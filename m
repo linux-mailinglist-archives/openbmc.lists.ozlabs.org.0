@@ -2,48 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DABFE7BA
-	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2019 18:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A2E1CE7F1
+	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2019 18:41:12 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44t97Z5tCmzDqJk
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 02:28:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44t9QZ1XhfzDqQl
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 02:41:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::543; helo=mail-pg1-x543.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="WKvhOJV0"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44t96X0YsYzDq5t
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:27:14 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 29 Apr 2019 09:27:11 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.60,410,1549958400"; d="scan'208";a="135391919"
-Received: from unknown (HELO [10.7.153.148]) ([10.7.153.148])
- by orsmga007.jf.intel.com with ESMTP; 29 Apr 2019 09:27:11 -0700
-Subject: Re: [PATCH dev-5.0 0/4] Improve stability of Aspeed video engine
- driver - 2nd phase
-To: Joel Stanley <joel@jms.id.au>
-References: <20190425222040.2413-1-jae.hyun.yoo@linux.intel.com>
- <CACPK8XdOBgGrR6EKj4rP3VhnwiCrFGAn33n6XTrU1UR3kJSigA@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <66b34da6-5d17-aa0b-0bcf-21ce9049fca4@linux.intel.com>
-Date: Mon, 29 Apr 2019 09:27:11 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44t9Pc3TqnzDqPy
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:40:19 +1000 (AEST)
+Received: by mail-pg1-x543.google.com with SMTP id n2so5392560pgg.13
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 09:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=/pCLjtBJxxkhH4ZWDBLUE5wcjD8HsLkfgQ0ydZmgv6w=;
+ b=WKvhOJV0Jvz+O9Bzzwcb/AQmAVqB92BKO5+hLzgka0Fu+ctb4gM4HwLwE84EDhpZPf
+ BEq5+O/XSolc3ANPGm+GAXtbVpgbNqWVcQTrK4v4vfIy+aa9jxaIsuzJTqooOE26ZckG
+ TWh0belYjwe2NGaGIxuX7aFuAdxQ5lCMfoHPim1REd2KpOIXKeoNJhMGmCDcDwXSLchF
+ 9/ve/ySDeWSEIuGtrLKO5SnCKSe0PvSfbTy3ZZWjBKZ0otxDogMSwBwwV1dgxKBkTlGF
+ sUQfaQcgZ/QM8hQJgByaLR/pGzU+76gT8G7HkCxbeGnfhhZQHV7wFb7qam5UXmVcTv/q
+ paoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=/pCLjtBJxxkhH4ZWDBLUE5wcjD8HsLkfgQ0ydZmgv6w=;
+ b=amveIJGNAgEh5uT62ssvDGf+jVsLaeO4X1UGoh2BnEVrYn66qBl5djIfHVacQ0yn2D
+ Yvu2vNAZEp4YQAugqKNmG7/wIj8520eyXqIRgqwUhacCzKzpym4kc6Sz8PWO+Mmx211E
+ fjMq9SQ0o/Y5R0J4sWvAvhfDoN7GGD9KaDSbOazmhy5iswXtoXIwGW93FtM+XHvIcIG1
+ +EDlioOkR4aJfGMayVn0MecPoY7tt5Di9L/OmXm9itk+BaPXjsKaIb6pgRM/vKjIfNsa
+ iD0YRAzi9mfXpDy8BYp4PqXgNT1ecvLBxFlBKmChKBEa1lisoQG0A3USAFfLQbNCw1uO
+ Qm8A==
+X-Gm-Message-State: APjAAAVKV1CpQfKm25qZFtpffNIa9AMln1m4ryIRS4IkquCittzp+gSn
+ TiBEybYcpNrww2M7SWp/KQ4=
+X-Google-Smtp-Source: APXvYqwCAVADJPjvoWnelLXP42g6sq8yoksUoOq0ZOGl9v203o/PClZ4Q7Z4DzZVkIc2EMvR/aAUWA==
+X-Received: by 2002:a63:f503:: with SMTP id w3mr56447709pgh.60.1556556016073; 
+ Mon, 29 Apr 2019 09:40:16 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id 14sm12367489pfx.13.2019.04.29.09.40.15
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 29 Apr 2019 09:40:15 -0700 (PDT)
+Date: Mon, 29 Apr 2019 09:40:14 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: Re: [PATCH 3/5] watchdog: npcm: make it explicitly non-modular
+Message-ID: <20190429164014.GA14357@roeck-us.net>
+References: <1556034515-28792-1-git-send-email-paul.gortmaker@windriver.com>
+ <1556034515-28792-4-git-send-email-paul.gortmaker@windriver.com>
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XdOBgGrR6EKj4rP3VhnwiCrFGAn33n6XTrU1UR3kJSigA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1556034515-28792-4-git-send-email-paul.gortmaker@windriver.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,50 +80,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: linux-watchdog@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ Tali Perry <tali.perry1@gmail.com>, Benjamin Fair <benjaminfair@google.com>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/29/2019 12:27 AM, Joel Stanley wrote:
-> Hi Jae,
+On Tue, Apr 23, 2019 at 11:48:33AM -0400, Paul Gortmaker wrote:
+> The Kconfig currently controlling compilation of this code is:
 > 
-> On Thu, 25 Apr 2019 at 22:20, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->>
->> This patch series improves stability of Aspeed video engine driver by fixing
->> interrupt handling logic and by reducing noisy log printings in the driver.
+> config NPCM7XX_WATCHDOG
+>        bool "Nuvoton NPCM750 watchdog"
 > 
-> NIce work. Did you post these for upstream inclusion?
+> ...meaning that it currently is not being built as a module by anyone.
 > 
-> I suggest doing that now. I can apply these to dev-5.0 once we have an
-> ack from Eddie.
+> Lets remove the modular code that is essentially orphaned, so that
+> when reading the driver there is no doubt it is builtin-only.
+> 
+> Since module_platform_driver() uses the same init level priority as
+> builtin_platform_driver() the init ordering remains unchanged with
+> this commit.
+> 
+> Also note that MODULE_DEVICE_TABLE is a no-op for non-modular code.
+> 
+> We also delete the MODULE_LICENSE tag etc. since all that information
+> was (or is now) contained at the top of the file in the comments.
+> 
+> Cc: Avi Fishman <avifishman70@gmail.com>
+> Cc: Tomer Maimon <tmaimon77@gmail.com>
+> Cc: Tali Perry <tali.perry1@gmail.com>
+> Cc: Patrick Venture <venture@google.com>
+> Cc: Nancy Yuen <yuenn@google.com>
+> Cc: Benjamin Fair <benjaminfair@google.com>
+> Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Cc: openbmc@lists.ozlabs.org
+> Cc: linux-watchdog@vger.kernel.org
+> Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
 
-Hi Joel,
+I'll send a different patch to make the driver tristate,
+to follow the example given by other drivers for the same chipset.
 
-Thanks for your review. I'll upstream it after Eddie's patch
-upstreaming. Will submit the 1st phase and this 2nd phase series
-altogether then.
-
-Thanks,
-Jae
-
-> Cheers,
-> 
-> Joel
-> 
-> 
-> 
->>
->> Jae Hyun Yoo (4):
->>    media: aspeed: remove IRQF_SHARED flag
->>    media: aspeed: reduce noisy log printing outs
->>    media: aspeed: remove checking of VE_INTERRUPT_CAPTURE_COMPLETE
->>    media: aspeed: clear interrupt status flags immediately
->>
->>   drivers/media/platform/aspeed-video.c | 35 ++++++++++++---------------
->>   1 file changed, 16 insertions(+), 19 deletions(-)
->>
->> --
->> 2.21.0
->>
+Guenter
