@@ -1,86 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DABFE7BA
+	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2019 18:28:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6266FE5F7
-	for <lists+openbmc@lfdr.de>; Mon, 29 Apr 2019 17:18:57 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44t7bf6mQ8zDqT3
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 01:18:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44t97Z5tCmzDqJk
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 02:28:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44t7Zl15LnzDqM7
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 01:18:05 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x3TF3fnb057556
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 11:18:01 -0400
-Received: from e11.ny.us.ibm.com (e11.ny.us.ibm.com [129.33.205.201])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2s62fabrbd-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 11:18:01 -0400
-Received: from localhost
- by e11.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <jrey@linux.ibm.com>;
- Mon, 29 Apr 2019 16:18:00 +0100
-Received: from b01cxnp22035.gho.pok.ibm.com (9.57.198.25)
- by e11.ny.us.ibm.com (146.89.104.198) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 29 Apr 2019 16:17:59 +0100
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x3TFHwAL21299258
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 15:17:58 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37709AC059
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 15:17:58 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F07EAAC05B
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 15:17:57 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 15:17:57 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44t96X0YsYzDq5t
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:27:14 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 29 Apr 2019 09:27:11 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,410,1549958400"; d="scan'208";a="135391919"
+Received: from unknown (HELO [10.7.153.148]) ([10.7.153.148])
+ by orsmga007.jf.intel.com with ESMTP; 29 Apr 2019 09:27:11 -0700
+Subject: Re: [PATCH dev-5.0 0/4] Improve stability of Aspeed video engine
+ driver - 2nd phase
+To: Joel Stanley <joel@jms.id.au>
+References: <20190425222040.2413-1-jae.hyun.yoo@linux.intel.com>
+ <CACPK8XdOBgGrR6EKj4rP3VhnwiCrFGAn33n6XTrU1UR3kJSigA@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <66b34da6-5d17-aa0b-0bcf-21ce9049fca4@linux.intel.com>
+Date: Mon, 29 Apr 2019 09:27:11 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <CACPK8XdOBgGrR6EKj4rP3VhnwiCrFGAn33n6XTrU1UR3kJSigA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date: Mon, 29 Apr 2019 10:19:48 -0500
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: Openbmc <openbmc@lists.ozlabs.org>
-Subject: Security Working Group meeting Wednesday May 1
-X-Sender: jrey@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-x-cbid: 19042915-2213-0000-0000-00000383EA9F
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011017; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000285; SDB=6.01196119; UDB=6.00627253; IPR=6.00976969; 
- MB=3.00026647; MTD=3.00000008; XFM=3.00000015; UTC=2019-04-29 15:18:00
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19042915-2214-0000-0000-00005E394DFC
-Message-Id: <ba0dfdabde4f7dae554fe0fdb68ee7d7@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-04-29_08:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=764 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1904290106
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,18 +55,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday May 1 at 10:00am PDT.
+On 4/29/2019 12:27 AM, Joel Stanley wrote:
+> Hi Jae,
+> 
+> On Thu, 25 Apr 2019 at 22:20, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>
+>> This patch series improves stability of Aspeed video engine driver by fixing
+>> interrupt handling logic and by reducing noisy log printings in the driver.
+> 
+> NIce work. Did you post these for upstream inclusion?
+> 
+> I suggest doing that now. I can apply these to dev-5.0 once we have an
+> ack from Eddie.
 
-Current topics:
-- development items with security impact
-- Eclypsium to talk about their research
+Hi Joel,
 
-Access, agenda, and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group
+Thanks for your review. I'll upstream it after Eddie's patch
+upstreaming. Will submit the 1st phase and this 2nd phase series
+altogether then.
 
-- Joseph
+Thanks,
+Jae
 
+> Cheers,
+> 
+> Joel
+> 
+> 
+> 
+>>
+>> Jae Hyun Yoo (4):
+>>    media: aspeed: remove IRQF_SHARED flag
+>>    media: aspeed: reduce noisy log printing outs
+>>    media: aspeed: remove checking of VE_INTERRUPT_CAPTURE_COMPLETE
+>>    media: aspeed: clear interrupt status flags immediately
+>>
+>>   drivers/media/platform/aspeed-video.c | 35 ++++++++++++---------------
+>>   1 file changed, 16 insertions(+), 19 deletions(-)
+>>
+>> --
+>> 2.21.0
+>>
