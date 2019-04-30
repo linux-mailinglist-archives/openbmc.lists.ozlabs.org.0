@@ -1,49 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 108FBFF1A
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 19:50:28 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tpw13PvnzDqMS
-	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 03:50:25 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C11BFF2D
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 19:58:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tq4r5tP4zDqSt
+	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 03:58:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tpvD13MCzDqLx
- for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 03:49:42 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tq3y66D0zDqM5
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 03:57:16 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2019 10:49:39 -0700
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 30 Apr 2019 10:57:14 -0700
 X-ExtLoop1: 1
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga002.jf.intel.com with ESMTP; 30 Apr 2019 10:49:39 -0700
-Subject: Re: [PATCH dev-5.0 3/4] media: aspeed: remove checking of
- VE_INTERRUPT_CAPTURE_COMPLETE
-To: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>,
- Joel Stanley <joel@jms.id.au>
-References: <20190425222040.2413-1-jae.hyun.yoo@linux.intel.com>
- <20190425222040.2413-4-jae.hyun.yoo@linux.intel.com>
- <1ffe0e08-c7fd-4ba1-9ac7-bb17c1ae0b7b@www.fastmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <d997ff31-68f0-41ae-58c2-87ac744f326d@linux.intel.com>
-Date: Tue, 30 Apr 2019 10:49:39 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.5.0
+X-IronPort-AV: E=Sophos;i="5.60,414,1549958400"; d="scan'208";a="153642343"
+Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
+ by FMSMGA003.fm.intel.com with ESMTP; 30 Apr 2019 10:57:14 -0700
+Subject: Re: A question about bmcweb code
+To: Lei YU <mine260309@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAARXrtmfZhmxJK3m-eOmR4cz0m78EaN9xyQjqdR5=1mf+CvZzA@mail.gmail.com>
+From: Ed Tanous <ed.tanous@intel.com>
+Message-ID: <24eb40ef-4921-37e3-6bb4-6e922dd5369e@intel.com>
+Date: Tue, 30 Apr 2019 10:57:13 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-In-Reply-To: <1ffe0e08-c7fd-4ba1-9ac7-bb17c1ae0b7b@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <CAARXrtmfZhmxJK3m-eOmR4cz0m78EaN9xyQjqdR5=1mf+CvZzA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -57,100 +53,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
-
-On 4/29/2019 10:50 PM, Andrew Jeffery wrote:
+On 4/29/19 10:59 PM, Lei YU wrote:
+> This email is to ask a question about the code in bmcweb.
 > 
+> When I started to review/read some code in bmcweb, some code concerns me.
 > 
-> On Fri, 26 Apr 2019, at 07:50, Jae Hyun Yoo wrote:
->> VE_INTERRUPT_CAPTURE_COMPLETE and VE_INTERRUPT_COMP_COMPLETE are
->> not set at the same time but the current interrupt handling
->> mechanism of this driver doesn't clear the interrupt flag until
->> both two are set, and this behavior causes unnecessary interrupt
->> handler calls. In fact, this driver provides JPEG format only so
->> taking care of the VE_INTERRUPT_COMP_COMPLETE is enough for getting
->> compressed image frame so this commit gets rid of the
->> VE_INTERRUPT_CAPTURE_COMPLETE checking logic to simplfy the logic.
+> 1. There is a static systemBus in `include/dbus_singleton.hpp`, which is
+>    included by multiple header files;
+>    In case this is included by multiple cpp files, there will be different
+>    instances of `systemBus` in different compile units, which makes it not
+>    singleton at all
+> 2. There are static variables in multiple header files in `includes/`, e.g.
+>    `include/obmc_console.hpp`
+>    In case these are included by multiple cpp files, we got different instances,
+>    and some of the variables are large and thus consume memory.
 > 
-> Typo: s/simplfy/simplify/
+> Luckily, current bmcweb only includes all the header files
+> src/webserver_main.cpp, so it does not have issues mentioned above.
+> 
+> So my question is, is it a design to enforce all implementation in headers and
+> only included by `webserver_main.cpp`?
 
-Will fix it.
+Today bmcweb is built as a (mostly) single compile unit because of some
+history, and some heavy template usage early on that was inherited from
+crow.  A lot of that has been cleaned up in the last while.  As you say,
+the mediocre singletons don't present a functional issue at this point,
+but it's definitely something that could be improved.
+
+My goal long term is to see things moved into appropriate separate
+compile units as make sense, with the goal of decreasing the build
+times, but I haven't really had time to execute on it as of late.
+
+
+> If yes, I would expect some description in README or some document;
+> If no, how do we avoid the issues described above?
+
+This isn't documented because we aren't consistent about it today, so
+documenting it would only really be documenting the statement on where
+we want to get to.  Once it's made consistent, we will absolutely
+document the rules.
+
+Any patches you want to send in to fix some, or all of these issues
+would be greatly appreciated and reviewed.
 
 > 
-> It wouldn't have been too difficult to just split the IRQ handling and maintain
-> some state to track whether we've completed both pieces. That wouldn't
-> have hobbled supporting non-JPEG captures in the future, but at the same
-> time it's not like it's hard to add back and someone would have to patch the
-> driver to make non-JPEG modes work anyway.
-
-Yes, I agree with you. The CAPTURE_COMPLETE event could be easily added
-back when non-JPEG support is implemented in the future so for now that
-event will be blocked for better performance and stability. If this
-driver supports multiple formats, CAPTURE_COMPLETE and COMP_COMPLETE
-should be selectively enabled in accordance with the format setting
-to avoid unnecessary interrupt handling.
-
-> I don't really have a dog in the race though, so I'm fine with the patch as it
-> stands.
-
-Thanks for your review!
-
-Jae
-
+> Thanks!
 > 
-> Andrew
-> 
->>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> ---
->>   drivers/media/platform/aspeed-video.c | 12 ++++--------
->>   1 file changed, 4 insertions(+), 8 deletions(-)
->>
->> diff --git a/drivers/media/platform/aspeed-video.c
->> b/drivers/media/platform/aspeed-video.c
->> index 429f676f9dea..77c209a472ca 100644
->> --- a/drivers/media/platform/aspeed-video.c
->> +++ b/drivers/media/platform/aspeed-video.c
->> @@ -463,8 +463,7 @@ static int aspeed_video_start_frame(struct
->> aspeed_video *video)
->>   	aspeed_video_write(video, VE_COMP_ADDR, addr);
->>   
->>   	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
->> -			    VE_INTERRUPT_COMP_COMPLETE |
->> -			    VE_INTERRUPT_CAPTURE_COMPLETE);
->> +			    VE_INTERRUPT_COMP_COMPLETE);
->>   
->>   	aspeed_video_update(video, VE_SEQ_CTRL, 0,
->>   			    VE_SEQ_CTRL_TRIG_CAPTURE | VE_SEQ_CTRL_TRIG_COMP);
->> @@ -570,8 +569,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->>   		}
->>   	}
->>   
->> -	if ((sts & VE_INTERRUPT_COMP_COMPLETE) &&
->> -	    (sts & VE_INTERRUPT_CAPTURE_COMPLETE)) {
->> +	if (sts & VE_INTERRUPT_COMP_COMPLETE) {
->>   		struct aspeed_video_buffer *buf;
->>   		u32 frame_size = aspeed_video_read(video,
->>   						   VE_OFFSET_COMP_STREAM);
->> @@ -600,11 +598,9 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->>   				    VE_SEQ_CTRL_FORCE_IDLE |
->>   				    VE_SEQ_CTRL_TRIG_COMP, 0);
->>   		aspeed_video_update(video, VE_INTERRUPT_CTRL,
->> -				    VE_INTERRUPT_COMP_COMPLETE |
->> -				    VE_INTERRUPT_CAPTURE_COMPLETE, 0);
->> +				    VE_INTERRUPT_COMP_COMPLETE, 0);
->>   		aspeed_video_write(video, VE_INTERRUPT_STATUS,
->> -				   VE_INTERRUPT_COMP_COMPLETE |
->> -				   VE_INTERRUPT_CAPTURE_COMPLETE);
->> +				   VE_INTERRUPT_COMP_COMPLETE);
->>   
->>   		if (test_bit(VIDEO_STREAMING, &video->flags) && buf)
->>   			aspeed_video_start_frame(video);
->> -- 
->> 2.21.0
->>
->>
