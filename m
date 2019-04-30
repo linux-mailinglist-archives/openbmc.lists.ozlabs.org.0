@@ -2,67 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A6B1F506
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 13:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6234FF55B
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 13:21:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tdrq0Q33zDqMs
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 21:02:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tfHT4TtpzDqT7
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 21:21:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::444; helo=mail-pf1-x444.google.com;
- envelope-from=ray.lue@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::22f; helo=mail-oi1-x22f.google.com;
+ envelope-from=ojayanth@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Vzr1TdUv"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="XjIjmzZz"; 
  dkim-atps=neutral
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
- [IPv6:2607:f8b0:4864:20::444])
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
+ [IPv6:2607:f8b0:4864:20::22f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tdqc20HBzDqMq
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 21:00:59 +1000 (AEST)
-Received: by mail-pf1-x444.google.com with SMTP id u17so2898751pfn.7
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 04:00:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tfGY150xzDqN2
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 21:20:52 +1000 (AEST)
+Received: by mail-oi1-x22f.google.com with SMTP id y64so5364108oia.7
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 04:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=WC3L39kZUzETd/chRm2rczn/nzsMh9TmBkCYdZ7BDlA=;
- b=Vzr1TdUvljTfwT3g+zXvl3xwrz68i26Il+qcOFuITlY2XgOKnRdmq5GchY0YlJluC6
- qiw+FhhAlhvB8F83gu+4Tzwzwip3Y72CDp8gvMUGD0HLKU4VGVtY6BaTe0LWrzVSXy78
- OvSzMiFYp2LyFJ3hZznF524oaDv+d+qaWdj0ivYliuSJfTQqQLMlEJBoFdr2sAYOm4Ew
- 319zV/BusyJZFuA0MAvPETL/Wp/96gpfQFXvdCuDsqIWEXSWpvmP4JMRx48atZIfl2W0
- UZNWpDAHsAY1hcFMVlwUVWxjL3EeI9FB0n879p/LZ6qe2Y0Pmoc81CLU6HOzqu6CoqLD
- bOOA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=gJtoWbvI5liR1xJX7ehFGtefw/rEsaaHiEePaAOWIfM=;
+ b=XjIjmzZzAElwvZWvFlumyOmvMm1Fxh7Z6GVpKq2tvDvrE/A+Ky86oAA1OEroN2scHR
+ cg4sEbi6hQqhT0T8nU0wczFNW2/epNzebTbqZXGquNZecbPNsVnxO0fhXbjBImQ23KUa
+ BT5VuQeoLCfg9lRYwBKi8oJQVFOUC5ZXiPkw5Jjy0XpVHVoe6ZdD9K2OXzN1hr6XPg2x
+ 6U7FtJrGrUY8xiGpaPZHvkio+XECYuhd7kO9Aqs05X1ky5PJG/tD4WjoYqKwuLeWXRB0
+ 42YwCJBUArUo59Mu31V9GF0r/KDwxytzYEmsqru8x1vWAjXENWwfPHBBRsJ+BsyoZht+
+ 9kVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=WC3L39kZUzETd/chRm2rczn/nzsMh9TmBkCYdZ7BDlA=;
- b=uoA8ybUI3iXpKEPmFBsl1ecMCCWKZmrDhwe2+xgYjjIdcz2ULBopazXqyadFlrGCwC
- UIAhKz0n5yFP+LhxFFds2RReId18sUj1TDCJwFiqjL4BLpPpcwLSqoDKuykZCf20uWYr
- ZL1yZs6bQ90ccnaqyFEaogV/dZ27GaKJ1WxzGvLYhQby0CLNiax+TTFrVe9tmvY2B6Mg
- IPdoDpWxblWi2RwMlWJ6B61jo7LKs7biL0hO1RI8MBfYnHRz0mg7jrOdlrX98lplcF4Y
- bzKKUkmIEDbFLj8G8+V9BbrwybPHZcfR3EsW7zQRj8hzKuR/rvLkFT7Bs8B8t7s4+ljG
- 3Wwg==
-X-Gm-Message-State: APjAAAXc+6FUw2jggD9awX81k+Di5sbtdJX9aNMykZQbZTjoLY6MxbX9
- /CzzXJRagwb3SqQXfiXV2ffSnj5URpY=
-X-Google-Smtp-Source: APXvYqwvAiGIuBvSVD1c7ZsC3Jn5eNd57E0FkLDxagpw5N9SzU9M/z93UpbIxM2TZpSSQ34tQvhnWw==
-X-Received: by 2002:a62:e411:: with SMTP id r17mr24456869pfh.127.1556622055554; 
- Tue, 30 Apr 2019 04:00:55 -0700 (PDT)
-Received: from localhost.localdomain ([220.130.36.2])
- by smtp.gmail.com with ESMTPSA id f21sm2888450pfn.30.2019.04.30.04.00.53
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Tue, 30 Apr 2019 04:00:54 -0700 (PDT)
-From: Ray Lue <ray.lue@gmail.com>
-X-Google-Original-From: Ray Lue <ray.lue@mic.com.tw>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH linux dev-5.0 v2 1/1] ARM: dts: aspeed: Add s7106 BMC Machine
-Date: Tue, 30 Apr 2019 19:00:19 +0800
-Message-Id: <1556622019-7790-1-git-send-email-ray.lue@mic.com.tw>
-X-Mailer: git-send-email 2.7.4
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=gJtoWbvI5liR1xJX7ehFGtefw/rEsaaHiEePaAOWIfM=;
+ b=m8FEg6CeuzG2vKdveeIwm6hh3CmuYXvg1eZsKnjo9nUQlx3n7gRwZaNK80cXgbi58q
+ D4eXcXLLC72tD32XSCcHzDYVF3jfS96jCffaGq99r4Kp0BGNGuRDNp3AsCS0ZslYL7kq
+ wmJBZl2xnQc5Jbp6h9PBjEwhyF5gKBVhdsomMzdp815960qypoVZR0tmKMWovLkhwOtT
+ lYft1Zku2YXb5Htxk5nQFYXB/5gNp3k0xQItrFMpRIEzqPnVbO4BgrmscsnImYMV15Ea
+ lScujlDMr0QUnUNKP9Cr0Xx4nzjxKByh52t5vCm79tpVzmyxq2TiVBfa59944H2stUG/
+ xrXw==
+X-Gm-Message-State: APjAAAVcHkrBpdd6aOvuh6Wn74EW19ujs15I+IHeQn1qKE7NlNU1ix36
+ OjjML9l42NlYHIBdzCabi3LZf+smOQi3InJPMnLiyrJH
+X-Google-Smtp-Source: APXvYqwdYaOzkYv6QcdVzK++pwsyZ3VDyMHxAxzD9ulseonXB0Ae5ohariX9WQxzcrHTt3VDt/YTkL/8aVFkjGGJEEU=
+X-Received: by 2002:aca:ebd5:: with SMTP id j204mr2433906oih.173.1556623248597; 
+ Tue, 30 Apr 2019 04:20:48 -0700 (PDT)
+MIME-Version: 1.0
+References: <CACkAXSq776Nb9Ft9iRqaN0baRqhFQDEwSpwShngnBXoUv=_0_A@mail.gmail.com>
+In-Reply-To: <CACkAXSq776Nb9Ft9iRqaN0baRqhFQDEwSpwShngnBXoUv=_0_A@mail.gmail.com>
+From: Jayanth Othayoth <ojayanth@gmail.com>
+Date: Tue, 30 Apr 2019 16:50:37 +0530
+Message-ID: <CACkAXSrn9gcnxjb9w=_+Hpy3-Vw3FxtbFe+YE8WHMfrGe8Fvrw@mail.gmail.com>
+Subject: Re: Secured LDAP Client: Root CA certificate upload process.
+To: openbmc@lists.ozlabs.org, ed.tanous@intel.com, 
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>, bradleyb@fuzziesquirrel.com
+Content-Type: multipart/alternative; boundary="000000000000c828be0587bd97c8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,211 +73,195 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ray Lue <ray.lue@mic.com.tw>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-s7106 is a Tyan platform family with an ASPEED AST2500 BMC.
+--000000000000c828be0587bd97c8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ray Lue <ray.lue@mic.com.tw>
----
- arch/arm/boot/dts/Makefile                  |   3 +-
- arch/arm/boot/dts/aspeed-bmc-tyan-s7106.dts | 175 ++++++++++++++++++++++++++++
- 2 files changed, 177 insertions(+), 1 deletion(-)
- create mode 100755 arch/arm/boot/dts/aspeed-bmc-tyan-s7106.dts
+Based on the community call discussion team decision is to use new URL for
+managing Root CA certificates in general.
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index bd40148..bc38f77 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1247,4 +1247,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-opp-witherspoon.dtb \
- 	aspeed-bmc-opp-zaius.dtb \
- 	aspeed-bmc-portwell-neptune.dtb \
--	aspeed-bmc-quanta-q71l.dtb
-+	aspeed-bmc-quanta-q71l.dtb \
-+	aspeed-bmc-tyan-s7106.dtb
-diff --git a/arch/arm/boot/dts/aspeed-bmc-tyan-s7106.dts b/arch/arm/boot/dts/aspeed-bmc-tyan-s7106.dts
-new file mode 100755
-index 0000000..563558d
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-tyan-s7106.dts
-@@ -0,0 +1,175 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+
-+/ {
-+	model = "Tyan S7106 BMC";
-+	compatible = "tyan,s7106-bmc", "aspeed,ast2500";
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@98000000 {
-+			no-map;
-+			reg = <0x98000000 0x00800000>; /* 8MB */
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-+			<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-+			<&adc 12>, <&adc 13>, <&adc 14>;
-+	};
-+
-+	iio-hwmon-battery {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 15>;
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		label = "bmc";
-+		status = "okay";
-+		m25p,fast-read;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+// UART1 is used only by the host. While the BMC does not need to access it,
-+// enable it here to make sure the UART's clock gets enabled.
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart3 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&lpc_ctrl {
-+	status = "okay";
-+};
-+
-+&lpc_snoop {
-+	status = "okay";
-+	snoop-ports = <0x80>;
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm3_default &pinctrl_pwm4_default>;
-+
-+	fan@0 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x02>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x03>;
-+	};
-+
-+	fan@2 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x04>;
-+	};
-+
-+	fan@3 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x05>;
-+	};
-+
-+	fan@4 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x06>;
-+	};
-+
-+	fan@5 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x07>;
-+	};
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+
-+	nct7802@28 {
-+		compatible = "nuvoton,nct7802";
-+		reg = <0x28>;
-+	};
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "at,24c256";
-+		reg = <0x50>;
-+	};
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	use-ncsi;
-+	no-hw-checksum;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+};
-+
-+&ibt {
-+	status = "okay";
-+};
--- 
-2.7.4
+The below proposal is based on the existing BMC usecase for uploading
+RootCA certificates in common place and Application configure to use this
+path for application specific validation purpose.
 
+Note: The below proposal scope is limited Redfish side , Certificate
+manager ( backend) implementation  is covered here.
+
+Root CA  Certificate (https://en.wikipedia.org/wiki/Root_certificate)
+Upload Proposal:
+
+Design approach: Extend the existing Certificate  schema( DMTF(DSP2046
+v2018.3).
+
+Proposed URI  for Root CA certificates : *
+/redfish/v1/Managers/{ManagerId}/Truststore/Certificates/{CertificateId} *
+
+*Root CA certificate management Flow:*
+
+Installing new Certificate:
+
+   - The user navigates to the Mangers Certificate Collection that is
+   subordinate to the =E2=80=9CTruststore=E2=80=9D object.
+
+
+   - The user performs a POST on the Certificate collection with the
+   certificate string in the body.
+
+
+Replacing Certificate:
+
+   - Use the existing action #CertificateService.ReplaceCertificate.
+      - Note: Most of the user wants to delete the invalid  certificates
+      instead of replace.
+
+
+*Deleting Certificates*
+This option is required for deleting invalid/expired/compromised
+certificates. Existing CertificateService schema doesn=E2=80=99t support to=
+ delete
+the installed  certificates. Also  =E2=80=9Cdeletable=E2=80=9D option is di=
+sabled ((
+deletable=3D false)) in the  CertificateCollection Schema (
+https://redfish.dmtf.org/schemas/CertificateCollection.json) .
+
+   - Need to work with Redfish community to add support delete option for
+   RootCA certificates.
+
+
+Looking for the input from the community on the proposed certificate schema
+changes to support this feature.
+
+i have already posted question in the Redfish specification forum (
+https://redfishforum.com/thread/169/certificate-management-ca-upload?page=
+=3D1&scrollTo=3D553)
+related to this few months back to understand any work in progress related
+to area.
+
+On Mon, Apr 29, 2019 at 6:22 PM Jayanth Othayoth <ojayanth@gmail.com> wrote=
+:
+
+> To configure Secured LDAP Client in BMC ,  required a Redfish interface t=
+o
+> upload Server copy of Root CA certificate in BMC for SSL handshaking.
+>
+> Latest version of DMTF spec (DSP2046 v2018.3 ) certificate supports the
+> below URIs:
+>
+> /redfish/v1/AccountService/Accounts/{ManagerAccountId}/Certificates/{Cert=
+ificateId}
+>
+> /redfish/v1/AccountService/ActiveDirectory/Certificates/{CertificateId}
+>
+> /redfish/v1/AccountService/ExternalAccountProviders/{ExternalAccountProvi=
+derId}/Certificates/{CertificateId}
+>  /redfish/v1/AccountService/LDAP/Certificates/{CertificateId}
+> /redfish/v1/Managers/{ManagerId}/NetworkProtocol/HTTPS/Certificates/{Cert=
+ificateId}
+>
+>
+> /redfish/v1/Managers/{ManagerId}/RemoteAccountService/Accounts/{ManagerAc=
+countId}/Certificates/{CertificateId}
+>
+>  /redfish/v1/Managers/{ManagerId}/RemoteAccountService/ActiveDirectory/Ce=
+rtificates/{CertificateId}
+>
+>  /redfish/v1/Managers/{ManagerId}/RemoteAccountService/ExternalAccountPro=
+viders/{ExternalAccountProviderId}/Certificates/{CertificateId}
+>  /redfish/v1/Managers/{ManagerId}/RemoteAccountService/LDAP/Certificates/=
+{CertificateId}
+>
+>
+> Currently URI
+> /redfish/v1/AccountService/LDAP/Certificates/{CertificateId} used for
+> upload LDAP client certificates.
+>
+> Ed, Ratan Can we use use any of the existing uri to upload  LDAP server
+> root CA Certificate , or do we need to introduce custom URI  for this
+> purpose?
+>
+> I have already posted question Redfish forum (
+> https://redfishforum.com/thread/169/certificate-management-ca-upload?page=
+=3D1&scrollTo=3D553)
+> related to general =E2=80=9Cauthority=E2=80=9D type certificate  upload p=
+rocess, which can
+> be used for this purpose.
+>
+>
+
+--000000000000c828be0587bd97c8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Based on the community call discussion te=
+am decision is to use new URL for managing Root CA certificates in general.=
+ <br></div><div dir=3D"ltr"><br>The below proposal is based on the existing=
+ BMC usecase for uploading RootCA certificates in common place and Applicat=
+ion configure to use this path for application specific validation purpose.=
+ <br><br>Note: The below proposal scope is limited Redfish side , Certifica=
+te manager ( backend) implementation=C2=A0 is covered here.<br><br>Root CA=
+=C2=A0 Certificate (<a href=3D"https://en.wikipedia.org/wiki/Root_certifica=
+te">https://en.wikipedia.org/wiki/Root_certificate</a>) Upload Proposal:<br=
+><br>Design approach: Extend the existing Certificate=C2=A0 schema( DMTF(DS=
+P2046 v2018.3).<br><br>Proposed URI=C2=A0 for Root CA certificates :=C2=A0<=
+b> /redfish/v1/Managers/{ManagerId}/Truststore/Certificates/{CertificateId}=
+ </b><br><br><b>Root CA certificate management Flow:</b><br><br>Installing =
+new Certificate:<br><ul><li>The user navigates to the Mangers Certificate C=
+ollection that is subordinate to the =E2=80=9CTruststore=E2=80=9D object.</=
+li></ul><ul><li>The user performs a POST on the Certificate collection with=
+ the certificate string in the body.</li></ul><br>Replacing Certificate:<br=
+><ul><li>Use the existing action #CertificateService.ReplaceCertificate.</l=
+i><ul><li>Note: Most of the user wants to delete the invalid=C2=A0 certific=
+ates instead of replace.=C2=A0 <br></li></ul></ul><br><b>Deleting Certifica=
+tes</b></div><div dir=3D"ltr">This option is required for deleting invalid/=
+expired/compromised=C2=A0 certificates. Existing CertificateService schema =
+doesn=E2=80=99t support to delete the installed=C2=A0 certificates. Also=C2=
+=A0 =E2=80=9Cdeletable=E2=80=9D option is disabled (( deletable=3D false)) =
+in the=C2=A0 CertificateCollection Schema (<a href=3D"https://redfish.dmtf.=
+org/schemas/CertificateCollection.json">https://redfish.dmtf.org/schemas/Ce=
+rtificateCollection.json</a>) . <br><ul><li>Need to work with Redfish commu=
+nity to add support delete option for RootCA certificates. </li></ul></div>=
+<div dir=3D"ltr"><br></div><div>Looking for the input from the community on=
+ the proposed certificate schema changes to support this feature.<br></div>=
+<div><br></div><div dir=3D"ltr"> i have already posted question in the Redf=
+ish specification forum=20
+(<a href=3D"https://redfishforum.com/thread/169/certificate-management-ca-u=
+pload?page=3D1&amp;scrollTo=3D553">https://redfishforum.com/thread/169/cert=
+ificate-management-ca-upload?page=3D1&amp;scrollTo=3D553</a>)
+ related to this few months back to understand any work in progress=20
+related to area. <br></div></div><br><div class=3D"gmail_quote"><div dir=3D=
+"ltr" class=3D"gmail_attr">On Mon, Apr 29, 2019 at 6:22 PM Jayanth Othayoth=
+ &lt;<a href=3D"mailto:ojayanth@gmail.com">ojayanth@gmail.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"lt=
+r"><div dir=3D"ltr">To configure Secured LDAP Client in BMC ,=C2=A0 require=
+d a Redfish interface to upload Server copy of Root CA certificate in BMC f=
+or SSL handshaking.<br><br>Latest version of DMTF spec (DSP2046 v2018.3 ) c=
+ertificate supports the below URIs: <br><br>/redfish/v1/AccountService/Acco=
+unts/{ManagerAccountId}/Certificates/{CertificateId} <br>/redfish/v1/Accoun=
+tService/ActiveDirectory/Certificates/{CertificateId} <br>/redfish/v1/Accou=
+ntService/ExternalAccountProviders/{ExternalAccountProviderId}/Certificates=
+/{CertificateId}<br>=C2=A0/redfish/v1/AccountService/LDAP/Certificates/{Cer=
+tificateId} <br>/redfish/v1/Managers/{ManagerId}/NetworkProtocol/HTTPS/Cert=
+ificates/{CertificateId} <br>/redfish/v1/Managers/{ManagerId}/RemoteAccount=
+Service/Accounts/{ManagerAccountId}/Certificates/{CertificateId}<br>=C2=A0/=
+redfish/v1/Managers/{ManagerId}/RemoteAccountService/ActiveDirectory/Certif=
+icates/{CertificateId}<br>=C2=A0/redfish/v1/Managers/{ManagerId}/RemoteAcco=
+untService/ExternalAccountProviders/{ExternalAccountProviderId}/Certificate=
+s/{CertificateId}<br>=C2=A0/redfish/v1/Managers/{ManagerId}/RemoteAccountSe=
+rvice/LDAP/Certificates/{CertificateId} <br><br>Currently URI=C2=A0 /redfis=
+h/v1/AccountService/LDAP/Certificates/{CertificateId} used for upload LDAP =
+client certificates. <br><br>Ed, Ratan Can we use use any of the existing u=
+ri to upload=C2=A0 LDAP server root CA Certificate , or do we need to intro=
+duce custom URI=C2=A0 for this purpose?<br><br>I have already posted questi=
+on Redfish forum (<a href=3D"https://redfishforum.com/thread/169/certificat=
+e-management-ca-upload?page=3D1&amp;scrollTo=3D553" target=3D"_blank">https=
+://redfishforum.com/thread/169/certificate-management-ca-upload?page=3D1&am=
+p;scrollTo=3D553</a>) related to general =E2=80=9Cauthority=E2=80=9D type c=
+ertificate=C2=A0 upload process, which can be used for this purpose.=C2=A0 =
+<br><br></div></div>
+</blockquote></div>
+
+--000000000000c828be0587bd97c8--
