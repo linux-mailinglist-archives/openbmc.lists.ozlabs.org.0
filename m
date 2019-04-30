@@ -1,84 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3820AF080
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 08:34:25 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26D1DF055
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 08:11:19 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tWPJ4rxTzDqMl
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 16:11:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tWvy5GnhzDqQ5
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 16:34:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="jYDfqezk"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="OqLJIazO"; dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tWNP5PZqzDqK3
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 16:10:29 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x3U62K4b140616
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:10:27 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2s6fjvjgwh-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:10:26 -0400
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Tue, 30 Apr 2019 07:10:24 +0100
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Tue, 30 Apr 2019 07:10:22 +0100
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x3U6ALmd46989382
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B65044C04A
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F0A54C058
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
-Received: from [9.202.13.25] (unknown [9.202.13.25])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
-Subject: Re: One-way dbus properties
-To: openbmc@lists.ozlabs.org
-References: <a25981c28a179307d5b8135e32a072ff@linux.vnet.ibm.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Tue, 30 Apr 2019 11:40:19 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <a25981c28a179307d5b8135e32a072ff@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19043006-0016-0000-0000-00000276BB4F
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19043006-0017-0000-0000-000032D34441
-Message-Id: <dcca3e80-93a4-beed-33dc-6d59512bd37c@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-04-30_02:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=694 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1904300041
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tWtp4b8szDqBM
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 16:33:22 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 89E0F6FE;
+ Tue, 30 Apr 2019 02:33:19 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Tue, 30 Apr 2019 02:33:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=7BHyuMZEtWVw1aM28rd7ZKLQssz3IoR
+ qFFKRJpojlI0=; b=jYDfqezkxBxiDryd76ADSedNGsGyLnyqwJkqwE/bqZAZzXZ
+ /jpOCaKAOx50803f89O45lGVOtDtZk2xoCFNlLCLbC+ONg7wfDKy+jyf7fOZKvMT
+ uAInYtnmln0nM8Jf1vOv6EUSLwAuYnrnnOnLOmQnglov4nTBZ+q+GZZlWhqVyTh0
+ b8o7g5Fk3uYoEvm00IK6PsRCzcQqN/VEzcCtmnzn2j7eIkuEZXZGD81ucDA3Lk8k
+ v3hEmZApEH2vnkJrfDZd0BrmkcqfUuGHgMXP3kaC5qA5zx/GGAk+pNmqDuON8/UP
+ TRnLzuKeRUpwPxxcNqb1lU7rquw1mSjCFkFNCrQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=7BHyuM
+ ZEtWVw1aM28rd7ZKLQssz3IoRqFFKRJpojlI0=; b=OqLJIazOsJ212thPtdLdQx
+ Sof4i11df0dRxISiMcDIA3KyyzL0iB25YZNeBiis/TOBk0dsed04GtEU0Z3IYJg2
+ mDLWduZ+JY/TReTDGtOuqEnSoH+1CKyRqsbxsOvI6mvTXGxaPNtx9x7tc3tqh011
+ OnBc8x9+xvx8pVDIMTo9bu3U3eMJLNNB4sahuQtUnJRTk0spaPkmHq+1zs+oxhDc
+ DzUjKMzWoqY3T1pkDlmHyzmQtimlGTnOpDZPLcsmU6eIN6zKnWMApBvuBIQ10nNz
+ vln61WqATugpPdtOIq5ZuSU5IP4ZW6dPN1iEIT9mCDBEuqHA3q4ZiYyIpPCWx2qA
+ ==
+X-ME-Sender: <xms:LuzHXJjXARY-sWsud2oxqtKN11LjnnPYcL-akD1wTVvBuQLdTwV_zQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrieefgdduudduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:LuzHXDlJ2QrWS3Szf70ooGJBq8jinTMb0OgbI5YeSpWbgdmi6E26jg>
+ <xmx:LuzHXLE6gBAeBPUhVceq9OEKO_TNdnQ8OvCFPCbOwZ1g03j4WaSwhQ>
+ <xmx:LuzHXMyndRwiBxy4JwL5aJtNcb4pL3ZNDRXgxVriIbn-aLc5OvD4Dw>
+ <xmx:L-zHXAuvQ09V4ZCnyydg_KDPI0ztAbKXZ9H01gaG96n__9J9OupNpg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id EE9207C199; Tue, 30 Apr 2019 02:33:17 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-448-g5cc1c91-fmstable-20190429v1
+Mime-Version: 1.0
+Message-Id: <9275a330-6ee3-4de0-8f0b-53b208abb81d@www.fastmail.com>
+In-Reply-To: <CACPK8XeHKyVF8FvcS9BCt9uaSaYSR6-+suGYr6-NCDZisK33mg@mail.gmail.com>
+References: <CAO=notxhe24e8-1dTcspD_H7xTy49yEnnn-gJbUciekirzKC_w@mail.gmail.com>
+ <CACPK8XfwP_DwqthSwgFGMjqRepGkC1XdziZ+eEds=6ND_Ov71Q@mail.gmail.com>
+ <CAO=notwAcxqFTN31Ecfd50rkjKm9X7PQsTFAP4Rc_xvN0wALUQ@mail.gmail.com>
+ <e44834c9-2755-1d05-1df1-d0fa930d48bd@kaod.org>
+ <CAO=notxCM7hR7bXXOi3Z86PikHxAj7CXSDWda-KV9wWxKSwBdg@mail.gmail.com>
+ <CAO=notx6cuUuARoDLrcrMX0fVQdVYahfvUbDNOwj588_0q-Bbg@mail.gmail.com>
+ <d5906e53-9e7a-44f3-b8af-c09e7c4db62a@www.fastmail.com>
+ <CAO=notwm0eqmk1G+B-YziEf0Y=6PjAPM-Pu=d1Kc6Q_3QD0B7g@mail.gmail.com>
+ <66a33cb9-19fe-4ccb-8449-76d2ba807cb1@www.fastmail.com>
+ <CACPK8XeHKyVF8FvcS9BCt9uaSaYSR6-+suGYr6-NCDZisK33mg@mail.gmail.com>
+Date: Tue, 30 Apr 2019 02:33:17 -0400
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, "Vijay Khemka" <vijaykhemka@fb.com>
+Subject: Re: transitioning from 4.17.18 to 5.0.6
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,40 +96,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Adriana,
 
-How is it different from readonly property, so suppose there is a object 
-which implements this interface.
 
-when this object gets created, as part of creation we can set the 
-property, but after object creation user can,t set
+On Mon, 29 Apr 2019, at 17:57, Joel Stanley wrote:
+> On Thu, 18 Apr 2019 at 06:20, Andrew Jeffery <andrew@aj.id.au> wrote:
+> > On Tue, 16 Apr 2019, at 23:56, Patrick Venture wrote:
+> > > > > Looks like the issue is 5.0.6 doesn't have the lpc parameter optional patchset.
+> > > Sorry, I stopped following that patchset a while back, I just assumed
+> > > it landed.  Was there some push back?
+> >
+> > Not that I'm aware of. Vijay has been pinging Joel periodically, I'm not
+> > sure why he hasn't merged it. I'd like to wait until Joel can respond in
+> > case there's something I've missed here.
+> 
+> I can't see anything relevant on the list. In fact, I've cleared the
+> entire backlog today.
+> 
+> $ pwclient list -p openbmc -s new  | grep dev-5.0 | wc -l
+> 0
+> 
+> Do you have a link to the email in question? If not, someone please
+> send it along and I'll put it in the tree. I assumed it was applied.
 
-the property.
+Maybe it's best if Vijay resends it. Add him in To.
 
-Am I missing something here?
+Andrew
 
-Ratan
-
-On 24/04/19 8:47 PM, Adriana Kobylak wrote:
-> Wanted to get thoughts on how attempting to clear one-way dbus 
-> properties should be handled.
+> 
+> Cheers,
+> 
+> Joel
 >
-> There are some properties like Field Mode that are intended to be 
-> one-way, meaning that you can set them but not clear them:
->
-> - 
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/FieldMode.interface.yaml
->       description: >
->           Keeps track of whether the BMC is in field mode. Enabling 
-> field mode
->           is intended to be a one-way operation.
->
-> If there's a call to clear the property value, currently this is a 
-> no-op and the REST call returns success but the value is not changed.
-> Should an error be returned to the user? It's like a read-only 
-> property but only after it's being set the first time.
->
-
