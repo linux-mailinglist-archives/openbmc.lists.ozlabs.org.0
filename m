@@ -1,68 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3050FF032
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 08:04:22 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tWFH4mVRzDqMg
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 16:04:19 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26D1DF055
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 08:11:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tWPJ4rxTzDqMl
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 16:11:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::741; helo=mail-qk1-x741.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="AIhq4buk"; 
- dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tWBg2zG1zDqRG
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 16:02:03 +1000 (AEST)
-Received: by mail-qk1-x741.google.com with SMTP id c1so7476508qkk.4
- for <openbmc@lists.ozlabs.org>; Mon, 29 Apr 2019 23:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=LY17JZfMQfniYS12+VqFsaExnC7S0x3aMWiY3ZuKM+M=;
- b=AIhq4bukfZfB7Zif2rNRrcy7gv6Fg+5zK4hzsCXKXHHIflr3+DFeLeaufOMNpejnjZ
- 8PfHX7nsEhrY4HkAKGvDkFo1s+NERNd/qsL5fgjuPiWypr+vatUQstMTFqBzcW6oxuQQ
- fEqEeR3Pv6ALXDR97uG1rOszs4Gz14+t1RXpc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=LY17JZfMQfniYS12+VqFsaExnC7S0x3aMWiY3ZuKM+M=;
- b=sfO7jXmtdHcqu2LEFzkxo/honzuAgXs9OhsE/hU9wqcbmg60IaHsnAGJjqRKxzDOyG
- n72KuHVvVvxFkWJFKpEzo8RPC8WcLvQLPojvXkSs5mAiIRe+yUV2oKXa6OgmPFnLtcJm
- dcMQ3CJSrEyYBXMscrA7eF8u4083FDu2+jHRBAdTSsJRTaSfPiZteQGUv/haRvpTTw1B
- tcDriGm/B113ItDvWoNu6hIyGNhxzjH/N6n8TJBEaLytznQ5WoOATCDCW8ajrP05vFHn
- Q0tmDBguO1ggKrstj4x/i5zl3opRfNIaUxz2HWewmyxeVY5GEu062iFOE2Yi02HwHBl8
- yAwg==
-X-Gm-Message-State: APjAAAU+IECsn4JAVMDHyCFUouWo0ZIuon8JknTljOhAqEBUCNT32Mtu
- 9wQErFvR0pwhSAMyEQIexEw9XZGVp2qaibWlHkk=
-X-Google-Smtp-Source: APXvYqxY0PdpAtlyPE7LeE9T/l2ThKA8dwmxkpK/XMOFT/a0bDytXBtx5CgPx9c15fkyk29L185eTzMrXvYBq7KY+AQ=
-X-Received: by 2002:ae9:f00e:: with SMTP id l14mr23886697qkg.127.1556604119400; 
- Mon, 29 Apr 2019 23:01:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tWNP5PZqzDqK3
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 16:10:29 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x3U62K4b140616
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:10:27 -0400
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2s6fjvjgwh-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 02:10:26 -0400
+Received: from localhost
+ by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
+ Tue, 30 Apr 2019 07:10:24 +0100
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
+ by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Tue, 30 Apr 2019 07:10:22 +0100
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x3U6ALmd46989382
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B65044C04A
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F0A54C058
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
+Received: from [9.202.13.25] (unknown [9.202.13.25])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 06:10:21 +0000 (GMT)
+Subject: Re: One-way dbus properties
+To: openbmc@lists.ozlabs.org
+References: <a25981c28a179307d5b8135e32a072ff@linux.vnet.ibm.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Date: Tue, 30 Apr 2019 11:40:19 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190425222040.2413-1-jae.hyun.yoo@linux.intel.com>
- <20190425222040.2413-5-jae.hyun.yoo@linux.intel.com>
- <23d85414-634a-2d2d-857e-2c3d824de7a5@linux.ibm.com>
- <f85d4a1f-c2ff-072b-63c3-08144e4d2e24@linux.intel.com>
- <CACPK8Xe+_+GWkY8UKU9JaDmhv1VWbCe+OGhz1uJsfRCeHh30yQ@mail.gmail.com>
-In-Reply-To: <CACPK8Xe+_+GWkY8UKU9JaDmhv1VWbCe+OGhz1uJsfRCeHh30yQ@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 30 Apr 2019 06:01:47 +0000
-Message-ID: <CACPK8Xet+EKSkFyParGuFFP+NZBybr7qiF1-EBk=-LkR8MUjwQ@mail.gmail.com>
-Subject: Re: [PATCH dev-5.0 4/4] media: aspeed: clear interrupt status flags
- immediately
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <a25981c28a179307d5b8135e32a072ff@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19043006-0016-0000-0000-00000276BB4F
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19043006-0017-0000-0000-000032D34441
+Message-Id: <dcca3e80-93a4-beed-33dc-6d59512bd37c@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-04-30_02:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=694 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1904300041
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,96 +90,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 30 Apr 2019 at 03:04, Joel Stanley <joel@jms.id.au> wrote:
+Hi Adriana,
+
+How is it different from readonly property, so suppose there is a object 
+which implements this interface.
+
+when this object gets created, as part of creation we can set the 
+property, but after object creation user can,t set
+
+the property.
+
+Am I missing something here?
+
+Ratan
+
+On 24/04/19 8:47 PM, Adriana Kobylak wrote:
+> Wanted to get thoughts on how attempting to clear one-way dbus 
+> properties should be handled.
 >
-> On Mon, 29 Apr 2019 at 23:38, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
-> >
-> > On 4/29/2019 3:29 PM, Eddie James wrote:
-> > >
-> > > On 4/25/19 5:20 PM, Jae Hyun Yoo wrote:
-> > >> Interrupt status flags should be cleared immediately otherwise
-> > >> interrupt handler will be called again and again until the flag
-> > >> is cleared, but this driver clears some flags through a 500ms
-> > >> delayed work which is a bad idea in interrupt handling, so this
-> > >> commit makes the interrupt handler clear the status flags
-> > >> immediately.
-> > >>
-> > >> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> > >> ---
-> > >>   drivers/media/platform/aspeed-video.c | 12 +++++++-----
-> > >>   1 file changed, 7 insertions(+), 5 deletions(-)
-> > >>
-> > >> diff --git a/drivers/media/platform/aspeed-video.c
-> > >> b/drivers/media/platform/aspeed-video.c
-> > >> index 77c209a472ca..e218f375b9f5 100644
-> > >> --- a/drivers/media/platform/aspeed-video.c
-> > >> +++ b/drivers/media/platform/aspeed-video.c
-> > >> @@ -546,17 +546,18 @@ static irqreturn_t aspeed_video_irq(int irq,
-> > >> void *arg)
-> > >>        * re-initialize
-> > >>        */
-> > >>       if (sts & VE_INTERRUPT_MODE_DETECT_WD) {
-> > >> +        aspeed_video_write(video, VE_INTERRUPT_STATUS,
-> > >> +                   VE_INTERRUPT_MODE_DETECT_WD);
-> > >
-> > >
-> > > aspeed_video_irq_res_change disables all IRQs and turns off the clocks.
-> > > This shouldn't be necessary.
-> >
-> > In fact, this patch fixes a watch dog reset with printing out a stack
-> > trace like below. This happens very rarely but it's critical because it
-> > causes a BMC reset. In my experiments, interrupt flags should be cleared
-> > even with the aspeed_video_write(video, VE_INTERRUPT_CTRL, 0) in
-> > aspeed_video_off(), or we should add
-> > apeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff)
-> > before the disabling interrupt. I think the way in this patch is better.
+> There are some properties like Field Mode that are intended to be 
+> one-way, meaning that you can set them but not clear them:
 >
-> In general, a driver should certainly be clearing (acking) the
-> interrupt bits in the interrupt handler before returning.
+> - 
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/FieldMode.interface.yaml
+>       description: >
+>           Keeps track of whether the BMC is in field mode. Enabling 
+> field mode
+>           is intended to be a one-way operation.
 >
-> Jae, it would be interesting to know the value of VE_INTERRUPT_STATUS
-> in the soft lockup situation.
+> If there's a call to clear the property value, currently this is a 
+> no-op and the REST call returns success but the value is not changed.
+> Should an error be returned to the user? It's like a read-only 
+> property but only after it's being set the first time.
 >
-> I took a closer look at this function, and it should probably not
-> return IRQ_HANDLED at the bottom, as it may have fallen through all of
-> the if statements and not have handled any interrupt. Jae, can you
-> take a look at this and send another patch if you think that is
-> correct.
 
-Something like the patch below. It also made me wonder why you don't
-return  from the flags = VIDEO_RES_DETECT state?
-
-I don't have a way to test. Is there a simple command I can run on a
-BMC to test, or do I need the entire stack?
-
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -566,8 +566,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
-                         * detection; reset the engine and re-initialize
-                         */
-                        aspeed_video_irq_res_change(video);
--                       return IRQ_HANDLED;
-                }
-+               return IRQ_HANDLED;
-        }
-
-        if (sts & VE_INTERRUPT_COMP_COMPLETE) {
-@@ -606,9 +606,13 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
-
-                if (test_bit(VIDEO_STREAMING, &video->flags) && buf)
-                        aspeed_video_start_frame(video);
-+
-+               return IRQ_HANDLED;
-        }
-
--       return IRQ_HANDLED;
-+       dev_dbg(video->dev, "unhandled states: %08x\n", sts);
-+
-+       return IRQ_NONE;
- }
