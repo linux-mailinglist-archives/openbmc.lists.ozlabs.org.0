@@ -1,47 +1,118 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7E2FFFC1
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 20:30:26 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C11BFF2D
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 19:58:07 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tq4r5tP4zDqSt
-	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 03:58:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tqp82W44zDqPM
+	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 04:30:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=0023ab73f8=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="BeQTVPmb"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="KYsx5pWJ"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tq3y66D0zDqM5
- for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 03:57:16 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2019 10:57:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.60,414,1549958400"; d="scan'208";a="153642343"
-Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
- by FMSMGA003.fm.intel.com with ESMTP; 30 Apr 2019 10:57:14 -0700
-Subject: Re: A question about bmcweb code
-To: Lei YU <mine260309@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CAARXrtmfZhmxJK3m-eOmR4cz0m78EaN9xyQjqdR5=1mf+CvZzA@mail.gmail.com>
-From: Ed Tanous <ed.tanous@intel.com>
-Message-ID: <24eb40ef-4921-37e3-6bb4-6e922dd5369e@intel.com>
-Date: Tue, 30 Apr 2019 10:57:13 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <CAARXrtmfZhmxJK3m-eOmR4cz0m78EaN9xyQjqdR5=1mf+CvZzA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tqmt1cQyzDqTY
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 04:29:13 +1000 (AEST)
+Received: from pps.filterd (m0001255.ppops.net [127.0.0.1])
+ by mx0b-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x3UINCvx009930
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 11:29:10 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : content-type : mime-version; s=facebook;
+ bh=t1fZ3F7utp8ziiRgQxOm2Vk83E3uG8frd2kq60zpHtc=;
+ b=BeQTVPmbbo6TZdKA9eg/3uWyS6FTI13IAJtrvjkSN8jxqoU6KEXpf1wcF2iHSL9la5An
+ Y/MJGGIymWSV/j4EJMe2Ra/Ghl2oAShwlRHBBL3LG09+fsumDHdbluS/nSPW5po0lesZ
+ DlcRXcytRT9Myw8doM59wJifUxE9wroOauY= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0b-00082601.pphosted.com with ESMTP id 2s6m1whnx4-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 11:29:10 -0700
+Received: from ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) by
+ ash-exhub102.TheFacebook.com (2620:10d:c0a8:82::f) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 30 Apr 2019 11:29:08 -0700
+Received: from NAM05-DM3-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.100) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Tue, 30 Apr 2019 11:29:08 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector1-fb-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=t1fZ3F7utp8ziiRgQxOm2Vk83E3uG8frd2kq60zpHtc=;
+ b=KYsx5pWJHj7gY3SqevyZHeptmdTDp5ZQm9BPhuH6Z8Yt6EIKaljrBJUmHtV4Ep7rqx7+qLc8Y2/r8WEfiG5RJCQ5M8/DOkbKfEPYc7yz6iCpmuiyPQyopACAAYwlmlGk5HYvs9jS18ft87lNX39j6udviwYfrKM7YxO40FbcE3Y=
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com (10.172.177.11) by
+ CY4PR15MB1461.namprd15.prod.outlook.com (10.172.157.22) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1835.14; Tue, 30 Apr 2019 18:29:07 +0000
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9]) by CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9%3]) with mapi id 15.20.1835.010; Tue, 30 Apr 2019
+ 18:29:06 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Phosphor pid control
+Thread-Topic: Phosphor pid control
+Thread-Index: AQHU/4KY0BYzgrKEY0CYtw90dRuDdA==
+Date: Tue, 30 Apr 2019 18:29:06 +0000
+Message-ID: <303477D5-BB35-4FC8-98FB-9C59A188064C@fb.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::c9a8]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 35d82b1a-6fea-4546-6506-08d6cd99bada
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);
+ SRVR:CY4PR15MB1461; 
+x-ms-traffictypediagnostic: CY4PR15MB1461:
+x-ms-exchange-purlcount: 2
+x-microsoft-antispam-prvs: <CY4PR15MB1461F410F1CA6BDA8E6E36CADD3A0@CY4PR15MB1461.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-forefront-prvs: 00235A1EEF
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(346002)(39860400002)(376002)(366004)(396003)(136003)(189003)(199004)(36756003)(81166006)(66476007)(64756008)(91956017)(82746002)(66556008)(7736002)(54896002)(6506007)(7116003)(6306002)(102836004)(6512007)(68736007)(478600001)(6486002)(53936002)(66446008)(73956011)(6916009)(33656002)(66946007)(76116006)(316002)(99286004)(6116002)(6436002)(256004)(2906002)(486006)(14444005)(8676002)(476003)(5660300002)(81156014)(83716004)(8936002)(97736004)(71190400001)(186003)(71200400001)(46003)(2616005)(3480700005)(86362001)(14454004)(25786009);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR15MB1461;
+ H:CY4PR15MB1269.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: UmIH/B9hTo6Nj2XvqnruVOm3VWCUA8HOe+240pWyOhTNrInvitibLtvU9ZQXnB8fIF7/PRHDA7NY5cs/u5MCLsu0i8aF7TZFn9AWdtBoEZGsLShuSuNzsTuUoHeYHhHuX9Gn9hhzvok4sXFKC8i5ar2BcrJKofpC5G5uANshmRyX193AeFGGr9OuPLIUnzyi7qMikXzEWuBXfLkirAAY/HOonu7cCnuNVkUfiis4FgtXkqvazseUwTJJWudDyeFMCegERl6z/a+Rty3f0HYdNzd69+f85LDXa6jIwoPjW9X0/X8MpX+KxRXfZYw9L94Q2DC92OLJUgEUMjHpn/kBOeZGIL5z7pgdgiQjO1QZ6A3lvEH3Xe7Y82obG4shoXV2gZ5BbnsGUWO1OwDTLJSkRE6QTSqu0W/rU3mV0fn6wpo=
+Content-Type: multipart/alternative;
+ boundary="_000_303477D5BB354FC898FB9C59A188064Cfbcom_"
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35d82b1a-6fea-4546-6506-08d6cd99bada
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2019 18:29:06.6397 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR15MB1461
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-04-30_09:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=980 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1904300110
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,49 +127,155 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/29/19 10:59 PM, Lei YU wrote:
-> This email is to ask a question about the code in bmcweb.
-> 
-> When I started to review/read some code in bmcweb, some code concerns me.
-> 
-> 1. There is a static systemBus in `include/dbus_singleton.hpp`, which is
->    included by multiple header files;
->    In case this is included by multiple cpp files, there will be different
->    instances of `systemBus` in different compile units, which makes it not
->    singleton at all
-> 2. There are static variables in multiple header files in `includes/`, e.g.
->    `include/obmc_console.hpp`
->    In case these are included by multiple cpp files, we got different instances,
->    and some of the variables are large and thus consume memory.
-> 
-> Luckily, current bmcweb only includes all the header files
-> src/webserver_main.cpp, so it does not have issues mentioned above.
-> 
-> So my question is, is it a design to enforce all implementation in headers and
-> only included by `webserver_main.cpp`?
+--_000_303477D5BB354FC898FB9C59A188064Cfbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Today bmcweb is built as a (mostly) single compile unit because of some
-history, and some heavy template usage early on that was inherited from
-crow.  A lot of that has been cleaned up in the last while.  As you say,
-the mediocre singletons don't present a functional issue at this point,
-but it's definitely something that could be improved.
+SSBoYXZlIGVuYWJsZWQgcGhvc3Bob3ItcGlkLWNvbnRyb2wgaW4gbXkgaW1hZ2UgYW5kIEkgc2Vl
+IGZvbGxvd2luZyBsb2cNCg0KDQpBcHIgMTIgMjM6MjI6NDMgdGlvZ2FwYXNzIHN5c3RlbWRbMV06
+IFN0YXJ0ZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJhc2VkIEZhbiBDb250cm9sIERh
+ZW1vbi4NCg0KQXByIDEyIDIzOjIyOjQ2IHRpb2dhcGFzcyBzd2FtcGRbMTA3Ml06IHRlcm1pbmF0
+ZSBjYWxsZWQgYWZ0ZXIgdGhyb3dpbmcgYW4gaW5zdGFuY2Ugb2YgJ3N0ZDo6cnVudGltZV9lcnJv
+cicNCg0KQXByIDEyIDIzOjIyOjQ2IHRpb2dhcGFzcyBzd2FtcGRbMTA3Ml06ICAgd2hhdCgpOiAg
+T2JqZWN0TWFwcGVyIENhbGwgRmFpbHVyZQ0KDQpBcHIgMTIgMjM6MjM6MDQgdGlvZ2FwYXNzIHN5
+c3RlbWRbMV06IFtbMDsxOzM5bVtbMDsxOzMxbVtbMDsxOzM5bXBob3NwaG9yLXBpZC1jb250cm9s
+LnNlcnZpY2U6IE1haW4gcHJvY2VzcyBleGl0ZWQsIGNvZGU9a2lsbGVkLCBzdGF0dXM9Ni9BQlJU
+W1swbQ0KDQpBcHIgMTIgMjM6MjM6MDQgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IFtbMDsxOzM5bVtb
+MDsxOzMxbVtbMDsxOzM5bXBob3NwaG9yLXBpZC1jb250cm9sLnNlcnZpY2U6IEZhaWxlZCB3aXRo
+IHJlc3VsdCAnc2lnbmFsJy5bWzBtDQoNCkFwciAxMiAyMzoyMzoxMyB0aW9nYXBhc3Mgc3lzdGVt
+ZFsxXTogcGhvc3Bob3ItcGlkLWNvbnRyb2wuc2VydmljZTogU2VydmljZSBSZXN0YXJ0U2VjPTVz
+IGV4cGlyZWQsIHNjaGVkdWxpbmcgcmVzdGFydC4NCg0KQXByIDEyIDIzOjIzOjEzIHRpb2dhcGFz
+cyBzeXN0ZW1kWzFdOiBwaG9zcGhvci1waWQtY29udHJvbC5zZXJ2aWNlOiBTY2hlZHVsZWQgcmVz
+dGFydCBqb2IsIHJlc3RhcnQgY291bnRlciBpcyBhdCAxLg0KDQpBcHIgMTIgMjM6MjM6MTYgdGlv
+Z2FwYXNzIHN5c3RlbWRbMV06IFN0b3BwZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJh
+c2VkIEZhbiBDb250cm9sIERhZW1vbi4NCg0KQXByIDEyIDIzOjIzOjE2IHRpb2dhcGFzcyBzeXN0
+ZW1kWzFdOiBTdGFydGVkIFBob3NwaG9yLVBpZC1Db250cm9sIE1hcmdpbi1iYXNlZCBGYW4gQ29u
+dHJvbCBEYWVtb24uDQoNCkFwciAxMiAyMzoyMzoxNyB0aW9nYXBhc3Mgc3dhbXBkWzExNDVdOiBO
+byBmYW4gem9uZXMsIGFwcGxpY2F0aW9uIHBhdXNpbmcgdW50aWwgcmVib290DQoNCkFwciAxMiAy
+MzoyMzoyNyB0aW9nYXBhc3Mgc3dhbXBkWzExNDVdOiBOZXcgY29uZmlndXJhdGlvbiBkZXRlY3Rl
+ZCwgcmVzdGFydGluZw0KDQpBcHIgMTIgMjM6MjM6MjcgdGlvZ2FwYXNzIHN3YW1wZFsxMTQ1XTog
+Lg0KDQpBcHIgMTIgMjM6MjM6MjcgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IHBob3NwaG9yLXBpZC1j
+b250cm9sLnNlcnZpY2U6IFN1Y2NlZWRlZC4NCg0KQXByIDEyIDIzOjIzOjMyIHRpb2dhcGFzcyBz
+eXN0ZW1kWzFdOiBwaG9zcGhvci1waWQtY29udHJvbC5zZXJ2aWNlOiBTZXJ2aWNlIFJlc3RhcnRT
+ZWM9NXMgZXhwaXJlZCwgc2NoZWR1bGluZyByZXN0YXJ0Lg0KDQpBcHIgMTIgMjM6MjM6MzIgdGlv
+Z2FwYXNzIHN5c3RlbWRbMV06IHBob3NwaG9yLXBpZC1jb250cm9sLnNlcnZpY2U6IFNjaGVkdWxl
+ZCByZXN0YXJ0IGpvYiwgcmVzdGFydCBjb3VudGVyIGlzIGF0IDIuDQoNCkFwciAxMiAyMzoyMzoz
+MyB0aW9nYXBhc3Mgc3lzdGVtZFsxXTogU3RvcHBlZCBQaG9zcGhvci1QaWQtQ29udHJvbCBNYXJn
+aW4tYmFzZWQgRmFuIENvbnRyb2wgRGFlbW9uLg0KDQpBcHIgMTIgMjM6MjM6MzMgdGlvZ2FwYXNz
+IHN5c3RlbWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJhc2VkIEZh
+biBDb250cm9sIERhZW1vbi4NCg0KQXByIDEyIDIzOjIzOjM0IHRpb2dhcGFzcyBzd2FtcGRbMTE4
+M106IE5vIGZhbiB6b25lcywgYXBwbGljYXRpb24gcGF1c2luZyB1bnRpbCByZWJvb3QNCg0KDQpJ
+IGhhdmUgY29uZmlndXJhdGlvbiBkZWZpbmVkIHRocm91Z2ggZW50aXR5IG1hbmFnZXIuIFdoYXQg
+aXMgdGhlIGJlc3Qgd2F5IHRvIGRlYnVnIHRoaXMgYW5kIG1vZGlmeSBjb25maWd1cmF0aW9ucy4N
+Cg0KUmVnYXJkcw0KLVZpamF5DQo=
 
-My goal long term is to see things moved into appropriate separate
-compile units as make sense, with the goal of decreasing the build
-times, but I haven't really had time to execute on it as of late.
+--_000_303477D5BB354FC898FB9C59A188064Cfbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <EE320699FECF91499EB719C3DEDFDAC0@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
+PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
+bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
+dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
+dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
+dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
+dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
+bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
+IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
+IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5Ok1lbmxvOw0K
+CXBhbm9zZS0xOjIgMTEgNiA5IDMgOCA0IDIgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25zICov
+DQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47
+DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1p
+bHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXtt
+c28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246
+dW5kZXJsaW5lO30NCmE6dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28t
+c3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6Izk1NEY3MjsNCgl0ZXh0LWRlY29yYXRpb246dW5k
+ZXJsaW5lO30NCnNwYW4uRW1haWxTdHlsZTE3DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLWNv
+bXBvc2U7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93
+dGV4dDt9DQpwLnAxLCBsaS5wMSwgZGl2LnAxDQoJe21zby1zdHlsZS1uYW1lOnAxOw0KCW1hcmdp
+bjowaW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZTo4LjVwdDsNCglmb250
+LWZhbWlseTpNZW5sbzsNCgljb2xvcjpibGFjazt9DQpzcGFuLnMyDQoJe21zby1zdHlsZS1uYW1l
+OnMyOw0KCWNvbG9yOndoaXRlOw0KCWJhY2tncm91bmQ6YmxhY2s7fQ0Kc3Bhbi5zMQ0KCXttc28t
+c3R5bGUtbmFtZTpzMTt9DQpzcGFuLmFwcGxlLWNvbnZlcnRlZC1zcGFjZQ0KCXttc28tc3R5bGUt
+bmFtZTphcHBsZS1jb252ZXJ0ZWQtc3BhY2U7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxl
+LXR5cGU6ZXhwb3J0LW9ubHk7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEu
+MGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24x
+DQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+DQo8L2hlYWQ+DQo8Ym9keSBsYW5n
+PSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0iV29y
+ZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
+MTEuMHB0Ij5JIGhhdmUgZW5hYmxlZCBwaG9zcGhvci1waWQtY29udHJvbCBpbiBteSBpbWFnZSBh
+bmQgSSBzZWUgZm9sbG93aW5nIGxvZzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpw
+Pjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJzMSI+QXByIDEyIDIzOjIy
+OjQzIHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBTdGFydGVkIFBob3NwaG9yLVBpZC1Db250cm9sIE1h
+cmdpbi1iYXNlZCBGYW4gQ29udHJvbCBEYWVtb24uPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEiPkFwciAxMiAyMzoyMjo0NiB0aW9nYXBhc3Mgc3dh
+bXBkWzEwNzJdOiB0ZXJtaW5hdGUgY2FsbGVkIGFmdGVyIHRocm93aW5nIGFuIGluc3RhbmNlIG9m
+ICdzdGQ6OnJ1bnRpbWVfZXJyb3InPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAx
+Ij48c3BhbiBjbGFzcz0iczEiPkFwciAxMiAyMzoyMjo0NiB0aW9nYXBhc3Mgc3dhbXBkWzEwNzJd
+OiA8L3NwYW4+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7DQo8L3Nw
+YW4+PHNwYW4gY2xhc3M9InMxIj53aGF0KCk6PC9zcGFuPjxzcGFuIGNsYXNzPSJhcHBsZS1jb252
+ZXJ0ZWQtc3BhY2UiPiZuYnNwOyA8L3NwYW4+DQo8c3BhbiBjbGFzcz0iczEiPk9iamVjdE1hcHBl
+ciBDYWxsIEZhaWx1cmU8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFu
+IGNsYXNzPSJzMSI+QXByIDEyIDIzOjIzOjA0IHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiA8L3NwYW4+
+PHNwYW4gY2xhc3M9InMyIj5bPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+WzA7MTszOW08L3NwYW4+
+PHNwYW4gY2xhc3M9InMyIj5bPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+WzA7MTszMW08L3NwYW4+
+PHNwYW4gY2xhc3M9InMyIj5bPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+WzA7MTszOW1waG9zcGhv
+ci1waWQtY29udHJvbC5zZXJ2aWNlOg0KIE1haW4gcHJvY2VzcyBleGl0ZWQsIGNvZGU9a2lsbGVk
+LCBzdGF0dXM9Ni9BQlJUPC9zcGFuPjxzcGFuIGNsYXNzPSJzMiI+Wzwvc3Bhbj48c3BhbiBjbGFz
+cz0iczEiPlswbTwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xh
+c3M9InMxIj5BcHIgMTIgMjM6MjM6MDQgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IDwvc3Bhbj48c3Bh
+biBjbGFzcz0iczIiPls8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj5bMDsxOzM5bTwvc3Bhbj48c3Bh
+biBjbGFzcz0iczIiPls8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj5bMDsxOzMxbTwvc3Bhbj48c3Bh
+biBjbGFzcz0iczIiPls8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj5bMDsxOzM5bXBob3NwaG9yLXBp
+ZC1jb250cm9sLnNlcnZpY2U6DQogRmFpbGVkIHdpdGggcmVzdWx0ICdzaWduYWwnLjwvc3Bhbj48
+c3BhbiBjbGFzcz0iczIiPls8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj5bMG08L3NwYW4+PG86cD48
+L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJzMSI+QXByIDEyIDIzOjIzOjEz
+IHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBwaG9zcGhvci1waWQtY29udHJvbC5zZXJ2aWNlOiBTZXJ2
+aWNlIFJlc3RhcnRTZWM9NXMgZXhwaXJlZCwgc2NoZWR1bGluZyByZXN0YXJ0Ljwvc3Bhbj48bzpw
+PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9InMxIj5BcHIgMTIgMjM6MjM6
+MTMgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IHBob3NwaG9yLXBpZC1jb250cm9sLnNlcnZpY2U6IFNj
+aGVkdWxlZCByZXN0YXJ0IGpvYiwgcmVzdGFydCBjb3VudGVyIGlzIGF0IDEuPC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEiPkFwciAxMiAyMzoyMzox
+NiB0aW9nYXBhc3Mgc3lzdGVtZFsxXTogU3RvcHBlZCBQaG9zcGhvci1QaWQtQ29udHJvbCBNYXJn
+aW4tYmFzZWQgRmFuIENvbnRyb2wgRGFlbW9uLjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNs
+YXNzPSJwMSI+PHNwYW4gY2xhc3M9InMxIj5BcHIgMTIgMjM6MjM6MTYgdGlvZ2FwYXNzIHN5c3Rl
+bWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJhc2VkIEZhbiBDb250
+cm9sIERhZW1vbi48L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNs
+YXNzPSJzMSI+QXByIDEyIDIzOjIzOjE3IHRpb2dhcGFzcyBzd2FtcGRbMTE0NV06IE5vIGZhbiB6
+b25lcywgYXBwbGljYXRpb24gcGF1c2luZyB1bnRpbCByZWJvb3Q8L3NwYW4+PG86cD48L286cD48
+L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJzMSI+QXByIDEyIDIzOjIzOjI3IHRpb2dh
+cGFzcyBzd2FtcGRbMTE0NV06IE5ldyBjb25maWd1cmF0aW9uIGRldGVjdGVkLCByZXN0YXJ0aW5n
+PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEiPkFw
+ciAxMiAyMzoyMzoyNyB0aW9nYXBhc3Mgc3dhbXBkWzExNDVdOiAuPC9zcGFuPjxvOnA+PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEiPkFwciAxMiAyMzoyMzoyNyB0aW9n
+YXBhc3Mgc3lzdGVtZFsxXTogcGhvc3Bob3ItcGlkLWNvbnRyb2wuc2VydmljZTogU3VjY2VlZGVk
+Ljwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9InMxIj5B
+cHIgMTIgMjM6MjM6MzIgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IHBob3NwaG9yLXBpZC1jb250cm9s
+LnNlcnZpY2U6IFNlcnZpY2UgUmVzdGFydFNlYz01cyBleHBpcmVkLCBzY2hlZHVsaW5nIHJlc3Rh
+cnQuPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEi
+PkFwciAxMiAyMzoyMzozMiB0aW9nYXBhc3Mgc3lzdGVtZFsxXTogcGhvc3Bob3ItcGlkLWNvbnRy
+b2wuc2VydmljZTogU2NoZWR1bGVkIHJlc3RhcnQgam9iLCByZXN0YXJ0IGNvdW50ZXIgaXMgYXQg
+Mi48L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJzMSI+
+QXByIDEyIDIzOjIzOjMzIHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBTdG9wcGVkIFBob3NwaG9yLVBp
+ZC1Db250cm9sIE1hcmdpbi1iYXNlZCBGYW4gQ29udHJvbCBEYWVtb24uPC9zcGFuPjxvOnA+PC9v
+OnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczEiPkFwciAxMiAyMzoyMzozMyB0
+aW9nYXBhc3Mgc3lzdGVtZFsxXTogU3RhcnRlZCBQaG9zcGhvci1QaWQtQ29udHJvbCBNYXJnaW4t
+YmFzZWQgRmFuIENvbnRyb2wgRGFlbW9uLjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJwMSI+PHNwYW4gY2xhc3M9InMxIj5BcHIgMTIgMjM6MjM6MzQgdGlvZ2FwYXNzIHN3YW1wZFsx
+MTgzXTogTm8gZmFuIHpvbmVzLCBhcHBsaWNhdGlvbiBwYXVzaW5nIHVudGlsIHJlYm9vdDwvc3Bh
+bj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8L286cD48
+L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+MS4wcHQiPkkgaGF2ZSBjb25maWd1cmF0aW9uIGRlZmluZWQgdGhyb3VnaCBlbnRpdHkgbWFuYWdl
+ci4gV2hhdCBpcyB0aGUgYmVzdCB3YXkgdG8gZGVidWcgdGhpcyBhbmQgbW9kaWZ5IGNvbmZpZ3Vy
+YXRpb25zLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
+IHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+UmVnYXJk
+czxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxl
+PSJmb250LXNpemU6MTEuMHB0Ij4tVmlqYXk8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4N
+CjwvYm9keT4NCjwvaHRtbD4NCg==
 
-> If yes, I would expect some description in README or some document;
-> If no, how do we avoid the issues described above?
-
-This isn't documented because we aren't consistent about it today, so
-documenting it would only really be documenting the statement on where
-we want to get to.  Once it's made consistent, we will absolutely
-document the rules.
-
-Any patches you want to send in to fix some, or all of these issues
-would be greatly appreciated and reviewed.
-
-> 
-> Thanks!
-> 
+--_000_303477D5BB354FC898FB9C59A188064Cfbcom_--
