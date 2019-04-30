@@ -2,66 +2,119 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DE29FFC4
-	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 20:31:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F25EFFCE
+	for <lists+openbmc@lfdr.de>; Tue, 30 Apr 2019 20:42:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44tqqw40qSzDqNT
-	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 04:31:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44tr3d4ZlPzDqSn
+	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 04:42:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::52f; helo=mail-pg1-x52f.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=0023ab73f8=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="l+KIcYY4"; 
- dkim-atps=neutral
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com
- [IPv6:2607:f8b0:4864:20::52f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="iCyaHqwC"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="DOE+lGGG"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44tqq93MrMzDq5n
- for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 04:31:16 +1000 (AEST)
-Received: by mail-pg1-x52f.google.com with SMTP id e6so7237187pgc.4
- for <openbmc@lists.ozlabs.org>; Tue, 30 Apr 2019 11:31:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ONVo/256UhPeXH7b6FAPVPIUoNbECPGmhMFY85gzlJs=;
- b=l+KIcYY4UPKDOjKTvQ7tM1Ros7hEIjLc8vri3CNRwKQLxGvFL9rw/o1zGBbXq/MLSB
- PfMEKeZxr6Bb5ni+A1PLhcvSYd57pE+sQl+0D9wg56w0gLHzGSlKDwfPb6FHMSPDs026
- gR1cQhMhJcauz1nTHG0BENbNR+l4Nwx+f9um7WHaGwCY2ZAmZeCP9O8zgwnKOys1On29
- cVRNYgc2BGIzv4uGChhlm/vOnXUxKdBRbXiY/KxwWbPZls6+lBuk+mwX7BlK9DC3y9cO
- B4IfgjtYxukA2yIqiGsBqD3OIBU5XNQ9II+6p0JNhZ19IBmZyGTjakvYwo9hluS7UUyV
- aTTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=ONVo/256UhPeXH7b6FAPVPIUoNbECPGmhMFY85gzlJs=;
- b=UY7FM7yN9JMaXiCIZeJjZQjwGGCgjMSN0ExEeN83LLt6ePT55tZjEqWlDGNaffhSQZ
- cwKoVZDm6ZYqFlEiwG9KG/5P3ALO9yz+WXmmjYPbLrJI8Yz2b18tD8pnapI58OISS+zL
- l4nStNN+OStTDoSgA3tTxszud9NBuCj3affuFUiFgOgHDmtDJbtXEycyzEQHhiISP+sS
- kHAqruQ/9rwUCgRVPCmyFYaUQD1dTaaqkXa1VVHNM8WFYFbvCfkswDZrWusKndek/FL5
- ZM52/cEKUiihd02jMB8Moyui2DupVga7/5teRNlwSVNrOFnZxDD5pQIkQLFhho7Ps4Lw
- +7ew==
-X-Gm-Message-State: APjAAAWJ0iGlgLqHcVAsb0PZE/ak98bmb22Ue6Yy+Q0OxWWLl6IbcyVc
- NS7NDE9kWZQQkxBHiqjcfIuZDoLl82Y+BXIKRT1JkA==
-X-Google-Smtp-Source: APXvYqwVN8wbx1ukpGqpoYLBLlKmKmPoWwgBQOpMHnZR+++aqrPf1p+iea7K2crsG9hQio2jo49Y8ZlrcDs8ut2ru5g=
-X-Received: by 2002:a62:864a:: with SMTP id x71mr10961374pfd.228.1556649072750; 
- Tue, 30 Apr 2019 11:31:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <303477D5-BB35-4FC8-98FB-9C59A188064C@fb.com>
-In-Reply-To: <303477D5-BB35-4FC8-98FB-9C59A188064C@fb.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 30 Apr 2019 11:31:01 -0700
-Message-ID: <CAO=notzKTpC-6zAGODatyDJL5p1Y3+mW5-LbxRh7qtg1hNmufQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44tr2p2jHgzDqPG
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 04:41:21 +1000 (AEST)
+Received: from pps.filterd (m0089730.ppops.net [127.0.0.1])
+ by m0089730.ppops.net (8.16.0.27/8.16.0.27) with SMTP id x3UIcgAb030563;
+ Tue, 30 Apr 2019 11:41:15 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=EvBiSTdLhkaXQ5WM0yucnmmMPvJL1Kb03T480HFw71I=;
+ b=iCyaHqwCT37R2yCb7d07wShyWoziuRLriYuKbhCyDZydNvimBxd/fC64nmKw6ewZ1k0t
+ QS5ue4Mc4QT1mdRUsST6/X6wUS5qjtBRSHCt48po+lAOQA0TM8HRUYbXwI7Y9JQ8ITdb
+ ZduZIHPjlaLnDg/4NRX9sBbLGyBd+Y0u6ck= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by m0089730.ppops.net with ESMTP id 2s6tqfg8vx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Tue, 30 Apr 2019 11:41:15 -0700
+Received: from prn-mbx06.TheFacebook.com (2620:10d:c081:6::20) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 30 Apr 2019 11:41:14 -0700
+Received: from prn-hub04.TheFacebook.com (2620:10d:c081:35::128) by
+ prn-mbx06.TheFacebook.com (2620:10d:c081:6::20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 30 Apr 2019 11:41:14 -0700
+Received: from NAM03-DM3-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Tue, 30 Apr 2019 11:41:14 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector1-fb-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EvBiSTdLhkaXQ5WM0yucnmmMPvJL1Kb03T480HFw71I=;
+ b=DOE+lGGGn+NKDIEM2rxF+MJCymbwOp+xE1qVLxlOc956lUBzCw7qaj4h9M/gCub3fDsUF2QI6u83bOpM2QK6cifkWzy+sCfbpv5D1I5JfooIylA09Howre32onaD3wgre5i1ZHpNLISuzl31gugjtuOwoBBFIgBOZPZ28RYF9OI=
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com (10.172.177.11) by
+ CY4PR15MB1943.namprd15.prod.outlook.com (10.172.180.151) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1835.13; Tue, 30 Apr 2019 18:41:13 +0000
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9]) by CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9%3]) with mapi id 15.20.1835.010; Tue, 30 Apr 2019
+ 18:41:13 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Patrick Venture <venture@google.com>, James Feist
+ <james.feist@linux.intel.com>
 Subject: Re: Phosphor pid control
-To: Vijay Khemka <vijaykhemka@fb.com>,
- James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Thread-Topic: Phosphor pid control
+Thread-Index: AQHU/4KY0BYzgrKEY0CYtw90dRuDdKZVBrOA//+Nf4A=
+Date: Tue, 30 Apr 2019 18:41:13 +0000
+Message-ID: <AF2ED931-7FB2-4AFE-AFCE-D0AEC3646A44@fb.com>
+References: <303477D5-BB35-4FC8-98FB-9C59A188064C@fb.com>
+ <CAO=notzKTpC-6zAGODatyDJL5p1Y3+mW5-LbxRh7qtg1hNmufQ@mail.gmail.com>
+In-Reply-To: <CAO=notzKTpC-6zAGODatyDJL5p1Y3+mW5-LbxRh7qtg1hNmufQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::c9a8]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: de34a8d3-840a-46c7-4d17-08d6cd9b6bf8
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);
+ SRVR:CY4PR15MB1943; 
+x-ms-traffictypediagnostic: CY4PR15MB1943:
+x-microsoft-antispam-prvs: <CY4PR15MB194374C52B81C205E2212836DD3A0@CY4PR15MB1943.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5516;
+x-forefront-prvs: 00235A1EEF
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(39860400002)(366004)(346002)(136003)(376002)(396003)(189003)(199004)(46003)(4326008)(110136005)(81156014)(81166006)(66946007)(71200400001)(186003)(71190400001)(68736007)(8676002)(478600001)(76116006)(66476007)(8936002)(91956017)(64756008)(6116002)(316002)(66556008)(73956011)(6246003)(99286004)(83716004)(66446008)(36756003)(3480700005)(76176011)(82746002)(6486002)(6436002)(86362001)(102836004)(229853002)(446003)(97736004)(305945005)(25786009)(2906002)(14444005)(53546011)(2616005)(6506007)(476003)(7736002)(6512007)(14454004)(256004)(5660300002)(53936002)(11346002)(7116003)(33656002)(486006);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR15MB1943;
+ H:CY4PR15MB1269.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: SGZivsi7vgOU/xWA2XILKsht7beI6fhan+C7zH5kggOrHGefmSeqoPjmq10z+zhKXF/aYRGEfokD91UVjBrQJvYlC0vwQXFgYu/l1uusUIWO+np6WiPe4Q7xWqU8LPGcEBl+FZ8v+DCrbeofW3ncfhmokmMcl/tmg/Gsa52Bs56JJZu73BuOKD0Om4yHTtfBSmXF664Ggf3bzEYfhER7qJLMl0YsyjTx7EZmdySUCj4KO46bm3BnJ0b7BmsfxPlzPobJA24BBSupuc594Ky0GJJkUfNaJyZbTs1UicCjrUxWABnEynWsGmG6b+QqyVGJh6BjoR9fE79mGp1RqvcCQ/ryAZq7qTj8ggwKRot0/uTWGQz03XQtYkP6i2+k1n3SDEsjjkwsl56rM4BoPxNZegfrcHpJQAGg0sE/BYkp3bU=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5549AFAFAC877C4084CA9F1F0C355824@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: de34a8d3-840a-46c7-4d17-08d6cd9b6bf8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2019 18:41:13.3502 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR15MB1943
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-04-30_09:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
+X-FB-Internal: Safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,58 +130,51 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-+James Feist to provide assistance.
-
-On Tue, Apr 30, 2019 at 11:30 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> I have enabled phosphor-pid-control in my image and I see following log
->
->
->
-> Apr 12 23:22:43 tiogapass systemd[1]: Started Phosphor-Pid-Control Margin-based Fan Control Daemon.
->
-> Apr 12 23:22:46 tiogapass swampd[1072]: terminate called after throwing an instance of 'std::runtime_error'
->
-> Apr 12 23:22:46 tiogapass swampd[1072]:   what():  ObjectMapper Call Failure
->
-> Apr 12 23:23:04 tiogapass systemd[1]: [[0;1;39m[[0;1;31m[[0;1;39mphosphor-pid-control.service: Main process exited, code=killed, status=6/ABRT[[0m
->
-> Apr 12 23:23:04 tiogapass systemd[1]: [[0;1;39m[[0;1;31m[[0;1;39mphosphor-pid-control.service: Failed with result 'signal'.[[0m
->
-> Apr 12 23:23:13 tiogapass systemd[1]: phosphor-pid-control.service: Service RestartSec=5s expired, scheduling restart.
->
-> Apr 12 23:23:13 tiogapass systemd[1]: phosphor-pid-control.service: Scheduled restart job, restart counter is at 1.
->
-> Apr 12 23:23:16 tiogapass systemd[1]: Stopped Phosphor-Pid-Control Margin-based Fan Control Daemon.
->
-> Apr 12 23:23:16 tiogapass systemd[1]: Started Phosphor-Pid-Control Margin-based Fan Control Daemon.
->
-> Apr 12 23:23:17 tiogapass swampd[1145]: No fan zones, application pausing until reboot
->
-> Apr 12 23:23:27 tiogapass swampd[1145]: New configuration detected, restarting
->
-> Apr 12 23:23:27 tiogapass swampd[1145]: .
->
-> Apr 12 23:23:27 tiogapass systemd[1]: phosphor-pid-control.service: Succeeded.
->
-> Apr 12 23:23:32 tiogapass systemd[1]: phosphor-pid-control.service: Service RestartSec=5s expired, scheduling restart.
->
-> Apr 12 23:23:32 tiogapass systemd[1]: phosphor-pid-control.service: Scheduled restart job, restart counter is at 2.
->
-> Apr 12 23:23:33 tiogapass systemd[1]: Stopped Phosphor-Pid-Control Margin-based Fan Control Daemon.
->
-> Apr 12 23:23:33 tiogapass systemd[1]: Started Phosphor-Pid-Control Margin-based Fan Control Daemon.
->
-> Apr 12 23:23:34 tiogapass swampd[1183]: No fan zones, application pausing until reboot
->
->
->
->
->
-> I have configuration defined through entity manager. What is the best way to debug this and modify configurations.
->
->
->
-> Regards
->
-> -Vijay
+SSBjaGVja2VkIGluIGNvZGUgYW5kIGxvb2tzIGxpa2UgL3Vzci9zaGFyZS9zd2FtcGQvY29uZmln
+Lmpzb24gZmlsZSBpcyBtaXNzaW5nLiBXaGVyZSBkbyB3ZSBnZXQgdGhpcyBmaWxlIGZyb20gb3Ig
+d2hlcmUgaXMgZXhhbXBsZSBjb25maWcuanNvbiBmaWxlPw0KDQrvu79PbiA0LzMwLzE5LCAxMToz
+MSBBTSwgIlBhdHJpY2sgVmVudHVyZSIgPHZlbnR1cmVAZ29vZ2xlLmNvbT4gd3JvdGU6DQoNCiAg
+ICArSmFtZXMgRmVpc3QgdG8gcHJvdmlkZSBhc3Npc3RhbmNlLg0KICAgIA0KICAgIE9uIFR1ZSwg
+QXByIDMwLCAyMDE5IGF0IDExOjMwIEFNIFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29t
+PiB3cm90ZToNCiAgICA+DQogICAgPiBJIGhhdmUgZW5hYmxlZCBwaG9zcGhvci1waWQtY29udHJv
+bCBpbiBteSBpbWFnZSBhbmQgSSBzZWUgZm9sbG93aW5nIGxvZw0KICAgID4NCiAgICA+DQogICAg
+Pg0KICAgID4gQXByIDEyIDIzOjIyOjQzIHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBTdGFydGVkIFBo
+b3NwaG9yLVBpZC1Db250cm9sIE1hcmdpbi1iYXNlZCBGYW4gQ29udHJvbCBEYWVtb24uDQogICAg
+Pg0KICAgID4gQXByIDEyIDIzOjIyOjQ2IHRpb2dhcGFzcyBzd2FtcGRbMTA3Ml06IHRlcm1pbmF0
+ZSBjYWxsZWQgYWZ0ZXIgdGhyb3dpbmcgYW4gaW5zdGFuY2Ugb2YgJ3N0ZDo6cnVudGltZV9lcnJv
+cicNCiAgICA+DQogICAgPiBBcHIgMTIgMjM6MjI6NDYgdGlvZ2FwYXNzIHN3YW1wZFsxMDcyXTog
+ICB3aGF0KCk6ICBPYmplY3RNYXBwZXIgQ2FsbCBGYWlsdXJlDQogICAgPg0KICAgID4gQXByIDEy
+IDIzOjIzOjA0IHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBbWzA7MTszOW1bWzA7MTszMW1bWzA7MTsz
+OW1waG9zcGhvci1waWQtY29udHJvbC5zZXJ2aWNlOiBNYWluIHByb2Nlc3MgZXhpdGVkLCBjb2Rl
+PWtpbGxlZCwgc3RhdHVzPTYvQUJSVFtbMG0NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6MjM6MDQg
+dGlvZ2FwYXNzIHN5c3RlbWRbMV06IFtbMDsxOzM5bVtbMDsxOzMxbVtbMDsxOzM5bXBob3NwaG9y
+LXBpZC1jb250cm9sLnNlcnZpY2U6IEZhaWxlZCB3aXRoIHJlc3VsdCAnc2lnbmFsJy5bWzBtDQog
+ICAgPg0KICAgID4gQXByIDEyIDIzOjIzOjEzIHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBwaG9zcGhv
+ci1waWQtY29udHJvbC5zZXJ2aWNlOiBTZXJ2aWNlIFJlc3RhcnRTZWM9NXMgZXhwaXJlZCwgc2No
+ZWR1bGluZyByZXN0YXJ0Lg0KICAgID4NCiAgICA+IEFwciAxMiAyMzoyMzoxMyB0aW9nYXBhc3Mg
+c3lzdGVtZFsxXTogcGhvc3Bob3ItcGlkLWNvbnRyb2wuc2VydmljZTogU2NoZWR1bGVkIHJlc3Rh
+cnQgam9iLCByZXN0YXJ0IGNvdW50ZXIgaXMgYXQgMS4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6
+MjM6MTYgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IFN0b3BwZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wg
+TWFyZ2luLWJhc2VkIEZhbiBDb250cm9sIERhZW1vbi4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6
+MjM6MTYgdGlvZ2FwYXNzIHN5c3RlbWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wg
+TWFyZ2luLWJhc2VkIEZhbiBDb250cm9sIERhZW1vbi4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6
+MjM6MTcgdGlvZ2FwYXNzIHN3YW1wZFsxMTQ1XTogTm8gZmFuIHpvbmVzLCBhcHBsaWNhdGlvbiBw
+YXVzaW5nIHVudGlsIHJlYm9vdA0KICAgID4NCiAgICA+IEFwciAxMiAyMzoyMzoyNyB0aW9nYXBh
+c3Mgc3dhbXBkWzExNDVdOiBOZXcgY29uZmlndXJhdGlvbiBkZXRlY3RlZCwgcmVzdGFydGluZw0K
+ICAgID4NCiAgICA+IEFwciAxMiAyMzoyMzoyNyB0aW9nYXBhc3Mgc3dhbXBkWzExNDVdOiAuDQog
+ICAgPg0KICAgID4gQXByIDEyIDIzOjIzOjI3IHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBwaG9zcGhv
+ci1waWQtY29udHJvbC5zZXJ2aWNlOiBTdWNjZWVkZWQuDQogICAgPg0KICAgID4gQXByIDEyIDIz
+OjIzOjMyIHRpb2dhcGFzcyBzeXN0ZW1kWzFdOiBwaG9zcGhvci1waWQtY29udHJvbC5zZXJ2aWNl
+OiBTZXJ2aWNlIFJlc3RhcnRTZWM9NXMgZXhwaXJlZCwgc2NoZWR1bGluZyByZXN0YXJ0Lg0KICAg
+ID4NCiAgICA+IEFwciAxMiAyMzoyMzozMiB0aW9nYXBhc3Mgc3lzdGVtZFsxXTogcGhvc3Bob3It
+cGlkLWNvbnRyb2wuc2VydmljZTogU2NoZWR1bGVkIHJlc3RhcnQgam9iLCByZXN0YXJ0IGNvdW50
+ZXIgaXMgYXQgMi4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6MjM6MzMgdGlvZ2FwYXNzIHN5c3Rl
+bWRbMV06IFN0b3BwZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJhc2VkIEZhbiBDb250
+cm9sIERhZW1vbi4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6MjM6MzMgdGlvZ2FwYXNzIHN5c3Rl
+bWRbMV06IFN0YXJ0ZWQgUGhvc3Bob3ItUGlkLUNvbnRyb2wgTWFyZ2luLWJhc2VkIEZhbiBDb250
+cm9sIERhZW1vbi4NCiAgICA+DQogICAgPiBBcHIgMTIgMjM6MjM6MzQgdGlvZ2FwYXNzIHN3YW1w
+ZFsxMTgzXTogTm8gZmFuIHpvbmVzLCBhcHBsaWNhdGlvbiBwYXVzaW5nIHVudGlsIHJlYm9vdA0K
+ICAgID4NCiAgICA+DQogICAgPg0KICAgID4NCiAgICA+DQogICAgPiBJIGhhdmUgY29uZmlndXJh
+dGlvbiBkZWZpbmVkIHRocm91Z2ggZW50aXR5IG1hbmFnZXIuIFdoYXQgaXMgdGhlIGJlc3Qgd2F5
+IHRvIGRlYnVnIHRoaXMgYW5kIG1vZGlmeSBjb25maWd1cmF0aW9ucy4NCiAgICA+DQogICAgPg0K
+ICAgID4NCiAgICA+IFJlZ2FyZHMNCiAgICA+DQogICAgPiAtVmlqYXkNCiAgICANCg0K
