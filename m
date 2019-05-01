@@ -1,55 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CF39105E7
+	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 09:39:34 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5DFA1059E
-	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 08:47:07 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44v8893K0szDqNn
-	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 16:47:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44v9Jh14rZzDqQc
+	for <lists+openbmc@lfdr.de>; Wed,  1 May 2019 17:39:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linuxfoundation.org
- (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (mailfrom)
+ smtp.mailfrom=raptorengineering.com (client-ip=23.155.224.45;
+ helo=mail.rptsys.com; envelope-from=tpearson@raptorengineering.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linuxfoundation.org
+ header.from=raptorengineering.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.b="R78rUUaI"; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ secure) header.d=raptorengineering.com header.i=@raptorengineering.com
+ header.b="boXSIRf9"; dkim-atps=neutral
+Received: from mail.rptsys.com (mail.rptsys.com [23.155.224.45])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44v85t5XrVzDqCw;
- Wed,  1 May 2019 16:45:06 +1000 (AEST)
-Received: from localhost (83-86-89-107.cable.dynamic.v4.ziggo.nl
- [83.86.89.107])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id BAD6920651;
- Wed,  1 May 2019 06:45:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1556693104;
- bh=zSQyJXYEzJbwz+ZrGQYkRZ+BmF0JOB9TUf4M8D0kTPk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=R78rUUaILBs4zPfIzHECy3LSHnmS8twK2vndMD6FgCnljFexsHGWNcM5HQforE769
- aoitIA8d6kWE11+5/Se19N9SpRiWEHn5hSFxXq93ohaCsnZ+OuGZpUc0ItXxXeWasJ
- +S0L1s/uBoC62Jq7g7b18xRDAc8ke8QCYqCElF1s=
-Date: Wed, 1 May 2019 08:45:02 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v2] misc: aspeed-lpc-ctrl: make parameter optional
-Message-ID: <20190501064501.GA20816@kroah.com>
-References: <20190116220154.1026171-1-vijaykhemka@fb.com>
- <1547787502.2061444.1637712576.1F1E21B4@webmail.messagingengine.com>
- <DCD8D2E5-DB18-427C-AA8F-18289E9AB0AB@fb.com>
- <CACPK8Xdgv1YVgeykf0grSpR3LXTGa45hoBwZVq+zWgR0anhmTg@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44v9Hn6XmgzDqN1
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 17:38:45 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.rptsys.com (Postfix) with ESMTP id B898DD22AC7
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 02:38:42 -0500 (CDT)
+Received: from mail.rptsys.com ([127.0.0.1])
+ by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10032)
+ with ESMTP id faGjpTvML10K for <openbmc@lists.ozlabs.org>;
+ Wed,  1 May 2019 02:38:42 -0500 (CDT)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.rptsys.com (Postfix) with ESMTP id 32405D22AD8
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 02:38:42 -0500 (CDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.rptsys.com 32405D22AD8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=raptorengineering.com; s=B8E824E6-0BE2-11E6-931D-288C65937AAD;
+ t=1556696322; bh=Fy/iLWLoUAjii3QTBx0xWJ+oqjDvqUz2YhjHmdZTCr8=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=boXSIRf9HuPvLSjCNI2vY+fisYpM1Nv7kjUgfectx44iBltwEC610XtiVdGjxHdUo
+ /zYmxnDgIwn3kYbxDYuC6ro1X60wfFG+9qR5l1BJoHj4DFXoRq/pbP/qCqnKYe2C8u
+ DW9onsxksP4mX83h/c4o5Ue/O1YWM96KcwggELqo=
+X-Virus-Scanned: amavisd-new at rptsys.com
+Received: from mail.rptsys.com ([127.0.0.1])
+ by localhost (vali.starlink.edu [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id 2IaHrLDWzezb for <openbmc@lists.ozlabs.org>;
+ Wed,  1 May 2019 02:38:42 -0500 (CDT)
+Received: from vali.starlink.edu (vali.starlink.edu [192.168.3.21])
+ by mail.rptsys.com (Postfix) with ESMTP id 13EF6D22AC7
+ for <openbmc@lists.ozlabs.org>; Wed,  1 May 2019 02:38:42 -0500 (CDT)
+Date: Wed, 1 May 2019 02:38:41 -0500 (CDT)
+From: Timothy Pearson <tpearson@raptorengineering.com>
+To: openbmc@lists.ozlabs.org
+Message-ID: <757768607.3289093.1556696321378.JavaMail.zimbra@raptorengineeringinc.com>
+Subject: CLA concerns
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8Xdgv1YVgeykf0grSpR3LXTGa45hoBwZVq+zWgR0anhmTg@mail.gmail.com>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 8.5.0_GA_3042 (ZimbraWebClient - GC73 (Linux)/8.5.0_GA_3042)
+Thread-Index: 30ss3KIJS4nzrN7gDvWGTqMdn2Mg+A==
+Thread-Topic: CLA concerns
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,29 +71,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Arnd Bergmann <arnd@arndb.de>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>,
- "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Vijay Khemka <vijaykhemka@fb.com>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, May 01, 2019 at 05:55:07AM +0000, Joel Stanley wrote:
-> On Fri, 18 Jan 2019 at 20:12, Vijay Khemka <vijaykhemka@fb.com> wrote:
-> >
-> > Hi Andrew,
-> > Thanks for this review, I will have a follow up patch for this return values.
-> 
-> Did you send a follow up patch to fix the return values?
-> 
-> Greg, is there any reason why you did not merge this one? 5.2 will
-> have device trees that depend on this patch's behavior.
+All,
 
-No idea, if it needs to be applied, please resend.
+While we would like to upstream the Talos II / Blackbird BMC patches to the OpenBMC project, our legal folks will not approve the CLA.  The main concern is the patent section, since our mainboards do contain patented technology that is not part of OpenBMC, but that OpenBMC may interface with.  We are not trying to upstream any code that would result in patent action, but are very concerned that the CLA would end up granting a license for the patented technology that exists outside of OpenBMC, merely because the OpenBMC codebase is able to interface with that external technology.
 
-thanks,
+The specific clause in question is:
+"...or by combination of Your Contribution(s) with the Work to which such Contribution(s) were submitted."
 
-greg k-h
+This is ambiguous enough that legal is concerned an external entity wishing to clone the patented technology from our mainboards without a license would simply be able to merge our contributions with their own de novo code duplicating parts of the patented technology, then claim a license for the patents was automatically granted by the CLA.  As such, we are currently blocked from upstreaming code to OpenBMC, despite the fact that our patches are freely available under GPL and MIT licenses, and that those patches are not covered by any of our patents (past or future).
+
+Is there a way to clean up the patent section of the CLA to make it clearer that only the patches submitted are released from patent infringement claims, and that any third party modifications to those patches (or to the codebase created in part by those patches) must still be cleared by their respective authors / maintainers not to infringe on the patent rights of other contributors to the codebase?
+
+Thank you!
+
+--
+Timothy Pearson
+Raptor Engineering, LLC
+https://www.raptorengineering.com
++1 (415) 727-8645
