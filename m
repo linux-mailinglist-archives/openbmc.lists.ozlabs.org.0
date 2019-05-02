@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D3BF111D8
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 05:25:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44vgdP6mgszDqS0
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 13:25:45 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 95839111D9
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 05:26:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44vgf86gkgzDqPM
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 13:26:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="W5HwPouS"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Lpn4k3ZO"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="jw4E2UKA"; dkim-atps=neutral
+ header.b="IneFxlY/"; dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44vgcQ1BXBzDqNt
- for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 13:24:53 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44vgdG1crjzDqPn
+ for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 13:25:38 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id B7C96222F3;
- Wed,  1 May 2019 23:24:50 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id E889E222F3;
+ Wed,  1 May 2019 23:25:35 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 01 May 2019 23:24:50 -0400
+ by compute4.internal (MEProxy); Wed, 01 May 2019 23:25:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=6BaI375c92oUAAupXp9bZst8OQ7efGw
- nv0hCWfZR9SE=; b=W5HwPouSTji26hmukklW6IudTZr3NrxyMnYqH3a+5MhYF7k
- gOg17Iz0I/zZeXJP6afWQdlA5/5yTJYI1pWJJFfjO2Bu9iVaIGn+5A2Jz9MI+5GF
- 7lL/zMgX3e5d20AyiIAHSJimHiczSE1DtHP/4KSZsSzW3IKU5FPwiRRgZz47hw6Q
- E1NVyIqlYqtDSbHILpYIWqdRyfRaHYCuOwhMEZokj3GpgWVQ2eAnLZ5gwz0w5BhE
- vRW6mdkZU20zAol+QwwD7zQSYHijxBMygUtTJOdDmtQC7Mr9pdRbFbnHeOFsWezP
- dndnsqNowWcyf1KxcVHT/iafQusMbmF0jD6Xv2A==
+ :subject:content-type; s=fm2; bh=Pj8rgjQzBI6Et/cgI8AKC1xB2nrM6Rr
+ DoSoqWFlBdd0=; b=Lpn4k3ZOEHW+cB4+BNyb9Ze76KYQbRu7vsUJi4WKXUUq2KY
+ STxkcnCGXZ6w59rVTOaHnaZ2JKj1i/LoPWwtpRRoK8m6KQFsfdTdnlCwpjsxFZhB
+ Q1va2o84lcoIOfG/YAfmIpBPfjnyj0fxWr7+vIEl0a0H1mP94cDyxIjpL3RhPYgC
+ ECu4nUvrnMyEL4nA+YvhMYW+5egEvRL4xmvU+ymbCsUDHYGDGIXipP6qAbH4hQoZ
+ pZSB44y8wH/qPBR6GCmgVI/fE0KRnINfHhNyqO5ClkeKuOHQWjse4eY+84zrbP2I
+ QKPhXbfIHcxI0rNeZKAnTI0VE/2Nf/rlj0p367Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=6BaI37
- 5c92oUAAupXp9bZst8OQ7efGwnv0hCWfZR9SE=; b=jw4E2UKAUh5ONbG7264jc4
- +mfmLivopxe1lJVu0xhbU3AtW56gaNh1gNTUiY2L5HqnJFX2Ii7fsZcQ8keyl0J1
- 5g3dlgkvizJZ2scv+BQar3rDCvthn/7HmaCL6z667Rx4HaEyUX4CU6gG1n0hGdPx
- YPpv7jjLBCirIvvhAWe09tGbpKlhdz10vhgYrVjrv0RgS6+3GTBZ86esA4VdJqkl
- KF/2Z54pLn6zbAa/1NMaNpz+fdCO5prnvJui1sMoMYK2v8avHHwYbKEDOz9AhJeN
- ETjQe9ZjRqcsHEj6TvYo2YMZp/GYOv1TQadz50e1+kvbz5fSxOPmmNHUiwFTByFg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Pj8rgj
+ QzBI6Et/cgI8AKC1xB2nrM6RrDoSoqWFlBdd0=; b=IneFxlY/RrcWSjG4gfZCDt
+ VFhK2eBuLsazftXtKhj04b1Zs51adkDTSB5DDtO9c8+j1HgFRX2y1Km0KxWRfbCA
+ lkRJSlwElrRfT9UF8IZ+kGLlmfIVHgvBbbbgLBDektlQ0cIOWbfUZS8j8qNcsleN
+ lrLEV8Ru7fPbEopMj/6wH47/Vwz/QZm6n0p4k4Rei7k2WVN4LcwGVZEkUI2OqfCF
+ jRMjBo8E9So16PGdTZ46tXAH544rB9pSB77SE5jXDcCwmTfuvW902JBhh7ZVQ/wI
+ zAdJLVF1ux1mxdL5KVbim7KLPddB94Kg+A4XjiMRTzijQKD8Hjv/WvLSwXDJtfXg
  ==
-X-ME-Sender: <xms:AWPKXJPQMKpIZaKF-lzDML1QRtJ1ul5hfcilSDXz9wk88xrh8ebYeA>
+X-ME-Sender: <xms:L2PKXK8nA7qg_ufDMkYUFgfBG3AgqWZ6R-xr-kP9QkpecqLlapTOog>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrieekgdeitdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
  hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:AWPKXBsp_UYq1QnMS3FLeeA-nW487J2MLIa38x452hLC6lEKDhftpg>
- <xmx:AWPKXGURoNeKvkZCldeSD2XR1i8-wqpxR2ojofzKHgrOid8XyNpQEw>
- <xmx:AWPKXAQN-EaK6J0V0I1Rq3Qmpk-GdoWYXw9-AFkZOgHwD4vwUlKyzw>
- <xmx:AmPKXNkh6DQBoLZxxoVgUMIu_Ux5AQ8GDBwlh3Ou1zqm0XTGjWErVg>
+ ufhiiigvpedu
+X-ME-Proxy: <xmx:L2PKXJeENrR7CApJSm9QuNwAmD-q18zh8wGSMpMJA3edDHld4eTBxQ>
+ <xmx:L2PKXEkVCjrRTmLDVs4kaKEzvMhw4UbL0eP9XhVLwwaeKy7imZ2vfQ>
+ <xmx:L2PKXOiamIdG4WfdgBjoCmkpRup3fM4OjXUfZ_wnGnax3s2RmArr5g>
+ <xmx:L2PKXMJTSi8nq0loWEVKrCVpcu0W1Fbf4I-D_VGt1oIifcCpFSomnw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 4828C7C6D9; Wed,  1 May 2019 23:24:49 -0400 (EDT)
+ id 9D7727C6D9; Wed,  1 May 2019 23:25:35 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
 Mime-Version: 1.0
-Message-Id: <35f3df7a-153a-4ae5-acfc-033d36191b51@www.fastmail.com>
-In-Reply-To: <20190501213750.28751-5-jae.hyun.yoo@linux.intel.com>
+Message-Id: <9c8610ed-4505-4aef-a461-682d1dd06094@www.fastmail.com>
+In-Reply-To: <20190501213750.28751-4-jae.hyun.yoo@linux.intel.com>
 References: <20190501213750.28751-1-jae.hyun.yoo@linux.intel.com>
- <20190501213750.28751-5-jae.hyun.yoo@linux.intel.com>
-Date: Wed, 01 May 2019 23:24:48 -0400
+ <20190501213750.28751-4-jae.hyun.yoo@linux.intel.com>
+Date: Wed, 01 May 2019 23:25:35 -0400
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Jae Hyun Yoo" <jae.hyun.yoo@linux.intel.com>,
  "Eddie James" <eajames@linux.ibm.com>, "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_dev-5.0_4/4]_media:_aspeed:_refine_interrupt_han?=
- =?UTF-8?Q?dling_logic?=
+Subject: =?UTF-8?Q?Re:_[PATCH_v2_dev-5.0_3/4]_media:_aspeed:_remove_checking_of_V?=
+ =?UTF-8?Q?E=5FINTERRUPT=5FCAPTURE=5FCOMPLETE?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,62 +97,69 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Thu, 2 May 2019, at 07:12, Jae Hyun Yoo wrote:
-> There are cases that interrupt bits are cleared by a 500ms delayed
-> work which causes unnecessary irq calls. Also, the current
-> interrupt handler returns IRQ_HANDLED always but it should return
-> IRQ_NONE if there is any unhandled interrupt. So this commit
-> refines the interrupt handling logic to fix these issues.
+> VE_INTERRUPT_CAPTURE_COMPLETE and VE_INTERRUPT_COMP_COMPLETE are
+> not set at the same time but the current interrupt handling
+> mechanism of this driver doesn't clear the interrupt flag until
+> both two are set, and this behavior causes unnecessary interrupt
+> handler calls. In fact, this driver provides JPEG format only so
+> taking care of the VE_INTERRUPT_COMP_COMPLETE is enough for getting
+> compressed image frame so this commit gets rid of the
+> VE_INTERRUPT_CAPTURE_COMPLETE checking logic to simplify the logic.
+> Handling of VE_INTERRUPT_CAPTURE_COMPLETE could be added back later
+> when it's actually needed.
 > 
 > Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> Reviewed-by: Eddie James <eajames@linux.ibm.com>
 
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
 
 > ---
 > Changes since v1:
->  * Moved bits clearing point to aspeed_video_off().
->  * Made irq handler return IRQ_NONE when there is any remaining bit.
+>  None
 > 
->  drivers/media/platform/aspeed-video.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+>  drivers/media/platform/aspeed-video.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
 > 
 > diff --git a/drivers/media/platform/aspeed-video.c 
 > b/drivers/media/platform/aspeed-video.c
-> index 77c209a472ca..1bb863b32836 100644
+> index 429f676f9dea..77c209a472ca 100644
 > --- a/drivers/media/platform/aspeed-video.c
 > +++ b/drivers/media/platform/aspeed-video.c
-> @@ -488,6 +488,7 @@ static void aspeed_video_off(struct aspeed_video 
-> *video)
+> @@ -463,8 +463,7 @@ static int aspeed_video_start_frame(struct 
+> aspeed_video *video)
+>  	aspeed_video_write(video, VE_COMP_ADDR, addr);
 >  
->  	/* Disable interrupts */
->  	aspeed_video_write(video, VE_INTERRUPT_CTRL, 0);
-> +	aspeed_video_write(video, VE_INTERRUPT_STATUS, 0xffffffff);
+>  	aspeed_video_update(video, VE_INTERRUPT_CTRL, 0,
+> -			    VE_INTERRUPT_COMP_COMPLETE |
+> -			    VE_INTERRUPT_CAPTURE_COMPLETE);
+> +			    VE_INTERRUPT_COMP_COMPLETE);
 >  
->  	/* Turn off the relevant clocks */
->  	clk_disable(video->vclk);
-> @@ -556,7 +557,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->  					    VE_INTERRUPT_MODE_DETECT, 0);
->  			aspeed_video_write(video, VE_INTERRUPT_STATUS,
->  					   VE_INTERRUPT_MODE_DETECT);
-> -
-> +			sts &= ~VE_INTERRUPT_MODE_DETECT;
->  			set_bit(VIDEO_MODE_DETECT_DONE, &video->flags);
->  			wake_up_interruptible_all(&video->wait);
->  		} else {
-> @@ -601,12 +602,12 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->  				    VE_INTERRUPT_COMP_COMPLETE, 0);
->  		aspeed_video_write(video, VE_INTERRUPT_STATUS,
->  				   VE_INTERRUPT_COMP_COMPLETE);
-> -
-> +		sts &= ~VE_INTERRUPT_COMP_COMPLETE;
->  		if (test_bit(VIDEO_STREAMING, &video->flags) && buf)
->  			aspeed_video_start_frame(video);
+>  	aspeed_video_update(video, VE_SEQ_CTRL, 0,
+>  			    VE_SEQ_CTRL_TRIG_CAPTURE | VE_SEQ_CTRL_TRIG_COMP);
+> @@ -570,8 +569,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>  		}
 >  	}
 >  
-> -	return IRQ_HANDLED;
-> +	return sts ? IRQ_NONE : IRQ_HANDLED;
->  }
+> -	if ((sts & VE_INTERRUPT_COMP_COMPLETE) &&
+> -	    (sts & VE_INTERRUPT_CAPTURE_COMPLETE)) {
+> +	if (sts & VE_INTERRUPT_COMP_COMPLETE) {
+>  		struct aspeed_video_buffer *buf;
+>  		u32 frame_size = aspeed_video_read(video,
+>  						   VE_OFFSET_COMP_STREAM);
+> @@ -600,11 +598,9 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>  				    VE_SEQ_CTRL_FORCE_IDLE |
+>  				    VE_SEQ_CTRL_TRIG_COMP, 0);
+>  		aspeed_video_update(video, VE_INTERRUPT_CTRL,
+> -				    VE_INTERRUPT_COMP_COMPLETE |
+> -				    VE_INTERRUPT_CAPTURE_COMPLETE, 0);
+> +				    VE_INTERRUPT_COMP_COMPLETE, 0);
+>  		aspeed_video_write(video, VE_INTERRUPT_STATUS,
+> -				   VE_INTERRUPT_COMP_COMPLETE |
+> -				   VE_INTERRUPT_CAPTURE_COMPLETE);
+> +				   VE_INTERRUPT_COMP_COMPLETE);
 >  
->  static void aspeed_video_check_and_set_polarity(struct aspeed_video *video)
+>  		if (test_bit(VIDEO_STREAMING, &video->flags) && buf)
+>  			aspeed_video_start_frame(video);
 > -- 
 > 2.21.0
 > 
