@@ -1,69 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B21D111022
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 01:16:52 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44vZ6B20kJzDqPW
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 09:16:50 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC6111193
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 04:37:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44vfZ535NXzDqKV
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 12:37:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=018bedac0=will.liang@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="H2c1gnW0"; 
- dkim-atps=neutral
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [IPv6:2607:f8b0:4864:20::62d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44vZ5N23SSzDqNT
- for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 09:16:05 +1000 (AEST)
-Received: by mail-pl1-x62d.google.com with SMTP id y3so127007plp.0
- for <openbmc@lists.ozlabs.org>; Wed, 01 May 2019 16:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GE56KmCUZJAXIh5TjF4Ub3Fjin4baG5+oZlYLu8kGv0=;
- b=H2c1gnW0TT8/nZOttldheUOV5dsTcWNeKdAuB7AS8AiWxztc8MJ7ZsN1a/BlSvBy9q
- ypyHFEYCe2TKaNIGKBmEHGk9MkcUNSG+ZLwLTBvVR+Ht4RDAdJyNWm2Y5Zi/q7QERX9f
- mywXjb8fPiSlX+v7YeI5wLX27TepdF2tp9Tt1VwUUf8HV0BeaP2u9MP3vokx87zZFSxg
- 59jYbkIWV1iEgLKQBuWpkq1XMnmpAFgewi7CfrayLwA1vq8QBDe9A+oxQsEPtzipjmhw
- qeSScZ+EnQSN+fDR0r+zb/1aq8zDcrncoV064Nw+rCeVIMstqETJ7M7U7QPnE4dLv8ll
- 4m7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GE56KmCUZJAXIh5TjF4Ub3Fjin4baG5+oZlYLu8kGv0=;
- b=JyqsjKLf8oQMQVC8jbw/xai5ee0M5jVu8SK2axG8CzQyabyARtBA8ag8vM0phSx9iq
- 1huLOsKy374tCSUBgvFDMaCJJVlmB/FWoS8mrnJXBTgKJQ5OWq8fFYiTNBXw422pkvdw
- POK/Z/SjRFucMD1alYv0pUem23ZYEpBwBSzk8KaZn4Boeo/5EfpsE9JLEdZESMiJmwy6
- SljSKO35tDI42EQXm7DhDzgGhwXzSXDm4twGDwnGyWaw81M9Jvf06CdImfjPzzqXuoLm
- nTiJR6HpCRAo+A+rG8qK7TyIVx52BFr5dOkszWUW91Uy/zR4Em+IQXgsrrWT8AWTVcw/
- QLug==
-X-Gm-Message-State: APjAAAXU/Zi/tl1Qjwx3N3RHZjk2a6qWp+kncm44UFNJcb/sqdmGMjgU
- MfJc3lXnPgLvwP8GhdX8DQuClnSVDXOiBH7vDOM4NcV/oo8=
-X-Google-Smtp-Source: APXvYqy31SmHM1hMyOhYdDeZOp2RXj+PhaMxDl/kVlurRgbdtz5aMI0a5g6wY9Akz0CGeV2ptgyo0KsuvO9LyWptMks=
-X-Received: by 2002:a17:902:e183:: with SMTP id
- cd3mr248299plb.233.1556752563521; 
- Wed, 01 May 2019 16:16:03 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 44vfYG3jCrzDqNt
+ for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 12:37:01 +1000 (AEST)
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx01.quantatw.com with ESMTP; 02 May 2019 10:36:58 +0800
+Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 2 May 2019
+ 10:36:57 +0800
+Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
+ ([192.168.1.8]) with mapi id 15.01.1713.004; Thu, 2 May 2019 10:36:57 +0800
+From: =?big5?B?V2lsbCBMaWFuZyAoseelw7liKQ==?= <Will.Liang@quantatw.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: A question about phosphor-sel-logger
+Thread-Topic: A question about phosphor-sel-logger
+Thread-Index: AdUAjyy781fIgI1HTSKO9wlhvkw5CQ==
+Date: Thu, 2 May 2019 02:36:57 +0000
+Message-ID: <f68b269b1a854bfabfb021c1ae1955cc@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24582.006
+x-tm-as-result: No--7.668300-0.000000-31
+x-tm-as-matchedid: 140026-701625-704425-700685-700752-700153-700767-106470-7
+ 02507-704980-139504-700264-702609-707321-700016-105700-701594-148004-148133
+ -10019-41000-42000-42003-63
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <96A52DC2-7B18-4F69-B8E8-3B489BDA84C6@fb.com>
- <1c5566ba-696e-42eb-c193-22eaca33a1db@intel.com>
- <CAO=notzQY9qm2phh6AYMuU-tZaKaqjDBq3WOei7z3R+1204u=A@mail.gmail.com>
-In-Reply-To: <CAO=notzQY9qm2phh6AYMuU-tZaKaqjDBq3WOei7z3R+1204u=A@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 1 May 2019 16:15:52 -0700
-Message-ID: <CAO=notzyNZTj-Uc8FqJyKOKx5XMStp64fLY1HdDTmWxArW7OUg@mail.gmail.com>
-Subject: Re: pid control configuration
-To: Ed Tanous <ed.tanous@intel.com>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,114 +63,12 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, May 1, 2019 at 4:10 PM Patrick Venture <venture@google.com> wrote:
->
-> On Wed, May 1, 2019 at 4:05 PM Ed Tanous <ed.tanous@intel.com> wrote:
-> >
-> > On 5/1/19 3:53 PM, Vijay Khemka wrote:
-> > > Hi Patrick/James,
-> > >
-> > > I am not understanding how to get these following data for configuration
-> > > file for pid. I only had p(proportional), i(integral) and
-> > > d(differential) values from my thermal team. But unable to maop these to
-> > > required parameter.
-> > >
-> > >
-> > >
-> > >     "required": [
-> > >
-> > >         "Class",
-> > This will be PIDController in the case of PID, and is part of how entity
-> > manager divides up the config information to the various components.
-> > >
-> > >         "FFGainCoefficient",
-> > >
-> > >         "FFOffCoefficient",
-> > In your case, both of these FF variables would be 0.0
-> > >
-> > >         "ICoefficient",
-> > Would be the I value from your thermal team.
-> >
-> > >
-> > >         "ILimitMax",
-> > >
-> > >         "ILimitMin",
-> >
-> > These sets the limits to the integral coefficient to prevent integral
-> > runaway in the case where the controller cannot ever reach the target
-> > temperature.  If you don't want to use these at all (which I wouldn't
-> > recommend from a control perspective) you can set them to unreasonably
-> > large and unreasonably small values, and they will have no effect.
-> >
-> > >
-> > >         "Inputs",
-> >
-> > The sensors you want to control, by name.
-> >
-> > >
-> > >         "Name",
-> > This is the "pretty" name for this controller, and can be whatever you
-> > want.  The controller will show up in DBus and Redfish under this name.
-> >
-> > >
-> > >         "OutLimitMax",
-> > >
-> > >         "OutLimitMin",
-> > >
-> >
-> > I believe both of these are in % of fan speed these days, so setting
-> > them to 100 and 0% respectively will probably give you the behavior you
-> > want if you don't have other data from your thermal team around limits.
-> >
-> > >         "PCoefficient",
-> > Your P value from your thermal team.
-> >
-> > >
-> > >         "SlewNeg",
-> > >
-> > >         "SlewPos",
-> >
-> > These two reflect the D values from your thermal team.  If they only
-> > gave you one D value, there are two things here.  1. It could use the
-> > same coefficients for both positive and negative derivative values.  Or
-> > 2. It only applies to Positive slew rates, and negative is zero.  You
-> > would need to talk to your team to understand what they intended.
-> >
-> > >
-> > >         "Type",
-> > The Entity manager type, which I believe it PIDController, but I don't
-> > have the examples in front of me.
-> >
-> > >
-> > >         "Zones"
-> > Fan zones in which this controller applies to.  For Tioga pass I would
-> > expect you to only have a single fan zone for the whole node.
-> >
-> > >
-> > >     ]
-> > >
-> > >
-> > >
-> > >
-> > >
-> > > Also we have a requirement of stepwise and pid together for some
-> > > sensors, is it possible to configure same sensor for both types.Yes, you can declare multiple controllers.  Whichever controller
-> > requests the high fan speed will be the one that's used for the PWM output.
->
-> Thanks Ed for those great answers.
->
->
-> I'll provide the units answer:
->
-> If the PID is a margin controller and it's set-point is in centigrade
-> and output in RPM:
-> pCoefficient is your p value in units: RPM/C and integral coefficient RPM/Csec
->
-> If the PID is a fan controller whose output is pwm:
-> pCoefficient is %/RPM and iCoefficient is %/RPM sec
-
-The non-step PID operates at a 10x frequency fans : sensors.  so it
-tries to control the fans 10x per second, and checks the status of the
-thermal sensors involved once every second.  that's hard-coded
-presently in the behavior of the code.  I think the step-wise operates
-similarly but I would have to check.
+SGksDQoNCk91ciBCTUMgaXMgdXNpbmcgcGFja2FnZSAicGhvc3Bob3Itc2VsLWxvZ2dlciIgdG8g
+c3VwcG9ydCBJUE1JIFNFTC4gaXQgc2F2ZWQgdGhlIGV2ZW50IGRhdGEgaW4gdGhlIGpvdXJuYWwg
+YW5kIHRoZSBpZCBpcyAxLTY1NTM0LiANCkl0IG1lYW5zIGl0IGNhbiBzYXZlIDY1NTM0IHJlY29y
+ZHMuIEFjdHVhbGx5LCB3ZSBmb3VuZCB0aGUgZmlsZSBzaXplIG9mIHNpbmdsZSBqb3VybmFsIGZp
+bGUgaXMgYXJvdW5kIDhNQih0aGUgZGVmYXVsdCBvZiBqb3VybmFsIGZpbGUgaXMgNjRNQiwgaXQg
+d2lsbCBiZSBzZXBhcmF0ZWQgYnkgOCBmaWxlcykuDQpXZSBjYW5ub3Qgc2hvdyBhbGwgU0VMcyg2
+NTUzNCByZWNvcmRzKSBpbiBJUE1JLiBpdCBtaWdodCBiZSBhIGJ1ZyBoZXJlIGlmIHdlIGRvbid0
+IGxpbWl0IHRoZSBtYXhpbXVtLg0KDQpJcyBpdCBuZWNlc3NhcnkgdG8gbGltaXQgdGhlIG51bWJl
+ciBvZiBTRUxzIHRvIHNtYWxsZXI/DQoNCkJScywNCldpbGwNCg==
