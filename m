@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 753F4111F4
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 05:49:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44vh8G0KWwzDqSk
-	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 13:49:02 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E64111F6
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 05:54:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44vhGj1yrwzDqQC
+	for <lists+openbmc@lfdr.de>; Thu,  2 May 2019 13:54:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,76 +16,74 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SdjSV+z0"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="doh/LxEm"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="PU3vxKkL"; dkim-atps=neutral
+ header.b="d5PfAPIm"; dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44vh7R5cN6zDqPG
- for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 13:48:19 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44vhFv3NKWzDqPG
+ for <openbmc@lists.ozlabs.org>; Thu,  2 May 2019 13:53:55 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 0209922F0F;
- Wed,  1 May 2019 23:48:17 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id EE09B231CF;
+ Wed,  1 May 2019 23:53:52 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 01 May 2019 23:48:17 -0400
+ by compute4.internal (MEProxy); Wed, 01 May 2019 23:53:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=cxd2Q
- rruPhfmDzND+CLK3gdJGUuwhbgx98VTWyzMCTw=; b=SdjSV+z0anR6lzV/0MW1v
- OG3Gqh2s8pLFd+Df2L8cXKQVHcrqSuiRBVOxPyHQqpalR6TOuovMtMuc9eAB7yy5
- HUW+5xfUqFbplk8CQfeSuOWH17ka7M6bIAW/xfkJKY6+WeDaQ3TWs0eKsJvZW4oo
- wUDIMp2Y9h8XCAvXbFzP79qnUlMz4OcOP0k9ZH8w6xV6OmfEEYS7n1OedDvIjOzz
- Ehix7bLK9bvpDMBSMHCkUg0JxPbg5afotd3SaxDPDlb9cxKQRerk3af/6aAIvWC+
- 4KT6j4YbWm4MT0GIplNJsGV9zamJAX/ek8+kgL0pd1fSypMQjK0whkZPrB0Af20T
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=Rg3HD
+ FWzJp2sb+vgfP1XFpLhSx1yFSABunpbD0ImuGc=; b=doh/LxEm/6NQsZrEf2upw
+ JlTAojK1W/mPdPhK/ETuVg/XS6Ssh4Aol6+jyIc7jaKUuKfeNFNQQ7Ln6r8N5q0c
+ RFn5xi9fYW403pkrXhZyEvCUKDWuLG05tQLBcyFXHCIClxdwROENUi9fnKGdAXd6
+ deWC95qhuGoE1s9RPXTO4e1qTDSnlMuxm1Fo7Eqah1duS4modK848oMmrfEpJnSS
+ hoI9078kOKl6H7mzKNNEtDKskGCScj1ogaQwDM8DHKigO6BEXTGc2/clWLunirYl
+ sVbZMKj/pwFsiSoUepGV9lI7QwcPrrUaaFCEXTqIG/Ncr6q2r5s8IkymKAK/5Ql7
  A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=cxd2QrruPhfmDzND+CLK3gdJGUuwhbgx98VTWyzMC
- Tw=; b=PU3vxKkLNJLU5EiTr/wGkw1hJj8xbx8ehielUjXmVgAH21Hg3OD/nbtRl
- LP3q2OaN9uHSHZ3czhLy/FwK8zfqhuGXz9x2xhgq8Fz3umWzJGz+AIpqWTMe+RoM
- GsBVuohqczj2+VFN9QpBFAb+JDRu161y7x42jJW8mHoNGT33hbzVRuCmH/vwD2AM
- IWy6R1H6sV5NffbPAJlZwfFiHbFSXHI2mNjKTikaBSqY24ueO6vSSspwxVEZ9Xc0
- Mvz9Ga1WG/muQNluqTXodCTxDT91KziaxHnDCFN/hGHlLCV2QS0h/Wu6vh0j6mnh
- e3/UPhJ8MsJm2I2r/3X3PiFJSLjcg==
-X-ME-Sender: <xms:gGjKXBJgo_U9xFcYcgDe98FL9lL3V5Zqn47lHkDjBB9Md29_h3q83A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrieekgdeihecutefuodetggdotefrodftvf
+ :x-sasl-enc; s=fm2; bh=Rg3HDFWzJp2sb+vgfP1XFpLhSx1yFSABunpbD0Imu
+ Gc=; b=d5PfAPIm1FtMnKdgRwj7N5M9rObxsySN8JXGfHIwLU/UVuLZkEZCzc/Ia
+ /rA2jpJi/kCeAaMQbAmkUODXtS3c47tCZBHog3npJVkk6Tz0A5pmA51peXkkFkLg
+ idr67rehe/9AlHVocH3PHel/0J2x+GmXcIDDIk17XGd/88GFCx265vC5RI+/WJv+
+ 1OvSEHf5MmyvLjbJF9Bpj5L5JFCLkwQhtWgbUrTBjepMzAdV6CviJrpkW8iHsG2L
+ uv+7YjH7yCheC+c7SF0RZuZO6/BQF4J3LRo3DuTFyl7B+RgV8o9sQrVBRkOL+ZP4
+ reweuWfJSOaTbBHSFfKzZXeg5ImVA==
+X-ME-Sender: <xms:z2nKXOCS76ovqPNtEWNX9uiEk1kAzlw8BvjRAGavhRlxPnKRrD1zhQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrieekgdeiiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculddugedmnecujfgurhepofgfggfkjghffffhvffutgfgsehtqhertder
- reejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrg
- hjrdhiugdrrghuqeenucffohhmrghinhepohhpvghnsghmtgdqphhrohhjvggtthdrgiih
- iidpshhouhhrtggvfhhorhhgvgdrnhgvthdpghhithhhuhgsrdgtohhmnecurfgrrhgrmh
- epmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfu
- ihiivgeptd
-X-ME-Proxy: <xmx:gGjKXBun822ybEQj1YCXlLuiFtGTa6tfkYQr9jjpdFm2hj6_eLOCgw>
- <xmx:gGjKXG3opHAtLK-XtI5JWzZTlIGK7_V3K3oyqjOtd9BEbYO5YQEQPA>
- <xmx:gGjKXJN1QCzwxHeeKS31aQmQnjhcwZNLQdglIFgLDmnR9Qpsr61fMw>
- <xmx:gGjKXFJWAVQgyrED_Lni2su0Fjdyl_ucaQ-qDr2J_shnut9XNMWdrA>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehgihhthhhusgdrtghomhenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
+ vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:0GnKXPiJpQ8ZEF8oQt_QgzUmmZ7gJ4MVF1LWQ1Qclpvz_TZsCMEMiA>
+ <xmx:0GnKXGmc-hEKq0cMlZTngj9OWb3uCGiRh0HN9ZApiTiJ6v-DCaUmVA>
+ <xmx:0GnKXLr8Juj590Bpv8vT1wbTLKM2cCnJfdZ8uVwyhkTnYQz7rw8n-w>
+ <xmx:0GnKXHjFYMhOtK6ywOBbbDmatWRCjusZhyHkol8PGyGahaitL4BcQA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E1B697C6D9; Wed,  1 May 2019 23:48:15 -0400 (EDT)
+ id D45C17C6D9; Wed,  1 May 2019 23:53:51 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
 Mime-Version: 1.0
-Message-Id: <7994b013-3a31-44ac-a9c5-a28232c91470@www.fastmail.com>
-In-Reply-To: <BYAPR02MB58475E4DBCCE9FEB3C5DA17CAE220@BYAPR02MB5847.namprd02.prod.outlook.com>
-References: <CAO=notwmhWoeCry_Z+xL=7N1Pp+74tJ9BCF7nr4Jq1MwqRjfOA@mail.gmail.com>
- <BYAPR02MB58478B07866A63D01DA3EB25AE210@BYAPR02MB5847.namprd02.prod.outlook.com>
- <CAO=notzqWthZ29ghauXdzS7Y8WYeVrnMbbmz6Tgt=R6n_mRRAA@mail.gmail.com>
- <BYAPR02MB5847D889707010DEF7F58A95AE220@BYAPR02MB5847.namprd02.prod.outlook.com>
- <CAO=notyZ8Qj96iGYqcPMnkMFSL-Q38-OC8F88oAgpsmu030pxQ@mail.gmail.com>
- <BYAPR02MB58475342BB3F33226E6446C9AE220@BYAPR02MB5847.namprd02.prod.outlook.com>
- <CAJoAoZnBEWP+x_R=55Cp9rh=iyh7QZMqfvMrnWqAjmjQ=qvvGw@mail.gmail.com>
- <BYAPR02MB58475E4DBCCE9FEB3C5DA17CAE220@BYAPR02MB5847.namprd02.prod.outlook.com>
-Date: Wed, 01 May 2019 23:48:11 -0400
+Message-Id: <0e8fa572-e01b-4c42-8544-a8a564256315@www.fastmail.com>
+In-Reply-To: <a914efb5-758f-b586-15f8-460ea6cbb225@kaod.org>
+References: <20190417133941.22962-4-clg@kaod.org>
+ <20190417133941.22962-1-clg@kaod.org>
+ <OF33F9274D.5DFDAC84-ON002583E0.00758962-002583E0.0075896A@notes.na.collabserv.com>
+ <a8ab1055-64c6-4763-b244-2a17e70a10a1@www.fastmail.com>
+ <d3ca43d0-0b47-bcd4-c2ae-d70226b5d12f@kaod.org>
+ <090455f7-21dd-4e96-888e-1b23592bdfa3@www.fastmail.com>
+ <a914efb5-758f-b586-15f8-460ea6cbb225@kaod.org>
+Date: Wed, 01 May 2019 23:53:51 -0400
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Mark Brown" <mkbrown32@hotmail.com>,
- "Emily Shaffer" <emilyshaffer@google.com>
-Subject: Re: Seeking openbmc programmer's editor info
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ "Milton Miller II" <miltonm@us.ibm.com>
+Subject: =?UTF-8?Q?Re:_[PATCH_dev-5.0_3/4]_mtd:_spi-nor:_aspeed:_use_memcpy=5Ffro?=
+ =?UTF-8?Q?mio()_to_capture_the_optimization_buffer?=
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -99,331 +97,179 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Tue, 23 Apr 2019, at 04:14, Mark Brown wrote:
-> Thanks for your response.
-> Are there updated openbmc build instructions that the new developer
-> should follow, posted elsewhere ?
+On Fri, 19 Apr 2019, at 17:39, C=C3=A9dric Le Goater wrote:
+> On 4/19/19 9:23 AM, Andrew Jeffery wrote:
+> > Hi C=C3=A9dric
+> >=20
+> > On Fri, 19 Apr 2019, at 15:32, C=C3=A9dric Le Goater wrote:
+> >> On 4/19/19 3:03 AM, Andrew Jeffery wrote:
+> >>>
+> >>>
+> >>> On Fri, 19 Apr 2019, at 06:53, Milton Miller II wrote:
+> >>>> About 04/17/2019 09:20AM in some timezone, C=C3=A9dric Le Goater =
+wrote:
+> >>>>
+> >>>>
+> >>>>> aspeed_smc_read_from_ahb() only reads the first word which is no=
+t
+> >>>>> what
+> >>>>> we want. We want to capture a CALIBRATE_BUF_SIZE size window of =
+the
+> >>>>> flash contents to optimize the read.
+> >>>>>
+> >>>>
+> >>>> NACK
+> >>>>
+> >>>> This justifcation is false.  The routine reads the whole buffer
+> >>>> because it calls the _rep routine and takes the size.
+> >>
+> >> It doesn't AFAICT looking at other drivers and also from my test.
+> >>
+> >>>> In addition, the comment just before aspeed_smc_read_from_ahb
+> >>>> tells why memcpy_fromio and memcpy_toio are broken on 32 bit
+> >>
+> >> That might have been the case on Linux 4.7. It doesn't seem to be=20=
+
+> >> the case anymore. See below.
+> >>
+> >>>> arm, and this is still the case judging from the recent bug
+> >>>> reportfrom a Nuvaton user [1].
+> >>>>
+> >>>> [1] https://github.com/openbmc/openbmc/issues/3521
+> >>>>
+> >>>> Andrew, Please revert this patch.
+> >>
+> >> I don't think you have enough convincing arguments for that.
+> >=20
+> > That may be the case, but having seen the pain of the original corru=
+ption
+> > problems that drove the ioreadX_rep() implementation above, Milton's=
+
+> > protest combined with my initial, briefly nagging concern was enough=
+ for
+> > me to revert. Two things here:
+> >=20
+> > 1. We've run without this patch for quite some time. Despite odditie=
+s,
+> > the existing implementation has been stable
+> > 2. With patch 4/4, you've resolved the 4B corruption problem. This w=
+as
+> > the immediate concern, as it was impacting teams developing and
+> > testing OpenBMC master. I appreciate the effort you put into hunting=
+
+> > that down, the root cause was certainly not obvious.
+> >=20
+> > From *my* testing we appear to be stable both with and without this
+> > change, however my concern is that *my* testing is not complete enou=
+gh
+> > to be confident that we're not going to hit the subtle corruption pr=
+oblems
+> > that drove the introduction of the existing code.
 >=20
-> Here is the C-scope errors paste,=20
-> I sent to someone else here but,  you are right,
-> it is unclear whether someone who may post here pervasively
-> is more of an administrative person (e.g. git project manager) ,
-> and may not be familiar with the issue raised.
+> QEMU would have caught this regression if SFDP was modeled. It does to=
+day
+> if 4B opcodes are forced on the mx25l25635e. Given the time the team s=
+pent
+> on this, I would say 1 or 2PM overall, QEMU is a good investment.=20
+>                                                   ^
+>                                                   |
+> Managers are you reading this ? ------------------+=20
+>=20
+> > For some additional context, I'm now on leave until the 30th, and Jo=
+el to
+> > the 29th. These patches have been through a process that has proceed=
+ed
+> > much more hastily than I would have liked, and that's lead to where =
+we
+> > are now.
+> >=20
+> > With that in mind, less change is better, and so I have decided to b=
+ack
+> > this patch out. It's a risk-based decision, not a reflection of the =
+effort,
+> > desires or technicalities involved.
+>=20
+> Back to where we were before, it's fine as it works.=20
+>=20
+> The optimize reads are just reading the first 4 bytes :
+>=20
+> [   14.130480] aspeed-smc 1e630000.spi: mx25l25635e (32768 Kbytes)
+> [   14.136664] aspeed-smc 1e630000.spi: write control register: 001223=
+02
+> [   14.143326] aspeed-smc 1e630000.spi: read control register: 203c234=
+1
+> [   14.149750] aspeed-smc 1e630000.spi: AHB frequency: 192 MHz
+> [   14.181561] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.188894] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.196230] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.203558] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.210751] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.218067] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.225397] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.232722] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.239912] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+> [   14.247232] 50 41 52 54 50 41 52 54 50 41 52 54 50 41 52 54  PARTPA=
+RTPARTPART
+>=20
+> with memcpy_fromio :
+>=20
+> [   13.779087] aspeed-smc 1e630000.spi: mx25l25635e (32768 Kbytes)
+> [   13.785255] aspeed-smc 1e630000.spi: write control register: 001223=
+02
+> [   13.791762] aspeed-smc 1e630000.spi: read control register: 203c234=
+1
+> [   13.798326] aspeed-smc 1e630000.spi: AHB frequency: 192 MHz
+> [   13.815420] 50 41 52 54 00 00 00 01 00 00 00 01 00 00 00 80  PART..=
+..........
+> [   13.822759] 00 00 00 1b 00 00 10 00 00 00 20 00 00 00 00 00  ......=
+.... .....
+> [   13.829946] 00 00 00 00 00 00 00 00 00 00 00 00 50 41 62 cf  ......=
+......PAb.
+> [   13.837266] 70 61 72 74 00 00 00 00 00 00 00 00 00 00 00 00  part..=
+..........
+> [   13.844597] 00 00 00 00 00 00 00 01 ff ff ff ff 00 00 00 01  ......=
+..........
+> [   13.851788] 00 00 00 03 00 00 00 01 00 00 10 00 00 00 00 00  ......=
+..........
+> [   13.859105] 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ......=
+..........
+> [   13.866433] 00 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00  .@....=
+..........
+> [   13.873759] 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ......=
+..........
+> [   13.880951] 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ......=
+..........
+> [   13.888267] 00 00 00 00 00 00 00 00 00 00 00 00 8f de 9d 89  ......=
+..........
+> [   13.895591] 48 42 49 00 00 00 00 00 00 00 00 00 00 00 00 00  HBI...=
+..........
+> [   13.902917] 00 00 00 10 00 00 05 a0 ff ff ff ff 00 00 00 02  ......=
+..........
+>=20
+>=20
+> I should have added these tests in the commit log. Sorry about that.
+> We will see later on. There are no hurries for this fix. Optimization
+> is still being done.
 
-When I suggested cscope I did so in the (probably implicit) context of n=
-avigating
-the C and C++ code that makes up OpenBMC. cscope does not support naviga=
-ting
-bitbake recipes as far as I'm aware. Your best tools there are `git ls-f=
-iles` and
-`git grep`. Note that the C and C++ code all resides in separate repos t=
-hat are
-pointed to by the bitbake recipes.
+Milton: Given you NACK'ed the patch I'd appreciate a follow-up in light =
+of
+this data.
 
-I hope that clarifies, sorry for any confusion.
+Cheers,
 
 Andrew
-
->=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Cscope 15.8a   generated a lot of errors -- maybe Vim  7.4.52  =20
-> is not compatible with Ubuntu 14.04.6 .
-> Any ideas ?
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> markbmc@markbmc-Precision-5520:~$
-> markbmc@markbmc-Precision-5520:~$ wget -P ~/.vim/plugin=20
-> http://cscope.sourceforge.net/cscope_maps.vim
-> --2019-04-18 01:09:51--  http://cscope.sourceforge.net/cscope_maps.vim=
-
-> Resolving cscope.sourceforge.net (cscope.sourceforge.net)...=20
-> 216.105.38.10
-> Connecting to cscope.sourceforge.net=20
-> (cscope.sourceforge.net)|216.105.38.10|:80... connected.
-> HTTP request sent, awaiting response... 200 OK
-> Length: 7336 (7.2K)
-> Saving to: =E2=80=98/home/markbmc/.vim/plugin/cscope_maps.vim=E2=80=99=
-
->=20
-> 100%[=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D>] 7,336       --.-K/s   in 0s
->=20
-> 2019-04-18 01:09:51 (1.21 GB/s) -=20
-> =E2=80=98/home/markbmc/.vim/plugin/cscope_maps.vim=E2=80=99 saved [733=
-6/7336]
->=20
-> markbmc@markbmc-Precision-5520:~$
-> markbmc@markbmc-Precision-5520:~$
-> markbmc@markbmc-Precision-5520:~$
-> markbmc@markbmc-Precision-5520:~$ cd openbmc
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$ find . -type f -print | grep=
-=20
-> -E '\.(c(pp)?|h)$' > cscope.files
-> markbmc@markbmc-Precision-5520:~/openbmc$ ls -la
-> total 124420
-> drwxrwxr-x 29 markbmc markbmc      4096 Apr 18 01:30 .
-> drwxr-xr-x 22 markbmc markbmc      4096 Apr 18 01:01 ..
-> lrwxrwxrwx  1 markbmc markbmc        13 Apr 11 09:45 bitbake ->=20
-> poky/bitbake/
-> drwxrwxr-x  7 markbmc markbmc      4096 Apr 11 13:35 build
-> -rw-rw-r--  1 markbmc markbmc 127253925 Apr 18 01:42 cscope.files
-> drwxrwxr-x  8 markbmc markbmc      4096 Apr 11 13:21 .git
-> drwxrwxr-x  2 markbmc markbmc      4096 Apr 11 09:45 .github
-> -rw-rw-r--  1 markbmc markbmc        31 Apr 11 09:45 .gitignore
-> -rw-rw-r--  1 markbmc markbmc       101 Apr 11 09:45 .gitreview
-> lrwxrwxrwx  1 markbmc markbmc        12 Apr 11 09:45 LICENSE ->=20
-> poky/LICENSE
-> -rw-rw-r--  1 markbmc markbmc      2000 Apr 11 09:45 MAINTAINERS
-> lrwxrwxrwx  1 markbmc markbmc         9 Apr 11 09:45 meta -> poky/meta=
-
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-arm
-> drwxrwxr-x  6 markbmc markbmc      4096 Apr 11 09:45 meta-aspeed
-> drwxrwxr-x  7 markbmc markbmc      4096 Apr 11 09:45 meta-evb
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-facebook
-> drwxrwxr-x  5 markbmc markbmc      4096 Apr 11 09:45 meta-google
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-hxt
-> drwxrwxr-x  9 markbmc markbmc      4096 Apr 11 09:45 meta-ibm
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-ingrasys
-> drwxrwxr-x  5 markbmc markbmc      4096 Apr 11 09:45 meta-inspur
-> drwxrwxr-x  5 markbmc markbmc      4096 Apr 11 09:45 meta-intel
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-inventec
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-mellanox
-> drwxrwxr-x  5 markbmc markbmc      4096 Apr 11 09:45 meta-nuvoton
-> drwxrwxr-x 14 markbmc markbmc      4096 Apr 11 09:45 meta-openembedded=
-
-> drwxrwxr-x  6 markbmc markbmc      4096 Apr 11 09:45 meta-openpower
-> drwxrwxr-x 15 markbmc markbmc      4096 Apr 11 09:45 meta-phosphor
-> lrwxrwxrwx  1 markbmc markbmc        15 Apr 11 09:45 meta-poky ->=20
-> poky/meta-poky/
-> drwxrwxr-x  3 markbmc markbmc      4096 Apr 11 09:45 meta-portwell
-> drwxrwxr-x  4 markbmc markbmc      4096 Apr 11 09:45 meta-qualcomm
-> drwxrwxr-x  7 markbmc markbmc      4096 Apr 11 09:45 meta-quanta
-> drwxrwxr-x 17 markbmc markbmc      4096 Apr 11 09:45 meta-raspberrypi
-> drwxrwxr-x 14 markbmc markbmc      4096 Apr 11 09:45 meta-security
-> lrwxrwxrwx  1 markbmc markbmc        18 Apr 11 09:45 meta-skeleton ->=20=
-
-> poky/meta-skeleton
-> drwxrwxr-x  3 markbmc markbmc      4096 Apr 11 09:45 meta-x86
-> drwxrwxr-x  5 markbmc markbmc      4096 Apr 11 09:45 meta-xilinx
-> lrwxrwxrwx  1 markbmc markbmc        22 Apr 11 09:45 oe-init-build-env=
-=20
-> -> poky/oe-init-build-env
-> -rw-rw-r--  1 markbmc markbmc       327 Apr 11 09:45 openbmc-env
-> drwxrwxr-x 10 markbmc markbmc      4096 Apr 11 09:45 poky
-> -rw-rw-r--  1 markbmc markbmc      4177 Apr 11 09:45 README.md
-> lrwxrwxrwx  1 markbmc markbmc        13 Apr 11 09:45 scripts ->=20
-> poky/scripts/
-> -rwxrwxr-x  1 markbmc markbmc      1609 Apr 11 09:45 setup
-> -rw-rw-r--  1 markbmc markbmc        49 Apr 11 09:45 .templateconf
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$
-> markbmc@markbmc-Precision-5520:~/openbmc$ cscope -bq
-> cscope: cannot find file=20
-> build/tmp/work/armv6-openbmc-linux-gnueabi/phosphor-debug-collector/1.=
-0+gitAUTOINC+fa180596fe-r1/packages-split/phosphor-debug-collector-src/u=
-sr/src/debug/phosphor-debug-collector/1.0+gitAUTOINC+fa180596fe-r1/build=
-/xyz/openbmc_project/Dump/Internal
-> cscope: cannot find file /Create/server.cpp
-> cscope: cannot find file=20
-> build/tmp/work/armv6-openbmc-linux-gnueabi/openpower-debug-collector/1=
-.0+gitAUTOINC+b618ccbaa7-r1/packages-split/openpower-debug-collector-src=
-/usr/src/debug/openpower-debug-collector/1.0+gitAUTOINC+b618ccbaa7-r1/bu=
-ild/org/open_power/Host/Boot/error
-> cscope: cannot find file .cpp
-> cscope: cannot find file=20
-> build/tmp/work/armv6-openbmc-linux-gnueabi/phosphor-led-manager/1.0+gi=
-tAUTOINC+ab3b247f04-r1/packages-split/phosphor-led-manager-src/usr/src/d=
-ebug/phosphor-led-manager/1.0+gitAUTOINC+ab3b247f04-r1/build/fault-monit=
-or/xyz/openbmc_project/Led/Fru/Mon
-> cscope: cannot find file itor/error.cpp
-> cscope: cannot find file=20
-> build/tmp/work/armv6-openbmc-linux-gnueabi/phosphor-led-manager/1.0+gi=
-tAUTOINC+ab3b247f04-r1/packages-split/phosphor-led-manager-src/usr/src/d=
-ebug/phosphor-led-manager/1.0+gitAUTOINC+ab3b247f04-r1/build/fault-monit=
-or/xyz/openbmc_project/Led/Mapper
-> cscope: cannot find file error.cpp
-> cscope: cannot find file=20
-> build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/image/home/markbmc/=
-openbmc/build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/recipe-sysroo=
-t-native/usr/lib/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi=
-/8.3.0/plugin/include/gimple-build
-> cscope: cannot find file er.h
-> cscope: cannot find file=20
-> build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/image/home/markbmc/=
-openbmc/build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/recipe-sysroo=
-t-native/usr/lib/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi=
-/8.3.0/plugin/include/gt-fortran-t
-> cscope: cannot find file rans-stmt.h
-> cscope: cannot find file=20
-> build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/image/home/markbmc/=
-openbmc/build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/recipe-sysroo=
-t-native/usr/lib/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi=
-/8.3.0/plugin/include/gt-cp-method
-> cscope: cannot find file .h
-> cscope: cannot find file=20
-> build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/image/home/markbmc/=
-openbmc/build/tmp/work/x86_64-linux/gcc-cross-arm/8.3.0-r0/recipe-sysroo=
-t-native/usr/lib/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi=
-/8.3.0/plugin/include/cp/name-look
-> ...
-> ...
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> ________________________________________
-> From: Emily Shaffer <emilyshaffer@google.com>
-> Sent: Monday, April 22, 2019 11:03 AM
-> To: Mark Brown
-> Cc: Patrick Venture; OpenBMC Maillist
-> Subject: Re: Seeking openbmc programmer's editor info
->=20
-> OpenBMC is cross-compiled to target the embedded chip that it will run=
-
-> on (often an Aspeed or Nuvoton part). I really doubt anybody is doing
-> their coding on an AST2400 :) Those stale-Ubuntu-targeted instructions=
-
-> might still work, and if they don't, please let us know which
-> libraries are missing.
->=20
-> I use a Debian derivative and Vim. However, it's worth noting that
-> openbmc/openbmc references a bunch of other Git repos. Bitbake will
-> pull these down and build for you, but if you want to edit anything,
-> you'll need to either check them out on your own or use devtool.
->=20
-> Can you paste the errors you're seeing with C-Scope? (I don't use it,
-> but the text of the error might help us suss out what's going wrong.)
->=20
-> By the way, even for questions like this, it's better to mail the
-> entire list than choose one person at random to ask in a direct email.=
-
-> Later developers may have the same question and your email will help
-> answer it for them. :)
->=20
-> Welcome to the project!
->=20
-> On Mon, Apr 22, 2019 at 9:22 AM Mark Brown <mkbrown32@hotmail.com> wro=
-te:
-> >
-> > On the official github   openbmc/openbmc   page:
-> >
-> > https://github.com/openbmc/openbmc
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-> > 1) Prerequisite
-> > Ubuntu 14.04
-> > sudo apt-get install -y git build-essential libsdl1.2-dev texinfo ga=
-wk chrpath diffstat
-> > Fedora 28
-> > sudo dnf install -y git patch diffstat texinfo chrpath SDL-devel bit=
-bake rpcgen
-> > sudo dnf groupinstall "C Development Tools and Libraries"
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
-> >
-> > ________________________________________
-> > From: Patrick Venture <venture@google.com>
-> > Sent: Monday, April 22, 2019 9:16 AM
-> > To: Mark Brown
-> > Cc: OpenBMC Maillist
-> > Subject: Re: Seeking openbmc programmer's editor info
-> >
-> > + openbmc mailing list
-> >
-> > On Mon, Apr 22, 2019 at 9:11 AM Mark Brown <mkbrown32@hotmail.com> w=
-rote:
-> > >
-> > > The openbmc build instructions state that Ubuntu 14
-> > > should be used.
-> > > Are you saying that you read, navigate, modify source code
-> > > in a different development platform from the build ?
-> >
-> > Yes, what documentation are you reading that says to use ubuntu 14?
-> > It's likely just out of date.
-> >
-> > >
-> > > Also, someone else mentioned Vim/C-scope -- however, I experience
-> > > many "cannot find file" errors and then hangs of the Term window
-> > > under C-scope.
-> >
-> > I don't use C-scope.
-> >
-> > >
-> > >
-> > > ________________________________________
-> > > From: Patrick Venture <venture@google.com>
-> > > Sent: Monday, April 22, 2019 7:26 AM
-> > > To: Mark Brown
-> > > Subject: Re: Seeking openbmc programmer's editor info
-> > >
-> > > I don't use Ubuntu 14, but generally grep/sed/vim are used most.
-> > >
-> > > On Sat, Apr 20, 2019 at 5:30 PM Mark Brown <mkbrown32@hotmail.com>=
- wrote:
-> > > >
-> > > > I am a firmware guy watching the traffic on this email list.
-> > > > I am interested to know what programmer's editor is most useful,=
-
-> > > > under Ubuntu 14,
-> > > > to navigate and read the source code here, perform multi-file se=
-arches,
-> > > > and help find bugs.
-> > > > Which editor is most commonly used here ?
-> > > >
-> > > > Mark
-> > > >
-> > > > ________________________________________
-> > > > From: openbmc <openbmc-bounces+mkbrown32=3Dhotmail.com@lists.ozl=
-abs.org> on behalf of Patrick Venture <venture@google.com>
-> > > > Sent: Friday, April 19, 2019 12:43 PM
-> > > > To: Joel Stanley; Brad Bishop; Andrew Jeffery
-> > > > Cc: OpenBMC Maillist
-> > > > Subject: meta-ingrasys patches required for new merged drivers
-> > > >
-> > > > If you don't work on or maintain meta-ingrasys/meta-zaius you ca=
-n stop
-> > > > reading and go on with your Friday. :D
-> > > >
-> > > > All;
-> > > >
-> > > > https://gerrit.openbmc-project.xyz/20692 and below are all ready=
--to-go
-> > > > and some are required for the meta-aspeed bump staged for
-> > > > openbmc/openbmc.
-> > > >
-> > > > I wanted to throw this into an email to it jumps out more.
-> > > >
-> > > > Patrick
->=20
->=20
->=20
-> --
-> Emily Shaffer
->
