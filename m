@@ -1,69 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8E8813666
+	for <lists+openbmc@lfdr.de>; Sat,  4 May 2019 01:57:54 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A32BE135E9
-	for <lists+openbmc@lfdr.de>; Sat,  4 May 2019 01:03:58 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44wnkM65kGzDqZx
-	for <lists+openbmc@lfdr.de>; Sat,  4 May 2019 09:03:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44wpwc3qT9zDqYt
+	for <lists+openbmc@lfdr.de>; Sat,  4 May 2019 09:57:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::544; helo=mail-pg1-x544.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="tnckqYRg"; 
- dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44wnjN0fH0zDqXl
- for <openbmc@lists.ozlabs.org>; Sat,  4 May 2019 09:03:03 +1000 (AEST)
-Received: by mail-pg1-x544.google.com with SMTP id h1so3416715pgs.2
- for <openbmc@lists.ozlabs.org>; Fri, 03 May 2019 16:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=v/E8d852gDmQi7cdvxKV3vdl3La3XJJsaNJSXh5T2LU=;
- b=tnckqYRgJ7zczte9qw9LuG/Mu7+f30bkxSOCnmaW/saYlVl5AjY8h+d5Kfgy9sl3VD
- ysPgp7r96hUDmKTdVCju1jg29TeDg8jiSQR9JsTIdxCaRhRRRU3+7JhzW3aZmu3vw2kI
- INuE6zxqdG6SItUk/jzrasmtANqwJKWjNaYWwg5+kMMQ2B3wwiEqACOIMvnhGI/C4G6W
- sRPY7DeYhQP60bVFcHJ7hHY6PGkM+gXXOiO24BHCm5JT1So7Vb9FyimIrfz3DNiQ8yHd
- 607SyQ0o99581LPVDDNAVGWMjGXzAq4DlT26Pp1eSZWxtt1zgADHJgrYNamsnxtfjnTe
- ZnOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=v/E8d852gDmQi7cdvxKV3vdl3La3XJJsaNJSXh5T2LU=;
- b=oOLSOUb+1MqHYj5RiSLnQd1W9raH/n+PFGCpnWs55BOE0hARZBenhtH8haHvvZwO/s
- CPIkDQ7RDylL1mLvDKSSFZtxOXXBIJwq8HTSYwlm6TtyWRcOUU36rO9RDn7KzqJ05uWJ
- f/PzaLQxsP67T10CFbhivoPKdeeGQwMospCr2HWzx/LnHfva0vil1up7lfCWxIaH8mWU
- kl+RCuIrdoWW0Cgmb3xREksHsltto2bY1bMsP5P+UC1ZQxkz31DcdvKP/soZKiCfCwYL
- UpImRt4SmdwConOoSbOe/m84uPHCStkgcsWjya25NkIhaz3LS0GrqNtOiKfnQLKXKm14
- sW6w==
-X-Gm-Message-State: APjAAAW2KQGVpV3n0uqlsNFWmcuE/TjI3+x/1WvApwawM1M+isWPCuO8
- DUKFLBlIt8HoHm5U+FOexO3DyLJ3xGppLbf6lzuz2w==
-X-Google-Smtp-Source: APXvYqwby3khCY1QLrmwxuyjb6dkL58HXqTvPJaLsetUX41vmmpcRnCKP4mErS0E9SdRry/IIpCObRHhxDq4Tc2iLbc=
-X-Received: by 2002:a65:408b:: with SMTP id t11mr14034646pgp.372.1556924579611; 
- Fri, 03 May 2019 16:02:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44wpvn1PcWzDqVc
+ for <openbmc@lists.ozlabs.org>; Sat,  4 May 2019 09:57:07 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 03 May 2019 16:57:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.60,427,1549958400"; d="scan'208";a="145866505"
+Received: from jmbills-mobl4.amr.corp.intel.com (HELO [10.255.84.179])
+ ([10.255.84.179])
+ by fmsmga008.fm.intel.com with ESMTP; 03 May 2019 16:57:04 -0700
+Subject: Re: A question about phosphor-sel-logger
+To: =?UTF-8?B?V2lsbCBMaWFuZyAo5qKB5rC46YmJKQ==?= <Will.Liang@quantatw.com>
+References: <f68b269b1a854bfabfb021c1ae1955cc@quantatw.com>
+ <04fa16ca-4f2a-0f2d-e6ef-8118fd757b0e@linux.intel.com>
+ <2b26e8a78f5548bc9d68349e5323b861@quantatw.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <bcd254dd-cbc6-abb0-f618-265d8644df43@linux.intel.com>
+Date: Fri, 3 May 2019 16:57:04 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <1556174916-137177-1-git-send-email-pengms1@lenovo.com>
- <CACPK8XfZy3znvy1pk0KL1ggrgamaSMHUBj7Na7bN_sq5Th64EA@mail.gmail.com>
- <CADKL2t7sMP1UQcX56YAjcjhPTfOktfdGfCx2P2DX0M_2YoM3Ng@mail.gmail.com>
-In-Reply-To: <CADKL2t7sMP1UQcX56YAjcjhPTfOktfdGfCx2P2DX0M_2YoM3Ng@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Fri, 3 May 2019 16:02:48 -0700
-Message-ID: <CAO=notxZw+XyqmhyZZCW=thh7QPFzzPsjqHFUxVrPrH4MXwxjw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.0] [PATCH v5] ARM: dts: aspeed: Adding Lenovo
- Hr630 BMC
-To: Benjamin Fair <benjaminfair@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <2b26e8a78f5548bc9d68349e5323b861@quantatw.com>
+Content-Type: text/plain; charset=big5; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,127 +56,101 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Duke KH Du <dukh@lenovo.com>, Andrew Peng <pengms1@lenovo.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Harry Sung1 <hsung1@lenovo.com>,
- Yonghui YH21 Liu <liuyh21@lenovo.com>, Lisa YJ19 Liu <liuyj19@lenovo.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, May 3, 2019 at 3:11 PM Benjamin Fair <benjaminfair@google.com> wrote:
->
-> On Mon, Apr 29, 2019 at 12:59 AM Joel Stanley <joel@jms.id.au> wrote:
-> >
-> > On Thu, 25 Apr 2019 at 06:48, Andrew Peng <pengms1@lenovo.com> wrote:
-> > >
-> > > Initial introduction of Lenovo Hr630 family equipped with
-> > > Aspeed 2500 BMC SoC. Hr630 is a x86 server development kit
-> > > with a ASPEED ast2500 BMC manufactured by Lenovo.
-> > > Specifically, This adds the Hr630 platform device tree file
-> > > used by the Hr630 BMC machines.
-> >
-> > Thanks for your patch. I'll wait for acks from Benjamin and Patrick
-> > before applying. I've got a a few questions of my own below.
-> >
-> >
-> > >
-> > > This also adds an entry of Hr630 device tree file in Makefile
-> > >
-> > > Signed-off-by: Andrew Peng <pengms1@lenovo.com>
-> > > Signed-off-by: Yonghui Liu <liuyh21@lenovo.com>
-> > > Signed-off-by: Lisa Liu <liuyj19@lenovo.com>
->
-> Once Joel's other comments are resolved:
->
-> Reviewed-by: Benjamin Fair <benjaminfair@google.com>
 
-Reviewed-by: Patrick Venture <venture@google.com>
 
->
-> > > ---
-> > > Changes in v5:
-> > >  - revise pca9545 and pca9546 switch aliases name.
-> > > Changes in v4:
-> > >  - add pca9546 switch aliases name.
-> > > Changes in v3:
-> > >  - revise i2c switch aliases name.
-> > > Changes in v2:
-> > >  - add i2c switch aliases name.
-> > >  - remove the unused eeprom device from DT file.
-> > >  - remove "Licensed under..." sentence.
-> > >
-> > >  arch/arm/boot/dts/Makefile                    |   3 +-
-> > >  arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts | 890 ++++++++++++++++++++++++++
-> > >  2 files changed, 892 insertions(+), 1 deletion(-)
-> > >  create mode 100644 arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-> > >
-> > > diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> > > index bd40148..b5d32a0 100644
-> > > --- a/arch/arm/boot/dts/Makefile
-> > > +++ b/arch/arm/boot/dts/Makefile
-> > > @@ -1247,4 +1247,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
-> > >         aspeed-bmc-opp-witherspoon.dtb \
-> > >         aspeed-bmc-opp-zaius.dtb \
-> > >         aspeed-bmc-portwell-neptune.dtb \
-> > > -       aspeed-bmc-quanta-q71l.dtb
-> > > +       aspeed-bmc-quanta-q71l.dtb \
-> > > +       aspeed-bmc-lenovo-hr630.dtb
-> >
-> > Sort alphabetically.
-> >
-> > > diff --git a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-> > > new file mode 100644
-> > > index 0000000..4f18f4d
-> > > --- /dev/null
-> > > +++ b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-> > > @@ -0,0 +1,890 @@
-> > > +// SPDX-License-Identifier: GPL-2.0+
-> > > +/*
-> > > + * Device Tree file for Lenovo Hr630 platform
-> > > + *
-> > > + * Copyright (C) 2019-present Lenovo
-> > > + */
-> > > +
-> > > +/dts-v1/;
-> > > +
-> > > +#include "aspeed-g5.dtsi"
-> > > +#include <dt-bindings/gpio/aspeed-gpio.h>
-> > > +
-> > > +/ {
-> > > +       model = "HR630 BMC";
-> > > +       compatible = "lenovo,hr630-bmc", "aspeed,ast2500";
-> > > +
-> > > +       aliases {
-> > > +               i2c14 = &i2c_rbp;
-> > > +               i2c15 = &i2c_fbp1;
-> > > +               i2c16 = &i2c_fbp2;
-> > > +               i2c17 = &i2c_fbp3;
-> > > +               i2c18 = &i2c_riser2;
-> > > +               i2c19 = &i2c_pcie4;
-> > > +               i2c20 = &i2c_riser1;
-> > > +               i2c21 = &i2c_ocp;
-> > > +       };
-> >
-> > > +               flash_memory: region@98000000 {
-> > > +                       no-map;
-> > > +                       reg = <0x98000000 0x00100000>; /* 1M */
-> >
-> > Do you use this feature of the driver? If it was there as a
-> > workaround, note that the driver no longer requires a memory region if
-> > you're just using it to turn the clocks on, or point to the flash
-> > device.
->
-> This feature will be used for in-band firmware update.
->
-> >
-> > > +               };
-> > > +
-> >
-> > > +/*
-> > > + * Enable port A as device (via the virtual hub) and port B as
-> > > + * host by default on the eval board. This can be easily changed
-> > > + * by replacing the override below with &ehci0 { ... } to enable
-> > > + * host on both ports.
-> > > + */
-> >
-> > This message is cut and pasted from the aspeed-ast2500-evb.dts. Does
-> > it also apply to your system?
+On 5/2/2019 8:39 PM, Will Liang (±ç¥Ã¹b) wrote:
+> Hi Jason,
+> 
+> I am very thankful that you reply me quickly and it's great to hear that you are working on this issue.
+> If you can share your rsyslog configuration with me that will be a good news for me, I can trace it first.
+I will share my rsyslog configuration file below.  It requires the 
+imjournal module to be installed which can be done by adding 
+'PACKAGECONFIG_append = " imjournal"' to an rsyslog_%.bbappend file.
+
+> 
+> According to the above URL, is it something I missed, I did not find the "add sel" to sys log function?
+
+If the imjournal rsyslog module works well enough, then the "add sel" 
+function won't need to change.  SEL entries will still be added to the 
+journal and the imjournal module will read the journal to find new SEL 
+entries for rsyslog to save to the SEL log file.
+
+> I wander to know how you add sel to sys log. Or you want to share it after internal testing.
+> 
+I'm willing to share whatever you are interested in, but it may change 
+if internal testing finds issues.  I'm planning to push the entire 
+solution once we complete initial internal testing.
+
+For clearing the log to work, you need to add "Reload" support to the 
+rsyslog service file.  I do this by adding this line to an override 
+.conf file:
+ExecReload=/bin/kill -HUP $MAINPID
+
+Here is my rsyslog.conf file which configures the entries the imjournal 
+module is looking for and how to format them in the syslog files:
+# if you experience problems, check
+# http://www.rsyslog.com/troubleshoot for assistance
+
+# rsyslog v3: load input modules
+# If you do not load inputs, nothing happens!
+# You may need to set the module load path if modules are not found.
+#
+# Ported from debian's sysklogd.conf
+
+# Journal-style logging
+# Limit to no more than 2000 entries in one minute and enable the
+# journal workaround to avoid duplicate entries
+module(load="imjournal" StateFile="/var/log/state"
+                         RateLimit.Interval="60"
+                         RateLimit.Burst="2000"
+                         WorkAroundJournalBug="on")
+
+# Template for IPMI SEL messages
+# "<timestamp> <ID>,<Type>,<EventData>,[<Generator ID>,<Path>,<Direction>]"
+template(name="IPMISELTemplate" type="list") {
+     property(name="timereported" dateFormat="rfc3339")
+     constant(value=" ")
+     property(name="$!IPMI_SEL_RECORD_ID")
+     constant(value=",")
+     property(name="$!IPMI_SEL_RECORD_TYPE")
+     constant(value=",")
+     property(name="$!IPMI_SEL_DATA")
+     constant(value=",")
+     property(name="$!IPMI_SEL_GENERATOR_ID")
+     constant(value=",")
+     property(name="$!IPMI_SEL_SENSOR_PATH")
+     constant(value=",")
+     property(name="$!IPMI_SEL_EVENT_DIR")
+     constant(value="\n")
+}
+
+# Template for Redfish messages
+# "<timestamp> <MessageId>,<MessageArgs>"
+template(name="RedfishTemplate" type="list") {
+     property(name="timereported" dateFormat="rfc3339")
+     constant(value=" ")
+     property(name="$!REDFISH_MESSAGE_ID")
+     constant(value=",")
+     property(name="$!REDFISH_MESSAGE_ARGS")
+     constant(value="\n")
+}
+
+# If the journal entry has the IPMI SEL MESSAGE_ID, save as IPMI SEL
+if ($!MESSAGE_ID == "b370836ccf2f4850ac5bee185b77893a") then {
+    action(type="omfile" file="/var/log/ipmi_sel" 
+template="IPMISELTemplate")
+}
+
+# If the journal entry has a Redfish MessageId, save as a Redfish event
+if ($!REDFISH_MESSAGE_ID != "") then {
+    action(type="omfile" file="/var/log/redfish" template="RedfishTemplate")
+}
+
+#
+# Include all config files in /etc/rsyslog.d/
+#
+$IncludeConfig /etc/rsyslog.d/*.conf
