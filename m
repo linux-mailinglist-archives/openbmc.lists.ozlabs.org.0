@@ -2,58 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEBF612683
-	for <lists+openbmc@lfdr.de>; Fri,  3 May 2019 05:40:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29045129CA
+	for <lists+openbmc@lfdr.de>; Fri,  3 May 2019 10:19:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44wHvf2wpGzDqRn
-	for <lists+openbmc@lfdr.de>; Fri,  3 May 2019 13:40:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44wQ6J17pNzDqDc
+	for <lists+openbmc@lfdr.de>; Fri,  3 May 2019 18:19:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=0190b1154=will.liang@quantatw.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linaro.org
+ (client-ip=2a00:1450:4864:20::441; helo=mail-wr1-x441.google.com;
+ envelope-from=daniel.lezcano@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 44wHtn6l9nzDqN1
- for <openbmc@lists.ozlabs.org>; Fri,  3 May 2019 13:39:25 +1000 (AEST)
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx02.quantatw.com with ESMTP; 03 May 2019 11:39:21 +0800
-Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Fri, 3 May 2019
- 11:39:19 +0800
-Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
- ([192.168.1.8]) with mapi id 15.01.1713.004; Fri, 3 May 2019 11:39:19 +0800
-From: =?big5?B?V2lsbCBMaWFuZyAoseelw7liKQ==?= <Will.Liang@quantatw.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: RE: A question about phosphor-sel-logger
-Thread-Topic: A question about phosphor-sel-logger
-Thread-Index: AdUAjyy781fIgI1HTSKO9wlhvkw5CQALNbGAACgxNBA=
-Date: Fri, 3 May 2019 03:39:19 +0000
-Message-ID: <2b26e8a78f5548bc9d68349e5323b861@quantatw.com>
-References: <f68b269b1a854bfabfb021c1ae1955cc@quantatw.com>
- <04fa16ca-4f2a-0f2d-e6ef-8118fd757b0e@linux.intel.com>
-In-Reply-To: <04fa16ca-4f2a-0f2d-e6ef-8118fd757b0e@linux.intel.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24586.004
-x-tm-as-result: No--18.828400-0.000000-31
-x-tm-as-matchedid: 140026-150567-701625-704425-700685-139010-700075-110462-7
- 00752-700153-700767-106470-702507-704980-139504-700264-702609-707321-700016
- -105700-701594-700758-710207-703440-703788-704439-780022-701305-105040-7013
- 95-705178-139705-704341-703674-113898-707788-780048-705388-701236-187067-70
- 5861-702020-701100-701005-706817-709291-704421-708797-700107-899168-190077-
- 148004-148133-20043-29106-42000-42003-63-190014
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=linaro.org header.i=@linaro.org header.b="KOwMT0Cl"; 
+ dkim-atps=neutral
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
+ [IPv6:2a00:1450:4864:20::441])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44wPmx1DcJzDql8
+ for <openbmc@lists.ozlabs.org>; Fri,  3 May 2019 18:04:48 +1000 (AEST)
+Received: by mail-wr1-x441.google.com with SMTP id l2so6602458wrb.9
+ for <openbmc@lists.ozlabs.org>; Fri, 03 May 2019 01:04:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=TpXqJQI7PVBHDytg+IGA8i8m1/XYj0MrND3X98mgWRU=;
+ b=KOwMT0Cl9efaAA08+DXGflf+klv1sSVEHKxtGUL+CBB2gxt07xyd+GyRUCCFVKzsBF
+ vKFUzaTq0/DOqlmb39mbYs9iH9RkOcgL/KAAeaSaMlUscaGj/bjbj+P1qApNVwESdscJ
+ g+1LJrqUlO8vcWihy8sZ39L1L6LS1ajt0o5fzIYYJaQhvca+WfuJGXFbdFR2rcym4b4t
+ zBYkf1Llb/Z3r2f2Mqm8DStMLgaZcHBFBYpuH2Uow5/FZOaBijtEgoGFhaFs2w3Lbcsf
+ fUx7d6Qd9AwY90DycZfziK6toE6kMAjg8Mx+cK1CNVyDwdMXuzYcxD1e3vRmAV6UcGSV
+ 1pBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=TpXqJQI7PVBHDytg+IGA8i8m1/XYj0MrND3X98mgWRU=;
+ b=iKWzb5zqwubmmNhDLhBPMeIj76dQ6Bjw0klyFbyT8lOtckDGfO8F6qLD0zMWKzq4mh
+ DUAdY2jeyI4REAtytXB6OjmLiLejkQQGVsBU17I5LvbUDmr+qd5YvcZneP8pfCVy4GZx
+ DFmua75PsHlovLn66lJ4WREpSZP0dDVUAGXkskqFT35PNiN7EY/L3lj07AJfsbmprOWK
+ IPDT/wzIszR7lTxLEXil8k0WAUCJY6KUS1tHCUJ+FWEbbuzP0i5kRTuB4jYWewMdFOEG
+ +f/Q0FvmD7hl6B7jxi4pb9/Yx2DZVPIklb/DxRAijXcSomRZruU+VexaWb0SwEnOCnDG
+ u0JQ==
+X-Gm-Message-State: APjAAAXCI3ZqA2UbZLa5XXqOTb8wJCNDHLfioFmsyJrTUTHn7hu0Rw07
+ rv3+c9BJSTKifoqGaXqI9ZKBIg==
+X-Google-Smtp-Source: APXvYqzRH5TpkdzGloadzIxAtQZsM2JgxqfDy9oibY2Qrd4ctA1Tpc85qqJ9ZfJamG8tTMt5Vi3YIQ==
+X-Received: by 2002:a5d:430f:: with SMTP id h15mr5756534wrq.132.1556870681778; 
+ Fri, 03 May 2019 01:04:41 -0700 (PDT)
+Received: from [192.168.0.41] (223.235.129.77.rev.sfr.net. [77.129.235.223])
+ by smtp.googlemail.com with ESMTPSA id k1sm1159060wmi.48.2019.05.03.01.04.39
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 03 May 2019 01:04:41 -0700 (PDT)
+Subject: Re: [PATCH 1/6] thermal: Introduce
+ devm_thermal_of_cooling_device_register
+To: Guenter Roeck <linux@roeck-us.net>, linux-hwmon@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-pm@vger.kernel.org
+References: <1555617500-10862-1-git-send-email-linux@roeck-us.net>
+ <1555617500-10862-2-git-send-email-linux@roeck-us.net>
+ <20190501164843.GA16333@roeck-us.net>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <c8a26b7d-2775-e13f-21b7-dbc901ea3b0b@linaro.org>
+Date: Fri, 3 May 2019 10:04:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
+In-Reply-To: <20190501164843.GA16333@roeck-us.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,49 +88,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Jean Delvare <jdelvare@suse.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Andrew Jeffery <andrew@aj.id.au>, Patrick Venture <venture@google.com>,
+ Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
+ Kamil Debski <kamil@wypas.org>, Tali Perry <tali.perry1@gmail.com>,
+ Eduardo Valentin <edubezval@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Zhang Rui <rui.zhang@intel.com>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiANCj4gT24gNS8xLzIwMTkgNzozNiBQTSwgV2lsbCBMaWFuZyAoseelw7liKSB3cm90ZToNCj4g
-PiBIaSwNCj4gPg0KPiA+IE91ciBCTUMgaXMgdXNpbmcgcGFja2FnZSAicGhvc3Bob3Itc2VsLWxv
-Z2dlciIgdG8gc3VwcG9ydCBJUE1JIFNFTC4gaXQNCj4gc2F2ZWQgdGhlIGV2ZW50IGRhdGEgaW4g
-dGhlIGpvdXJuYWwgYW5kIHRoZSBpZCBpcyAxLTY1NTM0Lg0KPiA+IEl0IG1lYW5zIGl0IGNhbiBz
-YXZlIDY1NTM0IHJlY29yZHMuIEFjdHVhbGx5LCB3ZSBmb3VuZCB0aGUgZmlsZSBzaXplIG9mIHNp
-bmdsZQ0KPiBqb3VybmFsIGZpbGUgaXMgYXJvdW5kIDhNQih0aGUgZGVmYXVsdCBvZiBqb3VybmFs
-IGZpbGUgaXMgNjRNQiwgaXQgd2lsbCBiZQ0KPiBzZXBhcmF0ZWQgYnkgOCBmaWxlcykuDQo+ID4g
-V2UgY2Fubm90IHNob3cgYWxsIFNFTHMoNjU1MzQgcmVjb3JkcykgaW4gSVBNSS4gaXQgbWlnaHQg
-YmUgYSBidWcgaGVyZSBpZiB3ZQ0KPiBkb24ndCBsaW1pdCB0aGUgbWF4aW11bS4NCj4gPg0KPiA+
-IElzIGl0IG5lY2Vzc2FyeSB0byBsaW1pdCB0aGUgbnVtYmVyIG9mIFNFTHMgdG8gc21hbGxlcj8N
-Cj4gDQo+IEhpIFdpbGwsDQo+IA0KPiBUaGUgcmVhc29uIHRoYXQgdmFsdWUgaXMgbGVmdCBhdCA2
-NTUzNCBpcyBiZWNhdXNlIGluIHRoZSBqb3VybmFsIHdlIGRvbid0IGhhdmUgYQ0KPiB3YXkgdG8g
-ZGV0ZXJtaW5lIGhvdyBtYW55IHRvdGFsIFNFTCBlbnRyaWVzIGFyZSBwb3NzaWJsZSBvciBob3cg
-bXVjaCBzcGFjZQ0KPiBpcyBsZWZ0Lg0KPiANCj4gV2l0aCB0aGUgam91cm5hbCBzZXQgYXQgNjRN
-QiB3ZSBjb3VsZCBzZWUgbW9yZSB0aGFuIDMwMDAwIGVudHJpZXMuICBXaGVuIEkNCj4gbWFkZSB0
-aGUgam91cm5hbCBwZXJzaXN0ZW50IGF0IDZNQiwgd2UgY291bGQgc2VlIGFueXdoZXJlIGJldHdl
-ZW4NCj4gMTIwMC0yMDAwIGVudHJpZXMuDQo+IA0KPiBXZSBjb3VsZCBjaG9vc2UgYSBzbWFsbGVy
-IG51bWJlciBmb3IgSVBNSSB0byByZXBvcnQsIGJ1dCBpdCB3aWxsIGJlIGFyYml0cmFyeQ0KPiBi
-ZWNhdXNlIHRoZSBqb3VybmFsIHNpemUgY2FuIGJlIGNoYW5nZWQgd2l0aG91dCBub3RpZnlpbmcg
-SVBNSS4NCj4gDQo+IEhvd2V2ZXIsIGJlY2F1c2Ugb2YgdGhlIHNpemUgKDEyMDAgZW50cmllcyBp
-biA2TUIpIGFuZCBvdGhlciBsaW1pdGF0aW9ucyB3aXRoDQo+IGEgcGVyc2lzdGVudCBqb3VybmFs
-LCBJJ20gZXhwZXJpbWVudGluZyB3aXRoIHVzaW5nIHJzeXNsb2cgdG8gbG9nIFNFTCBlbnRyaWVz
-DQo+IGludG8gYSBzeXNsb2cgZmlsZS4gIFRoaXMgd2lsbCBhbGxvdyB0aGUgam91cm5hbCB0byBy
-ZW1haW4gdm9sYXRpbGUgd2hpbGUNCj4gcGVyc2lzdGluZyBvbmx5IHRoZSBsb2dzIHRoYXQgd2Ug
-bmVlZCB0by4gIEl0IHdpbGwgYWxzbyBoYXZlIGEgbW9yZSBjb25zaXN0ZW50DQo+IHNpemUsIHNv
-IGl0IHdpbGwgYmUgcG9zc2libGUgdG8gZml4IHRoZSBzaXplIHRvIGEgc21hbGxlciBudW1iZXIg
-bW9yZSBhY2N1cmF0ZWx5DQo+IGFzIHlvdSBzdWdnZXN0Lg0KPiANCj4gWW91IGNhbiBzZWUgbXkg
-Y3VycmVudCByc3lzbG9nIGNoYW5nZXMgaGVyZToNCj4gaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1w
-cm9qZWN0Lnh5ei9xL3RvcGljOiJyc3lzbG9nK1NFTCIrKHN0YXR1czpvcGVuJTIwT1IlDQo+IDIw
-c3RhdHVzOm1lcmdlZCkNCj4gDQo+IElmIHlvdSBhcmUgaW50ZXJlc3RlZCwgSSB3aWxsIGFsc28g
-c2hhcmUgbXkgcnN5c2xvZyBjb25maWd1cmF0aW9uLCBidXQgSSB3YXMNCj4gcGxhbm5pbmcgdG8g
-dGVzdCBpdCBvdXQgaW50ZXJuYWxseSBmb3IgYSB3aGlsZSB0byBtYWtlIHN1cmUgaXQgd2lsbCB3
-b3JrIHNvIEkgZG9uJ3QNCj4gY2F1c2UgdGhyYXNoIGlmIGl0IGhhcyB0byBjaGFuZ2UgYWdhaW4u
-DQoNCkhpIEphc29uLA0KDQpJIGFtIHZlcnkgdGhhbmtmdWwgdGhhdCB5b3UgcmVwbHkgbWUgcXVp
-Y2tseSBhbmQgaXQncyBncmVhdCB0byBoZWFyIHRoYXQgeW91IGFyZSB3b3JraW5nIG9uIHRoaXMg
-aXNzdWUuDQpJZiB5b3UgY2FuIHNoYXJlIHlvdXIgcnN5c2xvZyBjb25maWd1cmF0aW9uIHdpdGgg
-bWUgdGhhdCB3aWxsIGJlIGEgZ29vZCBuZXdzIGZvciBtZSwgSSBjYW4gdHJhY2UgaXQgZmlyc3Qu
-DQoNCkFjY29yZGluZyB0byB0aGUgYWJvdmUgVVJMLCBpcyBpdCBzb21ldGhpbmcgSSBtaXNzZWQs
-IEkgZGlkIG5vdCBmaW5kIHRoZSAiYWRkIHNlbCIgdG8gc3lzIGxvZyBmdW5jdGlvbj8NCkkgd2Fu
-ZGVyIHRvIGtub3cgaG93IHlvdSBhZGQgc2VsIHRvIHN5cyBsb2cuIE9yIHlvdSB3YW50IHRvIHNo
-YXJlIGl0IGFmdGVyIGludGVybmFsIHRlc3RpbmcuDQoNClRoYW5rcywNCldpbGwNCg0KPiBUaGFu
-a3MsDQo+IC1KYXNvbg0KPiA+DQo+ID4gQlJzLA0KPiA+IFdpbGwNCj4gPg0K
+On 01/05/2019 18:48, Guenter Roeck wrote:
+> On Thu, Apr 18, 2019 at 12:58:15PM -0700, Guenter Roeck wrote:
+>> thermal_of_cooling_device_register() and thermal_cooling_device_register()
+>> are typically called from driver probe functions, and
+>> thermal_cooling_device_unregister() is called from remove functions. This
+>> makes both a perfect candidate for device managed functions.
+>>
+>> Introduce devm_thermal_of_cooling_device_register(). This function can
+>> also be used to replace thermal_cooling_device_register() by passing a NULL
+>> pointer as device node. The new function requires both struct device *
+>> and struct device_node * as parameters since the struct device_node *
+>> parameter is not always identical to dev->of_node.
+>>
+>> Don't introduce a device managed remove function since it is not needed
+>> at this point.
+>>
+> 
+> Any feedback / thoughts / comments ?
+
+Hi Guenter,
+
+I have comments about your patch but I need some time to double check in
+the current code how the 'of' and 'devm' are implemented.
+
+
+-- 
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
