@@ -2,61 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D95014929
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 13:50:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A75614B9A
+	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 16:14:27 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44yLf1009CzDqLJ
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 21:50:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44yPr10QYJzDq7d
+	for <lists+openbmc@lfdr.de>; Tue,  7 May 2019 00:14:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=mic.com.tw
- (client-ip=220.130.36.7; helo=micmsefe02.mic.com.tw;
- envelope-from=ray.lue@mic.com.tw; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=mic.com.tw
-X-Greylist: delayed 3328 seconds by postgrey-1.36 at bilbo;
- Mon, 06 May 2019 21:49:29 AEST
-Received: from MICMSEFE02.mic.com.tw (mail22.mic.com.tw [220.130.36.7])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44yLcn468szDqJV
- for <openbmc@lists.ozlabs.org>; Mon,  6 May 2019 21:49:29 +1000 (AEST)
-Received: from MICMSEFE02.mic.com.tw (localhost [127.0.0.2] (may be forged))
- by MICMSEFE02.mic.com.tw with ESMTP id x46As45i082433
- for <openbmc@lists.ozlabs.org>; Mon, 6 May 2019 18:54:04 +0800 (GMT-8)
- (envelope-from ray.lue@mic.com.tw)
-Received: from MICEXVCAS01.mitacad.com (micexvcas01.mitacad.com [10.88.2.25])
- by MICMSEFE02.mic.com.tw with ESMTP id x46ArXdp082357;
- Mon, 6 May 2019 18:53:33 +0800 (GMT-8)
- (envelope-from ray.lue@mic.com.tw)
-Received: from MICEXVMS02.mitacad.com ([10.88.2.28]) by
- MICEXVCAS01.mitacad.com ([10.88.2.25]) with mapi id 14.03.0210.002; Mon, 6
- May 2019 18:53:34 +0800
-From: <ray.lue@mic.com.tw>
-To: <andrew@aj.id.au>, <ray.lue@gmail.com>, <openbmc@lists.ozlabs.org>,
- <joel@jms.id.au>, <vijaykhemka@fb.com>
-Subject: RE: [PATCH linux dev-5.0 v2 1/1] ARM: dts: aspeed: Add s7106 BMC
- Machine
-Thread-Topic: [PATCH linux dev-5.0 v2 1/1] ARM: dts: aspeed: Add s7106 BMC
- Machine
-Thread-Index: AQHU/+DP/wbJva2FK02x2ob9lXLLKKZd6xNw
-Importance: high
-X-Priority: 1
-Date: Mon, 6 May 2019 10:53:33 +0000
-Message-ID: <AC132CC2BE8ECA4988A9953C168DE3C53AC8A567@MICEXVMS02.mitacad.com>
-References: <1556622019-7790-1-git-send-email-ray.lue@mic.com.tw>
- <9e9b1574-7d06-4866-a706-a11b390b3702@www.fastmail.com>
-In-Reply-To: <9e9b1574-7d06-4866-a706-a11b390b3702@www.fastmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.88.25.29]
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44yPkc6HHbzDqCG
+ for <openbmc@lists.ozlabs.org>; Tue,  7 May 2019 00:09:44 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x46E2cVW059084
+ for <openbmc@lists.ozlabs.org>; Mon, 6 May 2019 10:09:39 -0400
+Received: from e35.co.us.ibm.com (e35.co.us.ibm.com [32.97.110.153])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sap710s13-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 06 May 2019 10:09:39 -0400
+Received: from localhost
+ by e35.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <mspinler@linux.ibm.com>;
+ Mon, 6 May 2019 15:09:38 +0100
+Received: from b03cxnp07029.gho.boulder.ibm.com (9.17.130.16)
+ by e35.co.us.ibm.com (192.168.1.135) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 6 May 2019 15:09:35 +0100
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x46E9XVV9961956
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 May 2019 14:09:33 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF2186E050;
+ Mon,  6 May 2019 14:09:33 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 79ACD6E04E;
+ Mon,  6 May 2019 14:09:33 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  6 May 2019 14:09:33 +0000 (GMT)
+Subject: Re: [PATCH dev-5.0 v3] ARM: dts: aspeed: Add Swift BMC machine
+To: Adriana Kobylak <anoo@linux.ibm.com>, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org
+References: <5bbc8649-5a38-fe38-9a97-9c4ec582b511@linux.ibm.com>
+ <1556572128-20917-1-git-send-email-anoo@linux.ibm.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Date: Mon, 6 May 2019 09:09:40 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-X-MAIL: MICMSEFE02.mic.com.tw x46ArXdp082357
+In-Reply-To: <1556572128-20917-1-git-send-email-anoo@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19050614-0012-0000-0000-00001732A8D2
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011060; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000285; SDB=6.01199426; UDB=6.00629251; IPR=6.00980303; 
+ MB=3.00026753; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-06 14:09:36
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19050614-0013-0000-0000-00005727E1E0
+Message-Id: <98fe0915-50f5-62ca-f659-2fb852ac21e7@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-06_09:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905060122
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,124 +96,874 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Adriana Kobylak <anoo@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQW5kcmV3LA0KDQpUaGFua3MgZm9yIHlvdXIgcmV2aWV3LCBJIHdpbGwgdXBkYXRlIHRoZSBw
-YXRjaCBhY2NvcmRpbmdseS4NCkRldGFpbGVkIHJlc3BvbnNlIGJlbG93Lg0KDQo+IC0tLS0tT3Jp
-Z2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEFuZHJldyBKZWZmZXJ5IFttYWlsdG86YW5kcmV3
-QGFqLmlkLmF1XQ0KPiBTZW50OiBXZWRuZXNkYXksIE1heSAxLCAyMDE5IDE6NDMgUE0NCj4gVG86
-IFJheSBMdWUgPHJheS5sdWVAZ21haWwuY29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBK
-b2VsIFN0YW5sZXkNCj4gPGpvZWxAam1zLmlkLmF1PjsgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1r
-YUBmYi5jb20+DQo+IENjOiByYXkubHVlICinZq2nvlUgLSBNQ1QpIDxyYXkubHVlQG1pYy5jb20u
-dHc+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggbGludXggZGV2LTUuMCB2MiAxLzFdIEFSTTogZHRz
-OiBhc3BlZWQ6IEFkZCBzNzEwNiBCTUMNCj4gTWFjaGluZQ0KPiANCj4gSGkgUmF5LA0KPiANCj4g
-VGhhbmtzIGZvciB0aGUgcGF0Y2gsIGl0IHdvdWxkIGJlIGdvb2QgdG8gc2VuZCB0aGlzIHVwc3Ry
-ZWFtIQ0KPiANCj4gSG93ZXZlciwgc29tZSBjb21tZW50cyBiZWxvdzoNCj4gDQo+IE9uIFR1ZSwg
-MzAgQXByIDIwMTksIGF0IDIwOjMyLCBSYXkgTHVlIHdyb3RlOg0KPiA+IHM3MTA2IGlzIGEgVHlh
-biBwbGF0Zm9ybSBmYW1pbHkgd2l0aCBhbiBBU1BFRUQgQVNUMjUwMCBCTUMuDQo+ID4NCj4gPiBT
-aWduZWQtb2ZmLWJ5OiBSYXkgTHVlIDxyYXkubHVlQG1pYy5jb20udHc+DQo+ID4gLS0tDQo+ID4g
-IGFyY2gvYXJtL2Jvb3QvZHRzL01ha2VmaWxlICAgICAgICAgICAgICAgICAgfCAgIDMgKy0NCj4g
-PiAgYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cyB8IDE3NQ0KPiA+
-ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgMiBmaWxlcyBjaGFuZ2VkLCAxNzcg
-aW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKSAgY3JlYXRlIG1vZGUgMTAwNzU1DQo+ID4gYXJj
-aC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0KPiA+DQo+ID4gZGlmZiAt
-LWdpdCBhL2FyY2gvYXJtL2Jvb3QvZHRzL01ha2VmaWxlIGIvYXJjaC9hcm0vYm9vdC9kdHMvTWFr
-ZWZpbGUNCj4gPiBpbmRleCBiZDQwMTQ4Li5iYzM4Zjc3IDEwMDY0NA0KPiA+IC0tLSBhL2FyY2gv
-YXJtL2Jvb3QvZHRzL01ha2VmaWxlDQo+ID4gKysrIGIvYXJjaC9hcm0vYm9vdC9kdHMvTWFrZWZp
-bGUNCj4gPiBAQCAtMTI0Nyw0ICsxMjQ3LDUgQEAgZHRiLSQoQ09ORklHX0FSQ0hfQVNQRUVEKSAr
-PSBcDQo+ID4gIAlhc3BlZWQtYm1jLW9wcC13aXRoZXJzcG9vbi5kdGIgXA0KPiA+ICAJYXNwZWVk
-LWJtYy1vcHAtemFpdXMuZHRiIFwNCj4gPiAgCWFzcGVlZC1ibWMtcG9ydHdlbGwtbmVwdHVuZS5k
-dGIgXA0KPiA+IC0JYXNwZWVkLWJtYy1xdWFudGEtcTcxbC5kdGINCj4gPiArCWFzcGVlZC1ibWMt
-cXVhbnRhLXE3MWwuZHRiIFwNCj4gPiArCWFzcGVlZC1ibWMtdHlhbi1zNzEwNi5kdGINCj4gPiBk
-aWZmIC0tZ2l0IGEvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0K
-PiA+IGIvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0KPiA+IG5l
-dyBmaWxlIG1vZGUgMTAwNzU1DQo+ID4gaW5kZXggMDAwMDAwMC4uNTYzNTU4ZA0KPiA+IC0tLSAv
-ZGV2L251bGwNCj4gPiArKysgYi9hcmNoL2FybS9ib290L2R0cy9hc3BlZWQtYm1jLXR5YW4tczcx
-MDYuZHRzDQo+ID4gQEAgLTAsMCArMSwxNzUgQEANCj4gPiArLy8gU1BEWC1MaWNlbnNlLUlkZW50
-aWZpZXI6IEdQTC0yLjANCj4gPiArL2R0cy12MS87DQo+ID4gKw0KPiA+ICsjaW5jbHVkZSAiYXNw
-ZWVkLWc1LmR0c2kiDQo+ID4gKw0KPiA+ICsvIHsNCj4gPiArCW1vZGVsID0gIlR5YW4gUzcxMDYg
-Qk1DIjsNCj4gPiArCWNvbXBhdGlibGUgPSAidHlhbixzNzEwNi1ibWMiLCAiYXNwZWVkLGFzdDI1
-MDAiOw0KPiA+ICsNCj4gPiArCWNob3NlbiB7DQo+ID4gKwkJc3Rkb3V0LXBhdGggPSAmdWFydDU7
-DQo+ID4gKwkJYm9vdGFyZ3MgPSAiY29uc29sZT10dHlTNCwxMTUyMDAgZWFybHlwcmludGsiOw0K
-PiA+ICsJfTsNCj4gPiArDQo+ID4gKwltZW1vcnkgew0KPiA+ICsJCXJlZyA9IDwweDgwMDAwMDAw
-IDB4MjAwMDAwMDA+Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlyZXNlcnZlZC1tZW1vcnkgew0K
-PiA+ICsJCSNhZGRyZXNzLWNlbGxzID0gPDE+Ow0KPiA+ICsJCSNzaXplLWNlbGxzID0gPDE+Ow0K
-PiA+ICsJCXJhbmdlczsNCj4gPiArDQo+ID4gKwkJdmdhX21lbW9yeTogZnJhbWVidWZmZXJAOTgw
-MDAwMDAgew0KPiA+ICsJCQluby1tYXA7DQo+ID4gKwkJCXJlZyA9IDwweDk4MDAwMDAwIDB4MDA4
-MDAwMDA+OyAvKiA4TUIgKi8NCj4gPiArCQl9Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlpaW8t
-aHdtb24gew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiaWlvLWh3bW9uIjsNCj4gPiArCQlpby1jaGFu
-bmVscyA9IDwmYWRjIDA+LCA8JmFkYyAxPiwgPCZhZGMgMj4sIDwmYWRjIDM+LA0KPiA+ICsJCQk8
-JmFkYyA0PiwgPCZhZGMgNT4sIDwmYWRjIDY+LCA8JmFkYyA3PiwNCj4gPiArCQkJPCZhZGMgOD4s
-IDwmYWRjIDk+LCA8JmFkYyAxMD4sIDwmYWRjIDExPiwNCj4gPiArCQkJPCZhZGMgMTI+LCA8JmFk
-YyAxMz4sIDwmYWRjIDE0PjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJaWlvLWh3bW9uLWJhdHRl
-cnkgew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiaWlvLWh3bW9uIjsNCj4gPiArCQlpby1jaGFubmVs
-cyA9IDwmYWRjIDE1PjsNCj4gPiArCX07DQo+ID4gK307DQo+ID4gKw0KPiA+ICsmZm1jIHsNCj4g
-PiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArCWZsYXNoQDAgew0KPiA+ICsJCWxhYmVsID0gImJt
-YyI7DQo+ID4gKwkJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsJCW0yNXAsZmFzdC1yZWFkOw0KPiA+
-ICsjaW5jbHVkZSAib3BlbmJtYy1mbGFzaC1sYXlvdXQuZHRzaSINCj4gPiArCX07DQo+ID4gK307
-DQo+ID4gKw0KPiA+ICsvLyBVQVJUMSBpcyB1c2VkIG9ubHkgYnkgdGhlIGhvc3QuIFdoaWxlIHRo
-ZSBCTUMgZG9lcyBub3QgbmVlZCB0bw0KPiA+IGFjY2VzcyBpdCwNCj4gPiArLy8gZW5hYmxlIGl0
-IGhlcmUgdG8gbWFrZSBzdXJlIHRoZSBVQVJUJ3MgY2xvY2sgZ2V0cyBlbmFibGVkLg0KPiA+ICsm
-dWFydDEgew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiANCj4gTmVlZHMgYSBwaW5jdHJsIG5v
-ZGUgYXMgd2VsbCB0byBlbnN1cmUgdGhlIFVBUlQgSU8gaXMgcm91dGVkIG91dCBvZiB0aGUgQk1D
-Lg0KDQpXaWxsIGFkZCBpbiBWMyBwYXRjaA0KDQo+IA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnVh
-cnQzIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gDQo+IEFzIGFib3ZlLg0KDQpXaWxsIGFk
-ZCBpbiBWMyBwYXRjaA0KDQo+IA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnVhcnQ1IHsNCj4gPiAr
-CXN0YXR1cyA9ICJva2F5IjsNCj4gDQo+IE5vdGUgdGhhdCBwaW5jdHJsIGlzbid0IG5lY2Vzc2Fy
-eSBoZXJlLCB1YXJ0NSBmdW5jdGlvbmFsaXR5IGlzbid0IGJlaGluZCBhIG11eC4NCj4gDQo+ID4g
-K307DQo+ID4gKw0KPiA+ICsmbHBjX2N0cmwgew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiAN
-Cj4gSGF2ZSB5b3UgcnVuIGludG8gaXNzdWVzIHdpdGggbm90IGFzc2lnbmluZyByZXNlcnZlZCBt
-ZW1vcnk/IEFzIGZhciBhcyBJJ20NCj4gYXdhcmUgd2Ugc3RpbGwgbmVlZCBWaWpheSdzIHBhdGNo
-IHRvIGJlIGFwcGxpZWQuDQoNClllcywgSSBuZWVkIHRvIGFkZCBiZWxvdyBkZXNjcmlwdGlvbiBv
-ciB0aGUgTENMSyB3aWxsIGJlIGRpc2FibGVkLg0KDQoJbWVtb3J5LXJlZ2lvbiA9IDwmZmxhc2hf
-bWVtb3J5PjsNCglmbGFzaCA9IDwmc3BpMT47DQoNCldlIGNhbid0IHJlbGF0ZSB0aGlzIGRlc2Ny
-aXB0aW9uIHRvIExDTEssIHNvIHdlIHRoaW5rIGl0J3MgYSBidWcgYW5kIGNyZWF0ZWQgYW4NCmFu
-b3RoZXIgcGF0Y2ggdG8gYWRkIHRoZXNlIHR3byBsaW5lcyB0byB1cGRhdGUgczcwMTYgZGV2aWNl
-IHRyZWUuIA0KU29ycnkgZm9yIHRoZSBjb25mdXNpb24gbWFkZSwgSSB3aWxsIGFkZCB0aGlzIGlu
-dG8gVjMgcGF0Y2ggZGlyZWN0bHkuICAgDQoNCj4gDQo+IEFyZSB5b3Ugc2V0dGluZyBpdCB0byAi
-b2theSIgdGhpcyBqdXN0IHRvIGVuYWJsZSB0aGUgTFBDIGNsb2NrPw0KPiANCj4gPiArfTsNCj4g
-PiArDQo+ID4gKyZscGNfc25vb3Agew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsJc25v
-b3AtcG9ydHMgPSA8MHg4MD47DQo+ID4gK307DQo+ID4gKw0KPiA+ICsmYWRjIHsNCj4gPiArCXN0
-YXR1cyA9ICJva2F5IjsNCj4gDQo+IFNob3VsZCBoYXZlIGV4cGxpY2l0IHBpbmN0cmwgcHJvcGVy
-dHkgaGVyZSByZXF1ZXN0aW5nIHRoZSBuZWNlc3NhcnkgQURDIGxpbmVzLg0KPiBMb29rcyBsaWtl
-IGFsbCB0aGUgb3RoZXIgcGxhdGZvcm0gRFRTIGZpbGVzIG5lZWQgdGhpcyBmaXhlZCB0b28uDQo+
-IA0KDQpHb3QgaXQsIHdpbGwgdXBkYXRlIHRoZSBkZXZpY2UgcGluY3RybCBmb3IgYWxsIEFEQyBs
-aW5lcy4NCg0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnB3bV90YWNobyB7DQo+ID4gKwlzdGF0dXMg
-PSAib2theSI7DQo+ID4gKwlwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOw0KPiA+ICsJcGluY3Ry
-bC0wID0gPCZwaW5jdHJsX3B3bTNfZGVmYXVsdCAmcGluY3RybF9wd200X2RlZmF1bHQ+Ow0KPiA+
-ICsNCj4gPiArCWZhbkAwIHsNCj4gPiArCQlyZWcgPSA8MHgwMz47DQo+ID4gKwkJYXNwZWVkLGZh
-bi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDI+Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlmYW5A
-MSB7DQo+ID4gKwkJcmVnID0gPDB4MDQ+Ow0KPiA+ICsJCWFzcGVlZCxmYW4tdGFjaC1jaCA9IC9i
-aXRzLyA4IDwweDAzPjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJZmFuQDIgew0KPiA+ICsJCXJl
-ZyA9IDwweDAzPjsNCj4gPiArCQlhc3BlZWQsZmFuLXRhY2gtY2ggPSAvYml0cy8gOCA8MHgwND47
-DQo+ID4gKwl9Ow0KPiA+ICsNCj4gPiArCWZhbkAzIHsNCj4gPiArCQlyZWcgPSA8MHgwND47DQo+
-ID4gKwkJYXNwZWVkLGZhbi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDU+Ow0KPiA+ICsJfTsNCj4g
-PiArDQo+ID4gKwlmYW5ANCB7DQo+ID4gKwkJcmVnID0gPDB4MDM+Ow0KPiA+ICsJCWFzcGVlZCxm
-YW4tdGFjaC1jaCA9IC9iaXRzLyA4IDwweDA2PjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJZmFu
-QDUgew0KPiA+ICsJCXJlZyA9IDwweDA0PjsNCj4gPiArCQlhc3BlZWQsZmFuLXRhY2gtY2ggPSAv
-Yml0cy8gOCA8MHgwNz47DQo+ID4gKwl9Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzAgew0K
-PiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsNCj4gPiArCW5jdDc4MDJAMjggew0KPiA+ICsJ
-CWNvbXBhdGlibGUgPSAibnV2b3RvbixuY3Q3ODAyIjsNCj4gDQo+IFRoaXMgY29tcGF0aWJsZSBp
-c24ndCBkb2N1bWVudGVkIGFueXdoZXJlLiBEbyB5b3UgaGF2ZSBvdXQtb2YtdHJlZSBiaW5kaW5n
-cz8NCj4gQSBkcml2ZXI/DQo+IA0KDQpUaGUgZHJpdmVyIGlzIGluIC9kcml2ZXJzL2h3bW9uL25j
-dDc4MDIuYywgSSBkb24ndCBrbm93IHdoeSBpdCdzIG5vdCBkb2N1bWVudGVkIGluIA0KL2Rldmlj
-ZXRyZWUvYmluZGluZ3MvaHdtb24uIA0KDQo+ID4gKwkJcmVnID0gPDB4Mjg+Ow0KPiA+ICsJfTsN
-Cj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmMxIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4g
-PiArfTsNCj4gPiArDQo+ID4gKyZpMmMyIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiAr
-DQo+ID4gKwllZXByb21ANTAgew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiYXQsMjRjMjU2IjsNCj4g
-DQo+IENvbXBhdGlibGUgYWxzbyBpc24ndCBkb2N1bWVudGVkIGFueXdoZXJlLiBTYW1lIHF1ZXJp
-ZXMgYXMgYWJvdmUuDQo+IA0KDQpTb3JyeSBmb3IgdXNpbmcgdGhlIGRlcHJlY2F0ZWQgdGVybSwg
-d2lsbCB1cGRhdGUgdG8gImF0bWVsIi4NCg0KDQo+ID4gKwkJcmVnID0gPDB4NTA+Ow0KPiA+ICsJ
-fTsNCj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmMzIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsN
-Cj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmM0IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4g
-PiArfTsNCj4gPiArDQo+ID4gKyZpMmM1IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiAr
-fTsNCj4gPiArDQo+ID4gKyZpMmM2IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsN
-Cj4gPiArDQo+ID4gKyZpMmM3IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsNCj4g
-PiArDQo+ID4gKyZpMmM4IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsNCj4gPiAr
-DQo+ID4gKyZtYWMwIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArDQo+ID4gKwl1c2Ut
-bmNzaTsNCj4gPiArCW5vLWh3LWNoZWNrc3VtOw0KPiA+ICsNCj4gPiArCXBpbmN0cmwtbmFtZXMg
-PSAiZGVmYXVsdCI7DQo+ID4gKwlwaW5jdHJsLTAgPSA8JnBpbmN0cmxfcm1paTFfZGVmYXVsdD47
-IH07DQo+ID4gKw0KPiA+ICsmaWJ0IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsN
-Cj4gPiAtLQ0KPiA+IDIuNy40DQo+ID4NCj4gPg0KPiANCj4gQ2hlZXJzLA0KPiANCj4gQW5kcmV3
-DQo=
+
+On 4/29/2019 4:08 PM, Adriana Kobylak wrote:
+> From: Adriana Kobylak <anoo@us.ibm.com>
+>
+> The Swift BMC is an ASPEED ast2500 based BMC that is part of
+> a Power9 server. This adds the device tree description for
+> most upstream components.
+>
+> Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+
+
+Reviewed-by: Matt Spinler <spinler@us.ibm.com>
+
+
+> ---
+>   arch/arm/boot/dts/Makefile                 |   1 +
+>   arch/arm/boot/dts/aspeed-bmc-opp-swift.dts | 828 +++++++++++++++++++++++++++++
+>   2 files changed, 829 insertions(+)
+>   create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+>
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index bd40148..b82a24d 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1244,6 +1244,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	aspeed-bmc-opp-lanyang.dtb \
+>   	aspeed-bmc-opp-palmetto.dtb \
+>   	aspeed-bmc-opp-romulus.dtb \
+> +	aspeed-bmc-opp-swift.dtb \
+>   	aspeed-bmc-opp-witherspoon.dtb \
+>   	aspeed-bmc-opp-zaius.dtb \
+>   	aspeed-bmc-portwell-neptune.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+> new file mode 100644
+> index 0000000..8d44e3c
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+> @@ -0,0 +1,828 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/dts-v1/;
+> +#include "aspeed-g5.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +#include <dt-bindings/leds/leds-pca955x.h>
+> +
+> +/ {
+> +	model = "Swift BMC";
+> +	compatible = "ibm,swift-bmc", "aspeed,ast2500";
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +		bootargs = "console=ttyS4,115200 earlyprintk";
+> +	};
+> +
+> +	memory@80000000 {
+> +		reg = <0x80000000 0x20000000>;
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		flash_memory: region@98000000 {
+> +			no-map;
+> +			reg = <0x98000000 0x04000000>; /* 64M */
+> +		};
+> +
+> +		gfx_memory: framebuffer {
+> +			size = <0x01000000>;
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		air-water {
+> +			label = "air-water";
+> +			gpios = <&gpio ASPEED_GPIO(B, 5) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(B, 5)>;
+> +		};
+> +
+> +		checkstop {
+> +			label = "checkstop";
+> +			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(J, 2)>;
+> +		};
+> +
+> +		ps0-presence {
+> +			label = "ps0-presence";
+> +			gpios = <&gpio ASPEED_GPIO(R, 7) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(R, 7)>;
+> +		};
+> +
+> +		ps1-presence {
+> +			label = "ps1-presence";
+> +			gpios = <&gpio ASPEED_GPIO(N, 0) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(N, 0)>;
+> +		};
+> +
+> +		oppanel-presence {
+> +			label = "oppanel-presence";
+> +			gpios = <&gpio ASPEED_GPIO(A, 7) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(A, 7)>;
+> +		};
+> +
+> +		opencapi-riser-presence {
+> +			label = "opencapi-riser-presence";
+> +			gpios = <&gpio ASPEED_GPIO(I, 0) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(I, 0)>;
+> +		};
+> +	};
+> +
+> +	iio-hwmon-battery {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 12>;
+> +	};
+> +
+> +	gpio-keys-polled {
+> +		compatible = "gpio-keys-polled";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		poll-interval = <1000>;
+> +
+> +		scm0-presence {
+> +			label = "scm0-presence";
+> +			gpios = <&pca9552 6 GPIO_ACTIVE_LOW>;
+> +			linux,code = <6>;
+> +		};
+> +
+> +		scm1-presence {
+> +			label = "scm1-presence";
+> +			gpios = <&pca9552 7 GPIO_ACTIVE_LOW>;
+> +			linux,code = <7>;
+> +		};
+> +
+> +		cpu0vrm-presence {
+> +			label = "cpu0vrm-presence";
+> +			gpios = <&pca9552 12 GPIO_ACTIVE_LOW>;
+> +			linux,code = <12>;
+> +		};
+> +
+> +		cpu1vrm-presence {
+> +			label = "cpu1vrm-presence";
+> +			gpios = <&pca9552 13 GPIO_ACTIVE_LOW>;
+> +			linux,code = <13>;
+> +		};
+> +
+> +		fan0-presence {
+> +			label = "fan0-presence";
+> +			gpios = <&pca0 5 GPIO_ACTIVE_LOW>;
+> +			linux,code = <5>;
+> +		};
+> +
+> +		fan1-presence {
+> +			label = "fan1-presence";
+> +			gpios = <&pca0 6 GPIO_ACTIVE_LOW>;
+> +			linux,code = <6>;
+> +		};
+> +
+> +		fan2-presence {
+> +			label = "fan2-presence";
+> +			gpios = <&pca0 7 GPIO_ACTIVE_LOW>;
+> +			linux,code = <7>;
+> +		};
+> +
+> +		fan3-presence {
+> +			label = "fan3-presence";
+> +			gpios = <&pca0 8 GPIO_ACTIVE_LOW>;
+> +			linux,code = <8>;
+> +		};
+> +
+> +		fanboost-presence {
+> +			label = "fanboost-presence";
+> +			gpios = <&pca0 9 GPIO_ACTIVE_LOW>;
+> +			linux,code = <9>;
+> +		};
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		fan0 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca0 0 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan1 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca0 1 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan2 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca0 2 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan3 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca0 3 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fanboost {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca0 4 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		front-fault {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		front-power {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		front-id {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-fault {
+> +			gpios = <&gpio ASPEED_GPIO(N, 2) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-id {
+> +			gpios = <&gpio ASPEED_GPIO(N, 4) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-power {
+> +			gpios = <&gpio ASPEED_GPIO(N, 3) GPIO_ACTIVE_LOW>;
+> +		};
+> +	};
+> +
+> +	fsi: gpio-fsi {
+> +		compatible = "fsi-master-gpio", "fsi-master";
+> +		#address-cells = <2>;
+> +		#size-cells = <0>;
+> +		no-gpio-delays;
+> +
+> +		clock-gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
+> +		data-gpios = <&gpio ASPEED_GPIO(E, 0) GPIO_ACTIVE_HIGH>;
+> +		mux-gpios = <&gpio ASPEED_GPIO(P, 4) GPIO_ACTIVE_HIGH>;
+> +		enable-gpios = <&gpio ASPEED_GPIO(P, 0) GPIO_ACTIVE_HIGH>;
+> +		trans-gpios = <&gpio ASPEED_GPIO(P, 3) GPIO_ACTIVE_HIGH>;
+> +	};
+> +
+> +	iio-hwmon-dps310 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&dps 0>;
+> +	};
+> +
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		label = "bmc";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <100000000>;
+> +		partitions {
+> +			#address-cells = < 1 >;
+> +			#size-cells = < 1 >;
+> +			compatible = "fixed-partitions";
+> +			u-boot@0 {
+> +				reg = < 0 0x60000 >;
+> +				label = "u-boot";
+> +			};
+> +			u-boot-env@60000 {
+> +				reg = < 0x60000 0x20000 >;
+> +				label = "u-boot-env";
+> +			};
+> +			obmc-ubi@80000 {
+> +				reg = < 0x80000 0x7F80000>;
+> +				label = "obmc-ubi";
+> +			};
+> +		};
+> +	};
+> +
+> +	flash@1 {
+> +		status = "okay";
+> +		label = "alt-bmc";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <100000000>;
+> +		partitions {
+> +			#address-cells = < 1 >;
+> +			#size-cells = < 1 >;
+> +			compatible = "fixed-partitions";
+> +			u-boot@0 {
+> +				reg = < 0 0x60000 >;
+> +				label = "alt-u-boot";
+> +			};
+> +			u-boot-env@60000 {
+> +				reg = < 0x60000 0x20000 >;
+> +				label = "alt-u-boot-env";
+> +			};
+> +			obmc-ubi@80000 {
+> +				reg = < 0x80000 0x7F80000>;
+> +				label = "alt-obmc-ubi";
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&spi1 {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default>;
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		label = "pnor";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <100000000>;
+> +	};
+> +};
+> +
+> +&uart1 {
+> +	/* Rear RS-232 connector */
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_txd1_default
+> +			&pinctrl_rxd1_default
+> +			&pinctrl_nrts1_default
+> +			&pinctrl_ndtr1_default
+> +			&pinctrl_ndsr1_default
+> +			&pinctrl_ncts1_default
+> +			&pinctrl_ndcd1_default
+> +			&pinctrl_nri1_default>;
+> +};
+> +
+> +&uart2 {
+> +	/* APSS */
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
+> +};
+> +
+> +&uart5 {
+> +	status = "okay";
+> +};
+> +
+> +&lpc_ctrl {
+> +	status = "okay";
+> +	memory-region = <&flash_memory>;
+> +	flash = <&spi1>;
+> +};
+> +
+> +&mbox {
+> +	status = "okay";
+> +};
+> +
+> +&mac0 {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rmii1_default>;
+> +	use-ncsi;
+> +};
+> +
+> +&i2c2 {
+> +	status = "okay";
+> +
+> +	/* MUX ->
+> +	 *    Samtec 1
+> +	 *    Samtec 2
+> +	 */
+> +};
+> +
+> +&i2c3 {
+> +	status = "okay";
+> +
+> +	max31785@52 {
+> +		compatible = "maxim,max31785a";
+> +		reg = <0x52>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		fan@0 {
+> +			compatible = "pmbus-fan";
+> +			reg = <0>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan@1 {
+> +			compatible = "pmbus-fan";
+> +			reg = <1>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan@2 {
+> +			compatible = "pmbus-fan";
+> +			reg = <2>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan@3 {
+> +			compatible = "pmbus-fan";
+> +			reg = <3>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan@4 {
+> +			compatible = "pmbus-fan";
+> +			reg = <4>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +	};
+> +
+> +	pca0: pca9552@60 {
+> +		compatible = "nxp,pca9552";
+> +		reg = <0x60>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		gpio@0 {
+> +			reg = <0>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@1 {
+> +			reg = <1>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@2 {
+> +			reg = <2>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@3 {
+> +			reg = <3>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@4 {
+> +			reg = <4>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@5 {
+> +			reg = <5>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@6 {
+> +			reg = <6>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@7 {
+> +			reg = <7>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@8 {
+> +			reg = <8>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@9 {
+> +			reg = <9>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@10 {
+> +			reg = <10>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@11 {
+> +			reg = <11>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@12 {
+> +			reg = <12>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@13 {
+> +			reg = <13>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@14 {
+> +			reg = <14>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@15 {
+> +			reg = <15>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +	};
+> +
+> +	power-supply@68 {
+> +		compatible = "ibm,cffps1";
+> +		reg = <0x68>;
+> +	};
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +	};
+> +
+> +	power-supply@69 {
+> +		compatible = "ibm,cffps1";
+> +		reg = <0x69>;
+> +	};
+> +
+> +	eeprom@51 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x51>;
+> +	};
+> +};
+> +
+> +&i2c7 {
+> +	status = "okay";
+> +
+> +	dps: dps310@76 {
+> +		compatible = "infineon,dps310";
+> +		reg = <0x76>;
+> +		#io-channel-cells = <0>;
+> +	};
+> +
+> +	tmp275@48 {
+> +		compatible = "ti,tmp275";
+> +		reg = <0x48>;
+> +	};
+> +
+> +	si7021a20@20 {
+> +		compatible = "si,si7021a20";
+> +		reg = <0x20>;
+> +	};
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +	};
+> +
+> +	pca1: pca9551@60 {
+> +		compatible = "nxp,pca9551";
+> +		reg = <0x60>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		gpio@0 {
+> +			reg = <0>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@1 {
+> +			reg = <1>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@2 {
+> +			reg = <2>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@3 {
+> +			reg = <3>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@4 {
+> +			reg = <4>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@5 {
+> +			reg = <5>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@6 {
+> +			reg = <6>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@7 {
+> +			reg = <7>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +	};
+> +};
+> +
+> +&i2c8 {
+> +	status = "okay";
+> +
+> +	pca9552: pca9552@60 {
+> +		compatible = "nxp,pca9552";
+> +		reg = <0x60>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		gpio-line-names = "PS_SMBUS_RESET_N", "APSS_RESET_N",
+> +			"GPU0_TH_OVERT_N_BUFF",	"GPU1_TH_OVERT_N_BUFF",
+> +			"GPU2_TH_OVERT_N_BUFF", "GPU3_TH_OVERT_N_BUFF",
+> +			"P9_SCM0_PRES",	"P9_SCM1_PRES",
+> +			"GPU0_PWR_GOOD_BUFF", "GPU1_PWR_GOOD_BUFF",
+> +			"GPU2_PWR_GOOD_BUFF", "GPU3_PWR_GOOD_BUFF",
+> +			"PRESENT_VRM_CP0_N", "PRESENT_VRM_CP1_N",
+> +			"12V_BREAKER_FLT_N", "THROTTLE_UNLATCHED_N";
+> +
+> +		gpio@0 {
+> +			reg = <0>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@1 {
+> +			reg = <1>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@2 {
+> +			reg = <2>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@3 {
+> +			reg = <3>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@4 {
+> +			reg = <4>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@5 {
+> +			reg = <5>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@6 {
+> +			reg = <6>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@7 {
+> +			reg = <7>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@8 {
+> +			reg = <8>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@9 {
+> +			reg = <9>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@10 {
+> +			reg = <10>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@11 {
+> +			reg = <11>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@12 {
+> +			reg = <12>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@13 {
+> +			reg = <13>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@14 {
+> +			reg = <14>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@15 {
+> +			reg = <15>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +	};
+> +
+> +	rtc@32 {
+> +		compatible = "epson,rx8900";
+> +		reg = <0x32>;
+> +	};
+> +
+> +	eeprom@51 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x51>;
+> +	};
+> +
+> +	ucd90160@64 {
+> +		compatible = "ti,ucd90160";
+> +		reg = <0x64>;
+> +	};
+> +};
+> +
+> +&i2c9 {
+> +	status = "okay";
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +	};
+> +
+> +	tmp423a@4c {
+> +		compatible = "ti,tmp423";
+> +		reg = <0x4c>;
+> +	};
+> +
+> +	ir35221@71 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x71>;
+> +	};
+> +
+> +	ir35221@72 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x72>;
+> +	};
+> +};
+> +
+> +&i2c10 {
+> +	status = "okay";
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +	};
+> +
+> +	tmp423a@4c {
+> +		compatible = "ti,tmp423";
+> +		reg = <0x4c>;
+> +	};
+> +
+> +	ir35221@71 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x71>;
+> +	};
+> +
+> +	ir35221@72 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x72>;
+> +	};
+> +};
+> +
+> +&i2c11 {
+> +	/* MUX
+> +	 *   -> PCIe Slot 0
+> +	 *   -> PCIe Slot 1
+> +	 *   -> PCIe Slot 2
+> +	 *   -> PCIe Slot 3
+> +	 */
+> +	status = "okay";
+> +};
+> +
+> +&i2c12 {
+> +	status = "okay";
+> +
+> +	tmp275@48 {
+> +		compatible = "ti,tmp275";
+> +		reg = <0x48>;
+> +	};
+> +
+> +	tmp275@4a {
+> +		compatible = "ti,tmp275";
+> +		reg = <0x4a>;
+> +	};
+> +};
+> +
+> +&i2c13 {
+> +	status = "okay";
+> +};
+> +
+> +&vuart {
+> +	status = "okay";
+> +};
+> +
+> +&gfx {
+> +	status = "okay";
+> +	memory-region = <&gfx_memory>;
+> +};
+> +
+> +&pinctrl {
+> +	aspeed,external-nodes = <&gfx &lhc>;
+> +};
+> +
+> +&wdt1 {
+> +	aspeed,reset-type = "none";
+> +	aspeed,external-signal;
+> +	aspeed,ext-push-pull;
+> +	aspeed,ext-active-high;
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_wdtrst1_default>;
+> +};
+> +
+> +&wdt2 {
+> +	aspeed,alt-boot;
+> +};
+> +
+> +&ibt {
+> +	status = "okay";
+> +};
+> +
+> +&adc {
+> +	status = "okay";
+> +};
+> +
+> +#include "ibm-power9-dual.dtsi"
+
