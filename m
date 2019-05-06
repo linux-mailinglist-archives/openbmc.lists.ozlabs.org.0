@@ -2,61 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3A0D143D5
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 05:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 509F314438
+	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 07:03:16 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44y85D671rzDqGx
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 13:54:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44y9c14w7DzDqKX
+	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 15:03:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::841; helo=mail-qt1-x841.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2a00:1450:4864:20::241; helo=mail-lj1-x241.google.com;
+ envelope-from=wak@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="Hb4zxIV9"; 
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="vg9O1mWY"; 
  dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com
+ [IPv6:2a00:1450:4864:20::241])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44y84K6nbbzDqGg
- for <openbmc@lists.ozlabs.org>; Mon,  6 May 2019 13:54:09 +1000 (AEST)
-Received: by mail-qt1-x841.google.com with SMTP id c35so13259830qtk.3
- for <openbmc@lists.ozlabs.org>; Sun, 05 May 2019 20:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44y9b85WHnzDqJ8
+ for <openbmc@lists.ozlabs.org>; Mon,  6 May 2019 15:02:27 +1000 (AEST)
+Received: by mail-lj1-x241.google.com with SMTP id k8so9876037lja.8
+ for <openbmc@lists.ozlabs.org>; Sun, 05 May 2019 22:02:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yLmItnnqILiWWXO3Q5jI4vP2Ej3ZQf5sMErtWvOvLKo=;
- b=Hb4zxIV9LJHj8Qztum+gv2gC2iuvmxT+zAIuM+L0Uyv5J9nn51oQOiWdkqX3hC71w5
- 495k/D/Ka3Bqbo5f/QdVspzo/6FSb1IfjONGH5NnBGkNkUluoetI2TLnCDz7sBYQ5wk6
- DbnIYy1m/eqWNVG9qK8dQjduoHj4TQ58+HW0s=
+ :cc; bh=9QiB0xPtsxCNbnotWeUHMxF6FejUQE2kVT0Y8Qx/j5E=;
+ b=vg9O1mWY44kWuMAy+Gvqti2Fym1etSp6SGekbsVnE4awNPSkCevWLNUC56D5eb7zas
+ YKmODd8gIxi+QtGrphoy0FfSis3gINell2NsgKd8p89PXCjtb2CAHhFxyR8KVTV0aG4+
+ DgEb3XFvJeFh0MpC6MfsOsYV/lkdUBXKo0JEf9irQCZZMa1SLtFvkl/NbWXXg+3u6n10
+ OqQSdYPTRA+brlb8x7Gt07KU1jpAObQInnaKcdrBi2dHnKy6o+DbJlFyO0DGtwIGL3x7
+ A1W+GPyrj+s2OqqR0DyI9HJBLlnMUx6EdP2eZ4YYGZzTot+zMuS1HUNODCCVaI7TK47f
+ zseA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=yLmItnnqILiWWXO3Q5jI4vP2Ej3ZQf5sMErtWvOvLKo=;
- b=Q03zrXsPIo6rXQuFBdBa944nflMPSmhBAOsxHo8oHvvPuqjVIdTCFxxmTVNWcZBYJ6
- e7BSV+QjRVolNzw94zS6A11nz/eEy/YsSXBml8H3R6JvRNZhZswK+zPP+CMGOgetO3l7
- v9rlx6d0FV70wGM+rXwWyygCBsQdOebtHf7AghTALfGlqZ6EN47e0cMlR16SXG7dCp8M
- BNNp41NzEiX7IoKmdCBO3pb+ypCsfZ7f3zceS9p5WeIMwU5uhQMzHMgCDXJVKgfYWmz8
- CjjPWCQi5eRZMFv+lY6CX7jAS9ooV0eQTzHzUGuxZzl5HJPc+DVwbppAUVRaIZ8hKpSj
- uM2A==
-X-Gm-Message-State: APjAAAVaB/gLE6/adaMUR9SbbkY05+xfi2noqkCjJNj/cn3K8p4vc8zD
- uJZh2gxXXz4mAefJjkgfqcZ3ef/7KalomXQbim8=
-X-Google-Smtp-Source: APXvYqxWcLvDzsGzdeaDMClUQRaL3mRma/UHsa5khFMKXBVTIKfw4gT5W9rHs2lFOhBNFAH+Js6EDk/awZDpyErZV7s=
-X-Received: by 2002:ac8:2d48:: with SMTP id o8mr19057304qta.136.1557114845468; 
- Sun, 05 May 2019 20:54:05 -0700 (PDT)
+ bh=9QiB0xPtsxCNbnotWeUHMxF6FejUQE2kVT0Y8Qx/j5E=;
+ b=KELWzTad5lfzMlVCFxMhn7eK7YFK/9ZXWwuH8sKg8OM8GrtCLStiy0IgJI6HDxnzQx
+ X0nhF8xlVwiXXhm/d+2+jUlrc9egXmTO5biQIEHXWz33ZgerHGgKKei8JDo/MA7l1hsL
+ 5iwx4VmkEJ8munXUp9Q5UpeDifP2BhFkrSavSWA3fNjPXjxR+SkN/d8yEac246FS4KpN
+ nQoLc46GT6lQZ5gsAuvq4mgX1eEQDswTz1f+tI1u2Udg+qBTpc3KUqPqJJq7f2ACY9Wo
+ YgQC8HBzB8EGZJRzIADRgGDZ+oPId4lUDRdvYYsN7GrXJKyJz01LANlCujTbcd4SmrKT
+ 2keQ==
+X-Gm-Message-State: APjAAAXqbmrcxeXO9fznC++/eSYdzjUazzSxK/rZuE1eS69Wzfc9DO7W
+ Q2bnbCIM/G5Dn3SondlFqhhWMZx1YjEKKVAzMEQFFA==
+X-Google-Smtp-Source: APXvYqzyURGshUqOnIJhnv8OW6nrAbGxsm4NiT30Nxdqz9M6sdYE1U/bd2mb14qwUYy9FBmT4lgG7ghn/UXRfAywkaA=
+X-Received: by 2002:a2e:8787:: with SMTP id n7mr12356671lji.31.1557118939530; 
+ Sun, 05 May 2019 22:02:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190503124444.5056-1-joel@jms.id.au>
- <88246755-225c-43d9-b27f-6f081bba2d14@www.fastmail.com>
-In-Reply-To: <88246755-225c-43d9-b27f-6f081bba2d14@www.fastmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 6 May 2019 03:53:53 +0000
-Message-ID: <CACPK8XeQ=+uva-JA2nL_RzNmdZVTB0JH3qfrXBgo4m=Ktwrr+g@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.0] ARM: dts: npcm: Remove use of skeleton.dtsi
+References: <CAO=notyajN+Sft6MNBku81Kiovagfo7B_Pzm4bqf1NsLtAOX7A@mail.gmail.com>
+ <8b3e70c9-f182-44cd-997e-5d07b26d76a3@www.fastmail.com>
+In-Reply-To: <8b3e70c9-f182-44cd-997e-5d07b26d76a3@www.fastmail.com>
+From: William Kennington <wak@google.com>
+Date: Sun, 5 May 2019 22:02:07 -0700
+Message-ID: <CAPnigKm6=LS5Pvf5_KUhc9yDJNJUXFfKSgpwdRvjVmOKSHcrtg@mail.gmail.com>
+Subject: Re: pci util cpp library
 To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -70,24 +73,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 6 May 2019 at 03:05, Andrew Jeffery <andrew@aj.id.au> wrote:
+Worth noting that lspci just uses the libpci library provided by
+pciutils. I would try and use that before parsing lspci.
+https://github.com/pciutils/pciutils/blob/master/example.c
+
+On Sun, May 5, 2019 at 8:32 PM Andrew Jeffery <andrew@aj.id.au> wrote:
 >
 >
 >
-> On Fri, 3 May 2019, at 22:16, Joel Stanley wrote:
-> > This file is not present in 5.1. Clean it up in preparation for moving
-> > to a future kernel base.
+> On Sat, 4 May 2019, at 02:28, Patrick Venture wrote:
+> > Does anyone have a favorite CPP library for talking to PCI?  I don't
+> > think parsing lspci output is as clean.
+>
+> This feels a lot like the X-Y problem:
+>
+> https://mywiki.wooledge.org/XyProblem
+>
+> What are you actually trying to do?
+>
+> Maybe poking at sysfs directly might help?
+>
+> Andrew
+>
 > >
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
->
-> Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-
-Thanks. Applied to dev-5.0.
-
-Cheers,
-
-Joel
+> > Patrick
+> >
