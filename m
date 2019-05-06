@@ -2,92 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C12BC146D1
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 10:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D95014929
+	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 13:50:35 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44yGgc2jVdzDqHn
-	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 18:51:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44yLf1009CzDqLJ
+	for <lists+openbmc@lfdr.de>; Mon,  6 May 2019 21:50:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=dkodihal@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (mailfrom) smtp.mailfrom=mic.com.tw
+ (client-ip=220.130.36.7; helo=micmsefe02.mic.com.tw;
+ envelope-from=ray.lue@mic.com.tw; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=mic.com.tw
+X-Greylist: delayed 3328 seconds by postgrey-1.36 at bilbo;
+ Mon, 06 May 2019 21:49:29 AEST
+Received: from MICMSEFE02.mic.com.tw (mail22.mic.com.tw [220.130.36.7])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44yGf36GyHzDqGm
- for <openbmc@lists.ozlabs.org>; Mon,  6 May 2019 18:50:19 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x468kofO044559
- for <openbmc@lists.ozlabs.org>; Mon, 6 May 2019 04:50:16 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2saggdu446-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 06 May 2019 04:50:15 -0400
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <dkodihal@linux.vnet.ibm.com>;
- Mon, 6 May 2019 09:50:14 +0100
-Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 6 May 2019 09:50:12 +0100
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x468oBfG59572378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 6 May 2019 08:50:11 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BBFEFA4065;
- Mon,  6 May 2019 08:50:11 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC7FDA405B;
- Mon,  6 May 2019 08:50:10 +0000 (GMT)
-Received: from Deepaks-MacBook-Pro.local (unknown [9.199.203.20])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon,  6 May 2019 08:50:10 +0000 (GMT)
-Subject: Re: Redfish OEM commands in OpenBMC
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- "Tanous, Ed" <ed.tanous@intel.com>, vernon.mauery@linux.intel.com
-References: <CALLMt=qEtkfBwBcV1WzsGuCozyT1Fs8+1d+nUPPScxq1ZpihJQ@mail.gmail.com>
- <5978896f-712d-a2b7-3f94-3a23e7a86003@intel.com>
- <20190423135100.aelbc4w2np4lepjc@thinkpad.dyn.fuzziesquirrel.com>
- <060e7ffe-6953-c66b-483a-4600b64c7556@intel.com>
- <20190423175218.fe6rmtxrqrq35pu2@thinkpad.dyn.fuzziesquirrel.com>
- <488e0e73-76d0-977e-6f20-ff91e35f6cfa@intel.com>
- <20190424181851.fzfkef4ycqy3yuws@thinkpad.dyn.fuzziesquirrel.com>
- <36d7934c-4870-8ed9-a61f-a4fe69a6e76b@intel.com>
- <20190501180547.kzgnxxsfv2tkgr6x@thinkpad.dyn.fuzziesquirrel.com>
-From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-Date: Mon, 6 May 2019 14:20:10 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.6.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44yLcn468szDqJV
+ for <openbmc@lists.ozlabs.org>; Mon,  6 May 2019 21:49:29 +1000 (AEST)
+Received: from MICMSEFE02.mic.com.tw (localhost [127.0.0.2] (may be forged))
+ by MICMSEFE02.mic.com.tw with ESMTP id x46As45i082433
+ for <openbmc@lists.ozlabs.org>; Mon, 6 May 2019 18:54:04 +0800 (GMT-8)
+ (envelope-from ray.lue@mic.com.tw)
+Received: from MICEXVCAS01.mitacad.com (micexvcas01.mitacad.com [10.88.2.25])
+ by MICMSEFE02.mic.com.tw with ESMTP id x46ArXdp082357;
+ Mon, 6 May 2019 18:53:33 +0800 (GMT-8)
+ (envelope-from ray.lue@mic.com.tw)
+Received: from MICEXVMS02.mitacad.com ([10.88.2.28]) by
+ MICEXVCAS01.mitacad.com ([10.88.2.25]) with mapi id 14.03.0210.002; Mon, 6
+ May 2019 18:53:34 +0800
+From: <ray.lue@mic.com.tw>
+To: <andrew@aj.id.au>, <ray.lue@gmail.com>, <openbmc@lists.ozlabs.org>,
+ <joel@jms.id.au>, <vijaykhemka@fb.com>
+Subject: RE: [PATCH linux dev-5.0 v2 1/1] ARM: dts: aspeed: Add s7106 BMC
+ Machine
+Thread-Topic: [PATCH linux dev-5.0 v2 1/1] ARM: dts: aspeed: Add s7106 BMC
+ Machine
+Thread-Index: AQHU/+DP/wbJva2FK02x2ob9lXLLKKZd6xNw
+Importance: high
+X-Priority: 1
+Date: Mon, 6 May 2019 10:53:33 +0000
+Message-ID: <AC132CC2BE8ECA4988A9953C168DE3C53AC8A567@MICEXVMS02.mitacad.com>
+References: <1556622019-7790-1-git-send-email-ray.lue@mic.com.tw>
+ <9e9b1574-7d06-4866-a706-a11b390b3702@www.fastmail.com>
+In-Reply-To: <9e9b1574-7d06-4866-a706-a11b390b3702@www.fastmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.88.25.29]
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <20190501180547.kzgnxxsfv2tkgr6x@thinkpad.dyn.fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-x-cbid: 19050608-0016-0000-0000-00000278C164
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19050608-0017-0000-0000-000032D564AD
-Message-Id: <06e8cf91-5a80-a6ad-fa93-11e4e2e37b7c@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-05-06_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1905060077
+X-MAIL: MICMSEFE02.mic.com.tw x46ArXdp082357
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,116 +68,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 01/05/19 11:35 PM, Brad Bishop wrote:
-> On Mon, Apr 29, 2019 at 10:32:36AM -0700, Ed Tanous wrote:
-> 
->> On the nose, it sounds ok, but it would be good to see a proposal
->> that's a little more detailed. 
-> I put a proposal here:
-> https://lists.ozlabs.org/pipermail/openbmc/2019-April/016126.html
-> 
->>> Agreed on option #2.  However I still think you should consider
->>> runtime pluggable dynamic resolution.
->>
->> None of the features I've heard so far necessitates the use of runtime
->> discovery, or even fall outside what configurability is available in
->> bmcweb today.  "runtime pluggable" on an embedded system is a strange
->> concept, given that all uses I know of today are really just an
->> extension of compile time plugability, using the rootfs as the medium
->> for "discovery".  With that said, I'm imagining you're thinking
->> something like what IPMI has today, which I might be misinterpreting
->> based on our discussion this morning?
-> Yes, this is what I was thinking.  I agree with you that we don't have
-> features that require the use of runtime discovery.  My reasoning is
-> rooted in concerns around code maintanence and adoption.
-> 
-> maintanence:  I don't think code with a bunch of #ifdefs is desired or
-> readable.  It might not be too bad starting out.
-> 
-> adoption:  Do you recall how one of Michael Brown's issues with bmcweb
-> was that there wasn't "any way to extend or replace functions without
-> forking the codebase?"  I believe this is exactly what he was talking
-> about.  I suspect he didn't even consider compile time plugins because
-> in my experience maintaining codebases structured that way is painful.
-> 
->> It should be noted, we also have DBus "plugin" capability with the dbus
->> interface already: anyone can host logs on dbus, and redfish will
->> populate them.  That option doesn't really get to the core of the OEM
->> issue though, but is certainly an option in the PEL log case that I
->> didn't think of right away.
-> This is an interesting thought.  We could put OEM things on DBus and
-> maybe bmcweb looks at those to fill out OEM properties?
-> 
->>> It sounds like you want everyone to put their implementations of OEM
->>> properties right next to each other in bmcweb and surround them with
->>> ifdefs.  Do I have that right
->> Yes, I believe you have that right.
-> 
->>> Shouldn't we allow the OEM to maintain their own implementation?
->>> Also, when you (the bmcweb maintainer) look at the core bmcweb/redfish
->>> code, do you want to be distracted by the twenty implementations of an
->>> OEM property?
->>
->> If my goal is to make my changes without breaking any of the other
->> twenty implementations at the same time, absolutely, I want to be
->> "distracted" by them. 
-> Right.  This is the fallout of choosing to not have a framework/have an
-> unstable API.  This is also what makes this approach not scale very well
-> from a maintanence POV, IMO.
-> 
->>> Does it make sense for you to be the maintainer of code you have
->>> zero investment in?
->> We can definitely both agree that me personally maintaining all Redfish
->> code is unmaintainable in the long term.  I don't want to be the
->> maintainer of code that I have no investment in, but I'm not sure how
->> you came to the "Ed is the only maintainer of bmcweb for all time"
->> conclusion.  The current maintainer files have provisions for layering
->> just like the Kernel does.  Long-term, we can split maintainership on
->> whatever lines are appropriate.
-> Sounds good!
-> 
->>> This is just the reality of the world we live in...  It is precisely
->>> why we need robust (yes, sometimes complicated, sometimes performance
->>> impacting, sometimes harder to read) frameworks and abstractions that
->>> allow us to share and collaborate where it makes sense and to move
->>> quickly where it does not.
->> I would argue that the kernel driver interface is a great example of
->> how this should be done, and handles scales that we could only hope to
->> get to get to.  The kernel doesn't publish a "stable" driver interface
->> internally, but does publish a concrete user-facing API. 
-> It may not be a stable interface but there _is_ an interface to which
-> out of tree modules for instance can plug into.  And those modules could
-> implement a custom, OEM ABI via sysfs or ioctls.
-> 
->> somewhat what bmcweb has attempted to model in its design;  User facing
->> code should be able to be concrete, while keeping the internals
->> flexible enough to make changes as better patterns emerge.
-> 
-> This thread raises an important design point or "community norm" being
-> established for OpenBMC.  IMO it has the potential to impact
-> participation rates and cost of maintanence in the future.  It would be
-> nice to get some opinions from more than just two people.  Anyone care
-> to chime in?
-
-We have a similar problem to solve with PLDM OEM commands. I was 
-initially considering dynamically loaded libraries implementing OEM, but 
-I am interested to know the pitfalls of the same from Vernon or others, 
-as opposed to compile-time plugging-in of these libraries (not sure if 
-this was already discussed in the last community call, which I couldn't 
-attend).
-
-Do we want to disallow someone who uses OpenBMC from writing proprietary 
-PLDM OEM implementations - libraries which can be dynamically loaded at 
-runtime as opposed to compile time linking in of those implementations 
-to the main PLDM code base, thereby requiring the OEM implementations to 
-exist in the main PLDM code base?
-
-Thanks,
-Deepak
-
-
-
+SGkgQW5kcmV3LA0KDQpUaGFua3MgZm9yIHlvdXIgcmV2aWV3LCBJIHdpbGwgdXBkYXRlIHRoZSBw
+YXRjaCBhY2NvcmRpbmdseS4NCkRldGFpbGVkIHJlc3BvbnNlIGJlbG93Lg0KDQo+IC0tLS0tT3Jp
+Z2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEFuZHJldyBKZWZmZXJ5IFttYWlsdG86YW5kcmV3
+QGFqLmlkLmF1XQ0KPiBTZW50OiBXZWRuZXNkYXksIE1heSAxLCAyMDE5IDE6NDMgUE0NCj4gVG86
+IFJheSBMdWUgPHJheS5sdWVAZ21haWwuY29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBK
+b2VsIFN0YW5sZXkNCj4gPGpvZWxAam1zLmlkLmF1PjsgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1r
+YUBmYi5jb20+DQo+IENjOiByYXkubHVlICinZq2nvlUgLSBNQ1QpIDxyYXkubHVlQG1pYy5jb20u
+dHc+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggbGludXggZGV2LTUuMCB2MiAxLzFdIEFSTTogZHRz
+OiBhc3BlZWQ6IEFkZCBzNzEwNiBCTUMNCj4gTWFjaGluZQ0KPiANCj4gSGkgUmF5LA0KPiANCj4g
+VGhhbmtzIGZvciB0aGUgcGF0Y2gsIGl0IHdvdWxkIGJlIGdvb2QgdG8gc2VuZCB0aGlzIHVwc3Ry
+ZWFtIQ0KPiANCj4gSG93ZXZlciwgc29tZSBjb21tZW50cyBiZWxvdzoNCj4gDQo+IE9uIFR1ZSwg
+MzAgQXByIDIwMTksIGF0IDIwOjMyLCBSYXkgTHVlIHdyb3RlOg0KPiA+IHM3MTA2IGlzIGEgVHlh
+biBwbGF0Zm9ybSBmYW1pbHkgd2l0aCBhbiBBU1BFRUQgQVNUMjUwMCBCTUMuDQo+ID4NCj4gPiBT
+aWduZWQtb2ZmLWJ5OiBSYXkgTHVlIDxyYXkubHVlQG1pYy5jb20udHc+DQo+ID4gLS0tDQo+ID4g
+IGFyY2gvYXJtL2Jvb3QvZHRzL01ha2VmaWxlICAgICAgICAgICAgICAgICAgfCAgIDMgKy0NCj4g
+PiAgYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cyB8IDE3NQ0KPiA+
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgMiBmaWxlcyBjaGFuZ2VkLCAxNzcg
+aW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKSAgY3JlYXRlIG1vZGUgMTAwNzU1DQo+ID4gYXJj
+aC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0KPiA+DQo+ID4gZGlmZiAt
+LWdpdCBhL2FyY2gvYXJtL2Jvb3QvZHRzL01ha2VmaWxlIGIvYXJjaC9hcm0vYm9vdC9kdHMvTWFr
+ZWZpbGUNCj4gPiBpbmRleCBiZDQwMTQ4Li5iYzM4Zjc3IDEwMDY0NA0KPiA+IC0tLSBhL2FyY2gv
+YXJtL2Jvb3QvZHRzL01ha2VmaWxlDQo+ID4gKysrIGIvYXJjaC9hcm0vYm9vdC9kdHMvTWFrZWZp
+bGUNCj4gPiBAQCAtMTI0Nyw0ICsxMjQ3LDUgQEAgZHRiLSQoQ09ORklHX0FSQ0hfQVNQRUVEKSAr
+PSBcDQo+ID4gIAlhc3BlZWQtYm1jLW9wcC13aXRoZXJzcG9vbi5kdGIgXA0KPiA+ICAJYXNwZWVk
+LWJtYy1vcHAtemFpdXMuZHRiIFwNCj4gPiAgCWFzcGVlZC1ibWMtcG9ydHdlbGwtbmVwdHVuZS5k
+dGIgXA0KPiA+IC0JYXNwZWVkLWJtYy1xdWFudGEtcTcxbC5kdGINCj4gPiArCWFzcGVlZC1ibWMt
+cXVhbnRhLXE3MWwuZHRiIFwNCj4gPiArCWFzcGVlZC1ibWMtdHlhbi1zNzEwNi5kdGINCj4gPiBk
+aWZmIC0tZ2l0IGEvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0K
+PiA+IGIvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy10eWFuLXM3MTA2LmR0cw0KPiA+IG5l
+dyBmaWxlIG1vZGUgMTAwNzU1DQo+ID4gaW5kZXggMDAwMDAwMC4uNTYzNTU4ZA0KPiA+IC0tLSAv
+ZGV2L251bGwNCj4gPiArKysgYi9hcmNoL2FybS9ib290L2R0cy9hc3BlZWQtYm1jLXR5YW4tczcx
+MDYuZHRzDQo+ID4gQEAgLTAsMCArMSwxNzUgQEANCj4gPiArLy8gU1BEWC1MaWNlbnNlLUlkZW50
+aWZpZXI6IEdQTC0yLjANCj4gPiArL2R0cy12MS87DQo+ID4gKw0KPiA+ICsjaW5jbHVkZSAiYXNw
+ZWVkLWc1LmR0c2kiDQo+ID4gKw0KPiA+ICsvIHsNCj4gPiArCW1vZGVsID0gIlR5YW4gUzcxMDYg
+Qk1DIjsNCj4gPiArCWNvbXBhdGlibGUgPSAidHlhbixzNzEwNi1ibWMiLCAiYXNwZWVkLGFzdDI1
+MDAiOw0KPiA+ICsNCj4gPiArCWNob3NlbiB7DQo+ID4gKwkJc3Rkb3V0LXBhdGggPSAmdWFydDU7
+DQo+ID4gKwkJYm9vdGFyZ3MgPSAiY29uc29sZT10dHlTNCwxMTUyMDAgZWFybHlwcmludGsiOw0K
+PiA+ICsJfTsNCj4gPiArDQo+ID4gKwltZW1vcnkgew0KPiA+ICsJCXJlZyA9IDwweDgwMDAwMDAw
+IDB4MjAwMDAwMDA+Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlyZXNlcnZlZC1tZW1vcnkgew0K
+PiA+ICsJCSNhZGRyZXNzLWNlbGxzID0gPDE+Ow0KPiA+ICsJCSNzaXplLWNlbGxzID0gPDE+Ow0K
+PiA+ICsJCXJhbmdlczsNCj4gPiArDQo+ID4gKwkJdmdhX21lbW9yeTogZnJhbWVidWZmZXJAOTgw
+MDAwMDAgew0KPiA+ICsJCQluby1tYXA7DQo+ID4gKwkJCXJlZyA9IDwweDk4MDAwMDAwIDB4MDA4
+MDAwMDA+OyAvKiA4TUIgKi8NCj4gPiArCQl9Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlpaW8t
+aHdtb24gew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiaWlvLWh3bW9uIjsNCj4gPiArCQlpby1jaGFu
+bmVscyA9IDwmYWRjIDA+LCA8JmFkYyAxPiwgPCZhZGMgMj4sIDwmYWRjIDM+LA0KPiA+ICsJCQk8
+JmFkYyA0PiwgPCZhZGMgNT4sIDwmYWRjIDY+LCA8JmFkYyA3PiwNCj4gPiArCQkJPCZhZGMgOD4s
+IDwmYWRjIDk+LCA8JmFkYyAxMD4sIDwmYWRjIDExPiwNCj4gPiArCQkJPCZhZGMgMTI+LCA8JmFk
+YyAxMz4sIDwmYWRjIDE0PjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJaWlvLWh3bW9uLWJhdHRl
+cnkgew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiaWlvLWh3bW9uIjsNCj4gPiArCQlpby1jaGFubmVs
+cyA9IDwmYWRjIDE1PjsNCj4gPiArCX07DQo+ID4gK307DQo+ID4gKw0KPiA+ICsmZm1jIHsNCj4g
+PiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArCWZsYXNoQDAgew0KPiA+ICsJCWxhYmVsID0gImJt
+YyI7DQo+ID4gKwkJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsJCW0yNXAsZmFzdC1yZWFkOw0KPiA+
+ICsjaW5jbHVkZSAib3BlbmJtYy1mbGFzaC1sYXlvdXQuZHRzaSINCj4gPiArCX07DQo+ID4gK307
+DQo+ID4gKw0KPiA+ICsvLyBVQVJUMSBpcyB1c2VkIG9ubHkgYnkgdGhlIGhvc3QuIFdoaWxlIHRo
+ZSBCTUMgZG9lcyBub3QgbmVlZCB0bw0KPiA+IGFjY2VzcyBpdCwNCj4gPiArLy8gZW5hYmxlIGl0
+IGhlcmUgdG8gbWFrZSBzdXJlIHRoZSBVQVJUJ3MgY2xvY2sgZ2V0cyBlbmFibGVkLg0KPiA+ICsm
+dWFydDEgew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiANCj4gTmVlZHMgYSBwaW5jdHJsIG5v
+ZGUgYXMgd2VsbCB0byBlbnN1cmUgdGhlIFVBUlQgSU8gaXMgcm91dGVkIG91dCBvZiB0aGUgQk1D
+Lg0KDQpXaWxsIGFkZCBpbiBWMyBwYXRjaA0KDQo+IA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnVh
+cnQzIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gDQo+IEFzIGFib3ZlLg0KDQpXaWxsIGFk
+ZCBpbiBWMyBwYXRjaA0KDQo+IA0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnVhcnQ1IHsNCj4gPiAr
+CXN0YXR1cyA9ICJva2F5IjsNCj4gDQo+IE5vdGUgdGhhdCBwaW5jdHJsIGlzbid0IG5lY2Vzc2Fy
+eSBoZXJlLCB1YXJ0NSBmdW5jdGlvbmFsaXR5IGlzbid0IGJlaGluZCBhIG11eC4NCj4gDQo+ID4g
+K307DQo+ID4gKw0KPiA+ICsmbHBjX2N0cmwgew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiAN
+Cj4gSGF2ZSB5b3UgcnVuIGludG8gaXNzdWVzIHdpdGggbm90IGFzc2lnbmluZyByZXNlcnZlZCBt
+ZW1vcnk/IEFzIGZhciBhcyBJJ20NCj4gYXdhcmUgd2Ugc3RpbGwgbmVlZCBWaWpheSdzIHBhdGNo
+IHRvIGJlIGFwcGxpZWQuDQoNClllcywgSSBuZWVkIHRvIGFkZCBiZWxvdyBkZXNjcmlwdGlvbiBv
+ciB0aGUgTENMSyB3aWxsIGJlIGRpc2FibGVkLg0KDQoJbWVtb3J5LXJlZ2lvbiA9IDwmZmxhc2hf
+bWVtb3J5PjsNCglmbGFzaCA9IDwmc3BpMT47DQoNCldlIGNhbid0IHJlbGF0ZSB0aGlzIGRlc2Ny
+aXB0aW9uIHRvIExDTEssIHNvIHdlIHRoaW5rIGl0J3MgYSBidWcgYW5kIGNyZWF0ZWQgYW4NCmFu
+b3RoZXIgcGF0Y2ggdG8gYWRkIHRoZXNlIHR3byBsaW5lcyB0byB1cGRhdGUgczcwMTYgZGV2aWNl
+IHRyZWUuIA0KU29ycnkgZm9yIHRoZSBjb25mdXNpb24gbWFkZSwgSSB3aWxsIGFkZCB0aGlzIGlu
+dG8gVjMgcGF0Y2ggZGlyZWN0bHkuICAgDQoNCj4gDQo+IEFyZSB5b3Ugc2V0dGluZyBpdCB0byAi
+b2theSIgdGhpcyBqdXN0IHRvIGVuYWJsZSB0aGUgTFBDIGNsb2NrPw0KPiANCj4gPiArfTsNCj4g
+PiArDQo+ID4gKyZscGNfc25vb3Agew0KPiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsJc25v
+b3AtcG9ydHMgPSA8MHg4MD47DQo+ID4gK307DQo+ID4gKw0KPiA+ICsmYWRjIHsNCj4gPiArCXN0
+YXR1cyA9ICJva2F5IjsNCj4gDQo+IFNob3VsZCBoYXZlIGV4cGxpY2l0IHBpbmN0cmwgcHJvcGVy
+dHkgaGVyZSByZXF1ZXN0aW5nIHRoZSBuZWNlc3NhcnkgQURDIGxpbmVzLg0KPiBMb29rcyBsaWtl
+IGFsbCB0aGUgb3RoZXIgcGxhdGZvcm0gRFRTIGZpbGVzIG5lZWQgdGhpcyBmaXhlZCB0b28uDQo+
+IA0KDQpHb3QgaXQsIHdpbGwgdXBkYXRlIHRoZSBkZXZpY2UgcGluY3RybCBmb3IgYWxsIEFEQyBs
+aW5lcy4NCg0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJnB3bV90YWNobyB7DQo+ID4gKwlzdGF0dXMg
+PSAib2theSI7DQo+ID4gKwlwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOw0KPiA+ICsJcGluY3Ry
+bC0wID0gPCZwaW5jdHJsX3B3bTNfZGVmYXVsdCAmcGluY3RybF9wd200X2RlZmF1bHQ+Ow0KPiA+
+ICsNCj4gPiArCWZhbkAwIHsNCj4gPiArCQlyZWcgPSA8MHgwMz47DQo+ID4gKwkJYXNwZWVkLGZh
+bi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDI+Ow0KPiA+ICsJfTsNCj4gPiArDQo+ID4gKwlmYW5A
+MSB7DQo+ID4gKwkJcmVnID0gPDB4MDQ+Ow0KPiA+ICsJCWFzcGVlZCxmYW4tdGFjaC1jaCA9IC9i
+aXRzLyA4IDwweDAzPjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJZmFuQDIgew0KPiA+ICsJCXJl
+ZyA9IDwweDAzPjsNCj4gPiArCQlhc3BlZWQsZmFuLXRhY2gtY2ggPSAvYml0cy8gOCA8MHgwND47
+DQo+ID4gKwl9Ow0KPiA+ICsNCj4gPiArCWZhbkAzIHsNCj4gPiArCQlyZWcgPSA8MHgwND47DQo+
+ID4gKwkJYXNwZWVkLGZhbi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDU+Ow0KPiA+ICsJfTsNCj4g
+PiArDQo+ID4gKwlmYW5ANCB7DQo+ID4gKwkJcmVnID0gPDB4MDM+Ow0KPiA+ICsJCWFzcGVlZCxm
+YW4tdGFjaC1jaCA9IC9iaXRzLyA4IDwweDA2PjsNCj4gPiArCX07DQo+ID4gKw0KPiA+ICsJZmFu
+QDUgew0KPiA+ICsJCXJlZyA9IDwweDA0PjsNCj4gPiArCQlhc3BlZWQsZmFuLXRhY2gtY2ggPSAv
+Yml0cy8gOCA8MHgwNz47DQo+ID4gKwl9Ow0KPiA+ICt9Ow0KPiA+ICsNCj4gPiArJmkyYzAgew0K
+PiA+ICsJc3RhdHVzID0gIm9rYXkiOw0KPiA+ICsNCj4gPiArCW5jdDc4MDJAMjggew0KPiA+ICsJ
+CWNvbXBhdGlibGUgPSAibnV2b3RvbixuY3Q3ODAyIjsNCj4gDQo+IFRoaXMgY29tcGF0aWJsZSBp
+c24ndCBkb2N1bWVudGVkIGFueXdoZXJlLiBEbyB5b3UgaGF2ZSBvdXQtb2YtdHJlZSBiaW5kaW5n
+cz8NCj4gQSBkcml2ZXI/DQo+IA0KDQpUaGUgZHJpdmVyIGlzIGluIC9kcml2ZXJzL2h3bW9uL25j
+dDc4MDIuYywgSSBkb24ndCBrbm93IHdoeSBpdCdzIG5vdCBkb2N1bWVudGVkIGluIA0KL2Rldmlj
+ZXRyZWUvYmluZGluZ3MvaHdtb24uIA0KDQo+ID4gKwkJcmVnID0gPDB4Mjg+Ow0KPiA+ICsJfTsN
+Cj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmMxIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4g
+PiArfTsNCj4gPiArDQo+ID4gKyZpMmMyIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiAr
+DQo+ID4gKwllZXByb21ANTAgew0KPiA+ICsJCWNvbXBhdGlibGUgPSAiYXQsMjRjMjU2IjsNCj4g
+DQo+IENvbXBhdGlibGUgYWxzbyBpc24ndCBkb2N1bWVudGVkIGFueXdoZXJlLiBTYW1lIHF1ZXJp
+ZXMgYXMgYWJvdmUuDQo+IA0KDQpTb3JyeSBmb3IgdXNpbmcgdGhlIGRlcHJlY2F0ZWQgdGVybSwg
+d2lsbCB1cGRhdGUgdG8gImF0bWVsIi4NCg0KDQo+ID4gKwkJcmVnID0gPDB4NTA+Ow0KPiA+ICsJ
+fTsNCj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmMzIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsN
+Cj4gPiArfTsNCj4gPiArDQo+ID4gKyZpMmM0IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4g
+PiArfTsNCj4gPiArDQo+ID4gKyZpMmM1IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiAr
+fTsNCj4gPiArDQo+ID4gKyZpMmM2IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsN
+Cj4gPiArDQo+ID4gKyZpMmM3IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsNCj4g
+PiArDQo+ID4gKyZpMmM4IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsNCj4gPiAr
+DQo+ID4gKyZtYWMwIHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArDQo+ID4gKwl1c2Ut
+bmNzaTsNCj4gPiArCW5vLWh3LWNoZWNrc3VtOw0KPiA+ICsNCj4gPiArCXBpbmN0cmwtbmFtZXMg
+PSAiZGVmYXVsdCI7DQo+ID4gKwlwaW5jdHJsLTAgPSA8JnBpbmN0cmxfcm1paTFfZGVmYXVsdD47
+IH07DQo+ID4gKw0KPiA+ICsmaWJ0IHsNCj4gPiArCXN0YXR1cyA9ICJva2F5IjsNCj4gPiArfTsN
+Cj4gPiAtLQ0KPiA+IDIuNy40DQo+ID4NCj4gPg0KPiANCj4gQ2hlZXJzLA0KPiANCj4gQW5kcmV3
+DQo=
