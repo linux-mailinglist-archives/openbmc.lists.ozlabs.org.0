@@ -1,77 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24136157E4
+	for <lists+openbmc@lfdr.de>; Tue,  7 May 2019 05:09:38 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D574156F1
-	for <lists+openbmc@lfdr.de>; Tue,  7 May 2019 02:30:11 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44ygVR2pYPzDqM4
-	for <lists+openbmc@lfdr.de>; Tue,  7 May 2019 10:30:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44yl2R4qjWzDqLv
+	for <lists+openbmc@lfdr.de>; Tue,  7 May 2019 13:09:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.246.210; helo=mail1.bemta23.messagelabs.com;
- envelope-from=skochar@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.210])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="m2qsxWi5"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="AFTpd30y"; dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44ygTN6WF6zDqHw
- for <openbmc@lists.ozlabs.org>; Tue,  7 May 2019 10:29:11 +1000 (AEST)
-Received: from [67.219.247.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-3.bemta.az-d.us-east-1.aws.symcld.net id 11/94-19550-451D0DC5;
- Tue, 07 May 2019 00:29:08 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrPIsWRWlGSWpSXmKPExsWSLveKXTf44oU
- Yg8MbjC1OtbxgcWD0OD9jIWMAYxRrZl5SfkUCa0bXq0/MBXuEKz7MXcnYwPiPv4uRi0NIYAmT
- xJWm1awQzhpGickLFzB1MXJysAloSKx+dIcZxBYRsJRY8qCdrYuRg0NYwEzizzZ7iLC5xJd3y
- 6BK9CRu3Z8E1soioCKxq/c5I4jNK+AkcbhzNVicUUBM4vupNWA2s4C4xK0n88FsCQEBiSV7zj
- ND2KISLx//Y4WwFSTmtj1hhqjXkViw+xMbhK0tsWzha2aI+YISJ2c+YZnAKDgLydhZSFpmIWm
- ZhaRlASPLKkbzpKLM9IyS3MTMHF1DAwNdQ0MjIK1raGakl1ilm6JXWqybmlhcomuol1herFdc
- mZuck6KXl1qyiREY7CkFXIt2ML5bmn6IUZKDSUmUt3z+hRghvqT8lMqMxOKM+KLSnNTiQ4wyH
- BxKErxc54FygkWp6akVaZk5wLiDSUtw8CiJ8D45B5TmLS5IzC3OTIdInWI05jiw6OFcZo57B5
- /PZRZiycvPS5US590FMkkApDSjNA9uECwdXGKUlRLmZWRgYBDiKUgtys0sQZV/xSjOwagkzPs
- RZCFPZl4J3L5XQKcwAZ0yr+McyCkliQgpqQZG40MLEriLUnZc+tERym+ceib5tOuTHVpnDh39
- 9mC/2fzWkkMs80Miq/WPbJn5Ordvosb3ox6PpCWsI6QXNRq8TW6UXSeW4LlC4F9NVciOFjmO2
- 2FNubZHb67OXhMyZQFf6pSlNee48pc7xVb/XyHJX/bgrJFDqmf6j9z1lUkK65/wTZ6qvbVaia
- U4I9FQi7moOBEATunEYgIDAAA=
-X-Env-Sender: skochar@lenovo.com
-X-Msg-Ref: server-3.tower-426.messagelabs.com!1557188945!7587388!1
-X-Originating-IP: [103.30.234.7]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.31.5; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 12408 invoked from network); 7 May 2019 00:29:07 -0000
-Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.7)
- by server-3.tower-426.messagelabs.com with DHE-RSA-AES256-GCM-SHA384 encrypted
- SMTP; 7 May 2019 00:29:07 -0000
-Received: from USMAILCH02.lenovo.com (unknown [10.62.32.6])
- (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id BF6D2E605AE2BAE6072F
- for <openbmc@lists.ozlabs.org>; Tue,  7 May 2019 08:29:04 +0800 (CST)
-Received: from USMAILMBX03.lenovo.com ([10.62.32.3]) by USMAILCH02.lenovo.com
- ([fe80::39de:234f:e770:d116%25]) with mapi id 14.03.0415.000;
- Mon, 6 May 2019 17:29:03 -0700
-From: Sumeet Kochar <skochar@lenovo.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: [External]  QEMU models for new BMC chips
-Thread-Topic: [External]  QEMU models for new BMC chips
-Thread-Index: AdUEZ9Cnv/PCq7v3Sd28r2MjH0BshQ==
-Date: Tue, 7 May 2019 00:29:01 +0000
-Message-ID: <7F0BA69AEB211847B189840D81AA97F0EAB1AFE3@USMAILMBX03>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.38.104.23]
-Content-Type: text/plain; charset="us-ascii"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44yl1R3tc3zDqJW
+ for <openbmc@lists.ozlabs.org>; Tue,  7 May 2019 13:08:43 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 3F0432460C;
+ Mon,  6 May 2019 23:08:40 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Mon, 06 May 2019 23:08:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=gutNr
+ tcSrkd6PVjXQcwbdvmLiL0K1SMmnf+BEMOCGCA=; b=m2qsxWi5VHdMLKmqbaF+y
+ bMgiTMZR+ZxF5Z3R1L+Ezl9sXlrIqZJeA69F6ug1qz7b+bcxrj8dNd220JSfVywC
+ bt1coaK3GNkI8OffudnOKo8N6ez/ORwGw1dFrIFLgo6nc9ic5QgNw3HEScj6qdX9
+ ZpHR6zKxVTtl6nGtDKxSkfZiukkMLoos0L/oDaIOtap+VRvM1hZf7YRaB3MuG+pL
+ Q3qrDGHyT3UXBekIgerqwXJId0ZczHTX8egVdntulu6R7qO5iKyF3N5J/wwFewOe
+ XygFEmJH0x05D9x7Na8fQWbKhLBabnjekvDlj57mc5wbynHyirqtkIrY2ipd6jk9
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=gutNrtcSrkd6PVjXQcwbdvmLiL0K1SMmnf+BEMOCG
+ CA=; b=AFTpd30y/Te4WlT+kaBsihRa2PIK94t0nzJUJH9quf0WnrLqVpPDuE+KM
+ JjtQO3Xi9iJaHOfREFgihxXKvbFdvrTGfOMHTxiV/3bEq5m7q0qHxV3GXJac/YeO
+ luJt5MVigWkh5Q39yKA5Cz2Px4r2sTyoYz7WJChgJ4Z9m2LVxJjHDAKZyueDeL3V
+ crGpAqgI+k34NGG2nbdaQCa99QwmbfVIDg/qJ96JOZo9I+7fzWabJyJqdSO8UqfM
+ 40QppnyVlNY3PJJzO7uCXESR48uEgmYCIgnsXhMoyipx7aRePFce9F3iXol1VnHD
+ matb6MsaZoxkwAQ7xPdrXYNumCp2g==
+X-ME-Sender: <xms:t_bQXJJnZnYBbU8TKvDbicZi5vjwbMSigPzVnwb3ljLKeTFumiVnAA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrjeelgdeijecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehoiihlrggsshdrohhrghenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
+ vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:t_bQXKiiURxK2tZV6u0SkE8N-11vH2oTG40MikIrXG1I9Gy9nuNQbg>
+ <xmx:t_bQXOIz6dz89jXBWJVvVFDh8vZqhDmZgy_K-c0YiK6PMpxOdxf9sw>
+ <xmx:t_bQXPi0gIj7TIA4Qu0Q7I6AHwLRX8Ew_qF6GVWAuI35dkMjBxYbmw>
+ <xmx:uPbQXBObfcp7lmRyLlsFm-KNbyKoA0AmaQFR1h-VIX68yAGtsc4TGQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 3856E7C3DB; Mon,  6 May 2019 23:08:39 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
+Mime-Version: 1.0
+Message-Id: <6372fa6d-4b64-4736-a62a-6f1926992d70@www.fastmail.com>
+In-Reply-To: <06e8cf91-5a80-a6ad-fa93-11e4e2e37b7c@linux.vnet.ibm.com>
+References: <CALLMt=qEtkfBwBcV1WzsGuCozyT1Fs8+1d+nUPPScxq1ZpihJQ@mail.gmail.com>
+ <5978896f-712d-a2b7-3f94-3a23e7a86003@intel.com>
+ <20190423135100.aelbc4w2np4lepjc@thinkpad.dyn.fuzziesquirrel.com>
+ <060e7ffe-6953-c66b-483a-4600b64c7556@intel.com>
+ <20190423175218.fe6rmtxrqrq35pu2@thinkpad.dyn.fuzziesquirrel.com>
+ <488e0e73-76d0-977e-6f20-ff91e35f6cfa@intel.com>
+ <20190424181851.fzfkef4ycqy3yuws@thinkpad.dyn.fuzziesquirrel.com>
+ <36d7934c-4870-8ed9-a61f-a4fe69a6e76b@intel.com>
+ <20190501180547.kzgnxxsfv2tkgr6x@thinkpad.dyn.fuzziesquirrel.com>
+ <06e8cf91-5a80-a6ad-fa93-11e4e2e37b7c@linux.vnet.ibm.com>
+Date: Mon, 06 May 2019 23:08:38 -0400
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Deepak Kodihalli" <dkodihal@linux.vnet.ibm.com>,
+ "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
+ "Ed Tanous" <ed.tanous@intel.com>,
+ "Vernon Mauery" <vernon.mauery@linux.intel.com>
+Subject: Re: Redfish OEM commands in OpenBMC
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,57 +101,188 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Community came together and drove vendors to deliver drivers to device tree=
- bindings. Most of us who are part of this community purchase some BMC solu=
-tions in one form or the other and a large group in here has vested interes=
-t in deploying a stack that is vetted out through CI as best it can be. Sol=
-ving it as a general requirement is more powerful in my mind than some of u=
-s solving on the side with a vendor. Vendors are part of this community so =
-would love their feedback. I see mutual benefit. In long term as OpenBMC im=
-proves the CI model to me it would make more sense that code/drivers submit=
-ted for review have atleast gone through the CI flow without issues vs. the=
- community running the CI and/or during manual reviews finding  issues late=
- which could be discovered earlier through automation ? We certainly will c=
-ontribute what we can individually and upstream what is ok to share publica=
-lly respecting vendor IP on a new chip but to me that is catching the probl=
-em late. Doing what we can to avoid finding things late by making initial c=
-hecklist more automated and effective can only help save limited cycles we =
-all have. I'll leave it at that and let the community decide. Thanks again =
-for response.=20
 
-Date: Wed, 01 May 2019 00:32:18 -0400
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Sumeet Kochar" <skochar@lenovo.com>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>
-Subject: Re: [External]  openbmc Digest, Vol 44, Issue 120
-Message-ID: <52d67ef7-a7a4-4a5f-8af0-3a5cda3e4130@www.fastmail.com>
-Content-Type: text/plain
 
-Hi Sumeet,
+On Mon, 6 May 2019, at 18:21, Deepak Kodihalli wrote:
+> On 01/05/19 11:35 PM, Brad Bishop wrote:
+> > On Mon, Apr 29, 2019 at 10:32:36AM -0700, Ed Tanous wrote:
+> >=20
+> >> On the nose, it sounds ok, but it would be good to see a proposal
+> >> that's a little more detailed.=20
+> > I put a proposal here:
+> > https://lists.ozlabs.org/pipermail/openbmc/2019-April/016126.html
+> >=20
+> >>> Agreed on option #2.=C2=A0 However I still think you should consid=
+er
+> >>> runtime pluggable dynamic resolution.
+> >>
+> >> None of the features I've heard so far necessitates the use of runt=
+ime
+> >> discovery, or even fall outside what configurability is available i=
+n
+> >> bmcweb today.=C2=A0 "runtime pluggable" on an embedded system is a =
+strange
+> >> concept, given that all uses I know of today are really just an
+> >> extension of compile time plugability, using the rootfs as the medi=
+um
+> >> for "discovery".=C2=A0 With that said, I'm imagining you're thinkin=
+g
+> >> something like what IPMI has today, which I might be misinterpretin=
+g
+> >> based on our discussion this morning?
+> > Yes, this is what I was thinking.=C2=A0 I agree with you that we don=
+'t have
+> > features that require the use of runtime discovery.=C2=A0 My reasoni=
+ng is
+> > rooted in concerns around code maintanence and adoption.
+> >=20
+> > maintanence:=C2=A0 I don't think code with a bunch of #ifdefs is des=
+ired or
+> > readable.=C2=A0 It might not be too bad starting out.
+> >=20
+> > adoption:=C2=A0 Do you recall how one of Michael Brown's issues with=
+ bmcweb
+> > was that there wasn't "any way to extend or replace functions withou=
+t
+> > forking the codebase?"=C2=A0 I believe this is exactly what he was t=
+alking
+> > about.=C2=A0 I suspect he didn't even consider compile time plugins =
+because
+> > in my experience maintaining codebases structured that way is painfu=
+l.
+> >=20
+> >> It should be noted, we also have DBus "plugin" capability with the =
+dbus
+> >> interface already: anyone can host logs on dbus, and redfish will
+> >> populate them.=C2=A0 That option doesn't really get to the core of =
+the OEM
+> >> issue though, but is certainly an option in the PEL log case that I=
 
-On Wed, 1 May 2019, at 10:56, Sumeet Kochar wrote:
-> I want to seek input from the community on QEMU support from BMC chip=20
-> vendors for their new BMC chips.
+> >> didn't think of right away.
+> > This is an interesting thought.=C2=A0 We could put OEM things on DBu=
+s and
+> > maybe bmcweb looks at those to fill out OEM properties?
+> >=20
+> >>> It sounds like you want everyone to put their implementations of O=
+EM
+> >>> properties right next to each other in bmcweb and surround them wi=
+th
+> >>> ifdefs.=C2=A0 Do I have that right
+> >> Yes, I believe you have that right.
+> >=20
+> >>> Shouldn't we allow the OEM to maintain their own implementation?
+> >>> Also, when you (the bmcweb maintainer) look at the core bmcweb/red=
+fish
+> >>> code, do you want to be distracted by the twenty implementations o=
+f an
+> >>> OEM property?
+> >>
+> >> If my goal is to make my changes without breaking any of the other
+> >> twenty implementations at the same time, absolutely, I want to be
+> >> "distracted" by them.=20
+> > Right.=C2=A0 This is the fallout of choosing to not have a framework=
+/have an
+> > unstable API.=C2=A0 This is also what makes this approach not scale =
+very well
+> > from a maintanence POV, IMO.
+> >=20
+> >>> Does it make sense for you to be the maintainer of code you have
+> >>> zero investment in?
+> >> We can definitely both agree that me personally maintaining all Red=
+fish
+> >> code is unmaintainable in the long term.=C2=A0 I don't want to be t=
+he
+> >> maintainer of code that I have no investment in, but I'm not sure h=
+ow
+> >> you came to the "Ed is the only maintainer of bmcweb for all time"
+> >> conclusion.=C2=A0 The current maintainer files have provisions for =
+layering
+> >> just like the Kernel does.=C2=A0 Long-term, we can split maintainer=
+ship on
+> >> whatever lines are appropriate.
+> > Sounds good!
+> >=20
+> >>> This is just the reality of the world we live in...=C2=A0 It is pr=
+ecisely
+> >>> why we need robust (yes, sometimes complicated, sometimes performa=
+nce
+> >>> impacting, sometimes harder to read) frameworks and abstractions t=
+hat
+> >>> allow us to share and collaborate where it makes sense and to move=
 
-I agree it would be great to have the chip vendors on board. I think some h=
-ave seen the utility of qemu, but ultimately it's up to them to either act =
-on it for their own purposes or for their customers to start pressuring for=
- this as part of their purchase arrangement.
+> >>> quickly where it does not.
+> >> I would argue that the kernel driver interface is a great example o=
+f
+> >> how this should be done, and handles scales that we could only hope=
+ to
+> >> get to get to.=C2=A0 The kernel doesn't publish a "stable" driver i=
+nterface
+> >> internally, but does publish a concrete user-facing API.=20
+> > It may not be a stable interface but there _is_ an interface to whic=
+h
+> > out of tree modules for instance can plug into.=C2=A0 And those modu=
+les could
+> > implement a custom, OEM ABI via sysfs or ioctls.
+> >=20
+> >> somewhat what bmcweb has attempted to model in its design;=C2=A0 Us=
+er facing
+> >> code should be able to be concrete, while keeping the internals
+> >> flexible enough to make changes as better patterns emerge.
+> >=20
+> > This thread raises an important design point or "community norm" bei=
+ng
+> > established for OpenBMC.=C2=A0 IMO it has the potential to impact
+> > participation rates and cost of maintanence in the future.=C2=A0 It =
+would be
+> > nice to get some opinions from more than just two people.=C2=A0 Anyo=
+ne care
+> > to chime in?
+>=20
+> We have a similar problem to solve with PLDM OEM commands. I was=20
+> initially considering dynamically loaded libraries implementing OEM, b=
+ut=20
+> I am interested to know the pitfalls of the same from Vernon or others=
+,=20
+> as opposed to compile-time plugging-in of these libraries (not sure if=
+=20
+> this was already discussed in the last community call, which I couldn'=
+t=20
+> attend).
+>=20
+> Do we want to disallow someone who uses OpenBMC from writing proprieta=
+ry=20
+> PLDM OEM implementations - libraries which can be dynamically loaded a=
+t=20
+> runtime as opposed to compile time linking in of those implementations=
+=20
+> to the main PLDM code base, thereby requiring the OEM implementations =
+to=20
+> exist in the main PLDM code base?
 
-We can start advocating for it as a community, but given the community isn'=
-t the one purchasing the chips we don't have a lot of sway. As such from a =
-community perspective it's largely still a scratch-your-own-itch problem.
+If people are determined to write proprietary OEM implementations they c=
+an
+fork the codebase. It's Apache 2.0, not GPL, so there's no requirement t=
+hey
+redistribute the associated source. I'd be surprised if we as system des=
+igners
+backed ourselves into a corner where we were forced to load some third-p=
+arty
+proprietary PLDM plugin, given that we're working on OpenBMC.
 
-As such if you want to see improved qemu support please don't hesitate to s=
-tart contributing! Just like the kernel, we want the patches upstream, so s=
-end them there first and we can backport as required.
-
->>=20
-
-Cheers,
+Not that I'm advocating anyone forks, but it's not like they don't have =
+any
+options. That's my $0.02.
 
 Andrew
 
+>=20
+> Thanks,
+> Deepak
+>=20
+>=20
+>=20
+>
