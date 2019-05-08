@@ -2,83 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD23B1768E
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 13:16:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C48617AA7
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 15:32:20 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zYnn6X6PzDqLg
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 21:16:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zcpT4fXLzDqHr
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 23:32:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (mailfrom) smtp.mailfrom=eltan.com
- (client-ip=213.75.39.6; helo=cpsmtpb-ews03.kpnxchange.com;
- envelope-from=wvervoorn@eltan.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=inspur.com
+ (client-ip=210.51.26.145; helo=unicom145.biz-email.net;
+ envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=eltan.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=kpnmail.nl header.i=@kpnmail.nl header.b="EaCz313L"; 
- dkim-atps=neutral
-Received: from cpsmtpb-ews03.kpnxchange.com (cpsmtpb-ews03.kpnxchange.com
- [213.75.39.6])
- by lists.ozlabs.org (Postfix) with ESMTP id 44zYmr1sF8zDqHb
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 21:15:37 +1000 (AEST)
-Received: from cpsps-ews04.kpnxchange.com ([10.94.84.171]) by
- cpsmtpb-ews03.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514); 
- Wed, 8 May 2019 13:15:31 +0200
-X-Brand: 7Ljiz6bi2A==
-X-KPN-SpamVerdict: e1=0;e2=0;e3=0;e4=(e4=10;e1=10;e3=10;e2=11);EVW:Whi
- te;BM:NotScanned;FinalVerdict:Clean
-X-CMAE-Analysis: v=2.3 cv=MJyxZ/Rl c=1 sm=1 tr=0 cx=a_idp_e
- a=LO2mTXPAMClkaqVt2RTykg==:117 a=LO2mTXPAMClkaqVt2RTykg==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=eIHzyqS2sMcA:10 a=xqWC_Br6kY4A:10
- a=E5NmQfObTbMA:10 a=X5F7dNyOAAAA:8 a=pGLkceISAAAA:8 a=voM4FWlXAAAA:8
- a=enL2CNXqAAAA:8 a=PjTWelsUZT4Urmik5hAA:9 a=QEXdDO2ut3YA:10
- a=yMhMjlubAAAA:8 a=SSmOFEACAAAA:8 a=KgayFPWbKUdyUEEuudUA:9
- a=lDNl2lIEhZKvKMjIUR5gOGDH5rM=:19 a=leeuqTD3vZhUjKhE:21
- a=gKO2Hq4RSVkA:10 a=UiCQ7L4-1S4A:10 a=hTZeC7Yk6K0A:10
- a=frz4AuCg-hUA:10 a=pS7LufLo7ZPxIL5li5Lt:22 a=IC2XNlieTeVoXbcui8wp:22
-X-CM-AcctID: kpn@feedback.cloudmark.com
-Received: from smtp.kpnmail.nl ([195.121.84.12]) by cpsps-ews04.kpnxchange.com
- over TLS secured channel with Microsoft SMTPSVC(8.5.9600.16384); 
- Wed, 8 May 2019 13:15:31 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kpnmail.nl; s=kpnmail01;
- h=mime-version:content-type:message-id:date:subject:to:from;
- bh=h7CmIaqNtiv2WpCirPmAug6K23UT60VXSeUi5pkEi5I=;
- b=EaCz313LAyuLa8ZayDKXoMmMRh/rxxxXqAOz5Vq67P3WDG/wnhDYVmNTIdVcavIvK6rlsKhOI6iIt
- WUsLVflVTvtUfhWTw8+6lFDV2bOh6fl4sIyRL9Cu8UexOvA5X1z4Cq2ldKSoMCWlRgR6/7iroRu48P
- VJ00lJXnDEDHbdFs=
-Received: from Eltsrv03.Eltan.local (unknown [84.85.114.86])
- by smtp.kpnmail.nl (Halon) with ESMTPS
- id 97753039-7182-11e9-96e0-00505699772e;
- Wed, 08 May 2019 13:15:31 +0200 (CEST)
-Received: from Eltsrv03.Eltan.local (192.168.100.3) by Eltsrv03.Eltan.local
- (192.168.100.3) with Microsoft SMTP Server (TLS) id 15.0.847.32; Wed, 8 May
- 2019 13:14:58 +0200
-Received: from Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8]) by
- Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8%12]) with mapi id
- 15.00.0847.040; Wed, 8 May 2019 13:14:58 +0200
-From: Wim Vervoorn <wvervoorn@eltan.com>
-To: Jandra A <jandraara@gmail.com>
-Subject: RE: webui: setting Boot.Mode and Boot.Source
-Thread-Topic: webui: setting Boot.Mode and Boot.Source
-Thread-Index: AdUEz6XJwfxYM0oWRg6HrRwE1eqMiwACOcQAAC2ehcA=
-Date: Wed, 8 May 2019 11:14:57 +0000
-Message-ID: <8978ed3247124b13beccd3975514e11a@Eltsrv03.Eltan.local>
-References: <a345e6df8a574eb394eab94e70474cd8@Eltsrv03.Eltan.local>
- <CAMTupoSh0s1TQySQ+FZyKc8UH5s3hEYjkwNyW+8oBEG6yUBYTw@mail.gmail.com>
-In-Reply-To: <CAMTupoSh0s1TQySQ+FZyKc8UH5s3hEYjkwNyW+8oBEG6yUBYTw@mail.gmail.com>
-Accept-Language: nl-NL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.100.108]
-Content-Type: multipart/alternative;
- boundary="_000_8978ed3247124b13beccd3975514e11aEltsrv03Eltanlocal_"
+ dmarc=none (p=none dis=none) header.from=inspur.com
+Received: from unicom145.biz-email.net (unicom145.biz-email.net
+ [210.51.26.145])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zcmS46RXzDqGn
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 23:30:29 +1000 (AEST)
+Received: from ([218.57.135.44])
+ by unicom145.biz-email.net (Antispam) with ASMTP (SSL) id ZSM85417
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 21:30:17 +0800
+Received: from Jtjnmail201617.home.langchao.com (10.100.2.17) by
+ jtjncas07.home.langchao.com (172.30.26.36) with Microsoft SMTP Server (TLS)
+ id 14.3.408.0; Wed, 8 May 2019 21:30:47 +0800
+Received: from mail-lf1-f53.google.com (10.100.1.52) by
+ Jtjnmail201617.home.langchao.com (10.100.2.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 8 May 2019 21:30:46 +0800
+Received: by mail-lf1-f53.google.com with SMTP id v18so12340788lfi.1
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 06:30:16 -0700 (PDT)
+X-Gm-Message-State: APjAAAWcSWlGjVtQd8I3Dp98njgI3f0zT/sdek7GhnarlGAe2jvvEfwt
+ wtbR/03zCVgIzf7Z6iDDHeuQSoJM0/xUFeV5Roc=
+X-Google-Smtp-Source: APXvYqwQgO8kJfcg2hAvcPxW6TCAfHns9cuTovVI2ilN59Y5m5qPsNKaA8xPvnw61d/uVXZ3CAKjZjOp1nC7cirMOYw=
+X-Received: by 2002:a19:c7c3:: with SMTP id
+ x186mr21971782lff.107.1557322212013; 
+ Wed, 08 May 2019 06:30:12 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginalArrivalTime: 08 May 2019 11:15:31.0387 (UTC)
- FILETIME=[594B58B0:01D5058F]
-X-RcptDomain: lists.ozlabs.org
+References: <CAHkHK0_+4z7TJd_g9WszOFoPkFw5D0nh=EPhaqKSKinO7rzQRA@mail.gmail.com>
+ <a4a4ca92-d1a4-cb24-aec9-7ff31c79ff64@linux.vnet.ibm.com>
+In-Reply-To: <a4a4ca92-d1a4-cb24-aec9-7ff31c79ff64@linux.vnet.ibm.com>
+From: John Wang <wangzqbj@inspur.com>
+Date: Wed, 8 May 2019 21:29:59 +0800
+X-Gmail-Original-Message-ID: <CAHkHK09SGJ1mcrtOakyZECEZ45+G3Nb02b3qj8rwOgGEnEtNUQ@mail.gmail.com>
+Message-ID: <CAHkHK09SGJ1mcrtOakyZECEZ45+G3Nb02b3qj8rwOgGEnEtNUQ@mail.gmail.com>
+Subject: Re: Can't log in to bmc via ssh
+To: vishwa <vishwa@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.100.1.52]
+X-ClientProxiedBy: jtjnmail201609.home.langchao.com (10.100.2.9) To
+ Jtjnmail201617.home.langchao.com (10.100.2.17)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,213 +65,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_8978ed3247124b13beccd3975514e11aEltsrv03Eltanlocal_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Wed, May 8, 2019 at 2:43 PM vishwa <vishwa@linux.vnet.ibm.com> wrote:
+>
+> Hi John,
+>
+> I have always used -vvvv option in ssh to debug ssh connection issues
+>
+> ssh id@host -vvvv
+>
+Thanks Vishwa.
 
-SGVsbG8gSmFuZHJhLA0KDQpUaGFua3MgZm9yIHRoZSByZXBseS4gSSBoYWQgYSBsb29rLCB0aGlz
-IGlzIGV4YWN0bHkgd2hhdCBJIGFtIGxvb2tpbmcgZm9yLiBEbyB5b3Uga25vdyB3aGVuIHRoaXMg
-aXMgc2NoZWR1bGVkIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBXZWJVST8NCg0KQmVzdCBSZWdhcmRz
-LA0KV2ltIFZlcnZvb3JuDQoNCkVsdGFuIEIuVi4NCkFtYmFjaHRzdHJhYXQgMjMNCjU0ODEgU00g
-U2NoaWpuZGVsDQpUaGUgTmV0aGVybGFuZHMNCg0KVCA6ICszMS0oMCk3My01OTQgNDYgNjQNCkUg
-OiB3dmVydm9vcm5AZWx0YW4uY29tDQpXIDogaHR0cDovL3d3dy5lbHRhbi5jb208aHR0cDovL3d3
-dy5lbHRhbi5jb20vPg0KDQoNCiJUSElTIE1FU1NBR0UgQ09OVEFJTlMgQ09ORklERU5USUFMIElO
-Rk9STUFUSU9OLiBVTkxFU1MgWU9VIEFSRSBUSEUgSU5URU5ERUQgUkVDSVBJRU5UIE9GIFRISVMg
-TUVTU0FHRSwgQU5ZIFVTRSBPRiBUSElTIE1FU1NBR0UgSVMgU1RSSUNUTFkgUFJPSElCSVRFRC4g
-SUYgWU9VIEhBVkUgUkVDRUlWRUQgVEhJUyBNRVNTQUdFIElOIEVSUk9SLCBQTEVBU0UgSU1NRURJ
-QVRFTFkgTk9USUZZIFRIRSBTRU5ERVIgQlkgVEVMRVBIT05FICszMS0oMCk3My01OTQ0NjY0IE9S
-IFJFUExZIEVNQUlMLCBBTkQgSU1NRURJQVRFTFkgREVMRVRFIFRISVMgTUVTU0FHRSBBTkQgQUxM
-IENPUElFUy4iDQoNCkZyb206IEphbmRyYSBBIFttYWlsdG86amFuZHJhYXJhQGdtYWlsLmNvbV0N
-ClNlbnQ6IFR1ZXNkYXksIE1heSA3LCAyMDE5IDU6MjcgUE0NClRvOiBXaW0gVmVydm9vcm4gPHd2
-ZXJ2b29ybkBlbHRhbi5jb20+DQpDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0
-OiBSZTogd2VidWk6IHNldHRpbmcgQm9vdC5Nb2RlIGFuZCBCb290LlNvdXJjZQ0KDQpIZWxsbyBX
-aW0sDQoNClllcywgSSdtIGdsYWQgeW91IGFzay4gVGhpcyBpcyBzb21ldGhpbmcgd2UgYXJlIGN1
-cnJlbnRseSB3b3JraW5nIG9uIHNvIHRoZXJlIGlzIHN0aWxsIHNvbWUgd29yayB0byBiZSBkb25l
-LiBXZSdkIGxvdmUgdG8gZ2V0IHlvdXIgZmVlZGJhY2sgdG8gc2VlIGlmIHdoYXQgeW91IHRoaW5r
-IGlzIG1pc3NpbmcgYWxpZ25zIHdpdGggdGhlIHdvcmsgd2UgaGF2ZSBwbGFubmVkLCBhbmQgdW5k
-ZXJzdGFuZCB3aGF0IHlvdXIgbmVlZHMgd291bGQgYmUgZnJvbSB0aGlzIGZ1bmN0aW9uYWxpdHkg
-YXMgYSBzZXIuIFlvdSBjYW4gZmluZCB0aGUgY3VycmVudCBkZXNpZ24gcHJvcG9zYWxzIGhlcmU6
-IGh0dHBzOi8vaWJtLmludmlzaW9uYXBwLmNvbS9zaGFyZS84RU5ZUlZYQVBGRCMvMzE5MDk1MTM4
-XzEtX0Jvb3RfT3B0aW9uc18tX1N5c3RlbV9PbiAuDQoNCk5vdGU6IFRvIGxlYXZlIGZlZWRiYWNr
-IGluIEluVmlzaW9uLCB0dXJuIG9uIENvbW1lbnQgbW9kZSBmcm9tIHRoZSBib3R0b20gcmlnaHQg
-aGFuZCBjb3JuZXIgb2YgdGhlIHNjcmVlbiBhbmQgdGhlbiBjbGljayB3aGVyZSB5b3Ugd2FudCB0
-byBsZWF2ZSBhIGNvbW1lbnQuIFRvIG5hdmlnYXRlIHRocm91Z2ggdGhlIHByb3RvdHlwZSwgY2xp
-Y2sgd2hlcmUgeW91IHNlZSBmbGFzaGluZyBibHVlIHJlY3RhbmdsZXMgb3IgdXNlIHRoZSByaWdo
-dCBhbmQgbGVmdCBrZXlib2FyZCBhcnJvd3MNCg0KUGxlYXNlIGxldCB1cyBrbm93IGlmIHlvdSBo
-YXZlIGFueSBxdWVzdGlvbnMgYW5kIGlmIHlvdSB3b3VsZCBsaWtlIHRvIHNldCB1cCBzb21lIHRp
-bWUgdG8gcmV2aWV3IHRoaXMuDQoNCkJlc3QsDQpKYW5kcmEgQXJhbmd1cmVuICB8ICBHVUkgRGVz
-aWduIFRlYW0NCg0KDQpPbiBUdWUsIE1heSA3LCAyMDE5IGF0IDc6MjUgQU0gV2ltIFZlcnZvb3Ju
-IDx3dmVydm9vcm5AZWx0YW4uY29tPG1haWx0bzp3dmVydm9vcm5AZWx0YW4uY29tPj4gd3JvdGU6
-DQpIZWxsbywNCg0KQ3VycmVudGx5IHRoZSB3ZWJ1aSBkb2VzbuKAmXQgY29udGFpbiB0aGUgZnVu
-Y3Rpb25hbGl0eSB0byBjaGFuZ2UgdGhlIGJvb3QgbW9kZSBhbmQgYm9vdCBzb3VyY2UuIEFyZSB0
-aGVyZSBhbnkgcGxhbnMgdG8gYWRkIHRoaXMgdG8gdGhlIGludGVyZmFjZT8NCg0KQmVzdCBSZWdh
-cmRzLA0KV2ltIFZlcnZvb3JuDQoNCg==
+It looks like the dropbear process is out of order. There is a log on
+the system that is suspicious
+=EF=BD=90rintk: systemd: 31 output lines suppressed due to ratelimiting
 
---_000_8978ed3247124b13beccd3975514e11aEltsrv03Eltanlocal_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+I referenced this link
+https://forum.manjaro.org/t/systemd-shutdow-output-lines-suppressed-due-to-=
+ratelimiting/52811
+and the problem was not solved.
+Through the ps command, I saw that many of the processes that should
+be started did not start up normally.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBjbTsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
-Zm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiVGltZXMgTmV3IFJvbWFuIixzZXJpZjt9
-DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCglj
-b2xvcjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFu
-Lk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpw
-dXJwbGU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpzcGFuLkVtYWlsU3R5bGUxNw0K
-CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIs
-c2Fucy1zZXJpZjsNCgljb2xvcjojMUY0OTdEO30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHls
-ZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30N
-CkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjYxMi4wcHQgNzkyLjBwdDsNCgltYXJnaW46NzIu
-MHB0IDcyLjBwdCA3Mi4wcHQgNzIuMHB0O30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3Jk
-U2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBl
-ZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0t
-LT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4N
-CjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1s
-PjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9ImJsdWUiIHZs
-aW5rPSJwdXJwbGUiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0Nh
-bGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj5IZWxsbyBKYW5kcmEsPG86cD48
-L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlmO2Nv
-bG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0Nh
-bGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj5UaGFua3MgZm9yIHRoZSByZXBs
-eS4gSSBoYWQgYSBsb29rLCB0aGlzIGlzIGV4YWN0bHkgd2hhdCBJIGFtIGxvb2tpbmcgZm9yLiBE
-byB5b3Uga25vdyB3aGVuIHRoaXMgaXMgc2NoZWR1bGVkIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBX
-ZWJVST88bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNh
-bnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJn
-aW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJOTCIgc3R5bGU9ImZvbnQtc2l6ZToxMC4w
-cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdE
-Ij5CZXN0IFJlZ2FyZHMsPC9zcGFuPjxzcGFuIGxhbmc9Ik5MIiBzdHlsZT0iY29sb3I6IzFGNDk3
-RCI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFu
-Zz0iTkwiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1
-b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+V2ltIFZlcnZvb3JuPG86cD48L286cD48L3Nw
-YW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iTkwiIHN0eWxlPSJmb250
-LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29s
-b3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gbGFuZz0iTkwiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5
-OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+RWx0YW4gQi5WLjwv
-c3Bhbj48c3BhbiBsYW5nPSJOTCIgc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6
-JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPjxvOnA+PC9vOnA+
-PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9Ik5MIiBzdHlsZT0i
-Zm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlm
-O2NvbG9yOiMxRjQ5N0QiPkFtYmFjaHRzdHJhYXQgMjM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJERSIgc3R5bGU9ImZvbnQtc2l6ZToxMC4w
-cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdE
-Ij41NDgxIFNNIFNjaGlqbmRlbDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIGxhbmc9IkRFIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWls
-eTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPlRoZSBOZXRoZXJs
-YW5kczxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxh
-bmc9IkRFIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZx
-dW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkRFIiBzdHlsZT0iZm9udC1zaXpl
-OjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMx
-RjQ5N0QiPlQgOiAmIzQzOzMxLSgwKTczLTU5NCA0NiA2NDwvc3Bhbj48c3BhbiBsYW5nPSJERSIg
-c3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fu
-cy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBsYW5nPSJERSIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1m
-YW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj5FIDogd3Zl
-cnZvb3JuQGVsdGFuLmNvbTwvc3Bhbj48c3BhbiBsYW5nPSJERSIgc3R5bGU9ImZvbnQtc2l6ZTox
-MS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0
-OTdEIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5z
-LXNlcmlmO2NvbG9yOiMxRjQ5N0QiPlcgOg0KPGEgaHJlZj0iaHR0cDovL3d3dy5lbHRhbi5jb20v
-Ij5odHRwOi8vd3d3LmVsdGFuLmNvbTwvYT48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTom
-cXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNp
-emU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6
-IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwm
-cXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj4mcXVvdDtUSElTIE1FU1NBR0UgQ09OVEFJ
-TlMgQ09ORklERU5USUFMIElORk9STUFUSU9OLiBVTkxFU1MgWU9VIEFSRSBUSEUgSU5URU5ERUQg
-UkVDSVBJRU5UIE9GIFRISVMgTUVTU0FHRSwgQU5ZIFVTRSBPRiBUSElTIE1FU1NBR0UgSVMgU1RS
-SUNUTFkgUFJPSElCSVRFRC4gSUYgWU9VIEhBVkUNCiBSRUNFSVZFRCBUSElTIE1FU1NBR0UgSU4g
-RVJST1IsIFBMRUFTRSBJTU1FRElBVEVMWSBOT1RJRlkgVEhFIFNFTkRFUiBCWSBURUxFUEhPTkUg
-JiM0MzszMS0oMCk3My01OTQ0NjY0IE9SIFJFUExZIEVNQUlMLCBBTkQgSU1NRURJQVRFTFkgREVM
-RVRFIFRISVMgTUVTU0FHRSBBTkQgQUxMIENPUElFUy4mcXVvdDsmbmJzcDs8L3NwYW4+PHNwYW4g
-c3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90Oyxz
-YW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZx
-dW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwv
-bzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWYi
-PkZyb206PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250LWZhbWls
-eTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWYiPiBKYW5kcmEgQSBbbWFpbHRvOmphbmRy
-YWFyYUBnbWFpbC5jb21dDQo8YnI+DQo8Yj5TZW50OjwvYj4gVHVlc2RheSwgTWF5IDcsIDIwMTkg
-NToyNyBQTTxicj4NCjxiPlRvOjwvYj4gV2ltIFZlcnZvb3JuICZsdDt3dmVydm9vcm5AZWx0YW4u
-Y29tJmd0Ozxicj4NCjxiPkNjOjwvYj4gb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+
-U3ViamVjdDo8L2I+IFJlOiB3ZWJ1aTogc2V0dGluZyBCb290Lk1vZGUgYW5kIEJvb3QuU291cmNl
-PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8
-L286cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IZWxs
-byBXaW0sPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4m
-bmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5ZZXMs
-IEknbSBnbGFkIHlvdSBhc2suIFRoaXMgaXMgc29tZXRoaW5nIHdlIGFyZSBjdXJyZW50bHkgd29y
-a2luZyBvbiBzbyB0aGVyZSBpcyBzdGlsbCBzb21lIHdvcmsgdG8mbmJzcDtiZSBkb25lLiBXZSdk
-IGxvdmUgdG8gZ2V0IHlvdXIgZmVlZGJhY2sgdG8gc2VlIGlmIHdoYXQgeW91IHRoaW5rIGlzIG1p
-c3NpbmcgYWxpZ25zIHdpdGggdGhlIHdvcmsgd2UgaGF2ZSBwbGFubmVkLCBhbmQgdW5kZXJzdGFu
-ZCB3aGF0IHlvdXINCiBuZWVkcyB3b3VsZCBiZSBmcm9tIHRoaXMgZnVuY3Rpb25hbGl0eSBhcyBh
-IHNlci4gWW91IGNhbiBmaW5kIHRoZSBjdXJyZW50IGRlc2lnbiBwcm9wb3NhbHMgaGVyZTombmJz
-cDs8YSBocmVmPSJodHRwczovL2libS5pbnZpc2lvbmFwcC5jb20vc2hhcmUvOEVOWVJWWEFQRkQj
-LzMxOTA5NTEzOF8xLV9Cb290X09wdGlvbnNfLV9TeXN0ZW1fT24iPmh0dHBzOi8vaWJtLmludmlz
-aW9uYXBwLmNvbS9zaGFyZS84RU5ZUlZYQVBGRCMvMzE5MDk1MTM4XzEtX0Jvb3RfT3B0aW9uc18t
-X1N5c3RlbV9PbjwvYT4NCiAuJm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPk5vdGU6IFRvIGxlYXZlIGZlZWRiYWNrIGluIEluVmlzaW9u
-LCB0dXJuIG9uIENvbW1lbnQgbW9kZSBmcm9tIHRoZSBib3R0b20gcmlnaHQgaGFuZCBjb3JuZXIg
-b2YgdGhlIHNjcmVlbiBhbmQgdGhlbiBjbGljayB3aGVyZSB5b3Ugd2FudCB0byBsZWF2ZSBhIGNv
-bW1lbnQuIFRvIG5hdmlnYXRlIHRocm91Z2ggdGhlIHByb3RvdHlwZSwgY2xpY2sgd2hlcmUgeW91
-IHNlZSBmbGFzaGluZyBibHVlIHJlY3RhbmdsZXMNCiBvciB1c2UgdGhlIHJpZ2h0IGFuZCBsZWZ0
-IGtleWJvYXJkIGFycm93czxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PGJyPg0KUGxlYXNlIGxldCB1cyBrbm93IGlmIHlvdSBoYXZlIGFueSBxdWVz
-dGlvbnMgYW5kIGlmIHlvdSB3b3VsZCBsaWtlIHRvIHNldCB1cCBzb21lIHRpbWUgdG8gcmV2aWV3
-IHRoaXMuJm5ic3A7PGJyPg0KPGJyPg0KQmVzdCw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkphbmRyYSBBcmFuZ3VyZW4mbmJzcDsgfCZuYnNwOyBH
-VUkgRGVzaWduJm5ic3A7VGVhbTxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9k
-aXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0K
-PGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBUdWUsIE1heSA3LCAyMDE5IGF0
-IDc6MjUgQU0gV2ltIFZlcnZvb3JuICZsdDs8YSBocmVmPSJtYWlsdG86d3ZlcnZvb3JuQGVsdGFu
-LmNvbSI+d3ZlcnZvb3JuQGVsdGFuLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0K
-PC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQg
-I0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBjbSAwY20gMGNtIDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0
-O21hcmdpbi1yaWdodDowY20iPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBz
-dHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8i
-PkhlbGxvLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1t
-YXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpw
-PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1h
-bHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Q3VycmVudGx5IHRoZSB3ZWJ1aSBk
-b2VzbuKAmXQgY29udGFpbiB0aGUgZnVuY3Rpb25hbGl0eSB0byBjaGFuZ2UgdGhlIGJvb3QgbW9k
-ZSBhbmQgYm9vdCBzb3VyY2UuIEFyZSB0aGVyZSBhbnkgcGxhbnMgdG8gYWRkIHRoaXMgdG8gdGhl
-IGludGVyZmFjZT88bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJt
-c28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7
-PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
-b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9Ik5MIiBz
-dHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5z
-LXNlcmlmIj5CZXN0IFJlZ2FyZHMsPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
-LWFsdDphdXRvIj48c3BhbiBsYW5nPSJOTCIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1m
-YW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZiI+V2ltIFZlcnZvb3JuPC9zcGFuPjxv
-OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9w
-LWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJOTCIgc3R5
-bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1z
-ZXJpZiI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvYmxv
-Y2txdW90ZT4NCjwvZGl2Pg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
-
---_000_8978ed3247124b13beccd3975514e11aEltsrv03Eltanlocal_--
+> !! Vishwa !!
+>
+> On 5/8/19 8:08 AM, John Wang wrote:
+> > HI All,
+> >
+> > I can't log in to bmc with ssh, bmc's network configuration is good.
+> > I wrote an `echo server` for testing and found that it was able to
+> > communicate properly.
+> >
+> > netstat -an did not see the monitor 22 port,ssh -p 2200 also doesn't wo=
+rk.
+> >
+> > I don't know how to debug and troubleshoot the problem, so ask here.
+> >
+> > Thanks
+> >
+> > John
+>
