@@ -1,64 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CB4117458
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 10:57:54 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38ECE1744C
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 10:56:35 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zVhJ5G1qzDqHw
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 18:56:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zVjq61WdzDqGL
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 18:57:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::82f; helo=mail-qt1-x82f.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::12f; helo=mail-it1-x12f.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="DTbCPAhN"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="CYnY++la"; 
  dkim-atps=neutral
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com
- [IPv6:2607:f8b0:4864:20::82f])
+Received: from mail-it1-x12f.google.com (mail-it1-x12f.google.com
+ [IPv6:2607:f8b0:4864:20::12f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zVgK4SM9zDqGL
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 18:55:41 +1000 (AEST)
-Received: by mail-qt1-x82f.google.com with SMTP id d20so4723321qto.2
- for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 01:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zVj45ZrZzDqGL
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 18:57:12 +1000 (AEST)
+Received: by mail-it1-x12f.google.com with SMTP id m186so2751377itd.4
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 01:57:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=osBTPoQZ1v00qAusgudCBoj9vtfbnh1Ukbq/5McX444=;
- b=DTbCPAhNur4y7YJnRICsTAjNYpO4/Gukwk5tJc+DfCWk+tQMwa8iI8pWOkqx4zoBnf
- HCyvOkBcEjphbL4iJxxWQhQ5ofQRz7WU7CIyVD4/s3EQpcBGQDAUeCYHvCPh7E4pxXqF
- ddlI3XoqbzSim7aHgPNQkuaG87oJewNe3L+AI=
+ :cc; bh=9s4VZm0PCcy4igfagpz/g9u0fTnyj2jJNfVOR8ri8Es=;
+ b=CYnY++lahO6eAFdvzL8PLfcfrS6MTn33t24MRdpQwB38Q4ePj4umDg+KoU+vYoxeMC
+ 5Ex+Nfiv2q+OT2vPGZnR2Vtg8ROm4s4AUiwjPQRnGd/tpos9AneX97kr3HVwpKvcK4vk
+ oqDDWu8gH6bbsiJAsrABkHylSkC9DXbCECzclGybMDlI8N88mZMcQEZJFAUjbxtRrip9
+ hPXuiXjni8nkldIA+KDeACYtibjBsCxIT8XqVXYMvvxnk5aPt5JnlomeJxp9z/9e2ZH8
+ vMtQLDVnWjWZAABByYtHLVGkzHg09HfzlPdPa7T1NdW/ApRgk4j58ZHU42caeNfiQwu4
+ b2RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=osBTPoQZ1v00qAusgudCBoj9vtfbnh1Ukbq/5McX444=;
- b=r+Z8stWDl6Eq8Qbg44XoRnDSrCKju7Z2ANE4zjjTXXAQUFtnO9TYVZexGMH5RVSCk7
- OUi95281TmEwKo3XfwxiAYuUFqEXKm/5EueeL+xdCYGsiAi/fHxi19PVTmsM6pNvtAuj
- DSdKiBaCtwOuYfQTdi0iJdUnGH9/Vlpq9nb2C0537sZWeUQlFfTtDbz3aA2JCfISm8uO
- +M/LwUyUnh6h2s9gZx16vj7EV5CN9b0ZmpytC7JW1sofFSQ6a8z0zozkmqPB/UOghowL
- TFvEmxRLZC9W/T9q1qHo+5qCGMe9/N9FolaqLWc+vlpqHYlTAA8k2XgHGogmP1GhO8j2
- 9bVA==
-X-Gm-Message-State: APjAAAW52zGpM9KavnCJifsNpMhGQKJLk2CLohqN/DavJDQdJdR9DVe+
- a974yQx52GJYmR5KfowTNSj377M9+k9YumaDA7M=
-X-Google-Smtp-Source: APXvYqwRecejI/6ZUE/L+OYyfGAMAb7ZM6N2Lj/0VUgfx62MzuNdWlDKJvWyudYqmejVi1i4Fz0UEVxFo6zH3uWcJJk=
-X-Received: by 2002:a0c:ad89:: with SMTP id w9mr24293726qvc.89.1557305738970; 
- Wed, 08 May 2019 01:55:38 -0700 (PDT)
+ bh=9s4VZm0PCcy4igfagpz/g9u0fTnyj2jJNfVOR8ri8Es=;
+ b=rhuHE3XRv+HeZ1AtsJjUWC0OtCtWFBcJA7WK4DB1JDiQsEV+SHZILUPKkqN0GOTlRi
+ 329KzSBDUnlMTSRKu1f7rqJko5U9pGfmfg8ucexMaZT+85R4vDtyUUOEY1q4G5apQocK
+ 0i5BmGuv3Aymg3wG36d2lCMyCQ9rt620N4o9wKWvsJ5sAM3KCwr7wX0x25ankp9qNnp/
+ qWqgVzyWbtcLnRXaH3mSCCK7RwIZZu+VN6Vh7FOmR0FOxQaIfAwaF6eT4I6TAGQ23lnU
+ FhsbGB15QRSKOlv58fBs0dWRyXgbDcGutMApRNh4pTemKvNwlag7SCx+5eYnwi4qRATg
+ WvqA==
+X-Gm-Message-State: APjAAAXoETrYkDDqttZnz7D8tEzaqk6G/3qE1vQuYYt/SJ5pDjIk+5bR
+ Bg3UH6sOO/TQKKVoLaoJA3N7Yb7lldVgr7kKlCU=
+X-Google-Smtp-Source: APXvYqzOVZ01ZiL9df49plCcfOQVZ3RvnrsAdUNo2cbBWVB+wJKgLo8dlO4Z3eCxLLZGFcp9+EdZvuTB3NmpLQ415Xw=
+X-Received: by 2002:a02:b088:: with SMTP id v8mr28165498jah.21.1557305829349; 
+ Wed, 08 May 2019 01:57:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAARXrt=oNUnnPHXnbybAPAvdq9PvxHe4B3GiX0BYw6rdoXgDqw@mail.gmail.com>
- <CACPK8XcjuXuqejZ4oabLTE-Nv3+JXZ1Zn3qkeT3P1akpR9yFbA@mail.gmail.com>
- <CAARXrtk_AOkHQU09YO1rAzo7A4BbMw0gts+5r3jLK7upyJGXXw@mail.gmail.com>
-In-Reply-To: <CAARXrtk_AOkHQU09YO1rAzo7A4BbMw0gts+5r3jLK7upyJGXXw@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 8 May 2019 08:55:27 +0000
-Message-ID: <CACPK8Xdcxss9XFEuMoL7Av=P8-ZSuUUY=LmpzT3b_0g=Ls=VNQ@mail.gmail.com>
-Subject: Re: Proposal for removing legacy code update services
-To: Lei YU <mine260309@gmail.com>
+References: <CAN9Jwz1wvT0nhoTb8K9Qf-MTARc3q8kxRQXSH1TCA0e5nJFY4w@mail.gmail.com>
+In-Reply-To: <CAN9Jwz1wvT0nhoTb8K9Qf-MTARc3q8kxRQXSH1TCA0e5nJFY4w@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Wed, 8 May 2019 16:56:53 +0800
+Message-ID: <CAARXrtkqY+vLUsUmDMiL4o+ZpP4whAtRiqFB5At_PhR7dFD7hQ@mail.gmail.com>
+Subject: Re: How to deal with incorrect firmware image in
+ phosphor-bmc-code-mgmt?
+To: Troy Lee <leetroy@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,17 +77,33 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 8 May 2019 at 08:48, Lei YU <mine260309@gmail.com> wrote:
+On Wed, May 8, 2019 at 4:37 PM Troy Lee <leetroy@gmail.com> wrote:
 >
-> > To clarify, this only affects the updating of the PNOR/BIOS, and not the BMC?
+> Greeting,
 >
-> No, this affects BMC update as well.
-> With https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/21208,
-> the APIs in /org/openbmc/control/flash/bmc will be dropped.
+> With the method xyz.openbmc_project.Common.TFTP.DownloadViaTFTP,
+> does OpenBMC have a way to know that TFTP download status(completed)
+> and the downloaded image is incorrect?
 >
-> BMC code update shall use the APIs in /xyz/openbmc_project/software instead.
+> It would not be a problem if the image is correct, since we'll have an
+> InterfacesAdded signal.
+> But if the image is incorrect (untar failure/signature mismatch),
+> we'll only have an error log entry generated.
 
-Okay.
+What is the expected behavior if the image is incorrect?
 
-Does it affect the on-device update method of putting images in
-/run/initramfs and rebooting?
+> Or if the image has the same version id with currently running image,
+> the behavior will become unexpected.
+
+I met this problem before, and I think we may discuss the expected behavior,
+and fix this case.
+
+>
+> Because we have another service wants to integrate with firmware
+> update service, having a way to confirm the image file is nice to
+> have.
+>
+> Thanks,
+> Troy Lee
+> --
+> Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
