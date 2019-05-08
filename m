@@ -2,63 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 926FB17478
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 11:02:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E301E17480
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 11:04:06 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zVqg0XY2zDqGP
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 19:02:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zVs01N89zDqGM
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 19:04:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ (client-ip=2607:f8b0:4864:20::82d; helo=mail-qt1-x82d.google.com;
  envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="U86jsMhx"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="lpH/e5yG"; 
  dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com
+ [IPv6:2607:f8b0:4864:20::82d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zVpT4tlmzDq6Q
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 19:01:51 +1000 (AEST)
-Received: by mail-qt1-x843.google.com with SMTP id d13so939975qth.5
- for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 02:01:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zVrG2XxGzDq7h
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 19:03:26 +1000 (AEST)
+Received: by mail-qt1-x82d.google.com with SMTP id j6so22319543qtq.1
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 02:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=aJbLHl3vY2wWBfTm2f03mZuzrKme0WFbDUiAuAladiA=;
- b=U86jsMhxiJImVPJkU/qGNblN6XdubpYchhKOzNHD2EsRNZe/0UqAMYi86FiQbmetfq
- SyNGwGdgPj0LlwoaKHGLab44nbCsZ7U36BkDEzGRCDX6k5FCZjiz6Sy6xHKK15Be+x1q
- 95CylqFKgTGF0h/SA4ZDicnWQvMravXrC291U=
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=0yDzCUaWWkp3tn5Kbw2JfsF37HIDGVfnLmIKnLBDNBE=;
+ b=lpH/e5yGDMCJ9GliCFTdiefrE6PbFRidKf+R7lpDMTDhBvbK2z24oj1yXixM2H8fh6
+ 0XJKz80Z6D1x0e3OHMo0RUCTwFF/UqvbhqYApDfajqpWpjIOCWHSJrs4gpA+gM7s31Uo
+ rP3czIxspMz3Aw8DpFT8ssAV74o+olGDXHEnc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=aJbLHl3vY2wWBfTm2f03mZuzrKme0WFbDUiAuAladiA=;
- b=ViNX2EBqHlPPadDgWQE97q9ugESTmbkShrQ1vIwheze7qk/z0kerSWlazxuvU8r72r
- CIOOi63mUqI12AO+TISmdkVmmu/e8/tAUT+2NTKw90ia20sfbQe0PbnsmjB4EqY1q72M
- sCAxlO43Sbn323QOpnb9jCsQfpiBLumyK4+kMo/kcU9V3Qx0ChnSfkCQWQEpZMku7qIS
- eKW7o8NYNKwDQ1SasyIfRMInOmjggsEeGprswQXGRnB6KF880eo8nVH5loH+JK4Dwpen
- n5jO3mrAfGGkMR6CWiuhzsdRrjBKmTmMAIB8m8IEk+uS2xX3aaLFKm3aOyIjnQrtzhcN
- EiPg==
-X-Gm-Message-State: APjAAAUC/Btg+4GdLJguKf68MXqUv+HVaqiyl8gJLetD2ga/iX3QrTck
- HmupL/b3AbsmD6wIsGXGeuHIf0nhePRb7JgC0k//vXAF
-X-Google-Smtp-Source: APXvYqwk+9ftyfS5hp/mqyd65e4qbP4DwV0rANARC8g5CGUxxC94J6MX/bYXcJCpBOOGWGktQxRUsmlOpn+wAalAYBs=
-X-Received: by 2002:ac8:5352:: with SMTP id d18mr17594254qto.284.1557306108236; 
- Wed, 08 May 2019 02:01:48 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=0yDzCUaWWkp3tn5Kbw2JfsF37HIDGVfnLmIKnLBDNBE=;
+ b=AfwFTlJzaqUZjWF1DihvmfuINwZUKEE1CRv/Z/Glip410WlcAx4YuGIFI7bBfG2X5r
+ 19sElTBrSg63YBZIuTeyo2rzg9cX2kYlzWGNCGfk4iUL7ZxeUh7Xz73L0xoofZ+1iGU9
+ yGZL1H+4aCTdPGESTq80NaCjPCEf/JRHNOhQX4+TNbGR0VIUAWa1yoaYKziXTpAwYgoG
+ G10QDjlObCI94PUdqZyO4HSv5ucI/RxxutXbSGh+56CSly1Eu36Cv9dHwLDTMdGhycHd
+ cPX/HwdytXZAOAjo4nTv4onMT0t1ltsttxtuueBm0yaR1pvHS/JGf7WD3SVCYDVqzpH0
+ /M8Q==
+X-Gm-Message-State: APjAAAVgtGmM3iNQeqLggRB7LCkSAu0PiFtE2LnMwKbwAvpuTVQKvhZb
+ B956brh5BJwg6GhoovSEOxCValaqlGqRcPcD2DNEFhH3QeA=
+X-Google-Smtp-Source: APXvYqyHTflu4Db/IeB9IYjjjAqWEjufwn4UCHRvrSNWny4KaosFJNOhsPOTgRMm0G4URshDpuoseXi4ahVsLRH40VM=
+X-Received: by 2002:ac8:2d48:: with SMTP id o8mr30592099qta.136.1557306202565; 
+ Wed, 08 May 2019 02:03:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO9PYRL4Pr2hV=Hz5dvTJzhx-x9WPJL12qZEKuh+DiCWx2RMww@mail.gmail.com>
- <CAHkHK0_FCE=QHF6tdD3DyGNcOMZHkhrkAZmgPwQ0Lr-G0-e9Qg@mail.gmail.com>
-In-Reply-To: <CAHkHK0_FCE=QHF6tdD3DyGNcOMZHkhrkAZmgPwQ0Lr-G0-e9Qg@mail.gmail.com>
+References: <CAARXrt=oNUnnPHXnbybAPAvdq9PvxHe4B3GiX0BYw6rdoXgDqw@mail.gmail.com>
+ <CACPK8XcjuXuqejZ4oabLTE-Nv3+JXZ1Zn3qkeT3P1akpR9yFbA@mail.gmail.com>
+ <CAARXrtk_AOkHQU09YO1rAzo7A4BbMw0gts+5r3jLK7upyJGXXw@mail.gmail.com>
+ <CACPK8Xdcxss9XFEuMoL7Av=P8-ZSuUUY=LmpzT3b_0g=Ls=VNQ@mail.gmail.com>
+ <CAARXrtm1wqok-KZCK0r=1cWGx9rVX_EPfftMh3DVZOPLYhEDtQ@mail.gmail.com>
+In-Reply-To: <CAARXrtm1wqok-KZCK0r=1cWGx9rVX_EPfftMh3DVZOPLYhEDtQ@mail.gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 8 May 2019 09:01:37 +0000
-Message-ID: <CACPK8XftUZPWf_1hVaFu-iw7Hd1CT6oBcUHsAWcX1NVYRyLzQg@mail.gmail.com>
-Subject: Intel kernel patches (was Re: Is there Intel node management support?)
-To: James Feist <james.feist@linux.intel.com>, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Date: Wed, 8 May 2019 09:03:11 +0000
+Message-ID: <CACPK8Xd_wX6ayHFWmDC5hpZLTC=FTbz+BZD78Ug=0JPfDaut_Q@mail.gmail.com>
+Subject: Re: Proposal for removing legacy code update services
+To: Lei YU <mine260309@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,27 +73,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 8 May 2019 at 03:44, qianlihu <wangzhiqiang8906@gmail.com> wrote:
+On Wed, 8 May 2019 at 08:58, Lei YU <mine260309@gmail.com> wrote:
 >
-> On Wed, May 8, 2019 at 11:22 AM Deng Tyler <tyler.sabdon@gmail.com> wrote:
-> >
-> > Hi all:
-> >     Is there any package support Intel node management in current openbmc or plan to support it?
-> According to my understanding, you can refer to these repos:
-> [ipmbbridge] (https://github.com/openbmc/ipmbbridge)
-> [node-manager] (https://github.com/Intel-BMC/node-manager)
+> > Does it affect the on-device update method of putting images in
+> > /run/initramfs and rebooting?
 >
-> Also need the ipmi related patch here
->
-> https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-wolfpass/recipes-kernel/linux/linux-aspeed
+> No, it doesn't.
+> You could still update code by putting images in /run/initramfs and reboot.
 
-Is there a reason the Intel team has not submitted these patches for
-inclusion in the kernel tree?
+Great! I checked op-test, and it is already using the
+/xyz/openbmc_project/software API.
 
-I encourage you to send them to the list for review and merging.
++1 from me.
 
 Cheers,
 
