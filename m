@@ -1,67 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A46516FA4
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 05:46:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zMpn5Sb0zDqMr
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 13:46:41 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5310A171D6
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 08:43:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zRkP60T5zDq96
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 16:43:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::130; helo=mail-it1-x130.google.com;
- envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="a/tDiURp"; 
- dkim-atps=neutral
-Received: from mail-it1-x130.google.com (mail-it1-x130.google.com
- [IPv6:2607:f8b0:4864:20::130])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=vishwa@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zMnz5C8VzDqLc
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 13:45:59 +1000 (AEST)
-Received: by mail-it1-x130.google.com with SMTP id q65so1788803itg.2
- for <openbmc@lists.ozlabs.org>; Tue, 07 May 2019 20:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=X/4MdNLqFxgs6PSDMdgYhWTX72QZWuqNINz1bgCUaJI=;
- b=a/tDiURp3KWdyMuvjGk5q3LOX/LaTNLUVEAuvblSh25MRng4tOHxQMSlzUChVgsgEO
- LN990B8GFjlqxtkzWL5XyAnCrx052xozFA5eufj85CWcoAuevwKOg2sbbtQiWqBpNkoq
- c6PsU3OabHcRvZibAz23Io0dnPihFZWYTn4wVNhIwM0Vm7v+qq0oeZmgjSrZcJp5pPVv
- UUN0jKlGZlJLvLYevH+0D/U8lfnJ5fnvMsCFxErYWX3RN6+U6mJ+D3lJ/VPMSMRkMjEa
- w4RFgf7t+ctIcWw65nRrERsg4LEOGE9KOuY41bwSK5M+1OtEzjD/55brAphzXY7QDP+E
- WXMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=X/4MdNLqFxgs6PSDMdgYhWTX72QZWuqNINz1bgCUaJI=;
- b=JA0UOUGu0H5+scyHJZ4O6yyAZpSuJAIKf+OOepgoOQx7LYb/NFH2T/BG2duP/vYtBJ
- CEoX134yBagqpn+9BktpD39HfCXb3HqhzwfzMMhi2ypo5U+BqbHHkNBYCRJOd2cL/89X
- iBr09N2iDoSEAymoNuvUeuDHVb3q1DS05tgRZqjGAled1DWyphixBjlBNL7qOyfoPo4y
- yQqIMNJg0mo0Z1XbImvLcpFDCtJElCMY7+Nkb6SikX9P5YPBXmwspeozi5s4gGopGeUQ
- cSToHsCyn/i7ybN2mLMDuj1MYRrcAhV2oBBzZmVQCVMNtfkcihLBHxDK/UkOJVXASZiN
- W2Lw==
-X-Gm-Message-State: APjAAAWTSaOs7U6SyJ1Z9ET6YjYo5Do/Pq9B36xFk1BDjQa/OWhmUlS3
- rlqQPyd1hmoyRpwcgpwbnSPZIgL1CyQbh4XAIm0=
-X-Google-Smtp-Source: APXvYqw5d0LvjcExJEV1IGXGkLg7VtCLsMgi9yLgQaFNmDpXxx4Fw1bG0yNb31KfFmFHhWenLeFbF5nmtAftkbA8Tlc=
-X-Received: by 2002:a02:2b1d:: with SMTP id h29mr25860530jaa.76.1557287155942; 
- Tue, 07 May 2019 20:45:55 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zRWf3fnBzDqTl
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 16:33:49 +1000 (AEST)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x486XfXM011470
+ for <openbmc@lists.ozlabs.org>; Wed, 8 May 2019 02:33:47 -0400
+Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2sbnyjh9vj-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 02:33:44 -0400
+Received: from localhost
+ by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Wed, 8 May 2019 07:32:32 +0100
+Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
+ by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 8 May 2019 07:32:29 +0100
+Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
+ [9.149.105.61])
+ by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x486WSKB61472820
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 May 2019 06:32:28 GMT
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 67E7F11C052;
+ Wed,  8 May 2019 06:32:28 +0000 (GMT)
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F27AA11C05E;
+ Wed,  8 May 2019 06:32:27 +0000 (GMT)
+Received: from [9.122.210.224] (unknown [9.122.210.224])
+ by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Wed,  8 May 2019 06:32:27 +0000 (GMT)
+Subject: Re: Can't log in to bmc via ssh
+To: John Wang <wangzqbj@inspur.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAHkHK0_+4z7TJd_g9WszOFoPkFw5D0nh=EPhaqKSKinO7rzQRA@mail.gmail.com>
+From: vishwa <vishwa@linux.vnet.ibm.com>
+Date: Wed, 8 May 2019 12:02:27 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CAARXrt=oNUnnPHXnbybAPAvdq9PvxHe4B3GiX0BYw6rdoXgDqw@mail.gmail.com>
- <CALLMt=orZcWQ+A-dJwd+QKroYe78AK9LXTr=BsjeJiVpQj69SA@mail.gmail.com>
-In-Reply-To: <CALLMt=orZcWQ+A-dJwd+QKroYe78AK9LXTr=BsjeJiVpQj69SA@mail.gmail.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Wed, 8 May 2019 11:45:39 +0800
-Message-ID: <CAARXrtk6k56kn2UJYPQq=truocS=Dp6CFgQMyBw78K-WjTMqug@mail.gmail.com>
-Subject: Re: Proposal for removing legacy code update services
-To: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAHkHK0_+4z7TJd_g9WszOFoPkFw5D0nh=EPhaqKSKinO7rzQRA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19050806-4275-0000-0000-00000332822D
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19050806-4276-0000-0000-00003841EFC8
+Message-Id: <a4a4ca92-d1a4-cb24-aec9-7ff31c79ff64@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-08_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905080042
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,46 +91,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The services are being removed at:
-https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/21208
+Hi John,
 
-The related docs are being updated at:
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/21209
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/21210
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/21211
+I have always used -vvvv option in ssh to debug ssh connection issues
 
-Leave comments there if you have any concerns.
+ssh id@host -vvvv
 
+!! Vishwa !!
 
-On Wed, Apr 3, 2019 at 11:33 PM Andrew Geissler <geissonator@gmail.com> wrote:
+On 5/8/19 8:08 AM, John Wang wrote:
+> HI All,
 >
-> On Tue, Apr 2, 2019 at 10:48 PM Lei YU <mine260309@gmail.com> wrote:
-> >
-> > Hi All,
-> >
-> > With 3ba97559e, OpenBMC supports PNOR code update by
-> > org.open_power.Software.Host.Updater.service, with the steps described in
-> > [host-code-update.md][1]
-> >
-> > And before that OpenBMC already supports BMC code update by
-> > xyz.openbmc_project.Software.BMC.Updater.service as well, with the steps
-> > described in [ubi-code-update.md][2]
-> >
-> > So it's time to remove the legacy services that could be replaced:
-> > - org.openbmc.control.BmcFlash.service
-> > - org.openbmc.control.Flash.service
-> > - org.openbmc.managers.Download.service
-> >
-> > What do you think?
+> I can't log in to bmc with ssh, bmc's network configuration is good.
+> I wrote an `echo server` for testing and found that it was able to 
+> communicate properly.
 >
-> Sounds good to me! Get some more python applications out of our images and
-> makes it easier to have standard CI tests for all machines.
+> netstat -an did not see the monitor 22 port,ssh -p 2200 also doesn't work.
 >
-> > Thanks!
-> >
-> > [1]: https://github.com/openbmc/docs/blob/master/code-update/host-code-update.md
-> > [2]: https://github.com/openbmc/docs/blob/master/code-update/ubi-code-update.md
+> I don't know how to debug and troubleshoot the problem, so ask here.
+>
+> Thanks
+>
+> John
+
