@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C97BA173E2
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 10:32:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 02ABB17407
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 10:38:09 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zV8g11qXzDqFS
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 18:32:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zVH24G5nzDqDb
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 18:38:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::833; helo=mail-qt1-x833.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com;
+ envelope-from=leetroy@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="IBTYlTuw"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Am7ICoot"; 
  dkim-atps=neutral
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com
- [IPv6:2607:f8b0:4864:20::833])
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zV7w1zKxzDqBY
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 18:31:55 +1000 (AEST)
-Received: by mail-qt1-x833.google.com with SMTP id c13so22216014qtn.8
- for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 01:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=v847hmyE9RsrbPu/LLBhzrBwhOGu0OE0s1wZVxpCDT0=;
- b=IBTYlTuwiGRO4ZrzlOgPKC0xC1iaNRDS6yN+o5tPrK7zfIeSza5M9Ci5/lh4vuvdSt
- l79fknq+4vyJ8sSfzvIOC+Ew6FDhjxWVWiXJuBlc3gYlhYfaQ1QveQjYKbbxPHZ0hJJm
- f59TSW6uLC2JDGu58ie4/JF0f8qKRofPqL0sE=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zVDk0SG0zDqKT
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 18:36:05 +1000 (AEST)
+Received: by mail-oi1-x234.google.com with SMTP id a132so3443022oib.2
+ for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 01:36:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=F4gREXXakK2PH2ZyF2geS9uX4r93ZCFGyoLm5umubjE=;
+ b=Am7ICoot2JrJhVeKT14suTMVg4rhBIKQSW5AMi72ztx2iWFSd3Kepp4ZlGdY5NJ0Re
+ G2Hv/xGAzj+CMskmMVKkOOE259iOVuvQwHbDKotQtv4kZovxPpyvdGQmnO1fxSkWYLYe
+ M8tG2FmTBorC6N+HW8X3tkNREIpTa5IYJddLX5gdPzD0VTDg4zruQkfQ7l2WhMYBrizx
+ ZG6EgCcy1zfHHk1aYXQY+D1dwldmIu5DZT2GlJOUlitIrUOFZ0B1wDbX7WEymzWk46Si
+ 71sGZ0tFD9vmgXjWnkfTP0S7doPVoWmpasKo8oKk8QFO7UR6py929vvYNqePtnzM8aYC
+ EnNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=v847hmyE9RsrbPu/LLBhzrBwhOGu0OE0s1wZVxpCDT0=;
- b=phOaa5ZvQF7Ucf58RKVyzTkep32DCKqL+qLoxl34bkxsSjZNAgb/ayfcEFLMI5RKtZ
- N7DqTKatM+37N/qDh/Vpy3Ps6vg2zIMY4JUhqRj13let1yiK9tikIsXuKDfnL2BUYPTx
- 2/4/mtYbe04SNJVQor5Zj3PipkBfM+C45HV8hepZWdxNBs5BDIBKaGr7SApZcq5bprNA
- IqHmq70YtsBXIr1UFjyrv+O3Cw5CYw4AOYOBoAYCYqs42jN8N0hvHxjlDexfvYJuKr+k
- C7+uG0HWanieDBYmX8TJ6nyNIN1ExoOo4wokDBo6LrathuogxQT4aSjJzfpH93AvDzif
- 2pkQ==
-X-Gm-Message-State: APjAAAX7oC9CJZSR9W72Y+nJtXQ1yeatrbGz+JH1FCULxNkAmjiksQ28
- jXtP3x8EloEnuG8zDOPBhBmDsMcJZvBQdG6+ZFg=
-X-Google-Smtp-Source: APXvYqwf9yp8VPwTH0CGlE4tynvcJrHpVWpr/8NtehFoAzBpBFWptWu1kWjyTwwz64sznx/goAoT20GGjLgMqkGTEV4=
-X-Received: by 2002:a0c:9e27:: with SMTP id p39mr1015868qve.85.1557304312464; 
- Wed, 08 May 2019 01:31:52 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=F4gREXXakK2PH2ZyF2geS9uX4r93ZCFGyoLm5umubjE=;
+ b=T6C+Eb8bwi2IU0fR4NZs3KYH8WvGSHOjydT2ni4f+dpU0mr5CjKBHXizDWbRGDRloW
+ tAyOiAz2NvMq2zC8nLBbl0DSc3YGES2MrBLbIWb7l0DpNYNBWfYKGXoDPBO6pKzkOXji
+ YL4sPMZ18rhsp12b3zcFkQpidqfDNYHVx+7N9r2FL7RQiN5Q/yHQv2b3nY4ZAd/zkK5+
+ qfPg6NZFLjQVtX6yxe5deglyatiIutBZXWszI5KE1kueUzqG/uPEjw9Ha2I/EjyZa22z
+ u+uL59TWjvl4g/gCzpiVQkUXxCBiHy2SNxGFetwLiw8jnTO0NBZZMmzXHUdkykbJbPxJ
+ EKLg==
+X-Gm-Message-State: APjAAAUWZjiJV7fyquhKLkzf3TR1si6qCzp3BoOpA+i106sSmVYbS4ag
+ asp8MbfyoJt8hgDU4HxSNmbhVH6pYRBHiKa1sfrZ2RGNDOg=
+X-Google-Smtp-Source: APXvYqzGViaxRC47o5FtYQpAbnWv3NGdSPvF5n3ZrlqttYSyJlsOoFBhstQey3OcxsQceP54qNB9Ci649emgRJ2jztU=
+X-Received: by 2002:aca:5607:: with SMTP id k7mr1357167oib.116.1557304561668; 
+ Wed, 08 May 2019 01:36:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHkHK0-4r3ZD4YtOJKZW10FqySmCQ_Kzea=f7kmuyf5rCykitw@mail.gmail.com>
-In-Reply-To: <CAHkHK0-4r3ZD4YtOJKZW10FqySmCQ_Kzea=f7kmuyf5rCykitw@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 8 May 2019 08:31:41 +0000
-Message-ID: <CACPK8Xcrm0Jfz4oz+KuZnXoLmnsDjT0EKr-2X5Exg=wRS212sw@mail.gmail.com>
-Subject: Re: How to configure dram memory size
-To: John Wang <wangzqbj@inspur.com>
+From: Troy Lee <leetroy@gmail.com>
+Date: Wed, 8 May 2019 16:35:50 +0800
+Message-ID: <CAN9Jwz1wvT0nhoTb8K9Qf-MTARc3q8kxRQXSH1TCA0e5nJFY4w@mail.gmail.com>
+Subject: How to deal with incorrect firmware image in phosphor-bmc-code-mgmt?
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -69,19 +69,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 8 May 2019 at 02:45, John Wang <wangzqbj@inspur.com> wrote:
-> My machine memory is 256M, but why is uboot recognized as 512M, where should I set it?
+Greeting,
 
-Are you using the OpenBMC uboot tree on an ASPEED BMC?
+With the method xyz.openbmc_project.Common.TFTP.DownloadViaTFTP,
+does OpenBMC have a way to know that TFTP download status(completed)
+and the downloaded image is incorrect?
 
-If so, the code in platform.S should detect the amount of available RAM.
+It would not be a problem if the image is correct, since we'll have an
+InterfacesAdded signal.
+But if the image is incorrect (untar failure/signature mismatch),
+we'll only have an error log entry generated.
+Or if the image has the same version id with currently running image,
+the behavior will become unexpected.
 
-Can you provide the output of u-boot booting?
+Because we have another service wants to integrate with firmware
+update service, having a way to confirm the image file is nice to
+have.
 
-Cheers,
-
-Joel
+Thanks,
+Troy Lee
+--
+Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
