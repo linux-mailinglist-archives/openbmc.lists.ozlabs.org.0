@@ -2,65 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09F3516DAD
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 00:58:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A2DDC16EBC
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 03:55:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zFQQ347JzDqLx
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 08:58:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zKKy1RlrzDqNN
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 11:55:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::844; helo=mail-qt1-x844.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="NF0hTUGh"; 
- dkim-atps=neutral
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
- [IPv6:2607:f8b0:4864:20::844])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="TibiRHAx"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="aA6DdAq0"; dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zFPg4m2bzDqLT
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 08:57:56 +1000 (AEST)
-Received: by mail-qt1-x844.google.com with SMTP id m32so18003659qtf.0
- for <openbmc@lists.ozlabs.org>; Tue, 07 May 2019 15:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Q0rnowkJir8pLQTWmwqTzPbQwNtFRoLOFMuxuoY0zoE=;
- b=NF0hTUGhObCXdsz0w2xnhi4jnosagXTGSrd4uqYoHrxj8OO0RZ2eEWjblGtX6YSEgQ
- 2w8X8L2BcI0HmLzCf71syC4UpwozZ76jQi1s+EmPLn3VwgXSOA1ccWY73mOUlUBrOle0
- x0ihOSa2jpD5d0S2AaxUrpiMSVCvWyRgLTddM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Q0rnowkJir8pLQTWmwqTzPbQwNtFRoLOFMuxuoY0zoE=;
- b=V8BXryfsgkZu8iQNUZw+2nlaouGVv1boWceGZ+oM3BFnPUp0UR7tVZl5ZyTFCZReQp
- Ikfoo+PcVtD7knozAnSS2Yw/ldgE+D/ts/NRLarIfnAVKit4clv1Pws1P18dqt5TWqbq
- xynN4E0i9vfyv2SN0E4OajQ6fjjwnNrS+40EGP1o+RiHCHUlOCmnquWsP7Y3Ec6bMHRx
- AHm09jLsU0RvAGqxGN77zUN4Z79GQu18Gka/TSM47cPiZxi4ffiiEKNrn7S4TELfAnMu
- gP1kkUp9vV72Co3VW3EBBvHU2Nno8yxxfXFxjq3S62sOa5KE9AZrxbFlinOfPovNcL6L
- +Chw==
-X-Gm-Message-State: APjAAAWP+RnHrSSQuuNGgJd/JfwPPy5VtmemftYb3GBsx/WZUIrfHflQ
- aITzJXwHoPtFZmaT+eLM1LsXx3aART1Sbv4UmazxA0lt
-X-Google-Smtp-Source: APXvYqz+jmyoDgH9G/O+f9XRW29+XQylDoGDLz/63xA8puAJ2oMREwKToTq6Hb3Ah3CogIC3biUmanV/OMY/gpB8ekY=
-X-Received: by 2002:ac8:5352:: with SMTP id d18mr15725357qto.284.1557269872995; 
- Tue, 07 May 2019 15:57:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <1551820067-53510-1-git-send-email-anoo@linux.ibm.com>
- <02b66794-19bf-a042-66a9-00fc712355f5@linux.ibm.com>
- <CACPK8Xez-iKZ9h7NB9YX+AfNFtoZhsP9Ap8H+1w-cvmAk1S5xQ@mail.gmail.com>
- <e97fb72d9253a582404c704d743bedb6@linux.vnet.ibm.com>
-In-Reply-To: <e97fb72d9253a582404c704d743bedb6@linux.vnet.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 7 May 2019 22:57:39 +0000
-Message-ID: <CACPK8Xe+Xgj-S8Kgy=pTkJ8ftkVKivuRpQy3bMYqOka7xj00ag@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Add Swift BMC machine
-To: Adriana Kobylak <anoo@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zKJp2S6mzDqLS
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 11:54:01 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id A5F6620DC2;
+ Tue,  7 May 2019 21:53:58 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Tue, 07 May 2019 21:53:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=sLjkLSsA8kk+tCMKqg0Z4BMOroe4eRe
+ qX1RYiIHR8Y0=; b=TibiRHAxSX0Jv4+CoQ1WL5g8OM+5rXRsQx8L1Jr7qoPz4PD
+ 0EJOZoUqKfmXfye+TuIqRJ/Pesjq1zskUnPx03s4OW12gSo7i2pntde65KwAG4Ay
+ L8dlp7uL2mqRf1a/P0tGafiPPH9FzI6JFVgp+/CrYp9EKtZIuRg6P2RS4ZYYMKlx
+ LX0HpusU1YNUcZvwdMz4oWPdDaaChPLC+8RrBs7C1R506o95vEPcrYhe39ASfVZ5
+ uVH3wjw+EVLhNXz7cwJBZbOJn1lrN8zwLS1jUghokY4DhrBh1Y7sND5xcLWMwCEa
+ 3OGQTJY6puBxg1j/2mAw63ZMBvz9p0lXrxOHkfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=sLjkLS
+ sA8kk+tCMKqg0Z4BMOroe4eReqX1RYiIHR8Y0=; b=aA6DdAq0nZQF4a2l6pPFcn
+ gjFaJDJVkhUxSQ0iYflfUEsgpTaER621L90d6Iw8eK9GiRqwvNHjib2qSfZvnZJw
+ 2jqVGT86kASxnIZX7UqhP5PfnYAaP+vs8pdwBJxUa1ilBwpm3yHxyjn2gaetYjZX
+ +R1UgSQEKcOGbocJe2P4n6L42iJZED3Gtv1BxjzeXGxwgFGR6Py4EEX9Q1aL4YNQ
+ oRNcKC1XngrCrnOA+bkQjhUz4U1cEadb10GGQgXTsS9i0tgabwUcsev94Jzdjy2T
+ eQOraXDKtsQSYlIz5FMwmPmGk278Jn0jtoEh/JGRAiKzEyDDNofjEyPAHzBH6BiA
+ ==
+X-ME-Sender: <xms:tjbSXEsaRDcjGEZ09a525Yr5HurSBMramNz8TWhjBrsmB1y0-W65Bg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrkedugdehudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
+ hinhepkhgvrhhnvghlrdhorhhgnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
+ fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:tjbSXIaVVfhCj6MDoRn3W5Yc9srDjINJ6JrwAMjBLr31a0wt-yFEAw>
+ <xmx:tjbSXGO5DzgnIqyNH12juYuEpbH0NplMiwISA2LfQYbzbrkEhFjL5A>
+ <xmx:tjbSXFvq9wGgser_z9nJjVZo_R_6yN0irV_z-ZWPgkrRW5XZnV5WKA>
+ <xmx:tjbSXHI2u2TyosGEgMrp3yStQrHknb2rP85hBKkTcBCkKhPdnF5Oww>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id F2E9F7C76D; Tue,  7 May 2019 21:53:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
+Mime-Version: 1.0
+Message-Id: <18ccd5d6-0bce-4990-9d0a-62f97fae5b3b@www.fastmail.com>
+In-Reply-To: <A2B0CA36-50FC-4A4D-A1EE-C87B3A55223C@gmail.com>
+References: <365A980B-9730-411A-A91B-EB0A97026D95@gmail.com>
+ <acf57f4c-08bd-40db-a77a-bb7f4f9f5938@Spark>
+ <A2B0CA36-50FC-4A4D-A1EE-C87B3A55223C@gmail.com>
+Date: Tue, 07 May 2019 21:53:50 -0400
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Brad Chou" <chou.brad@gmail.com>,
+ "Samuel Jiang" <chyishian.jiang@gmail.com>
+Subject: Re: How to set GPIOs to pre-defined value
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,23 +90,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2 Apr 2019 at 21:02, Adriana Kobylak <anoo@linux.ibm.com> wrote:
->
-> On 2019-03-27 01:18, Joel Stanley wrote:
-> > Hi Adriana,
-> >
-> >
-> > Are you going to send a v2 that address Matt's comment?
-> >
->
-> Yeah, I wanted to wait to get a consensus on the flash layout for this
-> system to not have to send a separate patch for it, which seems will
-> happen this week, will send a v2 addressing the comments and removing
-> the TODO to update the flash layout once I get that information.
 
-ping?
+
+On Tue, 7 May 2019, at 18:23, Brad Chou wrote:
+> Hi Samuel,
+> Thanks for your reply, I am using AST2500.
+> I tried add gpio-hog settings into my device tree, and yes, the GPIO 
+> works as it defined.
+> But all GPIOs defined by gpio-hog can not be modified in user space by 
+> gpioset / gpioget utility.
+> I need to set all GPIOs to pre-defined state and can change it at run 
+> time.
+> Set GPIOs in Device tree is trying to lock it by a fixed direction and 
+> value.
+> 
+
+This problem is probably best taken up with upstream. Currently GPIO
+nodes in the devicetree are ignored if they do not have the `gpio-hog`
+property:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpio/gpiolib-of.c?h=v5.1#n454
+
+Changing that might be a hard argument - it may impact existing
+devicetrees that expect the current behaviour.
+
+However, I'm interested in what you see wrong with doing this from
+userspace? What requirements do you have that would need this to
+be done in the kernel?
+
+Cheers,
+
+Andrew
