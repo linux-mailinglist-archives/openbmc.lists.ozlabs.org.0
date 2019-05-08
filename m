@@ -1,55 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87EB816F2B
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 04:45:23 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zLS103WCzDqN3
-	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 12:45:21 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3CC316F6F
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 05:22:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 44zMGH146KzDqNk
+	for <lists+openbmc@lfdr.de>; Wed,  8 May 2019 13:21:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.61.248; helo=ssh248.corpemail.net;
- envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d35; helo=mail-io1-xd35.google.com;
+ envelope-from=tyler.sabdon@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-X-Greylist: delayed 128 seconds by postgrey-1.36 at bilbo;
- Wed, 08 May 2019 12:44:42 AEST
-Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="lBwndPlY"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
+ [IPv6:2607:f8b0:4864:20::d35])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zLRG0HwkzDqL0
- for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 12:44:41 +1000 (AEST)
-Received: from ([218.57.135.44])
- by ssh248.corpemail.net (Antispam) with ASMTP (SSL) id ZHY67521
- for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 10:42:21 +0800
-Received: from Jtjnmail201617.home.langchao.com (10.100.2.17) by
- jtjncas04.home.langchao.com (172.30.26.23) with Microsoft SMTP Server (TLS)
- id 14.3.408.0; Wed, 8 May 2019 10:42:23 +0800
-Received: from mail-lj1-f172.google.com (10.100.1.52) by
- Jtjnmail201617.home.langchao.com (10.100.2.17) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 8 May 2019 10:42:34 +0800
-Received: by mail-lj1-f172.google.com with SMTP id h21so16058071ljk.13
- for <openbmc@lists.ozlabs.org>; Tue, 07 May 2019 19:42:18 -0700 (PDT)
-X-Gm-Message-State: APjAAAUlP96CzRsG5CvCUIg/bXkRy0NZNDe9KbWi7xMv2JeD2B6g5zOp
- XJ7qMBCKC6vjz9NODqDShXyQKvJI3P0yybOLb6g=
-X-Google-Smtp-Source: APXvYqwFPGXEb/aUlPrIJxrcjZ5KtE9/cN7sHvA9bNxsD22En6BIPBxDQsAKecFKNIY3PhlWRe9dWtAsy4UOAPuVgTU=
-X-Received: by 2002:a2e:81d0:: with SMTP id s16mr19171363ljg.145.1557283336105; 
- Tue, 07 May 2019 19:42:16 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 44zMFX35PCzDqLP
+ for <openbmc@lists.ozlabs.org>; Wed,  8 May 2019 13:21:17 +1000 (AEST)
+Received: by mail-io1-xd35.google.com with SMTP id v9so12113406ion.11
+ for <openbmc@lists.ozlabs.org>; Tue, 07 May 2019 20:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=RDcuVT9gPSlVdG8y0cqpBzibKp7Fz9nQ7029Kh0XiII=;
+ b=lBwndPlYMEQWm8Rr2o7stXdBdNDql9SOFTBdM713QyM2i1c8OzzDnbIVD+cqbSwSB3
+ G3zRcVA002B3cK1ThIoUtoB4egiX5U73HNCHYUl730Zbz35qXXVnzkgfdYHgRGxoPvXp
+ M1p73dm3aowhXJyXPVMlirTwFhjXf8mAuyqYFlfiy8chRb19KLo+7Vlq0GYYfFdsZ0Ok
+ 1yKhCU5Z9f79VuSsN8khnC/Pa6r1x+YLnfAJKhnPPAkkHCIrDqlefGkZuDeLJ31xKit+
+ Dk5b71GpT+neNncny5AblhsgKcevpJi+tO+tSkooJxZxs1LkqhVwjlvNjFNUaioBTLsN
+ hLxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=RDcuVT9gPSlVdG8y0cqpBzibKp7Fz9nQ7029Kh0XiII=;
+ b=lZ6QAHE9t3bKhYpMVGVCEKsWdSdTeFB5RbIs8GV/UiI+/9uN2hMnF/9r1D8Xdkco1X
+ XFDh9IBMzS0cEr6sE6OPCkqIBa5+L/SNptjsM3Fl/eW5wCzvaY7tDvMH47VoX0TymzDb
+ m02jaG+bhc5ySDERAPoAMHWOtCdNUl0E/XwiCWM7pQrZ2x5ChGsm/sYNPQknTrUvCIY4
+ h4Kt+0Jqi1j0smNOwhQACkBv6NgoycOBdgjYSokSz2CCZkb2QDH+Pxx0214jK7CgQpnw
+ Jzl/Fjzv1JB/BKhnwupjONt0VtSfuS6U1jd3ErZN+sRJ0q05TxnqFh3k2Yy3FynoQ4nF
+ uITQ==
+X-Gm-Message-State: APjAAAXDChIAwSZmruK46o+v7CZVZV4ZXlfn12VjFEkGG50ua7LJiqBR
+ 3eyNnPqjjW06178S9CfCmRH4OYNTm9kU0J/KZ5dIfQ==
+X-Google-Smtp-Source: APXvYqwEC2KDIlxRISyGaj0uKNnxkKZySHJ+t3AoZwLx/jKj7gmrnVsibyXm62O7yBlVdUJZ5kOSXO27jx0m2ZiZi3c=
+X-Received: by 2002:a05:6602:8f:: with SMTP id
+ h15mr23411966iob.117.1557285673187; 
+ Tue, 07 May 2019 20:21:13 -0700 (PDT)
 MIME-Version: 1.0
-From: John Wang <wangzqbj@inspur.com>
-Date: Wed, 8 May 2019 10:42:04 +0800
-X-Gmail-Original-Message-ID: <CAHkHK0-4r3ZD4YtOJKZW10FqySmCQ_Kzea=f7kmuyf5rCykitw@mail.gmail.com>
-Message-ID: <CAHkHK0-4r3ZD4YtOJKZW10FqySmCQ_Kzea=f7kmuyf5rCykitw@mail.gmail.com>
-Subject: How to configure dram memory size
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Wed, 8 May 2019 11:21:14 +0800
+Message-ID: <CAO9PYRL4Pr2hV=Hz5dvTJzhx-x9WPJL12qZEKuh+DiCWx2RMww@mail.gmail.com>
+Subject: Is there Intel node management support?
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000001037b20588574819"
-X-Originating-IP: [10.100.1.52]
-X-ClientProxiedBy: jtjnmail201609.home.langchao.com (10.100.2.9) To
- Jtjnmail201617.home.langchao.com (10.100.2.17)
+Content-Type: multipart/alternative; boundary="0000000000005d3d19058857d3ca"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,25 +73,22 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001037b20588574819
+--0000000000005d3d19058857d3ca
 Content-Type: text/plain; charset="UTF-8"
 
-Hi All
+Hi all:
+    Is there any package support Intel node management in current openbmc
+or plan to support it?
 
-My machine memory is 256M, but why is uboot recognized as 512M, where
-should I set it?
+BR,
+Tyler
 
-Thanks
-
-John
-
---0000000000001037b20588574819
+--0000000000005d3d19058857d3ca
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi All<div><br></div><div>My machine memo=
-ry is 256M, but why is uboot recognized as 512M, where should I set it?<br>=
-</div><div><br></div><div>Thanks</div><div><br></div><div>John=C2=A0</div><=
-/div></div>
+<div dir=3D"ltr">Hi all:<div>=C2=A0 =C2=A0 Is there any package support Int=
+el node management in current openbmc or plan to support it?</div><div><br>=
+</div><div>BR,</div><div>Tyler=C2=A0</div></div>
 
---0000000000001037b20588574819--
+--0000000000005d3d19058857d3ca--
