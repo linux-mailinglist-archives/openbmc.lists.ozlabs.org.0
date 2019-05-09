@@ -2,84 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDBC618514
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 08:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AFD0418572
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 08:33:56 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4502tN1pSbzDqLD
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 16:07:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4503TG1cBlzDqLD
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 16:33:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=025fd6d60=will.liang@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="lfs8LGR4"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="WrznOOAs"; dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4502sG5WxdzDqHY;
- Thu,  9 May 2019 16:06:10 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 0E919220A5;
- Thu,  9 May 2019 02:06:08 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 09 May 2019 02:06:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm2; bh=SuctwDlVhH18vzG5WhFjPtKUCfoS1SU
- LOKHQ7orIUNs=; b=lfs8LGR4GbTaWlud6KKBBIj23SBTLzhFIY1WO5GBOAwDSVu
- VCwhIvKaj1o6xyHbaDqB7Tji4/PYsDznixSEqLwRXbOn25q7YVnDZSFltyLvyTKr
- jROyVCm+9DRkYiXm1XQzUpVnd5j1c+6yhVCpOtJ1Q9ALxDhXevsNCer03ktXexQJ
- CDxJtYQvqWe6RhuvRISf6E6EfF7OLt/B39iWGHSsPIcnTUbAg9JFljjzMZ17DpW0
- RCggzwjX4I/JjTE7L4fEIRzX3JiidO7J4JETsbCQhtHDbQGQE6R6M6PdiuMWbV0g
- Z5coXsQ/Jeex3GUNkz4ZBCGiSI5AUxi3KZ08ajA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=SuctwD
- lVhH18vzG5WhFjPtKUCfoS1SULOKHQ7orIUNs=; b=WrznOOAszPOrpOne62Dgug
- f7c7LKPoA7qkLeYgRq92XlVU3JJAN86NkswnoghX46rEBYvN5y41THuZeY9zmfvF
- fQUI2Z8xqAaOLIkVxO2JVXHpSS9mNQmQx76iBxv/fP8fC9sULXgmdQGeJWqXUgJB
- 8XR+aZdkVQ+aeo7I2P25bE1sLF0J44Om+BVrvCxkvVgydG1TmcfI+05jj+Jl9yzo
- PHKBfzLWfzyP7RvTb+04nIxPFQb6rtzPCsaDaHDLgZcUykc/4MHntYO27eCyUen6
- SRvx+zLr0iRpFvDpImCaL+woLVoYSQzIA8MXMB+sasyjUSuMOFP4v5qAxX1ZImfw
- ==
-X-ME-Sender: <xms:TsPTXOukkYXzeXR_nEdBVC-Tw5pEUwuShajO-Z2mnWKlsUOYP2nwmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrkeeggddutddvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:TsPTXEgRg3POyfVcJv0QBYvkGAvkf1Jzg-IrFoS5Q59oiKpMiGIXBQ>
- <xmx:TsPTXMvgPIXNdy1nqIsP0QN_YANasgxXci9ENznYtJv9_bn71QsdCg>
- <xmx:TsPTXG5e4ATmU0_cRHfZXVVG2Z0wVwYvHWBdAscvhiBTzctabtUrKQ>
- <xmx:T8PTXBB9VIc93Vdjk7GZr1OxhjK5X9K010XigoVWht-UXmqB_KHktw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 78A207C3DB; Thu,  9 May 2019 02:06:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
-Mime-Version: 1.0
-Message-Id: <29d7503b-6c14-4990-aadc-7cbce2897fc2@www.fastmail.com>
-In-Reply-To: <20190509035549.2203169-1-taoren@fb.com>
-References: <20190509035549.2203169-1-taoren@fb.com>
-Date: Thu, 09 May 2019 02:06:05 -0400
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Tao Ren" <taoren@fb.com>, "Rob Herring" <robh+dt@kernel.org>,
- "Mark Rutland" <mark.rutland@arm.com>, "Joel Stanley" <joel@jms.id.au>,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org
-Subject: Re: [PATCH] ARM: dts: aspeed: Add Facebook YAMP BMC
-Content-Type: text/plain
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4503SV4mvwzDqJ1
+ for <openbmc@lists.ozlabs.org>; Thu,  9 May 2019 16:33:09 +1000 (AEST)
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx01.quantatw.com with ESMTP; 09 May 2019 14:33:07 +0800
+Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 9 May 2019
+ 14:33:05 +0800
+Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
+ ([192.168.1.8]) with mapi id 15.01.1713.004; Thu, 9 May 2019 14:33:05 +0800
+From: =?utf-8?B?V2lsbCBMaWFuZyAo5qKB5rC46YmJKQ==?= <Will.Liang@quantatw.com>
+To: Patrick Venture <venture@google.com>
+Subject: RE: about phosphor pid control package
+Thread-Topic: about phosphor pid control package
+Thread-Index: AdUFo9RcAeugSeF6TkK3RbzjlTMQif//qpQA//6jn2A=
+Date: Thu, 9 May 2019 06:33:05 +0000
+Message-ID: <aa5dec4830f349429f440dda2aee7bf2@quantatw.com>
+References: <28581f1979a946fdb2f53013bab4661c@quantatw.com>
+ <CAO=notyeTBr3BSKrhxDP3uW3s0kma6cek-Dz-33tczKU0pL-Mg@mail.gmail.com>
+In-Reply-To: <CAO=notyeTBr3BSKrhxDP3uW3s0kma6cek-Dz-33tczKU0pL-Mg@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24596.006
+x-tm-as-result: No--12.897300-0.000000-31
+x-tm-as-matchedid: 140026-150567-701625-704425-700685-139010-139006-106660-7
+ 00075-110462-703378-702169-105250-700752-704341-704421-701914-700173-708797
+ -188019-709185-701019-701499-700038-701163-703529-700560-700312-707410-7021
+ 43-701604-700472-709584-106420-701005-705753-707027-148004-148133-20043-420
+ 00-42003-63-190014
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,206 +64,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Thu, 9 May 2019, at 13:26, Tao Ren wrote:
-> Add initial version of device tree for Facebook YAMP ast2500 BMC.
-> 
-> Signed-off-by: Tao Ren <taoren@fb.com>
-
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
-
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../arm/boot/dts/aspeed-bmc-facebook-yamp.dts | 160 ++++++++++++++++++
->  2 files changed, 161 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-> 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index f4f5aeaf3298..710616dcb62e 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1254,6 +1254,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->  	aspeed-bmc-arm-stardragon4800-rep2.dtb \
->  	aspeed-bmc-facebook-cmm.dtb \
->  	aspeed-bmc-facebook-tiogapass.dtb \
-> +	aspeed-bmc-facebook-yamp.dtb \
->  	aspeed-bmc-intel-s2600wf.dtb \
->  	aspeed-bmc-opp-lanyang.dtb \
->  	aspeed-bmc-opp-palmetto.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-> new file mode 100644
-> index 000000000000..4e09a9cf32b7
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-> @@ -0,0 +1,160 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +// Copyright (c) 2018 Facebook Inc.
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +
-> +/ {
-> +	model = "Facebook YAMP 100 BMC";
-> +	compatible = "facebook,yamp-bmc", "aspeed,ast2500";
-> +
-> +	aliases {
-> +		/*
-> +		 * Override the default uart aliases to avoid breaking
-> +		 * the legacy applications.
-> +		 */
-> +		serial0 = &uart5;
-> +		serial1 = &uart1;
-> +		serial2 = &uart2;
-> +		serial3 = &uart3;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=ttyS0,9600n8 root=/dev/ram rw";
-> +	};
-> +
-> +	memory@80000000 {
-> +		reg = <0x80000000 0x20000000>;
-> +	};
-> +};
-> +
-> +&pinctrl {
-> +	aspeed,external-nodes = <&gfx &lhc>;
-> +};
-> +
-> +/*
-> + * Update reset type to "system" (full chip) to fix warm reboot hang 
-> issue
-> + * when reset type is set to default ("soc", gated by reset mask 
-> registers).
-> + */
-> +&wdt1 {
-> +	status = "okay";
-> +	aspeed,reset-type = "system";
-> +};
-> +
-> +/*
-> + * wdt2 is not used by Yamp.
-> + */
-> +&wdt2 {
-> +	status = "disabled";
-> +};
-> +
-> +&fmc {
-> +	status = "okay";
-> +	flash@0 {
-> +		status = "okay";
-> +		m25p,fast-read;
-> +		label = "bmc";
-> +#include "facebook-bmc-flash-layout.dtsi"
-> +	};
-> +};
-> +
-> +&uart1 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_txd1_default
-> +		     &pinctrl_rxd1_default>;
-> +};
-> +
-> +&uart2 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_txd2_default
-> +		     &pinctrl_rxd2_default>;
-> +};
-> +
-> +&uart3 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_txd3_default
-> +		     &pinctrl_rxd3_default>;
-> +};
-> +
-> +&uart5 {
-> +	status = "okay";
-> +};
-> +
-> +&mac0 {
-> +	status = "okay";
-> +	use-ncsi;
-> +	no-hw-checksum;
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_rmii1_default>;
-> +};
-> +
-> +&i2c0 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c2 {
-> +	status = "okay";
-> +
-> +	i2c-switch@75 {
-> +		compatible = "nxp,pca9548";
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		reg = <0x75>;
-> +	};
-> +};
-> +
-> +&i2c3 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c4 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c5 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c6 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c8 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c9 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c10 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c11 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c12 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c13 {
-> +	status = "okay";
-> +};
-> +
-> +&vhub {
-> +	status = "okay";
-> +};
-> -- 
-> 2.17.1
-> 
->
+SGksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGF0cmljayBWZW50
+dXJlIFttYWlsdG86dmVudHVyZUBnb29nbGUuY29tXQ0KPiBTZW50OiBUaHVyc2RheSwgTWF5IDks
+IDIwMTkgMTI6MzYgQU0NCj4gVG86IFdpbGwgTGlhbmcgKOaigeawuOmJiSkgPFdpbGwuTGlhbmdA
+cXVhbnRhdHcuY29tPg0KPiBDYzogT3BlbkJNQyBNYWlsbGlzdCA8b3BlbmJtY0BsaXN0cy5vemxh
+YnMub3JnPg0KPiBTdWJqZWN0OiBSZTogYWJvdXQgcGhvc3Bob3IgcGlkIGNvbnRyb2wgcGFja2Fn
+ZQ0KPiANCj4gT24gV2VkLCBNYXkgOCwgMjAxOSBhdCA2OjQ2IEFNIFdpbGwgTGlhbmcgKOaigeaw
+uOmJiSkNCj4gPFdpbGwuTGlhbmdAcXVhbnRhdHcuY29tPiB3cm90ZToNCj4gPg0KPiA+IEhpLA0K
+PiA+DQo+ID4gSSBoYXZlIGEgcXVlc3Rpb24gYWJvdXQgZ2V0RmFpbFNhZmVNb2RlKCkuDQo+ID4N
+Cj4gPiBDdXJyZW50bHksIG9ubHkgc2Vuc29ycyB0aGF0IGFyZSBkZWZpbmVkIGFzICJ0ZW1wIiB0
+eXBlcyBjYW4gYmUgY2hlY2tlZCBmb3INCj4gZmFpbHVyZS4NCj4gPiBJIGRpZCBub3QgZmluZCBh
+bnkgImZhbiIgdHlwZSBzZW5zb3JzIHRvIGNoZWNrIGlmIHRoZSBmYW4gaGFzIGZhaWxlZC4NCj4g
+PiBPdXIgcHJvamVjdCBuZWVkIHRvIGNoZWNrIHRoZSBmYW4gZmFpbCBzbyAgSSB3YW50IHRvIGFk
+ZCBhbm90aGVyICJmYW4iIHNlbnNvcg0KPiB0eXBlIHRvIGNoZWNrLg0KPiANCj4gDQo+IA0KPiA+
+DQo+ID4gQ2FuIEkgYWRkIG9uZSBtb3JlICJmb3IgbG9vcCIgdG8gY2hlY2sgdGhlIGZhbiBzZW5z
+b3IgaW4gdXBkYXRlU2Vuc29ycygpDQo+IGZ1bmN0aW9uIGluIHpvbmUuY3BwPz8NCj4gPg0KPiA+
+IGZvciAoY29uc3QgYXV0byYgdCA6IF90aGVybWFsSW5wdXRzKQ0KPiA+IHsNCj4gPiAgICAgLi4u
+Li4uLi4NCj4gPiB9DQo+ID4gZm9yIChjb25zdCBhdXRvJiB0IDogX2ZhbklucHV0cykNCj4gPiB7
+DQo+ID4gICAgIC4uLi4uLi4uDQo+ID4gfQ0KPiANCj4gdXBkYXRlU2Vuc29ycyBpcyBkZWxpYmVy
+YXRlbHkgbm90IHRhbGtpbmcgdG8gdGhlIGZhbnMgYmVjYXVzZSB0aGV5J3JlIG5vdA0KPiBjb25z
+aWRlcmVkIGlucHV0cyBpbnRvIHRoZSB0aGVybWFsIGNvbmZpZywgdGhleSdyZSBjb250cm9sbGVk
+IG91dHB1dHMgLS0gdGhlDQo+IHF1ZXN0aW9uIEkgaGF2ZSBpcywgd2hhdCB3b3VsZCB5b3UgbGlr
+ZSB0byBkbyBpZiBhIGZhbiBpc24ndCByZXNwb25kaW5nPw0KPiBmYWlsc2FmZW1vZGUgZHJpdmVz
+IHRoZSBmYW5zIHRvIGEgc3BlY2lmaWMgcHJlLWRlZmluZWQgc3BlZWQgdG8ga2VlcCBpdCBmcm9t
+DQo+IHRoZXJtYWwgaXNzdWVzLiAgSWYgYSBmYW4gaXMgZmFpbGluZyB0byByZXNwb25kLCBvbmUg
+Y2FuJ3QgZHJpdmUgaXQgLS0gcGVyaGFwcyBvbmUNCj4gY2FuIGRyaXZlIHRoZSBvdGhlcnMgdG8g
+c29tZSBmYWlsc2FmZT8NCg0KSWYgYSBmYW4gZmFpbHMsIHdlIG5lZWQgdG8gZW50ZXIgdGhlIGZh
+aWwgc2FmZSBtb2RlIHRvIGluY3JlYXNlIHRoZSBvdGhlciBmYW4gZHV0eS4NCg0KPiBJZiBzbywg
+b25lIG5lZWRzIHRvIHVwZGF0ZSB0aGUgZmFpbHNhZmUgZm9yIGEgem9uZSBvdXRzaWRlIG9mIHRo
+ZSB0aGVybWFsIHNlbnNvcnMsDQo+IGJ1dCByYXRoZXIgd2hlcmUgdGhlIGZhbnMgYXJlIGNoZWNr
+ZWQgKHZvaWQNCj4gUElEWm9uZTo6dXBkYXRlRmFuVGVsZW1ldHJ5KHZvaWQpKQ0KDQpJIGFkZCBm
+b2xsb3dpbmcgY29kZSBpbnRvIHRoZSBQSURab25lOjp1cGRhdGVGYW5UZWxlbWV0cnkodm9pZCkg
+ZnVuY3Rpb24gdG8gY2hlY2sgdGhlIGZhbiBmYWlsLiANCklmIHRoZSBmYW4gZmFpbHMsIGl0IHdp
+bGwgZW50ZXIgZmFpbCBzYWZlIG1vZGUuDQogIGlmIChzZW5zb3ItPmdldEZhaWxlZCgpKQ0KICB7
+DQogIAlmYWlsU2FmZVNlbnNvcnMuaW5zZXJ0KGYpOw0KICB9DQogIGVsc2UNCiAgew0KICAJLy8g
+Q2hlY2sgaWYgaXQncyBpbiB0aGVyZTogcmVtb3ZlIGl0Lg0KICAgIGF1dG8ga3QgPSBfZmFpbFNh
+ZmVTZW5zb3JzLmZpbmQoZik7DQogICAgaWYgKGt0ICE9IF9mYWlsU2FmZVNlbnNvcnMuZW5kKCkp
+DQogIHsNCiAgCWZhaWxTYWZlU2Vuc29ycy5lcmFzZShrdCk7DQogIH0NCiAgIA0KQnV0IG9uZSBt
+b3JlIHF1ZXN0aW9uIEkgaGF2ZSBpcyB0aGF0IHRoZSBhYm92ZSBjb2RlIGNhbiBvbmx5IGNoZWNr
+IGlmIGEgc2luZ2xlIGZhbiBoYXMgZmFpbGVkLg0KT3VyIHByb2plY3QgbmVlZHMgdG8gY2hlY2sg
+Zm9yIGR1YWwtZmFuIGZhaWx1cmVzLiBEbyB5b3UgaGF2ZSBhbnkgc3VnZ2VzdGlvbnMgZm9yIGNo
+ZWNraW5nIHRoZSBmYWlsdXJlIG9mIHRoZSBkdWFsLWZhbj8NCg0KV2lsbA0KPiA+DQo+ID4gQlJz
+LA0KPiA+IFdpbGwNCg==
