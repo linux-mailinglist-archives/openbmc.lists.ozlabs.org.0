@@ -2,69 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DF0A18C41
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 16:48:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A94FE18DDD
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 18:19:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 450GRr5pmzzDqDx
-	for <lists+openbmc@lfdr.de>; Fri, 10 May 2019 00:48:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 450JSb1qj8zDqRd
+	for <lists+openbmc@lfdr.de>; Fri, 10 May 2019 02:19:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="JeJq4bL/"; 
- dkim-atps=neutral
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com
- [IPv6:2607:f8b0:4864:20::52a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 450GL01s7xzDqQl
- for <openbmc@lists.ozlabs.org>; Fri, 10 May 2019 00:43:19 +1000 (AEST)
-Received: by mail-pg1-x52a.google.com with SMTP id j26so1333623pgl.5
- for <openbmc@lists.ozlabs.org>; Thu, 09 May 2019 07:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=vSSU+VFQaeXzLclh+o5CB2EGoMrSj0IG8poKZQRN5Fk=;
- b=JeJq4bL//azbcVpPYZBhrr2LZzK/7/zZWsz4H62uP9dsWyF6a79tWSfJ4F2TOXwHvv
- JLcfwuIcFCI8+tjOOyTxuW5xnYeNEak0+pdMf4TgOO6HZ+HfkjeijV95wCtrNAE9Cx2e
- gpmXVFmtmyoo7kKo99ksH4Nmu43/oq+O8KkT6P00hFN+Zllb6256wqAE1lVlLTrKoNNa
- Ll9j7cZFfu3MBL+ddKez9A1UsThcUJJFg0m2P8ygE+GYa1v+5YpfufZmSfvfkciFzgmW
- b4CrbKoRbY9xpLO5Qqcq52ezLqNxNAVv+WBJjYmMXD6KR+RKAQUvWtVCWpAM9jsM3cdx
- I7yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=vSSU+VFQaeXzLclh+o5CB2EGoMrSj0IG8poKZQRN5Fk=;
- b=tcVg81tWx6ykTzflp2cmhZ8dgnVVHTm27wqz14R/sW09YEcWmG4s25WVjbkAbl2fSn
- yFex6LNxJK5fyVfaa6wxO/0gtorfEoW3tlE4R0y3ptChZsOnZj0V1UvTVwJNj/vtCV17
- bo9b1l7Tf5WmvYyQeRH9XLDDUKVfoL4L27DFxvE/W0vPod1LeZDuNTddOxthr9lHIsY9
- xb+cCQu50qZOIl1UPthoP4PKhjy1Z0tcevKS8f9htl5jD2QNC94syP9BUfy/Gtaaj6de
- E1Mk5zEhU+aYcgrul5x52jhhrAyHRnpRE6kyjjrDsbtsmrwQiaSmDqZa2ByuF0/U0xuM
- AbvA==
-X-Gm-Message-State: APjAAAWK24BtVJJJdDcC2zSVqTaFEE/+7BzV7oOZgczaRvoGMUk3fck/
- 3sp8pzJR5kYT0CUjXOIfLeIQuhGSES/o+++bI8gv0ffpoS0=
-X-Google-Smtp-Source: APXvYqx8q1SbmFVgVR3s+vpf26erRGhTJmTU7OvY4RUlbzmSDRlIaQ+hR6b0HN50VqydLrc9gKz+r+dD3qJATo5pj6c=
-X-Received: by 2002:a62:5487:: with SMTP id i129mr5741482pfb.68.1557412995554; 
- Thu, 09 May 2019 07:43:15 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 450JRm06v9zDqBj
+ for <openbmc@lists.ozlabs.org>; Fri, 10 May 2019 02:18:26 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 May 2019 09:18:23 -0700
+X-ExtLoop1: 1
+Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
+ by orsmga006.jf.intel.com with ESMTP; 09 May 2019 09:18:23 -0700
+Subject: Re: Intel kernel patches (was Re: Is there Intel node management
+ support?)
+To: Joel Stanley <joel@jms.id.au>, James Feist <james.feist@linux.intel.com>, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAO9PYRL4Pr2hV=Hz5dvTJzhx-x9WPJL12qZEKuh+DiCWx2RMww@mail.gmail.com>
+ <CAHkHK0_FCE=QHF6tdD3DyGNcOMZHkhrkAZmgPwQ0Lr-G0-e9Qg@mail.gmail.com>
+ <CACPK8XftUZPWf_1hVaFu-iw7Hd1CT6oBcUHsAWcX1NVYRyLzQg@mail.gmail.com>
+From: Ed Tanous <ed.tanous@intel.com>
+Message-ID: <66754d8b-7954-c0ad-b60a-f7b10c653603@intel.com>
+Date: Thu, 9 May 2019 09:18:23 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <28581f1979a946fdb2f53013bab4661c@quantatw.com>
- <CAO=notyeTBr3BSKrhxDP3uW3s0kma6cek-Dz-33tczKU0pL-Mg@mail.gmail.com>
- <aa5dec4830f349429f440dda2aee7bf2@quantatw.com>
-In-Reply-To: <aa5dec4830f349429f440dda2aee7bf2@quantatw.com>
-From: Patrick Venture <venture@google.com>
-Date: Thu, 9 May 2019 07:43:04 -0700
-Message-ID: <CAO=notzHKYjCd++=A+rEzV8bdLc782caeDA=aHg2bC4-6JTp=g@mail.gmail.com>
-Subject: Re: about phosphor pid control package
-To: =?UTF-8?B?V2lsbCBMaWFuZyAo5qKB5rC46YmJKQ==?= <Will.Liang@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACPK8XftUZPWf_1hVaFu-iw7Hd1CT6oBcUHsAWcX1NVYRyLzQg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,100 +56,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, May 8, 2019 at 11:33 PM Will Liang (=E6=A2=81=E6=B0=B8=E9=89=89)
-<Will.Liang@quantatw.com> wrote:
->
-> Hi,
->
-> > -----Original Message-----
-> > From: Patrick Venture [mailto:venture@google.com]
-> > Sent: Thursday, May 9, 2019 12:36 AM
-> > To: Will Liang (=E6=A2=81=E6=B0=B8=E9=89=89) <Will.Liang@quantatw.com>
-> > Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> > Subject: Re: about phosphor pid control package
-> >
-> > On Wed, May 8, 2019 at 6:46 AM Will Liang (=E6=A2=81=E6=B0=B8=E9=89=89)
-> > <Will.Liang@quantatw.com> wrote:
-> > >
-> > > Hi,
-> > >
-> > > I have a question about getFailSafeMode().
-> > >
-> > > Currently, only sensors that are defined as "temp" types can be check=
-ed for
-> > failure.
-> > > I did not find any "fan" type sensors to check if the fan has failed.
-> > > Our project need to check the fan fail so  I want to add another "fan=
-" sensor
-> > type to check.
-> >
-> >
-> >
-> > >
-> > > Can I add one more "for loop" to check the fan sensor in updateSensor=
-s()
-> > function in zone.cpp??
-> > >
-> > > for (const auto& t : _thermalInputs)
-> > > {
-> > >     ........
-> > > }
-> > > for (const auto& t : _fanInputs)
-> > > {
-> > >     ........
-> > > }
-> >
-> > updateSensors is deliberately not talking to the fans because they're n=
-ot
-> > considered inputs into the thermal config, they're controlled outputs -=
-- the
-> > question I have is, what would you like to do if a fan isn't responding=
-?
-> > failsafemode drives the fans to a specific pre-defined speed to keep it=
- from
-> > thermal issues.  If a fan is failing to respond, one can't drive it -- =
-perhaps one
-> > can drive the others to some failsafe?
->
-> If a fan fails, we need to enter the fail safe mode to increase the other=
- fan duty.
->
-> > If so, one needs to update the failsafe for a zone outside of the therm=
-al sensors,
-> > but rather where the fans are checked (void
-> > PIDZone::updateFanTelemetry(void))
->
-> I add following code into the PIDZone::updateFanTelemetry(void) function =
-to check the fan fail.
-> If the fan fails, it will enter fail safe mode.
->   if (sensor->getFailed())
->   {
->         failSafeSensors.insert(f);
->   }
->   else
->   {
->         // Check if it's in there: remove it.
->     auto kt =3D _failSafeSensors.find(f);
->     if (kt !=3D _failSafeSensors.end())
->   {
->         failSafeSensors.erase(kt);
->   }
->
-> But one more question I have is that the above code can only check if a s=
-ingle fan has failed.
+On 5/8/19 2:01 AM, Joel Stanley wrote:
+> On Wed, 8 May 2019 at 03:44, qianlihu <wangzhiqiang8906@gmail.com> wrote:
+>>
+>> On Wed, May 8, 2019 at 11:22 AM Deng Tyler <tyler.sabdon@gmail.com> wrote:
+>>>
+>>> Hi all:
+>>>     Is there any package support Intel node management in current openbmc or plan to support it?
+>> According to my understanding, you can refer to these repos:
+>> [ipmbbridge] (https://github.com/openbmc/ipmbbridge)
+>> [node-manager] (https://github.com/Intel-BMC/node-manager)
 
-> Our project needs to check for dual-fan failures. Do you have any suggest=
-ions for checking the failure of the dual-fan?
+The above package is our attempt to support Node Manager on OpenBMC.  As
+has already been pointed out, it hasn't been submitted to OpenBMC
+upstream, and as such, should be treated as a prototype of the features
+we want to make available at some point in the future.
 
-I'm not entirely certain what you mean.  You're saying a dual-fan is a
-fan that has two outputs but one input?
+With that said, they're all available for use today.
 
->
-> Will
-> > >
-> > > BRs,
-> > > Will
+>>
+>> Also need the ipmi related patch here
+>>
+>> https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-wolfpass/recipes-kernel/linux/linux-aspeed
+> 
+You were close, you actually need this patch:
+https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0019-Add-I2C-IPMB-support.patch
+
+
+> Is there a reason the Intel team has not submitted these patches for
+> inclusion in the kernel tree?  
+In the case of the above patch, it was submitted about a year ago, but
+it looks like it didn't receive many reviews.
+https://lkml.org/lkml/2018/4/23/835
+
+The intent is to get it upstreamed, but the original author has moved to
+a different team, so getting someone else working on it has been slowed
+a bit.  It was my intent long term to pick up this patch and get it
+submitted again as part of the libmctp work.
+
+In the case of some of the other patches, some of them have been
+submitted to upstream, some are taken from other non-master upstream
+patches, and some can't be upstreamed given their nature.  Can we do a
+better job filtering and upstreaming? Absolutely.  I do want to see us
+improve here.
+
+> 
+> I encourage you to send them to the list for review and merging.
+> 
+> Cheers,
+> 
+> Joel
+> 
