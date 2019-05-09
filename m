@@ -1,75 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 158BB18442
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 05:56:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 44zzzz4NT3zDqPg
-	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 13:56:47 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1106E184EA
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 07:43:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4502MR14sRzDqJ1
+	for <lists+openbmc@lfdr.de>; Thu,  9 May 2019 15:43:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=0032c47d90=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="V95/gRD9"; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="K7epDhGt"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="2FYma63Q"; dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 44zzz84FnpzDqKT
- for <openbmc@lists.ozlabs.org>; Thu,  9 May 2019 13:56:03 +1000 (AEST)
-Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x493n4d1002573
- for <openbmc@lists.ozlabs.org>; Wed, 8 May 2019 20:56:00 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=facebook;
- bh=DjLZB9bZDPfacMcOCOBHkeLPkSwAh79bJdhZjSfihCg=;
- b=V95/gRD9A7aC7Z4HnOmrHbegZ3MPDjM/fS6Hw0iOjerOyqPcCHglrCJshl3rPrF9vg+T
- /HAIbD0j6C4U2p7njeyGEw1Bk3HAsUEXBNln+/6tp+E4z0k3BGoCMoDWT050lbtB5Wch
- VUWD09fkXrmMurNgM+9GrgsiYNwk5wmHqoM= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2sca9w8bn5-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 08 May 2019 20:56:00 -0700
-Received: from mx-out.facebook.com (2620:10d:c0a8:1b::d) by
- mail.thefacebook.com (2620:10d:c0a8:83::7) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 8 May 2019 20:55:59 -0700
-Received: by devvm24792.prn1.facebook.com (Postfix, from userid 150176)
- id 2D7C6147933CA; Wed,  8 May 2019 20:55:57 -0700 (PDT)
-Smtp-Origin-Hostprefix: devvm
-From: Tao Ren <taoren@fb.com>
-Smtp-Origin-Hostname: devvm24792.prn1.facebook.com
-To: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>
-Smtp-Origin-Cluster: prn1c35
-Subject: [PATCH] ARM: dts: aspeed: Add Facebook YAMP BMC
-Date: Wed, 8 May 2019 20:55:49 -0700
-Message-ID: <20190509035549.2203169-1-taoren@fb.com>
-X-Mailer: git-send-email 2.17.1
-X-FB-Internal: Safe
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4502LZ0YykzDqGh
+ for <openbmc@lists.ozlabs.org>; Thu,  9 May 2019 15:43:01 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id D077E23D21;
+ Thu,  9 May 2019 01:42:57 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 09 May 2019 01:42:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=P8cuWqIFd9MmpH07T2Gg4NI44AqTrZJ
+ dh/zTugCl5Dc=; b=K7epDhGtGK8bdH//crjffFBmyi1aK2PMxGKFpVBzA0dlLq0
+ yZRjwYyIrTV/W5J+y7Mo0mm21jip99zsjxqDP29JyGAgZ8VB+xR3uhVDxZzabupa
+ 9li8oeTTDIVAJhYVPqvdpsgu8/+gCd6Q/NYrD0fRBxZTPJz9usntc4w8vpH0XPvt
+ eNBvqMwwC3JKwVUB5LgzAt/QtgLM/BsOCvHpBKKPoY6D+FwUlGXcOJPUMI32wyca
+ kCpkNlMRej5xh+FQh5mc29JZn0v3q/DOQfJ0QIyYEluRfKL2bVHo2GAH1hniskNo
+ AjSS/NqtIJSNolx2q1RoNQZ4BOIarhrMNGWNf4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=P8cuWq
+ IFd9MmpH07T2Gg4NI44AqTrZJdh/zTugCl5Dc=; b=2FYma63QT6Qhkl62xwZ4Mx
+ /nSytbzdp5JZ213MmQlMmDyRn96ZzGUjV+Z/qNejWeeg5Mza67FqGAUNB9jd6J85
+ ORvNmbETtktZHh4rKtX5G7Lv7AcpF/SsA4valtq9tTOq+fG2AgvWxOipgS41SdfA
+ 3mMy09MLYWGO9QmHrvNsrEwPQ7TM4aiDdt5F8BlZvWlLqWZa8lnzALJlo9NU0TWy
+ OoAyM8rjS8vFdrae6TyeijTQINyw5lQxAiEBI1ez5TBUFGBkn/ZupXt/2Gjo/ZYt
+ Vi2tPjKaYyIKrlKoE2ZijXyMdkH0sPDAZcV0TN2if4wyeK56Bwq7TCLwdkAP5eqA
+ ==
+X-ME-Sender: <xms:4b3TXLT-g8jJlyRBaw2uCvzyhInnvsTWmxLD-Zk5KQblto7MHmyT8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrkeeggdeljecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
+ hinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
+ fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:4b3TXNeYqGuEhOTD60Xl1-F9HdPybpPu6h46wc2tXt0uza2m19QM9Q>
+ <xmx:4b3TXPARA_AuSZNy8YsNeucSTlL0UyrInMLg_PHmwOAXGBbrszJybw>
+ <xmx:4b3TXPmi-e4V3y-gR5V9DCPjDjh5pH9XhlpjMRA2pL9Op94qY_V1vw>
+ <xmx:4b3TXGbZCFuZkq42bxIdR2fy8CkPsWRFNcnkGceN7L5E2FXja2cE-g>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 4A33B7C3DB; Thu,  9 May 2019 01:42:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-449-gfb3fc5a-fmstable-20190430v1
+Mime-Version: 1.0
+Message-Id: <6300b181-e846-4d4d-b749-0eb6b86ae1f6@www.fastmail.com>
+In-Reply-To: <CACPK8XftUZPWf_1hVaFu-iw7Hd1CT6oBcUHsAWcX1NVYRyLzQg@mail.gmail.com>
+References: <CAO9PYRL4Pr2hV=Hz5dvTJzhx-x9WPJL12qZEKuh+DiCWx2RMww@mail.gmail.com>
+ <CAHkHK0_FCE=QHF6tdD3DyGNcOMZHkhrkAZmgPwQ0Lr-G0-e9Qg@mail.gmail.com>
+ <CACPK8XftUZPWf_1hVaFu-iw7Hd1CT6oBcUHsAWcX1NVYRyLzQg@mail.gmail.com>
+Date: Thu, 09 May 2019 01:42:48 -0400
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>,
+ "James Feist" <james.feist@linux.intel.com>,
+ "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
+Subject: =?UTF-8?Q?Re:_Intel_kernel_patches_(was_Re:_Is_there_Intel_node_manageme?=
+ =?UTF-8?Q?nt_support=3F)?=
 Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-05-09_02:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1905090023
-X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,197 +92,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add initial version of device tree for Facebook YAMP ast2500 BMC.
 
-Signed-off-by: Tao Ren <taoren@fb.com>
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../arm/boot/dts/aspeed-bmc-facebook-yamp.dts | 160 ++++++++++++++++++
- 2 files changed, 161 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index f4f5aeaf3298..710616dcb62e 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1254,6 +1254,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-tiogapass.dtb \
-+	aspeed-bmc-facebook-yamp.dtb \
- 	aspeed-bmc-intel-s2600wf.dtb \
- 	aspeed-bmc-opp-lanyang.dtb \
- 	aspeed-bmc-opp-palmetto.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-new file mode 100644
-index 000000000000..4e09a9cf32b7
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-@@ -0,0 +1,160 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright (c) 2018 Facebook Inc.
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+
-+/ {
-+	model = "Facebook YAMP 100 BMC";
-+	compatible = "facebook,yamp-bmc", "aspeed,ast2500";
-+
-+	aliases {
-+		/*
-+		 * Override the default uart aliases to avoid breaking
-+		 * the legacy applications.
-+		 */
-+		serial0 = &uart5;
-+		serial1 = &uart1;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS0,9600n8 root=/dev/ram rw";
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+};
-+
-+&pinctrl {
-+	aspeed,external-nodes = <&gfx &lhc>;
-+};
-+
-+/*
-+ * Update reset type to "system" (full chip) to fix warm reboot hang issue
-+ * when reset type is set to default ("soc", gated by reset mask registers).
-+ */
-+&wdt1 {
-+	status = "okay";
-+	aspeed,reset-type = "system";
-+};
-+
-+/*
-+ * wdt2 is not used by Yamp.
-+ */
-+&wdt2 {
-+	status = "disabled";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+#include "facebook-bmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&uart1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+		     &pinctrl_rxd1_default>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd2_default
-+		     &pinctrl_rxd2_default>;
-+};
-+
-+&uart3 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd3_default
-+		     &pinctrl_rxd3_default>;
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+	use-ncsi;
-+	no-hw-checksum;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+
-+	i2c-switch@75 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x75>;
-+	};
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
--- 
-2.17.1
+On Wed, 8 May 2019, at 18:32, Joel Stanley wrote:
+> On Wed, 8 May 2019 at 03:44, qianlihu <wangzhiqiang8906@gmail.com> wrote:
+> >
+> > On Wed, May 8, 2019 at 11:22 AM Deng Tyler <tyler.sabdon@gmail.com> wrote:
+> > >
+> > > Hi all:
+> > >     Is there any package support Intel node management in current openbmc or plan to support it?
+> > According to my understanding, you can refer to these repos:
+> > [ipmbbridge] (https://github.com/openbmc/ipmbbridge)
+> > [node-manager] (https://github.com/Intel-BMC/node-manager)
+> >
+> > Also need the ipmi related patch here
+> >
+> > https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-wolfpass/recipes-kernel/linux/linux-aspeed
+> 
+> Is there a reason the Intel team has not submitted these patches for
+> inclusion in the kernel tree?
+> 
+> I encourage you to send them to the list for review and merging.
 
+I encourage this too, as looking at the patches the authors of the drivers could
+have provided input and avoided some confusion. For instance I have concerns
+about the pinmux patch. Also, I feel like we could also try to hash out a general
+solution to the LCLK issue rather than burdening each LPC driver with enabling
+it.
+
+Cheers,
+
+Andrew
+
+> 
+> Cheers,
+> 
+> Joel
+>
