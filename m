@@ -1,68 +1,124 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2B451A321
-	for <lists+openbmc@lfdr.de>; Fri, 10 May 2019 20:47:00 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 450zhf1l1jzDqTy
-	for <lists+openbmc@lfdr.de>; Sat, 11 May 2019 04:46:58 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F12C01A472
+	for <lists+openbmc@lfdr.de>; Fri, 10 May 2019 23:21:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45137F2vh8zDqSg
+	for <lists+openbmc@lfdr.de>; Sat, 11 May 2019 07:21:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::32e; helo=mail-ot1-x32e.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=0033f38a6f=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="dCmZ82zO"; 
- dkim-atps=neutral
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
- [IPv6:2607:f8b0:4864:20::32e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="KuQAnfWz"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="Q7OTpc3X"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 450zgm4QX8zDqRq
- for <openbmc@lists.ozlabs.org>; Sat, 11 May 2019 04:46:12 +1000 (AEST)
-Received: by mail-ot1-x32e.google.com with SMTP id w6so6481955otl.7
- for <openbmc@lists.ozlabs.org>; Fri, 10 May 2019 11:46:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NphYlJTT0atfZWiQGMxbq2XhyDjPdsI1Sw33jNDMjvs=;
- b=dCmZ82zOgVWZRQaddbM2kDvPGeBSF21EvL5X6/f5DCY0TtO4pjaRbCzVWNGGAA6hy+
- AL3xpzYlzivurARyUdvh2A2NvhKydfqSgPyfVvzZ01Zb2LpRYvWL8dlujKZ05PGrdTU7
- X9iPSAycAllFz+69V58MrlW1Ou6EfYmXlsLXw0aTK0zg4M0jE8Cs0jS9tCMXRcDbf1Es
- jVY3zA/lFApwfKZbVl15ZTAJpgT/NdYlo/hMoaFY6jWpDFMx/WnWOF/IUJA1StOelVSp
- 8zf6f5XKD+09xAb2Kl1Guq06165dSE4Jo+mVywY2DQN5wuJ8y9rC+KjC8wvX38b8AI4J
- O/nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=NphYlJTT0atfZWiQGMxbq2XhyDjPdsI1Sw33jNDMjvs=;
- b=cAmbfuiTxbwnLMwdP0Htk5WV0dzTe5vcErBvBjddd4jZmjoMlQe04bhifiCaNynuue
- YmRSbTQ9WQvFxfORsniRpS0g+Oe9cHb5tES6koqj6JIekhVEAFAeYYA9Sj7rCCmbMiqk
- Ukqd5D9vEPA8gSqOLBrEfWFnUUtXqAvG2vnG/wyFrXeQ4/smHQv5NBdt9G4/8obdVuV+
- VeJdFe58LabGaGN5yB2kJDR+gPCuCSgZkOxHeirF3tjh7cj1xGTH0XQNNSx1vv1rM0BB
- QmIUFh3vuAOb07oa3ktWDC1hdVwQnt3q+IYUjS95rNwgACKKV47B4RKOXHy2ofLlb++j
- c8Vw==
-X-Gm-Message-State: APjAAAV90nMiKuKbX7sta0uYVtvPuy4CjJ8l9V+JnJoynaPv5Ia+mvtx
- wytSfPIZmy0LDeOuokikIakyZnR8nC0A3IoyTeY=
-X-Google-Smtp-Source: APXvYqytqX5A2Y9qfExPLfVppuGfggETjgFohKxsEURkg7J9GfjPfPjjdboiwjDHBcJRzEeM1LpnP7xsC1jXMY+ixIM=
-X-Received: by 2002:a9d:6519:: with SMTP id i25mr7852840otl.287.1557513968417; 
- Fri, 10 May 2019 11:46:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45136C1f6xzDqSN
+ for <openbmc@lists.ozlabs.org>; Sat, 11 May 2019 07:20:46 +1000 (AEST)
+Received: from pps.filterd (m0044008.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x4ALJH6U011857; Fri, 10 May 2019 14:20:41 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=X5eM9xmsknKxzB/Eq461GlJgdE4A/E4o+uChkrQg9Lo=;
+ b=KuQAnfWza9SW/KaYGPZdy5pFzZd9znjtp378hPQDLYdUzSQEL147vBDbACtfhAVQn531
+ 0MyVvv9iECjzpOARd9RhRrk3c3XrvAuiLPxTRmlV5IoM/d/CqcaICJpqshA7ZranxmiX
+ HDkvdxdLPtEyHDp/Nu85w74A9Q531jDnxWU= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2sdcy7saet-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Fri, 10 May 2019 14:20:41 -0700
+Received: from ash-exhub202.TheFacebook.com (2620:10d:c0a8:83::6) by
+ ash-exhub101.TheFacebook.com (2620:10d:c0a8:82::e) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 10 May 2019 14:20:39 -0700
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.103) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Fri, 10 May 2019 14:20:39 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector1-fb-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=X5eM9xmsknKxzB/Eq461GlJgdE4A/E4o+uChkrQg9Lo=;
+ b=Q7OTpc3XYw/+29fSX+MDkuzAri78iELzguPH74BWklM5oo05S0OFmYwMLNh15ZW2RyaIeQnQiCKZXNG8rPLvxoM1iQ3erYfaRbvdCcslAtbpPI25Lyojp6J8hvHj3iThrp7P4/0FUPXQMngvNV4csfcOGKRs9buZ7Pio+g/UdoI=
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com (10.172.177.11) by
+ CY4PR15MB1702.namprd15.prod.outlook.com (10.174.52.16) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1856.11; Fri, 10 May 2019 21:20:38 +0000
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9]) by CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::1039:c5b1:f43e:14e9%3]) with mapi id 15.20.1856.012; Fri, 10 May 2019
+ 21:20:38 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Ed Tanous <ed.tanous@intel.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: pid control configuration
+Thread-Topic: pid control configuration
+Thread-Index: AQHVAHC+JTVF079u7EWEF1cz6ijBgKZW49mAgAEiSgCABkgqgIAGJ+UA
+Date: Fri, 10 May 2019 21:20:38 +0000
+Message-ID: <14F05B01-0B7D-44D1-A599-5EDD8CC3A6C8@fb.com>
+References: <96A52DC2-7B18-4F69-B8E8-3B489BDA84C6@fb.com>
+ <1c5566ba-696e-42eb-c193-22eaca33a1db@intel.com>
+ <7D337AEA-CB20-4E39-8A9A-58E21EDA0F31@fb.com>
+ <1b82951d-4293-0525-a562-000899544c2e@intel.com>
+In-Reply-To: <1b82951d-4293-0525-a562-000899544c2e@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::1:c3be]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1b5e51a8-d16e-47b0-b9c5-08d6d58d5983
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600141)(711020)(4605104)(2017052603328)(7193020);
+ SRVR:CY4PR15MB1702; 
+x-ms-traffictypediagnostic: CY4PR15MB1702:
+x-microsoft-antispam-prvs: <CY4PR15MB17025E3BF0938312A35459F5DD0C0@CY4PR15MB1702.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4125;
+x-forefront-prvs: 0033AAD26D
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(376002)(136003)(39860400002)(396003)(346002)(199004)(189003)(71190400001)(2501003)(53546011)(8936002)(316002)(81166006)(476003)(6506007)(76176011)(14454004)(36756003)(53936002)(81156014)(486006)(3480700005)(8676002)(68736007)(25786009)(102836004)(46003)(5660300002)(186003)(82746002)(2616005)(6116002)(66446008)(6246003)(2906002)(86362001)(76116006)(4744005)(71200400001)(446003)(66556008)(83716004)(6512007)(11346002)(73956011)(91956017)(478600001)(66946007)(64756008)(229853002)(14444005)(6486002)(256004)(33656002)(99286004)(305945005)(7116003)(7736002)(110136005)(66476007)(6436002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR15MB1702;
+ H:CY4PR15MB1269.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: abDRPboJnZTg4pvZqpP9Tf15G0W+qhB7A5nEAlZNK8vCXI1cUd64aigXkZVdVvXP++miWARwQ8wPZvsyEP7/uMD2VPiC1yH9yLgsaDpRMVJXlYYYFkIKfONOd6hCoirC3i1io1FBmoptvvFJdi0LDlF7zzLzW208+5WW6xeFEhzBXKaAVTNddSAYfqISQPAlHw1y/nqGH5HdzB21oCErfILOL1wNS9gx63iBvorLw7s+S3uhzp9MUAli//g0Tqj+vRiI4KiYX6CkJsRuF8TCbB+3Tu1ZdZ+VKhJb+epI7jE03RHOv5aOUF9+MPksoZoMv0n3UGP4vVvHs/HP8AERJX2GQC+MUlHk4deil1U+tdf6DGIC3jzA8yhcFmYFFAnzNdzAI21X9Mn1isJ0cgOVNfGaZ9okx1Zl9JZCIYKLaeM=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C906005ECA44B348ACC6E806584863C6@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CALLMt=qZOxWDH8eDqv6JYbkvgk10mR1K_REgnE-DkssLWD=iVg@mail.gmail.com>
- <CACPK8XdV6X6j=A2Qf7RcBnWWoESi6SWMZfcoA2mJPO_JFCdcrQ@mail.gmail.com>
- <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
-In-Reply-To: <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Fri, 10 May 2019 13:45:52 -0500
-Message-ID: <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
-Subject: Re: CI to stop testing meta-* layers not in tested machine
-To: Patrick Venture <venture@google.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1b5e51a8-d16e-47b0-b9c5-08d6d58d5983
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 May 2019 21:20:38.7763 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR15MB1702
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-10_14:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=791 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905100136
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,57 +130,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, May 10, 2019 at 9:33 AM Patrick Venture <venture@google.com> wrote:
->
-> From: Joel Stanley <joel@jms.id.au>
-> Date: Thu, May 9, 2019 at 6:11 PM
-> To: Andrew Geissler, Benjamin Fair
-> Cc: OpenBMC Maillist
->
-> > On Thu, 14 Mar 2019 at 13:39, Andrew Geissler <geissonator@gmail.com> wrote:
-> > >
-> > > I took an action item from last weeks Infrastructure Workgroup.
-> > >
-> > > The point was we're wasting CI resources by testing meta-*
-> > > commits that are not actually tested by any of the machines in the
-> > > CI job. We're also falsely marking those commits as Verified because
-> > > if they are not in any of the systems under test, they're not being
-> > > tested at all.
-> > >
-> > > The systems currently run as a part of the meta-* CI jobs are here:
-> > > https://openpower.xyz/view/CI/job/run-meta-ci/
-> >
-> > > Are there any advantages to running CI against meta-* layers that
-> > > are not in a machine being built? Are there other machines we can
-> > > add to CI that would cover some of the meta layers above? The
-> > > general criteria for getting a machine added to CI is that it's actively
-> > > being developed and supported. We also need to balance our
-> > > CI compute resources so the overall goal (in my mind) would be
-> > > to pick the machines that cover the most meta layers.
-> >
-> > I'd like to have a nuvoton based machine so we have some confidence
-> > that kernel bumps aren't broken.
-> >
-> > That would mean adding the evb-nuvoton or gsj machines to CI.
->
-> I vote for the gsj machine.  Not that it's a democracy :)
-
-I gave this a try but ran into https://github.com/openbmc/openbmc/issues/3542
-Be great to get gsj into CI since it would give us a few new layers
-for coverage.
-
-google provides a good chunk of the CI build infrastructure for OpenBMC so
-you definitely get a vote :)
-
-Andrew
-
->
-> >
-> > Cheers,
-> >
-> > Joel
+DQoNCu+7v09uIDUvNi8xOSwgOToyMCBBTSwgIkVkIFRhbm91cyIgPGVkLnRhbm91c0BpbnRlbC5j
+b20+IHdyb3RlOg0KDQogICAgT24gNS8yLzE5IDQ6MjQgUE0sIFZpamF5IEtoZW1rYSB3cm90ZToN
+CiAgICA+ICBNeSB1bmRlcnN0YW5kaW5nIGhlcmUgaXMgcGlkIGRhdGEgYXJlIG9ubHkgZGVmaW5l
+ZCBmb3IgdGVtcCBzZW5zb3JzIHdoaWNoIHdpbGwgZ2VuZXJhdGUgcHdtIHZhbHVlcyBmb3IgZmFu
+Lg0KICAgID4gDQogICAgDQogICAgVGhlIGFib3ZlIGlzIG5vdCBob3cgcGhvc3Bob3IgcGlkIGNv
+bnRyb2wgb3BlcmF0ZXMuICBUaGUgdGVtcGVyYXR1cmUNCiAgICBjb250cm9sbGVycyAicmVxdWVz
+dCIgYSBnaXZlbiBmYW4gUlBNLCB0aGVuIHRoZSBmYW4gUElEIGNvbnRyb2xsZXINCiAgICAod2hp
+Y2ggaXMgc2Nhbm5lZCBtdWNoIG1vcmUgcXVpY2tseSB0aGFuIHRoZSB0ZW1wZXJhdHVyZSBjb250
+cm9sbGVycykNCiAgICBhdHRlbXB0cyB0byBkcml2ZSB0aGUgZmFuIHRvIHRoYXQgc3BlZWQuICBU
+aGlzIGVuZHMgdXAgYmVpbmcgYSB0d28gc3RhZ2UNCiAgICBmZWVkYmFjayBsb29wIHRoYXQgY2Fu
+IHBlcmZvcm0gYmV0dGVyIHRoYW4gYSBzaW5nbGUgUElEIGxvb3AuDQogICAgDQpFZCwgd2UgYXJl
+IG5vdCB1c2luZyBjYXNjYWRlIGNvbnRyb2wgaGVyZSBpbiBmYWNlYm9vay4gV2Ugb25seSB1c2Ug
+b3V0ZXIgbG9vcCB3aGljaCBnaXZlcyBkYXRhIGZvciBmYW4gdG8gZHJpdmUuDQpJcyBpdCBwb3Nz
+aWJsZSB0byBzdGlsbCBydW4gUGhvc3Bob3IgcGlkIGNvbnRyb2xsZXIgd2l0aCBzaW5nbGUgbG9v
+cD8NCg0KUmVnYXJkcw0KLVZpamF5DQoNCg==
