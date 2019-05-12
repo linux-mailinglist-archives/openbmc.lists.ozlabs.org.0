@@ -1,80 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D8371ACD6
+	for <lists+openbmc@lfdr.de>; Sun, 12 May 2019 17:44:52 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA4F81A965
-	for <lists+openbmc@lfdr.de>; Sat, 11 May 2019 22:23:19 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 451dnH1KJFzDqMp
-	for <lists+openbmc@lfdr.de>; Sun, 12 May 2019 06:23:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4527YX175TzDqJc
+	for <lists+openbmc@lfdr.de>; Mon, 13 May 2019 01:44:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::543; helo=mail-pg1-x543.google.com;
- envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::143; helo=mail-it1-x143.google.com;
+ envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="aM7dbPPs"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="J3zv5gZX"; 
  dkim-atps=neutral
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
- [IPv6:2607:f8b0:4864:20::543])
+Received: from mail-it1-x143.google.com (mail-it1-x143.google.com
+ [IPv6:2607:f8b0:4864:20::143])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 451dmN1w9YzDqK6;
- Sun, 12 May 2019 06:22:27 +1000 (AEST)
-Received: by mail-pg1-x543.google.com with SMTP id t187so4666245pgb.13;
- Sat, 11 May 2019 13:22:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4527Xc71W9zDqJK
+ for <openbmc@lists.ozlabs.org>; Mon, 13 May 2019 01:43:56 +1000 (AEST)
+Received: by mail-it1-x143.google.com with SMTP id u16so11810749itc.0
+ for <openbmc@lists.ozlabs.org>; Sun, 12 May 2019 08:43:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=rLgXhVsDP/RzKSE+JdEI3qNT7K7MffBqtup5zZ8tHdc=;
- b=aM7dbPPsnspFks6phirtx9698Y0IsGto7C9UDT80WCowD101CpiPlyueVSOOSS4CfY
- rdUXmIGf4U5p2oHyI40ORwkVJPk6jMXUTME3sGn3ON5ZQ+XFLYiVN+Eu/fi6/9uZvkj5
- zRXR0e0BIzU6PM4HHEoI9hzRCtbvzL2zjiChylaRXSgxQw0UUV9NEL0sT1Ni0VDzhobJ
- BDqJEqRykfDS+779cLnXsMw+PlrBrlnoS7Ky8uYGGxYLiZNAtOfz2pMnhxNYIcuuAilI
- PQ+w3eqQj1Ju11J8TzECeV+wFqWMtZNpKrJ5OyEZHqZkmn3Zg70vXcdBYXtIItkdSiHv
- kJ3Q==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=KPdcFiwc52qsPtlV5dMHI1Jd08Cmm56jMeKEdUqwcDk=;
+ b=J3zv5gZXXSmniCcNuLAECaWzQVAvXY7tNA1qZL+quwXBbAvgTOQ9y5mwmOTKzf44oa
+ zPYSzO0S4AW7MIfVEWIvaGRN/1k3+DWpaAFWlep545ydxybHYYlbWzJQjsYXMA87iQon
+ qmH9agi6fbSMXVD+MOCZETCOnIjYawU86XlDO6V8OWPwj9N9h9PeKUXaOEtpsOoKGNh0
+ vGRgMxeG7OzHmv+Exl2WeHtecPjXHsdvujzT+Sk9NVUW3i3bvlOE9rU1EcerdxdzrJod
+ EVhedrVkPAWlDoX45Askj8tsB7kRgALLXmcuSIZO1nwJch+ScgkbL5TMk3h5agjAf4Nu
+ pl+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=rLgXhVsDP/RzKSE+JdEI3qNT7K7MffBqtup5zZ8tHdc=;
- b=ehB1VsFFnKksNLsCdugAD7zrVjYIJ3zZACbm8FgG2OuXwc8CfhdcXjwsWbAvf3n4rf
- UBmvcqkIf5meyCWqFi+okwnAnUkVwLjzwJIxEqskB0FBf+7gravniCPs403/7YlqLZck
- hAMB2G548pNVuejplM2keAl1YfzuCPRAFo0HFOWIrJYzgj/mPJUQViUhl5ANN2NRUtFl
- N5TWpqougwAqIUJZWDaIXPohDv2MVeXgXMAVbkdtk+io6jKAN7X/6peYY0Y8iW3vUoY2
- 6PoQh5SPfCY4sGTAeshF3Yv6d3x+Dyuxflfd5FHXvUtMoHlOGgK6QhxLjXBeReG6C5rE
- vU1A==
-X-Gm-Message-State: APjAAAW2wgfJS0P0gZ+czyJQgtYIVONfiSlZVkVogMGnTeNv7AlMqgCT
- AWgkRnpSFFbgF5q6dGOfd8c=
-X-Google-Smtp-Source: APXvYqw7yzV+NDnCGKPsyV6bDr4MyF9Eb869MU13gsl+ZlVdT1mderC/okBMSyIxf8Ec3QlKhM5xhQ==
-X-Received: by 2002:a65:6658:: with SMTP id z24mr22907719pgv.323.1557606144344; 
- Sat, 11 May 2019 13:22:24 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- c23sm22145201pfp.0.2019.05.11.13.22.20
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sat, 11 May 2019 13:22:22 -0700 (PDT)
-Subject: Re: [PATCH 1/6] thermal: Introduce
- devm_thermal_of_cooling_device_register
-To: Eduardo Valentin <edubezval@gmail.com>
-References: <1555617500-10862-1-git-send-email-linux@roeck-us.net>
- <1555617500-10862-2-git-send-email-linux@roeck-us.net>
- <20190511190415.GA22816@localhost.localdomain>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <4be54a9c-ccc9-5489-6938-c66229d361b3@roeck-us.net>
-Date: Sat, 11 May 2019 13:22:19 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=KPdcFiwc52qsPtlV5dMHI1Jd08Cmm56jMeKEdUqwcDk=;
+ b=OJEsT/Gd8mlLzlFGDRF0cBDObzFDwg/ajF5KFBzCYBHwPkKJNOcW/oskwMYg5LshN0
+ GQFzlhSXarqS+0kSEfkusHz8DvesLjqzIO9Vg3r4PUY9PpE0ShHqsBhE+MIqqZB3cs2A
+ Oi5zpvlYTKjQmSoF2y36nXLDEqDJLksGE60EAz8FiI8kkeAzMRsbbcYPprMc4P43giIq
+ xovELeoE2tDcWH3s9Lpp8XcMJNwptJBSDLvUWv5G3Ahk0e4Pu5ZVvgb13W2SJGU5eaBm
+ 2lRDKuUWnXI+yCLg8t3Pcv744ZXa2DVd7a9XsI4HTTPxF2a8Rx1FJFFHMlOtH07mYUcy
+ WN2w==
+X-Gm-Message-State: APjAAAVcoA0BFplnVgIPVN3xuNlKnrggZriFqF3BEv9coCtSDe+1dS5J
+ X476KHz7Y7IS7eyUn700+CIwirABveOz7ClASQ==
+X-Google-Smtp-Source: APXvYqy0ZBWq2Brra6vGMKlyXfSBgqCBDYCXha81661llKJZEV9C3qgGcxMEPgvaNn867o3dSHtmTdYnOZ4SCLYItZg=
+X-Received: by 2002:a24:2b4c:: with SMTP id h73mr13086109ita.41.1557675831809; 
+ Sun, 12 May 2019 08:43:51 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190511190415.GA22816@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1556034515-28792-1-git-send-email-paul.gortmaker@windriver.com>
+In-Reply-To: <1556034515-28792-1-git-send-email-paul.gortmaker@windriver.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Sun, 12 May 2019 18:43:29 +0300
+Message-ID: <CAKKbWA5ydScNecjU1C4z72o=6ZiX1D2ik4nUe7VoiFaSF=z9nw@mail.gmail.com>
+Subject: Re: [PATCH 0/5] wdt: clean up unused modular infrastructure
+To: Paul Gortmaker <paul.gortmaker@windriver.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,165 +72,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Kamil Debski <kamil@wypas.org>, Tomer Maimon <tmaimon77@gmail.com>,
- linux-aspeed@lists.ozlabs.org, linux-pm@vger.kernel.org,
- Andrew Jeffery <andrew@aj.id.au>, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org, Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Avi Fishman <avifishman70@gmail.com>, Zhang Rui <rui.zhang@intel.com>,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
+Cc: linux-watchdog@vger.kernel.org, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Tali Perry <tali.perry1@gmail.com>, Wim Van Sebroeck <wim@iguana.be>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Guenter Roeck <linux@roeck-us.net>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Eduardo,
+I saw many drivers that are putting "#ifdef MODULE" around module specific code.
+I think it answers all 4 concerns above.
+It also covers the case where a developer made the driver available to
+be compiled as a module and in the Kconfig didn't make it tristate.
+What do you think?
 
-On 5/11/19 12:04 PM, Eduardo Valentin wrote:
-> Hello Guenter,
-> 
-> On Thu, Apr 18, 2019 at 12:58:15PM -0700, Guenter Roeck wrote:
->> thermal_of_cooling_device_register() and thermal_cooling_device_register()
->> are typically called from driver probe functions, and
->> thermal_cooling_device_unregister() is called from remove functions. This
->> makes both a perfect candidate for device managed functions.
->>
->> Introduce devm_thermal_of_cooling_device_register(). This function can
->> also be used to replace thermal_cooling_device_register() by passing a NULL
->> pointer as device node. The new function requires both struct device *
->> and struct device_node * as parameters since the struct device_node *
->> parameter is not always identical to dev->of_node.
->>
->> Don't introduce a device managed remove function since it is not needed
->> at this point.
-> 
-> I don't have any objection on adding this API. Only a minor thing below:
-> 
-> 
->>
->> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
->> ---
->>   drivers/thermal/thermal_core.c | 49 ++++++++++++++++++++++++++++++++++++++++++
->>   include/linux/thermal.h        |  5 +++++
->>   2 files changed, 54 insertions(+)
->>
->> diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
->> index 6590bb5cb688..e0b530603db6 100644
->> --- a/drivers/thermal/thermal_core.c
->> +++ b/drivers/thermal/thermal_core.c
->> @@ -1046,6 +1046,55 @@ thermal_of_cooling_device_register(struct device_node *np,
->>   }
->>   EXPORT_SYMBOL_GPL(thermal_of_cooling_device_register);
->>   
->> +static void thermal_cooling_device_release(struct device *dev, void *res)
->> +{
->> +	thermal_cooling_device_unregister(
->> +				*(struct thermal_cooling_device **)res);
->> +}
->> +
->> +/**
->> + * devm_thermal_of_cooling_device_register() - register an OF thermal cooling
->> + *					       device
->> + * @dev:	a valid struct device pointer of a sensor device.
->> + * @np:		a pointer to a device tree node.
->> + * @type:	the thermal cooling device type.
->> + * @devdata:	device private data.
->> + * @ops:	standard thermal cooling devices callbacks.
->> + *
->> + * This function will register a cooling device with device tree node reference.
->> + * This interface function adds a new thermal cooling device (fan/processor/...)
->> + * to /sys/class/thermal/ folder as cooling_device[0-*]. It tries to bind itself
->> + * to all the thermal zone devices registered at the same time.
->> + *
->> + * Return: a pointer to the created struct thermal_cooling_device or an
->> + * ERR_PTR. Caller must check return value with IS_ERR*() helpers.
->> + */
->> +struct thermal_cooling_device *
->> +devm_thermal_of_cooling_device_register(struct device *dev,
->> +				struct device_node *np,
->> +				char *type, void *devdata,
->> +				const struct thermal_cooling_device_ops *ops)
->> +{
->> +	struct thermal_cooling_device **ptr, *tcd;
->> +
->> +	ptr = devres_alloc(thermal_cooling_device_release, sizeof(*ptr),
->> +			   GFP_KERNEL);
->> +	if (!ptr)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	tcd = __thermal_cooling_device_register(np, type, devdata, ops);
->> +	if (IS_ERR(tcd)) {
->> +		devres_free(ptr);
->> +		return tcd;
->> +	}
->> +
->> +	*ptr = tcd;
->> +	devres_add(dev, ptr);
->> +
->> +	return tcd;
->> +}
->> +EXPORT_SYMBOL_GPL(devm_thermal_of_cooling_device_register);
->> +
->>   static void __unbind(struct thermal_zone_device *tz, int mask,
->>   		     struct thermal_cooling_device *cdev)
->>   {
->> diff --git a/include/linux/thermal.h b/include/linux/thermal.h
->> index 5f4705f46c2f..43cf4fdd71d4 100644
->> --- a/include/linux/thermal.h
->> +++ b/include/linux/thermal.h
->> @@ -447,6 +447,11 @@ struct thermal_cooling_device *thermal_cooling_device_register(char *, void *,
->>   struct thermal_cooling_device *
->>   thermal_of_cooling_device_register(struct device_node *np, char *, void *,
->>   				   const struct thermal_cooling_device_ops *);
->> +struct thermal_cooling_device *
->> +devm_thermal_of_cooling_device_register(struct device *dev,
->> +				struct device_node *np,
->> +				char *type, void *devdata,
->> +				const struct thermal_cooling_device_ops *ops);
-> 
-> We need to stub this in case thermal is not selected.
-> 
+On Thu, May 9, 2019 at 9:17 AM Paul Gortmaker
+<paul.gortmaker@windriver.com> wrote:
+>
+> People can embed modular includes and modular exit functions into code
+> that never use any of it, and they won't get any errors or warnings.
+>
+> Using modular infrastructure in non-modules might seem harmless, but some
+> of the downfalls this leads to are:
+>
+>  (1) it is easy to accidentally write unused module_exit/remove code
+>  (2) it can be misleading when reading the source, thinking a driver can
+>      be modular when the Makefile and/or Kconfig prohibit it
+>  (3) an unused include of the module.h header file will in turn
+>      include nearly everything else; adding a lot to CPP overhead.
+>  (4) it gets copied/replicated into other drivers and can spread.
+>
+> As a data point for #3 above, an empty C file that just includes the
+> module.h header generates over 750kB of CPP output.  Repeating the same
+> experiment with init.h and the result is less than 12kB; with export.h
+> it is only about 1/2kB; with both it still is less than 12kB.
+>
+> Here, In this series, we do what has been done for other subsystems,
+> like, net, x86, mfd, iommu....  and audit for uses of modular
+> infrastructure inside code that currently can't be built as a module.
+>
+> As always, the option exists for driver authors to convert their code
+> to tristate, if there is a valid use case for it to be so.  But since
+> I don't have the context for each driver to know if such a use case
+> exists, I limit myself to simply removing the unused code in order to
+> make the driver consistent with the Makefile/Kconfig settings that
+> control it.
+>
+> Paul.
+>
+> ---
+>
+> Cc: Benjamin Fair <benjaminfair@google.com>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: linux-watchdog@vger.kernel.org
+> Cc: Nancy Yuen <yuenn@google.com>
+> Cc: openbmc@lists.ozlabs.org
+> Cc: Patrick Venture <venture@google.com>
+> Cc: Tali Perry <tali.perry1@gmail.com>
+> Cc: Tomer Maimon <tmaimon77@gmail.com>
+> Cc: Wim Van Sebroeck <wim@iguana.be>
+> Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
+>
+>
+> Paul Gortmaker (5):
+>   watchdog: rtd119x: drop unused module.h include
+>   watchdog: watchdog_core: make it explicitly non-modular
+>   watchdog: npcm: make it explicitly non-modular
+>   watchdog: intel_scu: make it explicitly non-modular
+>   watchdog: coh901327: make it explicitly non-modular
+>
+>  drivers/watchdog/coh901327_wdt.c      | 24 ++++--------------------
+>  drivers/watchdog/intel_scu_watchdog.c | 18 ------------------
+>  drivers/watchdog/npcm_wdt.c           | 13 ++++++-------
+>  drivers/watchdog/rtd119x_wdt.c        |  1 -
+>  drivers/watchdog/watchdog_core.c      | 15 +--------------
+>  5 files changed, 11 insertions(+), 60 deletions(-)
+>
+> --
+> 2.7.4
+>
 
-Yes. Sorry, that completely slipped my mind.
 
->>   void thermal_cooling_device_unregister(struct thermal_cooling_device *);
->>   struct thermal_zone_device *thermal_zone_get_zone_by_name(const char *name);
->>   int thermal_zone_get_temp(struct thermal_zone_device *tz, int *temp);
-> 
-> Something like:
-> 
-> 
-> diff --git a/include/linux/thermal.h b/include/linux/thermal.h
-> index 43cf4fd..9b1b365 100644
-> --- a/include/linux/thermal.h
-> +++ b/include/linux/thermal.h
-> @@ -508,6 +508,14 @@ static inline struct thermal_cooling_device *
->   thermal_of_cooling_device_register(struct device_node *np,
->          char *type, void *devdata, const struct thermal_cooling_device_ops *ops)
->   { return ERR_PTR(-ENODEV); }
-> +struct thermal_cooling_device *
-> +devm_thermal_of_cooling_device_register(struct device *dev,
-> +                               struct device_node *np,
-> +                               char *type, void *devdata,
-> +                               const struct thermal_cooling_device_ops *ops)
-> +{
-> +       return ERR_PTR(-ENODEV);
-> +}
->   static inline void thermal_cooling_device_unregister(
->          struct thermal_cooling_device *cdev)
->   { }
-> ~
-> 
-> 
-> If you want I can amend this to your patch and apply it.
-> 
-Please do.
-
-> Also, do you prefer me to collect only this patch and you would collect hwmon changes,
-> or are you ok if I collect all the series?
-> 
-
-Please go ahead and collect the entire series.
-
-Thanks,
-Guenter
+-- 
+Regards,
+Avi
