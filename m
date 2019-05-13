@@ -2,71 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A64341BB0B
-	for <lists+openbmc@lfdr.de>; Mon, 13 May 2019 18:33:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED2421BB0C
+	for <lists+openbmc@lfdr.de>; Mon, 13 May 2019 18:33:54 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 452mZz1WvRzDqBd
-	for <lists+openbmc@lfdr.de>; Tue, 14 May 2019 02:33:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 452mbh1pQyzDqCH
+	for <lists+openbmc@lfdr.de>; Tue, 14 May 2019 02:33:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::535; helo=mail-pg1-x535.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="kwdr90Mo"; 
- dkim-atps=neutral
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com
- [IPv6:2607:f8b0:4864:20::535])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 452mZ41S74zDqDy
- for <openbmc@lists.ozlabs.org>; Tue, 14 May 2019 02:32:27 +1000 (AEST)
-Received: by mail-pg1-x535.google.com with SMTP id t187so7019696pgb.13
- for <openbmc@lists.ozlabs.org>; Mon, 13 May 2019 09:32:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=PjeSYcT6RL87tnaD4fNX2YqCJu3X4aR+dV5KX/12pY4=;
- b=kwdr90MoQCOB8p8xjvOC8kY/TtJJ9SZszTSFR4iv7ThY+uee6MCkr05qijr2Q2KSrr
- F9pQl++ti53rI78DJa2PkqtxFJ1cVk+W9v0PsVhlt1nhsVWhoGZS05XyKrvqjMz/lOIC
- Wts/NCYTyjKFH9cejhPa9u97Z21GcKAeRYXgGqdoXbqG/ktBRLFgn0cSKEu3RJKcx3ET
- vfnJEwlR4ahSiugk1ZW7mlRvrlYtX6d2HHq2zjO2YdwRN1hyY9kjA/BILwrYejUJdkUo
- lz2c2gKH4G7bHZlvrIBtUma6MqCD8lD1PzCYH42mCMJpFjHfCgOr2noNb3w2NVBXqicq
- TtjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=PjeSYcT6RL87tnaD4fNX2YqCJu3X4aR+dV5KX/12pY4=;
- b=S4i1L7GTRqTZ1ELEqpth/Lfwm0LYH464lngY/Pfvpw4CvxIyvQ2yC0dsGxF/glye4r
- /SwRgFr8z/Hl7cFQR/r8BJZwfzqV8wNj4KRfjpBn7FBXpx+r6cAvjTUMoVWM8lEvN7UP
- 1qwpIR7AbrzXE4OVC6SBZHeApthSf/cHal02zFBFAFb4VcaZWUsahbQsA7pA5xp+EZ/g
- BLrI2BiwGY9x78W6HperH1fmX8dr9PkTa4RAlN4OczUsdN1aqZms/BI/HLwBfF4po0it
- TNSdSlo21sZbyOfBuANiEXwzUjkR8GbMxtbRuR74n4MHFzJNYH9t5NuWJB24P7HTXKFb
- q1sw==
-X-Gm-Message-State: APjAAAWzcax9N/XBFMmwYBmbMxie0FblK2MDIvN3UTycXSJWvrxT8Fd+
- +r+15h0pAJj67Vpc+UfwbcU8gX7OGP1+9wJBO2eyQg==
-X-Google-Smtp-Source: APXvYqyIXQEX09kgKeyoKTHfAR91YnqX3c4vTrZBo+/3tQk3fNyP35bPAxqPlsmVl8HBTA+26kAKWk6NYYCID5rmF0I=
-X-Received: by 2002:a63:1e0c:: with SMTP id e12mr30860618pge.218.1557765144010; 
- Mon, 13 May 2019 09:32:24 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 452mZd4mtPzDqG0
+ for <openbmc@lists.ozlabs.org>; Tue, 14 May 2019 02:32:57 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x4DGWEmo047962
+ for <openbmc@lists.ozlabs.org>; Mon, 13 May 2019 12:32:55 -0400
+Received: from e13.ny.us.ibm.com (e13.ny.us.ibm.com [129.33.205.203])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sfbjfhqkc-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 13 May 2019 12:32:55 -0400
+Received: from localhost
+ by e13.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <anoo@linux.ibm.com>;
+ Mon, 13 May 2019 17:32:54 +0100
+Received: from b01cxnp23034.gho.pok.ibm.com (9.57.198.29)
+ by e13.ny.us.ibm.com (146.89.104.200) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 13 May 2019 17:32:50 +0100
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x4DGWo0D43188588
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 May 2019 16:32:50 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED3B4AC059;
+ Mon, 13 May 2019 16:32:49 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 711B8AC05E;
+ Mon, 13 May 2019 16:32:49 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 13 May 2019 16:32:49 +0000 (GMT)
 MIME-Version: 1.0
-References: <96A52DC2-7B18-4F69-B8E8-3B489BDA84C6@fb.com>
- <1c5566ba-696e-42eb-c193-22eaca33a1db@intel.com>
- <7D337AEA-CB20-4E39-8A9A-58E21EDA0F31@fb.com>
- <1b82951d-4293-0525-a562-000899544c2e@intel.com>
- <14F05B01-0B7D-44D1-A599-5EDD8CC3A6C8@fb.com>
-In-Reply-To: <14F05B01-0B7D-44D1-A599-5EDD8CC3A6C8@fb.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 13 May 2019 09:32:12 -0700
-Message-ID: <CAO=notzQc2CX9Dx4gjX6HwnuCKnjmD_3ek+tv-XAfO+LxdQ3WA@mail.gmail.com>
-Subject: Re: pid control configuration
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Mon, 13 May 2019 11:32:52 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Lei YU <mine260309@gmail.com>
+Subject: Re: How to deal with incorrect firmware image in
+ phosphor-bmc-code-mgmt?
+In-Reply-To: <CAARXrtkqY+vLUsUmDMiL4o+ZpP4whAtRiqFB5At_PhR7dFD7hQ@mail.gmail.com>
+References: <CAN9Jwz1wvT0nhoTb8K9Qf-MTARc3q8kxRQXSH1TCA0e5nJFY4w@mail.gmail.com>
+ <CAARXrtkqY+vLUsUmDMiL4o+ZpP4whAtRiqFB5At_PhR7dFD7hQ@mail.gmail.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+x-cbid: 19051316-0064-0000-0000-000003DDB934
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011093; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000285; SDB=6.01202791; UDB=6.00631293; IPR=6.00983707; 
+ MB=3.00026868; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-13 16:32:52
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19051316-0065-0000-0000-00003D7480D2
+Message-Id: <eb00da838abbb81aff67bb883681e927@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-13_09:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905130113
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,41 +96,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed.tanous@intel.com>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ Troy Lee <leetroy@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, May 10, 2019 at 2:21 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
->
->
-> =EF=BB=BFOn 5/6/19, 9:20 AM, "Ed Tanous" <ed.tanous@intel.com> wrote:
->
->     On 5/2/19 4:24 PM, Vijay Khemka wrote:
->     >  My understanding here is pid data are only defined for temp sensor=
-s which will generate pwm values for fan.
->     >
->
->     The above is not how phosphor pid control operates.  The temperature
->     controllers "request" a given fan RPM, then the fan PID controller
->     (which is scanned much more quickly than the temperature controllers)
->     attempts to drive the fan to that speed.  This ends up being a two st=
-age
->     feedback loop that can perform better than a single PID loop.
->
-> Ed, we are not using cascade control here in facebook. We only use outer =
-loop which gives data for fan to drive.
-> Is it possible to still run Phosphor pid controller with single loop?
+On 2019-05-08 03:56, Lei YU wrote:
+> On Wed, May 8, 2019 at 4:37 PM Troy Lee <leetroy@gmail.com> wrote:
+>> 
+>> Greeting,
+>> 
+>> With the method xyz.openbmc_project.Common.TFTP.DownloadViaTFTP,
+>> does OpenBMC have a way to know that TFTP download status(completed)
+>> and the downloaded image is incorrect?
 
-Your cascade PID could be a pass-through -- so that it receives the
-set-point from the sensor PID and then just sets it directly within
-that loop..  It may require a new PID controller that is just a
-pass-through to explicitly exist -- i haven't dove into
-phosphor-pid-control in a while, but you probably need to write a
-basically empty PID controller object type.
+The challenge is the time that takes to perform the TFTP transfer. A
+transfer from a remote server can take minutes to complete, which would
+cause timeouts on the REST server. If we can solve this, then we could
+return a download status.
+See issue for reference : https://github.com/openbmc/openbmc/issues/1691
 
->
-> Regards
-> -Vijay
->
+>> 
+>> It would not be a problem if the image is correct, since we'll have an
+>> InterfacesAdded signal.
+>> But if the image is incorrect (untar failure/signature mismatch),
+>> we'll only have an error log entry generated.
+> 
+> What is the expected behavior if the image is incorrect?
+> 
+>> Or if the image has the same version id with currently running image,
+>> the behavior will become unexpected.
+> 
+> I met this problem before, and I think we may discuss the expected 
+> behavior,
+> and fix this case.
+> 
+
+The current behavior is that a new Version D-Bus object is not created
+because one already exists. If this is unexpected, what should the 
+expected
+behavior be?
+
+>> 
+>> Because we have another service wants to integrate with firmware
+>> update service, having a way to confirm the image file is nice to
+>> have.
+>> 
+>> Thanks,
+>> Troy Lee
+>> --
+>> Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
+
