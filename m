@@ -1,61 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7EA61C908
-	for <lists+openbmc@lfdr.de>; Tue, 14 May 2019 14:52:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 453Hdz3KXYzDqLg
-	for <lists+openbmc@lfdr.de>; Tue, 14 May 2019 22:52:39 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2BBE25E8B
+	for <lists+openbmc@lfdr.de>; Wed, 22 May 2019 09:12:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4583jx004KzDq5W
+	for <lists+openbmc@lfdr.de>; Wed, 22 May 2019 17:12:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=03047ea12=will.liang@quantatw.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=ami.com
+ (client-ip=63.147.10.42; helo=atlmailgw2.ami.com;
+ envelope-from=hongweiz@ami.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 453HcF41yKzDqL5
- for <openbmc@lists.ozlabs.org>; Tue, 14 May 2019 22:51:04 +1000 (AEST)
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx01.quantatw.com with ESMTP; 14 May 2019 20:51:00 +0800
-Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 14 May
- 2019 20:50:59 +0800
-Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
- ([192.168.1.8]) with mapi id 15.01.1713.004; Tue, 14 May 2019 20:50:59 +0800
-From: =?utf-8?B?V2lsbCBMaWFuZyAo5qKB5rC46YmJKQ==?= <Will.Liang@quantatw.com>
-To: James Feist <james.feist@linux.intel.com>, Patrick Venture
- <venture@google.com>
-Subject: RE: about phosphor pid control package
-Thread-Topic: about phosphor pid control package
-Thread-Index: AdUFo9RcAeugSeF6TkK3RbzjlTMQif//qpQA//6jn2CAAs8MAIAANJ2A//8SP1D/9wrAcA==
-Date: Tue, 14 May 2019 12:50:59 +0000
-Message-ID: <06213e65eb3c48ce8eaa3699265bf8ae@quantatw.com>
-References: <28581f1979a946fdb2f53013bab4661c@quantatw.com>
- <CAO=notyeTBr3BSKrhxDP3uW3s0kma6cek-Dz-33tczKU0pL-Mg@mail.gmail.com>
- <aa5dec4830f349429f440dda2aee7bf2@quantatw.com>
- <CAO=notzHKYjCd++=A+rEzV8bdLc782caeDA=aHg2bC4-6JTp=g@mail.gmail.com>
- <0a0149bc-5120-78ee-1fc3-877f510b66a4@linux.intel.com> 
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
+ dmarc=none (p=none dis=none) header.from=ami.com
+Received: from atlmailgw2.ami.com (atlmailgw2.ami.com [63.147.10.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 453KYD13JSzDqFv
+ for <openbmc@lists.ozlabs.org>; Wed, 15 May 2019 00:18:37 +1000 (AEST)
+X-AuditID: ac10606f-0adff700000054ce-d8-5cdace387d47
+Received: from atlms2.us.megatrends.com (atlms2.us.megatrends.com
+ [172.16.96.152])
+ (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by atlmailgw2.ami.com (Symantec Messaging Gateway) with SMTP id
+ 45.8C.21710.83ECADC5; Tue, 14 May 2019 10:18:33 -0400 (EDT)
+Received: from ATLMS1.us.megatrends.com ([fe80::8c55:daf0:ef05:5605]) by
+ atlms2.us.megatrends.com ([fe80::29dc:a91e:ea0c:cdeb%12]) with mapi id
+ 14.03.0415.000; Tue, 14 May 2019 10:18:32 -0400
+From: Hongwei Zhang <Hongweiz@ami.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: [PATCH linux dev-5.0] ARM: dts: aspeed: Add Microsoft Olympus BMC
+Thread-Topic: [PATCH linux dev-5.0] ARM: dts: aspeed: Add Microsoft Olympus BMC
+Thread-Index: AQHVCbg2gjDJfMCRsECTlQxGaLFLvKZqMBSAgAB544A=
+Date: Tue, 14 May 2019 14:18:32 +0000
+Message-ID: <14D3C8298A3B0F42A1EB31EE961CFF82308C6B@atlms1.us.megatrends.com>
+References: <1557771437-26366-1-git-send-email-hongweiz@ami.com>
+ <0192570c-1383-4183-b976-ce5c6b8270a3@www.fastmail.com>
+In-Reply-To: <0192570c-1383-4183-b976-ce5c6b8270a3@www.fastmail.com>
+Accept-Language: en-US
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24610.003
-x-tm-as-result: No--9.363500-0.000000-31
-x-tm-as-matchedid: 140026-150567-701625-704425-700685-139010-139006-700648-1
- 06660-110462-700075-703378-702169-105250-700752-704341-704421-701914-700173
- -708797-188019-709185-701019-701499-700038-701163-703529-700560-700312-7074
- 10-702143-701604-700472-709584-106420-701005-705753-707027-780022-700383-71
- 2058-705388-705861-700949-704102-700586-148004-148133-42000-42003-63-190014
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-originating-ip: [172.16.100.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphkeLIzCtJLcpLzFFi42JZI5AwQ9fy3K0Yg1UHOS12XeawWHrzCpvF
+ 7/N/mS1OtbxgcWDxuNq+i93j9vYmdo+LH48xe5yfsZAxgCWKyyYlNSezLLVI3y6BK+PW872s
+ BUdMKg4cOsnSwDhfo4uRk0NCwERi2eUXTF2MXBxCAruYJBZtXcwI4RxmlDh5dCYzSBWbgJrE
+ 0z8N7CC2iECNxK7NbxhBbGYBXYkv/TfAbGGBAInHLyYwQdQESpya2g3UywFkW0lc/R0DEmYR
+ UJV4f3QuWDmvgK/Eis4nYOVCAlUSk65BjOQUcJF4uPAdWJxRQEzi+6k1TBCrxCVuPZnPBHG0
+ gMSSPeeZIWxRiZeP/7FC2EoSDSv+QdXrSCzY/YkNwtaWWLbwNTPEXkGJkzOfsExgFJ2FZOws
+ JC2zkLTMQtKygJFlFaNQYklObmJmTnq5kV5ibqZecn7uJkZIHOXvYPz40fwQowAHoxIP7/X9
+ t2KEWBPLiitzDzFKcDArifBGKd6IEeJNSaysSi3Kjy8qzUktPsQozcGiJM47I+RyjJBAemJJ
+ anZqakFqEUyWiYNTqoExaopQW5qP5tXzMkr3vy53T7rCltR3buL3H8elkifP3iZemWDN0P+Y
+ wakvv+VgmorL1EUrX1zds1ZaN4w77IDipbmGz48r84jNXMj7VFf5qdyDe1J3i+uKTh2O6Rer
+ nSER//L4cqeLhQJfd2woUoiKel8X5TOjYOvhVFsGnWuBLbwa5V+Eq3OVWIozEg21mIuKEwFe
+ lTQenwIAAA==
+X-Mailman-Approved-At: Wed, 22 May 2019 17:12:17 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,80 +73,299 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogV2lsbCBMaWFuZyAo5qKB
-5rC46YmJKQ0KPiBTZW50OiBGcmlkYXksIE1heSAxMCwgMjAxOSA4OjA2IEFNDQo+IFRvOiAnSmFt
-ZXMgRmVpc3QnIDxqYW1lcy5mZWlzdEBsaW51eC5pbnRlbC5jb20+OyBQYXRyaWNrIFZlbnR1cmUN
-Cj4gPHZlbnR1cmVAZ29vZ2xlLmNvbT4NCj4gQ2M6IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZz4NCj4gU3ViamVjdDogUkU6IGFib3V0IHBob3NwaG9yIHBpZCBjb250
-cm9sIHBhY2thZ2UNCj4gDQo+IA0KPiA+IE9uIDUvOS8xOSA3OjQzIEFNLCBQYXRyaWNrIFZlbnR1
-cmUgd3JvdGU6DQo+ID4gPiBPbiBXZWQsIE1heSA4LCAyMDE5IGF0IDExOjMzIFBNIFdpbGwgTGlh
-bmcgKOaigeawuOmJiSkNCj4gPiA+IDxXaWxsLkxpYW5nQHF1YW50YXR3LmNvbT4gd3JvdGU6DQo+
-ID4gPj4NCj4gPiA+PiBIaSwNCj4gPiA+Pg0KPiA+ID4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2Ut
-LS0tLQ0KPiA+ID4+PiBGcm9tOiBQYXRyaWNrIFZlbnR1cmUgW21haWx0bzp2ZW50dXJlQGdvb2ds
-ZS5jb21dDQo+ID4gPj4+IFNlbnQ6IFRodXJzZGF5LCBNYXkgOSwgMjAxOSAxMjozNiBBTQ0KPiA+
-ID4+PiBUbzogV2lsbCBMaWFuZyAo5qKB5rC46YmJKSA8V2lsbC5MaWFuZ0BxdWFudGF0dy5jb20+
-DQo+ID4gPj4+IENjOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+
-DQo+ID4gPj4+IFN1YmplY3Q6IFJlOiBhYm91dCBwaG9zcGhvciBwaWQgY29udHJvbCBwYWNrYWdl
-DQo+ID4gPj4+DQo+ID4gPj4+IE9uIFdlZCwgTWF5IDgsIDIwMTkgYXQgNjo0NiBBTSBXaWxsIExp
-YW5nICjmooHmsLjpiYkpDQo+ID4gPj4+IDxXaWxsLkxpYW5nQHF1YW50YXR3LmNvbT4gd3JvdGU6
-DQo+ID4gPj4+Pg0KPiA+ID4+Pj4gSGksDQo+ID4gPj4+Pg0KPiA+ID4+Pj4gSSBoYXZlIGEgcXVl
-c3Rpb24gYWJvdXQgZ2V0RmFpbFNhZmVNb2RlKCkuDQo+ID4gPj4+Pg0KPiA+ID4+Pj4gQ3VycmVu
-dGx5LCBvbmx5IHNlbnNvcnMgdGhhdCBhcmUgZGVmaW5lZCBhcyAidGVtcCIgdHlwZXMgY2FuIGJl
-DQo+ID4gPj4+PiBjaGVja2VkIGZvcg0KPiA+ID4+PiBmYWlsdXJlLg0KPiA+ID4+Pj4gSSBkaWQg
-bm90IGZpbmQgYW55ICJmYW4iIHR5cGUgc2Vuc29ycyB0byBjaGVjayBpZiB0aGUgZmFuIGhhcyBm
-YWlsZWQuDQo+ID4gPj4+PiBPdXIgcHJvamVjdCBuZWVkIHRvIGNoZWNrIHRoZSBmYW4gZmFpbCBz
-byAgSSB3YW50IHRvIGFkZCBhbm90aGVyDQo+ID4gPj4+PiAiZmFuIiBzZW5zb3INCj4gPiA+Pj4g
-dHlwZSB0byBjaGVjay4NCj4gPiA+Pj4NCj4gPiA+Pj4NCj4gPiA+Pj4NCj4gPiA+Pj4+DQo+ID4g
-Pj4+PiBDYW4gSSBhZGQgb25lIG1vcmUgImZvciBsb29wIiB0byBjaGVjayB0aGUgZmFuIHNlbnNv
-ciBpbg0KPiA+ID4+Pj4gdXBkYXRlU2Vuc29ycygpDQo+ID4gPj4+IGZ1bmN0aW9uIGluIHpvbmUu
-Y3BwPz8NCj4gPiA+Pj4+DQo+ID4gPj4+PiBmb3IgKGNvbnN0IGF1dG8mIHQgOiBfdGhlcm1hbElu
-cHV0cykgew0KPiA+ID4+Pj4gICAgICAuLi4uLi4uLg0KPiA+ID4+Pj4gfQ0KPiA+ID4+Pj4gZm9y
-IChjb25zdCBhdXRvJiB0IDogX2ZhbklucHV0cykNCj4gPiA+Pj4+IHsNCj4gPiA+Pj4+ICAgICAg
-Li4uLi4uLi4NCj4gPiA+Pj4+IH0NCj4gPiA+Pj4NCj4gPiA+Pj4gdXBkYXRlU2Vuc29ycyBpcyBk
-ZWxpYmVyYXRlbHkgbm90IHRhbGtpbmcgdG8gdGhlIGZhbnMgYmVjYXVzZQ0KPiA+ID4+PiB0aGV5
-J3JlIG5vdCBjb25zaWRlcmVkIGlucHV0cyBpbnRvIHRoZSB0aGVybWFsIGNvbmZpZywgdGhleSdy
-ZQ0KPiA+ID4+PiBjb250cm9sbGVkIG91dHB1dHMgLS0gdGhlIHF1ZXN0aW9uIEkgaGF2ZSBpcywg
-d2hhdCB3b3VsZCB5b3UgbGlrZQ0KPiA+ID4+PiB0byBkbyBpZiBhDQo+ID4gZmFuIGlzbid0IHJl
-c3BvbmRpbmc/DQo+ID4gPj4+IGZhaWxzYWZlbW9kZSBkcml2ZXMgdGhlIGZhbnMgdG8gYSBzcGVj
-aWZpYyBwcmUtZGVmaW5lZCBzcGVlZCB0bw0KPiA+ID4+PiBrZWVwIGl0IGZyb20gdGhlcm1hbCBp
-c3N1ZXMuICBJZiBhIGZhbiBpcyBmYWlsaW5nIHRvIHJlc3BvbmQsIG9uZQ0KPiA+ID4+PiBjYW4n
-dCBkcml2ZSBpdCAtLSBwZXJoYXBzIG9uZSBjYW4gZHJpdmUgdGhlIG90aGVycyB0byBzb21lIGZh
-aWxzYWZlPw0KPiA+ID4+DQo+ID4gPj4gSWYgYSBmYW4gZmFpbHMsIHdlIG5lZWQgdG8gZW50ZXIg
-dGhlIGZhaWwgc2FmZSBtb2RlIHRvIGluY3JlYXNlIHRoZQ0KPiA+ID4+IG90aGVyIGZhbg0KPiA+
-IGR1dHkuDQo+ID4gPj4NCj4gPiA+Pj4gSWYgc28sIG9uZSBuZWVkcyB0byB1cGRhdGUgdGhlIGZh
-aWxzYWZlIGZvciBhIHpvbmUgb3V0c2lkZSBvZiB0aGUNCj4gPiA+Pj4gdGhlcm1hbCBzZW5zb3Jz
-LCBidXQgcmF0aGVyIHdoZXJlIHRoZSBmYW5zIGFyZSBjaGVja2VkICh2b2lkDQo+ID4gPj4+IFBJ
-RFpvbmU6OnVwZGF0ZUZhblRlbGVtZXRyeSh2b2lkKSkNCj4gPiA+Pg0KPiA+ID4+IEkgYWRkIGZv
-bGxvd2luZyBjb2RlIGludG8gdGhlIFBJRFpvbmU6OnVwZGF0ZUZhblRlbGVtZXRyeSh2b2lkKQ0K
-PiA+ID4+IGZ1bmN0aW9uDQo+ID4gdG8gY2hlY2sgdGhlIGZhbiBmYWlsLg0KPiA+ID4+IElmIHRo
-ZSBmYW4gZmFpbHMsIGl0IHdpbGwgZW50ZXIgZmFpbCBzYWZlIG1vZGUuDQo+ID4gPj4gICAgaWYg
-KHNlbnNvci0+Z2V0RmFpbGVkKCkpDQo+ID4gPj4gICAgew0KPiA+ID4+ICAgICAgICAgIGZhaWxT
-YWZlU2Vuc29ycy5pbnNlcnQoZik7DQo+ID4gPj4gICAgfQ0KPiA+ID4+ICAgIGVsc2UNCj4gPiA+
-PiAgICB7DQo+ID4gPj4gICAgICAgICAgLy8gQ2hlY2sgaWYgaXQncyBpbiB0aGVyZTogcmVtb3Zl
-IGl0Lg0KPiA+ID4+ICAgICAgYXV0byBrdCA9IF9mYWlsU2FmZVNlbnNvcnMuZmluZChmKTsNCj4g
-PiA+PiAgICAgIGlmIChrdCAhPSBfZmFpbFNhZmVTZW5zb3JzLmVuZCgpKQ0KPiA+ID4+ICAgIHsN
-Cj4gPiA+PiAgICAgICAgICBmYWlsU2FmZVNlbnNvcnMuZXJhc2Uoa3QpOw0KPiA+ID4+ICAgIH0N
-Cj4gPiA+Pg0KPiA+ID4+IEJ1dCBvbmUgbW9yZSBxdWVzdGlvbiBJIGhhdmUgaXMgdGhhdCB0aGUg
-YWJvdmUgY29kZSBjYW4gb25seSBjaGVjaw0KPiA+ID4+IGlmIGENCj4gPiBzaW5nbGUgZmFuIGhh
-cyBmYWlsZWQuDQo+ID4gPg0KPiA+ID4+IE91ciBwcm9qZWN0IG5lZWRzIHRvIGNoZWNrIGZvciBk
-dWFsLWZhbiBmYWlsdXJlcy4gRG8geW91IGhhdmUgYW55DQo+ID4gc3VnZ2VzdGlvbnMgZm9yIGNo
-ZWNraW5nIHRoZSBmYWlsdXJlIG9mIHRoZSBkdWFsLWZhbj8NCj4gPiA+DQo+ID4gPiBJJ20gbm90
-IGVudGlyZWx5IGNlcnRhaW4gd2hhdCB5b3UgbWVhbi4gIFlvdSdyZSBzYXlpbmcgYSBkdWFsLWZh
-biBpcw0KPiA+ID4gYSBmYW4gdGhhdCBoYXMgdHdvIG91dHB1dHMgYnV0IG9uZSBpbnB1dD8NCj4g
-Pg0KPiA+IElmIHRoaXMgaXMgd2hhdCB5b3UgbWVhbiwgb24gb3VyIHN5c3RlbXMgd2Ugc2ltcGx5
-IGhhdmUgYSB0YWNoIHNlbnNvcg0KPiA+IHBlciB0YWNoIGluIHRoZSBmYW4sIGkuZS4gZmFuMWEg
-YW5kIGZhbjFiLiBJIHRoaW5rIHRoZSBhYm92ZSBsb2dpYw0KPiA+IHdvdWxkIHdvcmsgZm9yIHRo
-aXMgaXNzdWUuDQpJIHRoaW5rIHNvbWVvbmUgbWF5IGFsc28gbmVlZCB0byBjaGVjayBmb3Igb25l
-IHJvdG9yIGZhbiBmYWlsLCBJIHdpbGwgcHVzaCB0aGUgYWJvdmUgY29kZSBpbnRvIGdlcnJpdA0K
-DQo+IEknbSBzbyBzb3JyeSB0byBtYWtlIHlvdSBtaXN1bmRlcnN0YW5kIGJlY2F1c2Ugb2YgbXkg
-dW5jbGVhciBleHByZXNzaW9uLg0KPiBUaGUgImR1YWwtZmFuIiBtZWFucyAiRHVhbCByb3RvciBm
-YW4iICwgdHdvIHRhY2hvbWV0ZXIgb3V0cHV0IG9uZSBQV00NCj4gaW5wdXQuDQpPdXIgYXJjaGl0
-ZWN0dXJlIGlzIHRoYXQgYm90aCBmYW4xYSBhbmQgZmFuMWIgZmFpbCAoZHVhbCByb3RvciBmYW4g
-ZmFpbHVyZSkgYW5kIHRoZW4gdGhpcyBzaXR1YXRpb24gaXMgaWRlbnRpZmllZCBhcyBvbmUgZmFu
-IGZhaWwuDQoNCldvdWxkIHlvdSBoYXZlIGFueSBzdWdnZXN0aW9uIG9yIGlkZWE/DQoNCj4NCj4g
-PiA+DQo+ID4gPj4NCj4gPiA+PiBXaWxsDQo+ID4gPj4+Pg0KPiA+ID4+Pj4gQlJzLA0KPiA+ID4+
-Pj4gV2lsbA0K
+Thanks Andrew for your prompt response!
+Sure I will use the proper options in git format-patch at the next time, th=
+anks for the tips :-)
+Our team will review your comments and submit updated version soon.
+
+Best Regards,
+--Hongwei
+
+-----Original Message-----
+From: Andrew Jeffery <andrew@aj.id.au>=20
+Sent: Monday, May 13, 2019 10:54 PM
+To: Hongwei Zhang <Hongweiz@ami.com>; Joel Stanley <joel@jms.id.au>; openbm=
+c@lists.ozlabs.org
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: [PATCH linux dev-5.0] ARM: dts: aspeed: Add Microsoft Olympus =
+BMC
+
+Hello Hongwei,
+
+Thanks for the patch!
+
+I think this is the second or third iteration? If you send an updated patch=
+ in the future please make sure to use the `-v` option as well as`--subject=
+-prefix` to `git format-patch` - this changes the subject to e.g. `[PATCH l=
+inux dev-5.0 v2]` and allows us to identify why you've sent the patch from =
+reading the subject.
+
+On Tue, 14 May 2019, at 03:48, Hongwei Zhang wrote:
+> Olympus is a Microsoft OCP platform equipped with Aspeed 2400 BMC Soc.
+>=20
+> Signed-off-by: Hongwei Zhang <hongweiz@ami.com>
+> ---
+>  arch/arm/boot/dts/Makefile                         |   1 +
+>  arch/arm/boot/dts/aspeed-bmc-microsoft-olympus.dts | 204=20
+> +++++++++++++++++++++
+>  2 files changed, 205 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-microsoft-olympus.dts
+>=20
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile=20
+> index c01a7b1..072725a 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1242,6 +1242,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
+>  	aspeed-bmc-facebook-tiogapass.dtb \
+>  	aspeed-bmc-intel-s2600wf.dtb \
+>  	aspeed-bmc-lenovo-hr630.dtb \
+> +	aspeed-bmc-microsoft-olympus.dtb \
+>  	aspeed-bmc-opp-lanyang.dtb \
+>  	aspeed-bmc-opp-palmetto.dtb \
+>  	aspeed-bmc-opp-romulus.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-microsoft-olympus.dts
+> b/arch/arm/boot/dts/aspeed-bmc-microsoft-olympus.dts
+> new file mode 100644
+> index 0000000..ed25fac
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed-bmc-microsoft-olympus.dts
+> @@ -0,0 +1,204 @@
+> +//SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Device Tree file for Microsoft Olympus platform.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "aspeed-g4.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +
+> +/ {
+> +	model =3D "Olympus BMC";
+> +	compatible =3D "microsoft,olympus-bmc", "aspeed,ast2400";
+> +
+> +	chosen {
+> +		stdout-path =3D &uart5;
+> +		bootargs =3D "console=3DttyS4,115200 earlyprintk";
+> +	};
+> +
+> +	memory@40000000 {
+> +		reg =3D <0x40000000 0x20000000>;
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells =3D <1>;
+> +		#size-cells =3D <1>;
+> +		ranges;
+> +
+> +		vga_memory: framebuffer@5f000000 {
+> +			no-map;
+> +			reg =3D <0x5f000000 0x01000000>; /* 16M */
+> +		};
+> +	};
+> +
+> +	leds {
+> +		compatible =3D "gpio-leds";
+> +
+> +		bmc_heartbeat {
+> +			gpios =3D <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		power_green {
+> +			gpios =3D <&gpio ASPEED_GPIO(U, 2) GPIO_ACTIVE_HIGH>;
+> +		};
+> +
+> +		power_amber {
+> +			gpios =3D <&gpio ASPEED_GPIO(U, 3) GPIO_ACTIVE_HIGH>;
+> +		};
+> +
+> +		identify {
+> +			gpios =3D <&gpio ASPEED_GPIO(Q, 5) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fault {
+> +			gpios =3D <&gpio ASPEED_GPIO(A, 1) GPIO_ACTIVE_LOW>;
+> +		};
+> +	};
+> +
+> +
+> +	iio-hwmon {
+> +		compatible =3D "iio-hwmon";
+> +		io-channels =3D <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
+> +		<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+> +	};
+> +};
+> +
+> +&adc {
+> +	status =3D "okay";
+
+Can you please add the pinmux properties for the ADC lines that you're usin=
+g?
+The iio-hwmon node suggests you're using lines 0-7.
+
+> +};
+> +
+> +&fmc {
+> +	status =3D "okay";
+> +
+> +	flash@0 {
+> +		status =3D "okay";
+> +		m25p,fast-read;
+> +		label =3D "bmc";
+> +#include "openbmc-flash-layout.dtsi"
+> +	};
+> +};
+> +
+> +&spi {
+> +	status =3D "okay";
+> +	pinctrl-names =3D "default";
+
+This is missing the pinctrl-0 property.
+
+I think in the last version of the patch you had this set to:
+
+pinctrl-0 =3D <&pinctrl_spi1debug_default>;
+
+and I queried how the board was strapped - you still need the pinctrl-0 nod=
+e, but what I should have been clearer about was that you should probably b=
+e using the following instead:
+
+pinctrl-0 =3D <&pinctrl_spi1_default>;
+
+unless your board is strapped for SPI debug mode. This is something you'll =
+need to check on the schematics, as pinctrl won't modify the strapping valu=
+e to accommodate the devicetree in this case.
+
+Otherwise, the patch looks okay to me!
+
+Cheers,
+
+Andrew
+
+> +
+> +	flash@0 {
+> +		status =3D "okay";
+> +		m25p,fast-read;
+> +		label =3D "pnor";
+> +	};
+> +};
+> +
+> +&uart5 {
+> +	status =3D "okay";
+> +};
+> +
+> +&mac0 {
+> +	status =3D "okay";
+> +
+> +	pinctrl-names =3D "default";
+> +	pinctrl-0 =3D <&pinctrl_rgmii1_default &pinctrl_mdio1_default>; };
+> +
+> +&i2c0 {
+> +	status =3D "okay";
+> +};
+> +
+> +&i2c1 {
+> +	status =3D "okay";
+> +
+> +	tmp421@4c {
+> +		compatible =3D "ti,tmp421";
+> +		reg =3D <0x4c>;
+> +	};
+> +};
+> +
+> +&i2c2 {
+> +	status =3D "okay";
+> +};
+> +
+> +&i2c3 {
+> +	status =3D "okay";
+> +};
+> +
+> +&i2c4 {
+> +	status =3D "okay";
+> +	clock-frequency =3D <100000>;
+> +};
+> +
+> +&i2c5 {
+> +	status =3D "okay";
+> +};
+> +
+> +&i2c6 {
+> +	status =3D "okay";
+> +
+> +	tmp421@4c {
+> +		compatible =3D "ti,tmp421";
+> +		reg =3D <0x4c>;
+> +	};
+> +};
+> +
+> +&i2c7 {
+> +	status =3D "okay";
+> +};
+> +
+> +&vuart {
+> +	status =3D "okay";
+> +};
+> +
+> +&wdt2 {
+> +	status =3D "okay";
+> +};
+> +
+> +&lpc_ctrl {
+> +	status =3D "okay";
+> +};
+> +
+> +&mbox {
+> +	status =3D "okay";
+> +};
+> +
+> +&pwm_tacho {
+> +	status =3D "okay";
+> +	pinctrl-names =3D "default";
+> +	pinctrl-0 =3D    <&pinctrl_pwm0_default
+> +			&pinctrl_pwm1_default
+> +			&pinctrl_pwm2_default
+> +			&pinctrl_pwm3_default
+> +			&pinctrl_pwm4_default
+> +			&pinctrl_pwm5_default
+> +			&pinctrl_pwm6_default>;
+> +
+> +	fan@0 {
+> +		reg =3D <0x00>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x00>;
+> +	};
+> +
+> +	fan@1 {
+> +		reg =3D <0x01>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x01>;
+> +	};
+> +
+> +	fan@2 {
+> +		reg =3D <0x02>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x02>;
+> +	};
+> +
+> +	fan@3 {
+> +		reg =3D <0x03>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x03>;
+> +	};
+> +
+> +	fan@4 {
+> +		reg =3D <0x04>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x04>;
+> +	};
+> +
+> +	fan@5 {
+> +		reg =3D <0x05>;
+> +		aspeed,fan-tach-ch =3D /bits/ 8 <0x05>;
+> +	};
+> +
+> +};
+> --
+> 2.7.4
+>=20
+>
