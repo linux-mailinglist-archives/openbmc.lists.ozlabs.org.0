@@ -2,83 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC5B2210DD
-	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 01:01:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73176210F6
+	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 01:17:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454n3g3z9qzDqRZ
-	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 09:01:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 454nQB6cftzDqQm
+	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 09:17:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com;
+ (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
  envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="EJd0ZG2q"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="V+DUoGdn"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="HJW+jbQy"; dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+ header.b="bb5ydZ53"; dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454n323NQgzDqNK
- for <openbmc@lists.ozlabs.org>; Fri, 17 May 2019 09:01:01 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 454nPm3mgFzDqPT
+ for <openbmc@lists.ozlabs.org>; Fri, 17 May 2019 09:17:16 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id A698F24E0E;
- Thu, 16 May 2019 19:00:57 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id EB0E224890;
+ Thu, 16 May 2019 19:17:11 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 16 May 2019 19:00:57 -0400
+ by compute4.internal (MEProxy); Thu, 16 May 2019 19:17:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=i+rmg
- fvInPFuvlBIzJOy3k/XeAcHRSbLvL4msZ6husE=; b=EJd0ZG2qb49551ynsCRsT
- 3d6rcjtbBdQf6OlbvwhbX76YUOwxE22ld1uVbuzCtxfdJ2flNd0L2W/eCXuFIBlo
- gYUeeNX4h5dbaafeKFMVn+wMDuFjivck2M038YKexUXjTj37tR6WItTz1l3jdYyY
- xqBnj2ehQOcuu+cJPG4Ip+Ev13fWjhYyyNbDcvJQTL4JI1WBNPPFK/2tIb8GYW9C
- DF3jBxOcplPaFnJU+XNI0QzF3B0PF9WxRXEKHWG2uPup/ypcXQAvFKtIcxuPI4Zq
- 59XqctLZTn1xGz3s4KCetlUVkizYqxx/fv/OHS+RgjNLA+sUkqa/w64wp31AvpbE
- w==
+ :subject:content-type; s=fm2; bh=SXtHk5Pgc5mLdjiCOFn2RRq1IDOB4VC
+ JydDc+zYlPVY=; b=V+DUoGdnQhgKFHxQoFP+7QWEJDmVGbUtdGm4g8zPZ7vLptI
+ U4EiY3g25jQ4UG+P/dwU8rcfdXIWl0DSR/Kqrdef2gG/aiUxHtGqjs/RJqy+vyGj
+ K+A292Zx2SwuissfNvIZ2EODBtFYrernLEfKDCTXIylT8IKxX6layPU4xRUY2vGb
+ r0OD7KMUycIavDy0pGN5IiQ90P94O7tdmOd/gMBNvIWEG3PaHHzqn4qPxMiqPWp9
+ 5a6699Tz0SPLTsqkRGY2K6fPdKkUpEC0rDvxK3nGd+VExEg88QLCrKuIpgCViyTK
+ SXTqjWfapeoGiQU/437Zrxv8ECkeQATH78uMQEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=i+rmgfvInPFuvlBIzJOy3k/XeAcHRSbLvL4msZ6hu
- sE=; b=HJW+jbQyw2HKtLsm6Ji2lZWVYFv8td+QNFmIKigjnsRwze1wVOe/OnNYp
- USvENIFwg6/cqyxRQg2qTRoEJ/pYM7WS+yKufyMTRt132WIU1xJb7EVCh1eY8jL6
- X2rZX6rf5sJbAiUmNs5nWCQ9rpLPoDGpVBa0J3vIEN46R//0Y1LDYKseofJv5MoR
- Y08s6zikfs9QB0jSgkyDna7+yeehhf2rKH+OkvTNZVXdoe5NIhNcAGDMSGpQZqAR
- KQ1ct2poa8BrIq4V8QzdmByryaHEF3Fsfdn2gMTmUMfL96bZ16Qi4JhJCcJGHl+x
- PPWs0T5LNe7OUgpcQnYHItbWcBGSg==
-X-ME-Sender: <xms:qOvdXIpdHnSFBBOmSWpJu8xBJQ9HZpNQY6-DevAq-A_J_GHrVHQzZg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddruddtuddgudejucetufdoteggodetrfdotf
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=SXtHk5
+ Pgc5mLdjiCOFn2RRq1IDOB4VCJydDc+zYlPVY=; b=bb5ydZ53j1QeJB46SqNNpv
+ V0qLIfk1prvx/8xAnQ9lxEW6fnPW+/qFLcMLHjgNux3LH3elJmtOgyg5S6bZQr0B
+ D/JXT3lwKmHlXgvVwrYTgbzl/D84OHQfMMAPAez3vmPtO9yX7fozw5iHNNbeSud4
+ 0f7IAVsI/pS/AFlYhdZrGBimqcTwRFdU7R23sGW948v7A+kMKEZd05ScJoczTkyX
+ yXar03JHu8mtH9FEO/+F9YhzFELBBd6Vy8AJsJQJgbUg6ucBQPZBh9F8iVL+fHta
+ GvpKUYrwFdLYri4PtNkLqUpQXUFKyRD2vHUqlOEzVcc/vN6fMsu97TH4JrhThSvA
+ ==
+X-ME-Sender: <xms:d-_dXBGb0ZjbIqVHaGI-LYYjZLPfs0eRxBD5oW7no0pYpehT3-KHPQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddruddtuddgvddtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
- ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffoh
- hmrghinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
- rhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:qOvdXAvW4MxwWgeLM-XmDNhTE08ClQXbXIyUUcdXIXMv4LN-m0dhcg>
- <xmx:qOvdXHRMmIs-EXeazPFyJLqBoUcZ-B5uhr7_KcUmancECQfGZf3jSQ>
- <xmx:qOvdXKmwIV2zOWoIc3LGsb3kf2tDOHiPe01I_xT6SsAFfNvAuQYkFA>
- <xmx:qevdXGQcMGFZom1rdiDbza_6xbBrhb5O4wD1ntp_wFCy_fFugCFxWA>
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:d-_dXPgh-UU5SyD9WnLVo05WeRKL8ezkinULQuhzBedYbl8lmS0Gkg>
+ <xmx:d-_dXHZ5JZ363slAVhLSLHYHQqgF7QYsyaAQF-aeTmjs81H4oCDU7A>
+ <xmx:d-_dXM29RPCJz2JDiwSlX_E-uTjCfjDRa872EGpw52Z6R9zeOOdOLw>
+ <xmx:d-_dXL3IGdzwpF665rFsQo_gBl_1FZvVVhNZ8qzeOun6x96vyxib-w>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 788387C3E9; Thu, 16 May 2019 19:00:56 -0400 (EDT)
+ id 326957C3E9; Thu, 16 May 2019 19:17:11 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.6-549-ge400f56-fmstable-20190516v3
 Mime-Version: 1.0
-Message-Id: <005d7fc6-ce77-4209-b37e-5aaefb066ebf@www.fastmail.com>
-In-Reply-To: <20190516161148.31062-1-clg@kaod.org>
-References: <20190516161148.31062-1-clg@kaod.org>
-Date: Fri, 17 May 2019 08:30:47 +0930
+Message-Id: <acff464f-4e77-4b69-8d3a-bd03d1df37f3@www.fastmail.com>
+In-Reply-To: <000001d50af1$2e9f3700$8bdda500$@linux.intel.com>
+References: <000001d50af1$2e9f3700$8bdda500$@linux.intel.com>
+Date: Fri, 17 May 2019 08:47:10 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_qemu]_aspeed:_add_support_for_a_witherspoon-bmc_boa?=
- =?UTF-8?Q?rd_with_128MB_flash_chip?=
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Yong Li" <yong.b.li@linux.intel.com>,
+ "'OpenBMC Maillist'" <openbmc@lists.ozlabs.org>
+Subject: Re: Get the AST2500 SCUE0/E4 value using kernel device driver? 
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,54 +88,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Adriana Kobylak <anoo@us.ibm.com>
+Cc: "Li, Yong B" <yong.b.li@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Fri, 17 May 2019, at 01:42, C=C3=A9dric Le Goater wrote:
-> Some Witherspoon boards are shipped with a mt25ql01g flash chip
-> holding the BMC firmware.
->=20
-> Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
+On Wed, 15 May 2019, at 17:12, Yong Li wrote:
+> Hi All,
+> 
+> 
+> Just want to know if there is any existing device driver provides the 
+> interface to get the SCUE0/E4 register values on AST2500?
+> 
+> 
+> If no, I would like to know if there is any examples/similar drivers 
+> for reference? By the way, the two registers are used for the uptime
 
-"witherspoon128-bmc" is not very creative, but I can't blame you for tha=
-t :D
+I'm not aware of any, but I'm interested in what you're trying to measure.
+Are you after something that can't be satisfied by CLOCK_MONOTONIC
+and friends for clock_gettime()? Or is that what you're wanting to drive?
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Andrew
 
-> ---
->=20
->  It helps in tracking https://github.com/openbmc/u-boot/issues/18
->=20
->  hw/arm/aspeed.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->=20
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index efc97df00de0..f26215ab5524 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -441,6 +441,17 @@ static const AspeedBoardConfig aspeed_boards[] =3D=
- {
->          .i2c_init  =3D witherspoon_bmc_i2c_init,
->          .ram       =3D 512 * MiB,
->          .num_cpus  =3D 1,
-> +     }, {
-> +        .name      =3D MACHINE_TYPE_NAME("witherspoon128-bmc"),
-> +        .desc      =3D "OpenPOWER Witherspoon128 BMC (ARM1176)",
-> +        .soc_name  =3D "ast2500-a1",
-> +        .hw_strap1 =3D WITHERSPOON_BMC_HW_STRAP1,
-> +        .fmc_model =3D "mt25ql01g",
-> +        .spi_model =3D "mx66l1g45g",
-> +        .num_cs    =3D 2,
-> +        .i2c_init  =3D witherspoon_bmc_i2c_init,
-> +        .ram       =3D 512 * MiB,
-> +        .num_cpus  =3D 1,
->      }, {
->          .name      =3D MACHINE_TYPE_NAME("ast2600-evb"),
->          .desc      =3D "Aspeed AST2600 EVB (Cortex A7)",
-> --=20
-> 2.20.1
->=20
+> 
+> 
+> Thanks,
+> 
+> Yong
+> 
 >
