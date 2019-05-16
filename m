@@ -2,83 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F6301FF9A
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 08:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E27F920181
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 10:47:30 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454MCH55XmzDqbm
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 16:36:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 454Q681pdPzDqbr
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 18:47:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=dkodihal@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::541; helo=mail-pg1-x541.google.com;
+ envelope-from=franhsutw@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="RL6yJN1I"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454MBj1fGpzDqJs
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 16:36:12 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x4G6Xqrc118665
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 02:36:09 -0400
-Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2sh0byneq2-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 02:36:08 -0400
-Received: from localhost
- by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <dkodihal@linux.vnet.ibm.com>;
- Thu, 16 May 2019 07:36:07 +0100
-Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
- by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 16 May 2019 07:36:03 +0100
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x4G6a2as44630064
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 16 May 2019 06:36:02 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6B0DA405C;
- Thu, 16 May 2019 06:36:02 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33C52A4062;
- Thu, 16 May 2019 06:36:02 +0000 (GMT)
-Received: from Deepaks-MacBook-Pro.local (unknown [9.199.203.20])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Thu, 16 May 2019 06:36:02 +0000 (GMT)
-Subject: Re: Add support to debug unresponsive host
-To: Jayanth Othayoth <ojayanth@gmail.com>
-References: <CACkAXSqktuOVy02_R9q4iWcTL=_v7iOrxoBOOCMb5xTAXnxREg@mail.gmail.com>
-From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-Date: Thu, 16 May 2019 12:06:01 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.6.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 454Q4X32XYzDqZV
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 18:45:59 +1000 (AEST)
+Received: by mail-pg1-x541.google.com with SMTP id t187so1197619pgb.13
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 01:45:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=koP8WtMZViDPjerG2cihNHJMvzGU1/PcIPRo5J1Tisc=;
+ b=RL6yJN1ImMWU4iHFDcoUsbmOxMMHKJ/dPQzSjqGAHgEBbRSmrZJi6fWr3IesUdh7Ib
+ 6uzr8KNZ4VbTRYL7eRukPwKrZejZ6g5R2kSGtZ9NkZAXoFv/rTnKfNzd3YVagwwF+HkL
+ Y8z25WzO7bhxi2a8MZzwIx2uViaxFROkHoism7FkhJgyNkv8iIKXYjUYi9DNCxnEGfJv
+ r7zUPgleFi9MjITrhPa9UlCfy7xVmDww4Bs2EQqH91H0A7AR0RLLJW/qTd5GfwCEhYeR
+ iVcl1K95EtZWOlJj1L93blZSFVXzCJGOqr3TcmhrC6fzZMoBWxb/2p8WvD6zW/Vdp99P
+ t1sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=koP8WtMZViDPjerG2cihNHJMvzGU1/PcIPRo5J1Tisc=;
+ b=Q68Ece6MKnMkeb8jGJFoBjy6RVSJHuGudIgmQVdwhq1IgzyYXfcq6ir4xKMkJm7/Bj
+ VWR7NB5l9YIQra2dX/6aEDeslIlcs7XNz4rkQfV7U58/u73D054hP/8Z0cgsD+lJptUC
+ 9Ub+yhpQE43QO7lSeVmMlyvimFb/2LAClrn3qq2A5RF/F5LAZZgX6raU7LyZK2Nmf2Am
+ hnq/jUnBjfe0hjUCeahEnd/0WraaxE4M0n/g+7jjYD+cBMLLIAuqRcTDtFVmeu/5NjAf
+ wZgnW2lC6ww/m3i1UnkmMafn4pyFtuUyc27sGXNZ+wN2FPv3mGHJB9Zxpzn7twNtLlnO
+ jewg==
+X-Gm-Message-State: APjAAAWbjhqH3VVaw1M2R1rUNwVk98W0iWj7hSSbIJxDa0rAZnE/pe8B
+ kgpYgJTKtMlNKVhzApbVLwU=
+X-Google-Smtp-Source: APXvYqw4hcfyuwA+HjZ+h07d3aFJrX4dBm1IH0v61RwuJSTknlHuvSBEz31P/Xz7shSA5fcFF2LOMg==
+X-Received: by 2002:a62:7995:: with SMTP id u143mr52349065pfc.61.1557996355986; 
+ Thu, 16 May 2019 01:45:55 -0700 (PDT)
+Received: from localhost.localdomain (220-135-135-179.HINET-IP.hinet.net.
+ [220.135.135.179])
+ by smtp.gmail.com with ESMTPSA id b186sm6233286pga.5.2019.05.16.01.45.54
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+ Thu, 16 May 2019 01:45:55 -0700 (PDT)
+From: Fran Hsu <franhsutw@gmail.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH dev-5.1 v3 2/3] ARM: dts: nuvoton: Add Quanta GSJ BMC pinctrl
+ file.
+Date: Thu, 16 May 2019 16:43:48 +0800
+Message-Id: <20190516084349.11556-2-franhsutw@gmail.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190516084349.11556-1-franhsutw@gmail.com>
+References: <20190516084349.11556-1-franhsutw@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CACkAXSqktuOVy02_R9q4iWcTL=_v7iOrxoBOOCMb5xTAXnxREg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-x-cbid: 19051606-0008-0000-0000-000002E733D9
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19051606-0009-0000-0000-00002253D719
-Message-Id: <c8826cab-42d1-85d7-4eb0-50e79857a205@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-05-16_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1905160046
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,59 +80,506 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Fran Hsu <Fran.Hsu@quantatw.com>,
+ benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 15/05/19 6:09 PM, Jayanth Othayoth wrote:
-> ## Problem Description
-> Issue #457:  Add support to debug unresponsive host.
-> 
-> Scope: High level design direction to solve this problem,
-> 
-> ## Background and References
-> There are situation at customer places where OPAL/Linux goes 
-> unresponsive causing a system hang. And there is no way to figure out 
-> what went wrong with Linux kernel or OPAL. Looking for a way to trigger 
-> a dump capture on Linux host so that we can capture the OS dump for post 
-> analysis.
-> 
-> ## Proposed Design for POWER processor based systems:
-> Get all Host CPUs in reset vector and Linux then has a mechanism to 
-> patch it into panic-kdump path to trigger dump capture. This will enable 
-> us to analyze and fix customer issue where we see Linux hang and 
-> unresponsive system.
-> 
-> ### Redfish Schema used:
-> * Reference: DSP2046 2018.3,
-> * ComputerSystem 1.6.0 schema provides an action called 
-> #ComputerSystem.Reset”, This action is used to reset the system. 
-> ResetType parameter is used  for indicating type of reset need to be 
-> performed. In this use case we can use “Nmi” type
->      * Nmi: Generate a Diagnostic Interrupt (usually an NMI on x86 
-> systems) to cease normal operations, perform diagnostic actions and 
-> typically halt the system.  
-> * ### d-bus :
-> 
-> Option 1:   Extending  the existing  d-bus interface  state.Host  name 
-> space ( 
-> /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/State/Host.interface.yaml 
-> ) to support new RequestedHostTransition property called  “Nmi”.   d-bus 
-> backend can internally invoke processor specific target to do Sreset( 
-> equivalent to x86 NMI) and associated  actions.
+From: Fran Hsu <Fran.Hsu@quantatw.com>
 
-I don't prefer this option, because this would mean adding host specific 
-code in phoshor-state-manager, which I think until now is host agnostic. 
-So for that reason, Option 2 sounds better. There are some good 
-questions from Neeraj as well, so I would suggest adding this as a 
-design template on Gerrit to gather better feedback.
+Add pinctrl definition file for Quanta GSJ BMC device tree.
+This file includes a series of Quanta GSJ default GPIO configuration.
 
-Thanks,
-Deepak
 
-> Option 2: Introducing new d-bus interface in the control.state namespace 
-> ( 
-> /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/Control/Host/NMI.interface.yaml) 
-> namespace and implement the new d-bus back-end for respective  processor 
-> specific targets.
+Signed-off-by: Fran Hsu <Fran.Hsu@quantatw.com>
+---
+ .../boot/dts/nuvoton-npcm730-gsj-gpio.dtsi    | 477 ++++++++++++++++++
+ 1 file changed, 477 insertions(+)
+ create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-gsj-gpio.dtsi
+
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm730-gsj-gpio.dtsi
+new file mode 100644
+index 000000000000..53cfd15fa03f
+--- /dev/null
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj-gpio.dtsi
+@@ -0,0 +1,477 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2018 Nuvoton Technology tomer.maimon@nuvoton.com
++
++/ {
++	pinctrl: pinctrl@f0800000 {
++		gpio0pp_pins: gpio0pp-pins {
++			pins = "GPIO0/IOX1DI";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio1pp_pins: gpio1pp-pins {
++			pins = "GPIO1/IOX1LD";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio2pp_pins: gpio2pp-pins {
++			pins = "GPIO2/IOX1CK";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio3pp_pins: gpio3pp-pins {
++			pins = "GPIO3/IOX1D0";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio4pp_pins: gpio4pp-pins {
++			pins = "GPIO4/IOX2DI/SMB1DSDA";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio5pp_pins: gpio5pp-pins {
++			pins = "GPIO5/IOX2LD/SMB1DSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio6pp_pins: gpio6pp-pins {
++			pins = "GPIO6/IOX2CK/SMB2DSDA";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio7pp_pins: gpio7pp-pins {
++			pins = "GPIO7/IOX2D0/SMB2DSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio8_pins: gpio8-pins {
++			pins = "GPIO8/LKGPO1";
++			bias-disable;
++			input-enable;
++		};
++		gpio9_pins: gpio9-pins {
++			pins = "GPIO9/LKGPO2";
++			bias-disable;
++			input-enable;
++		};
++		gpio10pp_pins: gpio10pp-pins {
++			pins = "GPIO10/IOXHLD";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio11pp_pins: gpio11pp-pins {
++			pins = "GPIO11/IOXHCK";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio12_pins: gpio12-pins {
++			pins = "GPIO12/GSPICK/SMB5BSCL";
++			bias-disable;
++			input-enable;
++		};
++		gpio13_pins: gpio13-pins {
++			pins = "GPIO13/GSPIDO/SMB5BSDA";
++			bias-disable;
++			input-enable;
++		};
++		gpio14_pins: gpio14-pins {
++			pins = "GPIO14/GSPIDI/SMB5CSCL";
++			bias-disable;
++			input-enable;
++		};
++		gpio15od_pins: gpio15od-pins {
++			pins = "GPIO15/GSPICS/SMB5CSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio17pp_pins: gpio17pp-pins {
++			pins = "GPIO17/PSPI2DI/SMB4DEN";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio18pp_pins: gpio18pp-pins {
++			pins = "GPIO18/PSPI2D0/SMB4BSDA";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio19pp_pins: gpio19pp-pins {
++			pins = "GPIO19/PSPI2CK/SMB4BSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio24pp_pins: gpio24pp-pins {
++			pins = "GPIO24/IOXHDO";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio25pp_pins: gpio25pp-pins {
++			pins = "GPIO25/IOXHDI";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio37od_pins: gpio37od-pins {
++			pins = "GPIO37/SMB3CSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio59pp_pins: gpio59pp-pins {
++			pins = "GPIO59/SMB3DSDA";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio60_pins: gpio60-pins {
++			pins = "GPIO60/SMB3DSCL";
++			bias-disable;
++			input-enable;
++		};
++		gpio72od_pins: gpio72od-pins {
++			pins = "GPIO72/FANIN8";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio73od_pins: gpio73od-pins {
++			pins = "GPIO73/FANIN9";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio74od_pins: gpio74od-pins {
++			pins = "GPIO74/FANIN10";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio75od_pins: gpio75od-pins {
++			pins = "GPIO75/FANIN11";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio76od_pins: gpio76od-pins {
++			pins = "GPIO76/FANIN12";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio77od_pins: gpio77od-pins {
++			pins = "GPIO77/FANIN13";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio78od_pins: gpio78od-pins {
++			pins = "GPIO78/FANIN14";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio79od_pins: gpio79od-pins {
++			pins = "GPIO79/FANIN15";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio83_pins: gpio83-pins {
++			pins = "GPIO83/PWM3";
++			bias-disable;
++			input-enable;
++		};
++		gpio84pp_pins: gpio84pp-pins {
++			pins = "GPIO84/R2TXD0";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio85pp_pins: gpio85pp-pins {
++			pins = "GPIO85/R2TXD1";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio86pp_pins: gpio86pp-pins {
++			pins = "GPIO86/R2TXEN";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio87pp_pins: gpio87pp-pins {
++			pins = "GPIO87/R2RXD0";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio88pp_pins: gpio88pp-pins {
++			pins = "GPIO88/R2RXD1";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio89pp_pins: gpio89pp-pins {
++			pins = "GPIO89/R2CRSDV";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio90pp_pins: gpio90pp-pins {
++			pins = "GPIO90/R2RXERR";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio91_pins: gpio91-pins {
++			pins = "GPIO91/R2MDC";
++			bias-disable;
++			input-enable;
++		};
++		gpio92_pins: gpio92-pins {
++			pins = "GPIO92/R2MDIO";
++			bias-disable;
++			input-enable;
++		};
++		gpio93pp_pins: gpio93pp-pins {
++			pins = "GPIO93/GA20/SMB5DSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio94pp_pins: gpio94pp-pins {
++			pins = "GPIO94/nKBRST/SMB5DSDA";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio95_pins: gpio95-pins {
++			pins = "GPIO95/nLRESET/nESPIRST";
++			bias-disable;
++			input-enable;
++		};
++		gpio125pp_pins: gpio125pp-pins {
++			pins = "GPIO125/SMB1CSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio126od_pins: gpio126od-pins {
++			pins = "GPIO126/SMB1BSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio127od_pins: gpio127od-pins {
++			pins = "GPIO127/SMB1BSCL";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio136_pins: gpio136-pins {
++			pins = "GPIO136/SD1DT0";
++			bias-disable;
++			input-enable;
++		};
++		gpio137_pins: gpio137-pins {
++			pins = "GPIO137/SD1DT1";
++			bias-disable;
++			input-enable;
++		};
++		gpio141_pins: gpio141-pins {
++			pins = "GPIO141/SD1WP";
++			bias-disable;
++			input-enable;
++		};
++		gpio142od_pins: gpio142od-pins {
++			pins = "GPIO142/SD1CMD";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio143ol_pins: gpio143ol-pins {
++			pins = "GPIO143/SD1CD/SD1PWR";
++			bias-disable;
++			output-low;
++		};
++		gpio144_pins: gpio144-pins {
++			pins = "GPIO144/PWM4";
++			bias-disable;
++			input-enable;
++		};
++		gpio145_pins: gpio145-pins {
++			pins = "GPIO145/PWM5";
++			bias-disable;
++			input-enable;
++		};
++		gpio146_pins: gpio146-pins {
++			pins = "GPIO146/PWM6";
++			bias-disable;
++			input-enable;
++		};
++		gpio147_pins: gpio147-pins {
++			pins = "GPIO147/PWM7";
++			bias-disable;
++			input-enable;
++		};
++		gpio148_pins: gpio148-pins {
++			pins = "GPIO148/MMCDT4";
++			bias-disable;
++			input-enable;
++		};
++		gpio149_pins: gpio149-pins {
++			pins = "GPIO149/MMCDT5";
++			bias-disable;
++			input-enable;
++		};
++		gpio150_pins: gpio150-pins {
++			pins = "GPIO150/MMCDT6";
++			bias-disable;
++			input-enable;
++		};
++		gpio151_pins: gpio151-pins {
++			pins = "GPIO151/MMCDT7";
++			bias-disable;
++			input-enable;
++		};
++		gpio152_pins: gpio152-pins {
++			pins = "GPIO152/MMCCLK";
++			bias-disable;
++			input-enable;
++		};
++		gpio153_pins: gpio153-pins {
++			pins = "GPIO153/MMCWP";
++			bias-disable;
++			input-enable;
++		};
++		gpio154_pins: gpio154-pins {
++			pins = "GPIO154/MMCCMD";
++			bias-disable;
++			input-enable;
++		};
++		gpio155_pins: gpio155-pins {
++			pins = "GPIO155/nMMCCD/nMMCRST";
++			bias-disable;
++			input-enable;
++		};
++		gpio156_pins: gpio156-pins {
++			pins = "GPIO156/MMCDT0";
++			bias-disable;
++			input-enable;
++		};
++		gpio157_pins: gpio157-pins {
++			pins = "GPIO157/MMCDT1";
++			bias-disable;
++			input-enable;
++		};
++		gpio158_pins: gpio158-pins {
++			pins = "GPIO158/MMCDT2";
++			bias-disable;
++			input-enable;
++		};
++		gpio159_pins: gpio159-pins {
++			pins = "GPIO159/MMCDT3";
++			bias-disable;
++			input-enable;
++		};
++		gpio161_pins: gpio161-pins {
++			pins = "GPIO161/nLFRAME/nESPICS";
++			bias-disable;
++			input-enable;
++		};
++		gpio162_pins: gpio162-pins {
++			pins = "GPIO162/SERIRQ";
++			bias-disable;
++			input-enable;
++		};
++		gpio163_pins: gpio163-pins {
++			pins = "GPIO163/LCLK/ESPICLK";
++			bias-disable;
++			input-enable;
++		};
++		gpio164_pins: gpio164-pins {
++			pins = "GPIO164/LAD0/ESPI_IO0";
++			bias-disable;
++			input-enable;
++		};
++		gpio165_pins: gpio165-pins {
++			pins = "GPIO165/LAD1/ESPI_IO1";
++			bias-disable;
++			input-enable;
++		};
++		gpio166_pins: gpio166-pins {
++			pins = "GPIO166/LAD2/ESPI_IO2";
++			bias-disable;
++			input-enable;
++		};
++		gpio167_pins: gpio167-pins {
++			pins = "GPIO167/LAD3/ESPI_IO3";
++			bias-disable;
++			input-enable;
++		};
++		gpio168_pins: gpio168-pins {
++			pins = "GPIO168/nCLKRUN/nESPIALERT";
++			bias-disable;
++			input-enable;
++		};
++		gpio169_pins: gpio169-pins {
++			pins = "GPIO169/nSCIPME";
++			bias-disable;
++			input-enable;
++		};
++		gpio170_pins: gpio170-pins {
++			pins = "GPIO170/nSMI";
++			bias-disable;
++			input-enable;
++		};
++		gpio175od_pins: gpio175od-pins {
++			pins = "GPIO175/PSPI1CK/FANIN19";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio176od_pins: gpio176od-pins {
++			pins = "GPIO176/PSPI1DO/FANIN18";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio177_pins: gpio177-pins {
++			pins = "GPIO177/PSPI1DI/FANIN17";
++			bias-disable;
++			input-enable;
++		};
++		gpio190od_pins: gpio190od-pins {
++			pins = "GPIO190/nPRD_SMI";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio191_pins: gpio191-pins {
++			pins = "GPIO191";
++			bias-disable;
++			input-enable;
++		};
++		gpio192_pins: gpio192-pins {
++			pins = "GPIO192";
++			bias-disable;
++			input-enable;
++		};
++		gpio194pp_pins: gpio194pp-pins {
++			pins = "GPIO194/SMB0BSCL";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio195od_pins: gpio195od-pins {
++			pins = "GPIO195/SMB0BSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio196od_pins: gpio196od-pins {
++			pins = "GPIO196/SMB0CSCL";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio197od_pins: gpio197od-pins {
++			pins = "GPIO197/SMB0DEN";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio198od_pins: gpio198od-pins {
++			pins = "GPIO198/SMB0DSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio199od_pins: gpio199od-pins {
++			pins = "GPIO199/SMB0DSCL";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio200pp_pins: gpio200pp-pins {
++			pins = "GPIO200/R2CK";
++			bias-disable;
++			drive-push-pull;
++		};
++		gpio202od_pins: gpio202od-pins {
++			pins = "GPIO202/SMB0CSDA";
++			bias-disable;
++			drive-open-drain;
++		};
++		gpio203_pins: gpio203-pins {
++			pins = "GPIO203/FANIN16";
++			bias-disable;
++			input-enable;
++		};
++	};
++};
+-- 
+2.21.0
 
