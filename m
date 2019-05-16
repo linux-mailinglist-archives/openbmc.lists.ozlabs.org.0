@@ -2,47 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CA1720D10
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 18:32:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC5B2210DD
+	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 01:01:39 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454cQT72hjzDqgd
-	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 02:32:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 454n3g3z9qzDqRZ
+	for <lists+openbmc@lfdr.de>; Fri, 17 May 2019 09:01:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=188.165.43.98; helo=14.mo3.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 605 seconds by postgrey-1.36 at bilbo;
- Fri, 17 May 2019 02:31:38 AEST
-Received: from 14.mo3.mail-out.ovh.net (14.mo3.mail-out.ovh.net
- [188.165.43.98])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="EJd0ZG2q"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="HJW+jbQy"; dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454cPk2WgdzDqLT
- for <openbmc@lists.ozlabs.org>; Fri, 17 May 2019 02:31:35 +1000 (AEST)
-Received: from player694.ha.ovh.net (unknown [10.109.143.238])
- by mo3.mail-out.ovh.net (Postfix) with ESMTP id C75EF2143E9
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 18:13:37 +0200 (CEST)
-Received: from kaod.org (deibp9eh1--blueice1n0.emea.ibm.com [195.212.29.162])
- (Authenticated sender: clg@kaod.org)
- by player694.ha.ovh.net (Postfix) with ESMTPSA id 5AF615C66557;
- Thu, 16 May 2019 16:13:32 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot] aspeed/flash: fix definition of the MT25QL01GB chip
-Date: Thu, 16 May 2019 18:13:30 +0200
-Message-Id: <20190516161330.32029-1-clg@kaod.org>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 10101855439946287874
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduuddruddttddgleehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
+ by lists.ozlabs.org (Postfix) with ESMTPS id 454n323NQgzDqNK
+ for <openbmc@lists.ozlabs.org>; Fri, 17 May 2019 09:01:01 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id A698F24E0E;
+ Thu, 16 May 2019 19:00:57 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 16 May 2019 19:00:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=i+rmg
+ fvInPFuvlBIzJOy3k/XeAcHRSbLvL4msZ6husE=; b=EJd0ZG2qb49551ynsCRsT
+ 3d6rcjtbBdQf6OlbvwhbX76YUOwxE22ld1uVbuzCtxfdJ2flNd0L2W/eCXuFIBlo
+ gYUeeNX4h5dbaafeKFMVn+wMDuFjivck2M038YKexUXjTj37tR6WItTz1l3jdYyY
+ xqBnj2ehQOcuu+cJPG4Ip+Ev13fWjhYyyNbDcvJQTL4JI1WBNPPFK/2tIb8GYW9C
+ DF3jBxOcplPaFnJU+XNI0QzF3B0PF9WxRXEKHWG2uPup/ypcXQAvFKtIcxuPI4Zq
+ 59XqctLZTn1xGz3s4KCetlUVkizYqxx/fv/OHS+RgjNLA+sUkqa/w64wp31AvpbE
+ w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=i+rmgfvInPFuvlBIzJOy3k/XeAcHRSbLvL4msZ6hu
+ sE=; b=HJW+jbQyw2HKtLsm6Ji2lZWVYFv8td+QNFmIKigjnsRwze1wVOe/OnNYp
+ USvENIFwg6/cqyxRQg2qTRoEJ/pYM7WS+yKufyMTRt132WIU1xJb7EVCh1eY8jL6
+ X2rZX6rf5sJbAiUmNs5nWCQ9rpLPoDGpVBa0J3vIEN46R//0Y1LDYKseofJv5MoR
+ Y08s6zikfs9QB0jSgkyDna7+yeehhf2rKH+OkvTNZVXdoe5NIhNcAGDMSGpQZqAR
+ KQ1ct2poa8BrIq4V8QzdmByryaHEF3Fsfdn2gMTmUMfL96bZ16Qi4JhJCcJGHl+x
+ PPWs0T5LNe7OUgpcQnYHItbWcBGSg==
+X-ME-Sender: <xms:qOvdXIpdHnSFBBOmSWpJu8xBJQ9HZpNQY6-DevAq-A_J_GHrVHQzZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddruddtuddgudejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffoh
+ hmrghinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
+ rhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:qOvdXAvW4MxwWgeLM-XmDNhTE08ClQXbXIyUUcdXIXMv4LN-m0dhcg>
+ <xmx:qOvdXHRMmIs-EXeazPFyJLqBoUcZ-B5uhr7_KcUmancECQfGZf3jSQ>
+ <xmx:qOvdXKmwIV2zOWoIc3LGsb3kf2tDOHiPe01I_xT6SsAFfNvAuQYkFA>
+ <xmx:qevdXGQcMGFZom1rdiDbza_6xbBrhb5O4wD1ntp_wFCy_fFugCFxWA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 788387C3E9; Thu, 16 May 2019 19:00:56 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-549-ge400f56-fmstable-20190516v3
+Mime-Version: 1.0
+Message-Id: <005d7fc6-ce77-4209-b37e-5aaefb066ebf@www.fastmail.com>
+In-Reply-To: <20190516161148.31062-1-clg@kaod.org>
+References: <20190516161148.31062-1-clg@kaod.org>
+Date: Fri, 17 May 2019 08:30:47 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_qemu]_aspeed:_add_support_for_a_witherspoon-bmc_boa?=
+ =?UTF-8?Q?rd_with_128MB_flash_chip?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,37 +90,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Adriana Kobylak <anoo@us.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: Adriana Kobylak <anoo@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Fixes: 3c33d1e84ebb ("aspeed/flash: Add MT25QL01GB chip")
----
 
- It should fix https://github.com/openbmc/u-boot/issues/18
 
- arch/arm/mach-aspeed/flash.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Fri, 17 May 2019, at 01:42, C=C3=A9dric Le Goater wrote:
+> Some Witherspoon boards are shipped with a mt25ql01g flash chip
+> holding the BMC firmware.
+>=20
+> Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
 
-diff --git a/arch/arm/mach-aspeed/flash.c b/arch/arm/mach-aspeed/flash.c
-index 54a6059f4216..db69d514952f 100644
---- a/arch/arm/mach-aspeed/flash.c
-+++ b/arch/arm/mach-aspeed/flash.c
-@@ -1149,10 +1149,11 @@ static ulong flash_get_size (ulong base, flash_info_t *info)
- 			info->readcmd = 0x0b;
- 			info->dualport = 0;
- 			info->dummybyte = 1;
--			info->buffersize = 1;
-+			info->buffersize = 256;
- 			WriteClk = 50;
- 			EraseClk = 25;
- 			ReadClk  = 50;
-+			info->address32 = 1;
- 			break;
- 
- 		default:	/* use JEDEC ID */
--- 
-2.20.1
+"witherspoon128-bmc" is not very creative, but I can't blame you for tha=
+t :D
 
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+
+> ---
+>=20
+>  It helps in tracking https://github.com/openbmc/u-boot/issues/18
+>=20
+>  hw/arm/aspeed.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>=20
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index efc97df00de0..f26215ab5524 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -441,6 +441,17 @@ static const AspeedBoardConfig aspeed_boards[] =3D=
+ {
+>          .i2c_init  =3D witherspoon_bmc_i2c_init,
+>          .ram       =3D 512 * MiB,
+>          .num_cpus  =3D 1,
+> +     }, {
+> +        .name      =3D MACHINE_TYPE_NAME("witherspoon128-bmc"),
+> +        .desc      =3D "OpenPOWER Witherspoon128 BMC (ARM1176)",
+> +        .soc_name  =3D "ast2500-a1",
+> +        .hw_strap1 =3D WITHERSPOON_BMC_HW_STRAP1,
+> +        .fmc_model =3D "mt25ql01g",
+> +        .spi_model =3D "mx66l1g45g",
+> +        .num_cs    =3D 2,
+> +        .i2c_init  =3D witherspoon_bmc_i2c_init,
+> +        .ram       =3D 512 * MiB,
+> +        .num_cpus  =3D 1,
+>      }, {
+>          .name      =3D MACHINE_TYPE_NAME("ast2600-evb"),
+>          .desc      =3D "Aspeed AST2600 EVB (Cortex A7)",
+> --=20
+> 2.20.1
+>=20
+>
