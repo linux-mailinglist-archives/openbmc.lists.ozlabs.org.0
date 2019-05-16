@@ -1,75 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 234382017E
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 10:46:38 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454Q572P1gzDqbF
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 18:46:35 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 696942024F
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 11:12:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 454QfX4PTqzDqbv
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 19:12:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::444; helo=mail-pf1-x444.google.com;
- envelope-from=franhsutw@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2a00:1450:4864:20::143; helo=mail-lf1-x143.google.com;
+ envelope-from=artemsen@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Z0BUt97l"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="m0X14i1m"; 
  dkim-atps=neutral
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
- [IPv6:2607:f8b0:4864:20::444])
+Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com
+ [IPv6:2a00:1450:4864:20::143])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454Q4X32VhzDqZG
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 18:46:00 +1000 (AEST)
-Received: by mail-pf1-x444.google.com with SMTP id y11so1463169pfm.13
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 01:46:00 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 454Qf671Z1zDqVQ
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 19:11:39 +1000 (AEST)
+Received: by mail-lf1-x143.google.com with SMTP id f1so2033283lfl.6
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 02:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=d4h1E/yatgT+rf64kqBXtFAoUtOpyZWwvUrP9czpAvI=;
- b=Z0BUt97ltZg99BehhCXN3Ak8MP2/HCthPxj21aeFCscJ8MnyfjmVdi7lP2aq4T8no3
- U3dyHsuQDUxTQwY5y/Tc0XiirUuDiEl7BY1IodgJeyuxznPjKMdyuWhGPHmgZ2KCrQuY
- PaO03/nFBWIrWoQczqSGl8X6EltwmyyAzy+12BpM2ifAqilIvfQInnz8SHSusRmIQ8vA
- 2P5cXlDYGpV1q09WZE63/mEWpcl50Ln2S+zeO114KuZLpTC8ddWpWdGtDlrEhpZdh5Mf
- DEpvhnwkaufSGhdXZxuU5ZW0uOillnopnXkWz3UwsU0xLqrsMk0QEwNVjL2REV5hBGx9
- lQxQ==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:content-transfer-encoding:in-reply-to
+ :user-agent; bh=v45gDFstr4RTdnUBXtZTzDERQn0/FyHc7GfgXmIy7wg=;
+ b=m0X14i1m6mVyxGFntSsaeVt30NT8cClonmrQc/FIzmhuZeFu5onznAMIaJb7+Ge+N5
+ 7fmtCwajXAckGkQzRtVResnmvht9II3ApUUGdeiYt3GDPPwN8NyA7WxGyuWtvpJ7WmVW
+ BjEjjEKkKyXgainpxmmuNnga0221KrHCR9CHUsN+NDUlvzzZeZe4qiUg7qcBXa3icu3A
+ OW+dXIUzNz6agkwBoHuat5PCirltNIKxonSYVplVPRr6yem0xl5hbcRgPpCJ0E3lafNw
+ UsAUvbr8Lqanzulz/lV8MZ68hXfjbP1l7AOK7lS68FoHvyGg1TKg9xaxXwYE5a/s7ghe
+ gMjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=d4h1E/yatgT+rf64kqBXtFAoUtOpyZWwvUrP9czpAvI=;
- b=c7cUJNyjG4GCuxjnKkuybVv7YsgLOu4uFJTIF9WzUnaaVnt+zCyZV1XXxnQWMxSOdm
- 0vuCizUtcXAC2qPI6UpVY6DS09xTFIfrDHjwgdKRMZSzxID90WaDzwkUgPxb2DaZRPur
- uh2Wc5VJE4hgboCyEpyAgIxH8l3sXA5g9czHOD1Pr/R7nwEzuWisCWdoRHhM7grNZP4l
- 0M/MM1PzZNAqCgkNQBvYkVTGIPK8Ic302yQ9VP23xG5Mu+doZ3ClD36Tow+3fC0bqm/e
- VsNHDmio9er0DaBqOHMqCjvg1Jn8P5bvJEcu44nCSAoX8gSh9dHG1+uW5W+JhH1aPfWi
- DYNw==
-X-Gm-Message-State: APjAAAXNGnEIcMsJdadiAtYuhE0OlGWulnGch8yINLqlmX+M2EiLQeOO
- oN3FmIG9F3/Lp0DJjwRg6jw=
-X-Google-Smtp-Source: APXvYqzkzVnFx29SGXQ9AsUIRsGdN4SimB6+OAH7zHYvn75KX4U0d1ybPoA2U4y0H8cHe9ge1SUmcw==
-X-Received: by 2002:a62:5581:: with SMTP id
- j123mr53116524pfb.102.1557996357774; 
- Thu, 16 May 2019 01:45:57 -0700 (PDT)
-Received: from localhost.localdomain (220-135-135-179.HINET-IP.hinet.net.
- [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id b186sm6233286pga.5.2019.05.16.01.45.56
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Thu, 16 May 2019 01:45:57 -0700 (PDT)
-From: Fran Hsu <franhsutw@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: [PATCH dev-5.1 v3 3/3] ARM: dts: nuvoton: Add NPCM730 common device
- tree include file.
-Date: Thu, 16 May 2019 16:43:49 +0800
-Message-Id: <20190516084349.11556-3-franhsutw@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190516084349.11556-1-franhsutw@gmail.com>
-References: <20190516084349.11556-1-franhsutw@gmail.com>
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:content-transfer-encoding
+ :in-reply-to:user-agent;
+ bh=v45gDFstr4RTdnUBXtZTzDERQn0/FyHc7GfgXmIy7wg=;
+ b=LIwUQEaE0N0AiWgtl3Zhiczz4uU6qsIS3VNZhmf9E6gbxBvw6jA1ABbKUaQ8V71Xkt
+ qJGmMvuSa6k4JGlvLDPp0OAvhGui8b/m6/b44s3z49HvHKu7zDLossn/Ye7ZWspVElXU
+ 66m9s57fPXr7591LIx2Fi6kIKZrEdkgOSJfDl0MPqSnh8zfOWTBvJEljFHa4+QN/HL5b
+ UNw3vEGmMwp/5PnlUQoEDrLTY15xuWcKCoI/N8ySvHPiInq/1jFWsY8JJEjuJ/vb9DCh
+ X1QLRHs1ZK8NxLXTgUUYiBbj35cBpZs+k8GuL3h3aqrKooju1KmT31ijXdXyC4t3KC59
+ NHBw==
+X-Gm-Message-State: APjAAAXnIlYPU3em5IrMVM4HbHNSdgrz3eTUJ9TiQX8nT+A0If9/BfAF
+ V9pKte+SqLCDXjfXiLquHFI=
+X-Google-Smtp-Source: APXvYqzRpSAjmJofRP8z2wuN+BmwuuXNan+8u1mubO4qBdGItQeBn5m9hMcWZgS02oiJls5w++yr0A==
+X-Received: by 2002:a19:8:: with SMTP id 8mr23069660lfa.125.1557997894508;
+ Thu, 16 May 2019 02:11:34 -0700 (PDT)
+Received: from gmail.com ([89.207.88.249])
+ by smtp.gmail.com with ESMTPSA id z6sm778775ljh.61.2019.05.16.02.11.32
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 16 May 2019 02:11:32 -0700 (PDT)
+Date: Thu, 16 May 2019 12:11:32 +0300
+From: Artem Senichev <artemsen@gmail.com>
+To: Neeraj Ladkani <neladk@microsoft.com>
+Subject: Re: Add support to debug unresponsive host
+Message-ID: <20190516091132.5233hakhib52bf7x@gmail.com>
+References: <CACkAXSqktuOVy02_R9q4iWcTL=_v7iOrxoBOOCMb5xTAXnxREg@mail.gmail.com>
+ <BL0PR2101MB093284F40176FBC801851059C8090@BL0PR2101MB0932.namprd21.prod.outlook.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <BL0PR2101MB093284F40176FBC801851059C8090@BL0PR2101MB0932.namprd21.prod.outlook.com>
+User-Agent: NeoMutt/20180716
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,85 +82,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Fran Hsu <Fran.Hsu@quantatw.com>,
- benjaminfair@google.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>,
+ Jayanth Othayoth <ojayanth@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Fran Hsu <Fran.Hsu@quantatw.com>
+We have solved a similar task for our VESNIN servers, based on POWER8 CPU
+(OpenPOWER platform).
 
-Quanta GSJ BMC uses the Nuvoton NPCM730 BMC processor.
-This file describes the common setting for NPCM730.
+OpenBMC has pdbg debugger (meta-openpower/recipes-bsp/pdbg), this
+utility, among other things, can be used to send SRESET signal from
+OpenBMC to the host's CPU. As a result of handling the signal, host
+side Linux kernel initiates kdump.
 
-Signed-off-by: Fran Hsu <Fran.Hsu@quantatw.com>
----
- arch/arm/boot/dts/nuvoton-npcm730.dtsi | 57 ++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm730.dtsi
+This procedure inevitably reboots the host system, whether the host
+is working or the system is hung, so it is not a good idea to do this
+automatically.
+A system administrator initiates the procedure manually from OpenBMC
+console.
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730.dtsi b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
-new file mode 100644
-index 000000000000..20e13489b993
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
-@@ -0,0 +1,57 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2018 Nuvoton Technology tomer.maimon@nuvoton.com
-+// Copyright 2018 Google, Inc.
-+
-+#include "nuvoton-common-npcm7xx.dtsi"
-+
-+/ {
-+	#address-cells = <1>;
-+	#size-cells = <1>;
-+	interrupt-parent = <&gic>;
-+
-+	cpus {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		enable-method = "nuvoton,npcm750-smp";
-+
-+		cpu@0 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a9";
-+			clocks = <&clk NPCM7XX_CLK_CPU>;
-+			clock-names = "clk_cpu";
-+			reg = <0>;
-+			next-level-cache = <&l2>;
-+		};
-+
-+		cpu@1 {
-+			device_type = "cpu";
-+			compatible = "arm,cortex-a9";
-+			clocks = <&clk NPCM7XX_CLK_CPU>;
-+			clock-names = "clk_cpu";
-+			reg = <1>;
-+			next-level-cache = <&l2>;
-+		};
-+	};
-+
-+	soc {
-+		timer@3fe600 {
-+			compatible = "arm,cortex-a9-twd-timer";
-+			reg = <0x3fe600 0x20>;
-+			interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) |
-+						  IRQ_TYPE_LEVEL_HIGH)>;
-+			clocks = <&clk NPCM7XX_CLK_AHB>;
-+		};
-+	};
-+
-+	ahb {
-+		udc9:udc@f0839000 {
-+			compatible = "nuvoton,npcm750-udc";
-+			reg = <0xf0839000 0x1000
-+			       0xfffd0000 0x800>;
-+			interrupts = <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
-+			clocks = <&clk NPCM7XX_CLK_SU>;
-+			clock-names = "clk_usb_bridge";
-+		};
-+	};
-+};
 -- 
-2.21.0
+Regards,
+Artem Senichev
+Software Engineer, YADRO.
 
+On Wed, May 15, 2019 at 06:26:08PM +0000, Neeraj Ladkani wrote:
+> Some questions.
+> 
+> 
+>   1.  How does BMC know when to trigger NMI? Are we relying on agents to run and send heartbeat? Can this be done agentless ?
+>   2.  How do we NMI on non x86 platforms ?
+> 
+> we should brainstorm to create a generic framework to solve this problem.
+> 
+> What
+> Neeraj
+> 
+> From: openbmc <openbmc-bounces+neladk=microsoft.com@lists.ozlabs.org> On Behalf Of Jayanth Othayoth
+> Sent: Wednesday, May 15, 2019 5:40 AM
+> To: openbmc@lists.ozlabs.org; geissonator@gmail.com; bradleyb@fuzziesquirrel.com
+> Subject: Add support to debug unresponsive host
+> 
+> ## Problem Description
+> Issue #457:  Add support to debug unresponsive host.
+> 
+> Scope: High level design direction to solve this problem,
+> 
+> ## Background and References
+> There are situation at customer places where OPAL/Linux goes unresponsive causing a system hang. And there is no way to figure out what went wrong with Linux kernel or OPAL. Looking for a way to trigger a dump capture on Linux host so that we can capture the OS dump for post analysis.
+> 
+> ## Proposed Design for POWER processor based systems:
+> Get all Host CPUs in reset vector and Linux then has a mechanism to patch it into panic-kdump path to trigger dump capture. This will enable us to analyze and fix customer issue where we see Linux hang and unresponsive system.
+> 
+> ### Redfish Schema used:
+> * Reference: DSP2046 2018.3,
+> * ComputerSystem 1.6.0 schema provides an action called #ComputerSystem.Reset”, This action is used to reset the system. ResetType parameter is used  for indicating type of reset need to be performed. In this use case we can use “Nmi” type
+>     * Nmi: Generate a Diagnostic Interrupt (usually an NMI on x86 systems) to cease normal operations, perform diagnostic actions and typically halt the system.  
+> * ### d-bus :
+> 
+> Option 1:   Extending  the existing  d-bus interface  state.Host  name space ( /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/State/Host.interface.yaml ) to support new RequestedHostTransition property called  “Nmi”.   d-bus backend can internally invoke processor specific target to do Sreset( equivalent to x86 NMI) and associated  actions.
+> 
+> Option 2: Introducing new d-bus interface in the control.state namespace ( /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/Control/Host/NMI.interface.yaml) namespace and implement the new d-bus back-end for respective  processor specific targets.
+> 
+> ## Alternatives Considered
+> NA
+> 
+> ## Impacts:
+> NA
+> 
+> ## Testing
+> NA
+> 
+> Looking for input from the team on this  High level design direction approach.
