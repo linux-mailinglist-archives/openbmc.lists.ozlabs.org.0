@@ -1,71 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2754620782
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 15:02:39 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 127D620589
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 13:44:44 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454V2d3p0NzDqdb
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 21:44:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 454WmX1bfmzDqbp
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 23:02:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::233; helo=mail-oi1-x233.google.com;
- envelope-from=leetroy@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="jCMS0Hjv"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="ncwKZLjW"; 
  dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454Tyn5PPTzDqZl
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 21:41:21 +1000 (AEST)
-Received: by mail-oi1-x233.google.com with SMTP id w144so2214168oie.12
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 04:41:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 454Wl40hrVzDqb1
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 23:01:19 +1000 (AEST)
+Received: by mail-oi1-x234.google.com with SMTP id a132so2446890oib.2
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 06:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=RpF+pxbdQ11V/YhKVxUMjWFRsXXLYHDCI5wJ7wBmqrQ=;
- b=jCMS0Hjv9kbZbBAmfvAEAzwCCROVhfAy9hY6WKB3tLfFKh5QORc9gSjAKYcnZvbq4q
- VRX0IXRfRiuBn3QBlXnFLQogvMrIvn9pFj0h1x2Q6vEsiplLVmZelo+ttzqm09va4dxx
- zwaSIKyhJRJ8nNL5rLxGAc8Qa4/gNdrRWPfS7mGZOwUMGD7Xsu1J25/QILwJe6y+ggUQ
- sDw6r4B+t8YN2Vr/zp7JGojrQ0Ewv7O+CqJXoIHHzJIuc8+o98mpABG2hz7fBwnTLtqC
- x3rtI0bWzT0Dz7ciS9l5pwZfbOr2p0rq1AgU6BvvfmZSMKVCKWjc4p3Wcz07Q5IMnCL4
- UEOg==
+ bh=ZrLIkedvgLUtU0vOg22+UhwNBWCvMEOU3nBz4z4tkwA=;
+ b=ncwKZLjWPczXCkmAqDahG5WpXxu2zXMVWivAZWSrCtkk2HjcV1hJHmBZ9iK5KxBlFv
+ qtVOGsb7JF1aDQm+DmBEES4r2J9CKp7j9IN1rGvWJkKPofjd29oMWfolfgfVWxJY39Ys
+ uWiKwiO6zHBYgdOv0tYxPd62lEpwU3pt4qfGJpNw9ijwnx8ebxK9FlDfYNDA/JbIIlsI
+ y4nqBYq6ZqlvyB0V3I58soalccb7iJE/VE7dHwxLdg0ZXjMrQsfeQN86e5va/1hfflVg
+ qPP7S+CElVgCy5DJ78JO2rA/wZQgyLe7XCdO0lusjgKVztHhwcJiOiIbVmjnXPa+QtKi
+ mMZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=RpF+pxbdQ11V/YhKVxUMjWFRsXXLYHDCI5wJ7wBmqrQ=;
- b=JiTGT8ZQfS/sqIdaxXa8KNBeNTZKESTWFTu8sD6rMEmBTaulNlDJNYmBooj9il52Dt
- qWJwEKmm81l/ioin1spjak7Dl2Sww+emEZQmHWs+WSaycHX2fIYpUShhuv34iIGRV2kE
- VdCu5b6cXxx/2Vt3ZGHkRur3W6mG1Dcz3zV4HwOVoxcbLLe9uqE+ZQB9vBm7yvbh/QKF
- 48g2ONpbjXGRqSCwu+uNRG5JYNrVEKYeMZPxXVC8FbE6ZwEcL3wXrtZTbkHqnxTU4SNT
- HxmovMSqFU1wfOnmKHGZAEayKVj0Hmuu5F+F9uDtcQARzgq91EncbqG3BqGlyComPrOG
- O+kA==
-X-Gm-Message-State: APjAAAXq3J3JVRHsgI8ZL2Tnjx7G/yFfHWU6WAXaUwWlRnqkZN0WItkf
- rhYaKGgMtG1duv9TkJNLS1G53pRR+zn83HPnUghgz9j/TAk=
-X-Google-Smtp-Source: APXvYqx/+vzLywE8x/ZWcDcvjbae8azgMrQN+Arb39pV50Wk7cC50CAvpLUNdrsCtiTiy6vtupu4ecnLb/igBYKnfx8=
-X-Received: by 2002:aca:72c5:: with SMTP id p188mr9401329oic.116.1558006877847; 
- Thu, 16 May 2019 04:41:17 -0700 (PDT)
+ bh=ZrLIkedvgLUtU0vOg22+UhwNBWCvMEOU3nBz4z4tkwA=;
+ b=IYt3kjIWeQHcaAmQkzg5B94LosM1BqqT/gb/Vw99R81RQsC/NFInYa3SkbV3cQ/re9
+ 9sNQOP6K7I+4I6RhKcTvF0X/WwPlWNVlmK4UCia0uO3ri431tfHDyVTxs0RP9O6sp0Kx
+ jIzV58n0hyKriW+hPspZOpokwsbK2rOH1QmnZmpfopEr7JdUZ26fJBiCI+IbH+eIK7oT
+ Gy89jn1yv7YrU6LwXeZVHHs8su7pv+6JX20wS54H3RhQr/ABn5O1RUD2sj3cJ64ur02Z
+ r7whjwC8SqdTCAzu75UN+++blJxO1QgEIPaglb9oNoJE9cAaSftecpZFWz/c8JO+wYCh
+ vMkA==
+X-Gm-Message-State: APjAAAVyqcsRohETi6o00E92AhM0gxn4tvjqBlGPt0Hx+575WN1rmcUr
+ 6hkVYDwVDv8/2jQ3yP9pCQu0jL4kvohRXkNCmk8=
+X-Google-Smtp-Source: APXvYqysOy9l3CSdy7nB8csdsdzXFlBOXok2x2boe51t4iFQZE6JDoccVc9FVyenvrldgUYlAj7ohZLVoayfscGcb5Q=
+X-Received: by 2002:aca:3289:: with SMTP id y131mr2503434oiy.42.1558011676211; 
+ Thu, 16 May 2019 06:01:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAN9Jwz1y3q3msG28uck2_0oyqNwmACbixHCRiF-hbshZ7ZLTJg@mail.gmail.com>
- <CAPnigKkYwyMKR3Wb2ehajEfmKjHgFdgHTZRXYcsF_RSyBiiKeg@mail.gmail.com>
- <CAN9Jwz3=X-FMaCgG9YNiU3VgtvqA34XRdfaS8rGDXdVgswKS4w@mail.gmail.com>
- <3e535745-9cc8-3289-61a7-8ad7a0bb9f9e@linux.vnet.ibm.com>
- <988b05f0-4d72-cf00-b717-82759a6eb8ac@linux.vnet.ibm.com>
- <1948c6f25ec94cb28fbb7927a42989f7@quantatw.com>
-In-Reply-To: <1948c6f25ec94cb28fbb7927a42989f7@quantatw.com>
-From: Troy Lee <leetroy@gmail.com>
-Date: Thu, 16 May 2019 19:41:06 +0800
-Message-ID: <CAN9Jwz2RjPwQ-0asohxTT8pCy1nbpwdzgB-e-ka4vx=by9c-7w@mail.gmail.com>
-Subject: Re: Switching to static network address issues
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+References: <CACkAXSqktuOVy02_R9q4iWcTL=_v7iOrxoBOOCMb5xTAXnxREg@mail.gmail.com>
+ <c8826cab-42d1-85d7-4eb0-50e79857a205@linux.vnet.ibm.com>
+In-Reply-To: <c8826cab-42d1-85d7-4eb0-50e79857a205@linux.vnet.ibm.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 16 May 2019 08:01:00 -0500
+Message-ID: <CALLMt=q+PHM09zDeM5hBGRm7sTmPF42QSo6fYB=CmL5DHP_rKg@mail.gmail.com>
+Subject: Re: Add support to debug unresponsive host
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -79,156 +75,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Jayanth Othayoth <ojayanth@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tony,
-
-Your situation is a bit different.
-
-You'll have 5 seconds window to send all these settings (
-ipsrc/ipaddr/defgw ipaddr)  through IPMI at once.
-Then the network-manager of OpenBMC will correctly apply you setting
-into system.
-For example:
-  ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan set 2 ipsrc st=
-atic
-  ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan set 2
-ipaddr 10.10.9.3
-  ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan set 2
-netmask 255.255.0.0
-  ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan set 2
-defgw ipaddr 10.10.10.204
-
-
-Otherwise, it will show the follow error message in journal log, and
-it seems not recoverable from in-band IPMI.
-  May 16 19:03:59 romulus systemd[1]: Started Network Service.
-  May 16 19:03:59 romulus systemd-networkd[1261]: sit0: Could not
-acquire IPv4 link-local address: Invalid argument
-  May 16 19:04:00 romulus systemd-networkd[1261]: eth0: Could not set
-route: Network is unreachable
-  May 16 19:04:02 romulus systemd[1]: Starting Hostname Service...
-  May 16 19:03:54 romulus ipmid[1169]: Failed to set network data
-
-Hope this helps.
-
-However, we have similar name :)
-
-Thanks,
-Troy Lee
-
---
-Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
-
-Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com> =E6=96=BC 20=
-19=E5=B9=B45=E6=9C=8816=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8B=E5=8D=882:23=
-=E5=AF=AB=E9=81=93=EF=BC=9A
-
+On Thu, May 16, 2019 at 1:36 AM Deepak Kodihalli
+<dkodihal@linux.vnet.ibm.com> wrote:
 >
-> Hi there,
-> I also met an similar issue about switching network address from DHCP to =
-static.
-> Here is my configuration steps:
->
-> 1. ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan print 2
-> Set in Progress         : Set Complete
-> Auth Type Support       : MD5
-> Auth Type Enable        : Callback : MD5
->                         : User     : MD5
->                         : Operator : MD5
->                         : Admin    : MD5
->                         : OEM      : MD5
-> IP Address Source       : DHCP Address
-> IP Address              : 10.10.15.206
-> Subnet Mask             : 255.255.0.0
-> MAC Address             : 00:00:f7:a0:7f:f2
-> Default Gateway IP      : 10.10.10.204
-> 802.1q VLAN ID          : Disabled
-> RMCP+ Cipher Suites     : 3,17
-> Cipher Suite Priv Max   : Not Available
-> Bad Password Threshold  : Not Available
->
-> 2. ipmitool -H 10.10.15.206 -U root -P 0penBmc -I lanplus lan set 2 ipsrc=
- static
->
-> 3. root@gsj:~# cat /etc/systemd/network/00-bmc-eth1.network
-> [Match]
-> Name=3Deth1
-> [Network]
-> LinkLocalAddressing=3Dno
-> IPv6AcceptRA=3Dfalse
-> DHCP=3Dfalse
-> Address=3Dfe80::200:f7ff:fea0:7ff2/64
-> Gateway=3D10.10.10.204
-> [DHCP]
-> ClientIdentifier=3Dmac
-> UseDNS=3Dtrue
-> UseNTP=3Dtrue
-> UseHostname=3Dtrue
-> SendHostname=3Dtrue
->
-> 4. Set static ip
-> root@gsj:~# ipmitool lan set 2 ipaddr 10.10.9.3
-> Setting LAN IP Address to 10.10.9.3
->
-> 5. root@gsj:~# cat /etc/systemd/network/00-bmc-eth1.network
-> [Match]
-> Name=3Deth1
-> [Network]
-> LinkLocalAddressing=3Dno
-> IPv6AcceptRA=3Dfalse
-> DHCP=3Dfalse
-> Address=3Dfe80::200:f7ff:fea0:7ff2/64
-> Gateway=3D10.10.10.204
-> [DHCP]
-> ClientIdentifier=3Dmac
-> UseDNS=3Dtrue
-> UseNTP=3Dtrue
-> UseHostname=3Dtrue
-> SendHostname=3Dtrue
->
-> But static IP doesn't work.
-> Is my step wrong?
->
-> > -----Original Message-----
-> > From: openbmc
-> > [mailto:openbmc-bounces+tony.lee=3Dquantatw.com@lists.ozlabs.org] On
-> > Behalf Of Gunnar Mills
-> > Sent: Thursday, April 11, 2019 5:14 AM
-> > To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>; openbmc@lists.ozlabs.org
-> > Subject: Re: Switching to static network address issues
+> On 15/05/19 6:09 PM, Jayanth Othayoth wrote:
+> > ## Problem Description
+> > Issue #457:  Add support to debug unresponsive host.
 > >
-> > On 4/10/2019 7:55 AM, Ratan Gupta wrote:
+> > Scope: High level design direction to solve this problem,
 > >
-> > >
-> > > Can you take a look at what are the rest url which is being executed
-> > > underneath?
-> > >
-> > When the DHCP setting changes on the GUI (e.g. "OBTAIN AN IP ADDRESS
-> > AUTOMATICALLY USING DHCP" to "ASSIGN A STATIC IP ADDRESS"), the
-> > /xyz/openbmc_project/network/<interface>/attr/DHCPEnabled interface is
-> > called on "Save settings".
+> > ## Background and References
+> > There are situation at customer places where OPAL/Linux goes
+> > unresponsive causing a system hang. And there is no way to figure out
+> > what went wrong with Linux kernel or OPAL. Looking for a way to trigger
+> > a dump capture on Linux host so that we can capture the OS dump for pos=
+t
+> > analysis.
 > >
-> > https://github.com/openbmc/phosphor-webui/blob/2f481e4cb83f0c72a9f3aa
-> > d11431e4abcf5d632c/app/common/services/api-utils.js#L428
+> > ## Proposed Design for POWER processor based systems:
+> > Get all Host CPUs in reset vector and Linux then has a mechanism to
+> > patch it into panic-kdump path to trigger dump capture. This will enabl=
+e
+> > us to analyze and fix customer issue where we see Linux hang and
+> > unresponsive system.
 > >
-> > Hope this helps.
+> > ### Redfish Schema used:
+> > * Reference: DSP2046 2018.3,
+> > * ComputerSystem 1.6.0 schema provides an action called
+> > #ComputerSystem.Reset=E2=80=9D, This action is used to reset the system=
+.
+> > ResetType parameter is used  for indicating type of reset need to be
+> > performed. In this use case we can use =E2=80=9CNmi=E2=80=9D type
+> >      * Nmi: Generate a Diagnostic Interrupt (usually an NMI on x86
+> > systems) to cease normal operations, perform diagnostic actions and
+> > typically halt the system.
+> > * ### d-bus :
 > >
-> > >
-> > > On 10/04/19 3:39 PM, Troy Lee wrote:
-> > >> Hi William,
-> > >>
-> > >> This issue could be reproduce with WebUI or REST interface.
-> > >> 1. Starts up romulus-bmc qemu as normal, so the IP address is
-> > >> acquired from DHCP by default, let's say "10.1.1.2".
-> > >> 2. Open the browser and login to https://10.1.1.2/, 3. Switch to
-> > >> [Server Configuration] tab.
-> > >>      Then you will see the current setting is "OBTAIN AN IP ADDRESS
-> > >> AUTOMATICALLY USING DHCP".
-> > >> 4. Click on checkbox "ASSIGN A STATIC IP ADDRESS, and DO NOT CHANGE
-> > >> the IP address, leave it the same as DHCP IP address "10.1.1.2".
-> > >> 5. Click on "Save settings" button.
-> > >>
+> > Option 1:   Extending  the existing  d-bus interface  state.Host  name
+> > space (
+> > /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/State/Host.interf=
+ace.yaml
+> > ) to support new RequestedHostTransition property called  =E2=80=9CNmi=
+=E2=80=9D.   d-bus
+> > backend can internally invoke processor specific target to do Sreset(
+> > equivalent to x86 NMI) and associated  actions.
+>
+> I don't prefer this option, because this would mean adding host specific
+> code in phoshor-state-manager, which I think until now is host agnostic.
+
+Yeah, this was my main concern with tying it into phosphor-state-manager.
+The fact Redfish put it in with their other state related commands (which
+are implemented by phosphor-state-manager) is the only reason I'm a little
+wishy-washy here. We could just create a generic systemd target "host-nmi"
+or something and phosphor-state-manager could just call that to abstract
+any of the specifics, but it sill doesn't really feel like it fits to me.
+
+I think I prefer option 2, and then we can just map bmcweb to that API when
+the Redfish command comes in. Sounds like for ppc64 systems we can just
+use pdbg to issue the NMI.
+
+> So for that reason, Option 2 sounds better. There are some good
+> questions from Neeraj as well, so I would suggest adding this as a
+> design template on Gerrit to gather better feedback.
+>
+> Thanks,
+> Deepak
+>
+> > Option 2: Introducing new d-bus interface in the control.state namespac=
+e
+> > (
+> > /openbmc/phosphor-dbus-interfaces/xyz/openbmc_project/Control/Host/NMI.=
+interface.yaml)
+> > namespace and implement the new d-bus back-end for respective  processo=
+r
+> > specific targets.
 >
