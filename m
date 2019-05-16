@@ -1,51 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B250A1FF7B
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 08:23:03 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55FDD1FD19
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 03:47:47 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 454Dnr1tDTzDqWG
-	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 11:47:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 454LvT28pqzDqXv
+	for <lists+openbmc@lfdr.de>; Thu, 16 May 2019 16:23:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 454Dmx6g5HzDqV3
- for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 11:46:55 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 15 May 2019 18:46:52 -0700
-X-ExtLoop1: 1
-Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
- ([10.239.196.32])
- by fmsmga008.fm.intel.com with ESMTP; 15 May 2019 18:46:51 -0700
-From: "Yong Li" <yong.b.li@linux.intel.com>
-To: <bradleyb@fuzziesquirrel.com>,
- "'OpenBMC Maillist'" <openbmc@lists.ozlabs.org>
-Subject: Cannot find the submit button after "+2" 
-Date: Thu, 16 May 2019 09:46:50 +0800
-Message-ID: <000d01d50b89$3beb7750$b3c265f0$@linux.intel.com>
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=032b49070=tony.lee@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 454Ltx0VgyzDqYX
+ for <openbmc@lists.ozlabs.org>; Thu, 16 May 2019 16:22:28 +1000 (AEST)
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx02.quantatw.com with ESMTP; 16 May 2019 14:22:24 +0800
+Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 16 May
+ 2019 14:22:22 +0800
+Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
+ ([192.168.1.8]) with mapi id 15.01.1713.004; Thu, 16 May 2019 14:22:22 +0800
+From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: Switching to static network address issues
+Thread-Topic: Switching to static network address issues
+Thread-Index: AQHU74DjzCUgLXria0m7wSP0r0wOn6Y0nx8AgAAGvgCAAC5hAIAAi1gAgDgeKHA=
+Date: Thu, 16 May 2019 06:22:21 +0000
+Message-ID: <1948c6f25ec94cb28fbb7927a42989f7@quantatw.com>
+References: <CAN9Jwz1y3q3msG28uck2_0oyqNwmACbixHCRiF-hbshZ7ZLTJg@mail.gmail.com>
+ <CAPnigKkYwyMKR3Wb2ehajEfmKjHgFdgHTZRXYcsF_RSyBiiKeg@mail.gmail.com>
+ <CAN9Jwz3=X-FMaCgG9YNiU3VgtvqA34XRdfaS8rGDXdVgswKS4w@mail.gmail.com>
+ <3e535745-9cc8-3289-61a7-8ad7a0bb9f9e@linux.vnet.ibm.com>
+ <988b05f0-4d72-cf00-b717-82759a6eb8ac@linux.vnet.ibm.com>
+In-Reply-To: <988b05f0-4d72-cf00-b717-82759a6eb8ac@linux.vnet.ibm.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24614.001
+x-tm-as-result: No--19.211900-0.000000-31
+x-tm-as-matchedid: 150567-155709-700225-703140-701090-703503-704714-702558-7
+ 04613-703132-704477-105700-701029-704053-121463-701589-704978-780001-703238
+ -704388-121657-702898-702829-701270-780012-188199-704564-702914-186035-7800
+ 33-700742-701750-701432-705220-705248-139010-139006-700273-702754-702304-10
+ 6660-702561-705249-110462-704633-705153-704976-705161-701510-703230-700385-
+ 705253-703674-106470-704240-139705-700251-702251-703948-704472-700051-70271
+ 5-700644-101000-704612-112033-700805-700786-148004-148133-20043-29090-42000
+ -42003-51-63
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_000_000E_01D50BCC.4A1212B0"
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdULhzRkW295JbmARneLbKVH8H9hQA==
-Content-Language: en-us
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYzBiNzQ2ZWMtNGY2MC00NThmLTk4OTAtMGFjMGI3NjMyOWZmIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiSlZJdjVuaEZ2a1dCaDY4QXdITFZqZmphN2tKOUtuNUtsZkJtbGk4eGtYQ2p1M2s1RlhtWWFibFc3ZFNGNFRIeCJ9
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,109 +70,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Li, Yong B" <yong.b.li@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multipart message in MIME format.
-
-------=_NextPart_000_000E_01D50BCC.4A1212B0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-
-Hi Brad,
-
- 
-
-On the below code review I submitted, there are "+2" already, but I cannot
-find the submit button on the web page,
-
- 
-
-Do I need to apply for other permissions or groups? 
-
- 
-
-https://gerrit.openbmc-project.xyz/#/c/openbmc/intel-ipmi-oem/+/17234/,
-
- 
-
-Thanks,
-
-Yong
-
-
-------=_NextPart_000_000E_01D50BCC.4A1212B0
-Content-Type: text/html;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.25in 1.0in 1.25in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
-link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
-class=3DMsoNormal>Hi Brad,<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>On the below =
-code review I submitted, there are &#8220;+2&#8221; already, but I =
-cannot find the submit button on the web page,<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Do I need to =
-apply for other permissions or groups? <o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal><a =
-href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/intel-ipmi-oem/+/1=
-7234/">https://gerrit.openbmc-project.xyz/#/c/openbmc/intel-ipmi-oem/+/17=
-234/</a>,<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
-class=3DMsoNormal>Yong<o:p></o:p></p></div></body></html>
-------=_NextPart_000_000E_01D50BCC.4A1212B0--
-
+SGkgdGhlcmUsDQpJIGFsc28gbWV0IGFuIHNpbWlsYXIgaXNzdWUgYWJvdXQgc3dpdGNoaW5nIG5l
+dHdvcmsgYWRkcmVzcyBmcm9tIERIQ1AgdG8gc3RhdGljLg0KSGVyZSBpcyBteSBjb25maWd1cmF0
+aW9uIHN0ZXBzOg0KDQoxLiBpcG1pdG9vbCAtSCAxMC4xMC4xNS4yMDYgLVUgcm9vdCAtUCAwcGVu
+Qm1jIC1JIGxhbnBsdXMgbGFuIHByaW50IDINClNldCBpbiBQcm9ncmVzcyAgICAgICAgIDogU2V0
+IENvbXBsZXRlDQpBdXRoIFR5cGUgU3VwcG9ydCAgICAgICA6IE1ENSANCkF1dGggVHlwZSBFbmFi
+bGUgICAgICAgIDogQ2FsbGJhY2sgOiBNRDUgDQogICAgICAgICAgICAgICAgICAgICAgICA6IFVz
+ZXIgICAgIDogTUQ1IA0KICAgICAgICAgICAgICAgICAgICAgICAgOiBPcGVyYXRvciA6IE1ENSAN
+CiAgICAgICAgICAgICAgICAgICAgICAgIDogQWRtaW4gICAgOiBNRDUgDQogICAgICAgICAgICAg
+ICAgICAgICAgICA6IE9FTSAgICAgIDogTUQ1IA0KSVAgQWRkcmVzcyBTb3VyY2UgICAgICAgOiBE
+SENQIEFkZHJlc3MNCklQIEFkZHJlc3MgICAgICAgICAgICAgIDogMTAuMTAuMTUuMjA2DQpTdWJu
+ZXQgTWFzayAgICAgICAgICAgICA6IDI1NS4yNTUuMC4wDQpNQUMgQWRkcmVzcyAgICAgICAgICAg
+ICA6IDAwOjAwOmY3OmEwOjdmOmYyDQpEZWZhdWx0IEdhdGV3YXkgSVAgICAgICA6IDEwLjEwLjEw
+LjIwNA0KODAyLjFxIFZMQU4gSUQgICAgICAgICAgOiBEaXNhYmxlZA0KUk1DUCsgQ2lwaGVyIFN1
+aXRlcyAgICAgOiAzLDE3DQpDaXBoZXIgU3VpdGUgUHJpdiBNYXggICA6IE5vdCBBdmFpbGFibGUN
+CkJhZCBQYXNzd29yZCBUaHJlc2hvbGQgIDogTm90IEF2YWlsYWJsZQ0KDQoyLiBpcG1pdG9vbCAt
+SCAxMC4xMC4xNS4yMDYgLVUgcm9vdCAtUCAwcGVuQm1jIC1JIGxhbnBsdXMgbGFuIHNldCAyIGlw
+c3JjIHN0YXRpYw0KDQozLiByb290QGdzajp+IyBjYXQgL2V0Yy9zeXN0ZW1kL25ldHdvcmsvMDAt
+Ym1jLWV0aDEubmV0d29yaw0KW01hdGNoXQ0KTmFtZT1ldGgxDQpbTmV0d29ya10NCkxpbmtMb2Nh
+bEFkZHJlc3Npbmc9bm8NCklQdjZBY2NlcHRSQT1mYWxzZQ0KREhDUD1mYWxzZQ0KQWRkcmVzcz1m
+ZTgwOjoyMDA6ZjdmZjpmZWEwOjdmZjIvNjQNCkdhdGV3YXk9MTAuMTAuMTAuMjA0DQpbREhDUF0N
+CkNsaWVudElkZW50aWZpZXI9bWFjDQpVc2VETlM9dHJ1ZQ0KVXNlTlRQPXRydWUNClVzZUhvc3Ru
+YW1lPXRydWUNClNlbmRIb3N0bmFtZT10cnVlDQoNCjQuIFNldCBzdGF0aWMgaXANCnJvb3RAZ3Nq
+On4jIGlwbWl0b29sIGxhbiBzZXQgMiBpcGFkZHIgMTAuMTAuOS4zIA0KU2V0dGluZyBMQU4gSVAg
+QWRkcmVzcyB0byAxMC4xMC45LjMNCg0KNS4gcm9vdEBnc2o6fiMgY2F0IC9ldGMvc3lzdGVtZC9u
+ZXR3b3JrLzAwLWJtYy1ldGgxLm5ldHdvcmsNCltNYXRjaF0NCk5hbWU9ZXRoMQ0KW05ldHdvcmtd
+DQpMaW5rTG9jYWxBZGRyZXNzaW5nPW5vDQpJUHY2QWNjZXB0UkE9ZmFsc2UNCkRIQ1A9ZmFsc2UN
+CkFkZHJlc3M9ZmU4MDo6MjAwOmY3ZmY6ZmVhMDo3ZmYyLzY0DQpHYXRld2F5PTEwLjEwLjEwLjIw
+NA0KW0RIQ1BdDQpDbGllbnRJZGVudGlmaWVyPW1hYw0KVXNlRE5TPXRydWUNClVzZU5UUD10cnVl
+DQpVc2VIb3N0bmFtZT10cnVlDQpTZW5kSG9zdG5hbWU9dHJ1ZQ0KDQpCdXQgc3RhdGljIElQIGRv
+ZXNuJ3Qgd29yay4NCklzIG15IHN0ZXAgd3Jvbmc/DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdl
+LS0tLS0NCj4gRnJvbTogb3BlbmJtYw0KPiBbbWFpbHRvOm9wZW5ibWMtYm91bmNlcyt0b255Lmxl
+ZT1xdWFudGF0dy5jb21AbGlzdHMub3psYWJzLm9yZ10gT24NCj4gQmVoYWxmIE9mIEd1bm5hciBN
+aWxscw0KPiBTZW50OiBUaHVyc2RheSwgQXByaWwgMTEsIDIwMTkgNToxNCBBTQ0KPiBUbzogUmF0
+YW4gR3VwdGEgPHJhdGFndXB0QGxpbnV4LnZuZXQuaWJtLmNvbT47IG9wZW5ibWNAbGlzdHMub3ps
+YWJzLm9yZw0KPiBTdWJqZWN0OiBSZTogU3dpdGNoaW5nIHRvIHN0YXRpYyBuZXR3b3JrIGFkZHJl
+c3MgaXNzdWVzDQo+IA0KPiBPbiA0LzEwLzIwMTkgNzo1NSBBTSwgUmF0YW4gR3VwdGEgd3JvdGU6
+DQo+IA0KPiA+DQo+ID4gQ2FuIHlvdSB0YWtlIGEgbG9vayBhdCB3aGF0IGFyZSB0aGUgcmVzdCB1
+cmwgd2hpY2ggaXMgYmVpbmcgZXhlY3V0ZWQNCj4gPiB1bmRlcm5lYXRoPw0KPiA+DQo+IFdoZW4g
+dGhlIERIQ1Agc2V0dGluZyBjaGFuZ2VzIG9uIHRoZSBHVUkgKGUuZy4gIk9CVEFJTiBBTiBJUCBB
+RERSRVNTDQo+IEFVVE9NQVRJQ0FMTFkgVVNJTkcgREhDUCIgdG8gIkFTU0lHTiBBIFNUQVRJQyBJ
+UCBBRERSRVNTIiksIHRoZQ0KPiAveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrLzxpbnRlcmZh
+Y2U+L2F0dHIvREhDUEVuYWJsZWQgaW50ZXJmYWNlIGlzDQo+IGNhbGxlZCBvbiAiU2F2ZSBzZXR0
+aW5ncyIuDQo+IA0KPiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci13ZWJ1aS9i
+bG9iLzJmNDgxZTRjYjgzZjBjNzJhOWYzYWENCj4gZDExNDMxZTRhYmNmNWQ2MzJjL2FwcC9jb21t
+b24vc2VydmljZXMvYXBpLXV0aWxzLmpzI0w0MjgNCj4gDQo+IEhvcGUgdGhpcyBoZWxwcy4NCj4g
+DQo+ID4NCj4gPiBPbiAxMC8wNC8xOSAzOjM5IFBNLCBUcm95IExlZSB3cm90ZToNCj4gPj4gSGkg
+V2lsbGlhbSwNCj4gPj4NCj4gPj4gVGhpcyBpc3N1ZSBjb3VsZCBiZSByZXByb2R1Y2Ugd2l0aCBX
+ZWJVSSBvciBSRVNUIGludGVyZmFjZS4NCj4gPj4gMS4gU3RhcnRzIHVwIHJvbXVsdXMtYm1jIHFl
+bXUgYXMgbm9ybWFsLCBzbyB0aGUgSVAgYWRkcmVzcyBpcw0KPiA+PiBhY3F1aXJlZCBmcm9tIERI
+Q1AgYnkgZGVmYXVsdCwgbGV0J3Mgc2F5ICIxMC4xLjEuMiIuDQo+ID4+IDIuIE9wZW4gdGhlIGJy
+b3dzZXIgYW5kIGxvZ2luIHRvIGh0dHBzOi8vMTAuMS4xLjIvLCAzLiBTd2l0Y2ggdG8NCj4gPj4g
+W1NlcnZlciBDb25maWd1cmF0aW9uXSB0YWIuDQo+ID4+IMKgwqDCoMKgIFRoZW4geW91IHdpbGwg
+c2VlIHRoZSBjdXJyZW50IHNldHRpbmcgaXMgIk9CVEFJTiBBTiBJUCBBRERSRVNTDQo+ID4+IEFV
+VE9NQVRJQ0FMTFkgVVNJTkcgREhDUCIuDQo+ID4+IDQuIENsaWNrIG9uIGNoZWNrYm94ICJBU1NJ
+R04gQSBTVEFUSUMgSVAgQUREUkVTUywgYW5kIERPIE5PVCBDSEFOR0UNCj4gPj4gdGhlIElQIGFk
+ZHJlc3MsIGxlYXZlIGl0IHRoZSBzYW1lIGFzIERIQ1AgSVAgYWRkcmVzcyAiMTAuMS4xLjIiLg0K
+PiA+PiA1LiBDbGljayBvbiAiU2F2ZSBzZXR0aW5ncyIgYnV0dG9uLg0KPiA+Pg0KDQo=
