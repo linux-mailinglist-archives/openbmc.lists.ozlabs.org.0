@@ -1,63 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86ED224910
-	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 09:36:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 457SJJ09HrzDqM3
-	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 17:36:48 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A08E924AB1
+	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 10:47:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 457Tsw6QZ6zDqMv
+	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 18:47:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::32a; helo=mail-wm1-x32a.google.com;
- envelope-from=asmithakarun@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.251; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="oskcKKYQ"; 
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="FuCrsVmi"; 
  dkim-atps=neutral
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
- [IPv6:2a00:1450:4864:20::32a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-01.yadro.com [89.207.88.251])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 457SHq3MFTzDqKw
- for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 17:36:19 +1000 (AEST)
-Received: by mail-wm1-x32a.google.com with SMTP id 15so1713439wmg.5
- for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 00:36:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Pk9AiCUyVhjKnH9F/mD2HWARnBoaFkgiYLrP0wcDdto=;
- b=oskcKKYQzFBgVJHEBwF1HPAJFzMNTlDHo49dE/uJ0z/bBCKC9v2lygSgi7GaDW9pOQ
- KHUJ04wGl69KwsveI1UAQEySZHZuv5Fk/1wXbiqAKEz35x4MRTH4p8GpBBVPQw8/rdba
- sOzQCFIZBMubXpHfo8ZokxMMkMqP6P+Pw5/+k0qsnDDfxj9DftUCeRa9GtIeKv4Jj6p3
- vEVFXzRByS1QhndlvuCxlhR+FB1lJZg86GOX1/QSo+3Jl8BmLC8gRvXj7qUmi85G4U+C
- HUAPpDU3thtyGPMZAeQnNrfvuZi6lFdjIgQa80OPjPvUPyrCz8IXpoBmqFS5DxGaoMr4
- s5KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Pk9AiCUyVhjKnH9F/mD2HWARnBoaFkgiYLrP0wcDdto=;
- b=FfnL1sNaEv2cDRiCYze4NBI128IC7G8pqN1QOFTEYpJYawVhgsCA8SxWweD1AFn6r3
- tkNXGsRpgW7cLB7clEv6hYBqra42JV0m2YHVG3jeF9OkY0qwF7QdJ66hPGwyGdA92QRu
- vyx4DdMWFLb2saYf0hgEz4GbABdaQSzkn1K2Yk8wi68Tb68aAe56k02wFdekWqDRxjge
- 4enKthGyRCs7m/51968+izoZOpynfQoCBFLxIiMdoUbbT6lvY88HnJkSxeS8EEHc4NEc
- eo+2fipt/eWtcg0YvMs5vi/vlW/ttapsw8uGHUffNHmZxbmWApuj8KBxhhoxsMYwEon1
- OR6g==
-X-Gm-Message-State: APjAAAVlLgw7mgoye2GuFs48eHI1/Owdz0rjI/GBbSbwM6Unj6vN9K3p
- nBWtzpICH2djto/S6XJ9mB8YMEA919hg2i5Jzv64QCTVyww=
-X-Google-Smtp-Source: APXvYqx2E/6q8uBb2J5Cwn7/33bDkfLb3fUNyJYc6ZOSowyI8tJHrBP+u4DKNjXi6MDMnOMY+lwe6HqPzDvgGcS4M38=
-X-Received: by 2002:a1c:7216:: with SMTP id n22mr2110496wmc.111.1558424171410; 
- Tue, 21 May 2019 00:36:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 457TsS6mTZzDqL7
+ for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 18:47:04 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 8E901412D3
+ for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 08:47:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1558428418; x=1560242819; bh=VqUAxJW4z7Q4mw5CcGJjdFYCqLTBk4tqYqs
+ hdXeKNaw=; b=FuCrsVmiJUWI+sWnnkOiNWmybCSO8w6mrHlpSDhaxm4S64J0baf
+ akZU2kVzOdmMfNqVphIO1SrEwpSvMtKim2AizdC3YQz7KgqHYZla+RQfrkGJ7VKQ
+ 7VVZsQQO9DMxTcaI0S5rZBxtBC0bBLgeZl18gjC2pz2GKYl5Pg491z5U=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id nsrpTmGlQH2O for <openbmc@lists.ozlabs.org>;
+ Tue, 21 May 2019 11:46:58 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id F0836412D2
+ for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 11:46:58 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 21
+ May 2019 11:46:58 +0300
+Date: Tue, 21 May 2019 11:46:58 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Design: Setting a unique hostname to the BMC machine on first boot
+Message-ID: <20190521084658.GA28585@bbwork.lan>
+References: <CANGK-S5uWkTdA1NJ1d5E5WtawK5Wpv=9GfV0JJ3HWfnNTYYMGw@mail.gmail.com>
 MIME-Version: 1.0
-From: Asmitha Karunanithi <asmithakarun@gmail.com>
-Date: Tue, 21 May 2019 13:05:36 +0530
-Message-ID: <CANGK-S5uWkTdA1NJ1d5E5WtawK5Wpv=9GfV0JJ3HWfnNTYYMGw@mail.gmail.com>
-Subject: Design: Setting a unique hostname to the BMC machine on first boot
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000257990058960e756"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <CANGK-S5uWkTdA1NJ1d5E5WtawK5Wpv=9GfV0JJ3HWfnNTYYMGw@mail.gmail.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,75 +77,60 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000257990058960e756
-Content-Type: text/plain; charset="UTF-8"
+On Tue, May 21, 2019 at 01:05:36PM +0530, Asmitha Karunanithi wrote:
+> Hi Team,
+> 
+> I have been facing a problem and the details of which is mentioned below.
+> 
+> Problem Description:
+> In OpenBMC, the hostname discovery is done by the avahi Dbus service at the
+> startup. In a network where there are multiple OpenBMC machines, avahi keeps
+> getting the hostname conflict and the service name conflict. Hence, the
+> problem is to find a solution that resolves these conflicts.
+> 
+> Background and References:
+> The detailed issue regarding the hostname and service name conflicts is
+> described in the following links.
+> https://github.com/openbmc/openbmc/issues/1741.
+> https://lists.freedesktop.org/archives/avahi/2018-January/002492.html
+> https://github.com/lathiat/avahi/issues/117
+> 
+> Requirements:
+> None.
+> 
+> Proposed Design:
+> To solve this, we are proposing a service which assigns a unique hostname to
+> the BMC and runs on the very first boot. one of the ways to generate the
+> unique
+> hostname is to append the machine UUID to the existing default hostname.
 
-Hi Team,
+We have already done it for our hardware, but we used the BMC's Serial Number
+instead of UUID.
 
-I have been facing a problem and the details of which is mentioned below.
+This service is very similar to meta-opepower/recipes-phosphor/network/first-boot-set-mac
 
-Problem Description:
-In OpenBMC, the hostname discovery is done by the avahi Dbus service at the
-startup. In a network where there are multiple OpenBMC machines, avahi keeps
-getting the hostname conflict and the service name conflict. Hence, the
-problem is to find a solution that resolves these conflicts.
+How it works:
+- openpower-vpd-parser read content of EEPROM VPD and fill corresponded fields
+  in the inventory.
+- the service reads serial number via DBus  and append it to the hostname if
+  it has default value.
 
-Background and References:
-The detailed issue regarding the hostname and service name conflicts is
-described in the following links.
-https://github.com/openbmc/openbmc/issues/1741.
-https://lists.freedesktop.org/archives/avahi/2018-January/002492.html
-https://github.com/lathiat/avahi/issues/117
+> 
+> Alternatives Considered:
+> None.
+> 
+> Impacts:
+> None.
+> 
+> Testing:
+> None.
+> 
+> If you have any suggestions, please feel free to let me know.
+> -- 
+> Thanks & Regards,
+> Asmitha Karunanithi
 
-Requirements:
-None.
-
-Proposed Design:
-To solve this, we are proposing a service which assigns a unique hostname to
-the BMC and runs on the very first boot. one of the ways to generate the
-unique
-hostname is to append the machine UUID to the existing default hostname.
-
-Alternatives Considered:
-None.
-
-Impacts:
-None.
-
-Testing:
-None.
-
-If you have any suggestions, please feel free to let me know.
--- 
-Thanks & Regards,
-Asmitha Karunanithi
-
---000000000000257990058960e756
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br>Hi Team,<div><br></div><div>I have been facing a probl=
-em and the details of which is mentioned below.=C2=A0</div><div><br>Problem=
- Description:<br>In OpenBMC, the hostname discovery is done by the avahi Db=
-us service at the<br>startup. In a network where there are multiple OpenBMC=
- machines, avahi keeps<br>getting the hostname conflict and the service nam=
-e conflict. Hence, the<br>problem is to find a solution that resolves these=
- conflicts.<br><br>Background and References:<br>The detailed issue regardi=
-ng the hostname and service name conflicts is<br>described in the following=
- links.<br><a href=3D"https://github.com/openbmc/openbmc/issues/1741">https=
-://github.com/openbmc/openbmc/issues/1741</a>.<br><a href=3D"https://lists.=
-freedesktop.org/archives/avahi/2018-January/002492.html">https://lists.free=
-desktop.org/archives/avahi/2018-January/002492.html</a><br><a href=3D"https=
-://github.com/lathiat/avahi/issues/117">https://github.com/lathiat/avahi/is=
-sues/117</a><br><br>Requirements:<br>None.<br><br>Proposed Design:<br>To so=
-lve this, we are proposing a service which assigns a unique hostname to<br>=
-the BMC and runs on the very first boot. one of the ways to generate the un=
-ique<br>hostname is to append the machine UUID to the existing default host=
-name.<br><br>Alternatives Considered:<br>None.<br><br>Impacts:<br>None.<br>=
-<br>Testing:<div>None.<br clear=3D"all"><div><br></div><div>If you have any=
- suggestions, please feel=C2=A0free to=C2=A0let me know.</div>-- <br><div d=
-ir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><di=
-v dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp; Regards,<div>Asmitha Karun=
-anithi</div></div></div></div></div></div></div></div>
-
---000000000000257990058960e756--
+--
+Regards,
+Alexander Filippov
+Software Engineer, YADRO
