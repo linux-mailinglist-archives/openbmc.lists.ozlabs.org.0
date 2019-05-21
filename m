@@ -2,67 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38D6B24682
-	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 05:55:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86ED224910
+	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 09:36:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 457MNm5kRRzDqLW
-	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 13:55:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 457SJJ09HrzDqM3
+	for <lists+openbmc@lfdr.de>; Tue, 21 May 2019 17:36:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::832; helo=mail-qt1-x832.google.com;
- envelope-from=henbinchang@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2a00:1450:4864:20::32a; helo=mail-wm1-x32a.google.com;
+ envelope-from=asmithakarun@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="NOz9pT7G"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="oskcKKYQ"; 
  dkim-atps=neutral
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com
- [IPv6:2607:f8b0:4864:20::832])
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
+ [IPv6:2a00:1450:4864:20::32a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 457MNJ2BMYzDqJ1
- for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 13:54:55 +1000 (AEST)
-Received: by mail-qt1-x832.google.com with SMTP id o7so18952346qtp.4
- for <openbmc@lists.ozlabs.org>; Mon, 20 May 2019 20:54:55 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 457SHq3MFTzDqKw
+ for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 17:36:19 +1000 (AEST)
+Received: by mail-wm1-x32a.google.com with SMTP id 15so1713439wmg.5
+ for <openbmc@lists.ozlabs.org>; Tue, 21 May 2019 00:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iSBLXhywLLlF1wZo7LThgf+fwV7OITg9qWF05PUmtm4=;
- b=NOz9pT7GkpxHBIuO2jXiClbgIkuiKP16N+mANTqyMh/V/NW2lfzJ2euk5Ta046Rl7r
- CjmHMcmF7nF+cWodCWIjAPAhN9fooXIdKfqyrhrXyGkvPMrHmG+VttqmM4mlsIz/MXIt
- R0bs5fLfuvuE+/lrdv55O+efBaNyjiIG1FXu07uQSqG6oea5Fq3+avWdDBN2yhNtDDD2
- Dkd+mqWeTYq8ZHeNvtENguu4tPiemlcLWuNJUxlxPsX4i0Q/Emt1FEeiCEZCLaX6LuQN
- TBnL5TmCY9eMxKZaLtymaqwE1EGTbFQsQtiAxWyzXeY7fJUFoeJ0/C36h1VJeNDMF3jS
- MKdA==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Pk9AiCUyVhjKnH9F/mD2HWARnBoaFkgiYLrP0wcDdto=;
+ b=oskcKKYQzFBgVJHEBwF1HPAJFzMNTlDHo49dE/uJ0z/bBCKC9v2lygSgi7GaDW9pOQ
+ KHUJ04wGl69KwsveI1UAQEySZHZuv5Fk/1wXbiqAKEz35x4MRTH4p8GpBBVPQw8/rdba
+ sOzQCFIZBMubXpHfo8ZokxMMkMqP6P+Pw5/+k0qsnDDfxj9DftUCeRa9GtIeKv4Jj6p3
+ vEVFXzRByS1QhndlvuCxlhR+FB1lJZg86GOX1/QSo+3Jl8BmLC8gRvXj7qUmi85G4U+C
+ HUAPpDU3thtyGPMZAeQnNrfvuZi6lFdjIgQa80OPjPvUPyrCz8IXpoBmqFS5DxGaoMr4
+ s5KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iSBLXhywLLlF1wZo7LThgf+fwV7OITg9qWF05PUmtm4=;
- b=k9/oagc7F9OgjDXSHzMys43Gy/NSRQAsH0s0YMrwWr9ZWH5ZjlskIb8nyCYaVIRSW7
- 7bQJuni0tOSp6qbBLukUBKvXKWczFb6HQY1g6nIzAU5zllswHn/nafpNv4mOIPfGYrv8
- FK738zJ831sIxbzWIwTapa8LuaaQAh33wQjsLHWyRrzkTrPVgSR5f3D7411+qCQUwgDG
- U9VCPuUiQS5hGaDJnZklEnUb9p1ieenwoDyETLXYp8FMg8fOuIpC2xr1I7ltp65Lfpwp
- A/ApU1Cfsvubvu+TtGDN4Y/DFqf4Epan8aFuf3Q5DT2nY3l2/oqkJAgilfaPu6FV/G99
- lAGA==
-X-Gm-Message-State: APjAAAUa8fo/yoviFNMs+pQ7hL8IczgBim2viz6w171tSz61ES9lQ6u2
- IRGKAxDlxGT+gn7AKcdyCxK1FZ1qKTKXFZ3ZcB4=
-X-Google-Smtp-Source: APXvYqytb/kyOtUXCbvJiaMofP7sDdTTB2RmQ7EiMeo31nC7aWy8+wb6cFkxBqCGqSh1AZ5muspfv6J5xcCw+XFMpxc=
-X-Received: by 2002:a0c:b5ad:: with SMTP id g45mr37836176qve.231.1558410891553; 
- Mon, 20 May 2019 20:54:51 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Pk9AiCUyVhjKnH9F/mD2HWARnBoaFkgiYLrP0wcDdto=;
+ b=FfnL1sNaEv2cDRiCYze4NBI128IC7G8pqN1QOFTEYpJYawVhgsCA8SxWweD1AFn6r3
+ tkNXGsRpgW7cLB7clEv6hYBqra42JV0m2YHVG3jeF9OkY0qwF7QdJ66hPGwyGdA92QRu
+ vyx4DdMWFLb2saYf0hgEz4GbABdaQSzkn1K2Yk8wi68Tb68aAe56k02wFdekWqDRxjge
+ 4enKthGyRCs7m/51968+izoZOpynfQoCBFLxIiMdoUbbT6lvY88HnJkSxeS8EEHc4NEc
+ eo+2fipt/eWtcg0YvMs5vi/vlW/ttapsw8uGHUffNHmZxbmWApuj8KBxhhoxsMYwEon1
+ OR6g==
+X-Gm-Message-State: APjAAAVlLgw7mgoye2GuFs48eHI1/Owdz0rjI/GBbSbwM6Unj6vN9K3p
+ nBWtzpICH2djto/S6XJ9mB8YMEA919hg2i5Jzv64QCTVyww=
+X-Google-Smtp-Source: APXvYqx2E/6q8uBb2J5Cwn7/33bDkfLb3fUNyJYc6ZOSowyI8tJHrBP+u4DKNjXi6MDMnOMY+lwe6HqPzDvgGcS4M38=
+X-Received: by 2002:a1c:7216:: with SMTP id n22mr2110496wmc.111.1558424171410; 
+ Tue, 21 May 2019 00:36:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAG9c7cDx5rw50zK0WnF20PqFFU_pGdDZ1fvk15PASeGeKsH-+w@mail.gmail.com>
- <19be2af8-7b88-5183-44c1-d27fddec29c3@intel.com>
- <CAOUmYFSSzi3Mo7YUh6-rvdJtNj1Bp2BG6+hV8AzMS3SHt9xWRw@mail.gmail.com>
-In-Reply-To: <CAOUmYFSSzi3Mo7YUh6-rvdJtNj1Bp2BG6+hV8AzMS3SHt9xWRw@mail.gmail.com>
-From: Henbin Chang <henbinchang@gmail.com>
-Date: Tue, 21 May 2019 11:54:40 +0800
-Message-ID: <CAG9c7cDTTbdC_huucwkEKf5mnaSJoaAUCUrQ3-1YdtVRVcpUSg@mail.gmail.com>
-Subject: Re: [phosphor-webui] Enable style-src 'unsafe-inline'
-To: Derick <derick.montague@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000009af36305895dcfd9"
+From: Asmitha Karunanithi <asmithakarun@gmail.com>
+Date: Tue, 21 May 2019 13:05:36 +0530
+Message-ID: <CANGK-S5uWkTdA1NJ1d5E5WtawK5Wpv=9GfV0JJ3HWfnNTYYMGw@mail.gmail.com>
+Subject: Design: Setting a unique hostname to the BMC machine on first boot
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000257990058960e756"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,47 +69,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000009af36305895dcfd9
+--000000000000257990058960e756
 Content-Type: text/plain; charset="UTF-8"
 
-Thank Ed and Derick.
+Hi Team,
 
-We would like to improve the layout of the table, like 'Server health
-->Sensors page' of phosphor-webui.
-ANd we are looking for the solution to make the table can support 'column
-hide', 'sorting by column name' and 'auto-resize for any client device'
-it's just like the example in the URL.
-http://ui-grid.info/docs/#!/tutorial/Tutorial:%20108%20Hidden%20Grids
+I have been facing a problem and the details of which is mentioned below.
 
-The Angular ui-grid  is easy to use and can address our requirement
-But it uses the inline style.
+Problem Description:
+In OpenBMC, the hostname discovery is done by the avahi Dbus service at the
+startup. In a network where there are multiple OpenBMC machines, avahi keeps
+getting the hostname conflict and the service name conflict. Hence, the
+problem is to find a solution that resolves these conflicts.
 
-We will look for other solution.
-Please let me know if you have any suggestion.
+Background and References:
+The detailed issue regarding the hostname and service name conflicts is
+described in the following links.
+https://github.com/openbmc/openbmc/issues/1741.
+https://lists.freedesktop.org/archives/avahi/2018-January/002492.html
+https://github.com/lathiat/avahi/issues/117
 
-Thanks for your help
+Requirements:
+None.
 
---0000000000009af36305895dcfd9
+Proposed Design:
+To solve this, we are proposing a service which assigns a unique hostname to
+the BMC and runs on the very first boot. one of the ways to generate the
+unique
+hostname is to append the machine UUID to the existing default hostname.
+
+Alternatives Considered:
+None.
+
+Impacts:
+None.
+
+Testing:
+None.
+
+If you have any suggestions, please feel free to let me know.
+-- 
+Thanks & Regards,
+Asmitha Karunanithi
+
+--000000000000257990058960e756
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Thank Ed and Derick.<div><br></div><div>We would like to i=
-mprove the layout of the table, like &#39;Server health -&gt;Sensors page&#=
-39; of phosphor-webui.</div><div>ANd we are looking for the solution to mak=
-e the table can support &#39;column hide&#39;, &#39;sorting by column name&=
-#39; and &#39;auto-resize for any client device&#39;</div><div>it&#39;s jus=
-t like the example in the URL.</div><div><a href=3D"http://ui-grid.info/doc=
-s/#!/tutorial/Tutorial:%20108%20Hidden%20Grids">http://ui-grid.info/docs/#!=
-/tutorial/Tutorial:%20108%20Hidden%20Grids</a></div><div><br></div><div>The=
- Angular ui-grid=C2=A0 is easy to use and can address our requirement=C2=A0=
-</div><div>But it uses the inline style.<br></div><div><br></div><div>We wi=
-ll look for other solution.=C2=A0</div><div>Please let me know if you have =
-any suggestion.<br></div><div><br></div><div>Thanks for your help</div><div=
-><br></div></div>
+<div dir=3D"ltr"><br>Hi Team,<div><br></div><div>I have been facing a probl=
+em and the details of which is mentioned below.=C2=A0</div><div><br>Problem=
+ Description:<br>In OpenBMC, the hostname discovery is done by the avahi Db=
+us service at the<br>startup. In a network where there are multiple OpenBMC=
+ machines, avahi keeps<br>getting the hostname conflict and the service nam=
+e conflict. Hence, the<br>problem is to find a solution that resolves these=
+ conflicts.<br><br>Background and References:<br>The detailed issue regardi=
+ng the hostname and service name conflicts is<br>described in the following=
+ links.<br><a href=3D"https://github.com/openbmc/openbmc/issues/1741">https=
+://github.com/openbmc/openbmc/issues/1741</a>.<br><a href=3D"https://lists.=
+freedesktop.org/archives/avahi/2018-January/002492.html">https://lists.free=
+desktop.org/archives/avahi/2018-January/002492.html</a><br><a href=3D"https=
+://github.com/lathiat/avahi/issues/117">https://github.com/lathiat/avahi/is=
+sues/117</a><br><br>Requirements:<br>None.<br><br>Proposed Design:<br>To so=
+lve this, we are proposing a service which assigns a unique hostname to<br>=
+the BMC and runs on the very first boot. one of the ways to generate the un=
+ique<br>hostname is to append the machine UUID to the existing default host=
+name.<br><br>Alternatives Considered:<br>None.<br><br>Impacts:<br>None.<br>=
+<br>Testing:<div>None.<br clear=3D"all"><div><br></div><div>If you have any=
+ suggestions, please feel=C2=A0free to=C2=A0let me know.</div>-- <br><div d=
+ir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><di=
+v dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp; Regards,<div>Asmitha Karun=
+anithi</div></div></div></div></div></div></div></div>
 
---0000000000009af36305895dcfd9--
+--000000000000257990058960e756--
