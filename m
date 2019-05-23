@@ -1,79 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45F79290AB
+	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 08:03:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20AA328C81
-	for <lists+openbmc@lfdr.de>; Thu, 23 May 2019 23:41:21 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4592xm5l5nzDqbG
-	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 07:41:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 459G5Y3bBLzDqYd
+	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 16:03:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4592x93lmYzDqZF;
- Fri, 24 May 2019 07:40:44 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x4NLXlGJ143403; Thu, 23 May 2019 17:40:35 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2sp0gwygr0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2019 17:40:35 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x4NFcfc1001449;
- Thu, 23 May 2019 15:45:14 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 2sn84n295g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 23 May 2019 15:45:14 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x4NLeXUw23200144
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 May 2019 21:40:33 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 453D0124053;
- Thu, 23 May 2019 21:40:33 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABDE6124052;
- Thu, 23 May 2019 21:40:32 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu, 23 May 2019 21:40:32 +0000 (GMT)
+ spf=pass (mailfrom) smtp.mailfrom=amazon.com
+ (client-ip=52.95.49.90; helo=smtp-fw-6002.amazon.com;
+ envelope-from=prvs=039855362=eduval@amazon.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=amazon.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=amazon.com header.i=@amazon.com header.b="NKuUKY8r"; 
+ dkim-atps=neutral
+Received: from smtp-fw-6002.amazon.com (smtp-fw-6002.amazon.com [52.95.49.90])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4593Ry1g3jzDqYL
+ for <openbmc@lists.ozlabs.org>; Fri, 24 May 2019 08:03:54 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1558649038; x=1590185038;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=jw3p9KIMnu4q9Tu7HpvCrvV5NFaBtkPkpziCxhuuaVQ=;
+ b=NKuUKY8r9a4A94l6qAoAVRyk5Gh9PJGF43bAI7Kgkl+5EsQ6RiPCZiV4
+ eAs9+dM8k8vsXdnBeFVOcqCS36oKRortDiSTYNQdPOj9T1/OXGFsv1/S7
+ D5VaYNYmXse96s5TMlb+JZrr7mTLQQk9wQcwl1e7WnzYvZhX9MpyaWnqq c=;
+X-IronPort-AV: E=Sophos;i="5.60,504,1549929600"; d="scan'208";a="403475082"
+Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ email-inbound-relay-1a-67b371d8.us-east-1.amazon.com) ([10.124.125.6])
+ by smtp-border-fw-out-6002.iad6.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
+ 23 May 2019 22:03:50 +0000
+Received: from EX13MTAUEB001.ant.amazon.com
+ (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
+ by email-inbound-relay-1a-67b371d8.us-east-1.amazon.com (8.14.7/8.14.7) with
+ ESMTP id x4NM3jEP097158
+ (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+ Thu, 23 May 2019 22:03:48 GMT
+Received: from EX13D07UEB004.ant.amazon.com (10.43.60.190) by
+ EX13MTAUEB001.ant.amazon.com (10.43.60.129) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 23 May 2019 22:03:46 +0000
+Received: from EX13MTAUEB001.ant.amazon.com (10.43.60.96) by
+ EX13D07UEB004.ant.amazon.com (10.43.60.190) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 23 May 2019 22:03:46 +0000
+Received: from localhost (10.95.247.65) by mail-relay.amazon.com
+ (10.43.60.129) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
+ Transport; Thu, 23 May 2019 22:03:46 +0000
+Date: Thu, 23 May 2019 15:03:45 -0700
+From: Eduardo Valentin <eduval@amazon.com>
+To: Haiyue Wang <haiyue.wang@linux.intel.com>
+Subject: Re: [PATCH i2c/slave-mqueue v5] i2c: slave-mqueue: add a slave
+ backend to receive and queue messages
+Message-ID: <20190523220345.GA3417@u40b0340c692b58f6553c.ant.amazon.com>
+References: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Thu, 23 May 2019 16:41:01 -0500
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: Ed Tanous <ed.tanous@intel.com>, Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: [Design] Kernel-based BMC firewall
-In-Reply-To: <8d8c463f-5043-4d95-b907-02cb182dd5da@intel.com>
-References: <285cb288b03952703b6b879f6a1cac9a@linux.vnet.ibm.com>
- <8d8c463f-5043-4d95-b907-02cb182dd5da@intel.com>
-Message-ID: <6fc6b3b5d3872ad73316b7a82cce498d@linux.vnet.ibm.com>
-X-Sender: jrey@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-05-23_17:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1905230138
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Mailman-Approved-At: Fri, 24 May 2019 16:03:26 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,334 +76,448 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org,
- openbmc <openbmc-bounces+jrey=linux.ibm.com@lists.ozlabs.org>
+Cc: jae.hyun.yoo@linux.intel.com, andriy.shevchenko@intel.com,
+ wsa@the-dreams.de, openbmc@lists.ozlabs.org, brendanhiggins@google.com,
+ linux-kernel@vger.kernel.org, jarkko.nikula@linux.intel.com,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-03-04 10:14, Ed Tanous wrote:
-> On 3/1/19 1:31 PM, Joseph Reynolds wrote:
->> ## Problem Description
->> 
->> OpenBMC needs an integral firewall to monitor and control its IP 
->> traffic.
+Hey Wang,
+
+On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
+> Some protocols over I2C are designed for bi-directional transferring
+> messages by using I2C Master Write protocol. Like the MCTP (Management
+> Component Transport Protocol) and IPMB (Intelligent Platform Management
+> Bus), they both require that the userspace can receive messages from
+> I2C dirvers under slave mode.
 > 
-> Why?  I believe this needs more details here on why the current 
-> solution
-> is inadequate.  If some document/security policy is driving this, we
-> should reference that here as well.  There _must_ be a standard or
-> authority for network security that we can reference rather than
-> creating our own.
+> This new slave mqueue backend is used to receive and queue messages, it
+> will exposes these messages to userspace by sysfs bin file.
 > 
-> I would like to see the problem description be a lot longer than 1
-> sentence given how long the requirements section is.
-
-
-Ed and Andrew,
-
-Thanks for your email.  Based partly on your input, I’m dropping 
-requirements which can be solved in better ways.  The remaining 
-requirement is blocking ICMP packet types 13 and 14 (timestamp 
-requests).  If this can be done without using a firewall, then I don’t 
-see a need for a firewall at all.
-
-Here are the requirements my previous design attempted to address, with 
-updated ideas about what the firewall should do.
-
-  - Block specific ICMP packets: Block ICMP packets of type 13 or 14 
-and/or code 0 per https://nvd.nist.gov/vuln/detail/CVE-1999-0524.  Given 
-this is rated as LOW severity, I wonder if it is worth pursuing.  
-Alternatively, can the Linux kernel be configured to not respond to 
-these packets?
-
-  - Block TCP and UDP ports: For incoming traffic; the BMC will open 
-exactly the ports it needs.  For outgoing traffic; software running on 
-the BMC (which uses the network) ought to be controlled by the 
-administrator.  To the extent these are true, there is no need to block 
-ports, so I am not going to pursue this.
-
-  - Block malicious packets, such as in IP fragmentation attacks 
-https://en.wikipedia.org/wiki/IP_fragmentation_attack : I am not going 
-to pursue this.
-
-  - Rate limiting for authentication failures: This protects against an 
-accidental denial of service (DOS) from malfunctioning automated tools 
-which repeatedly fail to authenticate to the BMC.  Solving this problem 
-does not require a firewall.  Instead, we can use “rate limiting in 
-the individual network facing daemons” (such as IPMI, BMCWeb, ssh), 
-for example, to delay a short time before sending the failure response.
-
-  - Log traffic to diagnose network problems: I am not going to pursue 
-this at this time.
-
-  - Logging access to the BMC: Each network service already does this.
-
-  - Limit the maximum number of active connections: Each network service 
-can do this.
-
-
-I am not a networking expert, so I appreciate your advice.  Additional 
-comments are below.
-
-- Joseph Reynolds
-
-
->> ## Background and References
->> 
->> The Yocto/OpenEmbedded projects offer ready-made Linux kernel-based
->> firewall recipes.  These are based on:
->>  - the Linux `netfilter` kernel modules which provide the basic 
->> capability
->>    to work with IP packets.
->>  - the `iptables` Linux command (and similar commands like ip6tables) 
->> work
->>    with netfilter tables
->>  - the `arno-iptables-firewall` package which provides shell scripts 
->> that
->>    uses iptables to establish a firewall.
->>  - the `ulogd` firewall logger package
->> 
->> References:
->> - The Linux firewall documentation:
->>   http://linuxdocs.org/HOWTOs/Firewall-HOWTO-2.html
->> - Basic concepts from Wikipedia:
->>   - https://en.wikipedia.org/wiki/Netfilter
->>   - https://en.wikipedia.org/wiki/Iptables
->> - The OpenEmbedded recipes for firewalls:
->> http://layers.openembedded.org/layerindex/branch/master/recipes/?q=iptables
->> - Log connections via ulogd.
->> 
->> ## Requirements
->> 
->> The BMC must automatically establish a firewall when the network
->> service is started, and remove it when networking stops.  The firewall
->> rules must have reasonable defaults for a BMC.
-> Why is firewall removal required?  If networking is down, that 
-> shouldn't
-> make any changes to the firewall, correct?
->> 
->> The firewall must have these capabilities:
->>  1. Block unauthorized IP traffic to and from the BMC.
+> Signed-off-by: Haiyue Wang <haiyue.wang@linux.intel.com>
+> ---
+> v4 -> v5:
+>  - Typo: bellowing -> the below
 > 
-> This needs a much better definition of what "unauthorized" means.
-> Technically traffic on ports that are unsupported is already "blocked"
-> just based on the bind rules, and the fact that we, as a policy, don't
-> run code that wasn't compiled into the image.  Under the strict 
-> security
-> definition of authorization, a firewall has no ability to "authorize" a
-> request, except possibly based on IP.  If your goal is DOS prevention,
-> _just_ a firewall is likely not enough.
+> v3 -> v4:
+>  - Drop the small message after receiving I2C STOP.
 > 
-> I would  like to see lots more detail here.
-
-This was removed.
-
->>  2. Block malicious packets.
-> Like what?  Do you have any references of what kinds of "malicious"
-> packets you're hoping to block?  Is there a relevant OWASP page on 
-> this?
-
-Explained above.
-
->>  3. Log network traffic.
+> v2 -> v3:
+>  - Just remove the ';' after the end '}' of i2c_slave_mqueue_probe().
 > 
-> This item feels like it could be a design document on its own.  I would
-> hope the firewall isn't logging all network traffic.
-
-This is removed.
-
->>  4. Rate-limiting to thwart denial of service attacks.
+> v1 -> v2:
+>  - Change MQ_MSGBUF_SIZE and MQ_QUEUE_SIZE to be configurable by Kconfig.
+> ---
+>  Documentation/i2c/slave-mqueue-backend.rst | 125 ++++++++++++++++++
+>  drivers/i2c/Kconfig                        |  25 ++++
+>  drivers/i2c/Makefile                       |   1 +
+>  drivers/i2c/i2c-slave-mqueue.c             | 203 +++++++++++++++++++++++++++++
+>  4 files changed, 354 insertions(+)
+>  create mode 100644 Documentation/i2c/slave-mqueue-backend.rst
+>  create mode 100644 drivers/i2c/i2c-slave-mqueue.c
 > 
-> More details on how this is desired really needs to be attached.  Is
-> this a per-ip rate limit?  In background, it would be good if you could
-> attach some data around what rate limits a common AST platform would
-> need imposed.
+> diff --git a/Documentation/i2c/slave-mqueue-backend.rst b/Documentation/i2c/slave-mqueue-backend.rst
+> new file mode 100644
+> index 0000000..3966cf0
+> --- /dev/null
+> +++ b/Documentation/i2c/slave-mqueue-backend.rst
+> @@ -0,0 +1,125 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +
+> +=====================================
+> +Linux I2C slave message queue backend
+> +=====================================
+> +
+> +:Author: Haiyue Wang <haiyue.wang@linux.intel.com>
+> +
+> +Some protocols over I2C/SMBus are designed for bi-directional transferring
+> +messages by using I2C Master Write protocol. This requires that both sides
+> +of the communication have slave addresses.
+> +
+> +Like MCTP (Management Component Transport Protocol) and IPMB (Intelligent
+> +Platform Management Bus), they both require that the userspace can receive
+> +messages from i2c dirvers under slave mode.
+> +
+> +This I2C slave mqueue (message queue) backend is used to receive and queue
+> +messages from the remote i2c intelligent device; and it will add the target
+> +slave address (with R/W# bit is always 0) into the message at the first byte,
+> +so that userspace can use this byte to dispatch the messages into different
+> +handling modules. Also, like IPMB, the address byte is in its message format,
+> +it needs it to do checksum.
+> +
+> +For messages are time related, so this backend will flush the oldest message
+> +to queue the newest one.
+> +
+> +Link
+> +----
+> +`Intelligent Platform Management Bus
+> +Communications Protocol Specification
+> +<https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmp-spec-v1.0.pdf>`_
+> +
+> +`Management Component Transport Protocol (MCTP)
+> +SMBus/I2C Transport Binding Specification
+> +<https://www.dmtf.org/sites/default/files/standards/documents/DSP0237_1.1.0.pdf>`_
+> +
+> +How to use
+> +----------
+> +For example, the I2C5 bus has slave address 0x10, the below command will create
+> +the related message queue interface:
+> +
+> +    echo slave-mqueue 0x1010 > /sys/bus/i2c/devices/i2c-5/new_device
+> +
+> +Then you can dump the messages like this:
+> +
+> +    hexdump -C /sys/bus/i2c/devices/5-1010/slave-mqueue
+> +
+> +Code Example
+> +------------
+> +*Note: call 'lseek' before 'read', this is a requirement from kernfs' design.*
+> +
+> +::
+> +
+> +  #include <sys/types.h>
+> +  #include <sys/stat.h>
+> +  #include <unistd.h>
+> +  #include <poll.h>
+> +  #include <time.h>
+> +  #include <fcntl.h>
+> +  #include <stdio.h>
+> +
+> +  int main(int argc, char *argv[])
+> +  {
+> +          int i, r;
+> +          struct pollfd pfd;
+> +          struct timespec ts;
+> +          unsigned char data[256];
+> +
+> +          pfd.fd = open(argv[1], O_RDONLY | O_NONBLOCK);
+> +          if (pfd.fd < 0)
+> +                  return -1;
+> +
+> +          pfd.events = POLLPRI;
+> +
+> +          while (1) {
+> +                  r = poll(&pfd, 1, 5000);
+> +
+> +                  if (r < 0)
+> +                          break;
+> +
+> +                  if (r == 0 || !(pfd.revents & POLLPRI))
+> +                          continue;
+> +
+> +                  lseek(pfd.fd, 0, SEEK_SET);
+> +                  r = read(pfd.fd, data, sizeof(data));
+> +                  if (r <= 0)
+> +                          continue;
+> +
+> +                  clock_gettime(CLOCK_MONOTONIC, &ts);
+> +                  printf("[%ld.%.9ld] :", ts.tv_sec, ts.tv_nsec);
+> +                  for (i = 0; i < r; i++)
+> +                          printf(" %02x", data[i]);
+> +                  printf("\n");
+> +          }
+> +
+> +          close(pfd.fd);
+> +
+> +          return 0;
+> +  }
+> +
+> +Result
+> +------
+> +*./a.out "/sys/bus/i2c/devices/5-1010/slave-mqueue"*
+> +
+> +::
+> +
+> +  [10183.232500449] : 20 18 c8 2c 78 01 5b
+> +  [10183.479358348] : 20 18 c8 2c 78 01 5b
+> +  [10183.726556812] : 20 18 c8 2c 78 01 5b
+> +  [10183.972605863] : 20 18 c8 2c 78 01 5b
+> +  [10184.220124772] : 20 18 c8 2c 78 01 5b
+> +  [10184.467764166] : 20 18 c8 2c 78 01 5b
+> +  [10193.233421784] : 20 18 c8 2c 7c 01 57
+> +  [10193.480273460] : 20 18 c8 2c 7c 01 57
+> +  [10193.726788733] : 20 18 c8 2c 7c 01 57
+> +  [10193.972781945] : 20 18 c8 2c 7c 01 57
+> +  [10194.220487360] : 20 18 c8 2c 7c 01 57
+> +  [10194.468089259] : 20 18 c8 2c 7c 01 57
+> +  [10203.233433099] : 20 18 c8 2c 80 01 53
+> +  [10203.481058715] : 20 18 c8 2c 80 01 53
+> +  [10203.727610472] : 20 18 c8 2c 80 01 53
+> +  [10203.974044856] : 20 18 c8 2c 80 01 53
+> +  [10204.220734634] : 20 18 c8 2c 80 01 53
+> +  [10204.468461664] : 20 18 c8 2c 80 01 53
+> +
+> diff --git a/drivers/i2c/Kconfig b/drivers/i2c/Kconfig
+> index efc3354..31e57d2 100644
+> --- a/drivers/i2c/Kconfig
+> +++ b/drivers/i2c/Kconfig
+> @@ -118,6 +118,31 @@ if I2C_SLAVE
+>  config I2C_SLAVE_EEPROM
+>  	tristate "I2C eeprom slave driver"
+>  
+> +config I2C_SLAVE_MQUEUE_MESSAGE_SIZE
+> +	int "The message size of I2C mqueue slave"
+> +	default 120
+> +
+> +config I2C_SLAVE_MQUEUE_QUEUE_SIZE
+> +	int "The queue size of I2C mqueue slave"
+> +	default 32
+> +	help
+> +	  This number MUST be power of 2.
+> +
+> +config I2C_SLAVE_MQUEUE
+> +	tristate "I2C mqueue (message queue) slave driver"
+> +	select I2C_SLAVE_MQUEUE_MESSAGE_SIZE
+> +	select I2C_SLAVE_MQUEUE_QUEUE_SIZE
+> +	help
+> +	  Some protocols over I2C are designed for bi-directional transferring
+> +	  messages by using I2C Master Write protocol. This driver is used to
+> +	  receive and queue messages from the remote I2C device.
+> +
+> +	  Userspace can get the messages by reading sysfs file that this driver
+> +	  exposes.
+> +
+> +	  This support is also available as a module. If so, the module will be
+> +	  called i2c-slave-mqueue.
+> +
+>  endif
+>  
+>  config I2C_DEBUG_CORE
+> diff --git a/drivers/i2c/Makefile b/drivers/i2c/Makefile
+> index 72c94c6..7ec287b 100644
+> --- a/drivers/i2c/Makefile
+> +++ b/drivers/i2c/Makefile
+> @@ -16,6 +16,7 @@ obj-$(CONFIG_I2C_MUX)		+= i2c-mux.o
+>  obj-y				+= algos/ busses/ muxes/
+>  obj-$(CONFIG_I2C_STUB)		+= i2c-stub.o
+>  obj-$(CONFIG_I2C_SLAVE_EEPROM)	+= i2c-slave-eeprom.o
+> +obj-$(CONFIG_I2C_SLAVE_MQUEUE)	+= i2c-slave-mqueue.o
+>  
+>  ccflags-$(CONFIG_I2C_DEBUG_CORE) := -DDEBUG
+>  CFLAGS_i2c-core-base.o := -Wno-deprecated-declarations
+> diff --git a/drivers/i2c/i2c-slave-mqueue.c b/drivers/i2c/i2c-slave-mqueue.c
+> new file mode 100644
+> index 0000000..424f435
+> --- /dev/null
+> +++ b/drivers/i2c/i2c-slave-mqueue.c
+> @@ -0,0 +1,203 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +// Copyright (c) 2017 - 2018, Intel Corporation.
+> +
+> +#include <linux/i2c.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/slab.h>
+> +#include <linux/spinlock.h>
+> +#include <linux/sysfs.h>
+> +
+> +#define MQ_MSGBUF_SIZE		CONFIG_I2C_SLAVE_MQUEUE_MESSAGE_SIZE
+> +#define MQ_QUEUE_SIZE		CONFIG_I2C_SLAVE_MQUEUE_QUEUE_SIZE
+> +#define MQ_QUEUE_NEXT(x)	(((x) + 1) & (MQ_QUEUE_SIZE - 1))
+> +
+> +struct mq_msg {
+> +	int	len;
+> +	u8	*buf;
+> +};
+> +
+> +struct mq_queue {
+> +	struct bin_attribute	bin;
+> +	struct kernfs_node	*kn;
+> +
+> +	spinlock_t		lock; /* spinlock for queue index handling */
 
-This is made more clear and removed above.
+I wonder why you decided to lock only in/out accesses and not the mq_queue struct.
 
->> The firewall must not:
->> - Consume excessive CPU cycles.
->> - Consume excessive space in memory or on disk.
-> These two things should have soft targets to define excessive.  is 5%
-> overhead excessive?  50%?  2MB on flash worth it?
+> +	int			in;
+> +	int			out;
+> +
+> +	struct mq_msg		*curr;
+> +	int			truncated; /* drop current if truncated */
+> +	struct mq_msg		queue[MQ_QUEUE_SIZE];
+> +};
+> +
+> +static int i2c_slave_mqueue_callback(struct i2c_client *client,
+> +				     enum i2c_slave_event event, u8 *val)
+> +{
+> +	struct mq_queue *mq = i2c_get_clientdata(client);
+> +	struct mq_msg *msg = mq->curr;
+> +	int ret = 0;
+> +
+> +	switch (event) {
+> +	case I2C_SLAVE_WRITE_REQUESTED:
+> +		mq->truncated = 0;
+> +
+> +		msg->len = 1;
+> +		msg->buf[0] = client->addr << 1;
+> +		break;
+> +
+> +	case I2C_SLAVE_WRITE_RECEIVED:
+> +		if (msg->len < MQ_MSGBUF_SIZE) {
+> +			msg->buf[msg->len++] = *val;
 
-I was thinking more 5%.
+Do we need to lock the accesses to msg->buf? how about to msg->len?
 
->> The system integrator must be able to:
->> - Establish firewall rules to implement security policy.
->> - Set default IP logging behavior.
-> I suspect the word "default" wasn't intended here.  Default implies 
-> that
-> someone can change the runtime defaults at runtime.  Unless you meant
-> compile time...?
+> +		} else {
+> +			dev_err(&client->dev, "message is truncated!\n");
+> +			mq->truncated = 1;
+> +			ret = -EINVAL;
+> +		}
+> +		break;
+> +
+> +	case I2C_SLAVE_STOP:
+> +		if (unlikely(mq->truncated || msg->len < 2))
+> +			break;
+> +
+> +		spin_lock(&mq->lock);
+> +		mq->in = MQ_QUEUE_NEXT(mq->in);
+> +		mq->curr = &mq->queue[mq->in];
+> +		mq->curr->len = 0;
+> +
+> +		/* Flush the oldest message */
+> +		if (mq->out == mq->in)
+> +			mq->out = MQ_QUEUE_NEXT(mq->out);
+> +		spin_unlock(&mq->lock);
+> +
+> +		kernfs_notify(mq->kn);
+> +		break;
+> +
+> +	default:
+> +		*val = 0xFF;
+> +		break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static ssize_t i2c_slave_mqueue_bin_read(struct file *filp,
+> +					 struct kobject *kobj,
+> +					 struct bin_attribute *attr,
+> +					 char *buf, loff_t pos, size_t count)
+> +{
+> +	struct mq_queue *mq;
+> +	struct mq_msg *msg;
+> +	unsigned long flags;
+> +	bool more = false;
+> +	ssize_t ret = 0;
+> +
+> +	mq = dev_get_drvdata(container_of(kobj, struct device, kobj));
+> +
+> +	spin_lock_irqsave(&mq->lock, flags);
+> +	if (mq->out != mq->in) {
+> +		msg = &mq->queue[mq->out];
+> +
+> +		if (msg->len <= count) {
+> +			ret = msg->len;
+> +			memcpy(buf, msg->buf, ret);
 
-I meant the person configuring features at compile-time.
-The word "default" means compile-time configuration of the default 
-setting, and the setting could be changed by the BMC admin at any time 
-the BMC is running.
-However, this requirement is removed.
+Is buf a userspace pointer? should it be a copy_to_user() here?
 
->> - Configure the firewall for IPv4, IPv6, or both.
->> - Remove firewall capabilty from the BMC if desired.
-> At runtime?  Is the goal for the defaults to be "firewall on" or
-> "firewall off"?
-
-I meant the firewall capability could be compiled out of the BMC image.
-That is probably too obvious to include in the design.
-
->> The admin user must be able to:
->> - Temporarily modify, disable, or re-enable the firewall.
->> - Enable or disable IP logging.
->> - Retrieve the firewall logs, if enabled.
->> 
+> +		} else {
+> +			ret = -EOVERFLOW; /* Drop this HUGE one. */
+> +		}
+> +
+> +		mq->out = MQ_QUEUE_NEXT(mq->out);
+> +		if (mq->out != mq->in)
+> +			more = true;
+> +	}
+> +	spin_unlock_irqrestore(&mq->lock, flags);
+> +
+> +	if (more)
+> +		kernfs_notify(mq->kn);
+> +
+> +	return ret;
+> +}
+> +
+> +static int i2c_slave_mqueue_probe(struct i2c_client *client,
+> +				  const struct i2c_device_id *id)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct mq_queue *mq;
+> +	int ret, i;
+> +	void *buf;
+> +
+> +	mq = devm_kzalloc(dev, sizeof(*mq), GFP_KERNEL);
+> +	if (!mq)
+> +		return -ENOMEM;
+> +
+> +	BUILD_BUG_ON(!is_power_of_2(MQ_QUEUE_SIZE));
+> +
+> +	buf = devm_kmalloc_array(dev, MQ_QUEUE_SIZE, MQ_MSGBUF_SIZE,
+> +				 GFP_KERNEL);
+> +	if (!buf)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < MQ_QUEUE_SIZE; i++)
+> +		mq->queue[i].buf = buf + i * MQ_MSGBUF_SIZE;
+> +
+> +	i2c_set_clientdata(client, mq);
+> +
+> +	spin_lock_init(&mq->lock);
+> +	mq->curr = &mq->queue[0];
+> +
+> +	sysfs_bin_attr_init(&mq->bin);
+> +	mq->bin.attr.name = "slave-mqueue";
+> +	mq->bin.attr.mode = 0400;
+> +	mq->bin.read = i2c_slave_mqueue_bin_read;
+> +	mq->bin.size = MQ_MSGBUF_SIZE * MQ_QUEUE_SIZE;
+> +
+> +	ret = sysfs_create_bin_file(&dev->kobj, &mq->bin);
+> +	if (ret)
+> +		return ret;
+> +
+> +	mq->kn = kernfs_find_and_get(dev->kobj.sd, mq->bin.attr.name);
+> +	if (!mq->kn) {
+> +		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
+> +		return -EFAULT;
+> +	}
+> +
+> +	ret = i2c_slave_register(client, i2c_slave_mqueue_callback);
+> +	if (ret) {
+> +		kernfs_put(mq->kn);
+> +		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int i2c_slave_mqueue_remove(struct i2c_client *client)
+> +{
+> +	struct mq_queue *mq = i2c_get_clientdata(client);
+> +
+> +	i2c_slave_unregister(client);
+> +
+> +	kernfs_put(mq->kn);
+> +	sysfs_remove_bin_file(&client->dev.kobj, &mq->bin);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct i2c_device_id i2c_slave_mqueue_id[] = {
+> +	{ "slave-mqueue", 0 },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(i2c, i2c_slave_mqueue_id);
+> +
+> +static struct i2c_driver i2c_slave_mqueue_driver = {
+> +	.driver = {
+> +		.name	= "i2c-slave-mqueue",
+> +	},
+> +	.probe		= i2c_slave_mqueue_probe,
+> +	.remove		= i2c_slave_mqueue_remove,
+> +	.id_table	= i2c_slave_mqueue_id,
+> +};
+> +module_i2c_driver(i2c_slave_mqueue_driver);
+> +
+> +MODULE_LICENSE("GPL v2");
+> +MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
+> +MODULE_DESCRIPTION("I2C slave mode for receiving and queuing messages");
+> -- 
+> 2.7.4
 > 
-> Some other background that I think would help here:
-> What do other BMC implementations do?
-> What do other similar network connected devices (OpenWRT for example) 
-> do?
 
-It's hard to get details about what the other BMC firewalls do.
-The OpenWRT firewall is for a router, so it has capability OpenBMC does 
-not need.
-
-
->> ## Proposed Design
->> 
->> This adds a set of BitBake recipes to set up an IP firewall based on
->> Linux kernel netfilter modules, the iptables commands, and the
->> arno-iptables-firewall package.
->> 
->> The firewall gets put up when systemd starts the networking service, 
->> and
->> gets taken down when networking stops.
->> The firewall logging service is also made available, but it is not 
->> started
->> 
->> The firewall rules will default to disallow all IP traffic, then be
->> permissive in allowing all legitimate BMC traffic.  We'll have
->> customized firewall rules specific to a generic BMC environment and
->> document these rules in the docs repository.
-> In terms of firewall rules, what is a "generic BMC environment"?  All
-> ports/ips accepted?
-
-I meant a BMC that supports all of meta-phosphor functions.  For 
-example, ports for HTTPS, SSH and IPMI would be unblocked, and ports 
-OpenBMC does not have services listening at would be blocked.
-However, this was removed form the design.
-
->> These rules are intended to be "secure by design" and documented well
->> enough for a system integrator to change them as needed.
-> 
-> In this section I see nothing about how rate limiting is going to be
-> implemented or designed.  Given that has a lot of real-world
-> implications, I'd like to see that called out specifically.  For
-> example, firmware update is a 64MB payload and can easily run over
-> buffer limits quickly.  Is that case called out specifically in the
-> firewall rules, or are the limits set so high that a firmware update
-> doesn't matter?  Virtual media and KVM are other great examples of
-> _very_ high bandwidth applications that would be severely impacted by
-> bandwidth limits.  In general, both those applications are capable of
-> using 100% of the BMCs effective NIC bandwidth.  I have worked on other
-> BMC firmwares in the past where the security tradeoffs of enabling a
-> firewall were shadowed by the performance hits to those services.  I
-> would feel a lot better if these were called out specifically in the
-> requirements.  Something like, "Enabling the firewall should have a 
-> <10%
-> impact of the performance of KVM/virtual media".
-
-By "rate limiting" I intended to guard against repeated automated 
-requests for service.
-I think work is needed here, but not in the firewall.
-I have dropped this from the design.
-
-
->> ## Alternatives Considered
->> 
->> A user interface to indicate the firewall's status was considered.
->> This would invoke iptables and return success only if it showed
->> firewall rules, something like `iptables -L -n -v`.  This is not
->> needed for basic function.
->> 
->> The `ufw` firewall was considered.  It is implemented in Python which
->> is being removed from the OpenBMC image.
->> 
-> 
-> You missed what we currently do, relying on bind rules to define what
-> sockets/ports are accepted.  I suspect it doesn't meet your needs, but
-> we should call it out, because it's what's currently implemented.
-
-No, that part is good.  The firewall blocking ports would be a 
-defence-in-depth protection.
-For example, if someone was to run software on the BMC which the BMC 
-admin did not intend,
-then blocking ports may make it more difficult for that unintended use.
-However, and I've dropped this from the design.
-
->> ## Impacts
->> 
->> There are three levels of impact:
->> 1. If the firewall recipes are present:
->>  - Uses more flash space for kernel modules and iptables commands.
->> 2. When the firewall is enabled:
->>  - Uses more memory for kernel modules and related tables.
->>  - Uses more CPU cycles for network service.
->> 3. When the firewall IP logging service is enabled:
->>  - Uses more resources for CPU and log file storage.
->> 
->> If the firewall rules are overly restrictive, functions which require
->> IP may not work correctly.  The documentation must show how to
->> identify and fix this problem, specifically:
->>  - How to enable IP logging.
->>  - How to find, read, and interpret the log.
->>  - How to change firewall rules to allow your traffic.
->> 
->> ## Testing
->> 
->> Ensure all functions which use IP continue to work.  Enable firewall
->> IP logging during these tests, and check it for errors.
->> 
->> From the requirement section:
->>  - Test the firewall's capabilities.  For example:
->>     - Send badly formed packets.
->>     - Send traffic to closed ports.
->>  - Test each of the admin user's functions.
->> 
->> Test the procedure to enable logging and detect blocked IP traffic.
->> 
->> Note the recommended dev-environment [1] maps TCP ports 22 and 443 (to
->> ports 2222 and 2443).  This is not an issue for the BMC's firewall
->> because this mapping is done by the simulator, so the BMC sees the
->> original port numbers: 22 and 443.
-> 
-> I don't see any tests for tests of the performance attributes.
-
-Good catch.  I'll add a performance test.
-
->> [1]:
-> https://github.com/openbmc/docs/blob/master/development/dev-environment.md
->> 
-> 
-> Overall, I'm skeptical that in real-world BMCs adding a firewall will
-> have a measurable impact on DOS attack prevention, or network security,
-> given how loose the rules would need to be to enable all the services
-> required.  My suspicion was that that rate limiting in the individual
-> network facing daemons would be more effective, as they can
-> remove/disable the rate limits for authorized users.  With that said,
-> I'm cautiously hopeful that I will be proven wrong.
-
-Yes, I agree the daemons are a better place to address some of my 
-requirements.
-I've noted that above, and I am interested in pursuing that.
-I'll add it to the wish list:
-https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list
-
-
-> Some initial, far-from-merge-worthy attempts at differentiating between
-> pre and post authenticated payloads, and adjusting the limits
-> accordingly is staged below:
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/16420/9/crow/include/crow/http_connection.h#133
-
-Interesting...thanks!
-
-> 
-> -Ed
+-- 
+All the best,
+Eduardo Valentin
