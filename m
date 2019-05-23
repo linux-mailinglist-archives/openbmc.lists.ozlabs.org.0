@@ -1,95 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0152285DC
-	for <lists+openbmc@lfdr.de>; Thu, 23 May 2019 20:22:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 458yXm2jpczDqXf
-	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 04:22:48 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 93BD62868C
+	for <lists+openbmc@lfdr.de>; Thu, 23 May 2019 21:15:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 458zj25nkVzDqZb
+	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 05:15:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=gmills@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::82a; helo=mail-qt1-x82a.google.com;
+ envelope-from=yoshiemuranaka@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="krw0lDBl"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com
+ [IPv6:2607:f8b0:4864:20::82a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 458yWg2MPVzDqY1
- for <openbmc@lists.ozlabs.org>; Fri, 24 May 2019 04:21:47 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x4NIGfxk010665
- for <openbmc@lists.ozlabs.org>; Thu, 23 May 2019 14:21:45 -0400
-Received: from e34.co.us.ibm.com (e34.co.us.ibm.com [32.97.110.152])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2snyem3bg8-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 23 May 2019 14:21:44 -0400
-Received: from localhost
- by e34.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <gmills@linux.vnet.ibm.com>;
- Thu, 23 May 2019 19:21:44 +0100
-Received: from b03cxnp08028.gho.boulder.ibm.com (9.17.130.20)
- by e34.co.us.ibm.com (192.168.1.134) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 23 May 2019 19:21:42 +0100
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x4NILfrb33423710
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 23 May 2019 18:21:41 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 131BCC605A;
- Thu, 23 May 2019 18:21:41 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D74D6C605F;
- Thu, 23 May 2019 18:21:40 +0000 (GMT)
-Received: from [9.10.100.31] (unknown [9.10.100.31])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu, 23 May 2019 18:21:40 +0000 (GMT)
-Subject: Re: OpenBMC GUI Navigation Update
-To: Derick <derick.montague@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <CANT4NrJdiFyJBR9SA-jVA0JZ8C=cf7HvBXjxaiHHBEocxaWR6Q@mail.gmail.com>
- <592E3848-A5D7-45DA-8E20-A3315BE359D9@intel.com>
- <006052f8-dce3-d523-6d7e-8bb610648deb@intel.com>
- <CANT4NrKDC92KOmUcsdP6hWarJKuRP7VTZSwD-F32g+Loqe4VEA@mail.gmail.com>
- <865C376D1B77624AAA570EFEF73CE52F94537DF0@fmsmsx118.amr.corp.intel.com>
- <CAOUmYFTYtxQBJk7iRAVJ7YUgH2-z_t=i9R1opwifJ72M97XaFA@mail.gmail.com>
- <CAOUmYFQECLzVUhSV-dRdGQbwjysQDrbEfT+xn_n1BcWdAn6_qg@mail.gmail.com>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Date: Thu, 23 May 2019 13:21:42 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 458zhQ2ymYzDqWC
+ for <openbmc@lists.ozlabs.org>; Fri, 24 May 2019 05:14:26 +1000 (AEST)
+Received: by mail-qt1-x82a.google.com with SMTP id z5so1747388qtb.0
+ for <openbmc@lists.ozlabs.org>; Thu, 23 May 2019 12:14:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Bbv2VnruS5SVK5+jOuNpOHlfXyiAfyPg/dHBeY8hm+U=;
+ b=krw0lDBlSo46I+IU4m/7UKyxQI8euAhj9dk3Wt+oDZsliZd3XP6omA+pFKkEOyJgFc
+ MhP1+xZ0Xre29kUCiC2xxqz9o3sdgNxKX0D+IcE+r8ySikybMaQbQPWqQeDOPsrqtkDG
+ JgCLN9ucSDzRDQ4yK6NkNK+nkL5TPpO+OZDKd9qmGC04fyPKTbpw3hddTeAO9oZOfT8C
+ vojLDlbAvu9BHPyLEIQqv+q5OnBdfGH6Zw0UrtG99g38q5t7Ev5rq9HyaRj8arBvEGfm
+ bLSo6tqs1voVjAH4lzPPQjJkPh19G2tFtT6naMLuVmQvEoPMPKEywWaSMa7z5jhnLbBm
+ +vYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Bbv2VnruS5SVK5+jOuNpOHlfXyiAfyPg/dHBeY8hm+U=;
+ b=qXN78V1EBzV5/DveFREIQwFKrXFmI0zAQ6ZgmaVEDL9paB6oc9hfbOyzEuVrZk7SN2
+ 3kNpnUeMJdDRIchI70Y2QH8bSYtZOFbee+Q+dYzQcGTIspOMdYvIViKaiUR+2ty84KYE
+ ktERKUFlCaj88hPmQegIzZ7wqFU1S3+aF7utXG0y8xZODKaCvNjvUzsZq30PlDnC3cnu
+ 9+Ebih1lXeRtCLNMCLnCrt9VTPJoPiXLYCfh8PGVbZyT+lFNhbbyHf/TQNfJnvIOL3lf
+ 6+xPaRaboY/YVx1hH1oqqCHr2Y5y1/cgngciBeCpOF1FBrO8HU44xKi6I6SCJvtMpv9G
+ 7i0g==
+X-Gm-Message-State: APjAAAXZoSxatz7gnCunlSt4J5evJ6XDpQymgvhlNlWv/jSsHgR6PaXA
+ 7d2pUPVXzwyo4pGMdhOL5Ln+EPgYdICfiNcLOwu0sypN
+X-Google-Smtp-Source: APXvYqyzag7V1D75fTGvND26u+IcRIt+51XO+JB/XYez6/uVlxzaMM/27y4xZqiLq0rKBPmziWvz2pRd9agkF5Sk5Fg=
+X-Received: by 2002:ac8:5519:: with SMTP id j25mr32697726qtq.131.1558638862060; 
+ Thu, 23 May 2019 12:14:22 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAOUmYFQECLzVUhSV-dRdGQbwjysQDrbEfT+xn_n1BcWdAn6_qg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19052318-0016-0000-0000-000009B8F0C3
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011150; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01207553; UDB=6.00634186; IPR=6.00988534; 
- MB=3.00027021; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-23 18:21:43
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19052318-0017-0000-0000-000043568869
-Message-Id: <a93570a4-966a-8169-5bcf-8d18647207c0@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-05-23_15:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=699 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1905230122
+From: Yoshie Muranaka <yoshiemuranaka@gmail.com>
+Date: Thu, 23 May 2019 14:13:46 -0500
+Message-ID: <CAOCY4Ee=6TGeFgeypJASOxQJE-1F5-oXCJnASN7PJifz=0G3Zw@mail.gmail.com>
+Subject: OpenBMC GUI button style change
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000b4d067058992e3ee"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,18 +72,29 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000b4d067058992e3ee
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/22/2019 9:57 PM, Derick wrote:
-> Current Navigation Structure
-> - Users
->    - Manage User Account
->
-> New Navigation Structure
-> - Access Control
->    - Certificate Management
->    - LDAP User Management
->    - Local User Management
+Hi all,
 
+We are planning to change all button styles in the GUI from
+rounded to straight corners.
 
-Makes sense to me.
+This will create more visual consistency between the components
+in the GUI since there are elements, such as text fields and
+dropdowns that are styled with straight corners.
 
+Yoshie
+
+--000000000000b4d067058992e3ee
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi all,<div><br></div><div>We are planning to change all b=
+utton styles in the GUI from=C2=A0</div><div>rounded to straight corners.</=
+div><div><br></div><div>This will create more visual consistency between th=
+e components</div>in the GUI since there are elements, such as text fields =
+and<br>dropdowns that are styled with straight corners.<div><br></div><div>=
+Yoshie</div></div>
+
+--000000000000b4d067058992e3ee--
