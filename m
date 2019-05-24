@@ -1,74 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0384305C3
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:26:05 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQGg3D2QzDqXb
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:26:03 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A335B2A00F
+	for <lists+openbmc@lfdr.de>; Fri, 24 May 2019 22:47:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 459dj622c1zDqVn
+	for <lists+openbmc@lfdr.de>; Sat, 25 May 2019 06:47:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=amazon.com
- (client-ip=207.171.184.25; helo=smtp-fw-9101.amazon.com;
- envelope-from=prvs=04012bafb=eduval@amazon.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=amazon.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=amazon.com header.i=@amazon.com header.b="B+CIWqAw"; 
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::e34; helo=mail-vs1-xe34.google.com;
+ envelope-from=srinuklge@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="kKBaG0AP"; 
  dkim-atps=neutral
-Received: from smtp-fw-9101.amazon.com (smtp-fw-9101.amazon.com
- [207.171.184.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com
+ [IPv6:2607:f8b0:4864:20::e34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 459YQ90VZJzDqVJ
- for <openbmc@lists.ozlabs.org>; Sat, 25 May 2019 03:34:05 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1558719249; x=1590255249;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=60JiHUi+mAqYoW4KXgGAWRkmDFnqaMCgzLBJ7C1Vxhs=;
- b=B+CIWqAwqI3AQF+Nt+WZrfLr2klARQFYDZsqd9AA/Tbuc0+R/6MFRcdd
- 0mEVYysXIKFQbOfm8KBZYS/4pN0aHOM+6F6wsNqPzIiPBTSDwX4cIMXsW
- IZVew1j4X+AJz/XlpvJ8V/Y+mfq93ll6bosYADq1QDdpyfJtjQKQ7aoGm o=;
-X-IronPort-AV: E=Sophos;i="5.60,507,1549929600"; d="scan'208";a="806591256"
-Received: from sea3-co-svc-lb6-vlan3.sea.amazon.com (HELO
- email-inbound-relay-1d-474bcd9f.us-east-1.amazon.com) ([10.47.22.38])
- by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
- 24 May 2019 17:33:58 +0000
-Received: from EX13MTAUWC001.ant.amazon.com
- (iad55-ws-svc-p15-lb9-vlan2.iad.amazon.com [10.40.159.162])
- by email-inbound-relay-1d-474bcd9f.us-east-1.amazon.com (8.14.7/8.14.7) with
- ESMTP id x4OHXmXI019870
- (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
- Fri, 24 May 2019 17:33:54 GMT
-Received: from EX13D05UWC004.ant.amazon.com (10.43.162.223) by
- EX13MTAUWC001.ant.amazon.com (10.43.162.135) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Fri, 24 May 2019 17:33:53 +0000
-Received: from EX13MTAUWC001.ant.amazon.com (10.43.162.135) by
- EX13D05UWC004.ant.amazon.com (10.43.162.223) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Fri, 24 May 2019 17:33:53 +0000
-Received: from localhost (10.107.60.88) by mail-relay.amazon.com
- (10.43.162.232) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
- Transport; Fri, 24 May 2019 17:33:53 +0000
-Date: Fri, 24 May 2019 10:33:53 -0700
-From: Eduardo Valentin <eduval@amazon.com>
-To: "Wang, Haiyue" <haiyue.wang@linux.intel.com>
-Subject: Re: [PATCH i2c/slave-mqueue v5] i2c: slave-mqueue: add a slave
- backend to receive and queue messages
-Message-ID: <20190524173353.GA6428@u40b0340c692b58f6553c.ant.amazon.com>
-References: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
- <20190523220345.GA3417@u40b0340c692b58f6553c.ant.amazon.com>
- <35a9d066-c732-cb00-04a5-438c948915ae@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 459dhb2Z3xzDqGg
+ for <openbmc@lists.ozlabs.org>; Sat, 25 May 2019 06:46:52 +1000 (AEST)
+Received: by mail-vs1-xe34.google.com with SMTP id w124so6726481vsb.11
+ for <openbmc@lists.ozlabs.org>; Fri, 24 May 2019 13:46:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=v4TafJFb0/iM40H13FuxTtAv3cnnDD1tkW6EfBQo8lE=;
+ b=kKBaG0APmxpmRsM4CWzJ+6O5/BH4WGmau3DFtgVLtncODbccP/jbmyoX9qDQw2785u
+ V5s77i/Wr4KwZzTBgZ4WenwJAo+lUGkCSVCfMiMMFbC8IJNR7BWQY1Pogd7CikNzh5wU
+ +6Wsv4tcD3Firs78JLgII/YLvyMYlta552yyj/1ph6J60F0nMOBv8klBRJw3c+zzvSe6
+ ZlIpZwb3Ilpo83JE97OAQprbmJSBcFa9uKqd2AjwlBkQY+MAtaR47wwsgm157GTHkSoT
+ Rv6oAaKWNgS+KkCkw5ZLsYNctjHPlIwbMQz01bR6HzOKHukAlfaP3hDq0KQvoPg/zOHE
+ 3DZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=v4TafJFb0/iM40H13FuxTtAv3cnnDD1tkW6EfBQo8lE=;
+ b=NouLHZhHTEwn5DKPxllDm8Ks04aoXZuPm4VvOH2Um2Tr9m8JxX1JA6MxBvCvxKBEUQ
+ gCiQMNZnWFuX1MZJ+BNTCQyVl3u74iJpGlB/gTkNIQu86SR838po7dbJaHHKIDGfBtGv
+ rzbooIROcLfF8GgEqgR93qw4mDRiquhnt1vIdc9SBTOyZG0HN0VeeurUeOVlX7bh7lyT
+ y16lRgKkvkPxHnqf9k2SZ2PNp2TjTHLGS8EALEF0PVCUQWUsndbQKhCh5ipcjvEYzQSQ
+ GKl9RhfG3Pm9FOKB4fwd47SC8BWjUHfqBFNsaY5aEBvWl/jhkf5/l6uFHb+3VYOBDKrP
+ a7zg==
+X-Gm-Message-State: APjAAAXVxo+m2+DiP8sxz5+GoMxoHsX4oG0ahr5PLBKAvOsQg9YDuiqV
+ FPOhlvwWJW2mhK+RyyWfuoPflMNbFNnS3OaPMtk=
+X-Google-Smtp-Source: APXvYqxhs/vdl4+gIF4Xd7zPleSCsQV1tMdM0lK/D3YrUfYxsfyusvIlBjgHHn74t9p/ZKzxUL+EwCm+jrXyi/8hVZM=
+X-Received: by 2002:a67:be18:: with SMTP id x24mr47312054vsq.66.1558730808215; 
+ Fri, 24 May 2019 13:46:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <35a9d066-c732-cb00-04a5-438c948915ae@linux.intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Mailman-Approved-At: Fri, 31 May 2019 10:25:29 +1000
+References: <BL0PR2101MB0932AE0C63ADC3CBDAE0CF16C8060@BL0PR2101MB0932.namprd21.prod.outlook.com>
+ <4d082cf8-c99c-22ac-9a60-85f70abb8bd6@linux.vnet.ibm.com>
+ <CAGMNF6W+W1VPnqa3J1Y_wqc=BcnkBCi4-h9rG4tjUUrCk3zR8g@mail.gmail.com>
+In-Reply-To: <CAGMNF6W+W1VPnqa3J1Y_wqc=BcnkBCi4-h9rG4tjUUrCk3zR8g@mail.gmail.com>
+From: srinivas k <srinuklge@gmail.com>
+Date: Fri, 24 May 2019 13:46:37 -0700
+Message-ID: <CALXe31mBvxQTaUkuFJsMozBYLiVTur18pMsTUfHY2t02Xp34wg@mail.gmail.com>
+Subject: Re: Platform telemetry and health monitoring
+To: Kun Yi <kunyi@google.com>
+Content-Type: multipart/alternative; boundary="0000000000001fcaff0589a84c88"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,477 +74,256 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: jae.hyun.yoo@linux.intel.com, andriy.shevchenko@intel.com,
- wsa@the-dreams.de, openbmc@lists.ozlabs.org,
- Eduardo Valentin <eduval@amazon.com>, brendanhiggins@google.com,
- linux-kernel@vger.kernel.org, jarkko.nikula@linux.intel.com,
- linux-i2c@vger.kernel.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Neeraj Ladkani <neladk@microsoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hey,
+--0000000000001fcaff0589a84c88
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 24, 2019 at 10:43:16AM +0800, Wang, Haiyue wrote:
-> Thanks for interest, the design idea is from:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/i2c/i2c-slave-eeprom.c?h=v5.2-rc1
-> 
-> and
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/i2c/slave-interface
-> 
-> Then you will get the answer. ;-)
+On Tue, May 21, 2019 at 9:55 AM Kun Yi <kunyi@google.com> wrote:
 
-Well, maybe :-) see further comments inline..
+> I put my preferred time slots but seems like vishwa@'s timeslot has no
+> overlapping with mine.. Problem finding common time between PST/IST.
+>
+> On Tue, May 21, 2019 at 2:21 AM vishwa <vishwa@linux.vnet.ibm.com> wrote:
+>
+>> Neeraj,
+>>
+>> Please find my entry here.
+>>
+>> !! Vishwa !!
+>> On 5/21/19 1:54 AM, Neeraj Ladkani wrote:
+>>
+>> Hi All,
+>>
+>>
+>>
+>> As we discussed having a focused workstream for =E2=80=9C*Platform telem=
+etry and
+>> health monitoring*=E2=80=9D in one of email thread, Please let me know i=
+f you
+>> would like to join this work stream. It would be great to have
+>> participation from Silicon partners/ mainboard design and mfg partners/
+>> Memory/ NICs/ Firmware and other components.
+>>
+>>
+>>
+>> Name
+>>
+>> Preferred Timings
+>>
+>> Agenda / Contribution Areas
+>>
+>>  Vishwanatha Subbanna ( Vishwa )
+>>
+>>  6:00 PM - 7:00 PM IST ( +5:30 )
+>>
+>> Firmware --> BMC health, HW link monitoring from BMC, OCC sensors
+>>
+>>  Kun Yi
+>>
+>>  8AM-4PM PST
+>>
+>>  BMC health monitoring
+>>
+>>  Srini K
+>>
+>>  7PM PST ~ 10PM PST
+>>
+>>  BMC Health ,Sensors, Anything which group collectively assigns to me .
+>>
+>>
+>>
+>> Once we have enough quorum, we will put together bi-weekly call to
+>> brainstorm various ideas and proposals.
+>>
+>>
+>>
+>> Thanks
+>>
+>> Neeraj
+>>
+>>
+>>
+>>
+>
+> --
+> Regards,
+> Kun
+>
 
-> 
-> BR,
-> 
-> Haiyue
-> 
-> 
-> 在 2019-05-24 06:03, Eduardo Valentin 写道:
-> >Hey Wang,
-> >
-> >On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
-> >>Some protocols over I2C are designed for bi-directional transferring
-> >>messages by using I2C Master Write protocol. Like the MCTP (Management
-> >>Component Transport Protocol) and IPMB (Intelligent Platform Management
-> >>Bus), they both require that the userspace can receive messages from
-> >>I2C dirvers under slave mode.
-> >>
-> >>This new slave mqueue backend is used to receive and queue messages, it
-> >>will exposes these messages to userspace by sysfs bin file.
-> >>
-> >>Signed-off-by: Haiyue Wang <haiyue.wang@linux.intel.com>
-> >>---
-> >>v4 -> v5:
-> >>  - Typo: bellowing -> the below
-> >>
-> >>v3 -> v4:
-> >>  - Drop the small message after receiving I2C STOP.
-> >>
-> >>v2 -> v3:
-> >>  - Just remove the ';' after the end '}' of i2c_slave_mqueue_probe().
-> >>
-> >>v1 -> v2:
-> >>  - Change MQ_MSGBUF_SIZE and MQ_QUEUE_SIZE to be configurable by Kconfig.
-> >>---
-> >>  Documentation/i2c/slave-mqueue-backend.rst | 125 ++++++++++++++++++
-> >>  drivers/i2c/Kconfig                        |  25 ++++
-> >>  drivers/i2c/Makefile                       |   1 +
-> >>  drivers/i2c/i2c-slave-mqueue.c             | 203 +++++++++++++++++++++++++++++
-> >>  4 files changed, 354 insertions(+)
-> >>  create mode 100644 Documentation/i2c/slave-mqueue-backend.rst
-> >>  create mode 100644 drivers/i2c/i2c-slave-mqueue.c
-> >>
-> >>diff --git a/Documentation/i2c/slave-mqueue-backend.rst b/Documentation/i2c/slave-mqueue-backend.rst
-> >>new file mode 100644
-> >>index 0000000..3966cf0
-> >>--- /dev/null
-> >>+++ b/Documentation/i2c/slave-mqueue-backend.rst
-> >>@@ -0,0 +1,125 @@
-> >>+.. SPDX-License-Identifier: GPL-2.0
-> >>+
-> >>+=====================================
-> >>+Linux I2C slave message queue backend
-> >>+=====================================
-> >>+
-> >>+:Author: Haiyue Wang <haiyue.wang@linux.intel.com>
-> >>+
-> >>+Some protocols over I2C/SMBus are designed for bi-directional transferring
-> >>+messages by using I2C Master Write protocol. This requires that both sides
-> >>+of the communication have slave addresses.
-> >>+
-> >>+Like MCTP (Management Component Transport Protocol) and IPMB (Intelligent
-> >>+Platform Management Bus), they both require that the userspace can receive
-> >>+messages from i2c dirvers under slave mode.
-> >>+
-> >>+This I2C slave mqueue (message queue) backend is used to receive and queue
-> >>+messages from the remote i2c intelligent device; and it will add the target
-> >>+slave address (with R/W# bit is always 0) into the message at the first byte,
-> >>+so that userspace can use this byte to dispatch the messages into different
-> >>+handling modules. Also, like IPMB, the address byte is in its message format,
-> >>+it needs it to do checksum.
-> >>+
-> >>+For messages are time related, so this backend will flush the oldest message
-> >>+to queue the newest one.
-> >>+
-> >>+Link
-> >>+----
-> >>+`Intelligent Platform Management Bus
-> >>+Communications Protocol Specification
-> >>+<https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmp-spec-v1.0.pdf>`_
-> >>+
-> >>+`Management Component Transport Protocol (MCTP)
-> >>+SMBus/I2C Transport Binding Specification
-> >>+<https://www.dmtf.org/sites/default/files/standards/documents/DSP0237_1.1.0.pdf>`_
-> >>+
-> >>+How to use
-> >>+----------
-> >>+For example, the I2C5 bus has slave address 0x10, the below command will create
-> >>+the related message queue interface:
-> >>+
-> >>+    echo slave-mqueue 0x1010 > /sys/bus/i2c/devices/i2c-5/new_device
-> >>+
-> >>+Then you can dump the messages like this:
-> >>+
-> >>+    hexdump -C /sys/bus/i2c/devices/5-1010/slave-mqueue
-> >>+
-> >>+Code Example
-> >>+------------
-> >>+*Note: call 'lseek' before 'read', this is a requirement from kernfs' design.*
-> >>+
-> >>+::
-> >>+
-> >>+  #include <sys/types.h>
-> >>+  #include <sys/stat.h>
-> >>+  #include <unistd.h>
-> >>+  #include <poll.h>
-> >>+  #include <time.h>
-> >>+  #include <fcntl.h>
-> >>+  #include <stdio.h>
-> >>+
-> >>+  int main(int argc, char *argv[])
-> >>+  {
-> >>+          int i, r;
-> >>+          struct pollfd pfd;
-> >>+          struct timespec ts;
-> >>+          unsigned char data[256];
-> >>+
-> >>+          pfd.fd = open(argv[1], O_RDONLY | O_NONBLOCK);
-> >>+          if (pfd.fd < 0)
-> >>+                  return -1;
-> >>+
-> >>+          pfd.events = POLLPRI;
-> >>+
-> >>+          while (1) {
-> >>+                  r = poll(&pfd, 1, 5000);
-> >>+
-> >>+                  if (r < 0)
-> >>+                          break;
-> >>+
-> >>+                  if (r == 0 || !(pfd.revents & POLLPRI))
-> >>+                          continue;
-> >>+
-> >>+                  lseek(pfd.fd, 0, SEEK_SET);
-> >>+                  r = read(pfd.fd, data, sizeof(data));
-> >>+                  if (r <= 0)
-> >>+                          continue;
-> >>+
-> >>+                  clock_gettime(CLOCK_MONOTONIC, &ts);
-> >>+                  printf("[%ld.%.9ld] :", ts.tv_sec, ts.tv_nsec);
-> >>+                  for (i = 0; i < r; i++)
-> >>+                          printf(" %02x", data[i]);
-> >>+                  printf("\n");
-> >>+          }
-> >>+
-> >>+          close(pfd.fd);
-> >>+
-> >>+          return 0;
-> >>+  }
-> >>+
-> >>+Result
-> >>+------
-> >>+*./a.out "/sys/bus/i2c/devices/5-1010/slave-mqueue"*
-> >>+
-> >>+::
-> >>+
-> >>+  [10183.232500449] : 20 18 c8 2c 78 01 5b
-> >>+  [10183.479358348] : 20 18 c8 2c 78 01 5b
-> >>+  [10183.726556812] : 20 18 c8 2c 78 01 5b
-> >>+  [10183.972605863] : 20 18 c8 2c 78 01 5b
-> >>+  [10184.220124772] : 20 18 c8 2c 78 01 5b
-> >>+  [10184.467764166] : 20 18 c8 2c 78 01 5b
-> >>+  [10193.233421784] : 20 18 c8 2c 7c 01 57
-> >>+  [10193.480273460] : 20 18 c8 2c 7c 01 57
-> >>+  [10193.726788733] : 20 18 c8 2c 7c 01 57
-> >>+  [10193.972781945] : 20 18 c8 2c 7c 01 57
-> >>+  [10194.220487360] : 20 18 c8 2c 7c 01 57
-> >>+  [10194.468089259] : 20 18 c8 2c 7c 01 57
-> >>+  [10203.233433099] : 20 18 c8 2c 80 01 53
-> >>+  [10203.481058715] : 20 18 c8 2c 80 01 53
-> >>+  [10203.727610472] : 20 18 c8 2c 80 01 53
-> >>+  [10203.974044856] : 20 18 c8 2c 80 01 53
-> >>+  [10204.220734634] : 20 18 c8 2c 80 01 53
-> >>+  [10204.468461664] : 20 18 c8 2c 80 01 53
-> >>+
-> >>diff --git a/drivers/i2c/Kconfig b/drivers/i2c/Kconfig
-> >>index efc3354..31e57d2 100644
-> >>--- a/drivers/i2c/Kconfig
-> >>+++ b/drivers/i2c/Kconfig
-> >>@@ -118,6 +118,31 @@ if I2C_SLAVE
-> >>  config I2C_SLAVE_EEPROM
-> >>  	tristate "I2C eeprom slave driver"
-> >>+config I2C_SLAVE_MQUEUE_MESSAGE_SIZE
-> >>+	int "The message size of I2C mqueue slave"
-> >>+	default 120
-> >>+
-> >>+config I2C_SLAVE_MQUEUE_QUEUE_SIZE
-> >>+	int "The queue size of I2C mqueue slave"
-> >>+	default 32
-> >>+	help
-> >>+	  This number MUST be power of 2.
-> >>+
-> >>+config I2C_SLAVE_MQUEUE
-> >>+	tristate "I2C mqueue (message queue) slave driver"
-> >>+	select I2C_SLAVE_MQUEUE_MESSAGE_SIZE
-> >>+	select I2C_SLAVE_MQUEUE_QUEUE_SIZE
-> >>+	help
-> >>+	  Some protocols over I2C are designed for bi-directional transferring
-> >>+	  messages by using I2C Master Write protocol. This driver is used to
-> >>+	  receive and queue messages from the remote I2C device.
-> >>+
-> >>+	  Userspace can get the messages by reading sysfs file that this driver
-> >>+	  exposes.
-> >>+
-> >>+	  This support is also available as a module. If so, the module will be
-> >>+	  called i2c-slave-mqueue.
-> >>+
-> >>  endif
-> >>  config I2C_DEBUG_CORE
-> >>diff --git a/drivers/i2c/Makefile b/drivers/i2c/Makefile
-> >>index 72c94c6..7ec287b 100644
-> >>--- a/drivers/i2c/Makefile
-> >>+++ b/drivers/i2c/Makefile
-> >>@@ -16,6 +16,7 @@ obj-$(CONFIG_I2C_MUX)		+= i2c-mux.o
-> >>  obj-y				+= algos/ busses/ muxes/
-> >>  obj-$(CONFIG_I2C_STUB)		+= i2c-stub.o
-> >>  obj-$(CONFIG_I2C_SLAVE_EEPROM)	+= i2c-slave-eeprom.o
-> >>+obj-$(CONFIG_I2C_SLAVE_MQUEUE)	+= i2c-slave-mqueue.o
-> >>  ccflags-$(CONFIG_I2C_DEBUG_CORE) := -DDEBUG
-> >>  CFLAGS_i2c-core-base.o := -Wno-deprecated-declarations
-> >>diff --git a/drivers/i2c/i2c-slave-mqueue.c b/drivers/i2c/i2c-slave-mqueue.c
-> >>new file mode 100644
-> >>index 0000000..424f435
-> >>--- /dev/null
-> >>+++ b/drivers/i2c/i2c-slave-mqueue.c
-> >>@@ -0,0 +1,203 @@
-> >>+// SPDX-License-Identifier: GPL-2.0
-> >>+// Copyright (c) 2017 - 2018, Intel Corporation.
-> >>+
-> >>+#include <linux/i2c.h>
-> >>+#include <linux/kernel.h>
-> >>+#include <linux/module.h>
-> >>+#include <linux/of.h>
-> >>+#include <linux/slab.h>
-> >>+#include <linux/spinlock.h>
-> >>+#include <linux/sysfs.h>
-> >>+
-> >>+#define MQ_MSGBUF_SIZE		CONFIG_I2C_SLAVE_MQUEUE_MESSAGE_SIZE
-> >>+#define MQ_QUEUE_SIZE		CONFIG_I2C_SLAVE_MQUEUE_QUEUE_SIZE
-> >>+#define MQ_QUEUE_NEXT(x)	(((x) + 1) & (MQ_QUEUE_SIZE - 1))
-> >>+
-> >>+struct mq_msg {
-> >>+	int	len;
-> >>+	u8	*buf;
-> >>+};
-> >>+
-> >>+struct mq_queue {
-> >>+	struct bin_attribute	bin;
-> >>+	struct kernfs_node	*kn;
-> >>+
-> >>+	spinlock_t		lock; /* spinlock for queue index handling */
-> >I wonder why you decided to lock only in/out accesses and not the mq_queue struct.
-> >
-> >>+	int			in;
-> >>+	int			out;
-> >>+
-> >>+	struct mq_msg		*curr;
-> >>+	int			truncated; /* drop current if truncated */
-> >>+	struct mq_msg		queue[MQ_QUEUE_SIZE];
-> >>+};
-> >>+
-> >>+static int i2c_slave_mqueue_callback(struct i2c_client *client,
-> >>+				     enum i2c_slave_event event, u8 *val)
-> >>+{
-> >>+	struct mq_queue *mq = i2c_get_clientdata(client);
-> >>+	struct mq_msg *msg = mq->curr;
-> >>+	int ret = 0;
-> >>+
-> >>+	switch (event) {
-> >>+	case I2C_SLAVE_WRITE_REQUESTED:
-> >>+		mq->truncated = 0;
-> >>+
-> >>+		msg->len = 1;
-> >>+		msg->buf[0] = client->addr << 1;
-> >>+		break;
-> >>+
-> >>+	case I2C_SLAVE_WRITE_RECEIVED:
-> >>+		if (msg->len < MQ_MSGBUF_SIZE) {
-> >>+			msg->buf[msg->len++] = *val;
-> >Do we need to lock the accesses to msg->buf? how about to msg->len?
+--0000000000001fcaff0589a84c88
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div dir=3D"ltr"><div dir=3D"lt=
+r"><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Tue, May 21, 2019 at 9:55 AM Kun Yi &lt;<a href=3D"mailto:kunyi@g=
+oogle.com" target=3D"_blank">kunyi@google.com</a>&gt; wrote:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"l=
+tr">I put my preferred time slots but seems like vishwa@&#39;s timeslot has=
+ no overlapping with mine.. Problem finding common time between PST/IST.</d=
+iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Tue, May 21, 2019 at 2:21 AM vishwa &lt;<a href=3D"mailto:vishwa@linux.vnet=
+.ibm.com" target=3D"_blank">vishwa@linux.vnet.ibm.com</a>&gt; wrote:<br></d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">
+ =20
+   =20
+ =20
+  <div bgcolor=3D"#FFFFFF">
+    <p>Neeraj,</p>
+    <p>Please find my entry here.</p>
+    <p>!! Vishwa !!<br>
+    </p>
+    <div class=3D"gmail-m_7951242083280990057gmail-m_43099196090947732gmail=
+-m_3307945314820574524moz-cite-prefix">On 5/21/19 1:54 AM, Neeraj Ladkani
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+     =20
+     =20
+     =20
+      <div class=3D"gmail-m_7951242083280990057gmail-m_43099196090947732gma=
+il-m_3307945314820574524WordSection1">
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)">Hi All,=
+ <u></u><u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"><u></u>=
+=C2=A0<u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)">As we d=
+iscussed
+            having a focused workstream for =E2=80=9C<i>Platform telemetry =
+and
+              health monitoring</i>=E2=80=9D in one of email thread, Please=
+ let
+            me know if you would like to join this work stream. It would
+            be great to have participation from Silicon partners/
+            mainboard design and mfg partners/ Memory/ NICs/ Firmware
+            and other components.
+            <u></u><u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"><u></u>=
+=C2=A0<u></u></span></p>
+        <table class=3D"gmail-m_7951242083280990057gmail-m_4309919609094773=
+2gmail-m_3307945314820574524MsoTableGrid" style=3D"border-collapse:collapse=
+;border:none" cellspacing=3D"0" cellpadding=3D"0" border=3D"1">
+          <tbody>
+            <tr>
+              <td style=3D"width:155.8pt;border:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+>Name<u></u><u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:1pt solid windowtext;b=
+order-right:1pt solid windowtext;border-bottom:1pt solid windowtext;border-=
+left:none;padding:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+>Preferred
+                    Timings<u></u><u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:1pt solid windowtext;b=
+order-right:1pt solid windowtext;border-bottom:1pt solid windowtext;border-=
+left:none;padding:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+>Agenda
+                    / Contribution Areas<u></u><u></u></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style=3D"width:155.8pt;border-right:1pt solid windowtext;=
+border-bottom:1pt solid windowtext;border-left:1pt solid windowtext;border-=
+top:none;padding:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A0Vishwanatha
+                      Subbanna ( Vishwa )<br>
+                    <u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A06:00
+                      PM - 7:00 PM IST ( +5:30 )<br>
+                    <u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>Firmware
+                      --&gt; BMC health, HW link monitoring from BMC,
+                      OCC sensors<br>
+                    <u></u></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style=3D"width:155.8pt;border-right:1pt solid windowtext;=
+border-bottom:1pt solid windowtext;border-left:1pt solid windowtext;border-=
+top:none;padding:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A0Kun Yi<u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A08AM-4PM PST<u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A0BMC health monitoring<u></u></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td style=3D"width:155.8pt;border-right:1pt solid windowtext;=
+border-bottom:1pt solid windowtext;border-left:1pt solid windowtext;border-=
+top:none;padding:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A0Srini K<u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A07PM PST ~ 10PM PST<u></u></span></p>
+              </td>
+              <td style=3D"width:155.85pt;border-top:none;border-left:none;=
+border-bottom:1pt solid windowtext;border-right:1pt solid windowtext;paddin=
+g:0in 5.4pt" width=3D"208" valign=3D"top">
+                <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"=
+><u></u>=C2=A0BMC Health ,Sensors, Anything which group collectively assign=
+s to me .<u></u></span></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"><u></u>=
+=C2=A0<u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)">Once we=
+ have
+            enough quorum, we will put together bi-weekly call to
+            brainstorm various ideas and proposals.
+            <u></u><u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)"><u></u>=
+=C2=A0<u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)">Thanks =
+<u></u><u></u></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:rgb(47,84,150)">Neeraj<=
+u></u><u></u></span></p>
+        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+      </div>
+    </blockquote>
+  </div>
 
-this code goes access and modify data here, e.g. msg->len and msg->buf.
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail-m_7951242083280990057gmail-m_43099196090947732gmail_signatu=
+re"><div dir=3D"ltr">Regards,<div>Kun</div></div></div></div>
+</blockquote></div></div>
+</div>
 
-On this case (I2C_SLAVE_WRITE_RECEIVED), this code wont protect access.
-
-This can cause concurrence issues if you receive an IRQ when the user
-is on your bin_read().
-
-> >
-> >>+		} else {
-> >>+			dev_err(&client->dev, "message is truncated!\n");
-> >>+			mq->truncated = 1;
-> >>+			ret = -EINVAL;
-> >>+		}
-> >>+		break;
-> >>+
-> >>+	case I2C_SLAVE_STOP:
-> >>+		if (unlikely(mq->truncated || msg->len < 2))
-> >>+			break;
-> >>+
-> >>+		spin_lock(&mq->lock);
-> >>+		mq->in = MQ_QUEUE_NEXT(mq->in);
-> >>+		mq->curr = &mq->queue[mq->in];
-> >>+		mq->curr->len = 0;
-> >>+
-> >>+		/* Flush the oldest message */
-> >>+		if (mq->out == mq->in)
-> >>+			mq->out = MQ_QUEUE_NEXT(mq->out);
-> >>+		spin_unlock(&mq->lock);
-> >>+
-
-Here you protect most of it, but you still access msg->len for read.. with no protection.
-
-> >>+		kernfs_notify(mq->kn);
-> >>+		break;
-> >>+
-> >>+	default:
-> >>+		*val = 0xFF;
-> >>+		break;
-> >>+	}
-> >>+
-> >>+	return ret;
-> >>+}
-> >>+
-> >>+static ssize_t i2c_slave_mqueue_bin_read(struct file *filp,
-> >>+					 struct kobject *kobj,
-> >>+					 struct bin_attribute *attr,
-> >>+					 char *buf, loff_t pos, size_t count)
-> >>+{
-> >>+	struct mq_queue *mq;
-> >>+	struct mq_msg *msg;
-> >>+	unsigned long flags;
-> >>+	bool more = false;
-> >>+	ssize_t ret = 0;
-> >>+
-> >>+	mq = dev_get_drvdata(container_of(kobj, struct device, kobj));
-> >>+
-> >>+	spin_lock_irqsave(&mq->lock, flags);
-> >>+	if (mq->out != mq->in) {
-> >>+		msg = &mq->queue[mq->out];
-> >>+
-> >>+		if (msg->len <= count) {
-> >>+			ret = msg->len;
-> >>+			memcpy(buf, msg->buf, ret);
-> >Is buf a userspace pointer? should it be a copy_to_user() here?
-> >
-> >>+		} else {
-> >>+			ret = -EOVERFLOW; /* Drop this HUGE one. */
-> >>+		}
-> >>+
-> >>+		mq->out = MQ_QUEUE_NEXT(mq->out);
-> >>+		if (mq->out != mq->in)
-> >>+			more = true;
-> >>+	}
-> >>+	spin_unlock_irqrestore(&mq->lock, flags);
-> >>+
-> >>+	if (more)
-> >>+		kernfs_notify(mq->kn);
-> >>+
-> >>+	return ret;
-> >>+}
-> >>+
-> >>+static int i2c_slave_mqueue_probe(struct i2c_client *client,
-> >>+				  const struct i2c_device_id *id)
-> >>+{
-> >>+	struct device *dev = &client->dev;
-> >>+	struct mq_queue *mq;
-> >>+	int ret, i;
-> >>+	void *buf;
-> >>+
-> >>+	mq = devm_kzalloc(dev, sizeof(*mq), GFP_KERNEL);
-> >>+	if (!mq)
-> >>+		return -ENOMEM;
-> >>+
-> >>+	BUILD_BUG_ON(!is_power_of_2(MQ_QUEUE_SIZE));
-> >>+
-> >>+	buf = devm_kmalloc_array(dev, MQ_QUEUE_SIZE, MQ_MSGBUF_SIZE,
-> >>+				 GFP_KERNEL);
-> >>+	if (!buf)
-> >>+		return -ENOMEM;
-> >>+
-> >>+	for (i = 0; i < MQ_QUEUE_SIZE; i++)
-> >>+		mq->queue[i].buf = buf + i * MQ_MSGBUF_SIZE;
-> >>+
-> >>+	i2c_set_clientdata(client, mq);
-> >>+
-> >>+	spin_lock_init(&mq->lock);
-> >>+	mq->curr = &mq->queue[0];
-> >>+
-> >>+	sysfs_bin_attr_init(&mq->bin);
-> >>+	mq->bin.attr.name = "slave-mqueue";
-> >>+	mq->bin.attr.mode = 0400;
-> >>+	mq->bin.read = i2c_slave_mqueue_bin_read;
-> >>+	mq->bin.size = MQ_MSGBUF_SIZE * MQ_QUEUE_SIZE;
-> >>+
-> >>+	ret = sysfs_create_bin_file(&dev->kobj, &mq->bin);
-> >>+	if (ret)
-> >>+		return ret;
-> >>+
-> >>+	mq->kn = kernfs_find_and_get(dev->kobj.sd, mq->bin.attr.name);
-> >>+	if (!mq->kn) {
-> >>+		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
-> >>+		return -EFAULT;
-> >>+	}
-> >>+
-> >>+	ret = i2c_slave_register(client, i2c_slave_mqueue_callback);
-> >>+	if (ret) {
-> >>+		kernfs_put(mq->kn);
-> >>+		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
-> >>+		return ret;
-> >>+	}
-> >>+
-> >>+	return 0;
-> >>+}
-> >>+
-> >>+static int i2c_slave_mqueue_remove(struct i2c_client *client)
-> >>+{
-> >>+	struct mq_queue *mq = i2c_get_clientdata(client);
-> >>+
-> >>+	i2c_slave_unregister(client);
-> >>+
-> >>+	kernfs_put(mq->kn);
-> >>+	sysfs_remove_bin_file(&client->dev.kobj, &mq->bin);
-> >>+
-> >>+	return 0;
-> >>+}
-> >>+
-> >>+static const struct i2c_device_id i2c_slave_mqueue_id[] = {
-> >>+	{ "slave-mqueue", 0 },
-> >>+	{ }
-> >>+};
-> >>+MODULE_DEVICE_TABLE(i2c, i2c_slave_mqueue_id);
-> >>+
-> >>+static struct i2c_driver i2c_slave_mqueue_driver = {
-> >>+	.driver = {
-> >>+		.name	= "i2c-slave-mqueue",
-> >>+	},
-> >>+	.probe		= i2c_slave_mqueue_probe,
-> >>+	.remove		= i2c_slave_mqueue_remove,
-> >>+	.id_table	= i2c_slave_mqueue_id,
-> >>+};
-> >>+module_i2c_driver(i2c_slave_mqueue_driver);
-> >>+
-> >>+MODULE_LICENSE("GPL v2");
-> >>+MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
-> >>+MODULE_DESCRIPTION("I2C slave mode for receiving and queuing messages");
-> >>-- 
-> >>2.7.4
-> >>
-
--- 
-All the best,
-Eduardo Valentin
+--0000000000001fcaff0589a84c88--
