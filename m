@@ -2,50 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4E0F305C8
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:28:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 67C012A958
+	for <lists+openbmc@lfdr.de>; Sun, 26 May 2019 13:09:59 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQJt3YM0zDqY2
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:27:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Bcnv3FTLzDqMg
+	for <lists+openbmc@lfdr.de>; Sun, 26 May 2019 21:09:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=haiyue.wang@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::142; helo=mail-it1-x142.google.com;
+ envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="rWMp+FTs"; 
+ dkim-atps=neutral
+Received: from mail-it1-x142.google.com (mail-it1-x142.google.com
+ [IPv6:2607:f8b0:4864:20::142])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 459rt72kmkzDqFH
- for <openbmc@lists.ozlabs.org>; Sat, 25 May 2019 15:10:53 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 24 May 2019 22:10:50 -0700
-X-ExtLoop1: 1
-Received: from haiyuewa-mobl.ccr.corp.intel.com (HELO [10.249.169.157])
- ([10.249.169.157])
- by orsmga005.jf.intel.com with ESMTP; 24 May 2019 22:10:47 -0700
-Subject: Re: [PATCH i2c/slave-mqueue v5] i2c: slave-mqueue: add a slave
- backend to receive and queue messages
-To: Eduardo Valentin <eduval@amazon.com>
-References: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
- <20190523220345.GA3417@u40b0340c692b58f6553c.ant.amazon.com>
- <35a9d066-c732-cb00-04a5-438c948915ae@linux.intel.com>
- <20190524173353.GA6428@u40b0340c692b58f6553c.ant.amazon.com>
-From: "Wang, Haiyue" <haiyue.wang@linux.intel.com>
-Message-ID: <bf1e8f0b-5bd0-fb43-c19b-9487603b9ee3@linux.intel.com>
-Date: Sat, 25 May 2019 13:10:46 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45BcnM4h3czDqLP
+ for <openbmc@lists.ozlabs.org>; Sun, 26 May 2019 21:09:27 +1000 (AEST)
+Received: by mail-it1-x142.google.com with SMTP id m141so22697365ita.3
+ for <openbmc@lists.ozlabs.org>; Sun, 26 May 2019 04:09:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=vOMKaTsUh/Gfp37OzHyIJ1pJJ6DuNtVb/a3VyzTG/Lc=;
+ b=rWMp+FTsGEsqh8sHzTzewKsbHTFE6ffk8y8glsFMkJ/jSN4WZRM7srbChW/jWmIdNk
+ 1ZRJ+tvV68s2lONBTTOtwrlnlmDE/ozrS4l8q5+NXALqARfvGpubTHO99OgziBL/ZeEq
+ 4Dnbk1mGX/3s9bf5Cne0PW08XwFfh7YNMvQWBtZ0xf2JpKEBgRLpMx8q/yPro6nFT4KT
+ d8iL7CfOJ2VxdISSdZ/tu4qjWDzglC+QF3A2N0FhV4fol9UKt4aZg+76YntD+HXQGd/r
+ /rZ7up3yPw+egJ/2daVWg55cYgUKI3yOBBLvsPdPdxp4vX4/5zYlUmwDuEaFfoUXZqMu
+ X8XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=vOMKaTsUh/Gfp37OzHyIJ1pJJ6DuNtVb/a3VyzTG/Lc=;
+ b=C4V8oUP7JYzsRFrgI7xLVtJODjrzEwSLk23XXEApNTK49QW7pwFhBTU99nwlEAIr3a
+ ZSiSb0SrT4n6rybL9zLFYT0RYZYPzfEXPXi7lg7zHQP5URZJIFmQ0ww1A873woGnjKox
+ du8i6+YHbyKRb9NkW88NzkwzEgfFN84wSp92+lbsRyBGLDH8KFWMMZmE0d+1/8oKIt3S
+ zDr674lcKFQmiCwGjfDs+IXtOXGoWiAZZ3pjiLWDugIicBgWCDKcn87C+Uip0+UhTdOK
+ IEDXa+ys6z8SYXgbAm8eIEV0SntbRbyu1iZyG1XG2xXA82L44hdkVnG9QRwIOUWYxnz2
+ X5mQ==
+X-Gm-Message-State: APjAAAVrV6cizBqZJGWKUSShZ8RpMaQwzS6InVxAdQmIy2PGmLpPGunr
+ vy41nVt2+23m+aN38yjLg2ZtQrgn4w5VEZBJZQ==
+X-Google-Smtp-Source: APXvYqw9sKNgKKrl4NdOqzmfS47sTQ7ARYz7mbItjTbROtFJDEVHS36UGghr/9IzQBUeeTkse52m8q+JLmrB3LeVCcY=
+X-Received: by 2002:a24:2955:: with SMTP id p82mr23510509itp.154.1558868963540; 
+ Sun, 26 May 2019 04:09:23 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190524173353.GA6428@u40b0340c692b58f6553c.ant.amazon.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Fri, 31 May 2019 10:25:30 +1000
+References: <20190523122734.27034-1-ghung.quanta@gmail.com>
+In-Reply-To: <20190523122734.27034-1-ghung.quanta@gmail.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Sun, 26 May 2019 14:08:50 +0300
+Message-ID: <CAKKbWA5xN8ESn1B-w77nG_kZpaXLGf_CibU0h0pankqL0ehx=g@mail.gmail.com>
+Subject: Re: [PATCH dev-5.1 v1 1/2] edac: npcm: Add Nuvoton NPCM7xx EDAC driver
+To: George Hung <ghung.quanta@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,473 +74,536 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: jae.hyun.yoo@linux.intel.com, andriy.shevchenko@intel.com,
- wsa@the-dreams.de, openbmc@lists.ozlabs.org, brendanhiggins@google.com,
- linux-kernel@vger.kernel.org, jarkko.nikula@linux.intel.com,
- linux-i2c@vger.kernel.org
+Cc: Benjamin Fair <benjaminfair@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Avi Fishman <Avi.Fishman@nuvoton.com>, tomer.maimon@nuvoton.com,
+ wak@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, May 23, 2019 at 3:34 PM George Hung <ghung.quanta@gmail.com> wrote:
+>
+> From: George Hung <george.hung@quantatw.com>
+>
+> Add support for the Nuvoton NPCM7xx SoC EDAC driver
+>
+> NPCM7xx ECC datasheet from nuvoton.israel-Poleg:
+> "Cadence DDR Controller User=E2=80=99s Manual For DDR3 & DDR4 Memories"
+>
+> Tested: Forcing an ECC error event
+>
+> Write a value to the xor_check_bits parameter that will trigger
+> an ECC event once that word is read
+>
+> For example, to force a single-bit correctable error on bit 0 of
+> the user-word space shown, write 0x75 into that byte of the
+> xor_check_bits parameter and then assert fwc (force write check)
+> bit to 'b1' (mem base: 0xf0824000, xor_check_bits reg addr: 0x178)
+>
+> $ devmem 0xf0824178 32 0x7501
+>
+> To force a double-bit un-correctable error for the user-word space,
+> write 0x03 into that byte of the xor_check_bits parameter
+>
+> $ devmem 0xf0824178 32 0x301
+>
+> Signed-off-by: George Hung <george.hung@quantatw.com>
+Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+> ---
+>  MAINTAINERS                 |   6 +
+>  drivers/edac/Kconfig        |   7 +
+>  drivers/edac/Makefile       |   1 +
+>  drivers/edac/npcm7xx_edac.c | 424 ++++++++++++++++++++++++++++++++++++
+>  4 files changed, 438 insertions(+)
+>  create mode 100644 drivers/edac/npcm7xx_edac.c
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 7c54dbc8f406..0a6ac3f00ed5 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -5658,6 +5658,12 @@ L:       linux-edac@vger.kernel.org
+>  S:     Maintained
+>  F:     drivers/edac/mpc85xx_edac.[ch]
+>
+> +EDAC-NPCM7XX
+> +M:     George Hung <george.hung@quantatw.com>
+> +S:     Maintained
+> +F:     drivers/edac/npcm7xx_edac.c
+> +F:     Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> +
+>  EDAC-PASEMI
+>  M:     Egor Martovetsky <egor@pasemi.com>
+>  L:     linux-edac@vger.kernel.org
+> diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
+> index 47eb4d13ed5f..7d666ad7f88b 100644
+> --- a/drivers/edac/Kconfig
+> +++ b/drivers/edac/Kconfig
+> @@ -504,4 +504,11 @@ config EDAC_ASPEED
+>           First, ECC must be configured in the bootloader. Then, this dri=
+ver
+>           will expose error counters via the EDAC kernel framework.
+>
+> +config EDAC_NPCM7XX
+> +       tristate "Nuvoton NPCM7xx DDR Memory Controller"
+> +       depends on ARCH_NPCM7XX
+> +       help
+> +         Support for error detection and correction on the
+> +         Nuvoton NPCM7xx DDR memory controller.
+> +
+>  endif # EDAC
+> diff --git a/drivers/edac/Makefile b/drivers/edac/Makefile
+> index 89ad4a84a0f6..d7780ce035b8 100644
+> --- a/drivers/edac/Makefile
+> +++ b/drivers/edac/Makefile
+> @@ -84,3 +84,4 @@ obj-$(CONFIG_EDAC_XGENE)              +=3D xgene_edac.o
+>  obj-$(CONFIG_EDAC_TI)                  +=3D ti_edac.o
+>  obj-$(CONFIG_EDAC_QCOM)                        +=3D qcom_edac.o
+>  obj-$(CONFIG_EDAC_ASPEED)              +=3D aspeed_edac.o
+> +obj-$(CONFIG_EDAC_NPCM7XX)              +=3D npcm7xx_edac.o
+> diff --git a/drivers/edac/npcm7xx_edac.c b/drivers/edac/npcm7xx_edac.c
+> new file mode 100644
+> index 000000000000..2d2deb81e49c
+> --- /dev/null
+> +++ b/drivers/edac/npcm7xx_edac.c
+> @@ -0,0 +1,424 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019 Quanta Computer lnc.
+> + */
+> +
+> +#include <linux/edac.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_device.h>
+> +
+> +#include "edac_module.h"
+> +
+> +#define ECC_ENABLE                     BIT(24)
+> +#define ECC_EN_INT_MASK                0x7fffff87
+> +
+> +#define INT_STATUS_ADDR                116
+> +#define INT_ACK_ADDR                   117
+> +#define INT_MASK_ADDR                  118
+> +
+> +#define ECC_EN_ADDR                    93
+> +#define ECC_C_ADDR_ADDR                98
+> +#define ECC_C_DATA_ADDR                100
+> +#define ECC_C_ID_ADDR                  101
+> +#define ECC_C_SYND_ADDR                99
+> +#define ECC_U_ADDR_ADDR                95
+> +#define ECC_U_DATA_ADDR                97
+> +#define ECC_U_ID_ADDR                  101
+> +#define ECC_U_SYND_ADDR                96
+> +
+> +#define ECC_ERROR                      -1
+> +#define EDAC_MSG_SIZE                  256
+> +#define EDAC_MOD_NAME                  "npcm7xx-edac"
+> +
+> +struct ecc_error_signature_info {
+> +       u32 ecc_addr;
+> +       u32 ecc_data;
+> +       u32 ecc_id;
+> +       u32 ecc_synd;
+> +};
+> +
+> +struct npcm7xx_ecc_int_status {
+> +       u32 int_mask;
+> +       u32 int_status;
+> +       u32 int_ack;
+> +       u32 ce_cnt;
+> +       u32 ue_cnt;
+> +       struct ecc_error_signature_info ceinfo;
+> +       struct ecc_error_signature_info ueinfo;
+> +};
+> +
+> +struct npcm7xx_edac_priv {
+> +       void __iomem *baseaddr;
+> +       char message[EDAC_MSG_SIZE];
+> +       struct npcm7xx_ecc_int_status stat;
+> +};
+> +
+> +/**
+> + * npcm7xx_edac_get_ecc_syndrom - Get the current ecc error info
+> + * @base:      Pointer to the base address of the ddr memory controller
+> + * @p:         Pointer to the Nuvoton ecc status structure
+> + *
+> + * Determines there is any ecc error or not
+> + *
+> + * Return: ECC detection status
+> + */
+> +static int npcm7xx_edac_get_ecc_syndrom(void __iomem *base,
+> +                                       struct npcm7xx_ecc_int_status *p)
+> +{
+> +       int status =3D 0;
+> +       u32 int_status =3D 0;
+> +
+> +       int_status =3D readl(base + 4*INT_STATUS_ADDR);
+> +       writel(int_status, base + 4*INT_ACK_ADDR);
+> +       edac_dbg(3, "int_status: %#08x\n", int_status);
+> +
+> +       if ((int_status & (1 << 6)) =3D=3D (1 << 6)) {
+> +               edac_dbg(3, "6-Mult uncorrectable detected.\n");
+> +               p->ue_cnt++;
+> +               status =3D ECC_ERROR;
+> +       }
+> +
+> +       if ((int_status & (1 << 5)) =3D=3D (1 << 5)) {
+> +               edac_dbg(3, "5-An uncorrectable detected\n");
+> +               p->ue_cnt++;
+> +               status =3D ECC_ERROR;
+> +       }
+> +
+> +       if ((int_status & (1 << 4)) =3D=3D (1 << 4)) {
+> +               edac_dbg(3, "4-mult correctable detected.\n");
+> +               p->ce_cnt++;
+> +               status =3D ECC_ERROR;
+> +       }
+> +
+> +       if ((int_status & (1 << 3)) =3D=3D (1 << 3)) {
+> +               edac_dbg(3, "3-A correctable detected.\n");
+> +               p->ce_cnt++;
+> +               status =3D ECC_ERROR;
+> +       }
+> +
+> +       if (status =3D=3D ECC_ERROR) {
+> +               u32 ecc_id;
+> +
+> +               p->ceinfo.ecc_addr =3D readl(base + 4*ECC_C_ADDR_ADDR);
+> +               p->ceinfo.ecc_data =3D readl(base + 4*ECC_C_DATA_ADDR);
+> +               p->ceinfo.ecc_synd =3D readl(base + 4*ECC_C_SYND_ADDR);
+> +
+> +               p->ueinfo.ecc_addr =3D readl(base + 4*ECC_U_ADDR_ADDR);
+> +               p->ueinfo.ecc_data =3D readl(base + 4*ECC_U_DATA_ADDR);
+> +               p->ueinfo.ecc_synd =3D readl(base + 4*ECC_U_SYND_ADDR);
+> +
+> +               /* ECC_C_ID_ADDR has same value as ECC_U_ID_ADDR */
+> +               ecc_id =3D readl(base + 4*ECC_C_ID_ADDR);
+> +               p->ueinfo.ecc_id =3D ecc_id & 0xffff;
+> +               p->ceinfo.ecc_id =3D ecc_id >> 16;
+> +       }
+> +
+> +       return status;
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_handle_error - Handle controller error types CE and UE
+> + * @mci:       Pointer to the edac memory controller instance
+> + * @p:         Pointer to the Nuvoton ecc status structure
+> + *
+> + * Handles the controller ECC correctable and un correctable error.
+> + */
+> +static void npcm7xx_edac_handle_error(struct mem_ctl_info *mci,
+> +                                   struct npcm7xx_ecc_int_status *p)
+> +{
+> +       struct npcm7xx_edac_priv *priv =3D mci->pvt_info;
+> +       u32 page, offset;
+> +
+> +       if (p->ce_cnt) {
+> +               snprintf(priv->message, EDAC_MSG_SIZE,
+> +                       "DDR ECC: synd=3D%#08x addr=3D%#08x data=3D%#08x =
+source_id=3D%#08x ",
+> +                       p->ceinfo.ecc_synd, p->ceinfo.ecc_addr,
+> +                       p->ceinfo.ecc_data, p->ceinfo.ecc_id);
+> +
+> +               page =3D p->ceinfo.ecc_addr >> PAGE_SHIFT;
+> +               offset =3D p->ceinfo.ecc_addr & ~PAGE_MASK;
+> +               edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci,
+> +                                    p->ce_cnt, page, offset,
+> +                                    p->ceinfo.ecc_synd,
+> +                                    0, 0, -1,
+> +                                    priv->message, "");
+> +       }
+> +
+> +       if (p->ue_cnt) {
+> +               snprintf(priv->message, EDAC_MSG_SIZE,
+> +                       "DDR ECC: synd=3D%#08x addr=3D%#08x data=3D%#08x =
+source_id=3D%#08x ",
+> +                       p->ueinfo.ecc_synd, p->ueinfo.ecc_addr,
+> +                       p->ueinfo.ecc_data, p->ueinfo.ecc_id);
+> +
+> +               page =3D p->ueinfo.ecc_addr >> PAGE_SHIFT;
+> +               offset =3D p->ueinfo.ecc_addr & ~PAGE_MASK;
+> +               edac_mc_handle_error(HW_EVENT_ERR_UNCORRECTED, mci,
+> +                                    p->ue_cnt, page, offset,
+> +                                    p->ueinfo.ecc_synd,
+> +                                    0, 0, -1,
+> +                                    priv->message, "");
+> +       }
+> +
+> +       memset(p, 0, sizeof(*p));
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_check - Check controller for ECC errors
+> + * @mci:       Pointer to the edac memory controller instance
+> + *
+> + * This routine is used to check and post ECC errors and is called by
+> + * this driver's CE and UE interrupt handler.
+> + */
+> +static void npcm7xx_edac_check(struct mem_ctl_info *mci)
+> +{
+> +       struct npcm7xx_edac_priv *priv =3D mci->pvt_info;
+> +       int status =3D 0;
+> +
+> +       status =3D npcm7xx_edac_get_ecc_syndrom(priv->baseaddr, &priv->st=
+at);
+> +       if (status !=3D ECC_ERROR)
+> +               return;
+> +
+> +       npcm7xx_edac_handle_error(mci, &priv->stat);
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_isr - CE/UE interrupt service routine
+> + * @irq:    The virtual interrupt number being serviced.
+> + * @dev_id: A pointer to the EDAC memory controller instance
+> + *          associated with the interrupt being handled.
+> + *
+> + * This routine implements the interrupt handler for both correctable
+> + * (CE) and uncorrectable (UE) ECC errors for the Nuvoton Cadence DDR
+> + * controller. It simply calls through to the routine used to check,
+> + * report and clear the ECC status.
+> + *
+> + * Unconditionally returns IRQ_HANDLED.
+> + */
+> +static irqreturn_t npcm7xx_edac_isr(int irq, void *dev_id)
+> +{
+> +       struct mem_ctl_info *mci =3D dev_id;
+> +       int npcm_edac_report =3D 0;
+> +
+> +       npcm_edac_report =3D edac_get_report_status();
+> +       if (npcm_edac_report !=3D EDAC_REPORTING_DISABLED)
+> +               npcm7xx_edac_check(mci);
+> +
+> +       return IRQ_HANDLED;
+> +}
+> +
+> +static int npcm7xx_edac_register_irq(struct mem_ctl_info *mci,
+> +                                       struct platform_device *pdev)
+> +{
+> +       int status =3D 0;
+> +       int mc_irq;
+> +       struct npcm7xx_edac_priv *priv =3D mci->pvt_info;
+> +
+> +       /* Only enable MC interrupts with ECC - clear int_mask[6:3] */
+> +       writel(ECC_EN_INT_MASK, priv->baseaddr + 4*INT_MASK_ADDR);
+> +
+> +       mc_irq =3D platform_get_irq(pdev, 0);
+> +
+> +       if (!mc_irq) {
+> +               edac_printk(KERN_ERR, EDAC_MC, "Unable to map interrupts.=
+\n");
+> +               status =3D -ENODEV;
+> +               goto fail;
+> +       }
+> +
+> +       status =3D devm_request_irq(&pdev->dev, mc_irq, npcm7xx_edac_isr,=
+ 0,
+> +                              "npcm-memory-controller", mci);
+> +
+> +       if (status < 0) {
+> +               edac_printk(KERN_ERR, EDAC_MC,
+> +                                     "Unable to request irq %d for ECC",
+> +                                     mc_irq);
+> +               status =3D -ENODEV;
+> +               goto fail;
+> +       }
+> +
+> +       return 0;
+> +
+> +fail:
+> +       return status;
+> +}
+> +
+> +static const struct of_device_id npcm7xx_edac_of_match[] =3D {
+> +       { .compatible =3D "nuvoton,npcm7xx-sdram-edac"},
+> +       { /* end of table */ }
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, npcm7xx_edac_of_match);
+> +
+> +/**
+> + * npcm7xx_edac_mc_init - Initialize driver instance
+> + * @mci:       Pointer to the edac memory controller instance
+> + * @pdev:      Pointer to the platform_device struct
+> + *
+> + * Performs initialization of the EDAC memory controller instance and
+> + * related driver-private data associated with the memory controller the
+> + * instance is bound to.
+> + *
+> + * Returns 0 if OK; otherwise, < 0 on error.
+> + */
+> +static int npcm7xx_edac_mc_init(struct mem_ctl_info *mci,
+> +                                struct platform_device *pdev)
+> +{
+> +       const struct of_device_id *id;
+> +
+> +       id =3D of_match_device(npcm7xx_edac_of_match, &pdev->dev);
+> +       if (!id)
+> +               return -ENODEV;
+> +
+> +       /* Initialize controller capabilities and configuration */
+> +       mci->mtype_cap =3D MEM_FLAG_DDR4;
+> +       mci->edac_ctl_cap =3D EDAC_FLAG_SECDED;
+> +       mci->edac_cap =3D EDAC_FLAG_SECDED;
+> +       mci->scrub_cap =3D SCRUB_FLAG_HW_SRC;
+> +       mci->scrub_mode =3D SCRUB_HW_SRC;
+> +       mci->ctl_name =3D id->compatible;
+> +       mci->dev_name =3D dev_name(&pdev->dev);
+> +       mci->mod_name =3D EDAC_MOD_NAME;
+> +
+> +       edac_op_state =3D EDAC_OPSTATE_INT;
+> +
+> +       return 0;
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_get_eccstate - Return the controller ecc enable/disable =
+status
+> + * @base:      Pointer to the ddr memory controller base address
+> + *
+> + * Get the ECC enable/disable status for the controller
+> + *
+> + * Return: a ecc status boolean i.e true/false - enabled/disabled.
+> + */
+> +static bool npcm7xx_edac_get_eccstate(void __iomem *base)
+> +{
+> +       u32 ecc_en;
+> +       bool state =3D false;
+> +
+> +       ecc_en =3D readl(base + 4*ECC_EN_ADDR);
+> +       if (ecc_en & ECC_ENABLE) {
+> +               edac_printk(KERN_INFO, EDAC_MC, "ECC reporting and correc=
+ting on. ");
+> +               state =3D true;
+> +       }
+> +
+> +       return state;
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_mc_probe - Check controller and bind driver
+> + * @pdev:      Pointer to the platform_device struct
+> + *
+> + * Probes a specific controller instance for binding with the driver.
+> + *
+> + * Return: 0 if the controller instance was successfully bound to the
+> + * driver; otherwise, < 0 on error.
+> + */
+> +static int npcm7xx_edac_mc_probe(struct platform_device *pdev)
+> +{
+> +       struct mem_ctl_info *mci;
+> +       struct edac_mc_layer layers[1];
+> +       struct npcm7xx_edac_priv *priv;
+> +       struct resource *res;
+> +       void __iomem *baseaddr;
+> +       int rc;
+> +
+> +       res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       baseaddr =3D devm_ioremap_resource(&pdev->dev, res);
+> +       if (IS_ERR(baseaddr)) {
+> +               edac_printk(KERN_ERR, EDAC_MOD_NAME,
+> +                           "DDR controller regs not defined\n");
+> +               return PTR_ERR(baseaddr);
+> +       }
+> +
+> +       /*
+> +        * Check if ECC is enabled.
+> +        * If not, there is no useful monitoring that can be done
+> +        * for this controller.
+> +        */
+> +       if (!npcm7xx_edac_get_eccstate(baseaddr)) {
+> +               edac_printk(KERN_INFO, EDAC_MC, "ECC disabled\n");
+> +               return -ENXIO;
+> +       }
+> +
+> +       /*
+> +        * Allocate an EDA controller instance and perform the appropriat=
+e
+> +        * initialization.
+> +        */
+> +       layers[0].type =3D EDAC_MC_LAYER_ALL_MEM;
+> +       layers[0].size =3D 1;
+> +
+> +       mci =3D edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
+> +                           sizeof(struct npcm7xx_edac_priv));
+> +       if (!mci) {
+> +               edac_printk(KERN_ERR, EDAC_MC,
+> +                           "Failed memory allocation for mc instance\n")=
+;
+> +               return -ENOMEM;
+> +       }
+> +
+> +       mci->pdev =3D &pdev->dev;
+> +       priv =3D mci->pvt_info;
+> +       priv->baseaddr =3D baseaddr;
+> +       platform_set_drvdata(pdev, mci);
+> +
+> +       rc =3D npcm7xx_edac_mc_init(mci, pdev);
+> +       if (rc) {
+> +               edac_printk(KERN_ERR, EDAC_MC,
+> +                           "Failed to initialize instance\n");
+> +               goto free_edac_mc;
+> +       }
+> +
+> +       /* Attempt to register it with the EDAC subsystem */
+> +       rc =3D edac_mc_add_mc(mci);
+> +       if (rc) {
+> +               edac_printk(KERN_ERR, EDAC_MC,
+> +                           "Failed to register with EDAC core\n");
+> +               goto free_edac_mc;
+> +       }
+> +
+> +       /* Register interrupts */
+> +       rc =3D npcm7xx_edac_register_irq(mci, pdev);
+> +       if (rc)
+> +               goto free_edac_mc;
+> +
+> +       return 0;
+> +
+> +free_edac_mc:
+> +       edac_mc_free(mci);
+> +
+> +       return rc;
+> +}
+> +
+> +/**
+> + * npcm7xx_edac_mc_remove - Unbind driver from controller
+> + * @pdev:      Pointer to the platform_device struct
+> + *
+> + * Return: Unconditionally 0
+> + */
+> +static int npcm7xx_edac_mc_remove(struct platform_device *pdev)
+> +{
+> +       struct mem_ctl_info *mci =3D platform_get_drvdata(pdev);
+> +
+> +       edac_mc_del_mc(&pdev->dev);
+> +       edac_mc_free(mci);
+> +
+> +       return 0;
+> +}
+> +
+> +static struct platform_driver npcm7xx_edac_driver =3D {
+> +       .probe =3D npcm7xx_edac_mc_probe,
+> +       .remove =3D npcm7xx_edac_mc_remove,
+> +       .driver =3D {
+> +                  .name =3D EDAC_MOD_NAME,
+> +                  .of_match_table =3D npcm7xx_edac_of_match,
+> +       },
+> +};
+> +
+> +module_platform_driver(npcm7xx_edac_driver);
+> +
+> +MODULE_AUTHOR("Quanta Computer Inc.");
+> +MODULE_DESCRIPTION("Nuvoton NPCM7xx EDAC Driver");
+> +MODULE_LICENSE("GPL v2");
+> --
+> 2.21.0
+>
 
-在 2019-05-25 01:33, Eduardo Valentin 写道:
-> Hey,
->
-> On Fri, May 24, 2019 at 10:43:16AM +0800, Wang, Haiyue wrote:
->> Thanks for interest, the design idea is from:
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/i2c/i2c-slave-eeprom.c?h=v5.2-rc1
->>
->> and
->>
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/i2c/slave-interface
->>
->> Then you will get the answer. ;-)
-> Well, maybe :-) see further comments inline..
-Please see in line. And how about the test result in your real system ? 
-It works as expected ?
->> BR,
->>
->> Haiyue
->>
->>
->> 在 2019-05-24 06:03, Eduardo Valentin 写道:
->>> Hey Wang,
->>>
->>> On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
->>>> Some protocols over I2C are designed for bi-directional transferring
->>>> messages by using I2C Master Write protocol. Like the MCTP (Management
->>>> Component Transport Protocol) and IPMB (Intelligent Platform Management
->>>> Bus), they both require that the userspace can receive messages from
->>>> I2C dirvers under slave mode.
->>>>
->>>> This new slave mqueue backend is used to receive and queue messages, it
->>>> will exposes these messages to userspace by sysfs bin file.
->>>>
->>>> Signed-off-by: Haiyue Wang <haiyue.wang@linux.intel.com>
->>>> ---
->>>> v4 -> v5:
->>>>   - Typo: bellowing -> the below
->>>>
->>>> v3 -> v4:
->>>>   - Drop the small message after receiving I2C STOP.
->>>>
->>>> v2 -> v3:
->>>>   - Just remove the ';' after the end '}' of i2c_slave_mqueue_probe().
->>>>
->>>> v1 -> v2:
->>>>   - Change MQ_MSGBUF_SIZE and MQ_QUEUE_SIZE to be configurable by Kconfig.
->>>> ---
->>>>   Documentation/i2c/slave-mqueue-backend.rst | 125 ++++++++++++++++++
->>>>   drivers/i2c/Kconfig                        |  25 ++++
->>>>   drivers/i2c/Makefile                       |   1 +
->>>>   drivers/i2c/i2c-slave-mqueue.c             | 203 +++++++++++++++++++++++++++++
->>>>   4 files changed, 354 insertions(+)
->>>>   create mode 100644 Documentation/i2c/slave-mqueue-backend.rst
->>>>   create mode 100644 drivers/i2c/i2c-slave-mqueue.c
->>>>
->>>> diff --git a/Documentation/i2c/slave-mqueue-backend.rst b/Documentation/i2c/slave-mqueue-backend.rst
->>>> new file mode 100644
->>>> index 0000000..3966cf0
->>>> --- /dev/null
->>>> +++ b/Documentation/i2c/slave-mqueue-backend.rst
->>>> @@ -0,0 +1,125 @@
->>>> +.. SPDX-License-Identifier: GPL-2.0
->>>> +
->>>> +=====================================
->>>> +Linux I2C slave message queue backend
->>>> +=====================================
->>>> +
->>>> +:Author: Haiyue Wang <haiyue.wang@linux.intel.com>
->>>> +
->>>> +Some protocols over I2C/SMBus are designed for bi-directional transferring
->>>> +messages by using I2C Master Write protocol. This requires that both sides
->>>> +of the communication have slave addresses.
->>>> +
->>>> +Like MCTP (Management Component Transport Protocol) and IPMB (Intelligent
->>>> +Platform Management Bus), they both require that the userspace can receive
->>>> +messages from i2c dirvers under slave mode.
->>>> +
->>>> +This I2C slave mqueue (message queue) backend is used to receive and queue
->>>> +messages from the remote i2c intelligent device; and it will add the target
->>>> +slave address (with R/W# bit is always 0) into the message at the first byte,
->>>> +so that userspace can use this byte to dispatch the messages into different
->>>> +handling modules. Also, like IPMB, the address byte is in its message format,
->>>> +it needs it to do checksum.
->>>> +
->>>> +For messages are time related, so this backend will flush the oldest message
->>>> +to queue the newest one.
->>>> +
->>>> +Link
->>>> +----
->>>> +`Intelligent Platform Management Bus
->>>> +Communications Protocol Specification
->>>> +<https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/ipmp-spec-v1.0.pdf>`_
->>>> +
->>>> +`Management Component Transport Protocol (MCTP)
->>>> +SMBus/I2C Transport Binding Specification
->>>> +<https://www.dmtf.org/sites/default/files/standards/documents/DSP0237_1.1.0.pdf>`_
->>>> +
->>>> +How to use
->>>> +----------
->>>> +For example, the I2C5 bus has slave address 0x10, the below command will create
->>>> +the related message queue interface:
->>>> +
->>>> +    echo slave-mqueue 0x1010 > /sys/bus/i2c/devices/i2c-5/new_device
->>>> +
->>>> +Then you can dump the messages like this:
->>>> +
->>>> +    hexdump -C /sys/bus/i2c/devices/5-1010/slave-mqueue
->>>> +
->>>> +Code Example
->>>> +------------
->>>> +*Note: call 'lseek' before 'read', this is a requirement from kernfs' design.*
->>>> +
->>>> +::
->>>> +
->>>> +  #include <sys/types.h>
->>>> +  #include <sys/stat.h>
->>>> +  #include <unistd.h>
->>>> +  #include <poll.h>
->>>> +  #include <time.h>
->>>> +  #include <fcntl.h>
->>>> +  #include <stdio.h>
->>>> +
->>>> +  int main(int argc, char *argv[])
->>>> +  {
->>>> +          int i, r;
->>>> +          struct pollfd pfd;
->>>> +          struct timespec ts;
->>>> +          unsigned char data[256];
->>>> +
->>>> +          pfd.fd = open(argv[1], O_RDONLY | O_NONBLOCK);
->>>> +          if (pfd.fd < 0)
->>>> +                  return -1;
->>>> +
->>>> +          pfd.events = POLLPRI;
->>>> +
->>>> +          while (1) {
->>>> +                  r = poll(&pfd, 1, 5000);
->>>> +
->>>> +                  if (r < 0)
->>>> +                          break;
->>>> +
->>>> +                  if (r == 0 || !(pfd.revents & POLLPRI))
->>>> +                          continue;
->>>> +
->>>> +                  lseek(pfd.fd, 0, SEEK_SET);
->>>> +                  r = read(pfd.fd, data, sizeof(data));
->>>> +                  if (r <= 0)
->>>> +                          continue;
->>>> +
->>>> +                  clock_gettime(CLOCK_MONOTONIC, &ts);
->>>> +                  printf("[%ld.%.9ld] :", ts.tv_sec, ts.tv_nsec);
->>>> +                  for (i = 0; i < r; i++)
->>>> +                          printf(" %02x", data[i]);
->>>> +                  printf("\n");
->>>> +          }
->>>> +
->>>> +          close(pfd.fd);
->>>> +
->>>> +          return 0;
->>>> +  }
->>>> +
->>>> +Result
->>>> +------
->>>> +*./a.out "/sys/bus/i2c/devices/5-1010/slave-mqueue"*
->>>> +
->>>> +::
->>>> +
->>>> +  [10183.232500449] : 20 18 c8 2c 78 01 5b
->>>> +  [10183.479358348] : 20 18 c8 2c 78 01 5b
->>>> +  [10183.726556812] : 20 18 c8 2c 78 01 5b
->>>> +  [10183.972605863] : 20 18 c8 2c 78 01 5b
->>>> +  [10184.220124772] : 20 18 c8 2c 78 01 5b
->>>> +  [10184.467764166] : 20 18 c8 2c 78 01 5b
->>>> +  [10193.233421784] : 20 18 c8 2c 7c 01 57
->>>> +  [10193.480273460] : 20 18 c8 2c 7c 01 57
->>>> +  [10193.726788733] : 20 18 c8 2c 7c 01 57
->>>> +  [10193.972781945] : 20 18 c8 2c 7c 01 57
->>>> +  [10194.220487360] : 20 18 c8 2c 7c 01 57
->>>> +  [10194.468089259] : 20 18 c8 2c 7c 01 57
->>>> +  [10203.233433099] : 20 18 c8 2c 80 01 53
->>>> +  [10203.481058715] : 20 18 c8 2c 80 01 53
->>>> +  [10203.727610472] : 20 18 c8 2c 80 01 53
->>>> +  [10203.974044856] : 20 18 c8 2c 80 01 53
->>>> +  [10204.220734634] : 20 18 c8 2c 80 01 53
->>>> +  [10204.468461664] : 20 18 c8 2c 80 01 53
->>>> +
->>>> diff --git a/drivers/i2c/Kconfig b/drivers/i2c/Kconfig
->>>> index efc3354..31e57d2 100644
->>>> --- a/drivers/i2c/Kconfig
->>>> +++ b/drivers/i2c/Kconfig
->>>> @@ -118,6 +118,31 @@ if I2C_SLAVE
->>>>   config I2C_SLAVE_EEPROM
->>>>   	tristate "I2C eeprom slave driver"
->>>> +config I2C_SLAVE_MQUEUE_MESSAGE_SIZE
->>>> +	int "The message size of I2C mqueue slave"
->>>> +	default 120
->>>> +
->>>> +config I2C_SLAVE_MQUEUE_QUEUE_SIZE
->>>> +	int "The queue size of I2C mqueue slave"
->>>> +	default 32
->>>> +	help
->>>> +	  This number MUST be power of 2.
->>>> +
->>>> +config I2C_SLAVE_MQUEUE
->>>> +	tristate "I2C mqueue (message queue) slave driver"
->>>> +	select I2C_SLAVE_MQUEUE_MESSAGE_SIZE
->>>> +	select I2C_SLAVE_MQUEUE_QUEUE_SIZE
->>>> +	help
->>>> +	  Some protocols over I2C are designed for bi-directional transferring
->>>> +	  messages by using I2C Master Write protocol. This driver is used to
->>>> +	  receive and queue messages from the remote I2C device.
->>>> +
->>>> +	  Userspace can get the messages by reading sysfs file that this driver
->>>> +	  exposes.
->>>> +
->>>> +	  This support is also available as a module. If so, the module will be
->>>> +	  called i2c-slave-mqueue.
->>>> +
->>>>   endif
->>>>   config I2C_DEBUG_CORE
->>>> diff --git a/drivers/i2c/Makefile b/drivers/i2c/Makefile
->>>> index 72c94c6..7ec287b 100644
->>>> --- a/drivers/i2c/Makefile
->>>> +++ b/drivers/i2c/Makefile
->>>> @@ -16,6 +16,7 @@ obj-$(CONFIG_I2C_MUX)		+= i2c-mux.o
->>>>   obj-y				+= algos/ busses/ muxes/
->>>>   obj-$(CONFIG_I2C_STUB)		+= i2c-stub.o
->>>>   obj-$(CONFIG_I2C_SLAVE_EEPROM)	+= i2c-slave-eeprom.o
->>>> +obj-$(CONFIG_I2C_SLAVE_MQUEUE)	+= i2c-slave-mqueue.o
->>>>   ccflags-$(CONFIG_I2C_DEBUG_CORE) := -DDEBUG
->>>>   CFLAGS_i2c-core-base.o := -Wno-deprecated-declarations
->>>> diff --git a/drivers/i2c/i2c-slave-mqueue.c b/drivers/i2c/i2c-slave-mqueue.c
->>>> new file mode 100644
->>>> index 0000000..424f435
->>>> --- /dev/null
->>>> +++ b/drivers/i2c/i2c-slave-mqueue.c
->>>> @@ -0,0 +1,203 @@
->>>> +// SPDX-License-Identifier: GPL-2.0
->>>> +// Copyright (c) 2017 - 2018, Intel Corporation.
->>>> +
->>>> +#include <linux/i2c.h>
->>>> +#include <linux/kernel.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/of.h>
->>>> +#include <linux/slab.h>
->>>> +#include <linux/spinlock.h>
->>>> +#include <linux/sysfs.h>
->>>> +
->>>> +#define MQ_MSGBUF_SIZE		CONFIG_I2C_SLAVE_MQUEUE_MESSAGE_SIZE
->>>> +#define MQ_QUEUE_SIZE		CONFIG_I2C_SLAVE_MQUEUE_QUEUE_SIZE
->>>> +#define MQ_QUEUE_NEXT(x)	(((x) + 1) & (MQ_QUEUE_SIZE - 1))
->>>> +
->>>> +struct mq_msg {
->>>> +	int	len;
->>>> +	u8	*buf;
->>>> +};
->>>> +
->>>> +struct mq_queue {
->>>> +	struct bin_attribute	bin;
->>>> +	struct kernfs_node	*kn;
->>>> +
->>>> +	spinlock_t		lock; /* spinlock for queue index handling */
->>> I wonder why you decided to lock only in/out accesses and not the mq_queue struct.
->>>
->>>> +	int			in;
->>>> +	int			out;
->>>> +
->>>> +	struct mq_msg		*curr;
->>>> +	int			truncated; /* drop current if truncated */
->>>> +	struct mq_msg		queue[MQ_QUEUE_SIZE];
->>>> +};
->>>> +
->>>> +static int i2c_slave_mqueue_callback(struct i2c_client *client,
->>>> +				     enum i2c_slave_event event, u8 *val)
->>>> +{
->>>> +	struct mq_queue *mq = i2c_get_clientdata(client);
->>>> +	struct mq_msg *msg = mq->curr;
->>>> +	int ret = 0;
->>>> +
->>>> +	switch (event) {
->>>> +	case I2C_SLAVE_WRITE_REQUESTED:
->>>> +		mq->truncated = 0;
->>>> +
->>>> +		msg->len = 1;
->>>> +		msg->buf[0] = client->addr << 1;
->>>> +		break;
->>>> +
->>>> +	case I2C_SLAVE_WRITE_RECEIVED:
->>>> +		if (msg->len < MQ_MSGBUF_SIZE) {
->>>> +			msg->buf[msg->len++] = *val;
->>> Do we need to lock the accesses to msg->buf? how about to msg->len?
->
-> this code goes access and modify data here, e.g. msg->len and msg->buf.
->
-> On this case (I2C_SLAVE_WRITE_RECEIVED), this code wont protect access.
->
-> This can cause concurrence issues if you receive an IRQ when the user
-> is on your bin_read().
 
-User will not touch 'msg = mq->curr;', just touch 'msg = 
-&mq->queue[mq->out];'
-
->>>> +		} else {
->>>> +			dev_err(&client->dev, "message is truncated!\n");
->>>> +			mq->truncated = 1;
->>>> +			ret = -EINVAL;
->>>> +		}
->>>> +		break;
->>>> +
->>>> +	case I2C_SLAVE_STOP:
->>>> +		if (unlikely(mq->truncated || msg->len < 2))
->>>> +			break;
->>>> +
->>>> +		spin_lock(&mq->lock);
->>>> +		mq->in = MQ_QUEUE_NEXT(mq->in);
->>>> +		mq->curr = &mq->queue[mq->in];
->>>> +		mq->curr->len = 0;
->>>> +
->>>> +		/* Flush the oldest message */
->>>> +		if (mq->out == mq->in)
->>>> +			mq->out = MQ_QUEUE_NEXT(mq->out);
->>>> +		spin_unlock(&mq->lock);
->>>> +
-> Here you protect most of it, but you still access msg->len for read.. with no protection.
->
->>>> +		kernfs_notify(mq->kn);
->>>> +		break;
->>>> +
->>>> +	default:
->>>> +		*val = 0xFF;
->>>> +		break;
->>>> +	}
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +static ssize_t i2c_slave_mqueue_bin_read(struct file *filp,
->>>> +					 struct kobject *kobj,
->>>> +					 struct bin_attribute *attr,
->>>> +					 char *buf, loff_t pos, size_t count)
->>>> +{
->>>> +	struct mq_queue *mq;
->>>> +	struct mq_msg *msg;
->>>> +	unsigned long flags;
->>>> +	bool more = false;
->>>> +	ssize_t ret = 0;
->>>> +
->>>> +	mq = dev_get_drvdata(container_of(kobj, struct device, kobj));
->>>> +
->>>> +	spin_lock_irqsave(&mq->lock, flags);
->>>> +	if (mq->out != mq->in) {
->>>> +		msg = &mq->queue[mq->out];
->>>> +
->>>> +		if (msg->len <= count) {
->>>> +			ret = msg->len;
->>>> +			memcpy(buf, msg->buf, ret);
->>> Is buf a userspace pointer? should it be a copy_to_user() here?
-The buf is the memory in kernel sysfs module.
->>>> +		} else {
->>>> +			ret = -EOVERFLOW; /* Drop this HUGE one. */
->>>> +		}
->>>> +
->>>> +		mq->out = MQ_QUEUE_NEXT(mq->out);
->>>> +		if (mq->out != mq->in)
->>>> +			more = true;
->>>> +	}
->>>> +	spin_unlock_irqrestore(&mq->lock, flags);
->>>> +
->>>> +	if (more)
->>>> +		kernfs_notify(mq->kn);
->>>> +
->>>> +	return ret;
->>>> +}
->>>> +
->>>> +static int i2c_slave_mqueue_probe(struct i2c_client *client,
->>>> +				  const struct i2c_device_id *id)
->>>> +{
->>>> +	struct device *dev = &client->dev;
->>>> +	struct mq_queue *mq;
->>>> +	int ret, i;
->>>> +	void *buf;
->>>> +
->>>> +	mq = devm_kzalloc(dev, sizeof(*mq), GFP_KERNEL);
->>>> +	if (!mq)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	BUILD_BUG_ON(!is_power_of_2(MQ_QUEUE_SIZE));
->>>> +
->>>> +	buf = devm_kmalloc_array(dev, MQ_QUEUE_SIZE, MQ_MSGBUF_SIZE,
->>>> +				 GFP_KERNEL);
->>>> +	if (!buf)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	for (i = 0; i < MQ_QUEUE_SIZE; i++)
->>>> +		mq->queue[i].buf = buf + i * MQ_MSGBUF_SIZE;
->>>> +
->>>> +	i2c_set_clientdata(client, mq);
->>>> +
->>>> +	spin_lock_init(&mq->lock);
->>>> +	mq->curr = &mq->queue[0];
->>>> +
->>>> +	sysfs_bin_attr_init(&mq->bin);
->>>> +	mq->bin.attr.name = "slave-mqueue";
->>>> +	mq->bin.attr.mode = 0400;
->>>> +	mq->bin.read = i2c_slave_mqueue_bin_read;
->>>> +	mq->bin.size = MQ_MSGBUF_SIZE * MQ_QUEUE_SIZE;
->>>> +
->>>> +	ret = sysfs_create_bin_file(&dev->kobj, &mq->bin);
->>>> +	if (ret)
->>>> +		return ret;
->>>> +
->>>> +	mq->kn = kernfs_find_and_get(dev->kobj.sd, mq->bin.attr.name);
->>>> +	if (!mq->kn) {
->>>> +		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
->>>> +		return -EFAULT;
->>>> +	}
->>>> +
->>>> +	ret = i2c_slave_register(client, i2c_slave_mqueue_callback);
->>>> +	if (ret) {
->>>> +		kernfs_put(mq->kn);
->>>> +		sysfs_remove_bin_file(&dev->kobj, &mq->bin);
->>>> +		return ret;
->>>> +	}
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static int i2c_slave_mqueue_remove(struct i2c_client *client)
->>>> +{
->>>> +	struct mq_queue *mq = i2c_get_clientdata(client);
->>>> +
->>>> +	i2c_slave_unregister(client);
->>>> +
->>>> +	kernfs_put(mq->kn);
->>>> +	sysfs_remove_bin_file(&client->dev.kobj, &mq->bin);
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>> +static const struct i2c_device_id i2c_slave_mqueue_id[] = {
->>>> +	{ "slave-mqueue", 0 },
->>>> +	{ }
->>>> +};
->>>> +MODULE_DEVICE_TABLE(i2c, i2c_slave_mqueue_id);
->>>> +
->>>> +static struct i2c_driver i2c_slave_mqueue_driver = {
->>>> +	.driver = {
->>>> +		.name	= "i2c-slave-mqueue",
->>>> +	},
->>>> +	.probe		= i2c_slave_mqueue_probe,
->>>> +	.remove		= i2c_slave_mqueue_remove,
->>>> +	.id_table	= i2c_slave_mqueue_id,
->>>> +};
->>>> +module_i2c_driver(i2c_slave_mqueue_driver);
->>>> +
->>>> +MODULE_LICENSE("GPL v2");
->>>> +MODULE_AUTHOR("Haiyue Wang <haiyue.wang@linux.intel.com>");
->>>> +MODULE_DESCRIPTION("I2C slave mode for receiving and queuing messages");
->>>> -- 
->>>> 2.7.4
->>>>
+--=20
+Regards,
+Avi
