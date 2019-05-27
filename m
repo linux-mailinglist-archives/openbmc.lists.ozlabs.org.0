@@ -1,67 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2B7D2AD44
+	for <lists+openbmc@lfdr.de>; Mon, 27 May 2019 05:11:10 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1F42A959
-	for <lists+openbmc@lfdr.de>; Sun, 26 May 2019 13:10:56 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Bcq169lWzDqMg
-	for <lists+openbmc@lfdr.de>; Sun, 26 May 2019 21:10:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45C26y5q0wzDqKr
+	for <lists+openbmc@lfdr.de>; Mon, 27 May 2019 13:11:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::142; helo=mail-it1-x142.google.com;
- envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::72a; helo=mail-qk1-x72a.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Z/jQtlMw"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="Dmf++XmA"; 
  dkim-atps=neutral
-Received: from mail-it1-x142.google.com (mail-it1-x142.google.com
- [IPv6:2607:f8b0:4864:20::142])
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
+ [IPv6:2607:f8b0:4864:20::72a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Bcpb4DyBzDqLN
- for <openbmc@lists.ozlabs.org>; Sun, 26 May 2019 21:10:31 +1000 (AEST)
-Received: by mail-it1-x142.google.com with SMTP id t184so5400434itf.2
- for <openbmc@lists.ozlabs.org>; Sun, 26 May 2019 04:10:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45C26T6Vy4zDqHS
+ for <openbmc@lists.ozlabs.org>; Mon, 27 May 2019 13:10:41 +1000 (AEST)
+Received: by mail-qk1-x72a.google.com with SMTP id c70so1564917qkg.7
+ for <openbmc@lists.ozlabs.org>; Sun, 26 May 2019 20:10:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=zbd0q77KqzJ+Mu2SrB8JWUeum0u0wAMNctAceRVqdB8=;
- b=Z/jQtlMwC2JTqf8JKNEhrisA3RbtmyOVELCMska+lgpmhOCAIMn/69mNRGf4q2Vb+C
- tSXU64mbO52rz32Ue+go6D4lCMgOzAZQuHNQdcDo61nm1AtMYMVXq5m9Ut2VoK4tu1t8
- 4I1Z9kpx4HHwf3a7vPrU2D86335kAHeB9VbE0K0HjLZR0EkPYZGMwki/v4Tv7pktD9D/
- EgIqO37lvYBP9pZA4O9nTTqb/TCO0SoVcYsbyZ/8XZ6hvB68GJvxXfLaWB6QkXpEm1PR
- siHEc7fJmcPDGVquux9/8ySB5jNQhFLGi90/rZJuRWPvez435YomzBuhgPFmi1Yydc37
- LtVw==
+ :cc; bh=cPcKOr1ckq7kr0Q1VVXloklIvRJUvAWkYOGoPkAfOpo=;
+ b=Dmf++XmA3vhU6IWKAbZdHjqeoDosK4nK9FlY43Ht+FHev3Q66MXs36LCD6etjUj9rP
+ udYyhzhiiCNS+o0nnMfu8fHUCv2sBVyI6LvsOJRGxu098g2fzEVaxaZC10rywMihL7rp
+ XIjXFAR48TsgQnIDr+vIUDui+2GJelC0hO+04=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=zbd0q77KqzJ+Mu2SrB8JWUeum0u0wAMNctAceRVqdB8=;
- b=SZZmcixFqHpJDcGDgMs6Zfw1CUneWfb/w44ObZ0kKy3NCYODfvQQI0f+z/ZC2OgV3m
- y+LmLwbS10vHpOCQL5Kd5059gctAqXVK8Lu5T156WhAsWeU4CmruomuO4vNiwyRWxFEM
- odTLnuRwpHLsk9gKkAyEIJ0vU/gsTxpK1SUmZ49YKvtXT83l/2zge7j0zEIc4gArqtfa
- Qz1fq+kDFMc1w32CcRniojOcPRXk5LM4RyeOF2aVBnwPWVykIcMzM2zyjLCw3u3s03sc
- FUb+bBocqva67BBv220FaA7zOd2r/9JJR29C/wUi0h+VUU3jcsMBHVb4QVApbPTucXL5
- FGXQ==
-X-Gm-Message-State: APjAAAUjbc++6Wv/E+aXWOb9DI4N8HOdOI7zDQENtNddC6t3Jaf11UjV
- BVM1g2kF0MvYQ6gvMw2qmfceQCHNnDSkRpompA==
-X-Google-Smtp-Source: APXvYqy5YZf3bFbLj1d4eNbt8QeStdJBL3l8iL9wHjMvq4uo2c6zRG/muMCFbAMf6L6mk7NbUg437X9VW0R4s+K+hJI=
-X-Received: by 2002:a02:1a89:: with SMTP id 131mr68161153jai.78.1558869029276; 
- Sun, 26 May 2019 04:10:29 -0700 (PDT)
+ bh=cPcKOr1ckq7kr0Q1VVXloklIvRJUvAWkYOGoPkAfOpo=;
+ b=NYWnMao5DaDhgG/qk0flzSPa6KMnnIpV/LzIsyMm9kiQ/TFRLt/LEk++IpLfg7yL/1
+ /E79ktEsrsoMaah0dQL58AqvvlfsMzsmBYDM9lrSLl72NLQkMcmalkqbhEFVJhu8D2VJ
+ iEegoZXa4ZsSOqTsa+ZcZSDcgudKLkp9Apve0Eg9yNWlvlEdhYSdktqiOtly4QALtVC6
+ 1qM7oVpR3Imy6Gh2D9/leVYaQiK+4gRNcbpCLXjAhC9ywbCFXrb5MsX/ED7KvfcpYFuM
+ kUZVblCa1PiR2JgzRwOA4pkPMfQ3LQwsP7+M/ie7kxQbCDU0uI64k+L7hY6ncwaAthO7
+ IWnA==
+X-Gm-Message-State: APjAAAWrh9krVsHvYDvDXM8YeDi+5ca+cQdf8F7LQEmMYjubJzY1MTOm
+ 8kP0e/3doxge3VYljLWg2gr5EMorUg37ijNVFSI=
+X-Google-Smtp-Source: APXvYqx8/xk3y638gr97Ekd3GmDgo95gmsQ8M19GmCheVFMEZTNfUFimkrOanr7Kbi+VB+VybRCW52i5d7ZE4ZdeIfY=
+X-Received: by 2002:ac8:7183:: with SMTP id w3mr7131488qto.269.1558926637495; 
+ Sun, 26 May 2019 20:10:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190523122734.27034-1-ghung.quanta@gmail.com>
- <20190523122734.27034-2-ghung.quanta@gmail.com>
-In-Reply-To: <20190523122734.27034-2-ghung.quanta@gmail.com>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Sun, 26 May 2019 14:09:55 +0300
-Message-ID: <CAKKbWA52EWP_VHSmFKCkeoBBUd=0WLuS=OtYvfRnPec88rqiGg@mail.gmail.com>
-Subject: Re: [PATCH dev-5.1 v1 2/2] dt-binding: edac: add NPCM ECC
- documentation
-To: George Hung <ghung.quanta@gmail.com>
+References: <20190524120328.GA648@bbwork.lan>
+In-Reply-To: <20190524120328.GA648@bbwork.lan>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 27 May 2019 03:10:26 +0000
+Message-ID: <CACPK8XeXzDE6tsfE7X0qX5E9R2WPCqFT6OuAktNVy4uQxB0jEw@mail.gmail.com>
+Subject: Re: IKVM on AST2400
+To: "Alexander A. Filippov" <a.filippov@yadro.com>,
+ Eddie James <eajames@linux.ibm.com>, 
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,54 +71,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Avi Fishman <Avi.Fishman@nuvoton.com>, tomer.maimon@nuvoton.com,
- wak@google.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 23, 2019 at 3:35 PM George Hung <ghung.quanta@gmail.com> wrote:
->
-> From: George Hung <george.hung@quantatw.com>
->
-> Add device tree documentation for Nuvoton BMC ECC
->
-> Signed-off-by: George Hung <george.hung@quantatw.com>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
-> ---
->  .../bindings/edac/npcm7xx-sdram-edac.txt        | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
->
-> diff --git a/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
-> new file mode 100644
-> index 000000000000..dd4dac59a5bd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
-> @@ -0,0 +1,17 @@
-> +Nuvoton NPCM7xx SoC EDAC device driver
-> +
-> +The Nuvoton NPCM7xx SoC supports DDR4 memory with/without ECC and the driver
-> +uses the EDAC framework to implement the ECC detection and corrtection.
-> +
-> +Required properties:
-> +- compatible:  should be "nuvoton,npcm7xx-sdram-edac"
-> +- reg:         Memory controller register set should be <0xf0824000 0x1000>
-> +- interrupts:  should be MC interrupt #25
-> +
-> +Example:
-> +
-> +       mc: memory-controller@f0824000 {
-> +               compatible = "nuvoton,npcm7xx-sdram-edac";
-> +               reg = <0xf0824000 0x1000>;
-> +               interrupts = <0 25 4>;
-> +       };
-> --
-> 2.21.0
->
+Hi Alexander,
 
+On Fri, 24 May 2019 at 12:03, Alexander A. Filippov
+<a.filippov@yadro.com> wrote:
+>
+> Some time ago the obmc-ikvm service was added to the firmware. It causes some
+> problems on our VESNIN hardware. As it based on AST2400 it does not have support
+> for IKVM in the DTS. The system log contains messages that create_usbhid.sh is
+> unable to find some items in the sysfs and then obmc-ikvm service crashes. It
+> causes fail in QEMU_CI test.
+>
+> I belive that this issue also present on other platforms based on AST2400.
+>
+> IBM Guys: Do you run tests for Palmetto?
+> Is there anybody else who uses AST2400?
 
--- 
-Regards,
-Avi
+I am not sure that anyone has tested it on ast2400. If it works, we
+can enable it for palmetto.
+
+>
+> Well, my proposal is to make the IKVM support optional by moving it to the
+> distrofeature.
+>
+> Besides, I've solved these problems for our hardware by adding required kernel
+> modules and modifying DTS.
+> IKVM works, but bring a lot of warnings after the host was shut down while the
+> VNC-client is still connected.
+>
+> During the solving I copied some records from aspeed-g5.dtsi to aspeed-g4.dtsi.
+> Should I commit these changes to Torvalds or OpenBMC repo?
+
+Send them to mainline (Torvalds).
+
+Thanks,
+
+Joel
