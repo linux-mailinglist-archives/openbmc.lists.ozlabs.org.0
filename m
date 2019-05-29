@@ -2,82 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FBA22DC74
-	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 14:11:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4BC72DE00
+	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 15:22:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45DV1z6TdkzDqJY
-	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 22:11:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45DWb216kXzDqRd
+	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 23:22:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (mailfrom) smtp.mailfrom=eltan.com
- (client-ip=213.75.39.8; helo=cpsmtpb-ews05.kpnxchange.com;
- envelope-from=wvervoorn@eltan.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=eltan.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=kpnmail.nl header.i=@kpnmail.nl header.b="Q2Xbbxib"; 
- dkim-atps=neutral
-Received: from cpsmtpb-ews05.kpnxchange.com (cpsmtpb-ews05.kpnxchange.com
- [213.75.39.8])
- by lists.ozlabs.org (Postfix) with ESMTP id 45DV1L6qPwzDqHm
- for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 22:11:14 +1000 (AEST)
-Received: from cpsps-ews09.kpnxchange.com ([10.94.84.176]) by
- cpsmtpb-ews05.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514); 
- Wed, 29 May 2019 14:11:08 +0200
-X-Brand: 4ZrJ
-X-KPN-SpamVerdict: e1=0;e2=0;e3=0;e4=(e4=10;e1=10;e3=10;e2=11);EVW:Whi
- te;BM:NotScanned;FinalVerdict:Clean
-X-CMAE-Analysis: v=2.3 cv=TPaUtGta c=1 sm=1 tr=0 cx=a_idp_d
- a=dZ5u/0G9QtS9WKCcNUBnHQ==:117 a=dZ5u/0G9QtS9WKCcNUBnHQ==:17
- a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=eIHzyqS2sMcA:10 a=IkcTkHD0fZMA:10
- a=xqWC_Br6kY4A:10 a=E5NmQfObTbMA:10 a=voM4FWlXAAAA:8 a=-c9VzbpeAAAA:8
- a=VwQbUJbxAAAA:8 a=0Czkjf2JYyS1-j4YLkcA:9 a=QEXdDO2ut3YA:10
- a=IC2XNlieTeVoXbcui8wp:22 a=WAq88MDkwfy8HpmZFCM0:22
- a=AjGcO6oz07-iQ99wixmX:22
-X-CM-AcctID: kpn@feedback.cloudmark.com
-Received: from smtp.kpnmail.nl ([195.121.84.13]) by cpsps-ews09.kpnxchange.com
- over TLS secured channel with Microsoft SMTPSVC(8.5.9600.16384); 
- Wed, 29 May 2019 14:11:08 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kpnmail.nl; s=kpnmail01;
- h=mime-version:content-type:message-id:date:subject:to:from;
- bh=c165VzpQsrj9wPx64SXfmPXdDE4jLRd5bmU4+R3LKzA=;
- b=Q2XbbxibD53DAXv5ZUhfZzEP3XkGfL6WVpEsWGZ/9gaP2obU+MTJxeMKtSnXQYCjAmNR4xWvV/jjm
- ZMMERm3rHNk1VbtViO6AqsU9hyKRtlA0HIqZ0Iv/nSAmoWsHlMB5/GH6bQl/Xbh9NMKGGZ4Y/DCZko
- 8dY9BIti8kHXTRJ4=
-Received: from Eltsrv03.Eltan.local (unknown [84.85.114.86])
- by smtp.kpnmail.nl (Halon) with ESMTPS
- id d70de762-820a-11e9-89e3-005056998788;
- Wed, 29 May 2019 14:11:08 +0200 (CEST)
-Received: from Eltsrv03.Eltan.local (192.168.100.3) by Eltsrv03.Eltan.local
- (192.168.100.3) with Microsoft SMTP Server (TLS) id 15.0.847.32; Wed, 29 May
- 2019 14:10:29 +0200
-Received: from Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8]) by
- Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8%12]) with mapi id
- 15.00.0847.040; Wed, 29 May 2019 14:09:59 +0200
-From: Wim Vervoorn <wvervoorn@eltan.com>
-To: Eddie James <eajames@linux.vnet.ibm.com>, "Alexander A. Filippov"
- <a.filippov@yadro.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: IKVM on AST2400
-Thread-Topic: IKVM on AST2400
-Thread-Index: AdUUYodASLBseELfRPSRnFujjQqcUAAFhXAAADhUTYAALygjQA==
-Date: Wed, 29 May 2019 12:09:58 +0000
-Message-ID: <76a1327991c541f9a328292c672d99e4@Eltsrv03.Eltan.local>
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=eajames@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45DWT20sZVzDq7c
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 23:16:53 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x4TDGcPj106215
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 09:16:49 -0400
+Received: from e36.co.us.ibm.com (e36.co.us.ibm.com [32.97.110.154])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sssn0u9ut-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 09:16:43 -0400
+Received: from localhost
+ by e36.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <eajames@linux.vnet.ibm.com>;
+ Wed, 29 May 2019 14:14:31 +0100
+Received: from b03cxnp08027.gho.boulder.ibm.com (9.17.130.19)
+ by e36.co.us.ibm.com (192.168.1.136) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 29 May 2019 14:14:28 +0100
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x4TDERGQ26149250
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 May 2019 13:14:27 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 37F9A6E059;
+ Wed, 29 May 2019 13:14:27 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F32F06E04C;
+ Wed, 29 May 2019 13:14:26 +0000 (GMT)
+Received: from [9.41.179.222] (unknown [9.41.179.222])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 29 May 2019 13:14:26 +0000 (GMT)
+Subject: Re: IKVM on AST2400
+To: Wim Vervoorn <wvervoorn@eltan.com>,
+ "Alexander A. Filippov" <a.filippov@yadro.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 References: <d826c4212f9b472ab33bf1036e5a4768@Eltsrv03.Eltan.local>
  <78912a29-889f-0252-52e2-7861930be5ef@linux.vnet.ibm.com>
-In-Reply-To: <78912a29-889f-0252-52e2-7861930be5ef@linux.vnet.ibm.com>
-Accept-Language: nl-NL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.100.108]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <76a1327991c541f9a328292c672d99e4@Eltsrv03.Eltan.local>
+From: Eddie James <eajames@linux.vnet.ibm.com>
+Date: Wed, 29 May 2019 08:14:26 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-X-OriginalArrivalTime: 29 May 2019 12:11:08.0717 (UTC)
- FILETIME=[992C3DD0:01D51617]
-X-RcptDomain: lists.ozlabs.org
+In-Reply-To: <76a1327991c541f9a328292c672d99e4@Eltsrv03.Eltan.local>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19052913-0020-0000-0000-00000EF19D39
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011179; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01210274; UDB=6.00635848; IPR=6.00991306; 
+ MB=3.00027101; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-29 13:14:29
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19052913-0021-0000-0000-0000660334FA
+Message-Id: <afcb5928-b1f5-e9c9-e0ba-2c3f2459ae8c@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-29_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905290088
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,109 +101,175 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8gRWRkaWUsDQoNClRoYW5rcyBmb3IgeW91ciByZXNwb25zZS4NCg0KSXQgY2xlYXJzIHRo
-aW5ncyB1cCBhIGJpdC4NCg0KSnVzdCB0byBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBtZWNo
-YW5pc20gY29ycmVjdGx5Lg0KDQpUaGUgIiBnZnhfbWVtb3J5IiBpcyB1c2VkIHRvIGJ1ZmZlciB0
-aGUgYWN0dWFsIGZyYW1lYnVmZmVyIGNvbnRlbnQgaXMgdGhhdCByaWdodD8NCg0KVGhlICJ2aWRl
-b19lbmdpbmVfbWVtb3J5IiBhcmUgaXMgdGhlIGNvbXByZXNzaW9uIGJ1ZmZlci4NCg0KVGhlIGRy
-aXZlciBhbGxvY2F0ZXMgdGhlIG1lbW9yeSBmcm9tIHRoZXNlIHJlc2VydmVkIGFyZWFzLiBJcyB0
-aGVyZSBhIHdheSB0byByZWxlYXNlIHRoZXNlIGFyZWEncyBmb3IgZ2VuZXJhbCB1c2Ugd2hlbiB0
-aGUgaUtWTSBpcyBzaHV0ZG93bi4gVGhpcyB3b3VsZCBhbGxvdyBtZSB0byB1cGRhdGUgdGhlIHN5
-c3RlbSByaWdodCBub3cgdGhlc2UgdHdvIGFyZWEncyBhcmUgYWxyZWFkeSBvY2N1cHlpbmcgYSBs
-YXJnZSBwYXJ0IG9mIHRoZSBzeXN0ZW0gbWVtb3J5IGFuZCBJIG5lZWQgYXBwcm94LiAzMiBNQiB0
-byBwZXJmb3JtIHRoZSB1cGRhdGUuDQoNCkJlc3QgUmVnYXJkcywNCldpbSBWZXJ2b29ybg0KDQoN
-Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJt
-Yy1ib3VuY2VzK3d2ZXJ2b29ybj1lbHRhbi5jb21AbGlzdHMub3psYWJzLm9yZ10gT24gQmVoYWxm
-IE9mIEVkZGllIEphbWVzDQpTZW50OiBUdWVzZGF5LCBNYXkgMjgsIDIwMTkgNTozMyBQTQ0KVG86
-IEFsZXhhbmRlciBBLiBGaWxpcHBvdiA8YS5maWxpcHBvdkB5YWRyby5jb20+OyBvcGVuYm1jQGxp
-c3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBJS1ZNIG9uIEFTVDI0MDANCg0KDQpPbiA1LzI3
-LzE5IDc6NDAgQU0sIEFsZXhhbmRlciBBLiBGaWxpcHBvdiB3cm90ZToNCj4gT24gTW9uLCBNYXkg
-MjcsIDIwMTkgYXQgMDg6MTk6NDRBTSArMDAwMCwgV2ltIFZlcnZvb3JuIHdyb3RlOg0KPj4gSGVs
-bG8gQWxleGFuZGVyLA0KPj4NCj4+IFdlIGFyZSBzdXBwb3J0aW5nIHRoZSBBU1QyNDAwIGFzIHdl
-bGwuDQo+Pg0KPj4gSSBhbSBhbHNvIHdvbmRlcmluZyB3aGF0IHRoZSBjb3JyZWN0IGNoYW5nZXMg
-YXJlIHRvIGdldCBpS1ZNIHdvcmtpbmcgcHJvcGVybHkgb24gdGhlIEFTVDI0MDAuDQo+Pg0KPj4g
-VGhlIGVycm9ycyBjYXVzZWQgYnkgY3JlYXRlX3VzYmhpZC5zaCBhcmUgY2F1c2VkIGJ5IHVzYiBn
-YWRnZXQgc3VwcG9ydCB0aGF0IGlzbid0IGVuYWJsZWQuIFRoaXMgc2hvdWxkIGJlIGRvbmUgaW4g
-dGhlIExpbnV4IGtlcm5lbC4gV2UgYXJlIHVzaW5nIHRoZSBmb2xsb3dpbmcgb3B0aW9uczoNCj4+
-DQo+PiBDT05GSUdfVVNCX0dBREdFVD15DQo+PiBDT05GSUdfVVNCX0ZfSElEPXkNCj4+IENPTkZJ
-R19VU0JfR0FER0VUPXkNCj4+IENPTkZJR19VU0JfQVNQRUVEX1ZIVUI9eQ0KPj4gQ09ORklHX1VT
-Ql9DT05GSUdGUz15DQo+PiBDT05GSUdfVVNCX0NPTkZJR0ZTX01BU1NfU1RPUkFHRT15DQo+PiBD
-T05GSUdfVVNCX0NPTkZJR0ZTX0ZfSElEPXkNCj4+DQo+PiBUaGUgQ09ORklHX1VTQl9DT05GSUdG
-U19NQVNTX1NUT1JBR0UgaXMgbm90IHJlYWxseSBuZWVkZWQgZm9yIHRoaXMuIFRoaXMgaXMgb25s
-eSByZXF1aXJlZCBpZiB5b3UgYWxzbyB3YW50IHRvIHN1cHBvcnQgZW11bGF0aW9uIG9mIGEgVVNC
-IHN0b3JhZ2UgZGV2aWNlLg0KPj4NCj4+IEJlc2lkZXMgdGhpcyB5b3UgbmVlZCBhIHNtYWxsIGNo
-YW5nZSB0byB0aGUgYXNwZWVkLWc0LmR0c2kgYW5kIHRoZSBzeXN0ZW0gZHRzIHRvIGFkZCB0aGUg
-VkhVQiBkZXZpY2UuIFlvdSBjYW4gY29weSB0aGF0IGZyb20gdGhlIGFzcGVlZC1nNS5kdHNpLg0K
-PiBZZXMsIEkndmUgZG9uZSBpdCB0b28uDQo+DQo+PiBJIGFtIHdvbmRlcmluZyB3aGljaCBzdXBw
-b3J0IHlvdSBlbmFibGVkIGZvciB0aGUgYWN0dWFsIGlLVk0gc3VwcG9ydCB0byB3b3JrIGFuZCB3
-aGljaCBjb2RlIHlvdSBhcmUgYWN0dWFsbHkgdXNpbmcuICh3aGljaCBrZXJuZWwgZXRjKS4NCj4g
-V2UgdXNlIGxpbnV4LWFzcGVlZCByZWNpcGUgZnJvbSBPcGVuQk1DIG1haW5saW5lLg0KPiBTbywg
-b3VyIGtlcm5lbCBpcyA1LjEuMy4NCj4NCj4gSSd2ZSBhbHNvIGVuYWJsZWQgdGhlc2Ugb3B0aW9u
-czoNCj4gICAgICBDT05GSUdfRFJNPXkNCj4gICAgICBDT05GSUdfRFJNX0FTUEVFRF9HRlg9eQ0K
-PiAgICAgIENPTkZJR19GUkFNRV9WRUNUT1I9eQ0KPiAgICAgIENPTkZJR19NRURJQV9TVVBQT1JU
-PXkNCj4gICAgICBDT05GSUdfTUVESUFfQ0FNRVJBX1NVUFBPUlQ9eQ0KPiAgICAgIENPTkZJR19W
-SURFT19ERVY9eQ0KPiAgICAgIENPTkZJR19WSURFT19WNEwyPXkNCj4gICAgICBDT05GSUdfVjRM
-X1BMQVRGT1JNX0RSSVZFUlM9eQ0KPiAgICAgIENPTkZJR19WSURFT19BU1BFRUQ9eQ0KPiAgICAg
-IENPTkZJR19WSURFT0JVRjJfQ09SRT15DQo+ICAgICAgQ09ORklHX1ZJREVPQlVGMl9WNEwyPXkN
-Cj4gICAgICBDT05GSUdfVklERU9CVUYyX01FTU9QUz15DQo+ICAgICAgQ09ORklHX1ZJREVPQlVG
-Ml9ETUFfQ09OVElHPXkNCj4gICAgICBDT05GSUdfTUVESUFfU1VCRFJWX0FVVE9TRUxFQ1Q9eQ0K
-Pg0KPiBhbmQgY29waWVkIHZnYV9zY3JhdGNoIGFuZCB2aWRlbyBub2RlcyBmcm9tIGFzcGVlZC1n
-NS5kdHNpLg0KPiBJJ3ZlIHNlbnQgdGhlc2UgY2hhbmdlcyB0byBjb3JyZXNwb25kIG1haWxsaXN0
-cy4NCj4gICAgaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcGF0Y2h3b3JrL3BhdGNoLzEwNzk0NjIv
-DQo+DQo+PiBBcyBmYXIgYXMgSSBoYXZlIHVuZGVyc3Rvb2QgdGhlc2UgbWVtb3J5IGFyZWEncyBh
-cmUgcmVxdWlyZWQgYnV0IEkgYW0gbm90IHJlYWxseSBzdXJlIGFib3V0IGl0Lg0KPj4NCj4+IAkJ
-Z2Z4X21lbW9yeTogZnJhbWVidWZmZXIgew0KPj4gCQkJc2l6ZSA9IDwweDAwODAwMDAwPjsNCj4+
-IAkJCWFsaWdubWVudCA9IDwweDAxMDAwMDAwPjsNCj4+IAkJCWNvbXBhdGlibGUgPSAic2hhcmVk
-LWRtYS1wb29sIjsNCj4+IAkJCXJldXNhYmxlOw0KPj4gCQl9Ow0KPj4NCj4+IAkJdmlkZW9fZW5n
-aW5lX21lbW9yeToganBlZ2J1ZmZlciB7DQo+PiAJCQlzaXplID0gPDB4MDIwMDAwMDA+OwkvKiAz
-Mk1NICovDQo+PiAJCQlhbGlnbm1lbnQgPSA8MHgwMTAwMDAwMD47DQo+PiAJCQljb21wYXRpYmxl
-ID0gInNoYXJlZC1kbWEtcG9vbCI7DQo+PiAJCQlyZXVzYWJsZTsNCj4+IAkJfTsNCj4+DQo+PiBU
-aGUgcXVlc3Rpb25zIEkgaGF2ZSBhcmUgOg0KPj4NCj4+IFRoZSAiZ2Z4X21lbW9yeSIgYXJlYSBz
-ZWVtcyBkb3VibGUgdG8gbWUgd2UgYWxzbyBoYXZlIHRoZSAidmdhX21lbW9yeSIgYXJlYSB3aGlj
-aCBhbHNvIGlzIHRoZSB2aWRlbyBtZW1vcnksIHdoeSBkbyB3ZSBuZWVkIHRvIGRlZmluZSBhIDJu
-ZCBvbmUgdGhhdCBhcyBmYXIgYXMgSSB1bmRlcnN0YW5kIGl0IHBvaW50cyB0byB0aGUgc2FtZSBw
-aHlzaWNhbCBwYXJ0IG9mIFJBTS4NCj4+DQo+IElmIEkgdW5kZXJzdGFuZCByaWdodCwgdGhpcyBu
-b2RlIGlzIG5vdCByZXF1aXJlZCBmb3IgQVNUMjQwMCBiZWNhdXNlIA0KPiBHRlggaXMgdW5zdXBw
-b3J0ZWQgYnkgU29DLg0KPg0KPj4gSSBjYW4gdW5kZXJzdGFuZCB3aGVyZSB0aGUgInZpZGVvX2Vu
-Z2luZV9tZW1vcnkiIGlzIGZvciBidXQgaXQgaXMgbm90IGNsZWFyIGhvdyBJIGNhbiBkZXRlcm1p
-bmUgdGhlIHJlcXVpcmVkIHNpemUuIEFzIHRoZSB0b3RhbCBhbW91bnQgb2YgbWVtb3J5IGlzIGxp
-bWl0ZWQgd2UgYXJlIHRyeWluZyB0byByZWR1Y2UgbWVtb3J5IHVzYWdlIHdoZXJlIHBvc3NpYmxl
-IGFuZCBzbyBmYXIgSSBoYXZlbid0IGJlZW4gYWJsZSB0byBmaW5kIG91dCB3aGF0IGlzIGRlZmlu
-aW5nIHRoZSBzaXplIG9mIHRoaXMgYmxvY2sgb2YgbWVtb3J5Lg0KPiBJIGNhbid0IHNheSBhbnl0
-aGluZyBhYm91dCBjaG9vc2luZyBidWZmZXIncyBzaXplLiBJIGp1c3QgY29waWVkIGl0IA0KPiBm
-cm9tIEFTVDI1MDAgYW5kIGl0IHdvcmtzIGZvciBtZS4NCg0KSGkgV2ltLA0KDQpJbiBvcmRlciB0
-byBkZXRlY3QgdGhlIHJlc29sdXRpb24sIHRoZSBkcml2ZXIgYWxsb2NhdGVzIGEgYnVmZmVyIGZv
-ciB0aGUgbGFyZ2VzdCBwb3NzaWJsZSByZXNvbHV0aW9uICgxOTIweDEyMDB4MzJicHApLiBPbmNl
-IGRldGVjdGVkLCB0aGUgbWVtb3J5IGlzIHJlZHVjZWQgZG93biB0byB3aGF0IGlzIG5lZWRlZCAo
-ZG91YmxlIGJ1ZmZlciBvZiB0aGUgZGV0ZWN0ZWQgcmVzb2x1dGlvbiwgYXMgd2VsbCBhcyB0aGUg
-Y29tcHJlc3Npb24gYnVmZmVyLCB3aGljaCBpcyBzbWFsbCBpbiBjb21wYXJpc29uKS4gU28gdGhh
-dCBpcyB3aHkgdGhhdCByZXNlcnZlZCBtZW1vcnkgYmxvY2sgaXMgdGhhdCBzaXplLCB0aG91Z2gg
-SSB0aGluayBpdCBpcyBsYXJnZXIgdGhhbiBpdCBuZWVkcyB0byBiZS4gSSBoYWQgaXNzdWVzIHdp
-dGggYXR0ZW1wdGluZyB0byByZWxpYWJseSBhbGxvY2F0ZSBETUEgd2l0aG91dCB0aGUgcmVzZXJ2
-ZWQgbWVtb3J5IChtZW1vcnkgaXMgcHJvYmFibHkgdG9vIGZyYWdtZW50ZWQpLg0KDQpIb3BlIHRo
-YXQgaGVscHMsDQoNCkVkZGllDQoNCj4NCj4+IEJlc3QgcmVnYXJkcywNCj4+DQo+PiBXaW0gVmVy
-dm9vcm4NCj4+DQo+Pg0KPj4NCj4+DQo+Pg0KPj4NCj4+IERhdGU6IEZyaSwgMjQgTWF5IDIwMTkg
-MTU6MDM6MjggKzAzMDANCj4+IEZyb206ICJBbGV4YW5kZXIgQS4gRmlsaXBwb3YiIDxhLmZpbGlw
-cG92QHlhZHJvLmNvbT4NCj4+IFRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96
-bGFicy5vcmc+DQo+PiBTdWJqZWN0OiBJS1ZNIG9uIEFTVDI0MDANCj4+IE1lc3NhZ2UtSUQ6IDwy
-MDE5MDUyNDEyMDMyOC5HQTY0OEBiYndvcmsubGFuPg0KPj4gQ29udGVudC1UeXBlOiB0ZXh0L3Bs
-YWluOyBjaGFyc2V0PSJ1dGYtOCINCj4+DQo+PiBTb21lIHRpbWUgYWdvIHRoZSBvYm1jLWlrdm0g
-c2VydmljZSB3YXMgYWRkZWQgdG8gdGhlIGZpcm13YXJlLiBJdCBjYXVzZXMgc29tZSBwcm9ibGVt
-cyBvbiBvdXIgVkVTTklOIGhhcmR3YXJlLiBBcyBpdCBiYXNlZCBvbiBBU1QyNDAwIGl0IGRvZXMg
-bm90IGhhdmUgc3VwcG9ydCBmb3IgSUtWTSBpbiB0aGUgRFRTLiBUaGUgc3lzdGVtIGxvZyBjb250
-YWlucyBtZXNzYWdlcyB0aGF0IGNyZWF0ZV91c2JoaWQuc2ggaXMgdW5hYmxlIHRvIGZpbmQgc29t
-ZSBpdGVtcyBpbiB0aGUgc3lzZnMgYW5kIHRoZW4gb2JtYy1pa3ZtIHNlcnZpY2UgY3Jhc2hlcy4g
-SXQgY2F1c2VzIGZhaWwgaW4gUUVNVV9DSSB0ZXN0Lg0KPj4NCj4+IEkgYmVsaXZlIHRoYXQgdGhp
-cyBpc3N1ZSBhbHNvIHByZXNlbnQgb24gb3RoZXIgcGxhdGZvcm1zIGJhc2VkIG9uIEFTVDI0MDAu
-DQo+Pg0KPj4gSUJNIEd1eXM6IERvIHlvdSBydW4gdGVzdHMgZm9yIFBhbG1ldHRvPw0KPj4gSXMg
-dGhlcmUgYW55Ym9keSBlbHNlIHdobyB1c2VzIEFTVDI0MDA/DQo+Pg0KPj4gV2VsbCwgbXkgcHJv
-cG9zYWwgaXMgdG8gbWFrZSB0aGUgSUtWTSBzdXBwb3J0IG9wdGlvbmFsIGJ5IG1vdmluZyBpdCB0
-byB0aGUgZGlzdHJvZmVhdHVyZS4NCj4+DQo+PiBCZXNpZGVzLCBJJ3ZlIHNvbHZlZCB0aGVzZSBw
-cm9ibGVtcyBmb3Igb3VyIGhhcmR3YXJlIGJ5IGFkZGluZyByZXF1aXJlZCBrZXJuZWwgbW9kdWxl
-cyBhbmQgbW9kaWZ5aW5nIERUUy4NCj4+IElLVk0gd29ya3MsIGJ1dCBicmluZyBhIGxvdCBvZiB3
-YXJuaW5ncyBhZnRlciB0aGUgaG9zdCB3YXMgc2h1dCBkb3duIHdoaWxlIHRoZSBWTkMtY2xpZW50
-IGlzIHN0aWxsIGNvbm5lY3RlZC4NCj4+DQo+PiBEdXJpbmcgdGhlIHNvbHZpbmcgSSBjb3BpZWQg
-c29tZSByZWNvcmRzIGZyb20gYXNwZWVkLWc1LmR0c2kgdG8gYXNwZWVkLWc0LmR0c2kuDQo+PiBT
-aG91bGQgSSBjb21taXQgdGhlc2UgY2hhbmdlcyB0byBUb3J2YWxkcyBvciBPcGVuQk1DIHJlcG8/
-DQo+Pg0KPj4gLS0NCj4+IFJlZ2FyZHMNCj4+IEFsZXhhbmRlciBGaWxpcHBvdg0KPj4gU29mdHdh
-cmUgRW5naW5lZXIsIFlBRFJPDQo+Pg0KPj4NCj4+DQoNCg0KDQo=
+
+On 5/29/19 7:09 AM, Wim Vervoorn wrote:
+> Hello Eddie,
+>
+> Thanks for your response.
+>
+> It clears things up a bit.
+>
+> Just to make sure I understand the mechanism correctly.
+>
+> The " gfx_memory" is used to buffer the actual framebuffer content is that right?
+>
+> The "video_engine_memory" are is the compression buffer.
+
+
+No, the gfx_memory is for the DRM driver on the bmc, that handles the 
+buffers for actually displaying the VGA output locally, i.e. you plug a 
+monitor into the back of the system. The video_engine_memory is for the 
+framebuffer and compression buffer for the video engine driver, which 
+grabs the VGA output into RGB data. Sorry for the confusion...
+
+
+>
+> The driver allocates the memory from these reserved areas. Is there a way to release these area's for general use when the iKVM is shutdown. This would allow me to update the system right now these two area's are already occupying a large part of the system memory and I need approx. 32 MB to perform the update.
+
+
+Not that I'm aware of. If the reserved memory is set in the devicetree, 
+I think it's fixed. There might be a way to instead call 
+dma_declare_coherent or something at probe time that would reliably get 
+enough memory, that could then be allocated later. And removing the 
+driver module would release it in that case. I haven't tried that.
+
+
+Thanks,
+
+Eddie
+
+
+>
+> Best Regards,
+> Wim Vervoorn
+>
+>
+> -----Original Message-----
+> From: openbmc [mailto:openbmc-bounces+wvervoorn=eltan.com@lists.ozlabs.org] On Behalf Of Eddie James
+> Sent: Tuesday, May 28, 2019 5:33 PM
+> To: Alexander A. Filippov <a.filippov@yadro.com>; openbmc@lists.ozlabs.org
+> Subject: Re: IKVM on AST2400
+>
+>
+> On 5/27/19 7:40 AM, Alexander A. Filippov wrote:
+>> On Mon, May 27, 2019 at 08:19:44AM +0000, Wim Vervoorn wrote:
+>>> Hello Alexander,
+>>>
+>>> We are supporting the AST2400 as well.
+>>>
+>>> I am also wondering what the correct changes are to get iKVM working properly on the AST2400.
+>>>
+>>> The errors caused by create_usbhid.sh are caused by usb gadget support that isn't enabled. This should be done in the Linux kernel. We are using the following options:
+>>>
+>>> CONFIG_USB_GADGET=y
+>>> CONFIG_USB_F_HID=y
+>>> CONFIG_USB_GADGET=y
+>>> CONFIG_USB_ASPEED_VHUB=y
+>>> CONFIG_USB_CONFIGFS=y
+>>> CONFIG_USB_CONFIGFS_MASS_STORAGE=y
+>>> CONFIG_USB_CONFIGFS_F_HID=y
+>>>
+>>> The CONFIG_USB_CONFIGFS_MASS_STORAGE is not really needed for this. This is only required if you also want to support emulation of a USB storage device.
+>>>
+>>> Besides this you need a small change to the aspeed-g4.dtsi and the system dts to add the VHUB device. You can copy that from the aspeed-g5.dtsi.
+>> Yes, I've done it too.
+>>
+>>> I am wondering which support you enabled for the actual iKVM support to work and which code you are actually using. (which kernel etc).
+>> We use linux-aspeed recipe from OpenBMC mainline.
+>> So, our kernel is 5.1.3.
+>>
+>> I've also enabled these options:
+>>       CONFIG_DRM=y
+>>       CONFIG_DRM_ASPEED_GFX=y
+>>       CONFIG_FRAME_VECTOR=y
+>>       CONFIG_MEDIA_SUPPORT=y
+>>       CONFIG_MEDIA_CAMERA_SUPPORT=y
+>>       CONFIG_VIDEO_DEV=y
+>>       CONFIG_VIDEO_V4L2=y
+>>       CONFIG_V4L_PLATFORM_DRIVERS=y
+>>       CONFIG_VIDEO_ASPEED=y
+>>       CONFIG_VIDEOBUF2_CORE=y
+>>       CONFIG_VIDEOBUF2_V4L2=y
+>>       CONFIG_VIDEOBUF2_MEMOPS=y
+>>       CONFIG_VIDEOBUF2_DMA_CONTIG=y
+>>       CONFIG_MEDIA_SUBDRV_AUTOSELECT=y
+>>
+>> and copied vga_scratch and video nodes from aspeed-g5.dtsi.
+>> I've sent these changes to correspond maillists.
+>>     https://lore.kernel.org/patchwork/patch/1079462/
+>>
+>>> As far as I have understood these memory area's are required but I am not really sure about it.
+>>>
+>>> 		gfx_memory: framebuffer {
+>>> 			size = <0x00800000>;
+>>> 			alignment = <0x01000000>;
+>>> 			compatible = "shared-dma-pool";
+>>> 			reusable;
+>>> 		};
+>>>
+>>> 		video_engine_memory: jpegbuffer {
+>>> 			size = <0x02000000>;	/* 32MM */
+>>> 			alignment = <0x01000000>;
+>>> 			compatible = "shared-dma-pool";
+>>> 			reusable;
+>>> 		};
+>>>
+>>> The questions I have are :
+>>>
+>>> The "gfx_memory" area seems double to me we also have the "vga_memory" area which also is the video memory, why do we need to define a 2nd one that as far as I understand it points to the same physical part of RAM.
+>>>
+>> If I understand right, this node is not required for AST2400 because
+>> GFX is unsupported by SoC.
+>>
+>>> I can understand where the "video_engine_memory" is for but it is not clear how I can determine the required size. As the total amount of memory is limited we are trying to reduce memory usage where possible and so far I haven't been able to find out what is defining the size of this block of memory.
+>> I can't say anything about choosing buffer's size. I just copied it
+>> from AST2500 and it works for me.
+> Hi Wim,
+>
+> In order to detect the resolution, the driver allocates a buffer for the largest possible resolution (1920x1200x32bpp). Once detected, the memory is reduced down to what is needed (double buffer of the detected resolution, as well as the compression buffer, which is small in comparison). So that is why that reserved memory block is that size, though I think it is larger than it needs to be. I had issues with attempting to reliably allocate DMA without the reserved memory (memory is probably too fragmented).
+>
+> Hope that helps,
+>
+> Eddie
+>
+>>> Best regards,
+>>>
+>>> Wim Vervoorn
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> Date: Fri, 24 May 2019 15:03:28 +0300
+>>> From: "Alexander A. Filippov" <a.filippov@yadro.com>
+>>> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+>>> Subject: IKVM on AST2400
+>>> Message-ID: <20190524120328.GA648@bbwork.lan>
+>>> Content-Type: text/plain; charset="utf-8"
+>>>
+>>> Some time ago the obmc-ikvm service was added to the firmware. It causes some problems on our VESNIN hardware. As it based on AST2400 it does not have support for IKVM in the DTS. The system log contains messages that create_usbhid.sh is unable to find some items in the sysfs and then obmc-ikvm service crashes. It causes fail in QEMU_CI test.
+>>>
+>>> I belive that this issue also present on other platforms based on AST2400.
+>>>
+>>> IBM Guys: Do you run tests for Palmetto?
+>>> Is there anybody else who uses AST2400?
+>>>
+>>> Well, my proposal is to make the IKVM support optional by moving it to the distrofeature.
+>>>
+>>> Besides, I've solved these problems for our hardware by adding required kernel modules and modifying DTS.
+>>> IKVM works, but bring a lot of warnings after the host was shut down while the VNC-client is still connected.
+>>>
+>>> During the solving I copied some records from aspeed-g5.dtsi to aspeed-g4.dtsi.
+>>> Should I commit these changes to Torvalds or OpenBMC repo?
+>>>
+>>> --
+>>> Regards
+>>> Alexander Filippov
+>>> Software Engineer, YADRO
+>>>
+>>>
+>>>
+>
+>
+
