@@ -2,65 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90C422DA73
-	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 12:25:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FBA22DC74
+	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 14:11:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45DRg974mQzDqKD
-	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 20:25:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45DV1z6TdkzDqJY
+	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 22:11:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::12e; helo=mail-it1-x12e.google.com;
- envelope-from=tyler.sabdon@gmail.com; receiver=<UNKNOWN>)
+ spf=softfail (mailfrom) smtp.mailfrom=eltan.com
+ (client-ip=213.75.39.8; helo=cpsmtpb-ews05.kpnxchange.com;
+ envelope-from=wvervoorn@eltan.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="UgdW/lWA"; 
+ dmarc=fail (p=none dis=none) header.from=eltan.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=kpnmail.nl header.i=@kpnmail.nl header.b="Q2Xbbxib"; 
  dkim-atps=neutral
-Received: from mail-it1-x12e.google.com (mail-it1-x12e.google.com
- [IPv6:2607:f8b0:4864:20::12e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45DRff6YmWzDqF0
- for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 20:24:58 +1000 (AEST)
-Received: by mail-it1-x12e.google.com with SMTP id h20so2809300itk.4
- for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 03:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=9rcGM9GkQc6OE6+i3+MNzG5PHqRhv0Itgo+EFL66LpY=;
- b=UgdW/lWAw5DlkY1fv+y05dJya5MPy0VBsu85vuVx69pZ6/bZaWgN+NpFr4IRME70yZ
- q8EZsl2iT2clAtc13D/o+/tYULLVsfHIfGTeOqCkv+aa56LZ5ITACC9OIQBWrDGCJd2I
- f9RTMDw3IQScj5V238/BZNoiamPdw6Ks9mW4rQZcH/9fnRk3I/lN/HDglpMvAIsliEA0
- KuccakoiXoHaoGu5Kcyba+xUdS0TmZMfJELHd4+daXLGKOINpAmk5VvqmaWDkpho8uMT
- pYHmqULAIhDqRZ1bD7SF6wXvUOsinzteqV2EXvbAeV20gggg4NeYnrOCfz3wIYZU2Vl0
- 84Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=9rcGM9GkQc6OE6+i3+MNzG5PHqRhv0Itgo+EFL66LpY=;
- b=i6vyPqAwTmHFa9hegYQDhtPdf7UgUGFI1Qr8GVRz9IKWv1NvUUJ18x1N4AEBU8UWQe
- Tmbtkui9Jsl8ZaNCXM+nsul2lppeMw8wTiI617gDRFano9zMku9lCCzB7RWK1w8WKECx
- Zd+IrzFlQm2aAvRN4klvEmg8RGyotv0i5XoDr/tWKmRiurHqI6ftm0Nab57JF1P48SnD
- vUz7G83y+t2JWuy/toebKN/RU4p1FLgPNYIunriOIbvUwe2PSfvYdt6UzjzvR2Myrx8P
- dkeAPmfFq9d47SKGt0xMc+zV5F6wTLNRao9NudWfQKrS8fLvyy+8RIMZOjknbHzJ57E9
- AyFA==
-X-Gm-Message-State: APjAAAVXXbMDpbkhRm18TO47Ynu4cd75H8tXpQ4yYM2KX9hkEC/bziTX
- H8DUsMCr0QRt6u5VZIg/Ui9pa3uwtZk7X/wG6IABDh5+
-X-Google-Smtp-Source: APXvYqxiZfz3gsq9CG1tvhEPe+aUwR2gZb3ijFJpbjUSqg6uqXfRhi0qwDgEi3GhENbl0WNzgRR0vF2Uk3ZzM/x2GB0=
-X-Received: by 2002:a24:1dce:: with SMTP id 197mr7062207itj.16.1559125494750; 
- Wed, 29 May 2019 03:24:54 -0700 (PDT)
+Received: from cpsmtpb-ews05.kpnxchange.com (cpsmtpb-ews05.kpnxchange.com
+ [213.75.39.8])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45DV1L6qPwzDqHm
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 22:11:14 +1000 (AEST)
+Received: from cpsps-ews09.kpnxchange.com ([10.94.84.176]) by
+ cpsmtpb-ews05.kpnxchange.com with Microsoft SMTPSVC(7.5.7601.17514); 
+ Wed, 29 May 2019 14:11:08 +0200
+X-Brand: 4ZrJ
+X-KPN-SpamVerdict: e1=0;e2=0;e3=0;e4=(e4=10;e1=10;e3=10;e2=11);EVW:Whi
+ te;BM:NotScanned;FinalVerdict:Clean
+X-CMAE-Analysis: v=2.3 cv=TPaUtGta c=1 sm=1 tr=0 cx=a_idp_d
+ a=dZ5u/0G9QtS9WKCcNUBnHQ==:117 a=dZ5u/0G9QtS9WKCcNUBnHQ==:17
+ a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=eIHzyqS2sMcA:10 a=IkcTkHD0fZMA:10
+ a=xqWC_Br6kY4A:10 a=E5NmQfObTbMA:10 a=voM4FWlXAAAA:8 a=-c9VzbpeAAAA:8
+ a=VwQbUJbxAAAA:8 a=0Czkjf2JYyS1-j4YLkcA:9 a=QEXdDO2ut3YA:10
+ a=IC2XNlieTeVoXbcui8wp:22 a=WAq88MDkwfy8HpmZFCM0:22
+ a=AjGcO6oz07-iQ99wixmX:22
+X-CM-AcctID: kpn@feedback.cloudmark.com
+Received: from smtp.kpnmail.nl ([195.121.84.13]) by cpsps-ews09.kpnxchange.com
+ over TLS secured channel with Microsoft SMTPSVC(8.5.9600.16384); 
+ Wed, 29 May 2019 14:11:08 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=kpnmail.nl; s=kpnmail01;
+ h=mime-version:content-type:message-id:date:subject:to:from;
+ bh=c165VzpQsrj9wPx64SXfmPXdDE4jLRd5bmU4+R3LKzA=;
+ b=Q2XbbxibD53DAXv5ZUhfZzEP3XkGfL6WVpEsWGZ/9gaP2obU+MTJxeMKtSnXQYCjAmNR4xWvV/jjm
+ ZMMERm3rHNk1VbtViO6AqsU9hyKRtlA0HIqZ0Iv/nSAmoWsHlMB5/GH6bQl/Xbh9NMKGGZ4Y/DCZko
+ 8dY9BIti8kHXTRJ4=
+Received: from Eltsrv03.Eltan.local (unknown [84.85.114.86])
+ by smtp.kpnmail.nl (Halon) with ESMTPS
+ id d70de762-820a-11e9-89e3-005056998788;
+ Wed, 29 May 2019 14:11:08 +0200 (CEST)
+Received: from Eltsrv03.Eltan.local (192.168.100.3) by Eltsrv03.Eltan.local
+ (192.168.100.3) with Microsoft SMTP Server (TLS) id 15.0.847.32; Wed, 29 May
+ 2019 14:10:29 +0200
+Received: from Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8]) by
+ Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8%12]) with mapi id
+ 15.00.0847.040; Wed, 29 May 2019 14:09:59 +0200
+From: Wim Vervoorn <wvervoorn@eltan.com>
+To: Eddie James <eajames@linux.vnet.ibm.com>, "Alexander A. Filippov"
+ <a.filippov@yadro.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: IKVM on AST2400
+Thread-Topic: IKVM on AST2400
+Thread-Index: AdUUYodASLBseELfRPSRnFujjQqcUAAFhXAAADhUTYAALygjQA==
+Date: Wed, 29 May 2019 12:09:58 +0000
+Message-ID: <76a1327991c541f9a328292c672d99e4@Eltsrv03.Eltan.local>
+References: <d826c4212f9b472ab33bf1036e5a4768@Eltsrv03.Eltan.local>
+ <78912a29-889f-0252-52e2-7861930be5ef@linux.vnet.ibm.com>
+In-Reply-To: <78912a29-889f-0252-52e2-7861930be5ef@linux.vnet.ibm.com>
+Accept-Language: nl-NL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [192.168.100.108]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAO9PYRLdxqjbMHgsMoEY7m0ygwchLQk=7GOQr_itjqor=AMqfA@mail.gmail.com>
-In-Reply-To: <CAO9PYRLdxqjbMHgsMoEY7m0ygwchLQk=7GOQr_itjqor=AMqfA@mail.gmail.com>
-From: Deng Tyler <tyler.sabdon@gmail.com>
-Date: Wed, 29 May 2019 18:24:57 +0800
-Message-ID: <CAO9PYRLkgxrpes9QvzaN30TNu4-hcL5apFLhgdoBbzqiHynbRw@mail.gmail.com>
-Subject: Re: Flash bmc fail due to partition incorrect
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000466476058a0431f9"
+X-OriginalArrivalTime: 29 May 2019 12:11:08.0717 (UTC)
+ FILETIME=[992C3DD0:01D51617]
+X-RcptDomain: lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,99 +92,109 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000466476058a0431f9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Deng Tyler <tyler.sabdon@gmail.com> =E6=96=BC 2019=E5=B9=B45=E6=9C=8829=E6=
-=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:07=E5=AF=AB=E9=81=93=EF=BC=9A
-
-> Hi all:
->     I encounter bmc firmware update fail issue and message is "Verify
-> error: update: --no-flash --ignore-mount --no-save-files --no-restore-fil=
-es
-> --no-clean-saved-files\nERROR: Unable to find mtd partition for
-> image-bmc.\n".
->
-> I check my flash partition and found that I lost "bmc" partition as below=
-:
-> cat /proc/mtd
-> dev:    size   erasesize  name
-> mtd0: 00060000 00001000 "u-boot"
-> mtd1: 00020000 00001000 "u-boot-env"
-> mtd2: 00440000 00001000 "kernel"
-> mtd3: 01740000 00001000 "rofs"
-> mtd4: 00400000 00001000 "rwfs"
->
-ls -l /dev/mtd
-lrwxrwxrwx    1 root     root             7 May 23 11:56 kernel -> ../mtd2
-lrwxrwxrwx    1 root     root             7 May 23 11:56 rofs -> ../mtd3
-lrwxrwxrwx    1 root     root             7 May 23 11:56 rwfs -> ../mtd4
-lrwxrwxrwx    1 root     root             7 May 23 11:56 u-boot -> ../mtd0
-lrwxrwxrwx    1 root     root             7 May 23 11:56 u-boot-env ->
-../mtd1
-
->
-> I tried to add bmc partition in dts
-> &bootspi {
->         status =3D "okay";
->         flash@0 {
->                 status =3D "okay";
->                 m25p,fast-read;
->                 label =3D "bmc";
->                 spi-max-frequency =3D <50000000>;
-> #include "openbmc-flash-layout.dtsi"
->         };
-> };
->
-> but there still is no "bmc" partition. Could someone give any suggestion?
-> thanks.
->
-> Tyler
->
-
---000000000000466476058a0431f9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">Deng Tyler &lt;<a href=3D"mailto:tyle=
-r.sabdon@gmail.com">tyler.sabdon@gmail.com</a>&gt; =E6=96=BC 2019=E5=B9=B45=
-=E6=9C=8829=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8B=E5=8D=886:07=E5=AF=AB=E9=
-=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-<div dir=3D"ltr">Hi all:<div>=C2=A0 =C2=A0 I encounter bmc firmware update =
-fail issue and message is &quot;Verify error: update: --no-flash --ignore-m=
-ount --no-save-files --no-restore-files --no-clean-saved-files\nERROR: Unab=
-le to find mtd partition for image-bmc.\n&quot;.</div><div><br></div><div>I=
- check my flash partition and found that I lost &quot;bmc&quot; partition a=
-s below:</div><div>cat /proc/mtd<br>dev: =C2=A0 =C2=A0size =C2=A0 erasesize=
- =C2=A0name<br>mtd0: 00060000 00001000 &quot;u-boot&quot;<br>mtd1: 00020000=
- 00001000 &quot;u-boot-env&quot;<br>mtd2: 00440000 00001000 &quot;kernel&qu=
-ot;<br>mtd3: 01740000 00001000 &quot;rofs&quot;<br>mtd4: 00400000 00001000 =
-&quot;rwfs&quot;<br></div></div></blockquote>ls -l /dev/mtd<br>lrwxrwxrwx =
-=C2=A0 =C2=A01 root =C2=A0 =C2=A0 root =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 7 May 23 11:56 kernel -&gt; ../mtd2<br>lrwxrwxrwx =C2=A0 =C2=A01 roo=
-t =C2=A0 =C2=A0 root =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 7 May 23 11:=
-56 rofs -&gt; ../mtd3<br>lrwxrwxrwx =C2=A0 =C2=A01 root =C2=A0 =C2=A0 root =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 7 May 23 11:56 rwfs -&gt; ../mtd4=
-<br>lrwxrwxrwx =C2=A0 =C2=A01 root =C2=A0 =C2=A0 root =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 7 May 23 11:56 u-boot -&gt; ../mtd0<br><div>lrwxrwxrwx=
- =C2=A0 =C2=A01 root =C2=A0 =C2=A0 root =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 7 May 23 11:56 u-boot-env -&gt; ../mtd1=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div></div><div><br></div=
-><div>I tried to add bmc partition in dts=C2=A0</div><div>&amp;bootspi {<br=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 status =3D &quot;okay&quot;;<br>=C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 flash@0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 status =3D &quot;okay&quot;;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 m25p,fast-read;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 label =3D &quot;bmc&quot;;<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 spi-max-frequency =3D &lt;50000000&gt;;<br>=
-#include &quot;openbmc-flash-layout.dtsi&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 };<br>};<br></div><div><br></div><div>but there still is no &quot;bmc&q=
-uot; partition. Could someone give any suggestion? thanks.</div><div><br></=
-div><div>Tyler</div></div>
-</blockquote></div></div>
-
---000000000000466476058a0431f9--
+SGVsbG8gRWRkaWUsDQoNClRoYW5rcyBmb3IgeW91ciByZXNwb25zZS4NCg0KSXQgY2xlYXJzIHRo
+aW5ncyB1cCBhIGJpdC4NCg0KSnVzdCB0byBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBtZWNo
+YW5pc20gY29ycmVjdGx5Lg0KDQpUaGUgIiBnZnhfbWVtb3J5IiBpcyB1c2VkIHRvIGJ1ZmZlciB0
+aGUgYWN0dWFsIGZyYW1lYnVmZmVyIGNvbnRlbnQgaXMgdGhhdCByaWdodD8NCg0KVGhlICJ2aWRl
+b19lbmdpbmVfbWVtb3J5IiBhcmUgaXMgdGhlIGNvbXByZXNzaW9uIGJ1ZmZlci4NCg0KVGhlIGRy
+aXZlciBhbGxvY2F0ZXMgdGhlIG1lbW9yeSBmcm9tIHRoZXNlIHJlc2VydmVkIGFyZWFzLiBJcyB0
+aGVyZSBhIHdheSB0byByZWxlYXNlIHRoZXNlIGFyZWEncyBmb3IgZ2VuZXJhbCB1c2Ugd2hlbiB0
+aGUgaUtWTSBpcyBzaHV0ZG93bi4gVGhpcyB3b3VsZCBhbGxvdyBtZSB0byB1cGRhdGUgdGhlIHN5
+c3RlbSByaWdodCBub3cgdGhlc2UgdHdvIGFyZWEncyBhcmUgYWxyZWFkeSBvY2N1cHlpbmcgYSBs
+YXJnZSBwYXJ0IG9mIHRoZSBzeXN0ZW0gbWVtb3J5IGFuZCBJIG5lZWQgYXBwcm94LiAzMiBNQiB0
+byBwZXJmb3JtIHRoZSB1cGRhdGUuDQoNCkJlc3QgUmVnYXJkcywNCldpbSBWZXJ2b29ybg0KDQoN
+Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJt
+Yy1ib3VuY2VzK3d2ZXJ2b29ybj1lbHRhbi5jb21AbGlzdHMub3psYWJzLm9yZ10gT24gQmVoYWxm
+IE9mIEVkZGllIEphbWVzDQpTZW50OiBUdWVzZGF5LCBNYXkgMjgsIDIwMTkgNTozMyBQTQ0KVG86
+IEFsZXhhbmRlciBBLiBGaWxpcHBvdiA8YS5maWxpcHBvdkB5YWRyby5jb20+OyBvcGVuYm1jQGxp
+c3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBJS1ZNIG9uIEFTVDI0MDANCg0KDQpPbiA1LzI3
+LzE5IDc6NDAgQU0sIEFsZXhhbmRlciBBLiBGaWxpcHBvdiB3cm90ZToNCj4gT24gTW9uLCBNYXkg
+MjcsIDIwMTkgYXQgMDg6MTk6NDRBTSArMDAwMCwgV2ltIFZlcnZvb3JuIHdyb3RlOg0KPj4gSGVs
+bG8gQWxleGFuZGVyLA0KPj4NCj4+IFdlIGFyZSBzdXBwb3J0aW5nIHRoZSBBU1QyNDAwIGFzIHdl
+bGwuDQo+Pg0KPj4gSSBhbSBhbHNvIHdvbmRlcmluZyB3aGF0IHRoZSBjb3JyZWN0IGNoYW5nZXMg
+YXJlIHRvIGdldCBpS1ZNIHdvcmtpbmcgcHJvcGVybHkgb24gdGhlIEFTVDI0MDAuDQo+Pg0KPj4g
+VGhlIGVycm9ycyBjYXVzZWQgYnkgY3JlYXRlX3VzYmhpZC5zaCBhcmUgY2F1c2VkIGJ5IHVzYiBn
+YWRnZXQgc3VwcG9ydCB0aGF0IGlzbid0IGVuYWJsZWQuIFRoaXMgc2hvdWxkIGJlIGRvbmUgaW4g
+dGhlIExpbnV4IGtlcm5lbC4gV2UgYXJlIHVzaW5nIHRoZSBmb2xsb3dpbmcgb3B0aW9uczoNCj4+
+DQo+PiBDT05GSUdfVVNCX0dBREdFVD15DQo+PiBDT05GSUdfVVNCX0ZfSElEPXkNCj4+IENPTkZJ
+R19VU0JfR0FER0VUPXkNCj4+IENPTkZJR19VU0JfQVNQRUVEX1ZIVUI9eQ0KPj4gQ09ORklHX1VT
+Ql9DT05GSUdGUz15DQo+PiBDT05GSUdfVVNCX0NPTkZJR0ZTX01BU1NfU1RPUkFHRT15DQo+PiBD
+T05GSUdfVVNCX0NPTkZJR0ZTX0ZfSElEPXkNCj4+DQo+PiBUaGUgQ09ORklHX1VTQl9DT05GSUdG
+U19NQVNTX1NUT1JBR0UgaXMgbm90IHJlYWxseSBuZWVkZWQgZm9yIHRoaXMuIFRoaXMgaXMgb25s
+eSByZXF1aXJlZCBpZiB5b3UgYWxzbyB3YW50IHRvIHN1cHBvcnQgZW11bGF0aW9uIG9mIGEgVVNC
+IHN0b3JhZ2UgZGV2aWNlLg0KPj4NCj4+IEJlc2lkZXMgdGhpcyB5b3UgbmVlZCBhIHNtYWxsIGNo
+YW5nZSB0byB0aGUgYXNwZWVkLWc0LmR0c2kgYW5kIHRoZSBzeXN0ZW0gZHRzIHRvIGFkZCB0aGUg
+VkhVQiBkZXZpY2UuIFlvdSBjYW4gY29weSB0aGF0IGZyb20gdGhlIGFzcGVlZC1nNS5kdHNpLg0K
+PiBZZXMsIEkndmUgZG9uZSBpdCB0b28uDQo+DQo+PiBJIGFtIHdvbmRlcmluZyB3aGljaCBzdXBw
+b3J0IHlvdSBlbmFibGVkIGZvciB0aGUgYWN0dWFsIGlLVk0gc3VwcG9ydCB0byB3b3JrIGFuZCB3
+aGljaCBjb2RlIHlvdSBhcmUgYWN0dWFsbHkgdXNpbmcuICh3aGljaCBrZXJuZWwgZXRjKS4NCj4g
+V2UgdXNlIGxpbnV4LWFzcGVlZCByZWNpcGUgZnJvbSBPcGVuQk1DIG1haW5saW5lLg0KPiBTbywg
+b3VyIGtlcm5lbCBpcyA1LjEuMy4NCj4NCj4gSSd2ZSBhbHNvIGVuYWJsZWQgdGhlc2Ugb3B0aW9u
+czoNCj4gICAgICBDT05GSUdfRFJNPXkNCj4gICAgICBDT05GSUdfRFJNX0FTUEVFRF9HRlg9eQ0K
+PiAgICAgIENPTkZJR19GUkFNRV9WRUNUT1I9eQ0KPiAgICAgIENPTkZJR19NRURJQV9TVVBQT1JU
+PXkNCj4gICAgICBDT05GSUdfTUVESUFfQ0FNRVJBX1NVUFBPUlQ9eQ0KPiAgICAgIENPTkZJR19W
+SURFT19ERVY9eQ0KPiAgICAgIENPTkZJR19WSURFT19WNEwyPXkNCj4gICAgICBDT05GSUdfVjRM
+X1BMQVRGT1JNX0RSSVZFUlM9eQ0KPiAgICAgIENPTkZJR19WSURFT19BU1BFRUQ9eQ0KPiAgICAg
+IENPTkZJR19WSURFT0JVRjJfQ09SRT15DQo+ICAgICAgQ09ORklHX1ZJREVPQlVGMl9WNEwyPXkN
+Cj4gICAgICBDT05GSUdfVklERU9CVUYyX01FTU9QUz15DQo+ICAgICAgQ09ORklHX1ZJREVPQlVG
+Ml9ETUFfQ09OVElHPXkNCj4gICAgICBDT05GSUdfTUVESUFfU1VCRFJWX0FVVE9TRUxFQ1Q9eQ0K
+Pg0KPiBhbmQgY29waWVkIHZnYV9zY3JhdGNoIGFuZCB2aWRlbyBub2RlcyBmcm9tIGFzcGVlZC1n
+NS5kdHNpLg0KPiBJJ3ZlIHNlbnQgdGhlc2UgY2hhbmdlcyB0byBjb3JyZXNwb25kIG1haWxsaXN0
+cy4NCj4gICAgaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcGF0Y2h3b3JrL3BhdGNoLzEwNzk0NjIv
+DQo+DQo+PiBBcyBmYXIgYXMgSSBoYXZlIHVuZGVyc3Rvb2QgdGhlc2UgbWVtb3J5IGFyZWEncyBh
+cmUgcmVxdWlyZWQgYnV0IEkgYW0gbm90IHJlYWxseSBzdXJlIGFib3V0IGl0Lg0KPj4NCj4+IAkJ
+Z2Z4X21lbW9yeTogZnJhbWVidWZmZXIgew0KPj4gCQkJc2l6ZSA9IDwweDAwODAwMDAwPjsNCj4+
+IAkJCWFsaWdubWVudCA9IDwweDAxMDAwMDAwPjsNCj4+IAkJCWNvbXBhdGlibGUgPSAic2hhcmVk
+LWRtYS1wb29sIjsNCj4+IAkJCXJldXNhYmxlOw0KPj4gCQl9Ow0KPj4NCj4+IAkJdmlkZW9fZW5n
+aW5lX21lbW9yeToganBlZ2J1ZmZlciB7DQo+PiAJCQlzaXplID0gPDB4MDIwMDAwMDA+OwkvKiAz
+Mk1NICovDQo+PiAJCQlhbGlnbm1lbnQgPSA8MHgwMTAwMDAwMD47DQo+PiAJCQljb21wYXRpYmxl
+ID0gInNoYXJlZC1kbWEtcG9vbCI7DQo+PiAJCQlyZXVzYWJsZTsNCj4+IAkJfTsNCj4+DQo+PiBU
+aGUgcXVlc3Rpb25zIEkgaGF2ZSBhcmUgOg0KPj4NCj4+IFRoZSAiZ2Z4X21lbW9yeSIgYXJlYSBz
+ZWVtcyBkb3VibGUgdG8gbWUgd2UgYWxzbyBoYXZlIHRoZSAidmdhX21lbW9yeSIgYXJlYSB3aGlj
+aCBhbHNvIGlzIHRoZSB2aWRlbyBtZW1vcnksIHdoeSBkbyB3ZSBuZWVkIHRvIGRlZmluZSBhIDJu
+ZCBvbmUgdGhhdCBhcyBmYXIgYXMgSSB1bmRlcnN0YW5kIGl0IHBvaW50cyB0byB0aGUgc2FtZSBw
+aHlzaWNhbCBwYXJ0IG9mIFJBTS4NCj4+DQo+IElmIEkgdW5kZXJzdGFuZCByaWdodCwgdGhpcyBu
+b2RlIGlzIG5vdCByZXF1aXJlZCBmb3IgQVNUMjQwMCBiZWNhdXNlIA0KPiBHRlggaXMgdW5zdXBw
+b3J0ZWQgYnkgU29DLg0KPg0KPj4gSSBjYW4gdW5kZXJzdGFuZCB3aGVyZSB0aGUgInZpZGVvX2Vu
+Z2luZV9tZW1vcnkiIGlzIGZvciBidXQgaXQgaXMgbm90IGNsZWFyIGhvdyBJIGNhbiBkZXRlcm1p
+bmUgdGhlIHJlcXVpcmVkIHNpemUuIEFzIHRoZSB0b3RhbCBhbW91bnQgb2YgbWVtb3J5IGlzIGxp
+bWl0ZWQgd2UgYXJlIHRyeWluZyB0byByZWR1Y2UgbWVtb3J5IHVzYWdlIHdoZXJlIHBvc3NpYmxl
+IGFuZCBzbyBmYXIgSSBoYXZlbid0IGJlZW4gYWJsZSB0byBmaW5kIG91dCB3aGF0IGlzIGRlZmlu
+aW5nIHRoZSBzaXplIG9mIHRoaXMgYmxvY2sgb2YgbWVtb3J5Lg0KPiBJIGNhbid0IHNheSBhbnl0
+aGluZyBhYm91dCBjaG9vc2luZyBidWZmZXIncyBzaXplLiBJIGp1c3QgY29waWVkIGl0IA0KPiBm
+cm9tIEFTVDI1MDAgYW5kIGl0IHdvcmtzIGZvciBtZS4NCg0KSGkgV2ltLA0KDQpJbiBvcmRlciB0
+byBkZXRlY3QgdGhlIHJlc29sdXRpb24sIHRoZSBkcml2ZXIgYWxsb2NhdGVzIGEgYnVmZmVyIGZv
+ciB0aGUgbGFyZ2VzdCBwb3NzaWJsZSByZXNvbHV0aW9uICgxOTIweDEyMDB4MzJicHApLiBPbmNl
+IGRldGVjdGVkLCB0aGUgbWVtb3J5IGlzIHJlZHVjZWQgZG93biB0byB3aGF0IGlzIG5lZWRlZCAo
+ZG91YmxlIGJ1ZmZlciBvZiB0aGUgZGV0ZWN0ZWQgcmVzb2x1dGlvbiwgYXMgd2VsbCBhcyB0aGUg
+Y29tcHJlc3Npb24gYnVmZmVyLCB3aGljaCBpcyBzbWFsbCBpbiBjb21wYXJpc29uKS4gU28gdGhh
+dCBpcyB3aHkgdGhhdCByZXNlcnZlZCBtZW1vcnkgYmxvY2sgaXMgdGhhdCBzaXplLCB0aG91Z2gg
+SSB0aGluayBpdCBpcyBsYXJnZXIgdGhhbiBpdCBuZWVkcyB0byBiZS4gSSBoYWQgaXNzdWVzIHdp
+dGggYXR0ZW1wdGluZyB0byByZWxpYWJseSBhbGxvY2F0ZSBETUEgd2l0aG91dCB0aGUgcmVzZXJ2
+ZWQgbWVtb3J5IChtZW1vcnkgaXMgcHJvYmFibHkgdG9vIGZyYWdtZW50ZWQpLg0KDQpIb3BlIHRo
+YXQgaGVscHMsDQoNCkVkZGllDQoNCj4NCj4+IEJlc3QgcmVnYXJkcywNCj4+DQo+PiBXaW0gVmVy
+dm9vcm4NCj4+DQo+Pg0KPj4NCj4+DQo+Pg0KPj4NCj4+IERhdGU6IEZyaSwgMjQgTWF5IDIwMTkg
+MTU6MDM6MjggKzAzMDANCj4+IEZyb206ICJBbGV4YW5kZXIgQS4gRmlsaXBwb3YiIDxhLmZpbGlw
+cG92QHlhZHJvLmNvbT4NCj4+IFRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96
+bGFicy5vcmc+DQo+PiBTdWJqZWN0OiBJS1ZNIG9uIEFTVDI0MDANCj4+IE1lc3NhZ2UtSUQ6IDwy
+MDE5MDUyNDEyMDMyOC5HQTY0OEBiYndvcmsubGFuPg0KPj4gQ29udGVudC1UeXBlOiB0ZXh0L3Bs
+YWluOyBjaGFyc2V0PSJ1dGYtOCINCj4+DQo+PiBTb21lIHRpbWUgYWdvIHRoZSBvYm1jLWlrdm0g
+c2VydmljZSB3YXMgYWRkZWQgdG8gdGhlIGZpcm13YXJlLiBJdCBjYXVzZXMgc29tZSBwcm9ibGVt
+cyBvbiBvdXIgVkVTTklOIGhhcmR3YXJlLiBBcyBpdCBiYXNlZCBvbiBBU1QyNDAwIGl0IGRvZXMg
+bm90IGhhdmUgc3VwcG9ydCBmb3IgSUtWTSBpbiB0aGUgRFRTLiBUaGUgc3lzdGVtIGxvZyBjb250
+YWlucyBtZXNzYWdlcyB0aGF0IGNyZWF0ZV91c2JoaWQuc2ggaXMgdW5hYmxlIHRvIGZpbmQgc29t
+ZSBpdGVtcyBpbiB0aGUgc3lzZnMgYW5kIHRoZW4gb2JtYy1pa3ZtIHNlcnZpY2UgY3Jhc2hlcy4g
+SXQgY2F1c2VzIGZhaWwgaW4gUUVNVV9DSSB0ZXN0Lg0KPj4NCj4+IEkgYmVsaXZlIHRoYXQgdGhp
+cyBpc3N1ZSBhbHNvIHByZXNlbnQgb24gb3RoZXIgcGxhdGZvcm1zIGJhc2VkIG9uIEFTVDI0MDAu
+DQo+Pg0KPj4gSUJNIEd1eXM6IERvIHlvdSBydW4gdGVzdHMgZm9yIFBhbG1ldHRvPw0KPj4gSXMg
+dGhlcmUgYW55Ym9keSBlbHNlIHdobyB1c2VzIEFTVDI0MDA/DQo+Pg0KPj4gV2VsbCwgbXkgcHJv
+cG9zYWwgaXMgdG8gbWFrZSB0aGUgSUtWTSBzdXBwb3J0IG9wdGlvbmFsIGJ5IG1vdmluZyBpdCB0
+byB0aGUgZGlzdHJvZmVhdHVyZS4NCj4+DQo+PiBCZXNpZGVzLCBJJ3ZlIHNvbHZlZCB0aGVzZSBw
+cm9ibGVtcyBmb3Igb3VyIGhhcmR3YXJlIGJ5IGFkZGluZyByZXF1aXJlZCBrZXJuZWwgbW9kdWxl
+cyBhbmQgbW9kaWZ5aW5nIERUUy4NCj4+IElLVk0gd29ya3MsIGJ1dCBicmluZyBhIGxvdCBvZiB3
+YXJuaW5ncyBhZnRlciB0aGUgaG9zdCB3YXMgc2h1dCBkb3duIHdoaWxlIHRoZSBWTkMtY2xpZW50
+IGlzIHN0aWxsIGNvbm5lY3RlZC4NCj4+DQo+PiBEdXJpbmcgdGhlIHNvbHZpbmcgSSBjb3BpZWQg
+c29tZSByZWNvcmRzIGZyb20gYXNwZWVkLWc1LmR0c2kgdG8gYXNwZWVkLWc0LmR0c2kuDQo+PiBT
+aG91bGQgSSBjb21taXQgdGhlc2UgY2hhbmdlcyB0byBUb3J2YWxkcyBvciBPcGVuQk1DIHJlcG8/
+DQo+Pg0KPj4gLS0NCj4+IFJlZ2FyZHMNCj4+IEFsZXhhbmRlciBGaWxpcHBvdg0KPj4gU29mdHdh
+cmUgRW5naW5lZXIsIFlBRFJPDQo+Pg0KPj4NCj4+DQoNCg0KDQo=
