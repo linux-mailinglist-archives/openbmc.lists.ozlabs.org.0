@@ -2,46 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DBBD2E10B
-	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 17:27:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 441352E114
+	for <lists+openbmc@lfdr.de>; Wed, 29 May 2019 17:30:24 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45DZMd2wjyzDqJ2
-	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 01:27:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45DZR15g1szDqLV
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 01:30:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (helo) smtp.helo=mga12.intel.com
- (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45DZM35N5nzDqDN
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 01:26:53 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 29 May 2019 08:26:49 -0700
-X-ExtLoop1: 1
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.67.244])
- ([10.252.67.244])
- by fmsmga008.fm.intel.com with ESMTP; 29 May 2019 08:26:48 -0700
-Subject: Re: U-Boot environment management from userspace
-To: openbmc@lists.ozlabs.org
-References: <20190528183802.GH15959@mauery.jf.intel.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <86e6c763-861a-241b-e083-ce274a6eca73@linux.intel.com>
-Date: Wed, 29 May 2019 20:56:47 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45DZQV2zbxzDqHw
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 01:29:53 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x4TFM6wf121785
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 11:29:51 -0400
+Received: from e32.co.us.ibm.com (e32.co.us.ibm.com [32.97.110.150])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2ssv3x9s33-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 11:29:51 -0400
+Received: from localhost
+ by e32.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <anoo@linux.ibm.com>;
+ Wed, 29 May 2019 16:29:50 +0100
+Received: from b03cxnp08027.gho.boulder.ibm.com (9.17.130.19)
+ by e32.co.us.ibm.com (192.168.1.132) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 29 May 2019 16:29:47 +0100
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x4TFTkAd19268048
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 May 2019 15:29:46 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21BFBC6059;
+ Wed, 29 May 2019 15:29:46 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EAE8DC6057;
+ Wed, 29 May 2019 15:29:45 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 29 May 2019 15:29:45 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <20190528183802.GH15959@mauery.jf.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date: Wed, 29 May 2019 10:30:29 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Vernon Mauery <vernon.mauery@linux.intel.com>
+Subject: Re: U-Boot environment management from userspace
+In-Reply-To: <20190528183802.GH15959@mauery.jf.intel.com>
+References: <20190528183802.GH15959@mauery.jf.intel.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+x-cbid: 19052915-0004-0000-0000-00001515AAC0
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011180; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01210319; UDB=6.00635876; IPR=6.00991352; 
+ MB=3.00027104; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-29 15:29:48
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19052915-0005-0000-0000-00008BD9E1FF
+Message-Id: <e42fb92effbc990f60239377b05e3f4e@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-29_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1905290101
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,54 +94,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Vernon,
-
-I just started a daemon for the same as i needed it for RestrictionMode 
-(provisioning) . At this point of time, the daemon uses the fw_setenv & 
-printenv internally, but atleast application will access the same in D-Bus
-
-Regards,
-
-Richard
-
-On 5/29/2019 12:10 AM, Vernon Mauery wrote:
-> Reading U-Boot environment variables from userspace is not difficult, 
-> but to do it in a standard way, (fw_printenv), it requires a fork and 
-> exec. We don't have any permissions problems because reading from the 
-> MTD partition is not restricted. It might be nice, however to have 
-> these variables exported on D-Bus so that a fork/exec is not 
-> necessary, just a property fetch.
->
-> But writing is a different story. That requires root privileges. To 
-> architect with a separation of privileges mechanism, this should 
-> probably be running as a daemon or service that could be spawned via 
-> D-Bus or something so that ipmid doesn't need root permission to set a 
-> U-Boot variable.
->
-> I see a couple of options:
-> 1) Shoehorn U-Boot variables into the settings daemon so they just 
-> show up as settings. I am not sure on the details of how this would be 
-> done, but it might work.
->
-> 2) Create yet another daemon that would provide a R/W interface 
-> (probably just using the D-Bus properties interface) that would act as 
-> a manager of U-Boot environment variables. It might even be able to 
-> place an inotify watch to get notified when an external process 
-> (fw_setenv) modifies the environment (like from a script or something) 
-> so the D-Bus properties could send out a PropertiesChanged notification.
->
-> 3) Use a one-shot service that parses the 'instance' to extract a 
-> variable name and variable value. Then the variable could be activated 
-> by launching ubootenv@foo=bar.service. This would require some fancy 
-> parameter encoding to make it all work correctly to avoid string 
-> injections.
-> Am I the only one that has a need for this or is there a wider 
+> Am I the only one that has a need for this or is there a wider
 > audience that would benefit?
->
-> Does anyone else already have a solution for this or an opinion on 
-> what path might be the best?
->
-> --Vernon
+
+The software manager (phosphor-bmc-code-mgmt) relies on U-Boot 
+environment
+variables for managing the images like for determining which image to 
+boot
+from.
+
+> 3) Use a one-shot service that parses the 'instance' to extract a
+> variable name and variable value. Then the variable could be activated
+> by launching ubootenv@foo=bar.service. This would require some fancy
+> parameter encoding to make it all work correctly to avoid string
+> injections.
+
+Yeah, we went that route with an obmc-flash-bmc-setenv@.service[1], with
+like you mentioned uses some 'fancy parameter encoding', ex:
+"obmc-flash-bmc-setenv@" + entryId + "\\x3d" + std::to_string(value) + 
+".service";
+
+This has worked so far but I'd be open on having a mapping of the env
+variables to D-Bus properties.
+
+> Reading U-Boot environment variables from userspace is not difficult,
+> but to do it in a standard way, (fw_printenv), it requires a fork and
+> exec.
+
+We're actually reading the mtd device to get the values of the variables
+to avoid having a 'system' or 'fork/exec' call, then we put those values
+in D-Bus properties under the software/ path. Having some other app do 
+that
+parsing would be nice especially if we're to expand the use of the 
+U-Boot
+env vars.
+
+---
+[1] 
+https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/master/obmc-flash-bmc-setenv%40.service
+
+
