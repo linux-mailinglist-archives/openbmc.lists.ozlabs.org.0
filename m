@@ -1,62 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A85D305C7
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:27:26 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQJC53CHzDqYL
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:27:23 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3E38305CD
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:31:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45FQNN0kG7zDqY1
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:31:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=amazon.com
- (client-ip=207.171.184.29; helo=smtp-fw-9102.amazon.com;
+ (client-ip=72.21.198.25; helo=smtp-fw-4101.amazon.com;
  envelope-from=prvs=046f45703=eduval@amazon.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
  header.from=amazon.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=amazon.com header.i=@amazon.com header.b="Xc3wJJAb"; 
+ unprotected) header.d=amazon.com header.i=@amazon.com header.b="Rosq3BpY"; 
  dkim-atps=neutral
-Received: from smtp-fw-9102.amazon.com (smtp-fw-9102.amazon.com
- [207.171.184.29])
+Received: from smtp-fw-4101.amazon.com (smtp-fw-4101.amazon.com [72.21.198.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Dt2b3nHhzDqQF
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 13:13:35 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Dtmy4nL8zDqH1
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 13:46:57 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1559186023; x=1590722023;
+ t=1559188018; x=1590724018;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=BQVuOlTLIt7kOletp8svIa6+869Kfh+6ig9xKiK7qRU=;
- b=Xc3wJJAbaTlyz3gRXAzRqq91eluQ+XotSpJgvH71O6/WF19X+j6sisFu
- NpDETJ87Yc0weHiS2UpaOBqTPimktK/NF3gzID4CIijPdGbFimYuqoieb
- L4MZ6jltrCtnejV6aWjWYTf++cB/cHbQhB/d5yupFywEYGUFzGBQpmamm I=;
-X-IronPort-AV: E=Sophos;i="5.60,529,1549929600"; d="scan'208";a="677127364"
-Received: from sea3-co-svc-lb6-vlan3.sea.amazon.com (HELO
- email-inbound-relay-2a-69849ee2.us-west-2.amazon.com) ([10.47.22.38])
- by smtp-border-fw-out-9102.sea19.amazon.com with ESMTP;
- 30 May 2019 03:13:31 +0000
-Received: from EX13MTAUEA001.ant.amazon.com
- (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
- by email-inbound-relay-2a-69849ee2.us-west-2.amazon.com (Postfix) with ESMTPS
- id 3E6DEA21C0; Thu, 30 May 2019 03:13:31 +0000 (UTC)
-Received: from EX13D04UEA002.ant.amazon.com (10.43.61.61) by
- EX13MTAUEA001.ant.amazon.com (10.43.61.243) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 30 May 2019 03:13:30 +0000
-Received: from EX13MTAUEA001.ant.amazon.com (10.43.61.82) by
- EX13D04UEA002.ant.amazon.com (10.43.61.61) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 30 May 2019 03:13:30 +0000
+ bh=fX9RTwrLezaSqCitXN9CP/VbwMXQ8Q/tGsSADw7/86Q=;
+ b=Rosq3BpYyhIfwJa86squiv5CB948dLw0OvbkxXC5j9ABxTxkOyFM0R8Q
+ tYnFTRpNKW8EhCXOKv8unN8wv8HTnXhdH4f1vH2wQ3eybB4kTlr+Md3IR
+ +JgaIdl+FqEeR/v2fkAmHq5vMCzqXo2KNqhwVg7/PPhxmVdLCMVXSd9kJ I=;
+X-IronPort-AV: E=Sophos;i="5.60,529,1549929600"; d="scan'208";a="768213302"
+Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ email-inbound-relay-1d-2c665b5d.us-east-1.amazon.com) ([10.124.125.6])
+ by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP;
+ 30 May 2019 03:46:53 +0000
+Received: from EX13MTAUWC001.ant.amazon.com
+ (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
+ by email-inbound-relay-1d-2c665b5d.us-east-1.amazon.com (Postfix) with ESMTPS
+ id 3D049A2105; Thu, 30 May 2019 03:46:49 +0000 (UTC)
+Received: from EX13D06UWC002.ant.amazon.com (10.43.162.205) by
+ EX13MTAUWC001.ant.amazon.com (10.43.162.135) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 30 May 2019 03:46:49 +0000
+Received: from EX13MTAUWC001.ant.amazon.com (10.43.162.135) by
+ EX13D06UWC002.ant.amazon.com (10.43.162.205) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Thu, 30 May 2019 03:46:49 +0000
 Received: from localhost (10.94.220.85) by mail-relay.amazon.com
- (10.43.61.243) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
- Transport; Thu, 30 May 2019 03:13:30 +0000
-Date: Wed, 29 May 2019 20:13:30 -0700
+ (10.43.162.232) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
+ Transport; Thu, 30 May 2019 03:46:48 +0000
+Date: Wed, 29 May 2019 20:46:48 -0700
 From: Eduardo Valentin <eduval@amazon.com>
 To: Haiyue Wang <haiyue.wang@linux.intel.com>
 Subject: Re: [PATCH i2c/slave-mqueue v5] i2c: slave-mqueue: add a slave
  backend to receive and queue messages
-Message-ID: <20190530031330.GA5890@u40b0340c692b58f6553c.ant.amazon.com>
+Message-ID: <20190530034648.GA17772@u40b0340c692b58f6553c.ant.amazon.com>
 References: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
@@ -135,6 +134,9 @@ On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
 > +Like MCTP (Management Component Transport Protocol) and IPMB (Intelligent
 > +Platform Management Bus), they both require that the userspace can receive
 > +messages from i2c dirvers under slave mode.
+
+s/dirvers/drivers/g
+
 > +
 > +This I2C slave mqueue (message queue) backend is used to receive and queue
 > +messages from the remote i2c intelligent device; and it will add the target
@@ -256,6 +258,9 @@ On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
 > +config I2C_SLAVE_MQUEUE_MESSAGE_SIZE
 > +	int "The message size of I2C mqueue slave"
 > +	default 120
+
+Can you please add a help entry here?
+
 > +
 > +config I2C_SLAVE_MQUEUE_QUEUE_SIZE
 > +	int "The queue size of I2C mqueue slave"
@@ -263,6 +268,10 @@ On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
 > +	help
 > +	  This number MUST be power of 2.
 > +
+
+Shouldnt the two above depend on I2C_SLAVE_MQUEUE?
+
+
 > +config I2C_SLAVE_MQUEUE
 > +	tristate "I2C mqueue (message queue) slave driver"
 > +	select I2C_SLAVE_MQUEUE_MESSAGE_SIZE
@@ -488,10 +497,10 @@ On Tue, Apr 24, 2018 at 01:06:32AM +0800, Haiyue Wang wrote:
 > +	{ }
 > +};
 > +MODULE_DEVICE_TABLE(i2c, i2c_slave_mqueue_id);
+
+Also, can we have device tree support for this driver?
+
 > +
-
-Can we have this driver supporting device tree based probing?
-
 > +static struct i2c_driver i2c_slave_mqueue_driver = {
 > +	.driver = {
 > +		.name	= "i2c-slave-mqueue",
