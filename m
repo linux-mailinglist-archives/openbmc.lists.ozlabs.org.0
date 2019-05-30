@@ -2,62 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14A632E9E4
-	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 02:55:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 006DC2E9E7
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 02:57:10 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Dpz140y6zDqKb
-	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 10:55:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Dq0z3cP4zDqNV
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 10:57:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::130; helo=mail-it1-x130.google.com;
- envelope-from=benjaminfair@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=james.mihm@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="m57En7Vp"; 
- dkim-atps=neutral
-Received: from mail-it1-x130.google.com (mail-it1-x130.google.com
- [IPv6:2607:f8b0:4864:20::130])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45DpyV10tbzDqGS
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 10:54:57 +1000 (AEST)
-Received: by mail-it1-x130.google.com with SMTP id j204so1380610ite.4
- for <openbmc@lists.ozlabs.org>; Wed, 29 May 2019 17:54:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=7WUIPfWEexXqVwRkDk86OoyQxPOI5vkBL9avUmnrrEo=;
- b=m57En7VpEOPfUTJmQ2pVdTSF9Bg797UMybX6tjARYr/c029q5eDb8ZKTlMDutWPCtS
- e9PujINvBLCeQQXU0Eo41fewWjtPwuqoM/eqNnb72WKLhtlOyXiKowH533i6EkJfhHcq
- 8AagRLZRk8FclmSTMqCN/66B/T374dRLOSmKllXbtjNH5k+rwjwHMMaxI9Yu34x7n1hs
- BBE8A3H080PHQNMBGIpsmcl/pw1LHd0nWvGFkggYYkerOtS9U0IW3vauELRqn07KAojs
- gEpCxX4ZTS2ZLdpG6VDt/recxHRkJn/HeGpOYVjjtxPS6Jp4DGSfp5oO/mBxvabKt4uz
- Smag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=7WUIPfWEexXqVwRkDk86OoyQxPOI5vkBL9avUmnrrEo=;
- b=YqZRfoHllofer+TIt+CESsntlZ2lt/3Fn7Dyk7MaumAINJ4Mui0/kNb816VOXqN8iC
- gmovr8qFhLZh9K+EXT2XzqZtO/apaG6vy7+onVTzZBpZaV2np5YbG/V2M2T1AOO6s8sL
- 4F54c3PVbdOgcc4mSCyPx3b/U/w62dsCXpUAUs9JyiH/X5Cv3KE9wzHawT5GEBLmktXG
- V/V+BgtKnYe90W5b1XefYXENFG41B3wNNLWsTm+Bocz4tCypqaNyOoMXxTsl3Ic13FrU
- t4r5byy3RVq9IjtToIRPiY7Iqrr6GGcwzyHTgTyjyC7v/i6z03Gdj+nl/DD3OC0Qh2fX
- Z73A==
-X-Gm-Message-State: APjAAAU8wjmZfyVMqrqqWz2P/pcH3sRz92S7qhNNHh0rZjCFWA9+/sud
- 6yL0NMdaOSdEHN9/tpq/agDRsno14uAN764CPgbiwDVOpec=
-X-Google-Smtp-Source: APXvYqw/ipRUBIq8qaDcfh+kK581GGTN8m9csa5EGdHMEWxskpwbDfnsMWWTZWavneY8ipHdGydhkF1nmsia3FJ9aCU=
-X-Received: by 2002:a24:3014:: with SMTP id q20mr987760itq.4.1559177693811;
- Wed, 29 May 2019 17:54:53 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Dq0X6Cy1zDqGM
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 10:56:40 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 29 May 2019 17:56:37 -0700
+X-ExtLoop1: 1
+Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
+ by fmsmga005.fm.intel.com with ESMTP; 29 May 2019 17:56:37 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.4.95]) by
+ ORSMSX107.amr.corp.intel.com ([169.254.1.194]) with mapi id 14.03.0415.000;
+ Wed, 29 May 2019 17:56:37 -0700
+From: "Mihm, James" <james.mihm@intel.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Please invite new Intel developers to the organization
+Thread-Topic: Please invite new Intel developers to the organization
+Thread-Index: AdUWgobvO6WRwOU6Tcak2a6yzxncxg==
+Date: Thu, 30 May 2019 00:56:36 +0000
+Message-ID: <C599FC839619124CAC44E062ABB7DFE2D7AD2AC3@ORSMSX115.amr.corp.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYzU0MjQxYjctNmEyMi00OGYxLTlkYTgtZmYyZDgxOWRhMTdlIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiZnVFaVVJMWFRRzhwZml0V3VpTVYxbTJDODJ0eDlaQ2pBRENRRlQ2YVdjVVdORXhaaEIrVUd5SUx0c2Q3QTY4dyJ9
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.138]
+Content-Type: multipart/alternative;
+ boundary="_000_C599FC839619124CAC44E062ABB7DFE2D7AD2AC3ORSMSX115amrcor_"
 MIME-Version: 1.0
-From: Benjamin Fair <benjaminfair@google.com>
-Date: Wed, 29 May 2019 17:54:17 -0700
-Message-ID: <CADKL2t4950qyjasc+MDH6ET+ndswPvOsNwgtx30rVMV3jhA-0w@mail.gmail.com>
-Subject: meta-lenovo subtree in openbmc repo
-To: bradleyb@fuzziesquirrel.com
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,15 +62,173 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad,
+--_000_C599FC839619124CAC44E062ABB7DFE2D7AD2AC3ORSMSX115amrcor_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Now that the meta-lenovo repository has been created and contains
-initial configuration, what's the process to add it as a subtree to
-the main openbmc/openbmc repository?
+Brad,
+
+Please invite the following Intel developers to the OpenBMC organization.
+
+Name                                Email address                          =
+            github userid
+Yuan Li                           yuan.li@linux.intel.com<mailto:yuan.li@li=
+nux.intel.com>                     yli-i
+Nilan Naidoo                 nilan.naidoo@intel.com<mailto:nilan.naidoo@int=
+el.com>                    nilanintc
+Pawel Rapkiewicz          pawel.rapkiewicz@intel.com<mailto:pawel.rapkiewic=
+z@intel.com>             prapkiewicz
+Vikram Bodireddy         vikram.bodireddy@intel.com<mailto:vikram.bodireddy=
+@intel.com>
+Saravanan Palanisamy  saravanan.palanisamy@intel.com<mailto:saravanan.palan=
+isamy@intel.com>    saravanan-palanisamy
+Smriti Ayushi                 smriti.ayushi@intel.com<mailto:smriti.ayushi@=
+intel.com>                    Smriti-Ayushi
+Sumanth Bhat               sumanth.bhat@intel.com<mailto:sumanth.bhat@intel=
+.com>                  sumbhat90
+Suryakanth Sekar          suryakanth.sekar@intel.com<mailto:suryakanth.seka=
+r@intel.com>
+Anil Kumar Appana      anil.kumarx.appana@intel.com<mailto:anil.kumarx.appa=
+na@intel.com>
 
 Thanks,
-Benjamin
+James Mihm
+Intel DCG BMC Core Firmware
+(503) 264-5129
+
+
+--_000_C599FC839619124CAC44E062ABB7DFE2D7AD2AC3ORSMSX115amrcor_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
+s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
+40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Comic Sans MS";
+	panose-1:3 15 7 2 3 3 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Brad, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Please invite the following Intel developers to the =
+OpenBMC organization.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email address&nb=
+sp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; github userid<o=
+:p></o:p></p>
+<p class=3D"MsoNormal">Yuan Li&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"mailto:yuan.li@linux.intel.=
+com">
+yuan.li@linux.intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;yl=
+i-i<o:p></o:p></p>
+<p class=3D"MsoNormal">Nilan Naidoo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"mailto:=
+nilan.naidoo@intel.com">
+nilan.naidoo@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;nilanintc=
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Pawel Rapkiewicz&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp; <a href=3D"mailto:pawel.rapkiewicz@intel.com">
+pawel.rapkiewicz@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp; &nbsp;&nbsp;&nbsp;prapkiewicz<o:p></o:p></p>
+<p class=3D"MsoNormal">Vikram Bodireddy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp; <a href=3D"mailto:vikram.bodireddy@intel.com">
+vikram.bodireddy@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp; &nbsp;&nbsp;&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal">Saravanan Palanisamy&nbsp; <a href=3D"mailto:saravan=
+an.palanisamy@intel.com">
+saravanan.palanisamy@intel.com</a>&nbsp;&nbsp;&nbsp; saravanan-palanisamy<o=
+:p></o:p></p>
+<p class=3D"MsoNormal">Smriti Ayushi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"mailto=
+:smriti.ayushi@intel.com">
+smriti.ayushi@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Smriti-A=
+yushi<o:p></o:p></p>
+<p class=3D"MsoNormal">Sumanth Bhat &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=3D"mailto:sumanth.bhat=
+@intel.com">sumanth.bhat@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sumbhat90=
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Suryakanth Sekar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;<a href=3D"mailto:suryakanth.sekar@intel.com">suryakanth=
+.sekar@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Anil Kumar Appana&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a h=
+ref=3D"mailto:anil.kumarx.appana@intel.com">
+anil.kumarx.appana@intel.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Co=
+mic Sans MS&quot;;color:navy">James Mihm</span><span style=3D"font-family:&=
+quot;Arial&quot;,sans-serif">
+</span><br>
+<span style=3D"font-family:&quot;Comic Sans MS&quot;;color:navy">Intel DCG =
+BMC Core Firmware</span><br>
+<span style=3D"font-size:10.0pt;font-family:&quot;Comic Sans MS&quot;;color=
+:navy">(503) 264-5129</span>
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_C599FC839619124CAC44E062ABB7DFE2D7AD2AC3ORSMSX115amrcor_--
