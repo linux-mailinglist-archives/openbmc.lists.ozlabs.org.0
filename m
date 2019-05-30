@@ -1,78 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 769DD2F709
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 07:10:17 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD56E305CE
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:31:39 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQP535b3zDqYP
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:31:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Dwd25vtYzDqFw
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 15:10:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=amazon.com
- (client-ip=72.21.198.25; helo=smtp-fw-4101.amazon.com;
- envelope-from=prvs=046f45703=eduval@amazon.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=amazon.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=amazon.com header.i=@amazon.com header.b="jcuObHOm"; 
- dkim-atps=neutral
-Received: from smtp-fw-4101.amazon.com (smtp-fw-4101.amazon.com [72.21.198.25])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="WFHLtSqa"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="tpKlEP7s"; dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Dv6l4fBKzDqBZ
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 14:02:22 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1559188943; x=1590724943;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=UkRYNR5hm0gc7X8fxqjNJQmr3n5Ab3tDm3l1W9pl4Bw=;
- b=jcuObHOmFidW+Zz7kg6SOLsEDDAPzasD6hcpo7ABXrvGLdo2MMhlVbup
- MJFJAq7eO8qOfusT1KMQn0z7JCzrcAOF7b8AlqGi9jtXNFGiDcHKgRhUP
- CFUDLRICCaE51IUxEp+lUoEjEo2vf1nUObqvVICaaTdbngYnSTveteS1X g=;
-X-IronPort-AV: E=Sophos;i="5.60,529,1549929600"; d="scan'208";a="768214243"
-Received: from iad6-co-svc-p1-lb1-vlan3.amazon.com (HELO
- email-inbound-relay-2c-168cbb73.us-west-2.amazon.com) ([10.124.125.6])
- by smtp-border-fw-out-4101.iad4.amazon.com with ESMTP;
- 30 May 2019 04:02:19 +0000
-Received: from EX13MTAUWB001.ant.amazon.com
- (pdx1-ws-svc-p6-lb9-vlan3.pdx.amazon.com [10.236.137.198])
- by email-inbound-relay-2c-168cbb73.us-west-2.amazon.com (Postfix) with ESMTPS
- id 0630FA2204; Thu, 30 May 2019 04:02:18 +0000 (UTC)
-Received: from EX13D05UWB002.ant.amazon.com (10.43.161.50) by
- EX13MTAUWB001.ant.amazon.com (10.43.161.249) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 30 May 2019 04:02:18 +0000
-Received: from EX13MTAUEA001.ant.amazon.com (10.43.61.82) by
- EX13D05UWB002.ant.amazon.com (10.43.161.50) with Microsoft SMTP Server (TLS)
- id 15.0.1367.3; Thu, 30 May 2019 04:02:18 +0000
-Received: from localhost (10.94.220.85) by mail-relay.amazon.com
- (10.43.61.243) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
- Transport; Thu, 30 May 2019 04:02:17 +0000
-Date: Wed, 29 May 2019 21:02:17 -0700
-From: Eduardo Valentin <eduval@amazon.com>
-To: "Wang, Haiyue" <haiyue.wang@linux.intel.com>
-Subject: Re: [PATCH i2c/slave-mqueue v5] i2c: slave-mqueue: add a slave
- backend to receive and queue messages
-Message-ID: <20190530040217.GB17772@u40b0340c692b58f6553c.ant.amazon.com>
-References: <1524503192-4176-1-git-send-email-haiyue.wang@linux.intel.com>
- <20190523220345.GA3417@u40b0340c692b58f6553c.ant.amazon.com>
- <35a9d066-c732-cb00-04a5-438c948915ae@linux.intel.com>
- <20190524173353.GA6428@u40b0340c692b58f6553c.ant.amazon.com>
- <bf1e8f0b-5bd0-fb43-c19b-9487603b9ee3@linux.intel.com>
- <20190529231100.GA18339@u40b0340c692b58f6553c.ant.amazon.com>
- <75cb9514-bb3a-9c3b-05df-0c3517bd775a@linux.intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <75cb9514-bb3a-9c3b-05df-0c3517bd775a@linux.intel.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Precedence: Bulk
-X-Mailman-Approved-At: Fri, 31 May 2019 10:25:30 +1000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Dwc153LDzDqSP
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 15:09:21 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 4D179220C9;
+ Thu, 30 May 2019 01:09:17 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 30 May 2019 01:09:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=xVibc6fFmDyDTyQek7k6RkVEzy94nFt
+ WbQUA99YUo5s=; b=WFHLtSqaZJfyNg/sdYo4/NprgP27n5SEKYchtTxnqt2ncN3
+ YCtirOJGky+8oNg4mI3SVqiO1HhS6ygfQHakZF7eWJCDKC/SEoEi7LCo6FyPi1r5
+ 02ib6jt2DdCnpEW2LmTj9s+pXopYbpa+4aEqvm7iheHKIneZQWBAVQ5PNW2Tkglh
+ Hx9LuaRKGyTS3U/lTpXiVAZCgES2S8OOa65Hz95nBsgwLrPuAZPEpyS77ILiP+Pn
+ tLs/7cXtjOIk6qkgYt9Bh/R38dGsRRXawF60URyTpmsUjxJf52t+P/zlzQo7hLVJ
+ l0xbucsnIyvP4a1KoNzNQTe1ou8Vvt7RInH6b9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xVibc6
+ fFmDyDTyQek7k6RkVEzy94nFtWbQUA99YUo5s=; b=tpKlEP7sMKXJQPv87UtbbD
+ 1t0JwIfMEzeFinRBrl2/JDpyfj1R74wLgRBVTbC+IJCxzL67wT3KB1BrGBrLgszk
+ E6X30V3C9saiI24Ztu31WT7BRFnGR8Llz6fH7pp2gz1pVQr1KWDsKmN4vLYOUciI
+ Byo4T3Br8xVuUbI6nfiox8dgO47SsE+8FYH5Fl1/4tUqFYsFxJ6W0uCR0i+TQMOJ
+ 3UPHesSg03ShDMhKKy9oT1oMhM3efKbxCk6RqOZFS8TZqZ8MaC9SImf7IwLAthg6
+ OAyGx6ZovTbZ4K8j76ZQgRhVOVgsyH9ClgYj/40qvtdTtOXCBvakK6cMoLbyZKEQ
+ ==
+X-ME-Sender: <xms:fGXvXFUMh3zazIjcl9OCu6f7tcUx8DrFk25n2kYK0ysaYdv54nKRHg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddruddvkedgledtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehkvghrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgr
+ ihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivg
+ eptd
+X-ME-Proxy: <xmx:fGXvXJ_XQTfVnqSM2NpNpoKKJi6JHGqHRFAc1tgVB_blu4A8TqXWVA>
+ <xmx:fGXvXPTlA4qvr_Nyqytv88xF0vnQbSFEOx6yXhXL15otCaKToq3b6Q>
+ <xmx:fGXvXGS3vB9_TY9Cl9EeGVR94PiOEZXGeWTpAgkMYLwNcpPD5Us7mQ>
+ <xmx:fWXvXBq16bfXNpgQcF1XYFLDe7hEYHGDcnkJNPe4oY6m0scnwbZNFw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id CBB57E00A0; Thu, 30 May 2019 01:09:15 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-555-g49357e1-fmstable-20190528v2
+Mime-Version: 1.0
+Message-Id: <d778f948-d440-492e-a7d0-a3685dee13b4@www.fastmail.com>
+In-Reply-To: <AC132CC2BE8ECA4988A9953C168DE3C53ACA875A@MICEXVMS02.mitacad.com>
+References: <1559025597-56042-1-git-send-email-ray.lue@mic.com.tw>
+ <cbc6dde9-ceb1-4051-a952-0d56767d61d0@www.fastmail.com>
+ <AC132CC2BE8ECA4988A9953C168DE3C53ACA875A@MICEXVMS02.mitacad.com>
+Date: Thu, 30 May 2019 14:39:13 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Ray Lue" <ray.lue@mic.com.tw>, "Ray Lue" <ray.lue@gmail.com>,
+ openbmc@lists.ozlabs.org, "Joel Stanley" <joel@jms.id.au>
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.1_v1_1/1]_ARM:_dts:_aspeed:_Add_s7106_B?=
+ =?UTF-8?Q?MC_Machine?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: Development list for OpenBMC <openbmc.lists.ozlabs.org>
 List-Unsubscribe: <https://lists.ozlabs.org/options/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=unsubscribe>
@@ -81,58 +92,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: jae.hyun.yoo@linux.intel.com, andriy.shevchenko@intel.com,
- wsa@the-dreams.de, openbmc@lists.ozlabs.org,
- Eduardo Valentin <eduval@amazon.com>, brendanhiggins@google.com,
- linux-kernel@vger.kernel.org, jarkko.nikula@linux.intel.com,
- linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 30, 2019 at 09:33:34AM +0800, Wang, Haiyue wrote:
-> 
-> 在 2019-05-30 07:11, Eduardo Valentin 写道:
-> >>>>>>+
-> >>>>>>+	case I2C_SLAVE_WRITE_RECEIVED:
-> >>>>>>+		if (msg->len < MQ_MSGBUF_SIZE) {
-> >>>>>>+			msg->buf[msg->len++] = *val;
-> >>>>>Do we need to lock the accesses to msg->buf? how about to msg->len?
-> >>>this code goes access and modify data here, e.g. msg->len and msg->buf.
-> >>>
-> >>>On this case (I2C_SLAVE_WRITE_RECEIVED), this code wont protect access.
-> >>>
-> >>>This can cause concurrence issues if you receive an IRQ when the user
-> >>>is on your bin_read().
-> >>User will not touch 'msg = mq->curr;', just touch 'msg =
-> >>&mq->queue[mq->out];'
-> >What happens if mq->curr == mq->queue[mq->out]?
-> >
-> 1. The Read will check.
-> 
-> +	spin_lock_irqsave(&mq->lock, flags);
-> +	if (mq->out != mq->in) {
-> +		msg = &mq->queue[mq->out];
-> 
-> 2. Flush the oldeast message. ^_^
-> 
-> +	case I2C_SLAVE_STOP:
-> +		if (unlikely(mq->truncated || msg->len < 2))
-> +			break;
-> +
-> +		spin_lock(&mq->lock);
-> +		mq->in = MQ_QUEUE_NEXT(mq->in);
-> +		mq->curr = &mq->queue[mq->in];
-> +		mq->curr->len = 0;
-> +
-> +		/* Flush the oldest message */
-> +		if (mq->out == mq->in)
-> +			mq->out = MQ_QUEUE_NEXT(mq->out);
+Hi Ray,
 
-Yeah, I see. We keep on dropping messages (old ones) when the queue is full...
-
-> +		spin_unlock(&mq->lock);
+On Wed, 29 May 2019, at 19:45, ray.lue@mic.com.tw wrote:
+> Hi Andrew, 
 > 
+> Thank you for reviewing this dts, I will test and update it based on 
+> your recommendation. 
 
--- 
-All the best,
-Eduardo Valentin
+Great!
+
+> 
+> Regarding the "slave-mqueue"
+> 
+> > 
+> > > +    status = "okay";
+> > > +    spsfw1@10 {
+> > > +        compatible = "slave-mqueue";
+> > 
+> > This compatible isn't documented anywhere. Do you have a bindings
+> > document for it? We'll need that before we can merge the devicetree.
+> 
+> it's an Intel developed driver for IPMB, but yet upstream to kernel. 
+> 
+> https://lore.kernel.org/patchwork/patch/934565/
+> https://github.com/Intel-BMC/openbmc/blob/a7715486507e75e4a7cee843a48067b15595defa/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0019-Add-I2C-IPMB-support.patch
+> 
+> However, it's a necessary driver for OpenBMC ipmbbridge service like below.  
+> 
+> https://github.com/openbmc/ipmbbridge/blob/master/ipmb-channels.json
+> {
+>   "channels": [
+>     {
+>       "type": "me",
+>       "master-path": "/dev/i2c-5",
+>       "slave-path": "/sys/bus/i2c/devices/5-1010/slave-mqueue",
+>       "bmc-addr": 32,
+>       "remote-addr": 44
+>     },
+>     {
+>       "type": "ipmb",
+>       "master-path": "/dev/i2c-0",
+>       "slave-path": "/sys/bus/i2c/devices/0-1010/slave-mqueue",
+>       "bmc-addr": 32,
+>       "remote-addr": 88
+>     }
+>   ]
+> }
+> 
+> The IPMB to ME is a very important channel for Intel based platform to 
+> retrieve critical sensors like CPU, DIMM, IO ...etc. What's your 
+> recommendation? should I remove it from dts until this driver approved 
+> by upstream? 
+
+My recommendation here is to split the patch. In the first patch, add everything
+you have here except for the IPMB node. Then in the following patch, add the
+IPMB node. This way you can send the first patch upstream while you harass
+Intel to upstream the IPMB bindings and driver.
+
+Cheers,
+
+Andrew
