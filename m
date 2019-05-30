@@ -2,58 +2,36 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30CFD2F9FF
-	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 12:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5430D2FB43
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 13:57:30 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45F3Jl3FPXzDqVY
-	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 20:11:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45F5fv2blwzDqVN
+	for <lists+openbmc@lfdr.de>; Thu, 30 May 2019 21:57:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=184.105.206.29; helo=smtpbg202.qq.com;
- envelope-from=1450335857@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Received: from smtpbg202.qq.com (smtpbg202.qq.com [184.105.206.29])
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45F3J42R4RzDqSw
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 20:10:59 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1559211052; bh=I75qnEPhtDw5YFXTDxxblwDCO/kDJueU9TN5ExJv/bo=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=w/PNo1rijBmT+c/ViqOTIgVt1OuxF5b6kMxz8YeFmLKrx+hgqncvyV5N4JjnIw6xN
- vZpagv92Ug7h0L/9nr6PgWlsiKzbcRJlTsoCPfdGoLr+YvDS0A3SHXPjL+mjhTC9gI
- uuGIEpFxFgtQOf6PSDUN5hOSnf79thauSqYf7COA=
-X-QQ-SSF: 00000000000000F000000000000000H
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 218.247.157.87
-In-Reply-To: <1ca8915ecad78c8089945cba6a9d1a7e86fb0147.camel@ozlabs.org>
-References: <tencent_0EB4C77C03274CE710EE5B37@qq.com>
- <1ca8915ecad78c8089945cba6a9d1a7e86fb0147.camel@ozlabs.org>
-X-QQ-STYLE: 
-X-QQ-mid: webenglish1t1559211051t493252
-From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
-To: "=?ISO-8859-1?B?ams=?=" <jk@ozlabs.org>
-Subject: Re:  About performance tuning of jsnbd openbmc
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5CEFAC2B_0987E3A0_00504F56"
-Content-Transfer-Encoding: 8Bit
-Date: Thu, 30 May 2019 18:10:51 +0800
-X-Priority: 3
-Message-ID: <tencent_27AB05AA0EA1A70C76BC4358@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 534517624
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Thu, 30 May 2019 18:10:51 +0800 (CST)
-Feedback-ID: webenglish:qq.com:bgforeign:bgforeign2
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45F5fS5HvpzDqFG
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 21:57:03 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Date: Thu, 30 May 2019 07:57:42 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: "Mihm, James" <james.mihm@intel.com>
+Subject: Re: Please invite new Intel developers to the organization
+Message-ID: <20190530115742.f6nt6qph7yiqymbh@thinkpad.dyn.fuzziesquirrel.com>
+References: <C599FC839619124CAC44E062ABB7DFE2D7AD2AC3@ORSMSX115.amr.corp.intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <C599FC839619124CAC44E062ABB7DFE2D7AD2AC3@ORSMSX115.amr.corp.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,106 +43,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?ISO-8859-1?B?b3BlbmJtYw==?= <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On Thu, May 30, 2019 at 12:56:36AM +0000, Mihm, James wrote:
+>Brad,
+>
+>Please invite the following Intel developers to the OpenBMC organization.
+>
+>Name                                Email address                                      github userid
+>Yuan Li                           yuan.li@linux.intel.com<mailto:yuan.li@linux.intel.com>                     yli-i
+>Nilan Naidoo                 nilan.naidoo@intel.com<mailto:nilan.naidoo@intel.com>                    nilanintc
+>Pawel Rapkiewicz          pawel.rapkiewicz@intel.com<mailto:pawel.rapkiewicz@intel.com>             prapkiewicz
+>Vikram Bodireddy         vikram.bodireddy@intel.com<mailto:vikram.bodireddy@intel.com>
+>Saravanan Palanisamy  saravanan.palanisamy@intel.com<mailto:saravanan.palanisamy@intel.com>    saravanan-palanisamy
+>Smriti Ayushi                 smriti.ayushi@intel.com<mailto:smriti.ayushi@intel.com>                    Smriti-Ayushi
+>Sumanth Bhat               sumanth.bhat@intel.com<mailto:sumanth.bhat@intel.com>                  sumbhat90
+>Suryakanth Sekar          suryakanth.sekar@intel.com<mailto:suryakanth.sekar@intel.com>
+>Anil Kumar Appana      anil.kumarx.appana@intel.com<mailto:anil.kumarx.appana@intel.com>
+>
+>Thanks,
+>James Mihm
+>Intel DCG BMC Core Firmware
+>(503) 264-5129
+>
 
-------=_NextPart_5CEFAC2B_0987E3A0_00504F56
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+Awesome!  Done!
 
-SGkgSmVyZW15LA0KICAgVGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgeW91ciAgdGhlIHN1Z2dl
-c3Rpb25zIHRvIHRoZSBWTSAgSlMgY29kZS4NCiAgIFRoZXJlIHdhcyBubyBpbXByb3ZlbWVu
-dCBpbiBuYmQtY2xpZW50IHBlcmZvcm1hbmNlIGFmdGVyIEkgcmVtb3ZlIHRoZSBsb2dnaW5n
-IEpTIGNvZGUgc25pcHBldHMuIFRoZSBzcGVlZCBrZWVwcyBhYm91dCAzM0tCeXRlcy9zIHRv
-IDM2S0J5dGVzL3MgLiANCiBXaGF0IGNvbmZpZ3VyYXRpb25zIGluIHRoZSBzeXN0ZW0gIG9y
-IG5naW54IG1heSBhZmZlY3QgdGhlIHBlcmZvcm1hbmNlIG9mIG5iZCB3ZWJzb2NrZXQgSW4g
-YWRkaXRpb24gdG8gd2ViIEpTIG5iZCBzZXJ2ZXIvY2xpZW50Pw0KIFdvdWxkIHlvdSBsaWtl
-IHRvIGdpdmUgbWUgc29tZSBkZWJ1Z2dpbmcgaW5zdHJ1Y3Rpb25zPw0KQmVzdCwNClhpdXpo
-aSAgIA0KLS0tLS0tLS0tLS0tLS0tLS0tIE9yaWdpbmFsIC0tLS0tLS0tLS0tLS0tLS0tLQ0K
-RnJvbTogICJqayI7PGprQG96bGFicy5vcmc+Ow0KU2VuZCB0aW1lOiBUaHVyc2RheSwgTWF5
-IDMwLCAyMDE5IDQ6NDMgUE0NClRvOiAieGl1emhpIjwxNDUwMzM1ODU3QHFxLmNvbT47IA0K
-Q2M6ICJvcGVuYm1jIjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+OyANClN1YmplY3Q6ICBS
-ZTogQWJvdXQgcGVyZm9ybWFuY2UgdHVuaW5nIG9mIGpzbmJkIG9wZW5ibWMNCg0KDQoNCkhp
-IFhpdXpoaSwNCg0KW0NDaW5nIHRoZSBvcGVuYm1jIGxpc3QsIGFzIHRoaXMgaXMgcmVsZXZh
-bnRdDQoNCj4gSGkgSmVyZW15LA0KPiAgICBJIGFtIHRyeWluZyB0byAgaW5zdGFsbCBDZW50
-b3M3LmlzbyBpbWFnZSBieSBvcGVuYm1jIG5iZC1zZXJ2ZXIuDQo+IFRoZSBwZXJmb3JtYW5j
-ZSBpcyB0b28gc2xvdyB0byBpbnN0YWxsIHRoZSBPUyBpbWFnZSAuIFRoZSBzcGVlZCBpcyBu
-bw0KPiBtb3JlIHRoYW4gNDBLQnl0ZXMvcy4gTXkgbmV0d29yayBzcGVlZCBpcyAxMDAwTWJw
-cy4NCj4gICBUaGUgc3BlZWQgaXMgdXAgdG8gNTEyS0J5dGVzL3Mgd2hlbiB0aGUgb3BlbmJt
-YyBuYmQtY2xpZW50IGNvbm5lY3QNCj4gdG8gdGhlICBuYmQtc2VydmVyIG9mIG5iZDMuMTkg
-d2hpY2ggcnVubmluZyBvbiBteSB1YnVudHUgMTYuMDQgUEMuDQo+ICAgV2hhdCBmYWN0b3Jz
-IGFmZmVjdCB0aGUgdHJhbnNtaXNzaW9uIHNwZWVkPw0KPiAgSG93IGNhbiBJIGltcHJvdmUg
-dGhlIHNwZWVkIG9mIG5iZHNlcnZlcj8NCj4gICBUaGUgYXR0YWNobWVudHMgaXMgcGF0Y2gg
-dG8gd2VidWkgYW5kIHBob3NwaG9yLWhhbmRsZXIgYW5kDQo+IG5naW54LmNvbmYoSSB1c2Vy
-IG5naW54IGFzIHRoZSB3ZWJzZXJ2ZXIgaW5zdGVhZCBvZiB0aGUgIGJtY3dlYikNCg0KDQpJ
-IHNlZSB5b3VyIGNsaWVudC1zaWRlIGphdmFzY3JpcHQgaW5jbHVkZXMgdGhpczoNCg0KKyAg
-ICAgICAgICAgICAgICBzZXJ2ZXIub25sb2cgPSBmdW5jdGlvbihtc2cpIHsNCisgICAgICAg
-ICAgICAgICAgICAgICRzY29wZS5uYmRzbG9nICs9IG1zZyArICJcbiI7DQorICAgICAgICAg
-ICAgICAgIH0NCg0KLSBJJ3ZlIGZvdW5kIHRoYXQgdGhlIGxvZ2dpbmcgbGlrZSB0aGF0IChh
-cHBlbmRpbmcgdG8gYW4gaW5jcmVhc2luZ2x5LQ0KbGFyZ2Ugc3RyaW5nKSBjYW4gY2F1c2Ug
-ZmFpcmx5IGxhcmdlIHNsb3dkb3ducy4NCg0KQ291bGQgeW91IHRyeSByZW1vdmluZyB0aGlz
-IGFuZCBzZWUgaWYgdGhhdCBpbXByb3ZlcyB0aGUgc3BlZWQ/DQoNCkNoZWVycywNCg0KDQpK
-ZXJlbXk=
-
-------=_NextPart_5CEFAC2B_0987E3A0_00504F56
-Content-Type: text/html;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
-
-PGRpdj5IaSBKZXJlbXksPC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7VGhhbmsgeW91IHZlcnkg
-bXVjaCBmb3IgeW91ciZuYnNwOyB0aGUgc3VnZ2VzdGlvbnMgdG8gdGhlIFZNJm5ic3A7IEpT
-IGNvZGUuPC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7VGhlcmUgd2FzIG5vIGltcHJvdmVtZW50
-IGluIG5iZC1jbGllbnQgcGVyZm9ybWFuY2UgYWZ0ZXIgSSByZW1vdmUgdGhlIGxvZ2dpbmcg
-SlMmbmJzcDtjb2RlIHNuaXBwZXRzLiBUaGUgc3BlZWQga2VlcHMgYWJvdXQgMzNLQnl0ZXMv
-cyB0byAzNktCeXRlcy9zIC4mbmJzcDs8L2Rpdj48ZGl2PiZuYnNwO1doYXQgY29uZmlndXJh
-dGlvbnMgaW4gdGhlIHN5c3RlbSZuYnNwOyBvciBuZ2lueCBtYXkgYWZmZWN0IHRoZSBwZXJm
-b3JtYW5jZSBvZiBuYmQgd2Vic29ja2V0IEluIGFkZGl0aW9uIHRvIHdlYiBKUyBuYmQgc2Vy
-dmVyL2NsaWVudD88L2Rpdj48ZGl2PiZuYnNwO1dvdWxkIHlvdSBsaWtlIHRvIGdpdmUgbWUg
-c29tZSBkZWJ1Z2dpbmcgaW5zdHJ1Y3Rpb25zPzwvZGl2PjxkaXY+QmVzdCw8L2Rpdj48ZGl2
-PlhpdXpoaSZuYnNwOyAmbmJzcDs8L2Rpdj48ZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTog
-MTJweDtmb250LWZhbWlseTogQXJpYWwgTmFycm93O3BhZGRpbmc6MnB4IDAgMnB4IDA7Ij4t
-LS0tLS0tLS0tLS0tLS0tLS0mbmJzcDtPcmlnaW5hbCZuYnNwOy0tLS0tLS0tLS0tLS0tLS0t
-LTwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtiYWNrZ3JvdW5kOiNlZmVmZWY7
-cGFkZGluZzo4cHg7Ij48ZGl2PjxiPkZyb206IDwvYj4mbmJzcDsiamsiOyZsdDtqa0Bvemxh
-YnMub3JnJmd0Ozs8L2Rpdj48ZGl2PjxiPlNlbmQgdGltZTo8L2I+Jm5ic3A7VGh1cnNkYXks
-IE1heSAzMCwgMjAxOSA0OjQzIFBNPC9kaXY+PGRpdj48Yj5Ubzo8L2I+Jm5ic3A7InhpdXpo
-aSImbHQ7MTQ1MDMzNTg1N0BxcS5jb20mZ3Q7OyA8d2JyPjwvZGl2PjxkaXY+PGI+Q2M6PC9i
-PiZuYnNwOyJvcGVuYm1jIiZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7OyA8d2Jy
-PjwvZGl2PjxkaXY+PGI+U3ViamVjdDogPC9iPiZuYnNwO1JlOiBBYm91dCBwZXJmb3JtYW5j
-ZSB0dW5pbmcgb2YganNuYmQgb3BlbmJtYzwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2Pkhp
-IFhpdXpoaSw8YnI+PGJyPltDQ2luZyB0aGUgb3BlbmJtYyBsaXN0LCBhcyB0aGlzIGlzIHJl
-bGV2YW50XTxicj48YnI+Jmd0OyBIaSBKZXJlbXksPGJyPiZndDsmbmJzcDsmbmJzcDsmbmJz
-cDsgSSBhbSB0cnlpbmcgdG8mbmJzcDsgaW5zdGFsbCBDZW50b3M3LmlzbyBpbWFnZSBieSBv
-cGVuYm1jIG5iZC1zZXJ2ZXIuPGJyPiZndDsgVGhlIHBlcmZvcm1hbmNlIGlzIHRvbyBzbG93
-IHRvIGluc3RhbGwgdGhlIE9TIGltYWdlIC4gVGhlIHNwZWVkIGlzIG5vPGJyPiZndDsgbW9y
-ZSB0aGFuIDQwS0J5dGVzL3MuIE15IG5ldHdvcmsgc3BlZWQgaXMgMTAwME1icHMuPGJyPiZn
-dDsmbmJzcDsmbmJzcDsgVGhlIHNwZWVkIGlzIHVwIHRvIDUxMktCeXRlcy9zIHdoZW4gdGhl
-IG9wZW5ibWMgbmJkLWNsaWVudCBjb25uZWN0PGJyPiZndDsgdG8gdGhlJm5ic3A7IG5iZC1z
-ZXJ2ZXIgb2YgbmJkMy4xOSB3aGljaCBydW5uaW5nIG9uIG15IHVidW50dSAxNi4wNCBQQy48
-YnI+Jmd0OyZuYnNwOyZuYnNwOyBXaGF0IGZhY3RvcnMgYWZmZWN0IHRoZSB0cmFuc21pc3Np
-b24gc3BlZWQ/PGJyPiZndDsmbmJzcDsgSG93IGNhbiBJIGltcHJvdmUgdGhlIHNwZWVkIG9m
-IG5iZHNlcnZlcj88YnI+Jmd0OyZuYnNwOyZuYnNwOyBUaGUgYXR0YWNobWVudHMgaXMgcGF0
-Y2ggdG8gd2VidWkgYW5kIHBob3NwaG9yLWhhbmRsZXIgYW5kPGJyPiZndDsgbmdpbnguY29u
-ZihJIHVzZXIgbmdpbnggYXMgdGhlIHdlYnNlcnZlciBpbnN0ZWFkIG9mIHRoZSZuYnNwOyBi
-bWN3ZWIpPGJyPjxicj48YnI+SSBzZWUgeW91ciBjbGllbnQtc2lkZSBqYXZhc2NyaXB0IGlu
-Y2x1ZGVzIHRoaXM6PGJyPjxicj4rJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7IHNlcnZlci5vbmxvZyA9IGZ1bmN0aW9uKG1zZykgezxicj4rJm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICRzY29wZS5u
-YmRzbG9nICs9IG1zZyArICJcbiI7PGJyPismbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsgfTxicj48YnI+LSBJJ3ZlIGZvdW5kIHRoYXQgdGhlIGxvZ2dpbmcgbGlrZSB0
-aGF0IChhcHBlbmRpbmcgdG8gYW4gaW5jcmVhc2luZ2x5LTxicj5sYXJnZSBzdHJpbmcpIGNh
-biBjYXVzZSBmYWlybHkgbGFyZ2Ugc2xvd2Rvd25zLjxicj48YnI+Q291bGQgeW91IHRyeSBy
-ZW1vdmluZyB0aGlzIGFuZCBzZWUgaWYgdGhhdCBpbXByb3ZlcyB0aGUgc3BlZWQ/PGJyPjxi
-cj5DaGVlcnMsPGJyPjxicj48YnI+SmVyZW15PGJyPjxicj48L2Rpdj4=
-
-------=_NextPart_5CEFAC2B_0987E3A0_00504F56--
-
-
-
+-brad
