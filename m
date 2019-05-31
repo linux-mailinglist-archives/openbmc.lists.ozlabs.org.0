@@ -1,71 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0A9031110
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 17:16:46 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C32E132353
-	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 14:51:57 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45GykL72shzDqQ8
-	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 22:51:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Fp2N1M5QzDqZX
+	for <lists+openbmc@lfdr.de>; Sat,  1 Jun 2019 01:16:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (mailfrom) smtp.mailfrom=lfprojects.org
- (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
- envelope-from=manager@lfprojects.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=lfprojects.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=lfprojects-org.20150623.gappssmtp.com
- header.i=@lfprojects-org.20150623.gappssmtp.com header.b="WYdQfzGC"; 
- dkim-atps=neutral
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
- [IPv6:2a00:1450:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=sivas.srr@in.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=in.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FnMc0VcHzDqYh
- for <openbmc@lists.ozlabs.org>; Sat,  1 Jun 2019 00:46:33 +1000 (AEST)
-Received: by mail-lj1-x22a.google.com with SMTP id y15so6661827ljd.9
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 07:46:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lfprojects-org.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=mA+bZu7PmG/vqqhpipKMEoTGkw0OLSF8wr5Wp48ZM50=;
- b=WYdQfzGCtxiY7KY4NsO2hRH3HNmbKpJulB7TVNYVdSR3LV7pK92BlXNHZcZfK7XTws
- KvDTxuoADawonU5NX5qDuyd6PSaX9eFvSORgLvk0XHozIKW/ODMiT4EYX12NIT29syp0
- Vfh169PdaVEtmXzVisBLyipXEFL0FNZtRSvhOJGA/Wi2i6GLUY+bpdaoNX6aFIX8HiUc
- E9SOKVQSyerxBPmGLaDxLzRD2AGH4iiukHG0CXquISV4FFbNUzme8SHtUcv6GzoXHFF0
- hg7b/TmCKcWJGWTVrGZQ8JONkFHqiH2sx2vQaFlCBlNj4gUTc4isVTI16F8B9CNj3hD+
- aP4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=mA+bZu7PmG/vqqhpipKMEoTGkw0OLSF8wr5Wp48ZM50=;
- b=mboe7NMnpGYe0EgK8k/QczMuK7ncvGaNvHOStTlt7gR42SZHmSsmHolWhdDSz5ckad
- XFbxGzDuw659AQ32s4y7h0SFUpFv7uw1pVdt/J7jokLEDA6gp6TPc05wz2/AC75Ht66p
- OG4yRPQzRX/sUsF0Qyw2g4JzIP+XJp0hdnKHZwE+KCGV5iDqruzUQrVVVj1kUAZT7v/q
- nvBJZaJGkZtrYFxyreUT3oN+FZ0FVIbns6Yjhqkxn7WYVXU1HPwg77hcHHC+EToyLZt6
- g+xu7niCO855+58uZuoT7TsygwHuy8IegS/bAn/yF/aHhdrjxGKahnzs/vx1fhLxeBMf
- ro3Q==
-X-Gm-Message-State: APjAAAUFA9w+tiHZT0k5tiXXb70QrAtllzNmLnpgHfW/1tfGQdPmVNyk
- FLQaTqSso8wXBYA5C5rg1yyrk3A3ifJACdDGMzimGQ==
-X-Google-Smtp-Source: APXvYqzI38Im7mPYaXMi6SNTUXGKZeHWOKtMn9BTunADAMqAOR2Wuu9+gkBVfihfosqXlTPsJtjUSahP1XXJfF8t3n4=
-X-Received: by 2002:a2e:87c9:: with SMTP id v9mr4401571ljj.100.1559313989121; 
- Fri, 31 May 2019 07:46:29 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Fp1w0KLkzDqXX
+ for <openbmc@lists.ozlabs.org>; Sat,  1 Jun 2019 01:16:19 +1000 (AEST)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x4VFDfbN076803
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 11:16:15 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.73])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2su6per6bu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 11:16:15 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <sivas.srr@in.ibm.com>;
+ Fri, 31 May 2019 15:16:14 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.90) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 31 May 2019 15:16:11 -0000
+Received: from us1a3-mail65.a3.dal09.isc4sb.com ([10.142.3.169])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2019053115161008-1937159 ;
+ Fri, 31 May 2019 15:16:10 +0000 
+In-Reply-To: 
+Subject: Fw: OpenBMC Test Work group meeting:  MoM of 30 May 2019 instance
+From: "Sivas Srr" <sivas.srr@in.ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Fri, 31 May 2019 15:16:10 +0000
+Sensitivity: 
+References: 
 MIME-Version: 1.0
-References: <96a177bb54474ad0944934a0efe8ddf6@wistron.com>
- <CALVHhedPVn8bkC3hed9_6w6O9YDhw==T_vrwSfS4+gnEUnFfQQ@mail.gmail.com>
- <75559516e6674ee98b0165f0d5d853c1@wistron.com>
-In-Reply-To: <75559516e6674ee98b0165f0d5d853c1@wistron.com>
-From: Mike Dolan <manager@lfprojects.org>
-Date: Fri, 31 May 2019 10:46:17 -0400
-Message-ID: <CALVHhedjG=3L3GVKyA2Fc=_9jhXBGY6cY42MxB-daB=ABM7sqA@mail.gmail.com>
-Subject: Re: Signed CLA from Wistron
-To: Claire_Ku@wistron.com
-Content-Type: multipart/alternative; boundary="0000000000006a478a058a301437"
-X-Mailman-Approved-At: Sun, 02 Jun 2019 22:50:29 +1000
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
+ SCN1812108_20180501T0841_FP55 May 22, 2019 at 11:09
+X-LLNOutbound: False
+X-Disclaimed: 47259
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19053115-8877-0000-0000-00000004AE77
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.407427; ST=0; TS=0; UL=0; ISC=; MB=0.220623
+X-IBM-SpamModules-Versions: BY=3.00011191; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01211269; UDB=6.00636449; IPR=6.00992305; 
+ MB=3.00027133; MTD=3.00000008; XFM=3.00000015; UTC=2019-05-31 15:16:12
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-05-31 11:23:29 - 6.00009991
+x-cbparentid: 19053115-8878-0000-0000-00000008CBF1
+Message-Id: <OF94CB576A.2BCD1094-ON0025840B.005284C4-0025840B.0053E0BA@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-05-31_09:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,211 +82,227 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Timothy_Huang@wistron.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006a478a058a301437
-Content-Type: text/plain; charset="UTF-8"
-
-Thank you this one shows the signature.
-
--- Mike
-
-On Thu, May 30, 2019 at 11:15 PM <Claire_Ku@wistron.com> wrote:
-
-> Hi Mike,
->
->
->
-> Please check the page 3, thank you very much.
->
->
->
-> Your sincerely,
->
-> Claire
->
->
->
-> *From:* Mike Dolan <manager@lfprojects.org>
-> *Sent:* Friday, May 31, 2019 5:16 AM
-> *To:* Claire Ku/WHQ/Wistron <Claire_Ku@wistron.com>
-> *Cc:* openbmc@lists.ozlabs.org; Timothy Huang/WHQ/Wistron <
-> Timothy_Huang@wistron.com>
-> *Subject:* Re: Signed CLA from Wistron
->
->
->
-> Hi, this file does not appear to be signed.
->
->
->
-> Thanks,
->
->
->
-> Mike
->
->
->
-> On Wed, May 29, 2019 at 5:39 AM <Claire_Ku@wistron.com> wrote:
->
-> Dear Sir/Madam,
->
->
->
-> Here is the signed CLA from Wistron Corporation.
->
-> Please help to approve it.
->
-> Thank you very much.
->
->
->
-> Yours faithfully,
->
-> Claire Ku
->
->
->
->
-> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
->
-> *This email contains confidential or legally privileged information and is
-> for the sole use of its intended recipient. *
->
-> *Any unauthorized review, use, copying or distribution of this email or
-> the content of this email is strictly prohibited.*
->
-> *If you are not the intended recipient, you may reply to the sender and
-> should delete this e-mail immediately.*
->
->
-> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
->
->
-
---0000000000006a478a058a301437
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you this one shows the signature.<div><br></div><div=
->-- Mike</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Thu, May 30, 2019 at 11:15 PM &lt;<a href=3D"mailto:Clai=
-re_Ku@wistron.com">Claire_Ku@wistron.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"ZH-TW">
-<div class=3D"gmail-m_1960412937213685642WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)">Hi Mike,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)">Please check the page 3, thank you very much=
-.<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)">Your sincerely,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)">Claire<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:rgb(31,73,125)"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11pt;font=
--family:Calibri,sans-serif">From:</span></b><span lang=3D"EN-US" style=3D"f=
-ont-size:11pt;font-family:Calibri,sans-serif"> Mike Dolan &lt;<a href=3D"ma=
-ilto:manager@lfprojects.org" target=3D"_blank">manager@lfprojects.org</a>&g=
-t;
-<br>
-<b>Sent:</b> Friday, May 31, 2019 5:16 AM<br>
-<b>To:</b> Claire Ku/WHQ/Wistron &lt;<a href=3D"mailto:Claire_Ku@wistron.co=
-m" target=3D"_blank">Claire_Ku@wistron.com</a>&gt;<br>
-<b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
-enbmc@lists.ozlabs.org</a>; Timothy Huang/WHQ/Wistron &lt;<a href=3D"mailto=
-:Timothy_Huang@wistron.com" target=3D"_blank">Timothy_Huang@wistron.com</a>=
-&gt;<br>
-<b>Subject:</b> Re: Signed CLA from Wistron<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi, this file does not appear t=
-o be signed.=C2=A0<u></u><u></u></span></p>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10.5pt" ><div dir=3D"ltr" >Dear All,</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Here with sending MoM of last instance of test work group=
+ meeting.</div>
+<div dir=3D"ltr" >Attendees: Joseph Reynold, Rahul Maheswari and Sivas:</di=
+v>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Agenda:</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >a) Security WG update and security testing: Joseph Reynol=
+ds:</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" ><div>Joseph walked thru security workgroup wiki</div>
+<div><a href=3D"https://github.com/openbmc/openbmc/wiki/Security-working-gr=
+oup" >https://github.com/openbmc/openbmc/wiki/Security-working-group</a></d=
+iv>
+<div>Sivas to check with community and our test team to help on testing.</d=
+iv>
+<div><button class=3D"f6 mx-auto btn-link muted-link js-wiki-more-pages-lin=
+k" style=3D"box-sizing: border-box; font-style: inherit; font-variant: inhe=
+rit; font-weight: inherit; font-stretch: inherit; font-size: 12px !importan=
+t; line-height: inherit; font-family: inherit; margin-top: 0px; margin-righ=
+t: auto !important; margin-bottom: 0px; margin-left: auto !important; overf=
+low: visible; text-transform: none; -webkit-appearance: button; border-radi=
+us: 0px; cursor: pointer; background-color: transparent; border: 0px; color=
+: rgb(88, 96, 105) !important; display: inline-block; padding: 0px; text-de=
+coration: none; user-select: none; white-space: nowrap;" type=3D"button" ><=
+/button></div>
+<div>b) Update on test specification document by Sivas</div>
+<div><a href=3D"https://github.com/openbmc/openbmc-test-automation/issues/1=
+769" style=3D"box-sizing: border-box; background-color: rgb(255, 255, 255);=
+ color: rgb(3, 102, 214); text-decoration: underline; outline-width: 0px; f=
+ont-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Helvetica, Aria=
+l, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &=
+quot;Segoe UI Symbol&quot;; font-size: 16px; font-style: normal; font-varia=
+nt-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-s=
+pacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-trans=
+form: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text=
+-stroke-width: 0px;" >https://github.com/openbmc/openbmc-test-automation/is=
+sues/1769</a></div>
+<div>&nbsp;</div>
+<div>Working on converting word document into md format.</div>
+<div>&nbsp;</div>
+<div>c) Update on test in progress in work in progress wiki</div>
+<div><a href=3D"https://github.com/openbmc/openbmc/wiki/Work-in-progress" s=
+tyle=3D"box-sizing: border-box; background-color: rgb(255, 255, 255); color=
+: rgb(3, 102, 214); text-decoration: underline; outline-width: 0px; font-fa=
+mily: -apple-system, system-ui, &quot;Segoe UI&quot;, Helvetica, Arial, san=
+s-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;S=
+egoe UI Symbol&quot;; font-size: 16px; font-style: normal; font-variant-lig=
+atures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing=
+: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px;" >https://github.com/openbmc/openbmc/wiki/Work-in-progress</a=
+><span style=3D"color: rgb(36, 41, 46); font-family: -apple-system, system-=
+ui, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color E=
+moji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; font-s=
+ize: 16px; font-style: normal; font-variant-ligatures: normal; font-variant=
+-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-a=
+lign: start; text-indent: 0px; text-transform: none; white-space: normal; w=
+idows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-col=
+or: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-col=
+or: initial; display: inline !important; float: none;" ><span>&nbsp; </span=
+></span></div>
+<div>and function test which is done is updated in changelog wiki</div>
+<div><a href=3D"https://github.com/openbmc/openbmc/wiki/Changelog" >https:/=
+/github.com/openbmc/openbmc/wiki/Changelog</a></div>
+<div>&nbsp;</div>
+<div>d)&nbsp; Need help on when the code changes will be available for issu=
+e</div>
+<div><a href=3D"https://github.com/openbmc/bmcweb/issues/62" >https://githu=
+b.com/openbmc/bmcweb/issues/62</a> - Thank you Rahul for bringing it in.</d=
+iv>
+<div>Kurt, Could you pls help here in case if you have target date. Thank y=
+ou in advance.</div>
+<div>&nbsp;</div>
+<div>Those who are contributing to test so far, Thank you team for all your=
+ contribution.</div>
+<div>Need more contribution from other community as well.</div>
+<div>&nbsp;</div></div>
+<div dir=3D"ltr" >Google Drive MoM video link: <a href=3D"https://drive.goo=
+gle.com/open?id=3D1lVXp-0XWd8YZe5Xspi6qZD2XbxchZhcB" >https://drive.google.=
+com/open?id=3D1lVXp-0XWd8YZe5Xspi6qZD2XbxchZhcB</a></div>
+<div dir=3D"ltr" >All other MoM folder: <a href=3D"https://drive.google.com=
+/drive/folders/1Cps88uPHB87RkQY3uDFKdVwrTmFQBtYa" >https://drive.google.com=
+/drive/folders/1Cps88uPHB87RkQY3uDFKdVwrTmFQBtYa</a></div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >With regards,</div>
+<div dir=3D"ltr" >Sivas</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<blockquote data-history-content-modified=3D"1" data-history-expanded=3D"1"=
+ dir=3D"ltr" style=3D"" >----- Original message -----<br><br>&nbsp;
+<div role=3D"region" ><div><div><div><div data-dojo-attach-point=3D"subject=
+Node" ><h2 role=3D"heading" style=3D"font-weight: 300;margin: 0; max-width:=
+ 100%;font-size: 22px;line-height: 28px;padding-bottom:10px;color: #4b4b4c;=
+" >OpenBMC Test Work group meeting: - Webex link: https://ibm.webex.com/mee=
+t/sivas.srr Telephone access is: United States Toll Free 1-844-531-0958 (To=
+ll - +1-669-234-1178) India Toll - 0(STD Code)-64800002 For eg. (Bengaluru =
+- 080-64800002)</h2></div>
+<div style=3D"font-size: 12px; white-space: nowrap;text-align: left;vertica=
+l-align: top;font-weight: normal;color: #666;display: inline-block;padding-=
+bottom:10px" ><div><span style=3D"font-weight: bold" >Chair: </span> <span>=
+Sivas Srr/India/IBM</span></div>
+<div style=3D"display:none" ><span style=3D"font-weight: bold" >Delegated t=
+o: </span></div>
+<div style=3D"display:none" ><span style=3D"font-weight: bold" >Send by: </=
+span></div></div></div>
+<div style=3D"font-size: 12px; white-space: nowrap;text-align: left;vertica=
+l-align: top;font-weight: normal;color: #666;display: inline-block;padding-=
+bottom:10px" ><div style=3D"display:none" ><span style=3D"font-weight: bold=
+" >Comments from Sivas Srr:</span></div></div>
+<div><div style=3D"font-size: 12px; white-space: nowrap;text-align: left;ve=
+rtical-align: top;font-weight: normal;color: #666;display: inline-block;pad=
+ding-bottom:10px" ><div><span style=3D"font-weight: bold" >Time: </span> <s=
+pan>Thu, May 30, 2019 9:00 PM - 10:00 PM</span> <span style=3D"display:inli=
+ne-block" >(applies to 18 instances)</span></div>
+<div style=3D"display:block" ><span style=3D"font-weight: bold" >Location: =
+</span> <span>United States Toll Free 1-844-531-0958 (Toll - +1-669-234-117=
+8) India Toll - 0(STD Code)-64800002 For eg. (Bengaluru - 080-64800002) Pas=
+scode: 928 662 307</span></div>
+<div style=3D"display:none" ><span style=3D"font-weight: bold" >Room: </spa=
+n></div>
+<div style=3D"display:none" ><span style=3D"font-weight: bold" >Resource: <=
+/span></div>
+<div style=3D"display:block" ><span style=3D"font-weight: bold" >Online Mee=
+ting name: </span> <span>OpenBMC Test Group meeting </span></div>
+<div style=3D"display:block" ><span style=3D"font-weight: bold" >Online mee=
+ting: </span> <span>https://ibm.webex.com/meet/sivas.srr</span></div>
+<div style=3D"display:block" ><span style=3D"font-weight: bold" >Meeting ID=
+: </span> <span>928 662 307</span></div>
+<div style=3D"display:block" ><span style=3D"font-weight: bold" >Password: =
+</span> <span>sivas</span></div></div>
+<div style=3D"font-weight: normal;color: #666;font-size: 12px;line-height: =
+17px;" ><div style=3D"white-space: nowrap;text-align: left;vertical-align: =
+top;font-weight: normal;color: #666;display: inline-block; padding-bottom: =
+10px; display: block" ><div><span style=3D"font-weight: bold" >Required:</s=
+pan></div>
+<div><span style=3D"padding-left: 20px;" >Andrew Geissler/Austin/IBM, anup.=
+pandya@intel.com, Arpana M Durgaprasad/India/IBM, benjaminfair@google.com, =
+bradleyb@fuzziesquirrel.com, Deepak Kodihalli/India/IBM, ed.tanous@intel.co=
+m, George Keishing/India/IBM, Joseph Reynolds/Rochester/Contr/IBM, Kaushik =
+Venkatesh/India/IBM, kurt.r.taylor@gmail.com, Maury Zipse/Rochester/IBM, Mi=
+chael Walsh/Rochester/IBM, rahulmaheshwari01@gmail.com, Ravindra S Rao1/Ind=
+ia/IBM, yuenn@google.com</span></div></div>
+<div data-dojo-attach-point=3D"optionalNode" style=3D"white-space: nowrap;t=
+ext-align: left;vertical-align: top;font-weight: normal;color: #666;display=
+: inline-block; padding-bottom: 10px; display: none" ><div><span style=3D"f=
+ont-weight: bold" >Optional: </span></div>
+<div>&nbsp;</div></div>
+<div data-dojo-attach-point=3D"FYINode" style=3D"white-space: nowrap;text-a=
+lign: left;vertical-align: top;font-weight: normal;color: #666;display: inl=
+ine-block; padding-bottom: 10px; display: none" ><div><span style=3D"font-w=
+eight: bold" >FYI: </span></div>
+<div>&nbsp;</div></div></div>
+<div><div data-dojo-attach-point=3D"descNode" ><div><span style=3D"font-wei=
+ght: bold; font-size: 12px;line-height: 17px; white-space: nowrap;text-alig=
+n: left; color: #666;" >Description:</span></div>
+<div><div><div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Ar=
+ial,Helvetica,sans-serif" ><font size=3D"2" ><font face=3D"Default Sans Ser=
+if,Verdana,Arial,Helvetica,sans-serif" >Based on the last instance of meeti=
+ng, it is agreed to have meeting from Jan 10th on-wards.</font></font></fon=
+t></span></div>
+<div>&nbsp;</div>
+<div><div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,H=
+elvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,A=
+rial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ver=
+dana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Ser=
+if,Verdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sa=
+ns Serif,Verdana,Arial,Helvetica,sans-serif" >General Agenda:&nbsp; </font>=
+</font></font></font></font></span></div>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,=
+Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,=
+Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ve=
+rdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Se=
+rif,Verdana,Arial,Helvetica,sans-serif" >Feel free to update in case any of=
+ you wants to update the agenda. </font></font></font></font></font></span>=
 </div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<u></u><u></u></span></p=
->
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Mike<u></u><u></u></span></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">On Wed, May 29, 2019 at 5:39 AM=
- &lt;<a href=3D"mailto:Claire_Ku@wistron.com" target=3D"_blank">Claire_Ku@w=
-istron.com</a>&gt; wrote:<u></u><u></u></span></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin-left:4=
-.8pt;margin-right:0cm">
-<div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Dear Sir/Madam,<u></u><u></u></=
-span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Here is the signed CLA from Wis=
-tron Corporation.<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Please help to approve it.<u></=
-u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thank you very much.<u></u><u><=
-/u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Yours faithfully,<u></u><u></u>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Claire Ku<u></u><u></u></span><=
-/p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
-</div>
-<p><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
--serif;color:black">-------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------</span></b><span lang=3D"EN-US"><u></u><u></u>=
-</span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
--serif;color:black">This email contains confidential or legally privileged =
-information and is for the sole use of its intended recipient.
-</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
--serif;color:black">Any unauthorized review, use, copying or distribution o=
-f this email or the content of this email is strictly prohibited.</span></b=
-><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
--serif;color:black">If you are not the intended recipient, you may reply to=
- the sender and should delete this e-mail immediately.</span></b><span lang=
-=3D"EN-US"><u></u><u></u></span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:Calibri,sans=
--serif;color:black">-------------------------------------------------------=
----------------------------------------------------------------------------=
------------------------------</span></b><span lang=3D"EN-US"><u></u><u></u>=
-</span></p>
-</div>
-</blockquote>
-</div>
-</div>
-</div>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,=
+Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,=
+Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ve=
+rdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Se=
+rif,Verdana,Arial,Helvetica,sans-serif" ><a href=3D"https://github.com/open=
+bmc/openbmc/wiki/Test-work-group" target=3D"=5Fblank" >https://github.com/o=
+penbmc/openbmc/wiki/Test-work-group&nbsp; </a></font></font></font></font><=
+/font></span></div></div>
+<div>&nbsp;</div>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" >Dreport instead of MYFFDC <a href=3D"https://github.com/op=
+enbmc/openbmc-test-automation/issues/1118" target=3D"=5Fblank" >https://git=
+hub.com/openbmc/openbmc-test-automation/issues/1118</a> <a href=3D"https://=
+github.com/openbmc/openbmc-test-automation/issues/1091" target=3D"=5Fblank"=
+ >https://github.com/openbmc/openbmc-test-automation/issues/1091</a></font>=
+</span>
+<p><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvetic=
+a,sans-serif" >OpenBMC Feature Test Sign-on <a href=3D"https://drive.google=
+.com/file/d/1-BuVY802-WRqBlrRmIPOKowEqQ-oYPCI/view?usp=3Dsharing" target=3D=
+"=5Fblank" >https://drive.google.com/file/d/1-BuVY802-WRqBlrRmIPOKowEqQ-oYP=
+CI/view?usp=3Dsharing</a></font></span></p>
+<p><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvetic=
+a,sans-serif" >OpenBMC test cases in XL sheet: <a href=3D"https://docs.goog=
+le.com/spreadsheets/d/14UFFokv6kifk=5F2leUU=5F77yOFSNkv7sCE=5FKEAhaYXkyg/ed=
+it?usp=3Dsharing" rel=3D"nofollow" target=3D"=5Fblank" >OpenBMC test cases =
+in XL sheet</a> Updated Version: <a href=3D"https://docs.google.com/spreads=
+heets/d/1TW706qauln3EPQNd11lOzvnRVM8=5F-ll-WCvdxm5NR6Y/edit?usp=3Dsharing" =
+target=3D"=5Fblank" >https://docs.google.com/spreadsheets/d/1TW706qauln3EPQ=
+Nd11lOzvnRVM8=5F-ll-WCvdxm5NR6Y/edit?usp=3Dsharing</a></font></span></p>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" >Quality at the first place: Unit test results needed at th=
+e time of gerrit code review</font></span></div>
+<div>&nbsp;</div></div>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" >IPMI Inband code update -&nbsp; Nancy to come back on test=
+ owner</font></span></div>
+<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
+ica,sans-serif" >IPMI User management -&nbsp; Anup Pandya - Is any one from=
+ Intel going to sign on this. ?</font></span></div></div></div></div></div>=
+</div></div></div></div></blockquote></div><BR>
 
-</blockquote></div>
-
---0000000000006a478a058a301437--
