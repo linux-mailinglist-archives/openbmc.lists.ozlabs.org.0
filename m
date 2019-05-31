@@ -2,62 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4805D305D9
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:36:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B655305DF
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:46:45 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQVx5JW9zDqV5
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:36:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45FQkV3MS3zDqWF
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:46:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::831; helo=mail-qt1-x831.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=inspur.com
+ (client-ip=210.51.26.146; helo=unicom146.biz-email.net;
+ envelope-from=zhuysh@inspur.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="P9C058UG"; 
- dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
- [IPv6:2607:f8b0:4864:20::831])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=inspur.com
+Received: from unicom146.biz-email.net (unicom146.biz-email.net
+ [210.51.26.146])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FQV132gczDqS4
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 10:35:53 +1000 (AEST)
-Received: by mail-qt1-x831.google.com with SMTP id 14so9415927qtf.0
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 17:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=LV0rreeRzznDSFPitu6IRcA1AlCHF4cq7HLGwa3ZWC4=;
- b=P9C058UGZl8eZKq2rVcWk8eq9lPglLVKwJh9gZnjbTwrt3ysCacv2Rk4TOfuNSbESj
- E7is63ErlPezCcg44ckV1Gg3AsVPL2qzu2cP41BJyux86moiglwow07HPCUA6vJfWW6k
- FPEAWBlCsG4jY4IJIgQrMWyStAzyppLOZfzu4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=LV0rreeRzznDSFPitu6IRcA1AlCHF4cq7HLGwa3ZWC4=;
- b=Au50V6uSx/cusoPhxSjYMCXmjYE40Ah2gxFz94THrUbwZeErpamYAmhWTL72Ze01fR
- tnQmvFvR0X1/44Cu92LemISH6vFiVGhLanHYbnRnc3qZcMMdBr057vqtt9+nXlY01Yfb
- ogF0zi2g56+YBxRDczL8ILsLRK7SnVuEJMyHe/m9uRoTvfQr78FYlVaHMuiM0dshr2PB
- 7WHWB+5OEQckZ3o0Z78v46XPUnRtVv3C4rieinq77+nZvJcye7M/mRo6bg4xJGe8AOrz
- XyQXNbprX9ooNZs2uEdyICwOugrkPFFORNKDBXE6wI83BSVZMgJ8uNcufAqSsJR22ufr
- cyxw==
-X-Gm-Message-State: APjAAAXxpe5s2sKhyaJ9o3IY81jDCJ8Sprn4kiyeOV9joSdu2XyUvT1y
- y2rhLgq/QPiTQDGIdkhNz2E6oIQWYmdFzakrJqU=
-X-Google-Smtp-Source: APXvYqyO8UHjmVma4JfClgYLuGH1ph2atzoAKxFgVTsSQ49QDDI7ztVGzeh9HgRPX5/xx2pcoyjt34xZeG/tjpAGjtg=
-X-Received: by 2002:a0c:fd8f:: with SMTP id p15mr2361746qvr.172.1559262949717; 
- Thu, 30 May 2019 17:35:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45FQk61M9TzDqSc
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 10:46:20 +1000 (AEST)
+Received: from ([60.208.111.195])
+ by unicom146.biz-email.net (Antispam) with ASMTP (SSL) id WFZ88310
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 08:46:10 +0800
+Received: from jtjnmail201601.home.langchao.com (10.100.2.1) by
+ jtjnmail201605.home.langchao.com (10.100.2.5) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1591.10; Fri, 31 May 2019 08:46:09 +0800
+Received: from jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78])
+ by jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78%8])
+ with mapi id 15.01.1591.008; Fri, 31 May 2019 08:46:09 +0800
+From: =?gb2312?B?U2ltb24gWmh1KNbs06Lk+Ck=?= <zhuysh@inspur.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: [IPMI] About LAN interface 
+Thread-Topic: [IPMI] About LAN interface 
+Thread-Index: AQHVF0o8iEBx741F50K4+WNDcSr2zg==
+Date: Fri, 31 May 2019 00:46:09 +0000
+Message-ID: <A2251FF4-28A5-4311-9DC7-6DD00306E0C9@inspur.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.100.1.52]
+Content-Type: multipart/signed;
+ boundary="Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F";
+ protocol="application/pkcs7-signature"; micalg=sha-256
 MIME-Version: 1.0
-References: <20190528183802.GH15959@mauery.jf.intel.com>
-In-Reply-To: <20190528183802.GH15959@mauery.jf.intel.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 31 May 2019 00:35:38 +0000
-Message-ID: <CACPK8XfyYfGXifFPFuAtH0vxf9bL8AE-u0nrSP5hYyVXYWkE-Q@mail.gmail.com>
-Subject: Re: U-Boot environment management from userspace
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,25 +58,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 28 May 2019 at 18:41, Vernon Mauery
-<vernon.mauery@linux.intel.com> wrote:
->
-> Reading U-Boot environment variables from userspace is not difficult,
-> but to do it in a standard way, (fw_printenv), it requires a fork and
-> exec.
+--Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+	charset=us-ascii
 
-I came across libubootenv the other day. Whatever solution you come up
-with to manage the variables could use this library. It's in
-tools/env/ in the u-boot sources.
+Hello,
 
-I would caution against the u-boot environment being used as a general
-purpose settings store. We should use it for configuring u-boot, and
-keep other settings somewhere else in the system.
+	Does IPMI support lan interface?
 
-Cheers,
+	I used ipmitool through lan interface, but failed:
+	
+	ipmitool -I lan -H IP -U root -P 0penBmc mc info
+	Authentication type NONE not supported
+	Error: Unable to establish LAN session
+	Error: Unable to establish IPMI v1.5 / RMCP session
 
-Joel
+	Can we support LAN interface?
+
+Best regards,
+
+Simon
+--Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCBz8w
+ggc7MIIGI6ADAgECAgpqPjdoAAEAAbdAMA0GCSqGSIb3DQEBBQUAMFsxEzARBgoJkiaJk/IsZAEZ
+FgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUxFDAS
+BgNVBAMTC0xhbmdDaGFvLUNBMB4XDTE0MTIwOTA3MjM1MFoXDTE5MTIwODA3MjM1MFowgZIxEzAR
+BgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixk
+ARkWBGhvbWUxFTATBgNVBAsMDOa1qua9ruS/oeaBrzESMBAGA1UEAwwJ5pyx6Iux5r6NMSAwHgYJ
+KoZIhvcNAQkBFhF6aHV5c2hAaW5zcHVyLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBANcl7k0O5Ddj8YZ7jFzneSe7nPVnP6CiFRYhW3ZckZhQ2VUSkkE2TgwxPbydHbR6njQZci3A
+soufiilTcWrz5gIexwCUPtpf4rg/CSMXdeOQCLR8rHwPahR1tY6EGgYRQGu1KfT6iGOs/of0+ufY
+FfpzxvoGfJ11q19Oro3Lrlf1fuA6FCVXTgLIIGHa5pBcDymFr6sS23qTtTnWXyfkDvpWEtGMKhPl
+as7ND5pT0LnjNV9/krBcBxUwlkUb30ZWxZJGqP7L3jq5+PWDjJzMLNWjbSPdF8doV81meVVNUz0y
+FB4mK8L0kK/2ePkhW/OuPQqnc928wn53u8oBISTUn4MCAwEAAaOCA8cwggPDMAsGA1UdDwQEAwIF
+oDA+BgkrBgEEAYI3FQcEMTAvBicrBgEEAYI3FQiC8qkfhIHXeoapkT2GgPcVg9iPXIFKhqKtHYbX
+lCwCAWQCARgwRAYJKoZIhvcNAQkPBDcwNTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+MAcGBSsOAwIHMAoGCCqGSIb3DQMHMB0GA1UdDgQWBBRakw7MI3vEw/JZItkKOHzlYEs4HTAfBgNV
+HSMEGDAWgBTGbsOiE24avQY6XrcvNNjg05z7IzCCARUGA1UdHwSCAQwwggEIMIIBBKCCAQCggf2G
+gbxsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPWp0am5jYTAxLENOPUNEUCxDTj1QdWJsaWMlMjBL
+ZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFu
+Z2NoYW8sREM9Y29tP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1j
+UkxEaXN0cmlidXRpb25Qb2ludIY8aHR0cDovL2p0am5jYTAxLmhvbWUubGFuZ2NoYW8uY29tL0Nl
+cnRFbnJvbGwvTGFuZ0NoYW8tQ0EuY3JsMIIBMAYIKwYBBQUHAQEEggEiMIIBHjCBswYIKwYBBQUH
+MAKGgaZsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2
+aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFuZ2NoYW8sREM9
+Y29tP2NBQ2VydGlmaWNhdGU/YmFzZT9vYmplY3RDbGFzcz1jZXJ0aWZpY2F0aW9uQXV0aG9yaXR5
+MGYGCCsGAQUFBzAChlpodHRwOi8vanRqbmNhMDEuaG9tZS5sYW5nY2hhby5jb20vQ2VydEVucm9s
+bC9qdGpuY2EwMS5ob21lLmxhbmdjaGFvLmNvbV9MYW5nQ2hhby1DQSgxKS5jcnQwKQYDVR0lBCIw
+IAYIKwYBBQUHAwIGCCsGAQUFBwMEBgorBgEEAYI3CgMEMDUGCSsGAQQBgjcVCgQoMCYwCgYIKwYB
+BQUHAwIwCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoDBDA/BgNVHREEODA2oCEGCisGAQQBgjcUAgOg
+EwwRemh1eXNoQGluc3B1ci5jb22BEXpodXlzaEBpbnNwdXIuY29tMA0GCSqGSIb3DQEBBQUAA4IB
+AQBuOubBOCkBWe+svIPrF5VWulW0HevKWzd4xg5Q1Y0h+2sQogGK1wxuKJSWC4aW8N9z6wFRHL9+
+ULXrSPpY6VRv89ZLUrGiVt1kfx1hkKvfXcgqtoMRRbSBIegY3mNWgJa/4q1nKAAF8a5enoRotbT3
+3VIowB84sDIF++pgixrJ4jjnXbYDhHDhdOWIY/Jt1Drn53hqbIOve0ZZBhfWNE40ag8RzjA6xquZ
+zGVC6dGEBVOjYg1heD1i7SsHWYauIGBbzUedq0QPiaotT0m9++X9IRuxjpCS3IJDaNm8jx6U6WH8
+XdS6CzYepNoOC2pI5X6LOCooK49ZK7BWpNtEpNSMMYIC9zCCAvMCAQEwaTBbMRMwEQYKCZImiZPy
+LGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDASBgoJkiaJk/IsZAEZFgRob21l
+MRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDANBglghkgBZQMEAgEFAKCCAV8wGAYJ
+KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNTMxMDA0NjA5WjAvBgkq
+hkiG9w0BCQQxIgQgaW2vgn1bw0SCAxUWdDMZL+H+R3IdJ8KLQddjSTh2LmEweAYJKwYBBAGCNxAE
+MWswaTBbMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDAS
+BgoJkiaJk/IsZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDB6Bgsq
+hkiG9w0BCRACCzFroGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxh
+bmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmo+N2gA
+AQABt0AwDQYJKoZIhvcNAQEBBQAEggEAL7/fJzLppvjP4sJyTe/HYquduuc9WnkR8mrYM8aDMdD6
+3ZOB+xhuGjhjZaS4qTf397MjtZ7oL8vpdD1JhJLbhghbaixVBHzoOLSWtsue6KR9emSjvQdCdFyW
+eHeRG684IYxBw0Wubbbg+qCQr83ozCmMmPgbyV4s1ifXf3TpYHImQQzQTzHTZLYrEiuu3D3GV5l/
+1KSwltAnbgSnWUMiVj3pfoW+OEO73ez2H5269ueWM9WoYNFYpSxN+kupc/PzwhfftUpNkx9u8qxA
+K38+xJmMxXTybtSi6SKG46dJDCUd5qnNgEXloxtUdPvkW0Oo3mNx6wLGBevLZ1e+gXN70gAAAAAA
+AA==
+
+--Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F--
