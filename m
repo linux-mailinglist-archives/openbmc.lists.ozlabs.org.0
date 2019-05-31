@@ -2,49 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B655305DF
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 74D3F30609
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 03:01:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQkV3MS3zDqWF
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:46:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45FR406qdlzDqWF
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 11:01:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.26.146; helo=unicom146.biz-email.net;
+ (client-ip=210.51.61.248; helo=ssh248.corpemail.net;
  envelope-from=zhuysh@inspur.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=inspur.com
-Received: from unicom146.biz-email.net (unicom146.biz-email.net
- [210.51.26.146])
+Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
  (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FQk61M9TzDqSc
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 10:46:20 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45FR3c5trLzDqTg
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 11:01:28 +1000 (AEST)
 Received: from ([60.208.111.195])
- by unicom146.biz-email.net (Antispam) with ASMTP (SSL) id WFZ88310
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 08:46:10 +0800
+ by ssh248.corpemail.net (Antispam) with ASMTP (SSL) id WGG28518
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 09:01:18 +0800
 Received: from jtjnmail201601.home.langchao.com (10.100.2.1) by
- jtjnmail201605.home.langchao.com (10.100.2.5) with Microsoft SMTP Server
+ jtjnmail201604.home.langchao.com (10.100.2.4) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1591.10; Fri, 31 May 2019 08:46:09 +0800
+ 15.1.1591.10; Fri, 31 May 2019 09:01:16 +0800
 Received: from jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78])
  by jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78%8])
- with mapi id 15.01.1591.008; Fri, 31 May 2019 08:46:09 +0800
+ with mapi id 15.01.1591.008; Fri, 31 May 2019 09:01:16 +0800
 From: =?gb2312?B?U2ltb24gWmh1KNbs06Lk+Ck=?= <zhuysh@inspur.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: [IPMI] About LAN interface 
-Thread-Topic: [IPMI] About LAN interface 
-Thread-Index: AQHVF0o8iEBx741F50K4+WNDcSr2zg==
-Date: Fri, 31 May 2019 00:46:09 +0000
-Message-ID: <A2251FF4-28A5-4311-9DC7-6DD00306E0C9@inspur.com>
+Subject: [Questions]Can bmcweb support both ports 80 and 443
+Thread-Topic: [Questions]Can bmcweb support both ports 80 and 443
+Thread-Index: AQHVF0xZj9HLljGAPk6/7cqU5Uj6MQ==
+Date: Fri, 31 May 2019 01:01:15 +0000
+Message-ID: <B851B5C7-9CF8-4F8F-81D8-3A0B3C1A231F@inspur.com>
 Accept-Language: zh-CN, en-US
 Content-Language: zh-CN
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 x-originating-ip: [10.100.1.52]
 Content-Type: multipart/signed;
- boundary="Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F";
+ boundary="Apple-Mail=_2F40711C-E802-41DE-B663-5761ECE858DC";
  protocol="application/pkcs7-signature"; micalg=sha-256
 MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -61,28 +60,35 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F
-Content-Transfer-Encoding: 7bit
+--Apple-Mail=_2F40711C-E802-41DE-B663-5761ECE858DC
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_928208F9-F0AE-4E8D-88EF-79C4826B3D7B"
+
+
+--Apple-Mail=_928208F9-F0AE-4E8D-88EF-79C4826B3D7B
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
 	charset=us-ascii
 
 Hello,
 
-	Does IPMI support lan interface?
-
-	I used ipmitool through lan interface, but failed:
-	
-	ipmitool -I lan -H IP -U root -P 0penBmc mc info
-	Authentication type NONE not supported
-	Error: Unable to establish LAN session
-	Error: Unable to establish IPMI v1.5 / RMCP session
-
-	Can we support LAN interface?
+	Can bmcweb support both ports 80 and 443?
+	And then we can use http://IP <http://ip/> or https://IP =
+<https://ip/> to visit bmcweb.
 
 Best regards,
 
-Simon
---Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F
+Simon=
+
+--Apple-Mail=_928208F9-F0AE-4E8D-88EF-79C4826B3D7B
+Content-Transfer-Encoding: 7bit
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=us-ascii"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; line-break: after-white-space;" class="">Hello,<div class=""><br class=""></div><div class=""><span class="Apple-tab-span" style="white-space:pre">	</span>Can bmcweb support both ports 80 and 443?</div><div class=""><span class="Apple-tab-span" style="white-space:pre">	</span>And then we can use <a href="http://IP" class="">http://IP</a>&nbsp;or <a href="https://IP" class="">https://IP</a>&nbsp;to visit bmcweb.</div><div class=""><br class=""></div><div class="">Best regards,</div><div class=""><br class=""></div><div class="">Simon</div></body></html>
+--Apple-Mail=_928208F9-F0AE-4E8D-88EF-79C4826B3D7B--
+
+--Apple-Mail=_2F40711C-E802-41DE-B663-5761ECE858DC
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -123,17 +129,17 @@ zGVC6dGEBVOjYg1heD1i7SsHWYauIGBbzUedq0QPiaotT0m9++X9IRuxjpCS3IJDaNm8jx6U6WH8
 XdS6CzYepNoOC2pI5X6LOCooK49ZK7BWpNtEpNSMMYIC9zCCAvMCAQEwaTBbMRMwEQYKCZImiZPy
 LGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDASBgoJkiaJk/IsZAEZFgRob21l
 MRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDANBglghkgBZQMEAgEFAKCCAV8wGAYJ
-KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNTMxMDA0NjA5WjAvBgkq
-hkiG9w0BCQQxIgQgaW2vgn1bw0SCAxUWdDMZL+H+R3IdJ8KLQddjSTh2LmEweAYJKwYBBAGCNxAE
+KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNTMxMDEwMTE2WjAvBgkq
+hkiG9w0BCQQxIgQgemLXBGJabf9Wx4wnI8OavcOuI7j8YdnbkFbGd+6mus0weAYJKwYBBAGCNxAE
 MWswaTBbMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDAS
 BgoJkiaJk/IsZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDB6Bgsq
 hkiG9w0BCRACCzFroGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxh
 bmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmo+N2gA
-AQABt0AwDQYJKoZIhvcNAQEBBQAEggEAL7/fJzLppvjP4sJyTe/HYquduuc9WnkR8mrYM8aDMdD6
-3ZOB+xhuGjhjZaS4qTf397MjtZ7oL8vpdD1JhJLbhghbaixVBHzoOLSWtsue6KR9emSjvQdCdFyW
-eHeRG684IYxBw0Wubbbg+qCQr83ozCmMmPgbyV4s1ifXf3TpYHImQQzQTzHTZLYrEiuu3D3GV5l/
-1KSwltAnbgSnWUMiVj3pfoW+OEO73ez2H5269ueWM9WoYNFYpSxN+kupc/PzwhfftUpNkx9u8qxA
-K38+xJmMxXTybtSi6SKG46dJDCUd5qnNgEXloxtUdPvkW0Oo3mNx6wLGBevLZ1e+gXN70gAAAAAA
+AQABt0AwDQYJKoZIhvcNAQEBBQAEggEAMxmx4CwFeJboBP9eeE5I82O3Paa5NsgDTssuWZSC0RT3
+3ABdhvQEp7LIhMhZ3kS98sM3TwFs1yBRLgGPj9x8qoynGwDtkru3eTWew6ilt46GD3BUwJ6PwCWs
+87VqkyXFwzpNAnAQCK5Y4EVmVP5RcoldzziaXSUDNcya7e0J1F5LWmVJ0NNK193v35bZLNlYI1By
+G73NM+BfWXtDsT9eGu6XlDziw+42L7fffE8dRRZIyd+luercfSyc5QDTvZJA7XN+4uoccT+dk5CE
+WaARRvF8B0/XVsl8Cp4Vh9lGJKUn3/wVPp/dxN4KdBGxqJIJbVaIBxUolFggphR3Hs2OXwAAAAAA
 AA==
 
---Apple-Mail=_5CF49BE5-00A5-4AAD-9CE8-7AA8E083346F--
+--Apple-Mail=_2F40711C-E802-41DE-B663-5761ECE858DC--
