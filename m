@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA58C316C2
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 23:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C81C316C1
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 23:49:23 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Fym41J3SzDqcx
-	for <lists+openbmc@lfdr.de>; Sat,  1 Jun 2019 07:49:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45FylN64gYzDqZ9
+	for <lists+openbmc@lfdr.de>; Sat,  1 Jun 2019 07:49:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,23 +18,23 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FyjN6Lw2zDqY2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45FyjN3mQwzDqXr
  for <openbmc@lists.ozlabs.org>; Sat,  1 Jun 2019 07:47:36 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga001.jf.intel.com ([10.7.209.18])
  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 31 May 2019 14:47:20 -0700
+ 31 May 2019 14:47:21 -0700
 X-ExtLoop1: 1
 Received: from maru.jf.intel.com ([10.54.51.75])
- by orsmga001.jf.intel.com with ESMTP; 31 May 2019 14:47:20 -0700
+ by orsmga001.jf.intel.com with ESMTP; 31 May 2019 14:47:21 -0700
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Eddie James <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH v2 dev-5.1 1/3] media: aspeed: remove source buffer allocation
- before mode detection
-Date: Fri, 31 May 2019 14:47:14 -0700
-Message-Id: <20190531214716.12118-2-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH v2 dev-5.1 2/3] media: aspeed: use different delays for
+ triggering VE H/W reset
+Date: Fri, 31 May 2019 14:47:15 -0700
+Message-Id: <20190531214716.12118-3-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
 References: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
@@ -55,77 +55,62 @@ Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Mode detection doesn't require source buffer allocation so this
-commit removes that.
+In case of watchdog timeout detected while doing mode detection,
+it's better triggering video engine hardware reset immediately so
+this commit fixes code for the case. Other than the case, it will
+trigger video engine hardware reset after RESOLUTION_CHANGE_DELAY.
 
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Reviewed-by: Eddie James <eajames@linux.ibm.com>
 Tested-by: Eddie James <eajames@linux.ibm.com>
 ---
 v1 -> v2:
-- Corrected re-allocation logic of source buffers.
+ None.
 
- drivers/media/platform/aspeed-video.c | 37 ++++-----------------------
- 1 file changed, 5 insertions(+), 32 deletions(-)
+ drivers/media/platform/aspeed-video.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 1bb863b32836..fed51fd22ce2 100644
+index fed51fd22ce2..67d6380d4ef3 100644
 --- a/drivers/media/platform/aspeed-video.c
 +++ b/drivers/media/platform/aspeed-video.c
-@@ -733,27 +733,6 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 	det->height = MIN_HEIGHT;
- 	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
+@@ -522,7 +522,7 @@ static void aspeed_video_bufs_done(struct aspeed_video *video,
+ 	spin_unlock_irqrestore(&video->lock, flags);
+ }
  
--	/*
--	 * Since we need max buffer size for detection, free the second source
--	 * buffer first.
--	 */
--	if (video->srcs[1].size)
--		aspeed_video_free_buf(video, &video->srcs[1]);
--
--	if (video->srcs[0].size < VE_MAX_SRC_BUFFER_SIZE) {
--		if (video->srcs[0].size)
--			aspeed_video_free_buf(video, &video->srcs[0]);
--
--		if (!aspeed_video_alloc_buf(video, &video->srcs[0],
--					    VE_MAX_SRC_BUFFER_SIZE)) {
--			dev_err(video->dev,
--				"Failed to allocate source buffers\n");
--			return;
--		}
--	}
--
--	aspeed_video_write(video, VE_SRC0_ADDR, video->srcs[0].dma);
--
- 	do {
- 		if (tries) {
- 			set_current_state(TASK_INTERRUPTIBLE);
-@@ -873,20 +852,14 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+-static void aspeed_video_irq_res_change(struct aspeed_video *video)
++static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
+ {
+ 	spin_lock(&video->lock);
+ 	dev_dbg(video->dev, "Resolution changed; resetting\n");
+@@ -534,7 +534,7 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video)
+ 	spin_unlock(&video->lock);
+ 	aspeed_video_bufs_done(video, VB2_BUF_STATE_ERROR);
  
- 	size *= 4;
+-	schedule_delayed_work(&video->res_work, RESOLUTION_CHANGE_DELAY);
++	schedule_delayed_work(&video->res_work, delay);
+ }
  
--	if (size == video->srcs[0].size / 2) {
--		aspeed_video_write(video, VE_SRC1_ADDR,
--				   video->srcs[0].dma + size);
--	} else if (size == video->srcs[0].size) {
--		if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
--			goto err_mem;
--
--		aspeed_video_write(video, VE_SRC1_ADDR, video->srcs[1].dma);
--	} else {
--		aspeed_video_free_buf(video, &video->srcs[0]);
-+	if (size != video->srcs[0].size) {
-+		if (video->srcs[0].size)
-+			aspeed_video_free_buf(video, &video->srcs[0]);
-+		if (video->srcs[1].size)
-+			aspeed_video_free_buf(video, &video->srcs[1]);
+ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+@@ -547,7 +547,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+ 	 * re-initialize
+ 	 */
+ 	if (sts & VE_INTERRUPT_MODE_DETECT_WD) {
+-		aspeed_video_irq_res_change(video);
++		aspeed_video_irq_res_change(video, 0);
+ 		return IRQ_HANDLED;
+ 	}
  
- 		if (!aspeed_video_alloc_buf(video, &video->srcs[0], size))
- 			goto err_mem;
--
- 		if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
- 			goto err_mem;
- 
+@@ -565,7 +565,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+ 			 * Signal acquired while NOT doing resolution
+ 			 * detection; reset the engine and re-initialize
+ 			 */
+-			aspeed_video_irq_res_change(video);
++			aspeed_video_irq_res_change(video,
++						    RESOLUTION_CHANGE_DELAY);
+ 			return IRQ_HANDLED;
+ 		}
+ 	}
 -- 
 2.21.0
 
