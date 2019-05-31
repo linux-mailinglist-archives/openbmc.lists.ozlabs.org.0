@@ -2,68 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5ADCF305D2
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:33:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00D84305A2
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 02:03:05 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FQR66lYMzDqXS
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:33:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45FPm64KdVzDqYk
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 10:03:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (mailfrom) smtp.mailfrom=lfprojects.org
- (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com;
- envelope-from=manager@lfprojects.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=lfprojects.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=lfprojects-org.20150623.gappssmtp.com
- header.i=@lfprojects-org.20150623.gappssmtp.com header.b="Rr5jPLlx"; 
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="aob4J1zx"; 
  dkim-atps=neutral
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
- [IPv6:2a00:1450:4864:20::134])
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FL4H2NcMzDqQM
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 07:16:42 +1000 (AEST)
-Received: by mail-lf1-x134.google.com with SMTP id r15so6142910lfm.11
- for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 14:16:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lfprojects-org.20150623.gappssmtp.com; s=20150623;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45FPlg0hbgzDqXD
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 10:02:38 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id l3so9290457qtj.5
+ for <openbmc@lists.ozlabs.org>; Thu, 30 May 2019 17:02:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=n+orujHmP10OnNremQPCvUn3K4iD9oBUY0GNkm/X9Bw=;
- b=Rr5jPLlxcxrbfME6bQmhLF1+cAgJf9aB9RmxM6LEtfFOEqWDIXKqgVoR3bbJBEc5xM
- RHFBhBopcvyfVyrq06PMh6XC01bAXZjrcDUSpleN4jqD2zACQ2sPHrAVGIMfz4WJQ3wx
- j1c2vdMOQMFrNkv/caT5nsiyvbABAVwsCHbCvhkB2VPl82AOLiBqfRKiY228sH9R/Qfx
- /ily4PEBKzPV0GnNbHZTwcCYP43CXPf6wpD7vYO9smQNkHC+8LNGxo1+71Cbg/4lhafj
- GZVmJWc0Ue/4IxjDd+2NdJNbAxgwQVybwbVk+D/1CzyIdauIugC28ulQJzXWu9cy1uhC
- 6DLg==
+ :cc; bh=Yg0yx7ouO9y6tjGgAv78IHLexxvA8I8IKKAycShCul8=;
+ b=aob4J1zxCccsHT83kWvADlzx4s7GiEl0bGCDLEBe4GsfgxQnN+wO52G7Py+aXA7kS4
+ VXQfgzWiAihVsRaxdUTFN9Ew9l00iPfd5/PrUpP/2KmPlZG9QiqFJtSE2UB033sFJJsh
+ mmFMvxqwTXAviDp6Wemp6Nr4p4vUcwHHPtEXo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=n+orujHmP10OnNremQPCvUn3K4iD9oBUY0GNkm/X9Bw=;
- b=q3ZRoGYttb7mNgV+k7o2bAnbOxx4dqRbtnV6TEG6OjgzW4zpXyNbjomtd41Y09+Dph
- nMVpIuGT+Ls+kraCGDbpxXVO3iXTO/XaonbP/X6q4jHxSH8D1kuPFrlXwvytgrhJtIFm
- 3cWffCYeqr6QzJPCU2ePp33K+P221JfQYYYWniXttIxgteclRDrHlvsmG811tRYx7jIz
- geSEfKn6OauH4wWod4/5efMxac7pkw4SoLAsXmQb0R8b941Qb5ri6pJOAfrGQ6Q23MZx
- 6bQbOPOscYs8hrsv0m9MGvtYvzIF61911GA9WrlaVcf456XxbbQid4CcJKX5OkreLxU/
- lGyw==
-X-Gm-Message-State: APjAAAUPag+hk3TJumSDvuze8//DtG1J6Cfcr3saH7oZ8HFup4ymYf6z
- 3HK0V3cfXo6mA4DS5F4BsRud9DVqqcY8b7s+XjaHTQ==
-X-Google-Smtp-Source: APXvYqwoPmMnSJkKWkL2cHjwPttcHSGP4Qac76LBDT97qhbGrOBvGf0E39q9vG5C0XFqaE7lZ4hqKWf548PezMMXtqk=
-X-Received: by 2002:a19:ed07:: with SMTP id y7mr3506668lfy.56.1559250997407;
- Thu, 30 May 2019 14:16:37 -0700 (PDT)
+ bh=Yg0yx7ouO9y6tjGgAv78IHLexxvA8I8IKKAycShCul8=;
+ b=dLvWdqKHwu0PsFuUt4HIRY6+Ki3hf0JwUAjXGgkhGKN4G0Pz4JiA7u2D/A6CCYM78B
+ nNw09TdUldU6EnXzoV2Jsfz+tulwB484VVROkH5skKayWHiRyEBbXwags3rBW+KIG0BA
+ CaX2HamtgzL48hUPSSWtHv552U5LIPZvriYhxQQZVI9c/sCLRfCWWJs9QjslpWCFXE92
+ Xxhdopp+5/2FkcLCH41O2sxIOsMF3hwZwgpX16zug3UylNPkPe8i1rBQAXexob8pg47u
+ ppfBhujv5QkRN25me31yFAk4PSdmcRKWwoRJ/3tXTxmHJfLOtE48hW4S9ojYb5yOFZp8
+ K4OA==
+X-Gm-Message-State: APjAAAW80mQ+ClqeQq8jKjjD9I0nH49MGC1UU1Mqdz/UaHK4EmylG0F1
+ rGF6YZFvR2Q1K+oaMGHnH6EzfkmDe6gSiwoQFLw=
+X-Google-Smtp-Source: APXvYqwxS7uTlKPSIGuSXx+JtUyzi4Q5pGdqnGcQR3hIQCFeZNTlLx8trD8MvZdneJ36c+mJ15jUv9D8H5XKRg3y0/0=
+X-Received: by 2002:ac8:5518:: with SMTP id j24mr6180074qtq.255.1559260954271; 
+ Thu, 30 May 2019 17:02:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <96a177bb54474ad0944934a0efe8ddf6@wistron.com>
-In-Reply-To: <96a177bb54474ad0944934a0efe8ddf6@wistron.com>
-From: Mike Dolan <manager@lfprojects.org>
-Date: Thu, 30 May 2019 17:16:25 -0400
-Message-ID: <CALVHhedPVn8bkC3hed9_6w6O9YDhw==T_vrwSfS4+gnEUnFfQQ@mail.gmail.com>
-Subject: Re: Signed CLA from Wistron
-To: Claire_Ku@wistron.com
-Content-Type: multipart/alternative; boundary="000000000000d1082b058a2169dd"
-X-Mailman-Approved-At: Fri, 31 May 2019 10:25:29 +1000
+References: <1559243767-19773-1-git-send-email-hongweiz@ami.com>
+In-Reply-To: <1559243767-19773-1-git-send-email-hongweiz@ami.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 31 May 2019 00:02:23 +0000
+Message-ID: <CACPK8Xe7UG2HX_2XSDUGu8zBqMKRqO_FAkbY6HtGP+fzAGCRRA@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.0 v1] ARM: dts: aspeed: Add SGPIO driver
+To: Hongwei Zhang <hongweiz@ami.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,108 +69,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Timothy_Huang@wistron.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d1082b058a2169dd
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Hi, this file does not appear to be signed.
+On Thu, 30 May 2019 at 19:16, Hongwei Zhang <hongweiz@ami.com> wrote:
+>
+> Add SGPIO driver support for Aspeed AST2500 board.
+>
+> Signed-off-by: Hongwei Zhang <hongweiz@ami.com>
 
-Thanks,
+Thanks for the patch!
 
-Mike
+Lets get this reviewed upstream and once we've had some feedback there
+we can add it to the openbmc tree.
 
-On Wed, May 29, 2019 at 5:39 AM <Claire_Ku@wistron.com> wrote:
+You will need to send out three different patch sets. The first should
+be pinmux, which will contain one patch to the device tree, and
+another to the driver.
 
-> Dear Sir/Madam,
->
->
->
-> Here is the signed CLA from Wistron Corporation.
->
-> Please help to approve it.
->
-> Thank you very much.
->
->
->
-> Yours faithfully,
->
-> Claire Ku
->
->
->
->
-> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
->
-> *This email contains confidential or legally privileged information and is
-> for the sole use of its intended recipient. *
->
-> *Any unauthorized review, use, copying or distribution of this email or
-> the content of this email is strictly prohibited.*
->
-> *If you are not the intended recipient, you may reply to the sender and
-> should delete this e-mail immediately.*
->
->
-> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
->
+The second should be the sgpio driver. In addition to the C code, you
+need to provide a patch with some device tree bindings in
+Documentation/devicetree/bindings.
 
---000000000000d1082b058a2169dd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The third patchset should be the change to add sgpio to the device
+tree. I suggest you hold off on sending that until the device tree
+bindings have been reviewed.
 
-<div dir=3D"ltr">Hi, this file does not appear to be signed.=C2=A0<div><br>=
-</div><div>Thanks,</div><div><br></div><div>Mike</div></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, May 29, 2019=
- at 5:39 AM &lt;<a href=3D"mailto:Claire_Ku@wistron.com">Claire_Ku@wistron.=
-com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
+Please use scripts/get_maintainers.pl to discover who to send the
+patches to. If you have any questions then please ask.
 
+> ---
+>  arch/arm/boot/dts/aspeed-g5.dtsi           |  16 +
+>  drivers/gpio/Kconfig                       |   8 +
+>  drivers/gpio/Makefile                      |   1 +
+>  drivers/gpio/sgpio-aspeed.c                | 644 +++++++++++++++++++++++++++++
+>  drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c |   4 +
+>  5 files changed, 673 insertions(+)
+>  create mode 100644 drivers/gpio/sgpio-aspeed.c
 
+> +++ b/drivers/gpio/sgpio-aspeed.c
+> @@ -0,0 +1,644 @@
+> +// SPDX-License-Identifier: GPL-2.0
 
+Put another line here with the copyright owner. For example:
 
+// Copyright 2019 Joel's Awesome BMC Company, inc
 
-<div lang=3D"ZH-TW">
-<div class=3D"gmail-m_-6404953693796521501WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Dear Sir/Madam,<u></u><u></u></=
-span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Here is the signed CLA from Wis=
-tron Corporation.<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Please help to approve it.<u></=
-u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thank you very much.<u></u><u><=
-/u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Yours faithfully,<u></u><u></u>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Claire Ku<u></u><u></u></span><=
-/p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
+> +
+> +/*
+> + * This program is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU General Public License
+> + * as published by the Free Software Foundation; either version
+> + * 2 of the License, or (at your option) any later version.
+> + */
 
-<p><span style=3D"font-family:Calibri;font-size:11pt;color:rgb(0,0,0)"><b>-=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
---------</b></span></p>
-<p><span style=3D"font-family:Calibri;font-size:11pt;color:rgb(0,0,0)"><b>T=
-his email contains confidential or legally privileged information and is fo=
-r the sole use of its intended recipient. </b></span></p>
-<p><span style=3D"font-family:Calibri;font-size:11pt;color:rgb(0,0,0)"><b>A=
-ny unauthorized review, use, copying or distribution of this email or the c=
-ontent of this email is strictly prohibited.</b></span></p>
-<p><span style=3D"font-family:Calibri;font-size:11pt;color:rgb(0,0,0)"><b>I=
-f you are not the intended recipient, you may reply to the sender and shoul=
-d delete this e-mail immediately.</b></span></p>
-<p><span style=3D"font-family:Calibri;font-size:11pt;color:rgb(0,0,0)"><b>-=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
---------</b></span></p></div>
-
-</blockquote></div>
-
---000000000000d1082b058a2169dd--
+If you have the "SPDX" line above you can leave this text out.
+However, there's a contradiction: the SPDX text says "GPL 2.0 only",
+while this text says "GPL 2.0 or later". You need to clarify which one
+you meant.
