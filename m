@@ -2,54 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD60B309A4
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 09:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2E2030D4A
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 13:23:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Fc1t6yZKzDqfV
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 17:45:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Fhsg1XtVzDqZl
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 21:23:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.26.145; helo=unicom145.biz-email.net;
- envelope-from=zhuysh@inspur.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=qq.com
+ (client-ip=59.36.132.35; helo=qq.com; envelope-from=1450335857@qq.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-Received: from unicom145.biz-email.net (unicom145.biz-email.net
- [210.51.26.145])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.b="K+f+dyEe"; 
+ dkim-atps=neutral
+X-Greylist: delayed 67 seconds by postgrey-1.36 at bilbo;
+ Fri, 31 May 2019 21:23:19 AEST
+Received: from qq.com (smtpbg465.qq.com [59.36.132.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Fc1M6VtWzDqdp
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 17:45:04 +1000 (AEST)
-Received: from ([60.208.111.195])
- by unicom145.biz-email.net (Antispam) with ASMTP (SSL) id WMX39654;
- Fri, 31 May 2019 15:44:54 +0800
-Received: from jtjnmail201601.home.langchao.com (10.100.2.1) by
- jtjnmail201603.home.langchao.com (10.100.2.3) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1591.10; Fri, 31 May 2019 15:44:50 +0800
-Received: from jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78])
- by jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78%8])
- with mapi id 15.01.1591.008; Fri, 31 May 2019 15:44:50 +0800
-From: =?gb2312?B?U2ltb24gWmh1KNbs06Lk+Ck=?= <zhuysh@inspur.com>
-To: Samuel Jiang <chyishian.jiang@gmail.com>
-Subject: Re: [IPMI] About LAN interface
-Thread-Topic: [IPMI] About LAN interface
-Thread-Index: AQHVF0o8ZH4t9azy+kqxX5b23Q2jD6aETU8AgAAHcoA=
-Date: Fri, 31 May 2019 07:44:50 +0000
-Message-ID: <6F24B29F-8F3E-404E-B19D-044C3F017F2A@inspur.com>
-References: <0bf60139f1302379f2ff8355443c0286@sslemail.net>
- <6a7553c7-060b-4318-a710-b903862b47af@Spark>
-In-Reply-To: <6a7553c7-060b-4318-a710-b903862b47af@Spark>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.100.1.52]
-Content-Type: multipart/signed;
- boundary="Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2";
- protocol="application/pkcs7-signature"; micalg=sha-256
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Fhs31w8GzDqY0
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 21:23:18 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1559301693; bh=xipYqlJwkLFXpn3LljA66QoMFjdtvolgfrJOeeIzUHQ=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=K+f+dyEeJaksTOPlOkOXcgE5D1juypXBe/CG8nNFdDamoFFjHkHX24O7ok6N+1YyW
+ cjoq+T94SljX5eY4TDsfUE4nWGD5hHbbyctv3NyO/iMqAlYFM2hUBnDsiT0qQB49mx
+ OA6qU5zbxSo7o+8vBK+rI+g/iJ7/3Lu1jjZO2ONA=
+X-QQ-SSF: 00000000000000F000000000000000H
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 218.247.157.87
+In-Reply-To: <mailman.9.1558663202.24371.openbmc@lists.ozlabs.org>
+References: <mailman.9.1558663202.24371.openbmc@lists.ozlabs.org>
+X-QQ-STYLE: 
+X-QQ-mid: webenglish1t1559301692t87554
+From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
+To: "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
+ "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
+ "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>,
+ "=?ISO-8859-1?B?am9lbA==?=" <joel@jms.id.au>,
+ "=?ISO-8859-1?B?YW5kcmV3?=" <andrew@aj.id.au>
+Subject: Re:[PATCH dev-5.1 4/4] media: aspeed: add a workaround to fix a
+ silicon bug (Jae Hyun Yoo)
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5CF10E3C_1035ED10_7773A597"
+Content-Transfer-Encoding: 8Bit
+Date: Fri, 31 May 2019 19:21:32 +0800
+X-Priority: 3
+Message-ID: <tencent_18FB023D486815FB74809705@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-ReplyHash: 1789413340
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Fri, 31 May 2019 19:21:33 +0800 (CST)
+Feedback-ID: webenglish:qq.com:bgforeign:bgforeign4
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,189 +74,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3"
+This is a multi-part message in MIME format.
 
-
---Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3
-Content-Transfer-Encoding: quoted-printable
+------=_NextPart_5CF10E3C_1035ED10_7773A597
 Content-Type: text/plain;
-	charset=gb2312
-
-Hi Samuel,
-
-	I know lanplus interface is ok.
-	My question is that can we support both lan and lanplus =
-interface?
-
-Best regards,
-Simon
-
-> =D4=DA 2019=C4=EA5=D4=C231=C8=D5=A3=AC15:18=A3=ACSamuel Jiang =
-<chyishian.jiang@gmail.com> =D0=B4=B5=C0=A3=BA
->=20
-> Hi Simon,
->=20
-> try use ipmitool -U root  -P 0penBmc -h <host_ip> -I lanplus mc info
->=20
-> Reference <https://github.com/openbmc/openbmc/issues/1570>
->=20
-> Thanks,
->=20
-> Samuel Jiang
-> On May 31, 2019, 8:46 AM +0800, Simon Zhu(=D6=EC=D3=A2=E4=F8) =
-<zhuysh@inspur.com>, wrote:
->> Hello,
->>=20
->> Does IPMI support lan interface?
->>=20
->> I used ipmitool through lan interface, but failed:
->>=20
->> ipmitool -I lan -H IP -U root -P 0penBmc mc info
->> Authentication type NONE not supported
->> Error: Unable to establish LAN session
->> Error: Unable to establish IPMI v1.5 / RMCP session
->>=20
->> Can we support LAN interface?
->>=20
->> Best regards,
->>=20
->> Simon
-
-
---Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=gb2312
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dgb2312"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">Hi =
-Samuel,<div class=3D""><br class=3D""></div><div class=3D""><span =
-class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>I know =
-lanplus interface is ok.</div><div class=3D""><span =
-class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>My =
-question is that can we support both lan and lanplus =
-interface?</div><div class=3D""><br class=3D""></div><div class=3D"">Best =
-regards,</div><div class=3D"">Simon<br class=3D""><div><br =
-class=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">=D4=DA =
-2019=C4=EA5=D4=C231=C8=D5=A3=AC15:18=A3=ACSamuel Jiang &lt;<a =
-href=3D"mailto:chyishian.jiang@gmail.com" =
-class=3D"">chyishian.jiang@gmail.com</a>&gt; =D0=B4=B5=C0=A3=BA</div><br =
-class=3D"Apple-interchange-newline"><div class=3D"">
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
-class=3D""><title class=3D""></title>
-
-<div class=3D"">
-<div name=3D"messageBodySection" style=3D"font-size: 14px; font-family: =
--apple-system, BlinkMacSystemFont, sans-serif;" class=3D"">
-<div dir=3D"auto" class=3D"">Hi Simon,
-<div dir=3D"auto" class=3D""><br class=3D""></div>
-<div dir=3D"auto" class=3D"">try use ipmitool -U root &nbsp;-P 0penBmc =
--h &lt;host_ip&gt; -I lanplus mc info</div>
-<div dir=3D"auto" class=3D""><br class=3D""></div>
-<div dir=3D"auto" class=3D""><a =
-href=3D"https://github.com/openbmc/openbmc/issues/1570" =
-class=3D"">Reference</a></div>
-</div>
-</div>
-<div name=3D"messageSignatureSection" class=3D""><br class=3D"">
-<div class=3D"matchFont">Thanks,
-<div style=3D"font-size: 14px; font-family: -apple-system, =
-BlinkMacSystemFont, sans-serif;" class=3D""><br style=3D"font-size: =
-14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;" =
-class=3D""></div>
-<div style=3D"font-size: 14px; font-family: -apple-system, =
-BlinkMacSystemFont, sans-serif;" class=3D"">Samuel Jiang</div>
-</div>
-</div>
-<div name=3D"messageReplySection" style=3D"font-size: 14px; font-family: =
--apple-system, BlinkMacSystemFont, sans-serif;" class=3D"">On May 31, =
-2019, 8:46 AM +0800, Simon Zhu(=D6=EC=D3=A2=E4=F8) &lt;<a =
-href=3D"mailto:zhuysh@inspur.com" class=3D"">zhuysh@inspur.com</a>&gt;, =
-wrote:<br class=3D"">
-<blockquote type=3D"cite" class=3D"spark_quote" style=3D"margin: 5px =
-5px; padding-left: 10px; border-left: thin solid #1abc9c;">Hello,<br =
-class=3D"">
-<br class=3D"">
-Does IPMI support lan interface?<br class=3D"">
-<br class=3D"">
-I used ipmitool through lan interface, but failed:<br class=3D"">
-<br class=3D"">
-ipmitool -I lan -H IP -U root -P 0penBmc mc info<br class=3D"">
-Authentication type NONE not supported<br class=3D"">
-Error: Unable to establish LAN session<br class=3D"">
-Error: Unable to establish IPMI v1.5 / RMCP session<br class=3D"">
-<br class=3D"">
-Can we support LAN interface?<br class=3D"">
-<br class=3D"">
-Best regards,<br class=3D"">
-<br class=3D"">
-Simon</blockquote>
-</div>
-</div>
-
-</div></blockquote></div><br class=3D""></div></body></html>=
-
---Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3--
-
---Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Type: application/pkcs7-signature; name="smime.p7s"
+	charset="ISO-8859-1"
 Content-Transfer-Encoding: base64
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCBz8w
-ggc7MIIGI6ADAgECAgpqPjdoAAEAAbdAMA0GCSqGSIb3DQEBBQUAMFsxEzARBgoJkiaJk/IsZAEZ
-FgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUxFDAS
-BgNVBAMTC0xhbmdDaGFvLUNBMB4XDTE0MTIwOTA3MjM1MFoXDTE5MTIwODA3MjM1MFowgZIxEzAR
-BgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixk
-ARkWBGhvbWUxFTATBgNVBAsMDOa1qua9ruS/oeaBrzESMBAGA1UEAwwJ5pyx6Iux5r6NMSAwHgYJ
-KoZIhvcNAQkBFhF6aHV5c2hAaW5zcHVyLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
-ggEBANcl7k0O5Ddj8YZ7jFzneSe7nPVnP6CiFRYhW3ZckZhQ2VUSkkE2TgwxPbydHbR6njQZci3A
-soufiilTcWrz5gIexwCUPtpf4rg/CSMXdeOQCLR8rHwPahR1tY6EGgYRQGu1KfT6iGOs/of0+ufY
-FfpzxvoGfJ11q19Oro3Lrlf1fuA6FCVXTgLIIGHa5pBcDymFr6sS23qTtTnWXyfkDvpWEtGMKhPl
-as7ND5pT0LnjNV9/krBcBxUwlkUb30ZWxZJGqP7L3jq5+PWDjJzMLNWjbSPdF8doV81meVVNUz0y
-FB4mK8L0kK/2ePkhW/OuPQqnc928wn53u8oBISTUn4MCAwEAAaOCA8cwggPDMAsGA1UdDwQEAwIF
-oDA+BgkrBgEEAYI3FQcEMTAvBicrBgEEAYI3FQiC8qkfhIHXeoapkT2GgPcVg9iPXIFKhqKtHYbX
-lCwCAWQCARgwRAYJKoZIhvcNAQkPBDcwNTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
-MAcGBSsOAwIHMAoGCCqGSIb3DQMHMB0GA1UdDgQWBBRakw7MI3vEw/JZItkKOHzlYEs4HTAfBgNV
-HSMEGDAWgBTGbsOiE24avQY6XrcvNNjg05z7IzCCARUGA1UdHwSCAQwwggEIMIIBBKCCAQCggf2G
-gbxsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPWp0am5jYTAxLENOPUNEUCxDTj1QdWJsaWMlMjBL
-ZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFu
-Z2NoYW8sREM9Y29tP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1j
-UkxEaXN0cmlidXRpb25Qb2ludIY8aHR0cDovL2p0am5jYTAxLmhvbWUubGFuZ2NoYW8uY29tL0Nl
-cnRFbnJvbGwvTGFuZ0NoYW8tQ0EuY3JsMIIBMAYIKwYBBQUHAQEEggEiMIIBHjCBswYIKwYBBQUH
-MAKGgaZsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2
-aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFuZ2NoYW8sREM9
-Y29tP2NBQ2VydGlmaWNhdGU/YmFzZT9vYmplY3RDbGFzcz1jZXJ0aWZpY2F0aW9uQXV0aG9yaXR5
-MGYGCCsGAQUFBzAChlpodHRwOi8vanRqbmNhMDEuaG9tZS5sYW5nY2hhby5jb20vQ2VydEVucm9s
-bC9qdGpuY2EwMS5ob21lLmxhbmdjaGFvLmNvbV9MYW5nQ2hhby1DQSgxKS5jcnQwKQYDVR0lBCIw
-IAYIKwYBBQUHAwIGCCsGAQUFBwMEBgorBgEEAYI3CgMEMDUGCSsGAQQBgjcVCgQoMCYwCgYIKwYB
-BQUHAwIwCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoDBDA/BgNVHREEODA2oCEGCisGAQQBgjcUAgOg
-EwwRemh1eXNoQGluc3B1ci5jb22BEXpodXlzaEBpbnNwdXIuY29tMA0GCSqGSIb3DQEBBQUAA4IB
-AQBuOubBOCkBWe+svIPrF5VWulW0HevKWzd4xg5Q1Y0h+2sQogGK1wxuKJSWC4aW8N9z6wFRHL9+
-ULXrSPpY6VRv89ZLUrGiVt1kfx1hkKvfXcgqtoMRRbSBIegY3mNWgJa/4q1nKAAF8a5enoRotbT3
-3VIowB84sDIF++pgixrJ4jjnXbYDhHDhdOWIY/Jt1Drn53hqbIOve0ZZBhfWNE40ag8RzjA6xquZ
-zGVC6dGEBVOjYg1heD1i7SsHWYauIGBbzUedq0QPiaotT0m9++X9IRuxjpCS3IJDaNm8jx6U6WH8
-XdS6CzYepNoOC2pI5X6LOCooK49ZK7BWpNtEpNSMMYIC9zCCAvMCAQEwaTBbMRMwEQYKCZImiZPy
-LGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDASBgoJkiaJk/IsZAEZFgRob21l
-MRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDANBglghkgBZQMEAgEFAKCCAV8wGAYJ
-KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNTMxMDc0NDUwWjAvBgkq
-hkiG9w0BCQQxIgQgHVM4eemYw35YpblNko6rBOx7bZInTgxWZY1SrwDX8J8weAYJKwYBBAGCNxAE
-MWswaTBbMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDAS
-BgoJkiaJk/IsZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDB6Bgsq
-hkiG9w0BCRACCzFroGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxh
-bmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmo+N2gA
-AQABt0AwDQYJKoZIhvcNAQEBBQAEggEAB2c7OQCBDpw6oTHwJL8jT8aGmCQlSohni8f/JNOK1Q82
-dRt7Vr+dDLk9XWWBwC7TUv1dDAV0ZQtqW2hK0gp26RZyYr5nqCeIfX/cZIARH+/XYYqAbnQ/jk7F
-087E0LhfekERkHGdCo76GF+UAMVT31WeVXYsedj2eVISJZwnyH5fno/1S3TIATvbZYDyfb+uUXD9
-UOxHMh4iKsNLGeodQa6fugqhrHZVKNMso3iZaWPCIlZqWIjUvAvPzE1EZymV7edZjEWQOMn+R4nD
-uTBAHUc8HYCdT546xpgqdnIhU0u094Fr09mgH8/mA7JU/wL/yLBwCZ2KIjbDpFdFCCNA7wAAAAAA
-AA==
+SGkgIEphZSwNCiAgIEkgdGVzdGVkIHRoaXMgcGF0Y2ggLGl0IHdvcmtzIG9uIDE2ODAqMTA1
+MCxidXQgSSBmb3VuZCBhbiBpc3N1ZToNCg0KVGhlIGlrdm0gd2VicGFnZSB3aWxsIGJlIGJs
+YWNrIHNjcmVlbiB3aGVuIHlvdSByZWJvb3QgdGhlIGhvc3QgYWZ0ZXIgc3dpdGNoaW5nIHNv
+bHV0aW9uIGJldHdlZW4gMTY4MCoxMDUwIGFuZCA4MDAqNjAwIG9uIGNocm9tZSBicm93c2Vy
+IChteSBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuDQp5b3UgY2FuIHJlcHJvZHVjZSBpdDoNCjEs
+IFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAxNjgwKjEwNTAgYW5kIHNhdmUgaXQgLiBp
+a3ZtIHdlYnBhZ2Ugd29ya3MgDQoyLFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byA4MDAq
+NjAwIGFuZCBzYXZlIGl0LiBpa3ZtIHdlYnBhZ2Ugd29ya3MNCjMsUmVzZXQgaG9zdCBzY3Jl
+ZW4gc29sdXRpb24gdG8gICAxNjgwKjEwNTAgYW5kIHNhdmUgaXQsDQo0LHJlYm9vdCB0aGUg
+aG9zdCwNCjUsIHRoZSBpa3ZtIHdlYnBhZ2UgaXMgYmxhY2sgc2NyZWVuIHdoZW4gYm9vdCB0
+byBDZW50b3MgR1VJIA0KQmVzdCwNCnhpdXpoaQ0KDQpBU1QyNTAwIHNpbGljb24gcmV2aXNp
+b24gQTEgYW5kIEEyIGhhdmUgYSBzaWxpY29uIGJ1ZyB3aGljaCBjYXVzZXMNCmV4dHJlbWx5
+IGxvbmcgY2FwdHVyaW5nIHRpbWUgb24gc3BlY2lmaWMgcmVzb2x1dGlvbnMgKDE2ODAgd2lk
+dGgpLg0KVG8gZml4IHRoZSBidWcsIHRoaXMgY29tbWl0IGFkanVzdHMgdGhlIGNhcHR1cmlu
+ZyB3aW5kb3cgcmVnaXN0ZXINCnNldHRpbmcgdG8gMTcyOCBpZiBkZXRlY3RlZCB3aWR0aCBp
+cyAxNjgwLiBUaGUgY29tcHJlc3Npb24gd2luZG93DQpyZWdpc3RlciBzZXR0aW5nIHdpbGwg
+YmUga2VwdCBhcyB0aGUgb3JpZ2luYWwgd2lkdGggc28gb3V0cHV0DQpyZXN1bHQgd2lsbCBi
+ZSB0aGUgc2FtZS4NCg0KU2lnbmVkLW9mZi1ieTogSmFlIEh5dW4gWW9vIDxqYWUuaHl1bi55
+b29AbGludXguaW50ZWwuY29tPg0KLS0tDQogZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3Bl
+ZWQtdmlkZW8uYyB8IDI2ICsrKysrKysrKysrKysrKysrKystLS0tLS0tDQogMSBmaWxlIGNo
+YW5nZWQsIDE5IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pDQoNCmRpZmYgLS1naXQg
+YS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jIGIvZHJpdmVycy9tZWRp
+YS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYw0KaW5kZXggZGEyMGU5M2Y1OGQzLi5jMmQ0YTJl
+NmYyMGYgMTAwNjQ0DQotLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRl
+by5jDQorKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jDQpAQCAt
+ODI2LDggKzgyNiwyNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9fc2V0X3Jlc29sdXRp
+b24oc3RydWN0IGFzcGVlZF92aWRlbyAqdmlkZW8pDQogCXN0cnVjdCB2NGwyX2J0X3RpbWlu
+Z3MgKmFjdCA9ICZ2aWRlby0+YWN0aXZlX3RpbWluZ3M7DQogCXVuc2lnbmVkIGludCBzaXpl
+ID0gYWN0LT53aWR0aCAqIGFjdC0+aGVpZ2h0Ow0KIA0KKwkvKiBTZXQgY2FwdHVyZS9jb21w
+cmVzc2lvbiBmcmFtZSBzaXplcyAqLw0KIAlhc3BlZWRfdmlkZW9fY2FsY19jb21wcmVzc2Vk
+X3NpemUodmlkZW8sIHNpemUpOw0KIA0KKwlpZiAodmlkZW8tPmFjdGl2ZV90aW1pbmdzLndp
+ZHRoID09IDE2ODApIHsNCisJCS8qDQorCQkgKiBUaGlzIGlzIGEgd29ya2Fyb3VuZCB0byBm
+aXggYSBzaWxpY29uIGJ1ZyBvbiBBMSBhbmQgQTINCisJCSAqIHJldmlzaW9ucy4gU2luY2Ug
+aXQgZG9lc24ndCBicmVhayBjYXB0dXJpbmcgb3BlcmF0aW9uIG9uIEEwDQorCQkgKiByZXZp
+c2lvbiwgdXNlIGl0IGZvciBhbGwgcmV2aXNpb25zIHdpdGhvdXQgY2hlY2tpbmcgdGhlDQor
+CQkgKiByZXZpc2lvbiBJRC4NCisJCSAqLw0KKwkJYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVv
+LCBWRV9DQVBfV0lORE9XLA0KKwkJCQkgICAxNzI4IDw8IDE2IHwgYWN0LT5oZWlnaHQpOw0K
+KwkJc2l6ZSArPSAoMTcyOCAtIDE2ODApICogdmlkZW8tPmFjdGl2ZV90aW1pbmdzLmhlaWdo
+dDsNCisJfSBlbHNlIHsNCisJCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfQ0FQX1dJ
+TkRPVywNCisJCQkJICAgYWN0LT53aWR0aCA8PCAxNiB8IGFjdC0+aGVpZ2h0KTsNCisJfQ0K
+Kwlhc3BlZWRfdmlkZW9fd3JpdGUodmlkZW8sIFZFX0NPTVBfV0lORE9XLA0KKwkJCSAgIGFj
+dC0+d2lkdGggPDwgMTYgfCBhY3QtPmhlaWdodCk7DQorCWFzcGVlZF92aWRlb193cml0ZSh2
+aWRlbywgVkVfU1JDX1NDQU5MSU5FX09GRlNFVCwgYWN0LT53aWR0aCAqIDQpOw0KKw0KIAkv
+KiBEb24ndCB1c2UgZGlyZWN0IG1vZGUgYmVsb3cgMTAyNCB4IDc2OCAoaXJxcyBkb24ndCBm
+aXJlKSAqLw0KIAlpZiAoc2l6ZSA8IERJUkVDVF9GRVRDSF9USFJFU0hPTEQpIHsNCiAJCWFz
+cGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfVEdTXzAsDQpAQCAtODQ0LDEzICs4NjMsNiBA
+QCBzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9fc2V0X3Jlc29sdXRpb24oc3RydWN0IGFzcGVl
+ZF92aWRlbyAqdmlkZW8pDQogCQlhc3BlZWRfdmlkZW9fdXBkYXRlKHZpZGVvLCBWRV9DVFJM
+LCAwLCBWRV9DVFJMX0RJUkVDVF9GRVRDSCk7DQogCX0NCiANCi0JLyogU2V0IGNhcHR1cmUv
+Y29tcHJlc3Npb24gZnJhbWUgc2l6ZXMgKi8NCi0JYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVv
+LCBWRV9DQVBfV0lORE9XLA0KLQkJCSAgIGFjdC0+d2lkdGggPDwgMTYgfCBhY3QtPmhlaWdo
+dCk7DQotCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfQ09NUF9XSU5ET1csDQotCQkJ
+ICAgYWN0LT53aWR0aCA8PCAxNiB8IGFjdC0+aGVpZ2h0KTsNCi0JYXNwZWVkX3ZpZGVvX3dy
+aXRlKHZpZGVvLCBWRV9TUkNfU0NBTkxJTkVfT0ZGU0VULCBhY3QtPndpZHRoICogNCk7DQot
+DQogCXNpemUgKj0gNDsNCiANCiAJaWYgKHNpemUgPT0gdmlkZW8tPnNyY3NbMF0uc2l6ZSAv
+IDIpIHsNCi0tIA0KMi4yMS4w
 
---Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2--
+------=_NextPart_5CF10E3C_1035ED10_7773A597
+Content-Type: text/html;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+
+SGkmbmJzcDsgSmFlLDxicj4mbmJzcDsmbmJzcDsgSSB0ZXN0ZWQgdGhpcyBwYXRjaCAsaXQg
+d29ya3Mgb24gMTY4MCoxMDUwLGJ1dCBJIGZvdW5kIGFuIGlzc3VlOjxicj48YnI+VGhlIGlr
+dm0gd2VicGFnZSB3aWxsIGJlIGJsYWNrIHNjcmVlbiB3aGVuIHlvdSByZWJvb3QgdGhlIGhv
+c3QgYWZ0ZXIgc3dpdGNoaW5nIHNvbHV0aW9uIGJldHdlZW4gMTY4MCoxMDUwIGFuZCA4MDAq
+NjAwIG9uIGNocm9tZSBicm93c2VyIChteSBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuPGJyPnlv
+dSBjYW4gcmVwcm9kdWNlIGl0Ojxicj4xLCBTZXQgaG9zdCBzY3JlZW4gc29sdXRpb24gdG8g
+MTY4MCoxMDUwIGFuZCBzYXZlIGl0IC4gaWt2bSB3ZWJwYWdlIHdvcmtzIDxicj4yLFNldCBo
+b3N0IHNjcmVlbiBzb2x1dGlvbiB0byA4MDAqNjAwIGFuZCBzYXZlIGl0LiBpa3ZtIHdlYnBh
+Z2Ugd29ya3M8YnI+MyxSZXNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAmbmJzcDsgMTY4
+MCoxMDUwIGFuZCBzYXZlIGl0LDxicj40LHJlYm9vdCB0aGUgaG9zdCw8YnI+NSwgdGhlIGlr
+dm0gd2VicGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRvcyBHVUkgPGJy
+PkJlc3QsPGJyPnhpdXpoaTxicj48YnI+QVNUMjUwMCBzaWxpY29uIHJldmlzaW9uIEExIGFu
+ZCBBMiBoYXZlIGEgc2lsaWNvbiBidWcgd2hpY2ggY2F1c2VzPGJyPmV4dHJlbWx5IGxvbmcg
+Y2FwdHVyaW5nIHRpbWUgb24gc3BlY2lmaWMgcmVzb2x1dGlvbnMgKDE2ODAgd2lkdGgpLjxi
+cj5UbyBmaXggdGhlIGJ1ZywgdGhpcyBjb21taXQgYWRqdXN0cyB0aGUgY2FwdHVyaW5nIHdp
+bmRvdyByZWdpc3Rlcjxicj5zZXR0aW5nIHRvIDE3MjggaWYgZGV0ZWN0ZWQgd2lkdGggaXMg
+MTY4MC4gVGhlIGNvbXByZXNzaW9uIHdpbmRvdzxicj5yZWdpc3RlciBzZXR0aW5nIHdpbGwg
+YmUga2VwdCBhcyB0aGUgb3JpZ2luYWwgd2lkdGggc28gb3V0cHV0PGJyPnJlc3VsdCB3aWxs
+IGJlIHRoZSBzYW1lLjxicj48YnI+U2lnbmVkLW9mZi1ieTogSmFlIEh5dW4gWW9vICZsdDtq
+YWUuaHl1bi55b29AbGludXguaW50ZWwuY29tJmd0Ozxicj4tLS08YnI+Jm5ic3A7ZHJpdmVy
+cy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYyB8IDI2ICsrKysrKysrKysrKysrKysr
+KystLS0tLS0tPGJyPiZuYnNwOzEgZmlsZSBjaGFuZ2VkLCAxOSBpbnNlcnRpb25zKCspLCA3
+IGRlbGV0aW9ucygtKTxicj48YnI+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVkaWEvcGxhdGZv
+cm0vYXNwZWVkLXZpZGVvLmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRl
+by5jPGJyPmluZGV4IGRhMjBlOTNmNThkMy4uYzJkNGEyZTZmMjBmIDEwMDY0NDxicj4tLS0g
+YS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jPGJyPisrKyBiL2RyaXZl
+cnMvbWVkaWEvcGxhdGZvcm0vYXNwZWVkLXZpZGVvLmM8YnI+QEAgLTgyNiw4ICs4MjYsMjcg
+QEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9yZXNvbHV0aW9uKHN0cnVjdCBhc3Bl
+ZWRfdmlkZW8gKnZpZGVvKTxicj4mbmJzcDsJc3RydWN0IHY0bDJfYnRfdGltaW5ncyAqYWN0
+ID0gJmFtcDt2aWRlby0mZ3Q7YWN0aXZlX3RpbWluZ3M7PGJyPiZuYnNwOwl1bnNpZ25lZCBp
+bnQgc2l6ZSA9IGFjdC0mZ3Q7d2lkdGggKiBhY3QtJmd0O2hlaWdodDs8YnI+Jm5ic3A7PGJy
+PisJLyogU2V0IGNhcHR1cmUvY29tcHJlc3Npb24gZnJhbWUgc2l6ZXMgKi88YnI+Jm5ic3A7
+CWFzcGVlZF92aWRlb19jYWxjX2NvbXByZXNzZWRfc2l6ZSh2aWRlbywgc2l6ZSk7PGJyPiZu
+YnNwOzxicj4rCWlmICh2aWRlby0mZ3Q7YWN0aXZlX3RpbWluZ3Mud2lkdGggPT0gMTY4MCkg
+ezxicj4rCQkvKjxicj4rCQkgKiBUaGlzIGlzIGEgd29ya2Fyb3VuZCB0byBmaXggYSBzaWxp
+Y29uIGJ1ZyBvbiBBMSBhbmQgQTI8YnI+KwkJICogcmV2aXNpb25zLiBTaW5jZSBpdCBkb2Vz
+bid0IGJyZWFrIGNhcHR1cmluZyBvcGVyYXRpb24gb24gQTA8YnI+KwkJICogcmV2aXNpb24s
+IHVzZSBpdCBmb3IgYWxsIHJldmlzaW9ucyB3aXRob3V0IGNoZWNraW5nIHRoZTxicj4rCQkg
+KiByZXZpc2lvbiBJRC48YnI+KwkJICovPGJyPisJCWFzcGVlZF92aWRlb193cml0ZSh2aWRl
+bywgVkVfQ0FQX1dJTkRPVyw8YnI+KwkJCQkmbmJzcDsmbmJzcDsgMTcyOCAmbHQ7Jmx0OyAx
+NiB8IGFjdC0mZ3Q7aGVpZ2h0KTs8YnI+KwkJc2l6ZSArPSAoMTcyOCAtIDE2ODApICogdmlk
+ZW8tJmd0O2FjdGl2ZV90aW1pbmdzLmhlaWdodDs8YnI+Kwl9IGVsc2Ugezxicj4rCQlhc3Bl
+ZWRfdmlkZW9fd3JpdGUodmlkZW8sIFZFX0NBUF9XSU5ET1csPGJyPisJCQkJJm5ic3A7Jm5i
+c3A7IGFjdC0mZ3Q7d2lkdGggJmx0OyZsdDsgMTYgfCBhY3QtJmd0O2hlaWdodCk7PGJyPisJ
+fTxicj4rCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfQ09NUF9XSU5ET1csPGJyPisJ
+CQkmbmJzcDsmbmJzcDsgYWN0LSZndDt3aWR0aCAmbHQ7Jmx0OyAxNiB8IGFjdC0mZ3Q7aGVp
+Z2h0KTs8YnI+Kwlhc3BlZWRfdmlkZW9fd3JpdGUodmlkZW8sIFZFX1NSQ19TQ0FOTElORV9P
+RkZTRVQsIGFjdC0mZ3Q7d2lkdGggKiA0KTs8YnI+Kzxicj4mbmJzcDsJLyogRG9uJ3QgdXNl
+IGRpcmVjdCBtb2RlIGJlbG93IDEwMjQgeCA3NjggKGlycXMgZG9uJ3QgZmlyZSkgKi88YnI+
+Jm5ic3A7CWlmIChzaXplICZsdDsgRElSRUNUX0ZFVENIX1RIUkVTSE9MRCkgezxicj4mbmJz
+cDsJCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfVEdTXzAsPGJyPkBAIC04NDQsMTMg
+Kzg2Myw2IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF92aWRlb19zZXRfcmVzb2x1dGlvbihzdHJ1
+Y3QgYXNwZWVkX3ZpZGVvICp2aWRlbyk8YnI+Jm5ic3A7CQlhc3BlZWRfdmlkZW9fdXBkYXRl
+KHZpZGVvLCBWRV9DVFJMLCAwLCBWRV9DVFJMX0RJUkVDVF9GRVRDSCk7PGJyPiZuYnNwOwl9
+PGJyPiZuYnNwOzxicj4tCS8qIFNldCBjYXB0dXJlL2NvbXByZXNzaW9uIGZyYW1lIHNpemVz
+ICovPGJyPi0JYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9DQVBfV0lORE9XLDxicj4t
+CQkJJm5ic3A7Jm5ic3A7IGFjdC0mZ3Q7d2lkdGggJmx0OyZsdDsgMTYgfCBhY3QtJmd0O2hl
+aWdodCk7PGJyPi0JYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9DT01QX1dJTkRPVyw8
+YnI+LQkJCSZuYnNwOyZuYnNwOyBhY3QtJmd0O3dpZHRoICZsdDsmbHQ7IDE2IHwgYWN0LSZn
+dDtoZWlnaHQpOzxicj4tCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfU1JDX1NDQU5M
+SU5FX09GRlNFVCwgYWN0LSZndDt3aWR0aCAqIDQpOzxicj4tPGJyPiZuYnNwOwlzaXplICo9
+IDQ7PGJyPiZuYnNwOzxicj4mbmJzcDsJaWYgKHNpemUgPT0gdmlkZW8tJmd0O3NyY3NbMF0u
+c2l6ZSAvIDIpIHs8YnI+LS0gPGJyPjIuMjEuMDxicj48YnI+PGJyPg==
+
+------=_NextPart_5CF10E3C_1035ED10_7773A597--
+
+
+
