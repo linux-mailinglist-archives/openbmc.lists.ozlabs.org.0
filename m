@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9398830D6C
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 13:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FE4A30EE1
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 15:29:40 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FjCN0F2mzDqFH
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 21:39:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Flfn2mZMzDqZL
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 23:29:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=103.7.29.139; helo=smtpbg64.qq.com; envelope-from=1450335857@qq.com;
- receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::441; helo=mail-pf1-x441.google.com;
+ envelope-from=franhsutw@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="mHHuXWGX"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="fHEABxLB"; 
  dkim-atps=neutral
-X-Greylist: delayed 70 seconds by postgrey-1.36 at bilbo;
- Fri, 31 May 2019 21:38:51 AEST
-Received: from smtpbg64.qq.com (unknown [103.7.29.139])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
+ [IPv6:2607:f8b0:4864:20::441])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FjBz5kVZzDqCx
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 21:38:51 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1559302721; bh=9vbrS3kcga50bVpg608d3hf/gwNRhkMTWEeoI7zIcG4=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=mHHuXWGXD6nEgugii7c1MEarIA+0HT3GQncLveWGnNm4OZbPsRM+RaovXPQvRo+yS
- XmcL+B4PxI+gpTqQiTrJd3j0CVxGa4JCpZxnfPQKqANluzHhQaE1duOOFEOQ/CngNB
- Oclt8QLOY3gToJhjgRbQmHSUitp8FWcZXZMuzOw4=
-X-QQ-SSF: 00000000000000F000000000000000H
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 218.247.157.87
-X-QQ-STYLE: 
-X-QQ-mid: webenglish1t1559302563t688889
-From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
-To: "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
- "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
- "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>,
- "=?ISO-8859-1?B?Sm9lbCBTdGFubGV5?=" <joel@jms.id.au>,
- "=?ISO-8859-1?B?QW5kcmV3LkplZmZlcnk=?=" <andrew@aj.id.au>
-Subject: Re:[PATCH dev-5.1 4/4] media: aspeed: add a workaround to fix a
- silicon bug (Jae Hyun Yoo)
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5CF111A3_09ECA508_402C2607"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 31 May 2019 19:36:03 +0800
-X-Priority: 3
-Message-ID: <tencent_4C0B266844637C1662BA6D8C@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 31 May 2019 19:36:04 +0800 (CST)
-Feedback-ID: webenglish:qq.com:bgweb:bgweb115
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45FlbZ6ccBzDqWF
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 23:26:48 +1000 (AEST)
+Received: by mail-pf1-x441.google.com with SMTP id y11so6195445pfm.13
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 06:26:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=k6E5Ogo9jYc91AiQ8WebDHVPyyZblZI4Qy3nP1ktOw0=;
+ b=fHEABxLBJjVA4qLF6ZFn6etVi18ApISaVQBw2V3/BKfe1sWeh8Aj7/f1+2lDhKVJet
+ DbVDPqwBIaPfX02YGQljMVQGqLXjedGa0eMccllnV/VC19ad4zMR2WQPjb7+j0mk2WbW
+ KRLBTrDHGjW/O8J9skaxPIVrh8o8SLEWUlCEaIL2RRY+u01K/OIrQqGjgocStQZspWhx
+ Z13vv9O2UvrtDBSIe04LFvXlOTCguw4eyJpG6YMHfmqySr3ecDRTntC5ByI1Pvffsy+9
+ vuhPOY9uSpLVtPx5pWXYmvRlkvx2/zzWX105E7Jm/m7r/AT9y0TMyuJsInMitcN22ces
+ QGDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=k6E5Ogo9jYc91AiQ8WebDHVPyyZblZI4Qy3nP1ktOw0=;
+ b=NB7GuWC9kOYa5YAYw2XcT4HkG99Siek3XR5GMbSYoHtLlgu1O6hVi4hK8aqiVOPuvx
+ ufwE2vJRHDW6W2XVSqJ6gamFen4q06jsgvY8Y40fFAsRQv/3byMa6dQ856TerDNVPKJ0
+ Dp6XR8W3n4nY0dNEQwAar0UAjVvriopzZ7BMYLEr7pLXZvLbervduHImvWgNyG0RzmQG
+ Mn7HCl2TcDS5fqhqYsRDBNPzRpUgHq64Gn1vyxFRy4cpXeLrnS1obwMBrsTwNGUgVcSk
+ Kh8/mUMvBDPxRXSEQhRU0mFGhJYJfWtDnuTes2KpGipaCmdQUIYRHhFpBZyn7bGqxQLk
+ IUlw==
+X-Gm-Message-State: APjAAAXLNzh6zFLiX3pPOr3LpCDPyJ6QD2ed9/XQoRIg0auxuIScb9vo
+ 738CKqG+7nyHsFD4yYfi/a4=
+X-Google-Smtp-Source: APXvYqwVdts85TPxzAouo9WVduNTorWDJiPzdg5RQoBJojBE8Ocl5fl1xBz7OLTyKYIZVCCRNVffyQ==
+X-Received: by 2002:a62:4dc5:: with SMTP id a188mr10166318pfb.8.1559309205009; 
+ Fri, 31 May 2019 06:26:45 -0700 (PDT)
+Received: from localhost.localdomain (220-135-135-179.HINET-IP.hinet.net.
+ [220.135.135.179])
+ by smtp.gmail.com with ESMTPSA id p20sm15444571pgk.7.2019.05.31.06.26.43
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+ Fri, 31 May 2019 06:26:44 -0700 (PDT)
+From: Fran Hsu <franhsutw@gmail.com>
+X-Google-Original-From: Fran Hsu <Fran.Hsu@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH dev-5.1 v5 1/4] ARM: dts: nuvoton: Add NPCM730 common device
+ tree include file.
+Date: Fri, 31 May 2019 21:24:37 +0800
+Message-Id: <20190531132440.37572-1-Fran.Hsu@quantatw.com>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,141 +79,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Fran Hsu <Fran.Hsu@quantatw.com>,
+ benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+Quanta GSJ BMC uses the Nuvoton NPCM730 BMC soc.
+This file describes the common setting of NPCM730 soc.
 
-------=_NextPart_5CF111A3_09ECA508_402C2607
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+Signed-off-by: Fran Hsu <Fran.Hsu@quantatw.com>
+---
+ arch/arm/boot/dts/nuvoton-npcm730.dtsi | 57 ++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
+ create mode 100644 arch/arm/boot/dts/nuvoton-npcm730.dtsi
 
-SGkgIEphZSwNCiAgIEkgdGVzdGVkIHRoaXMgcGF0Y2ggLGl0IHdvcmtzIG9uIDE2ODAqMTA1
-MCxidXQgSSBmb3VuZCBhbiBpc3N1ZToNCg0KVGhlIGlrdm0gd2VicGFnZSB3aWxsIGJlIGJs
-YWNrIHNjcmVlbiB3aGVuIHlvdSByZWJvb3QgdGhlIGhvc3QgYWZ0ZXIgc3dpdGNoaW5nIHNv
-bHV0aW9uIGJldHdlZW4gMTY4MCoxMDUwIGFuZCA4MDAqNjAwIG9uIGNocm9tZSBicm93c2Vy
-IChteSBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuDQp5b3UgY2FuIHJlcHJvZHVjZSBpdDoNCjEs
-IFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAxNjgwKjEwNTAgYW5kIHNhdmUgaXQgLiBp
-a3ZtIHdlYnBhZ2Ugd29ya3MgDQoyLFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byA4MDAq
-NjAwIGFuZCA1Nkh6IGFuZCBzYXZlIGl0LiBpa3ZtIHdlYnBhZ2Ugd29ya3MNCjMsUmVzZXQg
-aG9zdCBzY3JlZW4gc29sdXRpb24gdG8gICAxNjgwKjEwNTAgYW5kIHNhdmUgaXQsDQo0LHJl
-Ym9vdCB0aGUgaG9zdCwNCjUsIHRoZSBpa3ZtIHdlYnBhZ2UgaXMgYmxhY2sgc2NyZWVuIHdo
-ZW4gYm9vdCB0byBDZW50b3MgR1VJIA0KQmVzdCwNCnhpdXpoaQ0KDQpBU1QyNTAwIHNpbGlj
-b24gcmV2aXNpb24gQTEgYW5kIEEyIGhhdmUgYSBzaWxpY29uIGJ1ZyB3aGljaCBjYXVzZXMN
-CmV4dHJlbWx5IGxvbmcgY2FwdHVyaW5nIHRpbWUgb24gc3BlY2lmaWMgcmVzb2x1dGlvbnMg
-KDE2ODAgd2lkdGgpLg0KVG8gZml4IHRoZSBidWcsIHRoaXMgY29tbWl0IGFkanVzdHMgdGhl
-IGNhcHR1cmluZyB3aW5kb3cgcmVnaXN0ZXINCnNldHRpbmcgdG8gMTcyOCBpZiBkZXRlY3Rl
-ZCB3aWR0aCBpcyAxNjgwLiBUaGUgY29tcHJlc3Npb24gd2luZG93DQpyZWdpc3RlciBzZXR0
-aW5nIHdpbGwgYmUga2VwdCBhcyB0aGUgb3JpZ2luYWwgd2lkdGggc28gb3V0cHV0DQpyZXN1
-bHQgd2lsbCBiZSB0aGUgc2FtZS4NCg0KU2lnbmVkLW9mZi1ieTogSmFlIEh5dW4gWW9vIDxq
-YWUuaHl1bi55b29AbGludXguaW50ZWwuY29tPg0KLS0tDQogZHJpdmVycy9tZWRpYS9wbGF0
-Zm9ybS9hc3BlZWQtdmlkZW8uYyB8IDI2ICsrKysrKysrKysrKysrKysrKystLS0tLS0tDQog
-MSBmaWxlIGNoYW5nZWQsIDE5IGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pDQoNCmRp
-ZmYgLS1naXQgYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jIGIvZHJp
-dmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYw0KaW5kZXggZGEyMGU5M2Y1OGQz
-Li5jMmQ0YTJlNmYyMGYgMTAwNjQ0DQotLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2Fz
-cGVlZC12aWRlby5jDQorKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRl
-by5jDQpAQCAtODI2LDggKzgyNiwyNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9fc2V0
-X3Jlc29sdXRpb24oc3RydWN0IGFzcGVlZF92aWRlbyAqdmlkZW8pDQogCXN0cnVjdCB2NGwy
-X2J0X3RpbWluZ3MgKmFjdCA9ICZ2aWRlby0+YWN0aXZlX3RpbWluZ3M7DQogCXVuc2lnbmVk
-IGludCBzaXplID0gYWN0LT53aWR0aCAqIGFjdC0+aGVpZ2h0Ow0KIA0KKwkvKiBTZXQgY2Fw
-dHVyZS9jb21wcmVzc2lvbiBmcmFtZSBzaXplcyAqLw0KIAlhc3BlZWRfdmlkZW9fY2FsY19j
-b21wcmVzc2VkX3NpemUodmlkZW8sIHNpemUpOw0KIA0KKwlpZiAodmlkZW8tPmFjdGl2ZV90
-aW1pbmdzLndpZHRoID09IDE2ODApIHsNCisJCS8qDQorCQkgKiBUaGlzIGlzIGEgd29ya2Fy
-b3VuZCB0byBmaXggYSBzaWxpY29uIGJ1ZyBvbiBBMSBhbmQgQTINCisJCSAqIHJldmlzaW9u
-cy4gU2luY2UgaXQgZG9lc24ndCBicmVhayBjYXB0dXJpbmcgb3BlcmF0aW9uIG9uIEEwDQor
-CQkgKiByZXZpc2lvbiwgdXNlIGl0IGZvciBhbGwgcmV2aXNpb25zIHdpdGhvdXQgY2hlY2tp
-bmcgdGhlDQorCQkgKiByZXZpc2lvbiBJRC4NCisJCSAqLw0KKwkJYXNwZWVkX3ZpZGVvX3dy
-aXRlKHZpZGVvLCBWRV9DQVBfV0lORE9XLA0KKwkJCQkgICAxNzI4IDw8IDE2IHwgYWN0LT5o
-ZWlnaHQpOw0KKwkJc2l6ZSArPSAoMTcyOCAtIDE2ODApICogdmlkZW8tPmFjdGl2ZV90aW1p
-bmdzLmhlaWdodDsNCisJfSBlbHNlIHsNCisJCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywg
-VkVfQ0FQX1dJTkRPVywNCisJCQkJICAgYWN0LT53aWR0aCA8PCAxNiB8IGFjdC0+aGVpZ2h0
-KTsNCisJfQ0KKwlhc3BlZWRfdmlkZW9fd3JpdGUodmlkZW8sIFZFX0NPTVBfV0lORE9XLA0K
-KwkJCSAgIGFjdC0+d2lkdGggPDwgMTYgfCBhY3QtPmhlaWdodCk7DQorCWFzcGVlZF92aWRl
-b193cml0ZSh2aWRlbywgVkVfU1JDX1NDQU5MSU5FX09GRlNFVCwgYWN0LT53aWR0aCAqIDQp
-Ow0KKw0KIAkvKiBEb24ndCB1c2UgZGlyZWN0IG1vZGUgYmVsb3cgMTAyNCB4IDc2OCAoaXJx
-cyBkb24ndCBmaXJlKSAqLw0KIAlpZiAoc2l6ZSA8IERJUkVDVF9GRVRDSF9USFJFU0hPTEQp
-IHsNCiAJCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfVEdTXzAsDQpAQCAtODQ0LDEz
-ICs4NjMsNiBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfdmlkZW9fc2V0X3Jlc29sdXRpb24oc3Ry
-dWN0IGFzcGVlZF92aWRlbyAqdmlkZW8pDQogCQlhc3BlZWRfdmlkZW9fdXBkYXRlKHZpZGVv
-LCBWRV9DVFJMLCAwLCBWRV9DVFJMX0RJUkVDVF9GRVRDSCk7DQogCX0NCiANCi0JLyogU2V0
-IGNhcHR1cmUvY29tcHJlc3Npb24gZnJhbWUgc2l6ZXMgKi8NCi0JYXNwZWVkX3ZpZGVvX3dy
-aXRlKHZpZGVvLCBWRV9DQVBfV0lORE9XLA0KLQkJCSAgIGFjdC0+d2lkdGggPDwgMTYgfCBh
-Y3QtPmhlaWdodCk7DQotCWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfQ09NUF9XSU5E
-T1csDQotCQkJICAgYWN0LT53aWR0aCA8PCAxNiB8IGFjdC0+aGVpZ2h0KTsNCi0JYXNwZWVk
-X3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9TUkNfU0NBTkxJTkVfT0ZGU0VULCBhY3QtPndpZHRo
-ICogNCk7DQotDQogCXNpemUgKj0gNDsNCiANCiAJaWYgKHNpemUgPT0gdmlkZW8tPnNyY3Nb
-MF0uc2l6ZSAvIDIpIHsNCi0tIA0KMi4yMS4w
-
-------=_NextPart_5CF111A3_09ECA508_402C2607
-Content-Type: text/html;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
-
-SGkmbmJzcDsgSmFlLDxicj4mbmJzcDsmbmJzcDsgSSB0ZXN0ZWQgdGhpcyBwYXRjaCAsaXQg
-d29ya3Mgb24gMTY4MCoxMDUwLGJ1dCBJIGZvdW5kIGFuIGlzc3VlOjxicj48YnI+VGhlIGlr
-dm0gd2VicGFnZSB3aWxsIGJlIGJsYWNrIHNjcmVlbiB3aGVuIHlvdSByZWJvb3QgdGhlIGhv
-c3QgYWZ0ZXIgc3dpdGNoaW5nIHNvbHV0aW9uIGJldHdlZW4gMTY4MCoxMDUwIGFuZCA4MDAq
-NjAwIG9uIGNocm9tZSBicm93c2VyIChteSBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuPGJyPnlv
-dSBjYW4gcmVwcm9kdWNlIGl0Ojxicj4xLCBTZXQgaG9zdCBzY3JlZW4gc29sdXRpb24gdG8g
-MTY4MCoxMDUwIGFuZCBzYXZlIGl0IC4gaWt2bSB3ZWJwYWdlIHdvcmtzIDxicj4yLFNldCBo
-b3N0IHNjcmVlbiBzb2x1dGlvbiB0byA4MDAqNjAwIGFuZCA1Nkh6IGFuZCBzYXZlIGl0LiBp
-a3ZtIHdlYnBhZ2Ugd29ya3M8YnI+MyxSZXNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAm
-bmJzcDsgMTY4MCoxMDUwIGFuZCBzYXZlIGl0LDxicj40LHJlYm9vdCB0aGUgaG9zdCw8YnI+
-NSwgdGhlIGlrdm0gd2VicGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRv
-cyBHVUkgPGJyPkJlc3QsPGJyPnhpdXpoaTxicj48YnI+QVNUMjUwMCBzaWxpY29uIHJldmlz
-aW9uIEExIGFuZCBBMiBoYXZlIGEgc2lsaWNvbiBidWcgd2hpY2ggY2F1c2VzPGJyPmV4dHJl
-bWx5IGxvbmcgY2FwdHVyaW5nIHRpbWUgb24gc3BlY2lmaWMgcmVzb2x1dGlvbnMgKDE2ODAg
-d2lkdGgpLjxicj5UbyBmaXggdGhlIGJ1ZywgdGhpcyBjb21taXQgYWRqdXN0cyB0aGUgY2Fw
-dHVyaW5nIHdpbmRvdyByZWdpc3Rlcjxicj5zZXR0aW5nIHRvIDE3MjggaWYgZGV0ZWN0ZWQg
-d2lkdGggaXMgMTY4MC4gVGhlIGNvbXByZXNzaW9uIHdpbmRvdzxicj5yZWdpc3RlciBzZXR0
-aW5nIHdpbGwgYmUga2VwdCBhcyB0aGUgb3JpZ2luYWwgd2lkdGggc28gb3V0cHV0PGJyPnJl
-c3VsdCB3aWxsIGJlIHRoZSBzYW1lLjxicj48YnI+U2lnbmVkLW9mZi1ieTogSmFlIEh5dW4g
-WW9vICZsdDtqYWUuaHl1bi55b29AbGludXguaW50ZWwuY29tJmd0Ozxicj4tLS08YnI+Jm5i
-c3A7ZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYyB8IDI2ICsrKysrKysr
-KysrKysrKysrKystLS0tLS0tPGJyPiZuYnNwOzEgZmlsZSBjaGFuZ2VkLCAxOSBpbnNlcnRp
-b25zKCspLCA3IGRlbGV0aW9ucygtKTxicj48YnI+ZGlmZiAtLWdpdCBhL2RyaXZlcnMvbWVk
-aWEvcGxhdGZvcm0vYXNwZWVkLXZpZGVvLmMgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2Fz
-cGVlZC12aWRlby5jPGJyPmluZGV4IGRhMjBlOTNmNThkMy4uYzJkNGEyZTZmMjBmIDEwMDY0
-NDxicj4tLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jPGJyPisr
-KyBiL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vYXNwZWVkLXZpZGVvLmM8YnI+QEAgLTgyNiw4
-ICs4MjYsMjcgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9yZXNvbHV0aW9uKHN0
-cnVjdCBhc3BlZWRfdmlkZW8gKnZpZGVvKTxicj4mbmJzcDsJc3RydWN0IHY0bDJfYnRfdGlt
-aW5ncyAqYWN0ID0gJmFtcDt2aWRlby0mZ3Q7YWN0aXZlX3RpbWluZ3M7PGJyPiZuYnNwOwl1
-bnNpZ25lZCBpbnQgc2l6ZSA9IGFjdC0mZ3Q7d2lkdGggKiBhY3QtJmd0O2hlaWdodDs8YnI+
-Jm5ic3A7PGJyPisJLyogU2V0IGNhcHR1cmUvY29tcHJlc3Npb24gZnJhbWUgc2l6ZXMgKi88
-YnI+Jm5ic3A7CWFzcGVlZF92aWRlb19jYWxjX2NvbXByZXNzZWRfc2l6ZSh2aWRlbywgc2l6
-ZSk7PGJyPiZuYnNwOzxicj4rCWlmICh2aWRlby0mZ3Q7YWN0aXZlX3RpbWluZ3Mud2lkdGgg
-PT0gMTY4MCkgezxicj4rCQkvKjxicj4rCQkgKiBUaGlzIGlzIGEgd29ya2Fyb3VuZCB0byBm
-aXggYSBzaWxpY29uIGJ1ZyBvbiBBMSBhbmQgQTI8YnI+KwkJICogcmV2aXNpb25zLiBTaW5j
-ZSBpdCBkb2Vzbid0IGJyZWFrIGNhcHR1cmluZyBvcGVyYXRpb24gb24gQTA8YnI+KwkJICog
-cmV2aXNpb24sIHVzZSBpdCBmb3IgYWxsIHJldmlzaW9ucyB3aXRob3V0IGNoZWNraW5nIHRo
-ZTxicj4rCQkgKiByZXZpc2lvbiBJRC48YnI+KwkJICovPGJyPisJCWFzcGVlZF92aWRlb193
-cml0ZSh2aWRlbywgVkVfQ0FQX1dJTkRPVyw8YnI+KwkJCQkgJm5ic3A7IDE3MjggJmx0OyZs
-dDsgMTYgfCBhY3QtJmd0O2hlaWdodCk7PGJyPisJCXNpemUgKz0gKDE3MjggLSAxNjgwKSAq
-IHZpZGVvLSZndDthY3RpdmVfdGltaW5ncy5oZWlnaHQ7PGJyPisJfSBlbHNlIHs8YnI+KwkJ
-YXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9DQVBfV0lORE9XLDxicj4rCQkJCSAmbmJz
-cDsgYWN0LSZndDt3aWR0aCAmbHQ7Jmx0OyAxNiB8IGFjdC0mZ3Q7aGVpZ2h0KTs8YnI+Kwl9
-PGJyPisJYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9DT01QX1dJTkRPVyw8YnI+KwkJ
-CSAmbmJzcDsgYWN0LSZndDt3aWR0aCAmbHQ7Jmx0OyAxNiB8IGFjdC0mZ3Q7aGVpZ2h0KTs8
-YnI+Kwlhc3BlZWRfdmlkZW9fd3JpdGUodmlkZW8sIFZFX1NSQ19TQ0FOTElORV9PRkZTRVQs
-IGFjdC0mZ3Q7d2lkdGggKiA0KTs8YnI+Kzxicj4mbmJzcDsJLyogRG9uJ3QgdXNlIGRpcmVj
-dCBtb2RlIGJlbG93IDEwMjQgeCA3NjggKGlycXMgZG9uJ3QgZmlyZSkgKi88YnI+Jm5ic3A7
-CWlmIChzaXplICZsdDsgRElSRUNUX0ZFVENIX1RIUkVTSE9MRCkgezxicj4mbmJzcDsJCWFz
-cGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfVEdTXzAsPGJyPkBAIC04NDQsMTMgKzg2Myw2
-IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF92aWRlb19zZXRfcmVzb2x1dGlvbihzdHJ1Y3QgYXNw
-ZWVkX3ZpZGVvICp2aWRlbyk8YnI+Jm5ic3A7CQlhc3BlZWRfdmlkZW9fdXBkYXRlKHZpZGVv
-LCBWRV9DVFJMLCAwLCBWRV9DVFJMX0RJUkVDVF9GRVRDSCk7PGJyPiZuYnNwOwl9PGJyPiZu
-YnNwOzxicj4tCS8qIFNldCBjYXB0dXJlL2NvbXByZXNzaW9uIGZyYW1lIHNpemVzICovPGJy
-Pi0JYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9DQVBfV0lORE9XLDxicj4tCQkJICZu
-YnNwOyBhY3QtJmd0O3dpZHRoICZsdDsmbHQ7IDE2IHwgYWN0LSZndDtoZWlnaHQpOzxicj4t
-CWFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfQ09NUF9XSU5ET1csPGJyPi0JCQkgJm5i
-c3A7IGFjdC0mZ3Q7d2lkdGggJmx0OyZsdDsgMTYgfCBhY3QtJmd0O2hlaWdodCk7PGJyPi0J
-YXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9TUkNfU0NBTkxJTkVfT0ZGU0VULCBhY3Qt
-Jmd0O3dpZHRoICogNCk7PGJyPi08YnI+Jm5ic3A7CXNpemUgKj0gNDs8YnI+Jm5ic3A7PGJy
-PiZuYnNwOwlpZiAoc2l6ZSA9PSB2aWRlby0mZ3Q7c3Jjc1swXS5zaXplIC8gMikgezxicj4t
-LSA8YnI+Mi4yMS4wPGJyPjxicj48YnI+
-
-------=_NextPart_5CF111A3_09ECA508_402C2607--
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730.dtsi b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
+new file mode 100644
+index 000000000..20e13489b
+--- /dev/null
++++ b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
+@@ -0,0 +1,57 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2018 Nuvoton Technology tomer.maimon@nuvoton.com
++// Copyright 2018 Google, Inc.
++
++#include "nuvoton-common-npcm7xx.dtsi"
++
++/ {
++	#address-cells = <1>;
++	#size-cells = <1>;
++	interrupt-parent = <&gic>;
++
++	cpus {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		enable-method = "nuvoton,npcm750-smp";
++
++		cpu@0 {
++			device_type = "cpu";
++			compatible = "arm,cortex-a9";
++			clocks = <&clk NPCM7XX_CLK_CPU>;
++			clock-names = "clk_cpu";
++			reg = <0>;
++			next-level-cache = <&l2>;
++		};
++
++		cpu@1 {
++			device_type = "cpu";
++			compatible = "arm,cortex-a9";
++			clocks = <&clk NPCM7XX_CLK_CPU>;
++			clock-names = "clk_cpu";
++			reg = <1>;
++			next-level-cache = <&l2>;
++		};
++	};
++
++	soc {
++		timer@3fe600 {
++			compatible = "arm,cortex-a9-twd-timer";
++			reg = <0x3fe600 0x20>;
++			interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) |
++						  IRQ_TYPE_LEVEL_HIGH)>;
++			clocks = <&clk NPCM7XX_CLK_AHB>;
++		};
++	};
++
++	ahb {
++		udc9:udc@f0839000 {
++			compatible = "nuvoton,npcm750-udc";
++			reg = <0xf0839000 0x1000
++			       0xfffd0000 0x800>;
++			interrupts = <GIC_SPI 60 IRQ_TYPE_LEVEL_HIGH>;
++			status = "disabled";
++			clocks = <&clk NPCM7XX_CLK_SU>;
++			clock-names = "clk_usb_bridge";
++		};
++	};
++};
+-- 
+2.21.0
 
