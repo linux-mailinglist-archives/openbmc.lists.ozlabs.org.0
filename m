@@ -1,73 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD60B309A4
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 09:45:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ED1430935
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 09:19:03 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45FbR83KCFzDqdL
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 17:19:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Fc1t6yZKzDqfV
+	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 17:45:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::52e; helo=mail-pg1-x52e.google.com;
- envelope-from=chyishian.jiang@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=inspur.com
+ (client-ip=210.51.26.145; helo=unicom145.biz-email.net;
+ envelope-from=zhuysh@inspur.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="EKbA2qpQ"; 
- dkim-atps=neutral
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
- [IPv6:2607:f8b0:4864:20::52e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=inspur.com
+Received: from unicom145.biz-email.net (unicom145.biz-email.net
+ [210.51.26.145])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FbQR4BYjzDqSN
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 17:18:23 +1000 (AEST)
-Received: by mail-pg1-x52e.google.com with SMTP id n2so3519183pgp.11
- for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 00:18:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:message-id:in-reply-to:references:subject:mime-version;
- bh=mjsWi1JZXalxFYtmF8a6NDxHg76I/QESjCE8/raRCws=;
- b=EKbA2qpQxWIPqigRsrDdVhDWi9jqw7wy8NDPghN1aTuLBrb60uUi7CuDgxWU88HN1Q
- mJqoVT0zebIMlgL/YoqG1nUMTm7c7qjZ1ojl6rOPSaRoBe+PdAfmK8DNs2IQHu4oelYU
- ywSKKv5W2mgKG+gBK4VjWEmV6bwQHq3HehRABSmbWkPRLttjuZLLdZBkABp7uC3TKPYc
- 7ahF7oEMSfEqrnovTWNPFTZPI5gsElJWYgf+QWTTCKtKOD4eFyhbZpKp3iaSyKmHZxoR
- dfEcVmdUqp8vbX9FPvjt1TC4SnvJ2yv4ZIfUub4ac6gaMzhfn+eDtJtF11IEUui3kI++
- JRug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
- :subject:mime-version;
- bh=mjsWi1JZXalxFYtmF8a6NDxHg76I/QESjCE8/raRCws=;
- b=ZqMwsFGIcA1z1y5gqMwBj6h2BfwfhTKOeNg1X270G4aYEU9truhwra6UBQVW6lCybT
- DRmUsqG2nxF+7MXtBTmtbAR4hUpESy0tpVK+B6j/9CilG9XVh3uuiP7oT6dvvo9xuNtf
- wdXcuAngEHEhx6R5pnsc3ggK9VAKS1m8FX4BpJSs8wNh/K5Q7zq7ncjEipz2vrvjRXMb
- iO5SThS5K5ijMpbaKqDsKsXpdYIGweCG2WY6RdWa2C14awlA4qPjbF7fWF571paj3ukF
- lg9BKRTrYbjIhKO/722POuPzi4W8JlrKDXzzDJaX23ewB3Hg9TkUyc/ep6N4HskXag1u
- DjLQ==
-X-Gm-Message-State: APjAAAWfuujVo/5aHMGrRqDBPaQdE2anH0+SDP4nnkPh2RRm9aK68e77
- Qpvr+6BYJD59xAW2iCEyPV5nvnDZgXE=
-X-Google-Smtp-Source: APXvYqy4HZJ9FEq6961vEaudTzouKnmzFc39xbXxrvLjPM/0FTrEgts7M52deTqAtJ4qe5cLMuEZlQ==
-X-Received: by 2002:aa7:93bb:: with SMTP id x27mr7975014pff.104.1559287099047; 
- Fri, 31 May 2019 00:18:19 -0700 (PDT)
-Received: from [10.10.14.19] (220-135-135-179.HINET-IP.hinet.net.
- [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id o66sm4473526pje.8.2019.05.31.00.18.17
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 31 May 2019 00:18:18 -0700 (PDT)
-Date: Fri, 31 May 2019 15:18:10 +0800
-From: Samuel Jiang <chyishian.jiang@gmail.com>
-To: "=?utf-8?Q?openbmc=40lists.ozlabs.org?=" <openbmc@lists.ozlabs.org>, 
- "=?utf-8?Q?Simon_Zhu(=E6=9C=B1=E8=8B=B1=E6=BE=8D)?=" <zhuysh@inspur.com>
-Message-ID: <6a7553c7-060b-4318-a710-b903862b47af@Spark>
-In-Reply-To: <A2251FF4-28A5-4311-9DC7-6DD00306E0C9@inspur.com>
-References: <A2251FF4-28A5-4311-9DC7-6DD00306E0C9@inspur.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Fc1M6VtWzDqdp
+ for <openbmc@lists.ozlabs.org>; Fri, 31 May 2019 17:45:04 +1000 (AEST)
+Received: from ([60.208.111.195])
+ by unicom145.biz-email.net (Antispam) with ASMTP (SSL) id WMX39654;
+ Fri, 31 May 2019 15:44:54 +0800
+Received: from jtjnmail201601.home.langchao.com (10.100.2.1) by
+ jtjnmail201603.home.langchao.com (10.100.2.3) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1591.10; Fri, 31 May 2019 15:44:50 +0800
+Received: from jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78])
+ by jtjnmail201601.home.langchao.com ([fe80::1d84:2ff3:ead2:1c78%8])
+ with mapi id 15.01.1591.008; Fri, 31 May 2019 15:44:50 +0800
+From: =?gb2312?B?U2ltb24gWmh1KNbs06Lk+Ck=?= <zhuysh@inspur.com>
+To: Samuel Jiang <chyishian.jiang@gmail.com>
 Subject: Re: [IPMI] About LAN interface
-X-Readdle-Message-ID: 6a7553c7-060b-4318-a710-b903862b47af@Spark
+Thread-Topic: [IPMI] About LAN interface
+Thread-Index: AQHVF0o8ZH4t9azy+kqxX5b23Q2jD6aETU8AgAAHcoA=
+Date: Fri, 31 May 2019 07:44:50 +0000
+Message-ID: <6F24B29F-8F3E-404E-B19D-044C3F017F2A@inspur.com>
+References: <0bf60139f1302379f2ff8355443c0286@sslemail.net>
+ <6a7553c7-060b-4318-a710-b903862b47af@Spark>
+In-Reply-To: <6a7553c7-060b-4318-a710-b903862b47af@Spark>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.100.1.52]
+Content-Type: multipart/signed;
+ boundary="Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2";
+ protocol="application/pkcs7-signature"; micalg=sha-256
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="5cf0d537_625558ec_16a5d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,98 +61,189 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---5cf0d537_625558ec_16a5d
-Content-Type: text/plain; charset="utf-8"
+--Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3"
+
+
+--Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3
 Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Content-Type: text/plain;
+	charset=gb2312
 
-Hi Simon,
+Hi Samuel,
 
-try use ipmitool -U root =C2=A0-P 0penBmc -h <host=5Fip> -I lanplus mc in=
-fo
+	I know lanplus interface is ok.
+	My question is that can we support both lan and lanplus =
+interface?
 
-Reference
+Best regards,
+Simon
 
-Thanks,
+> =D4=DA 2019=C4=EA5=D4=C231=C8=D5=A3=AC15:18=A3=ACSamuel Jiang =
+<chyishian.jiang@gmail.com> =D0=B4=B5=C0=A3=BA
+>=20
+> Hi Simon,
+>=20
+> try use ipmitool -U root  -P 0penBmc -h <host_ip> -I lanplus mc info
+>=20
+> Reference <https://github.com/openbmc/openbmc/issues/1570>
+>=20
+> Thanks,
+>=20
+> Samuel Jiang
+> On May 31, 2019, 8:46 AM +0800, Simon Zhu(=D6=EC=D3=A2=E4=F8) =
+<zhuysh@inspur.com>, wrote:
+>> Hello,
+>>=20
+>> Does IPMI support lan interface?
+>>=20
+>> I used ipmitool through lan interface, but failed:
+>>=20
+>> ipmitool -I lan -H IP -U root -P 0penBmc mc info
+>> Authentication type NONE not supported
+>> Error: Unable to establish LAN session
+>> Error: Unable to establish IPMI v1.5 / RMCP session
+>>=20
+>> Can we support LAN interface?
+>>=20
+>> Best regards,
+>>=20
+>> Simon
 
-Samuel Jiang
-On May 31, 2019, 8:46 AM +0800, Simon Zhu(=E6=9C=B1=E8=8B=B1=E6=BE=8D) <z=
-huysh=40inspur.com>, wrote:
-> Hello,
->
-> Does IPMI support lan interface=3F
->
-> I used ipmitool through lan interface, but failed:
->
-> ipmitool -I lan -H IP -U root -P 0penBmc mc info
-> Authentication type NONE not supported
-> Error: Unable to establish LAN session
-> Error: Unable to establish IPMI v1.5 / RMCP session
->
-> Can we support LAN interface=3F
->
-> Best regards,
->
-> Simon
 
---5cf0d537_625558ec_16a5d
-Content-Type: text/html; charset="utf-8"
+--Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3
 Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Content-Type: text/html;
+	charset=gb2312
 
-<html xmlns=3D=22http://www.w3.org/1999/xhtml=22>
-<head>
-<title></title>
-</head>
-<body>
-<div name=3D=22messageBodySection=22 style=3D=22font-size: 14px; font-fam=
-ily: -apple-system, BlinkMacSystem=46ont, sans-serif;=22>
-<div dir=3D=22auto=22>Hi Simon,
-<div dir=3D=22auto=22><br /></div>
-<div dir=3D=22auto=22>try use ipmitool -U root &=23160;-P 0penBmc -h &lt;=
-host=5Fip&gt; -I lanplus mc info</div>
-<div dir=3D=22auto=22><br /></div>
-<div dir=3D=22auto=22><a href=3D=22https://github.com/openbmc/openbmc/iss=
-ues/1570=22>Reference</a></div>
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dgb2312"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">Hi =
+Samuel,<div class=3D""><br class=3D""></div><div class=3D""><span =
+class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>I know =
+lanplus interface is ok.</div><div class=3D""><span =
+class=3D"Apple-tab-span" style=3D"white-space:pre">	</span>My =
+question is that can we support both lan and lanplus =
+interface?</div><div class=3D""><br class=3D""></div><div class=3D"">Best =
+regards,</div><div class=3D"">Simon<br class=3D""><div><br =
+class=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">=D4=DA =
+2019=C4=EA5=D4=C231=C8=D5=A3=AC15:18=A3=ACSamuel Jiang &lt;<a =
+href=3D"mailto:chyishian.jiang@gmail.com" =
+class=3D"">chyishian.jiang@gmail.com</a>&gt; =D0=B4=B5=C0=A3=BA</div><br =
+class=3D"Apple-interchange-newline"><div class=3D"">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+class=3D""><title class=3D""></title>
+
+<div class=3D"">
+<div name=3D"messageBodySection" style=3D"font-size: 14px; font-family: =
+-apple-system, BlinkMacSystemFont, sans-serif;" class=3D"">
+<div dir=3D"auto" class=3D"">Hi Simon,
+<div dir=3D"auto" class=3D""><br class=3D""></div>
+<div dir=3D"auto" class=3D"">try use ipmitool -U root &nbsp;-P 0penBmc =
+-h &lt;host_ip&gt; -I lanplus mc info</div>
+<div dir=3D"auto" class=3D""><br class=3D""></div>
+<div dir=3D"auto" class=3D""><a =
+href=3D"https://github.com/openbmc/openbmc/issues/1570" =
+class=3D"">Reference</a></div>
 </div>
 </div>
-<div name=3D=22messageSignatureSection=22><br />
-<div class=3D=22match=46ont=22>Thanks,
-<div style=3D=22font-size: 14px; font-family: -apple-system, BlinkMacSyst=
-em=46ont, sans-serif;=22><br style=3D=22font-size: 14px; font-family: -ap=
-ple-system, BlinkMacSystem=46ont, sans-serif;=22 /></div>
-<div style=3D=22font-size: 14px; font-family: -apple-system, BlinkMacSyst=
-em=46ont, sans-serif;=22>Samuel Jiang</div>
+<div name=3D"messageSignatureSection" class=3D""><br class=3D"">
+<div class=3D"matchFont">Thanks,
+<div style=3D"font-size: 14px; font-family: -apple-system, =
+BlinkMacSystemFont, sans-serif;" class=3D""><br style=3D"font-size: =
+14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;" =
+class=3D""></div>
+<div style=3D"font-size: 14px; font-family: -apple-system, =
+BlinkMacSystemFont, sans-serif;" class=3D"">Samuel Jiang</div>
 </div>
 </div>
-<div name=3D=22messageReplySection=22 style=3D=22font-size: 14px; font-fa=
-mily: -apple-system, BlinkMacSystem=46ont, sans-serif;=22>On May 31, 2019=
-, 8:46 AM +0800, Simon Zhu(=E6=9C=B1=E8=8B=B1=E6=BE=8D) &lt;zhuysh=40insp=
-ur.com&gt;, wrote:<br />
-<blockquote type=3D=22cite=22 class=3D=22spark=5Fquote=22 style=3D=22marg=
-in: 5px 5px; padding-left: 10px; border-left: thin solid =231abc9c;=22>He=
-llo,<br />
-<br />
-Does IPMI support lan interface=3F<br />
-<br />
-I used ipmitool through lan interface, but failed:<br />
-<br />
-ipmitool -I lan -H IP -U root -P 0penBmc mc info<br />
-Authentication type NONE not supported<br />
-Error: Unable to establish LAN session<br />
-Error: Unable to establish IPMI v1.5 / RMCP session<br />
-<br />
-Can we support LAN interface=3F<br />
-<br />
-Best regards,<br />
-<br />
+<div name=3D"messageReplySection" style=3D"font-size: 14px; font-family: =
+-apple-system, BlinkMacSystemFont, sans-serif;" class=3D"">On May 31, =
+2019, 8:46 AM +0800, Simon Zhu(=D6=EC=D3=A2=E4=F8) &lt;<a =
+href=3D"mailto:zhuysh@inspur.com" class=3D"">zhuysh@inspur.com</a>&gt;, =
+wrote:<br class=3D"">
+<blockquote type=3D"cite" class=3D"spark_quote" style=3D"margin: 5px =
+5px; padding-left: 10px; border-left: thin solid #1abc9c;">Hello,<br =
+class=3D"">
+<br class=3D"">
+Does IPMI support lan interface?<br class=3D"">
+<br class=3D"">
+I used ipmitool through lan interface, but failed:<br class=3D"">
+<br class=3D"">
+ipmitool -I lan -H IP -U root -P 0penBmc mc info<br class=3D"">
+Authentication type NONE not supported<br class=3D"">
+Error: Unable to establish LAN session<br class=3D"">
+Error: Unable to establish IPMI v1.5 / RMCP session<br class=3D"">
+<br class=3D"">
+Can we support LAN interface?<br class=3D"">
+<br class=3D"">
+Best regards,<br class=3D"">
+<br class=3D"">
 Simon</blockquote>
 </div>
-</body>
-</html>
+</div>
 
---5cf0d537_625558ec_16a5d--
+</div></blockquote></div><br class=3D""></div></body></html>=
 
+--Apple-Mail=_DFA98005-60DB-4591-B178-616C1DDF51B3--
+
+--Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCBz8w
+ggc7MIIGI6ADAgECAgpqPjdoAAEAAbdAMA0GCSqGSIb3DQEBBQUAMFsxEzARBgoJkiaJk/IsZAEZ
+FgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixkARkWBGhvbWUxFDAS
+BgNVBAMTC0xhbmdDaGFvLUNBMB4XDTE0MTIwOTA3MjM1MFoXDTE5MTIwODA3MjM1MFowgZIxEzAR
+BgoJkiaJk/IsZAEZFgNjb20xGDAWBgoJkiaJk/IsZAEZFghsYW5nY2hhbzEUMBIGCgmSJomT8ixk
+ARkWBGhvbWUxFTATBgNVBAsMDOa1qua9ruS/oeaBrzESMBAGA1UEAwwJ5pyx6Iux5r6NMSAwHgYJ
+KoZIhvcNAQkBFhF6aHV5c2hAaW5zcHVyLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBANcl7k0O5Ddj8YZ7jFzneSe7nPVnP6CiFRYhW3ZckZhQ2VUSkkE2TgwxPbydHbR6njQZci3A
+soufiilTcWrz5gIexwCUPtpf4rg/CSMXdeOQCLR8rHwPahR1tY6EGgYRQGu1KfT6iGOs/of0+ufY
+FfpzxvoGfJ11q19Oro3Lrlf1fuA6FCVXTgLIIGHa5pBcDymFr6sS23qTtTnWXyfkDvpWEtGMKhPl
+as7ND5pT0LnjNV9/krBcBxUwlkUb30ZWxZJGqP7L3jq5+PWDjJzMLNWjbSPdF8doV81meVVNUz0y
+FB4mK8L0kK/2ePkhW/OuPQqnc928wn53u8oBISTUn4MCAwEAAaOCA8cwggPDMAsGA1UdDwQEAwIF
+oDA+BgkrBgEEAYI3FQcEMTAvBicrBgEEAYI3FQiC8qkfhIHXeoapkT2GgPcVg9iPXIFKhqKtHYbX
+lCwCAWQCARgwRAYJKoZIhvcNAQkPBDcwNTAOBggqhkiG9w0DAgICAIAwDgYIKoZIhvcNAwQCAgCA
+MAcGBSsOAwIHMAoGCCqGSIb3DQMHMB0GA1UdDgQWBBRakw7MI3vEw/JZItkKOHzlYEs4HTAfBgNV
+HSMEGDAWgBTGbsOiE24avQY6XrcvNNjg05z7IzCCARUGA1UdHwSCAQwwggEIMIIBBKCCAQCggf2G
+gbxsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPWp0am5jYTAxLENOPUNEUCxDTj1QdWJsaWMlMjBL
+ZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFu
+Z2NoYW8sREM9Y29tP2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1j
+UkxEaXN0cmlidXRpb25Qb2ludIY8aHR0cDovL2p0am5jYTAxLmhvbWUubGFuZ2NoYW8uY29tL0Nl
+cnRFbnJvbGwvTGFuZ0NoYW8tQ0EuY3JsMIIBMAYIKwYBBQUHAQEEggEiMIIBHjCBswYIKwYBBQUH
+MAKGgaZsZGFwOi8vL0NOPUxhbmdDaGFvLUNBLENOPUFJQSxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2
+aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFuZ2NoYW8sREM9
+Y29tP2NBQ2VydGlmaWNhdGU/YmFzZT9vYmplY3RDbGFzcz1jZXJ0aWZpY2F0aW9uQXV0aG9yaXR5
+MGYGCCsGAQUFBzAChlpodHRwOi8vanRqbmNhMDEuaG9tZS5sYW5nY2hhby5jb20vQ2VydEVucm9s
+bC9qdGpuY2EwMS5ob21lLmxhbmdjaGFvLmNvbV9MYW5nQ2hhby1DQSgxKS5jcnQwKQYDVR0lBCIw
+IAYIKwYBBQUHAwIGCCsGAQUFBwMEBgorBgEEAYI3CgMEMDUGCSsGAQQBgjcVCgQoMCYwCgYIKwYB
+BQUHAwIwCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoDBDA/BgNVHREEODA2oCEGCisGAQQBgjcUAgOg
+EwwRemh1eXNoQGluc3B1ci5jb22BEXpodXlzaEBpbnNwdXIuY29tMA0GCSqGSIb3DQEBBQUAA4IB
+AQBuOubBOCkBWe+svIPrF5VWulW0HevKWzd4xg5Q1Y0h+2sQogGK1wxuKJSWC4aW8N9z6wFRHL9+
+ULXrSPpY6VRv89ZLUrGiVt1kfx1hkKvfXcgqtoMRRbSBIegY3mNWgJa/4q1nKAAF8a5enoRotbT3
+3VIowB84sDIF++pgixrJ4jjnXbYDhHDhdOWIY/Jt1Drn53hqbIOve0ZZBhfWNE40ag8RzjA6xquZ
+zGVC6dGEBVOjYg1heD1i7SsHWYauIGBbzUedq0QPiaotT0m9++X9IRuxjpCS3IJDaNm8jx6U6WH8
+XdS6CzYepNoOC2pI5X6LOCooK49ZK7BWpNtEpNSMMYIC9zCCAvMCAQEwaTBbMRMwEQYKCZImiZPy
+LGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDASBgoJkiaJk/IsZAEZFgRob21l
+MRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDANBglghkgBZQMEAgEFAKCCAV8wGAYJ
+KoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNTMxMDc0NDUwWjAvBgkq
+hkiG9w0BCQQxIgQgHVM4eemYw35YpblNko6rBOx7bZInTgxWZY1SrwDX8J8weAYJKwYBBAGCNxAE
+MWswaTBbMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDAS
+BgoJkiaJk/IsZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaj43aAABAAG3QDB6Bgsq
+hkiG9w0BCRACCzFroGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxh
+bmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmo+N2gA
+AQABt0AwDQYJKoZIhvcNAQEBBQAEggEAB2c7OQCBDpw6oTHwJL8jT8aGmCQlSohni8f/JNOK1Q82
+dRt7Vr+dDLk9XWWBwC7TUv1dDAV0ZQtqW2hK0gp26RZyYr5nqCeIfX/cZIARH+/XYYqAbnQ/jk7F
+087E0LhfekERkHGdCo76GF+UAMVT31WeVXYsedj2eVISJZwnyH5fno/1S3TIATvbZYDyfb+uUXD9
+UOxHMh4iKsNLGeodQa6fugqhrHZVKNMso3iZaWPCIlZqWIjUvAvPzE1EZymV7edZjEWQOMn+R4nD
+uTBAHUc8HYCdT546xpgqdnIhU0u094Fr09mgH8/mA7JU/wL/yLBwCZ2KIjbDpFdFCCNA7wAAAAAA
+AA==
+
+--Apple-Mail=_25DF0223-EC2B-497C-89BE-B4509BC827A2--
