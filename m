@@ -1,70 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24F5F321A6
-	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 04:47:43 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45GjK71nYRzDqZ9
-	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 12:47:39 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 64EE232490
+	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 20:26:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45H67r2zvRzDqP6
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2019 04:26:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=52.59.177.22; helo=smtpbgeu1.qq.com;
- envelope-from=1450335857@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="u1t0JDhi"; 
- dkim-atps=neutral
-X-Greylist: delayed 141927 seconds by postgrey-1.36 at bilbo;
- Sun, 02 Jun 2019 12:47:13 AEST
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45GjJd233tzDqKf
- for <openbmc@lists.ozlabs.org>; Sun,  2 Jun 2019 12:47:12 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1559443604; bh=cZjFtUtqJf0G0GYkVyWLqq3s4ho9HTkDkzHV5cocdQg=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=u1t0JDhijUiErcsMy76f2tfFHNITsbGTUUPhryGXyW1vYxPKd4n4AJ+qsiBmiPLpK
- F46EGFqlqkL9vWrhbkwnGajAlb8aXrZKljTgP5K54354fsM/TY09Y/GoLWBI+Io9w/
- yj6ZKz1gLlj/W3FR0Wus5spnqvYttbe11VbA6qEY=
-X-QQ-SSF: 00000000000000F000000000000000H
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 218.247.157.87
-In-Reply-To: <41494d02-452f-5a09-d29e-476c6d4e4085@linux.intel.com>
-References: <mailman.9.1558663202.24371.openbmc@lists.ozlabs.org>
- <tencent_18FB023D486815FB74809705@qq.com>
- <41494d02-452f-5a09-d29e-476c6d4e4085@linux.intel.com>
-X-QQ-STYLE: 
-X-QQ-mid: webenglish1t1559443603t852951
-From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
-To: "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
- "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
- "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>,
- "=?ISO-8859-1?B?Sm9lbCBTdGFubGV5?=" <joel@jms.id.au>,
- "=?ISO-8859-1?B?QW5kcmV3LkplZmZlcnk=?=" <andrew@aj.id.au>
-Subject: Re: [PATCH dev-5.1 4/4] media: aspeed: add a workaround to fix
- asilicon bug (Jae Hyun Yoo)
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5CF33893_0A6F1688_62C7842F"
-Content-Transfer-Encoding: 8Bit
-Date: Sun, 2 Jun 2019 10:46:43 +0800
-X-Priority: 3
-Message-ID: <tencent_10A7D5E3614D49E602F427F6@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 3261143770
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Sun, 02 Jun 2019 10:46:44 +0800 (CST)
-Feedback-ID: webenglish:qq.com:bgforeign:bgforeign4
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45H67J68mBzDqN5
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2019 04:25:31 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2019 11:25:28 -0700
+X-ExtLoop1: 1
+Received: from rakesh3x-mobl1.gar.corp.intel.com (HELO [10.252.69.175])
+ ([10.252.69.175])
+ by orsmga004.jf.intel.com with ESMTP; 02 Jun 2019 11:25:26 -0700
+Subject: Re: Questions about changing default username or password
+To: =?UTF-8?B?U2ltb24gWmh1KOacseiLsea+jSk=?= <zhuysh@inspur.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <FF401BD5-4C8A-4F01-8B6B-3138E4A458DB@inspur.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <680f0ea6-c986-42f2-1185-dcd62c7db1ba@linux.intel.com>
+Date: Sun, 2 Jun 2019 23:55:25 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <FF401BD5-4C8A-4F01-8B6B-3138E4A458DB@inspur.com>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,170 +57,46 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
 
-------=_NextPart_5CF33893_0A6F1688_62C7842F
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+For #1 --> you can inherit extrausers class and override the users 
+accordingly, and the password
 
-SGkgSmFlLA0KICAgIFRoaXMgbmV3ICBwYXRjaCB3b3JrcyB2ZXJ5IHdlbGwgc28gZmFyLA0K
-IEkgd2lsbCB0ZXN0IGl0IG1vcmUgY2FzZXMgbmV4dCB3ZWVrLg0KQmVzdCwNCnhpdXpoaQ0K
-DQoNCg0KDQotLS0tLS0tLS0tLS0tLS0tLS0gT3JpZ2luYWwgLS0tLS0tLS0tLS0tLS0tLS0t
-DQpGcm9tOiAgImphZS5oeXVuLnlvbyI7PGphZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+
-Ow0KRGF0ZTogIEp1biAxLCAyMDE5DQpUbzogICJ4aXV6aGkiPDE0NTAzMzU4NTdAcXEuY29t
-PjsgIm9wZW5ibWMiPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47ICJlYWphbWVzIjxlYWph
-bWVzQGxpbnV4LmlibS5jb20+OyAiam9lbCI8am9lbEBqbXMuaWQuYXU+OyAiYW5kcmV3Ijxh
-bmRyZXdAYWouaWQuYXU+OyANCg0KU3ViamVjdDogIFJlOiBbUEFUQ0ggZGV2LTUuMSA0LzRd
-IG1lZGlhOiBhc3BlZWQ6IGFkZCBhIHdvcmthcm91bmQgdG8gZml4IGFzaWxpY29uIGJ1ZyAo
-SmFlIEh5dW4gWW9vKQ0KDQoNCg0KT24gNS8zMS8yMDE5IDQ6MjEgQU0sIHhpdXpoaSB3cm90
-ZToNCj4gSGkgIEphZSwNCj4gICAgIEkgdGVzdGVkIHRoaXMgcGF0Y2ggLGl0IHdvcmtzIG9u
-IDE2ODAqMTA1MCxidXQgSSBmb3VuZCBhbiBpc3N1ZToNCj4gDQo+IFRoZSBpa3ZtIHdlYnBh
-Z2Ugd2lsbCBiZSBibGFjayBzY3JlZW4gd2hlbiB5b3UgcmVib290IHRoZSBob3N0IGFmdGVy
-IA0KPiBzd2l0Y2hpbmcgc29sdXRpb24gYmV0d2VlbiAxNjgwKjEwNTAgYW5kIDgwMCo2MDAg
-b24gY2hyb21lIGJyb3dzZXIgKG15IA0KPiBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuDQo+IHlv
-dSBjYW4gcmVwcm9kdWNlIGl0Og0KPiAxLCBTZXQgaG9zdCBzY3JlZW4gc29sdXRpb24gdG8g
-MTY4MCoxMDUwIGFuZCBzYXZlIGl0IC4gaWt2bSB3ZWJwYWdlIHdvcmtzDQo+IDIsU2V0IGhv
-c3Qgc2NyZWVuIHNvbHV0aW9uIHRvIDgwMCo2MDAgYW5kIHNhdmUgaXQuIGlrdm0gd2VicGFn
-ZSB3b3Jrcw0KPiAzLFJlc2V0IGhvc3Qgc2NyZWVuIHNvbHV0aW9uIHRvICAgMTY4MCoxMDUw
-IGFuZCBzYXZlIGl0LA0KPiA0LHJlYm9vdCB0aGUgaG9zdCwNCj4gNSwgdGhlIGlrdm0gd2Vi
-cGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRvcyBHVUkNCg0KSGkgWGl1
-emhpLA0KDQpDaGVja2VkIHRoYXQgdGhlIGlzc3VlIGlzbid0IHJlbGF0ZWQgdGhpcyBwYXRj
-aC4gQWN0dWFsbHksIHRoYXQgaXMNCmNhdXNlZCBieSB0aGUgZmlyc3QgcGF0Y2ggb2YgdGhp
-cyBwYXRjaCBzZXJpZXMuIFNpbmNlIHRoZSBwYXRjaCByZW1vdmVzDQpzb3VyY2UgYnVmZmVy
-IGFsbG9jYXRpb24gYmVmb3JlIG1vZGUgZGV0ZWN0aW9uLCByZW1haW5pbmcgYWxsb2NhdGlv
-bg0KbG9naWMgc2hvdWxkIGJlIGNoYW5nZWQgYWNjb3JkaW5nbHksIG90aGVyd2lzZSBpdCBj
-YW4ndCBhbGxvY2F0ZSBidWZmZXJzDQphbmQgZXZlbnR1YWxseSBjYXVzZXMgdGhlIGlzc3Vl
-LiBJJ2xsIGZpeCB0aGUgZmlyc3QgcGF0Y2ggaW4gdGhlIG5leHQNCnNwaW4uIEluIHRoZSBt
-ZWFudGltZSwgeW91IGNhbiBhcHBseSBiZWxvdyBxdWljayBmaXggb24gdG9wIG9mIHdoYXQg
-eW91DQp0ZXN0ZWQgdGhlIGlzc3VlLg0KDQpUaGFua3MsDQpKYWUNCg0KDQpkaWZmIC0tZ2l0
-IGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYyANCmIvZHJpdmVycy9t
-ZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYw0KaW5kZXggYzJkNGEyZTZmMjBmLi4wMzRm
-MmY0MzZkNzYgMTAwNjQ0DQotLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12
-aWRlby5jDQorKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jDQpA
-QCAtODY1LDIwICs4NjUsMTQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9yZXNv
-bHV0aW9uKHN0cnVjdCANCmFzcGVlZF92aWRlbyAqdmlkZW8pDQoNCiAgICAgICAgIHNpemUg
-Kj0gNDsNCg0KLSAgICAgICBpZiAoc2l6ZSA9PSB2aWRlby0+c3Jjc1swXS5zaXplIC8gMikg
-ew0KLSAgICAgICAgICAgICAgIGFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfU1JDMV9B
-RERSLA0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2aWRlby0+c3Jjc1sw
-XS5kbWEgKyBzaXplKTsNCi0gICAgICAgfSBlbHNlIGlmIChzaXplID09IHZpZGVvLT5zcmNz
-WzBdLnNpemUpIHsNCi0gICAgICAgICAgICAgICBpZiAoIWFzcGVlZF92aWRlb19hbGxvY19i
-dWYodmlkZW8sICZ2aWRlby0+c3Jjc1sxXSwgc2l6ZSkpDQotICAgICAgICAgICAgICAgICAg
-ICAgICBnb3RvIGVycl9tZW07DQotDQotICAgICAgICAgICAgICAgYXNwZWVkX3ZpZGVvX3dy
-aXRlKHZpZGVvLCBWRV9TUkMxX0FERFIsIHZpZGVvLT5zcmNzWzFdLmRtYSk7DQotICAgICAg
-IH0gZWxzZSB7DQotICAgICAgICAgICAgICAgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVv
-LCAmdmlkZW8tPnNyY3NbMF0pOw0KKyAgICAgICBpZiAoc2l6ZSAhPSB2aWRlby0+c3Jjc1sw
-XS5zaXplKSB7DQorICAgICAgICAgICAgICAgaWYgKHZpZGVvLT5zcmNzWzBdLnNpemUpDQor
-ICAgICAgICAgICAgICAgICAgICAgICBhc3BlZWRfdmlkZW9fZnJlZV9idWYodmlkZW8sICZ2
-aWRlby0+c3Jjc1swXSk7DQorICAgICAgICAgICAgICAgaWYgKHZpZGVvLT5zcmNzWzFdLnNp
-emUpDQorICAgICAgICAgICAgICAgICAgICAgICBhc3BlZWRfdmlkZW9fZnJlZV9idWYodmlk
-ZW8sICZ2aWRlby0+c3Jjc1sxXSk7DQoNCiAgICAgICAgICAgICAgICAgaWYgKCFhc3BlZWRf
-dmlkZW9fYWxsb2NfYnVmKHZpZGVvLCAmdmlkZW8tPnNyY3NbMF0sIHNpemUpKQ0KICAgICAg
-ICAgICAgICAgICAgICAgICAgIGdvdG8gZXJyX21lbTsNCi0NCiAgICAgICAgICAgICAgICAg
-aWYgKCFhc3BlZWRfdmlkZW9fYWxsb2NfYnVmKHZpZGVvLCAmdmlkZW8tPnNyY3NbMV0sIHNp
-emUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgIGdvdG8gZXJyX21lbTs=
+For #2 --> There is no direct way to update /etc/ipmi_pass, but once 
+this image is flashed, login to bmc serial console, then try to execute 
+passwd and update the password to the desired one (during this scenario, 
+the new password is stored back in /etc/ipmi_pass). Now copy this 
+/etc/ipmi_pass from your BMC to your development environment, and 
+override it using bbappend.
 
-------=_NextPart_5CF33893_0A6F1688_62C7842F
-Content-Type: text/html;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
-
-SGkgSmFlLDxicj4mbmJzcDsmbmJzcDsmbmJzcDsgVGhpcyBuZXcmbmJzcDsgcGF0Y2ggd29y
-a3MgdmVyeSB3ZWxsIHNvIGZhciw8YnI+Jm5ic3A7SSB3aWxsIHRlc3QgaXQgbW9yZSBjYXNl
-cyBuZXh0IHdlZWsuPGJyPkJlc3QsPGJyPnhpdXpoaTxicj48ZGl2PjxkaXY+PGJyPjwvZGl2
-PjxkaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtmb250LWZhbWls
-eTogQXJpYWwgTmFycm93O3BhZGRpbmc6MnB4IDAgMnB4IDA7Ij4tLS0tLS0tLS0tLS0tLS0t
-LS0mbmJzcDtPcmlnaW5hbCZuYnNwOy0tLS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXYgc3R5
-bGU9ImZvbnQtc2l6ZTogMTJweDtiYWNrZ3JvdW5kOiNlZmVmZWY7cGFkZGluZzo4cHg7Ij48
-ZGl2PjxiPkZyb206IDwvYj4mbmJzcDsiamFlLmh5dW4ueW9vIjsmbHQ7amFlLmh5dW4ueW9v
-QGxpbnV4LmludGVsLmNvbSZndDs7PC9kaXY+PGRpdj48Yj5EYXRlOiA8L2I+Jm5ic3A7SnVu
-IDEsIDIwMTk8L2Rpdj48ZGl2PjxiPlRvOiA8L2I+Jm5ic3A7InhpdXpoaSImbHQ7MTQ1MDMz
-NTg1N0BxcS5jb20mZ3Q7OyAib3BlbmJtYyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-Jmd0OzsgImVhamFtZXMiJmx0O2VhamFtZXNAbGludXguaWJtLmNvbSZndDs7ICJqb2VsIiZs
-dDtqb2VsQGptcy5pZC5hdSZndDs7ICJhbmRyZXciJmx0O2FuZHJld0Bhai5pZC5hdSZndDs7
-IDx3YnI+PC9kaXY+PGRpdj48L2Rpdj48ZGl2PjxiPlN1YmplY3Q6IDwvYj4mbmJzcDtSZTog
-W1BBVENIIGRldi01LjEgNC80XSBtZWRpYTogYXNwZWVkOiBhZGQgYSB3b3JrYXJvdW5kIHRv
-IGZpeCBhc2lsaWNvbiBidWcgKEphZSBIeXVuIFlvbyk8L2Rpdj48L2Rpdj48ZGl2Pjxicj48
-L2Rpdj5PbiA1LzMxLzIwMTkgNDoyMSBBTSwgeGl1emhpIHdyb3RlOjxicj4mZ3Q7IEhpJm5i
-c3A7IEphZSw8YnI+Jmd0OyZuYnNwOyAmbmJzcDsmbmJzcDsgSSB0ZXN0ZWQgdGhpcyBwYXRj
-aCAsaXQgd29ya3Mgb24gMTY4MCoxMDUwLGJ1dCBJIGZvdW5kIGFuIGlzc3VlOjxicj4mZ3Q7
-IDxicj4mZ3Q7IFRoZSBpa3ZtIHdlYnBhZ2Ugd2lsbCBiZSBibGFjayBzY3JlZW4gd2hlbiB5
-b3UgcmVib290IHRoZSBob3N0IGFmdGVyIDxicj4mZ3Q7IHN3aXRjaGluZyBzb2x1dGlvbiBi
-ZXR3ZWVuIDE2ODAqMTA1MCBhbmQgODAwKjYwMCBvbiBjaHJvbWUgYnJvd3NlciAobXkgPGJy
-PiZndDsgY2hyb21lIHZlcnNpb24gaXMgNjUpLjxicj4mZ3Q7IHlvdSBjYW4gcmVwcm9kdWNl
-IGl0Ojxicj4mZ3Q7IDEsIFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAxNjgwKjEwNTAg
-YW5kIHNhdmUgaXQgLiBpa3ZtIHdlYnBhZ2Ugd29ya3M8YnI+Jmd0OyAyLFNldCBob3N0IHNj
-cmVlbiBzb2x1dGlvbiB0byA4MDAqNjAwIGFuZCBzYXZlIGl0LiBpa3ZtIHdlYnBhZ2Ugd29y
-a3M8YnI+Jmd0OyAzLFJlc2V0IGhvc3Qgc2NyZWVuIHNvbHV0aW9uIHRvICZuYnNwOyAxNjgw
-KjEwNTAgYW5kIHNhdmUgaXQsPGJyPiZndDsgNCxyZWJvb3QgdGhlIGhvc3QsPGJyPiZndDsg
-NSwgdGhlIGlrdm0gd2VicGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRv
-cyBHVUk8YnI+PGJyPkhpIFhpdXpoaSw8YnI+PGJyPkNoZWNrZWQgdGhhdCB0aGUgaXNzdWUg
-aXNuJ3QgcmVsYXRlZCB0aGlzIHBhdGNoLiBBY3R1YWxseSwgdGhhdCBpczxicj5jYXVzZWQg
-YnkgdGhlIGZpcnN0IHBhdGNoIG9mIHRoaXMgcGF0Y2ggc2VyaWVzLiBTaW5jZSB0aGUgcGF0
-Y2ggcmVtb3Zlczxicj5zb3VyY2UgYnVmZmVyIGFsbG9jYXRpb24gYmVmb3JlIG1vZGUgZGV0
-ZWN0aW9uLCByZW1haW5pbmcgYWxsb2NhdGlvbjxicj5sb2dpYyBzaG91bGQgYmUgY2hhbmdl
-ZCBhY2NvcmRpbmdseSwgb3RoZXJ3aXNlIGl0IGNhbid0IGFsbG9jYXRlIGJ1ZmZlcnM8YnI+
-YW5kIGV2ZW50dWFsbHkgY2F1c2VzIHRoZSBpc3N1ZS4gSSdsbCBmaXggdGhlIGZpcnN0IHBh
-dGNoIGluIHRoZSBuZXh0PGJyPnNwaW4uIEluIHRoZSBtZWFudGltZSwgeW91IGNhbiBhcHBs
-eSBiZWxvdyBxdWljayBmaXggb24gdG9wIG9mIHdoYXQgeW91PGJyPnRlc3RlZCB0aGUgaXNz
-dWUuPGJyPjxicj5UaGFua3MsPGJyPkphZTxicj48YnI+PGJyPmRpZmYgLS1naXQgYS9kcml2
-ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jIDxicj5iL2RyaXZlcnMvbWVkaWEv
-cGxhdGZvcm0vYXNwZWVkLXZpZGVvLmM8YnI+aW5kZXggYzJkNGEyZTZmMjBmLi4wMzRmMmY0
-MzZkNzYgMTAwNjQ0PGJyPi0tLSBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vYXNwZWVkLXZp
-ZGVvLmM8YnI+KysrIGIvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYzxi
-cj5AQCAtODY1LDIwICs4NjUsMTQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9y
-ZXNvbHV0aW9uKHN0cnVjdCA8YnI+YXNwZWVkX3ZpZGVvICp2aWRlbyk8YnI+PGJyPiZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBzaXplICo9IDQ7
-PGJyPjxicj4tJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGlmIChzaXpl
-ID09IHZpZGVvLSZndDtzcmNzWzBdLnNpemUgLyAyKSB7PGJyPi0mbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsgYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9TUkMxX0FERFIs
-PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgdmlkZW8tJmd0O3Ny
-Y3NbMF0uZG1hICsgc2l6ZSk7PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsgfSBlbHNlIGlmIChzaXplID09IHZpZGVvLSZndDtzcmNzWzBdLnNpemUpIHs8YnI+
-LSZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAoIWFzcGVlZF92aWRlb19hbGxv
-Y19idWYodmlkZW8sICZhbXA7dmlkZW8tJmd0O3NyY3NbMV0sIHNpemUpKTxicj4tJm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IGdvdG8gZXJyX21lbTs8YnI+LTxicj4tJm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IGFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfU1JDMV9B
-RERSLCB2aWRlby0mZ3Q7c3Jjc1sxXS5kbWEpOzxicj4tJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7IH0gZWxzZSB7PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVvLCAmYW1wO3ZpZGVvLSZndDtzcmNz
-WzBdKTs8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAoc2l6
-ZSAhPSB2aWRlby0mZ3Q7c3Jjc1swXS5zaXplKSB7PGJyPismbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsgaWYgKHZpZGVvLSZndDtzcmNzWzBdLnNpemUpPGJyPismbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVvLCAmYW1wO3ZpZGVv
-LSZndDtzcmNzWzBdKTs8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAo
-dmlkZW8tJmd0O3NyY3NbMV0uc2l6ZSk8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBh
-c3BlZWRfdmlkZW9fZnJlZV9idWYodmlkZW8sICZhbXA7dmlkZW8tJmd0O3NyY3NbMV0pOzxi
-cj48YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGlmICgh
-YXNwZWVkX3ZpZGVvX2FsbG9jX2J1Zih2aWRlbywgJmFtcDt2aWRlby0mZ3Q7c3Jjc1swXSwg
-c2l6ZSkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBnb3RvIGVy
-cl9tZW07PGJyPi08YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7IGlmICghYXNwZWVkX3ZpZGVvX2FsbG9jX2J1Zih2aWRlbywgJmFtcDt2aWRlby0mZ3Q7
-c3Jjc1sxXSwgc2l6ZSkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyBnb3RvIGVycl9tZW07PGJyPjxicj48L2Rpdj4=
-
-------=_NextPart_5CF33893_0A6F1688_62C7842F--
+Note: Our ultimate goal is to get rid of the default user name and 
+password from the system (to whichever project it is feasible for 
+security reason -- 
+https://github.com/openbmc/docs/blob/master/user_management.md#deployment---out-of-factory) 
 
 
+Let me know if you need any further clarifications
 
+Regards,
+
+Richard
+
+
+On 5/31/2019 5:56 AM, Simon Zhu(ÖìÓ¢äø) wrote:
+> Hello ,
+>
+> 	I want to change default username and password in local.conf.sample.
+>
+> 	But caused an invalid username error.
+>
+> 	I fixed it in the following way in /openbmc/openbmc/meta/recipes-extended/shadow/shadow.inc:
+> 	I moved the patch shadow-relaxed-usernames.patch from SRC_URI_append_class-target to SRC_URI.
+> 	
+>
+> 	And If I changed the default username or password, I failed to use IPMI through lanplus interface because of authentication failure.
+> 	I need to generate my own ipmi_pass and install it to /etc/ipmi_pass¡£
+>
+> 	Do these two issues need to be fixed?
+>
+> Best regards,
+>
+> Simon
