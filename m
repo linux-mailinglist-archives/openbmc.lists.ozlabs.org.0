@@ -1,45 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24F5F321A6
+	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 04:47:43 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59F0F316BF
-	for <lists+openbmc@lfdr.de>; Fri, 31 May 2019 23:48:47 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Fykh4W0nzDqcq
-	for <lists+openbmc@lfdr.de>; Sat,  1 Jun 2019 07:48:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45GjK71nYRzDqZ9
+	for <lists+openbmc@lfdr.de>; Sun,  2 Jun 2019 12:47:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ spf=pass (mailfrom) smtp.mailfrom=qq.com
+ (client-ip=52.59.177.22; helo=smtpbgeu1.qq.com;
+ envelope-from=1450335857@qq.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.b="u1t0JDhi"; 
+ dkim-atps=neutral
+X-Greylist: delayed 141927 seconds by postgrey-1.36 at bilbo;
+ Sun, 02 Jun 2019 12:47:13 AEST
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45FyjM2l9RzDqXr
- for <openbmc@lists.ozlabs.org>; Sat,  1 Jun 2019 07:47:35 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 31 May 2019 14:47:23 -0700
-X-ExtLoop1: 1
-Received: from maru.jf.intel.com ([10.54.51.75])
- by orsmga001.jf.intel.com with ESMTP; 31 May 2019 14:47:22 -0700
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Eddie James <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH v2 dev-5.1 3/3] media: aspeed: add a workaround to fix a
- silicon bug
-Date: Fri, 31 May 2019 14:47:16 -0700
-Message-Id: <20190531214716.12118-4-jae.hyun.yoo@linux.intel.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
-References: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45GjJd233tzDqKf
+ for <openbmc@lists.ozlabs.org>; Sun,  2 Jun 2019 12:47:12 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1559443604; bh=cZjFtUtqJf0G0GYkVyWLqq3s4ho9HTkDkzHV5cocdQg=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=u1t0JDhijUiErcsMy76f2tfFHNITsbGTUUPhryGXyW1vYxPKd4n4AJ+qsiBmiPLpK
+ F46EGFqlqkL9vWrhbkwnGajAlb8aXrZKljTgP5K54354fsM/TY09Y/GoLWBI+Io9w/
+ yj6ZKz1gLlj/W3FR0Wus5spnqvYttbe11VbA6qEY=
+X-QQ-SSF: 00000000000000F000000000000000H
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 218.247.157.87
+In-Reply-To: <41494d02-452f-5a09-d29e-476c6d4e4085@linux.intel.com>
+References: <mailman.9.1558663202.24371.openbmc@lists.ozlabs.org>
+ <tencent_18FB023D486815FB74809705@qq.com>
+ <41494d02-452f-5a09-d29e-476c6d4e4085@linux.intel.com>
+X-QQ-STYLE: 
+X-QQ-mid: webenglish1t1559443603t852951
+From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
+To: "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
+ "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
+ "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>,
+ "=?ISO-8859-1?B?Sm9lbCBTdGFubGV5?=" <joel@jms.id.au>,
+ "=?ISO-8859-1?B?QW5kcmV3LkplZmZlcnk=?=" <andrew@aj.id.au>
+Subject: Re: [PATCH dev-5.1 4/4] media: aspeed: add a workaround to fix
+ asilicon bug (Jae Hyun Yoo)
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5CF33893_0A6F1688_62C7842F"
+Content-Transfer-Encoding: 8Bit
+Date: Sun, 2 Jun 2019 10:46:43 +0800
+X-Priority: 3
+Message-ID: <tencent_10A7D5E3614D49E602F427F6@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-ReplyHash: 3261143770
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Sun, 02 Jun 2019 10:46:44 +0800 (CST)
+Feedback-ID: webenglish:qq.com:bgforeign:bgforeign4
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,73 +76,173 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-AST2500 silicon revision A1 and A2 have a silicon bug which causes
-extremly long capturing time on specific resolutions (1680 width).
-To fix the bug, this commit adjusts the capturing window register
-setting to 1728 if detected width is 1680. The compression window
-register setting will be kept as the original width so output
-result will be the same.
+This is a multi-part message in MIME format.
 
-Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
----
-v1 -> v2:
-- Added more detail comments why the value 1728 is picked.
+------=_NextPart_5CF33893_0A6F1688_62C7842F
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
- drivers/media/platform/aspeed-video.c | 28 ++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+SGkgSmFlLA0KICAgIFRoaXMgbmV3ICBwYXRjaCB3b3JrcyB2ZXJ5IHdlbGwgc28gZmFyLA0K
+IEkgd2lsbCB0ZXN0IGl0IG1vcmUgY2FzZXMgbmV4dCB3ZWVrLg0KQmVzdCwNCnhpdXpoaQ0K
+DQoNCg0KDQotLS0tLS0tLS0tLS0tLS0tLS0gT3JpZ2luYWwgLS0tLS0tLS0tLS0tLS0tLS0t
+DQpGcm9tOiAgImphZS5oeXVuLnlvbyI7PGphZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+
+Ow0KRGF0ZTogIEp1biAxLCAyMDE5DQpUbzogICJ4aXV6aGkiPDE0NTAzMzU4NTdAcXEuY29t
+PjsgIm9wZW5ibWMiPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47ICJlYWphbWVzIjxlYWph
+bWVzQGxpbnV4LmlibS5jb20+OyAiam9lbCI8am9lbEBqbXMuaWQuYXU+OyAiYW5kcmV3Ijxh
+bmRyZXdAYWouaWQuYXU+OyANCg0KU3ViamVjdDogIFJlOiBbUEFUQ0ggZGV2LTUuMSA0LzRd
+IG1lZGlhOiBhc3BlZWQ6IGFkZCBhIHdvcmthcm91bmQgdG8gZml4IGFzaWxpY29uIGJ1ZyAo
+SmFlIEh5dW4gWW9vKQ0KDQoNCg0KT24gNS8zMS8yMDE5IDQ6MjEgQU0sIHhpdXpoaSB3cm90
+ZToNCj4gSGkgIEphZSwNCj4gICAgIEkgdGVzdGVkIHRoaXMgcGF0Y2ggLGl0IHdvcmtzIG9u
+IDE2ODAqMTA1MCxidXQgSSBmb3VuZCBhbiBpc3N1ZToNCj4gDQo+IFRoZSBpa3ZtIHdlYnBh
+Z2Ugd2lsbCBiZSBibGFjayBzY3JlZW4gd2hlbiB5b3UgcmVib290IHRoZSBob3N0IGFmdGVy
+IA0KPiBzd2l0Y2hpbmcgc29sdXRpb24gYmV0d2VlbiAxNjgwKjEwNTAgYW5kIDgwMCo2MDAg
+b24gY2hyb21lIGJyb3dzZXIgKG15IA0KPiBjaHJvbWUgdmVyc2lvbiBpcyA2NSkuDQo+IHlv
+dSBjYW4gcmVwcm9kdWNlIGl0Og0KPiAxLCBTZXQgaG9zdCBzY3JlZW4gc29sdXRpb24gdG8g
+MTY4MCoxMDUwIGFuZCBzYXZlIGl0IC4gaWt2bSB3ZWJwYWdlIHdvcmtzDQo+IDIsU2V0IGhv
+c3Qgc2NyZWVuIHNvbHV0aW9uIHRvIDgwMCo2MDAgYW5kIHNhdmUgaXQuIGlrdm0gd2VicGFn
+ZSB3b3Jrcw0KPiAzLFJlc2V0IGhvc3Qgc2NyZWVuIHNvbHV0aW9uIHRvICAgMTY4MCoxMDUw
+IGFuZCBzYXZlIGl0LA0KPiA0LHJlYm9vdCB0aGUgaG9zdCwNCj4gNSwgdGhlIGlrdm0gd2Vi
+cGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRvcyBHVUkNCg0KSGkgWGl1
+emhpLA0KDQpDaGVja2VkIHRoYXQgdGhlIGlzc3VlIGlzbid0IHJlbGF0ZWQgdGhpcyBwYXRj
+aC4gQWN0dWFsbHksIHRoYXQgaXMNCmNhdXNlZCBieSB0aGUgZmlyc3QgcGF0Y2ggb2YgdGhp
+cyBwYXRjaCBzZXJpZXMuIFNpbmNlIHRoZSBwYXRjaCByZW1vdmVzDQpzb3VyY2UgYnVmZmVy
+IGFsbG9jYXRpb24gYmVmb3JlIG1vZGUgZGV0ZWN0aW9uLCByZW1haW5pbmcgYWxsb2NhdGlv
+bg0KbG9naWMgc2hvdWxkIGJlIGNoYW5nZWQgYWNjb3JkaW5nbHksIG90aGVyd2lzZSBpdCBj
+YW4ndCBhbGxvY2F0ZSBidWZmZXJzDQphbmQgZXZlbnR1YWxseSBjYXVzZXMgdGhlIGlzc3Vl
+LiBJJ2xsIGZpeCB0aGUgZmlyc3QgcGF0Y2ggaW4gdGhlIG5leHQNCnNwaW4uIEluIHRoZSBt
+ZWFudGltZSwgeW91IGNhbiBhcHBseSBiZWxvdyBxdWljayBmaXggb24gdG9wIG9mIHdoYXQg
+eW91DQp0ZXN0ZWQgdGhlIGlzc3VlLg0KDQpUaGFua3MsDQpKYWUNCg0KDQpkaWZmIC0tZ2l0
+IGEvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYyANCmIvZHJpdmVycy9t
+ZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYw0KaW5kZXggYzJkNGEyZTZmMjBmLi4wMzRm
+MmY0MzZkNzYgMTAwNjQ0DQotLS0gYS9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12
+aWRlby5jDQorKysgYi9kcml2ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jDQpA
+QCAtODY1LDIwICs4NjUsMTQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9yZXNv
+bHV0aW9uKHN0cnVjdCANCmFzcGVlZF92aWRlbyAqdmlkZW8pDQoNCiAgICAgICAgIHNpemUg
+Kj0gNDsNCg0KLSAgICAgICBpZiAoc2l6ZSA9PSB2aWRlby0+c3Jjc1swXS5zaXplIC8gMikg
+ew0KLSAgICAgICAgICAgICAgIGFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfU1JDMV9B
+RERSLA0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2aWRlby0+c3Jjc1sw
+XS5kbWEgKyBzaXplKTsNCi0gICAgICAgfSBlbHNlIGlmIChzaXplID09IHZpZGVvLT5zcmNz
+WzBdLnNpemUpIHsNCi0gICAgICAgICAgICAgICBpZiAoIWFzcGVlZF92aWRlb19hbGxvY19i
+dWYodmlkZW8sICZ2aWRlby0+c3Jjc1sxXSwgc2l6ZSkpDQotICAgICAgICAgICAgICAgICAg
+ICAgICBnb3RvIGVycl9tZW07DQotDQotICAgICAgICAgICAgICAgYXNwZWVkX3ZpZGVvX3dy
+aXRlKHZpZGVvLCBWRV9TUkMxX0FERFIsIHZpZGVvLT5zcmNzWzFdLmRtYSk7DQotICAgICAg
+IH0gZWxzZSB7DQotICAgICAgICAgICAgICAgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVv
+LCAmdmlkZW8tPnNyY3NbMF0pOw0KKyAgICAgICBpZiAoc2l6ZSAhPSB2aWRlby0+c3Jjc1sw
+XS5zaXplKSB7DQorICAgICAgICAgICAgICAgaWYgKHZpZGVvLT5zcmNzWzBdLnNpemUpDQor
+ICAgICAgICAgICAgICAgICAgICAgICBhc3BlZWRfdmlkZW9fZnJlZV9idWYodmlkZW8sICZ2
+aWRlby0+c3Jjc1swXSk7DQorICAgICAgICAgICAgICAgaWYgKHZpZGVvLT5zcmNzWzFdLnNp
+emUpDQorICAgICAgICAgICAgICAgICAgICAgICBhc3BlZWRfdmlkZW9fZnJlZV9idWYodmlk
+ZW8sICZ2aWRlby0+c3Jjc1sxXSk7DQoNCiAgICAgICAgICAgICAgICAgaWYgKCFhc3BlZWRf
+dmlkZW9fYWxsb2NfYnVmKHZpZGVvLCAmdmlkZW8tPnNyY3NbMF0sIHNpemUpKQ0KICAgICAg
+ICAgICAgICAgICAgICAgICAgIGdvdG8gZXJyX21lbTsNCi0NCiAgICAgICAgICAgICAgICAg
+aWYgKCFhc3BlZWRfdmlkZW9fYWxsb2NfYnVmKHZpZGVvLCAmdmlkZW8tPnNyY3NbMV0sIHNp
+emUpKQ0KICAgICAgICAgICAgICAgICAgICAgICAgIGdvdG8gZXJyX21lbTs=
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index 67d6380d4ef3..f58f44eab588 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -826,8 +826,29 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 	struct v4l2_bt_timings *act = &video->active_timings;
- 	unsigned int size = act->width * act->height;
- 
-+	/* Set capture/compression frame sizes */
- 	aspeed_video_calc_compressed_size(video, size);
- 
-+	if (video->active_timings.width == 1680) {
-+		/*
-+		 * This is a workaround to fix a silicon bug on A1 and A2
-+		 * revisions. Since it doesn't break capturing operation of
-+		 * other revisions, use it for all revisions without checking
-+		 * the revision ID. It picked 1728 which is a very next
-+		 * 64-pixels aligned value to 1680 to minimize memory bandwidth
-+		 * and to get better access speed from video engine.
-+		 */
-+		aspeed_video_write(video, VE_CAP_WINDOW,
-+				   1728 << 16 | act->height);
-+		size += (1728 - 1680) * video->active_timings.height;
-+	} else {
-+		aspeed_video_write(video, VE_CAP_WINDOW,
-+				   act->width << 16 | act->height);
-+	}
-+	aspeed_video_write(video, VE_COMP_WINDOW,
-+			   act->width << 16 | act->height);
-+	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
-+
- 	/* Don't use direct mode below 1024 x 768 (irqs don't fire) */
- 	if (size < DIRECT_FETCH_THRESHOLD) {
- 		aspeed_video_write(video, VE_TGS_0,
-@@ -844,13 +865,6 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 		aspeed_video_update(video, VE_CTRL, 0, VE_CTRL_DIRECT_FETCH);
- 	}
- 
--	/* Set capture/compression frame sizes */
--	aspeed_video_write(video, VE_CAP_WINDOW,
--			   act->width << 16 | act->height);
--	aspeed_video_write(video, VE_COMP_WINDOW,
--			   act->width << 16 | act->height);
--	aspeed_video_write(video, VE_SRC_SCANLINE_OFFSET, act->width * 4);
--
- 	size *= 4;
- 
- 	if (size != video->srcs[0].size) {
--- 
-2.21.0
+------=_NextPart_5CF33893_0A6F1688_62C7842F
+Content-Type: text/html;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+
+SGkgSmFlLDxicj4mbmJzcDsmbmJzcDsmbmJzcDsgVGhpcyBuZXcmbmJzcDsgcGF0Y2ggd29y
+a3MgdmVyeSB3ZWxsIHNvIGZhciw8YnI+Jm5ic3A7SSB3aWxsIHRlc3QgaXQgbW9yZSBjYXNl
+cyBuZXh0IHdlZWsuPGJyPkJlc3QsPGJyPnhpdXpoaTxicj48ZGl2PjxkaXY+PGJyPjwvZGl2
+PjxkaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtmb250LWZhbWls
+eTogQXJpYWwgTmFycm93O3BhZGRpbmc6MnB4IDAgMnB4IDA7Ij4tLS0tLS0tLS0tLS0tLS0t
+LS0mbmJzcDtPcmlnaW5hbCZuYnNwOy0tLS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXYgc3R5
+bGU9ImZvbnQtc2l6ZTogMTJweDtiYWNrZ3JvdW5kOiNlZmVmZWY7cGFkZGluZzo4cHg7Ij48
+ZGl2PjxiPkZyb206IDwvYj4mbmJzcDsiamFlLmh5dW4ueW9vIjsmbHQ7amFlLmh5dW4ueW9v
+QGxpbnV4LmludGVsLmNvbSZndDs7PC9kaXY+PGRpdj48Yj5EYXRlOiA8L2I+Jm5ic3A7SnVu
+IDEsIDIwMTk8L2Rpdj48ZGl2PjxiPlRvOiA8L2I+Jm5ic3A7InhpdXpoaSImbHQ7MTQ1MDMz
+NTg1N0BxcS5jb20mZ3Q7OyAib3BlbmJtYyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+Jmd0OzsgImVhamFtZXMiJmx0O2VhamFtZXNAbGludXguaWJtLmNvbSZndDs7ICJqb2VsIiZs
+dDtqb2VsQGptcy5pZC5hdSZndDs7ICJhbmRyZXciJmx0O2FuZHJld0Bhai5pZC5hdSZndDs7
+IDx3YnI+PC9kaXY+PGRpdj48L2Rpdj48ZGl2PjxiPlN1YmplY3Q6IDwvYj4mbmJzcDtSZTog
+W1BBVENIIGRldi01LjEgNC80XSBtZWRpYTogYXNwZWVkOiBhZGQgYSB3b3JrYXJvdW5kIHRv
+IGZpeCBhc2lsaWNvbiBidWcgKEphZSBIeXVuIFlvbyk8L2Rpdj48L2Rpdj48ZGl2Pjxicj48
+L2Rpdj5PbiA1LzMxLzIwMTkgNDoyMSBBTSwgeGl1emhpIHdyb3RlOjxicj4mZ3Q7IEhpJm5i
+c3A7IEphZSw8YnI+Jmd0OyZuYnNwOyAmbmJzcDsmbmJzcDsgSSB0ZXN0ZWQgdGhpcyBwYXRj
+aCAsaXQgd29ya3Mgb24gMTY4MCoxMDUwLGJ1dCBJIGZvdW5kIGFuIGlzc3VlOjxicj4mZ3Q7
+IDxicj4mZ3Q7IFRoZSBpa3ZtIHdlYnBhZ2Ugd2lsbCBiZSBibGFjayBzY3JlZW4gd2hlbiB5
+b3UgcmVib290IHRoZSBob3N0IGFmdGVyIDxicj4mZ3Q7IHN3aXRjaGluZyBzb2x1dGlvbiBi
+ZXR3ZWVuIDE2ODAqMTA1MCBhbmQgODAwKjYwMCBvbiBjaHJvbWUgYnJvd3NlciAobXkgPGJy
+PiZndDsgY2hyb21lIHZlcnNpb24gaXMgNjUpLjxicj4mZ3Q7IHlvdSBjYW4gcmVwcm9kdWNl
+IGl0Ojxicj4mZ3Q7IDEsIFNldCBob3N0IHNjcmVlbiBzb2x1dGlvbiB0byAxNjgwKjEwNTAg
+YW5kIHNhdmUgaXQgLiBpa3ZtIHdlYnBhZ2Ugd29ya3M8YnI+Jmd0OyAyLFNldCBob3N0IHNj
+cmVlbiBzb2x1dGlvbiB0byA4MDAqNjAwIGFuZCBzYXZlIGl0LiBpa3ZtIHdlYnBhZ2Ugd29y
+a3M8YnI+Jmd0OyAzLFJlc2V0IGhvc3Qgc2NyZWVuIHNvbHV0aW9uIHRvICZuYnNwOyAxNjgw
+KjEwNTAgYW5kIHNhdmUgaXQsPGJyPiZndDsgNCxyZWJvb3QgdGhlIGhvc3QsPGJyPiZndDsg
+NSwgdGhlIGlrdm0gd2VicGFnZSBpcyBibGFjayBzY3JlZW4gd2hlbiBib290IHRvIENlbnRv
+cyBHVUk8YnI+PGJyPkhpIFhpdXpoaSw8YnI+PGJyPkNoZWNrZWQgdGhhdCB0aGUgaXNzdWUg
+aXNuJ3QgcmVsYXRlZCB0aGlzIHBhdGNoLiBBY3R1YWxseSwgdGhhdCBpczxicj5jYXVzZWQg
+YnkgdGhlIGZpcnN0IHBhdGNoIG9mIHRoaXMgcGF0Y2ggc2VyaWVzLiBTaW5jZSB0aGUgcGF0
+Y2ggcmVtb3Zlczxicj5zb3VyY2UgYnVmZmVyIGFsbG9jYXRpb24gYmVmb3JlIG1vZGUgZGV0
+ZWN0aW9uLCByZW1haW5pbmcgYWxsb2NhdGlvbjxicj5sb2dpYyBzaG91bGQgYmUgY2hhbmdl
+ZCBhY2NvcmRpbmdseSwgb3RoZXJ3aXNlIGl0IGNhbid0IGFsbG9jYXRlIGJ1ZmZlcnM8YnI+
+YW5kIGV2ZW50dWFsbHkgY2F1c2VzIHRoZSBpc3N1ZS4gSSdsbCBmaXggdGhlIGZpcnN0IHBh
+dGNoIGluIHRoZSBuZXh0PGJyPnNwaW4uIEluIHRoZSBtZWFudGltZSwgeW91IGNhbiBhcHBs
+eSBiZWxvdyBxdWljayBmaXggb24gdG9wIG9mIHdoYXQgeW91PGJyPnRlc3RlZCB0aGUgaXNz
+dWUuPGJyPjxicj5UaGFua3MsPGJyPkphZTxicj48YnI+PGJyPmRpZmYgLS1naXQgYS9kcml2
+ZXJzL21lZGlhL3BsYXRmb3JtL2FzcGVlZC12aWRlby5jIDxicj5iL2RyaXZlcnMvbWVkaWEv
+cGxhdGZvcm0vYXNwZWVkLXZpZGVvLmM8YnI+aW5kZXggYzJkNGEyZTZmMjBmLi4wMzRmMmY0
+MzZkNzYgMTAwNjQ0PGJyPi0tLSBhL2RyaXZlcnMvbWVkaWEvcGxhdGZvcm0vYXNwZWVkLXZp
+ZGVvLmM8YnI+KysrIGIvZHJpdmVycy9tZWRpYS9wbGF0Zm9ybS9hc3BlZWQtdmlkZW8uYzxi
+cj5AQCAtODY1LDIwICs4NjUsMTQgQEAgc3RhdGljIHZvaWQgYXNwZWVkX3ZpZGVvX3NldF9y
+ZXNvbHV0aW9uKHN0cnVjdCA8YnI+YXNwZWVkX3ZpZGVvICp2aWRlbyk8YnI+PGJyPiZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBzaXplICo9IDQ7
+PGJyPjxicj4tJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGlmIChzaXpl
+ID09IHZpZGVvLSZndDtzcmNzWzBdLnNpemUgLyAyKSB7PGJyPi0mbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsgYXNwZWVkX3ZpZGVvX3dyaXRlKHZpZGVvLCBWRV9TUkMxX0FERFIs
+PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgdmlkZW8tJmd0O3Ny
+Y3NbMF0uZG1hICsgc2l6ZSk7PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsgfSBlbHNlIGlmIChzaXplID09IHZpZGVvLSZndDtzcmNzWzBdLnNpemUpIHs8YnI+
+LSZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAoIWFzcGVlZF92aWRlb19hbGxv
+Y19idWYodmlkZW8sICZhbXA7dmlkZW8tJmd0O3NyY3NbMV0sIHNpemUpKTxicj4tJm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7IGdvdG8gZXJyX21lbTs8YnI+LTxicj4tJm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7IGFzcGVlZF92aWRlb193cml0ZSh2aWRlbywgVkVfU1JDMV9B
+RERSLCB2aWRlby0mZ3Q7c3Jjc1sxXS5kbWEpOzxicj4tJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7IH0gZWxzZSB7PGJyPi0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVvLCAmYW1wO3ZpZGVvLSZndDtzcmNz
+WzBdKTs8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAoc2l6
+ZSAhPSB2aWRlby0mZ3Q7c3Jjc1swXS5zaXplKSB7PGJyPismbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsgaWYgKHZpZGVvLSZndDtzcmNzWzBdLnNpemUpPGJyPismbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsgYXNwZWVkX3ZpZGVvX2ZyZWVfYnVmKHZpZGVvLCAmYW1wO3ZpZGVv
+LSZndDtzcmNzWzBdKTs8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBpZiAo
+dmlkZW8tJmd0O3NyY3NbMV0uc2l6ZSk8YnI+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBh
+c3BlZWRfdmlkZW9fZnJlZV9idWYodmlkZW8sICZhbXA7dmlkZW8tJmd0O3NyY3NbMV0pOzxi
+cj48YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGlmICgh
+YXNwZWVkX3ZpZGVvX2FsbG9jX2J1Zih2aWRlbywgJmFtcDt2aWRlby0mZ3Q7c3Jjc1swXSwg
+c2l6ZSkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBnb3RvIGVy
+cl9tZW07PGJyPi08YnI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IGlmICghYXNwZWVkX3ZpZGVvX2FsbG9jX2J1Zih2aWRlbywgJmFtcDt2aWRlby0mZ3Q7
+c3Jjc1sxXSwgc2l6ZSkpPGJyPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyBnb3RvIGVycl9tZW07PGJyPjxicj48L2Rpdj4=
+
+------=_NextPart_5CF33893_0A6F1688_62C7842F--
+
+
 
