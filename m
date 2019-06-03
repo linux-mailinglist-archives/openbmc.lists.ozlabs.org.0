@@ -2,52 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBB35337CD
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2019 20:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6880033925
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2019 21:38:01 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Hk5Y1PTpzDqT9
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 04:26:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45HlhQ521QzDqRS
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 05:37:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Hk532xlyzDqKZ
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 04:25:41 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 03 Jun 2019 11:25:35 -0700
-X-ExtLoop1: 1
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga007.jf.intel.com with ESMTP; 03 Jun 2019 11:25:35 -0700
-Subject: Re: [PATCH dev-5.1 4/4] media: aspeed: add a workaround to fix
- asilicon bug (Jae Hyun Yoo)
-To: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>,
- eajames <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>,
- "Andrew.Jeffery" <andrew@aj.id.au>
-References: <mailman.9.1558663202.24371.openbmc@lists.ozlabs.org>
- <tencent_18FB023D486815FB74809705@qq.com>
- <41494d02-452f-5a09-d29e-476c6d4e4085@linux.intel.com>
- <tencent_10A7D5E3614D49E602F427F6@qq.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <e9a3d82f-df30-6930-cb00-cdcf0bc7d4e7@linux.intel.com>
-Date: Mon, 3 Jun 2019 11:25:35 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Hlgk1jqJzDq9G
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 05:37:21 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x53JWMBJ103399
+ for <openbmc@lists.ozlabs.org>; Mon, 3 Jun 2019 15:37:19 -0400
+Received: from e32.co.us.ibm.com (e32.co.us.ibm.com [32.97.110.150])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sw91x24cm-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 15:37:18 -0400
+Received: from localhost
+ by e32.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <anoo@linux.ibm.com>;
+ Mon, 3 Jun 2019 20:37:18 +0100
+Received: from b03cxnp07029.gho.boulder.ibm.com (9.17.130.16)
+ by e32.co.us.ibm.com (192.168.1.132) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 3 Jun 2019 20:37:16 +0100
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x53JbDuh19005526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 3 Jun 2019 19:37:14 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E32FBC6059;
+ Mon,  3 Jun 2019 19:37:13 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B09CBC6055;
+ Mon,  3 Jun 2019 19:37:13 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  3 Jun 2019 19:37:13 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <tencent_10A7D5E3614D49E602F427F6@qq.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Mon, 03 Jun 2019 14:38:10 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH dev-5.1] ARM: dts: aspeed: swift: Add VDD (IR35219) devices
+In-Reply-To: <CACPK8Xc8_SAkxQ1_HTFOkCsV8ejWS=MVXazH+bvDcE=9xKLF8A@mail.gmail.com>
+References: <1559334700-51970-1-git-send-email-anoo@linux.ibm.com>
+ <CACPK8Xc8_SAkxQ1_HTFOkCsV8ejWS=MVXazH+bvDcE=9xKLF8A@mail.gmail.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+x-cbid: 19060319-0004-0000-0000-00001517BBAB
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011209; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01212771; UDB=6.00637364; IPR=6.00993832; 
+ MB=3.00027168; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-03 19:37:17
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19060319-0005-0000-0000-00008BEA8D61
+Message-Id: <66ef1d874db0bf4963f3ea80d3436c3f@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-03_15:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=946 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906030132
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,91 +95,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Xiuzhi,
+On 2019-06-03 04:06, Joel Stanley wrote:
+> On Fri, 31 May 2019 at 20:31, Adriana Kobylak <anoo@linux.ibm.com> 
+> wrote:
+>> 
+>> From: Adriana Kobylak <anoo@us.ibm.com>
+>> 
+>> Add the VDD (IR35219) devices to the Swift device tree.
+>> 
+>> +       ir35219@70 {
+>> +               compatible = "infineon,ir35219";
+> 
+> There's no driver for these in our tree. Do you have one coming?
 
-Thanks a lot for sharing the test result. Please let us update if you
-find any issue in the further test.
+Eddie will be writing one [Swift VDD VRM device driver 
+#311](https://github.com/ibm-openbmc/dev/issues/311)
+Should we put this patch on hold until the driver is done?
 
-Regards,
-Jae
-
-On 6/1/2019 7:46 PM, xiuzhi wrote:
-> Hi Jae,
->      This new  patch works very well so far,
->   I will test it more cases next week.
-> Best,
-> xiuzhi
-> 
-> 
-> ------------------ Original ------------------
-> *From: * "jae.hyun.yoo";<jae.hyun.yoo@linux.intel.com>;
-> *Date: * Jun 1, 2019
-> *To: * "xiuzhi"<1450335857@qq.com>; "openbmc"<openbmc@lists.ozlabs.org>; 
-> "eajames"<eajames@linux.ibm.com>; "joel"<joel@jms.id.au>; 
-> "andrew"<andrew@aj.id.au>;
-> *Subject: * Re: [PATCH dev-5.1 4/4] media: aspeed: add a workaround to 
-> fix asilicon bug (Jae Hyun Yoo)
-> 
-> On 5/31/2019 4:21 AM, xiuzhi wrote:
->  > Hi  Jae,
->  >     I tested this patch ,it works on 1680*1050,but I found an issue:
->  >
->  > The ikvm webpage will be black screen when you reboot the host after
->  > switching solution between 1680*1050 and 800*600 on chrome browser (my
->  > chrome version is 65).
->  > you can reproduce it:
->  > 1, Set host screen solution to 1680*1050 and save it . ikvm webpage works
->  > 2,Set host screen solution to 800*600 and save it. ikvm webpage works
->  > 3,Reset host screen solution to   1680*1050 and save it,
->  > 4,reboot the host,
->  > 5, the ikvm webpage is black screen when boot to Centos GUI
-> 
-> Hi Xiuzhi,
-> 
-> Checked that the issue isn't related this patch. Actually, that is
-> caused by the first patch of this patch series. Since the patch removes
-> source buffer allocation before mode detection, remaining allocation
-> logic should be changed accordingly, otherwise it can't allocate buffers
-> and eventually causes the issue. I'll fix the first patch in the next
-> spin. In the meantime, you can apply below quick fix on top of what you
-> tested the issue.
-> 
-> Thanks,
-> Jae
-> 
-> 
-> diff --git a/drivers/media/platform/aspeed-video.c
-> b/drivers/media/platform/aspeed-video.c
-> index c2d4a2e6f20f..034f2f436d76 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -865,20 +865,14 @@ static void aspeed_video_set_resolution(struct
-> aspeed_video *video)
-> 
->           size *= 4;
-> 
-> -       if (size == video->srcs[0].size / 2) {
-> -               aspeed_video_write(video, VE_SRC1_ADDR,
-> -                                  video->srcs[0].dma + size);
-> -       } else if (size == video->srcs[0].size) {
-> -               if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
-> -                       goto err_mem;
-> -
-> -               aspeed_video_write(video, VE_SRC1_ADDR, video->srcs[1].dma);
-> -       } else {
-> -               aspeed_video_free_buf(video, &video->srcs[0]);
-> +       if (size != video->srcs[0].size) {
-> +               if (video->srcs[0].size)
-> +                       aspeed_video_free_buf(video, &video->srcs[0]);
-> +               if (video->srcs[1].size)
-> +                       aspeed_video_free_buf(video, &video->srcs[1]);
-> 
->                   if (!aspeed_video_alloc_buf(video, &video->srcs[0], size))
->                           goto err_mem;
-> -
->                   if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
->                           goto err_mem;
-> 
