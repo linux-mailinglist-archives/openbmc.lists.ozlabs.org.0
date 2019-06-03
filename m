@@ -2,64 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90151339A8
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2019 22:24:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 45C91339D4
+	for <lists+openbmc@lfdr.de>; Mon,  3 Jun 2019 22:49:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Hmjr0vpdzDqRs
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 06:24:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45HnH94WwHzDqNp
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 06:49:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::c35; helo=mail-yw1-xc35.google.com;
- envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="g+k/wOKc"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc35.google.com (mail-yw1-xc35.google.com
- [IPv6:2607:f8b0:4864:20::c35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derekh@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45HmjJ5V8JzDqL0
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 06:23:46 +1000 (AEST)
-Received: by mail-yw1-xc35.google.com with SMTP id t2so91688ywe.10
- for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 13:23:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=CSVGDRXhO43m6TupVbt0ikHq4hCuqhYTSe7ifZ6fAPk=;
- b=g+k/wOKcaeuf6OM4G9ognCAcQF1vt6mSVkD0Cr4UPli0ieZE3R6IiI9e3M89st6qSC
- HmuNE9YDpcZRpsybL+J41809u3jTz32OI1KdwA8k5VcpdGlH7bRAruwCmqNB9XRiiH0I
- lfgNil6YxBNIbEwDe/+Roqpfhs49dHsRiRi0gjrWEzeGFApTJM8JGbU345KMqosB5bY/
- 3rMZVCktheHr0Rf/qZ2Aj0zzzgomgeVPRENviZzISw/l21R/vTWq5zKbNoskf9OrcTok
- 2cFEX15EtWR7OLjpQ5rThMf1XsuT7UvIURKXrc1B3aGSGgajEn4cce/xQAZtfUx5O5bX
- 0b2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=CSVGDRXhO43m6TupVbt0ikHq4hCuqhYTSe7ifZ6fAPk=;
- b=QrcDXqIqPa7MMOPqgOChCRyQwav/7mtcAYOKJNmZwSZylhy6U3AU5ldjaxLK2jhCFm
- kxN0W1eceganpn5aE8t4QoAOyQfNR8MICBkKtlKNlcdbwP9aFpB1Y6/P9GtTEwMWRY4L
- /R5DQbaplYBUxHekrCMoMqmEnXbZRv6PAPIuMM+R/D/dFcmjPt9+V+GDXsFJFw/PSevG
- cEqkn7mRElrzP5yAtHft4YC2AqZY+S8UlCVLoxbwCoPI31mM2cn5PTuN1YVbDtAhv5/F
- wtDCV3uEFrmnxCuOboVOPAZZakKvTlRcHo8e71ZmbynfR8V3T6pwygpCSvxLEG45CWkq
- z9Fg==
-X-Gm-Message-State: APjAAAXI5CrUJWbIg2UTtzzQ1L89sFmqMuryYJqi4JoPJYR4+5S/CSi2
- 4hlWFVsWbkhRr/GYESLT58SkUzIei+egzi+pemEzJisIz9Q=
-X-Google-Smtp-Source: APXvYqwQg0xMO863ffS4Ga8Ms+BAX+BgnZnhHvGlF/Sb6GGfUZmBcEWRBonkeCcY54XAm6QtcqQcpCxm9JRvIGEENXw=
-X-Received: by 2002:a81:6083:: with SMTP id
- u125mr14454462ywb.485.1559593422703; 
- Mon, 03 Jun 2019 13:23:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45HnFp17s3zDqL7
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 06:48:23 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x53Kkgwc098161
+ for <openbmc@lists.ozlabs.org>; Mon, 3 Jun 2019 16:48:20 -0400
+Received: from e34.co.us.ibm.com (e34.co.us.ibm.com [32.97.110.152])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sw9m1k9ks-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 16:48:20 -0400
+Received: from localhost
+ by e34.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <derekh@linux.vnet.ibm.com>;
+ Mon, 3 Jun 2019 21:48:19 +0100
+Received: from b03cxnp07029.gho.boulder.ibm.com (9.17.130.16)
+ by e34.co.us.ibm.com (192.168.1.134) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 3 Jun 2019 21:48:17 +0100
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x53KmGDj18546712
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 3 Jun 2019 20:48:16 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 081AC6E05E
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2019 20:48:16 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DAEA86E04C
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2019 20:48:15 +0000 (GMT)
+Received: from [9.10.99.138] (unknown [9.10.99.138])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Jun 2019 20:48:15 +0000 (GMT)
+Subject: Re: [Design] PSU firmware update
+To: openbmc@lists.ozlabs.org
+References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
+From: Derek Howard <derekh@linux.vnet.ibm.com>
+Date: Mon, 3 Jun 2019 15:48:17 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-From: Jandra A <jandraara@gmail.com>
-Date: Mon, 3 Jun 2019 15:23:32 -0500
-Message-ID: <CAMTupoTagP0=uyg1DsNVZYvFvH23yAAwkxoGpYHoQtowCx2N-A@mail.gmail.com>
-Subject: GUI Workgroup meeting - this Wednesday 7:30AM CST
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Wang,
- Kuiying" <kuiying.wang@intel.com>
-Content-Type: multipart/alternative; boundary="000000000000f451bd058a712378"
+In-Reply-To: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19060320-0016-0000-0000-000009BD9E74
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011209; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01212795; UDB=6.00637379; IPR=6.00993856; 
+ MB=3.00027169; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-03 20:48:17
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19060320-0017-0000-0000-0000437A6442
+Message-Id: <4a1d2e3c-b780-d72c-9af6-8c1d472873a9@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-03_16:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906030140
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,72 +97,162 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000f451bd058a712378
-Content-Type: text/plain; charset="UTF-8"
 
-Hello all,
+On 6/3/2019 3:54 AM, Lei YU wrote:
+> Hi All,
+>
+> This is a proposed design of PSU firmware update.
+> It will be posted to gerrit for review after we have resolved comments
+> in the mailing list.
+>
+> # PSU firmware update
+>
+> Author:
+>     Lei YU <mine260309@gmail.com> <LeiYU>
+> Primary assignee:
+>     None
+> Other contributors:
+>     Su Xiao <suxiao@inspur.com>
+>     Derek Howard <derekh@us.ibm.com>
+> Created:
+>     2019-06-03
+>
+>
+> ## Problem Description
+>
+> There is no support in OpenBMC to update the firmware for PSUs.
+>
+>
+> ## Background and References
+>
+> In OpenBMC, there is an existing interface for [software update][1].
+>
+> The update process consists of:
+> 1. Uploading an image to BMC;
+> 2. Processing the image to check the version and purpose of the image;
+> 3. Verifying and activating the image.
+>
+> Currently, BMC and PNOR firmware update are supported:
+> * [phosphor-bmc-code-mgmt][2] implements BMC code update, and it supports all
+>    the above 3 processes.
+> * [openpower-pnor-code-mgmt][3] implements PNOR code update, and it only
+>    implements "verifying and activating" the image. It shares the function of
+>    the above 1 & 2 processes.
+>
+> For PSU firmware code update, it is preferred to re-use the same function for
+> the above 1 & 2.
+>
+>
+> ## Requirements
+>
+> To mitigate the risk of power loss, the PSU firmware code update shall meet
+> pre-conditions:
+> 1. The host is powered off;
+> 2. The redundant PSUs are all connected;
+> 3. The AC input and DC standby output shall be OK on all the PSUs;
 
-The GUI design workgroup meeting will be happening Wednesday June 5 at
-7:30AM CST. As there was no attendees last meeting, this week we have the
-same agenda.
+As part of the PSU code update, it will turn off it's control supply.  
+If only 1 PSU has AC applied, and it turns off the control supply, then 
+the BMC would lose power and get reset, which is not wanted.  That being 
+said, some systems may have 4 PSU instead of 2.  So ALL of the redundant 
+PSUs wouldn't be connected, but at least 1 other PSU should be connected 
+and have AC applied, so that when 1 PSU is reset due to the download, at 
+least 1 other PSU will hold up the control supply and be providing 
+standby power to the BMC.  It should still be ok to download the 
+remaining PSU even if they don't have AC applied.
 
-Tentative agenda:
+So #2 and #3 aren't always valid, including in systems with more than 2 
+PSUs attached.  It's probably better to say that whenever downloading a 
+PSU, that at least 1 other PSU is connected and has AC attached.
 
-   1. Updates on Intel-specific icon changes mentioned last meeting (Intel)
-   2. Share research findings and updates on design layout (Intel)
-   3. Review gathered user feedback on User Management panel and discuss a
-   possible redesign (IBM)
-   4. Current System log page design features discussion (IBM)
 
-Please add any other agenda items here:
-https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+> And during updating:
+> 4. After the update is done on a PSU, the AC input and DC standby output shall
+> be checked.
+>
+>
+> ## Proposed Design
+>
+> The PSU firmware code update will re-use the current interfaces to upload,
+> verify, and activate the image.
+>
+> 1. The "Version" interface needs to be extended:
+>     * Add a new [VersionPurpose][4] for PSU;
+>     * Re-use the existing ExtendedVersion as an additional string for
+>       vendor-specific purpose, e.g. to indicate the PSU model.
+> 2. Re-use the existing functions implemented by [phosphor-bmc-code-mgmt][2] for
+> uploading and processing the image.
+>     * The PSU update image shall be a tarball consists of a MANIFEST, images,
+>       and signatures
+> 3. There will be a new service that implements the [Activation][5] interface to
+> update the PSU firmware.
+>     * It shall run all the checks described in [Requirements] before performing
+>       the code update;
+>     * It shall run the checks after each PSU code update is done.
+>     * The service will verify the signature of the image;
+>     * The service shall check the ExtendedVersion to make sure the image matches
+>       the PSU model.
+>     * The service will call a configurable and vendor-specific tool to perform
+>       the code update.
+>     * When each check fails, or the vendor-specific tool returns errors, the PSU
+>       code update will be aborted and an error event log shall be created.
+>     * When the PSU code update is completed, an informational event log shall be
+>       created.
+>
+>
+> ## Alternatives Considered
+>
+> ### General implementation
+>
+> The PSU firmware update could be implemented by separated recipes that only
+> call vendor-specific tools.
+> It will be a bit simpler but loses the unified interface provided by OpenBMC's
+> existing [software update interface][1], and thus it will become difficult to
+> use a standard API to the PSU firmware update.
+>
+> ### VersionPurpose
+> It is possible to re-use the VersionPurpose.Other to represent the PSU image's
+> version purpose.
+> But that requires additional information about the image, otherwise, there is
+> no way to tell if the image is for PSU, or CPLD, or other peripherals.
+> A new VersionPurpose.PSU is more specific and makes it easier to implement and
+> friendly for the user.
+>
+> ### Additional string
+> The design proposal uses ExtendedVersion as the additional string for
+> vendor-specific purpose, e.g. to indicate the PSU model, so the implementation
+> could check and compare if the image matches the PSU model.
+> It is possible to make it optional or remove this additional string, then the
+> implementation will not verify if the image matches the PSU. It could be OK if
+> we trust the user who is uploading the correct image, especially the image
+> shall be signed.
+> But it is always risky in case the image does not match the PSU, and cause
+> unintended damage if the incorrect PSU firmware is updated.
+>
+>
+> ## Impacts
+>
+> This design only introduces a new VersionPurpose enum into the dbus interfaces.
+> The newly introduced PSU firmware update service will be a new service that
+> implements existing [Activation][5] interface.
+> So the impacts are minimal.
+>
+>
+> ## Testing
+>
+> It requires the manual tests to verify the PSU code update process.
+> * Verify the PSU code update will not start in case the pre-conditions are not
+>    met;
+> * Verify the PSU code update is done on all PSUs successfully when the
+>    pre-conditions are met.
+> * Verify the PSU code update will fail in the case that any PSU's AC input or
+>    DC standby output is lost during code update.
+>
+>
+> [1]: https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/openbmc_project/Software
+> [2]: https://github.com/openbmc/phosphor-bmc-code-mgmt/
+> [3]: https://github.com/openbmc/openpower-pnor-code-mgmt/
+> [4]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/57b878d048f929643276f1bf7fdf750abc4bde8b/xyz/openbmc_project/Software/Version.interface.yaml#L14
+> [5]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Activation.interface.yaml
+>
 
-Meeting Link:
-https://ibm.webex.com/ibm/j.php?MTID=m49792ce33d5af28f2823638d351732f3
-
-Best,
-GUI Design Team
-
---000000000000f451bd058a712378
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div><span style=3D"background-color:transparent"><fo=
-nt face=3D"verdana, sans-serif">Hello all,=C2=A0</font></span></div><div><s=
-pan style=3D"background-color:transparent;color:rgb(36,41,46)"><font face=
-=3D"verdana, sans-serif"><br></font></span></div><div><span style=3D"backgr=
-ound-color:transparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-ser=
-if">The GUI design workgroup meeting will be happening Wednesday June 5 at =
-7:30AM CST. As there was no attendees last meeting, this week we have the s=
-ame agenda.=C2=A0</font></span></div><div><span style=3D"background-color:t=
-ransparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-serif"><br></fo=
-nt></span></div><div><font color=3D"#24292e" face=3D"verdana, sans-serif">T=
-entative agenda:=C2=A0</font></div></div><div><ol><li style=3D"margin-left:=
-15px"><font face=3D"verdana, sans-serif">Updates on Intel-specific icon cha=
-nges mentioned last meeting (Intel)</font></li><li style=3D"margin-left:15p=
-x"><font face=3D"verdana, sans-serif">Share research findings and updates o=
-n design layout (Intel)</font></li><li style=3D"margin-left:15px"><font fac=
-e=3D"verdana, sans-serif">Review gathered user feedback on User Management =
-panel and discuss a possible redesign (IBM)</font></li><li style=3D"margin-=
-left:15px"><font face=3D"verdana, sans-serif">Current System log page desig=
-n features discussion (IBM)</font></li></ol></div><div><div><font face=3D"v=
-erdana, sans-serif">Please add any other agenda items here:=C2=A0<a href=3D=
-"https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group" target=3D"_=
-blank">https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group</a></f=
-ont></div><div><br></div><div><font face=3D"verdana, sans-serif"><span styl=
-e=3D"box-sizing:border-box;color:rgb(36,41,46)">Meeting Link</span><span st=
-yle=3D"color:rgb(36,41,46)">:=C2=A0</span><a href=3D"https://ibm.webex.com/=
-ibm/j.php?MTID=3Dm49792ce33d5af28f2823638d351732f3" rel=3D"nofollow" target=
-=3D"_blank" style=3D"color:rgb(3,102,214);box-sizing:border-box;text-decora=
-tion-line:none">https://ibm.webex.com/ibm/j.php?MTID=3Dm49792ce33d5af28f282=
-3638d351732f3</a><br style=3D"box-sizing:border-box;color:rgb(36,41,46)"></=
-font></div><div><font face=3D"verdana, sans-serif"><br></font></div><div><s=
-pan style=3D"background-color:transparent;color:rgb(36,41,46)"><font face=
-=3D"verdana, sans-serif">Best,</font></span></div><div><span style=3D"backg=
-round-color:transparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-se=
-rif"><span class=3D"gmail-m_-274210038052043966gmail-m_6525215738950614323g=
-mail-m_-6172510825241159069gmail-il">GUI</span>=C2=A0<span class=3D"gmail-m=
-_-274210038052043966gmail-m_6525215738950614323gmail-m_-6172510825241159069=
-gmail-il">Design</span>=C2=A0Team=C2=A0</font></span></div></div></div>
-
---000000000000f451bd058a712378--
