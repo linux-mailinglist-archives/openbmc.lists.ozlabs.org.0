@@ -2,116 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60E363401F
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 09:29:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E2E23416D
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 10:15:25 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45J3Tm4SzTzDqY1
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 17:29:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45J4VL6jCrzDqQd
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 18:15:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=yadro.com
- (client-ip=89.207.88.251; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=051e9ab8e=george.hung@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="Rk245qCw"; 
- dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-01.yadro.com [89.207.88.251])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45J3Sv3d6VzDqdp
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 17:29:03 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id DD2D841206;
- Tue,  4 Jun 2019 07:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:in-reply-to:mime-version:user-agent
- :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1559633337; x=
- 1561447738; bh=ZXOXXLwA+1AUXh3TPxPRuvS1+zS2spHnhkNruFEWtQA=; b=R
- k245qCwP8iTOLUKxh1p09aPIBiQFN/wrQIPFA/pc4xcZnAOUJngvAKpw1pBQD0I/
- e+I+8Og7lZ7FT45KWf+b5IAQIw8D3GdR0ADj0q2p9cDmD4ke6ds0YGmCn5cotEvy
- KcojAIV7jIPyFg5bDDEJDu8hSCJJtbLhGL7VfYVUr0=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 3O_Fv6qbMZlK; Tue,  4 Jun 2019 10:28:57 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 1C1E3411F8;
- Tue,  4 Jun 2019 10:28:55 +0300 (MSK)
-Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 4 Jun
- 2019 10:28:54 +0300
-Subject: Re: [Design] PSU firmware update
-To: Lei YU <mine260309@gmail.com>, Neeraj Ladkani <neladk@microsoft.com>
-References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
- <CALLMt=pdm=Nk5sCZvZBORb+N5suT7-FK0xbvWUy3Qxg5KcttKA@mail.gmail.com>
- <BL0PR2101MB09320BD7856E280C04852CB1C8140@BL0PR2101MB0932.namprd21.prod.outlook.com>
- <CAARXrtnJ1SsSVb2Y=5tvVVQtOouUpmZR4XoY4p=vhgizHmh4hA@mail.gmail.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
- 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
- dTYsE5wSxM06T2l/MILupCNZ7A==
-Organization: YADRO
-Message-ID: <22257476-0958-75c8-2093-cabd35bb0601@yadro.com>
-Date: Tue, 4 Jun 2019 10:28:54 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45J4TY3732zDqKw
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 18:14:35 +1000 (AEST)
+Received: from unknown (HELO mailbx06.quanta.corp) ([10.243.91.101])
+ by mx01.quantatw.com with ESMTP; 04 Jun 2019 16:14:32 +0800
+Received: from mailbx05.quanta.corp (10.243.91.100) by mailbx06.quanta.corp
+ (10.243.91.101) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 4 Jun 2019
+ 16:14:15 +0800
+Received: from mailbx05.quanta.corp ([192.168.0.5]) by mailbx05.quanta.corp
+ ([192.168.0.5]) with mapi id 15.01.1713.004; Tue, 4 Jun 2019 16:14:15 +0800
+From: =?utf-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>, George Hung <ghung.quanta@gmail.com>
+Subject: RE: [PATCH dev-5.1 v1 2/2] dt-binding: edac: add NPCM ECC
+ documentation
+Thread-Topic: [PATCH dev-5.1 v1 2/2] dt-binding: edac: add NPCM ECC
+ documentation
+Thread-Index: AQHVGpey2Shj+NQ76kCdqKQcL4QOuaaLIRhQ
+Date: Tue, 4 Jun 2019 08:14:15 +0000
+Message-ID: <fac45d9d10634620b2bff4f67eb315b9@quantatw.com>
+References: <20190523105448.26300-1-ghung.quanta@gmail.com>
+ <20190523105448.26300-2-ghung.quanta@gmail.com>
+ <CACPK8Xcw6=kACAfCsE7qsHQ82g9s5T5wbp+FpVFQXxXtH3NhDw@mail.gmail.com>
+In-Reply-To: <CACPK8Xcw6=kACAfCsE7qsHQ82g9s5T5wbp+FpVFQXxXtH3NhDw@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24654.001
+x-tm-as-result: No--15.111600-0.000000-31
+x-tm-as-matchedid: 140026-150567-700225-703140-701090-703503-139010-139006-1
+ 88199-704466-702605-830459-701745-106660-703408-700069-701429-863519-705249
+ -110462-701342-704841-705271-701784-704010-701919-139703-704543-702754-7026
+ 17-101339-188019-703017-702395-703213-701478-704585-701337-703958-703880-70
+ 4720-701275-702719-702203-701432-703115-700786-704542-148004-148133-20016-2
+ 0043-42000-42003-63
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <CAARXrtnJ1SsSVb2Y=5tvVVQtOouUpmZR4XoY4p=vhgizHmh4hA@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="dFr0mfnouhrTaCunbC8mH2x5T6Lr0bzXH"
-X-Originating-IP: [172.17.14.197]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,111 +68,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ "William A. Kennington III" <wak@google.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Tomer Maimon <tomer.maimon@nuvoton.com>, Avi
+ Fishman <Avi.Fishman@nuvoton.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---dFr0mfnouhrTaCunbC8mH2x5T6Lr0bzXH
-Content-Type: multipart/mixed; boundary="7NoqpB9QqqyUQ26S2wuW31aOpIj2s0ZFM";
- protected-headers="v1"
-From: Alexander Amelkin <a.amelkin@yadro.com>
-To: Lei YU <mine260309@gmail.com>, Neeraj Ladkani <neladk@microsoft.com>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Message-ID: <22257476-0958-75c8-2093-cabd35bb0601@yadro.com>
-Subject: Re: [Design] PSU firmware update
-References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
- <CALLMt=pdm=Nk5sCZvZBORb+N5suT7-FK0xbvWUy3Qxg5KcttKA@mail.gmail.com>
- <BL0PR2101MB09320BD7856E280C04852CB1C8140@BL0PR2101MB0932.namprd21.prod.outlook.com>
- <CAARXrtnJ1SsSVb2Y=5tvVVQtOouUpmZR4XoY4p=vhgizHmh4hA@mail.gmail.com>
-In-Reply-To: <CAARXrtnJ1SsSVb2Y=5tvVVQtOouUpmZR4XoY4p=vhgizHmh4hA@mail.gmail.com>
-
---7NoqpB9QqqyUQ26S2wuW31aOpIj2s0ZFM
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-
-04.06.2019 5:58, Lei YU wrote:
-> On Tue, Jun 4, 2019 at 1:23 AM Neeraj Ladkani <neladk@microsoft.com> wr=
-ote:
->> 1. Why host power off is a pre-condition? We should add this a PSU pre=
--requisite to support Live upgrade and activation.
-> Derek's reply explains the reason why we want to the host power off as
-> pre-condition.
->
->> 2. How should PSU update impact PSU and battery monitoring ? should th=
-ere be coordination between sensor monitoring task during update ?
-> This is a good point. During PSU update, the driver probably should be =
-unbind,
-> and after the update is one, rebind the driver.
-> Does that sounds OK?
-
-Unbinding the telemetry driver (as in kernel driver) isn't a good idea be=
-cause telemetry for a PSU can be provided by the same driver that provide=
-s firmware update facilities.
-
-In YADRO we have developed a mechanism that renders certain sensors 'inva=
-lid' (or alternatively changes their thresholds) in certain states of oth=
-er sensors. For us that allows for avoiding failure state for chassis fan=
- sensors when the host is off and also let's us live fine with zero main =
-12V output of PSUs when the host is off. I suppose this mechanism could b=
-e adopted by OpenBMC and adapted to this task to just disable some teleme=
-try during PSU firmware update.
-
->
->> 3. PSU may have multiple regions like bootloader, active region and in=
-active region. We should design to support multiple region update.
-> I do not have detailed information about this, which is more suitable t=
-o let
-> the vendor-specific tool to handle the multiple regions.
-> What do you think?
-
-It's definitely up to the PSU vendor specific update tool to handle all t=
-he layout and update interface peculiarities.
-
->
->> 4. Can you propose required SEL logs and telemetry requirements as wel=
-l ?
-> While I was writing this design doc, I was not thinking about the detai=
-led SEL
-> logs.
-> Will need some time to discuss this and see if it shall be covered in t=
-his doc
-> or not.
-
-The only event that I could find in IPMI spec is 'Version change' (sensor=
- type code 0x2B).
-
-With best regards,
-Alexander Amelkin,
-Leading BMC Software Engineer, YADRO
-https://yadro.com
-
-
-
-
---7NoqpB9QqqyUQ26S2wuW31aOpIj2s0ZFM--
-
---dFr0mfnouhrTaCunbC8mH2x5T6Lr0bzXH
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJc9h22AAoJEOiTWHtbdBeNifoP/Am+DchaHWcxhmAacPGuGfpk
-yZkJECkj+LNK0v3OLNo18EZwgTBrw7YEMwJMZWF7PT27onnzJbS6EuhkmS2lu7t4
-pjuACRHgWgEEyrKGQv2tUAAw9jdt1cDoWXBG2AAnBGJMcMcpQNL4mOcZwpsOkB8Y
-Em2SDLYW/J/otZ9UZsdG2ioNKBVO3lxlcOj30sxX87eICtvJtMEwm1ZjA+HUQm8P
-A3PIsXdrufb2eTzo2r+L3lpZA42N/FZjz5GbkFtU94y0W8gJ+PKtnmFYfHEOvr5N
-zgQvFKNhcLwGpG2f2F48SEufPMw7KzPKur0G0MDsJDgwSlEFL1WssP/Nbo7/QttZ
-E5A18GV/p27TvDl2d2i43gIBJpJT6MvhKa2X2z/ZurnkxL/Pa1Fen5t1P5ncDssX
-3dzZA0g6FR9sDk6JYCTQ5nww8+cTO3iTGZjAi4ry44kSswZqaAWGhZB0OcxFSssh
-RKgjXN/WLEOYzojRCSLpM6EA/KMKQetkYgL+O+Dd5oT/h16TAjlDz61kYPiF2oU7
-jr106tN5iFQey2P/Kb7st8Gh6DTqBjljyKCA6A7VddAVy7kpqZD4HPWmN+dj8VWQ
-H18nAZZ3YU/5Wq5Oo/hWvzQrtese/DIDIKNp7mRq0apeSQJKcqaM0285wtIOqefN
-OxhPwhV5n6Xlu4WaC3rZ
-=Fblx
------END PGP SIGNATURE-----
-
---dFr0mfnouhrTaCunbC8mH2x5T6Lr0bzXH--
+SGkgSm9lbCwNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBvcGVuYm1j
+DQo+IFttYWlsdG86b3BlbmJtYy1ib3VuY2VzK2dlb3JnZS5odW5nPXF1YW50YXR3LmNvbUBsaXN0
+cy5vemxhYnMub3JnXSBPbg0KPiBCZWhhbGYgT2YgSm9lbCBTdGFubGV5DQo+IFNlbnQ6IFR1ZXNk
+YXksIEp1bmUgMDQsIDIwMTkgMTozOCBQTQ0KPiBUbzogR2VvcmdlIEh1bmcNCj4gQ2M6IE9wZW5C
+TUMgTWFpbGxpc3Q7IFRvbWVyIE1haW1vbjsgQmVuamFtaW4gRmFpcjsgQXZpIEZpc2htYW47IFdp
+bGxpYW0gQS4NCj4gS2VubmluZ3RvbiBJSUkNCj4gU3ViamVjdDogUmU6IFtQQVRDSCBkZXYtNS4x
+IHYxIDIvMl0gZHQtYmluZGluZzogZWRhYzogYWRkIE5QQ00gRUNDDQo+IGRvY3VtZW50YXRpb24N
+Cj4gDQo+IEhpIEdlb3JnZSwNCj4gDQo+IE9uIFRodSwgMjMgTWF5IDIwMTkgYXQgMTE6MDAsIEdl
+b3JnZSBIdW5nIDxnaHVuZy5xdWFudGFAZ21haWwuY29tPg0KPiB3cm90ZToNCj4gPg0KPiA+IEZy
+b206IEdlb3JnZSBIdW5nIDxnZW9yZ2UuaHVuZ0BxdWFudGF0dy5jb20+DQo+ID4NCj4gPiBBZGQg
+ZGV2aWNlIHRyZWUgZG9jdW1lbnRhdGlvbiBmb3IgTnV2b3RvbiBCTUMgRUNDDQo+ID4NCj4gPiBT
+aWduZWQtb2ZmLWJ5OiBHZW9yZ2UgSHVuZyA8Z2VvcmdlLmh1bmdAcXVhbnRhdHcuY29tPg0KPiAN
+Cj4gQ2FuIHlvdSBjb252aW5jZSBvbmUgb2YgeW91ciBmZWxsb3cgTnV2b3RvbiBjb250cmlidXRv
+cnMgdG8gcmV2aWV3IHRoaXMNCj4gcGF0Y2g/DQoNClllcywgSSBoYXZlIGFscmVhZHkgZm91bmQg
+dGhlIE51dm90b24gY29udHJpYnV0b3JzIHRvIHJldmlldyBteSBwYXRjaC4NCg0KaHR0cHM6Ly9s
+aXN0cy5vemxhYnMub3JnL3BpcGVybWFpbC9vcGVuYm1jLzIwMTktTWF5LzAxNjQyOC5odG1sDQoN
+Cj4gDQo+IEhhdmUgeW91IHN1Ym1pdHRlZCB0aGlzIHBhdGNoIGZvciBtYWlubGluZSBpbmNsdXNp
+b24/DQoNClllcywgSSBoYXZlIHN1Ym1pdHRlZCB0aGlzIHBhdGNoIHRvIG1haW5saW5lIGluY2x1
+c2lvbiAobGludXgtZWRhYyBhbmQgbGludXgta2VybmVsKQ0KDQpodHRwczovL21hcmMuaW5mby8/
+bD1saW51eC1lZGFjJm09MTU1OTMwMDg1MTE5MzQzJnc9Mg0KaHR0cHM6Ly9tYXJjLmluZm8vP2w9
+bGludXgta2VybmVsJm09MTU1OTMwMDg1MDE5MzQwJnc9Mg0KDQo+IA0KPiA+IC0tLQ0KPiA+ICAu
+Li4vYmluZGluZ3MvZWRhYy9ucGNtN3h4LXNkcmFtLWVkYWMudHh0ICAgICAgICB8IDE3DQo+ICsr
+KysrKysrKysrKysrKysrDQo+ID4gIDEgZmlsZSBjaGFuZ2VkLCAxNyBpbnNlcnRpb25zKCspDQo+
+ID4gIGNyZWF0ZSBtb2RlIDEwMDY0NA0KPiA+IERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5k
+aW5ncy9lZGFjL25wY203eHgtc2RyYW0tZWRhYy50eHQNCj4gPg0KPiA+IGRpZmYgLS1naXQNCj4g
+PiBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9lZGFjL25wY203eHgtc2RyYW0t
+ZWRhYy50eHQNCj4gPiBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9lZGFjL25w
+Y203eHgtc2RyYW0tZWRhYy50eHQNCj4gPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiA+IGluZGV4
+IDAwMDAwMDAwMDAwMC4uZGQ0ZGFjNTlhNWJkDQo+ID4gLS0tIC9kZXYvbnVsbA0KPiA+ICsrKyBi
+L0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9lZGFjL25wY203eHgtc2RyYW0tZWRh
+Yy50eHQNCj4gPiBAQCAtMCwwICsxLDE3IEBADQo+ID4gK051dm90b24gTlBDTTd4eCBTb0MgRURB
+QyBkZXZpY2UgZHJpdmVyDQo+ID4gKw0KPiA+ICtUaGUgTnV2b3RvbiBOUENNN3h4IFNvQyBzdXBw
+b3J0cyBERFI0IG1lbW9yeSB3aXRoL3dpdGhvdXQgRUNDIGFuZA0KPiB0aGUNCj4gPiArZHJpdmVy
+IHVzZXMgdGhlIEVEQUMgZnJhbWV3b3JrIHRvIGltcGxlbWVudCB0aGUgRUNDIGRldGVjdGlvbiBh
+bmQNCj4gY29ycnRlY3Rpb24uDQo+ID4gKw0KPiA+ICtSZXF1aXJlZCBwcm9wZXJ0aWVzOg0KPiA+
+ICstIGNvbXBhdGlibGU6ICBzaG91bGQgYmUgIm51dm90b24sbnBjbTd4eC1zZHJhbS1lZGFjIg0K
+PiA+ICstIHJlZzogICAgICAgICBNZW1vcnkgY29udHJvbGxlciByZWdpc3RlciBzZXQgc2hvdWxk
+IGJlIDwweGYwODI0MDAwDQo+IDB4MTAwMD4NCj4gPiArLSBpbnRlcnJ1cHRzOiAgc2hvdWxkIGJl
+IE1DIGludGVycnVwdCAjMjUNCj4gPiArDQo+ID4gK0V4YW1wbGU6DQo+ID4gKw0KPiA+ICsgICAg
+ICAgbWM6IG1lbW9yeS1jb250cm9sbGVyQGYwODI0MDAwIHsNCj4gPiArICAgICAgICAgICAgICAg
+Y29tcGF0aWJsZSA9ICJudXZvdG9uLG5wY203eHgtc2RyYW0tZWRhYyI7DQo+ID4gKyAgICAgICAg
+ICAgICAgIHJlZyA9IDwweGYwODI0MDAwIDB4MTAwMD47DQo+ID4gKyAgICAgICAgICAgICAgIGlu
+dGVycnVwdHMgPSA8MCAyNSA0PjsNCj4gDQo+IEkgdGhpbmsgd2UgY2FuIHVzZSB0aGUgZGVmaW5l
+cyBmb3IgMCBhbmQgND8gR0lDX1NQSSBhbmQNCj4gSVJRX1RZUEVfTEVWRUxfSElHSC4NCg0KQmVj
+YXVzZSBJIHNhdyBvdGhlciBkb2N1bWVudGF0aW9uIGRvZXNuJ3QgdXNlIHRoZSBkZWZpbmVzIG5l
+Y2Vzc2FyaWx5Lg0KSWYgaXQncyBuZWVkZWQsIEkgY2FuIGNoYW5nZSB0byB1c2UgdGhlbSBhbmQg
+cmUtc3VibWl0IHRoZSBwYXRjaC4NCg0KPiANCj4gPiArICAgICAgIH07DQo+ID4gLS0NCj4gPiAy
+LjIxLjANCj4gPg0K
