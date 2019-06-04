@@ -1,66 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D43CE33E61
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 07:24:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDA0233D80
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 05:20:49 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45HxyR0Wj0zDqXS
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 13:20:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45J0jM2TDpzDqRh
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 15:24:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::129; helo=mail-it1-x129.google.com;
- envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="aV911pHS"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="Kz63OG5q"; 
  dkim-atps=neutral
-Received: from mail-it1-x129.google.com (mail-it1-x129.google.com
- [IPv6:2607:f8b0:4864:20::129])
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Hxxj57YkzDqRJ
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 13:20:09 +1000 (AEST)
-Received: by mail-it1-x129.google.com with SMTP id u124so1526363itc.1
- for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 20:20:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45J0hw0gNrzDqLw
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 15:24:15 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id x47so12286969qtk.11
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 22:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=00T6X1xWulN0+xMjl5X7DyUGcNiAdQYUeMdJ7wSeIn8=;
- b=aV911pHS2tB4OaoEAJ4d1LJ92ST4GvI92q6zRVOKRjUiwm43KBzzT8JGKAZfG/JmLY
- T/P6r4tbegNIR+DrBHgR7NcOEZAvSL8U3yd4hED3fSoE+V3as30xo5dsQW0LGtNYV0/1
- WZJRVGtXKg69ene7ugMThbwlnfjTN3q770JDJ/YZIVhEw4EedGh1/Kv0t1X7c4bz6K53
- op7ZMmY/8HC+Igjlw6Li+lGee3/Cf//lpJi9Wmcj0gGS3t6TfEhYs+XCEoCTx3NvKhwl
- cnusAI5Y1RDla+P0G3PrUlmV95fGSwlA19mRtUruXVOvH2qC364naLw8q4kfGFxquXIK
- Dipw==
+ :cc; bh=92snOCFV/Z7THXEYlBJkM72T49lRtTY8y/2zT+OtfoM=;
+ b=Kz63OG5qt1q+GgRiSApbcgFOFWqINzENStuXKuNlFcUFYl7jmHgjnifxJ2Eijbt6uf
+ YsdICSN9wBBwto6Akoe+9x88TuKv3ZoSi8+qaRatqqb4EF0yTY5G7dfyxTyLB0HsFE98
+ odb3nyi4fpiMscY8i7r7kuF0nMgqZ1U/U0xkc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=00T6X1xWulN0+xMjl5X7DyUGcNiAdQYUeMdJ7wSeIn8=;
- b=Op/rBGbKbicSnCQbZxscQNR1UmpiF1S/lcNj6pyELoePq+0v2dmzX8OQs3eAkOSyWD
- NC/A4hIIvypHF1RKhcpKjqICwf4vbLNi4w4aQDzoFyC9UmU5nSTlgWIaxnJY+HUjyhhh
- +9Tsuvn8swVW/sPMQgsheouBMSznHhl6ChRNPHOELILtvS6spgl53qVYasC1Wkz9Sc8Y
- Hjhdbgp64Hs9DQUgj4HYIGJO3gcbXCtbhqkAPbzBKLx3Y+1fysYyoFNp7yPEIMmcnemT
- eYB+vOv87L7TSh/JJ1dcUD0A8wdpYmCw1x0D7mYC2eUKwdwAbYPumkY+wRSVEzjAjkpE
- Ikvg==
-X-Gm-Message-State: APjAAAXqtLw6nEj+V7YIRojtWSGojgMvvet+v0N1LNS6AMDPGt9ODWe2
- LrutP7FXGf4IAEHlQjdhdOmBQd+13JELq07cqc3/SHp+bkacGw==
-X-Google-Smtp-Source: APXvYqzyryia8VRXxysbAYtlwn1evYne8EFkrNkr4CQycWgCUxEPjAz4M8EbGMz5wcjpPBm/Jv9kPmZIxDJFTNzcbxo=
-X-Received: by 2002:a02:a384:: with SMTP id y4mr19353333jak.77.1559618405446; 
- Mon, 03 Jun 2019 20:20:05 -0700 (PDT)
+ bh=92snOCFV/Z7THXEYlBJkM72T49lRtTY8y/2zT+OtfoM=;
+ b=s40pMVUGJUVf1h9sAVS2CyGa55NbZmOxV+z+6/ZquXz3Hqto4+rzRUwwjUn2cbTc+a
+ YbYiNxhyrC+O7c2j2H0Z0XWl/Xgi6Ywve5EmoS0wshYUZU8IwgozSs8x6OdJmIvFa5bK
+ xjhDrU7IqvzjRIF6exdd3CZ+QaAAo0iwFNS7pczRCSrKErG30ZB7eLGSdzvAqLWbc1jt
+ ynqTH+B9IetfqdPpfFO2M8rtOkhk41R1DFQ/bqvEbT2o9RxeaKbcAGUY5vh/LaXItfvn
+ RcGh8Xnig90KATkhFLRJeRnGGjzMyPg9tWBez6SCr4VofG0Ra1SFRqTrf5FnV1QTeZrH
+ xriQ==
+X-Gm-Message-State: APjAAAWAu0dvrQfF3srdfPxD1qc4olYgbyb7KX2QfQXFb1005IF9vj2v
+ lkhMJDUIWYGV8eFIcPi85DPtHsCl2E8guCCvSL8=
+X-Google-Smtp-Source: APXvYqz2AcIZ6sPIe5+wBQhB7mfmbqYiNBAKuLK0GExA2UL/tpItJwSHAqH8tr/F7W6uduxiwrgeeFHOIZf7+eY/W9o=
+X-Received: by 2002:ac8:2d69:: with SMTP id o38mr12827542qta.169.1559625851996; 
+ Mon, 03 Jun 2019 22:24:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
- <4a1d2e3c-b780-d72c-9af6-8c1d472873a9@linux.vnet.ibm.com>
-In-Reply-To: <4a1d2e3c-b780-d72c-9af6-8c1d472873a9@linux.vnet.ibm.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Tue, 4 Jun 2019 11:19:54 +0800
-Message-ID: <CAARXrt=Qy32zT4-spZf25TY_sgAM1tMN51HYFNhb7tbx5Du8vA@mail.gmail.com>
-Subject: Re: [Design] PSU firmware update
-To: Derek Howard <derekh@linux.vnet.ibm.com>
+References: <20190531132440.37572-1-Fran.Hsu@quantatw.com>
+ <CADKL2t6K1Vu-DyuH_MYt5jGoFyCWe+X3fWETLNiPbZYO8Xrcpw@mail.gmail.com>
+In-Reply-To: <CADKL2t6K1Vu-DyuH_MYt5jGoFyCWe+X3fWETLNiPbZYO8Xrcpw@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 4 Jun 2019 05:23:57 +0000
+Message-ID: <CACPK8XetcxfY1uWfiv9pLsX9a+X+66d2pD5-A68ZHrOUZhAd0Q@mail.gmail.com>
+Subject: Re: [PATCH dev-5.1 v5 1/4] ARM: dts: nuvoton: Add NPCM730 common
+ device tree include file.
+To: Benjamin Fair <benjaminfair@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,36 +71,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Fran Hsu <Fran.Hsu@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> > ## Requirements
+On Fri, 31 May 2019 at 15:28, Benjamin Fair <benjaminfair@google.com> wrote:
+> This looks great! I think it's ready to merge.
+>
+> On Fri, May 31, 2019 at 6:26 AM Fran Hsu <franhsutw@gmail.com> wrote:
 > >
-> > To mitigate the risk of power loss, the PSU firmware code update shall meet
-> > pre-conditions:
-> > 1. The host is powered off;
-> > 2. The redundant PSUs are all connected;
-> > 3. The AC input and DC standby output shall be OK on all the PSUs;
+> > Quanta GSJ BMC uses the Nuvoton NPCM730 BMC soc.
+> > This file describes the common setting of NPCM730 soc.
+> >
+> > Signed-off-by: Fran Hsu <Fran.Hsu@quantatw.com>
 >
-> As part of the PSU code update, it will turn off it's control supply.
-> If only 1 PSU has AC applied, and it turns off the control supply, then
-> the BMC would lose power and get reset, which is not wanted.  That being
-> said, some systems may have 4 PSU instead of 2.  So ALL of the redundant
-> PSUs wouldn't be connected, but at least 1 other PSU should be connected
-> and have AC applied, so that when 1 PSU is reset due to the download, at
-> least 1 other PSU will hold up the control supply and be providing
-> standby power to the BMC.  It should still be ok to download the
-> remaining PSU even if they don't have AC applied.
->
-> So #2 and #3 aren't always valid, including in systems with more than 2
-> PSUs attached.  It's probably better to say that whenever downloading a
-> PSU, that at least 1 other PSU is connected and has AC attached.
+> Reviewed-by: Benjamin Fair <benjaminfair@google.com>
 
-Yes, technically, as long as there is at least 1 other PSU has AC, it should
-be safe to do PSU update.
-But that involves a certain complexity, and it is safer to require all PSUs to
-have AC.
-So I chose a simpler way to require the above 2 & 3.
+Thanks Benjamin for reviewing, and Fran for working to get these
+patches in a state that we can merge them. I've put them in the
+dev-5.1 tree with some small tweaks to the commit messages.
 
-The requirements could be relaxed, let's see others' ideas probably?
+Fran, can you please submit these to the mainline list for inclusion?
+Now is the right time to make the submission in order to make the 5.3
+merge window.
+
+Cheers,
+
+Joel
