@@ -1,66 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A9733EDC
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 08:14:56 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45J1qK5q3YzDqRC
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 16:14:53 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D665B33EF7
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 08:26:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45J24h2pplzDqR1
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 16:26:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::142; helo=mail-it1-x142.google.com;
- envelope-from=oohall@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="O/DwmIQP"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="JYjMOZ5S"; 
  dkim-atps=neutral
-Received: from mail-it1-x142.google.com (mail-it1-x142.google.com
- [IPv6:2607:f8b0:4864:20::142])
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45J1pv0S3FzDqPk
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 16:14:28 +1000 (AEST)
-Received: by mail-it1-x142.google.com with SMTP id h11so30505537itf.5
- for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 23:14:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45J23m5r7xzDqTV
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 16:25:39 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id a15so12440054qtn.7
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 23:25:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=mpV+ZLe1Y/pV6FsmPy/Hsmr8nazSfBYPF/FYxcvhXhw=;
- b=O/DwmIQPBDIPzjwyL9JSCCCs2p/EtplyKCC20zuHO0dm833GLj8N3ewOJQclezpH0R
- ZoN1urGpPwl9NEpwrhFMWXUOfVpemmbQiTLulxzL2A2RhGkzlRY5VJAvjSBpE86o1gkC
- L3LiCOrHQfo1vO4jscFmXGHETwE3WANMjo6J2iAPwi8ggiNCkhLhf6pkkfT47UfP6oy6
- f2R0fBD4IdkEA2sKsrxi1M7czswxyvVYzbAboyWLlQueRdKYxMPlST+/2ERCkEZTDZg6
- VejOlNuPrCZB4c78Nnd5PRao7CP2r6T/KLO1Z81YCoZgogDu1F6ckgfOVMXOYl7yj5PS
- nLaQ==
+ :cc; bh=jLwXR1He6xHLibKFd9fJTmaVB6caBUD5Pr6b83FpRQM=;
+ b=JYjMOZ5S+JtvDr20YW8SEaMagt6fvaQYEwNNaw4R3kila2MpIFThW/TgGhbd1hhJyG
+ FEBEPi7T765AuZ0fr9ptorhWv+UZ4W532mJqnxRNdbXsJ35zhNur9Fm2dNmjPdm/KvUy
+ UxeVQka2ZK2tfNYV1ujm8Vl6KXw2aDp1McF9Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=mpV+ZLe1Y/pV6FsmPy/Hsmr8nazSfBYPF/FYxcvhXhw=;
- b=Rphbhdp8vwwPZTmBXnE31VAqPk2eSw3fjb8zMER0loxZezjqwFJR/Srk1qZ6/SRjuB
- a/0SdRCTlMCqH7ibBLN98heoTd6a1lIjHTtstYdMQ9KOjvFRZH0FXGWYViYAxaukLTfb
- KKeW2lst3MpXTkgf7Vy+oQC8tWhKAa22aOd4CzjH5TLdWWyJBFINHf5GenX9hCjFBLQb
- S4GxnQBhBz8bnMmtLVpK8uE/dAB9+KIOPt1ZgiLvZefAXh0W5mGF+K7++NsqQ2Z45has
- bjWHRxpP4Dhs1mjrJxDYimI5PyL5RrHJ8Iqx7fHEXOYHrrssULwoGw0/63HRqR+BtzKx
- WGOw==
-X-Gm-Message-State: APjAAAXgZ1hGo9KyBchj7GMgMcDdebjUWfKBumMR+flkwu1Gpntz4HZ9
- eaT+xu9PabBpmUq0ytYlQEQ9mwZKyNirtHp6SHk=
-X-Google-Smtp-Source: APXvYqzS3jwKCwk/umYAxKFFeDfgAPzZpyp0FAipe2DJGulCx+yBszMTdcmCUYb6hHU0qq+n6pwLJkhfLztu8Czenpk=
-X-Received: by 2002:a24:2855:: with SMTP id h82mr13134280ith.15.1559628865436; 
- Mon, 03 Jun 2019 23:14:25 -0700 (PDT)
+ bh=jLwXR1He6xHLibKFd9fJTmaVB6caBUD5Pr6b83FpRQM=;
+ b=ErhLxiA+PNF/mQ8xWxid+3ABR4tEFq12TLzXJeBYApsct8ulWb+XwjuuGERi6cKq0S
+ zy4ONrkeB62ifTWaxE62DQQjiFpGfMSbJN+EIvyiLGfDpYaF9SDTqzTPdmQxceDkbXFK
+ vPqJ+w/Ogwp5CmHKyOMsrHJ6au7R2GtY5mHrUTqQP3IwD8E0rduBfkQ5vM2aXos1WjjM
+ xb5B5ZOrU4uF+1OYECZjkDjEF4BCpzv4qPIzILpiBgB+PR1VMN7vxEpxkFWczQsoibeA
+ NcFpyYZJMSY1S3YdnYveOO7dVXX0gf0cFZ/TzrKpdrd7C7HfyauxxmSCdtcjyrcMxYVi
+ k+rQ==
+X-Gm-Message-State: APjAAAVucTGUCMduyt31ccq9wUJbDj6XzTJOZMIq8rKjt3lBweZ+QL4B
+ 1G2M1fLCEjPiXoGoEorx7eKOyiKZ/hekb6SazV+wqw==
+X-Google-Smtp-Source: APXvYqzFn4DzZzRj51EpW6/Fht7H/wEMZuOziJPQR1T9SaM8MEy7VPbaNExRa8KHdjvoxzBQmpvlqp6FLcmeig2Ysrk=
+X-Received: by 2002:ad4:44a7:: with SMTP id n7mr23269210qvt.16.1559629537042; 
+ Mon, 03 Jun 2019 23:25:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190603055714.7203-1-oohall@gmail.com>
- <e546c15f-07a9-656a-ce11-4f9a24795d9a@linux.ibm.com>
-In-Reply-To: <e546c15f-07a9-656a-ce11-4f9a24795d9a@linux.ibm.com>
-From: Oliver <oohall@gmail.com>
-Date: Tue, 4 Jun 2019 16:14:13 +1000
-Message-ID: <CAOSf1CE5J93rai-VcZJJWkU=N=1=STtV2XqKQh_yLvQpXBKkHw@mail.gmail.com>
-Subject: Re: [PATCH] i2c: fsi: Create busses for all ports
-To: Eddie James <eajames@linux.ibm.com>
+References: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
+In-Reply-To: <20190531214716.12118-1-jae.hyun.yoo@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 4 Jun 2019 06:25:25 +0000
+Message-ID: <CACPK8XdU9=QeSUhdQNhdvCH4N0ggD_SNhm4Dtm45CUuWUBtcHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 dev-5.1 0/3] Improve stability of Aspeed video engine
+ driver - 3rd phase
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,112 +70,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-i2c@vger.kernel.org,
- Eddie James <eajames@linux.vnet.ibm.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jun 4, 2019 at 12:15 AM Eddie James <eajames@linux.ibm.com> wrote:
->
->
-> On 6/3/19 12:57 AM, Oliver O'Halloran wrote:
-> > Currently we only create an I2C bus for the ports listed in the
-> > device-tree for that master. There's no real reason for this since
-> > we can discover the number of ports the master supports by looking
-> > at the port_max field of the status register.
-> >
-> > This patch re-works the bus add logic so that we always create buses
-> > for each port, unless the bus is marked as unavailable in the DT. This
-> > is useful since it ensures that all the buses provided by the CFAM I2C
-> > master are accessible to debug tools.
-> >
-> > Cc: Eddie James <eajames@linux.vnet.ibm.com>
-> > Signed-off-by: Oliver O'Halloran <oohall@gmail.com>
-> > ---
-> >   drivers/i2c/busses/i2c-fsi.c | 30 +++++++++++++++++++++++++-----
-> >   1 file changed, 25 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/i2c/busses/i2c-fsi.c b/drivers/i2c/busses/i2c-fsi.c
-> > index 1e2be2219a60..59a76c6e31ad 100644
-> > --- a/drivers/i2c/busses/i2c-fsi.c
-> > +++ b/drivers/i2c/busses/i2c-fsi.c
-> > @@ -658,13 +658,27 @@ static const struct i2c_algorithm fsi_i2c_algorithm = {
-> >       .functionality = fsi_i2c_functionality,
-> >   };
-> >
+Hi Jae,
 
-> > +static device_node *fsi_i2c_find_port_of_node(struct device_node *master,
-> > +                                           int port)
+On Fri, 31 May 2019 at 21:47, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
 
-Turns out I had a pile of compile fixes staged but not committed so
-this patch is totally broken. Oops.
+> Jae Hyun Yoo (3):
+>   media: aspeed: remove source buffer allocation before mode detection
+>   media: aspeed: use different delays for triggering VE H/W reset
 
-> > +{
-> > +     struct device_node *np;
-> > +
-> > +     for_each_child_of_node(fsi, np) {
-> > +             rc = of_property_read_u32(np, "reg", &port_no);
-> > +             if (!rc && port_no == port)
-> > +                     return np;
-> > +     }
-> > +
-> > +     return NULL;
-> > +}
-> > +
-> >   static int fsi_i2c_probe(struct device *dev)
-> >   {
-> >       struct fsi_i2c_master *i2c;
-> >       struct fsi_i2c_port *port;
-> >       struct device_node *np;
-> > +     u32 port_no, ports, stat;
-> >       int rc;
-> > -     u32 port_no;
-> >
-> >       i2c = devm_kzalloc(dev, sizeof(*i2c), GFP_KERNEL);
-> >       if (!i2c)
-> > @@ -678,10 +692,16 @@ static int fsi_i2c_probe(struct device *dev)
-> >       if (rc)
-> >               return rc;
-> >
-> > -     /* Add adapter for each i2c port of the master. */
-> > -     for_each_available_child_of_node(dev->of_node, np) {
-> > -             rc = of_property_read_u32(np, "reg", &port_no);
-> > -             if (rc || port_no > USHRT_MAX)
-> > +     rc = fsi_i2c_read_reg(i2c->fsi, I2C_FSI_STAT, &state);
-> > +     if (rc)
-> > +             return rc;
-> > +
-> > +     ports = FIELD_GET(I2C_STAT_MAX_PORT, stat);
-> > +     dev_dbg(dev, "I2C master has %d ports\n", ports);
->
->
-> Thanks for the patch Oliver. This looks great except some older CFAM
-> types don't report the max port number, in which case this would not
-> probe up any ports. So we probably need a fallback to dts if the max
-> ports is 0.
+I've applied these two.
 
-Hmm, The oldest CFAM spec I could find was v1.2 which is from the p6
-era and it includes the MAX_PORT field. When I was checking the spec I
-noticed that I mis-interpreted the meaning of MAX_PORT. It's actually
-the largest value you can write into the port field of the mode
-register rather than the number of ports the master supports. So zero
-is a valid value for MAX_PORT that you would see if the master only
-has one port.
+>   media: aspeed: add a workaround to fix a silicon bug
 
-Do you know if the old masters only had one port? If not, do you know
-what version (from the ext status reg) of the master doesn't support
-the max_port field?
+Can we get Eddie to ack this one? The justification looks reasonable to me.
 
+Cheers,
 
-> Thanks,
->
-> Eddie
->
->
-> > +
-> > +     for (port_no = 0; port_no < ports; port_no++) {
-> > +             np = fsi_i2c_find_port_of_node(dev.of_node, port_no);
-> > +             if (np && !of_device_is_available(np))
-> >                       continue;
-> >
-> >               port = kzalloc(sizeof(*port), GFP_KERNEL);
+Joel
