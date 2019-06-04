@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E0B633E78
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 07:38:33 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49E5B33E63
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 07:30:11 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45J0qh3fDjzDqQ1
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 15:30:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45J11M07hQzDqRS
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jun 2019 15:38:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,50 +16,49 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="I9AddxTf"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="atjcVXKu"; 
  dkim-atps=neutral
 Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
  [IPv6:2607:f8b0:4864:20::844])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45J0qF3vmgzDqNr
- for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 15:29:42 +1000 (AEST)
-Received: by mail-qt1-x844.google.com with SMTP id x47so12296762qtk.11
- for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 22:29:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45J10z1CJ5zDqFY
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Jun 2019 15:38:10 +1000 (AEST)
+Received: by mail-qt1-x844.google.com with SMTP id 14so12398793qtf.0
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Jun 2019 22:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=dMOOPlXSXiSejH9hnsHu7l40rBsbcyVsVmfD1OqBFhk=;
- b=I9AddxTfSeMC1LW/7j15oOL3RaHSS+vbCOdO2j8RgNwiSY4Lg5hlp/m3ydx8wSLk4+
- gYrtBNpfHrrHCUqraqej5vc41TAIG7EaoJu7og1x77XhXmDPyE+WPQLt3TV4RMH+4lqe
- s16HeszOhVFDQoZoC80ve9OeuhPySOkx6Vunk=
+ :cc; bh=pToIqUS9uPJ1vh6dRsDaXF33hDKyM6jq7/h5cRnOaT0=;
+ b=atjcVXKuH4LvmD4AUTaAcDAYjaAF5emsN9vLtqegSkyVwMl4xl7cR5GfJ2yys6KOAX
+ ttmhjYD2ab3NNdcFNag47ehAQXFOGc68MC3sVSfFQwQgO9/CSMw2/tAMaiKLgUn8Eu5r
+ 5aiSqSizHyZLq4eUwrgTaT3ajHHswhEUOZBCw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=dMOOPlXSXiSejH9hnsHu7l40rBsbcyVsVmfD1OqBFhk=;
- b=YKU2cVKSzBH5KmRBXL/87MhVLQq2GKJSoIMtqsya0e7YJqUzccTAiToFYxT2edmcR+
- 8JhNb9y9+PXcPfcYeXGbMK0TaEAjCX9EHMv7gxHCDcC0wvnXTLk5XBxyg9ra0fX9RgGg
- CA6L2AOnKMZR6sDbLHAkyCHH2Aq6BtbKSbHDjQhrBfLCihZApGSOAuZSfdY/0ABWHYYD
- Vy8mCPzEFzmt2taQ+Y7//D+YyDVp/YUBnSEpJCBbnmKqkl0915w+X/9xq4yhEFsyzCZD
- sDOtxb/h+kB90fdR1B+riWwShXgwFHNZ+Ccag4Fi/5d9SpOriyxj70D1h+9KFNZPIzlm
- umwg==
-X-Gm-Message-State: APjAAAVkG7KzPHHuR/4Pg29sy4gvbICoWcBdZ81JBvP7d0gkS7cSQBeq
- aEXYpdkp/8gq2Wa5l+pFUNuqF07OfaVGzgGU7Qsf8IC0
-X-Google-Smtp-Source: APXvYqxGNbpnhcOgqdv4bXPiHrR7OMnjepRdmiVZ8m26FUBRvlkz9RQU9Cj2RHyibswOPUDEA/b8ZZUnfNIVILhmpi0=
-X-Received: by 2002:a0c:f68e:: with SMTP id p14mr13615531qvn.172.1559626179556; 
- Mon, 03 Jun 2019 22:29:39 -0700 (PDT)
+ bh=pToIqUS9uPJ1vh6dRsDaXF33hDKyM6jq7/h5cRnOaT0=;
+ b=Sg8NMAPk5pFqb/J2+uD+78HmUPvZ8m0mKliyXsbrx9lrWCu96fJBnkr7s0WH39j+iq
+ H7386gI9QyWI5Qx21BpepbhcNVFsPT8cpCmqBh3i8pQqqKDNbLYjjX29emdSWfB+PuZG
+ IaoAsvU3qasy3FDcS0jkwppeDp1lDtnFYQjFGVhPAOxs/B1v5Aq6O4BT9xq8VNTFgzev
+ pMFjcA/cG7hn9c+P6tPzE2OGNKnoUh0kuEZVj2jtJ6pBwAQW/Zyqejmra422pb4/QJkQ
+ /GfTG8R6i6/cdpxwQenEBY44VuNtbJOXJsFzmZtLwLE8GXbeUlcn9q4+8xrDe4pVIQIy
+ vY9A==
+X-Gm-Message-State: APjAAAW8Z6Cpc8q9m65aDkXBBKZpMKIgTSS9vTWBigx3Gj80WgdN4ztp
+ s5ubcdRXokQiatwnjruGfKIXqkxtVu7q2hJRSCM=
+X-Google-Smtp-Source: APXvYqydJUoJ0hjc62ktjUTg3iA3SDXt4OQa58k39AQtG1xH9q1Amvoesglhfpg/RIr38YOpw0+ogZbNEfhVE0NkNuI=
+X-Received: by 2002:a0c:f68e:: with SMTP id p14mr13640303qvn.172.1559626688576; 
+ Mon, 03 Jun 2019 22:38:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190531132440.37572-1-Fran.Hsu@quantatw.com>
- <CADKL2t6K1Vu-DyuH_MYt5jGoFyCWe+X3fWETLNiPbZYO8Xrcpw@mail.gmail.com>
- <CACPK8XetcxfY1uWfiv9pLsX9a+X+66d2pD5-A68ZHrOUZhAd0Q@mail.gmail.com>
-In-Reply-To: <CACPK8XetcxfY1uWfiv9pLsX9a+X+66d2pD5-A68ZHrOUZhAd0Q@mail.gmail.com>
+References: <20190523105448.26300-1-ghung.quanta@gmail.com>
+ <20190523105448.26300-2-ghung.quanta@gmail.com>
+In-Reply-To: <20190523105448.26300-2-ghung.quanta@gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 4 Jun 2019 05:29:28 +0000
-Message-ID: <CACPK8Xe9rAEi8e5FDsbc89CQ_+iDhD5YW6+aqnZ0N5GxpZCR0Q@mail.gmail.com>
-Subject: Re: [PATCH dev-5.1 v5 1/4] ARM: dts: nuvoton: Add NPCM730 common
- device tree include file.
-To: Benjamin Fair <benjaminfair@google.com>
+Date: Tue, 4 Jun 2019 05:37:57 +0000
+Message-ID: <CACPK8Xcw6=kACAfCsE7qsHQ82g9s5T5wbp+FpVFQXxXtH3NhDw@mail.gmail.com>
+Subject: Re: [PATCH dev-5.1 v1 2/2] dt-binding: edac: add NPCM ECC
+ documentation
+To: George Hung <ghung.quanta@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,57 +72,57 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Fran Hsu <Fran.Hsu@quantatw.com>
+ Tomer Maimon <tomer.maimon@nuvoton.com>,
+ Benjamin Fair <benjaminfair@google.com>, Avi Fishman <Avi.Fishman@nuvoton.com>,
+ "William A. Kennington III" <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 4 Jun 2019 at 05:23, Joel Stanley <joel@jms.id.au> wrote:
+Hi George,
+
+On Thu, 23 May 2019 at 11:00, George Hung <ghung.quanta@gmail.com> wrote:
 >
-> On Fri, 31 May 2019 at 15:28, Benjamin Fair <benjaminfair@google.com> wrote:
-> > This looks great! I think it's ready to merge.
-> >
-> > On Fri, May 31, 2019 at 6:26 AM Fran Hsu <franhsutw@gmail.com> wrote:
-> > >
-> > > Quanta GSJ BMC uses the Nuvoton NPCM730 BMC soc.
-> > > This file describes the common setting of NPCM730 soc.
-> > >
-> > > Signed-off-by: Fran Hsu <Fran.Hsu@quantatw.com>
-> >
-> > Reviewed-by: Benjamin Fair <benjaminfair@google.com>
+> From: George Hung <george.hung@quantatw.com>
 >
-> Thanks Benjamin for reviewing, and Fran for working to get these
-> patches in a state that we can merge them. I've put them in the
-> dev-5.1 tree with some small tweaks to the commit messages.
+> Add device tree documentation for Nuvoton BMC ECC
+>
+> Signed-off-by: George Hung <george.hung@quantatw.com>
 
-I spoke too soon. I see these warnings when building:
+Can you convince one of your fellow Nuvoton contributors to review this patch?
 
-../arch/arm/boot/dts/nuvoton-npcm730-gsj.dts:307.6-25: Warning
-(i2c_bus_reg): /ahb/apb/i2c@8d000/ipmb@40000010:reg: I2C address must
-be less than 10-bits, got "0x40000010"
-../arch/arm/boot/dts/nuvoton-npcm730-gsj.dts:320.6-25: Warning
-(i2c_bus_reg): /ahb/apb/i2c@8e000/ipmb@40000012:reg: I2C address must
-be less than 10-bits, got "0x40000012"
+Have you submitted this patch for mainline inclusion?
 
-Please send follow up patches to fix these warnings.
+> ---
+>  .../bindings/edac/npcm7xx-sdram-edac.txt        | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+>
+> diff --git a/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> new file mode 100644
+> index 000000000000..dd4dac59a5bd
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> @@ -0,0 +1,17 @@
+> +Nuvoton NPCM7xx SoC EDAC device driver
+> +
+> +The Nuvoton NPCM7xx SoC supports DDR4 memory with/without ECC and the driver
+> +uses the EDAC framework to implement the ECC detection and corrtection.
+> +
+> +Required properties:
+> +- compatible:  should be "nuvoton,npcm7xx-sdram-edac"
+> +- reg:         Memory controller register set should be <0xf0824000 0x1000>
+> +- interrupts:  should be MC interrupt #25
+> +
+> +Example:
+> +
+> +       mc: memory-controller@f0824000 {
+> +               compatible = "nuvoton,npcm7xx-sdram-edac";
+> +               reg = <0xf0824000 0x1000>;
+> +               interrupts = <0 25 4>;
 
-The following warnings also exist when building the npcm kernel. If
-you could also fix those it would be appreciated:
+I think we can use the defines for 0 and 4? GIC_SPI and IRQ_TYPE_LEVEL_HIGH.
 
-../arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi:222.22-231.5: Warning
-(spi_bus_bridge): /ahb/fiu@fb000000: node name for SPI buses should be
-'spi'
-  also defined at ../arch/arm/boot/dts/nuvoton-npcm730-gsj.dts:81.22-126.5
-arch/arm/boot/dts/nuvoton-npcm730-gsj.dtb: Warning (spi_bus_reg):
-Failed prerequisite 'spi_bus_bridge'
-../arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi:222.22-231.5: Warning
-(spi_bus_bridge): /ahb/fiu@fb000000: node name for SPI buses should be
-'spi'
-  also defined at ../arch/arm/boot/dts/nuvoton-npcm750-evb.dts:164.22-221.5
-../arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi:233.22-244.5: Warning
-(spi_bus_bridge): /ahb/fiu@c0000000: node name for SPI buses should be
-'spi'
-  also defined at ../arch/arm/boot/dts/nuvoton-npcm750-evb.dts:223.22-242.5
-
-Cheers,
-
-Joel
+> +       };
+> --
+> 2.21.0
+>
