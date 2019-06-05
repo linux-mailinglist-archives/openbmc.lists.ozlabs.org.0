@@ -2,74 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C1AB35F04
-	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2019 16:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00CC035F27
+	for <lists+openbmc@lfdr.de>; Wed,  5 Jun 2019 16:25:38 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45JrWt6qlyzDqY1
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 00:19:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Jrg33lfKzDqZk
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 00:25:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::644; helo=mail-pl1-x644.google.com;
- envelope-from=ghung.quanta@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="SRyDZBKf"; 
- dkim-atps=neutral
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com
- [IPv6:2607:f8b0:4864:20::644])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45JrSb6h4MzDqWy
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 00:16:31 +1000 (AEST)
-Received: by mail-pl1-x644.google.com with SMTP id g21so9751005plq.0
- for <openbmc@lists.ozlabs.org>; Wed, 05 Jun 2019 07:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=v3XLypKZbOE7b5olH8wFcYwlI02ktNrldwBXglURa3w=;
- b=SRyDZBKfR6VLuQOeonUrKfw8C7A4yF0d3XMQJwjtp0LfMXI4HiCjx0WQ8U62jWYFsZ
- DVqV5Sc2DTx+3Zj9dFFodnSBWUmQP3kobhSvtrvVU105g/az29yBBuIEUz3T9B/8WRA+
- qLJyDidJIDRzrFEqrVi1UDMg+KRFLUbUnzGhXSnKQAOdIyuk7h7qVSmBBLitwr2vJI6x
- KioMQaxD5g6qwJkzEALSAZrmbyf/bpxBIRfKJDpa9Ax1xNbjtNNYhM08XxoIi+syxAjP
- NxHFkvcKZUSEF3ojvBkbCy/aOd3CiusdDnKW3y+IKuTQeEnmPpomVHvCvRTcSFJF1PML
- b97g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=v3XLypKZbOE7b5olH8wFcYwlI02ktNrldwBXglURa3w=;
- b=bEC2KK7joPkVVtTA3sZ2inK2NoUUb6vZgPjw0lo0Q6odW61Zni0QfjedptWvx+y3My
- MrEWkmXUC7YkVbcTWoECrHWN3epyLpDZtUxFrXftE9mfQ7VDh8p76E/hP0QsHHdXyMA6
- sWx4Eq4qA8yDKbFKPZPTxOMwUi44huCq3YK5A6z6n7FR/vtD+NT4irJ/7LTJjAK2itUi
- l6ZMEdRYqLyE41IroJQG4lpJhVjuGsbpIh3yDPuNl4O1ucj9x3HnI0E4ACsPRqDUW0Lv
- btmaFfVit7eBeENYnkD6YOSXCsGkEAHhwaaiFWLND3xzJQ0F1hJfBxxkIN6PAEAuIN2Y
- uKtQ==
-X-Gm-Message-State: APjAAAX0hd7M/daE0MzHC4jfZ9+68ZjtEG+wHory7eKnrWaSyJLGyhYD
- S8jtFmEzWRGAupm7GYX4wZA=
-X-Google-Smtp-Source: APXvYqz3yeokdSf0SMdH/IVvBAh8QltwCxeaCvedVcmCsDQdM6ywLVcbm5pG9vifCmcBDxYN2Ihpcg==
-X-Received: by 2002:a17:902:b18c:: with SMTP id
- s12mr42363782plr.181.1559744189242; 
- Wed, 05 Jun 2019 07:16:29 -0700 (PDT)
-Received: from george-Quanta.com.com (220-135-135-179.HINET-IP.hinet.net.
- [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id 24sm22376443pgn.32.2019.06.05.07.16.25
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Wed, 05 Jun 2019 07:16:28 -0700 (PDT)
-From: George Hung <ghung.quanta@gmail.com>
-To: linux-edac <linux-edac@vger.kernel.org>,
- linux-kernel <linux-kernel@vger.kernel.org>
-Subject: [PATCH 5.2 v2 2/2] dt-binding: edac: add NPCM ECC documentation
-Date: Wed,  5 Jun 2019 22:12:53 +0800
-Message-Id: <20190605141253.38554-2-ghung.quanta@gmail.com>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190605141253.38554-1-ghung.quanta@gmail.com>
-References: <20190605141253.38554-1-ghung.quanta@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45JrfW663bzDqXW
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 00:25:06 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x55EM8Jk126935
+ for <openbmc@lists.ozlabs.org>; Wed, 5 Jun 2019 10:25:04 -0400
+Received: from e12.ny.us.ibm.com (e12.ny.us.ibm.com [129.33.205.202])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sxdd7pcv8-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Jun 2019 10:25:04 -0400
+Received: from localhost
+ by e12.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <mspinler@linux.ibm.com>;
+ Wed, 5 Jun 2019 15:25:02 +0100
+Received: from b01cxnp23032.gho.pok.ibm.com (9.57.198.27)
+ by e12.ny.us.ibm.com (146.89.104.199) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 5 Jun 2019 15:25:01 +0100
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x55EP0Sk34341302
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 5 Jun 2019 14:25:00 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9C9B8124058
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Jun 2019 14:25:00 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7FCD8124055
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Jun 2019 14:25:00 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Jun 2019 14:25:00 +0000 (GMT)
+Subject: Re: [Design] PSU firmware update
+To: openbmc@lists.ozlabs.org
+References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
+ <20190604182635.GD46814@mauery.jf.intel.com>
+ <CAARXrtnpeP0J3T0y=K=O1QTYjxBXXxQSzUVErygzUo+MR6t=0w@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Date: Wed, 5 Jun 2019 09:25:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
+In-Reply-To: <CAARXrtnpeP0J3T0y=K=O1QTYjxBXXxQSzUVErygzUo+MR6t=0w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19060514-0060-0000-0000-0000034C6FF5
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011218; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01213614; UDB=6.00637877; IPR=6.00994688; 
+ MB=3.00027194; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-05 14:25:02
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19060514-0061-0000-0000-000049A4078D
+Message-Id: <f1d99c51-881e-c1f3-79e6-1d9be951b0c4@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-05_09:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906050091
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,51 +96,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- Linus Walleij <linus.walleij@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, benjaminfair@google.com,
- paulmck@linux.ibm.com, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- James Morse <james.morse@arm.com>, wak@google.com, davem@davemloft.net,
- tomer.maimon@nuvoton.com, Avi.Fishman@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add device tree documentation for Nuvoton BMC ECC
 
-Signed-off-by: George Hung <ghung.quanta@gmail.com>
----
- .../bindings/edac/npcm7xx-sdram-edac.txt        | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+On 6/5/2019 1:18 AM, Lei YU wrote:
+>>> The PSU firmware code update will re-use the current interfaces to upload,
+>>> verify, and activate the image.
+>> We would like the option to be able to ship the PSU firmware as part of
+>> the BMC image (in the root filesystem). This means that it is already
+>> present and authenticated when the BMC boots. In this way, we know that
+>> the current BMC firmware plays well with the PSU firmware and have fewer
+>> variables to test for when making a release.
+> Because the PSU firmware is part of BMC image, this seems a completely
+> different approach, and more like part of BMC image update, is it?
+> I would expect this should not be part of this design, what do you think?
 
-diff --git a/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
-new file mode 100644
-index 000000000000..dd4dac59a5bd
---- /dev/null
-+++ b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
-@@ -0,0 +1,17 @@
-+Nuvoton NPCM7xx SoC EDAC device driver
-+
-+The Nuvoton NPCM7xx SoC supports DDR4 memory with/without ECC and the driver
-+uses the EDAC framework to implement the ECC detection and corrtection.
-+
-+Required properties:
-+- compatible:	should be "nuvoton,npcm7xx-sdram-edac"
-+- reg:		Memory controller register set should be <0xf0824000 0x1000>
-+- interrupts:	should be MC interrupt #25
-+
-+Example:
-+
-+	mc: memory-controller@f0824000 {
-+		compatible = "nuvoton,npcm7xx-sdram-edac";
-+		reg = <0xf0824000 0x1000>;
-+		interrupts = <0 25 4>;
-+	};
--- 
-2.21.0
+FYI, I am 99% sure this is how IBM needs its systems to work as well.  
+That being the case,
+
+will you also be handling this design?
+
+
+
+>> I suppose this could be done by skipping the download phase and simply
+>> creating an activation object at boot and then initiating the FW
+>> activation automatically.
 
