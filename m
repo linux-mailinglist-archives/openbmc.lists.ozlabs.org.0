@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24A4F36B30
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 06:53:03 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BB6836B2B
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 06:52:22 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45KCv74px1zDqgn
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 14:52:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45KCvw55x2zDqgS
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 14:53:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -17,61 +17,61 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=mendozajonas.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=mendozajonas.com header.i=@mendozajonas.com
- header.b="RgVS8GOL"; dkim=pass (2048-bit key;
+ header.b="IGtYkGR1"; dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="E/8ARIdm"; dkim-atps=neutral
+ header.b="L1pBtnqG"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45KCrm1DYyzDqf1
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 14:50:16 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45KCrp6fjhzDqf1
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 14:50:18 +1000 (AEST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.nyi.internal (Postfix) with ESMTP id EA7862213A;
- Thu,  6 Jun 2019 00:50:13 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id B5556221F9;
+ Thu,  6 Jun 2019 00:50:16 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Thu, 06 Jun 2019 00:50:13 -0400
+ by compute2.internal (MEProxy); Thu, 06 Jun 2019 00:50:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  mendozajonas.com; h=from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- s=fm3; bh=IWpdLjUzvoRnVVXjHpowZ4+f3XTXwLw24SEBMuioU4o=; b=RgVS8
- GOLL2mmPhmyKmCRgS/fU2ekgWDxzNOhDFlJpH45Nz3/H+4YNXhFLW0h3k/uEPwqG
- H7ytoM/8WoU/rgfkkSY98r9UVQ2vM1YR7Hv9bTZBJTspKi4S0wkvstI4TC47/Szc
- EETffXvpPwjzujYnIE/+dnar398gIKdUqlRlz2qvBhPn05Llql9sLig19Wz6aOEQ
- VEu4fmc9T3cGRCjP1X9F4LrPASLet4vxrMDAwlYcJgwIM2VoaxlPt2s1yWQTnqdO
- 7+HNoK7PutcnO2qpcAXo09dtKBwC60q6RMWTkBxL4JBspkLfOHV4OlyfLtolfAT1
- I2KZ7tPWY8+eEk8Xw==
+ s=fm3; bh=wFAn+qFuDoz4MSlCXGphjce6sQayOAqKAew4nc01p2E=; b=IGtYk
+ GR1s6Tk8PCotIy9l1Og0+6fn3zV1/+W2dpt2iTKQM4146l/xMOknI1c/ZpIMZG00
+ 0Dl5FDSTrgR+hwRXnykY+A4hjUbdHuBufvcdDlQA+uBcHvBAcjnRxGl/FC/SwgsX
+ ZWoj+uMFiWdUVdCuKNYPA9qQ4Kk8y487JD3/rxRx7XXmJfn/nvs/Qqm4LcdkgX5O
+ 2Q7ThLFfFYhtQNA9DfDWp5Orr7w6dCYGNcSxA3V8nF3xJeEhehF89gNItc4PbBqO
+ Yvoq6aOT5EgsQGFIlCzn4vW22aSMPkEufvSozNddnYJP3nFfcd82ou6VlGF3WyoZ
+ YgwP892BBVTdj7sFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=IWpdLjUzvoRnVVXjHpowZ4+f3XTXwLw24SEBMuioU4o=; b=E/8ARIdm
- PJsFmsjZx7HYSrWE+4W3lrMy34p9au4YVMP6DilxHvbFEVRRHhLUgWSr5zAPl6jh
- sFuTfCdY2xiN8rKhtpL9rDssIPBe3TX/dTx10Rp3Sa5BCIg+idoLa7FD4kZ+Ngjw
- sGj+jnFC44qxSE2u+S9BRvNHsXsS+e28nsZwn7ouprNBTQHn0GJl/wJUywHliEUc
- wiVX+s5r6+FQafLIDo9rStd0EPdzU1Q4KgQpG8eXnweAlas4jIptSWX5BOKW3DSJ
- kDpLyaWH64ygwacz2x098e80UYjtuZBMdFqXhpOUiPZ8Kg3Sp/Uf/EgV3yRPU8/X
- g4qNsfLTaBe9oA==
-X-ME-Sender: <xms:hZv4XNmQVlxCxDQpsc380GIDxzEPwkTnuor5vbcQqBtxn5xKRWp4DA>
+ fm2; bh=wFAn+qFuDoz4MSlCXGphjce6sQayOAqKAew4nc01p2E=; b=L1pBtnqG
+ yCe9qrSNNgEzDSJngnjZeJC3viXvxLfmlNaNASvLaM6V37/ctXasq/8m4Dv+PQ3Q
+ PJwYOtVJbkNogbG8Jw9M99MhxQ78msvCFVYxH5g4pYkBndr6/wzXz9CrCvY0D/8X
+ idBVSHZFjxvRFRlFvP7UePYNguX0s5Vl/f2mdc0ywb7exspzkR/wjILPOvfUEONL
+ Oxl47J/KRiLMv5K88T7ddYByQriDfguoJHY+//Q5KDMZRPJOfcOWD0GnPMYXLtQ7
+ tfYzqzRYUKSP/CFU82HX+peuluz/IyqKDLtARyLAATO0Zr8MynY1d87LYOacAd3h
+ PkmEZRYzBnXkDQ==
+X-ME-Sender: <xms:iJv4XFQdQGB_bggutV4cpADTqdvt55KaqOPAAF1EcpG_H4inHMCAhg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudegfedgkeekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
  dtredttdenucfhrhhomhepufgrmhhuvghlucfovghnughoiigrqdflohhnrghsuceoshgr
  mhesmhgvnhguohiirghjohhnrghsrdgtohhmqeenucfkphepuddvvddrleelrdekvddrud
  dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehsrghmsehmvghnughoiigrjhhonhgrshdr
- tghomhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:hZv4XHSfzaAcTYA3n3eeHfJJCgqpcGMexxC-oQNg9KA0Co8iE8su6w>
- <xmx:hZv4XGandOi34hw23U6DUFANWzmYivPMqVOI2IKL7hqEcIaK6ZTvWg>
- <xmx:hZv4XCawj-VGAWe1ZxxNop1ITBpZxfgN7FxLtPyZx19H-f2v4-W-Pw>
- <xmx:hZv4XAsFM2xophLSOsGx_P1ylh687NltI5UQkNjKhCCxgYa1ozv6nw>
+ tghomhenucevlhhushhtvghrufhiiigvpedu
+X-ME-Proxy: <xmx:iJv4XNQynFb3PxAT8Gzpk1UQ6OlCzhMy6nQbgFmhLLDzcD77czAURw>
+ <xmx:iJv4XBo4mF_beKpY-qOhV0Bo2H7rpGs5ogkYw4uMv3bcoRijWFApeQ>
+ <xmx:iJv4XNCKlYtvtdMtYVRFQHP64UAdHFPBGiqQLZNZswOOFfjwblIs0g>
+ <xmx:iJv4XB5dLUDciQWl-s8uuE1ukVvrY265yar5rrR6X559uW2l34WDdw>
 Received: from v4.ozlabs.ibm.com (unknown [122.99.82.10])
- by mail.messagingengine.com (Postfix) with ESMTPA id 4334F380073;
- Thu,  6 Jun 2019 00:50:11 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 1A843380073;
+ Thu,  6 Jun 2019 00:50:13 -0400 (EDT)
 From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 To: u-boot@lists.denx.de
-Subject: [PATCH 2/4] phy: Include NC-SI in phy setup
-Date: Thu,  6 Jun 2019 14:49:48 +1000
-Message-Id: <20190606044950.5930-3-sam@mendozajonas.com>
+Subject: [PATCH 3/4] net/ftgmac100: Add NC-SI mode support
+Date: Thu,  6 Jun 2019 14:49:49 +1000
+Message-Id: <20190606044950.5930-4-sam@mendozajonas.com>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190606044950.5930-1-sam@mendozajonas.com>
 References: <20190606044950.5930-1-sam@mendozajonas.com>
@@ -93,101 +93,126 @@ Cc: openbmc@lists.ozlabs.org, joe.hershberger@ni.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add NC-SI to the usual phy handling. This makes two notable changes:
-- Somewhat similar to a fixed phy, phy_connect() will create an NC-SI
-phy if CONFIG_PHY_NCSI is defined.
-- An early return is added to phy_read() and phy_write() to handle a
-case like the NC-SI phy which does not define a bus.
+Update the ftgmac100 driver to support NC-SI instead of an mdio phy
+where available. This is a common setup for Aspeed AST2x00 platforms.
+
+NC-SI mode is determined from the device-tree if either phy-mode sets it
+or the use-ncsi property exists. If set then normal mdio setup is
+skipped in favour of the NC-SI phy.
 
 Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 ---
- drivers/net/phy/phy.c   |  8 ++++++++
- include/phy.h           | 11 +++++++++++
- include/phy_interface.h |  2 ++
- 3 files changed, 21 insertions(+)
+ drivers/net/ftgmac100.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index cda4caa803..c2bc57c45d 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -527,6 +527,9 @@ int phy_init(void)
- #endif
- #ifdef CONFIG_PHY_FIXED
- 	phy_fixed_init();
-+#endif
-+#ifdef CONFIG_PHY_NCSI
-+	phy_ncsi_init();
- #endif
- 	return 0;
- }
-@@ -902,6 +905,11 @@ struct phy_device *phy_connect(struct mii_dev *bus, int addr,
- 		sn = fdt_next_subnode(gd->fdt_blob, sn);
+diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
+index 92c38a81bd..c0100e91c7 100644
+--- a/drivers/net/ftgmac100.c
++++ b/drivers/net/ftgmac100.c
+@@ -18,6 +18,7 @@
+ #include <wait_bit.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
++#include <net/ncsi.h>
+ 
+ #include "ftgmac100.h"
+ 
+@@ -81,6 +82,7 @@ struct ftgmac100_data {
+ 	struct mii_dev *bus;
+ 	u32 phy_mode;
+ 	u32 max_speed;
++	bool ncsi_mode;
+ 
+ 	struct clk_bulk clks;
+ 
+@@ -181,7 +183,7 @@ static int ftgmac100_phy_adjust_link(struct ftgmac100_data *priv)
+ 	struct phy_device *phydev = priv->phydev;
+ 	u32 maccr;
+ 
+-	if (!phydev->link) {
++	if (!phydev->link && !priv->ncsi_mode) {
+ 		dev_err(phydev->dev, "No link\n");
+ 		return -EREMOTEIO;
  	}
- #endif
-+
-+#ifdef CONFIG_PHY_NCSI
-+	phydev = phy_device_create(bus, 0, PHY_NCSI_ID, interface);
-+#endif
-+
+@@ -217,7 +219,8 @@ static int ftgmac100_phy_init(struct udevice *dev)
  	if (!phydev)
- 		phydev = phy_find_by_mask(bus, 1 << addr, interface);
+ 		return -ENODEV;
  
-diff --git a/include/phy.h b/include/phy.h
-index f0c9df46c6..e1d546a81f 100644
---- a/include/phy.h
-+++ b/include/phy.h
-@@ -154,6 +154,11 @@ static inline int phy_read(struct phy_device *phydev, int devad, int regnum)
- {
- 	struct mii_dev *bus = phydev->bus;
+-	phydev->supported &= PHY_GBIT_FEATURES;
++	if (!priv->ncsi_mode)
++		phydev->supported &= PHY_GBIT_FEATURES;
+ 	if (priv->max_speed) {
+ 		ret = phy_set_supported(phydev, priv->max_speed);
+ 		if (ret)
+@@ -275,7 +278,8 @@ static void ftgmac100_stop(struct udevice *dev)
  
-+	if (!bus || !bus->read) {
-+		debug("%s: No bus configured\n", __func__);
-+		return -1;
-+	}
-+
- 	return bus->read(bus, phydev->addr, devad, regnum);
+ 	writel(0, &ftgmac100->maccr);
+ 
+-	phy_shutdown(priv->phydev);
++	if (!priv->ncsi_mode)
++		phy_shutdown(priv->phydev);
  }
  
-@@ -162,6 +167,11 @@ static inline int phy_write(struct phy_device *phydev, int devad, int regnum,
- {
- 	struct mii_dev *bus = phydev->bus;
- 
-+	if (!bus || !bus->read) {
-+		debug("%s: No bus configured\n", __func__);
-+		return -1;
-+	}
+ static int ftgmac100_start(struct udevice *dev)
+@@ -513,6 +517,7 @@ static int ftgmac100_ofdata_to_platdata(struct udevice *dev)
+ 	pdata->iobase = devfdt_get_addr(dev);
+ 	pdata->phy_interface = -1;
+ 	phy_mode = dev_read_string(dev, "phy-mode");
 +
- 	return bus->write(bus, phydev->addr, devad, regnum, val);
- }
+ 	if (phy_mode)
+ 		pdata->phy_interface = phy_get_interface_by_name(phy_mode);
+ 	if (pdata->phy_interface == -1) {
+@@ -537,8 +542,13 @@ static int ftgmac100_probe(struct udevice *dev)
+ {
+ 	struct eth_pdata *pdata = dev_get_platdata(dev);
+ 	struct ftgmac100_data *priv = dev_get_priv(dev);
++	const char *phy_mode;
+ 	int ret;
  
-@@ -241,6 +251,7 @@ int phy_vitesse_init(void);
- int phy_xilinx_init(void);
- int phy_mscc_init(void);
- int phy_fixed_init(void);
-+int phy_ncsi_init(void);
++	phy_mode = dev_read_string(dev, "phy-mode");
++	priv->ncsi_mode = dev_read_bool(dev, "use-ncsi") ||
++		(phy_mode && strcmp(phy_mode, "NC-SI") == 0);
++
+ 	priv->iobase = (struct ftgmac100 *)pdata->iobase;
+ 	priv->phy_mode = pdata->phy_interface;
+ 	priv->max_speed = pdata->max_speed;
+@@ -548,10 +558,15 @@ static int ftgmac100_probe(struct udevice *dev)
+ 	if (ret)
+ 		goto out;
  
- int board_phy_config(struct phy_device *phydev);
- int get_phy_id(struct mii_dev *bus, int addr, int devad, u32 *phy_id);
-diff --git a/include/phy_interface.h b/include/phy_interface.h
-index c6823189f8..9e334bb47d 100644
---- a/include/phy_interface.h
-+++ b/include/phy_interface.h
-@@ -31,6 +31,7 @@ typedef enum {
- 	PHY_INTERFACE_MODE_XLAUI,
- 	PHY_INTERFACE_MODE_CAUI2,
- 	PHY_INTERFACE_MODE_CAUI4,
-+	PHY_INTERFACE_MODE_NCSI,
- 	PHY_INTERFACE_MODE_NONE,	/* Must be last */
+-	ret = ftgmac100_mdio_init(dev);
+-	if (ret) {
+-		dev_err(dev, "Failed to initialize mdiobus: %d\n", ret);
+-		goto out;
++	if (priv->ncsi_mode) {
++		printf("%s - NCSI detected\n", __func__);
++	} else {
++		ret = ftgmac100_mdio_init(dev);
++		if (ret) {
++			dev_err(dev, "Failed to initialize mdiobus: %d\n", ret);
++			goto out;
++		}
++
+ 	}
  
- 	PHY_INTERFACE_MODE_COUNT,
-@@ -58,6 +59,7 @@ static const char * const phy_interface_strings[] = {
- 	[PHY_INTERFACE_MODE_XLAUI]		= "xlaui4",
- 	[PHY_INTERFACE_MODE_CAUI2]		= "caui2",
- 	[PHY_INTERFACE_MODE_CAUI4]		= "caui4",
-+	[PHY_INTERFACE_MODE_NCSI]		= "NC-SI",
- 	[PHY_INTERFACE_MODE_NONE]		= "",
- };
+ 	ret = ftgmac100_phy_init(dev);
+@@ -571,9 +586,13 @@ static int ftgmac100_remove(struct udevice *dev)
+ {
+ 	struct ftgmac100_data *priv = dev_get_priv(dev);
  
+-	free(priv->phydev);
+-	mdio_unregister(priv->bus);
+-	mdio_free(priv->bus);
++	if (!priv->ncsi_mode) {
++		free(priv->phydev);
++		mdio_unregister(priv->bus);
++		mdio_free(priv->bus);
++	} else {
++		free(priv->phydev);
++	}
+ 	clk_release_bulk(&priv->clks);
+ 
+ 	return 0;
 -- 
 2.21.0
 
