@@ -1,84 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBE0837FBA
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 23:39:14 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B07E37ED8
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 22:31:01 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Kck8302PzDqmK
-	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2019 06:30:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45KfDw0kNkzDqFK
+	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2019 07:39:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45KcjS3sjJzDqYp
- for <openbmc@lists.ozlabs.org>; Fri,  7 Jun 2019 06:30:19 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x56KR8i4122250
- for <openbmc@lists.ozlabs.org>; Thu, 6 Jun 2019 16:30:15 -0400
-Received: from e13.ny.us.ibm.com (e13.ny.us.ibm.com [129.33.205.203])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2sy7hcprup-1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45KfDJ11m4zDqmK
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Jun 2019 07:38:39 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x56LWP4W074594
+ for <openbmc@lists.ozlabs.org>; Thu, 6 Jun 2019 17:38:34 -0400
+Received: from e11.ny.us.ibm.com (e11.ny.us.ibm.com [129.33.205.201])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2syatpr80b-1
  (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2019 16:30:15 -0400
+ for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2019 17:38:34 -0400
 Received: from localhost
- by e13.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ by e11.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
  Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <anoo@linux.ibm.com>;
- Thu, 6 Jun 2019 21:30:14 +0100
-Received: from b01cxnp23032.gho.pok.ibm.com (9.57.198.27)
- by e13.ny.us.ibm.com (146.89.104.200) with IBM ESMTP SMTP Gateway: Authorized
+ for <openbmc@lists.ozlabs.org> from <eajames@linux.ibm.com>;
+ Thu, 6 Jun 2019 22:38:34 +0100
+Received: from b01cxnp22033.gho.pok.ibm.com (9.57.198.23)
+ by e11.ny.us.ibm.com (146.89.104.198) with IBM ESMTP SMTP Gateway: Authorized
  Use Only! Violators will be prosecuted; 
  (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 6 Jun 2019 21:30:11 +0100
+ Thu, 6 Jun 2019 22:38:31 +0100
 Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
  [9.57.199.107])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x56KUAWS31392004
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x56LcUEJ30015918
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 6 Jun 2019 20:30:10 GMT
+ Thu, 6 Jun 2019 21:38:30 GMT
 Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 34A9112405E;
- Thu,  6 Jun 2019 20:30:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 827D0124052;
+ Thu,  6 Jun 2019 21:38:30 +0000 (GMT)
 Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC590124054;
- Thu,  6 Jun 2019 20:30:09 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by IMSVA (Postfix) with ESMTP id 32BD3124055;
+ Thu,  6 Jun 2019 21:38:30 +0000 (GMT)
+Received: from [9.85.223.174] (unknown [9.85.223.174])
  by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu,  6 Jun 2019 20:30:09 +0000 (GMT)
+ Thu,  6 Jun 2019 21:38:30 +0000 (GMT)
+Subject: Re: [PATCH v2] i2c: fsi: Create busses for all ports
+To: "Oliver O'Halloran" <oohall@gmail.com>, openbmc@lists.ozlabs.org
+References: <20190606115220.9888-1-oohall@gmail.com>
+From: Eddie James <eajames@linux.ibm.com>
+Date: Thu, 6 Jun 2019 16:38:29 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20190606115220.9888-1-oohall@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date: Thu, 06 Jun 2019 15:31:13 -0500
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: Lei YU <mine260309@gmail.com>
-Subject: Re: [Design] PSU firmware update
-In-Reply-To: <CAARXrt=6DwO7cAxyEJ=FEUPF4+gU9npJtWmd31LuqmTpxHu98w@mail.gmail.com>
-References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
- <20190604182635.GD46814@mauery.jf.intel.com>
- <CAARXrtnpeP0J3T0y=K=O1QTYjxBXXxQSzUVErygzUo+MR6t=0w@mail.gmail.com>
- <f1d99c51-881e-c1f3-79e6-1d9be951b0c4@linux.ibm.com>
- <CAARXrt=6DwO7cAxyEJ=FEUPF4+gU9npJtWmd31LuqmTpxHu98w@mail.gmail.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
+Content-Language: en-US
 X-TM-AS-GCONF: 00
-x-cbid: 19060620-0064-0000-0000-000003EAC8A7
+x-cbid: 19060621-2213-0000-0000-0000039B2FDC
 X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011224; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01214207; UDB=6.00638238; IPR=6.00995287; 
- MB=3.00027211; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-06 20:30:12
+X-IBM-SpamModules-Versions: BY=3.00011225; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01214230; UDB=6.00638252; IPR=6.00995310; 
+ MB=3.00027212; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-06 21:38:32
 X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19060620-0065-0000-0000-00003DC7F1FC
-Message-Id: <b20a0ffd292efcafc8e4ebad40d810bc@linux.vnet.ibm.com>
+x-cbparentid: 19060621-2214-0000-0000-00005EBF5E11
+Message-Id: <5eca0a3d-f2e9-16a9-a9ed-edf795c529a8@linux.ibm.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-06-06_14:, , signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
@@ -86,7 +82,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906060138
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906060145
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,70 +94,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>
+Cc: Eddie James <eajames@linux.vnet.ibm.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-06-05 22:31, Lei YU wrote:
-> On Wed, Jun 5, 2019 at 10:25 PM Matt Spinler <mspinler@linux.ibm.com> 
-> wrote:
->> 
->> 
->> On 6/5/2019 1:18 AM, Lei YU wrote:
->> >>> The PSU firmware code update will re-use the current interfaces to upload,
->> >>> verify, and activate the image.
->> >> We would like the option to be able to ship the PSU firmware as part of
->> >> the BMC image (in the root filesystem). This means that it is already
->> >> present and authenticated when the BMC boots. In this way, we know that
->> >> the current BMC firmware plays well with the PSU firmware and have fewer
->> >> variables to test for when making a release.
->> > Because the PSU firmware is part of BMC image, this seems a completely
->> > different approach, and more like part of BMC image update, is it?
->> > I would expect this should not be part of this design, what do you think?
->> 
->> FYI, I am 99% sure this is how IBM needs its systems to work as well.
->> That being the case,
->> 
->> will you also be handling this design?
-> 
-> Good to know.
-> 
-> Then a question comes up:
-> In which cases PSU firmware update shall be done?
-> 1. It is updated together with BMC firmware update as described by 
-> Vernon
->    Mauery;
-> 2. It is updated independently with APIs, as described in this design 
-> doc.
-> 
-> Will 1 and 2 both be valid, or only 1 is the real case and we do not 
-> need to
-> support 2?
-> 
 
-I see it as having a single tarball file that has the required files to 
-update the
-BMC and the PSU. When this tarball is uploaded, then a new Version with 
-a Purpose
-of System or some other name is created. When this Version is activated, 
-this
-triggers the BMC updater (existing) and the PSU updater (new) to check 
-if all
-the necessary files to perform the update of their component exist. If 
-yes, each
-updater updates their piece and if any one fails it'd mark the Version 
-as Failed
-(TBD on synchronizing the updaters to mark the Version as Active or 
-Failed).
-So the PSU would be updated at the same time as the BMC, but done by its 
-own
-updater application.
+On 6/6/19 6:52 AM, Oliver O'Halloran wrote:
+> Currently we only create an I2C bus for the ports listed in the
+> device-tree for that master. There's no real reason for this since
+> we can discover the number of ports the master supports by looking
+> at the port_max field of the status register.
+>
+> This patch re-works the bus add logic so that we always create buses
+> for each port, unless the bus is marked as unavailable in the DT. This
+> is useful since it ensures that all the buses provided by the CFAM I2C
+> master are accessible to debug tools.
 
-Thoughts?
 
-> The reason I ask is because if we could get clear requirements, it is 
-> possible
-> to simplify the design.
+Thanks Oliver.
+
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
+
+
+>
+> Cc: Eddie James <eajames@linux.vnet.ibm.com>
+> Signed-off-by: Oliver O'Halloran <oohall@gmail.com>
+> ---
+> v2: Fixed off-by-one when calulating the number of ports.
+>      Compile fixes.
+> ---
+>   drivers/i2c/busses/i2c-fsi.c | 32 +++++++++++++++++++++++++++-----
+>   1 file changed, 27 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/i2c/busses/i2c-fsi.c b/drivers/i2c/busses/i2c-fsi.c
+> index 1e2be2219a60..da5eb3960def 100644
+> --- a/drivers/i2c/busses/i2c-fsi.c
+> +++ b/drivers/i2c/busses/i2c-fsi.c
+> @@ -658,13 +658,29 @@ static const struct i2c_algorithm fsi_i2c_algorithm = {
+>   	.functionality = fsi_i2c_functionality,
+>   };
+>   
+> +static struct device_node *fsi_i2c_find_port_of_node(struct device_node *fsi,
+> +						     int port)
+> +{
+> +	struct device_node *np;
+> +	u32 port_no;
+> +	int rc;
+> +
+> +	for_each_child_of_node(fsi, np) {
+> +		rc = of_property_read_u32(np, "reg", &port_no);
+> +		if (!rc && port_no == port)
+> +			return np;
+> +	}
+> +
+> +	return NULL;
+> +}
+> +
+>   static int fsi_i2c_probe(struct device *dev)
+>   {
+>   	struct fsi_i2c_master *i2c;
+>   	struct fsi_i2c_port *port;
+>   	struct device_node *np;
+> +	u32 port_no, ports, stat;
+>   	int rc;
+> -	u32 port_no;
+>   
+>   	i2c = devm_kzalloc(dev, sizeof(*i2c), GFP_KERNEL);
+>   	if (!i2c)
+> @@ -678,10 +694,16 @@ static int fsi_i2c_probe(struct device *dev)
+>   	if (rc)
+>   		return rc;
+>   
+> -	/* Add adapter for each i2c port of the master. */
+> -	for_each_available_child_of_node(dev->of_node, np) {
+> -		rc = of_property_read_u32(np, "reg", &port_no);
+> -		if (rc || port_no > USHRT_MAX)
+> +	rc = fsi_i2c_read_reg(i2c->fsi, I2C_FSI_STAT, &stat);
+> +	if (rc)
+> +		return rc;
+> +
+> +	ports = FIELD_GET(I2C_STAT_MAX_PORT, stat) + 1;
+> +	dev_dbg(dev, "I2C master has %d ports\n", ports);
+> +
+> +	for (port_no = 0; port_no < ports; port_no++) {
+> +		np = fsi_i2c_find_port_of_node(dev->of_node, port_no);
+> +		if (np && !of_device_is_available(np))
+>   			continue;
+>   
+>   		port = kzalloc(sizeof(*port), GFP_KERNEL);
 
