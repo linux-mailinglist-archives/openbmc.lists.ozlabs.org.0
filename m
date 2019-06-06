@@ -1,48 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0D2236A22
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 04:46:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2548B369ED
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 04:18:36 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45K8Tj3X87zDqSP
-	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 12:18:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45K95b0SKDzDqfy
+	for <lists+openbmc@lfdr.de>; Thu,  6 Jun 2019 12:46:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.26.145; helo=unicom145.biz-email.net;
- envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-Received: from unicom145.biz-email.net (unicom145.biz-email.net
- [210.51.26.145])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45K8TC2KX4zDqLv
- for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 12:18:03 +1000 (AEST)
-Received: from ([60.208.111.195])
- by unicom145.biz-email.net (Antispam) with ASMTP (SSL) id XIX45452
- for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2019 10:17:52 +0800
-Received: from Jtjnmail201617.home.langchao.com (10.100.2.17) by
- jtjnmail201603.home.langchao.com (10.100.2.3) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1591.10; Thu, 6 Jun 2019 10:17:51 +0800
-Received: from localhost (10.100.1.52) by Jtjnmail201617.home.langchao.com
- (10.100.2.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 6 Jun 2019
- 10:17:51 +0800
-From: John Wang <wangzqbj@inspur.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH dev-5.1] ARM: dts: aspeed: Add Inspur fp5280g2 BMC machine
-Date: Thu, 6 Jun 2019 10:17:51 +0800
-Message-ID: <1559787471-3734-1-git-send-email-wangzqbj@inspur.com>
-X-Mailer: git-send-email 2.7.4
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45K9566ySTzDqdX
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Jun 2019 12:45:45 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 05 Jun 2019 19:45:42 -0700
+X-ExtLoop1: 1
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.254.36.100])
+ ([10.254.36.100])
+ by fmsmga006.fm.intel.com with ESMTP; 05 Jun 2019 19:45:42 -0700
+Subject: Re: ikvm gadget usb_ep_queue error when the hostOS reboot
+To: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>,
+ eajames <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>,
+ "Andrew.Jeffery" <andrew@aj.id.au>
+References: <tencent_6F8069FB02E8C854660BE3B0@qq.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <9d03c1b8-914f-bc28-4035-17738c0622bb@linux.intel.com>
+Date: Wed, 5 Jun 2019 19:45:42 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.100.1.52]
-X-ClientProxiedBy: jtjnmail201607.home.langchao.com (10.100.2.7) To
- Jtjnmail201617.home.langchao.com (10.100.2.17)
+In-Reply-To: <tencent_6F8069FB02E8C854660BE3B0@qq.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,877 +58,112 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The fp5280g2 is an open-power server platform with
-an aspeed ast2500 BMC
+On 6/5/2019 7:07 PM, xiuzhi wrote:
+> Hi Jae,
+>     The bmc serial port will print an  usb_ep_queue errors when reboot 
+> the hostOS.
+> I can reproduce it by the following steps:
+> 1, Login the bmc webpage ,open the kvm webpage.
+> 2, reboot the host OS
+> 3,  Bmc  Serial port will print error messages:
+> [  680.786134] aspeed-video 1e700000.video: Timed out; first mode detect
+> [  681.846125] aspeed-video 1e700000.video: Timed out when stopping 
+> streaming
+> [  682.356106] aspeed-video 1e700000.video: Timed out; first mode detect
 
-Signed-off-by: John Wang <wangzqbj@inspur.com>
----
- arch/arm/boot/dts/Makefile                       |   1 +
- arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 843 +++++++++++++++++++++++
- 2 files changed, 844 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+Looks like you didn't apply this patch:
+https://lists.ozlabs.org/pipermail/openbmc/2019-May/016177.html
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index bed2047..31db1d3 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1256,6 +1256,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-tiogapass.dtb \
- 	aspeed-bmc-intel-s2600wf.dtb \
-+	aspeed-bmc-inspur-fp5280g2.dtb \
- 	aspeed-bmc-lenovo-hr630.dtb \
- 	aspeed-bmc-microsoft-olympus.dtb \
- 	aspeed-bmc-opp-lanyang.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-new file mode 100644
-index 0000000..771de77
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-@@ -0,0 +1,843 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+#include <dt-bindings/leds/leds-pca955x.h>
-+
-+/ {
-+	model = "FP5280G2 BMC";
-+	compatible = "inspur,fp5280g2-bmc", "aspeed,ast2500";
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@9f000000 {
-+			no-map;
-+			reg = <0x9f000000 0x01000000>; /* 16M */
-+		};
-+
-+		flash_memory: region@98000000 {
-+			no-map;
-+			reg = <0x98000000 0x04000000>; /* 64M */
-+		};
-+
-+		coldfire_memory: codefire_memory@9ef00000 {
-+			reg = <0x9ef00000 0x00100000>;
-+			no-map;
-+		};
-+
-+		gfx_memory: framebuffer {
-+			size = <0x01000000>;
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	fsi: gpio-fsi {
-+		compatible = "fsi-master-gpio", "fsi-master";
-+		#address-cells = <2>;
-+		#size-cells = <0>;
-+		no-gpio-delays;
-+
-+		memory-region = <&coldfire_memory>;
-+		aspeed,sram = <&sram>;
-+		aspeed,cvic = <&cvic>;
-+
-+		clock-gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
-+		data-gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_HIGH>;
-+		mux-gpios = <&gpio ASPEED_GPIO(I, 2) GPIO_ACTIVE_HIGH>;
-+		enable-gpios = <&gpio ASPEED_GPIO(I, 3) GPIO_ACTIVE_HIGH>;
-+		trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		checkstop {
-+			label = "checkstop";
-+			gpios = <&gpio ASPEED_GPIO(B, 3) GPIO_ACTIVE_LOW>;
-+			linux,code = <ASPEED_GPIO(B, 3)>;
-+		};
-+
-+		ps0-presence {
-+			label = "ps0-presence";
-+			gpios = <&gpio ASPEED_GPIO(F, 0) GPIO_ACTIVE_LOW>;
-+			linux,code = <ASPEED_GPIO(F, 0)>;
-+		};
-+
-+		ps1-presence {
-+			label = "ps1-presence";
-+			gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
-+			linux,code = <ASPEED_GPIO(F, 1)>;
-+		};
-+
-+	};
-+
-+	gpio-keys-polled {
-+		compatible = "gpio-keys-polled";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		poll-interval = <1000>;
-+
-+		fan0-presence {
-+			label = "fan0-presence";
-+			gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
-+			linux,code = <0>;
-+		};
-+
-+		fan1-presence {
-+			label = "fan1-presence";
-+			gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
-+			linux,code = <1>;
-+		};
-+
-+		fan2-presence {
-+			label = "fan2-presence";
-+			gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
-+			linux,code = <2>;
-+		};
-+
-+		fan3-presence {
-+			label = "fan3-presence";
-+			gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
-+			linux,code = <3>;
-+		};
-+
-+		fan4-presence {
-+			label = "fan4-presence";
-+			gpios = <&pca1 4 GPIO_ACTIVE_LOW>;
-+			linux,code = <4>;
-+		};
-+
-+		fan5-presence {
-+			label = "fan5-presence";
-+			gpios = <&pca1 5 GPIO_ACTIVE_LOW>;
-+			linux,code = <5>;
-+		};
-+
-+		fan6-presence {
-+			label = "fan6-presence";
-+			gpios = <&pca1 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <6>;
-+		};
-+
-+		fan7-presence {
-+			label = "fan7-presence";
-+			gpios = <&pca1 7 GPIO_ACTIVE_LOW>;
-+			linux,code = <7>;
-+		};
-+	};
-+
-+	leds {
-+	    compatible = "gpio-leds";
-+
-+	    power {
-+		    label = "power";
-+		    /* TODO: dummy gpio */
-+		    gpios = <&gpio ASPEED_GPIO(R, 1) GPIO_ACTIVE_LOW>;
-+	    };
-+
-+	};
-+
-+	iio-hwmon-battery {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 15>;
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>,
-+			<&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>,
-+			<&adc 10>, <&adc 11>, <&adc 12>, <&adc 13>, <&adc 14>;
-+	};
-+
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	flash@0 {
-+		status = "okay";
-+		label = "bmc";
-+		m25p,fast-read;
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		label = "pnor";
-+		m25p,fast-read;
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&uart1 {
-+	/* Rear RS-232 connector */
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+			&pinctrl_rxd1_default
-+			&pinctrl_nrts1_default
-+			&pinctrl_ndtr1_default
-+			&pinctrl_ndsr1_default
-+			&pinctrl_ncts1_default
-+			&pinctrl_ndcd1_default
-+			&pinctrl_nri1_default>;
-+};
-+
-+&uart2 {
-+	/* Test Point */
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
-+};
-+
-+&uart3 {
-+	/* APSS */
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd3_default &pinctrl_rxd3_default>;
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&lpc_ctrl {
-+	status = "okay";
-+	memory-region = <&flash_memory>;
-+	flash = <&spi1>;
-+};
-+
-+&mbox {
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	use-ncsi;
-+};
-+
-+&mac1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&i2c0 {
-+	/* LCD */
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+
-+	eeprom@50 {
-+		compatible = "atmel,24c256";
-+		reg = <0x50>;
-+		label = "fru";
-+	};
-+
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+
-+	tmp112@48 {
-+		compatible = "ti,tmp112";
-+		reg = <0x48>;
-+		label = "inlet";
-+	};
-+
-+	tmp112@49 {
-+		compatible = "ti,tmp112";
-+		reg = <0x49>;
-+		label = "outlet";
-+	};
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			tmp112@4a {
-+				compatible = "ti,tmp112";
-+				reg = <0x4a>;
-+				label = "psu_inlet";
-+			};
-+
-+		};
-+
-+		i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			tmp112@4a {
-+				compatible = "ti,tmp112";
-+				reg = <0x4a>;
-+				label = "ocp_zone";
-+			};
-+		};
-+
-+		i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+
-+			tmp112@4a {
-+				compatible = "ti,tmp112";
-+				reg = <0x4a>;
-+				label = "bmc_zone";
-+			};
-+		};
-+
-+		i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+
-+			tmp112@7c {
-+				compatible = "emc1413";
-+				reg = <0x7c>;
-+			};
-+		};
-+
-+	};
-+};
-+
-+&i2c3 {
-+	/* Riser Card */
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+	rtc@68 {
-+		compatible = "dallas,ds3232";
-+		reg = <0x68>;
-+	};
-+};
-+
-+&i2c5 {
-+	/* vr  */
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	/* bp card */
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			adm1278@10 {
-+				compatible = "adi,adm1278";
-+				reg = <0x10>;
-+			};
-+
-+			adm1278@13 {
-+				compatible = "adi,adm1278";
-+				reg = <0x13>;
-+			};
-+
-+			adm1278@50 {
-+				compatible = "adi,adm1278";
-+				reg = <0x50>;
-+			};
-+
-+			adm1278@53 {
-+				compatible = "adi,adm1278";
-+				reg = <0x53>;
-+			};
-+
-+		};
-+
-+		/*pcie riser*/
-+
-+	};
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	pca0: pca9555@20 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x20>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+	};
-+
-+	pca1: pca9555@21 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x21>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+	pca2: pca9555@22 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x22>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+	pca3: pca9555@23 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x23>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+	pca4: pca9555@24 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x24>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+	pca5: pca9555@25 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x25>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+};
-+
-+&i2c9 {
-+	/* cpld */
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	/* hdd bp */
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+
-+	power-supply@58 {
-+		compatible = "pmbus";
-+		reg = <0x58>;
-+	};
-+
-+	power-supply@5a {
-+		compatible = "pmbus";
-+		reg = <0x5a>;
-+	};
-+};
-+
-+&i2c12 {
-+	/* odcc */
-+	status = "okay";
-+};
-+
-+&vuart {
-+	status = "okay";
-+};
-+
-+&gfx {
-+	status = "okay";
-+	memory-region = <&gfx_memory>;
-+};
-+
-+&pinctrl {
-+	aspeed,external-nodes = <&gfx &lhc>;
-+};
-+
-+&gpio {
-+	pin_gpio_b7 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(B,7) GPIO_ACTIVE_LOW>;
-+		output-high;
-+		line-name = "BMC_INIT_OK";
-+	};
-+};
-+
-+&wdt1 {
-+	aspeed,reset-type = "none";
-+	aspeed,external-signal;
-+	aspeed,ext-push-pull;
-+	aspeed,ext-active-high;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_wdtrst1_default>;
-+};
-+
-+&ibt {
-+	status = "okay";
-+
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-+		&pinctrl_pwm2_default &pinctrl_pwm3_default
-+		&pinctrl_pwm4_default &pinctrl_pwm5_default
-+		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+	};
-+
-+	fan@2 {
-+		reg = <0x02>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+	};
-+
-+	fan@3 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+	};
-+
-+	fan@4 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-+	};
-+
-+	fan@5 {
-+		reg = <0x05>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-+	};
-+
-+	fan@6 {
-+		reg = <0x06>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
-+	};
-+
-+	fan@7 {
-+		reg = <0x07>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
-+	};
-+
-+};
-+
-+#include "ibm-power9-dual.dtsi"
--- 
-2.7.4
+> [  682.377294] configfs-gadget gadget: usb_ep_queue error on int 
+> endpoint -108
 
+This is expected because ikvm service will keep sending keyboard and
+mouse events to host but host disconnects the usb connection while host
+rebooting. This message is ignorable but if you want to disable printing
+out of this message in the case, use this:
+https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0049-Suppress-excessive-HID-gadget-error-logs.patch
+
+Thanks,
+Jae
+
+> [  682.896212] aspeed-video 1e700000.video: Timed out; first mode detect
+> [  684.917892] configfs-gadget gadget: usb_ep_queue error on int 
+> endpoint -108
+> [  685.426159] aspeed-video 1e700000.video: Timed out; first mode detect
+> 4, It will stop the error output when the hostOS start to bootup.[  
+> 739.598840] configfs-gadgetgadget: high-speed config #1: c              
+>        [  739.629961] aspeed_vhub 1e6a0000.usb-vhub: status direction 
+> mismatch
+> 
+> Does this output make sense?
+> Best,
+> Xiuzhi
+> ------------------ Original ------------------
+> *From: * "jae.hyun.yoo";<jae.hyun.yoo@linux.intel.com>;
+> *Date: * Jun 1, 2019
+> *To: * "xiuzhi"<1450335857@qq.com>; "openbmc"<openbmc@lists.ozlabs.org>; 
+> "eajames"<eajames@linux.ibm.com>; "joel"<joel@jms.id.au>; 
+> "andrew"<andrew@aj.id.au>;
+> *Subject: * Re: [PATCH dev-5.1 4/4] media: aspeed: add a workaround to 
+> fix asilicon bug (Jae Hyun Yoo)
+> 
+> On 5/31/2019 4:21 AM, xiuzhi wrote:
+>  > Hi  Jae,
+>  >     I tested this patch ,it works on 1680*1050,but I found an issue:
+>  >
+>  > The ikvm webpage will be black screen when you reboot the host after
+>  > switching solution between 1680*1050 and 800*600 on chrome browser (my
+>  > chrome version is 65).
+>  > you can reproduce it:
+>  > 1, Set host screen solution to 1680*1050 and save it . ikvm webpage works
+>  > 2,Set host screen solution to 800*600 and save it. ikvm webpage works
+>  > 3,Reset host screen solution to   1680*1050 and save it,
+>  > 4,reboot the host,
+>  > 5, the ikvm webpage is black screen when boot to Centos GUI
+> 
+> Hi Xiuzhi,
+> 
+> Checked that the issue isn't related this patch. Actually, that is
+> caused by the first patch of this patch series. Since the patch removes
+> source buffer allocation before mode detection, remaining allocation
+> logic should be changed accordingly, otherwise it can't allocate buffers
+> and eventually causes the issue. I'll fix the first patch in the next
+> spin. In the meantime, you can apply below quick fix on top of what you
+> tested the issue.
+> 
+> Thanks,
+> Jae
+> 
+> 
+> diff --git a/drivers/media/platform/aspeed-video.c
+> b/drivers/media/platform/aspeed-video.c
+> index c2d4a2e6f20f..034f2f436d76 100644
+> --- a/drivers/media/platform/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -865,20 +865,14 @@ static void aspeed_video_set_resolution(struct
+> aspeed_video *video)
+> 
+>           size *= 4;
+> 
+> -       if (size == video->srcs[0].size / 2) {
+> -               aspeed_video_write(video, VE_SRC1_ADDR,
+> -                                  video->srcs[0].dma + size);
+> -       } else if (size == video->srcs[0].size) {
+> -               if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
+> -                       goto err_mem;
+> -
+> -               aspeed_video_write(video, VE_SRC1_ADDR, video->srcs[1].dma);
+> -       } else {
+> -               aspeed_video_free_buf(video, &video->srcs[0]);
+> +       if (size != video->srcs[0].size) {
+> +               if (video->srcs[0].size)
+> +                       aspeed_video_free_buf(video, &video->srcs[0]);
+> +               if (video->srcs[1].size)
+> +                       aspeed_video_free_buf(video, &video->srcs[1]);
+> 
+>                   if (!aspeed_video_alloc_buf(video, &video->srcs[0], size))
+>                           goto err_mem;
+> -
+>                   if (!aspeed_video_alloc_buf(video, &video->srcs[1], size))
+>                           goto err_mem;
+> 
