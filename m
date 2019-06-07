@@ -2,63 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A677382C9
-	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2019 04:37:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CACF638D4C
+	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2019 16:36:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45KmsS5z0CzDqpR
-	for <lists+openbmc@lfdr.de>; Fri,  7 Jun 2019 12:37:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45L4q73DkHzDqxq
+	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2019 00:36:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::433; helo=mail-wr1-x433.google.com;
- envelope-from=derick.montague@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="APdOivxa"; 
- dkim-atps=neutral
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
- [IPv6:2a00:1450:4864:20::433])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Kmrx3rlTzDqnw
- for <openbmc@lists.ozlabs.org>; Fri,  7 Jun 2019 12:37:20 +1000 (AEST)
-Received: by mail-wr1-x433.google.com with SMTP id r18so531768wrm.10
- for <openbmc@lists.ozlabs.org>; Thu, 06 Jun 2019 19:37:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=9l1TytNkDXzKE0fof1Yb2loRfG+JHaN8mbR+fee992I=;
- b=APdOivxaIkKZtIRyuFCeta+HKrYrUKOzUwybo33SxOxKOkQWeF8b/3XxTdF6rx+zVK
- lA2u3C6Qv383WagrjvjLwKy7YF8Hna8u4XQlXtnCYeRuFhhaXOlv7ZzBjptk+8R5j4ug
- s4tzYNGhihRXq2GjxafKi/2sP/fqG4FpubjqntE/bwmTppWQMvyzp+cSoUaOkS7IIFDA
- flf3I4zrdmpSoZ65qM8MzYCkXZ1pQA40jl0VRQQf7PZfdrMXjo9SSxpeUowJGQ2myIgx
- cfpbXYrhl1XRG00oEMH2yNgYYBFhQRPzvtsKmk0KU6SfUPZJJKS0p6/C+73v3pT6KemZ
- 4wyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=9l1TytNkDXzKE0fof1Yb2loRfG+JHaN8mbR+fee992I=;
- b=cz0S7te17cRgR+UT7NFwOVZY8KF7VWltmV4WnilWYuUw2CdbGAsxGFmuFdq8SydECL
- TvBfncU4zP9sXvalhTx3ncBD157Yq5CEYdPvR1TQlGVI63gSEWzCFzhuRxhVMJITdAVC
- eo03HX/uaLafpR0t7i6Yx55HyXzaC1b0tgm6YWlnrmW2g+tkb6nEz1dh8liVfZMsjiY1
- ZRp6Ifb41Q/E/7ZHqMyL/2tx4n5eWod6KttMiPhC1Ge9AEZT1scxyYbwbjrGgq8o6ZoC
- AnB88g2xRRt5tSXP5/Bb/+z3lf5rgxbG6dV+ImRZ98kurxGYdAO4lL88Tq+jRuG+48Ir
- jWkw==
-X-Gm-Message-State: APjAAAVKQCEcM+8cB5R6NpsQlHPiIgKq+t5C9WPL+E65PJbKXWOPfuBQ
- /f7QIqc+AYyGOlobx2V2JygVi9dOby6B9nsnF7QZ42NicXM=
-X-Google-Smtp-Source: APXvYqz70g7LFvr06gRejK3C+X1ysjpfPyd/4pAJNA8be7gz3nTqgKORsAM0e3Muec2aZzpS6zPUxkMSq09zDDHnO4Y=
-X-Received: by 2002:adf:afd5:: with SMTP id y21mr31125903wrd.12.1559875034814; 
- Thu, 06 Jun 2019 19:37:14 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45L4np2ncszDqxW
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Jun 2019 00:35:41 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x57EP03Y088296
+ for <openbmc@lists.ozlabs.org>; Fri, 7 Jun 2019 10:35:36 -0400
+Received: from e31.co.us.ibm.com (e31.co.us.ibm.com [32.97.110.149])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2sypsu91hn-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Jun 2019 10:35:35 -0400
+Received: from localhost
+ by e31.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <mspinler@linux.ibm.com>;
+ Fri, 7 Jun 2019 15:35:34 +0100
+Received: from b03cxnp07028.gho.boulder.ibm.com (9.17.130.15)
+ by e31.co.us.ibm.com (192.168.1.131) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Fri, 7 Jun 2019 15:35:31 +0100
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x57EZUge22937956
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Jun 2019 14:35:30 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2E866A051;
+ Fri,  7 Jun 2019 14:35:30 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E34A6A04D;
+ Fri,  7 Jun 2019 14:35:30 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Jun 2019 14:35:30 +0000 (GMT)
+Subject: Re: [Design] PSU firmware update
+To: Adriana Kobylak <anoo@linux.ibm.com>, Lei YU <mine260309@gmail.com>
+References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
+ <20190604182635.GD46814@mauery.jf.intel.com>
+ <CAARXrtnpeP0J3T0y=K=O1QTYjxBXXxQSzUVErygzUo+MR6t=0w@mail.gmail.com>
+ <f1d99c51-881e-c1f3-79e6-1d9be951b0c4@linux.ibm.com>
+ <CAARXrt=6DwO7cAxyEJ=FEUPF4+gU9npJtWmd31LuqmTpxHu98w@mail.gmail.com>
+ <b20a0ffd292efcafc8e4ebad40d810bc@linux.vnet.ibm.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Date: Fri, 7 Jun 2019 09:35:30 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-From: Derick <derick.montague@gmail.com>
-Date: Thu, 6 Jun 2019 21:37:03 -0500
-Message-ID: <CAOUmYFRfVQha0NCZd2aLTc-EC2GNF8wuXqnAyWNMCpzcecQUKw@mail.gmail.com>
-Subject: Proposal to replace Clang Format with ESLint and Prettier in
- phosphor-webui
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b20a0ffd292efcafc8e4ebad40d810bc@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19060714-8235-0000-0000-00000EA50B6A
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011228; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01214563; UDB=6.00638456; IPR=6.00995648; 
+ MB=3.00027222; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-07 14:35:33
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19060714-8236-0000-0000-000045EA70D6
+Message-Id: <fdc1cbfa-d337-7219-b748-b251e6f80272@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-07_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906070102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,34 +99,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
 
-I propose we replace Clang Format in the phosphor-webui with an ESLint
-and Prettier configuration. Clang format handles formatting reasonably
-well, but it doesn't offer the ability to help identify potential
-errors.
+On 6/6/2019 3:31 PM, Adriana Kobylak wrote:
+> On 2019-06-05 22:31, Lei YU wrote:
+>> On Wed, Jun 5, 2019 at 10:25 PM Matt Spinler <mspinler@linux.ibm.com> 
+>> wrote:
+>>>
+>>>
+>>> On 6/5/2019 1:18 AM, Lei YU wrote:
+>>> >>> The PSU firmware code update will re-use the current interfaces 
+>>> to upload,
+>>> >>> verify, and activate the image.
+>>> >> We would like the option to be able to ship the PSU firmware as 
+>>> part of
+>>> >> the BMC image (in the root filesystem). This means that it is 
+>>> already
+>>> >> present and authenticated when the BMC boots. In this way, we 
+>>> know that
+>>> >> the current BMC firmware plays well with the PSU firmware and 
+>>> have fewer
+>>> >> variables to test for when making a release.
+>>> > Because the PSU firmware is part of BMC image, this seems a 
+>>> completely
+>>> > different approach, and more like part of BMC image update, is it?
+>>> > I would expect this should not be part of this design, what do you 
+>>> think?
+>>>
+>>> FYI, I am 99% sure this is how IBM needs its systems to work as well.
+>>> That being the case,
+>>>
+>>> will you also be handling this design?
+>>
+>> Good to know.
+>>
+>> Then a question comes up:
+>> In which cases PSU firmware update shall be done?
+>> 1. It is updated together with BMC firmware update as described by 
+>> Vernon
+>>    Mauery;
+>> 2. It is updated independently with APIs, as described in this design 
+>> doc.
+>>
+>> Will 1 and 2 both be valid, or only 1 is the real case and we do not 
+>> need to
+>> support 2?
+>>
+>
+> I see it as having a single tarball file that has the required files 
+> to update the
+> BMC and the PSU. When this tarball is uploaded, then a new Version 
+> with a Purpose
+> of System or some other name is created. When this Version is 
+> activated, this
+> triggers the BMC updater (existing) and the PSU updater (new) to check 
+> if all
+> the necessary files to perform the update of their component exist. If 
+> yes, each
+> updater updates their piece and if any one fails it'd mark the Version 
+> as Failed
+> (TBD on synchronizing the updaters to mark the Version as Active or 
+> Failed).
+> So the PSU would be updated at the same time as the BMC, but done by 
+> its own
+> updater application.
+>
+> Thoughts?
 
-We can run ESLint and Prettier from the command-line and integrate
-them into our editors. I have included links to the documentation for
-the resources and would like to continue the conversation in the
-Gerrit (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/22366).
+3 more quick notes:
 
-My initial goal was to use the Angular 1 Style Guide's shared eslint
-and the ESLint recommended configurations. However, those options
-require a considerable amount of effort to update and regression test
-to be compliant. For now,  I have added a few Angular and ESLint rules
-to the configuration that are categorized either as possible errors or
-best practices. If we decide the AngularJS community's suggested best
-practices will improve our code base, we can develop a plan to
-implement those changes in a phased approach.
+1) PSs can be hot pluggable, so when a new one is detected, the code
+update should run then too if the new PS needs one, assuming all other
+conditions are met.
 
-- ESLint: https://eslint.org/
-- Prettier: https://prettier.io/
-- ESLlint Angular Plugin: https://www.npmjs.com/package/eslint-plugin-angular
-- Angular 1 Style Guide:
-https://github.com/johnpapa/angular-styleguide/tree/master/a1
-- Gerrit Review:
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/22366
+2) A single system may support multiple models of PS (will definitely
+happen for us), so this design should be able to store multiple PS
+images and send the correct image to the correct model.
+
+3) You mentioned the combined image stuff before.  We should just check
+the timeline for that support aligns with this one.
+
+
+
+
+
+
+>
+>> The reason I ask is because if we could get clear requirements, it is 
+>> possible
+>> to simplify the design.
+
