@@ -1,40 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CB94398A4
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2019 00:27:35 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45LHGD5rhrzDqMX
-	for <lists+openbmc@lfdr.de>; Sat,  8 Jun 2019 08:27:32 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDDA43AAE7
+	for <lists+openbmc@lfdr.de>; Sun,  9 Jun 2019 19:29:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45MNY46LR0zDqNr
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 03:29:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=the-dreams.de
- (client-ip=88.99.104.3; helo=pokefinder.org; envelope-from=wsa@the-dreams.de;
- receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::731; helo=mail-qk1-x731.google.com;
+ envelope-from=simon.d.barber@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=the-dreams.de
-X-Greylist: delayed 450 seconds by postgrey-1.36 at bilbo;
- Sat, 08 Jun 2019 08:26:59 AEST
-Received: from pokefinder.org (sauhun.de [88.99.104.3])
- by lists.ozlabs.org (Postfix) with ESMTP id 45LHFb6pvKzDqJC
- for <openbmc@lists.ozlabs.org>; Sat,  8 Jun 2019 08:26:59 +1000 (AEST)
-Received: from localhost (p5486CE26.dip0.t-ipconnect.de [84.134.206.38])
- by pokefinder.org (Postfix) with ESMTPSA id 684603E43BA;
- Sat,  8 Jun 2019 00:19:24 +0200 (CEST)
-Date: Sat, 8 Jun 2019 00:19:24 +0200
-From: Wolfram Sang <wsa@the-dreams.de>
-To: Oliver O'Halloran <oohall@gmail.com>
-Subject: Re: [PATCH v2] i2c: fsi: Create busses for all ports
-Message-ID: <20190607221924.GC869@kunai>
-References: <20190606115220.9888-1-oohall@gmail.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="m5Ix+Kky"; 
+ dkim-atps=neutral
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com
+ [IPv6:2607:f8b0:4864:20::731])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45MNXT45cfzDqFF
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Jun 2019 03:28:37 +1000 (AEST)
+Received: by mail-qk1-x731.google.com with SMTP id t8so613967qkt.1
+ for <openbmc@lists.ozlabs.org>; Sun, 09 Jun 2019 10:28:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=wDoM3wdIddbshNwT2rdKVLfE4gLoet5oCP5Y5NOUr1s=;
+ b=m5Ix+KkyLV87hxx/L3kgLOz2S0Bfub4eyTXetM0iTiHCsdHJ/6lrHXILXlJlWPt7Ck
+ 426XQImj2fFdn551njLf2JKzhPRcyT5W05y4ytkZJueKBvPaBAeiafkfT4JoalMAMuOg
+ ug/w/rGCKQBcATrOs5Z7Kq9Ge0pnF3pRJ54a3l+t9ZVRKe6zt3ETdajFD+muWqJurkQq
+ AdZrJb7NEdHV5BAsOrBUI7wfNCcuiGFMZvLD2R4bzmANJUnj7hgNaxIAVurziiBg8gAT
+ YAlebNyhjgyAsyDjcUrU7mRShnouuyccBE5Dthur+tb6h3NPg8kidGZpxJffgZ+Qr+eM
+ 5itQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=wDoM3wdIddbshNwT2rdKVLfE4gLoet5oCP5Y5NOUr1s=;
+ b=oHKExnEEG91rRDm6kmTZq6/00VnfVbYxsB6kIBXCFpF0RX9kXmGmzGYoLHrzcgZuvd
+ tjd798KwDsffxw0bHxkVMvL4PYMn3LXtO+HAlePZyLtP0AfIqikwGF4HgE/yhLCuC4tk
+ 8zauwxL1GSEGxC/50M3eKDLhoZcEh03yJl59QWaYLG6FJXt4VUShL6Go+OUiL5MaqWUr
+ AN0770G+rvvv/Am3oHSuPrskbKGwUVkV0YAgqDevbbxX81wCxPLy9CaiZut4G5MNwm+1
+ 8hNQVFTo3da/rbp/m+OEyHx7cPo0pdA06lhhbLLOVegN9C+cA/iV4PblD8lgB7H4jfnT
+ HrAA==
+X-Gm-Message-State: APjAAAV1gXegZLmzg058Q3/572I48aE+Ubg96e4/On2Foa5cDZ3pUj1v
+ YIQw/RNB9MFkq8R+i7KRpqCxnom+smgqpRHzzVst8IKR
+X-Google-Smtp-Source: APXvYqxStYZUImp8Rqludg7+lLz+L/9AISF0kAax48GKuuFEVxTovy+cFwAkxDsP8zFljQW1MsP4IPVv+qaLVI1gZFk=
+X-Received: by 2002:a37:9a4d:: with SMTP id c74mr52998426qke.123.1560101313977; 
+ Sun, 09 Jun 2019 10:28:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4ZLFUWh1odzi/v6L"
-Content-Disposition: inline
-In-Reply-To: <20190606115220.9888-1-oohall@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From: Simon Barber <simon.d.barber@gmail.com>
+Date: Sun, 9 Jun 2019 18:28:22 +0100
+Message-ID: <CAJQj_PoNcJPQcT_uG9vN4nsi2512_xcjA5Oput+=xE2Ragqt6Q@mail.gmail.com>
+Subject: stable image archive
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000a2220c058ae76467"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,52 +69,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org,
- Eddie James <eajames@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000a2220c058ae76467
+Content-Type: text/plain; charset="UTF-8"
 
---4ZLFUWh1odzi/v6L
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Is there an archive  of stable built and released images for openbmc ? As
+part of my masters project I would like to run some pen tests against the
+the image, to compare with other BMCs out and in use.
+
+If  there is no stable release archive   is ipmi tool built as part of the
+palmetto build, I can find reference to a set of diffs to add it to the
+build, but there has been a restructure since then, and so the diffs dont
+patch cleanly and i dont understand the structure enough yet to resolve the
+conflicts., so do I need to build the sdk and then download and build
+openbmc/ipmitool
+
+
+Thanks.
+
+Simon
+
+--000000000000a2220c058ae76467
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 06, 2019 at 09:52:20PM +1000, Oliver O'Halloran wrote:
-> Currently we only create an I2C bus for the ports listed in the
-> device-tree for that master. There's no real reason for this since
-> we can discover the number of ports the master supports by looking
-> at the port_max field of the status register.
->=20
-> This patch re-works the bus add logic so that we always create buses
-> for each port, unless the bus is marked as unavailable in the DT. This
-> is useful since it ensures that all the buses provided by the CFAM I2C
-> master are accessible to debug tools.
->=20
-> Cc: Eddie James <eajames@linux.vnet.ibm.com>
-> Signed-off-by: Oliver O'Halloran <oohall@gmail.com>
+<div dir=3D"ltr"><div dir=3D"ltr">Is there an archive=C2=A0 of stable built=
+ and released images for openbmc ? As part of my masters project I would li=
+ke to run some pen tests against the the image, to compare with other BMCs =
+out and in use.<br><br>If=C2=A0 there is no stable release archive=C2=A0=C2=
+=A0 is ipmi tool built as part of the palmetto build, I can find reference =
+to a set of diffs to add it to the build, but there has been a restructure =
+since then, and so the diffs dont patch cleanly and i dont understand the s=
+tructure enough yet to resolve the conflicts., so do I need to build the sd=
+k and then download and build openbmc/ipmitool<br><br><br>Thanks.<br><br>Si=
+mon<br></div></div>
 
-Applied to for-next, thanks!
-
-
---4ZLFUWh1odzi/v6L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAlz64usACgkQFA3kzBSg
-KbbYthAArVDgB7Kw8dfQVNVvY21iHqMnEE+6VseRR2PzZyWqGLJPTTAnqJm8L6sL
-rhR+fZXxa8nFvU1rKnybYcp58OxxhJT1RO/UQDs4Qv6+9JMHmteb2Ll3ETno+FMu
-2I8Y5xFNeGqf3X2wn+yFm36IcXIn2l2P7BaQ8cN82AW7Etq+fTAmDH5v46ydngqQ
-OeXgSIR9bP1T6qEzcdf9sDENC3Dkw7S6YbPKA3UzOFypsXOo2f9xPC6Esmr0sZkb
-apquwU4lUCkQj//neBtI0mZqSQCv0k1F3k8BFmtFqLKw+KkaHQP3HxDWlOchv9Ow
-A14dNahgdm5D2IVcpM3MjrGS04U9Puu4dpYZ6X3adXwg25qLp6nS7XRVykV0OUcy
-2Va7Kot+e1u2n9S5Io4owfCdjszVW0ANkiyrQ8wp0o8A1dgSeAHfAH99I8wfBfxS
-yaKz+QCoMH3UQ/VDnMdS4EBLNFRuEdjmszAbrDIhoP9oul7nxar1ZTiAL/w/8w5I
-yA5Wmlf3oTXHRbOPc7qy7TT6zI4ZxjoNKRJpzYnrXeZYo6hbpK+vwK6DZlUy3R2k
-ohkg1s952Poq0nvrruBlCvz214nDonJmXDHxuzrmqCl57uV5VHh9g1WiHkRFrIWB
-+RThkQpHnTmXTLc8ax2D6b1VzYHiVoS39mZFtMyulniv5/42DKw=
-=tZYM
------END PGP SIGNATURE-----
-
---4ZLFUWh1odzi/v6L--
+--000000000000a2220c058ae76467--
