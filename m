@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 136AD3BC1A
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 20:53:14 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8545C3B840
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 17:24:41 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Mxkt6pC6zDqPM
-	for <lists+openbmc@lfdr.de>; Tue, 11 Jun 2019 01:24:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45N2MW4L4VzDqQq
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jun 2019 04:53:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::c2f; helo=mail-yw1-xc2f.google.com;
- envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="EXky6J7G"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="CHBSzbjn"; 
  dkim-atps=neutral
-Received: from mail-yw1-xc2f.google.com (mail-yw1-xc2f.google.com
- [IPv6:2607:f8b0:4864:20::c2f])
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45MxkN03NqzDqJs
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 01:24:11 +1000 (AEST)
-Received: by mail-yw1-xc2f.google.com with SMTP id u134so3933239ywf.6
- for <openbmc@lists.ozlabs.org>; Mon, 10 Jun 2019 08:24:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45N2Lj3ZJQzDqPk
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 04:52:29 +1000 (AEST)
+Received: by mail-oi1-x234.google.com with SMTP id w79so7013899oif.10
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Jun 2019 11:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to;
- bh=TT74comd67EJ9Zns6WjqPQEfzWY1Yrktf8V2baY897Q=;
- b=EXky6J7GUtw4ya7LoH2m7Tn+d9Pgno2rValw3j8Y81ESnXNTOBjhV+60srJ+yjulB/
- 2yO1SibQOZaxyMMwvAHUj2iUNRiyxPW5xGCeB8X26HT1TP1r4mfkUODy6aBqf2NEDwzX
- GRxFybt/BDyws1hEMYmxHxsc/iAq6LCMEV6MQL+845nmo3WOyhG1rFHfCoqWykHgkI/V
- +V0xwMrttG9OQj25N/7O6qpLhHxMBq81x3coaUWyLry3GXhAxMf+iwndygsFLPixgJBk
- ZJfbkzitBcF+22cipZq5aP5DDz44oif2u6gP5Yiao7fqUTErJr044F1W4vKOna1CJXi4
- cI9w==
+ bh=EZ3clZipg05SveXe5atZVFAabVtgmRlY3YehXQ5Beeg=;
+ b=CHBSzbjnSaw91/EoIKcVENwl3uVpuUOgbHwbywEmsbbBcVCZnpo434xY1ob8TdD/Xa
+ FsVjS1HMa7/Zen24BSiArSDISr3L3uDVGed7Go3gJm1rhMSh5V2tJsFtu9V4Z7oQFUZe
+ ARJLHXlwX/Ta2ZNAHRC/DNXwQUDFpupw8nBIeiOZPP9wJ1AAAit4c/5b/my4Vr1/9vgN
+ uiLTobMEcnfc+brmW6U4j3TC7hJDPG5dI1hf/KZJamYxhLVZ2yyIMz1GSDCLhyerGOwx
+ 0HWYHXCEyqmCY5ebX/QqqUSH3nZ6LLLW22rVGtRFxWyN+2zpMWTzBh4g6aIiMrysQAd7
+ eBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=TT74comd67EJ9Zns6WjqPQEfzWY1Yrktf8V2baY897Q=;
- b=Zo+6Z2+824FDk2ZjbGjhmmjGmx89h2/eKNQLrk66U2i4jCgJUA4uyu61bRMVuTXbQC
- ftpmLOxOMeYkEMJxFgsGLunKXTaLpJaJAJ/3HbetM8tpiJR1V6kmbsbGvL10Wx8bhWkl
- HjWuA7Qj183XnRFXnAhRaUQoAbqLsOShyb8hjpvsbrSRqUkquT90pcq9lYdEdkoout6M
- a+sybR8ANt6aVF7t0Du09GFV8yhN+UP/zseioraaUSe/BWUOcURpbCilFhyGA5C1rWEY
- HQRc2JUlVfjaZ3obRngJ38b73qAJl+9aehzrPTrfxR0UkhMVhXm32GQYLLiF6V+/uwMS
- LjyA==
-X-Gm-Message-State: APjAAAX6ULIpURS6E1jlYClxVnN5OwGvD/UFI4C9qd5ve5ZXz7zAPbCK
- 9QSBy170dXIZX1dZL0W/Mk4Nsv7DOHETu4BrUJwOvS5c
-X-Google-Smtp-Source: APXvYqwlcYotTHcHMiawKphqXwcl0qCFuFOa8DBWxZzYns9Uqecu1B0gByHTHYnoHh2KoE0iwrUdG31wD8f9yjMKYvg=
-X-Received: by 2002:a81:a10b:: with SMTP id y11mr21472839ywg.103.1560180247715; 
- Mon, 10 Jun 2019 08:24:07 -0700 (PDT)
+ bh=EZ3clZipg05SveXe5atZVFAabVtgmRlY3YehXQ5Beeg=;
+ b=kubaYIux1HGe7IzrQ1mycnD3dh5u7/UHYG3DTWpRQ5FabsuGmsciV+1bcyD9KMiEcj
+ 6Ujnwy4XCXoAwAl4h6HryXfuqz0Dzf1RoypxTstwP+SR3czcmHMjDitHNw9cRApFRp8y
+ sQiWXNANmFE6j4y2Ul/bM02YtRPblNpSLTklyeonLPzfvbc7QQH9aMefGG5YLHf8jaAh
+ c5iMFDZkr69H7/Q3Pxn3gB3hO4vwAnVKRWKNZu47oGt6GPDMxhN14lBPlM/SqAS5e+Be
+ zdkQPHH1j+hD45um/b1PHeedN3y/yLonfI1xmv2qiUN8vf0q+szwEUoHW3Vl6lR/3kL/
+ Jqkw==
+X-Gm-Message-State: APjAAAV96Ew6zpfiKBBrtmdV2k6AMucWB3M8lcmT+Wll+7msEyjynMqs
+ TQB5X4sd1Xbs7J3BnZP3xfp2fohPmDk5fLYuUZPq+7ojNIg=
+X-Google-Smtp-Source: APXvYqxZTpCSEfYAp6l4H93h8MMuh+ygbZnsj7LB7jbwltSNuS7fSyuylPha6Da46HMlg32dY/vi4RgsiZyY4wKdhNU=
+X-Received: by 2002:aca:aad3:: with SMTP id
+ t202mr13464549oie.158.1560192746117; 
+ Mon, 10 Jun 2019 11:52:26 -0700 (PDT)
 MIME-Version: 1.0
-From: Jandra A <jandraara@gmail.com>
-Date: Mon, 10 Jun 2019 10:23:57 -0500
-Message-ID: <CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com>
-Subject: Network Settings GUI
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Mon, 10 Jun 2019 13:52:10 -0500
+Message-ID: <CALLMt=r7F5G8fvwXuCsi2Z6hXW3fp-3ccHqAgNM6TytggbR=gA@mail.gmail.com>
+Subject: static analysis of openbmc systemd targets
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000736413058af9c55f"
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,80 +73,21 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000736413058af9c55f
-Content-Type: text/plain; charset="UTF-8"
+I'm looking for an easy way to visualize OpenBMC's systemd target
+dependencies. This will help with reviewing changes to these targets
+and services and help visualize future features[1].
 
-Hello all,
+I know there is systemd-analyze but this is a runtime tool (i.e. must
+be run within an executing OpenBMC based system) and it doesn't handle
+some of the nuances of OpenBMC (like our mapper stuff)[2]. I'd like a
+tool I could run against the rootfs after a bitbake of a system that
+would list out all targets, their OnError targets, and their dependent
+services and targets (requires and wants).
 
-Here is the proposal for the Network Settings GUI:
-https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319115961_Physical
-To navigate, click on any flashing blue rectangles or use the right and
-left keyboard arrows.
+I'm thinking of writing up a python tool to do this. Thoughts or
+alternatives out there?
 
-The design is based on the needs found by our research with stakeholders
-and users.
+Andrew
 
-With the GUI, a user is able to assign a Fully Qualified Domain Name
-(FQDN), and choose either DHCP or static configuration, for any selected
-interface.
-
-If DHCP is chosen, the GUI will reflect the appropriate default gateway,
-DNS server, and IP address assigned by the DHCP server. If static is
-selected, users manually assign the default gateway, as well as multiple
-DNS servers and a single IP address (not including the one assigned by
-zeroconf).
-
-Despite the type of configuration selected (DHCP or static),
-zero-configuration is always on to protect the user and ensure there is
-always an IP address assigned. However, once an interface has a non
-zeroconf IP address assigned, users have the flexibility to permanently
-delete that address. Currently, users can only temporarily delete these
-using CLI; once they reboot, the addresses come back. Permanently removing
-IP addresses assigned by zero-configuration is important to customers who
-need to account for every single IP address.
-
-
-NOTE: The reason for limiting to a single IP address per interface is that
-our research from users and stakeholders indicates that multiple would
-never be used and in fact it could make it easy to make a mistake, so for
-this reason we will not support it in the GUI. Additionally, there will be
-no support for VLAN as it was not expected by users and added unnecessary
-confusion.
-
-Regards,
-Jandra Aranguren
-
---000000000000736413058af9c55f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello all,<br><div><br></div><div>Here is the proposal for=
- the Network Settings GUI:=C2=A0<a href=3D"https://ibm.invisionapp.com/shar=
-e/8ENYRVXAPFD#/319115961_Physical">https://ibm.invisionapp.com/share/8ENYRV=
-XAPFD#/319115961_Physical</a>=C2=A0<br>To navigate, click on any flashing b=
-lue rectangles or use the right and left keyboard arrows.</div><div><br></d=
-iv><div>The design is based on the needs found by our research with stakeho=
-lders and users.=C2=A0</div><div><br></div><div>With the GUI, a user is abl=
-e to assign a Fully Qualified Domain Name (FQDN), and choose either DHCP or=
- static configuration, for any selected interface.</div><div><br></div><div=
->If DHCP is chosen, the GUI will reflect the appropriate default gateway, D=
-NS server, and IP address assigned by the DHCP server. If static is selecte=
-d, users manually assign the default gateway, as well as multiple DNS serve=
-rs and a single IP address (not including the one assigned by zeroconf).=C2=
-=A0</div><div><br></div><div>Despite the type of configuration selected (DH=
-CP or static), zero-configuration is always on to protect the user and ensu=
-re there is always an IP address assigned. However, once an interface has a=
- non zeroconf IP address assigned, users have the flexibility to permanentl=
-y delete that address. Currently, users can only temporarily delete these u=
-sing CLI; once they reboot, the addresses come back. Permanently removing I=
-P addresses assigned by zero-configuration is important to customers who ne=
-ed to account for every single IP address.=C2=A0</div><div><br></div><div><=
-br></div><div>NOTE: The reason for limiting to a single IP address per inte=
-rface is that our research from users and stakeholders indicates that multi=
-ple would never be used and in fact it could make it easy to make a mistake=
-, so for this reason we will not support it in the GUI. Additionally, there=
- will be no support for VLAN as it was not expected by users and added unne=
-cessary confusion.=C2=A0<br></div><div><br></div><div>Regards,</div><div>Ja=
-ndra Aranguren</div><div><br></div><div><br></div></div>
-
---000000000000736413058af9c55f--
+[1] https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22395
+[2] https://ozlabs.org/~arj/openbmc/systemd.svg
