@@ -1,63 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08BC63AD7C
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 05:16:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDDA43AAE7
-	for <lists+openbmc@lfdr.de>; Sun,  9 Jun 2019 19:29:15 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45MNY46LR0zDqNr
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 03:29:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Mdb13vm0zDqPK
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jun 2019 13:16:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::731; helo=mail-qk1-x731.google.com;
- envelope-from=simon.d.barber@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::d36; helo=mail-io1-xd36.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="m5Ix+Kky"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="qdFME67Y"; 
  dkim-atps=neutral
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com
- [IPv6:2607:f8b0:4864:20::731])
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45MNXT45cfzDqFF
- for <openbmc@lists.ozlabs.org>; Mon, 10 Jun 2019 03:28:37 +1000 (AEST)
-Received: by mail-qk1-x731.google.com with SMTP id t8so613967qkt.1
- for <openbmc@lists.ozlabs.org>; Sun, 09 Jun 2019 10:28:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45MdZS0RRqzDqG0
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Jun 2019 13:16:15 +1000 (AEST)
+Received: by mail-io1-xd36.google.com with SMTP id e3so5732502ioc.12
+ for <openbmc@lists.ozlabs.org>; Sun, 09 Jun 2019 20:16:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=wDoM3wdIddbshNwT2rdKVLfE4gLoet5oCP5Y5NOUr1s=;
- b=m5Ix+KkyLV87hxx/L3kgLOz2S0Bfub4eyTXetM0iTiHCsdHJ/6lrHXILXlJlWPt7Ck
- 426XQImj2fFdn551njLf2JKzhPRcyT5W05y4ytkZJueKBvPaBAeiafkfT4JoalMAMuOg
- ug/w/rGCKQBcATrOs5Z7Kq9Ge0pnF3pRJ54a3l+t9ZVRKe6zt3ETdajFD+muWqJurkQq
- AdZrJb7NEdHV5BAsOrBUI7wfNCcuiGFMZvLD2R4bzmANJUnj7hgNaxIAVurziiBg8gAT
- YAlebNyhjgyAsyDjcUrU7mRShnouuyccBE5Dthur+tb6h3NPg8kidGZpxJffgZ+Qr+eM
- 5itQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=OWUEqY2uLtw835NIC8BvOPg1Pd3QrF9jy+vV79/M8go=;
+ b=qdFME67Yj0g/Lc1tZQH/CZ8dxUysM2E2mIc4bwRM8gICAVVfP/hYGiVsBYTVMURPxh
+ xVvMlkbAQA6+5UDEcJgKo+/FcpIiSPolRn6gCT5Uf0pW+llXkRWeHd+zE4wgE9//q3TO
+ E3qDoTfIhwabRh8Xwwexd8XKpUbygF4LlCpAgZt42HWLD+NfQubcNtBmtyRzxRVMoAEN
+ V9Dt2kwKvrkBOw9Wurgcgk4bR4NDrdeo/FXqu4dYIP2M08W13VBuFuSZOuv1dc2ywVKO
+ 7Szxi/76EmkAcWOlXNlqxNBYXnuJiK62qP0CO+Of2qvwDLdIbkXkQR+LGWtP/J6GghFp
+ efbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=wDoM3wdIddbshNwT2rdKVLfE4gLoet5oCP5Y5NOUr1s=;
- b=oHKExnEEG91rRDm6kmTZq6/00VnfVbYxsB6kIBXCFpF0RX9kXmGmzGYoLHrzcgZuvd
- tjd798KwDsffxw0bHxkVMvL4PYMn3LXtO+HAlePZyLtP0AfIqikwGF4HgE/yhLCuC4tk
- 8zauwxL1GSEGxC/50M3eKDLhoZcEh03yJl59QWaYLG6FJXt4VUShL6Go+OUiL5MaqWUr
- AN0770G+rvvv/Am3oHSuPrskbKGwUVkV0YAgqDevbbxX81wCxPLy9CaiZut4G5MNwm+1
- 8hNQVFTo3da/rbp/m+OEyHx7cPo0pdA06lhhbLLOVegN9C+cA/iV4PblD8lgB7H4jfnT
- HrAA==
-X-Gm-Message-State: APjAAAV1gXegZLmzg058Q3/572I48aE+Ubg96e4/On2Foa5cDZ3pUj1v
- YIQw/RNB9MFkq8R+i7KRpqCxnom+smgqpRHzzVst8IKR
-X-Google-Smtp-Source: APXvYqxStYZUImp8Rqludg7+lLz+L/9AISF0kAax48GKuuFEVxTovy+cFwAkxDsP8zFljQW1MsP4IPVv+qaLVI1gZFk=
-X-Received: by 2002:a37:9a4d:: with SMTP id c74mr52998426qke.123.1560101313977; 
- Sun, 09 Jun 2019 10:28:33 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=OWUEqY2uLtw835NIC8BvOPg1Pd3QrF9jy+vV79/M8go=;
+ b=CY+3pfAVoq96zNTz3YQlkk2y20KFGLQG2oAOjJAXkQgV3/NFq2XruXu9AStiAtHmTE
+ r+/dGD8ND0NRCfEwxf5fM1r+svnpQRAr/jn4UDSqSjrZfXppDRdlYuP5/oOzJJPfcoau
+ ViWwonykGiT/9ByBP7tLo1+Y6Hx2MU2qcapeZA0Gvf0CFzrDiDAMwurqVEc5+BdI9K8a
+ ROBckZn03j/anCYNjDAjeUAuTBof4kb8PjEdeEajDPnJqAiD3g/zBPO9GSJ7MZVoYDIR
+ lBINxbunkwUylEKx6aIGr3Rib7LVOA4tPeLMUhL+15bmijhCq1cmErIzeghF2TBzDDLk
+ CKyg==
+X-Gm-Message-State: APjAAAXFmvA76xNYsXKPpj+WuLRtrKyoQRIdDXvVMZrdPtSx3mN5yqdu
+ JU2OyLVBBkyBBFBo++bxcC6jFjgdy+e4sAbRK+w=
+X-Google-Smtp-Source: APXvYqx7Wu0DMs2pYR2HJ+0oidQRcBAfv8vFTjrStWxxsu0EFqden5tK2oPH0FHeOqROx2/i94QZmTrt/m/YimHe+BM=
+X-Received: by 2002:a6b:4101:: with SMTP id n1mr6346122ioa.138.1560136571899; 
+ Sun, 09 Jun 2019 20:16:11 -0700 (PDT)
 MIME-Version: 1.0
-From: Simon Barber <simon.d.barber@gmail.com>
-Date: Sun, 9 Jun 2019 18:28:22 +0100
-Message-ID: <CAJQj_PoNcJPQcT_uG9vN4nsi2512_xcjA5Oput+=xE2Ragqt6Q@mail.gmail.com>
-Subject: stable image archive
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000a2220c058ae76467"
+References: <CAARXrt=6mZtVuwdTxamjUWXJk5RXNKaNM9aVZE5nEyTjowVjEQ@mail.gmail.com>
+ <20190604182635.GD46814@mauery.jf.intel.com>
+ <CAARXrtnpeP0J3T0y=K=O1QTYjxBXXxQSzUVErygzUo+MR6t=0w@mail.gmail.com>
+ <f1d99c51-881e-c1f3-79e6-1d9be951b0c4@linux.ibm.com>
+ <CAARXrt=6DwO7cAxyEJ=FEUPF4+gU9npJtWmd31LuqmTpxHu98w@mail.gmail.com>
+ <b20a0ffd292efcafc8e4ebad40d810bc@linux.vnet.ibm.com>
+ <fdc1cbfa-d337-7219-b748-b251e6f80272@linux.ibm.com>
+ <6614b24b-7552-65e7-bebb-1bc07ac62643@linux.vnet.ibm.com>
+In-Reply-To: <6614b24b-7552-65e7-bebb-1bc07ac62643@linux.vnet.ibm.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Mon, 10 Jun 2019 11:16:01 +0800
+Message-ID: <CAARXrt=c-w0pZeR7-zxekxqn5sHCbKYRaLR6R7x1R_uKhi_TuQ@mail.gmail.com>
+Subject: Re: [Design] PSU firmware update
+To: Derek Howard <derekh@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,41 +79,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a2220c058ae76467
-Content-Type: text/plain; charset="UTF-8"
+> > 3 more quick notes:
+> >
+> > 1) PSs can be hot pluggable, so when a new one is detected, the code
+> > update should run then too if the new PS needs one, assuming all other
+> > conditions are met.
+> >
+> > 2) A single system may support multiple models of PS (will definitely
+> > happen for us), so this design should be able to store multiple PS
+> > images and send the correct image to the correct model.
+> >
+> > 3) You mentioned the combined image stuff before.  We should just check
+> > the timeline for that support aligns with this one.
+> >
+> >
+> Good point Matt on the PS install.  It would probably be a good idea to
+> get the newly installed PS to the same image as the rest of the PS's in
+> the system.
 
-Is there an archive  of stable built and released images for openbmc ? As
-part of my masters project I would like to run some pen tests against the
-the image, to compare with other BMCs out and in use.
+Yup, really good point.
+This implies that BMC shall keep a local copy of the PSU image for future
+updates.
 
-If  there is no stable release archive   is ipmi tool built as part of the
-palmetto build, I can find reference to a set of diffs to add it to the
-build, but there has been a restructure since then, and so the diffs dont
-patch cleanly and i dont understand the structure enough yet to resolve the
-conflicts., so do I need to build the sdk and then download and build
-openbmc/ipmitool
+> We do support PS's that don't provide control supply (standby voltage)
+> when reset at the end of the update, while other PS's do.  Therefore for
+> the former case, if only 1 PS has AC attached, we cannot update/reset
+> that PS, so please let that be selectable by the user (eg vendor
+> specific tool).
+
+This is somehow complex, but if we could defer this to vendor specific tool,
+that's OK.
+However, if a system has multiple models of PS, I am not sure how the vendor
+specific tool will be.
+Should we defer that to vendor specfic tool, too?
+
+>
+> Also, please provide a way to know that the updates have finished.  As
+> we don't want to update the PS's when the power is on (this is vendor
+> specific as well), we also do not want to power the system on in the
+> middle of an update.  For example, if after a BMC update the PS's are
+> being updated, we want to hold off the next system power on until the PS
+> updates have finished. Thanks.
+
+This is already supported by the existing interface.
 
 
-Thanks.
+> >
+> >
+> >>
+> >>> The reason I ask is because if we could get clear requirements, it
+> >>> is possible
+> >>> to simplify the design.
+> >
+> Would it be possible to support both methods?  The general use case
+> being done during/after BMC code update, but also support the more
+> manual method that could be used perhaps in the lab to test new psu
+> images or in the field if there are problems with an existing image? Thanks.
 
-Simon
-
---000000000000a2220c058ae76467
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Is there an archive=C2=A0 of stable built=
- and released images for openbmc ? As part of my masters project I would li=
-ke to run some pen tests against the the image, to compare with other BMCs =
-out and in use.<br><br>If=C2=A0 there is no stable release archive=C2=A0=C2=
-=A0 is ipmi tool built as part of the palmetto build, I can find reference =
-to a set of diffs to add it to the build, but there has been a restructure =
-since then, and so the diffs dont patch cleanly and i dont understand the s=
-tructure enough yet to resolve the conflicts., so do I need to build the sd=
-k and then download and build openbmc/ipmitool<br><br><br>Thanks.<br><br>Si=
-mon<br></div></div>
-
---000000000000a2220c058ae76467--
+This design doc will be updated to support both cases.
