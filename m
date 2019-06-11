@@ -1,64 +1,120 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4F3C3C6D0
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jun 2019 11:01:31 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69BE746F52
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jun 2019 11:41:10 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45QstC2j7qzDrfX
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jun 2019 19:41:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45NPBK1f9vzDqbr
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jun 2019 19:01:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::330; helo=mail-wm1-x330.google.com;
- envelope-from=pokemonstone1@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="aTgUfm8v"; 
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="CKxBaZ/L"; 
  dkim-atps=neutral
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
- [IPv6:2a00:1450:4864:20::330])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NNFf49k9zDqMK
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 18:19:14 +1000 (AEST)
-Received: by mail-wm1-x330.google.com with SMTP id c66so1881499wmf.0
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 01:19:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=s0ojxcvSWPvsgHamp3oGj5jbihEeeBmVUMevUeBuWOk=;
- b=aTgUfm8vLZ/A1YhEp+NFRxCv7c/Se9a0QouFX6zmX63ZO87PZIAOm5OHGtNVkDP+jv
- gI5+8SGOM1laAW0usmE7BiSx0WE/KJEhkzrOpByovirar+9h3/cKBLdnps4mfteqCdap
- aGzV276krsX78v0EI4FBK28mhePMraq2Swnb/DtrAE7iZo/BwKwvq5Z+EvWeVzT6SkJz
- RmLhUm7fMQ+3WeLaE2V/2w5+abbOxrYLccQLCR8qIf4t547rJgjk0ag1xrOMzOObKDXL
- BP7tkjmgLwxYe0mTZwQHpe+RvaffVWocoz0up4LqLx6zkoCTzQNiLu0oCbYko2CoiLNM
- UFtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=s0ojxcvSWPvsgHamp3oGj5jbihEeeBmVUMevUeBuWOk=;
- b=CACiOQBVtuFCmgQi4BBjx9OS9ZFILwy2wuxqsRggVnrP42Bt5tLibr7alGCmMRIaYj
- pJ7mGYulCjt820N0NcE4NbQoAXM9iSH2qyeyltv1tV2eUBMdjDf4sNZ/P4VTQSm4YSTe
- 0r0F6a9JnM6c6m82nWwR3umvvNS5p4Dk+Ncf0NhXH3SPjHjcDjbepNXNQxoH/fH22LGV
- Dgkip3srx+ExMeo1Eyp4UgHjbUbmF7puHWEFQqoKLIGkWW5Ti8fsvNil55dPbvkTqey3
- 9uY91w4ft7L/JDRJvdHq6IWKfQQgAJo8lpEnougzu2gGFhvXuLZaBtgRmyYmlz5TLKAU
- ygyw==
-X-Gm-Message-State: APjAAAWWNwTm2pJxAayScLRbBJU6jev9RVHhKuCDXY+jTG416iE1hKk2
- nvzzjskx/Ji3NZkzoY8bR17u77YQazjR1V/gzu7xnNvU
-X-Google-Smtp-Source: APXvYqwKMHSMipMt/nwu+JsLZxVCFtwv4hJInHmCNxvASAILg4jwNsdg+doIHxuKYCXTkhxcfqVVA4yK83gSgrTLUwE=
-X-Received: by 2002:a1c:6545:: with SMTP id z66mr16344030wmb.77.1560241149873; 
- Tue, 11 Jun 2019 01:19:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45NP9X3CGjzDqL9
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 19:00:48 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id D880F41908
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 08:51:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-type:content-type:in-reply-to:mime-version:user-agent
+ :date:date:message-id:organization:from:from:references:subject
+ :subject:received:received:received; s=mta-01; t=1560243066; x=
+ 1562057467; bh=gizqjm0vWYfBvEPmZjlhihkgXrWWZMH8xam/91EDR0w=; b=C
+ KxBaZ/LIFhXURj3ovXJ0M4Rm9RslmCFP3xPqcNiIlVBCd0YKfpDqPSntusynAg7d
+ ZS29+yY1LbbUoVs5h0oku6ax37maInmls98oBDZgJBkJsoVN9Km9S1BL8tLvjmpO
+ MtcHgv/KzBkHoEadpciZ0vzG3Cd9GKz5iP5nZaBcD4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id tIGF-r9jmWIP for <openbmc@lists.ozlabs.org>;
+ Tue, 11 Jun 2019 11:51:06 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 9114C404CB
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 11:51:06 +0300 (MSK)
+Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 11
+ Jun 2019 11:51:06 +0300
+Subject: Re: Platform telemetry and health monitoring
+To: <openbmc@lists.ozlabs.org>
+References: <BL0PR2101MB0932AE0C63ADC3CBDAE0CF16C8060@BL0PR2101MB0932.namprd21.prod.outlook.com>
+ <4d082cf8-c99c-22ac-9a60-85f70abb8bd6@linux.vnet.ibm.com>
+ <CAGMNF6W+W1VPnqa3J1Y_wqc=BcnkBCi4-h9rG4tjUUrCk3zR8g@mail.gmail.com>
+ <CALXe31mBvxQTaUkuFJsMozBYLiVTur18pMsTUfHY2t02Xp34wg@mail.gmail.com>
+ <CAGMNF6XSD2U-qAe5ibotCkYW-U21vV+tL5-rJwvjPUvWwHA1hw@mail.gmail.com>
+ <20190605124935.ywwwoj26fk46e6qu@thinkpad.dyn.fuzziesquirrel.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
+ 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
+ dTYsE5wSxM06T2l/MILupCNZ7A==
+Organization: YADRO
+Message-ID: <ab42831d-e2a9-c13d-9061-fd39b807ace2@yadro.com>
+Date: Tue, 11 Jun 2019 11:51:05 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-From: =?UTF-8?B?55+z5pm65by3?= <pokemonstone1@gmail.com>
-Date: Tue, 11 Jun 2019 16:19:34 +0800
-Message-ID: <CANAauDN7EGpxu=77HGZFXjCFmkoKU_8AJw0qohNEaXnDch_8HA@mail.gmail.com>
-Subject: How to debug phosphor-dbus-monitor
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
-X-Mailman-Approved-At: Sat, 15 Jun 2019 19:40:40 +1000
+In-Reply-To: <20190605124935.ywwwoj26fk46e6qu@thinkpad.dyn.fuzziesquirrel.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="Bxju9AikVXqMkW2peoRg3zPhxXLgWg20z"
+X-Originating-IP: [172.17.14.197]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,6 +129,80 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi
-I had added yaml for sensor event. Does any method print message in
-phosphor-dbus-monitor ?
+--Bxju9AikVXqMkW2peoRg3zPhxXLgWg20z
+Content-Type: multipart/mixed; boundary="dirxjJIwmXKU0zUCqumJHEW9CbPHT395c";
+ protected-headers="v1"
+From: Alexander Amelkin <a.amelkin@yadro.com>
+To: openbmc@lists.ozlabs.org
+Message-ID: <ab42831d-e2a9-c13d-9061-fd39b807ace2@yadro.com>
+Subject: Re: Platform telemetry and health monitoring
+References: <BL0PR2101MB0932AE0C63ADC3CBDAE0CF16C8060@BL0PR2101MB0932.namprd21.prod.outlook.com>
+ <4d082cf8-c99c-22ac-9a60-85f70abb8bd6@linux.vnet.ibm.com>
+ <CAGMNF6W+W1VPnqa3J1Y_wqc=BcnkBCi4-h9rG4tjUUrCk3zR8g@mail.gmail.com>
+ <CALXe31mBvxQTaUkuFJsMozBYLiVTur18pMsTUfHY2t02Xp34wg@mail.gmail.com>
+ <CAGMNF6XSD2U-qAe5ibotCkYW-U21vV+tL5-rJwvjPUvWwHA1hw@mail.gmail.com>
+ <20190605124935.ywwwoj26fk46e6qu@thinkpad.dyn.fuzziesquirrel.com>
+In-Reply-To: <20190605124935.ywwwoj26fk46e6qu@thinkpad.dyn.fuzziesquirrel.com>
+
+--dirxjJIwmXKU0zUCqumJHEW9CbPHT395c
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
+
+I second the idea of reusing collectd. It's pretty standard and popular.
+
+With best regards,
+Alexander Amelkin,
+Leading BMC Software Engineer, YADRO
+https://yadro.com
+
+05.06.2019 15:49, Brad Bishop wrote:
+> On Tue, Jun 04, 2019 at 12:35:05PM -0700, Kun Yi wrote:
+>> FYI: Srinivas, Neeraj, and I are finalizing a time slot for the kick o=
+ff
+>> meeting. We are thinking about a bi-weekly discussion.
+>>
+>> Also, I'm drafting a version of BMC metrics collection daemon. The fir=
+st
+>> draft is up on https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/222=
+57,
+>> which we probably will go over during the meeting.
+>
+> I just wanted to point out the collectd project:=C2=A0 https://collectd=
+=2Eorg/
+>
+> I'm not sure if it is suitable or not but it seems like a pretty close =
+match to what you are trying to do and it would be a lot of code you don'=
+t have to write.
+>
+> Just something to consider.
+>
+> thx - brad
+
+
+--dirxjJIwmXKU0zUCqumJHEW9CbPHT395c--
+
+--Bxju9AikVXqMkW2peoRg3zPhxXLgWg20z
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJc/2t5AAoJEOiTWHtbdBeNJ8sP/1/YsWVW5YzESBv3DoKHDpSY
+RuPEpGovgg64MnXIy4rMZKeGPRN7xvAFaJcAA7PnCB9DleuYV6HBhSvKOlPRp2OQ
+RqqZ74eDg11w+Jpqi7JDaU+E5kGeKrcUCN8HBEL+FDibeA7LwrtwXDuWx65lEGM2
+t6kVzu7SQ/ty+dLtK7B1TgrDCwnHmDfFU57Yukw8n0KV/tDb74eWqvdeMv2RyBhQ
+OcTQQdTeGzauH8o73IbQd4MX0WxVBRqu4Ue4jfouzEJCygfmOLAWeYVzWyKJaqd1
+fpZNhiivGmXppxHsNebdK2Ra4UL8+p5HZOWRUYsLZKUvYKQlXBpXBvv899PHTTCV
+bi/MEcTfXfg+2z0vBKRDgYsumWC5+bH3+ZtnNnqqGdQjJPNCsL7NPhUqNdklKiZz
+gMI1fwkt1Iv0yFZFxs7rfH71jKIDCFcHkxrUytC+vCJ2lNKbutZ9k04b03R/Dvjp
+dDTC8ZpG34SQIwxWl0y4xAuLzZd+QceGApfM4xt45AesWLznuun3jBv+Lf73dFYK
+Ti/5MPPHNSTgGMY2YiM7BlUaTqj/42xSpTU96d+rD/Yh9bkOrm6mWxpewr2zbHw9
+kw0hJ4okM1aNKzHFNx3Z5bHtaNz1FE1gnLJ5DVRhZrbY2kt5xXOPn9vjWMBmJGSg
+qpkzz81Z5IzVR7hgpxi/
+=lvCA
+-----END PGP SIGNATURE-----
+
+--Bxju9AikVXqMkW2peoRg3zPhxXLgWg20z--
