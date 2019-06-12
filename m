@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 086EF4315B
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 23:13:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FB2543186
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 23:52:19 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45PKMy25k6zDr5N
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 07:13:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45PLFD52mVzDr0x
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 07:52:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,19 +19,20 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45PKMP4QFLzDqsb
- for <openbmc@lists.ozlabs.org>; Thu, 13 Jun 2019 07:12:33 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45PLDl6rpkzDr0r
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Jun 2019 07:51:51 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Date: Wed, 12 Jun 2019 17:13:18 -0400
+Message-ID: <0b087d91bf683a9d2e28ccdf751147e26c45a277.camel@fuzziesquirrel.com>
+Subject: Re: meta-yadro subtree
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-Subject: Re: pull in safec from meta-openembedded/master-next
-Message-ID: <20190612211318.xh74eg6augmneyyu@thinkpad.dyn.fuzziesquirrel.com>
-References: <20190611213719.GE46814@mauery.jf.intel.com>
+To: "Alexander A. Filippov" <a.filippov@yadro.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Date: Wed, 12 Jun 2019 17:52:38 -0400
+In-Reply-To: <20190603115332.GA20703@bbwork.lan>
+References: <20190603115332.GA20703@bbwork.lan>
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20190611213719.GE46814@mauery.jf.intel.com>
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -43,33 +44,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jun 11, 2019 at 02:37:19PM -0700, Vernon Mauery wrote:
->Brad,
->
->Could you pull in the newly added safec recipe from meta-openembedded/master-next?
->
->http://git.openembedded.org/meta-openembedded/commit/?h=master-next&id=7a81eea01aa06205732bddbe62df21f127c67955
->
->We have some projects that would like to use this in OpenBMC.
->
->Thanks,
->--Vernon
+On Mon, 2019-06-03 at 14:53 +0300, Alexander A. Filippov wrote:
+> Hi Brad,
+> 
+> Finally, we are ready to publish our yocto layer. 
+> Could you please create a repo meta-yadro in OpenBMC project and
+> corresponded
+> subtree.
+> You might clone it from https://github.com/YADRO-KNS/meta-yadro.git.
 
-I don't cherry-pick patches anymore - instead I have just been tracking 
-master of all our subtrees (including poky, meta-openembedded etc):
+Hi Alexander
 
-https://lists.ozlabs.org/pipermail/openbmc/2019-April/015766.html
+I finally did this today.  Thanks!
 
-I haven't done it in several weeks because they moved to gcc9 and we 
-need this fix from William first:
-
-https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/22123
-
-I have been meaning to review it but have not found the time.  Maybe you 
-could have a look?
-
-thx -brad
+-brad
