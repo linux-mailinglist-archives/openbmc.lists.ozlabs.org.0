@@ -2,83 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 927B641A91
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 05:10:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3340D41B96
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 07:43:15 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45NsLk3kznzDqlm
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 13:10:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Nwl42wTHzDqsj
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 15:43:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=mendozajonas.com
+ (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com;
+ envelope-from=sam@mendozajonas.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.from=mendozajonas.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=mendozajonas.com header.i=@mendozajonas.com
+ header.b="ZjsX8pse"; dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="IGLN6KfN"; dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NsL93h3QzDql2
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 13:09:49 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5C37r2x024022
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 23:09:46 -0400
-Received: from e06smtp07.uk.ibm.com (e06smtp07.uk.ibm.com [195.75.94.103])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2t2ng4qrk7-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 23:09:45 -0400
-Received: from localhost
- by e06smtp07.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Wed, 12 Jun 2019 04:09:44 +0100
-Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
- by e06smtp07.uk.ibm.com (192.168.101.137) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Wed, 12 Jun 2019 04:09:42 +0100
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x5C39fXb33423430
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 03:09:42 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD29F11C04C
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 03:09:41 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B0B811C058
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 03:09:40 +0000 (GMT)
-Received: from [9.85.128.70] (unknown [9.85.128.70])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 03:09:39 +0000 (GMT)
-Subject: Re: Network Settings GUI
-To: openbmc@lists.ozlabs.org
-References: <CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Wed, 12 Jun 2019 08:39:36 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45NwkP2N8SzDqsl
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 15:42:36 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.west.internal (Postfix) with ESMTP id AC502564;
+ Wed, 12 Jun 2019 01:42:32 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Wed, 12 Jun 2019 01:42:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ mendozajonas.com; h=message-id:subject:from:to:cc:date
+ :in-reply-to:references:content-type:mime-version
+ :content-transfer-encoding; s=fm3; bh=1XXJOCDS5TlstcINCL6PSOkxip
+ /YpBif4YROEL9IeDE=; b=ZjsX8pseSwLZIEBOjb+eoawTGPnwc6PyTnVRxtddw4
+ 7+rFc410ZTaX/a/F02QSfcJm7L9PsPs2jWCIwKiYlwbvlMvv3nNPt/GTFYIIQXvP
+ VAW6FUEW5553xJ8IH5QFBcTqpH4J9jRPHdS+YoFEFdrfYy+8GtNYZMd9A9ianxlR
+ /iV3LhsLq5X6wTgH5V7LPRhAvEp9BL6b4iZO/7ndljYzVbzpH/WibHqNFzr/Ll+I
+ RsIZ8yFoJGnEeZMg4N731oYm/LuKlK3SYZeI3uURS1YDa0UaopOWnLlSSmZSMwDV
+ c32aWqVZARSbCmgs9JlUlpe5es9NOlN1Znw68encuNng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=1XXJOCDS5TlstcINCL6PSOkxip/YpBif4YROEL9Ie
+ DE=; b=IGLN6KfNg9o0K4ZhimFV1J5tzfhEagZldseyjjSGFm0d94f6YXk/7Spcm
+ CnLwD4tz8dzG/Tih44jt0x4bcjXKiMM8dSX5Pk0MSOVCgzVuvIDRIrIgjTrgCQfA
+ sTTra81MHCoR4mcsCMZy/ryUg7/bxvFCqFkqqD6xqC9GFABocjVgQjTGveKJLPlp
+ v0FDja5xXEUBhsioTi0CN1d6Aabkekd1AEmPqkCMkTTOPeB+5ImFOPhPFDn5NQZu
+ Dmnh91hBBZQ0/yXFbzzwiE6q4kq6v0a0ITbmNZVcit4MNxUgOJMQQzgWrjFCzAtJ
+ WemB0xPGUE+q1Kxkhel6YJeSCFgCA==
+X-ME-Sender: <xms:xJAAXQwdVO8xta1y--zYxEUWOMB63SnH8wXcnIQI_djlC6dxJDQAjA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgleejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepufgrmhhu
+ vghlucfovghnughoiigrqdflohhnrghsuceoshgrmhesmhgvnhguohiirghjohhnrghsrd
+ gtohhmqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeduvdefrddvheeg
+ rdduvdeirddutdeinecurfgrrhgrmhepmhgrihhlfhhrohhmpehsrghmsehmvghnughoii
+ grjhhonhgrshdrtghomhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:xJAAXciZc-WoQPCPot5D5AefqNZ9uOua6TKDyboTPX9X-b9T3UHVaA>
+ <xmx:xJAAXWSvYnjSsdXcEy6_-lG-VeMV8BGaZp8dbRAGyD_GKJb4n1Yt3w>
+ <xmx:xJAAXV0qkvq3YpM7qQzEzXSEdeTcjKcPuw9LDJauTSbTxecQj4BYHQ>
+ <xmx:yJAAXQKPUeZMAohuZ5xeNY8PAqUuISg7hx6tJYuttA7JtQnw4p0Iaw>
+Received: from v4 (unknown [123.254.126.106])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 467B980059;
+ Wed, 12 Jun 2019 01:42:25 -0400 (EDT)
+Message-ID: <3761318b0b3dc3d0e3ae1c5faaa075d63d650962.camel@mendozajonas.com>
+Subject: Re: [PATCH 1/4] phy: Add support for the NC-SI protocol
+From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+To: Joel Stanley <joel@jms.id.au>
+Date: Wed, 12 Jun 2019 15:42:22 +1000
+In-Reply-To: <CACPK8Xd_OTZK+HO=xXp5dFn0rcZH_fCfbJndXVcttj0MR2_fxg@mail.gmail.com>
+References: <20190606044950.5930-1-sam@mendozajonas.com>
+ <20190606044950.5930-2-sam@mendozajonas.com>
+ <CACPK8Xd_OTZK+HO=xXp5dFn0rcZH_fCfbJndXVcttj0MR2_fxg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.2 
 MIME-Version: 1.0
-In-Reply-To: <CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------CED0FC3839542B4C04553EB4"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19061203-0028-0000-0000-0000037981DF
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19061203-0029-0000-0000-000024397321
-Message-Id: <0dde6e4b-484c-6d44-7e36-92551dbdd460@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-06-12_01:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906120019
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,196 +92,219 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ Simon Glass <sjg@chromium.org>, joe.hershberger@ni.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------CED0FC3839542B4C04553EB4
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Wed, 2019-06-12 at 02:40 +0000, Joel Stanley wrote:
+> On Thu, 6 Jun 2019 at 04:50, Samuel Mendoza-Jonas <sam@mendozajonas.com> wrote:
+> > This introduces support for the NC-SI protocol, modelled as a phy driver
+> > for other ethernet drivers to consume.
+> > 
+> > NC-SI (Network Controller Sideband Interface) is a protocol to manage a
+> > sideband connection to a proper network interface, for example a BMC
+> > (Baseboard Management Controller) sharing the NIC of the host system.
+> > Probing and configuration occurs by communicating with the "remote" NIC
+> > via NC-SI control frames (Ethernet header 0x88f8).
+> > 
+> > This implementation is roughly based on the upstream Linux
+> > implementation[0], with a reduced feature set and an emphasis on getting
+> > a link up as fast as possible rather than probing the full possible
+> > topology of the bus.
+> > The current phy model relies on the network being "up", sending NC-SI
+> > command frames via net_send_packet() and receiving them from the
+> > net_loop() loop (added in a following patch).
+> > 
+> > The ncsi-pkt.h header[1] is copied from the Linux kernel for consistent
+> > field definitions.
+> > 
+> > [0]: https://github.com/torvalds/linux/tree/master/net/ncsi
+> > [1]: https://github.com/torvalds/linux/blob/master/net/ncsi/ncsi-pkt.h
+> > 
+> > Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+> 
+> Looks good. Some comments below.
+> 
+> > +static int ncsi_validate_rsp(struct ncsi_rsp_pkt *pkt, int payload)
+> > +{
+> > +       struct ncsi_rsp_pkt_hdr *hdr = &pkt->rsp;
+> > +       __be32 pchecksum;
+> > +       u32 checksum;
+> > +       if (ntohs(hdr->common.length) != payload) {
+> > +               printf("NCSI: 0x%02x response has incorrect length %d\n",
+> > +                      hdr->common.type, hdr->common.length);
+> > +               return -1;
+> > +       }
+> > +
+> > +       pchecksum = get_unaligned_be32((void *)(hdr + 1) + payload - 4);
+> 
+> Wheee. So the checksum is the last 4-bytes of the payload. I assume
+> it's always longer than 4?
+> 
+> A clarifying comment might help, or try to write it in a different way:
 
-Hi Jandra,
+"Wheee" indeed. I kept this roughly as it is in the kernel so I could
+more easily verify it was doing the right thing; now that it's more
+tested I'll do something like below so it's less traumatic.
 
-Please find my comments inline ingreen.
+> 
+> endp = (void *)hdr + sizeof(hdr) + payload;
+> pchecksum = get_unaligned_be32(endp - sizeof(checksum));
+> 
+> or
+> 
+>     checksum_offset = sizeof(hdr) + payload - sizeof(checksum);
+>     pchecksum = get_unaligned_be32(payload + checksum_offset);
+> 
+> > +       if (pchecksum != 0) {
+> > +               checksum = ncsi_calculate_checksum((unsigned char *)hdr,
+> > +                                                  sizeof(*hdr) + payload - 4);
+> 
+> And then this can be:
+> 
+>     checksum = ((unsigned char *)hdr, checksum_offset);
+> 
+> > +               if (pchecksum != checksum) {
+> > +                       printf("NCSI: 0x%02x response has invalid checksum\n",
+> > +                              hdr->common.type);
+> > +                       return -1;
+> > +               }
+> > +       }
+> > +static void ncsi_send_sma(unsigned int np, unsigned int nc)
+> > +{
+> > +       struct ncsi_cmd_sma_pkt cmd;
+> > +       unsigned char *addr;
+> > +
+> > +       addr = eth_get_ethaddr();
+> > +       if (!addr) {
+> > +               printf("NCSI: no MAC address configured\n");
+> > +               return;
+> > +       }
+> > +
+> > +       memset(&cmd, 0, sizeof(cmd));
+> > +       memcpy(cmd.mac, addr, 6);
+> 
+> Are there endianness issues with addr here?
 
-Regards
+Aha, will fixup.
 
-Ratan Gupta
+> 
+> > +       cmd.index = 1;
+> > +       cmd.at_e = 1;
+> > +
+> > +       ncsi_send_command(np, nc, NCSI_PKT_CMD_SMA,
+> > +                         ((unsigned char *)&cmd)
+> > +                         + sizeof(struct ncsi_cmd_pkt_hdr),
+> > +                         cmd_payload(NCSI_PKT_CMD_SMA), true);
+> > +}
+> > +
+> > +int ncsi_probe(struct phy_device *phydev)
+> > +{
+> > +       // TODO Associate per device
+> 
+> Is this required before we can support multiple NICs?
 
-On 10/06/19 8:53 PM, Jandra A wrote:
-> Hello all,
->
-> Here is the proposal for the Network Settings GUI: 
-> https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319115961_Physical
-> To navigate, click on any flashing blue rectangles or use the right 
-> and left keyboard arrows.
->
-> The design is based on the needs found by our research with 
-> stakeholders and users.
->
-> With the GUI, a user is able to assign a Fully Qualified Domain Name 
-> (FQDN), and choose either DHCP or static configuration, for any 
-> selected interface.
->
-> If DHCP is chosen, the GUI will reflect the appropriate default 
-> gateway, DNS server, and IP address assigned by the DHCP server. If 
-> static is selected, users manually assign the default gateway, as well 
-> as multiple DNS servers and a single IP address (not including the one 
-> assigned by zeroconf).
->
-> Despite the type of configuration selected (DHCP or static), 
-> zero-configuration is always on to protect the user and ensure there 
-> is always an IP address assigned. However, once an interface has a non 
-> zeroconf IP address assigned, users have the flexibility to 
-> permanently delete that address. Currently, users can only temporarily 
-> delete these using CLI; once they reboot, the addresses come back. 
-> Permanently removing IP addresses assigned by zero-configuration is 
-> important to customers who need to account for every single IP address.
+Yes, I'll chase this up.
 
-Are you proposing that filter to be done at gui side? Suppose at first 
-boot, By default DHCP and  Zero config is enabled, In that case back end 
-will get two IP address
+> 
+> > +       if (!ncsi_priv) {
+> > +               ncsi_priv = malloc(sizeof(struct ncsi));
+> > +               if (!ncsi_priv)
+> > +                       return -ENOMEM;
+> > +               memset(ncsi_priv, 0, sizeof(struct ncsi));
+> > +       }
+> > +
+> > +       phydev->priv = ncsi_priv;
+> > +
+> > +       return 0;
+> > +}
+> > +
+> > +int ncsi_startup(struct phy_device *phydev)
+> > +{
+> > +       /* Set phydev parameters */
+> > +       phydev->speed = SPEED_100;
+> > +       phydev->duplex = DUPLEX_FULL;
+> > +       /* Normal phy reset is N/A */
+> > +       phydev->flags |= PHY_FLAG_BROKEN_RESET;
+> > +
+> > +       /* Set initial probe state */
+> > +       ncsi_priv->state = NCSI_PROBE_PACKAGE_SP;
+> > +
+> > +       /* No active package/channel yet */
+> > +       ncsi_priv->current_package = NCSI_PACKAGE_MAX;
+> > +       ncsi_priv->current_channel = NCSI_CHANNEL_MAX;
+> > +
+> > +       /* Pretend link works so ftgmac100 sets final bits up */
+> 
+> s/ftgmac100/mac driver/ ?
 
-(DHCP/ZeroConfig) and suppose after that user has not disabled the 
-Zeroconfig than GUI will keep getting the two ipaddresses, in that case 
-does the GUI apply the filter
+Ack
 
-to show single IP address.
+> 
+> > +       phydev->link = true;
+> > +
+> > +       return 0;
+> > +}
+> > +
+> > +int ncsi_shutdown(struct phy_device *phydev)
+> > +{
+> > +       printf("NCSI: Disabling package %d\n", ncsi_priv->current_package);
+> > +       ncsi_send_dp(ncsi_priv->current_package);
+> > +       return 0;
+> > +}
+> > +
+> > +static struct phy_driver ncsi_driver = {
+> > +       .uid            = PHY_NCSI_ID,
+> > +       .mask           = 0xffffffff,
+> > +       .name           = "NC-SI",
+> > +       .features       = PHY_100BT_FEATURES | PHY_DEFAULT_FEATURES | SUPPORTED_100baseT_Full | SUPPORTED_MII,
+> > +       .probe          = ncsi_probe,
+> > +       .startup        = ncsi_startup,
+> > +       .shutdown       = ncsi_shutdown,
+> > +};
+> > +
+> > +int phy_ncsi_init(void)
+> > +{
+> > +       phy_register(&ncsi_driver);
+> > +       return 0;
+> > +}
+> > --- /dev/null
+> > +++ b/include/net/ncsi-pkt.h
+> > @@ -0,0 +1,415 @@
+> > +/*
+> > + * Copyright Gavin Shan, IBM Corporation 2016.
+> > + *
+> > + * This program is free software; you can redistribute it and/or modify
+> > + * it under the terms of the GNU General Public License as published by
+> > + * the Free Software Foundation; either version 2 of the License, or
+> > + * (at your option) any later version.
+> > + */
+> 
+> If you grab the version from 5.2-rc3 it has been SPDXified.
 
-Are we planning to propose new settings for GUI for IPv6
+Cheers, will do.
 
-In IpV6 we may have multiple IPaddresses on the same interface 
-(LinkLocal,autoconf,static)
+> 
+> > --- a/include/phy.h
+> > +++ b/include/phy.h
+> > @@ -17,6 +17,7 @@
+> >  #include <phy_interface.h>
+> > 
+> >  #define PHY_FIXED_ID           0xa5a55a5a
+> > +#define PHY_NCSI_ID            0xbeefcafe
+> 
+> hmmm...
 
->
->
-> NOTE: The reason for limiting to a single IP address per interface is 
-> that our research from users and stakeholders indicates that multiple 
-> would never be used and in fact it could make it easy to make a 
-> mistake, so for this reason we will not support it in the GUI. 
-> Additionally, there will be no support for VLAN as it was not expected 
-> by users and added unnecessary confusion.
+Haha - suggestions welcome?
 
-What about the existing client network deployment where management 
-traffic has been separated from the host traffic through VLAN?
+> 
+> >  #define PHY_MAX_ADDR 32
+> > 
+> > --
+> > 2.21.0
+> > 
 
-We got this request from one of our IBM Internal team(HPC).
-
->
-> Regards,
-> Jandra Aranguren
->
->
-
---------------CED0FC3839542B4C04553EB4
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>Hi Jandra,</p>
-    <p>Please find my comments inline in<font color="#33cc00"> green</font>.</p>
-    <p>Regards</p>
-    <p>Ratan Gupta<br>
-    </p>
-    <div class="moz-cite-prefix">On 10/06/19 8:53 PM, Jandra A wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <div dir="ltr">Hello all,<br>
-        <div><br>
-        </div>
-        <div>Here is the proposal for the Network Settings GUI: <a
-            href="https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319115961_Physical"
-            moz-do-not-send="true">https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319115961_Physical</a> <br>
-          To navigate, click on any flashing blue rectangles or use the
-          right and left keyboard arrows.</div>
-        <div><br>
-        </div>
-        <div>The design is based on the needs found by our research with
-          stakeholders and users. </div>
-        <div><br>
-        </div>
-        <div>With the GUI, a user is able to assign a Fully Qualified
-          Domain Name (FQDN), and choose either DHCP or static
-          configuration, for any selected interface.</div>
-        <div><br>
-        </div>
-        <div>If DHCP is chosen, the GUI will reflect the appropriate
-          default gateway, DNS server, and IP address assigned by the
-          DHCP server. If static is selected, users manually assign the
-          default gateway, as well as multiple DNS servers and a single
-          IP address (not including the one assigned by zeroconf). </div>
-        <div><br>
-        </div>
-        <div>Despite the type of configuration selected (DHCP or
-          static), zero-configuration is always on to protect the user
-          and ensure there is always an IP address assigned. However,
-          once an interface has a non zeroconf IP address assigned,
-          users have the flexibility to permanently delete that address.
-          Currently, users can only temporarily delete these using CLI;
-          once they reboot, the addresses come back. Permanently
-          removing IP addresses assigned by zero-configuration is
-          important to customers who need to account for every single IP
-          address. <br>
-        </div>
-      </div>
-    </blockquote>
-    <p>Are you proposing that filter to be done at gui side? Suppose at
-      first boot, By default DHCP and  Zero config is enabled, In that
-      case back end will get two IP address <br>
-    </p>
-    <p>(DHCP/ZeroConfig) and suppose after that user has not disabled
-      the Zeroconfig than GUI will keep getting the two ipaddresses, in
-      that case does the GUI apply the filter <br>
-    </p>
-    <p>to show single IP address.<br>
-    </p>
-    <p>Are we planning to propose new settings for GUI for IPv6</p>
-    <p>In IpV6 we may have multiple IPaddresses on the same interface
-      (LinkLocal,autoconf,static)<br>
-    </p>
-    <blockquote type="cite"
-cite="mid:CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com">
-      <div dir="ltr">
-        <div><br>
-        </div>
-        <div><br>
-        </div>
-        <div>NOTE: The reason for limiting to a single IP address per
-          interface is that our research from users and stakeholders
-          indicates that multiple would never be used and in fact it
-          could make it easy to make a mistake, so for this reason we
-          will not support it in the GUI. Additionally, there will be no
-          support for VLAN as it was not expected by users and added
-          unnecessary confusion. <br>
-        </div>
-      </div>
-    </blockquote>
-    <p>What about the existing client network deployment where
-      management traffic has been separated from the host traffic
-      through VLAN?</p>
-    <p>We got this request from one of our IBM Internal team(HPC).<br>
-    </p>
-    <blockquote type="cite"
-cite="mid:CAMTupoQuV9AVpqvVu5E1M_vk3FkcQbvsdKR_ngUJFUai_MiFcA@mail.gmail.com">
-      <div dir="ltr">
-        <div><br>
-        </div>
-        <div>Regards,</div>
-        <div>Jandra Aranguren</div>
-        <div><br>
-        </div>
-        <div><br>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------CED0FC3839542B4C04553EB4--
 
