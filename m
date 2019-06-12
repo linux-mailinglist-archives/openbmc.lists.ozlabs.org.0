@@ -1,67 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83B4641A0E
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 03:51:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58FC541A00
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 03:42:48 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45NqPd4bY8zDqy6
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 11:42:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Nqby00nxzDqxB
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 11:51:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d42; helo=mail-io1-xd42.google.com;
- envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Jx1y86q3"; 
- dkim-atps=neutral
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
- [IPv6:2607:f8b0:4864:20::d42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VKQtVnej"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="VSyt5ulo"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NqP51kLPzDqtS
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 11:42:14 +1000 (AEST)
-Received: by mail-io1-xd42.google.com with SMTP id u13so11639042iop.0
- for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 18:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WKlDhgLH60a043n+C/PTaGj1btWnr10MF6yYNSYM2kc=;
- b=Jx1y86q3gBa9IQ4PYcCYyB1m20rVS+VoQD9NhYHngQJ0hjEtnzlYHpRAWH+bLXBjKx
- P96NZtCawLNGVVSSPvo4AuynK7uw6U0MBipRwjGnchnj4bVdaUHDfpNycFRML/97hkFf
- x+sPGtgCPFbx/dVQ/3eC5V5+XIPObiRbaA2z47pUMGR033PQkjUzieXSVTU5IrfbtdCL
- PpjJOtLqdOiI/KXgGiEHv6Un1v3V1lXqX1YtqEBEYNY8eWdk1VNCeNAfutcWk5YO75Ay
- FKrCV2FDsf9Dx8vH1eECPjuvHnljZc8AnoE1C9kyaPS21tBDIwphVFuTeNHbagPQVeRM
- oCyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=WKlDhgLH60a043n+C/PTaGj1btWnr10MF6yYNSYM2kc=;
- b=CX+0tCPmoQd/XN4Jke3VN306bG9l5zHp5XURdOlEhc6M+V7ct+T15mGm/qg1yVOLR8
- 9ZMbEPvYZLBgfyusJvDZPsyGQF1sA66EgsqELhRUhm5LcvdXnCmn/AVDq0OjCfD9R1wV
- dgBhzsqm9Fo+Ml6PYNUaDwuChj2Yx1uF4E/Fuy/FpyuP5ehyUXhNgj2MCgy/oYFb4hdj
- 9gVGg4rHHWAqNB81mLafNzX+UhxUkUwwd/1gZuJy5FfwLGtWwczDMHwqqrbTuwbV0fcD
- QN3sGXUQZe7VdIhsWSH088laixYPZydqSMxVcv96Q0HEWNHMQgil0DjOPq//axYUSiS6
- R2rQ==
-X-Gm-Message-State: APjAAAV5dt7SCOJpJQtpwbstscI7IIVg86z9Vy0GanwvvSz2UyQpLlsA
- 6ETR4L6yWzpkIGZIHx6KOIvbTVjIJZ6imi9y6sE=
-X-Google-Smtp-Source: APXvYqzxk5Cccpc1ILGkL4seXqTVHV0PJa/GmHWvbYxRMKHUrZHVmHPyMrxZ8Vw0fuuSvzZ3Ekx5tv1iR6nL2PsCXiU=
-X-Received: by 2002:a6b:4101:: with SMTP id n1mr1674797ioa.138.1560303731254; 
- Tue, 11 Jun 2019 18:42:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAARXrtkeMTts2GXpqjwNM6danj0jZoZVnkvJLKgo=416LheqRQ@mail.gmail.com>
- <d99f8d73-f648-df65-2c87-00f398e6dd35@intel.com>
-In-Reply-To: <d99f8d73-f648-df65-2c87-00f398e6dd35@intel.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Wed, 12 Jun 2019 09:42:01 +0800
-Message-ID: <CAARXrtnQEwJGhZo1ZO8M-x7PkgxP75QpDcKZtj=bOBXJJjoZHQ@mail.gmail.com>
-Subject: Re: About the external project of sdbusplus in bmcweb
-To: Ed Tanous <ed.tanous@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45NqbH6nVfzDqq7
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 11:51:07 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 0C3D82227B;
+ Tue, 11 Jun 2019 21:51:05 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Tue, 11 Jun 2019 21:51:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=L6Xj4+gtHFfBU99XpdCjoAIjCkfu+1d
+ gdhJRRXVwqpY=; b=VKQtVnejq0SPiga+wF5wPGjPEiCWSoeRh8wzfKU6QZlZOTE
+ GSBBgjYjanZ7zAjotcTGIuqFVKpi8qml4E/f+wYfr2SW7VDgJAUYeDfVhtb9CUca
+ GoYP4TQ4qHTmPVPesNJt1PMcnFT33KJgpFTXHylSnAhYZ5xnj02Dvd22WALW1hU0
+ O2dh+RJP2hvwhQ8SwDApgwznkqPPW929EZif/GabwLRB3LhY3p5eFS7N1Ax55RwJ
+ O2UeBm/03UkRTMjgzIMRbO/sK+I2hINBwCdVfAW7czHm7HWjPnmSjZgNfr9OvXri
+ XYebI86j6S/Jy9DTvaJDtnRvDsElA4AX+yCBlsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=L6Xj4+
+ gtHFfBU99XpdCjoAIjCkfu+1dgdhJRRXVwqpY=; b=VSyt5uloLKlcbVgVecmM/+
+ 0SSUHyUESPbpR+ELPObGaFE2RdOCdE6bGmF5I9cDcWwLqAaJVExc0GcF9rzT5Ghh
+ dWFIt5A0zrgKvPIDL5/xwQvN1ckFiu5IdOE9ZLeGAEAtG0bbwWyf9e7tUSYBoI4R
+ G8xBsHm6K+doTz4kcSEj7fxjwr4DhwYWqDcAHJMvx9Tfy8Q3oyBiUPsisveES/e+
+ 8NxoKwuDG3YSeoCUpJpoc04zSiolT66TyJbUMdwB0h+wTdnBXdGmEE5UwdpYrjoW
+ izVFlbKojTrFFatdYpiq8JZyirKKWoK8VN7aErdSGU7nzMsFcC/Gfw15ZlgF90gg
+ ==
+X-ME-Sender: <xms:h1oAXcnXTJRYV2IE0a2ayvtW8CLpO2qoj6M0hJlLfhVhvRcqSDKKOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedggeelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:h1oAXaNgVb094loB_wEj4lEtqJ503y3HXiTquWKyoVLNp9robKNSMw>
+ <xmx:h1oAXWpQ3D3IBpem61zGqe_1_vNMIDrht1QpXylpBXIjXgD-JpZ1Pw>
+ <xmx:h1oAXbsPIRV0qWx0l56GrK00VXQQOwKt_bWAi7mz58Sun5yqNhlFdw>
+ <xmx:iFoAXWyskdqFXuDkGiRf0ly5tH22aJGkua2oLh3M6_qn7kkwbyYu5A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id B132AE00A1; Tue, 11 Jun 2019 21:51:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-663-gf46ad30-fmstable-20190607v1
+Mime-Version: 1.0
+Message-Id: <5e34d258-a153-4296-8295-0b5100a9c66a@www.fastmail.com>
+In-Reply-To: <170efdca68cf69f93ee902b2c7ae7884e2a4217f.camel@arm.com>
+References: <18303a54-a3b0-4645-bdad-85a0c6ce4487@www.fastmail.com>
+ <170efdca68cf69f93ee902b2c7ae7884e2a4217f.camel@arm.com>
+Date: Wed, 12 Jun 2019 11:20:46 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Supreeth Venkatesh" <supreeth.venkatesh@arm.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_An_in-kernel_implementation_of_MCTP_for_a_socket-based_int?=
+ =?UTF-8?Q?erface_to_MCTP_networks?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,74 +89,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Ed Tanous <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jun 11, 2019 at 11:55 PM Ed Tanous <ed.tanous@intel.com> wrote:
->
-> On 6/11/19 2:29 AM, Lei YU wrote:
-> > While I was adding some new function in sdbusplus, it's found that bmcweb is
-> > not working correctly, that it always gives errors like below.
-> >
-> >     Jun 11 09:14:26 romulus bmcweb[1501]: terminate called after
-> > throwing an instance of 'sdbusplus::exception::SdBusError'
-> >     Jun 11 09:14:26 romulus bmcweb[1501]:   what():  sd_bus_process
-> > discard: org.freedesktop.DBus.Error.AccessDenied: Operation not
-> > permitted
->
-> It should be noted, I am not seeing this behavior in my builds.
->
-> >
-> > Then it's noticed that bmcweb is using its own revision of sdbusplus during
-> > build, as external project in "CMakeLists.txt.in"
->
-> https://github.com/openbmc/bmcweb/blob/6ca6ac12e62bd8bfbdb9a24bbfded4a138a1150a/CMakeLists.txt#L9
-> https://github.com/openbmc/bmcweb/blob/6ca6ac12e62bd8bfbdb9a24bbfded4a138a1150a/CMakeLists.txt#L142
->
-> Notice the YOCTO_DEPENDENCIES option.  When bmcweb is built within yocto
-> (which should be a majority of the time), it relies on the sdbusplus
-> version that yocto has decided, and ignores its own.  The
-> CMakeLists.txt.in is only used when building out of the yocto tree, to
-> enable static analysis tools to function without having to static
-> analyze the entire codebase.
 
-Thanks for this information, I did not notice that.
 
-> >
-> > It's worrying that one should expect that the whole build of OpenBMC should
-> > use a single sdbusplus lib defined in
-> > meta-phosphor/recipes-extended/sdbusplus/sdbusplus_git.bb, but apparently
-> > it's not for bmcweb, and that results in the weird behavior.
->
-> See above, my understanding is that bmcweb should be using the single
-> sdbusplus lib.
->
-> >
-> > When I change the "CMakeLists.txt.in" to use the same revision as the one in
-> > sdbusplus_git.bb, the issue is gone and bmcweb behaves normally.
->
-> This is really confusing to me.  When building the openbmc image, this
-> should have zero effect.  Can you verify you're building with "bitbake
-> obmc-phosphor-image"?  What machine are you building for?
+On Sat, 8 Jun 2019, at 05:14, Supreeth Venkatesh wrote:
+> On Thu, 2019-05-30 at 17:34 +0930, Andrew Jeffery wrote:
+> > 
+> > The DMTF PCMI WG have defined various bindings for MCTP, including
+> > PCIe VDM,
+> > KCS, serial and SMBus/I2C.
+> > 
+> > Putting my OpenPOWER hat on, we were looking at what bindings we
+> > could make use
+> > of in our platform designs. We make heavy use of the LPC bus during
+> > early boot,
+> > and so solutions needed to be useful across that interface. This
+> > requirement
+> > eliminates PCIe VDM (as do constraints in our PHBs). There's also no
+> > path for
+> > SMBus/I2C, leaving KCS and serial. KCS as it stands is pretty much
+> > MCTP wrapped
+> > in IPMI across a slow interface, and serial's no speed demon either.
+> > Additionally, we can only use the VUART, and there's only one in the
+> > AST2400/AST2500, so if we were to use it we'd have to multiplex the
+> > console
+> > with MCTP messages. This is all fairly ugly.
+> > 
+> > What Jeremy has proposed is a yet-to-be-standardised LPC MCTP binding
+> > that
+> > makes use of both a portion of the LPC FW space and a KCS device in
+> > the LPC IO
+> > space. This is made possible on ASPEED hardware by pointing the
+> > LPC2AHB bridge
+> > at a region of RAM, and defining an ABI for Rx and Tx buffers within
+> > that
+> > memory region. The KCS interface is then lightly used as an out-of-
+> > band
+> > mechanism for arbitration of buffer ownership. This gets us an
+> > efficient
+> > LPC-based interface for MCTP on our platforms that is compatible with
+> > existing
+> > hardware.
+> Can LPC binding be proposed to DMTF PMCI group for standardization. I
+> heard it briefly mentioned by Deepak in one of the calls, but dont
+> think we have a document ready yet. Correct?
 
-What I was doing is:
+Correct. Currently we're considering it a bit OpenPOWER-specific. Once we've
+got a better grip on it we can consider proposing it to PMCI for standardisation.
 
-1. devtool modify bmcweb
-2. Go to build/workspace/sources/bmcweb, modify the code
-3. bitbake obmc-phosphor-image
+> > 
+> > What it needs
+> > -------------
+> > 
+> > There roughly four areas of work that fall out of the idea:
+> > 
+> > 1. Doing the work to expose AF_MCTP from the kernel with support for
+> > SOCK_RAW
+> >    (exposing raw MCTP packets) and SOCK_DGRAM (fully assembled MCTP
+> > messages).
+> > 2. Exposing an out-of-band management interface to describe MCTP
+> > networks to
+> >    the kernel. The plan is to do this via the kernel's netlink
+> > interface.
+> Not sure by what you mean by out of band interface here. MCTP is meant
+> to be used for "inside the box" communication. Can you please
+> elaborate?
 
-So it looks like when bmcweb is being built with devtool, the
-YOCTO_DEPENDENCIES is missing, is it?
+"Out-of-band" in this context simply meant "not using the MCTP socket":
+BMC userspace will talk via a (separate) netlink socket to the kernel to
+provide the kernel with the MCTP network topology information it needs
+to instantiate MCTP interfaces, bridges and networks, and to route MCTP
+packets across interfaces. ("Out-of-band" was not meant e.g. as a contrast
+to "In-band IPMI", where communication happens external to the platform).
 
-Be noted that devtool is a yocto tool, see below reference:
-* https://www.yoctoproject.org/software-item/devtool/
-* https://wiki.yoctoproject.org/wiki/TipsAndTricks/Patching_the_source_for_a_recipe
+Hope that helps.
 
->
-> >
-> > So the question is, why bmcweb uses sdbusplus this way? Is it possible to make
-> > it just link against sdbusplus like other repos?
-> >
->
-> See above about static analysis, and building out of the yocto tree.
+Andrew
