@@ -2,81 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B67E41A4F
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 04:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68F3141A74
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 04:41:49 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45NrDw2SW5zDqwT
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 12:20:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Nrjk4z07zDqvV
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 12:41:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="iP+kK7EM"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="igMP43s4"; dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="Pr91t4nJ"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NrDF58CRzDqp5
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 12:19:41 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 1A312549;
- Tue, 11 Jun 2019 22:19:39 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 11 Jun 2019 22:19:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=SEfxNZJzkZA8QAtHevYxVcqW3vYmVmR
- KrpsK6DO9BnM=; b=iP+kK7EM82/7IHHpisUh0eL5dXH19uEyyJvq2c7Tf0p9asS
- /Q6LrwSNRTR/HrhWQROeZBdZ92BYGUSI/7FR9xLvRo+69RsU8doHi7QwuQu/Pf35
- pyOlFjteciPIw4K7TR3tP/fY6oT7ZxRS3UGl4OYjPPS+8U0cHY6240gFuE+nC4gv
- 9DXt1/91nQyU40XFOPi90BOYMkwaD9ZfeM8AbmzVrigcePVyGF+w+ap83QI4czaC
- bDQuFIfFFaj8e/VItmxS9afy8IVnYUWAwqyr4a5PJEGBXB+fQkjPY8DJi1mFLA5t
- KS79auuoQsSYm/YDXdJ62R1wZ3Hz8rtMFN0fKRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=SEfxNZ
- JzkZA8QAtHevYxVcqW3vYmVmRKrpsK6DO9BnM=; b=igMP43s4WdRZYc8tYZPcLy
- Da6zaPpw/KWvlp64MJ1uQujMR5bGbcSTSJYqa2+tV49aC2N4qf8apXj82clp6Bhs
- ldYEArU2o3iVAZhWvoUupGHJfijF8oyQ/cg4MpfAKxppbd4HLQgW/YCRVbXlglur
- laIBFDkBT6X3rWYC3M+1YiZLLhGWLetzmT+4bfXYq1uB/7f/F30DpEuga7d0tX05
- fgRHnuyWGwgW0zNo09i3t7v3oI07gdLSLRhHOLn8PYCUaSw/uIo8fxZqZaebtqdq
- eFWSOaf1/VacZfw0UweySCFc43s3twad2nQWJ7+zO0A0KuPEbo72U7ATqO9dXfvA
- ==
-X-ME-Sender: <xms:OWEAXQUCkd-H2vvIjkFyyIU0tx4mJY0CWsTVcYu6tTIkUOWAsnl4IQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgheehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:OWEAXUsTQusNp4KkACimtP5TBKCd0_Fpq1mSDCn7IFUQ6_8jv5B8LA>
- <xmx:OWEAXUqmPqgzdb_6vn-xsNZpr9ibHfIKIV7ei8WI-siLr2MrHdbZ9A>
- <xmx:OWEAXTbhrOecF3nvKZJ-21TV4OjRJpvimCh9yEEp_2_2dSZUWrs68Q>
- <xmx:OmEAXfJWoV8WhosSllDgRhs1qH2fAyZS8-3g8VHrRwa14mGl7hP13A>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 6F099E00A2; Tue, 11 Jun 2019 22:19:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-663-gf46ad30-fmstable-20190607v1
-Mime-Version: 1.0
-Message-Id: <d7047bff-acaa-49d1-98e4-6bf901e3c329@www.fastmail.com>
-In-Reply-To: <CAARXrtmd8MnBE4x=bsSRmM_rYrhzLnPzpZWpMG+gtknwGC2T=g@mail.gmail.com>
-References: <1559787471-3734-1-git-send-email-wangzqbj@inspur.com>
- <CAARXrtmd8MnBE4x=bsSRmM_rYrhzLnPzpZWpMG+gtknwGC2T=g@mail.gmail.com>
-Date: Wed, 12 Jun 2019 11:49:36 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: Mine <mine260309@gmail.com>, "John Wang" <wangzqbj@inspur.com>
-Subject: Re: [PATCH dev-5.1] ARM: dts: aspeed: Add Inspur fp5280g2 BMC machine
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Nrj661r5zDqvK
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 12:41:14 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id m29so17101190qtu.1
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Jun 2019 19:41:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=MiV1uDLbmSM4MW8PZzT6ifAls5y7TIn0VDcNehNB4qQ=;
+ b=Pr91t4nJ2IUCKq34hPuPMjeW+VLcyI0Y3LCR+Tgloj1yctk10oTitrm5Z3dKcxT2u1
+ /uCIp8PFzQ31pytmHTZYKOB4t2pYxgfxmC+A+T2gRLE++YZXQKTZVWvdjKUg1Gutl2Zx
+ lvLuaNnWLglN66tnN6+wZ+iXLr9j23I+Q77cE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=MiV1uDLbmSM4MW8PZzT6ifAls5y7TIn0VDcNehNB4qQ=;
+ b=BoIoXAM+1s+ePWKcy6dEJSC9vjwmg5vtbHxHPEtjafw21ELqSWC50Xn/wxae5eU4eV
+ kC/AzV9NS4YsTj+mnVHeOJXxGLmaLC5VeQQL99LgzxG6DzqWxEiaap2MqjpJuH4Ho/Yw
+ rytku4ye5F8GuiLEBwrRMg8k3TmBFguVDTVw6j93iQe6KdhzL3J/eO77z+Konn5BIt61
+ l191DIjMMTQq4mW64Uhg2v4QhE36klnMFXLt0qBYWBqKUBvbieV3voliOKZZAphM1gqQ
+ H83CM2Za9qpMJBaDSqMB7/4Jce36AvzdF1JfGycvpsQZX60SXSXBqbKjgwDLNg6JLC6b
+ ZuVw==
+X-Gm-Message-State: APjAAAX2nvEUoBTxcRi6XuysaICQd66m/yJCXUYBFgg7s0MAgEBuYmoj
+ QOiO6EmbVjQqSGT5o11JYY3V8D0cxl7YdA2dnz4iXb1Bc8A=
+X-Google-Smtp-Source: APXvYqyS6bdBcLvLLrrye5CgJHKQ2Aa3+jegqsr2gViqLAGMGLRGGpCOpdFw78McJCMn3yXqSaXifsbpV9sOEDKIJdE=
+X-Received: by 2002:ac8:2493:: with SMTP id s19mr47403518qts.220.1560307268913; 
+ Tue, 11 Jun 2019 19:41:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190606044950.5930-1-sam@mendozajonas.com>
+ <20190606044950.5930-2-sam@mendozajonas.com>
+In-Reply-To: <20190606044950.5930-2-sam@mendozajonas.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 12 Jun 2019 02:40:56 +0000
+Message-ID: <CACPK8Xd_OTZK+HO=xXp5dFn0rcZH_fCfbJndXVcttj0MR2_fxg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] phy: Add support for the NC-SI protocol
+To: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,837 +70,203 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Simon Glass <sjg@chromium.org>, joe.hershberger@ni.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi John,
+On Thu, 6 Jun 2019 at 04:50, Samuel Mendoza-Jonas <sam@mendozajonas.com> wrote:
+>
+> This introduces support for the NC-SI protocol, modelled as a phy driver
+> for other ethernet drivers to consume.
+>
+> NC-SI (Network Controller Sideband Interface) is a protocol to manage a
+> sideband connection to a proper network interface, for example a BMC
+> (Baseboard Management Controller) sharing the NIC of the host system.
+> Probing and configuration occurs by communicating with the "remote" NIC
+> via NC-SI control frames (Ethernet header 0x88f8).
+>
+> This implementation is roughly based on the upstream Linux
+> implementation[0], with a reduced feature set and an emphasis on getting
+> a link up as fast as possible rather than probing the full possible
+> topology of the bus.
+> The current phy model relies on the network being "up", sending NC-SI
+> command frames via net_send_packet() and receiving them from the
+> net_loop() loop (added in a following patch).
+>
+> The ncsi-pkt.h header[1] is copied from the Linux kernel for consistent
+> field definitions.
+>
+> [0]: https://github.com/torvalds/linux/tree/master/net/ncsi
+> [1]: https://github.com/torvalds/linux/blob/master/net/ncsi/ncsi-pkt.h
+>
+> Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 
-On Thu, 6 Jun 2019, at 17:22, Lei YU wrote:
-> Reviewed-by: Lei YU <mine260309@gmail.com>
-> 
-> On Thu, Jun 6, 2019 at 10:18 AM John Wang <wangzqbj@inspur.com> wrote:
-> >
-> > The fp5280g2 is an open-power server platform with
-> > an aspeed ast2500 BMC
-> >
-> > Signed-off-by: John Wang <wangzqbj@inspur.com>
-> > ---
-> >  arch/arm/boot/dts/Makefile                       |   1 +
-> >  arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 843 +++++++++++++++++++++++
-> >  2 files changed, 844 insertions(+)
-> >  create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> >
-> > diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> > index bed2047..31db1d3 100644
-> > --- a/arch/arm/boot/dts/Makefile
-> > +++ b/arch/arm/boot/dts/Makefile
-> > @@ -1256,6 +1256,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
-> >         aspeed-bmc-facebook-cmm.dtb \
-> >         aspeed-bmc-facebook-tiogapass.dtb \
-> >         aspeed-bmc-intel-s2600wf.dtb \
-> > +       aspeed-bmc-inspur-fp5280g2.dtb \
-> >         aspeed-bmc-lenovo-hr630.dtb \
-> >         aspeed-bmc-microsoft-olympus.dtb \
-> >         aspeed-bmc-opp-lanyang.dtb \
-> > diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> > new file mode 100644
-> > index 0000000..771de77
-> > --- /dev/null
-> > +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-> > @@ -0,0 +1,843 @@
-> > +// SPDX-License-Identifier: GPL-2.0+
-> > +/dts-v1/;
-> > +#include "aspeed-g5.dtsi"
-> > +#include <dt-bindings/gpio/aspeed-gpio.h>
-> > +#include <dt-bindings/leds/leds-pca955x.h>
-> > +
-> > +/ {
-> > +       model = "FP5280G2 BMC";
-> > +       compatible = "inspur,fp5280g2-bmc", "aspeed,ast2500";
-> > +
-> > +       chosen {
-> > +               stdout-path = &uart5;
-> > +               bootargs = "console=ttyS4,115200 earlyprintk";
-> > +       };
-> > +
-> > +       memory@80000000 {
-> > +               reg = <0x80000000 0x20000000>;
-> > +       };
-> > +
-> > +       reserved-memory {
-> > +               #address-cells = <1>;
-> > +               #size-cells = <1>;
-> > +               ranges;
-> > +
-> > +               vga_memory: framebuffer@9f000000 {
-> > +                       no-map;
-> > +                       reg = <0x9f000000 0x01000000>; /* 16M */
-> > +               };
-> > +
-> > +               flash_memory: region@98000000 {
-> > +                       no-map;
-> > +                       reg = <0x98000000 0x04000000>; /* 64M */
-> > +               };
-> > +
-> > +               coldfire_memory: codefire_memory@9ef00000 {
-> > +                       reg = <0x9ef00000 0x00100000>;
-> > +                       no-map;
-> > +               };
-> > +
-> > +               gfx_memory: framebuffer {
-> > +                       size = <0x01000000>;
-> > +                       alignment = <0x01000000>;
-> > +                       compatible = "shared-dma-pool";
-> > +                       reusable;
-> > +               };
-> > +
-> > +               video_engine_memory: jpegbuffer {
-> > +                       size = <0x02000000>;    /* 32M */
-> > +                       alignment = <0x01000000>;
-> > +                       compatible = "shared-dma-pool";
-> > +                       reusable;
-> > +               };
-> > +       };
-> > +
-> > +       fsi: gpio-fsi {
-> > +               compatible = "fsi-master-gpio", "fsi-master";
-> > +               #address-cells = <2>;
-> > +               #size-cells = <0>;
-> > +               no-gpio-delays;
-> > +
-> > +               memory-region = <&coldfire_memory>;
-> > +               aspeed,sram = <&sram>;
-> > +               aspeed,cvic = <&cvic>;
-> > +
-> > +               clock-gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
-> > +               data-gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_HIGH>;
-> > +               mux-gpios = <&gpio ASPEED_GPIO(I, 2) GPIO_ACTIVE_HIGH>;
-> > +               enable-gpios = <&gpio ASPEED_GPIO(I, 3) GPIO_ACTIVE_HIGH>;
-> > +               trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
-> > +       };
-> > +
-> > +       gpio-keys {
-> > +               compatible = "gpio-keys";
-> > +
-> > +               checkstop {
-> > +                       label = "checkstop";
-> > +                       gpios = <&gpio ASPEED_GPIO(B, 3) GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <ASPEED_GPIO(B, 3)>;
-> > +               };
-> > +
-> > +               ps0-presence {
-> > +                       label = "ps0-presence";
-> > +                       gpios = <&gpio ASPEED_GPIO(F, 0) GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <ASPEED_GPIO(F, 0)>;
-> > +               };
-> > +
-> > +               ps1-presence {
-> > +                       label = "ps1-presence";
-> > +                       gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <ASPEED_GPIO(F, 1)>;
-> > +               };
-> > +
-> > +       };
-> > +
-> > +       gpio-keys-polled {
-> > +               compatible = "gpio-keys-polled";
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +               poll-interval = <1000>;
-> > +
-> > +               fan0-presence {
-> > +                       label = "fan0-presence";
-> > +                       gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <0>;
-> > +               };
-> > +
-> > +               fan1-presence {
-> > +                       label = "fan1-presence";
-> > +                       gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <1>;
-> > +               };
-> > +
-> > +               fan2-presence {
-> > +                       label = "fan2-presence";
-> > +                       gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <2>;
-> > +               };
-> > +
-> > +               fan3-presence {
-> > +                       label = "fan3-presence";
-> > +                       gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <3>;
-> > +               };
-> > +
-> > +               fan4-presence {
-> > +                       label = "fan4-presence";
-> > +                       gpios = <&pca1 4 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <4>;
-> > +               };
-> > +
-> > +               fan5-presence {
-> > +                       label = "fan5-presence";
-> > +                       gpios = <&pca1 5 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <5>;
-> > +               };
-> > +
-> > +               fan6-presence {
-> > +                       label = "fan6-presence";
-> > +                       gpios = <&pca1 6 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <6>;
-> > +               };
-> > +
-> > +               fan7-presence {
-> > +                       label = "fan7-presence";
-> > +                       gpios = <&pca1 7 GPIO_ACTIVE_LOW>;
-> > +                       linux,code = <7>;
-> > +               };
-> > +       };
-> > +
-> > +       leds {
-> > +           compatible = "gpio-leds";
-> > +
-> > +           power {
-> > +                   label = "power";
-> > +                   /* TODO: dummy gpio */
-> > +                   gpios = <&gpio ASPEED_GPIO(R, 1) GPIO_ACTIVE_LOW>;
-> > +           };
-> > +
-> > +       };
-> > +
-> > +       iio-hwmon-battery {
-> > +               compatible = "iio-hwmon";
-> > +               io-channels = <&adc 15>;
-> > +       };
-> > +
-> > +       iio-hwmon {
-> > +               compatible = "iio-hwmon";
-> > +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>,
-> > +                       <&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>,
-> > +                       <&adc 10>, <&adc 11>, <&adc 12>, <&adc 13>, <&adc 14>;
-> > +       };
-> > +
-> > +};
-> > +
-> > +&fmc {
-> > +       status = "okay";
-> > +
-> > +       flash@0 {
-> > +               status = "okay";
-> > +               label = "bmc";
-> > +               m25p,fast-read;
-> > +               spi-max-frequency = <50000000>;
-> > +#include "openbmc-flash-layout.dtsi"
-> > +       };
-> > +};
-> > +
-> > +&spi1 {
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_spi1_default>;
-> > +
-> > +       flash@0 {
-> > +               status = "okay";
-> > +               label = "pnor";
-> > +               m25p,fast-read;
-> > +               spi-max-frequency = <100000000>;
-> > +       };
-> > +};
-> > +
-> > +&uart1 {
-> > +       /* Rear RS-232 connector */
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_txd1_default
-> > +                       &pinctrl_rxd1_default
-> > +                       &pinctrl_nrts1_default
-> > +                       &pinctrl_ndtr1_default
-> > +                       &pinctrl_ndsr1_default
-> > +                       &pinctrl_ncts1_default
-> > +                       &pinctrl_ndcd1_default
-> > +                       &pinctrl_nri1_default>;
-> > +};
-> > +
-> > +&uart2 {
-> > +       /* Test Point */
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
-> > +};
-> > +
-> > +&uart3 {
-> > +       /* APSS */
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_txd3_default &pinctrl_rxd3_default>;
-> > +};
-> > +
-> > +&uart5 {
-> > +       status = "okay";
-> > +};
-> > +
-> > +&lpc_ctrl {
-> > +       status = "okay";
-> > +       memory-region = <&flash_memory>;
-> > +       flash = <&spi1>;
-> > +};
-> > +
-> > +&mbox {
-> > +       status = "okay";
+Looks good. Some comments below.
 
-Are you sure this is necessary? We're planning to drop mbox support in the near
-future, so just want to make sure you're aware of that.
+> +static int ncsi_validate_rsp(struct ncsi_rsp_pkt *pkt, int payload)
+> +{
+> +       struct ncsi_rsp_pkt_hdr *hdr = &pkt->rsp;
+> +       __be32 pchecksum;
+> +       u32 checksum;
 
-> > +};
-> > +
-> > +&mac0 {
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_rmii1_default>;
-> > +       use-ncsi;
-> > +};
-> > +
-> > +&mac1 {
-> > +       status = "okay";
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-> > +};
-> > +
-> > +&i2c0 {
-> > +       /* LCD */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c1 {
-> > +       status = "okay";
-> > +
-> > +       eeprom@50 {
-> > +               compatible = "atmel,24c256";
-> > +               reg = <0x50>;
-> > +               label = "fru";
-> > +       };
-> > +
-> > +};
-> > +
-> > +&i2c2 {
-> > +       status = "okay";
-> > +
-> > +       tmp112@48 {
-> > +               compatible = "ti,tmp112";
-> > +               reg = <0x48>;
-> > +               label = "inlet";
-> > +       };
-> > +
-> > +       tmp112@49 {
-> > +               compatible = "ti,tmp112";
-> > +               reg = <0x49>;
-> > +               label = "outlet";
-> > +       };
-> > +
-> > +       i2c-switch@70 {
-> > +               compatible = "nxp,pca9546";
-> > +               reg = <0x70>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               i2c@0 {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +                       reg = <0>;
-> > +
-> > +                       tmp112@4a {
-> > +                               compatible = "ti,tmp112";
-> > +                               reg = <0x4a>;
-> > +                               label = "psu_inlet";
-> > +                       };
-> > +
-> > +               };
-> > +
-> > +               i2c@1 {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +                       reg = <1>;
-> > +
-> > +                       tmp112@4a {
-> > +                               compatible = "ti,tmp112";
-> > +                               reg = <0x4a>;
-> > +                               label = "ocp_zone";
-> > +                       };
-> > +               };
-> > +
-> > +               i2c@2 {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +                       reg = <2>;
-> > +
-> > +                       tmp112@4a {
-> > +                               compatible = "ti,tmp112";
-> > +                               reg = <0x4a>;
-> > +                               label = "bmc_zone";
-> > +                       };
-> > +               };
-> > +
-> > +               i2c@3 {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +                       reg = <3>;
-> > +
-> > +                       tmp112@7c {
-> > +                               compatible = "emc1413";
+> +       if (ntohs(hdr->common.length) != payload) {
+> +               printf("NCSI: 0x%02x response has incorrect length %d\n",
+> +                      hdr->common.type, hdr->common.length);
+> +               return -1;
+> +       }
+> +
+> +       pchecksum = get_unaligned_be32((void *)(hdr + 1) + payload - 4);
 
-Should have a "microchip," prefix?
+Wheee. So the checksum is the last 4-bytes of the payload. I assume
+it's always longer than 4?
 
-> > +                               reg = <0x7c>;
-> > +                       };
-> > +               };
-> > +
-> > +       };
-> > +};
-> > +
-> > +&i2c3 {
-> > +       /* Riser Card */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c4 {
-> > +       status = "okay";
-> > +
-> > +       rtc@68 {
-> > +               compatible = "dallas,ds3232";
-> > +               reg = <0x68>;
-> > +       };
-> > +};
-> > +
-> > +&i2c5 {
-> > +       /* vr  */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c6 {
-> > +       /* bp card */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c7 {
-> > +       status = "okay";
-> > +
-> > +       i2c-switch@70 {
-> > +               compatible = "nxp,pca9546";
-> > +               reg = <0x70>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               i2c@0 {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +                       reg = <0>;
-> > +
-> > +                       adm1278@10 {
-> > +                               compatible = "adi,adm1278";
-> > +                               reg = <0x10>;
-> > +                       };
-> > +
-> > +                       adm1278@13 {
-> > +                               compatible = "adi,adm1278";
-> > +                               reg = <0x13>;
-> > +                       };
-> > +
-> > +                       adm1278@50 {
-> > +                               compatible = "adi,adm1278";
-> > +                               reg = <0x50>;
-> > +                       };
-> > +
-> > +                       adm1278@53 {
-> > +                               compatible = "adi,adm1278";
-> > +                               reg = <0x53>;
-> > +                       };
-> > +
-> > +               };
-> > +
-> > +               /*pcie riser*/
-> > +
-> > +       };
-> > +};
-> > +
-> > +&i2c8 {
-> > +       status = "okay";
-> > +
-> > +       pca0: pca9555@20 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x20>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +       };
-> > +
-> > +       pca1: pca9555@21 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x21>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +       };
-> > +
-> > +       pca2: pca9555@22 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x22>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +       };
-> > +
-> > +       pca3: pca9555@23 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x23>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +       };
-> > +
-> > +       pca4: pca9555@24 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x24>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +       };
-> > +
-> > +       pca5: pca9555@25 {
-> > +               compatible = "nxp,pca9555";
-> > +               reg = <0x25>;
-> > +               #address-cells = <1>;
-> > +               #size-cells = <0>;
-> > +
-> > +               gpio-controller;
-> > +               #gpio-cells = <2>;
-> > +
-> > +               gpio@0 {
-> > +                       reg = <0>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@1 {
-> > +                       reg = <1>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@2 {
-> > +                       reg = <2>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@3 {
-> > +                       reg = <3>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@4 {
-> > +                       reg = <4>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@5 {
-> > +                       reg = <5>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@6 {
-> > +                       reg = <6>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +
-> > +               gpio@7 {
-> > +                       reg = <7>;
-> > +                       type = <PCA955X_TYPE_GPIO>;
-> > +               };
-> > +       };
-> > +
-> > +};
-> > +
-> > +&i2c9 {
-> > +       /* cpld */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c10 {
-> > +       /* hdd bp */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&i2c11 {
-> > +       status = "okay";
-> > +
-> > +       power-supply@58 {
-> > +               compatible = "pmbus";
-> > +               reg = <0x58>;
-> > +       };
-> > +
-> > +       power-supply@5a {
-> > +               compatible = "pmbus";
-> > +               reg = <0x5a>;
-> > +       };
-> > +};
-> > +
-> > +&i2c12 {
-> > +       /* odcc */
-> > +       status = "okay";
-> > +};
-> > +
-> > +&vuart {
-> > +       status = "okay";
-> > +};
-> > +
-> > +&gfx {
-> > +       status = "okay";
-> > +       memory-region = <&gfx_memory>;
-> > +};
-> > +
-> > +&pinctrl {
-> > +       aspeed,external-nodes = <&gfx &lhc>;
-> > +};
-> > +
-> > +&gpio {
-> > +       pin_gpio_b7 {
-> > +               gpio-hog;
-> > +               gpios = <ASPEED_GPIO(B,7) GPIO_ACTIVE_LOW>;
-> > +               output-high;
-> > +               line-name = "BMC_INIT_OK";
-> > +       };
-> > +};
-> > +
-> > +&wdt1 {
-> > +       aspeed,reset-type = "none";
-> > +       aspeed,external-signal;
-> > +       aspeed,ext-push-pull;
-> > +       aspeed,ext-active-high;
-> > +
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_wdtrst1_default>;
-> > +};
-> > +
-> > +&ibt {
-> > +       status = "okay";
-> > +
-> > +};
-> > +
-> > +&adc {
-> > +       status = "okay";
+A clarifying comment might help, or try to write it in a different way:
 
-Please add the pinctrl properties to mux the necessary ADC lines which you have
-associated with the iio-hwmon bridge (you've used lines 0-14).
+endp = (void *)hdr + sizeof(hdr) + payload;
+pchecksum = get_unaligned_be32(endp - sizeof(checksum));
 
-Cheers,
+or
 
-Andrew
+    checksum_offset = sizeof(hdr) + payload - sizeof(checksum);
+    pchecksum = get_unaligned_be32(payload + checksum_offset);
+
+> +       if (pchecksum != 0) {
+> +               checksum = ncsi_calculate_checksum((unsigned char *)hdr,
+> +                                                  sizeof(*hdr) + payload - 4);
+
+And then this can be:
+
+    checksum = ((unsigned char *)hdr, checksum_offset);
+
+> +               if (pchecksum != checksum) {
+> +                       printf("NCSI: 0x%02x response has invalid checksum\n",
+> +                              hdr->common.type);
+> +                       return -1;
+> +               }
+> +       }
+
+> +static void ncsi_send_sma(unsigned int np, unsigned int nc)
+> +{
+> +       struct ncsi_cmd_sma_pkt cmd;
+> +       unsigned char *addr;
+> +
+> +       addr = eth_get_ethaddr();
+> +       if (!addr) {
+> +               printf("NCSI: no MAC address configured\n");
+> +               return;
+> +       }
+> +
+> +       memset(&cmd, 0, sizeof(cmd));
+> +       memcpy(cmd.mac, addr, 6);
+
+Are there endianness issues with addr here?
+
+> +       cmd.index = 1;
+> +       cmd.at_e = 1;
+> +
+> +       ncsi_send_command(np, nc, NCSI_PKT_CMD_SMA,
+> +                         ((unsigned char *)&cmd)
+> +                         + sizeof(struct ncsi_cmd_pkt_hdr),
+> +                         cmd_payload(NCSI_PKT_CMD_SMA), true);
+> +}
+
+> +
+> +int ncsi_probe(struct phy_device *phydev)
+> +{
+> +       // TODO Associate per device
+
+Is this required before we can support multiple NICs?
+
+> +       if (!ncsi_priv) {
+> +               ncsi_priv = malloc(sizeof(struct ncsi));
+> +               if (!ncsi_priv)
+> +                       return -ENOMEM;
+> +               memset(ncsi_priv, 0, sizeof(struct ncsi));
+> +       }
+> +
+> +       phydev->priv = ncsi_priv;
+> +
+> +       return 0;
+> +}
+> +
+> +int ncsi_startup(struct phy_device *phydev)
+> +{
+> +       /* Set phydev parameters */
+> +       phydev->speed = SPEED_100;
+> +       phydev->duplex = DUPLEX_FULL;
+> +       /* Normal phy reset is N/A */
+> +       phydev->flags |= PHY_FLAG_BROKEN_RESET;
+> +
+> +       /* Set initial probe state */
+> +       ncsi_priv->state = NCSI_PROBE_PACKAGE_SP;
+> +
+> +       /* No active package/channel yet */
+> +       ncsi_priv->current_package = NCSI_PACKAGE_MAX;
+> +       ncsi_priv->current_channel = NCSI_CHANNEL_MAX;
+> +
+> +       /* Pretend link works so ftgmac100 sets final bits up */
+
+s/ftgmac100/mac driver/ ?
+
+> +       phydev->link = true;
+> +
+> +       return 0;
+> +}
+> +
+> +int ncsi_shutdown(struct phy_device *phydev)
+> +{
+> +       printf("NCSI: Disabling package %d\n", ncsi_priv->current_package);
+> +       ncsi_send_dp(ncsi_priv->current_package);
+> +       return 0;
+> +}
+> +
+> +static struct phy_driver ncsi_driver = {
+> +       .uid            = PHY_NCSI_ID,
+> +       .mask           = 0xffffffff,
+> +       .name           = "NC-SI",
+> +       .features       = PHY_100BT_FEATURES | PHY_DEFAULT_FEATURES | SUPPORTED_100baseT_Full | SUPPORTED_MII,
+> +       .probe          = ncsi_probe,
+> +       .startup        = ncsi_startup,
+> +       .shutdown       = ncsi_shutdown,
+> +};
+> +
+> +int phy_ncsi_init(void)
+> +{
+> +       phy_register(&ncsi_driver);
+> +       return 0;
+> +}
+
+
+> --- /dev/null
+> +++ b/include/net/ncsi-pkt.h
+> @@ -0,0 +1,415 @@
+> +/*
+> + * Copyright Gavin Shan, IBM Corporation 2016.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> + */
+
+If you grab the version from 5.2-rc3 it has been SPDXified.
+
+> --- a/include/phy.h
+> +++ b/include/phy.h
+> @@ -17,6 +17,7 @@
+>  #include <phy_interface.h>
+>
+>  #define PHY_FIXED_ID           0xa5a55a5a
+> +#define PHY_NCSI_ID            0xbeefcafe
+
+hmmm...
+
+>
+>  #define PHY_MAX_ADDR 32
+>
+> --
+> 2.21.0
+>
