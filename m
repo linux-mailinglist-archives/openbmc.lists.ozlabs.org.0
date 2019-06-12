@@ -2,114 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E86041C3A
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 08:30:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6110741FAF
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 10:51:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45NxnZ54D1zDqyn
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 16:30:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45P0vx52ZgzDqpg
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 18:51:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.69.124; helo=nam04-co1-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="S2ktbHlJ"; dkim-atps=neutral
-Received: from NAM04-CO1-obe.outbound.protection.outlook.com
- (mail-eopbgr690124.outbound.protection.outlook.com [40.107.69.124])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=inspur.com
+ (client-ip=210.51.61.248; helo=ssh248.corpemail.net;
+ envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=inspur.com
+Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
+ (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NxlV3kNCzDqyj
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 16:28:36 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
- b=VQpmXwZhQbaRsoLKusSQMQ4326iut3P7FoqQF7J/PuyHfr8fm0YfOUrC4LVqTebQ3/rX8nGRWqJDq4D2w4lpF5kH5ulUpzN/bdvQ8vKi/5dEHN2MF7p4R3T7J/PEFrKqgG5OKriMM23ddxqIlNJcf4v5aXK3NvC95EdVdnoSSH0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=testarcselector01;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0+3uGDBjyUD1qk4J0i+vaXF8FI9LbrAzBS+mfdnbrLI=;
- b=P5XhpnCJjgiXmI0SBl1c5zsYcp8zPFyq7cis85rraPSE4/BS/X8KA3C31Fui4bt0N3ADfFoy6lMF7d+SOR30e50NHhZpZ0l0/Qcj9r5maZLPmv6RyZMrQgH+Qj2lyj01g4HRUYoAvhbTZVrL7jDxEUFC6cc/LcSifnJuFsKXV3o=
-ARC-Authentication-Results: i=1; test.office365.com
- 1;spf=none;dmarc=none;dkim=none;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0+3uGDBjyUD1qk4J0i+vaXF8FI9LbrAzBS+mfdnbrLI=;
- b=S2ktbHlJXHcPrCbGyXN1tCE6gup7fDbEXe6UVT1Uc5OcJUaTsrezukIakSjEA3Ay+CXw2AsAQFpXpqCnYim5feOohgiUOUpBPYrP2LSlVkcOLgCuT358xL6JMpzqJwHgGe+cb29TYYL/tyOt8zrMkAF8EHNzbK4wb1ok5oo9iDE=
-Received: from BL0PR2101MB0932.namprd21.prod.outlook.com
- (2603:10b6:207:30::20) by BL0PR2101MB0881.namprd21.prod.outlook.com
- (2603:10b6:207:36::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2008.2; Wed, 12 Jun
- 2019 06:28:26 +0000
-Received: from BL0PR2101MB0932.namprd21.prod.outlook.com
- ([fe80::1072:430b:60ef:aaae]) by BL0PR2101MB0932.namprd21.prod.outlook.com
- ([fe80::1072:430b:60ef:aaae%4]) with mapi id 15.20.2008.002; Wed, 12 Jun 2019
- 06:28:26 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: Kun Yi <kunyi@google.com>, Alexander Amelkin <a.amelkin@yadro.com>
-Subject: RE: Platform telemetry and health monitoring
-Thread-Topic: Platform telemetry and health monitoring
-Thread-Index: AdUPSgV2V2O36/zKToW4XlARusyEFAAbGfeAAA/WT4AAnwBPgAImtRSAACQhJ4ABJWtDgAAUBnMAABk4WFA=
-Date: Wed, 12 Jun 2019 06:28:26 +0000
-Message-ID: <BL0PR2101MB0932ECD784D96485087196F4C8EC0@BL0PR2101MB0932.namprd21.prod.outlook.com>
-References: <BL0PR2101MB0932AE0C63ADC3CBDAE0CF16C8060@BL0PR2101MB0932.namprd21.prod.outlook.com>
- <4d082cf8-c99c-22ac-9a60-85f70abb8bd6@linux.vnet.ibm.com>
- <CAGMNF6W+W1VPnqa3J1Y_wqc=BcnkBCi4-h9rG4tjUUrCk3zR8g@mail.gmail.com>
- <CALXe31mBvxQTaUkuFJsMozBYLiVTur18pMsTUfHY2t02Xp34wg@mail.gmail.com>
- <CAGMNF6XSD2U-qAe5ibotCkYW-U21vV+tL5-rJwvjPUvWwHA1hw@mail.gmail.com>
- <20190605124935.ywwwoj26fk46e6qu@thinkpad.dyn.fuzziesquirrel.com>
- <ab42831d-e2a9-c13d-9061-fd39b807ace2@yadro.com>
- <CAGMNF6UpQ9WpHhZa8_NxRvraYG2mz=YgVjf+jYySigLXBzQTog@mail.gmail.com>
-In-Reply-To: <CAGMNF6UpQ9WpHhZa8_NxRvraYG2mz=YgVjf+jYySigLXBzQTog@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-06-12T06:28:24.5469448Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=d63604a2-9e18-4786-ba1e-31bdcefe0e6b;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-originating-ip: [50.47.128.230]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9c2b933f-30df-4e87-b1b9-08d6eeff2d74
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);
- SRVR:BL0PR2101MB0881; 
-x-ms-traffictypediagnostic: BL0PR2101MB0881:
-x-ms-exchange-purlcount: 6
-x-microsoft-antispam-prvs: <BL0PR2101MB08814AC9A543653DACC2CB68C8EC0@BL0PR2101MB0881.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 0066D63CE6
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(346002)(136003)(376002)(39860400002)(396003)(366004)(199004)(189003)(55016002)(102836004)(76176011)(99286004)(53546011)(5660300002)(186003)(52396003)(26005)(6506007)(7696005)(2906002)(25786009)(236005)(54896002)(9686003)(53936002)(14444005)(966005)(256004)(8990500004)(10090500001)(6306002)(68736007)(52536014)(14454004)(86362001)(6436002)(229853002)(33656002)(66446008)(64756008)(66556008)(66476007)(71200400001)(476003)(74316002)(446003)(11346002)(71190400001)(478600001)(81156014)(8676002)(8936002)(76116006)(81166006)(66066001)(486006)(7736002)(790700001)(6116002)(3846002)(606006)(22452003)(316002)(110136005)(73956011)(10290500003)(4326008)(66946007)(6246003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BL0PR2101MB0881;
- H:BL0PR2101MB0932.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 26kybo3dk69lWqsBxwYA6OxNRdAX4TnO+Ibb5q62TMjSKyhWE4LMUSvgEM7dtpnSS4a5mzb0W8yO5ZACrwhT4a9TrbQp+2uijiJ80WBS3mX/8dHEjGBau8GCCpSzoZCduS1Rm4hO8jR4G/KEPDweJk5iniFe9989AW58u0EJX7sq3y6pBX4wz81TrycE8721eodmZBUAMs7rQyYpIwyJ1L6S7uAMmLsR8mjHQIU0QopyomG6CupP6RoLm6LVn1pXTpUnQmwjBPZIvjtKr3uooF2c4svatItSWgRKqAxiZaM3cT7EltthE9p0UnWBkYm9A+7QYBjKFYuzHVLdo82QIYEttnFIykyxNbJzaCEh/FHHQQ4IJ0SrgqHHL7m5Zifj7Rd4lb2RAi18hwBy70ROhn0tg0dGJL9OOlgUl0Hn/80=
-Content-Type: multipart/alternative;
- boundary="_000_BL0PR2101MB0932ECD784D96485087196F4C8EC0BL0PR2101MB0932_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45P0vG1S6LzDqnk
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 18:50:21 +1000 (AEST)
+Received: from ([58.56.96.29])
+ by ssh248.corpemail.net (Antispam) with ASMTP (SSL) id DOK83701
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 16:50:01 +0800
+Received: from Jtjnmail201617.home.langchao.com (10.100.2.17) by
+ jtjnmail201610.home.langchao.com (10.100.2.10) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1591.10; Wed, 12 Jun 2019 16:49:59 +0800
+Received: from mail-lj1-f170.google.com (10.100.1.52) by
+ Jtjnmail201617.home.langchao.com (10.100.2.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 12 Jun 2019 16:49:58 +0800
+Received: by mail-lj1-f170.google.com with SMTP id x25so9763670ljh.2
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 01:49:58 -0700 (PDT)
+X-Gm-Message-State: APjAAAV9pQ+U3m1oMbk/Osv1UVkotOn/UaqqQ0KOiT5PTez/+1CfipbG
+ 99iDdLfHWEiwK0Zm5nWOTWz6ySlaqn80fhsTgsY=
+X-Google-Smtp-Source: APXvYqxhOcjTl5hgW7hIPN1FUbaWhTLFLs2T1p1irHah6TkZ8GTSHFem1ml7SItc2oWS/F+IrUISxYymvikFUQtaR68=
+X-Received: by 2002:a2e:9d07:: with SMTP id t7mr35701322lji.43.1560329390533; 
+ Wed, 12 Jun 2019 01:49:50 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c2b933f-30df-4e87-b1b9-08d6eeff2d74
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jun 2019 06:28:26.5108 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: neladk@microsoft.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0881
+References: <1559787471-3734-1-git-send-email-wangzqbj@inspur.com>
+ <CAARXrtmd8MnBE4x=bsSRmM_rYrhzLnPzpZWpMG+gtknwGC2T=g@mail.gmail.com>
+ <d7047bff-acaa-49d1-98e4-6bf901e3c329@www.fastmail.com>
+In-Reply-To: <d7047bff-acaa-49d1-98e4-6bf901e3c329@www.fastmail.com>
+From: John Wang <wangzqbj@inspur.com>
+Date: Wed, 12 Jun 2019 16:49:38 +0800
+X-Gmail-Original-Message-ID: <CAHkHK080NsLM-1jOfL-m+d+7U3Dse4MuVtMEbaVjn=3R8Sfcmw@mail.gmail.com>
+Message-ID: <CAHkHK080NsLM-1jOfL-m+d+7U3Dse4MuVtMEbaVjn=3R8Sfcmw@mail.gmail.com>
+Subject: Re: [PATCH dev-5.1] ARM: dts: aspeed: Add Inspur fp5280g2 BMC machine
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
+X-Originating-IP: [10.100.1.52]
+X-ClientProxiedBy: jtjnmail201605.home.langchao.com (10.100.2.5) To
+ Jtjnmail201617.home.langchao.com (10.100.2.17)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -125,198 +68,840 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BL0PR2101MB0932ECD784D96485087196F4C8EC0BL0PR2101MB0932_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-VGhhbmtzIEt1biBmb3Igc3VtbWFyaXppbmcgbm90ZXMuDQoNCkZvciBkZXRhaWxlZCBub3Rlczog
-aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy93aWtpL1BsYXRmb3JtLXRlbGVtZXRy
-eS1hbmQtaGVhbHRoLW1vbml0b3JpbmctV29yay1Hcm91cA0KDQpOZWVyYWoNCg0KRnJvbTogb3Bl
-bmJtYyA8b3BlbmJtYy1ib3VuY2VzK25lbGFkaz1taWNyb3NvZnQuY29tQGxpc3RzLm96bGFicy5v
-cmc+IE9uIEJlaGFsZiBPZiBLdW4gWWkNClNlbnQ6IFR1ZXNkYXksIEp1bmUgMTEsIDIwMTkgMTE6
-MjQgQU0NClRvOiBBbGV4YW5kZXIgQW1lbGtpbiA8YS5hbWVsa2luQHlhZHJvLmNvbT4NCkNjOiBP
-cGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSZTog
-UGxhdGZvcm0gdGVsZW1ldHJ5IGFuZCBoZWFsdGggbW9uaXRvcmluZw0KDQpOZWVyYWogbWVudGlv
-bmVkIGhlIHdpbGwgc2VuZCBvdXQgdGhlIG1lZXRpbmcgbWludXRlcy4gSGUgd2lsbCBhbHNvIGxv
-b2sgaW50byBzZXR0aW5nIHVwIGEgd2lraSBwYWdlIGhvbGRpbmcgdGhlIGNvbnRlbnRzIGFzIHdl
-bGwgYXMgbWludXRlcy4NCg0KQSBmZXcgcXVpY2sgbm90ZXMgZnJvbSB0b3Agb2YgbXkgaGVhZCBm
-cm9tIHRoZSBraWNrLW9mZiBtZWV0aW5nOg0KLSBkaWQgYSByb3VuZCB0YWJsZSwgYWxsIHRoZSBv
-cmdzIGhhdmUgc2ltaWxhciByZXF1aXJlbWVudHMNCi0gbmVlZCB0byBsb29rIGludG8gaG93IGV4
-aXN0aW5nIGluZnJhIGZpdCBpbnRvIHRoZSBuZWVkcyBhbmQgd2hhdCBmYWxscyBzaG9ydA0KLSB3
-aWxsIGhhdmUgd29ya3N0cmVhbXMgZm9yOg0KICAgIC0gd2hhdCB0byBjb2xsZWN0DQogICAgLSBo
-b3cgdG8gY29sbGVjdA0KICAgIC0gaG93IHRvIHN0b3JlDQogICAgLSBob3cgdG8gZXhwb3J0DQot
-IGNvbGxlY3RkIHNvdW5kcyBpbnRlcmVzdGluZyBhbmQgcHJvbWlzaW5nIGZvciBjb2xsZWN0aW5n
-IG1ldHJpY3MNCi0gSVBNSSBTRUxzIGhhdmUgbGltaXRhdGlvbnMgYXMgYW4gZXZlbnQgcmVwb3J0
-aW5nIG1lY2hhbmlzbSwgcG9zc2libHkgbmVlZCB0byBoYXZlIGEgbmV3IGV2ZW50cyBvciBlcnJv
-ciBsb2cgcmVwb3J0aW5nIG1lY2hhbmlzbSB0byBhZ2dyZWdhdGUgZmF1bHQgbG9ncyBmcm9tIGRp
-ZmZlcmVudCBjb21wb25lbnRzDQotIHdpbGwgbmVlZCB0byBsb29rIGludG8gUmVkaXNoIGFuZCBl
-eHBhbmQgdGhlIHNwZWNzIGFzIG5lY2Vzc2FyeSB0byBmaXQgb3VyIG5lZWRzDQoNCk9uIFR1ZSwg
-SnVuIDExLCAyMDE5IGF0IDI6MDIgQU0gQWxleGFuZGVyIEFtZWxraW4gPGEuYW1lbGtpbkB5YWRy
-by5jb208bWFpbHRvOmEuYW1lbGtpbkB5YWRyby5jb20+PiB3cm90ZToNCkkgc2Vjb25kIHRoZSBp
-ZGVhIG9mIHJldXNpbmcgY29sbGVjdGQuIEl0J3MgcHJldHR5IHN0YW5kYXJkIGFuZCBwb3B1bGFy
-Lg0KDQpXaXRoIGJlc3QgcmVnYXJkcywNCkFsZXhhbmRlciBBbWVsa2luLA0KTGVhZGluZyBCTUMg
-U29mdHdhcmUgRW5naW5lZXIsIFlBRFJPDQpodHRwczovL3lhZHJvLmNvbTxodHRwczovL25hbTA2
-LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYlMkZ5YWRy
-by5jb20mZGF0YT0wMiU3QzAxJTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3QzY4NTc2ZTQxYzYy
-ZjQ4MjU3YzMyMDhkNmVlOWE0NjE4JTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDcl
-N0MxJTdDMCU3QzYzNjk1ODc0MzcwOTU4MTU3NSZzZGF0YT0wN2JOSWJGMXFLaFlnaFZPdUZHWDZ5
-UjQwazJKWmprb0pveG1KS0tvajRZJTNEJnJlc2VydmVkPTA+DQoNCjA1LjA2LjIwMTkgMTU6NDks
-IEJyYWQgQmlzaG9wIHdyb3RlOg0KPiBPbiBUdWUsIEp1biAwNCwgMjAxOSBhdCAxMjozNTowNVBN
-IC0wNzAwLCBLdW4gWWkgd3JvdGU6DQo+PiBGWUk6IFNyaW5pdmFzLCBOZWVyYWosIGFuZCBJIGFy
-ZSBmaW5hbGl6aW5nIGEgdGltZSBzbG90IGZvciB0aGUga2ljayBvZmYNCj4+IG1lZXRpbmcuIFdl
-IGFyZSB0aGlua2luZyBhYm91dCBhIGJpLXdlZWtseSBkaXNjdXNzaW9uLg0KPj4NCj4+IEFsc28s
-IEknbSBkcmFmdGluZyBhIHZlcnNpb24gb2YgQk1DIG1ldHJpY3MgY29sbGVjdGlvbiBkYWVtb24u
-IFRoZSBmaXJzdA0KPj4gZHJhZnQgaXMgdXAgb24gaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9q
-ZWN0Lnh5ei9jL29wZW5ibWMvZG9jcy8rLzIyMjU3PGh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnBy
-b3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdlcnJpdC5vcGVuYm1jLXBy
-b2plY3QueHl6JTJGYyUyRm9wZW5ibWMlMkZkb2NzJTJGJTJCJTJGMjIyNTcmZGF0YT0wMiU3QzAx
-JTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3QzY4NTc2ZTQxYzYyZjQ4MjU3YzMyMDhkNmVlOWE0
-NjE4JTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNjk1ODc0
-MzcwOTU4MTU3NSZzZGF0YT1mM0s1MXhsQ21NZEROOUZZek5HMWNCaVNVUXBkeTlMemNDOEFqJTJC
-Qm9RSHMlM0QmcmVzZXJ2ZWQ9MD4sDQo+PiB3aGljaCB3ZSBwcm9iYWJseSB3aWxsIGdvIG92ZXIg
-ZHVyaW5nIHRoZSBtZWV0aW5nLg0KPg0KPiBJIGp1c3Qgd2FudGVkIHRvIHBvaW50IG91dCB0aGUg
-Y29sbGVjdGQgcHJvamVjdDogIGh0dHBzOi8vY29sbGVjdGQub3JnLzxodHRwczovL25hbTA2LnNh
-ZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYlMkZjb2xsZWN0
-ZC5vcmclMkYmZGF0YT0wMiU3QzAxJTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3QzY4NTc2ZTQx
-YzYyZjQ4MjU3YzMyMDhkNmVlOWE0NjE4JTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRi
-NDclN0MxJTdDMCU3QzYzNjk1ODc0MzcwOTU5MTU3NCZzZGF0YT00bjlCb3QxbVlrOTB5eVZlN2xy
-M0JBUUxwQnFEamRZcXlRdTNjdzAlMkYlMkZEOCUzRCZyZXNlcnZlZD0wPg0KPg0KPiBJJ20gbm90
-IHN1cmUgaWYgaXQgaXMgc3VpdGFibGUgb3Igbm90IGJ1dCBpdCBzZWVtcyBsaWtlIGEgcHJldHR5
-IGNsb3NlIG1hdGNoIHRvIHdoYXQgeW91IGFyZSB0cnlpbmcgdG8gZG8gYW5kIGl0IHdvdWxkIGJl
-IGEgbG90IG9mIGNvZGUgeW91IGRvbid0IGhhdmUgdG8gd3JpdGUuDQo+DQo+IEp1c3Qgc29tZXRo
-aW5nIHRvIGNvbnNpZGVyLg0KPg0KPiB0aHggLSBicmFkDQoNCg0KLS0NClJlZ2FyZHMsDQpLdW4N
-Cg==
-
---_000_BL0PR2101MB0932ECD784D96485087196F4C8EC0BL0PR2101MB0932_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6ZHQ9InV1aWQ6QzJGNDEwMTAtNjVC
-My0xMWQxLUEyOUYtMDBBQTAwQzE0ODgyIiB4bWxuczptPSJodHRwOi8vc2NoZW1hcy5taWNyb3Nv
-ZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9S
-RUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250
-ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1ldGEgbmFtZT0iR2VuZXJhdG9yIiBj
-b250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQgbWVkaXVtKSI+DQo8c3R5bGU+PCEt
-LQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiQ2Ft
-YnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2IDMgMiA0O30NCkBmb250LWZhY2UN
-Cgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToyIDE1IDUgMiAyIDIgNCAzIDIgNDt9
-DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2
-Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250
-LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmE6bGlu
-aywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJs
-dWU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlw
-ZXJsaW5rRm9sbG93ZWQNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOnB1cnBsZTsN
-Cgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30NCnAubXNvbm9ybWFsMCwgbGkubXNvbm9ybWFs
-MCwgZGl2Lm1zb25vcm1hbDANCgl7bXNvLXN0eWxlLW5hbWU6bXNvbm9ybWFsOw0KCW1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvOw0KCW1hcmdpbi1yaWdodDowaW47DQoJbXNvLW1hcmdpbi1ib3R0b20t
-YWx0OmF1dG87DQoJbWFyZ2luLWxlZnQ6MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1m
-YW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTgNCgl7bXNvLXN0
-eWxlLXR5cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2Vy
-aWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlw
-ZTpleHBvcnQtb25seTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpAcGFn
-ZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGlu
-IDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0K
-LS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpl
-eHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0
-ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6
-ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0t
-Pg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9ImJsdWUiIHZsaW5rPSJwdXJwbGUi
-Pg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlRoYW5r
-cyBLdW4gZm9yIHN1bW1hcml6aW5nIG5vdGVzLiA8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Rm9y
-IGRldGFpbGVkIG5vdGVzOiA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVu
-Ym1jL3dpa2kvUGxhdGZvcm0tdGVsZW1ldHJ5LWFuZC1oZWFsdGgtbW9uaXRvcmluZy1Xb3JrLUdy
-b3VwIj4NCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9QbGF0Zm9ybS10
-ZWxlbWV0cnktYW5kLWhlYWx0aC1tb25pdG9yaW5nLVdvcmstR3JvdXA8L2E+PG86cD48L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPk5lZXJhajxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj5Gcm9tOjwvYj4g
-b3BlbmJtYyAmbHQ7b3BlbmJtYy1ib3VuY2VzJiM0MztuZWxhZGs9bWljcm9zb2Z0LmNvbUBsaXN0
-cy5vemxhYnMub3JnJmd0Ow0KPGI+T24gQmVoYWxmIE9mIDwvYj5LdW4gWWk8YnI+DQo8Yj5TZW50
-OjwvYj4gVHVlc2RheSwgSnVuZSAxMSwgMjAxOSAxMToyNCBBTTxicj4NCjxiPlRvOjwvYj4gQWxl
-eGFuZGVyIEFtZWxraW4gJmx0O2EuYW1lbGtpbkB5YWRyby5jb20mZ3Q7PGJyPg0KPGI+Q2M6PC9i
-PiBPcGVuQk1DIE1haWxsaXN0ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7PGJyPg0K
-PGI+U3ViamVjdDo8L2I+IFJlOiBQbGF0Zm9ybSB0ZWxlbWV0cnkgYW5kIGhlYWx0aCBtb25pdG9y
-aW5nPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpw
-PjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5OZWVyYWogbWVudGlvbmVkIGhlIHdp
-bGwgc2VuZCBvdXQgdGhlIG1lZXRpbmcgbWludXRlcy4gSGUgd2lsbCBhbHNvIGxvb2sgaW50byBz
-ZXR0aW5nIHVwIGEgd2lraSBwYWdlIGhvbGRpbmcgdGhlIGNvbnRlbnRzIGFzIHdlbGwgYXMgbWlu
-dXRlcy48bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZu
-YnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkEgZmV3
-IHF1aWNrIG5vdGVzIGZyb20gdG9wIG9mIG15IGhlYWQgZnJvbSB0aGUga2ljay1vZmYgbWVldGlu
-Zzo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi0g
-ZGlkIGEgcm91bmQgdGFibGUsIGFsbCB0aGUgb3JncyBoYXZlIHNpbWlsYXIgcmVxdWlyZW1lbnRz
-PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4tIG5l
-ZWQgdG8gbG9vayBpbnRvIGhvdyBleGlzdGluZyBpbmZyYSBmaXQgaW50byB0aGUgbmVlZHMgYW5k
-IHdoYXQgZmFsbHMgc2hvcnQ8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPi0gd2lsbCBoYXZlIHdvcmtzdHJlYW1zIGZvcjo8bzpwPjwvbzpwPjwvcD4N
-CjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOyAmbmJzcDsgLSB3aGF0
-IHRvIGNvbGxlY3Q8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPiZuYnNwOyAmbmJzcDsgLSBob3cgdG8gY29sbGVjdDxvOnA+PC9vOnA+PC9wPg0KPC9k
-aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7ICZuYnNwOyAtIGhvdyB0byBz
-dG9yZTxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-Jm5ic3A7ICZuYnNwOyAtIGhvdyB0byBleHBvcnQ8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi0gY29sbGVjdGQgc291bmRzIGludGVyZXN0aW5nIGFu
-ZCBwcm9taXNpbmcgZm9yIGNvbGxlY3RpbmcgbWV0cmljczxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+
-DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+LSBJUE1JIFNFTHMgaGF2ZSBsaW1pdGF0aW9u
-cyBhcyBhbiBldmVudCByZXBvcnRpbmcgbWVjaGFuaXNtLCBwb3NzaWJseSBuZWVkIHRvIGhhdmUg
-YSBuZXcgZXZlbnRzJm5ic3A7b3IgZXJyb3IgbG9nIHJlcG9ydGluZyBtZWNoYW5pc20gdG8gYWdn
-cmVnYXRlIGZhdWx0IGxvZ3MgZnJvbSBkaWZmZXJlbnQgY29tcG9uZW50czxvOnA+PC9vOnA+PC9w
-Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+LSB3aWxsIG5lZWQgdG8gbG9v
-ayBpbnRvIFJlZGlzaCBhbmQgZXhwYW5kIHRoZSBzcGVjcyBhcyBuZWNlc3NhcnkgdG8gZml0IG91
-ciBuZWVkczxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj5PbiBUdWUsIEp1biAxMSwgMjAxOSBhdCAyOjAyIEFNIEFsZXhhbmRlciBBbWVsa2luICZs
-dDs8YSBocmVmPSJtYWlsdG86YS5hbWVsa2luQHlhZHJvLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPmEu
-YW1lbGtpbkB5YWRyby5jb208L2E+Jmd0OyB3cm90ZTo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0K
-PGJsb2NrcXVvdGUgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci1sZWZ0OnNvbGlkICNDQ0NDQ0Mg
-MS4wcHQ7cGFkZGluZzowaW4gMGluIDBpbiA2LjBwdDttYXJnaW4tbGVmdDo0LjhwdDttYXJnaW4t
-cmlnaHQ6MGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtYXJnaW4tYm90dG9tOjEy
-LjBwdCI+SSBzZWNvbmQgdGhlIGlkZWEgb2YgcmV1c2luZyBjb2xsZWN0ZC4gSXQncyBwcmV0dHkg
-c3RhbmRhcmQgYW5kIHBvcHVsYXIuPGJyPg0KPGJyPg0KV2l0aCBiZXN0IHJlZ2FyZHMsPGJyPg0K
-QWxleGFuZGVyIEFtZWxraW4sPGJyPg0KTGVhZGluZyBCTUMgU29mdHdhcmUgRW5naW5lZXIsIFlB
-RFJPPGJyPg0KPGEgaHJlZj0iaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRs
-b29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGeWFkcm8uY29tJmFtcDtkYXRhPTAyJTdDMDElN0Nu
-ZWxhZGslNDBtaWNyb3NvZnQuY29tJTdDNjg1NzZlNDFjNjJmNDgyNTdjMzIwOGQ2ZWU5YTQ2MTgl
-N0M3MmY5ODhiZjg2ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM2OTU4NzQzNzA5
-NTgxNTc1JmFtcDtzZGF0YT0wN2JOSWJGMXFLaFlnaFZPdUZHWDZ5UjQwazJKWmprb0pveG1KS0tv
-ajRZJTNEJmFtcDtyZXNlcnZlZD0wIiB0YXJnZXQ9Il9ibGFuayI+aHR0cHM6Ly95YWRyby5jb208
-L2E+PGJyPg0KPGJyPg0KMDUuMDYuMjAxOSAxNTo0OSwgQnJhZCBCaXNob3Agd3JvdGU6PGJyPg0K
-Jmd0OyBPbiBUdWUsIEp1biAwNCwgMjAxOSBhdCAxMjozNTowNVBNIC0wNzAwLCBLdW4gWWkgd3Jv
-dGU6PGJyPg0KJmd0OyZndDsgRllJOiBTcmluaXZhcywgTmVlcmFqLCBhbmQgSSBhcmUgZmluYWxp
-emluZyBhIHRpbWUgc2xvdCBmb3IgdGhlIGtpY2sgb2ZmPGJyPg0KJmd0OyZndDsgbWVldGluZy4g
-V2UgYXJlIHRoaW5raW5nIGFib3V0IGEgYmktd2Vla2x5IGRpc2N1c3Npb24uPGJyPg0KJmd0OyZn
-dDs8YnI+DQomZ3Q7Jmd0OyBBbHNvLCBJJ20gZHJhZnRpbmcgYSB2ZXJzaW9uIG9mIEJNQyBtZXRy
-aWNzIGNvbGxlY3Rpb24gZGFlbW9uLiBUaGUgZmlyc3Q8YnI+DQomZ3Q7Jmd0OyBkcmFmdCBpcyB1
-cCBvbiA8YSBocmVmPSJodHRwczovL25hbTA2LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2su
-Y29tLz91cmw9aHR0cHMlM0ElMkYlMkZnZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5eiUyRmMlMkZv
-cGVuYm1jJTJGZG9jcyUyRiUyQiUyRjIyMjU3JmFtcDtkYXRhPTAyJTdDMDElN0NuZWxhZGslNDBt
-aWNyb3NvZnQuY29tJTdDNjg1NzZlNDFjNjJmNDgyNTdjMzIwOGQ2ZWU5YTQ2MTglN0M3MmY5ODhi
-Zjg2ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM2OTU4NzQzNzA5NTgxNTc1JmFt
-cDtzZGF0YT1mM0s1MXhsQ21NZEROOUZZek5HMWNCaVNVUXBkeTlMemNDOEFqJTJCQm9RSHMlM0Qm
-YW1wO3Jlc2VydmVkPTAiIHRhcmdldD0iX2JsYW5rIj4NCmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMt
-cHJvamVjdC54eXovYy9vcGVuYm1jL2RvY3MvJiM0MzsvMjIyNTc8L2E+LDxicj4NCiZndDsmZ3Q7
-IHdoaWNoIHdlIHByb2JhYmx5IHdpbGwgZ28gb3ZlciBkdXJpbmcgdGhlIG1lZXRpbmcuPGJyPg0K
-Jmd0Ozxicj4NCiZndDsgSSBqdXN0IHdhbnRlZCB0byBwb2ludCBvdXQgdGhlIGNvbGxlY3RkIHBy
-b2plY3Q6Jm5ic3A7IDxhIGhyZWY9Imh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3RlY3Rpb24u
-b3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmNvbGxlY3RkLm9yZyUyRiZhbXA7ZGF0YT0w
-MiU3QzAxJTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3QzY4NTc2ZTQxYzYyZjQ4MjU3YzMyMDhk
-NmVlOWE0NjE4JTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYz
-Njk1ODc0MzcwOTU5MTU3NCZhbXA7c2RhdGE9NG45Qm90MW1ZazkweXlWZTdscjNCQVFMcEJxRGpk
-WXF5UXUzY3cwJTJGJTJGRDglM0QmYW1wO3Jlc2VydmVkPTAiIHRhcmdldD0iX2JsYW5rIj4NCmh0
-dHBzOi8vY29sbGVjdGQub3JnLzwvYT48YnI+DQomZ3Q7PGJyPg0KJmd0OyBJJ20gbm90IHN1cmUg
-aWYgaXQgaXMgc3VpdGFibGUgb3Igbm90IGJ1dCBpdCBzZWVtcyBsaWtlIGEgcHJldHR5IGNsb3Nl
-IG1hdGNoIHRvIHdoYXQgeW91IGFyZSB0cnlpbmcgdG8gZG8gYW5kIGl0IHdvdWxkIGJlIGEgbG90
-IG9mIGNvZGUgeW91IGRvbid0IGhhdmUgdG8gd3JpdGUuPGJyPg0KJmd0Ozxicj4NCiZndDsgSnVz
-dCBzb21ldGhpbmcgdG8gY29uc2lkZXIuPGJyPg0KJmd0Ozxicj4NCiZndDsgdGh4IC0gYnJhZDxv
-OnA+PC9vOnA+PC9wPg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48YnIgY2xlYXI9ImFsbCI+DQo8bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+LS0gPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PlJlZ2FyZHMsPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+S3Vu
-PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvYm9keT4N
-CjwvaHRtbD4NCg==
-
---_000_BL0PR2101MB0932ECD784D96485087196F4C8EC0BL0PR2101MB0932_--
+On Wed, Jun 12, 2019 at 10:20 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+> Hi John,
+>
+> On Thu, 6 Jun 2019, at 17:22, Lei YU wrote:
+> > Reviewed-by: Lei YU <mine260309@gmail.com>
+> >
+> > On Thu, Jun 6, 2019 at 10:18 AM John Wang <wangzqbj@inspur.com> wrote:
+> > >
+> > > The fp5280g2 is an open-power server platform with
+> > > an aspeed ast2500 BMC
+> > >
+> > > Signed-off-by: John Wang <wangzqbj@inspur.com>
+> > > ---
+> > >  arch/arm/boot/dts/Makefile                       |   1 +
+> > >  arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 843 +++++++++++++++++++++++
+> > >  2 files changed, 844 insertions(+)
+> > >  create mode 100644 arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+> > >
+> > > diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> > > index bed2047..31db1d3 100644
+> > > --- a/arch/arm/boot/dts/Makefile
+> > > +++ b/arch/arm/boot/dts/Makefile
+> > > @@ -1256,6 +1256,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+> > >         aspeed-bmc-facebook-cmm.dtb \
+> > >         aspeed-bmc-facebook-tiogapass.dtb \
+> > >         aspeed-bmc-intel-s2600wf.dtb \
+> > > +       aspeed-bmc-inspur-fp5280g2.dtb \
+> > >         aspeed-bmc-lenovo-hr630.dtb \
+> > >         aspeed-bmc-microsoft-olympus.dtb \
+> > >         aspeed-bmc-opp-lanyang.dtb \
+> > > diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+> > > new file mode 100644
+> > > index 0000000..771de77
+> > > --- /dev/null
+> > > +++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
+> > > @@ -0,0 +1,843 @@
+> > > +// SPDX-License-Identifier: GPL-2.0+
+> > > +/dts-v1/;
+> > > +#include "aspeed-g5.dtsi"
+> > > +#include <dt-bindings/gpio/aspeed-gpio.h>
+> > > +#include <dt-bindings/leds/leds-pca955x.h>
+> > > +
+> > > +/ {
+> > > +       model = "FP5280G2 BMC";
+> > > +       compatible = "inspur,fp5280g2-bmc", "aspeed,ast2500";
+> > > +
+> > > +       chosen {
+> > > +               stdout-path = &uart5;
+> > > +               bootargs = "console=ttyS4,115200 earlyprintk";
+> > > +       };
+> > > +
+> > > +       memory@80000000 {
+> > > +               reg = <0x80000000 0x20000000>;
+> > > +       };
+> > > +
+> > > +       reserved-memory {
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <1>;
+> > > +               ranges;
+> > > +
+> > > +               vga_memory: framebuffer@9f000000 {
+> > > +                       no-map;
+> > > +                       reg = <0x9f000000 0x01000000>; /* 16M */
+> > > +               };
+> > > +
+> > > +               flash_memory: region@98000000 {
+> > > +                       no-map;
+> > > +                       reg = <0x98000000 0x04000000>; /* 64M */
+> > > +               };
+> > > +
+> > > +               coldfire_memory: codefire_memory@9ef00000 {
+> > > +                       reg = <0x9ef00000 0x00100000>;
+> > > +                       no-map;
+> > > +               };
+> > > +
+> > > +               gfx_memory: framebuffer {
+> > > +                       size = <0x01000000>;
+> > > +                       alignment = <0x01000000>;
+> > > +                       compatible = "shared-dma-pool";
+> > > +                       reusable;
+> > > +               };
+> > > +
+> > > +               video_engine_memory: jpegbuffer {
+> > > +                       size = <0x02000000>;    /* 32M */
+> > > +                       alignment = <0x01000000>;
+> > > +                       compatible = "shared-dma-pool";
+> > > +                       reusable;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       fsi: gpio-fsi {
+> > > +               compatible = "fsi-master-gpio", "fsi-master";
+> > > +               #address-cells = <2>;
+> > > +               #size-cells = <0>;
+> > > +               no-gpio-delays;
+> > > +
+> > > +               memory-region = <&coldfire_memory>;
+> > > +               aspeed,sram = <&sram>;
+> > > +               aspeed,cvic = <&cvic>;
+> > > +
+> > > +               clock-gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
+> > > +               data-gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_HIGH>;
+> > > +               mux-gpios = <&gpio ASPEED_GPIO(I, 2) GPIO_ACTIVE_HIGH>;
+> > > +               enable-gpios = <&gpio ASPEED_GPIO(I, 3) GPIO_ACTIVE_HIGH>;
+> > > +               trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
+> > > +       };
+> > > +
+> > > +       gpio-keys {
+> > > +               compatible = "gpio-keys";
+> > > +
+> > > +               checkstop {
+> > > +                       label = "checkstop";
+> > > +                       gpios = <&gpio ASPEED_GPIO(B, 3) GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <ASPEED_GPIO(B, 3)>;
+> > > +               };
+> > > +
+> > > +               ps0-presence {
+> > > +                       label = "ps0-presence";
+> > > +                       gpios = <&gpio ASPEED_GPIO(F, 0) GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <ASPEED_GPIO(F, 0)>;
+> > > +               };
+> > > +
+> > > +               ps1-presence {
+> > > +                       label = "ps1-presence";
+> > > +                       gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <ASPEED_GPIO(F, 1)>;
+> > > +               };
+> > > +
+> > > +       };
+> > > +
+> > > +       gpio-keys-polled {
+> > > +               compatible = "gpio-keys-polled";
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +               poll-interval = <1000>;
+> > > +
+> > > +               fan0-presence {
+> > > +                       label = "fan0-presence";
+> > > +                       gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <0>;
+> > > +               };
+> > > +
+> > > +               fan1-presence {
+> > > +                       label = "fan1-presence";
+> > > +                       gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <1>;
+> > > +               };
+> > > +
+> > > +               fan2-presence {
+> > > +                       label = "fan2-presence";
+> > > +                       gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <2>;
+> > > +               };
+> > > +
+> > > +               fan3-presence {
+> > > +                       label = "fan3-presence";
+> > > +                       gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <3>;
+> > > +               };
+> > > +
+> > > +               fan4-presence {
+> > > +                       label = "fan4-presence";
+> > > +                       gpios = <&pca1 4 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <4>;
+> > > +               };
+> > > +
+> > > +               fan5-presence {
+> > > +                       label = "fan5-presence";
+> > > +                       gpios = <&pca1 5 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <5>;
+> > > +               };
+> > > +
+> > > +               fan6-presence {
+> > > +                       label = "fan6-presence";
+> > > +                       gpios = <&pca1 6 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <6>;
+> > > +               };
+> > > +
+> > > +               fan7-presence {
+> > > +                       label = "fan7-presence";
+> > > +                       gpios = <&pca1 7 GPIO_ACTIVE_LOW>;
+> > > +                       linux,code = <7>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       leds {
+> > > +           compatible = "gpio-leds";
+> > > +
+> > > +           power {
+> > > +                   label = "power";
+> > > +                   /* TODO: dummy gpio */
+> > > +                   gpios = <&gpio ASPEED_GPIO(R, 1) GPIO_ACTIVE_LOW>;
+> > > +           };
+> > > +
+> > > +       };
+> > > +
+> > > +       iio-hwmon-battery {
+> > > +               compatible = "iio-hwmon";
+> > > +               io-channels = <&adc 15>;
+> > > +       };
+> > > +
+> > > +       iio-hwmon {
+> > > +               compatible = "iio-hwmon";
+> > > +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>,
+> > > +                       <&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>,
+> > > +                       <&adc 10>, <&adc 11>, <&adc 12>, <&adc 13>, <&adc 14>;
+> > > +       };
+> > > +
+> > > +};
+> > > +
+> > > +&fmc {
+> > > +       status = "okay";
+> > > +
+> > > +       flash@0 {
+> > > +               status = "okay";
+> > > +               label = "bmc";
+> > > +               m25p,fast-read;
+> > > +               spi-max-frequency = <50000000>;
+> > > +#include "openbmc-flash-layout.dtsi"
+> > > +       };
+> > > +};
+> > > +
+> > > +&spi1 {
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_spi1_default>;
+> > > +
+> > > +       flash@0 {
+> > > +               status = "okay";
+> > > +               label = "pnor";
+> > > +               m25p,fast-read;
+> > > +               spi-max-frequency = <100000000>;
+> > > +       };
+> > > +};
+> > > +
+> > > +&uart1 {
+> > > +       /* Rear RS-232 connector */
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_txd1_default
+> > > +                       &pinctrl_rxd1_default
+> > > +                       &pinctrl_nrts1_default
+> > > +                       &pinctrl_ndtr1_default
+> > > +                       &pinctrl_ndsr1_default
+> > > +                       &pinctrl_ncts1_default
+> > > +                       &pinctrl_ndcd1_default
+> > > +                       &pinctrl_nri1_default>;
+> > > +};
+> > > +
+> > > +&uart2 {
+> > > +       /* Test Point */
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
+> > > +};
+> > > +
+> > > +&uart3 {
+> > > +       /* APSS */
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_txd3_default &pinctrl_rxd3_default>;
+> > > +};
+> > > +
+> > > +&uart5 {
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&lpc_ctrl {
+> > > +       status = "okay";
+> > > +       memory-region = <&flash_memory>;
+> > > +       flash = <&spi1>;
+> > > +};
+> > > +
+> > > +&mbox {
+> > > +       status = "okay";
+>
+> Are you sure this is necessary? We're planning to drop mbox support in the near
+> future, so just want to make sure you're aware of that.
+I am not sure.
+I just know that bmc can not host without
+[mboxd](https://github.com/openbmc/hiomapd).
+>
+> > > +};
+> > > +
+> > > +&mac0 {
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_rmii1_default>;
+> > > +       use-ncsi;
+> > > +};
+> > > +
+> > > +&mac1 {
+> > > +       status = "okay";
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
+> > > +};
+> > > +
+> > > +&i2c0 {
+> > > +       /* LCD */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c1 {
+> > > +       status = "okay";
+> > > +
+> > > +       eeprom@50 {
+> > > +               compatible = "atmel,24c256";
+> > > +               reg = <0x50>;
+> > > +               label = "fru";
+> > > +       };
+> > > +
+> > > +};
+> > > +
+> > > +&i2c2 {
+> > > +       status = "okay";
+> > > +
+> > > +       tmp112@48 {
+> > > +               compatible = "ti,tmp112";
+> > > +               reg = <0x48>;
+> > > +               label = "inlet";
+> > > +       };
+> > > +
+> > > +       tmp112@49 {
+> > > +               compatible = "ti,tmp112";
+> > > +               reg = <0x49>;
+> > > +               label = "outlet";
+> > > +       };
+> > > +
+> > > +       i2c-switch@70 {
+> > > +               compatible = "nxp,pca9546";
+> > > +               reg = <0x70>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               i2c@0 {
+> > > +                       #address-cells = <1>;
+> > > +                       #size-cells = <0>;
+> > > +                       reg = <0>;
+> > > +
+> > > +                       tmp112@4a {
+> > > +                               compatible = "ti,tmp112";
+> > > +                               reg = <0x4a>;
+> > > +                               label = "psu_inlet";
+> > > +                       };
+> > > +
+> > > +               };
+> > > +
+> > > +               i2c@1 {
+> > > +                       #address-cells = <1>;
+> > > +                       #size-cells = <0>;
+> > > +                       reg = <1>;
+> > > +
+> > > +                       tmp112@4a {
+> > > +                               compatible = "ti,tmp112";
+> > > +                               reg = <0x4a>;
+> > > +                               label = "ocp_zone";
+> > > +                       };
+> > > +               };
+> > > +
+> > > +               i2c@2 {
+> > > +                       #address-cells = <1>;
+> > > +                       #size-cells = <0>;
+> > > +                       reg = <2>;
+> > > +
+> > > +                       tmp112@4a {
+> > > +                               compatible = "ti,tmp112";
+> > > +                               reg = <0x4a>;
+> > > +                               label = "bmc_zone";
+> > > +                       };
+> > > +               };
+> > > +
+> > > +               i2c@3 {
+> > > +                       #address-cells = <1>;
+> > > +                       #size-cells = <0>;
+> > > +                       reg = <3>;
+> > > +
+> > > +                       tmp112@7c {
+> > > +                               compatible = "emc1413";
+>
+> Should have a "microchip," prefix?
+Sure.
+>
+> > > +                               reg = <0x7c>;
+> > > +                       };
+> > > +               };
+> > > +
+> > > +       };
+> > > +};
+> > > +
+> > > +&i2c3 {
+> > > +       /* Riser Card */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c4 {
+> > > +       status = "okay";
+> > > +
+> > > +       rtc@68 {
+> > > +               compatible = "dallas,ds3232";
+> > > +               reg = <0x68>;
+> > > +       };
+> > > +};
+> > > +
+> > > +&i2c5 {
+> > > +       /* vr  */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c6 {
+> > > +       /* bp card */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c7 {
+> > > +       status = "okay";
+> > > +
+> > > +       i2c-switch@70 {
+> > > +               compatible = "nxp,pca9546";
+> > > +               reg = <0x70>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               i2c@0 {
+> > > +                       #address-cells = <1>;
+> > > +                       #size-cells = <0>;
+> > > +                       reg = <0>;
+> > > +
+> > > +                       adm1278@10 {
+> > > +                               compatible = "adi,adm1278";
+> > > +                               reg = <0x10>;
+> > > +                       };
+> > > +
+> > > +                       adm1278@13 {
+> > > +                               compatible = "adi,adm1278";
+> > > +                               reg = <0x13>;
+> > > +                       };
+> > > +
+> > > +                       adm1278@50 {
+> > > +                               compatible = "adi,adm1278";
+> > > +                               reg = <0x50>;
+> > > +                       };
+> > > +
+> > > +                       adm1278@53 {
+> > > +                               compatible = "adi,adm1278";
+> > > +                               reg = <0x53>;
+> > > +                       };
+> > > +
+> > > +               };
+> > > +
+> > > +               /*pcie riser*/
+> > > +
+> > > +       };
+> > > +};
+> > > +
+> > > +&i2c8 {
+> > > +       status = "okay";
+> > > +
+> > > +       pca0: pca9555@20 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x20>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +       };
+> > > +
+> > > +       pca1: pca9555@21 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x21>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       pca2: pca9555@22 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x22>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       pca3: pca9555@23 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x23>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       pca4: pca9555@24 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x24>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +       pca5: pca9555@25 {
+> > > +               compatible = "nxp,pca9555";
+> > > +               reg = <0x25>;
+> > > +               #address-cells = <1>;
+> > > +               #size-cells = <0>;
+> > > +
+> > > +               gpio-controller;
+> > > +               #gpio-cells = <2>;
+> > > +
+> > > +               gpio@0 {
+> > > +                       reg = <0>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@1 {
+> > > +                       reg = <1>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@2 {
+> > > +                       reg = <2>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@3 {
+> > > +                       reg = <3>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@4 {
+> > > +                       reg = <4>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@5 {
+> > > +                       reg = <5>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@6 {
+> > > +                       reg = <6>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +
+> > > +               gpio@7 {
+> > > +                       reg = <7>;
+> > > +                       type = <PCA955X_TYPE_GPIO>;
+> > > +               };
+> > > +       };
+> > > +
+> > > +};
+> > > +
+> > > +&i2c9 {
+> > > +       /* cpld */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c10 {
+> > > +       /* hdd bp */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&i2c11 {
+> > > +       status = "okay";
+> > > +
+> > > +       power-supply@58 {
+> > > +               compatible = "pmbus";
+> > > +               reg = <0x58>;
+> > > +       };
+> > > +
+> > > +       power-supply@5a {
+> > > +               compatible = "pmbus";
+> > > +               reg = <0x5a>;
+> > > +       };
+> > > +};
+> > > +
+> > > +&i2c12 {
+> > > +       /* odcc */
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&vuart {
+> > > +       status = "okay";
+> > > +};
+> > > +
+> > > +&gfx {
+> > > +       status = "okay";
+> > > +       memory-region = <&gfx_memory>;
+> > > +};
+> > > +
+> > > +&pinctrl {
+> > > +       aspeed,external-nodes = <&gfx &lhc>;
+> > > +};
+> > > +
+> > > +&gpio {
+> > > +       pin_gpio_b7 {
+> > > +               gpio-hog;
+> > > +               gpios = <ASPEED_GPIO(B,7) GPIO_ACTIVE_LOW>;
+> > > +               output-high;
+> > > +               line-name = "BMC_INIT_OK";
+> > > +       };
+> > > +};
+> > > +
+> > > +&wdt1 {
+> > > +       aspeed,reset-type = "none";
+> > > +       aspeed,external-signal;
+> > > +       aspeed,ext-push-pull;
+> > > +       aspeed,ext-active-high;
+> > > +
+> > > +       pinctrl-names = "default";
+> > > +       pinctrl-0 = <&pinctrl_wdtrst1_default>;
+> > > +};
+> > > +
+> > > +&ibt {
+> > > +       status = "okay";
+> > > +
+> > > +};
+> > > +
+> > > +&adc {
+> > > +       status = "okay";
+>
+> Please add the pinctrl properties to mux the necessary ADC lines which you have
+> associated with the iio-hwmon bridge (you've used lines 0-14).
+ack
+>
+> Cheers,
+>
+> Andrew
