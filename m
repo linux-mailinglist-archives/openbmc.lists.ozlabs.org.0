@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A0E741BA7
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 07:53:12 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45NwyZ0Jl0zDqkd
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 15:53:10 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A79741BC1
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 07:56:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Nx1w4MpDzDqnM
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 15:56:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -17,42 +17,42 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=mendozajonas.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=mendozajonas.com header.i=@mendozajonas.com
- header.b="iLxARqYo"; dkim=pass (2048-bit key;
+ header.b="jSwyPocG"; dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="nnD6ubrG"; dkim-atps=neutral
+ header.b="XNV27xpo"; dkim-atps=neutral
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
  [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NwxM6W78zDqx2
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 15:52:07 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45NwzQ678NzDr1x
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 15:53:54 +1000 (AEST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.west.internal (Postfix) with ESMTP id 1461B41D;
- Wed, 12 Jun 2019 01:52:05 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 1F8D830B;
+ Wed, 12 Jun 2019 01:53:52 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Wed, 12 Jun 2019 01:52:05 -0400
+ by compute2.internal (MEProxy); Wed, 12 Jun 2019 01:53:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  mendozajonas.com; h=message-id:subject:from:to:cc:date
  :in-reply-to:references:content-type:mime-version
- :content-transfer-encoding; s=fm3; bh=KTxzfp2mv3yGdo+q8WP/TgT4OE
- pmxgsGO/h16NV+VEg=; b=iLxARqYoXQx9Ri/SHDhdKgyNh+KXCXlPDqscXK4D6h
- bYo/cAFDzVUHfWYKHWhX0zChpPD88NDKJJ8uKFDsUgJvwsCOKNRC97qNTVYpUDWG
- KuV5lC5qj5PrJkkt7/qU14tK6ceUpO7JBKCzr0LARNNks9UQleDOHKb0F6EqzF5f
- 0Ac6LldC0C3n3RKPvq6grzZF9eX3Dfcx7babbjMbyF36geM8kZsNFvmj1/HclizO
- bqhWcQiYCG6TT50J89csaZB9LuoEdHmLUUHa6ygZNE7VQ1v4lx+vW7+XF4t7fk46
- tFYPj/XvL4aZMwoqxEI1QFIfUW+QZfBifT24tmEfg/Jg==
+ :content-transfer-encoding; s=fm3; bh=P4SbxbKxZ8QnU4kBGRZfLD13Wm
+ w2RzlkyLXn+cSL6iE=; b=jSwyPocGcIuEIHd32RpiLwXExNLbV9l8w8YAayT4bG
+ y+O/Bhl/qZnpBBW7iyXnaMHrLrJAcADMGliN2OT92pcTj4BV0QkJt1JP6Dfg/ydW
+ XJ7+7M8j0/xZ8LOp+fW0xZCn5CBFYvTnOn22qjcosCN4mI6vKWpkpvIOzGi464cy
+ +AL7pME4qjK9cF/RrCsB2p/P8aJBysafeMg9GwHaYZ9/aoyruM7vSYSoBV3Zf/Jo
+ Ks1ndozvyHs7Yh40Q+h+ObDlkOk2dzr6hiBF7fCKh934173FHukfH0IdhLWTk1Xh
+ 73ypLTzvUvsfGUgXVntZ94SPk1lCgLBa3gN7efw3mm7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=KTxzfp2mv3yGdo+q8WP/TgT4OEpmxgsGO/h16NV+V
- Eg=; b=nnD6ubrGmGDaUoWaHAuVpg0GoQjuax7OEi72AHTS2jvuRiY+sTkdIUu9p
- CAPfJtGc9fmzFAvuKZa6/MAsh+kcuW9ecUyMruilucDya9TzoVJXpAJQnzc+wAyD
- 7Xc/k1i9LdQlJD0VODob/efCiAgbbOhdWMUltLXTWb3dvVdREWyPHiEQPloFOdtp
- aPuGfBQBWvoaN45s7KJLzZl7LTc3Oh429sqVi+6gV7SZVpVIrDBoDP+9ghvZWuRt
- kKjE/Rj1DgdrTHpST3ZfNiOID9AYuRKOCyKu46sKq/IsDhKR19w0Zx6RKItzL/DD
- 6Wh557UWUTlqVEJJLEaGNkPv37AHA==
-X-ME-Sender: <xms:ApMAXWgoR3YnurG9qDAK_sFaOrIia9Q3R5jok9kWJ45hsNDOw0h1iA>
+ :x-sasl-enc; s=fm3; bh=P4SbxbKxZ8QnU4kBGRZfLD13Wmw2RzlkyLXn+cSL6
+ iE=; b=XNV27xpoBv5esnl0xsFRAkfhVpKISWeFgw8Qy7X+lAR6s1qRXZ/8iBaoa
+ vux3Lc5xtxmdQNw/vzBkoutEUawff3w00cKmUXNkvLerBBLNL8b2Bffw2hgLPXlo
+ E2U286oe/op463qAWdCoaCMc4D00A5CQxXa6Go0dYkeWfVRqHj4bD4FA/oI6p9Hq
+ CT5kQFL2CUtj10GnPwZ1jgYKXOfFt9ZW1iydh68Emipe1DU/mkkD6uvTjP6LwXWi
+ XIQ/2hXomsdWLpPj5D7GpLIsgg/c5pXjtwkhXzaXFI3UKwGbNt7D7339yapsEMd4
+ GDvVTtMkScrG5XpjGen6+Dmv1nQvg==
+X-ME-Sender: <xms:b5MAXcuBfSnGxxOQbpD80hu8EMVbvG2oQuJKuPZsf4-mpswwOQMe1w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgleekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -61,22 +61,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgleekucetufdoteggod
  gtohhmqeenucfkphepuddvfedrvdehgedruddviedruddtieenucfrrghrrghmpehmrghi
  lhhfrhhomhepshgrmhesmhgvnhguohiirghjohhnrghsrdgtohhmnecuvehluhhsthgvrh
  fuihiivgeptd
-X-ME-Proxy: <xmx:A5MAXW4jXNuXfCeiLIO8aqGNIA5u_hcN51aYDgkzOg9Eu9pBN5xx9Q>
- <xmx:A5MAXbbwT5LrBsT7T8IhPZRX2H370V8RgZX78DVSFW3ehm4koOQEKA>
- <xmx:A5MAXbe4xcHhhDpgzYaZaDgaZZDfCps8BVCYixjwNW10yx-3-XuYIw>
- <xmx:BJMAXWdJHRQWVaIEI23JgpS2OQ8nOGVLbm_Epgp0Ojnk_hmFqzi1qg>
+X-ME-Proxy: <xmx:b5MAXZqbeVI97mZB3zLhNoZfKDQDEF8-SmeoAAvflNnVa8hvC732UA>
+ <xmx:b5MAXZnlZYWDSWCTxsUFAVT-3tNMq4CfLLUN7F7SzJnWHWMFBNJWTA>
+ <xmx:b5MAXdy1fJnD64uFoHIJjtIea_1905fTDGgkZZ1uhjCzvVr9mh9cGw>
+ <xmx:b5MAXXg2FiE6Q0_RDYJCElMHIbS50FcuJes4e0okW0h0oq8xnu4V7Q>
 Received: from v4 (unknown [123.254.126.106])
- by mail.messagingengine.com (Postfix) with ESMTPA id 569628005C;
- Wed, 12 Jun 2019 01:52:00 -0400 (EDT)
-Message-ID: <f66e5f86b95295600ed301ede04fb65094fec1e8.camel@mendozajonas.com>
-Subject: Re: [PATCH 3/4] net/ftgmac100: Add NC-SI mode support
+ by mail.messagingengine.com (Postfix) with ESMTPA id DBFD580060;
+ Wed, 12 Jun 2019 01:53:48 -0400 (EDT)
+Message-ID: <955024633e676cbaced59467644a6a6dedbb4e2d.camel@mendozajonas.com>
+Subject: Re: [PATCH 4/4] net: NC-SI setup and handling
 From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 To: Joel Stanley <joel@jms.id.au>
-Date: Wed, 12 Jun 2019 15:51:57 +1000
-In-Reply-To: <CACPK8Xdm4_Pnyj02Fws26mPeNSpRo5i7xHA__YbX94GbXU70mQ@mail.gmail.com>
+Date: Wed, 12 Jun 2019 15:53:46 +1000
+In-Reply-To: <CACPK8XdB6HN13Ov=vO++2tYCakbwqPDEfbsOA9dzBj5hs9Jvmg@mail.gmail.com>
 References: <20190606044950.5930-1-sam@mendozajonas.com>
- <20190606044950.5930-4-sam@mendozajonas.com>
- <CACPK8Xdm4_Pnyj02Fws26mPeNSpRo5i7xHA__YbX94GbXU70mQ@mail.gmail.com>
+ <20190606044950.5930-5-sam@mendozajonas.com>
+ <CACPK8XdB6HN13Ov=vO++2tYCakbwqPDEfbsOA9dzBj5hs9Jvmg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 User-Agent: Evolution 3.32.2 
 MIME-Version: 1.0
@@ -99,48 +99,34 @@ Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2019-06-12 at 03:04 +0000, Joel Stanley wrote:
+On Wed, 2019-06-12 at 02:05 +0000, Joel Stanley wrote:
 > On Thu, 6 Jun 2019 at 04:50, Samuel Mendoza-Jonas <sam@mendozajonas.com> wrote:
-> > Update the ftgmac100 driver to support NC-SI instead of an mdio phy
-> > where available. This is a common setup for Aspeed AST2x00 platforms.
-> > 
-> > NC-SI mode is determined from the device-tree if either phy-mode sets it
-> > or the use-ncsi property exists. If set then normal mdio setup is
-> > skipped in favour of the NC-SI phy.
+> > Add the handling of NC-SI ethernet frames, and add a check at the start
+> > of net_loop() to configure NC-SI before starting other network commands.
+> > This also adds an "ncsi" command to manually start NC-SI configuration.
 > > 
 > > Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
-> > ---
-> >  drivers/net/ftgmac100.c | 39 +++++++++++++++++++++++++++++----------
-> > @@ -181,7 +183,7 @@ static int ftgmac100_phy_adjust_link(struct ftgmac100_data *priv)
-> >         struct phy_device *phydev = priv->phydev;
-> >         u32 maccr;
-> > 
-> > -       if (!phydev->link) {
-> > +       if (!phydev->link && !priv->ncsi_mode) {
-> >                 dev_err(phydev->dev, "No link\n");
-> >                 return -EREMOTEIO;
-> >         }
-> > @@ -217,7 +219,8 @@ static int ftgmac100_phy_init(struct udevice *dev)
-> >         if (!phydev)
-> >                 return -ENODEV;
-> > 
-> > -       phydev->supported &= PHY_GBIT_FEATURES;
-> > +       if (!priv->ncsi_mode)
-> > +               phydev->supported &= PHY_GBIT_FEATURES;
 > 
-> Instead of hiding this behind ncsi_mode I was assuming the ncsi "phy"
-> driver would answer these questions through the phy_read callbacks.
+> We need the u-boot net specialists to weigh in, but this looks okay to
+> me. Please clarify the help text for the NCSI command, then add:
 > 
-> If you don't think that is going to work then this solution isn't too
-> invasive, and we've been using this in Linux for a while, so we know
-> it works.
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> 
+> > --- a/cmd/Kconfig
+> > +++ b/cmd/Kconfig
+> > @@ -1296,6 +1296,12 @@ config CMD_LINK_LOCAL
+> >         help
+> >           Acquire a network IP address using the link-local protocol
+> > 
+> > +config CMD_NCSI
+> > +       bool "ncsi"
+> > +       depends on PHY_NCSI
+> > +       help
+> > +         Configure the attached NIC via NC-SI
+> 
+> Can we clarify in the text if we need the 'ncsi' command to use any
+> NC-SI attached NIC, or if it's more for ncsi and network debugging?
 
-Having this purely transparent would indeed be nice, but it's been a
-little awkward fitting NCSI into the u-boot model. phy_read, etc don't
-really make sense for a NCSI "PHY" like in the Linux model since there
-aren't any registers as such to query - thus checking the device-tree and
-skipping the normal mdio bus setup.
-I'll have a bit more of a think about the driver model, and probably
-exactly how Aspeed (for example) hooks this up; maybe there's a way we
-can fit in to the more usual model.
+Can do - the command manually kicks off configuration of the NC-SI
+topology, but isn't needed in normal use.
 
