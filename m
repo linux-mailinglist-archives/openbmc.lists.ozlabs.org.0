@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A0E741BA7
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 07:53:12 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3340D41B96
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 07:43:15 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Nwl42wTHzDqsj
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 15:43:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45NwyZ0Jl0zDqkd
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jun 2019 15:53:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -17,66 +17,66 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=mendozajonas.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=mendozajonas.com header.i=@mendozajonas.com
- header.b="ZjsX8pse"; dkim=pass (2048-bit key;
+ header.b="iLxARqYo"; dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="IGLN6KfN"; dkim-atps=neutral
+ header.b="nnD6ubrG"; dkim-atps=neutral
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
  [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45NwkP2N8SzDqsl
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 15:42:36 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45NwxM6W78zDqx2
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 15:52:07 +1000 (AEST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailout.west.internal (Postfix) with ESMTP id AC502564;
- Wed, 12 Jun 2019 01:42:32 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 1461B41D;
+ Wed, 12 Jun 2019 01:52:05 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Wed, 12 Jun 2019 01:42:33 -0400
+ by compute2.internal (MEProxy); Wed, 12 Jun 2019 01:52:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  mendozajonas.com; h=message-id:subject:from:to:cc:date
  :in-reply-to:references:content-type:mime-version
- :content-transfer-encoding; s=fm3; bh=1XXJOCDS5TlstcINCL6PSOkxip
- /YpBif4YROEL9IeDE=; b=ZjsX8pseSwLZIEBOjb+eoawTGPnwc6PyTnVRxtddw4
- 7+rFc410ZTaX/a/F02QSfcJm7L9PsPs2jWCIwKiYlwbvlMvv3nNPt/GTFYIIQXvP
- VAW6FUEW5553xJ8IH5QFBcTqpH4J9jRPHdS+YoFEFdrfYy+8GtNYZMd9A9ianxlR
- /iV3LhsLq5X6wTgH5V7LPRhAvEp9BL6b4iZO/7ndljYzVbzpH/WibHqNFzr/Ll+I
- RsIZ8yFoJGnEeZMg4N731oYm/LuKlK3SYZeI3uURS1YDa0UaopOWnLlSSmZSMwDV
- c32aWqVZARSbCmgs9JlUlpe5es9NOlN1Znw68encuNng==
+ :content-transfer-encoding; s=fm3; bh=KTxzfp2mv3yGdo+q8WP/TgT4OE
+ pmxgsGO/h16NV+VEg=; b=iLxARqYoXQx9Ri/SHDhdKgyNh+KXCXlPDqscXK4D6h
+ bYo/cAFDzVUHfWYKHWhX0zChpPD88NDKJJ8uKFDsUgJvwsCOKNRC97qNTVYpUDWG
+ KuV5lC5qj5PrJkkt7/qU14tK6ceUpO7JBKCzr0LARNNks9UQleDOHKb0F6EqzF5f
+ 0Ac6LldC0C3n3RKPvq6grzZF9eX3Dfcx7babbjMbyF36geM8kZsNFvmj1/HclizO
+ bqhWcQiYCG6TT50J89csaZB9LuoEdHmLUUHa6ygZNE7VQ1v4lx+vW7+XF4t7fk46
+ tFYPj/XvL4aZMwoqxEI1QFIfUW+QZfBifT24tmEfg/Jg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=1XXJOCDS5TlstcINCL6PSOkxip/YpBif4YROEL9Ie
- DE=; b=IGLN6KfNg9o0K4ZhimFV1J5tzfhEagZldseyjjSGFm0d94f6YXk/7Spcm
- CnLwD4tz8dzG/Tih44jt0x4bcjXKiMM8dSX5Pk0MSOVCgzVuvIDRIrIgjTrgCQfA
- sTTra81MHCoR4mcsCMZy/ryUg7/bxvFCqFkqqD6xqC9GFABocjVgQjTGveKJLPlp
- v0FDja5xXEUBhsioTi0CN1d6Aabkekd1AEmPqkCMkTTOPeB+5ImFOPhPFDn5NQZu
- Dmnh91hBBZQ0/yXFbzzwiE6q4kq6v0a0ITbmNZVcit4MNxUgOJMQQzgWrjFCzAtJ
- WemB0xPGUE+q1Kxkhel6YJeSCFgCA==
-X-ME-Sender: <xms:xJAAXQwdVO8xta1y--zYxEUWOMB63SnH8wXcnIQI_djlC6dxJDQAjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgleejucetufdoteggodetrfdotf
+ :x-sasl-enc; s=fm3; bh=KTxzfp2mv3yGdo+q8WP/TgT4OEpmxgsGO/h16NV+V
+ Eg=; b=nnD6ubrGmGDaUoWaHAuVpg0GoQjuax7OEi72AHTS2jvuRiY+sTkdIUu9p
+ CAPfJtGc9fmzFAvuKZa6/MAsh+kcuW9ecUyMruilucDya9TzoVJXpAJQnzc+wAyD
+ 7Xc/k1i9LdQlJD0VODob/efCiAgbbOhdWMUltLXTWb3dvVdREWyPHiEQPloFOdtp
+ aPuGfBQBWvoaN45s7KJLzZl7LTc3Oh429sqVi+6gV7SZVpVIrDBoDP+9ghvZWuRt
+ kKjE/Rj1DgdrTHpST3ZfNiOID9AYuRKOCyKu46sKq/IsDhKR19w0Zx6RKItzL/DD
+ 6Wh557UWUTlqVEJJLEaGNkPv37AHA==
+X-ME-Sender: <xms:ApMAXWgoR3YnurG9qDAK_sFaOrIia9Q3R5jok9kWJ45hsNDOw0h1iA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudehiedgleekucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhepkffuhffvffgjfhgtfggggfesthejredttderjeenucfhrhhomhepufgrmhhu
  vghlucfovghnughoiigrqdflohhnrghsuceoshgrmhesmhgvnhguohiirghjohhnrghsrd
- gtohhmqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeduvdefrddvheeg
- rdduvdeirddutdeinecurfgrrhgrmhepmhgrihhlfhhrohhmpehsrghmsehmvghnughoii
- grjhhonhgrshdrtghomhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:xJAAXciZc-WoQPCPot5D5AefqNZ9uOua6TKDyboTPX9X-b9T3UHVaA>
- <xmx:xJAAXWSvYnjSsdXcEy6_-lG-VeMV8BGaZp8dbRAGyD_GKJb4n1Yt3w>
- <xmx:xJAAXV0qkvq3YpM7qQzEzXSEdeTcjKcPuw9LDJauTSbTxecQj4BYHQ>
- <xmx:yJAAXQKPUeZMAohuZ5xeNY8PAqUuISg7hx6tJYuttA7JtQnw4p0Iaw>
+ gtohhmqeenucfkphepuddvfedrvdehgedruddviedruddtieenucfrrghrrghmpehmrghi
+ lhhfrhhomhepshgrmhesmhgvnhguohiirghjohhnrghsrdgtohhmnecuvehluhhsthgvrh
+ fuihiivgeptd
+X-ME-Proxy: <xmx:A5MAXW4jXNuXfCeiLIO8aqGNIA5u_hcN51aYDgkzOg9Eu9pBN5xx9Q>
+ <xmx:A5MAXbbwT5LrBsT7T8IhPZRX2H370V8RgZX78DVSFW3ehm4koOQEKA>
+ <xmx:A5MAXbe4xcHhhDpgzYaZaDgaZZDfCps8BVCYixjwNW10yx-3-XuYIw>
+ <xmx:BJMAXWdJHRQWVaIEI23JgpS2OQ8nOGVLbm_Epgp0Ojnk_hmFqzi1qg>
 Received: from v4 (unknown [123.254.126.106])
- by mail.messagingengine.com (Postfix) with ESMTPA id 467B980059;
- Wed, 12 Jun 2019 01:42:25 -0400 (EDT)
-Message-ID: <3761318b0b3dc3d0e3ae1c5faaa075d63d650962.camel@mendozajonas.com>
-Subject: Re: [PATCH 1/4] phy: Add support for the NC-SI protocol
+ by mail.messagingengine.com (Postfix) with ESMTPA id 569628005C;
+ Wed, 12 Jun 2019 01:52:00 -0400 (EDT)
+Message-ID: <f66e5f86b95295600ed301ede04fb65094fec1e8.camel@mendozajonas.com>
+Subject: Re: [PATCH 3/4] net/ftgmac100: Add NC-SI mode support
 From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 To: Joel Stanley <joel@jms.id.au>
-Date: Wed, 12 Jun 2019 15:42:22 +1000
-In-Reply-To: <CACPK8Xd_OTZK+HO=xXp5dFn0rcZH_fCfbJndXVcttj0MR2_fxg@mail.gmail.com>
+Date: Wed, 12 Jun 2019 15:51:57 +1000
+In-Reply-To: <CACPK8Xdm4_Pnyj02Fws26mPeNSpRo5i7xHA__YbX94GbXU70mQ@mail.gmail.com>
 References: <20190606044950.5930-1-sam@mendozajonas.com>
- <20190606044950.5930-2-sam@mendozajonas.com>
- <CACPK8Xd_OTZK+HO=xXp5dFn0rcZH_fCfbJndXVcttj0MR2_fxg@mail.gmail.com>
+ <20190606044950.5930-4-sam@mendozajonas.com>
+ <CACPK8Xdm4_Pnyj02Fws26mPeNSpRo5i7xHA__YbX94GbXU70mQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 User-Agent: Evolution 3.32.2 
 MIME-Version: 1.0
@@ -99,212 +99,48 @@ Cc: U-Boot Mailing List <u-boot@lists.denx.de>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2019-06-12 at 02:40 +0000, Joel Stanley wrote:
+On Wed, 2019-06-12 at 03:04 +0000, Joel Stanley wrote:
 > On Thu, 6 Jun 2019 at 04:50, Samuel Mendoza-Jonas <sam@mendozajonas.com> wrote:
-> > This introduces support for the NC-SI protocol, modelled as a phy driver
-> > for other ethernet drivers to consume.
+> > Update the ftgmac100 driver to support NC-SI instead of an mdio phy
+> > where available. This is a common setup for Aspeed AST2x00 platforms.
 > > 
-> > NC-SI (Network Controller Sideband Interface) is a protocol to manage a
-> > sideband connection to a proper network interface, for example a BMC
-> > (Baseboard Management Controller) sharing the NIC of the host system.
-> > Probing and configuration occurs by communicating with the "remote" NIC
-> > via NC-SI control frames (Ethernet header 0x88f8).
-> > 
-> > This implementation is roughly based on the upstream Linux
-> > implementation[0], with a reduced feature set and an emphasis on getting
-> > a link up as fast as possible rather than probing the full possible
-> > topology of the bus.
-> > The current phy model relies on the network being "up", sending NC-SI
-> > command frames via net_send_packet() and receiving them from the
-> > net_loop() loop (added in a following patch).
-> > 
-> > The ncsi-pkt.h header[1] is copied from the Linux kernel for consistent
-> > field definitions.
-> > 
-> > [0]: https://github.com/torvalds/linux/tree/master/net/ncsi
-> > [1]: https://github.com/torvalds/linux/blob/master/net/ncsi/ncsi-pkt.h
+> > NC-SI mode is determined from the device-tree if either phy-mode sets it
+> > or the use-ncsi property exists. If set then normal mdio setup is
+> > skipped in favour of the NC-SI phy.
 > > 
 > > Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
-> 
-> Looks good. Some comments below.
-> 
-> > +static int ncsi_validate_rsp(struct ncsi_rsp_pkt *pkt, int payload)
-> > +{
-> > +       struct ncsi_rsp_pkt_hdr *hdr = &pkt->rsp;
-> > +       __be32 pchecksum;
-> > +       u32 checksum;
-> > +       if (ntohs(hdr->common.length) != payload) {
-> > +               printf("NCSI: 0x%02x response has incorrect length %d\n",
-> > +                      hdr->common.type, hdr->common.length);
-> > +               return -1;
-> > +       }
-> > +
-> > +       pchecksum = get_unaligned_be32((void *)(hdr + 1) + payload - 4);
-> 
-> Wheee. So the checksum is the last 4-bytes of the payload. I assume
-> it's always longer than 4?
-> 
-> A clarifying comment might help, or try to write it in a different way:
-
-"Wheee" indeed. I kept this roughly as it is in the kernel so I could
-more easily verify it was doing the right thing; now that it's more
-tested I'll do something like below so it's less traumatic.
-
-> 
-> endp = (void *)hdr + sizeof(hdr) + payload;
-> pchecksum = get_unaligned_be32(endp - sizeof(checksum));
-> 
-> or
-> 
->     checksum_offset = sizeof(hdr) + payload - sizeof(checksum);
->     pchecksum = get_unaligned_be32(payload + checksum_offset);
-> 
-> > +       if (pchecksum != 0) {
-> > +               checksum = ncsi_calculate_checksum((unsigned char *)hdr,
-> > +                                                  sizeof(*hdr) + payload - 4);
-> 
-> And then this can be:
-> 
->     checksum = ((unsigned char *)hdr, checksum_offset);
-> 
-> > +               if (pchecksum != checksum) {
-> > +                       printf("NCSI: 0x%02x response has invalid checksum\n",
-> > +                              hdr->common.type);
-> > +                       return -1;
-> > +               }
-> > +       }
-> > +static void ncsi_send_sma(unsigned int np, unsigned int nc)
-> > +{
-> > +       struct ncsi_cmd_sma_pkt cmd;
-> > +       unsigned char *addr;
-> > +
-> > +       addr = eth_get_ethaddr();
-> > +       if (!addr) {
-> > +               printf("NCSI: no MAC address configured\n");
-> > +               return;
-> > +       }
-> > +
-> > +       memset(&cmd, 0, sizeof(cmd));
-> > +       memcpy(cmd.mac, addr, 6);
-> 
-> Are there endianness issues with addr here?
-
-Aha, will fixup.
-
-> 
-> > +       cmd.index = 1;
-> > +       cmd.at_e = 1;
-> > +
-> > +       ncsi_send_command(np, nc, NCSI_PKT_CMD_SMA,
-> > +                         ((unsigned char *)&cmd)
-> > +                         + sizeof(struct ncsi_cmd_pkt_hdr),
-> > +                         cmd_payload(NCSI_PKT_CMD_SMA), true);
-> > +}
-> > +
-> > +int ncsi_probe(struct phy_device *phydev)
-> > +{
-> > +       // TODO Associate per device
-> 
-> Is this required before we can support multiple NICs?
-
-Yes, I'll chase this up.
-
-> 
-> > +       if (!ncsi_priv) {
-> > +               ncsi_priv = malloc(sizeof(struct ncsi));
-> > +               if (!ncsi_priv)
-> > +                       return -ENOMEM;
-> > +               memset(ncsi_priv, 0, sizeof(struct ncsi));
-> > +       }
-> > +
-> > +       phydev->priv = ncsi_priv;
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +int ncsi_startup(struct phy_device *phydev)
-> > +{
-> > +       /* Set phydev parameters */
-> > +       phydev->speed = SPEED_100;
-> > +       phydev->duplex = DUPLEX_FULL;
-> > +       /* Normal phy reset is N/A */
-> > +       phydev->flags |= PHY_FLAG_BROKEN_RESET;
-> > +
-> > +       /* Set initial probe state */
-> > +       ncsi_priv->state = NCSI_PROBE_PACKAGE_SP;
-> > +
-> > +       /* No active package/channel yet */
-> > +       ncsi_priv->current_package = NCSI_PACKAGE_MAX;
-> > +       ncsi_priv->current_channel = NCSI_CHANNEL_MAX;
-> > +
-> > +       /* Pretend link works so ftgmac100 sets final bits up */
-> 
-> s/ftgmac100/mac driver/ ?
-
-Ack
-
-> 
-> > +       phydev->link = true;
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +int ncsi_shutdown(struct phy_device *phydev)
-> > +{
-> > +       printf("NCSI: Disabling package %d\n", ncsi_priv->current_package);
-> > +       ncsi_send_dp(ncsi_priv->current_package);
-> > +       return 0;
-> > +}
-> > +
-> > +static struct phy_driver ncsi_driver = {
-> > +       .uid            = PHY_NCSI_ID,
-> > +       .mask           = 0xffffffff,
-> > +       .name           = "NC-SI",
-> > +       .features       = PHY_100BT_FEATURES | PHY_DEFAULT_FEATURES | SUPPORTED_100baseT_Full | SUPPORTED_MII,
-> > +       .probe          = ncsi_probe,
-> > +       .startup        = ncsi_startup,
-> > +       .shutdown       = ncsi_shutdown,
-> > +};
-> > +
-> > +int phy_ncsi_init(void)
-> > +{
-> > +       phy_register(&ncsi_driver);
-> > +       return 0;
-> > +}
-> > --- /dev/null
-> > +++ b/include/net/ncsi-pkt.h
-> > @@ -0,0 +1,415 @@
-> > +/*
-> > + * Copyright Gavin Shan, IBM Corporation 2016.
-> > + *
-> > + * This program is free software; you can redistribute it and/or modify
-> > + * it under the terms of the GNU General Public License as published by
-> > + * the Free Software Foundation; either version 2 of the License, or
-> > + * (at your option) any later version.
-> > + */
-> 
-> If you grab the version from 5.2-rc3 it has been SPDXified.
-
-Cheers, will do.
-
-> 
-> > --- a/include/phy.h
-> > +++ b/include/phy.h
-> > @@ -17,6 +17,7 @@
-> >  #include <phy_interface.h>
+> > ---
+> >  drivers/net/ftgmac100.c | 39 +++++++++++++++++++++++++++++----------
+> > @@ -181,7 +183,7 @@ static int ftgmac100_phy_adjust_link(struct ftgmac100_data *priv)
+> >         struct phy_device *phydev = priv->phydev;
+> >         u32 maccr;
 > > 
-> >  #define PHY_FIXED_ID           0xa5a55a5a
-> > +#define PHY_NCSI_ID            0xbeefcafe
-> 
-> hmmm...
-
-Haha - suggestions welcome?
-
-> 
-> >  #define PHY_MAX_ADDR 32
+> > -       if (!phydev->link) {
+> > +       if (!phydev->link && !priv->ncsi_mode) {
+> >                 dev_err(phydev->dev, "No link\n");
+> >                 return -EREMOTEIO;
+> >         }
+> > @@ -217,7 +219,8 @@ static int ftgmac100_phy_init(struct udevice *dev)
+> >         if (!phydev)
+> >                 return -ENODEV;
 > > 
-> > --
-> > 2.21.0
-> > 
+> > -       phydev->supported &= PHY_GBIT_FEATURES;
+> > +       if (!priv->ncsi_mode)
+> > +               phydev->supported &= PHY_GBIT_FEATURES;
+> 
+> Instead of hiding this behind ncsi_mode I was assuming the ncsi "phy"
+> driver would answer these questions through the phy_read callbacks.
+> 
+> If you don't think that is going to work then this solution isn't too
+> invasive, and we've been using this in Linux for a while, so we know
+> it works.
 
+Having this purely transparent would indeed be nice, but it's been a
+little awkward fitting NCSI into the u-boot model. phy_read, etc don't
+really make sense for a NCSI "PHY" like in the Linux model since there
+aren't any registers as such to query - thus checking the device-tree and
+skipping the normal mdio bus setup.
+I'll have a bit more of a think about the driver model, and probably
+exactly how Aspeed (for example) hooks this up; maybe there's a way we
+can fit in to the more usual model.
 
