@@ -1,64 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62BE34320F
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 03:04:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45PQWS4X6mzDr7f
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 11:04:52 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 32B8143212
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 03:16:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45PQmT28W4zDqpL
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jun 2019 11:16:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::433; helo=mail-pf1-x433.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=060c5fbd9=p.k.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="gstokYEd"; 
- dkim-atps=neutral
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com
- [IPv6:2607:f8b0:4864:20::433])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45PQVv6vWjzDqlJ
- for <openbmc@lists.ozlabs.org>; Thu, 13 Jun 2019 11:04:15 +1000 (AEST)
-Received: by mail-pf1-x433.google.com with SMTP id m30so10165250pff.8
- for <openbmc@lists.ozlabs.org>; Wed, 12 Jun 2019 18:04:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=YcY24ADdjB8MVXXWVdKPect4oe7EicUa6DXgs4vvUkg=;
- b=gstokYEd0Hb/DhWv2iKMW1QVx0NNy1LctnDAvkWVoPBwTdFOfXBAeRAk5+0RAHXpgA
- jbP7Mn4O4MZ8rRyY3L1p+VSJunqcNUk5KIKBVQ4+VPFDwL1paY0yVo1WQYabvGIKKcse
- yJNuQpHOY139KWeTQl0pfTpie/IKodR30KbRgidUWFiUfc1RptvajGDUPXfSjWqvoukM
- 2ow09/KFc9NlFgxoKtQexLnucQb2dWh2/U0slH1p2WnVNS4NUb1qzsOn5eGEHP27MyM2
- OLERgLUH9cltkoZ2YcrqPgHjw+dzoUcknEajOqtbNbcp9SrDgMUrxVJl29m5EXBFEUDV
- YFDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=YcY24ADdjB8MVXXWVdKPect4oe7EicUa6DXgs4vvUkg=;
- b=RKL7jyNejrMU86zXtnOSbeNJI8muu+/Mcgv4tG4j4E5Mw8jhwKreot7jwgXuiOMsUx
- iaHA9sPdqii/DVSKdDOIDnt4xtsjuhnHHr5Gb83JuVlHr74LXHz+1AQ6I+ZAhL+jE5RW
- NhYVPSZ6UL/sk8VxajUJHG7B7cn0wJ2DSuYVmDxKAcEZKtG7UXCOwmiRSAzbXQLaXg9o
- 39UPJ5wOlkDC9fUlB1vxB521mBu5GC7FPhk6l59FfEvXPax4gTO/TYjRE48imsJDGLUq
- 914Jzr2A14zjiDKYB4QnPjJPiByOJmdAdFzT0bFIqxXFLgFYwcxkG8bCKo807/CbUOFe
- ayRQ==
-X-Gm-Message-State: APjAAAWhtW9ykJint09c4x9dPpjr89HaOjJub5aEia2R4/pPGSE79uHa
- QM6Eyg4cV9/hbH6Bw5P6gsJT0yiVabfmD4M0eA0ZzlUQGso=
-X-Google-Smtp-Source: APXvYqz90p12lphXFfgb53uHPE1XuiAqL/vWgKlLfIlnzMkVt6ECP5ZegTGXcEjggP6f1xnBtvwhJW4T6ZDRw27h8Sg=
-X-Received: by 2002:a17:90a:aa81:: with SMTP id
- l1mr1904135pjq.55.1560387851661; 
- Wed, 12 Jun 2019 18:04:11 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45PQlm38lKzDq7d
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Jun 2019 11:15:27 +1000 (AEST)
+Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
+ by mx02.quantatw.com with ESMTP; 13 Jun 2019 09:15:23 +0800
+Received: from mailbx07.quanta.corp (10.243.91.102) by mailbx07.quanta.corp
+ (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 13 Jun
+ 2019 09:14:21 +0800
+Received: from mailbx07.quanta.corp ([192.168.1.7]) by mailbx07.quanta.corp
+ ([192.168.1.7]) with mapi id 15.01.1713.004; Thu, 13 Jun 2019 09:14:21 +0800
+From: =?big5?B?UC4gSy4gTGVlICin9axmvGUp?= <P.K.Lee@quantatw.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: RE: Gerrit replication for quanta-ipmi-oem
+Thread-Topic: Gerrit replication for quanta-ipmi-oem
+Thread-Index: AQHVIVpqDF38XAtXNUWQgjNydGTHHaaYxLqA
+Date: Thu, 13 Jun 2019 01:14:21 +0000
+Message-ID: <525c2d59451f4b17b99d9214d1c42ed5@quantatw.com>
+References: <20190612200853.qgpy6z5hopheoz7g@thinkpad.dyn.fuzziesquirrel.com>
+In-Reply-To: <20190612200853.qgpy6z5hopheoz7g@thinkpad.dyn.fuzziesquirrel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24670.001
+x-tm-as-result: No--5.304500-0.000000-31
+x-tm-as-matchedid: 140026-150567-151271-700225-703140-701090-703503-704708-7
+ 04704-139010-139006-702605-106660-863519-703238-701590-703945-704015-704706
+ -148004-148133-41000-42000-42003-63-190014
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 12 Jun 2019 18:04:00 -0700
-Message-ID: <CAO=notz0NB0+A6LivrKs7+i4nkWE_dWjBP8qV-q41FesZRsUeg@mail.gmail.com>
-Subject: phosphor-ipmi-flash making progress!
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,94 +61,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-For those interested parties, phosphor-ipmi-flash which provides a
-variety of out-of-band mechanisms for updating the BMC in a
-fully-configurable manner is nearly ready for wide distribution.
-
-Currently supported: aspeed-p2a-ctrl (ipmipci), and inband (ipmibt)*
-Shortly supported: aspeed-lpc-ctrl (ipmilpc)
-
-*There is a bug in the transmit buffer size depending on whether it's
-over KCS versus actually BT since BT has a smaller buffer requirement.
-
-UBI Tarball updates aren't yet supported, but that's only a matter of
-someone writing an update handler.  The firmware handler on the BMC
-can be extended easily to support a variety of verification and update
-mechanisms.  The default behavior is to leverage a service for each of
-these things.  One can implement whatever they really want for each
-service.
-
-The file sent to the BMC isn't required to have a signature file.  One
-could simply skip sending the hash file and have a verification step
-that doesn't do anything special.  So, it's very flexible.
-
-Here's some output:
-
-$ ./phosphor_ipmi_flash_tool --command update --interface ipmipci
---image image-bmc --sig image-bmc.sig
-
-Sending over the firmware image.
-[0x1a03 0x2000]
-The bridge is enabled!
-Received address: 0x47ff0000
-Sending over the hash file.
-[0x1a03 0x2000]
-The bridge is enabled!
-Received address: 0x47ff0000
-
-Opening the verification file
-Committing to /flash/verify file to trigger service
-Calling stat on /flash/verify session to check status
-other
-running
-running
-success
-Returned success
-succeeded
-
-Opening the update file
-Committing to /flash/update file to trigger service
-Calling stat on /flash/update session to check status
-running
-Exception received: blob exception received: Received IPMI_CC: busy
-
-On the BMC:
-shutdown: reboot --timeout 90000000us --log-level 6 --log-target kmsg
---log-color
-+ awk '/oldroot|mnt/ { print $2 }'
-+ sort -r
-+ umount /oldroot/sys/kernel/debug
-+ umount /oldroot/sys/fs/cgroup/unified
-+ umount /oldroot/sys/fs/cgroup/systemd
-+ umount /oldroot/sys/fs/cgroup
-+ umount /oldroot/sys/fs/bpf
-+ umount /oldroot/sys
-+ umount /oldroot/proc
-+ umount /oldroot/dev/shm
-+ umount /oldroot/dev/pts
-+ umount /oldroot/dev
-+ umount /oldroot
-+ umount /mnt/initramfs/rw
-+ umount /mnt/initramfs/ro
-+ umount /mnt
-+ set +x
-Pinging watchdog with args -t 1 -T 5
-update: --clean-saved-files
-[ 8240.817801] jffs2: notice: (1171) jffs2_build_xattr_subsystem:
-complete building xattr subsystem, 17 of xdatum (15 unchecked, 1
-orphan) and 30 of xref (1 dead, 0 orphan) found.
-Updating bmc...
-Erasing block: 69/512 (13%)
-
-Given a BMC configuration:
-EXTRA_OECONF_append_quanta-q71l = " --enable-static-layout"
-EXTRA_OECONF_append_quanta-q71l = " --enable-pci-bridge"
-EXTRA_OECONF_append_quanta-q71l = " --enable-aspeed-p2a"
-EXTRA_OECONF_append_quanta-q71l = " --enable-reboot-update"
-EXTRA_OECONF_append_quanta-q71l = " MAPPED_ADDRESS=0x47FF0000"
-
-
-Patrick
+SGkgQnJhZCwNCg0KVGhhdCdzIGp1c3QgZ3JlYXQhIFRoYW5rIHlvdS4NCg0KQmVzdCwNClAuSy4N
+Cg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBCcmFkIEJpc2hvcCBbbWFp
+bHRvOmJyYWRsZXliQGZ1enppZXNxdWlycmVsLmNvbV0NCj4gU2VudDogVGh1cnNkYXksIEp1bmUg
+MTMsIDIwMTkgNDowOSBBTQ0KPiBUbzogUC4gSy4gTGVlICin9axmvGUpIDxQLksuTGVlQHF1YW50
+YXR3LmNvbT4NCj4gQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KPiBTdWJqZWN0OiBHZXJy
+aXQgcmVwbGljYXRpb24gZm9yIHF1YW50YS1pcG1pLW9lbQ0KPiANCj4gSGkgUC5LLg0KPiANCj4g
+SSBqdXN0IGVuYWJsZWQgR2Vycml0IHJlcGxpY2F0aW9uIG9uIHRoZSBxdWFudGEtaXBtaS1vZW0g
+cmVwb3NpdG9yeS4NCj4gWW91IGNhbiB1c2UgR2Vycml0IHRvIGNvbmR1Y3QgY29kZSByZXZpZXdz
+IGZvciB0aGlzIHJlcG9zaXRvcnkgbm93Lg0KPiANCj4gVGhhbmtzIQ0KPiANCj4gLWJyYWQNCg==
