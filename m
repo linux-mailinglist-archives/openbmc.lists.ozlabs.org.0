@@ -1,54 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 633894558D
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 09:17:32 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DE1245646
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 09:27:01 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45QBxt5n81zDrTF
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 17:26:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45QBkx6xbFzDrTQ
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 17:17:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=46.105.34.195; helo=11.mo4.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::344; helo=mail-ot1-x344.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 599 seconds by postgrey-1.36 at bilbo;
- Fri, 14 Jun 2019 17:25:53 AEST
-Received: from 11.mo4.mail-out.ovh.net (11.mo4.mail-out.ovh.net
- [46.105.34.195])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="B01uhPco"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com
+ [IPv6:2607:f8b0:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45QBwd44SbzDrHy
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 17:25:49 +1000 (AEST)
-Received: from player750.ha.ovh.net (unknown [10.108.57.49])
- by mo4.mail-out.ovh.net (Postfix) with ESMTP id C709A1F46C1
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 09:06:11 +0200 (CEST)
-Received: from kaod.org (lfbn-1-10649-41.w90-89.abo.wanadoo.fr [90.89.235.41])
- (Authenticated sender: clg@kaod.org)
- by player750.ha.ovh.net (Postfix) with ESMTPSA id 547646ED1BBD;
- Fri, 14 Jun 2019 07:06:06 +0000 (UTC)
-Subject: Re: [u-boot, v2016.07-aspeed-openbmc v1] aspeed/flash: add winbond
- SPI support
-To: Hongwei Zhang <hongweiz@ami.com>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>
-References: <1559767965-21037-1-git-send-email-hongweiz@ami.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <5d0a22fd-a4fc-3b71-c725-862c7662eb2d@kaod.org>
-Date: Fri, 14 Jun 2019 09:06:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
-MIME-Version: 1.0
-In-Reply-To: <1559767965-21037-1-git-send-email-hongweiz@ami.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 5143955202856553218
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduuddrudeitddguddukecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45QBkR0zMSzDrNy
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 17:17:02 +1000 (AEST)
+Received: by mail-ot1-x344.google.com with SMTP id l15so1697239otn.9
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 00:17:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=h32rnj/Xf3zmV/TEf8UtDyLfAwJM/I2vMUL6LPoXjQU=;
+ b=B01uhPco1VHYGVmDr/AGQ+Z5tVDPv08h85eh7CT8t1nmC01UKwlx17lsYwJag+6Bgc
+ ozyE4/S9yRE4zKXuhtbAsyRdJkYgjuMwhK5trMzxwBU6I0VDKS+JXeSH3l3mAqBVmWiz
+ Wbr892XmOFMMi2S8/g18ykLXZMzdvSDpXs49GA4/ZHkq8C0Cb7b4rmfV88a3WUhV8euS
+ xrlZ7ENteccph53XehdLeTuRzH9HQqAVcI4BgutUFDaIuIWGJ538rbW8l17i1A1bCb7d
+ 0uR6ERirG3wJI4zuq1V1JTgeaJCXKpeFIPnCx98N1w6ZG3Oe3qQcctt12kHPhsd0NnSz
+ MY9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=h32rnj/Xf3zmV/TEf8UtDyLfAwJM/I2vMUL6LPoXjQU=;
+ b=svGQwFbQ/wNih2W87M2ETl3h5f6+MjmUx6Z0a9QH+6eC6EuFGkH+5+DSCXnO5xPDAT
+ aJHKh6phMtITuLqCIHRWpmDJXzIUdaluqJPFJvzpYqO7VtYOnZVqLEnV/tZb2L6gzVFu
+ ckF9ca/JJJSLguD9lKlzCTDWGinmvlshSGG0jDQ5PY89/UPtHroVOgDRol4HaoOw1Odb
+ SbyPGcVsiyBO7AtgY3Sm41+1t8KTd/ESnZ2sfq0TU6aPopvRSznW4UUInB5DbspFUa2A
+ qePP7fAGgrcp7FX/mAKwC+k5z5dlgByGz+K3vhCuVO9WZU4NT+DJ29zAKtceJaNxS7bh
+ H1dg==
+X-Gm-Message-State: APjAAAWpSA3e7Xw5KmwVIxgtMKuGO88NIIVsti9decnV4/h3xUpswxzQ
+ 581nr8QXZt3GVq4i75QPvG6++oOHHKgFlA==
+X-Google-Smtp-Source: APXvYqzNflSyEc856kOsgMUtwo56xGNV9rd0KtfV/jahIcNRjOY5XdMUe5zZCe7hBsmDYYj1TnCW9Q==
+X-Received: by 2002:a9d:5787:: with SMTP id q7mr11555014oth.75.1560496620199; 
+ Fri, 14 Jun 2019 00:17:00 -0700 (PDT)
+Received: from localhost ([32.97.110.52])
+ by smtp.gmail.com with ESMTPSA id y7sm824712oix.47.2019.06.14.00.16.58
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 14 Jun 2019 00:16:59 -0700 (PDT)
+From: Lei YU <mine260309@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.1] fsi: core: Fix NULL dereference issue
+Date: Fri, 14 Jun 2019 15:16:43 +0800
+Message-Id: <20190614071643.18607-1-mine260309@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,60 +72,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+The failure case in fsi_slave_init() is wrong and could cause NULL
+dereference issue.
+E.g. on FP5280G2 machine, it could get failure in fsi_slave_set_smode(),
+and when it does fsi rescan, kernel crashes due to:
 
-On 05/06/2019 22:52, Hongwei Zhang wrote:
-> Add Winbond SPI flash W25M512JV support to u-boot.
+    Unable to handle kernel NULL pointer dereference at virtual address 00000060
 
-For which board do you need this support ? 
+The fix is to make it not calling kfree() but just goto err_free.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+However, in err_free, it calls put_device() to free the device, it still
+cause issue during fsi rescan, that the device is used after freed.
 
-Thanks,
+    WARNING: CPU: 0 PID: 1433 at lib/refcount.c:190 refcount_sub_and_test_checked+0x94/0xac
+    refcount_t: underflow; use-after-free.
 
-C.
+So the put_device() is removed and "err_free" label is renamed to "fail".
 
-> Signed-off-by: Hongwei Zhang <hongweiz@ami.com>
-> ---
->  a/arch/arm/mach-aspeed/flash.c | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/arch/arm/mach-aspeed/flash.c b/arch/arm/mach-aspeed/flash.c
-> index db69d51..eefa6cd 100644
-> --- a/arch/arm/mach-aspeed/flash.c
-> +++ b/arch/arm/mach-aspeed/flash.c
-> @@ -84,6 +84,7 @@ flash_info_t flash_info[CONFIG_SYS_MAX_FLASH_BANKS];		/* FLASH chips info */
->  #define AT25DF161		0x02461F
->  #define AT25DF321		0x01471F
->  #define MT25QL01GB		0x21ba20
-> +#define W25M512JV		0x1971ef
->  
->  /* SPI Define */
->  #define CS0_CTRL			0x10
-> @@ -1156,6 +1157,20 @@ static ulong flash_get_size (ulong base, flash_info_t *info)
->  			info->address32 = 1;
->  			break;
->  
-> +		case W25M512JV:
-> +			info->sector_count = 512;
-> +			info->size = 0x2000000;
-> +			erase_region_size  = 0x10000;
-> +			info->readcmd = 0x0b;
-> +			info->dualport = 1;
-> +			info->dummybyte = 1;
-> +			info->buffersize = 256;
-> +			WriteClk = 50;
-> +			EraseClk = 20;
-> +			ReadClk  = 50;
-> +			info->address32 = 1;
-> +			break;
-> +
->  		default:	/* use JEDEC ID */
->  			printf("Unsupported SPI Flash!! 0x%08lx\n", info->flash_id);
->  			erase_region_size  = 0x10000;
-> 
+The slave device is freed by put_device() in fsi_master_remove_slave().
+
+Signed-off-by: Lei YU <mine260309@gmail.com>
+---
+ drivers/fsi/fsi-core.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+index 2c31563fdcae..ebede90cf4bd 100644
+--- a/drivers/fsi/fsi-core.c
++++ b/drivers/fsi/fsi-core.c
+@@ -1041,14 +1041,14 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 	rc = __fsi_get_new_minor(slave, fsi_dev_cfam, &slave->dev.devt,
+ 				 &slave->cdev_idx);
+ 	if (rc)
+-		goto err_free;
++		goto fail;
+ 
+ 	/* Create chardev for userspace access */
+ 	cdev_init(&slave->cdev, &cfam_fops);
+ 	rc = cdev_device_add(&slave->cdev, &slave->dev);
+ 	if (rc) {
+ 		dev_err(&slave->dev, "Error %d creating slave device\n", rc);
+-		goto err_free;
++		goto fail;
+ 	}
+ 
+ 	rc = fsi_slave_set_smode(slave);
+@@ -1056,8 +1056,8 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 		dev_warn(&master->dev,
+ 				"can't set smode on slave:%02x:%02x %d\n",
+ 				link, id, rc);
+-		kfree(slave);
+-		return -ENODEV;
++		rc = -ENODEV;
++		goto fail;
+ 	}
+ 	if (master->link_config)
+ 		master->link_config(master, link,
+@@ -1075,10 +1075,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 		dev_dbg(&master->dev, "failed during slave scan with: %d\n",
+ 				rc);
+ 
+-	return rc;
+-
+- err_free:
+-	put_device(&slave->dev);
++ fail:
+ 	return rc;
+ }
+ 
+-- 
+2.17.1
 
