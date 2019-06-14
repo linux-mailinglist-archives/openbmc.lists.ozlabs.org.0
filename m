@@ -1,105 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 564F2453B7
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 06:55:15 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FF2D4531C
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 05:49:29 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Q66t15MLzDrPb
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 13:49:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Q7Zm6Nc2zDrQ3
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 14:55:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.75.110; helo=nam02-bl2-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::836; helo=mail-qt1-x836.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="K+BbmEsY"; dkim-atps=neutral
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com
- (mail-eopbgr750110.outbound.protection.outlook.com [40.107.75.110])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="bzTP2qSA"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com
+ [IPv6:2607:f8b0:4864:20::836])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Q6693sQQzDrPV
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 13:48:48 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=testarcselector01; d=microsoft.com; cv=none;
- b=uxIhd4sJ1PEn9HUYN1dkEuho8hepzozgbac7/g0FxUXMvi7jWSAv72Jt9mQonvETKbqacyYoc4gq5/J7Bb5D+GdfkznX5su+7ENRcWRAR+l7ojzHrV3EvTPf14G77JaoH4pNhJyX+AgnLjnDhU1dQCHhFYGDWS3T2oBJBU+hQ9k=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=testarcselector01;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b/SvqS1c3lUI54CfunY/iyNzIkCoenH7Me+UKdM8KMo=;
- b=t5rjNndtC8nhpVyADia3RNB5mBNeUTBhdiYVq8vGTOJti81toc4RvPWUwQrSH2Gt45Ellrc6rOtqnN8qBZEOhzRS7jCO6bd1GM08rWmL9MZ6tBPNSLZpRNfborDeRwUrX6xy/LAa3/v5l1by6eH49CaZWUr+xG1fY1mdKMip3U8=
-ARC-Authentication-Results: i=1; test.office365.com
- 1;spf=none;dmarc=none;dkim=none;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b/SvqS1c3lUI54CfunY/iyNzIkCoenH7Me+UKdM8KMo=;
- b=K+BbmEsY9sYxbF+6EZsOqi+X5uscr1VGeLzIn2GoKH+Wbq7+FuBcK32IKESYudH82UT8GYt0JRd5b0TOqqZ8+bSFZxhDZM9Dr4VvxcJT+j56YlVh9WjH8cexaPCEcfbbX607lbI1NmzYw5n/IxDVRzV8+NOD37t/0Dbif9rbM74=
-Received: from BL0PR2101MB0932.namprd21.prod.outlook.com
- (2603:10b6:207:30::20) by BL0PR2101MB0897.namprd21.prod.outlook.com
- (2603:10b6:207:36::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2008.4; Fri, 14 Jun
- 2019 03:48:43 +0000
-Received: from BL0PR2101MB0932.namprd21.prod.outlook.com
- ([fe80::1072:430b:60ef:aaae]) by BL0PR2101MB0932.namprd21.prod.outlook.com
- ([fe80::1072:430b:60ef:aaae%4]) with mapi id 15.20.2008.002; Fri, 14 Jun 2019
- 03:48:43 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Platform Inventory for redfish 
-Thread-Topic: Platform Inventory for redfish 
-Thread-Index: AdUiY/+aKZsM/MRORKSmi2eCldLAJg==
-Date: Fri, 14 Jun 2019 03:48:42 +0000
-Message-ID: <BL0PR2101MB0932DF0B72012340CADF3E90C8EE0@BL0PR2101MB0932.namprd21.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-06-14T03:48:41.2545684Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=2c1bf5a7-5d90-4e08-b901-e1fb042a2a77;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-originating-ip: [50.47.128.230]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e92bfbf4-f027-4433-446a-08d6f07b320b
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
- SRVR:BL0PR2101MB0897; 
-x-ms-traffictypediagnostic: BL0PR2101MB0897:
-x-microsoft-antispam-prvs: <BL0PR2101MB0897F7F7CE60E45177669AE8C8EE0@BL0PR2101MB0897.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
-x-forefront-prvs: 0068C7E410
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(39860400002)(376002)(396003)(136003)(346002)(53754006)(199004)(189003)(33656002)(68736007)(4744005)(66476007)(66066001)(64756008)(66946007)(478600001)(52536014)(66556008)(6116002)(52396003)(25786009)(76116006)(66446008)(26005)(5660300002)(186003)(73956011)(99286004)(102836004)(6916009)(6506007)(8990500004)(10290500003)(256004)(2906002)(10090500001)(486006)(53936002)(3846002)(6436002)(7696005)(476003)(74316002)(86362001)(71200400001)(81166006)(4743002)(9686003)(71190400001)(8676002)(14454004)(55016002)(22452003)(305945005)(3480700005)(7736002)(8936002)(81156014)(316002);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BL0PR2101MB0897;
- H:BL0PR2101MB0932.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: qCzVgRGsNqqMI2VUsvacGvw4f7LTKrgS/jGrk1r/MgMCkV6QuRQ8XVGm97qinEkj9K9hb9MtgIcRUwt0RQoupObUoXkGt7LwAIQ4JGS5W0Jk1oYAfueq7Osw6cMyRXafPLyg/z6nUhBURmN/plWa2yGKhFEDGEQytoyzN5zsNrgsinxNWEPWMmh7VUKwj3hJ/Zsb7hhCfQubdtz5f5tKGRoGGt1/ul/kmXKCMW7b+NgPBTxXFdsebG5n9qmZAKTs0blyk/ANEEbzAQ+yoz5qzT5Oi5JDrMlQIFgoVoErXhINr3kf8no4vtH7DH67KMEXtXuFM4qPHxzwDCtqUVI54kmOV2KTp0RotSjU7EVenWszHro+vn5970X48U5u1q9ZjFS9oho3SUErfeR/SK4iIkUi/ky36lPULAROz4V0jCI=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Q7ZH01NDzDrPy
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 14:54:46 +1000 (AEST)
+Received: by mail-qt1-x836.google.com with SMTP id i34so1082772qta.6
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Jun 2019 21:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=a4jq7+FeyNgig7uoYeW41jdV4RNy907V4kpYbPMTFD8=;
+ b=bzTP2qSA6ydr09NnrHpnE2M+GG9FGeUayMY8/uRcsiTQBUaQRzKPW06ROCfPlBjfgj
+ 18eJTxnuEO1I/rkRA+y+g5buQT89uWIlxN2N0QJVter7+WHf96m2u5fdzmBX7Co5F+pv
+ DtQHJ1vmVVtg9P2W+tDx+sNRJynRnTE+jC8Y4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=a4jq7+FeyNgig7uoYeW41jdV4RNy907V4kpYbPMTFD8=;
+ b=Cv/DuewecJLgNzqQ++RT8a60dAMCeQrRoE1r9P+jU0cEOzWVhoKA0EWHwEvu2yD7lc
+ 8bZO3STLzXJpBHH1P130CJKgzc2D2nDUGJu3Mxb/DM5r0dYpdiQfCK6MAgFlgFNM52jL
+ f6Hlt/tcLji0BQBSf9FlQNj6BB70/HQ0Ko8sRHKpOODPLdwYGnSny3E3fs5QyLjvhEf6
+ 4XqwJM9l92SmPtc783Dn+Em8e2iF2lgHTLERRRYqOpZ2U+ZVKJaD1BMlNtS7cVk6Ju5B
+ apY+Wn7yR2a6b456WMM+eju3JGQBrYY646ewxKBayc47KpFTLGXMrAVKtfhVJPNTj8Vb
+ qN/A==
+X-Gm-Message-State: APjAAAXSClyaGA8ZI3+BtQwbNANK4AC3bYQHcATPqXdzGFVIKc0FHeTt
+ ypwd11qdnPQ+xThhdKGmgNimSRm4hO3HsdOP0X9em+H+K8E=
+X-Google-Smtp-Source: APXvYqx9T9MYrKa0CLTLwyTx+80a5zjNycWo0RoayqcKn1TCMUkzUR1ZirzkqPoiin46fJlovgciGB9r7IJh4fBytGk=
+X-Received: by 2002:a0c:afd5:: with SMTP id t21mr6563896qvc.105.1560488082315; 
+ Thu, 13 Jun 2019 21:54:42 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e92bfbf4-f027-4433-446a-08d6f07b320b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jun 2019 03:48:42.9497 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: neladk@microsoft.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0897
+References: <CALLMt=qZOxWDH8eDqv6JYbkvgk10mR1K_REgnE-DkssLWD=iVg@mail.gmail.com>
+ <CACPK8XdV6X6j=A2Qf7RcBnWWoESi6SWMZfcoA2mJPO_JFCdcrQ@mail.gmail.com>
+ <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
+ <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
+In-Reply-To: <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 14 Jun 2019 04:54:30 +0000
+Message-ID: <CACPK8XdZWGJ8d32N1D8Np2Ja8DOPZ4BqB9wJ4GyFOJ5PCmO5gg@mail.gmail.com>
+Subject: Re: CI to stop testing meta-* layers not in tested machine
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Patrick Venture <venture@google.com>, 
+ Benjamin Fair <benjaminfair@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,20 +77,44 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-HI All,=20
+On Fri, 10 May 2019 at 18:46, Andrew Geissler <geissonator@gmail.com> wrote:
+>
+> On Fri, May 10, 2019 at 9:33 AM Patrick Venture <venture@google.com> wrote:
+> > > I'd like to have a nuvoton based machine so we have some confidence
+> > > that kernel bumps aren't broken.
+> > >
+> > > That would mean adding the evb-nuvoton or gsj machines to CI.
+> >
+> > I vote for the gsj machine.  Not that it's a democracy :)
+>
+> I gave this a try but ran into https://github.com/openbmc/openbmc/issues/3542
+> Be great to get gsj into CI since it would give us a few new layers
+> for coverage.
 
-How does we manage platform inventory like CPU, memory and PCIe devices sin=
-ce BMC may not always have presence pins for all components.  For IPMI , we=
- have SDRs that can be programmed with correct SKU configurations. I am won=
-dering what is solution for redfish (except BIOS sending inventory on USB e=
-thernet using redfish). =20
+gsj is now supported in the kernel.
 
-Platform inventory includes=20
+Andrew tried to build the machine and ran into u-boot issues which is
+still blocking the machine's addition to our CI. Patrick, are you able
+to look into that?
 
-1. Number of host CPUs and type of CPUs
-2. Number of memory and types of memory=20
-3. IO expander cards=20
-4. SMBUS devices on PCI cards=20
+ https://github.com/openbmc/openbmc/issues/3542#issuecomment-501706892
 
-Thanks
-Neeraj
+Once we get the u-boot issue sorted out, I propose the following changes:
+
+ - drop qemu from CI. 'qemu' is actually testing on a generic arm
+machine. A few of us at IBM have a side project that has resulted in a
+high quality Qemu support for the aspeed boards, so if you would like
+to test in qemu I recommend grabbing palmetto or romulus and doing
+that. So consider this dropping the generic qemu image and instead
+focusing on the aspeed one.
+
+ - add gsj. This gives us coverage of the nuvoton kernel and u-boot,
+as well as the nuvoton specific layers
+
+ - add swift. This is an ast2500-based system that we're looking to
+use emmc flash with, and having testing for those images will be
+useful
+
+Cheers,
+
+Joel
