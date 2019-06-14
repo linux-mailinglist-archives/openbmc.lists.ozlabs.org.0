@@ -2,63 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0C4C45CB5
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 14:23:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E57F8461A2
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 16:51:45 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45QKWq3DY3zDrgD
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 22:23:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45QNq30lMzzDrgH
+	for <lists+openbmc@lfdr.de>; Sat, 15 Jun 2019 00:51:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::741; helo=mail-qk1-x741.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="CrNJF4wQ"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="qF06G03t"; 
  dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 466 seconds by postgrey-1.36 at bilbo;
+ Sat, 15 Jun 2019 00:50:49 AEST
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45QKTh1LRWzDrB8
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 22:21:27 +1000 (AEST)
-Received: by mail-qk1-x741.google.com with SMTP id a27so1498594qkk.5
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 05:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WlYwW5y12B7OxfPDmWRKnUOXybYI+jAbULo5UEZV1K8=;
- b=CrNJF4wQ/2BfylUyJLilpz2OvRZIGVIlW1QF9cTDt7grEpMPnVpICgnWZ1INs+ZcHx
- bJM6THc6PGdLZeo1zV8lD0Gnlpd38wDg4O7X5oIQv5ohQARBBEmaBbKZNcHNBmGChPQ+
- xpq2ET2gf83a2wrX6SY/WsfJvifdyQ9KbSA0s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=WlYwW5y12B7OxfPDmWRKnUOXybYI+jAbULo5UEZV1K8=;
- b=ZLhx5ajQ6s4p24lL606sbFK2gpKWyDF/KLxUT9wLKkR24uj+JSQSgTWWaICHREiDlD
- c/xwsai3sO3xG4EDrjRbJ4WTdu6Dc1m7AJCVKae6jUHdD0Q7oLPQMQNPK9SjH0iPTr0a
- kX6onZXhYsDB2lJ7FizrF2X0FmBBiLC63S6nDjafjla+JKZdPLaYDg6akviP4JmK3R4R
- zaCtl/EzADKGEi0bNC/XBxj1hfGPcWsfZltzRQPqZxz8ftyG3wL5+X1wRerc3cmnXbB9
- qR0SBhIr2iolnB8WEHOwkW6d20ltoN9J+lJzBOBBoiAQ6sGtUREUWa1nrdChBsSMmFwN
- 0Wkg==
-X-Gm-Message-State: APjAAAWL81PPsGJ/haFUYpJiRJ/4QCjJLbz7UkwzoEDf/uiuEQWTz8A6
- LSRkuGAFVFJrLj4PF7u9p1ME0UW9QlP8X9udPqc=
-X-Google-Smtp-Source: APXvYqyDbsTdzvLVMPPv9fwQn4sVV5cipybUF3qhTMNCpnQ8oqEMYQUzGeExVaGRiBdzJuNPdu26coGdzZtSoU0p9pQ=
-X-Received: by 2002:a37:a10b:: with SMTP id k11mr77831699qke.76.1560514885019; 
- Fri, 14 Jun 2019 05:21:25 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45QNp20D12zDrPv
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Jun 2019 00:50:49 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id CBF0741860;
+ Fri, 14 Jun 2019 14:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1560523377; x=1562337778; bh=1tPCcap9FeU8NfKu0KGV44oLahsFvfRCsvQ
+ +X0ZP+is=; b=qF06G03tI6i77t67K0DcEugmikXkQrNzCkauGEGnAGCTG1qvLcr
+ aYKpni8DcFLFgLaDi5VoydhTKJQdNFQIqonfJMymF0lxXg7TKQUO7PegV6efiakm
+ h+2OoBScm0k+alV8IrL24WBIkSUDpUnDqhwaFuQuxv5MuHp4ViKRwoDs=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id Kl3THeePWahY; Fri, 14 Jun 2019 17:42:57 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 77C474181D;
+ Fri, 14 Jun 2019 17:42:57 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 14
+ Jun 2019 17:42:57 +0300
+Date: Fri, 14 Jun 2019 17:42:56 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: meta-yadro subtree
+Message-ID: <20190614144256.GA13210@bbwork.lan>
+References: <20190603115332.GA20703@bbwork.lan>
+ <0b087d91bf683a9d2e28ccdf751147e26c45a277.camel@fuzziesquirrel.com>
 MIME-Version: 1.0
-References: <1560409202-6299-1-git-send-email-wangzqbj@inspur.com>
-In-Reply-To: <1560409202-6299-1-git-send-email-wangzqbj@inspur.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 14 Jun 2019 12:21:13 +0000
-Message-ID: <CACPK8XchuTTy+jfvV7r9BUXnLL2GJjJViK7timyfyNzfCWuOfA@mail.gmail.com>
-Subject: Re: [PATCH dev-5.1 v2] ARM: dts: aspeed: Add Inspur fp5280g2 BMC
- machine
-To: John Wang <wangzqbj@inspur.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <0b087d91bf683a9d2e28ccdf751147e26c45a277.camel@fuzziesquirrel.com>
+User-Agent: Mutt/1.11.3 (2019-02-01)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,21 +76,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 13 Jun 2019 at 07:00, John Wang <wangzqbj@inspur.com> wrote:
->
-> The fp5280g2 is an open-power server platform with
-> an aspeed ast2500 BMC
->
-> Signed-off-by: John Wang <wangzqbj@inspur.com>
-> Reviewed-by: Lei YU <mine260309@gmail.com>
+On Wed, Jun 12, 2019 at 05:52:38PM -0400, Brad Bishop wrote:
+> On Mon, 2019-06-03 at 14:53 +0300, Alexander A. Filippov wrote:
+> > Hi Brad,
+> > 
+> > Finally, we are ready to publish our yocto layer. 
+> > Could you please create a repo meta-yadro in OpenBMC project and
+> > corresponded
+> > subtree.
+> > You might clone it from https://github.com/YADRO-KNS/meta-yadro.git.
+> 
+> Hi Alexander
+> 
+> I finally did this today.  Thanks!
+> 
+> -brad
 
-Committed to dev-5.1.
+Hi Brad
 
+What about corresponded subtree in the openbmc/openbmc repository?
+I could create a pull request for adding subtree but I guess that you have some
+scripts/configs which also should be updated.
+
+--
 Cheers,
-
-Joel
+Alexander
