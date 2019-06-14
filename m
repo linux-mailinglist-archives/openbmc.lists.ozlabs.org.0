@@ -1,68 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6640C466E8
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 20:02:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E66FF4656C
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jun 2019 19:12:59 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45QRy134zYzDrj9
-	for <lists+openbmc@lfdr.de>; Sat, 15 Jun 2019 03:12:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45QT3Z4RxVzDrhK
+	for <lists+openbmc@lfdr.de>; Sat, 15 Jun 2019 04:02:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::32e; helo=mail-wm1-x32e.google.com;
- envelope-from=derick.montague@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="iQGRkyV9"; 
- dkim-atps=neutral
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com
- [IPv6:2a00:1450:4864:20::32e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45QRxG4zBszDrgX
- for <openbmc@lists.ozlabs.org>; Sat, 15 Jun 2019 03:12:18 +1000 (AEST)
-Received: by mail-wm1-x32e.google.com with SMTP id w9so9339514wmd.1
- for <openbmc@lists.ozlabs.org>; Fri, 14 Jun 2019 10:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lYU7WCJkTxeyq9xrCsy9osS5Ss5oayh0KT/NSLWcAZo=;
- b=iQGRkyV97eRtdLW36MTPh14xgLNmBVE4+IXpjNODBUe5R0leF9W3mqhEvpPAY9r1iH
- ABhArmmEXnND/9U0A7dR8tD3Au1uJUpEKWZyrjEUmg661ZekExTJY7rJtsK/BXtvVlzw
- IG/C0qSvi0ieCO9MstRo6KNQVGy2n3A8TbhBAYcVHTMFLTzLg4kAhoofAUoGFB1DHawT
- Iss08i4ShrKcLsfj84LDQBoIhAhNykG7CeUNah8dl45WNV4h9sHUiTCiiRnYH5aysUFX
- QokE1QPQ1q3ocYJfq/Kj3N9oQC14IJB3IzbI1LTCSii7PQBaqfQFge23Kw7GEwpGjF0d
- 3IZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=lYU7WCJkTxeyq9xrCsy9osS5Ss5oayh0KT/NSLWcAZo=;
- b=lupEnn4wQhQqCmuFnb5WgIjCu9yywKetcvf+IXNhsr3yfv53GARzHqVImAsV+EXSlJ
- DmwesQaKDo5FbUhayD4g97FG7RZ7WdqlKd4GmOAt9gHuZXBHFYQhkrK8ZJUh+Cj5rYbY
- P/8Xj1+xeO0FGr848EO8oPYkSNhdo1BjbWB4WQmlpOLU3mug2A6FlfufHCvrjywgurPK
- QgRtnytsyqcdUduxzpMZTUVamocnihUPAr3RYFwFKm4OVMW6an3WFcI0YXb7h7Wog6i5
- etzYCsMwHhip/wpuXBZT5JbdKqbHFU9UlBEXTaHn867Glsk1cjtmgu1VVGlwkxmQ6UA/
- 516g==
-X-Gm-Message-State: APjAAAVlNgPSiiHTHoBTx8dtD2kiEmskLFLhpby29pQA2EkDLXAPeRsY
- IVZpAgvPqo4U4eUtQmjfqzpB0CwyiSfwo4k7wud3d7lQLuM=
-X-Google-Smtp-Source: APXvYqwrqhE4zDihHW9HT7svzsCYu7iC1zOUfdN+ECQZdHROiGNCm3Nvt49TlvcVxGV12nS0MMx/YrxlskxxttqQdO0=
-X-Received: by 2002:a1c:1bc9:: with SMTP id b192mr8677417wmb.152.1560532334087; 
- Fri, 14 Jun 2019 10:12:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAOUmYFRfVQha0NCZd2aLTc-EC2GNF8wuXqnAyWNMCpzcecQUKw@mail.gmail.com>
- <6f963ba0-467f-14fe-ac0b-7c09b547d109@intel.com>
-In-Reply-To: <6f963ba0-467f-14fe-ac0b-7c09b547d109@intel.com>
-From: Derick <derick.montague@gmail.com>
-Date: Fri, 14 Jun 2019 12:12:02 -0500
-Message-ID: <CAOUmYFRHh3bQSwmFMEcvokd6_yFxPE7-X+UmBTcFxMegHdX0eA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45QT2w1yRtzDrf7
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Jun 2019 04:02:09 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 14 Jun 2019 11:00:48 -0700
+X-ExtLoop1: 1
+Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
+ by orsmga001.jf.intel.com with ESMTP; 14 Jun 2019 11:00:48 -0700
 Subject: Re: Proposal to replace Clang Format with ESLint and Prettier in
  phosphor-webui
-To: Ed Tanous <ed.tanous@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Derick <derick.montague@gmail.com>
+References: <CAOUmYFRfVQha0NCZd2aLTc-EC2GNF8wuXqnAyWNMCpzcecQUKw@mail.gmail.com>
+ <6f963ba0-467f-14fe-ac0b-7c09b547d109@intel.com>
+ <CAOUmYFRHh3bQSwmFMEcvokd6_yFxPE7-X+UmBTcFxMegHdX0eA@mail.gmail.com>
+From: Ed Tanous <ed.tanous@intel.com>
+Message-ID: <26aeae20-6815-d160-584f-c9252ec6a568@intel.com>
+Date: Fri, 14 Jun 2019 11:00:48 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
+MIME-Version: 1.0
+In-Reply-To: <CAOUmYFRHh3bQSwmFMEcvokd6_yFxPE7-X+UmBTcFxMegHdX0eA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,55 +59,83 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks for the follow up Ed!
+On 6/14/19 10:12 AM, Derick wrote:
+> 
+> I am ok if we don't want to use Prettier for JavaScript, but
+> clang-format does not
 
-> Prettier:
-> I struggle with this one, because as a whole, this project seems to use
-> clang-format for most everything else.  In the research I've done, I
-> wasn't able to find something that Prettier does significantly better
-> than clang-format, with the exception of maybe being more "standard" in
-> the javascript realm.  I'd much rather OpenBMC sticks with something
-> that's consistent than say every language gets its own formatting library.
+Never really thought of that, and that's a fair criticism of using
+clang-format for the web stuff.  I do have prettier hooked into my
+editor for the scss files, so I guess I never really thought about it.
 
-I am ok if we don't want to use Prettier for JavaScript, but
-clang-format does not
-support SCSS and we would like to have consistent formatting in SCSS as well.
-We wouldn't expect it to stop the builds, just to ensure code quality. I want
-to use the .prettierrc file to keep it consistent for anyone that uses
-Prettier and
-we can easily ignore .js files in the config. We can also make this a
-work in progress
-if we don't want to try and resolve all the files up front.
+> support SCSS and we would like to have consistent formatting in SCSS as well.
+> We wouldn't expect it to stop the builds, just to ensure code quality. I want
+> to use the .prettierrc file to keep it consistent for anyone that uses
+> Prettier and
+> we can easily ignore .js files in the config. We can also make this a
+> work in progress
+> if we don't want to try and resolve all the files up front.
+> 
+>> If ESlint is really something you want to tackle, by all means, but in
+>> terms of value to the end user, I suspect it's a wash.
+> 
+> I feel the benefit to the user is code quality and to the developer it
+> is efficiency.
+> You're correct, the formatting is not something that results in bugs that
+> require rework. However, clang-format does not surface any potential errors.
+> It is simply a formatting tool and not one that is widely used in the JavaScript
+> community (https://www.npmtrends.com/clang-format-vs-eslint-vs-prettier).
+> ESLint is extremely helpful to people using IDE/Editors like Visual Studio
+> Code due to it's integration and showing the developer potential problems
+> in their code as they are writing it. Personally, I have found the
+> formatting of
+> ESLint with the Google shared config preferable than clang-format and more
+> consistent with the formatting most JavaScript projects use.
 
-> If ESlint is really something you want to tackle, by all means, but in
-> terms of value to the end user, I suspect it's a wash.
+Maybe this is some of the disconnect.  When I went through this
+exercise, the only thing it was doing was bumping some braces around to
+different locations, which is already consistent across the project.  I
+didn't really see a significant impact.  If you think the google config
+makes you more efficient, by all means, I can get behind it, that just
+wasn't my experience.
 
-I feel the benefit to the user is code quality and to the developer it
-is efficiency.
-You're correct, the formatting is not something that results in bugs that
-require rework. However, clang-format does not surface any potential errors.
-It is simply a formatting tool and not one that is widely used in the JavaScript
-community (https://www.npmtrends.com/clang-format-vs-eslint-vs-prettier).
-ESLint is extremely helpful to people using IDE/Editors like Visual Studio
-Code due to it's integration and showing the developer potential problems
-in their code as they are writing it. Personally, I have found the
-formatting of
-ESLint with the Google shared config preferable than clang-format and more
-consistent with the formatting most JavaScript projects use.
+> 
+>> If you start with eslint-config-google, the changes are a lot less
+>> invasive, as we're pretty close to being compliant.
+> 
+> We want to use ESLint based on its ability to catch errors. I did
+> start with Google's
+> shared eslint configuration file and it is less invasive. There are
+> still a few issues to
+> resolve with that configuration, but if that is the tradeoff for using
+> ESLint, I'm good with that.
 
-> If you start with eslint-config-google, the changes are a lot less
-> invasive, as we're pretty close to being compliant.
+This is kind of what I'm talking about.  I had the same hope, but I
+didn't really see a lot of errors being caught that would've been a real
+production issue.  With that said, it looks like you turned on a heck of
+a lot more checks than I did.  Did you find any patterns that the UI
+consistently got wrong?  Were there checks that identified real
+functional issues in the webui (memory leaks, bad pages, race
+conditions, ect)
 
-We want to use ESLint based on its ability to catch errors. I did
-start with Google's
-shared eslint configuration file and it is less invasive. There are
-still a few issues to
-resolve with that configuration, but if that is the tradeoff for using
-ESLint, I'm good with that.
+I'm scrolling through your changeset, and most of it seems like
+whitespace.  The brace rules are different.  Object keys seem like
+they're always quoted.  CSS pixel alignments take the form of "0.6em"
+versus ".6em".  Not a lot of these improve the readability a lot IMO.
 
-> At one point I had looked at moving forward with Angular 2 and
-> typescript, and tried to sketch out the path to get there, but it
-> quickly got out of hand.
+> 
+>> At one point I had looked at moving forward with Angular 2 and
+>> typescript, and tried to sketch out the path to get there, but it
+>> quickly got out of hand.
+> 
+> Agree, that will require effort and time and our team doesn't have the
+> bandwidth for that.
+> 
+Yep.  I wasn't asking your team to do it.  I was more pointing out that
+a lot of the stuff that I was really wanting out of this exercise:
+(static analysis, transpiration correctness guarantees, type safety,
+increased code review efficiency with automation), were only available
+or useful when used from a typescript application.
 
-Agree, that will require effort and time and our team doesn't have the
-bandwidth for that.
+
+All in all, if this is something you want, I can get behind it.
