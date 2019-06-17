@@ -2,47 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D509C47DB8
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 11:00:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B460747E23
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 11:18:24 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45S4tV2NgWzDqXG
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 19:00:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45S5H20nTLzDqTb
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 19:18:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.26.146; helo=unicom146.biz-email.net;
- envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=wistron.com
+ (client-ip=103.200.3.19; helo=segapp03.wistron.com;
+ envelope-from=claire_ku@wistron.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-Received: from unicom146.biz-email.net (unicom146.biz-email.net
- [210.51.26.146])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45S4sn0BBVzDqVJ
- for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 18:59:49 +1000 (AEST)
-Received: from ([60.208.111.195])
- by unicom146.biz-email.net (Antispam) with ASMTP (SSL) id IOY15627
- for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 16:59:27 +0800
-Received: from Jtjnmail201618.home.langchao.com (10.100.2.18) by
- jtjnmail201603.home.langchao.com (10.100.2.3) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1591.10; Mon, 17 Jun 2019 16:59:34 +0800
-Received: from localhost (10.100.1.52) by Jtjnmail201618.home.langchao.com
- (10.100.2.18) with Microsoft SMTP Server (version=TLS1_2,
+ dmarc=none (p=none dis=none) header.from=wistron.com
+Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45S5GX3VH4zDqS8
+ for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 19:17:54 +1000 (AEST)
+Received: from EXCHAPP02.whq.wistron (unverified [10.37.38.25]) by
+ TWNHUMSW4.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id
+ <Td872daafd9c0a8167217a4@TWNHUMSW4.wistron.com>; 
+ Mon, 17 Jun 2019 17:17:50 +0800
+Received: from EXCHAPP02.whq.wistron (10.37.38.25) by EXCHAPP02.whq.wistron
+ (10.37.38.25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 17 Jun
- 2019 16:59:33 +0800
-From: John Wang <wangzqbj@inspur.com>
+ 2019 17:17:49 +0800
+Received: from EXCHAPP02.whq.wistron ([fe80::99f:669:fb69:25de]) by
+ EXCHAPP02.whq.wistron ([fe80::99f:669:fb69:25de%5]) with mapi id
+ 15.01.1713.004; Mon, 17 Jun 2019 17:17:49 +0800
+From: <Claire_Ku@wistron.com>
 To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH dev-5.1] ARM: dts: aspeed: fp5280g2: Fix gpio-keys key code
-Date: Mon, 17 Jun 2019 16:59:33 +0800
-Message-ID: <1560761973-26544-1-git-send-email-wangzqbj@inspur.com>
-X-Mailer: git-send-email 2.7.4
+Subject: RE: Signed CLA from Wistron
+Thread-Topic: Signed CLA from Wistron
+Thread-Index: AdUV+ravBGFdMF5cRNuU5AxLY9kQZwA7ysyAACoDNgACvI0bUA==
+Date: Mon, 17 Jun 2019 09:17:49 +0000
+Message-ID: <5ad89c721a254ed5b5bafe338aeb82b6@wistron.com>
+References: <96a177bb54474ad0944934a0efe8ddf6@wistron.com>
+ <CALVHhedPVn8bkC3hed9_6w6O9YDhw==T_vrwSfS4+gnEUnFfQQ@mail.gmail.com>
+ <dc4eea14-ace1-1ad6-e1d7-3e0a4a9787a3@gmail.com>
+In-Reply-To: <dc4eea14-ace1-1ad6-e1d7-3e0a4a9787a3@gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.37.38.230]
+x-tm-snts-smtp: 5D16277AA0C402CC7E5E4CBF26D8223B8C4852D69210A454AD9FD35E3700C2962000:8
+Content-Type: multipart/mixed;
+ boundary="_002_5ad89c721a254ed5b5bafe338aeb82b6wistroncom_"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.100.1.52]
-X-ClientProxiedBy: jtjnmail201603.home.langchao.com (10.100.2.3) To
- Jtjnmail201618.home.langchao.com (10.100.2.18)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,81 +60,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: shyulei@cn.ibm.com, bradleyb@fuzziesquirrel.com, wangat@tw.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-KEY_RESERVED is defined as 0 and is not supposed
-to be transmitted to userspace,so the key code in fan0-presence
-should not be 0.
-This changes fan-presence's key codes 0-7 to 1-8.
+--_002_5ad89c721a254ed5b5bafe338aeb82b6wistroncom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Signed-off-by: John Wang <wangzqbj@inspur.com>
----
- arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+RGVhciBTaXIvTWFkYW0sDQoNCkNvdWxkIHlvdSBwbGVhc2UgaGVscCB0byBjcmVhdGUgbWV0YS13
+aXN0cm9uIHJlcG8gZm9yIHVzPw0KV2UgYXJlIGdvaW5nIHRvIHJ1biBuZXcgcHJvamVjdHMgdGhh
+dCB3aWxsIG5lZWQgdG8gdXBzdHJlYW0gc291cmNlIGNvZGUgdG8gR2l0SHViIGluIGZ1dHVyZSBz
+b29uLg0KVGhhbmsgeW91IHZlcnkgbXVjaC4NCg0KWW91cnMgZmFpdGhmdWxseSwNCg0KQ2xhaXJl
+IEt1DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBrcnRheWxvciA8a3VydC5y
+LnRheWxvckBnbWFpbC5jb20+IA0KU2VudDogU2F0dXJkYXksIEp1bmUgMSwgMjAxOSAxOjE5IEFN
+DQpUbzogQ2xhaXJlIEt1L1dIUS9XaXN0cm9uIDxDbGFpcmVfS3VAd2lzdHJvbi5jb20+DQpDYzog
+TWlrZSBEb2xhbiA8bWFuYWdlckBsZnByb2plY3RzLm9yZz47IG9wZW5ibWNAbGlzdHMub3psYWJz
+Lm9yZzsgVGltb3RoeSBIdWFuZy9XSFEvV2lzdHJvbiA8VGltb3RoeV9IdWFuZ0B3aXN0cm9uLmNv
+bT4NClN1YmplY3Q6IFJlOiBTaWduZWQgQ0xBIGZyb20gV2lzdHJvbg0KDQpPbiA1LzMwLzE5IDQ6
+MTYgUE0sIE1pa2UgRG9sYW4gd3JvdGU6DQo+IEhpLCB0aGlzIGZpbGUgZG9lcyBub3QgYXBwZWFy
+IHRvIGJlIHNpZ25lZC4NCg0KV2VsY29tZSEgSSBoYXZlIHJlY2VpdmVkIHRoZSBzaWduZWQgdmVy
+c2lvbi4gWW91ciBDQ0xBIGhhcyBiZWVuIGFjY2VwdGVkLg0KDQpLdXJ0IFRheWxvciAoa3J0YXls
+b3IpDQoNCj4gDQo+IFRoYW5rcywNCj4gDQo+IE1pa2UNCj4gDQo+IE9uIFdlZCwgTWF5IDI5LCAy
+MDE5IGF0IDU6MzkgQU0gPENsYWlyZV9LdUB3aXN0cm9uLmNvbSANCj4gPG1haWx0bzpDbGFpcmVf
+S3VAd2lzdHJvbi5jb20+PiB3cm90ZToNCj4gDQo+ICAgICBEZWFyIFNpci9NYWRhbSxfX19fDQo+
+IA0KPiAgICAgX18gX18NCj4gDQo+ICAgICBIZXJlIGlzIHRoZSBzaWduZWQgQ0xBIGZyb20gV2lz
+dHJvbiBDb3Jwb3JhdGlvbi5fX19fDQo+IA0KPiAgICAgUGxlYXNlIGhlbHAgdG8gYXBwcm92ZSBp
+dC5fX19fDQo+IA0KPiAgICAgVGhhbmsgeW91IHZlcnkgbXVjaC5fX19fDQo+IA0KPiAgICAgX18g
+X18NCj4gDQo+ICAgICBZb3VycyBmYWl0aGZ1bGx5LF9fX18NCj4gDQo+ICAgICBDbGFpcmUgS3Vf
+X19fDQo+IA0KPiAgICAgX18gX18NCj4gDQo+ICAgICANCj4gKi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAtLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tDQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tKg0KPiANCj4gICAgICpUaGlzIGVtYWls
+IGNvbnRhaW5zIGNvbmZpZGVudGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3JtYXRpb24N
+Cj4gICAgIGFuZCBpcyBmb3IgdGhlIHNvbGUgdXNlIG9mIGl0cyBpbnRlbmRlZCByZWNpcGllbnQu
+ICoNCj4gDQo+ICAgICAqQW55IHVuYXV0aG9yaXplZCByZXZpZXcsIHVzZSwgY29weWluZyBvciBk
+aXN0cmlidXRpb24gb2YgdGhpcyBlbWFpbA0KPiAgICAgb3IgdGhlIGNvbnRlbnQgb2YgdGhpcyBl
+bWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLioNCj4gDQo+ICAgICAqSWYgeW91IGFyZSBub3Qg
+dGhlIGludGVuZGVkIHJlY2lwaWVudCwgeW91IG1heSByZXBseSB0byB0aGUgc2VuZGVyDQo+ICAg
+ICBhbmQgc2hvdWxkIGRlbGV0ZSB0aGlzIGUtbWFpbCBpbW1lZGlhdGVseS4qDQo+IA0KPiAgICAg
+DQo+ICotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAtLS0tLS0tLS0tLS0tLS0tLS0t
+LSoNCj4gDQoNCg==
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-index c822f49..c762c02 100644
---- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-@@ -101,49 +101,49 @@
- 		fan0-presence {
- 			label = "fan0-presence";
- 			gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
--			linux,code = <0>;
-+			linux,code = <1>;
- 		};
- 
- 		fan1-presence {
- 			label = "fan1-presence";
- 			gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
--			linux,code = <1>;
-+			linux,code = <2>;
- 		};
- 
- 		fan2-presence {
- 			label = "fan2-presence";
- 			gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
--			linux,code = <2>;
-+			linux,code = <3>;
- 		};
- 
- 		fan3-presence {
- 			label = "fan3-presence";
- 			gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
--			linux,code = <3>;
-+			linux,code = <4>;
- 		};
- 
- 		fan4-presence {
- 			label = "fan4-presence";
- 			gpios = <&pca1 4 GPIO_ACTIVE_LOW>;
--			linux,code = <4>;
-+			linux,code = <5>;
- 		};
- 
- 		fan5-presence {
- 			label = "fan5-presence";
- 			gpios = <&pca1 5 GPIO_ACTIVE_LOW>;
--			linux,code = <5>;
-+			linux,code = <6>;
- 		};
- 
- 		fan6-presence {
- 			label = "fan6-presence";
- 			gpios = <&pca1 6 GPIO_ACTIVE_LOW>;
--			linux,code = <6>;
-+			linux,code = <7>;
- 		};
- 
- 		fan7-presence {
- 			label = "fan7-presence";
- 			gpios = <&pca1 7 GPIO_ACTIVE_LOW>;
--			linux,code = <7>;
-+			linux,code = <8>;
- 		};
- 	};
- 
--- 
-2.7.4
+--_002_5ad89c721a254ed5b5bafe338aeb82b6wistroncom_
+Content-Type: application/octet-stream; name="MAINTAINERS"
+Content-Description: MAINTAINERS
+Content-Disposition: attachment; filename="MAINTAINERS"; size=2185;
+	creation-date="Mon, 17 Jun 2019 08:17:34 GMT";
+	modification-date="Mon, 17 Jun 2019 08:17:34 GMT"
+Content-Transfer-Encoding: base64
 
+SG93IHRvIHVzZSB0aGlzIGxpc3Q6DQogICAgRmluZCB0aGUgbW9zdCBzcGVjaWZpYyBzZWN0aW9u
+IGVudHJ5IChkZXNjcmliZWQgYmVsb3cpIHRoYXQgbWF0Y2hlcyB3aGVyZQ0KICAgIHlvdXIgY2hh
+bmdlIGxpdmVzIGFuZCBhZGQgdGhlIHJldmlld2VycyAoUikgYW5kIG1haW50YWluZXJzIChNKSBh
+cw0KICAgIHJldmlld2Vycy4gWW91IGNhbiB1c2UgdGhlIHNhbWUgbWV0aG9kIHRvIHRyYWNrIGRv
+d24gd2hvIGtub3dzIGEgcGFydGljdWxhcg0KICAgIGNvZGUgYmFzZSBiZXN0Lg0KDQogICAgWW91
+ciBjaGFuZ2UvcXVlcnkgbWF5IHNwYW4gbXVsdGlwbGUgZW50cmllczsgdGhhdCBpcyBva2F5Lg0K
+DQogICAgSWYgeW91IGRvIG5vdCBmaW5kIGFuIGVudHJ5IHRoYXQgZGVzY3JpYmVzIHlvdXIgcmVx
+dWVzdCBhdCBhbGwsIHNvbWVvbmUNCiAgICBmb3Jnb3QgdG8gdXBkYXRlIHRoaXMgbGlzdDsgcGxl
+YXNlIGF0IGxlYXN0IGZpbGUgYW4gaXNzdWUgb3Igc2VuZCBhbiBlbWFpbA0KICAgIHRvIGEgbWFp
+bnRhaW5lciwgYnV0IHByZWZlcmFibHkgeW91IHNob3VsZCBqdXN0IHVwZGF0ZSB0aGlzIGRvY3Vt
+ZW50Lg0KDQpEZXNjcmlwdGlvbiBvZiBzZWN0aW9uIGVudHJpZXM6DQoNCiAgICBTZWN0aW9uIGVu
+dHJpZXMgYXJlIHN0cnVjdHVyZWQgYWNjb3JkaW5nIHRvIHRoZSBmb2xsb3dpbmcgc2NoZW1lOg0K
+DQogICAgWDogIE5BTUUgPEVNQUlMX1VTRVJOQU1FQERPTUFJTj4gPElSQ19VU0VSTkFNRSE+DQog
+ICAgWDogIC4uLg0KICAgIC4NCiAgICAuDQogICAgLg0KDQogICAgV2hlcmUgUkVQT19OQU1FIGlz
+IHRoZSBuYW1lIG9mIHRoZSByZXBvc2l0b3J5IHdpdGhpbiB0aGUgT3BlbkJNQyBHaXRIdWINCiAg
+ICBvcmdhbml6YXRpb247IEZJTEVfUEFUSCBpcyBhIGZpbGUgcGF0aCB3aXRoaW4gdGhlIHJlcG9z
+aXRvcnksIHBvc3NpYmx5IHdpdGgNCiAgICB3aWxkY2FyZHM7IFggaXMgYSB0YWcgb2Ygb25lIG9m
+IHRoZSBmb2xsb3dpbmcgdHlwZXM6DQoNCiAgICBNOiAgRGVub3RlcyBtYWludGFpbmVyOyBoYXMg
+ZmllbGRzIE5BTUUgPEVNQUlMX1VTRVJOQU1FQERPTUFJTj4gPElSQ19VU0VSTkFNRSE+Ow0KICAg
+ICAgICBpZiBvbWl0dGVkIGZyb20gYW4gZW50cnksIGFzc3VtZSBvbmUgb2YgdGhlIG1haW50YWlu
+ZXJzIGZyb20gdGhlDQogICAgICAgIE1BSU5UQUlORVJTIGVudHJ5Lg0KICAgIFI6ICBEZW5vdGVz
+IHJldmlld2VyOyBoYXMgZmllbGRzIE5BTUUgPEVNQUlMX1VTRVJOQU1FQERPTUFJTj4gPElSQ19V
+U0VSTkFNRSE+Ow0KICAgICAgICB0aGVzZSBwZW9wbGUgYXJlIHRvIGJlIGFkZGVkIGFzIHJldmll
+d2VycyBmb3IgYSBjaGFuZ2UgbWF0Y2hpbmcgdGhlIHJlcG8NCiAgICAgICAgcGF0aC4NCiAgICBG
+OiAgRGVub3RlcyBmb3JrZWQgZnJvbSBhbiBleHRlcm5hbCByZXBvc2l0b3J5OyBoYXMgZmllbGRz
+IFVSTC4NCg0KICAgIExpbmUgY29tbWVudHMgYXJlIHRvIGJlIGRlbm90ZWQgIiMgU09NRSBDT01N
+RU5UIiAodHlwaWNhbCBzaGVsbCBzdHlsZQ0KICAgIGNvbW1lbnQpOyBpdCBpcyBpbXBvcnRhbnQg
+dG8gZm9sbG93IHRoZSBjb3JyZWN0IHN5bnRheCBhbmQgc2VtYW50aWNzIGFzIHdlDQogICAgbWF5
+IHdhbnQgdG8gdXNlIGF1dG9tYXRlZCB0b29scyB3aXRoIHRoaXMgZmlsZSBpbiB0aGUgZnV0dXJl
+Lg0KDQogICAgQSBjaGFuZ2UgY2Fubm90IGJlIGFkZGVkIHRvIGFuIE9wZW5CTUMgcmVwb3NpdG9y
+eSB3aXRob3V0IGEgTUFJTlRBSU5FUidzDQogICAgYXBwcm92YWw7IHRodXMsIGEgTUFJTlRBSU5F
+UiBzaG91bGQgYWx3YXlzIGJlIGxpc3RlZCBhcyBhIHJldmlld2VyLg0KDQpTVEFSVCBPRiBNQUlO
+VEFJTkVSUyBMSVNUDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQoNCk06ICBUaW1vdGh5IEh1
+YW5nIDxUaW1vdGh5X0h1YW5nQHdpc3Ryb24uY29tPiA8bWFvbWFvaHVhbmchPg0KTTogIEJlbiBQ
+YWkgPEJlbl9QYWlAd2lzdHJvbi5jb20+IDxCZW5QYWk5OSE+DQpNOiAgQm9iIEtpbmcgPEJvYl9L
+aW5nQHdpc3Ryb24uY29tPiA8Ym9ia2luZ2trcCE+DQpNOiAgSm9saWUgS3UgPEpvbGllX0t1QHdp
+c3Ryb24uY29tPiA8Sm9saWVLdSE+DQpNOiAgQW5keSBZRiBXYW5nIDxBbmR5X1lGX1dhbmdAd2lz
+dHJvbi5jb20+IDxBbmR5WUZXYW5nIT4NClI6ICBDbGFpcmUgS3UgPGNsYWlyZV9rdUB3aXN0cm9u
+LmNvbT4gPGNsYWlyZWZpc2ghPg==
+
+--_002_5ad89c721a254ed5b5bafe338aeb82b6wistroncom_--
