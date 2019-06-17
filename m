@@ -2,85 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10BDF47821
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 04:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C5F5478A8
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 05:30:45 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45RvmB1YT2zDqZl
-	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 12:09:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45RxYt52bmzDqZ3
+	for <lists+openbmc@lfdr.de>; Mon, 17 Jun 2019 13:30:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=popple.id.au
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=alistair@popple.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=popple.id.au
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="AAJ+Gkk0"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="tAghdI1H"; dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45RvlJ6WsHzDqZP
- for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 12:08:44 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5H26vBJ078916
- for <openbmc@lists.ozlabs.org>; Sun, 16 Jun 2019 22:08:41 -0400
-Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2t5vdufhke-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Sun, 16 Jun 2019 22:08:41 -0400
-Received: from localhost
- by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <alistair@popple.id.au>;
- Mon, 17 Jun 2019 03:08:38 +0100
-Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
- by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 17 Jun 2019 03:08:36 +0100
-Received: from d06av24.portsmouth.uk.ibm.com (mk.ibm.com [9.149.105.60])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id x5H28Z2436897230
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Jun 2019 02:08:35 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A3CCF42047;
- Mon, 17 Jun 2019 02:08:35 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 548FB42045;
- Mon, 17 Jun 2019 02:08:35 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
- by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon, 17 Jun 2019 02:08:35 +0000 (GMT)
-Received: from townsend.localnet (haven.au.ibm.com [9.192.254.114])
- (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ozlabs.au.ibm.com (Postfix) with ESMTPSA id F31BBA0208;
- Mon, 17 Jun 2019 12:08:33 +1000 (AEST)
-From: Alistair Popple <alistair@popple.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: Re: [PATCH] fsi: sbefifo: Don't fail operations when in SBE IPL state
-Date: Mon, 17 Jun 2019 12:08:33 +1000
-User-Agent: KMail/5.2.3 (Linux/4.18.0-0.bpo.1-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <1548090958-25908-1-git-send-email-eajames@linux.ibm.com>
-References: <1548090958-25908-1-git-send-email-eajames@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-TM-AS-GCONF: 00
-x-cbid: 19061702-0008-0000-0000-000002F449EE
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19061702-0009-0000-0000-000022615954
-Message-Id: <1780173.icGFXHrAMq@townsend>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-06-17_01:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906170019
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45RxYB6j9mzDqYp
+ for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 13:30:06 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1A96222347;
+ Sun, 16 Jun 2019 23:30:04 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 16 Jun 2019 23:30:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=10/wBMeygQ0SAsbaWukUMcxZn/6if91
+ jLZ3HccO0Adg=; b=AAJ+Gkk0DfAMt932UTQ9r9AARH97vcfmcsqRO98XhMA9G/s
+ 9a+j92yFVxU8DmlNHlssv0sg2wQj125zH2iOlEesHn/ivqTcdM1j850OunMknANF
+ ROdFbB5j417GfWdKZP7ho+Vv/EuIKyTmEXmScd6poE7tR9KvbI1oGR1BrL9ZoJES
+ TSoRC6lAyrI9t/epdRQGTr++E8dxx755ic2uhvkkKIzJxjsHmXnJdjV2VW/2kWdF
+ eD7RbtKBJdt93KT9ZDox5J8E8PgKdqd/Brmix2uxiWFqQ1luiPoUyhhcGp4/NXKj
+ FfEhpG1k8qZV8wLM6c0dw6SV7++fLyricLWNYKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=10/wBM
+ eygQ0SAsbaWukUMcxZn/6if91jLZ3HccO0Adg=; b=tAghdI1HD4XzoWdYbz5zw0
+ c7FjEA9N37Wb6OnEoZlCYaYTZMGrPk9Tadf4s6KdYLKBeCvK99noUgX5Kf4RiBmo
+ ydTNbxWIQ+klc/XCoKywnG1JrmIuRKgfRmFLbEmuWlK2z9tzrJC3S+6hbjiEYaSz
+ 1ZNdI2Y8pkQXoXbyJgrgPQP+3+eEP+VerZ5Bi8eXyAC7NNVHukIio9Z+GTF44rtI
+ YgdwWDD2USnwf6xtzPwPk/iPnRUcfVTC0AiVLBU8+bBpSTNnmlHLqFvFp86rvrZX
+ biCqOfIcJM2IENoU36AD+GW8sEgiQIYOzfFbQZ/GXM4euGIdSXlcgPZ7iWyvvf3Q
+ ==
+X-ME-Sender: <xms:OgkHXVy7HGy5L1w-6ZOxzffpQhbZHoEbO1Fq_b9wIliEwkbOpAgXbQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduuddrudeiiedgieeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehgihhthhhusgdrtghomhenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
+ vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:OgkHXctlMgu8wN3Eg9PADX65K8xPtDDqk8WZZ8QUG1GzcAkkEaULWg>
+ <xmx:OgkHXcvBiyEUc9BI4Ea9BbFkyXs3AcvFolrs7HfGrG7_4bR-SI5mrA>
+ <xmx:OgkHXRNpjHIxCIbrF3twTknInO_YXN0vj8ovI_hED4Q5BUeYCFX9mg>
+ <xmx:PAkHXY7hEEdU1llITyvQ7Ohk1psQ4DaHXoZastf2UBG2b4Z8bfesdQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id A4C52E00A2; Sun, 16 Jun 2019 23:30:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-663-gf46ad30-fmstable-20190607v1
+Mime-Version: 1.0
+Message-Id: <1fc9bc66-6bbc-4b13-9ebc-e8fc2b0d5129@www.fastmail.com>
+In-Reply-To: <CADKL2t7a41=uwFQaB8UyLOJUNm65rq4hgxCK1zdURCZ6reXZ0A@mail.gmail.com>
+References: <CALLMt=qZOxWDH8eDqv6JYbkvgk10mR1K_REgnE-DkssLWD=iVg@mail.gmail.com>
+ <CACPK8XdV6X6j=A2Qf7RcBnWWoESi6SWMZfcoA2mJPO_JFCdcrQ@mail.gmail.com>
+ <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
+ <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
+ <CACPK8XdZWGJ8d32N1D8Np2Ja8DOPZ4BqB9wJ4GyFOJ5PCmO5gg@mail.gmail.com>
+ <CADKL2t7a41=uwFQaB8UyLOJUNm65rq4hgxCK1zdURCZ6reXZ0A@mail.gmail.com>
+Date: Mon, 17 Jun 2019 12:59:47 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Benjamin Fair" <benjaminfair@google.com>, "Joel Stanley" <joel@jms.id.au>
+Subject: Re: CI to stop testing meta-* layers not in tested machine
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,42 +92,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, Eddie James <eajames@linux.ibm.com>,
- linux-kernel@vger.kernel.org
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This fixed the problem I was having trying to issue istep operations to the 
-SBE.
-
-Tested-by: Alistair Popple <alistair@popple.id.au>
-
-On Monday, 21 January 2019 11:15:58 AM AEST Eddie James wrote:
-> SBE fifo operations should be allowed while the SBE is in any of the
-> "IPL" states. Operations should succeed in this state.
+> >
+> >
+> >
+> > Once we get the u-boot issue sorted out, I propose the following changes:
+> >
+> >  - drop qemu from CI. 'qemu' is actually testing on a generic arm
+> > machine. A few of us at IBM have a side project that has resulted in a
+> > high quality Qemu support for the aspeed boards, so if you would like
+> > to test in qemu I recommend grabbing palmetto or romulus and doing
+> > that. So consider this dropping the generic qemu image and instead
+> > focusing on the aspeed one.
 > 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  drivers/fsi/fsi-sbefifo.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> +1
 > 
-> diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
-> index c7d13ac..f7665b3 100644
-> --- a/drivers/fsi/fsi-sbefifo.c
-> +++ b/drivers/fsi/fsi-sbefifo.c
-> @@ -290,11 +290,11 @@ static int sbefifo_check_sbe_state(struct sbefifo
-> *sbefifo) switch ((sbm & CFAM_SBM_SBE_STATE_MASK) >>
-> CFAM_SBM_SBE_STATE_SHIFT) { case SBE_STATE_UNKNOWN:
->  		return -ESHUTDOWN;
-> +	case SBE_STATE_DMT:
-> +		return -EBUSY;
->  	case SBE_STATE_IPLING:
->  	case SBE_STATE_ISTEP:
->  	case SBE_STATE_MPIPL:
-> -	case SBE_STATE_DMT:
-> -		return -EBUSY;
->  	case SBE_STATE_RUNTIME:
->  	case SBE_STATE_DUMP: /* Not sure about that one */
->  		break;
+> Many things are already broken on QEMU, including phosphor-ipmi-host.
+> It's not a useful platform to test with.
+> 
 
+Is that a general statement about QEMU, or are you talking about the generic
+qemu image as Joel was?
 
+It would be great if we had more contributions on the QEMU side. There's a
+list of things that can be attacked in the wiki:
+
+https://github.com/openbmc/qemu/wiki
+
+Modelling I2C peripherals is usually a good first step.
+
+Andrew
