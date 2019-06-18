@@ -1,60 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BD084A5D9
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 17:50:30 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 329194A38C
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 16:11:42 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Sqky48FXzDqd2
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 00:11:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Sswz5D0KzDqcq
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 01:50:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=209.85.222.194; helo=mail-qk1-f194.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::d2c; helo=mail-io1-xd2c.google.com;
+ envelope-from=derick.montague@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com
- [209.85.222.194])
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="CkyMwo/f"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
+ [IPv6:2607:f8b0:4864:20::d2c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Sqjf3SXRzDqVQ
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 00:10:29 +1000 (AEST)
-Received: by mail-qk1-f194.google.com with SMTP id l128so8642696qke.2
- for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 07:10:29 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Ssw35HlQzDqhC
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 01:49:39 +1000 (AEST)
+Received: by mail-io1-xd2c.google.com with SMTP id k8so806302iot.1
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 08:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=xj85c7qM9bXS5SzW0Ewqkk8ew0S2vpMOV0UKa+p29c4=;
+ b=CkyMwo/fNPydGgB5fR/yS6B4KkEvmI/y9Vfqvpw/cBzHlWLQpcWT+wtI2pbEmRLLaC
+ MDe+JgV2XBU5YE9jXpV+wJRaIu6sAGFvv6EnkDGW0e3UeKgWwwNyh7Mw9TOH9ccH0JC/
+ 1fK58jqkHd7q30nyvHFgEFMTmBjRSu/XZHL9h3Jru4F8Glx+awvu2P+Rb/Bci6hDsIw6
+ PWcUGlACXoBcoDMunXu2mvuMrxiC65yM8zco83MIt7Vnaug5HltnCCQ4E4EQPdr9B6Hv
+ sM5nV1xWdpeIO7ugAfVAtbMPVh7sErKmY9MmLXDm4T0LaQyW4qcWd+uk2uaFFb1UgEEy
+ KarA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=ymzVRv+HbWASk9IbK9IR5jfXe4p30txsWn7MI2aWfko=;
- b=Pz5Uh/ezH8X2/eu6aPm8+zyU5QgkqjhGuZa5uUeKhV6/KaCHUL0e+eikqs0CgwW23I
- zrE8sa9BlcApVp50dCjl6hvL82nab1ZqJT3hvTLJYB0dzf41278eFLueQZ56Yxr9BtVU
- hQCRBDGxd10oD7QZ7k4L72tJNHGmTLc9YzeUEYowM1DDqsWbnjtp9TBIAAFE+9eWVNtp
- t2mFc7VCDBTs0RjmrNXid43hbO9bZBAbMfTuCgVF1lxiIvo/HCp2thXUyPqz0WXtCEpw
- ag3OYYOHlTkOgLTYcEh1A8UahDbT0NrCBf2wq0jGgBmB4ymqTQnmFdPeskshm3e5MwzM
- GgWw==
-X-Gm-Message-State: APjAAAUxblLjdRGrAHpFWUuYflAkNeLOVCge8CpHp+o3wWyhy9nz0ksu
- g5IDr6XzcqlsTN4ggtxvfQ==
-X-Google-Smtp-Source: APXvYqzTd+SUScnI+raBK375orxhwOZtIjBl7LTQ+SrdOuzX+fB6KoQ7w06WVT6SBK2QaP+LwnqcBg==
-X-Received: by 2002:a37:9ece:: with SMTP id h197mr75339469qke.50.1560867025673; 
- Tue, 18 Jun 2019 07:10:25 -0700 (PDT)
-Received: from localhost ([64.188.179.192])
- by smtp.gmail.com with ESMTPSA id s11sm9602685qte.49.2019.06.18.07.10.24
- (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
- Tue, 18 Jun 2019 07:10:25 -0700 (PDT)
-Date: Tue, 18 Jun 2019 08:10:23 -0600
-From: Rob Herring <robh@kernel.org>
-To: Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: Re: [PATCH] dt-bindings: Add missing newline at end of file
-Message-ID: <20190618141023.GA20154@bogus>
-References: <20190617143322.4332-1-geert+renesas@glider.be>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=xj85c7qM9bXS5SzW0Ewqkk8ew0S2vpMOV0UKa+p29c4=;
+ b=fldfMSuukfH+Jzfrdqw/wzczqAXrIqAy0zgeSAVBAP8XthNrP/lqVtx7ggrB/ab3Rk
+ 8FZsftBrVfbk662SFAsCNno7Ht4qHA8cGHdqSWALDksaJXqVHfX2/pWAOzUO4qhsLPY6
+ JAO7u7V8G1+VGTvwf0xQczs6jOWv2dcf7Vqi7GJb2CElPe+IgmAsxcW1dC5MEBGi1pJM
+ mJyhhkpf9o1n27kqkh59dIs1veIeFIkjALL8zBFyTU9DUZ/67ZngR8NzqGsx8vkvnNKa
+ JehN6IWkE3HRbsqcmJU37IyN82iEQPngNS2vk+o3GCYgd2GW9EbTOTBIcKB9fMU4uDud
+ /wLw==
+X-Gm-Message-State: APjAAAWSUu58Mx/7pIK2u2YzoefiioKayVpGUTVi2WG6CFElkqpx6ggc
+ 8d7Wk2xOdBtx9fC8DHdYGxEyUTU1e0MV4xL+W0o=
+X-Google-Smtp-Source: APXvYqwWnbr+EnXMrzt3YGTqKH0qZmDAQM6K2E7EAWpU/L1824q84xbabrptS81eHbVBZOv2How+o8zRYebFSISuTzA=
+X-Received: by 2002:a5d:8a0c:: with SMTP id w12mr33915290iod.68.1560872975769; 
+ Tue, 18 Jun 2019 08:49:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190617143322.4332-1-geert+renesas@glider.be>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
+ <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
+In-Reply-To: <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
+From: Derick <derick.montague@gmail.com>
+Date: Tue, 18 Jun 2019 10:49:24 -0500
+Message-ID: <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
+Subject: Re: Re: Network Settings GUI
+To: xiuzhi <1450335857@qq.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,29 +73,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- alsa-devel@alsa-project.org, Geert Uytterhoeven <geert+renesas@glider.be>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, openipmi-developer@lists.sourceforge.net
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 17 Jun 2019 16:33:22 +0200, Geert Uytterhoeven wrote:
-> "git diff" says:
-> 
->     \ No newline at end of file
-> 
-> after modifying the files.
-> 
-> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
->  Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt      | 2 +-
->  .../devicetree/bindings/pinctrl/nuvoton,npcm7xx-pinctrl.txt     | 2 +-
->  Documentation/devicetree/bindings/regulator/pv88060.txt         | 2 +-
->  Documentation/devicetree/bindings/sound/cs42l73.txt             | 2 +-
->  4 files changed, 4 insertions(+), 4 deletions(-)
-> 
+> IPV6 is one of the functions  urgently need by Lenovo Commercial Server Products.
 
-Applied, thanks.
-
-Rob
+Thank you for your response! What does urgent mean, is there a
+timeframe? Does your
+team have front-end development resources to implement the design? We
+have a design that can be implemented, but we are not planning to
+implement IPv6
+in the GUI right away based on our current priorities. If someone else
+wants to implement the design, we can review and provide feedback. I
+believe the backend functionality is complete.
