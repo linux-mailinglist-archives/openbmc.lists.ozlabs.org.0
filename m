@@ -2,74 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C56349848
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 06:25:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE1F149C33
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 10:41:31 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45SZkF4B5PzDqZR
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 14:25:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ShQ03nhJzDqdx
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 18:41:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=1072c1fb7b=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=kaod.org
+ (client-ip=46.105.34.195; helo=11.mo4.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="qjYczwpW"; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ dmarc=none (p=none dis=none) header.from=kaod.org
+Received: from 11.mo4.mail-out.ovh.net (11.mo4.mail-out.ovh.net
+ [46.105.34.195])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45SZjc3WtWzDqV6
- for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 14:24:31 +1000 (AEST)
-Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5I4Jrd3014923
- for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 21:24:27 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=facebook;
- bh=GK3SLVCCxtKvfie9ouvtZTIBScPI3r1mM6zGRAGxTtc=;
- b=qjYczwpWNsbNUNyzlQYFn2NlEfIoD1/SKMvNa1cigTrotaAXqWS09oDYegViP45MCW6C
- EQs2Pk+t74cuoAVzyR4VTSRh/m2keLk6UHAv8CyW14KUX/yTA0x0wafxQWJr8WKwFA9q
- zPQNbNFnoblmIVXwmsCV7D5muDCfkBYYEaU= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2t6kdhrvwt-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 17 Jun 2019 21:24:27 -0700
-Received: from mx-out.facebook.com (2620:10d:c0a8:1b::d) by
- mail.thefacebook.com (2620:10d:c0a8:82::f) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Mon, 17 Jun 2019 21:24:24 -0700
-Received: by devvm24792.prn1.facebook.com (Postfix, from userid 150176)
- id 0C09816347389; Mon, 17 Jun 2019 21:24:23 -0700 (PDT)
-Smtp-Origin-Hostprefix: devvm
-From: Tao Ren <taoren@fb.com>
-Smtp-Origin-Hostname: devvm24792.prn1.facebook.com
-To: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>
-Smtp-Origin-Cluster: prn1c35
-Subject: [PATCH] ARM: dts: aspeed: Add Facebook Minipack BMC
-Date: Mon, 17 Jun 2019 21:24:21 -0700
-Message-ID: <20190618042421.1227372-1-taoren@fb.com>
-X-Mailer: git-send-email 2.17.1
-X-FB-Internal: Safe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ShPD6LqHzDqXS
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 18:40:47 +1000 (AEST)
+Received: from player698.ha.ovh.net (unknown [10.109.159.159])
+ by mo4.mail-out.ovh.net (Postfix) with ESMTP id D3EB31F708C
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 10:31:33 +0200 (CEST)
+Received: from kaod.org (lfbn-1-10649-41.w90-89.abo.wanadoo.fr [90.89.235.41])
+ (Authenticated sender: clg@kaod.org)
+ by player698.ha.ovh.net (Postfix) with ESMTPSA id 610F46F102EF;
+ Tue, 18 Jun 2019 08:31:27 +0000 (UTC)
+Subject: Re: [PATCH v2 3/4] net/ftgmac100: Add NC-SI mode support
+To: Samuel Mendoza-Jonas <sam@mendozajonas.com>, u-boot@lists.denx.de
+References: <20190618013720.2823-1-sam@mendozajonas.com>
+ <20190618013720.2823-4-sam@mendozajonas.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+Message-ID: <cde8f9f2-ee21-6859-0d0b-b072b826c871@kaod.org>
+Date: Tue, 18 Jun 2019 10:31:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-06-18_02:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906180034
-X-FB-Internal: deliver
+In-Reply-To: <20190618013720.2823-4-sam@mendozajonas.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 11629701615311096638
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduuddrudeiledgtdeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenuc
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,466 +57,146 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>
+Cc: joe.hershberger@ni.com, openbmc@lists.ozlabs.org, sjg@chromium.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add initial version of device tree for Facebook Minipack ast2500 BMC.
+On 18/06/2019 03:37, Samuel Mendoza-Jonas wrote:
+> Update the ftgmac100 driver to support NC-SI instead of an mdio phy
+> where available. This is a common setup for Aspeed AST2x00 platforms.
+> 
+> NC-SI mode is determined from the device-tree if either phy-mode sets it
+> or the use-ncsi property exists. If set then normal mdio setup is
+> skipped in favour of the NC-SI phy.
+> 
+> Signed-off-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 
-Signed-off-by: Tao Ren <taoren@fb.com>
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/aspeed-bmc-facebook-minipack.dts | 429 ++++++++++++++++++
- 2 files changed, 430 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 323fb7f13438..4c94e4c8de1e 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1267,6 +1267,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-arm-centriq2400-rep.dtb \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
-+	aspeed-bmc-facebook-minipack.dtb \
- 	aspeed-bmc-facebook-tiogapass.dtb \
- 	aspeed-bmc-facebook-yamp.dtb \
- 	aspeed-bmc-intel-s2600wf.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
-new file mode 100644
-index 000000000000..c05478296446
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
-@@ -0,0 +1,429 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright (c) 2018 Facebook Inc.
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+
-+/ {
-+	model = "Facebook Minipack 100 BMC";
-+	compatible = "facebook,minipack-bmc", "aspeed,ast2500";
-+
-+	aliases {
-+		/*
-+		 * Override the default serial aliases to avoid breaking
-+		 * the legacy applications.
-+		 */
-+		serial0 = &uart5;
-+		serial1 = &uart1;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+		serial4 = &uart4;
-+
-+		/*
-+		 * i2c switch 2-0070, pca9548, 8 child channels assigned
-+		 * with bus number 16-23.
-+		 */
-+		i2c16 = &imux16;
-+		i2c17 = &imux17;
-+		i2c18 = &imux18;
-+		i2c19 = &imux19;
-+		i2c20 = &imux20;
-+		i2c21 = &imux21;
-+		i2c22 = &imux22;
-+		i2c23 = &imux23;
-+
-+		/*
-+		 * i2c switch 8-0070, pca9548, 8 child channels assigned
-+		 * with bus number 24-31.
-+		 */
-+		i2c24 = &imux24;
-+		i2c25 = &imux25;
-+		i2c26 = &imux26;
-+		i2c27 = &imux27;
-+		i2c28 = &imux28;
-+		i2c29 = &imux29;
-+		i2c30 = &imux30;
-+		i2c31 = &imux31;
-+
-+		/*
-+		 * i2c switch 9-0070, pca9548, 8 child channels assigned
-+		 * with bus number 32-39.
-+		 */
-+		i2c32 = &imux32;
-+		i2c33 = &imux33;
-+		i2c34 = &imux34;
-+		i2c35 = &imux35;
-+		i2c36 = &imux36;
-+		i2c37 = &imux37;
-+		i2c38 = &imux38;
-+		i2c39 = &imux39;
-+
-+		/*
-+		 * i2c switch 11-0070, pca9548, 8 child channels assigned
-+		 * with bus number 40-47.
-+		 */
-+		i2c40 = &imux40;
-+		i2c41 = &imux41;
-+		i2c42 = &imux42;
-+		i2c43 = &imux43;
-+		i2c44 = &imux44;
-+		i2c45 = &imux45;
-+		i2c46 = &imux46;
-+		i2c47 = &imux47;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart1;
-+		bootargs = "debug console=ttyS1,9600n8 root=/dev/ram rw";
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+};
-+
-+&wdt1 {
-+	status = "okay";
-+	aspeed,reset-type = "system";
-+};
-+
-+&wdt2 {
-+	status = "okay";
-+	aspeed,reset-type = "system";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+#include "facebook-bmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&uart1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+		     &pinctrl_rxd1_default
-+		     &pinctrl_ncts1_default
-+		     &pinctrl_ndsr1_default
-+		     &pinctrl_ndtr1_default
-+		     &pinctrl_nrts1_default>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd2_default
-+		     &pinctrl_rxd2_default>;
-+};
-+
-+&uart3 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd3_default
-+		     &pinctrl_rxd3_default>;
-+};
-+
-+&uart4 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd4_default
-+		     &pinctrl_rxd4_default>;
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&mac1 {
-+	status = "okay";
-+	no-hw-checksum;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+	bus-frequency = <400000>;
-+	multi-master;
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		imux16: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux17: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux18: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux19: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux20: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux21: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux22: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux23: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		imux24: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux25: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux26: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux27: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux28: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux29: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux30: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux31: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		imux32: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux33: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux34: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux35: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux36: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux37: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux38: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux39: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		imux40: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux41: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux42: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux43: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		imux44: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		imux45: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		imux46: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		imux47: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
--- 
-2.17.1
+LGTM. Some very minor remarks below in case you resend.
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+> ---
+>  drivers/net/ftgmac100.c | 39 +++++++++++++++++++++++++++++----------
+>  1 file changed, 29 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
+> index 92c38a81bd..c0100e91c7 100644
+> --- a/drivers/net/ftgmac100.c
+> +++ b/drivers/net/ftgmac100.c
+> @@ -18,6 +18,7 @@
+>  #include <wait_bit.h>
+>  #include <linux/io.h>
+>  #include <linux/iopoll.h>
+> +#include <net/ncsi.h>
+>  
+>  #include "ftgmac100.h"
+>  
+> @@ -81,6 +82,7 @@ struct ftgmac100_data {
+>  	struct mii_dev *bus;
+>  	u32 phy_mode;
+>  	u32 max_speed;
+> +	bool ncsi_mode;
+>  
+>  	struct clk_bulk clks;
+>  
+> @@ -181,7 +183,7 @@ static int ftgmac100_phy_adjust_link(struct ftgmac100_data *priv)
+>  	struct phy_device *phydev = priv->phydev;
+>  	u32 maccr;
+>  
+> -	if (!phydev->link) {
+> +	if (!phydev->link && !priv->ncsi_mode) {
+>  		dev_err(phydev->dev, "No link\n");
+>  		return -EREMOTEIO;
+>  	}
+> @@ -217,7 +219,8 @@ static int ftgmac100_phy_init(struct udevice *dev)
+>  	if (!phydev)
+>  		return -ENODEV;
+>  
+> -	phydev->supported &= PHY_GBIT_FEATURES;
+> +	if (!priv->ncsi_mode)
+> +		phydev->supported &= PHY_GBIT_FEATURES;
+>  	if (priv->max_speed) {
+>  		ret = phy_set_supported(phydev, priv->max_speed);
+>  		if (ret)
+> @@ -275,7 +278,8 @@ static void ftgmac100_stop(struct udevice *dev)
+>  
+>  	writel(0, &ftgmac100->maccr);
+>  
+> -	phy_shutdown(priv->phydev);
+> +	if (!priv->ncsi_mode)
+> +		phy_shutdown(priv->phydev);
+>  }
+>  
+>  static int ftgmac100_start(struct udevice *dev)
+> @@ -513,6 +517,7 @@ static int ftgmac100_ofdata_to_platdata(struct udevice *dev)
+>  	pdata->iobase = devfdt_get_addr(dev);
+>  	pdata->phy_interface = -1;
+>  	phy_mode = dev_read_string(dev, "phy-mode");
+> +
+>  	if (phy_mode)
+>  		pdata->phy_interface = phy_get_interface_by_name(phy_mode);
+>  	if (pdata->phy_interface == -1) {
+> @@ -537,8 +542,13 @@ static int ftgmac100_probe(struct udevice *dev)
+>  {
+>  	struct eth_pdata *pdata = dev_get_platdata(dev);
+>  	struct ftgmac100_data *priv = dev_get_priv(dev);
+> +	const char *phy_mode;
+>  	int ret;
+>  
+> +	phy_mode = dev_read_string(dev, "phy-mode");
+> +	priv->ncsi_mode = dev_read_bool(dev, "use-ncsi") ||
+> +		(phy_mode && strcmp(phy_mode, "NC-SI") == 0);
+
+strncmp() may be ? I think a helper routine would make sense. 
+
+> +
+>  	priv->iobase = (struct ftgmac100 *)pdata->iobase;
+>  	priv->phy_mode = pdata->phy_interface;
+>  	priv->max_speed = pdata->max_speed;
+> @@ -548,10 +558,15 @@ static int ftgmac100_probe(struct udevice *dev)
+>  	if (ret)
+>  		goto out;
+>  
+> -	ret = ftgmac100_mdio_init(dev);
+> -	if (ret) {
+> -		dev_err(dev, "Failed to initialize mdiobus: %d\n", ret);
+> -		goto out;
+> +	if (priv->ncsi_mode) {
+> +		printf("%s - NCSI detected\n", __func__);
+
+"NC-SI"
+
+> +	} else {
+> +		ret = ftgmac100_mdio_init(dev);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to initialize mdiobus: %d\n", ret);
+> +			goto out;
+> +		}
+> +
+>  	}
+>  
+>  	ret = ftgmac100_phy_init(dev);
+> @@ -571,9 +586,13 @@ static int ftgmac100_remove(struct udevice *dev)
+>  {
+>  	struct ftgmac100_data *priv = dev_get_priv(dev);
+>  
+> -	free(priv->phydev);
+> -	mdio_unregister(priv->bus);
+> -	mdio_free(priv->bus);
+> +	if (!priv->ncsi_mode) {
+> +		free(priv->phydev);
+> +		mdio_unregister(priv->bus);
+> +		mdio_free(priv->bus);
+> +	} else {
+> +		free(priv->phydev);
+> +	}
+>  	clk_release_bulk(&priv->clks);
+>  
+>  	return 0;
+> 
 
