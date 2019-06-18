@@ -1,69 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 058554A5F6
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 17:56:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45St4M5QXJzDqgs
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 01:56:51 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EFE74AA41
+	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 20:50:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45SxwG1M3ZzDqjc
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 04:50:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::b32; helo=mail-yb1-xb32.google.com;
+ (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com;
  envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="p3U2Preb"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="LL55m9Bf"; 
  dkim-atps=neutral
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
- [IPv6:2607:f8b0:4864:20::b32])
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com
+ [IPv6:2607:f8b0:4864:20::b31])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45St3d5MQFzDqXg
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 01:56:12 +1000 (AEST)
-Received: by mail-yb1-xb32.google.com with SMTP id x32so1985866ybh.1
- for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 08:56:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Sxvk5YK4zDqVy
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 04:49:38 +1000 (AEST)
+Received: by mail-yb1-xb31.google.com with SMTP id v104so6473837ybi.12
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 11:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GQBF/wPi+8xkKm7KTMg6NFNAJrYbW2RBcy56U79R1Wg=;
- b=p3U2Prebk1u6HaqCsewWemLvKXOZ4QHwlRXAqtqwOTxAYyNQxfIAPT8OGNYO/L1LtH
- ReRnCEeydLit/Ba08w5V0YnSbDy2z6sg1NpGpwsVX8iicqG1Ad3qnA8IiJHxsCEm9XRQ
- Al14tJkjTFkUWWl8YJS6wzSJUBQywqTG4MVUV+O+B97KHE6cwbEyH1YciRSRwjizY4xH
- iVsjT9p6t1fVvJFa0jG2XllS9wb1ahL7cAWkCD83o4z5WLJKD5NAKSukf5N6usy0ctFz
- Vg/nRXXihCZzXIK5A1WdP79UMWKAENBn0eQGmYd2rQ8wiTH7XkPsfJ4JbEsVbgZHArP4
- JIpA==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=OWa0hQWH63vTxUIrhTsJTNFsbF9XZ7QrY4JM3jzB/3Q=;
+ b=LL55m9BfufGF0XGOtO22a/++/xGlzjDAhI9QYcy7QOSZ/9XiBTdfkBoneUecVF4tN/
+ sJPn8Om8ei0il2b33UPygTi4FStkL9RKOEWghdr4l8eNxJsuXkfLwyAMuG4Xiiqbd5Z5
+ 8y6FdrqZATkcls011Ahp88ToFxIXlgO7pfrk1Vj5mRm6TQ6rzA8IbY9kvr5f9zUxeZ7q
+ DNVtohW2gBNYiPuCfFEnMcP3u8KkyCkKD2emE6uDSz7LVcb9PF0v4VD6n5cdeuyPE9DI
+ Zk0NNi5BXuud600yiEh2wI4FSau6FKczKqFFDHQtIJEV+MyGTY5y8TYYr960QmyBb3Wj
+ do0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GQBF/wPi+8xkKm7KTMg6NFNAJrYbW2RBcy56U79R1Wg=;
- b=g9jnZN8YRXju1a7sbr9+J+SA3JUM9Rp6LwqaVx6MS/ltzLLkv8wq+1Uvz/5kSZItho
- vvPzF2e77PNgxwPuWkvNsINvfIXmVFD95oFwbD6f3IViPbwbFTIxR89QxqPefRmS7afV
- MzK0HmiffCXFMtsVkeSL6F0k39UBVw4I5xQsM1nhgf8DEP04BqorpTEXnZfufD+KYMfY
- ph8B49rh69Fk0ia5gIPmbuNHIHyrf6vg73F5PprkA8tLVcFOcfQHmx5BSZ2cbIr04erU
- Gqi8vHJYj2Jy4xhxljJV8A8dQ4j/CMcXv0iUJpHPGqluRLr2r8ua+/pI0/utt3U46PYw
- rUzQ==
-X-Gm-Message-State: APjAAAVhn3slc0G0valmVVeeO7bHWYrSyJxnD5dcpaPSIEdQY57pKdJ+
- exXGY3lF2SoCVnEH6W6vkvVe+2URTZmyTU4XIQI=
-X-Google-Smtp-Source: APXvYqxrbL4qyM5ETDx06Y+a3etDryCIJdkRxNtY0xeoznfuOG0JClPw1cSo2eeH6D7bHCPV/b1KWolcthRb8K01UsQ=
-X-Received: by 2002:a25:358b:: with SMTP id
- c133mr57371208yba.296.1560873369325; 
- Tue, 18 Jun 2019 08:56:09 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=OWa0hQWH63vTxUIrhTsJTNFsbF9XZ7QrY4JM3jzB/3Q=;
+ b=Rr/u66w81mYiWh8Jm3WomhcHFc5Ypyp0ndUptlJqmHNhBm0YlTIGuqd4nWwRg7MmwY
+ XU1VTrVuOcdaWhNdkEx6OZHFhI2lWFZP0ZAaQTXGcvIPWw33Rc7tPSTxeEJ2C38mIVdq
+ hfIVAx0eKNpwk7HHXAb0JjsBojNHWrmgwmn5cTtW8zT5AQTckagJMLIZfFkujpkNtljh
+ lwzFBOlTtx1IfgiuylwbnHDAWkZIBii8+FM4acoxTnRcuvpqG2oOnOie+IVYPfass+aN
+ ybSzXGqIY8iWt1r1WVigMquy6xLJpZaUnjjc95TxCNLx/TgV0vCQoINByRJQWT8YaSRC
+ QBRg==
+X-Gm-Message-State: APjAAAXyOf4l3a9x1YH1cKUYk1R66eiOfJ2LhsPw/wTr+60uuyxxZX8m
+ RKY8oZiR+RP6MLxQZZqNmy+GejDhkDkiJTePHeilpwL7
+X-Google-Smtp-Source: APXvYqy7tvP5i4ZiicpmTVW3z18gOW00H5jZ8nxZ10UnLwvzWOZ2ZyWL7BQMNFixoYvyVFFwIJSUDadaHcxUA0jtDHc=
+X-Received: by 2002:a25:dc0d:: with SMTP id y13mr13869807ybe.6.1560883774069; 
+ Tue, 18 Jun 2019 11:49:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
- <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
- <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
-In-Reply-To: <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
 From: Jandra A <jandraara@gmail.com>
-Date: Tue, 18 Jun 2019 10:55:58 -0500
-Message-ID: <CAMTupoQ9fovzOcFH__Ljq=y8RKAp8_7WYunzQ8xNcc6Qjk+Dvg@mail.gmail.com>
-Subject: Re: Re: Network Settings GUI
-To: Derick <derick.montague@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000b7d2b7058b9b26ef"
+Date: Tue, 18 Jun 2019 13:49:23 -0500
+Message-ID: <CAMTupoQ1P_DfcU6WJx2-uutNZs7zxF0F8encrQhoaH+2FT8mBA@mail.gmail.com>
+Subject: Local user management
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000e3a107058b9d9289"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,77 +69,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b7d2b7058b9b26ef
+--000000000000e3a107058b9d9289
 Content-Type: text/plain; charset="UTF-8"
 
->
-> IPV6 is one of the functions  urgently need by Lenovo Commercial Server
-> Products.
+Hello all,
+
+There have been some usability concerns from users on the current 'Local
+user management' design, and we would like to propose a design to address
+these issues:
+
+   - The 'User account properties' section is too prominent, taking away
+   from 'User account information'.
 
 
-We have a design that can be implemented, but we are not planning to
-> implement IPv6 in the GUI right away based on our current priorities.
+   - Adding a user account is not always visible and is too similar to the
+   'edit' mode.
 
 
-To provide a design to be implemented for supporting IPV6, we would also
-need to know if the expectation and use case is for supporting both IPV4
-and IPV6 on a single interface at the same time or if a user would have to
-select one or the other. Once we have this information, we can provide a
-design.
+   - It is not clear what the difference is between 'Locked' and 'Enabled'
+   or what the purpose of surfacing locked users is if it is temporary and
+   limited to the amount of time set by a sys admin.
+
+
+Our proposal is a work in progress on which we are getting user feedback
+and invite you to provide yours too.
+Redesign proposal:
+https://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319147576_6-4-1_Regular
+
+From this design we have the following questions:
+
+   - Where do the password requirements come from (imposed by the BMC or
+   their company's security team)? Should they be set in the GUI (at one point
+   there were fields for the max  and min lengths)?
+   - Do we have the ability to include a "custom" role type for local
+   users, in addition to the four existing roles (Admin, Operator, Callback,
+   and User)?
+   - When is the current password required to change a password?
 
 
 
-On Tue, Jun 18, 2019 at 10:51 AM Derick <derick.montague@gmail.com> wrote:
+Regards,
+Jandra Aranguren
 
-> > IPV6 is one of the functions  urgently need by Lenovo Commercial Server
-> Products.
->
-> Thank you for your response! What does urgent mean, is there a
-> timeframe? Does your
-> team have front-end development resources to implement the design? We
-> have a design that can be implemented, but we are not planning to
-> implement IPv6
-> in the GUI right away based on our current priorities. If someone else
-> wants to implement the design, we can review and provide feedback. I
-> believe the backend functionality is complete.
->
-
---000000000000b7d2b7058b9b26ef
+--000000000000e3a107058b9d9289
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">IPV6 is one of the functions=C2=A0 urgently need by Lenovo Comme=
-rcial Server Products.=C2=A0</blockquote><br class=3D"gmail-Apple-interchan=
-ge-newline"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">We have a des=
-ign that can be implemented, but we are not planning to implement IPv6 in t=
-he GUI right away based on our current priorities.</blockquote><div><br></d=
-iv><div>To provide a design to be implemented for supporting IPV6, we would=
- also need to know if the expectation and use case is for supporting both I=
-PV4 and IPV6 on a single interface at the same time or if a user would have=
- to select one or the other. Once we have this information, we can provide =
-a design.=C2=A0</div><div><br></div><div>=C2=A0</div></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 18, 2019=
- at 10:51 AM Derick &lt;<a href=3D"mailto:derick.montague@gmail.com">derick=
-.montague@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">&gt; IPV6 is one of the functions=C2=A0 urgently need by=
- Lenovo Commercial Server Products.<br>
-<br>
-Thank you for your response! What does urgent mean, is there a<br>
-timeframe? Does your<br>
-team have front-end development resources to implement the design? We<br>
-have a design that can be implemented, but we are not planning to<br>
-implement IPv6<br>
-in the GUI right away based on our current priorities. If someone else<br>
-wants to implement the design, we can review and provide feedback. I<br>
-believe the backend functionality is complete.<br>
-</blockquote></div></div>
+<div dir=3D"ltr"><font face=3D"verdana, sans-serif">Hello all,</font><div><=
+font face=3D"verdana, sans-serif"><br></font></div><div><font face=3D"verda=
+na, sans-serif">There have been some usability concerns from users on the c=
+urrent &#39;Local user management&#39; design, and we would like to propose=
+ a design to address these issues:=C2=A0</font></div><div><ul><li><font fac=
+e=3D"verdana, sans-serif">The &#39;User account properties&#39; section is =
+too prominent, taking away from &#39;User account information&#39;.=C2=A0</=
+font></li></ul><ul><li><font face=3D"verdana, sans-serif">Adding a user acc=
+ount is not always visible and is too similar to the &#39;edit&#39; mode.=
+=C2=A0</font></li></ul><ul><li><font face=3D"verdana, sans-serif">It is not=
+ clear what the difference is between &#39;Locked&#39; and &#39;Enabled&#39=
+; or what the purpose of surfacing locked users is if it is temporary and l=
+imited to the amount of time set by a sys admin.</font></li></ul></div><div=
+><font face=3D"verdana, sans-serif"><br></font></div><div><font face=3D"ver=
+dana, sans-serif">Our proposal is a work in progress on which we are gettin=
+g user feedback and invite you to provide yours too.=C2=A0</font></div><div=
+><font face=3D"verdana, sans-serif">Redesign proposal:=C2=A0<a href=3D"http=
+s://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319147576_6-4-1_Regular">https:/=
+/ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319147576_6-4-1_Regular</a></font><=
+/div><div><font face=3D"verdana, sans-serif"><br></font></div><div><font fa=
+ce=3D"verdana, sans-serif">From this design we have the following questions=
+:</font></div><div><ul><li class=3D"gmail-list-bullet1"><span class=3D"gmai=
+l-author-6922131016 gmail-font-size-small" style=3D""><font face=3D"verdana=
+, sans-serif">Where do the password requirements come from (imposed by the =
+BMC or their company&#39;s security team)? Should they be set in the GUI (a=
+t one point there were fields for the max=C2=A0 and min lengths)?=C2=A0</fo=
+nt></span></li><li class=3D"gmail-list-bullet1"><span class=3D"gmail-author=
+-6922131016 gmail-font-size-small" style=3D""><font face=3D"verdana, sans-s=
+erif">Do we have the ability to include a &quot;custom&quot; role type for =
+local users, in addition to the four existing roles (Admin, Operator, Callb=
+ack, and User)?=C2=A0</font></span></li><li class=3D"gmail-list-bullet1"><s=
+pan class=3D"gmail-author-6922131016 gmail-font-size-small" style=3D""><fon=
+t face=3D"verdana, sans-serif">When is the current password required to cha=
+nge a password?=C2=A0</font></span></li></ul><div><font face=3D"verdana, sa=
+ns-serif"><br></font></div></div><div><font face=3D"verdana, sans-serif"><b=
+r></font></div><div><font face=3D"verdana, sans-serif">Regards,</font></div=
+><div><font face=3D"verdana, sans-serif">Jandra Aranguren</font></div></div=
+>
 
---000000000000b7d2b7058b9b26ef--
+--000000000000e3a107058b9d9289--
