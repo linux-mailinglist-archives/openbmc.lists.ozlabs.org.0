@@ -2,63 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DED664BDD8
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 18:15:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 329B34BE49
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 18:32:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45TVR80bMRzDqmq
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 02:15:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45TVpY3vfBzDqT3
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 02:32:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d31; helo=mail-io1-xd31.google.com;
- envelope-from=derick.montague@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="hN8bEPPn"; 
- dkim-atps=neutral
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com
- [IPv6:2607:f8b0:4864:20::d31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45TVQZ61DgzDqW1
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 02:14:46 +1000 (AEST)
-Received: by mail-io1-xd31.google.com with SMTP id i10so800351iol.13
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 09:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=pMW/Nvfh+M6UAmK70l1YA74LDT9w+ILmCFfby8ojw+s=;
- b=hN8bEPPn9ZyK7EGaEYNC1PfWHkj8bKMb+e3XVyhOj8T30KY1RSqzj5niB4/fzuXpYX
- zhB8+/PiHZ2BLh3pH9gkrUHw2ZN5EWz1KHQDOs57rJDqhrY1Lbzb80+9efjvsQZlMuYd
- vJeBG/Vxqg9xTThPjsuv3+6uNA1NKEOYyIuRQLMK9ojkikMcE5/PGQpLliPg13hodnuV
- saEs8ZZJeqpokMovkLAilp5Iw8f4U7y19LfrfEnVW5wrIMAgG9T8j1K7bLDWBMRIytmY
- 1J70r4eBrZ5YFoozvzAZaoFzTKZ6PkxcKYAvkpq0Z2yQ/wmWaxOqfOMXasqXe7t5Xk6I
- Mmjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=pMW/Nvfh+M6UAmK70l1YA74LDT9w+ILmCFfby8ojw+s=;
- b=U9l/TZlC+l2r1nZVS66cCHmIGz/Fp+pTmvBRBVhUDtXGtHub2BNQwzupkMP0anPZrM
- HJgihGlZ98u3u/cUzBt6jwx3r9l9C0rX7B9n5C0K3pB1ttLYneJtojJE8HOzyu9LjjEl
- cfZ9ryoq4lO9TCRUpwS3HKzbEFqmgkreV+rCpm2zzgA7E90XAAAn0ywJAZ97e0cog4K/
- Eoe7ABqmB2Cf6cVkYokyXoqOwZpYphdAW179RnaKNND2HmN4kM4dlaS6YPM6J6XhHSP1
- BqsZGi4txdhG80/XHRGoevAeXf7xffPtQMaQ64vZ4nKbQkKDkRKLi9LjbF0Zd0gZdzrc
- r6Fw==
-X-Gm-Message-State: APjAAAV9qQ7kNCSbTvsu+IVccRBl95n9aRaRLCBvAjTGNb4vymFH1ZXn
- N0ICo/d6mhIWK4/Wod1yeA7yJfLWZGF5kXqgBSc9FXQDJUM=
-X-Google-Smtp-Source: APXvYqxduX07h18FMEUUq1CK9j5TsZjAkziGShXAj/3uiPurV3+YhWWDURViKtj+GAFALGuLaAB+nMGVLNu8K6yWTUI=
-X-Received: by 2002:a02:7715:: with SMTP id g21mr11195612jac.24.1560960882892; 
- Wed, 19 Jun 2019 09:14:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45TVnr3KbhzDqDy
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 02:31:26 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2019 09:31:10 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,392,1557212400"; d="scan'208";a="170611741"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
+ ([10.7.153.148])
+ by orsmga002.jf.intel.com with ESMTP; 19 Jun 2019 09:31:10 -0700
+Subject: Re: One question is regarding of PECI driver.
+To: Derek Lin23 <dlin23@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <1616aac7ca904100be2e0a7dddcc6127@lenovo.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <b01e1e4e-e723-bae2-32e0-20b47d38efcf@linux.intel.com>
+Date: Wed, 19 Jun 2019 09:31:10 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-From: Derick <derick.montague@gmail.com>
-Date: Wed, 19 Jun 2019 11:14:31 -0500
-Message-ID: <CAOUmYFQscR-QSS3AzMGJB4MkN4ji4+fNbS2_q6YEU1E-J-yS3w@mail.gmail.com>
-Subject: Button styles and icon implementation updates
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed.tanous@intel.com>, "Wang, Kuiying" <kuiying.wang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1616aac7ca904100be2e0a7dddcc6127@lenovo.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,19 +55,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Duke KH Du <dukh@lenovo.com>, Andrew MS1 Peng <pengms1@lenovo.com>,
+ Harry Sung1 <hsung1@lenovo.com>, Haitao HT11 Wang <wanght11@lenovo.com>,
+ Yonghui YH21 Liu <liuyh21@lenovo.com>, Lisa YJ19 Liu <liuyj19@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+On 6/14/2019 2:24 AM, Derek Lin23 wrote:
+> Hi team:
+> 
+>            We have a question for PECI driver, hope we can have some 
+> inputs and feedbacks.
+> 
+>            When PECI driver starts, it checks the availabilities for 
+> CPUs by the addresses defining in the device tree.
 
-We have some changes to our button styling, as well as how we plan to implement
-icons. The review is
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/22396.
-It would be great to get some feedback on the implementation! This
-change will allow us to
-control icons using CSS and start to remove all the duplicates needed
-to have icons
-of different colors.
+Yes, it's what PECI driver does.
 
-Thanks!
-Derick Montague
+>            But, when none of the CPUs are available, in our cases, CPUs 
+> are powered off, PECI driver responses with error messages of PECI 
+> clients and devices are not registered.
+
+It's an expected result because PECI works only when the host CPU is
+powered on.
+
+>            Is it possible that PECI driver would listen the events for 
+> power-on? So, PECI driver would be reloaded and PECI clients and devices 
+> become available.
+
+No. Instead, we are using CPU ping from user space and register PECI
+clients at run time. Please check these services:
+
+https://github.com/openbmc/dbus-sensors
+https://github.com/openbmc/entity-manager
+
+Thanks,
+Jae
+
+>            Or, other thoughts and ideas?
+> 
+> Thank you,
+> 
+> 
+> Derek Lin
+> 
