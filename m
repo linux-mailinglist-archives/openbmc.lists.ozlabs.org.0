@@ -1,67 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA2BF4AF08
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 02:31:28 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C2304AD83
-	for <lists+openbmc@lfdr.de>; Tue, 18 Jun 2019 23:44:50 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45T1nn0rNKzDqWM
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 07:44:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45T5V56nkJzDqgP
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jun 2019 10:31:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d35; helo=mail-io1-xd35.google.com;
- envelope-from=benjaminfair@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::c2a; helo=mail-yw1-xc2a.google.com;
+ envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="kVvxte9j"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="RFaklw8S"; 
  dkim-atps=neutral
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
- [IPv6:2607:f8b0:4864:20::d35])
+Received: from mail-yw1-xc2a.google.com (mail-yw1-xc2a.google.com
+ [IPv6:2607:f8b0:4864:20::c2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45T1l101YjzDqLH
- for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 07:42:19 +1000 (AEST)
-Received: by mail-io1-xd35.google.com with SMTP id e3so33246814ioc.12
- for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 14:42:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=AvsBQuncXKMU8fch/6do2idc/uJCuhzSye2GAk8jXwM=;
- b=kVvxte9jZ+j+NJNezcWxwOanIyB1sGrJsl31yhfjIJvh3idMKX5IJ6+tyk3UZaYrU2
- 3HPWZwYzRBwmEIMC14IpFZggoiW9VLygAuzkVqeebD7cdKOqX3+kbion40EHANJCMi0A
- oX/AgPKuE47cRH12e/BL29RpsT/L9fp9sofUy2Yz1JMocjExhSQ9xvAryDPqi8LU4Wl6
- AaHJF3KOIsCaz1Ld97J8UUhXFSjf7QRrNacfc3qevTFMm9qBMqpAhgY3xtUucKO5Od7i
- m45TOMZqAtK/K0bejKg2X4cuVZWKaNAaz9HALkaSgpwY8H9n0rF1QSDcvjwW7ezZKJg4
- Vw7A==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45T5Sq3jt4zDqf5
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Jun 2019 10:30:16 +1000 (AEST)
+Received: by mail-yw1-xc2a.google.com with SMTP id m16so7516744ywh.12
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Jun 2019 17:30:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=xgmqISk6hX85dcA6R3F8WFzePI2TD4dwn9u7lH2PzlI=;
+ b=RFaklw8SFaFvQvRDNuRqXLsHKFJozxSghMk1uqIJUttsehM9/w6+I7+ZjFIy+srhwb
+ J2kzJxjIgj6rrIboFUFhKT5W+VhyFkqDRhzUMPkWImbXaPmj69bCDq1WhNf4gBwC+DRq
+ s6+vNETPHrn8TYjPqM3r5MNCZjzULCr2FZJHRut+iEmoyBzQCvlu1T9Hd/+4bm+vvZw5
+ NS8vff7njvv/b0RQc+GIkCEIRTssnf+zQDLOD17Po3iN/flkdb9dAMnG3ntiieNiYV4m
+ z7MbEOgBhEiJvZk71IN7rUerB4zd+a8SxekOysf4GzBIP+SVLbDaMQGA2qNu+E0Jvkdt
+ TATg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=AvsBQuncXKMU8fch/6do2idc/uJCuhzSye2GAk8jXwM=;
- b=r6ou8CXqKSrz6z5bcFi410LTvxRSV9CXUnS2P/tPJdjOVoHM3VIqVksSrnffBM9cz0
- gwuexKdULFaiirogh1940IomtJVBu1k3W7bF4E3oNVG9bWCpR39kYiBLKKhgCu3PvaXf
- iaNtnpMgf6IRyHxTbCWpv4TNYsYcU+jdsos6y7cSljI4nVljs8C87JVSmMU+ES0KE4Yc
- x+T+LegoP2hsjPJLHSSwX9ys7ef1HqilpRs6wjrEjJb2G+NV/QVAiUqytgZmGqJw6Ecj
- NUga7j71lTzLWHG7/iXN/YBtr1WkdEuxGu2Z1IHON0JEc7iFP2OUUDmrtwIBoVzYxxfS
- nJQA==
-X-Gm-Message-State: APjAAAW281ENLstn5Vc6/6oqwtARSjjD8mO2JMA2Z3i873HAq+CLTxLw
- eqPpX5oPyaRWUu8qnL1Lq4Z82/2JDF3dk1pR/6j8fw==
-X-Google-Smtp-Source: APXvYqzs2n292JY245Ne26Dmv5guhtM6jxNUQ2jk6XeDLm/2gNKMatMfbhRQ4jWdNXDXJZL2NHRXY/LkIkFjcehVffk=
-X-Received: by 2002:a5e:9314:: with SMTP id k20mr2864486iom.235.1560894134172; 
- Tue, 18 Jun 2019 14:42:14 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=xgmqISk6hX85dcA6R3F8WFzePI2TD4dwn9u7lH2PzlI=;
+ b=I5TmmbZi3KzkpRJH+hv+mHySd6IueEloPqOb6f35BeJC57rDUt06Yb+1nmua4IUpSp
+ 9LpVlGV2BnMRjacxDhSQzbSseF6nGWkdnRkQT4t+UCfeX8paabItsaD53EWBp8tNXch5
+ nOQIiv+ppsAc1fI/8M9tN5qrd6XrdJCqBqnIQszyP/SAkDD/oeluVeIcjsSeiPqkyHOW
+ XM1StGM9NgvDivLkfOudh18WB9HADuL2676FuN/ZaUklFqabs+85yPz60DG8m0nfvPT0
+ afA4ibpmo1Ht3mLPEb96g90QDP/eWvGbuzy/HmznHXhKoZvVLdq43+cO+wufxRIaJIJH
+ zVZw==
+X-Gm-Message-State: APjAAAWqTpReO12+3y3UgkyucZ8xzCx02K9XAFLNCbVEH3aZuVAs7XAp
+ a5qC9fqpBFKTsxnRg2mKxM/PySVjYpJ97QEgeVSH1g48
+X-Google-Smtp-Source: APXvYqzEa6a6t6j7jZ7OP2KLMI26hTH+9NbeRF0uthVeKtf7pR38knTNisqSs0X7UWQBCpwrGZ25oP6H4JhyWzRjLQA=
+X-Received: by 2002:a81:a453:: with SMTP id b80mr39941701ywh.485.1560904212508; 
+ Tue, 18 Jun 2019 17:30:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <963572AF-71AC-4830-ACBE-CABBFDD2B929@fb.com>
- <d3212ced-52c2-9c30-7857-3a2f2b98aa3a@linux.intel.com>
-In-Reply-To: <d3212ced-52c2-9c30-7857-3a2f2b98aa3a@linux.intel.com>
-From: Benjamin Fair <benjaminfair@google.com>
-Date: Tue, 18 Jun 2019 14:41:37 -0700
-Message-ID: <CADKL2t57YnSFE0cABmnqUuGfo+p1sxQhgXY90JbU2LiVNHYziQ@mail.gmail.com>
-Subject: Re: NVME-MI temperature sensors
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+From: Jandra A <jandraara@gmail.com>
+Date: Tue, 18 Jun 2019 19:30:01 -0500
+Message-ID: <CAMTupoT_45Zbh04qoMv4RkKpVSBOh7VRfvrEwan9gf13XDNvhQ@mail.gmail.com>
+Subject: GUI workgroup meeting - Wednesday 10:30 AM CST
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000001d757b058ba255b3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,46 +69,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jun 18, 2019 at 1:31 PM James Feist <james.feist@linux.intel.com> wrote:
->
-> On 6/18/19 1:07 PM, Vijay Khemka wrote:
-> > Team,
-> >
-> > I am trying to expose temperature sensor provided by NVME SSD drive. As
-> > per NVME-MI spec device provides temperature sensor value at defined
-> > register. Is there any Linux kernel driver, I need to enable to get
-> > these sensors of a SSD device we have. I see some NVME temperature
-> > sensors definition in meta-quanta/meta-gsj config.yaml and was wondering
-> > how are these read.
-> >
-> > Any information on this would be helpful.
->
-> This might be interesting to you:
-> https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/20859
->
+--0000000000001d757b058ba255b3
+Content-Type: text/plain; charset="UTF-8"
 
-That's the MCTP implementation which is the direction everything is
-moving towards.
+Hello all,
 
-In the short term, Quanta is working on a daemon[0] to monitor
-temperature and other telemetry data over NVMe-MI on SMBus. They have
-an implementation on their own GitHub[1] and are currently in the
-process of upstreaming it[2].
+The GUI design workgroup meeting will be happening Wednesday June 19 at
+10:30AM CST. As there was no attendees last meeting, this week we have the
+same agenda.
 
-[0] https://github.com/openbmc/phosphor-nvme
-[1] https://github.com/quanta-bmc/phosphor-nvme
-[2] https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-nvme/+/22560
+Tentative agenda:
 
->
-> -James
->
-> >
-> > Regards
-> >
-> > -Vijay
-> >
+   1. Updates on Intel-specific icon changes mentioned last meeting (Intel)
+   2. Share research findings and updates on design layout (Intel)
+   3. Review gathered user feedback on User Management panel and discuss a
+   possible redesign (IBM)
+   4. Current System log page design features discussion (IBM)
+
+Please add any other agenda items here:
+https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+
+Meeting Link:
+https://ibm.webex.com/ibm/j.php?MTID=m49792ce33d5af28f2823638d351732f3
+
+Best,
+GUI Design Team
+
+--0000000000001d757b058ba255b3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><span style=3D"background-color:transparent"><fo=
+nt face=3D"verdana, sans-serif">Hello all,=C2=A0</font></span></div><div><s=
+pan style=3D"background-color:transparent;color:rgb(36,41,46)"><font face=
+=3D"verdana, sans-serif"><br></font></span></div><div><span style=3D"backgr=
+ound-color:transparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-ser=
+if">The=C2=A0<span class=3D"gmail-il">GUI</span>=C2=A0design=C2=A0<span cla=
+ss=3D"gmail-il">workgroup</span>=C2=A0meeting will be happening Wednesday J=
+une 19 at 10:30AM CST. As there was no attendees last meeting, this week we=
+ have the same agenda.=C2=A0</font></span></div><div><span style=3D"backgro=
+und-color:transparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-seri=
+f"><br></font></span></div><div><font color=3D"#24292e" face=3D"verdana, sa=
+ns-serif">Tentative agenda:=C2=A0</font></div></div><div><ol><li style=3D"m=
+argin-left:15px"><font face=3D"verdana, sans-serif">Updates on Intel-specif=
+ic icon changes mentioned last meeting (Intel)</font></li><li style=3D"marg=
+in-left:15px"><font face=3D"verdana, sans-serif">Share research findings an=
+d updates on design layout (Intel)</font></li><li style=3D"margin-left:15px=
+"><font face=3D"verdana, sans-serif">Review gathered user feedback on User =
+Management panel and discuss a possible redesign (IBM)</font></li><li style=
+=3D"margin-left:15px"><font face=3D"verdana, sans-serif">Current System log=
+ page design features discussion (IBM)</font></li></ol></div><div><div><fon=
+t face=3D"verdana, sans-serif">Please add any other agenda items here:=C2=
+=A0<a href=3D"https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group=
+" target=3D"_blank">https://github.com/openbmc/openbmc/wiki/<span class=3D"=
+gmail-il">GUI</span>-Design-<span class=3D"gmail-il">work</span>-<span clas=
+s=3D"gmail-il">group</span></a></font></div><div><br></div><div><font face=
+=3D"verdana, sans-serif"><span style=3D"box-sizing:border-box;color:rgb(36,=
+41,46)">Meeting Link</span><span style=3D"color:rgb(36,41,46)">:=C2=A0</spa=
+n><a href=3D"https://ibm.webex.com/ibm/j.php?MTID=3Dm49792ce33d5af28f282363=
+8d351732f3" rel=3D"nofollow" target=3D"_blank" style=3D"color:rgb(3,102,214=
+);box-sizing:border-box;text-decoration-line:none">https://ibm.webex.com/ib=
+m/j.php?MTID=3Dm49792ce33d5af28f2823638d351732f3</a><br style=3D"box-sizing=
+:border-box;color:rgb(36,41,46)"></font></div><div><font face=3D"verdana, s=
+ans-serif"><br></font></div><div><span style=3D"background-color:transparen=
+t;color:rgb(36,41,46)"><font face=3D"verdana, sans-serif">Best,</font></spa=
+n></div><div><span style=3D"background-color:transparent;color:rgb(36,41,46=
+)"><font face=3D"verdana, sans-serif"><span class=3D"gmail-m_-2158016735816=
+270648gmail-m_-274210038052043966gmail-m_6525215738950614323gmail-m_-617251=
+0825241159069gmail-il"><span class=3D"gmail-il">GUI</span></span>=C2=A0<spa=
+n class=3D"gmail-m_-2158016735816270648gmail-m_-274210038052043966gmail-m_6=
+525215738950614323gmail-m_-6172510825241159069gmail-il">Design</span>=C2=A0=
+Team=C2=A0</font></span></div></div></div>
+
+--0000000000001d757b058ba255b3--
