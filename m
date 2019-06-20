@@ -1,64 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C2EF4D57A
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 19:55:21 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45V8c65CxXzDrJv
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 03:55:18 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D8064DAAB
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 21:50:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45VC8m0DTtzDrMT
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 05:50:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::635; helo=mail-pl1-x635.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Ct+3Yyyp"; 
- dkim-atps=neutral
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
- [IPv6:2607:f8b0:4864:20::635])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45V8bY1f3gzDrCC
- for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 03:54:46 +1000 (AEST)
-Received: by mail-pl1-x635.google.com with SMTP id b7so1694983pls.6
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 10:54:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=5Pe91UUzRN+xBrav++21sER9CyY7eCA7DQYfcewLn+g=;
- b=Ct+3YyypR0GElGA7R1XYHBbvfu6hlWuC8LjIUjDMKfDMz/9jHC9fyUinxPrKptDXYh
- mXo1IuUkGl22xss5WYZMXHOmRDSSOA9mS7flTW/DHD7yJ5dDYnNKD5nUAoTUTspkSom7
- 2gWZRwaJ54kFPa2HJHGo3AqgWDJDOdt2UGuSA0Mst9C231G96NIG1byHxritakg7ESn3
- nTL6nmSTuG2MKZdinnnTlPP9B5EyV/pYFbagPF8KzWwpeyZlcxT7a4va9XPDjG0xzNHR
- WVQCeHqivpMvNZJkVCETToREe9jnW/Zr23HjG+XruTWsSGNQ1PpLOzr74ac/Bn36ZkTg
- Tn1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=5Pe91UUzRN+xBrav++21sER9CyY7eCA7DQYfcewLn+g=;
- b=MzegQz0aqUN6VrrNu5RHXdtOSLlyYvfmNnw5TxFwIdh75RraSVGFjhVIMVVjdUG7qD
- TS/5GIXAJSA7LYnNx1ghQZht7DPHZ1CJG4fNLBedBgkKsQHx/I8Q88/iE9JpXH4slcMI
- wyOdr7SA72gCexSp/0G7ugrGY7eCKI5iHY8/YAr82hoDfnIY98+nlZHmkPjkczst0HK0
- fTGKQeNQwDeL8ng8emtinDpaEeJWUcU2bcBwmYZ5e58AWRKVzmHrS0njO29+ZjYjtUo4
- fnn+hcBlGxrDY4UIpjJY5jXVgNWi5MXpPUWcA3PgiJw9c8V21RjP/l+cXJmxlvo3OLDM
- 9V8Q==
-X-Gm-Message-State: APjAAAUodtgJYYMtV3jSKssQUdSCQS7iCi7+1mJK9kLxVLLSHYPtLNjY
- xIeCDpSVZQUFEExVsqKEcbvFzpBmeEcJsSgrL1mtRj9JY1s=
-X-Google-Smtp-Source: APXvYqz+AnPw8EwfKqhr8oC3rLi0PzyaWtO+ckGiSacpsRSeyaxeRc1MbfhL2gQnoKuCpD58u68aNtXAKbalLKygKhI=
-X-Received: by 2002:a17:902:9897:: with SMTP id
- s23mr58710767plp.47.1561053282371; 
- Thu, 20 Jun 2019 10:54:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45VC7t6rNdzDrJt
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 05:49:29 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 20 Jun 2019 12:49:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,398,1557212400"; d="scan'208";a="154232451"
+Received: from maru.jf.intel.com ([10.54.51.75])
+ by orsmga008.jf.intel.com with ESMTP; 20 Jun 2019 12:49:24 -0700
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ C?ric Le Goater <clg@kaod.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>
+Subject: [RFC PATCH dev-5.1 0/6] Aspeed I2C buffer/DMA mode support
+Date: Thu, 20 Jun 2019 12:49:16 -0700
+Message-Id: <20190620194922.15093-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Thu, 20 Jun 2019 10:54:28 -0700
-Message-ID: <CAO=notwO_0MNFY-70bGRwmQZGG4_Wm-=2zddmncKYkT-QkBx0g@mail.gmail.com>
-Subject: reduced contributing availability
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,25 +51,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi fellow-openbmc'ers
+This patch series adds buffer mode and DMA mode transfer support for the
+Aspeed I2C driver. With this change, default transfer mode will be set to
+buffer mode for better performance, and DMA mode can be selectively used
+depends on platform configuration.
 
-I will have fewer cycles to contribute to OpenBMC moving forward.
-It's unclear yet how it'll settle out, likely just a few hours per
-week.  Enough to finish current things, and review incoming patches
-(pid-control/hwmon/ipmi-blobs-stuff).  Unlikely to contribute to new
-long-term efforts or long bug arcs (epics).
+* Buffer mode
+  AST2400:
+    It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
+    0x1e78a800 to 0x1e78afff that can be used for all busses with
+    buffer pool manipulation. To simplify implementation for supporting
+    both AST2400 and AST2500, it assigns each 128 Bytes per bus without
+    using buffer pool manipulation so total 1792 Bytes of I2C SRAM
+    buffer will be used.
 
-Watching this program grow as it has over the past couple years has
-been excellent and I'm excited to see the community continue to
-accelerate in growth and contributions.
+  AST2500:
+    It has 16 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
+    page selection' bit field in the Function control register, and
+    neither 'base address pointer' bit field in the Pool buffer control
+    register it has. To simplify implementation for supporting both
+    AST2400 and AST2500, it writes zeros on those register bit fields
+    but it's okay because it does nothing in AST2500.
 
-I will also be on the mailing list a little less actively, just
-by-the-way.  Where I am handing off maintainer-ship, there will be
-patches and github changes but in addition I will likely shoot out an
-email to assist in leading future questions to the right person.
+* DMA mode
+  Only AST2500 supports DMA mode under some limitations:
+    I2C is sharing the DMA H/W with UHCI host controller and MCTP
+    controller. Since those controllers operate with DMA mode only, I2C
+    has to use buffer mode or byte mode instead if one of those
+    controllers is enabled. Also make sure that if SD/eMMC or Port80
+    snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
+    use DMA mode..
 
-Regards,
-Patrick
+I'm submitting this series as an RFC because it needs more test on real
+AST2400 BMC mahines, also it needs to check if QEMU can handle this change
+so please review and test it.
+
+Jae Hyun Yoo (6):
+  dt-bindings: i2c: aspeed: add buffer and DMA mode transfer support
+  ARM: dts: aspeed: add I2C buffer mode support
+  irqchip/aspeed-i2c-ic: add I2C SRAM enabling control
+  i2c: aspeed: fix master pending state handling
+  i2c: aspeed: add buffer mode transfer support
+  i2c: aspeed: add DMA mode transfer support
+
+ .../devicetree/bindings/i2c/i2c-aspeed.txt    |  52 +-
+ arch/arm/boot/dts/aspeed-g4.dtsi              |  42 +-
+ arch/arm/boot/dts/aspeed-g5.dtsi              |  42 +-
+ drivers/i2c/busses/i2c-aspeed.c               | 469 ++++++++++++++++--
+ drivers/irqchip/irq-aspeed-i2c-ic.c           |   8 +
+ 5 files changed, 548 insertions(+), 65 deletions(-)
+
+-- 
+2.22.0
+
