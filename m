@@ -2,87 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B9674DD73
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 00:39:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A6604DDAF
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 01:13:00 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45VGvq1v2KzDrMc
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 08:39:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45VHfd3NMtzDrFK
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 09:12:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
  envelope-from=stewart@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45VGv82NLvzDrLk
- for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 08:38:43 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5KMbHoI051898
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 18:38:39 -0400
-Received: from e14.ny.us.ibm.com (e14.ny.us.ibm.com [129.33.205.204])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2t8ht3tpas-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 18:38:38 -0400
-Received: from localhost
- by e14.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <stewart@linux.ibm.com>;
- Thu, 20 Jun 2019 23:38:37 +0100
-Received: from b01cxnp23032.gho.pok.ibm.com (9.57.198.27)
- by e14.ny.us.ibm.com (146.89.104.201) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 20 Jun 2019 23:38:34 +0100
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x5KMcXoJ41353508
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45VHf51PvFzDr6P;
+ Fri, 21 Jun 2019 09:12:28 +1000 (AEST)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5KNBTKg098136; Thu, 20 Jun 2019 19:12:24 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2t8hsxkcuw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Jun 2019 19:12:24 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x5KN9eko002051;
+ Thu, 20 Jun 2019 23:12:23 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma03dal.us.ibm.com with ESMTP id 2t8hrnrk65-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Jun 2019 23:12:23 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x5KNCLwl37159220
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Jun 2019 22:38:33 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F555AE062;
- Thu, 20 Jun 2019 22:38:33 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B07BAAE05C;
- Thu, 20 Jun 2019 22:38:32 +0000 (GMT)
+ Thu, 20 Jun 2019 23:12:22 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD850C6066;
+ Thu, 20 Jun 2019 23:12:21 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26648C6055;
+ Thu, 20 Jun 2019 23:12:21 +0000 (GMT)
 Received: from birb.localdomain (unknown [9.102.43.75])
- by b01ledav005.gho.pok.ibm.com (Postfix) with SMTP;
- Thu, 20 Jun 2019 22:38:32 +0000 (GMT)
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with SMTP;
+ Thu, 20 Jun 2019 23:12:20 +0000 (GMT)
 Received: by birb.localdomain (Postfix, from userid 1000)
- id E04E94EC62A; Fri, 21 Jun 2019 08:38:28 +1000 (AEST)
+ id 4DDD94EC62A; Fri, 21 Jun 2019 09:12:17 +1000 (AEST)
 From: Stewart Smith <stewart@linux.ibm.com>
-To: =?utf-8?Q?Carter_Su=28=E8=8B=8F=E5=AD=9D=29?= <suxiao@inspur.com>,
- "openbmc\@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Subject: Re: Move away from default password
-In-Reply-To: <ca82e6a6ab5440e3b9f9754a66d5452c@inspur.com>
-References: <ca82e6a6ab5440e3b9f9754a66d5452c@inspur.com>
-Date: Fri, 21 Jun 2019 08:38:28 +1000
+In-Reply-To: <43de939d764a17c737b0edb31cdfe830@linux.vnet.ibm.com>
+References: <1164a9a82b2b59087059c59391e65d04@linux.vnet.ibm.com>
+ <874l4n6ct4.fsf@linux.vnet.ibm.com>
+ <43de939d764a17c737b0edb31cdfe830@linux.vnet.ibm.com>
+Date: Fri, 21 Jun 2019 09:12:17 +1000
+Message-ID: <878stv4zse.fsf@linux.vnet.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 X-TM-AS-GCONF: 00
-x-cbid: 19062022-0052-0000-0000-000003D35BEF
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011299; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01220896; UDB=6.00642291; IPR=6.01002034; 
- MB=3.00027398; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-20 22:38:35
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19062022-0053-0000-0000-00006165AFEF
-Message-Id: <87ef3n51cr.fsf@linux.vnet.ibm.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-06-20_15:, , signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
- malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=729 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906200160
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906200164
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,22 +85,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Openbmc <openbmc@lists.ozlabs.org>,
+ openbmc <openbmc-bounces+jrey=linux.ibm.com@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Carter Su(=E8=8B=8F=E5=AD=9D) <suxiao@inspur.com> writes:
-> Having a default password is a security risk, but if per BMC has an uniqu=
-e password, it may not very convenient for customer to use.
-> Customers will change the default password when they install new
-> machinery, or they may creat new account and password for BMC to use.
+Joseph Reynolds <jrey@linux.ibm.com> writes:
+> On 2019-06-17 17:56, Stewart Smith wrote:
+>> Joseph Reynolds <jrey@linux.ibm.com> writes:
+>>> There is some interest in moving OpenBMC away from a default password.
+>>> - email:
+>>> https://lists.ozlabs.org/pipermail/openbmc/2019-June/016515.html  
+>>> (which
+>>> references a RestrictionMode design:
+>>> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/21195)
+>>> 
+>>> Having a default password is a security risk.  Note that changing to a
+>>> different default password is not a good solution.  For example, if a
+>>> bad actor learns the default password from one device, that actor will
+>>> likely know the password for many of them.
+>> 
+>> and it makes it pretty easy to use something like Shodan to find all 
+>> the
+>> possible OpenBMCs connected to the Internet (hopefully by accident) and
+>> pop a root shell on them.
+>> 
+>> Mind you, in a lab environment, it's *really* useful.
+>
+> I imagine for the forseeable future, OpenBMC would continue to have a 
+> default userid and password (and I hope each development lab is using a 
+> different default password than the well-known password).  But I think 
+> development labs are subject to attack, so we need to eventually move 
+> away from default passwords even in the development labs.
+>
+> At this time, I am looking for options to move away from this model, but 
+> do not anticipate changing the default.
 
-I think there's a gap between what customers *should* do and what they
-*actually* do.
+I admire your optimism :)
 
-Defaulting to as secure as possible is nice as it somewhat saves people
-from themselves.
+I could probably ruin everybody's day with a simple nmap invocation and
+for loop in shell across the IBM class A :)
 
---=20
+Having something that wasn't the same everywhere would probably be an
+improvement in the lab, and make it harder for someone to accidentally
+do something to a machine they didn't intend to.
+
+-- 
 Stewart Smith
 OPAL Architect, IBM.
-
