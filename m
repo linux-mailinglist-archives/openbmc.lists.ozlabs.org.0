@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 850014D261
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 17:45:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F14BC4D29C
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 17:59:24 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45V5kB53cMzDrFj
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 01:45:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45V62L2sJlzDrDN
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 01:59:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,54 +19,65 @@ Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45V5jM001PzDqPW;
- Fri, 21 Jun 2019 01:44:38 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45V61m5jRZzDrF1
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 01:58:52 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5KFgifr038756; Thu, 20 Jun 2019 11:44:36 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2t8ccet8ku-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Jun 2019 11:44:36 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x5KFUfMa019353;
- Thu, 20 Jun 2019 15:44:35 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma04dal.us.ibm.com with ESMTP id 2t4ra6jg57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Jun 2019 15:44:35 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x5KFiXl457737502
+ x5KFvBfx075628
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 11:58:49 -0400
+Received: from e34.co.us.ibm.com (e34.co.us.ibm.com [32.97.110.152])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2t8amn81s0-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 11:58:49 -0400
+Received: from localhost
+ by e34.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <jrey@linux.ibm.com>;
+ Thu, 20 Jun 2019 16:58:48 +0100
+Received: from b03cxnp08025.gho.boulder.ibm.com (9.17.130.17)
+ by e34.co.us.ibm.com (192.168.1.134) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 20 Jun 2019 16:58:45 +0100
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x5KFwiUp49283574
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Jun 2019 15:44:33 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 26A81BE051;
- Thu, 20 Jun 2019 15:44:33 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9870BE054;
- Thu, 20 Jun 2019 15:44:32 +0000 (GMT)
+ Thu, 20 Jun 2019 15:58:44 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 68B2B78063;
+ Thu, 20 Jun 2019 15:58:44 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3F81E7805C;
+ Thu, 20 Jun 2019 15:58:44 +0000 (GMT)
 Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu, 20 Jun 2019 15:44:32 +0000 (GMT)
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 20 Jun 2019 15:58:44 +0000 (GMT)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 8bit
-Date: Thu, 20 Jun 2019 10:46:12 -0500
+Date: Thu, 20 Jun 2019 11:00:23 -0500
 From: Joseph Reynolds <jrey@linux.ibm.com>
 To: Stewart Smith <stewart@linux.ibm.com>
 Subject: Re: Move away from default password
-In-Reply-To: <874l4n6ct4.fsf@linux.vnet.ibm.com>
+In-Reply-To: <871rzr6cqt.fsf@linux.vnet.ibm.com>
 References: <1164a9a82b2b59087059c59391e65d04@linux.vnet.ibm.com>
- <874l4n6ct4.fsf@linux.vnet.ibm.com>
-Message-ID: <43de939d764a17c737b0edb31cdfe830@linux.vnet.ibm.com>
+ <1ec23c9c-6fd1-1a37-150e-6ac7c950cc0d@linux.intel.com>
+ <67d4cc41211749ef9ff888a31d9e8615@linux.vnet.ibm.com>
+ <871rzr6cqt.fsf@linux.vnet.ibm.com>
 X-Sender: jrey@linux.ibm.com
 User-Agent: Roundcube Webmail/1.0.1
 X-TM-AS-GCONF: 00
+x-cbid: 19062015-0016-0000-0000-000009C41795
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011297; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01220763; UDB=6.00642211; IPR=6.01001901; 
+ MB=3.00027394; MTD=3.00000008; XFM=3.00000015; UTC=2019-06-20 15:58:47
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19062015-0017-0000-0000-000043B7A037
+Message-Id: <d1b5f822cff4611fd21d537a9ef0c041@linux.vnet.ibm.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-06-20_11:, , signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
@@ -74,7 +85,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906200114
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906200116
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,117 +97,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Openbmc <openbmc@lists.ozlabs.org>,
- openbmc <openbmc-bounces+jrey=linux.ibm.com@lists.ozlabs.org>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ Openbmc <openbmc@lists.ozlabs.org>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-06-17 17:56, Stewart Smith wrote:
-> Joseph Reynolds <jrey@linux.ibm.com> writes:
->> There is some interest in moving OpenBMC away from a default password.
->> - email:
->> https://lists.ozlabs.org/pipermail/openbmc/2019-June/016515.html  
->> (which
->> references a RestrictionMode design:
->> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/21195)
+On 2019-06-17 17:58, Stewart Smith wrote:
+> Adriana Kobylak <anoo@linux.ibm.com> writes:
+>>>> 1. Unique password per BMC.
+>>>> In this approach, there is a way to change the factory default
+>>>> password.  Example flow: assemble the BMC, test it, factory reset,
+>>>> generate unique password (such as `pwgen`), then use a new function
+>>>> “save factory default settings” which would save the current
+>>>> setting into a new “factory settings” flash partition. After 
+>>>> that,
+>>>> a factory reset would reset to the factory installed password, not 
+>>>> to
+>>>> the setting in the source code.
 >> 
->> Having a default password is a security risk.  Note that changing to a
->> different default password is not a good solution.  For example, if a
->> bad actor learns the default password from one device, that actor will
->> likely know the password for many of them.
+>> How would this new "factory settings" flash partition be protected
+>> against being modified by an unauthorized or malicious user?
 > 
-> and it makes it pretty easy to use something like Shodan to find all 
-> the
-> possible OpenBMCs connected to the Internet (hopefully by accident) and
-> pop a root shell on them.
-> 
-> Mind you, in a lab environment, it's *really* useful.
+> My guess would be it'd be protected the same way that the default
+> password is today: not at all. If an attacker can write to flash, the
+> only way to reset the box is to dediprog the BMC flash chip.
 
-I imagine for the forseeable future, OpenBMC would continue to have a 
-default userid and password (and I hope each development lab is using a 
-different default password than the well-known password).  But I think 
-development labs are subject to attack, so we need to eventually move 
-away from default passwords even in the development labs.
+Access to the flash would be protected from attack by network agents via 
+password access to the BMC at two critical points.
 
-At this time, I am looking for options to move away from this model, but 
-do not anticipate changing the default.
+In this scenario:
+1. The factory assembles and tests the BMC, then changes its password to 
+a new value.  The password hash is stored on the flash "factory 
+settings" partition.  The BMC is then shipped to its new owner with the 
+new password.
+At this point, only the owner has password access to the BMC (unless the 
+factory keeps a record of the new password).
+2. The owner installs the BMC and configures it, including its network.  
+For example, change the password, creates new accounts, and set up IP.
+At this point, only the owner and owner's agents have password access to 
+the BMC.
 
+At this point, one of the owner's agents could use ssh to access the 
+flash partition.  (But why would they need to?)
 
->> I am exploring two options for OpenBMC, and want your feedback.
->> 
->> 1. Unique password per BMC.
->> In this approach, there is a way to change the factory default 
->> password.
->>   Example flow: assemble the BMC, test it, factory reset, generate 
->> unique
->> password (such as `pwgen`), then use a new function “save factory
->> default settings” which would save the current setting into a new
->> “factory settings” flash partition.  After that, a factory reset
->> would reset to the factory installed password, not to the setting in 
->> the
->> source code.
->> Presumably the new factory default would be printed on a sticker, or
->> something.
->> Are there any other factory settings (settings unique to each device)
->> that would benefit from being set like this?
->> One downside to this approach is someone who orders 100 systems has to
->> enter 100 unique passwords.
-> 
-> There's also a downside for those of us who often work remotely from
-> machines, we may have to wait for someone to be awake and be able to
-> physically go and check what the default password is.
-> 
->> 2. Create new account on first access.
->> Specifically, default OpenBMC to use a new RestrictionMode=SetupAccess
->> which:
->>   - (A) requires users to set up their credentials (at least: remove 
->> the
->> default password) before they can leave that mode, and
->>   - (B) does not let the user do anything else, including other
->> provisioning or operating the host, while in this mode.
->> So we could manufacture the BMC with a default password, but require 
->> it
->> to be changed as the first step to provision the BMC.
->> We might want to make network services react to this new mode, for
->> example, the phosphor-webui GUI would likely want to handle this
->> specially, and most REST APIs would be restricted.
->> Note this approach gives an attacker a window of time before the
->> credentials are set up.
-> 
-> In a lab environment though, we'd have to ensure we had a *very*
-> reliably way to reset the BMC when we switched who was using the 
-> machine.
-
-Agreed.  Gaining initial access and recovering access the BMC is one of 
-the issues.
-
-
->> I believe both of these approaches represent reasonable security
->> practices which may satisfy laws regarding consumer products.  For
->> example, CA Law SB-327
->> https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180SB327
->> 
->> Are there guidelines we can follow?  Can you find additional
->> vulnerabilities with these approaches?  Can we do better than this
->> without requiring additional infrastructure?
->> 
->> I plan to discuss this at the 2019-06-26 Security working group 
->> meeting:
->> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/
->> and would be happy to see ideas here.
-> 
-> I had an idea that provides less security, but still may be valuable:
-> make the default password at manufacturing be linked to the MAC address
-> of the BMC. This prevents people not on a local network to the machine
-> from gaining access (e.g. I have no idea what the MAC address of 
-> 8.8.8.8
-> is), but if I'm on the same ethernet network, then I can still work it
-> out. It would also allow someone buying 100 machines to programatically
-> work out what the password should be.
-
-Thanks, I understand this idea.  It may satisfy the letter of the law, 
-and perhaps also its intent (disclaimer: not a legal opinion), so it has 
-some merit.  But this scheme not as secure as random passwords 
-(specifically, if the attacker learns the MAC addresses).
-
-- Joseph
