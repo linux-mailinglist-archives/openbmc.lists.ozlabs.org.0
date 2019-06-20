@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F08D4DABF
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 21:53:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 034B44DAC3
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 21:54:23 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45VCDP3y64zDr83
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 05:53:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45VCFS19rfzDr88
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 05:54:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,26 +18,25 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45VC7x5qVJzDrJt
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45VC7x6CLKzDrJv
  for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 05:49:33 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 20 Jun 2019 12:49:29 -0700
+ 20 Jun 2019 12:49:32 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,398,1557212400"; d="scan'208";a="154232474"
+X-IronPort-AV: E=Sophos;i="5.63,398,1557212400"; d="scan'208";a="154232478"
 Received: from maru.jf.intel.com ([10.54.51.75])
- by orsmga008.jf.intel.com with ESMTP; 20 Jun 2019 12:49:29 -0700
+ by orsmga008.jf.intel.com with ESMTP; 20 Jun 2019 12:49:31 -0700
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Brendan Higgins <brendanhiggins@google.com>,
  Benjamin Herrenschmidt <benh@kernel.crashing.org>,
  C?ric Le Goater <clg@kaod.org>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM enabling
- control
-Date: Thu, 20 Jun 2019 12:49:19 -0700
-Message-Id: <20190620194922.15093-4-jae.hyun.yoo@linux.intel.com>
+Subject: [RFC PATCH dev-5.1 4/6] i2c: aspeed: fix master pending state handling
+Date: Thu, 20 Jun 2019 12:49:20 -0700
+Message-Id: <20190620194922.15093-5-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190620194922.15093-1-jae.hyun.yoo@linux.intel.com>
 References: <20190620194922.15093-1-jae.hyun.yoo@linux.intel.com>
@@ -58,41 +57,53 @@ Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds I2C SRAM enabling control for AST2500 SoC to
-support buffer mode and DMA mode transfer. The SRAM is enabled by
-default in AST2400 SoC.
+In case of a master pending state, it should not trigger the master
+command because this H/W is sharing the same data buffer for slave
+and master operation, so this commit fixes the issue with making
+the master command triggering happens when the state goes to active
+state.
 
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 ---
- drivers/irqchip/irq-aspeed-i2c-ic.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/i2c/busses/i2c-aspeed.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c b/drivers/irqchip/irq-aspeed-i2c-ic.c
-index f20200af0992..99985b22a9fa 100644
---- a/drivers/irqchip/irq-aspeed-i2c-ic.c
-+++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
-@@ -18,6 +18,9 @@
- #include <linux/of_irq.h>
- #include <linux/io.h>
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 6c8b38fd6e64..cde9dbac2d46 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -339,18 +339,19 @@ static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
+ 	struct i2c_msg *msg = &bus->msgs[bus->msgs_index];
+ 	u8 slave_addr = i2c_8bit_addr_from_msg(msg);
  
-+/* I2C Global Control Register (AST2500) */
-+#define ASPEED_I2C_GLOBAL_CTRL_REG	0xc
-+#define  ASPEED_I2C_SRAM_BUFFER_EN	BIT(0)
+-	bus->master_state = ASPEED_I2C_MASTER_START;
+-
+ #if IS_ENABLED(CONFIG_I2C_SLAVE)
+ 	/*
+ 	 * If it's requested in the middle of a slave session, set the master
+ 	 * state to 'pending' then H/W will continue handling this master
+ 	 * command when the bus comes back to the idle state.
+ 	 */
+-	if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE)
++	if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE) {
+ 		bus->master_state = ASPEED_I2C_MASTER_PENDING;
++		return;
++	}
+ #endif /* CONFIG_I2C_SLAVE */
  
- #define ASPEED_I2C_IC_NUM_BUS 14
++	bus->master_state = ASPEED_I2C_MASTER_START;
+ 	bus->buf_index = 0;
  
-@@ -100,6 +103,11 @@ static int __init aspeed_i2c_ic_of_init(struct device_node *node,
- 	irq_set_chained_handler_and_data(i2c_ic->parent_irq,
- 					 aspeed_i2c_ic_irq_handler, i2c_ic);
+ 	if (msg->flags & I2C_M_RD) {
+@@ -435,7 +436,7 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+ 		if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE)
+ 			goto out_no_complete;
  
-+	/* Enable I2C SRAM buffer in case of AST2500 */
-+	if (of_device_is_compatible(node, "aspeed,ast2500-i2c-ic"))
-+		writel(ASPEED_I2C_SRAM_BUFFER_EN,
-+		       i2c_ic->base + ASPEED_I2C_GLOBAL_CTRL_REG);
-+
- 	pr_info("i2c controller registered, irq %d\n", i2c_ic->parent_irq);
+-		bus->master_state = ASPEED_I2C_MASTER_START;
++		aspeed_i2c_do_start(bus);
+ 	}
+ #endif /* CONFIG_I2C_SLAVE */
  
- 	return 0;
 -- 
 2.22.0
 
