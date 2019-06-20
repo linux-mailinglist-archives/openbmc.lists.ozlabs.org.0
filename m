@@ -2,51 +2,130 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 251074C8D4
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 10:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 203974C8E1
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 10:03:20 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45TvRJ3Tc3zDqRx
-	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 18:01:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45TvT03dzSzDrC5
+	for <lists+openbmc@lfdr.de>; Thu, 20 Jun 2019 18:03:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.61.248; helo=ssh248.corpemail.net;
- envelope-from=suxiao@inspur.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=10748cf007=taoren@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-X-Greylist: delayed 135 seconds by postgrey-1.36 at bilbo;
- Thu, 20 Jun 2019 17:57:54 AEST
-Received: from ssh248.corpemail.net (ssh248.corpemail.net [210.51.61.248])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="TK0DuIcn"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="Fqvf/dZs"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45TvLp4wHKzDrC7
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 17:57:54 +1000 (AEST)
-Received: from ([60.208.111.195])
- by ssh248.corpemail.net (Antispam) with ASMTP (SSL) id LNX37818
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 15:55:18 +0800
-Received: from jtjnmail201608.home.langchao.com (10.100.2.8) by
- jtjnmail201611.home.langchao.com (10.100.2.11) with Microsoft SMTP Server
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45TvLz2FRkzDr8r;
+ Thu, 20 Jun 2019 17:58:01 +1000 (AEST)
+Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5K7sGkw003449; Thu, 20 Jun 2019 00:57:45 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=9mkV/NXUlt5XrPBELpS9BUgAgmSBEIgeZ78tpFg4D8g=;
+ b=TK0DuIcncbX4hCoc220+X8fE4Rk7WMy1WwIxKt/NqlI6+VNraUZ/RLOqDyPWlLoOwAol
+ huTG89ggOmQHzOUSlENfEYd39VjxvTlDogYQDZ37HvndgtZKCfKJ/fmP4xjjsOcPQ+9c
+ OZWsLO9nqcbzw0UcyfRp3jpZoL/k3qHq0rY= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2t7wrj1e0v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Thu, 20 Jun 2019 00:57:45 -0700
+Received: from ash-exhub101.TheFacebook.com (2620:10d:c0a8:82::e) by
+ ash-exhub103.TheFacebook.com (2620:10d:c0a8:82::c) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1591.10; Thu, 20 Jun 2019 15:55:14 +0800
-Received: from jtjnmail201608.home.langchao.com ([fe80::d834:149d:9ffa:ea88])
- by jtjnmail201608.home.langchao.com ([fe80::d834:149d:9ffa:ea88%2])
- with mapi id 15.01.1591.008; Thu, 20 Jun 2019 15:55:14 +0800
-From: =?utf-8?B?Q2FydGVyIFN1KOiLj+WtnSk=?= <suxiao@inspur.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Move away from default password
-Thread-Topic: Move away from default password
-Thread-Index: AdUnO8JPewLMJ13ARFaZCEPpJN6U4Q==
-Date: Thu, 20 Jun 2019 07:55:13 +0000
-Message-ID: <ca82e6a6ab5440e3b9f9754a66d5452c@inspur.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: yes
+ 15.1.1713.5; Thu, 20 Jun 2019 00:57:42 -0700
+Received: from NAM05-BY2-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.173) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Thu, 20 Jun 2019 00:57:42 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector1-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9mkV/NXUlt5XrPBELpS9BUgAgmSBEIgeZ78tpFg4D8g=;
+ b=Fqvf/dZs2srXY3Y5NWnR4BA+klCeGwUbih0QAxa28Hq/alntVGAmlWxvkGoedN8CxA+v15YXFQwbfw+XMZJY4neX4+OhOLDW/VW8cYBRYk7dAm7e7RGSj9yGY+WE9qDweP3CJ7OrkFiofnFYTf05iBmQOE7nS4d+qYbeuKBk37A=
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
+ MWHPR15MB1775.namprd15.prod.outlook.com (10.174.255.142) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1987.11; Thu, 20 Jun 2019 07:57:26 +0000
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::d51f:8f19:e2b5:3ae8]) by MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::d51f:8f19:e2b5:3ae8%6]) with mapi id 15.20.1987.014; Thu, 20 Jun 2019
+ 07:57:26 +0000
+From: Tao Ren <taoren@fb.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>, Brendan Higgins
+ <brendanhiggins@google.com>
+Subject: Re: [PATCH 1/2] i2c: aspeed: allow to customize base clock divisor
+Thread-Topic: [PATCH 1/2] i2c: aspeed: allow to customize base clock divisor
+Thread-Index: AQHVJuIcteG+E70PmUey9PLXreYJ5KajfUSAgAASwwCAAJYbgIAAB62A
+Date: Thu, 20 Jun 2019 07:57:26 +0000
+Message-ID: <bdd53adb-6987-1b91-adde-298839b2c066@fb.com>
+References: <20190619205009.4176588-1-taoren@fb.com>
+ <CAFd5g45TMtXcuqONdkpN_K+c0O+wUw8wkGzcQfV+sO8p5Krc9w@mail.gmail.com>
+ <18565fcf-3dc1-b671-f826-e4417e4ad284@fb.com>
+ <c610ecede7494c189a92a9a3f6d0fd16@TWMBX02.aspeed.com>
+In-Reply-To: <c610ecede7494c189a92a9a3f6d0fd16@TWMBX02.aspeed.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.100.1.52]
-Content-Type: multipart/signed; protocol="application/x-pkcs7-signature";
- micalg=SHA1; boundary="----=_NextPart_000_094E_01D52780.8B406CD0"
+x-clientproxiedby: MWHPR03CA0046.namprd03.prod.outlook.com
+ (2603:10b6:301:3b::35) To MWHPR15MB1216.namprd15.prod.outlook.com
+ (2603:10b6:320:22::17)
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.0
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2620:10d:c090:180::1:75c6]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 06c8c78d-992c-4a14-a670-08d6f554ef72
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
+ SRVR:MWHPR15MB1775; 
+x-ms-traffictypediagnostic: MWHPR15MB1775:
+x-microsoft-antispam-prvs: <MWHPR15MB1775F4F4CD54490AF0A8399EB2E40@MWHPR15MB1775.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4714;
+x-forefront-prvs: 0074BBE012
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(136003)(376002)(396003)(39860400002)(366004)(346002)(189003)(199004)(86362001)(58126008)(46003)(68736007)(478600001)(486006)(14454004)(4744005)(476003)(2616005)(64126003)(71200400001)(71190400001)(7416002)(2906002)(8676002)(81156014)(81166006)(110136005)(316002)(54906003)(66476007)(6116002)(229853002)(305945005)(73956011)(66946007)(53546011)(64756008)(6512007)(66446008)(186003)(7736002)(65826007)(25786009)(256004)(6486002)(53936002)(76176011)(99286004)(31696002)(66556008)(65956001)(65806001)(102836004)(5660300002)(31686004)(8936002)(446003)(11346002)(52116002)(6246003)(6506007)(386003)(6436002)(36756003)(4326008);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1775;
+ H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: fUAlk6DiJy6sWXQQgz6L6rxwIm5bWzYAwrm6K8boPqaWJ9ogUwzwQt037iYrBaV1LU4rgFjQpdIBrUfgrPog+/y2+Za1IhvLBZNC3dVt7r7bBFI4KpyaO11cTMqCmQ8atn3ZwEY80YqjSQnZ6HbMT6P3Wj9qbFLHoZBiCQFshXS6hsCUKtUskhaaH7Jabz9j1XfrG1jLOy59s6dVB8mgLeUZ/2ulwJV8VVlTDIyLOP4heKGkGJok0OxXyDw7RN/AoutH4ZCfrCTqeozLwu1Mo/9xDzw//ZLo+n39x2NNXqOCElj8Llzflu0Ip27zOsM5KJLjf3A04hz+i7Ac43W9hlLqNUV/IsH75Auo3JOD+lgFvkIg23z7MzmGYj7FfwGu7dCYYvqd15/zz7OZnf1/Wulfdqo2smx2ZJNSagqCGek=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <0FB3EA1C925D3F45868E5B7441BA38C2@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 06c8c78d-992c-4a14-a670-08d6f554ef72
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2019 07:57:26.6463 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: taoren@fb.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1775
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-20_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906200061
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,134 +137,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_NextPart_000_094E_01D52780.8B406CD0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-
-Having a default password is a security risk, but if per BMC has an =
-unique password, it may not very convenient for customer to use.
-Customers will change the default password when they install new =
-machinery, or they may creat new account and password for BMC to use.
-
-
-Carter Su
-
-
----------- Forwarded message ---------
-From: Stewart Smith <stewart@linux.ibm.com>
-Date: Tue, Jun 18, 2019 at 6:59 AM
-Subject: Re: Move away from default password
-To: Adriana Kobylak <anoo@linux.ibm.com>, Joseph Reynolds =
-<jrey@linux.ibm.com>
-Cc: openbmc <openbmc-bounces+anoo=3Dlinux.ibm.com@lists.ozlabs.org>,
-Openbmc <openbmc@lists.ozlabs.org>, Thomaiyar, Richard Marian =
-<richard.marian.thomaiyar@linux.intel.com>
-
-
-Adriana Kobylak <anoo@linux.ibm.com> writes:
->>> 1. Unique password per BMC.
->>> In this approach, there is a way to change the factory default=20
->>> password.  Example flow: assemble the BMC, test it, factory reset,=20
->>> generate unique password (such as `pwgen`), then use a new function=20
->>> =E2=80=9Csave factory default settings=E2=80=9D which would save the =
-current setting=20
->>> into a new =E2=80=9Cfactory settings=E2=80=9D flash partition. After =
-that, a factory=20
->>> reset would reset to the factory installed password, not to the=20
->>> setting in the source code.
->
-> How would this new "factory settings" flash partition be protected=20
-> against being modified by an unauthorized or malicious user?
-
-My guess would be it'd be protected the same way that the default =
-password is today: not at all. If an attacker can write to flash, the =
-only way to reset the box is to dediprog the BMC flash chip.
-
---
-Stewart Smith
-OPAL Architect, IBM.
-
-------=_NextPart_000_094E_01D52780.8B406CD0
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIMOTCCBOgw
-ggPQoAMCAQICEHJZ3dAghQm7TR3WtIciZWowDQYJKoZIhvcNAQEFBQAwWzETMBEGCgmSJomT8ixk
-ARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEU
-MBIGA1UEAxMLTGFuZ0NoYW8tQ0EwHhcNMDUwMTEyMDcyNTIyWhcNMjQxMTA3MTcyNjM4WjBbMRMw
-EQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDASBgoJkiaJk/Is
-ZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
-AQoCggEBAMvRSQUPw6jL6C6jqLQaQW3/yXkiew6X5DFftp11ymCmwpOEKEAHQEsOqiha/Lkj8ORt
-6KjfEHc1Z4AYgzXz9YJx0lJGoM27U/o07gu73XKTYTLEbs+MCb9Juq52ptSsRsZHBb0n4AfBjFON
-8gzgDmTg9TRyM2yNXDHoA1pSrHYvNT37urklW4XorW5DeMGohxlpOApkhsqlGpS2w7C2ZAR82NCp
-+80yCDXraDZ5cCOhQAyZ6qHcWJIloyi8+gwzJi1MqWB91JjE4wicxof9SCyNtdbx2XwKxSL5U0zM
-sZQJ+201lvmaqCrPSMcoUdZxWWKM2yYtro7oEiwB/4jpaHsCAwEAAaOCAaYwggGiMBMGCSsGAQQB
-gjcUAgQGHgQAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBTGbsOi
-E24avQY6XrcvNNjg05z7IzCCARUGA1UdHwSCAQwwggEIMIIBBKCCAQCggf2GgbxsZGFwOi8vL0NO
-PUxhbmdDaGFvLUNBLENOPWp0am5jYTAxLENOPUNEUCxDTj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNl
-cyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1cmF0aW9uLERDPWhvbWUsREM9bGFuZ2NoYW8sREM9Y29t
-P2NlcnRpZmljYXRlUmV2b2NhdGlvbkxpc3Q/YmFzZT9vYmplY3RDbGFzcz1jUkxEaXN0cmlidXRp
-b25Qb2ludIY8aHR0cDovL2p0am5jYTAxLmhvbWUubGFuZ2NoYW8uY29tL0NlcnRFbnJvbGwvTGFu
-Z0NoYW8tQ0EuY3JsMBAGCSsGAQQBgjcVAQQDAgEBMCMGCSsGAQQBgjcVAgQWBBRYQgrth4/MB0pS
-3hx7TTpz3BidCDANBgkqhkiG9w0BAQUFAAOCAQEAWjsuzhyiArAxdntQqbkoOaDt/caM2xEA3hWn
-gjl4yJeKxxuU0U5KLs7wcaVYantJjeL7jb9r29Aeb5lRzcUHodJgk2xvNYAI0s7ZkmahMSbPIMha
-w6sKSiq2bI08u7cyPoW5HxVJz3pEM4IkuLaWmMm/I3BUUQE3rxUdXy7iq2CE7KPNKIf+wDuouDgm
-bWItUuIev5toOR37MxpPS02Ci1H2KxOGkMDFAWJawNgzseRaRqEJdgMelpS46KnBaT3uFI/wqG+0
-1pMVfldgzOBA9Jaj4AC/AWU+v8Ks6+yX8/14Se7bkRltLqmXI6EGHo6KBiIAP2uGHg7lGzCmR/Ja
-dTCCB0kwggYxoAMCAQICCmqv3UcAAQABuGAwDQYJKoZIhvcNAQEFBQAwWzETMBEGCgmSJomT8ixk
-ARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEU
-MBIGA1UEAxMLTGFuZ0NoYW8tQ0EwHhcNMTQxMjA5MDkyNzU4WhcNMTkxMjA4MDkyNzU4WjCBoDET
-MBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYKCZImiZPy
-LGQBGRYEaG9tZTEVMBMGA1UECwwM5rWq5r2u5L+h5oGvMQ8wDQYDVQQLDAbnlKjmiLcxDzANBgNV
-BAMMBuiLj+WtnTEgMB4GCSqGSIb3DQEJARYRc3V4aWFvQGluc3B1ci5jb20wggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQCpbUD0W0y6Lg5GB/bXz4rEhZFfa+F0u6hz8Ngadu0KHSUMlZsW
-y9RX95a0IOGVqYzxEcyAPc30KUNa0xFn0qGOlDNBQm9KiQfGr52CGJQRlQoQG2ew7oPUPK4BnDpt
-NYapuKelJ5v1fnotykKrJM0MQFhj4IeSl1jUgBNHdMLJ4atTj5f81jLcxopTBFOX6DuQYYMwsYRy
-O209vUDlbfULUBRF0YQkWipi6Uco7BlUDsj2ODZzknYNzBEPFrlu+30CfM4K3ZE64O2IF5+YvVYN
-bmq6NEoFcZlvQA2VYX9Q5JM8cIKV5eadBKcJGhk+gYBA9glBWag9BJBF0PHAw+snAgMBAAGjggPH
-MIIDwzALBgNVHQ8EBAMCBaAwPgYJKwYBBAGCNxUHBDEwLwYnKwYBBAGCNxUIgvKpH4SB13qGqZE9
-hoD3FYPYj1yBSoairR2G15QsAgFkAgEYMEQGCSqGSIb3DQEJDwQ3MDUwDgYIKoZIhvcNAwICAgCA
-MA4GCCqGSIb3DQMEAgIAgDAHBgUrDgMCBzAKBggqhkiG9w0DBzAdBgNVHQ4EFgQUrlqThnV3wKMe
-46sD0xnYaGq/LVQwHwYDVR0jBBgwFoAUxm7DohNuGr0GOl63LzTY4NOc+yMwggEVBgNVHR8EggEM
-MIIBCDCCAQSgggEAoIH9hoG8bGRhcDovLy9DTj1MYW5nQ2hhby1DQSxDTj1qdGpuY2EwMSxDTj1D
-RFAsQ049UHVibGljJTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlv
-bixEQz1ob21lLERDPWxhbmdjaGFvLERDPWNvbT9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jh
-c2U/b2JqZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnSGPGh0dHA6Ly9qdGpuY2EwMS5ob21l
-LmxhbmdjaGFvLmNvbS9DZXJ0RW5yb2xsL0xhbmdDaGFvLUNBLmNybDCCATAGCCsGAQUFBwEBBIIB
-IjCCAR4wgbMGCCsGAQUFBzAChoGmbGRhcDovLy9DTj1MYW5nQ2hhby1DQSxDTj1BSUEsQ049UHVi
-bGljJTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixEQz1ob21l
-LERDPWxhbmdjaGFvLERDPWNvbT9jQUNlcnRpZmljYXRlP2Jhc2U/b2JqZWN0Q2xhc3M9Y2VydGlm
-aWNhdGlvbkF1dGhvcml0eTBmBggrBgEFBQcwAoZaaHR0cDovL2p0am5jYTAxLmhvbWUubGFuZ2No
-YW8uY29tL0NlcnRFbnJvbGwvanRqbmNhMDEuaG9tZS5sYW5nY2hhby5jb21fTGFuZ0NoYW8tQ0Eo
-MSkuY3J0MCkGA1UdJQQiMCAGCCsGAQUFBwMCBggrBgEFBQcDBAYKKwYBBAGCNwoDBDA1BgkrBgEE
-AYI3FQoEKDAmMAoGCCsGAQUFBwMCMAoGCCsGAQUFBwMEMAwGCisGAQQBgjcKAwQwPwYDVR0RBDgw
-NqAhBgorBgEEAYI3FAIDoBMMEXN1eGlhb0BpbnNwdXIuY29tgRFzdXhpYW9AaW5zcHVyLmNvbTAN
-BgkqhkiG9w0BAQUFAAOCAQEAVD/fSXQevnpNB3dZ7y/3Cn9As9+ujNiIMGCuP2rV29Z2GY5gsJFV
-4P5NkinQdE0Adkb2M9Smb6fCjYKZhE25c8LE96QfCWfglCn3mFjGZNUfwwrWFCRaSUyMBsM5soCo
-mMi9CYFQ7ADgeNS9t8EhCHlgDqnvpQ2vkVlse1i4TwfCU5yeZ5fI5SFHV162Ob9WjHTb/68cmS2N
-11b0Xodm6IoKMml6moyr8DmGmCDgB8c8/uJZHy36FinwOfKcWG4dAnmJB/irl9OmuKrIcaXtQSJk
-0voaIEPchLEZFEd6Be/glucWOeprFjySvn7vrMsgAxDQZZ53v2EtQGUk0KylCTGCA30wggN5AgEB
-MGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxhbmdjaGFvMRQwEgYK
-CZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmqv3UcAAQABuGAwCQYFKw4D
-AhoFAKCCAekwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTkwNjIw
-MDc1NTEyWjAjBgkqhkiG9w0BCQQxFgQUilkYgd8TyXijZb/pao4IdSBws3wweAYJKwYBBAGCNxAE
-MWswaTBbMRMwEQYKCZImiZPyLGQBGRYDY29tMRgwFgYKCZImiZPyLGQBGRYIbGFuZ2NoYW8xFDAS
-BgoJkiaJk/IsZAEZFgRob21lMRQwEgYDVQQDEwtMYW5nQ2hhby1DQQIKaq/dRwABAAG4YDB6Bgsq
-hkiG9w0BCRACCzFroGkwWzETMBEGCgmSJomT8ixkARkWA2NvbTEYMBYGCgmSJomT8ixkARkWCGxh
-bmdjaGFvMRQwEgYKCZImiZPyLGQBGRYEaG9tZTEUMBIGA1UEAxMLTGFuZ0NoYW8tQ0ECCmqv3UcA
-AQABuGAwgZMGCSqGSIb3DQEJDzGBhTCBgjALBglghkgBZQMEASowCwYJYIZIAWUDBAEWMAoGCCqG
-SIb3DQMHMAsGCWCGSAFlAwQBAjAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4D
-AhowCwYJYIZIAWUDBAIDMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAE
-ggEAiSSSmBL6nZglaOvhvTAZ9eXQWikkWqrZj4guXWBYw9gUbn6CloRjtlPoe1FG+I3ugU0Feoqj
-BEtZKwBshoacJwaUwT9aD8tBmSBCbt+WY57+XudYm8q6DqUe+ZUOsE5QDYN+j2TIV6R26NxTp9AM
-7b+ETksoB8rYh2kMAemY7ZAX0njuntJqd2UhI5JzkBYH+z3d3WtV7oPQWzX5PmguxW7kYIkeZDNu
-hDUWtJtwVAc2zJQgUR5N0HXjKNa0V4GEmd/NOutJgZtDWfIknlgyoSLuWPCL2yfwaglppi6snuZL
-V0NwGfLi1Ep5imiriEXfi0zeUOt/fW+D/r7wKcYefgAAAAAAAA==
-
-------=_NextPart_000_094E_01D52780.8B406CD0--
+T24gNi8yMC8xOSAxMjoyOSBBTSwgUnlhbiBDaGVuIHdyb3RlOg0KPiBIZWxsbyBUYW8sDQo+IAlP
+dXIgcmVjb21tZW5kIGFib3V0IGNsayBkaXZpZGVyIHNldHRpbmcgaXMgZm9sbG93IHRoZSBkYXRh
+c2hlZXQgY2xvY2sgc2V0dGluZyB0YWJsZSBmb3IgY2xvY2sgZGl2aXNvci4gDQo+IA0KPiBSeWFu
+ICANCg0KVGhhbmtzIFJ5YW4gZm9yIHRoZSByZXNwb25zZS4gQ291bGQgeW91IGFsc28gc2hhcmUg
+c29tZSByZWNvbW1lbmRhdGlvbnMvaGludHMgb24gaG93IHRvIHNvbHZlIHRoZSBpbnRlcm1pdHRl
+bnQgaTJjIHRyYW5zYWN0aW9uIGZhaWx1cmVzIG9uIEZhY2Vib29rIEFTVDI1MDAgQk1DIHBsYXRm
+b3Jtcz8NCg0KQlRXLCB0aGUgcGF0Y2ggaXMgbm90IGFpbWVkIGF0IG1vZGlmeWluZyB0aGUgZXhp
+c3RpbmcgZm9ybXVsYSBvZiBjYWxjdWxhdGluZyBjbG9jayBzZXR0aW5ncyBpbiBpMmMtYXNwZWVk
+IGRyaXZlcjogcGVvcGxlIHN0aWxsIGdldCB0aGUgcmVjb21tZW5kZWQgc2V0dGluZ3MgYnkgZGVm
+YXVsdC4gVGhlIGdvYWwgb2YgdGhlIHBhdGNoIGlzIHRvIGFsbG93IHBlb3BsZSB0byBjdXN0b21p
+emUgY2xvY2sgc2V0dGluZ3MgaW4gY2FzZSB0aGUgZGVmYXVsdC9yZWNvbW1lbmRlZCBvbmUgZG9l
+c24ndCB3b3JrLg0KDQoNCkNoZWVycywgDQoNClRhbw0K
