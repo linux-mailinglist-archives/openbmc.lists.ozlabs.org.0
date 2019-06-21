@@ -2,67 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF5164DE20
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 02:39:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC48C4DED2
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 03:53:07 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45VKZF0ms0zDrHP
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 10:39:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45VMCP0KZrzDqwj
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 11:53:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::72b; helo=mail-qk1-x72b.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="OV5VcpGM"; 
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="itETsA9K"; 
  dkim-atps=neutral
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com
- [IPv6:2607:f8b0:4864:20::72b])
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
+ [IPv6:2607:f8b0:4864:20::632])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45VKYk1ZY5zDrGs
- for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 10:38:48 +1000 (AEST)
-Received: by mail-qk1-x72b.google.com with SMTP id c70so3243248qkg.7
- for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 17:38:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45VMBq6t8pzDqRr
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 11:52:33 +1000 (AEST)
+Received: by mail-pl1-x632.google.com with SMTP id g4so2167417plb.5
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Jun 2019 18:52:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Zl5rlykWaRGsVQG6wMK791uGG6pWmTMWb8Usd1bjW/I=;
- b=OV5VcpGMwK7z8Ge1U6YfeJieC/LqWHGhQz49NYy61PDROcfqrW/Ejj1zacqfQRPknL
- /vZUnSTOnrQcUh4+jUEMpEmb/qaWkKl/oCr3vrIMqQpw+0W986NVwtjqF+FwXLxCbY2l
- TEE5VR/dtRuf06usL2Jjneg2dbsiKe8bFjhEQ=
+ :cc; bh=1oLc5lQY4IU5aXfQMRhbSsE0uyIQY6BrY5g1wxz/3Ec=;
+ b=itETsA9KthTGVhJt02h82wnAXDCn/fUpXes3TtZdoIJ3AfpUc6m4uzVwh8xOavKeAT
+ Q2lf2qEkdhBMgzpGhc4equMA1TJux43hUjXmz8n215R9LzamRA642EJG/LtpVgK6mg5P
+ I/0G9jtrQa56aeLvVDvqEMGJtmIrudOfsogqx++dc4Vvo/ul4LynPgb39Tt6RgJDHfHE
+ nBrV4UjKViQUdJu2ZPpWZ7ovXNLQ71xKJiQmZtt+eOcLodrPJM+8OIfOQoRSGOoTPVQ8
+ 5/FirUrimsgOaaSPQPsrOXIcCcJl08dUc0QY3mPMK0j/It88Wb8bIaPvezSgOmdVN24a
+ RQKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=Zl5rlykWaRGsVQG6wMK791uGG6pWmTMWb8Usd1bjW/I=;
- b=SUnesH+dtlkotEWIm1i/jJASpLkzjHY+Pmb6n6v7Rhn9LVGfyG4Tc/uVdlgMXdW+2Y
- rrwo0hCXiIcJPUD1L7hbUbOnr9WSOoUM25MWc1IKr4SKXt9KTolrocuopFhrG3cHoJpQ
- 8rw8ZWITS9RAE0+yl8Nd+Kqh5MrOYuuX8+T4L73KwM1gZME37AQrm1BEm5rutpOBv7zA
- 4Z5cHpJJHBMAa3hrbR9qATaaqao8maHD+RtLM50UB3T5i6f3Y12IK9KqHxqznLg7DGj0
- oTXj6lNhos6Sf7sqdswxCd6fPAM91hgkZDGnJwNRbxeJHeUxId5glutamEwwc9Oh1VXY
- JCPw==
-X-Gm-Message-State: APjAAAXE30b2lC4IhBRWcsd7TyPHdSZei829y6ZQu4dRS9zAQDv4kArj
- fQhaBrpgG0L1AreQOU1zJy92hUyhg0eLc8AS52g=
-X-Google-Smtp-Source: APXvYqzO+hf5R+lPVr/IE9m2XlHI6n4i1YmiB/m0rpydllkxv8ChMTzjMHhDsZwK6pGORop+9MHwvzEu7oOOYDec9S0=
-X-Received: by 2002:a05:620a:1113:: with SMTP id
- o19mr74168920qkk.330.1561077524459; 
- Thu, 20 Jun 2019 17:38:44 -0700 (PDT)
+ bh=1oLc5lQY4IU5aXfQMRhbSsE0uyIQY6BrY5g1wxz/3Ec=;
+ b=JWGnK1ofIzcrK02nG6FfbDNXCMb+uxIH6rgziLPT0FKsL0Gk3wfqDkPXqFeTu0lRin
+ yapJWWWz7HY1m3rewSs6Ut2+T2umii1ofieCOt4gIDpK+agKSAe9jAJ3lSRJVg34CiUQ
+ DhqcHeP1owYY/+/TyIVqFFGEOjfP9QPTZfJ5uOQTNUMaTf4GaO+1L7YJjf/5197Kn1XD
+ D5PDCe5rlvBi+XBd5DHP1cS0z78MPFMT4FpWdfMQdHtvkdWc86etmshL8ttzzvt1h0LV
+ cJLvtNPhoKa6uDvECS1xV+Rgc5DyjJKmEyzurl4F+6NKAMtjTTo8rCi4V9THWfmQGrDf
+ i9Vw==
+X-Gm-Message-State: APjAAAVOPWyKQ2MkgEvPaX4N12F9Gm5Jq+umEm+9oX+9yXCa31Y1QS0X
+ 0+6vOPMkZ5oQVUPTQoobVCn1mTjDztLpfH7Y0dGbadjA
+X-Google-Smtp-Source: APXvYqzfa463mi5HbCt35kkFFnvUMfGoH2RH9Q6UqxSNIqvuBdY5nOFW6thqXfbWJJhl8UPEbKuPVNTA7XVxrMHu830=
+X-Received: by 2002:a17:902:9897:: with SMTP id
+ s23mr60660350plp.47.1561081949950; 
+ Thu, 20 Jun 2019 18:52:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALLMt=qZOxWDH8eDqv6JYbkvgk10mR1K_REgnE-DkssLWD=iVg@mail.gmail.com>
- <CACPK8XdV6X6j=A2Qf7RcBnWWoESi6SWMZfcoA2mJPO_JFCdcrQ@mail.gmail.com>
- <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
- <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
- <CACPK8XdZWGJ8d32N1D8Np2Ja8DOPZ4BqB9wJ4GyFOJ5PCmO5gg@mail.gmail.com>
- <CADKL2t7a41=uwFQaB8UyLOJUNm65rq4hgxCK1zdURCZ6reXZ0A@mail.gmail.com>
-In-Reply-To: <CADKL2t7a41=uwFQaB8UyLOJUNm65rq4hgxCK1zdURCZ6reXZ0A@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 21 Jun 2019 00:38:31 +0000
-Message-ID: <CACPK8XdXNaWBNsigUuxGJtKPrrO=9Jhuy_Tci3ShBVXFD3WKSg@mail.gmail.com>
-Subject: Re: CI to stop testing meta-* layers not in tested machine
-To: Benjamin Fair <benjaminfair@google.com>
+References: <CAO=notwO_0MNFY-70bGRwmQZGG4_Wm-=2zddmncKYkT-QkBx0g@mail.gmail.com>
+ <CACPK8XdjO8uteCX6WzYWzrhjyWoof=_jwAOpjp=FUMeUwrXcLg@mail.gmail.com>
+In-Reply-To: <CACPK8XdjO8uteCX6WzYWzrhjyWoof=_jwAOpjp=FUMeUwrXcLg@mail.gmail.com>
+From: Patrick Venture <venture@google.com>
+Date: Thu, 20 Jun 2019 18:52:19 -0700
+Message-ID: <CAO=notzneH1K5w019Szob48gBTniwdAkmWgDCo+nkLhB=0iNrg@mail.gmail.com>
+Subject: Re: reduced contributing availability
+To: Joel Stanley <joel@jms.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,65 +74,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 14 Jun 2019 at 15:55, Benjamin Fair <benjaminfair@google.com> wrote:
-> >
-> > Andrew tried to build the machine and ran into u-boot issues which is
-> > still blocking the machine's addition to our CI. Patrick, are you able
-> > to look into that?
-> >
-> >  https://github.com/openbmc/openbmc/issues/3542#issuecomment-501706892
+On Thu, Jun 20, 2019 at 5:33 PM Joel Stanley <joel@jms.id.au> wrote:
 >
-> That issue will be resolved by switching to a 2019-based U-Boot branch:
+> On Thu, 20 Jun 2019 at 17:55, Patrick Venture <venture@google.com> wrote:
+> >
+> > Hi fellow-openbmc'ers
+> >
+> > I will have fewer cycles to contribute to OpenBMC moving forward.
+> > It's unclear yet how it'll settle out, likely just a few hours per
+> > week.  Enough to finish current things, and review incoming patches
+> > (pid-control/hwmon/ipmi-blobs-stuff).  Unlikely to contribute to new
+> > long-term efforts or long bug arcs (epics).
+> >
+> > Watching this program grow as it has over the past couple years has
+> > been excellent and I'm excited to see the community continue to
+> > accelerate in growth and contributions.
 >
-> https://gerrit.openbmc-project.xyz/c/openbmc/meta-nuvoton/+/22556
+> Thanks for the heads up. And thank you for your contributions, it's
+> been great to have you around.
 
-This has been merged now.
-
-Andrew G, are we able to turn on the CI?
-
-I think we have consensus to drop qemu, and enable gsj. There were no
-objections to enabling swift too.
-
-Cheers,
-
-Joel
+You're welcome.  Thanks for all the help!
 
 >
-> >
-> >
-> >
-> > Once we get the u-boot issue sorted out, I propose the following changes:
-> >
-> >  - drop qemu from CI. 'qemu' is actually testing on a generic arm
-> > machine. A few of us at IBM have a side project that has resulted in a
-> > high quality Qemu support for the aspeed boards, so if you would like
-> > to test in qemu I recommend grabbing palmetto or romulus and doing
-> > that. So consider this dropping the generic qemu image and instead
-> > focusing on the aspeed one.
+> Cheers,
 >
-> +1
->
-> Many things are already broken on QEMU, including phosphor-ipmi-host.
-> It's not a useful platform to test with.
->
-> >
-> >  - add gsj. This gives us coverage of the nuvoton kernel and u-boot,
-> > as well as the nuvoton specific layers
->
-> Agreed. I'd also like to switch to (or add) a Nuvoton system with a
-> host once such a machine is supported upstream. The gsj is only a
-> storage tray so it doesn't test IPMI bridges, power control, etc.
->
-> >
-> >  - add swift. This is an ast2500-based system that we're looking to
-> > use emmc flash with, and having testing for those images will be
-> > useful
-> >
-> > Cheers,
-> >
-> > Joel
+> Joel
