@@ -2,54 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3DF84EEDC
-	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 20:42:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA1CD4EEEF
+	for <lists+openbmc@lfdr.de>; Fri, 21 Jun 2019 20:52:21 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45VnbX1Fz7zDqgF
-	for <lists+openbmc@lfdr.de>; Sat, 22 Jun 2019 04:42:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45VnqR1KVnzDqdv
+	for <lists+openbmc@lfdr.de>; Sat, 22 Jun 2019 04:52:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::236; helo=mail-oi1-x236.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="J0GsTU/y"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45VnZz6NNbzDqdh
- for <openbmc@lists.ozlabs.org>; Sat, 22 Jun 2019 04:41:29 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 21 Jun 2019 11:41:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,401,1557212400"; d="scan'208";a="312069546"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga004.jf.intel.com with ESMTP; 21 Jun 2019 11:41:27 -0700
-Subject: Re: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM
- enabling control
-To: Ryan Chen <ryan_chen@aspeedtech.com>,
- Brendan Higgins <brendanhiggins@google.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- C?ric Le Goater <clg@kaod.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>
-References: <20190620194922.15093-1-jae.hyun.yoo@linux.intel.com>
- <20190620194922.15093-4-jae.hyun.yoo@linux.intel.com>
- <c64ab19a31d1495f8e137d5ac58645b2@TWMBX02.aspeed.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <2539f657-1966-c00d-dace-fa382bd1b85f@linux.intel.com>
-Date: Fri, 21 Jun 2019 11:41:27 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Vnpw67KQzDqdp
+ for <openbmc@lists.ozlabs.org>; Sat, 22 Jun 2019 04:51:52 +1000 (AEST)
+Received: by mail-oi1-x236.google.com with SMTP id e189so5352488oib.11
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Jun 2019 11:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qYqa41kXVXLOdMnIZXn9CLnnZdbeYnwSpvDqnzpANNk=;
+ b=J0GsTU/yS03j5FmlAfWHJwbZWbhJIPEx5fYHfD/Nz4EcijZVGW02S/JRjOawknEtId
+ lP56BCzoZOUNNrTNDuQXHbbhkVK9Ur6VZBWJ8sc6EPSfG6anasXWxSXtDQdTRncfyvJ7
+ JGnr1NNTkC2fBDqN4HjBcylWISw6L6962oVKVoFYEP7zf3Psi0Cf8lRdAlXznXpSWSmf
+ 4NKnOvhffssxncFKryk+ZODO0fShYOw/VTmKmXFdl5HP2W7aKx81Kxv02rpvvJVClkwV
+ stduXntZjvk1u5g011VnYIRN60XqzhQRXpmHHk2LQSrxJCkIvScMmkApcazvc27Dw92u
+ eOTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qYqa41kXVXLOdMnIZXn9CLnnZdbeYnwSpvDqnzpANNk=;
+ b=erIbqZUD7zu0W2A1v9bpJjWveNh9vK1WH38w0vJ58IaxuJ3XUyIQOZbB7aTJfp21yt
+ yqVHWy594IkIY+IISXsU3PVmmSLNvTMwBwXhyvkBhMaFY/9Oy2nUxyzES8DoHkzOv5UL
+ hZvlyQHrlKR1H4KJZVcI9MW1r+SuecjVXYrR+QQnzwtzcytIooThqfReOK4ZvAZ0FzTm
+ xCUsY7vSn5IQPKr+3A7XKqD0AtR3U/1my+IEN1Ac1xgVh1KhdUhoju2qVohQEurio1V4
+ T8S/nzfC92PgBHdSeEk74kEEubUiXho24WpPr4rPaTCQFT99o0CIJ+BmdTNFPKTM3jBp
+ drgQ==
+X-Gm-Message-State: APjAAAUwUjVWRQfeSKYlKzPtYz3pRvYAQsjwZbW4ButjYfvXJJbYMeTT
+ qKnYRj2qw4fRFBjDIT14ZFlvYxBzWbYPF/8iivI=
+X-Google-Smtp-Source: APXvYqxy/41izrHKk/s0fSLtRHZMr4Y8EUsP5q5Hyj6NZnqkHQPSxfhNQDYSvcUYmj59vShg8qE6fytrLttT+Gp1PKo=
+X-Received: by 2002:aca:aad3:: with SMTP id t202mr3973571oie.158.1561143110122; 
+ Fri, 21 Jun 2019 11:51:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c64ab19a31d1495f8e137d5ac58645b2@TWMBX02.aspeed.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CALLMt=qZOxWDH8eDqv6JYbkvgk10mR1K_REgnE-DkssLWD=iVg@mail.gmail.com>
+ <CACPK8XdV6X6j=A2Qf7RcBnWWoESi6SWMZfcoA2mJPO_JFCdcrQ@mail.gmail.com>
+ <CAO=notxmm4JWPSS3o6bBXpFxO=n-e43F8kLPcjSvudvGoCCZPA@mail.gmail.com>
+ <CALLMt=om6w-0um4vBKoosxVHjL2egHd-Fs=0aT3zE6LJHXedyw@mail.gmail.com>
+ <CACPK8XdZWGJ8d32N1D8Np2Ja8DOPZ4BqB9wJ4GyFOJ5PCmO5gg@mail.gmail.com>
+ <CADKL2t7a41=uwFQaB8UyLOJUNm65rq4hgxCK1zdURCZ6reXZ0A@mail.gmail.com>
+ <CACPK8XdXNaWBNsigUuxGJtKPrrO=9Jhuy_Tci3ShBVXFD3WKSg@mail.gmail.com>
+In-Reply-To: <CACPK8XdXNaWBNsigUuxGJtKPrrO=9Jhuy_Tci3ShBVXFD3WKSg@mail.gmail.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Fri, 21 Jun 2019 13:51:34 -0500
+Message-ID: <CALLMt=pX201pj9o8jWPZCXV+udeijVDAHcot1z_=_4nSy-3ShA@mail.gmail.com>
+Subject: Re: CI to stop testing meta-* layers not in tested machine
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,66 +78,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/20/2019 5:33 PM, Ryan Chen wrote:
-> Hello Jae,
-> 	The i2c register setting must after scu reset. - APEED_I2C_SRAM_BUFFER_EN
-> 	My recommend aspeed-i2c-ic.c need be probe after scu reset. And all others i2c bus is no needed for scu reset.
+On Thu, Jun 20, 2019 at 7:38 PM Joel Stanley <joel@jms.id.au> wrote:
+>
+> On Fri, 14 Jun 2019 at 15:55, Benjamin Fair <benjaminfair@google.com> wrote:
+> > >
+> > > Andrew tried to build the machine and ran into u-boot issues which is
+> > > still blocking the machine's addition to our CI. Patrick, are you able
+> > > to look into that?
+> > >
+> > >  https://github.com/openbmc/openbmc/issues/3542#issuecomment-501706892
+> >
+> > That issue will be resolved by switching to a 2019-based U-Boot branch:
+> >
+> > https://gerrit.openbmc-project.xyz/c/openbmc/meta-nuvoton/+/22556
+>
+> This has been merged now.
+>
+> Andrew G, are we able to turn on the CI?
+>
+> I think we have consensus to drop qemu, and enable gsj. There were no
+> objections to enabling swift too.
 
-Hello Ryan,
+I removed qemu and added in gsj but we still need to work a few things out
+to get Swift going. I pinged you offline on that Joel.
 
-This module is registered after the SCU reset.
-Thank you for the information.
-
-Regards,
-Jae
-
-> 
-> Ryan
-> 
-> -----Original Message-----
-> From: openbmc [mailto:openbmc-bounces+ryan_chen=aspeedtech.com@lists.ozlabs.org] On Behalf Of Jae Hyun Yoo
-> Sent: Friday, June 21, 2019 3:49 AM
-> To: Brendan Higgins <brendanhiggins@google.com>; Benjamin Herrenschmidt <benh@kernel.crashing.org>; C?ric Le Goater <clg@kaod.org>; Joel Stanley <joel@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
-> Cc: openbmc@lists.ozlabs.org; Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> Subject: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM enabling control
-> 
-> This commit adds I2C SRAM enabling control for AST2500 SoC to support buffer mode and DMA mode transfer. The SRAM is enabled by default in AST2400 SoC.
-> 
-> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> ---
->   drivers/irqchip/irq-aspeed-i2c-ic.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c b/drivers/irqchip/irq-aspeed-i2c-ic.c
-> index f20200af0992..99985b22a9fa 100644
-> --- a/drivers/irqchip/irq-aspeed-i2c-ic.c
-> +++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
-> @@ -18,6 +18,9 @@
->   #include <linux/of_irq.h>
->   #include <linux/io.h>
->   
-> +/* I2C Global Control Register (AST2500) */
-> +#define ASPEED_I2C_GLOBAL_CTRL_REG	0xc
-> +#define  ASPEED_I2C_SRAM_BUFFER_EN	BIT(0)
->   
->   #define ASPEED_I2C_IC_NUM_BUS 14
->   
-> @@ -100,6 +103,11 @@ static int __init aspeed_i2c_ic_of_init(struct device_node *node,
->   	irq_set_chained_handler_and_data(i2c_ic->parent_irq,
->   					 aspeed_i2c_ic_irq_handler, i2c_ic);
->   
-> +	/* Enable I2C SRAM buffer in case of AST2500 */
-> +	if (of_device_is_compatible(node, "aspeed,ast2500-i2c-ic"))
-> +		writel(ASPEED_I2C_SRAM_BUFFER_EN,
-> +		       i2c_ic->base + ASPEED_I2C_GLOBAL_CTRL_REG);
-> +
->   	pr_info("i2c controller registered, irq %d\n", i2c_ic->parent_irq);
->   
->   	return 0;
-> --
-> 2.22.0
-> 
+>
+> Cheers,
+>
+> Joel
