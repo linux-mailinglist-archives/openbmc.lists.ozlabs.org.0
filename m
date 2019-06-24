@@ -2,71 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F6C25190A
-	for <lists+openbmc@lfdr.de>; Mon, 24 Jun 2019 18:53:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E93D52173
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jun 2019 06:01:22 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Xb2T19wLzDqQm
-	for <lists+openbmc@lfdr.de>; Tue, 25 Jun 2019 02:53:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45XssW557PzDqT5
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jun 2019 14:01:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::c36; helo=mail-yw1-xc36.google.com;
- envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=dell.com
+ (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com;
+ envelope-from=paul.vancil@dell.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=dell.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="gtk+xqd2"; 
+ unprotected) header.d=dell.com header.i=@dell.com header.b="MP3p1OZG"; 
  dkim-atps=neutral
-Received: from mail-yw1-xc36.google.com (mail-yw1-xc36.google.com
- [IPv6:2607:f8b0:4864:20::c36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 30395 seconds by postgrey-1.36 at bilbo;
+ Tue, 25 Jun 2019 14:00:38 AEST
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
+ [148.163.137.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Xb161yKBzDqBW
- for <openbmc@lists.ozlabs.org>; Tue, 25 Jun 2019 02:51:54 +1000 (AEST)
-Received: by mail-yw1-xc36.google.com with SMTP id m16so6088452ywh.12
- for <openbmc@lists.ozlabs.org>; Mon, 24 Jun 2019 09:51:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=fZBvZh1LXih26qliibBPrM3MLe0oZdhFF4XNclcKkQg=;
- b=gtk+xqd2Ef/9h5H3F4EdzWTq4EbxndgLon9d+SrZHgCYI2LPPVySY5QyMAa2KlMQ/S
- OtAsMrslkJFBTGSCRatoQGByAcg/pifYEBIoGZgFp/yntxNFOMSHtWaybs9DDQ4XUgIa
- b07qSOnhi/0XV7yIbfXV62pHrNzn1egvT5jwO53WAVA0UaxMyVi0gHKJlAGN9KSBQrQR
- 2WN8n4lHlk8SjdMFwiQ0dC7MoHLmz9XZ1vy9C5FXSYgx1gJQqSxag6sNXCSVBVO04O5Q
- JANuf9Z6g8Q36kRgB8mcNBmKm4gVVIZXKLK1On7b7Eh+c60Q2JqNqrPT4SRpwfBWdQPd
- i2QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=fZBvZh1LXih26qliibBPrM3MLe0oZdhFF4XNclcKkQg=;
- b=AzFjIUJsYi7DXprIt/gM8y+3xL0u5lT/zwdxK+5zULBZpmljGVdjn9qAkOZ56zdDM1
- 7MzEVw6mdC2slgK/XGcSoBKR6qggqaHpFZOoXiI9YeqJt5A0cPOjx53Zo/G1fZo98WRr
- 2LHknRddxOwk+hfA5AbTTrfJBkpmnVS4jJXsqufnIQaOseg/UTResl09dpSyEbfOFV94
- QzhF4pzilAH6uL1xNxjJ09Ofavz3ES4Z2bO3PSXA3kHH4IeWQ5HmrYVyEmedSNNqzGEA
- f67rM2mILAlAPumGa9D1qyl7/SAGEyf6fIYjkn+DlF1puTy46K9aUYqGgw2Sa3hoCgw7
- 7ATA==
-X-Gm-Message-State: APjAAAV8tpdB2xMCp9LtncfkmhvR+gAeRVQB2VfBZ6K7y26alTNdhHPk
- KES2pyl+AZzXUKdbvXrWF4niPL8osPRlaNMrQdE=
-X-Google-Smtp-Source: APXvYqyUqKWSSGj7bX8/DKKUtZw5u24tCWGTdy4bLPcj1rE6Zi6VDziSqZscG0r7cRWtxar0zwGbH0QlnNK3tOx3a6Y=
-X-Received: by 2002:a81:1153:: with SMTP id 80mr24611032ywr.39.1561395110466; 
- Mon, 24 Jun 2019 09:51:50 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Xsrk53yKzDqSy
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Jun 2019 14:00:36 +1000 (AEST)
+Received: from pps.filterd (m0170397.ppops.net [127.0.0.1])
+ by mx0b-00154904.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5OJUBTa026894
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Jun 2019 15:33:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
+ h=from : to : subject :
+ date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=smtpout1; bh=8kVXmhg+Fu5sIZ5HJP1a8UKPHk+0O67IM3naPtVfM5k=;
+ b=MP3p1OZGduf8S8n6CmCy8+4dAsirTqgGB1iaiYVxeuyMOVCbFR9TbUUvF9w6xe5B3WzW
+ R5YcrX77r2/6xhucLIYjUhcIlUtKJiyfJSsL/2ZlN3nlEE5erlDC+GMkVhnvpl3q5w+C
+ M2NarE0Qivh17px8D3q0v6p74HRAuutoXfo8vegJ3vowfpQqqJpmtWXMChM8Hm3XtzNn
+ +jw8eS4k4l8MuroPiEu8EdJ8IvZ9kylOI4dzvD3ggYI8aedRpfODt2uqoMoaFRGes7v8
+ mo2aI3whjOou5WAdGuMPkK3YrdWHeKAn/OcoiaCfQCw7moiKIq6Xg5uviSCky9PGurhi BA== 
+Received: from mx0a-00154901.pphosted.com (mx0a-00154901.pphosted.com
+ [67.231.149.39])
+ by mx0b-00154904.pphosted.com with ESMTP id 2t9ddrs6f8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Jun 2019 15:33:56 -0400
+Received: from pps.filterd (m0142699.ppops.net [127.0.0.1])
+ by mx0a-00154901.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5OJXQ6F026529
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Jun 2019 15:33:55 -0400
+Received: from ausxippc101.us.dell.com (ausxippc101.us.dell.com
+ [143.166.85.207])
+ by mx0a-00154901.pphosted.com with ESMTP id 2tb23ujva8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Jun 2019 15:33:55 -0400
+X-LoopCount0: from 10.166.135.97
+X-PREM-Routing: D-Outbound
+X-IronPort-AV: E=Sophos;i="5.60,346,1549951200"; d="scan'208";a="1260479953"
+From: <Paul.Vancil@dell.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Platform telemetry and health monitoring
+Thread-Topic: Platform telemetry and health monitoring
+Thread-Index: AdUqvr91HvDeXicmSfWb6F6uAhq+3w==
+Date: Mon, 24 Jun 2019 19:33:52 +0000
+Message-ID: <742cb5ad955a42518e15c0c68ed06f94@AUSX13MPS306.AMER.DELL.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.143.18.86]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
- <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
- <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
- <CAMTupoQ9fovzOcFH__Ljq=y8RKAp8_7WYunzQ8xNcc6Qjk+Dvg@mail.gmail.com>
- <tencent_799D81715559779D478D3D61@qq.com>
- <CAOUmYFTVYjXwXP_oC6+yMUaUS8d15=Ys5BDqGjc-N5JBQC8HQg@mail.gmail.com>
- <tencent_1BF1F4AC2B9970D9471A8668@qq.com>
-In-Reply-To: <tencent_1BF1F4AC2B9970D9471A8668@qq.com>
-From: Jandra A <jandraara@gmail.com>
-Date: Mon, 24 Jun 2019 11:51:39 -0500
-Message-ID: <CAMTupoTUFv3TCY=D8OatOTCeoBdCsbqXVep5ZM6vXdJ1EGgr-A@mail.gmail.com>
-Subject: Re: Re: Network Settings GUI
-To: xiuzhi <1450335857@qq.com>
-Content-Type: multipart/alternative; boundary="000000000000e9d845058c14a090"
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-24_13:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906240156
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1810050000
+ definitions=main-1906240155
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,87 +97,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, rxsun <rxsun@zd-tech.com.cn>,
- Derick <derick.montague@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e9d845058c14a090
-Content-Type: text/plain; charset="UTF-8"
+Re Redfish support for Telemetry,
+Deepak noted that Redfish had a Telemetry schema that is a work-in-progress=
+ (wip).
+Actually, Redfish Telemetry was release as part of the 2018.2 release in Au=
+gust 2018, and is being implemented by some BMCs now.
+See:  https://www.dmtf.org/content/new-redfish-release-adds-openapi-30-supp=
+ort-telemetry
+And  https://www.dmtf.org/sites/default/files/Redfish_2018_Release_2_Overvi=
+ew.pdf    (slides 2, 7 )
+The White Paper Deepak referred to was released as a wip earlier in the yea=
+r.   It was not updated but is accurate as a general overview.
+There is a public-telemetry-mockup that is nice for understanding the model=
+, but not yet published.   We could push them to do that soon.
+In Redfish, there are:
+   --MetricDefinitions -- that define a metric property (eg minimumConsumed=
+Watts being the min of power consumption over an interval)
+   --MetricReportDefinitions -- define a metric report consisting of a set =
+of MetricProperties, what triggers the generation of the report (eg schedul=
+ed, on trigger...), and how to send the report (log to metricReports Collec=
+tion, send RedfishEvent, etc)
+   --MetricReports -- the report --which can is logged or sent as an event
+   --MetricTriggers -- defines triggers can can trigger a metric report cre=
+ation eg a sensor crossing a threshold etc
 
-Hi Xiuzhi and Ruixia,
+Metric data can be collected by the BMC, and then read by a client with Red=
+fish GET requests, or can be sent autonomously as RedfishEvents.
 
-It would be great to set some time to align on the requirements from design
-and how to work together so that your team can start on the so front-end
-development.
+The data is JSON encoded and formatted along the lines of Redfish responses=
+, but the reports generally only contains the relevant telemetry data (with=
+ minimal describing metadata) since the descriptive metadata is all defined=
+ by the MetricReportDefinitions and MetricDefinitions that are associated w=
+ith the report.
+=20
+The Redfish Telemetry model is very general in nature I think--and thus sup=
+ports about any type of metric or telemetry data one might want.
+So this is worth a strong consideration as the basis for OpenBMC telemetry.
 
-Like Derick said, we meet every other Wednesday at 10:00 Central time to
-discuss GUI issues, with the next one being next Wednesday (July 3rd).
-Hopefully you can make that.
+Note that the model does support allowing users to define metric reports (b=
+ased on supported Redfish properties), however it does not require allowing=
+ users to define custom reports (which could be complicated to implement).
+I think most early implementations will support some set of pre-defined Met=
+ricReportDefinitions.
+However the DMTF has not officially published any 'standard' Report Definit=
+ions.
 
-If you cannot, I am happy to meet at 7:00 or 8:00 AM Central time this
-Wednesday (June 26th) or Friday (June 28th). Please let me know.
+Thanks,  Paul Vancil   --Dell ESI
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Thu, 20 Jun 2019 14:54:35 +0530
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+To: Neeraj Ladkani <neladk@microsoft.com>, OpenBMC Maillist
+	<openbmc@lists.ozlabs.org>
+Subject: Re: Platform telemetry and health monitoring
+Message-ID: <582a29cf-e3bf-f7d3-2e78-c743c3a6a2d2@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=3Dutf-8; format=3Dflowed
+
+On 19/06/19 11:11 AM, Neeraj Ladkani wrote:
+> In last meeting, we discussed that telemetry data can be collected=20
+> using ?tools? and exported using binary ?blobs?,
+>=20
+> Should we define a standard data format so that information can be parsed=
+ through standard mechanism and help taking specific actions.
+>=20
+> Host CPU
+> Memory
+> Network Adapter
+> GPUs/IPUs
+> BMCs
+>=20
+
+Redfish has a work-in-progress [1] Telemetry schema, and I believe via this=
+ schema, one can pull out telemetry information, as well as have the BMC pu=
+sh out Telemetry information via server-sent events. Are you looking at thi=
+s as an option?
+
+[1]
+https://www.dmtf.org/documents/redfish-spmf/redfish-telemetry-white-paper-0=
+10a
 
 Regards,
+Deepak
 
-On Wed, Jun 19, 2019 at 8:30 PM xiuzhi <1450335857@qq.com> wrote:
+> Thanks
+> Neeraj
 
-> Hi Derick,
-> >> The IPV6 webui should support both IPV4 and IPV6 on a single interface
-> at the same time and users can set IPV4 and IPV6 on the same network
-> webpage from Lenovo test cases.
->
-> >Thank you!
->
-> >>  Ruixia (her email: rxsun@zd-tech.com.cn;), form my team can do
-> front-end  to implement your design .  It would be best if the IPV6 feature
-> could be achieved in one to two months.
->
-> >It would be great if she were able to join our GUI Community
-> workgroup. It's every other Wednesday at 10:00 Central Time. We use
-> these to discuss all the GUI issues. Where are you located?
->   I am in BeiJing  UTC+8. The meeting time is  Wednesday  23:00 Beijing
-> Time (Wednesday 10:00 am Central Daylight Time),isn't it?
-> >GUI Community Workgroup Wiki:
-> https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
->
-> Best,
-> Xiuzhi
->
 
---000000000000e9d845058c14a090
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi=C2=A0Xiuzhi and Ruixia,=C2=A0<div><br></div><div>It wou=
-ld be great to set some time to align on the requirements from design and h=
-ow to work together so that your team can start on the so front-end develop=
-ment.=C2=A0=C2=A0<br><br>Like Derick said, we meet every other Wednesday at=
- 10:00 Central time to discuss GUI issues, with the next one being next Wed=
-nesday (July 3rd). Hopefully you can make that.=C2=A0</div><div><br></div><=
-div>If you cannot, I am happy to meet at 7:00 or 8:00 AM Central time this =
-Wednesday (June 26th) or Friday (June 28th). Please let me know.=C2=A0</div=
-><div><br></div><div>Regards,</div></div><br><div class=3D"gmail_quote"><di=
-v dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 19, 2019 at 8:30 PM xiuzhi &=
-lt;<a href=3D"mailto:1450335857@qq.com">1450335857@qq.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex"><div>Hi Derick,</d=
-iv><div>&gt;&gt; The IPV6 webui should support both IPV4 and IPV6 on a sing=
-le interface at the same time and users can set IPV4 and IPV6 on the same n=
-etwork webpage from Lenovo test cases.</div><div><br>&gt;Thank you!<br><br>=
-&gt;&gt;=C2=A0 Ruixia (her email: <a href=3D"mailto:rxsun@zd-tech.com.cn" t=
-arget=3D"_blank">rxsun@zd-tech.com.cn</a>;), form my team can do=C2=A0 fron=
-t-end=C2=A0 to implement your design .=C2=A0 It would be best if the IPV6 f=
-eature could be achieved in one to two months.<br><br>&gt;It would be great=
- if she were able to join our GUI Community<br>workgroup. It&#39;s every ot=
-her Wednesday at 10:00 Central Time. We use<br>these to discuss all the GUI=
- issues. Where are you located?<br>=C2=A0 I am in BeiJing=C2=A0 UTC+8. The =
-meeting time is=C2=A0=C2=A0Wednesday=C2=A0 23:00 Beijing Time (Wednesday 10=
-:00 am=C2=A0<span style=3D"font-family:Arial,Helvetica,sans-serif;font-size=
-:17px">Central Daylight Time</span>),isn&#39;t it?</div><div>&gt;GUI Commun=
-ity Workgroup Wiki:<br><a href=3D"https://github.com/openbmc/openbmc/wiki/G=
-UI-Design-work-group" target=3D"_blank">https://github.com/openbmc/openbmc/=
-wiki/GUI-Design-work-group</a><br></div><div><br></div><div>Best,</div><div=
->Xiuzhi</div></blockquote></div>
-
---000000000000e9d845058c14a090--
