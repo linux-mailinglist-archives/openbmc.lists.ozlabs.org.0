@@ -2,62 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7838C5C3F3
-	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2019 21:54:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B9A35C8E9
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 07:43:27 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45cyl02RrrzDqXr
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 05:54:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45dCp46FMNzDqCh
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 15:43:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::22c; helo=mail-oi1-x22c.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="oGl9pZrV"; 
- dkim-atps=neutral
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
- [IPv6:2607:f8b0:4864:20::22c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45cyjv1y3RzDqXg
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jul 2019 05:53:54 +1000 (AEST)
-Received: by mail-oi1-x22c.google.com with SMTP id t76so11004784oih.4
- for <openbmc@lists.ozlabs.org>; Mon, 01 Jul 2019 12:53:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=/xq38ui2xT63I95L1AJvL3ycEm3IcNpRbl2en3NKYI8=;
- b=oGl9pZrV1LL+QHazAao/XQBvWS4I6ftaD2Z2Vqm4yM5lachiZkseiOqxr90USO511n
- U5yOz/yEI3icn5f7qj3JxUe/XUmiMg+m+/vtfDrKaB522sbrTk61nooxVmkqrNZx8sQq
- seKkFwdt3G8yXWYemQ3Cf4yYB12aZSkCK6FOMO3FxWXyMDd4UxkjMTGZ76M5INjNu4dj
- GfUAWTGVQhESW491GPSHsynhVNcObbvy1/7wn7DlHkzmEVmID98QRro7e6jmUsygHxly
- 3EDfVluXSVfrSCCwGPJ8zmu2lEURUx/T/Kntkdn3d69lZSfMc1+hlvpo5RD8or42Ugu1
- Nwag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=/xq38ui2xT63I95L1AJvL3ycEm3IcNpRbl2en3NKYI8=;
- b=V9IJUmKMh9FnrOlPP4q9Q4jRvhGtTK1z4IHu+60LR86T8KrEto6hJHHMm+A4ZoNFVF
- PzCxhb0pt/GvEHJFNzRFPQqIkkoo8jT+4zM3BIl/vwo03KQh1+rcjNtZslTKTSoA0ND+
- Ai5ccn+9VLlFAOonYOb1pAbsv2hY/tR4QAKwUuUrjp7pmHuTLXjT4qF5D7rr/wn8fuaE
- 45fWOJPwRdGCvopOsGerP20MTCdfjjxvllivkckzzfJcJpE05I5BrZFZzB8j57qiduGi
- 2nogQfzltPyBKTOMkkIeAGEynf8adMCYeKMCreooQwsJbTri3p9fLPdQG0/55F+Nw8Kc
- TA3g==
-X-Gm-Message-State: APjAAAVVRkiKVPkUhgEy556i2MmOyglw7V0eHPiQSrhPmDrYExwXxDOF
- MQGMpqrkRPyW81rzKSA1z/C1u8RYML0oqoagadnH8sXu
-X-Google-Smtp-Source: APXvYqx1h85ddxQZQGDd92R6yNk+gjsxQIsDg0NwcidDYvSN8O8Nv0L/bPkDaVHar34R9UYuxEtq8OXFo0UYRfh/ScM=
-X-Received: by 2002:aca:811:: with SMTP id 17mr624050oii.161.1562010830652;
- Mon, 01 Jul 2019 12:53:50 -0700 (PDT)
+ spf=pass (mailfrom) smtp.mailfrom=zd-tech.com.cn
+ (client-ip=220.181.97.116; helo=m97116.mail.qiye.163.com;
+ envelope-from=rxsun@zd-tech.com.cn; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=zd-tech.com.cn
+X-Greylist: delayed 382 seconds by postgrey-1.36 at bilbo;
+ Tue, 25 Jun 2019 16:21:34 AEST
+Received: from m97116.mail.qiye.163.com (m97116.mail.qiye.163.com
+ [220.181.97.116])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45XwzL6NDtzDq72
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Jun 2019 16:21:31 +1000 (AEST)
+Received: from rxsun$zd-tech.com.cn ( [218.247.145.4] ) by
+ ajax-webmail-wmsvr12 (Coremail) ; Tue, 25 Jun 2019 14:14:45 +0800 (CST)
+X-Originating-IP: [218.247.145.4]
+Date: Tue, 25 Jun 2019 14:14:45 +0800 (CST)
+From: =?GBK?B?y+/I8M+8?= <rxsun@zd-tech.com.cn>
+To: "Jandra A" <jandraara@gmail.com>
+Subject: Re:Re: Re: Network Settings GUI
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20150911(74783.7961) Copyright (c) 2002-2019 www.mailtech.cn 163-hosting
+In-Reply-To: <CAMTupoTUFv3TCY=D8OatOTCeoBdCsbqXVep5ZM6vXdJ1EGgr-A@mail.gmail.com>
+References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
+ <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
+ <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
+ <CAMTupoQ9fovzOcFH__Ljq=y8RKAp8_7WYunzQ8xNcc6Qjk+Dvg@mail.gmail.com>
+ <tencent_799D81715559779D478D3D61@qq.com>
+ <CAOUmYFTVYjXwXP_oC6+yMUaUS8d15=Ys5BDqGjc-N5JBQC8HQg@mail.gmail.com>
+ <tencent_1BF1F4AC2B9970D9471A8668@qq.com>
+ <CAMTupoTUFv3TCY=D8OatOTCeoBdCsbqXVep5ZM6vXdJ1EGgr-A@mail.gmail.com>
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_72724_1204239743.1561443285828"
 MIME-Version: 1.0
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Mon, 1 Jul 2019 14:53:34 -0500
-Message-ID: <CALLMt=ruYXdewq8xkU2UZQQRzqasYB26w+CDBwiWoUaGqnbx1g@mail.gmail.com>
-Subject: Gerrit Upgrade Tomorrow 7-9am Central
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <181ab467.6aa8.16b8d45bb45.Coremail.rxsun@zd-tech.com.cn>
+X-CM-TRANSID: dOCowACXncnVuxFdDkK3AA--.832W
+X-CM-SenderInfo: pu0v30o62gg3xhfkhulrpou0/1tbiiQrdhVtVgfsmXQACsW
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Mailman-Approved-At: Tue, 02 Jul 2019 15:42:20 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,15 +59,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>,
+ Derick <derick.montague@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This week, I'm doing our quarterly maintenance on the Jenkins nodes
-(security patches, filesystem cleanup, docker rebuilds). I'll be doing
-a Gerrit upgrade tomorrow. "Should" be a quick one.
+------=_Part_72724_1204239743.1561443285828
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-We're on 2.16.7 and I'll be taking us up to 2.16.9
+SGksYWxsLApJIHdpbGwgYmUgZ2xhZCB0byBtZWV0IGF0IDc6MDBBTSBDZW50cmFsIHRpbWUgdGhp
+cyBXZWRuZXNkYXkgKEp1bmUgMjZ0aCkuCgoKUnVpeGlhLFN1bgoKCgoKt6K8/sjLo7oiSmFuZHJh
+IEEiIDxqYW5kcmFhcmFAZ21haWwuY29tPgq3osvNyNXG2qO6MjAxOS0wNi0yNSAwMDo1MTozOQrK
+1bz+yMujunhpdXpoaSA8MTQ1MDMzNTg1N0BxcS5jb20+CrOty83Iy6O6RGVyaWNrIDxkZXJpY2su
+bW9udGFndWVAZ21haWwuY29tPixvcGVuYm1jIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+LHJ4
+c3VuIDxyeHN1bkB6ZC10ZWNoLmNvbS5jbj4K1vfM4qO6UmU6IFJlOiBOZXR3b3JrIFNldHRpbmdz
+IEdVSQoKSGkgWGl1emhpIGFuZCBSdWl4aWEsIAoKCkl0IHdvdWxkIGJlIGdyZWF0IHRvIHNldCBz
+b21lIHRpbWUgdG8gYWxpZ24gb24gdGhlIHJlcXVpcmVtZW50cyBmcm9tIGRlc2lnbiBhbmQgaG93
+IHRvIHdvcmsgdG9nZXRoZXIgc28gdGhhdCB5b3VyIHRlYW0gY2FuIHN0YXJ0IG9uIHRoZSBzbyBm
+cm9udC1lbmQgZGV2ZWxvcG1lbnQuICAKCkxpa2UgRGVyaWNrIHNhaWQsIHdlIG1lZXQgZXZlcnkg
+b3RoZXIgV2VkbmVzZGF5IGF0IDEwOjAwIENlbnRyYWwgdGltZSB0byBkaXNjdXNzIEdVSSBpc3N1
+ZXMsIHdpdGggdGhlIG5leHQgb25lIGJlaW5nIG5leHQgV2VkbmVzZGF5IChKdWx5IDNyZCkuIEhv
+cGVmdWxseSB5b3UgY2FuIG1ha2UgdGhhdC4gCgoKSWYgeW91IGNhbm5vdCwgSSBhbSBoYXBweSB0
+byBtZWV0IGF0IDc6MDAgb3IgODowMCBBTSBDZW50cmFsIHRpbWUgdGhpcyBXZWRuZXNkYXkgKEp1
+bmUgMjZ0aCkgb3IgRnJpZGF5IChKdW5lIDI4dGgpLiBQbGVhc2UgbGV0IG1lIGtub3cuIAoKClJl
+Z2FyZHMsCgoKT24gV2VkLCBKdW4gMTksIDIwMTkgYXQgODozMCBQTSB4aXV6aGkgPDE0NTAzMzU4
+NTdAcXEuY29tPiB3cm90ZToKCkhpIERlcmljaywKPj4gVGhlIElQVjYgd2VidWkgc2hvdWxkIHN1
+cHBvcnQgYm90aCBJUFY0IGFuZCBJUFY2IG9uIGEgc2luZ2xlIGludGVyZmFjZSBhdCB0aGUgc2Ft
+ZSB0aW1lIGFuZCB1c2VycyBjYW4gc2V0IElQVjQgYW5kIElQVjYgb24gdGhlIHNhbWUgbmV0d29y
+ayB3ZWJwYWdlIGZyb20gTGVub3ZvIHRlc3QgY2FzZXMuCgo+VGhhbmsgeW91IQoKPj4gIFJ1aXhp
+YSAoaGVyIGVtYWlsOiByeHN1bkB6ZC10ZWNoLmNvbS5jbjspLCBmb3JtIG15IHRlYW0gY2FuIGRv
+ICBmcm9udC1lbmQgIHRvIGltcGxlbWVudCB5b3VyIGRlc2lnbiAuICBJdCB3b3VsZCBiZSBiZXN0
+IGlmIHRoZSBJUFY2IGZlYXR1cmUgY291bGQgYmUgYWNoaWV2ZWQgaW4gb25lIHRvIHR3byBtb250
+aHMuCgo+SXQgd291bGQgYmUgZ3JlYXQgaWYgc2hlIHdlcmUgYWJsZSB0byBqb2luIG91ciBHVUkg
+Q29tbXVuaXR5Cndvcmtncm91cC4gSXQncyBldmVyeSBvdGhlciBXZWRuZXNkYXkgYXQgMTA6MDAg
+Q2VudHJhbCBUaW1lLiBXZSB1c2UKdGhlc2UgdG8gZGlzY3VzcyBhbGwgdGhlIEdVSSBpc3N1ZXMu
+IFdoZXJlIGFyZSB5b3UgbG9jYXRlZD8KICBJIGFtIGluIEJlaUppbmcgIFVUQys4LiBUaGUgbWVl
+dGluZyB0aW1lIGlzICBXZWRuZXNkYXkgIDIzOjAwIEJlaWppbmcgVGltZSAoV2VkbmVzZGF5IDEw
+OjAwIGFtIENlbnRyYWwgRGF5bGlnaHQgVGltZSksaXNuJ3QgaXQ/Cj5HVUkgQ29tbXVuaXR5IFdv
+cmtncm91cCBXaWtpOgpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL3dpa2kvR1VJ
+LURlc2lnbi13b3JrLWdyb3VwCgoKCkJlc3QsClhpdXpoaQ==
+------=_Part_72724_1204239743.1561443285828
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-I'll update IRC with status.
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+SGksYWxsLDwvZGl2PjxkaXY+SSB3aWxsIGJlIGdsYWQg
+dG8gbWVldCBhdCA3OjAwQU0gQ2VudHJhbCB0aW1lIHRoaXMgV2VkbmVzZGF5IChKdW5lIDI2dGgp
+LjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+UnVpeGlhLFN1bjwvZGl2Pjxicj48YnI+PGRpdiBz
+dHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48L2Rpdj48YnI+t6K8/sjLo7oiSmFuZHJh
+IEEiICZsdDtqYW5kcmFhcmFAZ21haWwuY29tJmd0Ozxicj63osvNyNXG2qO6MjAxOS0wNi0yNSAw
+MDo1MTozOTxicj7K1bz+yMujunhpdXpoaSAmbHQ7MTQ1MDMzNTg1N0BxcS5jb20mZ3Q7PGJyPrOt
+y83Iy6O6RGVyaWNrICZsdDtkZXJpY2subW9udGFndWVAZ21haWwuY29tJmd0OyxvcGVuYm1jICZs
+dDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7LHJ4c3VuICZsdDtyeHN1bkB6ZC10ZWNoLmNv
+bS5jbiZndDs8YnI+1vfM4qO6UmU6IFJlOiBOZXR3b3JrIFNldHRpbmdzIEdVSTxicj48YmxvY2tx
+dW90ZSBpZD0iaXNSZXBseUNvbnRlbnQiIHN0eWxlPSJQQURESU5HLUxFRlQ6IDFleDsgTUFSR0lO
+OiAwcHggMHB4IDBweCAwLjhleDsgQk9SREVSLUxFRlQ6ICNjY2MgMXB4IHNvbGlkIj48ZGl2IGRp
+cj0ibHRyIj5IaSZuYnNwO1hpdXpoaSBhbmQgUnVpeGlhLCZuYnNwOzxkaXY+PGJyPjwvZGl2Pjxk
+aXY+SXQgd291bGQgYmUgZ3JlYXQgdG8gc2V0IHNvbWUgdGltZSB0byBhbGlnbiBvbiB0aGUgcmVx
+dWlyZW1lbnRzIGZyb20gZGVzaWduIGFuZCBob3cgdG8gd29yayB0b2dldGhlciBzbyB0aGF0IHlv
+dXIgdGVhbSBjYW4gc3RhcnQgb24gdGhlIHNvIGZyb250LWVuZCBkZXZlbG9wbWVudC4mbmJzcDsm
+bmJzcDs8YnI+PGJyPkxpa2UgRGVyaWNrIHNhaWQsIHdlIG1lZXQgZXZlcnkgb3RoZXIgV2VkbmVz
+ZGF5IGF0IDEwOjAwIENlbnRyYWwgdGltZSB0byBkaXNjdXNzIEdVSSBpc3N1ZXMsIHdpdGggdGhl
+IG5leHQgb25lIGJlaW5nIG5leHQgV2VkbmVzZGF5IChKdWx5IDNyZCkuIEhvcGVmdWxseSB5b3Ug
+Y2FuIG1ha2UgdGhhdC4mbmJzcDs8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PklmIHlvdSBjYW5u
+b3QsIEkgYW0gaGFwcHkgdG8gbWVldCBhdCA3OjAwIG9yIDg6MDAgQU0gQ2VudHJhbCB0aW1lIHRo
+aXMgV2VkbmVzZGF5IChKdW5lIDI2dGgpIG9yIEZyaWRheSAoSnVuZSAyOHRoKS4gUGxlYXNlIGxl
+dCBtZSBrbm93LiZuYnNwOzwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+UmVnYXJkcyw8L2Rpdj48
+L2Rpdj48YnI+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJn
+bWFpbF9hdHRyIj5PbiBXZWQsIEp1biAxOSwgMjAxOSBhdCA4OjMwIFBNIHhpdXpoaSAmbHQ7PGEg
+aHJlZj0ibWFpbHRvOjE0NTAzMzU4NTdAcXEuY29tIj4xNDUwMzM1ODU3QHFxLmNvbTwvYT4mZ3Q7
+IHdyb3RlOjxicj48L2Rpdj48YmxvY2txdW90ZSBjbGFzcz0iZ21haWxfcXVvdGUiIHN0eWxlPSJt
+YXJnaW46MHB4IDBweCAwcHggMC44ZXg7Ym9yZGVyLWxlZnQ6MXB4IHNvbGlkIHJnYigyMDQsMjA0
+LDIwNCk7cGFkZGluZy1sZWZ0OjFleCI+PGRpdj5IaSBEZXJpY2ssPC9kaXY+PGRpdj4mZ3Q7Jmd0
+OyBUaGUgSVBWNiB3ZWJ1aSBzaG91bGQgc3VwcG9ydCBib3RoIElQVjQgYW5kIElQVjYgb24gYSBz
+aW5nbGUgaW50ZXJmYWNlIGF0IHRoZSBzYW1lIHRpbWUgYW5kIHVzZXJzIGNhbiBzZXQgSVBWNCBh
+bmQgSVBWNiBvbiB0aGUgc2FtZSBuZXR3b3JrIHdlYnBhZ2UgZnJvbSBMZW5vdm8gdGVzdCBjYXNl
+cy48L2Rpdj48ZGl2Pjxicj4mZ3Q7VGhhbmsgeW91ITxicj48YnI+Jmd0OyZndDsmbmJzcDsgUnVp
+eGlhIChoZXIgZW1haWw6IDxhIGhyZWY9Im1haWx0bzpyeHN1bkB6ZC10ZWNoLmNvbS5jbiIgdGFy
+Z2V0PSJfYmxhbmsiPnJ4c3VuQHpkLXRlY2guY29tLmNuPC9hPjspLCBmb3JtIG15IHRlYW0gY2Fu
+IGRvJm5ic3A7IGZyb250LWVuZCZuYnNwOyB0byBpbXBsZW1lbnQgeW91ciBkZXNpZ24gLiZuYnNw
+OyBJdCB3b3VsZCBiZSBiZXN0IGlmIHRoZSBJUFY2IGZlYXR1cmUgY291bGQgYmUgYWNoaWV2ZWQg
+aW4gb25lIHRvIHR3byBtb250aHMuPGJyPjxicj4mZ3Q7SXQgd291bGQgYmUgZ3JlYXQgaWYgc2hl
+IHdlcmUgYWJsZSB0byBqb2luIG91ciBHVUkgQ29tbXVuaXR5PGJyPndvcmtncm91cC4gSXQncyBl
+dmVyeSBvdGhlciBXZWRuZXNkYXkgYXQgMTA6MDAgQ2VudHJhbCBUaW1lLiBXZSB1c2U8YnI+dGhl
+c2UgdG8gZGlzY3VzcyBhbGwgdGhlIEdVSSBpc3N1ZXMuIFdoZXJlIGFyZSB5b3UgbG9jYXRlZD88
+YnI+Jm5ic3A7IEkgYW0gaW4gQmVpSmluZyZuYnNwOyBVVEMrOC4gVGhlIG1lZXRpbmcgdGltZSBp
+cyZuYnNwOyZuYnNwO1dlZG5lc2RheSZuYnNwOyAyMzowMCBCZWlqaW5nIFRpbWUgKFdlZG5lc2Rh
+eSAxMDowMCBhbSZuYnNwOzxzcGFuIHN0eWxlPSJmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Es
+c2Fucy1zZXJpZjtmb250LXNpemU6MTdweCI+Q2VudHJhbCBEYXlsaWdodCBUaW1lPC9zcGFuPiks
+aXNuJ3QgaXQ/PC9kaXY+PGRpdj4mZ3Q7R1VJIENvbW11bml0eSBXb3JrZ3JvdXAgV2lraTo8YnI+
+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy93aWtpL0dVSS1EZXNp
+Z24td29yay1ncm91cCIgdGFyZ2V0PSJfYmxhbmsiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1j
+L29wZW5ibWMvd2lraS9HVUktRGVzaWduLXdvcmstZ3JvdXA8L2E+PGJyPjwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXY+QmVzdCw8L2Rpdj48ZGl2PlhpdXpoaTwvZGl2PjwvYmxvY2txdW90ZT48L2Rp
+dj4KPC9ibG9ja3F1b3RlPjwvZGl2Pg==
+------=_Part_72724_1204239743.1561443285828--
 
-Andrew
