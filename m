@@ -1,81 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A8FD5637D
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 09:39:51 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 062CF56347
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 09:25:27 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45YZLW30cfzDqbq
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 17:25:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45YZg81pBKzDqQm
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 17:39:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.230; helo=new4-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d43; helo=mail-io1-xd43.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="R79Ha6g+"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Diw36Rcy"; dkim-atps=neutral
-Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
- [66.111.4.230])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="pMKkbVCJ"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com
+ [IPv6:2607:f8b0:4864:20::d43])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45YZ822pY3zDqXP;
- Wed, 26 Jun 2019 17:16:17 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 81BAE1DA9;
- Wed, 26 Jun 2019 03:16:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 26 Jun 2019 03:16:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=o/ghzHrj1X7yl
- XihRgJKS1cvGXzCMJPgUc8IsbXlG3Q=; b=R79Ha6g++rC7IaCm+ifBfu9AD4+HS
- v6GGRSKsTtS7ugDI5UdKYaTtDy2gTxtzW+MqbOSpB388R3UsOwQqQR7YFl5T3qMG
- n5D11EUlqlAVPQ6+NEPU+mYIMImldiljtGXCWhL6BtNhHIXSOAvfZQ1biu6EtPat
- WXBcl2bAjlRdSxEDB39omtihY5RItwtAjf5QBh8ac6MgG4DxMNPguF0RU4RfI4Xv
- 9hfk9SLrd0P77WmoC8xIkkkjvptur33cFOE/tybPcHzcZL9gx/rX5O6NHGaDrLdz
- TrsxAFTtIOO/Myyb/nLYeh+DYtar7lZfuZVVdsw9m4iejnOPBm7Zn/P7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=o/ghzHrj1X7ylXihRgJKS1cvGXzCMJPgUc8IsbXlG3Q=; b=Diw36Rcy
- C67TKYNy3OGM7AKpQ33NK7XrePCJcMe0hrhWmYWnaHpo6LJZSbGl+93l7U+9GsA3
- gYLP0oAFKzsyPwy/kwkP+8U00bBNoRYTztK94zGnsrW88epl1e9kv9CBR3kZjRh+
- zqX3SuAIFjDrhlKF5CEkxTuJkfwpWJ4fxIOQwLwQ92WerfFsDS9YqssfZesIp/Vq
- f1Tt+OJ4swXssWg+rJXiUSu/PfTn+ApYzFU4hSj7DCp3OkO8aHvFxyVaNUS26tsp
- HkkrHYI3CCXiZqYaakiwM+6f9t4iRKfquq9wXpImxvolDca7NJYBatWWtWKRmm3x
- kE7QkV3IL/sMWw==
-X-ME-Sender: <xms:vxsTXWift_nnqs93kIhr5EVsWEIJ7KOvC9n4_6I5ClyO4MQFzQAhNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudehgdduudejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
- dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
- jhdrihgurdgruheqnecukfhppedvtddvrdekuddrudekrdeftdenucfrrghrrghmpehmrg
- hilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigv
- peeg
-X-ME-Proxy: <xmx:vxsTXXNrmy0-aJmKmgvVLp57PdCV-bF8NdAoBE72L3Nd7Fznkoje8w>
- <xmx:vxsTXQt3nSkqVXCzQ7tm-ldhCykfxbc5e8SvN1HJF5uRqsxWwHEAhw>
- <xmx:vxsTXa2Io89txAQTgXj9VAvHcSA3d_VvbYQBtsCZL2_uZ8_xjePkRw>
- <xmx:vxsTXfh2mXauXZfoz-4GdDpMNjstImZDGkmM94TZqM3o26nXnweAdg>
-Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
- by mail.messagingengine.com (Postfix) with ESMTPA id A5594380076;
- Wed, 26 Jun 2019 03:16:11 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: linux-gpio@vger.kernel.org
-Subject: [PATCH 8/8] pinctrl: aspeed: Add implementation-related documentation
-Date: Wed, 26 Jun 2019 16:44:30 +0930
-Message-Id: <20190626071430.28556-9-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190626071430.28556-1-andrew@aj.id.au>
-References: <20190626071430.28556-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45YZfb6mLJzDqKV
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2019 17:39:19 +1000 (AEST)
+Received: by mail-io1-xd43.google.com with SMTP id w25so394545ioc.8
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Jun 2019 00:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=yTjxIK0c0opa7xhTId2uhU0GdbUNPkRH+9v/jF/i98o=;
+ b=pMKkbVCJmygcBFvgkWiQ4N/ir4tTnAv2VujocG+K0m65zpR77uLoPFHU16GHkFB1DV
+ NCX8NpIpgR5RLC+/YoM0ESBKaNdhHSRkmZh6rmf+az2OjAGWMZRxBPd7fmL/1SJL02+x
+ vArpVKvcorKAXq6DfqsZ0EZUfZ2XDR5kAkfvZbZ0NanNlPqxFb0y4wTbASOum5xHaF2a
+ AMI6lu8oufsteU6UTampI/nCeLipIgFvnvd1mclXRv24c8IdIkxoHcmjD8Jlj86M5avy
+ ei79XPoL5ArxBnCO0EKy+BTfTK4cskqvsh3VLkNrPK3NGpzIdDPkD0oJ4hVnyzgUjvRM
+ /thw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=yTjxIK0c0opa7xhTId2uhU0GdbUNPkRH+9v/jF/i98o=;
+ b=PEyqqLY1tjGMeXe0YZjEXJVnlIgUKqmDIeYH4HyQo5COrRq0xdQ0P4ZnM4yRX2bIhB
+ pK9u9cnOHFxZcrrH8Z2lsrSXo1ahnh8a23nI6FBT311UPChiwYO1+dfRcJUuInUXTjUa
+ B8y+OGJukRcsa+fe7CG0kB1ssAiuObKPUvwhhu6mqf3iUpc54kXPlpIdfpsQl09esS8y
+ ObJPX3EgU7fJghRBxEY+p1aFOO9ucXo4R7LiLTSjYlQAhABrZSMM+kmsdHOxigSVZA2N
+ SiIQ7anS/i8pDAVNAOqF+rIPvlDp+4mpEbFMgt/UMHVhSvlbRHwAlNugihdRkrVSB04M
+ 0Nwg==
+X-Gm-Message-State: APjAAAVvCLlKFRdielbFJpZhSVjdv1+sOnOWz83Q98X6AEoSF38pH7nK
+ t/7LQdu/7Etjp7KbfO3Zh5gdlEk4iDCO2vm7wtEFiPCVlIc=
+X-Google-Smtp-Source: APXvYqy9R/Sx5gaLZt6fbZ/PKwbuq0ScxsvxEapE8lRLMu01mRF1+bYCI26tqsM5jZx36wCnUoCGyP1eB1ISxX5DWa0=
+X-Received: by 2002:a02:aa8f:: with SMTP id u15mr3227221jai.39.1561534756078; 
+ Wed, 26 Jun 2019 00:39:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190614071643.18607-1-mine260309@gmail.com>
+ <b75c57a9f3ac3c6e91c470d69dcd2ab6a4f6ee03.camel@ozlabs.org>
+In-Reply-To: <b75c57a9f3ac3c6e91c470d69dcd2ab6a4f6ee03.camel@ozlabs.org>
+From: Lei YU <mine260309@gmail.com>
+Date: Wed, 26 Jun 2019 15:39:04 +0800
+Message-ID: <CAARXrtmqkYeHiE9rr4uYL_b3YtK=-hsnmR3DJtdy1_ZVLKWtUQ@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.1] fsi: core: Fix NULL dereference issue
+To: Jeremy Kerr <jk@ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,256 +73,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, ryan_chen@aspeedtech.com,
- linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- linus.walleij@linaro.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org,
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The ASPEED pinctrl driver implementations make heavy use of macros to
-minimise tedium of implementation and maximise the chance that the
-compiler will catch errors in defining signal and pin configurations.
-While the goal of minimising errors is achieved, it is at the cost of
-the complexity of the macros.
+On Wed, Jun 26, 2019 at 9:33 AM Jeremy Kerr <jk@ozlabs.org> wrote:
+>
+> Hi Lei,
+>
+> > The failure case in fsi_slave_init() is wrong and could cause NULL
+> > dereference issue.
+> > E.g. on FP5280G2 machine, it could get failure in
+> > fsi_slave_set_smode(),
+> > and when it does fsi rescan, kernel crashes due to:
+> >
+> >     Unable to handle kernel NULL pointer dereference at virtual
+> > address 00000060
+> >
+> > The fix is to make it not calling kfree() but just goto err_free.
+> >
+> > However, in err_free, it calls put_device() to free the device, it
+> > still
+> > cause issue during fsi rescan, that the device is used after freed.
+> >
+> >     WARNING: CPU: 0 PID: 1433 at lib/refcount.c:190
+> > refcount_sub_and_test_checked+0x94/0xac
+> >     refcount_t: underflow; use-after-free.
+> >
+> > So the put_device() is removed and "err_free" label is renamed to
+> > "fail".
+>
+> It looks like this will leak memory (through the struct fsi_slave) that
+> has been kzalloc()ed. After device_register, we need to call
+> put_device() to free the struct fsi_slave, but there's no mechanism for
+> that to happen if we remove it from fsi_slave_init().
 
-Document examples of the expanded form of pin declarations to
-demonstrate the operation of the macros.
+The memory is "leaked" in this function, that the slave device is not freed
+here. But eventually, it will be freed in fsi_slave_release() (if I understand
+the code correctly), so there is no leak, eventually.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- drivers/pinctrl/aspeed/pinmux-aspeed.h | 204 ++++++++++++++++++++++++-
- 1 file changed, 200 insertions(+), 4 deletions(-)
+> The error paths for this function do need to be fixed, but I don't think
+> this is the right approach.
+>
+> Do you have a backtrace of the refcount_sub_and_test_checked+0x94/0xac
+> warning? This may not be the actual struct device that underflows.
 
-diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.h b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-index a036ce8f1571..329d54d48667 100644
---- a/drivers/pinctrl/aspeed/pinmux-aspeed.h
-+++ b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-@@ -18,7 +18,8 @@
-  * priority level are frequently not the same (i.e. cannot just flip a bit to
-  * change from a high to low priority signal), or even in the same register.
-  * Further, not all signals can be unmuxed, as some expressions depend on
-- * values in the hardware strapping register (which is treated as read-only).
-+ * values in the hardware strapping register (which may be treated as
-+ * read-only).
-  *
-  * SoC Multi-function Pin Expression Examples
-  * ------------------------------------------
-@@ -172,9 +173,9 @@
-  * * A signal expression is the smallest set of signal descriptors whose
-  *   comparisons must evaluate 'true' for a signal to be enabled on a pin.
-  *
-- * * A function's signal is active on a pin if evaluating all signal
-- *   descriptors in the pin's signal expression for the function yields a 'true'
-- *   result
-+ * * A signal participating in a function is active on a pin if evaluating all
-+ *   signal descriptors in the pin's signal expression for the function yields
-+ *   a 'true' result
-  *
-  * * A signal at a given priority on a given pin is active if any of the
-  *   functions in which the signal participates are active, and no higher
-@@ -221,6 +222,201 @@
-  * well as pins) required for the group's configuration will already be in use,
-  * likely in a way that's inconsistent with the requirements of the failed
-  * group.
-+ *
-+ * Implementation
-+ * --------------
-+ *
-+ * Beyond the documentation below the various structures and helper macros that
-+ * allow the implementation to hang together are defined. The macros are fairly
-+ * dense, so below we walk through some raw examples of the configuration
-+ * tables in an effort to clarify the concepts.
-+ *
-+ * The complexity of configuring the mux combined with the scale of the pins
-+ * and functions was a concern, so the table design along with the macro jungle
-+ * is an attempt to address it. The rough principles of the approach are:
-+ *
-+ * 1. Use a data-driven solution rather than embedding state into code
-+ * 2. Minimise editing to the specifics of the given mux configuration
-+ * 3. Detect as many errors as possible at compile time
-+ *
-+ * Addressing point 3 leads to naming of symbols in terms of the four
-+ * properties associated with a given mux configuration: The pin, the signal,
-+ * the group and the function. In this way copy/paste errors cause duplicate
-+ * symbols to be defined, which prevents successful compilation. Failing to
-+ * properly parent the tables leads to unused symbol warnings, and use of
-+ * designated initialisers and additional warnings ensures that there are
-+ * no override errors in the pin, group and function arrays.
-+ *
-+ * Addressing point 2 drives the development of the macro jungle, as it
-+ * centralises the definition noise at the cost of taking some time to
-+ * understand.
-+ *
-+ * Here's a complete, concrete "pre-processed" example of the table structures
-+ * used to describe the D6 ball from the examples above:
-+ *
-+ * ```
-+ * static const struct aspeed_sig_desc sig_descs_MAC1LINK_MAC1LINK[] = {
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x80,
-+ *         .mask = BIT(0),
-+ *         .enable = 1,
-+ *         .disable = 0
-+ *     },
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr sig_expr_MAC1LINK_MAC1LINK = {
-+ *     .signal = "MAC1LINK",
-+ *     .function = "MAC1LINK",
-+ *     .ndescs = ARRAY_SIZE(sig_descs_MAC1LINK_MAC1LINK),
-+ *     .descs = &(sig_descs_MAC1LINK_MAC1LINK)[0],
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr *sig_exprs_MAC1LINK_MAC1LINK[] = {
-+ *     &sig_expr_MAC1LINK_MAC1LINK,
-+ *     NULL,
-+ * };
-+ *
-+ * static const struct aspeed_sig_desc sig_descs_GPIOA0_GPIOA0[] = { };
-+ *
-+ * static const struct aspeed_sig_expr sig_expr_GPIOA0_GPIOA0 = {
-+ *     .signal = "GPIOA0",
-+ *     .function = "GPIOA0",
-+ *     .ndescs = ARRAY_SIZE(sig_descs_GPIOA0_GPIOA0),
-+ *     .descs = &(sig_descs_GPIOA0_GPIOA0)[0],
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr *sig_exprs_GPIOA0_GPIOA0[] = {
-+ *     &sig_expr_GPIOA0_GPIOA0,
-+ *     NULL
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr **pin_exprs_0[] = {
-+ *     sig_exprs_MAC1LINK_MAC1LINK,
-+ *     sig_exprs_GPIOA0_GPIOA0,
-+ *     NULL
-+ * };
-+ *
-+ * static const struct aspeed_pin_desc pin_0 = { "0", (&pin_exprs_0[0]) };
-+ * static const int group_pins_MAC1LINK[] = { 0 };
-+ * static const char *func_groups_MAC1LINK[] = { "MAC1LINK" };
-+ *
-+ * static struct pinctrl_pin_desc aspeed_g4_pins[] = {
-+ *     [0] = { .number = 0, .name = "D6", .drv_data = &pin_0 },
-+ * };
-+ *
-+ * static const struct aspeed_pin_group aspeed_g4_groups[] = {
-+ *     {
-+ *         .name = "MAC1LINK",
-+ *         .pins = &(group_pins_MAC1LINK)[0],
-+ *         .npins = ARRAY_SIZE(group_pins_MAC1LINK),
-+ *     },
-+ * };
-+ *
-+ * static const struct aspeed_pin_function aspeed_g4_functions[] = {
-+ *     {
-+ *         .name = "MAC1LINK",
-+ *         .groups = &func_groups_MAC1LINK[0],
-+ *         .ngroups = ARRAY_SIZE(func_groups_MAC1LINK),
-+ *     },
-+ * };
-+ * ```
-+ *
-+ * At the end of the day much of the above code is compressed into the
-+ * following two lines:
-+ *
-+ * ```
-+ * #define D6 0
-+ * SSSF_PIN_DECL(D6, GPIOA0, MAC1LINK, SIG_DESC_SET(SCU80, 0));
-+ * ```
-+ *
-+ * The two examples below show just the differences from the example above.
-+ *
-+ * Ball E18 demonstrates a function, EXTRST, that requires multiple descriptors
-+ * be set for it to be muxed:
-+ *
-+ * ```
-+ * static const struct aspeed_sig_desc sig_descs_EXTRST_EXTRST[] = {
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x3C,
-+ *         .mask = BIT(3),
-+ *         .enable = 1,
-+ *         .disable = 0
-+ *     },
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x80,
-+ *         .mask = BIT(15),
-+ *         .enable = 1,
-+ *         .disable = 0
-+ *     },
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x90,
-+ *         .mask = BIT(31),
-+ *         .enable = 0,
-+ *         .disable = 1
-+ *     },
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr sig_expr_EXTRST_EXTRST = {
-+ *     .signal = "EXTRST",
-+ *     .function = "EXTRST",
-+ *     .ndescs = ARRAY_SIZE(sig_descs_EXTRST_EXTRST),
-+ *     .descs = &(sig_descs_EXTRST_EXTRST)[0],
-+ * };
-+ * ...
-+ * ```
-+ *
-+ * For ball E19, we have multiple functions enabling a single signal, LPCRST#.
-+ * The data structures look like:
-+ *
-+ * static const struct aspeed_sig_desc sig_descs_LPCRST_LPCRST[] = {
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x80,
-+ *         .mask = BIT(12),
-+ *         .enable = 1,
-+ *         .disable = 0
-+ *     },
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr sig_expr_LPCRST_LPCRST = {
-+ *     .signal = "LPCRST",
-+ *     .function = "LPCRST",
-+ *     .ndescs = ARRAY_SIZE(sig_descs_LPCRST_LPCRST),
-+ *     .descs = &(sig_descs_LPCRST_LPCRST)[0],
-+ * };
-+ *
-+ * static const struct aspeed_sig_desc sig_descs_LPCRST_LPCRSTS[] = {
-+ *     {
-+ *         .ip = ASPEED_IP_SCU,
-+ *         .reg = 0x70,
-+ *         .mask = BIT(14),
-+ *         .enable = 1,
-+ *         .disable = 0
-+ *     },
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr sig_expr_LPCRST_LPCRSTS = {
-+ *     .signal = "LPCRST",
-+ *     .function = "LPCRSTS",
-+ *     .ndescs = ARRAY_SIZE(sig_descs_LPCRST_LPCRSTS),
-+ *     .descs = &(sig_descs_LPCRST_LPCRSTS)[0],
-+ * };
-+ *
-+ * static const struct aspeed_sig_expr *sig_exprs_LPCRST_LPCRST[] = {
-+ *     &sig_expr_LPCRST_LPCRST,
-+ *     &sig_expr_LPCRST_LPCRSTS,
-+ *     NULL,
-+ * };
-+ * ...
-+ * ```
-+ *
-+ * Both expressions listed in the sig_exprs_LPCRST_LPCRST array need to be set
-+ * to disabled for the associated GPIO to be muxed.
-+ *
-  */
- 
- #define ASPEED_IP_SCU		0
--- 
-2.20.1
+Yes, below is the full trace:
 
+kernel: ------------[ cut here ]------------
+kernel: WARNING: CPU: 0 PID: 1417 at lib/refcount.c:190
+refcount_sub_and_test_checked+0x94/0xac
+kernel: refcount_t: underflow; use-after-free.
+kernel: CPU: 0 PID: 1417 Comm: openpower-proc- Tainted: G        W
+    5.1.1-60926c8a1d00a056568cb44da9e96d3ee5f6e654 #1
+kernel: Hardware name: Generic DT based system
+kernel: Backtrace:
+kernel: [<80107ca0>] (dump_backtrace) from [<80107ed4>] (show_stack+0x20/0x24)
+kernel:  r7:803629e8 r6:00000009 r5:00000000 r4:95937d14
+kernel: [<80107eb4>] (show_stack) from [<8067e944>] (dump_stack+0x20/0x28)
+kernel: [<8067e924>] (dump_stack) from [<80115ff8>] (__warn.part.3+0xb4/0xdc)
+kernel: [<80115f44>] (__warn.part.3) from [<8011608c>]
+(warn_slowpath_fmt+0x6c/0x90)
+kernel:  r6:000000be r5:807ff14c r4:80a07008
+kernel: [<80116024>] (warn_slowpath_fmt) from [<803629e8>]
+(refcount_sub_and_test_checked+0x94/0xac)
+kernel:  r3:80a4cbda r2:807ff1b8
+kernel:  r7:80410c1c r6:94506710 r5:95937ddc r4:00000000
+kernel: [<80362954>] (refcount_sub_and_test_checked) from [<80362a18>]
+(refcount_dec_and_test_checked+0x18/0x1c)
+kernel:  r5:95937ddc r4:94503c08
+kernel: [<80362a00>] (refcount_dec_and_test_checked) from [<806836a8>]
+(kobject_put+0x2c/0x1e8)
+kernel: [<8068367c>] (kobject_put) from [<80410c44>]
+(klist_children_put+0x28/0x2c)
+kernel:  r6:94506710 r5:95937ddc r4:945060fc
+kernel: [<80410c1c>] (klist_children_put) from [<80683130>]
+(klist_next+0x8c/0xe0)
+kernel: [<806830a4>] (klist_next) from [<80412548>]
+(device_for_each_child+0x4c/0xa4)
+kernel:  r10:00000051 r9:95937f60 r8:95075030 r7:80a07008 r6:80525804
+r5:00000000
+kernel:  r4:00000000 r3:db89ad67
+kernel: [<804124fc>] (device_for_each_child) from [<80525910>]
+(fsi_master_rescan+0x40/0x68)
+kernel:  r7:959293a0 r6:95075020 r5:94503afc r4:94503a00
+kernel: [<805258d0>] (fsi_master_rescan) from [<8052562c>]
+(master_rescan_store+0x1c/0x28)
+kernel:  r5:00000000 r4:00000001
+kernel: [<80525610>] (master_rescan_store) from [<80410354>]
+(dev_attr_store+0x28/0x34)
+kernel:  r5:00000000 r4:80525610
+kernel: [<8041032c>] (dev_attr_store) from [<802acac8>]
+(sysfs_kf_write+0x48/0x54)
+kernel:  r5:00000000 r4:8041032c
+kernel: [<802aca80>] (sysfs_kf_write) from [<802abef8>]
+(kernfs_fop_write+0x10c/0x1ec)
+kernel:  r5:00000000 r4:00000000
+kernel: [<802abdec>] (kernfs_fop_write) from [<80237e80>]
+(__vfs_write+0x44/0x18c)
+kernel:  r10:95937f60 r9:00000001 r8:00000000 r7:95937f60 r6:802abdec
+r5:80a07008
+kernel:  r4:95930f40
+kernel: [<80237e3c>] (__vfs_write) from [<80239864>] (vfs_write+0xb0/0x194)
+kernel:  r10:00000000 r9:00000000 r8:00000000 r7:95937f60 r6:0101a3d0
+r5:95930f40
+kernel:  r4:00000001
+kernel: [<802397b4>] (vfs_write) from [<80239b10>] (ksys_write+0x70/0xe8)
+kernel:  r8:00000000 r7:0101a3d0 r6:80a07008 r5:95930f40 r4:95930f40
+kernel: [<80239aa0>] (ksys_write) from [<80239ba0>] (sys_write+0x18/0x1c)
+kernel:  r9:95936000 r8:801011e4 r7:00000004 r6:00000003 r5:0101a3d0 r4:00000001
+kernel: [<80239b88>] (sys_write) from [<80101000>] (ret_fast_syscall+0x0/0x54)
+kernel: Exception stack(0x95937fa8 to 0x95937ff0)
+kernel: 7fa0:                   00000001 0101a3d0 00000003 0101a3d0
+00000001 00000000
+kernel: 7fc0: 00000001 0101a3d0 00000003 00000004 0006ac0c 0006ac20
+7e994c88 7e994a1c
+kernel: 7fe0: 00000070 7e9949a8 48a884ac 48714fec
+kernel: ---[ end trace 366cbd7a56b7dc9f ]---
