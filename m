@@ -2,77 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3003A5731F
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 22:52:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 559575737A
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 23:19:21 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45YwG10X0zzDqSY
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 06:52:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Ywrk69XLzDqWP
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 07:19:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45YwF91t9zzDqVm;
- Thu, 27 Jun 2019 06:51:55 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x5QKkuTX129839; Wed, 26 Jun 2019 16:51:51 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2tccwyqupd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Jun 2019 16:51:51 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x5QKnaG8024035;
- Wed, 26 Jun 2019 20:51:50 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma01dal.us.ibm.com with ESMTP id 2t9by79qkv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Jun 2019 20:51:50 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x5QKpnCp49217938
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Jun 2019 20:51:49 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44F81B205F;
- Wed, 26 Jun 2019 20:51:49 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D0DFEB2066;
- Wed, 26 Jun 2019 20:51:48 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 26 Jun 2019 20:51:48 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Ywr45CjVzDqLT
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2019 07:18:42 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 26 Jun 2019 14:18:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.63,421,1557212400"; d="scan'208";a="337346232"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.251.14.48])
+ ([10.251.14.48])
+ by orsmga005.jf.intel.com with ESMTP; 26 Jun 2019 14:18:39 -0700
+Subject: Re: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM
+ enabling control
+To: Ryan Chen <ryan_chen@aspeedtech.com>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ C?ric Le Goater <clg@kaod.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>
+References: <20190620194922.15093-1-jae.hyun.yoo@linux.intel.com>
+ <20190620194922.15093-4-jae.hyun.yoo@linux.intel.com>
+ <c64ab19a31d1495f8e137d5ac58645b2@TWMBX02.aspeed.com>
+ <2539f657-1966-c00d-dace-fa382bd1b85f@linux.intel.com>
+ <ba119b24-6f5d-f25c-fe63-3b3c05d70152@linux.intel.com>
+ <aae91ebe2e4d4b8ea56f7df2ce543971@TWMBX02.aspeed.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <9859b980-df9f-2c98-3656-c65dbeb734fe@linux.intel.com>
+Date: Wed, 26 Jun 2019 14:18:39 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Wed, 26 Jun 2019 15:53:43 -0500
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: obmc console history
-In-Reply-To: <BB3AF06A-F1A5-4999-8D8F-BD58F39D68D3@fb.com>
-References: <BB3AF06A-F1A5-4999-8D8F-BD58F39D68D3@fb.com>
-Message-ID: <0949cd7146560649af469c88e0e38c18@linux.vnet.ibm.com>
-X-Sender: jrey@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-06-26_11:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=799 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1906260240
+In-Reply-To: <aae91ebe2e4d4b8ea56f7df2ce543971@TWMBX02.aspeed.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,19 +64,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org,
- openbmc <openbmc-bounces+jrey=linux.ibm.com@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-06-26 14:42, Vijay Khemka wrote:
-> Hi,
-> 
-> Do we have option of storing obmc console history somewhere which can
-> be referred later on.
+On 6/25/2019 10:10 PM, Ryan Chen wrote:
+> Hello Jae,
+> 	Actually, my recommend is following.
+> 	1. Move i2c scu reset to irq-aspeed-i2c-ic.c and also keep SRAM buffer enable.
+> 	2. remove i2c each bus reset.
 
-https://github.com/openbmc/phosphor-hostlogger
+Hello Ryan,
 
-> Regards
+My thought is, irq-aspeed-i2c-ic module should do things only irqchip
+drivers do. i2c-aspeed module has been doing the I2C SCU reset control
+correctly so far without making any problem.
+
+Regards,
+Jae
+
+> Ryan
 > 
-> -Vijay
+> -----Original Message-----
+> From: Jae Hyun Yoo [mailto:jae.hyun.yoo@linux.intel.com]
+> Sent: Wednesday, June 26, 2019 1:23 AM
+> To: Ryan Chen <ryan_chen@aspeedtech.com>; Brendan Higgins <brendanhiggins@google.com>; Benjamin Herrenschmidt <benh@kernel.crashing.org>; C?ric Le Goater <clg@kaod.org>; Joel Stanley <joel@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM enabling control
+> 
+> On 6/21/2019 11:41 AM, Jae Hyun Yoo wrote:
+>> On 6/20/2019 5:33 PM, Ryan Chen wrote:
+>>> Hello Jae,
+>>>      The i2c register setting must after scu reset. -
+>>> APEED_I2C_SRAM_BUFFER_EN
+>>>      My recommend aspeed-i2c-ic.c need be probe after scu reset. And
+>>> all others i2c bus is no needed for scu reset.
+>>
+>> Hello Ryan,
+>>
+>> This module is registered after the SCU reset.
+>> Thank you for the information.
+>>
+>> Regards,
+>> Jae
+> 
+> Hello Ryan,
+> 
+> I got your point now. You meant the I2C H/W reset through SCU04 register, right? I'll move the SRAM buffer enable control from irq-aspeed-i2c-ic module to i2c-aspeed module so that the SRAM can be enabled correctly.
+> 
+> Thanks for your pointing it out.
+> 
+> Jae
+> 
+>>>
+>>> Ryan
+>>>
+>>> -----Original Message-----
+>>> From: openbmc
+>>> [mailto:openbmc-bounces+ryan_chen=aspeedtech.com@lists.ozlabs.org] On
+>>> Behalf Of Jae Hyun Yoo
+>>> Sent: Friday, June 21, 2019 3:49 AM
+>>> To: Brendan Higgins <brendanhiggins@google.com>; Benjamin
+>>> Herrenschmidt <benh@kernel.crashing.org>; C?ric Le Goater
+>>> <clg@kaod.org>; Joel Stanley <joel@jms.id.au>; Andrew Jeffery
+>>> <andrew@aj.id.au>
+>>> Cc: openbmc@lists.ozlabs.org; Jae Hyun Yoo
+>>> <jae.hyun.yoo@linux.intel.com>
+>>> Subject: [RFC PATCH dev-5.1 3/6] irqchip/aspeed-i2c-ic: add I2C SRAM
+>>> enabling control
+>>>
+>>> This commit adds I2C SRAM enabling control for AST2500 SoC to support
+>>> buffer mode and DMA mode transfer. The SRAM is enabled by default in
+>>> AST2400 SoC.
+>>>
+>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>>> ---
+>>>    drivers/irqchip/irq-aspeed-i2c-ic.c | 8 ++++++++
+>>>    1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c
+>>> b/drivers/irqchip/irq-aspeed-i2c-ic.c
+>>> index f20200af0992..99985b22a9fa 100644
+>>> --- a/drivers/irqchip/irq-aspeed-i2c-ic.c
+>>> +++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
+>>> @@ -18,6 +18,9 @@
+>>>    #include <linux/of_irq.h>
+>>>    #include <linux/io.h>
+>>> +/* I2C Global Control Register (AST2500) */ #define
+>>> +ASPEED_I2C_GLOBAL_CTRL_REG    0xc #define  ASPEED_I2C_SRAM_BUFFER_EN
+>>> +BIT(0)
+>>>    #define ASPEED_I2C_IC_NUM_BUS 14
+>>> @@ -100,6 +103,11 @@ static int __init aspeed_i2c_ic_of_init(struct
+>>> device_node *node,
+>>>        irq_set_chained_handler_and_data(i2c_ic->parent_irq,
+>>>                         aspeed_i2c_ic_irq_handler, i2c_ic);
+>>> +    /* Enable I2C SRAM buffer in case of AST2500 */
+>>> +    if (of_device_is_compatible(node, "aspeed,ast2500-i2c-ic"))
+>>> +        writel(ASPEED_I2C_SRAM_BUFFER_EN,
+>>> +               i2c_ic->base + ASPEED_I2C_GLOBAL_CTRL_REG);
+>>> +
+>>>        pr_info("i2c controller registered, irq %d\n",
+>>> i2c_ic->parent_irq);
+>>>        return 0;
+>>> --
+>>> 2.22.0
+>>>
