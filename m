@@ -2,48 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2E5956D95
-	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 17:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AF4E956DC5
+	for <lists+openbmc@lfdr.de>; Wed, 26 Jun 2019 17:35:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45YmzV298ZzDqMK
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 01:24:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45YnDB6rnCzDqTJ
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 01:35:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Ymwx1WJSzDqWx
- for <openbmc@lists.ozlabs.org>; Thu, 27 Jun 2019 01:22:22 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2019 08:22:19 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,420,1557212400"; d="scan'208";a="162320545"
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.75.193])
- ([10.252.75.193])
- by fmsmga008.fm.intel.com with ESMTP; 26 Jun 2019 08:22:17 -0700
-Subject: Re: Reg sdbusplus - async handlers - D-Bus error not getting reflected
-To: Lei YU <mine260309@gmail.com>
-References: <8f7ab4ab-99fe-edeb-f0dd-5eb38c480f79@linux.intel.com>
- <CAARXrtkyGn6ZxGPeCwFLbAtvQW44O=5sDyjvTHQci7E6CmwfEg@mail.gmail.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <dc937b26-2194-b93e-398d-d15b51ebf9e5@linux.intel.com>
-Date: Wed, 26 Jun 2019 20:52:16 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45YnCb1lVXzDqS7;
+ Thu, 27 Jun 2019 01:35:06 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5QFYutr008968; Wed, 26 Jun 2019 11:35:03 -0400
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2tc9u0vuwq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Jun 2019 11:35:03 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x5QFYwgd026295;
+ Wed, 26 Jun 2019 15:34:59 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma01wdc.us.ibm.com with ESMTP id 2t9by704cw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Jun 2019 15:34:59 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x5QFYwG257868602
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Jun 2019 15:34:58 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 872B8136053;
+ Wed, 26 Jun 2019 15:34:58 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6029513604F;
+ Wed, 26 Jun 2019 15:34:58 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Jun 2019 15:34:58 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <CAARXrtkyGn6ZxGPeCwFLbAtvQW44O=5sDyjvTHQci7E6CmwfEg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date: Wed, 26 Jun 2019 10:36:53 -0500
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: Paul.Vancil@dell.com
+Subject: Re: RE Redfish Host Interface and Related Security model
+In-Reply-To: <4d162450d2f3445998067bda33f3abc0@AUSX13MPS306.AMER.DELL.COM>
+References: <4d162450d2f3445998067bda33f3abc0@AUSX13MPS306.AMER.DELL.COM>
+Message-ID: <2258c118a309120838d7f384747a28df@linux.vnet.ibm.com>
+X-Sender: jrey@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-26_08:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906260182
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,68 +85,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Tanous,
- Ed" <ed.tanous@intel.com>, William Kennington <wak@google.com>
+Cc: openbmc@lists.ozlabs.org,
+ openbmc <openbmc-bounces+jrey=linux.ibm.com@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Lei,
+On 2019-06-25 17:32, Paul.Vancil@dell.com wrote:
+> 
+> Hello.  I will call into security WG meeting tomorrow 6/26.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/21611  is exactly what i had in mind for #2 but still looking for #1, so that error_no can be propagated, at this point of time, it is not set from D-Bus daemon.
+I look forward to seeing you there.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/22481 - is merged, and it solves async_send, but doesn't work for async_method_call(). Any situation in which you have used in async_method_call() ?
+> I have seen you have "Replace host IPMI with PLDM & MCTP" on the 
+> Security Feature Wish List,
+> And I think I once saw a comment in email thread the Redfish didn't 
+> have a host interface – can’t find though.
 
-regards,
-Richard
+The PLDM/MCTP stack is partially implemented.  Reviews are here: 
+https://gerrit.openbmc-project.xyz/q/mctp and work continues.
 
-On 6/26/2019 12:40 PM, Lei YU wrote:
-> On Wed, Jun 26, 2019 at 12:19 AM Thomaiyar, Richard Marian
-> <richard.marian.thomaiyar@linux.intel.com> wrote:
->> Hi,
->>
->> In sdbusplus code, async_send_handler callback() uses the
->> sdbusplus::message::message.get_errorno()
->> https://github.com/openbmc/sdbusplus/blob/master/sdbusplus/asio/detail/async_send_handler.hpp#L66
->> function to instantiate the boost::system::error_code. Unfortunately,
->> none of our D-Bus exception throwing functionality sets the error_no to
->> a proper one, but instead updates only the error_message field
->> https://github.com/openbmc/sdbusplus/blob/master/tools/sdbusplus/templates/method.mako.prototype.hpp.in#L171
->> causing the error_code instance to always return a generic error code
->> value, instead of a proper one. Because of this applications which uses
->> the asio logic will not be able to differentiate between exceptions
->> thrown / errors from D-Bus.
->>
->> Planning to fix the same in 2 step,
->>
->> 1. To make all D-Bus exception to set the errorno properly using
->> sd_bus_error_set_errno and getting the error from the yaml if available
->> else return generic one (so that no change in existing daemon will be
->> required).
->>
->> 2. make change in async_send_handler_callaback, such that derived class
->> of boost::system::error_code is returned, which will hold the error
->> message too. Any daemon which uses asio logic, can depend on ec.value()
->> as primary exception identifier or ec.message() for any detailed
->> exception thrown.
->>
->> Let me know your thoughts , and if agree, will start implementing the same.
->>
->> Regards,
->>
->> Richard
-> I am glad that you feel the same way!
-> The patch https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/21611 was
-> submitted trying to resolve the issue.
-> And during review, it's noticed that there is a better way to achieve the goal,
-> that the DBus error is returned by the message.
->
-> So we have https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/22481
->
-> Now in sdbusplus, message::get_error() is added, and the caller could get the
-> sd_bus_error* from the returned message, and get the DBus exception details
-> from the sd_bus_error.
->
-> See examples at
-> https://github.com/openbmc/bmcweb/blob/e4a4b9a95622b8e1c1bae93718699ad19f4882ac/include/openbmc_dbus_rest.hpp#L1385-L1403
-> https://github.com/openbmc/bmcweb/blob/e4a4b9a95622b8e1c1bae93718699ad19f4882ac/include/openbmc_dbus_rest.hpp#L1882-L1893
+The email archive is here: https://lists.ozlabs.org/pipermail/openbmc/.  
+My understanding of BMC/host interactions is weak, and I apologize if I 
+made misstated anything.  With that, I understand OpenBMC intends to use 
+Redfish APIs, and IBM is moving from host IPMI to MCTP/PLDM.
+
+
+> Actually, Redfish does have a Host Interface specification that I 
+> wanted to make sure you are aware of -- especially from a security 
+> point of view.
+> So I would like to get on the agenda list for some meeting to give an 
+> overview -- Redfish Host Interface and related security model
+> The security model has been often misunderstood.
+
+Thanks, that would be helpful.  I've added the topic to the agenda, 
+here: 
+https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/. 
+   This week's agenda looks pretty big...we'll cover this topic when we 
+can.
+
+- Joseph
+
+
+> -Thanks, Paul Vancil, Dell ESI
+> 
