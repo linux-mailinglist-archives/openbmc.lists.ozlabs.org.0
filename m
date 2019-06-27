@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 073E3578CF
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 02:58:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Z1jG3k9nzDqDS
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 10:58:10 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E26E578E1
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 03:09:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Z1yH2J0jzDqWx
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 11:09:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,66 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="kAye16Gf"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="BrQd3vXr"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="LM8hCUjm"; dkim-atps=neutral
+ header.b="x28MdS6a"; dkim-atps=neutral
 Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
  [66.111.4.221])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Z1Pw5kb1zDqY7;
- Thu, 27 Jun 2019 10:44:51 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Z1xZ0JmZzDqFS;
+ Thu, 27 Jun 2019 11:08:49 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 6889E15F0;
- Wed, 26 Jun 2019 20:44:46 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id C99512212;
+ Wed, 26 Jun 2019 21:08:46 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 26 Jun 2019 20:44:46 -0400
+ by compute4.internal (MEProxy); Wed, 26 Jun 2019 21:08:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=fpT0JqDAZ1LbsvcXxvksyaOpwMvPGdm
- Jm6T67E0jq2E=; b=kAye16GfKJbU0NWzzWSdIW4HXu0jSNwdtLtrj/7/PWGDrZJ
- 1e5JBZ7Tghc+ZNOoqTzDVuSXmFjTTUqAV5sijqH3OAn7NBLGoY4Q69Erz+2I5t9k
- IiT77FX+m0IOwyn8gCeJD4shCjoNa4jNJDy8C/TXvOJ425jIkkCXAqu0J4K97ADt
- 09tKH1Qq3+RAkp1D371KxmTGvoCYPrDmh9fXT0yN+wy9xRqFmyo7wGPMTJgNj0U0
- 23DRUuveeE9Vx/ox5BYg4dWWNicsNtAxExF+bV7nQj5NQJXmRWy64amvj522GmKQ
- WdUxMerQ/ZT48EdjRRueRPo1Q0tPt1uLPOia2qQ==
+ :subject:content-type; s=fm3; bh=ZiI3xxfYKmvDILJvqB7fVk8L/I2NP9d
+ zhcO3iE+B9zo=; b=BrQd3vXrWK9cQIP8itJI4yLnYhOACmlwPP91fUYKHYbtLHN
+ 0ogcNMGV9W8splCz6t+XZdCMVtGizKYBnKF6spbmNMI1eNJ6r+zmg0k/+6d1W4q7
+ +k6I7itFCu1bItE/yvKsMYtBMQbyf7ltQhuQNYElu9gTFj+zsRAICpm4ZS3tjhSO
+ 8KyHLX8mudpz7eKttQhCLCyBwkrhEGeoJnAWoKEEPhEBLvIUpP4H96wTd8IEJ2ZZ
+ LX5xaOVrj7Rhsd0+tt7yoGhVBceeevSXkUP0PmG4wUmk0duMN1c4jl9K34kW1Pta
+ 3zBsro14GpbO11VWv70wehz/6gPZQ0EQNjl1Piw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=fpT0Jq
- DAZ1LbsvcXxvksyaOpwMvPGdmJm6T67E0jq2E=; b=LM8hCUjmJFRQPZu5N+06Vi
- yOpOqYaI5yb+RCXXvI5zrc0TVYUEDDqu0iU0x2uXuyWdh5GY/HCOlELjsKJR7+so
- mzd0GrG4336P+7+NVNyGYOy+umqgSk1ArpCeFbx2siv2ZGjtO+jCHT0TaMHf/rMK
- rRm7UT2/WGKjtAsVgvyYjjczjNqzMCpU8D5dXHHvMoXCir4QeAdjdh813F9FFF97
- jqiIbXiMPE5Yo1PTdu6K2/SO5P/GZRB9UqiJQlPgY2EFipFBzPQBqiN7eh74z3Ir
- 2aVvEG8/hUa78s4plNRyXVWLEcwaJqAPjEup1pOJMyr9Y+luR/Djai6wlo93kchA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZiI3xx
+ fYKmvDILJvqB7fVk8L/I2NP9dzhcO3iE+B9zo=; b=x28MdS6aAMJjnWtjtB7WWg
+ 2siByivl2x8w5XEtXmNUvuYl+f7lY2HcDQ86cOF1asYgl4kcNcg1cZt4i7zxB5jt
+ QLsmQfxgwN/OVfIho5k3aZXV16b3jTI9CGMsq+mLV2Mw+Cru7l+nAhf6g6scykvS
+ CyOmU//+0e1r94HNCD1RhlilF5TDfmJxqfxE6RufpkkVCZOakaa4O1t0F9bog91/
+ dsylEeldN0KuO6YCmLCDGMdG5MVJSV7fIU6bJdjmwrepQbWMvRtZOsjWqPt5BYIe
+ Tr2y1WFdqUMW48LKh7xQOcYHCDELGsFjj0dIFABn9Z9DM3Z8p7qh4W+IeQt01QsA
  ==
-X-ME-Sender: <xms:fREUXZ0U7SxpeES9Qlz3dq7XonJ1O3AtQcjzUASFV1AARanvCpOOlA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudejgdeflecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:HBcUXX9FfhoRdrZDn36epoq77XF1EsuU37NtY6YFC6mM-c415dWkyg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudejgdeggecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
- hinhepuggvvhhitggvthhrvggvrdhorhhgnecurfgrrhgrmhepmhgrihhlfhhrohhmpegr
- nhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:fREUXfE1vMiDAkgUNmr5hjQpa0GlVpsE14x6wkwOk266RVHgjeuGzw>
- <xmx:fREUXSIVbHhJj3myuAHVPF1oS8YTEcjms7a5eVgBamlyfdAWRVOzRg>
- <xmx:fREUXTOhy32-NButsOuT38JzEdQAhkIiQpxim51uXsZHqnWWngsihw>
- <xmx:fhEUXVVex6m8ipyZbsmXD3IMMYfkh38q1IplXWOJSenvjX_FRPm65w>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:HBcUXUa9j9KOY8Ak6gZmtFfiRtd6UUY3gCF_-AYMovCK0o5If44DJQ>
+ <xmx:HBcUXQHivyoiGtCZ9rm7PPsGCC4-WmZYREdnJi8mTclO6S1TV9k9Yw>
+ <xmx:HBcUXTfyfDK7LxhQ-rnDeLeXIxlh1SBIgW46klopWxzc6IF3JiH6uQ>
+ <xmx:HhcUXdmMuLkZk_6WEw1ZXYe924zdtpZ1RXGCq9Fe19peV19V36hFLw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 343C9E00A2; Wed, 26 Jun 2019 20:44:45 -0400 (EDT)
+ id CAAE4E00A2; Wed, 26 Jun 2019 21:08:44 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.6-730-g63f2c3b-fmstable-20190622v1
 Mime-Version: 1.0
-Message-Id: <ee0cac9e-4b39-4900-87a8-3dabb58ed883@www.fastmail.com>
-In-Reply-To: <CAL_JsqKXPzFYTHos-uvCUtBj-bcsNfrzt5GjxQ=PmgeXpp5J-A@mail.gmail.com>
+Message-Id: <fa54f9a1-481e-4146-a4c2-7c43cf9a26e8@www.fastmail.com>
+In-Reply-To: <CACRpkdboxjMmeb8feffyG5JJ7fGPR6hqC8sc+XV5We3TC__LXg@mail.gmail.com>
 References: <20190626071430.28556-1-andrew@aj.id.au>
- <20190626071430.28556-3-andrew@aj.id.au>
- <CAL_JsqKXPzFYTHos-uvCUtBj-bcsNfrzt5GjxQ=PmgeXpp5J-A@mail.gmail.com>
-Date: Thu, 27 Jun 2019 10:14:40 +0930
+ <CACRpkdboxjMmeb8feffyG5JJ7fGPR6hqC8sc+XV5We3TC__LXg@mail.gmail.com>
+Date: Thu, 27 Jun 2019 10:38:44 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Rob Herring" <robh+dt@kernel.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_2/8]_dt-bindings:_pinctrl:_aspeed:_Convert_AST2400_?=
- =?UTF-8?Q?bindings_to_json-schema?=
+To: "Linus Walleij" <linus.walleij@linaro.org>
+Subject: Re: [PATCH 0/8] pinctrl: aspeed: Preparation for AST2600
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -90,159 +88,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- Ryan Chen <ryan_chen@aspeedtech.com>, linux-aspeed@lists.ozlabs.org,
- Linus Walleij <linus.walleij@linaro.org>,
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ linux-aspeed@lists.ozlabs.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
  "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE"
- <linux-arm-kernel@lists.infradead.org>
+ Rob Herring <robh+dt@kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Wed, 26 Jun 2019, at 23:17, Rob Herring wrote:
-> On Wed, Jun 26, 2019 at 1:21 AM Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> > Convert ASPEED pinctrl bindings to DT schema format using json-schema
+On Wed, 26 Jun 2019, at 17:25, Linus Walleij wrote:
+> On Wed, Jun 26, 2019 at 9:15 AM Andrew Jeffery <andrew@aj.id.au> wrote:
 > 
-> BTW, ASPEED is one of the remaining platforms needing the top-level
-> board bindings converted.
-
-Okay, I'll put together patches to fix that.
-
+> > The ASPEED AST2600 is in the pipeline, and we have enough information to start
+> > preparing to upstream support for it. This series lays some ground work;
+> > splitting the bindings and dicing the implementation up a little further to
+> > facilitate differences between the 2600 and previous SoC generations.
 > 
-> >
-> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > ---
-> >  .../pinctrl/aspeed,ast2400-pinctrl.txt        | 80 -------------------
-> >  .../pinctrl/aspeed,ast2400-pinctrl.yaml       | 73 +++++++++++++++++
-> >  2 files changed, 73 insertions(+), 80 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.txt
-> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> 
-> > diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> > new file mode 100644
-> > index 000000000000..3b8cf3e51506
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> > @@ -0,0 +1,73 @@
-> > +# SPDX-License-Identifier: GPL-2.0+
-> 
-> Do you have rights to change the license?
+> All looks good to me, but Rob should have a glance at the DT bindings
+> and YAML syntax before I proceed to apply them.
 
-Where are you coming from with this question? The bindings previously didn't list a
-license, is there some implicit license for them? I would have thought it was GPL-2.0?
-IBM's (my employer's) preferred contribution license is GPL 2.0-or-later, so I was just
-adding the SPDX marker to clarify.
+Thanks for the quick review. Rob's responded, looks like I'll need to send a v2 at
+least. Might need a hand sorting out describing generic pinctrl dt bits (subnodes
+with function and group properties).
 
-> If so, the preference is to
-> dual license with (GPL-2.0 OR BSD-2-Clause).
-
-You're asking if I have the power to relicense so I can dual license it this way?
-
-> 
-> BTW, '-or-later' is the preferred form over '+'.
-
-Thanks for the pointer.
-
-> 
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pinctrl/aspeed,ast2400-pinctrl.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: ASPEED AST2400 Pin Controller
-> > +
-> > +maintainers:
-> > +  - Andrew Jeffery <andrew@aj.id.au>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    oneOf:
-> > +      - items:
-> > +        - enum:
-> > +          - aspeed,ast2400-pinctrl
-> > +      - items:
-> > +        - enum:
-> > +          - aspeed,g4-pinctrl
-> 
-> This can be simplified to:
-> 
-> compatible:
->   enum:
->     - aspeed,ast2400-pinctrl
->     - aspeed,g4-pinctrl
-
-Ah, that makes more sense, I think I was thrown by some details of the example.
-
-> 
-> > +
-> > +required:
-> > +  - compatible
-> > +
-> > +description: |+
-> 
-> description goes before properties.
-
-Okay. I wouldn't have thought the ordering mattered. Is this just a preference?
-The tools seemed to run fine as is.
-
-I'll re-order it regardless.
-
-> 
-> > +  The pin controller node should be the child of a syscon node with the
-> > +  required property:
-> > +
-> > +  - compatible:     Should be one of the following:
-> > +                    "aspeed,ast2400-scu", "syscon", "simple-mfd"
-> > +                    "aspeed,g4-scu", "syscon", "simple-mfd"
-> > +
-> > +  Refer to the the bindings described in
-> > +  Documentation/devicetree/bindings/mfd/syscon.txt
-> > +
-> > +  For the AST2400 pinmux, each mux function has only one associated pin group.
-> > +  Each group is named by its function. The following values for the function
-> > +  and groups properties are supported:
-> > +
-> > +  ACPI ADC0 ADC1 ADC10 ADC11 ADC12 ADC13 ADC14 ADC15 ADC2 ADC3 ADC4 ADC5 ADC6
-> > +  ADC7 ADC8 ADC9 BMCINT DDCCLK DDCDAT EXTRST FLACK FLBUSY FLWP GPID GPID0 GPID2
-> > +  GPID4 GPID6 GPIE0 GPIE2 GPIE4 GPIE6 I2C10 I2C11 I2C12 I2C13 I2C14 I2C3 I2C4
-> > +  I2C5 I2C6 I2C7 I2C8 I2C9 LPCPD LPCPME LPCRST LPCSMI MAC1LINK MAC2LINK MDIO1
-> > +  MDIO2 NCTS1 NCTS2 NCTS3 NCTS4 NDCD1 NDCD2 NDCD3 NDCD4 NDSR1 NDSR2 NDSR3 NDSR4
-> > +  NDTR1 NDTR2 NDTR3 NDTR4 NDTS4 NRI1 NRI2 NRI3 NRI4 NRTS1 NRTS2 NRTS3 OSCCLK
-> > +  PWM0 PWM1 PWM2 PWM3 PWM4 PWM5 PWM6 PWM7 RGMII1 RGMII2 RMII1 RMII2 ROM16 ROM8
-> > +  ROMCS1 ROMCS2 ROMCS3 ROMCS4 RXD1 RXD2 RXD3 RXD4 SALT1 SALT2 SALT3 SALT4 SD1
-> > +  SD2 SGPMCK SGPMI SGPMLD SGPMO SGPSCK SGPSI0 SGPSI1 SGPSLD SIOONCTRL SIOPBI
-> > +  SIOPBO SIOPWREQ SIOPWRGD SIOS3 SIOS5 SIOSCI SPI1 SPI1DEBUG SPI1PASSTHRU
-> > +  SPICS1 TIMER3 TIMER4 TIMER5 TIMER6 TIMER7 TIMER8 TXD1 TXD2 TXD3 TXD4 UART6
-> > +  USB11D1 USB11H2 USB2D1 USB2H1 USBCKI VGABIOS_ROM VGAHS VGAVS VPI18 VPI24
-> > +  VPI30 VPO12 VPO24 WDTRST1 WDTRST2
-> 
-> This should be a schema. 
-
-Yeah, I covered this in my cover letter. I was hoping to get away without
-that for the moment as this seems like the first pinctrl binding to be
-converted, however if you insist...
-
-> You need to define child nodes and list these
-> as values for 'function' and 'group'. Ideally, the child nodes would
-> have some sort of pattern, but if not, you can just match on '^.*$'
-> under patternProperties.
-> 
-> BTW, You can put the names under a 'definitions' key and then use
-> '$ref' to reference them from function and group to avoid duplicating
-> the names. Or use patternProperties with '^(function|group)$'.
-
-Okay, I'll take some time to digest this while looking at the documentation.
-
-> 
-> Similar comments apply to AST2500 binding.
-
-Yes, will fix that too.
-
-Thanks for the prompt review!
+Cheers,
 
 Andrew
