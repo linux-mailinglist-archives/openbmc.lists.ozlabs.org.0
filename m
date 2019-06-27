@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A4FF58445
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 16:11:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D4A2F5848C
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jun 2019 16:33:38 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45ZMJC4mvwzDqh3
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 00:11:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ZMp75fCHzDqC8
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 00:33:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,43 +16,43 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.b="hVR26uH/"; 
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="L84JxVPO"; 
  dkim-atps=neutral
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ZMH73cpPzDqDK;
- Fri, 28 Jun 2019 00:10:11 +1000 (AEST)
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com
- [209.85.222.180])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ZMmq1Vk7zDqCV;
+ Fri, 28 Jun 2019 00:32:26 +1000 (AEST)
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com
+ [209.85.160.171])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id C2B9D2064A;
- Thu, 27 Jun 2019 14:10:08 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 619342133F;
+ Thu, 27 Jun 2019 14:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1561644608;
- bh=/DngtzD3s+ebdrL7sBNZ6LYRKYCMM3LinI6fdKixRbs=;
+ s=default; t=1561645944;
+ bh=5gJW6fGPom2YZXQO7oraQBq3Ezn53za/ZomUeOryuos=;
  h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=hVR26uH/NIhnY/IHahGGnvwEvj6QvHdswzSxKHLGvL4+8hpcCVSJe2rV4YRT0uhVT
- +La7BtUB8L5o81AMMKuxkL8ZcOxRxgDen7qfMIBP76iksKRcv1IrjlkMsYB8F5j92m
- ZA90F2/bH3dKXrpmsaC9e8ddLIOYaXGeXlf+9MEc=
-Received: by mail-qk1-f180.google.com with SMTP id b18so1798332qkc.9;
- Thu, 27 Jun 2019 07:10:08 -0700 (PDT)
-X-Gm-Message-State: APjAAAUn7S7oeYpdLh3SieP8GL64oNKw1EdyrqsikNoh2OND36qc58uf
- zsS1mmrvKm5qm4P+rWlr3Et7fqHeNro5MpdBtQ==
-X-Google-Smtp-Source: APXvYqzf4Zr0MF3Yow63S1uL/QA2OGEm4e5sTwKl5lupKlXsPXvUX0bhlfSmt6HmjepLO9Dl3d65W79s8N5se3FVB/I=
-X-Received: by 2002:a37:69c5:: with SMTP id e188mr3331270qkc.119.1561644608024; 
- Thu, 27 Jun 2019 07:10:08 -0700 (PDT)
+ b=L84JxVPONwTSWDeE2j2Txu83VK3qGUsMBySI/HbGywHTCcrAsWiftM/7yeAW3kyDy
+ X/dnZasddSr3Kotsqll9NSWUhR8RKxMNh03Y4hMBDc1zsQvCaz/VyWaMCKGcKaB1ok
+ GGelQUWMYzx0Gg6ZfHX71pJuCimyD1IAtW3Bmg/0=
+Received: by mail-qt1-f171.google.com with SMTP id m29so2675882qtu.1;
+ Thu, 27 Jun 2019 07:32:24 -0700 (PDT)
+X-Gm-Message-State: APjAAAUACk2F/AjceWhZoQVo0VP2IS5nklhjQ+vECOOp5JXkncMCMNjE
+ BQpLm+3dO4fcmMVhGvnfkNRcg599B4UebiO4Og==
+X-Google-Smtp-Source: APXvYqxCriH4LIaua+ro0nEzcOl+UHtCcZ9e0ZZlsjRTUIGNCXkYM/ZEkGcn66TVjEXD/NEZLSfavgIvkuGoTx14AGg=
+X-Received: by 2002:ac8:3908:: with SMTP id s8mr3407669qtb.224.1561645943537; 
+ Thu, 27 Jun 2019 07:32:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190626071430.28556-1-andrew@aj.id.au>
  <20190626071430.28556-3-andrew@aj.id.au>
  <CAL_JsqKXPzFYTHos-uvCUtBj-bcsNfrzt5GjxQ=PmgeXpp5J-A@mail.gmail.com>
- <ee0cac9e-4b39-4900-87a8-3dabb58ed883@www.fastmail.com>
-In-Reply-To: <ee0cac9e-4b39-4900-87a8-3dabb58ed883@www.fastmail.com>
+ <30d5585b-7591-4149-87c4-816e4c18fb9d@www.fastmail.com>
+In-Reply-To: <30d5585b-7591-4149-87c4-816e4c18fb9d@www.fastmail.com>
 From: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 27 Jun 2019 08:09:57 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLiZzkJZ+CeaMDer=Arm9vFdG1Y_6F0M=AZV=82EqORFg@mail.gmail.com>
-Message-ID: <CAL_JsqLiZzkJZ+CeaMDer=Arm9vFdG1Y_6F0M=AZV=82EqORFg@mail.gmail.com>
+Date: Thu, 27 Jun 2019 08:32:12 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJo37LQV9WKx_Zqy8KZ52=37TiGcNbFah6MsJmMYP23XA@mail.gmail.com>
+Message-ID: <CAL_JsqJo37LQV9WKx_Zqy8KZ52=37TiGcNbFah6MsJmMYP23XA@mail.gmail.com>
 Subject: Re: [PATCH 2/8] dt-bindings: pinctrl: aspeed: Convert AST2400
  bindings to json-schema
 To: Andrew Jeffery <andrew@aj.id.au>
@@ -79,78 +79,12 @@ Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 26, 2019 at 6:44 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+On Wed, Jun 26, 2019 at 9:55 PM Andrew Jeffery <andrew@aj.id.au> wrote:
 >
 >
 >
 > On Wed, 26 Jun 2019, at 23:17, Rob Herring wrote:
 > > On Wed, Jun 26, 2019 at 1:21 AM Andrew Jeffery <andrew@aj.id.au> wrote:
-> > >
-> > > Convert ASPEED pinctrl bindings to DT schema format using json-schema
-> >
-> > BTW, ASPEED is one of the remaining platforms needing the top-level
-> > board bindings converted.
->
-> Okay, I'll put together patches to fix that.
->
-> >
-> > >
-> > > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > > ---
-> > >  .../pinctrl/aspeed,ast2400-pinctrl.txt        | 80 -------------------
-> > >  .../pinctrl/aspeed,ast2400-pinctrl.yaml       | 73 +++++++++++++++++
-> > >  2 files changed, 73 insertions(+), 80 deletions(-)
-> > >  delete mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.txt
-> > >  create mode 100644 Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> >
-> > > diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> > > new file mode 100644
-> > > index 000000000000..3b8cf3e51506
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
-> > > @@ -0,0 +1,73 @@
-> > > +# SPDX-License-Identifier: GPL-2.0+
-> >
-> > Do you have rights to change the license?
->
-> Where are you coming from with this question? The bindings previously didn't list a
-> license, is there some implicit license for them? I would have thought it was GPL-2.0?
-
-Yes, it is implicitly GPL-2.0 since it is in the kernel tree and has
-no other license text.
-
-> IBM's (my employer's) preferred contribution license is GPL 2.0-or-later, so I was just
-> adding the SPDX marker to clarify.
-
-Adding 'or-later' is a licensing change. If IBM is the copyright
-holder on all this file, then that is fine.
-
-> > If so, the preference is to
-> > dual license with (GPL-2.0 OR BSD-2-Clause).
->
-> You're asking if I have the power to relicense so I can dual license it this way?
-
-It would probably be up to your company. If that's an issue, then not
-dual licensing is fine. I don't want to hold things up on that.
-
-[...]
-
-> > > +required:
-> > > +  - compatible
-> > > +
-> > > +description: |+
-> >
-> > description goes before properties.
->
-> Okay. I wouldn't have thought the ordering mattered. Is this just a preference?
-
-Yes, just a preference.
-
-> The tools seemed to run fine as is.
->
-> I'll re-order it regardless.
->
-> >
 > > > +  The pin controller node should be the child of a syscon node with the
 > > > +  required property:
 > > > +
@@ -179,15 +113,129 @@ Yes, just a preference.
 > > > +  USB11D1 USB11H2 USB2D1 USB2H1 USBCKI VGABIOS_ROM VGAHS VGAVS VPI18 VPI24
 > > > +  VPI30 VPO12 VPO24 WDTRST1 WDTRST2
 > >
-> > This should be a schema.
+> > This should be a schema. You need to define child nodes and list these
+> > as values for 'function' and 'group'. Ideally, the child nodes would
+> > have some sort of pattern, but if not, you can just match on '^.*$'
+> > under patternProperties.
 >
-> Yeah, I covered this in my cover letter. I was hoping to get away without
-> that for the moment as this seems like the first pinctrl binding to be
-> converted, however if you insist...
+> The children don't have any pattern in their node name, which drives
+> me towards the '^.*$' pattern match, however, what I've found is that
+> I get the following errors for some of the relevant dts files:
+>
+> ```
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-opp-palmetto.dt.yaml: compatible: ['aspeed,g4-pinctrl'] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-opp-palmetto.dt.yaml: pinctrl-names: ['default'] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-opp-palmetto.dt.yaml: pinctrl-0: [[7, 8, 9, 10, 11, 12]] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-opp-palmetto.dt.yaml: phandle: [[13]] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-opp-palmetto.dt.yaml: $nodename: ['pinctrl'] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dt.yaml: compatible: ['aspeed,g4-pinctrl'] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dt.yaml: pinctrl-names: ['default'] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dt.yaml: pinctrl-0: [[9, 10, 11, 12]] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dt.yaml: phandle: [[13]] is not of type 'object'
+> /home/andrew/src/linux/aspeed/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dt.yaml: $nodename: ['pinctrl'] is not of type 'object'
+> ```
+>
 
-That generally doesn't matter. You can assume common properties will
-have a schema and you don't need to define common constraints (like
-'function' is a string array). You only need what is specific to this
-binding which is possible values.
+The problem is "^.*$" matches both properties and child nodes.
+
+> We shouldn't be expecting these properties in the child nodes, so
+> something is busted. Looking at processed-schema.yaml, we have:
+>
+> ```
+> - $filename: /home/andrew/src/linux/aspeed/Documentation/devicetree/bindings/pinctrl/aspeed,ast2400-pinctrl.yaml
+>   $id: http://devicetree.org/schemas/pinctrl/aspeed,ast2400-pinctrl.yaml#
+>   $schema: http://devicetree.org/meta-schemas/core.yaml#
+>   patternProperties:
+>     ^.*$:
+>       patternProperties:
+>         ^function|groups$:
+>           allOf:
+>           - {$ref: /schemas/types.yaml#/definitions/string}
+>           - additionalItems: false
+>             items:
+>               enum: [ACPI, ADC0, ADC1, ADC10, ADC11, ADC12, ADC13, ADC14, ADC15, ADC2,
+>                 ADC3, ADC4, ADC5, ADC6, ADC7, ADC8, ADC9, BMCINT, DDCCLK, DDCDAT,
+>                 EXTRST, FLACK, FLBUSY, FLWP, GPID, GPID0, GPID2, GPID4, GPID6, GPIE0,
+>                 GPIE2, GPIE4, GPIE6, I2C10, I2C11, I2C12, I2C13, I2C14, I2C3, I2C4,
+>                 I2C5, I2C6, I2C7, I2C8, I2C9, LPCPD, LPCPME, LPCRST, LPCSMI, MAC1LINK,
+>                 MAC2LINK, MDIO1, MDIO2, NCTS1, NCTS2, NCTS3, NCTS4, NDCD1, NDCD2,
+>                 NDCD3, NDCD4, NDSR1, NDSR2, NDSR3, NDSR4, NDTR1, NDTR2, NDTR3, NDTR4,
+>                 NDTS4, NRI1, NRI2, NRI3, NRI4, NRTS1, NRTS2, NRTS3, OSCCLK, PWM0,
+>                 PWM1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, RGMII1, RGMII2, RMII1, RMII2,
+>                 ROM16, ROM8, ROMCS1, ROMCS2, ROMCS3, ROMCS4, RXD1, RXD2, RXD3, RXD4,
+>                 SALT1, SALT2, SALT3, SALT4, SD1, SD2, SGPMCK, SGPMI, SGPMLD, SGPMO,
+>                 SGPSCK, SGPSI0, SGPSI1, SGPSLD, SIOONCTRL, SIOPBI, SIOPBO, SIOPWREQ,
+>                 SIOPWRGD, SIOS3, SIOS5, SIOSCI, SPI1, SPI1DEBUG, SPI1PASSTHRU, SPICS1,
+>                 TIMER3, TIMER4, TIMER5, TIMER6, TIMER7, TIMER8, TXD1, TXD2, TXD3,
+>                 TXD4, UART6, USB11D1, USB11H2, USB2D1, USB2H1, USBCKI, VGABIOS_ROM,
+>                 VGAHS, VGAVS, VPI18, VPI24, VPI30, VPO12, VPO24, WDTRST1, WDTRST2]
+>             maxItems: 1
+>             minItems: 1
+>             type: array
+>         pinctrl-[0-9]+: true
+>       properties: {phandle: true, pinctrl-names: true, status: true}
+>       type: object
+>     pinctrl-[0-9]+: true
+>   properties:
+>     $nodename: true
+>     compatible:
+>       additionalItems: false
+>       items:
+>       - enum: ['aspeed,ast2400-pinctrl', 'aspeed,g4-pinctrl']
+>       maxItems: 1
+>       minItems: 1
+>       type: array
+>     phandle: true
+>     pinctrl-names: true
+>     status: true
+>   required: [compatible]
+>   select:
+>     properties:
+>       compatible:
+>         contains:
+>           enum: ['aspeed,ast2400-pinctrl', 'aspeed,g4-pinctrl']
+>     required: [compatible]
+>   title: ASPEED AST2400 Pin Controller
+> ```
+>
+> `properties: {phandle: true, pinctrl-names: true, status: true}` has been
+> merged into my '^.*$' patternProperty, presumably partly from
+> pinctrl-consumer.yaml, and this seems to be the source of the bad
+> output. If as a hack I change my pattern to '^.*_default$' the problem
+> goes away as we no longer try to enforce the constraints on properties
+> provided by other bindings, but the problem is the node names are
+> largely freeform[1] (unless I enforce a naming constraint as part of my
+> bindings?).
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pinctrl/pinctrl-bindings.txt?h=v5.2-rc6#n112
+>
+> >
+> > BTW, You can put the names under a 'definitions' key and then use
+> > '$ref' to reference them from function and group to avoid duplicating
+> > the names. Or use patternProperties with '^(function|group)$'.
+>
+> I've used the patternProperties approach above as I couldn't get the
+> definitions/$ref approach to work. I did the following:
+
+The problem is we'd need to process the schema under definitions. The
+YAML encoding we validate against always encodes strings as arrays as
+dtc has no way of knowing if a given property is a string array or
+single string. So to avoid a bunch of boilerplate in every binding, we
+process the schema to transform single strings into arrays of length
+1.
+
+It's probably best to stick with the patternProperties approach. I
+think you can do something like this:
+
+"^.*$":
+  if:
+    type: object
+  then:
+    patternProperties:
+       '^(function|group)$':
+         ...
+
+I'm not completely certain this works though, so if you can send me an
+updated binding with what you have so far I can test it out.
 
 Rob
