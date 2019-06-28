@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 707D6591BC
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 04:52:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2008F591C0
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 04:53:42 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45ZhC068jzzDqn4
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 12:52:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ZhD33sVzzDqZP
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 12:53:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,61 +16,61 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="JSrUAZ8l"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="ZFUpCXQy"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="nhPowcNo"; dkim-atps=neutral
+ header.b="TcvD6wq/"; dkim-atps=neutral
 Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
  [66.111.4.224])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45Zgvw5MPlzDqRG;
- Fri, 28 Jun 2019 12:39:40 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Zgw11LsTzDq7c;
+ Fri, 28 Jun 2019 12:39:45 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 074DF2DE9;
- Thu, 27 Jun 2019 22:39:37 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id 7E9093483;
+ Thu, 27 Jun 2019 22:39:41 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 27 Jun 2019 22:39:37 -0400
+ by compute4.internal (MEProxy); Thu, 27 Jun 2019 22:39:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=dkailpDyj7vUI
- txB8Vs9sL40BUOIyxRITgSOEfzO07k=; b=JSrUAZ8lW608Xlb0i4jxGz5M0lCm6
- hL3hy88SEw8o3eHtB42JUfTUOOJfQQurqCeN/B2wV2hOUofHMRrdGXkND6UBUDSs
- NUUGtpMwYtuBiQa9jRT1VvdAabNU2unU2bMxObJUOpYOnHM3KXL3xi4sz5+V4Klb
- XYsKHf9ZAvH42k1S3KcoLSI44HaDFUsxMo3oXsfw/DiV7NtYA0+7REe6LVL7P2Ya
- rYpYYARf6joLvi71TdUyNUN1IRVfTHG7JLKSUFWgt3po65+17zVCCh7haS/4Qc2G
- 4C2dYcV1EyY6Z/k0e+7ziX4hhftFPdMQWxSZlt5SXtGaWpWa5iwjT+0Mw==
+ :mime-version:content-transfer-encoding; s=fm3; bh=ADqhvifrknPuz
+ OYzjNxXRssrypRVqiE51aZTMCvODu0=; b=ZFUpCXQy6B8uj0ca88kY34wx9NsTW
+ nUjr5VFG7dhZvf8CVFBWzSbgULrOcaxoe9sNPrLvUaj+oL3FhA06vVh5xgVPsG8K
+ 2j4bbWRrw3sheZhasI/Nw5SaE5C58EESA13xOH5kbckMjZIbSs8d50Tkoe5DMFjT
+ GlVs7J1IgpNS6nWgcpVCz6EMZkLGatXOD/mjn4Pqzverr4M+aVDD63hs/SOwxeEV
+ gdI7TTIuf4TEDXNdiJ3EdfRe/caTjxuRlT2lXEpnevJJ1IF5XgE/bDtgdJtjC0dM
+ kIFhPUQOcC/3oHliOUQ2658UQwORvn33ROO/qzypdW3bMwgCvetbg5r/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=dkailpDyj7vUItxB8Vs9sL40BUOIyxRITgSOEfzO07k=; b=nhPowcNo
- yBqX1mv2xtH4kEyeJXoNbiL4OwHRGKlKefjuMTSd+JUy1jGKtah6ramJOjBDKaQB
- s8qxgJOSnyE7DIPO5EMKutnUfa3SaQlCqZkZHdLMh7+fDMzU7Wbt4leT0pApxPJO
- Ucgl0C/lF5+lpuMx9q1d7qJnSMaC0FE3d1yJXljAfnmdLJ5Ib8bVAsUuaEPnkPYm
- cSy+3TkHkwLQ6K11PH5hwhVAENULTPzKgGt/d7PmjhfoNGpyUCj9HSFeHwpWRGeO
- Q9dDRAgvshC/akiT6AxitkgyChhy30dOUW2Gc5OfQ661gkAjVaYv6J233KVd2KnU
- zmCD4II2U9sd2A==
-X-ME-Sender: <xms:6H0VXQqJ6glKWOVBBKDwGN1xIFb-aPx1esmLo-Pcwb01sd5pf7fz4g>
+ fm3; bh=ADqhvifrknPuzOYzjNxXRssrypRVqiE51aZTMCvODu0=; b=TcvD6wq/
+ aS2ba3+jDjzka/vzn1IAo8Td4r8TE0/t1pxAaI4c5PRB6DYCbyNwz3cXMpGglyWB
+ iz3OLf+Pd/LmyRKVkPL5Ib9Vs6expRxAJEArw7gWTuLoMiE+lJPwn6K4OpudHOoH
+ FykfS3L496SpeQ4dyeNqOIUob3cTOln2H75YU2p5/BGgcf0FkL0r3qb/RBWojZlV
+ Ie6aaPzonmsl3ViqvAvn90SeFDigpr75qT67pBCX9QcGMPX6NIfdQE4IAxwF9Iui
+ +gSw43orPBJndzNTohgMwaLIxQ1dd62Q3+sZl2t0XM2P58/olpFkF07NwdtV1R/2
+ lzfTh3/QlwJbfQ==
+X-ME-Sender: <xms:7X0VXYAGuohFMY5g3ytuF5SFQ4MMGGRbnKTqdYf1i2QIuRM01KcW9Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudelgdeiudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomheptehnughrvgif
  ucflvghffhgvrhihuceorghnughrvgifsegrjhdrihgurdgruheqnecukfhppedvtddvrd
  ekuddrudekrdeftdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdr
- ihgurdgruhenucevlhhushhtvghrufhiiigvpedv
-X-ME-Proxy: <xmx:6H0VXY5ZAfAOBaWzGw6NJ8MEYE9-tZTB3lkJFLX1gS1x0R1HwGWAOw>
- <xmx:6H0VXXeRNAVbiXnpwDwYBmKf7IkoDHFdQuizoywqeETG8gFJMDq_uA>
- <xmx:6H0VXd5Hdkx54YTCoiecEXw3xlxVSael4fdUF20lQg-tW3fqABb9IA>
- <xmx:6H0VXX7j7mtJMBAOZA6IE_9AhNUN5wxC1L4JOiKvHxFJEoBkQxoScw>
+ ihgurdgruhenucevlhhushhtvghrufhiiigvpeef
+X-ME-Proxy: <xmx:7X0VXcAt3aDT5XckrP3KkgvKfFd_FWCrgfgZTrQE_bOcgmFaGA1jiw>
+ <xmx:7X0VXQJaVibh-beRUVk9rE9lsd826w2OsNjrZTTj8YJRbn5Znjqmrw>
+ <xmx:7X0VXeTIa0G12SlZ49phXbBfGYUIwwm2w7JGMwYymGl8eDO8c6An8A>
+ <xmx:7X0VXcJxIYy1E3Lqkxq9a_-_8O7rFr5daoopP9pglOX2jGdulDzVxA>
 Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
- by mail.messagingengine.com (Postfix) with ESMTPA id C946D380074;
- Thu, 27 Jun 2019 22:39:32 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 3F15A380074;
+ Thu, 27 Jun 2019 22:39:37 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: linux-gpio@vger.kernel.org
-Subject: [PATCH v2 5/8] pinctrl: aspeed: Correct comment that is no longer true
-Date: Fri, 28 Jun 2019 12:08:35 +0930
-Message-Id: <20190628023838.15426-6-andrew@aj.id.au>
+Subject: [PATCH v2 6/8] pinctrl: aspeed: Clarify comment about strapping W1C
+Date: Fri, 28 Jun 2019 12:08:36 +0930
+Message-Id: <20190628023838.15426-7-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190628023838.15426-1-andrew@aj.id.au>
 References: <20190628023838.15426-1-andrew@aj.id.au>
@@ -95,29 +95,31 @@ Cc: mark.rutland@arm.com, devicetree@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We have handled the GFX register case for quite some time now.
+Writes of 1 to SCU7C clear set bits in SCU70, the hardware strapping
+register. The information was correct if you squinted while reading, but
+hopefully switching the order of the registers as listed conveys it
+better.
 
 Cc: Johnny Huang <johnny_huang@aspeedtech.com>
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Acked-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.h b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-index 4b06ddbc6aec..c5918c4a087c 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.h
-@@ -240,8 +240,7 @@
-  * opposed to naming them e.g. PINMUX_CTRL_[0-9]). Further, signal expressions
-  * reference registers beyond those dedicated to pinmux, such as the system
-  * reset control and MAC clock configuration registers. The AST2500 goes a step
-- * further and references registers in the graphics IP block, but that isn't
-- * handled yet.
-+ * further and references registers in the graphics IP block.
-  */
- #define SCU2C           0x2C /* Misc. Control Register */
- #define SCU3C           0x3C /* System Reset Control/Status Register */
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+index 4c775b8ffdc4..b510bb475851 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+@@ -209,7 +209,7 @@ static int aspeed_sig_expr_set(const struct aspeed_sig_expr *expr,
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP2)
+ 			continue;
+ 
+-		/* On AST2500, Set bits in SCU7C are cleared from SCU70 */
++		/* On AST2500, Set bits in SCU70 are cleared from SCU7C */
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1) {
+ 			unsigned int rev_id;
+ 
 -- 
 2.20.1
 
