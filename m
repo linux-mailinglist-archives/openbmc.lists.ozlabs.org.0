@@ -2,63 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82BE359E71
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 17:09:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E64359ED6
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 17:26:47 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45b0YK0fGDzDqv5
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jun 2019 01:09:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45b0x04MqtzDqtN
+	for <lists+openbmc@lfdr.de>; Sat, 29 Jun 2019 01:26:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::535; helo=mail-pg1-x535.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="IoRCUS3H"; 
- dkim-atps=neutral
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com
- [IPv6:2607:f8b0:4864:20::535])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45b0Xh2YFwzDqbq
- for <openbmc@lists.ozlabs.org>; Sat, 29 Jun 2019 01:09:07 +1000 (AEST)
-Received: by mail-pg1-x535.google.com with SMTP id g15so816985pgi.4
- for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 08:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=u6V4nPnPOdQ/uGLCy6mE/DVIniRjcIY27f0ohl0X1Jk=;
- b=IoRCUS3HXC85NlP3DnS551EhmsOkAhn4EFgHVgOFoElQSNxQRTukLYQKwY+11+Omwd
- EzuGHfzY6l4WIyMB1ItgP2WfxmFnBpWkBE+TC0oBb4eT0L8+KdJhJ8kkxFAZI3rNon0B
- q9d9HxZtnJHbp+mfD1P92Hwpv5aWj/3bhgzz32Jnm8TnQiBmAA9knMYYz1bcNlseDgUI
- +eIxTejvpsU9rDwDy05U1lhoAZlDMcouxgS4hc6tcao3YZcXw+CnuL4hVVrVpfHMjSMC
- I5h1xoWRpuqyJMEYrCcPK0oyh3RUBOUf+1G0aAIgWcHvbXcA46/jisDjY3v1cUojbwUt
- tJWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=u6V4nPnPOdQ/uGLCy6mE/DVIniRjcIY27f0ohl0X1Jk=;
- b=RbcJlFHIoVvvPRLVHeEaU+/GHyaMpllpkNDuL4zgyXw96HC9I+8np8ZMqumrRb51Pp
- AC2X41yJv+r/YCAh09T9dmoNybssugEKNXVYN4FTwCtk82p6IREHB+lvkQai6yR4/eOC
- g/ZdM51HnIMdV57zT1kRBbEcC7SWvjCQzllQtNPC6zwaEpDraxZ0fNvcpZopvgCgfkXH
- dpPxM/MqWBVw8qN1wFlwY86FnAjF7+PcI7jKYOwwsOu5c9ixu8ie+ECCAPjMsPo0leKN
- B+xEWAH7H9oKgedL1hnQxwVVd8Qqm6YKR8nSHvh1uLmobI92IXSuL3GMviHW1Ob9x288
- d+rQ==
-X-Gm-Message-State: APjAAAW4X6h1fz64u1Iu7Krz/xhbfUrHzUV6zysWNvMfhujwGgnst7UV
- yLWwlfpbD9D70gWPJLjVSsmgZRo7lSSM2L9zDEbyDkvwa+M=
-X-Google-Smtp-Source: APXvYqy3znBqPw9TaMMq2GEGxPQxzEJ5g26/2fg2li0wVH5dJ2qe9UqCifN2z5ZACXWNCkdCJCj4ZvjKZYys2pHOdC0=
-X-Received: by 2002:a17:90a:23a4:: with SMTP id
- g33mr14190743pje.115.1561734543646; 
- Fri, 28 Jun 2019 08:09:03 -0700 (PDT)
-MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Fri, 28 Jun 2019 08:08:52 -0700
-Message-ID: <CAO=notxpz2X-38J-UNjLZWh9RjyunjaXVDhZ_VGK587zFVg_Vw@mail.gmail.com>
-Subject: phosphor-ipmi-flash v1.0 -> v1.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45b0wQ65zKzDqsy
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Jun 2019 01:26:13 +1000 (AEST)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x5SFNFlv102457
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 11:26:10 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2tdndgg83q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 11:26:10 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x5SFOPSR025138
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:09 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma04dal.us.ibm.com with ESMTP id 2t9by7eb20-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:09 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x5SFQ9c646858668
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:09 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 10F35124053
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:09 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E7ABA124052
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:08 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 15:26:08 +0000 (GMT)
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Matt Spinler <mspinler@linux.ibm.com>
+Subject: Creating event logs for blackout power losses
+Message-ID: <77618bc2-0725-c104-1744-7ceca51e2d09@linux.ibm.com>
+Date: Fri, 28 Jun 2019 10:26:09 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-06-28_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1906280177
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,36 +83,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Adriana Kobylak <anoo@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all;
+Hi,
+We've been asked by field support to create an OpenBMC event log when we 
+detect that
+we suffered a power blackout, by which I mean the system is up and 
+running, and then the
+BMC suddenly reboots and when it comes back up main power is off. The 
+issue for it is
+https://github.com/ibm-openbmc/dev/issues/677.
 
-phosphor-ipmi-flash v1.0 is rolling out in the next couple of days.
-It supports sending a BMC firmware image (static or ubi-tarball) to
-the BMC and verifying and updating with that image.  You must provide
-your own verification service -- because presumably each company has
-their own verification scheme.  We're using a service that checks that
-it was signed with a private key, we have the public on the BMC --
-pretty straight forward use-case as an example.  The update service
-provides a default:no option you can enable that will just reboot the
-BMC, otherwise you'll need to provide an update service
-implementation.  You can do whatever you want.  I'm likely going to
-work with Adriana to come up with a default UBI tarball one -- for
-those using that, then it can provide that option if you have that
-distro_feature enabled.
+I have a proposal in there for how to detect it in the chassis state 
+manager code, which
+basically just consists of persisting the chassis power state and then 
+checking it against
+the actual value on startup, and an error proposed at
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/22791.
 
-The burn_my_bmc tool build and usage will be detailed in the README
-file, should be landing this week or next.
+Does anyone have any other ideas or thoughts?  Is it OK if we make this 
+the default behavior, or
+would it be preferred we enable it with a compile flag?
 
-v1.1:  I've received a request to extend this to support the host
-BIOS.  I'm working on the design changes to support either a BMC, a
-BIOS, or other firmware image.  To avoid adding another link in the
-dynamic loader chain from ipmid though, I'm looking at this as a case
-of pre-canned options you can compile-in versus searching for
-additional support in libraries (although it's somewhat trivial to
-transition from one approach to the other).  At least for now, that's
-the design direction.  But we'll see once it's more fleshed out.
-
-Patrick
+Thanks,
+Matt
