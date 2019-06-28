@@ -2,62 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42AF159711
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 11:13:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA38759716
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 11:14:29 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45ZrfY4hLLzDqhK
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 19:13:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ZrgR20LnzDqjc
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 19:14:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::429; helo=mail-wr1-x429.google.com;
- envelope-from=asmithakarun@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2a00:1450:4864:20::141; helo=mail-lf1-x141.google.com;
+ envelope-from=wangzhiqiang8906@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="YOg5OzhZ"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="A3HarYq7"; 
  dkim-atps=neutral
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
- [IPv6:2a00:1450:4864:20::429])
+Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com
+ [IPv6:2a00:1450:4864:20::141])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ZrcL6QvfzDqZb
- for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 19:11:40 +1000 (AEST)
-Received: by mail-wr1-x429.google.com with SMTP id p13so5438823wru.10
- for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 02:11:40 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Zrcw1ml1zDqsq
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 19:12:09 +1000 (AEST)
+Received: by mail-lf1-x141.google.com with SMTP id y198so3499987lfa.1
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 02:12:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=bvWvQmQywnoQeVGD+3LwAAURMw+KSXQ+sSgkh9m3Zg4=;
- b=YOg5OzhZ0L/uOc/8bEpCgBChcYk7gqiY8y9bzlr3mtM28thaKUm/VZmhhu1yA1kh5n
- xzkDZoB2zLeQB3pXhAHsIVqAK1CxfAskhci6ZT3qO58Zf0PeqlZFbZoalEyaeOkIAlYM
- /EZSAIbTSpqn8z53zBrKA7v7c1DfDdwnJmKyKpsJ0fRV1NDGp7bUoR50lXxtjuH7ENp3
- /iI/mTYrekwEw0qYW8XCkCCvR2ZocwYCVAocIfmu4XNwbdoXUjnNOwW1Z4fbAy7GV4mM
- DU2fcb5TeirmppP3CePycTR5i211ZBQhuH0h5pd8B5b3aw71W4M/dcSFZpNnj/qAyWFt
- d4oA==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=7mrqRpFBcHlXIJTPrxU5vhuwhqLGAyTHsJFALo70qg4=;
+ b=A3HarYq7qNIKhGAK0JlSPXx2FrZQjwxeYt9Sei65RP/fRuHvNorD27TCgxJIy8tTUI
+ X3kuTI3jrstiSuIWPH7WEhvLmQOoFtaFlCOWzqlE7t8dxV2RL2ilqW8o19lmq5yrgGBZ
+ jJram/coXtViiuIvP0ksjOhos4wFMRQ6sD8lVaxaKPekZhOAJZCTFLzab2/9Edjh8BU1
+ yT+yHuk9hCJukMePEdRtGLxozEy0BxEqn9F6CLxDMD/oFncuVI/j+SeWEFoJfLLgPvYI
+ Q8TiYY4BfblfvjnmvlFnoWf/F/wEQKEN/ngnroCxLpcm8Lglg94l48SdyyVnJAvza86v
+ +8zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=bvWvQmQywnoQeVGD+3LwAAURMw+KSXQ+sSgkh9m3Zg4=;
- b=TdD1T1gAG0jHm1O2+itYOdpbhCdxlA20MOQR1Nqti8WPaB77Pj9wVMcVxHz+OhwIGB
- sRAByvGQ3OMYCXBxeJ92M51FlP3M+yvrBTwj4oxUs/Oz6PG5vXTqGQ5OisFjYqulnTEs
- FvXq+Ec4oY4wK0f9G1qBl1OfuuyrqK6apXLrU/0m6fHbHhoq8NF3zUksea5iUBAPJ2H4
- Nj+sMzrrmAPmOSFsFASzuCbU5jhnABUEWtRYZ5SX2wX3exj9YQFt1kGhPb/0cQYXFkfl
- 7jjxu6JhiW0gEL1JekRlwonBdyRM0NG5QEkfQKCc6RSKx8JRvAIQ/+gHU4vzdqIZAZtt
- 2kUw==
-X-Gm-Message-State: APjAAAU8fG8Ocb5BnfFPH3A9eJMEECStgsJr5MImfhCwWbfYC964+gNo
- 8T35bS4Pk27DY05vyh3QDJl6iY6Eoc+OWOOu/k29zdpJis8=
-X-Google-Smtp-Source: APXvYqwU2SUTg9Z98fWBPcK627fIDl4vNXOMGE9EuBXCzXS/vBzLBfLc79KdezwGlfgFzKf982DvtvhfExc4G3U68Us=
-X-Received: by 2002:adf:afd5:: with SMTP id y21mr6892556wrd.12.1561713093371; 
- Fri, 28 Jun 2019 02:11:33 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=7mrqRpFBcHlXIJTPrxU5vhuwhqLGAyTHsJFALo70qg4=;
+ b=qXaCWcOiLUCQnli+uWy3HB5rnZm0Fj/oOsJ2tZgEo54wJqgo+DkPxbAEQgjERBiiH0
+ zRgupJbOFztjVIQPBFUSjN181EjPp3ZdVU6EMMIVq0vu695t5FMzmNu1eh55pCNom4PI
+ riL9mscED3JCYwrRBmtyxmxqOziinVwnE576YbDadrvn3EkEw9HTUOw1OIvjzcLO51d/
+ cciXFgL/GCic2/caB+1jJD1tkofuVa6IijDVyzFhaOLQH2nBtXbZSgRfofXu7bmOz70e
+ 1VMA3dCDnjFmWVpXoSsclLMQ38Ze8rPULcrRSD4a1BYrqD7q3F1JRF88Qh5L5Bxp4Qjw
+ 59uQ==
+X-Gm-Message-State: APjAAAUjOhHyJAM8+yMgnl+oWK7jf+n+4yJb63h0AhR2qKV8krRi3O8G
+ 7txYyJmSUo3ONLlQfHaWASpOjIB4ykj11gRXGyU=
+X-Google-Smtp-Source: APXvYqxylbApbZFZu+z8O773oR3E3OKBPyS+4ruem1iZGQ/cngWUmpaJlHvT6WFZLogbyoRnpzJyrANyLGDzvZozX7s=
+X-Received: by 2002:a19:f20d:: with SMTP id q13mr4381584lfh.65.1561713126226; 
+ Fri, 28 Jun 2019 02:12:06 -0700 (PDT)
 MIME-Version: 1.0
-From: Asmitha Karunanithi <asmithakarun@gmail.com>
-Date: Fri, 28 Jun 2019 14:40:57 +0530
-Message-ID: <CANGK-S4fQmYJ_kgH6SWRwkQ8E4TD6rukirs-0LR4+EMVY_Admw@mail.gmail.com>
-Subject: Enhance Discovery class infrastructure
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000002be9e8058c5eaa2c"
+References: <20190628064139.17408-1-jk@ozlabs.org>
+ <20190628080737.25491-1-jk@ozlabs.org>
+In-Reply-To: <20190628080737.25491-1-jk@ozlabs.org>
+From: qianlihu <wangzhiqiang8906@gmail.com>
+Date: Fri, 28 Jun 2019 17:11:55 +0800
+Message-ID: <CAHkHK0_ex5_13L9sAN3_u35qeTDOoTps2unR_f4Fayj3r-idoQ@mail.gmail.com>
+Subject: Re: [PATCH v2] fsi/core: Fix error paths on CFAM init
+To: Jeremy Kerr <jk@ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,117 +73,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002be9e8058c5eaa2c
-Content-Type: text/plain; charset="UTF-8"
+Tested-by: John Wang <wangzqbj@inspur.com>
 
-Hi All,
-
-Below is the design document for enhancing the discovery class
-infrastructure.
-
-# Enhance Discovery class infrastructure
-
-Primary assignee:
-  Asmitha KR
-
-Other contributors:
-  Ratan K Gupta
-
-Created:
-  2019-06-28
-
-## Problem Description
-Avahi is a system which facilitates service discovery on a local network via
-the mDNS/DNS-SD protocol suite. It allows programs to publish and discover
-services running on a local network. The format of the Avahi service file is
-in the "Background and References[1]" section. We have a requirement where
-the
-management console needs to identify the vendor-specific servers in a
-network.
-
-## Background and References
-[1]
-https://github.com/lathiat/avahi/blob/master/avahi-daemon/example.service
-[2] https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/22950
-[3] https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm/+/22951
-
-## Requirements
-None.
-
-## Proposed Design
-The services that are being published by avahi have various fields like -
-service name, type, port, hostname, address, port, and a text record. To
-solve
-the above-listed problem, we are proposing a solution in which the
-vendor-specific information is included in the text record field of the
-avahi
-service file.
-
-To do so, currently, in OpenBMC we have the infrastructure where the
-service-specific data is passed through a specific service bb file.
-Depending
-on the distro feature(slp or avahi), it generates the service file with the
-given data. We are enhancing this infrastructure to add the vendor-specific
-information in the avahi service file(under txt-record).
-
-There is a commit "Background and References[2 & 3]" section which is up for
-review.
-
-## Alternatives Considered
-None.
-
-## Impacts
-None.
-
-## Testing
-The path /etc/avahi/services contain all the services that avahi publishes
-on
-startup.
--- 
-Thanks & Regards,
-Asmitha Karunanithi
-
---0000000000002be9e8058c5eaa2c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div><br></div><div>Below is the design document fo=
-r enhancing the discovery class infrastructure.</div><div><br></div><div># =
-Enhance Discovery class infrastructure<br><br>Primary assignee:<br>=C2=A0 A=
-smitha KR<br><br>Other contributors:<br>=C2=A0 Ratan K Gupta<br><br>Created=
-:<br>=C2=A0 2019-06-28<br><br>## Problem Description<br>Avahi is a system w=
-hich facilitates service discovery on a local network via<br>the mDNS/DNS-S=
-D protocol suite. It allows programs to publish and discover<br>services ru=
-nning on a local network. The format of the Avahi service file is<br>in the=
- &quot;Background and References[1]&quot; section. We have a requirement wh=
-ere the<br>management console needs to identify the vendor-specific servers=
- in a network.<br><br>## Background and References<br>[1] <a href=3D"https:=
-//github.com/lathiat/avahi/blob/master/avahi-daemon/example.service">https:=
-//github.com/lathiat/avahi/blob/master/avahi-daemon/example.service</a><br>=
-[2] <a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+=
-/22950">https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/22950<=
-/a><br>[3] <a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm=
-/+/22951">https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm/+/22951</a>=
-<br><br>## Requirements<br>None.<br><br>## Proposed Design<br>The services =
-that are being published by avahi have various fields like -<br>service nam=
-e, type, port, hostname, address, port, and a text record. To solve<br>the =
-above-listed problem, we are proposing a solution in which the<br>vendor-sp=
-ecific information is included in the text record field of the avahi<br>ser=
-vice file.<br><br>To do so, currently, in OpenBMC we have the infrastructur=
-e where the<br>service-specific data is passed through a specific service b=
-b file. Depending<br><div>on the distro feature(slp or avahi), it generates=
- the service file with the<br>given data. We are enhancing this infrastruct=
-ure to add the vendor-specific<br>information in the avahi service file(und=
-er txt-record).<br><br>There is a commit &quot;Background and References[2 =
-&amp; 3]&quot; section which is up for<br>review.<br><br>## Alternatives Co=
-nsidered<br>None.<br><br>## Impacts<br>None.<br><br>## Testing<br>The path =
-/etc/avahi/services contain all the services that avahi publishes on<br>sta=
-rtup.<br></div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smart=
-mail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp=
-; Regards,<div>Asmitha Karunanithi</div></div></div></div></div></div></div=
+On Fri, Jun 28, 2019 at 4:09 PM Jeremy Kerr <jk@ozlabs.org> wrote:
 >
-
---0000000000002be9e8058c5eaa2c--
+> Change d1dcd67825 re-worked the struct fsi_slave initialisation in
+> fsi_slave_init, but introduced a few inconsitencies: the slave->dev is
+> now registered through cdev_device_add, but we may kfree() the device
+> out from underneath the cdev registration. We may also leave an IDA
+> allocated.
+>
+> This change fixes the error paths, so that we kfree() only before the
+> device is registered with the core code. We also move the smode write to
+> before we start creating proper devices, as it's the most likely to
+> fail. We also remove the IDA-allocated minor on error, and properly
+> clean up the of_node.
+>
+> Fixes: d1dcd678257603e71cf3f3d84c70e2b6f0f14bb8
+> Reported-by: Lei YU <mine260309@gmail.com>
+> Signed-off-by: Jeremy Kerr <jk@ozlabs.org>
+> ---
+> v2:
+>   fix dropped semicolon
+> ---
+>  drivers/fsi/fsi-core.c | 32 ++++++++++++++++++++------------
+>  1 file changed, 20 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+> index 1d83f3ba478b..1f76740f33b6 100644
+> --- a/drivers/fsi/fsi-core.c
+> +++ b/drivers/fsi/fsi-core.c
+> @@ -1029,6 +1029,14 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+>
+>         }
+>
+> +       rc = fsi_slave_set_smode(slave);
+> +       if (rc) {
+> +               dev_warn(&master->dev,
+> +                               "can't set smode on slave:%02x:%02x %d\n",
+> +                               link, id, rc);
+> +               goto err_free;
+> +       }
+> +
+>         /* Allocate a minor in the FSI space */
+>         rc = __fsi_get_new_minor(slave, fsi_dev_cfam, &slave->dev.devt,
+>                                  &slave->cdev_idx);
+> @@ -1040,17 +1048,14 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+>         rc = cdev_device_add(&slave->cdev, &slave->dev);
+>         if (rc) {
+>                 dev_err(&slave->dev, "Error %d creating slave device\n", rc);
+> -               goto err_free;
+> +               goto err_free_ida;
+>         }
+>
+> -       rc = fsi_slave_set_smode(slave);
+> -       if (rc) {
+> -               dev_warn(&master->dev,
+> -                               "can't set smode on slave:%02x:%02x %d\n",
+> -                               link, id, rc);
+> -               kfree(slave);
+> -               return -ENODEV;
+> -       }
+> +       /* Now that we have the cdev registered with the core, any fatal
+> +        * failures beyond this point will need to clean up through
+> +        * cdev_device_del(). Fortunately though, nothing past here is fatal.
+> +        */
+> +
+>         if (master->link_config)
+>                 master->link_config(master, link,
+>                                     slave->t_send_delay,
+> @@ -1067,10 +1072,13 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+>                 dev_dbg(&master->dev, "failed during slave scan with: %d\n",
+>                                 rc);
+>
+> -       return rc;
+> +       return 0;
+>
+> - err_free:
+> -       put_device(&slave->dev);
+> +err_free_ida:
+> +       fsi_free_minor(slave->dev.devt);
+> +err_free:
+> +       of_node_put(slave->dev.of_node);
+> +       kfree(slave);
+>         return rc;
+>  }
+>
+> --
+> 2.20.1
+>
