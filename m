@@ -1,85 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98F0958F81
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 03:01:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45Zdl301J7zDqdD
-	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 11:01:51 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FD2D59006
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 03:56:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45Zfxn4D1yzDqWM
+	for <lists+openbmc@lfdr.de>; Fri, 28 Jun 2019 11:56:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.221; helo=new1-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=qq.com
+ (client-ip=113.96.223.47; helo=qq.com; envelope-from=1450335857@qq.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="MyBHZuXx"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="aOvbE5MW"; dkim-atps=neutral
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
- [66.111.4.221])
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.b="OYqI+imb"; 
+ dkim-atps=neutral
+X-Greylist: delayed 67 seconds by postgrey-1.36 at bilbo;
+ Fri, 28 Jun 2019 11:55:37 AEST
+Received: from qq.com (smtpbg403.qq.com [113.96.223.47])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ZdkR1WHDzDqch;
- Fri, 28 Jun 2019 11:01:18 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 2A3631448;
- Thu, 27 Jun 2019 21:01:16 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 27 Jun 2019 21:01:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=6QkdIpPNZcez0nWZJny4hrwMOIoRT7+
- z3YW1PJJsa+0=; b=MyBHZuXxdmX/5SpLOi1pAk1sCtJy3enfybuFzaWKTrrihqf
- fjNZULa6ESDWG9Nb1IhjNaUOpYZKHFIDcgFyiFPg4JC97AXqbNcayZ0rTx2sGaZ2
- zQCnMf7nezIurCkUGAugjDNs4PXdf9Mha1OwOLdIRy2JuJnmOrIKCu5dWMRve7ny
- IHU5fjAUSZCjOCDUTaJO0hOwf1aHHz8yh64OjkbITBempZkcG9vMe0kchf7gViUc
- q6wJasjAVeHjWXYKG2uB5UjyTlH+3+p4iL28aEN82uexhYbGjCX9iIlFx5Bb8E0x
- Dt5XRi/Mqf0398zbAzSg9WVWxEeo5ebcPkwZeCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=6QkdIp
- PNZcez0nWZJny4hrwMOIoRT7+z3YW1PJJsa+0=; b=aOvbE5MWRlWu77Pg+XZaA/
- u4PlEqmN0NQRyeeEAHI37JRT5naI2Yzcgh5r+3Ovx+A6tOZ0YUE69dSLNvvnlgtC
- 0rr+BGnl0AmCuryqoZyldci7C9uWKjCRB7RYblWj70Akm9wL8e7Yfpa4nAE+9RVZ
- 47G8Q4DC8RfQSoughbd67uc4HGwhmNZVA6ZxBve8RQERZ29ep0tQFWEfmZS1kYyB
- mckAxPBzpheOfqxG/Q54sP+aGp0V3afVQY8wAZrr6TFdxwVo1PbUmUoJc8dS6Vs+
- Tafs4h/6x+M7+MM80WUPi/WmfEUXhGkYriNoBojwrgVVuDYKaVoDDkVAjsDhmzIA
- ==
-X-ME-Sender: <xms:2mYVXZRh07v3m3dtSpcqvSBZhb3GnfbHz-u-bsw1kRb6Mvs22kxfdw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudelgdegvdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:2mYVXQRnCamIqGoCcwQ4HGTSFXWpd7-rjjS744xveIwEbLYzbV5eiw>
- <xmx:2mYVXRdoBHmREkPzHUUNTFrBhroqsf2TSy20snTyK8odUSz6fSUTAQ>
- <xmx:2mYVXWdJECu90yIqi6uBcSVlaESB7fOX6doZKI4a18B3urbJj8mAUg>
- <xmx:3GYVXdkcWIdXmwbmCLrdk1-KHTzuUFRg8uGxViV45__3yffNc6InwA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 17816E00A3; Thu, 27 Jun 2019 21:01:14 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-731-g19d3b16-fmstable-20190627v1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45Zfx607MlzDqS6
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Jun 2019 11:55:35 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1561686819; bh=eMA9Pp/tvnu1DaFt2H/1NepsiZD9DrtmnMojyDNfCWY=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=OYqI+imbqBBrJV2Z1oMW8LzMnSg8eR072kfpPmxA5e12f+wdMAflLVoLK7FEMdw1r
+ ieSoUMwG0cwlRohKTpLEm94/lT27gJp6hE9kvCseazfJtif2HQxdI4t4X6RLwWaEgh
+ 7JGK4pN+lmuQWpUUuf/H4BGzuPQLOOsNK5sWDC4c=
+X-QQ-SSF: 00000000000000F000000000000000H
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 218.247.157.87
+X-QQ-STYLE: 
+X-QQ-mid: webenglish1t1561686818t210332
+From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
+To: "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
+ "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
+ "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>,
+ "=?ISO-8859-1?B?Sm9lbCBTdGFubGV5?=" <joel@jms.id.au>,
+ "=?ISO-8859-1?B?QW5kcmV3LkplZmZlcnk=?=" <andrew@aj.id.au>,
+ "=?ISO-8859-1?B?cmF0YWd1cHQ=?=" <ratagupt@linux.vnet.ibm.com>
+Subject: How to prevent the user repeat-login to avoid the ikvm overload
 Mime-Version: 1.0
-Message-Id: <67703d84-a827-4a5c-bf75-37a619f1de94@www.fastmail.com>
-In-Reply-To: <CACRpkdZtTy-HHu2O4aOaqV5ZdxcYYPFRuxK2jjnw+_O1xcF1rg@mail.gmail.com>
-References: <20190626071430.28556-1-andrew@aj.id.au>
- <20190626071430.28556-2-andrew@aj.id.au>
- <CACPK8Xfdd1ReAHr9f6zRbZ-WJRquDJsTdUQeT_JuEBhOzS8tig@mail.gmail.com>
- <CACRpkdZtTy-HHu2O4aOaqV5ZdxcYYPFRuxK2jjnw+_O1xcF1rg@mail.gmail.com>
-Date: Fri, 28 Jun 2019 10:31:13 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Linus Walleij" <linus.walleij@linaro.org>, "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_1/8]_dt-bindings:_pinctrl:_aspeed:_Split_bindings_d?=
- =?UTF-8?Q?ocument_in_two?=
-Content-Type: text/plain
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5D157322_0CE10608_40841D02"
+Content-Transfer-Encoding: 8Bit
+Date: Fri, 28 Jun 2019 09:53:38 +0800
+X-Priority: 3
+Message-ID: <tencent_7DE3A7000B33C89E09783AFC@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-ReplyHash: 109030438
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Fri, 28 Jun 2019 09:53:39 +0800 (CST)
+Feedback-ID: webenglish:qq.com:bgforeign:bgforeign4
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,31 +72,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>, Ryan Chen <ryan_chen@aspeedtech.com>,
- linux-aspeed@lists.ozlabs.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a multi-part message in MIME format.
+
+------=_NextPart_5D157322_0CE10608_40841D02
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+
+SGkgSmFlLFJhdGFuLA0KICAgVGhlIGlrdm0gb3Igb3BlbmJtYyBwaG9zcGhvci1yZXN0IHBy
+b2Nlc3Mgd2lsbCBkZWFkbG9jayB3aGVuIHVzZXJzIG9wZXJhdGUgdGhlIGlrdm0gb24gZGlm
+ZmVyZW50IFBDIGF0IHRoZSBzYW1lIHRpbWUgLiBUaGUgdXNlciBjYW4ndCBsb2dpbiB3aGVu
+IHRoZSAgQ1BVIHVzYWdlIG9mIHBob3NwaG9yLWdldmVudCBwcm9jZXNzIG1vcmUgdGhhbiA3
+MCUuICBUaGlzIGlzc3VlICB3aWxsIGJlIHRyaWdnZXJlZCB3aGVuIG9uZSB1c2VyIGxvZ2lu
+ICBib3RoIG9uIGRpZmZlcmVudCBJUCBhbmQgb3BlcmF0ZSB0aGUgaG9zdCBieSAgaWt2bS4N
+CiAgTXkgdGVzdCBjYXNlOg0KMSwgVGhlIHVzZXIgInJvb3QiIGxvZ2luIHRocm93IEFTVDI1
+MDAgIG5ldHdvcmsgIGNhcmQsIGVudGVyIHRoZSBpa3ZtIHdlYnBhZ2UgLHRoZSBJUCAxOTIu
+MTY4LjAuMTAwLg0KMiwgVGhlIHVzZXIgInJvb3QiIGxvZ2luIHRocm93IE9DUCBuZXR3b3Jr
+IGNhcmQgd2l0aCBhIGRpZmZlcmVudCBJUCAxOTIuMTY4LjEuMTAwLCBlbnRlciB0aGUgaWt2
+bSB3ZWIgcGFnZSwgZG8gc29tZSBrZXlib2FyZCBhbmQgbW91c2Ugb3BlcmF0aW9ucw0KMywg
+VGhlIG9wZW5ibWMgd2lsbCBkZWFkbG9jayBhbmQgY2Fubid0IGxvZ2luLCBJIG11c3QgcmVz
+dGFydCB0aGUgcGhvc3Bob3ItZ2V2ZW50IHNlcnZpY2UgLHRoZW4gSSBjYW4gbG9naW4gYWdh
+aW4uDQogIEkgY3JlYXRlZCBvdGhlciBjb21tb24gdXNlcnMsIGl0IGlzIGltcG9zc2libGUg
+dG8gZm9yYmlkIHRoZW0gdG8gbG9naW4gYW5kIG9wZXJhdGUgdGhlIGlrdm0gYXQgdGhlIHNh
+bWUgdGltZSB0byBjYXVzZSB0aGUgYm1jIG92ZXJsb2FkIC4NCiAgIE15IHBlcnNvbmFsIGlk
+ZWEgaXMgdG8gYWxsb3cgIG9uZSB1c2VyIHRvIGxvZ2luIG9ubHkgb24gb25lIG1hY2hpbmUg
+YXQgYSB0aW1lLiBEbyB5b3UgaGF2ZSBhbnkgZ29vZCBpZGVhcz8NCg0KDQogIEJlc3QsDQpY
+aXV6aGk=
+
+------=_NextPart_5D157322_0CE10608_40841D02
+Content-Type: text/html;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+
+PGRpdj5IaSBKYWUsUmF0YW4sPC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7VGhlIGlrdm0gb3Ig
+b3BlbmJtYyBwaG9zcGhvci1yZXN0IHByb2Nlc3Mgd2lsbCBkZWFkbG9jayB3aGVuIHVzZXJz
+IG9wZXJhdGUgdGhlIGlrdm0gb24gZGlmZmVyZW50IFBDIGF0IHRoZSBzYW1lIHRpbWUgLiBU
+aGUgdXNlciBjYW4ndCBsb2dpbiB3aGVuIHRoZSZuYnNwOyZuYnNwOzxzcGFuIGlkPSJ3XzMw
+IiBoaWdoLWxpZ2h0LWlkPSJ3XzUsd18zMCIgY2xhc3M9IiIgc3R5bGU9ImNvbG9yOiByZ2Io
+NTEsIDUxLCA1MSk7IGZvbnQtZmFtaWx5OiBBcmlhbCwgJnF1b3Q7UGluZ0ZhbmcgU0MmcXVv
+dDssICZxdW90O0hpcmFnaW5vIFNhbnMgR0ImcXVvdDssIFNUSGVpdGksICZxdW90O01pY3Jv
+c29mdCBZYUhlaSZxdW90OywgJnF1b3Q7V2VuUXVhbllpIE1pY3JvIEhlaSZxdW90Oywgc2Fu
+cy1zZXJpZjsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI0OSwgMjQ5LCAyNDkpOyI+Q1BVJm5i
+c3A7PC9zcGFuPjxzcGFuIGlkPSJ3XzMxIiBoaWdoLWxpZ2h0LWlkPSIiIHN0eWxlPSJjb2xv
+cjogcmdiKDUxLCA1MSwgNTEpOyBmb250LWZhbWlseTogQXJpYWwsICZxdW90O1BpbmdGYW5n
+IFNDJnF1b3Q7LCAmcXVvdDtIaXJhZ2lubyBTYW5zIEdCJnF1b3Q7LCBTVEhlaXRpLCAmcXVv
+dDtNaWNyb3NvZnQgWWFIZWkmcXVvdDssICZxdW90O1dlblF1YW5ZaSBNaWNybyBIZWkmcXVv
+dDssIHNhbnMtc2VyaWY7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDksIDI0OSwgMjQ5KTsi
+PnVzYWdlIG9mJm5ic3A7PC9zcGFuPnBob3NwaG9yLWdldmVudCBwcm9jZXNzIG1vcmUgdGhh
+biA3MCUuJm5ic3A7IFRoaXMgaXNzdWUmbmJzcDsgd2lsbCZuYnNwO2JlIHRyaWdnZXJlZCB3
+aGVuIG9uZSB1c2VyIGxvZ2luJm5ic3A7IGJvdGggb24gZGlmZmVyZW50IElQIGFuZCBvcGVy
+YXRlIHRoZSBob3N0IGJ5Jm5ic3A7IGlrdm0uPC9kaXY+PGRpdj4mbmJzcDsgTXkgdGVzdCBj
+YXNlOjwvZGl2PjxkaXY+MSwgVGhlIHVzZXIgInJvb3QiIGxvZ2luIHRocm93IEFTVDI1MDAm
+bmJzcDsgbmV0d29yayZuYnNwOyBjYXJkLCBlbnRlciB0aGUgaWt2bSB3ZWJwYWdlICx0aGUg
+SVAgMTkyLjE2OC4wLjEwMC48L2Rpdj48ZGl2PjIsIFRoZSB1c2VyICJyb290IiBsb2dpbiB0
+aHJvdyBPQ1AgbmV0d29yayBjYXJkIHdpdGggYSBkaWZmZXJlbnQgSVAgMTkyLjE2OC4xLjEw
+MCwgZW50ZXIgdGhlIGlrdm0gd2ViIHBhZ2UsIGRvIHNvbWUga2V5Ym9hcmQgYW5kIG1vdXNl
+IG9wZXJhdGlvbnM8L2Rpdj48ZGl2PjMsIFRoZSBvcGVuYm1jIHdpbGwgZGVhZGxvY2sgYW5k
+IGNhbm4ndCBsb2dpbiwgSSBtdXN0IHJlc3RhcnQgdGhlIHBob3NwaG9yLWdldmVudCBzZXJ2
+aWNlICx0aGVuIEkgY2FuIGxvZ2luIGFnYWluLjwvZGl2PjxkaXY+Jm5ic3A7IEkgY3JlYXRl
+ZCBvdGhlciBjb21tb24gdXNlcnMsIGl0IGlzIGltcG9zc2libGUgdG8gZm9yYmlkIHRoZW0g
+dG8gbG9naW4gYW5kIG9wZXJhdGUgdGhlIGlrdm0gYXQgdGhlIHNhbWUgdGltZSB0byBjYXVz
+ZSB0aGUgYm1jIG92ZXJsb2FkIC48L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDtNeSBwZXJzb25h
+bCBpZGVhIGlzIHRvIGFsbG93Jm5ic3A7IG9uZSB1c2VyIHRvIGxvZ2luIG9ubHkgb24gb25l
+IG1hY2hpbmUgYXQgYSB0aW1lLiBEbyB5b3UgaGF2ZSBhbnkgZ29vZCBpZGVhcz88L2Rpdj48
+ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNwOyBCZXN0LDwvZGl2PjxkaXY+WGl1emhpPC9kaXY+
 
 
-On Thu, 27 Jun 2019, at 20:56, Linus Walleij wrote:
-> On Thu, Jun 27, 2019 at 4:32 AM Joel Stanley <joel@jms.id.au> wrote:
-> 
-> > I think we can use this as an opportunity to drop the unused g4-scu
-> > compatible from the bindings. Similarly for the g5.
-> >
-> > Acked-by: Joel Stanley <joel@jms.id.au>
-> 
-> I assume I should wait for a new version of the patches that does
-> this?
+------=_NextPart_5D157322_0CE10608_40841D02--
 
-I'll take a look at the gX compatibles more broadly in a separate series.
-I'm cleaning up the current series wrt Rob's comments and I hope to
-send it out shortly.
 
-Andrew
+
