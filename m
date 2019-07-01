@@ -2,72 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 924155B472
-	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2019 08:03:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C3885B473
+	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2019 08:03:57 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45ccHB6brjzDqV2
-	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2019 16:03:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ccJB5KhJzDqSw
+	for <lists+openbmc@lfdr.de>; Mon,  1 Jul 2019 16:03:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::544; helo=mail-pg1-x544.google.com;
+ (client-ip=2607:f8b0:4864:20::643; helo=mail-pl1-x643.google.com;
  envelope-from=chyishian.jiang@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="GCJn2yF7"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="hZXQ267P"; 
  dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
+ [IPv6:2607:f8b0:4864:20::643])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ccGM41RszDqRv
- for <openbmc@lists.ozlabs.org>; Mon,  1 Jul 2019 16:02:19 +1000 (AEST)
-Received: by mail-pg1-x544.google.com with SMTP id 196so5469400pgc.6
- for <openbmc@lists.ozlabs.org>; Sun, 30 Jun 2019 23:02:18 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ccGZ6bzHzDqSt
+ for <openbmc@lists.ozlabs.org>; Mon,  1 Jul 2019 16:02:30 +1000 (AEST)
+Received: by mail-pl1-x643.google.com with SMTP id cl9so6720775plb.10
+ for <openbmc@lists.ozlabs.org>; Sun, 30 Jun 2019 23:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Q1fiqcHRXGHsbndMK1CPknRYLyXD66HLFL9N25fXOzM=;
- b=GCJn2yF7OH8nHkCXbTcuG1izIUz7kLSrXrMbgkH24oTKx2fcneIYMV3mTU8NdIjc3O
- 1z860/xxjRTkYvI4oe5WP4AS9Xhaa90LUVu+ljKK2/TtZKZdE/+8+nQczoTz+cc63gHm
- 55Q8aU0QDfbWNWSQZACrvj838su6RS1tunCJwl4dJEpS0mhGrUmZzGpO4Nnsb8derF72
- QYXOfGruBcFreiPNLN4BRViYwz9MfT5kyWQJw6d3lpJt0bj+HD+MMdrxabBoT5U3O3Az
- 4QWKz08HlRq93tOOAvJjjpxD8hnmewYtseJpxuZWl2bBnAMle635fj5voEaprQeztJMi
- FA0g==
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=CvuT93uGwLh7SWpMurI8X+dr3BifnScrSZgot390FuM=;
+ b=hZXQ267PKOfszDfgyv9dw6jDGr59eN27PahzZCf8OhL4nH3MpQDubLExZT0w0ancA9
+ awKPfxhrtz4Bd27WvMcbSfFrkUZeloez0SaBKOX+LadA73YWrUTypwUSjTjPOrTBpswI
+ 4zsilRgvSHao+cVcaG+B5nPv729S8tOlKx02rHZ1XHvImiWATpSeRRvR9FaQM5rZIXzA
+ Uy+1zyvC3qkjp62NJCLkML4MZLFkswoR5EZlItvr+UuVqDoLZSAD8BRS/hT8+JQiwxtb
+ ASNs2Y7AYxDM8wgBWoV1wAtu58b5IEanQQkGlNa7VAp3N3QPvWIhU0GbO8qgr25cU+Xg
+ XlTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Q1fiqcHRXGHsbndMK1CPknRYLyXD66HLFL9N25fXOzM=;
- b=f7zBUNXoEX8iQJ7s34YcedDNmg5pv5B7aGNbTNercSNsjvOPGj+msmtNrLnFYcgBmm
- e0Q0es/PqvcxFUjDN4fCl6jA0BttgPPku3oNeS8f3y80+R9UABhUaCasZL2wZNhAEPIo
- WI4QbF53MwIJJTv2NluYuPhPd3uZjrUSTq93JGvtRpb0R3K0wlcUvSLA5BNPBclIiHVY
- lL/218FHsNpXmnEIG22vy1k4LUY+1oajQUz7tl3AldVYovTPS24+cyLIkQQQw2IY1Z1w
- HX1v1TmgyVjMqDjJdXQtM6a4Z9EsvJaLxXqtn/rTA9Nl7A8oFZ/Y0yvch60ziDznsSAV
- yYCg==
-X-Gm-Message-State: APjAAAWkpwB5/Uj3iVj7U0xExxfir2QQgDfNWS73EAje/+q26H8h5ffH
- Cfg0L5LU7SnOJm5+dOy+0cY=
-X-Google-Smtp-Source: APXvYqxpZ7Zn8cuKUbReJe2YG88St4S5QdO6Ne5TTIB1trrRhPUtMsSrrRd7bFuVytnPC7asA3WCmQ==
-X-Received: by 2002:a17:90a:e397:: with SMTP id
- b23mr14769238pjz.117.1561960935521; 
- Sun, 30 Jun 2019 23:02:15 -0700 (PDT)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=CvuT93uGwLh7SWpMurI8X+dr3BifnScrSZgot390FuM=;
+ b=QAl7o03xiDURxI61+Udh2tcr2b7RUJ/qGbO18lNUZGaaA+2D3NhGUIJMrPZIlrN/sH
+ Ik9jSmdha2/9YlLpTFSPokn+7GixQq5QkRgSsYOosao5rl0UZxZvvmS6vlkZFJm8KQd+
+ 4HqH3izyzVD582y/SXTVSK/WrPQlwrt9oaZ7OltqH8/h8N7jJRVrIL0GQBHiJM/DGAaG
+ nU/6V7v+369OKt5feQA1wTwTVeN+H0g0pLd25Ss096UZivoAtN5bvrICTYS7ugOTWzoy
+ Zo3+5HaK6eh1CUx+jR3wBrRjWUMPxkvaOcKp3HHJUTPkvNv3bCfmISci3he9nrs4xdsV
+ Qfvg==
+X-Gm-Message-State: APjAAAVWx8LspRfhSuXQ/lKVPe04Vitrx6dkCP8sJQoep8d9dDWsIT3m
+ mnHEHRb2QCKmXcg56Oxujwo=
+X-Google-Smtp-Source: APXvYqye4AArdXaL5bnIlZdt36fR422bUTInt1qfG/JseFKstA7rDDjSdWgqjQQPNc7hR5LUWmcPqw==
+X-Received: by 2002:a17:902:aa5:: with SMTP id
+ 34mr27943816plp.166.1561960948397; 
+ Sun, 30 Jun 2019 23:02:28 -0700 (PDT)
 Received: from localhost.localdomain (220-135-135-179.HINET-IP.hinet.net.
  [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id w14sm8672127pfn.47.2019.06.30.23.02.13
+ by smtp.gmail.com with ESMTPSA id w14sm8672127pfn.47.2019.06.30.23.02.26
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Sun, 30 Jun 2019 23:02:14 -0700 (PDT)
+ Sun, 30 Jun 2019 23:02:27 -0700 (PDT)
 From: Samuel Jiang <chyishian.jiang@gmail.com>
 To: joel@jms.id.au,
 	tomer.maimon@nuvoton.com,
 	KWLIU@nuvoton.com
-Subject: [PATCH dev-5.17 v1 1/6] ARM: dts: nuvoton: Add Nuvoton RunBMC
- DeviceTree
-Date: Mon,  1 Jul 2019 14:01:32 +0800
-Message-Id: <20190701060137.22116-1-chyishian.jiang@gmail.com>
+Subject: [PATCH dev-5.17 v1 2/6] ARM: dts: nuvoton: nuvoton-npcm750-runbmc:
+ add fan and led functions
+Date: Mon,  1 Jul 2019 14:01:33 +0800
+Message-Id: <20190701060137.22116-2-chyishian.jiang@gmail.com>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20190701060137.22116-1-chyishian.jiang@gmail.com>
+References: <20190701060137.22116-1-chyishian.jiang@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -87,324 +89,95 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Samuel Jiang <Samuel.Jiang@quantatw.com>
 
-Initial Nuvoton RunBMC Module which use NPCM750 SoC.
-
-Including features:
-1. image partitions
-2. lpc and kcs
-3. usb
-4. serial port
-5. spi
-6. fiu
-7. watchdog
-
-Testeed:
-  Build Qunata runbmc-nuvoton image and load on RunBMC-nuvoton module
+Update nuvoton-npcm750-runbmc dts fan and led functions
 
 Signed-off-by: Samuel Jiang <Samuel.Jiang@quantatw.com>
 ---
- arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts | 292 +++++++++++++++++++
- 1 file changed, 292 insertions(+)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
+ arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts | 64 ++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
 diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
-new file mode 100644
-index 000000000000..eec815d2a638
---- /dev/null
+index eec815d2a638..bcd7f1063399 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
 +++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
-@@ -0,0 +1,292 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2019 Nuvoton Technology kwliu@nuvoton.com
-+// Copyright (c) 2019 Quanta Computer Inc. Samuel.Jiang@quantatw.com
-+
-+/dts-v1/;
-+#include "nuvoton-npcm750.dtsi"
-+
-+/ {
-+	model = "Nuvoton npcm750 RunBMC Module";
-+	compatible = "nuvoton,npcm750";
-+
-+	aliases {
-+		ethernet0 = &emc0;
-+		ethernet1 = &gmac0;
-+		serial0 = &serial0;
-+		serial1 = &serial1;
-+		serial2 = &serial2;
-+		serial3 = &serial3;
-+		udc0 = &udc0;
-+		udc1 = &udc1;
-+		udc2 = &udc2;
-+		udc3 = &udc3;
-+		udc4 = &udc4;
-+		udc5 = &udc5;
-+		udc6 = &udc6;
-+		udc7 = &udc7;
-+		udc8 = &udc8;
-+		udc9 = &udc9;
-+		emmc0 = &sdhci0;
-+		spi0 = &spi0;
-+		spi1 = &spi1;
-+		fiu0 = &fiu0;
-+		fiu1 = &fiu3;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial3;
-+	};
-+
-+	memory {
-+		reg = <0 0x40000000>;
-+	};
-+
-+	ahb {
-+		gmac0: eth@f0802000 {
-+			phy-mode = "rgmii-id";
-+			snps,eee-force-disable;
-+			status = "okay";
-+		};
-+
-+		emc0: eth@f0825000 {
-+			phy-mode = "rmii";
-+			use-ncsi;
-+			status = "okay";
-+		};
-+
-+		ehci1: usb@f0806000 {
-+			status = "okay";
-+		};
-+
-+		ohci1: ohci@f0807000 {
-+			status = "okay";
-+		};
-+
-+		udc0:udc@f0830000 {
-+			status = "okay";
-+		};
-+
-+		udc1:udc@f0831000 {
-+			status = "okay";
-+		};
-+
-+		udc2:udc@f0832000 {
-+			status = "okay";
-+		};
-+
-+		udc3:udc@f0833000 {
-+			status = "okay";
-+		};
-+
-+		udc4:udc@f0834000 {
-+			status = "okay";
-+		};
-+
-+		udc5:udc@f0835000 {
-+			status = "okay";
-+		};
-+
-+		udc6:udc@f0836000 {
-+			status = "okay";
-+		};
-+
-+		udc7:udc@f0837000 {
-+			status = "okay";
-+		};
-+
-+		udc8:udc@f0838000 {
-+			status = "okay";
-+		};
-+
-+		udc9:udc@f0839000 {
-+			status = "okay";
-+		};
-+
-+		aes:aes@f0858000 {
-+			status = "okay";
-+		};
-+
-+		sha:sha@f085a000 {
-+			status = "okay";
-+		};
-+
-+		fiu0: fiu@fb000000 {
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&spi0cs1_pins>;
-+			status = "okay";
-+			spi-nor@0 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <0>;
-+				spi-rx-bus-width = <2>;
-+				partitions@80000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					bmc@0{
-+						label = "bmc";
-+						reg = <0x000000 0x4000000>;
-+					};
-+					u-boot@0 {
-+						label = "u-boot";
-+						read-only;
-+						reg = <0x0000000 0x80000>;
-+					};
-+					u-boot-env@100000 {
-+						label = "u-boot-env";
-+						reg = <0x00100000 0x40000>;
-+					};
-+					kernel@200000 {
-+						label = "kernel";
-+						reg = <0x0200000 0x600000>;
-+					};
-+					rofs@800000 {
-+						label = "rofs";
-+						reg = <0x0800000 0x1500000>;
-+					};
-+					rwfs@1c00000 {
-+						label = "rwfs";
-+						reg = <0x1c00000 0x300000>;
-+					};
+@@ -269,6 +269,58 @@
+ 				};
+ 			};
+ 
++			pwm_fan:pwm-fan-controller@103000 {
++				pinctrl-names = "default";
++				pinctrl-0 = <   &pwm0_pins &pwm1_pins
++						&fanin0_pins &fanin1_pins
++						&fanin2_pins &fanin3_pins
++						&fanin4_pins &fanin5_pins
++						&fanin6_pins &fanin7_pins
++						&fanin8_pins &fanin9_pins
++						&fanin10_pins &fanin11_pins>;
++				status = "okay";
++				fan@0 {
++					reg = <0x00>;
++					fan-tach-ch = /bits/ 8 <0x00 0x01>;
++					cooling-levels = <127 255>;
 +				};
-+			};
-+			spi-nor@1 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <1>;
-+				npcm,fiu-rx-bus-width = <2>;
-+				partitions@88000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					spare1@0 {
-+						label = "spi0-cs1-spare1";
-+						reg = <0x0 0x800000>;
-+					};
-+					spare2@800000 {
-+						label = "spi0-cs1-spare2";
-+						reg = <0x800000 0x0>;
-+					};
++				fan@1 {
++					reg = <0x01>;
++					fan-tach-ch = /bits/ 8 <0x02 0x03>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
-+			};
-+		};
-+
-+		fiu3: fiu@c0000000 {
-+			pinctrl-0 = <&spi3_pins>;
-+			status = "okay";
-+			spi-nor@0 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <0>;
-+				spi-rx-bus-width = <2>;
-+				partitions@A0000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					system1@0 {
-+						label = "spi3-system1";
-+						reg = <0x0 0x800000>;
-+					};
-+					system2@800000 {
-+						label = "spi3-system2";
-+						reg = <0x800000 0x0>;
-+					};
++				fan@2 {
++					reg = <0x02>;
++					fan-tach-ch = /bits/ 8 <0x04 0x05>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
-+			};
-+		};
-+
-+		sdhci0: sdhci@f0842000 {
-+			status = "okay";
-+		};
-+
-+		pcimbox: pcimbox@f0848000 {
-+			status = "okay";
-+		};
-+
-+		vcd: vcd@f0810000 {
-+			status = "okay";
-+		};
-+
-+		ece: ece@f0820000 {
-+			status = "okay";
-+		};
-+
-+		apb {
-+
-+			watchdog1: watchdog@901C {
-+				status = "okay";
-+			};
-+
-+			rng: rng@b000 {
-+				status = "okay";
-+			};
-+
-+			serial0: serial@1000 {
-+				status = "okay";
-+			};
-+
-+			serial1: serial@2000 {
-+				status = "okay";
-+			};
-+
-+			serial2: serial@3000 {
-+				status = "okay";
-+			};
-+
-+			serial3: serial@4000 {
-+				status = "okay";
-+			};
-+
-+			adc: adc@c000 {
-+				status = "okay";
-+			};
-+
-+			otp:otp@189000 {
-+				status = "okay";
-+			};
-+
-+			lpc_kcs: lpc_kcs@7000 {
-+				kcs1: kcs1@0 {
-+					status = "okay";
++				fan@3 {
++					reg = <0x03>;
++					fan-tach-ch = /bits/ 8 <0x06 0x07>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
-+
-+				kcs2: kcs2@0 {
-+					status = "okay";
++				fan@4 {
++					reg = <0x04>;
++					fan-tach-ch = /bits/ 8 <0x08 0x09>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
-+
-+				kcs3: kcs3@0 {
-+					status = "okay";
++				fan@5 {
++					reg = <0x05>;
++					fan-tach-ch = /bits/ 8 <0x0A 0x0B>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@6 {
++					reg = <0x06>;
++					fan-tach-ch = /bits/ 8 <0x0C 0x0D>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@7 {
++					reg = <0x07>;
++					fan-tach-ch = /bits/ 8 <0x0E 0x0F>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
 +			};
 +
-+			lpc_host: lpc_host@7000 {
-+				lpc_bpc: lpc_bpc@40 {
-+					monitor-ports = <0x80>;
-+					status = "okay";
-+				};
-+			};
+ 			spi0: spi@200000 {
+ 				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
+ 				status = "okay";
+@@ -279,6 +331,18 @@
+ 			};
+ 		};
+ 	};
 +
-+			spi0: spi@200000 {
-+				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
-+				status = "okay";
-+			};
++	leds {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&gpio3 13 GPIO_ACTIVE_LOW>;
 +
-+			spi1: spi@201000 {
-+				status = "okay";
-+			};
++		led {
++			label = "led-green-arm";
++			gpios = <&gpio3 14 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "heartbeat";
 +		};
 +	};
-+};
-+
-+&gcr {
-+	serial_port_mux: mux-controller {
-+	compatible = "mmio-mux";
-+	#mux-control-cells = <1>;
-+
-+	mux-reg-masks = <0x38 0x07>;
-+	idle-states = <6>;
-+	};
-+};
+ };
+ 
+ &gcr {
 -- 
 2.20.1
 
