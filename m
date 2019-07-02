@@ -1,71 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C5B5C87E
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 06:43:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F2485C86C
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 06:37:52 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45dBLP21MlzDqX1
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 14:37:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45dBTP38jVzDqTb
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jul 2019 14:43:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::642; helo=mail-pl1-x642.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="p49ufNmq"; 
- dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
+Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45dBKp256WzDqR2;
- Tue,  2 Jul 2019 14:37:17 +1000 (AEST)
-Received: by mail-pl1-x642.google.com with SMTP id bh12so8438806plb.4;
- Mon, 01 Jul 2019 21:37:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=DC7T/1epSdwbqDWlhU77s7p6S8E3+rl5WhjQziUAp3Y=;
- b=p49ufNmqYf8JRR5G6e2SINTKVPTvV4SdImOKWOUQp+vXexeQ7fRafUiq5Poy0V8faU
- E/zc1Hz+LB3WE/ZeYL1gGnHssal6w69pUfEsCQs9S2NBzgYx71J08wHTa3RBBk3GkPhg
- sHfnlB12M0vzbcGXRBRifYiulW4GgmIcOVhdcttHxbBuTFj2zCBrX+v5J2XYixHEOg5G
- pZRMnz3STMwCz4B1tVcbthRgK97BjO6HP9qisr8Y/aTrUdhV7V2dVDyN6F2aCP6rFjRc
- AnXg2HLD15oh6JfPU3Y3ALXdTDCwkz2vYsWHu2JfBAiB6aGtrOZFGo+LbrZ8UVAbJigK
- +icg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=DC7T/1epSdwbqDWlhU77s7p6S8E3+rl5WhjQziUAp3Y=;
- b=dkuwHfp6fkGe1m7H+K88Hrl3ASlqRtOrD6bEZCcaue9Fb4R98zDydUL7EMF/j1CuQe
- PctwluisMFuXWc9ha/wO7eNDDOAl6vZbzIBkzQ+BtAQ41BlW2WHylEV5frkyv3roE4hI
- M5pxFtOYQBCJm94zPtSVTJFkp5j6sQ9609cIb2NCgMNNEkf0WVme/JplHFy+UBfrz8Ps
- rtZERhVkUxDS2PFKWcP+wc8Xx20PuxZu/T/YiCSoJgeS215z7uz326A1KH7/HUBAoggR
- qS1s1dO8lVdZyCur7UcKfqlyn2C053REPj3M4yi055LMygfjqwAddP1jtaQzwLu4n8VT
- xYWg==
-X-Gm-Message-State: APjAAAXGUb/jUx1ncavysABvy2zBIINzQ2UePg3QXqz0+83nUndQ+7Ay
- sXTlvSVrYafuF13Ssal6weE=
-X-Google-Smtp-Source: APXvYqyP+V1ZurARnQp09iaSwvmVd8yk1r5uiFEKPm0Rcd48E+ZKhTidU8KQ1RokPwypizlrDtRFSw==
-X-Received: by 2002:a17:902:ac1:: with SMTP id
- 59mr33525329plp.168.1562042234468; 
- Mon, 01 Jul 2019 21:37:14 -0700 (PDT)
-Received: from voyager.au.ibm.com (bh02i525f01.au.ibm.com. [202.81.18.30])
- by smtp.gmail.com with ESMTPSA id 85sm16028873pfv.130.2019.07.01.21.37.11
- (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
- Mon, 01 Jul 2019 21:37:13 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Jeremy Kerr <jk@ozlabs.org>
-Subject: [PATCH] MAINTAINERS: Add FSI subsystem
-Date: Tue,  2 Jul 2019 14:07:05 +0930
-Message-Id: <20190702043706.15069-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.20.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45dBSs3726zDqTY;
+ Tue,  2 Jul 2019 14:43:25 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ozlabs.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=ozlabs.org header.i=@ozlabs.org header.b="S3cXogx4"; 
+ dkim-atps=neutral
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 45dBSr6w8Yz9s00;
+ Tue,  2 Jul 2019 14:43:24 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
+ t=1562042605; bh=iMxxUb/MrP5191LRn/nhBkFeow9aH4C71D4VIMnNmRM=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=S3cXogx40ElVPWdtEYhfnIcMrb8TYMv+B1xiJHUGxAt2qAUgNfWW2IdQdPh9/Z8+A
+ 6fAWJGzr68M/oUWTxGC8wVYJ5iHEJx9Dtb5yBmfD/JczygqUAy2fD/1fpq15jR67k2
+ M6q6aj4vxkQw5On2qFdn1MgBva2NLYCGr9J8oNAkKZNO5vqvzWujqb5hjtIMBmV9hB
+ XW2b1yFEfaYiJrKpJDkSzPREBRvbm4imtcPS2nux5nGxSfV+skEBlxG50ZT22mUmvs
+ 7lENejasmL/gsS9/49RCMPote2mSjmE4NN9eowOcYQ+T7dlGswD9hMTzcGYbVaxC5i
+ bSt/mlcGaIqxA==
+Message-ID: <7cb3a9fce3c51837e7cc29fb15e10ed7c6d2631b.camel@ozlabs.org>
+Subject: Re: [PATCH] MAINTAINERS: Add FSI subsystem
+From: Jeremy Kerr <jk@ozlabs.org>
+To: Joel Stanley <joel@jms.id.au>
+Date: Tue, 02 Jul 2019 14:43:22 +1000
+In-Reply-To: <20190702043706.15069-1-joel@jms.id.au>
+References: <20190702043706.15069-1-joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,38 +62,17 @@ Cc: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The subsystem was merged some time ago but we did not have a maintainers
-entry.
+Hi Joel,
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- MAINTAINERS | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+> The subsystem was merged some time ago but we did not have a
+> maintainers
+> entry.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 01a52fc964da..2a5df9c20ecb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -6498,6 +6498,19 @@ F:	fs/crypto/
- F:	include/linux/fscrypt*.h
- F:	Documentation/filesystems/fscrypt.rst
- 
-+FSI SUBSYSTEM
-+M:	Jeremy Kerr <jk@ozlabs.org>
-+M:	Joel Stanley <joel@jms.id.au>
-+R:	Alistar Popple <alistair@popple.id.au>
-+R:	Eddie James <eajames@linux.ibm.com>
-+L:	linux-fsi@lists.ozlabs.org
-+T:	git git://git.kernel.org/pub/scm/joel/fsi.git
-+Q:	http://patchwork.ozlabs.org/project/linux-fsi/list/
-+S:	Supported
-+F:	drivers/fsi/
-+F:	include/linux/fsi*.h
-+F:	include/trace/events/fsi*.h
-+
- FSI-ATTACHED I2C DRIVER
- M:	Eddie James <eajames@linux.ibm.com>
- L:	linux-i2c@vger.kernel.org
--- 
-2.20.1
+Acked-by: Jeremy Kerr <jk@ozlabs.org>
+
+Cheers,
+
+
+Jeremy
+
 
