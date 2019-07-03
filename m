@@ -2,88 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68AC15E72F
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2019 16:54:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D81B5E734
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2019 16:55:46 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45f3zm1dSMzDqHv
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 00:54:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45f40v54njzDq77
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 00:55:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="MtBJo07o"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
+ [IPv6:2607:f8b0:4864:20::636])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45f3ZK6th0zDqS2
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 00:36:08 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x63EY81J016406
- for <openbmc@lists.ozlabs.org>; Wed, 3 Jul 2019 10:36:03 -0400
-Received: from e11.ny.us.ibm.com (e11.ny.us.ibm.com [129.33.205.201])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2tgwk89xv3-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 10:36:03 -0400
-Received: from localhost
- by e11.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <eajames@linux.ibm.com>;
- Wed, 3 Jul 2019 15:36:02 +0100
-Received: from b01cxnp22033.gho.pok.ibm.com (9.57.198.23)
- by e11.ny.us.ibm.com (146.89.104.198) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Wed, 3 Jul 2019 15:36:00 +0100
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x63EYjPx18153786
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 3 Jul 2019 14:34:45 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F0D7FB2065;
- Wed,  3 Jul 2019 14:34:44 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BB278B2067;
- Wed,  3 Jul 2019 14:34:44 +0000 (GMT)
-Received: from [9.85.218.219] (unknown [9.85.218.219])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed,  3 Jul 2019 14:34:44 +0000 (GMT)
-Subject: Re: [PATCH] OCC: FSI and hwmon: Add sequence numbering
-To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
-References: <1560285038-24233-1-git-send-email-eajames@linux.ibm.com>
- <95aa5594-325b-45d4-b777-075426ca3244@www.fastmail.com>
-From: Eddie James <eajames@linux.ibm.com>
-Date: Wed, 3 Jul 2019 09:34:44 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45f3kd30xYzDqGJ
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 00:43:20 +1000 (AEST)
+Received: by mail-pl1-x636.google.com with SMTP id ay6so1355041plb.9
+ for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 07:43:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=rqG4kxiAT4PnUvZ82cl71qp58/laWBy8TShrHZNDI0s=;
+ b=MtBJo07oYaiO7zHTLqSzP8ccaSTFTLkfzO0IwVhx1kJKs1sWcPju99sgKjns6goe31
+ 5/PVWpjzsNb0gsAct5eJjkf08Yw885Vq6nkEr1oWRJUfs38Fzb6CxvqamlLZjhMWDtM6
+ X3Cs0wqc/CrmQx813wNZcKg4YQWnzJmMiz+tttNqM6k+mMxhVKG8MZG6BD/gYgq3sI+5
+ 53XCWASb+EYJaDCspjQUgxYXmxRtte747p8TJcmToqhptlgQaWLW4C/p8ksJNX6s7QXm
+ jyzTqRzAyAXZbK0wZNefLyuPupEX31Y83sfYUJWyvp3rULylXPBWwp8kmQczU8Is3iim
+ J6Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=rqG4kxiAT4PnUvZ82cl71qp58/laWBy8TShrHZNDI0s=;
+ b=VuOaKvCTpVSU9h5Mn1pBO+0FOYuQ5d6wkKxc4Uy0nKBgRUqCxXRe2pqB47RfZKlTZg
+ hjvezJ52Z62ZYyXdi7aj03oqcwMI298VH2vZGs5WkKFodEnQmZdIEwo0Gtz4ZZBE6AtN
+ itkgu6fb7AlPo1TYRrmnzjfzMYtZIB/YA8thEuyjrqxJ3g4qwnrWL9aItoe8Br9b3QuN
+ h2ZbQl2tJvAvPpQXTxBuT+DVmO92y8wj8MxIP78Qw5irDQo5tkg/d5v1RDWkKHo5/fRY
+ Qb6RhrqbiscnljDyMGkyAtTkdHY3rHFL0qZMFM6u4kZJB/dTzIRhxKgzpztVX0saJs9q
+ QtiQ==
+X-Gm-Message-State: APjAAAW2S5AvexIN8zK+oC7djf7XQm/8ozWO6QoAG13XRWUhNXeWJ/PU
+ w0N8aESV1w0/LhpqYQO9/p7milfef1xsM2ZU3JclZw==
+X-Google-Smtp-Source: APXvYqx8H3wMLUwS+RctHUGLy6tJp5jyPMRzC5XxrJYS/A/zJYoACMp7Tja/Oo9cMcLUF3CqYgS9MO0d+ChBy2pBGVY=
+X-Received: by 2002:a17:902:b944:: with SMTP id
+ h4mr34145076pls.179.1562164995595; 
+ Wed, 03 Jul 2019 07:43:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <95aa5594-325b-45d4-b777-075426ca3244@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19070314-2213-0000-0000-000003A802F1
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011372; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01226876; UDB=6.00645934; IPR=6.01008104; 
- MB=3.00027569; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-03 14:36:02
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19070314-2214-0000-0000-00005F16FF83
-Message-Id: <25cbbfb5-0cc0-e8d9-4808-72bab90cb442@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-03_04:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907030178
+References: <CAO=notzxbMtyjvW5Efo-Pp3c1-hZz93aFwPvQiumsp_fj2nuzw@mail.gmail.com>
+ <CAARXrtknLpC0Ke+_Y7uCsL222kMPvXcj6E-qct5ppmwrzvCn4w@mail.gmail.com>
+ <BYAPR21MB11918D32FD1F25D6616FE591C8FB0@BYAPR21MB1191.namprd21.prod.outlook.com>
+In-Reply-To: <BYAPR21MB11918D32FD1F25D6616FE591C8FB0@BYAPR21MB1191.namprd21.prod.outlook.com>
+From: Patrick Venture <venture@google.com>
+Date: Wed, 3 Jul 2019 07:43:04 -0700
+Message-ID: <CAO=notzs1+p2Di-zSsVH4Uh2RBg008YB7XvSweN676GAr_+wtQ@mail.gmail.com>
+Subject: Re: Future features of phosphor-ipmi-flash
+To: Neeraj Ladkani <neladk@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,134 +75,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 7/2/19 7:31 PM, Andrew Jeffery wrote:
-> On Wed, 12 Jun 2019, at 06:31, Eddie James wrote:
->> Sequence numbering of the commands submitted to the OCC is required by
->> the OCC interface specification. Add sequence numbering and check for
->> the correct sequence number on the response.
->>
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   drivers/fsi/fsi-occ.c      | 15 ++++++++++++---
->>   drivers/hwmon/occ/common.c |  4 ++--
->>   drivers/hwmon/occ/common.h |  1 +
->>   3 files changed, 15 insertions(+), 5 deletions(-)
->>
->> diff --git a/drivers/fsi/fsi-occ.c b/drivers/fsi/fsi-occ.c
->> index a2301ce..7da9c81 100644
->> --- a/drivers/fsi/fsi-occ.c
->> +++ b/drivers/fsi/fsi-occ.c
->> @@ -412,6 +412,7 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   		msecs_to_jiffies(OCC_CMD_IN_PRG_WAIT_MS);
->>   	struct occ *occ = dev_get_drvdata(dev);
->>   	struct occ_response *resp = response;
->> +	u8 seq_no;
->>   	u16 resp_data_length;
->>   	unsigned long start;
->>   	int rc;
->> @@ -426,6 +427,8 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   
->>   	mutex_lock(&occ->occ_lock);
->>   
->> +	/* Extract the seq_no from the command (first byte) */
->> +	seq_no = *(const u8 *)request;
-> The fact that your doing this says to me that the fsi_occ_submit() interface
-> is wrong.
+On Tue, Jul 2, 2019 at 11:00 PM Neeraj Ladkani <neladk@microsoft.com> wrote:
 >
-> We already have `struct occ_response` in drivers/hwmon/occ/common.h.
-> I think we should add an equivalent `struct occ_request` and pass a
-> typed pointer through fsi_occ_submit(), that way we can access the
-> sequence number by name rather than through dodgy casts.
+> This is great. In this case, we should be able to make use of this design for all BMC managed components ( FPGA, CPLD and PSU FW) by providing verification service, and an update service. Basically TFTP the image and then call the dbus methods
 
-
-I don't think it's too bad. The first byte is always simply the sequence 
-number. The worst that can happen is a user doesn't write a request 
-correctly and we have a "wrong" sequence number, but in that case the 
-request most likely won't work anyway. I think ideally it would be like 
-you say, but it's also not ideal to change the interfaces at this stage.
-
+Yes, with phosphor-ipmi-flash, you can send down effectively any
+binary you wish and a signature (or without a signature) and then
+trigger actions against it, to update anything.  If you do wish to use
+it very generically, let me know what you have in mind for a timeline,
+and I can plan out the changes.  To make the codebase very generic is
+somewhat trivial at this point, it's just a matter of knowing what may
+come in the future enough to provide a sufficiently flexible schema
+for the json.
 
 >
-> Also why is this sent just to the OpenBMC list? Any reason it's not on
-> upstream lists?
+> How do we specify if we want to update only kernel or rofs or rwfs?
 
-
-It was... it's been accepted.
-
-
-Thanks,
-
-Eddie
-
-
+I imagine from reading the code that you can do this, by only dropping
+those files into the tarball and leaving out the others.  Maybe the
+MANIFEST file's contents specify what's in it in a formatted way?  I
+assume so, I don't use bmc-code-mgmt, so I can't say without reading
+more of the code, presumably Lei knows.
 
 >
-> Andrew
+> Neeraj
 >
->>   	rc = occ_putsram(occ, OCC_SRAM_CMD_ADDR, request, req_len);
->>   	if (rc)
->>   		goto done;
->> @@ -441,11 +444,17 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   		if (rc)
->>   			goto done;
->>   
->> -		if (resp->return_status == OCC_RESP_CMD_IN_PRG) {
->> +		if (resp->return_status == OCC_RESP_CMD_IN_PRG ||
->> +		    resp->seq_no != seq_no) {
->>   			rc = -ETIMEDOUT;
->>   
->> -			if (time_after(jiffies, start + timeout))
->> -				break;
->> +			if (time_after(jiffies, start + timeout)) {
->> +				dev_err(occ->dev, "resp timeout status=%02x "
->> +					"resp seq_no=%d our seq_no=%d\n",
->> +					resp->return_status, resp->seq_no,
->> +					seq_no);
->> +				goto done;
->> +			}
->>   
->>   			set_current_state(TASK_UNINTERRUPTIBLE);
->>   			schedule_timeout(wait_time);
->> diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
->> index d7cc0d2..e9d7167 100644
->> --- a/drivers/hwmon/occ/common.c
->> +++ b/drivers/hwmon/occ/common.c
->> @@ -122,12 +122,12 @@ struct extended_sensor {
->>   static int occ_poll(struct occ *occ)
->>   {
->>   	int rc;
->> -	u16 checksum = occ->poll_cmd_data + 1;
->> +	u16 checksum = occ->poll_cmd_data + occ->seq_no + 1;
->>   	u8 cmd[8];
->>   	struct occ_poll_response_header *header;
->>   
->>   	/* big endian */
->> -	cmd[0] = 0;			/* sequence number */
->> +	cmd[0] = occ->seq_no++;		/* sequence number */
->>   	cmd[1] = 0;			/* cmd type */
->>   	cmd[2] = 0;			/* data length msb */
->>   	cmd[3] = 1;			/* data length lsb */
->> diff --git a/drivers/hwmon/occ/common.h b/drivers/hwmon/occ/common.h
->> index fc13f3c..67e6968 100644
->> --- a/drivers/hwmon/occ/common.h
->> +++ b/drivers/hwmon/occ/common.h
->> @@ -95,6 +95,7 @@ struct occ {
->>   	struct occ_sensors sensors;
->>   
->>   	int powr_sample_time_us;	/* average power sample time */
->> +	u8 seq_no;
->>   	u8 poll_cmd_data;		/* to perform OCC poll command */
->>   	int (*send_cmd)(struct occ *occ, u8 *cmd);
->>   
->> -- 
->> 1.8.3.1
->>
->>
+> -----Original Message-----
+> From: openbmc <openbmc-bounces+neladk=microsoft.com@lists.ozlabs.org> On Behalf Of Lei YU
+> Sent: Tuesday, July 2, 2019 8:18 PM
+> To: Patrick Venture <venture@google.com>
+> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>; Adriana Kobylak <anoo@us.ibm.com>
+> Subject: Re: Future features of phosphor-ipmi-flash
+>
+> On Wed, Jul 3, 2019 at 11:06 AM Patrick Venture <venture@google.com> wrote:
+> >
+> > Uploading the BIOs via phosphor-ipmi-flash is available for review,
+> > but it's not tied into another daemon.  One must provide a
+> > verification service, and an update service.
+> >
+> > I'd like to provide the option to leverage phosphor-bmc-code-mgmt.  It
+> > looks like in this codebase there is a notion of a signed image, but
+> > the signature is attached.  It also looks like, there's some version
+> > information that's meant to parsable and involved.  I haven't had a
+> > chance to play with it.
+> >
+> > With phosphor-ipmi-flash the hash file portion is optional.  Because
+> > phosphor-ipmi-flash doesn't define anything beyond the sequence of
+> > calls, one could use burn_my_bmc and send the hash down separately and
+> > then the verification target could trigger something that concatenates
+> > and triggers the bmc code mgmt signature check.
+> >
+> > It should be somewhat straightforward to tie the two codebases
+> > together (as an optional usage).
+> >
+> > If someone has experience with programming against
+> > phosphor-bmc-code-mgmt and wants to help with this or at least point
+> > me at what I need to know, I'd be more than happy.
+> >
+> > From reading the docs with the dbus interface definitions, I think I
+> > have the general idea -- drop the file into the place it expects the
+> > file (a configuration option) and then call the dbus methods.
+>
+> Exactly, the whole process of BMC code update is:
+> 1. Put a tarball in /tmp/images/ (via REST API, TFTP, or scp) 2. An object will be generated on DBus to represent the image; 3. Invoke a DBus call to set RequestedActivation property to "Active"
+> 4. Reboot.
+>
+> Be noted that the tarball consists of following files:
+>
+>  image-u-boot
+>  image-kernel
+>  image-rofs
+>  image-rwfs
+>  MANIFEST
+>  publickey
+>  image-u-boot.sig
+>  image-kernel.sig
+>  image-rofs.sig
+>  image-rwfs.sig
+>  MANIFEST.sig
+>  publickey.sig
 
+Interesting, so it doesn't have to contain all those individual pieces
+but could just contain an image-bmc  (which has all the pieces) and
+then the signature file.
+
+So in the case of the quanta-q71l we can't use a tarball approach
+because there isn't enough memory free to hold the tarball, and the
+untarred contents at the same time, and I can't use the /tmp/images
+folder because the "mv" command will create a copy before moving and I
+also then run out of memory.  The /tmp/images is a configuration
+variable in the code-mgmt application, so that part I can get around.
+Others aspects, not so much.
+
+However, I want people who are using bmc-code-mgmt already to be able
+to use phosphor-ipmi-flash/burn_my_bmc to send down their payloads.
+In this case, it can be done very trivially -->
+
+Note: this isn't a ubi tarball update, but that is also supported by
+bmc-code-mgmt (I think).
+
+Lei, to use phosphor-ipmi-flash for this, you'd have the verify object
+in phosphor-ipmi-flash trigger the "apply" property (and check on the
+result somehow) -- I think I saw there's a property for the result.
+And you'd have to configure the temporary location variable to be
+/tmp/images/ -- you could then send the tarball down to something
+like, blob:/flash/statictar and it would know to trigger the things.
+-- It will only take one patchset to let burn_my_bmc take any "type"
+field that then gets translated directly into the blob.  So today it
+doesn't check for a /flash/statictar blob, but it could easily check
+for any blob specified. --
+
+phosphor-ipmi-flash expects an image handler, where the bytes are
+written, a verification object, and an update object.
+ - where the bytes are written, there is a file handler object that
+will blindly write bytes, could be used trivially for this just set
+destination to whatever.
+ - the verification object could trigger the dbus call, it just needs
+to be able to report success/failure
+ - there is a reboot update object provided that's just "available"
+already because we use static image updating presently.
+
+Lei, if I were to provide you some patches in a couple weeks are you
+in a position to test?  I'll help you configure your system.  I'll be
+busy for the next week, but after that I would like to roll this out
+for those already using bmc-code-mgmt.
+
+***Provided the bmc-code-mgmt can report whether it successfully
+verified the image against the signature(s).  I think it does, and if
+not, I bet it would be easy to add such a property and enum in
+phosphor-dbus-interfaces to support this extension.
