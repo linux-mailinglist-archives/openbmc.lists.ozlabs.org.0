@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E460161A59
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 07:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B174661A5A
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 07:40:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45hvRF3mN1zDqVk
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 15:39:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45hvSL6H4XzDqVb
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 15:40:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -17,13 +17,13 @@ Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
  header.from=zd-tech.com.cn
 Received: from m97139.mail.qiye.163.com (m97139.mail.qiye.163.com
  [220.181.97.139])
- by lists.ozlabs.org (Postfix) with ESMTP id 45dH7c0xXHzDqDl
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jul 2019 18:13:40 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTP id 45dqtX3nCmzDqMg
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jul 2019 15:49:14 +1000 (AEST)
 Received: from [192.168.200.84] (unknown [218.247.145.4])
- by smtp10 (Coremail) with SMTP id vOCowAAXg2kVEhtduvzyAA--.20S2;
- Tue, 02 Jul 2019 16:13:09 +0800 (CST)
+ by smtp10 (Coremail) with SMTP id vOCowACHv9PEQRxdoRX4AA--.1801S2;
+ Wed, 03 Jul 2019 13:48:53 +0800 (CST)
 Subject: Re: Network Settings GUI
-To: Jandra A <jandraara@gmail.com>, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+To: Jandra A <jandraara@gmail.com>
 References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
  <tencent_69C7E9EC6F65C50D0F925BFF@qq.com>
  <CAOUmYFRYB3i_-sLBMbmOXJX3-Lo49QjfK2G01XFHbj4Mndx4sA@mail.gmail.com>
@@ -36,24 +36,26 @@ References: <mailman.3250.1560532343.4162.openbmc@lists.ozlabs.org>
  <CAMTupoT26K4x4RB+=DiEphFfKZWhBm-ysb17J+thmuxkTVJodQ@mail.gmail.com>
  <14DDB6E3-8F8F-4536-835A-35B7D2AD3A76@zd-tech.com.cn>
  <CAMTupoQuwmjkpfF-f7CS7XNw1bT-bzZ5xqW2deVPqT7hPHe6dA@mail.gmail.com>
+ <d72c930c-b170-d706-0bc2-6d1c2122cc69@zd-tech.com.cn>
+ <CAMTupoRCx1vvAfbhmjzBTmmg6_5Y=MhjwvHw29eEcAc5sJJVPQ@mail.gmail.com>
 From: =?UTF-8?B?5a2Z55Ge6Zye?= <rxsun@zd-tech.com.cn>
-Message-ID: <d72c930c-b170-d706-0bc2-6d1c2122cc69@zd-tech.com.cn>
-Date: Tue, 2 Jul 2019 16:13:08 +0800
+Message-ID: <bda55054-71e9-c1eb-e65f-d14e207ac0b5@zd-tech.com.cn>
+Date: Wed, 3 Jul 2019 13:48:52 +0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <CAMTupoQuwmjkpfF-f7CS7XNw1bT-bzZ5xqW2deVPqT7hPHe6dA@mail.gmail.com>
+In-Reply-To: <CAMTupoRCx1vvAfbhmjzBTmmg6_5Y=MhjwvHw29eEcAc5sJJVPQ@mail.gmail.com>
 Content-Type: multipart/alternative;
- boundary="------------FC115C71618A4A4D4C24A708"
+ boundary="------------0586049791733C7F28F95525"
 Content-Language: en-US
-X-CM-TRANSID: vOCowAAXg2kVEhtduvzyAA--.20S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGFWrKr1DWw4DXF1fuw1fCrg_yoWrWFyrpF
- Z3Ga1jkFWDKa47Awn7Aws5ZrZYvrZ5GF93GFWkKrZ8Cwn8WryxJr1Ygasaqa4UWws7JFWj
- vrWIqF15Za15ZaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pR189iUUUUU=
+X-CM-TRANSID: vOCowACHv9PEQRxdoRX4AA--.1801S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3Gw48Wr18Aw1DtFyxJF1kZrb_yoW7XryUpF
+ Z3Ka1DKFs5KFy7Jwn7Xwn8ZrWF9rZ5CF93GFykGr98Cw45WFyxJrW0vas0qa4UXws7JrW0
+ qrW0qF1Uua15ZaDanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0z_8nYhUUUUU=
 X-Originating-IP: [218.247.145.4]
-X-CM-SenderInfo: pu0v30o62gg3xhfkhulrpou0/1tbicQLlhVlZuyY7FgAAsj
-X-Mailman-Approved-At: Mon, 08 Jul 2019 15:38:31 +1000
+X-CM-SenderInfo: pu0v30o62gg3xhfkhulrpou0/1tbihwnmhVtVgS2ANwAAs4
+X-Mailman-Approved-At: Mon, 08 Jul 2019 15:38:32 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,177 +68,216 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>,
- Derick <derick.montague@gmail.com>
+ Derick <derick.montague@gmail.com>, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is a multi-part message in MIME format.
---------------FC115C71618A4A4D4C24A708
+--------------0586049791733C7F28F95525
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi，
+Hi Jandra,
+ >>In the case that DHCP doesn't give either， both IPV4 and IPV6 are 
+enabled.
+ >>In the case that IPV6 DHCP is given ,IPV6 are disabled,so are IPV4.
 
-The following item is expected,
+ >Can you clarify this? I do not follow.
 
-  * In the case that DHCP doesn't give either， both IPV4 and IPV6 are
-    enabled.
+when both IPV4 and IPV6 are enabled and DHCP is disabled and the user 
+input nothing to IPV4 and IPV6 address input box （zeroconf）,in this 
+case,it shall not to assign any IP address to bmc network device, the 
+webui should give an error tips to users.
 
-  * In the case that IPV6 DHCP is given ,IPV6 are disabled,so are IPV4.
+It only works when the user input the correct format IP address.
+PS:Having a check box to enable ipv4 and ipv6 configuration would be better.
+One useful 
+link:https://support.code42.com/Administrator/6/Configuring/How_to_use_both_IPv4_and_IPv6_in_your_Code42_environment
+Best,
+Ruixia
 
-  * IPV6 DNS servers  is in the format of an IPV6 IP address.
-
-it will be similar with the picture below, maybe.
-
-
-Best regard, thanks.
-
-ruixia,sun.
-
-
-在 2019/7/1 下午11:26, Jandra A 写道:
-> Ruixia -- I am waiting on a couple of responses from our backend team 
-> to be able to provide a design that aligns with how the functionality 
-> is developed.
+在 2019/7/2 下午8:57, Jandra A 写道:
 >
-> Ratan -- I'm helping create the design mockup for including IPV6 in 
-> the Network settings panel so that Lenovo can do the front-end 
-> implementation. Do you know if the work your team was doing for this 
-> will be merged to the master soon?
+>       * In the case that DHCP doesn't give either， both IPV4 and IPV6
+>         are enabled.
 >
-> I have some questions I am hoping you can help answer for this IPV6 
-> design:
-> - What happens to zeroconf when both IPV4 and IPV6 are enabled? Does 
-> it try to assign an IP address to both (in the case that DHCP doesn't 
-> give either) or does it only assign either an IPV4 IP address or an 
-> IPV6 IP address?
-> - What is the format of IPV6 DNS servers? Is that also in the format 
-> of an IPV6 IP address?
->
->     I have built the latest openbmc project image by adding the option
->     "ipv6" in the term DISTRO_FEATURES_DEFAULT in the file
->     /meta-phosphor/conf/distro/include/phosphor-base.inc. I can ping
->     the openbmc  IPV6 IP successfully, but cannot login to it by
->     openssh command.
->     It seemed that there are some works on openbmc embedded OS to
->     support IPV6.
->     Another issue from Ruixia is the IPV6 Dbus Interfaces design, I
->     found there are some IPV6 rest-Dbus or Redfish interfaces on yaml
->     files available. I don' t know is it enough to the IPV6 webui.
+>       * In the case that IPV6 DHCP is given ,IPV6 are disabled,so are
+>         IPV4.
 >
 >
-> Ratan, would you be able to help Ruixia and Xiuzhi with this?
+> Can you clarify this? I do not follow.
 >
-> Regards,
-> Jandra Aranguren
->
->
-> On Mon, Jul 1, 2019 at 9:27 AM 孙瑞霞 <rxsun@zd-tech.com.cn 
+> On Tue, Jul 2, 2019 at 3:14 AM 孙瑞霞 <rxsun@zd-tech.com.cn 
 > <mailto:rxsun@zd-tech.com.cn>> wrote:
 >
->     hi，
->     After the meeting of last week，I was expecting the email about
->     ipv6 ui designing and ipv6 interface with web server ，when will I
->     receive it？Should we have another meeting this week？
->     best regard！
+>     Hi，
 >
->     ruixia，sun
+>     The following item is expected,
 >
+>       * In the case that DHCP doesn't give either， both IPV4 and IPV6
+>         are enabled.
 >
->     	
->     孙瑞霞
->     邮箱：rxsun@zd-tech.com.cn
+>       * In the case that IPV6 DHCP is given ,IPV6 are disabled,so are
+>         IPV4.
 >
->     <https://maas.mail.163.com/dashi-web-extend/html/proSignature.html?iconUrl=https%3A%2F%2Fmail-online.nosdn.127.net%2Fqiyelogo%2FdefaultAvatar.png&name=%E5%AD%99%E7%91%9E%E9%9C%9E&uid=example%40163.com&ftlId=3&items=%5B%22%E9%82%AE%E7%AE%B1%EF%BC%9Arxsun%40zd-tech.com.cn%22%5D>
+>       * IPV6 DNS servers  is in the format of an IPV6 IP address.
 >
->
->     签名由 网易邮箱大师
->     <https://mail.163.com/dashi/dlpro.html?from=mail88> 定制
->
->     On 06/25/2019 23:25, Jandra A <mailto:jandraara@gmail.com> wrote:
->
->         Great, let's meet using my webex
->         https://ibm.webex.com/meet/jandra.aranguren I will send you an
->         invite as well.
->
->         On Tue, Jun 25, 2019 at 1:16 AM 孙瑞霞 <rxsun@zd-tech.com.cn
->         <mailto:rxsun@zd-tech.com.cn>> wrote:
->
->             Hi,all,
->             I will be glad to meet at 7:00AM Central time this
->             Wednesday (June 26th).
->
->             Ruixia,Sun
+>     it will be similar with the picture below, maybe.
 >
 >
+>     Best regard, thanks.
 >
->             发件人："Jandra A" <jandraara@gmail.com
->             <mailto:jandraara@gmail.com>>
->             发送日期：2019-06-25 00:51:39
->             收件人：xiuzhi <1450335857@qq.com <mailto:1450335857@qq.com>>
->             抄送人：Derick <derick.montague@gmail.com
->             <mailto:derick.montague@gmail.com>>,openbmc
->             <openbmc@lists.ozlabs.org
->             <mailto:openbmc@lists.ozlabs.org>>,rxsun
->             <rxsun@zd-tech.com.cn <mailto:rxsun@zd-tech.com.cn>>
->             主题：Re: Re: Network Settings GUI
+>     ruixia,sun.
 >
->                 Hi Xiuzhi and Ruixia,
 >
->                 It would be great to set some time to align on the
->                 requirements from design and how to work together so
->                 that your team can start on the so front-end development.
->
->                 Like Derick said, we meet every other Wednesday at
->                 10:00 Central time to discuss GUI issues, with the
->                 next one being next Wednesday (July 3rd). Hopefully
->                 you can make that.
->
->                 If you cannot, I am happy to meet at 7:00 or 8:00 AM
->                 Central time this Wednesday (June 26th) or Friday
->                 (June 28th). Please let me know.
->
->                 Regards,
->
->                 On Wed, Jun 19, 2019 at 8:30 PM xiuzhi
->                 <1450335857@qq.com <mailto:1450335857@qq.com>> wrote:
->
->                     Hi Derick,
->                     >> The IPV6 webui should support both IPV4 and
->                     IPV6 on a single interface at the same time and
->                     users can set IPV4 and IPV6 on the same network
->                     webpage from Lenovo test cases.
->
->                     >Thank you!
->
->                     >>  Ruixia (her email: rxsun@zd-tech.com.cn
->                     <mailto:rxsun@zd-tech.com.cn>;), form my team can
->                     do  front-end  to implement your design .  It
->                     would be best if the IPV6 feature could be
->                     achieved in one to two months.
->
->                     >It would be great if she were able to join our
->                     GUI Community
->                     workgroup. It's every other Wednesday at 10:00
->                     Central Time. We use
->                     these to discuss all the GUI issues. Where are you
->                     located?
->                       I am in BeiJing  UTC+8. The meeting time
->                     is  Wednesday  23:00 Beijing Time (Wednesday 10:00
->                     am Central Daylight Time),isn't it?
->                     >GUI Community Workgroup Wiki:
->                     https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
->
->                     Best,
->                     Xiuzhi
->
+>     在 2019/7/1 下午11:26, Jandra A 写道:
+>>     Ruixia -- I am waiting on a couple of responses from our backend
+>>     team to be able to provide a design that aligns with how the
+>>     functionality is developed.
+>>
+>>     Ratan -- I'm helping create the design mockup for including IPV6
+>>     in the Network settings panel so that Lenovo can do the front-end
+>>     implementation. Do you know if the work your team was doing for
+>>     this will be merged to the master soon?
+>>
+>>     I have some questions I am hoping you can help answer for this
+>>     IPV6 design:
+>>     - What happens to zeroconf when both IPV4 and IPV6 are enabled?
+>>     Does it try to assign an IP address to both (in the case that
+>>     DHCP doesn't give either) or does it only assign either an IPV4
+>>     IP address or an IPV6 IP address?
+>>     - What is the format of IPV6 DNS servers? Is that also in the
+>>     format of an IPV6 IP address?
+>>
+>>         I have built the latest openbmc project image by adding the
+>>         option "ipv6" in the term DISTRO_FEATURES_DEFAULT in the file
+>>         /meta-phosphor/conf/distro/include/phosphor-base.inc. I can
+>>         ping the openbmc  IPV6 IP successfully, but cannot login to
+>>         it by openssh command.
+>>         It seemed that there are some works on openbmc embedded OS to
+>>         support IPV6.
+>>         Another issue from Ruixia is the IPV6 Dbus Interfaces design,
+>>         I found there are some IPV6 rest-Dbus or Redfish interfaces
+>>         on yaml files available. I don' t know is it enough to the
+>>         IPV6 webui.
+>>
+>>
+>>     Ratan, would you be able to help Ruixia and Xiuzhi with this?
+>>
+>>     Regards,
+>>     Jandra Aranguren
+>>
+>>
+>>     On Mon, Jul 1, 2019 at 9:27 AM 孙瑞霞 <rxsun@zd-tech.com.cn
+>>     <mailto:rxsun@zd-tech.com.cn>> wrote:
+>>
+>>         hi，
+>>         After the meeting of last week，I was expecting the email
+>>         about ipv6 ui designing and ipv6 interface with web server
+>>         ，when will I receive it？Should we have another meeting this
+>>         week？
+>>         best regard！
+>>
+>>         ruixia，sun
+>>
+>>
+>>         	
+>>         孙瑞霞
+>>         邮箱：rxsun@zd-tech.com.cn
+>>
+>>         <https://maas.mail.163.com/dashi-web-extend/html/proSignature.html?iconUrl=https%3A%2F%2Fmail-online.nosdn.127.net%2Fqiyelogo%2FdefaultAvatar.png&name=%E5%AD%99%E7%91%9E%E9%9C%9E&uid=example%40163.com&ftlId=3&items=%5B%22%E9%82%AE%E7%AE%B1%EF%BC%9Arxsun%40zd-tech.com.cn%22%5D>
+>>
+>>
+>>         签名由 网易邮箱大师
+>>         <https://mail.163.com/dashi/dlpro.html?from=mail88> 定制
+>>
+>>         On 06/25/2019 23:25, Jandra A <mailto:jandraara@gmail.com>
+>>         wrote:
+>>
+>>             Great, let's meet using my webex
+>>             https://ibm.webex.com/meet/jandra.aranguren I will send
+>>             you an invite as well.
+>>
+>>             On Tue, Jun 25, 2019 at 1:16 AM 孙瑞霞 <rxsun@zd-tech.com.cn
+>>             <mailto:rxsun@zd-tech.com.cn>> wrote:
+>>
+>>                 Hi,all,
+>>                 I will be glad to meet at 7:00AM Central time this
+>>                 Wednesday (June 26th).
+>>
+>>                 Ruixia,Sun
+>>
+>>
+>>
+>>                 发件人："Jandra A" <jandraara@gmail.com
+>>                 <mailto:jandraara@gmail.com>>
+>>                 发送日期：2019-06-25 00:51:39
+>>                 收件人：xiuzhi <1450335857@qq.com
+>>                 <mailto:1450335857@qq.com>>
+>>                 抄送人：Derick <derick.montague@gmail.com
+>>                 <mailto:derick.montague@gmail.com>>,openbmc
+>>                 <openbmc@lists.ozlabs.org
+>>                 <mailto:openbmc@lists.ozlabs.org>>,rxsun
+>>                 <rxsun@zd-tech.com.cn <mailto:rxsun@zd-tech.com.cn>>
+>>                 主题：Re: Re: Network Settings GUI
+>>
+>>                     Hi Xiuzhi and Ruixia,
+>>
+>>                     It would be great to set some time to align on
+>>                     the requirements from design and how to work
+>>                     together so that your team can start on the so
+>>                     front-end development.
+>>
+>>                     Like Derick said, we meet every other Wednesday
+>>                     at 10:00 Central time to discuss GUI issues, with
+>>                     the next one being next Wednesday (July 3rd).
+>>                     Hopefully you can make that.
+>>
+>>                     If you cannot, I am happy to meet at 7:00 or 8:00
+>>                     AM Central time this Wednesday (June 26th) or
+>>                     Friday (June 28th). Please let me know.
+>>
+>>                     Regards,
+>>
+>>                     On Wed, Jun 19, 2019 at 8:30 PM xiuzhi
+>>                     <1450335857@qq.com <mailto:1450335857@qq.com>> wrote:
+>>
+>>                         Hi Derick,
+>>                         >> The IPV6 webui should support both IPV4
+>>                         and IPV6 on a single interface at the same
+>>                         time and users can set IPV4 and IPV6 on the
+>>                         same network webpage from Lenovo test cases.
+>>
+>>                         >Thank you!
+>>
+>>                         >>  Ruixia (her email: rxsun@zd-tech.com.cn
+>>                         <mailto:rxsun@zd-tech.com.cn>;), form my team
+>>                         can do  front-end  to implement your design
+>>                         .  It would be best if the IPV6 feature could
+>>                         be achieved in one to two months.
+>>
+>>                         >It would be great if she were able to join
+>>                         our GUI Community
+>>                         workgroup. It's every other Wednesday at
+>>                         10:00 Central Time. We use
+>>                         these to discuss all the GUI issues. Where
+>>                         are you located?
+>>                           I am in BeiJing  UTC+8. The meeting time
+>>                         is  Wednesday  23:00 Beijing Time (Wednesday
+>>                         10:00 am Central Daylight Time),isn't it?
+>>                         >GUI Community Workgroup Wiki:
+>>                         https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+>>
+>>                         Best,
+>>                         Xiuzhi
+>>
 
---------------FC115C71618A4A4D4C24A708
+--------------0586049791733C7F28F95525
 Content-Type: multipart/related;
- boundary="------------B80957C1C1A647C4363D22C4"
+ boundary="------------A7974446A311F003149B440F"
 
 
---------------B80957C1C1A647C4363D22C4
+--------------A7974446A311F003149B440F
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
@@ -245,301 +286,377 @@ Content-Transfer-Encoding: 8bit
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body text="#000000" bgcolor="#FFFFFF">
-    <p>Hi，</p>
-    <p>The following item is expected,<br>
+    <p>Hi Jandra,<br>
+      &gt;&gt;In the case that DHCP doesn't give either， both IPV4 and
+      IPV6 are enabled.<br>
+      &gt;&gt;In the case that IPV6 DHCP is given ,IPV6 are disabled,so
+      are IPV4.<br>
+      <br>
+      &gt;Can you clarify this? I do not follow.<br>
+      <br>
+      when both IPV4 and IPV6 are enabled and DHCP is disabled and the
+      user input nothing to IPV4 and IPV6 address input box
+      （zeroconf）,in this case,it shall not to assign any IP address to
+      bmc network device, the webui should give an error tips to users.<br>
+      <br>
+      It only works when the user input the correct format IP address.<br>
+      PS:Having a check box to enable ipv4 and ipv6 configuration would
+      be better.<br>
+      One useful
+link:<a class="moz-txt-link-freetext" href="https://support.code42.com/Administrator/6/Configuring/How_to_use_both_IPv4_and_IPv6_in_your_Code42_environment">https://support.code42.com/Administrator/6/Configuring/How_to_use_both_IPv4_and_IPv6_in_your_Code42_environment</a><br>
+      Best,<br>
+      Ruixia<br>
+      <br>
     </p>
-    <ul>
-      <li>In the case that DHCP doesn't give either， both IPV4 and IPV6
-        are enabled.</li>
-    </ul>
-    <ul>
-      <li>In the case that IPV6 DHCP is given ,IPV6 are disabled,so are
-        IPV4.<br>
-      </li>
-    </ul>
-    <ul>
-      <li> IPV6 DNS servers  is in the format of an IPV6 IP address.</li>
-    </ul>
-    <p>it will be similar with the picture below, maybe.<br>
-    </p>
-    <img moz-do-not-send="false"
-      src="cid:part1.1628A88E.67ED36C5@zd-tech.com.cn" alt=""
-      width="509" height="509"><br>
-    <p>Best regard, thanks.</p>
-    <p>ruixia,sun.</p>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">在 2019/7/1 下午11:26, Jandra A 写道:<br>
+    <div class="moz-cite-prefix">在 2019/7/2 下午8:57, Jandra A 写道:<br>
     </div>
     <blockquote type="cite"
-cite="mid:CAMTupoQuwmjkpfF-f7CS7XNw1bT-bzZ5xqW2deVPqT7hPHe6dA@mail.gmail.com">
+cite="mid:CAMTupoRCx1vvAfbhmjzBTmmg6_5Y=MhjwvHw29eEcAc5sJJVPQ@mail.gmail.com">
       <meta http-equiv="content-type" content="text/html; charset=UTF-8">
       <div dir="ltr">
-        <div>Ruixia -- I am waiting on a couple of responses from our
-          backend team to be able to provide a design that aligns with
-          how the functionality is developed. </div>
+        <blockquote class="gmail_quote" style="margin:0px 0px 0px
+          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+          <ul>
+            <li style="margin-left:15px">In the case that DHCP doesn't
+              give either， both IPV4 and IPV6 are enabled.</li>
+          </ul>
+          <ul>
+            <li style="margin-left:15px">In the case that IPV6 DHCP is
+              given ,IPV6 are disabled,so are IPV4.</li>
+          </ul>
+        </blockquote>
         <div><br>
         </div>
-        <div>Ratan -- I'm helping create the design mockup for including
-          IPV6 in the Network settings panel so that Lenovo can do the
-          front-end implementation. Do you know if the work your team
-          was doing for this will be merged to the master soon?</div>
-        <br>
-        I have some questions I am hoping you can help answer for this
-        IPV6 design: 
-        <div>- What happens to zeroconf when both IPV4 and IPV6 are
-          enabled? Does it try to assign an IP address to both (in the
-          case that DHCP doesn't give either) or does it only assign
-          either an IPV4 IP address or an IPV6 IP address?
-          <div>- What is the format of IPV6 DNS servers? Is that also in
-            the format of an IPV6 IP address?<br>
-            <br>
-            <blockquote class="gmail_quote" style="margin:0px 0px 0px
-              0.8ex;border-left:1px solid
-              rgb(204,204,204);padding-left:1ex"><span class="gmail-im"
-                style="color:rgb(80,0,80)">I have built the latest
-                openbmc project image by adding the option "ipv6" in the
-                term DISTRO_FEATURES_DEFAULT in the file
-                /meta-phosphor/conf/distro/include/phosphor-base.inc. I
-                can ping the openbmc  IPV6 IP successfully, but cannot
-                login to it by openssh command.<br>
-                It seemed that there are some works on openbmc embedded
-                OS to support IPV6.<br>
-                Another issue from Ruixia is the IPV6 Dbus Interfaces
-                design, I found there are some IPV6 rest-Dbus or Redfish
-                interfaces on yaml files available. I don' t know is it
-                enough to the IPV6 webui.</span></blockquote>
-            <div><br>
-            </div>
-            Ratan, would you be able to help Ruixia and Xiuzhi with
-            this?</div>
-          <div><br>
-          </div>
-          <div>Regards,</div>
-          <div>Jandra Aranguren </div>
-          <div class="gmail-yj6qo gmail-ajU"
-            style="outline:none;padding:10px 0px;width:22px;margin:2px
-            0px 0px"><br class="gmail-Apple-interchange-newline">
-          </div>
-        </div>
+        <div>Can you clarify this? I do not follow.  </div>
       </div>
       <br>
       <div class="gmail_quote">
-        <div dir="ltr" class="gmail_attr">On Mon, Jul 1, 2019 at 9:27 AM
+        <div dir="ltr" class="gmail_attr">On Tue, Jul 2, 2019 at 3:14 AM
           孙瑞霞 &lt;<a href="mailto:rxsun@zd-tech.com.cn"
             moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt; wrote:<br>
         </div>
         <blockquote class="gmail_quote" style="margin:0px 0px 0px
           0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-          <div>
-            <div id="gmail-m_1619914329257948851contentDescription"
-              style="line-height:1.5;text-align:justify">
-              <div id="gmail-m_1619914329257948851imail_extraContent">hi，
+          <div bgcolor="#FFFFFF">
+            <p>Hi，</p>
+            <p>The following item is expected,<br>
+            </p>
+            <ul>
+              <li>In the case that DHCP doesn't give either， both IPV4
+                and IPV6 are enabled.</li>
+            </ul>
+            <ul>
+              <li>In the case that IPV6 DHCP is given ,IPV6 are
+                disabled,so are IPV4.<br>
+              </li>
+            </ul>
+            <ul>
+              <li> IPV6 DNS servers  is in the format of an IPV6 IP
+                address.</li>
+            </ul>
+            <p>it will be similar with the picture below, maybe.<br>
+            </p>
+            <img src="cid:part2.D7A3866A.90899613@zd-tech.com.cn" alt=""
+              class="" width="509" height="509"><br>
+            <p>Best regard, thanks.</p>
+            <p>ruixia,sun.</p>
+            <p><br>
+            </p>
+            <div class="gmail-m_8207711357368344562moz-cite-prefix">在
+              2019/7/1 下午11:26, Jandra A 写道:<br>
+            </div>
+            <blockquote type="cite">
+              <div dir="ltr">
+                <div>Ruixia -- I am waiting on a couple of responses
+                  from our backend team to be able to provide a design
+                  that aligns with how the functionality is developed. </div>
+                <div><br>
+                </div>
+                <div>Ratan -- I'm helping create the design mockup for
+                  including IPV6 in the Network settings panel so that
+                  Lenovo can do the front-end implementation. Do you
+                  know if the work your team was doing for this will be
+                  merged to the master soon?</div>
                 <br>
-                After the meeting of last week，I was expecting the email
-                about ipv6 ui designing and ipv6 interface with web
-                server ，when will I receive it？Should we have another
-                meeting this week？
-                <br>
-                best regard！
-                <br>
-                <br>
-                ruixia，sun</div>
-              <div><br>
-              </div>
-              <div><br>
-              </div>
-              <div
-                class="gmail-m_1619914329257948851NETEASEMAILMASTERLOCALSIGNATURE">
-                <div id="gmail-m_1619914329257948851imail_signature">
-                  <div style="margin:0px;padding:0px"> <a
-href="https://maas.mail.163.com/dashi-web-extend/html/proSignature.html?iconUrl=https%3A%2F%2Fmail-online.nosdn.127.net%2Fqiyelogo%2FdefaultAvatar.png&amp;name=%E5%AD%99%E7%91%9E%E9%9C%9E&amp;uid=example%40163.com&amp;ftlId=3&amp;items=%5B%22%E9%82%AE%E7%AE%B1%EF%BC%9Arxsun%40zd-tech.com.cn%22%5D"
-                      width="400"
-style="display:block;max-width:400px;background:rgb(255,255,255);padding:15px
-                      0px 10px;text-decoration:none;outline:none"
-                      target="_blank" moz-do-not-send="true">
-                      <table
-style="width:100%;max-width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0px;line-height:1.3;color:rgb(155,158,161);font-size:14px"
-                        cellpadding="0">
-                        <tbody
-                          style="word-break:break-all;font-family:&quot;PingFang
-                          SC&quot;,&quot;Hiragino Sans
-                          GB&quot;,&quot;WenQuanYi Micro
-                          Hei&quot;,&quot;Microsoft
-                          Yahei&quot;,微软雅黑,verdana">
-                          <tr>
-                            <td style="padding:0px 7px 0px
-                              0px;box-sizing:border-box;width:45px"
-                              width="45"> <img style="width: 38px;
-                                height: 38px; border-radius: 50%;"
-                                src="https://mail-online.nosdn.127.net/qiyelogo/defaultAvatar.png"
-                                moz-do-not-send="true" width="38"
-                                height="38"> </td>
-                            <td style="padding:0px 0px 0px 7px">
-                              <div style="max-width:380px">
-                                <div
-style="box-sizing:border-box;padding-right:35px;font-size:16px;margin-bottom:5px;color:rgb(49,53,59);font-weight:bold;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">孙瑞霞</div>
-                                <div style="font-size:0px;line-height:0">
-                                </div>
-                                <div style="word-break:break-all">
-                                  邮箱：rxsun@zd-tech.com.cn </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </a>
+                I have some questions I am hoping you can help answer
+                for this IPV6 design: 
+                <div>- What happens to zeroconf when both IPV4 and IPV6
+                  are enabled? Does it try to assign an IP address to
+                  both (in the case that DHCP doesn't give either) or
+                  does it only assign either an IPV4 IP address or an
+                  IPV6 IP address?
+                  <div>- What is the format of IPV6 DNS servers? Is that
+                    also in the format of an IPV6 IP address?<br>
+                    <br>
+                    <blockquote class="gmail_quote" style="margin:0px
+                      0px 0px 0.8ex;border-left:1px solid
+                      rgb(204,204,204);padding-left:1ex"><span
+                        class="gmail-m_8207711357368344562gmail-im"
+                        style="color:rgb(80,0,80)">I have built the
+                        latest openbmc project image by adding the
+                        option "ipv6" in the term
+                        DISTRO_FEATURES_DEFAULT in the file
+                        /meta-phosphor/conf/distro/include/phosphor-base.inc.
+                        I can ping the openbmc  IPV6 IP successfully,
+                        but cannot login to it by openssh command.<br>
+                        It seemed that there are some works on openbmc
+                        embedded OS to support IPV6.<br>
+                        Another issue from Ruixia is the IPV6 Dbus
+                        Interfaces design, I found there are some IPV6
+                        rest-Dbus or Redfish interfaces on yaml files
+                        available. I don' t know is it enough to the
+                        IPV6 webui.</span></blockquote>
+                    <div><br>
+                    </div>
+                    Ratan, would you be able to help Ruixia and Xiuzhi
+                    with this?</div>
+                  <div><br>
                   </div>
-                  <div>
-                    <p style="border-top:1px solid
-rgb(229,229,229);padding-top:8px;font-size:12px;color:rgb(182,184,187);line-height:1.833">签名由
-                      <a
-                        href="https://mail.163.com/dashi/dlpro.html?from=mail88"
-style="color:rgb(106,168,246);text-decoration:none" target="_blank"
-                        moz-do-not-send="true">网易邮箱大师</a> 定制</p>
+                  <div>Regards,</div>
+                  <div>Jandra Aranguren </div>
+                  <div class="gmail-m_8207711357368344562gmail-yj6qo
+                    gmail-m_8207711357368344562gmail-ajU"
+                    style="outline:none;padding:10px
+                    0px;width:22px;margin:2px 0px 0px"><br
+                      class="gmail-m_8207711357368344562gmail-Apple-interchange-newline">
                   </div>
                 </div>
               </div>
-              <div class="gmail-m_1619914329257948851J-reply"
-style="background-color:rgb(242,242,242);color:black;padding-top:6px;padding-bottom:6px;border-radius:3px;margin-top:45px;margin-bottom:20px">
-                <div
-style="font-size:14px;line-height:1.5;word-break:break-all;margin-left:10px;margin-right:10px">On
-                  <span class="gmail-m_1619914329257948851mail-date">06/25/2019
-                    23:25</span>, <a
-                    class="gmail-m_1619914329257948851mail-to"
-                    style="text-decoration:none;color:rgb(42,151,255)"
-                    href="mailto:jandraara@gmail.com" target="_blank"
-                    moz-do-not-send="true">Jandra A</a> wrote: </div>
-              </div>
-              <blockquote
-                id="gmail-m_1619914329257948851ntes-iosmail-quote"
-                style="margin:0px">
-                <div dir="ltr">Great, let's meet using my webex <a
-                    href="https://ibm.webex.com/meet/jandra.aranguren"
-style="box-sizing:inherit;text-decoration-line:none;outline:0px;color:rgb(16,92,182);font-family:&quot;Helvetica
-Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px" target="_blank"
-                    moz-do-not-send="true">https://ibm.webex.com/meet/jandra.aranguren</a> I
-                  will send you an invite as well. </div>
-                <br>
-                <div class="gmail_quote">
-                  <div dir="ltr" class="gmail_attr">On Tue, Jun 25, 2019
-                    at 1:16 AM 孙瑞霞 &lt;<a
-                      href="mailto:rxsun@zd-tech.com.cn" target="_blank"
-                      moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt;
-                    wrote:<br>
-                  </div>
-                  <blockquote class="gmail_quote" style="margin:0px 0px
-                    0px 0.8ex;border-left:1px solid
-                    rgb(204,204,204);padding-left:1ex">
+              <br>
+              <div class="gmail_quote">
+                <div dir="ltr" class="gmail_attr">On Mon, Jul 1, 2019 at
+                  9:27 AM 孙瑞霞 &lt;<a href="mailto:rxsun@zd-tech.com.cn"
+                    target="_blank" moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt;
+                  wrote:<br>
+                </div>
+                <blockquote class="gmail_quote" style="margin:0px 0px
+                  0px 0.8ex;border-left:1px solid
+                  rgb(204,204,204);padding-left:1ex">
+                  <div>
                     <div
-style="line-height:1.7;color:rgb(0,0,0);font-size:14px;font-family:Arial">
-                      <div>Hi,all,</div>
-                      <div>I will be glad to meet at 7:00AM Central time
-                        this Wednesday (June 26th).</div>
+id="gmail-m_8207711357368344562gmail-m_1619914329257948851contentDescription"
+                      style="line-height:1.5;text-align:justify">
+                      <div
+id="gmail-m_8207711357368344562gmail-m_1619914329257948851imail_extraContent">hi，
+                        <br>
+                        After the meeting of last week，I was expecting
+                        the email about ipv6 ui designing and ipv6
+                        interface with web server ，when will I receive
+                        it？Should we have another meeting this week？ <br>
+                        best regard！ <br>
+                        <br>
+                        ruixia，sun</div>
                       <div><br>
                       </div>
-                      <div>Ruixia,Sun</div>
-                      <br>
-                      <br>
-                      <br>
-                      发件人："Jandra A" &lt;<a
-                        href="mailto:jandraara@gmail.com"
-                        target="_blank" moz-do-not-send="true">jandraara@gmail.com</a>&gt;<br>
-                      发送日期：2019-06-25 00:51:39<br>
-                      收件人：xiuzhi &lt;<a href="mailto:1450335857@qq.com"
-                        target="_blank" moz-do-not-send="true">1450335857@qq.com</a>&gt;<br>
-                      抄送人：Derick &lt;<a
-                        href="mailto:derick.montague@gmail.com"
-                        target="_blank" moz-do-not-send="true">derick.montague@gmail.com</a>&gt;,openbmc
-                      &lt;<a href="mailto:openbmc@lists.ozlabs.org"
-                        target="_blank" moz-do-not-send="true">openbmc@lists.ozlabs.org</a>&gt;,rxsun
-                      &lt;<a href="mailto:rxsun@zd-tech.com.cn"
-                        target="_blank" moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt;<br>
-                      主题：Re: Re: Network Settings GUI<br>
-                      <blockquote
-id="gmail-m_1619914329257948851gmail-m_-8231268627540647716isReplyContent"
-                        style="padding-left:1ex;margin:0px 0px 0px
-                        0.8ex;border-left:1px solid rgb(204,204,204)">
-                        <div dir="ltr">Hi Xiuzhi and Ruixia, 
-                          <div><br>
+                      <div><br>
+                      </div>
+                      <div
+class="gmail-m_8207711357368344562gmail-m_1619914329257948851NETEASEMAILMASTERLOCALSIGNATURE">
+                        <div
+id="gmail-m_8207711357368344562gmail-m_1619914329257948851imail_signature">
+                          <div style="margin:0px;padding:0px"> <a
+href="https://maas.mail.163.com/dashi-web-extend/html/proSignature.html?iconUrl=https%3A%2F%2Fmail-online.nosdn.127.net%2Fqiyelogo%2FdefaultAvatar.png&amp;name=%E5%AD%99%E7%91%9E%E9%9C%9E&amp;uid=example%40163.com&amp;ftlId=3&amp;items=%5B%22%E9%82%AE%E7%AE%B1%EF%BC%9Arxsun%40zd-tech.com.cn%22%5D"
+                              width="400"
+style="display:block;max-width:400px;background:rgb(255,255,255);padding:15px
+                              0px
+                              10px;text-decoration:none;outline:none"
+                              target="_blank" moz-do-not-send="true">
+                              <table
+style="width:100%;max-width:100%;table-layout:fixed;border-collapse:collapse;border-spacing:0px;line-height:1.3;color:rgb(155,158,161);font-size:14px"
+                                cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <td style="padding:0px 7px 0px
+                                      0px;box-sizing:border-box;width:45px"
+                                      width="45"> <img style="width:
+                                        38px; height: 38px;
+                                        border-radius: 50%;"
+                                        src="https://mail-online.nosdn.127.net/qiyelogo/defaultAvatar.png"
+                                        moz-do-not-send="true"
+                                        width="38" height="38"> </td>
+                                    <td style="padding:0px 0px 0px 7px">
+                                      <div style="max-width:380px">
+                                        <div
+style="box-sizing:border-box;padding-right:35px;font-size:16px;margin-bottom:5px;color:rgb(49,53,59);font-weight:bold;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">孙瑞霞</div>
+                                        <div
+                                          style="font-size:0px;line-height:0">
+                                        </div>
+                                        <div
+                                          style="word-break:break-all">
+                                          邮箱：rxsun@zd-tech.com.cn </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </a> </div>
+                          <div>
+                            <p style="border-top:1px solid
+rgb(229,229,229);padding-top:8px;font-size:12px;color:rgb(182,184,187);line-height:1.833">签名由
+                              <a
+                                href="https://mail.163.com/dashi/dlpro.html?from=mail88"
+style="color:rgb(106,168,246);text-decoration:none" target="_blank"
+                                moz-do-not-send="true">网易邮箱大师</a> 定制</p>
                           </div>
-                          <div>It would be great to set some time to
-                            align on the requirements from design and
-                            how to work together so that your team can
-                            start on the so front-end development.  <br>
-                            <br>
-                            Like Derick said, we meet every other
-                            Wednesday at 10:00 Central time to discuss
-                            GUI issues, with the next one being next
-                            Wednesday (July 3rd). Hopefully you can make
-                            that. </div>
-                          <div><br>
-                          </div>
-                          <div>If you cannot, I am happy to meet at 7:00
-                            or 8:00 AM Central time this Wednesday (June
-                            26th) or Friday (June 28th). Please let me
-                            know. </div>
-                          <div><br>
-                          </div>
-                          <div>Regards,</div>
                         </div>
+                      </div>
+                      <div
+                        class="gmail-m_8207711357368344562gmail-m_1619914329257948851J-reply"
+style="background-color:rgb(242,242,242);color:black;padding-top:6px;padding-bottom:6px;border-radius:3px;margin-top:45px;margin-bottom:20px">
+                        <div
+style="font-size:14px;line-height:1.5;word-break:break-all;margin-left:10px;margin-right:10px">On
+                          <span
+                            class="gmail-m_8207711357368344562gmail-m_1619914329257948851mail-date">06/25/2019
+                            23:25</span>, <a
+                            class="gmail-m_8207711357368344562gmail-m_1619914329257948851mail-to"
+style="text-decoration:none;color:rgb(42,151,255)"
+                            href="mailto:jandraara@gmail.com"
+                            target="_blank" moz-do-not-send="true">Jandra
+                            A</a> wrote: </div>
+                      </div>
+                      <blockquote
+id="gmail-m_8207711357368344562gmail-m_1619914329257948851ntes-iosmail-quote"
+                        style="margin:0px">
+                        <div dir="ltr">Great, let's meet using my webex <a
+href="https://ibm.webex.com/meet/jandra.aranguren" target="_blank"
+                            moz-do-not-send="true">https://ibm.webex.com/meet/jandra.aranguren</a> I
+                          will send you an invite as well. </div>
                         <br>
                         <div class="gmail_quote">
-                          <div dir="ltr" class="gmail_attr">On Wed, Jun
-                            19, 2019 at 8:30 PM xiuzhi &lt;<a
-                              href="mailto:1450335857@qq.com"
-                              target="_blank" moz-do-not-send="true">1450335857@qq.com</a>&gt;
+                          <div dir="ltr" class="gmail_attr">On Tue, Jun
+                            25, 2019 at 1:16 AM 孙瑞霞 &lt;<a
+                              href="mailto:rxsun@zd-tech.com.cn"
+                              target="_blank" moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt;
                             wrote:<br>
                           </div>
                           <blockquote class="gmail_quote"
                             style="margin:0px 0px 0px
                             0.8ex;border-left:1px solid
                             rgb(204,204,204);padding-left:1ex">
-                            <div>Hi Derick,</div>
-                            <div>&gt;&gt; The IPV6 webui should support
-                              both IPV4 and IPV6 on a single interface
-                              at the same time and users can set IPV4
-                              and IPV6 on the same network webpage from
-                              Lenovo test cases.</div>
-                            <div><br>
-                              &gt;Thank you!<br>
+                            <div
+style="line-height:1.7;color:rgb(0,0,0);font-size:14px;font-family:Arial">
+                              <div>Hi,all,</div>
+                              <div>I will be glad to meet at 7:00AM
+                                Central time this Wednesday (June 26th).</div>
+                              <div><br>
+                              </div>
+                              <div>Ruixia,Sun</div>
                               <br>
-                              &gt;&gt;  Ruixia (her email: <a
-                                href="mailto:rxsun@zd-tech.com.cn"
-                                target="_blank" moz-do-not-send="true">rxsun@zd-tech.com.cn</a>;),
-                              form my team can do  front-end  to
-                              implement your design .  It would be best
-                              if the IPV6 feature could be achieved in
-                              one to two months.<br>
                               <br>
-                              &gt;It would be great if she were able to
-                              join our GUI Community<br>
-                              workgroup. It's every other Wednesday at
-                              10:00 Central Time. We use<br>
-                              these to discuss all the GUI issues. Where
-                              are you located?<br>
-                                I am in BeiJing  UTC+8. The meeting time
-                              is  Wednesday  23:00 Beijing Time
-                              (Wednesday 10:00 am <span
-                                style="font-family:Arial,Helvetica,sans-serif;font-size:17px">Central
-                                Daylight Time</span>),isn't it?</div>
-                            <div>&gt;GUI Community Workgroup Wiki:<br>
-                              <a
-                                href="https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group"
-                                target="_blank" moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group</a><br>
+                              <br>
+                              发件人："Jandra A" &lt;<a
+                                href="mailto:jandraara@gmail.com"
+                                target="_blank" moz-do-not-send="true">jandraara@gmail.com</a>&gt;<br>
+                              发送日期：2019-06-25 00:51:39<br>
+                              收件人：xiuzhi &lt;<a
+                                href="mailto:1450335857@qq.com"
+                                target="_blank" moz-do-not-send="true">1450335857@qq.com</a>&gt;<br>
+                              抄送人：Derick &lt;<a
+                                href="mailto:derick.montague@gmail.com"
+                                target="_blank" moz-do-not-send="true">derick.montague@gmail.com</a>&gt;,openbmc
+                              &lt;<a
+                                href="mailto:openbmc@lists.ozlabs.org"
+                                target="_blank" moz-do-not-send="true">openbmc@lists.ozlabs.org</a>&gt;,rxsun
+                              &lt;<a href="mailto:rxsun@zd-tech.com.cn"
+                                target="_blank" moz-do-not-send="true">rxsun@zd-tech.com.cn</a>&gt;<br>
+                              主题：Re: Re: Network Settings GUI<br>
+                              <blockquote
+id="gmail-m_8207711357368344562gmail-m_1619914329257948851gmail-m_-8231268627540647716isReplyContent"
+                                style="padding-left:1ex;margin:0px 0px
+                                0px 0.8ex;border-left:1px solid
+                                rgb(204,204,204)">
+                                <div dir="ltr">Hi Xiuzhi and Ruixia, 
+                                  <div><br>
+                                  </div>
+                                  <div>It would be great to set some
+                                    time to align on the requirements
+                                    from design and how to work together
+                                    so that your team can start on the
+                                    so front-end development.  <br>
+                                    <br>
+                                    Like Derick said, we meet every
+                                    other Wednesday at 10:00 Central
+                                    time to discuss GUI issues, with the
+                                    next one being next Wednesday (July
+                                    3rd). Hopefully you can make that. </div>
+                                  <div><br>
+                                  </div>
+                                  <div>If you cannot, I am happy to meet
+                                    at 7:00 or 8:00 AM Central time this
+                                    Wednesday (June 26th) or Friday
+                                    (June 28th). Please let me know. </div>
+                                  <div><br>
+                                  </div>
+                                  <div>Regards,</div>
+                                </div>
+                                <br>
+                                <div class="gmail_quote">
+                                  <div dir="ltr" class="gmail_attr">On
+                                    Wed, Jun 19, 2019 at 8:30 PM xiuzhi
+                                    &lt;<a
+                                      href="mailto:1450335857@qq.com"
+                                      target="_blank"
+                                      moz-do-not-send="true">1450335857@qq.com</a>&gt;
+                                    wrote:<br>
+                                  </div>
+                                  <blockquote class="gmail_quote"
+                                    style="margin:0px 0px 0px
+                                    0.8ex;border-left:1px solid
+                                    rgb(204,204,204);padding-left:1ex">
+                                    <div>Hi Derick,</div>
+                                    <div>&gt;&gt; The IPV6 webui should
+                                      support both IPV4 and IPV6 on a
+                                      single interface at the same time
+                                      and users can set IPV4 and IPV6 on
+                                      the same network webpage from
+                                      Lenovo test cases.</div>
+                                    <div><br>
+                                      &gt;Thank you!<br>
+                                      <br>
+                                      &gt;&gt;  Ruixia (her email: <a
+                                        href="mailto:rxsun@zd-tech.com.cn"
+                                        target="_blank"
+                                        moz-do-not-send="true">rxsun@zd-tech.com.cn</a>;),
+                                      form my team can do  front-end  to
+                                      implement your design .  It would
+                                      be best if the IPV6 feature could
+                                      be achieved in one to two months.<br>
+                                      <br>
+                                      &gt;It would be great if she were
+                                      able to join our GUI Community<br>
+                                      workgroup. It's every other
+                                      Wednesday at 10:00 Central Time.
+                                      We use<br>
+                                      these to discuss all the GUI
+                                      issues. Where are you located?<br>
+                                        I am in BeiJing  UTC+8. The
+                                      meeting time is  Wednesday  23:00
+                                      Beijing Time (Wednesday 10:00 am <span
+style="font-family:Arial,Helvetica,sans-serif;font-size:17px">Central
+                                        Daylight Time</span>),isn't it?</div>
+                                    <div>&gt;GUI Community Workgroup
+                                      Wiki:<br>
+                                      <a
+                                        href="https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group"
+                                        target="_blank"
+                                        moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group</a><br>
+                                    </div>
+                                    <div><br>
+                                    </div>
+                                    <div>Best,</div>
+                                    <div>Xiuzhi</div>
+                                  </blockquote>
+                                </div>
+                              </blockquote>
                             </div>
-                            <div><br>
-                            </div>
-                            <div>Best,</div>
-                            <div>Xiuzhi</div>
                           </blockquote>
                         </div>
                       </blockquote>
                     </div>
-                  </blockquote>
-                </div>
-              </blockquote>
-            </div>
+                  </div>
+                </blockquote>
+              </div>
+            </blockquote>
           </div>
         </blockquote>
       </div>
@@ -547,11 +664,11 @@ id="gmail-m_1619914329257948851gmail-m_-8231268627540647716isReplyContent"
   </body>
 </html>
 
---------------B80957C1C1A647C4363D22C4
+--------------A7974446A311F003149B440F
 Content-Type: image/jpeg;
  name="1935163017.jpg"
 Content-Transfer-Encoding: base64
-Content-ID: <part1.1628A88E.67ED36C5@zd-tech.com.cn>
+Content-ID: <part2.D7A3866A.90899613@zd-tech.com.cn>
 Content-Disposition: inline;
  filename="1935163017.jpg"
 
@@ -1152,7 +1269,7 @@ lp/dX8qPLT+6v5UAM81P76/99Uean99f++qf5af3V/Kjy0/ur+VADPNT++v/AH1R5qf31/76
 p/lp/dX8qPLT+6v5UAM81P76/wDfVHmp/fX/AL6p/lp/dX8qPLT+6v5UAM81P76/99Uean99
 f++qf5af3V/Kjy0/ur+VADPNT++v/fVHmp/fX/vqn+Wn91fyo8tP7q/lQAzzU/vr/wB9Uean
 99f++qf5af3V/Kjy0/ur+VAH/9k=
---------------B80957C1C1A647C4363D22C4--
+--------------A7974446A311F003149B440F--
 
---------------FC115C71618A4A4D4C24A708--
+--------------0586049791733C7F28F95525--
 
