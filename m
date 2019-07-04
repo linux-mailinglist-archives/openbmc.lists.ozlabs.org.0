@@ -1,67 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4103B5F2E6
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 08:31:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF27C5F28B
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 08:05:25 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45fSBV4CcKzDqbY
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 16:05:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45fSmp5P94zDqbl
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 16:31:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2a00:1450:4864:20::242; helo=mail-lj1-x242.google.com;
- envelope-from=wak@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="I0b102pi"; 
- dkim-atps=neutral
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com
- [IPv6:2a00:1450:4864:20::242])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=dkodihal@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45fS9n0Bn7zDqYt
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 16:04:37 +1000 (AEST)
-Received: by mail-lj1-x242.google.com with SMTP id p17so4928647ljg.1
- for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 23:04:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MQrkmrKp6SwwU5JtekI13lrfF86RU4AxQ1lZ1txpQUU=;
- b=I0b102piLXJFGW/Me73c1ThBre6BJfIq34EE+EJK8PB0FpnDUA33QDr7YY3EauF2b/
- Iqj0Pe+f2uhkEcYeIqFMWRZj/aIXcSQzWH0571/TV+B+uxNe0jiej1BYxntTfasZyZWt
- obCeSDgZKczH/bCdWDS3KUmKAxBuneS0y0ZBNlT2oN9cUpVrfTNS4lGt1jxtpTiNuyNw
- FcAskpMINRN+EuvNyFHhhOEJT52HmlqgI1Gu8SLqmLqXhkwBL95dsU4EZVnTvJFUm+PL
- 2pxhOmfefxtUPK1jLOUHEaDRq5y4YenTurw02u0Do8WskAJ2ZiFZwc5xwT698jf4c93/
- 46PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MQrkmrKp6SwwU5JtekI13lrfF86RU4AxQ1lZ1txpQUU=;
- b=ljqEBoMUGu7orVFxPPnCO08Bg/ROadIKMMuf59pm+xXsdw4soRaicSiC2+MPVLh7Pr
- 3YNKDDPJd7NpIbXsAwwqgQNJGnXDWrQXYqtso8P/k7qR4v5VilWNVjArv1mDrKZNIcpm
- Kt6jcXeSkjk+1dXqXOigNkzYHkXQ16QKRO6RERaK6ndFNi5I5fsEFLOBFWsPKgLRTpno
- hu7HuGYFD3SGaVJ1ebOH4jEOnDWpLutw9gDRQUWmIAarFVws01fZSesK4PrvPyCyeS04
- Dnc9H6y2UeHvDdpSwYVyLMMtffO1VCWtdVUduGefJEyjclcZj3Smp2lp5FYPOnJW5pMI
- JY3g==
-X-Gm-Message-State: APjAAAXDypGcdQbQVJsDA8/jjVc3qlKGqipd7vAcK6sY6I9c7nzmnT5G
- 8Kl0iZBq9F4iBoWm9x5Ukl6IGf4oCfLrkqLXd8sDTQ==
-X-Google-Smtp-Source: APXvYqxQlen/MH5zjnVk5jqI1kLenuo3LCBt1yZeyF2E40abdFPiA46ITGuaxuPXYy8aoEU6tsh+VFD3BTp25+CUQCE=
-X-Received: by 2002:a2e:8849:: with SMTP id z9mr23107020ljj.203.1562220272797; 
- Wed, 03 Jul 2019 23:04:32 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45fSlt1VJkzDqZC
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 16:30:49 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x646RK9U048989
+ for <openbmc@lists.ozlabs.org>; Thu, 4 Jul 2019 02:30:44 -0400
+Received: from e06smtp07.uk.ibm.com (e06smtp07.uk.ibm.com [195.75.94.103])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2thbfgsh9d-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Jul 2019 02:30:43 -0400
+Received: from localhost
+ by e06smtp07.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <dkodihal@linux.vnet.ibm.com>;
+ Thu, 4 Jul 2019 07:30:41 +0100
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
+ by e06smtp07.uk.ibm.com (192.168.101.137) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 4 Jul 2019 07:30:39 +0100
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x646UdC738469682
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 4 Jul 2019 06:30:39 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EDC444C046;
+ Thu,  4 Jul 2019 06:30:38 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7AD714C044;
+ Thu,  4 Jul 2019 06:30:38 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.199.203.20])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu,  4 Jul 2019 06:30:38 +0000 (GMT)
+Subject: Re: Deadline for OSFC OpenBMC Hackathon talks submission
+To: yuenn@google.com
+References: <CADfYTpEZ7KZ5gUk0VPQ9xJxtNg0ZY6npPE-y=Qfhhrjf1Nd3Nw@mail.gmail.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Date: Thu, 4 Jul 2019 12:00:37 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CAO=notxEsabCU_2U+ooZrkrYqM+yC8YWXs-1tmdGha6kzifkyg@mail.gmail.com>
- <CAARXrt=v=288DTkLJuQ9bM7svt5aX0TNmQs8YFbkGiwcvoyZ3g@mail.gmail.com>
-In-Reply-To: <CAARXrt=v=288DTkLJuQ9bM7svt5aX0TNmQs8YFbkGiwcvoyZ3g@mail.gmail.com>
-From: William Kennington <wak@google.com>
-Date: Wed, 3 Jul 2019 23:04:21 -0700
-Message-ID: <CAPnigKn+QqjwoGyGn=7f=ztS8x8vTOW+_b43v_9URdAUHBP=ig@mail.gmail.com>
-Subject: Re: Upstream Support for flto plugin with automake
-To: Lei YU <mine260309@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CADfYTpEZ7KZ5gUk0VPQ9xJxtNg0ZY6npPE-y=Qfhhrjf1Nd3Nw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+x-cbid: 19070406-0028-0000-0000-000003804F22
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19070406-0029-0000-0000-000024409064
+Message-Id: <4d82f790-d1f3-5251-e573-fc4d8d9701b3@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-04_03:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907040083
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,80 +90,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We shouldn't be hardcoding the use of lto anywhere in our builds and
-instead should rely on higher layer build logic adding it if needed.
-It's not very hard to apply classes in bitbake if we think our
-binaries really need lto when built for a BMC target.
+On 29/06/19 5:04 AM, Nancy Yuen wrote:
+> Gentle ping.  OSFC OpenBMC call for presentations deadline is June 30!
+> 
+> Please consider submitting a presentation for the first two days of the 
+> OFSC OpenBMC track.  There are submissions for days 3 and 4 but there's 
+> room for presenters on days 1 and 2.
 
-On Wed, Jul 3, 2019 at 7:38 PM Lei YU <mine260309@gmail.com> wrote:
->
-> On Thu, Jul 4, 2019 at 1:25 AM Patrick Venture <venture@google.com> wrote:
-> >
-> > Only one recipe currently uses flto-automake which provides for the
-> > gcc-ar and gcc-ranlib replacements to build with the flto option.
-> > IIRC, James added this because phosphor-pid-control required them to
-> > compile.  Many (if not all) Makefiles in openbmc pass in the flto
-> > option, and seem to compile fine.
-> >
-> > I did some light documentation reading on this feature and as I
-> > understand it, when objects are compiled with this they're left in a
-> > state to improve final "total optimization" during linking.  So,
-> > perhaps in the cases where it compiles without the flto-automake swap
-> > it's not actually able to take advantage of this during compilation?
-> >
-> > I ran into an issue today while debugging an SDK issue:
-> > x86_64-openbmc-linux-ar:
-> > .libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-sys.o:
-> > plugin needed to handle lto object
-> > x86_64-openbmc-linux-ar:
-> > .libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-util.o:
-> > plugin needed to handle lto object
-> > x86_64-openbmc-linux-ranlib:
-> > .libs/libupdater.a(libfirmware_common_la-sys.o): plugin needed to
-> > handle lto object
-> > x86_64-openbmc-linux-ranlib:
-> > .libs/libupdater.a(libfirmware_common_la-util.o): plugin needed to
-> > handle lto object
-> >
-> > This was with phosphor-ipmi-flash, building for the tool.  When
-> > building for the BMC library it also builds those objects, but does so
-> > without issue.  It seems to detect it automatically or favor it
-> > already:
-> >
-> > checking for arm-openbmc-linux-gnueabi-ar... (cached)
-> > arm-openbmc-linux-gnueabi-gcc-ar
-> > checking for archiver @FILE support... @
-> > checking for arm-openbmc-linux-gnueabi-strip... (cached)
-> > arm-openbmc-linux-gnueabi-strip
-> > checking for arm-openbmc-linux-gnueabi-ranlib...
-> > arm-openbmc-linux-gnueabi-gcc-ranlib
-> >
-> > So it seems flto-automake is obsolete?
-> >
-> > If that's the case, I can 1) drop the change from phosphor-pid-control
-> > (the only user) and 2) drop the bbclass.
-> >
-> > However, I was wondering what in the SDK could be used to inform it.
-> > I ended up getting past this by adding the information to the
-> > configure line, and that worked fine.
-> >
-> > Patrick
->
-> It's my first time to notice that we have flto-automake.bbclass for general
-> purpose, looks good!
->
-> But in your case, if you are building phosphor-ipmi-flash in SDK, it has
-> nothing to do with .bbclass, and you got the above issue.
->
-> One possible solution is to speicify the AR/RANLIB in configure.ac, see
-> example in
-> https://github.com/openbmc/phosphor-time-manager/blob/master/configure.ac#L9-L11
->
-> I do not know if we have better solutions though.
+Can we move the day 3 and 4 presentations to the first two days if we 
+don't have enough presenters in the OpenBMC track for the first two 
+days? That way we can have more time for hacking on the last 2 days. I 
+have submitted a paper on PLDM for the last 2 days as well (I thought 
+the content was short so it suited a lightning talk more).
+
+Regards,
+Deepak
+
+
