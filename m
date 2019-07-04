@@ -1,66 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32E825EA68
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jul 2019 19:25:06 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45f7KC3v44zDqV6
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 03:25:03 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8F3A5EFF9
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 02:14:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45fJQ62P7MzDqY7
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 10:14:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::42f; helo=mail-pf1-x42f.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="BD524Jhx"; 
- dkim-atps=neutral
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com
- [IPv6:2607:f8b0:4864:20::42f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="C+O0AWVG"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="dl1D771R"; dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45f73r3FwMzDqFY
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 03:13:28 +1000 (AEST)
-Received: by mail-pf1-x42f.google.com with SMTP id m30so1582889pff.8
- for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 10:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=imPLNfBLp3k+4YEPq7FzAO7MvwMpLk0WVIWB5h992Zg=;
- b=BD524JhxssfZvptuLw7myFSPu9T5tCiBXjC+2nRMdiIgVIX/mm8sXXVE2OKGRJYdFU
- dpNl2HPuA3hpLNS4HvU4tuwS77apxUxehSezvlrWZi8EgQHr1jAeS3dfUBV+Y/FYGGPI
- pArRSrbPMK1VB+N4h/N2E1SwmziGMXDW4qyM21+5nCM1nIsrCPHxs6AGDFWcOU7/+f4m
- tvotd2Q8nNzby0xtnInnzjvwIVHYyeJJBPGcv/8Lqhi7j/dYXoKoZQB9aeW43M7EnCXQ
- fFsESGYhhaq2pF6+DpulVXJgSd/ck4v6vDSbzCiYOXFy6DArI+WnTPXu3lJHu1kXpsUj
- V2MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=imPLNfBLp3k+4YEPq7FzAO7MvwMpLk0WVIWB5h992Zg=;
- b=pTh1DrvtfjzmiJUl3Mmha4EqNHJYf4i4uQQ+qDS1wMIRlh7V0ZsrYXTFXQdy+jDabs
- xHBKjmRbdFpYwfe02uVBXJ+nYVd3gY3T3mDteHBIfzScNvSqtsPOdvpGRzIp0G3VXNjW
- 6RqpKcj6ykPEz/U8HObYvqKHdgjTQ+YXq+MpnJLKGFH3H2tGtHd0ASHGhLGycmuAeFbM
- sdc4S32XS7/Dp/skcbGZpKKPgsHLnl798vmv9EaMD05LvShRpjs6bvv1WAnAXq2ruq+V
- x9X9ztWE+OrFpucLHJj9klzV7sQKXjxf+/gnlT5BA02pAo7SpAmyXhFnmK36h2/jF3yH
- aa9Q==
-X-Gm-Message-State: APjAAAXrCb3KP6sjBgq2fWNxbbFjjWRLQER8uNP8JTu+EhDEqopkhb7l
- A6+stpbZAx8ZRtcLyWESTuKeKF0xQ4phKsezbHEL4w==
-X-Google-Smtp-Source: APXvYqyMeHjUxCBUtBlMk1TIV3JUFtWPZen2Jp8cttwZxjkvZhM657STsLrt9nH3eWpp9PfJtWNrFv56mxZX/swFtWU=
-X-Received: by 2002:a17:90a:23a4:: with SMTP id
- g33mr14360396pje.115.1562174003391; 
- Wed, 03 Jul 2019 10:13:23 -0700 (PDT)
-MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 3 Jul 2019 10:13:12 -0700
-Message-ID: <CAO=notxEsabCU_2U+ooZrkrYqM+yC8YWXs-1tmdGha6kzifkyg@mail.gmail.com>
-Subject: Upstream Support for flto plugin with automake
-To: James Feist <james.feist@linux.intel.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, 
- William Kennington <wak@google.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45fJPT2qV1zDqXS
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 10:14:21 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id D046B511;
+ Wed,  3 Jul 2019 20:14:18 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 03 Jul 2019 20:14:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=FACy4IFHMw68VB8P+GJYr40gHGe/bHn
+ 0SJBEM5nfXow=; b=C+O0AWVGm5Vz4v0lQll0mWZXAyblLt0+2a5Ro155hK3iZ5w
+ Geod8glJL2INsApWuzKPajFnCrZ15uivIe5ds03LMiiajrK8LYabQZIRLspD/IVP
+ 3KT4eIaLnB61o36QxELBivBStCZiX+LeM6+ubgA1bw6IWXN/dCfCwXB6lxCm6Ml5
+ 90kC3bpamEl7z2aCVJAaMVjvGbiKmyQ3s9ASsTMr8fKfl84zqw5YUNOCykDcxqkg
+ /1JWXMho2E/vhVxkZ+a4oJhIV9rWYTHnD7BuKc6xDjBcfL+vq0lGZrsZw/GaE7G0
+ ZSsBLQMNyemyugWqX5UXD/iO4345HHaGD4+a26A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=FACy4I
+ FHMw68VB8P+GJYr40gHGe/bHn0SJBEM5nfXow=; b=dl1D771RJvcW7hAuV6taOP
+ xBPnck+8exkXDum2Pl8xN+A+C0Xe/HakZuZbPwSOcrGHflofAozOee3fFOgaBh1E
+ olGsZ7V7uZJfBHUG02x+ytO1lOsgo4q8jVWxwLKTAAsbyMLY31newIGMBmxogGtH
+ 45T4CRPGweyFsp482fgUYeAk5M2pZaURLSbtuQCx8zlCtzoAX8709MeqNaPL1KAU
+ mxIcvJviy2hRBgGkoI9iBeLxHL+bxg4a3o1dHu1qOF5d+XyShn5dpJCkyxZ0At0y
+ xnS7XxgedN5lCfnx5QMS4SeN10YwgxdZ0ISpYFPvEr4/aVgs9OFrrRlzBY7kOHcQ
+ ==
+X-ME-Sender: <xms:2kQdXYAEZHG3nHsM2FhLN32GAHVn92mxWVui2Yiqo4wzPNS6Op_NfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrfedugdefvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:2kQdXenJdlMyaGOiGA21Xr6AJ7mTZ6OhbAm1PAxxjRBAKfSlGmVX5A>
+ <xmx:2kQdXVG5jRF5alKcxU0gc308bXOQ-GkjpeNXshom1hYD3LkFjnfkxg>
+ <xmx:2kQdXYgbeNsgoA6PO_cusFFjUDejwqeGRkIX8tfVW0YwgHXBTR6dwg>
+ <xmx:2kQdXawTuIuuNoIy25_YUyDu3ggrvcXyPABrcFDzVWJEtmVwv9v4pw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 1AE8FE00A2; Wed,  3 Jul 2019 20:14:18 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-731-g19d3b16-fmstable-20190627v1
+Mime-Version: 1.0
+Message-Id: <db9601ef-3bb6-4747-ae40-f886054cad57@www.fastmail.com>
+In-Reply-To: <25cbbfb5-0cc0-e8d9-4808-72bab90cb442@linux.ibm.com>
+References: <1560285038-24233-1-git-send-email-eajames@linux.ibm.com>
+ <95aa5594-325b-45d4-b777-075426ca3244@www.fastmail.com>
+ <25cbbfb5-0cc0-e8d9-4808-72bab90cb442@linux.ibm.com>
+Date: Thu, 04 Jul 2019 10:14:10 +1000
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH] OCC: FSI and hwmon: Add sequence numbering
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,56 +89,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Only one recipe currently uses flto-automake which provides for the
-gcc-ar and gcc-ranlib replacements to build with the flto option.
-IIRC, James added this because phosphor-pid-control required them to
-compile.  Many (if not all) Makefiles in openbmc pass in the flto
-option, and seem to compile fine.
 
-I did some light documentation reading on this feature and as I
-understand it, when objects are compiled with this they're left in a
-state to improve final "total optimization" during linking.  So,
-perhaps in the cases where it compiles without the flto-automake swap
-it's not actually able to take advantage of this during compilation?
 
-I ran into an issue today while debugging an SDK issue:
-x86_64-openbmc-linux-ar:
-.libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-sys.o:
-plugin needed to handle lto object
-x86_64-openbmc-linux-ar:
-.libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-util.o:
-plugin needed to handle lto object
-x86_64-openbmc-linux-ranlib:
-.libs/libupdater.a(libfirmware_common_la-sys.o): plugin needed to
-handle lto object
-x86_64-openbmc-linux-ranlib:
-.libs/libupdater.a(libfirmware_common_la-util.o): plugin needed to
-handle lto object
+On Thu, 4 Jul 2019, at 00:36, Eddie James wrote:
+> 
+> On 7/2/19 7:31 PM, Andrew Jeffery wrote:
+> > On Wed, 12 Jun 2019, at 06:31, Eddie James wrote:
+> >> Sequence numbering of the commands submitted to the OCC is required by
+> >> the OCC interface specification. Add sequence numbering and check for
+> >> the correct sequence number on the response.
+> >>
+> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> >> ---
+> >>   drivers/fsi/fsi-occ.c      | 15 ++++++++++++---
+> >>   drivers/hwmon/occ/common.c |  4 ++--
+> >>   drivers/hwmon/occ/common.h |  1 +
+> >>   3 files changed, 15 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/fsi/fsi-occ.c b/drivers/fsi/fsi-occ.c
+> >> index a2301ce..7da9c81 100644
+> >> --- a/drivers/fsi/fsi-occ.c
+> >> +++ b/drivers/fsi/fsi-occ.c
+> >> @@ -412,6 +412,7 @@ int fsi_occ_submit(struct device *dev, const void
+> >> *request, size_t req_len,
+> >>   		msecs_to_jiffies(OCC_CMD_IN_PRG_WAIT_MS);
+> >>   	struct occ *occ = dev_get_drvdata(dev);
+> >>   	struct occ_response *resp = response;
+> >> +	u8 seq_no;
+> >>   	u16 resp_data_length;
+> >>   	unsigned long start;
+> >>   	int rc;
+> >> @@ -426,6 +427,8 @@ int fsi_occ_submit(struct device *dev, const void
+> >> *request, size_t req_len,
+> >>   
+> >>   	mutex_lock(&occ->occ_lock);
+> >>   
+> >> +	/* Extract the seq_no from the command (first byte) */
+> >> +	seq_no = *(const u8 *)request;
+> > The fact that your doing this says to me that the fsi_occ_submit() interface
+> > is wrong.
+> >
+> > We already have `struct occ_response` in drivers/hwmon/occ/common.h.
+> > I think we should add an equivalent `struct occ_request` and pass a
+> > typed pointer through fsi_occ_submit(), that way we can access the
+> > sequence number by name rather than through dodgy casts.
+> 
+> 
+> I don't think it's too bad. The first byte is always simply the sequence 
+> number.
 
-This was with phosphor-ipmi-flash, building for the tool.  When
-building for the BMC library it also builds those objects, but does so
-without issue.  It seems to detect it automatically or favor it
-already:
+Sure, but the readability isn't great and the code suggests to the reader
+(me?) that the interface is either being abused or wasn't thought through.
+The lack of  `struct occ_request` also has an impact on readability at the
+call-sites where we're manually stuffing the bytes into a buffer, some of
+which are multi-byte where we need to deal with endianness.
 
-checking for arm-openbmc-linux-gnueabi-ar... (cached)
-arm-openbmc-linux-gnueabi-gcc-ar
-checking for archiver @FILE support... @
-checking for arm-openbmc-linux-gnueabi-strip... (cached)
-arm-openbmc-linux-gnueabi-strip
-checking for arm-openbmc-linux-gnueabi-ranlib...
-arm-openbmc-linux-gnueabi-gcc-ranlib
+> The worst that can happen is a user doesn't write a request 
+> correctly and we have a "wrong" sequence number, but in that case the 
+> request most likely won't work anyway.
 
-So it seems flto-automake is obsolete?
+Except it's worked so far even though we were always sending zero?
 
-If that's the case, I can 1) drop the change from phosphor-pid-control
-(the only user) and 2) drop the bbclass.
+> I think ideally it would be like 
+> you say, but it's also not ideal to change the interfaces at this stage.
 
-However, I was wondering what in the SDK could be used to inform it.
-I ended up getting past this by adding the information to the
-configure line, and that worked fine.
+What do you mean? It's an internal kernel API, not userspace API/ABI.
+We can change it if we feel the need.
 
-Patrick
+> 
+> 
+> >
+> > Also why is this sent just to the OpenBMC list? Any reason it's not on
+> > upstream lists?
+> 
+> 
+> It was... it's been accepted.
+> 
+
+Yeah I missed that :/
+
+Andrew
