@@ -1,64 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D161E5F1B3
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 05:04:11 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0498E5F18C
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 04:39:41 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45fMd60KZwzDqYk
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 12:39:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45fN9P2pRvzDqbY
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 13:04:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d30; helo=mail-io1-xd30.google.com;
+ (client-ip=2607:f8b0:4864:20::d2a; helo=mail-io1-xd2a.google.com;
  envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Dctsa4yG"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="fuHTM7Kj"; 
  dkim-atps=neutral
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
- [IPv6:2607:f8b0:4864:20::d30])
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
+ [IPv6:2607:f8b0:4864:20::d2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45fMbc6gJxzDqc8
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 12:38:20 +1000 (AEST)
-Received: by mail-io1-xd30.google.com with SMTP id u13so5315648iop.0
- for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 19:38:20 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45fN8t52jmzDqT1
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jul 2019 13:03:42 +1000 (AEST)
+Received: by mail-io1-xd2a.google.com with SMTP id u19so9733607ior.9
+ for <openbmc@lists.ozlabs.org>; Wed, 03 Jul 2019 20:03:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=xXf8QtSnasO1ZWusny6TvnduVN5Xgetr8WONv1DkQCM=;
- b=Dctsa4yGHPj0vCpW/bhzn+lBmtCypM+ELbqpbc0HTL+Zmb56Lru26ORh6UQKBKOc+7
- 4Nunpto25UHbg+oUWCbev4NGYXSBM1L4PFh3elDTWogOqcX6ROdoSNe5RXdYbQwzeLmD
- I+JybzxQWOteSV6+AIaZ4WwyHsRXvwMB4oB3jrOmR9h/wGItPMs9XE1A51FlHRy7nSHs
- erRslAUdovUqn4zKQDk0llZzTQsnqitDcLlFT8ya+srL96k4bMIpw3wL3iaHpdN04GZo
- YLvYaIcC1YxoqJrWDiANAtFAOSa7KvQr57LBud22NAlkzCmaOA/RfDkoljvr2QdvpePf
- vU+Q==
+ :cc; bh=MrWHWWs+qNjQdiATpRs41Uz+zegEMv4DN1R+GSAddXs=;
+ b=fuHTM7KjlK0bU6l2KEI/7r9abjPPJTR7TJK7xw706vGhDPDcjkUjlGeIdui1+of1V6
+ krBAMb6h9Tig2+GSy9wU+zJw7xYacKVuAGTND/xrvoWA0BtiRscmmELXdhz1CGZKre2K
+ up2gXNCvS3bpKhn7DVD5E2SZSvnuU15rm1428v4mrltLvQnK9kn1mPIheJq40AtqIV/f
+ V4Mc40UW3JGI2+4Kt0wZqUUnEm42sy4efzWP5BGkm/8lJp8JIMHBJhlo1s5l1dDWZ1jB
+ 9GSkIvG2WfJKfMuKKPnF/uF5esV3dDKkGquQgRZ6BFg7eDDoTPY06qP1rE8XVZpNbfa9
+ sGWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=xXf8QtSnasO1ZWusny6TvnduVN5Xgetr8WONv1DkQCM=;
- b=qtuBOPH9CSihtgszAn1ZuBd3CcoRrGYidZVibW0CqA8xcFwsicGI9p9199CY761yQ3
- +P9SfxEeUuqt6vvJO6kQqGtfmdsD1YYIgDh/hOO7js5ZtHvztgWGEVLMIoNBjqwmDFCz
- EHbugpgagORsq62z1qR9cUlI5MaPyL6TRkwi4W5k63KsNJH+FOqL7B5J26S26j77u1yX
- PLRaQc7/ekzKpAbwmM70piVv9gzv1mbYOfHC2d8rbee57jEdVVhUjOHsHS3kZiYZpseD
- ++4QUsf8oDbE8eHOjeGfoHI/bl7tmj7yIPeOULjOxmrlyqdl9Bs6Cj/+sJBItDF+oREM
- 79xw==
-X-Gm-Message-State: APjAAAVU1bbk27nyJxzoPaNrnoYeKTiRYx6zK/GZNzILLyrP/f0RRc2t
- HmTYdrzoYyRrow0D/jjHUu84mCGSK329r2ka5mQ=
-X-Google-Smtp-Source: APXvYqyI6iQ2woP70hj907a0CI7awyipQk8JZ52+cPuiYc/KugXKN8maaPr0/w2gOydbpRXx9680i7Lx4Mjkk5UxIfM=
-X-Received: by 2002:a6b:e615:: with SMTP id g21mr12756169ioh.178.1562207897641; 
- Wed, 03 Jul 2019 19:38:17 -0700 (PDT)
+ bh=MrWHWWs+qNjQdiATpRs41Uz+zegEMv4DN1R+GSAddXs=;
+ b=I4famYOgzMBNd0AGBEFylgWGozv1tqKzLn4I4NrwD9EEiTXpHwNYZepIOT+0c5mJdt
+ HphODed46+RL6T6R0Mp1s4WGfj9ggrHU4D5luKp5EBvDWvU6S0gulfY6u5pPRma09IBq
+ KoOjiblq9NJRXDpNuJ9KHea860xDZz4SWFc6jRkz617/Ey10NaljY+xyZO4CeGKJACEH
+ q1oUpDMlpBQqlCzSghXD7pkaGTWd13OmKDrNS/d4Tr5W2TVhpnJ1PkUizPu98+BG7jKm
+ pQxHuecZgH2hovNSNIZW3lPwIHT99Meqo84TYjXE/oP07MOVRxUBrFnX0q2qpKeV20oA
+ r+0Q==
+X-Gm-Message-State: APjAAAXQgy7lPN8I50YBXXCj8tSHlif8KzSMNGXnqJ1A9mg09rMITAOK
+ tOzsqFcHJo++z34DDrarF/nIqyh2PxnWhCatYWo=
+X-Google-Smtp-Source: APXvYqwqqmXxVmL/cgH6+qXu71//nuKYQEiEdv52YHIWoVvgLWG4+uK5tZFocFIY7l9T6Nz8bVXknaDctV8tY4w9tY4=
+X-Received: by 2002:a6b:901:: with SMTP id t1mr37229868ioi.42.1562209418480;
+ Wed, 03 Jul 2019 20:03:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notxEsabCU_2U+ooZrkrYqM+yC8YWXs-1tmdGha6kzifkyg@mail.gmail.com>
-In-Reply-To: <CAO=notxEsabCU_2U+ooZrkrYqM+yC8YWXs-1tmdGha6kzifkyg@mail.gmail.com>
+References: <CAO=notzxbMtyjvW5Efo-Pp3c1-hZz93aFwPvQiumsp_fj2nuzw@mail.gmail.com>
+ <CAARXrtknLpC0Ke+_Y7uCsL222kMPvXcj6E-qct5ppmwrzvCn4w@mail.gmail.com>
+ <BYAPR21MB11918D32FD1F25D6616FE591C8FB0@BYAPR21MB1191.namprd21.prod.outlook.com>
+ <CAO=notzs1+p2Di-zSsVH4Uh2RBg008YB7XvSweN676GAr_+wtQ@mail.gmail.com>
+In-Reply-To: <CAO=notzs1+p2Di-zSsVH4Uh2RBg008YB7XvSweN676GAr_+wtQ@mail.gmail.com>
 From: Lei YU <mine260309@gmail.com>
-Date: Thu, 4 Jul 2019 10:38:06 +0800
-Message-ID: <CAARXrt=v=288DTkLJuQ9bM7svt5aX0TNmQs8YFbkGiwcvoyZ3g@mail.gmail.com>
-Subject: Re: Upstream Support for flto plugin with automake
+Date: Thu, 4 Jul 2019 11:03:27 +0800
+Message-ID: <CAARXrtnfyKmejEkDZepoBVUDL=1N1GoLf2hBnzzGfXz8fHG8-g@mail.gmail.com>
+Subject: Re: Future features of phosphor-ipmi-flash
 To: Patrick Venture <venture@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -73,71 +76,188 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>, William Kennington <wak@google.com>
+ Adriana Kobylak <anoo@us.ibm.com>, Neeraj Ladkani <neladk@microsoft.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jul 4, 2019 at 1:25 AM Patrick Venture <venture@google.com> wrote:
+On Wed, Jul 3, 2019 at 10:43 PM Patrick Venture <venture@google.com> wrote:
 >
-> Only one recipe currently uses flto-automake which provides for the
-> gcc-ar and gcc-ranlib replacements to build with the flto option.
-> IIRC, James added this because phosphor-pid-control required them to
-> compile.  Many (if not all) Makefiles in openbmc pass in the flto
-> option, and seem to compile fine.
+> On Tue, Jul 2, 2019 at 11:00 PM Neeraj Ladkani <neladk@microsoft.com> wrote:
+> >
+> > This is great. In this case, we should be able to make use of this design for all BMC managed components ( FPGA, CPLD and PSU FW) by providing verification service, and an update service. Basically TFTP the image and then call the dbus methods
 >
-> I did some light documentation reading on this feature and as I
-> understand it, when objects are compiled with this they're left in a
-> state to improve final "total optimization" during linking.  So,
-> perhaps in the cases where it compiles without the flto-automake swap
-> it's not actually able to take advantage of this during compilation?
+> Yes, with phosphor-ipmi-flash, you can send down effectively any
+> binary you wish and a signature (or without a signature) and then
+> trigger actions against it, to update anything.  If you do wish to use
+> it very generically, let me know what you have in mind for a timeline,
+> and I can plan out the changes.  To make the codebase very generic is
+> somewhat trivial at this point, it's just a matter of knowing what may
+> come in the future enough to provide a sufficiently flexible schema
+> for the json.
 >
-> I ran into an issue today while debugging an SDK issue:
-> x86_64-openbmc-linux-ar:
-> .libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-sys.o:
-> plugin needed to handle lto object
-> x86_64-openbmc-linux-ar:
-> .libs/libupdater.lax/libfirmware_common.a/libfirmware_common_la-util.o:
-> plugin needed to handle lto object
-> x86_64-openbmc-linux-ranlib:
-> .libs/libupdater.a(libfirmware_common_la-sys.o): plugin needed to
-> handle lto object
-> x86_64-openbmc-linux-ranlib:
-> .libs/libupdater.a(libfirmware_common_la-util.o): plugin needed to
-> handle lto object
->
-> This was with phosphor-ipmi-flash, building for the tool.  When
-> building for the BMC library it also builds those objects, but does so
-> without issue.  It seems to detect it automatically or favor it
-> already:
->
-> checking for arm-openbmc-linux-gnueabi-ar... (cached)
-> arm-openbmc-linux-gnueabi-gcc-ar
-> checking for archiver @FILE support... @
-> checking for arm-openbmc-linux-gnueabi-strip... (cached)
-> arm-openbmc-linux-gnueabi-strip
-> checking for arm-openbmc-linux-gnueabi-ranlib...
-> arm-openbmc-linux-gnueabi-gcc-ranlib
->
-> So it seems flto-automake is obsolete?
->
-> If that's the case, I can 1) drop the change from phosphor-pid-control
-> (the only user) and 2) drop the bbclass.
->
-> However, I was wondering what in the SDK could be used to inform it.
-> I ended up getting past this by adding the information to the
-> configure line, and that worked fine.
->
-> Patrick
 
-It's my first time to notice that we have flto-automake.bbclass for general
-purpose, looks good!
+Assuming all BMC managed components' update manager will use the same API (at
+least PSU firmware updater will do), then if phosphor-ipmi-flash eventually
+invokes the DBus APIs defined in xyz.openbmc_proejct.Software, it should be
+trivial to support different kinds of components.
 
-But in your case, if you are building phosphor-ipmi-flash in SDK, it has
-nothing to do with .bbclass, and you got the above issue.
 
-One possible solution is to speicify the AR/RANLIB in configure.ac, see
-example in
-https://github.com/openbmc/phosphor-time-manager/blob/master/configure.ac#L9-L11
+> >
+> > How do we specify if we want to update only kernel or rofs or rwfs?
+>
+> I imagine from reading the code that you can do this, by only dropping
+> those files into the tarball and leaving out the others.  Maybe the
+> MANIFEST file's contents specify what's in it in a formatted way?  I
+> assume so, I don't use bmc-code-mgmt, so I can't say without reading
+> more of the code, presumably Lei knows.
+>
 
-I do not know if we have better solutions though.
+For now, the bmc-code-mgmt (for static layout) hard-code the partitions to be
+updated in
+https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/master/images.hpp#L14-L15,
+because typically a code update shall update all the partitions to
+avoid incompatibility.
+
+But the part could be changed to support separated partitions if we all agree
+there are such use cases.
+
+
+> >
+> > Neeraj
+> >
+> > -----Original Message-----
+> > From: openbmc <openbmc-bounces+neladk=microsoft.com@lists.ozlabs.org> On Behalf Of Lei YU
+> > Sent: Tuesday, July 2, 2019 8:18 PM
+> > To: Patrick Venture <venture@google.com>
+> > Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>; Adriana Kobylak <anoo@us.ibm.com>
+> > Subject: Re: Future features of phosphor-ipmi-flash
+> >
+> > On Wed, Jul 3, 2019 at 11:06 AM Patrick Venture <venture@google.com> wrote:
+> > >
+> > > Uploading the BIOs via phosphor-ipmi-flash is available for review,
+> > > but it's not tied into another daemon.  One must provide a
+> > > verification service, and an update service.
+> > >
+> > > I'd like to provide the option to leverage phosphor-bmc-code-mgmt.  It
+> > > looks like in this codebase there is a notion of a signed image, but
+> > > the signature is attached.  It also looks like, there's some version
+> > > information that's meant to parsable and involved.  I haven't had a
+> > > chance to play with it.
+> > >
+> > > With phosphor-ipmi-flash the hash file portion is optional.  Because
+> > > phosphor-ipmi-flash doesn't define anything beyond the sequence of
+> > > calls, one could use burn_my_bmc and send the hash down separately and
+> > > then the verification target could trigger something that concatenates
+> > > and triggers the bmc code mgmt signature check.
+> > >
+> > > It should be somewhat straightforward to tie the two codebases
+> > > together (as an optional usage).
+> > >
+> > > If someone has experience with programming against
+> > > phosphor-bmc-code-mgmt and wants to help with this or at least point
+> > > me at what I need to know, I'd be more than happy.
+> > >
+> > > From reading the docs with the dbus interface definitions, I think I
+> > > have the general idea -- drop the file into the place it expects the
+> > > file (a configuration option) and then call the dbus methods.
+> >
+> > Exactly, the whole process of BMC code update is:
+> > 1. Put a tarball in /tmp/images/ (via REST API, TFTP, or scp) 2. An object will be generated on DBus to represent the image; 3. Invoke a DBus call to set RequestedActivation property to "Active"
+> > 4. Reboot.
+> >
+> > Be noted that the tarball consists of following files:
+> >
+> >  image-u-boot
+> >  image-kernel
+> >  image-rofs
+> >  image-rwfs
+> >  MANIFEST
+> >  publickey
+> >  image-u-boot.sig
+> >  image-kernel.sig
+> >  image-rofs.sig
+> >  image-rwfs.sig
+> >  MANIFEST.sig
+> >  publickey.sig
+>
+> Interesting, so it doesn't have to contain all those individual pieces
+> but could just contain an image-bmc  (which has all the pieces) and
+> then the signature file.
+
+As explained above, for now the code is hard-coded to require the tarball to
+contain all the partitions, and does not support image-bmc's tarball.
+It will get a Failure if any image-<partition> is missing.
+
+>
+> So in the case of the quanta-q71l we can't use a tarball approach
+> because there isn't enough memory free to hold the tarball, and the
+> untarred contents at the same time, and I can't use the /tmp/images
+> folder because the "mv" command will create a copy before moving and I
+> also then run out of memory.  The /tmp/images is a configuration
+> variable in the code-mgmt application, so that part I can get around.
+> Others aspects, not so much.
+
+I saw some discussion in mailing list before, I did not know if someone worked
+this out.
+Could you share how the bmc code update works on systems with limited RAM?
+Does it like "streaming", that fetches a few blocks, erase a few, and write a
+few?
+
+>
+> However, I want people who are using bmc-code-mgmt already to be able
+> to use phosphor-ipmi-flash/burn_my_bmc to send down their payloads.
+> In this case, it can be done very trivially -->
+>
+> Note: this isn't a ubi tarball update, but that is also supported by
+> bmc-code-mgmt (I think).
+
+Yes, the same DBus APIs support UBI tarball and static tarball.
+
+>
+> Lei, to use phosphor-ipmi-flash for this, you'd have the verify object
+> in phosphor-ipmi-flash trigger the "apply" property (and check on the
+> result somehow) -- I think I saw there's a property for the result.
+> And you'd have to configure the temporary location variable to be
+> /tmp/images/ -- you could then send the tarball down to something
+> like, blob:/flash/statictar and it would know to trigger the things.
+> -- It will only take one patchset to let burn_my_bmc take any "type"
+> field that then gets translated directly into the blob.  So today it
+> doesn't check for a /flash/statictar blob, but it could easily check
+> for any blob specified. --
+>
+> phosphor-ipmi-flash expects an image handler, where the bytes are
+> written, a verification object, and an update object.
+>  - where the bytes are written, there is a file handler object that
+> will blindly write bytes, could be used trivially for this just set
+> destination to whatever.
+>  - the verification object could trigger the dbus call, it just needs
+> to be able to report success/failure
+>  - there is a reboot update object provided that's just "available"
+> already because we use static image updating presently.
+>
+
+I did not read the phosphor-ipmi-flash code, but the idea here should work.
+* The file handler object writes the tarball bytes into a file;
+* The verification object triggers a DBus call to activate the image;
+* Then the BMC needs a reboot for the image to be written to the flash. I
+  expect the "reboot update object" here is to reboot the BMC.
+
+> Lei, if I were to provide you some patches in a couple weeks are you
+> in a position to test?  I'll help you configure your system.  I'll be
+> busy for the next week, but after that I would like to roll this out
+> for those already using bmc-code-mgmt.
+
+Yes, I would like to test this, in-band code update is good to have :)
+
+>
+> ***Provided the bmc-code-mgmt can report whether it successfully
+> verified the image against the signature(s).  I think it does, and if
+> not, I bet it would be easy to add such a property and enum in
+> phosphor-dbus-interfaces to support this extension.
+
+For now, if the verification of the signature fails, the BMC:
+1. Report an event log;
+2. Checks `FieldModeEnabled` property in `/xyz/openbmc_project/software`
+   * If it's true, set the "Activation" property to `Failed` state, and do not
+     update the code.
+   * If it's false, continue the code update.
