@@ -2,62 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20CD95FDC6
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jul 2019 22:28:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F44B600FE
+	for <lists+openbmc@lfdr.de>; Fri,  5 Jul 2019 08:22:24 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45fqLf4kLlzDqcW
-	for <lists+openbmc@lfdr.de>; Fri,  5 Jul 2019 06:28:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45g4Wd40v9zDqNw
+	for <lists+openbmc@lfdr.de>; Fri,  5 Jul 2019 16:22:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d36; helo=mail-io1-xd36.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Q7ZZQJOq"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45fqL26XS6zDqcW
- for <openbmc@lists.ozlabs.org>; Fri,  5 Jul 2019 06:28:01 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2019 13:27:58 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,452,1557212400"; d="scan'208";a="164705626"
-Received: from fmsmsx106.amr.corp.intel.com ([10.18.124.204])
- by fmsmga008.fm.intel.com with ESMTP; 04 Jul 2019 13:27:58 -0700
-Received: from fmsmsx153.amr.corp.intel.com (10.18.125.6) by
- FMSMSX106.amr.corp.intel.com (10.18.124.204) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Thu, 4 Jul 2019 13:27:58 -0700
-Received: from fmsmsx118.amr.corp.intel.com ([169.254.1.18]) by
- FMSMSX153.amr.corp.intel.com ([169.254.9.7]) with mapi id 14.03.0439.000;
- Thu, 4 Jul 2019 13:27:58 -0700
-From: "Khetan, Sharad" <sharad.khetan@intel.com>
-To: 'John Wang' <wangzqbj@inspur.com>, OpenBMC Maillist
- <openbmc@lists.ozlabs.org>
-Subject: RE: Inspur CCLA Schedule A update 2019-07-04
-Thread-Topic: Inspur CCLA Schedule A update 2019-07-04
-Thread-Index: AQHVMkG2cewRuh0pzEmM0uVqNwj086a66Syg
-Date: Thu, 4 Jul 2019 20:27:57 +0000
-Message-ID: <865C376D1B77624AAA570EFEF73CE52F98314A49@fmsmsx118.amr.corp.intel.com>
-References: <CAHkHK0-M-=D+DKt1+BPe7V_OYKaB0Hy7P9KwObDALwmLtpxL2g@mail.gmail.com>
-In-Reply-To: <CAHkHK0-M-=D+DKt1+BPe7V_OYKaB0Hy7P9KwObDALwmLtpxL2g@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOTliZjc4MjUtMjdhMC00ZDBlLTg3OTAtZTc0MmY0MTZlMWVjIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoicG5iTyttSVVteFJ6djhyS0E3Z0lLZlVPYUZxUWZCTXN6K0gyMTdTZFhTeTRxaEx0ZStpenNhSWpRU0U3cnJTRSJ9
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: request-justification,no-action
-x-originating-ip: [10.1.200.106]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45g4Vp6ryLzDqWN
+ for <openbmc@lists.ozlabs.org>; Fri,  5 Jul 2019 16:21:38 +1000 (AEST)
+Received: by mail-io1-xd36.google.com with SMTP id k20so16856642ios.10
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Jul 2019 23:21:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=4hjp6fxPBwu+6/VEBQPjKri38PdsRJfErR5thA7k/do=;
+ b=Q7ZZQJOq8okOxqeJWZAMbmW8ytv7LxPzBonFKMp7tFCiYMy/+mHHEO0DdpdFAyoFNW
+ CeH+Nhtai+ljz3bbwcZJuX6QyMaPl8KVPS+/dprRvwEiPJ1A4l5Ww++7y3bTgPY5zH3T
+ bfPmrJCu3/dWuEVTAtlN7zNlNRKlRRQVTNOd84bog2iee4K7TrCFriP6+dSQf8VEmhqz
+ VADRontpZXowqT3loR2MPFitQOOoVx6DqCwI1PymP2aCQx3NI/jPE24uN2aJx9hgfkZ8
+ 7aTF6v/zQNRQuBznxhlIaCs6rMn6n5OgUoumvxptYZ3hFmNdNw9q7ff98xKoLCiRCyGR
+ r/4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=4hjp6fxPBwu+6/VEBQPjKri38PdsRJfErR5thA7k/do=;
+ b=DmEDbM54HQPC5O9vCWxiaaoTM/o5QHpDENxMcAZXSqBL4JIUZ488obnzdrev7qlldB
+ gufTbgx5QxCFGbtfFY2q58TdJ90GtcibRO06ZpeoYKvxG9NHNbdOSPrSwDnP46uYAQKg
+ EMM4O9wcr8T457XmTROIbfpgUEHxrRo8CEKtsQm+ybexKBDuQSWZ3oAMyzeufhMd+pfL
+ bJyQJX06FC3d/JFPowGq+Dluam3IP65bFzaVc4k1NAd/e876RzPXEjQEEgIGzGMbX4ZA
+ jeA7CQoXdKpJUjVIXx2aZvTV8nij4JGF6NtyPtXwNx7ZIUxs8NQognzOP42NNO01FAzo
+ q5tQ==
+X-Gm-Message-State: APjAAAVBg/+uKon8Rpe5y+MGdL7KpuofrjLI/jDesDDPqbrfyyd7JAlc
+ Of7pgAhMnCYZKxu3761v6JbdIk37yBHNtTSMDPLLvRw97V0=
+X-Google-Smtp-Source: APXvYqyeAWKnU+qeZpQXZoJ1zBYaDe/epMoR/nhsOWEeJLBCC1ehXIndWzNJ48BboIN1jxHfxd2jmih3RAdpwB0uTD0=
+X-Received: by 2002:a6b:e615:: with SMTP id g21mr2316779ioh.178.1562307695657; 
+ Thu, 04 Jul 2019 23:21:35 -0700 (PDT)
 MIME-Version: 1.0
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 5 Jul 2019 14:21:25 +0800
+Message-ID: <CAARXrtkHr_=8xMXynKxMsUm036mGPDnS4ORHoM1uGMRhvi8ZKg@mail.gmail.com>
+Subject: Call for disabling libgcrypt libjitterentropy of rng-tool
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,22 +69,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "sunliangyong@inspur.com" <sunliangyong@inspur.com>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Tm8gYXR0YWNobWVudCBjYW1lIHRocm91Z2ggaW4gdGhlIGVtYWlsLg0KDQpUaGFua3MsDQotU2hh
-cmFkDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBvcGVuYm1jIFttYWlsdG86
-b3BlbmJtYy1ib3VuY2VzK3NoYXJhZC5raGV0YW49aW50ZWwuY29tQGxpc3RzLm96bGFicy5vcmdd
-IE9uIEJlaGFsZiBPZiBKb2huIFdhbmcNClNlbnQ6IFRodXJzZGF5LCBKdWx5IDA0LCAyMDE5IDE6
-MjEgQU0NClRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpD
-Yzogc3VubGlhbmd5b25nQGluc3B1ci5jb20NClN1YmplY3Q6IEluc3B1ciBDQ0xBIFNjaGVkdWxl
-IEEgdXBkYXRlIDIwMTktMDctMDQNCg0KSGksDQoNCkluc3B1ciBDQ0xBIFNjaGVkdWxlIEEgaXMg
-dXBkYXRlZCBhcyBiZWxvdzoNCg0KU2NoZWR1bGUgQQ0KSW5pdGlhbCBsaXN0IG9mIGRlc2lnbmF0
-ZWQgZW1wbG95ZWVzLiBOQjogYXV0aG9yaXphdGlvbiBpcyBub3QgdGllZCB0bw0KcGFydGljdWxh
-ciBDb250cmlidXRpb25zLg0KUGxlYXNlIGluZGljYXRlICJDTEEgTWFuYWdlciIgbmV4dCB0byB0
-aGUgbmFtZSBvZiBhbnkgZW1wbG95ZWVzIGxpc3RlZA0KYmVsb3cgdGhhdCBhcmUNCmF1dGhvcml6
-ZWQgdG8gYWRkIG9yIHJlbW92ZSBkZXNpZ25hdGVkIGVtcGxveWVlcyBmcm9tIHRoaXMgbGlzdCBp
-biB0aGUgZnV0dXJlLg0KDQpBbGV4IE5pbmcNCkNhcnRlciBTdQ0KQ2hpY2FnbyBEdWFuDQpHZW9y
-Z2UgTGl1DQpKb2huIFdhbmcNCktpdXlpIENoZW4NCkxld2lzIFN1biAtIENMQSBNYW5hZ2VyDQpY
-aWFvY2hhbyBNYQ0KDQpQbGVhc2UgaGVscCByZXZpZXcNClRoYW5rcw0KDQpKb2huDQo=
+This email is to call for disabling libgcrypt and libjitterentropy of rngd.
+
+The jitter entropy of rngd has two problems:
+1. It has a bug to consume all CPU in idle:
+   https://github.com/openbmc/openbmc/issues/3574
+2. During the start of rngd, the code in thread_entropy_task() consumes a lot
+   of CPU, until it read 16535 bytes from jent_read_entropy().
+
+The bug in 1 could be fixed, and the issue in 2 is mitigated by lower niceness
+of rngd [1].
+
+However, why not just disable jitter entropy?
+
+Pros:
+1. There will be no more high CPU consumption by rngd;
+2. The hwrng (hardware random number generator) is the default entropy source
+   of rngd, and it is enough.
+3. The performance of /dev/random is a bit better than with jitter entropy
+   (tested by rngtest, see below details)
+
+Cons:
+1. There is only one entropy source from hwrng, the quality of the random
+   number may be questionable if one does not trust the hwrng.
+
+What do you think?
+
+
+TL;DR
+
+Here are the details about the performance.
+1. With the above bug 1 fixed, and after jitter entropy is filled (otherwise
+the high CPU usage impacts the performance):
+
+rngtest: starting FIPS tests...
+rngtest: bits received from input: 200032
+rngtest: FIPS 140-2 successes: 10
+rngtest: FIPS 140-2 failures: 0
+rngtest: FIPS 140-2(2001-10-10) Monobit: 0
+rngtest: FIPS 140-2(2001-10-10) Poker: 0
+rngtest: FIPS 140-2(2001-10-10) Runs: 0
+rngtest: FIPS 140-2(2001-10-10) Long run: 0
+rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+rngtest: input channel speed: (min=46.411; avg=63.397; max=101.982)Kibits/s
+rngtest: FIPS tests speed: (min=24.359; avg=26.624; max=27.804)Mibits/s
+rngtest: Program run time: 3101853 microseconds
+
+The `avg` speed is about 60~64 Kibits/s.
+
+2. Built with libjitterentropy disabled:
+
+rngtest: starting FIPS tests...
+rngtest: bits received from input: 200032
+rngtest: FIPS 140-2 successes: 10
+rngtest: FIPS 140-2 failures: 0
+rngtest: FIPS 140-2(2001-10-10) Monobit: 0
+rngtest: FIPS 140-2(2001-10-10) Poker: 0
+rngtest: FIPS 140-2(2001-10-10) Runs: 0
+rngtest: FIPS 140-2(2001-10-10) Long run: 0
+rngtest: FIPS 140-2(2001-10-10) Continuous run: 0
+rngtest: input channel speed: (min=55.128; avg=72.556; max=90.751)Kibits/s
+rngtest: FIPS tests speed: (min=24.236; avg=26.762; max=27.723)Mibits/s
+rngtest: Program run time: 2713602 microseconds
+
+The `avg` speed is about 69~73 Kibits/s.
+
+[1]: https://github.com/openbmc/openbmc/commit/1987be716cba85cdc1f210ceddc957a87b03be27
