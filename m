@@ -1,67 +1,38 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C816762A91
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 22:46:43 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E00A662A6F
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 22:36:16 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45jHKQ5cbtzDq67
-	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 06:36:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45jHYY1cl6zDqQR
+	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 06:46:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="WzfTW/UN"; 
- dkim-atps=neutral
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com
- [IPv6:2607:f8b0:4864:20::62e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45jHH93KypzDqM0
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 06:34:11 +1000 (AEST)
-Received: by mail-pl1-x62e.google.com with SMTP id b3so5545000plr.4
- for <openbmc@lists.ozlabs.org>; Mon, 08 Jul 2019 13:34:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0je59Hy1gQdUZKVrI4NzxRuFrRUwGHUJj80szDK5PFY=;
- b=WzfTW/UNK8bPNxXgOyPA+p9pj8MpbU/ZNxf8LKc6U4Xk1nK/g85+10dm+WiOfMW1m9
- hQV+pGL3cbf5w+nv1gzJLK1trWdiwpS5crC7D10/9P5aq6rv5NktjPqc4zHrNBgoqF4c
- vfQxe39X7TLKwQB6injJ0NGz5pjsSg6pRbeV5PBJs85oL9PfXmeDKRz4OiJjwagst7qa
- 4Mw9uBiPeV7MOB2LEi1L82yhWizGdUXifjH1KKQmB+avjhebUvG3V7GhSoudoGWp4Vu1
- ga/3BiPka0l2UdAqK+wBW0SQtfkaj92ZM7JjWRqIhwGT+cE8vFjd5Le5tGr6ijCsdpEQ
- pxsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0je59Hy1gQdUZKVrI4NzxRuFrRUwGHUJj80szDK5PFY=;
- b=TK9+Dzq/GZXd83lndiLmq8EC+50rIEd3OjmvtlySOnyrk39w522vYuvbqLo+4Y5Xxf
- cECr/cOxiGJS32o2WLd6tro6H+k4TymK3fhTHQtrK5oltkGjacaNgU2dBDnLx9U4QE/x
- 9VqQXE/aYCZlEmPmz6n5hje1/uLMObsevqRSkPN9yS+3KXbtIYchvW0ESQ5bHGDCYMbl
- /dWfMrpWQBetX1eQNmDwCV8lTrwYTjOILjsCyFm8jV+U6qRT1338qFixfxjhBwKzMghE
- AcViGGwi46v2fnx9UqeMAUNUxvIMfAAu5poXJ7+0L3RZisWxTHaxUK8WBS+PbZ35DxTM
- fqRw==
-X-Gm-Message-State: APjAAAWA5AAfJs79rzHMC/YQjkau/Fzm6fBS8CyvAlqc9jukUhzugDIH
- 25/vPFnVpCf/bZa+BGHoueTidahofX6mEdud5SDKOA==
-X-Google-Smtp-Source: APXvYqzwPabG+cQx0axuyUFWjwY8zREsVts7xsch0LIcRUU7YqBDvjaR+HzMwzrwyV305Rns73QQdYJUF1KVcBEKA54=
-X-Received: by 2002:a17:902:9897:: with SMTP id
- s23mr27151337plp.47.1562618047472; 
- Mon, 08 Jul 2019 13:34:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45jHX461R2zDqN5
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 06:45:24 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Date: Mon, 8 Jul 2019 16:46:00 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Tony Lee =?utf-8?B?KOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+Subject: Re: Some questions about recipes-phosphor/inventory
+Message-ID: <20190708204600.wbfmzml462x6pvck@thinkpad.dyn.fuzziesquirrel.com>
+References: <63fc9eff383a40149fc8037b54844e1c@quantatw.com>
 MIME-Version: 1.0
-References: <2061b2a4-5308-0d65-ad52-4a4ad4dbaca5@gmail.com>
-In-Reply-To: <2061b2a4-5308-0d65-ad52-4a4ad4dbaca5@gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 8 Jul 2019 13:33:56 -0700
-Message-ID: <CAO=notxcDVnOgPLsJtcVxXn5VB8RNbcAnCZtAA2Nd6CmeXz3Wg@mail.gmail.com>
-Subject: Re: 2.7 Release: Freeze Week - What to do
-To: krtaylor <kurt.r.taylor@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <63fc9eff383a40149fc8037b54844e1c@quantatw.com>
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,36 +48,61 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 8, 2019 at 12:00 PM krtaylor <kurt.r.taylor@gmail.com> wrote:
->
-> Soon we will branch a 2.7 release candidate. <UPDATE: done, see email
-> from Brad> Here are some things to prepare for:
->
-> 1) Start testing the release candidate as soon as possible - please post
-> results to IRC or email, openly discuss any problems that you find on
-> your system.
->
-> 2) Clean up documentation, bring old docs current, add documentation for
-> new functionality.
->
-> 3) Send me any input for release notes that did not make it in a release
-> feature (github issue)
+On Thu, Jun 20, 2019 at 05:39:39AM +0000, Tony Lee (=E6=9D=8E=E6=96=87=E5=
+=AF=8C) wrote:
+>Hi Brad,
 
-phosphor-ipmi-flash support -- sending firmware bmc and bios images
-over ipmi, pci-aspeed, and other mechanisms for host-driven updates.
+Hi Tony
+
+It took me about three weeks to reply to this - so if you've picked one=20
+approach already I understand.
 
 >
-> 4)Bug cleanup/feature (issue) cleanup, add comments, indicate state - if
-> something didn't make it in the release, please let me know first and/or
-> come to a release planning meeting and we'll take care of it.
+>As our phosphor-nvme proposal, https://gerrit.openbmc-project.xyz/c/open=
+bmc/docs/+/19061
+>it will set properties to D-bus "xyz.openbmc_project.Inventory.Manager" =
+and object paths are
+>"/xyz/openbmc_project/inventory/system/chassis/motherboard/nvme(index)"
 >
-> 5) Master will not be frozen, so new functionality can continue to make
-> progress, but please take some time in the next couple of weeks to test
-> or contribute docs, etc
+>I have found two ways to achieve the above goals, but I have some proble=
+ms with these two methods.
 >
-> Remember: communicate outside your organization MUCH more than you think
-> you need to - use IRC, send email, share what you are doing and where
-> you are with it!
+>1.Add a yaml file to openbmc/meta-phosphor/recipes-phosphor/inventory to=
+ create those object paths.
+I'm not sure you need any yaml files at all.  In your design you=20
+mentioned a json config file to be read by a new nvme manager=20
+application.  That seems suitable.
 >
-> Happy 2.7 release month!
-> Kurt Taylor (krtaylor)
+>Creating a bb file named =E2=80=9Cphosphor-inventory-manager-nvme.bb=E2=80=
+=9D and follow the way like =E2=80=9Cphosphor-inventory-manager-assettag.=
+bb=E2=80=9D.
+I wouldn't recommend this...and I don't see how it fits into your design=20
+(19061)?
+
+>
+>One of the problems is that not every developer needs these paths.
+I'm not sure what you are meaning or why you are worried about here.
+Developers can always leave nvme-manager out of their configuration if=20
+they don't need it.  What am I not understanding?
+
+>Another question is that it doesn't know how many NVMe drives were used =
+for other projects
+It seems like the new nvme manager application would know how many
+nvme drives there are, and thus knows how many times to call=20
+xyz.openbmc_project.Inventory.Mananger.Notify.
+
+>
+>2.Add a description of how to create object paths to D-bus "xyz.openbmc_=
+project.Inventory.Manager" and give an example in README file.
+Adding documentation is always a good idea and very appreciated.
+
+>
+>Which approach do you think is better or do you have any other suggestio=
+ns?
+I think the third option would be to have your new nvme manager=20
+application call xyz.openbmc_project.Inventory.Mananger.Notify when it=20
+finds new nvme drives and their corresponding inventory information=20
+(serial number, etc).  Have you looked at that and could it meet your=20
+needs?
+
+thx - brad
