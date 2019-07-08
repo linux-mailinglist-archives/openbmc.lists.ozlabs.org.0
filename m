@@ -2,74 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 005046288A
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 20:46:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CA5A628E0
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 21:01:29 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45jDtr0MBBzDqPn
-	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 04:46:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45jFD62BV1zDqQD
+	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 05:01:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=gkeishin@in.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d29; helo=mail-io1-xd29.google.com;
+ envelope-from=kurt.r.taylor@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="RI3IX3wn"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
+ [IPv6:2607:f8b0:4864:20::d29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45jDtD33FWzDqP2
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 04:45:52 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x68IgeM7096128
- for <openbmc@lists.ozlabs.org>; Mon, 8 Jul 2019 14:45:50 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.75])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2tm8867kwt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 08 Jul 2019 14:45:50 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <gkeishin@in.ibm.com>;
- Mon, 8 Jul 2019 18:45:49 -0000
-Received: from us1a3-smtp04.a3.dal06.isc4sb.com (10.106.154.237)
- by smtp.notes.na.collabserv.com (10.106.227.123) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 8 Jul 2019 18:45:29 -0000
-Received: from us1a3-mail113.a3.dal06.isc4sb.com ([10.146.6.4])
- by us1a3-smtp04.a3.dal06.isc4sb.com
- with ESMTP id 2019070818452973-842619 ;
- Mon, 8 Jul 2019 18:45:29 +0000 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45jFC43ck7zDqB9
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 05:00:32 +1000 (AEST)
+Received: by mail-io1-xd29.google.com with SMTP id k20so37646785ios.10
+ for <openbmc@lists.ozlabs.org>; Mon, 08 Jul 2019 12:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:subject:to:message-id:date:user-agent:mime-version
+ :content-language:content-transfer-encoding;
+ bh=EFm1zjU3ivw4r7wE2K3KiUjutSzw+vpUcfyjxfDHyMg=;
+ b=RI3IX3wn/+ti911iRTuXo/eg8aE8hwXPeHqv3OcaQSFQBwwMAtNFd/X5xt/6qWBwSL
+ 41olDUNKiwnQUr9ONSoB3tb29TbpS+xge75LJQkK7LJGQ4ovBALVSA0ulDk9urPQI0LN
+ NfIeF6XbrNJYGPwQSZ/l1wb3tJ0Jm3GNc029TJljRd9oHOC32pd9Yjc0hx4SOD+mvSvh
+ aPxwohoKhQ9t470EUhtv7Hkk6BjGdl5zbQc2hWGVdT2VvQYlIVa70U2gUJ2mD4RJdVeA
+ K7hzqdVJioYoONDR8mqjCh5y28UskZNBar+N84SJ8k7zFSTnSIoA6gaJzqo1I4rw4bPd
+ kLKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:subject:to:message-id:date:user-agent
+ :mime-version:content-language:content-transfer-encoding;
+ bh=EFm1zjU3ivw4r7wE2K3KiUjutSzw+vpUcfyjxfDHyMg=;
+ b=GIDbbIz7JQDrSMW/vjlf5FlTcuG/TDwhwgmeNn7/Z5kTvC1KGm7ejGDEq86kHAB0K8
+ N11bUUZ64K3z0rXoGUsDEP42+ScKPm2hFD0uZZ/wBbXHXh6lZpnYS8GiXKvoC2S7B4ZK
+ BRcIMq9dULvoGpqzJxIgmYPq/64oGFqk0svoi6uc2Wm5IXSIfUGUKktKXdMoQZ88sewP
+ mBPQnZnpBPZmIDAHuAK1ysViMfMfsp2WEtV7mylTJ4qd9C4GuAOzPO6mF8rRskzClJ6I
+ WLY7KWGSFSYij66dvssDNgIVkO3L+E0tgtpWIkNmYdsZWx7FKhsM3F0Z6jcJnyLT3aaH
+ gZqg==
+X-Gm-Message-State: APjAAAVVR3QNM+ra/WrQz5LZSM931Z6iH70eflXJ1SO9hB12C4CYn5ZO
+ tewK0WKE54dfSY4oWUA9LlFJVu3J
+X-Google-Smtp-Source: APXvYqxrnQ0sByze6OBUdFpoQg5V3SKYiCgILzWWa7vcgxRoL8xmDEQ3sxAVUSHzI6T6JKzydgTiBw==
+X-Received: by 2002:a5d:9703:: with SMTP id h3mr2703150iol.152.1562612429068; 
+ Mon, 08 Jul 2019 12:00:29 -0700 (PDT)
+Received: from krtaylors-mbp.austin.ibm.com ([2620:1f7:8b5:2842::32:7e])
+ by smtp.gmail.com with ESMTPSA id k5sm22689361ioj.47.2019.07.08.12.00.28
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 08 Jul 2019 12:00:28 -0700 (PDT)
+From: krtaylor <kurt.r.taylor@gmail.com>
+Subject: 2.7 Release: Freeze Week - What to do
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Message-ID: <2061b2a4-5308-0d65-ad52-4a4ad4dbaca5@gmail.com>
+Date: Mon, 8 Jul 2019 14:00:27 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
+ Gecko/20100101 Thunderbird/60.7.2
 MIME-Version: 1.0
-Subject: OpenBMC Test 2.7 release (Warrior) information 
-To: "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
-From: "George Keishing" <gkeishin@in.ibm.com>
-Date: Tue, 9 Jul 2019 00:15:25 +0530
-X-KeepSent: F283F771:84A42BFB-00258431:00668028;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 10.0.1 November 29, 2018
-X-LLNOutbound: False
-X-Disclaimed: 63915
-X-TNEFEvaluated: 1
-Content-type: multipart/alternative; 
- Boundary="0__=8FBB0EA2DFF506B88f9e8a93df938690918c8FBB0EA2DFF506B8"
-Content-Disposition: inline
-x-cbid: 19070818-3815-0000-0000-00000C071162
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.423878; ST=0; TS=0; UL=0; ISC=; MB=0.000000
-X-IBM-SpamModules-Versions: BY=3.00011397; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01229324; UDB=6.00647421; IPR=6.01010584; 
- BA=6.00006352; NDR=6.00000001; ZLA=6.00000005; ZF=6.00000009; ZB=6.00000000;
- ZP=6.00000000; ZH=6.00000000; ZU=6.00000002; MB=3.00027637; XFM=3.00000015;
- UTC=2019-07-08 18:45:47
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-07-08 15:15:59 - 6.00010140
-x-cbparentid: 19070818-3816-0000-0000-000010B22CF8
-Message-Id: <OFF283F771.84A42BFB-ON00258431.00668028-65258431.00670954@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-08_06:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,80 +83,30 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Soon we will branch a 2.7 release candidate. <UPDATE: done, see email 
+from Brad> Here are some things to prepare for:
 
---0__=8FBB0EA2DFF506B88f9e8a93df938690918c8FBB0EA2DFF506B8
-Content-Transfer-Encoding: quoted-printable
-Content-type: text/plain; charset=ISO-8859-1
+1) Start testing the release candidate as soon as possible - please post 
+results to IRC or email, openly discuss any problems that you find on 
+your system.
 
+2) Clean up documentation, bring old docs current, add documentation for 
+new functionality.
 
+3) Send me any input for release notes that did not make it in a release 
+feature (github issue)
 
-Refer: https://github.com/openbmc/openbmc-test-automation/releases
+4)Bug cleanup/feature (issue) cleanup, add comments, indicate state - if 
+something didn't make it in the release, please let me know first and/or 
+come to a release planning meeting and we'll take care of it.
 
-This release is for the OpenBMC community Warrior branch
+5) Master will not be frozen, so new functionality can continue to make 
+progress, but please take some time in the next couple of weeks to test 
+or contribute docs, etc
 
-OpenBMC Dev branch=A0https://github.com/openbmc/openbmc/tree/warrior
-OpenBMC test branch
-https://github.com/openbmc/openbmc-test-automation/tree/warrior
+Remember: communicate outside your organization MUCH more than you think 
+you need to - use IRC, send email, share what you are doing and where 
+you are with it!
 
-OpenBMC branches follow Yocto Releases see
-https://wiki.yoctoproject.org/wiki/Releases=A0or
-https://github.com/openbmc/docs/tree/master/release
-
-Changes since v2.6-thud-stable:
-      Redfish features testing support
-            Certificates
-            Local User Management (Redfish/IPMI)
-            LDAP
-            Network
-            Event Logging
-            DateTime
-            Boot Devices
-            DMTF Tools etc.
-      Code fixes and documentation updates
-
-
-Thanks and Regards,
- George Keishing
-
-
---0__=8FBB0EA2DFF506B88f9e8a93df938690918c8FBB0EA2DFF506B8
-Content-Transfer-Encoding: quoted-printable
-Content-type: text/html; charset=ISO-8859-1
-Content-Disposition: inline
-
-<html><body><p><font color=3D"#2F2F2F" face=3D"Segoe UI">Refer: </font><a h=
-ref=3D"https://github.com/openbmc/openbmc-test-automation/releases"><font f=
-ace=3D"Segoe UI">https://github.com/openbmc/openbmc-test-automation/release=
-s</font></a><br><br><font color=3D"#24292E" face=3D"Segoe UI">This release =
-is for the OpenBMC community Warrior branch</font><br><br><font color=3D"#2=
-4292E" face=3D"Segoe UI">OpenBMC Dev branch=A0</font><a href=3D"https://git=
-hub.com/openbmc/openbmc/tree/warrior"><font color=3D"#0366D6" face=3D"Segoe=
- UI">https://github.com/openbmc/openbmc/tree/warrior</font></a><font color=
-=3D"#24292E" face=3D"Segoe UI"><br>OpenBMC test branch=A0</font><a href=3D"=
-https://github.com/openbmc/openbmc-test-automation/tree/warrior"><font colo=
-r=3D"#0366D6" face=3D"Segoe UI">https://github.com/openbmc/openbmc-test-aut=
-omation/tree/warrior</font></a><br><br><font color=3D"#24292E" face=3D"Sego=
-e UI">OpenBMC branches follow Yocto Releases see=A0</font><a href=3D"https:=
-//wiki.yoctoproject.org/wiki/Releases"><font color=3D"#0366D6" face=3D"Sego=
-e UI">https://wiki.yoctoproject.org/wiki/Releases</font></a><font color=3D"=
-#24292E" face=3D"Segoe UI">=A0or=A0</font><a href=3D"https://github.com/ope=
-nbmc/docs/tree/master/release"><font color=3D"#0366D6" face=3D"Segoe UI">ht=
-tps://github.com/openbmc/docs/tree/master/release</font></a><br><br><b><fon=
-t color=3D"#24292E" face=3D"Segoe UI">Changes since v2.6-thud-stable:</font=
-></b><ul><ul type=3D"disc"><li><font color=3D"#24292E" face=3D"Segoe UI">Re=
-dfish features testing support</font><ul><ul type=3D"disc"><li><font color=
-=3D"#24292E" face=3D"Segoe UI">Certificates</font><li><font color=3D"#24292=
-E" face=3D"Segoe UI">Local User Management (Redfish/IPMI)</font><li><font c=
-olor=3D"#24292E" face=3D"Segoe UI">LDAP</font><li><font color=3D"#24292E" f=
-ace=3D"Segoe UI">Network</font><li><font color=3D"#24292E" face=3D"Segoe UI=
-">Event Logging</font><li><font color=3D"#24292E" face=3D"Segoe UI">DateTim=
-e</font><li><font color=3D"#24292E" face=3D"Segoe UI">Boot Devices</font><l=
-i><font color=3D"#24292E" face=3D"Segoe UI">DMTF Tools etc.</font></ul></ul>
-<li><font color=3D"#24292E" face=3D"Segoe UI">Code fixes and documentation =
-updates</font></ul></ul><br><br><b><font size=3D"2" color=3D"#0000FF">Thank=
-s and Regards,</font></b><br><font size=3D"2" color=3D"#0000FF"> George Kei=
-shing</font><br><br><BR>
-</body></html>
-
---0__=8FBB0EA2DFF506B88f9e8a93df938690918c8FBB0EA2DFF506B8--
-
+Happy 2.7 release month!
+Kurt Taylor (krtaylor)
