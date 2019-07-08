@@ -1,74 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E1162A21
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 22:09:26 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CA5A628E0
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jul 2019 21:01:29 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45jFD62BV1zDqQD
-	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 05:01:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45jGkX0VSTzDqQs
+	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 06:09:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d29; helo=mail-io1-xd29.google.com;
- envelope-from=kurt.r.taylor@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="RI3IX3wn"; 
- dkim-atps=neutral
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
- [IPv6:2607:f8b0:4864:20::d29])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45jFC43ck7zDqB9
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 05:00:32 +1000 (AEST)
-Received: by mail-io1-xd29.google.com with SMTP id k20so37646785ios.10
- for <openbmc@lists.ozlabs.org>; Mon, 08 Jul 2019 12:00:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:subject:to:message-id:date:user-agent:mime-version
- :content-language:content-transfer-encoding;
- bh=EFm1zjU3ivw4r7wE2K3KiUjutSzw+vpUcfyjxfDHyMg=;
- b=RI3IX3wn/+ti911iRTuXo/eg8aE8hwXPeHqv3OcaQSFQBwwMAtNFd/X5xt/6qWBwSL
- 41olDUNKiwnQUr9ONSoB3tb29TbpS+xge75LJQkK7LJGQ4ovBALVSA0ulDk9urPQI0LN
- NfIeF6XbrNJYGPwQSZ/l1wb3tJ0Jm3GNc029TJljRd9oHOC32pd9Yjc0hx4SOD+mvSvh
- aPxwohoKhQ9t470EUhtv7Hkk6BjGdl5zbQc2hWGVdT2VvQYlIVa70U2gUJ2mD4RJdVeA
- K7hzqdVJioYoONDR8mqjCh5y28UskZNBar+N84SJ8k7zFSTnSIoA6gaJzqo1I4rw4bPd
- kLKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:subject:to:message-id:date:user-agent
- :mime-version:content-language:content-transfer-encoding;
- bh=EFm1zjU3ivw4r7wE2K3KiUjutSzw+vpUcfyjxfDHyMg=;
- b=GIDbbIz7JQDrSMW/vjlf5FlTcuG/TDwhwgmeNn7/Z5kTvC1KGm7ejGDEq86kHAB0K8
- N11bUUZ64K3z0rXoGUsDEP42+ScKPm2hFD0uZZ/wBbXHXh6lZpnYS8GiXKvoC2S7B4ZK
- BRcIMq9dULvoGpqzJxIgmYPq/64oGFqk0svoi6uc2Wm5IXSIfUGUKktKXdMoQZ88sewP
- mBPQnZnpBPZmIDAHuAK1ysViMfMfsp2WEtV7mylTJ4qd9C4GuAOzPO6mF8rRskzClJ6I
- WLY7KWGSFSYij66dvssDNgIVkO3L+E0tgtpWIkNmYdsZWx7FKhsM3F0Z6jcJnyLT3aaH
- gZqg==
-X-Gm-Message-State: APjAAAVVR3QNM+ra/WrQz5LZSM931Z6iH70eflXJ1SO9hB12C4CYn5ZO
- tewK0WKE54dfSY4oWUA9LlFJVu3J
-X-Google-Smtp-Source: APXvYqxrnQ0sByze6OBUdFpoQg5V3SKYiCgILzWWa7vcgxRoL8xmDEQ3sxAVUSHzI6T6JKzydgTiBw==
-X-Received: by 2002:a5d:9703:: with SMTP id h3mr2703150iol.152.1562612429068; 
- Mon, 08 Jul 2019 12:00:29 -0700 (PDT)
-Received: from krtaylors-mbp.austin.ibm.com ([2620:1f7:8b5:2842::32:7e])
- by smtp.gmail.com with ESMTPSA id k5sm22689361ioj.47.2019.07.08.12.00.28
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 08 Jul 2019 12:00:28 -0700 (PDT)
-From: krtaylor <kurt.r.taylor@gmail.com>
-Subject: 2.7 Release: Freeze Week - What to do
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <2061b2a4-5308-0d65-ad52-4a4ad4dbaca5@gmail.com>
-Date: Mon, 8 Jul 2019 14:00:27 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45jGjx0P5wzDqQk
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 06:08:52 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x68K7JF1125084; Mon, 8 Jul 2019 16:08:41 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2tmbbsartq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Jul 2019 16:08:41 -0400
+Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x68K7W07125652;
+ Mon, 8 Jul 2019 16:08:40 -0400
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2tmbbsarre-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Jul 2019 16:08:40 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x68K67cZ001151;
+ Mon, 8 Jul 2019 20:08:39 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma01wdc.us.ibm.com with ESMTP id 2tjk968evm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Jul 2019 20:08:39 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x68K8cC841812312
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 8 Jul 2019 20:08:38 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A44A1124052;
+ Mon,  8 Jul 2019 20:08:38 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4EBB5124053;
+ Mon,  8 Jul 2019 20:08:38 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Mon,  8 Jul 2019 20:08:38 +0000 (GMT)
+Subject: Re: How to prevent the user repeat-login to avoid the ikvm overload
+To: xiuzhi <1450335857@qq.com>, "jae.hyun.yoo" <jae.hyun.yoo@linux.intel.com>,
+ openbmc <openbmc@lists.ozlabs.org>, eajames <eajames@linux.ibm.com>,
+ Joel Stanley <joel@jms.id.au>, "Andrew.Jeffery" <andrew@aj.id.au>,
+ ratagupt <ratagupt@linux.vnet.ibm.com>
+References: <tencent_7DE3A7000B33C89E09783AFC@qq.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <604e506f-1bc7-d2f4-5a43-219cdb5b98fe@linux.ibm.com>
+Date: Mon, 8 Jul 2019 15:08:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
  Gecko/20100101 Thunderbird/60.7.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <tencent_7DE3A7000B33C89E09783AFC@qq.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-08_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907080250
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,30 +97,41 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Soon we will branch a 2.7 release candidate. <UPDATE: done, see email 
-from Brad> Here are some things to prepare for:
 
-1) Start testing the release candidate as soon as possible - please post 
-results to IRC or email, openly discuss any problems that you find on 
-your system.
+On 6/27/19 8:53 PM, xiuzhi wrote:
+> Hi Jae,Ratan,
+>    The ikvm or openbmc phosphor-rest process will deadlock when users 
+> operate the ikvm on different PC at the same time . The user can't 
+> login when the CPU usage of phosphor-gevent process more than 70%.  
+> This issue  will be triggered when one user login  both on different 
+> IP and operate the host by  ikvm.
+>   My test case:
+> 1, The user "root" login throw AST2500  network  card, enter the ikvm 
+> webpage ,the IP 192.168.0.100.
+> 2, The user "root" login throw OCP network card with a different IP 
+> 192.168.1.100, enter the ikvm web page, do some keyboard and mouse 
+> operations
+> 3, The openbmc will deadlock and cann't login, I must restart the 
+> phosphor-gevent service ,then I can login again.
+>   I created other common users, it is impossible to forbid them to 
+> login and operate the ikvm at the same time to cause the bmc overload .
+>    My personal idea is to allow  one user to login only on one machine 
+> at a time. Do you have any good ideas?
+I haven't seen a reply to this.  Here is my 2 cents worth:
 
-2) Clean up documentation, bring old docs current, add documentation for 
-new functionality.
+Enhance the service to establish a mutex (or exclusive lock) scoped to 
+the BMC when accessing the ikvm service, and release it when the ikvm 
+session ends.  A second attempt to use the service concurrently will 
+fail to obtain the lock and if possible, give a nice error message.
+Can you determine when the ikvm session ends?
+Have an easy way so you can (a) to determine if the lock is held, and 
+(b) to clear the lock.  I've seen lock files used for this purpose.  For 
+example, flock /tmp/ikvm.lock.  Rebooting the BMC should erase the /tmp 
+file which will also clear the lock.
 
-3) Send me any input for release notes that did not make it in a release 
-feature (github issue)
+Would that help solve the problem?
+- Joseph
+>
+>   Best,
+> Xiuzhi
 
-4)Bug cleanup/feature (issue) cleanup, add comments, indicate state - if 
-something didn't make it in the release, please let me know first and/or 
-come to a release planning meeting and we'll take care of it.
-
-5) Master will not be frozen, so new functionality can continue to make 
-progress, but please take some time in the next couple of weeks to test 
-or contribute docs, etc
-
-Remember: communicate outside your organization MUCH more than you think 
-you need to - use IRC, send email, share what you are doing and where 
-you are with it!
-
-Happy 2.7 release month!
-Kurt Taylor (krtaylor)
