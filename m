@@ -2,59 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D062D64495
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 11:46:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C01A64F12
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 01:08:36 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45kDqD1KtxzDqcn
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 19:46:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45kZcH53fqzDqT7
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 09:08:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::82b; helo=mail-qt1-x82b.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="AXzujGXA"; 
- dkim-atps=neutral
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
- [IPv6:2607:f8b0:4864:20::82b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45kDpj2TcMzDqPb
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:46:20 +1000 (AEST)
-Received: by mail-qt1-x82b.google.com with SMTP id h21so1663420qtn.13
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 02:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=zf0Y8+z1ZYCm4V8OxG5S/sFvVsAF7QOkvlShho0Xllo=;
- b=AXzujGXAc0P5RhzMKxJ6zWt6jmNGuUViVRDzcTrBvQZHsOYTYICGj9IXCNb3lK9VL/
- eAwegIfSBt9V3ZJsCfU+tYMYH8KRaWT9OgYl4zluyJ6No8b7KzBcxDEJMEJbUcit8ETV
- UptOP+NzKHZqf5t8HXM6+9faf8K0/KMN5WgiI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=zf0Y8+z1ZYCm4V8OxG5S/sFvVsAF7QOkvlShho0Xllo=;
- b=ug6t/7gP4fc+vufTU66dQzo5//6nAqcz305xHHaosgT7DzG+B8bGt5t/1/5P6cXiwq
- PiqKp4ABLc+N5LUa1IIG/1YmBOmGAEkTI3HELAIfVjHYLh72RlI4fn5dt5RMVif8t5EL
- A8q6DRGdg4zLV4nrWKIhpUlr3FQAKk4zBixuS2MK8oInFVVkw/wUUBayPf7AT75K+ir1
- TWPl/c8g3wphhj7WvMfRcfLOfgILHZS26DrzhDSeusey1n0fmkdO/LunWaG1gtZEpyoa
- cFOYYQ1KlnGay1dkU+tOBrfV2jtZ8QXy/ilqAZ7tJwiYkzxbzu2KaSxvrFMQq2MToCAD
- c5NQ==
-X-Gm-Message-State: APjAAAWk4YYU7gmBT+bKZcO62qVq+g/YvCv528qPZsfD7cUIDPNsbHnK
- Zm1oDM/reOV8LvC15xkt15zvVJJ3PLCHZcNne7p9aiH3
-X-Google-Smtp-Source: APXvYqw4v1OP2PExTAFW2oprAXq7Rkh7HGq7cLhZaqj01Q3aKNrGfJ5KhfQRKbCEmmcwDgZwVsjD19Lc/UCPdvBbO8o=
-X-Received: by 2002:ac8:2fc8:: with SMTP id m8mr23027308qta.269.1562751976767; 
- Wed, 10 Jul 2019 02:46:16 -0700 (PDT)
+ spf=pass (mailfrom) smtp.mailfrom=zd-tech.com.cn
+ (client-ip=220.181.97.177; helo=m97177.mail.qiye.163.com;
+ envelope-from=yangliu1@zd-tech.com.cn; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=zd-tech.com.cn
+X-Greylist: delayed 329 seconds by postgrey-1.36 at bilbo;
+ Tue, 09 Jul 2019 18:02:20 AEST
+Received: from m97177.mail.qiye.163.com (m97177.mail.qiye.163.com
+ [220.181.97.177])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45jZY82TSVzDqRh
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 18:02:17 +1000 (AEST)
+Received: from yangliu1$zd-tech.com.cn ( [218.247.145.2] ) by
+ ajax-webmail-wmsvr17 (Coremail) ; Tue, 9 Jul 2019 15:56:31 +0800 (CST)
+X-Originating-IP: [218.247.145.2]
+Date: Tue, 9 Jul 2019 15:56:31 +0800 (CST)
+From: =?GBK?B?wfXR9A==?= <yangliu1@zd-tech.com.cn>
+To: openbmc@lists.ozlabs.org
+Subject: How to set BMC NCSI use two ports in the same IP address?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20190614(cb3344cf) Copyright (c) 2002-2019 www.mailtech.cn 163-hosting
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_108216_882585963.1562658991417"
 MIME-Version: 1.0
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 10 Jul 2019 09:46:04 +0000
-Message-ID: <CACPK8XfLruW7RN+6G=eAjuY_pKPRbTVBs8aueJs==6QzmhDY2w@mail.gmail.com>
-Subject: Moving kernel to Linux 5.2
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <35a93598.9f8b.16bd5bbed3a.Coremail.yangliu1@zd-tech.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: seCowADH4tqvSCRdHSHWAA--.16344W
+X-CM-SenderInfo: p1dqwzdlxrq63gnwvu3kof0zgofq/1tbiPAXscVyqDrs4+wABsl
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Mailman-Approved-At: Thu, 11 Jul 2019 09:08:06 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,40 +51,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: subscribed@noreply.github.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-It's that time again. I've pushed a dev-5.2 branch to openbmc/linux
-that contains the patches from dev-5.1 rebased on top of v5.2.
+------=_Part_108216_882585963.1562658991417
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-The bump is in this commit:
+SGkgQWxsLAogICAgIEkgYW0gd29ya2luZyBvbiB0aGUgMi42IHJlbGVhc2UgaW4gb3BlbmJtYy4g
+SSBoYXZlIGEgcXVlc3Rpb24gYWJvdXQgTkNTSSBuZXR3b3JrLgogICAgVGhlIE5DU0kgaXMgd29y
+a2luZyBpbiBCQ00gbmljLCB3aG9zZSB2ZXJzaW9uIGlzIEJSQ00gMTBHIDJQIDU3NDE2IE9DUCBN
+ZXp6LgpUaGVyZSBhcmUgY3VycmVudGx5IHR3byBwb3J0cyBvbiB0aGlzIG5ldHdvcmsgY2FyZCwg
+b25lIG9mIHdoaWNoIGlzIGF2YWlsYWJsZSBhbmQgdGhlIG90aGVyIAppcyBub3Qgd2hlbiBibWMg
+IGlzIHJ1bm5pbmcuIFRoZSBVLWJvb3QgSSB1c2UgMjAxNi4wNy5iYiBhbmQgIHRoZSBrZXJuZWwg
+aXMgNC4xOC4xNi4gVGhlIGR0cyAKaW5jbHVkZSBtYWMwIGNvbmZpZ3VyZSwgd2hpY2ggaXMgdXNl
+IG5jc2kuCiAgICAgSSBuZWVkIGJvdGggcG9ydHMgYXZhaWxhYmxlIGFuZCB1c2luZyB0aGUgc2Ft
+ZSBJUCwgYnV0IEkgZG9uJ3Qga25vdyBIb3cgdG8gZG8gaXQ/CgoKUmVnYXJkcywKWWFuZw==
+------=_Part_108216_882585963.1562658991417
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
- https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/23344
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjc7Ij48ZGl2IHN0
+eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTog
+MTRweDsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE4cHg7Ij5IaSBBbGwsPC9zcGFuPjwvZGl2
+PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9u
+dC1zaXplOiAxNHB4OyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMThweDsiPiZuYnNwOyAmbmJz
+cDsgJm5ic3A7SSBhbSB3b3JraW5nIG9uIHRoZSAyLjYgcmVsZWFzZSBpbiBvcGVuYm1jLiBJIGhh
+dmUgYSBxdWVzdGlvbiBhYm91dCBOQ1NJIG5ldHdvcmsuPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9
+ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4
+OyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMThweDsiPiZuYnNwOyAmbmJzcDsgVGhlIE5DU0kg
+aXMgd29ya2luZyBpbiBCQ00gbmljLCB3aG9zZSB2ZXJzaW9uIGlzIEJSQ00gMTBHIDJQIDU3NDE2
+IE9DUCBNZXp6Ljwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBm
+b250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPjxzcGFuIHN0eWxlPSJmb250LXNp
+emU6IDE4cHg7Ij5UaGVyZSBhcmUgY3VycmVudGx5IHR3byBwb3J0cyBvbiB0aGlzIG5ldHdvcmsg
+Y2FyZCwgb25lIG9mIHdoaWNoIGlzIGF2YWlsYWJsZSBhbmQgdGhlIG90aGVyJm5ic3A7PC9zcGFu
+PjwvZGl2PjxkaXYgc3R5bGU9IiI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZv
+bnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxOHB4OyI+aXMgbm90IHdoZW4gYm1jJm5ic3A7
+IGlzIHJ1bm5pbmcuIFRoZSBVLWJvb3QgSSB1c2UmbmJzcDs8L3NwYW4+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZTogMThweDsiPjIwMTYuMDcuYmIgYW5kJm5ic3A7IHRoZSBrZXJuZWwgaXMmbmJzcDs0
+LjE4LjE2LiBUaGUgZHRzJm5ic3A7PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9IiI+PHNwYW4gc3R5
+bGU9ImZvbnQtc2l6ZTogMThweDsiPmluY2x1ZGUgbWFjMCBjb25maWd1cmUsIHdoaWNoIGlzIHVz
+ZSBuY3NpLjwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250
+LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
+IDE4cHg7Ij4mbmJzcDsgJm5ic3A7ICZuYnNwO0kgbmVlZCBib3RoIHBvcnRzIGF2YWlsYWJsZSBh
+bmQgdXNpbmcgdGhlIHNhbWUgSVAsIGJ1dCBJIGRvbid0IGtub3cgSG93IHRvIGRvIGl0Pzwvc3Bh
+bj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJp
+YWw7IGZvbnQtc2l6ZTogMTRweDsiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE4cHg7Ij48YnI+
+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5
+OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMThweDsi
+PlJlZ2FyZHMsPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZv
+bnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6
+ZTogMThweDsiPllhbmc8L3NwYW4+PC9kaXY+PC9kaXY+PC9kaXY+
+------=_Part_108216_882585963.1562658991417--
 
-Note that there's a systemd-network bug exposed by this change so you
-will need this commit to do any testing (or work around the issue by
-manually bringing up the device):
-
- https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/23412
-
-Please test, +1 and report your results.
-
-Where possible I've cherry picked the patches that will land in 5.3.
-This includes the device tree patches, dps310, aspeed-video, and fsi
-fixes.
-
-We have 100 out of tree patches at this point in time. Of these, 58
-are staged in 5.3, leaving 42 out of tree patches. The out of tree
-patches include:
-
- - aspeed spi-nor
- - npcm clk, bpc, mailbox, ethernet, flash
- - npcm device trees
- - peci framework, associated various drivers
- - misc other patches
-
-If you have code in the tree then please keep working on getting it upstream.
-
-Cheers,
-
-Joel
