@@ -2,77 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8492163886
-	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 17:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07E52638F8
+	for <lists+openbmc@lfdr.de>; Tue,  9 Jul 2019 17:58:40 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45jmHv0HvpzDqQt
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 01:21:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45jn6h5lxSzDqXr
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 01:58:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=kernel.org
+ (client-ip=198.145.29.99; helo=mail.kernel.org; envelope-from=robh@kernel.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="KON4ngr4"; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45jmH928fjzDqKK
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 01:20:52 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x69FDdmv071165
- for <openbmc@lists.ozlabs.org>; Tue, 9 Jul 2019 11:20:49 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2tmw60h756-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 09 Jul 2019 11:20:49 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x69FAKH2027510
- for <openbmc@lists.ozlabs.org>; Tue, 9 Jul 2019 15:20:48 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma01dal.us.ibm.com with ESMTP id 2tjk975ru6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 09 Jul 2019 15:20:48 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x69FKlMN52363694
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 9 Jul 2019 15:20:47 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3B16E6A047
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 15:20:47 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 197DE6A04D
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 15:20:47 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 15:20:46 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-Subject: Security Working Group meeting - Wednesday July 10
-Message-ID: <178abb88-594e-1c23-bf09-3636e6e9ec2b@linux.ibm.com>
-Date: Tue, 9 Jul 2019 10:20:46 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45jn661hmCzDqV7
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 01:58:06 +1000 (AEST)
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com
+ [209.85.160.182])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id C6D15217D8
+ for <openbmc@lists.ozlabs.org>; Tue,  9 Jul 2019 15:48:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1562687306;
+ bh=8uRt2LckP8V6eOMg2L1MMuumGINZ1eU0bTBj8g3A81c=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=KON4ngr4Z1oJj/l8kSJhRwNeUk2R1NwwJID4TkmcPIl+MyUHNX7S9wJWmLi5kcXKR
+ 9yQxDgx12Pr9RsOFxewTO1k23CslxM8Urly5NjQV84pjT6TLgiu+KpOv98L6F8TVW0
+ OXrssDvfqBv5JToN0eDMoLBPFu4Trx+79enV2b4E=
+Received: by mail-qt1-f182.google.com with SMTP id n11so22082898qtl.5
+ for <openbmc@lists.ozlabs.org>; Tue, 09 Jul 2019 08:48:26 -0700 (PDT)
+X-Gm-Message-State: APjAAAX9+0iAoy6WjIrUmk09/uIjQGVMlKfixX43nCz95pmrhrHE9IqA
+ BoOafUkAeBFBvA1uGeL9h15J0OD+JA9SGXHTSQ==
+X-Google-Smtp-Source: APXvYqwUwZzNp9+krU8sgcmMHMgX3VqOxwtH/223QreLrdzSam3oenUJ5tLIk/dBBxOlEo8N5HAE7gFB0xXhMGeAItk=
+X-Received: by 2002:ac8:3908:: with SMTP id s8mr19233318qtb.224.1562687305930; 
+ Tue, 09 Jul 2019 08:48:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-09_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=825 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907090180
+References: <20190605141253.38554-1-ghung.quanta@gmail.com>
+ <20190605141253.38554-2-ghung.quanta@gmail.com> <20190709014058.GA30269@bogus>
+ <0c90f9376c0e425c9a226379f7e5bfad@quantatw.com>
+In-Reply-To: <0c90f9376c0e425c9a226379f7e5bfad@quantatw.com>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 9 Jul 2019 09:48:14 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKf+Z9XJJvqcOw-0L-BLCt_Yv-qv-eu+zhoNFnk8rH8Og@mail.gmail.com>
+Message-ID: <CAL_JsqKf+Z9XJJvqcOw-0L-BLCt_Yv-qv-eu+zhoNFnk8rH8Og@mail.gmail.com>
+Subject: Re: [PATCH 5.2 v2 2/2] dt-binding: edac: add NPCM ECC documentation
+To: =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,35 +67,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-kernel <linux-kernel@vger.kernel.org>,
+ "benjaminfair@google.com" <benjaminfair@google.com>,
+ linux-edac <linux-edac@vger.kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>,
+ George Hung <ghung.quanta@gmail.com>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Tali Perry <tali.perry1@gmail.com>,
+ "davem@davemloft.net" <davem@davemloft.net>, Borislav Petkov <bp@alien8.de>,
+ "Avi.Fishman@nuvoton.com" <Avi.Fishman@nuvoton.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ James Morse <james.morse@arm.com>,
+ "paulmck@linux.ibm.com" <paulmck@linux.ibm.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "tomer.maimon@nuvoton.com" <tomer.maimon@nuvoton.com>,
+ "wak@google.com" <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday July 10 at 10:00am PDT.
+On Tue, Jul 9, 2019 at 3:50 AM George Hung (=E6=B4=AA=E5=BF=A0=E6=95=AC)
+<George.Hung@quantatw.com> wrote:
+>
+> Hi Rob,
+>
+>
+> > -----Original Message-----
+> > From: openbmc
+> > [mailto:openbmc-bounces+george.hung=3Dquantatw.com@lists.ozlabs.org] On
+> > Behalf Of Rob Herring
+> > Sent: Tuesday, July 09, 2019 9:41 AM
+> > To: George Hung
+> > Cc: Mark Rutland; Linus Walleij; Tali Perry; paulmck@linux.ibm.com;
+> > wak@google.com; benjaminfair@google.com; openbmc@lists.ozlabs.org;
+> > tomer.maimon@nuvoton.com; devicetree@vger.kernel.org; Borislav Petkov;
+> > Avi.Fishman@nuvoton.com; Jonathan Cameron; Mauro Carvalho Chehab;
+> > linux-edac; Patrick Venture; Nicolas Ferre; linux-kernel; James Morse; =
+Greg
+> > Kroah-Hartman; davem@davemloft.net
+> > Subject: Re: [PATCH 5.2 v2 2/2] dt-binding: edac: add NPCM ECC
+> > documentation
+> >
+> > On Wed, Jun 05, 2019 at 10:12:53PM +0800, George Hung wrote:
+> > > Add device tree documentation for Nuvoton BMC ECC
+> > >
+> > > Signed-off-by: George Hung <ghung.quanta@gmail.com>
+> > > ---
+> > >  .../bindings/edac/npcm7xx-sdram-edac.txt        | 17
+> > +++++++++++++++++
+> > >  1 file changed, 17 insertions(+)
+> > >  create mode 100644
+> > > Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> > >
+> > > diff --git
+> > > a/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> > > b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> > > new file mode 100644
+> > > index 000000000000..dd4dac59a5bd
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/edac/npcm7xx-sdram-edac.txt
+> > > @@ -0,0 +1,17 @@
+> > > +Nuvoton NPCM7xx SoC EDAC device driver
+> > > +
+> > > +The Nuvoton NPCM7xx SoC supports DDR4 memory with/without ECC and
+> > the
+> > > +driver uses the EDAC framework to implement the ECC detection and
+> > corrtection.
+> > > +
+> > > +Required properties:
+> > > +- compatible:      should be "nuvoton,npcm7xx-sdram-edac"
+> >
+> > Is this for the whole SDRAM controller or just ECC related registers?
+> > In the former case, the naming should just reflect the block name and n=
+ot a
+> > Linux term.
+>
+> Sorry for confused naming, the address space is for the whole memory cont=
+roller registers indeed,
+> but the driver only uses the ECC related registers.
+> Should I change the name to "nuvoton,npcm7xx-edac" ?
 
-* * * The call-in access is new/changed for this meeting - details below 
-* * *
+No, you should drop the 'edac' part. The DT describes the h/w, not
+what one driver (currently) uses.
 
-Current topics:
-- Development work (including approved network security considerations)
-- BMC use cases
-- Release planning input
-
-
-Access, agenda, and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group
-
-- Joseph
-
-The Security Working Group meeting access is changing.  The old access
-will not be used.  The new access is given in the wiki and in this
-email.  This is effective immediately, so please update your calendars.
-Here is the information for the web video conference and telephone access:
-- Join via Web:https://ibm.webex.com/meet/joseph.reynolds1
-- Join via Phone: Use access code: 927 034 486 -- United States Toll
-Free: 1-844-531-0958. Click here for other phone numbers
-<https://ibm.webex.com/cmp3300/webcomponents/widget/globalcallin/globalcallin.do?siteurl=ibm&serviceType=MC&ED=756982637&tollFree=1>
-- Visit the Webex web site for more ways to join or for an updated
-access code.
-
-
+Rob
