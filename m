@@ -2,54 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0E006440B
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 11:01:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2050F644B3
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 11:52:34 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45kCph58d7zDqdS
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 19:01:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45kDxq2Z8xzDqdx
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 19:52:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=087778c05=george.hung@quantatw.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 45kCnc29ypzDqcM
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:00:14 +1000 (AEST)
-Received: from unknown (HELO mailbx06.quanta.corp) ([10.243.91.101])
- by mx01.quantatw.com with ESMTP; 10 Jul 2019 16:59:54 +0800
-Received: from mailbx05.quanta.corp (10.243.91.100) by mailbx06.quanta.corp
- (10.243.91.101) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 10 Jul
- 2019 16:59:53 +0800
-Received: from mailbx05.quanta.corp ([192.168.0.5]) by mailbx05.quanta.corp
- ([192.168.0.5]) with mapi id 15.01.1713.004; Wed, 10 Jul 2019 16:59:53 +0800
-From: =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
-To: "Patrick Venture (venture@google.com)" <venture@google.com>
-Subject: phosphor-ipmi-flash in-band update question
-Thread-Topic: phosphor-ipmi-flash in-band update question
-Thread-Index: AdU2+0XsgRHJ+dogQrmlYPJ+JiFMyw==
-Date: Wed, 10 Jul 2019 08:59:53 +0000
-Message-ID: <aca67083725a43149c4571df9f13e9f1@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24750.004
-x-tm-as-result: No--22.524600-0.000000-31
-x-tm-as-matchedid: 140026-155797-139704-113220-780058-111604-702962-701816-7
- 04534-701751-702881-704318-700000-704114-700926-700558-704915-264792-701719
- -111605-700570-702612-703734-303242-102356-704959-780016-703080-703712-7042
- 92-705018-704559-704714-703117-701030-703967-703878-700069-701029-701342-70
- 4841-188124-704706-188093-148004-148054-20020-42000-63
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-Content-Type: multipart/alternative;
- boundary="_000_aca67083725a43149c4571df9f13e9f1quantatwcom_"
+ spf=none (mailfrom) smtp.mailfrom=armlinux.org.uk
+ (client-ip=2001:4d48:ad52:3201:214:fdff:fe10:1be6;
+ helo=pandora.armlinux.org.uk;
+ envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=armlinux.org.uk
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=armlinux.org.uk header.i=@armlinux.org.uk
+ header.b="SuuW/7NN"; dkim-atps=neutral
+X-Greylist: delayed 463 seconds by postgrey-1.36 at bilbo;
+ Wed, 10 Jul 2019 19:51:58 AEST
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk
+ [IPv6:2001:4d48:ad52:3201:214:fdff:fe10:1be6])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45kDxB2NpMzDqZb
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:51:56 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+ MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=j/WSDXca8rXK9NsDZMmI4ZGVD5lmMYmQNn9cX+c1P0c=; b=SuuW/7NN1z53N126yQd0mfU0n
+ ntWsBeL22jFfrqe6UV7yYYjaWAb/mGvo82v/VpffWPeHAXC8qvHdMVqjvTeqQYorTqKjPyjcVkd0Y
+ ehhidoReYAcrBOGYvK5hg+mxgyuD5Njr2SLIjID07Kvs0w8adz+Czb2UlD+NlXUjcnJQShORaFQ6X
+ Xl3J1vYZGJzoNp6wHmHn8OimwqiNyO9IG6bSDFpjxItLMpKnIWdEU05QuowI2tkahamV/uty376Ez
+ mf5JMQomwfeTQc+3SQ9pZj0NiYOkjfuIR3hSKUK/aQunmlQ7Q5KSFX7XpTfFzFgMc9EjJ+4N1wSfg
+ nEpyIjNkA==;
+Received: from shell.armlinux.org.uk
+ ([2001:4d48:ad52:3201:5054:ff:fe00:4ec]:59340)
+ by pandora.armlinux.org.uk with esmtpsa
+ (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256) (Exim 4.90_1)
+ (envelope-from <linux@armlinux.org.uk>)
+ id 1hl98c-0005tt-RN; Wed, 10 Jul 2019 10:43:47 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.89)
+ (envelope-from <linux@shell.armlinux.org.uk>)
+ id 1hl98T-0003nw-5z; Wed, 10 Jul 2019 10:43:37 +0100
+Date: Wed, 10 Jul 2019 10:43:37 +0100
+From: Russell King - ARM Linux admin <linux@armlinux.org.uk>
+To: Johannes Berg <johannes@sipsolutions.net>
+Subject: Re: [PATCH 00/12] treewide: Fix GENMASK misuses
+Message-ID: <20190710094337.wf2lftxzfjq2etro@shell.armlinux.org.uk>
+References: <cover.1562734889.git.joe@perches.com>
+ <5fa1fa6998332642c49e2d5209193ffe2713f333.camel@sipsolutions.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5fa1fa6998332642c49e2d5209193ffe2713f333.camel@sipsolutions.net>
+User-Agent: NeoMutt/20170113 (1.7.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,125 +72,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "OpenBMC Maillist \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>
+Cc: devel@driverdev.osuosl.org, linux-mmc@vger.kernel.org,
+ alsa-devel@alsa-project.org, Benjamin Fair <benjaminfair@google.com>,
+ linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-iio@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ dri-devel@lists.freedesktop.org, netdev@vger.kernel.org,
+ Joe Perches <joe@perches.com>, linux-amlogic@lists.infradead.org,
+ Andrew Morton <akpm@linux-foundation.org>,
+ linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org,
+ linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_aca67083725a43149c4571df9f13e9f1quantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+On Wed, Jul 10, 2019 at 11:17:31AM +0200, Johannes Berg wrote:
+> On Tue, 2019-07-09 at 22:04 -0700, Joe Perches wrote:
+> > These GENMASK uses are inverted argument order and the
+> > actual masks produced are incorrect.  Fix them.
+> > 
+> > Add checkpatch tests to help avoid more misuses too.
+> > 
+> > Joe Perches (12):
+> >   checkpatch: Add GENMASK tests
+> 
+> IMHO this doesn't make a lot of sense as a checkpatch test - just throw
+> in a BUILD_BUG_ON()?
 
-SGkgUGF0cmljaywNCg0KV2WhpmQgbGlrZSB0byBkbyBpbi1iYW5kIGZpcm13YXJlIHVwZGF0ZSBi
-eSBwaG9zcGhvci1pcG1pLWZsYXNoLCBidXQgaXQgbXVzdCBwcm92aWRlIHRoZSBzaWduYXR1cmUg
-ZmlsZSBvdGhlcndpc2UgaXQgZXhpdGVkIGRpcmVjdGx5Lg0KDQpIb3cgZG8gd2UgbWFrZSB0aGUg
-YXBwcm9wcmlhdGUgc2lnbmF0dXJlIGZpbGUgZm9yIHBob3NwaG9yLWlwbWktZmxhc2ggYW5kIGFs
-c28gdmVyaWZ5IGl0IHN1Y2Nlc3NmdWxseSA/DQoNCk9yIGlzIHRoZXJlIGEgd2F5IHRvIGRvIEZX
-IHVwZGF0ZSB3aXRob3V0IGEgc2lnbmF0dXJlIGZpbGU/DQoNCkJlc2lkZXMsIHNpbmNlIHdlIHVz
-ZSBOdXZvdG9uIEJNQyB0byB1cGRhdGUgYnkgTFBDIGJyaWRnZSwgaXQgbmVlZHMgdG8gY29uZmln
-dXJlIHRoZSBNQVBQRURfQUREUkVTUyBhcyB0aGUgcmVzZXJ2ZWQgbWVtb3J5IHJlZ2lvbi4NCg0K
-RG9lcyBpdCBoYXZlIHRvIGFkZCB0aGUgc2ltaWxhciBjb25maWd1cmF0aW9uIHRvIGRldmljZSB0
-cmVlIGxpa2UgQXNwZWVkID8NCg0KDQpUaGFua3MuDQo=
+My personal take on this is that GENMASK() is really not useful, it's
+just pure obfuscation and leads to exactly these kinds of mistakes.
 
---_000_aca67083725a43149c4571df9f13e9f1quantatwcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
+Yes, I fully understand the argument that you can just specify the
+start and end bits, and it _in theory_ makes the code more readable.
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri","sans-serif";}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
-	{mso-style-priority:99;
-	mso-style-link:"=AF=C2=A4=E5=A6r =A6r=A4=B8";
-	margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri","sans-serif";}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri","sans-serif";
-	color:windowtext;}
-span.a
-	{mso-style-name:"=AF=C2=A4=E5=A6r =A6r=A4=B8";
-	mso-style-priority:99;
-	mso-style-link:=AF=C2=A4=E5=A6r;
-	font-family:"Calibri","sans-serif";}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri","sans-serif";}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"blue" vlink=3D"purple" style=3D"text-justify-t=
-rim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Patrick,<o:p></o:p></span></=
-p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We=A1=A6d like to do in-band fi=
-rmware update by phosphor-ipmi-flash, but it must provide the signature fil=
-e otherwise it exited directly.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">How do we make the appropriate =
-signature file for phosphor-ipmi-flash and also verify it successfully ? &n=
-bsp;<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Or is there a way to do FW upda=
-te without a signature file?
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Besides, since we use Nuvoton B=
-MC to update by LPC bridge, it needs to configure the MAPPED_ADDRESS as the=
- reserved memory region.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Does it have to add the similar=
- configuration to device tree like Aspeed ?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks.<o:p></o:p></span></p>
-</div>
-</body>
-</html>
+However, the problem is when writing code.  GENMASK(a, b).  Is a the
+starting bit or ending bit?  Is b the number of bits?  It's confusing
+and causes mistakes resulting in incorrect code.  A BUILD_BUG_ON()
+can catch some of the cases, but not all of them.
 
---_000_aca67083725a43149c4571df9f13e9f1quantatwcom_--
+For example:
+
+	GENMASK(6, 2)
+
+would satisify the requirement that a > b, so a BUILD_BUG_ON() will
+not trigger, but was the author meaning 0x3c or 0xc0?
+
+Personally, I've decided I am _not_ going to use GENMASK() in my code
+because I struggle to get the macro arguments correct - I'm _much_
+happier, and it is way more reliable for me to write the mask in hex
+notation.
+
+I think this is where use of a ternary operator would come in use.  The
+normal way of writing a number of bits tends to be "a:b", so if GENMASK
+took something like GENMASK(6:2), then I'd have less issue with it,
+because it's argument is then in a familiar notation.
+
+Yes, I'm sure that someone will point out that the GENMASK arguments
+are just in the same order, but that doesn't prevent _me_ frequently
+getting it wrong - and that's the point.  The macro seems to me to
+cause more problems than it solves.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTC broadband for 0.8mile line in suburbia: sync at 12.1Mbps down 622kbps up
+According to speedtest.net: 11.9Mbps down 500kbps up
