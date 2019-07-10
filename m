@@ -2,65 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2050F644B3
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 11:52:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D062D64495
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 11:46:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45kDxq2Z8xzDqdx
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 19:52:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45kDqD1KtxzDqcn
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 19:46:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=armlinux.org.uk
- (client-ip=2001:4d48:ad52:3201:214:fdff:fe10:1be6;
- helo=pandora.armlinux.org.uk;
- envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=armlinux.org.uk
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=armlinux.org.uk header.i=@armlinux.org.uk
- header.b="SuuW/7NN"; dkim-atps=neutral
-X-Greylist: delayed 463 seconds by postgrey-1.36 at bilbo;
- Wed, 10 Jul 2019 19:51:58 AEST
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk
- [IPv6:2001:4d48:ad52:3201:214:fdff:fe10:1be6])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::82b; helo=mail-qt1-x82b.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="AXzujGXA"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com
+ [IPv6:2607:f8b0:4864:20::82b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45kDxB2NpMzDqZb
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:51:56 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
- MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=j/WSDXca8rXK9NsDZMmI4ZGVD5lmMYmQNn9cX+c1P0c=; b=SuuW/7NN1z53N126yQd0mfU0n
- ntWsBeL22jFfrqe6UV7yYYjaWAb/mGvo82v/VpffWPeHAXC8qvHdMVqjvTeqQYorTqKjPyjcVkd0Y
- ehhidoReYAcrBOGYvK5hg+mxgyuD5Njr2SLIjID07Kvs0w8adz+Czb2UlD+NlXUjcnJQShORaFQ6X
- Xl3J1vYZGJzoNp6wHmHn8OimwqiNyO9IG6bSDFpjxItLMpKnIWdEU05QuowI2tkahamV/uty376Ez
- mf5JMQomwfeTQc+3SQ9pZj0NiYOkjfuIR3hSKUK/aQunmlQ7Q5KSFX7XpTfFzFgMc9EjJ+4N1wSfg
- nEpyIjNkA==;
-Received: from shell.armlinux.org.uk
- ([2001:4d48:ad52:3201:5054:ff:fe00:4ec]:59340)
- by pandora.armlinux.org.uk with esmtpsa
- (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256) (Exim 4.90_1)
- (envelope-from <linux@armlinux.org.uk>)
- id 1hl98c-0005tt-RN; Wed, 10 Jul 2019 10:43:47 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.89)
- (envelope-from <linux@shell.armlinux.org.uk>)
- id 1hl98T-0003nw-5z; Wed, 10 Jul 2019 10:43:37 +0100
-Date: Wed, 10 Jul 2019 10:43:37 +0100
-From: Russell King - ARM Linux admin <linux@armlinux.org.uk>
-To: Johannes Berg <johannes@sipsolutions.net>
-Subject: Re: [PATCH 00/12] treewide: Fix GENMASK misuses
-Message-ID: <20190710094337.wf2lftxzfjq2etro@shell.armlinux.org.uk>
-References: <cover.1562734889.git.joe@perches.com>
- <5fa1fa6998332642c49e2d5209193ffe2713f333.camel@sipsolutions.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45kDpj2TcMzDqPb
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:46:20 +1000 (AEST)
+Received: by mail-qt1-x82b.google.com with SMTP id h21so1663420qtn.13
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 02:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=zf0Y8+z1ZYCm4V8OxG5S/sFvVsAF7QOkvlShho0Xllo=;
+ b=AXzujGXAc0P5RhzMKxJ6zWt6jmNGuUViVRDzcTrBvQZHsOYTYICGj9IXCNb3lK9VL/
+ eAwegIfSBt9V3ZJsCfU+tYMYH8KRaWT9OgYl4zluyJ6No8b7KzBcxDEJMEJbUcit8ETV
+ UptOP+NzKHZqf5t8HXM6+9faf8K0/KMN5WgiI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=zf0Y8+z1ZYCm4V8OxG5S/sFvVsAF7QOkvlShho0Xllo=;
+ b=ug6t/7gP4fc+vufTU66dQzo5//6nAqcz305xHHaosgT7DzG+B8bGt5t/1/5P6cXiwq
+ PiqKp4ABLc+N5LUa1IIG/1YmBOmGAEkTI3HELAIfVjHYLh72RlI4fn5dt5RMVif8t5EL
+ A8q6DRGdg4zLV4nrWKIhpUlr3FQAKk4zBixuS2MK8oInFVVkw/wUUBayPf7AT75K+ir1
+ TWPl/c8g3wphhj7WvMfRcfLOfgILHZS26DrzhDSeusey1n0fmkdO/LunWaG1gtZEpyoa
+ cFOYYQ1KlnGay1dkU+tOBrfV2jtZ8QXy/ilqAZ7tJwiYkzxbzu2KaSxvrFMQq2MToCAD
+ c5NQ==
+X-Gm-Message-State: APjAAAWk4YYU7gmBT+bKZcO62qVq+g/YvCv528qPZsfD7cUIDPNsbHnK
+ Zm1oDM/reOV8LvC15xkt15zvVJJ3PLCHZcNne7p9aiH3
+X-Google-Smtp-Source: APXvYqw4v1OP2PExTAFW2oprAXq7Rkh7HGq7cLhZaqj01Q3aKNrGfJ5KhfQRKbCEmmcwDgZwVsjD19Lc/UCPdvBbO8o=
+X-Received: by 2002:ac8:2fc8:: with SMTP id m8mr23027308qta.269.1562751976767; 
+ Wed, 10 Jul 2019 02:46:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5fa1fa6998332642c49e2d5209193ffe2713f333.camel@sipsolutions.net>
-User-Agent: NeoMutt/20170113 (1.7.2)
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 10 Jul 2019 09:46:04 +0000
+Message-ID: <CACPK8XfLruW7RN+6G=eAjuY_pKPRbTVBs8aueJs==6QzmhDY2w@mail.gmail.com>
+Subject: Moving kernel to Linux 5.2
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,67 +66,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devel@driverdev.osuosl.org, linux-mmc@vger.kernel.org,
- alsa-devel@alsa-project.org, Benjamin Fair <benjaminfair@google.com>,
- linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- linux-wireless@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-mediatek@lists.infradead.org,
- dri-devel@lists.freedesktop.org, netdev@vger.kernel.org,
- Joe Perches <joe@perches.com>, linux-amlogic@lists.infradead.org,
- Andrew Morton <akpm@linux-foundation.org>,
- linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 10, 2019 at 11:17:31AM +0200, Johannes Berg wrote:
-> On Tue, 2019-07-09 at 22:04 -0700, Joe Perches wrote:
-> > These GENMASK uses are inverted argument order and the
-> > actual masks produced are incorrect.  Fix them.
-> > 
-> > Add checkpatch tests to help avoid more misuses too.
-> > 
-> > Joe Perches (12):
-> >   checkpatch: Add GENMASK tests
-> 
-> IMHO this doesn't make a lot of sense as a checkpatch test - just throw
-> in a BUILD_BUG_ON()?
+It's that time again. I've pushed a dev-5.2 branch to openbmc/linux
+that contains the patches from dev-5.1 rebased on top of v5.2.
 
-My personal take on this is that GENMASK() is really not useful, it's
-just pure obfuscation and leads to exactly these kinds of mistakes.
+The bump is in this commit:
 
-Yes, I fully understand the argument that you can just specify the
-start and end bits, and it _in theory_ makes the code more readable.
+ https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/23344
 
-However, the problem is when writing code.  GENMASK(a, b).  Is a the
-starting bit or ending bit?  Is b the number of bits?  It's confusing
-and causes mistakes resulting in incorrect code.  A BUILD_BUG_ON()
-can catch some of the cases, but not all of them.
+Note that there's a systemd-network bug exposed by this change so you
+will need this commit to do any testing (or work around the issue by
+manually bringing up the device):
 
-For example:
+ https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/23412
 
-	GENMASK(6, 2)
+Please test, +1 and report your results.
 
-would satisify the requirement that a > b, so a BUILD_BUG_ON() will
-not trigger, but was the author meaning 0x3c or 0xc0?
+Where possible I've cherry picked the patches that will land in 5.3.
+This includes the device tree patches, dps310, aspeed-video, and fsi
+fixes.
 
-Personally, I've decided I am _not_ going to use GENMASK() in my code
-because I struggle to get the macro arguments correct - I'm _much_
-happier, and it is way more reliable for me to write the mask in hex
-notation.
+We have 100 out of tree patches at this point in time. Of these, 58
+are staged in 5.3, leaving 42 out of tree patches. The out of tree
+patches include:
 
-I think this is where use of a ternary operator would come in use.  The
-normal way of writing a number of bits tends to be "a:b", so if GENMASK
-took something like GENMASK(6:2), then I'd have less issue with it,
-because it's argument is then in a familiar notation.
+ - aspeed spi-nor
+ - npcm clk, bpc, mailbox, ethernet, flash
+ - npcm device trees
+ - peci framework, associated various drivers
+ - misc other patches
 
-Yes, I'm sure that someone will point out that the GENMASK arguments
-are just in the same order, but that doesn't prevent _me_ frequently
-getting it wrong - and that's the point.  The macro seems to me to
-cause more problems than it solves.
+If you have code in the tree then please keep working on getting it upstream.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTC broadband for 0.8mile line in suburbia: sync at 12.1Mbps down 622kbps up
-According to speedtest.net: 11.9Mbps down 500kbps up
+Cheers,
+
+Joel
