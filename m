@@ -2,60 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F62965001
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 03:53:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D6B3965012
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 04:02:50 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45kfH24PRLzDqY5
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 11:53:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45kfTN3MlvzDqhl
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 12:02:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d44; helo=mail-io1-xd44.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="KSU7fy0P"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com
+ [IPv6:2607:f8b0:4864:20::d44])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45kfGR5zmGzDqRD
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 11:53:18 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 10 Jul 2019 18:53:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,476,1557212400"; 
- d="scan'208,217";a="186275310"
-Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
- by fmsmga001.fm.intel.com with ESMTP; 10 Jul 2019 18:53:15 -0700
-Received: from fmsmsx118.amr.corp.intel.com ([169.254.1.247]) by
- FMSMSX103.amr.corp.intel.com ([169.254.2.17]) with mapi id 14.03.0439.000;
- Wed, 10 Jul 2019 18:53:15 -0700
-From: "Khetan, Sharad" <sharad.khetan@intel.com>
-To: 'Scott Ingham' <singham@amperecomputing.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: Adding to CLA
-Thread-Topic: Adding to CLA
-Thread-Index: AQHVN0set+FiznT1WkKvbDi98zmsxKbEpdjg
-Date: Thu, 11 Jul 2019 01:53:14 +0000
-Message-ID: <865C376D1B77624AAA570EFEF73CE52F98337E1C@fmsmsx118.amr.corp.intel.com>
-References: <663E1F51-B36B-4E0C-820E-8F57A9C16C30@amperecomputing.com>
-In-Reply-To: <663E1F51-B36B-4E0C-820E-8F57A9C16C30@amperecomputing.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZjRlMGI0ZTUtNWJkMC00ODg4LTkyZDYtZTMzMjdiZTA5YjFlIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiTlR4MW1NejFhdTRGcDc5XC9vNFwvbUtJa2VWWnp6Z01Qb05SNVlYOEVQSVU4QmlxRTFXNWxYU1pUeUZQTkFYdE9LIn0=
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: no-action
-x-originating-ip: [10.1.200.107]
-Content-Type: multipart/alternative;
- boundary="_000_865C376D1B77624AAA570EFEF73CE52F98337E1Cfmsmsx118amrcor_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45kfSs246xzDqcg
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 12:02:20 +1000 (AEST)
+Received: by mail-io1-xd44.google.com with SMTP id h6so9074739iom.7
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 19:02:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=D0JGpYYLwvVj4SxY4miPm78ehXhBCuFIXAAdu9PG9ec=;
+ b=KSU7fy0PFYZTUcetekJviEIj7JCHmhZVX55VDmvx2A3VKf/pso9cwJRoajUMY2jmkC
+ eBCvq8g7a+7mmTaPoaD6vwEAC08NwA/nQjj3RVDE0VQpli7GKHJv4PDgcU4a2vhhDdoJ
+ y0HfuarhFgbbNmGvHmXb5HueRfUYw/nOSMkm0586fEwz+QCBZLvJUGHWh8z1ahKa8l25
+ m7BSOmFnbEvIv0k/8OEtfSpZ1uYp0L35yNQUlcYMSb+Q3CIN+wMKcAM5K5vewaNJolCY
+ VNs5IF6v6bfRZrEOs0Zmoqx/l+8NxE5kzemPS9KKH/GbnhqyQ78TM7PEVdLeScPfOzgA
+ Aw5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=D0JGpYYLwvVj4SxY4miPm78ehXhBCuFIXAAdu9PG9ec=;
+ b=kChn2ZAmnuc+KQBwA/B5OunGziuvws7i0hGtK88T1f1JLsBqln86VSeMfRc9FmW0ey
+ pLEdKg49ae/rTl9S922udPcwXrJvPo0VqxtlYLjBIa2blhE2s3+0r4BkeICXa4Aw7Ibb
+ Ly5Bz+f7WnJg744YG6zuXzUPYdiTKCNxh33qdIlkRLPDEk1PLo+BgpUVdRwy/QqY0/an
+ souHbGVKwIbDHw90wS1BqNaIhNneoimG3d764ynekKtACoFdQQm7onOqo2axbUuAuUE6
+ xWIkewsLLqe+oOne6U1pRMGuMdqxUn8oCbmurX+C+Ihk1qM1zb4TsqgfAzM6I/MeMJ1B
+ 6yiA==
+X-Gm-Message-State: APjAAAW49WDQ17wHKBrmKbekv5PGAgckhxQgODLMDaUOEDmu7ndryY5g
+ NaZ3UlhMLuNx4vdVXHSa2mhsHKPmPozg+78sLb8=
+X-Google-Smtp-Source: APXvYqy1ECRBQ22pD06cGxnpiCaFw6sqY/+zz9YRtVv8iLxMmIbMuIEzDajmBKlslN7QZBGK5XnuJaVznA8fBs2IrCQ=
+X-Received: by 2002:a02:710f:: with SMTP id n15mr1495647jac.119.1562810537153; 
+ Wed, 10 Jul 2019 19:02:17 -0700 (PDT)
 MIME-Version: 1.0
+References: <1562574721-125584-1-git-send-email-mine260309@gmail.com>
+ <2a9ffe98-e190-fe7b-b6d0-2123dadcf551@linux.vnet.ibm.com>
+ <CACPK8XcY5UtyhaggEaKEAzVA626uo228j0vQ8_k6in5pJO89ng@mail.gmail.com>
+In-Reply-To: <CACPK8XcY5UtyhaggEaKEAzVA626uo228j0vQ8_k6in5pJO89ng@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Thu, 11 Jul 2019 10:02:06 +0800
+Message-ID: <CAARXrtmP59uz+MUy4+=J7EDhqW9agLqarBr0WkNA16SB526Q3w@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.1] hwmon (occ): Fix division by zero issue
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,134 +74,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Eddie James <eajames@linux.vnet.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_865C376D1B77624AAA570EFEF73CE52F98337E1Cfmsmsx118amrcor_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Sure, will do.
 
-SGV5IFNjb3R0LA0KSnVzdCBzZW5kIGEgUERGIOKAnFNjaGVkdWxlIEEgdXBkYXRlIDIwMTktMDct
-WFguUERG4oCdIHdpdGggdGV4dCBwZXIgdGVtcGxhdGUgYmVsb3cgYW5kIHNlbmQgdG8gdGhlIGxp
-c3QgKEJyYWQgb3IgS3VydCBoYW5kbGUgdGhpcyBtb3N0IG9mIHRoZSB0aW1lKToNCg0KDQpTY2hl
-ZHVsZSBBIOKAkyBVcGRhdGVkIERhdGUgIGJ5ICBQZXJzb24gc2VuZGluZyB0aGUgdXBkYXRlDQoN
-Ckxpc3Qgb2YgZGVzaWduYXRlZCBlbXBsb3llZXMuIE5COiBhdXRob3JpemF0aW9uIGlzIG5vdCB0
-aWVkIHRvIHBhcnRpY3VsYXIgQ29udHJpYnV0aW9ucy4NClBsZWFzZSBpbmRpY2F0ZSDigJxDTEEg
-TWFuYWdlcuKAnSBuZXh0IHRvIHRoZSBuYW1lIG9mIGFueSBlbXBsb3llZXMgbGlzdGVkIGJlbG93
-IHRoYXQgYXJlDQphdXRob3JpemVkIHRvIGFkZCBvciByZW1vdmUgZGVzaWduYXRlZCBlbXBsb3ll
-ZXMgZnJvbSB0aGlzIGxpc3QgaW4gdGhlIGZ1dHVyZS4NCg0KRW5naW5lZXIgTmFtZSAxDQpFbmdp
-bmVlciBOYW1lIDINCkFkZGVkIEVuZ2luZWVyIDMNCuKApg0KDQoNCg0KVGhhbmtzLA0KLVNoYXJh
-ZA0KDQpGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJtYy1ib3VuY2VzK3NoYXJhZC5raGV0YW49
-aW50ZWwuY29tQGxpc3RzLm96bGFicy5vcmddIE9uIEJlaGFsZiBPZiBTY290dCBJbmdoYW0NClNl
-bnQ6IFdlZG5lc2RheSwgSnVseSAxMCwgMjAxOSAxMToxMyBBTQ0KVG86IG9wZW5ibWNAbGlzdHMu
-b3psYWJzLm9yZw0KU3ViamVjdDogQWRkaW5nIHRvIENMQQ0KDQpIaSwNCg0KSG93IGRvIEkgZ28g
-YWJvdXQgZ2V0dGluZyBmb2xrcyBhZGRlZCB0byBvdXIgT3BlbkJNQyBDTEE/IEkgc2VlIHRoZSBl
-eGlzdGluZyBhZ3JlZW1lbnQgYnV0IEkgZG9u4oCZdCBrbm93IGhvdyB0byBhZGQgbmV3IHBlb3Bs
-ZSwNCg0KVGhhbmtzLA0KU2NvdHQgSW5naGFtDQpBbXBlcmUgQ29tcHV0aW5nDQoNCg==
-
---_000_865C376D1B77624AAA570EFEF73CE52F98337E1Cfmsmsx118amrcor_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-TWFuZ2FsOw0KCXBhbm9zZS0xOjAgMCA0IDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFjZQ0KCXtm
-b250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2IDMgMiA0
-O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToyIDE1IDUg
-MiAyIDIgNCAzIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxp
-Lk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1ib3R0b206
-LjAwMDFwdDsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5z
-LXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5
-Ojk5Ow0KCWNvbG9yOiMwNTYzQzE7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQphOnZp
-c2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5rRm9sbG93ZWQNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5
-Ow0KCWNvbG9yOiM5NTRGNzI7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpzcGFuLkVt
-YWlsU3R5bGUxNw0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsNCglmb250LWZhbWlseToiQ2Fs
-aWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCnNwYW4uRW1haWxTdHlsZTE4
-DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
-IixzYW5zLXNlcmlmOw0KCWNvbG9yOiMxRjQ5N0Q7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0
-eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2Vj
-dGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEu
-MGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHls
-ZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQi
-IHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+
-PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0
-IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFk
-Pg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIj4NCjxk
-aXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBuYW1lPSJf
-TWFpbEVuZENvbXBvc2UiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5
-N0QiPkhleSBTY290dCw8bzpwPjwvbzpwPjwvc3Bhbj48L2E+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Y29sb3I6IzFGNDk3RCI+SnVzdCBz
-ZW5kIGEgUERGIOKAnFNjaGVkdWxlIEEgdXBkYXRlIDIwMTktMDctWFguUERG4oCdIHdpdGggdGV4
-dCBwZXIgdGVtcGxhdGUgYmVsb3cgYW5kIHNlbmQgdG8gdGhlIGxpc3QgKEJyYWQgb3IgS3VydCBo
-YW5kbGUgdGhpcyBtb3N0IG9mIHRoZSB0aW1lKTo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtjb2xvcjojMUY0
-OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwv
-bzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1z
-aXplOjExLjBwdDtjb2xvcjojMUY0OTdEIj5TY2hlZHVsZSBBIOKAkyBVcGRhdGVkDQo8Yj48dT5E
-YXRlPC91PjwvYj48dT4mbmJzcDsgPC91PmJ5ICZuYnNwOzxiPjx1PlBlcnNvbiBzZW5kaW5nIHRo
-ZSB1cGRhdGU8L3U+PC9iPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5i
-c3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJm
-b250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPkxpc3Qgb2YgZGVzaWduYXRlZCBlbXBsb3ll
-ZXMuIE5COiBhdXRob3JpemF0aW9uIGlzIG5vdCB0aWVkIHRvIHBhcnRpY3VsYXIgQ29udHJpYnV0
-aW9ucy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjExLjBwdDtjb2xvcjojMUY0OTdEIj5QbGVhc2UgaW5kaWNhdGUg4oCc
-Q0xBIE1hbmFnZXLigJ0gbmV4dCB0byB0aGUgbmFtZSBvZiBhbnkgZW1wbG95ZWVzIGxpc3RlZCBi
-ZWxvdyB0aGF0IGFyZTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPmF1dGhvcml6ZWQg
-dG8gYWRkIG9yIHJlbW92ZSBkZXNpZ25hdGVkIGVtcGxveWVlcyBmcm9tIHRoaXMgbGlzdCBpbiB0
-aGUgZnV0dXJlLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
-cGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250
-LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPkVuZ2luZWVyIE5hbWUgMQ0KPG86cD48L286cD48
-L3NwYW4+PC9iPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250
-LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPkVuZ2luZWVyIE5hbWUgMjxvOnA+PC9vOnA+PC9z
-cGFuPjwvYj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1z
-aXplOjExLjBwdDtjb2xvcjojMUY0OTdEIj5BZGRlZCBFbmdpbmVlciAzPG86cD48L286cD48L3Nw
-YW4+PC9iPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
-MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPuKApjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0Qi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+
-PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
-MTEuMHB0O2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXY+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250
-LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPlRoYW5r
-cyw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHls
-ZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNl
-cmlmO2NvbG9yOiMxRjQ5N0QiPi1TaGFyYWQ8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
-MS4wcHQ7Y29sb3I6IzFGNDk3RCI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtjb2xvcjojMUY0
-OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPGRpdiBzdHlsZT0iYm9y
-ZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4wcHQgMGlu
-IDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGEgbmFtZT0iX19fX19yZXBseXNlcGFy
-YXRvciI+PC9hPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Gcm9tOjwvc3Bhbj48
-L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPiBvcGVuYm1jIFttYWlsdG86b3BlbmJt
-Yy1ib3VuY2VzJiM0MztzaGFyYWQua2hldGFuPWludGVsLmNvbUBsaXN0cy5vemxhYnMub3JnXQ0K
-PGI+T24gQmVoYWxmIE9mIDwvYj5TY290dCBJbmdoYW08YnI+DQo8Yj5TZW50OjwvYj4gV2VkbmVz
-ZGF5LCBKdWx5IDEwLCAyMDE5IDExOjEzIEFNPGJyPg0KPGI+VG86PC9iPiBvcGVuYm1jQGxpc3Rz
-Lm96bGFicy5vcmc8YnI+DQo8Yj5TdWJqZWN0OjwvYj4gQWRkaW5nIHRvIENMQTxvOnA+PC9vOnA+
-PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZu
-YnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNp
-emU6MTEuMHB0Ij5IaSw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQi
-PkhvdyBkbyBJIGdvIGFib3V0IGdldHRpbmcgZm9sa3MgYWRkZWQgdG8gb3VyIE9wZW5CTUMgQ0xB
-PyBJIHNlZSB0aGUgZXhpc3RpbmcgYWdyZWVtZW50IGJ1dCBJIGRvbuKAmXQga25vdyBob3cgdG8g
-YWRkIG5ldyBwZW9wbGUsPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFu
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
-Ij5UaGFua3MsPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNw
-YW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlNjb3R0IEluZ2hhbTxvOnA+PC9vOnA+PC9zcGFu
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
-Ij5BbXBlcmUgQ29tcHV0aW5nPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
-
---_000_865C376D1B77624AAA570EFEF73CE52F98337E1Cfmsmsx118amrcor_--
+On Thu, Jul 11, 2019 at 9:51 AM Joel Stanley <joel@jms.id.au> wrote:
+>
+> On Mon, 8 Jul 2019 at 15:19, Eddie James <eajames@linux.vnet.ibm.com> wrote:
+> >
+> >
+> > On 7/8/19 3:32 AM, Lei YU wrote:
+> > > The code in occ_get_powr_avg() invokes div64_u64() without checking the
+> > > divisor. In case the divisor is zero, kernel gets an "Division by zero
+> > > in kernel" error.
+> > >
+> > > Check the divisor and make it return 0 if the divisor is 0.
+> >
+> >
+> > Thanks!
+> >
+> > Reviewed-by: Eddie James <eajames@linux.ibm.com>
+>
+> Merged into dev-5.2.
+>
+> Lei, can you please submit this to upstream? Please add Eddie's r-b to
+> the commit message.
+>
+> Cheers,
+>
+> Joel
+>
+> >
+> >
+> > >
+> > > Signed-off-by: Lei YU <mine260309@gmail.com>
+> > > ---
+> > >   drivers/hwmon/occ/common.c | 6 ++++--
+> > >   1 file changed, 4 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+> > > index e9d7167..15c5d43 100644
+> > > --- a/drivers/hwmon/occ/common.c
+> > > +++ b/drivers/hwmon/occ/common.c
+> > > @@ -406,8 +406,10 @@ static ssize_t occ_show_power_1(struct device *dev,
+> > >
+> > >   static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
+> > >   {
+> > > -     return div64_u64(get_unaligned_be64(accum) * 1000000ULL,
+> > > -                      get_unaligned_be32(samples));
+> > > +     u64 divisor = get_unaligned_be32(samples);
+> > > +
+> > > +     return (divisor == 0) ? 0 :
+> > > +             div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
+> > >   }
+> > >
+> > >   static ssize_t occ_show_power_2(struct device *dev,
+> >
