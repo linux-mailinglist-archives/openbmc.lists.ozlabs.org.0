@@ -2,52 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AABD764C75
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jul 2019 21:00:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A133264FFE
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 03:52:11 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45kT5V0993zDqkJ
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 04:59:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45kfF50BSJzDqhD
+	for <lists+openbmc@lfdr.de>; Thu, 11 Jul 2019 11:52:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::841; helo=mail-qt1-x841.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="jTtSXcD9"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45kT4v1vlBzDqfc
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 04:59:20 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 10 Jul 2019 11:59:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.63,475,1557212400"; d="scan'208";a="173939602"
-Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
- by FMSMGA003.fm.intel.com with ESMTP; 10 Jul 2019 11:59:17 -0700
-Subject: Re: Proposal to replace Clang Format with ESLint and Prettier in
- phosphor-webui
-To: openbmc@lists.ozlabs.org
-References: <CAOUmYFRfVQha0NCZd2aLTc-EC2GNF8wuXqnAyWNMCpzcecQUKw@mail.gmail.com>
- <6f963ba0-467f-14fe-ac0b-7c09b547d109@intel.com>
- <CAOUmYFRHh3bQSwmFMEcvokd6_yFxPE7-X+UmBTcFxMegHdX0eA@mail.gmail.com>
- <26aeae20-6815-d160-584f-c9252ec6a568@intel.com>
- <CAOUmYFTj37WtKAs+RdjXPabEjVKj859=j2e5v0NWBc5n81VcUA@mail.gmail.com>
- <CAOUmYFSPoDhDrTqhNv+ehtJmj3E6qw2cyUKSQGp26nyFH_VAaA@mail.gmail.com>
-From: Ed Tanous <ed.tanous@intel.com>
-Message-ID: <d453defc-d076-5077-1e6c-ea7b50789efb@intel.com>
-Date: Wed, 10 Jul 2019 11:59:17 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45kfDX6fv4zDqRD
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 11:51:40 +1000 (AEST)
+Received: by mail-qt1-x841.google.com with SMTP id l9so4681266qtu.6
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jul 2019 18:51:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=m9hH78JfF0IovK05YGFgaJhkRuVxw4gofnnpOm9iqZw=;
+ b=jTtSXcD9LDiWMxal7SX6XvuhFJG/RkRO80yLg3BXQ8wtC75pSRhe4mqRaF6qHG8Uf7
+ NsG7MZflbAygQEZndXseVk9YV38DCjcjvjw3pLJpDvMD4Q9x3KqF4bJPf6z8ZrnHPHpc
+ F1s/p0qcQWMcDZEJ3znE3yk8LlJGW1XGtN3Y8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=m9hH78JfF0IovK05YGFgaJhkRuVxw4gofnnpOm9iqZw=;
+ b=JDRw4bx+ier/chV7OX81bltBnxpvPWOl2UB2mEGoMNe487+cEWpAcLuuwDI81HUExI
+ cegN5gBHeZTGqKx1dKDCcceqiU4BRnCrUOG/fyaK18fMGHiJJTlurYAY6O6T60C+DF08
+ mAYZbJFlq9+YclVJQ21/hW39HIZwFeT99tYq1ZHY7Jn7nMWMRigbNzuMldhWbDQFFpCp
+ EAB4bF/yVidqLQebVrzDZctuPLHwZi7W/OwL7Nl1MulbgglBDqndRcFqDNQWWPvkkHYE
+ SSPizkeR1QNHmv+JtSPPTU5JZ5f3D2roq3Bz/qZogHv6Z9agVS2esMntS/5HubmoTZ8G
+ 0Inw==
+X-Gm-Message-State: APjAAAWzIScOYG95ddhhDHjl/UgGHu4vOL0gDJZcT6lC5SEi3Fk7uvcH
+ qS7qVbrZ23fKoK5Q+aQRmdgWhFSB2zSmVWUzJ+0=
+X-Google-Smtp-Source: APXvYqwtMciR9QLI3Pf8mbKhHk6nyGCsvalnwvrBHQ0pnUNWIYbIsBl1DRxcGHmPHtZUlkrS5HG5Roc1e329OMJusJE=
+X-Received: by 2002:ac8:7219:: with SMTP id a25mr936261qtp.234.1562809896717; 
+ Wed, 10 Jul 2019 18:51:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAOUmYFSPoDhDrTqhNv+ehtJmj3E6qw2cyUKSQGp26nyFH_VAaA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <1562574721-125584-1-git-send-email-mine260309@gmail.com>
+ <2a9ffe98-e190-fe7b-b6d0-2123dadcf551@linux.vnet.ibm.com>
+In-Reply-To: <2a9ffe98-e190-fe7b-b6d0-2123dadcf551@linux.vnet.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 11 Jul 2019 01:51:25 +0000
+Message-ID: <CACPK8XcY5UtyhaggEaKEAzVA626uo228j0vQ8_k6in5pJO89ng@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.1] hwmon (occ): Fix division by zero issue
+To: Eddie James <eajames@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,45 +70,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/10/19 10:17 AM, Derick wrote:
-> Thanks Ed for the reviews and support on the GUI tools work! I ran into a
-> roadblock with the format-code.sh call. I am not finding Prettier as an
-> Ubuntu
-> package and won't be able to make the call during the build process.
+On Mon, 8 Jul 2019 at 15:19, Eddie James <eajames@linux.vnet.ibm.com> wrote:
+>
+>
+> On 7/8/19 3:32 AM, Lei YU wrote:
+> > The code in occ_get_powr_avg() invokes div64_u64() without checking the
+> > divisor. In case the divisor is zero, kernel gets an "Division by zero
+> > in kernel" error.
+> >
+> > Check the divisor and make it return 0 if the divisor is 0.
+>
+>
+> Thanks!
+>
+> Reviewed-by: Eddie James <eajames@linux.ibm.com>
 
-Not surprising;  Prettier is an npm package, not specific to Ubuntu.
+Merged into dev-5.2.
 
-sudo npm install --global prettier
+Lei, can you please submit this to upstream? Please add Eddie's r-b to
+the commit message.
 
-Should give you the result you want.
+Cheers,
 
-> However,
-> I am able to use a Git hook to test the code prior to commit and/or push.
+Joel
 
-That's great that this is available, but I'm not really comfortable if
-it can't be enforced in CI.  That would mean someone needs to pull down
-each commit and verify it manually.  That doesn't really scale IMO, and
-considering that the incumbent (clang-format) can already integrate
-properly, it's hard to justify going backwards.
-
-> 
-> I added the npm scripts that can be called for testing and fixing (if
-> auto-fixable)
-> so that they can be run from the command line for anyone that doesn't
-> Prettier
-> integrated with their code editor (it even has VIM support). 
-
-They'll still need to have it installed globally, which could be added
-as part of the main webui install, but I'm not sure that would be worth it.
-
-> 
->  I have these changes in the Gerrit
-> review https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/22366
-> and am hoping that this is an acceptable solution. 
-
-My main sticking point is the significant manual testing that's going to
-have to take place, for a relatively modest increase in productivity.
-If that can be resolved, I would support you moving this change forward.
+>
+>
+> >
+> > Signed-off-by: Lei YU <mine260309@gmail.com>
+> > ---
+> >   drivers/hwmon/occ/common.c | 6 ++++--
+> >   1 file changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+> > index e9d7167..15c5d43 100644
+> > --- a/drivers/hwmon/occ/common.c
+> > +++ b/drivers/hwmon/occ/common.c
+> > @@ -406,8 +406,10 @@ static ssize_t occ_show_power_1(struct device *dev,
+> >
+> >   static u64 occ_get_powr_avg(u64 *accum, u32 *samples)
+> >   {
+> > -     return div64_u64(get_unaligned_be64(accum) * 1000000ULL,
+> > -                      get_unaligned_be32(samples));
+> > +     u64 divisor = get_unaligned_be32(samples);
+> > +
+> > +     return (divisor == 0) ? 0 :
+> > +             div64_u64(get_unaligned_be64(accum) * 1000000ULL, divisor);
+> >   }
+> >
+> >   static ssize_t occ_show_power_2(struct device *dev,
+>
