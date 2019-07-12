@@ -1,91 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB6CD67546
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 21:07:58 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B209F67372
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 18:38:23 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45lds909L1zDr1D
-	for <lists+openbmc@lfdr.de>; Sat, 13 Jul 2019 02:38:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45lj9m0bB7zDr0Q
+	for <lists+openbmc@lfdr.de>; Sat, 13 Jul 2019 05:07:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=msbarth@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::72c; helo=mail-qk1-x72c.google.com;
+ envelope-from=emilyshaffer@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="XQUITo9W"; 
+ dkim-atps=neutral
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com
+ [IPv6:2607:f8b0:4864:20::72c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ldrR36t7zDqxc
- for <openbmc@lists.ozlabs.org>; Sat, 13 Jul 2019 02:37:39 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6CGbQSm085690
- for <openbmc@lists.ozlabs.org>; Fri, 12 Jul 2019 12:37:37 -0400
-Received: from e12.ny.us.ibm.com (e12.ny.us.ibm.com [129.33.205.202])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2tpucd6u3n-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 12 Jul 2019 12:37:36 -0400
-Received: from localhost
- by e12.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <msbarth@linux.ibm.com>;
- Fri, 12 Jul 2019 17:37:35 +0100
-Received: from b01cxnp23034.gho.pok.ibm.com (9.57.198.29)
- by e12.ny.us.ibm.com (146.89.104.199) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Fri, 12 Jul 2019 17:37:32 +0100
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x6CGbV2b39846342
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 12 Jul 2019 16:37:31 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A2C0DB205F;
- Fri, 12 Jul 2019 16:37:31 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 726D0B2066;
- Fri, 12 Jul 2019 16:37:31 +0000 (GMT)
-Received: from [9.10.99.12] (unknown [9.10.99.12])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 12 Jul 2019 16:37:31 +0000 (GMT)
-Subject: Re: Platform telemetry and health monitoring
-To: Neeraj Ladkani <neladk@microsoft.com>,
- "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <742cb5ad955a42518e15c0c68ed06f94@AUSX13MPS306.AMER.DELL.COM>
- <BYAPR21MB1191A26EB5622A8095101263C8E30@BYAPR21MB1191.namprd21.prod.outlook.com>
-From: Matthew Barth <msbarth@linux.ibm.com>
-Date: Fri, 12 Jul 2019 11:37:31 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45lj962K9dzDr0L
+ for <openbmc@lists.ozlabs.org>; Sat, 13 Jul 2019 05:07:15 +1000 (AEST)
+Received: by mail-qk1-x72c.google.com with SMTP id r21so7248058qke.2
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Jul 2019 12:07:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qFwbuqoesGn0JWlgvyYpsDt2oZlDn5d5vXuORiv2Nww=;
+ b=XQUITo9WvyPCAm7hTEkcET5gN6QHzyp+EW7b04e5Ii7dDqUBpbUOz3InxZ2f7fEyf4
+ 9EKWxcEvcJSf2koBP4kwiQznoxvbW2cGAI9YDmfcBNKhUebRVXAyD3lgWmMwsVkxJoU/
+ S3Kk+IZ4ri83lokmqS/1rRxn5pLRJx57nrCeQ2ZpKB8MB+NRbATeJxLzrrt43OFMdSkV
+ UXMrcvxIT/aheKqF1lwkLuk9tYLeqgpY7XdsrCZQM/AL7N177XCGWCXHp4Ujd4cSONxQ
+ bPkzVHGPdgIysokDuGpGEwKRa3FrGmfCAXOyu0GBkqGo1GXAUZ/mbrRCj/NA8o/XVibk
+ pYlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qFwbuqoesGn0JWlgvyYpsDt2oZlDn5d5vXuORiv2Nww=;
+ b=hGbdyeqqWk0ZqvfpDR6lFocrR+b15h1Cnp1Gx8t3bJfamkGhDcOUyC+NIrOZLyg3gY
+ u5KLkRngeToyydpUviS5Ps57zyNj8RWBDPfzFdM+G3y1RIn9t9X8eGWf9a8KMmrmDDUc
+ 4lLUuMP44TnURDsn752J2R9ybJavVQdX0dGsZS3bLmL5Bk0px3lCF2CidE4L6gh1AViZ
+ 7ZG6j23EgxRBAkqTwsYMTtrVWGsmEK2z8TG91gTsTjzst11wbgskr1acca99CQNDk66h
+ dn6C8rIiBt8EJSUMIpfzXePk77GYw2PsNEJhZ8hzR6iCn7hUJIpIMKMdDuECAGVFHdgQ
+ fpSg==
+X-Gm-Message-State: APjAAAV9NF+D2Cst74H6gNYyhHk55zXtsIjf7txvVR59wGJEepku5guU
+ jOM+nSeaeatIGJiPMsYTDS7y9ExD4Umz6ldwSMJUjg==
+X-Google-Smtp-Source: APXvYqx3lLBJnwMm7cIjuvFu4d2UdV9nixzVll6U9D2l8+rbuI9XgfcpxO+zdO9Pbz+m2sJIw5EmdYFdeDy/ypY2ek4=
+X-Received: by 2002:ae9:e50b:: with SMTP id w11mr7363079qkf.419.1562958432092; 
+ Fri, 12 Jul 2019 12:07:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <BYAPR21MB1191A26EB5622A8095101263C8E30@BYAPR21MB1191.namprd21.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-x-cbid: 19071216-0060-0000-0000-0000035DCB8C
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011415; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01231174; UDB=6.00648546; IPR=6.01012458; 
- MB=3.00027693; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-12 16:37:33
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19071216-0061-0000-0000-00004A1D3D8B
-Message-Id: <94ec9dd5-c0fa-580c-d121-0cb280feddee@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-12_04:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907120171
+References: <626c8a30d1674c71bfb4d4995dde4ca8@lenovo.com>
+In-Reply-To: <626c8a30d1674c71bfb4d4995dde4ca8@lenovo.com>
+From: Emily Shaffer <emilyshaffer@google.com>
+Date: Fri, 12 Jul 2019 12:07:01 -0700
+Message-ID: <CAJoAoZn6+AZJQWgg_79=gqmAf6016eaWexQUkJDN2q_sfewddw@mail.gmail.com>
+Subject: Re: IPMI Add SEL command question
+To: Harry Sung1 <hsung1@lenovo.com>
+Content-Type: multipart/alternative; boundary="00000000000025484c058d809ece"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,97 +72,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Derek Lin23 <dlin23@lenovo.com>, Duke KH Du <dukh@lenovo.com>,
+ Andrew MS1 Peng <pengms1@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Payne Yang <pyang4@lenovo.com>, Yonghui YH21 Liu <liuyh21@lenovo.com>,
+ Lisa YJ19 Liu <liuyj19@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There are a proposed design and associated dbus interfaces for power 
-metrics in gerrit that I'd like to receive any feedback that anyone may 
-have. Interfaces were created for providing average and maximum power 
-consumed metrics over a configurable duration of time. These were 
-intended to be flexible in providing these metrics to the end user thru 
-any protocol able to access the dbus properties calculated by a BMC side 
-application.
+--00000000000025484c058d809ece
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Design: https://gerrit.openbmc-project.xyz/23493
+Harry, I suggest that you participate in the discussion on the review you
+linked to give suggestions. You're right that it's not implemented - if you
+have a vested interest in it, your best bet is to find out what approach
+Jason etc. took and see if you can help fix the problems they found in your
+own implementation. Based on the inactivity there, I'm guessing Intel
+deprioritized that command, so you should probably expect to drive
+development effort (or modification of that patch) yourself.
 
-Dbus Intefaces: https://gerrit.openbmc-project.xyz/23405
+On Fri, Jul 12, 2019 at 7:08 AM Harry Sung1 <hsung1@lenovo.com> wrote:
 
-Matt
+> Hi Team,
+>
+>
+>
+> I have a question about Add SEL command.
+>
+> This standard command seems not be implemented in =E2=80=9Cphosphor-host-=
+ipmid=E2=80=9D.
+>
+> (
+> https://github.com/openbmc/phosphor-host-ipmid/blob/master/storagehandler=
+.cpp#L605
+> )
+>
+>
+>
+> Though I found a patch set about it, but it doesn=E2=80=99t be merged in =
+master
+> due to some issues.
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951
+>
+>
+>
+> Is anyone having any plans to implement it? Or other repository we can
+> refer to?
+>
+>
+>
+> Thanks,
+>
+> Harry
+>
 
-On 6/25/19 2:43 AM, Neeraj Ladkani wrote:
-> This is good stuff Paul. Thank you for detailed explanation in today's call. if you can share the Mock up, it would be great.
-> 
-> I'll share notes soon.
-> 
-> Neeraj
-> 
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+neladk=microsoft.com@lists.ozlabs.org> On Behalf Of Paul.Vancil@dell.com
-> Sent: Monday, June 24, 2019 12:34 PM
-> To: openbmc@lists.ozlabs.org
-> Subject: Re: Platform telemetry and health monitoring
-> 
-> Re Redfish support for Telemetry,
-> Deepak noted that Redfish had a Telemetry schema that is a work-in-progress (wip).
-> Actually, Redfish Telemetry was release as part of the 2018.2 release in August 2018, and is being implemented by some BMCs now.
-> See:  https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.dmtf.org%2Fcontent%2Fnew-redfish-release-adds-openapi-30-support-telemetry&amp;data=02%7C01%7Cneladk%40microsoft.com%7Ca3197c4ea71c426c110f08d6f921c441%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C1%7C636970320773102040&amp;sdata=2U11E0iOrhnRGxl8FgmBrjyaPzHKbWajeT509U5tmXw%3D&amp;reserved=0
-> And  https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.dmtf.org%2Fsites%2Fdefault%2Ffiles%2FRedfish_2018_Release_2_Overview.pdf&amp;data=02%7C01%7Cneladk%40microsoft.com%7Ca3197c4ea71c426c110f08d6f921c441%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C1%7C636970320773102040&amp;sdata=%2B4JjaeCJ870NOUS%2F7%2FhKSu6TFeexSayU45N08YYj0dM%3D&amp;reserved=0    (slides 2, 7 )
-> The White Paper Deepak referred to was released as a wip earlier in the year.   It was not updated but is accurate as a general overview.
-> There is a public-telemetry-mockup that is nice for understanding the model, but not yet published.   We could push them to do that soon.
-> In Redfish, there are:
->     --MetricDefinitions -- that define a metric property (eg minimumConsumedWatts being the min of power consumption over an interval)
->     --MetricReportDefinitions -- define a metric report consisting of a set of MetricProperties, what triggers the generation of the report (eg scheduled, on trigger...), and how to send the report (log to metricReports Collection, send RedfishEvent, etc)
->     --MetricReports -- the report --which can is logged or sent as an event
->     --MetricTriggers -- defines triggers can can trigger a metric report creation eg a sensor crossing a threshold etc
-> 
-> Metric data can be collected by the BMC, and then read by a client with Redfish GET requests, or can be sent autonomously as RedfishEvents.
-> 
-> The data is JSON encoded and formatted along the lines of Redfish responses, but the reports generally only contains the relevant telemetry data (with minimal describing metadata) since the descriptive metadata is all defined by the MetricReportDefinitions and MetricDefinitions that are associated with the report.
->   
-> The Redfish Telemetry model is very general in nature I think--and thus supports about any type of metric or telemetry data one might want.
-> So this is worth a strong consideration as the basis for OpenBMC telemetry.
-> 
-> Note that the model does support allowing users to define metric reports (based on supported Redfish properties), however it does not require allowing users to define custom reports (which could be complicated to implement).
-> I think most early implementations will support some set of pre-defined MetricReportDefinitions.
-> However the DMTF has not officially published any 'standard' Report Definitions.
-> 
-> Thanks,  Paul Vancil   --Dell ESI
-> 
-> 
-> ----------------------------------------------------------------------
-> 
-> Message: 1
-> Date: Thu, 20 Jun 2019 14:54:35 +0530
-> From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-> To: Neeraj Ladkani <neladk@microsoft.com>, OpenBMC Maillist
-> 	<openbmc@lists.ozlabs.org>
-> Subject: Re: Platform telemetry and health monitoring
-> Message-ID: <582a29cf-e3bf-f7d3-2e78-c743c3a6a2d2@linux.vnet.ibm.com>
-> Content-Type: text/plain; charset=utf-8; format=flowed
-> 
-> On 19/06/19 11:11 AM, Neeraj Ladkani wrote:
->> In last meeting, we discussed that telemetry data can be collected
->> using ?tools? and exported using binary ?blobs?,
->>
->> Should we define a standard data format so that information can be parsed through standard mechanism and help taking specific actions.
->>
->> Host CPU
->> Memory
->> Network Adapter
->> GPUs/IPUs
->> BMCs
->>
-> 
-> Redfish has a work-in-progress [1] Telemetry schema, and I believe via this schema, one can pull out telemetry information, as well as have the BMC push out Telemetry information via server-sent events. Are you looking at this as an option?
-> 
-> [1]
-> https://nam06.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.dmtf.org%2Fdocuments%2Fredfish-spmf%2Fredfish-telemetry-white-paper-010a&amp;data=02%7C01%7Cneladk%40microsoft.com%7Ca3197c4ea71c426c110f08d6f921c441%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C1%7C636970320773102040&amp;sdata=YhukH6juS%2FbWyFd7PngBHmbHwsY98%2FEVe2zYuYb2d%2Fs%3D&amp;reserved=0
-> 
-> Regards,
-> Deepak
-> 
->> Thanks
->> Neeraj
-> 
-> 
 
+--=20
+Emily Shaffer
+
+--00000000000025484c058d809ece
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Harry, I suggest that you participate in the discussion on=
+ the review you linked to give suggestions. You&#39;re right that it&#39;s =
+not implemented - if you have a vested interest in it, your best bet is to =
+find out what approach Jason etc. took and see if you can help fix the prob=
+lems they found in your own implementation. Based on the inactivity there, =
+I&#39;m guessing Intel deprioritized that command, so you should probably e=
+xpect to drive development effort (or modification of that patch) yourself.=
+</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
+On Fri, Jul 12, 2019 at 7:08 AM Harry Sung1 &lt;<a href=3D"mailto:hsung1@le=
+novo.com">hsung1@lenovo.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"ZH-TW">
+<div class=3D"gmail-m_1992553702417816486WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Team,<u></u><u></u></span></=
+p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I have a question about Add SEL=
+ command. <u></u>
+<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">This standard command seems not=
+ be implemented in =E2=80=9Cphosphor-host-ipmid=E2=80=9D.<u></u><u></u></sp=
+an></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">(<a href=3D"https://github.com/=
+openbmc/phosphor-host-ipmid/blob/master/storagehandler.cpp#L605" target=3D"=
+_blank">https://github.com/openbmc/phosphor-host-ipmid/blob/master/storageh=
+andler.cpp#L605</a>)<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Though I found a patch set abou=
+t it, but it doesn=E2=80=99t be merged in master due to some issues.<u></u>=
+<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://gerrit.openb=
+mc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951" target=3D"_blank">htt=
+ps://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951</a><u=
+></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Is anyone having any plans to i=
+mplement it? Or other repository we can refer to?<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<u></u><u></u></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Harry<u></u><u></u></span></p>
+</div>
+</div>
+
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature"><div dir=3D"ltr">Emily Shaffer</div></div>
+
+--00000000000025484c058d809ece--
