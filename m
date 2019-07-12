@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82CAA66726
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 08:43:47 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D414C66724
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 08:42:36 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45lNdk08tZzDqnF
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 16:42:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45lNg45fsJzDqD9
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jul 2019 16:43:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,57 +16,57 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="XPc/0qnf"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="l+Uw3Qzc"; 
  dkim-atps=neutral
 Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
  [IPv6:2607:f8b0:4864:20::636])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45lNVv28zdzDqYn
- for <openbmc@lists.ozlabs.org>; Fri, 12 Jul 2019 16:36:39 +1000 (AEST)
-Received: by mail-pl1-x636.google.com with SMTP id b7so4285492pls.6
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 23:36:39 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45lNVw51jZzDqYn
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Jul 2019 16:36:40 +1000 (AEST)
+Received: by mail-pl1-x636.google.com with SMTP id b3so4288176plr.4
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jul 2019 23:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=Cs8ItdG0oRQXx19eGomXoDMkVZNuOlWiu/5nIqGw1Q0=;
- b=XPc/0qnfduz14QYrWZtbY6tE/4pP9UhfGhLoXHDfenVNFpsbeEsSm2ZrjgsVEqDnm4
- NFty2PogpO2UIUaVQOjOvkqvdaiaoJWVUGDMrPZnqU0k4TWp0r7SmDZxnES0ouYdQwUB
- vYAgJWwvVc5DYtoZohm/fzu+htuorpH8hH+C0yNvkM4wbtRQ5UUzgeWRxCxCVUp2rKzq
- 0Su3BW1qPxhQQxEtfhAtH8WuXjrGTDdnVtxUTeC5yebnlWx54g4HP9QsrgIwtvxTSRKt
- nF5clP3IVe6p46S41GBQeIiIi4MMPCs+MpMJUSHW2NZNuDiYk3AWSuT301loB0c2/xST
- YfJw==
+ bh=96Zs41SWv3uwgqqQi74rupSq4f3CG0AVScA6O4z4pZU=;
+ b=l+Uw3Qzch2jl1Y0xmsGC6bowSalaygTneZ66uE2BkicT73KjcjejZG6eZky3WGlzjJ
+ Iii90CwwVoWro3hIWnHzQEAL3BVMgPRhGWG1C9eTHDULouEziyjYy0JCVVuhtiJmDjiX
+ 2baCkhx+HIyHw/IsLupIiG4L1d0ajZ5LfFs5/Rsxd8tvMdj2MPfevixLFPQv6cE3R39S
+ 6D6/mnw9fhHRks7JH6h0C+k5+C4+ca20XsIH4ml1eWHU6pMz0EjjEsiwiLSKn2yZ6PHv
+ JyGP/VWKrLtCvHjRUkjjoTDDbdSDFdeH407+WLmzabSzuGrx7IzEDBK1WfAckO3fX1k0
+ OXpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=Cs8ItdG0oRQXx19eGomXoDMkVZNuOlWiu/5nIqGw1Q0=;
- b=uPyEiIUXeXQ/JxL3oUDwkfLKjl8Ixqtlq3yTb8DRIBZl/s5/VwqZ47mWtOaW04wfdo
- s/oIJkEwBypEu+qDHqUsaR44ftZuNiJsNi4RNXiPlE2KlPRGPwragpaFbUWJ40DHYZ/z
- omheyz9b3MObItNRlh2EcPn4oe0NLrxc6IgTq6aCD1WEXa1sxwfHms6qZ+1wCmUjoevt
- V1rc4cDpOferp5n9kI+vjbiWCDT4QjBdZhSsiWISB37gDA6WRIL1J0XAiqeBNxzJHHl5
- DjqTtvwOyUc15m6HD6Bsz6bZQBpIp2u9lfOR1bGdd5tRof+bqUXnsDVYkBajO1OREWqO
- FQ4w==
-X-Gm-Message-State: APjAAAVRqw4PWjGUWhB7mzv4Rntu7hjhMvOA3oikT9fRdaqpiqwSpIa6
- r8IKTiFDDQQzRVi82ecXDXQ=
-X-Google-Smtp-Source: APXvYqzxHxaRuMdUOpirDbxlu6O7CZTwQcHbagY2hqmKMRYIFee7xM75OZKqrqWXppLtusxqsNKMfw==
-X-Received: by 2002:a17:902:124:: with SMTP id
- 33mr9649294plb.145.1562913396860; 
- Thu, 11 Jul 2019 23:36:36 -0700 (PDT)
+ bh=96Zs41SWv3uwgqqQi74rupSq4f3CG0AVScA6O4z4pZU=;
+ b=q0rgO1yNwj0Nf5jDMjEvCzcbd/hFE2IS4JwEjiRtl1FshLYABhd1cFElGjMh2VR40N
+ s3DjkzHFp7ZGb6iQuBoOWSEU+GUSNSSGKg/S2anYRiVO5auQQazSkiFW2410vtBGEQzi
+ l6hq4inkGj+vzjRhJ/gIDVqTeYaQSH/ycMeGiNG4ADS/qW1FmqVlHirlxhD/h/BRWBsO
+ b2ci789ZQ9Ljj6S8xiqFnvoTRc9wFH2P5FTKukCfMaWUiZOw+2DA8WapkxJZy2Svb/Bn
+ g7CMV83yehf7E10asuIpiASU88zvahQapvQNI6VkMqkkOJMineTph0IEWhW0a43oHAK7
+ +adw==
+X-Gm-Message-State: APjAAAX89Al+m/O5eiOpGyYaLCN7qEVtRZ24Cxj8V+GBWazr0xzC5X3m
+ aV77/1IAejRF69N0lU/hTxE=
+X-Google-Smtp-Source: APXvYqxdV0AM+znt1V9iXHXytT2RbzO8wXCsLt1yzMTMHsWN3eKZVyg9wEs+bFlyZKembuwti89RtA==
+X-Received: by 2002:a17:902:a40c:: with SMTP id
+ p12mr9439098plq.146.1562913398950; 
+ Thu, 11 Jul 2019 23:36:38 -0700 (PDT)
 Received: from localhost.localdomain (220-135-135-179.HINET-IP.hinet.net.
  [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id z19sm6610488pgv.35.2019.07.11.23.36.34
+ by smtp.gmail.com with ESMTPSA id z19sm6610488pgv.35.2019.07.11.23.36.37
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
- Thu, 11 Jul 2019 23:36:36 -0700 (PDT)
+ Thu, 11 Jul 2019 23:36:38 -0700 (PDT)
 From: Samuel Jiang <chyishian.jiang@gmail.com>
 To: joel@jms.id.au,
 	tomer.maimon@nuvoton.com,
 	KWLIU@nuvoton.com
-Subject: [PATCH dev-5.2 v2 5/7] ARM: dts: nuvoton: nuvoton-npcm750-runbmc: Add
- i2c IOExpand nodes
-Date: Fri, 12 Jul 2019 14:35:10 +0800
-Message-Id: <20190712063511.96268-5-chyishian.jiang@gmail.com>
+Subject: [PATCH dev-5.2 v2 6/7] ARM: dts: nuvoton: nuvoton-npcm750-runbmc:
+ gpios which inside module
+Date: Fri, 12 Jul 2019 14:35:11 +0800
+Message-Id: <20190712063511.96268-6-chyishian.jiang@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20190712063511.96268-1-chyishian.jiang@gmail.com>
 References: <20190712063511.96268-1-chyishian.jiang@gmail.com>
@@ -89,429 +89,234 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Samuel Jiang <Samuel.Jiang@quantatw.com>
 
-update nuvoton-npcm750-runbmc i2c nodes which define gpios outside
-RunBMC module
+add nuvoton-npcm750-runbmc-gpio-dtsi which include runbmc gpios
+update nuvoton-npcm750-runbmc gpios which execute inside module
 
 Signed-off-by: Samuel Jiang <Samuel.Jiang@quantatw.com>
 ---
- arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts | 404 +++++++++++++++++++
- 1 file changed, 404 insertions(+)
+ .../boot/dts/nuvoton-npcm750-runbmc-gpio.dtsi | 157 ++++++++++++++++++
+ arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts  |  37 +++++
+ 2 files changed, 194 insertions(+)
+ create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-runbmc-gpio.dtsi
 
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-gpio.dtsi
+new file mode 100644
+index 000000000000..f2f575d099ab
+--- /dev/null
++++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-gpio.dtsi
+@@ -0,0 +1,157 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2019 Quanta Computer Inc. Samuel.Jiang@quantatw.com
++
++/ {
++	pinctrl: pinctrl@f0800000 {
++		gpio0ol_pins: gpio0ol-pins {
++			pins = "GPIO0/IOX1DI";
++			bias-disable;
++			output-low;
++		};
++		gpio1ol_pins: gpio1ol-pins {
++			pins = "GPIO1/IOX1LD";
++			bias-disable;
++			output-low;
++		};
++		gpio2ol_pins: gpio2ol-pins {
++			pins = "GPIO2/IOX1CK";
++			bias-disable;
++			output-low;
++		};
++		gpio3ol_pins: gpio3ol-pins {
++			pins = "GPIO3/IOX1D0";
++			bias-disable;
++			output-low;
++		};
++		gpio8o_pins: gpio8o-pins {
++			pins = "GPIO8/LKGPO1";
++			bias-disable;
++			output-high;
++		};
++		gpio9ol_pins: gpio9ol-pins {
++			pins = "GPIO9/LKGPO2";
++			bias-disable;
++			output-low;
++		};
++		gpio12ol_pins: gpio12ol-pins {
++			pins = "GPIO12/GSPICK/SMB5BSCL";
++			bias-disable;
++			output-low;
++		};
++		gpio13ol_pins: gpio13ol-pins {
++			pins = "GPIO13/GSPIDO/SMB5BSDA";
++			bias-disable;
++			output-low;
++		};
++		gpio14ol_pins: gpio14ol-pins {
++			pins = "GPIO14/GSPIDI/SMB5CSCL";
++			bias-disable;
++			output-low;
++		};
++		gpio15ol_pins: gpio15ol-pins {
++			pins = "GPIO15/GSPICS/SMB5CSDA";
++			bias-disable;
++			output-low;
++		};
++		gpio37ol_pins: gpio37ol-pins {
++			pins = "GPIO37/SMB3CSDA";
++			bias-disable;
++			output-low;
++		};
++		gpio38_pins: gpio38-pins {
++			pins = "GPIO38/SMB3CSCL";
++			bias-disable;
++			input-enable;
++		};
++		gpio39_pins: gpio39-pins {
++			pins = "GPIO39/SMB3BSDA";
++			bias-disable;
++			input-enable;
++		};
++		gpio94ol_pins: gpio94ol-pins {
++			pins = "GPIO94/nKBRST/SMB5DSDA";
++			bias-disable;
++			output-low;
++		};
++		gpio108ol_pins: gpio108ol-pins {
++			pins = "GPIO108/RG1MDC";
++			bias-disable;
++			output-low;
++		};
++		gpio109ol_pins: gpio109ol-pins {
++			pins = "GPIO109/RG1MDIO";
++			bias-disable;
++			output-low;
++		};
++		gpio110ol_pins: gpio110ol-pins {
++			pins = "GPIO110/RG2TXD0/DDRV0";
++			bias-disable;
++			output-low;
++		};
++		gpio111ol_pins: gpio111ol-pins {
++			pins = "GPIO111/RG2TXD1/DDRV1";
++			bias-disable;
++			output-low;
++		};
++		gpio112ol_pins: gpio112ol-pins {
++			pins = "GPIO112/RG2TXD2/DDRV2";
++			bias-disable;
++			output-low;
++		};
++		gpio113ol_pins: gpio113ol-pins {
++			pins = "GPIO113/RG2TXD3/DDRV3";
++			bias-disable;
++			output-low;
++		};
++		gpio208_pins: gpio208-pins {
++			pins = "GPIO208/RG2TXC/DVCK";
++			bias-disable;
++			input-enable;
++		};
++		gpio209ol_pins: gpio209ol-pins {
++			pins = "GPIO209/RG2TXCTL/DDRV4";
++			bias-disable;
++			output-low;
++		};
++		gpio210ol_pins: gpio210ol-pins {
++			pins = "GPIO210/RG2RXD0/DDRV5";
++			bias-disable;
++			output-low;
++		};
++		gpio211ol_pins: gpio211ol-pins {
++			pins = "GPIO211/RG2RXD1/DDRV6";
++			bias-disable;
++			output-low;
++		};
++		gpio212ol_pins: gpio212ol-pins {
++			pins = "GPIO212/RG2RXD2/DDRV7";
++			bias-disable;
++			output-low;
++		};
++		gpio213ol_pins: gpio213ol-pins {
++			pins = "GPIO213/RG2RXD3/DDRV8";
++			bias-disable;
++			output-low;
++		};
++		gpio214ol_pins: gpio214ol-pins {
++			pins = "GPIO214/RG2RXC/DDRV9";
++			bias-disable;
++			output-low;
++		};
++		gpio215ol_pins: gpio215ol-pins {
++			pins = "GPIO215/RG2RXCTL/DDRV10";
++			bias-disable;
++			output-low;
++		};
++		gpio216ol_pins: gpio216ol-pins {
++			pins = "GPIO216/RG2MDC/DDRV11";
++			bias-disable;
++			output-low;
++		};
++		gpio217ol_pins: gpio217ol-pins {
++			pins = "GPIO217/RG2MDIO/DVHSYNC";
++			bias-disable;
++			output-low;
++		};
++	};
++};
 diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
-index e46015c56d24..35ce793d0238 100644
+index 35ce793d0238..53d59ee07e71 100644
 --- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
 +++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc.dts
-@@ -624,6 +624,410 @@
- 	};
- };
+@@ -4,6 +4,7 @@
  
-+/* external io expander */
-+
-+&i2c10 {
-+	gpio: pca9555@4e {
-+		compatible = "nxp,pca9555";
-+		reg = <0x27>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+};
-+
-+&i2c11 {
-+	pca9539_g1a: pca9539-g1a@74 {
-+		compatible = "nxp,pca9539";
-+		reg = <0x74>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		reset-gpios = <&gpio7 4 GPIO_ACTIVE_LOW>;
-+		G1A_P0_0 {
-+			gpio-hog;
-+			gpios = <0 0>;
-+			output-high;
-+			line-name = "TPM_BMC_ALERT_N";
-+		};
-+		G1A_P0_1 {
-+			gpio-hog;
-+			gpios = <1 0>;
-+			input;
-+			line-name = "FM_BIOS_TOP_SWAP";
-+		};
-+		G1A_P0_2 {
-+			gpio-hog;
-+			gpios = <2 0>;
-+			input;
-+			line-name = "FM_BIOS_PREFRB2_GOOD";
-+		};
-+		G1A_P0_3 {
-+			gpio-hog;
-+			gpios = <3 0>;
-+			input;
-+			line-name = "BMC_SATAXPCIE_0TO3_SEL";
-+		};
-+		G1A_P0_4 {
-+			gpio-hog;
-+			gpios = <4 0>;
-+			input;
-+			line-name = "BMC_SATAXPCIE_4TO7_SEL";
-+		};
-+		G1A_P0_5 {
-+			gpio-hog;
-+			gpios = <5 0>;
-+			output-low;
-+			line-name = "FM_UV_ADR_TRIGGER_EN_N";
-+		};
-+		G1A_P0_6 {
-+			gpio-hog;
-+			gpios = <6 0>;
-+			input;
-+			line-name = "RM_THROTTLE_EN_N";
-+		};
-+		G1A_P1_0 {
-+			gpio-hog;
-+			gpios = <8 0>;
-+			input;
-+			line-name = "FM_BMC_TPM_PRES_N";
-+		};
-+		G1A_P1_1 {
-+			gpio-hog;
-+			gpios = <9 0>;
-+			input;
-+			line-name = "FM_CPU0_SKTOCC_LVT3_N";
-+		};
-+		G1A_P1_2 {
-+			gpio-hog;
-+			gpios = <10 0>;
-+			input;
-+			line-name = "FM_CPU1_SKTOCC_LVT3_N";
-+		};
-+		G1A_P1_3 {
-+			gpio-hog;
-+			gpios = <11 0>;
-+			input;
-+			line-name = "PSU1_ALERT_N";
-+		};
-+		G1A_P1_4 {
-+			gpio-hog;
-+			gpios = <12 0>;
-+			input;
-+			line-name = "PSU2_ALERT_N";
-+		};
-+		G1A_P1_5 {
-+			gpio-hog;
-+			gpios = <13 0>;
-+			input;
-+			line-name = "H_CPU0_FAST_WAKE_LVT3_N";
-+		};
-+		G1A_P1_6 {
-+			gpio-hog;
-+			gpios = <14 0>;
-+			output-high;
-+			line-name = "I2C_MUX1_RESET_N";
-+		};
-+		G1A_P1_7 {
-+			gpio-hog;
-+			gpios = <15 0>;
-+			input;
-+			line-name = "FM_CPU_CATERR_LVT3_N";
-+		};
-+	};
-+	pca9539_g1b: pca9539-g1b@75 {
-+		compatible = "nxp,pca9539";
-+		reg = <0x75>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		G1B_P0_0 {
-+			gpio-hog;
-+			gpios = <0 0>;
-+			input;
-+			line-name = "PVDDQ_ABC_PINALERT_N";
-+		};
-+		G1B_P0_1 {
-+			gpio-hog;
-+			gpios = <1 0>;
-+			input;
-+			line-name = "PVDDQ_DEF_PINALERT_N";
-+		};
-+		G1B_P0_2 {
-+			gpio-hog;
-+			gpios = <2 0>;
-+			input;
-+			line-name = "PVDDQ_GHJ_PINALERT_N";
-+		};
-+		G1B_P0_3 {
-+			gpio-hog;
-+			gpios = <3 0>;
-+			input;
-+			line-name = "PVDDQ_KLM_PINALERT_N";
-+		};
-+		G1B_P0_5 {
-+			gpio-hog;
-+			gpios = <5 0>;
-+			input;
-+			line-name = "FM_BOARD_REV_ID0";
-+		};
-+		G1B_P0_6 {
-+			gpio-hog;
-+			gpios = <6 0>;
-+			input;
-+			line-name = "FM_BOARD_REV_ID1";
-+		};
-+		G1B_P0_7 {
-+			gpio-hog;
-+			gpios = <7 0>;
-+			input;
-+			line-name = "FM_BOARD_REV_ID2";
-+		};
-+		G1B_P1_0 {
-+			gpio-hog;
-+			gpios = <8 0>;
-+			input;
-+			line-name = "FM_OC_DETECT_EN_N";
-+		};
-+		G1B_P1_1 {
-+			gpio-hog;
-+			gpios = <9 0>;
-+			input;
-+			line-name = "FM_FLASH_DESC_OVERRIDE";
-+		};
-+		G1B_P1_2 {
-+			gpio-hog;
-+			gpios = <10 0>;
-+			output-low;
-+			line-name = "FP_PWR_ID_LED_N";
-+		};
-+		G1B_P1_3 {
-+			gpio-hog;
-+			gpios = <11 0>;
-+			output-low;
-+			line-name = "BMC_LED_PWR_GRN";
-+		};
-+		G1B_P1_4 {
-+			gpio-hog;
-+			gpios = <12 0>;
-+			output-low;
-+			line-name = "BMC_LED_PWR_AMBER";
-+		};
-+		G1B_P1_5 {
-+			gpio-hog;
-+			gpios = <13 0>;
-+			output-high;
-+			line-name = "FM_BMC_FAULT_LED_N";
-+		};
-+		G1B_P1_6 {
-+			gpio-hog;
-+			gpios = <14 0>;
-+			output-high;
-+			line-name = "FM_CPLD_BMC_PWRDN_N";
-+		};
-+		G1B_P1_7 {
-+			gpio-hog;
-+			gpios = <15 0>;
-+			output-high;
-+			line-name = "BMC_LED_CATERR_N";
-+		};
-+	};
-+};
-+
-+&i2c12 {
-+	pca9539_g2a: pca9539-g2a@74 {
-+		compatible = "nxp,pca9539";
-+		reg = <0x74>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		reset-gpios = <&gpio5 28 GPIO_ACTIVE_LOW>;
-+		G2A_P0_0 {
-+			gpio-hog;
-+			gpios = <0 0>;
-+			output-high;
-+			line-name = "BMC_PON_RST_REQ_N";
-+		};
-+		G2A_P0_1 {
-+			gpio-hog;
-+			gpios = <1 0>;
-+			output-high;
-+			line-name = "BMC_RST_IND_REQ_N";
-+		};
-+		G2A_P0_2 {
-+			gpio-hog;
-+			gpios = <2 0>;
-+			input;
-+			line-name = "RST_BMC_RTCRST";
-+		};
-+		G2A_P0_3 {
-+			gpio-hog;
-+			gpios = <3 0>;
-+			output-high;
-+			line-name = "FM_BMC_PWRBTN_OUT_N";
-+		};
-+		G2A_P0_4 {
-+			gpio-hog;
-+			gpios = <4 0>;
-+			output-high;
-+			line-name = "RST_BMC_SYSRST_BTN_OUT_N";
-+		};
-+		G2A_P0_5 {
-+			gpio-hog;
-+			gpios = <5 0>;
-+			output-high;
-+			line-name = "FM_BATTERY_SENSE_EN_N";
-+		};
-+		G2A_P0_6 {
-+			gpio-hog;
-+			gpios = <6 0>;
-+			output-high;
-+			line-name = "FM_BMC_READY_N";
-+		};
-+		G2A_P0_7 {
-+			gpio-hog;
-+			gpios = <7 0>;
-+			input;
-+			line-name = "IRQ_BMC_PCH_SMI_LPC_N";
-+		};
-+		G2A_P1_0 {
-+			gpio-hog;
-+			gpios = <8 0>;
-+			input;
-+			line-name = "FM_SLOT4_CFG0";
-+		};
-+		G2A_P1_1 {
-+			gpio-hog;
-+			gpios = <9 0>;
-+			input;
-+			line-name = "FM_SLOT4_CFG1";
-+		};
-+		G2A_P1_2 {
-+			gpio-hog;
-+			gpios = <10 0>;
-+			input;
-+			line-name = "FM_NVDIMM_EVENT_N";
-+		};
-+		G2A_P1_3 {
-+			gpio-hog;
-+			gpios = <11 0>;
-+			input;
-+			line-name = "PSU1_BLADE_EN_N";
-+		};
-+		G2A_P1_4 {
-+			gpio-hog;
-+			gpios = <12 0>;
-+			input;
-+			line-name = "BMC_PCH_FNM";
-+		};
-+		G2A_P1_5 {
-+			gpio-hog;
-+			gpios = <13 0>;
-+			input;
-+			line-name = "FM_SOL_UART_CH_SEL";
-+		};
-+		G2A_P1_6 {
-+			gpio-hog;
-+			gpios = <14 0>;
-+			input;
-+			line-name = "FM_BIOS_POST_CMPLT_N";
-+		};
+ /dts-v1/;
+ #include "nuvoton-npcm750.dtsi"
++#include "nuvoton-npcm750-runbmc-gpio.dtsi"
+ 
+ / {
+ 	model = "Nuvoton npcm750 RunBMC Module";
+@@ -609,6 +610,42 @@
+ 		};
+ 	};
+ 
++	pinctrl: pinctrl@f0800000 {
++		pinctrl-names = "default";
++		pinctrl-0 = <
++				/******* RunBMC inside Module pins *******/
++				&gpio0ol_pins
++				&gpio1ol_pins
++				&gpio2ol_pins
++				&gpio3ol_pins
++				&gpio8o_pins
++				&gpio9ol_pins
++				&gpio12ol_pins
++				&gpio13ol_pins
++				&gpio14ol_pins
++				&gpio15ol_pins
++				&gpio37ol_pins
++				&gpio38_pins
++				&gpio39_pins
++				&gpio94ol_pins
++				&gpio108ol_pins
++				&gpio109ol_pins
++				&gpio111ol_pins
++				&gpio112ol_pins
++				&gpio113ol_pins
++				&gpio208_pins
++				&gpio209ol_pins
++				&gpio210ol_pins
++				&gpio211ol_pins
++				&gpio212ol_pins
++				&gpio213ol_pins
++				&gpio214ol_pins
++				&gpio215ol_pins
++				&gpio216ol_pins
++				&gpio217ol_pins
++				>;
 +	};
 +
-+	pca9539_g2b: pca9539-g2b@75 {
-+		compatible = "nxp,pca9539";
-+		reg = <0x75>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		G2B_P0_0 {
-+			gpio-hog;
-+			gpios = <0 0>;
-+			input;
-+			line-name = "FM_CPU_MSMI_LVT3_N";
-+		};
-+		G2B_P0_1 {
-+			gpio-hog;
-+			gpios = <1 0>;
-+			input;
-+			line-name = "FM_BIOS_MRC_DEBUG_MSG_DIS";
-+		};
-+		G2B_P0_2 {
-+			gpio-hog;
-+			gpios = <2 0>;
-+			input;
-+			line-name = "FM_CPU1_DISABLE_BMC_N";
-+		};
-+		G2B_P0_3 {
-+			gpio-hog;
-+			gpios = <3 0>;
-+			output-low;
-+			line-name = "BMC_JTAG_SELECT";
-+		};
-+		G2B_P0_4 {
-+			gpio-hog;
-+			gpios = <4 0>;
-+			output-high;
-+			line-name = "PECI_MUX_SELECT";
-+		};
-+		G2B_P0_5 {
-+			gpio-hog;
-+			gpios = <5 0>;
-+			output-high;
-+			line-name = "I2C_MUX2_RESET_N";
-+		};
-+		G2B_P0_6 {
-+			gpio-hog;
-+			gpios = <6 0>;
-+			input;
-+			line-name = "FM_BMC_CPLD_PSU2_ON";
-+		};
-+		G2B_P0_7 {
-+			gpio-hog;
-+			gpios = <7 0>;
-+			output-high;
-+			line-name = "PSU2_ALERT_EN_N";
-+		};
-+		G2B_P1_0 {
-+			gpio-hog;
-+			gpios = <8 0>;
-+			output-high;
-+			line-name = "FM_CPU_BMC_INIT";
-+		};
-+		G2B_P1_1 {
-+			gpio-hog;
-+			gpios = <9 0>;
-+			output-high;
-+			line-name = "IRQ_BMC_PCH_SCI_LPC_N";
-+		};
-+		G2B_P1_2 {
-+			gpio-hog;
-+			gpios = <10 0>;
-+			output-low;
-+			line-name = "PMB_ALERT_EN_N";
-+		};
-+		G2B_P1_3 {
-+			gpio-hog;
-+			gpios = <11 0>;
-+			output-high;
-+			line-name = "FM_FAST_PROCHOT_EN_N";
-+		};
-+		G2B_P1_4 {
-+			gpio-hog;
-+			gpios = <12 0>;
-+			output-high;
-+			line-name = "BMC_NVDIMM_PRSNT_N";
-+		};
-+		G2B_P1_5 {
-+			gpio-hog;
-+			gpios = <13 0>;
-+			output-low;
-+			line-name = "FM_BACKUP_BIOS_SEL_H_BMC";
-+		};
-+		G2B_P1_6 {
-+			gpio-hog;
-+			gpios = <14 0>;
-+			output-high;
-+			line-name = "FM_PWRBRK_N";
-+		};
-+	};
-+};
-+
- &gcr {
- 	serial_port_mux: mux-controller {
- 	compatible = "mmio-mux";
+ 	leds {
+ 		compatible = "gpio-leds";
+ 		heartbeat {
 -- 
 2.20.1
 
