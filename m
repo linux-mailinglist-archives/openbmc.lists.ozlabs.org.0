@@ -1,128 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4BA46775D
-	for <lists+openbmc@lfdr.de>; Sat, 13 Jul 2019 02:52:28 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45lrqF3llczDr0D
-	for <lists+openbmc@lfdr.de>; Sat, 13 Jul 2019 10:52:25 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B07F867FE4
+	for <lists+openbmc@lfdr.de>; Sun, 14 Jul 2019 17:40:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45mrTz3WmqzDqXP
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 01:40:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=2097b6c345=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d42; helo=mail-io1-xd42.google.com;
+ envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="dT/fUbbX"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="j5hMAuWK"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="EbTQ+Azt"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
+ [IPv6:2607:f8b0:4864:20::d42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45lrpS6v3FzDqys
- for <openbmc@lists.ozlabs.org>; Sat, 13 Jul 2019 10:51:39 +1000 (AEST)
-Received: from pps.filterd (m0001255.ppops.net [127.0.0.1])
- by mx0b-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6D0m3H7021216; Fri, 12 Jul 2019 17:51:33 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=uYFPOecCnHcglKD0n8JHIjL9jaxhrG1UDUmxapAtctw=;
- b=dT/fUbbXE9U5WHxr6GWN1OToAEYg4DdA/OLJqY11IBYemsCfSOo124lWroeLvwxuQrHe
- CiJB0/7DiwFUAL+gBywDFw2IvxpZ+H4tiGde2r5WTE05MPK2E/7czjTQtku2IrlXYuhZ
- jPCCW0eFgJ7/vfgqvgPF4xXsvpyxMmexB4k= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0b-00082601.pphosted.com with ESMTP id 2tpu9ta375-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 12 Jul 2019 17:51:33 -0700
-Received: from ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) by
- ash-exhub203.TheFacebook.com (2620:10d:c0a8:83::5) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 12 Jul 2019 17:51:32 -0700
-Received: from NAM03-DM3-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.100) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Fri, 12 Jul 2019 17:51:32 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector1-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uYFPOecCnHcglKD0n8JHIjL9jaxhrG1UDUmxapAtctw=;
- b=j5hMAuWK+khAug1ChGM5b7giWLGVIDZO3J2rwZrQvUoLwcnxjRJTYUavtbeaAsxEyPe1Ui6hAvuaMKQ/DXiqDISjvYmvtMvsxQQOcCetqleDLWR5aMWGxICCOr1KKEuO9iaBDvEaEQP+v4ImkLRQRmkzEIWG0X3pdvUmQ2WPbz0=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1645.namprd15.prod.outlook.com (10.175.135.143) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2052.18; Sat, 13 Jul 2019 00:51:31 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::4129:4e4d:8cfb:7d5e]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::4129:4e4d:8cfb:7d5e%4]) with mapi id 15.20.2052.020; Sat, 13 Jul 2019
- 00:51:31 +0000
-From: Tao Ren <taoren@fb.com>
-To: Joel Stanley <joel@jms.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Re: Moving kernel to Linux 5.2
-Thread-Topic: Moving kernel to Linux 5.2
-Thread-Index: AQHVNwRhvcHfrTZBp0WwQ3mVC5Ndi6bHvC2A
-Date: Sat, 13 Jul 2019 00:51:31 +0000
-Message-ID: <509f66b3-1749-2dcd-6375-7b95abba46ce@fb.com>
-References: <CACPK8XfLruW7RN+6G=eAjuY_pKPRbTVBs8aueJs==6QzmhDY2w@mail.gmail.com>
-In-Reply-To: <CACPK8XfLruW7RN+6G=eAjuY_pKPRbTVBs8aueJs==6QzmhDY2w@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MWHPR0201CA0043.namprd02.prod.outlook.com
- (2603:10b6:301:73::20) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:180::1:985f]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d2e460fc-a4df-4a32-3251-08d7072c3eb6
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1645; 
-x-ms-traffictypediagnostic: MWHPR15MB1645:
-x-ms-exchange-purlcount: 3
-x-microsoft-antispam-prvs: <MWHPR15MB16452DC440BD72B4EDA7B73EB2CD0@MWHPR15MB1645.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:71;
-x-forefront-prvs: 00979FCB3A
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(979002)(346002)(366004)(39860400002)(396003)(376002)(136003)(189003)(199004)(6506007)(81166006)(81156014)(102836004)(8676002)(46003)(486006)(86362001)(476003)(71200400001)(64126003)(14454004)(53546011)(68736007)(25786009)(52116002)(99286004)(386003)(2616005)(11346002)(64756008)(478600001)(66946007)(71190400001)(2906002)(5660300002)(6306002)(6486002)(6436002)(110136005)(229853002)(65956001)(8936002)(6116002)(65826007)(66556008)(66446008)(966005)(76176011)(316002)(36756003)(7736002)(256004)(305945005)(66476007)(186003)(31696002)(6512007)(6246003)(53936002)(58126008)(31686004)(446003)(65806001)(969003)(989001)(999001)(1009001)(1019001);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1645;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: ww/Qkm9fJceBvk8h+txSPsIrvDZb3zPWMocI0Tth5KU15mND6du4c2Bqnub2koIxlPSot0h/QiM+AJH9z2VbcK0UeDuPcWlUw0h286IZZ+IMSmkdlQ2o6DwtXJh7CS+FKRvbh7eTjBqlSW+Z9C6m48W1oVAvbYywfUeNurPRLTvOTbO4SAA+k2N9FCRO+4U/ql03iSe4IQ2FxlAiSbeakbV96Zf1nQ22p7VIGH2mAD9FHCA4pzl+iIXe5OtNiFuveIMkYtuH59xl01PBqfZ7zbAxG/kKnEfCv3Zkf/+fpL8pUqkM7gDieIkyO77DJWfd/Zqr/yH+dxHWAIFAQ/glhWiUimEsP2ffkfyUeyBlTaj31ClXfDZH9wYELvsS7suJtEF/9KekJb3FHXFPWIbcQGaVA4dAtIZ/HAhB4yFRxTg=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <74CDF40C4E41F348A68F2B84955B8230@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45mrTG0PHQzDqVq
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 01:40:15 +1000 (AEST)
+Received: by mail-io1-xd42.google.com with SMTP id z3so30385442iog.0
+ for <openbmc@lists.ozlabs.org>; Sun, 14 Jul 2019 08:40:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=h4bHQ1Jc5WTGlqwv+kn8JJgmRRoI96dt/IgZ72rjGBA=;
+ b=EbTQ+Aztyq+1j51yJyaXlSrersnYBW/r0zoiVuDyu0dByJxIupmw500q+tV1XItn3f
+ fGPvHEoox/Z2H3e03WWBHc79byethRqRi+k9uixTxTuO23jbUomxPKTd6GvYAtaiPQ/i
+ BsMn4aPMKMHujUFkvPFJLSBEmaL9p1TQgxkZAySXVbi7K49mzgSmmLNPnEmwk6SQ5yEb
+ RPT1qxMUSl+rvW9rcrl0PnK4LG/WCY1Agi8HMWmiSVUYe1jxwuT9MAvWrBkS6TR8+nnb
+ Yt/QsX/b/hRkM9trNmZDyCSaOIFJGcWZzCLVA70oHtdzYR+04HE81/hQddh/Kfp2ap6x
+ 5wAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=h4bHQ1Jc5WTGlqwv+kn8JJgmRRoI96dt/IgZ72rjGBA=;
+ b=JuXme2ELXCMe8ff02OyTSrmU8OXj14qrjrc+GczZ03E3TL5wzJyfuHCb/gva1Z5RNN
+ JhuitP3iGzWHR+MSRwyTQGbgNkf8jhikg36xtHptchr9+CJyDq6FmS8FncMU2/cVflMe
+ sMT1Gr5P8U2mgD4GoWcFViFwg87sz9R3lNw5979weUrhKL2ZgstR6BkYT5JbO0R1Rl7r
+ iB7AFKLjSene3scLiRzrpl4YQfuabP1bPjCtcYzIGhYwBZWyUMWh/lct13XfCmN7tUXT
+ ylrl3gLgWjrGTkrFzqIo1YuNYDoJl8+p79Xks2OqKjvbb9A8esjuki8YcStZq160A8oL
+ xBXA==
+X-Gm-Message-State: APjAAAU0k/jI/BSj3QaJCW8fyWtc9qjnr00YfrMUmfdJtLUSUUuSgbDy
+ 4se6gH++K6H+wfGpyUbqf5exHPjKbAZVUGGNkw==
+X-Google-Smtp-Source: APXvYqz5e0ZMsmxeq3BvuV3Veo7tfSZ2IU3WmhirYiJwumXbxG0Wrfs4Jq9gZf52yJ643RUwyL5TZQdr1Y9XVtHMokQ=
+X-Received: by 2002:a02:b90e:: with SMTP id v14mr22926814jan.122.1563118811187; 
+ Sun, 14 Jul 2019 08:40:11 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2e460fc-a4df-4a32-3251-08d7072c3eb6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jul 2019 00:51:31.1140 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: taoren@fb.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1645
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-12_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907130005
-X-FB-Internal: deliver
+References: <20190702133444.444440-1-avifishman70@gmail.com>
+In-Reply-To: <20190702133444.444440-1-avifishman70@gmail.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Sun, 14 Jul 2019 18:39:29 +0300
+Message-ID: <CAKKbWA7ZLLp4nmcG+rFQbc=f5GWSThoghgF=B5CiunDczYAz3w@mail.gmail.com>
+Subject: Re: [PATCH] mtd: spi-nor: Add Winbond w25q256jvm
+To: Tudor Ambarus <tudor.ambarus@microchip.com>,
+ David Woodhouse <dwmw2@infradead.org>, 
+ Brian Norris <computersforpeace@gmail.com>,
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
+ linux-mtd@lists.infradead.org, 
+ boris.brezillon@bootlin.com, robimarko@gmail.com, 
+ Willis Chai <WillisC@supermicro.com.tw>,
+ Jerry Wang <Jerry_Wang@supermicro.com.tw>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,38 +80,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gNy8xMC8xOSAyOjQ2IEFNLCBKb2VsIFN0YW5sZXkgd3JvdGU6DQo+IEl0J3MgdGhhdCB0aW1l
-IGFnYWluLiBJJ3ZlIHB1c2hlZCBhIGRldi01LjIgYnJhbmNoIHRvIG9wZW5ibWMvbGludXgNCj4g
-dGhhdCBjb250YWlucyB0aGUgcGF0Y2hlcyBmcm9tIGRldi01LjEgcmViYXNlZCBvbiB0b3Agb2Yg
-djUuMi4NCj4gDQo+IFRoZSBidW1wIGlzIGluIHRoaXMgY29tbWl0Og0KPiANCj4gIGh0dHBzOi8v
-dXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9wZW5i
-bWMtMkRwcm9qZWN0Lnh5el9jX29wZW5ibWNfbWV0YS0yRGFzcGVlZF8tMkJfMjMzNDQmZD1Ed0lC
-YVEmYz01VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JnI9aVlFbFQ3SEM3N3BSWjNieVZ2VzhuZyZtPUZZ
-QVBjcWNGaHBGX1dlY1I1a1huVG9tWmZPdng3VlRLQldRWmtPdzkySTAmcz1QSVktbWN4cXVXdWxL
-YTNyNmdsTk9La3hwUm9MVmJSSmI5cHVPaUFENThnJmU9IA0KPiANCj4gTm90ZSB0aGF0IHRoZXJl
-J3MgYSBzeXN0ZW1kLW5ldHdvcmsgYnVnIGV4cG9zZWQgYnkgdGhpcyBjaGFuZ2Ugc28geW91DQo+
-IHdpbGwgbmVlZCB0aGlzIGNvbW1pdCB0byBkbyBhbnkgdGVzdGluZyAob3Igd29yayBhcm91bmQg
-dGhlIGlzc3VlIGJ5DQo+IG1hbnVhbGx5IGJyaW5naW5nIHVwIHRoZSBkZXZpY2UpOg0KPiANCj4g
-IGh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vy
-cml0Lm9wZW5ibWMtMkRwcm9qZWN0Lnh5el9jX29wZW5ibWNfbWV0YS0yRHBob3NwaG9yXy0yQl8y
-MzQxMiZkPUR3SUJhUSZjPTVWRDBSVHRObFRoM3ljZDQxYjNNVXcmcj1pWUVsVDdIQzc3cFJaM2J5
-VnZXOG5nJm09RllBUGNxY0ZocEZfV2VjUjVrWG5Ub21aZk92eDdWVEtCV1Faa093OTJJMCZzPU1h
-eVl2QkJpMUNEZTRSR0Y5TE9IUC0zbG1Ha2xvUWlNRjNQQ1pZRl8wblEmZT0gDQo+IA0KPiBQbGVh
-c2UgdGVzdCwgKzEgYW5kIHJlcG9ydCB5b3VyIHJlc3VsdHMuDQoNCisxLiBCb290ZWQgdXAgbGlu
-dXgtNS4yIG9uIEZhY2Vib29rIENNTSBBU1QyNTAwIEJNQyBhbmQgZXZlcnl0aGluZyBsb29rcyBu
-b3JtYWwuDQoNCkJUVywgSSBtZXQgMiBiaXRiYWtlIGZhaWx1cmVzIHdoaWxlIGJha2luZyBsaW51
-eC1hc3BlZWQtNS4yLiBCZWxvdyBhcmUgbXkgd29ya2Fyb3VuZHMsIGp1c3QgaW4gY2FzZSBvdGhl
-cnMgaGl0IHRoZSBzaW1pbGFyIHByb2JsZW06DQoNCjEpIHNjcmlwdHMvbWttYWtlZmlsZSBmYWls
-cyB3aXRoICJyZWFscGF0aDogY29tbWFuZCBub3QgZm91bmQiDQoNCkknbSBzdXNwZWN0aW5nIGl0
-J3MgY2F1c2VkIGJ5ICRQQVRIIGVudmlyb25tZW50IHZhcmlhYmxlIHVzZWQgYnkgbXkgImJpdGJh
-a2UiIGJlY2F1c2UgInJlYWxwYXRoIiBpcyBpbnN0YWxsZWQgb24gbXkgbWFjaGluZS4NCk15IHdv
-cmthcm91bmQgaXMgcmVwbGFjaW5nIHJlYWxwYXRoIHdpdGggL2Jpbi9yZWFscGF0aCBpbiBzY3Jp
-cHRzL21rbWFrZWZpbGUuDQoNCjIpICJiaXRiYWtlIiByZXBvcnRzIFFBIElzc3VlOiBtb2R1bGVz
-LmJ1aWx0aW4ubW9kaW5mbyBpbnN0YWxsZWQgYnV0IG5vdCBzaGlwcGVkLg0KDQpJdCdzIGJlY2F1
-c2UgSSdtIHN0aWxsIHVzaW5nIG9sZCB2ZXJzaW9uIHlvY3RvIChyb2NrbykuIEkgbWFudWFsbHkg
-YXBwbGllZCBiZWxvdyBwYXRjaCB0byB3b3JrYXJvdW5kIHRoZSBpc3N1ZToNCmh0dHBzOi8vcGF0
-Y2h3b3JrLm9wZW5lbWJlZGRlZC5vcmcvcGF0Y2gvMTYyMTg2Lw0KDQoNCkNoZWVycywNCg0KVGFv
-DQo=
+Hi Tudor, Boris & Tudor,
+
+I see that you pushed this kind of commit of Winbond chip previously,
+can you please approve also this?
+
+On Tue, Jul 2, 2019 at 5:23 PM Avi Fishman <avifishman70@gmail.com> wrote:
+>
+> Similar to w25q256 (besides not supporting QPI mode) but with different ID.
+> The "JVM" suffix is in the datasheet.
+> The datasheet indicates DUAL and QUAD are supported.
+> https://www.winbond.com/resource-files/w25q256jv%20spi%20revi%2010232018%20plus.pdf
+>
+> Signed-off-by: Avi Fishman <avifishman70@gmail.com>
+> ---
+>  drivers/mtd/spi-nor/spi-nor.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
+> index 0c2ec1c21434..ccb217a24404 100644
+> --- a/drivers/mtd/spi-nor/spi-nor.c
+> +++ b/drivers/mtd/spi-nor/spi-nor.c
+> @@ -2120,6 +2120,8 @@ static const struct flash_info spi_nor_ids[] = {
+>         { "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16, SECT_4K) },
+>         { "w25q128", INFO(0xef4018, 0, 64 * 1024, 256, SECT_4K) },
+>         { "w25q256", INFO(0xef4019, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+> +       { "w25q256jvm", INFO(0xef7019, 0, 64 * 1024, 512,
+> +                       SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+>         { "w25m512jv", INFO(0xef7119, 0, 64 * 1024, 1024,
+>                         SECT_4K | SPI_NOR_QUAD_READ | SPI_NOR_DUAL_READ) },
+>
+> --
+> 2.18.0
+>
+
+
+-- 
+Regards,
+Avi
