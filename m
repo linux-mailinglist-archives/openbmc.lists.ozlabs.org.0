@@ -2,87 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68E8969B4F
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 21:23:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55F0369B67
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 21:30:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nYMy4jpKzDqTJ
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 05:23:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nYXj51KKzDqSS
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 05:30:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com;
+ envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="YFH7dV8w"; 
+ dkim-atps=neutral
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
+ [IPv6:2607:f8b0:4864:20::b35])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nYMJ4w1tzDqSB
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 05:22:35 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6FJLwDt140173
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 15:22:27 -0400
-Received: from e14.ny.us.ibm.com (e14.ny.us.ibm.com [129.33.205.204])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2trw43eym8-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 15:22:26 -0400
-Received: from localhost
- by e14.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <jrey@linux.ibm.com>;
- Mon, 15 Jul 2019 20:22:25 +0100
-Received: from b01cxnp22034.gho.pok.ibm.com (9.57.198.24)
- by e14.ny.us.ibm.com (146.89.104.201) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 15 Jul 2019 20:22:23 +0100
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x6FJMMG650200892
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 19:22:22 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1BF922805A
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 19:22:22 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 07FB628065
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 19:22:22 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 19:22:21 +0000 (GMT)
-Subject: Re: Security Working Group meeting - Wednesday July 10 - results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <178abb88-594e-1c23-bf09-3636e6e9ec2b@linux.ibm.com>
-Date: Mon, 15 Jul 2019 14:22:21 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nYWz12VfzDqSK
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 05:30:05 +1000 (AEST)
+Received: by mail-yb1-xb35.google.com with SMTP id 187so6424590ybw.4
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:30:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=S7zKNOUF4iacqCA2wlgFB82QDoPq3oftLsLJViSjGTc=;
+ b=YFH7dV8wuOw0hW3JbO2YBR3w+o3q4DGPPAP5kS+bFJ0ggruUn7mir/JXzDKooCDKVq
+ fdZN4483dLU7+IH3WY+zmYMtJLbJJwsAf/sEAjF8W1/tNK30xmogvqPzBaa2/IYhTG1p
+ Blfimt9YScjt6zX8p8VCAPvLS1OsiYw9oi+KNUucrEvrp+Z6QG7u+fwd/C3S+8UX1aQc
+ 5wgfhAzi7SvCa5Ii1eC1Evz2FLVmf9WuJ8g9FhfF2Mn7UdyMAzUhmNsjUrpLObJl2h/k
+ XqMJJHzdCQPJ4Xj9JkSIrkXquOqCSyhu7v5xBOY9cVlmqXswQUvPiEIh/NjUEjUW1I30
+ Z0qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=S7zKNOUF4iacqCA2wlgFB82QDoPq3oftLsLJViSjGTc=;
+ b=iuYxAk+x3y65SijWiFU4tq017TZtD6dt8oEAunoUGiZ6yrmDM5FYH0PemPdLV0UH2L
+ t9l+FwA24ud5f/SR7afcXs7D/rk8xNBOwgxXelNyrer/3hgjb7VG6TG1rpNMUhDVk2QQ
+ hGy2IpwoivJqSs2JA8a3QzZg2IqDrpY31zkTL8bA2uYf3Q4Vjz9gp3M0dnUa2Bd7e03l
+ 32sbDMdaO4y3l8hASRuHGFmIcJgXWO8GIs/gQFyAtny4KJt6oMN/OyBU43jmJRIf4vW8
+ EsKyxQuiHijc/4ibYR+M8+Op9OXndo4jMahf3952JDKCNde6Mc80BAiFArgcJhqR3AeB
+ lyVQ==
+X-Gm-Message-State: APjAAAXr3aJCEFwEReMq78tdJceVD8ICtvxil8Z9F/NuL6B8sJk+w+8c
+ IesV1pu3x8jb8DVQbAE56+6evYQ6I/mmD5SBXNxPJCpm
+X-Google-Smtp-Source: APXvYqzxTBCnjuTtU/11ucU9vEmKg5WLqnZd0jc/Vu4TIXQGuA4MblE1CqjiBQFo7n8aKsPU1IDom912KTjvutT/nzc=
+X-Received: by 2002:a05:6902:508:: with SMTP id
+ x8mr18554680ybs.406.1563219001309; 
+ Mon, 15 Jul 2019 12:30:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <178abb88-594e-1c23-bf09-3636e6e9ec2b@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19071519-0052-0000-0000-000003DF49FB
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011434; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01232652; UDB=6.00649440; IPR=6.01013953; 
- MB=3.00027728; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-15 19:22:24
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19071519-0053-0000-0000-000061B3E97F
-Message-Id: <95f5155c-f320-f7bd-8bbc-d093769ee3f8@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-15_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907150221
+From: Jandra A <jandraara@gmail.com>
+Date: Mon, 15 Jul 2019 14:29:50 -0500
+Message-ID: <CAMTupoTxeyggc6JBU5EavaHsMj9gQkHaOKy9A5+LLEEwAwjf8A@mail.gmail.com>
+Subject: GUI workgroup - this Wednesday Jul 17 at 10AM CST
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Wang,
+ Kuiying" <kuiying.wang@intel.com>
+Content-Type: multipart/alternative; boundary="000000000000477c45058dbd4972"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,55 +74,102 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/9/19 10:20 AM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday July 10 at 10:00am PDT.
->
-> * * * The call-in access is new/changed for this meeting - details 
-> below * * *
->
-> Current topics:
-> - Development work (including approved network security considerations)
+--000000000000477c45058dbd4972
+Content-Type: text/plain; charset="UTF-8"
 
-We talked about the BMC initial setup, aka provisioning.
-We also discussed ideas about how to secure the BMC against having a 
-default password. The top two ideas were:
-1. Have the password be expired, so the BMC admin has to change it to 
-use the BMC.
-2. Have the BMC start in a new "setup mode" which encourages its admin 
-to change its password.
+Hello all,
 
-> - BMC use cases
+The GUI design workgroup will be meeting this Wednesday July 17 at 10:00AM
+CST.
 
-We went around the room, and several folks mentioned interest in the 
-DMTF's Security Protocol and Data Model (SPDM ~ 
-https://www.dmtf.org/content/spdm-spec-feature).  I've added that topic 
-to the agenda.
+Tentative agenda:
 
-> - Release planning input
+   1. Review progress on Boot Options front-end development (IBM)
+   2. Share initial designs for Firmware (IBM)
+   3. Discuss final changes made to Event Logs (IBM)
+   4. Discuss final changes for Local User Management panel (IBM)
+   5. TENTATIVE - Review progress on IPV4 Network Settings front-end
+   development (IBM)
+   6. IF THERE IS INTEL REPRESENTATION - Updates on Intel-specific icon
+   changes mentioned last meeting (Intel)
+   7. IF THERE IS INTEL REPRESENTATION - Share research findings and
+   updates on design layout (Intel)
 
-Only I stated an interest in providing security-related input to the 2.7 
-release process.  So I will send that email with only my name on it..
+Please add any other agenda items here:
+https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
 
->
->
-> Access, agenda, and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
->
-> - Joseph
->
-> The Security Working Group meeting access is changing.  The old access
-> will not be used.  The new access is given in the wiki and in this
-> email.  This is effective immediately, so please update your calendars.
-> Here is the information for the web video conference and telephone 
-> access:
-> - Join via Web:https://ibm.webex.com/meet/joseph.reynolds1
-> - Join via Phone: Use access code: 927 034 486 -- United States Toll
-> Free: 1-844-531-0958. Click here for other phone numbers
-> <https://ibm.webex.com/cmp3300/webcomponents/widget/globalcallin/globalcallin.do?siteurl=ibm&serviceType=MC&ED=756982637&tollFree=1> 
->
-> - Visit the Webex web site for more ways to join or for an updated
-> access code.
->
->
+As a note, attendance has been solely IBM community members. We would love
+to have others join. We are hoping that changing the time from 7:00 AM
+Central
+to 10:00 AM Central will make that possible for people invested in the
+GUI to attend.
 
+Meeting Link:
+https://ibm.webex.com/ibm/j.php?MTID=m49792ce33d5af28f2823638d351732f3
+
+Best,
+GUI Design Team
+
+--000000000000477c45058dbd4972
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><span style=3D"background-color:transparent"><fo=
+nt face=3D"verdana, sans-serif">Hello all,=C2=A0</font></span></div><div><s=
+pan style=3D"background-color:transparent;color:rgb(36,41,46)"><font face=
+=3D"verdana, sans-serif"><br></font></span></div><div><span style=3D"backgr=
+ound-color:transparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-ser=
+if">The=C2=A0<span class=3D"gmail-m_-4492976450962714341gmail-m_-1492632449=
+708843752gmail-il">GUI</span>=C2=A0design=C2=A0<span class=3D"gmail-m_-4492=
+976450962714341gmail-m_-1492632449708843752gmail-il">workgroup</span>=C2=A0=
+will be meeting this Wednesday July 17 at 10:00AM CST.=C2=A0</font></span><=
+/div><div><span style=3D"background-color:transparent;color:rgb(36,41,46)">=
+<font face=3D"verdana, sans-serif"><br></font></span></div><div><font color=
+=3D"#24292e" face=3D"verdana, sans-serif">Tentative agenda:=C2=A0</font></d=
+iv></div><div><ol><li style=3D"margin-left:15px"><font face=3D"verdana, san=
+s-serif">Review progress on Boot Options front-end development (IBM)</font>=
+</li><li style=3D"margin-left:15px"><font face=3D"verdana, sans-serif">Shar=
+e initial designs for Firmware (IBM)=C2=A0</font></li><li style=3D"margin-l=
+eft:15px"><font face=3D"verdana, sans-serif">Discuss final changes made to =
+Event Logs (IBM)</font></li><li style=3D"margin-left:15px"><font face=3D"ve=
+rdana, sans-serif">Discuss final changes for Local User Management panel (I=
+BM)</font></li><li style=3D"margin-left:15px"><font face=3D"verdana, sans-s=
+erif">TENTATIVE - Review progress on IPV4 Network Settings front-end develo=
+pment (IBM)=C2=A0</font></li><li style=3D"margin-left:15px"><font face=3D"v=
+erdana, sans-serif">IF THERE IS INTEL REPRESENTATION - Updates on Intel-spe=
+cific icon changes mentioned last meeting (Intel)</font></li><li style=3D"m=
+argin-left:15px"><font face=3D"verdana, sans-serif">IF THERE IS INTEL REPRE=
+SENTATION -=C2=A0Share research findings and updates on design layout (Inte=
+l)</font></li></ol></div><div><div><font face=3D"verdana, sans-serif">Pleas=
+e add any other agenda items here:=C2=A0<a href=3D"https://github.com/openb=
+mc/openbmc/wiki/GUI-Design-work-group" target=3D"_blank">https://github.com=
+/openbmc/openbmc/wiki/<span class=3D"gmail-m_-4492976450962714341gmail-m_-1=
+492632449708843752gmail-il">GUI</span>-Design-<span class=3D"gmail-m_-44929=
+76450962714341gmail-m_-1492632449708843752gmail-il">work</span>-<span class=
+=3D"gmail-m_-4492976450962714341gmail-m_-1492632449708843752gmail-il">group=
+</span></a></font></div><div><font face=3D"verdana, sans-serif"><br></font>=
+</div><div><font face=3D"verdana, sans-serif">As a note, attendance has bee=
+n solely IBM community members. We would love<br>to have others join. We ar=
+e hoping that changing the time from 7:00 AM Central<br>to 10:00 AM Central=
+ will make that possible for people invested in the<br>GUI to attend.<br></=
+font></div><div><font face=3D"verdana, sans-serif"><br></font></div><div><f=
+ont face=3D"verdana, sans-serif"><span style=3D"box-sizing:border-box;color=
+:rgb(36,41,46)">Meeting Link</span><span style=3D"color:rgb(36,41,46)">:=C2=
+=A0</span><a href=3D"https://ibm.webex.com/ibm/j.php?MTID=3Dm49792ce33d5af2=
+8f2823638d351732f3" rel=3D"nofollow" target=3D"_blank" style=3D"color:rgb(3=
+,102,214);box-sizing:border-box;text-decoration-line:none">https://ibm.webe=
+x.com/ibm/j.php?MTID=3Dm49792ce33d5af28f2823638d351732f3</a><br style=3D"bo=
+x-sizing:border-box;color:rgb(36,41,46)"></font></div><div><font face=3D"ve=
+rdana, sans-serif"><br></font></div><div><span style=3D"background-color:tr=
+ansparent;color:rgb(36,41,46)"><font face=3D"verdana, sans-serif">Best,</fo=
+nt></span></div><div><span style=3D"background-color:transparent;color:rgb(=
+36,41,46)"><font face=3D"verdana, sans-serif"><span class=3D"gmail-m_-44929=
+76450962714341gmail-m_-1492632449708843752gmail-m_-2158016735816270648gmail=
+-m_-274210038052043966gmail-m_6525215738950614323gmail-m_-61725108252411590=
+69gmail-il"><span class=3D"gmail-m_-4492976450962714341gmail-m_-14926324497=
+08843752gmail-il">GUI</span></span>=C2=A0<span class=3D"gmail-m_-4492976450=
+962714341gmail-m_-1492632449708843752gmail-m_-2158016735816270648gmail-m_-2=
+74210038052043966gmail-m_6525215738950614323gmail-m_-6172510825241159069gma=
+il-il">Design</span>=C2=A0Team=C2=A0</font></span></div></div></div>
+
+--000000000000477c45058dbd4972--
