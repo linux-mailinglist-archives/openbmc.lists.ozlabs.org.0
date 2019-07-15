@@ -1,74 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0671A6823A
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 04:28:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B07F867FE4
-	for <lists+openbmc@lfdr.de>; Sun, 14 Jul 2019 17:40:58 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45mrTz3WmqzDqXP
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 01:40:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45n6sT3k8JzDqPW
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 12:28:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d42; helo=mail-io1-xd42.google.com;
- envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="EbTQ+Azt"; 
- dkim-atps=neutral
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
- [IPv6:2607:f8b0:4864:20::d42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="F6tZ4Ja6"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="IVlIat4Y"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45mrTG0PHQzDqVq
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 01:40:15 +1000 (AEST)
-Received: by mail-io1-xd42.google.com with SMTP id z3so30385442iog.0
- for <openbmc@lists.ozlabs.org>; Sun, 14 Jul 2019 08:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=h4bHQ1Jc5WTGlqwv+kn8JJgmRRoI96dt/IgZ72rjGBA=;
- b=EbTQ+Aztyq+1j51yJyaXlSrersnYBW/r0zoiVuDyu0dByJxIupmw500q+tV1XItn3f
- fGPvHEoox/Z2H3e03WWBHc79byethRqRi+k9uixTxTuO23jbUomxPKTd6GvYAtaiPQ/i
- BsMn4aPMKMHujUFkvPFJLSBEmaL9p1TQgxkZAySXVbi7K49mzgSmmLNPnEmwk6SQ5yEb
- RPT1qxMUSl+rvW9rcrl0PnK4LG/WCY1Agi8HMWmiSVUYe1jxwuT9MAvWrBkS6TR8+nnb
- Yt/QsX/b/hRkM9trNmZDyCSaOIFJGcWZzCLVA70oHtdzYR+04HE81/hQddh/Kfp2ap6x
- 5wAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=h4bHQ1Jc5WTGlqwv+kn8JJgmRRoI96dt/IgZ72rjGBA=;
- b=JuXme2ELXCMe8ff02OyTSrmU8OXj14qrjrc+GczZ03E3TL5wzJyfuHCb/gva1Z5RNN
- JhuitP3iGzWHR+MSRwyTQGbgNkf8jhikg36xtHptchr9+CJyDq6FmS8FncMU2/cVflMe
- sMT1Gr5P8U2mgD4GoWcFViFwg87sz9R3lNw5979weUrhKL2ZgstR6BkYT5JbO0R1Rl7r
- iB7AFKLjSene3scLiRzrpl4YQfuabP1bPjCtcYzIGhYwBZWyUMWh/lct13XfCmN7tUXT
- ylrl3gLgWjrGTkrFzqIo1YuNYDoJl8+p79Xks2OqKjvbb9A8esjuki8YcStZq160A8oL
- xBXA==
-X-Gm-Message-State: APjAAAU0k/jI/BSj3QaJCW8fyWtc9qjnr00YfrMUmfdJtLUSUUuSgbDy
- 4se6gH++K6H+wfGpyUbqf5exHPjKbAZVUGGNkw==
-X-Google-Smtp-Source: APXvYqz5e0ZMsmxeq3BvuV3Veo7tfSZ2IU3WmhirYiJwumXbxG0Wrfs4Jq9gZf52yJ643RUwyL5TZQdr1Y9XVtHMokQ=
-X-Received: by 2002:a02:b90e:: with SMTP id v14mr22926814jan.122.1563118811187; 
- Sun, 14 Jul 2019 08:40:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190702133444.444440-1-avifishman70@gmail.com>
-In-Reply-To: <20190702133444.444440-1-avifishman70@gmail.com>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Sun, 14 Jul 2019 18:39:29 +0300
-Message-ID: <CAKKbWA7ZLLp4nmcG+rFQbc=f5GWSThoghgF=B5CiunDczYAz3w@mail.gmail.com>
-Subject: Re: [PATCH] mtd: spi-nor: Add Winbond w25q256jvm
-To: Tudor Ambarus <tudor.ambarus@microchip.com>,
- David Woodhouse <dwmw2@infradead.org>, 
- Brian Norris <computersforpeace@gmail.com>,
- Miquel Raynal <miquel.raynal@bootlin.com>, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
- linux-mtd@lists.infradead.org, 
- boris.brezillon@bootlin.com, robimarko@gmail.com, 
- Willis Chai <WillisC@supermicro.com.tw>,
- Jerry Wang <Jerry_Wang@supermicro.com.tw>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45n6pR0xRWzDqTK
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:26:06 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 821B121F76;
+ Sun, 14 Jul 2019 22:26:03 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 14 Jul 2019 22:26:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=5ed/qK+K+itXppMmT4g/PgiK8VtO1RK
+ SlbLF5hoWXqE=; b=F6tZ4Ja6hYLsp24SHnGDrC08RKXZ++Kx5Nu2l17p2Jau4/D
+ eWBv83opp2N1qHGeJGzKJQuCGpSMMWNMkrZfMZn1d9HL3errFcH6iPuBNykkcawc
+ 4aslH1HrHoiaHKI1Pb9hJeEgOQVG6ygpJ2TNvH3HvaLQ7/HVDZ32kV3v3X+UgwN2
+ u/rCR/njptp8TCGHbyfwHcmB5tVGsVSkyKoLM65b5DmWr6QAkEKclzGii1jBFadF
+ e1xer7jDCHLU6NIT/epTr9Bbs5za7LX12R8MyzJ/Ok0wrbQLDdJQoyfFSbHPxrSc
+ +hCU1OaHZMwxtZSYAY5uJVq6mngfcN+zkTZrxxg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=5ed/qK
+ +K+itXppMmT4g/PgiK8VtO1RKSlbLF5hoWXqE=; b=IVlIat4Yubf/eU+UdyvfZs
+ x2HQH//gxe7gf/rOoa39Trc/Y4Qg8nEV3ZF55eEdgSU+7cJthvfnCy6GdmAxCqnK
+ OoTHUOmpJnp2lyHAVJ3ePCPmlc+i9Gu5CPtWdBslfel0kpsxPvkF5cIuzEgInUiw
+ 90kQJ4DH9Ta3l9Wd3N5Caw170yO/wxDycbiHyGZ1pXRoeIyLuphaigwGdZsANkqQ
+ 75+tNE8OreSTgVt3rAg/Qq7JCti0gq13QA4nF3J1ue93QZv3vZcMT2Ka46LKCYWL
+ T2RWJejrUJwU48nI5f37Wt9ILkk7JEqYv+OQKCkHDKXk0n29REFyopXStoP4sxTQ
+ ==
+X-ME-Sender: <xms:O-QrXah8sn5YCVZm2zDG4Xp14u6Y6ZZ5Tea11DmOnaVR9L2ajkByLg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrheejgdefvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:O-QrXVShGaPYf5B2_7_kDc7apKGonG9ybtyV5uJrRYpm_LHjd7eWwA>
+ <xmx:O-QrXT33TPf0DRmt23XwRIZqU8jjnte9ppWYLe1vKZb8zOhQAEbmKw>
+ <xmx:O-QrXX1YSC_xNSIGRim1JmD__Phz5J1GwODbgH1GFgCcoBP9fIQDGA>
+ <xmx:O-QrXUGis6LVe81jEp31Du-4-WNUs8DtLL5nwlh9q2StGXy3FKVY1A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 466A5E00CC; Sun, 14 Jul 2019 22:26:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-731-g19d3b16-fmstable-20190627v1
+Mime-Version: 1.0
+Message-Id: <588446e9-8528-4081-9a1f-476628c37767@www.fastmail.com>
+In-Reply-To: <1562945738-7432-1-git-send-email-eajames@linux.ibm.com>
+References: <1562945738-7432-1-git-send-email-eajames@linux.ibm.com>
+Date: Mon, 15 Jul 2019 11:56:12 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.2]_ARM:_dts:_aspeed:_swift:_Enable_vide?=
+ =?UTF-8?Q?o_engine_and_USB_hub_devices?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,47 +88,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tudor, Boris & Tudor,
 
-I see that you pushed this kind of commit of Winbond chip previously,
-can you please approve also this?
 
-On Tue, Jul 2, 2019 at 5:23 PM Avi Fishman <avifishman70@gmail.com> wrote:
->
-> Similar to w25q256 (besides not supporting QPI mode) but with different ID.
-> The "JVM" suffix is in the datasheet.
-> The datasheet indicates DUAL and QUAD are supported.
-> https://www.winbond.com/resource-files/w25q256jv%20spi%20revi%2010232018%20plus.pdf
->
-> Signed-off-by: Avi Fishman <avifishman70@gmail.com>
+On Sat, 13 Jul 2019, at 01:18, Eddie James wrote:
+> These devices are necessary for IpKVM to function, so enable them on
+> Swift.
+> 
+> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
+
 > ---
->  drivers/mtd/spi-nor/spi-nor.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  arch/arm/boot/dts/aspeed-bmc-opp-swift.dts | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts 
+> b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+> index caac895..bdf3fb9 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
+> @@ -33,6 +33,13 @@
+>  			compatible = "shared-dma-pool";
+>  			reusable;
+>  		};
+> +
+> +		video_engine_memory: jpegbuffer {
+> +			size = <0x02000000>;	/* 32MM */
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+>  	};
+>  
+>  	gpio-keys {
+> @@ -963,4 +970,13 @@
+>  	status = "okay";
+>  };
+>  
+> +&vhub {
+> +	status = "okay";
+> +};
+> +
+> +&video {
+> +	status = "okay";
+> +	memory-region = <&video_engine_memory>;
+> +};
+> +
+>  #include "ibm-power9-dual.dtsi"
+> -- 
+> 1.8.3.1
+> 
 >
-> diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
-> index 0c2ec1c21434..ccb217a24404 100644
-> --- a/drivers/mtd/spi-nor/spi-nor.c
-> +++ b/drivers/mtd/spi-nor/spi-nor.c
-> @@ -2120,6 +2120,8 @@ static const struct flash_info spi_nor_ids[] = {
->         { "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16, SECT_4K) },
->         { "w25q128", INFO(0xef4018, 0, 64 * 1024, 256, SECT_4K) },
->         { "w25q256", INFO(0xef4019, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
-> +       { "w25q256jvm", INFO(0xef7019, 0, 64 * 1024, 512,
-> +                       SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
->         { "w25m512jv", INFO(0xef7119, 0, 64 * 1024, 1024,
->                         SECT_4K | SPI_NOR_QUAD_READ | SPI_NOR_DUAL_READ) },
->
-> --
-> 2.18.0
->
-
-
--- 
-Regards,
-Avi
