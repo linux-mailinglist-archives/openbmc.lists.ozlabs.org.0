@@ -1,92 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D39466996D
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 18:58:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 644E7698E0
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 18:11:09 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nT6L6TZ3zDqTQ
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 02:11:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nV8Y5qjwzDqSZ
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 02:58:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="HznXhQcV"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com
+ [IPv6:2607:f8b0:4864:20::42d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nT5b0fTrzDqRM
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 02:10:26 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6FG31Ph008103
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:10:23 -0400
-Received: from e12.ny.us.ibm.com (e12.ny.us.ibm.com [129.33.205.202])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2trtx96nms-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:10:22 -0400
-Received: from localhost
- by e12.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <mspinler@linux.ibm.com>;
- Mon, 15 Jul 2019 17:10:22 +0100
-Received: from b01cxnp22036.gho.pok.ibm.com (9.57.198.26)
- by e12.ny.us.ibm.com (146.89.104.199) with IBM ESMTP SMTP Gateway: Authorized
- Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 15 Jul 2019 17:10:19 +0100
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x6FGAI5X5309004
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 15 Jul 2019 16:10:18 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3778B112063;
- Mon, 15 Jul 2019 16:10:18 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D74DF112062;
- Mon, 15 Jul 2019 16:10:17 +0000 (GMT)
-Received: from [9.10.99.36] (unknown [9.10.99.36])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon, 15 Jul 2019 16:10:17 +0000 (GMT)
-Subject: Re: Proposal: configurable per-sensor error behavior in phosphor-hwmon
-To: Matthew Barth <msbarth@linux.ibm.com>, Kun Yi <kunyi@google.com>,
- Patrick Venture <venture@google.com>,
- Brandon Kim <brandonkim@google.com>, spinler@us.ibm.com,
- mine260309@gmail.com
-References: <CAGMNF6WpQS06JDQJOKRLbKWwKrXKHvNtY7r+MnUTqp1G2Jn=qg@mail.gmail.com>
- <3e99accb-832d-e9fd-4263-2daaade10045@linux.ibm.com>
-From: Matt Spinler <mspinler@linux.ibm.com>
-Date: Mon, 15 Jul 2019 11:10:17 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nV7t3GPqzDqRm
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 02:57:28 +1000 (AEST)
+Received: by mail-pf1-x42d.google.com with SMTP id q10so7686547pff.9
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 09:57:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=L8JaYs7KFVndmY8AoKzf7M7pu3WcZ9PataY8FXMAzJc=;
+ b=HznXhQcVwJAEpbYoLTa+SV4f/M4IXJwFatYUZNFbqDNe+u36HMZpYc+4u8kwAQue5Y
+ 2NYdTXVfnY9PmtLR5tvU9UXeQ9mqJe9I4SOzQiCIxxMkxYqtBST1Ctu2QqxG4o8e+VWE
+ qXanN2MiKmcvlAGfD+RbcOHQYVL98q5/jS3JjgutbGRHbfCG5drBmZqKP3vFsam/ah5g
+ McdBJ9o8eB0WUBbD2io79XT3zGChEZHYqqUsrK9Hk37zfiUcjsjd1jNlkbmiRfUIEv7p
+ micmavu2vwrIrM2MANHt7vrU8+23r+Y4HRVhsZfUU0NF6E4Gf8AzQXVhOeoxklwjzLWE
+ n/fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=L8JaYs7KFVndmY8AoKzf7M7pu3WcZ9PataY8FXMAzJc=;
+ b=kh4mg/2knA+M9rJ7LWb6j27avMotDuzFuT6pKgMIaSaLBJU1GUoRb6hpPkxsokQNp0
+ AmfMvLOO8xWTu+R1JvBjE0x7tCg1U1U6KCh52NiiTUOivIKfa0bqQbmOIlodQ86IULcI
+ OVElM1hhKUY0U370n/FFtyAUC//zqC/TusNIz5jTavGfv7IzGBLBJJXub4HHSJHjl2a9
+ 3bpbEiBZq/XNrUxs2HOh9dRsjJr3jxPec6V64S5bD5WpamUTGwA5pDaXgpfUTrRdoYAG
+ lo9EXVmlIZuZsDG8t75RhOdJLcZuPHubWgZUNyUt9Y+luJ5Z/wnQ7kgt5004fqQ4ij8E
+ kI+w==
+X-Gm-Message-State: APjAAAU1XJwpwLp9MEGxhqxniKd0E3RBwQQxP7SZeyHbXnqgsiJFxnQ6
+ O1DA7suYAhTZzSYk6YWXEG3pGOWfDEZaD7ptJBINT03TVozmYQ==
+X-Google-Smtp-Source: APXvYqwN+sMLapVdZvdaLuGfQtl81tAgE0Pk0uMhdNy+VLek81b1JbDWqwPpWH3DOOSwOl3tOTeLD5suOuBqjm140o0=
+X-Received: by 2002:a17:90a:bf0e:: with SMTP id
+ c14mr29017157pjs.55.1563209844753; 
+ Mon, 15 Jul 2019 09:57:24 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <3e99accb-832d-e9fd-4263-2daaade10045@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19071516-0060-0000-0000-0000035E9DE7
-X-IBM-SpamModules-Scores: 
-X-IBM-SpamModules-Versions: BY=3.00011433; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000286; SDB=6.01232588; UDB=6.00649402; IPR=6.01013889; 
- MB=3.00027727; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-15 16:10:20
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19071516-0061-0000-0000-00004A263B44
-Message-Id: <fdc0a94c-8295-fc78-b076-d186122dddd1@linux.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-15_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907150187
+References: <aca67083725a43149c4571df9f13e9f1@quantatw.com>
+In-Reply-To: <aca67083725a43149c4571df9f13e9f1@quantatw.com>
+From: Patrick Venture <venture@google.com>
+Date: Mon, 15 Jul 2019 09:57:13 -0700
+Message-ID: <CAO=notxTxvukUUQq6WNJF7Ya5g=809VzsYcKRbpid=b5Db6xfg@mail.gmail.com>
+Subject: Re: phosphor-ipmi-flash in-band update question
+To: =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,78 +75,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "OpenBMC Maillist \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 7/15/2019 9:45 AM, Matthew Barth wrote:
-> This is a great proposal, just a few concerns/notes.
+On Wed, Jul 10, 2019 at 2:00 AM George Hung (=E6=B4=AA=E5=BF=A0=E6=95=AC)
+<George.Hung@quantatw.com> wrote:
 >
-> On 7/12/19 5:27 PM, Kun Yi wrote:
->> Hi there,
->>
->> Current phosphor-hwmon code is filled with preprocessor macros to 
->> branch error condition for sysfs reads, and it seems to me that 
->> adding a per-sensor configuration would solve two issues at least:
->> 1. code can be greatly simplified
->> 2. we can code more flexible sensor reading behavior
->>
->> Why 2) is needed: with many types of sensors that BMC controls, 
->> having an one-size-fits-all policy will always have cases that it 
->> can't handle. Each flaky sensor is flaky in its own way.
->>
->> Rough proposal on how this will work:
->>
->> add properties to each sensor group's configuration file:
->>
->> "error behavior": can be one of
->> - always keep
->> - remove from D-Bus on error
-> There is a REMOVERCS device config file option that can be configured 
-> to remove an individual sensor or any sensor of the device when a 
-> given set of return codes occur when attempting to read the sensor.
->>
->> "error condition":  can be combination of
->> - certain sysfs return codes
-> REMOVERCS combines this error condition to the behavior of removing 
-> the sensor from Dbus. I'd be interested in how these types of 
-> bahavior-to-conditions will be mapped within the device's config file.
+> Hi Patrick,
 >
->> - timeout
-> In the case of phosphor-hwmon, isnt a timeout condition similar to 
-> error retries since a timeout condition is presented as a ETIMEDOUT 
-> return code on the sensor.
->> - invalid value
-> This is another area I'd be interested to hear more on, how would one 
-> go about defining when a value would be invalid? Or is this a simple, 
-> negative values are invalid for a sensor that should always return a 
-> positive value?
->>
->> "error retries": number of retries before declaring the sensor has an 
->> error
-> This would be great to have configurable per sensors, however a 
-> possible issue here would be allowing too many retries causing hwmon 
-> to take too long. So this should be capped or controlled in someway 
-> with the delay between reads as well. Right now a sensor is allowed to 
-> be retried 10x's with a 100ms delay between each attempt.
->>
->> Happy to hear any feedback.
->>
-
-I like this idea.  Hopefully the defaults can be kept the same as they 
-are today so users of
-today's default settings wouldn't have to change their config files to 
-keep things the same.
-
-Another thing we've been thinking about adding is the ability for 
-sensors to only be
-read when the power is on,   though there's still some invention 
-required as to how
-to represent this state on D-Bus.
-
->> Regards,
->> Kun
 >
+>
+> We=E2=80=99d like to do in-band firmware update by phosphor-ipmi-flash, b=
+ut it must provide the signature file otherwise it exited directly.
 
+You must provide a verification mechanism, this can just be a script
+that writes "success" to the output file.
+
+That can be in a script that's called by a service installed to the
+verification target listed on the README.
+
+IMAGE_FILE=3D/run/initramfs/bmc-image
+VERIFIED_FILE=3D/run/initramfs/image-bmc
+STATUS_FILE=3D/tmp/bmc.verify
+mv ${IMAGE_FILE} ${VERIFIED_FILE}
+echo "success" > ${STATUS_FILE}
+
+>
+>
+>
+> How do we make the appropriate signature file for phosphor-ipmi-flash and=
+ also verify it successfully ?
+
+You can do whatever signature you wish, could just be md5sum.  In
+which case, on the host you can md5sum the image-bmc file, and then
+write the md5sum to a file, that's sent down as the signature file.
+Then the script above could compare the md5s before writing success.
+
+Are you using static layout, or ubi?
+If you're using static layout, it currently writes the bytes to
+IMAGE_FILE above by default.  So you'd need something like the above
+script to move it into a usable update name.
+
+Again, this is if you're using this type of update mechanism.  If
+you're using phosphor-bmc-code-mgmt, then there is something more to
+be done, and it's not yet supported.  Hopefully it will be in a couple
+weeks.
+
+>
+>
+>
+> Or is there a way to do FW update without a signature file?
+
+Yes, see above.  Although I do recommend trying to check against
+something to validate the bytes are what you expect.
+>
+>
+>
+> Besides, since we use Nuvoton BMC to update by LPC bridge, it needs to co=
+nfigure the MAPPED_ADDRESS as the reserved memory region.
+>
+>
+>
+> Does it have to add the similar configuration to device tree like Aspeed =
+?
+
+Yes.  The MAPPED_ADDRESS for the Aspeed is the memory-region you've
+set aside in your device-tree for the BMC.
+
+>
+>
+>
+>
+>
+> Thanks.
