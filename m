@@ -2,77 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11CA568EE0
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:10:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF84368F7A
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:14:47 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nQR2104ZzDqNN
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:10:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nQX42ZMgzDqSC
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:14:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::230; helo=mail-oi1-x230.google.com;
- envelope-from=kurt.r.taylor@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Ug0KbVhQ"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="kntdLgcU"; 
  dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
+ [IPv6:2607:f8b0:4864:20::629])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nQKZ061CzDqSJ
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:05:37 +1000 (AEST)
-Received: by mail-oi1-x230.google.com with SMTP id m202so12725312oig.6
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 07:05:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=yjYF+KKSLOq1mFBORtnXdIjHKse3hh39INQbobnhIO4=;
- b=Ug0KbVhQ27BxTACQNax9aNrNCL2OYniv1oq5Wn24YwUQ4teqZjhRHEo9/JaRtF7VHN
- INWsOYAR7R+espjF4oxSwKqkLq/IV1+zJfdHKkOYMt9vMBe9VV/7mrVf56aNoby4USxa
- N1Bn2i0VsYp91h3pXi5NcHOAMTZNONyvna4JF1qgCzG9N7B6V61VLzIinBl7donRA1MD
- NZXByxLucgzHJbekP1Ngzs32YIk/4+nu6XucE0rHEDMwczWqaIk14KqQj/Ei7r4bMRNG
- 4YG7hIEJ1LXje286r7bwVls9et3JoWoKMd8NL/sOgerqvAJO5R9LthsuTvOqyZm262xB
- Nnsg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nQVX1S2JzDqKP
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:13:23 +1000 (AEST)
+Received: by mail-pl1-x629.google.com with SMTP id ay6so8357949plb.9
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 07:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :content-transfer-encoding;
+ bh=kK5YdZ+t4gv2xmiqq/K4Yk0i5vBSD0CFvhX++exutpI=;
+ b=kntdLgcU97PD36KFr9yvHbwY2O2taV1US4lOeer2RrfSzRfLmjcyMFgP+kB6P55ODw
+ A9M9J1ingpCtjjGq2LK4RcUUJJYvh63/3yGf1mKNS4BbLIIAYkagN/wtfMAKBx7WgodD
+ 8Bfb33rdlyOymYBGgcsQr6SxDBKuAh+p5B7Bnw/OfZFBBwgpIRXNoh0DTNkOaawJ/lVB
+ ANHU1+uNEdOjw203jU2U5MrL9jCZ9vKSSQ2y1D1zG4wgfNqRuMmP/qCc8zo0MZEaEZ5p
+ xno0+3JWgh+1Zsfa02R752AOvVby7n3RJsetDYCUNPeXUM+EKd7HWa5Xpgn7i7+LY9K3
+ DzKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=yjYF+KKSLOq1mFBORtnXdIjHKse3hh39INQbobnhIO4=;
- b=Bxdkchw+dCHsHtnpYZbe63Zdj5WohjfTy2I8lu+ZUHDTYE2DOehOallQl4e80/N+uS
- zHeaFrFuqPUkaidZnPpZOSCBZ65MOWe/p7JMGuQP76H4uCMSL/mDxaLd2Vb7cPGJV7Cb
- Hfdo9sfb2G0lco9t0kq0e7Lf8YBg8EhyKNKOuKiBCOiJcDwRBlm5vSS9uDFqIufSU8k3
- amHW2FHX5p3Mam7k4hB+PE1zuDr7EnCmJpsaTv3xkLaQPQiTROJHbMRvBABT3/4cG4D6
- MyJDQAXoDNxNMFDH01LhhijrvVehxFOwSdZNZVloPDQH4lEOdVjsXu5r/8N1/8FJWCZp
- eePg==
-X-Gm-Message-State: APjAAAWRiOyBnfkg23FjQwYc1ri7zo/15qBuNy0s76mJbivt+gCMjMM/
- L/3E6bS45xDqK5nxKzAmfZt0oFiiFoE=
-X-Google-Smtp-Source: APXvYqzQq++fpxmAPu+1StFAJAm87PLUfh1Kjc0VGLqOEUvhdeJO0VZvN11xDjuow0XeRO2d3xjJ1w==
-X-Received: by 2002:aca:b2d5:: with SMTP id
- b204mr11888131oif.101.1563199533670; 
- Mon, 15 Jul 2019 07:05:33 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id n95sm6677128otn.65.2019.07.15.07.05.32
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 15 Jul 2019 07:05:32 -0700 (PDT)
-Subject: Re: CLA for Raptor Computing Systems, LLC
-To: Timothy Pearson <tpearson@raptorcs.com>, openbmc@lists.ozlabs.org
-References: <1601006714.273471.1562959285670.JavaMail.zimbra@raptorcs.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <e72e83d8-365a-8519-8ed7-614c2be82ddc@gmail.com>
-Date: Mon, 15 Jul 2019 09:05:31 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.7.2
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=kK5YdZ+t4gv2xmiqq/K4Yk0i5vBSD0CFvhX++exutpI=;
+ b=QV0iGhWDolF2hRO9IK/+7CeV9ff1p3oXfUxFDo8HUQloaEjWF/vyjRpUc4xXIe+7IE
+ +Xl7JhY5jywlXQjdjsEStWpY5bo6ygbgCKoRQ5N8wXrLznY4IavHzviZf5MKxu1XLs90
+ ABlYs1g+lFymIfXoneqR+RdmkGuQcHPbkKkqH4EW0Sj/9AnfUOF+PSk4G85aO8+N7yTw
+ mgBQlXCBEvg8bd1pZnwJUuq6hXoAfTuLTOmyGG0Pspt9c564dDYy+feEUw+yuvXMgi7b
+ PXNZ7FsCfjjx1Xq2l7se3ZcIdEzfLRXyLMw1SKAwqkuFMH7W4pgE7cNuYmUUOVJOGHlO
+ NIew==
+X-Gm-Message-State: APjAAAXxgM7c3n3c/28ELk8TKFBOqHHR+Dp/3/1NwH65v95M93ZfXf8c
+ /BOFtNXudGwrJzAMZO3Mig3JhnqNLbbaQxAxhpIn8w==
+X-Google-Smtp-Source: APXvYqx964ksToBlydHnYwoSZ60n0kivEkHaiNb1X57yO9Ia/4Fn6RnixCcbHj9yeHXZlCzMCkRwvhpfQ3upyVhUYJ4=
+X-Received: by 2002:a17:902:9897:: with SMTP id
+ s23mr28486262plp.47.1563199999442; 
+ Mon, 15 Jul 2019 07:13:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1601006714.273471.1562959285670.JavaMail.zimbra@raptorcs.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAO=notyXP_Cdrn_9GMgw+OvPYM7Ge9r_BbMiqgSJqS5EdrsumA@mail.gmail.com>
+ <HK0PR03MB51239C4DDC3359F3AAC7F4EEDFF10@HK0PR03MB5123.apcprd03.prod.outlook.com>
+In-Reply-To: <HK0PR03MB51239C4DDC3359F3AAC7F4EEDFF10@HK0PR03MB5123.apcprd03.prod.outlook.com>
+From: Patrick Venture <venture@google.com>
+Date: Mon, 15 Jul 2019 07:13:08 -0700
+Message-ID: <CAO=notwWzEZ5ew-iT-pJTLSaJ0GLXopWfsJKx-jNokHjMU3Phw@mail.gmail.com>
+Subject: Re: phosphor-ipmi-flash: Aspeed LPC Tested
+To: CS20 CTCchien <CTCCHIEN@nuvoton.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, 
+ Benjamin Fair <benjaminfair@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,14 +81,177 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/12/19 2:21 PM, Timothy Pearson wrote:
-> Please find CLA for Raptor Computing Systems, LLC attached.
-> 
+On Tue, Jul 9, 2019 at 2:54 AM CS20 CTCchien <CTCCHIEN@nuvoton.com> wrote:
+>
+> Hi Patrick,
 
-Welcome! Thanks for signing. Your CCLA has been accepted.
+Please always include the mailing list when reaching out for help for
+a few reasons: 1) I'm not always around and others can help, 2) in the
+future someone may have the same problem and find this discussion.
+Thanks.
 
-I did notice that there is not any developers or CLA manager listed in 
-Schedule A. Let me know when you would like to update that and I'll add 
-to it.
+>
+> I have few questions about Configuration B( nuvoton LPC)
+>
+> How do you know what value the MAPPED_ADDRESS should be?
+> EXTRA_OECONF_append_b =3D " MAPPED_ADDRESS=3D0xc0008000"
 
-Kurt Taylor (krtaylor)
+Benjamin, how is this address chosen for nuvoton?  I know with the
+aspeed-lpc driver it's the region specified in the device-tree, s.t.
+the BMC kernel won't map anything into it (keep it free).
+
+>
+> These parameters are the input of running an application , but why can yo=
+u just assign a address and length before allocating?
+> --address 0xfedc1000
+> --length 0x1000
+
+The values passed here are where you've locked off space for this
+purpose via your bios memory map configuration (or your kernel
+configuration).  To say, keep this free.  IIRC.
+
+>
+>
+> Thanks
+>
+> B.R.
+> Medad
+> -----Original Message-----
+> From: openbmc <openbmc-bounces+george.hung=3Dquantatw.com@lists.ozlabs.or=
+g> On Behalf Of Patrick Venture
+> Sent: Thursday, June 27, 2019 3:55 AM
+> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>; Adriana Kobylak <anoo@us=
+.ibm.com>
+> Subject: phosphor-ipmi-flash: Aspeed LPC Tested
+>
+> The following three out-of-band data mechanisms are tested and supported =
+by phosphor-ipmi-flash:
+>  aspeed-p2a-ctl (PCI-to-AHB)
+>  aspeed-lpc-ctl
+>  nuvoton LPC
+>
+> Tested configurations:
+>
+> All the configurations have the cleanup blob enabled via the default PACK=
+AGECONFIG in the recipe.
+>
+> Configuration A:
+> This uses a static layout image, the lpc bridge, and aspeed.  Because it'=
+s using the static layout, we enable the reboot-update*
+>
+> EXTRA_OECONF_append_a =3D " --enable-static-layout"
+> EXTRA_OECONF_append_a =3D " --enable-lpc-bridge"
+> EXTRA_OECONF_append_a =3D " --enable-aspeed-lpc"
+> EXTRA_OECONF_append_a =3D " --enable-reboot-update"
+> EXTRA_OECONF_append_a =3D " MAPPED_ADDRESS=3D0x98000000"
+>
+> The MAPPED_ADDRESS above is the region for lpc_ctrl in the device-tree.
+>
+> Host-tool command**:
+> /tmp/phosphor_ipmi_flash_tool  \
+>   --command update \
+>   --interface ipmilpc \
+>   --image image-bmc \
+>   --sig image-bmc.sig \
+>   --type static \
+>   --address 0xfedc1000 \
+>   --length 0x1000
+> Sending over the firmware image.
+> sending writeMeta
+> writemeta sent
+> Sending over the hash file.
+> sending writeMeta
+> writemeta sent
+> Opening the verification file
+> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
+ify session to check status other running success Returned success succeede=
+d Opening the update file Committing to /flash/update to trigger service Ca=
+lling stat on /flash/update session to check status running Opening the cle=
+anup blob Exception received: blob exception received: Received IPMI_CC: bu=
+sy
+>
+> Configuration B:
+> This uses a static layout image, the lpc bridge, and nuvoton.  Because it=
+'s using the static layout, we enable the reboot-update*
+>
+> EXTRA_OECONF_append_b =3D " --enable-static-layout"
+> EXTRA_OECONF_append_b =3D " --enable-lpc-bridge"
+> EXTRA_OECONF_append_b =3D " --enable-nuvoton-lpc"
+> EXTRA_OECONF_append_b =3D " --enable-reboot-update"
+> EXTRA_OECONF_append_b =3D " MAPPED_ADDRESS=3D0xc0008000"
+>
+> Host-tool command**:
+>
+> /tmp/phosphor_ipmi_flash_tool  \
+>   --command update \
+>   --interface ipmilpc \
+>   --image image-bmc \
+>   --sig image-bmc.sig \
+>   --type static \
+>   --address 0xfedc1000 \
+>   --length 0x1000
+> Sending over the firmware image.
+> sending writeMeta
+> writemeta sent
+> Sending over the hash file.
+> sending writeMeta
+> writemeta sent
+> Opening the verification file
+> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
+ify session to check status other running success Returned success succeede=
+d Opening the update file Committing to /flash/update to trigger service Ca=
+lling stat on /flash/update session to check status running Opening the cle=
+anup blob Exception received: blob exception received: Received IPMI_CC: bu=
+sy
+>
+> Configuration C:
+> This uses a static layout image, the pci bridge, and aspeed.  Because it'=
+s using the static layout, we enable the reboot-update*
+>
+> EXTRA_OECONF_append_c =3D " --enable-static-layout"
+> EXTRA_OECONF_append_c =3D " --enable-pci-bridge"
+> EXTRA_OECONF_append_c =3D " --enable-aspeed-p2a"
+> EXTRA_OECONF_append_c =3D " --enable-reboot-update"
+> EXTRA_OECONF_append_c =3D " MAPPED_ADDRESS=3D0x47FF0000"
+>
+> /tmp/phosphor_ipmi_flash_tool  \
+>   --command update \
+>   --interface ipmipci \
+>   --image image-bmc \
+>   --sig image-bmc.sig \
+>   --type static
+> Sending over the firmware image.
+> sending writeMeta
+> writemeta sent
+> Sending over the hash file.
+> sending writeMeta
+> writemeta sent
+> Opening the verification file
+> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
+ify session to check status other running success Returned success succeede=
+d Opening the update file Committing to /flash/update to trigger service Ca=
+lling stat on /flash/update session to check status running Opening the cle=
+anup blob Exception received: blob exception received: Received IPMI_CC: bu=
+sy
+>
+> *I'm going to move this to a PACKAGECONFIG.
+> **Compiled to run in our environment and not the default autotools method=
+.
+>
+> I haven't tested the ipmibt interface in awhile, but I will give it a run=
+ later.  I'm looking at extending the design to support sending down the ho=
+st BIOS image.
+>
+> Patrick
+> ________________________________
+> ________________________________
+>  The privileged confidential information contained in this email is inten=
+ded for use only by the addressees as indicated by the original sender of t=
+his email. If you are not the addressee indicated in this email or are not =
+responsible for delivery of the email to such a person, please kindly reply=
+ to the sender indicating this fact and delete all copies of it from your c=
+omputer and network server immediately. Your cooperation is highly apprecia=
+ted. It is advised that any unauthorized use of confidential information of=
+ Nuvoton is strictly prohibited; and any information in this email irreleva=
+nt to the official business of Nuvoton shall be deemed as neither given nor=
+ endorsed by Nuvoton.
