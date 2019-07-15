@@ -1,69 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B4606989A
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 17:51:07 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nSgD5NQ1zDqWb
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 01:51:04 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 644E7698E0
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 18:11:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nT6L6TZ3zDqTQ
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 02:11:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d44; helo=mail-io1-xd44.google.com;
- envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ucGBCVwe"; 
- dkim-atps=neutral
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com
- [IPv6:2607:f8b0:4864:20::d44])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nScn68clzDqMr
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 01:48:57 +1000 (AEST)
-Received: by mail-io1-xd44.google.com with SMTP id z3so34906154iog.0
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 08:48:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=G2ekqYXyWScZdGL4/IuVQy9DAJhZ8DCtVpPL9rbaqvU=;
- b=ucGBCVwecdtUME+/YMeojNAwXZakBMGomin0nC9x95dHz5KQWKy9gXTcoyw8E6fg3b
- CWkR/aAVtbNnslyfoP0cLRICgvftKEgRUSA36BDa3LFP9HVAd//Xrgld9bpJcFNsbqPk
- n1FBLBPhZqmQ7aSSbFNgpB0B1yrGC4JGBtUIk42U8jJqFKlOz2q4dH0qsLE3q8hlf5JB
- v07NBeI1jXhnIaKe30/HtIUoOfpk90slS+/MzpK7YNTNhxwp7Rs6wPc+RHI9JCL3WSc+
- RwndnjrIIr63JSK30QtIONNkeICalsol8ZDl1UxeAcNAd/nMqS/8uAUdKAsO2I2HiljZ
- hi+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=G2ekqYXyWScZdGL4/IuVQy9DAJhZ8DCtVpPL9rbaqvU=;
- b=m9u+Tuuj12TiCtApZ3OLvCOdSJpAM5rQFubgBwy4R8+kSNnNInEdTL/13j8JekPvue
- lsm7QRhg5t4BeKZwqp/rJV8PghboTVjycUj01SLRtbvYxxJWXEJpq3lh2RTI7cgkbvwF
- BKQgh/8VkccrgJS6IBc+k7UL7qaiexbEyartwXZCRxrl1lEzcrr5E3IOqXtsGmxpQXqZ
- PyW/xjxA9GFX7n4CTrn1F3n9EVfSzTdxFSDIa7ry2tWn97uSXj0xXOnqNNZU/MJ8EMRb
- BKfPhT5wnrUEECJE+RyAp4lNOlmhsTUWd+LyTLKw2pNEyEk9cNEnr0IrnqXA2g5yYrMk
- kbGQ==
-X-Gm-Message-State: APjAAAWrm2ArJWNemWKTPohzpqkY0Hm7c8U9ZQxlrQg6WEC96EUb7xsG
- 8jXAz1UvUqk4Gc+Y62+nmym02UpwR+H5Fp5woU+q
-X-Google-Smtp-Source: APXvYqwRwyiP1lrPEyznFken0LaG2OqD8WsDYAhciMSRlzbZcHf2ce5cX3NvhLV+/DYi5sYuazpvzpL43Hn2E3LAQF8=
-X-Received: by 2002:a5e:a712:: with SMTP id b18mr25034142iod.220.1563205732236; 
- Mon, 15 Jul 2019 08:48:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nT5b0fTrzDqRM
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 02:10:26 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x6FG31Ph008103
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:10:23 -0400
+Received: from e12.ny.us.ibm.com (e12.ny.us.ibm.com [129.33.205.202])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2trtx96nms-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 12:10:22 -0400
+Received: from localhost
+ by e12.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <mspinler@linux.ibm.com>;
+ Mon, 15 Jul 2019 17:10:22 +0100
+Received: from b01cxnp22036.gho.pok.ibm.com (9.57.198.26)
+ by e12.ny.us.ibm.com (146.89.104.199) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 15 Jul 2019 17:10:19 +0100
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x6FGAI5X5309004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 15 Jul 2019 16:10:18 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3778B112063;
+ Mon, 15 Jul 2019 16:10:18 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D74DF112062;
+ Mon, 15 Jul 2019 16:10:17 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 15 Jul 2019 16:10:17 +0000 (GMT)
+Subject: Re: Proposal: configurable per-sensor error behavior in phosphor-hwmon
+To: Matthew Barth <msbarth@linux.ibm.com>, Kun Yi <kunyi@google.com>,
+ Patrick Venture <venture@google.com>,
+ Brandon Kim <brandonkim@google.com>, spinler@us.ibm.com,
+ mine260309@gmail.com
+References: <CAGMNF6WpQS06JDQJOKRLbKWwKrXKHvNtY7r+MnUTqp1G2Jn=qg@mail.gmail.com>
+ <3e99accb-832d-e9fd-4263-2daaade10045@linux.ibm.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Date: Mon, 15 Jul 2019 11:10:17 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CAKKbWA6S7KotAFtLO=ow=XYnLL2Ny5Mz2kcgM1cs+j=5mHQNmw@mail.gmail.com>
- <CAKKbWA5nwsa5kcZ8GCuC3WKJptb6RtZ65izFphd=KaALqeg+BA@mail.gmail.com>
- <f758b14c5d8343de778f9a6ccdcb29c43778d3f2.camel@perches.com>
-In-Reply-To: <f758b14c5d8343de778f9a6ccdcb29c43778d3f2.camel@perches.com>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Mon, 15 Jul 2019 18:48:05 +0300
-Message-ID: <CAKKbWA7-EyYHQA_yLz5OJRpZSq4Nh-RMwn_zd0C_LKKzc5wErw@mail.gmail.com>
-Subject: Re: [PATCH] [v2] clocksource/drivers/npcm: fix GENMASK and timer
- operation
-To: Joe Perches <joe@perches.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <3e99accb-832d-e9fd-4263-2daaade10045@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19071516-0060-0000-0000-0000035E9DE7
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011433; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000286; SDB=6.01232588; UDB=6.00649402; IPR=6.01013889; 
+ MB=3.00027727; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-15 16:10:20
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19071516-0061-0000-0000-00004A263B44
+Message-Id: <fdc0a94c-8295-fc78-b076-d186122dddd1@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-15_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907150187
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,86 +98,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>,
- Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Thomas Gleixner <tglx@linutronix.de>,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 15, 2019 at 6:25 PM Joe Perches <joe@perches.com> wrote:
->
-> On Mon, 2019-07-15 at 18:19 +0300, Avi Fishman wrote:
-> > clocksource/drivers/npcm: fix GENMASK and timer operation
-> >
-> > NPCM7XX_Tx_OPER GENMASK() changed from (27, 3) to (28, 27)
-> >
-> > in npcm7xx_timer_oneshot() the original NPCM7XX_REG_TCSR0 register was
-> > read again after masking it with ~NPCM7XX_Tx_OPER so the masking didn't
-> > take effect.
-> >
-> > npcm7xx_timer_periodic() was not wrong but it wrote to NPCM7XX_REG_TICR0
-> > in a middle of read modify write to NPCM7XX_REG_TCSR0 which is
-> > confusing.
->
-> You might mention how the original use of GENMASK(3, 27)
-> was defective or correct without effect.
-
-Done, see v3 of this patch.
-
->
-> > Signed-off-by: Avi Fishman <avifishman70@gmail.com>
-> > ---
-> >  drivers/clocksource/timer-npcm7xx.c | 9 +++------
-> >  1 file changed, 3 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/clocksource/timer-npcm7xx.c
-> > b/drivers/clocksource/timer-npcm7xx.c
-> > index 8a30da7f083b..9780ffd8010e 100644
-> > --- a/drivers/clocksource/timer-npcm7xx.c
-> > +++ b/drivers/clocksource/timer-npcm7xx.c
-> > @@ -32,7 +32,7 @@
-> >  #define NPCM7XX_Tx_INTEN               BIT(29)
-> >  #define NPCM7XX_Tx_COUNTEN             BIT(30)
-> >  #define NPCM7XX_Tx_ONESHOT             0x0
-> > -#define NPCM7XX_Tx_OPER                        GENMASK(27, 3)
-> > +#define NPCM7XX_Tx_OPER                        GENMASK(28, 27)
-> >  #define NPCM7XX_Tx_MIN_PRESCALE                0x1
-> >  #define NPCM7XX_Tx_TDR_MASK_BITS       24
-> >  #define NPCM7XX_Tx_MAX_CNT             0xFFFFFF
-> > @@ -84,8 +84,6 @@ static int npcm7xx_timer_oneshot(struct
-> > clock_event_device *evt)
-> >
-> >         val = readl(timer_of_base(to) + NPCM7XX_REG_TCSR0);
-> >         val &= ~NPCM7XX_Tx_OPER;
-> > -
-> > -       val = readl(timer_of_base(to) + NPCM7XX_REG_TCSR0);
-> >         val |= NPCM7XX_START_ONESHOT_Tx;
-> >         writel(val, timer_of_base(to) + NPCM7XX_REG_TCSR0);
-> >
-> > @@ -97,12 +95,11 @@ static int npcm7xx_timer_periodic(struct
-> > clock_event_device *evt)
-> >         struct timer_of *to = to_timer_of(evt);
-> >         u32 val;
-> >
-> > +       writel(timer_of_period(to), timer_of_base(to) + NPCM7XX_REG_TICR0);
-> > +
-> >         val = readl(timer_of_base(to) + NPCM7XX_REG_TCSR0);
-> >         val &= ~NPCM7XX_Tx_OPER;
-> > -
-> > -       writel(timer_of_period(to), timer_of_base(to) + NPCM7XX_REG_TICR0);
-> >         val |= NPCM7XX_START_PERIODIC_Tx;
-> > -
-> >         writel(val, timer_of_base(to) + NPCM7XX_REG_TCSR0);
-> >
-> >         return 0;
-> >
->
 
 
--- 
-Regards,
-Avi
+On 7/15/2019 9:45 AM, Matthew Barth wrote:
+> This is a great proposal, just a few concerns/notes.
+>
+> On 7/12/19 5:27 PM, Kun Yi wrote:
+>> Hi there,
+>>
+>> Current phosphor-hwmon code is filled with preprocessor macros to 
+>> branch error condition for sysfs reads, and it seems to me that 
+>> adding a per-sensor configuration would solve two issues at least:
+>> 1. code can be greatly simplified
+>> 2. we can code more flexible sensor reading behavior
+>>
+>> Why 2) is needed: with many types of sensors that BMC controls, 
+>> having an one-size-fits-all policy will always have cases that it 
+>> can't handle. Each flaky sensor is flaky in its own way.
+>>
+>> Rough proposal on how this will work:
+>>
+>> add properties to each sensor group's configuration file:
+>>
+>> "error behavior": can be one of
+>> - always keep
+>> - remove from D-Bus on error
+> There is a REMOVERCS device config file option that can be configured 
+> to remove an individual sensor or any sensor of the device when a 
+> given set of return codes occur when attempting to read the sensor.
+>>
+>> "error condition":  can be combination of
+>> - certain sysfs return codes
+> REMOVERCS combines this error condition to the behavior of removing 
+> the sensor from Dbus. I'd be interested in how these types of 
+> bahavior-to-conditions will be mapped within the device's config file.
+>
+>> - timeout
+> In the case of phosphor-hwmon, isnt a timeout condition similar to 
+> error retries since a timeout condition is presented as a ETIMEDOUT 
+> return code on the sensor.
+>> - invalid value
+> This is another area I'd be interested to hear more on, how would one 
+> go about defining when a value would be invalid? Or is this a simple, 
+> negative values are invalid for a sensor that should always return a 
+> positive value?
+>>
+>> "error retries": number of retries before declaring the sensor has an 
+>> error
+> This would be great to have configurable per sensors, however a 
+> possible issue here would be allowing too many retries causing hwmon 
+> to take too long. So this should be capped or controlled in someway 
+> with the delay between reads as well. Right now a sensor is allowed to 
+> be retried 10x's with a 100ms delay between each attempt.
+>>
+>> Happy to hear any feedback.
+>>
+
+I like this idea.  Hopefully the defaults can be kept the same as they 
+are today so users of
+today's default settings wouldn't have to change their config files to 
+keep things the same.
+
+Another thing we've been thinking about adding is the ability for 
+sensors to only be
+read when the power is on,   though there's still some invention 
+required as to how
+to represent this state on D-Bus.
+
+>> Regards,
+>> Kun
+>
+
