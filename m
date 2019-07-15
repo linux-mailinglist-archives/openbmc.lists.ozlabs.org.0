@@ -2,71 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BE1F68FDC
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:17:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E66EA693CB
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:47:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nQbT55q1zDqQj
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:17:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nRFK4WWBzDqCM
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:47:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::62b; helo=mail-pl1-x62b.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=msbarth@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="ifEPLucE"; 
- dkim-atps=neutral
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
- [IPv6:2607:f8b0:4864:20::62b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nQXb02GtzDqRp
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:15:10 +1000 (AEST)
-Received: by mail-pl1-x62b.google.com with SMTP id t14so8339924plr.11
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 07:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=5/4773hU+uc3ux+iPeg3w8Qf8hDrRkHi7sgbB+8NjIM=;
- b=ifEPLucEgFZuNDhJD6Dow/SRTRF02+frg2/D2uQX1Mkg0oPptVIREIbjrxwutNQ9ni
- ZKT7IqJ0SeHNhudl+F+fER8UnPvXgmD4XfVtZxcSEE/Np4aSiLLn3XAfl0yFUaJMiia/
- FvC8ohKjBGeDhGAWXu9viHM52Z6I6NxZWnx/wSxhjvvZEnBl3uveVgxC6H5IJDNCpOIl
- 61spxGOnlx17hqKa7JjebvmWaBHL4GX7hqFtiEiAZGf1dsaxEtBuRpqabw1GPqio2KwZ
- DTvUrPmRnm0v1NBDFAWYe0Ads7ZTMsiOvKzG9BfjjUYB6qhiM7j8b4D1PNT0WYhkBcsu
- iVrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=5/4773hU+uc3ux+iPeg3w8Qf8hDrRkHi7sgbB+8NjIM=;
- b=Mlf+gQzmuyM3Bzy2FdFiD3TQ/5qhYiwBDMdn1uydjIUIUlKj1EPnBzRNKL/HoSwv+n
- nexP/i0PXaMBGu06krSBc3i3o9i53qAwSAfxqqOwZAovd7kYdqTofVPYJWosv+4g3OHZ
- AjoO76wFI3SSabZHvD4SZzyUihRNIf64YWXayscTzT6wPCbMyrAhgr+mahOrtQW9Qqdl
- TTyPcg3epCGj11nJSgrXiqTHOWcjDcIbCe5uNz886s/K1GScOGnj3gMnKoSC7CBtZEeH
- Dn9U+1SdW7frAIfXClDXLE+Pf5T61BJvZKPj9ZUkNe1xuJmimT8IRg/I6bFYbRSPXbF7
- Xnaw==
-X-Gm-Message-State: APjAAAW4pQN0Ucvy2mzCCGqAo0hAX8TUcwMauu81T1ReOcL4POzY3gLG
- SpCDzUMQO2Gn0pxDtkYIhkZYg2oXwOBc0a3JXmmORPZ3YQI=
-X-Google-Smtp-Source: APXvYqzGpvHnuouwjIoFnk/LH4rjZQeLyXWynZJVUGzNsEZMxxT2auS3Xo96edoimY5/d8AKuigZwezXBwQiieAlXZY=
-X-Received: by 2002:a17:902:b944:: with SMTP id
- h4mr28047540pls.179.1563200106341; 
- Mon, 15 Jul 2019 07:15:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nRCl4W0NzDqCM
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:45:39 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x6FEbZgg017703
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 10:45:35 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2trtx92u61-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 10:45:35 -0400
+Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x6FEeeDX031341
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 10:45:35 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2trtx92u5e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2019 10:45:35 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x6FEikhA029457;
+ Mon, 15 Jul 2019 14:45:34 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma01dal.us.ibm.com with ESMTP id 2tq6x6g2u0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Jul 2019 14:45:34 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x6FEjX9149742098
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 15 Jul 2019 14:45:33 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 289CC124058;
+ Mon, 15 Jul 2019 14:45:33 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D9F5212405C;
+ Mon, 15 Jul 2019 14:45:32 +0000 (GMT)
+Received: from [9.10.99.12] (unknown [9.10.99.12])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 15 Jul 2019 14:45:32 +0000 (GMT)
+Subject: Re: Proposal: configurable per-sensor error behavior in phosphor-hwmon
+To: Kun Yi <kunyi@google.com>, Patrick Venture <venture@google.com>,
+ Brandon Kim <brandonkim@google.com>, spinler@us.ibm.com,
+ mine260309@gmail.com
+References: <CAGMNF6WpQS06JDQJOKRLbKWwKrXKHvNtY7r+MnUTqp1G2Jn=qg@mail.gmail.com>
+From: Matthew Barth <msbarth@linux.ibm.com>
+Message-ID: <3e99accb-832d-e9fd-4263-2daaade10045@linux.ibm.com>
+Date: Mon, 15 Jul 2019 09:45:32 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-References: <CAO=notyXP_Cdrn_9GMgw+OvPYM7Ge9r_BbMiqgSJqS5EdrsumA@mail.gmail.com>
- <HK0PR03MB51239C4DDC3359F3AAC7F4EEDFF10@HK0PR03MB5123.apcprd03.prod.outlook.com>
- <HK0PR03MB51237AB971B9227F8A003E75DFF20@HK0PR03MB5123.apcprd03.prod.outlook.com>
-In-Reply-To: <HK0PR03MB51237AB971B9227F8A003E75DFF20@HK0PR03MB5123.apcprd03.prod.outlook.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 15 Jul 2019 07:14:55 -0700
-Message-ID: <CAO=notwqCA0=3JL4=L1cbD2XZUv0KQ8NVentLoV0vp_5QSmiAg@mail.gmail.com>
-Subject: Re: phosphor-ipmi-flash: Aspeed LPC Tested
-To: CS20 CTCchien <CTCCHIEN@nuvoton.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAGMNF6WpQS06JDQJOKRLbKWwKrXKHvNtY7r+MnUTqp1G2Jn=qg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-15_04:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907150175
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,203 +94,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 12, 2019 at 1:32 AM CS20 CTCchien <CTCCHIEN@nuvoton.com> wrote:
->
-> Hi Patrick,
->
-> I follow your instructions in Configuration B to build host tool and lib =
-for BMC.
-> But after I run
-> ./burn_my_bmc  \
->   --command update \
->   --interface ipmilpc \
->   --image image-u-boot \
->   --sig image-u-boot.sig \
->   --type static \
->   --address 0xfedc1000 \
->   --length 0x1000
-> , it will show
-> /flash/image not found
-> Exception received: Goal firmware or interface not supported
+This is a great proposal, just a few concerns/notes.
 
-That's telling me that the BMC library compiled isn't configured for
-this, or that something has failed at run-time on the BMC.  It's more
-likely that the BMC library doesn't have all the flags set to do what
-it needs configuration-wise, but that's just speculation.
+On 7/12/19 5:27 PM, Kun Yi wrote:
+> Hi there,
+> 
+> Current phosphor-hwmon code is filled with preprocessor macros to branch 
+> error condition for sysfs reads, and it seems to me that adding a 
+> per-sensor configuration would solve two issues at least:
+> 1. code can be greatly simplified
+> 2. we can code more flexible sensor reading behavior
+> 
+> Why 2) is needed: with many types of sensors that BMC controls, having 
+> an one-size-fits-all policy will always have cases that it can't handle. 
+> Each flaky sensor is flaky in its own way.
+> 
+> Rough proposal on how this will work:
+> 
+> add properties to each sensor group's configuration file:
+> 
+> "error behavior": can be one of
+> - always keep
+> - remove from D-Bus on error
+There is a REMOVERCS device config file option that can be configured to 
+remove an individual sensor or any sensor of the device when a given set 
+of return codes occur when attempting to read the sensor.
+> 
+> "error condition":  can be combination of
+> - certain sysfs return codes
+REMOVERCS combines this error condition to the behavior of removing the 
+sensor from Dbus. I'd be interested in how these types of 
+bahavior-to-conditions will be mapped within the device's config file.
 
-Can you provide the configuration you're using?
-Can you check the journalctl log to see if there are any messages from
-the library?
-
->
-> Please advise.
-> Thanks a lot
->
-> B.R.
-> Medad
->
-> -----Original Message-----
-> From: CS20 CTCchien
-> Sent: Tuesday, July 9, 2019 5:55 PM
-> To: Patrick Venture <venture@google.com>
-> Subject: RE: phosphor-ipmi-flash: Aspeed LPC Tested
->
-> Hi Patrick,
->
-> I have few questions about Configuration B( nuvoton LPC)
->
-> How do you know what value the MAPPED_ADDRESS should be?
-> EXTRA_OECONF_append_b =3D " MAPPED_ADDRESS=3D0xc0008000"
->
-> These parameters are the input of running an application , but why can yo=
-u just assign a address and length before allocating?
-> --address 0xfedc1000
-> --length 0x1000
->
->
-> Thanks
->
-> B.R.
-> Medad
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+george.hung=3Dquantatw.com@lists.ozlabs.or=
-g> On Behalf Of Patrick Venture
-> Sent: Thursday, June 27, 2019 3:55 AM
-> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>; Adriana Kobylak <anoo@us=
-.ibm.com>
-> Subject: phosphor-ipmi-flash: Aspeed LPC Tested
->
-> The following three out-of-band data mechanisms are tested and supported =
-by phosphor-ipmi-flash:
->  aspeed-p2a-ctl (PCI-to-AHB)
->  aspeed-lpc-ctl
->  nuvoton LPC
->
-> Tested configurations:
->
-> All the configurations have the cleanup blob enabled via the default PACK=
-AGECONFIG in the recipe.
->
-> Configuration A:
-> This uses a static layout image, the lpc bridge, and aspeed.  Because it'=
-s using the static layout, we enable the reboot-update*
->
-> EXTRA_OECONF_append_a =3D " --enable-static-layout"
-> EXTRA_OECONF_append_a =3D " --enable-lpc-bridge"
-> EXTRA_OECONF_append_a =3D " --enable-aspeed-lpc"
-> EXTRA_OECONF_append_a =3D " --enable-reboot-update"
-> EXTRA_OECONF_append_a =3D " MAPPED_ADDRESS=3D0x98000000"
->
-> The MAPPED_ADDRESS above is the region for lpc_ctrl in the device-tree.
->
-> Host-tool command**:
-> /tmp/phosphor_ipmi_flash_tool  \
->   --command update \
->   --interface ipmilpc \
->   --image image-bmc \
->   --sig image-bmc.sig \
->   --type static \
->   --address 0xfedc1000 \
->   --length 0x1000
-> Sending over the firmware image.
-> sending writeMeta
-> writemeta sent
-> Sending over the hash file.
-> sending writeMeta
-> writemeta sent
-> Opening the verification file
-> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
-ify session to check status other running success Returned success succeede=
-d Opening the update file Committing to /flash/update to trigger service Ca=
-lling stat on /flash/update session to check status running Opening the cle=
-anup blob Exception received: blob exception received: Received IPMI_CC: bu=
-sy
->
-> Configuration B:
-> This uses a static layout image, the lpc bridge, and nuvoton.  Because it=
-'s using the static layout, we enable the reboot-update*
->
-> EXTRA_OECONF_append_b =3D " --enable-static-layout"
-> EXTRA_OECONF_append_b =3D " --enable-lpc-bridge"
-> EXTRA_OECONF_append_b =3D " --enable-nuvoton-lpc"
-> EXTRA_OECONF_append_b =3D " --enable-reboot-update"
-> EXTRA_OECONF_append_b =3D " MAPPED_ADDRESS=3D0xc0008000"
->
-> Host-tool command**:
->
-> /tmp/phosphor_ipmi_flash_tool  \
->   --command update \
->   --interface ipmilpc \
->   --image image-bmc \
->   --sig image-bmc.sig \
->   --type static \
->   --address 0xfedc1000 \
->   --length 0x1000
-> Sending over the firmware image.
-> sending writeMeta
-> writemeta sent
-> Sending over the hash file.
-> sending writeMeta
-> writemeta sent
-> Opening the verification file
-> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
-ify session to check status other running success Returned success succeede=
-d Opening the update file Committing to /flash/update to trigger service Ca=
-lling stat on /flash/update session to check status running Opening the cle=
-anup blob Exception received: blob exception received: Received IPMI_CC: bu=
-sy
->
-> Configuration C:
-> This uses a static layout image, the pci bridge, and aspeed.  Because it'=
-s using the static layout, we enable the reboot-update*
->
-> EXTRA_OECONF_append_c =3D " --enable-static-layout"
-> EXTRA_OECONF_append_c =3D " --enable-pci-bridge"
-> EXTRA_OECONF_append_c =3D " --enable-aspeed-p2a"
-> EXTRA_OECONF_append_c =3D " --enable-reboot-update"
-> EXTRA_OECONF_append_c =3D " MAPPED_ADDRESS=3D0x47FF0000"
->
-> /tmp/phosphor_ipmi_flash_tool  \
->   --command update \
->   --interface ipmipci \
->   --image image-bmc \
->   --sig image-bmc.sig \
->   --type static
-> Sending over the firmware image.
-> sending writeMeta
-> writemeta sent
-> Sending over the hash file.
-> sending writeMeta
-> writemeta sent
-> Opening the verification file
-> Committing to /flash/verify to trigger service Calling stat on /flash/ver=
-ify session to check status other running success Returned success succeede=
-d Opening the update file Committing to /flash/update to trigger service Ca=
-lling stat on /flash/update session to check status running Opening the cle=
-anup blob Exception received: blob exception received: Received IPMI_CC: bu=
-sy
->
-> *I'm going to move this to a PACKAGECONFIG.
-> **Compiled to run in our environment and not the default autotools method=
-.
->
-> I haven't tested the ipmibt interface in awhile, but I will give it a run=
- later.  I'm looking at extending the design to support sending down the ho=
-st BIOS image.
->
-> Patrick
-> ________________________________
-> ________________________________
->  The privileged confidential information contained in this email is inten=
-ded for use only by the addressees as indicated by the original sender of t=
-his email. If you are not the addressee indicated in this email or are not =
-responsible for delivery of the email to such a person, please kindly reply=
- to the sender indicating this fact and delete all copies of it from your c=
-omputer and network server immediately. Your cooperation is highly apprecia=
-ted. It is advised that any unauthorized use of confidential information of=
- Nuvoton is strictly prohibited; and any information in this email irreleva=
-nt to the official business of Nuvoton shall be deemed as neither given nor=
- endorsed by Nuvoton.
+> - timeout
+In the case of phosphor-hwmon, isnt a timeout condition similar to error 
+retries since a timeout condition is presented as a ETIMEDOUT return 
+code on the sensor.
+> - invalid value
+This is another area I'd be interested to hear more on, how would one go 
+about defining when a value would be invalid? Or is this a simple, 
+negative values are invalid for a sensor that should always return a 
+positive value?
+> 
+> "error retries": number of retries before declaring the sensor has an error
+This would be great to have configurable per sensors, however a possible 
+issue here would be allowing too many retries causing hwmon to take too 
+long. So this should be capped or controlled in someway with the delay 
+between reads as well. Right now a sensor is allowed to be retried 10x's 
+with a 100ms delay between each attempt.
+> 
+> Happy to hear any feedback.
+> 
+> Regards,
+> Kun
