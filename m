@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF84368F7A
-	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:14:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BE1F68FDC
+	for <lists+openbmc@lfdr.de>; Mon, 15 Jul 2019 16:17:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nQX42ZMgzDqSC
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:14:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45nQbT55q1zDqQj
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 00:17:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com;
+ (client-ip=2607:f8b0:4864:20::62b; helo=mail-pl1-x62b.google.com;
  envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="kntdLgcU"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="ifEPLucE"; 
  dkim-atps=neutral
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
- [IPv6:2607:f8b0:4864:20::629])
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
+ [IPv6:2607:f8b0:4864:20::62b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nQVX1S2JzDqKP
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:13:23 +1000 (AEST)
-Received: by mail-pl1-x629.google.com with SMTP id ay6so8357949plb.9
- for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 07:13:23 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45nQXb02GtzDqRp
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 00:15:10 +1000 (AEST)
+Received: by mail-pl1-x62b.google.com with SMTP id t14so8339924plr.11
+ for <openbmc@lists.ozlabs.org>; Mon, 15 Jul 2019 07:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :content-transfer-encoding;
- bh=kK5YdZ+t4gv2xmiqq/K4Yk0i5vBSD0CFvhX++exutpI=;
- b=kntdLgcU97PD36KFr9yvHbwY2O2taV1US4lOeer2RrfSzRfLmjcyMFgP+kB6P55ODw
- A9M9J1ingpCtjjGq2LK4RcUUJJYvh63/3yGf1mKNS4BbLIIAYkagN/wtfMAKBx7WgodD
- 8Bfb33rdlyOymYBGgcsQr6SxDBKuAh+p5B7Bnw/OfZFBBwgpIRXNoh0DTNkOaawJ/lVB
- ANHU1+uNEdOjw203jU2U5MrL9jCZ9vKSSQ2y1D1zG4wgfNqRuMmP/qCc8zo0MZEaEZ5p
- xno0+3JWgh+1Zsfa02R752AOvVby7n3RJsetDYCUNPeXUM+EKd7HWa5Xpgn7i7+LY9K3
- DzKA==
+ bh=5/4773hU+uc3ux+iPeg3w8Qf8hDrRkHi7sgbB+8NjIM=;
+ b=ifEPLucEgFZuNDhJD6Dow/SRTRF02+frg2/D2uQX1Mkg0oPptVIREIbjrxwutNQ9ni
+ ZKT7IqJ0SeHNhudl+F+fER8UnPvXgmD4XfVtZxcSEE/Np4aSiLLn3XAfl0yFUaJMiia/
+ FvC8ohKjBGeDhGAWXu9viHM52Z6I6NxZWnx/wSxhjvvZEnBl3uveVgxC6H5IJDNCpOIl
+ 61spxGOnlx17hqKa7JjebvmWaBHL4GX7hqFtiEiAZGf1dsaxEtBuRpqabw1GPqio2KwZ
+ DTvUrPmRnm0v1NBDFAWYe0Ads7ZTMsiOvKzG9BfjjUYB6qhiM7j8b4D1PNT0WYhkBcsu
+ iVrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:content-transfer-encoding;
- bh=kK5YdZ+t4gv2xmiqq/K4Yk0i5vBSD0CFvhX++exutpI=;
- b=QV0iGhWDolF2hRO9IK/+7CeV9ff1p3oXfUxFDo8HUQloaEjWF/vyjRpUc4xXIe+7IE
- +Xl7JhY5jywlXQjdjsEStWpY5bo6ygbgCKoRQ5N8wXrLznY4IavHzviZf5MKxu1XLs90
- ABlYs1g+lFymIfXoneqR+RdmkGuQcHPbkKkqH4EW0Sj/9AnfUOF+PSk4G85aO8+N7yTw
- mgBQlXCBEvg8bd1pZnwJUuq6hXoAfTuLTOmyGG0Pspt9c564dDYy+feEUw+yuvXMgi7b
- PXNZ7FsCfjjx1Xq2l7se3ZcIdEzfLRXyLMw1SKAwqkuFMH7W4pgE7cNuYmUUOVJOGHlO
- NIew==
-X-Gm-Message-State: APjAAAXxgM7c3n3c/28ELk8TKFBOqHHR+Dp/3/1NwH65v95M93ZfXf8c
- /BOFtNXudGwrJzAMZO3Mig3JhnqNLbbaQxAxhpIn8w==
-X-Google-Smtp-Source: APXvYqx964ksToBlydHnYwoSZ60n0kivEkHaiNb1X57yO9Ia/4Fn6RnixCcbHj9yeHXZlCzMCkRwvhpfQ3upyVhUYJ4=
-X-Received: by 2002:a17:902:9897:: with SMTP id
- s23mr28486262plp.47.1563199999442; 
- Mon, 15 Jul 2019 07:13:19 -0700 (PDT)
+ bh=5/4773hU+uc3ux+iPeg3w8Qf8hDrRkHi7sgbB+8NjIM=;
+ b=Mlf+gQzmuyM3Bzy2FdFiD3TQ/5qhYiwBDMdn1uydjIUIUlKj1EPnBzRNKL/HoSwv+n
+ nexP/i0PXaMBGu06krSBc3i3o9i53qAwSAfxqqOwZAovd7kYdqTofVPYJWosv+4g3OHZ
+ AjoO76wFI3SSabZHvD4SZzyUihRNIf64YWXayscTzT6wPCbMyrAhgr+mahOrtQW9Qqdl
+ TTyPcg3epCGj11nJSgrXiqTHOWcjDcIbCe5uNz886s/K1GScOGnj3gMnKoSC7CBtZEeH
+ Dn9U+1SdW7frAIfXClDXLE+Pf5T61BJvZKPj9ZUkNe1xuJmimT8IRg/I6bFYbRSPXbF7
+ Xnaw==
+X-Gm-Message-State: APjAAAW4pQN0Ucvy2mzCCGqAo0hAX8TUcwMauu81T1ReOcL4POzY3gLG
+ SpCDzUMQO2Gn0pxDtkYIhkZYg2oXwOBc0a3JXmmORPZ3YQI=
+X-Google-Smtp-Source: APXvYqzGpvHnuouwjIoFnk/LH4rjZQeLyXWynZJVUGzNsEZMxxT2auS3Xo96edoimY5/d8AKuigZwezXBwQiieAlXZY=
+X-Received: by 2002:a17:902:b944:: with SMTP id
+ h4mr28047540pls.179.1563200106341; 
+ Mon, 15 Jul 2019 07:15:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAO=notyXP_Cdrn_9GMgw+OvPYM7Ge9r_BbMiqgSJqS5EdrsumA@mail.gmail.com>
  <HK0PR03MB51239C4DDC3359F3AAC7F4EEDFF10@HK0PR03MB5123.apcprd03.prod.outlook.com>
-In-Reply-To: <HK0PR03MB51239C4DDC3359F3AAC7F4EEDFF10@HK0PR03MB5123.apcprd03.prod.outlook.com>
+ <HK0PR03MB51237AB971B9227F8A003E75DFF20@HK0PR03MB5123.apcprd03.prod.outlook.com>
+In-Reply-To: <HK0PR03MB51237AB971B9227F8A003E75DFF20@HK0PR03MB5123.apcprd03.prod.outlook.com>
 From: Patrick Venture <venture@google.com>
-Date: Mon, 15 Jul 2019 07:13:08 -0700
-Message-ID: <CAO=notwWzEZ5ew-iT-pJTLSaJ0GLXopWfsJKx-jNokHjMU3Phw@mail.gmail.com>
+Date: Mon, 15 Jul 2019 07:14:55 -0700
+Message-ID: <CAO=notwqCA0=3JL4=L1cbD2XZUv0KQ8NVentLoV0vp_5QSmiAg@mail.gmail.com>
 Subject: Re: phosphor-ipmi-flash: Aspeed LPC Tested
 To: CS20 CTCchien <CTCCHIEN@nuvoton.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, 
- Benjamin Fair <benjaminfair@google.com>
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -81,35 +81,58 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 9, 2019 at 2:54 AM CS20 CTCchien <CTCCHIEN@nuvoton.com> wrote:
+On Fri, Jul 12, 2019 at 1:32 AM CS20 CTCchien <CTCCHIEN@nuvoton.com> wrote:
 >
 > Hi Patrick,
+>
+> I follow your instructions in Configuration B to build host tool and lib =
+for BMC.
+> But after I run
+> ./burn_my_bmc  \
+>   --command update \
+>   --interface ipmilpc \
+>   --image image-u-boot \
+>   --sig image-u-boot.sig \
+>   --type static \
+>   --address 0xfedc1000 \
+>   --length 0x1000
+> , it will show
+> /flash/image not found
+> Exception received: Goal firmware or interface not supported
 
-Please always include the mailing list when reaching out for help for
-a few reasons: 1) I'm not always around and others can help, 2) in the
-future someone may have the same problem and find this discussion.
-Thanks.
+That's telling me that the BMC library compiled isn't configured for
+this, or that something has failed at run-time on the BMC.  It's more
+likely that the BMC library doesn't have all the flags set to do what
+it needs configuration-wise, but that's just speculation.
 
+Can you provide the configuration you're using?
+Can you check the journalctl log to see if there are any messages from
+the library?
+
+>
+> Please advise.
+> Thanks a lot
+>
+> B.R.
+> Medad
+>
+> -----Original Message-----
+> From: CS20 CTCchien
+> Sent: Tuesday, July 9, 2019 5:55 PM
+> To: Patrick Venture <venture@google.com>
+> Subject: RE: phosphor-ipmi-flash: Aspeed LPC Tested
+>
+> Hi Patrick,
 >
 > I have few questions about Configuration B( nuvoton LPC)
 >
 > How do you know what value the MAPPED_ADDRESS should be?
 > EXTRA_OECONF_append_b =3D " MAPPED_ADDRESS=3D0xc0008000"
-
-Benjamin, how is this address chosen for nuvoton?  I know with the
-aspeed-lpc driver it's the region specified in the device-tree, s.t.
-the BMC kernel won't map anything into it (keep it free).
-
 >
 > These parameters are the input of running an application , but why can yo=
 u just assign a address and length before allocating?
 > --address 0xfedc1000
 > --length 0x1000
-
-The values passed here are where you've locked off space for this
-purpose via your bios memory map configuration (or your kernel
-configuration).  To say, keep this free.  IIRC.
-
 >
 >
 > Thanks
