@@ -2,66 +2,143 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ADD76AC08
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 17:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0211F6AEC2
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 20:38:49 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45p4M36zhSzDqdD
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 01:39:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45p8LH20lfzDqNB
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 04:38:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ spf=pass (mailfrom) smtp.mailfrom=linkedin.com
+ (client-ip=108.174.3.121; helo=mail321.linkedin.com;
+ envelope-from=pmao@linkedin.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=linkedin.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Rbc2ybc4"; 
+ unprotected) header.d=linkedin.com header.i=@linkedin.com header.b="rwLYfop0";
+ dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.onmicrosoft.com
+ header.i=@microsoft.onmicrosoft.com header.b="g+qqMhUy"; 
  dkim-atps=neutral
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com
- [IPv6:2607:f8b0:4864:20::630])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 193 seconds by postgrey-1.36 at bilbo;
+ Wed, 17 Jul 2019 04:38:10 AEST
+Received: from mail321.linkedin.com (mail321.linkedin.com [108.174.3.121])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45p4LL6nV4zDqRB
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 01:38:31 +1000 (AEST)
-Received: by mail-pl1-x630.google.com with SMTP id b3so10310598plr.4
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 08:38:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ydo1MCRZ9iMorjS9IJoX1OcWyTOg9jShyCMmSM1YF9g=;
- b=Rbc2ybc474875W5h5Zw4P/wGTLEHxGXYiTwlmT5m7SWMlOgBDOP0bZKZgt1rLe7q2q
- Xmuw+Gn8lzdm5GOJK5akJbY6KW+wEBId//bZSNO5DFdTqqW01ZUjjoCS2qRynZluR3+x
- CxpRqDBWiso3F4wisJbyi5YVfn72uSRRjZv1khr2X026Dwtll626gfy2/BNkZypmyCRl
- 6bTlIoei3kESfasmOVGE4OD84SHzOvVB2CFYPhzxEbfntK7hoouV2AHdnUz7fB4Cx1j0
- Sz17uFL1B4ZRNYLV9Are4lCO7X8M0aK3z24TpYeNXXThO/lIfOY5LysJTTtTEbEXm4EK
- KE0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=ydo1MCRZ9iMorjS9IJoX1OcWyTOg9jShyCMmSM1YF9g=;
- b=U/8H2NeXK6PhvrrCdq5deCatPt0qVPDHEGZ7qdNxhgGbb3jk1l0qCK7zUDNISfkwiu
- 9LEBwcK9jUd8rNa4fdhbu6FHj6Klcqce4CXrqpT3Qr3Y+rcOLCI78pBI4X9vj5VPOvoV
- 3P9KFo9VaMofYdUDDtZOQswSBaefkB7dkekuzgWIexb6Fjlc7oyScGdWdwDAwvVG+H5J
- vcji5r1+ZhDlYKNupHhEbggQyaiedRh7da4AlvUEHArGUlovIJ+QDi4parUGDu8l/Ohn
- wtYIRrgSnyzI9bdmStTayCWjVRCJgwNlj7AcX2w7mpKZMjoQfsYbTOqyZV1pif3TBXfK
- lZCA==
-X-Gm-Message-State: APjAAAUId5CeDF9wJN5YTt7lXPOSXP1dGeXeuUqmQ6340ZyIGcmB4I1G
- /j/iHtHfNauvm2lHJZy30Gd5mfnX7il1HU4nOMndBQ==
-X-Google-Smtp-Source: APXvYqxTLNGTfMSSETpMk952nhfoatf23d2AUF2fD39dwFnYE4CrCpTrr6wdvbZQM6e7gxWPOksACMMrgsU749zxdyc=
-X-Received: by 2002:a17:902:9897:: with SMTP id
- s23mr36261781plp.47.1563291507951; 
- Tue, 16 Jul 2019 08:38:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45p8KZ63y8zDqc6
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 04:38:10 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linkedin.com;
+ s=d2048-201806-01; t=1563302093;
+ bh=F8xRvbJs9qIGXhL3pc0Rtg7d+BzZARQqo3Yc77fPTMM=;
+ h=From:To:Subject:Date:Content-Type:MIME-Version;
+ b=rwLYfop0s73s8HYCkZ2jmTm25glRH6IXChnIEBuW0yI3El3riLaknPoBvo70nShtn
+ vpFq3Ajh6P8n5OENyeqXxEAV6J3HPltr1fc7HStiJpdbKDG++XxeUjPkKCWFkGJZGW
+ nvwcMPgSgfM1/qbospwReebwq+oMJUxLbZa0XmTZGPEkt5KoET9S8LgTnul3vc3EO7
+ eEjuKvx/FGCd520p4mkMbyfHKOBQQxSMS1JUszD9RY/bD35f+BWY+SHxcpj3Igu5Hs
+ uTagFheAsNm+yqsjQnpltgMIWgFAqqxuTNYqRZeHCueAIyQgFLikDqOwoTTkGw9gPn
+ j+iATkO9r64Dw==
+Authentication-Results: mail321.prod.linkedin.com
+ x-tls.subject="/C=US/ST=Washington/L=Redmond/O=Microsoft
+ Corporation/CN=mail.protection.outlook.com";
+ auth=pass (cipher=AES256-GCM-SHA384)
+Authentication-Results: mail321.prod.linkedin.com;
+ iprev=pass policy.iprev="104.47.40.59";
+ spf=softfail smtp.mailfrom="pmao@linkedin.com"
+ smtp.helo="nam03-co1-obe.outbound.protection.outlook.com";
+ dkim=pass header.d=microsoft.onmicrosoft.com;
+ tls=pass (verified) key.ciphersuite="TLS_RSA_WITH_AES_256_GCM_SHA384"
+ key.length="256" tls.v="tlsv1.2"
+ cert.client="C=US,ST=Washington,L=Redmond,O=Microsoft
+ Corporation,CN=mail.protection.outlook.com"
+ cert.clientissuer="C=BE,O=GlobalSign nv-sa,CN=GlobalSign Organization
+ Validation CA - SHA256 - G3"
+Received: from [104.47.40.59] ([104.47.40.59:23411]
+ helo=NAM03-CO1-obe.outbound.protection.outlook.com)
+ by mail321.prod.linkedin.com (envelope-from <pmao@linkedin.com>)
+ (ecelerity 3.6.21.53563 r(Core:3.6.21.0)) with ESMTPS
+ (cipher=AES256-GCM-SHA384
+ subject="/C=US/ST=Washington/L=Redmond/O=Microsoft
+ Corporation/CN=mail.protection.outlook.com") 
+ id F8/4C-32691-DC81E2D5; Tue, 16 Jul 2019 18:34:53 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dJ4VEqQV2P2hEDmvIDb5f8K/3sxElKUnL018Id0jyxOqGSll2m3UjUWwLkwjbhOQpojPeHLQoApKp0IaSZgRBaKHrZLNqW8WHzJpGsC5DCOk9oFtNpOi2l8PS+atR99mBovBQHMdBXTrI312z4z7BS1mGY/5YP/zgYs4SrfisgCgJHHYpb59cUAWxpY7z7YlSJ6HBN24dXc2zUX+m2SVsua+ENHC3El+mcLoapOjO2+zokdvoqHHcTQgkVBKYmKElzRvKblDp13AhX3g87WkTk14CNL5AOYrZZds1Gjx68MEXL3aY9G2W9FXaiB0WePEhbJ/OVAShPUbWy+k4Tp1cg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F8xRvbJs9qIGXhL3pc0Rtg7d+BzZARQqo3Yc77fPTMM=;
+ b=n+hBLgQsfCXA1R/Ne6/qNZ7zSTGFsdo+QfN+8k/nkkKLq0QQngU/RQBsgivdbdFKdH53NBlnEl9yI8Ooibng0rum++m0l1KsJZ9IROx004TA41a0gYDLACQIK+t9H2Auy1EDccvhbGZtBG9dPCL5hbrkksIQf17WAVzAmS3IcXncZG2hzP61ACWiK2Hu7mVkKZ3WMo6iFVtDd3T6u+q/PEqnc9w0Y93SKmN79j/6w/xryPqC7j4E0IoZwWyKAxLu8vv8bsFuuNd7eB4dS4wiSbDsMUxu7rU3ZNM6nj616UG4Tip7sEN2tgr9NcNLbLYMaOPpqHSrvWF4oA4FkhZiaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
+ smtp.mailfrom=linkedin.com;dmarc=pass action=none
+ header.from=linkedin.com;dkim=pass header.d=linkedin.com;arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microsoft.onmicrosoft.com; s=selector1-microsoft-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=F8xRvbJs9qIGXhL3pc0Rtg7d+BzZARQqo3Yc77fPTMM=;
+ b=g+qqMhUy7LZpqG18S0tmw5yTVYo5e+cl76LxXClqKnQ2CYpR0W3c2RJGLAAq3jBlt35dwJJIXusdLwmOSM2FZUzyO1Nn6pfyGXW7mFrA9/yOnCFrE108s8ooQpXaGOgpNHHRZLr5Z5LX35LE7qdUfk/ISSBXuE5IFYtGdkkILzY=
+Received: from MWHPR21MB0831.namprd21.prod.outlook.com (10.173.51.9) by
+ MWHPR21MB0797.namprd21.prod.outlook.com (10.175.135.151) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2115.2; Tue, 16 Jul 2019 18:34:51 +0000
+Received: from MWHPR21MB0831.namprd21.prod.outlook.com
+ ([fe80::b172:85df:32d0:8364]) by MWHPR21MB0831.namprd21.prod.outlook.com
+ ([fe80::b172:85df:32d0:8364%4]) with mapi id 15.20.2115.002; Tue, 16 Jul 2019
+ 18:34:51 +0000
+From: Ping Mao <pmao@linkedin.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: BMC websocket
+Thread-Topic: BMC websocket
+Thread-Index: AQHVPAUn+oldHT3Sf0ySH/PjRZ5vYA==
+Date: Tue, 16 Jul 2019 18:34:51 +0000
+Message-ID: <82B71204-7C02-4A78-93A7-6AF55AF6C5A9@linkedin.biz>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=acaae2cb-7ef6-4bf1-bc52-000059c7c4f6;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-07-16T18:26:42-0800;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true; 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=pmao@linkedin.com; 
+x-originating-ip: [2620:119:5003:20c:591b:366c:86d1:6d7d]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: b8144d26-d7fa-4026-6004-08d70a1c4a0b
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(5600148)(711020)(4605104)(1401327)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
+ SRVR:MWHPR21MB0797; 
+x-ms-traffictypediagnostic: MWHPR21MB0797:
+x-microsoft-antispam-prvs: <MWHPR21MB07970FEBF442195A0589C689A0CE0@MWHPR21MB0797.namprd21.prod.outlook.com>
+x-o365ent-eop-header: Message Processed By - CBR_LInkedIn_Mail_To_External
+x-ms-oob-tlc-oobclassifiers: OLM:4714;
+x-forefront-prvs: 0100732B76
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(4636009)(366004)(376002)(39860400002)(136003)(346002)(396003)(47662002)(189003)(199004)(36756003)(81156014)(486006)(4270600006)(558084003)(6916009)(221733001)(186003)(10090500001)(7116003)(102836004)(478600001)(25786009)(6506007)(256004)(305945005)(14454004)(46003)(99286004)(476003)(33656002)(71200400001)(316002)(71190400001)(91956017)(76116006)(8676002)(66446008)(64756008)(66476007)(66556008)(6436002)(66946007)(68736007)(8936002)(5660300002)(3480700005)(6116002)(9686003)(86362001)(81166006)(6512007)(2906002)(6486002)(7736002)(53936002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR21MB0797;
+ H:MWHPR21MB0831.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: linkedin.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: Q+E/U/UCQ7r4ZM4AXRxKXN9TIYBiCa6ZOZWmW/9KO3vwjM6W9GNXP7XiJBh9FVCZ709/7UfCs3/B5BLkFQupNq9GEe7ZVFXsI2ptmwdCb4rAJHNYbtSrxnl3dMIVjW7JiDGtKh+i+XY8mE+L61h3teNKDuk4ZuIOumREymWd9sefWuoi8rzanFsnsgOBa6uuflmGU998nMJOKmoptf1Tx36CHsmn6p1SnvgVocHuoNRSJMEz7lBpRKJLrSZeTb2JUfyOdgd476vO3ghKt83x5QorSpsuf5owKmqG7X39g0uk9sFQPtBOgJa27ZEluXVggxKg0l1pfwUlkg39bE030Y+jJRJWIn4mI5Ss9G7NckKQbQ86Zy6FWO1NYcA6TcVaas8I7gnUMJGhsTpDANV56E4rA7E20LRCVULP/1ClBKY=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D49F4E6941240846AE818EE4D2862E64@namprd21.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
-In-Reply-To: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 16 Jul 2019 08:38:16 -0700
-Message-ID: <CAO=notzcuVK-0eV4tCjD-MuFi7RQvrX1Y7fJgU4yzLzU-vR+Vw@mail.gmail.com>
-Subject: Re: configure error and the image content seems to be incorrect
-To: Andrew MS1 Peng <pengms1@lenovo.com>
-Content-Type: multipart/alternative; boundary="000000000000035a84058dce2b2f"
+X-OriginatorOrg: linkedin.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8144d26-d7fa-4026-6004-08d70a1c4a0b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2019 18:34:51.2496 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pmao@linkedin.biz
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR21MB0797
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,420 +150,8 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Duke KH Du <dukh@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000035a84058dce2b2f
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, Jul 16, 2019 at 5:31 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
-
-> Hi Patrick,
->
-> 1.      I downloaded the latest version of phosphor-ipmi-flash to build
-> host tool with the SDK environment you provide, but encounter configure
-> error as below, could you help to take a look at it?
->
-> *Source code hash id*
->
-> *Compile Status*
->
-> *Error message*
->
-> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
->
-> configure successful
->
-> fd182168d9d1c852b1047b9eccea56812b614586
-> 1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137
-> fa06a5f0056e91bfada390c4007fbd3472d75a56
-> 7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0
-> c9792e75361c86da7f674976eacd03c761021d2f
->
-> configure failed
->
-> checking whether C++ compiler accepts -lgtest... yes
-> checking whether C++ compiler accepts -pthread... (cached) yes
-> checking for main in -lgtest... yes
-> checking whether C++ compiler accepts -lgmock... yes
-> checking whether C++ compiler accepts -pthread... (cached) yes
-> checking for main in -lgmock... yes
-> checking for valgrind... no
-> checking whether to build with code coverage support... no
-> configure: Enabling OE-SDK at
-> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
-> configure: error: conditional "HAVE_SYSTEMD" was never defined.
-> Usually this means the macro was only invoked conditionally.
->
-> 2.      The host tool compiled with phosphor-ipmi-flash hash id b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
-> and BMC flash library compiled with phosphor-ipmi-flash hash id c9792e75361c86da7f674976eacd03c761021d2f,
-> the BMC image can transfer from host side to BMC side via LPC bridge. The
-> image size is correct, but the image content seems to be incorrect as
-> below, could you give us some clues to solve it if this is an issue?
->
-> Image of host side
->
-> Image of BMC side
->
-> pengms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
->
-> 0000000 00be ea00 f014 e59f f014 e59f f014 e59f
->
-> 0000010 f014 e59f f014 e59f f014 e59f f014 e59f
->
-> 0000020 0060 0000 00c0 0000 0120 0000 0180 0000
->
-> 0000030 01e0 0000 0240 0000 02a0 0000 beef dead
->
-> root@hr630:~# hexdump -n 64 /run/initramfs/bmc-image
->
-> 0000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00
->
-> 0000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00
->
-> 0000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80
->
-> 0000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4
->
-> DTS setting:
->              flash_memory: region@98000000 {
->                     no-map;
->                     reg = <0x98000000 0x00100000>; /* 1M */
->              };
->
-> BMC configuration setting:
-> EXTRA_OECONF += " --enable-reboot-update  --enable-static-layout
-> --enable-aspeed-lpc MAPPED_ADDRESS=0x98000000 --enable-reboot-update"
->
-> Host tool setting:
-> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig
-> ./sig.txt --type static --address 2550136832 --length 65536
->
-
-The address provided for the host:
->>> '0x%x' % 2550136832
-'0x98000000'
-
-Is a region of memory on the host that's set aside for this purpose and is
-mapped via /dev/mem.  It's not the address the BMC Is using.  You'll need
-to use a region reserved for this purpose in the host kernel or bios.
-
-
-
-> Thanks,
-> Andrew
->
-
---000000000000035a84058dce2b2f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 16, 2019 at 5:31 AM Andre=
-w MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com">pengms1@lenovo.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"ZH-CN">
-<div class=3D"gmail-m_-3943518016435637397WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif;color:black">Hi Patrick,<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397MsoListParagraph" style=3D"margin-l=
-eft:18pt">
-<u></u><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack"><span>1.<span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0
-</span></span></span><u></u><span lang=3D"EN-US" style=3D"font-family:Calib=
-ri,sans-serif;color:black">I downloaded the latest version of phosphor-ipmi=
--flash to build host tool with the SDK environment you provide, but encount=
-er configure error as below, could
- you help to take a look at it?<u></u><u></u></span></p>
-<table class=3D"gmail-m_-3943518016435637397MsoNormalTable" border=3D"0" ce=
-llspacing=3D"0" cellpadding=3D"0" style=3D"margin-left:21pt;border-collapse=
-:collapse">
-<tbody>
-<tr>
-<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:1pt solid w=
-indowtext;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
-">Source code hash id</span></b><span lang=3D"EN-US"><u></u><u></u></span><=
-/p>
-</td>
-<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border-top:1pt soli=
-d windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid wind=
-owtext;border-left:none;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
-">Compile Status</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
-</td>
-<td width=3D"259" valign=3D"top" style=3D"width:16cm;border-top:1pt solid w=
-indowtext;border-right:1pt solid windowtext;border-bottom:1pt solid windowt=
-ext;border-left:none;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
-">Error message</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
-</td>
-</tr>
-<tr>
-<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
-olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
-ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">b=
-90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42</span><span lang=3D"EN-US" style=3D=
-"font-family:Calibri,sans-serif"><u></u><u></u></span></p>
-</td>
-<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
-der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
-dowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
-onfigure successful</span><span lang=3D"EN-US" style=3D"font-family:Calibri=
-,sans-serif"><u></u><u></u></span></p>
-</td>
-<td width=3D"259" valign=3D"top" style=3D"width:16cm;border-top:none;border=
--left:none;border-bottom:1pt solid windowtext;border-right:1pt solid window=
-text;padding:0cm 5.4pt">
-</td>
-</tr>
-<tr>
-<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
-olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
-ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">f=
-d182168d9d1c852b1047b9eccea56812b614586<br>
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack;background:white">1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137<br>
-fa06a5f0056e91bfada390c4007fbd3472d75a56<br>
-7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0<br>
-c9792e75361c86da7f674976eacd03c761021d2f</span><span lang=3D"EN-US" style=
-=3D"font-family:Calibri,sans-serif"><u></u><u></u></span></p>
-</td>
-<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
-der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
-dowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
-onfigure failed</span><span lang=3D"EN-US" style=3D"font-family:Calibri,san=
-s-serif"><u></u><u></u></span></p>
-</td>
-<td width=3D"259" valign=3D"top" style=3D"width:16cm;border-top:none;border=
--left:none;border-bottom:1pt solid windowtext;border-right:1pt solid window=
-text;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742msolistparagraph">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif">checking whet=
-her C++ compiler accepts -lgtest... yes<br>
-checking whether C++ compiler accepts -pthread... (cached) yes<br>
-checking for main in -lgtest... yes<br>
-checking whether C++ compiler accepts -lgmock... yes<br>
-checking whether C++ compiler accepts -pthread... (cached) yes<br>
-checking for main in -lgmock... yes<br>
-checking for valgrind... no<br>
-checking whether to build with code coverage support... no<br>
-configure: Enabling OE-SDK at /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/=
-core2-64-openbmc-linux<br>
-<span style=3D"color:red">configure: error: conditional &quot;HAVE_SYSTEMD&=
-quot; was never defined.<br>
-Usually this means the macro was only invoked conditionally.</span><u></u><=
-u></u></span></p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra" style=
-=3D"margin-left:18pt">
-<u></u><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack"><span>2.<span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0
-</span></span></span><u></u><span lang=3D"EN-US" style=3D"font-family:Calib=
-ri,sans-serif;color:black">The host tool compiled with
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack">phosphor-ipmi-flash</span><span lang=3D"EN-US" style=3D"font-family:C=
-alibri,sans-serif;color:black"> hash id
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack">b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42 and BMC flash library
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack">compiled with
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack">phosphor-ipmi-flash</span><span lang=3D"EN-US" style=3D"font-family:C=
-alibri,sans-serif;color:black"> hash id
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack;background:white">c9792e75361c86da7f674976eacd03c761021d2f, the BMC im=
-age can transfer from host side to BMC side via LPC bridge. The image size =
-is correct, but the image content
- seems to be incorrect as below, could you give us some </span><span lang=
-=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">clues to so=
-lve it if this is an issue?
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack"><u></u><u></u></span></p>
-<table class=3D"gmail-m_-3943518016435637397MsoTableGrid" border=3D"1" cell=
-spacing=3D"0" cellpadding=3D"0" style=3D"margin-left:18pt;border-collapse:c=
-ollapse;border:none">
-<tbody>
-<tr>
-<td width=3D"347" valign=3D"top" style=3D"width:307.65pt;border:1pt solid w=
-indowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
-mage of host side<u></u><u></u></span></p>
-</td>
-<td width=3D"336" valign=3D"top" style=3D"width:318.95pt;border-top:1pt sol=
-id windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid win=
-dowtext;border-left:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
-mage of BMC side<u></u><u></u></span></p>
-</td>
-</tr>
-<tr>
-<td width=3D"347" valign=3D"top" style=3D"width:307.65pt;border-right:1pt s=
-olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
-ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">p=
-engms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
-<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000000 00be ea00 f014 e59f f014 e59f f014 e59f<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000010 f014 e59f f014 e59f f014 e59f f014 e59f<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000020 0060 0000 00c0 0000 0120 0000 0180 0000<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000030 01e0 0000 0240 0000 02a0 0000 beef dead<u></u><u></u></span></p>
-</td>
-<td width=3D"336" valign=3D"top" style=3D"width:318.95pt;border-top:none;bo=
-rder-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid wi=
-ndowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">r=
-oot@hr630:~# hexdump -n 64 /run/initramfs/bmc-image<u></u><u></u></span></p=
->
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
-000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4<u></u><u></u></span></p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class=3D"gmail-m_-3943518016435637397gmail-m1545270694092823127gmail-m-8=
-411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail=
--m-4871403681716629123gmail-m5865277644764564145gmail-m5232517683823064206g=
-mail-m-6091798217660211465gmail-m-7106965077525685122msolistparagra" style=
-=3D"margin-left:24pt">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">D=
-TS setting:</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-se=
-rif;color:black"><br>
-</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
-lack">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 flash_memory: region@98000000 {<br>
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 no-map;<br>
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg =3D &lt;0x98000000 0x00100000&g=
-t;; /* 1M */<br>
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };=
-<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397MsoListParagraph" style=3D"margin-l=
-eft:18pt;text-indent:0cm">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">B=
-MC configuration setting:<br>
-EXTRA_OECONF +=3D &quot; --enable-reboot-update=C2=A0 --enable-static-layou=
-t --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update&qu=
-ot;<u></u><u></u></span></p>
-<p class=3D"gmail-m_-3943518016435637397MsoListParagraph" style=3D"margin-l=
-eft:18pt;text-indent:0cm">
-<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">H=
-ost tool setting:<br>
-./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
-./sig.txt --type static --address 2550136832 --length 65536</span></p></div=
-></div></blockquote><div><br></div><div>The address provided for the host:<=
-/div><div>&gt;&gt;&gt; &#39;0x%x&#39; % 2550136832</div>&#39;0x98000000&#39=
-;</div><div class=3D"gmail_quote"><br></div><div class=3D"gmail_quote">Is a=
- region of memory on the host that&#39;s set aside for this purpose and is =
-mapped via /dev/mem.=C2=A0 It&#39;s not the address the BMC Is using.=C2=A0=
- You&#39;ll need to use a region reserved for this purpose in the host kern=
-el or bios.</div><div class=3D"gmail_quote"><br><div>=C2=A0</div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex"><div lang=3D"ZH-CN"><div class=3D"g=
-mail-m_-3943518016435637397WordSection1"><p class=3D"gmail-m_-3943518016435=
-637397MsoListParagraph" style=3D"margin-left:18pt;text-indent:0cm"><span la=
-ng=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black"><u></u><u=
-></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">Thanks,<br>
-Andrew<u></u><u></u></span></p>
-</div>
-</div>
-
-</blockquote></div></div>
-
---000000000000035a84058dce2b2f--
+SGksICANCg0KQ291bGQgc29tZW9uZSBzaGFyZSBob3cgdG8gc3Vic2NyaWJlIHRvIEJNQyB3ZWJz
+b2NrZXQgZm9yIGV2ZW50cz8gICAgVGhhbmtzLg0KDQpUaGFua3MsDQpQaW5nDQoNCg==
