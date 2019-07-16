@@ -1,87 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C2FD6A8E1
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 14:44:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5496A6A4AF
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 11:13:46 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45nvpH0KX8zDqSw
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 19:13:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45p0Tj657lzDqCM
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jul 2019 22:44:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=vishwa@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.250.2; helo=mail1.bemta24.messagelabs.com;
+ envelope-from=pengms1@lenovo.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
+ [67.219.250.2])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45nvnd0099zDqDl
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 19:13:08 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6G9AN8h140847
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 05:13:03 -0400
-Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2ts9gk5vr3-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 05:13:03 -0400
-Received: from localhost
- by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
- Tue, 16 Jul 2019 10:13:01 +0100
-Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
- by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Tue, 16 Jul 2019 10:12:59 +0100
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x6G9CwKQ44630170
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jul 2019 09:12:58 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 519E5A4062;
- Tue, 16 Jul 2019 09:12:58 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABB42A405F;
- Tue, 16 Jul 2019 09:12:57 +0000 (GMT)
-Received: from [9.122.210.243] (unknown [9.122.210.243])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Tue, 16 Jul 2019 09:12:57 +0000 (GMT)
-Subject: Re: bmc_booted LED group was not asserted when BMC started up
-To: CS20 YSChu <YSCHU@nuvoton.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <HK2PR03MB451678ECD01E44B509753895B6CF0@HK2PR03MB4516.apcprd03.prod.outlook.com>
- <dfd399c9-757c-de7d-f61d-4ec844b9b0b6@linux.vnet.ibm.com>
- <HK2PR03MB4516A42C3DDE5528F5515D1CB6CE0@HK2PR03MB4516.apcprd03.prod.outlook.com>
-From: vishwa <vishwa@linux.vnet.ibm.com>
-Date: Tue, 16 Jul 2019 14:42:56 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <HK2PR03MB4516A42C3DDE5528F5515D1CB6CE0@HK2PR03MB4516.apcprd03.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45p0Bw0B48zDqRX
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 22:31:50 +1000 (AEST)
+Received: from [67.219.251.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-5.bemta.az-c.us-west-2.aws.symcld.net id 68/B7-14524-0B3CD2D5;
+ Tue, 16 Jul 2019 12:31:44 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJKsWRWlGSWpSXmKPExsWS8eIhr+6Gw7q
+ xBlOfMFmcannBYrH3wEYWByaPBZtKPc7PWMgYwBTFmpmXlF+RwJrxpbmPveDtMcaKLw09rA2M
+ jTsZuxi5OIQE2pkk7l+azw7hrGWUaOmbzAzhvGKUWN+4iLWLkRPI2cMoMXWWAojNJqAlsfD/H
+ iYQW0RAV6Lt4kswm1kgQmL79W4gm4NDWMBN4tbCFIgSb4mtD1exQNh6Ej8P72IEsVkEVCW+P1
+ 8EFucVsJRY3L4KbBWjgKzEtEf3oUaKS8ydNgssLiEgILFkz3lmCFtU4uXjf1BxBYkZb7dA1Sd
+ IPF5wjBVipqDEyZlPWCYwCs9CMmoWkrJZSMog4joSC3Z/YoOwtSWWLXzNDGOfOfCYCVl8ASP7
+ KkaLpKLM9IyS3MTMHF1DAwNdQ0MjXUNjc11DIwu9xCrdZL3SYt3y1OISXSO9xPJiveLK3OScF
+ L281JJNjMD4SynobNjB+OrIa71DjJIcTEqivMd26MYK8SXlp1RmJBZnxBeV5qQWH2KU4eBQku
+ BdcAgoJ1iUmp5akZaZA0wFMGkJDh4lEd67B4HSvMUFibnFmekQqVOMyRwTXs5dxMyx8+g8IHk
+ QTF5ZtQRIfgST38Hkm7Ug8i2YbLt3F0i2g0ghlrz8vFQpcd4ukM0CIKMzSvPgFsNS4CVGWSlh
+ XkYGBgYhnoLUotzMElT5V4ziHIxKwrw/QQ7kycwrgbsPmL6AvhbhlXfRAjm9JBEhJdXAtPN23
+ CPXOyrznv6fcuab059H4gIPuau4JMN29HpHFmyOMggTNdtmvrZXVHuuqCXPZx72NwIqK7d6v8
+ js9Z7TfHJBZnxgjZ3qYU6LZ5Y5j9a41E28Y3aFxcPZ8HBFs2S2QdwfrSCHjqltN+9UB0V7xic
+ V9k3YqalsGFeksKlTLHHiLqYal4gMSYFCX/f+ZbrKlkqzL3oUKM20rdPx33vGYGli/L49l/Zw
+ LW2tEJpsUyK7an0zZ+nZ5/0T7X8LKlpbXCmavsKle4PB8swIUReRg0fYJ86x5ZSPfJEjULxA+
+ /Dma8nNy1WizJaxGVcamnwLn2iu+0jo+s/ypfe2HXiwMbrr37NpHo633qrcaFJiKc5INNRiLi
+ pOBACLHTe//AMAAA==
+X-Env-Sender: pengms1@lenovo.com
+X-Msg-Ref: server-20.tower-366.messagelabs.com!1563280302!1459191!1
+X-Originating-IP: [104.232.225.13]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.31.5; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 24195 invoked from network); 16 Jul 2019 12:31:43 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.13)
+ by server-20.tower-366.messagelabs.com with DHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 16 Jul 2019 12:31:43 -0000
+Received: from CNMAILCH01.lenovo.com (unknown [10.96.97.129])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 360651B32F2A26EEBD9C;
+ Tue, 16 Jul 2019 08:31:40 -0400 (EDT)
+Received: from pekwpmail09.lenovo.com (10.96.81.78) by CNMAILCH01.lenovo.com
+ (10.96.97.129) with Microsoft SMTP Server (TLS) id 14.3.408.0; Tue, 16 Jul
+ 2019 20:31:38 +0800
+Received: from pekwpmail05.lenovo.com (10.96.81.230) by pekwpmail09.lenovo.com
+ (10.96.81.78) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Tue, 16 Jul
+ 2019 20:31:38 +0800
+Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
+ pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
+ 15.01.1591.008; Tue, 16 Jul 2019 20:31:38 +0800
+From: Andrew MS1 Peng <pengms1@lenovo.com>
+To: "venture@google.com" <venture@google.com>
+Subject: configure error and the image content  seems to be  incorrect
+Thread-Topic: configure error and the image content  seems to be  incorrect
+Thread-Index: AdU7wED6lXzOnHWTS/+oPAAS8wHIOA==
+Date: Tue, 16 Jul 2019 12:31:38 +0000
+Message-ID: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.96.12.251]
 Content-Type: multipart/alternative;
- boundary="------------D02F697A50916BC39E744F41"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19071609-4275-0000-0000-0000034D61D9
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19071609-4276-0000-0000-0000385D7329
-Message-Id: <cd6b719d-0bb0-9ebf-5a57-d85c2307285d@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-16_02:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1907160117
+ boundary="_000_55738808da484183a4fb1a59f7097e9clenovocom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,573 +94,596 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Duke KH Du <dukh@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------D02F697A50916BC39E744F41
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--_000_55738808da484183a4fb1a59f7097e9clenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Hmm.,,
+Hi Patrick,
 
-Clearly, the systemd unit did not run / was not loaded successfully etc. 
-Below line is telling me that some edits were done.
+1.      I downloaded the latest version of phosphor-ipmi-flash to build hos=
+t tool with the SDK environment you provide, but encounter configure error =
+as below, could you help to take a look at it?
 
-Warning: The unit file, source configuration file or drop-ins of 
-obmc-led-group-start@bmc_booted.service changed on disk. Run 'systemctl 
-daemon-reload' to reload units.
+Source code hash id
 
-Have you tried to reload systemd ?
 
-Jul 11 04:54:06 runbmc-nuvoton systemd[1]: Started Wait for 
-/xyz/openbmc_project/led/groups/bmc_booted.
+Compile Status
 
-That is telling me that, it is waiting for the precondition to be met.. 
-I thought you won't reach BMCReady state while having this stuck.  What 
-is the "obmcutil state" saying ?.
 
-Also, can you try "systemctl 
-startobmc-led-group-start@bmc_booted.service" and see how it behaves.
+Error message
 
-If it's a one-off, I would suggest retry.. If this is persisting, open a 
-girhub issue with needed information on  how to recreate.
 
-!! Vishwa !!
+b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
 
-On 7/16/19 9:20 AM, CS20 YSChu wrote:
->
-> Hi Vishwa,
->
-> -- The o/p of "systemctl status 
-> obmc-led-group-start@bmc_booted.service 
-> <mailto:obmc-led-group-start@bmc_booted.service>"
->
-> obmc-led-group-start@bmc_booted.service - Assert bmc_booted LED
->
-> Loaded: loaded (/lib/systemd/system/obmc-led-group-start@.service; 
-> static; vendor preset: enabled)
->
-> Drop-In: /lib/systemd/system/obmc-led-group-start@bmc_booted.service.d
->
-> └─bmc_booted.conf
->
-> Active: inactive (dead)
->
-> Warning: The unit file, source configuration file or drop-ins of 
-> obmc-led-group-start@bmc_booted.service changed on disk. Run 
-> 'systemctl daemon-reload' to reload units.
->
-> -- Properties of /xyz/openbmc_project/led/groups/bmc_booted
->
-> array [
->
-> dict entry(
->
-> string "Asserted"
->
-> variant             boolean false
->
-> )
->
-> ]
->
-> -- properties of xyz/openbmc_project/led/physical/heartbeat ?
->
-> array [
->
-> dict entry(
->
-> string "State"
->
-> variant             string "xyz.openbmc_project.Led.Physical.Action.Off"
->
-> )
->
-> dict entry(
->
-> string "DutyOn"
->
-> variant             byte 50
->
-> )
->
-> dict entry(
->
-> string "Color"
->
-> variant             string 
-> "xyz.openbmc_project.Led.Physical.Palette.Unknown"
->
-> )
->
-> dict entry(
->
-> string "Period"
->
-> variant             uint16 1000
->
-> )
->
-> ]
->
-> Thanks.
->
-> Stanley
->
-> *From:*vishwa [mailto:vishwa@linux.vnet.ibm.com]
-> *Sent:* Monday, July 15, 2019 5:48 PM
-> *To:* CS20 YSChu; openbmc@lists.ozlabs.org
-> *Subject:* Re: bmc_booted LED group was not asserted when BMC started up
->
-> Hi Stanley,
->
-> Could you tell:
->
-> -- The o/p of "systemctl status 
-> obmc-led-group-start@bmc_booted.service 
-> <mailto:obmc-led-group-start@bmc_booted.service>"
->
-> -- Properties of /xyz/openbmc_project/led/groups/bmc_booted
->
-> -- properties of xyz/openbmc_project/led/physical/heartbeat ?
->
-> !! Vishwa !!
->
-> On 7/15/19 1:57 PM, CS20 YSChu wrote:
->
->     Hi,
->
->     In normal case, we will see bmc_booted LED group been asserted
->     when bmc starts up.
->
->     Apr 08 04:56:30 evb-npcm750 systemd[1]: Starting Wait for
->     /xyz/openbmc_project/led/groups/bmc_booted...
->
->     Apr 08 04:56:31 evb-npcm750 systemd[1]: Started Wait for
->     /xyz/openbmc_project/led/groups/bmc_booted.
->
->     Apr 08 04:56:35 evb-npcm750 systemd[1]: Starting Assert bmc_booted
->     LED...
->
->     Apr 08 04:56:35 evb-npcm750 systemd[1]: Started Assert bmc_booted LED.
->
->     Recently, I update to newer commit (don’t know what exact commit
->     cause this), the wanted service was started but
->     bmc-led-group-start service itself was not started. As a result,
->     bmc heartbeat led was not blinked.
->
->     Can anyone please advise how to investigate such kind of issue?
->
->     Jul 11 04:54:03 runbmc-nuvoton systemd[1]: Starting Wait for
->     /xyz/openbmc_project/led/groups/bmc_booted...
->
->     Jul 11 04:54:06 runbmc-nuvoton systemd[1]: Started Wait for
->     /xyz/openbmc_project/led/groups/bmc_booted.
->
->     ------
->
->     Below is unit file of obmc-led-group-start@bmc_booted.service
->     <mailto:obmc-led-group-start@bmc_booted.service> in
->     /lib/systemd/system/multi-user.target.wants
->
->     [Unit]
->
->     Description=Assert %i LED
->
->     Wants=mapper-wait@-xyz-openbmc_project-led-groups-%i.service
->     <mailto:Wants=mapper-wait@-xyz-openbmc_project-led-groups-%25i.service>
->
->     After=mapper-wait@-xyz-openbmc_project-led-groups-%i.service
->     <mailto:After=mapper-wait@-xyz-openbmc_project-led-groups-%25i.service>
->
->     Conflicts=obmc-led-group-stop@%i.service
->     <mailto:Conflicts=obmc-led-group-stop@%25i.service>
->
->     [Service]
->
->     Type=oneshot
->
->     RemainAfterExit=yes
->
->     Restart=no
->
->     ExecStart=/bin/sh -c "busctl call `mapper get-service
->     /xyz/openbmc_project/led/groups/%i`
->     /xyz/openbmc_project/led/groups/%i org.freedesktop.DBus.Properties
->     Set ssv xyz.openbmc_project.Led.Group Asserted b true"
->
->     SyslogIdentifier=obmc-led-group-start
->
->     Thanks.
->
->     Stanley
->
->     ------------------------------------------------------------------------
->
->     The privileged confidential information contained in this email is
->     intended for use only by the addressees as indicated by the
->     original sender of this email. If you are not the addressee
->     indicated in this email or are not responsible for delivery of the
->     email to such a person, please kindly reply to the sender
->     indicating this fact and delete all copies of it from your
->     computer and network server immediately. Your cooperation is
->     highly appreciated. It is advised that any unauthorized use of
->     confidential information of Nuvoton is strictly prohibited; and
->     any information in this email irrelevant to the official business
->     of Nuvoton shall be deemed as neither given nor endorsed by Nuvoton.
->
-> ------------------------------------------------------------------------
-> The privileged confidential information contained in this email is 
-> intended for use only by the addressees as indicated by the original 
-> sender of this email. If you are not the addressee indicated in this 
-> email or are not responsible for delivery of the email to such a 
-> person, please kindly reply to the sender indicating this fact and 
-> delete all copies of it from your computer and network server 
-> immediately. Your cooperation is highly appreciated. It is advised 
-> that any unauthorized use of confidential information of Nuvoton is 
-> strictly prohibited; and any information in this email irrelevant to 
-> the official business of Nuvoton shall be deemed as neither given nor 
-> endorsed by Nuvoton. 
 
---------------D02F697A50916BC39E744F41
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+configure successful
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>Hmm.,,</p>
-    <p>Clearly, the systemd unit did not run / was not loaded
-      successfully etc. Below line is telling me that some edits were
-      done.<br>
-    </p>
-    <p><span style="color:#1F497D" lang="EN-US">Warning: The unit file,
-        source configuration file or drop-ins of
-        <a class="moz-txt-link-abbreviated" href="mailto:obmc-led-group-start@bmc_booted.service">obmc-led-group-start@bmc_booted.service</a> changed on disk. Run
-        'systemctl daemon-reload' to reload units.</span></p>
-    <p><span style="color:#1F497D" lang="EN-US"><font color="#000000">Have
-          you tried to reload systemd ?</font><br>
-      </span></p>
-    <p><span lang="EN-US">Jul 11 04:54:06 runbmc-nuvoton systemd[1]:
-        Started Wait for /xyz/openbmc_project/led/groups/bmc_booted.</span></p>
-    <p><span lang="EN-US">That is telling me that, it is waiting for the
-        precondition to be met.. I thought you won't reach BMCReady
-        state while having this stuck.  What is the "obmcutil state"
-        saying ?.</span></p>
-    <p><span lang="EN-US">Also, can you try "systemctl start</span><span
-        lang="EN-US"> </span><span lang="EN-US"><a class="moz-txt-link-abbreviated" href="mailto:obmc-led-group-start@bmc_booted.service">obmc-led-group-start@bmc_booted.service</a>"
-        and see how it behaves.</span></p>
-    <p><span lang="EN-US">If it's a one-off, I would suggest retry.. If
-        this is persisting, open a girhub issue with needed information
-        on  how to recreate.</span></p>
-    <p><span lang="EN-US">!! Vishwa !!</span></p>
-    On 7/16/19 9:20 AM, CS20 YSChu wrote:<br>
-    <blockquote type="cite"
-cite="mid:HK2PR03MB4516A42C3DDE5528F5515D1CB6CE0@HK2PR03MB4516.apcprd03.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 14 (filtered
-        medium)">
-      <!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
-o\:* {behavior:url(#default#VML);}
-w\:* {behavior:url(#default#VML);}
-.shape {behavior:url(#default#VML);}
-</style><![endif]-->
-      <style><!--
+
+fd182168d9d1c852b1047b9eccea56812b614586
+1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137
+fa06a5f0056e91bfada390c4007fbd3472d75a56
+7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0
+c9792e75361c86da7f674976eacd03c761021d2f
+
+
+configure failed
+
+
+checking whether C++ compiler accepts -lgtest... yes
+checking whether C++ compiler accepts -pthread... (cached) yes
+checking for main in -lgtest... yes
+checking whether C++ compiler accepts -lgmock... yes
+checking whether C++ compiler accepts -pthread... (cached) yes
+checking for main in -lgmock... yes
+checking for valgrind... no
+checking whether to build with code coverage support... no
+configure: Enabling OE-SDK at /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/=
+core2-64-openbmc-linux
+configure: error: conditional "HAVE_SYSTEMD" was never defined.
+Usually this means the macro was only invoked conditionally.
+
+
+2.      The host tool compiled with phosphor-ipmi-flash hash id b90cacdd0c1=
+ab8ea7576d4ca9f20aa5828a84e42 and BMC flash library compiled with phosphor-=
+ipmi-flash hash id c9792e75361c86da7f674976eacd03c761021d2f, the BMC image =
+can transfer from host side to BMC side via LPC bridge. The image size is c=
+orrect, but the image content seems to be incorrect as below, could you giv=
+e us some clues to solve it if this is an issue?
+
+Image of host side
+
+
+Image of BMC side
+
+
+pengms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
+
+0000000 00be ea00 f014 e59f f014 e59f f014 e59f
+
+0000010 f014 e59f f014 e59f f014 e59f f014 e59f
+
+0000020 0060 0000 00c0 0000 0120 0000 0180 0000
+
+0000030 01e0 0000 0240 0000 02a0 0000 beef dead
+
+
+root@hr630:~# hexdump -n 64 /run/initramfs/bmc-image
+
+0000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00
+
+0000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00
+
+0000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80
+
+0000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4
+
+
+DTS setting:
+             flash_memory: region@98000000 {
+                    no-map;
+                    reg =3D <0x98000000 0x00100000>; /* 1M */
+             };
+
+BMC configuration setting:
+EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout --enable=
+-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update"
+
+Host tool setting:
+./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
+./sig.txt --type static --address 2550136832 --length 65536
+Thanks,
+Andrew
+
+--_000_55738808da484183a4fb1a59f7097e9clenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
 /* Font Definitions */
 @font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
 @font-face
 	{font-family:PMingLiU;
 	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
 @font-face
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
 @font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
+	{font-family:"\@PMingLiU";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
 @font-face
-	{font-family:Tahoma;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0cm;
 	margin-bottom:.0001pt;
 	font-size:12.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;}
+	font-family:SimSun;}
 a:link, span.MsoHyperlink
 	{mso-style-priority:99;
-	color:blue;
+	color:#0563C1;
 	text-decoration:underline;}
 a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
-	color:purple;
+	color:#954F72;
 	text-decoration:underline;}
-p
-	{mso-style-priority:99;
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-indent:21.0pt;
+	font-size:12.0pt;
+	font-family:SimSun;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
 	mso-margin-top-alt:auto;
 	margin-right:0cm;
 	mso-margin-bottom-alt:auto;
 	margin-left:0cm;
 	font-size:12.0pt;
-	font-family:"Calibri","sans-serif";
-	color:black;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri","sans-serif";
-	color:windowtext;}
+	font-family:"Times New Roman",serif;}
+p.gmail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph, li=
+.gmail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph, div=
+.gmail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph
+	{mso-style-name:gmail-m_1545270694092823127gmail-m-8411625341099404742msol=
+istparagraph;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:SimSun;}
 span.EmailStyle19
-	{mso-style-type:personal-reply;
-	font-family:"Calibri","sans-serif";
-	color:#1F497D;}
+	{mso-style-type:personal-compose;
+	font-family:DengXian;
+	color:windowtext;}
+p.gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m1788754371567=
+513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m586527764=
+4764564145gmail-m5232517683823064206gmail-m-6091798217660211465gmail-m-7106=
+965077525685122msolistparagra, li.gmail-m1545270694092823127gmail-m-8411625=
+341099404742gmail-m1788754371567513735gmail-m6436252274273416049gmail-m-487=
+1403681716629123gmail-m5865277644764564145gmail-m5232517683823064206gmail-m=
+-6091798217660211465gmail-m-7106965077525685122msolistparagra, div.gmail-m1=
+545270694092823127gmail-m-8411625341099404742gmail-m1788754371567513735gmai=
+l-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764564145=
+gmail-m5232517683823064206gmail-m-6091798217660211465gmail-m-71069650775256=
+85122msolistparagra
+	{mso-style-name:"gmail-m_1545270694092823127gmail-m-8411625341099404742gma=
+il-m1788754371567513735gmail-m6436252274273416049gmail-m-487140368171662912=
+3gmail-m5865277644764564145gmail-m5232517683823064206gmail-m-60917982176602=
+11465gmail-m-7106965077525685122msolistparagra";
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:SimSun;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	font-size:10.0pt;}
+/* Page Definitions */
 @page WordSection1
 	{size:612.0pt 792.0pt;
 	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
 div.WordSection1
 	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:1511067852;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1306969414 -336284276 67698713 67698715 67698703 676=
+98713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%2\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%5\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%8\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
 --></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
 </o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">Hi
-            Vishwa,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><o:p> </o:p></span></p>
-        <p><span lang="EN-US">-- The o/p of "systemctl status <a
-              href="mailto:obmc-led-group-start@bmc_booted.service"
-              moz-do-not-send="true">
-              obmc-led-group-start@bmc_booted.service</a>"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><a class="moz-txt-link-abbreviated" href="mailto:obmc-led-group-start@bmc_booted.service">obmc-led-group-start@bmc_booted.service</a>
-            - Assert bmc_booted LED<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            Loaded: loaded
-            (/lib/systemd/system/obmc-led-group-start@.service; static;
-            vendor preset: enabled)<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"> 
-            Drop-In:
-            /lib/systemd/system/obmc-led-group-start@bmc_booted.service.d<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">          
-          </span><span
-            style="font-family:&quot;新細明體&quot;,&quot;serif&quot;;color:#1F497D">└─</span><span
-            style="color:#1F497D" lang="EN-US">bmc_booted.conf<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            Active: inactive (dead)<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">Warning:
-            The unit file, source configuration file or drop-ins of
-            <a class="moz-txt-link-abbreviated" href="mailto:obmc-led-group-start@bmc_booted.service">obmc-led-group-start@bmc_booted.service</a> changed on disk. Run
-            'systemctl daemon-reload' to reload units.<o:p></o:p></span></p>
-        <p><span lang="EN-US">-- Properties of
-            /xyz/openbmc_project/led/groups/bmc_booted<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            array [<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            dict entry(<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            string "Asserted"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            variant             boolean false<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            )<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            ]<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><o:p> </o:p></span></p>
-        <p><span lang="EN-US">-- properties of
-            xyz/openbmc_project/led/physical/heartbeat ?<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            array [<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            dict entry(<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            string "State"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            variant             string
-            "xyz.openbmc_project.Led.Physical.Action.Off"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            )<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            dict entry(<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            string "DutyOn"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            variant             byte 50<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            )<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            dict entry(<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            string "Color"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            variant             string
-            "xyz.openbmc_project.Led.Physical.Palette.Unknown"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            )<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            dict entry(<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            string "Period"<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">        
-            variant             uint16 1000<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">     
-            )<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">  
-            ]<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><o:p> </o:p></span></p>
-        <div>
-          <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">Thanks.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US">Stanley<o:p></o:p></span></p>
-        </div>
-        <p class="MsoNormal"><span style="color:#1F497D" lang="EN-US"><o:p> </o:p></span></p>
-        <div>
-          <div style="border:none;border-top:solid #B5C4DF
-            1.0pt;padding:3.0pt 0cm 0cm 0cm">
-            <p class="MsoNormal"><b><span
-style="font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;;color:windowtext"
-                  lang="EN-US">From:</span></b><span
-style="font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;;color:windowtext"
-                lang="EN-US"> vishwa [<a class="moz-txt-link-freetext" href="mailto:vishwa@linux.vnet.ibm.com">mailto:vishwa@linux.vnet.ibm.com</a>]
-                <br>
-                <b>Sent:</b> Monday, July 15, 2019 5:48 PM<br>
-                <b>To:</b> CS20 YSChu; <a class="moz-txt-link-abbreviated" href="mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><br>
-                <b>Subject:</b> Re: bmc_booted LED group was not
-                asserted when BMC started up<o:p></o:p></span></p>
-          </div>
-        </div>
-        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
-        <p><span lang="EN-US">Hi Stanley,<o:p></o:p></span></p>
-        <p><span lang="EN-US">Could you tell:<o:p></o:p></span></p>
-        <p><span lang="EN-US">-- The o/p of "systemctl status <a
-              href="mailto:obmc-led-group-start@bmc_booted.service"
-              moz-do-not-send="true">
-              obmc-led-group-start@bmc_booted.service</a>"<o:p></o:p></span></p>
-        <p><span lang="EN-US">-- Properties of
-            /xyz/openbmc_project/led/groups/bmc_booted<o:p></o:p></span></p>
-        <p><span lang="EN-US">-- properties of
-            xyz/openbmc_project/led/physical/heartbeat ?<o:p></o:p></span></p>
-        <p><span lang="EN-US">!! Vishwa !!<o:p></o:p></span></p>
-        <div>
-          <p class="MsoNormal"><span lang="EN-US">On 7/15/19 1:57 PM,
-              CS20 YSChu wrote:<o:p></o:p></span></p>
-        </div>
-        <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
-          <p class="MsoNormal"><span lang="EN-US">Hi,<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">In normal case, we
-              will see bmc_booted LED group been asserted when bmc
-              starts up.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Apr 08 04:56:30
-              evb-npcm750 systemd[1]: Starting Wait for
-              /xyz/openbmc_project/led/groups/bmc_booted...<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Apr 08 04:56:31
-              evb-npcm750 systemd[1]: Started Wait for
-              /xyz/openbmc_project/led/groups/bmc_booted.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Apr 08 04:56:35
-              evb-npcm750 systemd[1]: Starting Assert bmc_booted LED...<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Apr 08 04:56:35
-              evb-npcm750 systemd[1]: Started Assert bmc_booted LED.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Recently, I update to
-              newer commit (don’t know what exact commit cause this),
-              the wanted service was started but bmc-led-group-start
-              service itself was not started. As a result, bmc heartbeat
-              led was not blinked.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Can anyone please
-              advise how to investigate such kind of issue?<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Jul 11 04:54:03
-              runbmc-nuvoton systemd[1]: Starting Wait for
-              /xyz/openbmc_project/led/groups/bmc_booted...<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Jul 11 04:54:06
-              runbmc-nuvoton systemd[1]: Started Wait for
-              /xyz/openbmc_project/led/groups/bmc_booted.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">------<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Below is unit file of
-              <a href="mailto:obmc-led-group-start@bmc_booted.service"
-                moz-do-not-send="true">
-                obmc-led-group-start@bmc_booted.service</a> in
-              /lib/systemd/system/multi-user.target.wants<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">[Unit]<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Description=Assert %i
-              LED<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"><a
-href="mailto:Wants=mapper-wait@-xyz-openbmc_project-led-groups-%25i.service"
-                moz-do-not-send="true">Wants=mapper-wait@-xyz-openbmc_project-led-groups-%i.service</a><o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"><a
-href="mailto:After=mapper-wait@-xyz-openbmc_project-led-groups-%25i.service"
-                moz-do-not-send="true">After=mapper-wait@-xyz-openbmc_project-led-groups-%i.service</a><o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"><a
-                href="mailto:Conflicts=obmc-led-group-stop@%25i.service"
-                moz-do-not-send="true">Conflicts=obmc-led-group-stop@%i.service</a><o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">[Service]<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Type=oneshot<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">RemainAfterExit=yes<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Restart=no<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">ExecStart=/bin/sh -c
-              "busctl call `mapper get-service
-              /xyz/openbmc_project/led/groups/%i`
-              /xyz/openbmc_project/led/groups/%i
-              org.freedesktop.DBus.Properties Set ssv
-              xyz.openbmc_project.Led.Group Asserted b true"<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">SyslogIdentifier=obmc-led-group-start<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Thanks.<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US">Stanley<o:p></o:p></span></p>
-          <p class="MsoNormal"><span lang="EN-US"> <o:p></o:p></span></p>
-          <div class="MsoNormal" style="text-align:center"
-            align="center"><span style="font-family:&quot;Times New
-              Roman&quot;,&quot;serif&quot;" lang="EN-US">
-              <hr width="100%" size="3" align="center">
-            </span></div>
-          <p class="MsoNormal"><span
-              style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;color:gray"
-              lang="EN-US">The privileged confidential information
-              contained in this email is intended for use only by the
-              addressees as indicated by the original sender of this
-              email. If you are not the addressee indicated in this
-              email or are not responsible for delivery of the email to
-              such a person, please kindly reply to the sender
-              indicating this fact and delete all copies of it from your
-              computer and network server immediately. Your cooperation
-              is highly appreciated. It is advised that any unauthorized
-              use of confidential information of Nuvoton is strictly
-              prohibited; and any information in this email irrelevant
-              to the official business of Nuvoton shall be deemed as
-              neither given nor endorsed by Nuvoton. </span><span
-              style="font-family:&quot;Times New
-              Roman&quot;,&quot;serif&quot;" lang="EN-US"><o:p></o:p></span></p>
-        </blockquote>
-      </div>
-      <hr width="100%" align="center">
-      <span style="font-size:12pt;line-height:0.7;font-family: 'Arial';
-        color:#808080">The privileged confidential information contained
-        in this email is intended for use only by the addressees as
-        indicated by the original sender of this email. If you are not
-        the addressee indicated in this email or are not responsible for
-        delivery of the email to such a person, please kindly reply to
-        the sender indicating this fact and delete all copies of it from
-        your computer and network server immediately. Your cooperation
-        is highly appreciated. It is advised that any unauthorized use
-        of confidential information of Nuvoton is strictly prohibited;
-        and any information in this email irrelevant to the official
-        business of Nuvoton shall be deemed as neither given nor
-        endorsed by Nuvoton.
-      </span>
-    </blockquote>
-  </body>
+</head>
+<body lang=3D"ZH-CN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans=
+-serif;color:black">Hi Patrick,<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"mso-margin-top-alt:auto;mso-margin-b=
+ottom-alt:auto;margin-left:18.0pt;text-indent:-18.0pt;mso-list:l0 level1 lf=
+o1">
+<![if !supportLists]><span lang=3D"EN-US" style=3D"font-family:&quot;Calibr=
+i&quot;,sans-serif;color:black"><span style=3D"mso-list:Ignore">1.<span sty=
+le=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;
+</span></span></span><![endif]><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Calibri&quot;,sans-serif;color:black">I downloaded the latest version o=
+f phosphor-ipmi-flash to build host tool with the SDK environment you provi=
+de, but encounter configure error as below, could
+ you help to take a look at it?<o:p></o:p></span></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"margin-left:21.0pt;border-collapse:collapse">
+<tbody>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:solid windo=
+wtext 1.0pt;background:yellow;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
+;color:black">Source code hash id</span></b><span lang=3D"EN-US"><o:p></o:p=
+></span></p>
+</td>
+<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border:solid window=
+text 1.0pt;border-left:none;background:yellow;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
+;color:black">Compile Status</span></b><span lang=3D"EN-US"><o:p></o:p></sp=
+an></p>
+</td>
+<td width=3D"259" valign=3D"top" style=3D"width:16.0cm;border:solid windowt=
+ext 1.0pt;border-left:none;background:yellow;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
+;color:black">Error message</span></b><span lang=3D"EN-US"><o:p></o:p></spa=
+n></p>
+</td>
+</tr>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:solid windo=
+wtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black">b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42</span><span lang=3D"EN-=
+US" style=3D"font-family:&quot;Calibri&quot;,sans-serif"><o:p></o:p></span>=
+</p>
+</td>
+<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
+der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
+wtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black">configure successful</span><span lang=3D"EN-US" style=3D"font-fa=
+mily:&quot;Calibri&quot;,sans-serif"><o:p></o:p></span></p>
+</td>
+<td width=3D"259" valign=3D"top" style=3D"width:16.0cm;border-top:none;bord=
+er-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid window=
+text 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+</td>
+</tr>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:solid windo=
+wtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black">fd182168d9d1c852b1047b9eccea56812b614586<br>
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black;background:white">1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137=
+<br>
+fa06a5f0056e91bfada390c4007fbd3472d75a56<br>
+7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0<br>
+c9792e75361c86da7f674976eacd03c761021d2f</span><span lang=3D"EN-US" style=
+=3D"font-family:&quot;Calibri&quot;,sans-serif"><o:p></o:p></span></p>
+</td>
+<td width=3D"87" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
+der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
+wtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black">configure failed</span><span lang=3D"EN-US" style=3D"font-family=
+:&quot;Calibri&quot;,sans-serif"><o:p></o:p></span></p>
+</td>
+<td width=3D"259" valign=3D"top" style=3D"width:16.0cm;border-top:none;bord=
+er-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid window=
+text 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742msolistpar=
+agraph">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif">c=
+hecking whether C&#43;&#43; compiler accepts -lgtest... yes<br>
+checking whether C&#43;&#43; compiler accepts -pthread... (cached) yes<br>
+checking for main in -lgtest... yes<br>
+checking whether C&#43;&#43; compiler accepts -lgmock... yes<br>
+checking whether C&#43;&#43; compiler accepts -pthread... (cached) yes<br>
+checking for main in -lgmock... yes<br>
+checking for valgrind... no<br>
+checking whether to build with code coverage support... no<br>
+configure: Enabling OE-SDK at /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/=
+core2-64-openbmc-linux<br>
+<span style=3D"color:red">configure: error: conditional &quot;HAVE_SYSTEMD&=
+quot; was never defined.<br>
+Usually this means the macro was only invoked conditionally.</span><o:p></o=
+:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra" style=3D"margin-left:18.0pt;text-i=
+ndent:-18.0pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US" style=3D"font-family:&quot;Calibr=
+i&quot;,sans-serif;color:black;mso-fareast-language:ZH-TW"><span style=3D"m=
+so-list:Ignore">2.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US" style=3D"font-family:&q=
+uot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:ZH-TW">The ho=
+st tool compiled with
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black">phosphor-ipmi-flash</span><span lang=3D"EN-US" style=3D"f=
+ont-family:&quot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:=
+ZH-TW"> hash id
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black">b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42 and BMC flash li=
+brary
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black;mso-fareast-language:ZH-TW">compiled with
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black">phosphor-ipmi-flash</span><span lang=3D"EN-US" style=3D"f=
+ont-family:&quot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:=
+ZH-TW"> hash id
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black;background:white">c9792e75361c86da7f674976eacd03c761021d2f=
+, the BMC image can transfer from host side to BMC side via LPC bridge. The=
+ image size is correct, but the image content
+ seems to be incorrect as below, could you give us some </span><span lang=
+=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;color:black"=
+>clues to solve it if this is an issue?
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black;mso-fareast-language:ZH-TW"><o:p></o:p></span></p>
+<table class=3D"MsoTableGrid" border=3D"1" cellspacing=3D"0" cellpadding=3D=
+"0" style=3D"margin-left:18.0pt;border-collapse:collapse;border:none">
+<tbody>
+<tr>
+<td width=3D"347" valign=3D"top" style=3D"width:307.65pt;border:solid windo=
+wtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">Image of host side<o:p></o:p></span><=
+/p>
+</td>
+<td width=3D"336" valign=3D"top" style=3D"width:318.95pt;border:solid windo=
+wtext 1.0pt;border-left:none;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">Image of BMC side<o:p></o:p></span></=
+p>
+</td>
+</tr>
+<tr>
+<td width=3D"347" valign=3D"top" style=3D"width:307.65pt;border:solid windo=
+wtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">pengms1@hsbmc:/flash_tool$ hexdump -n=
+ 64 ./630.mtd
+<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000000 00be ea00 f014 e59f f014 e59f=
+ f014 e59f<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000010 f014 e59f f014 e59f f014 e59f=
+ f014 e59f<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000020 0060 0000 00c0 0000 0120 0000=
+ 0180 0000<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000030 01e0 0000 0240 0000 02a0 0000=
+ beef dead<o:p></o:p></span></p>
+</td>
+<td width=3D"336" valign=3D"top" style=3D"width:318.95pt;border-top:none;bo=
+rder-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid wind=
+owtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt">
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">root@hr630:~# hexdump -n 64 /run/init=
+ramfs/bmc-image<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000000 abc4 ef4e 11f2 b128 2538 fd9c=
+ 9f7a 2e00<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000010 78c4 af6e 01f2 a92a 7438 759c=
+ 8e76 2e00<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000020 f397 05f0 84e4 6546 0ac6 b6d0=
+ ef19 cb80<o:p></o:p></span></p>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">0000030 e9d7 82f0 c4e4 75dc 1bc6 a295=
+ 7319 49c4<o:p></o:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"gmail-m1545270694092823127gmail-m-8411625341099404742gmail-m178=
+8754371567513735gmail-m6436252274273416049gmail-m-4871403681716629123gmail-=
+m5865277644764564145gmail-m5232517683823064206gmail-m-6091798217660211465gm=
+ail-m-7106965077525685122msolistparagra" style=3D"margin-left:24.0pt;mso-pa=
+ra-margin-left:2.0gd">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">DTS setting:</span><span lang=3D"EN-U=
+S" style=3D"font-family:&quot;Calibri&quot;,sans-serif;color:black"><br>
+</span><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-s=
+erif;color:black;mso-fareast-language:ZH-TW">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flash_memory: region@98000000 {<=
+br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; no-map;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; reg =3D &lt;0x98000000 0x00100000&g=
+t;; /* 1M */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };=
+<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"mso-margin-top-alt:auto;mso-margin-b=
+ottom-alt:auto;margin-left:18.0pt;text-indent:0cm">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">BMC configuration setting:<br>
+EXTRA_OECONF &#43;=3D &quot; --enable-reboot-update&nbsp; --enable-static-l=
+ayout --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-updat=
+e&quot;<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"mso-margin-top-alt:auto;mso-margin-b=
+ottom-alt:auto;margin-left:18.0pt;text-indent:0cm">
+<span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif;co=
+lor:black;mso-fareast-language:ZH-TW">Host tool setting:<br>
+./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
+./sig.txt --type static --address 2550136832 --length 65536<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans=
+-serif;mso-fareast-language:ZH-TW">Thanks,<br>
+Andrew<o:p></o:p></span></p>
+</div>
+</body>
 </html>
 
---------------D02F697A50916BC39E744F41--
-
+--_000_55738808da484183a4fb1a59f7097e9clenovocom_--
