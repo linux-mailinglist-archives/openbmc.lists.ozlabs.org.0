@@ -2,63 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0988F6B4E5
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 05:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AD536B590
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 06:29:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45pMjr6Qf9zDqc4
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 13:11:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45pPRV67rnzDqRt
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 14:29:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::82a; helo=mail-qt1-x82a.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="EB8qdZkQ"; 
- dkim-atps=neutral
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com
- [IPv6:2607:f8b0:4864:20::82a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45pMjJ4w8gzDqYp
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 13:10:58 +1000 (AEST)
-Received: by mail-qt1-x82a.google.com with SMTP id 44so21816477qtg.11
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jul 2019 20:10:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=i3BWDgtEmDt3w9mL+ll7FrJTa6tpl8b5/pML6DqavRo=;
- b=EB8qdZkQWKyPDwieqc+lzAPNpB0T/KF9v+kVBpdavM8aI7kNTvP3Ih1pgxkseaOvuF
- o1ZKjC1l53ni7GlNAvHoIlq004dyzDhBsOyTNMWq2eqZ0j1XaP1pDn0+y7U63W4StH3M
- PBtVY46XxEYxoRsGa41RVlpfo/LuNdMk0A0DQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=i3BWDgtEmDt3w9mL+ll7FrJTa6tpl8b5/pML6DqavRo=;
- b=nnNL3lz/2K34OY0hh4doeCLk286QL/4vdeWTPaorlpZUGiP5UklbZzTS8SdpPo2gtz
- 7+jF8jD10B/x+05A7jSMB6o1FG4hV/QxpawqREW0WYyqgcZM6I05et9tlbUzkLUjxCrf
- JxT1MgJU8du3HzPVrG+NPEPP9sARxCy70Cgj4Jli0R/FQhwf6GHnBJOy4hAIuSn28Nw/
- P2N2gzNgSmt6f+gMnJW/uoZFPSYPWLvRsTk8WF4cvwVjlhy54Yip/llQsXSaBMbCkYJZ
- JSsrKI0BySp5P7T2zgt5M/EfObdd+5G/rRL4YmCpQVhUW6XKPm2Sac0b9sTgCNUN5BRn
- vX7w==
-X-Gm-Message-State: APjAAAVSeMcCRJNJCJHg8cS++fj+dHv+RoyjV6mf69MdSI1vmm7gJSKs
- QEJ3PLeXi32jaUxZmb+HwrSIh2H4uJo+JTQkjNQ=
-X-Google-Smtp-Source: APXvYqzzORBlL9mOPveg/VmnBMj+LRfvYXsO1+Pfd+G/ElEx+EB52C9NV/9J5IffijvitVVgOipFv8nBYSxuU3MJ7CE=
-X-Received: by 2002:ac8:1887:: with SMTP id s7mr25617076qtj.220.1563333055495; 
- Tue, 16 Jul 2019 20:10:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <MWHPR15MB132793F6F3B5BD2777083F46A3CE0@MWHPR15MB1327.namprd15.prod.outlook.com>
-In-Reply-To: <MWHPR15MB132793F6F3B5BD2777083F46A3CE0@MWHPR15MB1327.namprd15.prod.outlook.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 17 Jul 2019 03:10:42 +0000
-Message-ID: <CACPK8XdkYbPB2+g9yjennzmOCq3Spe09HZVHxQaz0oP3JCZYjQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45pPPR6gnCzDqTp
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 14:27:23 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x6H4MZgA140603
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 00:27:19 -0400
+Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2tss7gevs3-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 00:27:19 -0400
+Received: from localhost
+ by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
+ Wed, 17 Jul 2019 05:27:17 +0100
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 17 Jul 2019 05:27:14 +0100
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x6H4RD3157606216
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 17 Jul 2019 04:27:13 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 55E4C4C040;
+ Wed, 17 Jul 2019 04:27:13 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 407BC4C046;
+ Wed, 17 Jul 2019 04:27:12 +0000 (GMT)
+Received: from [9.202.13.25] (unknown [9.202.13.25])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+ Wed, 17 Jul 2019 04:27:12 +0000 (GMT)
 Subject: Re: Out-of-band NIC management
-To: Ben Wei <benwei@fb.com>, Sam Mendoza-Jonas <sam@mendozajonas.com>,
- Jeremy Kerr <jk@ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+To: openbmc@lists.ozlabs.org, joel Stanley <joel@jms.id.au>,
+ Ben Wei <benwei@fb.com>, Jeremy Kerr <jk@ozlabs.org>
+References: <MWHPR15MB132793F6F3B5BD2777083F46A3CE0@MWHPR15MB1327.namprd15.prod.outlook.com>
+ <CACPK8XdkYbPB2+g9yjennzmOCq3Spe09HZVHxQaz0oP3JCZYjQ@mail.gmail.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Date: Wed, 17 Jul 2019 09:57:09 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
+MIME-Version: 1.0
+In-Reply-To: <CACPK8XdkYbPB2+g9yjennzmOCq3Spe09HZVHxQaz0oP3JCZYjQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19071704-0008-0000-0000-000002FE2F81
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19071704-0009-0000-0000-0000226BA7BB
+Message-Id: <8aa4e88f-99f0-83ca-0f2e-7e1edd55de8d@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-17_02:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1031 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907170053
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,50 +92,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 16 Jul 2019 at 21:46, Ben Wei <benwei@fb.com> wrote:
->
-> Hi all,
->
-> Would anyone be interested in collaborating on out-of-band NIC management and monitoring?
->
-> DMTF has as a NCSI spec (https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.1.0.pdf), that defines a standard interface for BMCs to manage NICs.
-> And in kernel 5.x , NC-SI driver supports Netlink interface for communicating with userspace processes.
->
-> I'm thinking adding the following tools to OpenBMC as a starting point and build form there:
->
->       1. A command line utility (e.g. ncsi-util) to send raw NC-SI commands, useful for debugging and initial NIC bring up,
->       For example:
->           ncsi-util -eth0 -ch 0 <raw NC-SI command>
+Hi Joel,
 
-The NCSI kernel maintainer, Sam, has written a tool that fits this descirption:
+We had ported the similiar ncsi-netlink utility to openbmc under 
+phosphor-networkd.
 
- https://github.com/sammj/ncsi-netlink
+https://github.com/openbmc/phosphor-networkd/blob/master/ncsi_util.hpp
 
->
->       We can further extend this command line tool to support other management interfaces, e.g sending MCTP or PLDM commands to NIC.
+Ben,
 
-I have added Jeremy to cc, who has been doing some MCTP related work recently.
+we can extend the same.
 
+Regards
+Ratan Gupta
+
+
+
+On 17/07/19 8:40 AM, Joel Stanley wrote:
+> On Tue, 16 Jul 2019 at 21:46, Ben Wei <benwei@fb.com> wrote:
+>> Hi all,
+>>
+>> Would anyone be interested in collaborating on out-of-band NIC management and monitoring?
+>>
+>> DMTF has as a NCSI spec (https://www.dmtf.org/sites/default/files/standards/documents/DSP0222_1.1.0.pdf), that defines a standard interface for BMCs to manage NICs.
+>> And in kernel 5.x , NC-SI driver supports Netlink interface for communicating with userspace processes.
+>>
+>> I'm thinking adding the following tools to OpenBMC as a starting point and build form there:
+>>
+>>        1. A command line utility (e.g. ncsi-util) to send raw NC-SI commands, useful for debugging and initial NIC bring up,
+>>        For example:
+>>            ncsi-util -eth0 -ch 0 <raw NC-SI command>
+> The NCSI kernel maintainer, Sam, has written a tool that fits this descirption:
 >
->       2. A daemon running on OpenBMC (e.g ncsid) monitoring NIC status,  for example:
->           a. Query and log NIC capability and current parameter setting
->           b. Periodically check NIC link status, re-initialize NC-SI link if NIC is unreachable, log the status
->           c. Enable and monitor NIC Asynchronous Event Notifications (AENs)
->                 i. such as  Link Status Change, Configuration required, Host driver status change
->                 ii. there are OEM-specific AENs that BMC may also enable and monitor
->                 iii. either log these events, and/or performs recovery and remediation as needed
->           d. Additional monitoring such as
->                 i.  temperature (not in standard NC-SI command yet),
->                 ii. firmware version, update event, network traffic statistics
+>   https://github.com/sammj/ncsi-netlink
 >
-> Both the CLI tool and the monitoring daemon can either communicate to kernel driver directly via Netlink independently, or we can have the ncsi daemon acting as command serializer to kernel and other user space processes.
-> These are just some of my initial thoughts and I'd love to hear some feedback if these would be useful to OpenBMC.
+>>        We can further extend this command line tool to support other management interfaces, e.g sending MCTP or PLDM commands to NIC.
+> I have added Jeremy to cc, who has been doing some MCTP related work recently.
 >
-> If anyone in interested in collaborate on these we can discuss more on features and design details.
->
-> Regards,
-> -Ben
+>>        2. A daemon running on OpenBMC (e.g ncsid) monitoring NIC status,  for example:
+>>            a. Query and log NIC capability and current parameter setting
+>>            b. Periodically check NIC link status, re-initialize NC-SI link if NIC is unreachable, log the status
+>>            c. Enable and monitor NIC Asynchronous Event Notifications (AENs)
+>>                  i. such as  Link Status Change, Configuration required, Host driver status change
+>>                  ii. there are OEM-specific AENs that BMC may also enable and monitor
+>>                  iii. either log these events, and/or performs recovery and remediation as needed
+>>            d. Additional monitoring such as
+>>                  i.  temperature (not in standard NC-SI command yet),
+>>                  ii. firmware version, update event, network traffic statistics
+>>
+>> Both the CLI tool and the monitoring daemon can either communicate to kernel driver directly via Netlink independently, or we can have the ncsi daemon acting as command serializer to kernel and other user space processes.
+>> These are just some of my initial thoughts and I'd love to hear some feedback if these would be useful to OpenBMC.
+>>
+>> If anyone in interested in collaborate on these we can discuss more on features and design details.
+>>
+>> Regards,
+>> -Ben
+
