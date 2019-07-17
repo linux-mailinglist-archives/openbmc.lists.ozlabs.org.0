@@ -1,64 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57D236C23B
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 22:38:10 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E85B96C1EB
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jul 2019 22:11:06 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45ppLJ0P2XzDqV6
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 06:11:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ppxW4qkqzDqQW
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 06:38:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="DQQ1FL0/"; 
- dkim-atps=neutral
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
- [IPv6:2607:f8b0:4864:20::631])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45ppKY6nJCzDqRf
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 06:10:24 +1000 (AEST)
-Received: by mail-pl1-x631.google.com with SMTP id c2so12515024plz.13
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 13:10:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=RLP+cM7q9CZUGkmdY3ak762lYRSZwn+3N+nABuGlnmU=;
- b=DQQ1FL0/kkVN0G4FRJHku1k2NctteLiv1thI52HezSNDXIgHvxq3GmMuAEvJQpsXLj
- /46UxNMvRT66phBJo368nhKU+lnCHOCbMuTBniILUd/Dnb1m8sdNo1haeEobeb4qVbfm
- u21qU/oRjczCtbWZN1avecYW/OQFQAkbMRNkDQmvb3J+bVzt2HCLbFNjsHH3oEEJy+xg
- CNgPwjLgVEl5bdeaczsscfdqeBoa5oio6ZGOcwCyhtLS653g1toCT7VNR3Ux8l3I8Qd8
- GEUH4Y8s6iOFDp9cCZVB8dawHKCqnKVopZ7+flJGCXBQjVkH8Z1VJcvz90lwJcwdXFIb
- fIFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=RLP+cM7q9CZUGkmdY3ak762lYRSZwn+3N+nABuGlnmU=;
- b=RuoRjUu6IsDN98kV/hYezSqe9OIrbAqGZAQ3/bDndAqBIjcKMJU/flkEWmv9n7UUCI
- pbaZerNyEiXt/p0tYWCWI6Q2heOYKwEwfT2Cah5T6A3EuItgfHbLUu3zWvKlxpGJ6wmi
- DwRe9ft2z4Wb486WYMITNS2AqOlZfUOIqZXIAqS5a3ywiYj2d35S1RDbzpjm645FMDf7
- +B/9MbileTgMYwZ/in403XQ1Bir78lmQ9tbQQEh6pr7MeuujyWVAwCY57gTFE5VILjN+
- i8TM77m4Wryv6qj5V0Ad0juruACJy4/sdmX1nDEm2f/pR2ZYdsPDR6t8/2wYpD6HWOcK
- jIsA==
-X-Gm-Message-State: APjAAAUBLYYsNYGL0h7Sps0hbCRRJChJuqAy+RAxjGP9Y7BXL3wZBiOm
- dWfXyGGMakalSb4BqKFluvKDeTyr495qyOePjToZtcfB3Sg=
-X-Google-Smtp-Source: APXvYqylrUU1VMtMyXT2KwtTwfGdHXZQE8qa2zmo/kzkxfpFkKnGpKl1pNetVW418yjS/p6prg9ESQ1YVhW7kmsge8k=
-X-Received: by 2002:a17:902:9307:: with SMTP id
- bc7mr44057491plb.183.1563394221698; 
- Wed, 17 Jul 2019 13:10:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ppws1x6DzDqK5
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 06:37:28 +1000 (AEST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Jul 2019 13:37:24 -0700
+X-IronPort-AV: E=Sophos;i="5.64,275,1559545200"; d="scan'208";a="319424820"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by orsmga004-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Jul 2019 13:37:23 -0700
+Date: Wed, 17 Jul 2019 13:37:22 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: Patrick Venture <venture@google.com>
+Subject: Re: Super Short OEM IPMI Proposal
+Message-ID: <20190717203722.GA31389@mauery.jf.intel.com>
+References: <CAO=notxgpy8N5bf4GyqgoTaw6KdRgCUE7jy5Jk-a3-TZDYRpwQ@mail.gmail.com>
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 17 Jul 2019 13:10:10 -0700
-Message-ID: <CAO=notxgpy8N5bf4GyqgoTaw6KdRgCUE7jy5Jk-a3-TZDYRpwQ@mail.gmail.com>
-Subject: Super Short OEM IPMI Proposal
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAO=notxgpy8N5bf4GyqgoTaw6KdRgCUE7jy5Jk-a3-TZDYRpwQ@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,20 +53,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all;
+On 17-Jul-2019 01:10 PM, Patrick Venture wrote:
+>Hi all;
+>
+>Undoubtedly you've been using IPMI out of necessity and ran into some
+>limitations.  You've then worked to map out the commands you want, and
+>dropped them into the OEM space.
+>
+>I was looking at how Intel handled one of their OEM commands and
+>effectively want that command -- not all their commands, but just that
+>one.  And I was curious if there was any value in OpenBMC as a
+>community working to define some shared OEM commands.
+>
+>Is there value in this or will it just become a cumbersome camel?
 
-Undoubtedly you've been using IPMI out of necessity and ran into some
-limitations.  You've then worked to map out the commands you want, and
-dropped them into the OEM space.
+     //
+   _oo\
+  (__/ \  _  _
+     \  \/ \/ \
+     (         )\
+      \_______/  \
+       [[] [[]
+       [[] [[]
 
-I was looking at how Intel handled one of their OEM commands and
-effectively want that command -- not all their commands, but just that
-one.  And I was curious if there was any value in OpenBMC as a
-community working to define some shared OEM commands.
+As much as I don't want to tell someone to cut and paste code, I can't 
+really think of a good way to share something like an OEM command that 
+doesn't really have a shared spec. I guess it depends on the command 
+that you are interested in. We have overridden a couple of standard 
+commands to have behavior that is slightly different than the default 
+and we have two whole netfns of OEM commands that we have carried along 
+for generations of BMC implementations. Either way, the commands are 
+subject to change over time that may or may not diverge from what anyone 
+else might want, which is where the shared bit can become awkward. But 
+copied code won't necessarily get any updates or bug fixes, so that is 
+not great either.
 
-Is there value in this or will it just become a cumbersome camel?
-
-Patrick
+--Vernon
