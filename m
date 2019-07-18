@@ -2,68 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2A756C8F4
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 07:59:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 709406C932
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 08:19:17 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45q3P919PjzDqbq
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 15:59:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45q3r22632zDqRv
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 16:19:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::741; helo=mail-qk1-x741.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=09553e69f=will.liang@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="JDCcUCm+"; 
- dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45q3Nb1vLwzDqC9
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 15:58:52 +1000 (AEST)
-Received: by mail-qk1-x741.google.com with SMTP id v22so19489483qkj.8
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 22:58:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Ct4djxaQ1e/mTdSrBIwsU7pdc+Wg5hAQ5Rc00jVfMEQ=;
- b=JDCcUCm+UxhRJyF+biaGLv+OhX8tEiF3GoH4md1lH+alkkFmbm6eTa1yuwCoTYvDft
- C6IrZEhwBk/suMNDroFbhb+Bb25IQVzVI8JI9NoYsAJosNOC7n7fKjlGdn6A2prgANKF
- qDt2yZUiUXO5KBYmHuqEbdtWNYNDjbWciy3HE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Ct4djxaQ1e/mTdSrBIwsU7pdc+Wg5hAQ5Rc00jVfMEQ=;
- b=qkeXDZnmIl2AglsCDhLkC0WXy9uNs6ZqKCXEjH7/YkcmdO7UEsXYOzzAPk9KB/nmSR
- F1FQZg3e3DlwcrjTE0NKVBXnV2A/9oxTZe1wqzGBoX0k47a7N5UYKsG8aocCW/x1fPs8
- ftwFptLvJGrLjw9fjVEenCQU5RnklovkijEm0+1wBOEb1WEZHqDRkXYZ5hillwofEjMO
- o3ZgoGdsr5odcRAYkWXfxv1gwgmSmzEMHVvfc1A4L0BkfM12pCwxcX6Hb3BAb+l2HKWy
- 50TzkCVqH4yXAD51uCmoe8ZuIo2Rlj/M1FAmvdGoj8FYZV/tAkrGMYFsLXGYw9A11Cvi
- jLWQ==
-X-Gm-Message-State: APjAAAXJ2e4N7xpN7maxwaA6b9gbqgzdkAjpOBJ8/riwDqaXwp7jGWUm
- jSAicfuIrqN+3q5UtytQIa+6yC4guLsBA1Yrt1s=
-X-Google-Smtp-Source: APXvYqzcLYMEwoESQzzxmef5L9TTiiJuIWAKAm+XdfYfe6HMb/b31VMWQqdA+HZTL4rW/T3GD5FRKb10NjDJw6ddHYA=
-X-Received: by 2002:a37:a2d1:: with SMTP id
- l200mr29536871qke.330.1563429528860; 
- Wed, 17 Jul 2019 22:58:48 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 45q3qS3QhMzDqBZ
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 16:18:39 +1000 (AEST)
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx01.quantatw.com with ESMTP; 18 Jul 2019 14:18:35 +0800
+Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 18 Jul
+ 2019 14:18:32 +0800
+Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
+ ([192.168.1.8]) with mapi id 15.01.1713.004; Thu, 18 Jul 2019 14:18:32 +0800
+From: =?utf-8?B?V2lsbCBMaWFuZyAo5qKB5rC46YmJKQ==?= <Will.Liang@quantatw.com>
+To: AKASH G J <akashgj91@gmail.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Fan not recognized
+Thread-Topic: Fan not recognized
+Thread-Index: AQHVPInvzg1jDzgaOUyfXS7ho9hy06bP5+OA
+Date: Thu, 18 Jul 2019 06:18:32 +0000
+Message-ID: <57af9e34cf2e4a1e885e87ff7e9f8319@quantatw.com>
+References: <CAE33tLGM-13m=Ni=77vULrqD=d6HRYqZ48rjAy2NV5OenFb9ZA@mail.gmail.com>
+In-Reply-To: <CAE33tLGM-13m=Ni=77vULrqD=d6HRYqZ48rjAy2NV5OenFb9ZA@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24768.001
+x-tm-as-result: No--9.091100-0.000000-31
+x-tm-as-matchedid: 140026-150567-700225-703140-701090-703503-701919-705271-7
+ 01877-704714-703655-704240-701342-704841-701429-703674-702617-704388-188199
+ -702601-106660-187067-700562-701029-703914-704053-700863-702438-704997-7038
+ 15-139504-704706-148004-148133-42000-42003-63
+x-tm-as-user-approved-sender: Yes
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20190625205109.27672-1-jae.hyun.yoo@linux.intel.com>
- <20190625205109.27672-5-jae.hyun.yoo@linux.intel.com>
- <5cc696ba-7fa7-c7cb-0ba6-81df3015e974@fb.com>
- <9c862188-8360-fa39-f21d-9c6d51e1d831@linux.intel.com>
- <CACPK8XdSeK0CPrncmxjMKBLfCwCVHE-VWhAVaia1oQMFTOf_0w@mail.gmail.com>
- <74652ba6-ef4b-9e45-7e3a-f2375e21d40f@linux.intel.com>
-In-Reply-To: <74652ba6-ef4b-9e45-7e3a-f2375e21d40f@linux.intel.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 18 Jul 2019 05:58:36 +0000
-Message-ID: <CACPK8XfvM-mYW_wvdsKRqYm0aLmQnROptPbh3VnZ4jsoNs9HyQ@mail.gmail.com>
-Subject: Re: [RFC v2 dev-5.1 4/5] i2c: aspeed: add buffer mode transfer support
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,37 +63,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>, Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hey Jae,
-
-On Tue, 2 Jul 2019 at 16:05, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
-> > Do you want we to merge this series into the openbmc tree for further testing?
->
-> Yes please. It would be good if it gets tested on more various platforms
-> before upstreaming it.
-
-I did this and hit some issues.
-
-The first one is that we don't support this with the qemu model yet
-and so kernel crashes when probing i2c. This is bad, as we gate
-commits to the openbmc yocto tree on them passing a qemu boot test.
-
-Secondly, the changes you have made to the driver are incompatible
-with the old device tree. I thought I could revert the device tree
-change in order to get the old behavior, but the driver fails to
-probe. In general we strive to make kernel changes compatible with old
-versions of the device tree. I think that can be achieved here with
-some thought.
-
-Cedric will try to resolve the qemu issue. If you could create a
-version of the patch that makes the driver compatible with the old
-device tree that would be appreciated.
-
-Cheers,
-
-Joel
+SGksIA0KDQpZb3Ugd2FudCB0byB1c2UgdHdvIFBXTXMgdG8gY29udHJvbCBzZXZlbiBmYW5zLCBi
+dXQgSSBmb3VuZCBlaWdodCBQV01zIChQV00xflBXTTgpIGluIHlvdXIgaHdtb24gZm9sZGVyLg0K
+VGhlcmUgaXMgYSBwcm9ibGVtIHdpdGggeW91ciBmYW4gc2V0dGluZ3Mgb24gZGV2aWNlIHRyZWUu
+DQoNCllvdSBjYW4gcmVmZXJlbmNlIHRoZSBmb2xsb3dpbmcgZG9jdW1lbnRhdGlvbiBpbiB5b3Vy
+IHByb2plY3QsIHdoaWNoIGV4cGxhaW5zIGhvdyB0byBkZWZpbmUgZmFucyBhdCB0aGUgZGV2aWNl
+IHRyZWUuDQoqL2tlcm5lbC1zb3VyY2UvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdz
+L2h3bW9uL2FzcGVlZC1wd20tdGFjaG8udHh0DQoNCldpbGwNCg0KDQpGcm9tOiBvcGVuYm1jIFtt
+YWlsdG86b3BlbmJtYy1ib3VuY2VzK3dpbGwubGlhbmc9cXVhbnRhdHcuY29tQGxpc3RzLm96bGFi
+cy5vcmddIE9uIEJlaGFsZiBPZiBBS0FTSCBHIEoNClNlbnQ6IFdlZG5lc2RheSwgSnVseSAxNywg
+MjAxOSA2OjIzIFBNDQpUbzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBGYW4g
+bm90IHJlY29nbml6ZWQNCg0KSGkgQWxsLA0KDQpJIGFtIHVzaW5nIGEgc2VydmVyIGJvYXJkIHdp
+dGggQk1DIEFzcGVlZCBBU1QtMjUwMCBhbmQgQk1DIGZpcm13YXJlIHdpdGggemFpdXMgY29uZmln
+dXJhdGlvbi4gDQoNClNldmVuIGZhbnMgYXJlIGNvbm5lY3RlZCB0byB0aGUgYm9hcmQgYW5kIHdl
+IGFyZSB1c2luZyBQV00wIHRvIGNvbnRyb2wgZmlyc3QgZm91ciBmYW5zIGFuZCBQV00xIHRvIMKg
+Y29udHJvbCByZW1haW5pbmcgZmFucy4NCg0Kcm9vdEB6YWl1czpscyAvc3lzL2NsYXNzL2h3bW9u
+L2h3bW9uMA0KZGV2aWNlIGZhbjRfaW5wdXQgZmFuOF9pbnB1dCBwd20yIHB3bTYgdWV2ZW50DQpm
+YW4xX2lucHV0IGZhbjVfaW5wdXQgbmFtZSBwd20zIHB3bTcNCmZhbjJfaW5wdXQgZmFuNl9pbnB1
+dCBvZl9ub2RlIHB3bTQgcHdtOA0KZmFuM19pbnB1dCBmYW43X2lucHV0IHB3bTEgcHdtNSBzdWJz
+eXN0ZW0NCg0KRXZlbiBjaGFuZ2luZyB2YWx1ZXMgb2YgcHdtMSBhbmQgcHdtMiB0byAwIG9yIDEy
+NywgdGhlIHNwZWVkIG9mIHRoZSBmYW4gaXMgbm90IGNoYW5naW5nLg0KDQpBbHNvLCByZWFkaW5n
+IHRoZSBmaWxlcyBmYW4xX2lucHV0IHNob3dpbmcgZXJyb3IuDQoNClRoYW5rcyBpbiBhZHZhbmNl
+Lg0K
