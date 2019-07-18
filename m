@@ -2,67 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1839E6C365
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 01:03:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F2A756C8F4
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 07:59:27 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45pt923MVwzDqM4
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 09:03:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45q3P919PjzDqbq
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 15:59:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::741; helo=mail-qk1-x741.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="JJnbgeHA"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="JDCcUCm+"; 
  dkim-atps=neutral
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
- [IPv6:2607:f8b0:4864:20::632])
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
+ [IPv6:2607:f8b0:4864:20::741])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45pt8Q2vrxzDqLp
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 09:02:46 +1000 (AEST)
-Received: by mail-pl1-x632.google.com with SMTP id m9so12708672pls.8
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 16:02:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45q3Nb1vLwzDqC9
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jul 2019 15:58:52 +1000 (AEST)
+Received: by mail-qk1-x741.google.com with SMTP id v22so19489483qkj.8
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jul 2019 22:58:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=vpX7qIbNCeavSMo1PvaWR+CrClFm2WodOyHwj94hXWo=;
- b=JJnbgeHA35EJh/SBxNJDySicVbqVPrpHSQaI4JPE+HcxVXB7AFrehZn3yJ6YOGx7lT
- TPWfmyPnSCnIDYf1gxKHT1e/KBjYO1nAcsxkFDrOCUcV+fzOlSVuh+3WxAQ5jPNXeFIz
- jHpCJm1L76NbzF91dCgfeAh+LkVUYOQy0eSNCglG17XTH6CocJ2GysBgqXM+Yrb47oMA
- /SSLfF0I1vfDboAkXGXmEoxaSFc6jNqSU89mhdpTxcxqsbAKPaAxgTFG45atjsQZWQIV
- GyoarCsH5tghtWy6Ny0D9czwzvV9LZalyNd+sgkql2pCBBf6lPP/79WrK0ZCKczKF7d+
- 0unw==
+ :cc; bh=Ct4djxaQ1e/mTdSrBIwsU7pdc+Wg5hAQ5Rc00jVfMEQ=;
+ b=JDCcUCm+UxhRJyF+biaGLv+OhX8tEiF3GoH4md1lH+alkkFmbm6eTa1yuwCoTYvDft
+ C6IrZEhwBk/suMNDroFbhb+Bb25IQVzVI8JI9NoYsAJosNOC7n7fKjlGdn6A2prgANKF
+ qDt2yZUiUXO5KBYmHuqEbdtWNYNDjbWciy3HE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=vpX7qIbNCeavSMo1PvaWR+CrClFm2WodOyHwj94hXWo=;
- b=lmeBDCWDlrlFRzkY87N7M6RwBTELuLIz3JErf4XcWo4emeRHoTWnJZYBVNVbYcWfaf
- wxeYpNolvTzVtVOBg1nANF3tdaZ6paDsq+lzyEmTKVPa1hth9aBECM1pEw/I3lf9xfzk
- SDuilwkW3h95QSlMVoZU0BWJEr3rR/EJPPYmIUNUQ+47z5NQM0p6XnnvSBpKADO/bkwq
- OghHj965vRlb7Oq3Agc2yq2tFCpQORXTIAGJGVmJZCQ/WHReSmslJKoSOXorhRjaeYbX
- PJKyAFwuh8ZKWRca8map6y6XIKgDPMqk/0fY8Kv/FU6wS9QeosJfHX0fkD1Hbntm3u5M
- J8dQ==
-X-Gm-Message-State: APjAAAVZxzh3zmiLLCZhzJRaL5QJWt9zSL/X09ckaKyfCw0hjRBj6FZS
- 10zgOcHjPPFpAAhIR6YeIAGVK2k8/2LDJhA30PFuWw==
-X-Google-Smtp-Source: APXvYqyUHQhjHNsKEU3qgCeH0Ltxzbiuvb3DBM1VFnx9uNdEqTQX52v2o8JZ6E07+t9E4vb1+hvk4Vp/YIZiLtR/9z4=
-X-Received: by 2002:a17:902:b944:: with SMTP id
- h4mr45234107pls.179.1563404563353; 
- Wed, 17 Jul 2019 16:02:43 -0700 (PDT)
+ bh=Ct4djxaQ1e/mTdSrBIwsU7pdc+Wg5hAQ5Rc00jVfMEQ=;
+ b=qkeXDZnmIl2AglsCDhLkC0WXy9uNs6ZqKCXEjH7/YkcmdO7UEsXYOzzAPk9KB/nmSR
+ F1FQZg3e3DlwcrjTE0NKVBXnV2A/9oxTZe1wqzGBoX0k47a7N5UYKsG8aocCW/x1fPs8
+ ftwFptLvJGrLjw9fjVEenCQU5RnklovkijEm0+1wBOEb1WEZHqDRkXYZ5hillwofEjMO
+ o3ZgoGdsr5odcRAYkWXfxv1gwgmSmzEMHVvfc1A4L0BkfM12pCwxcX6Hb3BAb+l2HKWy
+ 50TzkCVqH4yXAD51uCmoe8ZuIo2Rlj/M1FAmvdGoj8FYZV/tAkrGMYFsLXGYw9A11Cvi
+ jLWQ==
+X-Gm-Message-State: APjAAAXJ2e4N7xpN7maxwaA6b9gbqgzdkAjpOBJ8/riwDqaXwp7jGWUm
+ jSAicfuIrqN+3q5UtytQIa+6yC4guLsBA1Yrt1s=
+X-Google-Smtp-Source: APXvYqzcLYMEwoESQzzxmef5L9TTiiJuIWAKAm+XdfYfe6HMb/b31VMWQqdA+HZTL4rW/T3GD5FRKb10NjDJw6ddHYA=
+X-Received: by 2002:a37:a2d1:: with SMTP id
+ l200mr29536871qke.330.1563429528860; 
+ Wed, 17 Jul 2019 22:58:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notxgpy8N5bf4GyqgoTaw6KdRgCUE7jy5Jk-a3-TZDYRpwQ@mail.gmail.com>
- <20190717203722.GA31389@mauery.jf.intel.com>
- <7bff7bf4-6eb0-4327-35af-20f758061c40@intel.com>
-In-Reply-To: <7bff7bf4-6eb0-4327-35af-20f758061c40@intel.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 17 Jul 2019 16:02:32 -0700
-Message-ID: <CAO=notzOsYf6-xau+mqaDOpHQQkf_FdFApRc96kWN0MDjbZJtg@mail.gmail.com>
-Subject: Re: Super Short OEM IPMI Proposal
-To: Ed Tanous <ed.tanous@intel.com>
+References: <20190625205109.27672-1-jae.hyun.yoo@linux.intel.com>
+ <20190625205109.27672-5-jae.hyun.yoo@linux.intel.com>
+ <5cc696ba-7fa7-c7cb-0ba6-81df3015e974@fb.com>
+ <9c862188-8360-fa39-f21d-9c6d51e1d831@linux.intel.com>
+ <CACPK8XdSeK0CPrncmxjMKBLfCwCVHE-VWhAVaia1oQMFTOf_0w@mail.gmail.com>
+ <74652ba6-ef4b-9e45-7e3a-f2375e21d40f@linux.intel.com>
+In-Reply-To: <74652ba6-ef4b-9e45-7e3a-f2375e21d40f@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 18 Jul 2019 05:58:36 +0000
+Message-ID: <CACPK8XfvM-mYW_wvdsKRqYm0aLmQnROptPbh3VnZ4jsoNs9HyQ@mail.gmail.com>
+Subject: Re: [RFC v2 dev-5.1 4/5] i2c: aspeed: add buffer mode transfer support
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,20 +75,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>, Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 17, 2019 at 2:56 PM Ed Tanous <ed.tanous@intel.com> wrote:
->
-> On 7/17/19 1:37 PM, Vernon Mauery wrote:
-> > As much as I don't want to tell someone to cut and paste code, I can't
-> > really think of a good way to share something like an OEM command that
-> > doesn't really have a shared spec.
->
-> +1.  Unless we're looking to do an OpenBMC shared OEM spec, which I
-> think would be interesting to discuss, I'm not sure how to effectively
-> share these kinds of thing especially when the needs of the commands
-> change over time.
+Hey Jae,
 
-My thinking was it within the OpenBMC OEM numbering thing.
+On Tue, 2 Jul 2019 at 16:05, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+> > Do you want we to merge this series into the openbmc tree for further testing?
+>
+> Yes please. It would be good if it gets tested on more various platforms
+> before upstreaming it.
+
+I did this and hit some issues.
+
+The first one is that we don't support this with the qemu model yet
+and so kernel crashes when probing i2c. This is bad, as we gate
+commits to the openbmc yocto tree on them passing a qemu boot test.
+
+Secondly, the changes you have made to the driver are incompatible
+with the old device tree. I thought I could revert the device tree
+change in order to get the old behavior, but the driver fails to
+probe. In general we strive to make kernel changes compatible with old
+versions of the device tree. I think that can be achieved here with
+some thought.
+
+Cedric will try to resolve the qemu issue. If you could create a
+version of the patch that makes the driver compatible with the old
+device tree that would be appreciated.
+
+Cheers,
+
+Joel
