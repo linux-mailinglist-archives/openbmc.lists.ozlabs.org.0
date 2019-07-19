@@ -1,58 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CA126E84C
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jul 2019 17:59:46 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45qwgM6DprzDqvN
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jul 2019 01:59:43 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5538C6E877
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jul 2019 18:08:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45qwsT5z9wzDqLl
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jul 2019 02:08:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::635; helo=mail-pl1-x635.google.com;
+ (client-ip=2607:f8b0:4864:20::536; helo=mail-pg1-x536.google.com;
  envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="R8vw/UMY"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="iXZNinLB"; 
  dkim-atps=neutral
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
- [IPv6:2607:f8b0:4864:20::635])
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com
+ [IPv6:2607:f8b0:4864:20::536])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45qwfd31vvzDqsJ
- for <openbmc@lists.ozlabs.org>; Sat, 20 Jul 2019 01:59:04 +1000 (AEST)
-Received: by mail-pl1-x635.google.com with SMTP id az7so15818893plb.5
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jul 2019 08:59:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45qwrv48SjzDq63
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Jul 2019 02:07:59 +1000 (AEST)
+Received: by mail-pg1-x536.google.com with SMTP id u17so14666167pgi.6
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Jul 2019 09:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RdDZUnWItKUQbmEQl29juglc1D/NFPBIcH6oIsdU9Us=;
- b=R8vw/UMYtMqxqjEMS1Msush47/PSBY+93ZKf32D/TStX6Plvl2JdmpRGtJZqN71Vz5
- SmL2p824DIezGcB6iPspasZuCv9wBy4IhiVeE3AFKdQ078CK4IbXK3eanHAOfw2AVLXN
- VECdh/Jx7PbkZCbXkJoTrLOa5xAX+TOA2ryNvFf3SCmXFZ0yJ9iZjeFT7dHtasOKcu85
- DJ8NP0taBlXCqasstNvba45s2zzyfrnvjuSF/jS9FWLjhaAAK422KP6ZN5X4zCH53OtQ
- CYUq4RWl2QxxXQqjbfINWGKOP1pGwvCZVoAqdMAQK0v6c9RkiJ3iceGcq6q2Pir+D/Tz
- XW5Q==
+ :cc; bh=qrKQJyQZF2E4lbtN5GOp0LLxA1VJqErco/vqNgkON5E=;
+ b=iXZNinLBZzygMbVUkpRsMYzIGfgcSMwFHTuDrYwdglaXrn9vqg4sMI1TcfrB89CejI
+ lgmKFWvajklGkY2rwjJU9kifCsx7MHWtzughIgRAWDCXu7yOizp49ksCL29W3LZ1EVAz
+ gUDq61VairCz38TEngjdM+ccAp0xocoiC71LIXNaLnkSlR92DK0lvTpOp8pLigb8i281
+ lVNYualyOY6ksHmYhNEwquXvoQNFVHhHu0sQb7azopBUig9AcSW5sVuVbMN/m08SuQ9c
+ bv8nwMYeMTHUi0vJ4TOYBak6pkM+DLYQkHwG2qv/NR+ir7h3dtfYzPEVJBma4zJ16SmN
+ 8wVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=RdDZUnWItKUQbmEQl29juglc1D/NFPBIcH6oIsdU9Us=;
- b=n2rioAKCPIvi8OQtGp4fBVA4pRN+bd8jYzFJPpJZpLzhPLw2awkiE8ndZeb1ztHsya
- qZmitHU/OaTY5B24q/czivemAGmlC52YqxdLqwb530peP1FhZhW8ef6VP1tG3uhCMGtT
- QPMtx1Lhwtk/vQMY0tctoWTxlYCqkTpC5wtaPx0v/7rBNvbRfYhjf8WlJxlb56PipBc0
- Oshu7rP8h7N9F57hrU15BEwN159iyTkqa75SjgH4VjEawTRhhma4S1t+NFsBl5vJxAuz
- 63ZdRNhn+rOaSZlRwcE49nicgshfakbMC8O97cCceqNOygwHYhL6VEfprMdL69MUmAbA
- oqUw==
-X-Gm-Message-State: APjAAAXjzSSd37q1bVn8g5XD3I8BjoYsaE/aB/CgFFDLB/2CtTGhoqxM
- aP8Y4lXFaMkLBUAgBvwoPFwqgJoNwwZGK9ZUwJKf4lN5AXqgMA==
-X-Google-Smtp-Source: APXvYqzEU71dus1IoY5UccyqxhQdYL9pXMrPmPo0oVhpd0rgWPRODleCq4ocMZY1OR9S1xi72zi0K2nggYiBXTyhk6U=
-X-Received: by 2002:a17:902:b944:: with SMTP id
- h4mr56598283pls.179.1563551940603; 
- Fri, 19 Jul 2019 08:59:00 -0700 (PDT)
+ bh=qrKQJyQZF2E4lbtN5GOp0LLxA1VJqErco/vqNgkON5E=;
+ b=IdNpK2YDJFABAM7jw8t5zE1DoaEEtXR43U5BbzNYAcxwlTU+hnp811GffLDePR/D2N
+ YrXvZj0eZf/vfHNm9A4HIA9j4RQjbjwsIilq5vWjvTXRutS1qA31n9cmWRnXN5Q7d+/b
+ HSdiFetc2PzngAkHY6VL8IsnTzqZ/PFP4ZVdZFWoABBeInKHCPZdS0yJBAihjcXUdRYn
+ L1iqEOu0rAxjwoUTcm3yNFw/uQgXa5J5cSONSOs83XlEsctCWbhPd1btQx29tlMywRMq
+ IRukY5zTuI/0uink2weZE67kEQ/bBrOu7wzXrYxiaIrYqzKjLzjdLxuRWVd+I9n9oMP/
+ XEMw==
+X-Gm-Message-State: APjAAAUm9xPp2yXZ34zLgzNJQfpJAq26Mx6x3qtxesi3IWi2rDTwaRHQ
+ uqCxxpotg6IfFMKO+FsvBldMUVh6cfRvUy+MyK7JWQ==
+X-Google-Smtp-Source: APXvYqwhCcnzpQU8n4nK9TWbMHz+juutfj/95sfhxVnNxa2u9TfApXaO1bdQ2Ez/avloLKFLEhJwmAVjlF9PRD9RtGM=
+X-Received: by 2002:a17:90a:bf0e:: with SMTP id
+ c14mr56081409pjs.55.1563552475305; 
+ Fri, 19 Jul 2019 09:07:55 -0700 (PDT)
 MIME-Version: 1.0
 References: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
  <CAO=notzcuVK-0eV4tCjD-MuFi7RQvrX1Y7fJgU4yzLzU-vR+Vw@mail.gmail.com>
@@ -60,14 +60,15 @@ References: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
  <CAO=notyKxDC=-v7dQ4j-fZMAmgr6rqg808Y+-+cokgLtT7MtnQ@mail.gmail.com>
  <dc89fd1273184d9d932bf8a7c8db1c6a@lenovo.com>
  <CAO=notxWDo8S_xNfc6PTo8i7cK4kNbqr=jjL4ZvVypAvTqOtRQ@mail.gmail.com>
-In-Reply-To: <CAO=notxWDo8S_xNfc6PTo8i7cK4kNbqr=jjL4ZvVypAvTqOtRQ@mail.gmail.com>
+ <CAO=noty9csc2axMFnOkqUc7MpTAFXJQKEaFHN0NT85oT_wBi4Q@mail.gmail.com>
+In-Reply-To: <CAO=noty9csc2axMFnOkqUc7MpTAFXJQKEaFHN0NT85oT_wBi4Q@mail.gmail.com>
 From: Patrick Venture <venture@google.com>
-Date: Fri, 19 Jul 2019 08:58:49 -0700
-Message-ID: <CAO=noty9csc2axMFnOkqUc7MpTAFXJQKEaFHN0NT85oT_wBi4Q@mail.gmail.com>
+Date: Fri, 19 Jul 2019 09:07:43 -0700
+Message-ID: <CAO=notyqqcsN0oziv-zTuEk9NuiCeUm953BR0codfnLYaAWvWA@mail.gmail.com>
 Subject: Re: [External] Re: configure error and the image content seems to be
  incorrect
 To: Andrew MS1 Peng <pengms1@lenovo.com>
-Content-Type: multipart/alternative; boundary="0000000000000251c5058e0aceda"
+Content-Type: multipart/alternative; boundary="000000000000e14070058e0aed53"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,435 +85,456 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000000251c5058e0aceda
+--000000000000e14070058e0aed53
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 19, 2019 at 8:37 AM Patrick Venture <venture@google.com> wrote:
+On Fri, Jul 19, 2019 at 8:58 AM Patrick Venture <venture@google.com> wrote:
 
 >
 >
-> On Fri, Jul 19, 2019 at 4:50 AM Andrew MS1 Peng <pengms1@lenovo.com>
+> On Fri, Jul 19, 2019 at 8:37 AM Patrick Venture <venture@google.com>
 > wrote:
 >
->> Hi Patrick,
 >>
 >>
+>> On Fri, Jul 19, 2019 at 4:50 AM Andrew MS1 Peng <pengms1@lenovo.com>
+>> wrote:
 >>
->> Please see my below comments.
->>
->>
->>
->> Thanks.
->>
->> Andrew
->>
->>
->>
->> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
->> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8819=E6=97=
+>>> Hi Patrick,
+>>>
+>>>
+>>>
+>>> Please see my below comments.
+>>>
+>>>
+>>>
+>>> Thanks.
+>>>
+>>> Andrew
+>>>
+>>>
+>>>
+>>> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+>>> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8819=E6=97=
 =A5 0:52
->> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
->> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.=
-com>; Yonghui
->> YH21 Liu <liuyh21@lenovo.com>
->> *=E4=B8=BB=E9=A2=98:* Re: [External] Re: configure error and the image c=
-ontent seems to
->> be incorrect
+>>> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+>>> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo=
+.com>; Yonghui
+>>> YH21 Liu <liuyh21@lenovo.com>
+>>> *=E4=B8=BB=E9=A2=98:* Re: [External] Re: configure error and the image =
+content seems to
+>>> be incorrect
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> On Thu, Jul 18, 2019 at 4:27 AM Andrew MS1 Peng <pengms1@lenovo.com>
+>>> wrote:
+>>>
+>>> Hi Patrick,
+>>>
+>>>
+>>>
+>>> Could you give me a hand on below problems? Thanks.
+>>>
+>>> 1.      I compiled the latest version of phosphor-ipmi-flash with
+>>> OpenBMC SDK environment to build host tool, but encounter configuration
+>>> error message as below, could you help to take a look at it?
+>>>
+>>> ./configure --enable-oe-sdk --host "$(uname -m)"
+>>> --disable-build-bmc-blob-handler  AR=3Dx86_64-openbmc-linux-gcc-ar
+>>> RANLIB=3Dx86_64-openbmc-linux-gcc-ranlib
+>>>
+>>> checking whether C++ compiler accepts -lgmock... yes
+>>> checking whether C++ compiler accepts -pthread... (cached) yes
+>>> checking for main in -lgmock... yes
+>>> checking for valgrind... no
+>>> checking whether to build with code coverage support... no
+>>> configure: Enabling OE-SDK at
+>>> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
+>>> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+>>> Usually this means the macro was only invoked conditionally.
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> Have systemd is only important for the BMC code, so it's unimportant in
+>>> this case.
+>>>
+>>> It block Makefile generation, how can I do to avoid this error to
+>>> generate Makefile?
+>>>
 >>
->>
->>
->>
->>
->>
->>
->> On Thu, Jul 18, 2019 at 4:27 AM Andrew MS1 Peng <pengms1@lenovo.com>
->> wrote:
->>
->> Hi Patrick,
->>
->>
->>
->> Could you give me a hand on below problems? Thanks.
->>
->> 1.      I compiled the latest version of phosphor-ipmi-flash with
->> OpenBMC SDK environment to build host tool, but encounter configuration
->> error message as below, could you help to take a look at it?
->>
->> ./configure --enable-oe-sdk --host "$(uname -m)"
->> --disable-build-bmc-blob-handler  AR=3Dx86_64-openbmc-linux-gcc-ar
->> RANLIB=3Dx86_64-openbmc-linux-gcc-ranlib
->>
->> checking whether C++ compiler accepts -lgmock... yes
->> checking whether C++ compiler accepts -pthread... (cached) yes
->> checking for main in -lgmock... yes
->> checking for valgrind... no
->> checking whether to build with code coverage support... no
->> configure: Enabling OE-SDK at
->> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
->> configure: error: conditional "HAVE_SYSTEMD" was never defined.
->> Usually this means the macro was only invoked conditionally.
->>
->>
->>
->>
->>
->> Have systemd is only important for the BMC code, so it's unimportant in
->> this case.
->>
->> It block Makefile generation, how can I do to avoid this error to
->> generate Makefile?
+>> I'll see if I need to always define it -- not sure why you're hitting
+>> this and I wasn't, but I'll take a look.
 >>
 >
-> I'll see if I need to always define it -- not sure why you're hitting thi=
-s
-> and I wasn't, but I'll take a look.
+> Verified I can reproduce:
+> checking that generated files are newer than configure... done
+> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+> Usually this means the macro was only invoked conditionally.
+> root@3b8289721be4:/phosphor-ipmi-flash#
+>
+> The issue is that although it doesn't use the bmc/Makefile in the
+> configuration, it still needs the variable defined.  I moved the systemd
+> search into only the bmc case because the host tool doesn't use systemd.
 >
 
-Verified I can reproduce:
-checking that generated files are newer than configure... done
-configure: error: conditional "HAVE_SYSTEMD" was never defined.
-Usually this means the macro was only invoked conditionally.
-root@3b8289721be4:/phosphor-ipmi-flash#
+Follow-on, I'm submitting a patch to fix that momentarily.
 
-The issue is that although it doesn't use the bmc/Makefile in the
-configuration, it still needs the variable defined.  I moved the systemd
-search into only the bmc case because the host tool doesn't use systemd.
+To address the other issue, it may behoove us to add some always-on debug
+logging, so we can see a few things.  One approach however, would be to try
+sending down a 64 byte file instead of the 32MB -- just to make the testing
+slightly faster.
+
+The other thing is the kernel you're using, I don't use the same one --
+perhaps there are differences from openbmc/linux.
 
 
 >
->>
->> 2.      According to your suggestion, our BIOS engineer help to reserve
->> host memory addr 0x40000000 with size 256KB and initiate this region wit=
-h
->> value 0xaa. I can see the value Oxaaaaaaaa from memory addr 0x40000000 v=
-ia
->> devmem2 tool. The memory region was overwritten during executable
->> burn_my_bmc running, I compared the content between BMC and host image b=
-ut
->> it was Inconsistent. Could you give me some advice to solve it?
->>
->>
->> BMC configuration setting:
->> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
->> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x40000000 --enable-reboot-update"
->>
->> Host tool setting:
->> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd
->> --sig ./sig.txt --type static --address 0x40000000 --length 65536
->>
->>
->>
->> Interesting, so you're seeing the memory getting changed, but the bmc
->> image doesn't match.
->>
->> Can you point me to your device tree? (for sanity checking)
->> DT file is below:
->>
->> https://github.com/LenovoHS/openbmc/blob/master/meta-lenovo/meta-hr630/r=
-ecipes-kernel/linux/linux-aspeed/aspeed-bmc-lenovo-hr630.dts
->>
->>
->>
->> What's the SHA for your linux tree (I want to make sure it has the
->> optional feature for aspeed-lpc-ctrl)
->>
->>     I don=E2=80=99t know where can obtain the SHA value of linux tree, c=
-ould you
->> give me clues or guidance?
->>
->
-> You're pointing to a different linux tree for your device-tree, presumabl=
-y
-> you're not using openbmc/linux?
->
 >
 >>
+>>>
+>>> 2.      According to your suggestion, our BIOS engineer help to reserve
+>>> host memory addr 0x40000000 with size 256KB and initiate this region wi=
+th
+>>> value 0xaa. I can see the value Oxaaaaaaaa from memory addr 0x40000000 =
+via
+>>> devmem2 tool. The memory region was overwritten during executable
+>>> burn_my_bmc running, I compared the content between BMC and host image =
+but
+>>> it was Inconsistent. Could you give me some advice to solve it?
+>>>
+>>>
+>>> BMC configuration setting:
+>>> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
+>>> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x40000000 --enable-reboot-update"
+>>>
+>>> Host tool setting:
+>>> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd
+>>> --sig ./sig.txt --type static --address 0x40000000 --length 65536
+>>>
+>>>
+>>>
+>>> Interesting, so you're seeing the memory getting changed, but the bmc
+>>> image doesn't match.
+>>>
+>>> Can you point me to your device tree? (for sanity checking)
+>>> DT file is below:
+>>>
+>>> https://github.com/LenovoHS/openbmc/blob/master/meta-lenovo/meta-hr630/=
+recipes-kernel/linux/linux-aspeed/aspeed-bmc-lenovo-hr630.dts
+>>>
+>>>
+>>>
+>>> What's the SHA for your linux tree (I want to make sure it has the
+>>> optional feature for aspeed-lpc-ctrl)
+>>>
+>>>     I don=E2=80=99t know where can obtain the SHA value of linux tree, =
+could
+>>> you give me clues or guidance?
+>>>
 >>
->> Do you see any output from journalctl?  I asked last time, but this if
->> leads with ipmid can hold some details.
->>
->> l  *Only host **reserve memory addr 0x**40000000 with 256KB, transfer
->> data failed.*
->>
->> ## DTS setting:
->>
->>         &lpc_ctrl {
->>
->>             status =3D "okay";
->>
->>         };
+>> You're pointing to a different linux tree for your device-tree,
+>> presumably you're not using openbmc/linux?
 >>
 >>
+>>>
+>>>
+>>> Do you see any output from journalctl?  I asked last time, but this if
+>>> leads with ipmid can hold some details.
+>>>
+>>> l  *Only host **reserve memory addr 0x**40000000 with 256KB, transfer
+>>> data failed.*
+>>>
+>>> ## DTS setting:
+>>>
+>>>         &lpc_ctrl {
+>>>
+>>>             status =3D "okay";
+>>>
+>>>         };
+>>>
+>>>
+>>>
+>>>     ## journalctl log message:
+>>>
+>>>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC ma=
+p
+>>> with error No such device or address
+>>>
+>>>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
+>>>
+>>>         Jul 19 02:06:02 hr630 ipmid[347]: requesting Aspeed LPC window
+>>> at 0x40000000 of size 65536
+>>>
+>>>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC ma=
+p
+>>> with error No such device or address
+>>>
+>>>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
+>>>
+>>>
+>>>
+>>>      ## BMC Registers (It is the same as default value):
+>>>
+>>>         (HICR7) devmem 0x1E789088
+>>>
+>>>          0x3000FFF8
+>>>
+>>>         (HICR8) devmem 0x1E78908c
+>>>
+>>>          0xFFF8F007
+>>>
+>>>         (HICR5) devmem 0x1E789080
+>>>
+>>>         0x00000403
+>>>
+>>>
+>>>
+>>> l  *BMC reserve memory addr 0x**98000000 with 1MB and host **reserve
+>>> memory addr 0x**40000000 with 256KB, transfer data successful but the
+>>> data was incorrect.*
+>>>
+>>> ## DTS setting:
+>>>
+>>>         flash_memory: region@98000000 {
+>>>
+>>>                 no-map;
+>>>
+>>>                 reg =3D <0x98000000 0x00100000>; /* 1M */
+>>>
+>>>             };
+>>>
+>>>
+>>>
+>>>         &lpc_ctrl {
+>>>
+>>>             status =3D "okay";
+>>>
+>>>             memory-region =3D <&flash_memory>;
+>>>
+>>>             flash =3D <&spi1>;
+>>>
+>>>         };
+>>>
+>>>
+>>>
+>>>     ## journalctl log message:
+>>>
+>>>         Jul 19 02:05:26 hr630 systemd[1]: Reached target
+>>> Phosphor-ipmi-flash Prepare BMC to receive update.
+>>>
+>>>         Jul 19 02:05:26 hr630 ipmid[339]: requesting Aspeed LPC window
+>>> at 0x40000000 of size 65536
+>>>
+>>>         Jul 19 02:05:52 hr630 ipmid[339]: requesting Aspeed LPC window
+>>> at 0x40000000 of size 65536
+>>>
+>>         Jul 19 02:05:52 hr630 systemd[1]: Reached target
+>>> Phosphor-ipmi-flash verify the image contents.
+>>>
 >>
->>     ## journalctl log message:
+>> Good that you're no longer seeing a problem with this.  I wonder if
+>> there's something different with the lpc_ctrl in this case since you're
+>> specifying the flash node (a version of the driver+config i haven't test=
+ed).
 >>
->>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC map
->> with error No such device or address
 >>
->>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
->>
->>         Jul 19 02:06:02 hr630 ipmid[347]: requesting Aspeed LPC window a=
+>>>
+>>>
+>>>     ## BMC Registers:
+>>>
+>>>         (HICR7) devmem 0x1E789088
+>>>
+>>>         0x98004000
+>>>
+>>>         (HICR8) devmem 0x1E78908c
+>>>
+>>>         0xFFFF0000
+>>>
+>>>         (HICR5) devmem 0x1E789080
+>>>
+>>>         0x00000503
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> I tested this with a 4K region on aspeed-lpc with the ast2500 and it
+>>> worked fine, so I do expect it to work... but you may have found some e=
+dge
+>>> case -- you're saying the length for the region should be 64KB, and tha=
 t
->> 0x40000000 of size 65536
->>
->>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC map
->> with error No such device or address
->>
->>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
->>
->>
->>
->>      ## BMC Registers (It is the same as default value):
->>
->>         (HICR7) devmem 0x1E789088
->>
->>          0x3000FFF8
->>
->>         (HICR8) devmem 0x1E78908c
->>
->>          0xFFF8F007
->>
->>         (HICR5) devmem 0x1E789080
->>
->>         0x00000403
->>
->>
->>
->> l  *BMC reserve memory addr 0x**98000000 with 1MB and host **reserve
->> memory addr 0x**40000000 with 256KB, transfer data successful but the
->> data was incorrect.*
->>
->> ## DTS setting:
->>
->>         flash_memory: region@98000000 {
->>
->>                 no-map;
->>
->>                 reg =3D <0x98000000 0x00100000>; /* 1M */
->>
->>             };
->>
->>
->>
->>         &lpc_ctrl {
->>
->>             status =3D "okay";
->>
->>             memory-region =3D <&flash_memory>;
->>
->>             flash =3D <&spi1>;
->>
->>         };
->>
->>
->>
->>     ## journalctl log message:
->>
->>         Jul 19 02:05:26 hr630 systemd[1]: Reached target
->> Phosphor-ipmi-flash Prepare BMC to receive update.
->>
->>         Jul 19 02:05:26 hr630 ipmid[339]: requesting Aspeed LPC window a=
-t
->> 0x40000000 of size 65536
->>
->>         Jul 19 02:05:52 hr630 ipmid[339]: requesting Aspeed LPC window a=
-t
->> 0x40000000 of size 65536
->>
->         Jul 19 02:05:52 hr630 systemd[1]: Reached target
->> Phosphor-ipmi-flash verify the image contents.
->>
->
-> Good that you're no longer seeing a problem with this.  I wonder if
-> there's something different with the lpc_ctrl in this case since you're
-> specifying the flash node (a version of the driver+config i haven't teste=
-d).
->
->
->>
->>
->>     ## BMC Registers:
->>
->>         (HICR7) devmem 0x1E789088
->>
->>         0x98004000
->>
->>         (HICR8) devmem 0x1E78908c
->>
->>         0xFFFF0000
->>
->>         (HICR5) devmem 0x1E789080
->>
->>         0x00000503
->>
->>
->>
->>
->>
->> I tested this with a 4K region on aspeed-lpc with the ast2500 and it
->> worked fine, so I do expect it to work... but you may have found some ed=
-ge
->> case -- you're saying the length for the region should be 64KB, and that
->> should be fine...
->>
->>
->>
->> Regards,
->> Andrew
->>
->>
->>
->> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
->> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8816=E6=97=
+>>> should be fine...
+>>>
+>>>
+>>>
+>>> Regards,
+>>> Andrew
+>>>
+>>>
+>>>
+>>> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+>>> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8816=E6=97=
 =A5 23:38
->> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
->> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.=
-com>
->> *=E4=B8=BB=E9=A2=98:* [External] Re: configure error and the image conte=
-nt seems to be
->> incorrect
->>
->>
->>
->>
->>
->>
->>
->> On Tue, Jul 16, 2019 at 5:31 AM Andrew MS1 Peng <pengms1@lenovo.com>
->> wrote:
->>
->> Hi Patrick,
->>
->> 1.      I downloaded the latest version of phosphor-ipmi-flash to build
->> host tool with the SDK environment you provide, but encounter configure
->> error as below, could you help to take a look at it?
->>
->> *Source code hash id*
->>
->> *Compile Status*
->>
->> *Error message*
->>
->> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
->>
->> configure successful
->>
->> fd182168d9d1c852b1047b9eccea56812b614586
->> 1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137
->> fa06a5f0056e91bfada390c4007fbd3472d75a56
->> 7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0
->> c9792e75361c86da7f674976eacd03c761021d2f
->>
->> configure failed
->>
->> checking whether C++ compiler accepts -lgtest... yes
->> checking whether C++ compiler accepts -pthread... (cached) yes
->> checking for main in -lgtest... yes
->> checking whether C++ compiler accepts -lgmock... yes
->> checking whether C++ compiler accepts -pthread... (cached) yes
->> checking for main in -lgmock... yes
->> checking for valgrind... no
->> checking whether to build with code coverage support... no
->> configure: Enabling OE-SDK at
->> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
->> configure: error: conditional "HAVE_SYSTEMD" was never defined.
->> Usually this means the macro was only invoked conditionally.
->>
->> 2.      The host tool compiled with phosphor-ipmi-flash hash id
->> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42 and BMC flash library compiled
->> with phosphor-ipmi-flash hash id c9792e75361c86da7f674976eacd03c761021d2=
-f,
->> the BMC image can transfer from host side to BMC side via LPC bridge. Th=
-e
->> image size is correct, but the image content seems to be incorrect as
->> below, could you give us some clues to solve it if this is an issue?
->>
->> Image of host side
->>
->> Image of BMC side
->>
->> pengms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
->>
->> 0000000 00be ea00 f014 e59f f014 e59f f014 e59f
->>
->> 0000010 f014 e59f f014 e59f f014 e59f f014 e59f
->>
->> 0000020 0060 0000 00c0 0000 0120 0000 0180 0000
->>
->> 0000030 01e0 0000 0240 0000 02a0 0000 beef dead
->>
->> root@hr630:~# hexdump -n 64 /run/initramfs/bmc-image
->>
->> 0000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00
->>
->> 0000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00
->>
->> 0000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80
->>
->> 0000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4
->>
->> DTS setting:
->>              flash_memory: region@98000000 {
->>                     no-map;
->>                     reg =3D <0x98000000 0x00100000>; /* 1M */
->>              };
->>
->> BMC configuration setting:
->> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
->> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update"
->>
->> Host tool setting:
->> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd
->> --sig ./sig.txt --type static --address 2550136832 --length 65536
->>
->>
->>
->> The address provided for the host:
->>
->> >>> '0x%x' % 2550136832
->>
->> '0x98000000'
->>
->>
->>
->> Is a region of memory on the host that's set aside for this purpose and
->> is mapped via /dev/mem.  It's not the address the BMC Is using.  You'll
->> need to use a region reserved for this purpose in the host kernel or bio=
-s.
->>
->>
->>
->>
->>
->> Thanks,
->> Andrew
->>
->>
+>>> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+>>> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo=
+.com>
+>>> *=E4=B8=BB=E9=A2=98:* [External] Re: configure error and the image cont=
+ent seems to be
+>>> incorrect
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> On Tue, Jul 16, 2019 at 5:31 AM Andrew MS1 Peng <pengms1@lenovo.com>
+>>> wrote:
+>>>
+>>> Hi Patrick,
+>>>
+>>> 1.      I downloaded the latest version of phosphor-ipmi-flash to build
+>>> host tool with the SDK environment you provide, but encounter configure
+>>> error as below, could you help to take a look at it?
+>>>
+>>> *Source code hash id*
+>>>
+>>> *Compile Status*
+>>>
+>>> *Error message*
+>>>
+>>> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
+>>>
+>>> configure successful
+>>>
+>>> fd182168d9d1c852b1047b9eccea56812b614586
+>>> 1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137
+>>> fa06a5f0056e91bfada390c4007fbd3472d75a56
+>>> 7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0
+>>> c9792e75361c86da7f674976eacd03c761021d2f
+>>>
+>>> configure failed
+>>>
+>>> checking whether C++ compiler accepts -lgtest... yes
+>>> checking whether C++ compiler accepts -pthread... (cached) yes
+>>> checking for main in -lgtest... yes
+>>> checking whether C++ compiler accepts -lgmock... yes
+>>> checking whether C++ compiler accepts -pthread... (cached) yes
+>>> checking for main in -lgmock... yes
+>>> checking for valgrind... no
+>>> checking whether to build with code coverage support... no
+>>> configure: Enabling OE-SDK at
+>>> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
+>>> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+>>> Usually this means the macro was only invoked conditionally.
+>>>
+>>> 2.      The host tool compiled with phosphor-ipmi-flash hash id
+>>> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42 and BMC flash library compiled
+>>> with phosphor-ipmi-flash hash id c9792e75361c86da7f674976eacd03c761021d=
+2f,
+>>> the BMC image can transfer from host side to BMC side via LPC bridge. T=
+he
+>>> image size is correct, but the image content seems to be incorrect as
+>>> below, could you give us some clues to solve it if this is an issue?
+>>>
+>>> Image of host side
+>>>
+>>> Image of BMC side
+>>>
+>>> pengms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
+>>>
+>>> 0000000 00be ea00 f014 e59f f014 e59f f014 e59f
+>>>
+>>> 0000010 f014 e59f f014 e59f f014 e59f f014 e59f
+>>>
+>>> 0000020 0060 0000 00c0 0000 0120 0000 0180 0000
+>>>
+>>> 0000030 01e0 0000 0240 0000 02a0 0000 beef dead
+>>>
+>>> root@hr630:~# hexdump -n 64 /run/initramfs/bmc-image
+>>>
+>>> 0000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00
+>>>
+>>> 0000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00
+>>>
+>>> 0000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80
+>>>
+>>> 0000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4
+>>>
+>>> DTS setting:
+>>>              flash_memory: region@98000000 {
+>>>                     no-map;
+>>>                     reg =3D <0x98000000 0x00100000>; /* 1M */
+>>>              };
+>>>
+>>> BMC configuration setting:
+>>> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
+>>> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update"
+>>>
+>>> Host tool setting:
+>>> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd
+>>> --sig ./sig.txt --type static --address 2550136832 --length 65536
+>>>
+>>>
+>>>
+>>> The address provided for the host:
+>>>
+>>> >>> '0x%x' % 2550136832
+>>>
+>>> '0x98000000'
+>>>
+>>>
+>>>
+>>> Is a region of memory on the host that's set aside for this purpose and
+>>> is mapped via /dev/mem.  It's not the address the BMC Is using.  You'll
+>>> need to use a region reserved for this purpose in the host kernel or bi=
+os.
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> Thanks,
+>>> Andrew
+>>>
+>>>
 
---0000000000000251c5058e0aceda
+--000000000000e14070058e0aed53
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 19, 2019 at 8:37 AM Patri=
+<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 19, 2019 at 8:58 AM Patri=
 ck Venture &lt;<a href=3D"mailto:venture@google.com">venture@google.com</a>=
 &gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div=
  dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div=
- dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 19, 2019 at 4:50 AM Andrew MS=
-1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank">pengms1@=
-lenovo.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+ dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 19, 2019 at 8:37 AM Patrick V=
+enture &lt;<a href=3D"mailto:venture@google.com" target=3D"_blank">venture@=
+google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
 =3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
+-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gm=
+ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jul 19, 2019 at 4:=
+50 AM Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_=
+blank">pengms1@lenovo.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">
 
 
 
 
 
 <div lang=3D"ZH-CN">
-<div class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508WordSec=
-tion1">
+<div class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-=
+m_2984205525165170508WordSection1">
 <p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
 ns-serif;color:rgb(0,112,192)">Hi
 </span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
@@ -582,9 +604,9 @@ n></p>
 <p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
 ns-serif;color:black">Could you give me a hand on below problems? Thanks.</=
 span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-right:0cm;margin-bottom=
-:12pt;margin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-right:0cm;margin-bottom:12pt;margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">1=
 .</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
  New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
@@ -593,14 +615,16 @@ lack">I compiled the latest version of phosphor-ipmi-flash with OpenBMC SDK=
  environment to build host tool, but encounter configuration error message =
 as below, could you help to take a
  look at it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">.=
 /configure --enable-oe-sdk --host &quot;$(uname -m)&quot; --disable-build-b=
 mc-blob-handler=C2=A0 AR=3Dx86_64-openbmc-linux-gcc-ar RANLIB=3Dx86_64-open=
 bmc-linux-gcc-ranlib</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-left:42pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-left:42pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;background:sil=
 ver">checking whether C++ compiler accepts -lgmock... yes<br>
 checking whether C++ compiler accepts -pthread... (cached) yes<br>
@@ -639,27 +663,39 @@ s means the macro was only invoked conditionally.<br>root@3b8289721be4:/pho=
 sphor-ipmi-flash#=C2=A0<br></div><div><br></div><div>The issue is that alth=
 ough it doesn&#39;t use the bmc/Makefile in the configuration, it still nee=
 ds the variable defined.=C2=A0 I moved the systemd search into only the bmc=
- case because the host tool doesn&#39;t use systemd.</div><div>=C2=A0<br></=
-div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div=
- class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
-iv lang=3D"ZH-CN"><div class=3D"gmail-m_-341926668711419608gmail-m_29842055=
-25165170508WordSection1"><div><div><div><p class=3D"MsoNormal" style=3D"tex=
-t-indent:24pt"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-family:=
-=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)"><u></u><u></u></span></p>
+ case because the host tool doesn&#39;t use systemd.</div></div></div></blo=
+ckquote><div><br></div><div>Follow-on, I&#39;m submitting a patch to fix th=
+at momentarily.</div><div><br></div><div>To address the other issue, it may=
+ behoove us to add some always-on debug logging, so we can see a few things=
+.=C2=A0 One approach however, would be to try sending down a 64 byte file i=
+nstead of the 32MB -- just to make the testing slightly faster.</div><div><=
+br></div><div>The other thing is the kernel you&#39;re using, I don&#39;t u=
+se the same one -- perhaps there are differences from openbmc/linux.</div><=
+div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr"><div class=3D"gmail_quote"><div>=C2=A0<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_quote=
+"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex"><div lang=3D"ZH-CN"><di=
+v class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_2=
+984205525165170508WordSection1"><div><div><div><p class=3D"MsoNormal" style=
+=3D"text-indent:24pt"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-f=
+amily:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)"><u></u><u></u></span></p>
 </div>
 <blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
 order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
 m 5pt 4.8pt">
 <div>
 <div>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-left:42pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-left:42pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">=
 =C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">2=
 .</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
  New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
@@ -668,27 +704,28 @@ lack">According to your suggestion, our BIOS engineer help to reserve host =
 memory addr 0x40000000 with size 256KB and initiate this region with value =
 0xaa. I can see the value Oxaaaaaaaa
  from memory addr 0x40000000 via devmem2 tool. The memory region was <span =
-class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3973=
-244268204610114src">
+class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_298=
+4205525165170508gmail-m-3973244268204610114src">
 <span style=3D"background:white">overwritten</span></span><span class=3D"gm=
-ail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-397324426820461=
-0114apple-converted-space"><span style=3D"background:white"> during</span><=
-/span> executable burn_my_bmc running, I compared the content between BMC a=
-nd host image but
+ail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_29842055251651=
+70508gmail-m-3973244268204610114apple-converted-space"><span style=3D"backg=
+round:white"> during</span></span> executable burn_my_bmc running, I compar=
+ed the content between BMC and host image but
  it was Inconsistent. <span style=3D"background:white">Could you give me so=
 me </span>
 advice to solve it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114msolistparagraph" style=3D"ma=
+rgin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black"><=
 br>
 <span style=3D"background:silver">BMC configuration setting:<br>
 EXTRA_OECONF +=3D &quot; --enable-reboot-update=C2=A0 --enable-static-layou=
 t --enable-aspeed-lpc MAPPED_ADDRESS=3D0x40000000 --enable-reboot-update&qu=
 ot;</span></span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397msolistparagraph" style=3D"mar=
-gin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397ms=
+olistparagraph" style=3D"margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black;ba=
 ckground:silver">Host tool setting:<br>
 ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
@@ -732,10 +769,10 @@ lockquote><div><br></div><div>You&#39;re pointing to a different linux tree=
  for your device-tree, presumably you&#39;re not using openbmc/linux?</div>=
 <div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div lan=
-g=3D"ZH-CN"><div class=3D"gmail-m_-341926668711419608gmail-m_29842055251651=
-70508WordSection1"><div><div><div><p class=3D"MsoNormal"><span lang=3D"EN-U=
-S" style=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)"><u></u><u>=
-</u></span></p>
+g=3D"ZH-CN"><div class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711=
+419608gmail-m_2984205525165170508WordSection1"><div><div><div><p class=3D"M=
+soNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;colo=
+r:rgb(0,112,192)"><u></u><u></u></span></p>
 <p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
 ns-serif"><u></u>=C2=A0<u></u></span></p>
 </div>
@@ -745,8 +782,8 @@ nalctl?=C2=A0 I asked last time, but this if leads with ipmid can hold some=
  details.<u></u><u></u></span></p>
 </div>
 <div>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508MsoListPa=
-ragraph" style=3D"margin-left:42pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508MsoListParagraph" style=3D"margin-left:42pt">
 <u></u><span lang=3D"EN-US" style=3D"font-family:Wingdings"><span>l<span st=
 yle=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
 </span></span></span><u></u><b><span lang=3D"EN-US" style=3D"font-family:Ca=
@@ -833,8 +870,8 @@ e=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)">=C2=A0=C2=A0=C2=
 <p class=3D"MsoNormal" style=3D"margin-left:12pt"><span lang=3D"EN-US" styl=
 e=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)"><u></u>=C2=A0<u><=
 /u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508MsoListPa=
-ragraph" style=3D"margin-left:42pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508MsoListParagraph" style=3D"margin-left:42pt">
 <u></u><span lang=3D"EN-US" style=3D"font-family:Wingdings"><span>l<span st=
 yle=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
 </span></span></span><u></u><b><span lang=3D"EN-US" style=3D"font-family:Ca=
@@ -912,22 +949,22 @@ e=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)">=C2=A0=C2=A0=C2=
 peed LPC window at 0x40000000 of size 65536</span>=C2=A0</p></div></div></d=
 iv></div></div></blockquote><blockquote class=3D"gmail_quote" style=3D"marg=
 in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x"><div lang=3D"ZH-CN"><div class=3D"gmail-m_-341926668711419608gmail-m_298=
-4205525165170508WordSection1"><div><div><div><p class=3D"MsoNormal" style=
-=3D"margin-left:36pt"><span lang=3D"EN-US" style=3D"font-family:Calibri,san=
-s-serif;color:rgb(0,112,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Ju=
-l 19 02:05:52 hr630 systemd[1]: Reached target Phosphor-ipmi-flash verify t=
-he image contents.</span></p></div></div></div></div></div></blockquote><di=
-v><br></div><div>Good that you&#39;re no=C2=A0longer seeing a problem with =
-this.=C2=A0 I wonder if there&#39;s something different with the lpc_ctrl i=
-n this case since you&#39;re specifying the flash node (a version of the dr=
-iver+config i haven&#39;t tested).</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex"><div lang=3D"ZH-CN"><div class=3D"gmail-m_=
--341926668711419608gmail-m_2984205525165170508WordSection1"><div><div><div>=
-<p class=3D"MsoNormal" style=3D"margin-left:36pt"><span lang=3D"EN-US" styl=
-e=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)"><u></u><u></u></s=
-pan></p>
+x"><div lang=3D"ZH-CN"><div class=3D"gmail-m_-7127236003342500103gmail-m_-3=
+41926668711419608gmail-m_2984205525165170508WordSection1"><div><div><div><p=
+ class=3D"MsoNormal" style=3D"margin-left:36pt"><span lang=3D"EN-US" style=
+=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)">=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:05:52 hr630 systemd[1]: Reached target P=
+hosphor-ipmi-flash verify the image contents.</span></p></div></div></div><=
+/div></div></blockquote><div><br></div><div>Good that you&#39;re no=C2=A0lo=
+nger seeing a problem with this.=C2=A0 I wonder if there&#39;s something di=
+fferent with the lpc_ctrl in this case since you&#39;re specifying the flas=
+h node (a version of the driver+config i haven&#39;t tested).</div><div>=C2=
+=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div lang=3D"ZH-=
+CN"><div class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gm=
+ail-m_2984205525165170508WordSection1"><div><div><div><p class=3D"MsoNormal=
+" style=3D"margin-left:36pt"><span lang=3D"EN-US" style=3D"font-family:Cali=
+bri,sans-serif;color:rgb(0,112,192)"><u></u><u></u></span></p>
 <p class=3D"MsoNormal" style=3D"margin-left:36pt"><span lang=3D"EN-US" styl=
 e=3D"font-family:Calibri,sans-serif;color:rgb(0,112,192)"><u></u>=C2=A0<u><=
 /u></span></p>
@@ -1035,9 +1072,9 @@ m 5pt 4.8pt">
 <p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
 ns-serif;color:black">Hi Patrick,</span><span lang=3D"EN-US"><u></u><u></u>=
 </span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397msolistparagraph" style=3D"mar=
-gin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397ms=
+olistparagraph" style=3D"margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">1=
 .</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
  New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
@@ -1046,16 +1083,16 @@ lack">I downloaded the latest version of phosphor-ipmi-flash to build host =
 tool with the SDK environment you provide, but encounter configure error as=
  below, could you help to take a look
  at it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<table class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508MsoNo=
-rmalTable" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"margin=
--left:21pt;border-collapse:collapse">
+<table class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmai=
+l-m_2984205525165170508MsoNormalTable" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0" style=3D"margin-left:21pt;border-collapse:collapse">
 <tbody>
 <tr>
 <td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:1pt solid w=
 indowtext;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
 ">Source code hash id</span></b><span lang=3D"EN-US"><u></u><u></u></span><=
 /p>
@@ -1063,18 +1100,18 @@ l-m-8411625341099404742msolistparagraph">
 <td width=3D"84" valign=3D"top" style=3D"width:124.95pt;border-top:1pt soli=
 d windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid wind=
 owtext;border-left:none;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
 ">Compile Status</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
 <td width=3D"245" valign=3D"top" style=3D"width:16cm;border-top:1pt solid w=
 indowtext;border-right:1pt solid windowtext;border-bottom:1pt solid windowt=
 ext;border-left:none;background:yellow;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
 ">Error message</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
@@ -1083,9 +1120,9 @@ l-m-8411625341099404742msolistparagraph">
 <td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
 olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
 ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">b=
 90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42</span><span lang=3D"EN-US"><u></u><=
 u></u></span></p>
@@ -1093,9 +1130,9 @@ u></u></span></p>
 <td width=3D"84" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
 der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
 dowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
 onfigure successful</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
@@ -1108,9 +1145,9 @@ text;padding:0cm 5.4pt">
 <td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
 olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
 ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">f=
 d182168d9d1c852b1047b9eccea56812b614586<br>
 <span style=3D"background:white">1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137<b=
@@ -1123,18 +1160,18 @@ c9792e75361c86da7f674976eacd03c761021d2f</span></span><span lang=3D"EN-US">=
 <td width=3D"84" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
 der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
 dowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
 onfigure failed</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
 <td width=3D"245" valign=3D"top" style=3D"width:16cm;border-top:none;border=
 -left:none;border-bottom:1pt solid windowtext;border-right:1pt solid window=
 text;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742msolistparagraph">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742msolistparagraph">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif">checking whet=
 her C++ compiler accepts -lgtest... yes<br>
 checking whether C++ compiler accepts -pthread... (cached) yes<br>
@@ -1154,11 +1191,11 @@ span lang=3D"EN-US"><u></u><u></u></span></p>
 </tr>
 </tbody>
 </table>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179" style=3D"margin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179" style=3D"margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">2=
 .</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
  New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
@@ -1172,29 +1209,29 @@ mage size is correct, but the image content seems to be incorrect as below,=
  could you give us some
 </span>clues to solve it if this is an issue? </span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<table class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508MsoNo=
-rmalTable" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"margin=
--left:18pt;border-collapse:collapse">
+<table class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmai=
+l-m_2984205525165170508MsoNormalTable" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0" style=3D"margin-left:18pt;border-collapse:collapse">
 <tbody>
 <tr>
 <td width=3D"356" valign=3D"top" style=3D"width:307.65pt;border:1pt solid w=
 indowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
 mage of host side</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
 <td width=3D"309" valign=3D"top" style=3D"width:318.95pt;border-top:1pt sol=
 id windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid win=
 dowtext;border-left:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
 mage of BMC side</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 </td>
@@ -1203,43 +1240,43 @@ mage of BMC side</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 <td width=3D"356" valign=3D"top" style=3D"width:307.65pt;border-right:1pt s=
 olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
 ndowtext;border-top:none;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">p=
 engms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
 </span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000000 00be ea00 f014 e59f f014 e59f f014 e59f</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000010 f014 e59f f014 e59f f014 e59f f014 e59f</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000020 0060 0000 00c0 0000 0120 0000 0180 0000</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000030 01e0 0000 0240 0000 02a0 0000 beef dead</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
@@ -1247,43 +1284,43 @@ u></u><u></u></span></p>
 <td width=3D"309" valign=3D"top" style=3D"width:318.95pt;border-top:none;bo=
 rder-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid wi=
 ndowtext;padding:0cm 5.4pt">
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">r=
 oot@hr630:~# hexdump -n 64 /run/initramfs/bmc-image</span><span lang=3D"EN-=
 US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
 000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4</span><span lang=3D"EN-US"><=
 u></u><u></u></span></p>
@@ -1291,11 +1328,11 @@ u></u><u></u></span></p>
 </tr>
 </tbody>
 </table>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397gmail-m1545270694092823127gmai=
-l-m-8411625341099404742gmail-m1788754371567513735gmail-m6436252274273416049=
-gmail-m-4871403681716629123gmail-m5865277644764564145gmail-m523251768382306=
-4206gmail-m-609179" style=3D"margin-left:24pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397gm=
+ail-m1545270694092823127gmail-m-8411625341099404742gmail-m17887543715675137=
+35gmail-m6436252274273416049gmail-m-4871403681716629123gmail-m5865277644764=
+564145gmail-m5232517683823064206gmail-m-609179" style=3D"margin-left:24pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">D=
 TS setting:<br>
 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fl=
@@ -1307,17 +1344,17 @@ ash_memory: region@98000000 {<br>
 t;; /* 1M */<br>
 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };=
 </span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397msolistparagraph" style=3D"mar=
-gin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397ms=
+olistparagraph" style=3D"margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">B=
 MC configuration setting:<br>
 EXTRA_OECONF +=3D &quot; --enable-reboot-update=C2=A0 --enable-static-layou=
 t --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update&qu=
 ot;</span><span lang=3D"EN-US"><u></u><u></u></span></p>
-<p class=3D"gmail-m_-341926668711419608gmail-m_2984205525165170508gmail-m-3=
-973244268204610114gmail-m-3943518016435637397msolistparagraph" style=3D"mar=
-gin-left:18pt">
+<p class=3D"gmail-m_-7127236003342500103gmail-m_-341926668711419608gmail-m_=
+2984205525165170508gmail-m-3973244268204610114gmail-m-3943518016435637397ms=
+olistparagraph" style=3D"margin-left:18pt">
 <span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">H=
 ost tool setting:<br>
 ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
@@ -1378,5 +1415,6 @@ Andrew</span><span lang=3D"EN-US"><u></u><u></u></span></p>
 
 </blockquote></div></div>
 </blockquote></div></div>
+</blockquote></div></div>
 
---0000000000000251c5058e0aceda--
+--000000000000e14070058e0aed53--
