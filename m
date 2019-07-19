@@ -2,39 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FA516D5BE
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jul 2019 22:27:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7F706D819
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jul 2019 03:01:56 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45qQfJ4Tv7zDqWH
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jul 2019 06:27:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45qXlP3YqdzDqbB
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jul 2019 11:01:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=arm.com
- (client-ip=217.140.110.172; helo=foss.arm.com;
- envelope-from=supreeth.venkatesh@arm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=arm.com
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
- by lists.ozlabs.org (Postfix) with ESMTP id 45qQdZ4PrzzDqTy
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jul 2019 06:26:23 +1000 (AEST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5D68C344;
- Thu, 18 Jul 2019 13:26:20 -0700 (PDT)
-Received: from supven01-thinkstation-p720.austin.arm.com
- (supven01-thinkstation-p720.austin.arm.com [10.118.30.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 564423F71F;
- Thu, 18 Jul 2019 13:26:20 -0700 (PDT)
-Message-ID: <7011303cd18ca5a722b66b18a8b726477587d78f.camel@arm.com>
-Subject: Remote Debug Feature Proposal for Arm (Aarch64) based  Servers
- using OpenBMC
-From: Supreeth Venkatesh <supreeth.venkatesh@arm.com>
-To: openbmc@lists.ozlabs.org
-Date: Thu, 18 Jul 2019 20:26:20 +0000
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="QRFtwhlw"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="xS56MCss"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45qXkc6VSXzDqYp
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Jul 2019 11:01:12 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id B51D922221;
+ Thu, 18 Jul 2019 21:01:08 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 18 Jul 2019 21:01:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=z1WpZIGWNE0XybgGqkuc+qWmbMztg/8
+ Re400KgBw4rE=; b=QRFtwhlwqFwtQ0MlRY6+wDLN5j3USBoq3UfsngtZ+bT+vV6
+ ouNzLHU3JD5Xki9+y/tQLS6IJL4yO8Zpd5MWZIEoywZHOk1r4cpo6xJB8G3tRUen
+ sfw7rVZ9QtgUfL+OzOZnIWi1PPyebPUhw5ejT78fTGx5KfYLYyuPZRkaqubPhXPq
+ mSEoXL+kS1ZpZTFZaWoAiDtl394x2eUnS9hC77FrTY83a5VHUguxVg6IAIo+DaTl
+ +NlT8kfnxQWelFeo+rL9sHNDY77AABStWVdcI97mVsXuDa+61eOaHHwpPZ43MgzH
+ xj/yoEDta4lBk6U0kWyw7Uz3zNAdRK9MBiasSpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=z1WpZI
+ GWNE0XybgGqkuc+qWmbMztg/8Re400KgBw4rE=; b=xS56MCsswbzkjSGv7mz9kJ
+ uc4p651rHR7eK0ueAHJnOBinI3dZOTWOdTCSTjhsspaAbNaas873Lw+S+zsCDf3E
+ bH/8pLuJhfYuV2Hn/6FX5iNdzRMkZzLvIz4iOwrMuZdPTCJxM0EQLaIG93akTXlc
+ bISukPNRjNrviVM74QKyMg+ZqH4f8dEDfGozX6QfbRiVEiEhUrHXREOnfo1R9ueT
+ LwPaO4LQGw4iyd4QeCp69BT0SQvbV4xpniCNIlPrXT3DrDtZGIBUSONoY6AHleas
+ tLSNh6SctezUAzZwSs0Fdw/MnIIf+MmxWWU9NxYxYtyi4nNbxrbjRwxB8KYhyiww
+ ==
+X-ME-Sender: <xms:UxYxXTmloihzo7ep15jBDnG-6n9NXojbzs_C_8NrI9TXf-_YbqSA1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrieeigdegvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:UxYxXW9IVWzZ7XShN8qsJl0X0uV8gRNLRNPucupMzs4gy6loeqpOKg>
+ <xmx:UxYxXZ6eWhTI5htwh1HLBQRNKVqT592ZNURYoDSe5k_iqG8rPgmung>
+ <xmx:UxYxXfoUIdbXGF3MF3nI8H4BxAkM1gU4HbMzjj7_n5TKL_rDWIGt5g>
+ <xmx:VBYxXZaMUPvHxBBwex1SDZf_ejFgOXEsE3i85EwMupLFHLJUdJPMVg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 191E8E03EA; Thu, 18 Jul 2019 21:01:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.6-736-gdfb8e44-fmstable-20190718v2
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Message-Id: <9071e58e-8eda-4358-a8dd-d72033eda5e2@www.fastmail.com>
+In-Reply-To: <20190718100229.27585-1-Ben_Pai@wistron.com>
+References: <20190718100229.27585-1-Ben_Pai@wistron.com>
+Date: Fri, 19 Jul 2019 10:31:18 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Ben Pai" <Ben_Pai@wistron.com>, openbmc@lists.ozlabs.org,
+ "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH] ARM: dts: aspeed: Add Mihawk BMC platform
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,84 +88,1022 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jeff.Booher-Kaeding@arm.com, Dong.Wei@arm.com, John.Horley@arm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-OpenBMCers,
+Hello Ben,
 
-Just a heads up...
+Thanks for the patch!
 
-Would anyone be interested in collaborating on Remote Debug for Arm
-(Aarch64) based  Servers?
+Generally we prefer sending the patch upstream first, then we can backport
+it to the OpenBMC kernel.
 
-A brief design document (may not be in OpenBMC design document format
-yet.)
+On Thu, 18 Jul 2019, at 19:38, Ben Pai wrote:
+> The Mihawk BMC is an ASPEED ast2500 based BMC that is part of an
+> OpenPower Power9 server.
+> 
+> This adds the device tree description for most upstream components. It
+> is a squashed commit from the OpenBMC kernel tree.
+> 
+> Signed-off-by: Ben Pai <Ben_Pai@wistron.com>
+> ---
+>  arch/arm/boot/dts/Makefile                  |   1 +
+>  arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts | 922 ++++++++++++++++++++
+>  2 files changed, 923 insertions(+)
+>  create mode 100755 arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index eb6de52c1936..262345544359 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1281,5 +1281,6 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>  	aspeed-bmc-opp-vesnin.dtb \
+>  	aspeed-bmc-opp-witherspoon.dtb \
+>  	aspeed-bmc-opp-zaius.dtb \
+> +	aspeed-bmc-opp-mihawk.dtb \
 
-The design is in flux at the moment and will appreciate your
-inputs/feedback.
+We try to keep these in alphabetical order. Looks like it should go between
+aspeed-bmc-opp-lanyang.dtb and aspeed-bmc-opp-palmetto.dtb.
 
-Problem Description
-Arm (Aarch64) SOC based servers need a remote source level debugging
-capability over JTAG.
+>  	aspeed-bmc-portwell-neptune.dtb \
+>  	aspeed-bmc-quanta-q71l.dtb
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts 
+> b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+> new file mode 100755
+> index 000000000000..cfa20e0b2939
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+> @@ -0,0 +1,922 @@
+> +/dts-v1/;
+> +
+> +#include "aspeed-g5.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +#include <dt-bindings/leds/leds-pca955x.h>
+> +
+> +/ {
+> +	model = "Mihawk BMC";
+> +	compatible = "ibm,mihawk-bmc", "aspeed,ast2500";
+> +
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +		bootargs = "console=ttyS4,115200 earlyprintk";
+> +	};
+> +
+> +	memory@80000000 {
+> +		reg = <0x80000000 0x20000000>; /* address and size of RAM(512MB) */
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		flash_memory: region@98000000 {
+> +			no-map;
+> +			reg = <0x98000000 0x04000000>; /* 64M */
+> +		};
+> +
+> +		gfx_memory: framebuffer {
+> +			size = <0x01000000>;
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +
+> +		video_engine_memory: jpegbuffer {
+> +			size = <0x02000000>;	/* 32MM */
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		air-water {
+> +			label = "air-water";
+> +			gpios = <&gpio ASPEED_GPIO(F, 6) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(F, 6)>;
+> +		};
+> +
+> +		checkstop {
+> +			label = "checkstop";
+> +			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(J, 2)>;
+> +		};
+> +
+> +		ps0-presence {
+> +			label = "ps0-presence";
+> +			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(Z, 2)>;
+> +		};
+> +
+> +		ps1-presence {
+> +			label = "ps1-presence";
+> +			gpios = <&gpio ASPEED_GPIO(Z, 0) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(Z, 0)>;
+> +		};
+> +		id-button {
+> +			label = "id-button";
+> +			gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(F, 1)>;
+> +		};
+> +	};
+> +
+> +	gpio-keys-polled {
+> +		compatible = "gpio-keys-polled";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		poll-interval = <1000>;
+> +
+> +		fan0-presence {
+> +			label = "fan0-presence";
+> +			gpios = <&pca9552 9 GPIO_ACTIVE_LOW>;
+> +			linux,code = <9>;
+> +		};
+> +
+> +		fan1-presence {
+> +			label = "fan1-presence";
+> +			gpios = <&pca9552 10 GPIO_ACTIVE_LOW>;
+> +			linux,code = <10>;
+> +		};
+> +
+> +		fan2-presence {
+> +			label = "fan2-presence";
+> +			gpios = <&pca9552 11 GPIO_ACTIVE_LOW>;
+> +			linux,code = <11>;
+> +		};
+> +
+> +		fan3-presence {
+> +			label = "fan3-presence";
+> +			gpios = <&pca9552 12 GPIO_ACTIVE_LOW>;
+> +			linux,code = <12>;
+> +		};
+> +
+> +		fan4-presence {
+> +			label = "fan4-presence";
+> +			gpios = <&pca9552 13 GPIO_ACTIVE_LOW>;
+> +			linux,code = <13>;
+> +		};
+> +
+> +		fan5-presence {
+> +			label = "fan5-presence";
+> +			gpios = <&pca9552 14 GPIO_ACTIVE_LOW>;
+> +			linux,code = <14>;
+> +		};
+> +	};
+> +
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		fault {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		power {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&gpio ASPEED_GPIO(AA, 1) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-id {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-g {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&gpio ASPEED_GPIO(AA, 4) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		rear-ok {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&gpio ASPEED_GPIO(Y, 0) GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan0 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 0 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan1 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 1 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan2 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 2 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan3 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 3 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan4 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 4 GPIO_ACTIVE_LOW>;
+> +		};
+> +
+> +		fan5 {
+> +			retain-state-shutdown;
+> +			default-state = "keep";
+> +			gpios = <&pca9552 5 GPIO_ACTIVE_LOW>;
+> +		};
+> +	};
+> +
+> +	fsi: gpio-fsi {
+> +		compatible = "fsi-master-gpio", "fsi-master";
+> +		#address-cells = <2>;
+> +		#size-cells = <0>;
+> +		no-gpio-delays;
+> +
+> +		clock-gpios = <&gpio ASPEED_GPIO(E, 6) GPIO_ACTIVE_HIGH>;
+> +		data-gpios = <&gpio ASPEED_GPIO(E, 7) GPIO_ACTIVE_HIGH>;
+> +		mux-gpios = <&gpio ASPEED_GPIO(E, 5) GPIO_ACTIVE_HIGH>;
+> +		enable-gpios = <&gpio ASPEED_GPIO(D, 0) GPIO_ACTIVE_HIGH>;
+> +		trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
+> +	};
+> +	iio-hwmon-12v {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 0>;
+> +	};
+> +	
+> +	iio-hwmon-5v {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 1>;
+> +	};
+> +	
+> +	iio-hwmon-3v {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 2>;
+> +	};
+> +		
+> +	iio-hwmon-vdd0 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 3>;
+> +	};
+> +	
+> +	iio-hwmon-vdd1 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 4>;
+> +	};
+> +	
+> +	iio-hwmon-vcs0 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 5>;
+> +	};
+> +	
+> +	iio-hwmon-vcs1 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 6>;
+> +	};
+> +
+> +	iio-hwmon-vdn0 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 7>;
+> +	};
+> +	
+> +	iio-hwmon-vdn1 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 8>;
+> +	};
+> +	
+> +	iio-hwmon-vio0 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 9>;
+> +	};
+> +	
+> +	iio-hwmon-vio1 {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 10>;
+> +	};
+> +	
+> +	iio-hwmon-vddra {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 11>;
+> +	};
+> +	
+> +	iio-hwmon-vddrb {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 13>;
+> +	};
+> +	
+> +	iio-hwmon-vddrc {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 14>;
+> +	};
+> +	
+> +	iio-hwmon-vddrd {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 15>;
+> +	};
+> +	
+> +	iio-hwmon-battery {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc 12>;
+> +	};
+> +};
+> +
+> +&pwm_tacho {
+> +	status = "okay";
+> +	/*compatible = "aspeed,ast2500-pwm-tacho";
+> +	#address-cells = <1>;
+> +	#size-cells = <1>;
+> +	reg = <0x1e786000 0x1000>;
+> +	clocks = <&pwm_tacho_fixed_clk>;*/
 
-There are several proprietary solutions. However, standardization is
-key to ensure that Arm Ecosystem does not get fragmented by point
-solutions that plague the industry today.
+Please remove the commented-out properties.
 
-Background and References
-What is Remote Debug?
-Server Remote Debug is the act of gaining visibility of the hardware
-and software behaviors of an SoC, using a debugger which is not
-directly connected to the Server SoC.
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
+> +		&pinctrl_pwm2_default &pinctrl_pwm3_default
+> +		&pinctrl_pwm4_default &pinctrl_pwm5_default>;
+> +
+> +	fan@0 {
+> +		reg = <0x00>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
+> +	};
+> +
+> +	fan@1 {
+> +		reg = <0x01>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x01>;
+> +	};
+> +
+> +	fan@2 {
+> +		reg = <0x02>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x02>;
+> +	};
+> +
+> +	fan@3 {
+> +		reg = <0x03>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x03>;
+> +	};
+> +
+> +	fan@4 {
+> +		reg = <0x04>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x04>;
+> +	};
+> +
+> +	fan@5 {
+> +		reg = <0x05>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x05>;
+> +	};
+> +
+> +	fan@6 {
+> +		reg = <0x00>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x06>;
+> +	};
+> +
+> +	fan@7 {
+> +		reg = <0x01>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x07>;
+> +	};
+> +
+> +	fan@8 {
+> +		reg = <0x02>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x08>;
+> +	};
+> +
+> +	fan@9 {
+> +		reg = <0x03>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x09>;
+> +	};
+> +
+> +	fan@10 {
+> +		reg = <0x04>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x0a>;
+> +	};
+> +
+> +	fan@11 {
+> +		reg = <0x05>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x0b>;
+> +	};
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +	flash@0 {
+> +		status = "okay";
+> +		label = "bmc";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <50000000>;
+> +		partitions {
+> +			#address-cells = < 1 >;
+> +			#size-cells = < 1 >;
+> +			compatible = "fixed-partitions";
+> +			u-boot@0 {
+> +				reg = < 0 0x60000 >;
+> +				label = "u-boot";
+> +			};
+> +			u-boot-env@60000 {
+> +				reg = < 0x60000 0x20000 >;
+> +				label = "u-boot-env";
+> +			};
+> +			obmc-ubi@80000 {
+> +				reg = < 0x80000 0x1F80000 >;
+> +				label = "obmc-ubi";
+> +			};
+> +		};
+> +	};
+> +	flash@1 {
+> +		status = "okay";
+> +		label = "alt-bmc";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <50000000>;
+> +		partitions {
+> +			#address-cells = < 1 >;
+> +			#size-cells = < 1 >;
+> +			compatible = "fixed-partitions";
+> +			u-boot@0 {
+> +				reg = < 0 0x60000 >;
+> +				label = "alt-u-boot";
+> +			};
+> +			u-boot-env@60000 {
+> +				reg = < 0x60000 0x20000 >;
+> +				label = "alt-u-boot-env";
+> +			};
+> +			obmc-ubi@80000 {
+> +				reg = < 0x80000 0x1F80000 >;
+> +				label = "alt-obmc-ubi";
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&spi1 {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default>;
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		label = "pnor";
+> +		m25p,fast-read;
+> +		spi-max-frequency = <100000000>;
+> +	};
+> +};
+> +
+> +&lpc_ctrl {
+> +	status = "okay";
+> +	memory-region = <&flash_memory>;
+> +	flash = <&spi1>;
+> +};
+> +
+> +&uart1 {
+> +	/* Rear RS-232 connector */
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_txd1_default
+> +			&pinctrl_rxd1_default
+> +			&pinctrl_nrts1_default
+> +			&pinctrl_ndtr1_default
+> +			&pinctrl_ndsr1_default
+> +			&pinctrl_ncts1_default
+> +			&pinctrl_ndcd1_default
+> +			&pinctrl_nri1_default>;
+> +};
+> +
+> +&uart2 {
+> +	/* APSS */
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
+> +};
+> +
+> +&uart5 {
+> +	status = "okay";
+> +};
+> +
+> +&mac0 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rmii1_default>;
+> +	use-ncsi;
+> +};
+> +
+> +&mac1 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
+> +};
+> +
+> +&i2c0 {
+> +	status = "disabled";
+> +};
+> +
+> +&i2c1 {
+> +	status = "disabled";
+> +};
+> +
+> +&i2c2 {
+> +	status = "okay";
+> +
+> +	/* SAMTEC P0 */
+> +	/* SAMTEC P1 */
+> +	
+> +};
+> +
+> +&i2c3 {
+> +	status = "okay";
+> +
+> +	/* APSS */
+> +	/* CPLD */
+> +
+> +	/* PCA9516 (repeater) ->
+> +	 *    CLK Buffer 9FGS9092
+> +	 *    CLK Buffer 9DBL0651BKILFT
+> +	 *    CLK Buffer 9DBL0651BKILFT
+> +	 *    Power Supply 0
+> +	 *    Power Supply 1
+> +	 *    PCA 9552 LED
+> +	 */
+> +	 
+> +	power-supply@58 {
+> +		compatible = "ibm,cffps1";
+> +		reg = <0x58>;
+> +	};
+> +
+> +	power-supply@5b {
+> +		compatible = "ibm,cffps1";
+> +		reg = <0x5b>;
+> +	};
+> +
+> +	pca9552: pca9552@60 {
+> +		compatible = "nxp,pca9552";
+> +		reg = <0x60>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		gpio@0 {
+> +			reg = <0>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@1 {
+> +			reg = <1>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@2 {
+> +			reg = <2>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@3 {
+> +			reg = <3>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@4 {
+> +			reg = <4>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@5 {
+> +			reg = <5>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@6 {
+> +			reg = <6>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@7 {
+> +			reg = <7>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@8 {
+> +			reg = <8>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@9 {
+> +			reg = <9>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@10 {
+> +			reg = <10>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@11 {
+> +			reg = <11>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@12 {
+> +			reg = <12>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@13 {
+> +			reg = <13>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@14 {
+> +			reg = <14>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +		gpio@15 {
+> +			reg = <15>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +	};
+> +
+> +};
+> +
+> +&i2c4 {
+> +	status = "okay";
+> +
+> +	/* CP0 VDD & VCS : IR35221 */
+> +	/* CP0 VDN : IR35221 */
+> +	/* CP0 VIO : IR38064 */
+> +        /* CP0 VDDR : PXM1330 */
+> +
+> +	ir35221@70 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x70>;
+> +	};
+> +
+> +	ir35221@72 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x72>;
+> +	};
+> +
+> +};
+> +
+> +&i2c5 {
+> +	status = "okay";
+> +	
+> +	/* CP0 VDD & VCS : IR35221 */
+> +	/* CP0 VDN : IR35221 */
+> +	/* CP0 VIO : IR38064 */
+> +        /* CP0 VDDR : PXM1330 */
+> +
+> +	ir35221@70 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x70>;
+> +	};
+> +
+> +	ir35221@72 {
+> +		compatible = "infineon,ir35221";
+> +		reg = <0x72>;
+> +	};
+> +	
+> +};
+> +
+> +&i2c6 {
+> +	status = "okay";
+> +	
+> +	/* pca9548 -> NVMe1 to 8 */
+> +	
+> +	pca9548@70 {
+> +		compatible = "nxp,pca9548";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +	};
+> +	
+> +};
+> +
+> +&i2c7 {
+> +	status = "okay";
+> +	
+> +	/* pca9548 -> NVMe9 to 16 */
+> +	
+> +	pca9548@70 {
+> +		compatible = "nxp,pca9548";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +	};
+> +	
+> +};
+> +
+> +&i2c8 {
+> +	status = "okay";
+> +
+> +	/* FSI CLK/DAT */
 
-Requirements
-Arm (Aarch64) SOC based server interface requirements
-1. Must have JTAG port.
-2. Must have Arm Debug Access Port (DAP)
-3. Authentication to allow debug access.
+What's this comment about?
 
-BMC Stack
-1. Integration of OpenOCD stack.
-2. Authentication of user (debugger) to BMC.
-3. Re-use/Leverage existing BMC JTAG driver. (if any)
-4. Framework for "other" traffic over JTAG and Arm DAP (e.g. for
-authentication on SOC)
-5. Leverage/Define protocols for communicating between the debugger and
-the BMC.
-6. Define mechanisms for ensuring only suitable debuggers can access
-the SoC.
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +	};
+> +};
+> +
+> +&i2c9 {
+> +	status = "okay";
+> +	
+> +	/* pca9545 Riser -> 
+> +	* 	PCIe x8  Slot3 
+> +	* 	PCIe x16 slot4 
+> +	* 	PCIe x8  slot5 
+> +	* 	I2C BMC RISER PCA9554
+> +	* 	BMC SCL/SDA PCA9554 
+> +	* 	PCA9554
+> +	*/
+> +	
+> +	/* pca9545 -> 
+> +	* 	PCIe x16 Slot1 
+> +	* 	PCIe x8  slot2 
+> +	* 	PEX8748 
+> +	*/
+> +
+> +	pca9545riser@70 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +
+> +		/*interrupt-parent = <&ipic>;*/
+> +		/*interrupts = <17 IRQ_TYPE_LEVEL_LOW>;*/
 
-Proposed Design
-Proposal is to integrate OpenOCD within OpenBMC stack.
-OpenOCD is a open source on-chip debuging solution for JTAG connected
-processors. It enables sourcelevel debugging with GNU gdb. It can also
-intergrate with and GDB aware IDE, such as eclipse.
+Please drop these properties if they're unnecessary.
 
-"OpenOCD provides debugging support with a
-layered architecture of JTAG interface and TAP support including:
-- (X)SVF playback to faciliate automated boundary scan and FPGA/CPLD
-  programming;
-- debug target support (e.g. ARM, MIPS): single-stepping,
-  breakpoints/watchpoints, gprof profiling, etc;
-- flash chip drivers (e.g. CFI, NAND, internal flash);
-- embedded TCL interpreter for easy scripting.
+> +		i2c-mux-idle-disconnect;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +	};
+> +	
+> +	pca9545@71 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x71>;
+> +
+> +		/*interrupt-parent = <&ipic>;*/
+> +		/*interrupts = <17 IRQ_TYPE_LEVEL_LOW>;*/
 
-Several network interfaces are available for interacting with OpenOCD:
-telnet, TCL, and GDB. The GDB server enables OpenOCD to function as a
-"remote target" for source-level debugging of embedded systems using
-the GNU GDB program (and the others who talk GDB protocol, e.g. IDA
-Pro)."
+Again here.
 
-Alternatives Considered
-RFC
+> +		i2c-mux-idle-disconnect;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;	
+> +	};
+> +};
+> +
+> +&i2c10 {
+> +	status = "okay";
+> +	
+> +	/* pca9545 Riser -> 
+> +	* 	PCIe x8  Slot8 
+> +	* 	PCIe x16 slot9 
+> +	* 	PCIe x8  slot10 
+> +	* 	I2C BMC RISER PCA9554
+> +	* 	BMC SCL/SDA PCA9554 
+> +	* 	PCA9554
+> +	*/
+> +	
+> +	/* pca9545 -> 
+> +	* 	PCIe x16 Slot1 
+> +	* 	PCIe x8  slot2 
+> +	* 	PEX8748 
+> +	*/
+> +	
+> +	pca9545riser@70 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +
+> +		/*interrupt-parent = <&ipic>;*/
+> +		/*interrupts = <17 IRQ_TYPE_LEVEL_LOW>;*/
 
-Impacts
-TBD
+Again here.
 
-Testing
-TBD
+> +		i2c-mux-idle-disconnect;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +	};
+> +	
+> +	pca9545@71 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x71>;
+> +
+> +		/*interrupt-parent = <&ipic>;*/
+> +		/*interrupts = <17 IRQ_TYPE_LEVEL_LOW>;*/
 
-Thanks,
-Supreeth & Jeff
+Again here.
 
+> +		i2c-mux-idle-disconnect;
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;	
+> +	};
+> +};
+> +
+> +&i2c11 {
+> +	status = "okay";
+> +	
+> +	/* TPM */
+> +	/* RTC RX8900CE */
+> +	/* FPGA for power sequence */
+> +	/* TMP275A */
+> +	/* TMP275A */
+> +	/* EMC1462 */
+> +
+> +	tpm@57 {
+> +		compatible = "infineon,slb9645tt";
+> +		reg = <0x57>;
+> +	};
+> +	
+> +	rtc@32 {
+> +		compatible = "epson,rx8900";
+> +		reg = <0x32>;
+> +	};
+> +	
+> +	tmp275@48 {
+> +		compatible = "ti,tmp275";
+> +		reg = <0x48>;
+> +	};
+> +	
+> +	tmp275@49 {
+> +		compatible = "ti,tmp275";
+> +		reg = <0x49>;
+> +	};
+> +
+> +    /* chip emc1462 use emc1403 driver */
+> +    emc1403@4c {
+> +        compatible = "smsc,emc1403";
+> +        reg = <0x4c>;
+> +    };
+> +
+> +};
+> +
+> +&i2c12 {
+> +	status = "okay";
+> +
+> +	/* pca9545 ->
+> +	*	SAS BP1
+> +	*	SAS BP2
+> +	*	NVMe BP
+> +	*	M.2 riser
+> +	*/
+> +	
+> +	pca9545@70 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +
+> +		/*interrupt-parent = <&ipic>;*/
+> +		/*interrupts = <17 IRQ_TYPE_LEVEL_LOW>;*/
+
+Drop these.
+
+> +		interrupt-controller;
+> +		#interrupt-cells = <2>;
+> +		
+> +		i2c@0 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0>;
+> +			
+> +			eeprom@50 {
+> +				compatible = "atmel,24c64";
+> +				reg = <0x50>;
+> +			};
+> +		};
+> +		
+> +		i2c@1 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <1>;
+> +			
+> +			eeprom@50 {
+> +				compatible = "atmel,24c64";
+> +				reg = <0x50>;
+> +			};
+> +		};
+> +		
+> +		i2c@2 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <2>;
+> +			
+> +			eeprom@50 {
+> +				compatible = "atmel,24c64";
+> +				reg = <0x50>;
+> +			};
+> +		};
+> +		
+> +		i2c@3 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <3>;
+> +			
+> +			tmp275@48 {
+> +				compatible = "ti,tmp275";
+> +				reg = <0x48>;
+> +			};
+> +		};
+> +		
+> +	};
+> +	
+> +};
+> +
+> +&i2c13 {
+> +	status = "okay";
+> +	
+> +	/* pca9548 ->
+> +	*	NVMe BP
+> +	*	NVMe HDD17 to 24
+> +	*/
+> +	
+> +	pca9548@70 {
+> +		compatible = "nxp,pca9548";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +	};	
+> +};
+> +
+> +&vuart {
+> +	status = "okay";
+> +};
+> +
+> +&gfx {
+> +	status = "okay";
+> +	memory-region = <&gfx_memory>;
+> +};
+> +
+> +&pinctrl {
+> +	aspeed,external-nodes = <&gfx &lhc>;
+> +};
+> +
+> +&adc {
+> +	status = "okay";
+
+Please add the pinctrl properties to mux each of the ADC lines that you
+use. Doing so will a) ensure that the mux state is correct (ADC mode is
+the default for these pins, but better to be explicit), and b) help catch
+bugs as the pinctrl subsystem enforces exclusive access for the pins
+(e.g. will stop userspace accidentally exporting them as GPIOs).
+
+> +};
+> +
+> +&wdt1 {
+> +	aspeed,reset-type = "none";
+> +	aspeed,external-signal;
+> +	aspeed,ext-push-pull;
+> +	aspeed,ext-active-high;
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_wdtrst1_default>;
+> +};
+> +
+> +&wdt2 {
+> +	aspeed,alt-boot;
+> +};
+> +
+> +&ibt {
+> +	status = "okay";
+> +};
+> +
+> +&vhub {
+> +	status = "okay";
+> +};
+> +
+> +&video {
+> +	status = "okay";
+> +	memory-region = <&video_engine_memory>;
+> +};
+> +
+> +#include "ibm-power9-dual.dtsi"
+> \ No newline at end of file
+
+Please add the newline to avoid the warning.
+
+> -- 
+> 2.17.1
+> 
+> 
+> ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+> This email contains confidential or legally privileged information and 
+> is for the sole use of its intended recipient. 
+> Any unauthorized review, use, copying or distribution of this email or 
+> the content of this email is strictly prohibited.
+> If you are not the intended recipient, you may reply to the sender and 
+> should delete this e-mail immediately.
+> ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+>
+
+Please don't append these footers to mailing list posts.
+
+Cheers,
+
+Andrew
