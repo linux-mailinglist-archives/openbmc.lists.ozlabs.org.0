@@ -1,46 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD098709F4
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 21:42:52 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83919708EC
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 20:52:32 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45srMK1D5gzDqVx
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 04:52:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ssTQ0hbrzDqQW
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 05:42:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=2106111e7f=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="cnxkTAyK"; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45srLZ4fJZzDqK5
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 04:51:49 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 6522A6DE60;
- Mon, 22 Jul 2019 14:51:42 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: Multi-node support
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <CAH2KKeb8akcV6D_0x3612BeEepRpesTzLiZAk=ASCJwRv-_M9A@mail.gmail.com>
-Date: Mon, 22 Jul 2019 14:51:42 -0400
-Message-Id: <5854893E-06B6-4EBA-818D-4AE2EB7F61EF@fuzziesquirrel.com>
-References: <CAH2KKebkJUxfEQbjcySkGWEteWjCem8EDKwVahAPnw-0-DfPJw@mail.gmail.com>
- <20190722172656.hkjfluvusnnhtzkx@thinkpad>
- <CAH2KKeb8akcV6D_0x3612BeEepRpesTzLiZAk=ASCJwRv-_M9A@mail.gmail.com>
-To: Thaj <tajudheenk@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ssR90qfNzDqPR
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 05:40:45 +1000 (AEST)
+Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x6MJegpp019407
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 12:40:42 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-type; s=facebook;
+ bh=1NSQ3GlOcXUrCSgPzKEGZL0QZp3rRab0Nvo0ylv224U=;
+ b=cnxkTAyKXPanJ1kocii4LVRNOMIzUdTow+eMCFk0zfzzK2r4h9xbCQPiWRZUFTOEQUfh
+ IIKgd14hr1aIDsOEVjyRWV4aikmSuYGFCo41ePL1oRfdFl8j0LSVJQJfV3B5DXeiEICH
+ bsEH2hNaR2XTcVv/FEKfS03P2Sm/R5lQK5A= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2twg6a8vac-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 12:40:42 -0700
+Received: from mx-out.facebook.com (2620:10d:c081:10::13) by
+ mail.thefacebook.com (2620:10d:c081:35::126) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.1.1713.5;
+ Mon, 22 Jul 2019 12:40:41 -0700
+Received: by devvm4117.prn2.facebook.com (Postfix, from userid 167582)
+ id 653DE1150EA86; Mon, 22 Jul 2019 12:25:23 -0700 (PDT)
+Smtp-Origin-Hostprefix: devvm
+From: Vijay Khemka <vijaykhemka@fb.com>
+Smtp-Origin-Hostname: devvm4117.prn2.facebook.com
+To: Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>, Rob
+ Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Joel
+ Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ <linux-hwmon@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>
+Smtp-Origin-Cluster: prn2c23
+Subject: [PATCH 1/2] ARM: dts: aspeed: tiogapass: Add VR devices
+Date: Mon, 22 Jul 2019 12:24:47 -0700
+Message-ID: <20190722192451.1947348-1-vijaykhemka@fb.com>
+X-Mailer: git-send-email 2.17.1
+X-FB-Internal: Safe
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-07-22_14:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=968 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1907220215
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,24 +82,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ vijaykhemka@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 2:20 PM, Thaj <tajudheenk@gmail.com> wrote:
+Addes Voltage regulators Infineon pxe1610 devices to Facebook
+tiogapass platform.
 
-> In this case we may need MC to MC communication interface (Master/Slave=
-) =20
-> for BMC management.
+Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
+---
+ .../dts/aspeed-bmc-facebook-tiogapass.dts     | 36 +++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-There is IPMB support if you wanted to use IPMI for this:
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
+index c4521eda787c..b7783833a58c 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
+@@ -144,6 +144,42 @@
+ &i2c5 {
+ 	status = "okay";
+ 	// CPU Voltage regulators
++	vr@48 {
++		compatible = "infineon,pxe1610";
++		reg = <0x48>;
++	};
++	vr@4a {
++		compatible = "infineon,pxe1610";
++		reg = <0x4a>;
++	};
++	vr@50 {
++		compatible = "infineon,pxe1610";
++		reg = <0x50>;
++	};
++	vr@52 {
++		compatible = "infineon,pxe1610";
++		reg = <0x52>;
++	};
++	vr@58 {
++		compatible = "infineon,pxe1610";
++		reg = <0x58>;
++	};
++	vr@5a {
++		compatible = "infineon,pxe1610";
++		reg = <0x5a>;
++	};
++	vr@68 {
++		compatible = "infineon,pxe1610";
++		reg = <0x68>;
++	};
++	vr@70 {
++		compatible = "infineon,pxe1610";
++		reg = <0x70>;
++	};
++	vr@72 {
++		compatible = "infineon,pxe1610";
++		reg = <0x72>;
++	};
+ };
+ 
+ &i2c6 {
+-- 
+2.17.1
 
-https://github.com/openbmc/ipmbbridge
-
-MC <-> MC in OpenBMC is something IBM will devote resources to eventually=
-.  =20
-But not in the near future.  We=E2=80=99d probably be looking at somethin=
-g other =20
-than IPMI/IPMB for that.  How do you think it should work?
-
-thx - brad
