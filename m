@@ -1,63 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5823470C91
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 00:29:24 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12E9770C8A
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 00:27:37 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45sx7T6VYlzDqX2
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 08:27:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45sx9Y5M0NzDqWm
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 08:29:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::42b; helo=mail-pf1-x42b.google.com;
+ (client-ip=2607:f8b0:4864:20::52e; helo=mail-pg1-x52e.google.com;
  envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="tg4uPLcw"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="T/D1WU7I"; 
  dkim-atps=neutral
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com
- [IPv6:2607:f8b0:4864:20::42b])
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com
+ [IPv6:2607:f8b0:4864:20::52e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45sx6z6gRgzDqPg
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 08:27:07 +1000 (AEST)
-Received: by mail-pf1-x42b.google.com with SMTP id t16so18024656pfe.11
- for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 15:27:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45sx911MDLzDqPg
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 08:28:52 +1000 (AEST)
+Received: by mail-pg1-x52e.google.com with SMTP id l21so18335721pgm.3
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 15:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to:cc;
- bh=YjwjEgBtV+WIxMzS0qIWQAD+hhX5ge49pppqVj3tcjY=;
- b=tg4uPLcwCjQNixiEFCPSnsn1HYC87DUdpkJpyo/bXRQfq/aww/GgBtkiB8E7Qq1g5j
- Af7PV31RHuKOJDz3L1wkMnJFCnVkhFhJsFkDDruuSeISVUjwBWu77V2wvNONzo5z3uiE
- 0psSv62s6sssUaiibLSdhab/xU2lU3TRosIuO4abyuKVAiPPuonzL3GRG99JUeQTWOQa
- AdboRvgQnQVOqQsl26sYnYm2iEdKvzaMEEntE89VVI5apLJ7r7MMGOzM2GwAH83WIUXu
- sWsH5VTNcidwXaCdoJApImc0oehS42FmixI/+XO/ngsiKthn8zhynVTatUdwtkVlNY+C
- mMVw==
+ bh=fYEfR3ReHJPZKhAkttp1NroLba1lgRRrVCFrvjrHH84=;
+ b=T/D1WU7IZlTlmd0EVfD8iUA74jvS81JR6wIEM1GOgMd662w7OFa9kAR2S5aXciXSHL
+ b6Raxv26k3CbDTsKeouGfPZ61bB23IrSCZwjkmD9/kRmuNN5XfUPeOmaxKzfXfQZCY5f
+ z27UrXysJYHmY7hqofdrciIrIzYo5u3tKFfIci4wv1BbdpFZRG2yFhezJZdXTFAGJNF7
+ +zHjq0AdiHMGh4J74ErTQ5VWezfDGOt9DmcSk//QzzIr1eU5dqSK2139kYyV9zG0FKR4
+ DbS5eh+lrhkTgSzLuvur8pj9cVqg3Mkr8ZdWq+Ym+7A/xOue6dXBZW7mDmnuGQHH6Duz
+ /f6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=YjwjEgBtV+WIxMzS0qIWQAD+hhX5ge49pppqVj3tcjY=;
- b=tVy1t4aFkYKcAUEDGGvJsUjnVwRl3JKVUgO+x33dHw25YDoCGIakX6F1BUsbvIBRzJ
- jIIKtzv90dy/FHVhUyUH7zCru/LxWicx2zqXF13uLOHVPy5s9RCeBe1GT9uPprAB1nFd
- E/sU8FUVnDEKG9+IJsilyl6yFHIBBLpMexTBNtgxYOZEt8GNKvLBMViS37xUACG5qGtv
- 8UuAyPY+79MtlQ+GGv9R4vfKzvzbdyAbDxA3ggzPgecRyl5fJbbQ1mlQQzHXU3KCRfOV
- uaAIvB3T0Lk9UQn5+PF5oSm0P1oiSEJX+djOtBSZrTsFBfifHz/horShuoNlMQ4q3uHG
- KuIw==
-X-Gm-Message-State: APjAAAX0QYABNncyM4u7M7FteZGkcSJ+i43ghViQAb5EI3FbmQj7GQ1G
- jeUuYNZqKXCexpBelEOb2y7vWAQV8wjyxA9YlSlbMQ==
-X-Google-Smtp-Source: APXvYqw3vS6i/EmRekjK1oNA5qJkfclmY+8xzyoZgLZTZhbKdKfMM1T7zktWSs1EUonU5FAnM7LqdzqRns8ijRW+qME=
-X-Received: by 2002:aa7:9f1c:: with SMTP id g28mr2428401pfr.81.1563834424265; 
- Mon, 22 Jul 2019 15:27:04 -0700 (PDT)
+ bh=fYEfR3ReHJPZKhAkttp1NroLba1lgRRrVCFrvjrHH84=;
+ b=su/jWQnhbJ8EJRGyoLSnTK51DUpMtuaVYTzPrnJ7CbaNA9XveeCXRY+4zAepcKnghJ
+ STY5PstbnlwOblhoxYN3IFV0/EPQ+imE2PQPRX4ieCxBfLT9EF5R3pPF5TkyV1qRkfEP
+ KFhYgVD/F2HrIK2TYBIavj81Ejb94bN1MjpBvGdq6SLv74MvEJHUz/w9RUdxmHHka04q
+ s0zclL+WZ2elG7nXFjXtuMR/k5aRzyyZdiP4uwFO5sB2KUJ8KPXK3EmnGcn2RbxcwFFO
+ B2YJiBZs1w0ctGauLt1ZkaHJNxzoml+ju45qP/J1DR/Gd7bBLaqNbKzNoEUPU/uOzYsb
+ E/Yw==
+X-Gm-Message-State: APjAAAWQ1JODuSFhIoo7KTh9Qr+M8+y8CXWgLwqeYbR2iw/o7PPads1r
+ 6QwfIo/J5ucKyXDVw6is/K80/yDMC/0kPy2v1dpvHw==
+X-Google-Smtp-Source: APXvYqwgPCb0LBuqhPobcUzgJ+O9Ip5yBXLWS3FqbDoohOjQSBAIzTThhb159pJzGAZ+n/+I6aaIcSMPhPytU00iL0c=
+X-Received: by 2002:a63:2784:: with SMTP id n126mr71084748pgn.92.1563834529360; 
+ Mon, 22 Jul 2019 15:28:49 -0700 (PDT)
 MIME-Version: 1.0
 From: Patrick Venture <venture@google.com>
-Date: Mon, 22 Jul 2019 15:26:53 -0700
-Message-ID: <CAO=notxxEHzBeCew3OaGs9E=vvzjf9q2XFD1E0S9aRqxzSSHzQ@mail.gmail.com>
-Subject: dbus-sensors + phosphor-hwmon
+Date: Mon, 22 Jul 2019 15:28:38 -0700
+Message-ID: <CAO=notzV0DFQ80fPP=z96RxK7WBwUYZzEG__Qdo7-mAzJRjwWg@mail.gmail.com>
+Subject: Dynamic Configuration of phosphor-host-ipmid sensors
 To: James Feist <james.feist@linux.intel.com>, "Tanous,
- Ed" <ed.tanous@intel.com>
+ Ed" <ed.tanous@intel.com>, 
+ tomjoseph@in.ibm.com, Vernon Mauery <vernon.mauery@linux.intel.com>, 
+ Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,13 +77,12 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I haven't tested yet, but I have a device-tree with a lot of ~40
-hard-coded sensors on it, and then the other sensors will be detected
-with entity-manager (once that's set up).
+I was curious if anyone has patches to do either:
+1) configure phosphor-host-ipmid's sensor list with json; or
+2) configure phosphor-host-ipmid's sensor list with entity-manager,
+s.t. it builds the SDRs from the Configuration namespace?
 
-In this case, will entity-manager populate the dbus configuration with
-those in the device-tree initially making them available to
-dbus-sensors? (or will we or should we, also configure phosphor-hwmon
-for those sensors?)
+Is there a preference along this path because we're going to need to
+move to dynamically configured sensors for phosphor-host-ipmid?
 
 Patrick
