@@ -2,66 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29EED70A97
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 22:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 147CC70AC0
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 22:36:02 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45stNm5LQ9zDqWv
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 06:23:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45stfl2m7FzDqW3
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 06:35:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=lixom.net
- (client-ip=2607:f8b0:4864:20::d41; helo=mail-io1-xd41.google.com;
- envelope-from=olof@lixom.net; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::22c; helo=mail-oi1-x22c.google.com;
+ envelope-from=bjwyman@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=lixom.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=lixom-net.20150623.gappssmtp.com
- header.i=@lixom-net.20150623.gappssmtp.com header.b="A3UBj/Oy"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="hinnasQQ"; 
  dkim-atps=neutral
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com
- [IPv6:2607:f8b0:4864:20::d41])
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [IPv6:2607:f8b0:4864:20::22c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45stN7355pzDqW2
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 06:23:18 +1000 (AEST)
-Received: by mail-io1-xd41.google.com with SMTP id m24so76922664ioo.2
- for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 13:23:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lixom-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Xh7VZmkbjwrBgayZ7b6xtD8WVEMS58rBjXLVPr4+QKE=;
- b=A3UBj/OyBJI/LYvN4Fbj2VbsI0NL07wC8qJGMNrKr9ob9nG3Ra36iFQwW3TU33Blux
- j3uAhD/lAp75l/WK7ILT8TM/o8BVuSH0w98G86pJT77QPCE1syd2o4Kg3zfHdlLIaHAZ
- /TN/V7KnoWIerNT6AaF+4n7LQHjxnsfpwnn8AGC6hiMLvgqwpVfornpWuvQwZ11zTriN
- CVR5fBmmoVyydoVA0SSSmzR2iANHprSMQnwwX4S+7wgUyT/FDAZRLLSWoIPMufTCmpza
- 12n6HyAQUN27O8cHaWfYxK0KZS/5KrbT9p9cjTTF2IGxSL/Sj6bf4PHgDekr8i8Y0krI
- aQkQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45stdt3d5XzDqVZ
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 06:35:10 +1000 (AEST)
+Received: by mail-oi1-x22c.google.com with SMTP id u15so30630849oiv.0
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 13:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Obvs+pdx3LMIqRWIcWOj+67kGq+v9Qey/EWAuHqAhg0=;
+ b=hinnasQQIkq56nn9NWlahF841e4qQpGb5SPr4aAtPgHg8VkDS7p/1xMFFD21pZbWjX
+ Mvl5szF/p9bVJ2Pba3jTQEtKJpkBTpHJZVb72J/Tvu+PupAkob5hkkI3vSP+xZcPfx5S
+ Ug06kM6qId2gUJsh79U2eedYCWWnVd3mu2wWNwT/tUy3H0zkys0Hn9jAG/Hn+93SSJHR
+ H1jyjDYnbRx1RS1cjQfyOaHjuCUHwA7xHUytImSZpYmOx+yYb7/T0d7k3iMmO2BJFg2b
+ xmjaMuFD+rtxmJj7s3cSHCVyTUc61smzxOptpCLGb9Bona7b7OiRnb3fjZnAZK/pcrVU
+ fdsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Xh7VZmkbjwrBgayZ7b6xtD8WVEMS58rBjXLVPr4+QKE=;
- b=Rw3aZv+WeAEmbm7HgUoHnlCnLq21QTVxE3wjs4cFkGiR5+C9QPt3eVqUbijwxl/4KG
- ZC7qy//H7PjBS+fW42k0SGmcyQ5AGMAx+AWx9EHTI3LBkWJFYSvkoYMldSbg0m+mESuO
- RxLKIXpk3CyNizAEkO1+wld2O+7hW7/XFHcfl0AZGznRsGi+URc7KThxN5SvV0OieVEU
- 1irkSOgkbeOO5aAgknozASxQdhNgf8z6RhemImOryg5ut0MBO6Ig/V7yF8GetRpNCeiz
- z70AWOx4F2PKNLLnXVzHScL2AnBjUuQEQkknQOXWJNZkos3Fw0MpndMyh9Vd3LVv3Hx4
- t2nQ==
-X-Gm-Message-State: APjAAAX756qj/zj8BbVLGjXkugWVXopcyFDRnt0YF1Lbnd9EQNKy1dp6
- elIKVqowvTWqCFs0JPsnXyGvpDHdOxmEkrzVFqo=
-X-Google-Smtp-Source: APXvYqxJpepQ9VQoAAc07ujRiGJYpdX3gf8KpVTLJVLZzcSeVsr0TxUgUDnv1zP688nUQIe9u44KNb4m+xHpj3P0O5k=
-X-Received: by 2002:a6b:ee15:: with SMTP id i21mr33273959ioh.281.1563826995537; 
- Mon, 22 Jul 2019 13:23:15 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Obvs+pdx3LMIqRWIcWOj+67kGq+v9Qey/EWAuHqAhg0=;
+ b=njTxWC1S3DHQXL2+ajx2FtUT/wLWGNgucNX88jkFaJTmUSugo/ZpWsqZwA9Qfyrkrq
+ NzmvIf6gb4tw9mFgrLbvgY5fBFRmm7fYelAb0bJ6M8z6U/2D4QPLWFCYO6YAvp1UhLkD
+ t8Shtj5uCb5zOuZCGGFuANhOjyW5jRd7Bbj+lKlCCda8Bpb7Y8lE+Ovh4iC3ua6g2irv
+ siPkItuE9r0n4FVPO9qwarkBB8UZJTFFO7x1DQPKt8ted3MRML09ZWic4NG3sTLsEsfb
+ n4p5goHwhksob+SotqASkSVtsw7BCGdws1Glkk4bPXCruiqV4/PO4X7ghJOuMQ4oGsN2
+ m0dQ==
+X-Gm-Message-State: APjAAAUPXYtYesw/FhP31TnvtydSbq5BygHFRzRzOBlJCDcHZzujQkTy
+ efHGM6NgsckXtl0dYHF6cOgpMH/T1tSOHfF54ePpETW+rV0=
+X-Google-Smtp-Source: APXvYqyoY8htb8KXfWlxWO9Km0QGZ+l2E8TtVx4/gUVXSlD5mptKQNh7ImZ3DCHAXpKWnfvEBrjZ9heZdEOJBCSNG1k=
+X-Received: by 2002:a05:6808:98:: with SMTP id
+ s24mr34094587oic.127.1563827707134; 
+ Mon, 22 Jul 2019 13:35:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190719203037.11795-1-mspinler@linux.ibm.com>
-In-Reply-To: <20190719203037.11795-1-mspinler@linux.ibm.com>
-From: Olof Johansson <olof@lixom.net>
-Date: Mon, 22 Jul 2019 13:23:04 -0700
-Message-ID: <CAOesGMhf984ic0O4zhNGo=SfrqDX2wDkYxyfga81JDXkUyciqw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.2] ARM: dts: aspeed: swift: Fix FSI GPIOs
-To: Matt Spinler <mspinler@linux.ibm.com>
+From: Brandon Wyman <bjwyman@gmail.com>
+Date: Mon, 22 Jul 2019 15:34:55 -0500
+Message-ID: <CAK_vbW26LXVT93yPqaV7OZT3r7yO30xsTm8vP1jB373ZO+Sh=Q@mail.gmail.com>
+Subject: New repo request: phosphor-power-monitor
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,38 +71,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Spinler <spinler@us.ibm.com>, openbmc@lists.ozlabs.org,
- linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 19, 2019 at 1:31 PM Matt Spinler <mspinler@linux.ibm.com> wrote:
->
-> From: Matt Spinler <spinler@us.ibm.com>
->
-> Change the FSI clock and data GPIOs to match what the hardware turned
-> out to use.
->
-> Signed-off-by: Matt Spinler <spinler@us.ibm.com>
+Hello Brad,
 
-Hi,
+Could you please create a new repository called phosphor-power-monitor?
 
-This is not a comment on this patch specifically, just an overall
-request for people to adjust how they post patches:
+I am proposing that this new repository be used for the single power
+supply monitoring application, design under review here:
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23038
 
-When running get_maintainer.pl on
-arch/arm/boot/dts/aspeed-bmc-opp-swift.dts, I get the following:
-
-[...]
-linux-arm-kernel@lists.infradead.org (moderated list:ARM/ASPEED MACHINE SUPPORT)
-linux-aspeed@lists.ozlabs.org (moderated list:ARM/ASPEED MACHINE SUPPORT)
-[...]
-
-Please include both of them on patches. Lots of people aren't
-subscribed to the aspeed-only mailing list, so coming back later to
-reply to a patch is hard when it hasn't made it into your mailboxes.
-
-
-Thanks!
-
--Olof
+This repository may get used for some other future applications
+related to power monitoring.
