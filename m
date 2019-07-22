@@ -1,56 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 699CB70265
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 16:34:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E330C6FCC3
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 11:49:44 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45scK15lFJzDqTM
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jul 2019 19:49:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45skf22MXmzDqVQ
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 00:34:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=0991e83b1=duke.du@quantatw.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::536; helo=mail-pg1-x536.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 45scJT18T2zDqN1
- for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 19:49:08 +1000 (AEST)
-Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
- by mx01.quantatw.com with ESMTP; 22 Jul 2019 17:49:04 +0800
-Received: from mailbx08.quanta.corp (10.243.91.103) by mailbx08.quanta.corp
- (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 22 Jul
- 2019 17:49:03 +0800
-Received: from mailbx08.quanta.corp ([192.168.1.8]) by mailbx08.quanta.corp
- ([192.168.1.8]) with mapi id 15.01.1713.004; Mon, 22 Jul 2019 17:49:03 +0800
-From: =?utf-8?B?RHVrZSBEdSAo5p2c56Wl5ZiJKQ==?= <Duke.Du@quantatw.com>
-To: "james.feist@linux.intel.com" <james.feist@linux.intel.com>
-Subject: Re: Could phosphor-hwmon support peci-sensors
-Thread-Topic: Could phosphor-hwmon support peci-sensors
-Thread-Index: AdVAcrEeJhGDbsKEQ6GlW/GsUn/vgw==
-Date: Mon, 22 Jul 2019 09:49:03 +0000
-Message-ID: <7297d188594b4d83a1f32f87b54db2dc@quantatw.com>
-Accept-Language: en-US, zh-TW
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-12.0.0.1727-8.200.1013-24784.005
-x-tm-as-result: No--19.209100-0.000000-31
-x-tm-as-matchedid: 140026-150567-700225-703140-701090-703503-704381-704225-7
- 05161-701173-705097-702203-705220-701632-704714-702082-704966-704241-703173
- -704706-139010-139006-188199-702601-702754-702481-106660-705249-703032-7026
- 00-704585-705244-701029-106230-704720-701480-700244-704224-704074-703381-70
- 0379-139705-703957-701478-186035-702617-704634-703812-701590-148004-148133-
- 20025-20043-42000-42003-63
-x-tm-as-user-approved-sender: Yes
-x-tm-as-user-blocked-sender: No
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="jEuinmFd"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com
+ [IPv6:2607:f8b0:4864:20::536])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45skcv5vxhzDqVB
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 00:33:48 +1000 (AEST)
+Received: by mail-pg1-x536.google.com with SMTP id x15so7411277pgg.8
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 07:33:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=uaNbIIFDx3Ufno0/9JFj7GXTETzX1QYAcCu4nOK5akI=;
+ b=jEuinmFdvjwTtdFW9M8aQt0h66mzf/8NZ+YF3xTpPTACvc0sBPOp6sW57UfFGo8VbH
+ osrtV1gdt2zlBpzmRTEhAlwMoZ4gD0pJuBYtXRX0R8jpB+S4lhxpCzzXO3act+PEYEk8
+ MMF2KSmpzZ2g4T2HHhYP7fzqxaC1V0PO46C2CM4O7j0SbHpQzVthbrRoODIMvwgxr/fF
+ Gyg+IE2JQ+kdjTc1yVCQ9weohhLOdyhCPOc1UCJiTsv5a6qJm3O9YWUSlnmgBJ4wtGDQ
+ TqIkQLIj26pO4qaayYPutM+lKZu9hb2dnAdXYuqzYOKAbnoyuOA1zDLhbTr1ffHbKtiO
+ xTiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=uaNbIIFDx3Ufno0/9JFj7GXTETzX1QYAcCu4nOK5akI=;
+ b=OnUw+gpuTdPDf/NtsD/lti4EUy3FWzT5y0cPASPvYXDlU2Dz5buBy9OByBBrLFqYbF
+ EsV5G8xVIVw9EyzZD2CtAyNjSXrmLEFx9NSly5FfuOEQ9EAVbXY+muF5v0EYXk0VD1Fo
+ jgyWmVgP/+pohOYfvZ71vpOkuXZvKarczeIer/fbdLtmvOrGuKlnVBvLzvNfke25Cumg
+ blCTQg7zFUkDXXKTmQvMmvOcp4RMCmTf5RRHT07IvW/KgxzW1shsrApGCm/Kjavwm6qM
+ MLV6k5CGTkWPohUXkVRoS49ZG3KCe358Ik0gPzhMxv2BiIZiXF9V6ugrLfsghgJId6bV
+ nC5Q==
+X-Gm-Message-State: APjAAAVUcipl8R+iqTXMInPK1fpKL7It0mmU6nYBz8IW0ABdPx4ur5BW
+ wszSmvL8F4Uv5PLuEfi2NoiirFLAlr4FIctq3QqmIA==
+X-Google-Smtp-Source: APXvYqzIwUCtdxsEyu39YryNjFC0pTePxntbdctNie0DRGqmlduw23V/45mBaACLkg2q6CyS7aXeBgbOy02a+saoEU8=
+X-Received: by 2002:a63:2784:: with SMTP id n126mr69487681pgn.92.1563806024766; 
+ Mon, 22 Jul 2019 07:33:44 -0700 (PDT)
 MIME-Version: 1.0
+References: <55738808da484183a4fb1a59f7097e9c@lenovo.com>
+ <CAO=notzcuVK-0eV4tCjD-MuFi7RQvrX1Y7fJgU4yzLzU-vR+Vw@mail.gmail.com>
+ <44ef02c54887404dbcfab3b22b4868c5@lenovo.com>
+ <CAO=notyKxDC=-v7dQ4j-fZMAmgr6rqg808Y+-+cokgLtT7MtnQ@mail.gmail.com>
+ <dc89fd1273184d9d932bf8a7c8db1c6a@lenovo.com>
+ <CAO=notxWDo8S_xNfc6PTo8i7cK4kNbqr=jjL4ZvVypAvTqOtRQ@mail.gmail.com>
+ <CAO=noty9csc2axMFnOkqUc7MpTAFXJQKEaFHN0NT85oT_wBi4Q@mail.gmail.com>
+ <CAO=notyqqcsN0oziv-zTuEk9NuiCeUm953BR0codfnLYaAWvWA@mail.gmail.com>
+ <e44f4dbb51304692bcd94cb55db9ca7a@lenovo.com>
+ <CAO=notxG1uVnDJthvt_ivUOWL7pnYWyAaGR+NF+qsBXTOthoyQ@mail.gmail.com>
+ <f3b9639d3a924918973061e33ed6d7a9@lenovo.com>
+In-Reply-To: <f3b9639d3a924918973061e33ed6d7a9@lenovo.com>
+From: Patrick Venture <venture@google.com>
+Date: Mon, 22 Jul 2019 07:33:33 -0700
+Message-ID: <CAO=notw0C-4UcuOs5=SSu3oZC6DMHPKSUt2DaVLHTtjhdU7S5Q@mail.gmail.com>
+Subject: Re: [External] Re: configure error and the image content seems to be
+ incorrect
+To: Andrew MS1 Peng <pengms1@lenovo.com>
+Content-Type: multipart/alternative; boundary="0000000000009af5b6058e45f6ff"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,76 +83,2054 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Yonghui YH21 Liu <liuyh21@lenovo.com>, Duke KH Du <dukh@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgSmFtZXMsDQogICBJIGhhdmUgc29tZSBwcm9ibGVtcyB3aXRoIGNwdXNlbnNvciBpbiBwYWNr
-YWdlIGRidXMtc2Vuc29ycy4gV2hlbiBJIHNldCB0ZW1wZXJhdHVyZXMgb2YgY3JpdGljYWwgYW5k
-IHdhcm5pbmcgaGlnaCBmb3IgRElNTSBpcyB3b3JrLCBidXQgQ29yZSBpcyBub3QuIENvdWxkIEkg
-c2V0IHRlbXBlcmF0dXJlcyBvZiBjcml0aWNhbCBhbmQgd2FybmluZyBoaWdoIGZvciBDb3JlIGJ5
-IGpzb24gZmlsZSBpbiBlbnRpdHktbWFuYWdlciA/IA0KKFRoZXJlIGlzIG15IGpvc24gZmlsZSBm
-b3IgY3B1IGluIHBhY2thZ2UgZW50aXR5LW1hbmFnZXIpDQoNCiAgICAgICAgICAgICJUaHJlc2hv
-bGRzIjogWw0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgIkRpcmVjdGlv
-biI6ICJncmVhdGVyIHRoYW4iLA0KICAgICAgICAgICAgICAgICAgICAiTGFiZWwiOiAiQ29yZSIs
-DQogICAgICAgICAgICAgICAgICAgICJOYW1lIjogInVwcGVyIGNyaXRpY2FsIiwNCiAgICAgICAg
-ICAgICAgICAgICAgIlNldmVyaXR5IjogMSwNCiAgICAgICAgICAgICAgICAgICAgIlZhbHVlIjog
-NzUNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAg
-ICAgICAgIkRpcmVjdGlvbiI6ICJncmVhdGVyIHRoYW4iLA0KICAgICAgICAgICAgICAgICAgICAi
-TGFiZWwiOiAiQ29yZSIsDQogICAgICAgICAgICAgICAgICAgICJOYW1lIjogInVwcGVyIG5vbiBj
-cml0aWNhbCIsDQogICAgICAgICAgICAgICAgICAgICJTZXZlcml0eSI6IDAsDQogICAgICAgICAg
-ICAgICAgICAgICJWYWx1ZSI6IDcwDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAg
-ICB7DQogICAgICAgICAgICAgICAgICAgICJEaXJlY3Rpb24iOiAiZ3JlYXRlciB0aGFuIiwNCiAg
-ICAgICAgICAgICAgICAgICAgIkxhYmVsIjogIkRJTU0iLA0KICAgICAgICAgICAgICAgICAgICAi
-TmFtZSI6ICJ1cHBlciBjcml0aWNhbCIsDQogICAgICAgICAgICAgICAgICAgICJTZXZlcml0eSI6
-IDEsDQogICAgICAgICAgICAgICAgICAgICJWYWx1ZSI6IDg1DQogICAgICAgICAgICAgICAgfSwN
-CiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJEaXJlY3Rpb24iOiAiZ3Jl
-YXRlciB0aGFuIiwNCiAgICAgICAgICAgICAgICAgICAgIkxhYmVsIjogIkRJTU0iLA0KICAgICAg
-ICAgICAgICAgICAgICAiTmFtZSI6ICJ1cHBlciBub24gY3JpdGljYWwiLA0KICAgICAgICAgICAg
-ICAgICAgICAiU2V2ZXJpdHkiOiAwLA0KICAgICAgICAgICAgICAgICAgICAiVmFsdWUiOiA4MA0K
-ICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIF0sDQoNClRoYW5rcy4NCkR1a2UsIER1DQoN
-Cj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogb3BlbmJtYw0KPiBbbWFpbHRv
-Om9wZW5ibWMtYm91bmNlcyt3aWxsLmxpYW5nPXF1YW50YXR3LmNvbUBsaXN0cy5vemxhYnMub3Jn
-XSBPbg0KPiBCZWhhbGYgT2YgVmlqYXkgS2hlbWthDQo+IFNlbnQ6IFdlZG5lc2RheSwgSnVseSAx
-MCwgMjAxOSA0OjIwIEFNDQo+IFRvOiBKYW1lcyBGZWlzdCA8amFtZXMuZmVpc3RAbGludXguaW50
-ZWwuY29tPjsgQnJhZCBCaXNob3ANCj4gPGJyYWRsZXliQGZ1enppZXNxdWlycmVsLmNvbT47IER1
-a2UgRHUgKOadnOelpeWYiSkNCj4gPER1a2UuRHVAcXVhbnRhdHcuY29tPg0KPiBDYzogb3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnOyBKYWUgSHl1biBZb28gPGphZS5oeXVuLnlvb0BsaW51eC5pbnRl
-bC5jb20+DQo+IFN1YmplY3Q6IFJlOiBDb3VsZCBwaG9zcGhvci1od21vbiBzdXBwb3J0IHBlY2kt
-c2Vuc29ycw0KPiANCj4gDQo+IA0KPiDvu79PbiA3LzgvMTksIDExOjI5IEFNLCAib3BlbmJtYyBv
-biBiZWhhbGYgb2YgSmFtZXMgRmVpc3QiDQo+IDxvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVta2E9
-ZmIuY29tQGxpc3RzLm96bGFicy5vcmcgb24gYmVoYWxmIG9mDQo+IGphbWVzLmZlaXN0QGxpbnV4
-LmludGVsLmNvbT4gd3JvdGU6DQo+IA0KPiAgICAgT24gNy84LzE5IDEwOjUyIEFNLCBCcmFkIEJp
-c2hvcCB3cm90ZToNCj4gICAgID4gT24gTW9uLCBKdWwgMDgsIDIwMTkgYXQgMTI6MzM6MjFQTSAr
-MDAwMCwgRHVrZSBEdSAo5p2c56Wl5ZiJKSB3cm90ZToNCj4gICAgID4+IEhpIEFsbCwNCj4gICAg
-ID4+ICBJIGhhdmUgc29tZSBwcm9ibGVtcyB3aXRoIHBob3NwaG9yLWh3bW9uLg0KPiAgICAgPj4g
-Q291bGQgcGFja2FnZSBwaG9zcGhvci1od21vbiBzdXBwb3J0cyBwZWNpIHNlbnNvcnMgc3VjaCBh
-cyBjcHUNCj4gYW5kDQo+ICAgICA+PiBkaW1tIHRlbXBhdHVyZXMgPw0KPiAgICAgPj4gSWYgeWVz
-LCBjb3VsZCB5b3UgZ2l2ZSBtZSBzb21lIGhpbnRzIHRoYXQgaG93IGRvIEkgd3JpdGUgY29uZmln
-dXJhdGlvbg0KPiAgICAgPj4gZm9yIHBlY2kgc2Vuc29ycywgcGxlYXNlIDopLg0KPiAgICAgPj4N
-Cj4gICAgID4+IFRoYW5rcy4NCj4gICAgID4+IER1a2UsIER1DQo+ICAgICA+DQo+ICAgICA+IHBo
-b3NwaG9yLWh3bW9uIHNob3VsZCB3b3JrIHdpdGggYW55dGhpbmcgdGhhdCBpbXBsZW1lbnRzIHRo
-ZQ0KPiBod21vbiBBQkkuDQo+ICAgICA+IFNvIEkgdGhpbmsgdG8gbWFrZSBQRUNJIHNlbnNvcnMg
-d29yayB3aXRoIHBob3NwaG9yLWh3bW9uLCB5b3UgbmVlZA0KPiBod21vbg0KPiAgICAgPiBkcml2
-ZXJzIGZvciBQRUNJIHNlbnNvcnMuICBJIGRvbid0IGtub3cgaWYgYW55b25lIGlzIHdvcmtpbmcg
-b24gdGhhdC4NCj4gICAgID4NCj4gICAgID4gSSBzdXNwZWN0IHRoZSBvdGhlciBzZW5zb3IgYXBw
-bGljYXRpb24gLSBkYnVzLXNlbnNvcnMgc3VwcG9ydHMgUEVDSSBqdXN0DQo+ICAgICA+IGZpbmUu
-ICBCdXQgSSBkb24ndCBrbm93IGhvdyBpdCB3b3JrcywgaWYgaXQgY2FuIGJlIHVzZWQgd2l0aG91
-dCBlbnRpdHkNCj4gICAgID4gbWFuYWdlciwgIGFuZC9vciBpZiBpdCBjYW4gYmUgcnVuIGluIHBh
-cmFsbGVsIHdpdGggcGhvc3Bob3ItaHdtb24uDQo+IA0KPiAgICAgKyBKYWUsIENQVSBTZW5zb3Ig
-QXV0aG9yDQo+IA0KPiANCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZGJ1cy1zZW5zb3Jz
-L2Jsb2IvbWFzdGVyL3NyYy9DUFVTZW5zb3JNYWluLg0KPiBjcHANCj4gDQo+ICAgICBDUFUgc2Vu
-c29yIGN1cnJlbnRseSBzdXBwb3J0cyBQRUNJIHNlbnNvcnMNCj4gDQo+IGh0dHBzOi8vZ2l0aHVi
-LmNvbS9vcGVuYm1jL2RidXMtc2Vuc29ycy9ibG9iL21hc3Rlci9zcmMvQ1BVU2Vuc29yLmNwcA0K
-PiANCj4gDQo+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2VudGl0eS1tYW5hZ2VyL2Jsb2Iv
-Zjg2MWRhODllZDAzZjllYzU1NmM1ZQ0KPiBkNmFjODE5OTg4YzBjMWY0OTgvY29uZmlndXJhdGlv
-bnMvV0ZUJTIwQmFzZWJvYXJkLmpzb24jTDIxODENCj4gDQo+ICAgICBJdCBkb2VzIHJlcXVpcmUg
-ZW50aXR5LW1hbmFnZXIgY3VycmVudGx5LCBidXQgaXQgY291bGQgYmUgcnVuIGluDQo+ICAgICBw
-YXJhbGxlbCB3aXRoIHBob3NwaG9yLWh3bW9uLg0KPiANCj4gVGhlcmUgaXMgcGVjaSBkcml2ZXIg
-YWxvbmcgd2l0aCBod21vbiBwZWNpIGRyaXZlciBhdmFpbGFibGUgaW4gb3BlbmJtYyBsaW51eA0K
-PiBrZXJuZWwgNS4zIHdoaWNoIHdpbGwgdGFrZSBjYXJlIG9mIGh3bW9uIGludGVyZmFjZS4gQW5k
-IHRoZXJlIGFyZSBhbHNvDQo+IHBlY2ktZGltbSBhbmQgcGVjaS1jcHUgZHJpdmVyIHRvIHJlYWQg
-Y3B1IGFuZCBkaW1tIHNlbnNvcnMuIE9uY2UgdGhlc2UNCj4gZHJpdmVycyBlbmFibGVkLCBpdCBz
-b3VsZCB3b3JrIHdpdGggcGhvc3Bob3ItaHdtb24gd2l0aG91dCBlbnRpdHkgbWFuYWdlcg0KPiBh
-bmQgZGJ1cy1zZW5zb3JzLg0KPiANCj4gUmVnYXJkcw0KPiAtVmlqYXkNCj4gDQo+ICAgICAtSmFt
-ZXMNCj4gDQoNCg==
+--0000000000009af5b6058e45f6ff
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jul 22, 2019 at 4:44 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
+
+>
+>
+> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8820=E6=97=
+=A5 1:06
+> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.c=
+om>; Yonghui
+> YH21 Liu <liuyh21@lenovo.com>
+> *=E4=B8=BB=E9=A2=98:* Re: [External] Re: configure error and the image co=
+ntent seems to
+> be incorrect
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Jul 19, 2019 at 9:46 AM Andrew MS1 Peng <pengms1@lenovo.com>
+> wrote:
+>
+>
+>
+>
+>
+> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8820=E6=97=
+=A5 0:08
+> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.c=
+om>; Yonghui
+> YH21 Liu <liuyh21@lenovo.com>
+> *=E4=B8=BB=E9=A2=98:* Re: [External] Re: configure error and the image co=
+ntent seems to
+> be incorrect
+>
+>
+>
+>
+>
+>
+>
+> On Fri, Jul 19, 2019 at 8:58 AM Patrick Venture <venture@google.com>
+> wrote:
+>
+>
+>
+>
+>
+> On Fri, Jul 19, 2019 at 8:37 AM Patrick Venture <venture@google.com>
+> wrote:
+>
+>
+>
+>
+>
+> On Fri, Jul 19, 2019 at 4:50 AM Andrew MS1 Peng <pengms1@lenovo.com>
+> wrote:
+>
+> Hi Patrick,
+>
+>
+>
+> Please see my below comments.
+>
+>
+>
+> Thanks.
+>
+> Andrew
+>
+>
+>
+> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8819=E6=97=
+=A5 0:52
+> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.c=
+om>; Yonghui
+> YH21 Liu <liuyh21@lenovo.com>
+> *=E4=B8=BB=E9=A2=98:* Re: [External] Re: configure error and the image co=
+ntent seems to
+> be incorrect
+>
+>
+>
+>
+>
+>
+>
+> On Thu, Jul 18, 2019 at 4:27 AM Andrew MS1 Peng <pengms1@lenovo.com>
+> wrote:
+>
+> Hi Patrick,
+>
+>
+>
+> Could you give me a hand on below problems? Thanks.
+>
+> 1.      I compiled the latest version of phosphor-ipmi-flash with OpenBMC
+> SDK environment to build host tool, but encounter configuration error
+> message as below, could you help to take a look at it?
+>
+> ./configure --enable-oe-sdk --host "$(uname -m)"
+> --disable-build-bmc-blob-handler  AR=3Dx86_64-openbmc-linux-gcc-ar
+> RANLIB=3Dx86_64-openbmc-linux-gcc-ranlib
+>
+> checking whether C++ compiler accepts -lgmock... yes
+> checking whether C++ compiler accepts -pthread... (cached) yes
+> checking for main in -lgmock... yes
+> checking for valgrind... no
+> checking whether to build with code coverage support... no
+> configure: Enabling OE-SDK at
+> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
+> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+> Usually this means the macro was only invoked conditionally.
+>
+>
+>
+>
+>
+> Have systemd is only important for the BMC code, so it's unimportant in
+> this case.
+>
+> It block Makefile generation, how can I do to avoid this error to generat=
+e
+> Makefile?
+>
+>
+>
+> I'll see if I need to always define it -- not sure why you're hitting thi=
+s
+> and I wasn't, but I'll take a look.
+>
+>
+>
+> Verified I can reproduce:
+>
+> checking that generated files are newer than configure... done
+> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+> Usually this means the macro was only invoked conditionally.
+> root@3b8289721be4:/phosphor-ipmi-flash#
+>
+>
+>
+> The issue is that although it doesn't use the bmc/Makefile in the
+> configuration, it still needs the variable defined.  I moved the systemd
+> search into only the bmc case because the host tool doesn't use systemd.
+>
+>
+>
+> Follow-on, I'm submitting a patch to fix that momentarily.
+>
+>
+>
+> To address the other issue, it may behoove us to add some always-on debug
+> logging, so we can see a few things.  One approach however, would be to t=
+ry
+> sending down a 64 byte file instead of the 32MB -- just to make the testi=
+ng
+> slightly faster.
+>
+>
+>
+> The other thing is the kernel you're using, I don't use the same one --
+> perhaps there are differences from openbmc/linux.
+>
+>
+>
+> We are using the openbmc/kernel. In development phase, we use our DT file
+> from our lenovo meta-layer since it is easy to develop and test. We have
+> been done upstream DT file to mainline kernel and openbmc kernel as below
+> link.
+>
+>
+> https://github.com/openbmc/linux/blob/dev-5.2/arch/arm/boot/dts/aspeed-bm=
+c-lenovo-hr630.dts
+>
+>
+>
+> Can you remove the flash property from the lpc_ctrl node and try again?  =
+I
+> don't think it's an issue, but it's something different.
+>
+>
+>
+> l  DTS modification is below.   (Remove memory-region and flash, transfer
+> data failed )
+>
+>
+>
+>  @@ -40,11 +40,6 @@
+>
+>                 #size-cells =3D <1>;
+>
+>                 ranges;
+>
+>
+>
+> -               flash_memory: region@98000000 {
+>
+> -                       no-map;
+>
+> -                       reg =3D <0x98000000 0x00100000>; /* 1M */
+>
+> -               };
+>
+> -
+>
+>                 gfx_memory: framebuffer {
+>
+>                         size =3D <0x01000000>;
+>
+>                         alignment =3D <0x01000000>;
+>
+> @@ -88,8 +83,6 @@
+>
+>
+>
+>     &lpc_ctrl {
+>
+>         status =3D "okay";
+>
+> -       memory-region =3D <&flash_memory>;
+>
+> -       flash =3D <&spi1>;
+>
+>            };
+>
+>
+>
+>       ###  journalctl log message:
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: requesting Aspeed LPC window at
+> 0x40000000 of size 65536
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: Failed to ioctl Aspeed LPC map with
+> error No such device or address
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: mappingResult.response 22
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: requesting Aspeed LPC window at
+> 0x40000000 of size 65536
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: Failed to ioctl Aspeed LPC map with
+> error No such device or address
+>
+> Jul 19 01:50:27 hr630 ipmid[360]: mappingResult.response 22
+>
+
+I would not expect it to work without the memory-region.
+
+
+>
+>
+> l  DTS modification is below.  DTS modification is below.   (Remove flash=
+,
+> transfer data successful but the data was incorrect)
+>
+>
+>
+> @@ -89,7 +89,11 @@
+>
+> &lpc_ctrl {
+>
+>        status =3D "okay";
+>
+>         memory-region =3D <&flash_memory>;
+>
+> -       flash =3D <&spi1>;
+>
+>
+>
+>              ###  journalctl log message:
+>
+>                 Jul 17 09:45:27 hr630 systemd[1]: Reached target
+> Phosphor-ipmi-flash Prepare BMC to receive update.
+>
+>                  Jul 17 09:45:27 hr630 ipmid[289]: requesting Aspeed LPC
+> window at 0x40000000 of size 65536
+>
+
+Ok, so that's interesting.
+
+Did you try only sending a tiny data piece, such as a 64 bytes of random
+data from the host, and then seeing if that arrives safely.  I don't
+imagine it does, but I wanted to simplify what you're testing.
+
+
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> 2.      According to your suggestion, our BIOS engineer help to reserve
+> host memory addr 0x40000000 with size 256KB and initiate this region with
+> value 0xaa. I can see the value Oxaaaaaaaa from memory addr 0x40000000 vi=
+a
+> devmem2 tool. The memory region was overwritten during executable
+> burn_my_bmc running, I compared the content between BMC and host image bu=
+t
+> it was Inconsistent. Could you give me some advice to solve it?
+>
+>
+> BMC configuration setting:
+> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
+> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x40000000 --enable-reboot-update"
+>
+> Host tool setting:
+> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --si=
+g
+> ./sig.txt --type static --address 0x40000000 --length 65536
+>
+>
+>
+> Interesting, so you're seeing the memory getting changed, but the bmc
+> image doesn't match.
+>
+> Can you point me to your device tree? (for sanity checking)
+> DT file is below:
+>
+> https://github.com/LenovoHS/openbmc/blob/master/meta-lenovo/meta-hr630/re=
+cipes-kernel/linux/linux-aspeed/aspeed-bmc-lenovo-hr630.dts
+>
+>
+>
+> What's the SHA for your linux tree (I want to make sure it has the
+> optional feature for aspeed-lpc-ctrl)
+>
+>     I don=E2=80=99t know where can obtain the SHA value of linux tree, co=
+uld you
+> give me clues or guidance?
+>
+>
+>
+> You're pointing to a different linux tree for your device-tree, presumabl=
+y
+> you're not using openbmc/linux?
+>
+>
+>
+>
+>
+> Do you see any output from journalctl?  I asked last time, but this if
+> leads with ipmid can hold some details.
+>
+> l  *Only host reserve memory addr 0x40000000 with 256KB, transfer data
+> failed.*
+>
+> ## DTS setting:
+>
+>         &lpc_ctrl {
+>
+>             status =3D "okay";
+>
+>         };
+>
+>
+>
+>     ## journalctl log message:
+>
+>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC map
+> with error No such device or address
+>
+>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
+>
+>         Jul 19 02:06:02 hr630 ipmid[347]: requesting Aspeed LPC window at
+> 0x40000000 of size 65536
+>
+>         Jul 19 02:06:02 hr630 ipmid[347]: Failed to ioctl Aspeed LPC map
+> with error No such device or address
+>
+>         Jul 19 02:06:02 hr630 ipmid[347]: mappingResult.response 22
+>
+>
+>
+>      ## BMC Registers (It is the same as default value):
+>
+>         (HICR7) devmem 0x1E789088
+>
+>          0x3000FFF8
+>
+>         (HICR8) devmem 0x1E78908c
+>
+>          0xFFF8F007
+>
+>         (HICR5) devmem 0x1E789080
+>
+>         0x00000403
+>
+>
+>
+> l  *BMC reserve memory addr 0x98000000 with 1MB and host reserve memory
+> addr 0x40000000 with 256KB, transfer data successful but the data was
+> incorrect.*
+>
+> ## DTS setting:
+>
+>         flash_memory: region@98000000 {
+>
+>                 no-map;
+>
+>                 reg =3D <0x98000000 0x00100000>; /* 1M */
+>
+>             };
+>
+>
+>
+>         &lpc_ctrl {
+>
+>             status =3D "okay";
+>
+>             memory-region =3D <&flash_memory>;
+>
+>             flash =3D <&spi1>;
+>
+>         };
+>
+>
+>
+>     ## journalctl log message:
+>
+>         Jul 19 02:05:26 hr630 systemd[1]: Reached target
+> Phosphor-ipmi-flash Prepare BMC to receive update.
+>
+>         Jul 19 02:05:26 hr630 ipmid[339]: requesting Aspeed LPC window at
+> 0x40000000 of size 65536
+>
+>         Jul 19 02:05:52 hr630 ipmid[339]: requesting Aspeed LPC window at
+> 0x40000000 of size 65536
+>
+>         Jul 19 02:05:52 hr630 systemd[1]: Reached target
+> Phosphor-ipmi-flash verify the image contents.
+>
+>
+>
+> Good that you're no longer seeing a problem with this.  I wonder if
+> there's something different with the lpc_ctrl in this case since you're
+> specifying the flash node (a version of the driver+config i haven't teste=
+d).
+>
+>
+>
+>
+>
+>     ## BMC Registers:
+>
+>         (HICR7) devmem 0x1E789088
+>
+>         0x98004000
+>
+>         (HICR8) devmem 0x1E78908c
+>
+>         0xFFFF0000
+>
+>         (HICR5) devmem 0x1E789080
+>
+>         0x00000503
+>
+>
+>
+>
+>
+> I tested this with a 4K region on aspeed-lpc with the ast2500 and it
+> worked fine, so I do expect it to work... but you may have found some edg=
+e
+> case -- you're saying the length for the region should be 64KB, and that
+> should be fine...
+>
+>
+>
+> Regards,
+> Andrew
+>
+>
+>
+> *=E5=8F=91=E4=BB=B6=E4=BA=BA:* Patrick Venture <venture@google.com>
+> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4:* 2019=E5=B9=B47=E6=9C=8816=E6=97=
+=A5 23:38
+> *=E6=94=B6=E4=BB=B6=E4=BA=BA:* Andrew MS1 Peng <pengms1@lenovo.com>
+> *=E6=8A=84=E9=80=81:* openbmc@lists.ozlabs.org; Duke KH Du <dukh@lenovo.c=
+om>
+> *=E4=B8=BB=E9=A2=98:* [External] Re: configure error and the image conten=
+t seems to be
+> incorrect
+>
+>
+>
+>
+>
+>
+>
+> On Tue, Jul 16, 2019 at 5:31 AM Andrew MS1 Peng <pengms1@lenovo.com>
+> wrote:
+>
+> Hi Patrick,
+>
+> 1.      I downloaded the latest version of phosphor-ipmi-flash to build
+> host tool with the SDK environment you provide, but encounter configure
+> error as below, could you help to take a look at it?
+>
+> *Source code hash id*
+>
+> *Compile Status*
+>
+> *Error message*
+>
+> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42
+>
+> configure successful
+>
+> fd182168d9d1c852b1047b9eccea56812b614586
+> 1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137
+> fa06a5f0056e91bfada390c4007fbd3472d75a56
+> 7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0
+> c9792e75361c86da7f674976eacd03c761021d2f
+>
+> configure failed
+>
+> checking whether C++ compiler accepts -lgtest... yes
+> checking whether C++ compiler accepts -pthread... (cached) yes
+> checking for main in -lgtest... yes
+> checking whether C++ compiler accepts -lgmock... yes
+> checking whether C++ compiler accepts -pthread... (cached) yes
+> checking for main in -lgmock... yes
+> checking for valgrind... no
+> checking whether to build with code coverage support... no
+> configure: Enabling OE-SDK at
+> /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/core2-64-openbmc-linux
+> configure: error: conditional "HAVE_SYSTEMD" was never defined.
+> Usually this means the macro was only invoked conditionally.
+>
+> 2.      The host tool compiled with phosphor-ipmi-flash hash id
+> b90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42 and BMC flash library compiled
+> with phosphor-ipmi-flash hash id c9792e75361c86da7f674976eacd03c761021d2f=
+,
+> the BMC image can transfer from host side to BMC side via LPC bridge. The
+> image size is correct, but the image content seems to be incorrect as
+> below, could you give us some clues to solve it if this is an issue?
+>
+> Image of host side
+>
+> Image of BMC side
+>
+> pengms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
+>
+> 0000000 00be ea00 f014 e59f f014 e59f f014 e59f
+>
+> 0000010 f014 e59f f014 e59f f014 e59f f014 e59f
+>
+> 0000020 0060 0000 00c0 0000 0120 0000 0180 0000
+>
+> 0000030 01e0 0000 0240 0000 02a0 0000 beef dead
+>
+> root@hr630:~# hexdump -n 64 /run/initramfs/bmc-image
+>
+> 0000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00
+>
+> 0000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00
+>
+> 0000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80
+>
+> 0000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4
+>
+> DTS setting:
+>              flash_memory: region@98000000 {
+>                     no-map;
+>                     reg =3D <0x98000000 0x00100000>; /* 1M */
+>              };
+>
+> BMC configuration setting:
+> EXTRA_OECONF +=3D " --enable-reboot-update  --enable-static-layout
+> --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update"
+>
+> Host tool setting:
+> ./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --si=
+g
+> ./sig.txt --type static --address 2550136832 --length 65536
+>
+>
+>
+> The address provided for the host:
+>
+> >>> '0x%x' % 2550136832
+>
+> '0x98000000'
+>
+>
+>
+> Is a region of memory on the host that's set aside for this purpose and i=
+s
+> mapped via /dev/mem.  It's not the address the BMC Is using.  You'll need
+> to use a region reserved for this purpose in the host kernel or bios.
+>
+>
+>
+>
+>
+> Thanks,
+> Andrew
+>
+>
+
+--0000000000009af5b6058e45f6ff
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 22, 2019 at 4:44 AM Andre=
+w MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com">pengms1@lenovo.com</a>=
+&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"ZH-CN">
+<div class=3D"gmail-m_-3730916834779851897WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)"><u></u>=C2=A0<u></u></span>=
+</p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:=E7=AD=
+=89=E7=BA=BF">=E5=8F=91=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></spa=
+n></b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=
+=BA=BF"> Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=
+=3D"_blank">venture@google.com</a>&gt;
+<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E5=
+=8F=91=E9=80=81=E6=97=B6=E9=97=B4<span lang=3D"EN-US">:</span></span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+ 2019</span><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+=E5=B9=B4<span lang=3D"EN-US">7</span>=E6=9C=88<span lang=3D"EN-US">20</spa=
+n>=E6=97=A5<span lang=3D"EN-US">
+ 1:06<br>
+</span><b>=E6=94=B6=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></b><span=
+ lang=3D"EN-US"> Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" =
+target=3D"_blank">pengms1@lenovo.com</a>&gt;<br>
+</span><b>=E6=8A=84=E9=80=81<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">
+openbmc@lists.ozlabs.org</a>; Duke KH Du &lt;<a href=3D"mailto:dukh@lenovo.=
+com" target=3D"_blank">dukh@lenovo.com</a>&gt;; Yonghui YH21 Liu &lt;<a hre=
+f=3D"mailto:liuyh21@lenovo.com" target=3D"_blank">liuyh21@lenovo.com</a>&gt=
+;<br>
+</span><b>=E4=B8=BB=E9=A2=98<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> Re: [External] Re: configure error and the image content seems to b=
+e incorrect<u></u><u></u></span></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Fri, Jul 19, 2019 at 9:46 AM=
+ Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank=
+">pengms1@lenovo.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)">=C2=A0</span><span lang=3D"=
+EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)">=C2=A0</span><span lang=3D"=
+EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:=E7=AD=
+=89=E7=BA=BF">=E5=8F=91=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></spa=
+n></b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=
+=BA=BF"> Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=
+=3D"_blank">venture@google.com</a>&gt;
+<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E5=
+=8F=91=E9=80=81=E6=97=B6=E9=97=B4<span lang=3D"EN-US">:</span></span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+ 2019</span><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+=E5=B9=B4<span lang=3D"EN-US">7</span>=E6=9C=88<span lang=3D"EN-US">20</spa=
+n>=E6=97=A5<span lang=3D"EN-US">
+ 0:08<br>
+</span><b>=E6=94=B6=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></b><span=
+ lang=3D"EN-US"> Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" =
+target=3D"_blank">pengms1@lenovo.com</a>&gt;<br>
+</span><b>=E6=8A=84=E9=80=81<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">
+openbmc@lists.ozlabs.org</a>; Duke KH Du &lt;<a href=3D"mailto:dukh@lenovo.=
+com" target=3D"_blank">dukh@lenovo.com</a>&gt;; Yonghui YH21 Liu &lt;<a hre=
+f=3D"mailto:liuyh21@lenovo.com" target=3D"_blank">liuyh21@lenovo.com</a>&gt=
+;<br>
+</span><b>=E4=B8=BB=E9=A2=98<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> Re: [External] Re: configure error and the image content seems to b=
+e incorrect</span></span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Fri, Jul 19, 2019 at 8:58 AM=
+ Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=3D"_blank=
+">venture@google.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Fri, Jul 19, 2019 at 8:37 AM=
+ Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=3D"_blank=
+">venture@google.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Fri, Jul 19, 2019 at 4:50 AM=
+ Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank=
+">pengms1@lenovo.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">Hi Patrick,</span><span lang=3D"EN-US"><u></=
+u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">=C2=A0</span><span lang=3D"EN-US"><u></u><u>=
+</u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">Please see my below comments.</span><span la=
+ng=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">=C2=A0</span><span lang=3D"EN-US"><u></u><u>=
+</u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">Thanks.</span><span lang=3D"EN-US"><u></u><u=
+></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:rgb(0,112,192)">Andrew</span><span lang=3D"EN-US"><u></u><u>=
+</u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)">=C2=A0</span><span lang=3D"=
+EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:=E7=AD=
+=89=E7=BA=BF">=E5=8F=91=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></spa=
+n></b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=
+=BA=BF"> Patrick Venture &lt;<a href=3D"mailto:venture@google.com" target=
+=3D"_blank">venture@google.com</a>&gt;
+<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E5=
+=8F=91=E9=80=81=E6=97=B6=E9=97=B4<span lang=3D"EN-US">:</span></span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+ 2019</span><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+=E5=B9=B4<span lang=3D"EN-US">7</span>=E6=9C=88<span lang=3D"EN-US">19</spa=
+n>=E6=97=A5<span lang=3D"EN-US">
+ 0:52<br>
+</span><b>=E6=94=B6=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></b><span=
+ lang=3D"EN-US"> Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" =
+target=3D"_blank">pengms1@lenovo.com</a>&gt;<br>
+</span><b>=E6=8A=84=E9=80=81<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">
+openbmc@lists.ozlabs.org</a>; Duke KH Du &lt;<a href=3D"mailto:dukh@lenovo.=
+com" target=3D"_blank">dukh@lenovo.com</a>&gt;; Yonghui YH21 Liu &lt;<a hre=
+f=3D"mailto:liuyh21@lenovo.com" target=3D"_blank">liuyh21@lenovo.com</a>&gt=
+;<br>
+</span><b>=E4=B8=BB=E9=A2=98<span lang=3D"EN-US">:</span></b><span lang=3D"=
+EN-US"> Re: [External] Re: configure error and the image content seems to b=
+e incorrect</span></span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Thu, Jul 18, 2019 at 4:27 AM=
+ Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank=
+">pengms1@lenovo.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">Hi Patrick,</span><span lang=3D"EN-US"><u></u><u></u>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">Could you give me a hand on below problems? Thanks.</=
+span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-right:0cm;margin-b=
+ottom:12pt;margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">1=
+.</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
+ New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
+lack">I compiled the latest version of phosphor-ipmi-flash with OpenBMC SDK=
+ environment to build host tool, but encounter configuration error message =
+as below, could you help to take a
+ look at it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">.=
+/configure --enable-oe-sdk --host &quot;$(uname -m)&quot; --disable-build-b=
+mc-blob-handler=C2=A0 AR=3Dx86_64-openbmc-linux-gcc-ar RANLIB=3Dx86_64-open=
+bmc-linux-gcc-ranlib</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-left:42pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;background:sil=
+ver">checking whether C++ compiler accepts -lgmock... yes<br>
+checking whether C++ compiler accepts -pthread... (cached) yes<br>
+checking for main in -lgmock... yes<br>
+checking for valgrind... no<br>
+checking whether to build with code coverage support... no<br>
+configure: Enabling OE-SDK at /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/=
+core2-64-openbmc-linux<br>
+<span style=3D"color:red">configure: error: conditional &quot;HAVE_SYSTEMD&=
+quot; was never defined.<br>
+Usually this means the macro was only invoked conditionally.</span></span><=
+span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Have systemd is only important =
+for the BMC code, so it&#39;s unimportant in this case.=C2=A0<u></u><u></u>=
+</span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:24pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">It block Makefile generation, how can I do to avoid this error to g=
+enerate Makefile?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I&#39;ll see if I need to alway=
+s define it -- not sure why you&#39;re hitting this and I wasn&#39;t, but I=
+&#39;ll take a look.=C2=A0<u></u><u></u></span></p>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Verified I can reproduce:<u></u=
+><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">checking that generated files a=
+re newer than configure... done<br>
+configure: error: conditional &quot;HAVE_SYSTEMD&quot; was never defined.<b=
+r>
+Usually this means the macro was only invoked conditionally.<br>
+root@3b8289721be4:/phosphor-ipmi-flash#=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The issue is that although it d=
+oesn&#39;t use the bmc/Makefile in the configuration, it still needs the va=
+riable defined.=C2=A0 I moved the systemd search into only the
+ bmc case because the host tool doesn&#39;t use systemd.<u></u><u></u></spa=
+n></p>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Follow-on, I&#39;m submitting a=
+ patch to fix that momentarily.<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">To address the other issue, it =
+may behoove us to add some always-on debug logging, so we can see a few thi=
+ngs.=C2=A0 One approach however, would be to try sending
+ down a 64 byte file instead of the 32MB -- just to make the testing slight=
+ly faster.<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The other thing is the kernel y=
+ou&#39;re using, I don&#39;t use the same one -- perhaps there are differen=
+ces from openbmc/linux.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)">=C2=A0</span><span lang=3D"=
+EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:21pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">We are using the openbmc/kernel. In development phase, we use our D=
+T file from our lenovo meta-layer since it is easy to develop and test. We =
+have been done upstream DT file to mainline
+ kernel and openbmc kernel as below link. </span><span lang=3D"EN-US"><u></=
+u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)"><a href=3D"https://github.com/openbmc/linux/blob/dev-5.2/arch/arm/b=
+oot/dts/aspeed-bmc-lenovo-hr630.dts" target=3D"_blank">https://github.com/o=
+penbmc/linux/blob/dev-5.2/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts</a>=
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Can you remove the flash proper=
+ty from the lpc_ctrl node and try again?=C2=A0 I don&#39;t think it&#39;s a=
+n issue, but it&#39;s something different.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:=E7=AD=89=E7=BA=BF;color:rgb(31,73,125)"><u></u>=C2=A0<u></u></span>=
+</p>
+<p class=3D"gmail-m_-3730916834779851897MsoListParagraph" style=3D"margin-l=
+eft:61.5pt">
+<u></u><span lang=3D"EN-US" style=3D"font-family:Wingdings;color:rgb(112,48=
+,160)"><span>l<span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span><u></u><span lang=3D"EN-US" style=3D"font-family:Calib=
+ri,sans-serif;color:rgb(112,48,160)">DTS modification is below. =C2=A0</spa=
+n><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(11=
+2,48,160)">
+ (Remove </span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-seri=
+f;color:rgb(112,48,160)">memory-region</span><span lang=3D"EN-US" style=3D"=
+font-family:Calibri,sans-serif;color:rgb(112,48,160)"> and
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
+gb(112,48,160)">flash, transfer data failed</span><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"> )</span><span l=
+ang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)=
+"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:24pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0@@ -40,11 =
++40,6 @@<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ #size-cells =3D &lt;1&gt;;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ ranges;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flash=
+_memory: region@98000000 {<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 no-map;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0reg =3D &lt;0x98000000 0x00100=
+000&gt;; /* 1M */<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };<u>=
+</u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-<u></u><u></u><=
+/span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ gfx_memory: framebuffer {<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 size =3D &lt;0x01000000&gt=
+;;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 alignment =3D &lt;0x010000=
+00&gt;;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">@@ -88,8 +83,6 @=
+@<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0 &amp;lpc_ctrl {<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D &quot;okay&quot;;<u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 memory-region =3D &lt;&amp;flash_memory&gt;;<u></u><u=
+></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 flash =3D &lt;&amp;spi1&gt;;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:48pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:24pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:12pt;margin-=
+left:48pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,=
+48,160)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ### =C2=A0journalctl log message:<u=
+></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: requesting Aspeed LPC window at 0x40000000 of size 65536<=
+u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: Failed to ioctl Aspeed LPC map with error No such device =
+or address<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: mappingResult.response 22<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: requesting Aspeed LPC window at 0x40000000 of size 65536<=
+u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: Failed to ioctl Aspeed LPC map with error No such device =
+or address<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:96pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">Jul 19 01:50:27 =
+hr630 ipmid[360]: mappingResult.response 22</span></p></div></div></div></d=
+iv></div></blockquote><div><br></div><div>I would not expect it to work wit=
+hout the memory-region.</div><div>=C2=A0</div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex"><div lang=3D"ZH-CN"><div class=3D"gmail-m_-37309168347=
+79851897WordSection1"><div><div><div><p class=3D"MsoNormal" style=3D"margin=
+-left:96pt"><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;co=
+lor:rgb(112,48,160)"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"gmail-m_-3730916834779851897MsoListParagraph" style=3D"margin-l=
+eft:61.5pt">
+<u></u><span lang=3D"EN-US" style=3D"font-family:Wingdings;color:rgb(112,48=
+,160)"><span>l<span style=3D"font:7pt &quot;Times New Roman&quot;">=C2=A0
+</span></span></span><u></u><span lang=3D"EN-US" style=3D"font-family:Calib=
+ri,sans-serif;color:rgb(112,48,160)">DTS modification is below.=C2=A0 DTS m=
+odification is below. =C2=A0</span><span lang=3D"EN-US" style=3D"font-famil=
+y:Calibri,sans-serif;color:rgb(112,48,160)">
+ (Remove </span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-seri=
+f;color:rgb(112,48,160)">flash</span><span lang=3D"EN-US" style=3D"font-fam=
+ily:Calibri,sans-serif;color:rgb(112,48,160)">,
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
+gb(112,48,160)">transfer data successful but the data was incorrect</span><=
+span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,4=
+8,160)">)</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-seri=
+f;color:rgb(112,48,160)"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:24pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">@@ -89,7 +89,11 =
+@@<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">&amp;lpc_ctrl {<=
+u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0status =3D &quot;okay&quot;;<u></u><u></u></span=
+></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 memory-region =3D &lt;&amp;flash_memory&gt;;<u>=
+</u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)">-=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 flash =3D &lt;&amp;spi1&gt;;<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:12pt;margin-=
+left:24pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,=
+48,160)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
+gb(112,48,160)">### =C2=A0journalctl log message:<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,=
+48,160)">=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Jul 17 09:45:27 hr630 systemd[1]: Reached target Phosphor-i=
+pmi-flash Prepare BMC to receive update.<u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,=
+48,160)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 17 09:45:27 hr630 ipmid[289]: requesting As=
+peed LPC window at 0x40000000 of size 65536</span></p></div></div></div></d=
+iv></div></blockquote><div><br></div><div>Ok, so that&#39;s interesting.</d=
+iv><div><br></div><div>Did you try only sending a tiny data piece, such as =
+a 64 bytes of random data from the host, and then seeing if that arrives sa=
+fely.=C2=A0 I don&#39;t imagine it does, but I wanted to simplify what you&=
+#39;re testing.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex"><div lang=3D"ZH-CN"><div class=3D"gmail-m_-3730916834779851897=
+WordSection1"><div><div><div><p class=3D"MsoNormal" style=3D"margin-left:36=
+pt"><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(=
+112,48,160)"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:72pt"><span lang=3D"EN-US" styl=
+e=3D"font-family:Calibri,sans-serif;color:rgb(112,48,160)"><u></u>=C2=A0<u>=
+</u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-right:0cm;margin-bottom:12pt;margin-=
+left:24pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(112,=
+48,160)">=C2=A0=C2=A0=C2=A0=C2=A0 <u></u>
+<u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:59.1pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span lang=3D"EN-US">=C2=A0<u>=
+</u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-left:42pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">=
+=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">2=
+.</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
+ New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
+lack">According to your suggestion, our BIOS engineer help to reserve host =
+memory addr 0x40000000 with size 256KB and initiate this region with value =
+0xaa. I can see the value Oxaaaaaaaa
+ from memory addr 0x40000000 via devmem2 tool. The memory region was <span =
+class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-712=
+7236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmail-m=
+-3973244268204610114src">
+<span style=3D"background:white">overwritten</span></span><span class=3D"gm=
+ail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-71272360033425=
+00103gmail-m-341926668711419608gmail-m2984205525165170508gmail-m-3973244268=
+204610114apple-converted-space"><span style=3D"background:white">
+ during</span></span> executable burn_my_bmc running, I compared the conten=
+t between BMC and host image but it was Inconsistent.
+<span style=3D"background:white">Could you give me some </span>advice to so=
+lve it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114msolistparagraph" style=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black"><=
+br>
+<span style=3D"background:silver">BMC configuration setting:<br>
+EXTRA_OECONF +=3D &quot; --enable-reboot-update=C2=A0 --enable-static-layou=
+t --enable-aspeed-lpc MAPPED_ADDRESS=3D0x40000000 --enable-reboot-update&qu=
+ot;</span></span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397msolistparagraph" style=
+=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black;ba=
+ckground:silver">Host tool setting:<br>
+./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
+./sig.txt --type static --address 0x40000000 --length 65536</span><span lan=
+g=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Interesting, so you&#39;re seei=
+ng the memory getting changed, but the bmc image doesn&#39;t match.<u></u><=
+u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-left:24pt">
+<span lang=3D"EN-US">Can you point me to your device tree? (for sanity chec=
+king)<br>
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
+gb(0,112,192)">DT file is below:</span><span lang=3D"EN-US" style=3D"font-f=
+amily:Calibri,sans-serif"><br>
+<a href=3D"https://github.com/LenovoHS/openbmc/blob/master/meta-lenovo/meta=
+-hr630/recipes-kernel/linux/linux-aspeed/aspeed-bmc-lenovo-hr630.dts" targe=
+t=3D"_blank"><span style=3D"color:rgb(0,112,192)">https://github.com/Lenovo=
+HS/openbmc/blob/master/meta-lenovo/meta-hr630/recipes-kernel/linux/linux-as=
+peed/aspeed-bmc-lenovo-hr630.dts</span></a></span><span lang=3D"EN-US"><u><=
+/u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">What&#39;s the SHA for your lin=
+ux tree (I want to make sure it has the optional feature for aspeed-lpc-ctr=
+l)<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:r=
+gb(0,112,192)">I don=E2=80=99t know where can obtain the SHA value of linux=
+ tree, could you give me clues or guidance?</span><span lang=3D"EN-US"><u><=
+/u><u></u></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">You&#39;re pointing to a differ=
+ent linux tree for your device-tree, presumably you&#39;re not using openbm=
+c/linux?<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Do you see any output from jour=
+nalctl?=C2=A0 I asked last time, but this if leads with ipmid can hold some=
+ details.<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508msol=
+istparagraph" style=3D"margin-left:42pt">
+<span lang=3D"EN-US" style=3D"font-family:Wingdings">l</span><span lang=3D"=
+EN-US" style=3D"font-size:7pt;font-family:&quot;Times New Roman&quot;,serif=
+">=C2=A0
+</span><b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;colo=
+r:rgb(0,112,192)">Only host reserve memory addr 0x40000000 with 256KB, tran=
+sfer data failed.</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:42pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">## DTS setting:</span><span lang=3D"EN-US"><u></u><u></u></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &amp;lpc_ctrl {</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+status =3D &quot;okay&quot;;</span><span lang=3D"EN-US"><u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0</span><span lang=3D"EN-US"><u></u><u></u><=
+/span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0## journalctl log message:
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Jul 19 02:06:02 hr6=
+30 ipmid[347]: Failed to ioctl Aspeed LPC map with error No such device or =
+address</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:06:02 hr630 ip=
+mid[347]: mappingResult.response 22</span><span lang=3D"EN-US"><u></u><u></=
+u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:06:02 hr630 ip=
+mid[347]: requesting Aspeed LPC window at 0x40000000 of size 65536</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:06:02 hr630 ip=
+mid[347]: Failed to ioctl Aspeed LPC map with error No such device or addre=
+ss</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Jul 19 02:06:02 hr630 ip=
+mid[347]: mappingResult.response 22</span><span lang=3D"EN-US"><u></u><u></=
+u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0 </span>
+<span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0## BMC Registers (It is the same as d=
+efault value):</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (HICR7) devmem 0x1E78908=
+8=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00x3000FFF8</s=
+pan><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (HICR8) devmem 0x1E78908=
+c=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00xFFF8F007
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0(HICR5) devmem 0x1E=
+789080=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00x00000403</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:12pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508msol=
+istparagraph" style=3D"margin-left:42pt">
+<span lang=3D"EN-US" style=3D"font-family:Wingdings">l</span><span lang=3D"=
+EN-US" style=3D"font-size:7pt;font-family:&quot;Times New Roman&quot;,serif=
+">=C2=A0
+</span><b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;colo=
+r:rgb(0,112,192)">BMC reserve memory addr 0x98000000 with 1MB and host rese=
+rve memory addr 0x40000000 with 256KB, transfer data successful but the dat=
+a was incorrect.</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:21pt;text-indent:15pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">## DTS setting:</span><span lang=3D"EN-US"><u></u><u></u></span></p=
+>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 flash_memory: region@980=
+00000 {</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 no-map;</span><span lang=3D"EN-US"><u></u><u></u><=
+/span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 reg =3D &lt;0x98000000 0x00100000&gt;; /* 1M */</s=
+pan><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+};=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &amp;lpc_ctrl {</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+status =3D &quot;okay&quot;;</span><span lang=3D"EN-US"><u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+memory-region =3D &lt;&amp;flash_memory&gt;;</span><span lang=3D"EN-US"><u>=
+</u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+flash =3D &lt;&amp;spi1&gt;;</span><span lang=3D"EN-US"><u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };</span><span lang=3D"E=
+N-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0 </span>
+<span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0## journalctl log message:
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Jul 19 02:05:26 hr6=
+30 systemd[1]: Reached target Phosphor-ipmi-flash Prepare BMC to receive up=
+date.</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:05:26 hr630 ip=
+mid[339]: requesting Aspeed LPC window at 0x40000000 of size 65536</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:05:52 hr630 ip=
+mid[339]: requesting Aspeed LPC window at 0x40000000 of size 65536</span><s=
+pan lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Jul 19 02:05:52 hr630 sy=
+stemd[1]: Reached target Phosphor-ipmi-flash verify the image contents.</sp=
+an><span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Good that you&#39;re no=C2=A0lo=
+nger seeing a problem with this.=C2=A0 I wonder if there&#39;s something di=
+fferent with the lpc_ctrl in this case since you&#39;re specifying the flas=
+h
+ node (a version of the driver+config i haven&#39;t tested).<u></u><u></u><=
+/span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0 ## BMC Registers:</span><span lang=3D"EN-US"><u>=
+</u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (HICR7) devmem 0x1E78908=
+8=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00x98004000</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (HICR8) devmem 0x1E78908=
+c=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00xFFFF0000
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0(HICR5) devmem 0x1E=
+789080=C2=A0
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal" style=3D"margin-left:36pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:rgb(0,11=
+2,192)">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A00x00000503</span><s=
+pan lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I tested this with a 4K region =
+on aspeed-lpc with the ast2500 and it worked fine, so I do expect it to wor=
+k... but you may have found some edge case -- you&#39;re
+ saying the length for the region should be 64KB, and that should be fine..=
+.<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">=C2=A0</span><span lang=3D"EN-US"><u></u><u></u></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">Regards,<br>
+Andrew</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:Calibri,sans-serif;color:rgb(31,73,125)">=C2=A0</span><span lang=3D"=
+EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:11pt;font-family:=E7=AD=
+=89=E7=BA=BF">=E5=8F=91=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></spa=
+n></b><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=
+=BA=BF"> Patrick Venture &lt;</span><span lang=3D"EN-US"><a href=3D"mailto:=
+venture@google.com" target=3D"_blank"><span style=3D"font-size:11pt;font-fa=
+mily:=E7=AD=89=E7=BA=BF">venture@google.com</span></a></span><span lang=3D"=
+EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">&gt;
+<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E5=
+=8F=91=E9=80=81=E6=97=B6=E9=97=B4<span lang=3D"EN-US">:</span></span></b><s=
+pan lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+ 2019</span><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=
+=E5=B9=B4<span lang=3D"EN-US">7</span>=E6=9C=88<span lang=3D"EN-US">16</spa=
+n>=E6=97=A5<span lang=3D"EN-US">
+ 23:38<br>
+</span><b>=E6=94=B6=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US">:</span></b><span=
+ lang=3D"EN-US"> Andrew MS1 Peng &lt;</span></span><span lang=3D"EN-US"><a =
+href=3D"mailto:pengms1@lenovo.com" target=3D"_blank"><span style=3D"font-si=
+ze:11pt;font-family:=E7=AD=89=E7=BA=BF">pengms1@lenovo.com</span></a></span=
+><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=
+=BF">&gt;<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E6=
+=8A=84=E9=80=81<span lang=3D"EN-US">:</span></span></b><span lang=3D"EN-US"=
+ style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">
+</span><span lang=3D"EN-US"><a href=3D"mailto:openbmc@lists.ozlabs.org" tar=
+get=3D"_blank"><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF=
+">openbmc@lists.ozlabs.org</span></a></span><span lang=3D"EN-US" style=3D"f=
+ont-size:11pt;font-family:=E7=AD=89=E7=BA=BF">; Duke KH Du &lt;</span><span=
+ lang=3D"EN-US"><a href=3D"mailto:dukh@lenovo.com" target=3D"_blank"><span =
+style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">dukh@lenovo.com</sp=
+an></a></span><span lang=3D"EN-US" style=3D"font-size:11pt;font-family:=E7=
+=AD=89=E7=BA=BF">&gt;<br>
+</span><b><span style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF">=E4=
+=B8=BB=E9=A2=98<span lang=3D"EN-US">:</span></span></b><span lang=3D"EN-US"=
+ style=3D"font-size:11pt;font-family:=E7=AD=89=E7=BA=BF"> [External] Re: co=
+nfigure error and the image content seems to be incorrect</span><span lang=
+=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Tue, Jul 16, 2019 at 5:31 AM=
+ Andrew MS1 Peng &lt;<a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank=
+">pengms1@lenovo.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif;color:black">Hi Patrick,</span><span lang=3D"EN-US"><u></u><u></u>=
+</span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397msolistparagraph" style=
+=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">1=
+.</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
+ New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
+lack">I downloaded the latest version of phosphor-ipmi-flash to build host =
+tool with the SDK environment you provide, but encounter configure error as=
+ below, could you help to take a look
+ at it?</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<table class=3D"gmail-m_-3730916834779851897MsoNormalTable" border=3D"0" ce=
+llspacing=3D"0" cellpadding=3D"0" style=3D"margin-left:21pt;border-collapse=
+:collapse">
+<tbody>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border:1pt solid w=
+indowtext;background:yellow;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
+">Source code hash id</span></b><span lang=3D"EN-US"><u></u><u></u></span><=
+/p>
+</td>
+<td width=3D"80" valign=3D"top" style=3D"width:124.95pt;border-top:1pt soli=
+d windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid wind=
+owtext;border-left:none;background:yellow;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
+">Compile Status</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+<td width=3D"228" valign=3D"top" style=3D"width:16cm;border-top:1pt solid w=
+indowtext;border-right:1pt solid windowtext;border-bottom:1pt solid windowt=
+ext;border-left:none;background:yellow;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<b><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black=
+">Error message</span></b><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+</tr>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
+olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
+ndowtext;border-top:none;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">b=
+90cacdd0c1ab8ea7576d4ca9f20aa5828a84e42</span><span lang=3D"EN-US"><u></u><=
+u></u></span></p>
+</td>
+<td width=3D"80" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
+der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
+dowtext;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
+onfigure successful</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+<td width=3D"228" valign=3D"top" style=3D"width:16cm;border-top:none;border=
+-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid window=
+text;padding:0cm 5.4pt">
+</td>
+</tr>
+<tr>
+<td width=3D"333" valign=3D"top" style=3D"width:250.55pt;border-right:1pt s=
+olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
+ndowtext;border-top:none;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">f=
+d182168d9d1c852b1047b9eccea56812b614586<br>
+<span style=3D"background:white">1999eef0e6ad3ab4ad6fcf58cce47f352ca5e137<b=
+r>
+fa06a5f0056e91bfada390c4007fbd3472d75a56<br>
+7c2a00e02f1f0169b3e80ef1715002cefc6fa0d0<br>
+c9792e75361c86da7f674976eacd03c761021d2f</span></span><span lang=3D"EN-US">=
+<u></u><u></u></span></p>
+</td>
+<td width=3D"80" valign=3D"top" style=3D"width:124.95pt;border-top:none;bor=
+der-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid win=
+dowtext;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">c=
+onfigure failed</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+<td width=3D"228" valign=3D"top" style=3D"width:16cm;border-top:none;border=
+-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid window=
+text;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742msolistparagraph">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif">checking whet=
+her C++ compiler accepts -lgtest... yes<br>
+checking whether C++ compiler accepts -pthread... (cached) yes<br>
+checking for main in -lgtest... yes<br>
+checking whether C++ compiler accepts -lgmock... yes<br>
+checking whether C++ compiler accepts -pthread... (cached) yes<br>
+checking for main in -lgmock... yes<br>
+checking for valgrind... no<br>
+checking whether to build with code coverage support... no<br>
+configure: Enabling OE-SDK at /home/pengms1/SDK/openbmc-sdk/2.8.0/sysroots/=
+core2-64-openbmc-linux<br>
+<span style=3D"color:red">configure: error: conditional &quot;HAVE_SYSTEMD&=
+quot; was never defined.<br>
+Usually this means the macro was only invoked conditionally.</span></span><=
+span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625" style=
+=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">2=
+.</span><span lang=3D"EN-US" style=3D"font-size:7pt;font-family:&quot;Times=
+ New Roman&quot;,serif;color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+</span><span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:b=
+lack">The host tool compiled with phosphor-ipmi-flash hash id b90cacdd0c1ab=
+8ea7576d4ca9f20aa5828a84e42 and BMC flash library compiled with phosphor-ip=
+mi-flash hash id
+<span style=3D"background:white">c9792e75361c86da7f674976eacd03c761021d2f, =
+the BMC image can transfer from host side to BMC side via LPC bridge. The i=
+mage size is correct, but the image content seems to be incorrect as below,=
+ could you give us some
+</span>clues to solve it if this is an issue? </span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<table class=3D"gmail-m_-3730916834779851897MsoNormalTable" border=3D"0" ce=
+llspacing=3D"0" cellpadding=3D"0" style=3D"margin-left:18pt;border-collapse=
+:collapse">
+<tbody>
+<tr>
+<td width=3D"344" valign=3D"top" style=3D"width:307.65pt;border:1pt solid w=
+indowtext;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
+mage of host side</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+<td width=3D"285" valign=3D"top" style=3D"width:318.95pt;border-top:1pt sol=
+id windowtext;border-right:1pt solid windowtext;border-bottom:1pt solid win=
+dowtext;border-left:none;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">I=
+mage of BMC side</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</td>
+</tr>
+<tr>
+<td width=3D"344" valign=3D"top" style=3D"width:307.65pt;border-right:1pt s=
+olid windowtext;border-bottom:1pt solid windowtext;border-left:1pt solid wi=
+ndowtext;border-top:none;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">p=
+engms1@hsbmc:/flash_tool$ hexdump -n 64 ./630.mtd
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000000 00be ea00 f014 e59f f014 e59f f014 e59f</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000010 f014 e59f f014 e59f f014 e59f f014 e59f</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000020 0060 0000 00c0 0000 0120 0000 0180 0000</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000030 01e0 0000 0240 0000 02a0 0000 beef dead</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+</td>
+<td width=3D"285" valign=3D"top" style=3D"width:318.95pt;border-top:none;bo=
+rder-left:none;border-bottom:1pt solid windowtext;border-right:1pt solid wi=
+ndowtext;padding:0cm 5.4pt">
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">r=
+oot@hr630:~# hexdump -n 64 /run/initramfs/bmc-image</span><span lang=3D"EN-=
+US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000000 abc4 ef4e 11f2 b128 2538 fd9c 9f7a 2e00</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000010 78c4 af6e 01f2 a92a 7438 759c 8e76 2e00</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000020 f397 05f0 84e4 6546 0ac6 b6d0 ef19 cb80</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">0=
+000030 e9d7 82f0 c4e4 75dc 1bc6 a295 7319 49c4</span><span lang=3D"EN-US"><=
+u></u><u></u></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397gmail-m154527069409282312=
+7gmail-m-8411625341099404742gmail-m1788754371567513735gmail-m643625" style=
+=3D"margin-left:24pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">D=
+TS setting:<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fl=
+ash_memory: region@98000000 {<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 no-map;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 reg =3D &lt;0x98000000 0x00100000&g=
+t;; /* 1M */<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };=
+</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397msolistparagraph" style=
+=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">B=
+MC configuration setting:<br>
+EXTRA_OECONF +=3D &quot; --enable-reboot-update=C2=A0 --enable-static-layou=
+t --enable-aspeed-lpc MAPPED_ADDRESS=3D0x98000000 --enable-reboot-update&qu=
+ot;</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+<p class=3D"gmail-m_-3730916834779851897gmail-m-1825268208033823891gmail-m-=
+7127236003342500103gmail-m-341926668711419608gmail-m2984205525165170508gmai=
+l-m-3973244268204610114gmail-m-3943518016435637397msolistparagraph" style=
+=3D"margin-left:18pt">
+<span lang=3D"EN-US" style=3D"font-family:Calibri,sans-serif;color:black">H=
+ost tool setting:<br>
+./burn_my_bmc --command update --interface ipmilpc --image ./630.mtd --sig =
+./sig.txt --type static --address 2550136832 --length 65536</span><span lan=
+g=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</blockquote>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The address provided for the ho=
+st:<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&gt;&gt;&gt; &#39;0x%x&#39; % 2=
+550136832<u></u><u></u></span></p>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&#39;0x98000000&#39;<u></u><u><=
+/u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Is a region of memory on the ho=
+st that&#39;s set aside for this purpose and is mapped via /dev/mem.=C2=A0 =
+It&#39;s not the address the BMC Is using.=C2=A0 You&#39;ll need to use a
+ region reserved for this purpose in the host kernel or bios.<u></u><u></u>=
+</span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=C2=A0<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin:5pt 0c=
+m 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">Thanks,<br>
+Andrew</span><span lang=3D"EN-US"><u></u><u></u></span></p>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+</blockquote></div></div>
+
+--0000000000009af5b6058e45f6ff--
