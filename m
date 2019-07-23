@@ -2,67 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D73D725CB
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 06:17:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4F46725CC
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 06:18:14 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45thrg0D0MzDqB5
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 14:17:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45thsb1JTJzDqPm
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 14:18:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::641; helo=mail-pl1-x641.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="ZBdqEJbS"; 
- dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45tQD03vvwzDqPM
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 03:18:08 +1000 (AEST)
-Received: by mail-pl1-x641.google.com with SMTP id i2so20880815plt.1
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 10:18:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+ExFB0nxtjHAdlbigHaEis7x3gF9OdgCWRRHpPcPEIU=;
- b=ZBdqEJbSfEQaNulkRNW2gqtv1Tgnc+E6G/6QCmwwAf3UE7vv4XavckSTFBgSs97rWD
- o3JR36jm+cN0JuIUPzagFykc1X7zOE7dHePxk5ONfYU2yDZSFKUgyoeyHkHd5RMCiaA1
- n9wqIru/3Oezogkt+3+etHRup9crlffKn/c/qGEaBJWmOAEAoXoZH6wWEA2M6T/dg3fx
- jiAF8j8kdFTfZbXboPSlB51eF6rk6ifECG7fYgmlyEQqNRh0nCKHJnY0TlRuPTrzGg+N
- 9hTFn2RWWsUs94+crTZ0f2qNFH3bWuBr72xVC33ETQSoiHzRxkimygHFWNurV4/cadEQ
- 1/7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=+ExFB0nxtjHAdlbigHaEis7x3gF9OdgCWRRHpPcPEIU=;
- b=KvHVVnWBfxGugTliFBGDywDWWccvbHs0qxrEP5QRyhv3MHbHzkiUlnN2BlQjMd6rze
- cTxTwQnkaeOVUPid1CPAuYYVQIFTW2MLwqj++worWK5MYg+wMf8hNTP9gWn2wxNe8Kdc
- u/5YtEZyhlXLFzpQ0gxTyt3aVtp2LbHic/1HEYvy2Nc/o6CmD7cQ+E+fVK0wYUU9wlyL
- MwlhwrBVF7hIhIMJbZpiw6vkHbJfnOK1GR4GXfci4s5UV14Bo9+mUKbt02d26znSapnv
- N9StHlwJGZj82S/Ash1IG6sP9Ak0r8F+NIT7ry1IiFP3EC1KI4TSYQ/nKP3pnEGISu5l
- jgIA==
-X-Gm-Message-State: APjAAAXgM9Rc666Fb9IAHSxq6ReOXjituOBxEZJzEb4moi2PrP9rDwbQ
- ZBnNiN3TdR6oJ/pd9tYGt6xLZh89Sqmqn/qupgiu3Q==
-X-Google-Smtp-Source: APXvYqy8pjLZ0FSBnKfO4PZtH1IHKxb0RbRz9LbnFmbkb6TUs76AFVZXI6jFU9sAOy2Y4X1sUTdFClrChw5kfmhVgB8=
-X-Received: by 2002:a17:902:9897:: with SMTP id
- s23mr81028326plp.47.1563902284750; 
- Tue, 23 Jul 2019 10:18:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45tQH41j7ZzDqBY
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 03:20:46 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2019 10:20:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,299,1559545200"; d="scan'208";a="172018994"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.150])
+ ([10.7.153.150])
+ by orsmga003.jf.intel.com with ESMTP; 23 Jul 2019 10:20:43 -0700
+Subject: Re: Could phosphor-hwmon support peci-sensors
+To: James Feist <james.feist@linux.intel.com>,
+ =?UTF-8?B?RHVrZSBEdSAo5p2c56Wl5ZiJKQ==?= <Duke.Du@quantatw.com>
+References: <7297d188594b4d83a1f32f87b54db2dc@quantatw.com>
+ <d2e652b7-9fea-e6a0-eafa-3f0c12008cfc@linux.intel.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <e1f56e58-66c6-5b7c-e41f-76c09cdfec3f@linux.intel.com>
+Date: Tue, 23 Jul 2019 10:20:43 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.2
 MIME-Version: 1.0
-References: <CAO=notxxEHzBeCew3OaGs9E=vvzjf9q2XFD1E0S9aRqxzSSHzQ@mail.gmail.com>
- <b6210038-21fb-6e90-fb90-88d5602db81e@linux.intel.com>
-In-Reply-To: <b6210038-21fb-6e90-fb90-88d5602db81e@linux.intel.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 23 Jul 2019 10:17:53 -0700
-Message-ID: <CAO=notwynLKMA9=37BQTDfdbda1Stfu=kgHt2YO4EwhpT2DekA@mail.gmail.com>
-Subject: Re: dbus-sensors + phosphor-hwmon
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <d2e652b7-9fea-e6a0-eafa-3f0c12008cfc@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,44 +56,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Tanous,
- Ed" <ed.tanous@intel.com>, Ofer Yehielli <ofery@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 23, 2019 at 9:58 AM James Feist <james.feist@linux.intel.com> wrote:
->
-> On 7/22/2019 3:26 PM, Patrick Venture wrote:
-> > I haven't tested yet, but I have a device-tree with a lot of ~40
-> > hard-coded sensors on it, and then the other sensors will be detected
-> > with entity-manager (once that's set up).
->
-> Entity-manager doesn't detect sensors, it detects removable components
-> then expects certain sensors. For our baseboard here:
-> https://github.com/openbmc/entity-manager/blob/master/configurations/WFT%20Baseboard.json
-> at the bottom of the file there is a dbus-probe for an
-> xyz.openbmc_project.FruDevice interface with some specific properties.
-> If those match, then entity-manager through sysfs can add some sensors
-> https://github.com/openbmc/entity-manager/blob/master/include/devices.hpp
+On 7/23/2019 10:12 AM, James Feist wrote:
+> On 7/22/2019 2:49 AM, Duke Du (杜祥嘉) wrote:
+>> Hi James,
+>>     I have some problems with cpusensor in package dbus-sensors. When 
+>> I set temperatures of critical and warning high for DIMM is work, but 
+>> Core is not. Could I set temperatures of critical and warning high for 
+>> Core by json file in entity-manager ?
+> 
+> Jae is the implementer of this sensor.
+> 
+> Jae, can you please help? I believe this is because the thresholds are 
+> read from the CPU.
 
-Right, so entity-manager writes out a configuration to dbus and
-dbus-sensors works from that exported configuration on dbus -- ?
-That's my current understanding, the trick is, the dynamic versus
-static, and how some sensors are already specified in the device-tree.
+In case of CPU package and core temperatures, peci-cputemp hwmon driver
+reads Tjmax and Tcontrol values from the CPU through PECI and cpusensor
+service uses it for critical and warning setting so no need to add json
+setting into entity-manager.
 
->
-> You could also use device tree if you wanted, the export just wouldn't
-> succeed. But you would need a json file with the sensors bus and address
-> for dbus-sensors to work.
->
+In case of DIMM temperature threshold information cannot be read through
+PECI so the json setting in entity-manager is needed.
+
+Thanks,
+Jae
+
+> Thanks,
+> 
 > -James
->
->
-> >
-> > In this case, will entity-manager populate the dbus configuration with
-> > those in the device-tree initially making them available to
-> > dbus-sensors? (or will we or should we, also configure phosphor-hwmon
-> > for those sensors?)
-> >
-> > Patrick
-> >
+> 
+> 
+>> (There is my josn file for cpu in package entity-manager)
+>>
+>>              "Thresholds": [
+>>                  {
+>>                      "Direction": "greater than",
+>>                      "Label": "Core",
+>>                      "Name": "upper critical",
+>>                      "Severity": 1,
+>>                      "Value": 75
+>>                  },
+>>                  {
+>>                      "Direction": "greater than",
+>>                      "Label": "Core",
+>>                      "Name": "upper non critical",
+>>                      "Severity": 0,
+>>                      "Value": 70
+>>                  },
+>>                  {
+>>                      "Direction": "greater than",
+>>                      "Label": "DIMM",
+>>                      "Name": "upper critical",
+>>                      "Severity": 1,
+>>                      "Value": 85
+>>                  },
+>>                  {
+>>                      "Direction": "greater than",
+>>                      "Label": "DIMM",
+>>                      "Name": "upper non critical",
+>>                      "Severity": 0,
+>>                      "Value": 80
+>>                  }
+>>              ],
+>>
+>> Thanks.
+>> Duke, Du
+>>
+>>> -----Original Message-----
+>>> From: openbmc
+>>> [mailto:openbmc-bounces+will.liang=quantatw.com@lists.ozlabs.org] On
+>>> Behalf Of Vijay Khemka
+>>> Sent: Wednesday, July 10, 2019 4:20 AM
+>>> To: James Feist <james.feist@linux.intel.com>; Brad Bishop
+>>> <bradleyb@fuzziesquirrel.com>; Duke Du (杜祥嘉)
+>>> <Duke.Du@quantatw.com>
+>>> Cc: openbmc@lists.ozlabs.org; Jae Hyun Yoo 
+>>> <jae.hyun.yoo@linux.intel.com>
+>>> Subject: Re: Could phosphor-hwmon support peci-sensors
+>>>
+>>>
+>>>
+>>> ﻿On 7/8/19, 11:29 AM, "openbmc on behalf of James Feist"
+>>> <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of
+>>> james.feist@linux.intel.com> wrote:
+>>>
+>>>      On 7/8/19 10:52 AM, Brad Bishop wrote:
+>>>      > On Mon, Jul 08, 2019 at 12:33:21PM +0000, Duke Du (杜祥嘉) wrote:
+>>>      >> Hi All,
+>>>      >>  I have some problems with phosphor-hwmon.
+>>>      >> Could package phosphor-hwmon supports peci sensors such as cpu
+>>> and
+>>>      >> dimm tempatures ?
+>>>      >> If yes, could you give me some hints that how do I write 
+>>> configuration
+>>>      >> for peci sensors, please :).
+>>>      >>
+>>>      >> Thanks.
+>>>      >> Duke, Du
+>>>      >
+>>>      > phosphor-hwmon should work with anything that implements the
+>>> hwmon ABI.
+>>>      > So I think to make PECI sensors work with phosphor-hwmon, you 
+>>> need
+>>> hwmon
+>>>      > drivers for PECI sensors.  I don't know if anyone is working 
+>>> on that.
+>>>      >
+>>>      > I suspect the other sensor application - dbus-sensors supports 
+>>> PECI just
+>>>      > fine.  But I don't know how it works, if it can be used 
+>>> without entity
+>>>      > manager,  and/or if it can be run in parallel with 
+>>> phosphor-hwmon.
+>>>
+>>>      + Jae, CPU Sensor Author
+>>>
+>>>
+>>> https://github.com/openbmc/dbus-sensors/blob/master/src/CPUSensorMain.
+>>> cpp
+>>>
+>>>      CPU sensor currently supports PECI sensors
+>>>
+>>> https://github.com/openbmc/dbus-sensors/blob/master/src/CPUSensor.cpp
+>>>
+>>>
+>>> https://github.com/openbmc/entity-manager/blob/f861da89ed03f9ec556c5e
+>>> d6ac819988c0c1f498/configurations/WFT%20Baseboard.json#L2181
+>>>
+>>>      It does require entity-manager currently, but it could be run in
+>>>      parallel with phosphor-hwmon.
+>>>
+>>> There is peci driver along with hwmon peci driver available in 
+>>> openbmc linux
+>>> kernel 5.3 which will take care of hwmon interface. And there are also
+>>> peci-dimm and peci-cpu driver to read cpu and dimm sensors. Once these
+>>> drivers enabled, it sould work with phosphor-hwmon without entity 
+>>> manager
+>>> and dbus-sensors.
+>>>
+>>> Regards
+>>> -Vijay
+>>>
+>>>      -James
+>>>
+>>
