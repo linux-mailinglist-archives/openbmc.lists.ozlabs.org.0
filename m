@@ -2,58 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3259725A5
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 05:59:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E758E725B5
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 06:10:46 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45thRR154nzDq6N
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 13:58:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45thj00bvrzDq9B
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 14:10:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kernel.org
- (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.b="SsT/GmA7"; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45tM0Q67HhzDqQ9;
- Wed, 24 Jul 2019 00:52:54 +1000 (AEST)
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com
- [209.85.222.181])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 4B356227C0;
- Tue, 23 Jul 2019 14:52:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1563893572;
- bh=mxAyG2JWokyVjQwpLu0BobuO2nOu71LIAdILH2OdHK0=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=SsT/GmA7WLxu60XFYod8t1s+fvkmxf73mvaoLNNxbiTOvhxPnPw/1IkqXSXvvxKQl
- ZCROOwBxWxMqCKY2Q4lqljcMP0vZMuhMJX9L2lBqGVf6amVNzvsTt0LN1G4fFEGCFi
- GUR4fiX5KQgNIpL+X3wCr+/3XOzhM7SxTu7asOV8=
-Received: by mail-qk1-f181.google.com with SMTP id r4so31258250qkm.13;
- Tue, 23 Jul 2019 07:52:52 -0700 (PDT)
-X-Gm-Message-State: APjAAAVZw6ZjMu1IqYk5C1b5MkbGiIq+i/LvQEubij8k37gaG2tEeAeO
- F6K0efbTh3oMe6BmOURH89xYMWBJ1WrXQLYOqQ==
-X-Google-Smtp-Source: APXvYqwZiOcoe1s7qhiFAJYivK+N5IPJMZGWxi+ThTt1Kn4ty2xNdEW6gS2kpNUOpRp3jkH0X+VUlMMwP04mvYWysaQ=
-X-Received: by 2002:a37:6944:: with SMTP id e65mr46744250qkc.119.1563893571463; 
- Tue, 23 Jul 2019 07:52:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45tPQl35jYzDqFJ
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 02:42:21 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Jul 2019 09:42:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,299,1559545200"; d="scan'208";a="368429787"
+Received: from unknown (HELO [10.251.18.151]) ([10.251.18.151])
+ by fmsmga005.fm.intel.com with ESMTP; 23 Jul 2019 09:42:18 -0700
+Subject: Re: ipmi-fru-parser + entity-manager
+To: Patrick Venture <venture@google.com>,
+ Benjamin Fair <benjaminfair@google.com>
+References: <CAO=notwpKm8KLiXbL_+02DLUsvjjZqAPBCujnTLCd8GnheQQvA@mail.gmail.com>
+ <CADKL2t4DztiWaWDFpYK_iHqyJxxk2+dgOhGTgayT2uUPVqGcKg@mail.gmail.com>
+ <CAO=notz0U8o-29JAy2_bJYCO4Sp_8ii3KZ4r88Y=QFwWTZd6-A@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <06aa38d3-a0b0-fea9-21ae-6b0eb126aadd@linux.intel.com>
+Date: Tue, 23 Jul 2019 09:42:17 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190723002052.2878847-1-vijaykhemka@fb.com>
- <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
-In-Reply-To: <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Tue, 23 Jul 2019 08:52:39 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+Kw0TFW_v54Y2QHcChqpNDYhFyCSO5Cj-be9yLSCq-Pw@mail.gmail.com>
-Message-ID: <CAL_Jsq+Kw0TFW_v54Y2QHcChqpNDYhFyCSO5Cj-be9yLSCq-Pw@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Add pxe1610 as a trivial device
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAO=notz0U8o-29JAy2_bJYCO4Sp_8ii3KZ4r88Y=QFwWTZd6-A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,49 +56,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- Jiri Kosina <trivial@kernel.org>, Herbert Xu <herbert@gondor.apana.org.au>,
- Anson Huang <anson.huang@nxp.com>, Ard Biesheuvel <ard.biesheuvel@linaro.org>,
- Patrick Venture <venture@google.com>,
- "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Jeremy Gebben <jgebben@sweptlaser.com>, linux-aspeed@lists.ozlabs.org,
- Guenter Roeck <linux@roeck-us.net>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Tanous,
+ Ed" <ed.tanous@intel.com>, Ofer Yehielli <ofery@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 23, 2019 at 8:50 AM Rob Herring <robh+dt@kernel.org> wrote:
->
-> On Mon, Jul 22, 2019 at 6:46 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
-> >
-> > The pxe1610 is a voltage regulator from Infineon. It also supports
-> > other VRs pxe1110 and pxm1310 from Infineon.
+On 7/23/2019 7:20 AM, Patrick Venture wrote:
+> On Mon, Jul 22, 2019 at 6:34 PM Benjamin Fair <benjaminfair@google.com> wrote:
+>>
+>> On Mon, Jul 22, 2019 at 3:25 PM Patrick Venture <venture@google.com> wrote:
+>>>
+>>> Does entity-manager manage the FRU eeprom devices?  Or does one still
+>>> need to configure ipmi-fru-parser, etc?
+>>>
+>>> Patrick
+>>
+>> There is a FRU parser shipped with entity-manager which searches for
+>> FRU EEPROMs and attempts to read them:
+>> https://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp
+> 
+> I saw that, but is that a replacement for the support provided by
+> ipmi-fru-parser?  I'm assuming yes, I just want an authoritative,
+> "yes, you get this and don't worry about ipmi-fru-parser when using
+> entity-manager."
+> 
+I haven't used ipmi-fru-parser, so I'm not sure. Basically fru-device 
+scans all i2c channels, looks for things that 'look like a fru' and 
+populates them on d-bus. It doesn't do much more than that. 
+Entity-manager can then "probe" it's properties and load configurations. 
+If that is what ipmi-fru-parser does then it might be a replacement.
 
-What happened to the other compatibles? S/w doesn't need to know the
-differences?
-
-> >
-> > Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
-> > ---
-> >  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
-> > index 2e742d399e87..1be648828a31 100644
-> > --- a/Documentation/devicetree/bindings/trivial-devices.yaml
-> > +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
-> > @@ -99,6 +99,8 @@ properties:
-> >              # Infineon IR38064 Voltage Regulator
-> >            - infineon,ir38064
-> >              # Infineon SLB9635 (Soft-) I2C TPM (old protocol, max 100khz)
-> > +          - infineon,pxe1610
-> > +            # Infineon PXE1610, PXE1110 and PXM1310 Voltage Regulators
->
-> The comment goes above the entry.
->
-> >            - infineon,slb9635tt
-> >              # Infineon SLB9645 I2C TPM (new protocol, max 400khz)
-> >            - infineon,slb9645tt
-> > --
-> > 2.17.1
-> >
+-James
