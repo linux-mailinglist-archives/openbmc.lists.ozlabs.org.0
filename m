@@ -1,67 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A82BA70ED0
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 03:51:25 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45t1fg26Z6zDqDF
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 11:51:23 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9878470EE5
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 03:57:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45t1nD2KfnzDqWT
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jul 2019 11:57:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d32; helo=mail-io1-xd32.google.com;
- envelope-from=tyler.sabdon@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::643; helo=mail-pl1-x643.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="O2y7Z7N6"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="DL1hJknP"; 
  dkim-atps=neutral
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
- [IPv6:2607:f8b0:4864:20::d32])
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
+ [IPv6:2607:f8b0:4864:20::643])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45t1f36LgJzDqD8
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jul 2019 11:50:49 +1000 (AEST)
-Received: by mail-io1-xd32.google.com with SMTP id m24so78426913ioo.2
- for <openbmc@lists.ozlabs.org>; Mon, 22 Jul 2019 18:50:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45t1mP1DhGzDqR1;
+ Tue, 23 Jul 2019 11:56:18 +1000 (AEST)
+Received: by mail-pl1-x643.google.com with SMTP id t14so19906973plr.11;
+ Mon, 22 Jul 2019 18:56:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=f3gIBmgwfkjV4ONJQiNjLSc67pw5VTKn3sQf8vU4Ra8=;
- b=O2y7Z7N6ntOwWcs5P6h7eCgao3kh02vkCVcfSDzFcm5rLeg0ez+YtCVwQwslolhLOS
- ADClE2H2G3BbKrQszE7583rPWacR1e+Ok0Gs5Mqv5Rxc1T2sOpaVU3GbuHt8iaSSlIY1
- ghe7d8mDLg+ibyqjc726ti/mR2I/8eMfpkQ0EH6tka7dSTZ08k2ms1TXUmRbNH9SH7sS
- QrO9I38hm4pHlaKwB59BqRxELAk4+S+b96uqjrjYlbsbOZNnJECt17WCbYp798k4171b
- M+0Ko0g8GJE5Mgs1AaCX9ep9KAA2/+rcZO8KSH1H2tNT6GYHUxubFxDX+u5becX/2WTy
- 73SA==
+ h=sender:subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=zdeVjAmSrferDd7T8hxsXdL0gr4l2xZ9zqxhMuU3IN4=;
+ b=DL1hJknP7dOl9CjvZmvtrrFSLoqcpqlmYiN2kZoCeny4znXR65bo8ivkfAHSiRM8Io
+ ciV5lejw6TLu5OncuR3jGwZHKmjXVnQpbP2HlGNCp5/18DPVq0rEGMRIk7NYUXKy9SQz
+ AE359Z3Ib+/HgL9RChLa4wN7g0Vmm3Ubqrjglfe5yCw7/Y4pGBbi5JwE9SQD6McdFs/Y
+ hdWQVG5eWZWRRNYC/wR0Z8IrBVFFuB8XzTj1CdTuQ/Wq0aynAWQ8W2wPHvlMahAq6O74
+ ESiKZsWT+vZH5vvL2fcLwpdekXs87EFTsfQkYJmbOPZc2f1wPEgwIucBUAyT7rABq7sx
+ WjEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=f3gIBmgwfkjV4ONJQiNjLSc67pw5VTKn3sQf8vU4Ra8=;
- b=GhmLa7HIPMHB/MA0UPOHY1U1g6b4XObMxMML8egCUMn1bMmBg6UnMTWfXSzeDcI/n8
- 0fZ2IQO6F4FPrRg2+WB13+BDWoiSr5TcZKnD1h16kC1sEGotjbZz2hbqJF3jaDGLjlCL
- 85NMMsO4ZJdCzqfqyvE/CiG9H/pomiJWbrTK6GMmwsGeOBZC6r2r4iIFLAoqF3+llCVn
- tseA0UsjYy0c2wECs9612l0rL4+hcAXfD9qBzmK9b7KxVhOi1D+RWaiwmkERHWfDpyeR
- fR8CyGUH+J2qX6pDWEPvW1B/54ckDpr8puAcINRYf3oz9z+2lOhQAdq/Vbj4kQ4trhFu
- zOdw==
-X-Gm-Message-State: APjAAAWmtfrHZyIbT3oY9/v+mLY7k7wttW8hPQemc/qZgZ87fBrZH0Rq
- rm4O7RZSIcE1RmyOs2Izc8QG4yOjmy2YB4NJwMKb2+QW
-X-Google-Smtp-Source: APXvYqxeypiShm5e6uBDPrEJc6n2BBmrmfj+ByabAYbE2Qz03OYPa1AUTkZ8GkfjGS3GlI6XUp6ka6gKACxYhL7uCWg=
-X-Received: by 2002:a5e:d817:: with SMTP id l23mr20153493iok.282.1563846646186; 
- Mon, 22 Jul 2019 18:50:46 -0700 (PDT)
+ h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+ :date:user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=zdeVjAmSrferDd7T8hxsXdL0gr4l2xZ9zqxhMuU3IN4=;
+ b=sEIjZ1CURg+esMhl/kQvSKzeNsNAF2TAXDo0NtQU2or8MNKJWFY4IIFhUsMmC+RZ3q
+ 7KYbDQu68PbhnFkakUPJTOn4L67tRMNQmX1st+oCJoZF3bVnRKlTRkqaK/1JaOw1F3Oc
+ L8wMlPfBatU2V2gcid/LoZI8VVeDcarlsImt13sbZp4Yh2RbxM6QL3RjY0d0m7kGu8yI
+ lc20QAwywyJX/aUypLEJAXIcGoIZb3PNkau3znnK6AnBVSM8ugkQKdGk2OfnPXZ6gSQX
+ R6sP93mqd3lQ2ns+u2v1BWMzyp9K7XYSaRHoGqVBLtIL9LJ2+c9CqV7PGZID3aO8a76F
+ goNg==
+X-Gm-Message-State: APjAAAV74RrIByzx4vrOjA5kUlaBvzAhDR/oT/1AQaGSOsQzOsJgW3DC
+ V7VLVWH2KGaZIBpo2GzufuI=
+X-Google-Smtp-Source: APXvYqzKhsXfltpbJVJRV5E8B+0BKmnIOshdtuCdiVOvUrS5QqQf/Dmwvk82qizj9HvksQeH3+gOmg==
+X-Received: by 2002:a17:902:44f:: with SMTP id
+ 73mr78998934ple.192.1563846976747; 
+ Mon, 22 Jul 2019 18:56:16 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ s11sm12752287pgc.78.2019.07.22.18.56.14
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 22 Jul 2019 18:56:15 -0700 (PDT)
+Subject: Re: [PATCH] dt-bindings: hwmon: Add binding for pxe1610
+To: Vijay Khemka <vijaykhemka@fb.com>
+References: <20190722192451.1947348-1-vijaykhemka@fb.com>
+ <20190722192451.1947348-2-vijaykhemka@fb.com>
+ <20190722200622.GA20435@roeck-us.net>
+ <6E2B35D8-B538-4C96-B289-27A87ECD74DB@fb.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Message-ID: <d3137d6b-8bf8-4da6-9da7-a42b8bc68fbd@roeck-us.net>
+Date: Mon, 22 Jul 2019 18:56:13 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CAO9PYRL-VUFar6MRFfEHxvx+XqSdybU-WdNkWxon8nzcU3DiMw@mail.gmail.com>
- <98d4b6e9-d4a8-c7cf-014d-64de2e6c8a5d@linux.intel.com>
-In-Reply-To: <98d4b6e9-d4a8-c7cf-014d-64de2e6c8a5d@linux.intel.com>
-From: Deng Tyler <tyler.sabdon@gmail.com>
-Date: Tue, 23 Jul 2019 09:50:32 +0800
-Message-ID: <CAO9PYRJ6FBP7DGBc_UPbB9LtDUckUY6zqZMvqtTpeWxuVJVrBA@mail.gmail.com>
-Subject: Re: Address type in entity-manager repo
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: multipart/alternative; boundary="000000000000d44bc9058e4f6bf5"
+In-Reply-To: <6E2B35D8-B538-4C96-B289-27A87ECD74DB@fb.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,162 +87,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+ Jean Delvare <jdelvare@suse.com>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d44bc9058e4f6bf5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/22/19 5:12 PM, Vijay Khemka wrote:
+> 
+> 
+> ﻿On 7/22/19, 1:06 PM, "Guenter Roeck" <groeck7@gmail.com on behalf of linux@roeck-us.net> wrote:
+> 
+>      On Mon, Jul 22, 2019 at 12:24:48PM -0700, Vijay Khemka wrote:
+>      > Added new DT binding document for Infineon PXE1610 devices.
+>      >
+>      > Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
+>      > ---
+>      >  .../devicetree/bindings/hwmon/pxe1610.txt         | 15 +++++++++++++++
+>      >  1 file changed, 15 insertions(+)
+>      >  create mode 100644 Documentation/devicetree/bindings/hwmon/pxe1610.txt
+>      >
+>      > diff --git a/Documentation/devicetree/bindings/hwmon/pxe1610.txt b/Documentation/devicetree/bindings/hwmon/pxe1610.txt
+>      > new file mode 100644
+>      > index 000000000000..635daf4955db
+>      > --- /dev/null
+>      > +++ b/Documentation/devicetree/bindings/hwmon/pxe1610.txt
+>      > @@ -0,0 +1,15 @@
+>      > +pxe1610 properties
+>      > +
+>      > +Required properties:
+>      > +- compatible: Must be one of the following:
+>      > +	- "infineon,pxe1610" for pxe1610
+>      > +	- "infineon,pxe1110" for pxe1610
+>      > +	- "infineon,pxm1310" for pxm1310
+>      > +- reg: I2C address
+>      > +
+>      > +Example:
+>      > +
+>      > +vr@48 {
+>      > +	compatible = "infineon,pxe1610";
+>      > +	reg = <0x48>;
+>      > +};
+>      
+>      Wouldn't it be better to add this to
+>      ./Documentation/devicetree/bindings/trivial-devices.txt ?
+> Sure, I didn't know about this file. I will add and send another patch. It is
+> Documentation/devicetree/bindings/trivial-devices.yaml. How do I abandon
+> this patch or just leave it.
+>      
 
-Hi James:
-    Thank for your kindly reply and that really helps. I have another
-question about entity-manager. In entity-manager, it add an dbus interface
-"xyz.openbmc_project.Inventory.Manager" to object
-"/xyz/openbmc_project/inventory" in its service.
-Why do that? I checked code and found there is no property or object will
-be added under this interface. Meanwhile anther service
-"xyz.openbmc_project.Inventory.Manager" has same interface and cause ipmid
-get wrong service if receiving a fru ipmi command. Do you have any
-suggestions? thanks. Regards
+When you send v2, just add the device to the trivial-devices file instead
+and describe the differences to v1 (ie this patch).
 
-Tyler
+Guenter
 
-James Feist <james.feist@linux.intel.com> =E6=96=BC 2019=E5=B9=B47=E6=9C=88=
-18=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=887:01=E5=AF=AB=E9=81=93=EF=
-=BC=9A
-
-> On 7/16/19 12:15 AM, Deng Tyler wrote:
-> > Hi All:
-> >      I am investigated entity-manager with dbus-sensors. In
-> > entity-manager, the schema define Address type is string as below
-> > ---------------------------------------------------
-> >              "type": "object",
-> >              "properties": {
-> >                  "Exposes": {
-> >                      "type": "array",
-> >                      "items": {
-> >                          "type": "object",
-> >                          "properties": {
-> >                              "Address": {
-> >                                  "type": "string"      <=3D=3D here
-> >                              },
-> >                              "Name": {
-> >                                  "type": "string"
-> >                              },
-> > --------------------------------------------------------
-> > In dbus-sensor application, cpusensor get CPU configuration from DBUS.
-> > But the type is mismatch and cause cpusensor terminated.
-> > *journalctl:*
-> > cpusensor[296]: terminate called after throwing an instance of
-> > 'std::invalid_argument'
-> > cpusensor[296]:   what():  Cannot translate type to unsigned int
-> >
-> > I found code in cpusensor to get "Address" and type shall be integer
-> > from dbus as below
-> > image.png
-> > But in dbus the Address property is string
-> > image.png
-> >
-> > Is this code error? or I miss something? thanks.
->
-> I would suggest updating EntityManager, looks like you are using an old
-> version, SkylakeCPU change to XeonCpu a long time ago.
->
-> Thanks,
->
-> James
->
->
->
-> >
-> > Tyler
->
-
---000000000000d44bc9058e4f6bf5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi James:<div>=C2=A0 =C2=A0 Thank for your kindly reply an=
-d that really helps. I have another question about entity-manager. In entit=
-y-manager, it add an dbus interface &quot;xyz.openbmc_project.Inventory.Man=
-ager&quot; to object &quot;/xyz/openbmc_project/inventory&quot; in its serv=
-ice.</div><div>Why do that? I checked code and found there is no property o=
-r object will be added under this interface. Meanwhile anther service &quot=
-;xyz.openbmc_project.Inventory.Manager&quot; has same interface and cause i=
-pmid get wrong service if receiving a fru ipmi command. Do you have any sug=
-gestions? thanks. Regards</div><div><br></div><div>Tyler</div></div><br><di=
-v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">James Feist &=
-lt;<a href=3D"mailto:james.feist@linux.intel.com">james.feist@linux.intel.c=
-om</a>&gt; =E6=96=BC 2019=E5=B9=B47=E6=9C=8818=E6=97=A5 =E9=80=B1=E5=9B=9B =
-=E4=B8=8A=E5=8D=887:01=E5=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex">On 7/16/19 12:15 AM, Deng Tyler wrote:<br=
->
-&gt; Hi All:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 I am investigated entity-manager with dbus-sensors=
-. In <br>
-&gt; entity-manager, the schema define Address type is string as below<br>
-&gt; ---------------------------------------------------<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;type&quot;: &quo=
-t;object&quot;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;properties&quot;=
-: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Ex=
-poses&quot;: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 &quot;type&quot;: &quot;array&quot;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 &quot;items&quot;: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 &quot;type&quot;: &quot;object&quot;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 &quot;properties&quot;: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Address&quot;: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;type&quot;: &quot;st=
-ring&quot;=C2=A0 =C2=A0 =C2=A0 &lt;=3D=3D here<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Name&quot;: {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;type&quot;: &quot;st=
-ring&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-&gt; --------------------------------------------------------<br>
-&gt; In dbus-sensor application, cpusensor get CPU configuration from DBUS.=
- <br>
-&gt; But the type is mismatch and cause cpusensor terminated.<br>
-&gt; *journalctl:*<br>
-&gt; cpusensor[296]: terminate called after throwing an instance of <br>
-&gt; &#39;std::invalid_argument&#39;<br>
-&gt; cpusensor[296]: =C2=A0 what(): =C2=A0Cannot translate type to unsigned=
- int<br>
-&gt; <br>
-&gt; I found code in cpusensor to get &quot;Address&quot; and type shall be=
- integer <br>
-&gt; from dbus as below<br>
-&gt; image.png<br>
-&gt; But in dbus the Address property is string<br>
-&gt; image.png<br>
-&gt; <br>
-&gt; Is this code error? or I miss something? thanks.<br>
-<br>
-I would suggest updating EntityManager, looks like you are using an old <br=
->
-version, SkylakeCPU change to XeonCpu a long time ago.<br>
-<br>
-Thanks,<br>
-<br>
-James<br>
-<br>
-<br>
-<br>
-&gt; <br>
-&gt; Tyler<br>
-</blockquote></div>
-
---000000000000d44bc9058e4f6bf5--
