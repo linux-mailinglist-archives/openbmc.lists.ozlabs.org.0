@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3259725A5
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 05:59:01 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B691C725A1
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 05:58:13 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45thQV44hQzDqPm
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 13:58:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45thRR154nzDq6N
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 13:58:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,40 +16,41 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.b="IDFS8+WN"; 
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="SsT/GmA7"; 
  dkim-atps=neutral
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45tLxk4SnPzDq9j;
- Wed, 24 Jul 2019 00:50:34 +1000 (AEST)
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com
- [209.85.160.169])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45tM0Q67HhzDqQ9;
+ Wed, 24 Jul 2019 00:52:54 +1000 (AEST)
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com
+ [209.85.222.181])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 12E8322839;
- Tue, 23 Jul 2019 14:50:31 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 4B356227C0;
+ Tue, 23 Jul 2019 14:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1563893431;
- bh=NWY3jIvmqwRnEzth0vMKEw2NgpGjrUlBjW0KeFbTm5o=;
+ s=default; t=1563893572;
+ bh=mxAyG2JWokyVjQwpLu0BobuO2nOu71LIAdILH2OdHK0=;
  h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=IDFS8+WNAeGLOnDIvNmXlG7K9oKwlVq7Z+RmdL9ze2zCJFUZz5fvjP3elsU3XWct6
- tVyeZxrFlS7zl0MIWuIyAUvMa0HUuQ4I5w6wcCdPzbRvoQe13OtzfjBPi+FTsf6Yem
- y09h8D/vh1Vta4RvFOm8i+sZwmHxidcnx17LNy6o=
-Received: by mail-qt1-f169.google.com with SMTP id l9so42171007qtu.6;
- Tue, 23 Jul 2019 07:50:31 -0700 (PDT)
-X-Gm-Message-State: APjAAAUiiq3R1fSES8PJdfUadXmZZZVP7If+Z7OLPK0StHLMEtiDYFzb
- /702ts0SqrpYMFrrS4h1rieG9qMS3sfGFT5/wQ==
-X-Google-Smtp-Source: APXvYqwBju742Uv1oJ/wgPhfyE4ujnFUKj5HTZyO6Z9MYKgunw2Xd7cpXwgfdumZPHvlQwtgggvcrJUV0jigeCY0Eso=
-X-Received: by 2002:a0c:b786:: with SMTP id l6mr55369242qve.148.1563893430142; 
- Tue, 23 Jul 2019 07:50:30 -0700 (PDT)
+ b=SsT/GmA7WLxu60XFYod8t1s+fvkmxf73mvaoLNNxbiTOvhxPnPw/1IkqXSXvvxKQl
+ ZCROOwBxWxMqCKY2Q4lqljcMP0vZMuhMJX9L2lBqGVf6amVNzvsTt0LN1G4fFEGCFi
+ GUR4fiX5KQgNIpL+X3wCr+/3XOzhM7SxTu7asOV8=
+Received: by mail-qk1-f181.google.com with SMTP id r4so31258250qkm.13;
+ Tue, 23 Jul 2019 07:52:52 -0700 (PDT)
+X-Gm-Message-State: APjAAAVZw6ZjMu1IqYk5C1b5MkbGiIq+i/LvQEubij8k37gaG2tEeAeO
+ F6K0efbTh3oMe6BmOURH89xYMWBJ1WrXQLYOqQ==
+X-Google-Smtp-Source: APXvYqwZiOcoe1s7qhiFAJYivK+N5IPJMZGWxi+ThTt1Kn4ty2xNdEW6gS2kpNUOpRp3jkH0X+VUlMMwP04mvYWysaQ=
+X-Received: by 2002:a37:6944:: with SMTP id e65mr46744250qkc.119.1563893571463; 
+ Tue, 23 Jul 2019 07:52:51 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190723002052.2878847-1-vijaykhemka@fb.com>
-In-Reply-To: <20190723002052.2878847-1-vijaykhemka@fb.com>
+ <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
 From: Rob Herring <robh+dt@kernel.org>
-Date: Tue, 23 Jul 2019 08:50:18 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
-Message-ID: <CAL_Jsq+uAjK6+xzkyOhcH96tZuqv7i6Nz5_nhUQkZ2adt2gutA@mail.gmail.com>
+Date: Tue, 23 Jul 2019 08:52:39 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+Kw0TFW_v54Y2QHcChqpNDYhFyCSO5Cj-be9yLSCq-Pw@mail.gmail.com>
+Message-ID: <CAL_Jsq+Kw0TFW_v54Y2QHcChqpNDYhFyCSO5Cj-be9yLSCq-Pw@mail.gmail.com>
 Subject: Re: [PATCH] dt-bindings: Add pxe1610 as a trivial device
 To: Vijay Khemka <vijaykhemka@fb.com>
 Content-Type: text/plain; charset="UTF-8"
@@ -75,32 +76,38 @@ Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 22, 2019 at 6:46 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+On Tue, Jul 23, 2019 at 8:50 AM Rob Herring <robh+dt@kernel.org> wrote:
 >
-> The pxe1610 is a voltage regulator from Infineon. It also supports
-> other VRs pxe1110 and pxm1310 from Infineon.
->
-> Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
-> ---
->  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
-> index 2e742d399e87..1be648828a31 100644
-> --- a/Documentation/devicetree/bindings/trivial-devices.yaml
-> +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
-> @@ -99,6 +99,8 @@ properties:
->              # Infineon IR38064 Voltage Regulator
->            - infineon,ir38064
->              # Infineon SLB9635 (Soft-) I2C TPM (old protocol, max 100khz)
-> +          - infineon,pxe1610
-> +            # Infineon PXE1610, PXE1110 and PXM1310 Voltage Regulators
+> On Mon, Jul 22, 2019 at 6:46 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+> >
+> > The pxe1610 is a voltage regulator from Infineon. It also supports
+> > other VRs pxe1110 and pxm1310 from Infineon.
 
-The comment goes above the entry.
+What happened to the other compatibles? S/w doesn't need to know the
+differences?
 
->            - infineon,slb9635tt
->              # Infineon SLB9645 I2C TPM (new protocol, max 400khz)
->            - infineon,slb9645tt
-> --
-> 2.17.1
+> >
+> > Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
+> > ---
+> >  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+> > index 2e742d399e87..1be648828a31 100644
+> > --- a/Documentation/devicetree/bindings/trivial-devices.yaml
+> > +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+> > @@ -99,6 +99,8 @@ properties:
+> >              # Infineon IR38064 Voltage Regulator
+> >            - infineon,ir38064
+> >              # Infineon SLB9635 (Soft-) I2C TPM (old protocol, max 100khz)
+> > +          - infineon,pxe1610
+> > +            # Infineon PXE1610, PXE1110 and PXM1310 Voltage Regulators
 >
+> The comment goes above the entry.
+>
+> >            - infineon,slb9635tt
+> >              # Infineon SLB9645 I2C TPM (new protocol, max 400khz)
+> >            - infineon,slb9645tt
+> > --
+> > 2.17.1
+> >
