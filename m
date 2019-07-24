@@ -2,78 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B11B2732B6
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 17:28:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5129F732C8
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 17:32:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45tzkw4CGMzDqPf
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 01:28:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45tzq44C10zDqNw
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 01:32:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=sivas.srr@in.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45tzkL2wlmzDqNK
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 01:27:53 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45tzpR1zDszDqHG
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 01:31:26 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6OFR1OD041451
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 11:27:50 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.72])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2txsqsgvun-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 11:27:50 -0400
+ x6OFUBcp001553
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 11:31:23 -0400
+Received: from e33.co.us.ibm.com (e33.co.us.ibm.com [32.97.110.151])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2txrpycc4y-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 11:31:23 -0400
 Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <sivas.srr@in.ibm.com>;
- Wed, 24 Jul 2019 15:27:45 -0000
-Received: from us1a3-smtp08.a3.dal06.isc4sb.com (10.146.103.57)
- by smtp.notes.na.collabserv.com (10.106.227.158) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 24 Jul 2019 15:25:49 -0000
-Received: from us1a3-mail65.a3.dal09.isc4sb.com ([10.142.3.169])
- by us1a3-smtp08.a3.dal06.isc4sb.com
- with ESMTP id 2019072415254817-633551 ;
- Wed, 24 Jul 2019 15:25:48 +0000 
-In-Reply-To: 
-Subject: Fw: OpenBMC Test Work group meeting: - Webex link:
- https://ibm.webex.com/meet/sivas.srr  Telephone access is: United States
- Toll Free 1-844-531-0958 (Toll - +1-669-234-1178) India Toll - 0(STD
- Code)-64800002 For eg. (Bengaluru - 080-64800002)
-From: "Sivas Srr" <sivas.srr@in.ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Wed, 24 Jul 2019 15:25:48 +0000
-Sensitivity: 
-References: 
+ by e33.co.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <jrey@linux.ibm.com>;
+ Wed, 24 Jul 2019 16:31:22 +0100
+Received: from b03cxnp08025.gho.boulder.ibm.com (9.17.130.17)
+ by e33.co.us.ibm.com (192.168.1.133) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 24 Jul 2019 16:31:20 +0100
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x6OFVJxO60555712
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jul 2019 15:31:19 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0BB446A04F;
+ Wed, 24 Jul 2019 15:31:19 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DC21E6A051;
+ Wed, 24 Jul 2019 15:31:18 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Wed, 24 Jul 2019 15:31:18 +0000 (GMT)
+Subject: Re: Security Working Group - Wednesday July 24
+To: Chittari Pabba <ChittariP@ami.com>, openbmc <openbmc@lists.ozlabs.org>
+References: <ee35ab16-f95b-f51b-956f-fb07b2234aaf@linux.ibm.com>
+ <00DE8410EF1E8148ABEDA156FA727A3C03ED1DA70A@atlms2.us.megatrends.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Date: Wed, 24 Jul 2019 10:31:18 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
- SCN1812108_20180501T0841_FP55 May 22, 2019 at 11:09
-X-LLNOutbound: False
-X-Disclaimed: 15127
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 19072415-1335-0000-0000-000000C02702
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.407427; ST=0; TS=0; UL=0; ISC=; MB=0.059740
+In-Reply-To: <00DE8410EF1E8148ABEDA156FA727A3C03ED1DA70A@atlms2.us.megatrends.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19072415-0036-0000-0000-00000ADDE471
+X-IBM-SpamModules-Scores: 
 X-IBM-SpamModules-Versions: BY=3.00011487; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000287; SDB=6.01236813; UDB=6.00651907; IPR=6.01018179; 
- MB=3.00027871; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-24 15:27:44
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-07-24 13:17:00 - 6.00010204
-x-cbparentid: 19072415-1336-0000-0000-0000018D4B2A
-Message-Id: <OFD7FE27BB.0D0AC818-ON00258441.0054BFD0-00258441.0054C2A7@notes.na.collabserv.com>
+ PH=3.00000004; SC=3.00000287; SDB=6.01236815; UDB=6.00651908; IPR=6.01018181; 
+ MB=3.00027871; MTD=3.00000008; XFM=3.00000015; UTC=2019-07-24 15:31:21
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19072415-0037-0000-0000-00004CBA97F4
+Message-Id: <f0049a8c-570b-59a1-0df8-17a97e8c7065@linux.ibm.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-07-24_06:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=983 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1907240171
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,144 +98,46 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Dear All,</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Gentle reminder for tomorrow's test work group meeting.</=
-div>
-<div dir=3D"ltr" >In case if you are testing the Warrior of any function et=
-c..,&nbsp; Its time to upload the test result.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >With regards,</div>
-<div dir=3D"ltr" >Sivas</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<blockquote data-history-content-modified=3D"1" data-history-expanded=3D"1"=
- dir=3D"ltr" style=3D"" >----- Original message -----<br><br>&nbsp;
-<div role=3D"region" ><div><div><div><div data-dojo-attach-point=3D"subject=
-Node" ><h2 role=3D"heading" style=3D"font-weight: 300;margin: 0; max-width:=
- 100%;font-size: 22px;line-height: 28px;padding-bottom:10px;color: #4b4b4c;=
-" >OpenBMC Test Work group meeting: - Webex link: https://ibm.webex.com/mee=
-t/sivas.srr Telephone access is: United States Toll Free 1-844-531-0958 (To=
-ll - +1-669-234-1178) India Toll - 0(STD Code)-64800002 For eg. (Bengaluru =
-- 080-64800002)</h2></div>
-<div style=3D"font-size: 12px; white-space: nowrap;text-align: left;vertica=
-l-align: top;font-weight: normal;color: #666;display: inline-block;padding-=
-bottom:10px" ><div><span style=3D"font-weight: bold" >Chair: </span> <span>=
-Sivas Srr/India/IBM</span></div>
-<div style=3D"display:none" ><span style=3D"font-weight: bold" >Delegated t=
-o: </span></div>
-<div style=3D"display:none" ><span style=3D"font-weight: bold" >Send by: </=
-span></div></div></div>
-<div style=3D"font-size: 12px; white-space: nowrap;text-align: left;vertica=
-l-align: top;font-weight: normal;color: #666;display: inline-block;padding-=
-bottom:10px" ><div style=3D"display:none" ><span style=3D"font-weight: bold=
-" >Comments from Sivas Srr:</span></div></div>
-<div><div style=3D"font-size: 12px; white-space: nowrap;text-align: left;ve=
-rtical-align: top;font-weight: normal;color: #666;display: inline-block;pad=
-ding-bottom:10px" ><div><span style=3D"font-weight: bold" >Time: </span> <s=
-pan>Thu, Jul 25, 2019 9:00 PM - 10:00 PM</span> <span style=3D"display:inli=
-ne-block" >(applies to 14 instances)</span></div>
-<div style=3D"display:block" ><span style=3D"font-weight: bold" >Location: =
-</span> <span>United States Toll Free 1-844-531-0958 (Toll - +1-669-234-117=
-8) India Toll - 0(STD Code)-64800002 For eg. (Bengaluru - 080-64800002) Pas=
-scode: 928 662 307</span></div>
-<div style=3D"display:none" ><span style=3D"font-weight: bold" >Room: </spa=
-n></div>
-<div style=3D"display:none" ><span style=3D"font-weight: bold" >Resource: <=
-/span></div>
-<div style=3D"display:block" ><span style=3D"font-weight: bold" >Online Mee=
-ting name: </span> <span>OpenBMC Test Group meeting </span></div>
-<div style=3D"display:block" ><span style=3D"font-weight: bold" >Online mee=
-ting: </span> <span>https://ibm.webex.com/meet/sivas.srr</span></div>
-<div style=3D"display:block" ><span style=3D"font-weight: bold" >Meeting ID=
-: </span> <span>928 662 307</span></div>
-<div style=3D"display:block" ><span style=3D"font-weight: bold" >Password: =
-</span> <span>sivas</span></div></div>
-<div style=3D"font-weight: normal;color: #666;font-size: 12px;line-height: =
-17px;" ><div style=3D"white-space: nowrap;text-align: left;vertical-align: =
-top;font-weight: normal;color: #666;display: inline-block; padding-bottom: =
-10px; display: block" ><div><span style=3D"font-weight: bold" >Required:</s=
-pan></div>
-<div><span style=3D"padding-left: 20px;" >Andrew Geissler/Austin/IBM, anup.=
-pandya@intel.com, Arpana M Durgaprasad/India/IBM, benjaminfair@google.com, =
-bradleyb@fuzziesquirrel.com, Deepak Kodihalli/India/IBM, ed.tanous@intel.co=
-m, George Keishing/India/IBM, Joseph Reynolds/Rochester/Contr/IBM, Kaushik =
-Venkatesh/India/IBM, kurt.r.taylor@gmail.com, Maury Zipse/Rochester/IBM, Mi=
-chael Walsh/Rochester/IBM, rahulmaheshwari01@gmail.com, Ravindra S Rao1/Ind=
-ia/IBM, yuenn@google.com</span></div></div>
-<div data-dojo-attach-point=3D"optionalNode" style=3D"white-space: nowrap;t=
-ext-align: left;vertical-align: top;font-weight: normal;color: #666;display=
-: inline-block; padding-bottom: 10px; display: none" ><div><span style=3D"f=
-ont-weight: bold" >Optional: </span></div>
-<div>&nbsp;</div></div>
-<div data-dojo-attach-point=3D"FYINode" style=3D"white-space: nowrap;text-a=
-lign: left;vertical-align: top;font-weight: normal;color: #666;display: inl=
-ine-block; padding-bottom: 10px; display: none" ><div><span style=3D"font-w=
-eight: bold" >FYI: </span></div>
-<div>&nbsp;</div></div></div>
-<div><div data-dojo-attach-point=3D"descNode" ><div><span style=3D"font-wei=
-ght: bold; font-size: 12px;line-height: 17px; white-space: nowrap;text-alig=
-n: left; color: #666;" >Description:</span></div>
-<div><div><div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Ar=
-ial,Helvetica,sans-serif" ><font size=3D"2" ><font face=3D"Default Sans Ser=
-if,Verdana,Arial,Helvetica,sans-serif" >Based on the last instance of meeti=
-ng, it is agreed to have meeting from Jan 10th on-wards.</font></font></fon=
-t></span></div>
-<div>&nbsp;</div>
-<div><div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,H=
-elvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,A=
-rial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ver=
-dana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Ser=
-if,Verdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sa=
-ns Serif,Verdana,Arial,Helvetica,sans-serif" >General Agenda:&nbsp; </font>=
-</font></font></font></font></span></div>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,=
-Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,=
-Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ve=
-rdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Se=
-rif,Verdana,Arial,Helvetica,sans-serif" >Feel free to update in case any of=
- you wants to update the agenda. </font></font></font></font></font></span>=
-</div>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,=
-Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Verdana,=
-Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Serif,Ve=
-rdana,Arial,Helvetica,sans-serif" ><font size=3D"2" face=3D"Default Sans Se=
-rif,Verdana,Arial,Helvetica,sans-serif" ><a href=3D"https://github.com/open=
-bmc/openbmc/wiki/Test-work-group" target=3D"=5Fblank" >https://github.com/o=
-penbmc/openbmc/wiki/Test-work-group&nbsp; </a></font></font></font></font><=
-/font></span></div></div>
-<div>&nbsp;</div>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" >Dreport instead of MYFFDC <a href=3D"https://github.com/op=
-enbmc/openbmc-test-automation/issues/1118" target=3D"=5Fblank" >https://git=
-hub.com/openbmc/openbmc-test-automation/issues/1118</a> <a href=3D"https://=
-github.com/openbmc/openbmc-test-automation/issues/1091" target=3D"=5Fblank"=
- >https://github.com/openbmc/openbmc-test-automation/issues/1091</a></font>=
-</span>
-<p><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvetic=
-a,sans-serif" >OpenBMC Feature Test Sign-on <a href=3D"https://drive.google=
-.com/file/d/1-BuVY802-WRqBlrRmIPOKowEqQ-oYPCI/view?usp=3Dsharing" target=3D=
-"=5Fblank" >https://drive.google.com/file/d/1-BuVY802-WRqBlrRmIPOKowEqQ-oYP=
-CI/view?usp=3Dsharing</a></font></span></p>
-<p><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvetic=
-a,sans-serif" >OpenBMC test cases in XL sheet: <a href=3D"https://docs.goog=
-le.com/spreadsheets/d/14UFFokv6kifk=5F2leUU=5F77yOFSNkv7sCE=5FKEAhaYXkyg/ed=
-it?usp=3Dsharing" rel=3D"nofollow" target=3D"=5Fblank" >OpenBMC test cases =
-in XL sheet</a> Updated Version: <a href=3D"https://docs.google.com/spreads=
-heets/d/1TW706qauln3EPQNd11lOzvnRVM8=5F-ll-WCvdxm5NR6Y/edit?usp=3Dsharing" =
-target=3D"=5Fblank" >https://docs.google.com/spreadsheets/d/1TW706qauln3EPQ=
-Nd11lOzvnRVM8=5F-ll-WCvdxm5NR6Y/edit?usp=3Dsharing</a></font></span></p>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" >Quality at the first place: Unit test results needed at th=
-e time of gerrit code review</font></span></div>
-<div>&nbsp;</div></div>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" >IPMI Inband code update -&nbsp; Nancy to come back on test=
- owner</font></span></div>
-<div><span><font size=3D"2" face=3D"Default Sans Serif,Verdana,Arial,Helvet=
-ica,sans-serif" >IPMI User management -&nbsp; Anup Pandya - Is any one from=
- Intel going to sign on this. ?</font></span></div></div></div></div></div>=
-</div></div></div></div></blockquote></div><BR>
+
+On 7/24/19 10:16 AM, Chittari Pabba wrote:
+> I like to add following item to today agenda items" Tracking Yocto Linux security fixes tracking"
+
+I've added that.  I am also interested in that topic.  Thank you!
+
+- Joseph
+
+>
+> -----Original Message-----
+> From: openbmc <openbmc-bounces+chittarip=ami.com@lists.ozlabs.org> On Behalf Of Joseph Reynolds
+> Sent: Tuesday, July 23, 2019 3:39 PM
+> To: openbmc <openbmc@lists.ozlabs.org>
+> Subject: Security Working Group - Wednesday July 24
+>
+> This is a reminder of the OpenBMC Security Working Group meeting scheduled for this Wednesday July 24 at 10:00am PDT.
+>
+> * * * The call-in access changed on July 10 (the previous meeting) - details below * * *
+>
+> Current topics:
+> - Development work (including approved network security considerations)
+> - SPDM
+> - Default user config: root, ipmi group, password limited to char[20]
+>
+>
+> Access, agenda, and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group
+>
+> - Joseph
+>
+> The Security Working Group meeting access changed on July 10.  The old access will not be used.  The new access is given in the wiki and in this email.  This is effective now, so please update your calendars.
+> Here is the information for the web video conference and telephone access:
+> - Join via Web:https://ibm.webex.com/meet/joseph.reynolds1
+> - Join via Phone: Use access code: 927 034 486 -- United States Toll
+> Free: 1-844-531-0958. Click here for other phone numbers <https://ibm.webex.com/cmp3300/webcomponents/widget/globalcallin/globalcallin.do?siteurl=ibm&serviceType=MC&ED=756982637&tollFree=1>
+>
+> - Visit the Webex web site for more ways to join or for an updated access code.
+>
+>
+> Please consider the environment before printing this email.
+>
+> The information contained in this message may be confidential and proprietary to American Megatrends, Inc.  This communication is intended to be read only by the individual or entity to whom it is addressed or by their designee. If the reader of this message is not the intended recipient, you are on notice that any distribution of this message, in any form, is strictly prohibited.  Please promptly notify the sender by reply e-mail or by telephone at 770-246-8600, and then delete or destroy all copies of the transmission.
 
