@@ -1,66 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0443672F86
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 15:07:20 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45twc515nRzDqMd
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 23:07:17 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B59F7328E
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jul 2019 17:16:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45tzTZ0X4qzDqQN
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 01:16:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::342; helo=mail-ot1-x342.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=ami.com
+ (client-ip=63.147.10.40; helo=atlmailgw1.ami.com;
+ envelope-from=chittarip@ami.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="kwFzGcub"; 
- dkim-atps=neutral
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
- [IPv6:2607:f8b0:4864:20::342])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=ami.com
+Received: from atlmailgw1.ami.com (atlmailgw1.ami.com [63.147.10.40])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45twb16yykzDq74
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 23:06:21 +1000 (AEST)
-Received: by mail-ot1-x342.google.com with SMTP id j11so23495464otp.10
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 06:06:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yW1QK/xb/vhiINCxe1DRUYkZzYZj6FDJc1h3pIjvHEk=;
- b=kwFzGcubZmdDk35IQoXU4ABnXjmfoeYwS1wgN0CU1HUsFv5wbnlwF8EcsUW3/Bkm5n
- igkGQwn/tyotcPT2z8S1f73zpZ5nzIBWhPjS2fdvpyR/HC6sg7m3+yOlK+Rc0twwqWA8
- JjejvPgeX5BPA95hbiG74RGx9Ff9OCADnJRjqfcRAn1BA429/20SpKuUrkxLtHQxvYlI
- zdF/6PG2cr9u6bMFe4ta2VVBBbiTo9A03zjTubmZqqaiwhOZIgDMVO7g21tmZcB0eYUW
- kKLKmh4PhoWJ1HrDmUVbTUJ7/sL6Kc5XnBDkROsaVTxCl2tLyadThw7326ZtHWLaHwks
- QB+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=yW1QK/xb/vhiINCxe1DRUYkZzYZj6FDJc1h3pIjvHEk=;
- b=YHNricCFu0xNGuH9mjR93ebSSYNHjV083nh8MLKhRMY9GWAwqfq62SwvfvcDDJwcVq
- a6waiikAjC1H3+7USX5ARlzEIYa3a3+zk2W1Yqmxw0K17KJ+10dSbkcunwYQM9VQyBGc
- 95jDUWjhX5aoRw4xRWYa+UKID5D8DWDeDfc2N+MMF+tB/zTieD4yu/QFsuhqKO61SP87
- p29ocv4bQVcolQYaSCjvPRY88vU+Ee5QUn4TomgpsYcUfQzZ7MsdU03wbWiPBu6+S7eS
- umq6D5f/XXDnSGRN5Axn0UoPBhFbMZcXlm5sSmrtYG0yQxdE6UTfjHuZm5PKIDIGV9bN
- +zQQ==
-X-Gm-Message-State: APjAAAXoim9jl+CF1CK4xuBm6ZhrBqVo9pZD8PJD77sJUgYk/hklgYIS
- twBZNynAOdBhlPiXKrcbtQUrja2Z3jUthjSIo08PGpmT55s=
-X-Google-Smtp-Source: APXvYqxcxYKkgaxPx4NDBZ53yyiPsA90wgP1ISDX+hnODz2SrLsGxlxftEw4lNH/2vnicNcRAw0lstvDgoHZ/EislS4=
-X-Received: by 2002:a9d:5512:: with SMTP id l18mr28980930oth.260.1563973578215; 
- Wed, 24 Jul 2019 06:06:18 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45tzSx2g5nzDqNK
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 01:16:14 +1000 (AEST)
+X-AuditID: ac1060b2-3fdff70000003a7d-55-5d387639b57e
+Received: from atlms1.us.megatrends.com (atlms1.us.megatrends.com
+ [172.16.96.144])
+ (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by atlmailgw1.ami.com (Symantec Messaging Gateway) with SMTP id
+ C7.AA.14973.936783D5; Wed, 24 Jul 2019 11:16:09 -0400 (EDT)
+Received: from ATLMS2.us.megatrends.com ([fe80::29dc:a91e:ea0c:cdeb]) by
+ atlms1.us.megatrends.com ([fe80::8c55:daf0:ef05:5605%12]) with mapi id
+ 14.03.0415.000; Wed, 24 Jul 2019 11:16:08 -0400
+From: Chittari Pabba <ChittariP@ami.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>
+Subject: RE: Security Working Group - Wednesday July 24
+Thread-Topic: Security Working Group - Wednesday July 24
+Thread-Index: AQHVQdhMOTDNmSqrV0q9/1PR1hIJ36bZ4WoQ
+Date: Wed, 24 Jul 2019 15:16:08 +0000
+Message-ID: <00DE8410EF1E8148ABEDA156FA727A3C03ED1DA70A@atlms2.us.megatrends.com>
+References: <ee35ab16-f95b-f51b-956f-fb07b2234aaf@linux.ibm.com>
+In-Reply-To: <ee35ab16-f95b-f51b-956f-fb07b2234aaf@linux.ibm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.16.100.135]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CH2PR04MB6933DAF6642B253AA3527F6FB9C60@CH2PR04MB6933.namprd04.prod.outlook.com>
-In-Reply-To: <CH2PR04MB6933DAF6642B253AA3527F6FB9C60@CH2PR04MB6933.namprd04.prod.outlook.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Wed, 24 Jul 2019 08:06:02 -0500
-Message-ID: <CALLMt=rA2-fKW=cPyCh25uH8YM-ufs0x=ZCwSso+du5h_-TBPA@mail.gmail.com>
-Subject: Re: Is there any documents about configurations/YAML files
-To: Brad Chou <bradc@hyvedesignsolutions.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrDIsWRmVeSWpSXmKPExsWyRiBhgq5lmUWsQe9+BYsTa7axWJxqecHi
+ wOQxYdEBRo/zMxYyBjBFNTDaJObl5ZcklqQqpKQWJ9sqBRRlliUmVyopZKbYKhkqKRTkJCan
+ 5qbmldgqJRYUpOalKNlxKWAAG6CyzDyF1Lzk/JTMvHRbJc9gf10LC1NLXUMlu5CMVIXMvLT8
+ otzEksz8PIXk/LwSoOrUFKCoQkIXZ8b7a+3MBXcEKm5Nf8bewLhEoIuRg0NCwERi4hHuLkYu
+ DiGBXUwS/56fYoRwDjNKHL/cxd7FyMnBJqAh0fDkCZgtIuAjMbv3FROILSxgLrHvzFNmiLiF
+ REfHJFYI20ji/tJfYHEWAVWJBbuXgdm8AoESLet6wGwhAQeJZUcWg9VzCjhKrDy/BWw+o4CY
+ xPdTa8DmMwuIS9x6Mh/MlhAQkFiy5zwzhC0q8fLxP1YIW0mi7+c6NpBnmAU0Jdbv0odoVZSY
+ 0v2QHWKtoMTJmU9YJjCKzEIydRZCxywkHbOQdCxgZFnFKJRYkpObmJmTXm6ol5ibqZecn7uJ
+ ERL1m3Ywtlw0P8TIxMF4iFGCg1lJhDewwSxWiDclsbIqtSg/vqg0J7X4EKMTMBgmMktxg6IE
+ GMfxxgYGUqIwjqGJmYm5kbmhpYm5sbGSOO/KNd9ihATSgWklOzW1ILUIZggTB6dUA+MhL7Fj
+ +3hMb53S0drvUBaVuO3g/ecPyi+v+CquOOd6UfGjW/qTHLYILsutuNa2ocdAc9MGfumoszan
+ PidujBSoUzBnYytbsF5n53u1uGbuJzwfima/kSyufc8UZndYrWvCbomgQ3+VvFgXb1YukJsn
+ 8u+Gyh7GGy6nFJRnTDjQqe/D53v6hq4SS3FGoqEWc1FxIgB7ZZPjDwMAAA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,31 +71,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 24, 2019 at 4:17 AM Brad Chou <bradc@hyvedesignsolutions.com> wrote:
->
-> Hi All,
-> I see there is a /recipes-phosphor/configuration/ folder contained many xxx-ipmi-xxx YAML files.
-> I tried to read it but still have no clear idea about how each YAML is for what feature.
-> Also each YAML seems to have its own syntax, but have no documents or comments to describe how to use it.
-> This can be a problem when somebody tries to add a new configuration on another machine.
-> Can anyone who has familiar with those YAML files can provide some simple guide/documents to let me getting  started ?
-> Many appreciated.
-
-Documentation is definitely always a struggle, especially with
-how quickly things change in OpenBMC. Like the recent addition
-of that configuration directory probably hasn't made its way into
-the docs yet. The goal is that this document be the main entry point
-for people creating a new system:
-https://github.com/openbmc/docs/blob/master/development/add-new-system.md
-
-Tom, Vernon, Emily, any better documentation out there describing those
-yaml files that are used by IPMI?
-
-Any help with the add-new-system.md would be much appreciated.
-
->
-> Thanks.
+SSBsaWtlIHRvIGFkZCBmb2xsb3dpbmcgaXRlbSB0byB0b2RheSBhZ2VuZGEgaXRlbXMiIFRy
+YWNraW5nIFlvY3RvIExpbnV4IHNlY3VyaXR5IGZpeGVzIHRyYWNraW5nIg0KDQotLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1ib3VuY2VzK2No
+aXR0YXJpcD1hbWkuY29tQGxpc3RzLm96bGFicy5vcmc+IE9uIEJlaGFsZiBPZiBKb3NlcGgg
+UmV5bm9sZHMNClNlbnQ6IFR1ZXNkYXksIEp1bHkgMjMsIDIwMTkgMzozOSBQTQ0KVG86IG9w
+ZW5ibWMgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NClN1YmplY3Q6IFNlY3VyaXR5IFdv
+cmtpbmcgR3JvdXAgLSBXZWRuZXNkYXkgSnVseSAyNA0KDQpUaGlzIGlzIGEgcmVtaW5kZXIg
+b2YgdGhlIE9wZW5CTUMgU2VjdXJpdHkgV29ya2luZyBHcm91cCBtZWV0aW5nIHNjaGVkdWxl
+ZCBmb3IgdGhpcyBXZWRuZXNkYXkgSnVseSAyNCBhdCAxMDowMGFtIFBEVC4NCg0KKiAqICog
+VGhlIGNhbGwtaW4gYWNjZXNzIGNoYW5nZWQgb24gSnVseSAxMCAodGhlIHByZXZpb3VzIG1l
+ZXRpbmcpIC0gZGV0YWlscyBiZWxvdyAqICogKg0KDQpDdXJyZW50IHRvcGljczoNCi0gRGV2
+ZWxvcG1lbnQgd29yayAoaW5jbHVkaW5nIGFwcHJvdmVkIG5ldHdvcmsgc2VjdXJpdHkgY29u
+c2lkZXJhdGlvbnMpDQotIFNQRE0NCi0gRGVmYXVsdCB1c2VyIGNvbmZpZzogcm9vdCwgaXBt
+aSBncm91cCwgcGFzc3dvcmQgbGltaXRlZCB0byBjaGFyWzIwXQ0KDQoNCkFjY2VzcywgYWdl
+bmRhLCBhbmQgbm90ZXMgYXJlIGluIHRoZSB3aWtpOg0KaHR0cHM6Ly9naXRodWIuY29tL29w
+ZW5ibWMvb3BlbmJtYy93aWtpL1NlY3VyaXR5LXdvcmtpbmctZ3JvdXANCg0KLSBKb3NlcGgN
+Cg0KVGhlIFNlY3VyaXR5IFdvcmtpbmcgR3JvdXAgbWVldGluZyBhY2Nlc3MgY2hhbmdlZCBv
+biBKdWx5IDEwLsKgIFRoZSBvbGQgYWNjZXNzIHdpbGwgbm90IGJlIHVzZWQuwqAgVGhlIG5l
+dyBhY2Nlc3MgaXMgZ2l2ZW4gaW4gdGhlIHdpa2kgYW5kIGluIHRoaXMgZW1haWwuwqAgVGhp
+cyBpcyBlZmZlY3RpdmUgbm93LCBzbyBwbGVhc2UgdXBkYXRlIHlvdXIgY2FsZW5kYXJzLg0K
+SGVyZSBpcyB0aGUgaW5mb3JtYXRpb24gZm9yIHRoZSB3ZWIgdmlkZW8gY29uZmVyZW5jZSBh
+bmQgdGVsZXBob25lIGFjY2VzczoNCi0gSm9pbiB2aWEgV2ViOmh0dHBzOi8vaWJtLndlYmV4
+LmNvbS9tZWV0L2pvc2VwaC5yZXlub2xkczENCi0gSm9pbiB2aWEgUGhvbmU6IFVzZSBhY2Nl
+c3MgY29kZTogOTI3IDAzNCA0ODYgLS0gVW5pdGVkIFN0YXRlcyBUb2xsDQpGcmVlOiAxLTg0
+NC01MzEtMDk1OC4gQ2xpY2sgaGVyZSBmb3Igb3RoZXIgcGhvbmUgbnVtYmVycyA8aHR0cHM6
+Ly9pYm0ud2ViZXguY29tL2NtcDMzMDAvd2ViY29tcG9uZW50cy93aWRnZXQvZ2xvYmFsY2Fs
+bGluL2dsb2JhbGNhbGxpbi5kbz9zaXRldXJsPWlibSZzZXJ2aWNlVHlwZT1NQyZFRD03NTY5
+ODI2MzcmdG9sbEZyZWU9MT4gDQoNCi0gVmlzaXQgdGhlIFdlYmV4IHdlYiBzaXRlIGZvciBt
+b3JlIHdheXMgdG8gam9pbiBvciBmb3IgYW4gdXBkYXRlZCBhY2Nlc3MgY29kZS4NCg0KDQpQ
+bGVhc2UgY29uc2lkZXIgdGhlIGVudmlyb25tZW50IGJlZm9yZSBwcmludGluZyB0aGlzIGVt
+YWlsLg0KDQpUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgbWVzc2FnZSBtYXkg
+YmUgY29uZmlkZW50aWFsIGFuZCBwcm9wcmlldGFyeSB0byBBbWVyaWNhbiBNZWdhdHJlbmRz
+LCBJbmMuICBUaGlzIGNvbW11bmljYXRpb24gaXMgaW50ZW5kZWQgdG8gYmUgcmVhZCBvbmx5
+IGJ5IHRoZSBpbmRpdmlkdWFsIG9yIGVudGl0eSB0byB3aG9tIGl0IGlzIGFkZHJlc3NlZCBv
+ciBieSB0aGVpciBkZXNpZ25lZS4gSWYgdGhlIHJlYWRlciBvZiB0aGlzIG1lc3NhZ2UgaXMg
+bm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsIHlvdSBhcmUgb24gbm90aWNlIHRoYXQgYW55
+IGRpc3RyaWJ1dGlvbiBvZiB0aGlzIG1lc3NhZ2UsIGluIGFueSBmb3JtLCBpcyBzdHJpY3Rs
+eSBwcm9oaWJpdGVkLiAgUGxlYXNlIHByb21wdGx5IG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHJl
+cGx5IGUtbWFpbCBvciBieSB0ZWxlcGhvbmUgYXQgNzcwLTI0Ni04NjAwLCBhbmQgdGhlbiBk
+ZWxldGUgb3IgZGVzdHJveSBhbGwgY29waWVzIG9mIHRoZSB0cmFuc21pc3Npb24uDQo=
