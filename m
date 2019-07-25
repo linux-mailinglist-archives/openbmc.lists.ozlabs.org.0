@@ -2,73 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D72875624
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 19:48:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D22C4756D3
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 20:24:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45vfpP39wnzDqPv
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jul 2019 03:48:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45vgbs5lHQzDqQS
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jul 2019 04:24:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=21096f87f0=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com;
+ envelope-from=ryanarnellibm@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="hMITGBVM"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Bkfc47+u"; 
  dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com
+ [IPv6:2a00:1450:4864:20::134])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45vfnT3xHczDqN9
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jul 2019 03:47:52 +1000 (AEST)
-Received: from pps.filterd (m0044008.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6PHljWl002457
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 10:47:49 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=facebook;
- bh=gU2NXoAIDe4kG/3Zgh8Jxlt2+T68VVp6jk3LMMeyHvg=;
- b=hMITGBVMgMYEiiGX0CJfJFpEokR1ePC1quMsG1/GSD2RSmtWgKNVQERrMFE5Z0sIQz9e
- X0GMoL6r/OPDdBrV4aXZA8lHxhTUTgBaJu7yqt77130yng04pZwpNQPEMp1TCm05AZvy
- 0KtUDnzBvr8XEnTIhTr+lS7H7TicDeeOxMQ= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2ty9n69wxp-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 10:47:49 -0700
-Received: from mx-out.facebook.com (2620:10d:c0a8:1b::d) by
- mail.thefacebook.com (2620:10d:c0a8:82::e) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Thu, 25 Jul 2019 10:47:23 -0700
-Received: by devvm4117.prn2.facebook.com (Postfix, from userid 167582)
- id 29F73116FDE13; Thu, 25 Jul 2019 10:45:14 -0700 (PDT)
-Smtp-Origin-Hostprefix: devvm
-From: Vijay Khemka <vijaykhemka@fb.com>
-Smtp-Origin-Hostname: devvm4117.prn2.facebook.com
-To: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Smtp-Origin-Cluster: prn2c23
-Subject: [PATCH] ARM: dts: aspeed: tiogapass: Move battery sensor
-Date: Thu, 25 Jul 2019 10:45:11 -0700
-Message-ID: <20190725174512.1380735-1-vijaykhemka@fb.com>
-X-Mailer: git-send-email 2.17.1
-X-FB-Internal: Safe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45vgbJ5f8RzDqP8
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jul 2019 04:24:06 +1000 (AEST)
+Received: by mail-lf1-x134.google.com with SMTP id b29so27969173lfq.1
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 11:24:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=r58lyfHOwoe3dzcGvhNz4OU4QdsC1XwcaxQguKa0rlw=;
+ b=Bkfc47+u+COKp3qDoxY+DkV4dnQ4eqxpcyggTMl/wkJEpeVImYgQp25niK0gtzkXrH
+ xHfB0ManDRB3acsv9R24oHBB+hWwXVisodidNCfqDv1qzw3wLf64eZkW2XMeGRvvbkR8
+ ajPpfIWX8qZx9xGpa76w4g9snaQxdxf1f8Xdj/jmJyVMynFEembKSWScrSNkYdmubkL6
+ BtEuGmq/XnZRKHQYPcGyxXzDiFRoPSVkUufQlyAmM5xF1SMpjh3DyQQctat6TnTcDN9P
+ NbQ++mw14gEZToZsDFNJNzuWjMZFEKcKpUopkN9semhe3/8CIyKX6HkyGf/nLrIwl4eR
+ JLHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=r58lyfHOwoe3dzcGvhNz4OU4QdsC1XwcaxQguKa0rlw=;
+ b=YON1QtwXQym6+y/ay8bxChlF7/AXc/B+ymEeUdEFVfns5s2vq4RxDResWIaarXP5qM
+ xex+ZZhHa41Wf05nWBWB8T/RAbarnhiXAU2AQRiBJuzf2he2hzdjHvRLN7CmmMNDDYPj
+ oUZT55kNNaaAtnpiJOFeZurT4pMqMnSw5UiPZ12fjjPqaFgNm3BcsBrOskIhZT0LXzkp
+ CXmW2PoCTjmJ8vgTNN2jd86s4OAkFheHj+2YXS6vpdStJEsJMBLa0BQtdq5M20JsHXfm
+ rG/bnaCfXqWcC7uXbiY+aVbXtEOg4YT9zzPNdLcSVEZyOiCdSbwahDONukHZMXAbDr6b
+ 3k2A==
+X-Gm-Message-State: APjAAAXTWpmJT7qjzhrXRHAM9x+ngjNDy09mf1IBUUjWINo5NCiEFzzS
+ PTfDUQwQPlRN6xzIsNmJOZKV+fmVrfRUEXU+30gXeA==
+X-Google-Smtp-Source: APXvYqwIiKrWohbl1BsGWP7/VcU++8x8eLLT3vC7QKlCzUypmRZh37oRoHHDMwPgWALYzWNT+8/vSxGcrjHowo3ttKo=
+X-Received: by 2002:a19:6e41:: with SMTP id q1mr31922915lfk.20.1564079041568; 
+ Thu, 25 Jul 2019 11:24:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-25_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=948 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1907250209
-X-FB-Internal: deliver
+From: Ryan Arnell <ryanarnellibm@gmail.com>
+Date: Thu, 25 Jul 2019 13:23:50 -0500
+Message-ID: <CAH3qHnbrcXzRyh==xZgNBJO3nRLf-j_X11JDymdpaQDUPo68ZA@mail.gmail.com>
+Subject: Event log new GUI
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000ac666b058e858755"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,38 +69,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- vijaykhemka@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Moved adc7 hwmon battery sensor to correct label to be read
-by single applications for all adc sensors.
+--000000000000ac666b058e858755
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
----
- arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+Hi all,
+We took initiative on redesigning the event log page to be more robust and
+user friendly. We have made the log table more compact, made columns
+sortable, added batch operations, improved the detail panel to name a few.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-index d0c823e8fce5..682f729ea25e 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-@@ -46,13 +46,9 @@
- 	iio-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
--					<&adc 4>, <&adc 5>, <&adc 6>;
-+			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
- 	};
- 
--	iio-hwmon-battery {
--		compatible = "iio-hwmon";
--		io-channels = <&adc 7>;
--	};
- };
- 
- &fmc {
--- 
-2.17.1
+Please feel free to review the new GUI and leave your feedback by adding
+comments in the following invision prototype link.
 
+https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319141765_01-Event-Logs
+
+You can also review the issue in github and leave your comments there. We
+look forward to hearing from you.
+
+https://github.com/openbmc/phosphor-webui/issues/89
+
+Thank you
+
+*Ryan Arnell*
+UX Engineer | IBM Design | IBM Studios Austin
+
+
+
+*E:* iffy.ryan@ibm.com
+
+--000000000000ac666b058e858755
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi all,=C2=A0<div>We took initiative on redesigning the ev=
+ent log page to be more robust and user friendly. We have made the log tabl=
+e more compact, made columns sortable, added batch operations, improved the=
+ detail panel to name a few.=C2=A0</div><div><br></div><div>Please feel fre=
+e to review the new GUI and leave your feedback by adding comments in the f=
+ollowing invision prototype link.=C2=A0=C2=A0</div><div><br></div><div><a r=
+el=3D"nofollow" href=3D"https://ibm.invisionapp.com/share/8ENYRVXAPFD#/3191=
+41765_01-Event-Logs" style=3D"box-sizing:border-box;color:rgb(3,102,214);te=
+xt-decoration-line:none;font-family:-apple-system,system-ui,&quot;Segoe UI&=
+quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe =
+UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px" target=3D"_blank=
+">https://ibm.invisionapp.com/share/8ENYRVXAPFD#/319141765_01-Event-Logs</a=
+><br></div><div><br></div><div>You can also review the issue in github and =
+leave your comments there. We look forward to hearing from you.=C2=A0</div>=
+<div><br></div><div><a href=3D"https://github.com/openbmc/phosphor-webui/is=
+sues/89" target=3D"_blank">https://github.com/openbmc/phosphor-webui/issues=
+/89</a>=C2=A0<br></div><div><br></div><div>Thank you</div><div>
+
+
+
+
+
+<p class=3D"m_5773488863098765984gmail-p1" style=3D"margin:0px;font-variant=
+-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-siz=
+e:11px;line-height:normal;font-family:Verdana"><b>Ryan Arnell</b>=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0<br>
+UX Engineer | IBM=C2=A0Design=C2=A0|=C2=A0IBM Studios Austin</p>
+<p class=3D"m_5773488863098765984gmail-p2" style=3D"margin:0px;font-variant=
+-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-siz=
+e:12px;line-height:normal;font-family:Times">=C2=A0</p>
+<p class=3D"m_5773488863098765984gmail-p1" style=3D"margin:0px;font-variant=
+-numeric:normal;font-variant-east-asian:normal;font-stretch:normal;font-siz=
+e:11px;line-height:normal;font-family:Verdana"><b>E:</b>=C2=A0<a href=3D"ma=
+ilto:iffy.ryan@ibm.com" target=3D"_blank">iffy.ryan@ibm.com</a></p></div><d=
+iv><br></div><div><br></div><div><br></div></div>
+
+--000000000000ac666b058e858755--
