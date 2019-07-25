@@ -1,77 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A17C742C0
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 03:06:31 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C0AE741D0
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 01:07:31 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45v9wb6kSYzDqPF
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 09:07:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45vDYw3xlQzDqMv
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 11:06:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::241; helo=mail-lj1-x241.google.com;
+ envelope-from=wangzhiqiang8906@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="nuKssDL0"; 
+ dkim-atps=neutral
+Received: from mail-lj1-x241.google.com (mail-lj1-x241.google.com
+ [IPv6:2a00:1450:4864:20::241])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45v9vv66NJzDqDV
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 09:06:50 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6ON6gNN064158; Wed, 24 Jul 2019 19:06:46 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2txwrpxdh3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2019 19:06:46 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x6ON51LZ020010;
- Wed, 24 Jul 2019 23:06:45 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma01dal.us.ibm.com with ESMTP id 2tx61na0eb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jul 2019 23:06:45 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x6ON6h3B52101490
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jul 2019 23:06:43 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 932796A04F;
- Wed, 24 Jul 2019 23:06:43 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D4C96A047;
- Wed, 24 Jul 2019 23:06:43 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Jul 2019 23:06:43 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>, yocto-security@yoctoproject.org
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Design for initial expired default password
-Message-ID: <cafdcfd1-7f98-4eab-eb07-ad5df650db2a@linux.ibm.com>
-Date: Wed, 24 Jul 2019 18:06:42 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45vDYG57r1zDq9y
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 11:05:53 +1000 (AEST)
+Received: by mail-lj1-x241.google.com with SMTP id z28so46382252ljn.4
+ for <openbmc@lists.ozlabs.org>; Wed, 24 Jul 2019 18:05:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=/+Uy9JPR9nS1F6Bo9Regny7IprTuv/oztolIWBmizjU=;
+ b=nuKssDL0dJsaX5fCgY6QrcMxh0FfwxzNN8vHJcrsMOVdirczCBku87mtQ8iXbvEzVl
+ rAYXKGIPRJJsjBlQkr6QLe8xA991BFInm0e/lkAe5K64dwO7UPGPRXH/U7CXJw+4vbyx
+ zcXioxN7xVgvomBumKtwpjY1eECQdcMTgRh0OPg27RsBF7ZDNAnk5r2eWEklY4kgmNif
+ JMyIIYE5osPNXYaaxlbvl4GNow+hneZsTZVBFa0pLVoyxI28GCte9MNb0WNJ+zqgCDNq
+ sF2YcF+ZSGPMOCk1uop7dLxvOdjoXxVVePYIVpAxsaO/y963xGIZedJaZWoT+V5j9eIX
+ wvTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=/+Uy9JPR9nS1F6Bo9Regny7IprTuv/oztolIWBmizjU=;
+ b=qUprQzjeR1728USKrGSl+hONzwFrc5sONq5fIIRtTlnqYX1Xp30eTnkLNcDQZKi0+p
+ YvDAAcarHr25bj3k60LViUAiweTAZne3JemAuDxMgBneT6i22Ty+3B8aCLEvOlqyRIxi
+ 5BptP65PHWepPavBeEb3YtR1M0LCQ4P/MqwmIsWlGXxsIOU6V5IVDrr21eS7dP2YNzO2
+ /6Cj9uB8udbksC4R3oxS9KjOd6e/MjN9cvLGYTgvGMM8Ky4m4fUPBtXJ8lWtyF3YDulU
+ P4Ncwoz4A6TpXalYbJHVIDxL3tosuXrDkG8V0cjzppnchz7hsahG/cOEP92aAkFEntU4
+ 4JWA==
+X-Gm-Message-State: APjAAAVDgSiiPOHzV8+ZX02aL0sBZM7mfqLfDfVPJ9yy+EAkeeV4t7b0
+ nip+xy9c/iBn/a2yr6TDjSACJOZ4Ub5A752WkmRK6ztw3EU=
+X-Google-Smtp-Source: APXvYqwovIgSkJVbQsnwwnVYd6r0pu3Lh0E8xQLfMJR9SkvqRU9JFWfPt90piypP8RjpUa0Qpj88ktvbEIqqp0v2At4=
+X-Received: by 2002:a2e:2b01:: with SMTP id q1mr43542321lje.27.1564016746984; 
+ Wed, 24 Jul 2019 18:05:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-24_09:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1907240248
+From: John Wang <wangzhiqiang8906@gmail.com>
+Date: Thu, 25 Jul 2019 09:05:36 +0800
+Message-ID: <CAHkHK0-dT2R6WUowZhaLgVurFPukL3tmJGneXCEijKew=1uRyA@mail.gmail.com>
+Subject: How to ideally fix the log function
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Yu Lei <mine260309@gmail.com>,
+ venture@google.com, 
+ mspinler@linux.ibm.com, vishwa <vishwa@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,16 +74,28 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I pushed an OpenBMC design to [Gerrit review][] for the OpenBMC project 
-for a new distro or image feature (disabled by default) which causes the 
-initial password to be disabled by default, so the password has to be 
-changed before using the BMC.
+Hi all
 
-This design is intended to make it easier to comply with the new CA law 
-[SB-327][] which becomes effective on 2020-01-01 (in 5 months).
+I am just curious about how to ideally fix the log function
 
-- Joseph
+Currently,error log code location metadata is not useful, link:
+https://github.com/openbmc/openbmc/issues/2297
 
-[Gerrit review]: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23849
-[SB-327]: 
-https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201720180SB327
+That issue mentioned several solutions,But I am still confused.
+
+The call stack of phsophor::logging:log<>() is like this:
+
+func() -> log<>() -> helper_log() -> sd_journal_send
+
+We need to pass arguments(CODE_LINE and CODE_FILE) from `func` to
+`sd_journal_send`,right?
+
+Ideally:
+
+template <level L, typename Msg, typename... Entry>
+void log(Msg msg, Entry... e,
+  const source_location& location = source_location::current())
+
+but packs must be last.
+
+is there any suggestions ?
