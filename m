@@ -1,134 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 220A1758E8
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 22:35:22 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C95E6757BE
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jul 2019 21:20:30 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45vhrC06myzDqQP
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jul 2019 05:20:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45vkVb2k0NzDqHV
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jul 2019 06:35:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=2109d0fdfc=wilfredsmith@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::32f; helo=mail-ot1-x32f.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="oKY/eAH7"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="Ji02HtNF"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Xvy6Wbrm"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
+ [IPv6:2607:f8b0:4864:20::32f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45vhqT5QcyzDqPn
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jul 2019 05:19:45 +1000 (AEST)
-Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6PJHftd013230; Thu, 25 Jul 2019 12:19:36 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=antVaV8OoGAg9URcctFbvoYuwQd/81+MhTzUOqMTtP0=;
- b=oKY/eAH7B4ms8xGEES8fSM6qfkBS2qrE/n1K583Rf7hWjr8omK4uXLPS6xfFcsHRYPpA
- 1jbC1vix6bL2jmJkAluU2Anh5yBE2HxdIDIYx0NJhjzyLWEn8Bhr1Ycmb2EkfOVW+hW2
- qLsfGuSPIoezpRx5fPAttKt4VoesqIxBGxI= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by mx0a-00082601.pphosted.com with ESMTP id 2tyg980tgp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
- Thu, 25 Jul 2019 12:19:35 -0700
-Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
- prn-hub02.TheFacebook.com (2620:10d:c081:35::126) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.1.1713.5; Thu, 25 Jul 2019 12:19:35 -0700
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (192.168.54.28)
- by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
- via Frontend Transport; Thu, 25 Jul 2019 12:19:34 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BfONykeOuAUn0dd0A8HEzsfWZRklLeMk2BoLvUgo2k6GdYpaWc9rUaEPPrdc1XGQNrHIjdAZha3gAf/66YBmd5rLoeqH69/49Zi5HjKyhQ9aT5SwiWfD7lht9fWUJqyWAHNz0g2rPVs22nzI+aLifveI4de+cVWhMCwfgwg+ZSXat4iFgMkH3a7huyZqK66J0WRVJQvhh8SEDsAHs9hPMX822wXRlIvBNrF+pjtief2bD/mqw1dwOs1uYjo3ULcEhcC8NuQx21E/QNdu+xGEvQ1hL94l2t77swicMtZHc8+w+kV1RA5pjkdsTlySLLDBXBYsjUS9hkVcq5v+zEi/EQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=antVaV8OoGAg9URcctFbvoYuwQd/81+MhTzUOqMTtP0=;
- b=Ja9oXqaeorf7AsS+gS/GDG0JaBgToSTbc/B4xhdt5ztK0fBOHEinXnP1Y6w/W4DLQ5kaweAJrD2sPW6rT9rk6HtVhytBzeFcY9FKrRT4ZOfcdkaMqqxdx+ktZsf/iwEx5TMu5uwYwI6h558zG1ZX6jEezeFHd5YcaJ3L/qc4BRS3SUnXtCikKwHO73QVV6V2ZoIUCEbh3tuMoMYxs7vnU40S/MZwO3se4DdwYHEaogzg0NH8UXmgwC1cbmTeETonPP2ALdmcQpVL8mwSwxvhYZd7U2mW1P3v6RTcZX4Zs3Rc4GbflQKc3ieobNV+cCGv88w56yVJN0GA2FCn01mXIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
- smtp.mailfrom=fb.com;dmarc=pass action=none header.from=fb.com;dkim=pass
- header.d=fb.com;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector1-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=antVaV8OoGAg9URcctFbvoYuwQd/81+MhTzUOqMTtP0=;
- b=Ji02HtNFNWfUZSLqxxi5Ega19tSnYBWVqLTtTU5m4UqRP2T3Nk2/kXu0mVw/DuGskzqm/X6QxSvxvlcSffRiyLU7GkbvqdE7lVHCs2e6J0g17VvrK0XrawzV8ehANXSa+BkR3mX/hiAiWm705/arwS9K+0//hzoWOn0Zdle8fDQ=
-Received: from MN2PR15MB3680.namprd15.prod.outlook.com (52.132.173.209) by
- MN2PR15MB2653.namprd15.prod.outlook.com (20.179.144.215) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2115.10; Thu, 25 Jul 2019 19:19:33 +0000
-Received: from MN2PR15MB3680.namprd15.prod.outlook.com
- ([fe80::85cb:7a62:4c8f:116a]) by MN2PR15MB3680.namprd15.prod.outlook.com
- ([fe80::85cb:7a62:4c8f:116a%5]) with mapi id 15.20.2115.005; Thu, 25 Jul 2019
- 19:19:33 +0000
-From: Wilfred Smith <wilfredsmith@fb.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: CLI Tools
-Thread-Topic: CLI Tools
-Thread-Index: AQHVQaTlrUxs1y7ZuEudkvEzdm/lfqbaj2aAgAAO2QCAAAgcgIABEiKA
-Date: Thu, 25 Jul 2019 19:19:33 +0000
-Message-ID: <7AF31809-55BF-4F0A-B2C4-A56A21BE1F5F@fb.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45vkSK3ssLzDqQ1
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jul 2019 06:33:21 +1000 (AEST)
+Received: by mail-ot1-x32f.google.com with SMTP id j19so14573273otq.2
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jul 2019 13:33:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=CeUnnzUh4v5TFGNVzv0m3LiFb1CrJL1tvIbvnRrHqWs=;
+ b=Xvy6WbrmiJhRolH1RTZH7XNmGN24xyzf74zgLuk/scR8nf0quqtKng2ppndRen8q64
+ YaDFweEm61UFIjeNRBl8fsMUWjAuRli90GyppnpII2goV3aol7U5GHfS8dgnqnJn7lLZ
+ +16l7FtciDZgjgb0PVacmdi9UGFwidm5R1wK22bnQ30Ca9pdSjUS96ZScK2OnH60+OM9
+ HqFHwIpcINPy/inUEOe6NnlEpW0pSnAxatqc0VTAfONi07KVHhHfHIRmJzINyPu7wLc3
+ M87ilj2LenCEVSPoRCPZ+gaPrLkgKJqGbZ7oV2eUv8kbcOsG9Rv/LxlL+ExWQy/a2Fs7
+ q5Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=CeUnnzUh4v5TFGNVzv0m3LiFb1CrJL1tvIbvnRrHqWs=;
+ b=q+1s1zYgu8fWPhhaxOnzhs7U5ynbkpe3TkG2Fr3QDIVlIWO/xmVNHE80yDPYgDQQLo
+ zb4zWmV+HSqmMhCFITXnV1Zj+fW8gUvycqggqs2lVwH378xddCLK1IM2GpUHekETvuud
+ c6CZsgq9Kj/bnctLhkmoN9L6+gMuAbGmfqD0DrOTl3nDG02mi/f7sIoxd3GYi5ydLSBf
+ dW8/pfDPZnJUq1dUN4h+4kDI6GQ5hDpzmmkJcXi75zoUNDTYCMxji46X2jKJ+U/YsE1q
+ J2wzBoORpMIfpuc8UlIH9ks7mUsg6ra0Qhd4n8bBmFY8LGTRb9hizECYWwa0mqRRv4OU
+ lWSg==
+X-Gm-Message-State: APjAAAVGJbH8XGBvFJ2VImowI4+ABnIBfb+8Wmk59xsWgkIVs8eu1dtL
+ URxmGOYwXDwBTtHtK+TSCSVfqHYx3tggNZscOns=
+X-Google-Smtp-Source: APXvYqxYSIVWSrMQo4k/D89UarYdzB4qhiHJBfS9lqz44szNmHm0l+o/Vje+jkQ+rrB+g9rgNmnPGRjlItdbl9D463k=
+X-Received: by 2002:a05:6830:1316:: with SMTP id
+ p22mr25438318otq.329.1564086797590; 
+ Thu, 25 Jul 2019 13:33:17 -0700 (PDT)
+MIME-Version: 1.0
 References: <904952B3-C01C-489C-BDD6-AB96F6734201@fb.com>
  <dd457a99-5202-415c-abb6-b4fad030e9ee@www.fastmail.com>
  <20190725022922.dqwkb2g4djsnobnw@thinkpad.dyn.fuzziesquirrel.com>
  <51140097-5a0b-4f5a-a198-c2c76b1013b9@www.fastmail.com>
-In-Reply-To: <51140097-5a0b-4f5a-a198-c2c76b1013b9@www.fastmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::2:15eb]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 40e4cca4-3ad1-4cdf-464c-08d7113506b2
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MN2PR15MB2653; 
-x-ms-traffictypediagnostic: MN2PR15MB2653:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <MN2PR15MB2653BDD8E5AD72C06AC644B1BDC10@MN2PR15MB2653.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2582;
-x-forefront-prvs: 0109D382B0
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(396003)(136003)(366004)(376002)(346002)(39860400002)(51914003)(199004)(189003)(966005)(53936002)(76116006)(91956017)(6436002)(6506007)(102836004)(7116003)(86362001)(478600001)(229853002)(64756008)(4326008)(5660300002)(53546011)(11346002)(25786009)(2906002)(6306002)(66946007)(6512007)(221733001)(14454004)(6486002)(66446008)(66556008)(66476007)(486006)(3480700005)(99286004)(14444005)(76176011)(33656002)(6246003)(2616005)(7736002)(316002)(6116002)(54906003)(8676002)(6916009)(81156014)(81166006)(46003)(68736007)(8936002)(71200400001)(256004)(71190400001)(186003)(476003)(36756003)(305945005)(446003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MN2PR15MB2653;
- H:MN2PR15MB3680.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: tO66OBsNN6BDqSsxK190CewAXqgS2UaApwRKmZLXjCyvnsGthI5P2EYD4Bkz/G2c5Z+nMgPZQAhmJTPRC7eslD1kyRuvv9GIrxFuIqGcUaL0TwqaFeVL0T0ZlzxdyS7DcDr33iQkjaqzvl6hZyVTyb3OlZTpM97EOeFkNOy+fwpgIR6pvylmqqYxYkocHo2Z6rtq4dJae69u8xi6uO6igqzDzXxC8Z2P/gHRnZsm/0klWwjdfv4/7kmQpKT4ZMSywFyy3oTmkBku4I883zTt2bLWdif6ZckxgMvZukFdoI8yb8JcaAODQElp7CTsA5erWkc6QnVKYzhLHtd0NO7sZ1xeoZsdpDTyBnRjZE+JbmXqMGhz0voj/6d+uc4zavfQuldgS20AKEqDp7Eqm+TRu7E6gPdVy0LFhm5yNRgAL6g=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E81986E7078FCA4481DF5D08234FC0DB@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 40e4cca4-3ad1-4cdf-464c-08d7113506b2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jul 2019 19:19:33.8320 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wilfredsmith@fb.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR15MB2653
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-25_07:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1907250229
-X-FB-Internal: deliver
+ <7AF31809-55BF-4F0A-B2C4-A56A21BE1F5F@fb.com>
+In-Reply-To: <7AF31809-55BF-4F0A-B2C4-A56A21BE1F5F@fb.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 25 Jul 2019 15:33:01 -0500
+Message-ID: <CALLMt=oR-0C4PGgJxJ_Q06qqbuAwyQ0Yx_Yu1OXhiOmK0Qceiw@mail.gmail.com>
+Subject: Re: CLI Tools
+To: Wilfred Smith <wilfredsmith@fb.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -140,88 +79,155 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
  Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-QWxsLA0KDQpJ4oCZbSBub3Qgc3VyZSB3aGF0IE9wZW5CTUPigJlzIG9yIEZhY2Vib29r4oCZcyBv
-ZmZpY2lhbCBzdGFuY2Ugb24gQ0xJIGlzLCBzbyBjb25zaWRlciB0aGlzIGNvbW1lbnQgdG8gYmUg
-YSDigJxzaG90IGZyb20gdGhlIGhpcOKAnSBvZiBzb21lb25lIHdobyBtZWFucyB3ZWxsLg0KDQpJ
-dCBzZWVtcyB0byBtZSB0aGF0IGF0IGxlYXN0IHRocmVlIGJ1enp3b3JkcyByZXF1aXJlIGludm9j
-YXRpb246IGNvbnNpc3RlbmN5LCBkaXNjb3ZlcmFiaWxpdHkgYW5kIGF1dG9tYXRpb24uIE9idmlv
-dXNseSBhbnkgZGV2ZWxvcGVyIHdobyBjYXJlcyBlbm91Z2ggdG8gcGx1bWIgdGhlIGJvd2VscyBv
-ZiBhIHZlbmRvcuKAmXMgRC1idXMgaW1wbGVtZW50YXRpb24gY2FuIHdyaXRlIGhpcyBvd24gdXRp
-bGl0aWVzIGFuZCBoYXMgbWFueSBtZWFucyBvZiBhY2NvbXBsaXNoaW5nIGhpcyBvYmplY3RpdmVz
-LiBCdXQgdGhvc2UgYXJlYXMgYXJlIGNyaXRpY2FsIGZvciB0aGUgZGV2b3Agd2hvIGp1c3QgbmVl
-ZHMgdG8gZ2V0IGEgdGFzayBkb25lIGFuZCBjYXJlcyBsaXR0bGUgYWJvdXQgYSBwYXJ0aWN1bGFy
-IHZlbmRvcuKAmXMgaW1wbGVtZW50YXRpb24uDQoNCjEuIEl0IHdvdWxkIGJlIGdvb2QgdG8gYWdy
-ZWUgb24gYSBzZXQgb2YgY29tbW9uLCBzaW1wbGlmaWVkIGNvbW1hbmRzIGZvciBrZXkgb3BlcmF0
-aW9ucyB0aGF0IGRvIG5vdCBpbXBvc2UgYSBzdGVlcCBsZWFybmluZyBjdXJ2ZS4gKENvbW1pdHRp
-bmcg4oCcZGlzYWJsZSBhdXRvLXJlYm9vdOKAnSB0byBtZW1vcnkgaXMgcmVhc29uYWJsZTsgY29t
-bWl0dGluZyDigJxidXNjdGwg4oCmbG9uZyBoaWVyYXJjaGljYWwgcGF0aOKApjE1IHBhcmFtZXRl
-cnPigJ0gaXMgbm90KQ0KMi4gSXQgd291bGQgYmUgZ29vZCB0byBoYXZlIGEgY29tbW9uIG1lYW5z
-IG9mIGRpc2NvdmVyaW5nIHRoZSBhdmFpbGFibGUgdG9vbChzKSwgdGhlaXIgbW9zdCBjb21tb24g
-dXNhZ2VzIGFuZCBhZGFwdGF0aW9ucy4g4oCmcG9zc2libHkgYXMgc2ltcGxlIGFzIGhhdmluZyBh
-IGdvb2QgYmFzZSDigJxtYW7igJ0gcGFnZSB0aGF0IHZlbmRvcnMgY2FuIGFkYXB0LiAoaXTigJlz
-IDMgQU0sIHRoZXJl4oCZcyBhIHBvd2VyIGdyaWQgZmFpbHVyZSBhbmQgeW91IG5lZWQgdG8gcmVj
-b3ZlciBmcm9tIGEgY2x1c3RlciBmYXVsdCB3aXRob3V0IGRvaW5nIGEgR29vZ2xlIHNlYXJjaOKA
-pmNhbiB5b3UgZmlndXJlIGl0IG91dCwgZXZlbiBpZiB5b3XigJl2ZSBuZXZlciBkb25lIGl0IGJl
-Zm9yZT8pDQozLiBUbyBlbmFibGUgYXV0b21hdGlvbiBpbiBwcm9kdWN0aW9uLCB0aGUgY29tbWFu
-ZHMgc2hvdWxkIGJlIHNjcmlwdGFibGUgYW5kIHRoZSBtZWFucyBvZiBjYXRjaGluZyBhbmQgaGFu
-ZGxpbmcgZXJyb3JzIHNob3VsZCBiZSB3ZWxsLWRlZmluZWQuIChUaGFua3MgZm9yIHRoZSBleGl0
-IGNvZGUgMSwgSSBrbm93IOKAnHNvbWV0aGluZ+KAnSBpcyB3cm9uZ+KApmxldCBtZSBkZXRlcm1p
-bmUg4oCcWW91IGNhbuKAmXQgcmVjb25maWd1cmUgdGhlIEZDb0UgY29ubmVjdGlvbiBiZWNhdXNl
-IHRoZSBOSUMgaXMgb2ZmbGluZeKAnSBhbmQgYWxsb3cgYSBzY3JpcHQgdG8gZGV0ZWN0IHRoYXQs
-IGVuYWJsZSB0aGUgTklDIGFuZCBjYXJyeSBvbikuDQo0LiBGdXJ0aGVyLCBJIHRoaW5rIG9ibWN1
-dGlsIHNob3VsZCBiZSBleHRlbnNpYmxlIGluIGEgbWFubmVyIGNvbXBhdGlibGUgd2l0aCBCaXRi
-YWtlIGxheWVycy4gVGhpcyBtYXkgYXZlcnQgdGhlIHByb2xpZmVyYXRpb24gb2YgdmVuZG9yLXNw
-ZWNpZmljLCBpbmNvbXBhdGlibGUsIGZ1bmN0aW9uYWxseSBkaWZmZXJpbmcgdG9vbHMuIEl0IHNo
-b3VsZCBiZSBhIGZyYW1ld29yayB0aGF0IG1ha2VzIGl0IGVhc2llciB0byBkZXZlbG9wIGFuZCBl
-eHRlbmQgY29tcGxpYW50IHRvb2xzIHRoYW4gdG8gcm9sbCDigJxBbmR5LWRiZy1udm1lLWNmZ+KA
-nQ0KDQpXaWxmcmVkIA0KDQoNCg0KPiBPbiBKdWwgMjQsIDIwMTksIGF0IDc6NTggUE0sIEFuZHJl
-dyBKZWZmZXJ5IDxhbmRyZXdAYWouaWQuYXU+IHdyb3RlOg0KPiANCj4gDQo+IA0KPiBPbiBUaHUs
-IDI1IEp1bCAyMDE5LCBhdCAxMTo1OCwgQnJhZCBCaXNob3Agd3JvdGU6DQo+PiBPbiBUaHUsIEp1
-bCAyNSwgMjAxOSBhdCAxMTowNjoxM0FNICswOTMwLCBBbmRyZXcgSmVmZmVyeSB3cm90ZToNCj4+
-PiBIaSBXaWxmcmVkLA0KPj4+IA0KPj4+IE9uIFdlZCwgMjQgSnVsIDIwMTksIGF0IDE0OjA0LCBX
-aWxmcmVkIFNtaXRoIHdyb3RlOg0KPj4+PiBUaGVyZSB3YXMgYSBkaXNjdXNzaW9uIGEgd2hpbGUg
-YmFjayAoMiB5ZWFycyBhZ28/IEluDQo+Pj4+IGh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50
-LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fbGlzdHMub3psYWJzLm9yZ19waXBlcm1haWxfb3BlbmJt
-Y18yMDE2LTJETm92ZW1iZXJfMDA1MzA3Lmh0bWwmZD1Ed0lGYVEmYz01VkQwUlR0TmxUaDN5Y2Q0
-MWIzTVV3JnI9LWVrdFQtdEQ5emYycmZVaXNFNjNScWlEYWdHeWhHZXkyaGJFR2EtNDdrYyZtPXow
-RUVJcG82azR5UXhWdFQxNHZoa3F4SERweXl5bXdqNFU4cDVncE8xNDAmcz1LcjJuQW4yeGxYZkVj
-MFdGYWVtbURtZTY2bnlWMkZISTZrZzlXUnJtZHNjJmU9ICkNCj4+Pj4gd2hlcmUgdGhlIE9QIChQ
-YXRyaWNrIFdpbGxpYW1zKSBleHByZXNzZWQgY29uY2VybiBvdmVyIHRoZQ0KPj4+PiBwcm9saWZl
-cmF0aW9uIG9mIGNvbW1hbmQgbGluZSB0b29scy4gUGF0cmlja+KAmXMgaW50ZXJlc3QgaW52b2x2
-ZWQgaG93IHRvDQo+Pj4+IGludGVncmF0ZSBpb3Rvb2xzLiBPdGhlcnMgY2hpbWVkIGluIHF1ZXN0
-aW9uaW5nIHdoZXRoZXIgaXTigJlzIGJldHRlciB0bw0KPj4+PiBwcm92aWRlIGNvbXBhY3QgY29t
-bWFuZHMgZm9yIGNvbW1vbiBuZWVkcyBvciBlbmNvdXJhZ2UgZXhwbG9yYXRpb24gYnkNCj4+Pj4g
-cmVxdWlyaW5nIGxvbmdoYW5kLiBQYXRyaWNrIGlucXVpcmVkIGFib3V0IHRoZSB0YXJnZXQgYXVk
-aWVuY2UgZm9yIHRoZQ0KPj4+PiB0b29scy4NCj4+PiANCj4+PiBJJ20gYWxsIGZvciBoZWxwZXJz
-IGZvciBjb21tb24gdGFza3MuIElmIHdlIGNhbiBpbnRlZ3JhdGUgdGhlbSBpbnRvIG9ibWN1dGls
-DQo+Pj4gdGhhdCB3b3VsZCBiZSBpZGVhbC4gVGhlIGFsdGVybmF0aXZlIGlzIHRoYXQgd2UgcmVx
-dWlyZSBwZW9wbGUgd3JpdGUgdGhpbmdzIGxpa2U6DQo+Pj4gDQo+Pj4gIyBidXNjdGwgc2V0LXBy
-b3BlcnR5IGBtYXBwZXIgZ2V0LXNlcnZpY2UgL3h5ei9vcGVuYm1jX3Byb2plY3QvY29udHJvbC9o
-b3N0MC9hdXRvX3JlYm9vdGAgL3h5ei9vcGVuYm1jX3Byb2plY3QvY29udHJvbC9ob3N0MC9hdXRv
-X3JlYm9vdCB4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuQm9vdC5SZWJvb3RQb2xpY3kgQXV0
-b1JlYm9vdCBiIGZhbHNlDQo+Pj4gDQo+Pj4gdG8gZGlzYWJsZSBhdXRvLXJlYm9vdCBvcg0KPj4+
-IA0KPj4+ICMgYnVzY3RsIHNldC1wcm9wZXJ0eSB4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsg
-L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yay9ldGgwIHh5ei5vcGVuYm1jX3Byb2plY3QuTmV0
-d29yay5FdGhlcm5ldEludGVyZmFjZSBESENQRW5hYmxlZCBiIDENCj4+PiANCj4+PiB0byBzd2l0
-Y2ggREhDUCBvbi4gUXVpdGUgZnJhbmtseSB0aGF0J3MgYSByaWRpY3Vsb3VzIHJlcXVpcmVtZW50
-IHRvIGZvcmNlIG9uDQo+Pj4gZXZlcnlvbmUuDQo+PiANCj4+IFllYXJzIGFnbyB3aGVuIFBhdHJp
-Y2sgd3JvdGUgdGhlIHJlZmVyZW5jZWQgbm90ZSwgdGhlIGJlbGllZiB3YXMgdGhhdCANCj4+IHRo
-ZSBPcGVuQk1DIERCdXMgQVBJIHdvdWxkIGJlIHN0YWJsZS4gIEJ1dCB0aGF0IHRoaW5raW5nIGhh
-cyBsb25nIHNpbmNlIA0KPj4gYmVlbiByZWplY3RlZCAtIHRoZSBPcGVuQk1DIERCdXMgaXMgbm90
-IHN0YWJsZSBhbmQgYXMgc3VjaCBpdCBwcm9iYWJseSANCj4+IGRvZXNuJ3QgbWFrZSBzZW5zZSB0
-byBiZSBzaGFyaW5nIGl0ICh2aWEgYnVzY3RsIGNvbW1hbmRzKSB3aXRoIG91ciANCj4+IHVzZXJz
-Pw0KPiANCj4gWWVhaCwgbGlmdGluZyBhbiBvYm1jdXRpbCBpbnRlcmZhY2UgdG8gcmVwcmVzZW50
-IHNvbWV0aGluZyB1c2VycyB3YW50IHRvDQo+IGFjaGlldmUgKGBvYm1jdXRpbCBkaGNwIGVuYWJs
-ZWApIHJhdGhlciB0aGFuIGV4cG9zaW5nIGltcGxlbWVudGF0aW9uDQo+IGRldGFpbHMgd291bGQg
-YmUgYSB3aW4uDQo+IA0KPj4gDQo+Pj4gDQo+Pj4gSGF2aW5nIHNhaWQgdGhhdCBzb21lIG9mIHRo
-ZXNlIGFscmVhZHkgaGF2ZSBzaG9ydGN1dHMsIHN1Y2ggYXMNCj4+PiANCj4+PiAjIHN5c3RlbWN0
-bCBzdG9wIGhvc3QtZmFpbHVyZS1yZWJvb3RzQDANCj4+IA0KPj4gSXQgbWlnaHQgYWxyZWFkeSBi
-ZSB0b28gbGF0ZSwgYnV0IHdlIHByb2JhYmx5IHNob3VsZCBub3QgaGF2ZSBwcmVzZW50ZWQgDQo+
-PiBzeXN0ZW1jdGwgY29tbWFuZHMgYXMgc3RhYmxlIGludGVyZmFjZXMgZm9yIG91ciB1c2VycyBl
-aXRoZXIsIGZvciB0aGUgDQo+PiBzYW1lIHJlYXNvbnMgYXMgSSd2ZSBtZW50aW9uZWQgYWJvdmUu
-DQo+IA0KPiBSaWdodC4NCj4gDQo+IEFuZHJldw0KDQo=
+On Thu, Jul 25, 2019 at 2:20 PM Wilfred Smith <wilfredsmith@fb.com> wrote:
+>
+> All,
+>
+> I=E2=80=99m not sure what OpenBMC=E2=80=99s or Facebook=E2=80=99s officia=
+l stance on CLI is, so consider this comment to be a =E2=80=9Cshot from the=
+ hip=E2=80=9D of someone who means well.
+>
+> It seems to me that at least three buzzwords require invocation: consiste=
+ncy, discoverability and automation. Obviously any developer who cares enou=
+gh to plumb the bowels of a vendor=E2=80=99s D-bus implementation can write=
+ his own utilities and has many means of accomplishing his objectives. But =
+those areas are critical for the devop who just needs to get a task done an=
+d cares little about a particular vendor=E2=80=99s implementation.
+>
+> 1. It would be good to agree on a set of common, simplified commands for =
+key operations that do not impose a steep learning curve. (Committing =E2=
+=80=9Cdisable auto-reboot=E2=80=9D to memory is reasonable; committing =E2=
+=80=9Cbusctl =E2=80=A6long hierarchical path=E2=80=A615 parameters=E2=80=9D=
+ is not)
+> 2. It would be good to have a common means of discovering the available t=
+ool(s), their most common usages and adaptations. =E2=80=A6possibly as simp=
+le as having a good base =E2=80=9Cman=E2=80=9D page that vendors can adapt.=
+ (it=E2=80=99s 3 AM, there=E2=80=99s a power grid failure and you need to r=
+ecover from a cluster fault without doing a Google search=E2=80=A6can you f=
+igure it out, even if you=E2=80=99ve never done it before?)
+> 3. To enable automation in production, the commands should be scriptable =
+and the means of catching and handling errors should be well-defined. (Than=
+ks for the exit code 1, I know =E2=80=9Csomething=E2=80=9D is wrong=E2=80=
+=A6let me determine =E2=80=9CYou can=E2=80=99t reconfigure the FCoE connect=
+ion because the NIC is offline=E2=80=9D and allow a script to detect that, =
+enable the NIC and carry on).
+> 4. Further, I think obmcutil should be extensible in a manner compatible =
+with Bitbake layers. This may avert the proliferation of vendor-specific, i=
+ncompatible, functionally differing tools. It should be a framework that ma=
+kes it easier to develop and extend compliant tools than to roll =E2=80=9CA=
+ndy-dbg-nvme-cfg=E2=80=9D
+
+I definitely agree on all fronts. I've gotten a lot of complaints as we've
+changed D-bus API's and target names over the years. We created openbmcutil=
+ as
+our standard for out of band access[1] (similar complaints with our custom =
+REST
+api's). Moving to Redfish and our ability to use off the shelf tools like
+Redfishtool should slowly deprecate most of openbmcutil.
+
+As noted above, for internal, we've got obmcutil[2]. We recently moved obmc=
+util
+from a python based app to bash so that we could make python optional in ou=
+r
+phosphor layer.
+
+I'd definitely be interested in ways to add bitbake-layer based options to =
+this
+tool, but hopefully without having to add python back.
+
+The biggest issue I've seen with tools is that it becomes a new interface w=
+hich
+must continue to always be supported. It definitely comes with a cost so we
+always want to be conscious of what we add to it.
+
+High on my list is the ability to disable autoreboots and/or the host watch=
+dog.
+Listing, clearing, and displaying phosphor-logging events would be nice.
+
+[1]: https://github.com/openbmc/openbmc-tools/blob/master/thalerj/openbmcto=
+ol.py
+[2]: https://github.com/openbmc/phosphor-state-manager/blob/master/obmcutil
+
+>
+> Wilfred
+>
+>
+>
+> > On Jul 24, 2019, at 7:58 PM, Andrew Jeffery <andrew@aj.id.au> wrote:
+> >
+> >
+> >
+> > On Thu, 25 Jul 2019, at 11:58, Brad Bishop wrote:
+> >> On Thu, Jul 25, 2019 at 11:06:13AM +0930, Andrew Jeffery wrote:
+> >>> Hi Wilfred,
+> >>>
+> >>> On Wed, 24 Jul 2019, at 14:04, Wilfred Smith wrote:
+> >>>> There was a discussion a while back (2 years ago? In
+> >>>> https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__lists.ozlabs.=
+org_pipermail_openbmc_2016-2DNovember_005307.html&d=3DDwIFaQ&c=3D5VD0RTtNlT=
+h3ycd41b3MUw&r=3D-ektT-tD9zf2rfUisE63RqiDagGyhGey2hbEGa-47kc&m=3Dz0EEIpo6k4=
+yQxVtT14vhkqxHDpyyymwj4U8p5gpO140&s=3DKr2nAn2xlXfEc0WFaemmDme66nyV2FHI6kg9W=
+Rrmdsc&e=3D )
+> >>>> where the OP (Patrick Williams) expressed concern over the
+> >>>> proliferation of command line tools. Patrick=E2=80=99s interest invo=
+lved how to
+> >>>> integrate iotools. Others chimed in questioning whether it=E2=80=99s=
+ better to
+> >>>> provide compact commands for common needs or encourage exploration b=
+y
+> >>>> requiring longhand. Patrick inquired about the target audience for t=
+he
+> >>>> tools.
+> >>>
+> >>> I'm all for helpers for common tasks. If we can integrate them into o=
+bmcutil
+> >>> that would be ideal. The alternative is that we require people write =
+things like:
+> >>>
+> >>> # busctl set-property `mapper get-service /xyz/openbmc_project/contro=
+l/host0/auto_reboot` /xyz/openbmc_project/control/host0/auto_reboot xyz.ope=
+nbmc_project.Control.Boot.RebootPolicy AutoReboot b false
+> >>>
+> >>> to disable auto-reboot or
+> >>>
+> >>> # busctl set-property xyz.openbmc_project.Network /xyz/openbmc_projec=
+t/network/eth0 xyz.openbmc_project.Network.EthernetInterface DHCPEnabled b =
+1
+> >>>
+> >>> to switch DHCP on. Quite frankly that's a ridiculous requirement to f=
+orce on
+> >>> everyone.
+> >>
+> >> Years ago when Patrick wrote the referenced note, the belief was that
+> >> the OpenBMC DBus API would be stable.  But that thinking has long sinc=
+e
+> >> been rejected - the OpenBMC DBus is not stable and as such it probably
+> >> doesn't make sense to be sharing it (via busctl commands) with our
+> >> users?
+> >
+> > Yeah, lifting an obmcutil interface to represent something users want t=
+o
+> > achieve (`obmcutil dhcp enable`) rather than exposing implementation
+> > details would be a win.
+> >
+> >>
+> >>>
+> >>> Having said that some of these already have shortcuts, such as
+> >>>
+> >>> # systemctl stop host-failure-reboots@0
+> >>
+> >> It might already be too late, but we probably should not have presente=
+d
+> >> systemctl commands as stable interfaces for our users either, for the
+> >> same reasons as I've mentioned above.
+> >
+> > Right.
+> >
+> > Andrew
+>
