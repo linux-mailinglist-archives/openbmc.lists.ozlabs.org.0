@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79E1A77547
-	for <lists+openbmc@lfdr.de>; Sat, 27 Jul 2019 01:46:33 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45wQhk5bTqzDqQ5
-	for <lists+openbmc@lfdr.de>; Sat, 27 Jul 2019 09:46:30 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C1C377900
+	for <lists+openbmc@lfdr.de>; Sat, 27 Jul 2019 15:43:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45wnGj3mfhzDqK5
+	for <lists+openbmc@lfdr.de>; Sat, 27 Jul 2019 23:43:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::430; helo=mail-pf1-x430.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (mailfrom)
+ smtp.mailfrom=flex--osk.bounces.google.com (client-ip=2607:f8b0:4864:20::84a;
+ helo=mail-qt1-x84a.google.com;
+ envelope-from=31vq8xqmkb2amqiemmejc.amkmncl9kajgqrq.mxj89q.mpe@flex--osk.bounces.google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="VzS1eRUa"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="cPxvUeg2"; 
  dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
+Received: from mail-qt1-x84a.google.com (mail-qt1-x84a.google.com
+ [IPv6:2607:f8b0:4864:20::84a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45wQh96MH6zDqNy
- for <openbmc@lists.ozlabs.org>; Sat, 27 Jul 2019 09:46:01 +1000 (AEST)
-Received: by mail-pf1-x430.google.com with SMTP id i189so25210512pfg.10
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jul 2019 16:46:01 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45wnFs4MGjzDq75
+ for <openbmc@lists.ozlabs.org>; Sat, 27 Jul 2019 23:42:48 +1000 (AEST)
+Received: by mail-qt1-x84a.google.com with SMTP id s9so50219411qtn.14
+ for <openbmc@lists.ozlabs.org>; Sat, 27 Jul 2019 06:42:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=YLM/B4ky7o3X3hQp0yzdYVZ2FXKIUnMBtbI3rF5/s44=;
- b=VzS1eRUagvGljwkFClFzny9C8SJK0AOgC9/ZV3xsRw2iR99qWePyMaE+hXpFg+ZU1/
- Cs5WHzISpOoBTCVtkr2jAiv8EbkyRVNdyc4ScLHQWIzghKKQoljfuwwOim8bcuPqebtN
- KzV6INbnfsaNe9vwWEZyrAmAFbaX3za8zvbvADVarFT1s7FogWiKqcFq7cgRLAOznwlm
- GBvjQF4zuZbGcYYMcb26fn2u5SVxusDvVNz9bLOqPvlJ7UYgg11A9UkFzyHbvZAu1H1g
- xAc+rilha2VIg6MQLdaBZRMQpMLfZ/8Dt9OVHlmlMvpnoBa2XXOFISXx9WW8vCnjQo4e
- yVWw==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=ymvuXtYVyAeoSM229fRKSMujJvzD8jiyBkagF0beL30=;
+ b=cPxvUeg2rmbb+ciZPrlIW3cqjM8M7aek4RnGcN+7TCE77K3iOFeVsuf8d1fW3Mx+kQ
+ Bz+if+U7MBxI1QhIn2Dvc+tIl3uFAtBG5jerBjksYBTRBnSmNZHhx1iY9PmsClQPikk0
+ k56+NgHPQEVPidzO0tYghcUTedctvgo8WB11ZgXXGoJiuiynAGjzA70/inV4xLcuykUI
+ XOCqgk7xxZj01ow5ve3wPfA90lGrwWLJMALru/U+I6h/OyPQrD6oD+ItgriLUjBChYk0
+ tWSER6dgrExS8mM95QoarmPrsTddK95bP9FR2xolsddZXs4fnWQJBxwLHDu4KyfaSXf0
+ e7sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=YLM/B4ky7o3X3hQp0yzdYVZ2FXKIUnMBtbI3rF5/s44=;
- b=B4HFUF6VfveVkQDz6ZiawjycirtGT4ikqEo5MaaCZqBIelYoluh37MrfFp0EdzSpdj
- nxFX15Qm+pUpEfEvubHcLbiNuxD+NB9QJD+xNOajS46eSUUa0M7ThYn91xsyUyhAE9LQ
- JRFcnQw6kMsVeHKNPYK6in8yWS6QhPebpvKIYr9ijbLwO1iaT4PWqtZoHJ0AwR9WcF6j
- YvtPzUCRVNXgtcfNWakRMCtD6uznclDolagME5JVTEXWBBGef67VrHRB/hAZxvxSK2Lo
- Arq0AR25UUQLXK6nIMEAlTAs11u4y9qo/hLXbAwindpXtIpQ+osanIt+lcysB0g98qy1
- YOwA==
-X-Gm-Message-State: APjAAAWFtaqwCQS/0CwKCF28NZ/A5b39Rq8W+HpFmH6HSfd85T06ECEh
- m511LEqSBY9X6BBhyTDlnOm96RcCX9ogNKeMNjG56U0QJejnrQ==
-X-Google-Smtp-Source: APXvYqygO0XVeQ3ce2ZO0kJYIAxVGAAFWoekiHbtanI2wqhIItX8yjNgnW2cqHQB8FqzwgUTKOPjNmAgWQeZTVKoqNw=
-X-Received: by 2002:aa7:9f1c:: with SMTP id g28mr24530183pfr.81.1564184757908; 
- Fri, 26 Jul 2019 16:45:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAO=notzQbwA32vcyznddZX8Y4ypyvoFcbHRQjpVZBQGfpTieaw@mail.gmail.com>
-In-Reply-To: <CAO=notzQbwA32vcyznddZX8Y4ypyvoFcbHRQjpVZBQGfpTieaw@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Fri, 26 Jul 2019 16:45:46 -0700
-Message-ID: <CAO=notwXPOwxDk_J5eZXjqjN-po-OTexSNPz=kBX=iunxhW=+Q@mail.gmail.com>
-Subject: Re: entity-manager experiments
-To: James Feist <james.feist@linux.intel.com>, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=ymvuXtYVyAeoSM229fRKSMujJvzD8jiyBkagF0beL30=;
+ b=ia4cZEDVLYLZbQfaYFzkvu9ehRTbwtYlgeYBxr7bvEJXlncOjKjnownoS4i/9mcABy
+ xOibBjZ7JMBwqaaF6zI+UZFV/0mXiC5uGJHVW/tKZXc58Y3PSulDmMNIqCmkNuulZJB7
+ wgEWZttmtiKTcxHT+J7qtUVrCsJ6KyFe6xA8Hzc9grW2JWEkEqMfHW+4rTC0N/IpWcJC
+ 56uR/WFGoQcyBucX9/iGG+z2wfkUzyRvCZiwb0KomVRImzkH5lVEtu3C2FwzXKvZuUNL
+ B6CcFBMhyy+ad6Pa6fds9xZ1yKPiDhyWox13nAw6BkQucHw1wVTe/+jKqH4VkZ5tqiCS
+ fCdw==
+X-Gm-Message-State: APjAAAXXi7HNaMox6qlfaAlTlPZD/kBZGK+aLrJ/ojSUpte75vu4z5I2
+ QkV9leK9PeT6a9oU1Ivio8hl/u8=
+X-Google-Smtp-Source: APXvYqyw0cYe/eB+h5vbkCOW06axIGup1wJt8vcrMsbtvu3UyeJ3ZXAKUlCvBgZY7al58EDTHoE2ScI=
+X-Received: by 2002:a37:b381:: with SMTP id
+ c123mr68205028qkf.349.1564234965253; 
+ Sat, 27 Jul 2019 06:42:45 -0700 (PDT)
+Date: Sat, 27 Jul 2019 09:42:42 -0400
+Message-Id: <20190727134242.49847-1-osk@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.709.g102302147b-goog
+Subject: [PATCH] drivers/tty/serial/8250: Make Aspeed VUART SIRQ polarity
+ configurable
+From: Oskar Senft <osk@google.com>
+To: joel@jms.id.au, andrew@aj.id.au
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,136 +73,109 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Oskar Senft <osk@google.com>,
+ linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 26, 2019 at 4:40 PM Patrick Venture <venture@google.com> wrote:
->
-> Hi,
->
-> I was curious if you had any thoughts on what is missing here -- I
-> wrote a basic json file:
->
-> razorback.json:
-> {
->     "Exposes": [
->         {
->             "Address": "$address",
->             "Bus": "$bus",
->             "Name": "Razorback",
->             "Type": "EEPROM"
->         },
->         {
->             "Address": "0x4c",
->             "Bus": "$bus",
->             "Name": "Razorback Temp Sensor",
->             "Type": "TMP421"
->         }
->     ],
->     "Name": "Razorback Board",
->     "Probe" : "xyz.openbmc_project.FruDevice({'PRODUCT_PRODUCT_NAME':
-> '.*Razorback'})",
->     "Type": "Board",
->     "xyz.openbmc_project.Inventory.Decorator.Asset": {
->         "Manufacturer": "$PRODUCT_MANUFACTURER",
->         "Model": "$PRODUCT_PRODUCT_NAME",
->         "PartNumber": "$PRODUCT_PART_NUMBER",
->         "SerialNumber": "$PRODUCT_SERIAL_NUMBER"
->     }
-> }
->
-> And it finds it:
-> Service xyz.openbmc_project.EntityManager:
-> `-/xyz
->   `-/xyz/openbmc_project
->     |-/xyz/openbmc_project/EntityManager
->     `-/xyz/openbmc_project/inventory
->       `-/xyz/openbmc_project/inventory/system
->         `-/xyz/openbmc_project/inventory/system/board
->           `-/xyz/openbmc_project/inventory/system/board/Razorback_Board
->             |-/xyz/openbmc_project/inventory/system/board/Razorback_Board/Razorback
->             `-/xyz/openbmc_project/inventory/system/board/Razorback_Board/Razorback_Temp_Sensor
->
-> Service xyz.openbmc_project.FruDevice:
-> `-/xyz
->   `-/xyz/openbmc_project
->     `-/xyz/openbmc_project/FruDevice
->       `-/xyz/openbmc_project/FruDevice/_0
->
-> I don't know why it's named _0, but I can debug that later.
->
-> So I introspect on it:
-> busctl introspect --no-pager xyz.openbmc_project.EntityManager
-> /xyz/openbmc_project/inventory/system/board/Razorback_Board/Razorback_Temp_Sensor
-> NAME                                     TYPE      SIGNATURE
-> RESULT/VALUE            FLAGS
-> org.freedesktop.DBus.Introspectable      interface -         -
->               -
-> .Introspect                              method    -         s
->               -
-> org.freedesktop.DBus.Peer                interface -         -
->               -
-> .GetMachineId                            method    -         s
->               -
-> .Ping                                    method    -         -
->               -
-> org.freedesktop.DBus.Properties          interface -         -
->               -
-> .Get                                     method    ss        v
->               -
-> .GetAll                                  method    s         a{sv}
->               -
-> .Set                                     method    ssv       -
->               -
-> .PropertiesChanged                       signal    sa{sv}as  -
->               -
-> xyz.openbmc_project.Configuration.TMP421 interface -         -
->               -
-> .Address                                 property  t         76
->               emits-change
-> .Bus                                     property  t         17
->               emits-change
-> .Name                                    property  s
-> "Razorback Temp Sensor" emits-change
-> .Type                                    property  s         "TMP421"
->               emits-change
->
-> and all that looks correct, and now there's an i2c device at 17-004c,
-> but no hwmon path, and:
->
-> Jul 25 00:27:24 machine intrusion-sensor[2654]: Error communicating to
-> entity manager
-> Jul 25 00:27:24 machine intrusion-sensor[2654]: error communicating to
-> entity manager
-> Jul 25 00:27:24 machine fansensor[2671]: Error communicating to entity manager
-> Jul 25 00:27:24 machine fansensor[2671]: error communicating to entity manager
-> Jul 25 00:27:24 machine fansensor[2671]: Error calling entity manager
-> Jul 25 00:27:24 machine adcsensor[2658]: Error communicating to entity manager
-> Jul 25 00:27:24 machine adcsensor[2658]: error communicating to entity manager
-> Jul 25 00:27:25 machine mcutempsensor[2689]: Error contacting entity manager
-> Jul 25 00:27:25 machine hwmontempsensor[2675]: Error communicating to
-> entity manager
-> Jul 25 00:27:25 machine hwmontempsensor[2675]: error communicating to
-> entity manager
-> Jul 25 00:27:26 machine psusensor[2677]: Error communicating to entity manager
-> Jul 25 00:27:26 machine psusensor[2677]: error get sensor config from
-> entity manager
-> Jul 25 00:27:27 machine ipmbsensor[2674]: Error contacting entity manager
-> Jul 25 00:27:27 machine cpusensor
-[2666]: Error communicating to entity manager
-> Jul 25 00:27:27 machine entity-manager[2694]: Clearing previous configuration
->
-> Service xyz.openbmc_project.HwmonTempSensor:
-> Only root object discovered.
->
-> Any thoughts on the disconnect?  Have you seen anything like this?
+Make the SIRQ polarity for Aspeed 24xx/25xx VUART configurable via
+sysfs. It is required on some host platforms (e.g. TYAN S7106) to
+reconfigure this setting from the default to enable the host to receive
+interrupts from the VUART.
 
-I had a hunch the driver was missing:
+The setting is configurable via sysfs rather than device-tree to stay in
+line with other related configurable settings.
 
-tmp/work-shared/machine/kernel-build-artifacts/.config:1827:#
-CONFIG_SENSORS_TMP421 is not set
+Tested: Verified on TYAN S7106 mainboard.
+Signed-off-by: Oskar Senft <osk@google.com>
+---
+ .../ABI/stable/sysfs-driver-aspeed-vuart      | 10 ++++-
+ drivers/tty/serial/8250/8250_aspeed_vuart.c   | 39 +++++++++++++++++++
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-... ok, so that makes sense then! :D  Will try fixing that first!
+diff --git a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+index 8062953ce77b..64fad87ad964 100644
+--- a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
++++ b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+@@ -6,10 +6,18 @@ Description:	Configures which IO port the host side of the UART
+ Users:		OpenBMC.  Proposed changes should be mailed to
+ 		openbmc@lists.ozlabs.org
+ 
+-What:		/sys/bus/platform/drivers/aspeed-vuart*/sirq
++What:		/sys/bus/platform/drivers/aspeed-vuart/*/sirq
+ Date:		April 2017
+ Contact:	Jeremy Kerr <jk@ozlabs.org>
+ Description:	Configures which interrupt number the host side of
+ 		the UART will appear on the host <-> BMC LPC bus.
+ Users:		OpenBMC.  Proposed changes should be mailed to
+ 		openbmc@lists.ozlabs.org
++
++What:		/sys/bus/platform/drivers/aspeed-vuart/*/sirq_polarity
++Date:		July 2019
++Contact:	Oskar Senft <osk@google.com>
++Description:	Configures the polarity of the serial interrupt to the
++		host via the BMC LPC bus.
++Users:		OpenBMC.  Proposed changes should be mailed to
++		openbmc@lists.ozlabs.org
+diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+index 0438d9a905ce..ef0a6ff69841 100644
+--- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
++++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+@@ -22,6 +22,7 @@
+ 
+ #define ASPEED_VUART_GCRA		0x20
+ #define ASPEED_VUART_GCRA_VUART_EN		BIT(0)
++#define ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY	BIT(1)
+ #define ASPEED_VUART_GCRA_DISABLE_HOST_TX_DISCARD BIT(5)
+ #define ASPEED_VUART_GCRB		0x24
+ #define ASPEED_VUART_GCRB_HOST_SIRQ_MASK	GENMASK(7, 4)
+@@ -131,8 +132,46 @@ static ssize_t sirq_store(struct device *dev, struct device_attribute *attr,
+ 
+ static DEVICE_ATTR_RW(sirq);
+ 
++static ssize_t sirq_polarity_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	struct aspeed_vuart *vuart = dev_get_drvdata(dev);
++	u8 reg;
++
++	reg = readb(vuart->regs + ASPEED_VUART_GCRA);
++	reg &= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++
++	return snprintf(buf, PAGE_SIZE - 1, "%u\n", reg ? 1 : 0);
++}
++
++static ssize_t sirq_polarity_store(struct device *dev,
++				   struct device_attribute *attr,
++				   const char *buf, size_t count)
++{
++	struct aspeed_vuart *vuart = dev_get_drvdata(dev);
++	unsigned long val;
++	int err;
++	u8 reg;
++
++	err = kstrtoul(buf, 0, &val);
++	if (err)
++		return err;
++
++	reg = readb(vuart->regs + ASPEED_VUART_GCRA);
++	if (val != 0)
++		reg |= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++	else
++		reg &= ~ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++	writeb(reg, vuart->regs + ASPEED_VUART_GCRA);
++
++	return count;
++}
++
++static DEVICE_ATTR_RW(sirq_polarity);
++
+ static struct attribute *aspeed_vuart_attrs[] = {
+ 	&dev_attr_sirq.attr,
++	&dev_attr_sirq_polarity.attr,
+ 	&dev_attr_lpc_address.attr,
+ 	NULL,
+ };
+-- 
+2.22.0.709.g102302147b-goog
 
->
-> Patrick
