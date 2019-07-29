@@ -1,56 +1,41 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 356F17833B
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 04:03:32 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45xjds5gHfzDqSk
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 12:03:29 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFBA978349
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 04:20:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45xk1H1x7BzDqSd
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 12:20:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Received: from ozlabs.org (bilbo.ozlabs.org [IPv6:2401:3900:2:1::2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=permerror (mailfrom)
+ smtp.mailfrom=kernel.crashing.org (client-ip=63.228.1.57;
+ helo=gate.crashing.org; envelope-from=benh@kernel.crashing.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=kernel.crashing.org
+Received: from gate.crashing.org (gate.crashing.org [63.228.1.57])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45xjdF4BcvzDqQb;
- Mon, 29 Jul 2019 12:02:57 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ozlabs.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=ozlabs.org header.i=@ozlabs.org header.b="sZcfwkaY"; 
- dkim-atps=neutral
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 45xjdD6RVKz9s7T;
- Mon, 29 Jul 2019 12:02:56 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1564365777; bh=dpZmzNioMMex7RcI3z1cf9X8awSQQyB//gG7MK7LaDo=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=sZcfwkaYkiOSDty3FTymDB4VS7eDnSDYhicNslEuGpoN4DbWtFzyeRbunqemEsCiu
- pRFIJ0JxSqnHHZqr5d/DCBCFDMMGTbZNO1A3WTAWaxuPCYmPSmm+YNlqptRU5GKSFv
- ixKfyPoHP6EYSYEEwMNINFFLqxgPYdqdxkmxzTfwiXLMq5A8LR63Q1KRpei0p9cZtb
- YLhCcsJS2sYQCMNW+J64vA/yKxkg2krMGWQmoVVySLJx/qQiM5j1EIS3LGk7XgBAvY
- dSuP+HQkOa99/iRa+8e2cprT8ixPtjPGH5FeLwCR0q430d1K6IgGvYrCb7ucXukfjx
- pSlFbPS99mg7g==
-Message-ID: <9855284dfa4c4d4a52441553691c7b4b08a9cc34.camel@ozlabs.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45xk0W0DqKzDqQd;
+ Mon, 29 Jul 2019 12:19:38 +1000 (AEST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by gate.crashing.org (8.14.1/8.14.1) with ESMTP id x6T2JNMB005360;
+ Sun, 28 Jul 2019 21:19:23 -0500
+Message-ID: <d763fb2428099fd4aba27a0dfb66b2d5fd9ab2a4.camel@kernel.crashing.org>
 Subject: Re: [PATCH] drivers/tty/serial/8250: Make Aspeed VUART SIRQ
  polarity configurable
-From: Jeremy Kerr <jk@ozlabs.org>
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 To: Oskar Senft <osk@google.com>
-Date: Mon, 29 Jul 2019 10:02:56 +0800
-In-Reply-To: <CABoTLcQF4_He15F5oO0Pxjdm6f7pLCxBF77cz7wR=jjWaednYQ@mail.gmail.com>
+Date: Mon, 29 Jul 2019 12:19:23 +1000
+In-Reply-To: <CABoTLcRPXffZuKy-DTFUVKJQRydSzMDynYRgBbZ_470iVN1KnA@mail.gmail.com>
 References: <20190727134242.49847-1-osk@google.com>
  <9fb8c99449cebd68fb5975890dedaa06ce7808ae.camel@kernel.crashing.org>
  <CABoTLcRPXffZuKy-DTFUVKJQRydSzMDynYRgBbZ_470iVN1KnA@mail.gmail.com>
- <CABoTLcTSFvQruPRnoRPgiWjOXNDOCSnAXVesG7f1WAuLLLVSSg@mail.gmail.com>
- <6b31627a8c5a2616c83783550517961b7ed8f3cb.camel@ozlabs.org>
- <CABoTLcQF4_He15F5oO0Pxjdm6f7pLCxBF77cz7wR=jjWaednYQ@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
-MIME-Version: 1.0
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -68,42 +53,163 @@ Cc: Andrew Jeffery <andrew@aj.id.au>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Oskar,
-
-> In my understanding the SIRQ polarity should be the same for all UARTs
-> on the particular bus, i.e. both UARTs controlled by the SuperI/O and
-> the VUART or PUART (pass-through). However, the host controls the
-> UARTs on the SuperI/O itself.
-
-Somewhat offtopic, but are you sure you want to enable the SuperIO
-device?
-
->  The VUART is covered by this code and we don't have a PUART driver
-> yet.
+On Sun, 2019-07-28 at 00:00 -0400, Oskar Senft wrote:
+> I was thinking exactly the same thing (which is why I pointed it out
+> in the change description). Thanks for picking up on that :-D
 > 
-> It might make sense to have this as a global setting which each driver
-> could read. But wouldn't this be an exercise for the future where we
-> actually have a second device? I don't think the Aspeed currently has
-> any other devices that could generate a SIRQ (except for the PUART for
-> which there's no driver).
+> I considered both options but decided to follow what's been done for
+> the sirq and lpc_address settings, as sirq_polarity should really go
+> together with the other two. I guess we could argue that the
+> sirq_polarity likely always has to have a specific setting for the
+> specific platform, whereas the sirq and the lpc_address might be
+> configurable in some way from the host at runtime.
+> 
+> Another reason I decided against DTS is that the properties currently
+> read from DTS are "standard properties" from the 8250 driver. So I
+> wasn't sure if it's ok to add a property that clearly specific to the
+> 8250_aspeed_vuart driver.
+> 
+> If anyone has strong feelings I can either change it from sysfs to
+> DTS or add DTS on top - it's quite easy to do. Thoughts?
 
-We have a bunch of SIRQ sources that we use (on OpenPOWER platforms) -
-the BT interface, the KCS interface, the UARTs, and the mbox hardware.
-It's not just the VUART/PUART :)
-
-> Having said that, ideally I'd like the SIRQ polarity to be auto-
-> configured from the LPC/eSPI HW pin strap anyway. I have the code for
-> that almost done. Maybe we shouldn't even have the sysfs interface for
-> it and I should strip that out?
-
-Yeah, I think I agree with that. The only downside is that the 
-individual drivers will now need to poke at the SCU to query the
-LPC/eSPI configuration. If you can find a nice way to do that, then that
-sounds like the best approach. Can you query it through the parent bus
-perhaps?
+No strong feelings. Adding properties should be ok but on the other
+hand, I agree with keeping things consistent with the other LPC
+settings (address & irq#).
 
 Cheers,
+Ben.
 
-
-Jeremy
+> 
+> Thanks
+> Oskar.
+> 
+> On Sat, Jul 27, 2019 at 9:30 PM Benjamin Herrenschmidt <
+> benh@kernel.crashing.org> wrote:
+> > On Sat, 2019-07-27 at 09:42 -0400, Oskar Senft wrote:
+> > > Make the SIRQ polarity for Aspeed 24xx/25xx VUART configurable
+> > via
+> > > sysfs. It is required on some host platforms (e.g. TYAN S7106) to
+> > > reconfigure this setting from the default to enable the host to
+> > > receive
+> > > interrupts from the VUART.
+> > > 
+> > > The setting is configurable via sysfs rather than device-tree to
+> > stay
+> > > in
+> > > line with other related configurable settings.
+> > 
+> > If it's a fixed platform configuration that never changes at
+> > runtime,
+> > shouldn't it be in the device-tree instead ?
+> > 
+> > Cheers,
+> > Ben
+> > 
+> > > Tested: Verified on TYAN S7106 mainboard.
+> > > Signed-off-by: Oskar Senft <osk@google.com>
+> > > ---
+> > >  .../ABI/stable/sysfs-driver-aspeed-vuart      | 10 ++++-
+> > >  drivers/tty/serial/8250/8250_aspeed_vuart.c   | 39
+> > > +++++++++++++++++++
+> > >  2 files changed, 48 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+> > > b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+> > > index 8062953ce77b..64fad87ad964 100644
+> > > --- a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+> > > +++ b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+> > > @@ -6,10 +6,18 @@ Description:        Configures which IO port
+> > the
+> > > host side of the UART
+> > >  Users:               OpenBMC.  Proposed changes should be mailed
+> > to
+> > >               openbmc@lists.ozlabs.org
+> > >  
+> > > -What:                /sys/bus/platform/drivers/aspeed-
+> > vuart*/sirq
+> > > +What:                /sys/bus/platform/drivers/aspeed-
+> > vuart/*/sirq
+> > >  Date:                April 2017
+> > >  Contact:     Jeremy Kerr <jk@ozlabs.org>
+> > >  Description: Configures which interrupt number the host side of
+> > >               the UART will appear on the host <-> BMC LPC bus.
+> > >  Users:               OpenBMC.  Proposed changes should be mailed
+> > to
+> > >               openbmc@lists.ozlabs.org
+> > > +
+> > > +What:                /sys/bus/platform/drivers/aspeed-
+> > > vuart/*/sirq_polarity
+> > > +Date:                July 2019
+> > > +Contact:     Oskar Senft <osk@google.com>
+> > > +Description: Configures the polarity of the serial interrupt to
+> > the
+> > > +             host via the BMC LPC bus.
+> > > +Users:               OpenBMC.  Proposed changes should be mailed
+> > to
+> > > +             openbmc@lists.ozlabs.org
+> > > diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > index 0438d9a905ce..ef0a6ff69841 100644
+> > > --- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > +++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+> > > @@ -22,6 +22,7 @@
+> > >  
+> > >  #define ASPEED_VUART_GCRA            0x20
+> > >  #define ASPEED_VUART_GCRA_VUART_EN           BIT(0)
+> > > +#define ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY BIT(1)
+> > >  #define ASPEED_VUART_GCRA_DISABLE_HOST_TX_DISCARD BIT(5)
+> > >  #define ASPEED_VUART_GCRB            0x24
+> > >  #define ASPEED_VUART_GCRB_HOST_SIRQ_MASK     GENMASK(7, 4)
+> > > @@ -131,8 +132,46 @@ static ssize_t sirq_store(struct device
+> > *dev,
+> > > struct device_attribute *attr,
+> > >  
+> > >  static DEVICE_ATTR_RW(sirq);
+> > >  
+> > > +static ssize_t sirq_polarity_show(struct device *dev,
+> > > +                               struct device_attribute *attr,
+> > char
+> > > *buf)
+> > > +{
+> > > +     struct aspeed_vuart *vuart = dev_get_drvdata(dev);
+> > > +     u8 reg;
+> > > +
+> > > +     reg = readb(vuart->regs + ASPEED_VUART_GCRA);
+> > > +     reg &= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
+> > > +
+> > > +     return snprintf(buf, PAGE_SIZE - 1, "%u\n", reg ? 1 : 0);
+> > > +}
+> > > +
+> > > +static ssize_t sirq_polarity_store(struct device *dev,
+> > > +                                struct device_attribute *attr,
+> > > +                                const char *buf, size_t count)
+> > > +{
+> > > +     struct aspeed_vuart *vuart = dev_get_drvdata(dev);
+> > > +     unsigned long val;
+> > > +     int err;
+> > > +     u8 reg;
+> > > +
+> > > +     err = kstrtoul(buf, 0, &val);
+> > > +     if (err)
+> > > +             return err;
+> > > +
+> > > +     reg = readb(vuart->regs + ASPEED_VUART_GCRA);
+> > > +     if (val != 0)
+> > > +             reg |= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
+> > > +     else
+> > > +             reg &= ~ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
+> > > +     writeb(reg, vuart->regs + ASPEED_VUART_GCRA);
+> > > +
+> > > +     return count;
+> > > +}
+> > > +
+> > > +static DEVICE_ATTR_RW(sirq_polarity);
+> > > +
+> > >  static struct attribute *aspeed_vuart_attrs[] = {
+> > >       &dev_attr_sirq.attr,
+> > > +     &dev_attr_sirq_polarity.attr,
+> > >       &dev_attr_lpc_address.attr,
+> > >       NULL,
+> > >  };
+> > 
 
