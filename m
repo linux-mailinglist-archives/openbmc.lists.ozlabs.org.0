@@ -2,64 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4669B791FD
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 19:22:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86B1C792AE
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jul 2019 19:56:18 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45y62Z4kLtzDqQC
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 03:22:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45y6nC58MgzDqDJ
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 03:56:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::444; helo=mail-pf1-x444.google.com;
+ (client-ip=2607:f8b0:4864:20::533; helo=mail-pg1-x533.google.com;
  envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Q2xRpAut"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="rL/YKN2x"; 
  dkim-atps=neutral
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
- [IPv6:2607:f8b0:4864:20::444])
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com
+ [IPv6:2607:f8b0:4864:20::533])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45y61w5l4bzDqNP
- for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2019 03:22:12 +1000 (AEST)
-Received: by mail-pf1-x444.google.com with SMTP id g2so28372545pfq.0
- for <openbmc@lists.ozlabs.org>; Mon, 29 Jul 2019 10:22:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45y6mX54ltzDqNH
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2019 03:55:39 +1000 (AEST)
+Received: by mail-pg1-x533.google.com with SMTP id f20so19401240pgj.0
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Jul 2019 10:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=At850VjJZfL/2pMedWKzOkEg4x1d0XhojXzI+8fH5Vk=;
- b=Q2xRpAut053t2ZWctIYu4sNgAQ3J2n93zTwguyw8JVLKhX8qhT6MWJD5cEvcLgMP7f
- UWDtXgluusd7yBWpadMa258cmvYK3Z4OPfMfhZHDZ9dHlprYiUVQozdYpj7bBLl3VAzG
- pQRQzFq27CyppHoC3a5gGoPd85MMHatT7K/apKVi+srPjrwmQ3KGtGfePL/IdeoUgHgN
- D/m0TklBv4swlhaJZrnWHOMIRdMQxmmjEe/CKm0l92CD23HjQ4j/wTo4UHGw5iigdlMh
- yvycaceL6NlFk9G3JcOD7e8NO/CfnN/768W+p5NUcrCu5su6XfrvTIPn7BdDT8/KtcEy
- +Vzg==
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=L4Lrq2n3fj9SyXGyN8xSAS+tlSvQ1q5YuGEI18xx3Lo=;
+ b=rL/YKN2xlUzXOAVgILC7ynKCBYetMlWXSbWJHAEhmE3tAmvOAubhx7RBGdGhv9Sbws
+ PLjcSHBchDp7cRlDBlY6E2syYhYJYEDkvQj5k5avJR3Liw/XfxaWN26XmHYDOgVSfWjA
+ nrasuGQCkp2J5DGCa19Sx7nI/0Znq2rDyZEKmbOUV2mCmOeWAb/zFS25TlHwLLo+Z35w
+ gfWey8Vsl5HI8nAkvuTMPkAJt570KTbSSHs3icU8GxSb6UmZ/q9qG/Ndtntue83zXw7l
+ M+g4th1NbQp2Lg7fCdmgYWw+yoKjUtmsLoIB5WWBRalQQYiUo2n79Ot5jPc+MApw+IHk
+ eD8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=At850VjJZfL/2pMedWKzOkEg4x1d0XhojXzI+8fH5Vk=;
- b=ORcFJVqwyqjRzOkEtFwhxhBV6UWWQSZO9UGRkc/nUKYlDTSN1TofqZd7yFSHHpIW4/
- 3p69uakIDpNEz4GjpN6S939NJMleyAWqxg/SmQmjhWo2YKwK7COZOZOoUXYrWBLcebFZ
- qopsTqtwXGqykMVRa5d/MQeWSh3OxUCBgPTlFAwZ7zBexttMnifAn9GpVPptPme/pizr
- 1VgguJs+7lXX/h9S8ckHwCWij4X2u4ctCWPWTk5//YUewpl2vNTP6ZE3e2VP+O/QBwOM
- zz3M4BYQiHTQpCCyzG/ZN9GCvP+l7+oU4YPbNKOayEmwyt0xFreckhoNsnILq7Eh6LHf
- +bbQ==
-X-Gm-Message-State: APjAAAWV4VgwHJy/0Mb4B/gBp4Sn2untBBVAuT19bX/XOFVE94WkTnZ5
- ew7XXbMH6gRkcKdVbr4rvZFnm5RAo52JE4cMfX+8+Q==
-X-Google-Smtp-Source: APXvYqxLD7DLBDyYG83y5AW71MUD06Y1ghP+W8wAQORqc++JHemaBgIpTjPheM7d+fr5NpKFZE+hMiUb0U99DSkkNic=
-X-Received: by 2002:aa7:9f1c:: with SMTP id g28mr37235554pfr.81.1564420928074; 
- Mon, 29 Jul 2019 10:22:08 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=L4Lrq2n3fj9SyXGyN8xSAS+tlSvQ1q5YuGEI18xx3Lo=;
+ b=qb/Sr2XAh0KzTgg0ZhFuonf9TKHqPBAf65MPxKMTtQoDB8iPgLDm7mvwjiv4HT/lEr
+ 3DYwe6slUEqU98kgB3SB3pWJZxeRmk8LMVuhScJxFudrqImvEebaNFk0Oea5wur9Qz/8
+ gJ/+8TFnViXb2X8vjNC4hr7EI7tW+CDpDeRNRQnaAVns3vD76n07XsXuuxm7uBVKl25M
+ GL7E1oJ7QceUJdZYu2uLcGa33tG70gy4crZ4QLU0ITyNJBFDBRmtDhWdWQozdlqMRp5w
+ r5UjrYNP7Ch/jqDFgu9IHgBLsZ/a0LvGp5Jgra6wvIknMV1+fvHJHSd8U0QS4ldF3jcv
+ +vLQ==
+X-Gm-Message-State: APjAAAXbHSx8RTH9pg+3Y0YL4ITSB+MkQ6hQBNU4ZszszoL6/Y65XnB+
+ 1Dez1TxRbzupZ8Ljez8QvcL32fnudj/srPTiw2agwQ==
+X-Google-Smtp-Source: APXvYqyNOqwiEk1tROoqI2BU2nPrrxbyRRiDCSiysHuJowgOhUR/Bhjvv24jUKUZ4AzCGC+Lra6dK1Lge/ICuUlb3ec=
+X-Received: by 2002:a17:90a:23a4:: with SMTP id
+ g33mr116448285pje.115.1564422935533; 
+ Mon, 29 Jul 2019 10:55:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notwJd4QkJVP2qRiB56DWf+D=qs6S9cMCcfiywpOJZO03mA@mail.gmail.com>
- <b5f26e39-965d-4c64-bd51-5e83b86a12d4@linux.intel.com>
-In-Reply-To: <b5f26e39-965d-4c64-bd51-5e83b86a12d4@linux.intel.com>
 From: Patrick Venture <venture@google.com>
-Date: Mon, 29 Jul 2019 10:21:56 -0700
-Message-ID: <CAO=notwboY-awYHPxq4JqLoNMDfhr+xHZaPiRdO=vnFiat75KA@mail.gmail.com>
-Subject: Re: Limitations of entity-manager:FruDevice
+Date: Mon, 29 Jul 2019 10:55:24 -0700
+Message-ID: <CAO=notyvYn5-VTKys86NVzXXturPh=Q-5DFsR_ZvGeoJs=P0PQ@mail.gmail.com>
+Subject: entity-manager exposing eeproms
 To: James Feist <james.feist@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -78,72 +75,94 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Tanous,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 29, 2019 at 10:05 AM James Feist
-<james.feist@linux.intel.com> wrote:
->
-> On 7/29/19 9:11 AM, Patrick Venture wrote:
-> > Hi;
-> >
-> > I don't know much about FRUs.  However, I know that for some eeproms
-> > on the device-tree for my platform, the default eeprom driver instance
-> > isn't correct and I need to explicitly use 24c64.
-> >
-> > root@semitruck:~# echo "eeprom 0x50" > /sys/bus/i2c/devices/i2c-14/new_device
-> > i2c i2c-14: new_device: Instantiated device eeprom at 0x50
-> > root@semitruck:~#
-> > root@semitruck:~# ls -l /sys/bus/i2c/devices/14-0050/
-> > -r--r--r--    1 root     root          4096 Jul 29 15:20 modalias
-> > -r--r--r--    1 root     root          4096 Jul 29 15:20 name
-> > drwxr-xr-x    2 root     root             0 Jul 29 15:20 power
-> > lrwxrwxrwx    1 root     root             0 Jul 29 15:20 subsystem ->
-> > ../../../../../../../bus/i2c
-> > -rw-r--r--    1 root     root          4096 Jul 29 15:20 uevent
-> >
-> > root@semitruck:~# echo "24c64 0x50" > /sys/bus/i2c/devices/i2c-14/new_device
-> > at24 14-0050: 8192 byte 24c64 EEPROM, writable, 1 bytes/write
-> > i2c i2c-14: new_device: Instantiated device 24c64 at 0x50
-> > root@semitruck:~# ls -l /sys/bus/i2c/devices/14-0050/
-> > drwxr-xr-x    3 root     root             0 Jul 29 15:46 14-00500
-> > lrwxrwxrwx    1 root     root             0 Jul 29 15:46 driver ->
-> > ../../../../../../../bus/i2c/drivers/at24
-> > -rw-------    1 root     root          8192 Jul 29 15:46 eeprom
-> > -r--r--r--    1 root     root          4096 Jul 29 15:46 modalias
-> > -r--r--r--    1 root     root          4096 Jul 29 15:46 name
-> > drwxr-xr-x    2 root     root             0 Jul 29 15:46 power
-> > lrwxrwxrwx    1 root     root             0 Jul 29 15:46 subsystem ->
-> > ../../../../../../../bus/i2c
-> > -rw-r--r--    1 root     root          4096 Jul 29 15:46 uevent
-> >
-> > For entity-manager, I can add the type and it'll do the right thing.
-> > However, when FruDevice runs first and populates the FRUs, it doesn't
-> > seem to detect the difference in the eeproms.  I don't know enough (as
-> > previously stated) to jump into fixing this, so I wanted to check if
-> > this was a known limitation (presumably) and whether there was a plan
-> > to fix it?
->
-> FruDevice basically does a i2cdetect, i2cdump, then reads the fru data
-> and sees if it looks like a fru. Do i2cdetect and i2cdump work with this
-> eeprom?
->
-> I know for 16 bit eeproms, that it doesn't work correctly, as in this
-> thread:
-> https://lists.ozlabs.org/pipermail/openbmc/2019-July/017134.html
->
-> There's also a issue: https://github.com/openbmc/entity-manager/issues/1
-> with a link to using device tree.
->
-> I don't have any of these eeproms available to try that don't work, I
-> can't comment on others attempts to get them going.
+Hi;
 
-Ok, I'll take a look when I get a little further into this.  Currently
-it's adding an eeprom as /_0 in the device-tree.  So, I have a hunch
-it's related.
+Sorry to flood with questions, but I'm hoping I won't be the only
+person asking and in the future, other machines starting to use
+entity-manager will find these useful.
 
+I've added the following configuration:
+
+cat configurations/semitruck.json
+{
+    "Exposes": [
+        {
+            "Address": "0x50",
+            "Bus": 14,
+            "Name": "Aberdeen",
+            "Type": "24C64"
+        },
+        {
+            "Address": "0x50",
+            "Bus": 15,
+            "Name": "Energia",
+            "Type": "24C64"
+        }
+    ],
+    "Name": "Aberdeen Baseboard",
+    "Probe" : "TRUE",
+    "Type": "Board"
+}
+
+And I see:
+i2c i2c-14: new_device: Instantiated device 24c64 at 0x50
+i2c i2c-15: new_device: Instantiated device 24c64 at 0x50
+
+And I see:
+Service xyz.openbmc_project.EntityManager:
+`-/xyz
+  `-/xyz/openbmc_project
+    |-/xyz/openbmc_project/EntityManager
+    `-/xyz/openbmc_project/inventory
+      `-/xyz/openbmc_project/inventory/system
+        `-/xyz/openbmc_project/inventory/system/board
+          |-/xyz/openbmc_project/inventory/system/board/Aberdeen_Baseboard
+
+busctl introspect xyz.openbmc_project.EntityManager
+/xyz/openbmc_project/inventory/system/board/Aberdeen_Baseboard
+--no-pager
+NAME                                     TYPE      SIGNATURE
+RESULT/VALUE         FLAGS
+org.freedesktop.DBus.Introspectable      interface -         -
+           -
+.Introspect                              method    -         s
+           -
+org.freedesktop.DBus.Peer                interface -         -
+           -
+.GetMachineId                            method    -         s
+           -
+.Ping                                    method    -         -
+           -
+org.freedesktop.DBus.Properties          interface -         -
+           -
+.Get                                     method    ss        v
+           -
+.GetAll                                  method    s         a{sv}
+           -
+.Set                                     method    ssv       -
+           -
+.PropertiesChanged                       signal    sa{sv}as  -
+           -
+xyz.openbmc_project.AddObject            interface -         -
+           -
+.AddObject                               method    a{sv}     -
+           -
+xyz.openbmc_project.Inventory.Item.Board interface -         -
+           -
+.Name                                    property  s         "Aberdeen
+Baseboard" emits-change
+.Probe                                   property  s         "TRUE"
+           emits-change
+.Type                                    property  s         "Board"
+           emits-change
+
+For the two eeproms listed, neither are currently supported by
+FruDevice.  It's my understanding that entity-manager "exposes"
+things, and I see it adding the eeproms successfully -- but then
+doesn't populate them to dbus.  It populates a configuration space for
+the sensors, so I expected the same for eeproms.
+
+Am I missing something, or?
+
+Thanks,
 Patrick
-
->
-> -James
->
-> >
-> > Patrick
-> >
