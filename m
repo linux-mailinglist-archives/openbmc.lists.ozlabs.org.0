@@ -1,64 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BA5B7A30A
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 10:21:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFEC67A10A
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 08:06:05 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45yQzG1hXdzDqSh
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 16:06:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 45yTz53zlbzDqVR
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jul 2019 18:21:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d2c; helo=mail-io1-xd2c.google.com;
- envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=avi.fishman@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="utcNRA9g"; 
- dkim-atps=neutral
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
- [IPv6:2607:f8b0:4864:20::d2c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45yQyT00QXzDqKK
- for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2019 16:05:19 +1000 (AEST)
-Received: by mail-io1-xd2c.google.com with SMTP id o9so21917984iom.3
- for <openbmc@lists.ozlabs.org>; Mon, 29 Jul 2019 23:05:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=ElZqvgRGBZhlvK/ZLtKOA+MaUfdCCd1Z9SlHomwijfI=;
- b=utcNRA9gf9wQD63PNrbxlKoEAJ/mV5tdEpIZlJ3iGiBzEjFpNwHaOWSKid+6VIvjN4
- /jLgrURhhzDxVBL3/nqTdEjDOtkxC3pETeNkBRY9qbvo0Kl+U6CNqMsdzWRg8IUJqvi9
- cf+X3feYqVjmvBPJxfFutKF7qHDEOMiNO2S/c8V7HXe8wh5HV9kWvJ9XZ+//JjNL/V7M
- uEd2E8b1uoFgEbBcu6n2D3h3bh6gowdgn1koSSusSS05RSO0tjgea/jCugYsc/Nvy1by
- 4TX6z7iTd+r+0ZHSttQiZSAukS0Vi7XdFzevF/MYNt8TXo3GoJCdU5pff/WbN6YC7npT
- YajQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=ElZqvgRGBZhlvK/ZLtKOA+MaUfdCCd1Z9SlHomwijfI=;
- b=JluDmDrC6RKVjIlEl746cWpv3yM7ypawcH5BCVEJRyVmkYbx/BzNe/mQCuDD43fam3
- d9CXFAqAMf39MO+XqhXlfYlsUGs/l4x0/r3MvcmXN2Dr/jf2tnQKQ8am5wT2UL/b2u8Z
- r5refSZDfUXarxUrLI+BxPmoYFqji415bbPkYVP0S0AOBCE95UMZN97fyZ6xIa0hTQrv
- rfoGBV7M7xMnNOPcLhrzRj1dsBwYL5CfNbr2n+2S3nKfai+crs2Td5xI84udBEnLJkQT
- nZcJ3fWcyt/8aWRVzeN6ilkPhOXXXVA7eOG8l9o7IpE8Tr7hRDlOXO/QVttwLcKgTE1U
- eoAQ==
-X-Gm-Message-State: APjAAAWScwb00yvSmC3e8umBtMiJZ3sc0Bg0SUgNef+Gr0GWrCKNhVqg
- B9kLhgHK44K1GVkDYOY4X+SynG15as8w1xw3wcR3Pw==
-X-Google-Smtp-Source: APXvYqxCBIeugaTMMN1Mo9p0dE6dtLCJKE4aGIHH+PVfm7jf1L0x4BAKvBugRHpvbNHPk2XHdx0evGsby5mHuZRJf3M=
-X-Received: by 2002:a6b:f80b:: with SMTP id o11mr96537240ioh.40.1564466715376; 
- Mon, 29 Jul 2019 23:05:15 -0700 (PDT)
-MIME-Version: 1.0
-From: Kun Yi <kunyi@google.com>
-Date: Mon, 29 Jul 2019 23:04:49 -0700
-Message-ID: <CAGMNF6UZ6PV5+0RcpOOPwhM7rd7Rf4tX47hPeg_bJaiQXn-Kcw@mail.gmail.com>
-Subject: [Telemetry workgroup] Gathering requirements and interest!
-To: Neeraj Ladkani <neladk@microsoft.com>, vishwa <vishwa@linux.vnet.ibm.com>, 
- srinivas k <srinuklge@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45yTyH5034zDqNv
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2019 18:20:17 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x6U8JLvX014526;
+ Tue, 30 Jul 2019 11:19:22 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 8441)
+ id A126062A2E; Tue, 30 Jul 2019 11:19:21 +0300 (IDT)
+From: Avi Fishman <avifishman70@gmail.com>
+To: tudor.ambarus@microchip.com, dwmw2@infradead.org,
+ computersforpeace@gmail.com, miquel.raynal@bootlin.com, richard@nod.at,
+ vigneshr@ti.com, joel@jms.id.au, linux-mtd@lists.infradead.org
+Subject: [PATCH v2] mtd: spi-nor: Add Winbond w25q256jvm
+Date: Tue, 30 Jul 2019 11:18:32 +0300
+Message-Id: <20190730081832.271125-1-avifishman70@gmail.com>
+X-Mailer: git-send-email 2.18.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,25 +45,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: avifishman70@gmail.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi there,
+Similar to w25q256 (besides not supporting QPI mode) but with different ID.
+The "JVM" suffix is in the datasheet.
+The datasheet indicates DUAL and QUAD are supported.
+https://www.winbond.com/resource-files/w25q256jv%20spi%20revi%2010232018%20plus.pdf
 
-As we found out and discussed in the workgroup meeting, different
-people have various goals and requirements in their telemetry
-collection from BMCs. We would appreciate if you could help us fill in
-the following spreadsheet so that we can have a better context when
-making design decisions:
+Signed-off-by: Avi Fishman <avifishman70@gmail.com>
+---
+ drivers/mtd/spi-nor/spi-nor.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-https://docs.google.com/spreadsheets/d/12gMMXB9r_WfWDf5wz-Z_zXsz6RNheC6p2LKp7HePAEE/edit?usp=sharing
-
-It is added to the telemetry workgroup wiki page as well:
-https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Work-Group
-
-Feel free to raise any questions.
-
+diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
+index 03cc788511d5..74b41ec92414 100644
+--- a/drivers/mtd/spi-nor/spi-nor.c
++++ b/drivers/mtd/spi-nor/spi-nor.c
+@@ -2151,6 +2151,8 @@ static const struct flash_info spi_nor_ids[] = {
+ 	{ "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16, SECT_4K) },
+ 	{ "w25q128", INFO(0xef4018, 0, 64 * 1024, 256, SECT_4K) },
+ 	{ "w25q256", INFO(0xef4019, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
++	{ "w25q256jvm", INFO(0xef7019, 0, 64 * 1024, 512,
++			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+ 	{ "w25m512jv", INFO(0xef7119, 0, 64 * 1024, 1024,
+ 			SECT_4K | SPI_NOR_QUAD_READ | SPI_NOR_DUAL_READ) },
+ 
 -- 
-Regards,
-Kun
+2.18.0
+
