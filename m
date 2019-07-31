@@ -1,143 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E36D27B6A8
-	for <lists+openbmc@lfdr.de>; Wed, 31 Jul 2019 02:18:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45yvCR2nk7zDqVv
-	for <lists+openbmc@lfdr.de>; Wed, 31 Jul 2019 10:18:11 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89E0C7B7A1
+	for <lists+openbmc@lfdr.de>; Wed, 31 Jul 2019 03:36:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45ywxR39LWzDqZV
+	for <lists+openbmc@lfdr.de>; Wed, 31 Jul 2019 11:36:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (mailfrom)
+ smtp.mailfrom=flex--osk.bounces.google.com (client-ip=2607:f8b0:4864:20::a4a;
+ helo=mail-vk1-xa4a.google.com;
+ envelope-from=3e_baxqmkb-ywasowwotm.kwuwxmvjuktqaba.whtija.wzo@flex--osk.bounces.google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=3115e160e8=taoren@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="Q9y6z5zg"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="FrLjwJt2"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="lnqfmVuI"; 
+ dkim-atps=neutral
+Received: from mail-vk1-xa4a.google.com (mail-vk1-xa4a.google.com
+ [IPv6:2607:f8b0:4864:20::a4a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45yv8v749VzDqVn
- for <openbmc@lists.ozlabs.org>; Wed, 31 Jul 2019 10:15:58 +1000 (AEST)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x6V08B9O004436; Tue, 30 Jul 2019 17:15:51 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=1cP2hSX/3zk+VjxEdT+WCzYrb6por2mdG5SMMxd4wg4=;
- b=Q9y6z5zgJOWDMrWr9sZOlg2MFCSrbALJ1V3mcj1DL4314gfhDEoHIf3AZTvpI3JAd0QX
- SvYjA1xv0Pts6L1bEeInzaYXVxUoIYOv6Bh2/I0nH8+LoMbzEvHziYyCxBunJFzWmI15
- gwu77A3VHpKJq5271eSX7rjhI5UgBUZ2eck= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2u2ty516wj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 30 Jul 2019 17:15:51 -0700
-Received: from ash-exhub103.TheFacebook.com (2620:10d:c0a8:82::c) by
- ash-exhub102.TheFacebook.com (2620:10d:c0a8:82::f) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Tue, 30 Jul 2019 17:15:49 -0700
-Received: from NAM01-BN3-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.174) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
- via Frontend Transport; Tue, 30 Jul 2019 17:15:49 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FvZPRX7dpxOn6CcZ8VqYkNBgffc/i5eLiqIvC4iSHZoDJ4NQIQCKcJr3dNMVjvAZsDbA4bPteuLJODzDN0DQEEzQ79Pve0fi7lJ/78WVe2hf+xfBrHG6KTBxUORDqdmNLRpRlLDWLglHupzJwx6S4GX/HPQfdCP9fF13tGeV2WMVe+2iDoJ3PHyfdFS91absPyTszmdimTlRuZqfk+B9OArTZ1rr+y/3XhO1LTGujcC7s0sQXXukLwrkfVC1oLU0I5rssMTgCoQpvQUb4UMubkJ2yrJnc1tFwBB8QC3z3+TeWff5bMa8enUlHRzn/Zs2OglWslKy977Os+W/xF1ftQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1cP2hSX/3zk+VjxEdT+WCzYrb6por2mdG5SMMxd4wg4=;
- b=KWxlsHckBFLpWXLco6mEpH6Phov4l+pz2acCf/sbX/uQQ89t4sHgB4wz6DtM5ZuCzgXH9YMHYOENFarEWj9cC+FSScvZR/CBVSHyjk5A/R54MN+Tjlb/50ZCbahdvzQHlwbyyP1xACRUrRlx62bsmhfk/Efck5wCfsLcv4X65mFnApLyMs0FaXZTJOdExI/aFs3azB1f43zvprQ7BTb0QQIG+WsyfME7rJy7cdsHSzNAPPyu7YJjBMIo8GDZvXmv7iYtRPa9OGYEBRDK5/kw4H8Ft5A8gMI38SpUUFAwJ4iCLOAxO3E95lG5/Kk6CeLz4W7OvubWBkhHtHSCKoH61Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
- smtp.mailfrom=fb.com;dmarc=pass action=none header.from=fb.com;dkim=pass
- header.d=fb.com;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1cP2hSX/3zk+VjxEdT+WCzYrb6por2mdG5SMMxd4wg4=;
- b=FrLjwJt267UkW14d1Os7YoLM8yoaU2TZ38Ojn7mycaGyuvv5q4m+Yu7OBRqqgzAPbBtBK89oU+w69aFt7rl5Ij6JCDdPwExwDc4cEcwmkkAzo5khTkj3wB2wIJEcLqAWlt6whwP3yol62QFUFcRuutKZsc5rttyZIlhekEfMTe0=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1502.namprd15.prod.outlook.com (10.173.235.140) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2136.12; Wed, 31 Jul 2019 00:15:48 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::c66:6d60:f6e5:773c]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::c66:6d60:f6e5:773c%8]) with mapi id 15.20.2136.010; Wed, 31 Jul 2019
- 00:15:48 +0000
-From: Tao Ren <taoren@fb.com>
-To: Andrew Lunn <andrew@lunn.ch>, Vladimir Oltean <olteanv@gmail.com>
-Subject: Re: [PATCH net-next 2/2] net: phy: broadcom: add 1000Base-X support
- for BCM54616S
-Thread-Topic: [PATCH net-next 2/2] net: phy: broadcom: add 1000Base-X support
- for BCM54616S
-Thread-Index: AQHVRm4oHxOo2s4k1kyYCsigpkISsabiYHeAgAA34ACAAFoWAIAAMvGAgAC3+AA=
-Date: Wed, 31 Jul 2019 00:15:48 +0000
-Message-ID: <ed0a7455-1999-90c2-6d7c-a6587542c804@fb.com>
-References: <20190730002549.86824-1-taoren@fb.com>
- <CA+h21hq1+E6-ScFx425hXwTPTZHTVZbBuAm7RROFZTBOFvD8vQ@mail.gmail.com>
- <3987251b-9679-dfbe-6e15-f991c2893bac@fb.com>
- <CA+h21ho1KOGS3WsNBHzfHkpSyE4k5HTE1tV9wUtnkZhjUZGeUw@mail.gmail.com>
- <20190730131719.GA28552@lunn.ch>
-In-Reply-To: <20190730131719.GA28552@lunn.ch>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MWHPR1401CA0014.namprd14.prod.outlook.com
- (2603:10b6:301:4b::24) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:200::1:463a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c9b09410-359f-425d-56cc-08d7154c3d46
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1502; 
-x-ms-traffictypediagnostic: MWHPR15MB1502:
-x-microsoft-antispam-prvs: <MWHPR15MB15022396764FB81AEC6A9636B2DF0@MWHPR15MB1502.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 011579F31F
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(346002)(136003)(396003)(376002)(39860400002)(189003)(199004)(86362001)(66946007)(14444005)(11346002)(46003)(8936002)(53936002)(486006)(66476007)(64756008)(14454004)(316002)(65956001)(66556008)(65806001)(476003)(2616005)(446003)(31686004)(58126008)(54906003)(110136005)(7416002)(71190400001)(71200400001)(2906002)(256004)(66446008)(6246003)(81166006)(8676002)(4326008)(31696002)(6436002)(478600001)(65826007)(6486002)(6512007)(229853002)(7736002)(25786009)(81156014)(36756003)(68736007)(64126003)(6116002)(76176011)(186003)(52116002)(5660300002)(4744005)(99286004)(305945005)(102836004)(6506007)(386003)(53546011);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1502;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: wAQGDtfDEAHgZgI4W8Alt7lHS+JZgO8ol+PXbrRM6tAc1NbRKS2TxUH2QxPYQHlnKxlqNGvx6Q2SMzC+t6p2gGIFHVLkMvbjdzCZ+MlMtvbe9/4GtUzW+fCZ4IrzvLLZVXWceeJe8NSbjnmZABKxBsjWhdR9dkPjhgJT5evUPyPHXfQmSSXrhBKk//SfxSxHIQ4TDartEosGAn3/1PVr0CYvfyararopHTo1rqprvvZ/qAhZhnJgtutTG+c0TNE8htDabD6cMMQho0VFxvArF2R5l7LEoAfPtjtdtw8fDvtEZkZGIrUbS7y/Ed4fo2TdyKsfUlRS4HLtuTY6j/V9qaovveJ1ox0qisMUqCheVyRi//AKES4Oe4/O3jH8r/4eTOMZqHS93MehlCo8XY0DQLGB/kbHvCxDV0nbCpbwkQk=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DF27B83DF65E3C43AA973C4833857C05@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9b09410-359f-425d-56cc-08d7154c3d46
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jul 2019 00:15:48.8043 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: taoren@fb.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1502
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-07-30_11:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1907310000
-X-FB-Internal: deliver
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45ywvM1bhhzDqYp
+ for <openbmc@lists.ozlabs.org>; Wed, 31 Jul 2019 11:34:15 +1000 (AEST)
+Received: by mail-vk1-xa4a.google.com with SMTP id d14so28700820vka.6
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jul 2019 18:34:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=d2sWsZYwop/FlZD2sslunw1XpgNZEW/d3Zvm+DXDThk=;
+ b=lnqfmVuII8vLJomjxRWE8WtUicmV5dshtalbAPTKX4vej097pN/0nouRFUFVQDVjtO
+ BEVg/4WRje82jt3tbzDjruPPFjYipP5YwpE+NFfX3z3NiihN6qOpysy8zBqNszFP00Fb
+ uTAOxPmIL3lWWkr4IMrMfTXNuSMSwX+f5pvWN912uTR7zskPICTQw0+OW1HbkRCC+ADG
+ IxSEsfigGnIrLkZeNDCBEI8+YEEDqj7Z8JxOeANzxRCsRbeYhEgAUA41QAn0U9uE2W53
+ bD7EcC2BAeYP2683fGyezZVrrhOqFVa7ywC86IGb7vZ2JPZR8cmBbBJzAHlE9d6Hkd9P
+ aJ+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=d2sWsZYwop/FlZD2sslunw1XpgNZEW/d3Zvm+DXDThk=;
+ b=jG8m3HOy+oSG2Qvsl5PvXxmeJsOL8I97jstp3/HqgduOcShLRfyyWbFsivRVii6eIF
+ nNnSKG9M8AH9bz9gy5ivv0PU2gZmGwgJTVmGHav2080wzbCu0+KO2tARLL38CWyG4gr6
+ yJNn/a1YO/byi6SijdCzqV7q6I5SUBaQ3b0AZKwph2OF1PilRL2D9fVSrCVUYQwVI1ME
+ JsqqjKdhwG4bRxTMtwu6V9imvyzrSflbXmlSkcCu3Yw/e0oCnG5Re1/NLIJt0jZOiR1t
+ XMV/N0cUy73+mOHPVfIbhei0IYIwgA/ilS08RVBFPxG033Ch+sFHFOVM6Dhs6IQjLNJn
+ Ylbw==
+X-Gm-Message-State: APjAAAV3mOaJKUttx0qRU1S8qWXA2Jc4s3uyA0mmv/+u6KEbLV9uK8AX
+ 4ZYyjZ15FtjaBWgVT1BrHmTUWJA=
+X-Google-Smtp-Source: APXvYqyG0L9Yj7lhRAqqpt80c1tlP4H2oqVMRnvB7LFmMJOwO8AEB/TpxqCFDW73Q61xO2ur51YhdWc=
+X-Received: by 2002:a1f:1d58:: with SMTP id d85mr46622787vkd.13.1564536851278; 
+ Tue, 30 Jul 2019 18:34:11 -0700 (PDT)
+Date: Tue, 30 Jul 2019 21:34:02 -0400
+Message-Id: <20190731013404.243755-1-osk@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.22.0.709.g102302147b-goog
+Subject: [PATCH v2 1/3] drivers/tty/serial/8250: Make Aspeed VUART SIRQ
+ polarity configurable
+From: Oskar Senft <osk@google.com>
+To: joel@jms.id.au, andrew@aj.id.au
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,27 +72,195 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Florian Fainelli <f.fainelli@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
- netdev <netdev@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Arun
- Parameswaran <arun.parameswaran@broadcom.com>,
- lkml <linux-kernel@vger.kernel.org>, Justin Chen <justinpopo6@gmail.com>,
- "David S . Miller" <davem@davemloft.net>,
- Heiner Kallweit <hkallweit1@gmail.com>
+Cc: openbmc@lists.ozlabs.org, Oskar Senft <osk@google.com>,
+ linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gNy8zMC8xOSA2OjE3IEFNLCBBbmRyZXcgTHVubiB3cm90ZToNCj4+IEFnYWluLCBJIGRvbid0
-IHRoaW5rIExpbnV4IGhhcyBnZW5lcmljIHN1cHBvcnQgZm9yIG92ZXJ3cml0aW5nIChvcg0KPj4g
-ZXZlbiBkZXNjcmliaW5nKSB0aGUgb3BlcmF0aW5nIG1vZGUgb2YgYSBQSFksIGFsdGhvdWdoIG1h
-eWJlIHRoYXQncyBhDQo+PiBkaXJlY3Rpb24gd2Ugd291bGQgd2FudCB0byBwdXNoIHRoZSBkaXNj
-dXNzaW9uIHRvd2FyZHMuIFJHTUlJIHRvDQo+PiBjb3BwZXIsIFJHTUlJIHRvIGZpYmVyLCBTR01J
-SSB0byBjb3BwZXIsIGNvcHBlciB0byBmaWJlciAobWVkaWENCj4+IGNvbnZlcnRlciksIGV2ZW4g
-UkdNSUkgdG8gU0dNSUkgKFJUTDgyMTFGUyBzdXBwb3J0cyB0aGlzKSAtIGxvdHMgb2YNCj4+IG1v
-ZGVzLCBhbmQgdGhpcyBpcyBvbmx5IGZvciBnaWdhYml0IFBIWXMuLi4NCj4gDQo+IFRoaXMgaXMg
-c29tZXRoaW5nIFJ1c3NlbGwgS2luZyBoYXMgUEhZTElOSyBwYXRjaGVzIGZvciwgd2hpY2ggaGF2
-ZSBub3QNCj4geWV0IGJlZW4gbWVyZ2VkLiBUaGVyZSBhcmUgc29tZSBib2FyZHMgd2hpY2ggdXNl
-IGEgUEhZIGFzIGEgbWVkaWENCj4gY29udmVydGVyLCBwbGFjZWQgYmV0d2VlbiB0aGUgTUFDIGFu
-ZCBhbiBTRlAuDQoNClRoYW5rIHlvdSBBbmRyZXcuIExldCBtZSBzZWUgaWYgdGhlIG9wZXJhdGlu
-ZyBtb2RlIGNhbiBiZSBhdXRvLWRldGVjdGVkIG9uIEJDTTU0NjE2UyBjaGlwLCBhbmQgSSB3aWxs
-IHVwZGF0ZSBiYWNrIHNvb24uDQoNClRoYW5rcywNCg0KVGFvDQo=
+Make the SIRQ polarity for Aspeed AST24xx/25xx VUART configurable via
+sysfs. This setting need to be changed on specific host platforms
+depending on the selected host interface (LPC / eSPI).
+
+The setting is configurable via sysfs rather than device-tree to stay in
+line with other related configurable settings.
+
+On AST2500 the VUART SIRQ polarity can be auto-configured by reading the
+LPC/eSPI interface configuration from the HW strap table.
+
+Tested: Verified on TYAN S7106 mainboard.
+Signed-off-by: Oskar Senft <osk@google.com>
+---
+ .../ABI/stable/sysfs-driver-aspeed-vuart      | 10 ++-
+ drivers/tty/serial/8250/8250_aspeed_vuart.c   | 82 +++++++++++++++++++
+ drivers/tty/serial/8250/Kconfig               |  1 +
+ 3 files changed, 92 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+index 8062953ce77b..64fad87ad964 100644
+--- a/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
++++ b/Documentation/ABI/stable/sysfs-driver-aspeed-vuart
+@@ -6,10 +6,18 @@ Description:	Configures which IO port the host side of the UART
+ Users:		OpenBMC.  Proposed changes should be mailed to
+ 		openbmc@lists.ozlabs.org
+ 
+-What:		/sys/bus/platform/drivers/aspeed-vuart*/sirq
++What:		/sys/bus/platform/drivers/aspeed-vuart/*/sirq
+ Date:		April 2017
+ Contact:	Jeremy Kerr <jk@ozlabs.org>
+ Description:	Configures which interrupt number the host side of
+ 		the UART will appear on the host <-> BMC LPC bus.
+ Users:		OpenBMC.  Proposed changes should be mailed to
+ 		openbmc@lists.ozlabs.org
++
++What:		/sys/bus/platform/drivers/aspeed-vuart/*/sirq_polarity
++Date:		July 2019
++Contact:	Oskar Senft <osk@google.com>
++Description:	Configures the polarity of the serial interrupt to the
++		host via the BMC LPC bus.
++Users:		OpenBMC.  Proposed changes should be mailed to
++		openbmc@lists.ozlabs.org
+diff --git a/drivers/tty/serial/8250/8250_aspeed_vuart.c b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+index 0438d9a905ce..e0e441c38541 100644
+--- a/drivers/tty/serial/8250/8250_aspeed_vuart.c
++++ b/drivers/tty/serial/8250/8250_aspeed_vuart.c
+@@ -14,6 +14,8 @@
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+ #include <linux/of_platform.h>
++#include <linux/regmap.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/tty.h>
+ #include <linux/tty_flip.h>
+ #include <linux/clk.h>
+@@ -22,6 +24,7 @@
+ 
+ #define ASPEED_VUART_GCRA		0x20
+ #define ASPEED_VUART_GCRA_VUART_EN		BIT(0)
++#define ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY	BIT(1)
+ #define ASPEED_VUART_GCRA_DISABLE_HOST_TX_DISCARD BIT(5)
+ #define ASPEED_VUART_GCRB		0x24
+ #define ASPEED_VUART_GCRB_HOST_SIRQ_MASK	GENMASK(7, 4)
+@@ -131,8 +134,53 @@ static ssize_t sirq_store(struct device *dev, struct device_attribute *attr,
+ 
+ static DEVICE_ATTR_RW(sirq);
+ 
++static ssize_t sirq_polarity_show(struct device *dev,
++				  struct device_attribute *attr, char *buf)
++{
++	struct aspeed_vuart *vuart = dev_get_drvdata(dev);
++	u8 reg;
++
++	reg = readb(vuart->regs + ASPEED_VUART_GCRA);
++	reg &= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++
++	return snprintf(buf, PAGE_SIZE - 1, "%u\n", reg ? 1 : 0);
++}
++
++static void aspeed_vuart_set_sirq_polarity(struct aspeed_vuart *vuart,
++					   bool polarity)
++{
++	u8 reg = readb(vuart->regs + ASPEED_VUART_GCRA);
++
++	if (polarity)
++		reg |= ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++	else
++		reg &= ~ASPEED_VUART_GCRA_HOST_SIRQ_POLARITY;
++
++	writeb(reg, vuart->regs + ASPEED_VUART_GCRA);
++}
++
++static ssize_t sirq_polarity_store(struct device *dev,
++				   struct device_attribute *attr,
++				   const char *buf, size_t count)
++{
++	struct aspeed_vuart *vuart = dev_get_drvdata(dev);
++	unsigned long val;
++	int err;
++
++	err = kstrtoul(buf, 0, &val);
++	if (err)
++		return err;
++
++	aspeed_vuart_set_sirq_polarity(vuart, val != 0);
++
++	return count;
++}
++
++static DEVICE_ATTR_RW(sirq_polarity);
++
+ static struct attribute *aspeed_vuart_attrs[] = {
+ 	&dev_attr_sirq.attr,
++	&dev_attr_sirq_polarity.attr,
+ 	&dev_attr_lpc_address.attr,
+ 	NULL,
+ };
+@@ -302,6 +350,27 @@ static int aspeed_vuart_handle_irq(struct uart_port *port)
+ 	return 1;
+ }
+ 
++static void aspeed_vuart_auto_configure_sirq_polarity(
++	struct aspeed_vuart *vuart, struct device_node *syscon_np,
++	u32 reg_offset, u32 reg_mask)
++{
++	struct regmap *regmap;
++	u32 value;
++
++	regmap = syscon_node_to_regmap(syscon_np);
++	if (IS_ERR(regmap)) {
++		dev_warn(vuart->dev,
++			 "could not get regmap for espi-enabled\n");
++		return;
++	}
++	if (regmap_read(regmap, reg_offset, &value)) {
++		dev_warn(vuart->dev, "could not read hw strap table\n");
++		return;
++	}
++
++	aspeed_vuart_set_sirq_polarity(vuart, (value & reg_mask) == 0);
++}
++
+ static int aspeed_vuart_probe(struct platform_device *pdev)
+ {
+ 	struct uart_8250_port port;
+@@ -310,6 +379,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+ 	struct resource *res;
+ 	u32 clk, prop;
+ 	int rc;
++	struct of_phandle_args espi_enabled_args;
+ 
+ 	np = pdev->dev.of_node;
+ 
+@@ -402,6 +472,18 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+ 
+ 	vuart->line = rc;
+ 
++	rc = of_parse_phandle_with_fixed_args(
++		np, "espi-enabled", 2, 0, &espi_enabled_args);
++	if (rc < 0) {
++		dev_warn(&pdev->dev, "espi-enabled property not found\n");
++	} else {
++		aspeed_vuart_auto_configure_sirq_polarity(
++			vuart, espi_enabled_args.np,
++			espi_enabled_args.args[0],
++			BIT(espi_enabled_args.args[1]));
++		of_node_put(espi_enabled_args.np);
++	}
++
+ 	aspeed_vuart_set_enabled(vuart, true);
+ 	aspeed_vuart_set_host_tx_discard(vuart, true);
+ 	platform_set_drvdata(pdev, vuart);
+diff --git a/drivers/tty/serial/8250/Kconfig b/drivers/tty/serial/8250/Kconfig
+index 509f6a3bb9ff..98e25781a293 100644
+--- a/drivers/tty/serial/8250/Kconfig
++++ b/drivers/tty/serial/8250/Kconfig
+@@ -243,6 +243,7 @@ config SERIAL_8250_ASPEED_VUART
+ 	tristate "Aspeed Virtual UART"
+ 	depends on SERIAL_8250
+ 	depends on OF
++	depends on REGMAP && MFD_SYSCON
+ 	help
+ 	  If you want to use the virtual UART (VUART) device on Aspeed
+ 	  BMC platforms, enable this option. This enables the 16550A-
+-- 
+2.22.0.709.g102302147b-goog
+
