@@ -1,60 +1,135 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD0107E442
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 22:36:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4602BL5w8zzDqhm
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 06:36:10 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1C5D7E444
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 22:39:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4602Fr3SZ6zDqqJ
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 06:39:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=email.dropbox.com
- (client-ip=54.240.60.165; helo=a60-165.smtp-out.us-west-2.amazonses.com;
- envelope-from=0101016c4edb5253-5333b105-6c2d-41d7-bc85-bda73c0cb6ba-000000@email.dropbox.com;
- receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=311651850f=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=dropbox.com
+ dmarc=pass (p=none dis=none) header.from=fb.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=dropbox.com header.i=@dropbox.com header.b="hij9fVtp"; 
+ unprotected) header.d=fb.com header.i=@fb.com header.b="lH5Vo7D+"; 
  dkim=pass (1024-bit key;
- unprotected) header.d=amazonses.com header.i=@amazonses.com
- header.b="DRhwjJ1r"; dkim-atps=neutral
-X-Greylist: delayed 393 seconds by postgrey-1.36 at bilbo;
- Fri, 02 Aug 2019 06:31:31 AEST
-Received: from a60-165.smtp-out.us-west-2.amazonses.com
- (a60-165.smtp-out.us-west-2.amazonses.com [54.240.60.165])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="RfXTj5m7"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4602502FvZzDqcy
- for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2019 06:31:31 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=fwekda4pbtfzhnrtrrriuun7z25zrizq; d=dropbox.com; t=1564691092;
- h=Content-Type:MIME-Version:From:To:CC:Subject:Date:Message-ID:Reply-To;
- bh=rpXTf8FhbG7fgj3OCRc1Rsi1kXW973T5KCT0f8eB3w8=;
- b=hij9fVtpOEe5w1t67O4CstIYcsHQzFXUVToRDSWGkuuKjAynROJTUwc2bGNNST1R
- IfGrdvUpafWSe/AY2JaPtLDlR0jLFg8VPGpv8y6lCM8ulKBIjhaLKdGngfvVGR0o8Xf
- 96ihn2kYkSb1bIvKmnJid2o0AQBrYBWnzphgN8eA=
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
- s=gdwg2y3kokkkj5a55z2ilkup5wp5hhxx; d=amazonses.com; t=1564691092;
- h=Content-Type:MIME-Version:From:To:CC:Subject:Date:Message-ID:Reply-To:Feedback-ID;
- bh=rpXTf8FhbG7fgj3OCRc1Rsi1kXW973T5KCT0f8eB3w8=;
- b=DRhwjJ1rwGb3sSy/NzQ7D0JoXfKbcAtHJWEa+umb4PsDbBMpxQALHdTGveJYPY3y
- hB28HP636/4RxMF1uXS5U64pHf9MddTyF31pEPKksk2992cE2V7GMFhCmcZ6pApMWyC
- xan8eWin0Gk7D8hoDBXRv8O2mcnZpSsGygvg8axY=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4602FD3GWBzDqRy
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2019 06:38:39 +1000 (AEST)
+Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x71KYvXo027329
+ for <openbmc@lists.ozlabs.org>; Thu, 1 Aug 2019 13:38:36 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ mime-version; s=facebook; bh=tkfl93NdNtXj8PhuuebeclKRkB/l3rSLUSfDQF6TJlg=;
+ b=lH5Vo7D+tiUe3EvcEtmKt9ufPzzqJKtIrWPaNZr3ksdJYMQ868N/nqExuxsuSq1r+Fk0
+ jTWnOLljxx4XWsPpqlPxEVpgGGAAxPUusodrA1hL8vmwdjUp/zXW43MpUl6y31b1GbGV
+ gYfrcxMp5nMedF4QaEt3ARR8Abt4GxI4njQ= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2u430ys4gd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Aug 2019 13:38:36 -0700
+Received: from ash-exopmbx201.TheFacebook.com (2620:10d:c0a8:83::8) by
+ ash-exhub103.TheFacebook.com (2620:10d:c0a8:82::c) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Thu, 1 Aug 2019 13:38:34 -0700
+Received: from ash-exhub201.TheFacebook.com (2620:10d:c0a8:83::7) by
+ ash-exopmbx201.TheFacebook.com (2620:10d:c0a8:83::8) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Thu, 1 Aug 2019 13:38:34 -0700
+Received: from NAM04-SN1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.101) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Thu, 1 Aug 2019 13:38:34 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Aaax0ELG0ixeTiMaZH691l+9EQrrIjW4awo5NlDycHb1gOPw9Hqxb3suOe8dF8SrbCt4lrTJq4qNyCttoA2LhjUJOvuc2eoMg2YPjtrnAOK+Ze1ZSQlAasCpGDtzQIoEJrr6zTYATBZNKiCqorjmqVz0nNx1N0K8AbP743pBrs5ce2LUDIcSN/lmAqn9lcqdzILo5yAVv5HRjcZS8pBfifhkkomaZWgHxVi4SWsJO6HwHZk71G+YLgEcrjpy60Qf0WuHhVvVAS40fYpm+I53aOAKXnLtv7cFC9AEqJ5e/cWr1kmQVCqzvtrOq6taPMrehoOifpvodOQ6Yd+PLP46ag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tkfl93NdNtXj8PhuuebeclKRkB/l3rSLUSfDQF6TJlg=;
+ b=cT9KjpuX5JxopjzIhsFW3DXTK/ERixoGZPZywP18jUHR19CwGABfRmAcLko6dQ2o5GwOaNDNhIylaVp9cdard9sxnpaX8Uf9gKE2g4YU72NZqq/cwaPOk1QZZhBaVbX26Nv9P026HWXhReCv2Ec8liO6GjUWJ5VvGXH/f7A5z6Tuk5IQDC+pdYuavXJ9j4guQ7RbCIOWOoNt8CHYZK+agiWUIJa5hYQrDU77T1bxhB0Ofc7ErBYcF0UdRGOL1cpXI8npey5v2h5Xz09/1+AngKFUZt3EqcegOvjQ6o9DaQ6EL0A15C3lYvXNzi17TbKKkInLW82KKnHvHGdG8kioTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
+ smtp.mailfrom=fb.com;dmarc=pass action=none header.from=fb.com;dkim=pass
+ header.d=fb.com;arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tkfl93NdNtXj8PhuuebeclKRkB/l3rSLUSfDQF6TJlg=;
+ b=RfXTj5m7+VMJoPGnnbbZm/8fZQAt8JXlbj9/1svs/tEZw6E+88FoGcHZN4k0A5qAFRJljToPL3pa7PrEi8GqAIuL+EiU62ccirClXfJJHJ5eS77MTUonfM44SICk0T6jMjOah2jFbwE6G0Bfs1xsmSc/CU6hYOrK0XQlSIHBjSU=
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com (10.172.177.11) by
+ CY4PR15MB1878.namprd15.prod.outlook.com (10.172.78.151) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2115.15; Thu, 1 Aug 2019 20:38:33 +0000
+Received: from CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::8c93:f913:124:8dd0]) by CY4PR15MB1269.namprd15.prod.outlook.com
+ ([fe80::8c93:f913:124:8dd0%8]) with mapi id 15.20.2115.005; Thu, 1 Aug 2019
+ 20:38:33 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: Vijay Khemka shared "obmcdev" with you
+Thread-Topic: Vijay Khemka shared "obmcdev" with you
+Thread-Index: AQHVSKjRqEJNcrOHJEyaa4SFV6VPuabmS4AA
+Date: Thu, 1 Aug 2019 20:38:33 +0000
+Message-ID: <E376FDA7-86A3-4EFE-BECB-D7AE41C32EF9@fb.com>
+References: <0101016c4edb5253-5333b105-6c2d-41d7-bc85-bda73c0cb6ba-000000@us-west-2.amazonses.com>
+In-Reply-To: <0101016c4edb5253-5333b105-6c2d-41d7-bc85-bda73c0cb6ba-000000@us-west-2.amazonses.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:b2a0]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 4854cab2-208c-489a-08c6-08d716c03884
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:CY4PR15MB1878; 
+x-ms-traffictypediagnostic: CY4PR15MB1878:
+x-ms-exchange-purlcount: 4
+x-microsoft-antispam-prvs: <CY4PR15MB18789964226FC4B24323F24CDDDE0@CY4PR15MB1878.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:3173;
+x-forefront-prvs: 01165471DB
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(396003)(39860400002)(376002)(346002)(136003)(366004)(199004)(189003)(53546011)(66946007)(6436002)(66476007)(66556008)(64756008)(66446008)(733005)(229853002)(6486002)(91956017)(76116006)(5660300002)(6916009)(4744005)(2501003)(256004)(25786009)(606006)(6116002)(14454004)(38353004)(2906002)(6506007)(790700001)(68736007)(478600001)(71190400001)(71200400001)(5640700003)(33656002)(53936002)(236005)(6306002)(54896002)(19627405001)(6246003)(76176011)(6512007)(54556002)(102836004)(186003)(99286004)(10100003)(316002)(2351001)(476003)(2616005)(11346002)(446003)(486006)(7736002)(1730700003)(8676002)(81166006)(46003)(81156014)(8936002)(36756003)(86362001)(81890200001)(24704002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR15MB1878;
+ H:CY4PR15MB1269.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: gj6CeBXcVCJM+ej61ILU/NSBEjPUvyonuRDC2PRZywrVvvYXoueA60D/o3q3TzgrfElPL4QVw+PRCd6jOQ6KjMwg1I697sSd94ZIyhoKXYUfHd7eunJc/1+zjROI5TBmvqqBAU4ej8YPv28w33ZmE9kIlaDq5QTNj0D+mai+XVtE1HYt1uXw5zVz3Toiq0X0JxPU6/rb9V+f7pc23FCRAO+h+kFnthA/PLi8eT5Ccc03wlliH9CLFDeXPNmEfNleVSpA2ft1dZCrydEzF7bbIqBF7VELlxvcXNqqdvpSteGnhUWPbAsFGsKXONRYZTWo6to6LCzyeVss5QPsa/GfUS5un0neZ60tCugeOvpaoVOi6fYlJun/1fOrqzl3pm+dOZo2RfrPTOIvcQudpig6BuhKgszQpTNZvductF7oQuI=
 Content-Type: multipart/alternative;
- boundary="===============5378081814455380666=="
+ boundary="_000_E376FDA786A34EFEBECBD7AE41C32EF9fbcom_"
 MIME-Version: 1.0
-From: "Vijay Khemka \(via Dropbox\)" <no-reply@dropbox.com>
-To: openbmc@lists.ozlabs.org
-CC: 
-Subject: =?utf-8?q?Vijay_Khemka_shared_=22obmcdev=22_with_you?=
-Date: Thu, 1 Aug 2019 20:24:52 +0000
-Message-ID: <0101016c4edb5253-5333b105-6c2d-41d7-bc85-bda73c0cb6ba-000000@us-west-2.amazonses.com>
-X-Dropbox-Message-ID: 8953012584659403885
-X-SES-Outgoing: 2019.08.01-54.240.60.165
-Feedback-ID: 1.us-west-2.C1J9pRCK9rJULWC8wBKFbk8/mhlW6tSneJoML9ymcSA=:AmazonSES
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4854cab2-208c-489a-08c6-08d716c03884
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Aug 2019 20:38:33.1894 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vijaykhemka@fb.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR15MB1878
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-01_08:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=857 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908010217
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,110 +141,172 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: vijaykhemka@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---===============5378081814455380666==
+--_000_E376FDA786A34EFEBECBD7AE41C32EF9fbcom_
 Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: base64
 
-Hi there,
+UGxlYXNlIGlnbm9yZSB0aGlzLg0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrdmlq
+YXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmc+IG9uIGJlaGFsZiBvZiAiVmlqYXkgS2hl
+bWthICh2aWEgRHJvcGJveCkiIDxuby1yZXBseUBkcm9wYm94LmNvbT4NClJlcGx5LVRvOiBWaWph
+eSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4NCkRhdGU6IFRodXJzZGF5LCBBdWd1c3QgMSwg
+MjAxOSBhdCAxOjM2IFBNDQpUbzogIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyIgPG9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZz4NClN1YmplY3Q6IFZpamF5IEtoZW1rYSBzaGFyZWQgIm9ibWNkZXYi
+IHdpdGggeW91DQoNCltJbWFnZSByZW1vdmVkIGJ5IHNlbmRlci5dDQpIaSB0aGVyZSwNCg0KVmlq
+YXkgS2hlbWthICh2aWpheWtoZW1rYUBmYi5jb20pIGludml0ZWQgeW91IHRvIHZpZXcgdGhlIGZv
+bGRlciAib2JtY2RldiIgb24gRHJvcGJveC4NCkdvIHRvIGZvbGRlcjxodHRwczovL3VybGRlZmVu
+c2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX3d3dy5kcm9wYm94LmNvbV9sX3Nj
+bF9BQUFEM21ydHBJMEZIWUtwVTVTY0wwNkRRbVdSejdoOU8tNUZRJmQ9RHdNRmFRJmM9NVZEMFJU
+dE5sVGgzeWNkNDFiM01VdyZyPXY5TVUwS2k5cFduVFhDV3dqSFBWZ3BuQ1I4MHZYa2tjcklhcVU3
+VVNsNWcmbT1WX1hUYlF0eUhYSzNCcHhvX1VCUjNxaXNMVy1ySnBfWGZmOEYxLXZzQ1QwJnM9R21B
+Y3g3dWYyQkNrVXJ0SkVPeTk0bDZnY0ZPcG4yOUt5T3gtcy04ZkVybyZlPT4NCg0KRW5qb3khDQpU
+aGUgRHJvcGJveCB0ZWFtDQoNClJlcG9ydCB0byBEcm9wYm94PGh0dHBzOi8vdXJsZGVmZW5zZS5w
+cm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fd3d3LmRyb3Bib3guY29tX2xfQUFBRUFW
+dWoySDUyNGdOWlRQWFVNTUJ6U0VHand4UGg1TVlfcmVwb3J0LTVGYWJ1c2UmZD1Ed01GYVEmYz01
+VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JnI9djlNVTBLaTlwV25UWENXd2pIUFZncG5DUjgwdlhra2Ny
+SWFxVTdVU2w1ZyZtPVZfWFRiUXR5SFhLM0JweG9fVUJSM3Fpc0xXLXJKcF9YZmY4RjEtdnNDVDAm
+cz1BdTFGd29MRjlhNkdRMlFWSHBuM3NaN1pOT0RyQ3RJOF9Wb2pObzhqQXpvJmU9Pg0KwqkgMjAx
+OSBEcm9wYm94DQoNCg==
 
-Vijay Khemka (vijaykhemka@fb.com) invited you to view the folder " obmcdev =
-" on Dropbox.
-
-Go to folder[1]
-
-Enjoy!
-The Dropbox team
-
-[1]: https://www.dropbox.com/l/scl/AAAud2xbRKh-ZiPBhcMsAVSTzJpVSaC_qwQ
---===============5378081814455380666==
+--_000_E376FDA786A34EFEBECBD7AE41C32EF9fbcom_
 Content-Type: text/html; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-ID: <35A6102D9458C84A91462311BC97D6BA@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w=
-3.org/TR/REC-html40/loose.dtd">
-<html xmlns=3D"http://www.w3.org/1999/xhtml">
-<head>
-<meta content=3D"text/html; charset=3Dutf-8" http-equiv=3D"Content-Type">
-<style>
-        @font-face {
-            font-family: "proxima_nova";
-            src: url("https://www.dropbox.com/static/fonts/proximanova/prox=
-ima-nova-regular.otf") format("opentype");
-            font-weight: normal;
-            font-style: normal;
-        }
-         =
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
+ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
+YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
+I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
+W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
+DQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYg
+MyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIg
+MTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6cHJveGltYV9u
+b3ZhOw0KCXBhbm9zZS0xOjIgMTEgNiA0IDIgMiAyIDIgMiA0O30NCi8qIFN0eWxlIERlZmluaXRp
+b25zICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdp
+bjowaW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9u
+dC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGlu
+aw0KCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6IzAwN0VFNjsNCgl0ZXh0LWRlY29y
+YXRpb246bm9uZSBub25lO30NCmE6dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0K
+CXttc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6IzAwN0VFNjsNCgl0ZXh0LWRlY29yYXRp
+b246bm9uZSBub25lO30NCnAubXNvbm9ybWFsMCwgbGkubXNvbm9ybWFsMCwgZGl2Lm1zb25vcm1h
+bDANCgl7bXNvLXN0eWxlLW5hbWU6bXNvbm9ybWFsOw0KCW1zby1tYXJnaW4tdG9wLWFsdDphdXRv
+Ow0KCW1hcmdpbi1yaWdodDowaW47DQoJbXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87DQoJbWFy
+Z2luLWxlZnQ6MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmki
+LHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTkNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29u
+YWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2lu
+ZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlwZTpleHBvcnQtb25seTsN
+Cglmb250LXNpemU6MTAuMHB0O30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDEx
+LjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9u
+MQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48
+eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwv
+eG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQg
+djpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hh
+cGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIg
+bGluaz0iIzAwN0VFNiIgdmxpbms9IiMwMDdFRTYiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24x
+Ij4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlBsZWFzZSBpZ25vcmUgdGhpcy48bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHls
+ZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4w
+cHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9
+ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPm9wZW5ibWMgJmx0O29wZW5ibWMtYm91bmNl
+cyYjNDM7dmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7IG9uIGJlaGFsZiBv
+ZiAmcXVvdDtWaWpheSBLaGVta2EgKHZpYSBEcm9wYm94KSZxdW90OyAmbHQ7bm8tcmVwbHlAZHJv
+cGJveC5jb20mZ3Q7PGJyPg0KPGI+UmVwbHktVG86IDwvYj5WaWpheSBLaGVta2EgJmx0O3ZpamF5
+a2hlbWthQGZiLmNvbSZndDs8YnI+DQo8Yj5EYXRlOiA8L2I+VGh1cnNkYXksIEF1Z3VzdCAxLCAy
+MDE5IGF0IDE6MzYgUE08YnI+DQo8Yj5UbzogPC9iPiZxdW90O29wZW5ibWNAbGlzdHMub3psYWJz
+Lm9yZyZxdW90OyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj4NCjxiPlN1Ympl
+Y3Q6IDwvYj5WaWpheSBLaGVta2Egc2hhcmVkICZxdW90O29ibWNkZXYmcXVvdDsgd2l0aCB5b3U8
+bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdiBhbGlnbj0iY2VudGVyIj4NCjx0
+YWJsZSBjbGFzcz0iTXNvTm9ybWFsVGFibGUiIGJvcmRlcj0iMCIgY2VsbHNwYWNpbmc9IjAiIGNl
+bGxwYWRkaW5nPSIwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZTsqd2lkdGg6IDU0MHB4Ij4NCjx0
+Ym9keT4NCjx0cj4NCjx0ZCB2YWxpZ249InRvcCIgc3R5bGU9InBhZGRpbmc6MGluIDBpbiAwaW4g
+MGluIj4NCjxkaXYgYWxpZ249ImNlbnRlciI+DQo8dGFibGUgY2xhc3M9Ik1zb05vcm1hbFRhYmxl
+IiBib3JkZXI9IjEiIGNlbGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCIgc3R5bGU9ImJvcmRl
+cjpzb2xpZCAjRENFQUY1IDEuMHB0O2JvcmRlci1yYWRpdXM6IDRweDstd2Via2l0LWJvcmRlci1y
+YWRpdXM6IDRweDstbW96LWJvcmRlci1yYWRpdXM6IDRweCI+DQo8dGJvZHk+DQo8dHIgc3R5bGU9
+ImhlaWdodDo0LjVwdCI+DQo8dGQgY29sc3Bhbj0iMyIgc3R5bGU9ImJvcmRlcjpub25lO3BhZGRp
+bmc6MGluIDBpbiAwaW4gMGluO2hlaWdodDo0LjVwdCI+PC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9
+ImhlaWdodDouNzVwdCI+DQo8dGQgd2lkdGg9IjEwMCUiIHN0eWxlPSJ3aWR0aDoxMDAuMCU7Ym9y
+ZGVyOm5vbmU7cGFkZGluZzowaW4gMGluIDBpbiAwaW47aGVpZ2h0Oi43NXB0Ij4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiIGFsaWduPSJjZW50ZXIiIHN0eWxlPSJ0ZXh0LWFsaWduOmNlbnRlcjttc28t
+bGluZS1oZWlnaHQtYWx0OjBwdCI+DQo8c3BhbiBzdHlsZT0iZm9udC1zaXplOjEuMHB0O2JvcmRl
+cjpzb2xpZCB3aW5kb3d0ZXh0IDEuMHB0O3BhZGRpbmc6MGluIj48aW1nIGlkPSJfeDAwMDBfaTEw
+MjYiIHNyYz0iY2lkOn5XUkQwMDAuanBnIiBhbHQ9IkltYWdlIHJlbW92ZWQgYnkgc2VuZGVyLiI+
+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MS4wcHQiPjxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjwvdGQ+DQo8dGQgc3R5bGU9ImJvcmRlcjpub25lO3BhZGRpbmc6MGluIDBpbiAwaW4gMGlu
+O2hlaWdodDouNzVwdCI+PC90ZD4NCjx0ZCBzdHlsZT0iYm9yZGVyOm5vbmU7cGFkZGluZzowaW4g
+MGluIDBpbiAwaW47aGVpZ2h0Oi43NXB0Ij48L3RkPg0KPC90cj4NCjx0cj4NCjx0ZCBzdHlsZT0i
+Ym9yZGVyOm5vbmU7cGFkZGluZzowaW4gMGluIDBpbiAwaW4iPg0KPGRpdiBhbGlnbj0iY2VudGVy
+Ij4NCjx0YWJsZSBjbGFzcz0iTXNvTm9ybWFsVGFibGUiIGJvcmRlcj0iMCIgY2VsbHNwYWNpbmc9
+IjAiIGNlbGxwYWRkaW5nPSIwIiBzdHlsZT0iYm9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlIj4NCjx0
+Ym9keT4NCjx0ciBzdHlsZT0iaGVpZ2h0OjIyLjVwdCI+DQo8dGQgY29sc3Bhbj0iMyIgc3R5bGU9
+InBhZGRpbmc6MGluIDBpbiAwaW4gMGluO2hlaWdodDoyMi41cHQiPjwvdGQ+DQo8L3RyPg0KPHRy
+Pg0KPHRkIHdpZHRoPSIzNiIgc3R5bGU9IndpZHRoOjI3LjBwdDtwYWRkaW5nOjBpbiAwaW4gMGlu
+IDBpbiI+PC90ZD4NCjx0ZCB3aWR0aD0iNDU0IiB2YWxpZ249InRvcCIgc3R5bGU9IndpZHRoOjM0
+MC41cHQ7cGFkZGluZzowaW4gMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5
+bGU9Im1hcmdpbi1ib3R0b206MTIuMHB0O2xpbmUtaGVpZ2h0OjE4Ljc1cHQiPjxzcGFuIHN0eWxl
+PSJmb250LWZhbWlseTpwcm94aW1hX25vdmE7Y29sb3I6IzQ0NDQ0NCI+SGkgdGhlcmUsPGJyPg0K
+PGJyPg0KVmlqYXkgS2hlbWthICh2aWpheWtoZW1rYUBmYi5jb20pIGludml0ZWQgeW91IHRvIHZp
+ZXcgdGhlIGZvbGRlciAmcXVvdDs8c3Ryb25nPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTpwcm94
+aW1hX25vdmEiPm9ibWNkZXY8L3NwYW4+PC9zdHJvbmc+JnF1b3Q7IG9uIERyb3Bib3guPG86cD48
+L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249ImNlbnRlciIgc3R5
+bGU9InRleHQtYWxpZ246Y2VudGVyO2xpbmUtaGVpZ2h0OjE4Ljc1cHQiPg0KPHNwYW4gc3R5bGU9
+ImZvbnQtZmFtaWx5OnByb3hpbWFfbm92YTtjb2xvcjojNDQ0NDQ0Ij48YSBocmVmPSJodHRwczov
+L3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX3d3dy5kcm9wYm94
+LmNvbV9sX3NjbF9BQUFEM21ydHBJMEZIWUtwVTVTY0wwNkRRbVdSejdoOU8tNUZRJmFtcDtkPUR3
+TUZhUSZhbXA7Yz01VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JmFtcDtyPXY5TVUwS2k5cFduVFhDV3dq
+SFBWZ3BuQ1I4MHZYa2tjcklhcVU3VVNsNWcmYW1wO209Vl9YVGJRdHlIWEszQnB4b19VQlIzcWlz
+TFctckpwX1hmZjhGMS12c0NUMCZhbXA7cz1HbUFjeDd1ZjJCQ2tVcnRKRU95OTRsNmdjRk9wbjI5
+S3lPeC1zLThmRXJvJmFtcDtlPSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS41cHQ7Y29sb3I6
+d2hpdGU7Ym9yZGVyOnNvbGlkICMxMzczQjUgMS4wcHQ7cGFkZGluZzoxMS4wcHQ7YmFja2dyb3Vu
+ZDojMDA3RUU2Ij5Hbw0KIHRvIGZvbGRlcjwvc3Bhbj48L2E+PG86cD48L286cD48L3NwYW4+PC9w
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9ImxpbmUtaGVpZ2h0OjE4Ljc1cHQiPjxzcGFu
+IHN0eWxlPSJmb250LWZhbWlseTpwcm94aW1hX25vdmE7Y29sb3I6IzQ0NDQ0NCI+PGJyPg0KRW5q
+b3khPGJyPg0KVGhlIERyb3Bib3ggdGVhbSA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L3RkPg0K
+PHRkIHdpZHRoPSIzNiIgc3R5bGU9IndpZHRoOjI3LjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDBp
+biI+PC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9ImhlaWdodDoyNy4wcHQiPg0KPHRkIGNvbHNwYW49
+IjMiIHN0eWxlPSJwYWRkaW5nOjBpbiAwaW4gMGluIDBpbjtoZWlnaHQ6MjcuMHB0Ij48L3RkPg0K
+PC90cj4NCjwvdGJvZHk+DQo8L3RhYmxlPg0KPC9kaXY+DQo8L3RkPg0KPHRkIHN0eWxlPSJib3Jk
+ZXI6bm9uZTtwYWRkaW5nOjBpbiAwaW4gMGluIDBpbiI+PC90ZD4NCjx0ZCBzdHlsZT0iYm9yZGVy
+Om5vbmU7cGFkZGluZzowaW4gMGluIDBpbiAwaW4iPjwvdGQ+DQo8L3RyPg0KPC90Ym9keT4NCjwv
+dGFibGU+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJkaXNwbGF5
+Om5vbmUiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXYgYWxpZ249ImNlbnRlciI+
+DQo8dGFibGUgY2xhc3M9Ik1zb05vcm1hbFRhYmxlIiBib3JkZXI9IjAiIGNlbGxzcGFjaW5nPSIw
+IiBjZWxscGFkZGluZz0iMCIgc3R5bGU9ImJvcmRlci1jb2xsYXBzZTpjb2xsYXBzZSI+DQo8dGJv
+ZHk+DQo8dHIgc3R5bGU9ImhlaWdodDo3LjVwdCI+DQo8dGQgc3R5bGU9InBhZGRpbmc6MGluIDBp
+biAwaW4gMGluO2hlaWdodDo3LjVwdCI+PC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9Ii13ZWJraXQt
+dGV4dC1zaXplLWFkanVzdDogbm9uZSI+DQo8dGQgc3R5bGU9InBhZGRpbmc6MGluIDBpbiAwaW4g
+MGluIj4NCjxkaXYgYWxpZ249ImNlbnRlciI+DQo8dGFibGUgY2xhc3M9Ik1zb05vcm1hbFRhYmxl
+IiBib3JkZXI9IjAiIGNlbGxzcGFjaW5nPSIwIiBjZWxscGFkZGluZz0iMCI+DQo8dGJvZHk+DQo8
+dHI+DQo8dGQgd2lkdGg9IjQwMCIgc3R5bGU9IndpZHRoOjMwMC4wcHQ7cGFkZGluZzowaW4gMGlu
+IDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTo4
+LjVwdDtmb250LWZhbWlseTpwcm94aW1hX25vdmE7Y29sb3I6I0E4QjlDNiI+PGEgaHJlZj0iaHR0
+cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBzLTNBX193d3cuZHJv
+cGJveC5jb21fbF9BQUFFQVZ1ajJINTI0Z05aVFBYVU1NQnpTRUdqd3hQaDVNWV9yZXBvcnQtNUZh
+YnVzZSZhbXA7ZD1Ed01GYVEmYW1wO2M9NVZEMFJUdE5sVGgzeWNkNDFiM01VdyZhbXA7cj12OU1V
+MEtpOXBXblRYQ1d3akhQVmdwbkNSODB2WGtrY3JJYXFVN1VTbDVnJmFtcDttPVZfWFRiUXR5SFhL
+M0JweG9fVUJSM3Fpc0xXLXJKcF9YZmY4RjEtdnNDVDAmYW1wO3M9QXUxRndvTEY5YTZHUTJRVkhw
+bjNzWjdaTk9EckN0SThfVm9qTm84akF6byZhbXA7ZT0iPlJlcG9ydA0KIHRvIERyb3Bib3g8L2E+
+PG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB3aWR0aD0iMTI4IiBzdHlsZT0id2lk
+dGg6OTYuMHB0O3BhZGRpbmc6MGluIDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+IGFsaWduPSJyaWdodCIgc3R5bGU9InRleHQtYWxpZ246cmlnaHQiPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6OC41cHQ7Zm9udC1mYW1pbHk6cHJveGltYV9ub3ZhO2NvbG9yOiNBOEI5QzYiPsKpIDIw
+MTkgRHJvcGJveDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvdGQ+DQo8L3RyPg0KPC90Ym9keT4N
+CjwvdGFibGU+DQo8L2Rpdj4NCjwvdGQ+DQo8L3RyPg0KPC90Ym9keT4NCjwvdGFibGU+DQo8L2Rp
+dj4NCjwvdGQ+DQo8L3RyPg0KPC90Ym9keT4NCjwvdGFibGU+DQo8L2Rpdj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJib3JkZXI6c29saWQgd2luZG93dGV4dCAxLjBwdDtwYWRk
+aW5nOjBpbiI+PGltZyBib3JkZXI9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIHN0eWxlPSJ3aWR0
+aDouMDEwNGluO2hlaWdodDouMDEwNGluIiBpZD0iX3gwMDAwX2kxMDI1IiBzcmM9ImNpZDp+V1JE
+MDAwLmpwZyIgYWx0PSJJbWFnZSByZW1vdmVkIGJ5IHNlbmRlci4iPjwvc3Bhbj48bzpwPjwvbzpw
+PjwvcD4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-        a {
-            color: #007ee6;
-            text-decoration: none;
-        }
-        </style>
-</head> <body style=3D"padding: 0; width: 100% !important; -webkit-text-siz=
-e-adjust: 100%; margin: 0; -ms-text-size-adjust: 100%;" marginheight=3D"0" =
-marginwidth=3D"0"><center><table cellpadding=3D"8" cellspacing=3D"0" style=
-=3D"*width: 540px; padding: 0; width: 100% !important; background: #ffffff;=
- margin: 0; background-color: #ffffff;" border=3D"0"><tr><td valign=3D"top">
-<table cellpadding=3D"0" cellspacing=3D"0" style=3D"border-radius: 4px; -we=
-bkit-border-radius: 4px; border: 1px #dceaf5 solid; -moz-border-radius: 4px=
-;" border=3D"0" align=3D"center">
-<tr><td colspan=3D"3" height=3D"6"></td></tr>
-<tr style=3D"line-height: 0px;"><td width=3D"100%" style=3D"font-size: 0px;=
-" align=3D"center" height=3D"1"><img src=3D"https://cfl.dropboxstatic.com/s=
-tatic/images/emails/logo_glyph_34_m1%402x.png" style=3D"max-height: 73px; w=
-idth: 40px; *width: 40px; *height: 73px;" catalogid=3D"logo_glyph_34_2x_png=
-" alt=3D"" width=3D"40px"></td></tr> <tr><td><table cellpadding=3D"0" cells=
-pacing=3D"0" style=3D"line-height: 25px;" border=3D"0" align=3D"center">
-<tr><td colspan=3D"3" height=3D"30"></td></tr>
-<tr>
-<td width=3D"36"></td>
-<td width=3D"454" align=3D"left" style=3D"color: #444444; border-collapse: =
-collapse; font-size: 11pt; font-family: proxima_nova, 'Open Sans', 'Lucida =
-Grande', 'Segoe UI', Arial, Verdana, 'Lucida Sans Unicode', Tahoma, 'Sans S=
-erif'; max-width: 454px;" valign=3D"top">Hi there,<br><br>Vijay Khemka (vij=
-aykhemka@fb.com) invited you to view the folder "<strong>obmcdev</strong>" =
-on Dropbox.<br><br><center><a style=3D"border-radius: 3px; font-size: 15px;=
- color: white; border: 1px #1373b5 solid; box-shadow: inset 0 1px 0 #6db3e6=
-, inset 1px 0 0 #48a1e2; text-decoration: none; padding: 14px 7px 14px 7px;=
- width: 150px; max-width: 150px; font-family: proxima_nova, 'Open Sans', 'l=
-ucida grande', 'Segoe UI', arial, verdana, 'lucida sans unicode', tahoma, s=
-ans-serif; margin: 6px auto; display: block; background-color: #007ee6; tex=
-t-align: center;" href=3D"https://www.dropbox.com/l/scl/AAAD3mrtpI0FHYKpU5S=
-cL06DQmWRz7h9O_Q">Go to folder</a></center>
-<br>Enjoy!<br>The Dropbox team<script type=3D"application/ld+json">{"action=
-": {"url": "https&#58;&#47;&#47;www.dropbox.com&#47;scl&#47;fo&#47;gqtxgwt8=
-erl9apni63pcm&#47;AACEWEtbaxlZJ19zcVLJ_dcGa&#63;dl&#61;0&#38;r&#61;AA9jEw-d=
-6RZfcQUFIpCTKiv0PFxE9_DesBnl5qgzitmgJBzplTRU4FPPZxF9Dlpz11zbTZA6kqZxclUmkAr=
-mhkjIKaD-oMi2J7c0pKESdcSqWQJ9i7lq9WTRatU62OGoCtyJeG7nbpxb8pdNFB6M9xMi1kHjUQ=
-tcJTxxZTkmvedQemIM-9V3BFfg7gFURFVHdiFiLQOdJJajlkZ19zCutG5J&#38;sm&#61;1", "=
-name": "Go to folder", "@type": "ViewAction"}, "@context": "http://schema.o=
-rg", "@type": "EmailMessage", "description": null}</script>
-</td>
-<td width=3D"36"></td>
-</tr>
-<tr><td colspan=3D"3" height=3D"36"></td></tr>
-</table></td></tr>
-</table>
-<table cellpadding=3D"0" cellspacing=3D"0" align=3D"center" border=3D"0">
-<tr><td height=3D"10"></td></tr>
-<tr><td style=3D"padding: 0; border-collapse: collapse;"><table cellpadding=
-=3D"0" cellspacing=3D"0" align=3D"center" border=3D"0"><tr style=3D"color: =
-#a8b9c6; font-size: 11px; font-family: proxima_nova, 'Open Sans', 'Lucida G=
-rande', 'Segoe UI', Arial, Verdana, 'Lucida Sans Unicode', Tahoma, 'Sans Se=
-rif'; -webkit-text-size-adjust: none;">
-<td width=3D"400" align=3D"left">
-<a href=3D"https://www.dropbox.com/l/AAAEAVuj2H524gNZTPXUMMBzSEGjwxPh5MY/re=
-port_abuse">Report to Dropbox</a><br> </td>
-<td width=3D"128" align=3D"right">&#169; 2019 Dropbox</td>
-</tr></table></td></tr>
-</table>
-</td></tr></table></center></body>
-</html><img width=3D"1" src=3D"https://www.dropbox.com/l/AABG96cyQZYkpf9BVF=
-GWwUm5cMzu45BbZSk" height=3D"1" />
---===============5378081814455380666==--
+--_000_E376FDA786A34EFEBECBD7AE41C32EF9fbcom_--
