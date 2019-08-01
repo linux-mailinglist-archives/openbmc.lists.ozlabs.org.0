@@ -1,145 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 914337D4D8
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 07:21:54 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 45zdvL5BqLzDqm6
-	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 15:21:50 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5232C7D64B
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 09:28:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 45zhjk33tXzDqq8
+	for <lists+openbmc@lfdr.de>; Thu,  1 Aug 2019 17:28:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=3116f30347=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=avi.fishman@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="oC1qt0al"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="gy4CMuop"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 45zdtm5LzJzDqk5
- for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2019 15:21:19 +1000 (AEST)
-Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x715JRlv025404; Wed, 31 Jul 2019 22:21:12 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=+KsMD+mrYgQX0qFFPtEvfVdIJ4jmNo/UpxFL9/vQlvQ=;
- b=oC1qt0algtDk1tdLMyTnInE+96Rm6YBA43FEO8RLpxYsqkxbdqqIoXvfnQJwPD5SrJJH
- ou9Xn/dUOe384wQ78O7J39n5HFbRuqluP2m0LOPVqF9MHYIgOSrrNksGm68zK82tuGhF
- MnA7zBxOWDiCOK8IpRpBSoJHkXbedVJUmnM= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2u3q5jgexg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 31 Jul 2019 22:21:12 -0700
-Received: from ash-exhub203.TheFacebook.com (2620:10d:c0a8:83::5) by
- ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 31 Jul 2019 22:21:11 -0700
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.102) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Wed, 31 Jul 2019 22:21:11 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=E5ijAAkICIzE+a3Brbnixmm5UmRvzyeEkWMslyJHSRBvo3ahE13Bc3uqjFiLgh8wXt8sT7fvcRGpewOIb0he8Htyy9SqR6WA3QY3FszA7+ArP9kqvnyVC60YKrnbL1GLuCTtEDuj1pvgJNNW3R4KJdrcR2Qn1bEfz6IErbUD9hkVP9gr8Fc2577SrWdu1f//zcCsK6Vc21gemKHB8yMEgWFmW22boKIiDUpvvqXS4KLrw1nZpU4bhz5U5PozUm1nDRbE1DPFBClSlXoY9MJ4OJnoIVYeo6BMeyl8o1IWnOktQbsJiXoJ7wDEPfSWlSf4l62pnT5g5Nh9M4ly+OeHnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+KsMD+mrYgQX0qFFPtEvfVdIJ4jmNo/UpxFL9/vQlvQ=;
- b=Wv4ngiObY/f3MAvJ9oAxt6vtiK2nxfq1iytLOgNuEK5h36lsUXP6y1+fi1d3NMeUQGWieAFaMkS+AzLSxZd2LNOtHG+R4O22/1HWBLsiu/qwVbQ54ADiNypymdOZFYn88W6QimBfEeWimI2iskUsdsFUNoq8eO/pmxXvGvILtKJmTVj+PBnDlzv7NCEyzqVt5gW00Pe9Vv7nOJVz3MM0SquRpagq2iR/hMJTFRL23pVKqrs6S09d0pE58H3MxDdkzkGHUFuxezn2LEKJk19ww5u8suMY1WYFY/LZ8N6/9C0mBI78JfEFr7SqSLLJBucz/SeYKUXjwNCrsSVzrUsy2g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1;spf=pass
- smtp.mailfrom=fb.com;dmarc=pass action=none header.from=fb.com;dkim=pass
- header.d=fb.com;arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+KsMD+mrYgQX0qFFPtEvfVdIJ4jmNo/UpxFL9/vQlvQ=;
- b=gy4CMuopydIWJO8snhWPK0mhJdbWI66nwxCXstLPM1LTb0rqqoqc579I7XSZ7oESk8QC5CMdBK1qcg5shy4W5NeNOddCVwUFdP3NeobIFlrh7kG5gDK8Zc94U+DKYqDKg4ARIFKGwWE6+GLrV7EyVqXx5nlkXsZoVvDaQtaikrE=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1808.namprd15.prod.outlook.com (10.174.96.136) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2115.15; Thu, 1 Aug 2019 05:20:56 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::c66:6d60:f6e5:773c]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::c66:6d60:f6e5:773c%8]) with mapi id 15.20.2136.010; Thu, 1 Aug 2019
- 05:20:56 +0000
-From: Tao Ren <taoren@fb.com>
-To: Heiner Kallweit <hkallweit1@gmail.com>, Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH net-next 1/2] net: phy: broadcom: set features explicitly
- for BCM54616S
-Thread-Topic: [PATCH net-next 1/2] net: phy: broadcom: set features explicitly
- for BCM54616S
-Thread-Index: AQHVRm4tZSvvLl002ECU4Omi5U5C86bigvAA//+jr4CAAISsAIABMSsAgABfTQD//4x8gIAB/KuA
-Date: Thu, 1 Aug 2019 05:20:56 +0000
-Message-ID: <88f4d709-d9bb-943c-37a9-aeebe8ca0ebc@fb.com>
-References: <20190730002532.85509-1-taoren@fb.com>
- <20190730033558.GB20628@lunn.ch>
- <aff2728d-5db1-50fd-767c-29b355890323@fb.com>
- <bdfe07d3-66b4-061a-a149-aa2aef94b9b7@gmail.com>
- <f59c2ae9-ef44-1e1b-4ae2-216eb911e92e@fb.com>
- <41c1f898-aee8-d73a-386d-c3ce280c5a1b@gmail.com>
- <fd179662-b9f9-4813-b9b5-91dbd796596e@fb.com>
-In-Reply-To: <fd179662-b9f9-4813-b9b5-91dbd796596e@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MWHPR0201CA0055.namprd02.prod.outlook.com
- (2603:10b6:301:73::32) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:180::1:ed2b]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b5a4a902-990b-4940-b903-08d7164007ad
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1808; 
-x-ms-traffictypediagnostic: MWHPR15MB1808:
-x-microsoft-antispam-prvs: <MWHPR15MB180837CC8AE2EC1448E91965B2DE0@MWHPR15MB1808.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:4125;
-x-forefront-prvs: 01165471DB
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(376002)(136003)(346002)(396003)(39860400002)(366004)(189003)(199004)(40764003)(65826007)(8676002)(8936002)(14444005)(256004)(81166006)(81156014)(14454004)(6246003)(31686004)(6486002)(186003)(64126003)(7736002)(71200400001)(46003)(71190400001)(305945005)(316002)(68736007)(58126008)(446003)(53936002)(229853002)(110136005)(54906003)(478600001)(99286004)(6512007)(6436002)(66446008)(65806001)(65956001)(53546011)(6506007)(5660300002)(386003)(25786009)(102836004)(52116002)(4326008)(66556008)(76176011)(86362001)(11346002)(476003)(7416002)(2616005)(486006)(36756003)(6116002)(31696002)(2906002)(66946007)(64756008)(66476007);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1808;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: u1dkerU71pmpADGaRMYkbtXiYe0a8P5XPWz1Q+Tr66NfzqcHI/qt5f66mEVYc85Wk1lqfE/4e7OKIfsB5pItwobV6CRHZBMREKplKLTkrlLq8KTkVFJu8+H4ot1Nnerj2aHguw0m/0w00VShGoGI+14LKiRmUmkEwN5NNrPxaileFwK3D8oMdzjvWVOj+tKDMRiYA5NYCp+Fzwaqgalq473gi3dflbVYD5Q9QtAgjgdRhoN2E9ln8LXoNfeGUCdvaqpA4BjGCiUNF59pJgJToP0TtZk0naGpCzfRQJpQShTpVMaXCpUMTUQdVXf1qOtlAhwkGSm0hAFnTIP5cvs07cNRHDAUhjdUn/dDuJbUdBAnUw4veWPYdlxXJd+76b1iADRXjrpAwnOv7C1Xb1rtTYF4H9DYpvgOhHwkQiZz5K0=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E2E57299AF3A684DB55784790C163BF5@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5a4a902-990b-4940-b903-08d7164007ad
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Aug 2019 05:20:56.1060 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: taoren@fb.com
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1808
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-01_03:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908010051
-X-FB-Internal: deliver
+ by lists.ozlabs.org (Postfix) with ESMTPS id 45zhhx6ltXzDqpq
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Aug 2019 17:27:59 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x717R6Nr004914;
+ Thu, 1 Aug 2019 10:27:06 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 8441)
+ id 3EDC262A2E; Thu,  1 Aug 2019 10:27:06 +0300 (IDT)
+From: Avi Fishman <avifishman70@gmail.com>
+To: venture@google.com, yuenn@google.com, benjaminfair@google.com,
+ davem@davemloft.net, robh+dt@kernel.org, mark.rutland@arm.com,
+ gregkh@linuxfoundation.org
+Subject: [PATCH v1 0/2] add NPCM7xx EMC 10/100 Ethernet driver
+Date: Thu,  1 Aug 2019 10:26:09 +0300
+Message-Id: <20190801072611.27935-1-avifishman70@gmail.com>
+X-Mailer: git-send-email 2.18.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -151,60 +45,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Florian Fainelli <f.fainelli@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Arun Parameswaran <arun.parameswaran@broadcom.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Justin Chen <justinpopo6@gmail.com>, Vladimir Oltean <olteanv@gmail.com>,
- "David S . Miller" <davem@davemloft.net>
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, avifishman70@gmail.com,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ tali.perry1@gmail.com, tglx@linutronix.de
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gNy8zMC8xOSAxMTowMCBQTSwgVGFvIFJlbiB3cm90ZToNCj4gT24gNy8zMC8xOSAxMDo1MyBQ
-TSwgSGVpbmVyIEthbGx3ZWl0IHdyb3RlOg0KPj4gT24gMzEuMDcuMjAxOSAwMjoxMiwgVGFvIFJl
-biB3cm90ZToNCj4+PiBPbiA3LzI5LzE5IDExOjAwIFBNLCBIZWluZXIgS2FsbHdlaXQgd3JvdGU6
-DQo+Pj4+IE9uIDMwLjA3LjIwMTkgMDc6MDUsIFRhbyBSZW4gd3JvdGU6DQo+Pj4+PiBPbiA3LzI5
-LzE5IDg6MzUgUE0sIEFuZHJldyBMdW5uIHdyb3RlOg0KPj4+Pj4+IE9uIE1vbiwgSnVsIDI5LCAy
-MDE5IGF0IDA1OjI1OjMyUE0gLTA3MDAsIFRhbyBSZW4gd3JvdGU6DQo+Pj4+Pj4+IEJDTTU0NjE2
-UyBmZWF0dXJlICJQSFlfR0JJVF9GRUFUVVJFUyIgd2FzIHJlbW92ZWQgYnkgY29tbWl0IGRjZGVj
-ZGNmZTFmYw0KPj4+Pj4+PiAoIm5ldDogcGh5OiBzd2l0Y2ggZHJpdmVycyB0byB1c2UgZHluYW1p
-YyBmZWF0dXJlIGRldGVjdGlvbiIpLiBBcyBkeW5hbWljDQo+Pj4+Pj4+IGZlYXR1cmUgZGV0ZWN0
-aW9uIGRvZXNuJ3Qgd29yayB3aGVuIEJDTTU0NjE2UyBpcyB3b3JraW5nIGluIFJHTUlJLUZpYmVy
-DQo+Pj4+Pj4+IG1vZGUgKGRpZmZlcmVudCBzZXRzIG9mIE1JSSBDb250cm9sL1N0YXR1cyByZWdp
-c3RlcnMgYmVpbmcgdXNlZCksIGxldCdzDQo+Pj4+Pj4+IHNldCAiUEhZX0dCSVRfRkVBVFVSRVMi
-IGZvciBCQ001NDYxNlMgZXhwbGljaXRseS4NCj4+Pj4+Pg0KPj4+Pj4+IEhpIFRhbw0KPj4+Pj4+
-DQo+Pj4+Pj4gV2hhdCBleGFjdGx5IGRvZXMgaXQgZ2V0IHdyb25nPw0KPj4+Pj4+DQo+Pj4+Pj4g
-ICAgICBUaGFua3MNCj4+Pj4+PiAJQW5kcmV3DQo+Pj4+Pg0KPj4+Pj4gSGkgQW5kcmV3LA0KPj4+
-Pj4NCj4+Pj4+IEJDTTU0NjE2UyBpcyBzZXQgdG8gUkdNSUktRmliZXIgKDEwMDBCYXNlLVgpIG1v
-ZGUgb24gbXkgcGxhdGZvcm0sIGFuZCBub25lIG9mIHRoZSBmZWF0dXJlcyAoMTAwMEJhc2VULzEw
-MEJhc2VULzEwQmFzZVQpIGNhbiBiZSBkZXRlY3RlZCBieSBnZW5waHlfcmVhZF9hYmlsaXRpZXMo
-KSwgYmVjYXVzZSB0aGUgUEhZIG9ubHkgcmVwb3J0cyAxMDAwQmFzZVhfRnVsbHxIYWxmIGFiaWxp
-dHkgaW4gdGhpcyBtb2RlLg0KPj4+Pj4NCj4+Pj4gQXJlIHlvdSBnb2luZyB0byB1c2UgdGhlIFBI
-WSBpbiBjb3BwZXIgb3IgZmlicmUgbW9kZT8NCj4+Pj4gSW4gY2FzZSB5b3UgdXNlIGZpYnJlIG1v
-ZGUsIHdoeSBkbyB5b3UgbmVlZCB0aGUgY29wcGVyIG1vZGVzIHNldCBhcyBzdXBwb3J0ZWQ/DQo+
-Pj4+IE9yIGRvZXMgdGhlIFBIWSBqdXN0IHN0YXJ0IGluIGZpYnJlIG1vZGUgYW5kIHlvdSB3YW50
-IHRvIHN3aXRjaCBpdCB0byBjb3BwZXIgbW9kZT8NCj4+Pg0KPj4+IEhpIEhlaW5lciwNCj4+Pg0K
-Pj4+IFRoZSBwaHkgc3RhcnRzIGluIGZpYmVyIG1vZGUgYW5kIHRoYXQncyB0aGUgbW9kZSBJIHdh
-bnQuDQo+Pj4gTXkgb2JzZXJ2YXRpb24gaXM6IHBoeWRldi0+bGluayBpcyBhbHdheXMgMCAoTGlu
-ayBzdGF0dXMgYml0IGlzIG5ldmVyIHNldCBpbiBNSUlfQk1TUikgYnkgdXNpbmcgZHluYW1pYyBh
-YmlsaXR5IGRldGVjdGlvbiBvbiBteSBtYWNoaW5lLiBJIGNoZWNrZWQgcGh5ZGV2LT5zdXBwb3J0
-ZWQgYW5kIGl0J3Mgc2V0IHRvICJBdXRvTmVnIHwgVFAgfCBNSUkgfCBQYXVzZSB8IEFzeW1fUGF1
-c2UiIGJ5IGR5bmFtaWMgYWJpbGl0eSBkZXRlY3Rpb24uIElzIGl0IG5vcm1hbC9leHBlY3RlZD8g
-T3IgbWF5YmUgdGhlIGZpeCBzaG91bGQgZ28gdG8gZGlmZmVyZW50IHBsYWNlcz8gVGhhbmsgeW91
-IGZvciB5b3VyIGhlbHAuDQo+Pj4NCj4+DQo+PiBOb3Qgc3VyZSB3aGV0aGVyIHlvdSBzdGF0ZWQg
-YWxyZWFkeSB3aGljaCBrZXJuZWwgdmVyc2lvbiB5b3UncmUgdXNpbmcuDQo+PiBUaGVyZSdzIGEg
-YnJhbmQtbmV3IGV4dGVuc2lvbiB0byBhdXRvLWRldGVjdCAxMDAwQmFzZVg6DQo+PiBmMzBlMzNi
-Y2RhYjkgKCJuZXQ6IHBoeTogQWRkIG1vcmUgMTAwMEJhc2VYIHN1cHBvcnQgZGV0ZWN0aW9uIikN
-Cj4+IEl0J3MgaW5jbHVkZWQgaW4gdGhlIDUuMy1yYyBzZXJpZXMuDQo+IA0KPiBJJ20gcnVubmlu
-ZyBrZXJuZWwgNS4yLjAuIFRoYW5rIHlvdSBmb3IgdGhlIHNoYXJpbmcgYW5kIEkgZGlkbid0IGtu
-b3cgdGhlIHBhdGNoLiBMZXQgbWUgY2hlY2sgaXQgb3V0Lg0KDQpJIGFwcGxpZWQgYWJvdmUgcGF0
-Y2ggYW5kIGNhNzJlZmI2YmRjNyAoIm5ldDogcGh5OiBBZGQgZGV0ZWN0aW9uIG9mIDEwMDBCYXNl
-WCBsaW5rIG1vZGUgc3VwcG9ydCIpIHRvIG15IDUuMi4wIHRyZWUgYnV0IGdvdCBmb2xsb3dpbmcg
-d2FybmluZyB3aGVuIGJvb3RpbmcgdXAgbXkgbWFjaGluZToNCg0KIlBIWSBhZHZlcnRpc2luZyAo
-MCwwMDAwMDIwMCwwMDAwNjJjMCkgbW9yZSBtb2RlcyB0aGFuIGdlbnBoeSBzdXBwb3J0cywgc29t
-ZSBtb2RlcyBub3QgYWR2ZXJ0aXNlZCIuDQoNClRoZSBCQ001NDYxNlMgUEhZIG9uIG15IG1hY2hp
-bmUgb25seSByZXBvcnRzIDEwMDAtWCBmZWF0dXJlcyBpbiBSR01JSS0+MTAwMEJhc2UtS1ggbW9k
-ZS4gSXMgaXQgYSBrbm93biBwcm9ibGVtPw0KDQpBbnl3YXlzIGxldCBtZSBzZWUgaWYgSSBtaXNz
-ZWQgc29tZSBkZXBlbmRlbmN5L2ZvbGxvdy11cCBwYXRjaGVzLi4NCg0KDQpDaGVlcnMsDQoNClRh
-bw0K
+EMC Ethernet Media Access Controller supports 10/100 Mbps and RMII.
+This driver has been working on Nuvoton BMC NPCM7xx.
+
+Avi Fishman (2):
+  dt-binding: net: document NPCM7xx EMC 10/100 DT bindings
+  net: npcm: add NPCM7xx EMC 10/100 Ethernet driver
+
+ .../bindings/net/nuvoton,npcm7xx-emc.txt      |   38 +
+ drivers/net/ethernet/nuvoton/Kconfig          |   21 +-
+ drivers/net/ethernet/nuvoton/Makefile         |    2 +
+ drivers/net/ethernet/nuvoton/npcm7xx_emc.c    | 2073 +++++++++++++++++
+ 4 files changed, 2131 insertions(+), 3 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/nuvoton,npcm7xx-emc.txt
+ create mode 100644 drivers/net/ethernet/nuvoton/npcm7xx_emc.c
+
+-- 
+2.18.0
+
