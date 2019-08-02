@@ -1,70 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC55A8024D
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 23:48:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 460glW0sFVzDrFb
-	for <lists+openbmc@lfdr.de>; Sat,  3 Aug 2019 07:48:39 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 548038025C
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 23:57:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 460gxV4qxpzDrGw
+	for <lists+openbmc@lfdr.de>; Sat,  3 Aug 2019 07:57:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d30; helo=mail-io1-xd30.google.com;
- envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=31170bfc9b=taoren@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="TWKsXQGk"; 
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="lh3WCwZH"; 
  dkim-atps=neutral
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
- [IPv6:2607:f8b0:4864:20::d30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 460gkw2Vr3zDrCG
- for <openbmc@lists.ozlabs.org>; Sat,  3 Aug 2019 07:48:07 +1000 (AEST)
-Received: by mail-io1-xd30.google.com with SMTP id j6so35484564ioa.5
- for <openbmc@lists.ozlabs.org>; Fri, 02 Aug 2019 14:48:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=8IZXKQyVzK/R55s0kcJmgLxOYn1BAJMRBVObs9FAtz4=;
- b=TWKsXQGk7FC4XDyLar1uVN7avXTf1ZbywZqfimVc58gQjqHOqpAKf1sSOEGVIuhfKT
- MweUGASg3xa6BTk0AQ2H8UZWdA+l0fSRhpma1ujNpPiJJOOvSDLCpkaz04V8OGsQIdjR
- 1oJnFcnuI6riRLLcnMD8MhUZ0SOpEcl5NdEbmKxhsTJONltbk8d2YjSo9kzWUpR85zw/
- jVuOOMJNpINlfShfmNLEM60v2dMNgcPs5FZ9MZHWZ7freREMcZbP21o5vfCHKmaWVwZm
- 3HEA2x6hkTyl4KQcyzaQ2LtnUEAEHolDfZbGsPec0B5+Lu991c1CYv7rBVzjkOIJSQ3x
- 5aow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=8IZXKQyVzK/R55s0kcJmgLxOYn1BAJMRBVObs9FAtz4=;
- b=notsiWr7dt3cyRqIYL5fEck6P/FCBWBz4aB25AyIbteUXS914sGgMFtUlsac4ZaOs2
- eNTJj6sZ2Kf8pGtCqsXvcACPWnjNiC8/d8XniFmlbyKThy+v+2V7dbms7wa/0VlfvKwq
- kNhA9IFd11HMQtteunBb8Z1zIjdjBRCdh3hI53LuwCBOtE/mwkF7DctPQiPas2zyL+AE
- 4/dF6xd67/hRN15m7r6SDqqMyFxSDauCNX86A9izZbWtCfV3zmZa3c4VQssU8bjYi0IW
- Vz14qKi0E4oY+BqwsBV9I6A3T1DqOd1EVHQbea15W+ws6SuvHLGTFMB1MWPOv40jUXd9
- h2bQ==
-X-Gm-Message-State: APjAAAWPumeUPznT2xQ/dxmQTG565mvllUJ63X4uIdH0Iq7feQf/tGbm
- FCyyFtxEFl6DqGG9pli1OOyoYdGw+dxpIetbNnLbfg==
-X-Google-Smtp-Source: APXvYqzgZz2p9fmJPFTzNC1ujaKkL0Xn8vfaney8MLzaKHZ3vVquWbYLsyd4xOyCd6V3OIIn7jxZYikWEWIKPdpCe2s=
-X-Received: by 2002:a02:16c5:: with SMTP id
- a188mr144679170jaa.86.1564782484025; 
- Fri, 02 Aug 2019 14:48:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 460gws1g15zDqR3
+ for <openbmc@lists.ozlabs.org>; Sat,  3 Aug 2019 07:56:44 +1000 (AEST)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x72LrBhH016867
+ for <openbmc@lists.ozlabs.org>; Fri, 2 Aug 2019 14:56:41 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-type; s=facebook;
+ bh=pAXhtSSrymtvNQ1Vuj81KTyaBnvdKVU8ZFfefO5CZ60=;
+ b=lh3WCwZHtxkJs8ejmZ6GF+y7JvhVF6qh7sZp2R86f1Cj2G5g3BRy03nik/8VkknJB9+n
+ w4S2kksfydvy7nnf5oYBiSQmxjZ72BI1iQCEL2AlOCXbiUfleNjZVJiJ6O4yk7pG5826
+ hbVh9Iyme+0MFk5p3JholaF0QMIVWHn7D1o= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2u4py09mja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 02 Aug 2019 14:56:41 -0700
+Received: from mx-out.facebook.com (2620:10d:c0a8:1b::d) by
+ mail.thefacebook.com (2620:10d:c0a8:82::e) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 2 Aug 2019 14:56:39 -0700
+Received: by devvm24792.prn1.facebook.com (Postfix, from userid 150176)
+ id B6E6B189AC9D9; Fri,  2 Aug 2019 14:54:20 -0700 (PDT)
+Smtp-Origin-Hostprefix: devvm
+From: Tao Ren <taoren@fb.com>
+Smtp-Origin-Hostname: devvm24792.prn1.facebook.com
+To: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>, "David S . Miller"
+ <davem@davemloft.net>, Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ Justin Chen <justinpopo6@gmail.com>,
+ Vladimir Oltean <olteanv@gmail.com>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>
+Smtp-Origin-Cluster: prn1c35
+Subject: [PATCH net-next v3] net: phy: broadcom: add 1000Base-X support for
+ BCM54616S
+Date: Fri, 2 Aug 2019 14:54:19 -0700
+Message-ID: <20190802215419.313512-1-taoren@fb.com>
+X-Mailer: git-send-email 2.17.1
+X-FB-Internal: Safe
 MIME-Version: 1.0
-References: <A6540D28-604F-4057-8065-0EB20BFE92A5@fb.com>
- <CAARXrtn6OqU9P5MEbZ9znetZ5f115vyZ8NYr0e_P79PFdG1ChA@mail.gmail.com>
- <23b0b26b-2ad2-d97d-a7e5-d2518b801d6d@linux.vnet.ibm.com>
- <48D01587-EBCB-4992-83C6-5D8ABC56D234@fb.com>
-In-Reply-To: <48D01587-EBCB-4992-83C6-5D8ABC56D234@fb.com>
-From: Kun Yi <kunyi@google.com>
-Date: Fri, 2 Aug 2019 14:47:37 -0700
-Message-ID: <CAGMNF6VgO5jt1mNbm91Z23EzR=AEcbuM5DqukOAK=TMj_a3-4g@mail.gmail.com>
-Subject: Re: Small help on trivial issue
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: multipart/alternative; boundary="0000000000001cd073058f295024"
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-02_09:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=588 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908020230
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,169 +83,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001cd073058f295024
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+genphy_read_status() cannot report correct link speed when BCM54616S PHY
+is configured in RGMII->1000Base-KX mode (for example, on Facebook CMM
+BMC platform), and it is because speed-related fields in MII registers
+are assigned different meanings in 1000X register set. Actually there
+is no speed field in 1000X register set because link speed is always
+1000 Mb/s.
 
-On Fri, Aug 2, 2019 at 2:19 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> Thanks a lot guys, It really helped.
->
-> Regards
-> -Vijay
->
-> =EF=BB=BFOn 8/1/19, 11:27 PM, "vishwa" <vishwa@linux.vnet.ibm.com> wrote:
->
->     Here is another instance: from one of my old commits.
->
->
-https://github.com/openbmc/phosphor-host-ipmid/blob/master/systemintfcmds.c=
-pp#L131
->
->     !! Vishwa !!
->
->     On 8/2/19 7:39 AM, Lei YU wrote:
->     > I did not check the code details, but from the description, it is
-likely due to
->     > the global variable's initialization order in a shared library.
->     >
->     > Basically, you need to specify
-`__attribute__((init_priority(101)))` for your
->     > global variables.
->     >
->     > Please check below commit for details and how to manually specify
-the init
->     > order for such variables.
->     >
-https://github.com/openbmc/phosphor-host-ipmid/commit/4b0ddb68b4e7642035858=
-9213bc400155fa12e43
->     >
->     >
->     > On Fri, Aug 2, 2019 at 4:12 AM Vijay Khemka <vijaykhemka@fb.com>
-wrote:
->     >> Team,
->     >>
->     >> I am having small issue of global json object corruption and I am
-unable to find reason for it. I am defining a global json object
-(nlohmann::json appSelData) at the start of file. I am initializing this
-object in register function and accessing this in different functions
-defined in same shared library. While accessing in different function, it
-doesn=E2=80=99t hold initialized data. This is failing in my storagecommand=
-s.cpp
-for IPMI.
+The patch adds "probe" callback to detect PHY's operation mode based on
+INTERF_SEL[1:0] pins and 1000X/100FX selection bit in SerDES 100-FX
+Control register. Besides, link speed is manually set to 1000 Mb/s in
+"read_status" callback if PHY-switch link is 1000Base-X.
 
-I  would advise against using static global variables exactly for this
-issue.
-See also static initialization fiasco
-<https://isocpp.org/wiki/faq/ctors#static-init-order>, another subtle way
-to crash your app nondeterministically.
-They were called out and forbidden
-<https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variab=
-les>
-in Google C++ style guide (except for constants).
-Using a factory and use smart pointers to manage ownership would be a safer
-bet.
+Signed-off-by: Tao Ren <taoren@fb.com>
+---
+ Changes in v3:
+  - rename bcm5482_read_status to bcm54xx_read_status so the callback can
+    be shared by BCM5482 and BCM54616S.
+ Changes in v2:
+  - Auto-detect PHY operation mode instead of passing DT node.
+  - move PHY mode auto-detect logic from config_init to probe callback.
+  - only set speed (not including duplex) in read_status callback.
+  - update patch description with more background to avoid confusion.
+  - patch #1 in the series ("net: phy: broadcom: set features explicitly
+    for BCM54616") is dropped: the fix should go to get_features callback
+    which may potentially depend on this patch.
 
->     >>
->     >>
->     >>
->     >> Then I created a separate new file selcommands.cpp and did the
-same operation, it works here as expected. So I am wondering why it is
-failing in existing file vs new one. Looks like there are some header
-included in existing file is messing it up but I have no clue yet. This
-only happens with json object.
->     >>
->     >>
->     >>
->     >> For your reference, I am attaching both below files
->     >>
->     >> Storagecommands.cpp =E2=80=93 where this fails
->     >>
->     >> Selcommands.cpp =E2=80=93 where it works.
->     >>
->     >>
->     >>
->     >> I know it is a debug issue and I have been struggling last 2 days
-so thought of asking for help to team. Any help here would be appreciated.
->     >>
->     >>
->     >>
->     >> Regards
->     >>
->     >> -Vijay
->
->
->
+ drivers/net/phy/broadcom.c | 41 +++++++++++++++++++++++++++++++++-----
+ include/linux/brcmphy.h    | 10 ++++++++--
+ 2 files changed, 44 insertions(+), 7 deletions(-)
 
+diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+index 937d0059e8ac..ecad8a201a09 100644
+--- a/drivers/net/phy/broadcom.c
++++ b/drivers/net/phy/broadcom.c
+@@ -383,9 +383,9 @@ static int bcm5482_config_init(struct phy_device *phydev)
+ 		/*
+ 		 * Select 1000BASE-X register set (primary SerDes)
+ 		 */
+-		reg = bcm_phy_read_shadow(phydev, BCM5482_SHD_MODE);
+-		bcm_phy_write_shadow(phydev, BCM5482_SHD_MODE,
+-				     reg | BCM5482_SHD_MODE_1000BX);
++		reg = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
++		bcm_phy_write_shadow(phydev, BCM54XX_SHD_MODE,
++				     reg | BCM54XX_SHD_MODE_1000BX);
+ 
+ 		/*
+ 		 * LED1=ACTIVITYLED, LED3=LINKSPD[2]
+@@ -409,7 +409,7 @@ static int bcm5482_config_init(struct phy_device *phydev)
+ 	return err;
+ }
+ 
+-static int bcm5482_read_status(struct phy_device *phydev)
++static int bcm54xx_read_status(struct phy_device *phydev)
+ {
+ 	int err;
+ 
+@@ -464,6 +464,35 @@ static int bcm54616s_config_aneg(struct phy_device *phydev)
+ 	return ret;
+ }
+ 
++static int bcm54616s_probe(struct phy_device *phydev)
++{
++	int val, intf_sel;
++
++	val = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
++	if (val < 0)
++		return val;
++
++	/* The PHY is strapped in RGMII to fiber mode when INTERF_SEL[1:0]
++	 * is 01b.
++	 */
++	intf_sel = (val & BCM54XX_SHD_INTF_SEL_MASK) >> 1;
++	if (intf_sel == 1) {
++		val = bcm_phy_read_shadow(phydev, BCM54616S_SHD_100FX_CTRL);
++		if (val < 0)
++			return val;
++
++		/* Bit 0 of the SerDes 100-FX Control register, when set
++		 * to 1, sets the MII/RGMII -> 100BASE-FX configuration.
++		 * When this bit is set to 0, it sets the GMII/RGMII ->
++		 * 1000BASE-X configuration.
++		 */
++		if (!(val & BCM54616S_100FX_MODE))
++			phydev->dev_flags |= PHY_BCM_FLAGS_MODE_1000BX;
++	}
++
++	return 0;
++}
++
+ static int brcm_phy_setbits(struct phy_device *phydev, int reg, int set)
+ {
+ 	int val;
+@@ -655,6 +684,8 @@ static struct phy_driver broadcom_drivers[] = {
+ 	.config_aneg	= bcm54616s_config_aneg,
+ 	.ack_interrupt	= bcm_phy_ack_intr,
+ 	.config_intr	= bcm_phy_config_intr,
++	.read_status	= bcm54xx_read_status,
++	.probe		= bcm54616s_probe,
+ }, {
+ 	.phy_id		= PHY_ID_BCM5464,
+ 	.phy_id_mask	= 0xfffffff0,
+@@ -689,7 +720,7 @@ static struct phy_driver broadcom_drivers[] = {
+ 	.name		= "Broadcom BCM5482",
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init	= bcm5482_config_init,
+-	.read_status	= bcm5482_read_status,
++	.read_status	= bcm54xx_read_status,
+ 	.ack_interrupt	= bcm_phy_ack_intr,
+ 	.config_intr	= bcm_phy_config_intr,
+ }, {
+diff --git a/include/linux/brcmphy.h b/include/linux/brcmphy.h
+index 6db2d9a6e503..b475e7f20d28 100644
+--- a/include/linux/brcmphy.h
++++ b/include/linux/brcmphy.h
+@@ -200,9 +200,15 @@
+ #define BCM5482_SHD_SSD		0x14	/* 10100: Secondary SerDes control */
+ #define BCM5482_SHD_SSD_LEDM	0x0008	/* SSD LED Mode enable */
+ #define BCM5482_SHD_SSD_EN	0x0001	/* SSD enable */
+-#define BCM5482_SHD_MODE	0x1f	/* 11111: Mode Control Register */
+-#define BCM5482_SHD_MODE_1000BX	0x0001	/* Enable 1000BASE-X registers */
+ 
++/* 10011: SerDes 100-FX Control Register */
++#define BCM54616S_SHD_100FX_CTRL	0x13
++#define	BCM54616S_100FX_MODE		BIT(0)	/* 100-FX SerDes Enable */
++
++/* 11111: Mode Control Register */
++#define BCM54XX_SHD_MODE		0x1f
++#define BCM54XX_SHD_INTF_SEL_MASK	GENMASK(2, 1)	/* INTERF_SEL[1:0] */
++#define BCM54XX_SHD_MODE_1000BX		BIT(0)	/* Enable 1000-X registers */
+ 
+ /*
+  * EXPANSION SHADOW ACCESS REGISTERS.  (PHY REG 0x15, 0x16, and 0x17)
+-- 
+2.17.1
 
---=20
-Regards,
-Kun
-
---0000000000001cd073058f295024
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Fri, Aug 2, 2019 at 2:19 PM Vijay Khemka &lt;<a=
- href=3D"mailto:vijaykhemka@fb.com">vijaykhemka@fb.com</a>&gt; wrote:<br>&g=
-t;<br>&gt; Thanks a lot guys, It really helped.<br>&gt;<br>&gt; Regards<br>=
-&gt; -Vijay<br>&gt;<br>&gt; =EF=BB=BFOn 8/1/19, 11:27 PM, &quot;vishwa&quot=
-; &lt;<a href=3D"mailto:vishwa@linux.vnet.ibm.com">vishwa@linux.vnet.ibm.co=
-m</a>&gt; wrote:<br>&gt;<br>&gt; =C2=A0 =C2=A0 Here is another instance: fr=
-om one of my old commits.<br>&gt;<br>&gt; =C2=A0 =C2=A0 <a href=3D"https://=
-github.com/openbmc/phosphor-host-ipmid/blob/master/systemintfcmds.cpp#L131"=
->https://github.com/openbmc/phosphor-host-ipmid/blob/master/systemintfcmds.=
-cpp#L131</a><br>&gt;<br>&gt; =C2=A0 =C2=A0 !! Vishwa !!<br>&gt;<br>&gt; =C2=
-=A0 =C2=A0 On 8/2/19 7:39 AM, Lei YU wrote:<br>&gt; =C2=A0 =C2=A0 &gt; I di=
-d not check the code details, but from the description, it is likely due to=
-<br>&gt; =C2=A0 =C2=A0 &gt; the global variable&#39;s initialization order =
-in a shared library.<br>&gt; =C2=A0 =C2=A0 &gt;<br>&gt; =C2=A0 =C2=A0 &gt; =
-Basically, you need to specify `__attribute__((init_priority(101)))` for yo=
-ur<br>&gt; =C2=A0 =C2=A0 &gt; global variables.<br>&gt; =C2=A0 =C2=A0 &gt;<=
-br>&gt; =C2=A0 =C2=A0 &gt; Please check below commit for details and how to=
- manually specify the init<br>&gt; =C2=A0 =C2=A0 &gt; order for such variab=
-les.<br>&gt; =C2=A0 =C2=A0 &gt; <a href=3D"https://github.com/openbmc/phosp=
-hor-host-ipmid/commit/4b0ddb68b4e76420358589213bc400155fa12e43">https://git=
-hub.com/openbmc/phosphor-host-ipmid/commit/4b0ddb68b4e76420358589213bc40015=
-5fa12e43</a><br>&gt; =C2=A0 =C2=A0 &gt;<br>&gt; =C2=A0 =C2=A0 &gt;<br>&gt; =
-=C2=A0 =C2=A0 &gt; On Fri, Aug 2, 2019 at 4:12 AM Vijay Khemka &lt;<a href=
-=3D"mailto:vijaykhemka@fb.com">vijaykhemka@fb.com</a>&gt; wrote:<br>&gt; =
-=C2=A0 =C2=A0 &gt;&gt; Team,<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =
-=C2=A0 &gt;&gt; I am having small issue of global json object corruption an=
-d I am unable to find reason for it. I am defining a global json object (nl=
-ohmann::json appSelData) at the start of file. I am initializing this objec=
-t in register function and accessing this in different functions defined in=
- same shared library. While accessing in different function, it doesn=E2=80=
-=99t hold initialized data. This is failing in my storagecommands.cpp for I=
-PMI.<div><br></div><div>I=C2=A0 would advise against using static global va=
-riables exactly for this issue.</div><div>See also <a href=3D"https://isocp=
-p.org/wiki/faq/ctors#static-init-order">static initialization fiasco</a>, a=
-nother subtle way to crash your app nondeterministically.</div><div>They we=
-re <a href=3D"https://google.github.io/styleguide/cppguide.html#Static_and_=
-Global_Variables">called out and forbidden</a> in Google C++ style guide (e=
-xcept for constants).</div><div>Using a factory and use smart pointers to m=
-anage ownership would be a safer bet.</div><div><br>&gt; =C2=A0 =C2=A0 &gt;=
-&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =
-=C2=A0 =C2=A0 &gt;&gt; Then I created a separate new file selcommands.cpp a=
-nd did the same operation, it works here as expected. So I am wondering why=
- it is failing in existing file vs new one. Looks like there are some heade=
-r included in existing file is messing it up but I have no clue yet. This o=
-nly happens with json object.<div>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=
-=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &g=
-t;&gt; For your reference, I am attaching both below files<br>&gt; =C2=A0 =
-=C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt; Storagecommands.cpp =E2=80=
-=93 where this fails<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &=
-gt;&gt; Selcommands.cpp =E2=80=93 where it works.<br>&gt; =C2=A0 =C2=A0 &gt=
-;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt;=
- =C2=A0 =C2=A0 &gt;&gt; I know it is a debug issue and I have been struggli=
-ng last 2 days so thought of asking for help to team. Any help here would b=
-e appreciated.<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt=
-;<br>&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt; Regards<br>=
-&gt; =C2=A0 =C2=A0 &gt;&gt;<br>&gt; =C2=A0 =C2=A0 &gt;&gt; -Vijay<br>&gt;<b=
-r>&gt;<br>&gt;<br><br><br>-- <br>Regards,<br>Kun</div></div></div>
-
---0000000000001cd073058f295024--
