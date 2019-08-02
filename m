@@ -1,64 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4667B7EC9A
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 08:27:26 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8649B7EC78
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 08:10:58 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 460GxW0Rc0zDqgF
-	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 16:10:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 460HJW3T2kzDqtr
+	for <lists+openbmc@lfdr.de>; Fri,  2 Aug 2019 16:27:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="R3+zgINs"; 
- dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=vishwa@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 460Gwk3XdkzDqW8
- for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2019 16:10:13 +1000 (AEST)
-Received: by mail-qt1-x843.google.com with SMTP id w17so28490973qto.10
- for <openbmc@lists.ozlabs.org>; Thu, 01 Aug 2019 23:10:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=aFWaj3cSyAp5cCruqVAXM269R+jXFA+hpQyudleBW8I=;
- b=R3+zgINs75dLpE9xitGDlrbGtE/wzbCCZrUQRqXd1DkFAauk+rXBs5F/P6isRb82rQ
- fGCdP+uzBdeSYGqQpFlJB3PO3LQtniJfZDwC7aTY1w7I/MNKmSqPPLN5EwZ2gGwtY3KB
- /kjIdOGt+CsMNaXLGf9WLJI4inkssBNReoyCg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=aFWaj3cSyAp5cCruqVAXM269R+jXFA+hpQyudleBW8I=;
- b=dMEZgPbEhbhvGGfIJbSXNTU7Mp4f6xvBuG9zJeEuYpWgPlGKfTUviOzsFRPoHeRqkk
- Py2P+we2XZKa0CCZvHbquASWEu3sE3tL7g7RBwZmZ/LnHlDcqfK3FpucS8Gn50ZQUKPp
- WzlS9kkYzcyzu8lMhUeBDbA90RytorEBhRAjiK09FDJ6a01e5QTsuO2s122xDhGRKNBq
- Ke4ywVNKIXS2VCsCsHwnJiFqooJDQIlORsIsWFtwi9CEiTRKCzfAF3YkFQAUKY+QzfT2
- Mhl+XT7UDo93vu21IdlH4yJ/OOAUvhCbjf1DE/3UhlJZrp/1F9Y9v+SfJjCGga9n2USn
- VC6g==
-X-Gm-Message-State: APjAAAUCEsGKfPJ0Bm0JwUDXydKHAaP/q5poWHIkjrEj1Wb/5KnJR8ml
- /uY4r+QqJizlsrfp4TR+kndNoqCPUK99a2Ie3QA=
-X-Google-Smtp-Source: APXvYqz7bb22+a5Wv4AkSi0btb/AAI8H35mfK49hqP0WgDG+Ezce+iETXBjueb2NE8qmF9oHprwt/CYIrmsrIe0PbKY=
-X-Received: by 2002:a05:6214:1306:: with SMTP id
- a6mr97906903qvv.38.1564726208597; 
- Thu, 01 Aug 2019 23:10:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 460HHw6kyxzDqjT
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Aug 2019 16:26:51 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x726McOs102298
+ for <openbmc@lists.ozlabs.org>; Fri, 2 Aug 2019 02:26:49 -0400
+Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2u4d8jn1k3-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 02 Aug 2019 02:26:48 -0400
+Received: from localhost
+ by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Fri, 2 Aug 2019 07:26:47 +0100
+Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
+ by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Fri, 2 Aug 2019 07:26:45 +0100
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id x726Qi9b43581816
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 2 Aug 2019 06:26:44 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A241A5204E;
+ Fri,  2 Aug 2019 06:26:44 +0000 (GMT)
+Received: from [9.122.210.177] (unknown [9.122.210.177])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id 0670052052;
+ Fri,  2 Aug 2019 06:26:43 +0000 (GMT)
+From: vishwa <vishwa@linux.vnet.ibm.com>
+To: Lei YU <mine260309@gmail.com>
+Subject: Re: Small help on trivial issue
+References: <A6540D28-604F-4057-8065-0EB20BFE92A5@fb.com>
+ <CAARXrtn6OqU9P5MEbZ9znetZ5f115vyZ8NYr0e_P79PFdG1ChA@mail.gmail.com>
+Date: Fri, 2 Aug 2019 11:56:43 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <20190730081832.271125-1-avifishman70@gmail.com>
-In-Reply-To: <20190730081832.271125-1-avifishman70@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 2 Aug 2019 06:09:56 +0000
-Message-ID: <CACPK8XeqDRNYJC+=xC_XySSTX6mHi5r94UDaeMPQv3DFV1HYQw@mail.gmail.com>
-Subject: Re: [PATCH v2] mtd: spi-nor: Add Winbond w25q256jvm
-To: Avi Fishman <avifishman70@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAARXrtn6OqU9P5MEbZ9znetZ5f115vyZ8NYr0e_P79PFdG1ChA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+x-cbid: 19080206-0012-0000-0000-00000338A9ED
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19080206-0013-0000-0000-00002172592B
+Message-Id: <23b0b26b-2ad2-d97d-a7e5-d2518b801d6d@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-02_04:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908020067
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,44 +87,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: vigneshr@ti.com, tudor.ambarus@microchip.com,
- Richard Weinberger <richard@nod.at>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- linux-mtd@lists.infradead.org, miquel.raynal@bootlin.com,
- Brian Norris <computersforpeace@gmail.com>,
- David Woodhouse <dwmw2@infradead.org>, Tomer Maimon <tmaimon77@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 30 Jul 2019 at 08:19, Avi Fishman <avifishman70@gmail.com> wrote:
->
-> Similar to w25q256 (besides not supporting QPI mode) but with different ID.
-> The "JVM" suffix is in the datasheet.
-> The datasheet indicates DUAL and QUAD are supported.
-> https://www.winbond.com/resource-files/w25q256jv%20spi%20revi%2010232018%20plus.pdf
->
-> Signed-off-by: Avi Fishman <avifishman70@gmail.com>
+Here is another instance: from one of my old commits.
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+https://github.com/openbmc/phosphor-host-ipmid/blob/master/systemintfcmds.cpp#L131
 
-> ---
->  drivers/mtd/spi-nor/spi-nor.c | 2 ++
->  1 file changed, 2 insertions(+)
+!! Vishwa !!
+
+On 8/2/19 7:39 AM, Lei YU wrote:
+> I did not check the code details, but from the description, it is likely due to
+> the global variable's initialization order in a shared library.
 >
-> diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
-> index 03cc788511d5..74b41ec92414 100644
-> --- a/drivers/mtd/spi-nor/spi-nor.c
-> +++ b/drivers/mtd/spi-nor/spi-nor.c
-> @@ -2151,6 +2151,8 @@ static const struct flash_info spi_nor_ids[] = {
->         { "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16, SECT_4K) },
->         { "w25q128", INFO(0xef4018, 0, 64 * 1024, 256, SECT_4K) },
->         { "w25q256", INFO(0xef4019, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
-> +       { "w25q256jvm", INFO(0xef7019, 0, 64 * 1024, 512,
-> +                       SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
->         { "w25m512jv", INFO(0xef7119, 0, 64 * 1024, 1024,
->                         SECT_4K | SPI_NOR_QUAD_READ | SPI_NOR_DUAL_READ) },
+> Basically, you need to specify `__attribute__((init_priority(101)))` for your
+> global variables.
 >
-> --
-> 2.18.0
+> Please check below commit for details and how to manually specify the init
+> order for such variables.
+> https://github.com/openbmc/phosphor-host-ipmid/commit/4b0ddb68b4e76420358589213bc400155fa12e43
 >
+>
+> On Fri, Aug 2, 2019 at 4:12 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
+>> Team,
+>>
+>> I am having small issue of global json object corruption and I am unable to find reason for it. I am defining a global json object (nlohmann::json appSelData) at the start of file. I am initializing this object in register function and accessing this in different functions defined in same shared library. While accessing in different function, it doesn’t hold initialized data. This is failing in my storagecommands.cpp for IPMI.
+>>
+>>
+>>
+>> Then I created a separate new file selcommands.cpp and did the same operation, it works here as expected. So I am wondering why it is failing in existing file vs new one. Looks like there are some header included in existing file is messing it up but I have no clue yet. This only happens with json object.
+>>
+>>
+>>
+>> For your reference, I am attaching both below files
+>>
+>> Storagecommands.cpp – where this fails
+>>
+>> Selcommands.cpp – where it works.
+>>
+>>
+>>
+>> I know it is a debug issue and I have been struggling last 2 days so thought of asking for help to team. Any help here would be appreciated.
+>>
+>>
+>>
+>> Regards
+>>
+>> -Vijay
+
