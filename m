@@ -2,69 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAC3F8139B
-	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 09:40:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24B45813F5
+	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 10:09:05 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4628p10T0TzDqgf
-	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 17:40:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4629QQ47ZWzDqnD
+	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 18:09:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d35; helo=mail-io1-xd35.google.com;
- envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=vertiv.com
+ (client-ip=40.107.68.74; helo=nam04-bn3-obe.outbound.protection.outlook.com;
+ envelope-from=troy.lee@vertiv.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="gDWqob/d"; 
+ dmarc=none (p=none dis=none) header.from=vertiv.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=vertivco.onmicrosoft.com
+ header.i=@vertivco.onmicrosoft.com header.b="TOoZf2Uv"; 
  dkim-atps=neutral
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
- [IPv6:2607:f8b0:4864:20::d35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com
+ (mail-eopbgr680074.outbound.protection.outlook.com [40.107.68.74])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4628mk6JrWzDqnD
- for <openbmc@lists.ozlabs.org>; Mon,  5 Aug 2019 17:39:50 +1000 (AEST)
-Received: by mail-io1-xd35.google.com with SMTP id g20so165320756ioc.12
- for <openbmc@lists.ozlabs.org>; Mon, 05 Aug 2019 00:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=XBw9xdp8XHRLsy9boBfn5KLugepQZaFffWClyQraoXo=;
- b=gDWqob/dkA3znUyU+rdVvh6mCpDuSH0kj+lKRCNPcwvAnd4clic+lE+gsanfxwj5kE
- nnXxXEsX3RGH81W/Omyq11sJ7e9hLJQwQ8X9xcAT9IuPsvfDVlpc9F8p7osjNsZUZ/BN
- AZUgyb+TJysBY3tNNevEOrP7wkfmSDjk1DmzXZ9ZrIQqGLTVF9nqFWA7fBft8xfB9iao
- gib4AmvB3IZzVHNdI03rSbGhLPDzBLr19lshlIjZ98JjC+DKY4AWIYoCTEzl8Q/3kID0
- Bk5tjFmyITe3qO5oWTPliYWUCTFWPc9zwxfYv6Jkk5VlZsdsWKO6jky325RVHdH+Ysih
- uDlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=XBw9xdp8XHRLsy9boBfn5KLugepQZaFffWClyQraoXo=;
- b=VtNSNban3EQCh2H5Z50LHstfjm8JNm06/K7LZRzZ/g3Ef4UHErLxsdliEFaLCI2e8M
- /fbT4g44ncZFrutN2I92IKtcXkMwVExfP50mytySKwlyhn9jtV9PUaapYAix6LfyVhuR
- sSSd2O64I0ENmOY1aTBJHp5IqIfOIVrniYK42SPGqP8ua/yBR3IkC16eXSABinV7Vhtx
- h3Dhd3NsDrvd0AOyBXkVmckErXrjOpfxxvdnQiL2/bfwAeVBSIqhZvx322rA7oMdIbc9
- aWkLKzGTLjC3Ls7CZWf4Kue8cDO72KNBFI2ZLqSM1WNU/bb1wtONNzqhwfTwRHgGlWmq
- uStA==
-X-Gm-Message-State: APjAAAV9p3/a+yjjUqBO4RO1xra4Fucn+ewlqEZYWK+Uy048UjMX4YZF
- McEmpyN2RFvmn4t645PVandLOpPKiHh2AnIPxV8=
-X-Google-Smtp-Source: APXvYqwLH5uhRJ9jakDVCsKSdM3P+SyhXet4AwJPutKoxYLqsgE/Z3FSivZ6+Xjttx9kwOF89qBvP1EStJsfA5QUBhY=
-X-Received: by 2002:a5e:8f08:: with SMTP id c8mr52444428iok.52.1564990787844; 
- Mon, 05 Aug 2019 00:39:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4629Lr0CQVzDqgl
+ for <openbmc@lists.ozlabs.org>; Mon,  5 Aug 2019 18:05:53 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WArn2POeqLaG+B8bWDJCozU2gMaHOw0g4VvKJ53vYRaBbdclTlOs2xB87nBlK4IC/68jtDfj39J3FuRtUJH394Bh4I0pQcTXcFWCIZqmf3lE5CQ1Uq2ujetGfyaqncxhUEwKSwgnUjQ9zfVW+25BXJ9wDWTEnF5l7LriEvfwl6wOgE/AIEcONWR9N3yNlxRzCAGzGYJ2s2dRsxxC8WebCD4OwOUjUpecLG0xO0CR7RSWGJjbdO5eRSjYdQKDowrXlza7oasHqv4XeLb/T27P0iQsEQE4j/1m40uIE6Zr5miAiWuqgLmL7tOMMXEjGBCVxwL0RPIT4ERmG27DMi1rfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LpsGS0xCiZ48PBjeKcY4LCj0Mq2o0DOcarp2Z9Rf9T0=;
+ b=KN4nZl857exHTpD5l9NCkyVU29vt+6l/ehieda4/LA1hJnrjXkUtEeSLx3UpBJ1a0YP6IPWlQjnWRowbIC6/DsFujj07ZSWUJPeA5gCkkWRhAnlUahDuCMKyY7Z0UyR+5Su3czWrnWP1QPNnZJZ6Tgev/j46j15G0q7vtZHdNz/pBcNkMeW2iN7ECYMHDfUEbKbcGVhNpJK7CprkX0TLhzFYyhOQD2wkx7/7gKGmOWSAbTcqMtmAZSyszp3orovr0Vr9pY+ebHaMNTP8ckJi5/g8+iNOqy9AMMbkaFQM4rj/p1brnRmrjfI53kQcBhnZuZWgnDE4tE5W0TV81sUUYg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vertiv.com; dmarc=pass action=none header.from=vertiv.com;
+ dkim=pass header.d=vertiv.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vertivco.onmicrosoft.com; s=selector2-vertivco-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LpsGS0xCiZ48PBjeKcY4LCj0Mq2o0DOcarp2Z9Rf9T0=;
+ b=TOoZf2UvqdadTZeLrNp4SNOzzcC1wtdzPiO2uouF4nT5UJ0VwOdiWj0c8Oo9o9QMffrW2kg5w9y/acKQ6h8Xx6ha6NTyVjOkzENas+/PKpZTq7jPAgl+7MMHQKABHqDlMXTY6kCy9HVYGL6tN8rCkq2+tPr2mDV8F5IeVk0acAw=
+Received: from MWHPR13MB1360.namprd13.prod.outlook.com (10.173.120.8) by
+ MWHPR13MB1341.namprd13.prod.outlook.com (10.173.123.18) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2157.9; Mon, 5 Aug 2019 08:05:48 +0000
+Received: from MWHPR13MB1360.namprd13.prod.outlook.com
+ ([fe80::f8a0:214c:cccd:85a8]) by MWHPR13MB1360.namprd13.prod.outlook.com
+ ([fe80::f8a0:214c:cccd:85a8%6]) with mapi id 15.20.2157.011; Mon, 5 Aug 2019
+ 08:05:48 +0000
+From: "Troy.Lee@vertiv.com" <Troy.Lee@vertiv.com>
+To: krtaylor <kurt.r.taylor@gmail.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Subject: RE: [ExternalEmail] Re: Signed CCLA from Vertiv
+Thread-Topic: [ExternalEmail] Re: Signed CCLA from Vertiv
+Thread-Index: AdVI1QWAN3LhRCTKR7+J3UF7per7QgAjYeUAAICAlCA=
+Date: Mon, 5 Aug 2019 08:05:48 +0000
+Message-ID: <MWHPR13MB136028DCE650949F5F86841AEDDA0@MWHPR13MB1360.namprd13.prod.outlook.com>
+References: <MWHPR13MB1360C410A284A04C167D7397EDD90@MWHPR13MB1360.namprd13.prod.outlook.com>
+ <8ccde7bc-5991-209e-1fd9-3240f6b80cb9@gmail.com>
+In-Reply-To: <8ccde7bc-5991-209e-1fd9-3240f6b80cb9@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Troy.Lee@vertiv.com; 
+x-originating-ip: [103.83.160.34]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c017a3ff-d1df-4ea6-b5fa-08d7197bb995
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:MWHPR13MB1341; 
+x-ms-traffictypediagnostic: MWHPR13MB1341:
+x-microsoft-antispam-prvs: <MWHPR13MB13413BADCFD6EB294C9B9CE0EDDA0@MWHPR13MB1341.namprd13.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 01208B1E18
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10009020)(396003)(346002)(366004)(39860400002)(136003)(376002)(13464003)(199004)(189003)(316002)(71200400001)(7736002)(81166006)(81156014)(305945005)(74316002)(71190400001)(6116002)(2906002)(110136005)(3846002)(11346002)(55016002)(486006)(66946007)(229853002)(86362001)(76116006)(446003)(66446008)(66556008)(53936002)(6436002)(8676002)(8936002)(64756008)(33656002)(476003)(66476007)(5660300002)(7696005)(9686003)(26005)(76176011)(186003)(99286004)(53546011)(102836004)(52536014)(6506007)(68736007)(478600001)(25786009)(5024004)(14444005)(256004)(6246003)(66066001)(14454004);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:MWHPR13MB1341;
+ H:MWHPR13MB1360.namprd13.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: vertiv.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: qRl006EmXSToE2KUGquCwMffWx0ARzb7BUjMxlv+dIDZMO07AQ1gttX0GEnJHNChUGsANNEWGoMMg+eJY9ukcULp5hV2PlUkgMG6vQhgFFsuVnSfqELBSBQv4B8ICgBC0u5d4ZuLZgUyJR7xjjPth/kR3QSi53BBCLnk6mK8yKtQm/Vo4qSRTYx/8tqTShvzbjwgpQg7XhuAxHbJFsq85Z04SQI/VSQ97fRdzOf5Tb+cnQey+fWJJoej3bglfwrxA4EW6JdcGEPLR3fblnp0rHZ2ZpczhoiUn4sPLO1UezFqVjcIL5dexoaA163wTtmjEmfosDqF8ReHpspLF0YsSRSSuFXJMg7W49Ftfze9bjtfMDSzvHEau10X4epCaYAs2OyUW6LNxahB0poruxuZ1Hjz9OZNO9CSf57BfjjHnyk=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <29CA6B5F-505E-462F-A1DA-9146B97E01EC@hyvedesignsolutions.com>
- <CAARXrtnOwXtOS_y9Wj3RkjhwFG9ReKvjfG7XNaKpEV=H-4cqMg@mail.gmail.com>
-In-Reply-To: <CAARXrtnOwXtOS_y9Wj3RkjhwFG9ReKvjfG7XNaKpEV=H-4cqMg@mail.gmail.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Mon, 5 Aug 2019 15:39:36 +0800
-Message-ID: <CAARXrtkwZndaH_3QU5z5sOWn21mP60Nm-iy9quQXd07UkKg-Lg@mail.gmail.com>
-Subject: Re: Nothing RPROVIDES 'virtual-p9-vcs-workaround' when creating
- romulus-prime machne
-To: Brad Chou <bradc@hyvedesignsolutions.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: vertiv.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c017a3ff-d1df-4ea6-b5fa-08d7197bb995
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Aug 2019 08:05:48.0373 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 74fe92c5-ef57-4d1a-a0e7-9451117d9272
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: GPayfw8/GB6QwNoSRYBoAS7f0sCO1GuOGtQc04N5VOwUl3m91Nv1U1gwCsHLSIpsLpa8TDlC+USn0GTV6ObfGw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR13MB1341
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,84 +107,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-And below
-
-    meta-romulus/recipes-phosphor/host/p9-host-start.bbappend:RDEPENDS_${PN=
-}_remove_romulus
-=3D "p9-vcs-workaround"
-
-removes the dependency.
-
-On Mon, Aug 5, 2019 at 3:38 PM Lei YU <mine260309@gmail.com> wrote:
->
-> If you grep p9-vcs-workaround you will see below:
->
->     meta-romulus/conf/machine/romulus.conf:PREFERRED_PROVIDER_virtual/p9-=
-vcs-workaround
-> =3D ''
->
-> which defines it as empty.
->
-> On Mon, Aug 5, 2019 at 3:07 PM Brad Chou <bradc@hyvedesignsolutions.com> =
-wrote:
-> >
-> > Hi All,
-> > I followed the exact steps in Add a New System to OpenBMC.
-> > https://github.com/openbmc/docs/blob/master/development/add-new-system.=
-md
-> >
-> > Unfortunately, I got this error as "ERROR: Nothing RPROVIDES 'virtual-p=
-9-vcs-workaround' (but /home/bradc/Documents/openbmc/meta-openpower/recipes=
--phosphor/host/p9-vcs-workaround.bb RDEPENDS on or otherwise requires it)=
-=E2=80=9D.
-> >
-> > I need to delete one line in romulus-prine.conf to fix this error.
-> > # require conf/machine/include/p9.inc
-> >
-> > Is anyone have idea why it only happens when create a new machine ?
-> > Thanks.
-> >
-> > The detail error messages are :
-> >
-> > [bradc@hyve-taipei-fw-lab build]$ bitbake obmc-phosphor-image
-> > Loading cache: 100% |##################################################=
-###########################################################################=
-########################################################| Time: 0:00:00
-> > Loaded 3596 entries from dependency cache.
-> > Parsing recipes: 100% |################################################=
-###########################################################################=
-########################################################| Time: 0:00:02
-> > Parsing of 2442 .bb files complete (2441 cached, 1 parsed). 3597 target=
-s, 351 skipped, 0 masked, 0 errors.
-> > Removing 1 recipes from the armv6 sysroot: 100% |######################=
-###########################################################################=
-########################################################| Time: 0:00:00
-> > Removing 1 recipes from the romulus_prime sysroot: 100% |##############=
-###########################################################################=
-########################################################| Time: 0:00:00
-> > NOTE: Resolving any missing task queue dependencies
-> > ERROR: Nothing RPROVIDES 'virtual-p9-vcs-workaround' (but /home/bradc/D=
-ocuments/openbmc/meta-openpower/recipes-phosphor/host/p9-vcs-workaround.bb =
-RDEPENDS on or otherwise requires it)
-> > NOTE: Runtime target 'virtual-p9-vcs-workaround' is unbuildable, removi=
-ng...
-> > Missing or unbuildable dependency chain was: ['virtual-p9-vcs-workaroun=
-d']
-> > NOTE: Runtime target 'p9-vcs-workaround' is unbuildable, removing...
-> > Missing or unbuildable dependency chain was: ['p9-vcs-workaround', 'vir=
-tual-p9-vcs-workaround']
-> > NOTE: Runtime target 'virtual-obmc-host-ctl' is unbuildable, removing..=
-.
-> > Missing or unbuildable dependency chain was: ['virtual-obmc-host-ctl', =
-'p9-vcs-workaround', 'virtual-p9-vcs-workaround']
-> > ERROR: Required build target 'obmc-phosphor-image' has no buildable pro=
-viders.
-> > Missing or unbuildable dependency chain was: ['obmc-phosphor-image', 'v=
-irtual-obmc-host-ctl', 'p9-vcs-workaround', 'virtual-p9-vcs-workaround']
-> >
-> > Summary: There were 2 ERROR messages shown, returning a non-zero exit c=
-ode.
+VGhhbmsgeW91IQ0KDQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbToga3J0YXlsb3Ig
+PGt1cnQuci50YXlsb3JAZ21haWwuY29tPg0KU2VudDogU2F0dXJkYXksIEF1Z3VzdCAwMywgMjAx
+OSAyOjQ2IEFNDQpUbzogTGVlLCBUcm95IDxUcm95LkxlZUB2ZXJ0aXYuY29tPjsgT3BlbkJNQyBN
+YWlsbGlzdCA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KU3ViamVjdDogW0V4dGVybmFsRW1h
+aWxdIFJlOiBTaWduZWQgQ0NMQSBmcm9tIFZlcnRpdg0KDQpPbiA4LzEvMTkgOToxNCBQTSwgVHJv
+eS5MZWVAdmVydGl2LmNvbSB3cm90ZToNCj4gSGksDQo+DQo+IFRoaXMgaXMgYSBmcmllbmRseSBy
+ZW1pbmRlci4NCj4gUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZXJlIGlzIGFueSBvZiBpbmZvcm1h
+dGlvbiBtaXNzaW5nLg0KDQpJIGd1ZXNzIEkgbWlzc2VkIHRoaXMgYmVjYXVzZSBvZiB2YWNhdGlv
+bi4NCg0KV2VsY29tZSEgVGhhbmtzIGZvciBzaWduaW5nLiBZb3VyIENDTEEgaGFzIGJlZW4gYWNj
+ZXB0ZWQuDQoNCkt1cnQgVGF5bG9yIChrcnRheWxvcikNCg0KPg0KPg0KPiBUaGFua3MsDQo+IFRy
+b3kgTGVlDQo+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IG9wZW5ibWMg
+PG9wZW5ibWMtYm91bmNlcyt0cm95LmxlZT12ZXJ0aXYuY29tQGxpc3RzLm96bGFicy5vcmc+IE9u
+IEJlaGFsZiBPZiBUcm95LkxlZUB2ZXJ0aXYuY29tDQo+IFNlbnQ6IFN1bmRheSwgSnVseSAyMSwg
+MjAxOSAzOjE4IFBNDQo+IFRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFi
+cy5vcmc+DQo+IFN1YmplY3Q6IFtFeHRlcm5hbEVtYWlsXSBTaWduZWQgQ0NMQSBmcm9tIFZlcnRp
+dg0KPg0KPiBHcmVldGluZ3MsDQo+DQo+IFRoaXMgaXMgVHJveSBMZWUgZnJvbSBWZXJ0aXYuDQo+
+IFBsZWFzZSBmaW5kIHNpZ25lZCBDQ0xBIGZyb20gVmVydGl2L0F2b2NlbnQgYXR0YWNoZWQuDQo+
+IFBsZWFzZSBoZWxwIHRvIGFjY2VwdCBpdC4NCj4NCj4gVGhhbmtzLA0KPiBUcm95IExlZQ0KPiBD
+T05GSURFTlRJQUxJVFkgTk9USUNFOiBUaGlzIGUtbWFpbCBhbmQgYW55IGZpbGVzIHRyYW5zbWl0
+dGVkIHdpdGggaXQgYXJlIGludGVuZGVkIHNvbGVseSBmb3IgdGhlIHVzZSBvZiB0aGUgaW5kaXZp
+ZHVhbCBvciBlbnRpdHkgdG8gd2hvbSB0aGV5IGFyZSBhZGRyZXNzZWQgYW5kIG1heSBjb250YWlu
+IGNvbmZpZGVudGlhbCBhbmQgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBwcm90ZWN0ZWQgYnkgbGF3
+LiBJZiB5b3UgcmVjZWl2ZWQgdGhpcyBlLW1haWwgaW4gZXJyb3IsIGFueSByZXZpZXcsIHVzZSwg
+ZGlzc2VtaW5hdGlvbiwgZGlzdHJpYnV0aW9uLCBvciBjb3B5aW5nIG9mIHRoZSBlLW1haWwgaXMg
+c3RyaWN0bHkgcHJvaGliaXRlZC4gUGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5
+IGJ5IHJldHVybiBlLW1haWwgYW5kIGRlbGV0ZSBhbGwgY29waWVzIGZyb20geW91ciBzeXN0ZW0u
+DQo+IENPTkZJREVOVElBTElUWSBOT1RJQ0U6IFRoaXMgZS1tYWlsIGFuZCBhbnkgZmlsZXMgdHJh
+bnNtaXR0ZWQgd2l0aCBpdCBhcmUgaW50ZW5kZWQgc29sZWx5IGZvciB0aGUgdXNlIG9mIHRoZSBp
+bmRpdmlkdWFsIG9yIGVudGl0eSB0byB3aG9tIHRoZXkgYXJlIGFkZHJlc3NlZCBhbmQgbWF5IGNv
+bnRhaW4gY29uZmlkZW50aWFsIGFuZCBwcml2aWxlZ2VkIGluZm9ybWF0aW9uIHByb3RlY3RlZCBi
+eSBsYXcuIElmIHlvdSByZWNlaXZlZCB0aGlzIGUtbWFpbCBpbiBlcnJvciwgYW55IHJldmlldywg
+dXNlLCBkaXNzZW1pbmF0aW9uLCBkaXN0cmlidXRpb24sIG9yIGNvcHlpbmcgb2YgdGhlIGUtbWFp
+bCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBQbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgaW1tZWRp
+YXRlbHkgYnkgcmV0dXJuIGUtbWFpbCBhbmQgZGVsZXRlIGFsbCBjb3BpZXMgZnJvbSB5b3VyIHN5
+c3RlbS4NCj4NCg0KQ09ORklERU5USUFMSVRZIE5PVElDRTogVGhpcyBlLW1haWwgYW5kIGFueSBm
+aWxlcyB0cmFuc21pdHRlZCB3aXRoIGl0IGFyZSBpbnRlbmRlZCBzb2xlbHkgZm9yIHRoZSB1c2Ug
+b2YgdGhlIGluZGl2aWR1YWwgb3IgZW50aXR5IHRvIHdob20gdGhleSBhcmUgYWRkcmVzc2VkIGFu
+ZCBtYXkgY29udGFpbiBjb25maWRlbnRpYWwgYW5kIHByaXZpbGVnZWQgaW5mb3JtYXRpb24gcHJv
+dGVjdGVkIGJ5IGxhdy4gSWYgeW91IHJlY2VpdmVkIHRoaXMgZS1tYWlsIGluIGVycm9yLCBhbnkg
+cmV2aWV3LCB1c2UsIGRpc3NlbWluYXRpb24sIGRpc3RyaWJ1dGlvbiwgb3IgY29weWluZyBvZiB0
+aGUgZS1tYWlsIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIFBsZWFzZSBub3RpZnkgdGhlIHNlbmRl
+ciBpbW1lZGlhdGVseSBieSByZXR1cm4gZS1tYWlsIGFuZCBkZWxldGUgYWxsIGNvcGllcyBmcm9t
+IHlvdXIgc3lzdGVtLg0K
