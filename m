@@ -2,69 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBB3382629
-	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 22:40:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C95782644
+	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 22:46:09 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 462V5L2m5SzDqRS
-	for <lists+openbmc@lfdr.de>; Tue,  6 Aug 2019 06:40:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 462VCy1YHNzDqRP
+	for <lists+openbmc@lfdr.de>; Tue,  6 Aug 2019 06:46:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::533; helo=mail-pg1-x533.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::344; helo=mail-wm1-x344.google.com;
+ envelope-from=hkallweit1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="dHEZmYva"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="ha1kccmI"; 
  dkim-atps=neutral
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com
- [IPv6:2607:f8b0:4864:20::533])
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
+ [IPv6:2a00:1450:4864:20::344])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 462V4V6v4HzDqWg
- for <openbmc@lists.ozlabs.org>; Tue,  6 Aug 2019 06:39:37 +1000 (AEST)
-Received: by mail-pg1-x533.google.com with SMTP id o13so40302107pgp.12
- for <openbmc@lists.ozlabs.org>; Mon, 05 Aug 2019 13:39:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=rqMc5gytOQLKE5pyJkmPw/qn6jv1RAY5ZmYX89sat6Q=;
- b=dHEZmYvarW0NmNLYE7FFNLpf8ApdxPdBImlcnj0BNEPlgJXPZxRLyzP/Oj5HxLEBkl
- g+6+hmR2ij1g0cp2WD7Kth0hoPvBWieaZauU+PBTF8HtkiYWjfmKh2MJ6TZbm1xmzv20
- vWGFaZ/OfWFgiTfDS1aDZ0PekswxO4y2CiKWEtPni7Rnuo6+kkLpQa7zQQTXlTc/gl3t
- 4hlNsP1bquKpjcQW0Ht1JpiHB7v93iukZEGPqD98yExlWSCq0/lIgJ9VxNpgkyqDMsze
- OactAU6CdP09EU9hZrwJ0U0fa8ktpUCy9ueQHR6R8qi4Wfi9u0Cuhqla/ERxBhcx27pW
- Frpw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 462VBy50h4zDqMM
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Aug 2019 06:45:14 +1000 (AEST)
+Received: by mail-wm1-x344.google.com with SMTP id g67so70170574wme.1
+ for <openbmc@lists.ozlabs.org>; Mon, 05 Aug 2019 13:45:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=EgXdDmP0k1tqZgycySCKwplOmPJButNgffG4bh/ytLc=;
+ b=ha1kccmItNUXTZwqjy+EwRU64TDB9oBQA9lqPCxHRWhGnbl2am4RRvu6HVyG4PEMgF
+ ZhKW4zk4HMPmntg65C72XwyX8l1vH4iSYZpLoI0l5UQePQ124Hr/zbZjfT5ogAiISyGt
+ 9pVeNOSfNqC0qSaQorruFF8NoNxQuXalzCMaB6yAB0GulpDCkyE0TY/nsSHLZ/42IjZ1
+ Jckfd6hLdnBNduvSMNkKB+HbeuHvZexGIX0MSgsSwEoyI+mL/nD2UwUqVqJeJOq0kbJW
+ P/UBJ1okrlFn6yatswf5Bq+9SmyUeA8AzargfX01roOcmTP60pgADr3AstJavSE77hLA
+ f30g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=rqMc5gytOQLKE5pyJkmPw/qn6jv1RAY5ZmYX89sat6Q=;
- b=sRUC2u7gELJbGCyhhNNylu3p7sKFEC7r7T8AbgxPn7dGPd1wZPT5VPsv1TCgiLDE6L
- su5exTGWl9PpLHgHbT5dLCv7OOvL8INpVTD/xfA9H2A4VQ4PRpPYtkjxwJ6kgucpWi/8
- 51O2LTI8rVO2t55zWLuSQE5mqSceeJ/Q8npEUQhocVtELsID7B3ffiQfFepT5xtXC6tr
- 0cz/MIf7zbd7fR4N7t0CVD1IoYRb9QD9qFElFp6L8NYa7u8X9IImEqk/iS37defXul1Y
- 7Zhxe3BgMfZtRDMiw6UETUOiCD/Iny6ayeAAhXGOJSX9axsg11BYhFavRTj8f5EUa/8X
- WqwA==
-X-Gm-Message-State: APjAAAU2cXjf0IehYGW/29zPdF1Qi3TevSEWQ2VNTlzOdKgFefm+1z/a
- RfSHKtxXRuIraUdDo9D6dnbq4R7QttXXN+U99edYPA==
-X-Google-Smtp-Source: APXvYqz8SeCWR10ASWJpqwHT2168eCuzUTAxkD9n3TsiEeT6db3F14Xq1sqOBAXNeQ75/+Dg57NuzvSRitND8xWP7nU=
-X-Received: by 2002:aa7:914e:: with SMTP id 14mr74588823pfi.136.1565037572180; 
- Mon, 05 Aug 2019 13:39:32 -0700 (PDT)
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=EgXdDmP0k1tqZgycySCKwplOmPJButNgffG4bh/ytLc=;
+ b=BynS+LCsdGyAzGcNxSnx2EV7Ac102Ek512caQT+MYj2e+Utf+4zIRSjCvVBF9SNcmU
+ EzaIQ0gRJ/YJEiKAaiHgGmmPT+kC1kon2pkozLHmY8rOGP5tdYW4eOOPV3ynubY7D17P
+ ASuAHPZDHfvuv+i4lLvaWIfZIvtSEsG3HwkDjtFrvJ8sG5KfiPs2mC3MvUQlc18UTIgy
+ RbVEtEj+naNQwwImJaYj+d+BNnCjknUTSwQ3xwleXhqqUr2px6qPNrc8tQnCeBXM64us
+ rnBOYHIWH64yVce6W2O3e89zrGITyGH+scnEjvYepFCIKnI45IsK2W9PkqFOWYPyIM4j
+ cYZw==
+X-Gm-Message-State: APjAAAUUEB9yMoo6EQX9kDwoeKGD7mbSX0I3PmII8T4IN5d2Kh54ZMRW
+ lsZedGD6H/a51MbAYQ8I8iHQxH8s
+X-Google-Smtp-Source: APXvYqykjkECVeegO7PV5zTexDEVC6PLGPDdBeHJMAo2IUPpo2e8tQlEZ96KnKyTBJIQ3fGN2SscRw==
+X-Received: by 2002:a1c:7e90:: with SMTP id z138mr168152wmc.128.1565037909695; 
+ Mon, 05 Aug 2019 13:45:09 -0700 (PDT)
+Received: from ?IPv6:2003:ea:8f05:8600:d16c:62d1:98de:d1e5?
+ (p200300EA8F058600D16C62D198DED1E5.dip0.t-ipconnect.de.
+ [2003:ea:8f05:8600:d16c:62d1:98de:d1e5])
+ by smtp.googlemail.com with ESMTPSA id n3sm77342100wrt.31.2019.08.05.13.45.08
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 05 Aug 2019 13:45:09 -0700 (PDT)
+Subject: Re: [PATCH net-next v3] net: phy: broadcom: add 1000Base-X support
+ for BCM54616S
+To: Vladimir Oltean <olteanv@gmail.com>
+References: <20190802215419.313512-1-taoren@fb.com>
+ <CA+h21hrOEape89MTqCUyGFt=f6ba7Q-2KcOsN_Vw2Qv8iq86jw@mail.gmail.com>
+ <53e18a01-3d08-3023-374f-2c712c4ee9ea@fb.com> <20190804145152.GA6800@lunn.ch>
+ <CA+h21hrUDaSxKpsy9TuWqwgaxKYaoXHyhgS=xSoAcPwxXzvrHg@mail.gmail.com>
+ <f8de2514-081a-0e6e-fbe2-bcafcd459646@gmail.com>
+ <CA+h21hov3WzqYSUcxOnH0DOMO2dYdh_Q30Q_GQJpxa4nFM7MsQ@mail.gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Message-ID: <291a3c6e-ca8f-a9b8-a0b8-735a68dc04ea@gmail.com>
+Date: Mon, 5 Aug 2019 22:45:01 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <95784a9aed5d4f269fdf95684500d48e@lenovo.com>
- <CAO=notyC=6U8Afq8yOPxW0e933kXq3ubTVR5mc3WVGBhd4F08g@mail.gmail.com>
- <CAO=notwQv43Nbe9nUfzFDM1GYDqc6u6Oro83BGdcZ1rjePu-hg@mail.gmail.com>
- <CAO=notyQpRiwYMsGY83DyvaM-a_c+fCpguFyFW4dqQz3_yWWjA@mail.gmail.com>
- <CAO=notzWsPKqV_+rgm=Hzv27YfoRQtz8OPwVDOmGuvRS20BDwA@mail.gmail.com>
-In-Reply-To: <CAO=notzWsPKqV_+rgm=Hzv27YfoRQtz8OPwVDOmGuvRS20BDwA@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 5 Aug 2019 13:39:20 -0700
-Message-ID: <CAO=notwQ52OeLrFNisQyfj__3LuEE2u_48FhdcApUDyOGYOovQ@mail.gmail.com>
-Subject: Re: Clarify some questions about BIOS update (phosphor-ipmi-flash)
-To: Andrew MS1 Peng <pengms1@lenovo.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CA+h21hov3WzqYSUcxOnH0DOMO2dYdh_Q30Q_GQJpxa4nFM7MsQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,92 +90,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Yonghui YH21 Liu <liuyh21@lenovo.com>, Lisa YJ19 Liu <liuyj19@lenovo.com>,
- Duke KH Du <dukh@lenovo.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
+ Tao Ren <taoren@fb.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ lkml <linux-kernel@vger.kernel.org>, Justin Chen <justinpopo6@gmail.com>,
+ netdev <netdev@vger.kernel.org>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Aug 5, 2019 at 10:39 AM Patrick Venture <venture@google.com> wrote:
->
-> On Mon, Aug 5, 2019 at 9:39 AM Patrick Venture <venture@google.com> wrote:
-> >
-> > On Mon, Aug 5, 2019 at 9:32 AM Patrick Venture <venture@google.com> wrote:
-> > >
-> > > On Mon, Aug 5, 2019 at 9:17 AM Patrick Venture <venture@google.com> wrote:
-> > > >
-> > > > On Mon, Aug 5, 2019 at 4:56 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
-> > > > >
-> > > > > Hi Patrick,
-> > > > >
-> > > > >
-> > > > >
-> > > > > I have some questions about BIOS update via phosphor-ipmi-flash with L2A, please help to clarify. Thanks.
-> > > > >
-> > > > >
-> > > > >
-> > > >
-> > > > Thanks for giving it a shot!  I don't have any systems using this for
-> > > > BIOS update, so I'm curious where there may be issues lurking :)
-> > > >
-> > > >
-> > > > > 1. How can I update the status (success or failure) after upgrade BIOS firmware? Currently, the update status only appear "running".
-> > > > >
-> > > >
-> > > > I see, the update mechanism doesn't have a verification option.  A bit
-> > > > of an oversight.  I'll have something up for review later today.  Then
-> > > > it'll be something you configure similarly to the verifySystemd json
-> > > > entry.
-> > > >
-> > > > > 2. It was failed when triggered "phosphor-ipmi-flash-bios-update.target" since the job-mode is null string. It can work well when I add string "replace" to job-mode. How can I config (json file or configure parameter) to support it?
->
-> This patch will enable you to specify "mode" in the json. *** note: i
-> will set some time aside shortly to document writing json
-> configurations.
->
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-flash/+/24167
->
-> > > >
-> > > > I'll take a look!  The parameter for job-mode, I thought, was
-> > > > optional?  Since we don't specify it for other jobs (verification,
-> > > > etc).  The string should be empty by default and then not added as a
-> > > > null-string:
-> > > >
-> > > > https://github.com/openbmc/phosphor-ipmi-flash/blob/f0c71df2514927e933f6fc33d9669ab0663a0706/bmc/update_systemd.cpp#L49
-> > >
-> > > I see it is required!  Since I always configure with reboot, I never
-> > > saw this failure. I'll default it to "replace"
-> >
-> > First patch in the series generated from your email:
-> >
-> > https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-flash/+/24165
-> >
-> > Next: json configuration option to control the job-mode.
-> > Then merge verification and update objects, s.t. you can specify the
-> > status path.
+On 04.08.2019 21:22, Vladimir Oltean wrote:
+> On Sun, 4 Aug 2019 at 19:07, Heiner Kallweit <hkallweit1@gmail.com> wrote:
+>>
+>> On 04.08.2019 17:59, Vladimir Oltean wrote:
+>>> On Sun, 4 Aug 2019 at 17:52, Andrew Lunn <andrew@lunn.ch> wrote:
+>>>>
+>>>>>> The patchset looks better now. But is it ok, I wonder, to keep
+>>>>>> PHY_BCM_FLAGS_MODE_1000BX in phydev->dev_flags, considering that
+>>>>>> phy_attach_direct is overwriting it?
+>>>>>
+>>>>
+>>>>> I checked ftgmac100 driver (used on my machine) and it calls
+>>>>> phy_connect_direct which passes phydev->dev_flags when calling
+>>>>> phy_attach_direct: that explains why the flag is not cleared in my
+>>>>> case.
+>>>>
+>>>> Yes, that is the way it is intended to be used. The MAC driver can
+>>>> pass flags to the PHY. It is a fragile API, since the MAC needs to
+>>>> know what PHY is being used, since the flags are driver specific.
+>>>>
+>>>> One option would be to modify the assignment in phy_attach_direct() to
+>>>> OR in the flags passed to it with flags which are already in
+>>>> phydev->dev_flags.
+>>>>
+>>>>         Andrew
+>>>
+>>> Even if that were the case (patching phy_attach_direct to apply a
+>>> logical-or to dev_flags), it sounds fishy to me that the genphy code
+>>> is unable to determine that this PHY is running in 1000Base-X mode.
+>>>
+>>> In my opinion it all boils down to this warning:
+>>>
+>>> "PHY advertising (0,00000200,000062c0) more modes than genphy
+>>> supports, some modes not advertised".
+>>>
+>> The genphy code deals with Clause 22 + Gigabit BaseT only.
+>> Question is whether you want aneg at all in 1000Base-X mode and
+>> what you want the config_aneg callback to do.
+>> There may be some inspiration in the Marvel PHY drivers.
+>>
+> 
+> AN for 1000Base-X still gives you duplex and pause frame settings. I
+> thought the base page format for exchanging that info is standardized
+> in clause 37.
+> Does genphy cover only copper media by design, or is it desirable to
+> augment genphy_read_status?
+> 
+So far we care about copper only in phylib. Some constants needed for
+Clause 37 support are defined, but used by few drivers only.
 
-This patchset adds support for a new update configuration that lets
-you read the status from a file.
+ADVERTISE_1000XHALF
+ADVERTISE_1000XFULL
+ADVERTISE_1000XPAUSE
+ADVERTISE_1000XPSE_ASYM
 
-https://gerrit.openbmc-project.xyz/24171
+I think it would make sense to have something like genphy_c37_config_aneg.
+Similar for read_status.
 
-> >
-> > *** A later patchset can have the status be not a path, but a dbus
-> > property or dbus path -- if someone wants to implement a new object
-> > for this, it's somewhat trivial.
-> >
-> > >
-> > > >
-> > > > I don't think I have a unit-test that verifies the parameters are sent
-> > > > down properly, so I'll also add that today AND I'll add an optional
-> > > > mode parameter to the json.
-> > > >
-> > > > Sending for review today.
-> > > >
-> > > > ...
-> > > >
-> > > > >
-> > > > >
-> > > > >
-> > > > > Regards,
-> > > > > Andrew
+>>> You see, the 0x200 in the above advertising mask corresponds exactly
+>>> to this definition from ethtool.h:
+>>>     ETHTOOL_LINK_MODE_1000baseX_Full_BIT    = 41,
+>>>
+>>> But it gets truncated and hence lost.
+>>>
+>>> Regards,
+>>> -Vladimir
+>>>
+>> Heiner
+> 
+Heiner
