@@ -2,70 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AEC180C2B
-	for <lists+openbmc@lfdr.de>; Sun,  4 Aug 2019 21:22:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 41EE281056
+	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 04:48:14 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 461rQS4GM7zDqY3
-	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 05:22:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4622JC4zNrzDqX0
+	for <lists+openbmc@lfdr.de>; Mon,  5 Aug 2019 12:48:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::544; helo=mail-ed1-x544.google.com;
- envelope-from=olteanv@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::d2a; helo=mail-io1-xd2a.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="gPsfzmbW"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="VMimQ/rf"; 
  dkim-atps=neutral
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com
- [IPv6:2a00:1450:4864:20::544])
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
+ [IPv6:2607:f8b0:4864:20::d2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 461rPg2Mb6zDqW8
- for <openbmc@lists.ozlabs.org>; Mon,  5 Aug 2019 05:22:15 +1000 (AEST)
-Received: by mail-ed1-x544.google.com with SMTP id x19so70830392eda.12
- for <openbmc@lists.ozlabs.org>; Sun, 04 Aug 2019 12:22:14 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4622HQ6ztQzDqVK
+ for <openbmc@lists.ozlabs.org>; Mon,  5 Aug 2019 12:47:29 +1000 (AEST)
+Received: by mail-io1-xd2a.google.com with SMTP id g20so164209160ioc.12
+ for <openbmc@lists.ozlabs.org>; Sun, 04 Aug 2019 19:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=pj0ikRyiM2M9/CD5d5FXd58Pei1+6t41sEsA8s09Pcw=;
- b=gPsfzmbWFNebo/r/tjyKdRsMpRqU7/GEJfVm12iwmr3CNve3wsyxGbCCPz/l4auW7j
- JPHC/iGCWCazjhXUo/D9KqaSGNBR1FDgiuaMKXJ7csIm6LSP9oPszFw2+rn5MwDyTxes
- 8RkOp2C3q/x1XIognnm732OGX1WYSZVsDKzM0Ct+yCeSh5C79g8D/sS5rphnKHMvFmkx
- LTZkHNeAr3L62qSi4W6sgffugyxMDLgSu1QnB4jR6VZsLDcA4i1j82xcpWm8Yswl5T6P
- khPBEn4QQNyuy+ZXFDUDoarTya3UGTurgdSA6k/salgjZ7FMA22rOKhSfc1U8YbQ90ib
- GvKw==
+ :cc; bh=8OXqEPZUecfRPXxPLmHETGASMei5LEm2b4dG/VuVKek=;
+ b=VMimQ/rfGdbkwRIIkBelfRCFGcrIiNXnem7gvrlNbBevSMD2dNIkdXGGGHf3F0fm+h
+ Fu9UMtPEw87uwy5Ewy4g1zmWyLOLjMAQkbzW83+HI4iltDwxzW50f8OhlvWTpthn7mR2
+ qRpVd6zpWwKlQPSsdWSb6ols/UV87RXkyZreZ+kuwxl3JzpatmUMBsRG79BSUvqpqVrU
+ c/J0D1Ws/kjH23fnhiGFKAbcgVr6hc3RpVDhHj7wFmFiiFG4Rna6E6MiCxnxs/ti64xP
+ DIuIbx4LcZbagcTciSH41VQYH/8zZJOvmhp3IpSh+DTxZ86MGRM/fP/n3P43MBCY8puJ
+ AfpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=pj0ikRyiM2M9/CD5d5FXd58Pei1+6t41sEsA8s09Pcw=;
- b=gF9S78bdualGnKpBT+iyzpwpHnDRAvVLUSDkBi2OTcPD9v4w/GzWyw5fv3wetPmm1C
- hkQbSoFfLRKlTjMC5yyg+sxA3NszkonLSkoevanu+XKqc1iQmgjZ7Eq4b6ZNvWPYkJg9
- jCJUE9itE3S2VCxWhnHClyo0qFKEOfyzbisgkd4iqzwwnOXAmdltiV9pxsi1LIAY8PLD
- +UMBXQ0QGLYznNTwZRcseuuQIJj2TC243yXwiRa0zkqhkatnFziQW6ilRrhkrJu0Q6ex
- MtNAqYtprZPKjne1Vj5DAQcP2cZNC98B/Nm/lLrS0rC7SzdE4ctJEvN34iwLW0sX0lmq
- DZIg==
-X-Gm-Message-State: APjAAAVsVMGiquH6xVy74oiuwXfVsX02GciqA5jshWTGhCFciPjCywA3
- A5dleYyhdkYhfthLDOjD/Ze3bLncBWIfB2pD3aM=
-X-Google-Smtp-Source: APXvYqySJFhDQZLNHXF8JQtrbX7ltOk9v6vkJxguWkKjYjXZq6sNO150ER/Wv1dGCfkPRz29WtcXiXs6SnoLaT60K5s=
-X-Received: by 2002:a17:906:19d3:: with SMTP id
- h19mr13839881ejd.300.1564946532348; 
- Sun, 04 Aug 2019 12:22:12 -0700 (PDT)
+ bh=8OXqEPZUecfRPXxPLmHETGASMei5LEm2b4dG/VuVKek=;
+ b=DLaKfT+D6DBlLVJGb3iZOVEUStskjZDcWEeG+ydboeHm4ayU2KDbevbmd39ioRisq4
+ Eitks1qeA+AYoyNvaNhyfcnyPqlHH/9UY454PJBJ3l/trthCul5uh18ExTwG+JxvLmEI
+ jAPfCvTQHHhOt0mHiMX0wU2F4U9cl+I6BDSjGJmXEUKqYxYQD5uY/84peAM8o5rfweJE
+ mV3jJF39wEk1mswDMwcjB+Z28Vo4BILBWIU64m+LJ88Uvh/QiIcssCeWET8foYdoYxnD
+ RWofw13mKPxMTj99nD28iS2cIvmHo8E5xsVBe3C9BL5/uMbIs2UQyr7dL+xLTDgwUzz/
+ 7ixg==
+X-Gm-Message-State: APjAAAXXvE9cQ5fVBzZ2QiXE+IxtrvBzBE+uJQHee3Go5nHmGWKpiAa+
+ UVOiUcr96UG9a6JMCQeRjYPNII74c9UY3lo6mks=
+X-Google-Smtp-Source: APXvYqzVVAKOM9zUiLIoRiRa5I3NGZc1qccgnZxEMgsZjt1x/sD16vE6T4+0Z4zv7g5eVXgxInXzgGh0Y52zOjL60YI=
+X-Received: by 2002:a5e:8c11:: with SMTP id n17mr67024099ioj.64.1564973246261; 
+ Sun, 04 Aug 2019 19:47:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20190802215419.313512-1-taoren@fb.com>
- <CA+h21hrOEape89MTqCUyGFt=f6ba7Q-2KcOsN_Vw2Qv8iq86jw@mail.gmail.com>
- <53e18a01-3d08-3023-374f-2c712c4ee9ea@fb.com> <20190804145152.GA6800@lunn.ch>
- <CA+h21hrUDaSxKpsy9TuWqwgaxKYaoXHyhgS=xSoAcPwxXzvrHg@mail.gmail.com>
- <f8de2514-081a-0e6e-fbe2-bcafcd459646@gmail.com>
-In-Reply-To: <f8de2514-081a-0e6e-fbe2-bcafcd459646@gmail.com>
-From: Vladimir Oltean <olteanv@gmail.com>
-Date: Sun, 4 Aug 2019 22:22:01 +0300
-Message-ID: <CA+h21hov3WzqYSUcxOnH0DOMO2dYdh_Q30Q_GQJpxa4nFM7MsQ@mail.gmail.com>
-Subject: Re: [PATCH net-next v3] net: phy: broadcom: add 1000Base-X support
- for BCM54616S
-To: Heiner Kallweit <hkallweit1@gmail.com>
+References: <CAARXrt=-WgcYhXVd9WOxtgE54C4QCqatpM0nAeaaqc_h4tKWVg@mail.gmail.com>
+ <CAPnigK=PhKkJUk6wDVnRwxqkFvh2YgpivCQYgVuyOfnC3+a0WQ@mail.gmail.com>
+In-Reply-To: <CAPnigK=PhKkJUk6wDVnRwxqkFvh2YgpivCQYgVuyOfnC3+a0WQ@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Mon, 5 Aug 2019 10:47:15 +0800
+Message-ID: <CAARXrtnvLxFNgWeJm4YodDzgT=n_M6WVXJhwOwMHk=BRzqAf-Q@mail.gmail.com>
+Subject: Re: Using meson unittest in OE SDK environment
+To: William Kennington <wak@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,67 +73,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
- Tao Ren <taoren@fb.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Arun Parameswaran <arun.parameswaran@broadcom.com>,
- lkml <linux-kernel@vger.kernel.org>, Justin Chen <justinpopo6@gmail.com>,
- netdev <netdev@vger.kernel.org>, "David S . Miller" <davem@davemloft.net>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, 4 Aug 2019 at 19:07, Heiner Kallweit <hkallweit1@gmail.com> wrote:
+On Sat, Aug 3, 2019 at 2:41 AM William Kennington <wak@google.com> wrote:
 >
-> On 04.08.2019 17:59, Vladimir Oltean wrote:
-> > On Sun, 4 Aug 2019 at 17:52, Andrew Lunn <andrew@lunn.ch> wrote:
-> >>
-> >>>> The patchset looks better now. But is it ok, I wonder, to keep
-> >>>> PHY_BCM_FLAGS_MODE_1000BX in phydev->dev_flags, considering that
-> >>>> phy_attach_direct is overwriting it?
-> >>>
-> >>
-> >>> I checked ftgmac100 driver (used on my machine) and it calls
-> >>> phy_connect_direct which passes phydev->dev_flags when calling
-> >>> phy_attach_direct: that explains why the flag is not cleared in my
-> >>> case.
-> >>
-> >> Yes, that is the way it is intended to be used. The MAC driver can
-> >> pass flags to the PHY. It is a fragile API, since the MAC needs to
-> >> know what PHY is being used, since the flags are driver specific.
-> >>
-> >> One option would be to modify the assignment in phy_attach_direct() to
-> >> OR in the flags passed to it with flags which are already in
-> >> phydev->dev_flags.
-> >>
-> >>         Andrew
-> >
-> > Even if that were the case (patching phy_attach_direct to apply a
-> > logical-or to dev_flags), it sounds fishy to me that the genphy code
-> > is unable to determine that this PHY is running in 1000Base-X mode.
-> >
-> > In my opinion it all boils down to this warning:
-> >
-> > "PHY advertising (0,00000200,000062c0) more modes than genphy
-> > supports, some modes not advertised".
-> >
-> The genphy code deals with Clause 22 + Gigabit BaseT only.
-> Question is whether you want aneg at all in 1000Base-X mode and
-> what you want the config_aneg callback to do.
-> There may be some inspiration in the Marvel PHY drivers.
->
+> It seems like a complete misuse of the SDK if you have to hardcode
+> that much of the toolchain information into the build scripts.
 
-AN for 1000Base-X still gives you duplex and pause frame settings. I
-thought the base page format for exchanging that info is standardized
-in clause 37.
-Does genphy cover only copper media by design, or is it desirable to
-augment genphy_read_status?
+This is typical use in all the repos with autotool, see example in
+https://github.com/openbmc/phosphor-hwmon/blob/2227bd52c5bb8d62dcfe33b58d65515d21e9be17/configure.ac#L149-L162
 
-> > You see, the 0x200 in the above advertising mask corresponds exactly
-> > to this definition from ethtool.h:
-> >     ETHTOOL_LINK_MODE_1000baseX_Full_BIT    = 41,
-> >
-> > But it gets truncated and hence lost.
-> >
-> > Regards,
-> > -Vladimir
-> >
-> Heiner
+> This should all be handled outside of your meson build.
+
+Could you kindly share how to configure this outside of meson?
+The goal is to tell the linker to use the OE-SDK's ld.
+
+Btw, I managed to config meson to specify the rpath and ld correct, by
+splitting my previous linker args into two parts:
+* Put dynamic-linker in `link_args`
+* Put rpath in `build_rpath`
+
+And it works as expected, see example in:
+https://github.com/mine260309/phosphor-psu-code-mgmt/blob/cff6d1b02d43f3f7e4946e778dcfca388cec77e4/test/meson.build#L44-L45
