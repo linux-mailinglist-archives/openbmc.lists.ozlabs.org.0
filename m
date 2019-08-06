@@ -1,146 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D45CE83C9C
-	for <lists+openbmc@lfdr.de>; Tue,  6 Aug 2019 23:44:11 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4637SQ4Kw7zDqSw
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 07:44:06 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D64083D1E
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 00:01:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4637qy60NdzDr1Z
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 08:01:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=312172077b=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::344; helo=mail-wm1-x344.google.com;
+ envelope-from=hkallweit1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="NoahQLgA"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="FJgwHDLZ"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="KS5LCUAX"; 
+ dkim-atps=neutral
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
+ [IPv6:2a00:1450:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4637RK4SBYzDqyH
- for <openbmc@lists.ozlabs.org>; Wed,  7 Aug 2019 07:43:08 +1000 (AEST)
-Received: from pps.filterd (m0044008.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x76Ldfbh021862; Tue, 6 Aug 2019 14:43:00 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=vdiyCNhlkR5KdnYJvaUIP85TLkF1/tsoQXzcG5Tct0o=;
- b=NoahQLgAOGrRkN/uXzVtK1CYOoX6rizXZJPJ5soO6Hu1n7p6Fucr0y6tdKDL/KX4AojG
- i/KRmhRUH81LXVEyYSd2vtZxi/2Wp6tpvjKnughYKS1rjeId4YIUxqhtxMpEwiv3gKA5
- KFui/obly+QmcyCu6DB4FCdx0WAl+vR3I1w= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2u7g3g8d9a-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 06 Aug 2019 14:42:59 -0700
-Received: from ash-exhub102.TheFacebook.com (2620:10d:c0a8:82::f) by
- ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Tue, 6 Aug 2019 14:42:32 -0700
-Received: from NAM05-CO1-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.172) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Tue, 6 Aug 2019 14:42:32 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eur2y8kCqYNsYS1qlF2D7X3Oaytn6Q+0x2n5Qfr71fDEClqia0pnY+Dzd2CWf90OWQAlPdk45fnSF9Z48dy0qGujo/ZRvUQ38cuzG1dSIdivLgGEgEPLiUJVE0LUycvcpuMZwpGpKlEiKMkw5+PuJjRoRLqGzPep2RWT1Jp0kA9wIq4c/dBeFeJm/X5FdE9oJpNOc4YLnuwmPSlh8v1qkR5DDQKTToqhwGCQyRI9yweHPazbPoxVxFfXGHXyS+aJR1C3wjfHlDeSIfF5n2BikoFexYT04E8tgKQzI9NV0BtD+XQxG/60JsqQ6pk/AvEsl6lTyOlvyy+kc/A1jb7EMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vdiyCNhlkR5KdnYJvaUIP85TLkF1/tsoQXzcG5Tct0o=;
- b=lGoSxwJRr1QcMGTUaA+9tD/wjT0I+wbGkUIjy7MZ0CQF2g+EuvjkOFRk/wl/qscT+deKGm49W6MnSZwFrtG08/NkRX/YxwJym+cNJckG28PH14tjUSX8SmXEbc9QX1q8HDsIxyQxH2M6w3wlbFsMlJnfrYR+rTfWWlu/lbr3S1b/LwuHhHeFjv0o4AxtzZxN9RPj2eQDLXyRh5R8YXeiLNwA6EDwZw5/ic9NqZUfJ/utMYLvBJxXZFWVA+jJKY+TPB+AKsIkKVc6kgz1IdrkkuShY5s6ki4wztaWiRM8QqciOotoxVSD4vZQ/2vio/5ZH4eYSDm2jl0MoaL2FENN5Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vdiyCNhlkR5KdnYJvaUIP85TLkF1/tsoQXzcG5Tct0o=;
- b=FJgwHDLZ/gvxSckVND0K0UfdcxD7CHCHWMSWp9caMFsuWksOGtKgXzhUT/OQnOrj+Ot+W2I9PtS4HBlnBrQ+jOcsda8uq3EQCcsQTPJIAp7YTccJYe4GSgBMsmQ3FGcisZRV+8BJ5j8SuyiwFNNVNArZFln9jOKEu72gtyNYHZo=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1629.namprd15.prod.outlook.com (10.175.141.12) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.13; Tue, 6 Aug 2019 21:42:31 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2971:619a:860e:b6cc]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2971:619a:860e:b6cc%2]) with mapi id 15.20.2157.011; Tue, 6 Aug 2019
- 21:42:31 +0000
-From: Tao Ren <taoren@fb.com>
-To: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>, "David S . Miller"
- <davem@davemloft.net>, Arun Parameswaran <arun.parameswaran@broadcom.com>,
- Justin Chen <justinpopo6@gmail.com>, Vladimir Oltean <olteanv@gmail.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4637q527tmzDqyw
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Aug 2019 08:00:16 +1000 (AEST)
+Received: by mail-wm1-x344.google.com with SMTP id s15so56593104wmj.3
+ for <openbmc@lists.ozlabs.org>; Tue, 06 Aug 2019 15:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=SyE/O0WhvxOUfPhh+mEZXq7ZPnaC6Vs+gmVPB6kPhjk=;
+ b=KS5LCUAXM1QwTK/IvmYORp4hwBU1WBI1ci7hI41WNiFa+ljJdsq8PKdPsBOqlKZr3L
+ IJ4gZ9vKdlq/PUeRTlg7h63V6v7snoBdE0mZP+7TdOOtXB54FmUf/Qg7pKWNQQzyEr/F
+ kN/y1p1PgRMf9hBsMdqDKvLORZ+Tzle4F0FZhmfpd/37k5WWttZAtU3G9UmzsosN3P/h
+ LYAgAG9em8aDgkJNY2Qjszim5tRykdm1a5C043JiTVDTicOvu6FvsjaL2OikVrdykoID
+ Rnqfr2dHMj9V4rCWUY9PT6pyQ8RL5AmVyi7+ehvCRpCRKCOp6Otl3nRFkF3LgmVlgox5
+ 736g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=SyE/O0WhvxOUfPhh+mEZXq7ZPnaC6Vs+gmVPB6kPhjk=;
+ b=C4xN9iE5bRPyPFPmVxtLvENm9np/SYijHUGZLjbN5mWuk8FqdX2Th0XREH19wCChtk
+ siXYRkDLcG3Qg0acYj1IusyHdgS28HQDjFerRQfpvJXBTv/Atf6MChEOISMrN0NXS4fd
+ Z7JbIJQLpHong5nH9ffzTvIyfr3KPryjuni+eHWWpAZetEzwcCxsi/7n75aXfhlbtc3q
+ 8WQWK5QZyLPZzd8ECI0wA8elYjIR5Lkm5JHSZcBqLo5UAMcvZF10dV6y3ZRU1KTpF1B2
+ CjjygfqvzB8uuN3u2eX97HSu/QWj6QH2vaslkFucXE+2E5mHkwpIL/tRe0YywXZ275dk
+ /k/w==
+X-Gm-Message-State: APjAAAWJPQxT+jf4snqntcB0VjRzv0IxqHhlrnfw6UBbTYpX9m7iLXHW
+ 6jxxaMisjnmdQt8zu4e6NBjDCr99
+X-Google-Smtp-Source: APXvYqy1qmA3lEJZfYybzuiIfRhBG2C44G+uNdU4t8D3sg9ZOEeW48P5ilYL5QH4SBLJK2rRF6MPOw==
+X-Received: by 2002:a05:600c:254b:: with SMTP id
+ e11mr5935859wma.171.1565128811644; 
+ Tue, 06 Aug 2019 15:00:11 -0700 (PDT)
+Received: from ?IPv6:2003:ea:8f05:8600:c8c7:5fd0:c6c9:d62?
+ (p200300EA8F058600C8C75FD0C6C90D62.dip0.t-ipconnect.de.
+ [2003:ea:8f05:8600:c8c7:5fd0:c6c9:d62])
+ by smtp.googlemail.com with ESMTPSA id o11sm84420698wmh.37.2019.08.06.15.00.10
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 06 Aug 2019 15:00:11 -0700 (PDT)
 Subject: Re: [PATCH net-next v4 2/2] net: phy: broadcom: add 1000Base-X
  support for BCM54616S
-Thread-Topic: [PATCH net-next v4 2/2] net: phy: broadcom: add 1000Base-X
- support for BCM54616S
-Thread-Index: AQHVTJuYHTgXpcglwkmoKo5MNz+oeabupnmA
-Date: Tue, 6 Aug 2019 21:42:31 +0000
-Message-ID: <fe0d39ea-91f3-0cac-f13b-3d46ea1748a3@fb.com>
+To: Tao Ren <taoren@fb.com>, Andrew Lunn <andrew@lunn.ch>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ Justin Chen <justinpopo6@gmail.com>, Vladimir Oltean <olteanv@gmail.com>,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org
 References: <20190806210931.3723590-1-taoren@fb.com>
-In-Reply-To: <20190806210931.3723590-1-taoren@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MWHPR0201CA0107.namprd02.prod.outlook.com
- (2603:10b6:301:75::48) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Message-ID: <36d81485-ec23-eb7b-583e-3dd0f90ca562@gmail.com>
+Date: Wed, 7 Aug 2019 00:00:06 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:200::cfa4]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: abbffab3-efa3-4025-31d1-08d71ab6fc25
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1629; 
-x-ms-traffictypediagnostic: MWHPR15MB1629:
-x-microsoft-antispam-prvs: <MWHPR15MB16296DECF5CE7553E3E0F3C2B2D50@MWHPR15MB1629.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 0121F24F22
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(979002)(396003)(346002)(376002)(39860400002)(136003)(366004)(199004)(189003)(6486002)(102836004)(2616005)(25786009)(305945005)(31696002)(7736002)(229853002)(86362001)(2501003)(476003)(446003)(8936002)(6246003)(65826007)(8676002)(81156014)(2906002)(46003)(256004)(6512007)(186003)(68736007)(478600001)(14454004)(81166006)(53936002)(11346002)(66446008)(52116002)(64126003)(99286004)(31686004)(58126008)(110136005)(6116002)(76176011)(36756003)(65956001)(65806001)(5660300002)(316002)(486006)(53546011)(7416002)(71190400001)(6436002)(2201001)(71200400001)(66476007)(386003)(6506007)(64756008)(66556008)(66946007)(921003)(1121003)(969003)(989001)(999001)(1009001)(1019001);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1629;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: HQZMyfnu8UPXQnH7/U0CzsH7+arEkDPX5gb8zPcxRVVnVKBvYOVDeRfkIlOrkAGnWFgygcfr6YUwJyjHGTn5xmkIQ8B0iGh5DyOkV50GY26XQZ7/ukCWXNWOlekcGSO1/pPXrV3O+FCw/TAWH5/+PYgVlErYV2UDmLkpPFRDMEypcayYar+SkuQdjya+8oMzUjQPhe84+w3DXI9OIH6HANkduvZV7Z7SVhDzo1cH/jkCMrJVyTkDO2v3LR/oWG25rwUK1M/3Sx1bE8qkN9OOnK5FVQf0syIuGrBEYX0C+x5w4VjUItxDSBMSH5VgyiOTJhK/+P99ymaxH/pcZco5ekGdOaI5IvCOk05PFfO7cHW29va+h1jN0CQtWs0m6LM+rfyMmaP6lmMQQxpvh6r1xhq/Iz6mH7BUsG7dyRqqUII=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4EA8150608DD5942A0B0DDFC6F84A627@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: abbffab3-efa3-4025-31d1-08d71ab6fc25
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Aug 2019 21:42:31.5119 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5QCivJhdyxGetujlqsWv3hDk1qsu5njflGVeNKM4hCpVDg9rb/T1BiQbFsLHvN27
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1629
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-06_11:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=898 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908060185
-X-FB-Internal: deliver
+In-Reply-To: <20190806210931.3723590-1-taoren@fb.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -155,28 +95,183 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQW5kcmV3IC8gSGVpbmVyIC8gVmxhZGltaXIsDQoNCk9uIDgvNi8xOSAyOjA5IFBNLCBUYW8g
-UmVuIHdyb3RlOg0KPiBUaGUgQkNNNTQ2MTZTIFBIWSBjYW5ub3Qgd29yayBwcm9wZXJseSBpbiBS
-R01JSS0+MTAwMEJhc2UtS1ggbW9kZSAoZm9yDQo+IGV4YW1wbGUsIG9uIEZhY2Vib29rIENNTSBC
-TUMgcGxhdGZvcm0pLCBtYWlubHkgYmVjYXVzZSBnZW5waHkgZnVuY3Rpb25zDQo+IGFyZSBkZXNp
-Z25lZCBmb3IgY29wcGVyIGxpbmtzLCBhbmQgMTAwMEJhc2UtWCAoY2xhdXNlIDM3KSBhdXRvIG5l
-Z290aWF0aW9uDQo+IG5lZWRzIHRvIGJlIGhhbmRsZWQgZGlmZmVyZW50bHkuDQo+IA0KPiBUaGlz
-IHBhdGNoIGVuYWJsZXMgMTAwMEJhc2UtWCBzdXBwb3J0IGZvciBCQ001NDYxNlMgYnkgY3VzdG9t
-aXppbmcgMw0KPiBkcml2ZXIgY2FsbGJhY2tzOg0KPiANCj4gICAtIHByb2JlOiBwcm9iZSBjYWxs
-YmFjayBkZXRlY3RzIFBIWSdzIG9wZXJhdGlvbiBtb2RlIGJhc2VkIG9uDQo+ICAgICBJTlRFUkZf
-U0VMWzE6MF0gcGlucyBhbmQgMTAwMFgvMTAwRlggc2VsZWN0aW9uIGJpdCBpbiBTZXJERVMgMTAw
-LUZYDQo+ICAgICBDb250cm9sIHJlZ2lzdGVyLg0KPiANCj4gICAtIGNvbmZpZ19hbmVnOiBiY201
-NDYxNnNfY29uZmlnX2FuZWdfMTAwMGJ4IGZ1bmN0aW9uIGlzIGFkZGVkIGZvciBhdXRvDQo+ICAg
-ICBuZWdvdGlhdGlvbiBpbiAxMDAwQmFzZS1YIG1vZGUuDQo+IA0KPiAgIC0gcmVhZF9zdGF0dXM6
-IEJDTTU0NjE2UyBhbmQgQkNNNTQ4MiBQSFkgc2hhcmUgdGhlIHNhbWUgcmVhZF9zdGF0dXMNCj4g
-ICAgIGNhbGxiYWNrIHdoaWNoIG1hbnVhbGx5IHNldCBsaW5rIHNwZWVkIGFuZCBkdXBsZXggbW9k
-ZSBpbiAxMDAwQmFzZS1YDQo+ICAgICBtb2RlLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogVGFvIFJl
-biA8dGFvcmVuQGZiLmNvbT4NCg0KSSBjdXN0b21pemVkIGNvbmZpZ19hbmVnIGZ1bmN0aW9uIGZv
-ciBCQ001NDYxNlMgMTAwMEJhc2UtWCBtb2RlIGFuZCBsaW5rLWRvd24gaXNzdWUgaXMgYWxzbyBm
-aXhlZDogdGhlIHBhdGNoIGlzIHRlc3RlZCBvbiBGYWNlYm9vayBDTU0gYW5kIE1pbmlwYWNrIEJN
-QyBhbmQgZXZlcnl0aGluZyBsb29rcyBub3JtYWwuIFBsZWFzZSBraW5kbHkgcmV2aWV3IHdoZW4g
-eW91IGhhdmUgYmFuZHdpZHRoIGFuZCBsZXQgbWUga25vdyBpZiB5b3UgaGF2ZSBmdXJ0aGVyIHN1
-Z2dlc3Rpb25zLg0KDQpCVFcsIEkgd291bGQgYmUgaGFwcHkgdG8gaGVscCBpZiB3ZSBkZWNpZGUg
-dG8gYWRkIGEgc2V0IG9mIGdlbnBoeSBmdW5jdGlvbnMgZm9yIGNsYXVzZSAzNywgYWx0aG91Z2gg
-dGhhdCBtYXkgbWVhbiBJIG5lZWQgbW9yZSBoZWxwL2d1aWRhbmNlIGZyb20geW91IDotKQ0KDQoN
-CkNoZWVycywNCg0KVGFvDQo=
+On 06.08.2019 23:09, Tao Ren wrote:
+> The BCM54616S PHY cannot work properly in RGMII->1000Base-KX mode (for
+> example, on Facebook CMM BMC platform), mainly because genphy functions
+> are designed for copper links, and 1000Base-X (clause 37) auto negotiation
+> needs to be handled differently.
+> 
+> This patch enables 1000Base-X support for BCM54616S by customizing 3
+> driver callbacks:
+> 
+>   - probe: probe callback detects PHY's operation mode based on
+>     INTERF_SEL[1:0] pins and 1000X/100FX selection bit in SerDES 100-FX
+>     Control register.
+> 
+>   - config_aneg: bcm54616s_config_aneg_1000bx function is added for auto
+>     negotiation in 1000Base-X mode.
+> 
+>   - read_status: BCM54616S and BCM5482 PHY share the same read_status
+>     callback which manually set link speed and duplex mode in 1000Base-X
+>     mode.
+> 
+> Signed-off-by: Tao Ren <taoren@fb.com>
+> ---
+>  Changes in v4:
+>   - add bcm54616s_config_aneg_1000bx() to deal with auto negotiation in
+>     1000Base-X mode.
+>  Changes in v3:
+>   - rename bcm5482_read_status to bcm54xx_read_status so the callback can
+>     be shared by BCM5482 and BCM54616S.
+>  Changes in v2:
+>   - Auto-detect PHY operation mode instead of passing DT node.
+>   - move PHY mode auto-detect logic from config_init to probe callback.
+>   - only set speed (not including duplex) in read_status callback.
+>   - update patch description with more background to avoid confusion.
+>   - patch #1 in the series ("net: phy: broadcom: set features explicitly
+>     for BCM54616") is dropped: the fix should go to get_features callback
+>     which may potentially depend on this patch.
+> 
+>  drivers/net/phy/broadcom.c | 62 ++++++++++++++++++++++++++++++++++----
+>  include/linux/brcmphy.h    | 10 ++++--
+>  2 files changed, 64 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+> index 937d0059e8ac..bf61ed8451e5 100644
+> --- a/drivers/net/phy/broadcom.c
+> +++ b/drivers/net/phy/broadcom.c
+> @@ -383,9 +383,9 @@ static int bcm5482_config_init(struct phy_device *phydev)
+>  		/*
+>  		 * Select 1000BASE-X register set (primary SerDes)
+>  		 */
+> -		reg = bcm_phy_read_shadow(phydev, BCM5482_SHD_MODE);
+> -		bcm_phy_write_shadow(phydev, BCM5482_SHD_MODE,
+> -				     reg | BCM5482_SHD_MODE_1000BX);
+> +		reg = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+> +		bcm_phy_write_shadow(phydev, BCM54XX_SHD_MODE,
+> +				     reg | BCM54XX_SHD_MODE_1000BX);
+>  
+>  		/*
+>  		 * LED1=ACTIVITYLED, LED3=LINKSPD[2]
+> @@ -409,7 +409,7 @@ static int bcm5482_config_init(struct phy_device *phydev)
+>  	return err;
+>  }
+>  
+> -static int bcm5482_read_status(struct phy_device *phydev)
+> +static int bcm54xx_read_status(struct phy_device *phydev)
+>  {
+>  	int err;
+>  
+> @@ -451,12 +451,60 @@ static int bcm5481_config_aneg(struct phy_device *phydev)
+>  	return ret;
+>  }
+>  
+> +static int bcm54616s_probe(struct phy_device *phydev)
+> +{
+> +	int val, intf_sel;
+> +
+> +	val = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+> +	if (val < 0)
+> +		return val;
+> +
+> +	/* The PHY is strapped in RGMII to fiber mode when INTERF_SEL[1:0]
+> +	 * is 01b.
+> +	 */
+> +	intf_sel = (val & BCM54XX_SHD_INTF_SEL_MASK) >> 1;
+> +	if (intf_sel == 1) {
+> +		val = bcm_phy_read_shadow(phydev, BCM54616S_SHD_100FX_CTRL);
+> +		if (val < 0)
+> +			return val;
+> +
+> +		/* Bit 0 of the SerDes 100-FX Control register, when set
+> +		 * to 1, sets the MII/RGMII -> 100BASE-FX configuration.
+> +		 * When this bit is set to 0, it sets the GMII/RGMII ->
+> +		 * 1000BASE-X configuration.
+> +		 */
+> +		if (!(val & BCM54616S_100FX_MODE))
+> +			phydev->dev_flags |= PHY_BCM_FLAGS_MODE_1000BX;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int bcm54616s_config_aneg_1000bx(struct phy_device *phydev)
+> +{
+> +	int err;
+> +	int adv = 0;
+> +
+> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+> +			      phydev->supported))
+> +		adv |= ADVERTISE_1000XFULL;
+> +
+> +	err = phy_modify_changed(phydev, MII_ADVERTISE, 0, adv);
+
+The "0" parameter is wrong, it must be ADVERTISE_1000XFULL.
+First you reset the bit, and then you set it or not.
+
+> +	if (err > 0)
+> +		err = genphy_restart_aneg(phydev);
+> +
+> +	return err;
+> +}
+> +
+>  static int bcm54616s_config_aneg(struct phy_device *phydev)
+>  {
+>  	int ret;
+>  
+>  	/* Aneg firsly. */
+> -	ret = genphy_config_aneg(phydev);
+> +	if (phydev->dev_flags & PHY_BCM_FLAGS_MODE_1000BX)
+> +		ret = bcm54616s_config_aneg_1000bx(phydev);
+> +	else
+> +		ret = genphy_config_aneg(phydev);
+>  
+>  	/* Then we can set up the delay. */
+>  	bcm54xx_config_clock_delay(phydev);
+> @@ -655,6 +703,8 @@ static struct phy_driver broadcom_drivers[] = {
+>  	.config_aneg	= bcm54616s_config_aneg,
+>  	.ack_interrupt	= bcm_phy_ack_intr,
+>  	.config_intr	= bcm_phy_config_intr,
+> +	.read_status	= bcm54xx_read_status,
+
+If you use aneg, you should also read what was negotiated.
+But this function reads neither negotiated duplex mode nor
+pause settings.
+
+> +	.probe		= bcm54616s_probe,
+>  }, {
+>  	.phy_id		= PHY_ID_BCM5464,
+>  	.phy_id_mask	= 0xfffffff0,
+> @@ -689,7 +739,7 @@ static struct phy_driver broadcom_drivers[] = {
+>  	.name		= "Broadcom BCM5482",
+>  	/* PHY_GBIT_FEATURES */
+>  	.config_init	= bcm5482_config_init,
+> -	.read_status	= bcm5482_read_status,
+> +	.read_status	= bcm54xx_read_status,
+>  	.ack_interrupt	= bcm_phy_ack_intr,
+>  	.config_intr	= bcm_phy_config_intr,
+>  }, {
+> diff --git a/include/linux/brcmphy.h b/include/linux/brcmphy.h
+> index 6db2d9a6e503..b475e7f20d28 100644
+> --- a/include/linux/brcmphy.h
+> +++ b/include/linux/brcmphy.h
+> @@ -200,9 +200,15 @@
+>  #define BCM5482_SHD_SSD		0x14	/* 10100: Secondary SerDes control */
+>  #define BCM5482_SHD_SSD_LEDM	0x0008	/* SSD LED Mode enable */
+>  #define BCM5482_SHD_SSD_EN	0x0001	/* SSD enable */
+> -#define BCM5482_SHD_MODE	0x1f	/* 11111: Mode Control Register */
+> -#define BCM5482_SHD_MODE_1000BX	0x0001	/* Enable 1000BASE-X registers */
+>  
+> +/* 10011: SerDes 100-FX Control Register */
+> +#define BCM54616S_SHD_100FX_CTRL	0x13
+> +#define	BCM54616S_100FX_MODE		BIT(0)	/* 100-FX SerDes Enable */
+> +
+> +/* 11111: Mode Control Register */
+> +#define BCM54XX_SHD_MODE		0x1f
+> +#define BCM54XX_SHD_INTF_SEL_MASK	GENMASK(2, 1)	/* INTERF_SEL[1:0] */
+> +#define BCM54XX_SHD_MODE_1000BX		BIT(0)	/* Enable 1000-X registers */
+>  
+>  /*
+>   * EXPANSION SHADOW ACCESS REGISTERS.  (PHY REG 0x15, 0x16, and 0x17)
+> 
+
