@@ -1,74 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7662583E3E
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 02:21:59 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 463ByY0CjGzDr4M
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 10:21:57 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E3E983E62
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 02:32:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 463CBr2xCVzDr7D
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 10:32:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=31220e4898=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::443; helo=mail-wr1-x443.google.com;
+ envelope-from=natechancellor@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="fRpmoOPe"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="az+UmsXm"; 
  dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com
+ [IPv6:2a00:1450:4864:20::443])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 463Bxy3LwSzDqvd
- for <openbmc@lists.ozlabs.org>; Wed,  7 Aug 2019 10:21:24 +1000 (AEST)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7707rqQ007591
- for <openbmc@lists.ozlabs.org>; Tue, 6 Aug 2019 17:21:22 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-type; s=facebook;
- bh=he/2Z0ENIriYPhFo9YJ+fTiLFe2HN0KKpsDTYLP2IlE=;
- b=fRpmoOPe2fDK3434gxhp9ipnXgFCXPsxdQKdWA3RTYtIfXvtsXpx9MCVgiQS5zglI30K
- etZS05UrYZpXprpa9IbXeew6qgWV4bLoZFdy+0aLQEuOtOTpU6viCZUqAZh8vC8O+y1r
- qiJ75OwnA4rWw3VKs+NXFo8cDdxWyORuQc8= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by mx0a-00082601.pphosted.com with ESMTP id 2u7dfs1jh2-3
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 06 Aug 2019 17:21:22 -0700
-Received: from mx-out.facebook.com (2620:10d:c081:10::13) by
- mail.thefacebook.com (2620:10d:c081:35::127) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.1.1713.5;
- Tue, 6 Aug 2019 17:21:21 -0700
-Received: by devvm24792.prn1.facebook.com (Postfix, from userid 150176)
- id 8FFE818C66019; Tue,  6 Aug 2019 17:21:19 -0700 (PDT)
-Smtp-Origin-Hostprefix: devvm
-From: Tao Ren <taoren@fb.com>
-Smtp-Origin-Hostname: devvm24792.prn1.facebook.com
-To: Samuel Mendoza-Jonas <sam@mendozajonas.com>, "David S . Miller"
- <davem@davemloft.net>, <netdev@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>, William
- Kennington <wak@google.com>, Joel Stanley <joel@jms.id.au>
-Smtp-Origin-Cluster: prn1c35
-Subject: [PATCH net-next] net/ncsi: allow to customize BMC MAC Address offset
-Date: Tue, 6 Aug 2019 17:21:18 -0700
-Message-ID: <20190807002118.164360-1-taoren@fb.com>
-X-Mailer: git-send-email 2.17.1
-X-FB-Internal: Safe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 463CBJ5LSJzDqpq;
+ Wed,  7 Aug 2019 10:32:08 +1000 (AEST)
+Received: by mail-wr1-x443.google.com with SMTP id p13so14995483wru.10;
+ Tue, 06 Aug 2019 17:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=GGs8MT6FGlCkbNNH7TTlHmnRq/ZZmT2kM4HCkC2iAKw=;
+ b=az+UmsXmDuq0cUhWJaho5IgfxSfXKToHUabQ1qKX5d/vT3zH87nkJ2i5gDs/K+jCy1
+ DQefVcwEeK7GXtQWtwnU8isjUoMThDEhn5YvyURbVwRC1ppp23CPg+idSb4c2+qqZABJ
+ vI5QmFWHBrhwxE1ebD2Ahhi/8ItA4cw8m7cWaYspTCRxUwI8yEbX6XN7SFoQFZz+Pv+2
+ +owVGTu2fr3Rt4XaTdrV9JScsafyA9POwGXWsmRNVDCqDiNsSLuDlc/zPwusE/2JERCZ
+ 9oWK3+0Aoz1yhxW5n58r5gNe3ZPPJfE8XXIAwnRzZjNnwy4nAg8osT246qbwoYnNP3Z9
+ yKNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=GGs8MT6FGlCkbNNH7TTlHmnRq/ZZmT2kM4HCkC2iAKw=;
+ b=TWyIx00fsI9X31gezsyR0zKhJNqXKCOHdALgISrqX2Zq4bqqCD8aMYJCsZ3MwU/2jG
+ om8PBQ2/Z6BKqBMwMRkZdFl5pLYXIAistb66F/+pX6ef1YSdxE5A5gEn5QLuEcWGGZ5K
+ 9KQS9A8oQtG1hBMzkGsyVH9Q43qAm2GmJkPiUeumCCXcRItRJlPh6ZGbCzg6LbMIQoR9
+ /Po5GY3JWwUHr8vJJgqVNHrPW0NIovFJZWTomL7i9r6qSYQGRGPL7Yf8y+Wx5Fxl2S/E
+ XKEUOqCWjsUkDJAkq6kduIFhj/qRPI5Lkem0arGwR50x8iJi4EK0igMGihI5t0bYFvke
+ D7JA==
+X-Gm-Message-State: APjAAAW72gIEDqceE3lO/QgvFZiiJz3y5aGUB5RpydOlv2oM4iIoVvwr
+ cSln41wj+/hIiTOhdBBfXhA=
+X-Google-Smtp-Source: APXvYqynFI9yVSwY6UqnrCwxba4J2DyfeETuCPqf8QdPoeXnlnppBxsfHbIvGeLFeGUQTKIz3twsdA==
+X-Received: by 2002:adf:f646:: with SMTP id x6mr7256533wrp.18.1565137923815;
+ Tue, 06 Aug 2019 17:32:03 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:4f8:222:2f1b::2])
+ by smtp.gmail.com with ESMTPSA id 91sm183684963wrp.3.2019.08.06.17.32.02
+ (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
+ Tue, 06 Aug 2019 17:32:03 -0700 (PDT)
+From: Nathan Chancellor <natechancellor@gmail.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH] pinctrl: aspeed: g6: Remove const specifier from
+ aspeed_g6_sig_expr_set's ctx parameter
+Date: Tue,  6 Aug 2019 17:30:37 -0700
+Message-Id: <20190807003037.48457-1-natechancellor@gmail.com>
+X-Mailer: git-send-email 2.23.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-06_11:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=673 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908070000
-X-FB-Internal: deliver
+X-Patchwork-Bot: notify
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,75 +78,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>
+Cc: linux-aspeed@lists.ozlabs.org, clang-built-linux@googlegroups.com,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, Nathan Chancellor <natechancellor@gmail.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Currently BMC's MAC address is calculated by adding 1 to NCSI NIC's base
-MAC address when CONFIG_NCSI_OEM_CMD_GET_MAC option is enabled. The logic
-doesn't work for platforms with different BMC MAC offset: for example,
-Facebook Yamp BMC's MAC address is calculated by adding 2 to NIC's base
-MAC address ("BaseMAC + 1" is reserved for Host use).
+clang errors:
 
-This patch adds NET_NCSI_MC_MAC_OFFSET config option to customize offset
-between NIC's Base MAC address and BMC's MAC address. Its default value is
-set to 1 to avoid breaking existing users.
+drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c:2325:9: error: incompatible
+pointer types initializing 'int (*)(struct aspeed_pinmux_data *, const
+struct aspeed_sig_expr *, bool)' with an expression of type 'int (const
+struct aspeed_pinmux_data *, const struct aspeed_sig_expr *, bool)'
+[-Werror,-Wincompatible-pointer-types]
+        .set = aspeed_g6_sig_expr_set,
+               ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
 
-Signed-off-by: Tao Ren <taoren@fb.com>
+Commit 674fa8daa8c9 ("pinctrl: aspeed-g5: Delay acquisition of regmaps")
+changed the set function pointer declaration and the g6 one wasn't
+updated (I assume because it wasn't merged yet).
+
+Fixes: 2eda1cdec49f ("pinctrl: aspeed: Add AST2600 pinmux support")
+Link: https://github.com/ClangBuiltLinux/linux/issues/632
+Signed-off-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
- net/ncsi/Kconfig    |  8 ++++++++
- net/ncsi/ncsi-rsp.c | 15 +++++++++++++--
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ncsi/Kconfig b/net/ncsi/Kconfig
-index 2f1e5756c03a..be8efe1ed99e 100644
---- a/net/ncsi/Kconfig
-+++ b/net/ncsi/Kconfig
-@@ -17,3 +17,11 @@ config NCSI_OEM_CMD_GET_MAC
- 	---help---
- 	  This allows to get MAC address from NCSI firmware and set them back to
- 		controller.
-+config NET_NCSI_MC_MAC_OFFSET
-+	int
-+	prompt "Offset of Management Controller's MAC Address"
-+	depends on NCSI_OEM_CMD_GET_MAC
-+	default 1
-+	help
-+	  This defines the offset between Network Controller's (base) MAC
-+	  address and Management Controller's MAC address.
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 7581bf919885..24a791f9ebf5 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -656,6 +656,11 @@ static int ncsi_rsp_handler_oem_bcm_gma(struct ncsi_request *nr)
- 	struct ncsi_rsp_oem_pkt *rsp;
- 	struct sockaddr saddr;
- 	int ret = 0;
-+#ifdef CONFIG_NET_NCSI_MC_MAC_OFFSET
-+	int mac_offset = CONFIG_NET_NCSI_MC_MAC_OFFSET;
-+#else
-+	int mac_offset = 1;
-+#endif
- 
- 	/* Get the response header */
- 	rsp = (struct ncsi_rsp_oem_pkt *)skb_network_header(nr->rsp);
-@@ -663,8 +668,14 @@ static int ncsi_rsp_handler_oem_bcm_gma(struct ncsi_request *nr)
- 	saddr.sa_family = ndev->type;
- 	ndev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
- 	memcpy(saddr.sa_data, &rsp->data[BCM_MAC_ADDR_OFFSET], ETH_ALEN);
--	/* Increase mac address by 1 for BMC's address */
--	eth_addr_inc((u8 *)saddr.sa_data);
-+
-+	/* Management Controller's MAC address is calculated by adding
-+	 * the offset to Network Controller's (base) MAC address.
-+	 * Note: negative offset is "ignored", and BMC will use the Base
-+	 * MAC address in this case.
-+	 */
-+	while (mac_offset-- > 0)
-+		eth_addr_inc((u8 *)saddr.sa_data);
- 	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
- 		return -ENXIO;
- 
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+index 6012d7d4a22a..648ddb7f038a 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+@@ -2267,7 +2267,7 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
+  * Return: 0 if the expression is configured as requested and a negative error
+  * code otherwise
+  */
+-static int aspeed_g6_sig_expr_set(const struct aspeed_pinmux_data *ctx,
++static int aspeed_g6_sig_expr_set(struct aspeed_pinmux_data *ctx,
+ 				  const struct aspeed_sig_expr *expr,
+ 				  bool enable)
+ {
 -- 
-2.17.1
+2.23.0.rc1
 
