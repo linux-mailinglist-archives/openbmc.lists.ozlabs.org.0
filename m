@@ -2,66 +2,43 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6B4984EAC
-	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 16:26:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B42A84F11
+	for <lists+openbmc@lfdr.de>; Wed,  7 Aug 2019 16:47:59 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 463Yhd3yZPzDqnW
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 00:26:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 463Z9k5SNFzDqqD
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 00:47:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com;
- envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=wistron.com
+ (client-ip=103.200.3.19; helo=segapp02.wistron.com;
+ envelope-from=ben_pai@wistron.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="g9+IhkQo"; 
- dkim-atps=neutral
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
- [IPv6:2607:f8b0:4864:20::32a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 463Ygl4bsRzDqf9
- for <openbmc@lists.ozlabs.org>; Thu,  8 Aug 2019 00:25:23 +1000 (AEST)
-Received: by mail-ot1-x32a.google.com with SMTP id b7so54806226otl.11
- for <openbmc@lists.ozlabs.org>; Wed, 07 Aug 2019 07:25:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=hcuIzS3MP/PFqol0AfYPqIKc2Pb8DzaJVi72yf9wTlw=;
- b=g9+IhkQox4Tf033rBhcJHeIWQOh+Cx8WV4LM03y5R+q2XISOZSGgTh7GeJvUdMMjuJ
- 9W98RzEQJ93Zn1SG4CQRMMi0ctLNtN/zISNP2LbfeDGfAVfhyju/u53Nh7/WkUixeeBF
- 2NN4FUPmPaYVu4+9rHruHsFBBfwKNgRXw1KfRdm8F/Oix4PVRBrRc+4AibB1uxH7rh3W
- vg7HCiAUTelso7fQK6ujZdvjNpJle3JHeLhcss6g0XqrvFzjDHnsF1fyARiUaE7Y16qe
- wVmEgZpchvZVgVPIXrnJSV/6chdSzleCQS0vGtknO1axhf8dpYSrvC0Tf3mdxv8hhLoS
- hr3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=hcuIzS3MP/PFqol0AfYPqIKc2Pb8DzaJVi72yf9wTlw=;
- b=TDHFTagb1+bWVTz5s3Dj9pUMExpVndHgR/RlQEGk4maAK6X54MAiAMIJ9yy1vc4h47
- cfD7oD95Lf1XKpvahGDx9zHY8zAqHOhEFyo/8jev82lvxeedi69tQWgnIww+2LXfZaXP
- g7qhuOauGcvblarhOFjESok20kR0ukGXGXr5RuIxWleePKDQEK1/ElNpI+ym9yjscDpS
- PNel9688nr+JPlAnUcHLSf2oC8ZeHnUYetFnznxIZwTknV0sVXNf+ewhxp4LL770iX/6
- u3fsbLYO5Ft4Lb75GlIWaE3NLSMC87ZHytiZgCMhqboRRLCB5g7JiIb6vKL7Dygqbduq
- tIlw==
-X-Gm-Message-State: APjAAAWe9nBW4FDqG1384QJUbsWES7oTNzumeL7scRv+4ul5ga1XZaR6
- vJ2CWJghlXLUzG+/FQnU7peJ5YTQ4e/AJVkZXkJqjkpuolA=
-X-Google-Smtp-Source: APXvYqxXvD3mWYDWtyWeG48hTloC9gWrzAyMyEs5pPQ/XZJiZxxNVodRLnEvuLkwPr+vXVr0hcXs/qAYQ91mZI6e6Ps=
-X-Received: by 2002:a02:ce35:: with SMTP id v21mr10185620jar.108.1565187919159; 
- Wed, 07 Aug 2019 07:25:19 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=wistron.com
+Received: from segapp02.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 463Z8n6hZCzDqfP
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Aug 2019 00:47:02 +1000 (AEST)
+Received: from EXCHAPP03.whq.wistron (unverified [10.37.38.26]) by 
+ TWNHUMSW3.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
+ <Td97aac57f0c0a81671bc4@TWNHUMSW3.wistron.com>; Wed, 7 Aug 2019 
+ 22:46:58 +0800
+Received: from EXCHAPP04.whq.wistron (10.37.38.27) by EXCHAPP03.whq.wistron 
+ (10.37.38.26) with Microsoft SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
+ 15.1.1713.5; Wed, 7 Aug 2019 22:46:56 +0800
+Received: from gitserver.wistron.com (10.37.38.233) by EXCHAPP04.whq.wistron 
+ (10.37.38.27) with Microsoft SMTP Server id 15.1.1713.5 via Frontend
+ Transport; Wed, 7 Aug 2019 22:46:56 +0800
+From: Ben Pai <Ben_Pai@wistron.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [PATCH v4 4/4] ARM: dts: aspeed: Add Mihawk BMC platform
+Date: Wed, 7 Aug 2019 22:46:54 +0800
+Message-ID: <20190807144654.23330-1-Ben_Pai@wistron.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <BYAPR21MB1191FD5198A9311CFA234CC5C8D50@BYAPR21MB1191.namprd21.prod.outlook.com>
- <6654073d-b4ff-474a-c85f-3cdd24a02584@linux.vnet.ibm.com>
-In-Reply-To: <6654073d-b4ff-474a-c85f-3cdd24a02584@linux.vnet.ibm.com>
-From: Kun Yi <kunyi@google.com>
-Date: Wed, 7 Aug 2019 07:25:06 -0700
-Message-ID: <CAGMNF6XwDVhM-aocnfhouoBQXLJe-uU7_Uan9==x_aa04AhTQw@mail.gmail.com>
-Subject: Re: Platform telemetry and health monitoring - PST AM
-To: vishwa <vishwa@linux.vnet.ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000ef2935058f87b5c3"
+Content-Type: text/plain; charset="us-ascii"
+X-TM-SNTS-SMTP: FF654F0DFF18E5153CBED66A45F33831C7BA47A3B2320B30F343972334FCB76B2000:8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,254 +50,962 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>,
- Neeraj Ladkani <neladk@microsoft.com>
+Cc: Ben Pai <Ben_Pai@wistron.com>, wangat@tw.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ef2935058f87b5c3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The Mihawk BMC is an ASPEED ast2500 based BMC that is part of an
+OpenPower Power9 server.
 
-Thanks Vishwa!
+Signed-off-by: Ben Pai <Ben_Pai@wistron.com>
+---
+ arch/arm/boot/dts/Makefile                  |   1 +
+ arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts | 918 ++++++++++++++++++++
+ 2 files changed, 919 insertions(+)
+ create mode 100755 arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
 
-On Wed, Aug 7, 2019, 00:42 vishwa <vishwa@linux.vnet.ibm.com> wrote:
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index eb6de52c1936..cdfe0f43ffd3 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1275,6 +1275,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-lenovo-hr630.dtb \
+ 	aspeed-bmc-microsoft-olympus.dtb \
+ 	aspeed-bmc-opp-lanyang.dtb \
++	aspeed-bmc-opp-mihawk.dtb \
+ 	aspeed-bmc-opp-palmetto.dtb \
+ 	aspeed-bmc-opp-romulus.dtb \
+ 	aspeed-bmc-opp-swift.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+new file mode 100755
+index 000000000000..bbf4a4671421
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+@@ -0,0 +1,918 @@
++/dts-v1/;
++
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/leds/leds-pca955x.h>
++
++/ {
++	model = "Mihawk BMC";
++	compatible = "ibm,mihawk-bmc", "aspeed,ast2500";
++
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++
++	memory@80000000 {
++		reg = <0x80000000 0x20000000>; /* address and size of RAM(512MB) */
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		flash_memory: region@98000000 {
++			no-map;
++			reg = <0x98000000 0x04000000>; /* 64M */
++		};
++
++		gfx_memory: framebuffer {
++			size = <0x01000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++		video_engine_memory: jpegbuffer {
++			size = <0x02000000>;	/* 32MM */
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		air-water {
++			label = "air-water";
++			gpios = <&gpio ASPEED_GPIO(F, 6) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(F, 6)>;
++		};
++
++		checkstop {
++			label = "checkstop";
++			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(J, 2)>;
++		};
++
++		ps0-presence {
++			label = "ps0-presence";
++			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(Z, 2)>;
++		};
++
++		ps1-presence {
++			label = "ps1-presence";
++			gpios = <&gpio ASPEED_GPIO(Z, 0) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(Z, 0)>;
++		};
++		id-button {
++			label = "id-button";
++			gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(F, 1)>;
++		};
++	};
++
++	gpio-keys-polled {
++		compatible = "gpio-keys-polled";
++		poll-interval = <1000>;
++
++		fan0-presence {
++			label = "fan0-presence";
++			gpios = <&pca9552 9 GPIO_ACTIVE_LOW>;
++			linux,code = <9>;
++		};
++
++		fan1-presence {
++			label = "fan1-presence";
++			gpios = <&pca9552 10 GPIO_ACTIVE_LOW>;
++			linux,code = <10>;
++		};
++
++		fan2-presence {
++			label = "fan2-presence";
++			gpios = <&pca9552 11 GPIO_ACTIVE_LOW>;
++			linux,code = <11>;
++		};
++
++		fan3-presence {
++			label = "fan3-presence";
++			gpios = <&pca9552 12 GPIO_ACTIVE_LOW>;
++			linux,code = <12>;
++		};
++
++		fan4-presence {
++			label = "fan4-presence";
++			gpios = <&pca9552 13 GPIO_ACTIVE_LOW>;
++			linux,code = <13>;
++		};
++
++		fan5-presence {
++			label = "fan5-presence";
++			gpios = <&pca9552 14 GPIO_ACTIVE_LOW>;
++			linux,code = <14>;
++		};
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		fault {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
++		};
++
++		power {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 1) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-id {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-g {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 4) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-ok {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(Y, 0) GPIO_ACTIVE_LOW>;
++		};
++
++		fan0 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 0 GPIO_ACTIVE_LOW>;
++		};
++
++		fan1 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 1 GPIO_ACTIVE_LOW>;
++		};
++
++		fan2 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 2 GPIO_ACTIVE_LOW>;
++		};
++
++		fan3 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 3 GPIO_ACTIVE_LOW>;
++		};
++
++		fan4 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 4 GPIO_ACTIVE_LOW>;
++		};
++
++		fan5 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 5 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	fsi: gpio-fsi {
++		compatible = "fsi-master-gpio", "fsi-master";
++		#address-cells = <2>;
++		#size-cells = <0>;
++		no-gpio-delays;
++
++		clock-gpios = <&gpio ASPEED_GPIO(E, 6) GPIO_ACTIVE_HIGH>;
++		data-gpios = <&gpio ASPEED_GPIO(E, 7) GPIO_ACTIVE_HIGH>;
++		mux-gpios = <&gpio ASPEED_GPIO(E, 5) GPIO_ACTIVE_HIGH>;
++		enable-gpios = <&gpio ASPEED_GPIO(D, 0) GPIO_ACTIVE_HIGH>;
++		trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
++	};
++	iio-hwmon-12v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>;
++	};
++	
++	iio-hwmon-5v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 1>;
++	};
++	
++	iio-hwmon-3v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 2>;
++	};
++		
++	iio-hwmon-vdd0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 3>;
++	};
++	
++	iio-hwmon-vdd1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 4>;
++	};
++	
++	iio-hwmon-vcs0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 5>;
++	};
++	
++	iio-hwmon-vcs1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 6>;
++	};
++
++	iio-hwmon-vdn0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 7>;
++	};
++	
++	iio-hwmon-vdn1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 8>;
++	};
++	
++	iio-hwmon-vio0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 9>;
++	};
++	
++	iio-hwmon-vio1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 10>;
++	};
++	
++	iio-hwmon-vddra {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 11>;
++	};
++
++        iio-hwmon-battery {
++                compatible = "iio-hwmon";
++                io-channels = <&adc 12>;
++        };
++	
++	iio-hwmon-vddrb {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 13>;
++	};
++	
++	iio-hwmon-vddrc {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 14>;
++	};
++	
++	iio-hwmon-vddrd {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 15>;
++	};
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
++		&pinctrl_pwm2_default &pinctrl_pwm3_default
++		&pinctrl_pwm4_default &pinctrl_pwm5_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x01>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x03>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x05>;
++	};
++
++	fan@6 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06>;
++	};
++
++	fan@7 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x07>;
++	};
++
++	fan@8 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x08>;
++	};
++
++	fan@9 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x09>;
++	};
++
++	fan@10 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0a>;
++	};
++
++	fan@11 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0b>;
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		label = "bmc";
++		m25p,fast-read;
++		spi-max-frequency = <50000000>;
++		partitions {
++			#address-cells = < 1 >;
++			#size-cells = < 1 >;
++			compatible = "fixed-partitions";
++			u-boot@0 {
++				reg = < 0 0x60000 >;
++				label = "u-boot";
++			};
++			u-boot-env@60000 {
++				reg = < 0x60000 0x20000 >;
++				label = "u-boot-env";
++			};
++			obmc-ubi@80000 {
++				reg = < 0x80000 0x1F80000 >;
++				label = "obmc-ubi";
++			};
++		};
++	};
++	flash@1 {
++		status = "okay";
++		label = "alt-bmc";
++		m25p,fast-read;
++		spi-max-frequency = <50000000>;
++		partitions {
++			#address-cells = < 1 >;
++			#size-cells = < 1 >;
++			compatible = "fixed-partitions";
++			u-boot@0 {
++				reg = < 0 0x60000 >;
++				label = "alt-u-boot";
++			};
++			u-boot-env@60000 {
++				reg = < 0x60000 0x20000 >;
++				label = "alt-u-boot-env";
++			};
++			obmc-ubi@80000 {
++				reg = < 0x80000 0x1F80000 >;
++				label = "alt-obmc-ubi";
++			};
++		};
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++
++	flash@0 {
++		status = "okay";
++		label = "pnor";
++		m25p,fast-read;
++		spi-max-frequency = <100000000>;
++	};
++};
++
++&lpc_ctrl {
++	status = "okay";
++	memory-region = <&flash_memory>;
++	flash = <&spi1>;
++};
++
++&uart1 {
++	/* Rear RS-232 connector */
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd1_default
++			&pinctrl_rxd1_default
++			&pinctrl_nrts1_default
++			&pinctrl_ndtr1_default
++			&pinctrl_ndsr1_default
++			&pinctrl_ncts1_default
++			&pinctrl_ndcd1_default
++			&pinctrl_nri1_default>;
++};
++
++&uart2 {
++	/* APSS */
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii1_default>;
++	use-ncsi;
++};
++
++&mac1 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&i2c0 {
++	status = "disabled";
++};
++
++&i2c1 {
++	status = "disabled";
++};
++
++&i2c2 {
++	status = "okay";
++
++	/* SAMTEC P0 */
++	/* SAMTEC P1 */
++	
++};
++
++&i2c3 {
++	status = "okay";
++
++	/* APSS */
++	/* CPLD */
++
++	/* PCA9516 (repeater) ->
++	 *    CLK Buffer 9FGS9092
++	 *    CLK Buffer 9DBL0651BKILFT
++	 *    CLK Buffer 9DBL0651BKILFT
++	 *    Power Supply 0
++	 *    Power Supply 1
++	 *    PCA 9552 LED
++	 */
++	 
++	power-supply@58 {
++		compatible = "ibm,cffps1";
++		reg = <0x58>;
++	};
++
++	power-supply@5b {
++		compatible = "ibm,cffps1";
++		reg = <0x5b>;
++	};
++
++	pca9552: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@8 {
++			reg = <8>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@9 {
++			reg = <9>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@10 {
++			reg = <10>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@11 {
++			reg = <11>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@12 {
++			reg = <12>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@13 {
++			reg = <13>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@14 {
++			reg = <14>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@15 {
++			reg = <15>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++	};
++
++};
++
++&i2c4 {
++	status = "okay";
++
++	/* CP0 VDD & VCS : IR35221 */
++	/* CP0 VDN : IR35221 */
++	/* CP0 VIO : IR38064 */
++        /* CP0 VDDR : PXM1330 */
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@72 {
++		compatible = "infineon,ir35221";
++		reg = <0x72>;
++	};
++
++};
++
++&i2c5 {
++	status = "okay";
++	
++	/* CP0 VDD & VCS : IR35221 */
++	/* CP0 VDN : IR35221 */
++	/* CP0 VIO : IR38064 */
++        /* CP0 VDDR : PXM1330 */
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@72 {
++		compatible = "infineon,ir35221";
++		reg = <0x72>;
++	};
++	
++};
++
++&i2c6 {
++	status = "okay";
++	
++	/* pca9548 -> NVMe1 to 8 */
++	
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};
++	
++};
++
++&i2c7 {
++	status = "okay";
++	
++	/* pca9548 -> NVMe9 to 16 */
++	
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};
++	
++};
++
++&i2c8 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c64";
++		reg = <0x50>;
++	};
++};
++
++&i2c9 {
++	status = "okay";
++	
++	/* pca9545 Riser -> 
++	* 	PCIe x8  Slot3 
++	* 	PCIe x16 slot4 
++	* 	PCIe x8  slot5 
++	* 	I2C BMC RISER PCA9554
++	* 	BMC SCL/SDA PCA9554 
++	* 	PCA9554
++	*/
++	
++	/* pca9545 -> 
++	* 	PCIe x16 Slot1 
++	* 	PCIe x8  slot2 
++	* 	PEX8748 
++	*/
++
++	pca9545riser@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++	
++	pca9545@71 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x71>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;	
++	};
++};
++
++&i2c10 {
++	status = "okay";
++	
++	/* pca9545 Riser -> 
++	* 	PCIe x8  Slot8 
++	* 	PCIe x16 slot9 
++	* 	PCIe x8  slot10 
++	* 	I2C BMC RISER PCA9554
++	* 	BMC SCL/SDA PCA9554 
++	* 	PCA9554
++	*/
++	
++	/* pca9545 -> 
++	* 	PCIe x16 Slot1 
++	* 	PCIe x8  slot2 
++	* 	PEX8748 
++	*/
++	
++	pca9545riser@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++	
++	pca9545@71 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x71>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;	
++	};
++};
++
++&i2c11 {
++	status = "okay";
++	
++	/* TPM */
++	/* RTC RX8900CE */
++	/* FPGA for power sequence */
++	/* TMP275A */
++	/* TMP275A */
++	/* EMC1462 */
++
++	tpm@57 {
++		compatible = "infineon,slb9645tt";
++		reg = <0x57>;
++	};
++	
++	rtc@32 {
++		compatible = "epson,rx8900";
++		reg = <0x32>;
++	};
++	
++	tmp275@48 {
++		compatible = "ti,tmp275";
++		reg = <0x48>;
++	};
++	
++	tmp275@49 {
++		compatible = "ti,tmp275";
++		reg = <0x49>;
++	};
++
++	/* chip emc1462 use emc1403 driver */
++	emc1403@4c {
++        	compatible = "smsc,emc1403";
++        	reg = <0x4c>;
++    	};
++
++};
++
++&i2c12 {
++	status = "okay";
++
++	/* pca9545 ->
++	*	SAS BP1
++	*	SAS BP2
++	*	NVMe BP
++	*	M.2 riser
++	*/
++	
++	pca9545@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		interrupt-controller;
++		#interrupt-cells = <2>;
++		
++		i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++			
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++		
++		i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++			
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++		
++		i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++			
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++		
++		i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++			
++			tmp275@48 {
++				compatible = "ti,tmp275";
++				reg = <0x48>;
++			};
++		};
++		
++	};
++	
++};
++
++&i2c13 {
++	status = "okay";
++	
++	/* pca9548 ->
++	*	NVMe BP
++	*	NVMe HDD17 to 24
++	*/
++	
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};	
++};
++
++&vuart {
++	status = "okay";
++};
++
++&gfx {
++	status = "okay";
++	memory-region = <&gfx_memory>;
++};
++
++&adc {
++	status = "okay";
++	pinctrl-names = "default";
++        pinctrl-0 = <&pinctrl_adc0_default
++                        &pinctrl_adc1_default
++                        &pinctrl_adc2_default
++                        &pinctrl_adc3_default
++                        &pinctrl_adc4_default
++                        &pinctrl_adc5_default
++                        &pinctrl_adc6_default
++                        &pinctrl_adc7_default
++                        &pinctrl_adc8_default
++                        &pinctrl_adc9_default
++                        &pinctrl_adc10_default
++                        &pinctrl_adc11_default
++                        &pinctrl_adc12_default
++                        &pinctrl_adc13_default
++                        &pinctrl_adc14_default
++                        &pinctrl_adc15_default>;
++};
++
++&wdt1 {
++	aspeed,reset-type = "none";
++	aspeed,external-signal;
++	aspeed,ext-push-pull;
++	aspeed,ext-active-high;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdtrst1_default>;
++};
++
++&wdt2 {
++	aspeed,alt-boot;
++};
++
++&ibt {
++	status = "okay";
++};
++
++&vhub {
++	status = "okay";
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++#include "ibm-power9-dual.dtsi"
++
+-- 
+2.17.1
 
-> I updated the wiki with the minutes from yesterday's discussion.
-> !! Vishwa !!
->
-> On 8/6/19 5:37 AM, Neeraj Ladkani wrote:
->
-> Hello Everyone.
->
->
->
-> This is a reminder for tomorrow=E2=80=99s OpenBMC platform telemetry work=
-group
-> meeting ( Tuesday 08/06 -  9:30 AM PST)
->
->
->
-> Neeraj
->
->
->
-> -----Original Appointment-----
-> *From:* Neeraj Ladkani
-> *Sent:* Tuesday, June 4, 2019 12:09 AM
-> *To:* Neeraj Ladkani; openbmc@lists.ozlabs.org
-> *Cc:* Joe P Mulholland; Luke Chen; Matt Chen/WYHQ/Wiwynn; Dong Wei;
-> Jitendra_Kumar4@Dell.com; Reed B Frandsen; Michael Lim; Buddy Huang (=E9=
-=BB=83=E5=A4=A9=E9=B4=BB);
-> Tom Sand; Asmaa Mnebhi; Paul.Vancil@dell.com; Tanous, Ed; Christopher
-> Bostic; James Morse; Vijay Khemka
-> *Subject:* Platform telemetry and health monitoring - PST AM
-> *When:* Tuesday, August 6, 2019 9:30 AM-10:30 AM (UTC-08:00) Pacific Time
-> (US & Canada).
-> *Where:* Microsoft Teams Meeting
->
->
->
->
-> https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-mon=
-itoring-Work-Group
->
->
->
->
->
->
->
->
->
-> Join Microsoft Teams Meeting
-> <https://teams.microsoft.com/l/meetup-join/19%3ameeting_MDU1NDM2Y2EtOTZkY=
-y00ZjI5LTkzMDctMjMxZDYyNzlhNjQy%40thread.v2/0?context=3D%7b%22Tid%22%3a%227=
-2f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%221c29c2f7-d386-4c5a-=
-a3bc-0ee13b48bc65%22%7d>
->
-> +1 323-849-4874 <+1%20323-849-4874,,73572842#>   United States, Los
-> Angeles (Toll)
->
-> (866) 679-9995 <(866)%20679-9995,,73572842#>   (Toll-free)
->
-> Conference ID: 735 728 42#
->
-> Local numbers
-> <https://dialin.teams.microsoft.com/8551f4c1-bea3-441a-8738-69aa517a91c5?=
-id=3D73572842>
-> | Reset PIN <https://mysettings.lync.com/pstnconferencing> | Learn more
-> about Teams <https://go.microsoft.com/fwlink/?linkid=3D857250> | Meeting
-> options
-> <https://teams.microsoft.com/meetingOptions/?organizerId=3D1c29c2f7-d386-=
-4c5a-a3bc-0ee13b48bc65&tenantId=3D72f988bf-86f1-41af-91ab-2d7cd011db47&thre=
-adId=3D19_meeting_MDU1NDM2Y2EtOTZkYy00ZjI5LTkzMDctMjMxZDYyNzlhNjQy@thread.v=
-2&messageId=3D0&language=3Den-US>
->
-> Join with a video conferencing device
->
-> 813878896@t.plcm.vc VTC Conference ID: 017920684
->
-> Alternate VTC dialing instructions
-> <https://dialin.plcm.vc/teams/?key=3D813878896&conf=3D017920684>
->
->
->
->
 
---000000000000ef2935058f87b5c3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Thanks Vishwa!</div><br><div class=3D"gmail_quote"><div d=
-ir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 7, 2019, 00:42 vishwa &lt;<a hr=
-ef=3D"mailto:vishwa@linux.vnet.ibm.com">vishwa@linux.vnet.ibm.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
-;border-left:1px #ccc solid;padding-left:1ex">
- =20
-   =20
- =20
-  <div text=3D"#000000" bgcolor=3D"#FFFFFF">
-    <p>I updated the wiki with the minutes from yesterday&#39;s discussion.=
-<br>
-    </p>
-    <div>!! Vishwa !!</div>
-    <div><br>
-    </div>
-    <div>On 8/6/19 5:37 AM, Neeraj Ladkani
-      wrote:<br>
-    </div>
-    <blockquote type=3D"cite">
-     =20
-     =20
-     =20
-      <div>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060">Hello
-            Everyone.
-            <u></u><u></u></span></p>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060"><u></u>=C2=A0<=
-u></u></span></p>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060">This is a
-            reminder for tomorrow=E2=80=99s OpenBMC platform telemetry work=
-group
-            meeting ( Tuesday 08/06 - =C2=A09:30 AM PST)
-            <u></u><u></u></span></p>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060"><u></u>=C2=A0<=
-u></u></span></p>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060">Neeraj<u></u><=
-u></u></span></p>
-        <p class=3D"MsoNormal"><span style=3D"color:#002060"><u></u>=C2=A0<=
-u></u></span></p>
-        <div>
-          <p class=3D"MsoNormal">-----Original Appointment-----<br>
-            <b>From:</b> Neeraj Ladkani <br>
-            <b>Sent:</b> Tuesday, June 4, 2019 12:09 AM<br>
-            <b>To:</b> Neeraj Ladkani; <a href=3D"mailto:openbmc@lists.ozla=
-bs.org" target=3D"_blank" rel=3D"noreferrer">openbmc@lists.ozlabs.org</a><b=
-r>
-            <b>Cc:</b> Joe P Mulholland; Luke Chen; Matt
-            Chen/WYHQ/Wiwynn; Dong Wei; <a href=3D"mailto:Jitendra_Kumar4@D=
-ell.com" target=3D"_blank" rel=3D"noreferrer">Jitendra_Kumar4@Dell.com</a>;=
- Reed B
-            Frandsen; Michael Lim; Buddy Huang (<span style=3D"font-family:=
-&quot;Gulim&quot;,sans-serif" lang=3D"KO">=E9=BB=83=E5=A4=A9=E9=B4=BB</span=
->);
-            Tom Sand; Asmaa Mnebhi; <a href=3D"mailto:Paul.Vancil@dell.com"=
- target=3D"_blank" rel=3D"noreferrer">Paul.Vancil@dell.com</a>; Tanous, Ed;
-            Christopher Bostic; James Morse; Vijay Khemka<br>
-            <b>Subject:</b> Platform telemetry and health monitoring -
-            PST AM <br>
-            <b>When:</b> Tuesday, August 6, 2019 9:30 AM-10:30 AM
-            (UTC-08:00) Pacific Time (US &amp; Canada).<br>
-            <b>Where:</b> Microsoft Teams Meeting<u></u><u></u></p>
-        </div>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-        <p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/openbm=
-c/wiki/Platform-telemetry-and-health-monitoring-Work-Group" target=3D"_blan=
-k" rel=3D"noreferrer">https://github.com/openbmc/openbmc/wiki/Platform-tele=
-metry-and-health-monitoring-Work-Group</a><u></u><u></u></p>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-        <p class=3D"MsoNormal"><span><a href=3D"https://teams.microsoft.com=
-/l/meetup-join/19%3ameeting_MDU1NDM2Y2EtOTZkYy00ZjI5LTkzMDctMjMxZDYyNzlhNjQ=
-y%40thread.v2/0?context=3D%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd01=
-1db47%22%2c%22Oid%22%3a%221c29c2f7-d386-4c5a-a3bc-0ee13b48bc65%22%7d" targe=
-t=3D"_blank" rel=3D"noreferrer"><span>Join Microsoft
-                Teams Meeting</span></a> <u></u><u></u></span></p>
-        <div>
-          <div>
-            <p class=3D"MsoNormal"><span><a href=3D"tel:+1%20323-849-4874,,=
-73572842#" target=3D"_blank" rel=3D"noreferrer"><span style=3D"font-size:10=
-.5pt;color:#6264a7;text-decoration:none">+1
-                    323-849-4874</span></a>
-              </span><span>=C2=A0 United States, Los
-                Angeles (Toll)
-              </span><span><u></u><u></u></span></p>
-          </div>
-          <div style=3D"margin-bottom:3.0pt">
-            <p class=3D"MsoNormal"><span><a href=3D"tel:(866)%20679-9995,,7=
-3572842#" target=3D"_blank" rel=3D"noreferrer"><span style=3D"font-size:10.=
-5pt;color:#6264a7;text-decoration:none">(866)
-                    679-9995</span></a>
-              </span><span>=C2=A0 (Toll-free)
-              </span><span><u></u><u></u></span></p>
-          </div>
-        </div>
-        <div style=3D"margin-top:7.5pt;margin-bottom:15.0pt">
-          <p class=3D"MsoNormal"><span>Conference ID:
-            </span><span>735 728 42#
-            </span><span><u></u><u></u></span></p>
-        </div>
-        <div style=3D"margin-bottom:.25in">
-          <p class=3D"MsoNormal"><span><a href=3D"https://dialin.teams.micr=
-osoft.com/8551f4c1-bea3-441a-8738-69aa517a91c5?id=3D73572842" target=3D"_bl=
-ank" rel=3D"noreferrer"><span style=3D"font-size:9.0pt;color:#6264a7;text-d=
-ecoration:none">Local
-                  numbers</span></a> | <a href=3D"https://mysettings.lync.c=
-om/pstnconferencing" target=3D"_blank" rel=3D"noreferrer">
-                <span style=3D"font-size:9.0pt;color:#6264a7;text-decoratio=
-n:none">Reset
-                  PIN</span></a> |
-              <a href=3D"https://go.microsoft.com/fwlink/?linkid=3D857250" =
-target=3D"_blank" rel=3D"noreferrer"><span style=3D"font-size:9.0pt;color:#=
-6264a7;text-decoration:none">Learn
-                  more about Teams</span></a> |
-              <a href=3D"https://teams.microsoft.com/meetingOptions/?organi=
-zerId=3D1c29c2f7-d386-4c5a-a3bc-0ee13b48bc65&amp;tenantId=3D72f988bf-86f1-4=
-1af-91ab-2d7cd011db47&amp;threadId=3D19_meeting_MDU1NDM2Y2EtOTZkYy00ZjI5LTk=
-zMDctMjMxZDYyNzlhNjQy@thread.v2&amp;messageId=3D0&amp;language=3Den-US" tar=
-get=3D"_blank" rel=3D"noreferrer">
-                <span style=3D"font-size:9.0pt;color:#6264a7;text-decoratio=
-n:none">Meeting
-                  options</span></a>
-              <u></u><u></u></span></p>
-        </div>
-        <div style=3D"margin-bottom:3.0pt">
-          <p class=3D"MsoNormal"><span>Join with a video
-              conferencing device
-              <u></u><u></u></span></p>
-        </div>
-        <div style=3D"margin-bottom:3.0pt">
-          <p class=3D"MsoNormal"><span><span><a href=3D"mailto:813878896@t.=
-plcm.vc" target=3D"_blank" rel=3D"noreferrer">813878896@t.plcm.vc</a></span=
-></span><span> VTC Conference ID:
-              017920684 <u></u><u></u></span></p>
-        </div>
-        <div style=3D"margin-bottom:15.0pt">
-          <p class=3D"MsoNormal"><span><a href=3D"https://dialin.plcm.vc/te=
-ams/?key=3D813878896&amp;conf=3D017920684" target=3D"_blank" rel=3D"norefer=
-rer"><span style=3D"color:#6264a7;text-decoration:none">Alternate
-                  VTC dialing instructions</span></a>
-              <u></u><u></u></span></p>
-        </div>
-        <p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-      </div>
-    </blockquote>
-  </div>
-
-</blockquote></div>
-
---000000000000ef2935058f87b5c3--
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+This email contains confidential or legally privileged information and is for the sole use of its intended recipient. 
+Any unauthorized review, use, copying or distribution of this email or the content of this email is strictly prohibited.
+If you are not the intended recipient, you may reply to the sender and should delete this e-mail immediately.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
