@@ -1,96 +1,40 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAEA085CB6
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 10:23:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E65E7862D3
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 15:16:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4641bX2366zDqfW
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 18:23:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46485w0nwrzDqG1
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 23:16:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.250.209; helo=mail1.bemta24.messagelabs.com;
- envelope-from=pengms1@lenovo.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
- [67.219.250.209])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4641YK5NtdzDqgZ
- for <openbmc@lists.ozlabs.org>; Thu,  8 Aug 2019 18:21:23 +1000 (AEST)
-Received: from [67.219.251.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-2.bemta.az-c.us-west-2.aws.symcld.net id EC/00-30481-08BDB4D5;
- Thu, 08 Aug 2019 08:21:20 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrGKsWRWlGSWpSXmKPExsWS8eIhr27Dbe9
- Yg5WGFqdaXrBY7D2wkcWByWPBplKP8zMWMgYwRbFm5iXlVySwZpw6IVVw0b/ixvMvbA2MZ/y6
- GLk4hAT+M0qc/viWBcJ5wShx8vh/RghnN6PEmbePmLoYOTnYBLQkFv7fA2RzcIgIaEj8f5cJE
- mYWsJTY/PESO0i9sEA7o8SJv5fA6kUEYiQe/b/PCmEbSTy8+ogFxGYRUJE4ff4EI4jNC9T8tW
- s3O8SyHhaJrgXnGEEWcAoESrz94g5SwyggKzHt0X0miGXiEnOnzQKbKSEgILFkz3lmCFtU4uX
- jf1BxBYmr95aA3cksoCmxfpc+RKuixJTuh+wQawUlTs58wjKBUXQWkqmzEDpmIemYhaRjASPL
- KkaLpKLM9IyS3MTMHF1DAwNdQ0MjXUNjC10jIzO9xCrdZL3SYt3y1OISXSO9xPJiveLK3OScF
- L281JJNjMDoSinoerSDcfKsN3qHGCU5mJREeZuuescK8SXlp1RmJBZnxBeV5qQWH2KU4eBQku
- ANvAaUEyxKTU+tSMvMAUY6TFqCg0dJhHfxLaA0b3FBYm5xZjpE6hRjIMeEl3MXMXO8XT4PSLZ
- tBZEHj4LI780LgeSxpiVA8sjcpYuYhVjy8vNSpcR5c0EGCYAMyijNg1sDS16XGGWlhHkZGRgY
- hHgKUotyM0tQ5V8xinMwKgnzuoBM4cnMK4G75hXQoUxAhxa98wQ5tCQRISXVwBSct35L8nON6
- 0d+rFyaapevHHRrdYL2u550sxLn+ZFrAsW1+94Uzn2tPMd/8RHJk6eKC+OU98+8upz9sra6xB
- L/Ere6o5ZrNG9dTuSra5tcVi73edM/7pu27Ay7Dt92dJ/2L27ziohflWYJeSc0Lv5SO1utHO8
- vM9NI099t49KfawqfNmWmVK/y02Q5vXGBZWnC3Ru5iYLl91ovPgwwP+bZzbR5T3HEG6szjct2
- Gnok3I6/duS/34kFv6dd0BfcdtKSQWyJ+DKP8zlKNYp8OWtcVUqO2m1KW1bn7LilKunb5fhc1
- TtzYyfEal3NWy77j0Pt0URWZ171U9fc8is3c67w4ypef+b65JdNIZ/eZyuxFGckGmoxFxUnAg
- C0WIaI2QMAAA==
-X-Env-Sender: pengms1@lenovo.com
-X-Msg-Ref: server-24.tower-366.messagelabs.com!1565252479!3209!1
-X-Originating-IP: [104.232.225.13]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 5235 invoked from network); 8 Aug 2019 08:21:19 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.13)
- by server-24.tower-366.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 8 Aug 2019 08:21:19 -0000
-Received: from pekwpmail06.lenovo.com (unknown [10.96.93.84])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 1B8354ACD8E1454CAB6F;
- Thu,  8 Aug 2019 04:21:17 -0400 (EDT)
-Received: from pekwpmail05.lenovo.com (10.96.93.83) by pekwpmail06.lenovo.com
- (10.96.93.84) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Thu, 8 Aug
- 2019 16:21:16 +0800
-Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
- pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
- 15.01.1591.008; Thu, 8 Aug 2019 16:21:16 +0800
-From: Andrew MS1 Peng <pengms1@lenovo.com>
-To: Patrick Venture <venture@google.com>
-Subject: =?utf-8?B?562U5aSNOiBbRXh0ZXJuYWxdIFJlOiBDbGFyaWZ5IHNvbWUgcXVlc3Rpb25z?=
- =?utf-8?Q?_about_BIOS_update_(phosphor-ipmi-flash)?=
-Thread-Topic: [External] Re: Clarify some questions about BIOS update
- (phosphor-ipmi-flash)
-Thread-Index: AQHVTTXj8EQcxrKSf0WEb+vRFmOYhqbw27MA
-Date: Thu, 8 Aug 2019 08:21:16 +0000
-Message-ID: <b8f6076bb4f14007ad21d50bb9c30735@lenovo.com>
-References: <95784a9aed5d4f269fdf95684500d48e@lenovo.com>
- <CAO=notyC=6U8Afq8yOPxW0e933kXq3ubTVR5mc3WVGBhd4F08g@mail.gmail.com>
- <CAO=notwQv43Nbe9nUfzFDM1GYDqc6u6Oro83BGdcZ1rjePu-hg@mail.gmail.com>
- <CAO=notyQpRiwYMsGY83DyvaM-a_c+fCpguFyFW4dqQz3_yWWjA@mail.gmail.com>
- <CAO=notzWsPKqV_+rgm=Hzv27YfoRQtz8OPwVDOmGuvRS20BDwA@mail.gmail.com>
- <CAO=notwQ52OeLrFNisQyfj__3LuEE2u_48FhdcApUDyOGYOovQ@mail.gmail.com>
- <c2042ca491d34de99777995068b603af@lenovo.com>
- <CAO=notxM06wb8asmujXT2ney+fr1sHhU4yjRN0ENhn=jkhydhw@mail.gmail.com>
-In-Reply-To: <CAO=notxM06wb8asmujXT2ney+fr1sHhU4yjRN0ENhn=jkhydhw@mail.gmail.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.96.12.252]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46484Z6WcbzDqgr
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Aug 2019 23:15:26 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x78DEorj024395;
+ Thu, 8 Aug 2019 16:14:50 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+ id E4AFE628F1; Thu,  8 Aug 2019 16:14:49 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: broonie@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
+ vigneshr@ti.com, bbrezillon@kernel.org, avifishman70@gmail.com,
+ tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
+ benjaminfair@google.com
+Subject: [PATCH v2 0/2] spi: add NPCM FIU controller driver 
+Date: Thu,  8 Aug 2019 16:14:46 +0300
+Message-Id: <20190808131448.349161-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.18.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,140 +46,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org,
+ linux-spi@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgUGF0cmljaywNCg0KMS4gRm9sbG93aW5nIHlvdXIgc3VnZ2VzdGlvbiB0byBtb2RpZnkgdGhl
-IGpzb24gZmlsZSwgYnV0IGVuY291bnRlcmVkIGFuIGVycm9yIG1lc3NhZ2UgYXMgIlBhcnNpbmcg
-anNvbiBmYWlsZWQgIi4gUGxlYXNlIGhlbHAgdG8gdGFrZSBhIGxvb2sgYXQgaXQsIHRoYW5rcy4N
-CglBIHBhcnQgb2YgY29uZmlnLWJpb3MuanNvbihkZWZhdWx0KSBjb250ZW50IGFuZCBqb3VybmFs
-Y3RsIGxvZyB3YXMgYmVsb3cuIA0KCQkidXBkYXRlIjogew0KCQkJInR5cGUiOiAic3lzdGVtZCIs
-DQoJCQkidW5pdCI6ICJwaG9zcGhvci1pcG1pLWZsYXNoLWJpb3MtdXBkYXRlLnRhcmdldCINCgkJ
-fQ0KICAgICAgICANCiAgICAgICAgQXVnIDA3IDA2OjU0OjIyIGhyNjMwIGlwbWlkWzUwN106IFJl
-Z2lzdGVyaW5nIE9FTTpbMFgwMEMyQ0ZdLCBDbWQ6WzBYODBdIGZvciBCbG9iIENvbW1hbmRzDQog
-ICAgICAgIEF1ZyAwNyAwNjo1NDoyMiBocjYzMCBpcG1pZFs1MDddOiBjb25maWcgbG9hZGVkOiAv
-Zmxhc2gvYmlvcw0KICAgICAgICBBdWcgMDcgMDY6NTQ6MjIgaHI2MzAgaXBtaWRbNTA3XTogY29u
-ZmlnIGxvYWRlZDogL2ZsYXNoL2ltYWdlDQoNCg0KCUEgcGFydCBvZiBjb25maWctYmlvcy5qc29u
-KG1vZGlmaWNhdGlvbikgY29udGVudCBhbmQgam91cm5hbGN0bCBsb2cgd2FzIGJlbG93LiANCgkJ
-InVwZGF0ZSI6IHsNCgkJCSJ0eXBlIjogImZpbGVTeXN0ZW1kVXBkYXRlIiwNCgkJCSJ1bml0Ijog
-InBob3NwaG9yLWlwbWktZmxhc2gtYmlvcy11cGRhdGUudGFyZ2V0Ig0KCQkJInBhdGgiOiAiL3Rt
-cC9iaW9zLnVwZGF0ZSINCgkJfQ0KDQogICAgICAgIEF1ZyAwNyAwNjozMzoxMiBocjYzMCBpcG1p
-ZFs0OThdOiBSZWdpc3RlcmluZyBPRU06WzBYMDBDMkNGXSwgQ21kOlswWDgwXSBmb3IgQmxvYiBD
-b21tYW5kcw0KICAgICAgICBBdWcgMDcgMDY6MzM6MTIgaHI2MzAgaXBtaWRbNDk4XTogUGFyc2lu
-ZyBqc29uIGZhaWxlZA0KICAgICAgICBBdWcgMDcgMDY6MzM6MTIgaHI2MzAgaXBtaWRbNDk4XTog
-Y29uZmlnIGxvYWRlZDogL2ZsYXNoL2ltYWdlDQoNCjIuIFdoaWNoIG9uZSBpcyB0aGUgYmVzdCB3
-YXkgdG8gbW9kaWZ5IGpzb24gZmlsZSBpbiBPcGVuQm1jLCBwYXRjaCBvciBvdmVyd3JpdGU/IEkg
-YWRkZWQgbGVub3ZvLWJpb3MtdXBkYXRlLmJiIHRvIGhhbmRsZSBzZXJ2aWNlIGFuZCBzY3JpcHQu
-IEkgZW5jb3VudGVyZWQgYW4gZXJyb3IgbWVzc2FnZSBhcyAiZmlsZSBjb25mbGljdHMiIHdoZW4g
-SSBhZGRlZCBuZXcgZmlsZSBvZiBqc29uIHRvIG92ZXJ3cml0ZSBvcmlnaW5hbCBmaWxlLiBXaGF0
-IHNob3VsZCBJIGRvIHRvIGZpeCBpdD8NCgkJVGhlIGVycm9yIG1lc3NhZ2UgaXMgYmVsb3cuDQoJ
-CQlFcnJvcjogVHJhbnNhY3Rpb24gY2hlY2sgZXJyb3I6DQoJCQlmaWxlIC91c3Ivc2hhcmUvcGhv
-c3Bob3ItaXBtaS1mbGFzaC9jb25maWctYmlvcy5qc29uIGNvbmZsaWN0cyBiZXR3ZWVuIGF0dGVt
-cHRlZCBpbnN0YWxscyBvZiBwaG9zcGhvci1pcG1pLWZsYXNoLTEuMCtnaXQ5OTktcjEuYXJtdjYg
-YW5kIGxlbm92by1iaW9zLXVwZGF0ZS0xLjAtcjAuYXJtdjYgDQoNCgkJQSBwYXJ0IG9mIGxlbm92
-by1iaW9zLXVwZGF0ZS5iYiBjb250ZW50IGlzIGJlbG93Lg0KCQkJU1JDX1VSSSArPSAiIFwNCgkJ
-CWZpbGU6Ly9iaW9zLXZlcmlmeS5zZXJ2aWNlIFwNCiAgICAgICAgICAgIGZpbGU6Ly9iaW9zLXZl
-cmlmeS5zaCBcDQogICAgICAgICAgICBmaWxlOi8vYmlvcy11cGRhdGUuc2VydmljZSBcDQogICAg
-ICAgICAgICBmaWxlOi8vYmlvcy11cGRhdGUuc2ggXA0KICAgICAgICAgICAgZmlsZTovL2NvbmZp
-Zy1iaW9zLmpzb24gXA0KICAgICAgICAgICAgIg0KCQkJREVQRU5EUyArPSAic3lzdGVtZCINCgkJ
-CVJERVBFTkRTXyR7UE59ID0gImJhc2giDQoJCQlTWVNURU1EX1BBQ0tBR0VTID0gIiR7UE59Ig0K
-CQkJU1lTVEVNRF9TRVJWSUNFXyR7UE59ID0gImJpb3MtdmVyaWZ5LnNlcnZpY2UgYmlvcy11cGRh
-dGUuc2VydmljZSINCgkJCWRvX2luc3RhbGwoKSB7DQogICAgCQkJaW5zdGFsbCAtZCAke0R9L3Vz
-ci9zYmluDQogICAgCQkJaW5zdGFsbCAtZCAke0R9L3Vzci9zaGFyZS9waG9zcGhvci1pcG1pLWZs
-YXNoLw0KICAgIAkJCWluc3RhbGwgLW0gMDc1NSAke1N9Ymlvcy12ZXJpZnkuc2ggJHtEfS8ke3Ni
-aW5kaXJ9Lw0KICAgCQkJCWluc3RhbGwgLW0gMDc1NSAke1N9Ymlvcy11cGRhdGUuc2ggJHtEfS8k
-e3NiaW5kaXJ9Lw0KICAgIAkJCWluc3RhbGwgLW0gMDY0NCAke1N9Y29uZmlnLWJpb3MuanNvbiAk
-e0R9L3Vzci9zaGFyZS9waG9zcGhvci1pcG1pLWZsYXNoLw0KCQkJfQ0KCQkJRklMRVNfJHtQTn0g
-PSAiIFwNCiAgICAJCQkvdXNyL3NoYXJlL3Bob3NwaG9yLWlwbWktZmxhc2gvY29uZmlnLWJpb3Mu
-anNvbiBcDQogICAgCQkJJHtzYmluZGlyfS9iaW9zLXVwZGF0ZS5zaCBcDQogICAgCQkJJHtzYmlu
-ZGlyfS9iaW9zLXZlcmlmeS5zaCBcDQogICAgCQkiDQpSZWdhcmRzLA0KQW5kcmV3DQoNCg0KLS0t
-LS3pgq7ku7bljp/ku7YtLS0tLQ0K5Y+R5Lu25Lq6OiBQYXRyaWNrIFZlbnR1cmUgPHZlbnR1cmVA
-Z29vZ2xlLmNvbT4gDQrlj5HpgIHml7bpl7Q6IDIwMTnlubQ45pyIN+aXpSAyMzozNg0K5pS25Lu2
-5Lq6OiBBbmRyZXcgTVMxIFBlbmcgPHBlbmdtczFAbGVub3ZvLmNvbT4NCuaKhOmAgTogb3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnDQrkuLvpopg6IFJlOiBbRXh0ZXJuYWxdIFJlOiBDbGFyaWZ5IHNv
-bWUgcXVlc3Rpb25zIGFib3V0IEJJT1MgdXBkYXRlIChwaG9zcGhvci1pcG1pLWZsYXNoKQ0KDQpP
-biBXZWQsIEF1ZyA3LCAyMDE5IGF0IDQ6NDcgQU0gQW5kcmV3IE1TMSBQZW5nIDxwZW5nbXMxQGxl
-bm92by5jb20+IHdyb3RlOg0KPg0KPiBIaSBQYXRyaWNrLA0KPg0KPiBUaGUgdHJpZ2dlcmVkICJw
-aG9zcGhvci1pcG1pLWZsYXNoLWJpb3MtdXBkYXRlLnRhcmdldCIgc2VlbXMgdG8gYmVlbiBzb2x2
-ZWQsIGJ1dCB0aGUgQklPUyB1cGRhdGUgc3RhdHVzIGhhcyBub3QgeWV0IGJlZW4gZml4ZWQuDQo+
-IENvdWxkIHdlIGFkZCBjaGVja2luZyB0aGUgY29udGVudHMgb2YgdGhlIGZpbGUgaW4gU3lzdGVt
-ZFVwZGF0ZU1lY2hhbmlzbTo6c3RhdHVzKCkgZnVuY3Rpb24gb2YgdXBkYXRlX3N5c3RlbWQuY3Bw
-IHN1Y2ggYXMgdmVyaWZpY2F0aW9uIG1lY2hhbmlzbSBTeXN0ZW1kV2l0aFN0YXR1c0ZpbGU6OnN0
-YXR1cygpIG9mIGdlbmVyYWxfc3lzdGVtZC5jcHA/DQoNCllvdSBjYW4ganVzdCB1c2UgdGhlIHR5
-cGUgImZpbGVTeXN0ZW1kVXBkYXRlIiB3aGljaCBsZXQgeW91IGNoZWNrIGEgcGF0aCBmb3IgdGhl
-IHN0YXR1cy4NCg0KVGhlIHRocmVlIHBhcmFtZXRlcnMgZm9yIHRoYXQgdXBkYXRlIHR5cGUgYXJl
-IHRoZSBzYW1lIGFzIHRoZSB2ZXJpZmljYXRpb24gdHlwZSB0aGF0IG1hdGNoZXM6DQogLSBwYXRo
-IC0gdGhlIGZpbGVzeXN0ZW0gcGF0aCBjb250YWluaW5nIHRoZSBzdGF0dXMNCiAtIHVuaXQgLSB0
-aGUgdGFyZ2V0ICJwaG9zcGhvci1pcG1pLWZsYXNoLWJpb3MtdXBkYXRlLnRhcmdldCINCiAtIG1v
-ZGUgLSBvcHRpb25hbCBqb2ItbW9kZSBwYXJhbWV0ZXIsIGRlZmF1bHRzIHRvICJyZXBsYWNlIg0K
-DQo+DQo+IFJlZ2FyZHMsDQo+IEFuZHJldw0KPg0KPiAtLS0tLemCruS7tuWOn+S7ti0tLS0tDQo+
-IOWPkeS7tuS6ujogUGF0cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+DQo+IOWPkemA
-geaXtumXtDogMjAxOeW5tDjmnIg25pelIDQ6MzkNCj4g5pS25Lu25Lq6OiBBbmRyZXcgTVMxIFBl
-bmcgPHBlbmdtczFAbGVub3ZvLmNvbT4NCj4g5oqE6YCBOiBvcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmc7IER1a2UgS0ggRHUgPGR1a2hAbGVub3ZvLmNvbT47IFlvbmdodWkgDQo+IFlIMjEgTGl1IDxs
-aXV5aDIxQGxlbm92by5jb20+OyBMaXNhIFlKMTkgTGl1IDxsaXV5ajE5QGxlbm92by5jb20+DQo+
-IOS4u+mimDogW0V4dGVybmFsXSBSZTogQ2xhcmlmeSBzb21lIHF1ZXN0aW9ucyBhYm91dCBCSU9T
-IHVwZGF0ZSANCj4gKHBob3NwaG9yLWlwbWktZmxhc2gpDQo+DQo+IE9uIE1vbiwgQXVnIDUsIDIw
-MTkgYXQgMTA6MzkgQU0gUGF0cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+IHdyb3Rl
-Og0KPiA+DQo+ID4gT24gTW9uLCBBdWcgNSwgMjAxOSBhdCA5OjM5IEFNIFBhdHJpY2sgVmVudHVy
-ZSA8dmVudHVyZUBnb29nbGUuY29tPiB3cm90ZToNCj4gPiA+DQo+ID4gPiBPbiBNb24sIEF1ZyA1
-LCAyMDE5IGF0IDk6MzIgQU0gUGF0cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+IHdy
-b3RlOg0KPiA+ID4gPg0KPiA+ID4gPiBPbiBNb24sIEF1ZyA1LCAyMDE5IGF0IDk6MTcgQU0gUGF0
-cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+IHdyb3RlOg0KPiA+ID4gPiA+DQo+ID4g
-PiA+ID4gT24gTW9uLCBBdWcgNSwgMjAxOSBhdCA0OjU2IEFNIEFuZHJldyBNUzEgUGVuZyA8cGVu
-Z21zMUBsZW5vdm8uY29tPiB3cm90ZToNCj4gPiA+ID4gPiA+DQo+ID4gPiA+ID4gPiBIaSBQYXRy
-aWNrLA0KPiA+ID4gPiA+ID4NCj4gPiA+ID4gPiA+DQo+ID4gPiA+ID4gPg0KPiA+ID4gPiA+ID4g
-SSBoYXZlIHNvbWUgcXVlc3Rpb25zIGFib3V0IEJJT1MgdXBkYXRlIHZpYSBwaG9zcGhvci1pcG1p
-LWZsYXNoIHdpdGggTDJBLCBwbGVhc2UgaGVscCB0byBjbGFyaWZ5LiBUaGFua3MuDQo+ID4gPiA+
-ID4gPg0KPiA+ID4gPiA+ID4NCj4gPiA+ID4gPiA+DQo+ID4gPiA+ID4NCj4gPiA+ID4gPiBUaGFu
-a3MgZm9yIGdpdmluZyBpdCBhIHNob3QhICBJIGRvbid0IGhhdmUgYW55IHN5c3RlbXMgdXNpbmcg
-DQo+ID4gPiA+ID4gdGhpcyBmb3IgQklPUyB1cGRhdGUsIHNvIEknbSBjdXJpb3VzIHdoZXJlIHRo
-ZXJlIG1heSBiZSBpc3N1ZXMgDQo+ID4gPiA+ID4gbHVya2luZyA6KQ0KPiA+ID4gPiA+DQo+ID4g
-PiA+ID4NCj4gPiA+ID4gPiA+IDEuIEhvdyBjYW4gSSB1cGRhdGUgdGhlIHN0YXR1cyAoc3VjY2Vz
-cyBvciBmYWlsdXJlKSBhZnRlciB1cGdyYWRlIEJJT1MgZmlybXdhcmU/IEN1cnJlbnRseSwgdGhl
-IHVwZGF0ZSBzdGF0dXMgb25seSBhcHBlYXIgInJ1bm5pbmciLg0KPiA+ID4gPiA+ID4NCj4gPiA+
-ID4gPg0KPiA+ID4gPiA+IEkgc2VlLCB0aGUgdXBkYXRlIG1lY2hhbmlzbSBkb2Vzbid0IGhhdmUg
-YSB2ZXJpZmljYXRpb24gb3B0aW9uLg0KPiA+ID4gPiA+IEEgYml0IG9mIGFuIG92ZXJzaWdodC4g
-IEknbGwgaGF2ZSBzb21ldGhpbmcgdXAgZm9yIHJldmlldyANCj4gPiA+ID4gPiBsYXRlciB0b2Rh
-eS4gIFRoZW4gaXQnbGwgYmUgc29tZXRoaW5nIHlvdSBjb25maWd1cmUgc2ltaWxhcmx5IA0KPiA+
-ID4gPiA+IHRvIHRoZSB2ZXJpZnlTeXN0ZW1kIGpzb24gZW50cnkuDQo+ID4gPiA+ID4NCj4gPiA+
-ID4gPiA+IDIuIEl0IHdhcyBmYWlsZWQgd2hlbiB0cmlnZ2VyZWQgInBob3NwaG9yLWlwbWktZmxh
-c2gtYmlvcy11cGRhdGUudGFyZ2V0IiBzaW5jZSB0aGUgam9iLW1vZGUgaXMgbnVsbCBzdHJpbmcu
-IEl0IGNhbiB3b3JrIHdlbGwgd2hlbiBJIGFkZCBzdHJpbmcgInJlcGxhY2UiIHRvIGpvYi1tb2Rl
-LiBIb3cgY2FuIEkgY29uZmlnIChqc29uIGZpbGUgb3IgY29uZmlndXJlIHBhcmFtZXRlcikgdG8g
-c3VwcG9ydCBpdD8NCj4gPg0KPiA+IFRoaXMgcGF0Y2ggd2lsbCBlbmFibGUgeW91IHRvIHNwZWNp
-ZnkgIm1vZGUiIGluIHRoZSBqc29uLiAqKiogbm90ZTogDQo+ID4gaSB3aWxsIHNldCBzb21lIHRp
-bWUgYXNpZGUgc2hvcnRseSB0byBkb2N1bWVudCB3cml0aW5nIGpzb24gDQo+ID4gY29uZmlndXJh
-dGlvbnMuDQo+ID4NCj4gPiBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3Bl
-bmJtYy9waG9zcGhvci1pcG1pLWZsYXNoLysvMg0KPiA+IDQxDQo+ID4gNjcNCj4gPg0KPiA+ID4g
-PiA+DQo+ID4gPiA+ID4gSSdsbCB0YWtlIGEgbG9vayEgIFRoZSBwYXJhbWV0ZXIgZm9yIGpvYi1t
-b2RlLCBJIHRob3VnaHQsIHdhcyANCj4gPiA+ID4gPiBvcHRpb25hbD8gIFNpbmNlIHdlIGRvbid0
-IHNwZWNpZnkgaXQgZm9yIG90aGVyIGpvYnMgDQo+ID4gPiA+ID4gKHZlcmlmaWNhdGlvbiwgZXRj
-KS4gIFRoZSBzdHJpbmcgc2hvdWxkIGJlIGVtcHR5IGJ5IGRlZmF1bHQgDQo+ID4gPiA+ID4gYW5k
-IHRoZW4gbm90IGFkZGVkIGFzIGENCj4gPiA+ID4gPiBudWxsLXN0cmluZzoNCj4gPiA+ID4gPg0K
-PiA+ID4gPiA+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWlwbWktZmxhc2gv
-YmxvYi9mMGM3MWRmMjUxDQo+ID4gPiA+ID4gNDkNCj4gPiA+ID4gPiAyN2U5MzNmNmZjMzNkOTY2
-OWFiMDY2M2EwNzA2L2JtYy91cGRhdGVfc3lzdGVtZC5jcHAjTDQ5DQo+ID4gPiA+DQo+ID4gPiA+
-IEkgc2VlIGl0IGlzIHJlcXVpcmVkISAgU2luY2UgSSBhbHdheXMgY29uZmlndXJlIHdpdGggcmVi
-b290LCBJIA0KPiA+ID4gPiBuZXZlciBzYXcgdGhpcyBmYWlsdXJlLiBJJ2xsIGRlZmF1bHQgaXQg
-dG8gInJlcGxhY2UiDQo+ID4gPg0KPiA+ID4gRmlyc3QgcGF0Y2ggaW4gdGhlIHNlcmllcyBnZW5l
-cmF0ZWQgZnJvbSB5b3VyIGVtYWlsOg0KPiA+ID4NCj4gPiA+IGh0dHBzOi8vZ2Vycml0Lm9wZW5i
-bWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLWlwbWktZmxhc2gvKw0KPiA+ID4gLzIN
-Cj4gPiA+IDQxNjUNCj4gPiA+DQo+ID4gPiBOZXh0OiBqc29uIGNvbmZpZ3VyYXRpb24gb3B0aW9u
-IHRvIGNvbnRyb2wgdGhlIGpvYi1tb2RlLg0KPiA+ID4gVGhlbiBtZXJnZSB2ZXJpZmljYXRpb24g
-YW5kIHVwZGF0ZSBvYmplY3RzLCBzLnQuIHlvdSBjYW4gc3BlY2lmeSANCj4gPiA+IHRoZSBzdGF0
-dXMgcGF0aC4NCj4NCj4gVGhpcyBwYXRjaHNldCBhZGRzIHN1cHBvcnQgZm9yIGEgbmV3IHVwZGF0
-ZSBjb25maWd1cmF0aW9uIHRoYXQgbGV0cyB5b3UgcmVhZCB0aGUgc3RhdHVzIGZyb20gYSBmaWxl
-Lg0KPg0KPiBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6LzI0MTcxDQo+DQo+ID4g
-Pg0KPiA+ID4gKioqIEEgbGF0ZXIgcGF0Y2hzZXQgY2FuIGhhdmUgdGhlIHN0YXR1cyBiZSBub3Qg
-YSBwYXRoLCBidXQgYSBkYnVzIA0KPiA+ID4gcHJvcGVydHkgb3IgZGJ1cyBwYXRoIC0tIGlmIHNv
-bWVvbmUgd2FudHMgdG8gaW1wbGVtZW50IGEgbmV3IA0KPiA+ID4gb2JqZWN0IGZvciB0aGlzLCBp
-dCdzIHNvbWV3aGF0IHRyaXZpYWwuDQo+ID4gPg0KPiA+ID4gPg0KPiA+ID4gPiA+DQo+ID4gPiA+
-ID4gSSBkb24ndCB0aGluayBJIGhhdmUgYSB1bml0LXRlc3QgdGhhdCB2ZXJpZmllcyB0aGUgcGFy
-YW1ldGVycyANCj4gPiA+ID4gPiBhcmUgc2VudCBkb3duIHByb3Blcmx5LCBzbyBJJ2xsIGFsc28g
-YWRkIHRoYXQgdG9kYXkgQU5EIEknbGwgDQo+ID4gPiA+ID4gYWRkIGFuIG9wdGlvbmFsIG1vZGUg
-cGFyYW1ldGVyIHRvIHRoZSBqc29uLg0KPiA+ID4gPiA+DQo+ID4gPiA+ID4gU2VuZGluZyBmb3Ig
-cmV2aWV3IHRvZGF5Lg0KPiA+ID4gPiA+DQo+ID4gPiA+ID4gLi4uDQo+ID4gPiA+ID4NCj4gPiA+
-ID4gPiA+DQo+ID4gPiA+ID4gPg0KPiA+ID4gPiA+ID4NCj4gPiA+ID4gPiA+IFJlZ2FyZHMsDQo+
-ID4gPiA+ID4gPiBBbmRyZXcNCg==
+This patch set adds Flash Interface Unit(FIU) SPI 
+master support for the Nuvoton NPCM Baseboard 
+Management Controller (BMC).
+
+The FIU supports single, dual or quad communication interface.
+
+the FIU controller can operate in following modes:
+- User Mode Access(UMA): provides flash access by using an
+  indirect address/data mechanism.
+- direct rd/wr mode: maps the flash memory into the core
+  address space.
+- SPI-X mode: used for an expansion bus to an ASIC or CPLD.
+
+The NPCM750/730/715/710 supports up to three FIU devices:
+- FIU0 supports two chip select.
+- FIU3 supports four chip select.
+- FIUX supports two chip select.
+
+The NPCM FIU driver tested on NPCM750 evaluation board. 
+
+The FIU controller driver using direct map API SPI-MEM
+interface and tested with the latest m25p80 driver patch
+https://www.spinics.net/lists/linux-mtd/msg07358.html
+
+According a conversion about direct SPI-MEM API
+https://www.spinics.net/lists/linux-mtd/msg08225.html
+
+The m25p80 driver will merge to the spi-nor driver we
+need to make sure the m25p80 direct SPI-MEM will merge
+as well.
+
+The FIU controller driver tested with the latest spi-nor driver patch
+https://www.spinics.net/lists/linux-mtd/msg08472.html
+
+Changes since version 1:
+ - Support spi-mem no data transferred option (SPI_MEM_NO_DATA)
+
+Tomer Maimon (2):
+  dt-binding: spi: add NPCM FIU controller
+  spi: npcm-fiu: add NPCM FIU controller driver
+
+ .../bindings/spi/nuvoton,npcm-fiu.txt         |  47 ++
+ drivers/spi/Kconfig                           |  10 +
+ drivers/spi/Makefile                          |   1 +
+ drivers/spi/spi-npcm-fiu.c                    | 761 ++++++++++++++++++
+ 4 files changed, 819 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.txt
+ create mode 100644 drivers/spi/spi-npcm-fiu.c
+
+-- 
+2.18.0
+
