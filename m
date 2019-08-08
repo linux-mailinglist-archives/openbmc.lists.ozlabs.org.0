@@ -2,74 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C685686480
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 16:39:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D3810865BF
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 17:29:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4649xK465XzDqtj
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 00:39:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464C3M04wszDqZb
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 01:29:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::642; helo=mail-pl1-x642.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::342; helo=mail-ot1-x342.google.com;
+ envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Hz5UL/ya"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="jSpi25ui"; 
  dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
+ [IPv6:2607:f8b0:4864:20::342])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4649qF1DY2zDqW4
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 00:34:01 +1000 (AEST)
-Received: by mail-pl1-x642.google.com with SMTP id m12so5011222plt.5
- for <openbmc@lists.ozlabs.org>; Thu, 08 Aug 2019 07:34:00 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464C2g4BtZzDqZR
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 01:28:54 +1000 (AEST)
+Received: by mail-ot1-x342.google.com with SMTP id b7so69944126otl.11
+ for <openbmc@lists.ozlabs.org>; Thu, 08 Aug 2019 08:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=ZeMCC2yGJViBcdY1VURznMMeyB8+2Tl2+O52eDL+e+c=;
- b=Hz5UL/yaLCUMlGgOwScWH/W4ALmh6n80lE77mZDDuUFSKYsjU8YFZ5/DvrB6wfMS1M
- BLrOetW7b/9BuDcs0hTIYbHTGrhIVuIdnE6MxyF8l9u9mQ88C3TZB6lApRDCKuSxXsTx
- xoHYJWnLbnakkLOh+pOvU3oLKAaul8CWSG6EZK/niWF8ykiFofwW+oA6zEfb9CrqO6JC
- ap8SQK9Iho5PWxA1G3ZvnExgKbvjrZCVs04EJpCCBpIHR8U5RUSz0dq1zoHqI1xQxhj/
- TJmmPXwHb1gAb9c/dwaG2x2HnxZfpc/RHHgPoZKCIOcvFgVnwD9afxa3vYNdtEFIEMNs
- ptNg==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=eOj2Rv+FhDDbysqg2BboNfCSaS3vXM7Dzfn1m36lEU8=;
+ b=jSpi25uimilOELaFSQoW5amOW6tSO47ZpZSDZ2HjqWeEh2TdBG6Djk4zAgNnMkZnCJ
+ 5c/DI8L6ykpThj4uFMInlSoY21J3jbUAsCirrG27vVJv6PNHIcGLHM+u8rvVYrnc8j4J
+ qBwzqrKjOroogd9NSQm+rtuIrSfb8fr27bfsa/f4m/yKnSPol58+N1fbxM0ZBpfmyBtF
+ UVc8sLhWvDBSKICpPFBwpoFN+Vsug54RWUfVocZuRK5q6P9Df5CzYAlzXv7zeNNGim/m
+ jRsdiEV90SsnAmcTY96BXn02kWXwpxw9Tl3+zEeKuEr9YqN9Ig4fpedaUE5S86HQPAWO
+ nLLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=ZeMCC2yGJViBcdY1VURznMMeyB8+2Tl2+O52eDL+e+c=;
- b=GL3KCbxR6ywGegigTPUMT6UHVkt1YhSeBhdY2ANb0fQWwPs1xv/VQaWhTquNqJe/+C
- hQHeAGbWDwLqVAPpSgRkQzi5sxqtzlDPKarP9W3J6tVuj23JPdQDesePEuhs7vGUjyVR
- keyQ7bPgWhX9MfWEWJt9kRbehZgHsxNZJyRYoUKuOBGDCcqJf4nIRlhtiV09p0Q0rqx8
- HFFjHl6PvC7Q7l57hw/nMchd09xCJ7Hp2I2FatWAQRPRmaxyWj2rA/Ty1qsgBOWX5N9K
- h5zAJmyKQyC6ajBuNbaBT/AJppiyh6dSbF8zxlI+HC+D5TDmzOn7Lj2n4kRAiF4d4sV0
- ZyRQ==
-X-Gm-Message-State: APjAAAW6M6y7E8vZu2PGlKpBW5Z0X64s6IlqcSoLotUDMxzG3MjOex3M
- 7OgP33W+2uYbfWYtsKOTz0/x3ID0
-X-Google-Smtp-Source: APXvYqzli1Zn89EN+8XdWH7Te0DaDn6GTfcGB/lSwtk6Taju+voy8oMbD9UnFfWR9ZYk6TDcATijAg==
-X-Received: by 2002:a17:902:7887:: with SMTP id
- q7mr1485138pll.129.1565274838239; 
- Thu, 08 Aug 2019 07:33:58 -0700 (PDT)
-Received: from voyager.iht.com.au (210-10-229-158.cust.static-ipl.aapt.com.au.
- [210.10.229.158])
- by smtp.gmail.com with ESMTPSA id c35sm27554972pgl.72.2019.08.08.07.33.55
- (version=TLS1_3 cipher=AEAD-AES256-GCM-SHA384 bits=256/256);
- Thu, 08 Aug 2019 07:33:57 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 2/2] Revert "ARM: dts: aspeed: add I2C buffer
- mode support"
-Date: Fri,  9 Aug 2019 00:03:42 +0930
-Message-Id: <20190808143342.27779-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190808143342.27779-1-joel@jms.id.au>
-References: <20190808143342.27779-1-joel@jms.id.au>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=eOj2Rv+FhDDbysqg2BboNfCSaS3vXM7Dzfn1m36lEU8=;
+ b=Yav84rMm7WuiYmZ1DXqwEqERb9wHvEn9/qnmqGI5iv/aNa2aE7TDXIvm1e5Y+Ungra
+ TKt+g1o36zP1lTvIUkXBIv3nkiLobS1hQzF1e0hSl2Zg/HSlK8Pp7h7YV9kFETh2JO5G
+ juGVWxk/86YGdjwkPm9mEq72w5/ZksoyHXfPFojERNxLqkwPW0Ijx4M7utz1jip5Cy0I
+ kDVqZuBNvXpGR2Ko/wE45qP3lr6rOmCHBUEKSz26dcTDsfqw2/xdw99b0z2XJc4zEn3T
+ Fdt6Wr5Dqs8YOH9yR//xuuHNULzm55QokOrZ9xTVq/SJA7kfDQ8sqR+LJ5l6Mqj3GsEn
+ ODDw==
+X-Gm-Message-State: APjAAAVSZZtD/s4ev3e/UZQ2CLxCJD6nQMDPkXA/vMqo5Z0BTPfmOkEG
+ hhcbCp8sHIrEOsl2sBiHZv3/DiZyMvl0EPjuE0s=
+X-Google-Smtp-Source: APXvYqw1lwpLXImsrU3To1h3tMt2O5fpWd21G3R2eBTYuHnTiM7bkYUTw+Kj3E2/SeA2qpTHPvjPp6oGQ4XkqfnBkLE=
+X-Received: by 2002:a9d:7352:: with SMTP id l18mr14046718otk.292.1565278130689; 
+ Thu, 08 Aug 2019 08:28:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190808131448.349161-1-tmaimon77@gmail.com>
+ <20190808131448.349161-3-tmaimon77@gmail.com>
+ <20190808132740.GG3795@sirena.co.uk>
+In-Reply-To: <20190808132740.GG3795@sirena.co.uk>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Thu, 8 Aug 2019 18:37:06 +0300
+Message-ID: <CAP6Zq1j7jHejdx9h-nxCJcVjtGx_3rHmay7R8nn11DLaE8Q4gA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] spi: npcm-fiu: add NPCM FIU controller driver
+To: Mark Brown <broonie@kernel.org>
+Content-Type: multipart/alternative; boundary="000000000000f45bbc058f9cb6ba"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,365 +74,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Eddie James <eajames@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>, Vignesh Raghavendra <vigneshr@ti.com>,
+ bbrezillon@kernel.org, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-spi@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This reverts commit 0a3231c83471b2ceca1fed916547d702c425236f to disable
-buffer mode support. It is not supported in Qemu, which means this
-change cannot pass OpenBMC CI.
+--000000000000f45bbc058f9cb6ba
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-g4.dtsi | 61 ++++++++++----------------------
- arch/arm/boot/dts/aspeed-g5.dtsi | 61 ++++++++++----------------------
- 2 files changed, 38 insertions(+), 84 deletions(-)
+Hi Mark,
 
-diff --git a/arch/arm/boot/dts/aspeed-g4.dtsi b/arch/arm/boot/dts/aspeed-g4.dtsi
-index 7eaf6a549436..fd857be397bf 100644
---- a/arch/arm/boot/dts/aspeed-g4.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g4.dtsi
-@@ -404,21 +404,12 @@
- };
- 
- &i2c {
--	i2c_gr: i2c-global-regs@0 {
--		compatible = "aspeed,ast2400-i2c-gr", "syscon";
-+	i2c_ic: interrupt-controller@0 {
-+		#interrupt-cells = <1>;
-+		compatible = "aspeed,ast2400-i2c-ic";
- 		reg = <0x0 0x40>;
--
--		#address-cells = <1>;
--		#size-cells = <1>;
--		ranges = <0x0 0x0 0x40>;
--
--		i2c_ic: interrupt-controller@0 {
--			#interrupt-cells = <1>;
--			compatible = "aspeed,ast2400-i2c-ic";
--			reg = <0x0 0x4>;
--			interrupts = <12>;
--			interrupt-controller;
--		};
-+		interrupts = <12>;
-+		interrupt-controller;
- 	};
- 
- 	i2c0: i2c-bus@40 {
-@@ -426,8 +417,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x40 0x40>, <0x800 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x40 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -443,8 +433,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x80 0x40>, <0x880 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x80 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -460,8 +449,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0xc0 0x40>, <0x900 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0xc0 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -478,8 +466,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x100 0x40>, <0x980 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x100 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -496,8 +483,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x140 0x40>, <0xa00 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x140 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -514,8 +500,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x180 0x40>, <0xa80 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x180 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -532,8 +517,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x1c0 0x40>, <0xb00 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x1c0 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -550,8 +534,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x300 0x40>, <0xb80 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x300 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -568,8 +551,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x340 0x40>, <0xc00 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x340 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -586,8 +568,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x380 0x40>, <0xc80 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x380 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -604,8 +585,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x3c0 0x40>, <0xd00 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x3c0 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -622,8 +602,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x400 0x40>, <0xd80 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x400 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -640,8 +619,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x440 0x40>, <0xe00 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x440 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -658,8 +636,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x480 0x40>, <0xe80 0x80>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x480 0x40>;
- 		compatible = "aspeed,ast2400-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-diff --git a/arch/arm/boot/dts/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed-g5.dtsi
-index 44a1a0123a8a..dc58eb8c6969 100644
---- a/arch/arm/boot/dts/aspeed-g5.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g5.dtsi
-@@ -526,21 +526,12 @@
- };
- 
- &i2c {
--	i2c_gr: i2c-global-regs@0 {
--		compatible = "aspeed,ast2500-i2c-gr", "syscon";
-+	i2c_ic: interrupt-controller@0 {
-+		#interrupt-cells = <1>;
-+		compatible = "aspeed,ast2500-i2c-ic";
- 		reg = <0x0 0x40>;
--
--		#address-cells = <1>;
--		#size-cells = <1>;
--		ranges = <0x0 0x0 0x40>;
--
--		i2c_ic: interrupt-controller@0 {
--			#interrupt-cells = <1>;
--			compatible = "aspeed,ast2500-i2c-ic";
--			reg = <0x0 0x4>;
--			interrupts = <12>;
--			interrupt-controller;
--		};
-+		interrupts = <12>;
-+		interrupt-controller;
- 	};
- 
- 	i2c0: i2c-bus@40 {
-@@ -548,8 +539,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x40 0x40>, <0x200 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x40 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -565,8 +555,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x80 0x40>, <0x210 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x80 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -582,8 +571,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0xc0 0x40>, <0x220 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0xc0 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -600,8 +588,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x100 0x40>, <0x230 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x100 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -618,8 +605,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x140 0x40>, <0x240 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x140 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -636,8 +622,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x180 0x40>, <0x250 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x180 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -654,8 +639,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x1c0 0x40>, <0x260 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x1c0 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -672,8 +656,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x300 0x40>, <0x270 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x300 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -690,8 +673,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x340 0x40>, <0x280 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x340 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -708,8 +690,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x380 0x40>, <0x290 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x380 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -726,8 +707,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x3c0 0x40>, <0x2a0 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x3c0 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -744,8 +724,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x400 0x40>, <0x2b0 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x400 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -762,8 +741,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x440 0x40>, <0x2c0 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x440 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
-@@ -780,8 +758,7 @@
- 		#size-cells = <0>;
- 		#interrupt-cells = <1>;
- 
--		reg = <0x480 0x40>, <0x2d0 0x10>;
--		reg-names = "bus-regs", "buf";
-+		reg = <0x480 0x40>;
- 		compatible = "aspeed,ast2500-i2c-bus";
- 		clocks = <&syscon ASPEED_CLK_APB>;
- 		resets = <&syscon ASPEED_RESET_I2C>;
--- 
-2.20.1
+Thanks for the prompt reply.
 
+On Thu, 8 Aug 2019 at 16:27, Mark Brown <broonie@kernel.org> wrote:
+
+> On Thu, Aug 08, 2019 at 04:14:48PM +0300, Tomer Maimon wrote:
+>
+> > +     ctrl->mode_bits = SPI_RX_DUAL | SPI_RX_QUAD
+> > +             | SPI_TX_DUAL | SPI_TX_QUAD;
+> > +     ctrl->setup = npcm_fiu_setup;
+>
+> I'm not seeing where we implement dual or quad modes in the driver?
+> There's some
+>
+>
+Do you mean you do not see where it is implemented in the NPCM FIU driver?
+
+for example in our driver we modify the access type (singe, dual or quad)
+according the op->addr.buswidth
+for example in the npcm_fiu_set_drd function.
+
+        regmap_update_bits(fiu->regmap, NPCM_FIU_DRD_CFG,
+                           NPCM_FIU_DRD_CFG_ACCTYPE,
+                           ilog2(op->addr.buswidth) <<
+                           NPCM_FIU_DRD_ACCTYPE_SHIFT);
+
+we also modify it in the UMA R/W functions.
+
+> +     dev_info(dev, "NPCM %s probe succeed\n", fiu->info->name);
+>
+> Just remove this, it makes the log more verbose but doesn't really add
+> any information.
+>
+
+I will remove it.
+
+Thanks,
+
+Tomer
+
+--000000000000f45bbc058f9cb6ba
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Mark,<div><br></div><div>Thanks for th=
+e prompt reply.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Thu, 8 Aug 2019 at 16:27, Mark Brown &lt;<a href=3D=
+"mailto:broonie@kernel.org">broonie@kernel.org</a>&gt; wrote:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Aug 08, 2019 at 04:14=
+:48PM +0300, Tomer Maimon wrote:<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ctrl-&gt;mode_bits =3D SPI_RX_DUAL | SPI_RX_QUAD<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| SPI_TX_DUAL | SPI_T=
+X_QUAD;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ctrl-&gt;setup =3D npcm_fiu_setup;<br>
+<br>
+I&#39;m not seeing where we implement dual or quad modes in the driver?<br>
+There&#39;s some <br>
+<br></blockquote><div>=C2=A0</div><div>Do you mean you do not see where it =
+is implemented in the NPCM FIU driver?</div><div><br></div><div>for example=
+ in our driver we modify the access type (singe, dual or quad) according th=
+e=C2=A0<span style=3D"color:rgb(0,0,0);font-family:&quot;Courier New&quot;;=
+font-size:11pt">op-&gt;addr.buswidth</span></div><div>for example in the=C2=
+=A0<span style=3D"font-weight:bolder;color:rgb(0,0,0);font-family:&quot;Cou=
+rier New&quot;;font-size:11pt">npcm_fiu_set_drd function.</span></div><div>=
+<div style=3D"font-family:&quot;Courier New&quot;;font-size:11pt;color:rgb(=
+0,0,0)">
+<pre>        <span style=3D"font-weight:bolder">regmap_update_bits</span>(f=
+iu-&gt;regmap, NPCM_FIU_DRD_CFG,
+                           NPCM_FIU_DRD_CFG_ACCTYPE,
+                           <span style=3D"font-weight:bolder">ilog2</span>(=
+op-&gt;addr.buswidth) &lt;&lt;
+                           NPCM_FIU_DRD_ACCTYPE_SHIFT);
+</pre></div></div><div>we also modify it in the UMA R/W functions.</div><di=
+v><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 =C2=A0dev_info(dev, &quot;NPCM %s probe succeed\n&quot;=
+, fiu-&gt;info-&gt;name);<br>
+<br>
+Just remove this, it makes the log more verbose but doesn&#39;t really add<=
+br>
+any information.<br></blockquote><div><br></div><div>I will remove it.</div=
+><div><br></div><div>Thanks,</div><div><br></div><div>Tomer=C2=A0</div></di=
+v></div>
+
+--000000000000f45bbc058f9cb6ba--
