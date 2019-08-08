@@ -1,63 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4357863E9
-	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 16:09:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1691863E4
+	for <lists+openbmc@lfdr.de>; Thu,  8 Aug 2019 16:07:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4649H40S5PzDqp5
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 00:09:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4649D94vSGzDqSM
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 00:07:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=sirena.co.uk
- (client-ip=2a01:7e01::f03c:91ff:fed4:a3b6; helo=heliosphere.sirena.org.uk;
- envelope-from=broonie@sirena.co.uk; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::542; helo=mail-pg1-x542.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=sirena.org.uk header.i=@sirena.org.uk
- header.b="rQyhzfUB"; dkim-atps=neutral
-X-Greylist: delayed 2458 seconds by postgrey-1.36 at bilbo;
- Fri, 09 Aug 2019 00:08:50 AEST
-Received: from heliosphere.sirena.org.uk (heliosphere.sirena.org.uk
- [IPv6:2a01:7e01::f03c:91ff:fed4:a3b6])
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="WQH6cNwn"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4649GB4DvYzDqHK
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 00:08:50 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=sirena.org.uk; s=20170815-heliosphere; h=In-Reply-To:Content-Type:
- MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=egMV3q9uEBW5xiJ68iYvqE6+ywPdvkHsBfVwqjoD4mc=; b=rQyhzfUBYPLZwvKm+PR5EX4zO
- zq0eKrBDfmA2kQ1AA00oDjwN1lSG+ZeH8DGBC1KIZsgvcoERHOuS9Yog1x7aEoPEok2MYmrykWaNw
- MOxo54qFXdL0FVZya2kLH4FS5OK/c2ewtxggnhYU+/8LASoTKYNq1fjICbyIdeVR1UQ4g=;
-Received: from cpc102320-sgyl38-2-0-cust46.18-2.cable.virginm.net
- ([82.37.168.47] helo=ypsilon.sirena.org.uk)
- by heliosphere.sirena.org.uk with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <broonie@sirena.co.uk>)
- id 1hviSD-000309-0I; Thu, 08 Aug 2019 13:27:41 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
- id 1B7F82742B42; Thu,  8 Aug 2019 14:27:40 +0100 (BST)
-Date: Thu, 8 Aug 2019 14:27:40 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2 2/2] spi: npcm-fiu: add NPCM FIU controller driver
-Message-ID: <20190808132740.GG3795@sirena.co.uk>
-References: <20190808131448.349161-1-tmaimon77@gmail.com>
- <20190808131448.349161-3-tmaimon77@gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4649BP5qSVzDqSL
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 00:05:32 +1000 (AEST)
+Received: by mail-pg1-x542.google.com with SMTP id d1so11309182pgp.4
+ for <openbmc@lists.ozlabs.org>; Thu, 08 Aug 2019 07:05:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=sHMBnctDRnXDSO29XMMETuXMrq1SVqcW4ppEF+Xo3DY=;
+ b=WQH6cNwneZrR6sezbxY6d8CNWaF6yKtm+E5dqPZekRgugPs6kC5F91/jYs+moXcErs
+ eHomMUxbZUpVRlW1RaS+i05AqG+c/pvG4TKDeNFotJWP6C7+wnyDZlOapY5JV/ImFdDm
+ /4ymio93HID2HqkFvxHQa7KBaYVgruzfGtrK9ftY0Wp/zZlMW2MVV+DtK13OpUc0EBkh
+ RR/pno6E4MHzoIQW6gSopV1Ta8gjbetDH5gD3avjwocFjXRdU8csbW4sQb2WfcOL7aAK
+ H6EBGKZGeZSOZfcrMv75/FFt1DUjksiE39WTsVrfNKNW8iUJQxMrEEFlc0HIUySEvclC
+ Cf0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=sHMBnctDRnXDSO29XMMETuXMrq1SVqcW4ppEF+Xo3DY=;
+ b=cJVBft5f4NHTPGrqwyNBzqpE+NeH/kPOcC0U96MxlOti+GshIyGb9QEmP5goHBwExy
+ Ogzsys51UNQxAGFEsjKO+w8DHFwXCxltJMKNnWOPXOraAQjVf7wGiKcQ0Z4SQGSIEG3v
+ V7TxyMkorjZ4QwVDrC9uENEbjE/ntJGy9mz4lZKc4C8npyTOw637JN13IFydVhi9yEHA
+ rCH2zPg1QioeVR1V2mOskZuPRDH6YAicrgW4qI82IXk6LpX07lFTpL7280wSCrhAn9ds
+ tjAxuJcMbdBiDhrVwn6vcXx6Em+DdXkYuCKe9FtO4E4buQXEdHrVcbEpavbViS90HJZC
+ F9Yg==
+X-Gm-Message-State: APjAAAWublHlLrtzRb9rNChub5+JD7GMwqKpQW1Dj6h0Gi3cj5ehmQz5
+ KZQ6Blyps4mjUDD4SvzjOgI=
+X-Google-Smtp-Source: APXvYqwY+kNV6cXUvrPO6lvrRUn22QvOvjuQW+w4HDQwlaJHbddjvA+Fg484IkdzB7MpE75a425qjw==
+X-Received: by 2002:a17:90a:bf02:: with SMTP id
+ c2mr4290499pjs.73.1565273128155; 
+ Thu, 08 Aug 2019 07:05:28 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id 33sm107236041pgy.22.2019.08.08.07.05.26
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 08 Aug 2019 07:05:27 -0700 (PDT)
+Date: Thu, 8 Aug 2019 07:05:25 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: John Wang <wangzqbj@inspur.com>
+Subject: Re: [PATCH] hwmon: pmbus: Add Inspur Power System power supply driver
+Message-ID: <20190808140525.GA30738@roeck-us.net>
+References: <20190808073636.18611-1-wangzqbj@inspur.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="S5HS5MvDw4DmbRmb"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190808131448.349161-3-tmaimon77@gmail.com>
-X-Cookie: I think we're in trouble.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20190808073636.18611-1-wangzqbj@inspur.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,46 +80,406 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, vigneshr@ti.com,
- bbrezillon@kernel.org, avifishman70@gmail.com, venture@google.com,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- robh+dt@kernel.org, linux-spi@vger.kernel.org, benjaminfair@google.com
+Cc: linux-hwmon@vger.kernel.org, jdelvare@suse.com, andrew@aj.id.au,
+ openbmc@lists.ozlabs.org, duanzhijia01@inspur.com,
+ linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Aug 08, 2019 at 03:36:36PM +0800, John Wang wrote:
+> Add the driver to monitor Inspur Power System power supplies
+> with hwmon over pmbus.
+> 
+> This driver adds debugfs entries for addintional power supply data,
 
---S5HS5MvDw4DmbRmb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+s/addintional/additional/
 
-On Thu, Aug 08, 2019 at 04:14:48PM +0300, Tomer Maimon wrote:
+> including vendor,model,part_number,serial number,firmware revision,
+> hardware revision,and psu mode(active/standby).
 
-> +	ctrl->mode_bits =3D SPI_RX_DUAL | SPI_RX_QUAD
-> +		| SPI_TX_DUAL | SPI_TX_QUAD;
-> +	ctrl->setup =3D npcm_fiu_setup;
+Spaces after "'", please.
 
-I'm not seeing where we implement dual or quad modes in the driver?
-There's some=20
+> 
 
-> +	dev_info(dev, "NPCM %s probe succeed\n", fiu->info->name);
+Please run checkpatch --strict and fix what it reports.
+Mostly multi-line alignment, but also stray empty lines
+and missing spaces.
 
-Just remove this, it makes the log more verbose but doesn't really add
-any information.
+> Signed-off-by: John Wang <wangzqbj@inspur.com>
+> ---
+>  drivers/hwmon/pmbus/Kconfig        |   9 +
+>  drivers/hwmon/pmbus/Makefile       |   1 +
+>  drivers/hwmon/pmbus/inspur-ipsps.c | 291 +++++++++++++++++++++++++++++
+>  3 files changed, 301 insertions(+)
+>  create mode 100644 drivers/hwmon/pmbus/inspur-ipsps.c
+> 
+> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
+> index 30751eb9550a..c09357c26b10 100644
+> --- a/drivers/hwmon/pmbus/Kconfig
+> +++ b/drivers/hwmon/pmbus/Kconfig
+> @@ -203,4 +203,13 @@ config SENSORS_ZL6100
+>  	  This driver can also be built as a module. If so, the module will
+>  	  be called zl6100.
+>  
+> +config SENSORS_INSPUR_IPSPS
+> +	tristate "INSPUR Power System Power Supply"
+> +	help
+> +	  If you say yes here you get hardware monitoring support for the INSPUR
+> +	  Power System power supply.
+> +
+> +	  This driver can also be built as a module. If so, the module will
+> +	  be called inspur-ipsps.
+> +
+>  endif # PMBUS
+> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
+> index 2219b9300316..fde2d10cd05c 100644
+> --- a/drivers/hwmon/pmbus/Makefile
+> +++ b/drivers/hwmon/pmbus/Makefile
+> @@ -23,3 +23,4 @@ obj-$(CONFIG_SENSORS_TPS53679)	+= tps53679.o
+>  obj-$(CONFIG_SENSORS_UCD9000)	+= ucd9000.o
+>  obj-$(CONFIG_SENSORS_UCD9200)	+= ucd9200.o
+>  obj-$(CONFIG_SENSORS_ZL6100)	+= zl6100.o
+> +obj-$(CONFIG_SENSORS_INSPUR_IPSPS)	+= inspur-ipsps.o
+> diff --git a/drivers/hwmon/pmbus/inspur-ipsps.c b/drivers/hwmon/pmbus/inspur-ipsps.c
+> new file mode 100644
+> index 000000000000..7dc2b00cb192
+> --- /dev/null
+> +++ b/drivers/hwmon/pmbus/inspur-ipsps.c
+> @@ -0,0 +1,291 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * Copyright 2019 Inspur Corp.
+> + */
+> +
+> +#include <linux/bitops.h>
+> +#include <linux/debugfs.h>
+> +#include <linux/device.h>
+> +#include <linux/fs.h>
+> +#include <linux/i2c.h>
+> +#include <linux/module.h>
+> +#include <linux/pmbus.h>
+> +
+> +#include "pmbus.h"
+> +
+> +#define IPSPS_VENDOR_ID		0x99
+> +#define IPSPS_MODEL		0x9A
+> +#define IPSPS_FW_VERSION	0x9B
+> +#define IPSPS_PN		0x9C
+> +#define IPSPS_SN		0x9E
+> +#define IPSPS_HW_VERSION	0xB0
+> +#define IPSPS_MODE		0xFC
+> +
+> +#define MODE_ACTIVE		0x55
+> +#define MODE_STANDBY		0x0E
+> +#define MODE_REDUNDANCY		0x00
+> +
+> +#define MODE_ACTIVE_STRING		"active"
+> +#define MODE_STANDBY_STRING		"standby"
+> +#define MODE_REDUNDANCY_STRING		"redundancy"
+> +
+> +struct ipsps_attr {
+> +	u8 reg;
+> +	umode_t mode;
+> +	const char *name;
+> +	int mask;
+> +	const struct file_operations *fops;
+> +};
+> +
+> +struct ipsps_entry {
+> +	struct i2c_client *client;
+> +	u8 reg;
+> +};
+> +
+> +static ssize_t ipsps_string_read(struct file *file, char __user *buf,
+> +					size_t count, loff_t *ppos)
+> +{
+> +	struct ipsps_entry *entry = file->private_data;
+> +	char data[I2C_SMBUS_BLOCK_MAX + 1] = { 0 };
+> +	int i, rc;
+> +
+> +	rc = i2c_smbus_read_block_data(entry->client, entry->reg, data);
+> +	if (rc <= 0)
+> +		return rc;
 
---S5HS5MvDw4DmbRmb
-Content-Type: application/pgp-signature; name="signature.asc"
+With this, an read size of 0 returns nothing (no newline)
+and no error. Anything else returns a string with newline.
+Is that intentional ?
 
------BEGIN PGP SIGNATURE-----
+> +
+> +	for (i = 0; i < rc; i++) {
+> +		if (data[i] == '#')
+> +			break;
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAl1MI0sACgkQJNaLcl1U
-h9Cu2wf9FI8ekzKOtKPknDdXJFSkW34/Y7Fa6IFFOzRNy/zJa/KK4039pd967txp
-uqy4z1++x9xd9hct1F2qFzJRRAAfKHxCQVjwfxfXKf5kwHLS/tP9Q3LQtI4Curae
-jmY4wrFeNsDTGDtA9BFQFdDbDUp1nNETnWzNPBijNo9cuzTlCsTEEhBpOM5HhhJS
-E5i/L3B/If5JDs18ULa4B7vsL4oqMxgHw6ztC2EwkxcNl0/8ymCTzHI8D1kpl/+c
-nJ/cX59A4kqGn42v5Zw/dt1zrqAL5lPTywW2RL/WbS7IiDjREsFoHrF4vtnKHJAJ
-VEB121JZAJjasaLrxwfT/dO0JDeQFw==
-=tVs8
------END PGP SIGNATURE-----
+What if there is a '\0' in the buffer ?
 
---S5HS5MvDw4DmbRmb--
+> +	}
+> +
+> +	data[i] = '\n';
+> +	i++;
+
+	data[i++] = '\n';
+
+> +	data[i] = '\0';
+> +	i++;
+
+	data[i++] = '0';
+
+i2c_smbus_read_block_data() can return up to 32 bytes of data.
+If it does, and the code does not include a '#', the above writes
+after the end of the bufer.
+
+> +
+> +	return simple_read_from_buffer(buf, count, ppos, data, i);
+> +
+> +}
+> +
+> +static ssize_t ipsps_fw_version_read(struct file *file, char __user *buf,
+> +					size_t count, loff_t *ppos)
+> +{
+> +	char data[I2C_SMBUS_BLOCK_MAX] = { 0 };
+> +	int rc;
+> +	struct ipsps_entry *entry = file->private_data;
+> +
+> +	rc = i2c_smbus_read_block_data(entry->client, entry->reg, data);
+> +	if (rc < 0)
+> +		return rc;
+> +
+> +	if (rc != 6)
+> +		return -ENODATA;
+
+That seems inappropriate. There is data, after all, only it is unexpected.
+-EPROTO, maybe.
+
+> +
+> +	rc = snprintf(data, sizeof(data), "%d.%02d.%02d\n",
+> +			data[1], data[2], data[3]);
+
+This will be reported as negative numbers if values are larger than 127.
+Is this intentional ?
+
+> +
+> +	return simple_read_from_buffer(buf, count, ppos, data, rc);
+> +}
+> +
+> +static ssize_t ipsps_mode_read(struct file *file,
+> +					    char __user *buf, size_t count,
+> +					    loff_t *ppos)
+> +{
+> +	int rc;
+> +	char data[64] = { 0 };
+> +	struct ipsps_entry *entry = file->private_data;
+
+Please use reverse chrismas tree declarations where possible.
+
+> +
+> +	rc = i2c_smbus_read_byte_data(entry->client, entry->reg);
+> +	if (rc < 0)
+> +		return rc;
+> +
+> +	switch (rc) {
+> +	case MODE_ACTIVE:
+> +		rc = snprintf(data, sizeof(data), "[%s] %s %s\n",
+> +				MODE_ACTIVE_STRING,
+> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
+> +		break;
+> +	case MODE_STANDBY:
+> +		rc = snprintf(data, sizeof(data), "%s [%s] %s\n",
+> +				MODE_ACTIVE_STRING,
+> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
+> +		break;
+> +	case MODE_REDUNDANCY:
+> +		rc = snprintf(data, sizeof(data), "%s %s [%s]\n",
+> +				MODE_ACTIVE_STRING,
+> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
+> +		break;
+> +	default:
+> +		rc = snprintf(data, sizeof(data), "unspecified\n");
+> +		break;
+> +	}
+> +
+> +	return simple_read_from_buffer(buf, count, ppos, data, rc);
+> +}
+> +
+> +static ssize_t ipsps_mode_write(struct file *file, const char __user *buf,
+> +					size_t count, loff_t *ppos)
+> +{
+> +	int rc;
+> +	char data[64] = { 0 };
+> +	struct ipsps_entry *entry = file->private_data;
+> +
+> +	rc = simple_write_to_buffer(data, sizeof(data), ppos, buf, count);
+> +	if (rc < 0)
+> +		return rc;
+> +
+> +	if (strcmp(MODE_STANDBY_STRING, data) == 0 ||
+> +			strcmp(MODE_STANDBY_STRING"\n", data) == 0) {
+
+Any reason for not using sysfs_streq() ?
+
+> +		rc = i2c_smbus_write_byte_data(entry->client, entry->reg,
+> +						MODE_STANDBY);
+> +		if (rc < 0)
+> +			return rc;
+> +		return count;
+> +	} else if (strcmp(MODE_ACTIVE_STRING, data) == 0 ||
+> +			strcmp(MODE_ACTIVE_STRING"\n", data) == 0) {
+> +		rc = i2c_smbus_write_byte_data(entry->client, entry->reg,
+> +						MODE_ACTIVE);
+> +		if (rc < 0)
+> +			return rc;
+> +		return count;
+> +	}
+
+So one can only set active and standby, but not "redundancy".
+If that is intentional, it might make sense to document it somewhere.
+
+Also, it is kind of unusual to configure a device with a debugfs entry.
+Are you sure this is what you want, and not a sysfs attribute ?
+
+> +
+> +	return -EINVAL;
+> +}
+> +
+> +static const struct file_operations ipsps_string_fops = {
+> +	.llseek = noop_llseek,
+> +	.open = simple_open,
+> +	.read = ipsps_string_read,
+> +};
+> +
+> +static const struct file_operations ipsps_fw_version_fops = {
+> +	.llseek = noop_llseek,
+> +	.open = simple_open,
+> +	.read = ipsps_fw_version_read,
+> +};
+> +
+> +static const struct file_operations ipsps_mode_fops = {
+> +	.llseek = noop_llseek,
+> +	.open = simple_open,
+> +	.read = ipsps_mode_read,
+> +	.write = ipsps_mode_write,
+> +};
+> +
+> +struct ipsps_attr ipsps_attrs[] = {
+> +	{
+> +		.name = "vendor",
+> +		.fops = &ipsps_string_fops,
+> +		.reg = IPSPS_VENDOR_ID,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "model",
+> +		.fops = &ipsps_string_fops,
+> +		.reg = IPSPS_MODEL,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "fw_version",
+> +		.fops = &ipsps_fw_version_fops,
+> +		.reg = IPSPS_FW_VERSION,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "part_number",
+> +		.fops = &ipsps_string_fops,
+> +		.reg = IPSPS_PN,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "serial_number",
+> +		.fops = &ipsps_string_fops,
+> +		.reg = IPSPS_SN,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "hw_version",
+> +		.fops = &ipsps_string_fops,
+> +		.reg = IPSPS_HW_VERSION,
+> +		.mode = 0444,
+> +	}, {
+> +		.name = "mode",
+> +		.fops = &ipsps_mode_fops,
+> +		.reg = IPSPS_MODE,
+> +		.mode = 0644,
+> +	}
+> +
+> +};
+> +
+> +static struct pmbus_driver_info ipsps_info = {
+> +	.pages = 1,
+> +	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IOUT |
+> +		PMBUS_HAVE_POUT | PMBUS_HAVE_PIN | PMBUS_HAVE_FAN12 |
+> +		PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +		PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +		PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +		PMBUS_HAVE_STATUS_FAN12,
+> +};
+> +
+> +static struct pmbus_platform_data ipsps_pdata = {
+> +	.flags = PMBUS_SKIP_STATUS_CHECK,
+> +};
+> +
+> +static int ipsps_probe(struct i2c_client *client,
+> +			   const struct i2c_device_id *id)
+> +{
+> +	int i, rc;
+> +	struct dentry *debugfs;
+> +	struct dentry *ipsps_dir;
+> +	struct ipsps_entry *entry;
+> +
+> +	client->dev.platform_data = &ipsps_pdata;
+> +	rc = pmbus_do_probe(client, id, &ipsps_info);
+> +	if (rc)
+> +		return rc;
+> +
+> +	/* Don't fail the probe if we can't create debugfs */
+> +	debugfs = pmbus_get_debugfs_dir(client);
+> +	if (!debugfs)
+> +		return 0;
+> +
+> +	ipsps_dir = debugfs_create_dir(client->name, debugfs);
+> +	if (!ipsps_dir)
+> +		return 0;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(ipsps_attrs); ++i) {
+> +		entry = devm_kzalloc(&client->dev, sizeof(*entry), GFP_KERNEL);
+> +		if (!entry)
+> +			return 0;
+> +
+> +		entry->client = client;
+> +		entry->reg = ipsps_attrs[i].reg;
+> +		debugfs_create_file(ipsps_attrs[i].name, ipsps_attrs[i].mode,
+> +					ipsps_dir, entry, ipsps_attrs[i].fops);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct i2c_device_id ipsps_id[] = {
+> +	{ "inspur_ipsps1", 1 },
+
+What is the "1" for ? It isn't used, so 0 might be more appropriate.
+
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(i2c, ipsps_id);
+> +
+> +static const struct of_device_id ipsps_of_match[] = {
+> +	{ .compatible = "inspur,ipsps1" },
+
+Please make sure this is documented in
+./Documentation/devicetree/bindings/trivial-devices.yaml.
+
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, ipsps_of_match);
+> +
+> +static struct i2c_driver ipsps_driver = {
+> +	.driver = {
+> +		.name = "inspur-ipsps",
+> +		.of_match_table = ipsps_of_match,
+> +	},
+> +	.probe = ipsps_probe,
+> +	.remove = pmbus_do_remove,
+> +	.id_table = ipsps_id,
+> +};
+> +
+> +module_i2c_driver(ipsps_driver);
+> +
+> +MODULE_AUTHOR("John Wang");
+> +MODULE_DESCRIPTION("PMBus driver for Inspur Power System power supplies");
+> +MODULE_LICENSE("GPL");
