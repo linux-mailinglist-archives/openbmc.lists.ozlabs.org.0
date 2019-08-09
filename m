@@ -2,81 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A581872C9
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 09:14:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7360687300
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 09:33:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 464c1H3t0nzDqys
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 17:14:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464cRt72DXzDr0P
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 17:33:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=vishwa@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="KPhHUWVu"; 
+ dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 464c0d1l04zDqxH
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 17:13:36 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x797CnvL018160
- for <openbmc@lists.ozlabs.org>; Fri, 9 Aug 2019 03:13:28 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2u91gxnhkg-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 03:13:28 -0400
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
- Fri, 9 Aug 2019 08:13:26 +0100
-Received: from b06cxnps4076.portsmouth.uk.ibm.com (9.149.109.198)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Fri, 9 Aug 2019 08:13:23 +0100
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x797DMLB46792808
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Fri, 9 Aug 2019 07:13:22 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C0725A405B
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 07:13:22 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73931A405F
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 07:13:22 +0000 (GMT)
-Received: from [9.122.210.157] (unknown [9.122.210.157])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 07:13:22 +0000 (GMT)
-From: vishwa <vishwa@linux.vnet.ibm.com>
-Subject: BMC Operating Mode [Manual / Normal]
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Date: Fri, 9 Aug 2019 12:43:21 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464cRC52pgzDqxQ
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 17:33:11 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 8A65141200
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 07:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1565335985; x=1567150386; bh=Bx7mXEaMNTRY/BGkvtQvmfvYTj3esXzR2TL
+ pBerPeIE=; b=KPhHUWVuRMrfgDoRX2zxVVPc/jzv8jjfsrxGxW0OMfeZ8SLGur5
+ ihH/4tZYbrmXi+dBGB5y/iyna12vjya/rJ6hhpNlAWiZRZ115NaMB0QGFqQEvUBU
+ T7bxt6nNIOUzGwsBNh3V/UVUFSdVqEW/U5HH2d/eyY8FWAmxF/SY6WKs=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id WtBRy2dldSid for <openbmc@lists.ozlabs.org>;
+ Fri,  9 Aug 2019 10:33:05 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 413AA404CD
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Aug 2019 10:33:05 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 9 Aug
+ 2019 10:33:04 +0300
+Date: Fri, 9 Aug 2019 10:33:04 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Continuing discussion on Handling persistent files
+ (/etc/group)during BMC updates
+Message-ID: <20190809073304.GA327@bbwork.lan>
+References: <96f5e075-b324-90da-f004-703ab6275374@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19080907-0016-0000-0000-0000029CA0DA
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19080907-0017-0000-0000-000032FCA790
-Message-Id: <fa89fca6-8b4a-030d-7268-8a97958909f4@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-09_01:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=948 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908090076
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <96f5e075-b324-90da-f004-703ab6275374@gmail.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,28 +78,39 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+On Fri, Aug 09, 2019 at 12:19:32PM +0530, Raviteja Bailapudi wrote:
+> Hi all,
+> 
+> We are looking for thoughts and perspectives on the way the persistent files
+> are managed across BMC code updates.
+> 
+> The problem is regarding the code update where, as a part of code update we
+> don't touch any of the persistent files like /etc/group or /etc/password.
+> 
+> what if the new BMC image has an application which requires some changes to
+> be present in these persistent files ?
+> 
+> For Example:
+> Let's say the BMC image which is used for code update has a new
+> feature(ex:avahi) and it requires avahi user and
+> the group to be present in the /etc/passwd and /etc/group to even kick start
+> it's daemon.
 
-IBM systems have a need to run BMC either in Manual or Normal Mode. What 
-it means is this:
+We had faced with the similar issue several months ago and don't find good
+solution yet.
+https://github.com/openbmc/openbmc/issues/3468
 
-Manual: It's mostly a lab / debug mode, where in the system would be 
-booted with recovery disabled.
-For example: If we enter Quiesce state as part of power-on, then BMC 
-remains in Quiesce state and would *not* attempt to re power-on and 
-reboot the system.
-
-Normal: This is the default customer mode with recovery enabled in BMC.
-For example: If we enter Quiesce state as part of power-on, then an 
-attempt will automatically be done to re power-on and boot the system.
-
-There are other use-cases, where BMC does a Automatic power-on after 
-coming back from an AC loss. Manual / Normal would influence this.
-
-My current thought is to make this a settings in phosphor-settings. 
-Looking to see if others have any use-case like this.
-
-Thank you.
-
-!! Vishwa !!
-
+> 
+> How to update such persistent files where customer data might exist?
+> 
+> One of the quick solution i could think of is:
+> - We can identify what is missing and then write a service override file to
+> make the necessary changes in the persistent file.
+> 
+> But i am still looking community thoughts to fix this issue? There was
+> already a mail sent regarding same, please find it below:
+> https://lists.ozlabs.org/pipermail/openbmc/2018-March/011162.html
+> 
+> Thanks!
+> Raviteja
+> 
