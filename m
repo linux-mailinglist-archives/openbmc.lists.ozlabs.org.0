@@ -1,142 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98CC188468
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 23:09:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B2008846C
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 23:11:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 464yXZ4LvrzDrNJ
-	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 07:09:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464ybj60HyzDrNV
+	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 07:11:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=3124fcab13=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="SDyvt7o2"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="KBAc+GGL"; dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="O2I1ivvf"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
+ [IPv6:2607:f8b0:4864:20::534])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 464yWr05GMzDr8g
- for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 07:08:23 +1000 (AEST)
-Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x79L48FB031379
- for <openbmc@lists.ozlabs.org>; Fri, 9 Aug 2019 14:08:20 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=qRvPr27ZruhDM99Lbv9rb82XLR3npQ28ZenveUV2kjI=;
- b=SDyvt7o270VLU6H0N0wDve23QYVDkZNCZxCVEHhc3BkcFgCpAPPat84QwDcUY4g5qFhZ
- uL35ZC9PxOXyyfK2VhzXQebbz4rZTB5jKxsdBSfs1SDiYL3JSNqbNgTgV6pXCcgdzv9Y
- RBxJchMXiGv5DxJtmY1YwLuXQfpB50Ugwhw= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by mx0a-00082601.pphosted.com with ESMTP id 2u96vgtk15-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 14:08:20 -0700
-Received: from prn-hub02.TheFacebook.com (2620:10d:c081:35::126) by
- prn-hub06.TheFacebook.com (2620:10d:c081:35::130) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.1.1713.5; Fri, 9 Aug 2019 14:08:19 -0700
-Received: from NAM04-CO1-obe.outbound.protection.outlook.com (192.168.54.28)
- by o365-in.thefacebook.com (192.168.16.26) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
- via Frontend Transport; Fri, 9 Aug 2019 14:08:19 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ptc8D3CyJKQ2IU36r421J75agFhGPBkZg7v5cr3I5/UdW/fd15ol9TZ6btUqRLVIgexOtSQAhqdgAgamcMejwxAhBbmlmDQ8EESxQ+u30CxfFoBYc5i55eWq30bgDd+bRAzJXEE1wcaMfXbkRKyfMFJFhhiOd9DWAwa/ipL1c1YxYgPK6luLEzCq5/50NyxOF6oqSyFM9RzqEAK1Mk+CmrdZsuHs/eTQx6mmTEodzvdtWiXZbn93lhVMmtcy+gLbiUUjSFYlfZmiqAtXbXimu1i+nqVkbmn99bp73Fi8uTqDlkVOGl5bKywaF/7WHj4Nmvo++3WqqM/U43ZL585w1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qRvPr27ZruhDM99Lbv9rb82XLR3npQ28ZenveUV2kjI=;
- b=WGVHg31UYNcSYRF2+SxI0fh0FmXynULQCKnCHwGw1/GTVovs6nmeSi/ONhk8MCIoAwsuWM1bHlioP1HhdF5+X85QC24O9TypRknuE8/uQqvOpFcmgeSHQaMF/6qsb1jWI/V1LWJJm6+SwPDabi+y09WV36RoBiox31ZPTupBwdGr0eJqA5bPa6pNqoNwxy59ek+SW6e9jL9alaPAdDM4knDa3nNZfxbDwGdah5Uh3OZG6DkxkFzrkN6wjW55vH6MPH3HqXb1eqRhsIK//Ksd9d+amz2UhD+wTOrIFTHK7fjYksFtIGZSQToU8FsI5faxwgyS61CmVqqPmiXzSXuA3g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qRvPr27ZruhDM99Lbv9rb82XLR3npQ28ZenveUV2kjI=;
- b=KBAc+GGL1cbK7vXbefk8pSt9pEQTWMZi0mxzrqHlBBbwOSOeIxRxDp81Ib4BxUrn0CWWLfmRHkFGSnc7B04UgDQBiWr3k18IORG3Xrs7497e3aV5DKVkWi0rD8sl8XKfehKBohuFT3BmXRBknNsl2Fvgo8yJT4FOVEOxBgQFJ4I=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1421.namprd15.prod.outlook.com (10.173.235.12) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.13; Fri, 9 Aug 2019 21:08:18 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2971:619a:860e:b6cc]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2971:619a:860e:b6cc%2]) with mapi id 15.20.2157.020; Fri, 9 Aug 2019
- 21:08:18 +0000
-From: Tao Ren <taoren@fb.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: [Potential Spoof] Re: [PATCH net-next v6 3/3] net: phy: broadcom:
- add 1000Base-X support for BCM54616S
-Thread-Topic: [Potential Spoof] Re: [PATCH net-next v6 3/3] net: phy:
- broadcom: add 1000Base-X support for BCM54616S
-Thread-Index: AQHVTnXbR0omRCjy/0G0ZEtUvAlu56bzQySAgAAJTACAAAPEAA==
-Date: Fri, 9 Aug 2019 21:08:18 +0000
-Message-ID: <04d51cab-b243-804a-7937-864c3f0af3af@fb.com>
-References: <20190809054411.1015962-1-taoren@fb.com>
- <97cd059c-d98e-1392-c814-f3bd628e6366@gmail.com>
- <e556dd17-ef85-3c61-bc08-17db02d9a5dc@fb.com>
-In-Reply-To: <e556dd17-ef85-3c61-bc08-17db02d9a5dc@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: CO2PR18CA0056.namprd18.prod.outlook.com
- (2603:10b6:104:2::24) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:200::2:f2f1]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7d7878ef-f52e-4f6a-47df-08d71d0db3b1
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1421; 
-x-ms-traffictypediagnostic: MWHPR15MB1421:
-x-microsoft-antispam-prvs: <MWHPR15MB14217DA9FC9DC0CF60AABCDDB2D60@MWHPR15MB1421.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 01244308DF
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(39860400002)(346002)(136003)(396003)(366004)(376002)(189003)(199004)(316002)(65806001)(8676002)(476003)(2616005)(14454004)(6512007)(99286004)(31696002)(64126003)(5640700003)(86362001)(5660300002)(58126008)(65956001)(71190400001)(7736002)(71200400001)(305945005)(229853002)(66556008)(478600001)(66446008)(64756008)(25786009)(66946007)(6116002)(2906002)(6436002)(6246003)(66476007)(65826007)(6486002)(386003)(6506007)(53936002)(53546011)(36756003)(186003)(486006)(46003)(8936002)(14444005)(256004)(11346002)(446003)(2501003)(6916009)(31686004)(81156014)(81166006)(2351001)(1730700003)(52116002)(76176011)(102836004);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1421;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 1q7Qe/IV0EOgEvy/td2mFZa9RtV9be8VUaS4WqBA2LaCXSSJgDg3cRTZ822OaHKq90EI/POJ7X3mMQSSNtGZ/TCb9p9jLc1K5xrbQBOcXa2VH2XSTEtMRsTREf3oyTnjjF+G+dpKTNxCpIfmhjRnRTum9sO1Hg91XGay5NATS2z8LojYwXuaa5i9cMHGEDewW0xRjKLQ1MMUWpikknqTgUwjZo7FHG4qnrEsoFG1wjHmlS49dnftjCNekc4fESPcDw36bQm3vpHR3fuwH0dgQR/jqrAhw56mk6ixO6JcS3KFHd5du7EclFNU8f/MlKNGKg/Ij+A+FFXh2S1cHwhLYwc7DJy9SsvGFes6EHxwyfSefWrJhW/e18cHmsdXBCtYuZndg2smIBUY29sEPoIeaPvjxfBWc9nlpiq2e+Dzl7o=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <11CF120196D6A74AB15358C1DAF9CD68@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464yZx2zmhzDr8g
+ for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 07:11:04 +1000 (AEST)
+Received: by mail-pg1-x534.google.com with SMTP id u17so46431299pgi.6
+ for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 14:11:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=N4e0xE0XO1IzCm82bPf8h7/ak6Kkz0yb9X0FqbWz5Xk=;
+ b=O2I1ivvfzDEySkJVQLU1kbfUk/btital4koHLfNVaZxzGmrCPi/gEwH1PJe3WNovva
+ wGKm11LINj2TcGDcjxQAz27P0SAiT9FkD9+blhHIV02ezSGGlf6vXDMdtGpAnkaW0bR2
+ xll7MSKO0A7IllbCmGckkKb2RGQE8Ub0/4jZ3seqZpb8GqaNf2XlGl8Tf9zgkD2RbC6H
+ eCzRP6JNQ83RqWVG0DBAa8WD5qp4xP1eN4XYTwPDFWxkEFrooQfpYOVlaKQBm01YNDrS
+ Wf6F0Z+CjaM7gfrBehYJAfcJ8z7qCe0LG12dI/iP6z7m1JlAIPUetxjvC2vvFmBzOnwN
+ e0Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=N4e0xE0XO1IzCm82bPf8h7/ak6Kkz0yb9X0FqbWz5Xk=;
+ b=YumY3Uv34NhXRzJohHTFMULPLarfj8zYjFxEk81datNug11IPACEqDPH4x0Z/NNu0y
+ iYjBhWVj5UtJYkwHfKT0w60Yh2ZFUpySQnwOTLLphNErIt7Ral4p/lTYksls3XyrXrQT
+ 3OvIeuQ+8Y4JZI0nZPj/w83GdXqcfKCYUKOO2g9nO8AtoLPLedXBWYhBFvTuAd8Svg+L
+ 6g/MssEqJiaVGwfHHu2cUCygFxdD9E0t4/N33Z2S3KIyp5L2mVOY94PNwz49Fsi6aucq
+ Mq2FQNPjEi1Z8XQCKz5uU2l7EQSNaMyzAlxxf+JtTU73rMKGYJ1LGJeaDlQIZ6JmlKjf
+ 2W4w==
+X-Gm-Message-State: APjAAAVZfWeAU54ajvTiyA5WL79ZdTKviNtrwQsgtOB8pnR4x9iEjs3K
+ WPq8JCQD0r0Vg5vNxGaEXIx+T0AmCVFtzcf0secMf0OXSxzc7w==
+X-Google-Smtp-Source: APXvYqxPz4UDahqN6KVL7R602A3H/38kazBKBWl0kOdzO3P82PiZOvYALSVeY9OynbuFiIRjQDg7pkPv7+mGpmv3XGw=
+X-Received: by 2002:aa7:914e:: with SMTP id 14mr23479888pfi.136.1565385062534; 
+ Fri, 09 Aug 2019 14:11:02 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7d7878ef-f52e-4f6a-47df-08d71d0db3b1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Aug 2019 21:08:18.4334 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tES3l7cxJGwKNiKAzSRy0ol+W54LuMga8IAweJw0Auo2EVUU3jQxoC5q9RSuJdq2
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1421
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-09_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=960 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908090206
-X-FB-Internal: deliver
+References: <CAO=notycFS1Zhjjt_n5J+mQwLTToZYwW-SM-FKQ-aaeSs4hMUw@mail.gmail.com>
+ <56c9b48b-da29-8ec3-dc16-0e37072c2eb7@linux.intel.com>
+ <CAO=notzfd57brCmkUZyegCC9RkwxY1zp9GSXEMt8GGWctX8PhA@mail.gmail.com>
+ <6c111451-8e2c-42ef-2a36-77f040879f2f@linux.intel.com>
+ <CAO=notxsMejO5T1Qg88PuPKBG6LPeTifjWbVuxAS11qUF7DMhg@mail.gmail.com>
+ <CAO=notxRQuDT+AZxWV-fOz=dhv15MZJ3RZkcpgD1i_fx9U-XcQ@mail.gmail.com>
+ <CAO=noty5B5PVrzmfXox7snF-Y6U29D_MiJ9LM-gjJDjfiXwrZg@mail.gmail.com>
+ <CAO=notzeg9ZYEEMJ43G7AcJ2Ot2n13or-9_zyFFOxCH2Ua6k1g@mail.gmail.com>
+ <CAO=notz7q6nG3-b7OD1yxfoibCYa8mtJPXRShp-LTn9JDMwguQ@mail.gmail.com>
+ <3884653c-fb6f-3735-b370-85a93553aa52@linux.intel.com>
+In-Reply-To: <3884653c-fb6f-3735-b370-85a93553aa52@linux.intel.com>
+From: Patrick Venture <venture@google.com>
+Date: Fri, 9 Aug 2019 14:10:51 -0700
+Message-ID: <CAO=notxxTAdEF=EjTVM0bv-D9D4VH5B6xKE1ev9fJUOnmmb4Ng@mail.gmail.com>
+Subject: Re: entity-manager unexpected handling of template parameters
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,99 +81,243 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gOC85LzE5IDE6NTQgUE0sIFRhbyBSZW4gd3JvdGU6DQo+IEhpIEhlaW5lciwNCj4gDQo+IE9u
-IDgvOS8xOSAxOjIxIFBNLCBIZWluZXIgS2FsbHdlaXQgd3JvdGU6DQo+PiBPbiAwOS4wOC4yMDE5
-IDA3OjQ0LCBUYW8gUmVuIHdyb3RlOg0KPj4+IFRoZSBCQ001NDYxNlMgUEhZIGNhbm5vdCB3b3Jr
-IHByb3Blcmx5IGluIFJHTUlJLT4xMDAwQmFzZS1LWCBtb2RlIChmb3INCj4+PiBleGFtcGxlLCBv
-biBGYWNlYm9vayBDTU0gQk1DIHBsYXRmb3JtKSwgbWFpbmx5IGJlY2F1c2UgZ2VucGh5IGZ1bmN0
-aW9ucw0KPj4+IGFyZSBkZXNpZ25lZCBmb3IgY29wcGVyIGxpbmtzLCBhbmQgMTAwMEJhc2UtWCAo
-Y2xhdXNlIDM3KSBhdXRvIG5lZ290aWF0aW9uDQo+Pj4gbmVlZHMgdG8gYmUgaGFuZGxlZCBkaWZm
-ZXJlbnRseS4NCj4+Pg0KPj4+IFRoaXMgcGF0Y2ggZW5hYmxlcyAxMDAwQmFzZS1YIHN1cHBvcnQg
-Zm9yIEJDTTU0NjE2UyBieSBjdXN0b21pemluZyAzDQo+Pj4gZHJpdmVyIGNhbGxiYWNrczoNCj4+
-Pg0KPj4+ICAgLSBwcm9iZTogcHJvYmUgY2FsbGJhY2sgZGV0ZWN0cyBQSFkncyBvcGVyYXRpb24g
-bW9kZSBiYXNlZCBvbg0KPj4+ICAgICBJTlRFUkZfU0VMWzE6MF0gcGlucyBhbmQgMTAwMFgvMTAw
-Rlggc2VsZWN0aW9uIGJpdCBpbiBTZXJERVMgMTAwLUZYDQo+Pj4gICAgIENvbnRyb2wgcmVnaXN0
-ZXIuDQo+Pj4NCj4+PiAgIC0gY29uZmlnX2FuZWc6IGNhbGxzIGdlbnBoeV9jMzdfY29uZmlnX2Fu
-ZWcgd2hlbiB0aGUgUEhZIGlzIHJ1bm5pbmcgaW4NCj4+PiAgICAgMTAwMEJhc2UtWCBtb2RlOyBv
-dGhlcndpc2UsIGdlbnBoeV9jb25maWdfYW5lZyB3aWxsIGJlIGNhbGxlZC4NCj4+Pg0KPj4+ICAg
-LSByZWFkX3N0YXR1czogY2FsbHMgZ2VucGh5X2MzN19yZWFkX3N0YXR1cyB3aGVuIHRoZSBQSFkg
-aXMgcnVubmluZyBpbg0KPj4+ICAgICAxMDAwQmFzZS1YIG1vZGU7IG90aGVyd2lzZSwgZ2VucGh5
-X3JlYWRfc3RhdHVzIHdpbGwgYmUgY2FsbGVkLg0KPj4+DQo+Pj4gU2lnbmVkLW9mZi1ieTogVGFv
-IFJlbiA8dGFvcmVuQGZiLmNvbT4NCj4+PiAtLS0NCj4+PiAgQ2hhbmdlcyBpbiB2NjoNCj4+PiAg
-IC0gbm90aGluZyBjaGFuZ2VkLg0KPj4+ICBDaGFuZ2VzIGluIHY1Og0KPj4+ICAgLSBpbmNsdWRl
-IEhlaW5lcidzIHBhdGNoICJuZXQ6IHBoeTogYWRkIHN1cHBvcnQgZm9yIGNsYXVzZSAzNw0KPj4+
-ICAgICBhdXRvLW5lZ290aWF0aW9uIiBpbnRvIHRoZSBzZXJpZXMuDQo+Pj4gICAtIHVzZSBnZW5w
-aHlfYzM3X2NvbmZpZ19hbmVnIGFuZCBnZW5waHlfYzM3X3JlYWRfc3RhdHVzIGluIEJDTTU0NjE2
-Uw0KPj4+ICAgICBQSFkgZHJpdmVyJ3MgY2FsbGJhY2sgd2hlbiB0aGUgUEhZIGlzIHJ1bm5pbmcg
-aW4gMTAwMEJhc2UtWCBtb2RlLg0KPj4+ICBDaGFuZ2VzIGluIHY0Og0KPj4+ICAgLSBhZGQgYmNt
-NTQ2MTZzX2NvbmZpZ19hbmVnXzEwMDBieCgpIHRvIGRlYWwgd2l0aCBhdXRvIG5lZ290aWF0aW9u
-IGluDQo+Pj4gICAgIDEwMDBCYXNlLVggbW9kZS4NCj4+PiAgQ2hhbmdlcyBpbiB2MzoNCj4+PiAg
-IC0gcmVuYW1lIGJjbTU0ODJfcmVhZF9zdGF0dXMgdG8gYmNtNTR4eF9yZWFkX3N0YXR1cyBzbyB0
-aGUgY2FsbGJhY2sgY2FuDQo+Pj4gICAgIGJlIHNoYXJlZCBieSBCQ001NDgyIGFuZCBCQ001NDYx
-NlMuDQo+Pj4gIENoYW5nZXMgaW4gdjI6DQo+Pj4gICAtIEF1dG8tZGV0ZWN0IFBIWSBvcGVyYXRp
-b24gbW9kZSBpbnN0ZWFkIG9mIHBhc3NpbmcgRFQgbm9kZS4NCj4+PiAgIC0gbW92ZSBQSFkgbW9k
-ZSBhdXRvLWRldGVjdCBsb2dpYyBmcm9tIGNvbmZpZ19pbml0IHRvIHByb2JlIGNhbGxiYWNrLg0K
-Pj4+ICAgLSBvbmx5IHNldCBzcGVlZCAobm90IGluY2x1ZGluZyBkdXBsZXgpIGluIHJlYWRfc3Rh
-dHVzIGNhbGxiYWNrLg0KPj4+ICAgLSB1cGRhdGUgcGF0Y2ggZGVzY3JpcHRpb24gd2l0aCBtb3Jl
-IGJhY2tncm91bmQgdG8gYXZvaWQgY29uZnVzaW9uLg0KPj4+ICAgLSBwYXRjaCAjMSBpbiB0aGUg
-c2VyaWVzICgibmV0OiBwaHk6IGJyb2FkY29tOiBzZXQgZmVhdHVyZXMgZXhwbGljaXRseQ0KPj4+
-ICAgICBmb3IgQkNNNTQ2MTYiKSBpcyBkcm9wcGVkOiB0aGUgZml4IHNob3VsZCBnbyB0byBnZXRf
-ZmVhdHVyZXMgY2FsbGJhY2sNCj4+PiAgICAgd2hpY2ggbWF5IHBvdGVudGlhbGx5IGRlcGVuZCBv
-biB0aGlzIHBhdGNoLg0KPj4+DQo+Pj4gIGRyaXZlcnMvbmV0L3BoeS9icm9hZGNvbS5jIHwgNTQg
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0NCj4+PiAgaW5jbHVkZS9saW51
-eC9icmNtcGh5LmggICAgfCAxMCArKysrKy0tDQo+Pj4gIDIgZmlsZXMgY2hhbmdlZCwgNTggaW5z
-ZXJ0aW9ucygrKSwgNiBkZWxldGlvbnMoLSkNCj4+Pg0KPj4+IGRpZmYgLS1naXQgYS9kcml2ZXJz
-L25ldC9waHkvYnJvYWRjb20uYyBiL2RyaXZlcnMvbmV0L3BoeS9icm9hZGNvbS5jDQo+Pj4gaW5k
-ZXggOTM3ZDAwNTllOGFjLi5mYmQ3NmEzMWMxNDIgMTAwNjQ0DQo+Pj4gLS0tIGEvZHJpdmVycy9u
-ZXQvcGh5L2Jyb2FkY29tLmMNCj4+PiArKysgYi9kcml2ZXJzL25ldC9waHkvYnJvYWRjb20uYw0K
-Pj4+IEBAIC0zODMsOSArMzgzLDkgQEAgc3RhdGljIGludCBiY201NDgyX2NvbmZpZ19pbml0KHN0
-cnVjdCBwaHlfZGV2aWNlICpwaHlkZXYpDQo+Pj4gIAkJLyoNCj4+PiAgCQkgKiBTZWxlY3QgMTAw
-MEJBU0UtWCByZWdpc3RlciBzZXQgKHByaW1hcnkgU2VyRGVzKQ0KPj4+ICAJCSAqLw0KPj4+IC0J
-CXJlZyA9IGJjbV9waHlfcmVhZF9zaGFkb3cocGh5ZGV2LCBCQ001NDgyX1NIRF9NT0RFKTsNCj4+
-PiAtCQliY21fcGh5X3dyaXRlX3NoYWRvdyhwaHlkZXYsIEJDTTU0ODJfU0hEX01PREUsDQo+Pj4g
-LQkJCQkgICAgIHJlZyB8IEJDTTU0ODJfU0hEX01PREVfMTAwMEJYKTsNCj4+PiArCQlyZWcgPSBi
-Y21fcGh5X3JlYWRfc2hhZG93KHBoeWRldiwgQkNNNTRYWF9TSERfTU9ERSk7DQo+Pj4gKwkJYmNt
-X3BoeV93cml0ZV9zaGFkb3cocGh5ZGV2LCBCQ001NFhYX1NIRF9NT0RFLA0KPj4+ICsJCQkJICAg
-ICByZWcgfCBCQ001NFhYX1NIRF9NT0RFXzEwMDBCWCk7DQo+Pj4gIA0KPj4+ICAJCS8qDQo+Pj4g
-IAkJICogTEVEMT1BQ1RJVklUWUxFRCwgTEVEMz1MSU5LU1BEWzJdDQo+Pj4gQEAgLTQ1MSwxMiAr
-NDUxLDQ0IEBAIHN0YXRpYyBpbnQgYmNtNTQ4MV9jb25maWdfYW5lZyhzdHJ1Y3QgcGh5X2Rldmlj
-ZSAqcGh5ZGV2KQ0KPj4+ICAJcmV0dXJuIHJldDsNCj4+PiAgfQ0KPj4+ICANCj4+PiArc3RhdGlj
-IGludCBiY201NDYxNnNfcHJvYmUoc3RydWN0IHBoeV9kZXZpY2UgKnBoeWRldikNCj4+PiArew0K
-Pj4+ICsJaW50IHZhbCwgaW50Zl9zZWw7DQo+Pj4gKw0KPj4+ICsJdmFsID0gYmNtX3BoeV9yZWFk
-X3NoYWRvdyhwaHlkZXYsIEJDTTU0WFhfU0hEX01PREUpOw0KPj4+ICsJaWYgKHZhbCA8IDApDQo+
-Pj4gKwkJcmV0dXJuIHZhbDsNCj4+PiArDQo+Pj4gKwkvKiBUaGUgUEhZIGlzIHN0cmFwcGVkIGlu
-IFJHTUlJIHRvIGZpYmVyIG1vZGUgd2hlbiBJTlRFUkZfU0VMWzE6MF0NCj4+PiArCSAqIGlzIDAx
-Yi4NCj4+PiArCSAqLw0KPj4+ICsJaW50Zl9zZWwgPSAodmFsICYgQkNNNTRYWF9TSERfSU5URl9T
-RUxfTUFTSykgPj4gMTsNCj4+PiArCWlmIChpbnRmX3NlbCA9PSAxKSB7DQo+Pj4gKwkJdmFsID0g
-YmNtX3BoeV9yZWFkX3NoYWRvdyhwaHlkZXYsIEJDTTU0NjE2U19TSERfMTAwRlhfQ1RSTCk7DQo+
-Pj4gKwkJaWYgKHZhbCA8IDApDQo+Pj4gKwkJCXJldHVybiB2YWw7DQo+Pj4gKw0KPj4+ICsJCS8q
-IEJpdCAwIG9mIHRoZSBTZXJEZXMgMTAwLUZYIENvbnRyb2wgcmVnaXN0ZXIsIHdoZW4gc2V0DQo+
-Pj4gKwkJICogdG8gMSwgc2V0cyB0aGUgTUlJL1JHTUlJIC0+IDEwMEJBU0UtRlggY29uZmlndXJh
-dGlvbi4NCj4+PiArCQkgKiBXaGVuIHRoaXMgYml0IGlzIHNldCB0byAwLCBpdCBzZXRzIHRoZSBH
-TUlJL1JHTUlJIC0+DQo+Pj4gKwkJICogMTAwMEJBU0UtWCBjb25maWd1cmF0aW9uLg0KPj4+ICsJ
-CSAqLw0KPj4+ICsJCWlmICghKHZhbCAmIEJDTTU0NjE2U18xMDBGWF9NT0RFKSkNCj4+PiArCQkJ
-cGh5ZGV2LT5kZXZfZmxhZ3MgfD0gUEhZX0JDTV9GTEFHU19NT0RFXzEwMDBCWDsNCj4+PiArCX0N
-Cj4+PiArDQo+Pj4gKwlyZXR1cm4gMDsNCj4+PiArfQ0KPj4+ICsNCj4+PiAgc3RhdGljIGludCBi
-Y201NDYxNnNfY29uZmlnX2FuZWcoc3RydWN0IHBoeV9kZXZpY2UgKnBoeWRldikNCj4+PiAgew0K
-Pj4+ICAJaW50IHJldDsNCj4+PiAgDQo+Pj4gIAkvKiBBbmVnIGZpcnNseS4gKi8NCj4+PiAtCXJl
-dCA9IGdlbnBoeV9jb25maWdfYW5lZyhwaHlkZXYpOw0KPj4+ICsJaWYgKHBoeWRldi0+ZGV2X2Zs
-YWdzICYgUEhZX0JDTV9GTEFHU19NT0RFXzEwMDBCWCkNCj4+PiArCQlyZXQgPSBnZW5waHlfYzM3
-X2NvbmZpZ19hbmVnKHBoeWRldik7DQo+Pj4gKwllbHNlDQo+Pj4gKwkJcmV0ID0gZ2VucGh5X2Nv
-bmZpZ19hbmVnKHBoeWRldik7DQo+Pj4gIA0KPj4NCj4+IEknbSBqdXN0IHdvbmRlcmluZyB3aGV0
-aGVyIGl0IG5lZWRzIHRvIGJlIGNvbnNpZGVyZWQgdGhhdCAxMDBiYXNlLUZYDQo+PiBkb2Vzbid0
-IHN1cHBvcnQgYXV0by1uZWdvdGlhdGlvbi4gSSBzdXBwb3NlIEJNU1IgcmVwb3J0cyBhbmVnIGFz
-DQo+PiBzdXBwb3J0ZWQsIHRoZXJlZm9yZSBwaHlsaWIgd2lsbCB1c2UgYW5lZyBwZXIgZGVmYXVs
-dC4NCj4+IE5vdCBzdXJlIHdobyBjb3VsZCBzZXQgMTAwQmFzZS1GWCBtb2RlIHdoZW4sIGJ1dCBt
-YXliZSBhdCB0aGF0IHBsYWNlDQo+PiBhbHNvIHBoeWRldi0+YXV0b25lZyBuZWVkcyB0byBiZSBj
-bGVhcmVkLiBEaWQgeW91IHRlc3QgMTAwQmFzZS1GWCBtb2RlPw0KPiANCj4gSSdtIGRvdWJ0aW5n
-IGlmIDEwMEJhc2UtRlggd29ya3MuIEJlc2lkZXMgYXV0by1uZWdvdGlhdGlvbiwgMTAwQmFzZS1G
-WCBDb250cm9sL1N0YXR1cyByZWdpc3RlcnMgYXJlIGRlZmluZWQgaW4gc2hhZG93IHJlZ2lzdGVy
-IGluc3RlYWQgb2YgTUlJX0JNQ1IgYW5kIE1JSV9CTVNSLg0KPiANCj4gVW5mb3J0dW5hdGVseSBJ
-IGRvbid0IGhhdmUgZW52aXJvbm1lbnQgdG8gdGVzdCAxMDBCYXNlLUZYIGFuZCB0aGF0J3Mgd2h5
-IEkgb25seSBtYWtlIGNoYW5nZXMgd2hlbiB0aGUgUEhZIGlzIHdvcmtpbmcgaW4gMTAwMFggbW9k
-ZS4NCg0KSSBjYW4gcHJlcGFyZSBhIHBhdGNoIGZvciAxMDBCYXNlLUZYIGJhc2VkIG9uIG15IHVu
-ZGVyc3RhbmRpbmcgb2YgYmNtNTQ2MTZzIGRhdGFzaGVldCwgYnV0IHRoZSBwYXRjaCB3b3VsZCBi
-ZSBqdXN0IGNvbXBpbGUtdGVzdGVkIDopDQoNCg0KVGhhbmtzLA0KDQpUYW8NCg==
+On Fri, Aug 9, 2019 at 1:21 PM James Feist <james.feist@linux.intel.com> wrote:
+>
+> On 8/9/19 12:30 PM, Patrick Venture wrote:
+> > On Fri, Aug 9, 2019 at 12:24 PM Patrick Venture <venture@google.com> wrote:
+> >>
+> >> On Fri, Aug 9, 2019 at 12:20 PM Patrick Venture <venture@google.com> wrote:
+> >>>
+> >>> On Fri, Aug 9, 2019 at 11:57 AM Patrick Venture <venture@google.com> wrote:
+> >>>>
+> >>>> On Fri, Aug 9, 2019 at 11:50 AM Patrick Venture <venture@google.com> wrote:
+> >>>>>
+> >>>>> On Fri, Aug 9, 2019 at 11:45 AM James Feist <james.feist@linux.intel.com> wrote:
+> >>>>>>
+> >>>>>> On 8/9/19 11:33 AM, Patrick Venture wrote:
+> >>>>>>> On Fri, Aug 9, 2019 at 11:22 AM James Feist <james.feist@linux.intel.com> wrote:
+> >>>>>>>>
+> >>>>>>>> On 8/9/19 9:53 AM, Patrick Venture wrote:
+> >>>>>>>>> Given the following:
+> >>>>>>>>>
+> >>>>>>>>> busctl introspect --no-pager xyz.openbmc_project.FruDevice
+> >>>>>>>>> /xyz/openbmc_project/FruDevice/Altie
+> >>>>>>>>> NAME                                TYPE      SIGNATURE RESULT/VALUE
+> >>>>>>>>>                FLAGS
+> >>>>>>>>> org.freedesktop.DBus.Introspectable interface -         -
+> >>>>>>>>>                -
+> >>>>>>>>> .Introspect                         method    -         s
+> >>>>>>>>>                -
+> >>>>>>>>> org.freedesktop.DBus.Peer           interface -         -
+> >>>>>>>>>                -
+> >>>>>>>>> .GetMachineId                       method    -         s
+> >>>>>>>>>                -
+> >>>>>>>>> .Ping                               method    -         -
+> >>>>>>>>>                -
+> >>>>>>>>> org.freedesktop.DBus.Properties     interface -         -
+> >>>>>>>>>                -
+> >>>>>>>>> .Get                                method    ss        v
+> >>>>>>>>>                -
+> >>>>>>>>> .GetAll                             method    s         a{sv}
+> >>>>>>>>>                -
+> >>>>>>>>> .Set                                method    ssv       -
+> >>>>>>>>>                -
+> >>>>>>>>> .PropertiesChanged                  signal    sa{sv}as  -
+> >>>>>>>>>                -
+> >>>>>>>>> xyz.openbmc_project.FruDevice       interface -         -
+> >>>>>>>>>                -
+> >>>>>>>>> .ADDRESS                            property  u         82
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .BOARD_LANGUAGE_CODE                property  s         "25"
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .BOARD_MANUFACTURER                 property  s         "Inventec"
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .BOARD_MANUFACTURE_DATE             property  s         "Thu Jul 11
+> >>>>>>>>> 17:09:00 2019" emits-change
+> >>>>>>>>> .BOARD_PART_NUMBER                  property  s         "1051867-01"
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .BOARD_PRODUCT_NAME                 property  s         "Altie"
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .BOARD_SERIAL_NUMBER                property  s
+> >>>>>>>>> "ALTIVT192700026"          emits-change
+> >>>>>>>>> .BUS                                property  u         1
+> >>>>>>>>>                emits-change
+> >>>>>>>>> .Common_Format_Version              property  s         "1"
+> >>>>>>>>>                emits-change
+> >>>>>>>>>
+> >>>>>>>>> I expected entity-manager with this profile to populate dbus properly:
+> >>>>>>>>> configurations/altie.json
+> >>>>>>>>> {
+> >>>>>>>>>        "Name" : "Altie",
+> >>>>>>>>>        "Probe" : "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Altie'})",
+> >>>>>>>>>        "Type": "Board",
+> >>>>>>>>>        "xyz.openbmc_project.Inventory.Decorator.Asset": {
+> >>>>>>>>>            "Manufacturer": "$BOARD_MANUFACTURER",
+> >>>>>>>>>            "Model": "$BOARD_PRODUCT_NAME",
+> >>>>>>>>>            "PartNumber": "$BOARD_PART_NUMBER",
+> >>>>>>>>>            "SerialNumber": "$BOARD_SERIAL_NUMBER"
+> >>>>>>>>>        }
+> >>>>>>>>> }
+> >>>>>>>>>
+> >>>>>>>>> Instead:
+> >>>>>>>>> root@semitruck:~# busctl introspect --no-pager
+> >>>>>>>>> xyz.openbmc_project.EntityManager
+> >>>>>>>>> /xyz/openbmc_project/inventory/system/board/Altie
+> >>>>>>>>> NAME                                          TYPE      SIGNATURE
+> >>>>>>>>> RESULT/VALUE                             FLAGS
+> >>>>>>>>> org.freedesktop.DBus.Introspectable           interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .Introspect                                   method    -         s
+> >>>>>>>>>                                        -
+> >>>>>>>>> org.freedesktop.DBus.Peer                     interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .GetMachineId                                 method    -         s
+> >>>>>>>>>                                        -
+> >>>>>>>>> .Ping                                         method    -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> org.freedesktop.DBus.Properties               interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .Get                                          method    ss        v
+> >>>>>>>>>                                        -
+> >>>>>>>>> .GetAll                                       method    s
+> >>>>>>>>> a{sv}                                    -
+> >>>>>>>>> .Set                                          method    ssv       -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .PropertiesChanged                            signal    sa{sv}as  -
+> >>>>>>>>>                                        -
+> >>>>>>>>> xyz.openbmc_project.AddObject                 interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .AddObject                                    method    a{sv}     -
+> >>>>>>>>>                                        -
+> >>>>>>>>> xyz.openbmc_project.Inventory.Decorator.Asset interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .Manufacturer                                 property  s
+> >>>>>>>>> "$BOARD_MANUFACTURER"                    emits-change
+> >>>>>>>>> .Model                                        property  s
+> >>>>>>>>> "$BOARD_PRODUCT_NAME"                    emits-change
+> >>>>>>>>> .PartNumber                                   property  s
+> >>>>>>>>> "$BOARD_PART_NUMBER"                     emits-change
+> >>>>>>>>> .SerialNumber                                 property  s
+> >>>>>>>>> "$BOARD_SERIAL_NUMBER"                   emits-change
+> >>>>>>>>> xyz.openbmc_project.Inventory.Item.Board      interface -         -
+> >>>>>>>>>                                        -
+> >>>>>>>>> .Name                                         property  s
+> >>>>>>>>> "Altie"                                  emits-change
+> >>>>>>>>> .Probe                                        property  s
+> >>>>>>>>> "xyz.openbmc_project.FruDevice({\'BOA... emits-change
+> >>>>>>>>> .Type                                         property  s
+> >>>>>>>>> "Board"                                  emits-change
+> >>>>>>>>>
+> >>>>>>>>> I must be doing something obvious and silly.  Please advise.
+> >>>>>>>>
+> >>>>>>>> Entity-manager caches the result and only updates if etc/os-release
+> >>>>>>>> changes. There is a version file in /var/configuration/version, if you
+> >>>>>>>> delete this it'll rescan fresh. It looks right to me.. so I imagine this
+> >>>>>>>> is what is happening.
+> >>>>>>>
+> >>>>>>> I deleted the /var/configuration/version file and rebooted the BMC.
+> >>>>>>> it didn't pick it up -- I decided a rescan was too subtle :)
+> >>>>>>>
+> >>>>>>> Any other ideas?  I've started digging into entity-manager further.
+> >>>>>>
+> >>>>>> Sorry I don't see anything obvious... it should all be happening in this
+> >>>>>> function
+> >>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1130
+> >>>>>>
+> >>>>>>
+> >>>>>> Specifically it should be making it to here:
+> >>>>>>
+> >>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1291
+> >>>>>
+> >>>>> Thanks, that's where I'm now looking --
+> >>>>
+> >>>> I deleted everything from /var/configuration/ rebooted, and added some
+> >>>> debug to dig into the specific template replacement:
+> >>>>
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: strPtr value:
+> >>>> '$BOARD_MANUFACTURER'
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: templateName:
+> >>>> $BOARD_MANUFACTURER, find: true
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: keyPair.value(): "Inventec"
+> >>>>
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: strPtr value:
+> >>>> '$BOARD_PRODUCT_NAME'
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: templateName:
+> >>>> $BOARD_PRODUCT_NAME, find: true
+> >>>> Aug 09 18:51:47 semitruck entity-manager[2700]: keyPair.value(): "Altie"
+> >>>
+> >>> So the visitor is finding and applying the value to the template, but
+> >>> that change isn't propagating up.  It works for the card that's found
+> >>> afterwards...  The only real difference is, the other profile also
+> >>> Exposes, whereas this one doesn't.  Is there a step that's skipped if
+> >>> there isn't an "Exposes" key?
+> >>
+> >> Looks like this part is skipped:
+> >> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1618
+> >>
+> >> _systemConfiguration[recordName] = record;
+> >> logDeviceAdded(record);
+> >> foundDeviceIdx++;
+> >
+> > I think foundDeviceIdx is the culprit because it isnt' always
+> > incremented.  So, I've moved that before the contnue.
+>
+> I think you're close.. I think this line is your issue if you have no
+> exposes:
+>
+> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1539
+>
+> you need to hit here regardless:
+> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1619
+>
+> That continue should just be removed.
+
+Yup, it should :D :D
+
+xyz.openbmc_project.Inventory.Decorator.Asset interface -         -
+                                    -
+.Manufacturer                                 property  s
+"Inventec"                               emits-change
+.Model                                        property  s
+"Altie"                                  emits-change
+.PartNumber                                   property  s
+"1051867-01"                             emits-change
+.SerialNumber                                 property  s
+"ALTIVT192700026"                        emits-change
+
+>
+>
+> >
+> >>
+> >> Hm.
+> >>
+> >>>
+> >>>>
+> >>>>
+> >>>>
+> >>>>>
+> >>>>>>
+> >>>>>> foundDevice should be your fru.... and should be populated here:
+> >>>>>>
+> >>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L425
+> >>>>>
+> >>>>> I did not think to look here, thanks!
+> >>>>>
+> >>>>>>
+> >>>>>> Hope that helps
+> >>>>>>
+> >>>>>> -James
+> >>>>>>
+> >>>>>>
+> >>>>>>
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> -James
+> >>>>>>>>>
+> >>>>>>>>> Thanks,
+> >>>>>>>>> Patrick
+> >>>>>>>>>
