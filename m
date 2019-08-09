@@ -1,63 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF23888485
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 23:19:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF59A8856A
+	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 00:00:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 464ymS61lJzDrK3
-	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 07:19:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464zgR4B7yzDqyH
+	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 08:00:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::b29; helo=mail-yb1-xb29.google.com;
- envelope-from=jandraara@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2a00:1450:4864:20::441; helo=mail-wr1-x441.google.com;
+ envelope-from=hkallweit1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="lqa11Ka1"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="QHaYgj5d"; 
  dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
- [IPv6:2607:f8b0:4864:20::b29])
+Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
+ [IPv6:2a00:1450:4864:20::441])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 464ylv0k1xzDrHl
- for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 07:18:50 +1000 (AEST)
-Received: by mail-yb1-xb29.google.com with SMTP id d9so29787865ybf.3
- for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 14:18:50 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464zfr3yv0zDq61
+ for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 07:59:31 +1000 (AEST)
+Received: by mail-wr1-x441.google.com with SMTP id r1so399472wrl.7
+ for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 14:59:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=V6Spd4XzVK0ABOBTSeoWqlLz/n5xL8gfN2LOYQJAYgs=;
- b=lqa11Ka1FDGrRcEw8lxOFN3k6sSe3bx4ZvvpAfv0phQ8ZRQSBA5AxQKbcm9dhgvZM4
- aMYaV5hFNU3SbCe3QST2uXhYXuD+2ase2twaNq44fQgRqg6EFvQyfNqaxqxJ3xnp6lI8
- jcr7gXSOfrQ2mfdCWKYelGE3LVoh5oKKLSPupY6qR6pCfPyFeut79DhAMXrB7B/xI+Y7
- wQVtSLLwJCFjfkNPSoQ7OSYusohdEiLICj7aGOixdl5q1Pq+uK3b2Nuc+hyukRE/aunJ
- AReKecnx1mdG68WKelXF0VoDbAjOyhHnFI8ntJTgyc9zOaNVsrJcqaYB2lrEJWObqCyS
- f4kA==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=C8rcwrHAcumdiWA8PpigkBNKuYiY/rhXO+GoUfqjFqk=;
+ b=QHaYgj5dLh067tINoIWjCFy70yFeFkAOVdO8NzPZci6BLZkrsLi6R1C74Q70+sBgwW
+ CUFLb1DA7kqlog/YFQ9p0u5Egb4wZ+qVKFPq4Zx7GsiV1gM7LwxNSpS9R08YC34XyAN8
+ XeXnkS6c6JiH8DMZDjMu25h32fjvdBQqqWdx8AV4u1JI9scMd5+vqiDgSFwj54LjBEE2
+ y4/pNLSORG/s8CAkcYj4VeE2c4b1LwjuE9h+UJHEgiXzp4QpvM+sbHeXb0opF1r1j8hM
+ qNZMztQryu7uMBUmxXTZTrAxyK9uqIikCA0mSFzUGIQNLlTZSFuQG3Bg3CSXdSAe6vN+
+ GlGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=V6Spd4XzVK0ABOBTSeoWqlLz/n5xL8gfN2LOYQJAYgs=;
- b=n2x24hqHeuQoU+8vWxxEqYpOTjo5CbGW3UERzaXRIJv8JKxWeGuvXXo1Y+JeNz/YZ0
- OMefOI5rjr44UPhW7WSA5jS6E7T6Y39vSaaZlho4GyW7feVvcibnZunOd9GhMaMCyHn4
- fTN3aQohFTKJrEr45NuQ0DHaTyAGbSgMAxCe+ZLJPtbx2dEPrFPV7dm+WSjl6Hg1u8o3
- PxybBj4h/aByHatEMLqTRRf4/sR5aJ867ZC2prTappGfoKJzHG2Mw4zEPZ5qf41oGXBv
- UuU9g+RUIsbdgioXPmnxGWeXJUlIuhQIU8RtE8E1Bdjf4Nk7acWrq0agkFMAUV2E/Bz9
- Eg3A==
-X-Gm-Message-State: APjAAAXwS7ESPc6+EbLN/zBIQQgc5QQfEaH3X2IOCxpi4n8QKO6GQlt1
- 7uYWCJch9M/1RkTJVIco/RdtgNrZnbFuE2WI5kJhSjwi
-X-Google-Smtp-Source: APXvYqwevGWuNNn9/R6gU5JDDmiAHJvPjKATik0axpSib4Ow9EBaP55ct92wJfLLF/Nk1tLW/NnlAGebQ3Y6p4fz24Q=
-X-Received: by 2002:a25:ad45:: with SMTP id l5mr10880004ybe.134.1565385526820; 
- Fri, 09 Aug 2019 14:18:46 -0700 (PDT)
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=C8rcwrHAcumdiWA8PpigkBNKuYiY/rhXO+GoUfqjFqk=;
+ b=AZmfYiDHapFdgo8GCcdhpbNAIXZrs76gPtJAbQJPlHpD3al5ckCmh/unoyOk3efdMw
+ 3xo0dU4WknbFdMiSoEjVA+mtyEeoVZ+SJboTFHQvt3xwXy5QnmW4npr/yWMT3L0WZd7x
+ w+hWGpUyKD95PmmKlbJ3IM8sSDHoiDUh1bzuxfglQlmNKMd1Yg9hVn55y9TXFyOoofLF
+ vD9ZmzNeKJ1MIT/rMpW7RA2Rf1p+5ZyhVZ2FWhy4R3t0HhY2vWi8uj9xGepF3Tfug/AF
+ 4FcsqHpcfPatj5kyFx8tqlaZ40LfLNd6Mhtm6giWeL1z4MIxEHabbC+oNqUCzJpD7hLv
+ 0IRQ==
+X-Gm-Message-State: APjAAAXhVM3LWiTsTFUuabcPCD4XfE1NjBuz5JTqBBcl46T8BMuL6/z+
+ I+CuMhjiN9mWrwmuy5TcEQ7U7iSe
+X-Google-Smtp-Source: APXvYqy/PTSD4jDsZxzUrYQcl6ky488C/MqyCG0t73bf69LOBHIbiv7HAGZoeCMkdYPSSsi7RcYAUA==
+X-Received: by 2002:adf:ce04:: with SMTP id p4mr21581788wrn.227.1565387967114; 
+ Fri, 09 Aug 2019 14:59:27 -0700 (PDT)
+Received: from ?IPv6:2003:ea:8f2f:3200:e9e3:33ea:6814:ab7?
+ (p200300EA8F2F3200E9E333EA68140AB7.dip0.t-ipconnect.de.
+ [2003:ea:8f2f:3200:e9e3:33ea:6814:ab7])
+ by smtp.googlemail.com with ESMTPSA id r16sm10068368wrc.81.2019.08.09.14.59.26
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 09 Aug 2019 14:59:26 -0700 (PDT)
+Subject: Re: [Potential Spoof] Re: [PATCH net-next v6 3/3] net: phy: broadcom:
+ add 1000Base-X support for BCM54616S
+To: Tao Ren <taoren@fb.com>, Andrew Lunn <andrew@lunn.ch>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ Justin Chen <justinpopo6@gmail.com>, Vladimir Oltean <olteanv@gmail.com>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <20190809054411.1015962-1-taoren@fb.com>
+ <97cd059c-d98e-1392-c814-f3bd628e6366@gmail.com>
+ <e556dd17-ef85-3c61-bc08-17db02d9a5dc@fb.com>
+ <8f0e172b-575c-dab8-b695-c33dfc78fa8f@fb.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Message-ID: <d398ca57-575c-6e88-49a5-bf49cddfa2f0@gmail.com>
+Date: Fri, 9 Aug 2019 23:59:23 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-From: Jandra A <jandraara@gmail.com>
-Date: Fri, 9 Aug 2019 16:18:36 -0500
-Message-ID: <CAMTupoQYjPuVSJ_jJn8f5=7C9UD_azywbpjvTBr4yMVJ9bzanw@mail.gmail.com>
-Subject: Firmware updates - GUI Redesign
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000434657058fb5b826"
+In-Reply-To: <8f0e172b-575c-dab8-b695-c33dfc78fa8f@fb.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,115 +98,138 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000434657058fb5b826
-Content-Type: text/plain; charset="UTF-8"
+On 09.08.2019 23:13, Tao Ren wrote:
+> On 8/9/19 1:54 PM, Tao Ren wrote:
+>> Hi Heiner,
+>>
+>> On 8/9/19 1:21 PM, Heiner Kallweit wrote:
+>>> On 09.08.2019 07:44, Tao Ren wrote:
+>>>> The BCM54616S PHY cannot work properly in RGMII->1000Base-KX mode (for
+>>>> example, on Facebook CMM BMC platform), mainly because genphy functions
+>>>> are designed for copper links, and 1000Base-X (clause 37) auto negotiation
+>>>> needs to be handled differently.
+>>>>
+>>>> This patch enables 1000Base-X support for BCM54616S by customizing 3
+>>>> driver callbacks:
+>>>>
+>>>>   - probe: probe callback detects PHY's operation mode based on
+>>>>     INTERF_SEL[1:0] pins and 1000X/100FX selection bit in SerDES 100-FX
+>>>>     Control register.
+>>>>
+>>>>   - config_aneg: calls genphy_c37_config_aneg when the PHY is running in
+>>>>     1000Base-X mode; otherwise, genphy_config_aneg will be called.
+>>>>
+>>>>   - read_status: calls genphy_c37_read_status when the PHY is running in
+>>>>     1000Base-X mode; otherwise, genphy_read_status will be called.
+>>>>
+>>>> Signed-off-by: Tao Ren <taoren@fb.com>
+>>>> ---
+>>>>  Changes in v6:
+>>>>   - nothing changed.
+>>>>  Changes in v5:
+>>>>   - include Heiner's patch "net: phy: add support for clause 37
+>>>>     auto-negotiation" into the series.
+>>>>   - use genphy_c37_config_aneg and genphy_c37_read_status in BCM54616S
+>>>>     PHY driver's callback when the PHY is running in 1000Base-X mode.
+>>>>  Changes in v4:
+>>>>   - add bcm54616s_config_aneg_1000bx() to deal with auto negotiation in
+>>>>     1000Base-X mode.
+>>>>  Changes in v3:
+>>>>   - rename bcm5482_read_status to bcm54xx_read_status so the callback can
+>>>>     be shared by BCM5482 and BCM54616S.
+>>>>  Changes in v2:
+>>>>   - Auto-detect PHY operation mode instead of passing DT node.
+>>>>   - move PHY mode auto-detect logic from config_init to probe callback.
+>>>>   - only set speed (not including duplex) in read_status callback.
+>>>>   - update patch description with more background to avoid confusion.
+>>>>   - patch #1 in the series ("net: phy: broadcom: set features explicitly
+>>>>     for BCM54616") is dropped: the fix should go to get_features callback
+>>>>     which may potentially depend on this patch.
+>>>>
+>>>>  drivers/net/phy/broadcom.c | 54 +++++++++++++++++++++++++++++++++++---
+>>>>  include/linux/brcmphy.h    | 10 +++++--
+>>>>  2 files changed, 58 insertions(+), 6 deletions(-)
+>>>>
+>>>> diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+>>>> index 937d0059e8ac..fbd76a31c142 100644
+>>>> --- a/drivers/net/phy/broadcom.c
+>>>> +++ b/drivers/net/phy/broadcom.c
+>>>> @@ -383,9 +383,9 @@ static int bcm5482_config_init(struct phy_device *phydev)
+>>>>  		/*
+>>>>  		 * Select 1000BASE-X register set (primary SerDes)
+>>>>  		 */
+>>>> -		reg = bcm_phy_read_shadow(phydev, BCM5482_SHD_MODE);
+>>>> -		bcm_phy_write_shadow(phydev, BCM5482_SHD_MODE,
+>>>> -				     reg | BCM5482_SHD_MODE_1000BX);
+>>>> +		reg = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+>>>> +		bcm_phy_write_shadow(phydev, BCM54XX_SHD_MODE,
+>>>> +				     reg | BCM54XX_SHD_MODE_1000BX);
+>>>>  
+>>>>  		/*
+>>>>  		 * LED1=ACTIVITYLED, LED3=LINKSPD[2]
+>>>> @@ -451,12 +451,44 @@ static int bcm5481_config_aneg(struct phy_device *phydev)
+>>>>  	return ret;
+>>>>  }
+>>>>  
+>>>> +static int bcm54616s_probe(struct phy_device *phydev)
+>>>> +{
+>>>> +	int val, intf_sel;
+>>>> +
+>>>> +	val = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+>>>> +	if (val < 0)
+>>>> +		return val;
+>>>> +
+>>>> +	/* The PHY is strapped in RGMII to fiber mode when INTERF_SEL[1:0]
+>>>> +	 * is 01b.
+>>>> +	 */
+>>>> +	intf_sel = (val & BCM54XX_SHD_INTF_SEL_MASK) >> 1;
+>>>> +	if (intf_sel == 1) {
+>>>> +		val = bcm_phy_read_shadow(phydev, BCM54616S_SHD_100FX_CTRL);
+>>>> +		if (val < 0)
+>>>> +			return val;
+>>>> +
+>>>> +		/* Bit 0 of the SerDes 100-FX Control register, when set
+>>>> +		 * to 1, sets the MII/RGMII -> 100BASE-FX configuration.
+>>>> +		 * When this bit is set to 0, it sets the GMII/RGMII ->
+>>>> +		 * 1000BASE-X configuration.
+>>>> +		 */
+>>>> +		if (!(val & BCM54616S_100FX_MODE))
+>>>> +			phydev->dev_flags |= PHY_BCM_FLAGS_MODE_1000BX;
+>>>> +	}
+>>>> +
+>>>> +	return 0;
+>>>> +}
+>>>> +
+>>>>  static int bcm54616s_config_aneg(struct phy_device *phydev)
+>>>>  {
+>>>>  	int ret;
+>>>>  
+>>>>  	/* Aneg firsly. */
+>>>> -	ret = genphy_config_aneg(phydev);
+>>>> +	if (phydev->dev_flags & PHY_BCM_FLAGS_MODE_1000BX)
+>>>> +		ret = genphy_c37_config_aneg(phydev);
+>>>> +	else
+>>>> +		ret = genphy_config_aneg(phydev);
+>>>>  
+>>>
+>>> I'm just wondering whether it needs to be considered that 100base-FX
+>>> doesn't support auto-negotiation. I suppose BMSR reports aneg as
+>>> supported, therefore phylib will use aneg per default.
+>>> Not sure who could set 100Base-FX mode when, but maybe at that place
+>>> also phydev->autoneg needs to be cleared. Did you test 100Base-FX mode?
+>>
+>> I'm doubting if 100Base-FX works. Besides auto-negotiation, 100Base-FX Control/Status registers are defined in shadow register instead of MII_BMCR and MII_BMSR.
+>>
+>> Unfortunately I don't have environment to test 100Base-FX and that's why I only make changes when the PHY is working in 1000X mode.
+> 
+> I can prepare a patch for 100Base-FX based on my understanding of bcm54616s datasheet, but the patch would be just compile-tested 
+> 
+Support for 1000Base-X should be sufficient. Best mention the missing support for
+100Base-FX in the commit message and at a suited place in the driver code.
 
-Hello all,
-
-Please find below the links to the proposed redesigns for the firmware
-update panels.
-
-This design improves the usability of the current design by addressing the
-following items:
-
-   - Intuitiveness on which image is running
-   - Clarity on what the current activated images are and what they will be
-   on the next reboot
-   - Updating terminology to match what customers are used to (Functional
-   and active) is confusing
-   - (For double file) Support uploading multiple images at the same time
-   to avoid errors caused by a need for concurrent images.
-   -Support for a single image file containing both BMC and server code
-
-Single file upload prototype:
-https://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319207132_4-8-S-1_Home
-
-Double file upload prototype:
-
- https://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319212821_4-8-D-1_Home
-
-
-Github story: https://github.com/openbmc/phosphor-webui/issues/92
-
-
-*Note: These designs are only prototypes and not everything is clickable.
-To navigate, click on any flashing blue rectangles or use the right and
-left keyboard arrows. Comments are welcome in InVision (turn on comment
-mode in the bottom right corner of the screen) and in the Github story.
-
---000000000000434657058fb5b826
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p style=3D"box-sizing:border-box;margin-bottom:16px;margi=
-n-top:0px;color:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Seg=
-oe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;=
-Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px">Hello all,=
-=C2=A0</p><p style=3D"box-sizing:border-box;margin-bottom:16px;margin-top:0=
-px;color:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Segoe UI&q=
-uot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe U=
-I Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px">Please find below=
- the links to the proposed redesigns for the firmware update panels.=C2=A0<=
-/p><p style=3D"box-sizing:border-box;margin-bottom:16px;margin-top:0px;colo=
-r:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Segoe UI&quot;,He=
-lvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji=
-&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px">This design improves the=
- usability of the current design by addressing the following items:</p><ul =
-style=3D"box-sizing:border-box;margin-bottom:16px;margin-top:0px;padding-le=
-ft:2em;color:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Segoe =
-UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Seg=
-oe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px"><li style=3D"=
-box-sizing:border-box;margin-left:0px">Intuitiveness on which image is runn=
-ing</li><li style=3D"box-sizing:border-box;margin-top:0.25em;margin-left:0p=
-x">Clarity on what the current activated images are and what they will be o=
-n the next reboot</li><li style=3D"box-sizing:border-box;margin-top:0.25em;=
-margin-left:0px">Updating terminology to match what customers are used to (=
-Functional and active) is confusing</li><li style=3D"box-sizing:border-box;=
-margin-top:0.25em;margin-left:0px">(For double file) Support uploading mult=
-iple images at the same time to avoid errors caused by a need for concurren=
-t images.<br style=3D"box-sizing:border-box">-Support for a single image fi=
-le containing both BMC and server code</li></ul><p style=3D"box-sizing:bord=
-er-box;margin-bottom:16px;margin-top:0px;color:rgb(36,41,46);font-family:-a=
-pple-system,system-ui,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot=
-;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&q=
-uot;;font-size:14px">Single file upload prototype:=C2=A0<br style=3D"box-si=
-zing:border-box"><a rel=3D"nofollow" href=3D"https://ibm.invisionapp.com/sh=
-are/4XNZ0JAMJ7B#/319207132_4-8-S-1_Home" style=3D"box-sizing:border-box;bac=
-kground-color:transparent;color:rgb(3,102,214);text-decoration-line:none">h=
-ttps://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319207132_4-8-S-1_Home</a></p=
-><p style=3D"box-sizing:border-box;margin-top:0px;color:rgb(36,41,46);font-=
-family:-apple-system,system-ui,&quot;Segoe UI&quot;,Helvetica,Arial,sans-se=
-rif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI=
- Symbol&quot;;font-size:14px;margin-bottom:0px">Double file upload prototyp=
-e:</p><p style=3D"box-sizing:border-box;margin-top:0px;color:rgb(36,41,46);=
-font-family:-apple-system,system-ui,&quot;Segoe UI&quot;,Helvetica,Arial,sa=
-ns-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Seg=
-oe UI Symbol&quot;;font-size:14px;margin-bottom:0px">=C2=A0<a rel=3D"nofoll=
-ow" href=3D"https://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/319212821_4-8-D-=
-1_Home" style=3D"box-sizing:border-box;background-color:transparent;color:r=
-gb(3,102,214);text-decoration-line:none">https://ibm.invisionapp.com/share/=
-4XNZ0JAMJ7B#/319212821_4-8-D-1_Home</a></p><p style=3D"box-sizing:border-bo=
-x;margin-top:0px;color:rgb(36,41,46);font-family:-apple-system,system-ui,&q=
-uot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;=
-,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px;marg=
-in-bottom:0px"><br></p><p style=3D"box-sizing:border-box;margin-top:0px;col=
-or:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Segoe UI&quot;,H=
-elvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoj=
-i&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px;margin-bottom:0px">Githu=
-b story:=C2=A0<a href=3D"https://github.com/openbmc/phosphor-webui/issues/9=
-2" style=3D"font-family:Arial,Helvetica,sans-serif;font-size:small">https:/=
-/github.com/openbmc/phosphor-webui/issues/92</a></p><p style=3D"box-sizing:=
-border-box;margin-top:0px;color:rgb(36,41,46);font-family:-apple-system,sys=
-tem-ui,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Em=
-oji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:=
-14px;margin-bottom:0px"><br></p><p style=3D"box-sizing:border-box;margin-to=
-p:0px;color:rgb(36,41,46);font-family:-apple-system,system-ui,&quot;Segoe U=
-I&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Sego=
-e UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:14px;margin-bottom:0=
-px">*Note: These designs are only prototypes and not everything is clickabl=
-e. To navigate, click on any flashing blue rectangles or use the right and =
-left keyboard arrows. Comments are welcome in InVision (turn on comment mod=
-e in the bottom right corner of the screen) and in the Github story.=C2=A0<=
-/p></div>
-
---000000000000434657058fb5b826--
+> 
+> Thanks,
+> 
+> Tao
+> 
+Heiner
