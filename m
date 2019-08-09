@@ -2,48 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CE1287DFF
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 17:29:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D821787DED
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 17:23:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 464q0F05j3zDqNJ
-	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 01:29:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464psw511bzDrJp
+	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 01:23:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=collabora.com
- (client-ip=2a00:1098:0:82:1000:25:2eeb:e3e3; helo=bhuna.collabora.co.uk;
- envelope-from=boris.brezillon@collabora.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::344; helo=mail-ot1-x344.google.com;
+ envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=collabora.com
-X-Greylist: delayed 85997 seconds by postgrey-1.36 at bilbo;
- Sat, 10 Aug 2019 01:26:13 AEST
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk
- [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="VslAPcqS"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com
+ [IPv6:2607:f8b0:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 464px118mGzDq7W
- for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 01:26:09 +1000 (AEST)
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- (Authenticated sender: bbrezillon)
- by bhuna.collabora.co.uk (Postfix) with ESMTPSA id C093628CFB2;
- Fri,  9 Aug 2019 16:25:59 +0100 (BST)
-Date: Fri, 9 Aug 2019 17:25:57 +0200
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2 2/2] spi: npcm-fiu: add NPCM FIU controller driver
-Message-ID: <20190809172557.346e7c41@collabora.com>
-In-Reply-To: <CAP6Zq1iW0C0FDOoqmn5r_xk5HQFWw+GgLfeapvt-8mB50N2Vvg@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464psH02PSzDrBr
+ for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 01:22:58 +1000 (AEST)
+Received: by mail-ot1-x344.google.com with SMTP id j19so57326803otq.2
+ for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 08:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=CWWSN41R73JmJLmr5Omp4qhrEHUGaCWZI+3jXv5vv+8=;
+ b=VslAPcqSBqWD6Vc0Spz+BvayLUidp2lEgHnLNz/GHOQteRzNVIZ54l+z8STXet5mhZ
+ 7r7mht2bOW9tZ09u6BwrIt+TOEvqOW0afCIPyiDrhpAOtXS9TwcKP+7826T2YHqnrdMS
+ piLhqPvbLMVMZci+GkrE1xxAZYDqeFFaGNJTGINEchcMWzO6G1DS4rXABj6CnUguKL3P
+ lZ+fBeXUh6dL2NuqewrmU3YyfDnFA5xOOAP1pHkVVhsQwxBWae80Nu/a+71ibmO1EcTA
+ sUYQcULbMinQyhxotc/jtEcbD+aQ8qSLvW6OWXYT3bKgiYIndsx1R8FT0IzpTAbHJ9rb
+ QOZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=CWWSN41R73JmJLmr5Omp4qhrEHUGaCWZI+3jXv5vv+8=;
+ b=XTvtMkuf4HgarHIDqpja5wdkXAGGWPRAAuuCQZXRXH58QBNSXUiYn2mwEfYIhMx68H
+ LjO/lrZE3FmGioe4qzlqOD3zdRl0TNWY70kjcGyXNiDLRI7pPIzUHdcuzG0U1keX8Imq
+ 7Tnixkj1LeyoVGrSDrTmwny56ket3aFQeJkrkXT4jwzG93i4hNUVbzCgu0yk5BituJjZ
+ MW8lLW1EouVbkCEv1fKZP82W38WUT1SSvukKCOykHuAl1g/94uNqjiwt7VUL7i8kagCI
+ GS+iHdOUhDIy5KZpAQNth4prAMKcAms9TI4XagQfCpQ9UkhNd+mxrKKxN71Qo67jy0MD
+ IqwQ==
+X-Gm-Message-State: APjAAAVNskErr+1jhCppD/EX2FHGSEKXYRr3QuLzIKEqyq+S6fXbbBw/
+ n+n42cU8+TeHmwe/WAsy7prCENf6m+vwaz878y8=
+X-Google-Smtp-Source: APXvYqzY0Mx/wJLxBSDDpV1dOzPZXd9lzLQSYYXVt/6mLEU0ex1Oie0+UuQNU6YnDaSEG19u8LEsacAck+hKQ1XufAY=
+X-Received: by 2002:aca:b788:: with SMTP id h130mr6968291oif.85.1565364175359; 
+ Fri, 09 Aug 2019 08:22:55 -0700 (PDT)
+MIME-Version: 1.0
 References: <20190808131448.349161-1-tmaimon77@gmail.com>
  <20190808131448.349161-3-tmaimon77@gmail.com>
- <20190808173232.4d79d698@collabora.com>
- <CAP6Zq1iW0C0FDOoqmn5r_xk5HQFWw+GgLfeapvt-8mB50N2Vvg@mail.gmail.com>
-Organization: Collabora
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ <20190808132740.GG3795@sirena.co.uk>
+ <CAP6Zq1j7jHejdx9h-nxCJcVjtGx_3rHmay7R8nn11DLaE8Q4gA@mail.gmail.com>
+ <20190808185522.GJ3795@sirena.co.uk>
+In-Reply-To: <20190808185522.GJ3795@sirena.co.uk>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Fri, 9 Aug 2019 18:31:10 +0300
+Message-ID: <CAP6Zq1jzvEPWehT5VVd6+=zTB7c+RsGjPr2XzmQa4n1NDOrSOg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] spi: npcm-fiu: add NPCM FIU controller driver
+To: Mark Brown <broonie@kernel.org>
+Content-Type: multipart/alternative; boundary="0000000000009de0be058fb0bf5c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,51 +82,79 @@ Cc: Mark Rutland <mark.rutland@arm.com>,
  Patrick Venture <venture@google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- Mark Brown <broonie@kernel.org>, linux-spi@vger.kernel.org,
- Benjamin Fair <benjaminfair@google.com>
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-spi@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 9 Aug 2019 18:26:23 +0300
-Tomer Maimon <tmaimon77@gmail.com> wrote:
+--0000000000009de0be058fb0bf5c
+Content-Type: text/plain; charset="UTF-8"
 
-> Hi Boris,
-> 
-> Thanks a lot for your comment.
-> 
-> On Thu, 8 Aug 2019 at 18:32, Boris Brezillon <boris.brezillon@collabora.com>
-> wrote:
-> 
-> > On Thu,  8 Aug 2019 16:14:48 +0300
-> > Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >
-> >  
-> > > +
-> > > +static const struct spi_controller_mem_ops npcm_fiu_mem_ops = {
-> > > +     .exec_op = npcm_fiu_exec_op,  
-> >
-> > No npcm_supports_op()? That's suspicious, especially after looking at
-> > the npcm_fiu_exec_op() (and the functions called from there) where the
-> > requested ->buswidth seems to be completely ignored...
-> >
-> > Sorry but I do not fully understand it, do you mean a support for the  
-> buswidth?
-> If yes it been done in the UMA functions as follow:
-> 
->                 uma_cfg |= ilog2(op->cmd.buswidth);
->                 uma_cfg |= ilog2(op->addr.buswidth) <<
->                         NPCM_FIU_UMA_CFG_ADBPCK_SHIFT;
->                 uma_cfg |= ilog2(op->data.buswidth) <<
->                         NPCM_FIU_UMA_CFG_WDBPCK_SHIFT;
->                 uma_cfg |= op->addr.nbytes << NPCM_FIU_UMA_CFG_ADDSIZ_SHIFT;
->                 regmap_write(fiu->regmap, NPCM_FIU_UMA_ADDR, op->addr.val);
+Hi Mark,
+
+Thanks for your prompt reply.
+
+I will like to send another patch with support for the spi_mem_op->addr
+field.
+
+I am going to vacation until 25/08 I will send the new patch (V3) as soon I
+will be back.
+
+Thanks for your support,
+
+Tomer
+
+On Thu, 8 Aug 2019 at 21:55, Mark Brown <broonie@kernel.org> wrote:
+
+> On Thu, Aug 08, 2019 at 06:37:06PM +0300, Tomer Maimon wrote:
+>
+> > for example in our driver we modify the access type (singe, dual or quad)
+> > according the op->addr.buswidth
+> > for example in the npcm_fiu_set_drd function.
+>
+> >         regmap_update_bits(fiu->regmap, NPCM_FIU_DRD_CFG,
+> >                            NPCM_FIU_DRD_CFG_ACCTYPE,
+> >                            ilog2(op->addr.buswidth) <<
+> >                            NPCM_FIU_DRD_ACCTYPE_SHIFT);
+>
+> > we also modify it in the UMA R/W functions.
+>
+> Ah, it's only for the flash functions - that's fine.
 >
 
-Hm, the default supports_op() implementation might be just fine for
-your use case. But there's one thing you still need to check: the
-number of addr cycles (or address size as you call it in this driver).
-Looks like your IP is limited to 4 address cycles, if I'm right, you
-should reject any operation that have op->addr.nbytes > 4. I also
-wonder if there's a limitation on the data size you can have on a
-single transfer. If there's one you should implement ->adjust_op() too.
+--0000000000009de0be058fb0bf5c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Mark,<div><br></div><div>Thanks for your prompt reply.<=
+/div><div><br></div><div>I will like to send another patch with support for=
+ the spi_mem_op-&gt;addr field.</div><div><br></div><div>I am going to vaca=
+tion until 25/08 I will send the new patch (V3) as soon I will be back.</di=
+v><div><br></div><div>Thanks for your support,</div><div><br></div><div>Tom=
+er</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmai=
+l_attr">On Thu, 8 Aug 2019 at 21:55, Mark Brown &lt;<a href=3D"mailto:broon=
+ie@kernel.org" target=3D"_blank">broonie@kernel.org</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Aug 08, 2019 at =
+06:37:06PM +0300, Tomer Maimon wrote:<br>
+<br>
+&gt; for example in our driver we modify the access type (singe, dual or qu=
+ad)<br>
+&gt; according the op-&gt;addr.buswidth<br>
+&gt; for example in the npcm_fiu_set_drd function.<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0regmap_update_bits(fiu-&gt;regmap, NP=
+CM_FIU_DRD_CFG,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_FIU_DRD_CFG_ACCTYPE,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ilog2(op-&gt;addr.buswidth) &lt;&lt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_FIU_DRD_ACCTYPE_SHIFT);<br>
+<br>
+&gt; we also modify it in the UMA R/W functions.<br>
+<br>
+Ah, it&#39;s only for the flash functions - that&#39;s fine.<br>
+</blockquote></div>
+
+--0000000000009de0be058fb0bf5c--
