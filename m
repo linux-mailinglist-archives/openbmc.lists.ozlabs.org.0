@@ -1,53 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81171883C8
-	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 22:21:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28E56883CC
+	for <lists+openbmc@lfdr.de>; Fri,  9 Aug 2019 22:22:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 464xV31ZNRzDqSH
-	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 06:21:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 464xWK4v4tzDqQs
+	for <lists+openbmc@lfdr.de>; Sat, 10 Aug 2019 06:22:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::344; helo=mail-wm1-x344.google.com;
+ envelope-from=hkallweit1@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="uFKxwL3J"; 
+ dkim-atps=neutral
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
+ [IPv6:2a00:1450:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 464xTG40ThzDq7g
- for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 06:21:04 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 09 Aug 2019 13:21:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,366,1559545200"; d="scan'208";a="259138484"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by orsmga001.jf.intel.com with ESMTP; 09 Aug 2019 13:21:01 -0700
-Subject: Re: entity-manager unexpected handling of template parameters
-To: Patrick Venture <venture@google.com>
-References: <CAO=notycFS1Zhjjt_n5J+mQwLTToZYwW-SM-FKQ-aaeSs4hMUw@mail.gmail.com>
- <56c9b48b-da29-8ec3-dc16-0e37072c2eb7@linux.intel.com>
- <CAO=notzfd57brCmkUZyegCC9RkwxY1zp9GSXEMt8GGWctX8PhA@mail.gmail.com>
- <6c111451-8e2c-42ef-2a36-77f040879f2f@linux.intel.com>
- <CAO=notxsMejO5T1Qg88PuPKBG6LPeTifjWbVuxAS11qUF7DMhg@mail.gmail.com>
- <CAO=notxRQuDT+AZxWV-fOz=dhv15MZJ3RZkcpgD1i_fx9U-XcQ@mail.gmail.com>
- <CAO=noty5B5PVrzmfXox7snF-Y6U29D_MiJ9LM-gjJDjfiXwrZg@mail.gmail.com>
- <CAO=notzeg9ZYEEMJ43G7AcJ2Ot2n13or-9_zyFFOxCH2Ua6k1g@mail.gmail.com>
- <CAO=notz7q6nG3-b7OD1yxfoibCYa8mtJPXRShp-LTn9JDMwguQ@mail.gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <3884653c-fb6f-3735-b370-85a93553aa52@linux.intel.com>
-Date: Fri, 9 Aug 2019 13:21:01 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 464xV11mvRzDqSH
+ for <openbmc@lists.ozlabs.org>; Sat, 10 Aug 2019 06:21:44 +1000 (AEST)
+Received: by mail-wm1-x344.google.com with SMTP id v15so6845585wml.0
+ for <openbmc@lists.ozlabs.org>; Fri, 09 Aug 2019 13:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=KRYBujXeesavxkZEhR2u/6WvFBsfbrUIYbLhrwxBRGM=;
+ b=uFKxwL3JgE0/swoMA2NXpTNyIp5TCvLNtLftadRXPE/WyTthtwaM2pE5IPvoVns/IL
+ VAmK0o271QCRnGMdGuZw79XaH19S845iC1xUOvhW1KT21Rq8SGcqPf2IP/XnBG2bOc3U
+ lLmdLEe0fcLzz8WAj8U5ZTmduFnBj13zt0c2TJcfh3nfq/uAb6bIlLk9Egwz7LTlKbsP
+ H+rc5M30ZNNJr0f+SQs1FY8vuU8nPE93PU3KS2F/j8zaM3WR52mm+OOEZ2/lcQMRLxa9
+ V5CV15JQo5ZXNzw9df6jVDSzCUaBGPz9pgDTOy2tlYw3L2hKub06oRq6cI4PhW82CjTm
+ Q+JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=KRYBujXeesavxkZEhR2u/6WvFBsfbrUIYbLhrwxBRGM=;
+ b=hR9SGPqbf6dPSlYe8WR4BGBXiVYLWimclIVYbQZUNEFXKgW98KysIsHzStLNVPvNFS
+ cGXt2eV0n1EZxpoC86ZqYKVwNozcvXohmoxwQhZAdasVv4qGwzQDm89gp90dlN+NdoIk
+ LlYtDA1je90XKgUcoRASd6GsePrkucUgO3TU/A+0cBlAG6yPmbPC2iNbgUTd6sWDoTmV
+ /kwWgl10hBc7VWXF0hy/nMngvgccZQ7J0hI6mbTCOeEqIZLZj0tGE7WDYhAImmTW4JaI
+ rFO23Ppxjs5mRpSY0mHE2MEtVP1yGsSyc1KHN8I9hliW2BfIO/pvY3o2T+zZmv/NNAZW
+ Zs0g==
+X-Gm-Message-State: APjAAAUul65KsN5ZC9Pku1IH4O1deNWfh5AZn7fQsSM8IHjJWnVugbs8
+ EiPCVKGe7WN4RJWCrEGsyo0Aw+nh
+X-Google-Smtp-Source: APXvYqyLCY2+UnvuTTTsqp0D0bjjDvSXFr7omopd9/6FzcqezAx2P2Hvi0mh6qbVaBd/hIzjpvsyBQ==
+X-Received: by 2002:a1c:61d4:: with SMTP id
+ v203mr11610033wmb.164.1565382100073; 
+ Fri, 09 Aug 2019 13:21:40 -0700 (PDT)
+Received: from ?IPv6:2003:ea:8f2f:3200:2994:d24a:66a1:e0e5?
+ (p200300EA8F2F32002994D24A66A1E0E5.dip0.t-ipconnect.de.
+ [2003:ea:8f2f:3200:2994:d24a:66a1:e0e5])
+ by smtp.googlemail.com with ESMTPSA id o11sm305922wrw.19.2019.08.09.13.21.38
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 09 Aug 2019 13:21:39 -0700 (PDT)
+Subject: Re: [PATCH net-next v6 3/3] net: phy: broadcom: add 1000Base-X
+ support for BCM54616S
+To: Tao Ren <taoren@fb.com>, Andrew Lunn <andrew@lunn.ch>,
+ Florian Fainelli <f.fainelli@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ Justin Chen <justinpopo6@gmail.com>, Vladimir Oltean <olteanv@gmail.com>,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org
+References: <20190809054411.1015962-1-taoren@fb.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
+Message-ID: <97cd059c-d98e-1392-c814-f3bd628e6366@gmail.com>
+Date: Fri, 9 Aug 2019 22:21:31 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAO=notz7q6nG3-b7OD1yxfoibCYa8mtJPXRShp-LTn9JDMwguQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20190809054411.1015962-1-taoren@fb.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -61,227 +92,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/9/19 12:30 PM, Patrick Venture wrote:
-> On Fri, Aug 9, 2019 at 12:24 PM Patrick Venture <venture@google.com> wrote:
->>
->> On Fri, Aug 9, 2019 at 12:20 PM Patrick Venture <venture@google.com> wrote:
->>>
->>> On Fri, Aug 9, 2019 at 11:57 AM Patrick Venture <venture@google.com> wrote:
->>>>
->>>> On Fri, Aug 9, 2019 at 11:50 AM Patrick Venture <venture@google.com> wrote:
->>>>>
->>>>> On Fri, Aug 9, 2019 at 11:45 AM James Feist <james.feist@linux.intel.com> wrote:
->>>>>>
->>>>>> On 8/9/19 11:33 AM, Patrick Venture wrote:
->>>>>>> On Fri, Aug 9, 2019 at 11:22 AM James Feist <james.feist@linux.intel.com> wrote:
->>>>>>>>
->>>>>>>> On 8/9/19 9:53 AM, Patrick Venture wrote:
->>>>>>>>> Given the following:
->>>>>>>>>
->>>>>>>>> busctl introspect --no-pager xyz.openbmc_project.FruDevice
->>>>>>>>> /xyz/openbmc_project/FruDevice/Altie
->>>>>>>>> NAME                                TYPE      SIGNATURE RESULT/VALUE
->>>>>>>>>                FLAGS
->>>>>>>>> org.freedesktop.DBus.Introspectable interface -         -
->>>>>>>>>                -
->>>>>>>>> .Introspect                         method    -         s
->>>>>>>>>                -
->>>>>>>>> org.freedesktop.DBus.Peer           interface -         -
->>>>>>>>>                -
->>>>>>>>> .GetMachineId                       method    -         s
->>>>>>>>>                -
->>>>>>>>> .Ping                               method    -         -
->>>>>>>>>                -
->>>>>>>>> org.freedesktop.DBus.Properties     interface -         -
->>>>>>>>>                -
->>>>>>>>> .Get                                method    ss        v
->>>>>>>>>                -
->>>>>>>>> .GetAll                             method    s         a{sv}
->>>>>>>>>                -
->>>>>>>>> .Set                                method    ssv       -
->>>>>>>>>                -
->>>>>>>>> .PropertiesChanged                  signal    sa{sv}as  -
->>>>>>>>>                -
->>>>>>>>> xyz.openbmc_project.FruDevice       interface -         -
->>>>>>>>>                -
->>>>>>>>> .ADDRESS                            property  u         82
->>>>>>>>>                emits-change
->>>>>>>>> .BOARD_LANGUAGE_CODE                property  s         "25"
->>>>>>>>>                emits-change
->>>>>>>>> .BOARD_MANUFACTURER                 property  s         "Inventec"
->>>>>>>>>                emits-change
->>>>>>>>> .BOARD_MANUFACTURE_DATE             property  s         "Thu Jul 11
->>>>>>>>> 17:09:00 2019" emits-change
->>>>>>>>> .BOARD_PART_NUMBER                  property  s         "1051867-01"
->>>>>>>>>                emits-change
->>>>>>>>> .BOARD_PRODUCT_NAME                 property  s         "Altie"
->>>>>>>>>                emits-change
->>>>>>>>> .BOARD_SERIAL_NUMBER                property  s
->>>>>>>>> "ALTIVT192700026"          emits-change
->>>>>>>>> .BUS                                property  u         1
->>>>>>>>>                emits-change
->>>>>>>>> .Common_Format_Version              property  s         "1"
->>>>>>>>>                emits-change
->>>>>>>>>
->>>>>>>>> I expected entity-manager with this profile to populate dbus properly:
->>>>>>>>> configurations/altie.json
->>>>>>>>> {
->>>>>>>>>        "Name" : "Altie",
->>>>>>>>>        "Probe" : "xyz.openbmc_project.FruDevice({'BOARD_PRODUCT_NAME': 'Altie'})",
->>>>>>>>>        "Type": "Board",
->>>>>>>>>        "xyz.openbmc_project.Inventory.Decorator.Asset": {
->>>>>>>>>            "Manufacturer": "$BOARD_MANUFACTURER",
->>>>>>>>>            "Model": "$BOARD_PRODUCT_NAME",
->>>>>>>>>            "PartNumber": "$BOARD_PART_NUMBER",
->>>>>>>>>            "SerialNumber": "$BOARD_SERIAL_NUMBER"
->>>>>>>>>        }
->>>>>>>>> }
->>>>>>>>>
->>>>>>>>> Instead:
->>>>>>>>> root@semitruck:~# busctl introspect --no-pager
->>>>>>>>> xyz.openbmc_project.EntityManager
->>>>>>>>> /xyz/openbmc_project/inventory/system/board/Altie
->>>>>>>>> NAME                                          TYPE      SIGNATURE
->>>>>>>>> RESULT/VALUE                             FLAGS
->>>>>>>>> org.freedesktop.DBus.Introspectable           interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .Introspect                                   method    -         s
->>>>>>>>>                                        -
->>>>>>>>> org.freedesktop.DBus.Peer                     interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .GetMachineId                                 method    -         s
->>>>>>>>>                                        -
->>>>>>>>> .Ping                                         method    -         -
->>>>>>>>>                                        -
->>>>>>>>> org.freedesktop.DBus.Properties               interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .Get                                          method    ss        v
->>>>>>>>>                                        -
->>>>>>>>> .GetAll                                       method    s
->>>>>>>>> a{sv}                                    -
->>>>>>>>> .Set                                          method    ssv       -
->>>>>>>>>                                        -
->>>>>>>>> .PropertiesChanged                            signal    sa{sv}as  -
->>>>>>>>>                                        -
->>>>>>>>> xyz.openbmc_project.AddObject                 interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .AddObject                                    method    a{sv}     -
->>>>>>>>>                                        -
->>>>>>>>> xyz.openbmc_project.Inventory.Decorator.Asset interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .Manufacturer                                 property  s
->>>>>>>>> "$BOARD_MANUFACTURER"                    emits-change
->>>>>>>>> .Model                                        property  s
->>>>>>>>> "$BOARD_PRODUCT_NAME"                    emits-change
->>>>>>>>> .PartNumber                                   property  s
->>>>>>>>> "$BOARD_PART_NUMBER"                     emits-change
->>>>>>>>> .SerialNumber                                 property  s
->>>>>>>>> "$BOARD_SERIAL_NUMBER"                   emits-change
->>>>>>>>> xyz.openbmc_project.Inventory.Item.Board      interface -         -
->>>>>>>>>                                        -
->>>>>>>>> .Name                                         property  s
->>>>>>>>> "Altie"                                  emits-change
->>>>>>>>> .Probe                                        property  s
->>>>>>>>> "xyz.openbmc_project.FruDevice({\'BOA... emits-change
->>>>>>>>> .Type                                         property  s
->>>>>>>>> "Board"                                  emits-change
->>>>>>>>>
->>>>>>>>> I must be doing something obvious and silly.  Please advise.
->>>>>>>>
->>>>>>>> Entity-manager caches the result and only updates if etc/os-release
->>>>>>>> changes. There is a version file in /var/configuration/version, if you
->>>>>>>> delete this it'll rescan fresh. It looks right to me.. so I imagine this
->>>>>>>> is what is happening.
->>>>>>>
->>>>>>> I deleted the /var/configuration/version file and rebooted the BMC.
->>>>>>> it didn't pick it up -- I decided a rescan was too subtle :)
->>>>>>>
->>>>>>> Any other ideas?  I've started digging into entity-manager further.
->>>>>>
->>>>>> Sorry I don't see anything obvious... it should all be happening in this
->>>>>> function
->>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1130
->>>>>>
->>>>>>
->>>>>> Specifically it should be making it to here:
->>>>>>
->>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1291
->>>>>
->>>>> Thanks, that's where I'm now looking --
->>>>
->>>> I deleted everything from /var/configuration/ rebooted, and added some
->>>> debug to dig into the specific template replacement:
->>>>
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: strPtr value:
->>>> '$BOARD_MANUFACTURER'
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: templateName:
->>>> $BOARD_MANUFACTURER, find: true
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: keyPair.value(): "Inventec"
->>>>
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: strPtr value:
->>>> '$BOARD_PRODUCT_NAME'
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: templateName:
->>>> $BOARD_PRODUCT_NAME, find: true
->>>> Aug 09 18:51:47 semitruck entity-manager[2700]: keyPair.value(): "Altie"
->>>
->>> So the visitor is finding and applying the value to the template, but
->>> that change isn't propagating up.  It works for the card that's found
->>> afterwards...  The only real difference is, the other profile also
->>> Exposes, whereas this one doesn't.  Is there a step that's skipped if
->>> there isn't an "Exposes" key?
->>
->> Looks like this part is skipped:
->> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1618
->>
->> _systemConfiguration[recordName] = record;
->> logDeviceAdded(record);
->> foundDeviceIdx++;
+On 09.08.2019 07:44, Tao Ren wrote:
+> The BCM54616S PHY cannot work properly in RGMII->1000Base-KX mode (for
+> example, on Facebook CMM BMC platform), mainly because genphy functions
+> are designed for copper links, and 1000Base-X (clause 37) auto negotiation
+> needs to be handled differently.
 > 
-> I think foundDeviceIdx is the culprit because it isnt' always
-> incremented.  So, I've moved that before the contnue.
-
-I think you're close.. I think this line is your issue if you have no 
-exposes:
-
-https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1539
-
-you need to hit here regardless:
-https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L1619
-
-That continue should just be removed.
-
-
+> This patch enables 1000Base-X support for BCM54616S by customizing 3
+> driver callbacks:
 > 
->>
->> Hm.
->>
->>>
->>>>
->>>>
->>>>
->>>>>
->>>>>>
->>>>>> foundDevice should be your fru.... and should be populated here:
->>>>>>
->>>>>> https://github.com/openbmc/entity-manager/blob/b295e1d8385544f12a436ef63153d373ff8de625/src/EntityManager.cpp#L425
->>>>>
->>>>> I did not think to look here, thanks!
->>>>>
->>>>>>
->>>>>> Hope that helps
->>>>>>
->>>>>> -James
->>>>>>
->>>>>>
->>>>>>
->>>>>>>
->>>>>>>>
->>>>>>>> -James
->>>>>>>>>
->>>>>>>>> Thanks,
->>>>>>>>> Patrick
->>>>>>>>>
+>   - probe: probe callback detects PHY's operation mode based on
+>     INTERF_SEL[1:0] pins and 1000X/100FX selection bit in SerDES 100-FX
+>     Control register.
+> 
+>   - config_aneg: calls genphy_c37_config_aneg when the PHY is running in
+>     1000Base-X mode; otherwise, genphy_config_aneg will be called.
+> 
+>   - read_status: calls genphy_c37_read_status when the PHY is running in
+>     1000Base-X mode; otherwise, genphy_read_status will be called.
+> 
+> Signed-off-by: Tao Ren <taoren@fb.com>
+> ---
+>  Changes in v6:
+>   - nothing changed.
+>  Changes in v5:
+>   - include Heiner's patch "net: phy: add support for clause 37
+>     auto-negotiation" into the series.
+>   - use genphy_c37_config_aneg and genphy_c37_read_status in BCM54616S
+>     PHY driver's callback when the PHY is running in 1000Base-X mode.
+>  Changes in v4:
+>   - add bcm54616s_config_aneg_1000bx() to deal with auto negotiation in
+>     1000Base-X mode.
+>  Changes in v3:
+>   - rename bcm5482_read_status to bcm54xx_read_status so the callback can
+>     be shared by BCM5482 and BCM54616S.
+>  Changes in v2:
+>   - Auto-detect PHY operation mode instead of passing DT node.
+>   - move PHY mode auto-detect logic from config_init to probe callback.
+>   - only set speed (not including duplex) in read_status callback.
+>   - update patch description with more background to avoid confusion.
+>   - patch #1 in the series ("net: phy: broadcom: set features explicitly
+>     for BCM54616") is dropped: the fix should go to get_features callback
+>     which may potentially depend on this patch.
+> 
+>  drivers/net/phy/broadcom.c | 54 +++++++++++++++++++++++++++++++++++---
+>  include/linux/brcmphy.h    | 10 +++++--
+>  2 files changed, 58 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/net/phy/broadcom.c b/drivers/net/phy/broadcom.c
+> index 937d0059e8ac..fbd76a31c142 100644
+> --- a/drivers/net/phy/broadcom.c
+> +++ b/drivers/net/phy/broadcom.c
+> @@ -383,9 +383,9 @@ static int bcm5482_config_init(struct phy_device *phydev)
+>  		/*
+>  		 * Select 1000BASE-X register set (primary SerDes)
+>  		 */
+> -		reg = bcm_phy_read_shadow(phydev, BCM5482_SHD_MODE);
+> -		bcm_phy_write_shadow(phydev, BCM5482_SHD_MODE,
+> -				     reg | BCM5482_SHD_MODE_1000BX);
+> +		reg = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+> +		bcm_phy_write_shadow(phydev, BCM54XX_SHD_MODE,
+> +				     reg | BCM54XX_SHD_MODE_1000BX);
+>  
+>  		/*
+>  		 * LED1=ACTIVITYLED, LED3=LINKSPD[2]
+> @@ -451,12 +451,44 @@ static int bcm5481_config_aneg(struct phy_device *phydev)
+>  	return ret;
+>  }
+>  
+> +static int bcm54616s_probe(struct phy_device *phydev)
+> +{
+> +	int val, intf_sel;
+> +
+> +	val = bcm_phy_read_shadow(phydev, BCM54XX_SHD_MODE);
+> +	if (val < 0)
+> +		return val;
+> +
+> +	/* The PHY is strapped in RGMII to fiber mode when INTERF_SEL[1:0]
+> +	 * is 01b.
+> +	 */
+> +	intf_sel = (val & BCM54XX_SHD_INTF_SEL_MASK) >> 1;
+> +	if (intf_sel == 1) {
+> +		val = bcm_phy_read_shadow(phydev, BCM54616S_SHD_100FX_CTRL);
+> +		if (val < 0)
+> +			return val;
+> +
+> +		/* Bit 0 of the SerDes 100-FX Control register, when set
+> +		 * to 1, sets the MII/RGMII -> 100BASE-FX configuration.
+> +		 * When this bit is set to 0, it sets the GMII/RGMII ->
+> +		 * 1000BASE-X configuration.
+> +		 */
+> +		if (!(val & BCM54616S_100FX_MODE))
+> +			phydev->dev_flags |= PHY_BCM_FLAGS_MODE_1000BX;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>  static int bcm54616s_config_aneg(struct phy_device *phydev)
+>  {
+>  	int ret;
+>  
+>  	/* Aneg firsly. */
+> -	ret = genphy_config_aneg(phydev);
+> +	if (phydev->dev_flags & PHY_BCM_FLAGS_MODE_1000BX)
+> +		ret = genphy_c37_config_aneg(phydev);
+> +	else
+> +		ret = genphy_config_aneg(phydev);
+>  
+
+I'm just wondering whether it needs to be considered that 100base-FX
+doesn't support auto-negotiation. I suppose BMSR reports aneg as
+supported, therefore phylib will use aneg per default.
+Not sure who could set 100Base-FX mode when, but maybe at that place
+also phydev->autoneg needs to be cleared. Did you test 100Base-FX mode?
+
+Heiner
