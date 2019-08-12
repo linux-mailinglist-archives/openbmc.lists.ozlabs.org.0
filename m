@@ -1,76 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4B618A724
-	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 21:33:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8FC68A8EB
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 23:04:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 466mHM5W4kzDqcc
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 05:33:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 466pHd3btxzDqb0
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 07:04:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::443; helo=mail-pf1-x443.google.com;
- envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=james.mihm@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="AIa90ZoH"; 
- dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 466mGm5cDCzDqYb
- for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 05:33:20 +1000 (AEST)
-Received: by mail-pf1-x443.google.com with SMTP id 196so3029605pfz.8
- for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 12:33:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=lY5DGsJDc3Y+tZVDLUfZi0aZQ3PPwhIlfg0HaMz3r80=;
- b=AIa90ZoHoru2I9VNWKV4LI3OnccJG+8PO2earwb8sJ1A3wQX6fxRIoDZCylil+EBwN
- J+oaotTViWZOzUMaJKPAuqtTme4p/2ZbJPlqP43AuxmKmMlyiM+47KBPwdp7kcla5skW
- WP+GE+hLXpOt8FTJvImqMrnpBBEWwuXuLEIO7y4KYYU3vsvuQRXC5NdmXEPDZ44PyCxt
- i9A04iNEoqjKfBBfFZIGGaGWUMUm6YAV3T+pdi5y9FFvjpRAHCuNbuM/diDBodUoB3mK
- s+j7/9Otk7s00RjJJINSZh54p00zMCfUOPnNP7CeadBVeJH/vGTAbU8ogtgzQnjRGBSq
- 4dIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=lY5DGsJDc3Y+tZVDLUfZi0aZQ3PPwhIlfg0HaMz3r80=;
- b=th4BjwtlOjZrGaw/lB59+pnIlvgUD1Ozp+rKAo1qZXFZzuldEkwi+50AA5/1d0xQJ4
- JNjRvOhE2yh9AZcDTTZevnLML1TwmS8ayBJwfS0iNwuVylFUQ7HHNK9BFtXaCcd3Y+qO
- nBckApOxT5/Hl3xwgdV0yl388hvW22RaXwAhOMMldEzsGwsmKXl3oleGv9KA2igqL7+j
- tZhXRWM1ocjmSyseyp5FUtakFC5cT5dAgGZRhfiQD3TiRwxfEbuGA8mB043SWrLDLeK3
- hx0Mbbjr3ZFp2Ht/tFW0i5cBNf78piWZaeyqH3JH1UoBoapDvM3wC1yDp2iogkzpjisP
- w2LA==
-X-Gm-Message-State: APjAAAVGycd8r2rw5FRE5PZPvOZIQeDhUpU9JPm1dAq8VJ1PIg8fXHM7
- qcL7eD4GMjOY+jKk3XARj3o=
-X-Google-Smtp-Source: APXvYqzxKWyH2qgTEFviQYl7Wab07MS3tFufvlF5TQB9I4OQAemdGgUgffTip/CtEultfSEqFSrcaQ==
-X-Received: by 2002:a17:90a:b947:: with SMTP id f7mr788530pjw.63.1565638398324; 
- Mon, 12 Aug 2019 12:33:18 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id k36sm107627092pgl.42.2019.08.12.12.33.16
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 12 Aug 2019 12:33:17 -0700 (PDT)
-Date: Mon, 12 Aug 2019 12:33:15 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: John Wang <wangzqbj@inspur.com>
-Subject: Re: [PATCH v3 2/2] hwmon: pmbus: Add Inspur Power System power
- supply driver
-Message-ID: <20190812193315.GA25520@roeck-us.net>
-References: <20190812025309.15702-1-wangzqbj@inspur.com>
- <6cf699d9-6efb-f701-d5ab-6f624e515ab8@roeck-us.net>
- <CAHkHK0_wts97mEjSOpZrKU8bTWKzh0+HBxTg0fSmdkFBsrWjFA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 466pGv17f3zDqZl
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 07:03:24 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 12 Aug 2019 14:03:21 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,378,1559545200"; 
+ d="scan'208,217";a="166850785"
+Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
+ by orsmga007.jf.intel.com with ESMTP; 12 Aug 2019 14:03:21 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.4.6]) by
+ ORSMSX104.amr.corp.intel.com ([169.254.4.30]) with mapi id 14.03.0439.000;
+ Mon, 12 Aug 2019 14:03:20 -0700
+From: "Mihm, James" <james.mihm@intel.com>
+To: "'openbmc@lists.ozlabs.org'" <openbmc@lists.ozlabs.org>
+Subject: Invitations to join org
+Thread-Topic: Invitations to join org
+Thread-Index: AdVRT2XEqtV2lykhTp+OeEuKlTYqhQ==
+Date: Mon, 12 Aug 2019 21:03:19 +0000
+Message-ID: <C599FC839619124CAC44E062ABB7DFE2D7B0ECA4@ORSMSX115.amr.corp.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOThhZTkwODUtY2I3Ni00MzEyLTljNjEtNjUzODJhNGZmMzk1IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiK0ZFM3E1XC9yVzc3YUo2UGlyTE94UWoyY3A0blwvZzNXTkNtR1V5d2hRT1BYM1hxb281Umc0NCtMM2N0aDV1b1kwIn0=
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.138]
+Content-Type: multipart/alternative;
+ boundary="_000_C599FC839619124CAC44E062ABB7DFE2D7B0ECA4ORSMSX115amrcor_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHkHK0_wts97mEjSOpZrKU8bTWKzh0+HBxTg0fSmdkFBsrWjFA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,20 +64,230 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, jdelvare@suse.com, linux-doc@vger.kernel.org,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, corbet@lwn.net,
- linux-kernel@vger.kernel.org, duanzhijia01@inspur.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Aug 12, 2019 at 12:48:34PM +0800, John Wang wrote:
-> 
-> So I should
-> 
-> 1. Add SENSOR_INSPUR_IPSPS to the end of the file
-> 2. Add SENSOR_INSPUR_IPSPS in alphabetical order, without additional tab
-> 3. other suggestions
-> 
-I would suggest 2). Just use a space before += instead of a tab.
+--_000_C599FC839619124CAC44E062ABB7DFE2D7B0ECA4ORSMSX115amrcor_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Guenter
+Brad,
+
+Can you please send invitations to the follow Intel developers:
+
+adrian.ambrozewicz@linux.intel.com;
+aleksandra.skibowska@intel.com;
+arun.p.m@intel.com;
+bartlomiej.grzegorzek@intel.com;
+cezary.golder@intel.com;
+iwona.klimaszewska@intel.com;
+jan.sowinski@intel.com;
+kamil.kowalski@intel.com;
+kamil.majcher@intel.com;
+kasper.wszolek@intel.com;
+lukasz.golawski@intel.com;
+lukasz.tuz@intel.com;
+maciej.jusza@intel.com;
+maciej.lawniczak@intel.com;
+mansi.joshi@intel.com;
+marta.mazur@intel.com;
+martyna.oleszkiewicz@intel.com;
+mateusz.kowzan@intel.com;
+michal.gleba@intel.com;
+michal.spica@intel.com;
+mutyalax.jayaprakash@intel.com;
+natalia.turowska@intel.com;
+nitin1x.sharma@intel.com;
+piotr.matuszczak@intel.com;
+przemyslaw.hawrylewicz.czarnowski@intel.com;
+rafal.krauze@intel.com;
+raja.sekhar.reddy.gade@intel.com;
+rashmi.r.v@intel.com;
+tomasz.ciechanowicz@intel.com;
+wiktor.golgowski@intel.com;
+wojciech.szczerba@intel.com;
+zbigniew.kurzynski@intel.com;
+zbigniew.lukwinski@intel.com;
+
+
+
+
+
+Thanks,
+James Mihm
+Intel DCG BMC Core Firmware
+(503) 264-5129
+
+
+--_000_C599FC839619124CAC44E062ABB7DFE2D7B0ECA4ORSMSX115amrcor_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
+s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
+40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Comic Sans MS";
+	panose-1:3 15 7 2 3 3 2 2 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Brad, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Can you please send invitations to the follow Intel =
+developers:<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<table class=3D"MsoNormalTable" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"0" style=3D"width:438.0pt;border-collapse:collapse">
+<tbody>
+<tr style=3D"height:14.5pt">
+<td width=3D"584" nowrap=3D"" style=3D"width:438.0pt;padding:0in 5.4pt 0in =
+5.4pt;height:14.5pt">
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">adrian.ambrozewicz@linux.intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">aleksandra.skibowska@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">arun.p.m@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">bartlomiej.grzegorzek@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">cezary.golder@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">iwona.klimaszewska@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">jan.sowinski@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">kamil.kowalski@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">kamil.majcher@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">kasper.wszolek@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">lukasz.golawski@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">lukasz.tuz@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">maciej.jusza@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">maciej.lawniczak@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">mansi.joshi@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">marta.mazur@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">martyna.oleszkiewicz@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">mateusz.kowzan@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">michal.gleba@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">michal.spica@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">mutyalax.jayaprakash@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">natalia.turowska@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">nitin1x.sharma@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">piotr.matuszczak@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">przemyslaw.hawrylewicz.czarnowski@intel.com;<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">rafal.krauze@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">raja.sekhar.reddy.gade@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">rashmi.r.v@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">tomasz.ciechanowicz@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">wiktor.golgowski@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">wojciech.szczerba@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">zbigniew.kurzynski@intel.com;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black">zbigniew.lukwinski@intel.com;<o:p></o:p></span></p>
+</td>
+</tr>
+<tr style=3D"height:14.5pt">
+<td width=3D"584" nowrap=3D"" style=3D"width:438.0pt;padding:0in 5.4pt 0in =
+5.4pt;height:14.5pt">
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black"><o:p>&nbsp;</o:p></span></p>
+</td>
+</tr>
+<tr style=3D"height:14.5pt">
+<td width=3D"584" nowrap=3D"" style=3D"width:438.0pt;padding:0in 5.4pt 0in =
+5.4pt;height:14.5pt">
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black"><o:p>&nbsp;</o:p></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Co=
+mic Sans MS&quot;;color:navy">Thanks,
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;Co=
+mic Sans MS&quot;;color:navy">James Mihm</span><span style=3D"font-family:&=
+quot;Arial&quot;,sans-serif">
+</span><br>
+<span style=3D"font-family:&quot;Comic Sans MS&quot;;color:navy">Intel DCG =
+BMC Core Firmware</span><br>
+<span style=3D"font-size:10.0pt;font-family:&quot;Comic Sans MS&quot;;color=
+:navy">(503) 264-5129</span>
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_C599FC839619124CAC44E062ABB7DFE2D7B0ECA4ORSMSX115amrcor_--
