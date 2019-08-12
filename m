@@ -1,71 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75512A4CCF
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:29:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BF69A4CD6
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:36:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46M9vf00vtzDqWv
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:29:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MB3Y0bM0zDqQr
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:36:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::641; helo=mail-pl1-x641.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.209; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=liuyh21@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="DjYmX7pk"; 
- dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.209])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46M9v517jgzDqRm
- for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2019 10:29:20 +1000 (AEST)
-Received: by mail-pl1-x641.google.com with SMTP id t14so5823863plr.11
- for <openbmc@lists.ozlabs.org>; Sun, 01 Sep 2019 17:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=kUGL/sDDx56rfMUFQdsjRHuEUsNKQm1oITc8vkLtzkQ=;
- b=DjYmX7pk2IJ0VZ3ysgtiwECr5hu9mQv6+3kzengGjKc0FRQYXE4vl6Tztp6Bx9z8dB
- yDf+Tznncmd7AtaL2dQEQwArOoA1wsFPPy2R7w9/XJ15PKk9IGIKb6Sbv5kVxqIZRujW
- QtqfUvAxMFjezG/+VwMioQc7tfYNOnI2T8Xa/dql23dh5Bn1SMo/5jU8vr5GAgk+GO4z
- wj/flItMS1v6wcQP9A0OH0Dt11scvhhQlqzySB1AYBj3DfFHGiysUuxNKBARrRvfIiCR
- RKDKzlGKwYkt6kRF1HHVvXP8Pzox2bv1JAPsSP+ez70XzBhznwHFih0y7lcC6ZRfz5+r
- 6A3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=kUGL/sDDx56rfMUFQdsjRHuEUsNKQm1oITc8vkLtzkQ=;
- b=ZsuZpymlAbzWw7SZzVusjIIhNMhza6Kyhia1qt5D2IICJSGYUjGgk9xUJ2D7ooVd0j
- ikygPb2e5bdHnoezuoa7iEY4qS1vbSWB5oAnYr7BhWtwcAaHbnF0gYuVOPKsRpWhS+3W
- IJkil2Ekz23DNfUyfGLtS1btpucapEDhxBAEDuBOYGaiOPU+Mw2pPIwUBsHHxeA+xvfs
- 1LLKRvqRZUZukeSdEnhkUjIk2NBM+8/A7Ki9u8s3Kdw2kPEmxOaBsAsg4tVFPwicmb1Y
- IYHH1Evzou3JNf9htHRGwxr1xsfLKFEIxC1/yzGq0NaAgsyQq9FFKa5qznDaxFQgT1DF
- tqCA==
-X-Gm-Message-State: APjAAAUJTBrStSs2nK5j8Lorc0mbWo3gpsVy+U0xZs+0iAq2wvMrg/VK
- wTV5KAs2CsPL+XpCcshS2Kj2zHa0/JM=
-X-Google-Smtp-Source: APXvYqwNFcjFm7QICvXI917R1hORaZJLvAqQ9GgUtE0bg7CQU2pCJNnptScHxOhVZnhLJ9hhwscuiQ==
-X-Received: by 2002:a17:902:2b81:: with SMTP id
- l1mr27197976plb.107.1567384157256; 
- Sun, 01 Sep 2019 17:29:17 -0700 (PDT)
-Received: from voyager.lan ([45.124.203.19])
- by smtp.gmail.com with ESMTPSA id e13sm27346332pfl.130.2019.09.01.17.29.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Sep 2019 17:29:16 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2] ARM: dts: aspeed: Add Tacoma machine
-Date: Mon,  2 Sep 2019 09:59:11 +0930
-Message-Id: <20190902002911.18717-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.23.0.rc1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 466cWZ2D7TzDqVd
+ for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 23:43:49 +1000 (AEST)
+Received: from [67.219.247.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-d.us-east-1.aws.symcld.net id 44/03-22799-11D615D5;
+ Mon, 12 Aug 2019 13:43:45 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRWlGSWpSXmKPExsWS8eIhj65gbmC
+ swcXpchanWl6wODB6nJ+xkDGAMYo1My8pvyKBNePc8TssBdvVK66/6GZrYPyo3MXIxSEksIRJ
+ 4lr3bhYIZw2jxNeL3ewQzmtGicmvnkFl9jBKtD1bA5Th4GAT0JaYvj+1i5GTQ0RAX2LXpN1sI
+ LawgIZE4952Roi4rsTjw5eYQMpFBPQkWvaClbMIqEq8OHiSGSTMK2ApMWl+CEiYUUBWYtqj+0
+ wgNrOAuMTcabNYQWwJAQGJJXvOM0PYohIvH/+DiitItF9qZoWoT5BYOWUDO4jNKyAocXLmE5Y
+ JjEKzkIyahaRsFpIyiLiOxILdn9ggbG2JZQtfM8PYZw48ZkIWX8DIvorRNKkoMz2jJDcxM0fX
+ 0MBA19DQSNdS19hIL7FKN0WvtFg3NbG4RNdQL7G8WK+4Mjc5J0UvL7VkEyMwklIKOBV2MPYdf
+ a13iFGSg0lJlLcoNjBWiC8pP6UyI7E4I76oNCe1+BCjDAeHkgQvfxZQTrAoNT21Ii0zBxjVMG
+ kJDh4lEd49IGne4oLE3OLMdIjUKUZ7jgkv5y5i5jh4dB6Q/LhqCZD8DiKFWPLy81KlxHl/gbQ
+ JgLRllObBDYUloUuMslLCvIwMDAxCPAWpRbmZJajyrxjFORiVhHnfZQJN4cnMK4Hb/QroLCag
+ s7if+IKcVZKIkJJqYApu3aPidXYad8OLq9nLmn1O8Tv/WZPQKhDEc2nOf95gN7+amIpd3tNd6
+ spf2rb+EL00o9pWeKJi6TuerL4Y55s3gup/brySczu/5Yynm299xj6mzan7ljT5hkz7PJ3tyc
+ 3nYrMkZs7j//SXWXeOMfO82IDV9lXtT9nYF3HEm/il6H49LfSyOFPONVvSY63mfefaR5+Ezr1
+ S0qk815Wz6FvDt/Iz7UmuP+o0fHjD+Te+zwi/2ntJgjfp9u/HuwJCP/3bECTRZxY/9c2UXnbb
+ uwJ+53IDPF+3/1onH9Qruaf29eNV7z/vczOuVTu/ZF7N4yyeRz8XiVySmTL/UeICNi+Rx90n3
+ W/YvvYPb87Zo8RSnJFoqMVcVJwIADaS8dS9AwAA
+X-Env-Sender: liuyh21@lenovo.com
+X-Msg-Ref: server-7.tower-426.messagelabs.com!1565617425!846336!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.9; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 18605 invoked from network); 12 Aug 2019 13:43:45 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-7.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 12 Aug 2019 13:43:45 -0000
+Received: from CNMAILEX02.lenovo.com (unknown [10.96.80.2])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 85084FC58EA5FA84178D
+ for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 09:43:44 -0400 (EDT)
+Received: from pekwpmail08.lenovo.com (10.96.81.160) by CNMAILEX02.lenovo.com
+ (10.96.80.2) with Microsoft SMTP Server (TLS) id 14.3.408.0;
+ Mon, 12 Aug 2019 21:43:42 +0800
+Received: from pekwpmail05.lenovo.com (10.96.81.230) by pekwpmail08.lenovo.com
+ (10.96.81.160) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 12 Aug
+ 2019 21:43:41 +0800
+Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
+ pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
+ 15.01.1591.008; Mon, 12 Aug 2019 21:43:41 +0800
+From: Yonghui YH21 Liu <liuyh21@lenovo.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: OpenBMC Solution To CVE Issues 
+Thread-Topic: OpenBMC Solution To CVE Issues 
+Thread-Index: AdVRE/KzcTyajXJdTUq73lo1GoCtCQ==
+Date: Mon, 12 Aug 2019 13:43:41 +0000
+Message-ID: <599ab89a2cad4cd4bb8e80cf43db38d1@lenovo.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.96.12.253]
+Content-Type: multipart/alternative;
+ boundary="_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:52 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,76 +94,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an AST2600 based BMC card for a Power9 system.
+--_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/Makefile                  |  1 +
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 39 +++++++++++++++++++++
- 2 files changed, 40 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+HI All,
+         I saw there are some solutions to public CVE issues, some solution=
+ are not enable by default setting.
+         As we know, there are some new coming CVE issues. Could you help c=
+onfirm whether below issues will be fixed? Is yes, when will be ready?
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 1b45e790e1e3..180405378b86 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1280,6 +1280,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-opp-palmetto.dtb \
- 	aspeed-bmc-opp-romulus.dtb \
- 	aspeed-bmc-opp-swift.dtb \
-+	aspeed-bmc-opp-tacoma.dtb \
- 	aspeed-bmc-opp-vesnin.dtb \
- 	aspeed-bmc-opp-witherspoon.dtb \
- 	aspeed-bmc-opp-zaius.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-new file mode 100644
-index 000000000000..9ccd4c3db81a
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -0,0 +1,39 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2019 IBM Corp.
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+
-+/ {
-+	model = "Tacoma";
-+	compatible = "ibm,tacoma-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS4,115200n8";
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x80000000>;
-+	};
-+};
-+
-+&mac2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii3_default>;
-+	use-ncsi;
-+};
-+
-+&emmc {
-+	status = "okay";
-+};
-+
-+&fsim0 {
-+	status = "okay";
-+};
--- 
-2.23.0.rc1
+         CVE-2019-12900
+CVE-2018-20843
+CVE-2019-9169
+CVE-2018-20750
+CVE-2019-13404
 
+
+Thank your great support in advance!
+
+Thanks
+
+
+
+--_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
+s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
+40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-CN" link=3D"blue" vlink=3D"purple" style=3D"text-justify-t=
+rim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">HI All,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; I saw there are some solutions to public CVE issues, some=
+ solution are not enable by default setting.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; As we know, there are some new coming CVE issues. Could y=
+ou help confirm whether below issues will be fixed? Is yes, when will be re=
+ady?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; CVE-2019-12900<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
+E-2018-20843<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
+E-2019-9169<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
+E-2018-20750<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
+E-2019-13404<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
+</span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
+</span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black">Thank your great =
+support in advance!<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
+</span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black">Thanks<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
+yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_--
