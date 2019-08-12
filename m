@@ -2,51 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 821168A6AB
-	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 20:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 645848A6E9
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 21:12:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 466lTf0ZH6zDqb0
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 04:57:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 466lpW37mDzDqdf
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 05:12:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ spf=pass (mailfrom) smtp.mailfrom=kernel.org
+ (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="treak2G8"; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 466lT31k9qzDqVD
- for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 04:57:09 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 12 Aug 2019 11:57:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,378,1559545200"; d="scan'208";a="180954257"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga006.jf.intel.com with ESMTP; 12 Aug 2019 11:57:06 -0700
-Received: from [10.241.245.64] (unknown [10.241.245.64])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 466lnq1VdBzDqQZ
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 05:11:42 +1000 (AEST)
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com
+ [209.85.160.180])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 3F6A6580372
- for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 11:57:06 -0700 (PDT)
-Subject: Re: Question about sensor number access
-To: openbmc@lists.ozlabs.org
-References: <860e21837286442b9a1cdd7d7dafe474@lenovo.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <73e88c82-447d-38fb-bfa4-ddd48976d1b3@linux.intel.com>
-Date: Mon, 12 Aug 2019 11:57:06 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by mail.kernel.org (Postfix) with ESMTPSA id BFEF9214C6
+ for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 19:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1565637099;
+ bh=E/Wq7i7xnIxt1gJKCZ82QanfLVuebUWCuy1K24B+FMo=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=treak2G8MrbmObg8FSSFRSwB7hajX9l7l97PeEBgEdM/rpYdzbDA/0/OLeqsgg2qU
+ KKeMhhzubR55UZHsQlN1wJmK2EcT4cTbc3Qci1JDGQox8SEM4HqQml5jf7ih485rmi
+ GzvXzfi6cTXv86Tepm51ut18EIkOqAVRXDCcMW38=
+Received: by mail-qt1-f180.google.com with SMTP id u34so4664418qte.2
+ for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 12:11:39 -0700 (PDT)
+X-Gm-Message-State: APjAAAWSMyuLeNUmCwNifC24d02U1186LruQx939rGwulCMJpA6QuPAa
+ OUaRFJtUfqD2SHMw11tK4uyYtx+FGCzH4zArfw==
+X-Google-Smtp-Source: APXvYqwy7GVmLeGMFfbnCU9KfMy2d+Cst1XuCcbjR1Nxmy2vbL1Eh3xsRpA80dmnLum7eCTeYkaqBTIWT6xIjJgsq9c=
+X-Received: by 2002:ad4:4301:: with SMTP id c1mr10974792qvs.138.1565637099006; 
+ Mon, 12 Aug 2019 12:11:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <860e21837286442b9a1cdd7d7dafe474@lenovo.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20190812025242.15570-1-wangzqbj@inspur.com>
+In-Reply-To: <20190812025242.15570-1-wangzqbj@inspur.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Mon, 12 Aug 2019 13:11:27 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJ1742r8vkwMjzem5FYEis21kVJKamrBt-TgDpMHHFsPw@mail.gmail.com>
+Message-ID: <CAL_JsqJ1742r8vkwMjzem5FYEis21kVJKamrBt-TgDpMHHFsPw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: Add ipsps1 as a trivial device
+To: John Wang <wangzqbj@inspur.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,44 +64,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+ Jiri Kosina <trivial@kernel.org>, Anson Huang <anson.huang@nxp.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, duanzhijia01@inspur.com,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Jeremy Gebben <jgebben@sweptlaser.com>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sun, Aug 11, 2019 at 8:52 PM John Wang <wangzqbj@inspur.com> wrote:
+>
+> The ipsps1 is an Inspur Power System power supply unit
+>
+> Signed-off-by: John Wang <wangzqbj@inspur.com>
+> ---
+> v3:
+>     - Fix adding entry to the inappropriate line
+> v2:
+>     - No changes.
+> ---
+>  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
-On 8/12/2019 9:08 AM, Ivan Li11 wrote:
-> Hi Team,
-> 
-> I have a question about sensor number.
-> 
-> As far as I know, “phosphor-host-ipmid” will parse “ipmi-sensors.yaml” 
-> and then store these sensors info(sensor number and sensor type, etc) in 
-> ipmid.
-> 
-> May I know if another daemon(e.g. phosphor-sel-logger) needs sensor 
-> number info, is there any suggested method to get sensor number ?
-
-phosphor-sel-logger stores only the sensor path and depends on something 
-to map sensor path to sensor number when the log is read.
-
-Today, that mapping is only done for dynamic IPMI sensors in 
-intel-ipmi-oem, here: 
-https://github.com/openbmc/intel-ipmi-oem/blob/master/include/sdrutils.hpp#L207.
-
-We were not able to get to a final solution for handling the mapping of 
-dynamic and hardcoded sensor numbers.  You can see the ideas and 
-discussion in this review: 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951 
-and this thread: 
-https://lists.ozlabs.org/pipermail/openbmc/2019-January/014890.html.
-
-This is specifically about getting the sensor number from the path for 
-phosphor-sel-logger, so it may not apply to your situation, but 
-hopefully helps.
-
-Thanks,
--Jason
-> 
-> Thanks,
-> 
-> Ivan
-> 
+Reviewed-by: Rob Herring <robh@kernel.org>
