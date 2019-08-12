@@ -1,84 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C33689A4A
-	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 11:46:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFDF289C72
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 13:13:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 466WFd3vR3zDqQn
-	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 19:46:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 466YBQ5fSzzDqdT
+	for <lists+openbmc@lfdr.de>; Mon, 12 Aug 2019 21:13:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.246.115; helo=mail1.bemta23.messagelabs.com;
- envelope-from=pengms1@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=wistron.com
+ (client-ip=103.200.3.19; helo=segapp03.wistron.com;
+ envelope-from=ben_pai@wistron.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 466WBh4lVgzDqQj
- for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 19:43:54 +1000 (AEST)
-Received: from [67.219.246.198] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-4.bemta.az-c.us-east-1.aws.symcld.net id E2/CA-11628-6D4315D5;
- Mon, 12 Aug 2019 09:43:50 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRWlGSWpSXmKPExsWSLveKTfeqSWC
- swZZmTYtTLS9YLPYe2MjiwOSxYFOpx/kZCxkDmKJYM/OS8isSWDOmLXnJVPDVuaL54zLWBsaV
- dl2MXBxCAv8ZJa4f/8LSxcgJ5LxklGi/pwuR2MMoMX3JT0aQBJuAlsTC/3uYuhg5OEQENCT+v
- 8sECTMLWEps/niJHSQsLGArsWNNAkhYRMBJYkvzD0YIW0/i+4uHrCA2i4CqxJlVH8BW8QK1/l
- yynhnEZhSQlZj26D4TxEhxibnTZoHVSwgISCzZc54ZwhaVePn4H1RcQeLqvSVQ9QkS9490QM0
- UlDg58wnLBEahWUhGzUJSNgtJGURcR2LB7k9sELa2xLKFr5lh7DMHHjMhiy9gZF/FaJpUlJme
- UZKbmJmja2hgoGtoaKRrrmtiqJdYpZusV1qsm5pYXKIL5JYX6xVX5ibnpOjlpZZsYgRGVkoBu
- +YOxr2z3ugdYpTkYFIS5TWTCIwV4kvKT6nMSCzOiC8qzUktPsQow8GhJMF7xggoJ1iUmp5akZ
- aZA4xymLQEB4+SCO8GkDRvcUFibnFmOkTqFKM9x4SXcxcxcxw8Og9Ifly1BEh+B5FCLHn5eal
- S4rwuxkBtAiBtGaV5cENhSekSo6yUMC8jAwODEE9BalFuZgmq/CtGcQ5GJWHe6yDLeTLzSuB2
- vwI6iwnoLO4nviBnlSQipKQamA6qL1/XaL5hisXn5MPHJ4Rdbrmr9dG18dCbbDnTt89/9phWV
- za8vm9s3z15t/D1gB79It6olbovo1g9K8P55dy6LvN+KNCMPviRcWFs3l85jhKuuxKPss/87Z
- uWLNHF/sTN/di1gqTde+u3Ptl362q2v8HcV1vZ2jIrXedMXBu8RPDFzcKZfoecI9hijX5des/
- 0Q2qRurr+E0Xnhg6u7m8Sx+9dOGw9d/KtRdeaoiZ+3hiZyjPtFc9F3nSNH//vm5WZfWmcdHbJ
- 2gXphqqinhXcr1NnaconpHDkiGWe4NLp5H6+oJhhtZr1hH8s3n8SZzSfP7VtmcKuoqKs3wuet
- bQ9Uv5l1hNk1lQVZ7HNXomlOCPRUIu5qDgRAFE3LdHFAwAA
-X-Env-Sender: pengms1@lenovo.com
-X-Msg-Ref: server-27.tower-406.messagelabs.com!1565603026!410712!1
-X-Originating-IP: [103.30.234.6]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 4102 invoked from network); 12 Aug 2019 09:43:49 -0000
-Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.6)
- by server-27.tower-406.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 12 Aug 2019 09:43:49 -0000
-Received: from pekwpmail06.lenovo.com (unknown [10.96.93.84])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 7AC4CFE982F6C6DEC3BE;
- Mon, 12 Aug 2019 17:43:46 +0800 (CST)
-Received: from pekwpmail05.lenovo.com (10.96.93.83) by pekwpmail06.lenovo.com
- (10.96.93.84) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 12 Aug
- 2019 17:43:34 +0800
-Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
- pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
- 15.01.1591.008; Mon, 12 Aug 2019 17:43:34 +0800
-From: Andrew MS1 Peng <pengms1@lenovo.com>
-To: Patrick Venture <venture@google.com>
-Subject: Clarify some questions about host tool (burn_my_bmc)
-Thread-Topic: Clarify some questions about host tool (burn_my_bmc)
-Thread-Index: AdVQ3W50GCnSA9PWRhaBmkYUGq9iDA==
-Date: Mon, 12 Aug 2019 09:43:34 +0000
-Message-ID: <8c0e07bacc89478996cca5f6718fe715@lenovo.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.96.12.252]
-Content-Type: multipart/alternative;
- boundary="_000_8c0e07bacc89478996cca5f6718fe715lenovocom_"
+ dmarc=none (p=none dis=none) header.from=wistron.com
+Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 466Y9n3M95zDqX0
+ for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 21:13:13 +1000 (AEST)
+Received: from EXCHAPP03.whq.wistron (unverified [10.37.38.26]) by 
+ TWNHUMSW4.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
+ <Td993a861d2c0a81672d34@TWNHUMSW4.wistron.com>; Mon, 12 Aug 2019 
+ 19:13:09 +0800
+Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP03.whq.wistron 
+ (10.37.38.26) with Microsoft SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
+ 15.1.1713.5; Mon, 12 Aug 2019 19:13:08 +0800
+Received: from gitserver.wistron.com (10.37.38.233) by EXCHAPP03.whq.wistron 
+ (10.37.38.26) with Microsoft SMTP Server id 15.1.1713.5 via Frontend
+ Transport; Mon, 12 Aug 2019 19:13:08 +0800
+From: Ben Pai <Ben_Pai@wistron.com>
+To: <openbmc@lists.ozlabs.org>, <joel@jms.id.au>, <andrew@aj.id.au>
+Subject: [PATCH linux dev-5.2] ARM: dts: aspeed: Add Mihawk BMC platform
+Date: Mon, 12 Aug 2019 19:13:07 +0800
+Message-ID: <20190812111307.22321-1-Ben_Pai@wistron.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+X-TM-SNTS-SMTP: B40589601D17C7C79E14DC40BE88C67D0855204B922851AB09D144D2668AB5192000:8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,255 +50,962 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Ben Pai <Ben_Pai@wistron.com>, wangat@tw.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_8c0e07bacc89478996cca5f6718fe715lenovocom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+The Mihawk BMC is an ASPEED ast2500 based BMC that is part of an
+OpenPower Power9 server.
 
-Hi Patrick,
+Signed-off-by: Ben Pai <Ben_Pai@wistron.com>
+---
+ arch/arm/boot/dts/Makefile                  |   1 +
+ arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts | 918 ++++++++++++++++++++
+ 2 files changed, 919 insertions(+)
+ create mode 100755 arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index eb6de52c1936..cdfe0f43ffd3 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1275,6 +1275,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-lenovo-hr630.dtb \
+ 	aspeed-bmc-microsoft-olympus.dtb \
+ 	aspeed-bmc-opp-lanyang.dtb \
++	aspeed-bmc-opp-mihawk.dtb \
+ 	aspeed-bmc-opp-palmetto.dtb \
+ 	aspeed-bmc-opp-romulus.dtb \
+ 	aspeed-bmc-opp-swift.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+new file mode 100755
+index 000000000000..e55cc454b17f
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
+@@ -0,0 +1,918 @@
++// SPDX-License-Identifier: GPL-2.0+
++/dts-v1/;
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/leds/leds-pca955x.h>
++
++/ {
++	model = "Mihawk BMC";
++	compatible = "ibm,mihawk-bmc", "aspeed,ast2500";
++
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++
++	memory@80000000 {
++		reg = <0x80000000 0x20000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		flash_memory: region@98000000 {
++			no-map;
++			reg = <0x98000000 0x04000000>; /* 64M */
++		};
++
++		gfx_memory: framebuffer {
++			size = <0x01000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++		video_engine_memory: jpegbuffer {
++			size = <0x02000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		air-water {
++			label = "air-water";
++			gpios = <&gpio ASPEED_GPIO(F, 6) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(F, 6)>;
++		};
++
++		checkstop {
++			label = "checkstop";
++			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(J, 2)>;
++		};
++
++		ps0-presence {
++			label = "ps0-presence";
++			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(Z, 2)>;
++		};
++
++		ps1-presence {
++			label = "ps1-presence";
++			gpios = <&gpio ASPEED_GPIO(Z, 0) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(Z, 0)>;
++		};
++		id-button {
++			label = "id-button";
++			gpios = <&gpio ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
++			linux,code = <ASPEED_GPIO(F, 1)>;
++		};
++	};
++
++	gpio-keys-polled {
++		compatible = "gpio-keys-polled";
++		poll-interval = <1000>;
++
++		fan0-presence {
++			label = "fan0-presence";
++			gpios = <&pca9552 9 GPIO_ACTIVE_LOW>;
++			linux,code = <9>;
++		};
++
++		fan1-presence {
++			label = "fan1-presence";
++			gpios = <&pca9552 10 GPIO_ACTIVE_LOW>;
++			linux,code = <10>;
++		};
++
++		fan2-presence {
++			label = "fan2-presence";
++			gpios = <&pca9552 11 GPIO_ACTIVE_LOW>;
++			linux,code = <11>;
++		};
++
++		fan3-presence {
++			label = "fan3-presence";
++			gpios = <&pca9552 12 GPIO_ACTIVE_LOW>;
++			linux,code = <12>;
++		};
++
++		fan4-presence {
++			label = "fan4-presence";
++			gpios = <&pca9552 13 GPIO_ACTIVE_LOW>;
++			linux,code = <13>;
++		};
++
++		fan5-presence {
++			label = "fan5-presence";
++			gpios = <&pca9552 14 GPIO_ACTIVE_LOW>;
++			linux,code = <14>;
++		};
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		fault {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_LOW>;
++		};
++
++		power {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 1) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-id {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-g {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(AA, 4) GPIO_ACTIVE_LOW>;
++		};
++
++		rear-ok {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&gpio ASPEED_GPIO(Y, 0) GPIO_ACTIVE_LOW>;
++		};
++
++		fan0 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 0 GPIO_ACTIVE_LOW>;
++		};
++
++		fan1 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 1 GPIO_ACTIVE_LOW>;
++		};
++
++		fan2 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 2 GPIO_ACTIVE_LOW>;
++		};
++
++		fan3 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 3 GPIO_ACTIVE_LOW>;
++		};
++
++		fan4 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 4 GPIO_ACTIVE_LOW>;
++		};
++
++		fan5 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca9552 5 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	fsi: gpio-fsi {
++		compatible = "fsi-master-gpio", "fsi-master";
++		#address-cells = <2>;
++		#size-cells = <0>;
++		no-gpio-delays;
++
++		clock-gpios = <&gpio ASPEED_GPIO(E, 6) GPIO_ACTIVE_HIGH>;
++		data-gpios = <&gpio ASPEED_GPIO(E, 7) GPIO_ACTIVE_HIGH>;
++		mux-gpios = <&gpio ASPEED_GPIO(E, 5) GPIO_ACTIVE_HIGH>;
++		enable-gpios = <&gpio ASPEED_GPIO(D, 0) GPIO_ACTIVE_HIGH>;
++		trans-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_HIGH>;
++	};
++	iio-hwmon-12v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>;
++	};
++
++	iio-hwmon-5v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 1>;
++	};
++
++	iio-hwmon-3v {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 2>;
++	};
++
++	iio-hwmon-vdd0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 3>;
++	};
++
++	iio-hwmon-vdd1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 4>;
++	};
++
++	iio-hwmon-vcs0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 5>;
++	};
++
++	iio-hwmon-vcs1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 6>;
++	};
++
++	iio-hwmon-vdn0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 7>;
++	};
++
++	iio-hwmon-vdn1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 8>;
++	};
++
++	iio-hwmon-vio0 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 9>;
++	};
++
++	iio-hwmon-vio1 {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 10>;
++	};
++
++	iio-hwmon-vddra {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 11>;
++	};
++
++	iio-hwmon-battery {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 12>;
++	};
++
++	iio-hwmon-vddrb {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 13>;
++	};
++
++	iio-hwmon-vddrc {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 14>;
++	};
++
++	iio-hwmon-vddrd {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 15>;
++	};
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
++		&pinctrl_pwm2_default &pinctrl_pwm3_default
++		&pinctrl_pwm4_default &pinctrl_pwm5_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x01>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x03>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x05>;
++	};
++
++	fan@6 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06>;
++	};
++
++	fan@7 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x07>;
++	};
++
++	fan@8 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x08>;
++	};
++
++	fan@9 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x09>;
++	};
++
++	fan@10 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0a>;
++	};
++
++	fan@11 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0b>;
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		label = "bmc";
++		m25p,fast-read;
++		spi-max-frequency = <50000000>;
++		partitions {
++			#address-cells = < 1 >;
++			#size-cells = < 1 >;
++			compatible = "fixed-partitions";
++			u-boot@0 {
++				reg = < 0 0x60000 >;
++				label = "u-boot";
++			};
++			u-boot-env@60000 {
++				reg = < 0x60000 0x20000 >;
++				label = "u-boot-env";
++			};
++			obmc-ubi@80000 {
++				reg = < 0x80000 0x1F80000 >;
++				label = "obmc-ubi";
++			};
++		};
++	};
++	flash@1 {
++		status = "okay";
++		label = "alt-bmc";
++		m25p,fast-read;
++		spi-max-frequency = <50000000>;
++		partitions {
++			#address-cells = < 1 >;
++			#size-cells = < 1 >;
++			compatible = "fixed-partitions";
++			u-boot@0 {
++				reg = < 0 0x60000 >;
++				label = "alt-u-boot";
++			};
++			u-boot-env@60000 {
++				reg = < 0x60000 0x20000 >;
++				label = "alt-u-boot-env";
++			};
++			obmc-ubi@80000 {
++				reg = < 0x80000 0x1F80000 >;
++				label = "alt-obmc-ubi";
++			};
++		};
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++
++	flash@0 {
++		status = "okay";
++		label = "pnor";
++		m25p,fast-read;
++		spi-max-frequency = <100000000>;
++	};
++};
++
++&lpc_ctrl {
++	status = "okay";
++	memory-region = <&flash_memory>;
++	flash = <&spi1>;
++};
++
++&uart1 {
++	/* Rear RS-232 connector */
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd1_default
++			&pinctrl_rxd1_default
++			&pinctrl_nrts1_default
++			&pinctrl_ndtr1_default
++			&pinctrl_ndsr1_default
++			&pinctrl_ncts1_default
++			&pinctrl_ndcd1_default
++			&pinctrl_nri1_default>;
++};
++
++&uart2 {
++	/* APSS */
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd2_default &pinctrl_rxd2_default>;
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii1_default>;
++	use-ncsi;
++};
++
++&mac1 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&i2c0 {
++	status = "disabled";
++};
++
++&i2c1 {
++	status = "disabled";
++};
++
++&i2c2 {
++	status = "okay";
++
++	/* SAMTEC P0 */
++	/* SAMTEC P1 */
++
++};
++
++&i2c3 {
++	status = "okay";
++
++	/* APSS */
++	/* CPLD */
++
++	/* PCA9516 (repeater) ->
++	 *    CLK Buffer 9FGS9092
++	 *    CLK Buffer 9DBL0651BKILFT
++	 *    CLK Buffer 9DBL0651BKILFT
++	 *    Power Supply 0
++	 *    Power Supply 1
++	 *    PCA 9552 LED
++	 */
++
++	power-supply@58 {
++		compatible = "ibm,cffps1";
++		reg = <0x58>;
++	};
++
++	power-supply@5b {
++		compatible = "ibm,cffps1";
++		reg = <0x5b>;
++	};
++
++	pca9552: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@8 {
++			reg = <8>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@9 {
++			reg = <9>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@10 {
++			reg = <10>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@11 {
++			reg = <11>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@12 {
++			reg = <12>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@13 {
++			reg = <13>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@14 {
++			reg = <14>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++		gpio@15 {
++			reg = <15>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++	};
++
++};
++
++&i2c4 {
++	status = "okay";
++
++	/* CP0 VDD & VCS : IR35221 */
++	/* CP0 VDN : IR35221 */
++	/* CP0 VIO : IR38064 */
++	/* CP0 VDDR : PXM1330 */
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@72 {
++		compatible = "infineon,ir35221";
++		reg = <0x72>;
++	};
++
++};
++
++&i2c5 {
++	status = "okay";
++
++	/* CP0 VDD & VCS : IR35221 */
++	/* CP0 VDN : IR35221 */
++	/* CP0 VIO : IR38064 */
++	/* CP0 VDDR : PXM1330 */
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@72 {
++		compatible = "infineon,ir35221";
++		reg = <0x72>;
++	};
++
++};
++
++&i2c6 {
++	status = "okay";
++
++	/* pca9548 -> NVMe1 to 8 */
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};
++
++};
++
++&i2c7 {
++	status = "okay";
++
++	/* pca9548 -> NVMe9 to 16 */
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};
++
++};
++
++&i2c8 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c64";
++		reg = <0x50>;
++	};
++};
++
++&i2c9 {
++	status = "okay";
++
++	/* pca9545 Riser ->
++	*	PCIe x8  Slot3
++	*	PCIe x16 slot4
++	*	PCIe x8  slot5
++	*	I2C BMC RISER PCA9554
++	*	BMC SCL/SDA PCA9554
++	*	PCA9554
++	*/
++
++	/* pca9545 ->
++	*	PCIe x16 Slot1
++	*	PCIe x8  slot2
++	*	PEX8748
++	*/
++
++	pca9545riser@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++
++	pca9545@71 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x71>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++};
++
++&i2c10 {
++	status = "okay";
++
++	/* pca9545 Riser ->
++	* 	PCIe x8  Slot8
++	* 	PCIe x16 slot9
++	* 	PCIe x8  slot10
++	* 	I2C BMC RISER PCA9554
++	* 	BMC SCL/SDA PCA9554
++	* 	PCA9554
++	*/
++
++	/* pca9545 ->
++	*	PCIe x16 Slot1
++	*	PCIe x8  slot2
++	*	PEX8748
++	*/
++
++	pca9545riser@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++
++	pca9545@71 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x71>;
++
++		i2c-mux-idle-disconnect;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++	};
++};
++
++&i2c11 {
++	status = "okay";
++
++	/* TPM */
++	/* RTC RX8900CE */
++	/* FPGA for power sequence */
++	/* TMP275A */
++	/* TMP275A */
++	/* EMC1462 */
++
++	tpm@57 {
++		compatible = "infineon,slb9645tt";
++		reg = <0x57>;
++	};
++
++	rtc@32 {
++		compatible = "epson,rx8900";
++		reg = <0x32>;
++	};
++
++	tmp275@48 {
++		compatible = "ti,tmp275";
++		reg = <0x48>;
++	};
++
++	tmp275@49 {
++		compatible = "ti,tmp275";
++		reg = <0x49>;
++	};
++
++	/* chip emc1462 use emc1403 driver */
++	emc1403@4c {
++		compatible = "smsc,emc1403";
++		reg = <0x4c>;
++	};
++
++};
++
++&i2c12 {
++	status = "okay";
++
++	/* pca9545 ->
++	*	SAS BP1
++	*	SAS BP2
++	*	NVMe BP
++	*	M.2 riser
++	*/
++
++	pca9545@70 {
++		compatible = "nxp,pca9545";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++
++		interrupt-controller;
++		#interrupt-cells = <2>;
++
++		i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++
++		i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++
++		i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++
++			eeprom@50 {
++				compatible = "atmel,24c64";
++				reg = <0x50>;
++			};
++		};
++
++		i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++
++			tmp275@48 {
++				compatible = "ti,tmp275";
++				reg = <0x48>;
++			};
++		};
++
++	};
++
++};
++
++&i2c13 {
++	status = "okay";
++
++	/* pca9548 ->
++	*	NVMe BP
++	*	NVMe HDD17 to 24
++	*/
++
++	pca9548@70 {
++		compatible = "nxp,pca9548";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		reg = <0x70>;
++	};
++};
++
++&vuart {
++	status = "okay";
++};
++
++&gfx {
++	status = "okay";
++	memory-region = <&gfx_memory>;
++};
++
++&adc {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default
++			&pinctrl_adc1_default
++			&pinctrl_adc2_default
++			&pinctrl_adc3_default
++			&pinctrl_adc4_default
++			&pinctrl_adc5_default
++			&pinctrl_adc6_default
++			&pinctrl_adc7_default
++			&pinctrl_adc8_default
++			&pinctrl_adc9_default
++			&pinctrl_adc10_default
++			&pinctrl_adc11_default
++			&pinctrl_adc12_default
++			&pinctrl_adc13_default
++			&pinctrl_adc14_default
++			&pinctrl_adc15_default>;
++};
++
++&wdt1 {
++	aspeed,reset-type = "none";
++	aspeed,external-signal;
++	aspeed,ext-push-pull;
++	aspeed,ext-active-high;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdtrst1_default>;
++};
++
++&wdt2 {
++	aspeed,alt-boot;
++};
++
++&ibt {
++	status = "okay";
++};
++
++&vhub {
++	status = "okay";
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++#include "ibm-power9-dual.dtsi"
++
+-- 
+2.17.1
 
 
-1.      It took about 4 minutes and 30 seconds for BIOS update with 64MB ro=
-m image. Could we extension the pollstatus time from 100 sec to 300 sec to =
-get the final status?
-
-2.      If user can choose to preserve BMC configuration (rw area) or BIOS =
-configuration when upgrade firmware, do you have any suggestions with regar=
-ds to preserve configuration implementation or could the host tool support =
-to send a parameter to support it?
-
-
-
-Regards,
-
-Andrew
-
-
---_000_8c0e07bacc89478996cca5f6718fe715lenovocom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@PMingLiU";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	font-size:10.5pt;
-	font-family:DengXian;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
-	{mso-style-priority:99;
-	mso-style-link:"\7EAF\6587\672C \5B57\7B26";
-	margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:10.5pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	text-indent:21.0pt;
-	font-size:10.5pt;
-	font-family:DengXian;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-span.a
-	{mso-style-name:"\7EAF\6587\672C \5B57\7B26";
-	mso-style-priority:99;
-	mso-style-link:\7EAF\6587\672C;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle20
-	{mso-style-type:personal-compose;
-	font-family:DengXian;
-	color:windowtext;}
-span.src
-	{mso-style-name:src;}
-span.apple-converted-space
-	{mso-style-name:apple-converted-space;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:1832257715;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1369123240 1418768858 67698713 67698715 67698703 67=
-698713 67698715 67698703 67698713 67698715;}
-@list l0:level1
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:18.0pt;
-	text-indent:-18.0pt;}
-@list l0:level2
-	{mso-level-number-format:alpha-lower;
-	mso-level-text:"%2\)";
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:42.0pt;
-	text-indent:-21.0pt;}
-@list l0:level3
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	margin-left:63.0pt;
-	text-indent:-21.0pt;}
-@list l0:level4
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:84.0pt;
-	text-indent:-21.0pt;}
-@list l0:level5
-	{mso-level-number-format:alpha-lower;
-	mso-level-text:"%5\)";
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:105.0pt;
-	text-indent:-21.0pt;}
-@list l0:level6
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	margin-left:126.0pt;
-	text-indent:-21.0pt;}
-@list l0:level7
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:147.0pt;
-	text-indent:-21.0pt;}
-@list l0:level8
-	{mso-level-number-format:alpha-lower;
-	mso-level-text:"%8\)";
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:168.0pt;
-	text-indent:-21.0pt;}
-@list l0:level9
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	margin-left:189.0pt;
-	text-indent:-21.0pt;}
-ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-CN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-=
-family:&quot;Calibri&quot;,sans-serif">Hi Patrick,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-=
-family:&quot;Calibri&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
-pt;mso-list:l0 level1 lfo1">
-<![if !supportLists]><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-fa=
-mily:&quot;Calibri&quot;,sans-serif;mso-fareast-language:ZH-TW"><span style=
-=3D"mso-list:Ignore">1.<span style=3D"font:7.0pt &quot;Times New Roman&quot=
-;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=3D"EN-US" style=3D"font-size:12.0=
-pt;font-family:&quot;Calibri&quot;,sans-serif;mso-fareast-language:ZH-TW">I=
-t took about 4 minutes and 30 seconds for BIOS update with 64MB rom image. =
-Could we extension the pollstatus time from 100
- sec to 300 sec to get the final status? <o:p></o:p></span></p>
-<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
-pt;mso-list:l0 level1 lfo1">
-<![if !supportLists]><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-fa=
-mily:&quot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:ZH-TW"=
-><span style=3D"mso-list:Ignore">2.<span style=3D"font:7.0pt &quot;Times Ne=
-w Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></span><![endif]><span lang=3D"EN-US" style=3D"font-size:12.0=
-pt;font-family:&quot;Calibri&quot;,sans-serif;color:black;mso-fareast-langu=
-age:ZH-TW">If user can choose to
-</span><span class=3D"src"><span lang=3D"EN-US" style=3D"font-size:12.0pt;f=
-ont-family:&quot;Calibri&quot;,sans-serif;color:black;background:white">pre=
-serve</span></span><span class=3D"apple-converted-space"><span lang=3D"EN-U=
-S" style=3D"font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif;col=
-or:black;background:white">
-</span></span><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-family:&q=
-uot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:ZH-TW">BMC co=
-nfiguration (rw area) or BIOS configuration when upgrade firmware, do you h=
-ave any suggestions with regards to
-</span><span class=3D"src"><span lang=3D"EN-US" style=3D"font-size:12.0pt;f=
-ont-family:&quot;Calibri&quot;,sans-serif;color:black;background:white">pre=
-serve</span></span><span class=3D"apple-converted-space"><span lang=3D"EN-U=
-S" style=3D"font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif;col=
-or:black;background:white">
-</span></span><span lang=3D"EN-US" style=3D"font-size:12.0pt;font-family:&q=
-uot;Calibri&quot;,sans-serif;color:black;mso-fareast-language:ZH-TW">config=
-uration implementation or co</span><span lang=3D"EN-US" style=3D"font-size:=
-12.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-fareast-language:ZH-T=
-W">uld
- the host tool support to send a parameter to support it?<span style=3D"col=
-or:black"> &nbsp;&nbsp;<o:p></o:p></span></span></p>
-<p class=3D"MsoPlainText"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><=
-o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoPlainText"><span lang=3D"EN-US" style=3D"font-size:12.0pt">R=
-egards,<o:p></o:p></span></p>
-<p class=3D"MsoPlainText"><span lang=3D"EN-US" style=3D"font-size:12.0pt">A=
-ndrew<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
-
---_000_8c0e07bacc89478996cca5f6718fe715lenovocom_--
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+This email contains confidential or legally privileged information and is for the sole use of its intended recipient. 
+Any unauthorized review, use, copying or distribution of this email or the content of this email is strictly prohibited.
+If you are not the intended recipient, you may reply to the sender and should delete this e-mail immediately.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
