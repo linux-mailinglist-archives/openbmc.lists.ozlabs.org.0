@@ -1,72 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFE808BDAD
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 17:50:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6D8A8BDD0
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 17:56:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 467HGs3jprzDqfs
-	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 01:50:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 467HQW66fVzDqfG
+	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 01:56:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com;
+ (client-ip=2607:f8b0:4864:20::541; helo=mail-pg1-x541.google.com;
  envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="HAdrbada"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="bTUekn2f"; 
  dkim-atps=neutral
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com
- [IPv6:2607:f8b0:4864:20::62f])
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 467HG54xVTzDqfF
- for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2019 01:49:33 +1000 (AEST)
-Received: by mail-pl1-x62f.google.com with SMTP id t14so49413753plr.11
- for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 08:49:32 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 467HPk4b4bzDqfG
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2019 01:56:10 +1000 (AEST)
+Received: by mail-pg1-x541.google.com with SMTP id k3so452863pgb.10
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 08:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=/u0iiCi18Z0WrLuJoZtu8bc35q+Tekzfw6Yy7JcqRoo=;
- b=HAdrbadaKTZB6D/PG782DE7o/kQ1sRckq7ChQfAKDuc3kI7O48IwCF97SuAsS5/h48
- oiWMG66qVmHcam5SyxKWfG2l3nhK96toZAhHI5nfMNRepmIngdqsCw8DO/p7m2aVzXXM
- FtAbGDq8JFSCYZ3OMWNzvc90eP3oB8dBTiHyz9CH14ejKiHMUUZ4K9hDck5/7csEyTEw
- fUffN0+2k5P1B9UWE5qtSPazXlDP7k6Q0C47etdhTtRNpcLO8+m7N4w17zjdo7ZH8u2l
- 78fMxx7HzvbRJRtTRq2LMmeMM23/D0Qz8I+sv83C3XBUCkYw5u7CBsS4Qp4cwK8xaEw6
- vfhg==
+ :cc; bh=NzH0zTEonOYlV67yGHvi8Vxu/fSCUVplyPzFv4by8Kk=;
+ b=bTUekn2fhXGbatzCEygIVUI3uem3DSHx8gVkthxUaFXMDGPJ/3/cIB6vs6oq0vbkt2
+ cJXRbLFJad4tmprckKo5Q30ty6HD1H+tskwuyRIFjNmf1olK/MFcz9p1bbyvC+IrL5IK
+ 2FXyrG7Fvc4iRLo3AJhT33k1T0Qnko4T9ngQLw1kApTNZ2l8CASfewXk2TI3e+DnECLG
+ GxfWqN3ADUdXG3q7aocppFGP8TWVM+MMXavUi1rporOOUv6kett6uEkPxRy95k1R4umm
+ yDxpAkOEkG21pmN1bOvXC/8YL5ppFVfWZu56jw1JVnKJ5S8L4SByIZxeKKO7K3GgyTgm
+ hKhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=/u0iiCi18Z0WrLuJoZtu8bc35q+Tekzfw6Yy7JcqRoo=;
- b=Q97PVIwlK07E3JVgeEeGG3VR2nSECCzHAT2E4g4nrfA2KkV/TeNgtlLRZwpcB+hgWl
- +AjKs1o69tN7sWtqB1Et9oFgvhUqASO4yDE18JgW+oOkwQl5fGPWsDyK9xvuHtLTJr4U
- fCqvjJdtb35lr+4hO+kky9YX1ryM/AeAsV0zW+L+KR0MthdCsacHG17z59GojJTeA6TZ
- ZGxo/9VvbiHAsdcsFFj0W2OPRcGG4n4mmydPbTHl2FNPvHVMlYgj4EqrzOBYHjOhba0R
- SH+DWH7/bhHdb3+1Hozs4sq6yqi1CE2kLTnU3fzJwEgiKp1DuR5oA1TZklgmRJDDFB5t
- 4k7A==
-X-Gm-Message-State: APjAAAVnhjlqh4Y3/fBXtjM20MRChSlgYRsbsjAE68o2g6qeUFd/oLf4
- GbgQePWNW91d4wcgwW+iEnAsw8z6CtgGquVT7y91rA==
-X-Google-Smtp-Source: APXvYqzurjSOj84WxOA1dud8Z58qzAkwDQlA1v7sN1tfxiUZRnk9lVNreU1w62D4SXg7B3Olw8p6oWUF4iLzoj7HKmk=
-X-Received: by 2002:a17:902:e311:: with SMTP id
- cg17mr10911909plb.183.1565711369656; 
- Tue, 13 Aug 2019 08:49:29 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=NzH0zTEonOYlV67yGHvi8Vxu/fSCUVplyPzFv4by8Kk=;
+ b=GveGPseyc0ZAWbg/8yZPaJv0+p9+wKVOMm1hhbLfYdsMh5eSV6VOiMvG9F2cWAXRdp
+ E6lyiQXW+mvSA+HOfp1R8kIvJZVNTa9bQGgzDfHT7ohvMg3CQ+uC8oAozs+/QozEx2x7
+ szwISshVBGbOX/dfoMCbqv4/o9ugbwNd8JkEJv2XVTiuxlLCCTtY4Vh4IxVfs3IJe+6N
+ ubp4xIjzftXZBWdnWcJiuHBEVuFvkNhlyTa64wRFfkH0NdTQsPAQxsJ7SMbAblwB2+jt
+ QaumxU02kE8C+YW09nDTAjj8K1HmqbrdIWV7OtxGqvPrbg+99SWbc7TbLIJIFqgS+nfO
+ yAIw==
+X-Gm-Message-State: APjAAAXoS7sla7HJFfQ44LeT3hHETur6L9+MZdWY3i4cGGTXH6+tQ0Op
+ BT1NknzXdaUi5+Fh/DJSuZQBxl77Pb5C0bo25/m43A==
+X-Google-Smtp-Source: APXvYqxDzBRU6f2at4U96r7awwei7YcuJu5S0TNGlVov5zAN7RiJ2s5KUPhkc3vKLWbCxuu+GfMmuhfp0tEcDjLyV4U=
+X-Received: by 2002:a62:1515:: with SMTP id 21mr24836382pfv.81.1565711766566; 
+ Tue, 13 Aug 2019 08:56:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <8c0e07bacc89478996cca5f6718fe715@lenovo.com>
- <CAO=notzwOqKnmhB8Rn+0wAGua6OzpjjNDF=Va4Wyt7p2z9ES8g@mail.gmail.com>
- <6c7100c2019942dc9d5efad6475038ab@lenovo.com>
-In-Reply-To: <6c7100c2019942dc9d5efad6475038ab@lenovo.com>
+References: <d739c79fc78643c8aa6da29522290874@lenovo.com>
+ <2841ed2f-ef3d-7cbb-3afb-c8c657382455@linux.ibm.com>
+In-Reply-To: <2841ed2f-ef3d-7cbb-3afb-c8c657382455@linux.ibm.com>
 From: Patrick Venture <venture@google.com>
-Date: Tue, 13 Aug 2019 08:49:17 -0700
-Message-ID: <CAO=notwDt+KHOih1JFxOeuU1N6aDTK6qqhOzMJ0nFzRvF9EYdQ@mail.gmail.com>
-Subject: Re: [External] Re: Clarify some questions about host tool
- (burn_my_bmc)
-To: Andrew MS1 Peng <pengms1@lenovo.com>
+Date: Tue, 13 Aug 2019 08:55:55 -0700
+Message-ID: <CAO=notwKnBztj3GUhG45i0weNM53V8yo5j33qupr21qH1SUZ4w@mail.gmail.com>
+Subject: Re: OpenBMC Solution To CVE issues
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,75 +73,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Yonghui YH21 Liu <liuyh21@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 13, 2019 at 8:15 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
+On Tue, Aug 13, 2019 at 7:46 AM Joseph Reynolds <jrey@linux.ibm.com> wrote:
 >
->
->
-> -----=E9=82=AE=E4=BB=B6=E5=8E=9F=E4=BB=B6-----
-> =E5=8F=91=E4=BB=B6=E4=BA=BA: Patrick Venture <venture@google.com>
-> =E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4: 2019=E5=B9=B48=E6=9C=8813=E6=97=A5 =
-22:34
-> =E6=94=B6=E4=BB=B6=E4=BA=BA: Andrew MS1 Peng <pengms1@lenovo.com>
-> =E6=8A=84=E9=80=81: openbmc@lists.ozlabs.org
-> =E4=B8=BB=E9=A2=98: [External] Re: Clarify some questions about host tool=
- (burn_my_bmc)
->
-> On Mon, Aug 12, 2019 at 2:43 AM Andrew MS1 Peng <pengms1@lenovo.com> wrot=
-e:
+> On 8/12/19 10:21 PM, Yonghui YH21 Liu wrote:
 > >
-> > Hi Patrick,
+> > HI All,
 > >
+> >          I saw there are some solutions to public CVE issues, some
+> > solution are not enable by default setting.
 > >
+> I've provided by initial thoughts about how these CVEs affect OpenBMC.
+> This is from the point of view of code running on OpenBMC 2.7.0
+> systems.  My responses disregard vulnerabilities which may affect the
+> build host.
+>
+> Will BMC subject matter experts review the information below and provide
+> answers?
+>
+> - Joseph
+>
+> >          As we know, there are some new coming CVE issues. Could you
+> > help confirm whether below issues will be fixed? Is yes, when will be
+> > ready?
 > >
-> > 1.      It took about 4 minutes and 30 seconds for BIOS update with 64M=
-B rom image. Could we extension the pollstatus time from 100 sec to 300 sec=
- to get the final status?
+> >       CVE-2019-12900
+> >
+> The problem: BZ2 decompress - affects bzip2 through 1.0.6
+> Impact: we are impacted, we are at bzip2 1.0.6
+> How to exploit?  Do any OpenBMC interfaces use BZ2 compression? Image
+> upload?  Web interfaces?  If so, we may be impacted.
 >
-> I'm curious why it's harmful to check more frequently?
+> > CVE-2018-20843
+> >
+> The problem: affects Expat XML before 2.2.7
+> Impact: Not applicable, OpenBMC does not use XML
 >
->                 I showed some source code of helper.cpp as below, the che=
-cking status total time was 100 sec (5*20) but it was not enough for bios u=
-pdate and therefore I would like to extension the time from 100 sec to 300 =
-sec.
->
->                                         static constexpr auto verificatio=
-nSleep =3D 5s;
->                                 ipmi_flash::ActionStatus result =3D ipmi_=
-flash::ActionStatus::unknown;
->
->                                         try
->                                 {
->                                         static constexpr int commandAttem=
-pts =3D 20;
->                                          int attempts =3D 0;
->                                                 .........................=
-...................
+> > CVE-2019-9169
+> >
+> The problem: glibc/libc6 regexec proceed_next_node
+> Impact: we are impacted, we are on glibc 2.29
+> How to exploit?  Do any OpenBMC interfaces parse regular expressions?
+> If so we may be impacted?  If not, this will be hared to exploit.
 
-So you're not asking to check it less frequently, you're asking it to
-allow for a longer period before timing out.
+We parse regular expressions, however they're pre-programmed, versus
+allowing user-input.  This makes them difficult to exploit.  I don't
+know if bmcweb offers that type of input from the user, but I can't
+imagine -- but someone can follow-up.
 
 >
+> > CVE-2018-20750
 > >
-> > 2.      If user can choose to preserve BMC configuration (rw area) or B=
-IOS configuration when upgrade firmware, do you have any suggestions with r=
-egards to preserve configuration implementation or could the host tool supp=
-ort to send a parameter to support it?
+> The problem: libvncserver/rfbserver.c, affects LibVNC through 0.9.12
+> Impact: we may be impacted, we are on 0.9.12
+> Does our KVM use vncserver?
 >
-> Since one of the design goals was to keep the interface from the host sim=
-ple, and mostly agonistic to what was taking place, consideration wasn't gi=
-ven for a mechanism for adding extra parameters.  We're in a similar boat w=
-here we want a mechanism for changing the level of upgrade, so I'll go over=
- the design today at some point and see whether we can do it agnostically.
+> > CVE-2019-13404
+> >
+> The problem: Python installer, applies to Windows
+> Impact: not applicable, note that OpenBMC removed Python from the image
 >
+> > Thank your great support in advance!
 > >
+> > Thanks
 > >
-> >
-> > Regards,
-> >
-> > Andrew
-> >
-> >
+>
