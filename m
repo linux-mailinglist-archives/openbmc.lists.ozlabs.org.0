@@ -1,68 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A90B18BF05
-	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 18:54:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C0F8C084
+	for <lists+openbmc@lfdr.de>; Tue, 13 Aug 2019 20:22:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 467JhQ5VP9zDqX2
-	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 02:53:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 467Lfs4dnfzDqcM
+	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 04:22:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::436; helo=mail-pf1-x436.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=mspinler@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="W1uLrZhi"; 
- dkim-atps=neutral
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
- [IPv6:2607:f8b0:4864:20::436])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 467Jgf3ZWdzDqQ6
- for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2019 02:53:15 +1000 (AEST)
-Received: by mail-pf1-x436.google.com with SMTP id p184so51934415pfp.7
- for <openbmc@lists.ozlabs.org>; Tue, 13 Aug 2019 09:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=8NUM0HWEXRAVJGVGzqlPX3dCskNhVxc4/H3G8qD6zjU=;
- b=W1uLrZhi7AsUMy/jAXMsEoDEknLZQavgilUjJAYiOdfd8PMnd0biKfP4+IHUoXmj0i
- jYz+j9D+SRcfTgbJXbdtLH/DjP8XKm89phXKF6KY/629KKEuJrrcuR1Re0mN6TA/jvmJ
- ztF/RaAZ5IBqstuGgFFSdufF+er6WcWK8qU1S2u0TZwuE06yZy3pFvB/SGuLDdJ3jG1j
- 7WuohcLb4jne6n3yXACTRwGQ1MV7UOx9zE+TaQxv21OFCfh4hPO9s57NnML+g/3ZKhKq
- lq4EHP1CwAfDjmR7SAr73FDkFxqPnzfyC4C/s50cqfszv+apZ1ZWyYOm5X2bzfH/4plu
- TOgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=8NUM0HWEXRAVJGVGzqlPX3dCskNhVxc4/H3G8qD6zjU=;
- b=Wl00IFheFMXJX39zimmhbx8kv2Qi8l2fuMkFSvgzLo8Pirb+H0576QQNAAwoSE6HGw
- N9T6CvWA1yKJ8UXP/ENW5PGpzumyrcvgWuNJtoQrOoGcKQ0siFlGnIoetU0bVJQo7oro
- UuL0yXtbW1i6/fyqW12xH1Xjm2BX0jT1/hGD2eVPQgmZj8Bwx4hSJNsppPnX1bJ5m66F
- qxYS5jICB69s8MJ0Js4zUv8KArE6elpgz59rY/BPLJ43v2eELr//jiL22lFNJjX4DSQU
- /kQa57WG5zLGR7Lh62kcp73GVAdxXArDWKvw9CVhRZl/4I8KVZ+fMYRbXh1yZ1Gy35az
- 0yHw==
-X-Gm-Message-State: APjAAAVKeCHOij8Y2Fi/lFRajShIH8g8G/Nc1WtrmOkvy41qMZ8Xr39N
- V7ZqBSdyinQlXWmxlBIhzi8cSJXYZXhsOAAl/LvsJA==
-X-Google-Smtp-Source: APXvYqyYKctN2ADfzq/vbwywRCGfZC28WE49wGtwS6IRk55iF8r6gPIQKQ4Zo83g+UQUZP7As0orZrZ1xo6RkeoL9nY=
-X-Received: by 2002:a17:90a:bf0e:: with SMTP id
- c14mr2925186pjs.55.1565715192286; 
- Tue, 13 Aug 2019 09:53:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 467LfH4YL6zDqYq
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2019 04:22:14 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7DIKoGp056295; Tue, 13 Aug 2019 14:22:08 -0400
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2uc12s3mnu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Aug 2019 14:22:07 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7DIAP4w028764;
+ Tue, 13 Aug 2019 18:22:06 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma02wdc.us.ibm.com with ESMTP id 2u9nj62xn3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Aug 2019 18:22:06 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7DIM6tn47776030
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Aug 2019 18:22:06 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 56E1F112064;
+ Tue, 13 Aug 2019 18:22:06 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 318ED112061;
+ Tue, 13 Aug 2019 18:22:06 +0000 (GMT)
+Received: from [9.10.99.36] (unknown [9.10.99.36])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Aug 2019 18:22:06 +0000 (GMT)
+Subject: Re: Re-use witherspoon-psu-monitor
+To: =?UTF-8?B?R2VvcmdlIExpdSAo5YiY6ZSh5LyfKQ==?= <liuxiwei@inspur.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <l7vrab9ffh6cynjgiq6wmlqm.1565599934470@email.jadenine.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <5ae2cd44-0c3c-b960-c614-31d7920d9f05@linux.ibm.com>
+Date: Tue, 13 Aug 2019 13:22:07 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CAO=notxCMZBE7+osFBTmTjg_zyC=BLZ3QZhxsnUrKXwE2JqChA@mail.gmail.com>
- <d1e0c76c-a38d-6a3d-f78a-508b7014ccd6@intel.com>
-In-Reply-To: <d1e0c76c-a38d-6a3d-f78a-508b7014ccd6@intel.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 13 Aug 2019 09:53:00 -0700
-Message-ID: <CAO=notxiAHKTDQWXE6iv37nsjSndksw8t0pAfBbLW_bGNXT+xg@mail.gmail.com>
-Subject: Re: Adding BuildDate field to entity-manager output
-To: Ed Tanous <ed.tanous@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <l7vrab9ffh6cynjgiq6wmlqm.1565599934470@email.jadenine.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-13_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908130171
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,51 +85,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 13, 2019 at 9:31 AM Ed Tanous <ed.tanous@intel.com> wrote:
->
-> On 8/13/19 9:09 AM, Patrick Venture wrote:
-> > So, with entity-manager you can specify and interface, some properties
-> > and how the values should be presented.  For the BuildDate field
-> > however, the output from FruDevice for that interface doesn't match
-> > the Asset interface's date property format.
-> >
-> > I merged patch into phosphor-host-ipmid that makes it support parsing
-> > multiple formats, however, that dbus interface defines the format "by
-> > description."
-> >
-> > I was curious if it would be worth trying to reinterpret the value
-> > when publishing it to that dbus interface?  Converting from "%a %b %e
-> > %H:%M:%S %Y" to "%Y-%m-%d - %H:%M:%S"
-> >
-> > Honestly, I'd be perfectly fine just adding it as-is to the Asset
-> > interface description since phosphor-host-ipmid knows how to parse it
-> > (pending: https://gerrit.openbmc-project.xyz/24384).
-> >
-> > Thoughts?
-> >
-> > Patrick
-> >
->
-> In theory Entity-manager is just forwarding those fields directly
-> through from FruDevice.  It's not surprising they're incorrect;  I don't
-> believe there are any uses of them by the external interfaces.  IPMI
-> just reads the raw FRU bytes, and Redfish doesn't expose the manufacture
-> date at all.
->
-> What I suspect is that we just need to make this line conform to the
-> right format string.
-> https://github.com/openbmc/entity-manager/blob/b8293c016074d19d8579c8ef0e1bfee6dff46ab0/src/FruDevice.cpp#L738
->
-> And everything else should "just work"
 
-That's my understanding as well. I Just wanted to make sure the format
-wasn't important to anything redfish or out of my scope.
 
-In this case, I'll just swap out the format string with the other one
-and it'll just work :)
+On 8/12/2019 3:54 AM, George Liu (刘锡伟) wrote:
+> Hi All,
+>
+> Recently I need to get the asset information of psu on the fp5280g2 machine. For the downstream, I think re-use witherspoon-psu-monitor is better. but currently it`s only adapted witherspoon machine.Is it possible to change this recipes to a general repo, so that a repo can be adapted to a variety of machines for future maintenance and updates?
+
+Sounds like a good idea to me!  The only reason we put a witherspoon on 
+the repo name in  the first place was because we didn't know how others 
+would want to do PSU interaction at that time and we didn't want to 
+presume that we should be a generic repo for it.
+
+>
+> I have a couple of question:
+>
+> 1. For the recipes of the witherspoon-psu-monitor, could it be changed to a generic name, for example...
+
+Yea, we would definitely want to change the recipe name if we change the 
+repo name.
+
+>
+> 2. When reading and updating the properties of the xyz.openbmc_project.Inventory.Decorator.Asset interface via the pmbus driver, could it be changed to a common configuration (eg yaml or json, etc.)
+
+I'm not exactly sure what you're looking to do, but if the goal is to 
+make it more generic, I'm all for it.  I have no problem with making 
+things configurable.
+
+>
+> 3. /sys/kenerl/debug/pmbus/hwmonX/XXX/... Does each file name need to be unified?
+
+If you're suggesting adding some configurable way of specifying which 
+sysfs files to read, that also sounds like a good idea.
+
+>
+> Thanks!
+
