@@ -2,63 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 020DC8DFA5
-	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 23:10:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE9DC8DFAD
+	for <lists+openbmc@lfdr.de>; Wed, 14 Aug 2019 23:18:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4682LB2rS2zDqvd
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 07:10:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4682W52QDlzDqyq
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 07:18:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="lFB16B3y"; 
- dkim-atps=neutral
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
- [IPv6:2607:f8b0:4864:20::432])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4682KR4w4SzDqjc
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 07:10:03 +1000 (AEST)
-Received: by mail-pf1-x432.google.com with SMTP id o70so94431pfg.5
- for <openbmc@lists.ozlabs.org>; Wed, 14 Aug 2019 14:10:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=4Zu9tcEoSc0CvZTapAuSKu0z1+5SgC3WiAqJMLLJMZ8=;
- b=lFB16B3y7Wty76DV1FXjANRp1W5e4hhU/v2v8fS1M5Lt8XruJM9XAITwzz+z/dXQLh
- 3QtLT47u0tveMyLXYU9DhsvQS39Z4DdfTvLphsUxH6Mp+fMB+ABIQQmokHKVDyzB73fQ
- s0tGek9Yn0CYOsFdai+gxlS5jQHiQJEgOVqv9nobYcV3yTGJypAvEWkWjuuclCr1+ZUe
- Jg4TyexGcgKr0NNBFleDxxkZUTPajEC7zwjzOdKA0bEA3hkSDWvnf9RJQRZK22BvJKkf
- xL8HbjZVq8KOHjyEKKx/ATmyl6Z4ttsj5iaHgGeHMGWQdImmaiOhfnj3hGuzmqlj2cre
- y6OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=4Zu9tcEoSc0CvZTapAuSKu0z1+5SgC3WiAqJMLLJMZ8=;
- b=i25jAHfuwIMHEAfFDSmlGX40018arPwVHZLMRNLVR4kKPzarF1c85u15jeqavqxakf
- +rXfDk3QhucPlMndf32qoTgw1iH1XoRFXT9d9ZNjZnvkMX+n5yAEv4PWf2Y74jL+I4nD
- h4sXTWazsCvi5xir7IbSPBkh+WiO7kAx91TmYENnI0EvW8s9vwYDkLmxMPkXKcyQVFbv
- umiKOPuu+0iAtNh6aBq0QaIZauMJRuV742hWC2Lp3ZLT0dJ6RBs12qdyJzUwoRv/w2EL
- 8szE2vAU8X3Y5wMLknDY8Dvste/LY/1KIgU9LRIvbD9kaJOdMY9WC984SeAwLNoGz5RM
- Jtgg==
-X-Gm-Message-State: APjAAAVgopeYLlSx45zhdN10xmkTyqfi/5MHr74X/UNMaUNYoLzTnl+8
- eoayjq7QKqaB71lycuMpwwxKxMFmTS3Dk1xL+nr23w==
-X-Google-Smtp-Source: APXvYqyQMFh12CYMxhWb8o0zrhlOToANK8K3svXuafdRaEWrm4FD1i48PfrKlAscxdYxkhKxuCKuwnh9jwDfa6E5vXg=
-X-Received: by 2002:a62:e515:: with SMTP id n21mr2014833pff.186.1565816999217; 
- Wed, 14 Aug 2019 14:09:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4682VT1jD4zDqs3
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 07:17:52 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2019 14:17:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,386,1559545200"; d="scan'208";a="260623442"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga001.jf.intel.com with ESMTP; 14 Aug 2019 14:17:49 -0700
+Subject: Re: mixing phosphor-dbus-interfaces and intel-dbus-interfaces
+To: Patrick Venture <venture@google.com>, "Tanous, Ed" <ed.tanous@intel.com>, 
+ Nancy Yuen <yuenn@google.com>
+References: <CAO=notwDmu0Xz4usK1aZQg39V3vT9ZBOt7L7zDp8zRN+5dMcvw@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <990303f2-4434-f098-1f2c-af3bd4ffa075@linux.intel.com>
+Date: Wed, 14 Aug 2019 14:17:49 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 14 Aug 2019 14:09:47 -0700
-Message-ID: <CAO=notwDmu0Xz4usK1aZQg39V3vT9ZBOt7L7zDp8zRN+5dMcvw@mail.gmail.com>
-Subject: mixing phosphor-dbus-interfaces and intel-dbus-interfaces
-To: James Feist <james.feist@linux.intel.com>, "Tanous,
- Ed" <ed.tanous@intel.com>, Nancy Yuen <yuenn@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAO=notwDmu0Xz4usK1aZQg39V3vT9ZBOt7L7zDp8zRN+5dMcvw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,9 +58,49 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I was curious how you guys mixed your dbus-interfaces repos.  it looks
-like at least in dbus-sensors that you approach the use of them
-differently.  So there's no incompatibility -- for instance, between
-the two sensor value interfaces?
+On 8/14/19 2:09 PM, Patrick Venture wrote:
+> I was curious how you guys mixed your dbus-interfaces repos.  it looks
+> like at least in dbus-sensors that you approach the use of them
+> differently.  So there's no incompatibility -- for instance, between
+> the two sensor value interfaces?
+> 
 
-Patrick
+sdbusplus asio doesn't require any yaml files, it lets you create the 
+interface on the fly.
+
+Examples are here:
+https://github.com/openbmc/sdbusplus/blob/4212292bcf136d04b38ba5116aa568b0fa312798/example/asio-example.cpp#L206
+
+So to create the sensor interface one just calls:
+
+  auto server = sdbusplus::asio::object_server(conn);
+   std::shared_ptr<sdbusplus::asio::dbus_interface> iface =
+      server.add_interface("/xyz/openbmc_project/Sensor/Value",
+			    "xyz.openbmc_project.SomeType.SensorName");
+
+Then if you want a double you call.
+
+double value = 3;
+
+iface->register_property("Value", value);
+
+and it adds it to the vtable.
+
+Then just call iface->initialize();
+
+
+So for adc sensor it gets created on the fly here: 
+https://github.com/openbmc/dbus-sensors/blob/7fa475d3f27ec6c37503ff7ec0496acc2215da29/src/ADCSensor.cpp#L57
+
+
+and the double is added here:
+
+
+https://github.com/openbmc/dbus-sensors/blob/7fa475d3f27ec6c37503ff7ec0496acc2215da29/include/sensor.hpp#L62
+
+
+-James
+
+
+> Patrick
+> 
