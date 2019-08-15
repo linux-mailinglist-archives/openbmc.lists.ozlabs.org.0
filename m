@@ -2,87 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 128158E7D5
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 11:10:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B34A98EC1C
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 14:58:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 468LJ970ptzDqHg
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 19:10:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 468RMW2cHhzDr6Q
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 22:58:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.250.210; helo=mail1.bemta24.messagelabs.com;
- envelope-from=rli11@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::22e; helo=mail-oi1-x22e.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
- [67.219.250.210])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="pYOh6cWS"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468LC91Z2lzDqq3
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 19:05:40 +1000 (AEST)
-Received: from [67.219.251.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-3.bemta.az-c.us-west-2.aws.symcld.net id 07/29-16224-060255D5;
- Thu, 15 Aug 2019 09:05:36 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRWlGSWpSXmKPExsWS8eIhj26CQmi
- swZONohYfNnewWpxqecHiwOQx72Sgx/kZCxkDmKJYM/OS8isSWDNaTm5jLljPV/H04DPWBsZZ
- PF2MXBxCAg1MEr83LmOCcF4zSiz+280K4exjlHjdvoy5i5GTg01ASaLl1Qr2LkYODhGBHIllt
- 3VAwsICDhK/XixiB7FFBBwlNi64D2VbSXQ/vsEIYrMIqErcvvAOLM4rYCnx+v18NhBbSKBQov
- fCEVaQkZwCzhLtLdogYUYBWYknC54xgdjMAuIS5y62grVKCAhILNlznhnCFpV4+fgfK4StING
- 85zULRL2OxILdn9ggbG2JZQtfM0OsFZQ4OfMJywRGkVlIxs5C0jILScssJC0LGFlWMZonFWWm
- Z5TkJmbm6BoaGOgaGhrpGhqb6Vqa6yVW6SbrlRbrlqcWl+ga6SWWF+sVV+Ym56To5aWWbGIEx
- lFKQUfiDsZzs97oHWKU5GBSEuUtnxocK8SXlJ9SmZFYnBFfVJqTWnyIUYaDQ0mC97tcaKyQYF
- FqempFWmYOMKZh0hIcPEoivLXyQGne4oLE3OLMdIjUKUZXjgkv5y5i5ni7fB6QPHgURB5rWgI
- kN89duohZiCUvPy9VSpw3H6RZAKQ5ozQPbjQsHV1ilJUS5mVkYGAQ4ilILcrNLEGVf8UozsGo
- JMz7EeRCnsy8ErgLXgEdxwR03JsbgSDHlSQipKQamObsvsCp1La7n+v2LvdD/0Q1DR5wX1/xz
- 2PKnbsOK44dYnH9cPH25uPrWnVrJyivumtl9eHjt5RpS4z4Il7y8HDYJ8g94ZmrHei5WXFek+
- Wkadd+FCUkNd08p1j0WOit1dG6px7Ff3RZl38N31Ck62EhLRUmPVtdeUpfl2yy6jQ70XeHpXV
- kpp87JnN/hfthvqX+8uzb10YLPTz/PpchcL7sf7FvRpKf2fcxqry+1qJuqB/NoCb2WmZqRoKJ
- vdCHVR2ruBOmHJFk+12yYMcljhSuZY0VfQZ30rcGrqhOuP/jwMOHp6/fXLl0RdChstOP4tJ+P
- o26a3nmyoyZVwJi2nctX2jGuuHzLyv/1ce3qAYqsRRnJBpqMRcVJwIAp9GVRMIDAAA=
-X-Env-Sender: rli11@lenovo.com
-X-Msg-Ref: server-31.tower-366.messagelabs.com!1565859935!163245!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 9193 invoked from network); 15 Aug 2019 09:05:36 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-31.tower-366.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 15 Aug 2019 09:05:36 -0000
-Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id A624BB6D4BA8409FA0F9;
- Thu, 15 Aug 2019 05:05:34 -0400 (EDT)
-Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
- HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Thu, 15 Aug 2019 17:05:22 +0800
-Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
- HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
- 15.01.1591.008; Thu, 15 Aug 2019 17:05:32 +0800
-From: Ivan Li11 <rli11@lenovo.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: [External]  Re: Question about sensor number access
-Thread-Topic: [External]  Re: Question about sensor number access
-Thread-Index: AdVRIVn/nYHC01CUQoC1p3ukkFbh5f//tqgA//t7EiA=
-Date: Thu, 15 Aug 2019 09:05:32 +0000
-Message-ID: <3854ce3f1b23419f99998cda08f15965@lenovo.com>
-References: <860e21837286442b9a1cdd7d7dafe474@lenovo.com>
- <73e88c82-447d-38fb-bfa4-ddd48976d1b3@linux.intel.com>
-In-Reply-To: <73e88c82-447d-38fb-bfa4-ddd48976d1b3@linux.intel.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468RJP0sNDzDr4R
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 22:55:32 +1000 (AEST)
+Received: by mail-oi1-x22e.google.com with SMTP id l12so1800584oil.1
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 05:55:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=5S4p475ezAkW1DYNvepjWvLKEBrDqNktZKNo0+PnXCU=;
+ b=pYOh6cWSm0QThAedGSkmHFbF7Cn6IZSfaAu9/VjNeM0NGshVAKtEhCU+6l0E4Mq3Qz
+ JrXpVavLDeudw8jjiD4Vx3s6n2M+UnIEJbh/tcE3OqzlCGLbrmKNBb/TK4KrO6xb0be7
+ 6b4MBNgNsd8XdQ36tv/wkXv7ZK7NoEE3Uwt7lrH1irMXWTSHexeCqxf7apg5kOIsWUqn
+ E2UMPiJvs27/GJz4Ag/9IGO8sz+pq1fX3iosGR6hyDp1AkfnKey2zAvNocW4ZyeTQL+b
+ erNNuIzUyy3d4uBCzV1McYsrzZO4qFnSCUw5AdjDBiXkm5SnCvSMj5pz33EEMarGqvD9
+ K7gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=5S4p475ezAkW1DYNvepjWvLKEBrDqNktZKNo0+PnXCU=;
+ b=q3INoYtMmbSEetPUwSuq3XbNg/a22xyMDfkYpfwJpvX1hwpmx3WE2Es6++oggeSMKg
+ nsYq87A50Wf7v1Psl3F8sxxXcUwvsRv8WTpZ35NOUrOmwp9FxGvzsTSdnMuzNZ5Oxj8i
+ MG4wBp+OiLr4IBK7yWpGi0BfCuNa8wqjzbYoVueeZw1/G4ytAx9kszVtdZJhhhL8MIMz
+ QA6B45MWjk0ZJr/8wnhuv0ENoNIHet3jlW5mG34Ki3hDmJRHALd8LakDpNhMrLzk7Muk
+ 9FYHcNAzdJ1SAVwzIhyJPW6QQwgCtcwMjqZjOrAzzcj+yoJ5JfyYJ/udPCgTMOJQK7bP
+ BXHw==
+X-Gm-Message-State: APjAAAV03Szf0HhwMIBj/sIwjO6R49P58tcjsASmkHQJpkdq+OF/Q1Fv
+ u0/9ILRLsk/Y3hcd54CQZm0JHfEs4kwTmEbe8Ew=
+X-Google-Smtp-Source: APXvYqwfWCfbEwDm7ggxy0dM9TE7DphMXKdfEUusMkk3BpVHGEWPvVyDWuyl+nwNux+q7lNhUbu/ix0BJC3G7J/Yfh8=
+X-Received: by 2002:aca:c713:: with SMTP id x19mr1509483oif.158.1565873728646; 
+ Thu, 15 Aug 2019 05:55:28 -0700 (PDT)
 MIME-Version: 1.0
+References: <6BC2AA78-97AF-4D38-A876-F9E50BADE98E@fb.com>
+In-Reply-To: <6BC2AA78-97AF-4D38-A876-F9E50BADE98E@fb.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Thu, 15 Aug 2019 07:55:12 -0500
+Message-ID: <CALLMt=p9KvdX3-fneG5JdJNK6viHo0Hny=90MTj=tqUu1SQ=Zw@mail.gmail.com>
+Subject: Re: Policy on Tools Posting
+To: Wilfred Smith <wilfredsmith@fb.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,64 +72,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jason,
+On Mon, Aug 12, 2019 at 7:58 PM Wilfred Smith <wilfredsmith@fb.com> wrote:
+>
+>
+> 1. Are there guidelines/procedures specific to submitting command line tools and utilities? I have heard that there may be a repository and/or path dedicated to CLI tools.
 
-Thanks your great support
-.
-I have an idea that create JSON file including threshold sensor number and =
-sensor name mapping table for phosphor-sel-logger , and use sensor name to =
-map the related sensor number with that JSON file when threshold sensor SEL=
- log is generated.
-Please help to advise it.
+The community has definitely tended to limit wrapper tools within
+OpenBMC. We had a discussion a while back that we're open to some but
+the API's to them really need to be thought out and reviewed because
+command line tools become customer API's (i.e. people start writing
+scripts on top of these tools that then become key to the
+manufacturing process or some other critical area).
 
-Thanks,
-Ivan
------Original Message-----
-From: openbmc <openbmc-bounces+rli11=3Dlenovo.com@lists.ozlabs.org> On Beha=
-lf Of Bills, Jason M
-Sent: Tuesday, August 13, 2019 2:57 AM
-To: openbmc@lists.ozlabs.org
-Subject: [External] Re: Question about sensor number access
+Anything that goes into OpenBMC needs to support OpenBMC interfaces.
+For example, I'm not familiar with fruid-util's D-bus service
+xyz.openbmc_project.FruDevice. A "busctl tree
+xyz.openbmc_project.Inventory.Manager | cat" shows the inventory items
+on OpenBMC.
 
+One issue we have within OpenBMC is there may be different
+implementations of the D-bus API's for a given area. For example,
+Inventory has different implementations so I'm not sure which repo
+would best fit your tool. That type of issue leads me to wonder if we
+should put the tools with the interface definitions in
+openbmc/phosphor-dbus-interfaces? Or maybe a separate phosphor-tools
+repo would be more logical for these.
 
-On 8/12/2019 9:08 AM, Ivan Li11 wrote:
-> Hi Team,
->=20
-> I have a question about sensor number.
->=20
-> As far as I know, "phosphor-host-ipmid" will parse "ipmi-sensors.yaml"=20
-> and then store these sensors info(sensor number and sensor type, etc)=20
-> in ipmid.
->=20
-> May I know if another daemon(e.g. phosphor-sel-logger) needs sensor=20
-> number info, is there any suggested method to get sensor number ?
+Either way, I think command line tools should each get their own
+mini-design doc
+(https://github.com/openbmc/docs/blob/master/designs/design-template.md)
+with requirements and interfaces clearly defined for review by the
+community. If we can find a generic tool that multiple people find
+useful, we can then find a place to put it. Otherwise, you could host
+your tools outside of openbmc/ github and just pull them into recipes
+from within your meta-facebook layer.
 
-phosphor-sel-logger stores only the sensor path and depends on something to=
- map sensor path to sensor number when the log is read.
-
-Today, that mapping is only done for dynamic IPMI sensors in intel-ipmi-oem=
-, here:=20
-https://github.com/openbmc/intel-ipmi-oem/blob/master/include/sdrutils.hpp#=
-L207.
-
-We were not able to get to a final solution for handling the mapping of dyn=
-amic and hardcoded sensor numbers.  You can see the ideas and discussion in=
- this review:=20
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951
-and this thread:=20
-https://lists.ozlabs.org/pipermail/openbmc/2019-January/014890.html.
-
-This is specifically about getting the sensor number from the path for phos=
-phor-sel-logger, so it may not apply to your situation, but hopefully helps=
-.
-
-Thanks,
--Jason
->=20
-> Thanks,
->=20
-> Ivan
->=20
+> Thanks in advance,
+>
+> Wilfred
