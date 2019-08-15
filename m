@@ -1,55 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE18F8F227
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 19:27:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB0438F268
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 19:39:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 468YLV1nndzDr13
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 03:27:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 468YbT3swxzDrC8
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 03:39:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468YKs37tpzDr13
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 03:27:11 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 15 Aug 2019 10:27:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,389,1559545200"; d="scan'208";a="376447848"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga005.fm.intel.com with ESMTP; 15 Aug 2019 10:27:08 -0700
-Received: from [10.241.245.150] (unknown [10.241.245.150])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id B37C8580522;
- Thu, 15 Aug 2019 10:27:08 -0700 (PDT)
-Subject: Re: [External] Re: Question about sensor number access
-To: Ivan Li11 <rli11@lenovo.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <860e21837286442b9a1cdd7d7dafe474@lenovo.com>
- <73e88c82-447d-38fb-bfa4-ddd48976d1b3@linux.intel.com>
- <3854ce3f1b23419f99998cda08f15965@lenovo.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <2b66eb14-a4a6-6eaa-dbfb-943445eebb30@linux.intel.com>
-Date: Thu, 15 Aug 2019 10:27:08 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468YZg3ccVzDr3r
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 03:38:18 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7FHbVOm121797
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 13:38:13 -0400
+Received: from e14.ny.us.ibm.com (e14.ny.us.ibm.com [129.33.205.204])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2ud9acppk3-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 13:38:12 -0400
+Received: from localhost
+ by e14.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <anoo@linux.ibm.com>;
+ Thu, 15 Aug 2019 18:38:10 +0100
+Received: from b01cxnp23033.gho.pok.ibm.com (9.57.198.28)
+ by e14.ny.us.ibm.com (146.89.104.201) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 15 Aug 2019 18:38:08 +0100
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7FHc7Qn52560254
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 17:38:07 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9F8E8112062
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 17:38:07 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 63E43112061
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 17:38:07 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 17:38:07 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <3854ce3f1b23419f99998cda08f15965@lenovo.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Thu, 15 Aug 2019 12:38:16 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: Alternative to the filesystem overlay
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+x-cbid: 19081517-0052-0000-0000-000003EB2969
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011594; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000287; SDB=6.01247265; UDB=6.00658258; IPR=6.01028772; 
+ MB=3.00028186; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-15 17:38:09
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19081517-0053-0000-0000-0000621B0461
+Message-Id: <efb47539225e57a0ab0138987287c230@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-15_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908150170
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,66 +95,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+In OpenBMC we've been using an overlay to make the read-only filesystem 
+(or part of it) writable. It hasn't come without its issues, like 
+missing directories (openbmc/openbmc#3564) and various flavors of 
+corruption (openbmc/openbmc#3578 and issues when adding files to /etc in 
+the build causing files that had been previously modified on the bmc to 
+become corrupted).
 
+An alternative would be to use a bind mount and manage the file merging 
+by an OpenBMC app. Doing some experimentation, seems this solves the 
+issues seen above. The way that it'd work would be:
+- The init script or initramfs would do an rsync from /etc to the bind 
+mount destination directory in the read-write filesystem, skipping the 
+contents of a list which would contain the files that have been modified 
+in the BMC and should be preserved.
+- A new OpenBMC app would monitor /etc for changes via inotify for 
+example, and if a file is modified, it'd add it to the "list".
 
-On 8/15/2019 2:05 AM, Ivan Li11 wrote:
-> Hi Jason,
-> 
-> Thanks your great support
-> .
-> I have an idea that create JSON file including threshold sensor number and sensor name mapping table for phosphor-sel-logger , and use sensor name to map the related sensor number with that JSON file when threshold sensor SEL log is generated.
-> Please help to advise it.
-Hi Ivan,
+Considerations:
+- The /etc dir mainly being a configuration destination does not get 
+modified often so the app that is watching the directory would not be 
+triggered often.
+- The bind mount would duplicate the contents of etc although it's not 
+much. If space is a concern, some exploration could be done to have the 
+bind mount be a tmpfs and have the monitor app copy the modified files 
+to the read-write filesystem instead of adding them to a list.
 
-We still need to support dynamic sensor numbers, so it couldn't be a 
-fully hardcoded sensor map in JSON.  One approach could be to use the 
-JSON file to build up the hardcoded sensor number map, then fill in the 
-dynamic sensors and numbers as they are detected.
+Thoughts?
 
-phosphor-sel-logger and ipmid can then use the final map to log (by 
-name/path) and display (by number) sensor events.
-
-Thanks,
--Jason
-
-> 
-> Thanks,
-> Ivan
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+rli11=lenovo.com@lists.ozlabs.org> On Behalf Of Bills, Jason M
-> Sent: Tuesday, August 13, 2019 2:57 AM
-> To: openbmc@lists.ozlabs.org
-> Subject: [External] Re: Question about sensor number access
-> 
-> 
-> On 8/12/2019 9:08 AM, Ivan Li11 wrote:
->> Hi Team,
->>
->> I have a question about sensor number.
->>
->> As far as I know, "phosphor-host-ipmid" will parse "ipmi-sensors.yaml"
->> and then store these sensors info(sensor number and sensor type, etc)
->> in ipmid.
->>
->> May I know if another daemon(e.g. phosphor-sel-logger) needs sensor
->> number info, is there any suggested method to get sensor number ?
-> 
-> phosphor-sel-logger stores only the sensor path and depends on something to map sensor path to sensor number when the log is read.
-> 
-> Today, that mapping is only done for dynamic IPMI sensors in intel-ipmi-oem, here:
-> https://github.com/openbmc/intel-ipmi-oem/blob/master/include/sdrutils.hpp#L207.
-> 
-> We were not able to get to a final solution for handling the mapping of dynamic and hardcoded sensor numbers.  You can see the ideas and discussion in this review:
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/12951
-> and this thread:
-> https://lists.ozlabs.org/pipermail/openbmc/2019-January/014890.html.
-> 
-> This is specifically about getting the sensor number from the path for phosphor-sel-logger, so it may not apply to your situation, but hopefully helps.
-> 
-> Thanks,
-> -Jason
->>
->> Thanks,
->>
->> Ivan
->>
