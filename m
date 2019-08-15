@@ -2,77 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A3D38F0F1
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 18:40:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B73D08F13E
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 18:51:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 468XHv0D3GzDr8t
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 02:40:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 468XXF4vQCzDr9S
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 02:51:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::52b; helo=mail-pg1-x52b.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="NoLET9cv"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com
+ [IPv6:2607:f8b0:4864:20::52b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468XGh1CkgzDr7M
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 02:39:23 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7FGbDxs142816
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 12:39:14 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.67])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2ud9xgay5y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 12:39:14 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Thu, 15 Aug 2019 16:39:10 -0000
-Received: from us1a3-smtp02.a3.dal06.isc4sb.com (10.106.154.159)
- by smtp.notes.na.collabserv.com (10.106.227.16) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 15 Aug 2019 16:39:05 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp02.a3.dal06.isc4sb.com
- with ESMTP id 2019081516390515-576310 ;
- Thu, 15 Aug 2019 16:39:05 +0000 
-In-Reply-To: <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Wilfred Smith <wilfredsmith@fb.com>
-Date: Thu, 15 Aug 2019 16:39:05 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468XWb10TWzDqLM
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 02:50:32 +1000 (AEST)
+Received: by mail-pg1-x52b.google.com with SMTP id n190so1551264pgn.0
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 09:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=W2B777okBFYU0wjrHeS0d72/mDQsG5TZgKHNUdWEDQk=;
+ b=NoLET9cv5uf84sO5/4gk0IFPM7JJbbprD+sqJY7Om6uyqZQV6XVc1XThAsgi/ayeoB
+ l99dy5xaLBncQ/7CzB57y9dgIlRSXJAlWr1My9327dSZgUiBES8guK5ed1ZavLlXI5c/
+ 7DUp//OUYhuyr0NA7FabmdyL8PCk+8Rdmo1ib9zraIpoR4N1HLCld3HKtWVs5wbHp5tn
+ l1JUOdk9zb+QEbdf4mn91Ez3IyghFkgcLDW+a4qUZJOza614lU/D/S5IvJt0gTy/voNs
+ o747l2cEKaZlreHPjzT1fniKRkmY9EUxOg8UbGy9x39AZRM0TBAcUMLG+Ad6b4hCDCfT
+ Mj6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=W2B777okBFYU0wjrHeS0d72/mDQsG5TZgKHNUdWEDQk=;
+ b=ShIkbVlJRqpXG/QVA4sJFhjWSRMNh1Xx2pMQeU5XjFFGO2e196K+6seVp0Mv/hFcQM
+ 2BgaHst2D90FSEbDan7xUTBh98Oqm1UqGDOY39OoR0as7LZ1opTMyK/XMCxzXWdTfaDC
+ FCShYIM11vp8NI/G3zk4Q6/XAJD4SS5c2t7UbYmQZJNRsPWLX4san2QtFuIguYtY4i0N
+ Z38T7OTR8SSHyAAPJVeNku2fy4Iv8NOa+0ndST2NzVyUOWC417S4JWBkawotHtYypIKx
+ 4ddgWu67HfknoVbj2b14YjYet8wrpKSbDix0anJGqVO3yl3QsciWHZdii61tcJSFf+jh
+ CRnw==
+X-Gm-Message-State: APjAAAWRdKXLX8G3nX9bvnA+Mt9kdzl8k57L8MSKvU2vANp9lIb0cxZf
+ aoKNL0+5QZNpiNNBrW9GQ1qNsoUkI8Zke39pMPEXXw==
+X-Google-Smtp-Source: APXvYqzT1JNhaPmiDCoX6xjAUqqEmKha75iXsSOf3abzGG6rBngzCVOgr4BxQpUQffvsuvw0qAmw03yRnAH/JfwnAKs=
+X-Received: by 2002:a63:1f1f:: with SMTP id f31mr4129704pgf.353.1565887828896; 
+ Thu, 15 Aug 2019 09:50:28 -0700 (PDT)
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>,
- <FB0EDEFC-F92E-4F6E-B6BC-B0C5E7AD6E73@fb.com>
- <CAJoAoZm9QpFgRdCsxoaNuCu1YONm_CFUp1fhdFj+h5uZhuCzAw@mail.gmail.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
- SCN1812108_20180501T0841_FP55 May 22, 2019 at 11:09
-X-LLNOutbound: False
-X-Disclaimed: 29271
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 19081516-7279-0000-0000-0000003ACD6C
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.440876; ST=0; TS=0; UL=0; ISC=; MB=0.001107
-X-IBM-SpamModules-Versions: BY=3.00011593; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000287; SDB=6.01247245; UDB=6.00658246; IPR=6.01028753; 
- MB=3.00028186; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-15 16:39:09
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-08-15 10:44:44 - 6.00010288
-x-cbparentid: 19081516-7280-0000-0000-00000058FAA0
-Message-Id: <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
-Subject: RE: Historical Sensor Information
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-15_06:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+References: <CAO=notzZQ4La6sUWYsDqFsbtXV_A4EhdsUA7iTsouxZMsm+bqQ@mail.gmail.com>
+ <CAO=notzy6ntzoNV3VB8Qu672nYk6qdu2j4Y2zGfi=zqsGCmmag@mail.gmail.com>
+ <19d0d4a3-3696-f6af-12e9-663143c79133@linux.intel.com>
+In-Reply-To: <19d0d4a3-3696-f6af-12e9-663143c79133@linux.intel.com>
+From: Patrick Venture <venture@google.com>
+Date: Thu, 15 Aug 2019 09:50:17 -0700
+Message-ID: <CAO=notwugCOwxGW=9aD=yD9FxCKDERBX_QxfGow1Kk+hF96NdQ@mail.gmail.com>
+Subject: Re: unexpected configuration output given examples
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,59 +74,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On August 15, 2019, Wilfred Smith wrote:
->I=E2=80=99ll need to check with my compatriots here at Facebook for our
->specific use cases.
+On Thu, Aug 15, 2019 at 9:27 AM James Feist <james.feist@linux.intel.com> wrote:
 >
->Can you point me to the discussion on metrics reporting?
+> On 8/14/19 6:16 PM, Patrick Venture wrote:
+> > On Wed, Aug 14, 2019 at 5:48 PM Patrick Venture <venture@google.com> wrote:
+> >>
+> >> When hard-coding bus and addresses, I ran into an interesting issue.
+> >> Previously, my sensors were dynamically bus'd with hard-coded
+> >> addresses, like:
+> >>
+> >> {
+> >>      "Exposes": [
+> >>          {
+> >>              "Address": "0x1c",
+> >>              "Bus": "$bus",
+> >>              "Name": "$bus board local",
+> >>              "Name1": "$bus board external",
+> >>              "Type": "TMP441"
+> >>          },
+> >> ...
+> >> }
+> >>
+> >> Leads to:
+> >> xyz.openbmc_project.Configuration.TMP441 interface -         -                 -
+> >> .Address                                 property  t         28
+> >>          emits-change
+> >> .Bus                                     property  t         20
+> >>          emits-change
+> >>
+> >> Which is great.
+> >>
+> >> But:
+> >> {
+> >>      "Exposes": [
+> >>          {
+> >>             "Address": "0x54",
+> >>             "Bus": 15,
+> >>             "Name": "$bus i2cool 0",
+> >>             "Type": "MAX31725"
+> >>          },
+> >> ...
+> >> }
+> >>
+> >> Leads to:
+> >> xyz.openbmc_project.Configuration.MAX31725 interface -         -               -
+> >> .Address                                   property  s         "0x54"
+> >>          emits-change
+> >> .Bus                                       property  t         15
+> >>          emits-change
+> >>
+> >>
+> >> Which crashes the hwmon temp program because it's "getting" a uint64_t
+> >> and not a string.
+> >
+> > I verified that if I use decimal for the address as an int it works.
+> > But I'm interested to know why "0x54" doesn't get converted to an int
+> > every time?
 >
+> It's possible some of the changes in review fix this.. I added it as a
+> unit test here and it seems to work:
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24463
+>
+> Unless something else in the code is preventing it from getting to the
+> replacement function.
 
-Probably this thread here, there seems to be a working group with a meeting=
- schedule:
-
-https://lists.ozlabs.org/pipermail/openbmc/2019-August/017412.html
-
-Platform telemetry and health monitoring - PST AM=20
-
-https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monit=
-oring-Work-Group
+I have a theory this is the issue, that it's not always hitting it,
+but I'll pick up your changes and continue testing.
 
 >
->> On Aug 14, 2019, at 7:51 PM, Emily Shaffer
-><emilyshaffer@google.com> wrote:
->>=20
->> On Wed, Aug 14, 2019 at 4:05 PM Wilfred Smith <wilfredsmith@fb.com>
->wrote:
->>>=20
->>> I presume most vendors desire the ability to query historical
->sensor information from the BMC.
->>>        Has this feature been implemented already? If so, please
->direct me.
->>>        If not, has someone already begun development?
->>>        Is there an existing specification or write-up?
->>>        Any =E2=80=98druthers or preferences on how I might proceed such
->that my effort benefits the wider community?
->>>=20
->>> Wilfred
->>=20
->> I think that the space constriction on many BMCs has left folks to
->> instead query over IPMI/Redfish and compile historical information
->> elsewhere. Can you tell a little more about the use case and
->indicate
->> why you would rather save history on the BMC than off the BMC?
->>=20
->> A related topic which - as I recall - was discussed and never
->> implemented is the topic of metrics reporting. It's possible that
->the
->> community has moved further on these topics than I remember,
->though,
->> as I've been fairly out of the loop lately.
->> - Emily
->
->
-
+> >
+> >>
+> >> My only caveat worthwhile is that the hwmon instance is already
+> >> present because that sensor is in the device-tree.  So I would expect
+> >> it to only fail on the export.
+> >>
+> >> Note, I did also try "Address" as an int and not a string, but that
+> >> then failed the json validation.
+> >>
+> >> Thanks,
+> >> Patrick
