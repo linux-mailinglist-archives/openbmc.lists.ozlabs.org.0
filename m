@@ -1,68 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B73D08F13E
-	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 18:51:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DA828F154
+	for <lists+openbmc@lfdr.de>; Thu, 15 Aug 2019 18:58:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 468XXF4vQCzDr9S
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 02:51:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 468XhM2swKzDr8r
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 02:58:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::52b; helo=mail-pg1-x52b.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::d34; helo=mail-io1-xd34.google.com;
+ envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="NoLET9cv"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="WutaPDEQ"; 
  dkim-atps=neutral
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com
- [IPv6:2607:f8b0:4864:20::52b])
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
+ [IPv6:2607:f8b0:4864:20::d34])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468XWb10TWzDqLM
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 02:50:32 +1000 (AEST)
-Received: by mail-pg1-x52b.google.com with SMTP id n190so1551264pgn.0
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 09:50:32 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468Xgg0kFXzDqpq
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 02:57:34 +1000 (AEST)
+Received: by mail-io1-xd34.google.com with SMTP id z3so494100iog.0
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 09:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=W2B777okBFYU0wjrHeS0d72/mDQsG5TZgKHNUdWEDQk=;
- b=NoLET9cv5uf84sO5/4gk0IFPM7JJbbprD+sqJY7Om6uyqZQV6XVc1XThAsgi/ayeoB
- l99dy5xaLBncQ/7CzB57y9dgIlRSXJAlWr1My9327dSZgUiBES8guK5ed1ZavLlXI5c/
- 7DUp//OUYhuyr0NA7FabmdyL8PCk+8Rdmo1ib9zraIpoR4N1HLCld3HKtWVs5wbHp5tn
- l1JUOdk9zb+QEbdf4mn91Ez3IyghFkgcLDW+a4qUZJOza614lU/D/S5IvJt0gTy/voNs
- o747l2cEKaZlreHPjzT1fniKRkmY9EUxOg8UbGy9x39AZRM0TBAcUMLG+Ad6b4hCDCfT
- Mj6w==
+ :cc; bh=tXiWH0nizJ5QOquP+R9iYczfB2hbRRo4y7p1CZJyMQA=;
+ b=WutaPDEQBi7gBNAz3lnk4IxWO6Y7Y2fWJhYPnxOggNmSWRBHVeutZDvhEWX5Ifa9Wu
+ BcZDhukwwLAGv/9umX7y3iSnJ5Sglqn8FxPoyMX+ebOUB6ljiJK787BvD1PTueWDjRW8
+ KL4j1XZCqvkGZ0uEQNmFP725+8enYKz7K6mqHK3DG09uAU2bjTMcD6eQ1vlQiU083O0D
+ b7gUNF0MgbnJLnHY899G8MBb7fzwmXUrB6A0PR9JaxsFDwQvt1d1Hl42LGpYrn3egykj
+ Flr8kSH/+KUEcUkPcGedCEjvABwf4/djxCy9n0oXA1zMY4JSfQ/y7RzuweAcspsoQ+NX
+ k9vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=W2B777okBFYU0wjrHeS0d72/mDQsG5TZgKHNUdWEDQk=;
- b=ShIkbVlJRqpXG/QVA4sJFhjWSRMNh1Xx2pMQeU5XjFFGO2e196K+6seVp0Mv/hFcQM
- 2BgaHst2D90FSEbDan7xUTBh98Oqm1UqGDOY39OoR0as7LZ1opTMyK/XMCxzXWdTfaDC
- FCShYIM11vp8NI/G3zk4Q6/XAJD4SS5c2t7UbYmQZJNRsPWLX4san2QtFuIguYtY4i0N
- Z38T7OTR8SSHyAAPJVeNku2fy4Iv8NOa+0ndST2NzVyUOWC417S4JWBkawotHtYypIKx
- 4ddgWu67HfknoVbj2b14YjYet8wrpKSbDix0anJGqVO3yl3QsciWHZdii61tcJSFf+jh
- CRnw==
-X-Gm-Message-State: APjAAAWRdKXLX8G3nX9bvnA+Mt9kdzl8k57L8MSKvU2vANp9lIb0cxZf
- aoKNL0+5QZNpiNNBrW9GQ1qNsoUkI8Zke39pMPEXXw==
-X-Google-Smtp-Source: APXvYqzT1JNhaPmiDCoX6xjAUqqEmKha75iXsSOf3abzGG6rBngzCVOgr4BxQpUQffvsuvw0qAmw03yRnAH/JfwnAKs=
-X-Received: by 2002:a63:1f1f:: with SMTP id f31mr4129704pgf.353.1565887828896; 
- Thu, 15 Aug 2019 09:50:28 -0700 (PDT)
+ bh=tXiWH0nizJ5QOquP+R9iYczfB2hbRRo4y7p1CZJyMQA=;
+ b=KtyA1IZNk5gr7fFOYZPetJOpKkayBEqzwze1S1NMy/8L89QSGTUkYNZa2Jyyhbsoy9
+ DoNE3OVDnNNHa4EslSGRIZltGfrZvEqLwlnAl1d3GnsEzbpGyCfoFq67jJSSD2tPCNrh
+ Bls8BnN0SECyVh+dpNuIImM/ZXbIlY+HGyizwgfAIZMwmVla0Aa8HrOx1jtiWXI1Oc8G
+ +uzy9dzHbXJh1YfEBrzIuR8GSQ/7dVHPvatABssomi0/EUV/bKL6amzaIdkUhBz6TwvB
+ N9f1cZ976AaFYLZvsM8106pz06ZnMrfAd58Nq182XLjUBmTZA6swIrUSg1TSSoJTHiBq
+ 8sQg==
+X-Gm-Message-State: APjAAAWcP+gepb9bz7DdA4s0D/F5evh6Tbp8dzk6EKd5qVsW+5rESCz2
+ /MfA/QcGE45b/YGCWSMrNxASoOj5WyNS3/Kny3vEsw==
+X-Google-Smtp-Source: APXvYqzKy1VHWXTsfBJxaO+eNQ1d3c1hc66sr52zuh7Y4lGSgxLSUxXcAwMy6chY9Y8W65LV3cCt+FWzR+pVW1OzweE=
+X-Received: by 2002:a02:ce35:: with SMTP id v21mr5979486jar.108.1565888250364; 
+ Thu, 15 Aug 2019 09:57:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notzZQ4La6sUWYsDqFsbtXV_A4EhdsUA7iTsouxZMsm+bqQ@mail.gmail.com>
- <CAO=notzy6ntzoNV3VB8Qu672nYk6qdu2j4Y2zGfi=zqsGCmmag@mail.gmail.com>
- <19d0d4a3-3696-f6af-12e9-663143c79133@linux.intel.com>
-In-Reply-To: <19d0d4a3-3696-f6af-12e9-663143c79133@linux.intel.com>
-From: Patrick Venture <venture@google.com>
-Date: Thu, 15 Aug 2019 09:50:17 -0700
-Message-ID: <CAO=notwugCOwxGW=9aD=yD9FxCKDERBX_QxfGow1Kk+hF96NdQ@mail.gmail.com>
-Subject: Re: unexpected configuration output given examples
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <FB0EDEFC-F92E-4F6E-B6BC-B0C5E7AD6E73@fb.com>
+ <CAJoAoZm9QpFgRdCsxoaNuCu1YONm_CFUp1fhdFj+h5uZhuCzAw@mail.gmail.com>
+ <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>
+ <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
+In-Reply-To: <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
+From: Kun Yi <kunyi@google.com>
+Date: Thu, 15 Aug 2019 09:57:04 -0700
+Message-ID: <CAGMNF6XTn4ktTXj6zVkviS3J5OOKwSkNYUBDsrnfPrT2EH3WSQ@mail.gmail.com>
+Subject: Re: Historical Sensor Information
+To: Milton Miller II <miltonm@us.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000ec65db05902ac4df"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,88 +75,183 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Emily Shaffer <emilyshaffer@google.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Wilfred Smith <wilfredsmith@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 15, 2019 at 9:27 AM James Feist <james.feist@linux.intel.com> wrote:
->
-> On 8/14/19 6:16 PM, Patrick Venture wrote:
-> > On Wed, Aug 14, 2019 at 5:48 PM Patrick Venture <venture@google.com> wrote:
-> >>
-> >> When hard-coding bus and addresses, I ran into an interesting issue.
-> >> Previously, my sensors were dynamically bus'd with hard-coded
-> >> addresses, like:
-> >>
-> >> {
-> >>      "Exposes": [
-> >>          {
-> >>              "Address": "0x1c",
-> >>              "Bus": "$bus",
-> >>              "Name": "$bus board local",
-> >>              "Name1": "$bus board external",
-> >>              "Type": "TMP441"
-> >>          },
-> >> ...
-> >> }
-> >>
-> >> Leads to:
-> >> xyz.openbmc_project.Configuration.TMP441 interface -         -                 -
-> >> .Address                                 property  t         28
-> >>          emits-change
-> >> .Bus                                     property  t         20
-> >>          emits-change
-> >>
-> >> Which is great.
-> >>
-> >> But:
-> >> {
-> >>      "Exposes": [
-> >>          {
-> >>             "Address": "0x54",
-> >>             "Bus": 15,
-> >>             "Name": "$bus i2cool 0",
-> >>             "Type": "MAX31725"
-> >>          },
-> >> ...
-> >> }
-> >>
-> >> Leads to:
-> >> xyz.openbmc_project.Configuration.MAX31725 interface -         -               -
-> >> .Address                                   property  s         "0x54"
-> >>          emits-change
-> >> .Bus                                       property  t         15
-> >>          emits-change
-> >>
-> >>
-> >> Which crashes the hwmon temp program because it's "getting" a uint64_t
-> >> and not a string.
-> >
-> > I verified that if I use decimal for the address as an int it works.
-> > But I'm interested to know why "0x54" doesn't get converted to an int
-> > every time?
->
-> It's possible some of the changes in review fix this.. I added it as a
-> unit test here and it seems to work:
->
-> https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24463
->
-> Unless something else in the code is preventing it from getting to the
-> replacement function.
+--000000000000ec65db05902ac4df
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I have a theory this is the issue, that it's not always hitting it,
-but I'll pick up your changes and continue testing.
+On Thu, Aug 15, 2019 at 9:41 AM Milton Miller II <miltonm@us.ibm.com> wrote=
+:
+
+> On August 15, 2019, Wilfred Smith wrote:
+> >I=E2=80=99ll need to check with my compatriots here at Facebook for our
+> >specific use cases.
+> >
+> >Can you point me to the discussion on metrics reporting?
+> >
+>
+> Probably this thread here, there seems to be a working group with a
+> meeting schedule:
+>
+> https://lists.ozlabs.org/pipermail/openbmc/2019-August/017412.html
+>
+> Platform telemetry and health monitoring - PST AM
+>
+>
+> https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-mon=
+itoring-Work-Group
+>
+> We are currently looking into using collectd to store metrics. You can
+look into the design doc proposal here:
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22257
+The design still needs to be fleshed out in a few places, but we are
+working towards implementing a prototype.
+
+How far back and how often you need to collect sensor information is also
+important. If you are interested in discussion, could you fill out this
+form to specify your FR? thanks
+
+ https://docs.google.com/spreadsheets/d/12gMMXB9r_WfWDf5wz-Z_zXsz6RNheC6p2L=
+Kp7HePAEE/edit?usp=3Dsharing
+<https://docs.google.com/spreadsheets/d/12gMMXB9r_WfWDf5wz-Z_zXsz6RNheC6p2L=
+Kp7HePAEE/edit?usp=3Dsharing>
 
 >
+> >> On Aug 14, 2019, at 7:51 PM, Emily Shaffer
+> ><emilyshaffer@google.com> wrote:
+> >>
+> >> On Wed, Aug 14, 2019 at 4:05 PM Wilfred Smith <wilfredsmith@fb.com>
+> >wrote:
+> >>>
+> >>> I presume most vendors desire the ability to query historical
+> >sensor information from the BMC.
+> >>>        Has this feature been implemented already? If so, please
+> >direct me.
+> >>>        If not, has someone already begun development?
+> >>>        Is there an existing specification or write-up?
+> >>>        Any =E2=80=98druthers or preferences on how I might proceed su=
+ch
+> >that my effort benefits the wider community?
+> >>>
+> >>> Wilfred
+> >>
+> >> I think that the space constriction on many BMCs has left folks to
+> >> instead query over IPMI/Redfish and compile historical information
+> >> elsewhere. Can you tell a little more about the use case and
+> >indicate
+> >> why you would rather save history on the BMC than off the BMC?
+> >>
+> >> A related topic which - as I recall - was discussed and never
+> >> implemented is the topic of metrics reporting. It's possible that
+> >the
+> >> community has moved further on these topics than I remember,
+> >though,
+> >> as I've been fairly out of the loop lately.
+> >> - Emily
 > >
-> >>
-> >> My only caveat worthwhile is that the hwmon instance is already
-> >> present because that sensor is in the device-tree.  So I would expect
-> >> it to only fail on the export.
-> >>
-> >> Note, I did also try "Address" as an int and not a string, but that
-> >> then failed the json validation.
-> >>
-> >> Thanks,
-> >> Patrick
+> >
+>
+>
+
+--=20
+Regards,
+Kun
+
+--000000000000ec65db05902ac4df
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Thu, Aug 15, 2019 at 9:41 AM Milton Mi=
+ller II &lt;<a href=3D"mailto:miltonm@us.ibm.com">miltonm@us.ibm.com</a>&gt=
+; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Augu=
+st 15, 2019, Wilfred Smith wrote:<br>
+&gt;I=E2=80=99ll need to check with my compatriots here at Facebook for our=
+<br>
+&gt;specific use cases.<br>
+&gt;<br>
+&gt;Can you point me to the discussion on metrics reporting?<br>
+&gt;<br>
+<br>
+Probably this thread here, there seems to be a working group with a meeting=
+ schedule:<br>
+<br>
+<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2019-August/017412.ht=
+ml" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/pipermail=
+/openbmc/2019-August/017412.html</a><br>
+<br>
+Platform telemetry and health monitoring - PST AM <br>
+<br>
+<a href=3D"https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-h=
+ealth-monitoring-Work-Group" rel=3D"noreferrer" target=3D"_blank">https://g=
+ithub.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Wor=
+k-Group</a><br>
+<br></blockquote><div>We are currently looking into using collectd to store=
+ metrics. You can look into the design doc proposal here:=C2=A0</div><div><=
+a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22257">https:=
+//gerrit.openbmc-project.xyz/c/openbmc/docs/+/22257</a><br></div><div>The d=
+esign still needs to be fleshed out in a few places, but we are working tow=
+ards implementing a prototype.<br></div><div><br></div><div>How far back an=
+d how often you need to collect sensor information is also important. If yo=
+u are interested in discussion, could you fill out this form to specify you=
+r FR? thanks</div><div><br></div><div></div><div><a href=3D"https://docs.go=
+ogle.com/spreadsheets/d/12gMMXB9r_WfWDf5wz-Z_zXsz6RNheC6p2LKp7HePAEE/edit?u=
+sp=3Dsharing">=C2=A0https://docs.google.com/spreadsheets/d/12gMMXB9r_WfWDf5=
+wz-Z_zXsz6RNheC6p2LKp7HePAEE/edit?usp=3Dsharing</a></div><div><br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">
+&gt;<br>
+&gt;&gt; On Aug 14, 2019, at 7:51 PM, Emily Shaffer<br>
+&gt;&lt;<a href=3D"mailto:emilyshaffer@google.com" target=3D"_blank">emilys=
+haffer@google.com</a>&gt; wrote:<br>
+&gt;&gt; <br>
+&gt;&gt; On Wed, Aug 14, 2019 at 4:05 PM Wilfred Smith &lt;<a href=3D"mailt=
+o:wilfredsmith@fb.com" target=3D"_blank">wilfredsmith@fb.com</a>&gt;<br>
+&gt;wrote:<br>
+&gt;&gt;&gt; <br>
+&gt;&gt;&gt; I presume most vendors desire the ability to query historical<=
+br>
+&gt;sensor information from the BMC.<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 Has this feature been implemented a=
+lready? If so, please<br>
+&gt;direct me.<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 If not, has someone already begun d=
+evelopment?<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 Is there an existing specification =
+or write-up?<br>
+&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 Any =E2=80=98druthers or preference=
+s on how I might proceed such<br>
+&gt;that my effort benefits the wider community?<br>
+&gt;&gt;&gt; <br>
+&gt;&gt;&gt; Wilfred<br>
+&gt;&gt; <br>
+&gt;&gt; I think that the space constriction on many BMCs has left folks to=
+<br>
+&gt;&gt; instead query over IPMI/Redfish and compile historical information=
+<br>
+&gt;&gt; elsewhere. Can you tell a little more about the use case and<br>
+&gt;indicate<br>
+&gt;&gt; why you would rather save history on the BMC than off the BMC?<br>
+&gt;&gt; <br>
+&gt;&gt; A related topic which - as I recall - was discussed and never<br>
+&gt;&gt; implemented is the topic of metrics reporting. It&#39;s possible t=
+hat<br>
+&gt;the<br>
+&gt;&gt; community has moved further on these topics than I remember,<br>
+&gt;though,<br>
+&gt;&gt; as I&#39;ve been fairly out of the loop lately.<br>
+&gt;&gt; - Emily<br>
+&gt;<br>
+&gt;<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature"><div dir=3D"ltr">Regards,<div>Kun</div></div></d=
+iv></div>
+
+--000000000000ec65db05902ac4df--
