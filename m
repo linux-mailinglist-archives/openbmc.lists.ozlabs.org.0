@@ -2,138 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E59C8F741
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 00:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C0418F75C
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 01:03:26 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 468hZd3bvXzDqyH
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 08:53:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 468hnl16Y9zDr7L
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 09:03:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=3130004482=wilfredsmith@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="DzeRPgTY"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="gCDB+4XZ"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468hZ20JbbzDqn1
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 08:53:12 +1000 (AEST)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7FMmRLF011064; Thu, 15 Aug 2019 15:53:06 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=GdBcwt9Jw3ReN2x3W8kUIJjpyorPvaqhAwVWcGUSpv0=;
- b=DzeRPgTYuP7FSeGk7cTociE7sBcEKM/Rd2bTw/YEPbENg3BDm2UJPdE8NEaC5oYFPknr
- bREDdLbQh5FQ2TF+TKICaJ8vV5yceC21P80k3fekMkCihSou7fFfbEfN2L2a6nO6TOur
- RiOCCUAU15zbvlDW+THLIFSTvXw1DXUAq0c= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2udemhrnh9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Thu, 15 Aug 2019 15:52:56 -0700
-Received: from ash-exopmbx101.TheFacebook.com (2620:10d:c0a8:82::b) by
- ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Thu, 15 Aug 2019 15:52:43 -0700
-Received: from ash-exhub203.TheFacebook.com (2620:10d:c0a8:83::5) by
- ash-exopmbx101.TheFacebook.com (2620:10d:c0a8:82::b) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Thu, 15 Aug 2019 15:52:42 -0700
-Received: from NAM04-SN1-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.102) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
- via Frontend Transport; Thu, 15 Aug 2019 15:50:31 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fTrWFwE1606NXUkjai7TL0qDbgNfs8yLX64lwaPUFbNP/pbyUGd7px/eTn5czDeAdVMZpjMmPcH3KrgY85s49Cb9zIh021gjANZoY5ZqbtImSAreN42D14S2PLjdlTXCFoPEfnoe1Bqq8ETtycGqTsVAhmHCURfqzQC+lXMIAqhLbhojKKquz4qerp7o9atuhS10pGMduWLgzw0N8SHICU72zuyStsG+rFIXSNpsiPPJCGkp8DAHB21FD+kygtIWHRdyRRBLrfBDqOmeEmzT/T7EwBzhZGOsODnjqMu6vKORx+cR7WgWb+x/uy/sOz7GwSxUYKdbrpSqIYudszdAyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GdBcwt9Jw3ReN2x3W8kUIJjpyorPvaqhAwVWcGUSpv0=;
- b=OApvOGNAkTsEQEKO3x4DoLCi+Eq+iTLykKRy+WE3qkkdmqkCeL1alRuP8fL8PdCdBo21Ogizgqp4ja2uNdwNQgYR42Dd2NDc3B786lwzR0BXL+SlRc3KuoUQNedjme8bWNbAhTDtLr1Z/aM2YK6F17sI5mZs3GFWv8UosbrGSWLr/nvqdis85aypwR9OTZgA3tcAVwowm2oTFBBA3JCFwh/RkXqvKejVmnEab907f38hjjBwBbigYHoAmBE6gnM8FZQ6Ei+Y7LU6J98sHl/UNy1IT0vOGbwRf4sH5VZHjOCbKLTBvphYeiJ+ILnh6miee32py7GZW6M0iwsBr/MJMQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GdBcwt9Jw3ReN2x3W8kUIJjpyorPvaqhAwVWcGUSpv0=;
- b=gCDB+4XZsE2iyHpfGFV31EawqVWidfdYRkM819k8hcdWKFSQXwwEaCNN1qt7DBIZwSEy+/yhveirmjITnwDKLVn3pWqINEIMOU/osuFFxJXIEAgBwokykyL2a9L01vM8OOyb7w8eoc2nkUUsFr7H0uiIrNAxKbJwaDNY4ViQ0p8=
-Received: from MN2PR15MB3680.namprd15.prod.outlook.com (52.132.173.209) by
- MN2PR15MB3373.namprd15.prod.outlook.com (20.179.20.215) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2157.20; Thu, 15 Aug 2019 22:50:30 +0000
-Received: from MN2PR15MB3680.namprd15.prod.outlook.com
- ([fe80::b9ff:f089:c837:4a20]) by MN2PR15MB3680.namprd15.prod.outlook.com
- ([fe80::b9ff:f089:c837:4a20%5]) with mapi id 15.20.2157.022; Thu, 15 Aug 2019
- 22:50:30 +0000
-From: Wilfred Smith <wilfredsmith@fb.com>
-To: Kun Yi <kunyi@google.com>
-Subject: Re: Historical Sensor Information
-Thread-Topic: Historical Sensor Information
-Thread-Index: AQHVUvSnCUL8h6OlREa1Ga5JzQ1Uc6b7gsyAgAAmrQCAAMCEgIAABQcAgABivoA=
-Date: Thu, 15 Aug 2019 22:50:30 +0000
-Message-ID: <C1B2C3C5-B14B-4DF4-8DD9-38D70E112627@fb.com>
-References: <FB0EDEFC-F92E-4F6E-B6BC-B0C5E7AD6E73@fb.com>
- <CAJoAoZm9QpFgRdCsxoaNuCu1YONm_CFUp1fhdFj+h5uZhuCzAw@mail.gmail.com>
- <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>
- <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
- <CAGMNF6XTn4ktTXj6zVkviS3J5OOKwSkNYUBDsrnfPrT2EH3WSQ@mail.gmail.com>
-In-Reply-To: <CAGMNF6XTn4ktTXj6zVkviS3J5OOKwSkNYUBDsrnfPrT2EH3WSQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::3:90e2]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bffdc38c-bc9f-40ba-28b7-08d721d2f93f
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MN2PR15MB3373; 
-x-ms-traffictypediagnostic: MN2PR15MB3373:
-x-ms-exchange-purlcount: 4
-x-microsoft-antispam-prvs: <MN2PR15MB3373298875D80D1B3D1694BBBDAC0@MN2PR15MB3373.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 01304918F3
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(39860400002)(136003)(376002)(396003)(346002)(189003)(199004)(51444003)(561944003)(6916009)(71190400001)(76176011)(606006)(236005)(6436002)(53936002)(33656002)(478600001)(6246003)(7116003)(229853002)(966005)(14454004)(71200400001)(66446008)(99286004)(66476007)(316002)(6306002)(11346002)(6116002)(81156014)(2906002)(36756003)(81166006)(410100003)(486006)(446003)(66556008)(476003)(2616005)(64756008)(54896002)(25786009)(86362001)(8676002)(91956017)(6512007)(4326008)(66946007)(186003)(8936002)(6506007)(76116006)(53546011)(14444005)(5660300002)(6486002)(102836004)(7736002)(3480700005)(256004)(54906003)(46003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MN2PR15MB3373;
- H:MN2PR15MB3680.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: +filHxjJub8oTDnSIJx1mkKDATThjSzzGU+ObrzWDweXb2cgaaIva1Wqz30jmaEYo5Pq871ChbX6sHwgliR/6vlXq12rJrDt2PG/YdjV5PQetZ749txet/OG56Bry1TaTjcdeTfUir5CJTxWQjareLDesGgI9LzhfXZOhvEVnrQJsNJlOS3CCnFKqptqB8nljnm6vzwcWdKD2VhRhOXSgR86Gb1+eQpc2HG4oiGkOkqIBXAR1hDmSN9ccuMmUVryKksVgM5jbJocrFP9+kdumhO5vayNixqVPekZOI3gnZEm0LQFnQtMIyDOvQMiI5lVSyJ/Q9ajezebafueeL9vq3+MoQAGk+grtW0ifXcAEYuJVxRcJuVUuYq/HrD6sPVQZlpsT0yo6nTUpOw9DQrjG6/uHJJoNYxSM+qY9qHuXKE=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_C1B2C3C5B14B4DF48DD938D70E112627fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468hn64K7kzDqyj
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 09:02:49 +1000 (AEST)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7FMw8IU031489; Thu, 15 Aug 2019 19:02:24 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2udfac2ns6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Aug 2019 19:02:24 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7FMxiVN031543;
+ Thu, 15 Aug 2019 23:02:23 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma01dal.us.ibm.com with ESMTP id 2ucr3q7xch-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Aug 2019 23:02:23 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7FN2MSm16318824
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 Aug 2019 23:02:22 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CBDF6B206B;
+ Thu, 15 Aug 2019 23:02:22 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A0AACB205F;
+ Thu, 15 Aug 2019 23:02:22 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Thu, 15 Aug 2019 23:02:22 +0000 (GMT)
+Subject: Re: Policy on Tools Posting
+To: Wilfred Smith <wilfredsmith@fb.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <mailman.545.1565898074.372.openbmc@lists.ozlabs.org>
+ <A586CD10-BC88-4316-B900-E3F0874B0910@fb.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <c20c680c-45af-7b5f-129a-00b053516ed5@linux.ibm.com>
+Date: Thu, 15 Aug 2019 18:02:22 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: bffdc38c-bc9f-40ba-28b7-08d721d2f93f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Aug 2019 22:50:30.2690 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Vz8hqub7ULCuyh8Xp58qQTiremQOwqF7Pf+lkzB68G1YD0Y12QLMRHigqUqbp13OC5jYFF/QFKnM44ACuAMMfg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR15MB3373
-X-OriginatorOrg: fb.com
+In-Reply-To: <A586CD10-BC88-4316-B900-E3F0874B0910@fb.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-08-15_10:, , signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908150217
-X-FB-Internal: deliver
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908150219
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -145,225 +86,118 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_C1B2C3C5B14B4DF48DD938D70E112627fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-TWFueSB0aGFua3MgdG8gRW1pbHksIE1pbHRvbiBhbmQgS3VuIFlpIGZvciB0aGVpciBxdWljayBy
-ZXNwb25zZXMgYW5kIHBvaW50ZXJzLg0KDQpBbW9uZyB0aGUgcmVhc29ucyBmb3IgbG9jYWwgaGlz
-dG9yaWNhbCBkYXRhIGNvbGxlY3Rpb24gYXJlIGluZGVwZW5kZW50IGF1ZGl0aW5nLCBkaXNhc3Rl
-ciByZWNvdmVyeSwgZGVidWdnaW5nIGFuZCBpbmNyZWFzaW5nIGF2YWlsYWJpbGl0eSBkdXJpbmcg
-cGVyaW9kcyBvZiBpbnRlcm1pdHRlbnQgbmV0d29yayBjb25uZWN0aXZpdHkuDQoNClZpamF5IGlz
-IGFscmVhZHkgcGFydGljaXBhdGluZyBpbiB0aGUgVGVsZW1ldHJ5IHdvcmtncm91cCwgc28gSeKA
-mWxsIHRyeSB0byBnZXQgYSBkb3dubG9hZCBmcm9tIGhpbSB0byBzZWUgd2hhdCBjYW4gYmUgbGV2
-ZXJhZ2VkLg0KDQpUaGUgcmVxdWlyZW1lbnQgYXQgRmFjZWJvb2sgaW5jbHVkZXMgdGhlIGFiaWxp
-dHkgdG8gcmV0cmlldmUgaGlzdG9yaWNhbCBzZW5zb3IgaW5mb3JtYXRpb24gZm9yIGEgdXNlci1k
-ZWZpbmVkIHBlcmlvZCBhbmQgaW50ZXJ2YWwgb24gdGhlIEJNQyBjb25zb2xlICh0aHJvdWdoIHNl
-bnNvci11dGlsLCBhbmQgaW4gdGhlIHNhbWUgZm9ybWF0KS4gQmFzZWQgb24gbXkgY3Vyc29yeSBy
-ZXZpZXcgb2YgY29sbGVjdGQsIGl0cyBsb3NzeSBtdWx0aWNhc3QgbmV0d29yayBwcm90b2NvbCB3
-b3VsZG7igJl0IGFsbG93IHRoaXMgaW5mb3JtYXRpb24gdG8gYmUgcmUtc3ludGhlc2l6ZWQgd2l0
-aCBmaWRlbGl0eSBvbiB0aGUgY2xpZW50IHNpZGUsIGJ1dCBpdCB3b3VsZCBiZSBhIGh1Z2Ugd2lu
-IGlmIHdlIGNhbiBnZXQgYSBmZXcgY29uY2Vzc2lvbnMuIEkgaW50ZW5kIHRvIHN0dWR5IHRoZSBU
-ZWxlbWV0cnkgV29ya2dyb3Vw4oCZcyBwcm9ncmVzcyBjYXJlZnVsbHkuDQoNCldpbGZyZWQNCg0K
-T24gQXVnIDE1LCAyMDE5LCBhdCA5OjU3IEFNLCBLdW4gWWkgPGt1bnlpQGdvb2dsZS5jb208bWFp
-bHRvOmt1bnlpQGdvb2dsZS5jb20+PiB3cm90ZToNCg0KDQpPbiBUaHUsIEF1ZyAxNSwgMjAxOSBh
-dCA5OjQxIEFNIE1pbHRvbiBNaWxsZXIgSUkgPG1pbHRvbm1AdXMuaWJtLmNvbTxtYWlsdG86bWls
-dG9ubUB1cy5pYm0uY29tPj4gd3JvdGU6DQpPbiBBdWd1c3QgMTUsIDIwMTksIFdpbGZyZWQgU21p
-dGggd3JvdGU6DQo+SeKAmWxsIG5lZWQgdG8gY2hlY2sgd2l0aCBteSBjb21wYXRyaW90cyBoZXJl
-IGF0IEZhY2Vib29rIGZvciBvdXINCj5zcGVjaWZpYyB1c2UgY2FzZXMuDQo+DQo+Q2FuIHlvdSBw
-b2ludCBtZSB0byB0aGUgZGlzY3Vzc2lvbiBvbiBtZXRyaWNzIHJlcG9ydGluZz8NCj4NCg0KUHJv
-YmFibHkgdGhpcyB0aHJlYWQgaGVyZSwgdGhlcmUgc2VlbXMgdG8gYmUgYSB3b3JraW5nIGdyb3Vw
-IHdpdGggYSBtZWV0aW5nIHNjaGVkdWxlOg0KDQpodHRwczovL2xpc3RzLm96bGFicy5vcmcvcGlw
-ZXJtYWlsL29wZW5ibWMvMjAxOS1BdWd1c3QvMDE3NDEyLmh0bWw8aHR0cHM6Ly91cmxkZWZlbnNl
-LnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBzLTNBX19saXN0cy5vemxhYnMub3JnX3BpcGVy
-bWFpbF9vcGVuYm1jXzIwMTktMkRBdWd1c3RfMDE3NDEyLmh0bWwmZD1Ed01GYVEmYz01VkQwUlR0
-TmxUaDN5Y2Q0MWIzTVV3JnI9LWVrdFQtdEQ5emYycmZVaXNFNjNScWlEYWdHeWhHZXkyaGJFR2Et
-NDdrYyZtPWg5RHlWNkNDcnYxWHhqRGZzN21xQnRPUlNORFB4SGNNZ3lxU0NLTUJ6VWsmcz1lOFlR
-WlhGaXViekVIa1hQSEJ0QU9wSVk1YzFQZVdTc1lwSVZocF9JU2hvJmU9Pg0KDQpQbGF0Zm9ybSB0
-ZWxlbWV0cnkgYW5kIGhlYWx0aCBtb25pdG9yaW5nIC0gUFNUIEFNDQoNCmh0dHBzOi8vZ2l0aHVi
-LmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9QbGF0Zm9ybS10ZWxlbWV0cnktYW5kLWhlYWx0aC1t
-b25pdG9yaW5nLVdvcmstR3JvdXANCg0KV2UgYXJlIGN1cnJlbnRseSBsb29raW5nIGludG8gdXNp
-bmcgY29sbGVjdGQgdG8gc3RvcmUgbWV0cmljcy4gWW91IGNhbiBsb29rIGludG8gdGhlIGRlc2ln
-biBkb2MgcHJvcG9zYWwgaGVyZToNCmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXov
-Yy9vcGVuYm1jL2RvY3MvKy8yMjI1NzxodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20v
-djIvdXJsP3U9aHR0cHMtM0FfX2dlcnJpdC5vcGVuYm1jLTJEcHJvamVjdC54eXpfY19vcGVuYm1j
-X2RvY3NfLTJCXzIyMjU3JmQ9RHdNRmFRJmM9NVZEMFJUdE5sVGgzeWNkNDFiM01VdyZyPS1la3RU
-LXREOXpmMnJmVWlzRTYzUnFpRGFnR3loR2V5MmhiRUdhLTQ3a2MmbT1oOUR5VjZDQ3J2MVh4akRm
-czdtcUJ0T1JTTkRQeEhjTWd5cVNDS01CelVrJnM9aTJtTzJHY0ZTUks3dTRRei01QWlnM1kzODY5
-TjNnNzloNTRfZDY4ZS1IRSZlPT4NClRoZSBkZXNpZ24gc3RpbGwgbmVlZHMgdG8gYmUgZmxlc2hl
-ZCBvdXQgaW4gYSBmZXcgcGxhY2VzLCBidXQgd2UgYXJlIHdvcmtpbmcgdG93YXJkcyBpbXBsZW1l
-bnRpbmcgYSBwcm90b3R5cGUuDQoNCkhvdyBmYXIgYmFjayBhbmQgaG93IG9mdGVuIHlvdSBuZWVk
-IHRvIGNvbGxlY3Qgc2Vuc29yIGluZm9ybWF0aW9uIGlzIGFsc28gaW1wb3J0YW50LiBJZiB5b3Ug
-YXJlIGludGVyZXN0ZWQgaW4gZGlzY3Vzc2lvbiwgY291bGQgeW91IGZpbGwgb3V0IHRoaXMgZm9y
-bSB0byBzcGVjaWZ5IHlvdXIgRlI/IHRoYW5rcw0KDQogaHR0cHM6Ly9kb2NzLmdvb2dsZS5jb20v
-c3ByZWFkc2hlZXRzL2QvMTJnTU1YQjlyX1dmV0RmNXd6LVpfelhzejZSTmhlQzZwMkxLcDdIZVBB
-RUUvZWRpdD91c3A9c2hhcmluZzxodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIv
-dXJsP3U9aHR0cHMtM0FfX2RvY3MuZ29vZ2xlLmNvbV9zcHJlYWRzaGVldHNfZF8xMmdNTVhCOXIt
-NUZXZldEZjV3ei0yRFotNUZ6WHN6NlJOaGVDNnAyTEtwN0hlUEFFRV9lZGl0LTNGdXNwLTNEc2hh
-cmluZyZkPUR3TUZhUSZjPTVWRDBSVHRObFRoM3ljZDQxYjNNVXcmcj0tZWt0VC10RDl6ZjJyZlVp
-c0U2M1JxaURhZ0d5aEdleTJoYkVHYS00N2tjJm09aDlEeVY2Q0NydjFYeGpEZnM3bXFCdE9SU05E
-UHhIY01neXFTQ0tNQnpVayZzPW5HdU1jbUhXQXo2Sk94SFFNdkhIUHRaTXFfeEtqdDF3M3lJZm1Z
-RFZrYzgmZT0+DQoNCj4NCj4+IE9uIEF1ZyAxNCwgMjAxOSwgYXQgNzo1MSBQTSwgRW1pbHkgU2hh
-ZmZlcg0KPjxlbWlseXNoYWZmZXJAZ29vZ2xlLmNvbTxtYWlsdG86ZW1pbHlzaGFmZmVyQGdvb2ds
-ZS5jb20+PiB3cm90ZToNCj4+DQo+PiBPbiBXZWQsIEF1ZyAxNCwgMjAxOSBhdCA0OjA1IFBNIFdp
-bGZyZWQgU21pdGggPHdpbGZyZWRzbWl0aEBmYi5jb208bWFpbHRvOndpbGZyZWRzbWl0aEBmYi5j
-b20+Pg0KPndyb3RlOg0KPj4+DQo+Pj4gSSBwcmVzdW1lIG1vc3QgdmVuZG9ycyBkZXNpcmUgdGhl
-IGFiaWxpdHkgdG8gcXVlcnkgaGlzdG9yaWNhbA0KPnNlbnNvciBpbmZvcm1hdGlvbiBmcm9tIHRo
-ZSBCTUMuDQo+Pj4gICAgICAgIEhhcyB0aGlzIGZlYXR1cmUgYmVlbiBpbXBsZW1lbnRlZCBhbHJl
-YWR5PyBJZiBzbywgcGxlYXNlDQo+ZGlyZWN0IG1lLg0KPj4+ICAgICAgICBJZiBub3QsIGhhcyBz
-b21lb25lIGFscmVhZHkgYmVndW4gZGV2ZWxvcG1lbnQ/DQo+Pj4gICAgICAgIElzIHRoZXJlIGFu
-IGV4aXN0aW5nIHNwZWNpZmljYXRpb24gb3Igd3JpdGUtdXA/DQo+Pj4gICAgICAgIEFueSDigJhk
-cnV0aGVycyBvciBwcmVmZXJlbmNlcyBvbiBob3cgSSBtaWdodCBwcm9jZWVkIHN1Y2gNCj50aGF0
-IG15IGVmZm9ydCBiZW5lZml0cyB0aGUgd2lkZXIgY29tbXVuaXR5Pw0KPj4+DQo+Pj4gV2lsZnJl
-ZA0KPj4NCj4+IEkgdGhpbmsgdGhhdCB0aGUgc3BhY2UgY29uc3RyaWN0aW9uIG9uIG1hbnkgQk1D
-cyBoYXMgbGVmdCBmb2xrcyB0bw0KPj4gaW5zdGVhZCBxdWVyeSBvdmVyIElQTUkvUmVkZmlzaCBh
-bmQgY29tcGlsZSBoaXN0b3JpY2FsIGluZm9ybWF0aW9uDQo+PiBlbHNld2hlcmUuIENhbiB5b3Ug
-dGVsbCBhIGxpdHRsZSBtb3JlIGFib3V0IHRoZSB1c2UgY2FzZSBhbmQNCj5pbmRpY2F0ZQ0KPj4g
-d2h5IHlvdSB3b3VsZCByYXRoZXIgc2F2ZSBoaXN0b3J5IG9uIHRoZSBCTUMgdGhhbiBvZmYgdGhl
-IEJNQz8NCj4+DQo+PiBBIHJlbGF0ZWQgdG9waWMgd2hpY2ggLSBhcyBJIHJlY2FsbCAtIHdhcyBk
-aXNjdXNzZWQgYW5kIG5ldmVyDQo+PiBpbXBsZW1lbnRlZCBpcyB0aGUgdG9waWMgb2YgbWV0cmlj
-cyByZXBvcnRpbmcuIEl0J3MgcG9zc2libGUgdGhhdA0KPnRoZQ0KPj4gY29tbXVuaXR5IGhhcyBt
-b3ZlZCBmdXJ0aGVyIG9uIHRoZXNlIHRvcGljcyB0aGFuIEkgcmVtZW1iZXIsDQo+dGhvdWdoLA0K
-Pj4gYXMgSSd2ZSBiZWVuIGZhaXJseSBvdXQgb2YgdGhlIGxvb3AgbGF0ZWx5Lg0KPj4gLSBFbWls
-eQ0KPg0KPg0KDQoNCg0KLS0NClJlZ2FyZHMsDQpLdW4NCg0K
+On 8/15/19 4:57 PM, Wilfred Smith wrote:
+> My manager (Sai) is asking whether there is precedence for having utilities posted outside the OpenBMC repository. Do we want 100 OpenBMC tools repositories, each managed differently or 1 harmonized repository?
+>
+> Separately, is there any effort to create a “common core” for OpenBMC such that an effort akin to POSIX or the Single UNIX Specification isn’t needed ten years from now? Without standard API (or at least abstracted tools) for things like where FRU information is located or sending IPMB commands, isn’t the market for innovative software stifled (Android software market vs iOS, or even Linux vs Windows)?
 
---_000_C1B2C3C5B14B4DF48DD938D70E112627fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <6B1221CD4687DC45830664F91D548503@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+My view is to focus on enhancing the Redfish functions so that users of 
+OpenBMC systems can do everything they need to without having use Secure 
+Shell (ssh) or any of the command line utilities ssh can access (such as 
+systemctl, busctl, or obmctool).  See some publicly-readable IBM 
+discussion on this topic here: https://github.com/ibm-openbmc/dev/issues/612
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5IHN0eWxlPSJ3b3JkLXdy
-YXA6IGJyZWFrLXdvcmQ7IC13ZWJraXQtbmJzcC1tb2RlOiBzcGFjZTsgbGluZS1icmVhazogYWZ0
-ZXItd2hpdGUtc3BhY2U7IiBjbGFzcz0iIj4NCk1hbnkgdGhhbmtzIHRvIEVtaWx5LCBNaWx0b24g
-YW5kIEt1biBZaSBmb3IgdGhlaXIgcXVpY2sgcmVzcG9uc2VzIGFuZCBwb2ludGVycy4NCjxkaXYg
-Y2xhc3M9IiI+PGJyIGNsYXNzPSIiPg0KPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPkFtb25nIHRoZSBy
-ZWFzb25zIGZvciBsb2NhbCBoaXN0b3JpY2FsIGRhdGEgY29sbGVjdGlvbiBhcmUgaW5kZXBlbmRl
-bnQgYXVkaXRpbmcsIGRpc2FzdGVyIHJlY292ZXJ5LCBkZWJ1Z2dpbmcgYW5kIGluY3JlYXNpbmcg
-YXZhaWxhYmlsaXR5IGR1cmluZyBwZXJpb2RzIG9mIGludGVybWl0dGVudCBuZXR3b3JrIGNvbm5l
-Y3Rpdml0eS48L2Rpdj4NCjxkaXYgY2xhc3M9IiI+PGJyIGNsYXNzPSIiPg0KPC9kaXY+DQo8ZGl2
-IGNsYXNzPSIiPlZpamF5IGlzIGFscmVhZHkgcGFydGljaXBhdGluZyBpbiB0aGUgVGVsZW1ldHJ5
-IHdvcmtncm91cCwgc28gSeKAmWxsIHRyeSB0byBnZXQgYSBkb3dubG9hZCBmcm9tIGhpbSB0byBz
-ZWUgd2hhdCBjYW4gYmUgbGV2ZXJhZ2VkLjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48YnIgY2xhc3M9
-IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+VGhlIHJlcXVpcmVtZW50IGF0IEZhY2Vib29rIGlu
-Y2x1ZGVzIHRoZSBhYmlsaXR5IHRvIHJldHJpZXZlIGhpc3RvcmljYWwgc2Vuc29yIGluZm9ybWF0
-aW9uIGZvciBhIHVzZXItZGVmaW5lZCBwZXJpb2QgYW5kIGludGVydmFsIG9uIHRoZSBCTUMgY29u
-c29sZSAodGhyb3VnaCBzZW5zb3ItdXRpbCwgYW5kIGluIHRoZSBzYW1lIGZvcm1hdCkuIEJhc2Vk
-IG9uIG15IGN1cnNvcnkgcmV2aWV3IG9mIGNvbGxlY3RkLCBpdHMgbG9zc3kNCiBtdWx0aWNhc3Qg
-bmV0d29yayBwcm90b2NvbCB3b3VsZG7igJl0IGFsbG93IHRoaXMgaW5mb3JtYXRpb24gdG8gYmUg
-cmUtc3ludGhlc2l6ZWQgd2l0aCBmaWRlbGl0eSBvbiB0aGUgY2xpZW50IHNpZGUsIGJ1dCBpdCB3
-b3VsZCBiZSBhIGh1Z2Ugd2luIGlmIHdlIGNhbiBnZXQgYSBmZXcgY29uY2Vzc2lvbnMuIEkgaW50
-ZW5kIHRvIHN0dWR5IHRoZSBUZWxlbWV0cnkgV29ya2dyb3Vw4oCZcyBwcm9ncmVzcyBjYXJlZnVs
-bHkuPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPjxiciBjbGFzcz0iIj4NCjwvZGl2Pg0KPGRpdiBjbGFz
-cz0iIj5XaWxmcmVkPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPg0KPGRpdj48YnIgY2xhc3M9IiI+DQo8
-YmxvY2txdW90ZSB0eXBlPSJjaXRlIiBjbGFzcz0iIj4NCjxkaXYgY2xhc3M9IiI+T24gQXVnIDE1
-LCAyMDE5LCBhdCA5OjU3IEFNLCBLdW4gWWkgJmx0OzxhIGhyZWY9Im1haWx0bzprdW55aUBnb29n
-bGUuY29tIiBjbGFzcz0iIj5rdW55aUBnb29nbGUuY29tPC9hPiZndDsgd3JvdGU6PC9kaXY+DQo8
-YnIgY2xhc3M9IkFwcGxlLWludGVyY2hhbmdlLW5ld2xpbmUiPg0KPGRpdiBjbGFzcz0iIj4NCjxk
-aXYgZGlyPSJsdHIiIGNsYXNzPSIiPg0KPGRpdiBkaXI9Imx0ciIgY2xhc3M9IiI+PC9kaXY+DQo8
-YnIgY2xhc3M9IiI+DQo8ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSI+DQo8ZGl2IGRpcj0ibHRyIiBj
-bGFzcz0iZ21haWxfYXR0ciI+T24gVGh1LCBBdWcgMTUsIDIwMTkgYXQgOTo0MSBBTSBNaWx0b24g
-TWlsbGVyIElJICZsdDs8YSBocmVmPSJtYWlsdG86bWlsdG9ubUB1cy5pYm0uY29tIiBjbGFzcz0i
-Ij5taWx0b25tQHVzLmlibS5jb208L2E+Jmd0OyB3cm90ZTo8YnIgY2xhc3M9IiI+DQo8L2Rpdj4N
-CjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowcHggMHB4IDBw
-eCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwyMDQsMjA0KTtwYWRkaW5nLWxl
-ZnQ6MWV4Ij4NCk9uIEF1Z3VzdCAxNSwgMjAxOSwgV2lsZnJlZCBTbWl0aCB3cm90ZTo8YnIgY2xh
-c3M9IiI+DQomZ3Q7SeKAmWxsIG5lZWQgdG8gY2hlY2sgd2l0aCBteSBjb21wYXRyaW90cyBoZXJl
-IGF0IEZhY2Vib29rIGZvciBvdXI8YnIgY2xhc3M9IiI+DQomZ3Q7c3BlY2lmaWMgdXNlIGNhc2Vz
-LjxiciBjbGFzcz0iIj4NCiZndDs8YnIgY2xhc3M9IiI+DQomZ3Q7Q2FuIHlvdSBwb2ludCBtZSB0
-byB0aGUgZGlzY3Vzc2lvbiBvbiBtZXRyaWNzIHJlcG9ydGluZz88YnIgY2xhc3M9IiI+DQomZ3Q7
-PGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0KUHJvYmFibHkgdGhpcyB0aHJlYWQgaGVyZSwg
-dGhlcmUgc2VlbXMgdG8gYmUgYSB3b3JraW5nIGdyb3VwIHdpdGggYSBtZWV0aW5nIHNjaGVkdWxl
-OjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4NCjxhIGhyZWY9Imh0dHBzOi8vdXJsZGVmZW5z
-ZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fbGlzdHMub3psYWJzLm9yZ19waXBl
-cm1haWxfb3BlbmJtY18yMDE5LTJEQXVndXN0XzAxNzQxMi5odG1sJmFtcDtkPUR3TUZhUSZhbXA7
-Yz01VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JmFtcDtyPS1la3RULXREOXpmMnJmVWlzRTYzUnFpRGFn
-R3loR2V5MmhiRUdhLTQ3a2MmYW1wO209aDlEeVY2Q0NydjFYeGpEZnM3bXFCdE9SU05EUHhIY01n
-eXFTQ0tNQnpVayZhbXA7cz1lOFlRWlhGaXViekVIa1hQSEJ0QU9wSVk1YzFQZVdTc1lwSVZocF9J
-U2hvJmFtcDtlPSIgcmVsPSJub3JlZmVycmVyIiB0YXJnZXQ9Il9ibGFuayIgY2xhc3M9IiI+aHR0
-cHM6Ly9saXN0cy5vemxhYnMub3JnL3BpcGVybWFpbC9vcGVuYm1jLzIwMTktQXVndXN0LzAxNzQx
-Mi5odG1sPC9hPjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4NClBsYXRmb3JtIHRlbGVtZXRy
-eSBhbmQgaGVhbHRoIG1vbml0b3JpbmcgLSBQU1QgQU0gPGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNz
-PSIiPg0KPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy93aWtpL1Bs
-YXRmb3JtLXRlbGVtZXRyeS1hbmQtaGVhbHRoLW1vbml0b3JpbmctV29yay1Hcm91cCIgcmVsPSJu
-b3JlZmVycmVyIiB0YXJnZXQ9Il9ibGFuayIgY2xhc3M9IiI+aHR0cHM6Ly9naXRodWIuY29tL29w
-ZW5ibWMvb3BlbmJtYy93aWtpL1BsYXRmb3JtLXRlbGVtZXRyeS1hbmQtaGVhbHRoLW1vbml0b3Jp
-bmctV29yay1Hcm91cDwvYT48YnIgY2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQo8L2Jsb2NrcXVv
-dGU+DQo8ZGl2IGNsYXNzPSIiPldlIGFyZSBjdXJyZW50bHkgbG9va2luZyBpbnRvIHVzaW5nIGNv
-bGxlY3RkIHRvIHN0b3JlIG1ldHJpY3MuIFlvdSBjYW4gbG9vayBpbnRvIHRoZSBkZXNpZ24gZG9j
-IHByb3Bvc2FsIGhlcmU6Jm5ic3A7PC9kaXY+DQo8ZGl2IGNsYXNzPSIiPjxhIGhyZWY9Imh0dHBz
-Oi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9w
-ZW5ibWMtMkRwcm9qZWN0Lnh5el9jX29wZW5ibWNfZG9jc18tMkJfMjIyNTcmYW1wO2Q9RHdNRmFR
-JmFtcDtjPTVWRDBSVHRObFRoM3ljZDQxYjNNVXcmYW1wO3I9LWVrdFQtdEQ5emYycmZVaXNFNjNS
-cWlEYWdHeWhHZXkyaGJFR2EtNDdrYyZhbXA7bT1oOUR5VjZDQ3J2MVh4akRmczdtcUJ0T1JTTkRQ
-eEhjTWd5cVNDS01CelVrJmFtcDtzPWkybU8yR2NGU1JLN3U0UXotNUFpZzNZMzg2OU4zZzc5aDU0
-X2Q2OGUtSEUmYW1wO2U9IiBjbGFzcz0iIj5odHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3Qu
-eHl6L2Mvb3BlbmJtYy9kb2NzLyYjNDM7LzIyMjU3PC9hPjxiciBjbGFzcz0iIj4NCjwvZGl2Pg0K
-PGRpdiBjbGFzcz0iIj5UaGUgZGVzaWduIHN0aWxsIG5lZWRzIHRvIGJlIGZsZXNoZWQgb3V0IGlu
-IGEgZmV3IHBsYWNlcywgYnV0IHdlIGFyZSB3b3JraW5nIHRvd2FyZHMgaW1wbGVtZW50aW5nIGEg
-cHJvdG90eXBlLjxiciBjbGFzcz0iIj4NCjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48YnIgY2xhc3M9
-IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+SG93IGZhciBiYWNrIGFuZCBob3cgb2Z0ZW4geW91
-IG5lZWQgdG8gY29sbGVjdCBzZW5zb3IgaW5mb3JtYXRpb24gaXMgYWxzbyBpbXBvcnRhbnQuIElm
-IHlvdSBhcmUgaW50ZXJlc3RlZCBpbiBkaXNjdXNzaW9uLCBjb3VsZCB5b3UgZmlsbCBvdXQgdGhp
-cyBmb3JtIHRvIHNwZWNpZnkgeW91ciBGUj8gdGhhbmtzPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPjxi
-ciBjbGFzcz0iIj4NCjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48L2Rpdj4NCjxkaXYgY2xhc3M9IiI+
-PGEgaHJlZj0iaHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBz
-LTNBX19kb2NzLmdvb2dsZS5jb21fc3ByZWFkc2hlZXRzX2RfMTJnTU1YQjlyLTVGV2ZXRGY1d3ot
-MkRaLTVGelhzejZSTmhlQzZwMkxLcDdIZVBBRUVfZWRpdC0zRnVzcC0zRHNoYXJpbmcmYW1wO2Q9
-RHdNRmFRJmFtcDtjPTVWRDBSVHRObFRoM3ljZDQxYjNNVXcmYW1wO3I9LWVrdFQtdEQ5emYycmZV
-aXNFNjNScWlEYWdHeWhHZXkyaGJFR2EtNDdrYyZhbXA7bT1oOUR5VjZDQ3J2MVh4akRmczdtcUJ0
-T1JTTkRQeEhjTWd5cVNDS01CelVrJmFtcDtzPW5HdU1jbUhXQXo2Sk94SFFNdkhIUHRaTXFfeEtq
-dDF3M3lJZm1ZRFZrYzgmYW1wO2U9IiBjbGFzcz0iIj4mbmJzcDtodHRwczovL2RvY3MuZ29vZ2xl
-LmNvbS9zcHJlYWRzaGVldHMvZC8xMmdNTVhCOXJfV2ZXRGY1d3otWl96WHN6NlJOaGVDNnAyTEtw
-N0hlUEFFRS9lZGl0P3VzcD1zaGFyaW5nPC9hPjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48YnIgY2xh
-c3M9IiI+DQo8L2Rpdj4NCjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1h
-cmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwyMDQs
-MjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij4NCiZndDs8YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0OyBPbiBB
-dWcgMTQsIDIwMTksIGF0IDc6NTEgUE0sIEVtaWx5IFNoYWZmZXI8YnIgY2xhc3M9IiI+DQomZ3Q7
-Jmx0OzxhIGhyZWY9Im1haWx0bzplbWlseXNoYWZmZXJAZ29vZ2xlLmNvbSIgdGFyZ2V0PSJfYmxh
-bmsiIGNsYXNzPSIiPmVtaWx5c2hhZmZlckBnb29nbGUuY29tPC9hPiZndDsgd3JvdGU6PGJyIGNs
-YXNzPSIiPg0KJmd0OyZndDsgPGJyIGNsYXNzPSIiPg0KJmd0OyZndDsgT24gV2VkLCBBdWcgMTQs
-IDIwMTkgYXQgNDowNSBQTSBXaWxmcmVkIFNtaXRoICZsdDs8YSBocmVmPSJtYWlsdG86d2lsZnJl
-ZHNtaXRoQGZiLmNvbSIgdGFyZ2V0PSJfYmxhbmsiIGNsYXNzPSIiPndpbGZyZWRzbWl0aEBmYi5j
-b208L2E+Jmd0OzxiciBjbGFzcz0iIj4NCiZndDt3cm90ZTo8YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0
-OyZndDsgPGJyIGNsYXNzPSIiPg0KJmd0OyZndDsmZ3Q7IEkgcHJlc3VtZSBtb3N0IHZlbmRvcnMg
-ZGVzaXJlIHRoZSBhYmlsaXR5IHRvIHF1ZXJ5IGhpc3RvcmljYWw8YnIgY2xhc3M9IiI+DQomZ3Q7
-c2Vuc29yIGluZm9ybWF0aW9uIGZyb20gdGhlIEJNQy48YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0OyZn
-dDsmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgSGFzIHRoaXMgZmVhdHVyZSBiZWVuIGltcGxl
-bWVudGVkIGFscmVhZHk/IElmIHNvLCBwbGVhc2U8YnIgY2xhc3M9IiI+DQomZ3Q7ZGlyZWN0IG1l
-LjxiciBjbGFzcz0iIj4NCiZndDsmZ3Q7Jmd0OyZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBJ
-ZiBub3QsIGhhcyBzb21lb25lIGFscmVhZHkgYmVndW4gZGV2ZWxvcG1lbnQ/PGJyIGNsYXNzPSIi
-Pg0KJmd0OyZndDsmZ3Q7Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IElzIHRoZXJlIGFuIGV4
-aXN0aW5nIHNwZWNpZmljYXRpb24gb3Igd3JpdGUtdXA/PGJyIGNsYXNzPSIiPg0KJmd0OyZndDsm
-Z3Q7Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IEFueSDigJhkcnV0aGVycyBvciBwcmVmZXJl
-bmNlcyBvbiBob3cgSSBtaWdodCBwcm9jZWVkIHN1Y2g8YnIgY2xhc3M9IiI+DQomZ3Q7dGhhdCBt
-eSBlZmZvcnQgYmVuZWZpdHMgdGhlIHdpZGVyIGNvbW11bml0eT88YnIgY2xhc3M9IiI+DQomZ3Q7
-Jmd0OyZndDsgPGJyIGNsYXNzPSIiPg0KJmd0OyZndDsmZ3Q7IFdpbGZyZWQ8YnIgY2xhc3M9IiI+
-DQomZ3Q7Jmd0OyA8YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0OyBJIHRoaW5rIHRoYXQgdGhlIHNwYWNl
-IGNvbnN0cmljdGlvbiBvbiBtYW55IEJNQ3MgaGFzIGxlZnQgZm9sa3MgdG88YnIgY2xhc3M9IiI+
-DQomZ3Q7Jmd0OyBpbnN0ZWFkIHF1ZXJ5IG92ZXIgSVBNSS9SZWRmaXNoIGFuZCBjb21waWxlIGhp
-c3RvcmljYWwgaW5mb3JtYXRpb248YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0OyBlbHNld2hlcmUuIENh
-biB5b3UgdGVsbCBhIGxpdHRsZSBtb3JlIGFib3V0IHRoZSB1c2UgY2FzZSBhbmQ8YnIgY2xhc3M9
-IiI+DQomZ3Q7aW5kaWNhdGU8YnIgY2xhc3M9IiI+DQomZ3Q7Jmd0OyB3aHkgeW91IHdvdWxkIHJh
-dGhlciBzYXZlIGhpc3Rvcnkgb24gdGhlIEJNQyB0aGFuIG9mZiB0aGUgQk1DPzxiciBjbGFzcz0i
-Ij4NCiZndDsmZ3Q7IDxiciBjbGFzcz0iIj4NCiZndDsmZ3Q7IEEgcmVsYXRlZCB0b3BpYyB3aGlj
-aCAtIGFzIEkgcmVjYWxsIC0gd2FzIGRpc2N1c3NlZCBhbmQgbmV2ZXI8YnIgY2xhc3M9IiI+DQom
-Z3Q7Jmd0OyBpbXBsZW1lbnRlZCBpcyB0aGUgdG9waWMgb2YgbWV0cmljcyByZXBvcnRpbmcuIEl0
-J3MgcG9zc2libGUgdGhhdDxiciBjbGFzcz0iIj4NCiZndDt0aGU8YnIgY2xhc3M9IiI+DQomZ3Q7
-Jmd0OyBjb21tdW5pdHkgaGFzIG1vdmVkIGZ1cnRoZXIgb24gdGhlc2UgdG9waWNzIHRoYW4gSSBy
-ZW1lbWJlciw8YnIgY2xhc3M9IiI+DQomZ3Q7dGhvdWdoLDxiciBjbGFzcz0iIj4NCiZndDsmZ3Q7
-IGFzIEkndmUgYmVlbiBmYWlybHkgb3V0IG9mIHRoZSBsb29wIGxhdGVseS48YnIgY2xhc3M9IiI+
-DQomZ3Q7Jmd0OyAtIEVtaWx5PGJyIGNsYXNzPSIiPg0KJmd0OzxiciBjbGFzcz0iIj4NCiZndDs8
-YnIgY2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQo8L2Jsb2NrcXVvdGU+DQo8L2Rpdj4NCjxiciBj
-bGVhcj0iYWxsIiBjbGFzcz0iIj4NCjxkaXYgY2xhc3M9IiI+PGJyIGNsYXNzPSIiPg0KPC9kaXY+
-DQotLSA8YnIgY2xhc3M9IiI+DQo8ZGl2IGRpcj0ibHRyIiBjbGFzcz0iZ21haWxfc2lnbmF0dXJl
-Ij4NCjxkaXYgZGlyPSJsdHIiIGNsYXNzPSIiPlJlZ2FyZHMsDQo8ZGl2IGNsYXNzPSIiPkt1bjwv
-ZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8L2Rp
-dj4NCjxiciBjbGFzcz0iIj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+Meanwhile, when us developers need to access the BMC via ssh, we are 
+happy to use the existing command line utilities and don't see the need 
+for any more.
 
---_000_C1B2C3C5B14B4DF48DD938D70E112627fbcom_--
+I would prefer to see our energy focused on enhancements to Redfish and 
+on utilities which use the Redfish APIs (akin to redfishtool).
+
+- Joseph
+
+>
+> Wilfred
+>
+>> On Aug 15, 2019, at 12:41 PM, openbmc-request@lists.ozlabs.org wrote:
+>>
+>> Send openbmc mailing list submissions to
+>> 	openbmc@lists.ozlabs.org
+>>
+>> To subscribe or unsubscribe via the World Wide Web, visit
+>> 	https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.ozlabs.org_listinfo_openbmc&d=DwICAg&c=5VD0RTtNlTh3ycd41b3MUw&r=-ektT-tD9zf2rfUisE63RqiDagGyhGey2hbEGa-47kc&m=CsXIqDLC_9ZYrVSwNllcHo7GjqAG9mj2S6NymPQTblk&s=_RrYmmMf-6XU6r5LsXsWLj8G0K_qaWyo6K2yDU5JGu8&e=
+>> or, via email, send a message with subject or body 'help' to
+>> 	openbmc-request@lists.ozlabs.org
+>>
+>> You can reach the person managing the list at
+>> 	openbmc-owner@lists.ozlabs.org
+>>
+>> When replying, please edit your Subject line so it is more specific
+>> than "Re: Contents of openbmc digest..."
+>>
+>>
+>> Today's Topics:
+>>
+>>    1. Re: Policy on Tools Posting (Vijay Khemka)
+>>    2. [PATCH dev-5.2] fsi: scom: Don't abort operations for minor
+>>       errors (Eddie James)
+>>    3. Re: [PATCH] net/ncsi: Ensure 32-bit boundary for data cksum
+>>       (David Miller)
+>>    4. Re: [PATCH v4 2/2] hwmon: pmbus: Add Inspur Power System
+>>       power supply driver (Guenter Roeck)
+>>
+>>
+>> ----------------------------------------------------------------------
+>>
+>> Message: 1
+>> Date: Thu, 15 Aug 2019 19:07:26 +0000
+>> From: Vijay Khemka <vijaykhemka@fb.com>
+>> To: Andrew Geissler <geissonator@gmail.com>, Wilfred Smith
+>> 	<wilfredsmith@fb.com>
+>> Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+>> Subject: Re: Policy on Tools Posting
+>> Message-ID: <68929B76-8826-4DAD-A29E-DF7A119D00C5@fb.com>
+>> Content-Type: text/plain; charset="utf-8"
+>>
+>>
+>>
+>> ?On 8/15/19, 5:59 AM, "openbmc on behalf of Andrew Geissler" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of geissonator@gmail.com> wrote:
+>>
+>>     On Mon, Aug 12, 2019 at 7:58 PM Wilfred Smith <wilfredsmith@fb.com> wrote:
+>>>
+>>> 1. Are there guidelines/procedures specific to submitting command line tools and utilities? I have heard that there may be a repository and/or path dedicated to CLI tools.
+>>     The community has definitely tended to limit wrapper tools within
+>>     OpenBMC. We had a discussion a while back that we're open to some but
+>>     the API's to them really need to be thought out and reviewed because
+>>     command line tools become customer API's (i.e. people start writing
+>>     scripts on top of these tools that then become key to the
+>>     manufacturing process or some other critical area).
+>>
+>>     Anything that goes into OpenBMC needs to support OpenBMC interfaces.
+>>     For example, I'm not familiar with fruid-util's D-bus service
+>>     xyz.openbmc_project.FruDevice. A "busctl tree
+>>     xyz.openbmc_project.Inventory.Manager | cat" shows the inventory items
+>>     on OpenBMC.
+>>
+>>     One issue we have within OpenBMC is there may be different
+>>     implementations of the D-bus API's for a given area. For example,
+>>     Inventory has different implementations so I'm not sure which repo
+>>     would best fit your tool. That type of issue leads me to wonder if we
+>>     should put the tools with the interface definitions in
+>>     openbmc/phosphor-dbus-interfaces? Or maybe a separate phosphor-tools
+>>     repo would be more logical for these.
+>> Andrew, I like the idea of having phosphor-tools which can be a placeholder
+>> for any commandline tools and can grow as per requirement. Currently
+>> it can start with 3 proposed tools.
+>>
+>>     Either way, I think command line tools should each get their own
+>>     mini-design doc
+>>     (https://github.com/openbmc/docs/blob/master/designs/design-template.md)
+>> Wilfred, Can you please create a document as per this design template and submit for review.
+>>
+>>     with requirements and interfaces clearly defined for review by the
+>>     community. If we can find a generic tool that multiple people find
+>>     useful, we can then find a place to put it. Otherwise, you could host
+>>     your tools outside of openbmc/ github and just pull them into recipes
+>>     from within your meta-facebook layer.
+>>
+>>> Thanks in advance,
+>>>
+>>> Wilfred
+>
+...snip...
+
