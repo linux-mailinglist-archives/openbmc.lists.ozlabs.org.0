@@ -2,86 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BF69A4CD6
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:36:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AFF03A4CD5
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:35:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MB3Y0bM0zDqQr
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:36:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MB2G359DzDqS9
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:35:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.246.209; helo=mail1.bemta23.messagelabs.com;
- envelope-from=liuyh21@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=dropbox.com
+ (client-ip=2a00:1450:4864:20::434; helo=mail-wr1-x434.google.com;
+ envelope-from=shobe@dropbox.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.209])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=dropbox.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=dropbox.com header.i=@dropbox.com header.b="oASf52ph"; 
+ dkim-atps=neutral
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
+ [IPv6:2a00:1450:4864:20::434])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 466cWZ2D7TzDqVd
- for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 23:43:49 +1000 (AEST)
-Received: from [67.219.247.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-2.bemta.az-d.us-east-1.aws.symcld.net id 44/03-22799-11D615D5;
- Mon, 12 Aug 2019 13:43:45 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrFKsWRWlGSWpSXmKPExsWS8eIhj65gbmC
- swcXpchanWl6wODB6nJ+xkDGAMYo1My8pvyKBNePc8TssBdvVK66/6GZrYPyo3MXIxSEksIRJ
- 4lr3bhYIZw2jxNeL3ewQzmtGicmvnkFl9jBKtD1bA5Th4GAT0JaYvj+1i5GTQ0RAX2LXpN1sI
- LawgIZE4952Roi4rsTjw5eYQMpFBPQkWvaClbMIqEq8OHiSGSTMK2ApMWl+CEiYUUBWYtqj+0
- wgNrOAuMTcabNYQWwJAQGJJXvOM0PYohIvH/+DiitItF9qZoWoT5BYOWUDO4jNKyAocXLmE5Y
- JjEKzkIyahaRsFpIyiLiOxILdn9ggbG2JZQtfM8PYZw48ZkIWX8DIvorRNKkoMz2jJDcxM0fX
- 0MBA19DQSNdS19hIL7FKN0WvtFg3NbG4RNdQL7G8WK+4Mjc5J0UvL7VkEyMwklIKOBV2MPYdf
- a13iFGSg0lJlLcoNjBWiC8pP6UyI7E4I76oNCe1+BCjDAeHkgQvfxZQTrAoNT21Ii0zBxjVMG
- kJDh4lEd49IGne4oLE3OLMdIjUKUZ7jgkv5y5i5jh4dB6Q/LhqCZD8DiKFWPLy81KlxHl/gbQ
- JgLRllObBDYUloUuMslLCvIwMDAxCPAWpRbmZJajyrxjFORiVhHnfZQJN4cnMK4Hb/QroLCag
- s7if+IKcVZKIkJJqYApu3aPidXYad8OLq9nLmn1O8Tv/WZPQKhDEc2nOf95gN7+amIpd3tNd6
- spf2rb+EL00o9pWeKJi6TuerL4Y55s3gup/brySczu/5Yynm299xj6mzan7ljT5hkz7PJ3tyc
- 3nYrMkZs7j//SXWXeOMfO82IDV9lXtT9nYF3HEm/il6H49LfSyOFPONVvSY63mfefaR5+Ezr1
- S0qk815Wz6FvDt/Iz7UmuP+o0fHjD+Te+zwi/2ntJgjfp9u/HuwJCP/3bECTRZxY/9c2UXnbb
- uwJ+53IDPF+3/1onH9Qruaf29eNV7z/vczOuVTu/ZF7N4yyeRz8XiVySmTL/UeICNi+Rx90n3
- W/YvvYPb87Zo8RSnJFoqMVcVJwIADaS8dS9AwAA
-X-Env-Sender: liuyh21@lenovo.com
-X-Msg-Ref: server-7.tower-426.messagelabs.com!1565617425!846336!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 18605 invoked from network); 12 Aug 2019 13:43:45 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-7.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 12 Aug 2019 13:43:45 -0000
-Received: from CNMAILEX02.lenovo.com (unknown [10.96.80.2])
- (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 85084FC58EA5FA84178D
- for <openbmc@lists.ozlabs.org>; Mon, 12 Aug 2019 09:43:44 -0400 (EDT)
-Received: from pekwpmail08.lenovo.com (10.96.81.160) by CNMAILEX02.lenovo.com
- (10.96.80.2) with Microsoft SMTP Server (TLS) id 14.3.408.0;
- Mon, 12 Aug 2019 21:43:42 +0800
-Received: from pekwpmail05.lenovo.com (10.96.81.230) by pekwpmail08.lenovo.com
- (10.96.81.160) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 12 Aug
- 2019 21:43:41 +0800
-Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
- pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
- 15.01.1591.008; Mon, 12 Aug 2019 21:43:41 +0800
-From: Yonghui YH21 Liu <liuyh21@lenovo.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: OpenBMC Solution To CVE Issues 
-Thread-Topic: OpenBMC Solution To CVE Issues 
-Thread-Index: AdVRE/KzcTyajXJdTUq73lo1GoCtCQ==
-Date: Mon, 12 Aug 2019 13:43:41 +0000
-Message-ID: <599ab89a2cad4cd4bb8e80cf43db38d1@lenovo.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.96.12.253]
-Content-Type: multipart/alternative;
- boundary="_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 468pzs52sfzDr0m
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 13:42:29 +1000 (AEST)
+Received: by mail-wr1-x434.google.com with SMTP id y8so186874wrn.10
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 20:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dropbox.com; s=corp;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Xs6dG3DhgGisUrJy13+7eYanjcelANiFXhPUs15UPxU=;
+ b=oASf52pho8GUwmqcvWhPl8FPI/NlkQkr1rhzb9omxrq0i96IBH5cWdX23cnzgEbmEa
+ nyoMCGjoF38U/RrZoFVT9/tEUgmtLGJeOzmCsAhSg9kcPwLXVx1jnBaWFLjZuz6S58r6
+ bi25J0OBx6uA6jK75y0n+vk84n9kkRJ44h0C8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Xs6dG3DhgGisUrJy13+7eYanjcelANiFXhPUs15UPxU=;
+ b=mVkCMTzbE6Vtl0f3VtJMeIypdjM3uBSEECcEeNyLizzZsMHQLuf4P0aXJ6Dsssz2Or
+ f7m+KnchprhBW92FYY+yOMf7YtBtwHKOkzFlrHXKwyCmZrRphufJolO3317VL9NkT317
+ IrJgbSExgxtSZEmZacHfvlGZluyb0C28NJDvoCm3L6W5KKhIGLZoMsByjJP+XS8ffOiO
+ 0Z0GlnoiSBnDP13jjDE69yMyUKJgdCnf0w8NLXgJMZl0x14AAx1xvTRscm+uVfktjBuy
+ eFFOaVlmspw1Hl6kuWiTXTzYAT9kHoHmXaIiKRxNaAxhB5QFLY4cqlS8dzWkaVeJ+xx3
+ 3zYQ==
+X-Gm-Message-State: APjAAAW1AH5i0Q5DGiS8N+Uk8qI1WcxUsJ+Q9ruJhZZ/qPuH7437JLwD
+ 8Fovp0N49RIrw44FNcMn+5QtPLlDXtPXjkvhr1w0
+X-Google-Smtp-Source: APXvYqxtlD2ZTTgxCc+2fpxXP3nwGVnsd667umtYDoh075F4GRlVBioKzAt9afq2PBkoANcY0zLg8GTz1Yth0iag66c=
+X-Received: by 2002:a5d:6606:: with SMTP id n6mr8466540wru.346.1565926942345; 
+ Thu, 15 Aug 2019 20:42:22 -0700 (PDT)
 MIME-Version: 1.0
+From: Eric Shobe <shobe@dropbox.com>
+Date: Thu, 15 Aug 2019 20:42:10 -0700
+Message-ID: <CALo0W=u_Cznj5dtzh0Cc5u9M80WZDMRQ4R0zhbTsRkCT5XAMgA@mail.gmail.com>
+Subject: The RunBMC Specification has been published!
+To: Jared Mednick <jaredm@dropbox.com>
+Content-Type: multipart/alternative; boundary="00000000000024a83b059033c778"
 X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:52 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,140 +70,84 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_
-Content-Type: text/plain; charset="us-ascii"
+--00000000000024a83b059033c778
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-HI All,
-         I saw there are some solutions to public CVE issues, some solution=
- are not enable by default setting.
-         As we know, there are some new coming CVE issues. Could you help c=
-onfirm whether below issues will be fixed? Is yes, when will be ready?
+Esteemed colleagues,
 
-         CVE-2019-12900
-CVE-2018-20843
-CVE-2019-9169
-CVE-2018-20750
-CVE-2019-13404
+We are most pleased to announce that RunBMC,an open Hardware Standard that
+defines the interface between the Baseboard Management Controller(BMC)
+subsystem and OCP hardware platform - such as network or compute
+motherboards, has been officially accepted to the Open Compute Project.  Li=
+nk
+to the RunBMC 1.4.1 Specification.
+<https://www.opencompute.org/documents/ocp-runbmc-daughterboard-card-design=
+-specification-v1-4-1-pdf>
 
+We owe credit and thanks to our collaborators at Quanta, Nuvoton, Hyve,
+Intel, Aspeed, Facebook, Google, Salesforce, and Microsoft.  I think we can
+confidently say that the collaborative spirit meant to be fostered by OCP
+is alive and well.
 
-Thank your great support in advance!
+Our next steps are to draft and complete a User=E2=80=99s Guide for the Bri=
+ng-Up
+Vehicle and work with our partners to submit their designs for
+daughter-cards based on the AST2500 and Poleg.  We look forward to seeing
+the progress of this effort realized through these contributions.
 
-Thanks
+Thanks!
 
-
-
---_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_
-Content-Type: text/html; charset="us-ascii"
+--00000000000024a83b059033c778
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
-s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
-40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	font-size:10.5pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-CN" link=3D"blue" vlink=3D"purple" style=3D"text-justify-t=
-rim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">HI All,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp; I saw there are some solutions to public CVE issues, some=
- solution are not enable by default setting.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp; As we know, there are some new coming CVE issues. Could y=
-ou help confirm whether below issues will be fixed? Is yes, when will be re=
-ady?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp; CVE-2019-12900<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
-E-2018-20843<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
-E-2019-9169<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
-E-2018-20750<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US">CV=
-E-2019-13404<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
-</span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
-</span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black">Thank your great =
-support in advance!<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
-</span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black">Thanks<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:21.0pt"><span lang=3D"EN-US" st=
-yle=3D"font-size:11.0pt;font-family:DengXian;color:black"><o:p>&nbsp;</o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+<div dir=3D"ltr"><div><span class=3D"gmail-m_2563781303913535005gmail-autho=
+r-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz6=
+6zz87z3z76zmz69z3z85zz69zr">Esteemed=C2=A0</span><span class=3D"gmail-m_256=
+3781303913535005gmail-thread-140947146019351338598583 gmail-m_2563781303913=
+535005gmail-attrcomment gmail-m_2563781303913535005gmail-attrcommentfirst g=
+mail-m_2563781303913535005gmail-thread-140947146019351338598583-first gmail=
+-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75z=
+fxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><span class=3D=
+"gmail-m_2563781303913535005gmail-comment-extra-inner-span">colleagues</spa=
+n></span><span class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z=
+1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz=
+69z3z85zz69zr">,</span></div><div><span class=3D"gmail-m_256378130391353500=
+5gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85=
+z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></span></div><div></div><div><s=
+pan class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68=
+zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69=
+zr">We are most pleased to announce that RunBMC,an open Hardware Standard t=
+hat defines the interface between the Baseboard Management Controller(BMC) =
+subsystem and OCP hardware platform - such as network or compute motherboar=
+ds, has been officially accepted to the Open Compute Project. =C2=A0</span>=
+<span class=3D"gmail-m_2563781303913535005gmail-attrlink gmail-m_2563781303=
+913535005gmail-url gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85=
+zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z=
+85zz69zr"><a class=3D"gmail-m_2563781303913535005gmail-attrlink" href=3D"ht=
+tps://www.opencompute.org/documents/ocp-runbmc-daughterboard-card-design-sp=
+ecification-v1-4-1-pdf" rel=3D"noreferrer nofollow noopener" target=3D"_bla=
+nk">Link to the RunBMC 1.4.1 Specification.</a></span></div><div><br></div>=
+<div></div><div><span class=3D"gmail-m_2563781303913535005gmail-author-d-1g=
+g9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z=
+3z76zmz69z3z85zz69zr">We owe credit and thanks to our collaborators at Quan=
+ta, Nuvoton, Hyve, Intel, Aspeed, Facebook, Google, Salesforce, and Microso=
+ft.=C2=A0 I think we can confidently say that the collaborative spirit mean=
+t to be fostered by OCP is alive and well.</span></div><div><span class=3D"=
+gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qox=
+vz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></spa=
+n></div><div></div><div><span class=3D"gmail-m_2563781303913535005gmail-aut=
+hor-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70z=
+z66zz87z3z76zmz69z3z85zz69zr">Our next steps are to draft and complete a Us=
+er=E2=80=99s Guide for the Bring-Up Vehicle and work with our partners to s=
+ubmit their designs for daughter-cards based on the AST2500 and Poleg.=C2=
+=A0 We look forward to seeing the progress of this effort realized through =
+these contributions.</span></div><div><span class=3D"gmail-m_25637813039135=
+35005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80=
+zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></span></div><div></div><di=
+v><span class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zg=
+dz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85=
+zz69zr">Thanks!</span></div></div>
 
---_000_599ab89a2cad4cd4bb8e80cf43db38d1lenovocom_--
+--00000000000024a83b059033c778--
