@@ -2,87 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B212C90730
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 19:47:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B11090734
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 19:49:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4699kW1cwHzDr6q
-	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 03:47:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4699mc4vp6zDqDh
+	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 03:49:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.246.208; helo=mail1.bemta23.messagelabs.com;
- envelope-from=hsung1@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.208])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4698WH4GnkzDqtv
- for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 02:52:25 +1000 (AEST)
-Received: from [67.219.247.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-1.bemta.az-d.us-east-1.aws.symcld.net id 29/21-14628-74FD65D5;
- Fri, 16 Aug 2019 16:52:23 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrMKsWRWlGSWpSXmKPExsWS8eIhj677/bB
- Yg1kvWCwO7/C0ONXygsWByWPxnpdMHudnLGQMYIpizcxLyq9IYM3Y1nGKseCYSMWGV53MDYxf
- +LsYuTiEBBqYJFrPT2KDcF4zSmy4NI8dwtnHKNG0dztTFyMnB5uAqsSWZ09YQGwRgWiJOVtXg
- tnCAhYS1zetYoWIW0qsXLKTHcK2kni26i6QzcHBAtR7aGcuSJgXqGTX+7tsILaQQLbEgQVNYO
- M5BWwlfm18ChZnFJCVeLLgGVicWUBc4tzFVrCREgICEkv2nGeGsEUlXj7+xwphK0g073nNAlG
- vI7Fg9yc2CFtbYtnC18wQewUlTs58wjKBUWQWkrGzkLTMQtIyC0nLAkaWVYxmSUWZ6RkluYmZ
- ObqGBga6hoZGupa6RsameolVuil6pcW6qYnFJbqGeonlxXrFlbnJOSl6eaklmxiBcZRSwPl6B
- +P/mW/0DjFKcjApifKWTw2OFeJLyk+pzEgszogvKs1JLT7EKMPBoSTB++ZuWKyQYFFqempFWm
- YOMKZh0hIcPEoivOvvAaV5iwsSc4sz0yFSpxgtOSa8nLuImePg0XlA8vJ1ICnEkpeflyolznv
- vDlCDAEhDRmke3DhY2rnEKCslzMvIwMAgxFOQWpSbWYIq/4pRnINRSZj3Fshansy8Eritr4AO
- YgI6yPJcKMhBJYkIKakGJnZ/RdtA9SNtP6+62AQk1e7ePKnLbHr3vqhUn+2M/x1LAx3nbN2ZZ
- hIUuv/03HTrjmnHkvYxtf9eX3j8BvO9z/fevsz7mPd01+eZHUuXbJ+RrXv1uOnTh7Hzo7ys94
- n/OfFZJPJ885fMq+XRiyqv/3lgoD9BbzlPVEXdX+/Gqur7koJthnrZls6mq2U/Ox0SP/PhzRH
- mDaK7tYNvdaebOJxy/MJcFPuu4krXt/lLz25byXzL3lqN61vaa2k/m8NCclc41Fbzis5TuijS
- K3PvzKwYad2VRVvcWBamfC5QPrux06gjed9yu8PMp4/rPhdbvXS1irXYm8uc1W6L2Jm3hL0K7
- q4SnnaAX7loUtLrT0osxRmJhlrMRcWJAAs3+e62AwAA
-X-Env-Sender: hsung1@lenovo.com
-X-Msg-Ref: server-22.tower-426.messagelabs.com!1565974342!1318271!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 17401 invoked from network); 16 Aug 2019 16:52:23 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-22.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 16 Aug 2019 16:52:23 -0000
-Received: from HKGWPEMAIL04.lenovo.com (unknown [10.128.3.72])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 41C5119029DCCC61195C;
- Fri, 16 Aug 2019 12:52:22 -0400 (EDT)
-Received: from HKGWPEMAIL03.lenovo.com (10.128.3.71) by
- HKGWPEMAIL04.lenovo.com (10.128.3.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Sat, 17 Aug 2019 00:52:20 +0800
-Received: from HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903]) by
- HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903%6]) with mapi id
- 15.01.1591.008; Sat, 17 Aug 2019 00:52:09 +0800
-From: Harry Sung1 <hsung1@lenovo.com>
-To: Ed Tanous <ed.tanous@intel.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: [External]  Re: ipmitool FRU write question
-Thread-Topic: [External]  Re: ipmitool FRU write question
-Thread-Index: AdVTbopZKRwneAIkR/qkHv41VIuS6///l9oA//3TzXA=
-Date: Fri, 16 Aug 2019 16:52:09 +0000
-Message-ID: <6ca6d992e4a248828063ff9f6a8e6c87@lenovo.com>
-References: <4a91e18f7195458193f673c26986421a@lenovo.com>
- <e9ba404c-a35e-1c46-2a0c-a4fd971312a6@intel.com>
-In-Reply-To: <e9ba404c-a35e-1c46-2a0c-a4fd971312a6@intel.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4698Yk63GCzDqnf
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 02:54:34 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7GGpXsC002753
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 12:54:31 -0400
+Received: from e14.ny.us.ibm.com (e14.ny.us.ibm.com [129.33.205.204])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2udxf2d24q-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 12:54:31 -0400
+Received: from localhost
+ by e14.ny.us.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <jrey@linux.ibm.com>;
+ Fri, 16 Aug 2019 17:54:30 +0100
+Received: from b01cxnp23032.gho.pok.ibm.com (9.57.198.27)
+ by e14.ny.us.ibm.com (146.89.104.201) with IBM ESMTP SMTP Gateway: Authorized
+ Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Fri, 16 Aug 2019 17:54:28 +0100
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7GGsREE50266560
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 16 Aug 2019 16:54:27 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D111FB2065;
+ Fri, 16 Aug 2019 16:54:27 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8EF19B2066;
+ Fri, 16 Aug 2019 16:54:27 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Fri, 16 Aug 2019 16:54:27 +0000 (GMT)
+Subject: Re: where to store application json
+To: Matt Spinler <mspinler@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Andrew Geissler <geissonator@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CALLMt=pv9GdHmv7ZJOBK+Z1wqAh4DmOzVR8ud=+KefddvEkreg@mail.gmail.com>
+ <9ad991fb-13fe-42fa-b5b6-48fd069342f9@www.fastmail.com>
+ <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Date: Fri, 16 Aug 2019 11:54:27 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19081616-0052-0000-0000-000003EB74D3
+X-IBM-SpamModules-Scores: 
+X-IBM-SpamModules-Versions: BY=3.00011599; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000287; SDB=6.01247728; UDB=6.00658537; IPR=6.01029238; 
+ MB=3.00028203; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-16 16:54:30
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19081616-0053-0000-0000-0000621E150B
+Message-Id: <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-16_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908160173
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,74 +102,66 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-> On 8/15/19 6:49 AM, Harry Sung1 wrote:
-> > Hi Team,
-> >
-> >
-> >
-> > Current phosphor-host-ipmid does not support fru write command, but
-> > ipmi-fru-parser supports it.
-> >
-> > We found this fru write command only update the data to dbus
-> > inventory, but doesn't sync the data back to the EEPROM.
-> >
-> > Does ipmi-fru-parser has any plans to implement it? I think it is more
-> > make sense to sync the data to EEPROM when we do fru write.
->=20
-> The alternative FRU daemon from entity manager, FruDevice, supports writi=
-ng
-> the FRU directly.
-> https://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp
->=20
-> Happy to see this capability added to ipmi-fru-parser, but you might be a=
-ble to
-> model it off FruDevice.  If you want to use FruDevice as-is, you will nee=
-d the
-> alternative FruWrite command sets from here.
->=20
-> https://github.com/openbmc/intel-ipmi-oem/blob/159547cdfbf1992737dcecb
-> cb3888af7795f930b/src/storagecommands.cpp#L316
->=20
-> As written, those commands change the behavior a bit, and double buffers =
-the
-> FRU write commands.  When the last Fru write is sent, the data is flushed
-> through the FRU parser to ensure that it's valid, and the user isn't doin=
-g
-> anything nefarious (like changing a product name or serial
-> number) before it writes the EEPROM in one chunk, as quickly as it can to
-> reduce the possibility of a half written EEPROM.
+On 8/16/19 8:31 AM, Matt Spinler wrote:
+>
+> On 8/15/2019 6:59 PM, Andrew Jeffery wrote:
+>>
+>> On Fri, 16 Aug 2019, at 07:01, Andrew Geissler wrote:
+>>> As we start moving more and more of our applications to using 
+>>> runtime parsed
+>>> json files, it seems like a good time to come up with a standard 
+>>> location to put
+>>> the json files. I think a requirement is they be in a writeable 
+>>> filesystem
+>>> (although that may bring security concerns) so that you can edit and 
+>>> restart
+>>> services that use them on the fly for bringup and debug.
+>>>
+>>> /etc seems like the right spot. But if so, where in /etc
+>
+> While convenient to the developer for testing, to me it doesn't sound 
+> like good practice to put read
+> only, critical files into a writeable spot?  How could we even trust 
+> data that comes back to us from
+> the field when a user that can get into their BMC can just change 
+> these?  Or accidentally
+> delete a file?
+>
 
-Hi Ed,
+One security concern is that config files offer a good way for hackers 
+to get persistent access to the system.  That is, if they are able to 
+get root access to the BMC one time, they may be able to persist their 
+hack across BMC reboots by modifying some config files.  IMHO, to make 
+it harder for them, as much as possible of the file system should be 
+read-only, and read-write config files should not offer the above 
+mentioned service to hackers.
 
-Thanks for your kindly reply! I have surveyed the entity-manager before.
-But I encountered an issue when I using phosphor-inventory-manager and enti=
-ty-manager at the same time.
-Both of them have same method "Notify" under same interface " xyz.openbmc_p=
-roject.Inventory.Manager ", but different signature.
+My 2 cents,
+- Joseph
 
-phosphor-inventory-manager:
-NAME                                  TYPE    SIGNATURE   RESULT/VALUE   FL=
-AGS
-xyz.openbmc_project.Inventory.Manager interface -             -            =
- -
-.Notify                               method    a{oa{sa{sv}}} -            =
- -
+>
+>
+>>> ?
+>>>
+>>> Adriana pointed me to the FSH guidelines[1] in a review which has 
+>>> the following:
+>>> "It is recommended that files be stored in subdirectories of /etc 
+>>> rather than
+>>> directly in /etc.".
+>>>
+>>> /etc/opt ?
+>>> /etc/opt/phosphor/ ?
+>>> /etc/opt/phosphor/<repository name>/ ?
+>> Where did the "/opt/" bit come from? Please lets drop that.
+>>
+>> IMO we should be using /etc/<application name>. Be mindful that one 
+>> repository
+>> can produce multiple applications, but what application sits in which 
+>> repository
+>> is a code organisation problem and not something that we should tie 
+>> into system
+>> configuration.
+>>
+>> Andrew
+>
 
-entity-manager
-NAME                                  TYPE    SIGNATURE   RESULT/VALUE   FL=
-AGS
-xyz.openbmc_project.Inventory.Manager interface -         -            -
-.Notify                               method    a{sa{sv}} -            -
-
-So when some services call the 'Notify' method failed because of getting wr=
-ong service.=20
-Ex: https://github.com/openbmc/ipmi-fru-parser/blob/master/writefrudata.cpp=
-#L206
-Have you ever seen this issue before?
-
-Should I use intel-dbus-interfaces if I want to use Frudevice (entity-manag=
-er) and write FRU command(intel-ipmi-oem)?
-Or it is compatible with original dbus-interface?
-
-Thanks,
-Harry
