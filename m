@@ -2,89 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56CFF90738
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 19:50:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E48319074D
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 19:55:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4699nw1DsHzDrJ7
-	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 03:50:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4699w73xkgzDrNV
+	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 03:55:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=kernel.org
+ (client-ip=198.145.29.99; helo=mail.kernel.org; envelope-from=sboyd@kernel.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="yQH2QSy2"; 
+ dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4698kh2zjzzDrQv
- for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 03:02:19 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7GGvSoR072682; Fri, 16 Aug 2019 13:02:14 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2udxshcb0s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 Aug 2019 13:02:14 -0400
-Received: from m0098396.ppops.net (m0098396.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x7GGxhG1080002;
- Fri, 16 Aug 2019 13:02:14 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2udxshcb03-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 Aug 2019 13:02:14 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7GGscWS002041;
- Fri, 16 Aug 2019 17:02:13 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma05wdc.us.ibm.com with ESMTP id 2udbc491dw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 Aug 2019 17:02:13 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x7GH2Cje54002074
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 Aug 2019 17:02:12 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7EFA2B206A;
- Fri, 16 Aug 2019 17:02:12 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F8ECB205F;
- Fri, 16 Aug 2019 17:02:12 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Fri, 16 Aug 2019 17:02:12 +0000 (GMT)
-Subject: Re: Historical Sensor Information
-To: Wilfred Smith <wilfredsmith@fb.com>, Kun Yi <kunyi@google.com>
-References: <FB0EDEFC-F92E-4F6E-B6BC-B0C5E7AD6E73@fb.com>
- <CAJoAoZm9QpFgRdCsxoaNuCu1YONm_CFUp1fhdFj+h5uZhuCzAw@mail.gmail.com>
- <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>
- <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
- <CAGMNF6XTn4ktTXj6zVkviS3J5OOKwSkNYUBDsrnfPrT2EH3WSQ@mail.gmail.com>
- <C1B2C3C5-B14B-4DF4-8DD9-38D70E112627@fb.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <96c68da9-8abf-aa64-7d88-ffa4596927ac@linux.ibm.com>
-Date: Fri, 16 Aug 2019 12:02:11 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4699R00nMNzDqWn
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 03:33:47 +1000 (AEST)
+Received: from kernel.org (unknown [104.132.0.74])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 766E82086C;
+ Fri, 16 Aug 2019 17:33:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1565976825;
+ bh=iTWDKy7i46AGTrrCkTa1IC9HRZoGPU9Ot5ficdX+Qe4=;
+ h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+ b=yQH2QSy2LVGYJfDgQnhKokR0BbtvYvrDV32d8I/eO7p423knqPRQmxBrtTVo5O7Ta
+ RUsyrh7tBGeHnTHwn3OtWwga8a23vZ7geqX9sOLQQtXu7xn+E7S/zXMLfHrI8y8Isw
+ iaBItVGnikwPApprJjYpt96Z/JSlVePWEzuSxdTA=
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <C1B2C3C5-B14B-4DF4-8DD9-38D70E112627@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-16_07:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=984 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908160176
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20190816141132.55060-1-yuehaibing@huawei.com>
+References: <20190816141132.55060-1-yuehaibing@huawei.com>
+Subject: Re: [PATCH -next] clk: npcm7xx: remove unused code
+From: Stephen Boyd <sboyd@kernel.org>
+To: YueHaibing <yuehaibing@huawei.com>, avifishman70@gmail.com,
+ benjaminfair@google.com, mturquette@baylibre.com, tali.perry1@gmail.com,
+ tmaimon77@gmail.com, venture@google.com, yuenn@google.com
+User-Agent: alot/0.8.1
+Date: Fri, 16 Aug 2019 10:33:44 -0700
+Message-Id: <20190816173345.766E82086C@mail.kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,41 +59,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, YueHaibing <yuehaibing@huawei.com>,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Quoting YueHaibing (2019-08-16 07:11:32)
+> drivers/clk/clk-npcm7xx.c:365:48: warning:
+>  npcm7xx_divs_fx defined but not used [-Wunused-const-variable=3D]
+> drivers/clk/clk-npcm7xx.c:438:43: warning:
+>  npcm7xx_gates defined but not used [-Wunused-const-variable=3D]
+>=20
+> The two variables are never used, so remove them,
+> also remove related type declarations.
+>=20
+> Reported-by: Hulk Robot <hulkci@huawei.com>
+> Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+> ---
 
+Maybe we should register the gates?
 
-On 8/15/19 5:50 PM, Wilfred Smith wrote:
-> Many thanks to Emily, Milton and Kun Yi for their quick responses and 
-> pointers.
->
-> Among the reasons for local historical data collection are independent 
-> auditing, disaster recovery, debugging and increasing availability 
-> during periods of intermittent network connectivity.
->
-> Vijay is already participating in the Telemetry workgroup, so I’ll try 
-> to get a download from him to see what can be leveraged.
->
-> The requirement at Facebook includes the ability to retrieve 
-> historical sensor information for a user-defined period and interval 
-> on the BMC console (through sensor-util, and in the same format). 
-> Based on my cursory review of collectd, its lossy multicast network 
-> protocol wouldn’t allow this information to be re-synthesized with 
-> fidelity on the
-
-I share this concern and would prefer to have a more reliable way to get 
-sensor data off the BMC.  This data may be valuable to help detect when 
-the BMC is being attacked.
-
-- Joseph
-
-> client side, but it would be a huge win if we can get a few 
-> concessions. I intend to study the Telemetry Workgroup’s progress 
-> carefully.
->
-> Wilfred
->
-...snip...
