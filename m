@@ -2,48 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B2BE90928
-	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 22:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9536790938
+	for <lists+openbmc@lfdr.de>; Fri, 16 Aug 2019 22:13:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 469DpS4ZQDzDsGf
-	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 06:05:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 469Dyj4NygzDrgC
+	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 06:13:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::329; helo=mail-ot1-x329.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="P3lLxgb+"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
+ [IPv6:2607:f8b0:4864:20::329])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 469DYr2XxczDs09
- for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 05:54:53 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 72CEB6DC94;
- Fri, 16 Aug 2019 15:54:49 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: Historical Sensor Information
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <96c68da9-8abf-aa64-7d88-ffa4596927ac@linux.ibm.com>
-Date: Fri, 16 Aug 2019 15:54:49 -0400
-Message-Id: <C28BB0B0-AFCD-41AA-BF7E-82CE85593020@fuzziesquirrel.com>
-References: <FB0EDEFC-F92E-4F6E-B6BC-B0C5E7AD6E73@fb.com>
- <CAJoAoZm9QpFgRdCsxoaNuCu1YONm_CFUp1fhdFj+h5uZhuCzAw@mail.gmail.com>
- <CF903FDC-3D9E-4FB9-8A3E-34ABB5BDD6B8@fb.com>
- <OF838F4B69.A8C14781-ON00258457.005B6C1A-00258457.005B781B@notes.na.collabserv.com>
- <CAGMNF6XTn4ktTXj6zVkviS3J5OOKwSkNYUBDsrnfPrT2EH3WSQ@mail.gmail.com>
- <C1B2C3C5-B14B-4DF4-8DD9-38D70E112627@fb.com>
- <96c68da9-8abf-aa64-7d88-ffa4596927ac@linux.ibm.com>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 469Dy60r4xzDrRH
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 06:12:29 +1000 (AEST)
+Received: by mail-ot1-x329.google.com with SMTP id m24so10621887otp.12
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 13:12:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=h2lslwlZV5MofC3DBNqZ+Ae4QKkct/U71srsbqTxJI8=;
+ b=P3lLxgb+Ndt95lVIRV0zXwaHLDj3l4ljBHjsK1Xjx6zCAeyL45QYY0ytzubXB4cTVn
+ HHlhtMsxTg1ygAGO9cErVFy5PE9sjWN4V/WAHkARI0gf4X+/HPqJGNFC2p2F/79VUzzP
+ I18+2jAvBorBAPW/m1bikJ5kWS0ZfhdWJ5BEeMyQXCWV6fn+F6itQTmgwwWWQOEFcMmr
+ 0BqWGnXE6N1IADFtPZ3YnmnAxR3xeA6Lh6bAinx/8KaBzs4oVPGLhm+HAwKZtdG3W76G
+ I96SFSgpj4LThy48HT+U/P9VVwcdHvpNV6QOWXnOuTDXnBJ2dCQ4AvFYUQbDsJHgeQRJ
+ dNLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=h2lslwlZV5MofC3DBNqZ+Ae4QKkct/U71srsbqTxJI8=;
+ b=Sh6/FmBXLw0GtzlVxXZHaoJBlqs+inL/kVNuCdVih3vNCRbqwN51zdREuDPSP5IffG
+ a8AkvMqFvm1CMXqm97+0kVnhgGN1uesKhqaDnoCNa/vimGKmNtkAXOGbP+xh1tJvhJjG
+ QvMs8QAv89HffCN2FYOInpoqagEhvv/MJTpqDMvhai8TVlW51Mq48uayT94hMpNsaKfP
+ a54WXjWIkTW1ERCgrHLnsRs2OtZSYpewEJ1gsGU82cVv2OiZ2wBVQisnD48C7fjg5TDu
+ ol0tGLBfrz6Uk6hIomHjYSgPIB/EO3swembA8aD6+rOPxD7q9AmRohFn7jjr8BtnGz7q
+ ZpUQ==
+X-Gm-Message-State: APjAAAULIoIcmYI/MMzaWiedRFqMC2a17v9MwGZvijHp6K9pH9/padXw
+ qzvADHXExwJsU2G3sMJT9ZscJWDUs95NYe93ZDjKfu13
+X-Google-Smtp-Source: APXvYqy6G7qncKX0Bg5dZC+6TMJzKcb19xHVCRgFUCR51eqgJ0g6LyHQ0SZNol6tQFiRlgMlm61vBcoA8fRshdcmUPg=
+X-Received: by 2002:a05:6830:15c5:: with SMTP id
+ j5mr9044717otr.296.1565986346191; 
+ Fri, 16 Aug 2019 13:12:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <mailman.545.1565898074.372.openbmc@lists.ozlabs.org>
+ <A586CD10-BC88-4316-B900-E3F0874B0910@fb.com>
+In-Reply-To: <A586CD10-BC88-4316-B900-E3F0874B0910@fb.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Fri, 16 Aug 2019 15:12:10 -0500
+Message-ID: <CALLMt=rKLg0+i=+b-Nr=+Evf6cJvSWA6qnwrpPLO1jUzKyA=Bg@mail.gmail.com>
+Subject: Re: Policy on Tools Posting
+To: Wilfred Smith <wilfredsmith@fb.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -56,51 +76,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Wilfred Smith <wilfredsmith@fb.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 1:02 PM, Joseph Reynolds <jrey@linux.ibm.com> wrote:
+On Thu, Aug 15, 2019 at 4:57 PM Wilfred Smith <wilfredsmith@fb.com> wrote:
+>
+> My manager (Sai) is asking whether there is precedence for having utiliti=
+es posted outside the OpenBMC repository. Do we want 100 OpenBMC tools repo=
+sitories, each managed differently or 1 harmonized repository?
 
->
->
-> On 8/15/19 5:50 PM, Wilfred Smith wrote:
->> Many thanks to Emily, Milton and Kun Yi for their quick responses and =
-=20
->> pointers.
->>
->> Among the reasons for local historical data collection are independent=
- =20
->> auditing, disaster recovery, debugging and increasing availability =20
->> during periods of intermittent network connectivity.
->>
->> Vijay is already participating in the Telemetry workgroup, so I=E2=80=99=
-ll try =20
->> to get a download from him to see what can be leveraged.
->>
->> The requirement at Facebook includes the ability to retrieve historica=
-l =20
->> sensor information for a user-defined period and interval on the BMC =20
->> console (through sensor-util, and in the same format). Based on my =20
->> cursory review of collectd, its lossy multicast network protocol =20
->> wouldn=E2=80=99t allow this information to be re-synthesized with fide=
-lity on the
->
-> I share this concern and would prefer to have a more reliable way to ge=
-t =20
-> sensor data off the BMC.  This data may be valuable to help detect when=
- =20
-> the BMC is being attacked.
+We do bring in some tools, like for our openpower systems we bring in a pdb=
+g
+tool[1]. That tool isn't really specific to OpenBMC though, just a
+useful tool that
+works within OpenBMC.
 
-I don=E2=80=99t think anyone intended to use the collectd network plugin =
-to publish =20
-the sensor data (although you could).  IIUC the intent was to use collect=
-d =20
-only in the capacity of collecting the sensor data into an rrd database o=
-n =20
-the BMC flash.  From there you can get the data out of the BMC however yo=
-u =20
-like.  IPMI<->rrd.  Redfish<->rrd.  ssh+cli<->rrd.  Do I have it right Ku=
-n?
+The spirit behind creating https://github.com/openbmc/openbmc-tools was to
+not have a bunch of the same tools being written by a bunch of different
+people. So far it's only been tools run outside of OpenBMC though. I know
+AndrewJ mentioned he may be open to using that repo for what's proposed her=
+e.
+It seems like a better fit then making some other tools repo. To me that's =
+just
+confusing when you go to a github project and see multiple repositories wit=
+h
+"tools" in the name.
+
+[1]: https://github.com/openbmc/openbmc/blob/master/meta-openpower/recipes-=
+bsp/pdbg/pdbg_2.2.bb
+
+> Separately, is there any effort to create a =E2=80=9Ccommon core=E2=80=9D=
+ for OpenBMC such that an effort akin to POSIX or the Single UNIX Specifica=
+tion isn=E2=80=99t needed ten years from now? Without standard API (or at l=
+east abstracted tools) for things like where FRU information is located or =
+sending IPMB commands, isn=E2=80=99t the market for innovative software sti=
+fled (Android software market vs iOS, or even Linux vs Windows)?
+
+Our focus so far has been on standardizing our external interfaces,
+i.e. Redfish/IPMI.
+There has not been much focus on the internals (i.e. ssh) because it's a lo=
+t
+of work to version and standardize something and it's not something people
+buying OpenBMC machines are very interested in. I think wrapper tools are o=
+ur
+best bet but there's been a lot of back and forth on that as well.
+
+> Wilfred
+>
