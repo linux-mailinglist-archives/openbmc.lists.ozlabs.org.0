@@ -2,68 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D5790CFD
-	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 06:46:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DB48590D02
+	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 06:55:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 469SM7276GzDsNQ
-	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 14:46:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 469SZ05ytyzDrcF
+	for <lists+openbmc@lfdr.de>; Sat, 17 Aug 2019 14:55:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::c33; helo=mail-yw1-xc33.google.com;
+ (client-ip=2607:f8b0:4864:20::c2e; helo=mail-yw1-xc2e.google.com;
  envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="tuMrLy6n"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="OYMAepll"; 
  dkim-atps=neutral
-Received: from mail-yw1-xc33.google.com (mail-yw1-xc33.google.com
- [IPv6:2607:f8b0:4864:20::c33])
+Received: from mail-yw1-xc2e.google.com (mail-yw1-xc2e.google.com
+ [IPv6:2607:f8b0:4864:20::c2e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 469SLR2jc7zDsLx
- for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 14:45:47 +1000 (AEST)
-Received: by mail-yw1-xc33.google.com with SMTP id x74so2453228ywx.6
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 21:45:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 469SYQ4SHSzDrSq
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Aug 2019 14:55:20 +1000 (AEST)
+Received: by mail-yw1-xc2e.google.com with SMTP id m11so2463235ywh.3
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 21:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=JIXl6enO/V92Y9pHAtX4/GzJ1cQhPrBDQB8Qd43MPII=;
- b=tuMrLy6n2GhhDG6RnWA2Lmvku2/+56dsCrn337D4SaFr2ZCftCmOXLi0ONU745fF9Q
- PSTwXRj3mR34Ouqcm7BcOGomSCkuK8L/zET9x8XndyOw/sydzx5zk3s7XiVXeN03ub4p
- gVxzMhQ4naM8IBoxC9fvgpunLzxK/9seMgvPIXd5lbH91BAUmLbwBxoF7yrX27oHQAZe
- an71e7rHTr26Y77YRfnf9IwDy9cFD85ymH2Qqfnme6xOcMDcAQxHMSaeNhCMya1uyNqE
- h5JYRcxnXpW7J7+lUtNWkTePBzULxHxX682XMqqu+ziUTkRy3jhPeLSBp8WlGEQJ2S80
- NAzA==
+ :cc; bh=H6JdUbObSlye/F5zmSdY24mMSPoUM9r5QS/9UmgyPkE=;
+ b=OYMAepllOtlkcHZym/g8joPY+QglV6oLNKXsj8k2bjr4m88auQ1hD+mD3FAAbZ7Rmm
+ T7zE6AUa8lPNMtMQR4xhmh4VNudcO11uOVJf7aySCKFHqxDt5BCxShaGYwPBOzqU0KuW
+ lyovvnBkFurfUOop6gWiFBaCzrYDBfmSjUlYcSiatzabbAS3bQ0TGmIBjxOLOuDXJkZJ
+ prIXqNPnXNEQJ1vkgrW5NlqnuU/td/Q5Z3Pvr3KL0TLQAFyckHb7ZTaXSF860nGNxbYo
+ OzD9KlPSA257z0VAeL2aZ4FcqIP7ClZINHtUEbDVULjxQI1Oi6CV5z/yIiNMKnZ42BZo
+ ozyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=JIXl6enO/V92Y9pHAtX4/GzJ1cQhPrBDQB8Qd43MPII=;
- b=V1lAYYeCsob2dzNE4Xp3pxVAmi2HwL+ugMqVo5csIUv5yJ6acHWts62gWBGKOWzgnf
- XQHCUG9LDd+tRCgYD8cNAGwyeF2uWIRl8d6Pep0Z7Pe8XyRSooNIiZwLOdg72zg58EKa
- F+De8vY0E3az8B/EGk3YLD/zOtgVm8BlVJ5LY4dj7fs6AbIJdRpFPwbNU10BcSS7N74W
- hGmsi3kTS7M0WU8jwGwW2mQJYpLCE84/zoQ8Xo9GpU3+59jBmfwbrkM3I671hJoLVISs
- TYdMCqvVVrndkG5TEm8IpWOfJcYawc/u4JOR9AdXwWOm06lOVfIFMwAmzhyAoBfn1Yb8
- n4CQ==
-X-Gm-Message-State: APjAAAWoXUiML7SYWA/N67BrTYhFpP1l/lYaoKvQnfV1c0m42Abf4BvQ
- LbME5gS8gaPJw7R5Q4vUrFZF83pKSIScP/E5wTc=
-X-Google-Smtp-Source: APXvYqz9amF7+GmAiHI7TRdaYxA6iojQX6nfOIXxQ5bRXO9HAnPyMqNJhFj3cl7ACzjN7DSIhvoFy5vZ0d2rgwa7ISI=
-X-Received: by 2002:a81:de4e:: with SMTP id o14mr8817705ywl.369.1566017143058; 
- Fri, 16 Aug 2019 21:45:43 -0700 (PDT)
+ bh=H6JdUbObSlye/F5zmSdY24mMSPoUM9r5QS/9UmgyPkE=;
+ b=Jy8UDBJv0/ptQ/CCYqKPD2+0k4L/WbfXIhVBbjeQ31eB8x0UzBHHICDOC9nrArTUOS
+ 0JQ34mjJ+FMNaRr6JSy8M6ooavQkD6x7z0HY7trQ8MOhVVWX0tt/soxSG4MNamjWATrB
+ KHAxFZ2bKAQblVZ0rB06VXQX4yu1E2RUGcUtqFA41k/1zTWMinPOUxIcOhCy3Utmubny
+ pwk47N6v8iUV0Psw4wmAXLKTzA6yxDZ4YnnacTxvxJrCfgyXQpu5DIbyfNzLD/Onb476
+ AM21PsUKlOO9sB0FpmlUr2a5UCmVoX8+ik7oXodfU79l09/PGqXjJDq6xJoHBYSGV1r4
+ bM5g==
+X-Gm-Message-State: APjAAAVKR1Ah+WBw4ZVRsmEpJ4Fj39imnWmnTWYJI3FQ/n2YVoiYslnQ
+ /5qJK4+54XxtjokwRPu4H+62MM3aoUc0wBvsYpI=
+X-Google-Smtp-Source: APXvYqyRXhCpwA+Y1/rXVGQ+FzUST8LF9dr894EkgPsAnkTGlItpGgqkU1BKRQRshNNs56vDfziNoD06sWBTZn9cYrA=
+X-Received: by 2002:a0d:c985:: with SMTP id l127mr9155165ywd.332.1566017717120; 
+ Fri, 16 Aug 2019 21:55:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <e336595b3dbf4162a4bfb8a8880077d2@nokia-sbell.com>
- <38c0bc79-4ffe-c9c5-423c-b6a98f0dcd58@elsoft.ch>
- <03edb9afa89345ec90f2b711ef0c3d73@nokia-sbell.com>
-In-Reply-To: <03edb9afa89345ec90f2b711ef0c3d73@nokia-sbell.com>
+References: <OFEB757C0D.E4799559-ON0025843C.0016DC0E-0025843C.0017D3B9@notes.na.collabserv.com>
+In-Reply-To: <OFEB757C0D.E4799559-ON0025843C.0016DC0E-0025843C.0017D3B9@notes.na.collabserv.com>
 From: James Mihm <james.mihm@gmail.com>
-Date: Fri, 16 Aug 2019 21:45:06 -0700
-Message-ID: <CADy_Pt0Jv+uAZNnxZBy72+U5Szs0D8SojXUuiu3H73VF3mvr8A@mail.gmail.com>
-Subject: Re: OpenBMC version 2.7 run in target S2600WF shows BMC not
- ready(xyz.openbmc_project.State.BMC.BMCState.NotReady)
-To: "Jiang, Hongjiang (NSB - CN/Hangzhou)" <hongjiang.jiang@nokia-sbell.com>
-Content-Type: multipart/alternative; boundary="000000000000863680059048c749"
+Date: Fri, 16 Aug 2019 21:54:39 -0700
+Message-ID: <CADy_Pt3zcSaN9Eh=yM9PC1ex1Nd3XVSEWcwarohsAcm=cwz6cQ@mail.gmail.com>
+Subject: Re: [tsc] How we can make others contribute to openbmc-test-automation
+ repository
+To: Sivas Srr <sivas.srr@in.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000bdb1bb059048e907"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,135 +73,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Ravindra S Rao1 <ravindra.s@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000863680059048c749
+--000000000000bdb1bb059048e907
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Check out the Intel development repo at  https://github.com/intel-bmc. You
-should be able to find what you need there.
-This is the Intel repository that we're working on getting upstreamed which
-takes a little longer.
+Hi Sivas, I'm sorry it's taken so long for me to respond. We do want to
+participate in the openbmc-test-automation repository. One of the
+challenges that we have is limited resources working on delivering products
+using our internal test automation tools versus the
+openbmc-test-automation. I'll discuss with my team at Intel to determine
+when can spend some cycles on this effort.
 
-James.
+Thanks, James.
 
-On Fri, Aug 16, 2019 at 1:24 AM Jiang, Hongjiang (NSB - CN/Hangzhou) <
-hongjiang.jiang@nokia-sbell.com> wrote:
+On Thu, Jul 18, 2019 at 10:51 PM Sivas Srr <sivas.srr@in.ibm.com> wrote:
 
-> Hi,
+> Hi All,
 >
-> Thanks for your info. I will check this package and see if I can do some
-> hacking=F0=9F=98=8A
+> Objective of this mail is to get contribution to openbmc-test-automation
+> repository.
+> Not only in automation / automation test plan / code review, Even sharing
+> test results also fine.
+> As openbmc common for both Intel and Power platform, If some one share
+> Intel based test results of
+> openbmc-test-automation test cases also good.
+>
+> Would like to get your suggestions / input on how we can make openbmc-test
+> better.
+>
+> Hi Brad, Could you please have it in TSC group agenda.
+> If needed, Will schedule separate meeting which aligns with all other
+> convenient time.
+> Thank you in advance Brad.
+>
+> With regards,
+> Sivas
 >
 >
-> Best Regards,
-> Jiang Hongjiang
->
-> Nokia
 >
 >
-> Jiang Hongjiang
->
->
->
-> +86 13666669403
->
->
->
->
-> -----Original Message-----
-> From: David M=C3=BCller (ELSOFT AG) <d.mueller@elsoft.ch>
-> Sent: Friday, August 16, 2019 3:05 PM
-> To: Jiang, Hongjiang (NSB - CN/Hangzhou) <hongjiang.jiang@nokia-sbell.com=
->
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: OpenBMC version 2.7 run in target S2600WF shows BMC not
-> ready(xyz.openbmc_project.State.BMC.BMCState.NotReady)
->
-> Hello
->
-> Jiang, Hongjiang (NSB - CN/Hangzhou) wrote:
->
-> > Currently I compiled OpenBMC tag 2.7-0 with machine target S2600WF( as
-> > I have only wolfpass server in hand), and flash it to a real S2600WF
-> server.
->
-> As far as I can see support for the Intel s2600wf board is currently
-> broken as it uses the (no longer working) x86-power-control package.
->
-> Please see https://github.com/openbmc/x86-power-control/issues/1 for more
-> details.
->
-> Dave
 >
 
---000000000000863680059048c749
+--000000000000bdb1bb059048e907
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Check out the Intel development repo at=C2=A0
+<div dir=3D"ltr">Hi=C2=A0Sivas, I&#39;m sorry it&#39;s taken so long for me=
+ to respond. We do want to participate in the openbmc-test-automation repos=
+itory. One of the challenges that we have is limited resources working on d=
+elivering products using our internal test automation tools versus the open=
+bmc-test-automation. I&#39;ll discuss with my team at Intel to determine wh=
+en can spend some cycles on this effort.<div><br></div><div>Thanks, James.<=
+/div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_a=
+ttr">On Thu, Jul 18, 2019 at 10:51 PM Sivas Srr &lt;<a href=3D"mailto:sivas=
+.srr@in.ibm.com">sivas.srr@in.ibm.com</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex"><div class=3D"gmail-m_-176877250727129=
+4365socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial,Helvetica,sa=
+ns-serif;font-size:10pt"><div dir=3D"ltr">Hi All,</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">Objective of this mail is to get contribution to openbmc-t=
+est-automation repository.</div>
+<div dir=3D"ltr">Not only in automation / automation test plan / code revie=
+w, Even sharing test results also fine.</div>
+<div dir=3D"ltr">As openbmc common for both Intel and Power platform, If so=
+me one share Intel based test results of</div>
+<div dir=3D"ltr">openbmc-test-automation test cases also good.</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">Would like to get your suggestions / input on how we can m=
+ake openbmc-test better.</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">Hi Brad, Could you please have it in TSC group agenda.</di=
+v>
+<div dir=3D"ltr">If needed, Will schedule separate meeting which aligns wit=
+h all other convenient time.</div>
+<div dir=3D"ltr">Thank you in advance Brad.</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">With regards,</div>
+<div dir=3D"ltr">Sivas</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">=C2=A0</div>
+<div dir=3D"ltr">=C2=A0</div></div><br>
 
-<a href=3D"https://github.com/intel-bmc">https://github.com/intel-bmc</a>. =
-You should be able to find what=C2=A0you need there.=C2=A0<div>This is the =
-Intel repository that we&#39;re working on getting upstreamed which takes a=
- little longer.</div><div><br></div><div>James.</div></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 16, 2019=
- at 1:24 AM Jiang, Hongjiang (NSB - CN/Hangzhou) &lt;<a href=3D"mailto:hong=
-jiang.jiang@nokia-sbell.com">hongjiang.jiang@nokia-sbell.com</a>&gt; wrote:=
-<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
-ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi,<br>
-<br>
-Thanks for your info. I will check this package and see if I can do some ha=
-cking=F0=9F=98=8A<br>
-<br>
-<br>
-Best Regards,<br>
-Jiang Hongjiang<br>
-<br>
-Nokia<br>
-<br>
-<br>
-Jiang Hongjiang<br>
-<br>
-<br>
-<br>
-+86 13666669403<br>
-<br>
-<br>
-<br>
-<br>
------Original Message-----<br>
-From: David M=C3=BCller (ELSOFT AG) &lt;<a href=3D"mailto:d.mueller@elsoft.=
-ch" target=3D"_blank">d.mueller@elsoft.ch</a>&gt; <br>
-Sent: Friday, August 16, 2019 3:05 PM<br>
-To: Jiang, Hongjiang (NSB - CN/Hangzhou) &lt;<a href=3D"mailto:hongjiang.ji=
-ang@nokia-sbell.com" target=3D"_blank">hongjiang.jiang@nokia-sbell.com</a>&=
-gt;<br>
-Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
-ists.ozlabs.org</a><br>
-Subject: Re: OpenBMC version 2.7 run in target S2600WF shows BMC not ready(=
-xyz.openbmc_project.State.BMC.BMCState.NotReady)<br>
-<br>
-Hello<br>
-<br>
-Jiang, Hongjiang (NSB - CN/Hangzhou) wrote:<br>
-<br>
-&gt; Currently I compiled OpenBMC tag 2.7-0 with machine target S2600WF( as=
- <br>
-&gt; I have only wolfpass server in hand), and flash it to a real S2600WF s=
-erver.<br>
-<br>
-As far as I can see support for the Intel s2600wf board is currently broken=
- as it uses the (no longer working) x86-power-control package.<br>
-<br>
-Please see <a href=3D"https://github.com/openbmc/x86-power-control/issues/1=
-" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/x86-power=
--control/issues/1</a> for more details.<br>
-<br>
-Dave<br>
 </blockquote></div>
 
---000000000000863680059048c749--
+--000000000000bdb1bb059048e907--
