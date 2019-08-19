@@ -2,59 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFF03A4CD5
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:35:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB443A4CD7
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:37:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MB2G359DzDqS9
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:35:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MB4r2wbxzDqNR
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:37:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=dropbox.com
- (client-ip=2a00:1450:4864:20::434; helo=mail-wr1-x434.google.com;
- envelope-from=shobe@dropbox.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=vdorst.com
+ (client-ip=2a04:52c0:101:921::25; helo=mx.0dd.nl;
+ envelope-from=opensource@vdorst.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=dropbox.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=dropbox.com header.i=@dropbox.com header.b="oASf52ph"; 
+ dmarc=pass (p=reject dis=none) header.from=vdorst.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=vdorst.com header.i=@vdorst.com header.b="ULjt8ge+"; 
  dkim-atps=neutral
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com
- [IPv6:2a00:1450:4864:20::434])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 607 seconds by postgrey-1.36 at bilbo;
+ Tue, 20 Aug 2019 09:25:44 AEST
+Received: from mx.0dd.nl (mx.0dd.nl [IPv6:2a04:52c0:101:921::25])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46C95h5vj6zDqdM
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 09:25:43 +1000 (AEST)
+Received: from mail.vdorst.com (mail.vdorst.com [IPv6:fd01::250])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 468pzs52sfzDr0m
- for <openbmc@lists.ozlabs.org>; Fri, 16 Aug 2019 13:42:29 +1000 (AEST)
-Received: by mail-wr1-x434.google.com with SMTP id y8so186874wrn.10
- for <openbmc@lists.ozlabs.org>; Thu, 15 Aug 2019 20:42:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dropbox.com; s=corp;
- h=mime-version:from:date:message-id:subject:to;
- bh=Xs6dG3DhgGisUrJy13+7eYanjcelANiFXhPUs15UPxU=;
- b=oASf52pho8GUwmqcvWhPl8FPI/NlkQkr1rhzb9omxrq0i96IBH5cWdX23cnzgEbmEa
- nyoMCGjoF38U/RrZoFVT9/tEUgmtLGJeOzmCsAhSg9kcPwLXVx1jnBaWFLjZuz6S58r6
- bi25J0OBx6uA6jK75y0n+vk84n9kkRJ44h0C8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Xs6dG3DhgGisUrJy13+7eYanjcelANiFXhPUs15UPxU=;
- b=mVkCMTzbE6Vtl0f3VtJMeIypdjM3uBSEECcEeNyLizzZsMHQLuf4P0aXJ6Dsssz2Or
- f7m+KnchprhBW92FYY+yOMf7YtBtwHKOkzFlrHXKwyCmZrRphufJolO3317VL9NkT317
- IrJgbSExgxtSZEmZacHfvlGZluyb0C28NJDvoCm3L6W5KKhIGLZoMsByjJP+XS8ffOiO
- 0Z0GlnoiSBnDP13jjDE69yMyUKJgdCnf0w8NLXgJMZl0x14AAx1xvTRscm+uVfktjBuy
- eFFOaVlmspw1Hl6kuWiTXTzYAT9kHoHmXaIiKRxNaAxhB5QFLY4cqlS8dzWkaVeJ+xx3
- 3zYQ==
-X-Gm-Message-State: APjAAAW1AH5i0Q5DGiS8N+Uk8qI1WcxUsJ+Q9ruJhZZ/qPuH7437JLwD
- 8Fovp0N49RIrw44FNcMn+5QtPLlDXtPXjkvhr1w0
-X-Google-Smtp-Source: APXvYqxtlD2ZTTgxCc+2fpxXP3nwGVnsd667umtYDoh075F4GRlVBioKzAt9afq2PBkoANcY0zLg8GTz1Yth0iag66c=
-X-Received: by 2002:a5d:6606:: with SMTP id n6mr8466540wru.346.1565926942345; 
- Thu, 15 Aug 2019 20:42:22 -0700 (PDT)
+ by mx.0dd.nl (Postfix) with ESMTPS id 3E1E95FA7D;
+ Tue, 20 Aug 2019 01:15:27 +0200 (CEST)
+Authentication-Results: mx.0dd.nl; dkim=pass (2048-bit key;
+ secure) header.d=vdorst.com header.i=@vdorst.com header.b="ULjt8ge+"; 
+ dkim-atps=neutral
+Received: from www (www.vdorst.com [192.168.2.222])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.vdorst.com (Postfix) with ESMTPSA id ECEC81D7CB29;
+ Tue, 20 Aug 2019 01:15:26 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.vdorst.com ECEC81D7CB29
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vdorst.com;
+ s=default; t=1566256527;
+ bh=C8ea6Y3384VBk/QFSJchvtn4T6yvfAqag7cXPB04Y84=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=ULjt8ge+g1b0WHabO2Nvp0MO8hkns0DYw9T60kxk1Hgdvz1yxwutf9QTyiw4dxxDy
+ PnLCyf+I96TCz42A8cO2+u/SzEm7GQD4/734KP1EB70BeL4wLssReF7CO+hUdOKyfo
+ RBPZvFb0AHLn9dN2mIoiWkoV7AVkwO/l49Ih3EqIjMjH9Ce8+wjqGiNDzKpucTxF2p
+ NrxDOqx0OGn71mTVq/8bCFXW5yQFyqIh2xZzS91n9WwC9vaAdaXeaLpbUBW8M/Cbz0
+ EGGkljRvWTvaSzIgaVee0T7gCla0s/oyNemnCUuCRb507radYgJxDWgtLGCLkGOTDC
+ iPGnC1B2C/q3A==
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1]) by
+ www.vdorst.com (Horde Framework) with HTTPS; Mon, 19 Aug 2019 23:15:26 +0000
+Date: Mon, 19 Aug 2019 23:15:26 +0000
+Message-ID: <20190819231526.Horde.8CjxfcGbCnfBNA-nXmq1PJt@www.vdorst.com>
+From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
+To: Tao Ren <taoren@fb.com>
+Subject: Re: [PATCH net-next v7 2/3] net: phy: add support for clause 37
+ auto-negotiation
+References: <20190811234010.3673592-1-taoren@fb.com>
+ <3af5d897-7f97-a223-2d7b-56e09b83dcb5@fb.com>
+In-Reply-To: <3af5d897-7f97-a223-2d7b-56e09b83dcb5@fb.com>
+User-Agent: Horde Application Framework 5
+Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
 MIME-Version: 1.0
-From: Eric Shobe <shobe@dropbox.com>
-Date: Thu, 15 Aug 2019 20:42:10 -0700
-Message-ID: <CALo0W=u_Cznj5dtzh0Cc5u9M80WZDMRQ4R0zhbTsRkCT5XAMgA@mail.gmail.com>
-Subject: The RunBMC Specification has been published!
-To: Jared Mednick <jaredm@dropbox.com>
-Content-Type: multipart/alternative; boundary="00000000000024a83b059033c778"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:52 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,87 +75,309 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Arun Parameswaran <arun.parameswaran@broadcom.com>,
+ linux-kernel@vger.kernel.org, Justin Chen <justinpopo6@gmail.com>,
+ Vladimir Oltean <olteanv@gmail.com>, "David S . Miller" <davem@davemloft.net>,
+ Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000024a83b059033c778
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Tao,
 
-Esteemed colleagues,
+Quoting Tao Ren <taoren@fb.com>:
 
-We are most pleased to announce that RunBMC,an open Hardware Standard that
-defines the interface between the Baseboard Management Controller(BMC)
-subsystem and OCP hardware platform - such as network or compute
-motherboards, has been officially accepted to the Open Compute Project.  Li=
-nk
-to the RunBMC 1.4.1 Specification.
-<https://www.opencompute.org/documents/ocp-runbmc-daughterboard-card-design=
--specification-v1-4-1-pdf>
+> On 8/11/19 4:40 PM, Tao Ren wrote:
+>> From: Heiner Kallweit <hkallweit1@gmail.com>
+>>
+>> This patch adds support for clause 37 1000Base-X auto-negotiation.
+>>
+>> Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+>> Signed-off-by: Tao Ren <taoren@fb.com>
+>
+> A kind reminder: could someone help to review the patch when you  
+> have bandwidth?
+>
 
-We owe credit and thanks to our collaborators at Quanta, Nuvoton, Hyve,
-Intel, Aspeed, Facebook, Google, Salesforce, and Microsoft.  I think we can
-confidently say that the collaborative spirit meant to be fostered by OCP
-is alive and well.
+FWIW: I have a similar setup with my device. MAC -> PHY -> SFP cage.
+PHY is a Qualcomm at8031 and is used as a RGMII-to-SerDes converter.
+SerDes only support 100Base-FX and 1000Base-X in this converter mode.
+PHY also supports a RJ45 port but that is not wired on my device.
 
-Our next steps are to draft and complete a User=E2=80=99s Guide for the Bri=
-ng-Up
-Vehicle and work with our partners to submit their designs for
-daughter-cards based on the AST2500 and Poleg.  We look forward to seeing
-the progress of this effort realized through these contributions.
+I converted [0] at803x driver to make use of the PHYLINK API for SFP cage and
+also of these new c37 functions.
 
-Thanks!
+In autoneg on and off, it detects the link and can ping a host on the network.
+Tested with 1gbit BiDi optical(1000Base-X) and RJ45 module(SGMII).
+Both work and both devices detects unplug and plug-in of the cable.
 
---00000000000024a83b059033c778
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+output of ethtool:
 
-<div dir=3D"ltr"><div><span class=3D"gmail-m_2563781303913535005gmail-autho=
-r-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz6=
-6zz87z3z76zmz69z3z85zz69zr">Esteemed=C2=A0</span><span class=3D"gmail-m_256=
-3781303913535005gmail-thread-140947146019351338598583 gmail-m_2563781303913=
-535005gmail-attrcomment gmail-m_2563781303913535005gmail-attrcommentfirst g=
-mail-m_2563781303913535005gmail-thread-140947146019351338598583-first gmail=
--m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75z=
-fxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><span class=3D=
-"gmail-m_2563781303913535005gmail-comment-extra-inner-span">colleagues</spa=
-n></span><span class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z=
-1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz=
-69z3z85zz69zr">,</span></div><div><span class=3D"gmail-m_256378130391353500=
-5gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85=
-z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></span></div><div></div><div><s=
-pan class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68=
-zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69=
-zr">We are most pleased to announce that RunBMC,an open Hardware Standard t=
-hat defines the interface between the Baseboard Management Controller(BMC) =
-subsystem and OCP hardware platform - such as network or compute motherboar=
-ds, has been officially accepted to the Open Compute Project. =C2=A0</span>=
-<span class=3D"gmail-m_2563781303913535005gmail-attrlink gmail-m_2563781303=
-913535005gmail-url gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85=
-zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z=
-85zz69zr"><a class=3D"gmail-m_2563781303913535005gmail-attrlink" href=3D"ht=
-tps://www.opencompute.org/documents/ocp-runbmc-daughterboard-card-design-sp=
-ecification-v1-4-1-pdf" rel=3D"noreferrer nofollow noopener" target=3D"_bla=
-nk">Link to the RunBMC 1.4.1 Specification.</a></span></div><div><br></div>=
-<div></div><div><span class=3D"gmail-m_2563781303913535005gmail-author-d-1g=
-g9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z=
-3z76zmz69z3z85zz69zr">We owe credit and thanks to our collaborators at Quan=
-ta, Nuvoton, Hyve, Intel, Aspeed, Facebook, Google, Salesforce, and Microso=
-ft.=C2=A0 I think we can confidently say that the collaborative spirit mean=
-t to be fostered by OCP is alive and well.</span></div><div><span class=3D"=
-gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qox=
-vz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></spa=
-n></div><div></div><div><span class=3D"gmail-m_2563781303913535005gmail-aut=
-hor-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70z=
-z66zz87z3z76zmz69z3z85zz69zr">Our next steps are to draft and complete a Us=
-er=E2=80=99s Guide for the Bring-Up Vehicle and work with our partners to s=
-ubmit their designs for daughter-cards based on the AST2500 and Poleg.=C2=
-=A0 We look forward to seeing the progress of this effort realized through =
-these contributions.</span></div><div><span class=3D"gmail-m_25637813039135=
-35005gmail-author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80=
-zz85z1le4iz70zz66zz87z3z76zmz69z3z85zz69zr"><br></span></div><div></div><di=
-v><span class=3D"gmail-m_2563781303913535005gmail-author-d-1gg9uz65z1iz85zg=
-dz68zmqkz84zo2qoxvz75zfxfz86zgwm2hpwz80zz85z1le4iz70zz66zz87z3z76zmz69z3z85=
-zz69zr">Thanks!</span></div></div>
+Autoneg on
+Settings for lan5:
+         Supported ports: [ TP MII ]
+         Supported link modes:   100baseT/Half 100baseT/Full
+                                 1000baseT/Full
+                                 1000baseX/Full
+         Supported pause frame use: Symmetric Receive-only
+         Supports auto-negotiation: Yes
+         Supported FEC modes: Not reported
+         Advertised link modes:  100baseT/Half 100baseT/Full
+                                 1000baseT/Full
+                                 1000baseX/Full
+         Advertised pause frame use: Symmetric Receive-only
+         Advertised auto-negotiation: Yes
+         Advertised FEC modes: Not reported
+         Link partner advertised link modes:  1000baseX/Full
+         Link partner advertised pause frame use: Symmetric Receive-only
+         Link partner advertised auto-negotiation: Yes
+         Link partner advertised FEC modes: Not reported
+         Speed: 1000Mb/s
+         Duplex: Full
+         Port: MII
+         PHYAD: 7
+         Transceiver: internal
+         Auto-negotiation: on
+         Supports Wake-on: g
+         Wake-on: d
+         Link detected: yes
 
---00000000000024a83b059033c778--
+Autoneg off
+Settings for lan5:
+         Supported ports: [ TP MII ]
+         Supported link modes:   100baseT/Half 100baseT/Full
+                                 1000baseT/Full
+                                 1000baseX/Full
+         Supported pause frame use: Symmetric Receive-only
+         Supports auto-negotiation: Yes
+         Supported FEC modes: Not reported
+         Advertised link modes:  1000baseT/Full
+         Advertised pause frame use: Symmetric Receive-only
+         Advertised auto-negotiation: No
+         Advertised FEC modes: Not reported
+         Speed: 1000Mb/s
+         Duplex: Full
+         Port: MII
+         PHYAD: 7
+         Transceiver: internal
+         Auto-negotiation: off
+         Supports Wake-on: g
+         Wake-on: d
+         Link detected: yes
+
+Tested-by: René van Dorst <opensource@vdorst.com>
+
+Greats,
+
+René
+
+[0]  
+https://github.com/vDorst/linux-1/blob/1d8cb01bc8047bda94c076676e47b09d2f31069d/drivers/net/phy/at803x.c
+
+>
+> Cheers,
+>
+> Tao
+>
+>> ---
+>>  Changes in v7:
+>>   - Update "if (AUTONEG_ENABLE != phydev->autoneg)" to
+>>     "if (phydev->autoneg != AUTONEG_ENABLE)" so checkpatch.pl is happy.
+>>  Changes in v6:
+>>   - add "Signed-off-by: Tao Ren <taoren@fb.com>"
+>>  Changes in v1-v5:
+>>   - nothing changed. It's given v5 just to align with the version of
+>>     patch series.
+>>
+>>  drivers/net/phy/phy_device.c | 139 +++++++++++++++++++++++++++++++++++
+>>  include/linux/phy.h          |   5 ++
+>>  2 files changed, 144 insertions(+)
+>>
+>> diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+>> index 252a712d1b2b..301a794b2963 100644
+>> --- a/drivers/net/phy/phy_device.c
+>> +++ b/drivers/net/phy/phy_device.c
+>> @@ -1617,6 +1617,40 @@ static int genphy_config_advert(struct  
+>> phy_device *phydev)
+>>  	return changed;
+>>  }
+>>
+>> +/**
+>> + * genphy_c37_config_advert - sanitize and advertise  
+>> auto-negotiation parameters
+>> + * @phydev: target phy_device struct
+>> + *
+>> + * Description: Writes MII_ADVERTISE with the appropriate values,
+>> + *   after sanitizing the values to make sure we only advertise
+>> + *   what is supported.  Returns < 0 on error, 0 if the PHY's advertisement
+>> + *   hasn't changed, and > 0 if it has changed. This function is intended
+>> + *   for Clause 37 1000Base-X mode.
+>> + */
+>> +static int genphy_c37_config_advert(struct phy_device *phydev)
+>> +{
+>> +	u16 adv = 0;
+>> +
+>> +	/* Only allow advertising what this PHY supports */
+>> +	linkmode_and(phydev->advertising, phydev->advertising,
+>> +		     phydev->supported);
+>> +
+>> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+>> +			      phydev->advertising))
+>> +		adv |= ADVERTISE_1000XFULL;
+>> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Pause_BIT,
+>> +			      phydev->advertising))
+>> +		adv |= ADVERTISE_1000XPAUSE;
+>> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
+>> +			      phydev->advertising))
+>> +		adv |= ADVERTISE_1000XPSE_ASYM;
+>> +
+>> +	return phy_modify_changed(phydev, MII_ADVERTISE,
+>> +				  ADVERTISE_1000XFULL | ADVERTISE_1000XPAUSE |
+>> +				  ADVERTISE_1000XHALF | ADVERTISE_1000XPSE_ASYM,
+>> +				  adv);
+>> +}
+>> +
+>>  /**
+>>   * genphy_config_eee_advert - disable unwanted eee mode advertisement
+>>   * @phydev: target phy_device struct
+>> @@ -1726,6 +1760,54 @@ int genphy_config_aneg(struct phy_device *phydev)
+>>  }
+>>  EXPORT_SYMBOL(genphy_config_aneg);
+>>
+>> +/**
+>> + * genphy_c37_config_aneg - restart auto-negotiation or write BMCR
+>> + * @phydev: target phy_device struct
+>> + *
+>> + * Description: If auto-negotiation is enabled, we configure the
+>> + *   advertising, and then restart auto-negotiation.  If it is not
+>> + *   enabled, then we write the BMCR. This function is intended
+>> + *   for use with Clause 37 1000Base-X mode.
+>> + */
+>> +int genphy_c37_config_aneg(struct phy_device *phydev)
+>> +{
+>> +	int err, changed;
+>> +
+>> +	if (phydev->autoneg != AUTONEG_ENABLE)
+>> +		return genphy_setup_forced(phydev);
+>> +
+>> +	err = phy_modify(phydev, MII_BMCR, BMCR_SPEED1000 | BMCR_SPEED100,
+>> +			 BMCR_SPEED1000);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	changed = genphy_c37_config_advert(phydev);
+>> +	if (changed < 0) /* error */
+>> +		return changed;
+>> +
+>> +	if (!changed) {
+>> +		/* Advertisement hasn't changed, but maybe aneg was never on to
+>> +		 * begin with?  Or maybe phy was isolated?
+>> +		 */
+>> +		int ctl = phy_read(phydev, MII_BMCR);
+>> +
+>> +		if (ctl < 0)
+>> +			return ctl;
+>> +
+>> +		if (!(ctl & BMCR_ANENABLE) || (ctl & BMCR_ISOLATE))
+>> +			changed = 1; /* do restart aneg */
+>> +	}
+>> +
+>> +	/* Only restart aneg if we are advertising something different
+>> +	 * than we were before.
+>> +	 */
+>> +	if (changed > 0)
+>> +		return genphy_restart_aneg(phydev);
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL(genphy_c37_config_aneg);
+>> +
+>>  /**
+>>   * genphy_aneg_done - return auto-negotiation status
+>>   * @phydev: target phy_device struct
+>> @@ -1864,6 +1946,63 @@ int genphy_read_status(struct phy_device *phydev)
+>>  }
+>>  EXPORT_SYMBOL(genphy_read_status);
+>>
+>> +/**
+>> + * genphy_c37_read_status - check the link status and update  
+>> current link state
+>> + * @phydev: target phy_device struct
+>> + *
+>> + * Description: Check the link, then figure out the current state
+>> + *   by comparing what we advertise with what the link partner
+>> + *   advertises. This function is for Clause 37 1000Base-X mode.
+>> + */
+>> +int genphy_c37_read_status(struct phy_device *phydev)
+>> +{
+>> +	int lpa, err, old_link = phydev->link;
+>> +
+>> +	/* Update the link, but return if there was an error */
+>> +	err = genphy_update_link(phydev);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	/* why bother the PHY if nothing can have changed */
+>> +	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
+>> +		return 0;
+>> +
+>> +	phydev->duplex = DUPLEX_UNKNOWN;
+>> +	phydev->pause = 0;
+>> +	phydev->asym_pause = 0;
+>> +
+>> +	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete) {
+>> +		lpa = phy_read(phydev, MII_LPA);
+>> +		if (lpa < 0)
+>> +			return lpa;
+>> +
+>> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
+>> +				 phydev->lp_advertising, lpa & LPA_LPACK);
+>> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+>> +				 phydev->lp_advertising, lpa & LPA_1000XFULL);
+>> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Pause_BIT,
+>> +				 phydev->lp_advertising, lpa & LPA_1000XPAUSE);
+>> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
+>> +				 phydev->lp_advertising,
+>> +				 lpa & LPA_1000XPAUSE_ASYM);
+>> +
+>> +		phy_resolve_aneg_linkmode(phydev);
+>> +	} else if (phydev->autoneg == AUTONEG_DISABLE) {
+>> +		int bmcr = phy_read(phydev, MII_BMCR);
+>> +
+>> +		if (bmcr < 0)
+>> +			return bmcr;
+>> +
+>> +		if (bmcr & BMCR_FULLDPLX)
+>> +			phydev->duplex = DUPLEX_FULL;
+>> +		else
+>> +			phydev->duplex = DUPLEX_HALF;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +EXPORT_SYMBOL(genphy_c37_read_status);
+>> +
+>>  /**
+>>   * genphy_soft_reset - software reset the PHY via BMCR_RESET bit
+>>   * @phydev: target phy_device struct
+>> diff --git a/include/linux/phy.h b/include/linux/phy.h
+>> index 462b90b73f93..81a2921512ee 100644
+>> --- a/include/linux/phy.h
+>> +++ b/include/linux/phy.h
+>> @@ -1077,6 +1077,11 @@ int genphy_suspend(struct phy_device *phydev);
+>>  int genphy_resume(struct phy_device *phydev);
+>>  int genphy_loopback(struct phy_device *phydev, bool enable);
+>>  int genphy_soft_reset(struct phy_device *phydev);
+>> +
+>> +/* Clause 37 */
+>> +int genphy_c37_config_aneg(struct phy_device *phydev);
+>> +int genphy_c37_read_status(struct phy_device *phydev);
+>> +
+>>  static inline int genphy_no_soft_reset(struct phy_device *phydev)
+>>  {
+>>  	return 0;
+>>
+
+
+
