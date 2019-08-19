@@ -1,89 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBD4291A6A
-	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 02:15:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5C1591B03
+	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 04:21:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46BZFJ1JlTzDr84
-	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 10:15:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Bd2Q61n8zDrC7
+	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 12:21:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::844; helo=mail-qt1-x844.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="cYW+58k/"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="wPVL8+bh"; dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="ZfSBy0mA"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
+ [IPv6:2607:f8b0:4864:20::844])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46BZDn541szDr7b
- for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 10:14:49 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 3A02721B7C;
- Sun, 18 Aug 2019 20:14:47 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 18 Aug 2019 20:14:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm3; bh=uWtq8
- i9Iw3/CGIUhqjhw9oRRzNsSJCl7NwblaV8oAno=; b=cYW+58k/5Qrey1pVd25Ss
- xFZQYH8InXLB38H5yI+fzajZPn4H7kMcNhBgeVTsB3Tp2LHDt7WmURSEirddjYko
- 3n5ZTTvj7u6qXjR0AHFutjmL1KvIftPwzSDgP5umn/EYhYc9axNf5RTHMPLK/rsw
- Eh01szf4cMZ6k+JbFHGEfZzsVVlWXXAI4hdG6Sd0cqms33VkHdzegFM8XZly2zFf
- weQlOmXWBSztw2d+M8e702z6dvc+YL61nL2HXQi1zQRPJrMuUNKMyvqIhZcUjOcv
- B0c+KOunpJhWORIVSV9mZnFESNZAgfk58T7TNf70Y+F5H+jWJkflG2ufghrduCeH
- A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=uWtq8i9Iw3/CGIUhqjhw9oRRzNsSJCl7NwblaV8oA
- no=; b=wPVL8+bh2Tx+hcFUNUTJ7pR3te4cNncOCOGq5LLRx12U0NDtr6q/Fdrez
- qflK3r4epslmcQa0Rgj3SHCIhlPDYwD48iNwDps9VbWWZzw7wZ0ceM1jB7ExZQXt
- wsjvV4wR0j4yooGFqvUgcgXtlaO0glVpwizivmw8NBjsrNGdFSNFcXxbfWDNHiFd
- WXnZibi5vRknMZf/Y0aH8spDi3U0NMQRj2f6GpWbSILtyOICcvs6L9ni94DxayV+
- fLaTmG3ZoTJCtFUI5QU+rW1Ir2yegB/jQebMd/tFDyw2vjKnJGbAL71bFUc9hohy
- CVIriC5oOKnvgHqhxXay3ILyTlc6g==
-X-ME-Sender: <xms:9ulZXRsUzxSrU5ItZi_Fgtj_jl2yWisV9vPP3KwJZCecvH6yjd2kYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudefkedgfeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
- ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrg
- hrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushht
- vghrufhiiigvpedt
-X-ME-Proxy: <xmx:9ulZXfBkm72dN317_ArlhxdzfEnb1v0zVyFuaW4V3IeQOB9y5CFkIg>
- <xmx:9ulZXR4a-sXmZsgLpmgDdoM8tlhppxnEDs1ALd1VkRyp0ClsjRa_oA>
- <xmx:9ulZXfCjV1lb6Gj4sHd7pK6X4ETimFnXYLEw8HT5dGQy7RV6A7p21w>
- <xmx:9-lZXSOtbltb976JIQ7Z75KD5954TzeKC4Bzb4nPNlqs3a4BpAeL9Q>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 9F764E00A3; Sun, 18 Aug 2019 20:14:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.6-869-g2d94aad-fmstable-20190814v1
-Mime-Version: 1.0
-Message-Id: <96f668f0-9580-44a4-9bbd-ca6324494017@www.fastmail.com>
-In-Reply-To: <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
-References: <CALLMt=pv9GdHmv7ZJOBK+Z1wqAh4DmOzVR8ud=+KefddvEkreg@mail.gmail.com>
- <9ad991fb-13fe-42fa-b5b6-48fd069342f9@www.fastmail.com>
- <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
- <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
-Date: Mon, 19 Aug 2019 09:45:20 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joseph Reynolds" <jrey@linux.ibm.com>,
- "Matt Spinler" <mspinler@linux.ibm.com>,
- "Andrew Geissler" <geissonator@gmail.com>,
- "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
-Subject: Re: where to store application json
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Bd1k16ByzDr0q
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 12:20:25 +1000 (AEST)
+Received: by mail-qt1-x844.google.com with SMTP id q4so356034qtp.1
+ for <openbmc@lists.ozlabs.org>; Sun, 18 Aug 2019 19:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=b7rnR1qd4xgOUxyyaF6IjQnLml5tXyZWdkBe61/XKs8=;
+ b=ZfSBy0mAR7LEIy8hyM1zGqml5g+qdngvkT5lgRQzobe8DZoZiyvOsHbDb4niMhGwPk
+ DmVDkeIFtlyTEv8OZw8KneGVipNN4tY1Fkb6KDwQqloV43aVD3rLLppOikxeAWHkeGnh
+ 3Fk+Bj8lsj8Oq4jL9OGuEGGy8Sg1gF8Ch/qdg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=b7rnR1qd4xgOUxyyaF6IjQnLml5tXyZWdkBe61/XKs8=;
+ b=TAdwI+fNv8K79IBL+8ChEJJTeqR+RMaVi2hnzOFbftgJQ+t00mvgOIut0Vn0F/Gxgx
+ KSXcnSsu2I2fTSzlC3jPv+ki7sxUTWyuUvaErnAhVouE1qmfBrEF8eE1BNh6ES5mWwPp
+ M6NRGfGlwimy0HXRUlr9Dr97emOQKoWpx84npSW8w7WdncaR/RVjHZUfaU3zLVgPmQOD
+ 5TVbRE1Lq1NUHCl34gXu7EWYI4Gh7TH7eWa72+XbEoJF0vmqX8zHxEY1QQG8+y/snASd
+ UBGOM7Pb3SaMLo1IgbiVsDVHRobJf3vivxoqRvgihdge7jQzckpQ7dFrhcixFGx2cNEH
+ tfyQ==
+X-Gm-Message-State: APjAAAUBCuLBBcKF20YBQAA2nwz3uvAHqJTdP1jj3DT+gwlH/gsEKjv+
+ gLteWQqAnyPyX7YXcS35mD9M3PYLsyBeEti9aw4=
+X-Google-Smtp-Source: APXvYqzlVVWIt46DHe3BSDVNFq99MZ4mEWM467ZlIV1gDI6a+EYmDAWabohjbwWZMa5JgJ25PPU/sJa8NkSQbWUN5so=
+X-Received: by 2002:ac8:46cc:: with SMTP id h12mr19146680qto.234.1566181222265; 
+ Sun, 18 Aug 2019 19:20:22 -0700 (PDT)
+MIME-Version: 1.0
+References: <20190816101944.3586-1-wangzqbj@inspur.com>
+In-Reply-To: <20190816101944.3586-1-wangzqbj@inspur.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 19 Aug 2019 02:20:10 +0000
+Message-ID: <CACPK8XegTePdmykMzZHnW=g6hyEGr7jiW3TP8AvdzSwZGr=2gA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] hwmon: pmbus: Add Inspur Power System power supply
+ driver
+To: John Wang <wangzqbj@inspur.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,70 +70,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ linux-doc@vger.kernel.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Jonathan Corbet <corbet@lwn.net>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ duanzhijia01@inspur.com, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, 16 Aug 2019 at 10:19, John Wang <wangzqbj@inspur.com> wrote:
+>
+> Add the driver to monitor Inspur Power System power supplies
+> with hwmon over pmbus.
+>
+> This driver adds sysfs attributes for additional power supply data,
+> including vendor, model, part_number, serial number,
+> firmware revision, hardware revision, and psu mode(active/standby).
+>
+> Signed-off-by: John Wang <wangzqbj@inspur.com>
 
+> +static const struct i2c_device_id ipsps_id[] = {
+> +       { "inspur_ipsps1", 0 },
 
-On Sat, 17 Aug 2019, at 02:24, Joseph Reynolds wrote:
->=20
-> On 8/16/19 8:31 AM, Matt Spinler wrote:
-> >
-> > On 8/15/2019 6:59 PM, Andrew Jeffery wrote:
-> >>
-> >> On Fri, 16 Aug 2019, at 07:01, Andrew Geissler wrote:
-> >>> As we start moving more and more of our applications to using=20
-> >>> runtime parsed
-> >>> json files, it seems like a good time to come up with a standard=20=
+Convention would be to use "ipsps" here, instead of "vendor_device"?
+> +       {}
+> +};
+> +MODULE_DEVICE_TABLE(i2c, ipsps_id);
+> +
+> +static const struct of_device_id ipsps_of_match[] = {
+> +       { .compatible = "inspur,ipsps1" },
+> +       {}
+> +};
+> +MODULE_DEVICE_TABLE(of, ipsps_of_match);
 
-> >>> location to put
-> >>> the json files. I think a requirement is they be in a writeable=20=
+Do we need the of match table? I thought the match on the device name
+from the i2c table would be enough. I will defer to Guenter here
+though.
 
-> >>> filesystem
-> >>> (although that may bring security concerns) so that you can edit a=
-nd=20
-> >>> restart
-> >>> services that use them on the fly for bringup and debug.
-> >>>
-> >>> /etc seems like the right spot. But if so, where in /etc
-> >
-> > While convenient to the developer for testing, to me it doesn't soun=
-d=20
-> > like good practice to put read
-> > only, critical files into a writeable spot?=C2=A0 How could we even =
-trust=20
-> > data that comes back to us from
-> > the field when a user that can get into their BMC can just change=20=
+Assuming the device tables are okay:
 
-> > these?=C2=A0 Or accidentally
-> > delete a file?
-> >
->=20
-> One security concern is that config files offer a good way for hackers=
-=20
-> to get persistent access to the system.=C2=A0 That is, if they are abl=
-e to=20
-> get root access to the BMC one time, they may be able to persist their=
-=20
-> hack across BMC reboots by modifying some config files.=C2=A0 IMHO, to=
- make=20
-> it harder for them, as much as possible of the file system should be=20=
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-> read-only, and read-write config files should not offer the above=20
-> mentioned service to hackers.
+Cheers,
 
-What are some concrete examples of what you're concerned about here?
+Joel
 
-Are you suggesting hackers are exploiting flaws in the config file parse=
-rs?
-Because in that case we should just fix the parsers. Or perhaps configur=
-ing
-the system in an unsafe way?
-
-Anyway, having any writable storage provides a place to drop payloads
-and generally wreak havoc, but having an unconfigurable BMC is not a
-direction I think we should go, it seems pretty restrictive. We do need
-to be careful about how we treat the content though, as it can't really
-be authenticated.
-
-Andrew
+> +
+> +static struct i2c_driver ipsps_driver = {
+> +       .driver = {
+> +               .name = "inspur-ipsps",
+> +               .of_match_table = ipsps_of_match,
+> +       },
+> +       .probe = ipsps_probe,
+> +       .remove = pmbus_do_remove,
+> +       .id_table = ipsps_id,
+> +};
