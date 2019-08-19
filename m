@@ -2,66 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3F45926C8
-	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 16:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B6B7094B2C
+	for <lists+openbmc@lfdr.de>; Mon, 19 Aug 2019 19:03:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46BxJM2kpgzDqFB
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 00:34:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46C0cj1L1KzDqrn
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 03:03:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::c36; helo=mail-yw1-xc36.google.com;
- envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="pq6T6n1t"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc36.google.com (mail-yw1-xc36.google.com
- [IPv6:2607:f8b0:4864:20::c36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Bx786tKTzDqF1
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 00:26:12 +1000 (AEST)
-Received: by mail-yw1-xc36.google.com with SMTP id f187so820542ywa.5
- for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 07:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=R2RBjYs+rLjU8d3vZfBqYo9KrFKPlhcOW93pjUUafjk=;
- b=pq6T6n1tkBuEITW3H6sgU48GUBiFbkBTJmeO/7eB/Dqn/XEbyWFjGVbmj6cVBIcrip
- zOd5lWKBmU3cflnWmkqHcJP+oY/8Ocqqwy/F5jNl/pLHACYKuPj6xjULBPOQjUtCHs5U
- wdb2IAoVfDCNMqLkkSOLznvw5XdVLENVlUDBn4TiL8fREJD5n6vL0zLIwdfvQOTlQ5pk
- W3geFWTqGJU+a8vsyV+0RF/ryHul8XL5sa4E2NjWCDJkF/gU/LAF2ir68RB5qyKNh042
- npGFUYfV4N/BxrDMJ5AFH+P73azzH2XI/+o8qQ21ft9LBgckLUl8mKh4eGNOAUxzYwN/
- l1Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=R2RBjYs+rLjU8d3vZfBqYo9KrFKPlhcOW93pjUUafjk=;
- b=RJBst1TamT3BptDdBnaumKVfjHLQ6nbO6ly+OZS5ML9R06VVspDCmTCyvR3bTnpyrj
- nMYB6PLyNoXEGIZsfhyVORUafB01YhDFl1L+xmOLD6rGAv2Wo4lR0yLsx6xSToXBL0kQ
- mR4v05ycqD/7jWvcz67EgdyrMt73TrP+7OrH0v/sWjoh8wCVuG6hFDXlMnVW1Aoq9syq
- aej4WD4nio9ADBOQthLdTfrF0Fyfnolb9oj6CeoRGSdwhpf3BWx+8ua6KceknpbviVt8
- LQpBh8PtngVa4w5IzOLG3VhS+32PdVlPPNYd7TqJ4rBLkkdUIHx3vpLIQ0+LV3Tw1kmY
- wGpw==
-X-Gm-Message-State: APjAAAW/DcjY/gLALHzM1h4Ig8cgNnAGYp8Vy6dw8FoHEsdGGqzccThK
- UlIKjUoXqVWNk9qytBdZDslj4uZqkiNTB22HWGc=
-X-Google-Smtp-Source: APXvYqxp/llUa6f++fRma1/6tCB1Yd7UhZ9i8idQdF+s4mvecOZeyt0AirJf6vyAS2oI0vCEtfcUAVj3QGLY7bxDkfA=
-X-Received: by 2002:a0d:c985:: with SMTP id
- l127mr16510479ywd.332.1566224769097; 
- Mon, 19 Aug 2019 07:26:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46C0bm2St8zDqrn
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 03:02:43 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7JH2GpA146975
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 13:02:40 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2ufx6mm7hj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 13:02:40 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7JH0Njp010348
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:39 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma01dal.us.ibm.com with ESMTP id 2ue976famk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:39 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7JH2chH43516366
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:38 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F61AAC060
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:38 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 31EE6AC05E
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:38 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 17:02:38 +0000 (GMT)
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: Initial expired passwords - low level designs
+Message-ID: <b15904b6-aeaa-f3b1-1a62-ba7217727b79@linux.ibm.com>
+Date: Mon, 19 Aug 2019 12:02:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <MN2PR04MB5839D33826EF08A499E32167CDA80@MN2PR04MB5839.namprd04.prod.outlook.com>
-In-Reply-To: <MN2PR04MB5839D33826EF08A499E32167CDA80@MN2PR04MB5839.namprd04.prod.outlook.com>
-From: James Mihm <james.mihm@gmail.com>
-Date: Mon, 19 Aug 2019 07:25:32 -0700
-Message-ID: <CADy_Pt3tvAci8tXuZ3cTJY3tRxwnWPbD=yNL05VEYrjZKWcpEw@mail.gmail.com>
-Subject: Re: Socflash says the bmc is write protected.
-To: Zheng Bao <fishbaoz@hotmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000025d70590791fb6"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-19_03:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908190180
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,70 +83,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000000025d70590791fb6
-Content-Type: text/plain; charset="UTF-8"
+This is an attempt to over-communicate progress on the [Initial expired 
+passwords design][], currently in review.  This email has the 
+significant and tricky work items needed to implement the design.  
+Emails about the BMCWeb pieces that need to be changed are [here][]; in 
+contrast, this email attempts to decompose the overall design.
 
-The P2A Bridge that is used by the socflash utility has been disabled; see
-https://nvd.nist.gov/vuln/detail/CVE-2019-6260 for details.
+[Initial expired passwords design]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23849
+[here][]: https://lists.ozlabs.org/pipermail/openbmc/2019-August/017625.html
 
-On Mon, Aug 19, 2019 at 5:51 AM Zheng Bao <fishbaoz@hotmail.com> wrote:
+The "initial expired passwords design" includes the following work. An 
+understanding of that design is a pre-requisite to understand the items 
+here.
 
-> Hi, All,
-> I use socflash to update the BMC firmware. The original BMC firmware can
-> be updated, but openbmc can not be.
-> Socflash says the BMC is protected. Does anybody know why?
->
-> Thanks.
-> Joe
->
+1. Implement the new EXPIRED_PASSWORD image feature (initially off).  
+This ensures the password is expired for all local users. The right 
+place to do this piece is in Yocto/OpenEmbedded; see 
+https://lists.yoctoproject.org/pipermail/yocto-security/2019-July/000114.html
 
---0000000000000025d70590791fb6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+2. Enhance BMCWeb to handle Redfish PasswordChangeRequired (reference: 
+https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.7.0.pdf 
+("Redfish Specification" version 1.7.0 or later) section 13.2.6.1).
+This further breaks down into:
 
-<div dir=3D"ltr">The P2A Bridge that is used by the socflash utility has be=
-en disabled; see=C2=A0
+2a. Add the PasswordChangeRequired field to 
+/redfish/v1/SessionManager/Sessions/<session>.  This new field comes 
+from PAM_NEW_AUTHTOK_REQD.
 
-<a href=3D"https://nvd.nist.gov/vuln/detail/CVE-2019-6260">https://nvd.nist=
-.gov/vuln/detail/CVE-2019-6260</a>=C2=A0for details.</div><br><div class=3D=
-"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 19, 2019 at=
- 5:51 AM Zheng Bao &lt;<a href=3D"mailto:fishbaoz@hotmail.com">fishbaoz@hot=
-mail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
+2b. Add the PasswordChangeRequired field to 
+/redfish/v1/AccountManager/Accounts/<account>.  Does this require D-Bus 
+changes?
 
+2c. Tweak the authority model to handle privilege ConfigureSelf which 
+applies only to *your* Session or Account and is intended to encompass 
+all the privileges needed change your own expired password.  I am 
+pursuing this question in private Redfish forums (issue 1986).
 
+2d. Tweak the authority for the 
+/redfish/v1/AccountManager/Accounts/<account> "Password" property as a 
+Redfish "property override".  The Password property needs to have a 
+different authority than the other ManagerAccount properties in that 
+same account.
 
+3. Enhance phosphor-webui to handle the expired password dialog at 
+login.  This will use the enhanced Redfish APIs. See 
+https://github.com/ibm-openbmc/dev/issues/1048
 
-<div dir=3D"ltr">
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-Hi, All,</div>
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-I use socflash to update the BMC firmware. The original BMC firmware can be=
- updated, but openbmc can not be.</div>
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-Socflash says the BMC is protected. Does anybody know why?</div>
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-<br>
-</div>
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-Thanks. <br>
-</div>
-<div style=3D"font-family:Calibri,Helvetica,sans-serif;font-size:12pt;color=
-:rgb(0,0,0)">
-Joe<br>
-</div>
-</div>
+4. Enhance Dropbear SSH so a user can change their expired password.  
+See 
+https://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2016q2/001895.html 
+This piece is optional, but I would like this to be available.  The 
+alternative is to use the OpenSSH server instead of Dropbear.  The right 
+place to do this piece is in Dropbear.
 
-</blockquote></div>
+- Joseph
 
---0000000000000025d70590791fb6--
