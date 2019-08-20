@@ -1,74 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E4EA9641F
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:20:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C10F96434
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:23:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CZHQ2Kp7zDqQW
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:20:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CZLJ3kzfzDqPn
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:23:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::541; helo=mail-pg1-x541.google.com;
- envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::231; helo=mail-oi1-x231.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="qivyYH5D"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="jqtEAGNM"; 
  dkim-atps=neutral
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
+ [IPv6:2607:f8b0:4864:20::231])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CZ2m237GzDr5s
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:09:35 +1000 (AEST)
-Received: by mail-pg1-x541.google.com with SMTP id i18so3409590pgl.11
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:09:35 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CZ9S3nVWzDqT5
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:15:24 +1000 (AEST)
+Received: by mail-oi1-x231.google.com with SMTP id k22so4345762oiw.11
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=FTh0WpYoA5HGKRWZ/eXeav+8+rPTI45l+tq4J19/no0=;
- b=qivyYH5D+TXcAf1WCO9cWtJhBUfC70HfnAIy8OgMHDCHp5otJMvZWRWSkC/RdtSXAO
- cvK5CS1qAOvlKUebbITRt8kNjU1lKXpYq//jvRjshElS5wQlqSABqpfDPcZ2fUBbi0fU
- cJ/elk8TvZrmDeUsQQcAJSzOTNEt5CbC5fg9GfHBW3ywgEV/AzABGYASrp+2YwEenKzR
- f/YcT3AcCE5AW20WAU5yK/X4JrRac/GL8y23xbCbR/RMW5BKGXxwbdmpSkYw4CH0QPDz
- DM8HS6EfNr5GFzMOgCjchX6R+4rS6brL6EwaIFrkg/vX/a+35pD0UImBF0BVZhaBxbrY
- xz/g==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9TuW3ZQfZdpUr5GBuHyrWfntJl1gYetnT7IZtmSVmHU=;
+ b=jqtEAGNMBn+DBkxSpsYJbOq3Qm9g0dAiRi7rxxJOgSR0h+c4B/Nkr4sWwVZE4PWV/r
+ 3meXROFwMhpUKTl0ZbstgAuQ2cw3gnOhSE/1NtJ0xAOo2IrdFUJ1q43+R7haUFwrBJj6
+ 9sBGpxzzd5wbWzk8oerAylynrSPmN8Dk0jUnOoUknEe01hxYyZhur5Rxtio3pL603Vma
+ 50xsstcGK4LjLquV+V2Ee7KKO+NpF9AuCDqgQ/Ez4riATz/5pfTUUbkzUZoGasjx8qTD
+ UgcEomYVd+tVBfkeydeLS9mUllgr7DuntATNN9A7y0pXZ6mn4XtwrhR98fOeSF+u+MtE
+ gkMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=FTh0WpYoA5HGKRWZ/eXeav+8+rPTI45l+tq4J19/no0=;
- b=Lu9Vi/9LKJq+XLq8XCegwmDIzP2/WM2oPfHQnES1s7rAvc1EBXzliW128PtQXHJIvR
- JEh3ZmhpchlMzHb9v7SuaTDMk/z3FCMPmhVDOR7ztOAL4aE5eLP64fxDXw0xBw7qkdca
- nL7fVC4fImBLJGe8JDmzehsX1FloVlGVvcfHVJs3Ko0/kDS89IDle2vmixyfs4XrRjRy
- A98Pt7J1kPVletQnTRgJ9T7axcpMFfQRhWMV5SDXdlXWHklclgkFNZXYnh/e28LCsFpi
- mibgqT7/hmHBJrIbQCuwRPlNwAA9V5+M+U35fnxB4o0Ix0u4yOd3/VZ7c15B6DKRbQM9
- gD5A==
-X-Gm-Message-State: APjAAAVraFG+l6VX2jbf6ls91i7g/LXQ4A29UgalaTgA0T0H6lXsYnJa
- pZDxHPFmi3YgZ8XTH0WJi7c=
-X-Google-Smtp-Source: APXvYqzMHRQTEOZGZTkfAP4fm84PZtggdd6SrxUR7852PRorQMaXkNl+lQVUVH65MZx/29JFxvH1fg==
-X-Received: by 2002:aa7:938d:: with SMTP id t13mr29384749pfe.180.1566313772102; 
- Tue, 20 Aug 2019 08:09:32 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id a5sm196193pjs.31.2019.08.20.08.09.31
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 20 Aug 2019 08:09:31 -0700 (PDT)
-Date: Tue, 20 Aug 2019 08:09:30 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: John Wang <wangzqbj@inspur.com>
-Subject: Re: [PATCH v6 2/2] hwmon: pmbus: Add Inspur Power System power
- supply driver
-Message-ID: <20190820150930.GA12866@roeck-us.net>
-References: <20190819091509.29276-1-wangzqbj@inspur.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9TuW3ZQfZdpUr5GBuHyrWfntJl1gYetnT7IZtmSVmHU=;
+ b=jeBxqB41ahxZG3l9Q49iKrrXLBtRnxPmNea2PTH32RYXEtjNrGIID/VWGdf9oaoiHv
+ IkDz+hE7+ijcfwdFr4Zwlgr1G/0DJaqx4vGvSl5bB0kMpzWK1nWEEJyHqD85CSNzASTu
+ omWZNmH8IuHtJkWehjiOp1Wefz8RzjZgAIDrEFmXuzXq0clGfvOg2zQcPUYURREjmDMg
+ /WnLIk5A1f8jNnXQbqq3u4fhnWHVNL9D+LESswig7yG87drLTU5KxBt1nHFNzqkjGtbt
+ Rla8RaV2WMMpiyfOcUwxLxLi8E3hRkCuIUjrPB0i1XoA4fLkx3v9EvPqrMMMKG+3iuno
+ zHOw==
+X-Gm-Message-State: APjAAAUG7Lu25DUp9KcVGswRgwL0KKyQPvkQUTkUYUp1rmcxGUPFe+9W
+ kF57BEcskIFHrjK1Pb+7Kn41ddytyRnSdT6Yls4RVAYr
+X-Google-Smtp-Source: APXvYqwCBdJwDvvdXYRIh3TioZcHuin/p7euL2oadDDF3SCXhynNhq1P9GXCUIKZw+lvvgI4m27tQTFNil5W+D/XCVk=
+X-Received: by 2002:aca:5b04:: with SMTP id p4mr369026oib.161.1566314118334;
+ Tue, 20 Aug 2019 08:15:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190819091509.29276-1-wangzqbj@inspur.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CALLMt=pv9GdHmv7ZJOBK+Z1wqAh4DmOzVR8ud=+KefddvEkreg@mail.gmail.com>
+ <9ad991fb-13fe-42fa-b5b6-48fd069342f9@www.fastmail.com>
+ <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
+ <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
+ <96f668f0-9580-44a4-9bbd-ca6324494017@www.fastmail.com>
+ <3645ad01-172f-be62-0531-6d0660fc211a@linux.ibm.com>
+In-Reply-To: <3645ad01-172f-be62-0531-6d0660fc211a@linux.ibm.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Tue, 20 Aug 2019 10:15:02 -0500
+Message-ID: <CALLMt=ppYod6utC-W4mojmefn_Yqt_K0FyUKhAKaZgYJugrUzQ@mail.gmail.com>
+Subject: Re: where to store application json
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,409 +77,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, jdelvare@suse.com, linux-doc@vger.kernel.org,
- openbmc@lists.ozlabs.org, corbet@lwn.net, linux-kernel@vger.kernel.org,
- duanzhijia01@inspur.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Aug 19, 2019 at 05:15:09PM +0800, John Wang wrote:
-> Add the driver to monitor Inspur Power System power supplies
-> with hwmon over pmbus.
-> 
-> This driver adds sysfs attributes for additional power supply data,
-> including vendor, model, part_number, serial number,
-> firmware revision, hardware revision, and psu mode(active/standby).
-> 
-> Signed-off-by: John Wang <wangzqbj@inspur.com>
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
+Thanks for all the good discussion. It seems like in summary the
+consensus is what
+Andrew Jeffery proposed:
 
-Applied to hwmon-next.
+/etc/<application name>/
 
-Thanks,
-Guenter
+There are security concerns with this but there are a lot of files in /etc/
+that could cause security concerns if people get the correct access
+to modify them. For my use case, the json is simply something that
+tells the application when to log errors. If people find they need data
+files which could have significant security concerns, they may want
+to revisit the location for their config file.
 
-> ---
-> v6:
->     - Name i2c device as ipsps1
->     - Use of_match_ptr to save a few bytes if CONFIG_OF
->       is not enabled :)
-> v5:
->     - Align sysfs attrs description in inspur-ipsps1.rst
->       (Use tab instead of space to sperate names and values)
-> v4:
->     - Remove the additional tabs in the Makefile
->     - Rebased on 5.3-rc4, not 5.2
-> v3:
->     - Sort kconfig/makefile entries alphabetically
->     - Remove unnecessary initialization
->     - Use ATTRIBUTE_GROUPS instead of expanding directly
->     - Use memscan to avoid reimplementation
-> v2:
->     - Fix typos in commit message
->     - Invert Christmas tree
->     - Configure device with sysfs attrs, not debugfs entries
->     - Fix errno in fw_version_read, ENODATA to EPROTO
->     - Change the print format of fw-version
->     - Use sysfs_streq instead of strcmp("xxx" "\n", "xxx")
->     - Document sysfs attributes
-> ---
->  Documentation/hwmon/inspur-ipsps1.rst |  79 +++++++++
->  drivers/hwmon/pmbus/Kconfig           |   9 +
->  drivers/hwmon/pmbus/Makefile          |   1 +
->  drivers/hwmon/pmbus/inspur-ipsps.c    | 228 ++++++++++++++++++++++++++
->  4 files changed, 317 insertions(+)
->  create mode 100644 Documentation/hwmon/inspur-ipsps1.rst
->  create mode 100644 drivers/hwmon/pmbus/inspur-ipsps.c
-> 
-> diff --git a/Documentation/hwmon/inspur-ipsps1.rst b/Documentation/hwmon/inspur-ipsps1.rst
-> new file mode 100644
-> index 000000000000..2b871ae3448f
-> --- /dev/null
-> +++ b/Documentation/hwmon/inspur-ipsps1.rst
-> @@ -0,0 +1,79 @@
-> +Kernel driver inspur-ipsps1
-> +=======================
-> +
-> +Supported chips:
-> +
-> +  * Inspur Power System power supply unit
-> +
-> +Author: John Wang <wangzqbj@inspur.com>
-> +
-> +Description
-> +-----------
-> +
-> +This driver supports Inspur Power System power supplies. This driver
-> +is a client to the core PMBus driver.
-> +
-> +Usage Notes
-> +-----------
-> +
-> +This driver does not auto-detect devices. You will have to instantiate the
-> +devices explicitly. Please see Documentation/i2c/instantiating-devices for
-> +details.
-> +
-> +Sysfs entries
-> +-------------
-> +
-> +The following attributes are supported:
-> +
-> +======================= ======================================================
-> +curr1_input		Measured input current
-> +curr1_label		"iin"
-> +curr1_max		Maximum current
-> +curr1_max_alarm		Current high alarm
-> +curr2_input		Measured output current in mA.
-> +curr2_label		"iout1"
-> +curr2_crit		Critical maximum current
-> +curr2_crit_alarm	Current critical high alarm
-> +curr2_max		Maximum current
-> +curr2_max_alarm		Current high alarm
-> +
-> +fan1_alarm		Fan 1 warning.
-> +fan1_fault		Fan 1 fault.
-> +fan1_input		Fan 1 speed in RPM.
-> +
-> +in1_alarm		Input voltage under-voltage alarm.
-> +in1_input		Measured input voltage in mV.
-> +in1_label		"vin"
-> +in2_input		Measured output voltage in mV.
-> +in2_label		"vout1"
-> +in2_lcrit		Critical minimum output voltage
-> +in2_lcrit_alarm		Output voltage critical low alarm
-> +in2_max			Maximum output voltage
-> +in2_max_alarm		Output voltage high alarm
-> +in2_min			Minimum output voltage
-> +in2_min_alarm		Output voltage low alarm
-> +
-> +power1_alarm		Input fault or alarm.
-> +power1_input		Measured input power in uW.
-> +power1_label		"pin"
-> +power1_max		Input power limit
-> +power2_max_alarm	Output power high alarm
-> +power2_max		Output power limit
-> +power2_input		Measured output power in uW.
-> +power2_label		"pout"
-> +
-> +temp[1-3]_input		Measured temperature
-> +temp[1-2]_max		Maximum temperature
-> +temp[1-3]_max_alarm	Temperature high alarm
-> +
-> +vendor			Manufacturer name
-> +model			Product model
-> +part_number		Product part number
-> +serial_number		Product serial number
-> +fw_version		Firmware version
-> +hw_version		Hardware version
-> +mode			Work mode. Can be set to active or
-> +			standby, when set to standby, PSU will
-> +			automatically switch between standby
-> +			and redundancy mode.
-> +======================= ======================================================
-> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-> index b6588483fae1..d62d69bb7e49 100644
-> --- a/drivers/hwmon/pmbus/Kconfig
-> +++ b/drivers/hwmon/pmbus/Kconfig
-> @@ -46,6 +46,15 @@ config SENSORS_IBM_CFFPS
->  	  This driver can also be built as a module. If so, the module will
->  	  be called ibm-cffps.
->  
-> +config SENSORS_INSPUR_IPSPS
-> +	tristate "INSPUR Power System Power Supply"
-> +	help
-> +	  If you say yes here you get hardware monitoring support for the INSPUR
-> +	  Power System power supply.
-> +
-> +	  This driver can also be built as a module. If so, the module will
-> +	  be called inspur-ipsps.
-> +
->  config SENSORS_IR35221
->  	tristate "Infineon IR35221"
->  	help
-> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-> index c950ea9a5d00..03bacfcfd660 100644
-> --- a/drivers/hwmon/pmbus/Makefile
-> +++ b/drivers/hwmon/pmbus/Makefile
-> @@ -7,6 +7,7 @@ obj-$(CONFIG_PMBUS)		+= pmbus_core.o
->  obj-$(CONFIG_SENSORS_PMBUS)	+= pmbus.o
->  obj-$(CONFIG_SENSORS_ADM1275)	+= adm1275.o
->  obj-$(CONFIG_SENSORS_IBM_CFFPS)	+= ibm-cffps.o
-> +obj-$(CONFIG_SENSORS_INSPUR_IPSPS) += inspur-ipsps.o
->  obj-$(CONFIG_SENSORS_IR35221)	+= ir35221.o
->  obj-$(CONFIG_SENSORS_IR38064)	+= ir38064.o
->  obj-$(CONFIG_SENSORS_IRPS5401)	+= irps5401.o
-> diff --git a/drivers/hwmon/pmbus/inspur-ipsps.c b/drivers/hwmon/pmbus/inspur-ipsps.c
-> new file mode 100644
-> index 000000000000..42e01549184a
-> --- /dev/null
-> +++ b/drivers/hwmon/pmbus/inspur-ipsps.c
-> @@ -0,0 +1,228 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Copyright 2019 Inspur Corp.
-> + */
-> +
-> +#include <linux/debugfs.h>
-> +#include <linux/device.h>
-> +#include <linux/fs.h>
-> +#include <linux/i2c.h>
-> +#include <linux/module.h>
-> +#include <linux/pmbus.h>
-> +#include <linux/hwmon-sysfs.h>
-> +
-> +#include "pmbus.h"
-> +
-> +#define IPSPS_REG_VENDOR_ID	0x99
-> +#define IPSPS_REG_MODEL		0x9A
-> +#define IPSPS_REG_FW_VERSION	0x9B
-> +#define IPSPS_REG_PN		0x9C
-> +#define IPSPS_REG_SN		0x9E
-> +#define IPSPS_REG_HW_VERSION	0xB0
-> +#define IPSPS_REG_MODE		0xFC
-> +
-> +#define MODE_ACTIVE		0x55
-> +#define MODE_STANDBY		0x0E
-> +#define MODE_REDUNDANCY		0x00
-> +
-> +#define MODE_ACTIVE_STRING		"active"
-> +#define MODE_STANDBY_STRING		"standby"
-> +#define MODE_REDUNDANCY_STRING		"redundancy"
-> +
-> +enum ipsps_index {
-> +	vendor,
-> +	model,
-> +	fw_version,
-> +	part_number,
-> +	serial_number,
-> +	hw_version,
-> +	mode,
-> +	num_regs,
-> +};
-> +
-> +static const u8 ipsps_regs[num_regs] = {
-> +	[vendor] = IPSPS_REG_VENDOR_ID,
-> +	[model] = IPSPS_REG_MODEL,
-> +	[fw_version] = IPSPS_REG_FW_VERSION,
-> +	[part_number] = IPSPS_REG_PN,
-> +	[serial_number] = IPSPS_REG_SN,
-> +	[hw_version] = IPSPS_REG_HW_VERSION,
-> +	[mode] = IPSPS_REG_MODE,
-> +};
-> +
-> +static ssize_t ipsps_string_show(struct device *dev,
-> +				 struct device_attribute *devattr,
-> +				 char *buf)
-> +{
-> +	u8 reg;
-> +	int rc;
-> +	char *p;
-> +	char data[I2C_SMBUS_BLOCK_MAX + 1];
-> +	struct i2c_client *client = to_i2c_client(dev->parent);
-> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-> +
-> +	reg = ipsps_regs[attr->index];
-> +	rc = i2c_smbus_read_block_data(client, reg, data);
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	/* filled with printable characters, ending with # */
-> +	p = memscan(data, '#', rc);
-> +	*p = '\0';
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%s\n", data);
-> +}
-> +
-> +static ssize_t ipsps_fw_version_show(struct device *dev,
-> +				     struct device_attribute *devattr,
-> +				     char *buf)
-> +{
-> +	u8 reg;
-> +	int rc;
-> +	u8 data[I2C_SMBUS_BLOCK_MAX] = { 0 };
-> +	struct i2c_client *client = to_i2c_client(dev->parent);
-> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-> +
-> +	reg = ipsps_regs[attr->index];
-> +	rc = i2c_smbus_read_block_data(client, reg, data);
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	if (rc != 6)
-> +		return -EPROTO;
-> +
-> +	return snprintf(buf, PAGE_SIZE, "%u.%02u%u-%u.%02u\n",
-> +			data[1], data[2]/* < 100 */, data[3]/*< 10*/,
-> +			data[4], data[5]/* < 100 */);
-> +}
-> +
-> +static ssize_t ipsps_mode_show(struct device *dev,
-> +			       struct device_attribute *devattr, char *buf)
-> +{
-> +	u8 reg;
-> +	int rc;
-> +	struct i2c_client *client = to_i2c_client(dev->parent);
-> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-> +
-> +	reg = ipsps_regs[attr->index];
-> +	rc = i2c_smbus_read_byte_data(client, reg);
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	switch (rc) {
-> +	case MODE_ACTIVE:
-> +		return snprintf(buf, PAGE_SIZE, "[%s] %s %s\n",
-> +				MODE_ACTIVE_STRING,
-> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
-> +	case MODE_STANDBY:
-> +		return snprintf(buf, PAGE_SIZE, "%s [%s] %s\n",
-> +				MODE_ACTIVE_STRING,
-> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
-> +	case MODE_REDUNDANCY:
-> +		return snprintf(buf, PAGE_SIZE, "%s %s [%s]\n",
-> +				MODE_ACTIVE_STRING,
-> +				MODE_STANDBY_STRING, MODE_REDUNDANCY_STRING);
-> +	default:
-> +		return snprintf(buf, PAGE_SIZE, "unspecified\n");
-> +	}
-> +}
-> +
-> +static ssize_t ipsps_mode_store(struct device *dev,
-> +				struct device_attribute *devattr,
-> +				const char *buf, size_t count)
-> +{
-> +	u8 reg;
-> +	int rc;
-> +	struct i2c_client *client = to_i2c_client(dev->parent);
-> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
-> +
-> +	reg = ipsps_regs[attr->index];
-> +	if (sysfs_streq(MODE_STANDBY_STRING, buf)) {
-> +		rc = i2c_smbus_write_byte_data(client, reg,
-> +					       MODE_STANDBY);
-> +		if (rc < 0)
-> +			return rc;
-> +		return count;
-> +	} else if (sysfs_streq(MODE_ACTIVE_STRING, buf)) {
-> +		rc = i2c_smbus_write_byte_data(client, reg,
-> +					       MODE_ACTIVE);
-> +		if (rc < 0)
-> +			return rc;
-> +		return count;
-> +	}
-> +
-> +	return -EINVAL;
-> +}
-> +
-> +static SENSOR_DEVICE_ATTR_RO(vendor, ipsps_string, vendor);
-> +static SENSOR_DEVICE_ATTR_RO(model, ipsps_string, model);
-> +static SENSOR_DEVICE_ATTR_RO(part_number, ipsps_string, part_number);
-> +static SENSOR_DEVICE_ATTR_RO(serial_number, ipsps_string, serial_number);
-> +static SENSOR_DEVICE_ATTR_RO(hw_version, ipsps_string, hw_version);
-> +static SENSOR_DEVICE_ATTR_RO(fw_version, ipsps_fw_version, fw_version);
-> +static SENSOR_DEVICE_ATTR_RW(mode, ipsps_mode, mode);
-> +
-> +static struct attribute *ipsps_attrs[] = {
-> +	&sensor_dev_attr_vendor.dev_attr.attr,
-> +	&sensor_dev_attr_model.dev_attr.attr,
-> +	&sensor_dev_attr_part_number.dev_attr.attr,
-> +	&sensor_dev_attr_serial_number.dev_attr.attr,
-> +	&sensor_dev_attr_hw_version.dev_attr.attr,
-> +	&sensor_dev_attr_fw_version.dev_attr.attr,
-> +	&sensor_dev_attr_mode.dev_attr.attr,
-> +	NULL,
-> +};
-> +
-> +ATTRIBUTE_GROUPS(ipsps);
-> +
-> +static struct pmbus_driver_info ipsps_info = {
-> +	.pages = 1,
-> +	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IOUT |
-> +		PMBUS_HAVE_IIN | PMBUS_HAVE_POUT | PMBUS_HAVE_PIN |
-> +		PMBUS_HAVE_FAN12 | PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 |
-> +		PMBUS_HAVE_TEMP3 | PMBUS_HAVE_STATUS_VOUT |
-> +		PMBUS_HAVE_STATUS_IOUT | PMBUS_HAVE_STATUS_INPUT |
-> +		PMBUS_HAVE_STATUS_TEMP | PMBUS_HAVE_STATUS_FAN12,
-> +	.groups = ipsps_groups,
-> +};
-> +
-> +static struct pmbus_platform_data ipsps_pdata = {
-> +	.flags = PMBUS_SKIP_STATUS_CHECK,
-> +};
-> +
-> +static int ipsps_probe(struct i2c_client *client,
-> +		       const struct i2c_device_id *id)
-> +{
-> +	client->dev.platform_data = &ipsps_pdata;
-> +	return pmbus_do_probe(client, id, &ipsps_info);
-> +}
-> +
-> +static const struct i2c_device_id ipsps_id[] = {
-> +	{ "ipsps1", 0 },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(i2c, ipsps_id);
-> +
-> +#ifdef CONFIG_OF
-> +static const struct of_device_id ipsps_of_match[] = {
-> +	{ .compatible = "inspur,ipsps1" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, ipsps_of_match);
-> +#endif
-> +
-> +static struct i2c_driver ipsps_driver = {
-> +	.driver = {
-> +		.name = "inspur-ipsps",
-> +		.of_match_table = of_match_ptr(ipsps_of_match),
-> +	},
-> +	.probe = ipsps_probe,
-> +	.remove = pmbus_do_remove,
-> +	.id_table = ipsps_id,
-> +};
-> +
-> +module_i2c_driver(ipsps_driver);
-> +
-> +MODULE_AUTHOR("John Wang");
-> +MODULE_DESCRIPTION("PMBus driver for Inspur Power System power supplies");
-> +MODULE_LICENSE("GPL");
+Andrew
+
+On Mon, Aug 19, 2019 at 12:15 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+>
+>
+> On 8/18/19 7:15 PM, Andrew Jeffery wrote:
+> >
+> > On Sat, 17 Aug 2019, at 02:24, Joseph Reynolds wrote:
+> >> On 8/16/19 8:31 AM, Matt Spinler wrote:
+> >>> On 8/15/2019 6:59 PM, Andrew Jeffery wrote:
+> >>>> On Fri, 16 Aug 2019, at 07:01, Andrew Geissler wrote:
+> >>>>> As we start moving more and more of our applications to using
+> >>>>> runtime parsed
+> >>>>> json files, it seems like a good time to come up with a standard
+> >>>>> location to put
+> >>>>> the json files. I think a requirement is they be in a writeable
+> >>>>> filesystem
+> >>>>> (although that may bring security concerns) so that you can edit and
+> >>>>> restart
+> >>>>> services that use them on the fly for bringup and debug.
+> >>>>>
+> >>>>> /etc seems like the right spot. But if so, where in /etc
+> >>> While convenient to the developer for testing, to me it doesn't sound
+> >>> like good practice to put read
+> >>> only, critical files into a writeable spot?  How could we even trust
+> >>> data that comes back to us from
+> >>> the field when a user that can get into their BMC can just change
+> >>> these?  Or accidentally
+> >>> delete a file?
+> >>>
+> >> One security concern is that config files offer a good way for hackers
+> >> to get persistent access to the system.  That is, if they are able to
+> >> get root access to the BMC one time, they may be able to persist their
+> >> hack across BMC reboots by modifying some config files.  IMHO, to make
+> >> it harder for them, as much as possible of the file system should be
+> >> read-only, and read-write config files should not offer the above
+> >> mentioned service to hackers.
+> > What are some concrete examples of what you're concerned about here?
+>
+> I was thinking about config files that specify which plugins to load,
+> for example, by absolute pathname.  In this scenario, the hacker would
+> write a plugin, and the first time they compromise the BMC, they copy
+> the plugin to the BMC's file system, and modify the config file to
+> active it.  In this way, their code re-activates even if they lose access.
+>
+> >
+> > Are you suggesting hackers are exploiting flaws in the config file parsers?
+> > Because in that case we should just fix the parsers. Or perhaps configuring
+> > the system in an unsafe way?
+>
+> No, but that's a good point.  We can begin to address those
+> vulnerabilities with static and dynamic code scans and config file
+> fuzzing, and with good design and documentation about config files.
+>
+> >
+> > Anyway, having any writable storage provides a place to drop payloads
+> > and generally wreak havoc, but having an unconfigurable BMC is not a
+> > direction I think we should go, it seems pretty restrictive. We do need
+> > to be careful about how we treat the content though, as it can't really
+> > be authenticated.
+>
+> Agreed.
+>
+> >
+> > Andrew
+> >
+>
