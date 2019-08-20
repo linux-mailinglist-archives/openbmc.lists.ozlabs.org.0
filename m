@@ -2,74 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AA9895618
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 06:29:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DD0295D59
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 13:31:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CHqZ5krVzDr1F
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 14:28:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CTCQ0QBDzDqJP
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 21:31:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.214; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=pengms1@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.214])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CHps2858zDqg6
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 14:28:19 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7K4QvFu091244
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 00:28:16 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.111])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2ug63v75fj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 00:28:16 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 20 Aug 2019 04:28:15 -0000
-Received: from us1b3-smtp08.a3dr.sjc01.isc4sb.com (10.122.203.190)
- by smtp.notes.na.collabserv.com (10.122.47.52) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 20 Aug 2019 04:28:10 -0000
-Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
- by us1b3-smtp08.a3dr.sjc01.isc4sb.com
- with ESMTP id 2019082004280966-570 ; Tue, 20 Aug 2019 04:28:09 +0000 
-In-Reply-To: <3F27A9B8-86A5-48DB-AAAD-211F8364FEF7@fb.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Date: Tue, 20 Aug 2019 04:28:09 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CTBm3BFlzDqkL
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 21:31:10 +1000 (AEST)
+Received: from [67.219.246.198] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-c.us-east-1.aws.symcld.net id 50/0F-15579-BF9DB5D5;
+ Tue, 20 Aug 2019 11:31:07 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHKsWRWlGSWpSXmKPExsWSLveKXff3zeh
+ YgwsThS1OtbxgcWD0OD9jIWMAYxRrZl5SfkUCa8brE29ZC66pVXy9tpi5gfGJUhcjF4eQwDIm
+ icVHNzFBOGsZJV7MaWODcF4xShzv7maFcPYwSuw9/wDI4eRgE9CSWPh/DxOILSJgKbHkQTtQB
+ weHsICqxJ9FgRBhLYk974+wQNh6ElM+PAFrZQEquf3wB5jNC9TafPY7mM0oICsx7dF9sJHMAu
+ ISc6fNAotLCAhILNlznhnCFpV4+fgfVFxBYsbbLVD1CRIXfncyQ8wUlDg58wnLBEahWUhGzUJ
+ SNgtJGURcR2LB7k9sELa2xLKFr5lh7DMHHjMhiy9gZF/FaJpUlJmeUZKbmJmja2hgoGtoaKRr
+ pmtqrpdYpZusV1qsm5pYXKJrqJdYXqxXXJmbnJOil5dasokRGE0pBWyWOxi7Z73RO8QoycGkJ
+ Mp7sDI6VogvKT+lMiOxOCO+qDQntfgQowYHh8DptS0zGaVY8vLzUpUkePdeB6oTLEpNT61Iy8
+ wBRjxMqQQHj5IIb9Y1oDRvcUFibnFmOkTqFKMrx4SXcxcxcxw8Og9Ifly1BEh+B5Pz7gNJIbD
+ ZUuK800BmC4A0Z5TmwY2GJatLjLJSwryMDAwMQjwFqUW5mSWo8q8YxTkYlYR52W4ATeHJzCuB
+ uwCYfoB+FOHdfTgS5LiSRISUVAOTe4TbjZczjv1fW67f73njxBmJ+ZVapkz7rc3PbSuQXKDK+
+ J91YoBNxtWSJ60/D8pHetw5UCG7cNKESWmZ236v3m9pInxBa46KVobLcdZOnhMa7t9m1bwqOO
+ HncmdZ2b/Tt3RbnT4cdwjP3m7JwXWu9ajMh4uNE3Y+4TLllnsW9kDL6oy/ZknpgqbI/5m9S2d
+ +VHi9aEZTw8z7P9zirAyiZ6aLTntdsuCECEel+lfnYtE/Ew8v2qOmtPjytPUvbVMV7C7seKu9
+ VZZ9epTWoe/NpWwxLj8mHN41/4mJ3YESGTeu6+1nD8TdYnR6/SyLZfGLomaObbqTbsWsK6xpv
+ zM34qG2Rj7/W6eg4H3iNQJflFiKMxINtZiLihMBHW2fDtEDAAA=
+X-Env-Sender: pengms1@lenovo.com
+X-Msg-Ref: server-39.tower-406.messagelabs.com!1566300664!1176127!1
+X-Originating-IP: [103.30.234.7]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.9; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 20047 invoked from network); 20 Aug 2019 11:31:06 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.7)
+ by server-39.tower-406.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 20 Aug 2019 11:31:06 -0000
+Received: from CNMAILCH03.lenovo.com (unknown [10.96.97.131])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 3461ED5CF0E3BEBBEC18
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 19:31:04 +0800 (CST)
+Received: from pekwpmail09.lenovo.com (10.96.81.78) by CNMAILCH03.lenovo.com
+ (10.96.97.131) with Microsoft SMTP Server (TLS) id 14.3.408.0; Tue, 20 Aug
+ 2019 19:31:02 +0800
+Received: from pekwpmail05.lenovo.com (10.96.81.230) by pekwpmail09.lenovo.com
+ (10.96.81.78) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Tue, 20 Aug
+ 2019 19:31:02 +0800
+Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
+ pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
+ 15.01.1591.008; Tue, 20 Aug 2019 19:31:02 +0800
+From: Andrew MS1 Peng <pengms1@lenovo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Top shows rngd using 79% CPU
+Thread-Topic: Top shows rngd using 79% CPU
+Thread-Index: AdVXSdNwCtyqy/0SSmuw8W8Gq/Bjow==
+Date: Tue, 20 Aug 2019 11:31:02 +0000
+Message-ID: <6c4e4469c1134121b840176f92121013@lenovo.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.96.12.251]
+Content-Type: multipart/alternative;
+ boundary="_000_6c4e4469c1134121b840176f92121013lenovocom_"
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <3F27A9B8-86A5-48DB-AAAD-211F8364FEF7@fb.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
- SCN1812108_20180501T0841_FP55 May 22, 2019 at 11:09
-X-LLNOutbound: False
-X-Disclaimed: 18247
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 19082004-3633-0000-0000-00000072312D
-X-IBM-SpamModules-Scores: BY=0.02117; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.173593
-X-IBM-SpamModules-Versions: BY=3.00011621; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000287; SDB=6.01249357; UDB=6.00659531; IPR=6.01030902; 
- MB=3.00028243; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-20 04:28:13
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-08-20 01:33:43 - 6.00010306
-x-cbparentid: 19082004-3634-0000-0000-00000BE35B12
-Message-Id: <OFF6F4F3D1.CC0C983B-ON0025845C.0016F062-0025845C.00188CCE@notes.na.collabserv.com>
-Subject: Re:  persistent storage and bcc upgrade
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-20_01:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,60 +93,148 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On August 19, 2019 around 4:52PM in some timezone, Vijay Khemka wrote:
->      =20
-> Team,
-> I have a following question
->  what are directories mounted as rw and kept as persistent across
->reboot?
+--_000_6c4e4469c1134121b840176f92121013lenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-It depends on the flash layout you choose, but the default phosphor
-initramfs will mount a readwrite overlay over the whole root.  From
-that, /tmp and /run are excluded via a ramfs.
+Hi Team,
 
-The UBI option will only allow writes to /var and /etc, and /home/root
-(well, also /run and /tmp are tmpfs again).
+Top is showing that rngd(random number generator daemon) is using high CPU =
+usage in our machine as below. I download the romulus image from Jenkins an=
+d ran it in QEMU environment and it had the same situation, how should I do=
+ to avoid or fix it?
 
-That said you can do other customization.
+Load average: 1.99 2.16 1.05 2/101 1297
+  PID  PPID USER     STAT   VSZ %VSZ %CPU COMMAND
+  109     1 root     RN   12716   3%  79% /usr/sbin/rngd -f -r /dev/hwrng
 
->How are we updating BMC image and what happens to persistent storage
->after upgrade. I am using =E2=80=9Cflashcp=E2=80=9D which copies complete =
-32 mb image
->which means  it wipes out everything stored currently.
+Thanks,
+Andrew
 
-Are you doing flashcp while the filesystem is mounted?  How are you
-avoiding errors?
+--_000_6c4e4469c1134121b840176f92121013lenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Are you booting in "code update mode" which will copy the squashfs
-to RAM?   If so then read on.
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@PMingLiU";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle18
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle19
+	{mso-style-type:personal;
+	font-family:DengXian;
+	color:#1F497D;}
+span.EmailStyle20
+	{mso-style-type:personal;
+	font-family:DengXian;
+	color:windowtext;}
+span.EmailStyle22
+	{mso-style-type:personal;
+	font-family:DengXian;
+	color:#1F497D;}
+span.EmailStyle23
+	{mso-style-type:personal-compose;
+	font-family:DengXian;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-CN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW">Hi Team,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW">Top is showing that rngd(random number generator daemon) is using hig=
+h CPU usage in our machine as below. I download the romulus image from Jenk=
+ins and ran it in QEMU environment and
+ it had the same situation, how should I do to avoid or fix it? <o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW">Load average: 1.99 2.16 1.05 2/101 1297<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW">&nbsp; PID&nbsp; PPID USER&nbsp;&nbsp;&nbsp;&nbsp; STAT&nbsp;&nbsp; V=
+SZ %VSZ %CPU COMMAND<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"mso-fareast-language:Z=
+H-TW">&nbsp; 109&nbsp;&nbsp;&nbsp;&nbsp; 1 root&nbsp;&nbsp;&nbsp;&nbsp; RN&=
+nbsp;&nbsp; 12716&nbsp;&nbsp; 3%&nbsp; 79% /usr/sbin/rngd -f -r /dev/hwrng<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:10.5pt;font-=
+family:DengXian;mso-fareast-language:ZH-TW"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black;mso-fareas=
+t-language:ZH-TW">Thanks,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black;mso-fareas=
+t-language:ZH-TW">Andrew<o:p></o:p></span></p>
+</div>
+</body>
+</html>
 
-The phosphor-initfs recipe has a whitelist file (was going to be
-a directory but never made the patch) that will copy files from
-the read-write backing filesystem to the overlay over the / to
-the /run initramfs.  When booted in code-update mode, the files
-and directories in the whitelist are copied to /run. =20
-
-When systemd shutown target is activated, the initramfs shutdown
-script will call the update script to save any initramfs images. =20
-After writing images with flash=5Ferase and flash=5Fcp it will=20
-mount the read-write partition and copy back the ram overlay to
-the persistent read-write filesystem (only the files in the
-whitelist).  The shutdown script will also copy the u-boot env
-partition back to the mtd, so variables there will also be restored.
-
-This is the default for aspeed AST2500 and ASt2400 and as far as=20
-I know would also run for npcm (they just have an additional=20
-partition).
-
-This was somewhat described in the newly merged (today)
-
-https://github.com/openbmc/docs/blob/master/code-update/flash-layout.md
-
-Feels free to ask more questions though the list.
-
-milton
-
+--_000_6c4e4469c1134121b840176f92121013lenovocom_--
