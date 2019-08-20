@@ -1,71 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C10F96434
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:23:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A1D996456
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:27:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CZLJ3kzfzDqPn
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:23:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CZRh1RmmzDqgk
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:27:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::231; helo=mail-oi1-x231.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::443; helo=mail-pf1-x443.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="jqtEAGNM"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="SrtCqF9p"; 
  dkim-atps=neutral
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com
- [IPv6:2607:f8b0:4864:20::231])
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CZ9S3nVWzDqT5
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:15:24 +1000 (AEST)
-Received: by mail-oi1-x231.google.com with SMTP id k22so4345762oiw.11
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:15:23 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CZJn5Kf6zDqX9
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:21:45 +1000 (AEST)
+Received: by mail-pf1-x443.google.com with SMTP id c81so3576191pfc.11
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:21:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9TuW3ZQfZdpUr5GBuHyrWfntJl1gYetnT7IZtmSVmHU=;
- b=jqtEAGNMBn+DBkxSpsYJbOq3Qm9g0dAiRi7rxxJOgSR0h+c4B/Nkr4sWwVZE4PWV/r
- 3meXROFwMhpUKTl0ZbstgAuQ2cw3gnOhSE/1NtJ0xAOo2IrdFUJ1q43+R7haUFwrBJj6
- 9sBGpxzzd5wbWzk8oerAylynrSPmN8Dk0jUnOoUknEe01hxYyZhur5Rxtio3pL603Vma
- 50xsstcGK4LjLquV+V2Ee7KKO+NpF9AuCDqgQ/Ez4riATz/5pfTUUbkzUZoGasjx8qTD
- UgcEomYVd+tVBfkeydeLS9mUllgr7DuntATNN9A7y0pXZ6mn4XtwrhR98fOeSF+u+MtE
- gkMQ==
+ h=sender:date:from:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=MJt24EPy43Ti5EtCu4AqEKxniVOrhxVv02Gleo5IXyE=;
+ b=SrtCqF9pPnng7ehiqNQgq73kEhqLuhCwqieKSAEaSvgM23Ld7sPB5E1MwQCM6rBqBE
+ nqmNgyz4x/nxY4sF9m29OUz7Q8LcQesHeXcjY5dDR/poJ+uuGoar38LR4oSXQQbNi7h8
+ NC2Gmvd7gVALP/tUWbPViXAR+Q0UMpmmYgw8Ifjl1MPhUE+f4LAio38eFt3bo7fid0jk
+ DuuI61zdjgYUyQuD/Fbs/mNe1ZXXj5DtM9P1PH6dtY10xMKyWCGV1DKpj1cizs/ndrTQ
+ BLWALERkRMpKMX4SP267bTOSwNXQI1JFEtEj/4LVICaNPpCOiKJdchjzLRYBdjqovWE3
+ K8ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=9TuW3ZQfZdpUr5GBuHyrWfntJl1gYetnT7IZtmSVmHU=;
- b=jeBxqB41ahxZG3l9Q49iKrrXLBtRnxPmNea2PTH32RYXEtjNrGIID/VWGdf9oaoiHv
- IkDz+hE7+ijcfwdFr4Zwlgr1G/0DJaqx4vGvSl5bB0kMpzWK1nWEEJyHqD85CSNzASTu
- omWZNmH8IuHtJkWehjiOp1Wefz8RzjZgAIDrEFmXuzXq0clGfvOg2zQcPUYURREjmDMg
- /WnLIk5A1f8jNnXQbqq3u4fhnWHVNL9D+LESswig7yG87drLTU5KxBt1nHFNzqkjGtbt
- Rla8RaV2WMMpiyfOcUwxLxLi8E3hRkCuIUjrPB0i1XoA4fLkx3v9EvPqrMMMKG+3iuno
- zHOw==
-X-Gm-Message-State: APjAAAUG7Lu25DUp9KcVGswRgwL0KKyQPvkQUTkUYUp1rmcxGUPFe+9W
- kF57BEcskIFHrjK1Pb+7Kn41ddytyRnSdT6Yls4RVAYr
-X-Google-Smtp-Source: APXvYqwCBdJwDvvdXYRIh3TioZcHuin/p7euL2oadDDF3SCXhynNhq1P9GXCUIKZw+lvvgI4m27tQTFNil5W+D/XCVk=
-X-Received: by 2002:aca:5b04:: with SMTP id p4mr369026oib.161.1566314118334;
- Tue, 20 Aug 2019 08:15:18 -0700 (PDT)
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :mime-version:content-disposition:user-agent;
+ bh=MJt24EPy43Ti5EtCu4AqEKxniVOrhxVv02Gleo5IXyE=;
+ b=aAxvfTxH5mP6BNPAUeqRhaMHmIJBAeG6QXNO2ZkO5JKT//+K9sPOmPF+H54GZP8B7L
+ zzyVv4+wXoga3AdQE5SI/oeui/r2EuMcLHED7BzCGlNuG0p7xUzgmf0kW+TT67VYiRyk
+ kx//Hmv8ATSv6jh396HZFSYdoaNS3AJrww4YzZ4KVMsz3JxuWDQO+taCH2JZGvtR3w3V
+ BNYMZE32DOkQAo5nWN7ibM49f3K+0iwdT7lnMRZ7Wz+gKo/m8sSPxuTz6X5ZJMt6KYyk
+ fCOZtRpfGJV8GDPno7Ish+EesnTCqsS+0tXY5hdMYJfFDZ86BBMwvNpFHHKH2tZ/hP4I
+ IxQg==
+X-Gm-Message-State: APjAAAWo1kN5mkkEDCiTY88JM0jDGMm5kKRE4m4TxIJCCroR+tN8BX+T
+ uYtXLE9TK6gMli9aDmh+C5Y=
+X-Google-Smtp-Source: APXvYqyye+f2ZvNPRYjsHLx9yEZsbjtsiD/vrXS+OvTR4qsU+Ap8Rb5ttF0FQamv2w/cdmS4Sjesdg==
+X-Received: by 2002:a63:b20f:: with SMTP id x15mr25966808pge.453.1566314501422; 
+ Tue, 20 Aug 2019 08:21:41 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id w2sm513828pjr.27.2019.08.20.08.21.40
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 20 Aug 2019 08:21:40 -0700 (PDT)
+Date: Tue, 20 Aug 2019 08:21:40 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: John Wang <wangzqbj@inspur.com>
+Subject: Re: [PATCH v6 1/2] dt-bindings: Add ipsps1 as a trivial device
+Message-ID: <20190820152140.GA13677@roeck-us.net>
 MIME-Version: 1.0
-References: <CALLMt=pv9GdHmv7ZJOBK+Z1wqAh4DmOzVR8ud=+KefddvEkreg@mail.gmail.com>
- <9ad991fb-13fe-42fa-b5b6-48fd069342f9@www.fastmail.com>
- <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
- <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
- <96f668f0-9580-44a4-9bbd-ca6324494017@www.fastmail.com>
- <3645ad01-172f-be62-0531-6d0660fc211a@linux.ibm.com>
-In-Reply-To: <3645ad01-172f-be62-0531-6d0660fc211a@linux.ibm.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Tue, 20 Aug 2019 10:15:02 -0500
-Message-ID: <CALLMt=ppYod6utC-W4mojmefn_Yqt_K0FyUKhAKaZgYJugrUzQ@mail.gmail.com>
-Subject: Re: where to store application json
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,89 +77,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>
+Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, trivial@kernel.org,
+ openbmc@lists.ozlabs.org, duanzhijia01@inspur.com,
+ linux-kernel@vger.kernel.org, robh+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks for all the good discussion. It seems like in summary the
-consensus is what
-Andrew Jeffery proposed:
+On Mon, Aug 19, 2019 at 05:14:25PM +0800, John Wang wrote:
+> The ipsps1 is an Inspur Power System power supply unit
+> 
+> Signed-off-by: John Wang <wangzqbj@inspur.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-/etc/<application name>/
+Aplied to hwmon-next. If someone else wants to take it, please
+let me know and I'll drop it.
 
-There are security concerns with this but there are a lot of files in /etc/
-that could cause security concerns if people get the correct access
-to modify them. For my use case, the json is simply something that
-tells the application when to log errors. If people find they need data
-files which could have significant security concerns, they may want
-to revisit the location for their config file.
+Thanks,
+Guenter
 
-Andrew
-
-On Mon, Aug 19, 2019 at 12:15 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
->
->
-> On 8/18/19 7:15 PM, Andrew Jeffery wrote:
-> >
-> > On Sat, 17 Aug 2019, at 02:24, Joseph Reynolds wrote:
-> >> On 8/16/19 8:31 AM, Matt Spinler wrote:
-> >>> On 8/15/2019 6:59 PM, Andrew Jeffery wrote:
-> >>>> On Fri, 16 Aug 2019, at 07:01, Andrew Geissler wrote:
-> >>>>> As we start moving more and more of our applications to using
-> >>>>> runtime parsed
-> >>>>> json files, it seems like a good time to come up with a standard
-> >>>>> location to put
-> >>>>> the json files. I think a requirement is they be in a writeable
-> >>>>> filesystem
-> >>>>> (although that may bring security concerns) so that you can edit and
-> >>>>> restart
-> >>>>> services that use them on the fly for bringup and debug.
-> >>>>>
-> >>>>> /etc seems like the right spot. But if so, where in /etc
-> >>> While convenient to the developer for testing, to me it doesn't sound
-> >>> like good practice to put read
-> >>> only, critical files into a writeable spot?  How could we even trust
-> >>> data that comes back to us from
-> >>> the field when a user that can get into their BMC can just change
-> >>> these?  Or accidentally
-> >>> delete a file?
-> >>>
-> >> One security concern is that config files offer a good way for hackers
-> >> to get persistent access to the system.  That is, if they are able to
-> >> get root access to the BMC one time, they may be able to persist their
-> >> hack across BMC reboots by modifying some config files.  IMHO, to make
-> >> it harder for them, as much as possible of the file system should be
-> >> read-only, and read-write config files should not offer the above
-> >> mentioned service to hackers.
-> > What are some concrete examples of what you're concerned about here?
->
-> I was thinking about config files that specify which plugins to load,
-> for example, by absolute pathname.  In this scenario, the hacker would
-> write a plugin, and the first time they compromise the BMC, they copy
-> the plugin to the BMC's file system, and modify the config file to
-> active it.  In this way, their code re-activates even if they lose access.
->
-> >
-> > Are you suggesting hackers are exploiting flaws in the config file parsers?
-> > Because in that case we should just fix the parsers. Or perhaps configuring
-> > the system in an unsafe way?
->
-> No, but that's a good point.  We can begin to address those
-> vulnerabilities with static and dynamic code scans and config file
-> fuzzing, and with good design and documentation about config files.
->
-> >
-> > Anyway, having any writable storage provides a place to drop payloads
-> > and generally wreak havoc, but having an unconfigurable BMC is not a
-> > direction I think we should go, it seems pretty restrictive. We do need
-> > to be careful about how we treat the content though, as it can't really
-> > be authenticated.
->
-> Agreed.
->
-> >
-> > Andrew
-> >
->
+> ---
+> v6:
+>     - No changes
+> v5:
+>     - No changes
+> v4:
+>     - Rebased on 5.3-rc4 instead of 5.2, No changes
+> v3:
+>     - Fix adding entry to the inappropriate line
+> v2:
+>     - No changes.
+> ---
+>  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+> index 2e742d399e87..870ac52d2225 100644
+> --- a/Documentation/devicetree/bindings/trivial-devices.yaml
+> +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+> @@ -104,6 +104,8 @@ properties:
+>            - infineon,slb9645tt
+>              # Infineon TLV493D-A1B6 I2C 3D Magnetic Sensor
+>            - infineon,tlv493d-a1b6
+> +            # Inspur Power System power supply unit version 1
+> +          - inspur,ipsps1
+>              # Intersil ISL29028 Ambient Light and Proximity Sensor
+>            - isil,isl29028
+>              # Intersil ISL29030 Ambient Light and Proximity Sensor
+> -- 
+> 2.17.1
+> 
