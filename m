@@ -2,70 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1D996456
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:27:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42EA1964D9
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 17:44:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CZRh1RmmzDqgk
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:27:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CZpc2pZXzDrBp
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 01:44:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::443; helo=mail-pf1-x443.google.com;
- envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::42a; helo=mail-pf1-x42a.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="SrtCqF9p"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="uChRnSN9"; 
  dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [IPv6:2607:f8b0:4864:20::42a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CZJn5Kf6zDqX9
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:21:45 +1000 (AEST)
-Received: by mail-pf1-x443.google.com with SMTP id c81so3576191pfc.11
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:21:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:mime-version
- :content-disposition:user-agent;
- bh=MJt24EPy43Ti5EtCu4AqEKxniVOrhxVv02Gleo5IXyE=;
- b=SrtCqF9pPnng7ehiqNQgq73kEhqLuhCwqieKSAEaSvgM23Ld7sPB5E1MwQCM6rBqBE
- nqmNgyz4x/nxY4sF9m29OUz7Q8LcQesHeXcjY5dDR/poJ+uuGoar38LR4oSXQQbNi7h8
- NC2Gmvd7gVALP/tUWbPViXAR+Q0UMpmmYgw8Ifjl1MPhUE+f4LAio38eFt3bo7fid0jk
- DuuI61zdjgYUyQuD/Fbs/mNe1ZXXj5DtM9P1PH6dtY10xMKyWCGV1DKpj1cizs/ndrTQ
- BLWALERkRMpKMX4SP267bTOSwNXQI1JFEtEj/4LVICaNPpCOiKJdchjzLRYBdjqovWE3
- K8ag==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CZnH3VbjzDr0L
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 01:42:58 +1000 (AEST)
+Received: by mail-pf1-x42a.google.com with SMTP id d85so3628195pfd.2
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 08:42:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=5GEftX0c2nKkKUOvgR5ZrgzuMMaNeRfz+3hVe6kSK0M=;
+ b=uChRnSN9qpMBGm+MY4/vUE9QTm9CYjfqjNqlcZsAFc0YHtI30+vA/pKK/79C20raXm
+ gSWZaWR8CBtDi1HgHTFrOAx/6RQzDmY3aaLvpjsqX356qxEuhg4JbQ4sycXhU8DEOsx6
+ qKqxHaQu6i65oGKDT+QTdg96aj2EHiRJV6T5N6rfPg2Eqs2pjqJ6RyCZxzkd2TWWFLtY
+ e9ImVoUQgLYLsjI5pJfI+RbRhFgmIv3A/R1DalCyB1MDEiEIuBVn8tc2UedgzhfWyLXr
+ YAeY9wWAfyU1cbkW6HEEJye/L0MYRzrAztWuxr33ufo9X2fA+jcd8Kj/8JUtDCoYo+Oe
+ 2lGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :mime-version:content-disposition:user-agent;
- bh=MJt24EPy43Ti5EtCu4AqEKxniVOrhxVv02Gleo5IXyE=;
- b=aAxvfTxH5mP6BNPAUeqRhaMHmIJBAeG6QXNO2ZkO5JKT//+K9sPOmPF+H54GZP8B7L
- zzyVv4+wXoga3AdQE5SI/oeui/r2EuMcLHED7BzCGlNuG0p7xUzgmf0kW+TT67VYiRyk
- kx//Hmv8ATSv6jh396HZFSYdoaNS3AJrww4YzZ4KVMsz3JxuWDQO+taCH2JZGvtR3w3V
- BNYMZE32DOkQAo5nWN7ibM49f3K+0iwdT7lnMRZ7Wz+gKo/m8sSPxuTz6X5ZJMt6KYyk
- fCOZtRpfGJV8GDPno7Ish+EesnTCqsS+0tXY5hdMYJfFDZ86BBMwvNpFHHKH2tZ/hP4I
- IxQg==
-X-Gm-Message-State: APjAAAWo1kN5mkkEDCiTY88JM0jDGMm5kKRE4m4TxIJCCroR+tN8BX+T
- uYtXLE9TK6gMli9aDmh+C5Y=
-X-Google-Smtp-Source: APXvYqyye+f2ZvNPRYjsHLx9yEZsbjtsiD/vrXS+OvTR4qsU+Ap8Rb5ttF0FQamv2w/cdmS4Sjesdg==
-X-Received: by 2002:a63:b20f:: with SMTP id x15mr25966808pge.453.1566314501422; 
- Tue, 20 Aug 2019 08:21:41 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id w2sm513828pjr.27.2019.08.20.08.21.40
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 20 Aug 2019 08:21:40 -0700 (PDT)
-Date: Tue, 20 Aug 2019 08:21:40 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: John Wang <wangzqbj@inspur.com>
-Subject: Re: [PATCH v6 1/2] dt-bindings: Add ipsps1 as a trivial device
-Message-ID: <20190820152140.GA13677@roeck-us.net>
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=5GEftX0c2nKkKUOvgR5ZrgzuMMaNeRfz+3hVe6kSK0M=;
+ b=oE2jkIbqq0lNWnm5p3NN/MwqpmwcLdp/BvQolB1JSV97kBzeSaDfpM7+mOemZQUWyL
+ rqG//IEuA5lWkJTHm0mcbmG3nv1YRKQ5x77/BPpUP3Y67hSajQJwYr5MHDdQ1Y5BrH5x
+ Q1tD7d3coYeV3gfUu0+hDfdjrQF19t04wj57anHe9urYdNXJqD5M1Q7IIazrFMK9EXru
+ q/fsBTBilfV+2lZMwv9OACA5+LWFwhNITjcUMulpSe/mg4zI+vpJC9VKPxVrFRVd129k
+ wfw7REE33wVd7CWIKnrevnldUYgSwqf1Wktb84f0Fb0lu9plpa5EcsmfJ5Ep4AX+Qe9N
+ 3ORQ==
+X-Gm-Message-State: APjAAAXM/P2KfC1wJHm6BJX8XWB99yS5lFVI0DJb6jJtSNPTvnEJH0tX
+ 0/dRMv6sIctwqxg+Wn0z9QUhf1HIQPpsiJJvxQM1Y7arpiMmbA==
+X-Google-Smtp-Source: APXvYqxsvj56Gg3WLOMdSvKZt/pjy++NXBfVee+fsxPK6TcwT1bcVSiGHC4x1xhgte1h1n9W77esr9XgNlj8MwIAMMI=
+X-Received: by 2002:a17:90a:d990:: with SMTP id
+ d16mr594415pjv.55.1566315774597; 
+ Tue, 20 Aug 2019 08:42:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From: Patrick Venture <venture@google.com>
+Date: Tue, 20 Aug 2019 08:42:43 -0700
+Message-ID: <CAO=notyg--q9B8_6Z4SrVjjzJEumQtVTSa1XzveRmR04XppFyQ@mail.gmail.com>
+Subject: phosphor-host-ipmid entity map moving from YAML to JSON
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,52 +70,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, trivial@kernel.org,
- openbmc@lists.ozlabs.org, duanzhijia01@inspur.com,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Aug 19, 2019 at 05:14:25PM +0800, John Wang wrote:
-> The ipsps1 is an Inspur Power System power supply unit
-> 
-> Signed-off-by: John Wang <wangzqbj@inspur.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
+If you provide your own entity YAML file for phosphor-host-ipmid:
+https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/entity-example.yaml
 
-Aplied to hwmon-next. If someone else wants to take it, please
-let me know and I'll drop it.
+Previously, this was done via a virtual provider, but that was dropped
+some time ago.  Now you'd replace that file to have the effect.
 
-Thanks,
-Guenter
+Well, if you're one of these machines you now will be moving to JSON
+at run-time.  There'll be a file to add to phosphor-ipmi-config named:
+"entity-map.json"
 
-> ---
-> v6:
->     - No changes
-> v5:
->     - No changes
-> v4:
->     - Rebased on 5.3-rc4 instead of 5.2, No changes
-> v3:
->     - Fix adding entry to the inappropriate line
-> v2:
->     - No changes.
-> ---
->  Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
-> index 2e742d399e87..870ac52d2225 100644
-> --- a/Documentation/devicetree/bindings/trivial-devices.yaml
-> +++ b/Documentation/devicetree/bindings/trivial-devices.yaml
-> @@ -104,6 +104,8 @@ properties:
->            - infineon,slb9645tt
->              # Infineon TLV493D-A1B6 I2C 3D Magnetic Sensor
->            - infineon,tlv493d-a1b6
-> +            # Inspur Power System power supply unit version 1
-> +          - inspur,ipsps1
->              # Intersil ISL29028 Ambient Light and Proximity Sensor
->            - isil,isl29028
->              # Intersil ISL29030 Ambient Light and Proximity Sensor
-> -- 
-> 2.17.1
-> 
+The schema for the json is similar to the YAML and is documented here:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/24551/scripts/entity-example.md
+
+Nobody upstream is using this -- no system that is merged into
+openbmc/openbmc.  I was using it before downstream.  Perhaps others
+are too :)
+
+Patrick
