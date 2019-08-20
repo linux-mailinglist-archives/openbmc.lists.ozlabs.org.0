@@ -2,104 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A71D96668
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 18:31:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A1EE9668A
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 18:38:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Cbrr2gJZzDrCM
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 02:31:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Cc1N20bFzDqGQ
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 02:38:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=dell.com
- (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com;
- envelope-from=justin.lee1@dell.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2a00:1450:4864:20::230; helo=mail-lj1-x230.google.com;
+ envelope-from=wak@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=Dell.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=dell.com header.i=@dell.com header.b="BKGB7dnE"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="VhBp5hTr"; 
  dkim-atps=neutral
-Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
- [148.163.137.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com
+ [IPv6:2a00:1450:4864:20::230])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Cbqc1MDvzDrCM
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 02:30:01 +1000 (AEST)
-Received: from pps.filterd (m0170397.ppops.net [127.0.0.1])
- by mx0b-00154904.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7KGGmRL026596
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:29:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=smtpout1;
- bh=unpFzPMywWO68rfoFFYX9S8rEWh+wxA5cn8gEFYw2A0=;
- b=BKGB7dnEw2n5kBrvHqgBbsubf40XpiD/rOba5eXfqLv6+3LFlguP3rqIDim2f729wFdO
- gQYLPmehk5sDtU3OSAZa3KmNBiyl9AvQDMWoC0w9zfWnKoGK9vslimK1szC+aU7hYxc8
- HazxyaSvowv2z1aoImhY58rqMntdPCILRuLKaP9bzlHDqFaOzFeJ1NkThem+uX8QF82w
- /93nfy6TkWdlHlqbAO/Z9VmojJ4aDZcYKVo50HjatjTBzteEVPheXhNkW4WFrpD04Eon
- MtVi4VKD48A5W7udmmWX05QisAN26b2gJbXwj/NNlT5JvZHu3gMjLYj0LCI+FJ83+lYP SQ== 
-Received: from mx0a-00154901.pphosted.com (mx0b-00154901.pphosted.com
- [67.231.157.37])
- by mx0b-00154904.pphosted.com with ESMTP id 2ug4f3bxaf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:29:58 -0400
-Received: from pps.filterd (m0089484.ppops.net [127.0.0.1])
- by mx0b-00154901.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7KGS7D6024536
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:29:57 -0400
-Received: from ausxipps301.us.dell.com (ausxipps301.us.dell.com
- [143.166.148.223])
- by mx0b-00154901.pphosted.com with ESMTP id 2ugkdk946u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:29:57 -0400
-X-LoopCount0: from 10.166.135.92
-X-PREM-Routing: D-Outbound
-X-IronPort-AV: E=Sophos;i="5.60,349,1549951200"; d="scan'208";a="384864590"
-From: <Justin.Lee1@Dell.com>
-To: <benwei@fb.com>
-Subject: RE: [PATCH] net/ncsi: add control packet payload to NC-SI commands
- from netlink
-Thread-Topic: [PATCH] net/ncsi: add control packet payload to NC-SI commands
- from netlink
-Thread-Index: AdVWRzWK9Wcjcdd/SW6uTu9wV1cgUQAe69YgAALeARAAKCEBYA==
-Date: Tue, 20 Aug 2019 16:29:55 +0000
-Message-ID: <b862e3168f5b4a6eaf005d6b24950795@AUSX13MPS302.AMER.DELL.COM>
-References: <CH2PR15MB368691D280F882864A6D356DA3A80@CH2PR15MB3686.namprd15.prod.outlook.com>
- <ec5842fff4de45069a51618eb72df164@AUSX13MPS302.AMER.DELL.COM>
- <CH2PR15MB3686A4CEF8FA3B567078B4A1A3A80@CH2PR15MB3686.namprd15.prod.outlook.com>
-In-Reply-To: <CH2PR15MB3686A4CEF8FA3B567078B4A1A3A80@CH2PR15MB3686.namprd15.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Enabled=True;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Owner=Justin_Lee1@Dell.com;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SetDate=2019-08-19T20:17:25.5740389Z;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Name=External Public;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Extended_MSFT_Method=Manual;
- aiplabel=External Public
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.143.242.75]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Cbyp6Hx2zDrNy
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 02:36:18 +1000 (AEST)
+Received: by mail-lj1-x230.google.com with SMTP id e24so5725470ljg.11
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 09:36:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=kMgmYySjrlSNpT/HK/XuqaPomzojhSx6QqT0oTUkuH0=;
+ b=VhBp5hTrC+GsGh7/l7bXqB6imBad2PLHHxwoK94gQz0pZfIyUqoQQWqEl7XXNOS8dI
+ jMuwuO65IhW+XZQZ578ZcAZSRrdhxdbJUiImuGThWPXqfBskyY46btClMEG4nPz7tvc7
+ zyiBmKgiOUP+Xrg9Sz9w20d3L+ZoPikYJKo2IByIK9Qv2BkCDsBbmfCoocS+7YA3agTu
+ tbTk2JCEZpOCnmHgXfQqXmdy0canozMDNPRVAK4D6D6tOR8cxrKCRpWvbs++GI23yCZV
+ d4YhEt22Fumyc59nYvMyPaJRQL2i9tD6b+TAr/iGFkD/0EMMU9+KKnaFm+QMUuM1PUcH
+ GJhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=kMgmYySjrlSNpT/HK/XuqaPomzojhSx6QqT0oTUkuH0=;
+ b=LzXm/2gPdBI+LrquqLjsLeFhL9sADMRgWulX2L2vGqqZyNd97R0kq47IbpSlOct6mR
+ emVU7lZen1vgP5IQloUCdAkLG13QoMCKcF1Nhxrdhol2J7RimQ1x5Mk/VRkC/jhpryFz
+ CGnaSl8zl7hjUSRFH5mOn92X85PwzvsEMq6fAfh22Q2Kt3yDn20jZ81V2sz9gjzUKKET
+ wW9IDLrFSbT17rQ60jZs2406HCizWbXO6xF0QyHm7MCxpL8B58D6nnfyuQY9GOfd0pdN
+ xvoab4QAP1Rs7WysVXg09zYwymtTkelg0B6FrCVeC5mO7y0zB3rrSZar6u4eaulG/8uf
+ iH4w==
+X-Gm-Message-State: APjAAAUrPrilj+9lW3YcV6rArqeT+2aapA6OrQMnHRKCcguEJo4Emymp
+ zejyJzAF9RhWFdlNit9QgLUj4z2Oos88gQE2bw3JzA==
+X-Google-Smtp-Source: APXvYqw3qS0bzZi/WqSfsCTrolTblr2/6DKgPManFzGr0Aizma734CraCMnQSag6Sblit6JsXfK8AofCjbSJNgBDKCQ=
+X-Received: by 2002:a2e:97cc:: with SMTP id m12mr16393878ljj.24.1566318971022; 
+ Tue, 20 Aug 2019 09:36:11 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-20_07:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908200151
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
- definitions=main-1908200150
+References: <CALLMt=pv9GdHmv7ZJOBK+Z1wqAh4DmOzVR8ud=+KefddvEkreg@mail.gmail.com>
+ <9ad991fb-13fe-42fa-b5b6-48fd069342f9@www.fastmail.com>
+ <e4636a3c-82b8-0f35-ebad-6b23e304dc3d@linux.ibm.com>
+ <f459cebc-ab70-08ee-7ea7-2647e41b3c04@linux.ibm.com>
+ <96f668f0-9580-44a4-9bbd-ca6324494017@www.fastmail.com>
+ <3645ad01-172f-be62-0531-6d0660fc211a@linux.ibm.com>
+ <CALLMt=ppYod6utC-W4mojmefn_Yqt_K0FyUKhAKaZgYJugrUzQ@mail.gmail.com>
+In-Reply-To: <CALLMt=ppYod6utC-W4mojmefn_Yqt_K0FyUKhAKaZgYJugrUzQ@mail.gmail.com>
+From: William Kennington <wak@google.com>
+Date: Tue, 20 Aug 2019 09:35:59 -0700
+Message-ID: <CAPnigKn78Wn1SDnhRwZY7O9F5bgCnpUWBgvheDJdzAAs8zO87w@mail.gmail.com>
+Subject: Re: where to store application json
+To: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,85 +78,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, sam@mendozajonas.com, davem@davemloft.net
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ben,=20
+I think it's pretty straightforward, immutable data is stored in
+/etc/<appname> and mutable data in /var/lib/<appname>
 
-> Hi Justin,=20
->=20
-> > Hi Ben,
+On Tue, Aug 20, 2019 at 8:23 AM Andrew Geissler <geissonator@gmail.com> wrote:
+>
+> Thanks for all the good discussion. It seems like in summary the
+> consensus is what
+> Andrew Jeffery proposed:
+>
+> /etc/<application name>/
+>
+> There are security concerns with this but there are a lot of files in /etc/
+> that could cause security concerns if people get the correct access
+> to modify them. For my use case, the json is simply something that
+> tells the application when to log errors. If people find they need data
+> files which could have significant security concerns, they may want
+> to revisit the location for their config file.
+>
+> Andrew
+>
+> On Mon, Aug 19, 2019 at 12:15 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
 > >
-> > I have similar fix locally with different approach as the command handl=
-er may have some expectation for those byes.
-> > We can use NCSI_PKT_CMD_OEM handler as it only copies data based on the=
- payload length.
->=20
-> Great! Yes I was thinking the same, we just need some way to take data pa=
-yload sent from netlink message and sent it over NC-SI.
->=20
 > >
-> > diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c index 5c3fad8..3=
-b01f65 100644
-> > --- a/net/ncsi/ncsi-cmd.c
-> > +++ b/net/ncsi/ncsi-cmd.c
-> > @@ -309,14 +309,19 @@ static struct ncsi_request *ncsi_alloc_command(st=
-ruct ncsi_cmd_arg *nca)
-> > =20
-> >  int ncsi_xmit_cmd(struct ncsi_cmd_arg *nca)  {
-> > + struct ncsi_cmd_handler *nch =3D NULL;
-> >         struct ncsi_request *nr;
-> > + unsigned char type;
-> >         struct ethhdr *eh;
-> > -   struct ncsi_cmd_handler *nch =3D NULL;
-> >         int i, ret;
-> > =20
-> > + if (nca->req_flags =3D=3D NCSI_REQ_FLAG_NETLINK_DRIVEN)
-> > +         type =3D NCSI_PKT_CMD_OEM;
-> > + else
-> > +         type =3D nca->type;
-> >         /* Search for the handler */
-> >         for (i =3D 0; i < ARRAY_SIZE(ncsi_cmd_handlers); i++) {
-> > -           if (ncsi_cmd_handlers[i].type =3D=3D nca->type) {
-> > +         if (ncsi_cmd_handlers[i].type =3D=3D type) {
-> >                         if (ncsi_cmd_handlers[i].handler)
-> >                                 nch =3D &ncsi_cmd_handlers[i];
-> >                         else
+> > On 8/18/19 7:15 PM, Andrew Jeffery wrote:
+> > >
+> > > On Sat, 17 Aug 2019, at 02:24, Joseph Reynolds wrote:
+> > >> On 8/16/19 8:31 AM, Matt Spinler wrote:
+> > >>> On 8/15/2019 6:59 PM, Andrew Jeffery wrote:
+> > >>>> On Fri, 16 Aug 2019, at 07:01, Andrew Geissler wrote:
+> > >>>>> As we start moving more and more of our applications to using
+> > >>>>> runtime parsed
+> > >>>>> json files, it seems like a good time to come up with a standard
+> > >>>>> location to put
+> > >>>>> the json files. I think a requirement is they be in a writeable
+> > >>>>> filesystem
+> > >>>>> (although that may bring security concerns) so that you can edit and
+> > >>>>> restart
+> > >>>>> services that use them on the fly for bringup and debug.
+> > >>>>>
+> > >>>>> /etc seems like the right spot. But if so, where in /etc
+> > >>> While convenient to the developer for testing, to me it doesn't sound
+> > >>> like good practice to put read
+> > >>> only, critical files into a writeable spot?  How could we even trust
+> > >>> data that comes back to us from
+> > >>> the field when a user that can get into their BMC can just change
+> > >>> these?  Or accidentally
+> > >>> delete a file?
+> > >>>
+> > >> One security concern is that config files offer a good way for hackers
+> > >> to get persistent access to the system.  That is, if they are able to
+> > >> get root access to the BMC one time, they may be able to persist their
+> > >> hack across BMC reboots by modifying some config files.  IMHO, to make
+> > >> it harder for them, as much as possible of the file system should be
+> > >> read-only, and read-write config files should not offer the above
+> > >> mentioned service to hackers.
+> > > What are some concrete examples of what you're concerned about here?
 > >
->=20
-> So in this case NCSI_PKT_CMD_OEM would be the default handler for all NC-=
-SI command over netlink  (standard and OEM), correct?
-Yes, that is correct. The handler for NCSI_PKT_CMD_OEM command is generic.
-
-> Should we rename this to something like NCSI_PKT_CMD_GENERIC for clarity =
-perhaps?  Do you plan to upstream this patch? =20
-NCSI_PKT_CMD_OEM is a real command type and it is defined by the NC-SI spec=
-ific.=20
-We can add comments to indicate that we use the generic command handler fro=
-m NCSI_PKT_CMD_OEM command.
-
-Does the change work for you? If so, I will prepare the patch.
-
->=20
->=20
-> Also do you have local patch to support NCSI_PKT_CMD_PLDM and the PLDM ov=
-er NC-SI commands defined here (https://www.dmtf.org/sites/default/files/NC=
--SI_1.2_PLDM_Support_over_RBT_Commands_Proposal.pdf)?
-> If not I can send my local changes - but I think we can use the same NCSI=
-_PKT_CMD_OEM handler to transport PLDM payload over NC-SI.
-> What do you think?
-No, I don't have any change currently to support these commands. It should =
-be very similar to NCSI_PKT_CMD_OEM handler with some minor modification.
-
->=20
-> (CC Deepak as I think once this is in place we can use pldmtool to send b=
-asic PLDM payloads over NC-SI)
->=20
-> Regards,
-> -Ben
-
-Thanks,
-Justin
-
+> > I was thinking about config files that specify which plugins to load,
+> > for example, by absolute pathname.  In this scenario, the hacker would
+> > write a plugin, and the first time they compromise the BMC, they copy
+> > the plugin to the BMC's file system, and modify the config file to
+> > active it.  In this way, their code re-activates even if they lose access.
+> >
+> > >
+> > > Are you suggesting hackers are exploiting flaws in the config file parsers?
+> > > Because in that case we should just fix the parsers. Or perhaps configuring
+> > > the system in an unsafe way?
+> >
+> > No, but that's a good point.  We can begin to address those
+> > vulnerabilities with static and dynamic code scans and config file
+> > fuzzing, and with good design and documentation about config files.
+> >
+> > >
+> > > Anyway, having any writable storage provides a place to drop payloads
+> > > and generally wreak havoc, but having an unconfigurable BMC is not a
+> > > direction I think we should go, it seems pretty restrictive. We do need
+> > > to be careful about how we treat the content though, as it can't really
+> > > be authenticated.
+> >
+> > Agreed.
+> >
+> > >
+> > > Andrew
+> > >
+> >
