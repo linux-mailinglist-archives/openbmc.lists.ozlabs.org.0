@@ -2,92 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C4F095404
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 04:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ACF3495418
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 04:14:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CDjg10VVzDqkp
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 12:08:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CDrd1qYQzDql6
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 12:14:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.246.209; helo=mail1.bemta23.messagelabs.com;
- envelope-from=hsung1@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=sivas.srr@in.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.209])
+ dmarc=none (p=none dis=none) header.from=in.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CDj25P1czDqkK
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:08:05 +1000 (AEST)
-Received: from [67.219.247.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-2.bemta.az-d.us-east-1.aws.symcld.net id F1/A7-22799-2065B5D5;
- Tue, 20 Aug 2019 02:08:02 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHKsWRWlGSWpSXmKPExsWS8eIhjy5TWHS
- swdLfvBaHd3hanGp5wWKx98BGFosbXWfYHVg8Jja/Y/dYsKnUY/Gel0we52csZAxgiWLNzEvK
- r0hgzVh7ehJbwRHLirOt+g2MTyy6GLk4hAQamCTuHV3OBuG8ZpT4vWQpM4Szj1Fia8M8pi5GT
- g42AVWJLc+esIDYIgLeElvfHAIq4uBgFoiW2HlbDsQUFjCX2HZeFqLCQmL7sn4mkLCIgJvEu7
- l6IGEWoCFr5/0DG8grYCmx5v9uJohNLcwSfe/XsoMkOAWsJNbebgQrYhSQlXiy4BmYzSwgLnH
- uYitYjYSAgMSSPeeZIWxRiZeP/7FC2AoSzXtes0Bcpimxfpc+RKuixJTuh+wQewUlTs58wjKB
- UXQWkqmzEDpmIemYhaRjASPLKkazpKLM9IyS3MTMHF1DAwNdQ0MjXUtdIxMDvcQq3RS90mLd1
- MTiEl1DvcTyYr3iytzknBS9vNSSTYzA6Esp4Pywg7Fr1hu9Q4ySHExKorxpr6JihfiS8lMqMx
- KLM+KLSnNSiw8xynBwKEnwngmOjhUSLEpNT61Iy8wBJgKYtAQHj5IIr3IoUJq3uCAxtzgzHSJ
- 1itGSY8LLuYuYOQ4enQckj8xduohZiCUvPy9VSpyXNQSoQQCkIaM0D24cLFldYpSVEuZlZGBg
- EOIpSC3KzSxBlX/FKM7BqCTMmwAyhSczrwRu6yugg5iADtp9OBLkoJJEhJRUA9M6wYq4JOYZP
- josRSYHOsqPNth/7qn9vHD30qMKOxd6Zv3N5F+2XLMrfPOZ9qk+PRwZd7Z/YdTWzuoUKdrzhm
- /zihMx7JxztYutesWEHrVNlrg72WhhZPPEj5d2zl/6U9xnzbVNxxgZfQKZLF4LyOrzzJWpYha
- t1V7y5oHz06bJa1gkjijZ7khYGfND/Xnq29OiYT5M4Qm63udWZPw9plOxP00moeLeb+7uiHcv
- Pik4Z0sKrDZYt/LxR73I66Y9bBKHLx+559ZryShib/uq+YPFlCo1/ZObpV9u6o7VMHdYpiImd
- +iIz3aRPcYa3SdZfsg0bn3fICp8QaOq423pyujYrVG6nO6bDzTVbGs2UGIpzkg01GIuKk4EAO
- drtQTRAwAA
-X-Env-Sender: hsung1@lenovo.com
-X-Msg-Ref: server-9.tower-426.messagelabs.com!1566266882!1116070!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 8928 invoked from network); 20 Aug 2019 02:08:02 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-9.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 20 Aug 2019 02:08:02 -0000
-Received: from HKGWPEMAIL04.lenovo.com (unknown [10.128.3.72])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 1025FA8DC2FA2A5491F6;
- Mon, 19 Aug 2019 22:08:00 -0400 (EDT)
-Received: from HKGWPEMAIL03.lenovo.com (10.128.3.71) by
- HKGWPEMAIL04.lenovo.com (10.128.3.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Tue, 20 Aug 2019 10:07:56 +0800
-Received: from HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903]) by
- HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903%6]) with mapi id
- 15.01.1591.008; Tue, 20 Aug 2019 10:07:45 +0800
-From: Harry Sung1 <hsung1@lenovo.com>
-To: Vijay Khemka <vijaykhemka@fb.com>, Patrick Venture <venture@google.com>
-Subject: RE: [External] Re: ipmitool FRU write question
-Thread-Topic: [External] Re: ipmitool FRU write question
-Thread-Index: AQHVVFvYD7uYtL8XakOzrjKI42KXOacCgtmAgAAGgICAAAIpgIAAv+8Q
-Date: Tue, 20 Aug 2019 02:07:45 +0000
-Message-ID: <31b4d63a76e94a40b8b70dccdc7d39a8@lenovo.com>
-References: <4a91e18f7195458193f673c26986421a@lenovo.com>
- <e9ba404c-a35e-1c46-2a0c-a4fd971312a6@intel.com>
- <6ca6d992e4a248828063ff9f6a8e6c87@lenovo.com>
- <CAO=notyjqi2m5LRDqRjSkTpYBmu5m_wr4JQnBeU8Vifg9_zLzw@mail.gmail.com>
- <4ACC3BDB-7E8D-4A4E-BBA7-A7B281A705C2@fb.com>
- <CAO=noty_n2a5nHzL7O-hDRAuuhw8Mx8CXmTc-_0izpAzMCS_EQ@mail.gmail.com>
- <8E191471-44DD-41F2-8E60-B39982821C85@fb.com>
-In-Reply-To: <8E191471-44DD-41F2-8E60-B39982821C85@fb.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CDqZ5L7VzDqkS
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:13:45 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7K2CbnC017643
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 22:13:42 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.112])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2ug63dkes1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Aug 2019 22:13:42 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <sivas.srr@in.ibm.com>;
+ Tue, 20 Aug 2019 02:13:41 -0000
+Received: from us1b3-smtp02.a3dr.sjc01.isc4sb.com (10.122.7.175)
+ by smtp.notes.na.collabserv.com (10.122.47.54) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 20 Aug 2019 02:13:39 -0000
+Received: from us1b3-mail65.a3dr.sjc01.isc4sb.com ([10.122.7.228])
+ by us1b3-smtp02.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019082002133845-1094304 ;
+ Tue, 20 Aug 2019 02:13:38 +0000 
+In-Reply-To: <CADy_Pt3zcSaN9Eh=yM9PC1ex1Nd3XVSEWcwarohsAcm=cwz6cQ@mail.gmail.com>
+From: "Sivas Srr" <sivas.srr@in.ibm.com>
+To: james.mihm@gmail.com
+Date: Tue, 20 Aug 2019 02:13:38 +0000
+Sensitivity: 
 MIME-Version: 1.0
+References: <CADy_Pt3zcSaN9Eh=yM9PC1ex1Nd3XVSEWcwarohsAcm=cwz6cQ@mail.gmail.com>,
+ <OFEB757C0D.E4799559-ON0025843C.0016DC0E-0025843C.0017D3B9@notes.na.collabserv.com>
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
+ SCN1812108_20180501T0841_FP55 May 22, 2019 at 11:09
+X-KeepSent: 3B10C288:9F732822-0025845C:000C161E;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 21763
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19082002-4615-0000-0000-0000004B1022
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.363559; ST=0; TS=0; UL=0; ISC=; MB=0.002676
+X-IBM-SpamModules-Versions: BY=3.00011621; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000287; SDB=6.01249321; UDB=6.00659504; IPR=6.01030857; 
+ MB=3.00028240; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-20 02:13:40
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-08-20 01:25:26 - 6.00010306
+x-cbparentid: 19082002-4616-0000-0000-0000200639BA
+Message-Id: <OF3B10C288.9F732822-ON0025845C.000C161E-0025845C.000C3C4C@notes.na.collabserv.com>
+Subject: RE: [tsc] How we can make others contribute to openbmc-test-automation
+ repository
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-20_01:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,104 +86,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed.tanous@intel.com>
+Cc: openbmc@lists.ozlabs.org, Ravindra S Rao1 <ravindra.s@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiANCj4g77u/T24gOC8xOS8xOSwgMzoxOSBQTSwgIlBhdHJpY2sgVmVudHVyZSIgPHZlbnR1cmVA
-Z29vZ2xlLmNvbT4gd3JvdGU6DQo+IA0KPiAgICAgT24gTW9uLCBBdWcgMTksIDIwMTkgYXQgMjo1
-NSBQTSBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4NCj4gd3JvdGU6DQo+ICAgICA+
-DQo+ICAgICA+DQo+ICAgICA+DQo+ICAgICA+IE9uIDgvMTYvMTksIDExOjAyIEFNLCAib3BlbmJt
-YyBvbiBiZWhhbGYgb2YgUGF0cmljayBWZW50dXJlIg0KPiA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5
-a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZg0KPiB2ZW50dXJlQGdv
-b2dsZS5jb20+IHdyb3RlOg0KPiAgICAgPg0KPiAgICAgPiAgICAgT24gRnJpLCBBdWcgMTYsIDIw
-MTkgYXQgMTA6NDcgQU0gSGFycnkgU3VuZzENCj4gPGhzdW5nMUBsZW5vdm8uY29tPiB3cm90ZToN
-Cj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4gPiBPbiA4LzE1LzE5
-IDY6NDkgQU0sIEhhcnJ5IFN1bmcxIHdyb3RlOg0KPiAgICAgPiAgICAgPiA+ID4gSGkgVGVhbSwN
-Cj4gICAgID4gICAgID4gPiA+DQo+ICAgICA+ICAgICA+ID4gPg0KPiAgICAgPiAgICAgPiA+ID4N
-Cj4gICAgID4gICAgID4gPiA+IEN1cnJlbnQgcGhvc3Bob3ItaG9zdC1pcG1pZCBkb2VzIG5vdCBz
-dXBwb3J0IGZydSB3cml0ZQ0KPiBjb21tYW5kLCBidXQNCj4gICAgID4gICAgID4gPiA+IGlwbWkt
-ZnJ1LXBhcnNlciBzdXBwb3J0cyBpdC4NCj4gICAgID4gICAgID4gPiA+DQo+ICAgICA+ICAgICA+
-ID4gPiBXZSBmb3VuZCB0aGlzIGZydSB3cml0ZSBjb21tYW5kIG9ubHkgdXBkYXRlIHRoZSBkYXRh
-IHRvDQo+IGRidXMNCj4gICAgID4gICAgID4gPiA+IGludmVudG9yeSwgYnV0IGRvZXNuJ3Qgc3lu
-YyB0aGUgZGF0YSBiYWNrIHRvIHRoZSBFRVBST00uDQo+ICAgICA+ICAgICA+ID4gPg0KPiAgICAg
-PiAgICAgPiA+ID4gRG9lcyBpcG1pLWZydS1wYXJzZXIgaGFzIGFueSBwbGFucyB0byBpbXBsZW1l
-bnQgaXQ/IEkgdGhpbmsgaXQNCj4gaXMgbW9yZQ0KPiAgICAgPiAgICAgPiA+ID4gbWFrZSBzZW5z
-ZSB0byBzeW5jIHRoZSBkYXRhIHRvIEVFUFJPTSB3aGVuIHdlIGRvIGZydQ0KPiB3cml0ZS4NCj4g
-ICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IFRoZSBhbHRlcm5hdGl2ZSBGUlUgZGFlbW9u
-IGZyb20gZW50aXR5IG1hbmFnZXIsIEZydURldmljZSwNCj4gc3VwcG9ydHMgd3JpdGluZw0KPiAg
-ICAgPiAgICAgPiA+IHRoZSBGUlUgZGlyZWN0bHkuDQo+ICAgICA+ICAgICA+ID4NCj4gaHR0cHM6
-Ly9naXRodWIuY29tL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvYmxvYi9tYXN0ZXIvc3JjL0ZydURl
-dmljZS5jcHANCj4gICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IEhhcHB5IHRvIHNlZSB0
-aGlzIGNhcGFiaWxpdHkgYWRkZWQgdG8gaXBtaS1mcnUtcGFyc2VyLCBidXQgeW91DQo+IG1pZ2h0
-IGJlIGFibGUgdG8NCj4gICAgID4gICAgID4gPiBtb2RlbCBpdCBvZmYgRnJ1RGV2aWNlLiAgSWYg
-eW91IHdhbnQgdG8gdXNlIEZydURldmljZSBhcy1pcywNCj4geW91IHdpbGwgbmVlZCB0aGUNCj4g
-ICAgID4gICAgID4gPiBhbHRlcm5hdGl2ZSBGcnVXcml0ZSBjb21tYW5kIHNldHMgZnJvbSBoZXJl
-Lg0KPiAgICAgPiAgICAgPiA+DQo+ICAgICA+ICAgICA+ID4NCj4gaHR0cHM6Ly9naXRodWIuY29t
-L29wZW5ibWMvaW50ZWwtaXBtaS1vZW0vYmxvYi8xNTk1NDdjZGZiZjE5OTI3MzdkY2VjYg0KPiAg
-ICAgPiAgICAgPiA+IGNiMzg4OGFmNzc5NWY5MzBiL3NyYy9zdG9yYWdlY29tbWFuZHMuY3BwI0wz
-MTYNCj4gICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IEFzIHdyaXR0ZW4sIHRob3NlIGNv
-bW1hbmRzIGNoYW5nZSB0aGUgYmVoYXZpb3IgYSBiaXQsIGFuZA0KPiBkb3VibGUgYnVmZmVycyB0
-aGUNCj4gICAgID4gICAgID4gPiBGUlUgd3JpdGUgY29tbWFuZHMuICBXaGVuIHRoZSBsYXN0IEZy
-dSB3cml0ZSBpcyBzZW50LCB0aGUNCj4gZGF0YSBpcyBmbHVzaGVkDQo+ICAgICA+ICAgICA+ID4g
-dGhyb3VnaCB0aGUgRlJVIHBhcnNlciB0byBlbnN1cmUgdGhhdCBpdCdzIHZhbGlkLCBhbmQgdGhl
-IHVzZXINCj4gaXNuJ3QgZG9pbmcNCj4gICAgID4gICAgID4gPiBhbnl0aGluZyBuZWZhcmlvdXMg
-KGxpa2UgY2hhbmdpbmcgYSBwcm9kdWN0IG5hbWUgb3Igc2VyaWFsDQo+ICAgICA+ICAgICA+ID4g
-bnVtYmVyKSBiZWZvcmUgaXQgd3JpdGVzIHRoZSBFRVBST00gaW4gb25lIGNodW5rLCBhcyBxdWlj
-a2x5DQo+IGFzIGl0IGNhbiB0bw0KPiAgICAgPiAgICAgPiA+IHJlZHVjZSB0aGUgcG9zc2liaWxp
-dHkgb2YgYSBoYWxmIHdyaXR0ZW4gRUVQUk9NLg0KPiAgICAgPiAgICAgPg0KPiAgICAgPiAgICAg
-PiBIaSBFZCwNCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4gVGhhbmtzIGZvciB5b3VyIGtp
-bmRseSByZXBseSEgSSBoYXZlIHN1cnZleWVkIHRoZSBlbnRpdHktbWFuYWdlcg0KPiBiZWZvcmUu
-DQo+ICAgICA+ICAgICA+IEJ1dCBJIGVuY291bnRlcmVkIGFuIGlzc3VlIHdoZW4gSSB1c2luZw0K
-PiBwaG9zcGhvci1pbnZlbnRvcnktbWFuYWdlciBhbmQgZW50aXR5LW1hbmFnZXIgYXQgdGhlIHNh
-bWUgdGltZS4NCj4gICAgID4gICAgID4gQm90aCBvZiB0aGVtIGhhdmUgc2FtZSBtZXRob2QgIk5v
-dGlmeSIgdW5kZXIgc2FtZSBpbnRlcmZhY2UgIg0KPiB4eXoub3BlbmJtY19wcm9qZWN0LkludmVu
-dG9yeS5NYW5hZ2VyICIsIGJ1dCBkaWZmZXJlbnQgc2lnbmF0dXJlLg0KPiAgICAgPg0KPiAgICAg
-Pg0KPiBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0Ff
-X2dlcnJpdC5vcGVuYm1jLTJEcHJvDQo+IGplY3QueHl6X2Nfb3BlbmJtY19pcG1pLTJEZnJ1LTJE
-cGFyc2VyXy0yQl8yMjAyMiZkPUR3SUJhUSZjPTVWRDBSVA0KPiB0TmxUaDN5Y2Q0MWIzTVV3JnI9
-djlNVTBLaTlwV25UWENXd2pIUFZncG5DUjgwdlhra2NySWFxVTdVU2w1Zw0KPiAmbT1TOXRDOVhm
-Mk5TTFR5SEpDRlRsNm9JTzQyTHBkaHJ0bndYYkgwVnNzQ2tJJnM9UDgwVlRvZjBUOWFzcC1rUTQN
-Cj4gcXI5bWNFWTFZM21LVGZWai1ienR4NS0zX28mZT0NCj4gICAgID4NCj4gICAgID4gICAgIFRo
-aXMgcGF0Y2ggYWRkcmVzc2VzIHBhcnQgb2YgaXQuDQo+ICAgICA+DQo+ICAgICA+ICAgICA+DQo+
-ICAgICA+ICAgICA+IHBob3NwaG9yLWludmVudG9yeS1tYW5hZ2VyOg0KPiAgICAgPiAgICAgPiBO
-QU1FICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEUNCj4gU0lHTkFUVVJFICAg
-UkVTVUxUL1ZBTFVFICAgRkxBR1MNCj4gICAgID4gICAgID4geHl6Lm9wZW5ibWNfcHJvamVjdC5J
-bnZlbnRvcnkuTWFuYWdlciBpbnRlcmZhY2UgLQ0KPiAtICAgICAgICAgICAgIC0NCj4gICAgID4g
-ICAgID4gLk5vdGlmeSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRob2QNCj4gYXtv
-YXtzYXtzdn19fSAtICAgICAgICAgICAgIC0NCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4g
-ZW50aXR5LW1hbmFnZXINCj4gICAgID4gICAgID4gTkFNRSAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBUWVBFDQo+IFNJR05BVFVSRSAgIFJFU1VMVC9WQUxVRSAgIEZMQUdTDQo+ICAg
-ICA+ICAgICA+IHh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5Lk1hbmFnZXIgaW50ZXJmYWNl
-IC0gICAgICAgICAtDQo+IC0NCj4gICAgID4gICAgID4gLk5vdGlmeSAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBtZXRob2QNCj4gYXtzYXtzdn19IC0gICAgICAgICAgICAtDQo+ICAgICA+
-ICAgICA+DQo+ICAgICA+ICAgICA+IFNvIHdoZW4gc29tZSBzZXJ2aWNlcyBjYWxsIHRoZSAnTm90
-aWZ5JyBtZXRob2QgZmFpbGVkIGJlY2F1c2Ugb2YNCj4gZ2V0dGluZyB3cm9uZyBzZXJ2aWNlLg0K
-PiAgICAgPiAgICAgPiBFeDoNCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaXBtaS1mcnUt
-cGFyc2VyL2Jsb2IvbWFzdGVyL3dyaXRlZnJ1ZGF0YS5jcHAjTA0KPiAyMDYNCj4gICAgID4gICAg
-ID4gSGF2ZSB5b3UgZXZlciBzZWVuIHRoaXMgaXNzdWUgYmVmb3JlPw0KPiAgICAgPg0KPiAgICAg
-PiAgICAgSSd2ZSBhZGRyZXNzZWQgcGFydCBvZiB0aGlzIGlzc3VlIGluIHBob3NwaG9yLWhvc3Qt
-aXBtaWQsIG5vdyBpdCBubw0KPiAgICAgPiAgICAgbG9uZ2VyIGFzc3VtZXMgdGhlIEZSVSdzIG93
-bmVyLg0KPiAgICAgPiAgICAgU2VlIHBhdGNoZXMgcmVsYXRlZCB0bzoNCj4gICAgID4NCj4gICAg
-ID4NCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9jb21t
-aXQvNDVlOTNjYmFlMGFhMGQNCj4gMGY1Mzg1ZDQwZjU2ODViMjNlMThmOTUzNTENCj4gICAgID4N
-Cj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9jb21taXQv
-YzI2Y2M3MTdhNGVlZjE4DQo+IGZmZmMxY2E4OTFiYjZhNjAxNTc0MGJmOWYNCg0KVGhhbmtzIGZv
-ciBmaXggaXQhIEFjdHVhbGx5LCBJIGhhdmUgdGhlIHNpbWlsYXIgcGF0Y2hlcyBpbiBteSByZXBv
-IHRvIGFkZHJlc3MgdGhpcyBpc3N1ZSwgbm93IEkgYW0gYWJsZSB0byByZW1vdmUgdGhlbS4NCg0K
-PiAgICAgPg0KPiAgICAgPiAgICAgPg0KPiAgICAgPiAgICAgPiBTaG91bGQgSSB1c2UgaW50ZWwt
-ZGJ1cy1pbnRlcmZhY2VzIGlmIEkgd2FudCB0byB1c2UgRnJ1ZGV2aWNlDQo+IChlbnRpdHktbWFu
-YWdlcikgYW5kIHdyaXRlIEZSVSBjb21tYW5kKGludGVsLWlwbWktb2VtKT8NCj4gICAgID4gICAg
-ID4gT3IgaXQgaXMgY29tcGF0aWJsZSB3aXRoIG9yaWdpbmFsIGRidXMtaW50ZXJmYWNlPw0KPiAg
-ICAgPg0KPiAgICAgPiAgICAgWW91IHVzZSBib3RoLg0KPiAgICAgPiBQYXRyaWNrLCBJIGFtIG5v
-dCB1c2luZyBpbnRlbC1kYnVzLWludGVyZmFjZXMsIG9ubHkgdXNpbmcgZGJ1cy1zZW5zb3JzLg0K
-PiBXaGF0IGlzIHRoZSB1c2Ugb2YgaW50ZWwtZGJ1cy1pbnRlcmZhY2VzPw0KPiANCj4gICAgIEkg
-ZG9uJ3QgdXNlIGJvdGguICBJIG9ubHkgdXNlIHBob3NwaG9yLWRidXMtaW50ZXJmYWNlcy4gIEkg
-d2FzIGp1c3QNCj4gICAgIGluZGljYXRpbmcgdGhleSB3ZXJlbid0IGdvaW5nIHRvIGludGVyZmVy
-ZSB3aXRoIGVhY2ggb3RoZXIgYmVjYXVzZSB0aGUNCj4gICAgIGludGVsLWRidXMtaW50ZXJmYWNl
-cyBpc24ndCB1c2VkIGluIHRoZSBzYW1lIHdheSBhcw0KPiAgICAgcGhvc3Bob3ItZGJ1cy1pbnRl
-cmZhY2VzLg0KPiANCj4gT2theSwgdGhhbmtzDQo+IA0KPiAgICAgPg0KPiAgICAgPiAgICAgPg0K
-PiAgICAgPiAgICAgPiBUaGFua3MsDQo+ICAgICA+ICAgICA+IEhhcnJ5DQo+ICAgICA+DQo+ICAg
-ICA+DQo+IA0KDQpJIHdpbGwgbm90IHVzaW5nIGludGVsLWRidXMtaW50ZXJmYWNlcyBmb3Igbm93
-LCB0aGFua3MgZm9yIGNvbW1lbnRzLg0KDQpIYXJyeQ0KDQo=
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Thank you for your =
+mail James. Expecting to hear / see good progress in openbmc-test-automatio=
+n.</div>
+<div dir=3D"ltr" >Similarly other organization also comes up and contribute=
+ in test repository then it will be good.</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >With regards,</div>
+<div dir=3D"ltr" >Sivas</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
+-left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
+margin-right:0px" >----- Original message -----<br>From: James Mihm &lt;jam=
+es.mihm@gmail.com&gt;<br>To: Sivas Srr &lt;sivas.srr@in.ibm.com&gt;<br>Cc: =
+openbmc@lists.ozlabs.org, Ravindra S Rao1 &lt;ravindra.s@in.ibm.com&gt;<br>=
+Subject: [EXTERNAL] Re: [tsc] How we can make others contribute to openbmc-=
+test-automation repository<br>Date: Sat, Aug 17, 2019 10:25 AM<br>&nbsp;<br=
+><font size=3D"3" >Hi&nbsp;Sivas, I'm sorry it's taken so long for me to re=
+spond. We do want to participate in the openbmc-test-automation repository.=
+ One of the challenges that we have is limited resources working on deliver=
+ing products using our internal test automation tools versus the openbmc-te=
+st-automation. I'll discuss with my team at Intel to determine when can spe=
+nd some cycles on this effort.</font><br><br><font size=3D"3" >Thanks, Jame=
+s.</font><br><br><font size=3D"3" >On Thu, Jul 18, 2019 at 10:51 PM Sivas S=
+rr &lt;</font><a href=3D"mailto:sivas.srr@in.ibm.com" target=3D"=5Fblank" >=
+<u><font size=3D"3" color=3D"#0000ff" >sivas.srr@in.ibm.com</font></u></a><=
+font size=3D"3" >&gt;&nbsp;wrote:</font><br><font size=3D"3" >Hi All,</font=
+><font size=3D"3" >&nbsp;</font><br><font size=3D"3" >Objective of this mai=
+l is to get contribution to openbmc-test-automation repository.</font><br><=
+font size=3D"3" >Not only in automation / automation test plan / code revie=
+w, Even sharing test results also fine.</font><br><font size=3D"3" >As open=
+bmc common for both Intel and Power platform, If some one share Intel based=
+ test results of</font><br><font size=3D"3" >openbmc-test-automation test c=
+ases also good.</font><font size=3D"3" >&nbsp;</font><br><font size=3D"3" >=
+Would like to get your suggestions / input on how we can make openbmc-test =
+better.</font><font size=3D"3" >&nbsp;</font><br><font size=3D"3" >Hi Brad,=
+ Could you please have it in TSC group agenda.</font><br><font size=3D"3" >=
+If needed, Will schedule separate meeting which aligns with all other conve=
+nient time.</font><br><font size=3D"3" >Thank you in advance Brad.</font><f=
+ont size=3D"3" >&nbsp;</font><br><font size=3D"3" >With regards,</font><br>=
+<font size=3D"3" >Sivas</font><font size=3D"3" >&nbsp;</font><font size=3D"=
+3" >&nbsp;</font><font size=3D"3" >&nbsp;</font></blockquote>
+<div dir=3D"ltr" >&nbsp;</div></div><BR>
+
