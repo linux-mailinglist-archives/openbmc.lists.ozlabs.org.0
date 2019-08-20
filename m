@@ -1,68 +1,148 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB443A4CD7
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:37:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7409A4CD9
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:39:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MB4r2wbxzDqNR
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:37:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MB6D3zlLzDqZx
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:39:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=vdorst.com
- (client-ip=2a04:52c0:101:921::25; helo=mx.0dd.nl;
- envelope-from=opensource@vdorst.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=microchip.com
+ (client-ip=68.232.154.123; helo=esa4.microchip.iphmx.com;
+ envelope-from=tudor.ambarus@microchip.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=vdorst.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=vdorst.com header.i=@vdorst.com header.b="ULjt8ge+"; 
+ dmarc=pass (p=none dis=none) header.from=microchip.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microchiptechnology.onmicrosoft.com
+ header.i=@microchiptechnology.onmicrosoft.com header.b="Hcphfi3X"; 
  dkim-atps=neutral
-X-Greylist: delayed 607 seconds by postgrey-1.36 at bilbo;
- Tue, 20 Aug 2019 09:25:44 AEST
-Received: from mx.0dd.nl (mx.0dd.nl [IPv6:2a04:52c0:101:921::25])
- by lists.ozlabs.org (Postfix) with ESMTP id 46C95h5vj6zDqdM
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 09:25:43 +1000 (AEST)
-Received: from mail.vdorst.com (mail.vdorst.com [IPv6:fd01::250])
+X-Greylist: delayed 69 seconds by postgrey-1.36 at bilbo;
+ Wed, 21 Aug 2019 00:29:08 AEST
+Received: from esa4.microchip.iphmx.com (esa4.microchip.iphmx.com
+ [68.232.154.123])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mx.0dd.nl (Postfix) with ESMTPS id 3E1E95FA7D;
- Tue, 20 Aug 2019 01:15:27 +0200 (CEST)
-Authentication-Results: mx.0dd.nl; dkim=pass (2048-bit key;
- secure) header.d=vdorst.com header.i=@vdorst.com header.b="ULjt8ge+"; 
- dkim-atps=neutral
-Received: from www (www.vdorst.com [192.168.2.222])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by mail.vdorst.com (Postfix) with ESMTPSA id ECEC81D7CB29;
- Tue, 20 Aug 2019 01:15:26 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.vdorst.com ECEC81D7CB29
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vdorst.com;
- s=default; t=1566256527;
- bh=C8ea6Y3384VBk/QFSJchvtn4T6yvfAqag7cXPB04Y84=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=ULjt8ge+g1b0WHabO2Nvp0MO8hkns0DYw9T60kxk1Hgdvz1yxwutf9QTyiw4dxxDy
- PnLCyf+I96TCz42A8cO2+u/SzEm7GQD4/734KP1EB70BeL4wLssReF7CO+hUdOKyfo
- RBPZvFb0AHLn9dN2mIoiWkoV7AVkwO/l49Ih3EqIjMjH9Ce8+wjqGiNDzKpucTxF2p
- NrxDOqx0OGn71mTVq/8bCFXW5yQFyqIh2xZzS91n9WwC9vaAdaXeaLpbUBW8M/Cbz0
- EGGkljRvWTvaSzIgaVee0T7gCla0s/oyNemnCUuCRb507radYgJxDWgtLGCLkGOTDC
- iPGnC1B2C/q3A==
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1]) by
- www.vdorst.com (Horde Framework) with HTTPS; Mon, 19 Aug 2019 23:15:26 +0000
-Date: Mon, 19 Aug 2019 23:15:26 +0000
-Message-ID: <20190819231526.Horde.8CjxfcGbCnfBNA-nXmq1PJt@www.vdorst.com>
-From: =?utf-8?b?UmVuw6k=?= van Dorst <opensource@vdorst.com>
-To: Tao Ren <taoren@fb.com>
-Subject: Re: [PATCH net-next v7 2/3] net: phy: add support for clause 37
- auto-negotiation
-References: <20190811234010.3673592-1-taoren@fb.com>
- <3af5d897-7f97-a223-2d7b-56e09b83dcb5@fb.com>
-In-Reply-To: <3af5d897-7f97-a223-2d7b-56e09b83dcb5@fb.com>
-User-Agent: Horde Application Framework 5
-Content-Type: text/plain; charset=utf-8; format=flowed; DelSp=Yes
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CY845lGWzDqMf
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 00:29:08 +1000 (AEST)
+Received-SPF: Pass (esa4.microchip.iphmx.com: domain of
+ Tudor.Ambarus@microchip.com designates 198.175.253.82 as
+ permitted sender) identity=mailfrom;
+ client-ip=198.175.253.82; receiver=esa4.microchip.iphmx.com;
+ envelope-from="Tudor.Ambarus@microchip.com";
+ x-sender="Tudor.Ambarus@microchip.com";
+ x-conformance=spf_only; x-record-type="v=spf1";
+ x-record-text="v=spf1 mx a:ushub1.microchip.com
+ a:smtpout.microchip.com a:mx1.microchip.iphmx.com
+ a:mx2.microchip.iphmx.com include:servers.mcsv.net
+ include:mktomail.com include:spf.protection.outlook.com ~all"
+Received-SPF: None (esa4.microchip.iphmx.com: no sender
+ authenticity information available from domain of
+ postmaster@email.microchip.com) identity=helo;
+ client-ip=198.175.253.82; receiver=esa4.microchip.iphmx.com;
+ envelope-from="Tudor.Ambarus@microchip.com";
+ x-sender="postmaster@email.microchip.com"; x-conformance=spf_only
+Authentication-Results: esa4.microchip.iphmx.com;
+ spf=Pass smtp.mailfrom=Tudor.Ambarus@microchip.com;
+ spf=None smtp.helo=postmaster@email.microchip.com;
+ dkim=pass (signature verified) header.i=@microchiptechnology.onmicrosoft.com;
+ dmarc=pass (p=none dis=none) d=microchip.com
+IronPort-SDR: Z76A+xReMfmXVWlUywhJzDVDO2eleQOIOHh0I6tGjZq6+oBqMkYlh2/oggzE5tmc/zEfwG9t2V
+ pZGL/t1A6d9s8YmZlbC7zLVbR+PUmYXw4FlyXYGxulNU9vmXDTi1w31E2zKRGlhf7DUi+Qg83d
+ vz5r3eAVsuNb2i6n+/Kjo8shMUQbBJCxFHGuN+1XH6nC3lUAw4tCjYmjtBpGngSc4ztwuxy8qc
+ vkfal6qkYt2bP4jRDra78uJnBLLhpKU5O6y4+uyNoK03VYdIr7LS+AfGs4mYwHmscnmPpM1ecv
+ J8k=
+X-IronPort-AV: E=Sophos;i="5.64,408,1559545200"; d="scan'208";a="44940251"
+Received: from smtpout.microchip.com (HELO email.microchip.com)
+ ([198.175.253.82])
+ by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256;
+ 20 Aug 2019 07:27:56 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 20 Aug 2019 07:27:54 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (10.10.215.89) by
+ email.microchip.com (10.10.87.72) with Microsoft SMTP Server
+ (version=TLS1_2, 
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5 via Frontend
+ Transport; Tue, 20 Aug 2019 07:27:54 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Hxy2ixSI5rKN11ISZ/nAaTMtBuV7LreYBkFn6IN1/mIjFyG3kOX0WrF5U/zMx5Mb41h3tV9iKZoYrUVsQ3XTBjb23v3x6b75JxH7/31Vqf5vHmHbGe2GYpTqj5x4Lh1l89E8WY7u0uZ8aHbcxfgL+7xDAzPEJHvwH64w8AurITNBqVh6n5RDEIGnVczJTGELZsuPLQAf0Dsa30EDhDIv3u/FVgU8Y9TaA/nRCTzPtRKql+k6BkKGtrXymCt1DZHLedZLTTYWVMinSCZgvPH7mHIAFlAh0Z8L7hKjG18Y9hj2O9UU7g7/AmaUc6E5NfcFZf60vi6jeu+uBypJcUuCGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cxmURSRQCT7QXxYe7VoM4+0YvcnBmYJ2X7G+SRvmQQ0=;
+ b=BZ2Gs/Hr7HP89mtRUZ+X1tvdIvbISJ46GldDK/EXqZhdSE75TkA4JhB6foIJE3VaKDe5bNk/SNebwBAtj4+cyPRzkrCmr19EInWYo9+XrWS1zwOtGBAxGAllFQeR2nH0O3K5qxiFruzNwbrZTJliJ+xz0yBm34UW//MXBeLA6aQDN9Bv943RzBEFA4K79dChIg2kzL+7ty/G87ipiPtcRCce7H3iALFsCdp/6d6iyaP7HUzO2elyT/WUSo5ENwIWHm+Eo4RLVWArYmUw8qp9sc6lE9uJf5RvHTNJDXPZBvcAEodwile2vkU9SOtrVFcjaL86gvYsxhIC3rmJQVl/FQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microchip.com; dmarc=pass action=none
+ header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microchiptechnology.onmicrosoft.com;
+ s=selector2-microchiptechnology-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cxmURSRQCT7QXxYe7VoM4+0YvcnBmYJ2X7G+SRvmQQ0=;
+ b=Hcphfi3X+N278gBsi07fpCgBSCEcG7mayR8JG52FqfEPV1lu15GjnNlBZrHPsK1eJvdH3ZjGgBhwh+3Xo4w4Ml3FaI+H6oqwZkhAT7lraXgNfZEjs5IDzp7DT7nlM55v8vwqJ1AQHOw1/98Fh/DGrlmajTuSnIUj+/JIhBOMis0=
+Received: from MN2PR11MB4448.namprd11.prod.outlook.com (52.135.39.157) by
+ MN2PR11MB3902.namprd11.prod.outlook.com (10.255.180.77) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.16; Tue, 20 Aug 2019 14:27:54 +0000
+Received: from MN2PR11MB4448.namprd11.prod.outlook.com
+ ([fe80::70c3:e929:4da2:60a5]) by MN2PR11MB4448.namprd11.prod.outlook.com
+ ([fe80::70c3:e929:4da2:60a5%7]) with mapi id 15.20.2178.018; Tue, 20 Aug 2019
+ 14:27:54 +0000
+From: <Tudor.Ambarus@microchip.com>
+To: <avifishman70@gmail.com>, <dwmw2@infradead.org>,
+ <computersforpeace@gmail.com>, <miquel.raynal@bootlin.com>, <richard@nod.at>, 
+ <vigneshr@ti.com>, <joel@jms.id.au>, <linux-mtd@lists.infradead.org>
+Subject: Re: [PATCH v2] mtd: spi-nor: Add Winbond w25q256jvm
+Thread-Topic: [PATCH v2] mtd: spi-nor: Add Winbond w25q256jvm
+Thread-Index: AQHVRq+si21hV/W8IkmhTrNYaeTiY6cEOX8A
+Date: Tue, 20 Aug 2019 14:27:54 +0000
+Message-ID: <0f86aed8-3f24-fee7-61a7-968b69dee107@microchip.com>
+References: <20190730081832.271125-1-avifishman70@gmail.com>
+In-Reply-To: <20190730081832.271125-1-avifishman70@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: VI1PR04CA0054.eurprd04.prod.outlook.com
+ (2603:10a6:802:2::25) To MN2PR11MB4448.namprd11.prod.outlook.com
+ (2603:10b6:208:193::29)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [94.177.32.156]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: faf57603-7794-4ee0-8137-08d7257a9690
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:MN2PR11MB3902; 
+x-ms-traffictypediagnostic: MN2PR11MB3902:
+x-ms-exchange-purlcount: 2
+x-microsoft-antispam-prvs: <MN2PR11MB3902402FE2270CF17E99C890F0AB0@MN2PR11MB3902.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:2887;
+x-forefront-prvs: 013568035E
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10009020)(376002)(39860400002)(396003)(346002)(366004)(136003)(199004)(189003)(2906002)(2201001)(478600001)(7736002)(6116002)(6512007)(3846002)(31686004)(305945005)(76176011)(6436002)(86362001)(31696002)(6306002)(966005)(7416002)(229853002)(5660300002)(26005)(14444005)(256004)(25786009)(14454004)(6486002)(316002)(53936002)(110136005)(4744005)(54906003)(4326008)(6246003)(66066001)(186003)(36756003)(99286004)(8936002)(102836004)(66446008)(66476007)(81166006)(81156014)(64756008)(66556008)(71190400001)(71200400001)(11346002)(53546011)(2501003)(6506007)(486006)(476003)(2616005)(8676002)(386003)(66946007)(52116002)(446003);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:MN2PR11MB3902;
+ H:MN2PR11MB4448.namprd11.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: microchip.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: /6sxK0VyCJ7thlbJBAzoEljOsSsOzVl4B1Q3VI/zVBCOBfRSLKZxFoUV3cFO83iCsMeisMmwLkT4Wy+afJ3QFDDNDzxA2UlFLgrYtfMS8KU3DJpj4/ydmmG6RoScA9PuZyIoHGOcoRR5nOK4P/3IzcyVrh6qVWdM0K7EwHata0i2Sat3OJWk9nutf/dpxBVQVemKBwFFUMMKPze9wGVk0+aKwt1FvKLSZbgDZiOqXBAThg79wxHgVn1qZcQtrMnb5o1IPGbdxImzAUb48ZZ8SU2IjVgLbYXKCNvbh4bBe3YhURlSpFalljvcHQGyy/ySOmoUGOhLXLdJO/Dnfv8h95Dud5cC4K7QM5mkRdIkcsFO5OSjotlkvjmzry4Ng2BRU2XtDOifprb5GOG2+yvgMBnP/3PyWvC7dyt7lnIC8tY=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B3B5DF9CE8F61A4DB38F1205E86E1131@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-Network-Message-Id: faf57603-7794-4ee0-8137-08d7257a9690
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2019 14:27:54.0943 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RKW5Pt7qcHDpNcxRz9NChKwePvoGkxmWchSeUGCXWmjTesFz8jCjmcRgxfOOElRABWOllcYDQt/xGRRjbsWPFpGrl/z7ktXNIDSg0Hyth9w=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB3902
 X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:52 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,309 +155,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Florian Fainelli <f.fainelli@gmail.com>,
- netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
- Arun Parameswaran <arun.parameswaran@broadcom.com>,
- linux-kernel@vger.kernel.org, Justin Chen <justinpopo6@gmail.com>,
- Vladimir Oltean <olteanv@gmail.com>, "David S . Miller" <davem@davemloft.net>,
- Heiner Kallweit <hkallweit1@gmail.com>
+Cc: openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tao,
-
-Quoting Tao Ren <taoren@fb.com>:
-
-> On 8/11/19 4:40 PM, Tao Ren wrote:
->> From: Heiner Kallweit <hkallweit1@gmail.com>
->>
->> This patch adds support for clause 37 1000Base-X auto-negotiation.
->>
->> Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
->> Signed-off-by: Tao Ren <taoren@fb.com>
->
-> A kind reminder: could someone help to review the patch when you  
-> have bandwidth?
->
-
-FWIW: I have a similar setup with my device. MAC -> PHY -> SFP cage.
-PHY is a Qualcomm at8031 and is used as a RGMII-to-SerDes converter.
-SerDes only support 100Base-FX and 1000Base-X in this converter mode.
-PHY also supports a RJ45 port but that is not wired on my device.
-
-I converted [0] at803x driver to make use of the PHYLINK API for SFP cage and
-also of these new c37 functions.
-
-In autoneg on and off, it detects the link and can ping a host on the network.
-Tested with 1gbit BiDi optical(1000Base-X) and RJ45 module(SGMII).
-Both work and both devices detects unplug and plug-in of the cable.
-
-output of ethtool:
-
-Autoneg on
-Settings for lan5:
-         Supported ports: [ TP MII ]
-         Supported link modes:   100baseT/Half 100baseT/Full
-                                 1000baseT/Full
-                                 1000baseX/Full
-         Supported pause frame use: Symmetric Receive-only
-         Supports auto-negotiation: Yes
-         Supported FEC modes: Not reported
-         Advertised link modes:  100baseT/Half 100baseT/Full
-                                 1000baseT/Full
-                                 1000baseX/Full
-         Advertised pause frame use: Symmetric Receive-only
-         Advertised auto-negotiation: Yes
-         Advertised FEC modes: Not reported
-         Link partner advertised link modes:  1000baseX/Full
-         Link partner advertised pause frame use: Symmetric Receive-only
-         Link partner advertised auto-negotiation: Yes
-         Link partner advertised FEC modes: Not reported
-         Speed: 1000Mb/s
-         Duplex: Full
-         Port: MII
-         PHYAD: 7
-         Transceiver: internal
-         Auto-negotiation: on
-         Supports Wake-on: g
-         Wake-on: d
-         Link detected: yes
-
-Autoneg off
-Settings for lan5:
-         Supported ports: [ TP MII ]
-         Supported link modes:   100baseT/Half 100baseT/Full
-                                 1000baseT/Full
-                                 1000baseX/Full
-         Supported pause frame use: Symmetric Receive-only
-         Supports auto-negotiation: Yes
-         Supported FEC modes: Not reported
-         Advertised link modes:  1000baseT/Full
-         Advertised pause frame use: Symmetric Receive-only
-         Advertised auto-negotiation: No
-         Advertised FEC modes: Not reported
-         Speed: 1000Mb/s
-         Duplex: Full
-         Port: MII
-         PHYAD: 7
-         Transceiver: internal
-         Auto-negotiation: off
-         Supports Wake-on: g
-         Wake-on: d
-         Link detected: yes
-
-Tested-by: René van Dorst <opensource@vdorst.com>
-
-Greats,
-
-René
-
-[0]  
-https://github.com/vDorst/linux-1/blob/1d8cb01bc8047bda94c076676e47b09d2f31069d/drivers/net/phy/at803x.c
-
->
-> Cheers,
->
-> Tao
->
->> ---
->>  Changes in v7:
->>   - Update "if (AUTONEG_ENABLE != phydev->autoneg)" to
->>     "if (phydev->autoneg != AUTONEG_ENABLE)" so checkpatch.pl is happy.
->>  Changes in v6:
->>   - add "Signed-off-by: Tao Ren <taoren@fb.com>"
->>  Changes in v1-v5:
->>   - nothing changed. It's given v5 just to align with the version of
->>     patch series.
->>
->>  drivers/net/phy/phy_device.c | 139 +++++++++++++++++++++++++++++++++++
->>  include/linux/phy.h          |   5 ++
->>  2 files changed, 144 insertions(+)
->>
->> diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
->> index 252a712d1b2b..301a794b2963 100644
->> --- a/drivers/net/phy/phy_device.c
->> +++ b/drivers/net/phy/phy_device.c
->> @@ -1617,6 +1617,40 @@ static int genphy_config_advert(struct  
->> phy_device *phydev)
->>  	return changed;
->>  }
->>
->> +/**
->> + * genphy_c37_config_advert - sanitize and advertise  
->> auto-negotiation parameters
->> + * @phydev: target phy_device struct
->> + *
->> + * Description: Writes MII_ADVERTISE with the appropriate values,
->> + *   after sanitizing the values to make sure we only advertise
->> + *   what is supported.  Returns < 0 on error, 0 if the PHY's advertisement
->> + *   hasn't changed, and > 0 if it has changed. This function is intended
->> + *   for Clause 37 1000Base-X mode.
->> + */
->> +static int genphy_c37_config_advert(struct phy_device *phydev)
->> +{
->> +	u16 adv = 0;
->> +
->> +	/* Only allow advertising what this PHY supports */
->> +	linkmode_and(phydev->advertising, phydev->advertising,
->> +		     phydev->supported);
->> +
->> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
->> +			      phydev->advertising))
->> +		adv |= ADVERTISE_1000XFULL;
->> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Pause_BIT,
->> +			      phydev->advertising))
->> +		adv |= ADVERTISE_1000XPAUSE;
->> +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
->> +			      phydev->advertising))
->> +		adv |= ADVERTISE_1000XPSE_ASYM;
->> +
->> +	return phy_modify_changed(phydev, MII_ADVERTISE,
->> +				  ADVERTISE_1000XFULL | ADVERTISE_1000XPAUSE |
->> +				  ADVERTISE_1000XHALF | ADVERTISE_1000XPSE_ASYM,
->> +				  adv);
->> +}
->> +
->>  /**
->>   * genphy_config_eee_advert - disable unwanted eee mode advertisement
->>   * @phydev: target phy_device struct
->> @@ -1726,6 +1760,54 @@ int genphy_config_aneg(struct phy_device *phydev)
->>  }
->>  EXPORT_SYMBOL(genphy_config_aneg);
->>
->> +/**
->> + * genphy_c37_config_aneg - restart auto-negotiation or write BMCR
->> + * @phydev: target phy_device struct
->> + *
->> + * Description: If auto-negotiation is enabled, we configure the
->> + *   advertising, and then restart auto-negotiation.  If it is not
->> + *   enabled, then we write the BMCR. This function is intended
->> + *   for use with Clause 37 1000Base-X mode.
->> + */
->> +int genphy_c37_config_aneg(struct phy_device *phydev)
->> +{
->> +	int err, changed;
->> +
->> +	if (phydev->autoneg != AUTONEG_ENABLE)
->> +		return genphy_setup_forced(phydev);
->> +
->> +	err = phy_modify(phydev, MII_BMCR, BMCR_SPEED1000 | BMCR_SPEED100,
->> +			 BMCR_SPEED1000);
->> +	if (err)
->> +		return err;
->> +
->> +	changed = genphy_c37_config_advert(phydev);
->> +	if (changed < 0) /* error */
->> +		return changed;
->> +
->> +	if (!changed) {
->> +		/* Advertisement hasn't changed, but maybe aneg was never on to
->> +		 * begin with?  Or maybe phy was isolated?
->> +		 */
->> +		int ctl = phy_read(phydev, MII_BMCR);
->> +
->> +		if (ctl < 0)
->> +			return ctl;
->> +
->> +		if (!(ctl & BMCR_ANENABLE) || (ctl & BMCR_ISOLATE))
->> +			changed = 1; /* do restart aneg */
->> +	}
->> +
->> +	/* Only restart aneg if we are advertising something different
->> +	 * than we were before.
->> +	 */
->> +	if (changed > 0)
->> +		return genphy_restart_aneg(phydev);
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(genphy_c37_config_aneg);
->> +
->>  /**
->>   * genphy_aneg_done - return auto-negotiation status
->>   * @phydev: target phy_device struct
->> @@ -1864,6 +1946,63 @@ int genphy_read_status(struct phy_device *phydev)
->>  }
->>  EXPORT_SYMBOL(genphy_read_status);
->>
->> +/**
->> + * genphy_c37_read_status - check the link status and update  
->> current link state
->> + * @phydev: target phy_device struct
->> + *
->> + * Description: Check the link, then figure out the current state
->> + *   by comparing what we advertise with what the link partner
->> + *   advertises. This function is for Clause 37 1000Base-X mode.
->> + */
->> +int genphy_c37_read_status(struct phy_device *phydev)
->> +{
->> +	int lpa, err, old_link = phydev->link;
->> +
->> +	/* Update the link, but return if there was an error */
->> +	err = genphy_update_link(phydev);
->> +	if (err)
->> +		return err;
->> +
->> +	/* why bother the PHY if nothing can have changed */
->> +	if (phydev->autoneg == AUTONEG_ENABLE && old_link && phydev->link)
->> +		return 0;
->> +
->> +	phydev->duplex = DUPLEX_UNKNOWN;
->> +	phydev->pause = 0;
->> +	phydev->asym_pause = 0;
->> +
->> +	if (phydev->autoneg == AUTONEG_ENABLE && phydev->autoneg_complete) {
->> +		lpa = phy_read(phydev, MII_LPA);
->> +		if (lpa < 0)
->> +			return lpa;
->> +
->> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
->> +				 phydev->lp_advertising, lpa & LPA_LPACK);
->> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
->> +				 phydev->lp_advertising, lpa & LPA_1000XFULL);
->> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Pause_BIT,
->> +				 phydev->lp_advertising, lpa & LPA_1000XPAUSE);
->> +		linkmode_mod_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
->> +				 phydev->lp_advertising,
->> +				 lpa & LPA_1000XPAUSE_ASYM);
->> +
->> +		phy_resolve_aneg_linkmode(phydev);
->> +	} else if (phydev->autoneg == AUTONEG_DISABLE) {
->> +		int bmcr = phy_read(phydev, MII_BMCR);
->> +
->> +		if (bmcr < 0)
->> +			return bmcr;
->> +
->> +		if (bmcr & BMCR_FULLDPLX)
->> +			phydev->duplex = DUPLEX_FULL;
->> +		else
->> +			phydev->duplex = DUPLEX_HALF;
->> +	}
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(genphy_c37_read_status);
->> +
->>  /**
->>   * genphy_soft_reset - software reset the PHY via BMCR_RESET bit
->>   * @phydev: target phy_device struct
->> diff --git a/include/linux/phy.h b/include/linux/phy.h
->> index 462b90b73f93..81a2921512ee 100644
->> --- a/include/linux/phy.h
->> +++ b/include/linux/phy.h
->> @@ -1077,6 +1077,11 @@ int genphy_suspend(struct phy_device *phydev);
->>  int genphy_resume(struct phy_device *phydev);
->>  int genphy_loopback(struct phy_device *phydev, bool enable);
->>  int genphy_soft_reset(struct phy_device *phydev);
->> +
->> +/* Clause 37 */
->> +int genphy_c37_config_aneg(struct phy_device *phydev);
->> +int genphy_c37_read_status(struct phy_device *phydev);
->> +
->>  static inline int genphy_no_soft_reset(struct phy_device *phydev)
->>  {
->>  	return 0;
->>
-
-
-
+DQoNCk9uIDA3LzMwLzIwMTkgMTE6MTggQU0sIEF2aSBGaXNobWFuIHdyb3RlOg0KPiBFeHRlcm5h
+bCBFLU1haWwNCj4gDQo+IA0KPiBTaW1pbGFyIHRvIHcyNXEyNTYgKGJlc2lkZXMgbm90IHN1cHBv
+cnRpbmcgUVBJIG1vZGUpIGJ1dCB3aXRoIGRpZmZlcmVudCBJRC4NCj4gVGhlICJKVk0iIHN1ZmZp
+eCBpcyBpbiB0aGUgZGF0YXNoZWV0Lg0KPiBUaGUgZGF0YXNoZWV0IGluZGljYXRlcyBEVUFMIGFu
+ZCBRVUFEIGFyZSBzdXBwb3J0ZWQuDQo+IGh0dHBzOi8vd3d3LndpbmJvbmQuY29tL3Jlc291cmNl
+LWZpbGVzL3cyNXEyNTZqdiUyMHNwaSUyMHJldmklMjAxMDIzMjAxOCUyMHBsdXMucGRmDQo+IA0K
+PiBTaWduZWQtb2ZmLWJ5OiBBdmkgRmlzaG1hbiA8YXZpZmlzaG1hbjcwQGdtYWlsLmNvbT4NCj4g
+LS0tDQo+ICBkcml2ZXJzL210ZC9zcGktbm9yL3NwaS1ub3IuYyB8IDIgKysNCj4gIDEgZmlsZSBj
+aGFuZ2VkLCAyIGluc2VydGlvbnMoKykNCj4gDQoNCkFwcGxpZWQgdG8gaHR0cHM6Ly9naXQua2Vy
+bmVsLm9yZy9wdWIvc2NtL2xpbnV4L2tlcm5lbC9naXQvbXRkL2xpbnV4LmdpdCwNCnNwaS1ub3Iv
+bmV4dCBicmFuY2guDQoNClRoYW5rcywNCnRhDQoNCg==
