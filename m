@@ -1,42 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62730952BA
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 02:25:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C4F095404
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 04:08:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46CBR46JdYzDqYC
-	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 10:25:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CDjg10VVzDqkp
+	for <lists+openbmc@lfdr.de>; Tue, 20 Aug 2019 12:08:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=terry.s.duncan@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.209; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=hsung1@lenovo.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.209])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46CBQB0hYHzDqJh
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 10:25:04 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 19 Aug 2019 17:25:01 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,406,1559545200"; d="scan'208";a="189691872"
-Received: from tsduncan-ubuntu.jf.intel.com ([10.7.169.130])
- by orsmga002.jf.intel.com with ESMTP; 19 Aug 2019 17:25:00 -0700
-From: "Terry S. Duncan" <terry.s.duncan@linux.intel.com>
-To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- "David S . Miller" <davem@davemloft.net>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH v2] net/ncsi: Ensure 32-bit boundary for data cksum
-Date: Mon, 19 Aug 2019 17:24:02 -0700
-Message-Id: <20190820002402.39001-1-terry.s.duncan@linux.intel.com>
-X-Mailer: git-send-email 2.17.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CDj25P1czDqkK
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 12:08:05 +1000 (AEST)
+Received: from [67.219.247.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-d.us-east-1.aws.symcld.net id F1/A7-22799-2065B5D5;
+ Tue, 20 Aug 2019 02:08:02 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrHKsWRWlGSWpSXmKPExsWS8eIhjy5TWHS
+ swdLfvBaHd3hanGp5wWKx98BGFosbXWfYHVg8Jja/Y/dYsKnUY/Gel0we52csZAxgiWLNzEvK
+ r0hgzVh7ehJbwRHLirOt+g2MTyy6GLk4hAQamCTuHV3OBuG8ZpT4vWQpM4Szj1Fia8M8pi5GT
+ g42AVWJLc+esIDYIgLeElvfHAIq4uBgFoiW2HlbDsQUFjCX2HZeFqLCQmL7sn4mkLCIgJvEu7
+ l6IGEWoCFr5/0DG8grYCmx5v9uJohNLcwSfe/XsoMkOAWsJNbebgQrYhSQlXiy4BmYzSwgLnH
+ uYitYjYSAgMSSPeeZIWxRiZeP/7FC2AoSzXtes0Bcpimxfpc+RKuixJTuh+wQewUlTs58wjKB
+ UXQWkqmzEDpmIemYhaRjASPLKkazpKLM9IyS3MTMHF1DAwNdQ0MjXUtdIxMDvcQq3RS90mLd1
+ MTiEl1DvcTyYr3iytzknBS9vNSSTYzA6Esp4Pywg7Fr1hu9Q4ySHExKorxpr6JihfiS8lMqMx
+ KLM+KLSnNSiw8xynBwKEnwngmOjhUSLEpNT61Iy8wBJgKYtAQHj5IIr3IoUJq3uCAxtzgzHSJ
+ 1itGSY8LLuYuYOQ4enQckj8xduohZiCUvPy9VSpyXNQSoQQCkIaM0D24cLFldYpSVEuZlZGBg
+ EOIpSC3KzSxBlX/FKM7BqCTMmwAyhSczrwRu6yugg5iADtp9OBLkoJJEhJRUA9M6wYq4JOYZP
+ josRSYHOsqPNth/7qn9vHD30qMKOxd6Zv3N5F+2XLMrfPOZ9qk+PRwZd7Z/YdTWzuoUKdrzhm
+ /zihMx7JxztYutesWEHrVNlrg72WhhZPPEj5d2zl/6U9xnzbVNxxgZfQKZLF4LyOrzzJWpYha
+ t1V7y5oHz06bJa1gkjijZ7khYGfND/Xnq29OiYT5M4Qm63udWZPw9plOxP00moeLeb+7uiHcv
+ Pik4Z0sKrDZYt/LxR73I66Y9bBKHLx+559ZryShib/uq+YPFlCo1/ZObpV9u6o7VMHdYpiImd
+ +iIz3aRPcYa3SdZfsg0bn3fICp8QaOq423pyujYrVG6nO6bDzTVbGs2UGIpzkg01GIuKk4EAO
+ drtQTRAwAA
+X-Env-Sender: hsung1@lenovo.com
+X-Msg-Ref: server-9.tower-426.messagelabs.com!1566266882!1116070!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.9; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 8928 invoked from network); 20 Aug 2019 02:08:02 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-9.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 20 Aug 2019 02:08:02 -0000
+Received: from HKGWPEMAIL04.lenovo.com (unknown [10.128.3.72])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 1025FA8DC2FA2A5491F6;
+ Mon, 19 Aug 2019 22:08:00 -0400 (EDT)
+Received: from HKGWPEMAIL03.lenovo.com (10.128.3.71) by
+ HKGWPEMAIL04.lenovo.com (10.128.3.72) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Tue, 20 Aug 2019 10:07:56 +0800
+Received: from HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903]) by
+ HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903%6]) with mapi id
+ 15.01.1591.008; Tue, 20 Aug 2019 10:07:45 +0800
+From: Harry Sung1 <hsung1@lenovo.com>
+To: Vijay Khemka <vijaykhemka@fb.com>, Patrick Venture <venture@google.com>
+Subject: RE: [External] Re: ipmitool FRU write question
+Thread-Topic: [External] Re: ipmitool FRU write question
+Thread-Index: AQHVVFvYD7uYtL8XakOzrjKI42KXOacCgtmAgAAGgICAAAIpgIAAv+8Q
+Date: Tue, 20 Aug 2019 02:07:45 +0000
+Message-ID: <31b4d63a76e94a40b8b70dccdc7d39a8@lenovo.com>
+References: <4a91e18f7195458193f673c26986421a@lenovo.com>
+ <e9ba404c-a35e-1c46-2a0c-a4fd971312a6@intel.com>
+ <6ca6d992e4a248828063ff9f6a8e6c87@lenovo.com>
+ <CAO=notyjqi2m5LRDqRjSkTpYBmu5m_wr4JQnBeU8Vifg9_zLzw@mail.gmail.com>
+ <4ACC3BDB-7E8D-4A4E-BBA7-A7B281A705C2@fb.com>
+ <CAO=noty_n2a5nHzL7O-hDRAuuhw8Mx8CXmTc-_0izpAzMCS_EQ@mail.gmail.com>
+ <8E191471-44DD-41F2-8E60-B39982821C85@fb.com>
+In-Reply-To: <8E191471-44DD-41F2-8E60-B39982821C85@fb.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -48,69 +99,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org,
- "Terry S. Duncan" <terry.s.duncan@linux.intel.com>,
- William Kennington <wak@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The NCSI spec indicates that if the data does not end on a 32 bit
-boundary, one to three padding bytes equal to 0x00 shall be present to
-align the checksum field to a 32-bit boundary.
-
-Signed-off-by: Terry S. Duncan <terry.s.duncan@linux.intel.com>
----
- net/ncsi/ncsi-cmd.c | 2 +-
- net/ncsi/ncsi-rsp.c | 9 ++++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
-index 5c3fad8cba57..eab4346b0a39 100644
---- a/net/ncsi/ncsi-cmd.c
-+++ b/net/ncsi/ncsi-cmd.c
-@@ -54,7 +54,7 @@ static void ncsi_cmd_build_header(struct ncsi_pkt_hdr *h,
- 	checksum = ncsi_calculate_checksum((unsigned char *)h,
- 					   sizeof(*h) + nca->payload);
- 	pchecksum = (__be32 *)((void *)h + sizeof(struct ncsi_pkt_hdr) +
--		    nca->payload);
-+		    ALIGN(nca->payload, 4));
- 	*pchecksum = htonl(checksum);
- }
- 
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 7581bf919885..d876bd55f356 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -47,7 +47,8 @@ static int ncsi_validate_rsp_pkt(struct ncsi_request *nr,
- 	if (ntohs(h->code) != NCSI_PKT_RSP_C_COMPLETED ||
- 	    ntohs(h->reason) != NCSI_PKT_RSP_R_NO_ERROR) {
- 		netdev_dbg(nr->ndp->ndev.dev,
--			   "NCSI: non zero response/reason code\n");
-+			   "NCSI: non zero response/reason code %04xh, %04xh\n",
-+			    ntohs(h->code), ntohs(h->reason));
- 		return -EPERM;
- 	}
- 
-@@ -55,7 +56,7 @@ static int ncsi_validate_rsp_pkt(struct ncsi_request *nr,
- 	 * sender doesn't support checksum according to NCSI
- 	 * specification.
- 	 */
--	pchecksum = (__be32 *)((void *)(h + 1) + payload - 4);
-+	pchecksum = (__be32 *)((void *)(h + 1) + ALIGN(payload, 4) - 4);
- 	if (ntohl(*pchecksum) == 0)
- 		return 0;
- 
-@@ -63,7 +64,9 @@ static int ncsi_validate_rsp_pkt(struct ncsi_request *nr,
- 					   sizeof(*h) + payload - 4);
- 
- 	if (*pchecksum != htonl(checksum)) {
--		netdev_dbg(nr->ndp->ndev.dev, "NCSI: checksum mismatched\n");
-+		netdev_dbg(nr->ndp->ndev.dev,
-+			   "NCSI: checksum mismatched; recd: %08x calc: %08x\n",
-+			   *pchecksum, htonl(checksum));
- 		return -EINVAL;
- 	}
- 
--- 
-2.17.1
-
+PiANCj4g77u/T24gOC8xOS8xOSwgMzoxOSBQTSwgIlBhdHJpY2sgVmVudHVyZSIgPHZlbnR1cmVA
+Z29vZ2xlLmNvbT4gd3JvdGU6DQo+IA0KPiAgICAgT24gTW9uLCBBdWcgMTksIDIwMTkgYXQgMjo1
+NSBQTSBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4NCj4gd3JvdGU6DQo+ICAgICA+
+DQo+ICAgICA+DQo+ICAgICA+DQo+ICAgICA+IE9uIDgvMTYvMTksIDExOjAyIEFNLCAib3BlbmJt
+YyBvbiBiZWhhbGYgb2YgUGF0cmljayBWZW50dXJlIg0KPiA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5
+a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZg0KPiB2ZW50dXJlQGdv
+b2dsZS5jb20+IHdyb3RlOg0KPiAgICAgPg0KPiAgICAgPiAgICAgT24gRnJpLCBBdWcgMTYsIDIw
+MTkgYXQgMTA6NDcgQU0gSGFycnkgU3VuZzENCj4gPGhzdW5nMUBsZW5vdm8uY29tPiB3cm90ZToN
+Cj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4gPiBPbiA4LzE1LzE5
+IDY6NDkgQU0sIEhhcnJ5IFN1bmcxIHdyb3RlOg0KPiAgICAgPiAgICAgPiA+ID4gSGkgVGVhbSwN
+Cj4gICAgID4gICAgID4gPiA+DQo+ICAgICA+ICAgICA+ID4gPg0KPiAgICAgPiAgICAgPiA+ID4N
+Cj4gICAgID4gICAgID4gPiA+IEN1cnJlbnQgcGhvc3Bob3ItaG9zdC1pcG1pZCBkb2VzIG5vdCBz
+dXBwb3J0IGZydSB3cml0ZQ0KPiBjb21tYW5kLCBidXQNCj4gICAgID4gICAgID4gPiA+IGlwbWkt
+ZnJ1LXBhcnNlciBzdXBwb3J0cyBpdC4NCj4gICAgID4gICAgID4gPiA+DQo+ICAgICA+ICAgICA+
+ID4gPiBXZSBmb3VuZCB0aGlzIGZydSB3cml0ZSBjb21tYW5kIG9ubHkgdXBkYXRlIHRoZSBkYXRh
+IHRvDQo+IGRidXMNCj4gICAgID4gICAgID4gPiA+IGludmVudG9yeSwgYnV0IGRvZXNuJ3Qgc3lu
+YyB0aGUgZGF0YSBiYWNrIHRvIHRoZSBFRVBST00uDQo+ICAgICA+ICAgICA+ID4gPg0KPiAgICAg
+PiAgICAgPiA+ID4gRG9lcyBpcG1pLWZydS1wYXJzZXIgaGFzIGFueSBwbGFucyB0byBpbXBsZW1l
+bnQgaXQ/IEkgdGhpbmsgaXQNCj4gaXMgbW9yZQ0KPiAgICAgPiAgICAgPiA+ID4gbWFrZSBzZW5z
+ZSB0byBzeW5jIHRoZSBkYXRhIHRvIEVFUFJPTSB3aGVuIHdlIGRvIGZydQ0KPiB3cml0ZS4NCj4g
+ICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IFRoZSBhbHRlcm5hdGl2ZSBGUlUgZGFlbW9u
+IGZyb20gZW50aXR5IG1hbmFnZXIsIEZydURldmljZSwNCj4gc3VwcG9ydHMgd3JpdGluZw0KPiAg
+ICAgPiAgICAgPiA+IHRoZSBGUlUgZGlyZWN0bHkuDQo+ICAgICA+ICAgICA+ID4NCj4gaHR0cHM6
+Ly9naXRodWIuY29tL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvYmxvYi9tYXN0ZXIvc3JjL0ZydURl
+dmljZS5jcHANCj4gICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IEhhcHB5IHRvIHNlZSB0
+aGlzIGNhcGFiaWxpdHkgYWRkZWQgdG8gaXBtaS1mcnUtcGFyc2VyLCBidXQgeW91DQo+IG1pZ2h0
+IGJlIGFibGUgdG8NCj4gICAgID4gICAgID4gPiBtb2RlbCBpdCBvZmYgRnJ1RGV2aWNlLiAgSWYg
+eW91IHdhbnQgdG8gdXNlIEZydURldmljZSBhcy1pcywNCj4geW91IHdpbGwgbmVlZCB0aGUNCj4g
+ICAgID4gICAgID4gPiBhbHRlcm5hdGl2ZSBGcnVXcml0ZSBjb21tYW5kIHNldHMgZnJvbSBoZXJl
+Lg0KPiAgICAgPiAgICAgPiA+DQo+ICAgICA+ICAgICA+ID4NCj4gaHR0cHM6Ly9naXRodWIuY29t
+L29wZW5ibWMvaW50ZWwtaXBtaS1vZW0vYmxvYi8xNTk1NDdjZGZiZjE5OTI3MzdkY2VjYg0KPiAg
+ICAgPiAgICAgPiA+IGNiMzg4OGFmNzc5NWY5MzBiL3NyYy9zdG9yYWdlY29tbWFuZHMuY3BwI0wz
+MTYNCj4gICAgID4gICAgID4gPg0KPiAgICAgPiAgICAgPiA+IEFzIHdyaXR0ZW4sIHRob3NlIGNv
+bW1hbmRzIGNoYW5nZSB0aGUgYmVoYXZpb3IgYSBiaXQsIGFuZA0KPiBkb3VibGUgYnVmZmVycyB0
+aGUNCj4gICAgID4gICAgID4gPiBGUlUgd3JpdGUgY29tbWFuZHMuICBXaGVuIHRoZSBsYXN0IEZy
+dSB3cml0ZSBpcyBzZW50LCB0aGUNCj4gZGF0YSBpcyBmbHVzaGVkDQo+ICAgICA+ICAgICA+ID4g
+dGhyb3VnaCB0aGUgRlJVIHBhcnNlciB0byBlbnN1cmUgdGhhdCBpdCdzIHZhbGlkLCBhbmQgdGhl
+IHVzZXINCj4gaXNuJ3QgZG9pbmcNCj4gICAgID4gICAgID4gPiBhbnl0aGluZyBuZWZhcmlvdXMg
+KGxpa2UgY2hhbmdpbmcgYSBwcm9kdWN0IG5hbWUgb3Igc2VyaWFsDQo+ICAgICA+ICAgICA+ID4g
+bnVtYmVyKSBiZWZvcmUgaXQgd3JpdGVzIHRoZSBFRVBST00gaW4gb25lIGNodW5rLCBhcyBxdWlj
+a2x5DQo+IGFzIGl0IGNhbiB0bw0KPiAgICAgPiAgICAgPiA+IHJlZHVjZSB0aGUgcG9zc2liaWxp
+dHkgb2YgYSBoYWxmIHdyaXR0ZW4gRUVQUk9NLg0KPiAgICAgPiAgICAgPg0KPiAgICAgPiAgICAg
+PiBIaSBFZCwNCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4gVGhhbmtzIGZvciB5b3VyIGtp
+bmRseSByZXBseSEgSSBoYXZlIHN1cnZleWVkIHRoZSBlbnRpdHktbWFuYWdlcg0KPiBiZWZvcmUu
+DQo+ICAgICA+ICAgICA+IEJ1dCBJIGVuY291bnRlcmVkIGFuIGlzc3VlIHdoZW4gSSB1c2luZw0K
+PiBwaG9zcGhvci1pbnZlbnRvcnktbWFuYWdlciBhbmQgZW50aXR5LW1hbmFnZXIgYXQgdGhlIHNh
+bWUgdGltZS4NCj4gICAgID4gICAgID4gQm90aCBvZiB0aGVtIGhhdmUgc2FtZSBtZXRob2QgIk5v
+dGlmeSIgdW5kZXIgc2FtZSBpbnRlcmZhY2UgIg0KPiB4eXoub3BlbmJtY19wcm9qZWN0LkludmVu
+dG9yeS5NYW5hZ2VyICIsIGJ1dCBkaWZmZXJlbnQgc2lnbmF0dXJlLg0KPiAgICAgPg0KPiAgICAg
+Pg0KPiBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0Ff
+X2dlcnJpdC5vcGVuYm1jLTJEcHJvDQo+IGplY3QueHl6X2Nfb3BlbmJtY19pcG1pLTJEZnJ1LTJE
+cGFyc2VyXy0yQl8yMjAyMiZkPUR3SUJhUSZjPTVWRDBSVA0KPiB0TmxUaDN5Y2Q0MWIzTVV3JnI9
+djlNVTBLaTlwV25UWENXd2pIUFZncG5DUjgwdlhra2NySWFxVTdVU2w1Zw0KPiAmbT1TOXRDOVhm
+Mk5TTFR5SEpDRlRsNm9JTzQyTHBkaHJ0bndYYkgwVnNzQ2tJJnM9UDgwVlRvZjBUOWFzcC1rUTQN
+Cj4gcXI5bWNFWTFZM21LVGZWai1ienR4NS0zX28mZT0NCj4gICAgID4NCj4gICAgID4gICAgIFRo
+aXMgcGF0Y2ggYWRkcmVzc2VzIHBhcnQgb2YgaXQuDQo+ICAgICA+DQo+ICAgICA+ICAgICA+DQo+
+ICAgICA+ICAgICA+IHBob3NwaG9yLWludmVudG9yeS1tYW5hZ2VyOg0KPiAgICAgPiAgICAgPiBO
+QU1FICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRZUEUNCj4gU0lHTkFUVVJFICAg
+UkVTVUxUL1ZBTFVFICAgRkxBR1MNCj4gICAgID4gICAgID4geHl6Lm9wZW5ibWNfcHJvamVjdC5J
+bnZlbnRvcnkuTWFuYWdlciBpbnRlcmZhY2UgLQ0KPiAtICAgICAgICAgICAgIC0NCj4gICAgID4g
+ICAgID4gLk5vdGlmeSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBtZXRob2QNCj4gYXtv
+YXtzYXtzdn19fSAtICAgICAgICAgICAgIC0NCj4gICAgID4gICAgID4NCj4gICAgID4gICAgID4g
+ZW50aXR5LW1hbmFnZXINCj4gICAgID4gICAgID4gTkFNRSAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBUWVBFDQo+IFNJR05BVFVSRSAgIFJFU1VMVC9WQUxVRSAgIEZMQUdTDQo+ICAg
+ICA+ICAgICA+IHh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5Lk1hbmFnZXIgaW50ZXJmYWNl
+IC0gICAgICAgICAtDQo+IC0NCj4gICAgID4gICAgID4gLk5vdGlmeSAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICBtZXRob2QNCj4gYXtzYXtzdn19IC0gICAgICAgICAgICAtDQo+ICAgICA+
+ICAgICA+DQo+ICAgICA+ICAgICA+IFNvIHdoZW4gc29tZSBzZXJ2aWNlcyBjYWxsIHRoZSAnTm90
+aWZ5JyBtZXRob2QgZmFpbGVkIGJlY2F1c2Ugb2YNCj4gZ2V0dGluZyB3cm9uZyBzZXJ2aWNlLg0K
+PiAgICAgPiAgICAgPiBFeDoNCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaXBtaS1mcnUt
+cGFyc2VyL2Jsb2IvbWFzdGVyL3dyaXRlZnJ1ZGF0YS5jcHAjTA0KPiAyMDYNCj4gICAgID4gICAg
+ID4gSGF2ZSB5b3UgZXZlciBzZWVuIHRoaXMgaXNzdWUgYmVmb3JlPw0KPiAgICAgPg0KPiAgICAg
+PiAgICAgSSd2ZSBhZGRyZXNzZWQgcGFydCBvZiB0aGlzIGlzc3VlIGluIHBob3NwaG9yLWhvc3Qt
+aXBtaWQsIG5vdyBpdCBubw0KPiAgICAgPiAgICAgbG9uZ2VyIGFzc3VtZXMgdGhlIEZSVSdzIG93
+bmVyLg0KPiAgICAgPiAgICAgU2VlIHBhdGNoZXMgcmVsYXRlZCB0bzoNCj4gICAgID4NCj4gICAg
+ID4NCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9jb21t
+aXQvNDVlOTNjYmFlMGFhMGQNCj4gMGY1Mzg1ZDQwZjU2ODViMjNlMThmOTUzNTENCj4gICAgID4N
+Cj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9jb21taXQv
+YzI2Y2M3MTdhNGVlZjE4DQo+IGZmZmMxY2E4OTFiYjZhNjAxNTc0MGJmOWYNCg0KVGhhbmtzIGZv
+ciBmaXggaXQhIEFjdHVhbGx5LCBJIGhhdmUgdGhlIHNpbWlsYXIgcGF0Y2hlcyBpbiBteSByZXBv
+IHRvIGFkZHJlc3MgdGhpcyBpc3N1ZSwgbm93IEkgYW0gYWJsZSB0byByZW1vdmUgdGhlbS4NCg0K
+PiAgICAgPg0KPiAgICAgPiAgICAgPg0KPiAgICAgPiAgICAgPiBTaG91bGQgSSB1c2UgaW50ZWwt
+ZGJ1cy1pbnRlcmZhY2VzIGlmIEkgd2FudCB0byB1c2UgRnJ1ZGV2aWNlDQo+IChlbnRpdHktbWFu
+YWdlcikgYW5kIHdyaXRlIEZSVSBjb21tYW5kKGludGVsLWlwbWktb2VtKT8NCj4gICAgID4gICAg
+ID4gT3IgaXQgaXMgY29tcGF0aWJsZSB3aXRoIG9yaWdpbmFsIGRidXMtaW50ZXJmYWNlPw0KPiAg
+ICAgPg0KPiAgICAgPiAgICAgWW91IHVzZSBib3RoLg0KPiAgICAgPiBQYXRyaWNrLCBJIGFtIG5v
+dCB1c2luZyBpbnRlbC1kYnVzLWludGVyZmFjZXMsIG9ubHkgdXNpbmcgZGJ1cy1zZW5zb3JzLg0K
+PiBXaGF0IGlzIHRoZSB1c2Ugb2YgaW50ZWwtZGJ1cy1pbnRlcmZhY2VzPw0KPiANCj4gICAgIEkg
+ZG9uJ3QgdXNlIGJvdGguICBJIG9ubHkgdXNlIHBob3NwaG9yLWRidXMtaW50ZXJmYWNlcy4gIEkg
+d2FzIGp1c3QNCj4gICAgIGluZGljYXRpbmcgdGhleSB3ZXJlbid0IGdvaW5nIHRvIGludGVyZmVy
+ZSB3aXRoIGVhY2ggb3RoZXIgYmVjYXVzZSB0aGUNCj4gICAgIGludGVsLWRidXMtaW50ZXJmYWNl
+cyBpc24ndCB1c2VkIGluIHRoZSBzYW1lIHdheSBhcw0KPiAgICAgcGhvc3Bob3ItZGJ1cy1pbnRl
+cmZhY2VzLg0KPiANCj4gT2theSwgdGhhbmtzDQo+IA0KPiAgICAgPg0KPiAgICAgPiAgICAgPg0K
+PiAgICAgPiAgICAgPiBUaGFua3MsDQo+ICAgICA+ICAgICA+IEhhcnJ5DQo+ICAgICA+DQo+ICAg
+ICA+DQo+IA0KDQpJIHdpbGwgbm90IHVzaW5nIGludGVsLWRidXMtaW50ZXJmYWNlcyBmb3Igbm93
+LCB0aGFua3MgZm9yIGNvbW1lbnRzLg0KDQpIYXJyeQ0KDQo=
