@@ -2,68 +2,132 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B9F2986B8
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 23:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3352986FB
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 00:10:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46DLlp3hMWzDr45
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 07:44:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DMKL3MjdzDr22
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 08:09:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d31; helo=mail-io1-xd31.google.com;
- envelope-from=yuenn@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=31366b7381=benwei@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="HKCo7Zs/"; 
- dkim-atps=neutral
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com
- [IPv6:2607:f8b0:4864:20::d31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="BfcmJk2M"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="fqd735h3"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46DLlC4hsqzDr1X
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 07:43:49 +1000 (AEST)
-Received: by mail-io1-xd31.google.com with SMTP id s21so7791999ioa.1
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 14:43:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MuIvm7w+h6LdI42cnP24XmOWM0ZrtJTw2uRaAfDkXUM=;
- b=HKCo7Zs/xO5u//ZEsT6Hg0DTM1ygwqyIeJRDqOaBSynD0h9lxkVjjx4autbCC1eVZZ
- 3R5Tmood22J7Y4pHCfElhzWENsuQ0lkQJ3jS5eJfR9HdPdNIoBLJ/tKE1YLh4naRziGJ
- 1MTKR3bFyF3dUBByJrGWsRs1tw6yHHzebAoscwSRqBHZbZ8p+kiFJ+4s8E5RcNpJqFDS
- jaUrAmK+hFji3AYNT0EImpQhD32ZaiHXlzO9T/dscOBYwQ+by+qrdHN3AXz6hYRUb8HI
- ALpPI2JOEcsphqFSl2xTwZ8Akv4uAH/I/oJO+t9UHqzsESkiuOSw3ko4VUY0bICsCUl1
- pqOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MuIvm7w+h6LdI42cnP24XmOWM0ZrtJTw2uRaAfDkXUM=;
- b=kM8YZnKhMQCi6LjZwH3oEvmPyL+0eiEzN9yQo9DYvL3E4FOzLsFPA4thH5HL4oX9GF
- Q5rMP9LPoX6h9tWwR9/g16ptO4HdYrS8gfrxQ2mohW7WtsIlKW6GUqvKjuRvtZcxI1ZZ
- z2SXSKVjKGysC2NO05r192yDYq7c4TAUqNgvNsHKfzdjdaPQlKODt1+1xrysLq3DL2dy
- zi50VRffcgLRkfudmNXsaHcoMHUGiTVbcOmFjR+tWq7Q6o4y9LNydf5FPg69e7nL73Nn
- D1pMH8R+zohKahW2QW9Cb1w1Xmub3N+hzkPIN827bcrpNlWd7PFJPZRlxRWoDQ+Rf6yM
- /a4A==
-X-Gm-Message-State: APjAAAUD6r+mefXdG4xl+FLHbIJlIDUU0P1Xgl6E/pCGD0s+xLebZ8Pu
- DL/PVZLAFLHQWJ3RgUZZ885GjTOUUAWKZbqBSs8H8g==
-X-Google-Smtp-Source: APXvYqwAwMBqoOwY387/ZNW+/DNIcknISeubWA5Vx07kDfvYLgHnFDZJm1seSLs35leHgPf9z3rEXB9LjZKbUS/SZEg=
-X-Received: by 2002:a5d:9403:: with SMTP id v3mr7289211ion.281.1566423825989; 
- Wed, 21 Aug 2019 14:43:45 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DMJf37L7zDqkT
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 08:09:17 +1000 (AEST)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7LM7Xc3018877; Wed, 21 Aug 2019 15:09:13 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=facebook; bh=Osh/bHjjLw2nr3rh79U62Ku2VBxW5YvK8dbZMcmGHSA=;
+ b=BfcmJk2MQrAmenFytCAMYS2B8ys0w9F7tQBHpqVYO1e2rGmfwz8HTqaKGCheFyQ6u9Rj
+ 99EQmyjzq6/QWMOowUq5JK6SD9RPlfXP3ZVY+EmJQ8f3hm7HtR2MVZXv4B3wppg63xbU
+ xWIJ7tSvk0jveko9SipuPKygk6pfFnE4tns= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uh8ecsuyg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Wed, 21 Aug 2019 15:09:12 -0700
+Received: from ash-exhub103.TheFacebook.com (2620:10d:c0a8:82::c) by
+ ash-exhub202.TheFacebook.com (2620:10d:c0a8:83::6) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 21 Aug 2019 15:09:11 -0700
+Received: from NAM05-CO1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.174) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Wed, 21 Aug 2019 15:09:11 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WvaYJOkun7Wtp9KscIeKBc0F5sFUy3QlH9GOZsP4TT5c3BgCfN1OqR3lj3lXvkmW6RuAXWyDZzi0OEl46+JHMvcw9DzCEbC8Um6tQAQ3yC4voi8ooC1wuX/ONuT3pkzUWK0pVAnXwSINlmGL5kATp47TkVC09AvlXftEbVcBwF3lo1Z7OQ19dim7vyT/V7vR8Pc1MUoINprC6H7oKKVWIUj2hCaYhanKeDd1jOgJKXVti6iltT60floEcwo4JOxi53OS7CHkaQcV7Op4DmyzfnVxhhj9Ol3yFQdjx93QTd2V6RkOFrTmP9tXAZ8aJCA54g1m0JnYJ36lOWEM/a20pg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Osh/bHjjLw2nr3rh79U62Ku2VBxW5YvK8dbZMcmGHSA=;
+ b=DUKGCulZN9HfCDZ8U77NWOKtiINByu1QzICh4g1168zMOxgkHxQlEqJz/NGgQUkxpnS/EvU1NLDk+95uSCXdMcpg7FfpfD+liMZSJkPiGJ8J23GZaRY8MJ587SUVfUyoay4KMeaepKHWuDDBWf6denPhNhqccwaS5HcrhVsqBZ4Ta5LPgwsPAu6UM9GwSIUMqNIAX5f+V2LcMeLTPrvRSF7z2Am4TMRcUB9CGOhcUbD1b0puBuNolomB5XEiN2AO0pQObVk5U9KhPXfDFsWVUJjpURZTyLDxo4bBVWsOyMStfzqoZNdkVrcHTuks/bb6bYcTP2xDC9r6heB8z8N00Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Osh/bHjjLw2nr3rh79U62Ku2VBxW5YvK8dbZMcmGHSA=;
+ b=fqd735h35pTVzrubEVXbEJfuKZ1ctr94t74DA0lce7k5Dgk/+PDzcqD/A8nrjLbUuwfDa9od2YllFqWoBj+045BEx/uh7R2PrxXX46ng2+eFiGZw7b9ziEydS412IKcrQ/ZwKg8LyK7DuLwUurGn2pmeVLRWR9rYeOsQMxcx7ac=
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com (10.255.155.143) by
+ CH2PR15MB3687.namprd15.prod.outlook.com (52.132.229.209) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.16; Wed, 21 Aug 2019 22:08:49 +0000
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::9d88:b74a:48ea:cf6c]) by CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::9d88:b74a:48ea:cf6c%5]) with mapi id 15.20.2178.020; Wed, 21 Aug 2019
+ 22:08:49 +0000
+From: Ben Wei <benwei@fb.com>
+To: "sam@mendozajonas.com" <sam@mendozajonas.com>, "davem@davemloft.net"
+ <davem@davemloft.net>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: [PATCH net-next] net/ncsi: update response packet length for
+ GCPS/GNS/GNPTS commands
+Thread-Topic: [PATCH net-next] net/ncsi: update response packet length for
+ GCPS/GNS/GNPTS commands
+Thread-Index: AdVYbQEZzjCYid+VRb6aZg2XXHH58A==
+Date: Wed, 21 Aug 2019 22:08:49 +0000
+Message-ID: <CH2PR15MB3686567EBCBE71B41C5F079AA3AA0@CH2PR15MB3686.namprd15.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:ba86]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 06d70a9c-6e2b-41fe-0380-08d726842543
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600148)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:CH2PR15MB3687; 
+x-ms-traffictypediagnostic: CH2PR15MB3687:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <CH2PR15MB3687647B0CFAE04189E11E5FA3AA0@CH2PR15MB3687.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:580;
+x-forefront-prvs: 0136C1DDA4
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(346002)(39860400002)(376002)(136003)(396003)(366004)(199004)(189003)(305945005)(2501003)(14454004)(478600001)(6506007)(486006)(476003)(46003)(102836004)(99286004)(186003)(7696005)(8936002)(53936002)(81156014)(8676002)(81166006)(55016002)(52536014)(71190400001)(86362001)(71200400001)(25786009)(2201001)(4326008)(256004)(14444005)(6116002)(7736002)(15650500001)(2906002)(66946007)(76116006)(110136005)(66556008)(66446008)(316002)(6436002)(9686003)(66476007)(64756008)(74316002)(5660300002)(33656002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CH2PR15MB3687;
+ H:CH2PR15MB3686.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: UINubnK1HEhcN4uPro3R7hZGvyqqWC7sVUiV7HnalO0wEFekiDx53KDtWtKi7cchGCfThDHSodzuHd8F1nMXQW9rMQbQJuf0bCbeSyKPJN0EeE8UaabdEKekoaK8Ku+CxXH783InUbrIWJnhh3ijIxjpUW+/3Z+J41n9upT1sbbjSeW5j2caaqwpp5yhj+8y1MRtUtaV+YZVWqCBw1p2d905wxXQTlApcHA61v0qL5NCXyEiSCkzWRrErmABkrvJW3AYPgRyKK/LAk9oXEnXL1WvAFm2WR/rks1W7H2K+ZSaw2xUyiR1hKGytGv33EnQMB3We4cvO6OsVEqx50AIbRKvz4oObLVi6hDffr/00YlBaTkWyfVrusjIUksxoR9jzTTFAZNlAYddf0uIqcKent3gUh0OggGMyNn+9S2PefY=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <OFEB757C0D.E4799559-ON0025843C.0016DC0E-0025843C.0017D3B9@notes.na.collabserv.com>
- <CADy_Pt3zcSaN9Eh=yM9PC1ex1Nd3XVSEWcwarohsAcm=cwz6cQ@mail.gmail.com>
- <OF3B10C288.9F732822-ON0025845C.000C161E-0025845C.000C3C4C@notes.na.collabserv.com>
-In-Reply-To: <OF3B10C288.9F732822-ON0025845C.000C161E-0025845C.000C3C4C@notes.na.collabserv.com>
-From: Nancy Yuen <yuenn@google.com>
-Date: Wed, 21 Aug 2019 14:43:09 -0700
-Message-ID: <CADfYTpFfpxuvW1jFK3BqnUUBTECbSC7z9ueib=m7PQ=7AxV=BA@mail.gmail.com>
-Subject: Re: [tsc] How we can make others contribute to openbmc-test-automation
- repository
-To: Sivas Srr <sivas.srr@in.ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000b7b93c0590a777c0"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 06d70a9c-6e2b-41fe-0380-08d726842543
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2019 22:08:49.8012 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9j3MCyMU0r8s+dPUZ1/zlgBEyd5D9vuK970Vx7KNLRI+AnfsHu6NYkD+q1XAoFY0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR15MB3687
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-21_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=890 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908210217
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,150 +139,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: james.mihm@gmail.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ravindra S Rao1 <ravindra.s@in.ibm.com>
+Cc: Ben Wei <benwei@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b7b93c0590a777c0
-Content-Type: text/plain; charset="UTF-8"
+Update response packet length for the following commands per NC-SI spec
+- Get Controller Packet Statistics
+- Get NC-SI Statistics
+- Get NC-SI Pass-through Statistics command
 
-Hi Sivas,
+Signed-off-by: Ben Wei <benwei@fb.com>
+---
+ net/ncsi/ncsi-rsp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-I'm sorry I couldn't reply until now.  Internally we've kicked off a large
-build, release, and testing effort to improve automation and test coverage
-for various testing methods.  Our internal tools do not integrate well with
-git based projects so there's a lot of work around that aspect.  Robot
-based testing is also part of the effort and it's been started but it has
-experiences the same challenges with integrating with our internal tools
-that we need to work through.  We'll get there so you will see activity
-from my team in the future.  I'm hoping it will be next quarter.
+diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c index 7581bf919885..=
+5254004f2b42 100644
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -1083,9 +1083,9 @@ static struct ncsi_rsp_handler {
+ 	{ NCSI_PKT_RSP_GVI,    40, ncsi_rsp_handler_gvi     },
+ 	{ NCSI_PKT_RSP_GC,     32, ncsi_rsp_handler_gc      },
+ 	{ NCSI_PKT_RSP_GP,     -1, ncsi_rsp_handler_gp      },
+-	{ NCSI_PKT_RSP_GCPS,  172, ncsi_rsp_handler_gcps    },
+-	{ NCSI_PKT_RSP_GNS,   172, ncsi_rsp_handler_gns     },
+-	{ NCSI_PKT_RSP_GNPTS, 172, ncsi_rsp_handler_gnpts   },
++	{ NCSI_PKT_RSP_GCPS,  204, ncsi_rsp_handler_gcps    },
++	{ NCSI_PKT_RSP_GNS,    32, ncsi_rsp_handler_gns     },
++	{ NCSI_PKT_RSP_GNPTS,  48, ncsi_rsp_handler_gnpts   },
+ 	{ NCSI_PKT_RSP_GPS,     8, ncsi_rsp_handler_gps     },
+ 	{ NCSI_PKT_RSP_OEM,    -1, ncsi_rsp_handler_oem     },
+ 	{ NCSI_PKT_RSP_PLDM,    0, NULL                     },
+--
+2.17.1
 
-----------
-Nancy
-
-
-On Mon, Aug 19, 2019 at 7:14 PM Sivas Srr <sivas.srr@in.ibm.com> wrote:
-
-> Thank you for your mail James. Expecting to hear / see good progress in
-> openbmc-test-automation.
-> Similarly other organization also comes up and contribute in test
-> repository then it will be good.
->
->
->
-> With regards,
-> Sivas
->
->
-> ----- Original message -----
-> From: James Mihm <james.mihm@gmail.com>
-> To: Sivas Srr <sivas.srr@in.ibm.com>
-> Cc: openbmc@lists.ozlabs.org, Ravindra S Rao1 <ravindra.s@in.ibm.com>
-> Subject: [EXTERNAL] Re: [tsc] How we can make others contribute to
-> openbmc-test-automation repository
-> Date: Sat, Aug 17, 2019 10:25 AM
->
-> Hi Sivas, I'm sorry it's taken so long for me to respond. We do want to
-> participate in the openbmc-test-automation repository. One of the
-> challenges that we have is limited resources working on delivering products
-> using our internal test automation tools versus the
-> openbmc-test-automation. I'll discuss with my team at Intel to determine
-> when can spend some cycles on this effort.
->
-> Thanks, James.
->
-> On Thu, Jul 18, 2019 at 10:51 PM Sivas Srr <*sivas.srr@in.ibm.com*
-> <sivas.srr@in.ibm.com>> wrote:
-> Hi All,
-> Objective of this mail is to get contribution to openbmc-test-automation
-> repository.
-> Not only in automation / automation test plan / code review, Even sharing
-> test results also fine.
-> As openbmc common for both Intel and Power platform, If some one share
-> Intel based test results of
-> openbmc-test-automation test cases also good.
-> Would like to get your suggestions / input on how we can make openbmc-test
-> better.
-> Hi Brad, Could you please have it in TSC group agenda.
-> If needed, Will schedule separate meeting which aligns with all other
-> convenient time.
-> Thank you in advance Brad.
-> With regards,
-> Sivas
->
->
->
->
-
---000000000000b7b93c0590a777c0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Sivas,<div><br></div><div>I&#39;m sorry I couldn&#39;t =
-reply until now.=C2=A0 Internally we&#39;ve kicked off a large build, relea=
-se, and testing effort to improve automation and test coverage for various =
-testing methods.=C2=A0 Our internal tools do not integrate well with git ba=
-sed projects so there&#39;s a lot of work around that aspect.=C2=A0 Robot b=
-ased testing is also part of the effort and it&#39;s been started but it ha=
-s experiences the same challenges with integrating with our internal tools =
-that we need to work through.=C2=A0 We&#39;ll get there so you will see act=
-ivity from my team in the future.=C2=A0 I&#39;m hoping it will be next quar=
-ter.</div><div><br></div><div><div><div dir=3D"ltr" class=3D"gmail_signatur=
-e" data-smartmail=3D"gmail_signature">----------<br>Nancy</div></div><br></=
-div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Mon, Aug 19, 2019 at 7:14 PM Sivas Srr &lt;<a href=3D"mailto:sivas.s=
-rr@in.ibm.com">sivas.srr@in.ibm.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr" style=3D"font-family:Ar=
-ial,Helvetica,sans-serif;font-size:10pt"><div dir=3D"ltr">Thank you for you=
-r mail James. Expecting to hear / see good progress in openbmc-test-automat=
-ion.</div>
-<div dir=3D"ltr">Similarly other organization also comes up and contribute =
-in test repository then it will be good.</div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">With regards,</div>
-<div dir=3D"ltr">Sivas</div>
-<div dir=3D"ltr">=C2=A0</div>
-<blockquote dir=3D"ltr" style=3D"border-left:2px solid rgb(170,170,170);mar=
-gin-left:5px;padding-left:5px;direction:ltr;margin-right:0px">----- Origina=
-l message -----<br>From: James Mihm &lt;<a href=3D"mailto:james.mihm@gmail.=
-com" target=3D"_blank">james.mihm@gmail.com</a>&gt;<br>To: Sivas Srr &lt;<a=
- href=3D"mailto:sivas.srr@in.ibm.com" target=3D"_blank">sivas.srr@in.ibm.co=
-m</a>&gt;<br>Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_bla=
-nk">openbmc@lists.ozlabs.org</a>, Ravindra S Rao1 &lt;<a href=3D"mailto:rav=
-indra.s@in.ibm.com" target=3D"_blank">ravindra.s@in.ibm.com</a>&gt;<br>Subj=
-ect: [EXTERNAL] Re: [tsc] How we can make others contribute to openbmc-test=
--automation repository<br>Date: Sat, Aug 17, 2019 10:25 AM<br>=C2=A0<br><fo=
-nt size=3D"3">Hi=C2=A0Sivas, I&#39;m sorry it&#39;s taken so long for me to=
- respond. We do want to participate in the openbmc-test-automation reposito=
-ry. One of the challenges that we have is limited resources working on deli=
-vering products using our internal test automation tools versus the openbmc=
--test-automation. I&#39;ll discuss with my team at Intel to determine when =
-can spend some cycles on this effort.</font><br><br><font size=3D"3">Thanks=
-, James.</font><br><br><font size=3D"3">On Thu, Jul 18, 2019 at 10:51 PM Si=
-vas Srr &lt;</font><a href=3D"mailto:sivas.srr@in.ibm.com" target=3D"_blank=
-"><u><font size=3D"3" color=3D"#0000ff">sivas.srr@in.ibm.com</font></u></a>=
-<font size=3D"3">&gt;=C2=A0wrote:</font><br><font size=3D"3">Hi All,</font>=
-<font size=3D"3">=C2=A0</font><br><font size=3D"3">Objective of this mail i=
-s to get contribution to openbmc-test-automation repository.</font><br><fon=
-t size=3D"3">Not only in automation / automation test plan / code review, E=
-ven sharing test results also fine.</font><br><font size=3D"3">As openbmc c=
-ommon for both Intel and Power platform, If some one share Intel based test=
- results of</font><br><font size=3D"3">openbmc-test-automation test cases a=
-lso good.</font><font size=3D"3">=C2=A0</font><br><font size=3D"3">Would li=
-ke to get your suggestions / input on how we can make openbmc-test better.<=
-/font><font size=3D"3">=C2=A0</font><br><font size=3D"3">Hi Brad, Could you=
- please have it in TSC group agenda.</font><br><font size=3D"3">If needed, =
-Will schedule separate meeting which aligns with all other convenient time.=
-</font><br><font size=3D"3">Thank you in advance Brad.</font><font size=3D"=
-3">=C2=A0</font><br><font size=3D"3">With regards,</font><br><font size=3D"=
-3">Sivas</font><font size=3D"3">=C2=A0</font><font size=3D"3">=C2=A0</font>=
-<font size=3D"3">=C2=A0</font></blockquote>
-<div dir=3D"ltr">=C2=A0</div></div><br>
-
-</blockquote></div>
-
---000000000000b7b93c0590a777c0--
