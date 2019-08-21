@@ -1,63 +1,102 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C51298615
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 22:57:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6539D98690
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 23:25:46 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46DKjj65FdzDqsw
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 06:57:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DLLH5rrqzDqym
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 07:25:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=209.85.210.66; helo=mail-ot1-f66.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=dell.com
+ (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com;
+ envelope-from=justin.lee1@dell.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-ot1-f66.google.com (mail-ot1-f66.google.com
- [209.85.210.66])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=Dell.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=dell.com header.i=@dell.com header.b="NP8pW7K/"; 
+ dkim-atps=neutral
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
+ [148.163.137.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46DKj20cNBzDqkL
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 06:56:53 +1000 (AEST)
-Received: by mail-ot1-f66.google.com with SMTP id e12so3379534otp.10
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:56:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=cw5zVFDgnti+9h09SHubCz/1zUqdZG2/3ACA1Sozj6M=;
- b=nSn1jIFI27tRPhocdh23oQ3VEVDbe3E3aVEAwRgjJOizMtFmgibsEG5o721P5+R/DV
- 9DSjImMf9hFLFTuGQgUKPSFlIS1GaOINkbguRVG/hfzhgt2uRAo3dcHsy64HcdmJlubh
- F/HsJ1rWstm4DEoR/H9nGyNRry9daS1KMDb3gmWvQQUKU6P7AfZKFFnByg0iv5G915AF
- gfeyeThG6ROKzJP4XlgRm0/M0uPQ4g4bDmyISqHsjlXr16TlEJnwtZ6IPyZ/oDfbY5ZK
- bWaUtLrkYVWxjIhBtsA8uMxEZmvEyXVXS89JqUZ2D8Fuhpi022mWiJK0+qUGey3bblQz
- 3QQw==
-X-Gm-Message-State: APjAAAUCQjgY3Kr3MpbAJ1TbXZZHDujgydNnBtcXG0jvnUK0slQ+hVi5
- Wwzf7P/5ONP4vDihJFulrQ==
-X-Google-Smtp-Source: APXvYqwkzyR5k2lVn9jQ7SWqN03g1X/p1BcvTAz47w4p4sCmgewK0YLxZltsj/wiQTiBJlsmcwM1OA==
-X-Received: by 2002:a05:6830:1657:: with SMTP id
- h23mr6886407otr.222.1566421011342; 
- Wed, 21 Aug 2019 13:56:51 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id m7sm8447750otm.5.2019.08.21.13.56.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Aug 2019 13:56:50 -0700 (PDT)
-Date: Wed, 21 Aug 2019 15:56:50 -0500
-From: Rob Herring <robh@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-binding: spi: add NPCM FIU controller
-Message-ID: <20190821205650.GA14884@bogus>
-References: <20190808131448.349161-1-tmaimon77@gmail.com>
- <20190808131448.349161-2-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DLKX3kf5zDqy9
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 07:25:01 +1000 (AEST)
+Received: from pps.filterd (m0170394.ppops.net [127.0.0.1])
+ by mx0b-00154904.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7LLADEn006795
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 17:24:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
+ h=from : to : subject :
+ date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=smtpout1; bh=IW/4zYgD443tA89Wg+OoQ6xbIDSw8ToEd3ox1kivyl0=;
+ b=NP8pW7K/UxhctC6VMfomtSLM2BVipafYSy8jg4itOTNjbbItaxTKAgQtp4DxUgwzmlBR
+ B9VZHKw+FkdGNCheKzDo2+FuWy9NnrIPVpmvwkP8JuTByI4+Yj/4l7EvpsHACNnNZapE
+ GekCPUF3q4zNXHE9TFuCjSbQApi1zS4WsdGCmHPwUshBk/q5k/3B2/U2YohU/bZuThID
+ jR5QFtPsQbxTCTmkKcLFfaFWmLql5AHdPXAdPopbBtexy2RH/RthY8fAmJi+ZCBMWQiA
+ Rfj2WaRAdi/hajA1jePtHdVJXcmZfGDNNSeG3NWX3YDx6YqoOMElmokWl7B0KOVmiMQe 2w== 
+Received: from mx0a-00154901.pphosted.com (mx0a-00154901.pphosted.com
+ [67.231.149.39])
+ by mx0b-00154904.pphosted.com with ESMTP id 2ugh3g80p4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 17:24:56 -0400
+Received: from pps.filterd (m0134746.ppops.net [127.0.0.1])
+ by mx0a-00154901.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7LLCwR9048590
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 17:24:55 -0400
+Received: from ausxippc106.us.dell.com (AUSXIPPC106.us.dell.com
+ [143.166.85.156])
+ by mx0a-00154901.pphosted.com with ESMTP id 2uh91uvjhm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 17:24:55 -0400
+X-LoopCount0: from 10.166.135.94
+X-PREM-Routing: D-Outbound
+X-IronPort-AV: E=Sophos;i="5.60,349,1549951200"; d="scan'208";a="450686217"
+From: <Justin.Lee1@Dell.com>
+To: <netdev@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+ <linux-kernel@vger.kernel.org>, <sam@mendozajonas.com>,
+ <davem@davemloft.net>
+Subject: [PATCH] net/ncsi: Fix the payload copying for the request coming from
+ Netlink
+Thread-Topic: [PATCH] net/ncsi: Fix the payload copying for the request coming
+ from Netlink
+Thread-Index: AdVYWI8OU3qkqsD+SsWDRcEtUwk7KQ==
+Date: Wed, 21 Aug 2019 21:24:52 +0000
+Message-ID: <a94e5fa397a64ae3a676ec11ea09aaba@AUSX13MPS302.AMER.DELL.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Enabled=True;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Owner=Justin_Lee1@Dell.com;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_SetDate=2019-08-21T21:22:10.9472431Z;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Name=External Public;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_17cb76b2-10b8-4fe1-93d4-2202842406cd_Extended_MSFT_Method=Manual;
+ aiplabel=External Public
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.143.242.75]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190808131448.349161-2-tmaimon77@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-21_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=669 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908210208
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=825 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
+ definitions=main-1908210208
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,83 +108,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, vigneshr@ti.com,
- bbrezillon@kernel.org, avifishman70@gmail.com, venture@google.com,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- broonie@kernel.org, linux-spi@vger.kernel.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 08, 2019 at 04:14:47PM +0300, Tomer Maimon wrote:
-> Added device tree binding documentation for Nuvoton BMC
-> NPCM Flash Interface Unit(FIU) SPI master controller
-> using SPI-MEM interface.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../bindings/spi/nuvoton,npcm-fiu.txt         | 47 +++++++++++++++++++
->  1 file changed, 47 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.txt b/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.txt
-> new file mode 100644
-> index 000000000000..ab37aae91d19
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/spi/nuvoton,npcm-fiu.txt
-> @@ -0,0 +1,47 @@
-> +* Nuvoton FLASH Interface Unit (FIU) SPI Controller
-> +
-> +NPCM FIU supports single, dual and quad communication interface.
-> +
-> +The NPCM7XX supports three FIU modules,
-> +FIU0 and FIUx supports two chip selects,
-> +FIU3 support four chip select.
-> +
-> +Required properties:
-> +  - compatible : "nuvoton,npcm750-fiu" for the NPCM7XX BMC
-> +  - #address-cells : should be 1.
-> +  - #size-cells : should be 0.
-> +  - reg : the first contains the register location and length,
-> +          the second contains the memory mapping address and length
-> +  - reg-names: Should contain the reg names "control" and "memory"
-> +  - clocks : phandle of FIU reference clock.
-> +
-> +Required properties in case the pins can be muxed:
-> +  - pinctrl-names : a pinctrl state named "default" must be defined.
-> +  - pinctrl-0 : phandle referencing pin configuration of the device.
-> +
-> +Optional property:
-> +  - spix-mode: enable spix-mode for an expansion bus to an ASIC or CPLD.
+The request coming from Netlink should use the OEM generic handler.
 
-Is this something standard? If not, add a vendor prefix.
+The standard command handler expects payload in bytes/words/dwords
+but the actual payload is stored in data if the request is coming from Netl=
+ink.
 
-> +
-> +Aliases:
-> +- All the FIU controller nodes should be represented in the aliases node using
-> +  the following format 'fiu{n}' where n is a unique number for the alias.
-> +  In the NPCM7XX BMC:
-> +  		fiu0 represent fiu 0 controller
-> +  		fiu1 represent fiu 3 controller
-> +  		fiu2 represent fiu x controller
-> +
-> +Example:
-> +fiu3: fiu@c00000000 {
+Signed-off-by: Justin Lee <justin.lee1@dell.com>
 
-spi@...
+---
+ net/ncsi/ncsi-cmd.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> +	compatible = "nuvoton,npcm750-fiu";
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +	reg = <0xfb000000 0x1000>, <0x80000000 0x10000000>;
-> +	reg-names = "control", "memory";
-> +	clocks = <&clk NPCM7XX_CLK_AHB>;
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&spi3_pins>;
-> +	spi-nor@0 {
-> +			...
-> +	};
-> +};
-> +
-> -- 
-> 2.18.0
-> 
+diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
+index eab4346..0187e65 100644
+--- a/net/ncsi/ncsi-cmd.c
++++ b/net/ncsi/ncsi-cmd.c
+@@ -309,14 +309,21 @@ static struct ncsi_request *ncsi_alloc_command(struct=
+ ncsi_cmd_arg *nca)
+=20
+ int ncsi_xmit_cmd(struct ncsi_cmd_arg *nca)
+ {
++	struct ncsi_cmd_handler *nch =3D NULL;
+ 	struct ncsi_request *nr;
++	unsigned char type;
+ 	struct ethhdr *eh;
+-	struct ncsi_cmd_handler *nch =3D NULL;
+ 	int i, ret;
+=20
++	/* Use OEM generic handler for Netlink request */
++	if (nca->req_flags =3D=3D NCSI_REQ_FLAG_NETLINK_DRIVEN)
++		type =3D NCSI_PKT_CMD_OEM;
++	else
++		type =3D nca->type;
++
+ 	/* Search for the handler */
+ 	for (i =3D 0; i < ARRAY_SIZE(ncsi_cmd_handlers); i++) {
+-		if (ncsi_cmd_handlers[i].type =3D=3D nca->type) {
++		if (ncsi_cmd_handlers[i].type =3D=3D type) {
+ 			if (ncsi_cmd_handlers[i].handler)
+ 				nch =3D &ncsi_cmd_handlers[i];
+ 			else
+--=20
+2.9.3
