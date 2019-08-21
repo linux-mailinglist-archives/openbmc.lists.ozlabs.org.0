@@ -2,70 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3C07981A1
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 19:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7914498309
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 20:34:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46DFPX2dbMzDr7B
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 03:43:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DGXX2vkKzDqnl
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 04:34:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d36; helo=mail-io1-xd36.google.com;
- envelope-from=yuenn@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=209.85.210.67; helo=mail-ot1-f67.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="LSYFnnwu"; 
- dkim-atps=neutral
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
- [IPv6:2607:f8b0:4864:20::d36])
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-ot1-f67.google.com (mail-ot1-f67.google.com
+ [209.85.210.67])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46DFNk54qCzDr5l
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:42:29 +1000 (AEST)
-Received: by mail-io1-xd36.google.com with SMTP id z3so6351878iog.0
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 10:42:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=HX1/t79vZk1U5vrvwv6vkpqCU8tCYEauaa31fKEq6Dg=;
- b=LSYFnnwu8TZzOJlFovn2BWMhwu2Y499OV8fB49Si+w4nvjHS+jlXVykEeZtMn89vW2
- iemn1bM1/Mig2kpM+UCeo8M5XHdWrtsLvglANzUzqzNJESoPns5Z/5h9JJ3AzXSmP+3N
- 9w5RSHC1A2shMRViiOvRhJnVUALX3YTFyYVEwnznZmU9INda2q0zUIoFqXHyCe4AUqMP
- /XqOL1rvrkdRQXIUpIarpXJ3uAobHze4Hk+afhRvzxHMnV+30eENq3VpkKsmg1Ub3Nbm
- adK0dwNoEYMO60XeR0IvS/Wta5VJlw3LJk1OtU/u6N1udERJ38Az/sSlZdyNqH9keIM9
- DFPg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DGWV6sN8zDqmh
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 04:33:24 +1000 (AEST)
+Received: by mail-ot1-f67.google.com with SMTP id g17so3019437otl.2
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 11:33:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=HX1/t79vZk1U5vrvwv6vkpqCU8tCYEauaa31fKEq6Dg=;
- b=tXfKYu/UrVo5MEiHvr0dYcDe8ykPBGAx1/8Pe6M2RIFXWk/jfPm8x0+yeP/B1yOGVX
- Zip6CvdMkLk/lhZD3pcqiBUUC3QucRz/nEhwA2k09T0S44NZNSuJ/y1V2UmucHEa2FeG
- ltAJ6QJxeBBcozhxGJyATj/j8/VvOabAYpA3HMO2CSSTU+lxT4c38Ak0MFYWXTX2By2j
- K8ltLV/Q6wxfQrbaFWEnHWvwY8XHGifthC2tFNV1k5E4p4PeA4bcZ7caSXdLCRPZsVqR
- ndIObIcbDUSYWwIVH6VdJWl5BlbGSLHmku79HqRBTS2ZuBCXJ+mbF/y4alyZ2iNMChfi
- GyHA==
-X-Gm-Message-State: APjAAAWygQhqY/dS30N9VzkH0+4mhDV2a6k8SwxpyhFD96sqwDGFJo8Q
- LBnj+9SEElp+0VeZ5haIJ6KR/154yrguka1ukDVihA==
-X-Google-Smtp-Source: APXvYqwFUFCzjus9/m+aeD+9bx2aN6oJCsoclnR/NO7RbNQQif5G1eF/JOHZSUFMnBymXxgJdmWpuhYCjV7+Z0bpr3Y=
-X-Received: by 2002:a5e:960a:: with SMTP id a10mr1231565ioq.82.1566409345986; 
- Wed, 21 Aug 2019 10:42:25 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=egHhqVwtSMDmp9YF4xs0dobfljwNvPw3rwWXCHsf7oo=;
+ b=gU2I8DOLir5eO6Ono2exwYFOg7YlIpYsIQ4O1x+7NJcBDwiwETEEMQnjiEgw2vW8gQ
+ PYzZNur/UfRCubkxaGEICAOoENv+UjskoqCF8S1KlurHEKxVjRuQzqhYNlItmL7RMzz4
+ EiEv2DyVTaYbObkEXA2Qvz6WnKrTy7sLh4xynwoFzRtH5aNSASCbQGNBK8e+Ubc20yrA
+ gHQSYu7HD2cgQbRzOcIfq/HZpKkZO9LGmZQbhIMDP7/zjZ9ATCSx5OBWom/F1+wp85SO
+ AyHC2527Rw4PLjqwiY8bfOESJvKi+sYesxuqdgmCCGuxgiHvmUwlVa/BeXQpr6llX2u/
+ JyQA==
+X-Gm-Message-State: APjAAAUVdwtow6MsisUbqo2M5syZy5z/tcpHMgIykRHC5IwUGQkzuXT0
+ Co08bnv7ckdWaFdoqOIFNw==
+X-Google-Smtp-Source: APXvYqwQIo2Vuh1ftveWru24y3+5VDk13vltqfb28SAYQ4YZfiK4rqCZKAcqCdEvqJ17ZGIKIpXeTA==
+X-Received: by 2002:a9d:331:: with SMTP id 46mr23079892otv.8.1566412400760;
+ Wed, 21 Aug 2019 11:33:20 -0700 (PDT)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id v24sm7972302otj.78.2019.08.21.11.33.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Aug 2019 11:33:20 -0700 (PDT)
+Date: Wed, 21 Aug 2019 13:33:19 -0500
+From: Rob Herring <robh@kernel.org>
+To: Avi Fishman <avifishman70@gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-binding: net: document NPCM7xx EMC 10/100 DT
+ bindings
+Message-ID: <20190821183319.GA19310@bogus>
+References: <20190801072611.27935-1-avifishman70@gmail.com>
+ <20190801072611.27935-2-avifishman70@gmail.com>
 MIME-Version: 1.0
-References: <CAGMNF6Xdkf8Obp8iLVajt21ZT81RAuGksper_u-w9Fvt_OrCZA@mail.gmail.com>
- <20190722163049.kyupys7alq6zzq6x@thinkpad>
- <CAGMNF6UO0T7Dq4--QDXGkbWZ3CwKAhFSLxy5rKeMW-Af=V=o_A@mail.gmail.com>
- <843FFB1F-4CF1-45EB-80E1-216FD23C8E2D@fuzziesquirrel.com>
- <CAGMNF6V-ReCHTbSpM0Ly65f+PsCZDf+KAjL+pEybmWKYaNjBjg@mail.gmail.com>
- <852D2A81-1C96-4BD3-8F83-489E43A564A5@fuzziesquirrel.com>
-In-Reply-To: <852D2A81-1C96-4BD3-8F83-489E43A564A5@fuzziesquirrel.com>
-From: Nancy Yuen <yuenn@google.com>
-Date: Wed, 21 Aug 2019 10:41:48 -0700
-Message-ID: <CADfYTpHHFF6EGupzKk=VM7FBsevAZLHE8N_safZs7V=i=RNSxQ@mail.gmail.com>
-Subject: Re: Integrate collectd with OpenBMC
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000a45b8c0590a41846"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190801072611.27935-2-avifishman70@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,72 +69,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Gabriel Matute <gmatute@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, benjaminfair@google.com,
+ venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ tali.perry1@gmail.com, netdev@vger.kernel.org, gregkh@linuxfoundation.org,
+ tglx@linutronix.de, davem@davemloft.net, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a45b8c0590a41846
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Aug 01, 2019 at 10:26:10AM +0300, Avi Fishman wrote:
+> Added device tree binding documentation for
+> Nuvoton NPCM7xx Ethernet MAC Controller (EMC) 10/100 RMII
+> 
+> Signed-off-by: Avi Fishman <avifishman70@gmail.com>
+> ---
+>  .../bindings/net/nuvoton,npcm7xx-emc.txt      | 38 +++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/nuvoton,npcm7xx-emc.txt
 
-Will do.
-----------
-Nancy
+Consider converting this to DT schema (YAML).
 
+> 
+> diff --git a/Documentation/devicetree/bindings/net/nuvoton,npcm7xx-emc.txt b/Documentation/devicetree/bindings/net/nuvoton,npcm7xx-emc.txt
+> new file mode 100644
+> index 000000000000..a7ac3ca66de9
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/nuvoton,npcm7xx-emc.txt
+> @@ -0,0 +1,38 @@
+> +Nuvoton NPCM7XX 10/100 Ethernet MAC Controller (EMC)
+> +
+> +The NPCM7XX provides one or two Ethernet MAC RMII Controllers
+> +for WAN/LAN applications
+> +
+> +Required properties:
+> +- device_type     : Should be "network"
 
-On Wed, Aug 21, 2019 at 5:14 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
+Drop this. device_type is deprecated for FDT except for a few cases.
 
-> at 4:46 PM, Kun Yi <kunyi@google.com> wrote:
->
-> > No problem, thanks!
-> > Brad, could you also add Gabriel to the list of OpenBMC contributors?
-> His
-> > email is gabomatute@gmail.com
-> > Does he need to sign the CLA individually?
->
-> Hi Kun
->
-> No the corporate CLA has the concept of a CLA manager who can add and
-> remove people from the company CLA.
->
-> Nancy can you add Gabriel to Googles schedule A and to the
-> google/ci-authorized gerrit group?
->
-> thx - brad
->
+> +- compatible      : "nuvoton,npcm750-emc" for Poleg NPCM7XX.
+> +- reg             : Offset and length of the register set for the device.
+> +- interrupts      : Contain the emc interrupts with flags for falling edge.
+> +                    first interrupt dedicated to Txirq
+> +                    second interrupt dedicated to Rxirq
+> +- phy-mode        : Should be "rmii" (see ethernet.txt in the same directory)
+> +- clocks          : phandle of emc reference clock.
+> +- resets          : phandle to the reset control for this device.
+> +- use-ncsi        : Use the NC-SI stack instead of an MDIO PHY
 
---000000000000a45b8c0590a41846
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Vendor prefix needed.
 
-<div dir=3D"ltr">Will do.<br clear=3D"all"><div><div dir=3D"ltr" class=3D"g=
-mail_signature" data-smartmail=3D"gmail_signature">----------<br>Nancy</div=
-></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
-mail_attr">On Wed, Aug 21, 2019 at 5:14 AM Brad Bishop &lt;<a href=3D"mailt=
-o:bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquirrel.com</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">at 4:46 PM, Kun Y=
-i &lt;<a href=3D"mailto:kunyi@google.com" target=3D"_blank">kunyi@google.co=
-m</a>&gt; wrote:<br>
-<br>
-&gt; No problem, thanks!<br>
-&gt; Brad, could you also add Gabriel to the list of OpenBMC contributors? =
-His=C2=A0 <br>
-&gt; email is <a href=3D"mailto:gabomatute@gmail.com" target=3D"_blank">gab=
-omatute@gmail.com</a><br>
-&gt; Does he need to sign the CLA individually?<br>
-<br>
-Hi Kun<br>
-<br>
-No the corporate CLA has the concept of a CLA manager who can add and=C2=A0=
- <br>
-remove people from the company CLA.<br>
-<br>
-Nancy can you add Gabriel to Googles schedule A and to the=C2=A0 <br>
-google/ci-authorized gerrit group?<br>
-<br>
-thx - brad<br>
-</blockquote></div>
+> +
+> +Example:
+> +
+> +emc0: eth@f0825000 {
 
---000000000000a45b8c0590a41846--
+ethernet@...
+
+> +	device_type = "network";
+> +	compatible = "nuvoton,npcm750-emc";
+> +	reg = <0xf0825000 0x1000>;
+> +	interrupts = <GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>,
+> +	             <GIC_SPI 15 IRQ_TYPE_LEVEL_HIGH>;
+> +	phy-mode = "rmii";
+> +	clocks = <&clk NPCM7XX_CLK_AHB>;
+> +
+> +	#use-ncsi; /* add this to support ncsi */
+
+Doesn't match the binding.
+
+> +
+> +	clock-names = "clk_emc";
+> +	resets = <&rstc 6>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&r1_pins
+> +	             &r1err_pins
+> +	             &r1md_pins>;
+> +	status = "okay";
+
+Drop status in examples.
+
+> +};
+> -- 
+> 2.18.0
+> 
