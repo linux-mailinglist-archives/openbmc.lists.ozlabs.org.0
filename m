@@ -2,44 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ADAE97AC6
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 15:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6646397D0F
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 16:33:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46D7mw04NRzDr45
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 23:29:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46D9BL6yYmzDrBy
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 00:33:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::52b; helo=mail-pg1-x52b.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="gNBJZn0q"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com
+ [IPv6:2607:f8b0:4864:20::52b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46D7m02BMCzDqXY
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 23:28:47 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from brads-mbp.dyn.fuzziesquirrel.com
- (Brads-MBP.dyn.fuzziesquirrel.com [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id C91E61542A;
- Wed, 21 Aug 2019 09:28:42 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: Re-use witherspoon-psu-monitor
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <5ae2cd44-0c3c-b960-c614-31d7920d9f05@linux.ibm.com>
-Date: Wed, 21 Aug 2019 09:28:42 -0400
-Message-Id: <0ED07A03-3592-4C51-8536-304616D3A7C3@fuzziesquirrel.com>
-References: <l7vrab9ffh6cynjgiq6wmlqm.1565599934470@email.jadenine.com>
- <5ae2cd44-0c3c-b960-c614-31d7920d9f05@linux.ibm.com>
-To: Matt Spinler <mspinler@linux.ibm.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46D99T0PLKzDqg7
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 00:32:27 +1000 (AEST)
+Received: by mail-pg1-x52b.google.com with SMTP id i18so1408444pgl.11
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 07:32:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=o6DB7pAkCUwFIso39Rf3hqxTTSfj8/a9OCvEMZgVbE4=;
+ b=gNBJZn0qh4P6tk+1Alr71w5/yH9O2lmtFN5tIoHUEh5T8+xZ5W1RXfve8oSMHJWhG2
+ WvNVVu4DiHrC/wZPBnrZSkMl/TsflgxjSxf4wnaeuGVblKCblJ1y0MXNHlvp4iBuivAO
+ yoaRgO7j0rhBJsAxvkfIhRDbieSm3KokMHU6r5pFXTw5dms42gsm9i9G+NXRqUOPUgi/
+ EhJmEA3xuu9Rt2qeHytn3JsaB7etJzPTnV6ed4nS9ERa/00v1sSqHfCtDa5q+ERxy9Za
+ XJnr9O8g9nbRsIUzlXc/xnSFpi5D0RULZ3zBhao4X9OMlUoEaILM7/V2u6gUtmC4NGEL
+ vGpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=o6DB7pAkCUwFIso39Rf3hqxTTSfj8/a9OCvEMZgVbE4=;
+ b=PwFwvQCeEOnD4EzpKricXH5yK0Ia15SB/JW4u4z1htwYxO49su6EK/jE3s482XKEPb
+ hP5iUPczA7j2L5mx3bPBxRV9NRHuapn9hbT5zGHsrZr9xS1LjE61eT/XjyBkI8N1DPse
+ W6voc3TAJaUun4fvy1nQKmS6Jja98i7bPjX8DwrDazfw17Al0eTVDz+kZjOHQGYO+519
+ l2qMTUB2VWb9+uTTr0LKBfQEEU2ZWjXYYJxvY3LSZcWIcOmz+59ZqQP/Zml8s3icC7ji
+ gcwbn2jqu594Qs4fDUAe50EkldMCaOFcU/amZy4zOK4nIh+4IyzScdZLhvt+ItkdmIN1
+ HW4w==
+X-Gm-Message-State: APjAAAV2yutCzt30IQiwHfdCP5AJcIs3byT8al4JmSsf5jAIYPRcIh51
+ aLUHvXsDV+Y3kAENuP4Vpa5nBIXGSfc8xrMWlr8YLg==
+X-Google-Smtp-Source: APXvYqx7FqPdIfTOGcvyplDdefAELhUihoW8Q46/7R0KoMHc/xs8BCTXfDfZF0pLs0TS1EqcUE44z2FvsO6SmS4vz+c=
+X-Received: by 2002:aa7:914e:: with SMTP id 14mr35910628pfi.136.1566397944149; 
+ Wed, 21 Aug 2019 07:32:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
+In-Reply-To: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
+From: Patrick Venture <venture@google.com>
+Date: Wed, 21 Aug 2019 07:32:12 -0700
+Message-ID: <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
+Subject: Re: [phosphor-pid-control] scaling issue
+To: =?UTF-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>, 
+ James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -52,69 +75,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: derekh@us.ibm.com, Shawn McCarney <shawnmm@linux.vnet.ibm.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?utf-8?B?Ikdlb3JnZSBMaXUgKOWImOmUoeS8nyki?= <liuxiwei@inspur.com>,
- Brandon Wyman <bjwyman@gmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 2:22 PM, Matt Spinler <mspinler@linux.ibm.com> wrote:
+On Wed, Aug 21, 2019 at 1:11 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Ha=
+nk.Liou@quantatw.com> wrote:
+>
+> Hi All,
+>
+>
+> After commit [1], I found my temp sensor reading would be re-scaled by mu=
+ltiplying 1 over 255, making temperature into unfamiliar unit. Also the fan=
+ rpm reading would lie in [0,1] interval, letting the fan input to be 0 (si=
+nce the input value of fan is from an integer array [2]). Are these normal =
+behaviors? Or do I miss something?
+
+Are you using dbus configuration or json?  If json, can you attach
+your config.  Since you're saying it was working and now isn't, I'm
+assuming there's something about the config being treated differently
+with the code changes in an unexpected way.
 
 >
 >
-> On 8/12/2019 3:54 AM, George Liu (=E5=88=98=E9=94=A1=E4=BC=9F) wrote:
->> Hi All,
->>
->> Recently I need to get the asset information of psu on the fp5280g2 =20
->> machine. For the downstream, I think re-use witherspoon-psu-monitor is=
- =20
->> better. but currently it`s only adapted witherspoon machine.Is it =20
->> possible to change this recipes to a general repo, so that a repo can =
-be =20
->> adapted to a variety of machines for future maintenance and updates?
+> [1] https://github.com/openbmc/phosphor-pid-control/commit/fc2e803f5d9256=
+944e18c7c878a441606b1f121c
 >
-> Sounds like a good idea to me!  The only reason we put a witherspoon on=
- =20
-> the repo name in  the first place was because we didn't know how others=
- =20
-> would want to do PSU interaction at that time and we didn't want to =20
-> presume that we should be a generic repo for it.
+> [2] https://github.com/openbmc/phosphor-pid-control/blob/a7ec8350d17b7015=
+3cebe666d3fbe88bddd02a1a/pid/fancontroller.cpp#L86
 >
->> I have a couple of question:
->>
->> 1. For the recipes of the witherspoon-psu-monitor, could it be changed=
- =20
->> to a generic name, for example...
 >
-> Yea, we would definitely want to change the recipe name if we change th=
-e =20
-> repo name.
+> Thanks,
 >
->> 2. When reading and updating the properties of the =20
->> xyz.openbmc_project.Inventory.Decorator.Asset interface via the pmbus =
-=20
->> driver, could it be changed to a common configuration (eg yaml or json=
-, =20
->> etc.)
 >
-> I'm not exactly sure what you're looking to do, but if the goal is to =20
-> make it more generic, I'm all for it.  I have no problem with making =20
-> things configurable.
+> Hank Liou
 >
->> 3. /sys/kenerl/debug/pmbus/hwmonX/XXX/... Does each file name need to =
-be =20
->> unified?
+> Quanta Computer Inc.
 >
-> If you're suggesting adding some configurable way of specifying which =20
-> sysfs files to read, that also sounds like a good idea.
 >
->> Thanks!
-
-I=E2=80=99ve put out a proposal to move forward on this in another thread=
- here:
-https://lists.ozlabs.org/pipermail/openbmc/2019-August/017729.html
-
-I should have just replied to this thread=E2=80=A6sorry ABT.
-
-thx - brad
