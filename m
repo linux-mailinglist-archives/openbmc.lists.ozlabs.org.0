@@ -2,92 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46A7598101
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 19:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D3C07981A1
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 19:43:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46DDfD0PbnzDqll
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 03:09:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DFPX2dbMzDr7B
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 03:43:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=dell.com
- (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com;
- envelope-from=paul.vancil@dell.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::d36; helo=mail-io1-xd36.google.com;
+ envelope-from=yuenn@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=dell.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=dell.com header.i=@dell.com header.b="J186Cu/s"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="LSYFnnwu"; 
  dkim-atps=neutral
-Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
- [148.163.137.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46DDdP1fk7zDqkL
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:08:22 +1000 (AEST)
-Received: from pps.filterd (m0170398.ppops.net [127.0.0.1])
- by mx0b-00154904.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7LH4iCN002291
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=smtpout1;
- bh=J0io9T/JeQAn3ARTfUFS03oOPzevgydwmoyzPkPgUlk=;
- b=J186Cu/sZpNAMaypYOB9x/1Qq3ae5WutFeal7uHK3+FT1NNzGQYjI1x/v7bG90UcTwUj
- yCDxY/A8l2pNNmYqT2rduW0GMcFHBqTW2hba+f4ebo1gw+TfYGYYrRwcEWa+iBIaEI0Q
- /pU3syOGw8+3eBkNd3g4BIMuZvNBUbFdaZLnA42tLYZqpris/YhYOvtoHQkspcLHMY28
- 2dj55W+DcJUJkVKpZUE1dtRZaGCegI9dd98EmOc28OXM+cpdpWF1KadNKOJn4R2cHTqA
- eBg3tiT4VVBu9rmq4aAc9lSHem8+ok5mIG1YlYHz2yFOQ1EL+9cvpVG7M+NTt9dtAPq/ +g== 
-Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com
- [67.231.157.37])
- by mx0b-00154904.pphosted.com with ESMTP id 2ugn6knpme-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:18 -0400
-Received: from pps.filterd (m0134318.ppops.net [127.0.0.1])
- by mx0a-00154901.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7LH2v9E018535
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:17 -0400
-Received: from ausxippc110.us.dell.com (AUSXIPPC110.us.dell.com
- [143.166.85.200])
- by mx0a-00154901.pphosted.com with ESMTP id 2uec7e0uhc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:17 -0400
-X-LoopCount0: from 10.166.135.98
-X-PREM-Routing: D-Outbound
-X-IronPort-AV: E=Sophos;i="5.60,349,1549951200"; d="scan'208";a="846526680"
-From: <Paul.Vancil@dell.com>
-To: <neladk@microsoft.com>, <openbmc@lists.ozlabs.org>
-Subject: RE: Telemetry Redfish Mockup location at DMTF
-Thread-Topic: Telemetry Redfish Mockup location at DMTF
-Thread-Index: AdVXffjt5pIc6PV9Q2GEUvsqM049eAAZhsAAABeOw0A=
-Date: Wed, 21 Aug 2019 17:08:15 +0000
-Message-ID: <cf52a78d26364365820f5b70e80ef422@AUSX13MPS306.AMER.DELL.COM>
-References: <fbf557cba2d045b3a57d0adc508ae727@AUSX13MPS306.AMER.DELL.COM>
- <BYAPR21MB1191F6E61DC3BF7CA78C37CAC8AA0@BYAPR21MB1191.namprd21.prod.outlook.com>
-In-Reply-To: <BYAPR21MB1191F6E61DC3BF7CA78C37CAC8AA0@BYAPR21MB1191.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.143.18.86]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DFNk54qCzDr5l
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:42:29 +1000 (AEST)
+Received: by mail-io1-xd36.google.com with SMTP id z3so6351878iog.0
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 10:42:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=HX1/t79vZk1U5vrvwv6vkpqCU8tCYEauaa31fKEq6Dg=;
+ b=LSYFnnwu8TZzOJlFovn2BWMhwu2Y499OV8fB49Si+w4nvjHS+jlXVykEeZtMn89vW2
+ iemn1bM1/Mig2kpM+UCeo8M5XHdWrtsLvglANzUzqzNJESoPns5Z/5h9JJ3AzXSmP+3N
+ 9w5RSHC1A2shMRViiOvRhJnVUALX3YTFyYVEwnznZmU9INda2q0zUIoFqXHyCe4AUqMP
+ /XqOL1rvrkdRQXIUpIarpXJ3uAobHze4Hk+afhRvzxHMnV+30eENq3VpkKsmg1Ub3Nbm
+ adK0dwNoEYMO60XeR0IvS/Wta5VJlw3LJk1OtU/u6N1udERJ38Az/sSlZdyNqH9keIM9
+ DFPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=HX1/t79vZk1U5vrvwv6vkpqCU8tCYEauaa31fKEq6Dg=;
+ b=tXfKYu/UrVo5MEiHvr0dYcDe8ykPBGAx1/8Pe6M2RIFXWk/jfPm8x0+yeP/B1yOGVX
+ Zip6CvdMkLk/lhZD3pcqiBUUC3QucRz/nEhwA2k09T0S44NZNSuJ/y1V2UmucHEa2FeG
+ ltAJ6QJxeBBcozhxGJyATj/j8/VvOabAYpA3HMO2CSSTU+lxT4c38Ak0MFYWXTX2By2j
+ K8ltLV/Q6wxfQrbaFWEnHWvwY8XHGifthC2tFNV1k5E4p4PeA4bcZ7caSXdLCRPZsVqR
+ ndIObIcbDUSYWwIVH6VdJWl5BlbGSLHmku79HqRBTS2ZuBCXJ+mbF/y4alyZ2iNMChfi
+ GyHA==
+X-Gm-Message-State: APjAAAWygQhqY/dS30N9VzkH0+4mhDV2a6k8SwxpyhFD96sqwDGFJo8Q
+ LBnj+9SEElp+0VeZ5haIJ6KR/154yrguka1ukDVihA==
+X-Google-Smtp-Source: APXvYqwFUFCzjus9/m+aeD+9bx2aN6oJCsoclnR/NO7RbNQQif5G1eF/JOHZSUFMnBymXxgJdmWpuhYCjV7+Z0bpr3Y=
+X-Received: by 2002:a5e:960a:: with SMTP id a10mr1231565ioq.82.1566409345986; 
+ Wed, 21 Aug 2019 10:42:25 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-21_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=938 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908210174
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- priorityscore=1501 malwarescore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
- definitions=main-1908210174
+References: <CAGMNF6Xdkf8Obp8iLVajt21ZT81RAuGksper_u-w9Fvt_OrCZA@mail.gmail.com>
+ <20190722163049.kyupys7alq6zzq6x@thinkpad>
+ <CAGMNF6UO0T7Dq4--QDXGkbWZ3CwKAhFSLxy5rKeMW-Af=V=o_A@mail.gmail.com>
+ <843FFB1F-4CF1-45EB-80E1-216FD23C8E2D@fuzziesquirrel.com>
+ <CAGMNF6V-ReCHTbSpM0Ly65f+PsCZDf+KAjL+pEybmWKYaNjBjg@mail.gmail.com>
+ <852D2A81-1C96-4BD3-8F83-489E43A564A5@fuzziesquirrel.com>
+In-Reply-To: <852D2A81-1C96-4BD3-8F83-489E43A564A5@fuzziesquirrel.com>
+From: Nancy Yuen <yuenn@google.com>
+Date: Wed, 21 Aug 2019 10:41:48 -0700
+Message-ID: <CADfYTpHHFF6EGupzKk=VM7FBsevAZLHE8N_safZs7V=i=RNSxQ@mail.gmail.com>
+Subject: Re: Integrate collectd with OpenBMC
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: multipart/alternative; boundary="000000000000a45b8c0590a41846"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,51 +77,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Gabriel Matute <gmatute@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Neeraj,
-It works if you have access to the github.com/DMTF/Redfish repo.
-It has not been made public because of the errors, etc.
-I assume you do not have access.
-I am working on a BMC-specific mockup this week as soon as I get the design=
- spec updated (hopefully that finished today).
-Need to identify a place under github for such mockups.  Maybe just a Mocku=
-ps folder under openbmc/docs/designbs/Mockups? =20
-Thanks
-paulv=20
+--000000000000a45b8c0590a41846
+Content-Type: text/plain; charset="UTF-8"
 
------Original Message-----
-From: Neeraj Ladkani <neladk@microsoft.com>=20
-Sent: Wednesday, August 21, 2019 12:51 AM
-To: Vancil, Paul; openbmc@lists.ozlabs.org
-Subject: RE: Telemetry Redfish Mockup location at DMTF
+Will do.
+----------
+Nancy
 
 
-[EXTERNAL EMAIL]=20
+On Wed, Aug 21, 2019 at 5:14 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
+wrote:
 
-Hi Paul,=20
+> at 4:46 PM, Kun Yi <kunyi@google.com> wrote:
+>
+> > No problem, thanks!
+> > Brad, could you also add Gabriel to the list of OpenBMC contributors?
+> His
+> > email is gabomatute@gmail.com
+> > Does he need to sign the CLA individually?
+>
+> Hi Kun
+>
+> No the corporate CLA has the concept of a CLA manager who can add and
+> remove people from the company CLA.
+>
+> Nancy can you add Gabriel to Googles schedule A and to the
+> google/ci-authorized gerrit group?
+>
+> thx - brad
+>
 
-Link didn't work for me. Can you reconfirm.=20
+--000000000000a45b8c0590a41846
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Neeraj
+<div dir=3D"ltr">Will do.<br clear=3D"all"><div><div dir=3D"ltr" class=3D"g=
+mail_signature" data-smartmail=3D"gmail_signature">----------<br>Nancy</div=
+></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
+mail_attr">On Wed, Aug 21, 2019 at 5:14 AM Brad Bishop &lt;<a href=3D"mailt=
+o:bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquirrel.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">at 4:46 PM, Kun Y=
+i &lt;<a href=3D"mailto:kunyi@google.com" target=3D"_blank">kunyi@google.co=
+m</a>&gt; wrote:<br>
+<br>
+&gt; No problem, thanks!<br>
+&gt; Brad, could you also add Gabriel to the list of OpenBMC contributors? =
+His=C2=A0 <br>
+&gt; email is <a href=3D"mailto:gabomatute@gmail.com" target=3D"_blank">gab=
+omatute@gmail.com</a><br>
+&gt; Does he need to sign the CLA individually?<br>
+<br>
+Hi Kun<br>
+<br>
+No the corporate CLA has the concept of a CLA manager who can add and=C2=A0=
+ <br>
+remove people from the company CLA.<br>
+<br>
+Nancy can you add Gabriel to Googles schedule A and to the=C2=A0 <br>
+google/ci-authorized gerrit group?<br>
+<br>
+thx - brad<br>
+</blockquote></div>
 
------Original Message-----
-From: openbmc <openbmc-bounces+neladk=3Dmicrosoft.com@lists.ozlabs.org> On =
-Behalf Of Paul.Vancil@dell.com
-Sent: Tuesday, August 20, 2019 10:40 AM
-To: openbmc@lists.ozlabs.org
-Subject: Telemetry Redfish Mockup location at DMTF
-
-For those who have access to the DMTF private repo on github, The location =
-of the current Telemetry mockup is:
- https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithub=
-.com%2FDMTF%2FRedfish%2Ftree%2Fmaster%2Fmockups%2Fpublic-telemetry&amp;data=
-=3D02%7C01%7Cneladk%40microsoft.com%7C23e27aa9627a47be38be08d725d4d0f5%7C72=
-f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637019468286104259&amp;sdata=3DXZs=
-0FM7p97grbS50EuS0lAWk%2Br%2BaMuGxReRSxgZ1Lvs%3D&amp;reserved=3D0
- This mockup has some issues (i.e. errors).
-  I am working on pull requests into Redfish for the fixes.
-  Then they will make this public as soon as possible.
-  Thanks
-   Paul Vancil
+--000000000000a45b8c0590a41846--
