@@ -2,109 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB00E971B3
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 07:53:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5984B971F3
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 08:12:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Cxf92dpqzDr6w
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 15:53:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Cy4b3VyfzDrDY
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 16:12:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.77.124; helo=nam02-sn1-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="hGh+hMtK"; dkim-atps=neutral
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com
- (mail-eopbgr770124.outbound.protection.outlook.com [40.107.77.124])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::42c; helo=mail-pf1-x42c.google.com;
+ envelope-from=santosh.puranik.ibm@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="e43lX8/p"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
+ [IPv6:2607:f8b0:4864:20::42c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Cxbd0xWszDr7Z
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 15:50:50 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ct7KB7THY+iIkq9WP9cUYHIO2Bqxs9EmJmi4coZBdiDWjPt/+RE0rEU4zCedi7SFut0ozzQqtGlwA3eFyM9Td6/B4HZtyZ2Zx2Q/x4q3QBUZJtokFEzaLpQKcVIDuiNgUnyWVXM+CDMp15G3g/Oa7w7GZa69Cjjb78vr0EA+a+WeDV4tYzuXJug5mzS3CYIBc9+Zyehh3UgUBE5sbz6apWVURX4+T9hshYVqM/D9iJnwq9JAy+nhABk8xNtMLsQYwf7v/I89zv+9DenlxGQkCSEujmbm1BwqM/mdJY2eU/Rg6ibVXUv6mbhL6IMT6k7tGAU86RWvCC3F07PKNs0Fyw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v5l9UhCLEMQBmgKfnfzRxkWKkdbvWJty76ZrtaG0+ms=;
- b=mZ7O0pyqXaqF8j8QLo11NOBt8QiqTKOi4SG0Tm3hZ+ERT8pR3NwTjJyz5DQVu8XoxtncVMEFK+/xYWHOJfB5VeB6gKjJCRDYDa3teB3RcfQAWXiuIC3aF5vmpmArddJFtYZ6F2A8f21X1pDlIkJcpKQzjuvieIju9ND0iMgMbNXbs5kjc+YaQrxSXf67v3JkCICUpoProzOdl/HccNb4MiXbhZ0ZzoA6oLgr7dZUzvOyinPa/Bk0IXXo6wXAugE/NDMcAUE6J2V3jnqscXES+dgevRCwExH9HGIHPAg8++rr+q7hmQ0osAgZuN8BvNoMYxhXKNLnWmkwtRPgkHaQbg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v5l9UhCLEMQBmgKfnfzRxkWKkdbvWJty76ZrtaG0+ms=;
- b=hGh+hMtKaYRE7LOBfH/xOMme8W+5kxIdibvIM6MX2pN0vAjIayY3xnRe9zQ3klIva13i1T7r1kIyob5qRZglvw05SqUl6477l6tCTv8a8RielR2lG4Pb364nW6f1KfdgPDjGfSnV8tasKrciHxfJxqhAbC/GT1HSmSQ+UpaoiBw=
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com (20.179.56.209) by
- BYAPR21MB1237.namprd21.prod.outlook.com (20.179.57.96) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2220.1; Wed, 21 Aug 2019 05:50:45 +0000
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::b855:45ab:ca06:4230]) by BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::b855:45ab:ca06:4230%9]) with mapi id 15.20.2178.016; Wed, 21 Aug 2019
- 05:50:45 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: Telemetry Redfish Mockup location at DMTF
-Thread-Topic: Telemetry Redfish Mockup location at DMTF
-Thread-Index: AdVXffjt5pIc6PV9Q2GEUvsqM049eAAZhsAA
-Date: Wed, 21 Aug 2019 05:50:45 +0000
-Message-ID: <BYAPR21MB1191F6E61DC3BF7CA78C37CAC8AA0@BYAPR21MB1191.namprd21.prod.outlook.com>
-References: <fbf557cba2d045b3a57d0adc508ae727@AUSX13MPS306.AMER.DELL.COM>
-In-Reply-To: <fbf557cba2d045b3a57d0adc508ae727@AUSX13MPS306.AMER.DELL.COM>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-08-21T05:50:42.7642350Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=5be23d72-6506-42d9-9bce-abd29764befe;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-originating-ip: [50.35.92.19]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 77c77544-5ba6-4103-0f46-08d725fb829d
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600158)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);
- SRVR:BYAPR21MB1237; 
-x-ms-traffictypediagnostic: BYAPR21MB1237:
-x-ms-exchange-purlcount: 1
-x-microsoft-antispam-prvs: <BYAPR21MB12373DF8995A946DD13AF3F5C8AA0@BYAPR21MB1237.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:4714;
-x-forefront-prvs: 0136C1DDA4
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(39860400002)(396003)(366004)(376002)(346002)(136003)(189003)(199004)(13464003)(76116006)(71190400001)(66476007)(66066001)(6116002)(3846002)(52536014)(14444005)(256004)(64756008)(71200400001)(66556008)(5660300002)(66446008)(8676002)(55016002)(6436002)(66946007)(966005)(8990500004)(81166006)(81156014)(478600001)(8936002)(229853002)(2501003)(9686003)(6306002)(486006)(7736002)(7696005)(11346002)(22452003)(446003)(102836004)(74316002)(10090500001)(76176011)(316002)(14454004)(4744005)(305945005)(99286004)(6246003)(86362001)(26005)(110136005)(6506007)(186003)(53546011)(53936002)(476003)(2906002)(33656002)(25786009)(10290500003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1237;
- H:BYAPR21MB1191.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: LKyjuFqu+uBPi4rXf3aBCSFKKsy3pJGvAQ+aCnigGQE5TBaD9raS3HCVH2L9E05b65hRWmO2uJUcjMuDGHMOLEmYZnI+EQ1uPYvJh0eR8aCHqTUbt0yGmvoSZXfBOChCkL1/+VJ7HjjySS/s17ziuhuUqRgTxHJLq/aAKmahw4cmIIb62oMLOAWGJ5qr314JLhqmsbqhV+dlqLYF8L6ethB2ui40FVEXYx+G+l8nLWpaS2+e5YNjdDL20Ra86XJbemUR3irt3a4tz2mTsIyx7DFhBM9ZZpX9DGx/QkaNw9KdDb5/OBxZbf26ez76bhLfOpFZeQPsfzETjac9ljCYns99L8/Kvc26rd/xtDbzgjVFYpGHkFvkMr/tliqBPn9wY4yJW5m4sZxHfxqVFS2RdiwSsEWqGKnBaP/wbqRUw6c=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Cy3k230vzDqgB
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 16:11:45 +1000 (AEST)
+Received: by mail-pf1-x42c.google.com with SMTP id w2so719816pfi.3
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 23:11:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=DiLx9pkUaOjYweTgmo/6vN6IKlQOFUe2OwabKOaTbmc=;
+ b=e43lX8/puwoW6OXF/QSJF1BT8fITsLKtejtCUeFQUlgzaU/bNBgj+gxRbvqwx3Tnsy
+ F99g4g8oNWMXX8f01EnJXGkG3zaKg/Va6M2I6fjWE2W4pmhgaXCoGxuiN8wtx75R81LQ
+ 15LDvL5oVvSSaHaLZ8YMvL7Qa6MU6phUaGG6TiM6eagwwBh/GFAgZN2fi991oBR1JAYt
+ D14iXpWhMyvnGRxrfcA9jNtkcBdiklbSZetzSvjN+9IrlrA+cM5jVUXdnrT4/iOzc3fr
+ 0w/8g9ShIRGUGewkrYCowsKVHaWc9Za1uHY+xPRM8ddAQtAE34Xkos+bYNgz+awoCQ7M
+ NdNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=DiLx9pkUaOjYweTgmo/6vN6IKlQOFUe2OwabKOaTbmc=;
+ b=kJ/JICsVpvDBtSfwKem/HdfldNDQYjUVZDU90R2cfQxjyY/cEq/r5dJppF41NMpOa4
+ F36f3v3FtB5CxKHtM+jgLc0zDFjKhw1Ek8HsLZh8sEn83LTHB0gZQ9cOHZ8OW58GZUlw
+ RMIkLQoEG1O+Iy7YqZ+gLWX0LZGssFMtAK8q2RreS8Fki2Ba4l/YliEBbfT4VI295Cks
+ 81hEw761jrGVhyYcoCycfoLIrdKunAa4WOSWR6Kv8nZfFZXtQfBdRX1V9sAJd58TPIYg
+ 0QkbfuppDn2JooafBtvJUGHWkNehXxnV5m+J0CAdAvYTt+zaIYRNdR3dJtxbIFeU1PU8
+ 1Nuw==
+X-Gm-Message-State: APjAAAWs//hrQFM37bQWs2w+BY5AEvm38JLEnMm/5JCp2BF395/O2pgU
+ 9zuqQQqlr9uCVp9KerGvHiQf/u+P
+X-Google-Smtp-Source: APXvYqwGFvfe328CTiQ72rmY19/dWJ6lvsJJmCXp3X1HfX83JoXhOhKV3R6sp1iNHnqYo7zYOlDF+w==
+X-Received: by 2002:a17:90a:d3d4:: with SMTP id
+ d20mr3854561pjw.28.1566367902179; 
+ Tue, 20 Aug 2019 23:11:42 -0700 (PDT)
+Received: from [9.199.76.54] ([129.41.84.90])
+ by smtp.gmail.com with ESMTPSA id r6sm3533818pjb.22.2019.08.20.23.11.40
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 20 Aug 2019 23:11:41 -0700 (PDT)
+Subject: Re: New Repo Creation Request
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+References: <8b047191-7648-587a-2b14-8cbb94aaf1c7@gmail.com>
+ <B8F669FB-9B7C-466B-A736-27EE8FFEAEB7@fuzziesquirrel.com>
+From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Message-ID: <29b134c9-b18d-62cb-fd87-15417a2a13d7@gmail.com>
+Date: Wed, 21 Aug 2019 11:41:39 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77c77544-5ba6-4103-0f46-08d725fb829d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2019 05:50:45.2585 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L0LzFmZhxSxRnOwtVdxG0hQv2D3yujjBp8OhI+mWa3E/jIC+rqkpieVo4BVc+vks+fTiHJ1G/+MkUcmd7mxNFQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1237
+In-Reply-To: <B8F669FB-9B7C-466B-A736-27EE8FFEAEB7@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,31 +85,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Paul,=20
+Hi Brad,
 
-Link didn't work for me. Can you reconfirm.=20
+On 12/08/19 10:42 PM, Brad Bishop wrote:
+> at 8:51 AM, Santosh Puranik <santosh.puranik.ibm@gmail.com> wrote:
+>
+>> Hi Brad,
+>>
+>> Could you create two new repositories:
+>>
+>> ipz-vpd-parser : Parser application for IPZ format VPD.
+>>
+>> keyword-vpd-parser : Parser application for keyword format VPD.
+>>
+>> The design document that details these applications is here:
+>>
+>> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22491
+>>
+>> Thanks,
+>>
+>> Santosh
+>
+> Hi Santosh
+>
+> The design calls for additional systemd services and applications (not 
+> necessarily additional git repositories).  Can the new applications 
+> and systemd services be hosted in the existing openpower-vpd-parser 
+> repository?  We have an awful lot of repos as it is and these new 
+> applications seem like a good fit to go with the existing ones in 
+> openpower-vpd-parser.
+I agree, we can reuse the openpower-vpd-parser repo. for these new 
+applications.
+>
+>
+> I’m envisioning a repository that supports parsing a number of 
+> different fru data formats.  Support for the different formats can be 
+> turned on or off with meson options or autoconf options.   The 
+> specifics of how the code would be organized within the build process 
+> for openpower-vpd-parser I’d leave to you and the current 
+> openpower-vpd-parser maintainer (Deepak).
 
-Neeraj
+Deepak and I spoke about this, we'll just use compile time options wherever
 
------Original Message-----
-From: openbmc <openbmc-bounces+neladk=3Dmicrosoft.com@lists.ozlabs.org> On =
-Behalf Of Paul.Vancil@dell.com
-Sent: Tuesday, August 20, 2019 10:40 AM
-To: openbmc@lists.ozlabs.org
-Subject: Telemetry Redfish Mockup location at DMTF
+possible.
 
-For those who have access to the DMTF private repo on github, The location =
-of the current Telemetry mockup is:
- https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithub=
-.com%2FDMTF%2FRedfish%2Ftree%2Fmaster%2Fmockups%2Fpublic-telemetry&amp;data=
-=3D02%7C01%7Cneladk%40microsoft.com%7C23e27aa9627a47be38be08d725d4d0f5%7C72=
-f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637019468286104259&amp;sdata=3DXZs=
-0FM7p97grbS50EuS0lAWk%2Br%2BaMuGxReRSxgZ1Lvs%3D&amp;reserved=3D0
- This mockup has some issues (i.e. errors).
-  I am working on pull requests into Redfish for the fixes.
-  Then they will make this public as soon as possible.
-  Thanks
-   Paul Vancil
+>
+> We could rename the repository and/or recipe to something more general 
+> if it is just the name that is off-putting.  Open to suggestions there 
+> - how about phosphor-fru-parser or just fru-parser or vpd-parser?
+I think I am fine with the name as it is. Don't have a particular 
+preference.
+>
+> thx - brad
