@@ -1,79 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5984B971F3
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 08:12:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B10997309
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 09:10:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Cy4b3VyfzDrDY
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 16:12:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46CzM440ZBzDr5Z
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 17:10:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::42c; helo=mail-pf1-x42c.google.com;
- envelope-from=santosh.puranik.ibm@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="e43lX8/p"; 
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="EH2LMd+V"; 
  dkim-atps=neutral
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
- [IPv6:2607:f8b0:4864:20::42c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Cy3k230vzDqgB
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 16:11:45 +1000 (AEST)
-Received: by mail-pf1-x42c.google.com with SMTP id w2so719816pfi.3
- for <openbmc@lists.ozlabs.org>; Tue, 20 Aug 2019 23:11:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=DiLx9pkUaOjYweTgmo/6vN6IKlQOFUe2OwabKOaTbmc=;
- b=e43lX8/puwoW6OXF/QSJF1BT8fITsLKtejtCUeFQUlgzaU/bNBgj+gxRbvqwx3Tnsy
- F99g4g8oNWMXX8f01EnJXGkG3zaKg/Va6M2I6fjWE2W4pmhgaXCoGxuiN8wtx75R81LQ
- 15LDvL5oVvSSaHaLZ8YMvL7Qa6MU6phUaGG6TiM6eagwwBh/GFAgZN2fi991oBR1JAYt
- D14iXpWhMyvnGRxrfcA9jNtkcBdiklbSZetzSvjN+9IrlrA+cM5jVUXdnrT4/iOzc3fr
- 0w/8g9ShIRGUGewkrYCowsKVHaWc9Za1uHY+xPRM8ddAQtAE34Xkos+bYNgz+awoCQ7M
- NdNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=DiLx9pkUaOjYweTgmo/6vN6IKlQOFUe2OwabKOaTbmc=;
- b=kJ/JICsVpvDBtSfwKem/HdfldNDQYjUVZDU90R2cfQxjyY/cEq/r5dJppF41NMpOa4
- F36f3v3FtB5CxKHtM+jgLc0zDFjKhw1Ek8HsLZh8sEn83LTHB0gZQ9cOHZ8OW58GZUlw
- RMIkLQoEG1O+Iy7YqZ+gLWX0LZGssFMtAK8q2RreS8Fki2Ba4l/YliEBbfT4VI295Cks
- 81hEw761jrGVhyYcoCycfoLIrdKunAa4WOSWR6Kv8nZfFZXtQfBdRX1V9sAJd58TPIYg
- 0QkbfuppDn2JooafBtvJUGHWkNehXxnV5m+J0CAdAvYTt+zaIYRNdR3dJtxbIFeU1PU8
- 1Nuw==
-X-Gm-Message-State: APjAAAWs//hrQFM37bQWs2w+BY5AEvm38JLEnMm/5JCp2BF395/O2pgU
- 9zuqQQqlr9uCVp9KerGvHiQf/u+P
-X-Google-Smtp-Source: APXvYqwGFvfe328CTiQ72rmY19/dWJ6lvsJJmCXp3X1HfX83JoXhOhKV3R6sp1iNHnqYo7zYOlDF+w==
-X-Received: by 2002:a17:90a:d3d4:: with SMTP id
- d20mr3854561pjw.28.1566367902179; 
- Tue, 20 Aug 2019 23:11:42 -0700 (PDT)
-Received: from [9.199.76.54] ([129.41.84.90])
- by smtp.gmail.com with ESMTPSA id r6sm3533818pjb.22.2019.08.20.23.11.40
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 20 Aug 2019 23:11:41 -0700 (PDT)
-Subject: Re: New Repo Creation Request
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-References: <8b047191-7648-587a-2b14-8cbb94aaf1c7@gmail.com>
- <B8F669FB-9B7C-466B-A736-27EE8FFEAEB7@fuzziesquirrel.com>
-From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
-Message-ID: <29b134c9-b18d-62cb-fd87-15417a2a13d7@gmail.com>
-Date: Wed, 21 Aug 2019 11:41:39 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46CzLX11rlzDqcH
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 17:09:39 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6FCD14120B;
+ Wed, 21 Aug 2019 07:09:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1566371374; x=1568185775; bh=2fOrPggW1pojYoFnDxztfi3Yvt3TLEazfP6
+ Rho9WSZ8=; b=EH2LMd+VQKxzlYzJfZbZX3jftrKC6eitH9yXpiFPcjYaYFmdmNw
+ g8HEa6b3gzctcDZPxQH7Zk3Icj0cRxrli6pVadp/zxbY0Ch8iTaz3oTkyolv01fY
+ 8KZzri2DWCO0QOmLEWP8XIXOXQ2DAadLia9RPNxDuCLeyz+AJP9ZVrTQ=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id zB-LsVlr4zKj; Wed, 21 Aug 2019 10:09:34 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 64EF9404CB;
+ Wed, 21 Aug 2019 10:09:34 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 21
+ Aug 2019 10:09:33 +0300
+Date: Wed, 21 Aug 2019 10:09:33 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: Terry Duncan <terry.s.duncan@linux.intel.com>, <openbmc@lists.ozlabs.org>
+Subject: Re: Alternative to the filesystem overlay
+Message-ID: <20190821070933.GA19933@bbwork.lan>
+References: <efb47539225e57a0ab0138987287c230@linux.vnet.ibm.com>
+ <20190816090955.GA15986@bbwork.lan>
+ <791b2ada-c35d-c394-b7f0-fd3f92abeed2@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <B8F669FB-9B7C-466B-A736-27EE8FFEAEB7@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <791b2ada-c35d-c394-b7f0-fd3f92abeed2@linux.intel.com>
+User-Agent: Mutt/1.12.0 (2019-05-25)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,59 +75,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad,
+On Tue, Aug 20, 2019 at 05:56:32PM -0700, Terry Duncan wrote:
+> On 8/16/19 2:09 AM, Alexander A. Filippov wrote:
+> 
+> > Most of these issues can be solved by the simple shell scripts. We could modify
+> > the initramfs/init scenario to exec these scripts at the moment when ROFS and
+> > RWFS have mounted but are not combined to OVERLAY yet.
+> > 
+> > Of course, this method doesn't prevent an occurrence of any new issues of this
+> > type but brings an easy way to solve them.
+> > 
+> > --
+> > Regards,
+> > Alexander
+> > 
+> 
+> Possibly the overlay FS is not expecting and does not support the ROFS to
+> change as it does when a new build adds a file to an existing directory.
+> When this occurs an overlayed file in the same directory could cause
+> corruption in the directory. Are you suggesting scripts that detect a change
+> to the underlying FS and attempt to patch the overlay?
+> 
+> Thanks,
+> Terry
 
-On 12/08/19 10:42 PM, Brad Bishop wrote:
-> at 8:51 AM, Santosh Puranik <santosh.puranik.ibm@gmail.com> wrote:
->
->> Hi Brad,
->>
->> Could you create two new repositories:
->>
->> ipz-vpd-parser : Parser application for IPZ format VPD.
->>
->> keyword-vpd-parser : Parser application for keyword format VPD.
->>
->> The design document that details these applications is here:
->>
->> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22491
->>
->> Thanks,
->>
->> Santosh
->
-> Hi Santosh
->
-> The design calls for additional systemd services and applications (not 
-> necessarily additional git repositories).  Can the new applications 
-> and systemd services be hosted in the existing openpower-vpd-parser 
-> repository?  We have an awful lot of repos as it is and these new 
-> applications seem like a good fit to go with the existing ones in 
-> openpower-vpd-parser.
-I agree, we can reuse the openpower-vpd-parser repo. for these new 
-applications.
->
->
-> I’m envisioning a repository that supports parsing a number of 
-> different fru data formats.  Support for the different formats can be 
-> turned on or off with meson options or autoconf options.   The 
-> specifics of how the code would be organized within the build process 
-> for openpower-vpd-parser I’d leave to you and the current 
-> openpower-vpd-parser maintainer (Deepak).
+That's not entirely true. I'm suggesting to keep the scripts to solve each
+particular issue. But if we can detect and resolve such issues automatically
+that would be nice.
 
-Deepak and I spoke about this, we'll just use compile time options wherever
-
-possible.
-
->
-> We could rename the repository and/or recipe to something more general 
-> if it is just the name that is off-putting.  Open to suggestions there 
-> - how about phosphor-fru-parser or just fru-parser or vpd-parser?
-I think I am fine with the name as it is. Don't have a particular 
-preference.
->
-> thx - brad
+Regards,
+Alexander
