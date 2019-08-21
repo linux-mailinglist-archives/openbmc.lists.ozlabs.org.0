@@ -2,68 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6646397D0F
-	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 16:33:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46A7598101
+	for <lists+openbmc@lfdr.de>; Wed, 21 Aug 2019 19:09:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46D9BL6yYmzDrBy
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 00:33:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DDfD0PbnzDqll
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 03:09:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::52b; helo=mail-pg1-x52b.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=dell.com
+ (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com;
+ envelope-from=paul.vancil@dell.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=dell.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="gNBJZn0q"; 
+ unprotected) header.d=dell.com header.i=@dell.com header.b="J186Cu/s"; 
  dkim-atps=neutral
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com
- [IPv6:2607:f8b0:4864:20::52b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com
+ [148.163.137.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46D99T0PLKzDqg7
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 00:32:27 +1000 (AEST)
-Received: by mail-pg1-x52b.google.com with SMTP id i18so1408444pgl.11
- for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 07:32:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=o6DB7pAkCUwFIso39Rf3hqxTTSfj8/a9OCvEMZgVbE4=;
- b=gNBJZn0qh4P6tk+1Alr71w5/yH9O2lmtFN5tIoHUEh5T8+xZ5W1RXfve8oSMHJWhG2
- WvNVVu4DiHrC/wZPBnrZSkMl/TsflgxjSxf4wnaeuGVblKCblJ1y0MXNHlvp4iBuivAO
- yoaRgO7j0rhBJsAxvkfIhRDbieSm3KokMHU6r5pFXTw5dms42gsm9i9G+NXRqUOPUgi/
- EhJmEA3xuu9Rt2qeHytn3JsaB7etJzPTnV6ed4nS9ERa/00v1sSqHfCtDa5q+ERxy9Za
- XJnr9O8g9nbRsIUzlXc/xnSFpi5D0RULZ3zBhao4X9OMlUoEaILM7/V2u6gUtmC4NGEL
- vGpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=o6DB7pAkCUwFIso39Rf3hqxTTSfj8/a9OCvEMZgVbE4=;
- b=PwFwvQCeEOnD4EzpKricXH5yK0Ia15SB/JW4u4z1htwYxO49su6EK/jE3s482XKEPb
- hP5iUPczA7j2L5mx3bPBxRV9NRHuapn9hbT5zGHsrZr9xS1LjE61eT/XjyBkI8N1DPse
- W6voc3TAJaUun4fvy1nQKmS6Jja98i7bPjX8DwrDazfw17Al0eTVDz+kZjOHQGYO+519
- l2qMTUB2VWb9+uTTr0LKBfQEEU2ZWjXYYJxvY3LSZcWIcOmz+59ZqQP/Zml8s3icC7ji
- gcwbn2jqu594Qs4fDUAe50EkldMCaOFcU/amZy4zOK4nIh+4IyzScdZLhvt+ItkdmIN1
- HW4w==
-X-Gm-Message-State: APjAAAV2yutCzt30IQiwHfdCP5AJcIs3byT8al4JmSsf5jAIYPRcIh51
- aLUHvXsDV+Y3kAENuP4Vpa5nBIXGSfc8xrMWlr8YLg==
-X-Google-Smtp-Source: APXvYqx7FqPdIfTOGcvyplDdefAELhUihoW8Q46/7R0KoMHc/xs8BCTXfDfZF0pLs0TS1EqcUE44z2FvsO6SmS4vz+c=
-X-Received: by 2002:aa7:914e:: with SMTP id 14mr35910628pfi.136.1566397944149; 
- Wed, 21 Aug 2019 07:32:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
-In-Reply-To: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 21 Aug 2019 07:32:12 -0700
-Message-ID: <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
-Subject: Re: [phosphor-pid-control] scaling issue
-To: =?UTF-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>, 
- James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DDdP1fk7zDqkL
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:08:22 +1000 (AEST)
+Received: from pps.filterd (m0170398.ppops.net [127.0.0.1])
+ by mx0b-00154904.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7LH4iCN002291
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=smtpout1;
+ bh=J0io9T/JeQAn3ARTfUFS03oOPzevgydwmoyzPkPgUlk=;
+ b=J186Cu/sZpNAMaypYOB9x/1Qq3ae5WutFeal7uHK3+FT1NNzGQYjI1x/v7bG90UcTwUj
+ yCDxY/A8l2pNNmYqT2rduW0GMcFHBqTW2hba+f4ebo1gw+TfYGYYrRwcEWa+iBIaEI0Q
+ /pU3syOGw8+3eBkNd3g4BIMuZvNBUbFdaZLnA42tLYZqpris/YhYOvtoHQkspcLHMY28
+ 2dj55W+DcJUJkVKpZUE1dtRZaGCegI9dd98EmOc28OXM+cpdpWF1KadNKOJn4R2cHTqA
+ eBg3tiT4VVBu9rmq4aAc9lSHem8+ok5mIG1YlYHz2yFOQ1EL+9cvpVG7M+NTt9dtAPq/ +g== 
+Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com
+ [67.231.157.37])
+ by mx0b-00154904.pphosted.com with ESMTP id 2ugn6knpme-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:18 -0400
+Received: from pps.filterd (m0134318.ppops.net [127.0.0.1])
+ by mx0a-00154901.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7LH2v9E018535
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:17 -0400
+Received: from ausxippc110.us.dell.com (AUSXIPPC110.us.dell.com
+ [143.166.85.200])
+ by mx0a-00154901.pphosted.com with ESMTP id 2uec7e0uhc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 13:08:17 -0400
+X-LoopCount0: from 10.166.135.98
+X-PREM-Routing: D-Outbound
+X-IronPort-AV: E=Sophos;i="5.60,349,1549951200"; d="scan'208";a="846526680"
+From: <Paul.Vancil@dell.com>
+To: <neladk@microsoft.com>, <openbmc@lists.ozlabs.org>
+Subject: RE: Telemetry Redfish Mockup location at DMTF
+Thread-Topic: Telemetry Redfish Mockup location at DMTF
+Thread-Index: AdVXffjt5pIc6PV9Q2GEUvsqM049eAAZhsAAABeOw0A=
+Date: Wed, 21 Aug 2019 17:08:15 +0000
+Message-ID: <cf52a78d26364365820f5b70e80ef422@AUSX13MPS306.AMER.DELL.COM>
+References: <fbf557cba2d045b3a57d0adc508ae727@AUSX13MPS306.AMER.DELL.COM>
+ <BYAPR21MB1191F6E61DC3BF7CA78C37CAC8AA0@BYAPR21MB1191.namprd21.prod.outlook.com>
+In-Reply-To: <BYAPR21MB1191F6E61DC3BF7CA78C37CAC8AA0@BYAPR21MB1191.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.143.18.86]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-21_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=938 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908210174
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ priorityscore=1501 malwarescore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1906280000
+ definitions=main-1908210174
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,41 +99,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Aug 21, 2019 at 1:11 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Ha=
-nk.Liou@quantatw.com> wrote:
->
-> Hi All,
->
->
-> After commit [1], I found my temp sensor reading would be re-scaled by mu=
-ltiplying 1 over 255, making temperature into unfamiliar unit. Also the fan=
- rpm reading would lie in [0,1] interval, letting the fan input to be 0 (si=
-nce the input value of fan is from an integer array [2]). Are these normal =
-behaviors? Or do I miss something?
+Neeraj,
+It works if you have access to the github.com/DMTF/Redfish repo.
+It has not been made public because of the errors, etc.
+I assume you do not have access.
+I am working on a BMC-specific mockup this week as soon as I get the design=
+ spec updated (hopefully that finished today).
+Need to identify a place under github for such mockups.  Maybe just a Mocku=
+ps folder under openbmc/docs/designbs/Mockups? =20
+Thanks
+paulv=20
 
-Are you using dbus configuration or json?  If json, can you attach
-your config.  Since you're saying it was working and now isn't, I'm
-assuming there's something about the config being treated differently
-with the code changes in an unexpected way.
+-----Original Message-----
+From: Neeraj Ladkani <neladk@microsoft.com>=20
+Sent: Wednesday, August 21, 2019 12:51 AM
+To: Vancil, Paul; openbmc@lists.ozlabs.org
+Subject: RE: Telemetry Redfish Mockup location at DMTF
 
->
->
-> [1] https://github.com/openbmc/phosphor-pid-control/commit/fc2e803f5d9256=
-944e18c7c878a441606b1f121c
->
-> [2] https://github.com/openbmc/phosphor-pid-control/blob/a7ec8350d17b7015=
-3cebe666d3fbe88bddd02a1a/pid/fancontroller.cpp#L86
->
->
-> Thanks,
->
->
-> Hank Liou
->
-> Quanta Computer Inc.
->
->
+
+[EXTERNAL EMAIL]=20
+
+Hi Paul,=20
+
+Link didn't work for me. Can you reconfirm.=20
+
+Neeraj
+
+-----Original Message-----
+From: openbmc <openbmc-bounces+neladk=3Dmicrosoft.com@lists.ozlabs.org> On =
+Behalf Of Paul.Vancil@dell.com
+Sent: Tuesday, August 20, 2019 10:40 AM
+To: openbmc@lists.ozlabs.org
+Subject: Telemetry Redfish Mockup location at DMTF
+
+For those who have access to the DMTF private repo on github, The location =
+of the current Telemetry mockup is:
+ https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithub=
+.com%2FDMTF%2FRedfish%2Ftree%2Fmaster%2Fmockups%2Fpublic-telemetry&amp;data=
+=3D02%7C01%7Cneladk%40microsoft.com%7C23e27aa9627a47be38be08d725d4d0f5%7C72=
+f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637019468286104259&amp;sdata=3DXZs=
+0FM7p97grbS50EuS0lAWk%2Br%2BaMuGxReRSxgZ1Lvs%3D&amp;reserved=3D0
+ This mockup has some issues (i.e. errors).
+  I am working on pull requests into Redfish for the fixes.
+  Then they will make this public as soon as possible.
+  Thanks
+   Paul Vancil
