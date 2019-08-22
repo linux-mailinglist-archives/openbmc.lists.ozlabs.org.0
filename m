@@ -2,66 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C92A99877
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 17:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55DAE99DEE
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 19:47:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Dpnw4fYWzDqwt
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 01:47:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DsRt5JfyzDrN0
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 03:47:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::333; helo=mail-ot1-x333.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="HS/xfd1a"; 
- dkim-atps=neutral
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
- [IPv6:2607:f8b0:4864:20::333])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Dpn66MJGzDqRS
- for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 01:47:06 +1000 (AEST)
-Received: by mail-ot1-x333.google.com with SMTP id w4so5847004ote.11
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 08:47:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GIPU5Ae4pgVwUDbCz4T9wkgmBGVD/0tL9/S/7uHrtlU=;
- b=HS/xfd1acLhBzxClKrKz1f2fhlwY1cDTgnd4WjznuKQgol5mR8aoFErZYab3GUBlYH
- PJKKHZyIUkPHd+Qaj9eJk39l9HnKPvDIepK/piyt7i1WqYxrpQE34P2aXxWxMExRwWbL
- NHLjAf7v7vghU0SmvfzPeDE+ivJck2TeyMROwjJdaHjlJx2EzJOKk26X9S9EShVeC8oO
- Y0J1qV5WSAUtLbSFUfAB7/fRSs3aEmXqHHrvRw6PBI1bzUAqWxls9MVcSYHUDWx5j/43
- 3RXQrW/WNjnwxJ4kZJ7cIPa8f9F8nTw6MVlSf/gNtoJgt4jN96itN7woL0MYIoOM7lG9
- 48WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GIPU5Ae4pgVwUDbCz4T9wkgmBGVD/0tL9/S/7uHrtlU=;
- b=nBQ1VNPUICl+UmpF1eHWM8Ez7dKdpX+HdPKtBNACCZga6LgsCYI6JRbLknsvVsqzeF
- 20Fvl9EhHe61XJvKEPERZQg6596l5Ae59xyxXSX+Mv9ghTT2sbbc94ovAa9f77JOMeRx
- opzLBoEzE2vdF1G8RBvt3N84HDkpiPSkXKBwCDBFAQ3yyvlOqnwi7Frjt6k+WvMqVoed
- qYI9g21GQ6p4KEyhFzxjL+2aY8EEpUr+lHs8dvDYSva49LUG4PAWBtHgU+SA+0Xc7iXM
- FzdcRe0aLn7HEyFZ8WDgtUL6xRAtsHtRI4U/WxzqDwPR4CtdNGWIgEWMmS9Fsnm7zPmb
- cojg==
-X-Gm-Message-State: APjAAAUBirat9PVaHjQ02WtGq0qsSSW7CBelwd2M1Hr4NmS72s9qk9kW
- jJwZynjpKjCDw+9dldOS4ya/6m7HZdL8LZIS6zyQZw==
-X-Google-Smtp-Source: APXvYqzBKw678YMFHex4xEC+7PrPLua2u19ly+Y+enjlz88qOP9itUOQ4qCXXUKCKdxEeyuyh7CdTVIISd4j8kCS8iI=
-X-Received: by 2002:a9d:6a4a:: with SMTP id h10mr226574otn.260.1566488822174; 
- Thu, 22 Aug 2019 08:47:02 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DsQX1yzHzDqdm
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 03:46:10 +1000 (AEST)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7MHc5LN124421; Thu, 22 Aug 2019 13:46:00 -0400
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2uhvrc8hpn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Aug 2019 13:46:00 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7MHjRwt004326;
+ Thu, 22 Aug 2019 17:45:59 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma05wdc.us.ibm.com with ESMTP id 2ue976c42c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Aug 2019 17:45:59 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7MHjwiK54657356
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Aug 2019 17:45:58 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BBCE8BE058;
+ Thu, 22 Aug 2019 17:45:58 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F20ABE056;
+ Thu, 22 Aug 2019 17:45:58 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 22 Aug 2019 17:45:58 +0000 (GMT)
 MIME-Version: 1.0
-References: <d0c56bc73b384a0f941e5f4b96ddc73a@lenovo.com>
-In-Reply-To: <d0c56bc73b384a0f941e5f4b96ddc73a@lenovo.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Thu, 22 Aug 2019 10:46:46 -0500
-Message-ID: <CALLMt=rvTV0iUV9hUkXQyMF2yTOBQmfrpjZwqKD2X4LLV11j7A@mail.gmail.com>
-Subject: Re: chassis power status seems to not be changed when type command to
- shutdown OS
-To: Andrew MS1 Peng <pengms1@lenovo.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Thu, 22 Aug 2019 12:46:25 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Richard.Schmitt@commscope.com
+Subject: Re: [yocto] assembling lvm disk images
+In-Reply-To: <OFC0267C60.13E1331D-ON8625845E.006071E1-8625845E.00607C75@notes.na.collabserv.com>
+References: <OFC0267C60.13E1331D-ON8625845E.006071E1-8625845E.00607C75@notes.na.collabserv.com>
+Message-ID: <9829dda63f7e17007a17c85d01fea270@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-22_11:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=760 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908220158
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,21 +85,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: yocto@yoctoproject.org, openbmc@lists.ozlabs.org,
+ bradleyb@fuzziesquirrel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 22, 2019 at 5:01 AM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
->
-> Hi Team,
->
-> When I executed command "poweroff" or "shutdown -h" in Host OS, the chassis power status seems to not be changed. Is there any package could support update power status for this situation?
 
-Sounds like your host is not sending the inband IPMI message to
-the BMC to turn off the chassis once it completes the shutdown?
+> "Schmitt, Richard" <Richard.Schmitt@commscope.com> wrote on 08/22/2019
+> 09:28:23 AM:
+> 
+>> From: "Schmitt, Richard" <Richard.Schmitt@commscope.com>
+>> To: Brad Bishop <bradleyb@fuzziesquirrel.com>, OpenBMC Maillist
+>> <openbmc@lists.ozlabs.org>, "yocto@yoctoproject.org"
+> <yocto@yoctoproject.org>
+>> Cc: Adriana Kobylak <anoo@us.ibm.com>
+>> Date: 08/22/2019 09:28 AM
+>> Subject: [EXTERNAL] RE: [yocto] assembling lvm disk images
+>> 
+>> Not sure the type of lvm you're trying to use, but we successfully
+>> build a dm-verity rootfs offline.
+>> 
+>> It probably is specific to what type of lvm you are using.
 
-> Thanks,
->
-> Andrew
->
->
+We were thinking lvm2. Is there a link or steps you could share
+on how you're generating the rootfs image?
+
+>> 
+>> Rich
+>> 
