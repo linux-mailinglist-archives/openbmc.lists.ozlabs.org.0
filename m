@@ -2,43 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82D70989BA
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 05:12:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FAA2989C7
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 05:19:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46DV2P0BVnzDqwY
-	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 13:12:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46DVBt4TT5zDqst
+	for <lists+openbmc@lfdr.de>; Thu, 22 Aug 2019 13:19:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=inspur.com
- (client-ip=210.51.26.145; helo=unicom145.biz-email.net;
- envelope-from=wangzqbj@inspur.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=inspur.com
-Received: from unicom145.biz-email.net (unicom145.biz-email.net
- [210.51.26.145])
- (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46DV1l64MPzDqQv
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 13:11:50 +1000 (AEST)
-Received: from ([60.208.111.195])
- by unicom145.biz-email.net (Antispam) with ASMTP (SSL) id NLH19335
- for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 11:11:35 +0800
-Received: from localhost (10.100.1.52) by Jtjnmail201617.home.langchao.com
- (10.100.2.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 22 Aug
- 2019 11:11:34 +0800
-From: John Wang <wangzqbj@inspur.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH dev-5.2] ARM: dts: aspeed: fp5280g2: Remove cold-fire
-Date: Thu, 22 Aug 2019 11:11:33 +0800
-Message-ID: <20190822031133.16389-1-wangzqbj@inspur.com>
-X-Mailer: git-send-email 2.17.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46DVBB042lzDqV4
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 13:19:12 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7M38Op8000928
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 23:19:10 -0400
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2uhg1fd49s-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Aug 2019 23:19:10 -0400
+Received: from localhost
+ by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
+ Thu, 22 Aug 2019 04:19:08 +0100
+Received: from b06avi18626390.portsmouth.uk.ibm.com (9.149.26.192)
+ by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 22 Aug 2019 04:19:07 +0100
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id x7M3IjE440501574
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:18:45 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 609B4A4051
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:19:06 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 89F31A4053
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:19:05 +0000 (GMT)
+Received: from [9.85.165.197] (unknown [9.85.165.197])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Aug 2019 03:19:05 +0000 (GMT)
+Subject: Re: Initial expired passwords - low level designs
+To: openbmc@lists.ozlabs.org
+References: <b15904b6-aeaa-f3b1-1a62-ba7217727b79@linux.ibm.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Date: Thu, 22 Aug 2019 08:49:02 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.100.1.52]
-X-ClientProxiedBy: jtjnmail201607.home.langchao.com (10.100.2.7) To
- Jtjnmail201617.home.langchao.com (10.100.2.17)
+In-Reply-To: <b15904b6-aeaa-f3b1-1a62-ba7217727b79@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19082203-0016-0000-0000-000002A15260
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19082203-0017-0000-0000-0000330188FD
+Message-Id: <38b5f461-98d8-4152-3795-cfa3e975d178@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-22_03:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908220031
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,51 +93,87 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Cold-fire for fsi needs a dedicated gpio bank.
-There should be no other pins in the bank in use.
+Hi Joseph,
 
-But cold-fire is a new thing after the system is
-designed. There is a conflict in the pins, so use
-the fsi-master-gpio driver instead of the cf one
+On 19/08/19 10:32 PM, Joseph Reynolds wrote:
+> This is an attempt to over-communicate progress on the [Initial 
+> expired passwords design][], currently in review.  This email has the 
+> significant and tricky work items needed to implement the design. 
+> Emails about the BMCWeb pieces that need to be changed are [here][]; 
+> in contrast, this email attempts to decompose the overall design.
+>
+> [Initial expired passwords design]: 
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23849
+> [here][]: 
+> https://lists.ozlabs.org/pipermail/openbmc/2019-August/017625.html
+>
+> The "initial expired passwords design" includes the following work. An 
+> understanding of that design is a pre-requisite to understand the 
+> items here.
+>
+> 1. Implement the new EXPIRED_PASSWORD image feature (initially off).  
+> This ensures the password is expired for all local users. The right 
+> place to do this piece is in Yocto/OpenEmbedded; see 
+> https://lists.yoctoproject.org/pipermail/yocto-security/2019-July/000114.html
+>
+> 2. Enhance BMCWeb to handle Redfish PasswordChangeRequired (reference: 
+> https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.7.0.pdf 
+> ("Redfish Specification" version 1.7.0 or later) section 13.2.6.1).
+> This further breaks down into:
+>
+> 2a. Add the PasswordChangeRequired field to 
+> /redfish/v1/SessionManager/Sessions/<session>.  This new field comes 
+> from PAM_NEW_AUTHTOK_REQD.
+   Are you mentioning the OEM filed in the session schema ? I think that 
+we should define a new error message that will tell that password change 
+required during creation of the session.
+>
+> 2b. Add the PasswordChangeRequired field to 
+> /redfish/v1/AccountManager/Accounts/<account>.  Does this require 
+> D-Bus changes?
+   I understand that PasswordChangeRequired filed is supported by the 
+redfish in the account schema, but how it would be useful.
+   Suppose we have the implementation for the above then how does user 
+knows that his password has been expired.
+   He has to create the session which should tell that his password has 
+been expired.
 
-Signed-off-by: John Wang <wangzqbj@inspur.com>
----
- arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+  2c. Tweak the authority model to handle privilege ConfigureSelf which 
+applies only to *your* Session or Account and is intended to encompass 
+all the privileges needed change your own expired password.  I am 
+pursuing this question in private Redfish forums (issue 1986).
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-index e9d714a46a60..52c28f2fed6c 100644
---- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-@@ -32,11 +32,6 @@
- 			reg = <0x98000000 0x04000000>; /* 64M */
- 		};
- 
--		coldfire_memory: codefire_memory@9ef00000 {
--			reg = <0x9ef00000 0x00100000>;
--			no-map;
--		};
--
- 		gfx_memory: framebuffer {
- 			size = <0x01000000>;
- 			alignment = <0x01000000>;
-@@ -53,15 +48,11 @@
- 	};
- 
- 	fsi: gpio-fsi {
--		compatible = "aspeed,ast2500-cf-fsi-master", "fsi-master";
-+		compatible = "fsi-master-gpio", "fsi-master";
- 		#address-cells = <2>;
- 		#size-cells = <0>;
- 		no-gpio-delays;
- 
--		memory-region = <&coldfire_memory>;
--		aspeed,sram = <&sram>;
--		aspeed,cvic = <&cvic>;
--
- 		clock-gpios = <&gpio ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
- 		data-gpios = <&gpio ASPEED_GPIO(AA, 2) GPIO_ACTIVE_HIGH>;
- 		mux-gpios = <&gpio ASPEED_GPIO(I, 2) GPIO_ACTIVE_HIGH>;
--- 
-2.17.1
+My suggestion is to allow the session to be created with the expired 
+password and the session with expired password only allow to change the 
+password for that account.
+Other redfish interfaces should be restricted to access.
+>
+> 2d. Tweak the authority for the 
+> /redfish/v1/AccountManager/Accounts/<account> "Password" property as a 
+> Redfish "property override".  The Password property needs to have a 
+> different authority than the other ManagerAccount properties in that 
+> same account.
+Why do we need property override for the same? User can change it's own 
+user configuration eg password etc.  why different authority for the 
+password?
+Seems I am missing something here.
+>
+> 3. Enhance phosphor-webui to handle the expired password dialog at 
+> login.  This will use the enhanced Redfish APIs. See 
+> https://github.com/ibm-openbmc/dev/issues/1048
+>
+> 4. Enhance Dropbear SSH so a user can change their expired password.  
+> See 
+> https://lists.ucc.gu.uwa.edu.au/pipermail/dropbear/2016q2/001895.html 
+> This piece is optional, but I would like this to be available. The 
+> alternative is to use the OpenSSH server instead of Dropbear. The 
+> right place to do this piece is in Dropbear.
+What about IPMI? As you mentioned we need to support this through IPMI 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23849/3/designs/expired-password.md#98
+How does user knows that his password has been expired via inband access 
+IPMI?
+>
+> - Joseph
+>
+Ratan
 
