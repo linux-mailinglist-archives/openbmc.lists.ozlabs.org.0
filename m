@@ -1,52 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D073D9AA67
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 10:32:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A855C9AB38
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 11:19:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46FF5M10bfzDrL6
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 18:32:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46FG754N3pzDrR2
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 19:19:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=131ce2f92=hank.liou@quantatw.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.250.5; helo=mail1.bemta24.messagelabs.com;
+ envelope-from=pyang4@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
- Fri, 23 Aug 2019 18:31:48 AEST
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 46FF4N66pfzDrgw
- for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 18:31:47 +1000 (AEST)
-Received: from unknown (HELO mailbx05.quanta.corp) ([10.243.91.100])
- by mx02.quantatw.com with ESMTP; 23 Aug 2019 16:30:33 +0800
-Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx05.quanta.corp
- (10.243.91.100) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Fri, 23 Aug
- 2019 16:30:32 +0800
-Received: from mailbx09.quanta.corp ([fe80::c501:1c2b:62fc:dd81]) by
- mailbx09.quanta.corp ([fe80::c501:1c2b:62fc:dd81%6]) with mapi id
- 15.01.1713.004; Fri, 23 Aug 2019 16:30:32 +0800
-From: =?big5?B?SGFuayBMaW91ICi8Qq7Kv6sp?= <Hank.Liou@quantatw.com>
-To: Patrick Venture <venture@google.com>, James Feist
- <james.feist@linux.intel.com>
-Subject: RE: [phosphor-pid-control] scaling issue
-Thread-Topic: [phosphor-pid-control] scaling issue
-Thread-Index: AQHVV/XbtwEoqXVk+kGbiKtv2uj0UqcFJGgAgAE9VwA=
-Date: Fri, 23 Aug 2019 08:30:32 +0000
-Message-ID: <369926533c3e448c9d1a0d28391fd688@quantatw.com>
-References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
- <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
-In-Reply-To: <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
-Accept-Language: en-US, zh-TW
-Content-Language: en-US
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
+ [67.219.250.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46FG6M1TsFzDrDY
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 19:18:30 +1000 (AEST)
+Received: from [67.219.250.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-5.bemta.az-a.us-west-2.aws.symcld.net id EB/B4-18627-36FAF5D5;
+ Fri, 23 Aug 2019 09:18:27 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRWlGSWpSXmKPExsWS8eIhj27y+vh
+ Yg6YH7BanWl6wODB6nJ+xkDGAMYo1My8pvyKBNaPr4yfmguNqFUf/vWBqYOxT7mLk4hASmM8k
+ sebMYRYI5zWjxPINs9khnH2MEp8e7mLsYuTkYBNQkZizdAcLiC0iYCmx5EE7G4gtLKAoceDEW
+ 3aIuJrE7i//oGr0JM7OXwhWwyKgKvHkZBPYHF6g3pPNG5lAbEYBMYnvp9aA2cwC4hLnLraCzZ
+ EQEJBYsuc8M4QtKvHy8T9WCFtBonnPa6D5HED1CRJTJ4dBjBSUODnzCcsERsFZSCbNQqiahaQ
+ KokRHYsHuT2wQtrbEsoWvmWHsMwceMyGLL2BkX8VonlSUmZ5RkpuYmaNraGCga2hopGtobKBr
+ aaqXWKWbqFdarFueWlyia6SXWF6sV1yZm5yTopeXWrKJERg1KQVN8TsYz856o3eIUZKDSUmUN
+ 6IzPlaILyk/pTIjsTgjvqg0J7X4EKMMB4eSBO+TtUA5waLU9NSKtMwcYATDpCU4eJREeC+ApH
+ mLCxJzizPTIVKnGO05Jrycu4iZ4+DReUDy46olQPI7iBRiycvPS5US5324DqhNAKQtozQPbig
+ s4VxilJUS5mVkYGAQ4ilILcrNLEGVf8UozsGoJMz7BWQ5T2ZeCdzuV0BnMQGdVbkjFuSskkSE
+ lFQDU9+Kvc5Nx+7U+qSX//WyOXr2sPuUMw48CnoirXr5jrtfnat7rPrfRfvop8rbK78enXa3V
+ GkKl/+tgL7qhkTBvTfYmrMzn5VJv3vm98X35s+8Rq2PqzcnuO5ifS1+PmzplBtpXM9V2aoOyO
+ Up2x2yS5BuWmtY7qz85dK7umoXtnZHr4UTpin+LuKzXpSsvZe1IXyeco/H8ss/d36fFr34fbL
+ xL1ZfqZ9nGx6t/TWD7SDnOtZVK9uM1vV5bP/x5aDMRhbNjW6Nj4NsWub1Mdh9f3oy5lPmc8N9
+ TS+zE/bIrXZTb/l9Pnf+yYUrv2V5Tjt5Xmw6p8h0dr0jn8/ttZpWOW9vesLd9cUH4lc4T3qjJ
+ 6fEUpyRaKjFXFScCADRn9CrswMAAA==
+X-Env-Sender: pyang4@lenovo.com
+X-Msg-Ref: server-12.tower-326.messagelabs.com!1566551905!86925!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.9; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 27290 invoked from network); 23 Aug 2019 09:18:26 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-12.tower-326.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 23 Aug 2019 09:18:26 -0000
+Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 607EFDD2A3DA0E4C8134
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 05:18:25 -0400 (EDT)
+Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
+ HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Fri, 23 Aug 2019 17:18:11 +0800
+Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
+ HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
+ 15.01.1591.008; Fri, 23 Aug 2019 17:18:24 +0800
+From: Payne Yang <pyang4@lenovo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Question for ACPI status
+Thread-Topic: Question for ACPI status
+Thread-Index: AdVZk6691UFjhEL7Rh2cXX3NMUPdOA==
+Date: Fri, 23 Aug 2019 09:18:24 +0000
+Message-ID: <a05edc724bdb4a10a5860c88ceef10c1@lenovo.com>
+Accept-Language: en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+x-originating-ip: [10.128.115.1]
+Content-Type: multipart/alternative;
+ boundary="_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_"
 MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -59,68 +90,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgUGF0cmljaywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogUGF0cmlj
-ayBWZW50dXJlIFttYWlsdG86dmVudHVyZUBnb29nbGUuY29tXQ0KPlNlbnQ6IFdlZG5lc2RheSwg
-QXVndXN0IDIxLCAyMDE5IDEwOjMyIFBNDQo+VG86IEhhbmsgTGlvdSAovEKuyr+rKSA8SGFuay5M
-aW91QHF1YW50YXR3LmNvbT47IEphbWVzIEZlaXN0DQo+PGphbWVzLmZlaXN0QGxpbnV4LmludGVs
-LmNvbT4NCj5DYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+U3ViamVjdDogUmU6IFtwaG9z
-cGhvci1waWQtY29udHJvbF0gc2NhbGluZyBpc3N1ZQ0KPg0KPk9uIFdlZCwgQXVnIDIxLCAyMDE5
-IGF0IDE6MTEgQU0gSGFuayBMaW91ICi8Qq7Kv6spDQo+PEhhbmsuTGlvdUBxdWFudGF0dy5jb20+
-IHdyb3RlOg0KPj4NCj4+IEhpIEFsbCwNCj4+DQo+Pg0KPj4gQWZ0ZXIgY29tbWl0IFsxXSwgSSBm
-b3VuZCBteSB0ZW1wIHNlbnNvciByZWFkaW5nIHdvdWxkIGJlIHJlLXNjYWxlZCBieQ0KPm11bHRp
-cGx5aW5nIDEgb3ZlciAyNTUsIG1ha2luZyB0ZW1wZXJhdHVyZSBpbnRvIHVuZmFtaWxpYXIgdW5p
-dC4gQWxzbyB0aGUgZmFuDQo+cnBtIHJlYWRpbmcgd291bGQgbGllIGluIFswLDFdIGludGVydmFs
-LCBsZXR0aW5nIHRoZSBmYW4gaW5wdXQgdG8gYmUgMCAoc2luY2UgdGhlDQo+aW5wdXQgdmFsdWUg
-b2YgZmFuIGlzIGZyb20gYW4gaW50ZWdlciBhcnJheSBbMl0pLiBBcmUgdGhlc2Ugbm9ybWFsIGJl
-aGF2aW9ycz8NCj5PciBkbyBJIG1pc3Mgc29tZXRoaW5nPw0KPg0KPkFyZSB5b3UgdXNpbmcgZGJ1
-cyBjb25maWd1cmF0aW9uIG9yIGpzb24/ICBJZiBqc29uLCBjYW4geW91IGF0dGFjaCB5b3VyIGNv
-bmZpZy4NCj5TaW5jZSB5b3UncmUgc2F5aW5nIGl0IHdhcyB3b3JraW5nIGFuZCBub3cgaXNuJ3Qs
-IEknbSBhc3N1bWluZyB0aGVyZSdzDQo+c29tZXRoaW5nIGFib3V0IHRoZSBjb25maWcgYmVpbmcg
-dHJlYXRlZCBkaWZmZXJlbnRseSB3aXRoIHRoZSBjb2RlIGNoYW5nZXMgaW4NCj5hbiB1bmV4cGVj
-dGVkIHdheS4NCg0KSSBmb3VuZCBwaWQgY29udHJvbCB3aWxsIGZpcnN0IHJlYWQgbWluIGFuZCBt
-YXggZnJvbSBkYnVzIGFuZCB0aGVuIChiZWZvcmUgY29tbWl0IFsxXSkgcmV2aXNlIHRoZW0gaWYg
-DQoNCmluZm8tPm1pbiAhPSBjb25mOjppbmhlcml0VmFsdWVGcm9tRGJ1cyAoaW4gZGJ1cy9kYnVz
-cGFzc2l2ZS5jcHApDQoNCkFmdGVyIHZhbHVlIGluaXRpYWxpemF0aW9uLCB0aGUgbWluIGFuZCBt
-YXggd291bGQgYmUgdGhlIG9uZXMgaW4ganNvbiBmaWxlIChKc29uIGZpbGUgWzNdKS4gSG93ZXZl
-ciwgYWZ0ZXIgY29tbWl0IFsxXSB0aGUgbWluIGFuZCBtYXggdmFsdWVzIG9mIGNvbmZpZyB3b3Vs
-ZCBub3QgYmUgZmVkIGludG8gdGhlIGZhbiBjb250cm9sIHByb2Nlc3MuIFRoZSBzY2FsaW5nIGlz
-c3VlIGlzIG9yaWdpbmF0ZWQgZnJvbSBjb21taXQgWzRdIHdpdGggdGhlIGFpbSB0byB0cmVhdCBm
-YW4gcnBtIGFzIHBlcmNlbnRhZ2UuIEl0IHNlZW1zIHRoYXQgY29tbWl0IFsxXSB1bmV4cGVjdGVk
-bHkgYWZmZWN0cyB0ZW1wIHNlbnNvcnMgaW4gdGhlIHNlbnNlIHRoYXQgdGhlIHRlbXAgaXMgdGhl
-IGludGVnZXIgcmVhZGluZyBub3QgcGVyY2VudGFnZS4gQmVmb3JlIGNvbW1pdCBbMV0sIGl0IHdv
-dWxkIG5vdCByZS1zY2FsZSB0aGUgdGVtcCByZWFkaW5nIHNpbmNlIG15IG1pbiBhbmQgbWF4IGFy
-ZSAwIFs2XS4NCg0KDQoNClRoZXJlIGlzIGFub3RoZXIgaXNzdWUgd2l0aCBjb21taXQgWzFdLiBO
-b3cgdGhlIGZhbiBycG0gd291bGQgYmUgc29tZXRoaW5nIGxpa2UNCg0KMTUwMCAvIDIwMDAwID0g
-MC4wNzUNCg0Kd2hlcmUgcnBtIG1heCAyMDAwMCBpcyBmcm9tIGRidXMuIEhvd2V2ZXIgdGhlIGZh
-biBpbnB1dCBmdW5jdGlvbiB3b3VsZCB0cmFuc2ZlciBkb3VibGUgaW50byBpbnQsIHdoaWNoIGlz
-IDAgZm9yIDAuMDc1IChzZWUgWzVdKS4gSGVuY2UgdGhlIGZhbiBpbnB1dCBpcyAwIG5vdCBwZXJj
-ZW50YWdlLiBJcyB0aGVyZSBzb21ldGhpbmcgd3Jvbmc/DQoNClsxXSBodHRwczovL2dpdGh1Yi5j
-b20vb3BlbmJtYy9waG9zcGhvci1waWQtY29udHJvbC9jb21taXQvZmMyZTgwM2Y1ZDkyNTY5NDRl
-MThjN2M4NzhhNDQxNjA2YjFmMTIxYw0KWzJdIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bo
-b3NwaG9yLXBpZC1jb250cm9sL2Jsb2IvYTdlYzgzNTBkMTdiNzAxNTNjZWJlNjY2ZDNmYmU4OGJk
-ZGQwMmExYS9waWQvZmFuY29udHJvbGxlci5jcHAjTDg2DQpbM10NCiAgICAgICB7DQogICAgICAg
-ICAgICAibmFtZSI6ICJmYW4xIiwNCiAgICAgICAgICAgICJ0eXBlIjogImZhbiIsDQogICAgICAg
-ICAgICAicmVhZFBhdGgiOiAiL3N5cy9jbGFzcy9od21vbi9od21vbjEvZmFuMV9pbnB1dCIsDQog
-ICAgICAgICAgICAid3JpdGVQYXRoIjogIi9zeXMvY2xhc3MvaHdtb24vaHdtb24xL3B3bTEiLA0K
-ICAgICAgICAgICAgIm1pbiI6IDAsDQogICAgICAgICAgICAibWF4IjogMjU1DQogICAgICAgIH0s
-DQogICAgICAgIHsNCiAgICAgICAgICAgICJuYW1lIjogInRlbXAxIiwNCiAgICAgICAgICAgICJ0
-eXBlIjogInRlbXAiLA0KICAgICAgICAgICAgInJlYWRQYXRoIjogIi94eXovb3BlbmJtY19wcm9q
-ZWN0L3NlbnNvcnMvdGVtcGVyYXR1cmUvdGVtcDEiLA0KICAgICAgICAgICAgIndyaXRlUGF0aCI6
-ICIiLA0KICAgICAgICAgICAgIm1pbiI6IDAsDQogICAgICAgICAgICAibWF4IjogMA0KICAgICAg
-ICB9DQpbNF0gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlkLWNvbnRyb2wv
-Y29tbWl0Lzc1ZWI3NjlkMzUxNDM0NTQ3ODk5MTg2ZjczZmY3MGFlMDBkNzkzNGENCls1XSBodHRw
-czovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtY29udHJvbC9ibG9iL2E3ZWM4MzUw
-ZDE3YjcwMTUzY2ViZTY2NmQzZmJlODhiZGRkMDJhMWEvcGlkL2ZhbmNvbnRyb2xsZXIuY3BwI0w2
-NA0KWzZdIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXBpZC1jb250cm9sL2Js
-b2IvYTdlYzgzNTBkMTdiNzAxNTNjZWJlNjY2ZDNmYmU4OGJkZGQwMmExYS9kYnVzL2RidXNwYXNz
-aXZlLmNwcCNMMTU4DQoNCj4NCj4+DQo+Pg0KPj4gWzFdDQo+PiBodHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9waG9zcGhvci1waWQtDQo+Y29udHJvbC9jb21taXQvZmMyZTgwM2Y1ZDkyNTY5DQo+
-PiA0NGUxOGM3Yzg3OGE0NDE2MDZiMWYxMjFjDQo+Pg0KPj4gWzJdDQo+PiBodHRwczovL2dpdGh1
-Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtDQo+Y29udHJvbC9ibG9iL2E3ZWM4MzUwZDE3Yjcw
-MTUzDQo+PiBjZWJlNjY2ZDNmYmU4OGJkZGQwMmExYS9waWQvZmFuY29udHJvbGxlci5jcHAjTDg2
-DQo+Pg0KPj4NCj4+IFRoYW5rcywNCj4+DQo+Pg0KPj4gSGFuayBMaW91DQo+Pg0KPj4gUXVhbnRh
-IENvbXB1dGVyIEluYy4NCj4+DQo+Pg0KDQpTaW5jZXJlbHksDQpIYW5rDQo=
+--_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Team,
+
+Is there any ACPI service to update the ACPI state ?
+I could find that the property of ACPI state is defined in dbus, and the ip=
+mi command is also done in package "phosphor-host-ipmid".
+https://github.com/openbmc/phosphor-host-ipmid/blob/b90a53280c74e8c65e8dc58=
+c8964d93a08cfd65e/apphandler.cpp#L202
+
+However, I could not find other services to update the property "ACPIPowerS=
+tate".
+https://github.com/search?q=3Dorg%3Aopenbmc+ACPIPowerState&type=3DCode
+
+Do I miss something ?
+If yes, please help to share your comment or suggestion:)
+If no, it seems to me that I have to write a service as ACPI state monitor.
+
+Best Regards,
+Payne
+
+
+--_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Team,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Is there any ACPI service to up=
+date the ACPI state ?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I could find that the property =
+of ACPI state is defined in dbus, and the ipmi command is also done in pack=
+age &#8220;phosphor-host-ipmid&#8221;.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://github.com/o=
+penbmc/phosphor-host-ipmid/blob/b90a53280c74e8c65e8dc58c8964d93a08cfd65e/ap=
+phandler.cpp#L202">https://github.com/openbmc/phosphor-host-ipmid/blob/b90a=
+53280c74e8c65e8dc58c8964d93a08cfd65e/apphandler.cpp#L202</a><o:p></o:p></sp=
+an></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">However, I could not find other=
+ services to update the property &#8220;ACPIPowerState&#8221;.<o:p></o:p></=
+span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://github.com/s=
+earch?q=3Dorg%3Aopenbmc&#43;ACPIPowerState&amp;type=3DCode">https://github.=
+com/search?q=3Dorg%3Aopenbmc&#43;ACPIPowerState&amp;type=3DCode</a><o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Do I miss something ?<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">If yes, please help to share yo=
+ur comment or suggestion</span><span lang=3D"EN-US" style=3D"font-family:Wi=
+ngdings">J</span><span lang=3D"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">If no, it seems to me that I ha=
+ve to write a service as ACPI state monitor.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Payne<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_--
