@@ -1,82 +1,136 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EDF79A3AF
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 01:21:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 549709A422
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 02:03:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46F0sm4X5JzDrZC
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 09:21:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46F1p45P2WzDrg6
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 10:03:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=313840f0e7=benwei@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="cTdkVcG9"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="kF5zZPvG"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46F0rx5ySbzDrRc
- for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 09:21:03 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7MNH7hY063377; Thu, 22 Aug 2019 19:20:58 -0400
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2uj1amem5k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Aug 2019 19:20:58 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7MNJwUn013909;
- Thu, 22 Aug 2019 23:20:57 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma02dal.us.ibm.com with ESMTP id 2ue976tshp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Aug 2019 23:20:57 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x7MNKunA44302652
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Aug 2019 23:20:56 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10BC4C605B;
- Thu, 22 Aug 2019 23:20:56 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF350C605D;
- Thu, 22 Aug 2019 23:20:55 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Thu, 22 Aug 2019 23:20:55 +0000 (GMT)
-Subject: Re: BMCWeb changes for expired password design
-To: Ed Tanous <ed.tanous@intel.com>, openbmc@lists.ozlabs.org
-References: <0057c203-b76b-6ecf-7f40-c8e225ea6891@linux.ibm.com>
- <21bdc6a1-2397-c115-cdb6-201ebf3041b2@intel.com>
- <c1fba479-a81c-bd63-0157-42143ffab08a@linux.ibm.com>
- <67a0677e-0ef8-663b-8d6a-9be7141606a9@intel.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <40cb4914-80e8-486b-8300-3ee72c3d31d8@linux.ibm.com>
-Date: Thu, 22 Aug 2019 18:20:55 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <67a0677e-0ef8-663b-8d6a-9be7141606a9@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46F1nD4bNHzDrfN
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 10:02:49 +1000 (AEST)
+Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7MNxMQU007796; Thu, 22 Aug 2019 17:02:43 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=facebook; bh=tzDHFVj08kh2HrkxLT8sH97xFr1Rmz/csc2Wg01ze34=;
+ b=cTdkVcG90CDtfDSxy0+FQpPTFvPrbAtLATxUqL2jGyu09FotDBiQt3PQqrvtNOV6XAjJ
+ YNGv+iYSi4DHKq4IJTal76HA7BzGgUKP6HZwmeq8jW4kOlRhZWqtUUz7toA+9v2CxVoJ
+ et/sGtkz3P08SS0U/Ne4JGTDTKpHL5cXNx8= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uj1w98upp-7
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Thu, 22 Aug 2019 17:02:43 -0700
+Received: from prn-mbx02.TheFacebook.com (2620:10d:c081:6::16) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Thu, 22 Aug 2019 17:02:42 -0700
+Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
+ prn-mbx02.TheFacebook.com (2620:10d:c081:6::16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Thu, 22 Aug 2019 17:02:41 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Thu, 22 Aug 2019 17:02:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ngWGNmJI1Mh31b5i/gtLO/qXEGO3z94pIROoslHo+QenXncGTkhKCr0HRgaCVIkCgafevffgcuVrJLSPWVgedCNiWGFLUEw3ielGf0uatWRSoFC9oRi+s1QWGU0mCzp0IdQwve7Ob/CVc2LUVsPivDhNNjpwBVYlC0ntYxON+BghZID7xXdxUL96qsoPrycINUlF4dH76dCGxn32LvdcZgAp8BZo8BuavrxYfoDuSm+KF4spWT7kgQmcxGJAGHWYH1aiUCMGkC/qz+bSRWdqq36jjTyLB8FzZ6DK23/Wr9qTBxFhapW+U6cljy4si0iNL/r0GTdhZ9JM83gQdfSsvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tzDHFVj08kh2HrkxLT8sH97xFr1Rmz/csc2Wg01ze34=;
+ b=nyvbL0g1uBjUfH+wyX1OELbJfn84snN7UxUCbpKxhXpEEgqVRVxsLzHb3LeDuKHi58kKsHz1irvMQvEf3nh1H0arRBtCZ//eWLsUxTzW1oZM0hrcLdIZRsBw+BnpOFkoutWRT+no77dSopr+GmozPbF6eEIlb9g2RYIlDwiHkZOX9mjpQVsmmDXukmpE3HYLPAHXQO229uQInmBVIkVKvr43jbAzOtydHgJmp5q82b6Wa7IPiBnWge1Sdy/u5oHByIJeXhQFnBhlK/jzzXbcWkkc1Razak/xArxkn/9O4XjADs7z60oBl7UOrnlftgjZYgHBMijtPmz8j5uf1KR3lA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tzDHFVj08kh2HrkxLT8sH97xFr1Rmz/csc2Wg01ze34=;
+ b=kF5zZPvGKE4QGa4BrcpbxzzdlfVr/OL8rSMdY+ahjUQahZGp4fgM5lY63z2y53h/3JzlQ7PW241lrwPNsUFk7DzQew4fXQFz9y/blZcN1FWzfVLDo27U2Tm0P/eVMzEHdXqDpVtsrz3hci/VLSyEoD+s3gleByFDvEmm3nixF/k=
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com (10.255.155.143) by
+ CH2PR15MB3720.namprd15.prod.outlook.com (52.132.230.74) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.16; Fri, 23 Aug 2019 00:02:40 +0000
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::9d88:b74a:48ea:cf6c]) by CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::9d88:b74a:48ea:cf6c%5]) with mapi id 15.20.2178.020; Fri, 23 Aug 2019
+ 00:02:40 +0000
+From: Ben Wei <benwei@fb.com>
+To: "sam@mendozajonas.com" <sam@mendozajonas.com>, "davem@davemloft.net"
+ <davem@davemloft.net>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "Justin.Lee1@Dell.com" <Justin.Lee1@Dell.com>
+Subject: [PATCH] ncsi-netlink: support sending NC-SI commands over Netlink
+ interface
+Thread-Topic: [PATCH] ncsi-netlink: support sending NC-SI commands over
+ Netlink interface
+Thread-Index: AdVZRhK7FBH7PA61Tj6DiPuS9P29Hg==
+Date: Fri, 23 Aug 2019 00:02:40 +0000
+Message-ID: <CH2PR15MB36860EECD2EA6D63BEA70110A3A40@CH2PR15MB3686.namprd15.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::c865]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: acb92059-a415-4234-b4b8-08d7275d36fe
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(5600166)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
+ SRVR:CH2PR15MB3720; 
+x-ms-traffictypediagnostic: CH2PR15MB3720:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <CH2PR15MB372055C6705F3647C3E39287A3A40@CH2PR15MB3720.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:826;
+x-forefront-prvs: 0138CD935C
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(396003)(376002)(136003)(39860400002)(346002)(199004)(189003)(6436002)(2501003)(478600001)(46003)(486006)(476003)(7696005)(99286004)(186003)(102836004)(6506007)(305945005)(14454004)(81156014)(81166006)(8676002)(53936002)(8936002)(55016002)(6116002)(71190400001)(52536014)(86362001)(71200400001)(2201001)(25786009)(4326008)(256004)(33656002)(2906002)(7736002)(66946007)(9686003)(76116006)(316002)(110136005)(74316002)(66556008)(5660300002)(66446008)(66476007)(64756008);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CH2PR15MB3720;
+ H:CH2PR15MB3686.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: Eu6VmD346+1D85WqCCaIZkYizYusQKO+k/JH+E1BB0QqBw+d8Ygn/DUIy7jgtLqZCZ7A9Ku6ZqwlA3S4IbaSM2bjN6KMNGcj06+07NNscDG14+SHQqZ2OL6bc3eHQ+h9lQly1M2h8zVMySk2Y7/DcfAeHNkmc3S4XHwYWZGUqw2gOHM0jPiUAf+rTbKDxRTG5Y5wyUkk1dwi8oqlMpj78lPyDBh6X4RMDsOSoykhsLyilT8CKG/eFZkZdNskxiyuXE872A6pl8siXl+SHHPLWZFOejxYmRLr/umLfzZwgNCsVh7cktcIWv3WPMzcjUQVJppVuPrS5EoSFxTnZX1Vw4jc/PijuBaeX5LZELdcgqhWfwkJFII2ALyClD9bvRwlIDylil7ggX2Z2Guc1Mynq5zO5EQPeTsHjWbWUUmCMm8=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: acb92059-a415-4234-b4b8-08d7275d36fe
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2019 00:02:40.3448 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 3nolW2HRqzZMOvcGV8fHfv/d+WTkinfJ2CUNH2GL38iGwPrzY+oUzYkLRWVk+Lnu
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR15MB3720
+X-OriginatorOrg: fb.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-22_14:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ definitions=2019-08-22_15:, , signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
  priorityscore=1501
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908220204
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908220207
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,213 +142,253 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ben Wei <benwei@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch extends ncsi-netlink command line utility to send NC-SI command =
+to kernel driver=20
+via NCSI_CMD_SEND_CMD command.
 
-On 8/15/19 6:13 PM, Ed Tanous wrote:
-> On 8/15/19 3:46 PM, Joseph Reynolds wrote:
->> Here are some low level design ideas:
->>
->> Enhance bmcweb/include/pam_authenticate.hpp - pamAuthenticateUser() like:
->>    inline bool pamAuthenticateUser(const std::string_view username,
->>      const std::string_view password,
->>      bool &passwordChangeRequired)
->> so that if the password is correct but expired, the function will return
->> true and set passwordChangeRequired=true.
->>
->> This change will get the passwordChangeRequired status to where it is
->> needed.  As you mentioned, each of those will respond differently:
->> - Basic Auth will fail when passwordChangeRequired=true
->> - POST /login will fail when passwordChangeRequired=true, with an
->> additional message
->> - POST /redfish/v1/SessionManager/Sessions will succeed when
->> passwordChangeRequired=true
-> Sounds good.
->
->> Naturally, the crow::persistent_data::UserSession will store the new
->> passwordChangeRequired field, with all the changes that requires.
-> This is what I meant about using the existing privilege system and not
-> hardcoding it.  I suspect when we hit this, we need to give the user a
-> "OnlyCanChangePassword" privilege, then tag some routes appropriately
-> with that flag.  In this way, we will still properly handle all the
-> routes that don't require auth (like ServiceRoot) but can reject any
-> requests that require any privileges if the password hasn't been set.
+New command line option -o (opcode) is used to specify NC-SI command and op=
+tional payload.
 
-Agreed.  The OnlyCanChangePassword privilege is exactly the Redfish 
-ConfigureSelf privilege.  (I learned about that after I wrote my first 
-email.)
+For example, to send "Get Parameter" command
 
->
-> You would amend this function to handle the case where the users
-> password needs changed, and to apply the correct Privilege.
-> https://github.com/openbmc/bmcweb/blob/a2730f017069aeb39ea5d3bf4c1403965b2ba2f9/redfish-core/include/privileges.hpp#L180
->
->
->> Skipping ahead a bit, I think
->> crow::token_authorization::Middleware.beforeHandle() should have the
->> following logic after it successfully locates a session:
->>    if (req.session.passwordChangeRequired &&
->>        !isOnPasswordChangeRequiredWhitelist(req))
->>    then fail with HTTP status 403 and an explanation in the payload
-> See above statement, use the privileges module to do this.
-> This would mechanically look like going here:
-> https://github.com/openbmc/bmcweb/blob/a2730f017069aeb39ea5d3bf4c1403965b2ba2f9/crow/include/crow/routing.h#L1245
->
-> and adding something like
->          if (!rules[ruleIndex]->checkPrivileges(userPrivileges))
->          {
->              // if the user was only granted the ability to change the
-> password, print the correct message.
->              if (userPrivileges.isSupersetOf({"OnlyCanChangePassword"}){
-> 		// res.result.jsonValue = ...... appropriate error message for the type.
->              } else {
->                  //While we're here, and we're implementing error codes
-> properly, we might as well fix the normal 403 handler.
->              }
->              res.result(boost::beast::http::status::forbidden);
->              res.end();
->              return;
->          }
->
->
->> Where new function isOnPasswordChangeRequiredWhitelist returns true in
->> the following cases:
->>    isOnWhitelist(req) || GET or DELETE mySession || GET or PATCH myAccount
-> This is exactly what I meant when I said "do not have a fixed "go/no-go"
-> url list".  We already have a privilege system that can tag handlers,
-> and has more information about the route map than can be provided in a
-> single if statement.  Lets use it as it was intended.
->
-> Also, I'm not sure what you meant by mySession and myAccount.   I'm
-> assuming you meant AccountService and SessionService?
-Close.  I meant the actual account and session resource within the 
-collection.  I've clarified this in my discussion below.
->
-> Another thing to realize:  With the last round of per-verb router
-> registrations that went in several months ago, isOnWhitelist is likely
-> going away, as it's redundant to the existing privilege mechanisms (and
-> super inefficient to boot).  It's only still there because I have a
-> healthy paranoia of removing security features whitelists like that
-> without testing the hell out of the changeset ahead of time.
+  ncsi-netlink -l 2 -c 0 -p0 -o 0x17
 
-Thanks for your response and the links into BMCWeb code.
+To configure AEN
 
-I think BMCWeb needs tweaks to its authority model to match the Redfish 
-spec for the ConfigureSelf privilege.  (And I apologize in advance for 
-the C++ish code in this email.)
+  ncsi-netlink -l 2 -c 0 -p0 -o 8 0 0 0 0 0 0 0 7
 
-The key parts of the Redfish spec are below. An understanding of these 
-sections is required to understand the BMCWeb authority changes I am 
-proposing.
+Signed-off-by: Ben Wei <benwei@fb.com>
+---
+ ncsi-netlink.c | 162 +++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 157 insertions(+), 5 deletions(-)
 
-The Redfish spec 1.7.0
-http://redfish.dmtf.org/schemas/DSP0266_1.7.0.html
-   Section 13.2.6.1 ("Password change required handling")
-   Section 13.2.10.5 ("Property override example")
-
-DSP2046 The Redfish Resource and Schema Guide, version 2019.1
-http://redfish.dmtf.org/schemas/DSP2046_2019.1.html
-   search for "ConfigureSelf"
-
-
-Change 1: When a user establishes a session where 
-PasswordChangeRequired=True, that session should only have the 
-ConfigureSelf privilege; the user's normal role should be disregarded 
-for that session.
-
-One way to handle this is to create a new user role 
-"priv-configure-self" (used only internally within BMCWeb) which grants 
-only the Redfish ConfigureSelf privilege.  Then when creating the 
-UserSession:
-   if (pamAuthenticateUser() indicated passwordChangeRequired==true)
-     session.userRole = "priv-configure-self";  // override
-
-This sets up the idea (mentioned in your email) that you can use the 
-following code in routing.h:Router.handle() to detect if the current 
-session is for password change only:
-     userPrivileges.isSupersetOf({"ConfigureSelf"})
-
-[routing.h]: 
-https://github.com/openbmc/bmcweb/blob/master/crow/include/crow/routing.h
-
-Change 2: In routing.h:Router.handle(), when 
-(userPrivileges.isSupersetOf({"ConfigureSelf"}) == true) add the:
-    "@Message.ExtendedInfo object containing the PasswordChangeRequired 
-message from the Base Message Registry"
-to the HTTP 403 response.  (The quoted language is from the Redfish 
-spec, section 13.2.6.1.)
-
-Change 3: Ignore the user's ConfigureSelf privilege when accessing an 
-account or session which is not theirs.  Details:
-
-I think we need to change routing.h:Router.handle() to implement the 
-Redfish ConfigureSelf privilege.
-The Redfish ConfigureSelf privilege 
-(http://redfish.dmtf.org/schemas/DSP2046_2019.1.html) is defined as, 
-"Able to change the password for the current user Account."  I 
-understand this privilege should also allow the user to terminate their 
-session.  The relevant routes and verbs which should be allowed are:
-   /redfish/v1/AccountService/Accounts/<account>/  GET
-   /redfish/v1/AccountService/Accounts/<account>/  PATCH (only Password, 
-see change 4 below) and GET
-   /redfish/v1/SessionService/Sessions/<session>/   DELETE
-
-Specifically, in routing.h:Router.handle():
-if
-   (((rules[ruleIndex].rule matches
-       "/redfish/v1/AccountService/Accounts/<account>/")
-   and
-     ("<account>" does not match session.username))
-or
-     (((rules[ruleIndex].rule matches
-     "/redfish/v1/SessionService/Sessions/<session>/")
-   and
-     ("<session>" does not match session.uniqueId)))
-then
-     // if we got here, the user is accessing an account
-     // or session not their own, so the ConfigureSelf
-     // privilege does not apply.
-     // remove the ConfigureSelf privilege:
-     userPrivileges = userPrivileges.remove({ConfigureSelf});
-endif
-...perform the authority check against userPrivileges as usual ...
-
-Change 4: ConfigureSelf should only apply to PATCH 
-/redfish/v1/AccountService/Accounts/<account> Password, not to the 
-entire ManagerAccount resource.
-This special case is seen in the example in section 13.2.10.5 referenced 
-above.  It is needed because ConfigureSelf applies specifically to the 
-ManagerAccount Password property, and no other properties in that resources.
-
-To handle this make two changes to: 
-https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/account_service.hpp 
-class ManagerAccount:
-A. For this resource, boost::beast::http::verb::patch should allow 
-{ConfigureSelf}.
-B. Add an additional check to doPatch() to ensure ConfigureSelf 
-privilege only allows the the Password property to be patched.
-If we are trying to PATCH something other than the Password property, 
-re-check authority like this:
-if ((newUserName or enabled or roleId or locked) and
-   (!check user privileges with ({ConfigureSelf}) removed))
-then
-   fail the request with HTTP 403
-
-Whew.  I think that covers the authority changes needed for BMCWeb to 
-implement the PasswordChangeRequired design.  It seems like the design 
-is getting closer.  What do you think?
-
-- Joseph
-
->
->> Doing it this way seems the most clear and only adds a few cycles in the
->> usual case.  It seems like having a new whitelist for this situation is
->> correct because Redfish specifies that these interfaces are needed for
->> PasswordChangeRequired handling.  And this way avoids having to change
->> the authority model.
-> What I suggested above does not require any changes to the authority
-> model, aside from adding a privilege type which is supported already,
-> and shouldn't require any code changes to the privileges module itself.
->
+diff --git a/ncsi-netlink.c b/ncsi-netlink.c index c46ae76..a06e30e 100644
+--- a/ncsi-netlink.c
++++ b/ncsi-netlink.c
+@@ -11,10 +11,22 @@
+ #include <linux/ncsi.h>
+ //#include "ncsi.h"
+=20
++struct ncsi_pkt_hdr {
++	unsigned char mc_id;        /* Management controller ID */
++	unsigned char revision;     /* NCSI version - 0x01      */
++	unsigned char reserved;     /* Reserved                 */
++	unsigned char id;           /* Packet sequence number   */
++	unsigned char type;         /* Packet type              */
++	unsigned char channel;      /* Network controller ID    */
++	__be16        length;       /* Payload length           */
++	__be32        reserved1[2]; /* Reserved                 */
++};
++
+ struct ncsi_msg {
+ 	struct nl_sock	*sk;
+ 	struct nl_msg	*msg;
+ 	struct nlmsghdr	*hdr;
++	int ret;
+ };
+=20
+ static void free_ncsi_msg(struct ncsi_msg *msg) @@ -69,6 +81,7 @@ int setu=
+p_ncsi_message(struct ncsi_msg *msg, int cmd, int flags)
+ 		rc =3D -1;
+ 		goto out;
+ 	}
++	msg->ret =3D 1;
+=20
+ 	return 0;
+ out:
+@@ -308,10 +321,132 @@ out:
+ 	return rc;
+ }
+=20
++static int send_cb(struct nl_msg *msg, void *arg) { #define=20
++ETHERNET_HEADER_SIZE 16
++
++	struct nlmsghdr *hdr =3D nlmsg_hdr(msg);
++	struct nlattr *tb[NCSI_ATTR_MAX + 1] =3D {0};
++	int rc, data_len, i;
++	char *data;
++	int *ret =3D arg;
++
++	static struct nla_policy ncsi_genl_policy[NCSI_ATTR_MAX + 1] =3D {
++		[NCSI_ATTR_IFINDEX] =3D		{ .type =3D NLA_U32 },
++		[NCSI_ATTR_PACKAGE_LIST] =3D	{ .type =3D NLA_NESTED },
++		[NCSI_ATTR_PACKAGE_ID] =3D	{ .type =3D NLA_U32 },
++		[NCSI_ATTR_CHANNEL_ID] =3D	{ .type =3D NLA_U32 },
++		[NCSI_ATTR_DATA] =3D		{ .type =3D NLA_BINARY  },
++		[NCSI_ATTR_MULTI_FLAG] =3D	{ .type =3D NLA_FLAG },
++		[NCSI_ATTR_PACKAGE_MASK] =3D	{ .type =3D NLA_U32 },
++		[NCSI_ATTR_CHANNEL_MASK] =3D	{ .type =3D NLA_U32 },
++	};
++
++
++	rc =3D genlmsg_parse(hdr, 0, tb, NCSI_ATTR_MAX, ncsi_genl_policy);
++	if (rc) {
++		fprintf(stderr, "Failed to parse ncsi cmd callback\n");
++		return rc;
++	}
++
++	data_len =3D nla_len(tb[NCSI_ATTR_DATA]) - ETHERNET_HEADER_SIZE;
++	data =3D nla_data(tb[NCSI_ATTR_DATA]) + ETHERNET_HEADER_SIZE;
++
++
++	printf("NC-SI Response Payload length =3D %d\n", data_len);
++	printf("Response Payload:\n");
++	for (i =3D 0; i < data_len; ++i) {
++		if (i && !(i%4))
++			printf("\n%d: ", 16+i);
++		printf("0x%02x ", *(data+i));
++	}
++	printf("\n");
++
++	// indicating call back has been completed
++	*ret =3D 0;
++	return 0;
++}
++
++static int run_command_send(int ifindex, int package, int channel,
++			uint8_t type, short payload_len, uint8_t *payload) {
++	struct ncsi_msg msg;
++	struct ncsi_pkt_hdr *hdr;
++	int rc;
++	uint8_t *pData, *pCtrlPktPayload;
++
++	// allocate a  contiguous buffer space to hold ncsi message
++	//  (header + Control Packet payload)
++	pData =3D calloc(1, sizeof(struct ncsi_pkt_hdr) + payload_len);
++	if (!pData) {
++		fprintf(stderr, "Failed to allocate buffer for ctrl pkt, %m\n");
++		goto out;
++	}
++	// prepare buffer to be copied to netlink msg
++	hdr =3D (void *)pData;
++	pCtrlPktPayload =3D pData + sizeof(struct ncsi_pkt_hdr);
++	memcpy(pCtrlPktPayload, payload, payload_len);
++
++	rc =3D setup_ncsi_message(&msg, NCSI_CMD_SEND_CMD, 0);
++	if (rc)
++		return -1;
++
++	printf("send cmd, ifindex %d, package %d, channel %d, type 0x%x\n",
++			ifindex, package, channel, type);
++
++	rc =3D nla_put_u32(msg.msg, NCSI_ATTR_IFINDEX, ifindex);
++	if (rc) {
++		fprintf(stderr, "Failed to add ifindex, %m\n");
++		goto out;
++	}
++
++	if (package >=3D 0) {
++		rc =3D nla_put_u32(msg.msg, NCSI_ATTR_PACKAGE_ID, package);
++		if (rc) {
++			fprintf(stderr, "Failed to add package id, %m\n");
++			goto out;
++		}
++	}
++
++	rc =3D nla_put_u32(msg.msg, NCSI_ATTR_CHANNEL_ID, channel);
++	if (rc)
++		fprintf(stderr, "Failed to add channel, %m\n");
++
++	hdr->type =3D type;   // NC-SI command
++	hdr->length =3D htons(payload_len);  // NC-SI command payload length
++	rc =3D nla_put(msg.msg, NCSI_ATTR_DATA,
++				sizeof(struct ncsi_pkt_hdr)+payload_len,
++				(void *)pData);
++	if (rc)
++		fprintf(stderr, "Failed to add netlink header, %m\n");
++
++	nl_socket_disable_seq_check(msg.sk);
++	rc =3D nl_socket_modify_cb(msg.sk, NL_CB_VALID, NL_CB_CUSTOM, send_cb,
++			&(msg.ret));
++
++	rc =3D nl_send_auto(msg.sk, msg.msg);
++	if (rc < 0) {
++		fprintf(stderr, "Failed to send message, %m\n");
++		goto out;
++	}
++
++	while (msg.ret =3D=3D 1) {
++		rc =3D nl_recvmsgs_default(msg.sk);
++		if (rc) {
++			fprintf(stderr, "Failed to rcv msg, rc=3D%d %m\n", rc);
++			goto out;
++		}
++	}
++
++out:
++	free_ncsi_msg(&msg);
++	return rc;
++}
++
+ void usage(void)
+ {
+ 	printf(	"ncsi-netlink: Send messages to the NCSI driver via Netlink\n"
+-		"ncsi-netlink [-h] operation [-p PACKAGE] [-c CHANNEL] [-l IFINDEX]\n"
++		"ncsi-netlink [-h] operation [-p PACKAGE] [-c CHANNEL] [-l IFINDEX] [-o =
+cmd [payload]]\n"
+ 		"\t--ifindex index      Specify the interface index\n"
+ 		"\t--package package    Package number\n"
+ 		"\t--channel channel    Channel number (aka. port number)\n"
+@@ -326,7 +461,9 @@ void usage(void)
+ int main(int argc, char *argv[])
+ {
+ 	int rc, operation =3D -1;
+-	int package, channel, ifindex;
++	int package, channel, ifindex, opcode;
++	uint8_t payload[2048] =3D {0};
++	short payload_length =3D 0, i =3D 0;
+=20
+ 	static const struct option long_opts[] =3D {
+ 		{"channel",	required_argument, 	NULL, 'c'},
+@@ -336,12 +473,12 @@ int main(int argc, char *argv[])
+ 		{"package",	required_argument, 	NULL, 'p'},
+ 		{"set",		no_argument, 		NULL, 's'},
+ 		{"clear",	no_argument, 		NULL, 'x'},
++		{"cmd",		required_argument,	NULL, 'o'},
+ 		{ NULL, 0, NULL, 0},
+ 	};
+-	static const char short_opts[] =3D "c:hil:p:sx";
+-
+-	package =3D channel =3D ifindex =3D -1;
++	static const char short_opts[] =3D "c:hil:p:sxo:";
+=20
++	package =3D channel =3D ifindex =3D opcode =3D -1;
+ 	while (true) {
+ 		int c =3D getopt_long(argc, argv, short_opts, long_opts, NULL);
+=20
+@@ -350,6 +487,17 @@ int main(int argc, char *argv[])
+=20
+ 		errno =3D 0;
+ 		switch (c) {
++		case 'o':
++			opcode =3D strtoul(optarg, NULL, 0);
++			if (errno) {
++				fprintf(stderr, "Couldn't parse opcode, %m\n");
++				return -1;
++			}
++			operation =3D NCSI_CMD_SEND_CMD;
++			payload_length =3D argc - optind;
++			for (i =3D 0; i < payload_length; ++i)
++				payload[i] =3D (int)strtoul(argv[i + optind], NULL, 0);
++			break;
+ 		case 'c':
+ 			channel =3D strtoul(optarg, NULL, 0);
+ 			if (errno) {
+@@ -408,6 +556,10 @@ int main(int argc, char *argv[])
+ 	case NCSI_CMD_CLEAR_INTERFACE:
+ 		rc =3D run_command_clear(ifindex);
+ 		break;
++	case NCSI_CMD_SEND_CMD:
++		rc =3D run_command_send(ifindex, package, channel,
++			opcode, payload_length, payload);
++		break;
+ 	default:
+ 		usage();
+ 		return -1;
+--
+2.17.1
 
