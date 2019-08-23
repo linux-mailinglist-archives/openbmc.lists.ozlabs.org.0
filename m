@@ -1,84 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A855C9AB38
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 11:19:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEA5E9AB52
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 11:29:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46FG754N3pzDrR2
-	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 19:19:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46FGLm14X6zDrdY
+	for <lists+openbmc@lfdr.de>; Fri, 23 Aug 2019 19:29:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.250.5; helo=mail1.bemta24.messagelabs.com;
- envelope-from=pyang4@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=vertiv.com
+ (client-ip=40.107.82.85; helo=nam01-sn1-obe.outbound.protection.outlook.com;
+ envelope-from=troy.lee@vertiv.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
- [67.219.250.5])
+ dmarc=none (p=none dis=none) header.from=vertiv.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=vertivco.onmicrosoft.com
+ header.i=@vertivco.onmicrosoft.com header.b="j6kpN+Q2"; 
+ dkim-atps=neutral
+Received: from NAM01-SN1-obe.outbound.protection.outlook.com
+ (mail-eopbgr820085.outbound.protection.outlook.com [40.107.82.85])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46FG6M1TsFzDrDY
- for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 19:18:30 +1000 (AEST)
-Received: from [67.219.250.102] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-5.bemta.az-a.us-west-2.aws.symcld.net id EB/B4-18627-36FAF5D5;
- Fri, 23 Aug 2019 09:18:27 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRWlGSWpSXmKPExsWS8eIhj27y+vh
- Yg6YH7BanWl6wODB6nJ+xkDGAMYo1My8pvyKBNaPr4yfmguNqFUf/vWBqYOxT7mLk4hASmM8k
- sebMYRYI5zWjxPINs9khnH2MEp8e7mLsYuTkYBNQkZizdAcLiC0iYCmx5EE7G4gtLKAoceDEW
- 3aIuJrE7i//oGr0JM7OXwhWwyKgKvHkZBPYHF6g3pPNG5lAbEYBMYnvp9aA2cwC4hLnLraCzZ
- EQEJBYsuc8M4QtKvHy8T9WCFtBonnPa6D5HED1CRJTJ4dBjBSUODnzCcsERsFZSCbNQqiahaQ
- KokRHYsHuT2wQtrbEsoWvmWHsMwceMyGLL2BkX8VonlSUmZ5RkpuYmaNraGCga2hopGtobKBr
- aaqXWKWbqFdarFueWlyia6SXWF6sV1yZm5yTopeXWrKJERg1KQVN8TsYz856o3eIUZKDSUmUN
- 6IzPlaILyk/pTIjsTgjvqg0J7X4EKMMB4eSBO+TtUA5waLU9NSKtMwcYATDpCU4eJREeC+ApH
- mLCxJzizPTIVKnGO05Jrycu4iZ4+DReUDy46olQPI7iBRiycvPS5US5324DqhNAKQtozQPbig
- s4VxilJUS5mVkYGAQ4ilILcrNLEGVf8UozsGoJMz7BWQ5T2ZeCdzuV0BnMQGdVbkjFuSskkSE
- lFQDU9+Kvc5Nx+7U+qSX//WyOXr2sPuUMw48CnoirXr5jrtfnat7rPrfRfvop8rbK78enXa3V
- GkKl/+tgL7qhkTBvTfYmrMzn5VJv3vm98X35s+8Rq2PqzcnuO5ifS1+PmzplBtpXM9V2aoOyO
- Up2x2yS5BuWmtY7qz85dK7umoXtnZHr4UTpin+LuKzXpSsvZe1IXyeco/H8ss/d36fFr34fbL
- xL1ZfqZ9nGx6t/TWD7SDnOtZVK9uM1vV5bP/x5aDMRhbNjW6Nj4NsWub1Mdh9f3oy5lPmc8N9
- TS+zE/bIrXZTb/l9Pnf+yYUrv2V5Tjt5Xmw6p8h0dr0jn8/ttZpWOW9vesLd9cUH4lc4T3qjJ
- 6fEUpyRaKjFXFScCADRn9CrswMAAA==
-X-Env-Sender: pyang4@lenovo.com
-X-Msg-Ref: server-12.tower-326.messagelabs.com!1566551905!86925!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.9; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 27290 invoked from network); 23 Aug 2019 09:18:26 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-12.tower-326.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 23 Aug 2019 09:18:26 -0000
-Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 607EFDD2A3DA0E4C8134
- for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 05:18:25 -0400 (EDT)
-Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
- HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Fri, 23 Aug 2019 17:18:11 +0800
-Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
- HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
- 15.01.1591.008; Fri, 23 Aug 2019 17:18:24 +0800
-From: Payne Yang <pyang4@lenovo.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Question for ACPI status
-Thread-Topic: Question for ACPI status
-Thread-Index: AdVZk6691UFjhEL7Rh2cXX3NMUPdOA==
-Date: Fri, 23 Aug 2019 09:18:24 +0000
-Message-ID: <a05edc724bdb4a10a5860c88ceef10c1@lenovo.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46FGL12lMvzDr2J
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Aug 2019 19:28:37 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HBLaudxGEmJw6O33iQHTu5tpKE69FaCcvrvk2qBwYz4yn8qYQmEmd0wIG3PSzxIf+VnRqpCMwtLO2C0mHuF+Q1EY3yAs0UakgMArYBWxSgaav0vlOLmH5y4FKjNL3rTdbchzjywAQWNmxFmcfq+hFB8rTLybsvsZRgg5O+1Lg1EWIKrT8k1BLj0FOdcvTIRrclq3+3cmMKGNNtdqF0gcdOgpCFQtYBgydSa3qRThzyAcjmV2ep9XmE/r6LJm8+q5XgPaMY9vO3MQ72wc3XxCx+2CHvS7RSjJ0s/G7Cm5WXKWJsbYonpRMbHrvz7u3ltc56kJHGO6lp3KkwbabtDT9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5xLKOPaa1wV8eOyRDO8SDBdsvdxZfOZLMV0if/9Jvus=;
+ b=lzIoxkSWiqCEs/XgQyXDxrTmUjBUSMf8kmFrAhT/g+kXEh0BPrK+ne+GfiInP1S4EjU8nJOIM5S1c0Bj0uXWofSIF4RhrUvK4FtZBVM0xgXwPPEsUY+my70Gz/H7Nor+5wzh2p+az+64x+kJYIiIZQnAHG7l1S4bUcZ17lKTlqkK1xHDXHjhwYjOS1NwO8hlaLLGc12KuaQ5Fdv6Av+YqmXGuhRkoM8zO5eJjpG8S96bV9HcfJybKnLtsU8gJ9Ur0LG8LGJSQAVI/udrIbzUuVI1APrvciTUjwxQqsS3Grh/irezjBdnxDqdMoPjIDVO1F624FKKDXY4NWweH2FIGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vertiv.com; dmarc=pass action=none header.from=vertiv.com;
+ dkim=pass header.d=vertiv.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vertivco.onmicrosoft.com; s=selector2-vertivco-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5xLKOPaa1wV8eOyRDO8SDBdsvdxZfOZLMV0if/9Jvus=;
+ b=j6kpN+Q2AkW+4gPSAWi68kLXdfNEMcREa2Qk0YxrMlAn4+71zMBxy3lQzk3TI8dVWBtGy0FngJXH26HiXyUW5lvVkZcRA1WCE3mmrLQ5G/T5pNRTWsY7QjuUeAd5xO0Ra1h9LzIbOjfWulTYKLSAC1Ny5TVmqGfk6nyQl5rPJnU=
+Received: from MWHPR13MB1360.namprd13.prod.outlook.com (10.173.120.8) by
+ MWHPR13MB1328.namprd13.prod.outlook.com (10.173.119.16) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2199.11; Fri, 23 Aug 2019 09:28:32 +0000
+Received: from MWHPR13MB1360.namprd13.prod.outlook.com
+ ([fe80::f8a0:214c:cccd:85a8]) by MWHPR13MB1360.namprd13.prod.outlook.com
+ ([fe80::f8a0:214c:cccd:85a8%6]) with mapi id 15.20.2199.011; Fri, 23 Aug 2019
+ 09:28:32 +0000
+From: "Troy.Lee@vertiv.com" <Troy.Lee@vertiv.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Persistent storage of AssetTag
+Thread-Topic: Persistent storage of AssetTag
+Thread-Index: AdVZkdyqoDYe0P/lQdKzr0V0QHr3Rg==
+Date: Fri, 23 Aug 2019 09:28:32 +0000
+Message-ID: <MWHPR13MB1360F536BDF71319FE7FA457EDA40@MWHPR13MB1360.namprd13.prod.outlook.com>
 Accept-Language: en-US
-Content-Language: zh-TW
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: multipart/alternative;
- boundary="_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_"
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Troy.Lee@vertiv.com; 
+x-originating-ip: [103.83.160.36]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: aa07ca06-66cb-4b7e-b7bb-08d727ac43e3
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(5600166)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
+ SRVR:MWHPR13MB1328; 
+x-ms-traffictypediagnostic: MWHPR13MB1328:
+x-ms-exchange-purlcount: 4
+x-microsoft-antispam-prvs: <MWHPR13MB1328E1397981B6131A96EA60EDA40@MWHPR13MB1328.namprd13.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0138CD935C
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10009020)(376002)(39860400002)(136003)(366004)(346002)(396003)(189003)(199004)(6306002)(256004)(14444005)(3480700005)(52536014)(5660300002)(99286004)(33656002)(7696005)(7736002)(71190400001)(3846002)(81166006)(81156014)(102836004)(8676002)(186003)(71200400001)(8936002)(316002)(26005)(478600001)(9686003)(6436002)(966005)(486006)(305945005)(6916009)(6116002)(2906002)(86362001)(55016002)(66066001)(25786009)(74316002)(476003)(6506007)(66476007)(53936002)(64756008)(66556008)(66946007)(66446008)(76116006)(14454004);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:MWHPR13MB1328;
+ H:MWHPR13MB1360.namprd13.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: vertiv.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 79NWsy4aRWuDGZIQBfcGnOGygZRUZ+5jcbf0xVHiXK1UfjHUh3qXnqCQC1v/3hhEt05ch976oEC08XthrEOHgk6zlBUHm7cfN85cAFd5J9FbQein3e7qGUOG+8SdDBtrOgAlc4RWQ9r6p7Ur/OGYOsovTjurhtjsyTGMg1zvb4cKVKkaLnW8Ih3aME07KlfUowoELh7VIRs41fW+ZGuIQ9xG5bF1cGupzbZU5j6mOKVI5z6KQlAaqD0fgyIUJO8QZJ7XlzFRnubEqaS4J96whwz1iERFU/0CbMKMzlKpYqmuoyow9S0GaxQQJDcRk5Okk9eds6RNje0mShaBMMAx9Hyv1gxHUXvvLaiqxR0iuq5m9+KJgrtvrb5B8aKF0BsdxTsTXzgelUg9avHg/2K7MBryf/n3NSjEGUR4Nez6Sk0=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
+X-OriginatorOrg: vertiv.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa07ca06-66cb-4b7e-b7bb-08d727ac43e3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2019 09:28:32.1900 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 74fe92c5-ef57-4d1a-a0e7-9451117d9272
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: uh825nNlcbpFb5AH0FWwN/eQP9fg2QLCRWuWfYOBMen0on/HyLTXtnJAWQAIeoEN4PLK6xAxli9CXH+VzAd+kQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR13MB1328
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,130 +107,46 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hi Team,
+We met an issue about persistent storage of AssetTag.
+AssetTag is managed by phosphor-inventor-manager, and it was defined with a=
+ssettag.yaml.
+Though we could update the AssetTag with DCMI command over IPMI or DBus, bu=
+t the value will not retain after BMC reboot.
 
-Is there any ACPI service to update the ACPI state ?
-I could find that the property of ACPI state is defined in dbus, and the ip=
-mi command is also done in package "phosphor-host-ipmid".
-https://github.com/openbmc/phosphor-host-ipmid/blob/b90a53280c74e8c65e8dc58=
-c8964d93a08cfd65e/apphandler.cpp#L202
+If we use Notify over DBus, I could see the value is stored in /var/lib/pho=
+sphor-inventory-manager/xyz/openbmc_project/inventory/system/xyz.openbmc_pr=
+oject.Inventory.Decorator.AssetTag.
+After phosphor-inventor-manager started, it first deserialize from AssetTag=
+ json file from Manager::restore(), and then it be overwritten with default=
+ value in Manager::run().
+The issues seems to be related to the startup event with actions name of "c=
+reateObjects".
 
-However, I could not find other services to update the property "ACPIPowerS=
-tate".
-https://github.com/search?q=3Dorg%3Aopenbmc+ACPIPowerState&type=3DCode
+Does this behavior work as expect in OpenBMC? (AssetTag become empty string=
+ after reboot)
+Does anyone have suggestion how to change the YAML to have persistent stora=
+ge for Asset Tag?
 
-Do I miss something ?
-If yes, please help to share your comment or suggestion:)
-If no, it seems to me that I have to write a service as ACPI state monitor.
+Reference:
+- assettag.yaml: https://github.com/openbmc/openbmc/blob/master/meta-phosph=
+or/recipes-phosphor/inventory/phosphor-inventory-manager-assettag/assettag.=
+yaml
+- manager::restore(): https://github.com/openbmc/phosphor-inventory-manager=
+/blob/ded627c42f5e5319e3704fff742a0227c05f00a9/manager.cpp#L355-L359
+- manager::run(): https://github.com/openbmc/phosphor-inventory-manager/blo=
+b/master/manager.cpp#L114-L117
+- Issue#2867: https://github.com/openbmc/openbmc/issues/2867
 
-Best Regards,
-Payne
 
 
---_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Team,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Is there any ACPI service to up=
-date the ACPI state ?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I could find that the property =
-of ACPI state is defined in dbus, and the ipmi command is also done in pack=
-age &#8220;phosphor-host-ipmid&#8221;.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://github.com/o=
-penbmc/phosphor-host-ipmid/blob/b90a53280c74e8c65e8dc58c8964d93a08cfd65e/ap=
-phandler.cpp#L202">https://github.com/openbmc/phosphor-host-ipmid/blob/b90a=
-53280c74e8c65e8dc58c8964d93a08cfd65e/apphandler.cpp#L202</a><o:p></o:p></sp=
-an></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">However, I could not find other=
- services to update the property &#8220;ACPIPowerState&#8221;.<o:p></o:p></=
-span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://github.com/s=
-earch?q=3Dorg%3Aopenbmc&#43;ACPIPowerState&amp;type=3DCode">https://github.=
-com/search?q=3Dorg%3Aopenbmc&#43;ACPIPowerState&amp;type=3DCode</a><o:p></o=
-:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Do I miss something ?<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">If yes, please help to share yo=
-ur comment or suggestion</span><span lang=3D"EN-US" style=3D"font-family:Wi=
-ngdings">J</span><span lang=3D"EN-US"><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">If no, it seems to me that I ha=
-ve to write a service as ACPI state monitor.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Payne<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
-
---_000_a05edc724bdb4a10a5860c88ceef10c1lenovocom_--
+Thanks,
+Troy Lee
+CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it are i=
+ntended solely for the use of the individual or entity to whom they are add=
+ressed and may contain confidential and privileged information protected by=
+ law. If you received this e-mail in error, any review, use, dissemination,=
+ distribution, or copying of the e-mail is strictly prohibited. Please noti=
+fy the sender immediately by return e-mail and delete all copies from your =
+system.
