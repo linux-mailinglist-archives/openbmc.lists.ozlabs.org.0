@@ -1,67 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FD529D1D2
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 16:39:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD0AF9D268
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 17:13:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46HF5c6sMmzDqDS
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 00:39:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HFs01114zDqSm
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 01:13:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=eajames@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HF3n6wMNzDqkd
- for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 00:38:09 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2019 07:38:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,433,1559545200"; 
- d="scan'208,217";a="182464513"
-Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
- by orsmga003.jf.intel.com with ESMTP; 26 Aug 2019 07:38:05 -0700
-Received: from fmsmsx114.amr.corp.intel.com (10.18.116.8) by
- FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 26 Aug 2019 07:38:05 -0700
-Received: from fmsmsx118.amr.corp.intel.com ([169.254.1.57]) by
- FMSMSX114.amr.corp.intel.com ([169.254.6.244]) with mapi id 14.03.0439.000;
- Mon, 26 Aug 2019 07:38:05 -0700
-From: "Khetan, Sharad" <sharad.khetan@intel.com>
-To: Christian Svensson <bluecmd@google.com>, Neeraj Ladkani
- <neladk@microsoft.com>
-Subject: RE: Socflash says the bmc is write protected.
-Thread-Topic: Socflash says the bmc is write protected.
-Thread-Index: AQHVVoxoxs+m3mo6VES5fDtPvSrCtqcC/CoAgABoXQCACjiYgP//7S5g
-Date: Mon, 26 Aug 2019 14:38:04 +0000
-Message-ID: <865C376D1B77624AAA570EFEF73CE52F983F2A4E@fmsmsx118.amr.corp.intel.com>
-References: <MN2PR04MB5839D33826EF08A499E32167CDA80@MN2PR04MB5839.namprd04.prod.outlook.com>
- <CADy_Pt3tvAci8tXuZ3cTJY3tRxwnWPbD=yNL05VEYrjZKWcpEw@mail.gmail.com>
- <BYAPR21MB1191A89B2C012758241C5C72C8A80@BYAPR21MB1191.namprd21.prod.outlook.com>
- <CAEfeXvbYEA-5Hg=1Zs=Di=3HyNOpoSdM51GjSLwuiX01yHg2-w@mail.gmail.com>
-In-Reply-To: <CAEfeXvbYEA-5Hg=1Zs=Di=3HyNOpoSdM51GjSLwuiX01yHg2-w@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZWUzNjdlMGQtZDlhYy00YjhlLWE2ZTEtYmQ2NjY3ZDU2NjljIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiR1wvYmNITWNkTnhFdWwwUG9pbzA3cHRYZXRhR1JYUmptSlZXVmpPZVNLTHR5OHF1Z3AwMmtFN09tMUxieTZsME4ifQ==
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [10.1.200.108]
-Content-Type: multipart/alternative;
- boundary="_000_865C376D1B77624AAA570EFEF73CE52F983F2A4Efmsmsx118amrcor_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HFr56rCrzDqSd;
+ Tue, 27 Aug 2019 01:13:08 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7QF6wUB089934; Mon, 26 Aug 2019 11:12:50 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2umggp3tqc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Aug 2019 11:12:50 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x7QFAdhV028102;
+ Mon, 26 Aug 2019 15:12:49 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma04dal.us.ibm.com with ESMTP id 2ujvv6gwhw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Aug 2019 15:12:49 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7QFCmRg51904774
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Aug 2019 15:12:48 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 783C0112066;
+ Mon, 26 Aug 2019 15:12:48 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFAD6112062;
+ Mon, 26 Aug 2019 15:12:47 +0000 (GMT)
+Received: from [9.41.179.222] (unknown [9.41.179.222])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 26 Aug 2019 15:12:47 +0000 (GMT)
+Subject: Re: [PATCH 3/7] media: aspeed-video: address a protential usage of an
+ unit var
+To: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
+ Linux Media Mailing List <linux-media@vger.kernel.org>
+References: <4a411ba155eb062b6575aba0824123c840806c0b.1566502743.git.mchehab+samsung@kernel.org>
+ <7c85f7dc159927a7316dc13f52697f157fb6e2bd.1566502743.git.mchehab+samsung@kernel.org>
+From: Eddie James <eajames@linux.vnet.ibm.com>
+Message-ID: <64b90f55-2d8d-718d-0562-528063f3edab@linux.vnet.ibm.com>
+Date: Mon, 26 Aug 2019 10:12:47 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <7c85f7dc159927a7316dc13f52697f157fb6e2bd.1566502743.git.mchehab+samsung@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-26_08:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908260158
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,180 +87,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: James Mihm <james.mihm@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Zheng Bao <fishbaoz@hotmail.com>
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ Mauro Carvalho Chehab <mchehab@infradead.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_865C376D1B77624AAA570EFEF73CE52F983F2A4Efmsmsx118amrcor_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-WWVzIHRoZSBsb2NrcyB3aWxsIHBlcnNpc3QgYWNyb3NzIGFueSBSZXNldHMgKEJNQyBvciBIb3N0
-KSwgdG8gbWl0aWdhdGUgdGhlIHZ1bG5lcmFiaWxpdHkuDQoNClRoYW5rcw0KLVNoYXJhZA0KDQpG
-cm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrc2hhcmFkLmtoZXRhbj1pbnRlbC5jb21AbGlz
-dHMub3psYWJzLm9yZz4gT24gQmVoYWxmIE9mIENocmlzdGlhbiBTdmVuc3Nvbg0KU2VudDogTW9u
-ZGF5LCBBdWd1c3QgMjYsIDIwMTkgMTo0NCBBTQ0KVG86IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtA
-bWljcm9zb2Z0LmNvbT4NCkNjOiBKYW1lcyBNaWhtIDxqYW1lcy5taWhtQGdtYWlsLmNvbT47IG9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgWmhlbmcgQmFvIDxmaXNoYmFvekBob3RtYWlsLmNvbT4N
-ClN1YmplY3Q6IFJlOiBTb2NmbGFzaCBzYXlzIHRoZSBibWMgaXMgd3JpdGUgcHJvdGVjdGVkLg0K
-DQpXaGljaCB0eXBlIG9mIHJlc2V0IGFyZSB5b3UgcmVmZXJyaW5nIHRvPw0KDQotIENocmlzDQoN
-Cg0KT24gTW9uLCBBdWcgMTksIDIwMTkgYXQgMTA6NDAgUE0gTmVlcmFqIExhZGthbmkgPG5lbGFk
-a0BtaWNyb3NvZnQuY29tPG1haWx0bzpuZWxhZGtAbWljcm9zb2Z0LmNvbT4+IHdyb3RlOg0KQ2Fu
-IGFueW9uZSBjb25maXJtcyBpZiB0aGVzZSBsb2NrcyBwZXJzaXN0cyBkdXJpbmcgQk1DIHJlc2V0
-Pw0KDQpOZWVyYWoNCg0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrbmVsYWRrPW1p
-Y3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZzxtYWlsdG86bWljcm9zb2Z0LmNvbUBsaXN0cy5v
-emxhYnMub3JnPj4gT24gQmVoYWxmIE9mIEphbWVzIE1paG0NClNlbnQ6IE1vbmRheSwgQXVndXN0
-IDE5LCAyMDE5IDc6MjYgQU0NClRvOiBaaGVuZyBCYW8gPGZpc2hiYW96QGhvdG1haWwuY29tPG1h
-aWx0bzpmaXNoYmFvekBob3RtYWlsLmNvbT4+DQpDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-PG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSZTogU29jZmxhc2gg
-c2F5cyB0aGUgYm1jIGlzIHdyaXRlIHByb3RlY3RlZC4NCg0KVGhlIFAyQSBCcmlkZ2UgdGhhdCBp
-cyB1c2VkIGJ5IHRoZSBzb2NmbGFzaCB1dGlsaXR5IGhhcyBiZWVuIGRpc2FibGVkOyBzZWUgIGh0
-dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4vZGV0YWlsL0NWRS0yMDE5LTYyNjA8aHR0cHM6Ly9uYW0w
-Ni5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGbnZk
-Lm5pc3QuZ292JTJGdnVsbiUyRmRldGFpbCUyRkNWRS0yMDE5LTYyNjAmZGF0YT0wMiU3QzAxJTdD
-bmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3Qzc0NWNiYjdiZjk1YTQxNmUzOWU4MDhkNzI0YjI0NzZl
-JTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNzAxODIyMDQz
-Njg5NjYxNSZzZGF0YT1aSmIlMkJ4OEJRbWVuS3M2SyUyRlYyNml5cHU5SnJNb3IxZDR1bGlRSkdl
-MVlJayUzRCZyZXNlcnZlZD0wPiBmb3IgZGV0YWlscy4NCg0KT24gTW9uLCBBdWcgMTksIDIwMTkg
-YXQgNTo1MSBBTSBaaGVuZyBCYW8gPGZpc2hiYW96QGhvdG1haWwuY29tPG1haWx0bzpmaXNoYmFv
-ekBob3RtYWlsLmNvbT4+IHdyb3RlOg0KSGksIEFsbCwNCkkgdXNlIHNvY2ZsYXNoIHRvIHVwZGF0
-ZSB0aGUgQk1DIGZpcm13YXJlLiBUaGUgb3JpZ2luYWwgQk1DIGZpcm13YXJlIGNhbiBiZSB1cGRh
-dGVkLCBidXQgb3BlbmJtYyBjYW4gbm90IGJlLg0KU29jZmxhc2ggc2F5cyB0aGUgQk1DIGlzIHBy
-b3RlY3RlZC4gRG9lcyBhbnlib2R5IGtub3cgd2h5Pw0KDQpUaGFua3MuDQpKb2UNCg==
+On 8/22/19 2:39 PM, Mauro Carvalho Chehab wrote:
+> While this might not occur in practice, if the device is doing
+> the right thing, it would be teoretically be possible to have
+> both hsync_counter and vsync_counter negatives.
+>
+> If this ever happen, ctrl will be undefined, but the driver
+> will still call:
+>
+> 	aspeed_video_update(video, VE_CTRL, 0, ctrl);
+>
+> Change the code to prevent this to happen.
+>
+> This was warned by cppcheck:
+>
+> 	[drivers/media/platform/aspeed-video.c:653]: (error) Uninitialized variable: ctrl
 
---_000_865C376D1B77624AAA570EFEF73CE52F983F2A4Efmsmsx118amrcor_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
-Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
-OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
-cjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1z
-b0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpwdXJw
-bGU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLm1zb25vcm1hbDAsIGxpLm1zb25v
-cm1hbDAsIGRpdi5tc29ub3JtYWwwDQoJe21zby1zdHlsZS1uYW1lOm1zb25vcm1hbDsNCgltc28t
-bWFyZ2luLXRvcC1hbHQ6YXV0bzsNCgltYXJnaW4tcmlnaHQ6MGluOw0KCW1zby1tYXJnaW4tYm90
-dG9tLWFsdDphdXRvOw0KCW1hcmdpbi1sZWZ0OjBpbjsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZv
-bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTE4DQoJe21z
-by1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5z
-LXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxl
-LXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0K
-QHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAx
-LjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24x
-O30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRz
-IHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtp
-ZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1h
-cCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3htbD48IVtlbmRp
-Zl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2bGluaz0icHVy
-cGxlIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5Z
-ZXMgdGhlIGxvY2tzIHdpbGwgcGVyc2lzdCBhY3Jvc3MgYW55IFJlc2V0cyAoQk1DIG9yIEhvc3Qp
-LCB0byBtaXRpZ2F0ZSB0aGUgdnVsbmVyYWJpbGl0eS4NCjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij5UaGFua3M8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi1TaGFyYWQ8bzpw
-PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PGEgbmFtZT0iX19fX19yZXBseXNlcGFyYXRvciI+PC9hPjxi
-PkZyb206PC9iPiBvcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMmIzQzO3NoYXJhZC5raGV0YW49
-aW50ZWwuY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7DQo8Yj5PbiBCZWhhbGYgT2YgPC9iPkNocmlz
-dGlhbiBTdmVuc3Nvbjxicj4NCjxiPlNlbnQ6PC9iPiBNb25kYXksIEF1Z3VzdCAyNiwgMjAxOSAx
-OjQ0IEFNPGJyPg0KPGI+VG86PC9iPiBOZWVyYWogTGFka2FuaSAmbHQ7bmVsYWRrQG1pY3Jvc29m
-dC5jb20mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiBKYW1lcyBNaWhtICZsdDtqYW1lcy5taWhtQGdtYWls
-LmNvbSZndDs7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgWmhlbmcgQmFvICZsdDtmaXNoYmFv
-ekBob3RtYWlsLmNvbSZndDs8YnI+DQo8Yj5TdWJqZWN0OjwvYj4gUmU6IFNvY2ZsYXNoIHNheXMg
-dGhlIGJtYyBpcyB3cml0ZSBwcm90ZWN0ZWQuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+V2hpY2ggdHlwZSBvZiByZXNldCBhcmUgeW91Jm5ic3A7cmVmZXJyaW5nIHRvPzxv
-OnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4m
-bmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8ZGl2Pg0KPGRpdj4NCjxkaXY+DQo8ZGl2
-Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi0gQ2hyaXM8bzpwPjwvbzpwPjwvcD4NCjwv
-ZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+T24gTW9uLCBBdWcgMTksIDIwMTkgYXQgMTA6NDAgUE0gTmVlcmFqIExhZGthbmkgJmx0
-OzxhIGhyZWY9Im1haWx0bzpuZWxhZGtAbWljcm9zb2Z0LmNvbSI+bmVsYWRrQG1pY3Jvc29mdC5j
-b208L2E+Jmd0OyB3cm90ZTo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGJsb2NrcXVvdGUgc3R5
-bGU9ImJvcmRlcjpub25lO2JvcmRlci1sZWZ0OnNvbGlkICNDQ0NDQ0MgMS4wcHQ7cGFkZGluZzow
-aW4gMGluIDBpbiA2LjBwdDttYXJnaW4tbGVmdDo0LjhwdDttYXJnaW4tcmlnaHQ6MGluIj4NCjxk
-aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFs
-dDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAw
-MjA2MCI+Q2FuIGFueW9uZSBjb25maXJtcyBpZiB0aGVzZSBsb2NrcyBwZXJzaXN0cyBkdXJpbmcg
-Qk1DIHJlc2V0Pw0KPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
-Ij48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21z
-by1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+TmVl
-cmFqPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1z
-by1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBz
-dHlsZT0iY29sb3I6IzAwMjA2MCI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4t
-Ym90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+Jm5ic3A7PC9zcGFu
-PjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4t
-dG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48Yj5Gcm9tOjwvYj4gb3Bl
-bmJtYyAmbHQ7b3BlbmJtYy1ib3VuY2VzJiM0MztuZWxhZGs9PGEgaHJlZj0ibWFpbHRvOm1pY3Jv
-c29mdC5jb21AbGlzdHMub3psYWJzLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPm1pY3Jvc29mdC5jb21A
-bGlzdHMub3psYWJzLm9yZzwvYT4mZ3Q7DQo8Yj5PbiBCZWhhbGYgT2YgPC9iPkphbWVzIE1paG08
-YnI+DQo8Yj5TZW50OjwvYj4gTW9uZGF5LCBBdWd1c3QgMTksIDIwMTkgNzoyNiBBTTxicj4NCjxi
-PlRvOjwvYj4gWmhlbmcgQmFvICZsdDs8YSBocmVmPSJtYWlsdG86ZmlzaGJhb3pAaG90bWFpbC5j
-b20iIHRhcmdldD0iX2JsYW5rIj5maXNoYmFvekBob3RtYWlsLmNvbTwvYT4mZ3Q7PGJyPg0KPGI+
-Q2M6PC9iPiA8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIiB0YXJnZXQ9
-Il9ibGFuayI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPjxicj4NCjxiPlN1YmplY3Q6PC9i
-PiBSZTogU29jZmxhc2ggc2F5cyB0aGUgYm1jIGlzIHdyaXRlIHByb3RlY3RlZC48bzpwPjwvbzpw
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0
-bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8ZGl2
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21z
-by1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5UaGUgUDJBIEJyaWRnZSB0aGF0IGlzIHVzZWQgYnkg
-dGhlIHNvY2ZsYXNoIHV0aWxpdHkgaGFzIGJlZW4gZGlzYWJsZWQ7IHNlZSZuYnNwOw0KPGEgaHJl
-Zj0iaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0
-dHBzJTNBJTJGJTJGbnZkLm5pc3QuZ292JTJGdnVsbiUyRmRldGFpbCUyRkNWRS0yMDE5LTYyNjAm
-YW1wO2RhdGE9MDIlN0MwMSU3Q25lbGFkayU0MG1pY3Jvc29mdC5jb20lN0M3NDVjYmI3YmY5NWE0
-MTZlMzllODA4ZDcyNGIyNDc2ZSU3QzcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdD
-MSU3QzAlN0M2MzcwMTgyMjA0MzY4OTY2MTUmYW1wO3NkYXRhPVpKYiUyQng4QlFtZW5LczZLJTJG
-VjI2aXlwdTlKck1vcjFkNHVsaVFKR2UxWUlrJTNEJmFtcDtyZXNlcnZlZD0wIiB0YXJnZXQ9Il9i
-bGFuayI+DQpodHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAxOS02MjYwPC9h
-PiZuYnNwO2ZvciBkZXRhaWxzLjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20t
-YWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0
-b20tYWx0OmF1dG8iPk9uIE1vbiwgQXVnIDE5LCAyMDE5IGF0IDU6NTEgQU0gWmhlbmcgQmFvICZs
-dDs8YSBocmVmPSJtYWlsdG86ZmlzaGJhb3pAaG90bWFpbC5jb20iIHRhcmdldD0iX2JsYW5rIj5m
-aXNoYmFvekBob3RtYWlsLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+
-DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQgI0NDQ0ND
-QyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0O21hcmdp
-bi10b3A6NS4wcHQ7bWFyZ2luLXJpZ2h0OjBpbjttYXJnaW4tYm90dG9tOjUuMHB0Ij4NCjxkaXY+
-DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDph
-dXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEy
-LjBwdDtjb2xvcjpibGFjayI+SGksIEFsbCw8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4N
-CjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
-dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIu
-MHB0O2NvbG9yOmJsYWNrIj5JIHVzZSBzb2NmbGFzaCB0byB1cGRhdGUgdGhlIEJNQyBmaXJtd2Fy
-ZS4gVGhlIG9yaWdpbmFsIEJNQyBmaXJtd2FyZSBjYW4gYmUgdXBkYXRlZCwgYnV0IG9wZW5ibWMg
-Y2FuIG5vdCBiZS48L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1i
-b3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNr
-Ij5Tb2NmbGFzaCBzYXlzIHRoZSBCTUMgaXMgcHJvdGVjdGVkLiBEb2VzIGFueWJvZHkga25vdyB3
-aHk/PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFs
-dDphdXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+Jm5ic3A7
-PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDph
-dXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+VGhhbmtzLg0K
-PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDph
-dXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+Sm9lPC9zcGFu
-PjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvYmxvY2txdW90ZT4NCjwvZGl2Pg0K
-PC9kaXY+DQo8L2Rpdj4NCjwvYmxvY2txdW90ZT4NCjwvZGl2Pg0KPC9kaXY+DQo8L2JvZHk+DQo8
-L2h0bWw+DQo=
+Thanks Mauro.
 
---_000_865C376D1B77624AAA570EFEF73CE52F983F2A4Efmsmsx118amrcor_--
+
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
+
+
+>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
+> ---
+>   drivers/media/platform/aspeed-video.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+> index f899ac3b4a61..4ef37cfc8446 100644
+> --- a/drivers/media/platform/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -630,7 +630,7 @@ static void aspeed_video_check_and_set_polarity(struct aspeed_video *video)
+>   	}
+>   
+>   	if (hsync_counter < 0 || vsync_counter < 0) {
+> -		u32 ctrl;
+> +		u32 ctrl = 0;
+>   
+>   		if (hsync_counter < 0) {
+>   			ctrl = VE_CTRL_HSYNC_POL;
+> @@ -650,7 +650,8 @@ static void aspeed_video_check_and_set_polarity(struct aspeed_video *video)
+>   				V4L2_DV_VSYNC_POS_POL;
+>   		}
+>   
+> -		aspeed_video_update(video, VE_CTRL, 0, ctrl);
+> +		if (ctrl)
+> +			aspeed_video_update(video, VE_CTRL, 0, ctrl);
+>   	}
+>   }
+>   
