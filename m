@@ -2,113 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 214009D535
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 19:50:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35D679D5F8
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 20:45:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46HKKp0XQrzDqfr
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 03:50:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HLYK2Jp9zDqmC
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 04:45:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.74.133; helo=nam01-bn3-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="Vu10fsBq"; dkim-atps=neutral
-Received: from NAM01-BN3-obe.outbound.protection.outlook.com
- (mail-eopbgr740133.outbound.protection.outlook.com [40.107.74.133])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::b2d; helo=mail-yb1-xb2d.google.com;
+ envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="MDse3OJW"; 
+ dkim-atps=neutral
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
+ [IPv6:2607:f8b0:4864:20::b2d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HKK107BSzDqdp
- for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 03:49:54 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=J8fdtrHQmEcD89Njh7WVQltxXyJmq8WmoGmoUOt6NCqYEVn+nqtVvGRR195HjoN1OO4HP7FhtH0FT6MfaK0UoZcdFx/kpN6rIbB0Pc+bFoeuChHgGz4NKrBSUyftXHr1ySx29jZmqnlRjck4Crjty6hXGURb8waZy3px3F9Ob4uOwGNTUM6cURySuR37EKBMzRH2RZ9MktIfTQXR18t2f3lkFbsDABw0CT47wLQUOShwtb1Zy0q6LOvjshyAVHChl8+gNWSV4h5QalbL0cepl66n0naOElBvfg4GVy5eFmwJeV5K2E0z80/Z7L4OPbHWgzSOQqlokdXDA6vUVRj0Aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UuKmFdHFw25aHmPF9c4g6zCW/Hp3hgheSfV7ZodS6+M=;
- b=hTfNSFK4ZToAaSrG+VD8sGvg1qMenZthDyrUxtXXt6LDug5GNNRhQWWtfjC7KiW5b9q4UH2XsAnj/XQVasqcuZCnWhjr/LQSgh33qUA8vR9yYQg4RBU46CzYKULSCi5Sw1e/xYw9RroyKspL1V6qeKtNLaVA7+8HuuEw0KruyWDnQ1Xvw2l7KEaoXvvg2U+6sxit2rFP2Tr69b0+9+CAp/8kfMyfj0s+cvFWkU3SarPj8Hbjzsdp0d0CsaiwGKfJux2jo2R9H4WRV6p+okYEXPXOOOpUvEZssKEUZWalgmGI/nO1eZEeccby6CUReLJupHWLyQmVpix3jY0T1qY79A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UuKmFdHFw25aHmPF9c4g6zCW/Hp3hgheSfV7ZodS6+M=;
- b=Vu10fsBqXhc+89CvDlfaHvYrqMcoTuYqAd7LfZH1LtxpnNctqSJylJvP3XXqszep0Eq8/z2KwhROKKL/Gi7KioqCw1c5FQ163gU8tekWOqiITiOlhQVAikdZi7aATz4lXq5V5O6Q+N5j3P01YLOLMw5V3p9mtVdidBuW3bqPZGg=
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com (20.179.56.209) by
- BYAPR21MB1159.namprd21.prod.outlook.com (20.179.56.77) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2241.1; Mon, 26 Aug 2019 17:49:48 +0000
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::e805:a5bc:9f69:771b]) by BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::e805:a5bc:9f69:771b%9]) with mapi id 15.20.2241.000; Mon, 26 Aug 2019
- 17:49:48 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: "Khetan, Sharad" <sharad.khetan@intel.com>, Christian Svensson
- <bluecmd@google.com>
-Subject: RE: Socflash says the bmc is write protected.
-Thread-Topic: Socflash says the bmc is write protected.
-Thread-Index: AQHVVoxoxs+m3mo6VES5fDtPvSrCtqcChtEAgABoH/CACjjWgIAAYt0AgAA0QKA=
-Date: Mon, 26 Aug 2019 17:49:48 +0000
-Message-ID: <BYAPR21MB11916802ED44B6397460086BC8A10@BYAPR21MB1191.namprd21.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HLXd50fwzDqlL
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 04:45:05 +1000 (AEST)
+Received: by mail-yb1-xb2d.google.com with SMTP id u68so7344368ybg.1
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 11:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=o1QGiv1qP8e4q98jDBqoXVZXbJboxDKda8bmTZWb+FY=;
+ b=MDse3OJWScjqK3XAg+bJ1NzGfsMy1GDI+cbpSRgmsefDQ6VauXRROZNjIJwcIZOPQK
+ rLD7iUCWKhbv/7rK74qCK36tVFZwRCqhCz1K3M9PP6pu9NUuMkbmCVm6rDZZpAWFMbcm
+ 3wQXiRr2Sl+srQxzAyEwCXTiur82rlw5Ixq6B2TuIeRAxA/n4UV3WR0lPDsNoqNz9yfV
+ FM8vwaF4Kw+3OzQ5Tll6rs5hF30GKfgWMehvmNCk4LiMF9fkUxHZPLr2az9tbFbI0Sw6
+ 6evfMoUVS1thMYZAay6pRq/M1Z0ZMuGLkHe7NwB++TJen3GwXNShkPiaRdT3e1TEtRud
+ V+1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=o1QGiv1qP8e4q98jDBqoXVZXbJboxDKda8bmTZWb+FY=;
+ b=lgwMcEgf+q1ruM/2che4yXsnUlgIEVKa9WPTO8Qe6SzbECCxT8Sby+jik1yA/f+hs2
+ 9VpBJVPWBXnwAtw1zzNgGDJUl4GWQ+wMWoYQ8KHplsRRd/A776ZnJcWGkFMMkhj2pis6
+ zsn+g5kHeOs75s9fjNYT27GTp9D43w/ZNBJ+OOzjVn4CrZzSAVANCcrZNZIAEgU9XUBH
+ wrEO2SKgkHlM83yAU1x55MoRTMKI94zuM0d//MOf1dql0BJcVdbuuJk33bBZXBJmNjBO
+ zQTdrReLM/HniLURCPi/P+BPTB4eFByEXDt42uY+S1di8l3sv+TwEPFQwqfqP+ozynKi
+ aJhw==
+X-Gm-Message-State: APjAAAUf5LHf58AxiQXuAEfN5j4cI4USQxVhBq9W23Esrx0FHeBQjHJg
+ suQk6pmJJ9zVC6Ob7kFsfsXd68aV5tTJfvBjNYo=
+X-Google-Smtp-Source: APXvYqxhX6iDMot6aw9ttigbv7l3FkZ0z/lTHKfsOhzzk/2PDZRmzSezS1hkKrKvv7JwaCpPOwl2/xFywOIKHT2QlSk=
+X-Received: by 2002:a25:7652:: with SMTP id r79mr14377971ybc.258.1566845101658; 
+ Mon, 26 Aug 2019 11:45:01 -0700 (PDT)
+MIME-Version: 1.0
 References: <MN2PR04MB5839D33826EF08A499E32167CDA80@MN2PR04MB5839.namprd04.prod.outlook.com>
  <CADy_Pt3tvAci8tXuZ3cTJY3tRxwnWPbD=yNL05VEYrjZKWcpEw@mail.gmail.com>
  <BYAPR21MB1191A89B2C012758241C5C72C8A80@BYAPR21MB1191.namprd21.prod.outlook.com>
  <CAEfeXvbYEA-5Hg=1Zs=Di=3HyNOpoSdM51GjSLwuiX01yHg2-w@mail.gmail.com>
  <865C376D1B77624AAA570EFEF73CE52F983F2A4E@fmsmsx118.amr.corp.intel.com>
-In-Reply-To: <865C376D1B77624AAA570EFEF73CE52F983F2A4E@fmsmsx118.amr.corp.intel.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-08-26T17:49:46.6844113Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=98df1a35-9bce-4299-ba0e-d3f7a4b5c3ad;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-originating-ip: [2001:4898:80e8:7:78b5:dd69:44fd:ea0e]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 664eb1e5-72fc-4d90-bfd6-08d72a4dc9d0
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);
- SRVR:BYAPR21MB1159; 
-x-ms-traffictypediagnostic: BYAPR21MB1159:
-x-ms-exchange-purlcount: 3
-x-microsoft-antispam-prvs: <BYAPR21MB1159D4E8586C13D843F6D896C8A10@BYAPR21MB1159.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 01415BB535
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(346002)(396003)(376002)(39860400002)(136003)(366004)(199004)(189003)(53936002)(256004)(22452003)(316002)(478600001)(10290500003)(81166006)(54906003)(10090500001)(8936002)(110136005)(55016002)(33656002)(54896002)(6306002)(6436002)(81156014)(8676002)(46003)(86362001)(186003)(6246003)(66446008)(14444005)(229853002)(64756008)(66556008)(66476007)(66946007)(8990500004)(486006)(476003)(2906002)(76116006)(53546011)(71190400001)(6506007)(74316002)(5660300002)(966005)(25786009)(102836004)(606006)(99286004)(71200400001)(6116002)(4326008)(790700001)(446003)(7696005)(52536014)(76176011)(7736002)(11346002)(9686003)(236005)(14454004);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1159;
- H:BYAPR21MB1191.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: Rdn2bXfzIsAKifocRaNw16BObAgMQTL68g9jSZMtF2Hakq2yWvJpNGhoaJSUbpoi2oKgDySXqEgtWp2Vz+F2Og32U5uoOW/qUHN/2nq8Xmncf1H1ysPASVULRG665/Ri4fcZUauQkD45qz48Z9tAy7lItd1f4EnrHBuiYP8k9rfrwZSBmNAZqCbbSBjIqaQ+I/fMiosS1dPn2b97SrjYs2RzzqbN3bh5EHygheQJBwnILks5YLnTgc4BIfeUwdX6D2ra6sWiGNZwkMA1Fj1s8d0ChZ3J08hBmcNuJs/g8km229NVamPV+3juiTPaJh/BP4/1CTRH1JbaffII05Pd9Brh7QVFCIVZmYPZ0glLn6R820Olz9esvumqTAyQe5uSqYWPNxIt9jzX0Di2CoDLxSvANSI+a0wtmTnqZ6gj/GM=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR21MB11916802ED44B6397460086BC8A10BYAPR21MB1191namp_"
-MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 664eb1e5-72fc-4d90-bfd6-08d72a4dc9d0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2019 17:49:48.1664 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6j+yqALmiyOm6JGuurg1fBkRrBIrGTEG4fXuPxGCK0zbGcdEChm8W4RwUfovOn36G/j0Q6SvPR9H+R3QG3izPw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1159
+ <BYAPR21MB11916802ED44B6397460086BC8A10@BYAPR21MB1191.namprd21.prod.outlook.com>
+In-Reply-To: <BYAPR21MB11916802ED44B6397460086BC8A10@BYAPR21MB1191.namprd21.prod.outlook.com>
+From: James Mihm <james.mihm@gmail.com>
+Date: Mon, 26 Aug 2019 11:44:25 -0700
+Message-ID: <CADy_Pt0PNASL=1eeL+KsasFhQZ69JRWkHzokmJwre+Y6++GtDQ@mail.gmail.com>
+Subject: Re: Socflash says the bmc is write protected.
+To: Neeraj Ladkani <neladk@microsoft.com>
+Content-Type: multipart/alternative; boundary="000000000000b3d6250591098df0"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,256 +77,329 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: James Mihm <james.mihm@gmail.com>,
+Cc: "Khetan, Sharad" <sharad.khetan@intel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Zheng Bao <fishbaoz@hotmail.com>
+ Christian Svensson <bluecmd@google.com>, Zheng Bao <fishbaoz@hotmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR21MB11916802ED44B6397460086BC8A10BYAPR21MB1191namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--000000000000b3d6250591098df0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SSB0cmllZCB0byBkaWcgbW9yZSBhbmQgY29uZmlybWVkIHRoYXQgQVNQRUVEIGRvZXMgbm90IHBl
-cnNpc3RzIGxvY2tzIGR1cmluZyBTUlNULg0KDQoNCiAgMS4gIEV4aXN0aW5nIEZXIHNvbHV0aW9u
-IGlzIG5vdCB2aWFibGUuICBJcyBpdCBwb3NzaWJsZSBmb3IgaG9zdCB0byBoaWRlL2Rpc2FibGUg
-SU8gcG9ydHMgdGhhdCBhcmUgdXNlZCBieSBTb2NGbGFzaD8NCiAgMi4gIEFyZSB0aGVyZSBhbnkg
-SFcgZGVzaWduIGNvbnNpZGVyYXRpb25zIHRvIHByZXZlbnQgdGhpcyBleHBsb2l0Pw0KDQpOZWVy
-YWoNCg0KRnJvbTogS2hldGFuLCBTaGFyYWQgPHNoYXJhZC5raGV0YW5AaW50ZWwuY29tPg0KU2Vu
-dDogTW9uZGF5LCBBdWd1c3QgMjYsIDIwMTkgNzozOCBBTQ0KVG86IENocmlzdGlhbiBTdmVuc3Nv
-biA8Ymx1ZWNtZEBnb29nbGUuY29tPjsgTmVlcmFqIExhZGthbmkgPG5lbGFka0BtaWNyb3NvZnQu
-Y29tPg0KQ2M6IEphbWVzIE1paG0gPGphbWVzLm1paG1AZ21haWwuY29tPjsgb3BlbmJtY0BsaXN0
-cy5vemxhYnMub3JnOyBaaGVuZyBCYW8gPGZpc2hiYW96QGhvdG1haWwuY29tPg0KU3ViamVjdDog
-UkU6IFNvY2ZsYXNoIHNheXMgdGhlIGJtYyBpcyB3cml0ZSBwcm90ZWN0ZWQuDQoNClllcyB0aGUg
-bG9ja3Mgd2lsbCBwZXJzaXN0IGFjcm9zcyBhbnkgUmVzZXRzIChCTUMgb3IgSG9zdCksIHRvIG1p
-dGlnYXRlIHRoZSB2dWxuZXJhYmlsaXR5Lg0KDQpUaGFua3MNCi1TaGFyYWQNCg0KRnJvbTogb3Bl
-bmJtYyA8b3BlbmJtYy1ib3VuY2VzK3NoYXJhZC5raGV0YW49aW50ZWwuY29tQGxpc3RzLm96bGFi
-cy5vcmc8bWFpbHRvOm9wZW5ibWMtYm91bmNlcytzaGFyYWQua2hldGFuPWludGVsLmNvbUBsaXN0
-cy5vemxhYnMub3JnPj4gT24gQmVoYWxmIE9mIENocmlzdGlhbiBTdmVuc3Nvbg0KU2VudDogTW9u
-ZGF5LCBBdWd1c3QgMjYsIDIwMTkgMTo0NCBBTQ0KVG86IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtA
-bWljcm9zb2Z0LmNvbTxtYWlsdG86bmVsYWRrQG1pY3Jvc29mdC5jb20+Pg0KQ2M6IEphbWVzIE1p
-aG0gPGphbWVzLm1paG1AZ21haWwuY29tPG1haWx0bzpqYW1lcy5taWhtQGdtYWlsLmNvbT4+OyBv
-cGVuYm1jQGxpc3RzLm96bGFicy5vcmc8bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47
-IFpoZW5nIEJhbyA8ZmlzaGJhb3pAaG90bWFpbC5jb208bWFpbHRvOmZpc2hiYW96QGhvdG1haWwu
-Y29tPj4NClN1YmplY3Q6IFJlOiBTb2NmbGFzaCBzYXlzIHRoZSBibWMgaXMgd3JpdGUgcHJvdGVj
-dGVkLg0KDQpXaGljaCB0eXBlIG9mIHJlc2V0IGFyZSB5b3UgcmVmZXJyaW5nIHRvPw0KDQotIENo
-cmlzDQoNCg0KT24gTW9uLCBBdWcgMTksIDIwMTkgYXQgMTA6NDAgUE0gTmVlcmFqIExhZGthbmkg
-PG5lbGFka0BtaWNyb3NvZnQuY29tPG1haWx0bzpuZWxhZGtAbWljcm9zb2Z0LmNvbT4+IHdyb3Rl
-Og0KQ2FuIGFueW9uZSBjb25maXJtcyBpZiB0aGVzZSBsb2NrcyBwZXJzaXN0cyBkdXJpbmcgQk1D
-IHJlc2V0Pw0KDQpOZWVyYWoNCg0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrbmVs
-YWRrPW1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZzxtYWlsdG86bWljcm9zb2Z0LmNvbUBs
-aXN0cy5vemxhYnMub3JnPj4gT24gQmVoYWxmIE9mIEphbWVzIE1paG0NClNlbnQ6IE1vbmRheSwg
-QXVndXN0IDE5LCAyMDE5IDc6MjYgQU0NClRvOiBaaGVuZyBCYW8gPGZpc2hiYW96QGhvdG1haWwu
-Y29tPG1haWx0bzpmaXNoYmFvekBob3RtYWlsLmNvbT4+DQpDYzogb3BlbmJtY0BsaXN0cy5vemxh
-YnMub3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSZTogU29j
-Zmxhc2ggc2F5cyB0aGUgYm1jIGlzIHdyaXRlIHByb3RlY3RlZC4NCg0KVGhlIFAyQSBCcmlkZ2Ug
-dGhhdCBpcyB1c2VkIGJ5IHRoZSBzb2NmbGFzaCB1dGlsaXR5IGhhcyBiZWVuIGRpc2FibGVkOyBz
-ZWUgIGh0dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4vZGV0YWlsL0NWRS0yMDE5LTYyNjA8aHR0cHM6
-Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJG
-JTJGbnZkLm5pc3QuZ292JTJGdnVsbiUyRmRldGFpbCUyRkNWRS0yMDE5LTYyNjAmZGF0YT0wMiU3
-QzAxJTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3Qzg2YzY3MTU5YjRjYTRjODYwYWEwMDhkNzJh
-MzMwMmUwJTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNzAy
-NDI3MDkyMDQ2MDkxOCZzZGF0YT1XSFZLOXNyN2F1d1JBb0E5a0c2Z2lNaTRNWVZObGZuWEh4c2RR
-ZUtHYjlzJTNEJnJlc2VydmVkPTA+IGZvciBkZXRhaWxzLg0KDQpPbiBNb24sIEF1ZyAxOSwgMjAx
-OSBhdCA1OjUxIEFNIFpoZW5nIEJhbyA8ZmlzaGJhb3pAaG90bWFpbC5jb208bWFpbHRvOmZpc2hi
-YW96QGhvdG1haWwuY29tPj4gd3JvdGU6DQpIaSwgQWxsLA0KSSB1c2Ugc29jZmxhc2ggdG8gdXBk
-YXRlIHRoZSBCTUMgZmlybXdhcmUuIFRoZSBvcmlnaW5hbCBCTUMgZmlybXdhcmUgY2FuIGJlIHVw
-ZGF0ZWQsIGJ1dCBvcGVuYm1jIGNhbiBub3QgYmUuDQpTb2NmbGFzaCBzYXlzIHRoZSBCTUMgaXMg
-cHJvdGVjdGVkLiBEb2VzIGFueWJvZHkga25vdyB3aHk/DQoNClRoYW5rcy4NCkpvZQ0K
+The best that can be done with the AST2500 is to disable the bridges very
+early in the reset handler and in a ROM'd bootloader. This has been
+mitigated in the AST2600 with an option to permanently disable the bridges.
 
---_000_BYAPR21MB11916802ED44B6397460086BC8A10BYAPR21MB1191namp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Mon, Aug 26, 2019 at 10:49 AM Neeraj Ladkani <neladk@microsoft.com>
+wrote:
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
-Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
-OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
-cjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1z
-b0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpwdXJw
-bGU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLk1zb0xpc3RQYXJhZ3JhcGgsIGxp
-Lk1zb0xpc3RQYXJhZ3JhcGgsIGRpdi5Nc29MaXN0UGFyYWdyYXBoDQoJe21zby1zdHlsZS1wcmlv
-cml0eTozNDsNCgltYXJnaW4tdG9wOjBpbjsNCgltYXJnaW4tcmlnaHQ6MGluOw0KCW1hcmdpbi1i
-b3R0b206MGluOw0KCW1hcmdpbi1sZWZ0Oi41aW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0K
-CWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0K
-cC5tc29ub3JtYWwwLCBsaS5tc29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUt
-bmFtZTptc29ub3JtYWw7DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0
-OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJ
-Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpz
-cGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsNCglmb250LWZhbWls
-eToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCnNwYW4uRW1haWxT
-dHlsZTIwDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJD
-YWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOiMwMDIwNjA7fQ0KLk1zb0NocERlZmF1bHQNCgl7
-bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBX
-b3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEu
-MGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLyog
-TGlzdCBEZWZpbml0aW9ucyAqLw0KQGxpc3QgbDANCgl7bXNvLWxpc3QtaWQ6ODgxNTk2NDIwOw0K
-CW1zby1saXN0LXR5cGU6aHlicmlkOw0KCW1zby1saXN0LXRlbXBsYXRlLWlkczozOTEyNTg0Mjgg
-Njc2OTg3MDMgNjc2OTg3MTMgNjc2OTg3MTUgNjc2OTg3MDMgNjc2OTg3MTMgNjc2OTg3MTUgNjc2
-OTg3MDMgNjc2OTg3MTMgNjc2OTg3MTU7fQ0KQGxpc3QgbDA6bGV2ZWwxDQoJe21zby1sZXZlbC10
-YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWlu
-ZGVudDotLjI1aW47fQ0KQGxpc3QgbDA6bGV2ZWwyDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0
-OmFscGhhLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1i
-ZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0KQGxpc3QgbDA6bGV2ZWwz
-DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0KCW1zby1sZXZlbC10YWIt
-c3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7DQoJdGV4dC1pbmRl
-bnQ6LTkuMHB0O30NCkBsaXN0IGwwOmxldmVsNA0KCXttc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsN
-Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30N
-CkBsaXN0IGwwOmxldmVsNQ0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDphbHBoYS1sb3dlcjsN
-Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxl
-ZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30NCkBsaXN0IGwwOmxldmVsNg0KCXttc28tbGV2ZWwt
-bnVtYmVyLWZvcm1hdDpyb21hbi1sb3dlcjsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCglt
-c28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOnJpZ2h0Ow0KCXRleHQtaW5kZW50Oi05LjBwdDt9DQpA
-bGlzdCBsMDpsZXZlbDcNCgl7bXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51
-bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjt9DQpAbGlzdCBsMDpsZXZl
-bDgNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEtbG93ZXI7DQoJbXNvLWxldmVsLXRh
-Yi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5k
-ZW50Oi0uMjVpbjt9DQpAbGlzdCBsMDpsZXZlbDkNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6
-cm9tYW4tbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJl
-ci1wb3NpdGlvbjpyaWdodDsNCgl0ZXh0LWluZGVudDotOS4wcHQ7fQ0Kb2wNCgl7bWFyZ2luLWJv
-dHRvbTowaW47fQ0KdWwNCgl7bWFyZ2luLWJvdHRvbTowaW47fQ0KLS0+PC9zdHlsZT48IS0tW2lm
-IGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9
-IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxv
-OnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIx
-IiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkg
-bGFuZz0iRU4tVVMiIGxpbms9ImJsdWUiIHZsaW5rPSJwdXJwbGUiPg0KPGRpdiBjbGFzcz0iV29y
-ZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjojMDAy
-MDYwIj5JIHRyaWVkIHRvIGRpZyBtb3JlIGFuZCBjb25maXJtZWQgdGhhdCBBU1BFRUQgZG9lcyBu
-b3QgcGVyc2lzdHMgbG9ja3MgZHVyaW5nIFNSU1QuDQo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+PG86cD4mbmJz
-cDs8L286cD48L3NwYW4+PC9wPg0KPG9sIHN0eWxlPSJtYXJnaW4tdG9wOjBpbiIgc3RhcnQ9IjEi
-IHR5cGU9IjEiPg0KPGxpIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0iY29sb3I6IzAw
-MjA2MDttYXJnaW4tbGVmdDowaW47bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPg0KRXhpc3Rpbmcg
-Rlcgc29sdXRpb24gaXMgbm90IHZpYWJsZS4gJm5ic3A7SXMgaXQgcG9zc2libGUgZm9yIGhvc3Qg
-dG8gaGlkZS9kaXNhYmxlIElPIHBvcnRzIHRoYXQgYXJlIHVzZWQgYnkgU29jRmxhc2g/DQo8bzpw
-PjwvbzpwPjwvbGk+PGxpIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0iY29sb3I6IzAw
-MjA2MDttYXJnaW4tbGVmdDowaW47bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPg0KQXJlIHRoZXJl
-IGFueSBIVyBkZXNpZ24gY29uc2lkZXJhdGlvbnMgdG8gcHJldmVudCB0aGlzIGV4cGxvaXQ/IDxv
-OnA+PC9vOnA+PC9saT48L29sPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNv
-bG9yOiMwMDIwNjAiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjojMDAyMDYwIj5OZWVyYWo8bzpwPjwvbzpwPjwvc3Bh
-bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+
-PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPGRpdj4NCjxkaXYgc3R5bGU9ImJvcmRlcjpu
-b25lO2JvcmRlci10b3A6c29saWQgI0UxRTFFMSAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4g
-MGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPkZyb206PC9iPiBLaGV0YW4sIFNoYXJhZCAm
-bHQ7c2hhcmFkLmtoZXRhbkBpbnRlbC5jb20mZ3Q7IDxicj4NCjxiPlNlbnQ6PC9iPiBNb25kYXks
-IEF1Z3VzdCAyNiwgMjAxOSA3OjM4IEFNPGJyPg0KPGI+VG86PC9iPiBDaHJpc3RpYW4gU3ZlbnNz
-b24gJmx0O2JsdWVjbWRAZ29vZ2xlLmNvbSZndDs7IE5lZXJhaiBMYWRrYW5pICZsdDtuZWxhZGtA
-bWljcm9zb2Z0LmNvbSZndDs8YnI+DQo8Yj5DYzo8L2I+IEphbWVzIE1paG0gJmx0O2phbWVzLm1p
-aG1AZ21haWwuY29tJmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBaaGVuZyBCYW8gJmx0
-O2Zpc2hiYW96QGhvdG1haWwuY29tJmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBSRTogU29jZmxh
-c2ggc2F5cyB0aGUgYm1jIGlzIHdyaXRlIHByb3RlY3RlZC48bzpwPjwvbzpwPjwvcD4NCjwvZGl2
-Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPlllcyB0aGUgbG9ja3Mgd2lsbCBwZXJzaXN0IGFjcm9zcyBhbnkg
-UmVzZXRzIChCTUMgb3IgSG9zdCksIHRvIG1pdGlnYXRlIHRoZSB2dWxuZXJhYmlsaXR5Lg0KPG86
-cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPlRoYW5rczxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+LVNoYXJhZDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86
-cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBuYW1lPSJfX19fX3Jl
-cGx5c2VwYXJhdG9yIj48L2E+PGI+RnJvbTo8L2I+IG9wZW5ibWMgJmx0OzxhIGhyZWY9Im1haWx0
-bzpvcGVuYm1jLWJvdW5jZXMmIzQzO3NoYXJhZC5raGV0YW49aW50ZWwuY29tQGxpc3RzLm96bGFi
-cy5vcmciPm9wZW5ibWMtYm91bmNlcyYjNDM7c2hhcmFkLmtoZXRhbj1pbnRlbC5jb21AbGlzdHMu
-b3psYWJzLm9yZzwvYT4mZ3Q7DQo8Yj5PbiBCZWhhbGYgT2YgPC9iPkNocmlzdGlhbiBTdmVuc3Nv
-bjxicj4NCjxiPlNlbnQ6PC9iPiBNb25kYXksIEF1Z3VzdCAyNiwgMjAxOSAxOjQ0IEFNPGJyPg0K
-PGI+VG86PC9iPiBOZWVyYWogTGFka2FuaSAmbHQ7PGEgaHJlZj0ibWFpbHRvOm5lbGFka0BtaWNy
-b3NvZnQuY29tIj5uZWxhZGtAbWljcm9zb2Z0LmNvbTwvYT4mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiBK
-YW1lcyBNaWhtICZsdDs8YSBocmVmPSJtYWlsdG86amFtZXMubWlobUBnbWFpbC5jb20iPmphbWVz
-Lm1paG1AZ21haWwuY29tPC9hPiZndDs7DQo8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+OyBaaGVuZyBCYW8gJmx0Ozxh
-IGhyZWY9Im1haWx0bzpmaXNoYmFvekBob3RtYWlsLmNvbSI+ZmlzaGJhb3pAaG90bWFpbC5jb208
-L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogU29jZmxhc2ggc2F5cyB0aGUgYm1jIGlz
-IHdyaXRlIHByb3RlY3RlZC48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5X
-aGljaCB0eXBlIG9mIHJlc2V0IGFyZSB5b3UmbmJzcDtyZWZlcnJpbmcgdG8/PG86cD48L286cD48
-L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpw
-PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxkaXY+DQo8ZGl2Pg0KPGRpdj4NCjxkaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+LSBDaHJpczxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rp
-dj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5i
-c3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+
-Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBN
-b24sIEF1ZyAxOSwgMjAxOSBhdCAxMDo0MCBQTSBOZWVyYWogTGFka2FuaSAmbHQ7PGEgaHJlZj0i
-bWFpbHRvOm5lbGFka0BtaWNyb3NvZnQuY29tIj5uZWxhZGtAbWljcm9zb2Z0LmNvbTwvYT4mZ3Q7
-IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVy
-Om5vbmU7Ym9yZGVyLWxlZnQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGlu
-IDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0O21hcmdpbi10b3A6NS4wcHQ7bWFyZ2luLXJpZ2h0OjBp
-bjttYXJnaW4tYm90dG9tOjUuMHB0Ij4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDph
-dXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+Q2FuIGFueW9uZSBjb25maXJtcyBpZiB0
-aGVzZSBsb2NrcyBwZXJzaXN0cyBkdXJpbmcgQk1DIHJlc2V0Pw0KPC9zcGFuPjxvOnA+PC9vOnA+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRv
-O21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+
-Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9
-Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3Bh
-biBzdHlsZT0iY29sb3I6IzAwMjA2MCI+TmVlcmFqPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJn
-aW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iY29sb3I6IzAwMjA2MCI+Jm5ic3A7PC9z
-cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0i
-Y29sb3I6IzAwMjA2MCI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
-LWFsdDphdXRvIj48Yj5Gcm9tOjwvYj4gb3BlbmJtYyAmbHQ7b3BlbmJtYy1ib3VuY2VzJiM0Mztu
-ZWxhZGs9PGEgaHJlZj0ibWFpbHRvOm1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZyIgdGFy
-Z2V0PSJfYmxhbmsiPm1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZzwvYT4mZ3Q7DQo8Yj5P
-biBCZWhhbGYgT2YgPC9iPkphbWVzIE1paG08YnI+DQo8Yj5TZW50OjwvYj4gTW9uZGF5LCBBdWd1
-c3QgMTksIDIwMTkgNzoyNiBBTTxicj4NCjxiPlRvOjwvYj4gWmhlbmcgQmFvICZsdDs8YSBocmVm
-PSJtYWlsdG86ZmlzaGJhb3pAaG90bWFpbC5jb20iIHRhcmdldD0iX2JsYW5rIj5maXNoYmFvekBo
-b3RtYWlsLmNvbTwvYT4mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiA8YSBocmVmPSJtYWlsdG86b3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnIiB0YXJnZXQ9Il9ibGFuayI+b3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnPC9hPjxicj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogU29jZmxhc2ggc2F5cyB0aGUgYm1jIGlz
-IHdyaXRlIHByb3RlY3RlZC48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0
-eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+
-Jm5ic3A7PG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9
-Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5UaGUg
-UDJBIEJyaWRnZSB0aGF0IGlzIHVzZWQgYnkgdGhlIHNvY2ZsYXNoIHV0aWxpdHkgaGFzIGJlZW4g
-ZGlzYWJsZWQ7IHNlZSZuYnNwOw0KPGEgaHJlZj0iaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJv
-dGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGbnZkLm5pc3QuZ292JTJGdnVs
-biUyRmRldGFpbCUyRkNWRS0yMDE5LTYyNjAmYW1wO2RhdGE9MDIlN0MwMSU3Q25lbGFkayU0MG1p
-Y3Jvc29mdC5jb20lN0M4NmM2NzE1OWI0Y2E0Yzg2MGFhMDA4ZDcyYTMzMDJlMCU3QzcyZjk4OGJm
-ODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdDMSU3QzAlN0M2MzcwMjQyNzA5MjA0NjA5MTgmYW1w
-O3NkYXRhPVdIVks5c3I3YXV3UkFvQTlrRzZnaU1pNE1ZVk5sZm5YSHhzZFFlS0diOXMlM0QmYW1w
-O3Jlc2VydmVkPTAiIHRhcmdldD0iX2JsYW5rIj4NCmh0dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4v
-ZGV0YWlsL0NWRS0yMDE5LTYyNjA8L2E+Jm5ic3A7Zm9yIGRldGFpbHMuPG86cD48L286cD48L3A+
-DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6
-YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8
-ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1h
-bHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+T24gTW9uLCBBdWcgMTksIDIwMTkg
-YXQgNTo1MSBBTSBaaGVuZyBCYW8gJmx0OzxhIGhyZWY9Im1haWx0bzpmaXNoYmFvekBob3RtYWls
-LmNvbSIgdGFyZ2V0PSJfYmxhbmsiPmZpc2hiYW96QGhvdG1haWwuY29tPC9hPiZndDsgd3JvdGU6
-PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXI6bm9uZTti
-b3JkZXItbGVmdDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3BhZGRpbmc6MGluIDBpbiAwaW4gNi4wcHQ7
-bWFyZ2luLWxlZnQ6NC44cHQ7bWFyZ2luLXRvcDo1LjBwdDttYXJnaW4tcmlnaHQ6MGluO21hcmdp
-bi1ib3R0b206NS4wcHQiPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHls
-ZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxz
-cGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5IaSwgQWxsLDwvc3Bhbj48
-bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxl
-PSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNw
-YW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPkkgdXNlIHNvY2ZsYXNoIHRv
-IHVwZGF0ZSB0aGUgQk1DIGZpcm13YXJlLiBUaGUgb3JpZ2luYWwgQk1DIGZpcm13YXJlIGNhbiBi
-ZSB1cGRhdGVkLCBidXQgb3BlbmJtYyBjYW4gbm90IGJlLjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4N
-CjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRv
-cC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPlNvY2ZsYXNoIHNheXMgdGhlIEJNQyBpcyBwcm90ZWN0
-ZWQuIERvZXMgYW55Ym9keSBrbm93IHdoeT88L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4N
-CjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
-dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIu
-MHB0O2NvbG9yOmJsYWNrIj4mbmJzcDs8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87
-bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0
-O2NvbG9yOmJsYWNrIj5UaGFua3MuDQo8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87
-bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0
-O2NvbG9yOmJsYWNrIj5Kb2U8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0K
-PC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9k
-aXY+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+> I tried to dig more and confirmed that ASPEED does not persists locks
+> during SRST.
+>
+>
+>
+>    1. Existing FW solution is not viable.  Is it possible for host to
+>    hide/disable IO ports that are used by SocFlash?
+>    2. Are there any HW design considerations to prevent this exploit?
+>
+>
+>
+> Neeraj
+>
+>
+>
+> *From:* Khetan, Sharad <sharad.khetan@intel.com>
+> *Sent:* Monday, August 26, 2019 7:38 AM
+> *To:* Christian Svensson <bluecmd@google.com>; Neeraj Ladkani <
+> neladk@microsoft.com>
+> *Cc:* James Mihm <james.mihm@gmail.com>; openbmc@lists.ozlabs.org; Zheng
+> Bao <fishbaoz@hotmail.com>
+> *Subject:* RE: Socflash says the bmc is write protected.
+>
+>
+>
+> Yes the locks will persist across any Resets (BMC or Host), to mitigate
+> the vulnerability.
+>
+>
+>
+> Thanks
+>
+> -Sharad
+>
+>
+>
+> *From:* openbmc <openbmc-bounces+sharad.khetan=3Dintel.com@lists.ozlabs.o=
+rg>
+> *On Behalf Of *Christian Svensson
+> *Sent:* Monday, August 26, 2019 1:44 AM
+> *To:* Neeraj Ladkani <neladk@microsoft.com>
+> *Cc:* James Mihm <james.mihm@gmail.com>; openbmc@lists.ozlabs.org; Zheng
+> Bao <fishbaoz@hotmail.com>
+> *Subject:* Re: Socflash says the bmc is write protected.
+>
+>
+>
+> Which type of reset are you referring to?
+>
+>
+>
+> - Chris
+>
+>
+>
+>
+>
+> On Mon, Aug 19, 2019 at 10:40 PM Neeraj Ladkani <neladk@microsoft.com>
+> wrote:
+>
+> Can anyone confirms if these locks persists during BMC reset?
+>
+>
+>
+> Neeraj
+>
+>
+>
+>
+>
+> *From:* openbmc <openbmc-bounces+neladk=3Dmicrosoft.com@lists.ozlabs.org>=
+ *On
+> Behalf Of *James Mihm
+> *Sent:* Monday, August 19, 2019 7:26 AM
+> *To:* Zheng Bao <fishbaoz@hotmail.com>
+> *Cc:* openbmc@lists.ozlabs.org
+> *Subject:* Re: Socflash says the bmc is write protected.
+>
+>
+>
+> The P2A Bridge that is used by the socflash utility has been disabled;
+> see  https://nvd.nist.gov/vuln/detail/CVE-2019-6260
+> <https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fnvd.=
+nist.gov%2Fvuln%2Fdetail%2FCVE-2019-6260&data=3D02%7C01%7Cneladk%40microsof=
+t.com%7C86c67159b4ca4c860aa008d72a3302e0%7C72f988bf86f141af91ab2d7cd011db47=
+%7C1%7C0%7C637024270920460918&sdata=3DWHVK9sr7auwRAoA9kG6giMi4MYVNlfnXHxsdQ=
+eKGb9s%3D&reserved=3D0> for
+> details.
+>
+>
+>
+> On Mon, Aug 19, 2019 at 5:51 AM Zheng Bao <fishbaoz@hotmail.com> wrote:
+>
+> Hi, All,
+>
+> I use socflash to update the BMC firmware. The original BMC firmware can
+> be updated, but openbmc can not be.
+>
+> Socflash says the BMC is protected. Does anybody know why?
+>
+>
+>
+> Thanks.
+>
+> Joe
+>
+>
 
---_000_BYAPR21MB11916802ED44B6397460086BC8A10BYAPR21MB1191namp_--
+--000000000000b3d6250591098df0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">The best that can be done with the AST2500 is to disable t=
+he bridges very early in the reset handler and in a ROM&#39;d bootloader. T=
+his has been mitigated in the AST2600 with an option to permanently disable=
+ the bridges.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">On Mon, Aug 26, 2019 at 10:49 AM Neeraj Ladkani &lt;<a href=3D=
+"mailto:neladk@microsoft.com">neladk@microsoft.com</a>&gt; wrote:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_-4267959366855531349WordSection1">
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">I tried to dig mo=
+re and confirmed that ASPEED does not persists locks during SRST.
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
+/u></span></p>
+<ol style=3D"margin-top:0in" start=3D"1" type=3D"1">
+<li class=3D"gmail-m_-4267959366855531349MsoListParagraph" style=3D"color:r=
+gb(0,32,96);margin-left:0in">
+Existing FW solution is not viable.=C2=A0 Is it possible for host to hide/d=
+isable IO ports that are used by SocFlash?
+<u></u><u></u></li><li class=3D"gmail-m_-4267959366855531349MsoListParagrap=
+h" style=3D"color:rgb(0,32,96);margin-left:0in">
+Are there any HW design considerations to prevent this exploit? <u></u><u><=
+/u></li></ol>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
+/u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Neeraj<u></u><u><=
+/u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
+/u></span></p>
+<div>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b>From:</b> Khetan, Sharad &lt;<a href=3D"mailto:sh=
+arad.khetan@intel.com" target=3D"_blank">sharad.khetan@intel.com</a>&gt; <b=
+r>
+<b>Sent:</b> Monday, August 26, 2019 7:38 AM<br>
+<b>To:</b> Christian Svensson &lt;<a href=3D"mailto:bluecmd@google.com" tar=
+get=3D"_blank">bluecmd@google.com</a>&gt;; Neeraj Ladkani &lt;<a href=3D"ma=
+ilto:neladk@microsoft.com" target=3D"_blank">neladk@microsoft.com</a>&gt;<b=
+r>
+<b>Cc:</b> James Mihm &lt;<a href=3D"mailto:james.mihm@gmail.com" target=3D=
+"_blank">james.mihm@gmail.com</a>&gt;; <a href=3D"mailto:openbmc@lists.ozla=
+bs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>; Zheng Bao &lt;<a hr=
+ef=3D"mailto:fishbaoz@hotmail.com" target=3D"_blank">fishbaoz@hotmail.com</=
+a>&gt;<br>
+<b>Subject:</b> RE: Socflash says the bmc is write protected.<u></u><u></u>=
+</p>
+</div>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Yes the locks will persist across any Resets (BMC or=
+ Host), to mitigate the vulnerability.
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Thanks<u></u><u></u></p>
+<p class=3D"MsoNormal">-Sharad<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal"><a name=3D"m_-4267959366855531349______replyseparato=
+r"></a><b>From:</b> openbmc &lt;<a href=3D"mailto:openbmc-bounces+sharad.kh=
+etan=3Dintel.com@lists.ozlabs.org" target=3D"_blank">openbmc-bounces+sharad=
+.khetan=3Dintel.com@lists.ozlabs.org</a>&gt;
+<b>On Behalf Of </b>Christian Svensson<br>
+<b>Sent:</b> Monday, August 26, 2019 1:44 AM<br>
+<b>To:</b> Neeraj Ladkani &lt;<a href=3D"mailto:neladk@microsoft.com" targe=
+t=3D"_blank">neladk@microsoft.com</a>&gt;<br>
+<b>Cc:</b> James Mihm &lt;<a href=3D"mailto:james.mihm@gmail.com" target=3D=
+"_blank">james.mihm@gmail.com</a>&gt;;
+<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists=
+.ozlabs.org</a>; Zheng Bao &lt;<a href=3D"mailto:fishbaoz@hotmail.com" targ=
+et=3D"_blank">fishbaoz@hotmail.com</a>&gt;<br>
+<b>Subject:</b> Re: Socflash says the bmc is write protected.<u></u><u></u>=
+</p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">Which type of reset are you=C2=A0referring to?<u></u=
+><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal">- Chris<u></u><u></u></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Mon, Aug 19, 2019 at 10:40 PM Neeraj Ladkani &lt;=
+<a href=3D"mailto:neladk@microsoft.com" target=3D"_blank">neladk@microsoft.=
+com</a>&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
+n 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Can anyone confir=
+ms if these locks persists during BMC reset?
+</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
+/u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Neeraj</span><u><=
+/u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
+/u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
+/u><u></u></p>
+<p class=3D"MsoNormal"><b>From:</b> openbmc &lt;openbmc-bounces+neladk=3D<a=
+ href=3D"mailto:microsoft.com@lists.ozlabs.org" target=3D"_blank">microsoft=
+.com@lists.ozlabs.org</a>&gt;
+<b>On Behalf Of </b>James Mihm<br>
+<b>Sent:</b> Monday, August 19, 2019 7:26 AM<br>
+<b>To:</b> Zheng Bao &lt;<a href=3D"mailto:fishbaoz@hotmail.com" target=3D"=
+_blank">fishbaoz@hotmail.com</a>&gt;<br>
+<b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
+enbmc@lists.ozlabs.org</a><br>
+<b>Subject:</b> Re: Socflash says the bmc is write protected.<u></u><u></u>=
+</p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<div>
+<p class=3D"MsoNormal">The P2A Bridge that is used by the socflash utility =
+has been disabled; see=C2=A0
+<a href=3D"https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
+F%2Fnvd.nist.gov%2Fvuln%2Fdetail%2FCVE-2019-6260&amp;data=3D02%7C01%7Cnelad=
+k%40microsoft.com%7C86c67159b4ca4c860aa008d72a3302e0%7C72f988bf86f141af91ab=
+2d7cd011db47%7C1%7C0%7C637024270920460918&amp;sdata=3DWHVK9sr7auwRAoA9kG6gi=
+Mi4MYVNlfnXHxsdQeKGb9s%3D&amp;reserved=3D0" target=3D"_blank">
+https://nvd.nist.gov/vuln/detail/CVE-2019-6260</a>=C2=A0for details.<u></u>=
+<u></u></p>
+</div>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Mon, Aug 19, 2019 at 5:51 AM Zheng Bao &lt;<a hre=
+f=3D"mailto:fishbaoz@hotmail.com" target=3D"_blank">fishbaoz@hotmail.com</a=
+>&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
+n 5pt 4.8pt">
+<div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Hi, All,<=
+/span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">I use soc=
+flash to update the BMC firmware. The original BMC firmware can be updated,=
+ but openbmc can not be.</span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Socflash =
+says the BMC is protected. Does anybody know why?</span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">=C2=A0</s=
+pan><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Thanks.
+</span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Joe</span=
+><u></u><u></u></p>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+
+</blockquote></div>
+
+--000000000000b3d6250591098df0--
