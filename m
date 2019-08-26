@@ -1,71 +1,134 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35D679D5F8
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 20:45:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55F149D700
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 21:48:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46HLYK2Jp9zDqmC
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 04:45:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HMy53XPFzDqmT
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 05:48:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::b2d; helo=mail-yb1-xb2d.google.com;
- envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=314158d10e=wilfredsmith@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="MDse3OJW"; 
- dkim-atps=neutral
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
- [IPv6:2607:f8b0:4864:20::b2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="lCt3mKnF"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="JgGvpu+6"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HLXd50fwzDqlL
- for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 04:45:05 +1000 (AEST)
-Received: by mail-yb1-xb2d.google.com with SMTP id u68so7344368ybg.1
- for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 11:45:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=o1QGiv1qP8e4q98jDBqoXVZXbJboxDKda8bmTZWb+FY=;
- b=MDse3OJWScjqK3XAg+bJ1NzGfsMy1GDI+cbpSRgmsefDQ6VauXRROZNjIJwcIZOPQK
- rLD7iUCWKhbv/7rK74qCK36tVFZwRCqhCz1K3M9PP6pu9NUuMkbmCVm6rDZZpAWFMbcm
- 3wQXiRr2Sl+srQxzAyEwCXTiur82rlw5Ixq6B2TuIeRAxA/n4UV3WR0lPDsNoqNz9yfV
- FM8vwaF4Kw+3OzQ5Tll6rs5hF30GKfgWMehvmNCk4LiMF9fkUxHZPLr2az9tbFbI0Sw6
- 6evfMoUVS1thMYZAay6pRq/M1Z0ZMuGLkHe7NwB++TJen3GwXNShkPiaRdT3e1TEtRud
- V+1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=o1QGiv1qP8e4q98jDBqoXVZXbJboxDKda8bmTZWb+FY=;
- b=lgwMcEgf+q1ruM/2che4yXsnUlgIEVKa9WPTO8Qe6SzbECCxT8Sby+jik1yA/f+hs2
- 9VpBJVPWBXnwAtw1zzNgGDJUl4GWQ+wMWoYQ8KHplsRRd/A776ZnJcWGkFMMkhj2pis6
- zsn+g5kHeOs75s9fjNYT27GTp9D43w/ZNBJ+OOzjVn4CrZzSAVANCcrZNZIAEgU9XUBH
- wrEO2SKgkHlM83yAU1x55MoRTMKI94zuM0d//MOf1dql0BJcVdbuuJk33bBZXBJmNjBO
- zQTdrReLM/HniLURCPi/P+BPTB4eFByEXDt42uY+S1di8l3sv+TwEPFQwqfqP+ozynKi
- aJhw==
-X-Gm-Message-State: APjAAAUf5LHf58AxiQXuAEfN5j4cI4USQxVhBq9W23Esrx0FHeBQjHJg
- suQk6pmJJ9zVC6Ob7kFsfsXd68aV5tTJfvBjNYo=
-X-Google-Smtp-Source: APXvYqxhX6iDMot6aw9ttigbv7l3FkZ0z/lTHKfsOhzzk/2PDZRmzSezS1hkKrKvv7JwaCpPOwl2/xFywOIKHT2QlSk=
-X-Received: by 2002:a25:7652:: with SMTP id r79mr14377971ybc.258.1566845101658; 
- Mon, 26 Aug 2019 11:45:01 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HMxM1zy0zDqZ9
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 05:48:02 +1000 (AEST)
+Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x7QJlsAC005668
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 12:47:57 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : content-type : content-id : content-transfer-encoding
+ : mime-version; s=facebook;
+ bh=5PAg4gK7tW8FYHKMDdcfVy/SdWVG6FMygCIJ9qOoFmk=;
+ b=lCt3mKnFTOtf5NvOmVOFu6TqzgLNU5+ls/I2ltnki3F26uwDtrcLgytSgV8rInbo58aF
+ BY1pVROllLrX8Ksim3kHF/8ibM9qlO/wnG+QMwFV0zb45dRz3PFxF56zaxzoiAs079TB
+ XRhT41wRm5+bS1FIi8vql54+ztfT1C3udHk= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2umhkp9b2g-5
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 12:47:57 -0700
+Received: from prn-mbx05.TheFacebook.com (2620:10d:c081:6::19) by
+ prn-hub05.TheFacebook.com (2620:10d:c081:35::129) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Mon, 26 Aug 2019 12:47:30 -0700
+Received: from prn-hub03.TheFacebook.com (2620:10d:c081:35::127) by
+ prn-mbx05.TheFacebook.com (2620:10d:c081:6::19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Mon, 26 Aug 2019 12:47:29 -0700
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.27) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Mon, 26 Aug 2019 12:47:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gMuSz/Kv/+ItTEnAyymkAeKgtwVkjRj4UuIUn/9B60kU/quC7ytZKGQg57+v9hQDYgt5gEerBwJNu2uiKe9GWVLRYwyq3GKFvIiHE/kDbl1eztJDcXWS7ExjV9Mj9vBsYcxa4beRI33mct/1bTu3S/j6n7sZKjKjPeQF8Towu/A7x4Wb84dHDy6+hDOOAv6e1KvKbg9sH2XUyF9+qAfBT50Nva2OC34fgQ5YocJD5OLqj3YQeztgaCSlDBikPnivp+lOIAVb+RLCWZRzras7F3fqLWRwjOKu9KDOoiJClei3M6OtzkmTJKed5KlBnE2TNASG8YXQTlIbpR7B1xdEig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5PAg4gK7tW8FYHKMDdcfVy/SdWVG6FMygCIJ9qOoFmk=;
+ b=JOIQS42YybGPcQtpFRcjhBlPipxUlTmTeJ+P8o0VCHDeIvLyDGxvCAUA+uTo5D+9Ut6EzRfMZa1pPaNx+tbgFpl2C3N/qhqjm6iLA74K6PnVxvv/f8NVXovyCG1vJHcexAAtHZaYG3A0UaszgqiN/T+LrkgfjtHAn7sbmBN//fOedmsPMQhXZaRMQl/r+B68oZ7FRCuMObmAUrpMUz+rYL0eJFfe462CNBBSAWvik2A2djkFYfLwyf2qGW9pAu5sCxhL32rPz3gdCoQvYJbaDW073y5RVJSFxt0tDzZXXbXSwaza09kuY5bsyJJRiJjXpVgC3EmQn001tPv/XEy6ng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5PAg4gK7tW8FYHKMDdcfVy/SdWVG6FMygCIJ9qOoFmk=;
+ b=JgGvpu+6cR/hian2nxkUaOJMABnHQyHhzLqDNJ3Xzk/eS307pl+v34h/CCAuymXBiLp2vSur4SzXRTCffHeG8T0aFNp4yp6pBB/mDXf2XkbYIggYVbH8/kxG/eyxTmLpK4JJGDcmQxPDW0S92ZvJRnCzrvRRmsuxVk/E9pR2oH0=
+Received: from MN2PR15MB3680.namprd15.prod.outlook.com (52.132.173.209) by
+ MN2PR15MB2864.namprd15.prod.outlook.com (20.178.251.18) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2199.21; Mon, 26 Aug 2019 19:47:28 +0000
+Received: from MN2PR15MB3680.namprd15.prod.outlook.com
+ ([fe80::b9ff:f089:c837:4a20]) by MN2PR15MB3680.namprd15.prod.outlook.com
+ ([fe80::b9ff:f089:c837:4a20%5]) with mapi id 15.20.2199.020; Mon, 26 Aug 2019
+ 19:47:28 +0000
+From: Wilfred Smith <wilfredsmith@fb.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Virtual sensors
+Thread-Topic: Virtual sensors
+Thread-Index: AQHVXEcXIr2Ht1JqKk+TD/xHMHcuMw==
+Date: Mon, 26 Aug 2019 19:47:28 +0000
+Message-ID: <CB9FB78A-5D6B-42AD-98CF-DD2CC3B43958@fb.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::1:e2e2]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0f585858-1e07-42ac-096c-08d72a5e39e3
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:MN2PR15MB2864; 
+x-ms-traffictypediagnostic: MN2PR15MB2864:
+x-microsoft-antispam-prvs: <MN2PR15MB28646D68393BB0771F42ED58BDA10@MN2PR15MB2864.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-forefront-prvs: 01415BB535
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(39860400002)(366004)(396003)(346002)(376002)(136003)(199004)(189003)(4744005)(316002)(6916009)(2616005)(6436002)(25786009)(5660300002)(36756003)(486006)(33656002)(3480700005)(6486002)(99286004)(6506007)(71190400001)(86362001)(53936002)(2906002)(2501003)(6512007)(476003)(256004)(91956017)(66946007)(8676002)(1730700003)(81156014)(81166006)(221733001)(76116006)(66446008)(64756008)(66556008)(66476007)(5640700003)(71200400001)(7736002)(305945005)(6116002)(14454004)(7116003)(46003)(8936002)(102836004)(2351001)(478600001)(186003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MN2PR15MB2864;
+ H:MN2PR15MB3680.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: VLYsZjgasreIYwcagHHsK2IWdydqVHPD7OsJ021C8cysmtoq2ync5GmWM+4Tx0e6bGE6E52mhiAURJjeGmjlYtoI9aOfvCVm9y/1uhB9SPM1CmxD3336T6GFfThciCwKHFH1s8pwJ94CyKHTWxXfsRIHQ7NbW4lzKkIYTHiciLSzZ5bTFSr2vlsCFyWqgxg2+aYgYIwcFu4BM2z2nb1mNS97YFMQiCImmKGL9EgEEhfVPflc5IQFK2/RNqHQg0d++WL4bZDMVS/DOZoXeCrIF5+ncy3NZtWRYEX+6fFQGPqoHpGr1m2YXZedkoO5R77NjCzNzxjK0gCv2Xam4OlglCk7qY49co2kwi0Shns2smyvqRoO313yL2C5jIg582B2+RMJH5IJ0nyVu+YUiP168QAuXK8N77SVv1aWToGDsLg=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <CB80860EA6880D4982FEAAA29F4B7C3B@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <MN2PR04MB5839D33826EF08A499E32167CDA80@MN2PR04MB5839.namprd04.prod.outlook.com>
- <CADy_Pt3tvAci8tXuZ3cTJY3tRxwnWPbD=yNL05VEYrjZKWcpEw@mail.gmail.com>
- <BYAPR21MB1191A89B2C012758241C5C72C8A80@BYAPR21MB1191.namprd21.prod.outlook.com>
- <CAEfeXvbYEA-5Hg=1Zs=Di=3HyNOpoSdM51GjSLwuiX01yHg2-w@mail.gmail.com>
- <865C376D1B77624AAA570EFEF73CE52F983F2A4E@fmsmsx118.amr.corp.intel.com>
- <BYAPR21MB11916802ED44B6397460086BC8A10@BYAPR21MB1191.namprd21.prod.outlook.com>
-In-Reply-To: <BYAPR21MB11916802ED44B6397460086BC8A10@BYAPR21MB1191.namprd21.prod.outlook.com>
-From: James Mihm <james.mihm@gmail.com>
-Date: Mon, 26 Aug 2019 11:44:25 -0700
-Message-ID: <CADy_Pt0PNASL=1eeL+KsasFhQZ69JRWkHzokmJwre+Y6++GtDQ@mail.gmail.com>
-Subject: Re: Socflash says the bmc is write protected.
-To: Neeraj Ladkani <neladk@microsoft.com>
-Content-Type: multipart/alternative; boundary="000000000000b3d6250591098df0"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f585858-1e07-42ac-096c-08d72a5e39e3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2019 19:47:28.1517 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9PfNupwiCSS3aAE8nXotJU/MzjGOraxEQqnT9tnv4rOoYgBXCZ389lzYVEVjHlhIrFySH898cic8hA0ftYN4CA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR15MB2864
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:5.22.84,1.0.8
+ definitions=2019-08-26_08:2019-08-26,2019-08-26 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ phishscore=0
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 adultscore=0 mlxlogscore=360 mlxscore=0
+ priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1906280000 definitions=main-1908260187
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,329 +140,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Khetan, Sharad" <sharad.khetan@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Christian Svensson <bluecmd@google.com>, Zheng Bao <fishbaoz@hotmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b3d6250591098df0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-The best that can be done with the AST2500 is to disable the bridges very
-early in the reset handler and in a ROM'd bootloader. This has been
-mitigated in the AST2600 with an option to permanently disable the bridges.
-
-On Mon, Aug 26, 2019 at 10:49 AM Neeraj Ladkani <neladk@microsoft.com>
-wrote:
-
-> I tried to dig more and confirmed that ASPEED does not persists locks
-> during SRST.
->
->
->
->    1. Existing FW solution is not viable.  Is it possible for host to
->    hide/disable IO ports that are used by SocFlash?
->    2. Are there any HW design considerations to prevent this exploit?
->
->
->
-> Neeraj
->
->
->
-> *From:* Khetan, Sharad <sharad.khetan@intel.com>
-> *Sent:* Monday, August 26, 2019 7:38 AM
-> *To:* Christian Svensson <bluecmd@google.com>; Neeraj Ladkani <
-> neladk@microsoft.com>
-> *Cc:* James Mihm <james.mihm@gmail.com>; openbmc@lists.ozlabs.org; Zheng
-> Bao <fishbaoz@hotmail.com>
-> *Subject:* RE: Socflash says the bmc is write protected.
->
->
->
-> Yes the locks will persist across any Resets (BMC or Host), to mitigate
-> the vulnerability.
->
->
->
-> Thanks
->
-> -Sharad
->
->
->
-> *From:* openbmc <openbmc-bounces+sharad.khetan=3Dintel.com@lists.ozlabs.o=
-rg>
-> *On Behalf Of *Christian Svensson
-> *Sent:* Monday, August 26, 2019 1:44 AM
-> *To:* Neeraj Ladkani <neladk@microsoft.com>
-> *Cc:* James Mihm <james.mihm@gmail.com>; openbmc@lists.ozlabs.org; Zheng
-> Bao <fishbaoz@hotmail.com>
-> *Subject:* Re: Socflash says the bmc is write protected.
->
->
->
-> Which type of reset are you referring to?
->
->
->
-> - Chris
->
->
->
->
->
-> On Mon, Aug 19, 2019 at 10:40 PM Neeraj Ladkani <neladk@microsoft.com>
-> wrote:
->
-> Can anyone confirms if these locks persists during BMC reset?
->
->
->
-> Neeraj
->
->
->
->
->
-> *From:* openbmc <openbmc-bounces+neladk=3Dmicrosoft.com@lists.ozlabs.org>=
- *On
-> Behalf Of *James Mihm
-> *Sent:* Monday, August 19, 2019 7:26 AM
-> *To:* Zheng Bao <fishbaoz@hotmail.com>
-> *Cc:* openbmc@lists.ozlabs.org
-> *Subject:* Re: Socflash says the bmc is write protected.
->
->
->
-> The P2A Bridge that is used by the socflash utility has been disabled;
-> see  https://nvd.nist.gov/vuln/detail/CVE-2019-6260
-> <https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fnvd.=
-nist.gov%2Fvuln%2Fdetail%2FCVE-2019-6260&data=3D02%7C01%7Cneladk%40microsof=
-t.com%7C86c67159b4ca4c860aa008d72a3302e0%7C72f988bf86f141af91ab2d7cd011db47=
-%7C1%7C0%7C637024270920460918&sdata=3DWHVK9sr7auwRAoA9kG6giMi4MYVNlfnXHxsdQ=
-eKGb9s%3D&reserved=3D0> for
-> details.
->
->
->
-> On Mon, Aug 19, 2019 at 5:51 AM Zheng Bao <fishbaoz@hotmail.com> wrote:
->
-> Hi, All,
->
-> I use socflash to update the BMC firmware. The original BMC firmware can
-> be updated, but openbmc can not be.
->
-> Socflash says the BMC is protected. Does anybody know why?
->
->
->
-> Thanks.
->
-> Joe
->
->
-
---000000000000b3d6250591098df0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">The best that can be done with the AST2500 is to disable t=
-he bridges very early in the reset handler and in a ROM&#39;d bootloader. T=
-his has been mitigated in the AST2600 with an option to permanently disable=
- the bridges.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Mon, Aug 26, 2019 at 10:49 AM Neeraj Ladkani &lt;<a href=3D=
-"mailto:neladk@microsoft.com">neladk@microsoft.com</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"EN-US">
-<div class=3D"gmail-m_-4267959366855531349WordSection1">
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">I tried to dig mo=
-re and confirmed that ASPEED does not persists locks during SRST.
-<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
-/u></span></p>
-<ol style=3D"margin-top:0in" start=3D"1" type=3D"1">
-<li class=3D"gmail-m_-4267959366855531349MsoListParagraph" style=3D"color:r=
-gb(0,32,96);margin-left:0in">
-Existing FW solution is not viable.=C2=A0 Is it possible for host to hide/d=
-isable IO ports that are used by SocFlash?
-<u></u><u></u></li><li class=3D"gmail-m_-4267959366855531349MsoListParagrap=
-h" style=3D"color:rgb(0,32,96);margin-left:0in">
-Are there any HW design considerations to prevent this exploit? <u></u><u><=
-/u></li></ol>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
-/u></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Neeraj<u></u><u><=
-/u></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)"><u></u>=C2=A0<u><=
-/u></span></p>
-<div>
-<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
-top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
-<p class=3D"MsoNormal"><b>From:</b> Khetan, Sharad &lt;<a href=3D"mailto:sh=
-arad.khetan@intel.com" target=3D"_blank">sharad.khetan@intel.com</a>&gt; <b=
-r>
-<b>Sent:</b> Monday, August 26, 2019 7:38 AM<br>
-<b>To:</b> Christian Svensson &lt;<a href=3D"mailto:bluecmd@google.com" tar=
-get=3D"_blank">bluecmd@google.com</a>&gt;; Neeraj Ladkani &lt;<a href=3D"ma=
-ilto:neladk@microsoft.com" target=3D"_blank">neladk@microsoft.com</a>&gt;<b=
-r>
-<b>Cc:</b> James Mihm &lt;<a href=3D"mailto:james.mihm@gmail.com" target=3D=
-"_blank">james.mihm@gmail.com</a>&gt;; <a href=3D"mailto:openbmc@lists.ozla=
-bs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>; Zheng Bao &lt;<a hr=
-ef=3D"mailto:fishbaoz@hotmail.com" target=3D"_blank">fishbaoz@hotmail.com</=
-a>&gt;<br>
-<b>Subject:</b> RE: Socflash says the bmc is write protected.<u></u><u></u>=
-</p>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Yes the locks will persist across any Resets (BMC or=
- Host), to mitigate the vulnerability.
-<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Thanks<u></u><u></u></p>
-<p class=3D"MsoNormal">-Sharad<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><a name=3D"m_-4267959366855531349______replyseparato=
-r"></a><b>From:</b> openbmc &lt;<a href=3D"mailto:openbmc-bounces+sharad.kh=
-etan=3Dintel.com@lists.ozlabs.org" target=3D"_blank">openbmc-bounces+sharad=
-.khetan=3Dintel.com@lists.ozlabs.org</a>&gt;
-<b>On Behalf Of </b>Christian Svensson<br>
-<b>Sent:</b> Monday, August 26, 2019 1:44 AM<br>
-<b>To:</b> Neeraj Ladkani &lt;<a href=3D"mailto:neladk@microsoft.com" targe=
-t=3D"_blank">neladk@microsoft.com</a>&gt;<br>
-<b>Cc:</b> James Mihm &lt;<a href=3D"mailto:james.mihm@gmail.com" target=3D=
-"_blank">james.mihm@gmail.com</a>&gt;;
-<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists=
-.ozlabs.org</a>; Zheng Bao &lt;<a href=3D"mailto:fishbaoz@hotmail.com" targ=
-et=3D"_blank">fishbaoz@hotmail.com</a>&gt;<br>
-<b>Subject:</b> Re: Socflash says the bmc is write protected.<u></u><u></u>=
-</p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">Which type of reset are you=C2=A0referring to?<u></u=
-><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<div>
-<div>
-<div>
-<div>
-<div>
-<p class=3D"MsoNormal">- Chris<u></u><u></u></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">On Mon, Aug 19, 2019 at 10:40 PM Neeraj Ladkani &lt;=
-<a href=3D"mailto:neladk@microsoft.com" target=3D"_blank">neladk@microsoft.=
-com</a>&gt; wrote:<u></u><u></u></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
-n 5pt 4.8pt">
-<div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Can anyone confir=
-ms if these locks persists during BMC reset?
-</span><u></u><u></u></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
-/u><u></u></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">Neeraj</span><u><=
-/u><u></u></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
-/u><u></u></p>
-<p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=C2=A0</span><u><=
-/u><u></u></p>
-<p class=3D"MsoNormal"><b>From:</b> openbmc &lt;openbmc-bounces+neladk=3D<a=
- href=3D"mailto:microsoft.com@lists.ozlabs.org" target=3D"_blank">microsoft=
-.com@lists.ozlabs.org</a>&gt;
-<b>On Behalf Of </b>James Mihm<br>
-<b>Sent:</b> Monday, August 19, 2019 7:26 AM<br>
-<b>To:</b> Zheng Bao &lt;<a href=3D"mailto:fishbaoz@hotmail.com" target=3D"=
-_blank">fishbaoz@hotmail.com</a>&gt;<br>
-<b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
-enbmc@lists.ozlabs.org</a><br>
-<b>Subject:</b> Re: Socflash says the bmc is write protected.<u></u><u></u>=
-</p>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-<div>
-<p class=3D"MsoNormal">The P2A Bridge that is used by the socflash utility =
-has been disabled; see=C2=A0
-<a href=3D"https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
-F%2Fnvd.nist.gov%2Fvuln%2Fdetail%2FCVE-2019-6260&amp;data=3D02%7C01%7Cnelad=
-k%40microsoft.com%7C86c67159b4ca4c860aa008d72a3302e0%7C72f988bf86f141af91ab=
-2d7cd011db47%7C1%7C0%7C637024270920460918&amp;sdata=3DWHVK9sr7auwRAoA9kG6gi=
-Mi4MYVNlfnXHxsdQeKGb9s%3D&amp;reserved=3D0" target=3D"_blank">
-https://nvd.nist.gov/vuln/detail/CVE-2019-6260</a>=C2=A0for details.<u></u>=
-<u></u></p>
-</div>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">On Mon, Aug 19, 2019 at 5:51 AM Zheng Bao &lt;<a hre=
-f=3D"mailto:fishbaoz@hotmail.com" target=3D"_blank">fishbaoz@hotmail.com</a=
->&gt; wrote:<u></u><u></u></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
-n 5pt 4.8pt">
-<div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Hi, All,<=
-/span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">I use soc=
-flash to update the BMC firmware. The original BMC firmware can be updated,=
- but openbmc can not be.</span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Socflash =
-says the BMC is protected. Does anybody know why?</span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">=C2=A0</s=
-pan><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Thanks.
-</span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:black">Joe</span=
-><u></u><u></u></p>
-</div>
-</div>
-</blockquote>
-</div>
-</div>
-</div>
-</blockquote>
-</div>
-</div>
-</div>
-
-</blockquote></div>
-
---000000000000b3d6250591098df0--
+SXMgdGhlcmUgY3VycmVudGx5IGEgdmlydHVhbCBzZW5zb3IgaW1wbGVtZW50YXRpb24/IElmIG5v
+dCwgaXMgYW55b25lIHdvcmtpbmcgb24gb25lPw0KDQpWaXJ0dWFsIHNlbnNvcnMgYWxsb3cgeW91
+IHRvIGRlZmluZSBhIHNlbnNvciBhcyBhbiBlcXVhdGlvbiBhdG9wIG90aGVyIHNlbnNvcnMsIHdp
+dGggZWFjaCBkZXBlbmRlbnQgc2Vuc29yIHNwZWNpZnlpbmcgaXRzIHBvbGxpbmcgcmF0ZS4gRm9y
+IGV4YW1wbGU6IFBlYWtEcml2ZUJheVRlbXBlcmF0dXJlID0gTWF4KERyaXZlQmF5VGVtcGVyYXR1
+cmVbMeKApjQsMjBIel0pIHdvdWxkIHBvbGwgdGhlIHRlbXBlcmF0dXJlIG9mIHNlbnNvcnMgMS00
+IGF0IDIwIEh6IGFuZCBwcm9tb3RlIHRoZSBtYXggdGVtcGVyYXR1cmUgc2Vlbi4NCg0KV2lsZnJl
+ZCA=
