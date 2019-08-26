@@ -2,46 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DD029D2DD
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 17:35:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A7589D3F3
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 18:26:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46HGKQ0wgBzDqjQ
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 01:35:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HHSG5wvwzDqkR
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 02:26:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ spf=pass (mailfrom) smtp.mailfrom=yadro.com
+ (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="lwQyINNQ"; 
+ dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HGJr38lKzDqQX
- for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 01:34:34 +1000 (AEST)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2019 08:34:32 -0700
-X-IronPort-AV: E=Sophos;i="5.64,433,1559545200"; d="scan'208";a="174242438"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2019 08:34:31 -0700
-Date: Mon, 26 Aug 2019 08:34:30 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Harry Sung1 <hsung1@lenovo.com>
-Subject: Re: Leverage source code from another repository
-Message-ID: <20190826153430.GA45301@mauery.jf.intel.com>
-References: <e806efd25d7248d29f411ef4dedfec2f@lenovo.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HHRS18WszDqgM
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 02:25:23 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6931F4122E
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 16:25:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:content-disposition:content-type:content-type
+ :mime-version:message-id:subject:subject:from:from:date:date
+ :received:received:received; s=mta-01; t=1566836718; x=
+ 1568651119; bh=BM+TflCTbYGERPN0WR0zRJHsCvAu/KAng+bgY4DuGII=; b=l
+ wQyINNQv60h1N5DT4wdyNOL6PNGzbJdKDOtKssSDSOwn2+hzJgxXWdzK74q124JV
+ gsABQ6gM92yIVNIZEdJ/4J8NW2GA9BzZEsTc6pJrDZ7NLIH43LnvVqjJkZFhrDpb
+ 2E68UEbtk2st7jyjEDFAmPQm6gkV6eOGWPzNRlhEq0=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id h-e5XYecySVE for <openbmc@lists.ozlabs.org>;
+ Mon, 26 Aug 2019 19:25:18 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 72F9741207
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 19:25:18 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 26
+ Aug 2019 19:25:18 +0300
+Date: Mon, 26 Aug 2019 19:25:17 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: custom ntp server in phosphor-networkd
+Message-ID: <20190826162517.GA19876@bbwork.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <e806efd25d7248d29f411ef4dedfec2f@lenovo.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+User-Agent: Mutt/1.12.0 (2019-05-25)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,24 +72,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 23-Aug-2019 10:27 AM, Harry Sung1 wrote:
-> Hi Team,
-> 
-> Is it ok to leverage source code from another repository?
-> For example, if I only want to use the FRU write command from intel-ipmi-oem.
-> https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp#L316
-> 
-> Is it allowed to copy it into our ipmi oem library?
+Our customers complain that they can't set custom ntp while dhcp is enabled on
+bmc network interface.
 
-The licenses on the repositories allow it. As long as the copyrights are 
-kept and the licences don't conflict, it should be fine.
+I found out that the phosphor-networkd doesn't allow it in fact and it awaits
+the list of ntp-servers in response from dhcp server. When BMC is configured
+with a static IP address phosphor-networkd keep a list of ntp-service in the
+configuration file of the network interface. In my opinion it is wrong.
 
-That being said, many of the handlers in intel-ipmi-oem work well 
-together and it may be that you just want to include the whole provider 
-libarary.
+I propose to change this behavior: 
+ - the list of ntp-service should be kept in /etc/systemd/timesyncd.conf
+ - the customization of ntp-servers should be independent from the network
+   inferface configuration.
 
---Vernon
+thoughts, doubts?
+
+Regards,
+Alexander
