@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B0EC9CDA0
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 12:52:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C7B39CFA9
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 14:32:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46H8346snfzDqQc
-	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 20:52:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HBGF3fJ9zDqQm
+	for <lists+openbmc@lfdr.de>; Mon, 26 Aug 2019 22:32:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,51 +16,49 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="tV1cLjpX"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="olU9ZELV"; 
  dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46H7xG3W5QzDqW3;
- Mon, 26 Aug 2019 20:47:14 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HBFK5KG0zDqcy
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 22:31:17 +1000 (AEST)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 633BB42EE5;
- Mon, 26 Aug 2019 10:47:11 +0000 (UTC)
+ by mta-01.yadro.com (Postfix) with ESMTP id C91C24120B
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 12:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:content-transfer-encoding:mime-version
- :references:in-reply-to:x-mailer:message-id:date:date:subject
- :subject:from:from:received:received:received; s=mta-01; t=
- 1566816430; x=1568630831; bh=sDEjAIt5xHIASzEmtC/Trtueg2g59LDArRf
- QVSN+7T4=; b=tV1cLjpXjz8aSWpEAlBwXBqbEGUYEz64wHjdQ8NMfZBsIVR9O58
- 3bibA7Kw+Qle+KB9G+5OEy+F9J9BWaPjBmwnbdaZLK/dkfSHxNYNWNG4Fh7dQ9XY
- eQ5Gv7+CqXhXPG4OKlD4ZL19gDa24cUVA30hGvh7Vb7yES+t7bpuvqCw=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:date:date:from:from:subject:subject
+ :message-id:received:received:received; s=mta-01; t=1566822672;
+ x=1568637073; bh=pfU6RT3SNmDYIRF0sygj0fBVH85M02IxfmhjK1cVx94=; b=
+ olU9ZELVh/eagRm6UXsGF3XFd1/hvMr6avRun1bQczugGTt6LiOJi6MaheMN6YZU
+ ydO5UIA+hwz/YnBH81aPz8X86zKFu7H7g0AFHneFsTkIyBxikS99B4IV2uWzRIxL
+ 0f2pxmAOp3mvRPZmBuVVWVBFTKqecENwm3xJicWkhF8=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id gltpLMrPWcoY; Mon, 26 Aug 2019 13:47:10 +0300 (MSK)
+ with ESMTP id sR0hAi2RKjRp for <openbmc@lists.ozlabs.org>;
+ Mon, 26 Aug 2019 15:31:12 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
  [172.17.10.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 64A0E42EEA;
- Mon, 26 Aug 2019 13:47:10 +0300 (MSK)
-Received: from localhost.dev.yadro.com (172.17.15.69) by
+ by mta-01.yadro.com (Postfix) with ESMTPS id 7EBE941207
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Aug 2019 15:31:12 +0300 (MSK)
+Received: from localhost.localdomain (172.17.15.69) by
  T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Mon, 26 Aug 2019 13:47:09 +0300
+ 15.1.669.32; Mon, 26 Aug 2019 15:31:11 +0300
+Message-ID: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+Subject: service for tracking user activity (phosphor-audit)
 From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Guenter Roeck <linux@roeck-us.net>, Wim Van Sebroeck
- <wim@linux-watchdog.org>
-Subject: [PATCH v2 4/4] dt-bindings/watchdog: Add access_cs0 option for
- alt-boot
-Date: Mon, 26 Aug 2019 13:46:36 +0300
-Message-ID: <20190826104636.19324-5-i.mikhaylov@yadro.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190826104636.19324-1-i.mikhaylov@yadro.com>
-References: <20190826104636.19324-1-i.mikhaylov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Date: Mon, 26 Aug 2019 15:31:04 +0300
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [172.17.15.69]
 X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
  T-EXCH-02.corp.yadro.com (172.17.10.102)
@@ -75,40 +73,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- Alexander Amelkin <a.amelkin@yadro.com>, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, Ivan Mikhaylov <i.mikhaylov@yadro.com>,
- linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The option for the ast2400/2500 to get access to CS0 at runtime.
+hi all, There it is updated design proposal about audit service which provides a
+way to track user activity. Right now most parts are described there. If you
+have any ideas or anything to add, feel free to share in this thread.
 
-Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
----
- Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23870
 
-diff --git a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-index c5077a1f5cb3..023a9b578df6 100644
---- a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-+++ b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-@@ -34,6 +34,13 @@ Optional properties:
-                 engine is responsible for this.
- 
-  - aspeed,alt-boot:    If property is present then boot from alternate block.
-+                       At alternate side 'access_cs0' sysfs file provides:
-+                       ast2400: a way to get access to the primary SPI flash
-+                                chip at CS0 after booting from the alternate
-+                                chip at CS1.
-+                       ast2500: a way to restore the normal address mapping from
-+                                (CS0->CS1, CS1->CS0) to (CS0->CS0, CS1->CS1).
-+
-  - aspeed,external-signal: If property is present then signal is sent to
- 			external reset counter (only WDT1 and WDT2). If not
- 			specified no external signal is sent.
--- 
-2.20.1
+
+thanks.
 
