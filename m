@@ -1,107 +1,99 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB7E09F1CA
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 19:40:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E84959F1CD
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 19:41:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Hx3P2lYgzDqkS
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 03:40:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Hx5B6BHLzDqwM
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 03:41:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.77.128; helo=nam02-sn1-obe.outbound.protection.outlook.com;
+ (client-ip=40.107.71.126; helo=nam05-by2-obe.outbound.protection.outlook.com;
  envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
  header.from=microsoft.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="iKowEYgC"; dkim-atps=neutral
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com
- (mail-eopbgr770128.outbound.protection.outlook.com [40.107.77.128])
+ header.b="jhc04QTw"; dkim-atps=neutral
+Received: from NAM05-BY2-obe.outbound.protection.outlook.com
+ (mail-eopbgr710126.outbound.protection.outlook.com [40.107.71.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Hx2h03zYzDqgB
- for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2019 03:39:38 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Hx4Z5F7czDqh3
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2019 03:41:17 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BcH6F3LZ5p97E1h8SglIwUQEc4mJt9eLri1kVUj2XpRI/BHABpgpk2hTlpSKPLcFk+ETUzgeFm8sXnTWEIB49HyX6DKW3uxnkIeJDki0IbfM1G/qBWfDbpw/hS0gE2uNIaEcFDys7Wde8RZ53WAOgKo/Ap8cP84oA+L7FDLAQVqUwCrGvrH9+pZ0qDKE+kuzp/+QqfxEGLFAqPLuhI54EUZJ4nFCczbrWDzQo8TwDhuUo77SL+l93W6ceSrb88DM03FdepbW34I4RWzQJ5hRPw9qbs6If5rjoLPbEsDb6tv1hvsO0OeMzc1T9mqbLie3hN22of0FET/R8Ih29rpahA==
+ b=n1zkg8yp/AkU8n+A/8V2k0bQxEf9SVosz4Z6DVVwh543rZo+on+b+G0A6ApUVAIxGrlzDES/lA1Ine1u6D4LZ4FmI1i5hZ8ZDbq7kNGmAQFj1Wt6h6DpOWHHlz8K0MweRjlqlxLolje58dfIycLUIqbALwQM7k+3lPfDK/xKbZSbO+/R0dvIJjGj+onbIS72Pfri2N0OMH/Ip20oO5itPMhmw+ZQQBckGh0mMBSd+weG2+xV8y/4U9qdZ2MtD8c01Rg1oKTU3qFwcodDtFhVtVEWuAeCi3mj4kUKbDL1wBqGjnuV8K/Kwx6eliYld8n86rG6lhlnLUdQy/DgNY+Znw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=s0MJu8H26KdwDVmnihJ0MaR/3Hyq6cMsC2WEcPRRkbs=;
- b=UQr0JbjqTQk2wfbSFx0u4lkMcKj4g87td6SY+KLO+jp4UwTPhCS9XtNjthgE1lQ04RT4qdELzggADlR+zBlJ5Z3rAHQZKqUc+nt9Gm5K28sAh/cUBr5wegKE/gFKPELu0zETAO0juLP2+76WsFWfkWgJFA1lP1E+GhCB1Lik8MbluL7K7QfPLZf09qPix8ZMeYdvYSRee67XRT+LvBqI5bPbEsgifQMTrirY1SwRJ45Ku+uamyAbRqW4bA4Xgv/F3SoL8RCuzlEGRTZafKAzJfimQgbHaPmG/40bTUCk76PeN62f9rYGKyESd7OhRK6n4sUNtQvemJGK08Bdll5AGw==
+ bh=b1vVdudKAnyr5DH88AQ0hVpx4pN+9DA9iecwt7UMESo=;
+ b=VqwfGyEEX2RFumTSeN1cqYlpkcjmFIf1wpw43/GKOBn9yQnzyi1VYAZAW4UKWIWLX8hDSK9Qpw6PDzgOOm/IaYnEqEJyQdLn+fW8mOirHMKm64DPA/YMWeM+1Ib7zGPQ4qEdBdC5sNemFJxwgzZv1fHHcrj9mtdFd1a2AiSRg7I/BmJ1N108lKQG5NwMhSLgyDXWf8cex1WBq5P3lrVExU2ZDP6HC7Ed7EK3XspYNsIokcYLPyAKKFLOlLZ7fYnlj0xdzKGNu8+B8vfM1SY6mUD8p1bVZ8J6PA4otJv1n74sNSr2Arybl3Q4uXbupBLm5vqvSz8iUuty4wZmtOoB8Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=microsoft.com; dmarc=pass action=none
  header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=s0MJu8H26KdwDVmnihJ0MaR/3Hyq6cMsC2WEcPRRkbs=;
- b=iKowEYgCIMrv9g0lKFkVRrz1DR4AvEPk/ZOZwp5djsqdPOshqi4nv818751lIwfaBZTLnDcAGe1JAeu0oowXKGPA259nV0/clBPazDqxf7xoXLKJchHzVmWORAYBUCU4MSXXziMAymsMZgYNJ6DmdvKQJfV1c7DN5Wn5dXDQ0Tk=
+ bh=b1vVdudKAnyr5DH88AQ0hVpx4pN+9DA9iecwt7UMESo=;
+ b=jhc04QTwv55M0hCK5nJ63K1H0DFR4DeTNq4tLv0L59nNe0VO96idKzNS2TB6UcK+rqoqcbuHvtvIxn+KvbDN00jXcdq4GX6CjcIPByedjkF+aUUu9PJGcZkbUEiLIsT/lNcrgi+hXgO0zhHKahV9qGVgfI7fkQPIf2Fr5wrk/k4=
 Received: from BYAPR21MB1191.namprd21.prod.outlook.com (20.179.56.209) by
- BYAPR21MB1271.namprd21.prod.outlook.com (20.179.57.219) with Microsoft SMTP
+ BYAPR21MB1269.namprd21.prod.outlook.com (20.179.57.217) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2220.1; Tue, 27 Aug 2019 17:39:33 +0000
+ 15.20.2220.13; Tue, 27 Aug 2019 17:41:12 +0000
 Received: from BYAPR21MB1191.namprd21.prod.outlook.com
  ([fe80::e805:a5bc:9f69:771b]) by BYAPR21MB1191.namprd21.prod.outlook.com
  ([fe80::e805:a5bc:9f69:771b%9]) with mapi id 15.20.2241.000; Tue, 27 Aug 2019
- 17:39:33 +0000
+ 17:41:12 +0000
 From: Neeraj Ladkani <neladk@microsoft.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: Platform telemetry and health monitoring - PST PM 
-Thread-Topic: Platform telemetry and health monitoring - PST PM 
-Thread-Index: AdVc/l9mN7XdRxQ0RVCmQ3nrpx0Qtg==
-Date: Tue, 27 Aug 2019 17:39:33 +0000
-Message-ID: <BYAPR21MB1191314BF7B11D94C2B3A485C8A00@BYAPR21MB1191.namprd21.prod.outlook.com>
+Subject: Platform telemetry and health monitoring Work Group meeting
+Thread-Topic: Platform telemetry and health monitoring Work Group meeting
+Thread-Index: AdVc/pFaN9JQT+A+QemSJkUwozIXJgAAAuOA
+Date: Tue, 27 Aug 2019 17:41:12 +0000
+Message-ID: <BYAPR21MB1191F86101DFCB77988CAEBAC8A00@BYAPR21MB1191.namprd21.prod.outlook.com>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-05-20T20:24:51.7634725Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=7ad7e3a0-0fda-4efe-b5af-bd9df99a438a;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+x-ms-publictraffictype: Email
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=neladk@microsoft.com; 
+x-ms-exchange-calendar-series-instance-id: BAAAAIIA4AB0xbcQGoLgCAAAAACQ637gw1zVAQAAAAAAAAAAEAAAAMEJzOwVPCdForuIrc7xUKc=
 x-originating-ip: [2001:4898:80e8:7:78b5:dd69:44fd:ea0e]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 37e9a962-88b1-423d-c896-08d72b15860b
+x-ms-office365-filtering-correlation-id: bbe0f694-944f-48ab-e743-08d72b15c0d9
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0; PCL:0;
  RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);
- SRVR:BYAPR21MB1271; 
-x-ms-traffictypediagnostic: BYAPR21MB1271:
+ SRVR:BYAPR21MB1269; 
+x-ms-traffictypediagnostic: BYAPR21MB1269:MeetingMessage
 x-ms-exchange-purlcount: 9
-x-microsoft-antispam-prvs: <BYAPR21MB127114FB5F556491AF82CD5BC8A00@BYAPR21MB1271.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:873;
+x-microsoft-antispam-prvs: <BYAPR21MB126977CFF22607AA617D48B3C8A00@BYAPR21MB1269.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1051;
 x-forefront-prvs: 0142F22657
 x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(366004)(376002)(346002)(136003)(396003)(39860400002)(199004)(189003)(53754006)(256004)(14444005)(8990500004)(1730700003)(74316002)(33656002)(6246003)(5660300002)(476003)(6916009)(478600001)(81156014)(8676002)(54906003)(966005)(2906002)(7736002)(14454004)(10090500001)(54896002)(4743002)(6306002)(66946007)(64756008)(66446008)(76116006)(66476007)(55016002)(66556008)(486006)(52536014)(5640700003)(9686003)(6436002)(606006)(86362001)(2351001)(53936002)(236005)(7696005)(46003)(2501003)(81166006)(790700001)(25786009)(4326008)(10290500003)(229853002)(6116002)(316002)(8936002)(102836004)(53546011)(71190400001)(6506007)(71200400001)(99286004)(22452003)(186003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1271;
+ SFS:(10019020)(4636009)(376002)(366004)(39860400002)(136003)(346002)(396003)(189003)(199004)(25786009)(55016002)(5640700003)(236005)(10090500001)(9686003)(6306002)(54896002)(66446008)(8936002)(6436002)(7696005)(53936002)(5660300002)(99286004)(66476007)(66556008)(478600001)(186003)(1730700003)(81156014)(8990500004)(8676002)(81166006)(2906002)(102836004)(64756008)(4744005)(52536014)(14454004)(486006)(74316002)(76116006)(66946007)(256004)(71190400001)(86362001)(22452003)(7736002)(71200400001)(790700001)(6116002)(476003)(6506007)(2351001)(606006)(10290500003)(966005)(2501003)(46003)(6916009)(33656002)(316002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1269;
  H:BYAPR21MB1191.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
+ PTR:InfoNoRecords; MX:1; A:1; 
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: ObWnM8ztytEXUujLFy6YS6OxpfIZ6md/XjCirZQKlSQjNiRgdpsu+KtVBZDmTdQmpwmAX7JdJLqQd0pu7EuX07pU8RJenvVN6SdGWAAHm7jez4xJfjGZbKKFaq5OfHt5Z+zB6cK5p6oW67Yl5jw8S9/s+l9KT36YDuetnq9cR+oyQyxWVc+dQ0nmw1E/wUqC4MD5oq+yemJTvMcJzIhRxdDLl+gK2S98Gr0G4I0uwPL/On1wiZpKaTK/nUeM3PTZKZcpDCT1M3mKx3wDOendzBxfzElL0ztmd9Ny+lPVGAE2uik8YZ0xecdfiKrxkFppjRbNLs9jVRM6f16Lg/rCyN/CmghnBm07jqsb/K5QK3yhUwghYkAnEWMSq9AHIaENG9kjm3UNVpDsL+4c2fHuyPsfifDgIQilEpiwMIG6s0c=
+x-microsoft-antispam-message-info: Kl/IUlNFn60W8GhWSj5Pf7W2a9Yq+l5sAlqlz5t/YctID8hMTaGTad6QzwnXvj+NumuJkJlYN9C31j9Bvy+cR6joDm+Bhh+oQgwMLH040PYTsAtWU8H0NGuBr7SKeDS6Lt3JoIUKDIlrcGFnFNMYbmCbalQr22O2EudpjbUnGyEc1VE6kKg9En1+uQSjv68IXpkSxJQkL/Pg9pgLzC5RW4VxiHbhIs2NvGorAfaRciB66EcPDL1SXkiEyf9pIN69oQgjuFLcSKCv0jvfM9gAakG8ZXfD9ioN33e+cD8eHD+COe9sv4+3bGBPmyu0aH7zUWfYwm6sEK0sfNiUM/j1AEsyv5I1lhud/WxunRwV3OTFcI9RB3ZHoc+p9rN0qmdR/1pI7mIxLFO7HiYeDXYm+eThl77s2a4Jd4cK9ss4JJU=
 x-ms-exchange-transport-forked: True
 Content-Type: multipart/alternative;
- boundary="_000_BYAPR21MB1191314BF7B11D94C2B3A485C8A00BYAPR21MB1191namp_"
+ boundary="_000_BYAPR21MB1191F86101DFCB77988CAEBAC8A00BYAPR21MB1191namp_"
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37e9a962-88b1-423d-c896-08d72b15860b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2019 17:39:33.8182 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bbe0f694-944f-48ab-e743-08d72b15c0d9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2019 17:41:12.4429 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4O2J3CyLArAE4zqtXrmPUpH1yXEJj4DjI1PpYkqlL2f7FqJhfnJOk2lloDDfGVnvhwrzWhjfDeVSJvJdbfrPsA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1271
+X-MS-Exchange-CrossTenant-userprincipalname: 3bqKxbklzdDjGnNizjfj3/U21Sa9vCuiVLXzr69Bt8cSRzILy7nQDTSw86m0pOC67fdrX9ToXn9cFuAIs8aYlg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1269
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,86 +105,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR21MB1191314BF7B11D94C2B3A485C8A00BYAPR21MB1191namp_
-Content-Type: text/plain; charset="ks_c_5601-1987"
-Content-Transfer-Encoding: base64
+--_000_BYAPR21MB1191F86101DFCB77988CAEBAC8A00BYAPR21MB1191namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-SGVsbG8uDQoNClRoaXMgaXMgcmVtaW5kZXIgZm9yIHRvZGF5oa9zIE9wZW5CTUMgcGxhdGZvcm0g
-dGVsZW1ldHJ5IHdvcmtncm91cCBtZWV0aW5nICggVHVlc2RheSAwOC8yNyAtICA5OjMwIFBNIFBT
-VCkNCg0KVGhhbmtzDQpOZWVyYWoNCg0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMr
-bmVsYWRrPW1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZz4gT24gQmVoYWxmIE9mIE5lZXJh
-aiBMYWRrYW5pDQpTZW50OiBNb25kYXksIEF1Z3VzdCA1LCAyMDE5IDU6MDcgUE0NClRvOiBvcGVu
-Ym1jQGxpc3RzLm96bGFicy5vcmcNCkNjOiBQYXVsLlZhbmNpbEBkZWxsLmNvbQ0KU3ViamVjdDog
-UkU6IFBsYXRmb3JtIHRlbGVtZXRyeSBhbmQgaGVhbHRoIG1vbml0b3JpbmcgLSBQU1QgQU0NCg0K
-SGVsbG8gRXZlcnlvbmUuDQoNClRoaXMgaXMgYSByZW1pbmRlciBmb3IgdG9tb3Jyb3ehr3MgT3Bl
-bkJNQyBwbGF0Zm9ybSB0ZWxlbWV0cnkgd29ya2dyb3VwIG1lZXRpbmcgKCBUdWVzZGF5IDA4LzA2
-IC0gIDk6MzAgQU0gUFNUKQ0KDQpOZWVyYWoNCg0KLS0tLS1PcmlnaW5hbCBBcHBvaW50bWVudC0t
-LS0tDQpGcm9tOiBOZWVyYWogTGFka2FuaQ0KU2VudDogVHVlc2RheSwgSnVuZSA0LCAyMDE5IDEy
-OjA5IEFNDQpUbzogTmVlcmFqIExhZGthbmk7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWls
-dG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KQ2M6IEpvZSBQIE11bGhvbGxhbmQ7IEx1a2Ug
-Q2hlbjsgTWF0dCBDaGVuL1dZSFEvV2l3eW5uOyBEb25nIFdlaTsgSml0ZW5kcmFfS3VtYXI0QERl
-bGwuY29tPG1haWx0bzpKaXRlbmRyYV9LdW1hcjRARGVsbC5jb20+OyBSZWVkIEIgRnJhbmRzZW47
-IE1pY2hhZWwgTGltOyBCdWRkeSBIdWFuZyAo/Nz0uPv4KTsgVG9tIFNhbmQ7IEFzbWFhIE1uZWJo
-aTsgUGF1bC5WYW5jaWxAZGVsbC5jb208bWFpbHRvOlBhdWwuVmFuY2lsQGRlbGwuY29tPjsgVGFu
-b3VzLCBFZDsgQ2hyaXN0b3BoZXIgQm9zdGljOyBKYW1lcyBNb3JzZTsgVmlqYXkgS2hlbWthDQpT
-dWJqZWN0OiBQbGF0Zm9ybSB0ZWxlbWV0cnkgYW5kIGhlYWx0aCBtb25pdG9yaW5nIC0gUFNUIEFN
-DQpXaGVuOiBUdWVzZGF5LCBBdWd1c3QgNiwgMjAxOSA5OjMwIEFNLTEwOjMwIEFNIChVVEMtMDg6
-MDApIFBhY2lmaWMgVGltZSAoVVMgJiBDYW5hZGEpLg0KV2hlcmU6IE1pY3Jvc29mdCBUZWFtcyBN
-ZWV0aW5nDQoNCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9QbGF0Zm9y
-bS10ZWxlbWV0cnktYW5kLWhlYWx0aC1tb25pdG9yaW5nLVdvcmstR3JvdXA8aHR0cHM6Ly9uYW0w
-Ni5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0
-aHViLmNvbSUyRm9wZW5ibWMlMkZvcGVuYm1jJTJGd2lraSUyRlBsYXRmb3JtLXRlbGVtZXRyeS1h
-bmQtaGVhbHRoLW1vbml0b3JpbmctV29yay1Hcm91cCZkYXRhPTAyJTdDMDElN0NuZWxhZGslNDBt
-aWNyb3NvZnQuY29tJTdDNGEwOWRmNmY5NmE2NDVjMTFhNTYwOGQ3MWEwMjIxNWQlN0M3MmY5ODhi
-Zjg2ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM3MDA2NDY4NzY2NDUyMjUwJnNk
-YXRhPTZGbXdvWWZtJTJGRDg5M0t4ekVqekFYdmdMbSUyQlV3YlFWUDltemlJeUJDdVFrJTNEJnJl
-c2VydmVkPTA+DQoNCg0KDQoNCkpvaW4gTWljcm9zb2Z0IFRlYW1zIE1lZXRpbmc8aHR0cHM6Ly90
-ZWFtcy5taWNyb3NvZnQuY29tL2wvbWVldHVwLWpvaW4vMTklM2FtZWV0aW5nX01EVTFORE0yWTJF
-dE9UWmtZeTAwWmpJNUxUa3pNRGN0TWpNeFpEWXlOemxoTmpReSU0MHRocmVhZC52Mi8wP2NvbnRl
-eHQ9JTdiJTIyVGlkJTIyJTNhJTIyNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3
-JTIyJTJjJTIyT2lkJTIyJTNhJTIyMWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYzY1
-JTIyJTdkPg0KKzEgMzIzLTg0OS00ODc0PHRlbDorMSUyMDMyMy04NDktNDg3NCwsNzM1NzI4NDIj
-PiAgIFVuaXRlZCBTdGF0ZXMsIExvcyBBbmdlbGVzIChUb2xsKQ0KKDg2NikgNjc5LTk5OTU8dGVs
-Oig4NjYpJTIwNjc5LTk5OTUsLDczNTcyODQyIz4gICAoVG9sbC1mcmVlKQ0KQ29uZmVyZW5jZSBJ
-RDogNzM1IDcyOCA0MiMNCkxvY2FsIG51bWJlcnM8aHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJv
-dGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZGlhbGluLnRlYW1zLm1pY3Jv
-c29mdC5jb20lMkY4NTUxZjRjMS1iZWEzLTQ0MWEtODczOC02OWFhNTE3YTkxYzUlM0ZpZCUzRDcz
-NTcyODQyJmRhdGE9MDIlN0MwMSU3Q25lbGFkayU0MG1pY3Jvc29mdC5jb20lN0M0YTA5ZGY2Zjk2
-YTY0NWMxMWE1NjA4ZDcxYTAyMjE1ZCU3QzcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3
-JTdDMSU3QzAlN0M2MzcwMDY0Njg3NjY0NjIyNTUmc2RhdGE9cjR6TE9VcEJ3ODA4cGdiJTJGdFpR
-MTdzRHpoa2hBU2xmOGFSbmdwcTNzcE4wJTNEJnJlc2VydmVkPTA+IHwgUmVzZXQgUElOPGh0dHBz
-Oi8vbmFtMDYuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUy
-RiUyRm15c2V0dGluZ3MubHluYy5jb20lMkZwc3RuY29uZmVyZW5jaW5nJmRhdGE9MDIlN0MwMSU3
-Q25lbGFkayU0MG1pY3Jvc29mdC5jb20lN0M0YTA5ZGY2Zjk2YTY0NWMxMWE1NjA4ZDcxYTAyMjE1
-ZCU3QzcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdDMSU3QzAlN0M2MzcwMDY0Njg3
-NjY0NjIyNTUmc2RhdGE9ZVFoT0NkMkxHelZxRERDOE9VJTJGZXpYdHp5Tng3RnVkYU5LY0QyRmMy
-MUpVJTNEJnJlc2VydmVkPTA+IHwgTGVhcm4gbW9yZSBhYm91dCBUZWFtczxodHRwczovL2dvLm1p
-Y3Jvc29mdC5jb20vZndsaW5rLz9saW5raWQ9ODU3MjUwPiB8IE1lZXRpbmcgb3B0aW9uczxodHRw
-czovL25hbTA2LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0El
-MkYlMkZ0ZWFtcy5taWNyb3NvZnQuY29tJTJGbWVldGluZ09wdGlvbnMlMkYlM0Zvcmdhbml6ZXJJ
-ZCUzRDFjMjljMmY3LWQzODYtNGM1YS1hM2JjLTBlZTEzYjQ4YmM2NSUyNnRlbmFudElkJTNENzJm
-OTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3JTI2dGhyZWFkSWQlM0QxOV9tZWV0aW5n
-X01EVTFORE0yWTJFdE9UWmtZeTAwWmpJNUxUa3pNRGN0TWpNeFpEWXlOemxoTmpReSU0MHRocmVh
-ZC52MiUyNm1lc3NhZ2VJZCUzRDAlMjZsYW5ndWFnZSUzRGVuLVVTJmRhdGE9MDIlN0MwMSU3Q25l
-bGFkayU0MG1pY3Jvc29mdC5jb20lN0M0YTA5ZGY2Zjk2YTY0NWMxMWE1NjA4ZDcxYTAyMjE1ZCU3
-QzcyZjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdDMSU3QzAlN0M2MzcwMDY0Njg3NjY0
-NzIyNjQmc2RhdGE9bVdYbXhVdUpYS25GSlc5N2JoVFRoeXgxblJTeTJ2Y3U2ekVpTUowY0JYTSUz
-RCZyZXNlcnZlZD0wPg0KSm9pbiB3aXRoIGEgdmlkZW8gY29uZmVyZW5jaW5nIGRldmljZQ0KODEz
-ODc4ODk2QHQucGxjbS52YzxtYWlsdG86ODEzODc4ODk2QHQucGxjbS52Yz4gVlRDIENvbmZlcmVu
-Y2UgSUQ6IDAxNzkyMDY4NA0KQWx0ZXJuYXRlIFZUQyBkaWFsaW5nIGluc3RydWN0aW9uczxodHRw
-czovL25hbTA2LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0El
-MkYlMkZkaWFsaW4ucGxjbS52YyUyRnRlYW1zJTJGJTNGa2V5JTNEODEzODc4ODk2JTI2Y29uZiUz
-RDAxNzkyMDY4NCZkYXRhPTAyJTdDMDElN0NuZWxhZGslNDBtaWNyb3NvZnQuY29tJTdDNGEwOWRm
-NmY5NmE2NDVjMTFhNTYwOGQ3MWEwMjIxNWQlN0M3MmY5ODhiZjg2ZjE0MWFmOTFhYjJkN2NkMDEx
-ZGI0NyU3QzElN0MwJTdDNjM3MDA2NDY4NzY2NDgyMjc0JnNkYXRhPVRFVXF0cyUyRm1QMWdUYkhC
-MEhneGJKeWhRQVdZS1lyZ2xiJTJCMVhncEpOQUVVJTNEJnJlc2VydmVkPTA+DQoNCg==
+https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monit=
+oring-Work-Group
 
---_000_BYAPR21MB1191314BF7B11D94C2B3A485C8A00BYAPR21MB1191namp_
-Content-Type: text/html; charset="ks_c_5601-1987"
+___________________________________________________________________________=
+_____
+Join Microsoft Teams Meeting<https://teams.microsoft.com/l/meetup-join/19%3=
+ameeting_NzhkNmNiYmQtMWRiZS00NDE2LTk2MmItM2ViOTY3YzlmZWE1%40thread.v2/0?con=
+text=3D%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%2=
+2%3a%221c29c2f7-d386-4c5a-a3bc-0ee13b48bc65%22%7d>
++1 323-849-4874<tel:+1%20323-849-4874,,37688521#>   United States, Los Ange=
+les (Toll)
+(866) 679-9995<tel:(866)%20679-9995,,37688521#>   (Toll-free)
+Conference ID: 376 885 21#
+Local numbers<https://dialin.teams.microsoft.com/8551f4c1-bea3-441a-8738-69=
+aa517a91c5?id=3D37688521> | Reset PIN<https://mysettings.lync.com/pstnconfe=
+rencing> | Learn more about Teams<https://go.microsoft.com/fwlink/?linkid=
+=3D857250> | Meeting options<https://teams.microsoft.com/meetingOptions/?or=
+ganizerId=3D1c29c2f7-d386-4c5a-a3bc-0ee13b48bc65&tenantId=3D72f988bf-86f1-4=
+1af-91ab-2d7cd011db47&threadId=3D19_meeting_NzhkNmNiYmQtMWRiZS00NDE2LTk2MmI=
+tM2ViOTY3YzlmZWE1@thread.v2&messageId=3D0&language=3Den-US>
+Join with a video conferencing device
+813878896@t.plcm.vc<mailto:813878896@t.plcm.vc> VTC Conference ID: 01652803=
+7
+Alternate VTC dialing instructions<https://dialin.plcm.vc/teams/?key=3D8138=
+78896&conf=3D016528037>
+___________________________________________________________________________=
+_____
+
+
+--_000_BYAPR21MB1191F86101DFCB77988CAEBAC8A00BYAPR21MB1191namp_
+Content-Type: text/html; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 
 <html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
@@ -200,14 +150,11 @@ osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
 xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 //www.w3.org/TR/REC-html40">
 <head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dks_c_5601=
--1987">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
 <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
 <style><!--
 /* Font Definitions */
-@font-face
-	{font-family:Gulim;
-	panose-1:2 11 6 0 0 1 1 1 1 1;}
 @font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
@@ -220,9 +167,6 @@ xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 @font-face
 	{font-family:"Segoe UI Semibold";
 	panose-1:2 11 7 2 4 2 4 2 2 3;}
-@font-face
-	{font-family:"\@Gulim";
-	panose-1:2 11 6 0 0 1 1 1 1 1;}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0in;
@@ -238,16 +182,6 @@ a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
 	color:#954F72;
 	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-language:KO;}
 p.msonormal0, li.msonormal0, div.msonormal0
 	{mso-style-name:msonormal;
 	mso-margin-top-alt:auto;
@@ -255,25 +189,13 @@ p.msonormal0, li.msonormal0, div.msonormal0
 	mso-margin-bottom-alt:auto;
 	margin-left:0in;
 	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
 	font-family:"Calibri",sans-serif;
-	mso-fareast-language:KO;}
-span.EmailStyle19
-	{mso-style-type:personal;
 	color:#2F5496;
 	font-weight:normal;
 	font-style:normal;}
-span.EmailStyle20
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle21
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:#002060;}
-span.EmailStyle23
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:#002060;}
 .MsoChpDefault
 	{mso-style-type:export-only;
 	font-size:10.0pt;}
@@ -291,98 +213,30 @@ div.WordSection1
 </head>
 <body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
 <div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">Hello.
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
+<p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/openbmc/wiki/P=
+latform-telemetry-and-health-monitoring-Work-Group">https://github.com/open=
+bmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Work-Group</a><o:=
+p></o:p></p>
+<p class=3D"MsoNormal"><span style=3D"color:#2F5496;mso-fareast-language:EN=
 -US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">This is reminder for today=A1=AFs
-</span><span style=3D"color:#002060;mso-fareast-language:EN-US">OpenBMC pla=
-tform telemetry workgroup meeting ( Tuesday 08/27 - &nbsp;9:30 PM PST)
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">Thanks<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">Neeraj<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:gray">_________________________=
+_______________________________________________________</span>
+<o:p></o:p></p>
 <div>
-<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
-0in 0in">
-<p class=3D"MsoNormal"><b>From:</b> openbmc &lt;openbmc-bounces&#43;neladk=
-=3Dmicrosoft.com@lists.ozlabs.org&gt;
-<b>On Behalf Of </b>Neeraj Ladkani<br>
-<b>Sent:</b> Monday, August 5, 2019 5:07 PM<br>
-<b>To:</b> openbmc@lists.ozlabs.org<br>
-<b>Cc:</b> Paul.Vancil@dell.com<br>
-<b>Subject:</b> RE: Platform telemetry and health monitoring - PST AM <o:p>=
-</o:p></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">Hello Everyone.
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">This is a reminder for tomorrow=A1=AFs OpenBMC platform telemetry work=
-group meeting ( Tuesday 08/06 - &nbsp;9:30 AM PST)
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US">Neeraj<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:#002060;mso-fareast-language:EN=
--US"><o:p>&nbsp;</o:p></span></p>
-<div>
-<p class=3D"MsoNormal">-----Original Appointment-----<br>
-<b>From:</b> Neeraj Ladkani <br>
-<b>Sent:</b> Tuesday, June 4, 2019 12:09 AM<br>
-<b>To:</b> Neeraj Ladkani; <a href=3D"mailto:openbmc@lists.ozlabs.org">open=
-bmc@lists.ozlabs.org</a><br>
-<b>Cc:</b> Joe P Mulholland; Luke Chen; Matt Chen/WYHQ/Wiwynn; Dong Wei; <a=
- href=3D"mailto:Jitendra_Kumar4@Dell.com">
-Jitendra_Kumar4@Dell.com</a>; Reed B Frandsen; Michael Lim; Buddy Huang (<s=
-pan lang=3D"KO" style=3D"font-family:&quot;Gulim&quot;,sans-serif">=FC=DC=
-=F4=B8=FB=F8</span>); Tom Sand; Asmaa Mnebhi;
-<a href=3D"mailto:Paul.Vancil@dell.com">Paul.Vancil@dell.com</a>; Tanous, E=
-d; Christopher Bostic; James Morse; Vijay Khemka<br>
-<b>Subject:</b> Platform telemetry and health monitoring - PST AM <br>
-<b>When:</b> Tuesday, August 6, 2019 9:30 AM-10:30 AM (UTC-08:00) Pacific T=
-ime (US &amp; Canada).<br>
-<b>Where:</b> Microsoft Teams Meeting<o:p></o:p></p>
-</div>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://nam06.safelinks.protection.outloo=
-k.com/?url=3Dhttps%3A%2F%2Fgithub.com%2Fopenbmc%2Fopenbmc%2Fwiki%2FPlatform=
--telemetry-and-health-monitoring-Work-Group&amp;data=3D02%7C01%7Cneladk%40m=
-icrosoft.com%7C4a09df6f96a645c11a5608d71a02215d%7C72f988bf86f141af91ab2d7cd=
-011db47%7C1%7C0%7C637006468766452250&amp;sdata=3D6FmwoYfm%2FD893KxzEjzAXvgL=
-m%2BUwbQVP9mziIyBCuQk%3D&amp;reserved=3D0">https://github.com/openbmc/openb=
-mc/wiki/Platform-telemetry-and-health-monitoring-Work-Group</a><o:p></o:p><=
-/p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div style=3D"margin-top:.25in;margin-bottom:7.5pt">
 <p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
 -serif;color:#252424"><a href=3D"https://teams.microsoft.com/l/meetup-join/=
-19%3ameeting_MDU1NDM2Y2EtOTZkYy00ZjI5LTkzMDctMjMxZDYyNzlhNjQy%40thread.v2/0=
+19%3ameeting_NzhkNmNiYmQtMWRiZS00NDE2LTk2MmItM2ViOTY3YzlmZWE1%40thread.v2/0=
 ?context=3D%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22O=
 id%22%3a%221c29c2f7-d386-4c5a-a3bc-0ee13b48bc65%22%7d" target=3D"_blank"><s=
 pan style=3D"font-size:13.5pt;font-family:&quot;Segoe UI Semibold&quot;,san=
 s-serif;color:#6264A7">Join
  Microsoft Teams Meeting</span></a> <o:p></o:p></span></p>
+</div>
 <div>
 <div>
 <p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"tel:&#43;1%20323-849-4874,,73572842# " tar=
+-serif;color:#252424"><a href=3D"tel:&#43;1%20323-849-4874,,37688521# " tar=
 get=3D"_blank"><span style=3D"font-size:10.5pt;color:#6264A7;text-decoratio=
 n:none">&#43;1 323-849-4874</span></a>
 </span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quot;,sans=
@@ -392,7 +246,7 @@ n:none">&#43;1 323-849-4874</span></a>
 </div>
 <div style=3D"margin-bottom:3.0pt">
 <p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"tel:(866)%20679-9995,,73572842# " target=
+-serif;color:#252424"><a href=3D"tel:(866)%20679-9995,,37688521# " target=
 =3D"_blank"><span style=3D"font-size:10.5pt;color:#6264A7;text-decoration:n=
 one">(866) 679-9995</span></a>
 </span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quot;,sans=
@@ -405,38 +259,27 @@ one">(866) 679-9995</span></a>
 <p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Seg=
 oe UI&quot;,sans-serif;color:#252424">Conference ID:
 </span><span style=3D"font-size:10.5pt;font-family:&quot;Segoe UI&quot;,san=
-s-serif;color:#252424">735 728 42#
+s-serif;color:#252424">376 885 21#
 </span><span style=3D"font-family:&quot;Segoe UI&quot;,sans-serif;color:#25=
 2424"><o:p></o:p></span></p>
 </div>
 <div style=3D"margin-bottom:.25in">
 <p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"https://nam06.safelinks.protection.outlook=
-.com/?url=3Dhttps%3A%2F%2Fdialin.teams.microsoft.com%2F8551f4c1-bea3-441a-8=
-738-69aa517a91c5%3Fid%3D73572842&amp;data=3D02%7C01%7Cneladk%40microsoft.co=
-m%7C4a09df6f96a645c11a5608d71a02215d%7C72f988bf86f141af91ab2d7cd011db47%7C1=
-%7C0%7C637006468766462255&amp;sdata=3Dr4zLOUpBw808pgb%2FtZQ17sDzhkhASlf8aRn=
-gpq3spN0%3D&amp;reserved=3D0" target=3D"_blank"><span style=3D"font-size:9.=
-0pt;color:#6264A7;text-decoration:none">Local
- numbers</span></a> | <a href=3D"https://nam06.safelinks.protection.outlook=
-.com/?url=3Dhttps%3A%2F%2Fmysettings.lync.com%2Fpstnconferencing&amp;data=
-=3D02%7C01%7Cneladk%40microsoft.com%7C4a09df6f96a645c11a5608d71a02215d%7C72=
-f988bf86f141af91ab2d7cd011db47%7C1%7C0%7C637006468766462255&amp;sdata=3DeQh=
-OCd2LGzVqDDC8OU%2FezXtzyNx7FudaNKcD2Fc21JU%3D&amp;reserved=3D0" target=3D"_=
-blank">
+-serif;color:#252424"><a href=3D"https://dialin.teams.microsoft.com/8551f4c=
+1-bea3-441a-8738-69aa517a91c5?id=3D37688521" target=3D"_blank"><span style=
+=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Local
+ numbers</span></a> | <a href=3D"https://mysettings.lync.com/pstnconferenci=
+ng" target=3D"_blank">
 <span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Reset PI=
 N</span></a> |
 <a href=3D"https://go.microsoft.com/fwlink/?linkid=3D857250" target=3D"_bla=
 nk"><span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Lear=
 n more about Teams</span></a> |
-<a href=3D"https://nam06.safelinks.protection.outlook.com/?url=3Dhttps%3A%2=
-F%2Fteams.microsoft.com%2FmeetingOptions%2F%3ForganizerId%3D1c29c2f7-d386-4=
-c5a-a3bc-0ee13b48bc65%26tenantId%3D72f988bf-86f1-41af-91ab-2d7cd011db47%26t=
-hreadId%3D19_meeting_MDU1NDM2Y2EtOTZkYy00ZjI5LTkzMDctMjMxZDYyNzlhNjQy%40thr=
-ead.v2%26messageId%3D0%26language%3Den-US&amp;data=3D02%7C01%7Cneladk%40mic=
-rosoft.com%7C4a09df6f96a645c11a5608d71a02215d%7C72f988bf86f141af91ab2d7cd01=
-1db47%7C1%7C0%7C637006468766472264&amp;sdata=3DmWXmxUuJXKnFJW97bhTThyx1nRSy=
-2vcu6zEiMJ0cBXM%3D&amp;reserved=3D0" target=3D"_blank">
+<a href=3D"https://teams.microsoft.com/meetingOptions/?organizerId=3D1c29c2=
+f7-d386-4c5a-a3bc-0ee13b48bc65&amp;tenantId=3D72f988bf-86f1-41af-91ab-2d7cd=
+011db47&amp;threadId=3D19_meeting_NzhkNmNiYmQtMWRiZS00NDE2LTk2MmItM2ViOTY3Y=
+zlmZWE1@thread.v2&amp;messageId=3D0&amp;language=3Den-US" target=3D"_blank"=
+>
 <span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Meeting =
 options</span></a>
 <o:p></o:p></span></p>
@@ -453,22 +296,104 @@ e:9.0pt;font-family:&quot;Segoe UI&quot;,sans-serif;color:#6264A7;text-deco=
 ration:none"><a href=3D"mailto:813878896@t.plcm.vc">813878896@t.plcm.vc</a>=
 </span></span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quo=
 t;,sans-serif;color:#252424">
- VTC Conference ID: 017920684 <o:p></o:p></span></p>
+ VTC Conference ID: 016528037 <o:p></o:p></span></p>
 </div>
 <div style=3D"margin-bottom:15.0pt">
 <p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Seg=
-oe UI&quot;,sans-serif;color:#252424"><a href=3D"https://nam06.safelinks.pr=
-otection.outlook.com/?url=3Dhttps%3A%2F%2Fdialin.plcm.vc%2Fteams%2F%3Fkey%3=
-D813878896%26conf%3D017920684&amp;data=3D02%7C01%7Cneladk%40microsoft.com%7=
-C4a09df6f96a645c11a5608d71a02215d%7C72f988bf86f141af91ab2d7cd011db47%7C1%7C=
-0%7C637006468766482274&amp;sdata=3DTEUqts%2FmP1gTbHB0HgxbJyhQAWYKYrglb%2B1X=
-gpJNAEU%3D&amp;reserved=3D0"><span style=3D"color:#6264A7;text-decoration:n=
-one">Alternate
- VTC dialing instructions</span></a> <o:p></o:p></span></p>
+oe UI&quot;,sans-serif;color:#252424"><a href=3D"https://dialin.plcm.vc/tea=
+ms/?key=3D813878896&amp;conf=3D016528037"><span style=3D"color:#6264A7;text=
+-decoration:none">Alternate VTC dialing instructions</span></a>
+<o:p></o:p></span></p>
 </div>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"color:gray">_________________________=
+_______________________________________________________</span>
+<o:p></o:p></p>
+</div>
+<p class=3D"MsoNormal"><span style=3D"color:#2F5496;mso-fareast-language:EN=
+-US"><o:p>&nbsp;</o:p></span></p>
 </div>
 </body>
 </html>
 
---_000_BYAPR21MB1191314BF7B11D94C2B3A485C8A00BYAPR21MB1191namp_--
+--_000_BYAPR21MB1191F86101DFCB77988CAEBAC8A00BYAPR21MB1191namp_
+Content-Type: text/calendar; charset="utf-8"; method=REQUEST
+Content-Transfer-Encoding: base64
+
+QkVHSU46VkNBTEVOREFSDQpNRVRIT0Q6UkVRVUVTVA0KUFJPRElEOk1pY3Jvc29mdCBFeGNoYW5n
+ZSBTZXJ2ZXIgMjAxMA0KVkVSU0lPTjoyLjANCkJFR0lOOlZUSU1FWk9ORQ0KVFpJRDpQYWNpZmlj
+IFN0YW5kYXJkIFRpbWUNCkJFR0lOOlNUQU5EQVJEDQpEVFNUQVJUOjE2MDEwMTAxVDAyMDAwMA0K
+VFpPRkZTRVRGUk9NOi0wNzAwDQpUWk9GRlNFVFRPOi0wODAwDQpSUlVMRTpGUkVRPVlFQVJMWTtJ
+TlRFUlZBTD0xO0JZREFZPTFTVTtCWU1PTlRIPTExDQpFTkQ6U1RBTkRBUkQNCkJFR0lOOkRBWUxJ
+R0hUDQpEVFNUQVJUOjE2MDEwMTAxVDAyMDAwMA0KVFpPRkZTRVRGUk9NOi0wODAwDQpUWk9GRlNF
+VFRPOi0wNzAwDQpSUlVMRTpGUkVRPVlFQVJMWTtJTlRFUlZBTD0xO0JZREFZPTJTVTtCWU1PTlRI
+PTMNCkVORDpEQVlMSUdIVA0KRU5EOlZUSU1FWk9ORQ0KQkVHSU46VkVWRU5UDQpPUkdBTklaRVI7
+Q049TmVlcmFqIExhZGthbmk6TUFJTFRPOm5lbGFka0BtaWNyb3NvZnQuY29tDQpBVFRFTkRFRTtS
+T0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NOPW9w
+ZW5ibWNAbGkNCiBzdHMub3psYWJzLm9yZzpNQUlMVE86b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+DQpERVNDUklQVElPTjtMQU5HVUFHRT1lbi1VUzpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9v
+cGVuYm1jL3dpa2kvUGxhdGZvcm0NCiAtdGVsZW1ldHJ5LWFuZC1oZWFsdGgtbW9uaXRvcmluZy1X
+b3JrLUdyb3VwXG5cbl9fX19fX19fX19fX19fX19fX19fX19fX19fXw0KIF9fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXG5Kb2luIE1pY3Jvc29mdCBU
+ZWFtDQogcyBNZWV0aW5nPGh0dHBzOi8vdGVhbXMubWljcm9zb2Z0LmNvbS9sL21lZXR1cC1qb2lu
+LzE5JTNhbWVldGluZ19OemhrTm1OaVkNCiBtUXRNV1JpWlMwME5ERTJMVGsyTW1JdE0yVmlPVFkz
+WXpsbVpXRTElNDB0aHJlYWQudjIvMD9jb250ZXh0PSU3YiUyMlRpZCUyMg0KICUzYSUyMjcyZjk4
+OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyUyMiUyYyUyMk9pZCUyMiUzYSUyMjFjMjlj
+MmY3LWQzDQogODYtNGM1YS1hM2JjLTBlZTEzYjQ4YmM2NSUyMiU3ZD5cbisxIDMyMy04NDktNDg3
+NDx0ZWw6KzElMjAzMjMtODQ5LTQ4NzRcLFwNCiAsMzc2ODg1MjEjPiAgIFVuaXRlZCBTdGF0ZXNc
+LCBMb3MgQW5nZWxlcyAoVG9sbClcbig4NjYpIDY3OS05OTk1PHRlbDooODY2KQ0KICUyMDY3OS05
+OTk1XCxcLDM3Njg4NTIxIz4gICAoVG9sbC1mcmVlKVxuQ29uZmVyZW5jZSBJRDogMzc2IDg4NSAy
+MSNcbkxvY2FsDQogIG51bWJlcnM8aHR0cHM6Ly9kaWFsaW4udGVhbXMubWljcm9zb2Z0LmNvbS84
+NTUxZjRjMS1iZWEzLTQ0MWEtODczOC02OWFhNTENCiA3YTkxYzU/aWQ9Mzc2ODg1MjE+IHwgUmVz
+ZXQgUElOPGh0dHBzOi8vbXlzZXR0aW5ncy5seW5jLmNvbS9wc3RuY29uZmVyZW5jaQ0KIG5nPiB8
+IExlYXJuIG1vcmUgYWJvdXQgVGVhbXM8aHR0cHM6Ly9nby5taWNyb3NvZnQuY29tL2Z3bGluay8/
+bGlua2lkPTg1NzI1DQogMD4gfCBNZWV0aW5nIG9wdGlvbnM8aHR0cHM6Ly90ZWFtcy5taWNyb3Nv
+ZnQuY29tL21lZXRpbmdPcHRpb25zLz9vcmdhbml6ZXINCiBJZD0xYzI5YzJmNy1kMzg2LTRjNWEt
+YTNiYy0wZWUxM2I0OGJjNjUmdGVuYW50SWQ9NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMg0KIGQ3
+Y2QwMTFkYjQ3JnRocmVhZElkPTE5X21lZXRpbmdfTnpoa05tTmlZbVF0TVdSaVpTMDBOREUyTFRr
+Mk1tSXRNMlZpT1RZM1l6DQogbG1aV0UxQHRocmVhZC52MiZtZXNzYWdlSWQ9MCZsYW5ndWFnZT1l
+bi1VUz5cbkpvaW4gd2l0aCBhIHZpZGVvIGNvbmZlcmVuY2kNCiBuZyBkZXZpY2VcbjgxMzg3ODg5
+NkB0LnBsY20udmM8bWFpbHRvOjgxMzg3ODg5NkB0LnBsY20udmM+IFZUQyBDb25mZXJlbmNlIA0K
+IElEOiAwMTY1MjgwMzdcbkFsdGVybmF0ZSBWVEMgZGlhbGluZyBpbnN0cnVjdGlvbnM8aHR0cHM6
+Ly9kaWFsaW4ucGxjbS52Yy90DQogZWFtcy8/a2V5PTgxMzg3ODg5NiZjb25mPTAxNjUyODAzNz5c
+bl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCiBfX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fXG5cbg0KVUlEOjA0MDAwMDAwODIwMEUwMDA3NEM1
+QjcxMDFBODJFMDA4MDAwMDAwMDA5MEVCN0VFMEMzNUNENTAxMDAwMDAwMDAwMDAwMDAwDQogMDEw
+MDAwMDAwQzEwOUNDRUMxNTNDMjc0NUEyQkI4OEFEQ0VGMTUwQTcNClNVTU1BUlk7TEFOR1VBR0U9
+ZW4tVVM6UGxhdGZvcm0gdGVsZW1ldHJ5IGFuZCBoZWFsdGggbW9uaXRvcmluZyBXb3JrIEdyb3Vw
+IA0KIG1lZXRpbmcNCkRUU1RBUlQ7VFpJRD1QYWNpZmljIFN0YW5kYXJkIFRpbWU6MjAxOTA4MjdU
+MjEzMDAwDQpEVEVORDtUWklEPVBhY2lmaWMgU3RhbmRhcmQgVGltZToyMDE5MDgyN1QyMjMwMDAN
+CkNMQVNTOlBVQkxJQw0KUFJJT1JJVFk6NQ0KRFRTVEFNUDoyMDE5MDgyN1QxNzQxMTBaDQpUUkFO
+U1A6T1BBUVVFDQpTVEFUVVM6Q09ORklSTUVEDQpTRVFVRU5DRTowDQpMT0NBVElPTjtMQU5HVUFH
+RT1lbi1VUzpNaWNyb3NvZnQgVGVhbXMgTWVldGluZw0KWC1NSUNST1NPRlQtQ0RPLUFQUFQtU0VR
+VUVOQ0U6MA0KWC1NSUNST1NPRlQtQ0RPLU9XTkVSQVBQVElEOjE5NTAwNTg0NjcNClgtTUlDUk9T
+T0ZULUNETy1CVVNZU1RBVFVTOlRFTlRBVElWRQ0KWC1NSUNST1NPRlQtQ0RPLUlOVEVOREVEU1RB
+VFVTOkJVU1kNClgtTUlDUk9TT0ZULUNETy1BTExEQVlFVkVOVDpGQUxTRQ0KWC1NSUNST1NPRlQt
+Q0RPLUlNUE9SVEFOQ0U6MQ0KWC1NSUNST1NPRlQtQ0RPLUlOU1RUWVBFOjANClgtTUlDUk9TT0ZU
+LVNLWVBFVEVBTVNNRUVUSU5HVVJMOmh0dHBzOi8vdGVhbXMubWljcm9zb2Z0LmNvbS9sL21lZXR1
+cC1qb2luLw0KIDE5JTNhbWVldGluZ19OemhrTm1OaVltUXRNV1JpWlMwME5ERTJMVGsyTW1JdE0y
+VmlPVFkzWXpsbVpXRTElNDB0aHJlYWQudjIvDQogMD9jb250ZXh0PSU3YiUyMlRpZCUyMiUzYSUy
+MjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyUyMiUyYyUyMk8NCiBpZCUyMiUz
+YSUyMjFjMjljMmY3LWQzODYtNGM1YS1hM2JjLTBlZTEzYjQ4YmM2NSUyMiU3ZA0KWC1NSUNST1NP
+RlQtU0NIRURVTElOR1NFUlZJQ0VVUERBVEVVUkw6aHR0cHM6Ly9zY2hlZC5zZXJ2aWNlcy5za3lw
+ZS5uZXQvdGVhDQogbXMvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LzFjMjlj
+MmY3LWQzODYtNGM1YS1hM2JjLTBlZTEzYjQ4YmMNCiA2NS8xOV9tZWV0aW5nX056aGtObU5pWW1R
+dE1XUmlaUzAwTkRFMkxUazJNbUl0TTJWaU9UWTNZemxtWldFMUB0aHJlYWQudjIvMA0KWC1NSUNS
+T1NPRlQtU0tZUEVURUFNU1BST1BFUlRJRVM6eyJjaWQiOiIxOTptZWV0aW5nX056aGtObU5pWW1R
+dE1XUmlaUzAwTkRFDQogMkxUazJNbUl0TTJWaU9UWTNZemxtWldFMUB0aHJlYWQudjIiXCwicHJp
+dmF0ZSI6dHJ1ZVwsInR5cGUiOjBcLCJtaWQiOjBcLCINCiByaWQiOjBcLCJ1aWQiOm51bGx9DQpY
+LU1JQ1JPU09GVC1PTkxJTkVNRUVUSU5HRVhURVJOQUxMSU5LOg0KWC1NSUNST1NPRlQtT05MSU5F
+TUVFVElOR0NPTkZMSU5LOmNvbmY6c2lwOm5lbGFka0BtaWNyb3NvZnQuY29tXDtncnV1XDtvcGFx
+DQogdWU9YXBwOmNvbmY6Zm9jdXM6aWQ6dGVhbXM6MjowITE5Om1lZXRpbmdfTnpoa05tTmlZbVF0
+TVdSaVpTMDBOREUyTFRrMk1tSXQNCiBNMlZpT1RZM1l6bG1aV0UxLXRocmVhZC52MiExYzI5YzJm
+N2QzODY0YzVhYTNiYzBlZTEzYjQ4YmM2NSE3MmY5ODhiZjg2ZjE0MQ0KIGFmOTFhYjJkN2NkMDEx
+ZGI0Nw0KWC1NSUNST1NPRlQtRE9OT1RGT1JXQVJETUVFVElORzpGQUxTRQ0KWC1NSUNST1NPRlQt
+RElTQUxMT1ctQ09VTlRFUjpGQUxTRQ0KWC1NSUNST1NPRlQtTE9DQVRJT05TOlsgeyAiRGlzcGxh
+eU5hbWUiIDogIk1pY3Jvc29mdCBUZWFtcyBNZWV0aW5nIlwsICJMb2NhDQogdGlvbkFubm90YXRp
+b24iIDogIiJcLCAiTG9jYXRpb25Tb3VyY2UiIDogMFwsICJVbnJlc29sdmVkIiA6IGZhbHNlXCwg
+IkxvY2ENCiB0aW9uVXJpIiA6ICIiIH0gXQ0KQkVHSU46VkFMQVJNDQpERVNDUklQVElPTjpSRU1J
+TkRFUg0KVFJJR0dFUjtSRUxBVEVEPVNUQVJUOi1QVDE1TQ0KQUNUSU9OOkRJU1BMQVkNCkVORDpW
+QUxBUk0NCkVORDpWRVZFTlQNCkVORDpWQ0FMRU5EQVINCg==
+
+--_000_BYAPR21MB1191F86101DFCB77988CAEBAC8A00BYAPR21MB1191namp_--
