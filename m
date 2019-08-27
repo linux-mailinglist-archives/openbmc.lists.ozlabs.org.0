@@ -1,54 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9180C9F19B
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 19:32:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EF409F1C3
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 19:39:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Hwt06f9YzDqNH
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 03:32:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Hx265MWFzDqjv
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 03:39:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jinujoy@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HwsF0tx0zDqhY
- for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2019 03:31:28 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 27 Aug 2019 10:31:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,438,1559545200"; d="scan'208";a="355838901"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga005.jf.intel.com with ESMTP; 27 Aug 2019 10:31:25 -0700
-Received: from [10.241.245.68] (unknown [10.241.245.68])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 0BFDE580409
- for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 10:31:25 -0700 (PDT)
-Subject: Re: [ExternalEmail] Re: Asynchronous Event Notification support.
-To: openbmc@lists.ozlabs.org
-References: <ad95a67f-dbf9-450b-9cf4-38d9a595bf76@linux.vnet.ibm.com>
- <CF0228C6-5A25-452E-8849-7BCC778593FA@fb.com>
- <MWHPR13MB1360DD37BA66B55F2A1E0495EDA00@MWHPR13MB1360.namprd13.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <2a89f6df-5e60-1dfb-b2d9-a8a16b194b13@linux.intel.com>
-Date: Tue, 27 Aug 2019 10:31:24 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HwzX0S6hzDqg7
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2019 03:36:52 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7RHY1Be122230
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 13:36:50 -0400
+Received: from e06smtp05.uk.ibm.com (e06smtp05.uk.ibm.com [195.75.94.101])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2un6w9p0j2-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 13:36:50 -0400
+Received: from localhost
+ by e06smtp05.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <jinujoy@linux.vnet.ibm.com>;
+ Tue, 27 Aug 2019 18:36:48 +0100
+Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
+ by e06smtp05.uk.ibm.com (192.168.101.135) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Tue, 27 Aug 2019 18:36:46 +0100
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7RHakgO47186136
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 17:36:46 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E56034C040
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 17:36:45 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 89C374C050
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 17:36:45 +0000 (GMT)
+Received: from Jinus-MacBook-Pro.local (unknown [9.199.37.102])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 17:36:45 +0000 (GMT)
+From: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Control / Operator panel support in systems
+Date: Tue, 27 Aug 2019 23:06:44 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <MWHPR13MB1360DD37BA66B55F2A1E0495EDA00@MWHPR13MB1360.namprd13.prod.outlook.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19082717-0020-0000-0000-0000036492D4
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19082717-0021-0000-0000-000021B9E188
+Message-Id: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-27_03:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=710 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908270168
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,57 +91,17 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi All,
+
+  I was starting to explore on the design for the operator panel seen on 
+IBM systems, it is also called a control panel , which basically is a 
+card unit which has an LCD and some buttons to navigate the display on 
+the LCD. I wanted to check if there is any design or code out there, for 
+such  kind of usage. The design/code can be checked to see if it can be 
+made generic for use, even though the hardware is only used by IBM.
 
 
-On 8/27/2019 12:02 AM, Troy.Lee@vertiv.com wrote:
-> Hi,
-> 
-> As far as I know, the phosphor-sel-logger has the ability to monitor the threshold crossing which generated by phosphor-hwmon or dbus-sensors on DBus, and then it will generate redfish event log or journal log.
-> 
-> However, I didn't see the IPMI SEL being generated regarding to the name of the repository.
-Hi Troy,
+Thanks a lot
 
-The phosphor-sel-logger will log the IPMI SEL and Redfish event to the 
-journal.  Other modules are then responsible for getting the events out 
-of the journal and making them available to a user.
+Jinu Joy
 
-For example in Intel systems, we use rsyslog to extract the IPMI SEL log 
-entries from the journal and store them to a persisted syslog file. (See 
-https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-common/recipes-extended/rsyslog.)
-
-Then, IPMI uses the SEL entries in the syslog file to handle the SEL 
-IPMI commands. (See 
-https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp.) 
-
-> 
-> Thanks,
-> Troy Lee
-> 
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+troy.lee=vertiv.com@lists.ozlabs.org> On Behalf Of Vijay Khemka
-> Sent: Tuesday, August 27, 2019 10:30 AM
-> To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>; openbmc@lists.ozlabs.org; Tanous, Ed <ed.tanous@intel.com>
-> Subject: [ExternalEmail] Re: Asynchronous Event Notification support.
-> 
-> 
-> 
-> ﻿On 8/25/19, 3:43 AM, "openbmc on behalf of Ratan Gupta" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of ratagupt@linux.vnet.ibm.com> wrote:
-> 
->      Hi All,
-> 
->      Does anyone have suggestions on enabling Asynchronus Event notification
->      support for Redfish?
-> Are you looking for redfish only? Are we even handling any such event in BMC Like sensor threshold crossing or any system failure etc.
-> 
->      We are doing some exploration on this area and wanted to hear if someone
->      is already working on it. Will be happy to collaborate.
-> 
->      Thanks,
->      Ratan
-> 
-> 
-> 
-> 
-> 
-> CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it are intended solely for the use of the individual or entity to whom they are addressed and may contain confidential and privileged information protected by law. If you received this e-mail in error, any review, use, dissemination, distribution, or copying of the e-mail is strictly prohibited. Please notify the sender immediately by return e-mail and delete all copies from your system.
-> 
