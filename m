@@ -2,71 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E59799E417
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 11:25:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 829829E516
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 12:00:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Hk4g3V8bzDqtr
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 19:25:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Hkrq00nJzDqwv
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 20:00:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=yadro.com
- (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=hotmail.com
+ (client-ip=40.92.14.19; helo=nam05-dm3-obe.outbound.protection.outlook.com;
+ envelope-from=fishbaoz@hotmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="QNwHTQH6"; 
+ dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=hotmail.com header.i=@hotmail.com header.b="UTfkHNg0"; 
  dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Hk3y3gczzDqtG;
- Tue, 27 Aug 2019 19:25:02 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id CA33742ECC;
- Tue, 27 Aug 2019 09:24:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1566897896; x=1568712297; bh=m1oceRiF1Qn5bpG3Kcq7B21nL
- l0SDA1suLrzuRV2RYc=; b=QNwHTQH6Jdn9Kgs9RTfRZNE6geyuX8ZoE5YgCjSFv
- zPxnaVeQA02q/7LwHDTCh233tUyfe3F1UCUOohyoG+1zO3G0Z3U6q3faEywoX/Jd
- fivRSfSAod/yPoImQLJgOT0ef+bWyenioM7KckGVab4ZiQKOAFFSwfJjgeIE+YVk
- uk=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id B_j679UsMczu; Tue, 27 Aug 2019 12:24:56 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
+Received: from NAM05-DM3-obe.outbound.protection.outlook.com
+ (mail-oln040092014019.outbound.protection.outlook.com [40.92.14.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 2DC3E42ECA;
- Tue, 27 Aug 2019 12:24:55 +0300 (MSK)
-Received: from localhost.localdomain (172.17.15.69) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Tue, 27 Aug 2019 12:24:54 +0300
-Message-ID: <818746d20661b51914a7802dcbe0081352900b05.camel@yadro.com>
-Subject: Re: [PATCH v2 3/4] watchdog/aspeed: add support for dual boot
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Guenter Roeck <linux@roeck-us.net>, Wim Van Sebroeck
- <wim@linux-watchdog.org>
-Date: Tue, 27 Aug 2019 12:24:45 +0300
-In-Reply-To: <0df27d36-b45f-2059-6ead-a09ceb4b7605@roeck-us.net>
-References: <20190826104636.19324-1-i.mikhaylov@yadro.com>
- <20190826104636.19324-4-i.mikhaylov@yadro.com>
- <0df27d36-b45f-2059-6ead-a09ceb4b7605@roeck-us.net>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Hkr51NTtzDqc6
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Aug 2019 19:59:47 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bZssr84Yd3ewQX0XYseu0kFjYCPfZgT+124vXcJf92FGmjmwtBMDjXHC6+hd/IPPrH0a0LauKP7RmazndUBHZNw0X+HvYF0BM6zJZlSUnFgZMJOiXilBJpanHBHCihdlZ1zMc6/zQ0tVBTZGTzYIAYB0v2diumP5rUUoRvzf1INCpLTbh5MnwRbie3KHeACx4DizijN8tEg22ejdqmtavTlSH/02asbjzXuf5eF6jQVWNCclbteigNtx522dwPhus3l2GBXJoNHCPEXZFkAE9IMNX36fCjqXyTBLTm7OGGKeyYj9K34aySv5zdSsQlXHpBGHP2IoFVXAbvEW09uMEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YqU8BJ+30WikKcG+D38TXut7x5F+0rpBfq+DfqH4KeI=;
+ b=V8mkofl9+bmg3StPnbtRv9wwznVU8YJDF+SbeN5MfU85Vcw99ld1wGCw2QPsJxys2JZasoqt/qtETHoEBus5hUCUWITSZ7MXOVaUFLOx23luvtlvC5pQ1djcVICdQXIdPRcIpvZGL5RQ2zs7w+JmgE4GtdR9WhCInBhdGMYWhlt7EaxQ89Sgxaym4vb8Lu+SF2h9xvw560cTprVwubNw1SSao44pL/ihOEb1I/DJvUnS3OxoC4YghP5i/1nYL4ImxHKJeSsQZTR1YfrvjAz24myOktdSMfjW0gKFgBeL3iRv/TL3znD9LtbChDitQ1gDmQMN8W6PO+xgb7BVgWw4CA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YqU8BJ+30WikKcG+D38TXut7x5F+0rpBfq+DfqH4KeI=;
+ b=UTfkHNg0blnXrs/WdKT7GR/FXCngu+rj5m7/unIYCnTcMK1Ou/peA0uXADpUVbRkt+coyQNkc/CWa2+JcazX+BudwkkIFZyuOFL9LbLTpknF3bSQwQZlBMEblO0k08qex8eyvpMVBi3I4S/gt+QE6+DEpX4I5xe9t0hl82tK5PhJqZkzfmDP9EpB3UtbBixzDbQazyKKXaq12mWOtXIMv+p7LPyVXEXyi6TQmfUrCD5bdE+KJ4ltDUMDXyTWiooo8du/i1tCFCcsS1dbtP6pQnxm434jU/WghkukgPvBNUoGE/I8MZXv3a//KxXPUQARt4c9iZdyEMtu1e84vos8hg==
+Received: from BY2NAM05FT010.eop-nam05.prod.protection.outlook.com
+ (10.152.100.56) by BY2NAM05HT176.eop-nam05.prod.protection.outlook.com
+ (10.152.101.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2220.7; Tue, 27 Aug
+ 2019 09:59:43 +0000
+Received: from MN2PR04MB6669.namprd04.prod.outlook.com (10.152.100.60) by
+ BY2NAM05FT010.mail.protection.outlook.com (10.152.100.147) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2220.7 via Frontend Transport; Tue, 27 Aug 2019 09:59:43 +0000
+Received: from MN2PR04MB6669.namprd04.prod.outlook.com
+ ([fe80::647f:2fe9:ff83:e676]) by MN2PR04MB6669.namprd04.prod.outlook.com
+ ([fe80::647f:2fe9:ff83:e676%2]) with mapi id 15.20.2199.021; Tue, 27 Aug 2019
+ 09:59:42 +0000
+From: Zheng Bao <fishbaoz@hotmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: KCS ipmi interface doesnt work
+Thread-Topic: KCS ipmi interface doesnt work
+Thread-Index: AQHVXL0FNY1lkmYW5kevDWfpz1e0Xw==
+Date: Tue, 27 Aug 2019 09:59:42 +0000
+Message-ID: <MN2PR04MB6669921B935ABDEC69C6DB6ECDA00@MN2PR04MB6669.namprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:BF34683C226DB1D3E8B9619DD57F8D874C0E07FAD4865043BCF22080B05722BE;
+ UpperCasedChecksum:273055002E1EE62C0026299C394FFB3BB367B569EE0DF97214CCDD4605B74D31;
+ SizeAsReceived:6492; Count:40
+x-tmn: [sCyrQGsMx4KkL9zOEPCtanIkRGjdLRUS]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 40
+x-eopattributedmessage: 0
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(5050001)(7020095)(20181119110)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031322404)(2017031323274)(2017031324274)(1601125500)(1603101475)(1701031045);
+ SRVR:BY2NAM05HT176; 
+x-ms-traffictypediagnostic: BY2NAM05HT176:
+x-microsoft-antispam-message-info: 47vKte25YoUTYTpFzNRGgC6B0Ys3EI3uYMJzMO83eFVcW37Aqw/Pz+v9ijA7hjV1vVCedss8YwzFqWDXs24FsKD/HBLi/NHF2xDuVQvkKRdfeV1KBwAQ3M8uSYQT7fTF7Vep9K5Q0ewh6ac+Tgsh+kBvVa49M1WomYx6TE1RFeJfGH7eUqPxwSj2p5kfIswb
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_MN2PR04MB6669921B935ABDEC69C6DB6ECDA00MN2PR04MB6669namp_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.17.15.69]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f99ef32-8046-4b70-90c9-08d72ad54879
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2019 09:59:42.7390 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY2NAM05HT176
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,76 +97,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Alexander
- Amelkin <a.amelkin@yadro.com>, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2019-08-26 at 17:14 -0700, Guenter Roeck wrote:
-> > +/*
-> > + * At alternate side the 'access_cs0' sysfs node provides:
-> > + *   ast2400: a way to get access to the primary SPI flash chip at CS0
-> > + *            after booting from the alternate chip at CS1.
-> > + *   ast2500: a way to restore the normal address mapping from
-> > + *            (CS0->CS1, CS1->CS0) to (CS0->CS0, CS1->CS1).
-> > + *
-> > + * Clearing the boot code selection and timeout counter also resets to the
-> > + * initial state the chip select line mapping. When the SoC is in normal
-> > + * mapping state (i.e. booted from CS0), clearing those bits does nothing
-> > for
-> > + * both versions of the SoC. For alternate boot mode (booted from CS1 due
-> > to
-> > + * wdt2 expiration) the behavior differs as described above.
-> > + *
-> The above needs to be in the sysfs attribute documentation as well.
+--_000_MN2PR04MB6669921B935ABDEC69C6DB6ECDA00MN2PR04MB6669namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-My apologies but I didn't find any suitable, only watchdog parameters with
-dtbindings file, where should I put it? Documentation/watchdog/aspeed-wdt-
-sysfs.rst?
+Hi, All,
+My server BIOS tries to send ipmi command "self test", but openbmc( I tried=
+ Zaius)  doesn't response.
 
-> > + * This option can be used with wdt2 (watchdog1) only.
-> 
-> This implies a specific watchdog numbering which is not guaranteed.
-> Someone might implement a system with some external watchdog.
-> 
-> > + */
-> > +static DEVICE_ATTR_RW(access_cs0);
-> > +
-> > +static struct attribute *bswitch_attrs[] = {
-> > +	&dev_attr_access_cs0.attr,
-> > +	NULL
-> > +};
-> > +ATTRIBUTE_GROUPS(bswitch);
-> > +
-> >   static const struct watchdog_ops aspeed_wdt_ops = {
-> >   	.start		= aspeed_wdt_start,
-> >   	.stop		= aspeed_wdt_stop,
-> > @@ -306,9 +359,16 @@ static int aspeed_wdt_probe(struct platform_device
-> > *pdev)
-> >   	}
-> >   
-> >   	status = readl(wdt->base + WDT_TIMEOUT_STATUS);
-> > -	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY)
-> > +	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY) {
-> >   		wdt->wdd.bootstatus = WDIOF_CARDRESET;
-> >   
-> > +		if (of_device_is_compatible(np, "aspeed,ast2400-wdt") ||
-> > +			of_device_is_compatible(np, "aspeed,ast2500-wdt"))
-> > +			wdt->wdd.groups = bswitch_groups;
+Is this right? Or how can I debug this? Thanks.
 
-> Kind of odd that the attribute only exists if the system booted from the
-> second flash, but if that is what you want I won't object. Just make sure
-> that this is explained properly.
-Perhaps dts configuration option would be better solution for it then? "force-
-cs0-switch" as example? Also, if it would be an option, dtbindings/wdt file for
-documentation will be the right place for it. Usage of this at side 0 will not
-get any good/bad results, it just makes user confused, so I decided to put it
-only at side 1. It works only for ast2400/2500 board unfortunately, for 2600
-there is big difference in switching mechanism. Any other thoughts how to make
-it better?
+Joe (Rookie)
 
-Thanks.
 
+--_000_MN2PR04MB6669921B935ABDEC69C6DB6ECDA00MN2PR04MB6669namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Hi, All,</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+My server BIOS tries to send ipmi command &quot;self test&quot;, but openbm=
+c( I tried Zaius)&nbsp; doesn't response.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Is this right? Or how can I debug this? Thanks.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+Joe (Rookie)<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_MN2PR04MB6669921B935ABDEC69C6DB6ECDA00MN2PR04MB6669namp_--
