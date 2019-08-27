@@ -2,86 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0794C9DA66
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 02:11:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F5069DA7A
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 02:15:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46HTnQ09C7zDqlZ
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 10:11:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HTsd1xgSzDqSJ
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 10:15:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.229; helo=new3-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::441; helo=mail-pf1-x441.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="pMIvHTKZ"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="oi9vzr2o"; dkim-atps=neutral
-Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
- [66.111.4.229])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="GUuYMNh/"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
+ [IPv6:2607:f8b0:4864:20::441])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46HTmn65jLzDqjW;
- Tue, 27 Aug 2019 10:11:05 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id CDCF33BCB;
- Mon, 26 Aug 2019 20:11:01 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 26 Aug 2019 20:11:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=CDTuiZrelUWEgf3y4KZ7WxVJzGTyvoY
- nwkgEV9GS9EA=; b=pMIvHTKZfpHH9DiPjpIImmW3Ww53CpcROqSmFp5Tys75FC4
- TBMkOOioKeLUpn+0eyWjmt2bHiT0j1gjmAm2EM0D8d4a4czex3Scxw1LdcIbarZc
- jZUgoUkf2I/bJFh4UEA3AXiKP/PzDt0e2V1IOFCOA7qsGnwF0U4O56YD8zX0Pe2n
- Aqpjhw2SU30W1GAjSG6lXTKgTqoT/iiKSYdi7lDONGb1cVAKKtPubdxgbVNY++7N
- LJQ2HIhXr3egKtJlhvdme2KxFrE478QhhNgExi7HyrZV8BOpHDyIUSAcPEpLlw5p
- huCY1LaXN99OXfdn8r12DnPn/wrN6AIOvKnbpWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CDTuiZ
- relUWEgf3y4KZ7WxVJzGTyvoYnwkgEV9GS9EA=; b=oi9vzr2oQAO4M9UzRhnh7x
- xG/WjjXFbS9aYWXUHhD0sX20VMN0v1Ylj/GoOPxJn77BK0VfCJMwMCRL/fiG0DWF
- /TvV4rPWpwMWCClxFPBM+DxcO1SqWLREyw0Jh8EfKJKmkp5/AjB61jHD3ANsO6+P
- DCeTe7QKCCG8iWjn0PqZHSmIibVhG6VoVUU4HLYIC8O/LudJfArrj3b/Od0c6cYm
- sx8cQ32bmEwH45dbR4VPLuEb5Z8ldOxz+avgSxBYxDB/eMHFgL+v+ALfS23EVBnx
- QN4JzC484C0aXxJGcJ4xdVcl4GvNqjDOYvv99g5gyBSiUgaeFGvOwSuojOCKfCZw
- ==
-X-ME-Sender: <xms:E3VkXYYUAs1qVZX0bxp2cCivuf6mqWaKBKA32yy6F1UDS54wmR32aQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudehhedgfeegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:E3VkXUCRvqid6DYMA7CP5qTwQWTota8AuxMsxAzHOQOdmliQ3a44Ag>
- <xmx:E3VkXeEnNc3xf7FKhFrDLweXn-j111DuNyJpS-Bz7mDlVZ5LasnN1g>
- <xmx:E3VkXXMrjR2fwsgTDPKwwyYleaJsez8kBnIGKOWim1lg8tV1ofLwzw>
- <xmx:FXVkXceB8jxtGO1j6CzyihvzBhYsA89B7faXbulxE_RYbHG1KEIxow>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 5EF99E00A3; Mon, 26 Aug 2019 20:10:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-139-g73fcb67-fmstable-20190826v1
-Mime-Version: 1.0
-Message-Id: <fab64830-69be-44fb-9e6f-ed8783b821a4@www.fastmail.com>
-In-Reply-To: <d040fee1-d12d-9ac9-a72a-e76137a4579f@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HTrn2QmgzDqJs;
+ Tue, 27 Aug 2019 10:14:33 +1000 (AEST)
+Received: by mail-pf1-x441.google.com with SMTP id d85so12894196pfd.2;
+ Mon, 26 Aug 2019 17:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=nJ8C78NoAqVqSum3LuoxAwskIWISqkgXdmo5sYpNHfk=;
+ b=GUuYMNh/Zq9M6fu3kKwUR7xomor6vHtCuypnWT895hvqEeOCsaQgqtTUlpLfLT1S+o
+ NkpHhFzliH5Lcd84Iu2vU+E93qYlREQSqB5+xntHrnTGwYhb6XslmoRGqDumw2vz8Cor
+ gEEwJ/AjDkn2qUKos9LEGcfdNXCSjKxjhehiLRsTJy7tM9CAV4p+NEyo6yGR1FF55cjV
+ OE/DMCIAu3bKaQj0ARtBGTikFBgjgIdsC53XHtFkTBr4qbZXUy/w/E9S7pqRNYzi8Wt1
+ bPf/p5vnV6zh1RU0pVL4/yFQGTGekQqeYVcjLyQIac4bJBvIcasZ8ywgiG6Fd4tStHiT
+ rLGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+ :date:user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=nJ8C78NoAqVqSum3LuoxAwskIWISqkgXdmo5sYpNHfk=;
+ b=E1Wp4uAUXU2IkP4YlG8UeW/LZtEio0RNNLRhKVu+EsitJfD1nqWI5j/ogFbuNQDHV1
+ dqAy0ondy+hmmSQPVluqVQ+X1SDkEOuF7mcM/3EtDxI9Xu6mvdtgJTgThqBbC6NywDQu
+ QKgpQvsVu8fiQAUJQEJlTDFR20FqZIxiAGlztMXgkqzybO0CXP56BRUCBel8y33tKq1i
+ Ml4V5sDHUH4q3hly2oE2tVmn6Y9TNuCsFe1kbcdExx5RdiEi46G8sg537W6ZWz1DGkhu
+ DJNdO0zcVRxW/yu2vtO9eQP0namgiIM0oOxp16D6csTXsH9fS6g8muCDs3fogiNWU7nB
+ jJ5Q==
+X-Gm-Message-State: APjAAAWxaUtUzC7ml12it8lJU8acEamfaltBNa5KgjXj3tVfzPy/7/y6
+ ObZDDmGVHGy926tsQUbLMoM=
+X-Google-Smtp-Source: APXvYqxvhXCKutjPnT5nWH3BMk7cObsbeQwIEFqub1CAyoV7XPoqs0YnakBp1Z0eeWOxE2cRwsTUlw==
+X-Received: by 2002:a63:460d:: with SMTP id t13mr18245482pga.205.1566864869792; 
+ Mon, 26 Aug 2019 17:14:29 -0700 (PDT)
+Received: from server.roeck-us.net
+ (108-223-40-66.lightspeed.sntcca.sbcglobal.net. [108.223.40.66])
+ by smtp.gmail.com with ESMTPSA id j11sm4723844pfa.113.2019.08.26.17.14.28
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 26 Aug 2019 17:14:29 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] watchdog/aspeed: add support for dual boot
+To: Ivan Mikhaylov <i.mikhaylov@yadro.com>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>
 References: <20190826104636.19324-1-i.mikhaylov@yadro.com>
- <20190826104636.19324-5-i.mikhaylov@yadro.com>
- <f33aa4b8-6d06-4226-8859-ce21a4b8728b@www.fastmail.com>
- <d040fee1-d12d-9ac9-a72a-e76137a4579f@roeck-us.net>
-Date: Tue, 27 Aug 2019 09:41:20 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Guenter Roeck" <linux@roeck-us.net>,
- "Ivan Mikhaylov" <i.mikhaylov@yadro.com>,
- "Wim Van Sebroeck" <wim@linux-watchdog.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_4/4]_dt-bindings/watchdog:_Add_access=5Fcs0_opti?=
- =?UTF-8?Q?on_for_alt-boot?=
-Content-Type: text/plain
+ <20190826104636.19324-4-i.mikhaylov@yadro.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Message-ID: <0df27d36-b45f-2059-6ead-a09ceb4b7605@roeck-us.net>
+Date: Mon, 26 Aug 2019 17:14:27 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <20190826104636.19324-4-i.mikhaylov@yadro.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,55 +87,131 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
  linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- openbmc@lists.ozlabs.org, Alexander Amelkin <a.amelkin@yadro.com>,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ Alexander Amelkin <a.amelkin@yadro.com>, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Tue, 27 Aug 2019, at 09:38, Guenter Roeck wrote:
-> On 8/26/19 4:57 PM, Andrew Jeffery wrote:
-> > 
-> > 
-> > On Mon, 26 Aug 2019, at 20:17, Ivan Mikhaylov wrote:
-> >> The option for the ast2400/2500 to get access to CS0 at runtime.
-> >>
-> >> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-> >> ---
-> >>   Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt | 7 +++++++
-> >>   1 file changed, 7 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-> >> b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-> >> index c5077a1f5cb3..023a9b578df6 100644
-> >> --- a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-> >> +++ b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-> >> @@ -34,6 +34,13 @@ Optional properties:
-> >>                   engine is responsible for this.
-> >>   
-> >>    - aspeed,alt-boot:    If property is present then boot from alternate
-> >> block.
-> >> +                       At alternate side 'access_cs0' sysfs file
-> >> provides:
-> > 
-> > Why are we talking about sysfs in the devicetree binding? This patch
-> > doesn't seem right to me.
-> > 
+On 8/26/19 3:46 AM, Ivan Mikhaylov wrote:
+> Set WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION into WDT_CLEAR_TIMEOUT_STATUS
+> to clear out boot code source and re-enable access to the primary SPI flash
+> chip while booted via wdt2 from the alternate chip.
 > 
-> Correct; this is the wrong document. The attribute also will need
-> to be better explained. "At alternate side" does not explain (at
-> least not at all clearly enough) that the attribute only exists
-> if the system has booted from the alternate flash / block.
+> AST2400 datasheet says:
+> "In the 2nd flash booting mode, all the address mapping to CS0# would be
+> re-directed to CS1#. And CS0# is not accessable under this mode. To access
+> CS0#, firmware should clear the 2nd boot mode register in the WDT2 status
+> register WDT30.bit[1]."
 > 
-> > Also if we're not supporting the aspeed,alt-boot property we should
-> > probably document it as deprecated rather than making it disappear,
-> > unless you're going to fix the systems that are using it.
-> > 
-> Sorry, you lost me here. Where is it made to disappear ?
+> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+> ---
+>   drivers/watchdog/aspeed_wdt.c | 62 ++++++++++++++++++++++++++++++++++-
+>   1 file changed, 61 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+> index cc71861e033a..bbc42847c0e3 100644
+> --- a/drivers/watchdog/aspeed_wdt.c
+> +++ b/drivers/watchdog/aspeed_wdt.c
+> @@ -53,6 +53,8 @@ MODULE_DEVICE_TABLE(of, aspeed_wdt_of_table);
+>   #define   WDT_CTRL_ENABLE		BIT(0)
+>   #define WDT_TIMEOUT_STATUS	0x10
+>   #define   WDT_TIMEOUT_STATUS_BOOT_SECONDARY	BIT(1)
+> +#define WDT_CLEAR_TIMEOUT_STATUS	0x14
+> +#define   WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION	BIT(0)
+>   
+>   /*
+>    * WDT_RESET_WIDTH controls the characteristics of the external pulse (if
+> @@ -165,6 +167,57 @@ static int aspeed_wdt_restart(struct watchdog_device *wdd,
+>   	return 0;
+>   }
+>   
+> +/* access_cs0 shows if cs0 is accessible, hence the reverted bit */
+> +static ssize_t access_cs0_show(struct device *dev,
+> +		struct device_attribute *attr, char *buf)
 
-Oh, hah, I read the bullet '-' as a diff marker. Maybe I should go back to
-bed!
+This and other multi-line declarations do not appear to be aligned
+with '('.
 
-Andrew
+> +{
+> +	struct aspeed_wdt *wdt = dev_get_drvdata(dev);
+> +	uint32_t status = readl(wdt->base + WDT_TIMEOUT_STATUS);
+> +
+> +	return sprintf(buf, "%u\n",
+> +			!(status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY));
+> +}
+> +
+> +static ssize_t access_cs0_store(struct device *dev,
+> +			      struct device_attribute *attr,
+> +			      const char *buf, size_t size)
+> +{
+> +	struct aspeed_wdt *wdt = dev_get_drvdata(dev);
+> +	unsigned long val;
+> +
+> +	if (kstrtoul(buf, 10, &val))
+> +		return -EINVAL;
+> +
+> +	if (val)
+> +		writel(WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION,
+> +			wdt->base + WDT_CLEAR_TIMEOUT_STATUS);
+> +
+> +	return size;
+> +}
+> +
+> +/*
+> + * At alternate side the 'access_cs0' sysfs node provides:
+> + *   ast2400: a way to get access to the primary SPI flash chip at CS0
+> + *            after booting from the alternate chip at CS1.
+> + *   ast2500: a way to restore the normal address mapping from
+> + *            (CS0->CS1, CS1->CS0) to (CS0->CS0, CS1->CS1).
+> + *
+> + * Clearing the boot code selection and timeout counter also resets to the
+> + * initial state the chip select line mapping. When the SoC is in normal
+> + * mapping state (i.e. booted from CS0), clearing those bits does nothing for
+> + * both versions of the SoC. For alternate boot mode (booted from CS1 due to
+> + * wdt2 expiration) the behavior differs as described above.
+> + *
+The above needs to be in the sysfs attribute documentation as well.
+
+> + * This option can be used with wdt2 (watchdog1) only.
+
+This implies a specific watchdog numbering which is not guaranteed.
+Someone might implement a system with some external watchdog.
+
+> + */
+> +static DEVICE_ATTR_RW(access_cs0);
+> +
+> +static struct attribute *bswitch_attrs[] = {
+> +	&dev_attr_access_cs0.attr,
+> +	NULL
+> +};
+> +ATTRIBUTE_GROUPS(bswitch);
+> +
+>   static const struct watchdog_ops aspeed_wdt_ops = {
+>   	.start		= aspeed_wdt_start,
+>   	.stop		= aspeed_wdt_stop,
+> @@ -306,9 +359,16 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
+>   	}
+>   
+>   	status = readl(wdt->base + WDT_TIMEOUT_STATUS);
+> -	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY)
+> +	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY) {
+>   		wdt->wdd.bootstatus = WDIOF_CARDRESET;
+>   
+> +		if (of_device_is_compatible(np, "aspeed,ast2400-wdt") ||
+> +			of_device_is_compatible(np, "aspeed,ast2500-wdt"))
+> +			wdt->wdd.groups = bswitch_groups;
+
+Kind of odd that the attribute only exists if the system booted from the
+second flash, but if that is what you want I won't object. Just make sure
+that this is explained properly.
+
+> +	}
+> +
+> +	dev_set_drvdata(dev, wdt);
+> +
+>   	return devm_watchdog_register_device(dev, &wdt->wdd);
+>   }
+>   
+> 
+
