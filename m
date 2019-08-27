@@ -2,80 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D2369E8A5
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 15:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D92BB9EBA5
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 16:55:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Hq0w4gjmzDqNG
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 23:07:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46HsPW0ZF2zDqjj
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 00:55:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::541; helo=mail-pg1-x541.google.com;
- envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="e3RW4O/b"; 
- dkim-atps=neutral
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Hpzf2dBPzDqs2;
- Tue, 27 Aug 2019 23:06:38 +1000 (AEST)
-Received: by mail-pg1-x541.google.com with SMTP id l21so12670044pgm.3;
- Tue, 27 Aug 2019 06:06:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=tLfakLGpMLvdTV8QFc4nFi+HIp0PsQAUDM5NCWw4kOM=;
- b=e3RW4O/bkBNjJRXt0syqTSuQGa6iNaNuqgXq1e20CmuXTlkyv4RT1GXqxjJswj3P9n
- /YdtWylwjfbPGSAQdoXp4eYTIbehmw1D9qGRsg1gTqCMVaKrxKQWjCdN86PKqUq51kRq
- NR8qAB0zKrdjK75IhJeRlJgDOAXQNeFdgAjdFD4dBsx4aN9OEFmUQFHpIvf8vtA0Bj70
- ket1ALJGUasj0Ii86eSbQCX2dj2wHIOF1zoAwi0pGp63B+/MuqFU13+jrGuTeNXLRXKG
- 6OQqyleuALUIjqcKCCtWtnbGPvmSg1mzEQWWArfw4basGrT1oA/gbONb+qvQ5t4qTte8
- UQDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=tLfakLGpMLvdTV8QFc4nFi+HIp0PsQAUDM5NCWw4kOM=;
- b=FXqeTWlZGiITsHSPEnJCHczb5hHXFR3j9rqGp81l+dotTEL70a65PSSlb0NspSmob6
- WUEFKG8+BUkPgek6ExH0hIqolSS6iP5qoD0DzRgL0Rb0nBWAIkUCB48Kg35rtD/2iVki
- 17AwOfS2uPOykrXKkkKObFVy08vh4U1c91OblJJ8nd5dll5GRh6mwOflWb1BZBkwOjvI
- CcuNY4pLbTt6khW3f5fJ5vXBDj8mzfDl4EzCdNn+2wSHfbeqf0tlzdeOBnb+xbFLzsf1
- K+iMSIeeiof444busmcfwIzU8E2KP7MfGAVy1LjnFgflrD8zvgYNZNR4zoUVpLpdPOjf
- 1N3w==
-X-Gm-Message-State: APjAAAXJL+owHRiooy3IZEJHtQIqBRF1wh0/UhG3n3oqQJWaah9GIx42
- 50lMTMJ+Ucmw2tRF6FGVd3M=
-X-Google-Smtp-Source: APXvYqwfc3SZsT1Lj8EgzY5d72Zcg5rMHFxdArytviyXSiZ1V1oA2QmZOxx6LeKLWB7fM8fNGtzyfw==
-X-Received: by 2002:a63:c203:: with SMTP id b3mr21289785pgd.450.1566911194546; 
- Tue, 27 Aug 2019 06:06:34 -0700 (PDT)
-Received: from server.roeck-us.net
- (108-223-40-66.lightspeed.sntcca.sbcglobal.net. [108.223.40.66])
- by smtp.gmail.com with ESMTPSA id a23sm11467191pfc.71.2019.08.27.06.06.31
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 27 Aug 2019 06:06:32 -0700 (PDT)
-Subject: Re: [PATCH v2 3/4] watchdog/aspeed: add support for dual boot
-To: Ivan Mikhaylov <i.mikhaylov@yadro.com>,
- Wim Van Sebroeck <wim@linux-watchdog.org>
-References: <20190826104636.19324-1-i.mikhaylov@yadro.com>
- <20190826104636.19324-4-i.mikhaylov@yadro.com>
- <0df27d36-b45f-2059-6ead-a09ceb4b7605@roeck-us.net>
- <818746d20661b51914a7802dcbe0081352900b05.camel@yadro.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <d46685d9-c6d2-46af-67aa-844d2b0296a9@roeck-us.net>
-Date: Tue, 27 Aug 2019 06:06:30 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46HsKk5Xp9zDqSP
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Aug 2019 00:52:21 +1000 (AEST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 27 Aug 2019 07:52:16 -0700
+X-IronPort-AV: E=Sophos;i="5.64,437,1559545200"; 
+ d="asc'?scan'208,217";a="192256048"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
+ by orsmga002-auth.jf.intel.com with ESMTP/TLS/AES256-SHA;
+ 27 Aug 2019 07:52:16 -0700
+Subject: Re: custom ntp server in phosphor-networkd
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+References: <20190826162517.GA19876@bbwork.lan>
+ <20190826172315.GB45301@mauery.jf.intel.com>
+ <6c7a1584-b35e-199b-e970-630ad6975125@linux.vnet.ibm.com>
+ <20190827074336.GA14200@bbwork.lan>
+ <93b03449-207d-cf0a-a454-ac32fef4f410@linux.vnet.ibm.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <c1fb7fc5-3dc1-0937-476c-acb8b6f3cb84@intel.com>
+Date: Tue, 27 Aug 2019 07:52:12 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <818746d20661b51914a7802dcbe0081352900b05.camel@yadro.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <93b03449-207d-cf0a-a454-ac32fef4f410@linux.vnet.ibm.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="ccmOgVpHzFycuB4lksp0rBhSsKN24q8c1"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,93 +83,380 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- Alexander Amelkin <a.amelkin@yadro.com>, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/27/19 2:24 AM, Ivan Mikhaylov wrote:
-> On Mon, 2019-08-26 at 17:14 -0700, Guenter Roeck wrote:
->>> +/*
->>> + * At alternate side the 'access_cs0' sysfs node provides:
->>> + *   ast2400: a way to get access to the primary SPI flash chip at CS0
->>> + *            after booting from the alternate chip at CS1.
->>> + *   ast2500: a way to restore the normal address mapping from
->>> + *            (CS0->CS1, CS1->CS0) to (CS0->CS0, CS1->CS1).
->>> + *
->>> + * Clearing the boot code selection and timeout counter also resets to the
->>> + * initial state the chip select line mapping. When the SoC is in normal
->>> + * mapping state (i.e. booted from CS0), clearing those bits does nothing
->>> for
->>> + * both versions of the SoC. For alternate boot mode (booted from CS1 due
->>> to
->>> + * wdt2 expiration) the behavior differs as described above.
->>> + *
->> The above needs to be in the sysfs attribute documentation as well.
-> 
-> My apologies but I didn't find any suitable, only watchdog parameters with
-> dtbindings file, where should I put it? Documentation/watchdog/aspeed-wdt-
-> sysfs.rst?
-> 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--ccmOgVpHzFycuB4lksp0rBhSsKN24q8c1
+Content-Type: multipart/mixed; boundary="6xwRO8wvNs7OZftfMwODu5FPWxmRBkUwH";
+ protected-headers="v1"
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+Message-ID: <c1fb7fc5-3dc1-0937-476c-acb8b6f3cb84@intel.com>
+Subject: Re: custom ntp server in phosphor-networkd
+References: <20190826162517.GA19876@bbwork.lan>
+ <20190826172315.GB45301@mauery.jf.intel.com>
+ <6c7a1584-b35e-199b-e970-630ad6975125@linux.vnet.ibm.com>
+ <20190827074336.GA14200@bbwork.lan>
+ <93b03449-207d-cf0a-a454-ac32fef4f410@linux.vnet.ibm.com>
+In-Reply-To: <93b03449-207d-cf0a-a454-ac32fef4f410@linux.vnet.ibm.com>
 
-Documentation/ABI/testing/sysfs-class-watchdog
+--6xwRO8wvNs7OZftfMwODu5FPWxmRBkUwH
+Content-Type: multipart/alternative;
+ boundary="------------58BB0A8E62950E634817DA1E"
+Content-Language: en-US
 
-Guenter
+This is a multi-part message in MIME format.
+--------------58BB0A8E62950E634817DA1E
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
->>> + * This option can be used with wdt2 (watchdog1) only.
+Ratan, Alexander,
+
+I've pushed code to improve DHCP recently which may be of value in this
+instance.
+
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/2=
+4665
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/24666
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/24725
+
+This implements a greater set of control over the DHCP from Redfish.=C2=A0=
+ I
+believe I tested using DHCP, while UseNTPServers =3D false was active.=C2=
+=A0 I
+then explicitly defined a static NTP server from one of the Intel
+chimers.=C2=A0 I was able to get my clock updated from the assigned NTP
+server.=C2=A0 Prior to this change NTP requests to the google chimers wen=
+t
+unanswered, as our BMC network can't get to the internet.
+
+On 8/27/19 3:32 AM, Ratan Gupta wrote:
+> On 27/08/19 1:13 PM, Alexander A. Filippov wrote:
+>> On Mon, Aug 26, 2019 at 10:23:15AM -0700, Vernon Mauery wrote:
+>>> This is pretty common behavior for DHCP settings.
+>> On Tue, Aug 27, 2019 at 11:28:36AM +0530, Ratan Gupta wrote:
+>>> Why this is wrong,
+>> Ok, ok.  I wasn't clear enough. My appologies.
 >>
->> This implies a specific watchdog numbering which is not guaranteed.
->> Someone might implement a system with some external watchdog.
+>> I've meant that the impossibility to add a custom ntp server while dhc=
+p is
+>> enabled is wrong. Of course, the list of ntp servers received from DHC=
+P-server
+>> must be used. And I propose to move only manual settings.
 >>
->>> + */
->>> +static DEVICE_ATTR_RW(access_cs0);
->>> +
->>> +static struct attribute *bswitch_attrs[] = {
->>> +	&dev_attr_access_cs0.attr,
->>> +	NULL
->>> +};
->>> +ATTRIBUTE_GROUPS(bswitch);
->>> +
->>>    static const struct watchdog_ops aspeed_wdt_ops = {
->>>    	.start		= aspeed_wdt_start,
->>>    	.stop		= aspeed_wdt_stop,
->>> @@ -306,9 +359,16 @@ static int aspeed_wdt_probe(struct platform_device
->>> *pdev)
->>>    	}
->>>    
->>>    	status = readl(wdt->base + WDT_TIMEOUT_STATUS);
->>> -	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY)
->>> +	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY) {
->>>    		wdt->wdd.bootstatus = WDIOF_CARDRESET;
->>>    
->>> +		if (of_device_is_compatible(np, "aspeed,ast2400-wdt") ||
->>> +			of_device_is_compatible(np, "aspeed,ast2500-wdt"))
->>> +			wdt->wdd.groups = bswitch_groups;
-> 
->> Kind of odd that the attribute only exists if the system booted from the
->> second flash, but if that is what you want I won't object. Just make sure
->> that this is explained properly.
-> Perhaps dts configuration option would be better solution for it then? "force-
-> cs0-switch" as example? Also, if it would be an option, dtbindings/wdt file for
+>> I believe that it is a same stuff with DNS-servers, routes. But probab=
+ly, the
+>> BMC is not such kind of devices which is required such deep settings. =
+One of the
+>> possible reasons was specified by Vernon quoted below:
+>>
+>> On Mon, Aug 26, 2019 at 10:23:15AM -0700, Vernon Mauery wrote:
+>>> It seems to me that if you are using static settings for your network=
+,=20
+>>> then you would also have static (or user-supplied) settings for NTP a=
+nd=20
+>>> DNS. But if you are using DHCP for the network, it would make sense t=
+o=20
+>>> use the NTP and DNS settings supplied by the DHCP server.
+>>>
+>>> Now it might also be nice to have some reasonable defaults for NTP=20
+>>> servers. It is not uncommon to have IP gateways also be NTP servers, =
+so=20
+>>> it might be reasonable to attempt to use the gateway as an NTP server=
+ if=20
+>>> none was specified in the DHCP response. I don't like the idea of=20
+>>> setting the default NTP server to be something that is globally=20
+>>> addressable because that makes the assumption that the BMC can reach =
 
-You said earlier that this can not be done automatically but _must_ be done
-from user space after the system has booted. Otherwise you could just
-automatically switch to cs0 when the driver probes.
+>>> global networks, which should not be the case.
+> I have the following suggestion
+>
+>
+> =3D> By default all the DHCP optional parameters will be set to
+> false(i.e Don't ask the optional info from the DHCP server) =3D> If
+> users wants the DHCP provided configuration then it has to set the
+> specific optional parameters to true(Say NTPEnabled=3Dtrue). =3D> User
+> configures the Static NTP =3D> Check if DHCP is enabled then look for
+> the DHCP configuration parameters, if "NTP Enabled is true"
+> then user wants the NTP server from the DHCP and in that case don't
+> allow the static configuration.
+> =3D> if DHCP is enabled but in DHCP configuration parameters "NTP
+> Enabled is false"
+> then user doesn't want the NTP server from the DHCP and allow the
+> static configuration.
+>
+> Link:
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/ope=
+nbmc_project/Network/DHCPConfiguration.interface.yaml
+>
+> Note: It may happen that user has set DHCP Configuration parameters on
+> the BMC to take the NTP server details from the
+> DHCP server but have not configured the DHCP server to provide the NTP
+> server, in that case
+> Static NTP server configuration will not be allowed.
+>> On Tue, Aug 27, 2019 at 11:28:36AM +0530, Ratan Gupta wrote:
+>>>  * The NTP servers defined in|/etc/systemd/timesyncd.conf|will be
+>>>    appended to the per-interface list at runtime and the daemon will
+>>>    contact the servers in turn until one is found that responds.
+>> So, my propose is to implement this point.
+>>
+>> Regards,
+>> Alexander
+>>
 
-As I said, all I am asking for is proper documentation.
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
 
-Guenter
 
-> documentation will be the right place for it. Usage of this at side 0 will not
-> get any good/bad results, it just makes user confused, so I decided to put it
-> only at side 1. It works only for ast2400/2500 board unfortunately, for 2600
-> there is big difference in switching mechanism. Any other thoughts how to make
-> it better?
-> 
-> Thanks.
-> 
-> 
+--------------58BB0A8E62950E634817DA1E
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body bgcolor=3D"#FFFFFF" text=3D"#000000">
+    Ratan, Alexander,<br>
+    <br>
+    I've pushed code to improve DHCP recently which may be of value in
+    this instance.<br>
+    <br>
+<a class=3D"moz-txt-link-freetext" href=3D"https://gerrit.openbmc-project=
+=2Exyz/c/openbmc/phosphor-dbus-interfaces/+/24665">https://gerrit.openbmc=
+-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/24665</a><br>
+<a class=3D"moz-txt-link-freetext" href=3D"https://gerrit.openbmc-project=
+=2Exyz/c/openbmc/phosphor-networkd/+/24666">https://gerrit.openbmc-projec=
+t.xyz/c/openbmc/phosphor-networkd/+/24666</a><br>
+    <a class=3D"moz-txt-link-freetext" href=3D"https://gerrit.openbmc-pro=
+ject.xyz/c/openbmc/bmcweb/+/24725">https://gerrit.openbmc-project.xyz/c/o=
+penbmc/bmcweb/+/24725</a><br>
+    <br>
+    This implements a greater set of control over the DHCP from
+    Redfish.=C2=A0 I believe I tested using DHCP, while UseNTPServers =3D=
+ false
+    was active.=C2=A0 I then explicitly defined a static NTP server from =
+one
+    of the Intel chimers.=C2=A0 I was able to get my clock updated from t=
+he
+    assigned NTP server.=C2=A0 Prior to this change NTP requests to the
+    google chimers went unanswered, as our BMC network can't get to the
+    internet.<br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 8/27/19 3:32 AM, Ratan Gupta wrote:=
+<br>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:93b03449-207d-cf0a-a454-ac32fef4f410@linux.vnet.ibm.com=
+">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DU=
+TF-8">
+      <div class=3D"moz-cite-prefix">On 27/08/19 1:13 PM, Alexander A.
+        Filippov wrote:<br>
+      </div>
+      <blockquote type=3D"cite"
+        cite=3D"mid:20190827074336.GA14200@bbwork.lan">
+        <pre class=3D"moz-quote-pre" wrap=3D"">On Mon, Aug 26, 2019 at 10=
+:23:15AM -0700, Vernon Mauery wrote:
+</pre>
+        <blockquote type=3D"cite">
+          <pre class=3D"moz-quote-pre" wrap=3D"">This is pretty common be=
+havior for DHCP settings.
+</pre>
+        </blockquote>
+        <pre class=3D"moz-quote-pre" wrap=3D"">On Tue, Aug 27, 2019 at 11=
+:28:36AM +0530, Ratan Gupta wrote:
+</pre>
+        <blockquote type=3D"cite">
+          <pre class=3D"moz-quote-pre" wrap=3D"">Why this is wrong,
+</pre>
+        </blockquote>
+        <pre class=3D"moz-quote-pre" wrap=3D"">Ok, ok.  I wasn't clear en=
+ough. My appologies.
+
+I've meant that the impossibility to add a custom ntp server while dhcp i=
+s
+enabled is wrong. Of course, the list of ntp servers received from DHCP-s=
+erver
+must be used. And I propose to move only manual settings.
+
+I believe that it is a same stuff with DNS-servers, routes. But probably,=
+ the
+BMC is not such kind of devices which is required such deep settings. One=
+ of the
+possible reasons was specified by Vernon quoted below:
+
+On Mon, Aug 26, 2019 at 10:23:15AM -0700, Vernon Mauery wrote:
+</pre>
+        <blockquote type=3D"cite">
+          <pre class=3D"moz-quote-pre" wrap=3D"">It seems to me that if y=
+ou are using static settings for your network,=20
+then you would also have static (or user-supplied) settings for NTP and=20
+DNS. But if you are using DHCP for the network, it would make sense to=20
+use the NTP and DNS settings supplied by the DHCP server.
+
+Now it might also be nice to have some reasonable defaults for NTP=20
+servers. It is not uncommon to have IP gateways also be NTP servers, so=20
+it might be reasonable to attempt to use the gateway as an NTP server if =
+
+none was specified in the DHCP response. I don't like the idea of=20
+setting the default NTP server to be something that is globally=20
+addressable because that makes the assumption that the BMC can reach=20
+global networks, which should not be the case.
+</pre>
+        </blockquote>
+      </blockquote>
+      <tt>I have the following suggestion</tt><tt><br>
+      </tt><tt><br>
+      </tt><tt><br>
+      </tt><tt><span style=3D"color: rgb(33, 33, 33); font-size: 13px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); te=
+xt-decoration-style: initial; text-decoration-color: initial; display: in=
+line !important; float: none;">=3D&gt; By default all the DHCP optional p=
+arameters will be set to false(i.e Don't ask the optional info from the D=
+HCP server)
+=3D&gt; If users wants the DHCP provided configuration then it has to set=
+ the specific optional parameters to true(Say NTPEnabled=3Dtrue).
+=3D&gt; User configures the Static NTP
+=3D&gt; Check if DHCP is enabled then look for the DHCP configuration par=
+ameters, if "NTP Enabled is true"</span></tt><tt><br>
+      </tt><tt><span style=3D"color: rgb(33, 33, 33); font-size: 13px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); te=
+xt-decoration-style: initial; text-decoration-color: initial; display: in=
+line !important; float: none;">then user wants the NTP server from the DH=
+CP and in that case don't allow the static configuration.</span></tt><tt>=
+<br>
+      </tt><tt><span style=3D"color: rgb(33, 33, 33); font-size: 13px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); te=
+xt-decoration-style: initial; text-decoration-color: initial; display: in=
+line !important; float: none;">=3D&gt; if DHCP is enabled but in DHCP con=
+figuration parameters "</span></tt><tt><span style=3D"color: rgb(33, 33, =
+33); font-size: 13px; font-style: normal; font-variant-ligatures: normal;=
+ font-variant-caps: normal; font-weight: 400; letter-spacing: normal; tex=
+t-align: start; text-indent: 0px; text-transform: none; white-space: pre-=
+wrap; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color=
+: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-col=
+or: initial; display: inline !important; float: none;"><span style=3D"col=
+or: rgb(33, 33, 33); font-size: 13px; font-style: normal; font-variant-li=
+gatures: normal; font-variant-caps: normal; font-weight: 400; letter-spac=
+ing: normal; text-align: start; text-indent: 0px; text-transform: none; w=
+hite-space: pre-wrap; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+background-color: rgb(255, 255, 255); text-decoration-style: initial; tex=
+t-decoration-color: initial; display: inline !important; float: none;">NT=
+P Enabled is false</span>"</span></tt><tt><br>
+      </tt><tt><span style=3D"color: rgb(33, 33, 33); font-size: 13px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); te=
+xt-decoration-style: initial; text-decoration-color: initial; display: in=
+line !important; float: none;">then user doesn't want the NTP server from=
+ the DHCP and allow the static configuration.</span></tt><tt><br>
+      </tt><tt><br>
+      </tt><tt>Link: </tt><tt><a href=3D"https://github.com/openbmc/phosp=
+hor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/DHCPConfigura=
+tion.interface.yaml" target=3D"_blank" rel=3D"noopener" class=3D"style-sc=
+ope gr-linked-text" style=3D"box-sizing: border-box; margin: 0px; padding=
+: 0px; border: 0px none; font-style: normal; font-variant-ligatures: norm=
+al; font-variant-caps: normal; font-variant-numeric: inherit; font-varian=
+t-east-asian: inherit; font-weight: 400; font-stretch: inherit; font-size=
+: 13px; line-height: inherit; vertical-align: baseline; color: rgb(42, 10=
+2, 217); letter-spacing: normal; text-align: start; text-indent: 0px; tex=
+t-transform: none; white-space: pre-wrap; word-spacing: 0px; -webkit-text=
+-stroke-width: 0px; background-color: rgb(255, 255, 255);" moz-do-not-sen=
+d=3D"true">https://github.com/openbmc/phosphor-dbus-interfaces/blob/maste=
+r/xyz/openbmc_project/Network/DHCPConfiguration.interface.yaml</a></tt><t=
+t><br>
+      </tt><tt><span style=3D"color: rgb(33, 33, 33); font-size: 13px; fo=
+nt-style: normal; font-variant-ligatures: normal; font-variant-caps: norm=
+al; font-weight: 400; letter-spacing: normal; text-align: start; text-ind=
+ent: 0px; text-transform: none; white-space: pre-wrap; word-spacing: 0px;=
+ -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); te=
+xt-decoration-style: initial; text-decoration-color: initial; display: in=
+line !important; float: none;"></span></tt><tt><br>
+      </tt><tt>Note: It may happen that user has set DHCP Configuration
+        parameters on the BMC to take the NTP server details from the</tt=
+><tt><br>
+      </tt><tt>DHCP server but have not configured the DHCP server to
+        provide the NTP server, in that case</tt><tt><br>
+      </tt><tt>Static NTP server configuration will not be allowed.</tt>
+      <blockquote type=3D"cite"
+        cite=3D"mid:20190827074336.GA14200@bbwork.lan">
+        <pre class=3D"moz-quote-pre" wrap=3D"">On Tue, Aug 27, 2019 at 11=
+:28:36AM +0530, Ratan Gupta wrote:
+</pre>
+        <blockquote type=3D"cite">
+          <pre class=3D"moz-quote-pre" wrap=3D""> * The NTP servers defin=
+ed in|/etc/systemd/timesyncd.conf|will be
+   appended to the per-interface list at runtime and the daemon will
+   contact the servers in turn until one is found that responds.
+</pre>
+        </blockquote>
+        <pre class=3D"moz-quote-pre" wrap=3D"">So, my propose is to imple=
+ment this point.
+
+Regards,
+Alexander
+
+</pre>
+      </blockquote>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------58BB0A8E62950E634817DA1E--
+
+--6xwRO8wvNs7OZftfMwODu5FPWxmRBkUwH--
+
+--ccmOgVpHzFycuB4lksp0rBhSsKN24q8c1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl1lQ5wACgkQ0EfviT3f
+Hwnjlgf+K+YhLs1NM0qNPmMRToJe1bcQynel0+7ENzU0fR4Q5Os+naH5iYT4UWIb
+OOoDDqLj/G9ps5GZEvOlZhlp8hyxx8liLf7cMkMk5aL8NiCUGLgEdCkZF6/+cUdl
+Ic6Uzejv3Ib01a4eEthgZ4q2YIBzHIwUyS8wXfOxU84bdz9UuD02ntlaan0c+yGs
+AcdKS9QmvDP6u3pC29l9P7baMpoVOT8XlClj2DgyIS9iWHCF9ykwIoi64q/dYJsV
+q0BXdxgsEQyQ6yaYTqbqv47lunHtC6QMxojMthXdLop2QaEqtG1KCPW/vH4DCQge
+SmQfvBNGrlcDTYhiYN0amdYQocyNzw==
+=fN/r
+-----END PGP SIGNATURE-----
+
+--ccmOgVpHzFycuB4lksp0rBhSsKN24q8c1--
