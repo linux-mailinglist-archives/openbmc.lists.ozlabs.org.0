@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AB989F0EC
-	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 18:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6341E9F0F9
+	for <lists+openbmc@lfdr.de>; Tue, 27 Aug 2019 18:58:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Hw6153M6zDqhN
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 02:57:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Hw7Q4dRGzDqRf
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 02:58:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,44 +16,44 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="OGEgskoN"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="PeSrTtWH"; 
  dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Hw3220ZpzDqWL;
- Wed, 28 Aug 2019 02:54:54 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Hw332SrGzDqWL;
+ Wed, 28 Aug 2019 02:54:55 +1000 (AEST)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 3DAF842ECC;
- Tue, 27 Aug 2019 16:54:51 +0000 (UTC)
+ by mta-01.yadro.com (Postfix) with ESMTP id 4F2FC42ECD;
+ Tue, 27 Aug 2019 16:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
  content-type:content-type:content-transfer-encoding:mime-version
  :references:in-reply-to:x-mailer:message-id:date:date:subject
  :subject:from:from:received:received:received; s=mta-01; t=
- 1566924890; x=1568739291; bh=mEhEh6gAJzPJESzZ96RxoI02+oLNMejWhrw
- LDGL5SN0=; b=OGEgskoNln7egAIhfiLrKN4P/S1HDpgt9khkLFP9deDZ+M+EpmP
- FAfFqOUuQj+WiQSd9GGIDO8rn2ys5gdlP+p3+vitx9bA360ixxE93qWpf5cXojEn
- buwT0/VlsDmHom5zuXGU7tFz3JxC6iL30O1RP31P3MpgERUmaCB13SXc=
+ 1566924891; x=1568739292; bh=GCxrgga2ACU49JHMFa9Qm+9SSWX1i4ngDP9
+ HAa9kUNA=; b=PeSrTtWHlfVd34xdod3NoD5BkcVs+NOqWEumOJ5pJQ5/lYX+8jb
+ 2v07LeuNAJXX2Ax+YhMpKetKwAsDhKEABNtT2eMGtlujedzMdOBgojByqNLUh+1J
+ EBsN0cXh/LKo1kP8K7lSdWjFnvFTm5MgO5qDi2N1ACLeZPsGUf2fE1ZQ=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 2d4klrJHhy_p; Tue, 27 Aug 2019 19:54:50 +0300 (MSK)
+ with ESMTP id 484lRlM42xDh; Tue, 27 Aug 2019 19:54:51 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
  [172.17.10.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id F1B6741209;
- Tue, 27 Aug 2019 19:54:49 +0300 (MSK)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 3BD8642ECA;
+ Tue, 27 Aug 2019 19:54:50 +0300 (MSK)
 Received: from localhost.dev.yadro.com (172.17.15.69) by
  T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Tue, 27 Aug 2019 19:54:49 +0300
+ 15.1.669.32; Tue, 27 Aug 2019 19:54:50 +0300
 From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 To: Guenter Roeck <linux@roeck-us.net>, Wim Van Sebroeck
  <wim@linux-watchdog.org>
-Subject: [PATCH v3 1/4] vesnin: add wdt2 section with alt-boot option
-Date: Tue, 27 Aug 2019 19:54:23 +0300
-Message-ID: <20190827165426.17037-2-i.mikhaylov@yadro.com>
+Subject: [PATCH v3 2/4] vesnin: add secondary SPI flash chip
+Date: Tue, 27 Aug 2019 19:54:24 +0300
+Message-ID: <20190827165426.17037-3-i.mikhaylov@yadro.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190827165426.17037-1-i.mikhaylov@yadro.com>
 References: <20190827165426.17037-1-i.mikhaylov@yadro.com>
@@ -83,25 +83,32 @@ Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adds wdt2 section with 'alt-boot' option into dts for vesnin.
+Adds secondary SPI flash chip into dts for vesnin.
 
 Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts b/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
-index 0b9e29c3212e..2ee26c86a32e 100644
+index 2ee26c86a32e..db4cc3df61ce 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
-@@ -222,3 +222,7 @@
- &vuart {
- 	status = "okay";
- };
+@@ -81,6 +81,14 @@
+         label = "bmc";
+ #include "openbmc-flash-layout.dtsi"
+ 	};
 +
-+&wdt2 {
-+	aspeed,alt-boot;
-+};
++	flash@1 {
++		status = "okay";
++		reg = < 1 >;
++		compatible = "jedec,spi-nor";
++		m25p,fast-read;
++		label = "alt";
++	};
+ };
+ 
+ &spi {
 -- 
 2.20.1
 
