@@ -1,51 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89E29A0C7F
-	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 23:38:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08000A0CCB
+	for <lists+openbmc@lfdr.de>; Wed, 28 Aug 2019 23:53:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46JfHz3rFbzDrHY
-	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 07:38:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46JfcT3RDdzDrGx
+	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 07:52:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
  envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46JfHK5MkSzDrGp
- for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 07:38:05 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Jfbt5C1kzDqrN
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 07:52:25 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 28 Aug 2019 14:38:01 -0700
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 28 Aug 2019 14:52:22 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,442,1559545200"; d="scan'208";a="380550174"
+X-IronPort-AV: E=Sophos;i="5.64,442,1559545200"; d="scan'208";a="380554334"
 Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by fmsmga005.fm.intel.com with ESMTP; 28 Aug 2019 14:38:02 -0700
+ by fmsmga005.fm.intel.com with ESMTP; 28 Aug 2019 14:52:22 -0700
 Subject: Re: Entity-Manager's Configuration Generation leaves address as string
+From: James Feist <james.feist@linux.intel.com>
 To: Patrick Venture <venture@google.com>
 References: <CAO=notzA5GNeAbNxvrDs3gwORnjx36d5oPa5R=D-oajCxBC2Ow@mail.gmail.com>
  <6ab26e95-a327-9263-c1f3-9ba02333913d@linux.intel.com>
  <CAO=notxxc_S-DnPL=ObOuA_KiC-j0F-qMOMKmfYMTUAnepVdew@mail.gmail.com>
  <309f39a3-8f76-aec1-85a5-0a3907120bd0@linux.intel.com>
  <CAO=notyv_RCRv08EbSVfSkpMiO2LCBTU+GTz-9n5C-hBrcm9ww@mail.gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <a920a3b6-c5d0-81df-1de7-e45e76c1da26@linux.intel.com>
-Date: Wed, 28 Aug 2019 14:38:02 -0700
+ <a920a3b6-c5d0-81df-1de7-e45e76c1da26@linux.intel.com>
+Message-ID: <c74fcc4f-3592-f021-e97e-32fbeec74d7b@linux.intel.com>
+Date: Wed, 28 Aug 2019 14:52:22 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <CAO=notyv_RCRv08EbSVfSkpMiO2LCBTU+GTz-9n5C-hBrcm9ww@mail.gmail.com>
+In-Reply-To: <a920a3b6-c5d0-81df-1de7-e45e76c1da26@linux.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,84 +63,94 @@ Cc: Peter Lundgren <peterlundgren@google.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/28/19 2:36 PM, Patrick Venture wrote:
-> On Wed, Aug 28, 2019 at 2:29 PM James Feist <james.feist@linux.intel.com> wrote:
->>
->> On 8/28/19 2:16 PM, Patrick Venture wrote:
->>> On Wed, Aug 28, 2019 at 9:29 AM James Feist <james.feist@linux.intel.com> wrote:
->>>>
->>>> On 8/28/19 7:27 AM, Patrick Venture wrote:
->>>>> I think I've figured out what's happening.
+On 8/28/19 2:38 PM, James Feist wrote:
+> On 8/28/19 2:36 PM, Patrick Venture wrote:
+>> On Wed, Aug 28, 2019 at 2:29 PM James Feist 
+>> <james.feist@linux.intel.com> wrote:
+>>>
+>>> On 8/28/19 2:16 PM, Patrick Venture wrote:
+>>>> On Wed, Aug 28, 2019 at 9:29 AM James Feist 
+>>>> <james.feist@linux.intel.com> wrote:
 >>>>>
->>>>> If a configuration has no fields that are changed by the template code
->>>>> (or possibly even in that case), nothing happens to the values.  So,
->>>>> the property Address is left "0x54" if that's what it is.  And the
->>>>> code is templated, so it just adds that property of type string to the
->>>>> dbus sensor configuration.  As this is definitely what I'm seeing.
->>>>> Json doesn't support ints that are written raw as hex, so wrapping
->>>>> them as strings is what's required to make the json parse.  I've
->>>>> worked around this problem by just using decimal everywhere, but
->>>>> that's harder to read when comparing to schematics.
+>>>>> On 8/28/19 7:27 AM, Patrick Venture wrote:
+>>>>>> I think I've figured out what's happening.
+>>>>>>
+>>>>>> If a configuration has no fields that are changed by the template 
+>>>>>> code
+>>>>>> (or possibly even in that case), nothing happens to the values.  So,
+>>>>>> the property Address is left "0x54" if that's what it is.  And the
+>>>>>> code is templated, so it just adds that property of type string to 
+>>>>>> the
+>>>>>> dbus sensor configuration.  As this is definitely what I'm seeing.
+>>>>>> Json doesn't support ints that are written raw as hex, so wrapping
+>>>>>> them as strings is what's required to make the json parse.  I've
+>>>>>> worked around this problem by just using decimal everywhere, but
+>>>>>> that's harder to read when comparing to schematics.
+>>>>>
+>>>>> Based on this, I think this line might be your issue:
+>>>>>
+>>>>> https://github.com/openbmc/entity-manager/blob/3b80d7c51ff5d5859c0ca1f2b517c18f4766a1a6/src/EntityManager.cpp#L1336 
+>>>>>
+>>>>>
+>>>>>
+>>>>> If found device is nullopt, you still want to call this line, but you
+>>>>> want to call it with an empty flat_map.
+>>>>>
+>>>>> I verified if this happens it should work here:
+>>>>>
+>>>>> https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24787
 >>>>
->>>> Based on this, I think this line might be your issue:
+>>>> So, we're still hitting the error:
 >>>>
->>>> https://github.com/openbmc/entity-manager/blob/3b80d7c51ff5d5859c0ca1f2b517c18f4766a1a6/src/EntityManager.cpp#L1336
->>>>
->>>>
->>>> If found device is nullopt, you still want to call this line, but you
->>>> want to call it with an empty flat_map.
->>>>
->>>> I verified if this happens it should work here:
->>>>
->>>> https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24787
+>>>> ...
+>>>>       "Exposes": [
+>>>>           {
+>>>>              "Address": "0x54",
+>>>>              "Bus": 31,
+>>>>              "Name": "i2cool 0",
+>>>>              "Type": "MAX31725"
+>>>>           },
+>>>> ....
 >>>
->>> So, we're still hitting the error:
->>>
->>> ...
->>>       "Exposes": [
->>>           {
->>>              "Address": "0x54",
->>>              "Bus": 31,
->>>              "Name": "i2cool 0",
->>>              "Type": "MAX31725"
->>>           },
->>> ....
+>>> Did you change the above line? What have you tried? Guessing it has to
+>>> do with templateCharReplace not getting hit, if it gets hit it should be
+>>> replacing it.
 >>
->> Did you change the above line? What have you tried? Guessing it has to
->> do with templateCharReplace not getting hit, if it gets hit it should be
->> replacing it.
+>> Yeah, I see your new unit-test validates the replacement behavior.  So
+>> it must be that it's not hitting that line you pointed to.  I'll see
+>> if I can grab a test platform tomorrow and see if I can replicate it
+>> (we have a config that consistently fails).  And see if I can figure
+>> out why the device isn't being "found."
 > 
-> Yeah, I see your new unit-test validates the replacement behavior.  So
-> it must be that it's not hitting that line you pointed to.  I'll see
-> if I can grab a test platform tomorrow and see if I can replicate it
-> (we have a config that consistently fails).  And see if I can figure
-> out why the device isn't being "found."
+> This would make sense if you had a probe that is set to "TRUE". We 
+> normally probe for everything, so this would make sense why we haven't 
+> seen it.
 
-This would make sense if you had a probe that is set to "TRUE". We 
-normally probe for everything, so this would make sense why we haven't 
-seen it.
+This should fix that issue, if it is your issue: 
+https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24796
 
 > 
 >>
 >>>
->>> Aug 15 22:38:58 MACHINE hwmontempsensor[2697]: terminate called after
->>> throwing an instance of 'std::bad_variant_access'
->>>
->>> It's failing because the configuration is a string "0x54" in dbus.
->>>
 >>>>
+>>>> Aug 15 22:38:58 MACHINE hwmontempsensor[2697]: terminate called after
+>>>> throwing an instance of 'std::bad_variant_access'
 >>>>
+>>>> It's failing because the configuration is a string "0x54" in dbus.
 >>>>
 >>>>>
->>>>> Would it make sense to make the add property code less field agnostic
->>>>> so that if the field is Address and the Interface for
->>>>> configuration.XXX that it checks to see if it's a hex string?  Or,
->>>>> maybe the templateChar replace -- if that supports converting the hex
->>>>> string to a raw integer value type should always get hit?
-> 
-> 
-> 
 >>>>>
->>>>> Thanks,
->>>>> Patrick
 >>>>>
+>>>>>>
+>>>>>> Would it make sense to make the add property code less field agnostic
+>>>>>> so that if the field is Address and the Interface for
+>>>>>> configuration.XXX that it checks to see if it's a hex string?  Or,
+>>>>>> maybe the templateChar replace -- if that supports converting the hex
+>>>>>> string to a raw integer value type should always get hit?
+>>
+>>
+>>
+>>>>>>
+>>>>>> Thanks,
+>>>>>> Patrick
+>>>>>>
