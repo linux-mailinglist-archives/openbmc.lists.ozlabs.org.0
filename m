@@ -2,61 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9042A1656
-	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 12:37:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39374A187B
+	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 13:29:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46JzZN2lmczDqn1
-	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 20:37:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46K0l74g8xzDrdR
+	for <lists+openbmc@lfdr.de>; Thu, 29 Aug 2019 21:29:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=203.205.250.114; helo=smtpbg.qq.com;
- envelope-from=1450335857@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="CaA9CUf9"; 
- dkim-atps=neutral
-X-Greylist: delayed 66 seconds by postgrey-1.36 at bilbo;
- Thu, 29 Aug 2019 20:36:32 AEST
-Received: from smtpbg.qq.com (smtpbg505.qq.com [203.205.250.114])
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=vishwa@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46JzYX0XXNzDqSM
- for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 20:36:31 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1567074985; bh=vETSxXFz+z6kkvd8+tgnd2IUnTRcMWof/A+nrcPf4o0=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=CaA9CUf9ajaWBZO94dIpZ+/EIldSm9k6alYLf8R5FmyBBOvmmLY9+Z9NrTxd+n4+v
- Qva+FFHo6iB8SIDN4atM8dpKUfQzWTUqIXStWoHkzR6V16Ba7mulBOoxWJ+54nh58Z
- 35RSdFGuMNzwSuBZB8BQyXr38sZGKaPmBUY84RVI=
-X-QQ-SSF: 00000000000000F000000000000000H
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 218.247.157.87
-In-Reply-To: <mailman.1763.1567021708.372.openbmc@lists.ozlabs.org>
-References: <mailman.1763.1567021708.372.openbmc@lists.ozlabs.org>
-X-QQ-STYLE: 
-X-QQ-mid: webenglish1t1567074663t463459
-From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
-To: "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: How to configure the snmp trap
-Mime-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46K0kJ5kRDzDqmY
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 21:29:12 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7TBT2WS124815
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 07:29:07 -0400
+Received: from e06smtp05.uk.ibm.com (e06smtp05.uk.ibm.com [195.75.94.101])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2upbuuckfe-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 07:29:06 -0400
+Received: from localhost
+ by e06smtp05.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Thu, 29 Aug 2019 12:29:05 +0100
+Received: from b06cxnps3075.portsmouth.uk.ibm.com (9.149.109.195)
+ by e06smtp05.uk.ibm.com (192.168.101.135) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 29 Aug 2019 12:29:02 +0100
+Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
+ [9.149.105.61])
+ by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x7TBT1lU56361008
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Aug 2019 11:29:01 GMT
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD68011C05E;
+ Thu, 29 Aug 2019 11:29:01 +0000 (GMT)
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF13E11C04C;
+ Thu, 29 Aug 2019 11:29:00 +0000 (GMT)
+Received: from [9.85.110.149] (unknown [9.85.110.149])
+ by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Aug 2019 11:29:00 +0000 (GMT)
+Subject: Re: Document about the REST interface
+To: =?UTF-8?B?WGlhb2NoYW8gTWEgKOmprOWwj+i2hSk=?= <maxiaochao@inspur.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <bcf71058f3494169b90ee051e0079bb6@inspur.com>
+From: vishwa <vishwa@linux.vnet.ibm.com>
+Date: Thu, 29 Aug 2019 16:58:59 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <bcf71058f3494169b90ee051e0079bb6@inspur.com>
 Content-Type: multipart/alternative;
- boundary="----=_NextPart_5D67A966_0E3F04B0_1EE927D1"
-Content-Transfer-Encoding: 8Bit
-Date: Thu, 29 Aug 2019 18:31:02 +0800
-X-Priority: 3
-Message-ID: <tencent_2C97DABC4F44BB346BFBDE36@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 386828080
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Thu, 29 Aug 2019 18:31:04 +0800 (CST)
-Feedback-ID: webenglish:qq.com:bgweb:bgweb1
+ boundary="------------3FD9013DC3095FE48644E220"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19082911-0020-0000-0000-000003653AEC
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19082911-0021-0000-0000-000021BA92DA
+Message-Id: <d0bbfd57-1b31-a34f-6629-896e963e357e@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-29_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=870 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1908290127
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,47 +91,140 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?ISO-8859-1?B?UmF0YW4gR3VwdGE=?= <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is a multi-part message in MIME format.
+--------------3FD9013DC3095FE48644E220
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-------=_NextPart_5D67A966_0E3F04B0_1EE927D1
-Content-Type: text/plain;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+Hi Ma,
 
-SGkgUmF0YW4sDQogIEkgYW0gdHJ5IHRvIHRlc3QgdGhlIHNubXAgdHJhcCBmZWF0dXJlIG9u
-IG9wZW5ibWMgMi44LjAtZGV2Lg0KVGhlcmUgaXMgbm8gbW9yZSBzbm1wIHV0aWwgY29tbWFu
-ZHMgc3VjaCBhcyBzbm1wdHJhcCBldGMuIGV4cGVjdCAgIHBob3NwaG9yLW5ldHdvcmstc25t
-cGNvbmYgLiBUaGUgZG9jdW1lbnQgLA0KICBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9w
-aG9zcGhvci1zbm1wL2Jsb2IvbWFzdGVyL2RvY3Mvc25tcC1jb25maWd1cmF0aW9uLm1kICwg
-IGRvZXMgbm90IGd1aWRlIG1lIHRvIGRvIHRoZSBzbm1wIHRyYXAgdGVzdC4NCiAgV291bGQg
-eW91IGxpa2UgdG8gZ2l2ZSBtZSBhIGRldGFpbCBpbnN0cnVjdGlvbiB0byBkbyB0aGUgc25t
-cCB0cmFwIHRlc3Q/IA0KDQoNCkJlc3QsDQpYaXV6aGk=
+Thanks for putting this together. Could you please create a pull request 
+so that it can go through the review process ?
 
-------=_NextPart_5D67A966_0E3F04B0_1EE927D1
-Content-Type: text/html;
-	charset="ISO-8859-1"
-Content-Transfer-Encoding: base64
+!! Vishwa !!
 
-PGRpdj5IaSBSYXRhbiw8L2Rpdj48ZGl2PiZuYnNwOyBJIGFtIHRyeSB0byB0ZXN0IHRoZSBz
-bm1wIHRyYXAgZmVhdHVyZSBvbiBvcGVuYm1jIDIuOC4wLWRldi48L2Rpdj48ZGl2PlRoZXJl
-IGlzIG5vIG1vcmUgc25tcCB1dGlsIGNvbW1hbmRzIHN1Y2ggYXMgc25tcHRyYXAgZXRjLiBl
-eHBlY3QmbmJzcDsgJm5ic3A7cGhvc3Bob3ItbmV0d29yay1zbm1wY29uZiAuIFRoZSBkb2N1
-bWVudCAsPC9kaXY+PGRpdj4mbmJzcDsmbmJzcDtodHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
-Yy9waG9zcGhvci1zbm1wL2Jsb2IvbWFzdGVyL2RvY3Mvc25tcC1jb25maWd1cmF0aW9uLm1k
-ICwmbmJzcDsgZG9lcyBub3QgZ3VpZGUgbWUgdG8gZG8gdGhlIHNubXAgdHJhcCB0ZXN0Ljwv
-ZGl2PjxkaXY+Jm5ic3A7IFdvdWxkIHlvdSBsaWtlIHRvIGdpdmUgbWUgYSBkZXRhaWwgaW5z
-dHJ1Y3Rpb24gdG8gZG8gdGhlIHNubXAgdHJhcCB0ZXN0Pzxmb250IGNvbG9yPSIjMzMzMzMz
-IiBmYWNlPSJhcmlhbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTogMTZweDsiPiZuYnNwOzwv
-c3Bhbj48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBjb2xvcj0iIzMzMzMzMyIgZmFjZT0iYXJp
-YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE2cHg7Ij48YnI+PC9zcGFuPjwvZm9udD48
-L2Rpdj48ZGl2Pjxmb250IGNvbG9yPSIjMzMzMzMzIiBmYWNlPSJhcmlhbCI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZTogMTZweDsiPkJlc3QsPC9zcGFuPjwvZm9udD48L2Rpdj48ZGl2Pjxm
-b250IGNvbG9yPSIjMzMzMzMzIiBmYWNlPSJhcmlhbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6
-ZTogMTZweDsiPlhpdXpoaTwvc3Bhbj48L2ZvbnQ+PC9kaXY+
+On 8/29/19 3:17 PM, Xiaochao Ma (马小超) wrote:
+>
+> I wrote a document about the REST interface (contains the REDFISH 
+> section ).
+> It contains all the commands in REST-cheatsheet.md , 
+> REDFISH-cheatsheet.md and a REST related document.
+> This document includes power, FW update, time settings, event log and 
+> related commands.
+> All commands have been run on the fp5280g2 machine.
+> I want to upload this document to openbmc/docs because I think this 
+> document is good for the community.
+> Can this document be accepted?
+> Here is the link:
+> https://github.com/inspur-bmc/openbmc-doc/blob/master/user's%20guide.md
+>
 
-------=_NextPart_5D67A966_0E3F04B0_1EE927D1--
+--------------3FD9013DC3095FE48644E220
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>Hi Ma,</p>
+    <p>Thanks for putting this together. Could you please create a pull
+      request so that it can go through the review process ?</p>
+    <p>!! Vishwa !!<br>
+    </p>
+    <div class="moz-cite-prefix">On 8/29/19 3:17 PM, Xiaochao Ma (马小超)
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:bcf71058f3494169b90ee051e0079bb6@inspur.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-priority:99;
+	mso-style-link:"纯文本 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:宋体;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.Char
+	{mso-style-name:"纯文本 Char";
+	mso-style-priority:99;
+	mso-style-link:纯文本;
+	font-family:宋体;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoPlainText"><span lang="EN-US">I wrote a document
+            about the REST interface (contains the REDFISH section ).<br>
+            It contains all the commands in REST-cheatsheet.md ,
+            REDFISH-cheatsheet.md and a REST related document.<br>
+            This document includes power, FW update, time settings,
+            event log and related commands.<br>
+            All commands have been run on the fp5280g2 machine.<br>
+            I want to upload this document to openbmc/docs because I
+            think this document is good for the community.<br>
+            Can this document be accepted?<br>
+            Here is the link:<br>
+<a class="moz-txt-link-freetext" href="https://github.com/inspur-bmc/openbmc-doc/blob/master/user's%20guide.md">https://github.com/inspur-bmc/openbmc-doc/blob/master/user's%20guide.md</a><o:p></o:p></span></p>
+        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------3FD9013DC3095FE48644E220--
 
