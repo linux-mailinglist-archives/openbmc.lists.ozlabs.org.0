@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EBE3A3356
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:05:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC9D1A3357
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:06:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KYTW11N5zDqDM
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:05:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KYVd5z14zDr2j
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:06:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,63 +16,63 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SP4jZYZ9"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="OvMiF7uW"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="V7MZosv8"; dkim-atps=neutral
+ header.b="1fmC+GT5"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQr5k3ZzDqB5
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:44 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQt6YDczDqZq
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:46 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 6650B21B5A;
- Fri, 30 Aug 2019 05:02:42 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 97C5D21C7D;
+ Fri, 30 Aug 2019 05:02:44 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:42 -0400
+ by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=qgxOet6Vexw+I
- T/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=SP4jZYZ9Ajnwz1uaDubvlgdgTYzVC
- 6VaT1bBbQshujl6FVfdkvBNlwwGrvtTvZQXwNkixL/4E0dU0AlB1lWC6/4gj44Pp
- BuXrQ86HT01UBIim3/aXW8tNbHpADio9F8fT0hZoZ0vIiKinQDa4S0z/hPj6TdKh
- LmCfFr5f1nnDcLSBx9hLWpwPqhNp5Y/1Yx5+0W4cCy+P6nrQ46c/OFnO7PaPAUnl
- KGG4aHM2FFesXL6Wakhri6H9WS2HIgLSH5o1l63o+DSuhljEDRLe5q2xeYQr4mrs
- kINqUowmCXTt8K+sYodiZZeArFBE3g+kxZ1V0nPV4DimpuyV/HPPdLQMw==
+ :mime-version:content-transfer-encoding; s=fm3; bh=RDwyLwvHbByVw
+ BGEjdoYpYdD89qsWbvbK620dSvHQ74=; b=OvMiF7uWbEFAI/W026SgK/92sVZsB
+ i9hd1P92tPTe4zZXBrl3rxLVslEZ2altgFg45d9ro9AgyCNNxt6lhNIUCTpsm95D
+ UcxOB5UJjAz4OLZTE5SLxmNZcg4zyxZmF9fhdlxhUyPbAP8f1Aa3gyOEhpjqgrFn
+ XMviIQOudA1iyU/9Z1uEhkXTbTHc6BKv9xnlNGj40sew8pqB+YsyS5CLUjCsvgFb
+ 2IkgR+iqJalS9JFju9D7zZks7k8k2Qh7noX6iVu0xZR+dHTM2EEkob8gTOy8vuhl
+ ogQXP4JLMZyREH8cu3pzR+0prLfkOgbofom6+R5IdMsUteh1Ddj1v14DQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=qgxOet6Vexw+IT/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=V7MZosv8
- WTqCjFNL/ZoIjf5Hl4A/DuU2v2ALxeAZmR8VCYFEe7hjzKo99ZXH+lp/culPBP+1
- rbPG2OO23x00fNk/Rk4Ky6UGzERA86Uk0bm3bi3lSQxj0i1uDkmP7piRGLREAzkd
- KQoHwPn7cbVjtskRIrymnxzXbGhvv6J6jlcM3qn9AUFooh39tQgmBfRLtbMyi+uo
- /G7SmmrGTkxkr4OXPaW5CAKwi+uT6LR4SLqiR1nH1zoDZ+6fkesJYA9wxiWMM29v
- vazIPPSN+fWWVtHg+Qb7gBpUOfOrQ8jsYDW34BDWyZADyCxo1yOxyiEpEgXQtVxl
- vRv/OJMN4pC5kQ==
-X-ME-Sender: <xms:MuZoXSxL6zVe3HRviqpxlYwtmXL75vZa5uyw5hLd6SDq5IxIUnM6ow>
+ fm3; bh=RDwyLwvHbByVwBGEjdoYpYdD89qsWbvbK620dSvHQ74=; b=1fmC+GT5
+ y+K+d7AEc5eU8xIFwtog4Qam4XvSROBSUPNeF5sutXXv25lbumnY7dLoGeUa1a/G
+ moPa00CdUwkUma9AtwPYJRASQNJjBRRtX/9cResisR30l9ve+nohPM0uUFHL1Yfl
+ KaZZA+WxBXwwF/96IpGooOF17OUfYxsSVa92pas5hTfkNv9KaGdms1uxfn3aehY7
+ f4o531GeCpAdAmPXFs1DIbsWy0BYdn0TExB6IjxNjrOijeMHWYhciEBHGQ+5lWcd
+ qIvu7uGqO6Z+sh7C/Op6T5EpxM8ca3ug9LGZpX2HW/gz6rYU0M8DehJ4hA9Soq+4
+ 6n4pqKN7cnYOgA==
+X-ME-Sender: <xms:NOZoXWNIHTEPgHuEIRvA1HkC5pxVtS5P9j-qogRFTALTO77-Lwml1Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
  dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
  jhdrihgurdgruheqnecukfhppedvtdefrdehjedrvdduhedrudejkeenucfrrghrrghmpe
  hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhi
- iigvpedt
-X-ME-Proxy: <xmx:MuZoXTsf4Z-eB9j2lo9Dlp8y2fpeAPQQmE7BND2rUGzOiTsHJc9jAA>
- <xmx:MuZoXZFtVBxrbAuMQNt28J0lFdAGC5s6Zq2c0DULAb0OrThfU5zeqA>
- <xmx:MuZoXZdVgu59NCQzcn5iSM7FQzt1QgSHk67ET7_BX_Tkp5qgT0eddw>
- <xmx:MuZoXYeGFOD6vkj4YlSkMHpaXz3TptPRfRbJSsW0GMRri3QpZZqsxQ>
+ iigvpedv
+X-ME-Proxy: <xmx:NOZoXVFVgBAo4L7li1C4Dl1VIr0WLCZL65piYYaqYfpz4NiJ40-Tjg>
+ <xmx:NOZoXUsuLL-lJLgAsIqoqvMtJt61N35uM9Mc8yvMmnW_6q1Zu34b6g>
+ <xmx:NOZoXdS3UXsxR-Xd-qVqO1HOjIAV--eryAnnsDoeb6Q0wDWHCwlX9g>
+ <xmx:NOZoXQ5RCzMGVR-XRrsXTZrX4quCkPMRjfsrCNUfioAuT0tRWoATpA>
 Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
  [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id C47D7D60062;
- Fri, 30 Aug 2019 05:02:40 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id D050ED60065;
+ Fri, 30 Aug 2019 05:02:42 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 2/5] mmc: sdhci-of-aspeed: Drop redundant
- assignment to host->clock
-Date: Fri, 30 Aug 2019 18:32:41 +0930
-Message-Id: <20190830090244.13566-3-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.2 3/5] mmc: sdhci-of-aspeed: Uphold clocks-on
+ post-condition of set_clock()
+Date: Fri, 30 Aug 2019 18:32:42 +0930
+Message-Id: <20190830090244.13566-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190830090244.13566-1-andrew@aj.id.au>
 References: <20190830090244.13566-1-andrew@aj.id.au>
@@ -93,37 +93,30 @@ Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-host->clock is already managed by sdhci_set_ios().
+The early-exit didn't seem to matter on the AST2500, but on the AST2600
+the SD clock genuinely may not be running on entry to
+aspeed_sdhci_set_clock(). Remove the early exit to ensure we always run
+sdhci_enable_clk().
 
-Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-of-aspeed.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index d5acb5afc50f..6ae81c8af431 100644
+index 6ae81c8af431..0b75806ed69d 100644
 --- a/drivers/mmc/host/sdhci-of-aspeed.c
 +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -61,7 +61,7 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+@@ -55,9 +55,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	int div;
+ 	u16 clk;
+ 
+-	if (clock == host->clock)
+-		return;
+-
  	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
  
  	if (clock == 0)
--		goto out;
-+		return;
- 
- 	for (div = 1; div < 256; div *= 2) {
- 		if ((host->max_clk / div) <= clock)
-@@ -72,9 +72,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
- 	clk = div << SDHCI_DIVIDER_SHIFT;
- 
- 	sdhci_enable_clk(host, clk);
--
--out:
--	host->clock = clock;
- }
- 
- static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
 -- 
 2.20.1
 
