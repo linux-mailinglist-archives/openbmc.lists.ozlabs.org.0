@@ -1,142 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69925A3FE7
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 23:47:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0221A40AF
+	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 00:48:32 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KtP371njzDr7b
-	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 07:47:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Kvlc1l8czDrBk
+	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 08:48:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=4145614214=benwei@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="LrO2e/um"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="ZAFey0U5"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ dmarc=none (p=none dis=none) header.from=us.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KtNJ33y4zDr6b
- for <openbmc@lists.ozlabs.org>; Sat, 31 Aug 2019 07:46:38 +1000 (AEST)
-Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- x7ULkXSC026210; Fri, 30 Aug 2019 14:46:34 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=facebook;
- bh=UX2IPoburKePrP/3CLUcNqSNVNV0TyoSz192aq88egQ=;
- b=LrO2e/umvU3SDJQntX6s5+V5AmMtLE6KTifxNGTjd44mUsNYeLTy/3l3PmZvrMYkfRMF
- sRVhRi2wtWah2Se4BR5UP5Vl38KlvlpRtmYViZ/tUMsROFfOdgszGDwMar74xFtRNdav
- LR93wTzOzPZXbj1fN1YmhVorLbmmAPYZy6Y= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2uq0s6bcev-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 30 Aug 2019 14:46:34 -0700
-Received: from ash-exopmbx201.TheFacebook.com (2620:10d:c0a8:83::8) by
- ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 30 Aug 2019 14:46:07 -0700
-Received: from ash-exhub101.TheFacebook.com (2620:10d:c0a8:82::e) by
- ash-exopmbx201.TheFacebook.com (2620:10d:c0a8:83::8) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 30 Aug 2019 14:46:07 -0700
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.173) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
- via Frontend Transport; Fri, 30 Aug 2019 14:46:07 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mci+vKFivBd6j/+i5gBbbLijLfltWLAQce6OJmsRPMAC00HFp8h0m9rlQVQtr2O7ENtw0/4hLFgMt/sIdczfO/1EN+A0SXZCiOrdL9UaGG8SNr+tvqA09cSlKrI3z7z74sraSwUK6Dz3pioWPTrbjnSm86zwxJY6qFiJnmUg5yz8Gk9mWUYELOfo7ZTaCyIYUMsbo7JQN1uKwHa/VsZMs5Xo8rkIkkeovYT2azywlUxFKO36sm92VEpOf7g7rflb5DgBRHgUg+VIXpy5UZruuE42wpf7ydgA10MQi2zgObkYl7UQrl4FRo4z7ohRfRRbs6zgT6l8NEU70LyDXYUtug==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UX2IPoburKePrP/3CLUcNqSNVNV0TyoSz192aq88egQ=;
- b=B4WwB2T1ydQQO4QRsGvQlifuqtO32QS8hPTz9Ukc1e2Ul/pcMKEDUzq6zuHVuyFYp8w3TY0Vq1BKgC8yxDNCn4E95Bzv1AnLKgdnThiaGmntRrrFCs5mv/kUrB5QegipyBvPNUQS4BDqk0Hgk/fM8l16Gn7SWvTLYa2QBbK4I9uh4g9w9pWRvAmalHdTtOc0/EMoaVN5JuzZdd40jCMrJUKhKOPW6qpXvRImgxZwO5qJtRXxClsP9QyZB+ILUMr579v7t/XX+JHhbPSdjPt1faWiMnlsfva6uWs7Y9x5gLLbFuShQRjhhni0AkIWGgdU3nV0peJ99nA9zIK6Q6jhlQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UX2IPoburKePrP/3CLUcNqSNVNV0TyoSz192aq88egQ=;
- b=ZAFey0U5S/OmyyU0dq78wcMBXoTqL2H+eeKe53Bq14VMJN1BWg97REAXeaIIkhs1KIrelRV4qg5znvHPQRqBHQoktnGM1CYjvu/OCWC3xepRsI51sM/ki51bFGXX5oKfaTZHTMvLs7K3YNOhLVknUbRpW3n1SJO5mVFdGk/g61c=
-Received: from CH2PR15MB3686.namprd15.prod.outlook.com (10.255.155.143) by
- CH2PR15MB3607.namprd15.prod.outlook.com (52.132.228.205) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2178.18; Fri, 30 Aug 2019 21:46:05 +0000
-Received: from CH2PR15MB3686.namprd15.prod.outlook.com
- ([fe80::9d88:b74a:48ea:cf6c]) by CH2PR15MB3686.namprd15.prod.outlook.com
- ([fe80::9d88:b74a:48ea:cf6c%5]) with mapi id 15.20.2199.021; Fri, 30 Aug 2019
- 21:46:05 +0000
-From: Ben Wei <benwei@fb.com>
-To: Terry Duncan <terry.s.duncan@linux.intel.com>, "sam@mendozajonas.com"
- <sam@mendozajonas.com>, "davem@davemloft.net" <davem@davemloft.net>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "Justin.Lee1@Dell.com" <Justin.Lee1@Dell.com>
-Subject: RE: [PATCH] ncsi-netlink: support sending NC-SI commands over Netlink
- interface
-Thread-Topic: [PATCH] ncsi-netlink: support sending NC-SI commands over
- Netlink interface
-Thread-Index: AdVZRhK7FBH7PA61Tj6DiPuS9P29HgGM2h4AAACIDLA=
-Date: Fri, 30 Aug 2019 21:46:05 +0000
-Message-ID: <CH2PR15MB3686CCC22840AD848796D6CAA3BD0@CH2PR15MB3686.namprd15.prod.outlook.com>
-References: <CH2PR15MB36860EECD2EA6D63BEA70110A3A40@CH2PR15MB3686.namprd15.prod.outlook.com>
- <0da11d73-b3ab-53f6-f695-30857a743a7b@linux.intel.com>
-In-Reply-To: <0da11d73-b3ab-53f6-f695-30857a743a7b@linux.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::2:6945]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 407d7b55-9fee-4b89-ed3b-08d72d9375d6
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:CH2PR15MB3607; 
-x-ms-traffictypediagnostic: CH2PR15MB3607:
-x-microsoft-antispam-prvs: <CH2PR15MB3607938569BE56D9BD259310A3BD0@CH2PR15MB3607.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:6790;
-x-forefront-prvs: 0145758B1D
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(39860400002)(136003)(396003)(346002)(376002)(199004)(189003)(256004)(478600001)(7736002)(52536014)(4744005)(74316002)(2201001)(305945005)(7696005)(102836004)(53546011)(86362001)(6506007)(316002)(76176011)(229853002)(5660300002)(110136005)(81166006)(8676002)(81156014)(8936002)(2906002)(6246003)(6436002)(55016002)(9686003)(53936002)(25786009)(99286004)(46003)(66446008)(14454004)(71190400001)(33656002)(446003)(486006)(186003)(64756008)(11346002)(476003)(66946007)(66556008)(66476007)(71200400001)(76116006)(6116002)(14444005)(2501003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:CH2PR15MB3607;
- H:CH2PR15MB3686.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: SW/N1FCuBLowG9Z7edXpVUOhxfLpkHnX7+KhwxilCdrlmQXIuF6cyczfc13pzEZyj6dnFy0iGN56AfPuBKVTEof9p3BSCl+HTcTEyu32PRQmmlvtdlw0UAXQ69F+iTBqJlpHi2pDifP5C+ECb4PJb+Cc7I6RALEMeU6KWQFPHP/jHUsEjTr02wFJJ8DDgzY09oEvQqQKMRvkdkW/bi4OzA3ZsD79Y2sQhBDwuHw+hdJG2nBcBA7eMbitkLetuJvo9dW78s7adxHN94azNO9v7BMIx6ZFwSARFq5rLYj/GzUmMfnfzXEjtLT+D/PuzaAly4dpu1Ao9HQQLXW4rub3buu38dcD1gEyv6ZyIx4c4PdYBeIaD6wneQwA9hrcHA9tFKH/Z0IGU1c0kbgP0C+op6sy7C+uq4c1jIC3/VArBN4=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Kvkr4KVVzDrBZ
+ for <openbmc@lists.ozlabs.org>; Sat, 31 Aug 2019 08:47:47 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x7UMkxcj018488
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 18:47:40 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.74])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2uqbbxadju-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 18:47:40 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Fri, 30 Aug 2019 22:47:40 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.92) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 30 Aug 2019 22:47:22 -0000
+Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2019083022472156-935807 ;
+ Fri, 30 Aug 2019 22:47:21 +0000 
+In-Reply-To: <20190828162617.237398-3-tmaimon77@gmail.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Date: Fri, 30 Aug 2019 22:47:21 +0000
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 407d7b55-9fee-4b89-ed3b-08d72d9375d6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Aug 2019 21:46:05.4347 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ZLziPJA7vYK4AYhXNZ4OhaIn9Rxb12j91XLp/GmqOLf/HSjSXWtYpR3Wh7vqZG2W
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR15MB3607
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
- definitions=2019-08-30_09:2019-08-29,2019-08-30 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- adultscore=0 mlxscore=0
- lowpriorityscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=999 spamscore=0 impostorscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1906280000 definitions=main-1908300208
-X-FB-Internal: deliver
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <20190828162617.237398-3-tmaimon77@gmail.com>,
+ <20190828162617.237398-1-tmaimon77@gmail.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-LLNOutbound: False
+X-Disclaimed: 11283
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 19083022-3165-0000-0000-000000D79B79
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.177132
+X-IBM-SpamModules-Versions: BY=3.00011687; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000287; SDB=6.01254435; UDB=6.00662622; IPR=6.01036056; 
+ MB=3.00028401; MTD=3.00000008; XFM=3.00000015; UTC=2019-08-30 22:47:37
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-08-30 17:30:21 - 6.00010349
+x-cbparentid: 19083022-3166-0000-0000-00001BF1D68D
+Message-Id: <OF311056DF.80F736D6-ON00258466.007A807F-00258466.007D2F93@notes.na.collabserv.com>
+Subject: Re:  [PATCH v1 2/2] hwrng: npcm: add NPCM RNG driver
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-08-30_09:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,24 +83,310 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
+ herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
+ avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, vkoul@kernel.org,
+ robh+dt@kernel.org, mpm@selenic.com, venture@google.com, tglx@linutronix.de,
+ jens.wiklander@linaro.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PiBPbiA4LzIyLzE5IDU6MDIgUE0sIEJlbiBXZWkgd3JvdGU6DQo+ID4gVGhpcyBwYXRjaCBleHRl
-bmRzIG5jc2ktbmV0bGluayBjb21tYW5kIGxpbmUgdXRpbGl0eSB0byBzZW5kIE5DLVNJIGNvbW1h
-bmQgdG8ga2VybmVsIGRyaXZlcg0KPiA+IHZpYSBOQ1NJX0NNRF9TRU5EX0NNRCBjb21tYW5kLg0K
-PiA+IA0KPiA+IE5ldyBjb21tYW5kIGxpbmUgb3B0aW9uIC1vIChvcGNvZGUpIGlzIHVzZWQgdG8g
-c3BlY2lmeSBOQy1TSSBjb21tYW5kIGFuZCBvcHRpb25hbCBwYXlsb2FkLg0KPiA+IA0KPg0KPiBU
-aGFuayB5b3UgZm9yIHBvc3RpbmcgdGhpcyBCZW4uDQo+IFNvbWV0aGluZyBsb29rcyBvZmYgb24g
-dGhpcyBuZXh0IGxpbmUgYnV0IGl0IGxvb2tzIGZpbmUgaW4geW91ciBwdWxsIA0KPiByZXF1ZXN0
-IGluIHRoZSBnaXRodWIuY29tL3NhbW1qL25jc2ktbmV0bGluayByZXBvLg0KPg0KPiA+ICtzdGF0
-aWMgaW50IHNlbmRfY2Ioc3RydWN0IG5sX21zZyAqbXNnLCB2b2lkICphcmcpIHsgI2RlZmluZQ0K
-PiA+ICtFVEhFUk5FVF9IRUFERVJfU0laRSAxNg0KPiA+ICsNCg0KWWVzIEkgdGhpbmsgbXkgZW1h
-aWwgY2xpZW50IHdhcyBub3QgY29uZmlndXJlZCBjb3JyZWN0bHkgZm9yIHBsYWluIHRleHQgc28g
-aXQncyByZW1vdmluZyBjZXJ0YWluIGxpbmUgYnJlYWtzLg0KSG9wZWZ1bGx5IEkgaGF2ZSB0aGlz
-IGZpZ3VyZWQgb3V0IG5vdyBzbyBteSBmdXR1cmUgcGF0Y2hlcyB3b24ndCBoYXZlIHRoaXMgaXNz
-dWUuDQoNCj4NCj4gRG8geW91IGhhdmUgcGxhbnMgdG8gdXBzdHJlYW0geW91ciB5b2N0byByZWNp
-cGUgZm9yIHRoaXMgcmVwbz8NCg0KWWVzIEkgc3VyZSBjYW4gdXBzdHJlYW0gdGhlIHJlY2lwZSBm
-aWxlLiBJIGhhZCB0byBtYWtlIGxvY2FsIGNoYW5nZXMgdG8gYnVpbGQgbmNzaS1uZXRsaW5rIGZv
-ciBteSBCTUMgcGxhdGZvcm0uDQpJcyB0aGVyZSBhIGdyb3VwIEkgbWF5IHN1Ym1pdCBteSByZWNp
-cGUgdG8/IA0KDQpUaGFua3MsDQotQmVuDQo=
+On August 28th around 11:28AM in some timezone, Tomer Maimon wrote
+
+>Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+>
+>Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+>---
+> drivers/char/hw=5Frandom/Kconfig    |  13 ++
+> drivers/char/hw=5Frandom/Makefile   |   1 +
+> drivers/char/hw=5Frandom/npcm-rng.c | 207
+>++++++++++++++++++++++++++++++
+> 3 files changed, 221 insertions(+)
+> create mode 100644 drivers/char/hw=5Frandom/npcm-rng.c
+>
+>diff --git a/drivers/char/hw=5Frandom/Kconfig
+>b/drivers/char/hw=5Frandom/Kconfig
+>index 59f25286befe..87a1c30e7958 100644
+>--- a/drivers/char/hw=5Frandom/Kconfig
+>+++ b/drivers/char/hw=5Frandom/Kconfig
+>@@ -440,6 +440,19 @@ config HW=5FRANDOM=5FOPTEE
+>=20
+> 	  If unsure, say Y.
+>=20
+>+config HW=5FRANDOM=5FNPCM
+>+	tristate "NPCM Random Number Generator support"
+>+	depends on ARCH=5FNPCM || COMPILE=5FTEST
+>+	default HW=5FRANDOM
+>+	help
+>+ 	  This driver provides support for the Random Number
+>+	  Generator hardware available in Nuvoton NPCM SoCs.
+>+
+>+	  To compile this driver as a module, choose M here: the
+>+	  module will be called npcm-rng.
+>+
+>+ 	  If unsure, say Y.
+>+
+> endif # HW=5FRANDOM
+>=20
+> config UML=5FRANDOM
+>diff --git a/drivers/char/hw=5Frandom/Makefile
+>b/drivers/char/hw=5Frandom/Makefile
+>index 7c9ef4a7667f..17b6d4e6d591 100644
+>--- a/drivers/char/hw=5Frandom/Makefile
+>+++ b/drivers/char/hw=5Frandom/Makefile
+>@@ -39,3 +39,4 @@ obj-$(CONFIG=5FHW=5FRANDOM=5FMTK)	+=3D mtk-rng.o
+> obj-$(CONFIG=5FHW=5FRANDOM=5FS390) +=3D s390-trng.o
+> obj-$(CONFIG=5FHW=5FRANDOM=5FKEYSTONE) +=3D ks-sa-rng.o
+> obj-$(CONFIG=5FHW=5FRANDOM=5FOPTEE) +=3D optee-rng.o
+>+obj-$(CONFIG=5FHW=5FRANDOM=5FNPCM) +=3D npcm-rng.o
+>diff --git a/drivers/char/hw=5Frandom/npcm-rng.c
+>b/drivers/char/hw=5Frandom/npcm-rng.c
+>new file mode 100644
+>index 000000000000..5b4b1b6cb362
+>--- /dev/null
+>+++ b/drivers/char/hw=5Frandom/npcm-rng.c
+>@@ -0,0 +1,207 @@
+>+// SPDX-License-Identifier: GPL-2.0
+>+// Copyright (c) 2019 Nuvoton Technology corporation.
+>+
+>+#include <linux/kernel.h>
+>+#include <linux/module.h>
+>+#include <linux/io.h>
+>+#include <linux/iopoll.h>
+>+#include <linux/init.h>
+>+#include <linux/random.h>
+>+#include <linux/err.h>
+>+#include <linux/platform=5Fdevice.h>
+>+#include <linux/hw=5Frandom.h>
+>+#include <linux/delay.h>
+>+#include <linux/of=5Firq.h>
+>+#include <linux/pm=5Fruntime.h>
+>+
+>+#define NPCM=5FRNGCS=5FREG		0x00	/* Control and status register */
+>+#define NPCM=5FRNGD=5FREG		0x04	/* Data register */
+>+#define NPCM=5FRNGMODE=5FREG	0x08	/* Mode register */
+>+
+>+#define NPCM=5FRNG=5FCLK=5FSET=5F25MHZ	GENMASK(4, 3) /* 20-25 MHz */
+>+#define NPCM=5FRNG=5FDATA=5FVALID	BIT(1)
+>+#define NPCM=5FRNG=5FENABLE		BIT(0)
+>+#define NPCM=5FRNG=5FM1ROSEL	BIT(1)
+>+
+>+#define NPCM=5FRNG=5FTIMEOUT=5FPOLL	20
+>+
+>+#define to=5Fnpcm=5Frng(p)	container=5Fof(p, struct npcm=5Frng, rng)
+>+
+>+struct npcm=5Frng {
+>+	void =5F=5Fiomem *base;
+>+	struct hwrng rng;
+>+};
+>+
+>+static int npcm=5Frng=5Finit(struct hwrng *rng)
+>+{
+>+	struct npcm=5Frng *priv =3D to=5Fnpcm=5Frng(rng);
+>+	u32 val;
+>+
+>+	val =3D readl(priv->base + NPCM=5FRNGCS=5FREG);
+>+	val |=3D NPCM=5FRNG=5FENABLE;
+>+	writel(val, priv->base + NPCM=5FRNGCS=5FREG);
+>+
+>+	return 0;
+>+}
+>+
+>+static void npcm=5Frng=5Fcleanup(struct hwrng *rng)
+>+{
+>+	struct npcm=5Frng *priv =3D to=5Fnpcm=5Frng(rng);
+>+	u32 val;
+>+
+>+	val =3D readl(priv->base + NPCM=5FRNGCS=5FREG);
+>+	val &=3D ~NPCM=5FRNG=5FENABLE;
+>+	writel(val, priv->base + NPCM=5FRNGCS=5FREG);
+>+}
+>+
+>+static bool npcm=5Frng=5Fwait=5Fready(struct hwrng *rng, bool wait)
+>+{
+>+	struct npcm=5Frng *priv =3D to=5Fnpcm=5Frng(rng);
+>+	int timeout=5Fcnt =3D 0;
+>+	int ready;
+>+
+>+	ready =3D readl(priv->base + NPCM=5FRNGCS=5FREG) & NPCM=5FRNG=5FDATA=5FV=
+ALID;
+
+You should honor the wait paramter here.
+
+>+	while ((ready =3D=3D 0) && (timeout=5Fcnt < NPCM=5FRNG=5FTIMEOUT=5FPOLL)=
+) {
+>+		usleep=5Frange(500, 1000);
+>+		ready =3D readl(priv->base + NPCM=5FRNGCS=5FREG) &
+>+			NPCM=5FRNG=5FDATA=5FVALID;
+>+		timeout=5Fcnt++;
+>+	}
+>+
+>+	return !!ready;
+>+}
+>+
+>+static int npcm=5Frng=5Fread(struct hwrng *rng, void *buf, size=5Ft max,
+>bool wait)
+>+{
+>+	struct npcm=5Frng *priv =3D to=5Fnpcm=5Frng(rng);
+>+	int retval =3D 0;
+>+
+>+	pm=5Fruntime=5Fget=5Fsync((struct device *)priv->rng.priv);
+>+
+>+	while (max >=3D sizeof(u32)) {
+>+		if (!npcm=5Frng=5Fwait=5Fready(rng, wait))
+>+			break;
+>+
+>+		*(u32 *)buf =3D readl(priv->base + NPCM=5FRNGD=5FREG);
+>+		retval +=3D sizeof(u32);
+>+		buf +=3D sizeof(u32);
+>+		max -=3D sizeof(u32);
+>+	}
+>+
+>+	pm=5Fruntime=5Fmark=5Flast=5Fbusy((struct device *)priv->rng.priv);
+>+	pm=5Fruntime=5Fput=5Fsync=5Fautosuspend((struct device *)priv->rng.priv);
+>+
+>+	return retval || !wait ? retval : -EIO;
+
+So you are doing pm get/put around each rng data sample.
+
+Have you characterized the time to enable to the time to get a sample
+and compared to the pm runtime sync parameters?
+
+Do you get any data if you set non-blocking wait above?
+
+
+>+}
+>+
+>+static int npcm=5Frng=5Fprobe(struct platform=5Fdevice *pdev)
+>+{
+>+	struct npcm=5Frng *priv;
+>+	struct resource *res;
+>+	u32 quality;
+>+	int ret;
+>+
+>+	priv =3D devm=5Fkzalloc(&pdev->dev, sizeof(*priv), GFP=5FKERNEL);
+>+	if (!priv)
+>+		return -ENOMEM;
+>+
+>+	res =3D platform=5Fget=5Fresource(pdev, IORESOURCE=5FMEM, 0);
+>+	priv->base =3D devm=5Fioremap=5Fresource(&pdev->dev, res);
+>+	if (IS=5FERR(priv->base))
+>+		return PTR=5FERR(priv->base);
+>+
+>+	priv->rng.name =3D pdev->name;
+>+#ifndef CONFIG=5FPM
+>+	priv->rng.init =3D npcm=5Frng=5Finit;
+>+	priv->rng.cleanup =3D npcm=5Frng=5Fcleanup;
+
+so npcm=5Frng=5Finit and npcm=5Frng=5Fcleanup are unused if !CONFIG=5FPM.  =
+No warnings?
+
+>+#endif
+>+	priv->rng.read =3D npcm=5Frng=5Fread;
+>+	priv->rng.priv =3D (unsigned long)&pdev->dev;
+>+	if (of=5Fproperty=5Fread=5Fu32(pdev->dev.of=5Fnode, "quality", &quality))
+>+		priv->rng.quality =3D 1000;
+>+	else
+>+		priv->rng.quality =3D quality;
+>+
+>+	writel(NPCM=5FRNG=5FM1ROSEL, priv->base + NPCM=5FRNGMODE=5FREG);
+>+#ifndef CONFIG=5FPM
+>+	writel(NPCM=5FRNG=5FCLK=5FSET=5F25MHZ, priv->base + NPCM=5FRNGCS=5FREG);
+>+#else
+>+	writel(NPCM=5FRNG=5FCLK=5FSET=5F25MHZ | NPCM=5FRNG=5FENABLE,
+>+	       priv->base + NPCM=5FRNGCS=5FREG);
+>+#endif
+
+I am assuming these are safe to always set and the clock will
+bein range?
+
+Did you test without CONFIG=5FPM ? Looks like the ifndev should be
+ifdef otherwise the enable will never be set.
+
+Can you use a local variable for this value that is chosen by
+the config instead of ifdef'ing the code?
+
+
+
+>+
+>+	ret =3D devm=5Fhwrng=5Fregister(&pdev->dev, &priv->rng);
+>+	if (ret) {
+>+		dev=5Ferr(&pdev->dev, "Failed to register rng device: %d\n",
+>+			ret);
+>+		return ret;
+>+	}
+>+
+>+	dev=5Fset=5Fdrvdata(&pdev->dev, priv);
+>+	pm=5Fruntime=5Fset=5Fautosuspend=5Fdelay(&pdev->dev, 100);
+>+	pm=5Fruntime=5Fuse=5Fautosuspend(&pdev->dev);
+>+	pm=5Fruntime=5Fenable(&pdev->dev);
+>+
+>+	dev=5Finfo(&pdev->dev, "Random Number Generator Probed\n");
+>+
+>+	return 0;
+>+}
+>+
+>+static int npcm=5Frng=5Fremove(struct platform=5Fdevice *pdev)
+>+{
+>+	struct npcm=5Frng *priv =3D platform=5Fget=5Fdrvdata(pdev);
+>+
+>+	hwrng=5Funregister(&priv->rng);
+>+	pm=5Fruntime=5Fdisable(&pdev->dev);
+>+	pm=5Fruntime=5Fset=5Fsuspended(&pdev->dev);
+>+
+>+	return 0;
+>+}
+>+
+>+#ifdef CONFIG=5FPM
+>+static int npcm=5Frng=5Fruntime=5Fsuspend(struct device *dev)
+>+{
+>+	struct npcm=5Frng *priv =3D dev=5Fget=5Fdrvdata(dev);
+>+
+>+	npcm=5Frng=5Fcleanup(&priv->rng);
+>+
+>+	return 0;
+>+}
+>+
+>+static int npcm=5Frng=5Fruntime=5Fresume(struct device *dev)
+>+{
+>+	struct npcm=5Frng *priv =3D dev=5Fget=5Fdrvdata(dev);
+>+
+>+	return npcm=5Frng=5Finit(&priv->rng);
+>+}
+>+#endif
+>+
+>+static const struct dev=5Fpm=5Fops npcm=5Frng=5Fpm=5Fops =3D {
+>+	SET=5FRUNTIME=5FPM=5FOPS(npcm=5Frng=5Fruntime=5Fsuspend,
+>+			   npcm=5Frng=5Fruntime=5Fresume, NULL)
+>+	SET=5FSYSTEM=5FSLEEP=5FPM=5FOPS(pm=5Fruntime=5Fforce=5Fsuspend,
+>+				pm=5Fruntime=5Fforce=5Fresume)
+>+};
+>+
+>+static const struct of=5Fdevice=5Fid rng=5Fdt=5Fid[] =3D {
+>+	{ .compatible =3D "nuvoton,npcm750-rng",  },
+>+	{},
+>+};
+>+MODULE=5FDEVICE=5FTABLE(of, rng=5Fdt=5Fid);
+>+
+>+static struct platform=5Fdriver npcm=5Frng=5Fdriver =3D {
+>+	.driver =3D {
+>+		.name		=3D "npcm-rng",
+>+		.pm		=3D &npcm=5Frng=5Fpm=5Fops,
+>+		.owner		=3D THIS=5FMODULE,
+>+		.of=5Fmatch=5Ftable =3D of=5Fmatch=5Fptr(rng=5Fdt=5Fid),
+>+	},
+>+	.probe		=3D npcm=5Frng=5Fprobe,
+>+	.remove		=3D npcm=5Frng=5Fremove,
+>+};
+>+
+>+module=5Fplatform=5Fdriver(npcm=5Frng=5Fdriver);
+>+
+>+MODULE=5FDESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
+>+MODULE=5FAUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+>+MODULE=5FLICENSE("GPL v2");
+>--=20
+>2.18.0
+>
+>
+
