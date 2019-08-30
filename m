@@ -2,81 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8F7CA3361
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:07:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 294A8A348E
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:59:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KYXn3dvbzDr2P
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:07:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KZh56tx4zDqpr
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:59:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::32d; helo=mail-ot1-x32d.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="lo4zR/78"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="CWUE7K9P"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="kAZYUnkw"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com
+ [IPv6:2607:f8b0:4864:20::32d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQz0hHDzDr2h
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:51 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id AC55D21E44;
- Fri, 30 Aug 2019 05:02:48 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=rm+5UcMSfAOhK
- YwVFY13EEfKfl+FUXza08LZQXvzmmY=; b=lo4zR/78mgaV2NjVxyuwfT5UFuXUF
- bDge13WPb2wHW1Lc+a8PSqsKUgx28IAFIx+pqVuKu3RBY2EUzfMzOiLKnhjNHe+K
- 1qHq6iY0HsZOoyab+dcuPn1vboNwpRhQFIDHAhC0bUtLlFkcPcn+bNZ2u8ujZe7j
- 2IlZwRmLFxCPuenlkMYgDfTftzvP5Ln3CN5UVPWodasyb3Vw+YKv3eDmQQ5Z8Fm1
- wWFY3Smhk0lGIQIRqjX1ICCqozRJy78GdA5tNdUHin0AQlY8mRzCDbZjXWM+J3os
- glC67ku5w7ZfS3E48YuiOP5tpIVzi0YrCxmvnw9sPIuGvWnWbDf3RTUyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=rm+5UcMSfAOhKYwVFY13EEfKfl+FUXza08LZQXvzmmY=; b=CWUE7K9P
- 3dx/eC42K9e/Bj0QMnAVm0FBOhtcIV3X/QnJIDju2QhJLZjgp+RNDui+B88lpRN7
- z0Tg0HDy+l69V90DZs5lrWkxdRWegEZoxrV7A87EpMm18Yk6iGgELmZZCn+vQvRT
- XiW+ojYRBGKugwRs3rVVWxuC0aOlTF6FDMHxr2XbEwEcsp2fEdDpowsaITFvTMw0
- +DqImqvvF+IC1OLJRiGS+22z/purOPeQZk/0DjJ2iARScDuQFtiXB96ZYCtVwOpV
- M9pEKJ6vtLHej5pF+wrPaAJgtofg340+1HIoiGx04O2lqA6tnuAgb3ZoVYt8N4uF
- 8qf+B6UYsDxcBA==
-X-ME-Sender: <xms:OOZoXY6qPuQhdRi2N9U3N-HDpc-z3gqOnYzA5GZvcbTGtbVwcWeBNg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
- dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
- jhdrihgurdgruheqnecukfhppedvtdefrdehjedrvdduhedrudejkeenucfrrghrrghmpe
- hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhi
- iigvpedv
-X-ME-Proxy: <xmx:OOZoXYKlPZBYPhJvtnkScoenvjdbA73cIG-xvLTZo1KFk7wBq71bRA>
- <xmx:OOZoXRnItiOrUq0igp9jE8SivANL2yiskwCaJ3huPSFRMSiyYDmBqQ>
- <xmx:OOZoXZgDiGE0EuE3mAnlqIeMbt8yeTSzikunZ2n9eH5GaYQAefazdg>
- <xmx:OOZoXcJxVc_To1_CeMFPUd_vXUYVGo8U9DOhLNPx0XD3b9P0HSYw9A>
-Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
- [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 04DDAD6005B;
- Fri, 30 Aug 2019 05:02:46 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 5/5] ARM: dts: ast2600-evb: eMMC configuration
-Date: Fri, 30 Aug 2019 18:32:44 +0930
-Message-Id: <20190830090244.13566-6-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190830090244.13566-1-andrew@aj.id.au>
-References: <20190830090244.13566-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KZgQ3DjpzDr2k
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:58:42 +1000 (AEST)
+Received: by mail-ot1-x32d.google.com with SMTP id g111so3336673otg.9
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 02:58:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=NSkljrY/kOuoBKvgehA3pQhbAS7x01i7e/qdHz3BPto=;
+ b=kAZYUnkwLKxZm2cbjnxTG2A0R9bHkwRm1CJlqpNIn/oNb+zG6MU2Km50k68d/4GTOe
+ DiDWTzmx7Ok8g/hmleIZKjI5SA5iX3ydwIJWegd9TKo0CWbEkAgYz3kBWDdsMrorC9IM
+ 5yXzagQY/2gyLQwjUkBk3j7Bg50YLzaoRbq5YMOO15YTUVlcnj/NDfjJUmHDJdVHdw5c
+ HC/V8GnOjLKVkTb2lRil83wsJlZkY4YdoGWcscNp3zPAt4sgRL8gXelc2GgUAaZ9m5rd
+ cZlFIAmB/mFTNP7D2X8T7fdQIfcjMkABwBDwrjchB/raY3hBm6IeFz4OTCBDrFVLUtnC
+ vt/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=NSkljrY/kOuoBKvgehA3pQhbAS7x01i7e/qdHz3BPto=;
+ b=sxOjuibng4MMNSTeQnsw6IrX+b5VS+gNpCstQjuZOZhYpV0VpbEvKPCZzXtESUpJcV
+ pXz+hr/m7zhXRINRbiZr7kGs9FFtyuPVbtLSBgBC843Rn9mAODHaO0hdiTSCpTcbKpd7
+ Ya8OHlxUO18GnfEPa6yJWnYMO1DzOAQQ4oXlz7sK97yyQLJhMLWXA1QhDPf4+5Vma0iP
+ 9ttQgikbb8sIozdzAvLeuYb1eEJkfV+vVwKJM29x0I1oNsHiFeo8EEGKY1x7iqnDVuof
+ jAD3khOSmROLS2Zn4woK1R8qupcVh5QAGFdst1mmbKmIOn5AMvogNMEab6gu5WdWiL61
+ 8IWw==
+X-Gm-Message-State: APjAAAWaq/X5u27zKe1+YlGT57o1RyghwsTcM0k0uXQW4WHvWaMzZlY/
+ bYsg6xzDR4IiMZjZDOQg4lS1+HT8673D3+ZUOkfam5aP
+X-Google-Smtp-Source: APXvYqzsmR33+2lTm5IxA/V0yfzyT+Fv2XSPDD+RAOba0I9xr9S4m9WpukojBbDznJddTTKYkr9ImEUKsU4VU9JV+dw=
+X-Received: by 2002:a05:6830:1e87:: with SMTP id
+ n7mr2022667otr.263.1567159118587; 
+ Fri, 30 Aug 2019 02:58:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Fri, 30 Aug 2019 04:58:22 -0500
+Message-ID: <CALLMt=o3+h7JpEdyFci7BXzpDyN2XvYvDmxOGLwOxaqn9OneNw@mail.gmail.com>
+Subject: stack overflow tag for openbmc questions?
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,61 +70,12 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Enable the eMMC controller and limit it to 52MHz to avoid the host
-controller reporting error conditions.
+As a community, we're getting more and more questions via
+IRC, the mailing list, and openbmc github issues. Any thoughts
+on creating a stack overflow tag to try and get a more searchable
+and consistent location for questions (i.e. openbmc)?
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/boot/dts/aspeed-ast2600-evb.dts | 8 +++++++-
- arch/arm/boot/dts/aspeed-g6.dtsi         | 4 ++--
- 2 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-index 2cb92d2a1041..9613cff2ce3a 100644
---- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-+++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-@@ -39,8 +39,14 @@
- 	phy-handle = <&ethphy1>;
- };
- 
-+&emmc_controller {
-+	status = "okay";
-+};
-+
- &emmc {
--	status = "disabled";
-+	non-removable;
-+	bus-width = <4>;
-+	max-frequency = <52000000>;
- };
- 
- &fsim0 {
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index d0507f797981..12569e502678 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -235,7 +235,7 @@
- 				};
- 			};
- 
--			emmc: sdc@1e750000 {
-+			emmc_controller: sdc@1e750000 {
- 				compatible = "aspeed,ast2600-sd-controller";
- 				reg = <0x1e750000 0x100>;
- 				#address-cells = <1>;
-@@ -244,7 +244,7 @@
- 				clocks = <&syscon ASPEED_CLK_GATE_EMMCCLK>;
- 				status = "disabled";
- 
--				sdhci@1e750100 {
-+				emmc: sdhci@1e750100 {
- 					compatible = "aspeed,ast2600-sdhci";
- 					reg = <0x100 0x100>;
- 					sdhci,auto-cmd12;
--- 
-2.20.1
-
+Andrew
