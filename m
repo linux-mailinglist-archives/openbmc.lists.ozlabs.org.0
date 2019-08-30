@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEFC9A3355
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:04:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EBE3A3356
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:05:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KYSW1cDpzDqZq
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:04:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KYTW11N5zDqDM
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:05:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,63 +16,63 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Uw+aX94S"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SP4jZYZ9"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="j8QZHO/1"; dkim-atps=neutral
+ header.b="V7MZosv8"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQp6VMhzDqB5
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:42 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQr5k3ZzDqB5
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:44 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 7F1232202A;
- Fri, 30 Aug 2019 05:02:40 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 6650B21B5A;
+ Fri, 30 Aug 2019 05:02:42 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:40 -0400
+ by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=N+/xHfrW3aULX
- QCqVybged8XEa4ya5xZpQyzoYwgBTM=; b=Uw+aX94SOlLPM1U3DFp/+EEDXWbdA
- kTJ82sO4tBCBPLTJU5988b+gpOhRAueukhiwqjwpaJDsOaJmPvq5Qn36QG/7Sacf
- c4LvGYie0iYWpKG7LZT2l2GJpom12BEOeLksZs7w/DPLOgY5CG9WKpxXTFNRzist
- uEGbKUIOMv/v6SSPakDiO8V9/vmc6Jk3vsEdFCioGunJSP7qE7thmuwM/X2v9R4q
- LeCeX6218zmW5aqw6HSJ06PGZsa/tIjx/nkrmDS+JV1I6uN+ySDWGxUFr4s4a09H
- f3fmOh7wpkNytTC7XQQ4QqtjhwCNsWo72xIGlY7NbJQbSjWaDuzGDUVCQ==
+ :mime-version:content-transfer-encoding; s=fm3; bh=qgxOet6Vexw+I
+ T/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=SP4jZYZ9Ajnwz1uaDubvlgdgTYzVC
+ 6VaT1bBbQshujl6FVfdkvBNlwwGrvtTvZQXwNkixL/4E0dU0AlB1lWC6/4gj44Pp
+ BuXrQ86HT01UBIim3/aXW8tNbHpADio9F8fT0hZoZ0vIiKinQDa4S0z/hPj6TdKh
+ LmCfFr5f1nnDcLSBx9hLWpwPqhNp5Y/1Yx5+0W4cCy+P6nrQ46c/OFnO7PaPAUnl
+ KGG4aHM2FFesXL6Wakhri6H9WS2HIgLSH5o1l63o+DSuhljEDRLe5q2xeYQr4mrs
+ kINqUowmCXTt8K+sYodiZZeArFBE3g+kxZ1V0nPV4DimpuyV/HPPdLQMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=N+/xHfrW3aULXQCqVybged8XEa4ya5xZpQyzoYwgBTM=; b=j8QZHO/1
- NE1knNdBbk2JRWPFraUjEbkxnqGoWnOMKG05BQ9PNcWhzk4k8nn4SLyGPex+AK61
- MIZZOE/6ewzyMjyA4CquLBZmnK2TcPa5KlPix+EIu8Z7e12OL5s15XqYU/rvJkmW
- nHcRUyet1OlXiooogRw1SA2djUb/7lzdea/EY/8CWkPlWLRlPkJKfZaILgaJkeVD
- zW8KEqqEZIZZvhamjXHbmnE0P75T1v9N4c9V2hGRrJywkQjbpxtjmY2CyQjfhjs8
- FkIpHlBu/aD8/lVCJYOXqRd9rB5W7pPvhUZvzgGyMojRbJzACOBn5/IMQgvDDKux
- yj/m+R2zZL4Tqw==
-X-ME-Sender: <xms:MOZoXZB6nlByO7A_PaH2SR3cNtYEH-C361NukQ-WzWaOFZqy5AoS1g>
+ fm3; bh=qgxOet6Vexw+IT/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=V7MZosv8
+ WTqCjFNL/ZoIjf5Hl4A/DuU2v2ALxeAZmR8VCYFEe7hjzKo99ZXH+lp/culPBP+1
+ rbPG2OO23x00fNk/Rk4Ky6UGzERA86Uk0bm3bi3lSQxj0i1uDkmP7piRGLREAzkd
+ KQoHwPn7cbVjtskRIrymnxzXbGhvv6J6jlcM3qn9AUFooh39tQgmBfRLtbMyi+uo
+ /G7SmmrGTkxkr4OXPaW5CAKwi+uT6LR4SLqiR1nH1zoDZ+6fkesJYA9wxiWMM29v
+ vazIPPSN+fWWVtHg+Qb7gBpUOfOrQ8jsYDW34BDWyZADyCxo1yOxyiEpEgXQtVxl
+ vRv/OJMN4pC5kQ==
+X-ME-Sender: <xms:MuZoXSxL6zVe3HRviqpxlYwtmXL75vZa5uyw5hLd6SDq5IxIUnM6ow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
- ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfkphepvddtfe
- drheejrddvudehrddujeeknecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfies
- rghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:MOZoXXFN718b4IBAjyIwClCtqeKqx63DVTTSul9GeEbrBD89gI2pAg>
- <xmx:MOZoXYogV5j0SD8OWiGZBdoVpArifFfQivGKbDCHrxfzx0wJO0TgdA>
- <xmx:MOZoXThm_4KW1ZcrtDTgkGg51dzLMlFwBp8-KapnUaWTSuqvQ16dpQ>
- <xmx:MOZoXV0UTQNV6jR586-gwTG1r4Z2ID3d1MdD2jmmYllp1RAM0zSZvg>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+ dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
+ jhdrihgurdgruheqnecukfhppedvtdefrdehjedrvdduhedrudejkeenucfrrghrrghmpe
+ hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhi
+ iigvpedt
+X-ME-Proxy: <xmx:MuZoXTsf4Z-eB9j2lo9Dlp8y2fpeAPQQmE7BND2rUGzOiTsHJc9jAA>
+ <xmx:MuZoXZFtVBxrbAuMQNt28J0lFdAGC5s6Zq2c0DULAb0OrThfU5zeqA>
+ <xmx:MuZoXZdVgu59NCQzcn5iSM7FQzt1QgSHk67ET7_BX_Tkp5qgT0eddw>
+ <xmx:MuZoXYeGFOD6vkj4YlSkMHpaXz3TptPRfRbJSsW0GMRri3QpZZqsxQ>
 Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
  [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 6DF14D60062;
- Fri, 30 Aug 2019 05:02:38 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id C47D7D60062;
+ Fri, 30 Aug 2019 05:02:40 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 1/5] mmc: sdhci-of-aspeed: Fix return value
- check in aspeed_sdc_probe()
-Date: Fri, 30 Aug 2019 18:32:40 +0930
-Message-Id: <20190830090244.13566-2-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.2 2/5] mmc: sdhci-of-aspeed: Drop redundant
+ assignment to host->clock
+Date: Fri, 30 Aug 2019 18:32:41 +0930
+Message-Id: <20190830090244.13566-3-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190830090244.13566-1-andrew@aj.id.au>
 References: <20190830090244.13566-1-andrew@aj.id.au>
@@ -89,41 +89,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+host->clock is already managed by sdhci_set_ios().
 
-In case of error, the function of_platform_device_create() returns
-NULL pointer not ERR_PTR(). The IS_ERR() test in the return value
-check should be replaced with NULL test.
-
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-(cherry picked from commit 7b7de08a14b59d45cc4720bfb21732063ccfc8f6)
+Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-aspeed.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index 8bb095ca2fa9..d5acb5afc50f 100644
+index d5acb5afc50f..6ae81c8af431 100644
 --- a/drivers/mmc/host/sdhci-of-aspeed.c
 +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -261,9 +261,9 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
- 		struct platform_device *cpdev;
+@@ -61,7 +61,7 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
  
- 		cpdev = of_platform_device_create(child, NULL, &pdev->dev);
--		if (IS_ERR(cpdev)) {
-+		if (!cpdev) {
- 			of_node_put(child);
--			ret = PTR_ERR(cpdev);
-+			ret = -ENODEV;
- 			goto err_clk;
- 		}
- 	}
+ 	if (clock == 0)
+-		goto out;
++		return;
+ 
+ 	for (div = 1; div < 256; div *= 2) {
+ 		if ((host->max_clk / div) <= clock)
+@@ -72,9 +72,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	clk = div << SDHCI_DIVIDER_SHIFT;
+ 
+ 	sdhci_enable_clk(host, clk);
+-
+-out:
+-	host->clock = clock;
+ }
+ 
+ static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
 -- 
 2.20.1
 
