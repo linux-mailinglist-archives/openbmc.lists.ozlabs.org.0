@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB428A3180
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 09:47:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E5EFA3188
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 09:49:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KWmB2WnSzF0WS
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 17:47:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KWny3P2WzF0Tn
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 17:49:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,62 +16,66 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="QOcqzeZA"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Gm2vqLZR"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="1H1dbsIz"; dkim-atps=neutral
+ header.b="gGd/ZFur"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KWl62tMxzDsS0;
- Fri, 30 Aug 2019 17:46:41 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KWl85fhLzDsRY;
+ Fri, 30 Aug 2019 17:46:44 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 1AFE3210F2;
- Fri, 30 Aug 2019 03:46:38 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 5D68120A34;
+ Fri, 30 Aug 2019 03:46:42 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 03:46:38 -0400
+ by compute4.internal (MEProxy); Fri, 30 Aug 2019 03:46:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm3; bh=wOiPzLG3FhxjtzR8rsBkC79oy1
- 3YcSX1rCw5Ip7LvOk=; b=QOcqzeZAvNkdX0XrmuI/41pdvneLhtVk+adFkiK8Jd
- xkjTDB/Z9UdtH6CVT9XFRrU/m178LYhbaH2qF6bmU7Lggshign+2mhLdsXyEWE27
- gpaAS4ua+CTurEp0IYTrFRUdowCdzsLTEIfa1fz8cK+Pmo2p5KECYYOfmMDErOsI
- Ltj1V/zoQw8Xk0PMhZtkZs2IP24Ror++YkMtw957Horncu1zNHSvL+WT3xrx9EQV
- 2uznitynpymlwI2uLLx4IIfDCHUv6QEYWOexettkzzJi3I4yx02lTJan4o6T5Qmy
- XNPnVssx/tyE4D4Bxrc0hTculT/caS1QFOApUkJN0xxg==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=fm3; bh=2Kccgmz9rjelR
+ IO9aczulPQlBm48n9tsTFBim9C8Ml0=; b=Gm2vqLZREqLxAukDM2yV1i9iRpLfD
+ kGEaAs8Or3YMclJd02jJ/gWPn+ixd82VkTgoIgv5rDbSoh0tdu9mMFLCIrQabSrJ
+ t0JP8ZnYtiJ7/4tEZQUDc0kFBR1qxJWYRk7/GB9QxKhX4u4MFvRKHJ50ICU1NhU9
+ dhepCKIw+dM3jSCVp844BFWK6iHbN2W1VYtCLwClOFwQQNE67MgI7qAvTPSba8QU
+ 0tM/q00t2Jahn1e2zEayOEgmHDitp158M6csj43vdXwF+W+R+vba5dUBdLL0mhn8
+ DJVpWUzhp83qi+hDZGgIwPw/NTY5u47E9SAEWLCUEgo5cDVhyUjVT2FSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=wOiPzLG3FhxjtzR8r
- sBkC79oy13YcSX1rCw5Ip7LvOk=; b=1H1dbsIzWAOdpx7lcBsSNh8xQqir/bqpa
- RoEpc/IGrrncVUYSadJU7HPmajDudhVbyVrpigJNt5KyfoDRBpwBZNj0FdipJ4V3
- FVs2kG46zuICyI10xicke0dyWyXq0HlIsppHg3CEW4cJl/Q5RbY4tVmpgfOenWr+
- DgHPXTROLbPLr95ZJ0bl7qvSpK6pomU4Atc2eNVhUEZuC4TewLA+WEdJcnuT9qpp
- +zl+p5xRnTT/+o3K0syw2rE6wfa1oIGs9OaDbrFuUw4CKnR/vXH2h2/kqnMKYuW5
- gtUiMsmM7CHNp4REMN7vnO2cOV+pEIze9Mpzdpyb/WlQzMG85cdtQ==
-X-ME-Sender: <xms:WtRoXRJpycpv8bq9ZYWroPC8dbNZoOC0f2YgaZHEgarQTFwEw91DuQ>
+ :in-reply-to:message-id:mime-version:references:subject:to
+ :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; bh=2Kccgmz9rjelRIO9aczulPQlBm48n9tsTFBim9C8Ml0=; b=gGd/ZFur
+ YFw1xQhxP0fenQwUuAJeUJ9AT7Z86GjJCtNWV7jp8s2f0OkCFjrDM54UheVpcvhA
+ VBzzRGbtOQb+/1r/SxJwf42YPfQA6ysXEI+xvwkYrkLF1SQwTV52NYQzv/5sTsAo
+ sfiVJ8QFx8FsiWHdAap09KGlbxeZXoQUCWFzykDBG3YiQQc5yJKRbbgFJsd2ivEH
+ Ypp33OTOT6dKZMNtCAP725KG4t6IyMokaVXRRKA2C2x3xXr9NyHrt4oss/tUg9Hq
+ TL0L19WM5fXfTXS63dx2y9VDgY2OaJta9h2zTC2h4jnXonPISmh74ck7S7FnJ4nD
+ xv+ILEoNi1cRdg==
+X-ME-Sender: <xms:YtRoXW5coA30Yg9-8ujHS4OCJT0dOkZzBQESCUuxdq7GRpB5lXvL7w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeifedguddvudcutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
- ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
- grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
- vgeptd
-X-ME-Proxy: <xmx:WtRoXcIydX4ajN2Gjn9zQkLTF4IiE2BLocK07jfkTD3KszNDJHPsDQ>
- <xmx:WtRoXWXWcxCsps0CZuPIVgBiChwt0G4adj1xuuBksRthQwbU6ee2ug>
- <xmx:WtRoXcndN8ysDArbdYrXJJaDuFj5qQdg9N5gmHgcQEPxfIW5VKsTsA>
- <xmx:XtRoXX_-l60JPiQyz7jdX98IQDRAUYIPlvirQihJA0cHDfMTcS3_tw>
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtke
+ ertdertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfies
+ rghjrdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmh
+ epmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfu
+ ihiivgeptd
+X-ME-Proxy: <xmx:YtRoXbRhpxaTEEZY-MQ__dgsXKyp9mTTATLlEPrVUWABIn62YcCMMQ>
+ <xmx:YtRoXTNUZEAS98Uur4qxtkIG_a9MjoqWPBx_bxYHmqq5YwORKn_O6Q>
+ <xmx:YtRoXZrikDXWjnbU3CF2bWYcvLIjwdhp-Ddty2rbYsBMqKZvAP1GkA>
+ <xmx:YtRoXcKKvyBVr4a9so2vV2qm05RAkgmdr1XO74g7wKsXnf_UUOgNmg>
 Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
  [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id D8181D60057;
- Fri, 30 Aug 2019 03:46:30 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 14361D60057;
+ Fri, 30 Aug 2019 03:46:38 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: linux-mmc@vger.kernel.org
-Subject: [PATCH 0/2] mmc: sdhci-of-aspeed: Fixes for AST2600 eMMC support
-Date: Fri, 30 Aug 2019 17:16:42 +0930
-Message-Id: <20190830074644.10936-1-andrew@aj.id.au>
+Subject: [PATCH 2/2] mmc: sdhci-of-aspeed: Allow max-frequency limitation of
+ SDCLK
+Date: Fri, 30 Aug 2019 17:16:44 +0930
+Message-Id: <20190830074644.10936-3-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190830074644.10936-1-andrew@aj.id.au>
+References: <20190830074644.10936-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -92,33 +96,70 @@ Cc: ulf.hansson@linaro.org, linux-aspeed@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Add a get_max_clock() handler to sdhci-of-aspeed to report f_max as the
+maximum clock rate if it is set. This enables artificial limitation of
+the bus speed via max-frequency in the devicetree for e.g. the AST2600
+evaluation board where I am seeing errors at 200MHz.
 
-The ASPEED SDHCI driver patches sent previously were based on testing on the
-AST2500. The SD controllers in the 2500 and 2600 had the same register layout
-according to the documentation, so we added the necessary devicetree compatible
-string at the same time.
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+ drivers/mmc/host/sdhci-of-aspeed.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-Now that I've got access to 2600 hardware with an eMMC chip I have a couple of
-patches that are fixes enabling support for it. I don't think the first patch
-is too controversial - in some cases we weren't ensuring the clock was enabled
-before returning from the set_clock() callback.
-
-I'm a bit unsure about the second patch though which enables use of
-max-frequency in the devicetree, it feels a bit hacky so I'm looking for any
-suggestions on the approach.
-
-Please review!
-
-Andrew
-
-Andrew Jeffery (2):
-  mmc: sdhci-of-aspeed: Uphold clocks-on post-condition of set_clock()
-  mmc: sdhci-of-aspeed: Allow max-frequency limitation of SDCLK
-
- drivers/mmc/host/sdhci-of-aspeed.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
-
+diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+index a9175ca85696..5cc00abcd71f 100644
+--- a/drivers/mmc/host/sdhci-of-aspeed.c
++++ b/drivers/mmc/host/sdhci-of-aspeed.c
+@@ -52,16 +52,24 @@ static void aspeed_sdc_configure_8bit_mode(struct aspeed_sdc *sdc,
+ 
+ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+ {
++	struct sdhci_pltfm_host *pltfm_host;
++	unsigned long parent;
+ 	int div;
+ 	u16 clk;
+ 
++	pltfm_host = sdhci_priv(host);
++	parent = clk_get_rate(pltfm_host->clk);
++
+ 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+ 	if (clock == 0)
+ 		goto out;
+ 
++	if (WARN_ON(clock > host->max_clk))
++		clock = host->max_clk;
++
+ 	for (div = 1; div < 256; div *= 2) {
+-		if ((host->max_clk / div) <= clock)
++		if ((parent / div) <= clock)
+ 			break;
+ 	}
+ 	div >>= 1;
+@@ -74,6 +82,14 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+ 	host->clock = clock;
+ }
+ 
++static unsigned int aspeed_sdhci_get_max_clock(struct sdhci_host *host)
++{
++	if (host->mmc->f_max)
++		return host->mmc->f_max;
++
++	return sdhci_pltfm_clk_get_max_clock(host);
++}
++
+ static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
+ {
+ 	struct sdhci_pltfm_host *pltfm_priv;
+@@ -100,7 +116,7 @@ static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
+ 
+ static const struct sdhci_ops aspeed_sdhci_ops = {
+ 	.set_clock = aspeed_sdhci_set_clock,
+-	.get_max_clock = sdhci_pltfm_clk_get_max_clock,
++	.get_max_clock = aspeed_sdhci_get_max_clock,
+ 	.set_bus_width = aspeed_sdhci_set_bus_width,
+ 	.get_timeout_clock = sdhci_pltfm_clk_get_max_clock,
+ 	.reset = sdhci_reset,
 -- 
 2.20.1
 
