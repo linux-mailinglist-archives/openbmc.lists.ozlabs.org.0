@@ -1,83 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D9BDA2B49
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 02:09:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 985BBA2C7E
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 03:49:52 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KKb33MgfzDrdL
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 10:09:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KMqH4s2yzDrgn
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:49:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::335; helo=mail-ot1-x335.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="nK7vlst6"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="0ZaTgvDX"; dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="EVvhFvGX"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
+ [IPv6:2607:f8b0:4864:20::335])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KKZL0vsCzDsx9
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 10:08:25 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 3FEFB21AD2;
- Thu, 29 Aug 2019 20:08:21 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 29 Aug 2019 20:08:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=FDR5IqhOSMAVpbr6xuLKzTjkyMOP5Eh
- MJwrHTLUT+3E=; b=nK7vlst6MkvDJLd159bWjmLKgoO44UWwxBbgeiR6bE29FG/
- ND/nG+Dxm19/+NpFW4J7Fqn5/xIx87LMtLhZnhec/PclafOe4jtOefeb8a8eRIdu
- XnMFVkwtKVqmp2Z8NTIBoS2FvqMynXskWSTZPZHmfyx0ZfFpUkQDImFPdn3MBD0Z
- 2oF6QUFPlqVNqyy5GxqTm+yZT5QJ0TBq410dZBC8ryAiF2xuzAqWkz3x1vaDDozB
- weqm9lJNqDGigpYQ300bBPSZs9uCBP7NK8H5xK+X5ALu3UTZjonT/Oqiy2RWYlqr
- d8P52ayPUUrEXfpR/niCoX91+y+bihwNx3ialVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=FDR5Iq
- hOSMAVpbr6xuLKzTjkyMOP5EhMJwrHTLUT+3E=; b=0ZaTgvDX54liwMsqI7mHNB
- UFrQPrMBs0JPavWFC69Uv+IbGUQR4pmyyR9KAKw8DQ0YhFcwoBwhTxG3XvJ57Adf
- a/PAw7vIoIUiZm7DU+NJSXM9xRs0FiGyv/x7/cuWQ6v6NXVNKb+/e25HPPW3hWK9
- l/rxnVIQVcXMBfLbbwuN4w3B+fvK8bxRiWNZiCfkg7h30+7/xPNJWWZs3uQ6FdXQ
- tri5xaWx/KTR9k7i1GWGJJAhG/15FQ+iHSZV3Oz0xuVcISjO3Sow3RHI3eCnjyYG
- CQTO/4eWxPql0lr9KiOJyPbrXVy5AytEeSGzEgDTXNCeNoHbBdtrsxOKbKLSw6Eg
- ==
-X-ME-Sender: <xms:9GhoXbCjp_xte04ugSO1bO3plW5tMvOsxQDjhB_XGV4LBRY-NkEUvQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeifedgvdekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:9GhoXY-11OniJ2nOg4VAm1H0pNH0AAjD_SVUvZllOJ0GaiL4qErTjA>
- <xmx:9GhoXfjTSl7Hx24x7kmMgw1HMYQ5tyxNGjUHj6RtHI7bSr2lOTNE5Q>
- <xmx:9GhoXYuL4EVbuYBU11nFiurZC8gdMkIm33HyVsuXLBEnAus7bg4klQ>
- <xmx:9WhoXZoI4bs_ZfODYNyKEPQQRhIhWuAdYu8tAFHW7jT9O8lkHzvhcw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 913DFE00AD; Thu, 29 Aug 2019 20:08:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-154-gfa7592a-fmstable-20190829v1
-Mime-Version: 1.0
-Message-Id: <4739073b-3ac8-4e0f-b3e0-7a268ccd3db4@www.fastmail.com>
-In-Reply-To: <393e2e29-979b-3787-9776-0d5f5f8fbc6f@intel.com>
-References: <85985690-0f45-9c8e-cde7-caa7d932ff12@intel.com>
- <eba2e99e-f3bc-4906-aafb-1e09794c6c43@www.fastmail.com>
- <393e2e29-979b-3787-9776-0d5f5f8fbc6f@intel.com>
-Date: Fri, 30 Aug 2019 09:38:42 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Johnathan Mantey" <johnathanx.mantey@intel.com>
-Subject: Re: QEMU native compile issue
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KMpK4BS0zDsNT;
+ Fri, 30 Aug 2019 11:48:55 +1000 (AEST)
+Received: by mail-ot1-x335.google.com with SMTP id 100so5465289otn.2;
+ Thu, 29 Aug 2019 18:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=Y2jDAJQUkerTCXXMvvTfE74hBR7qHn7jlgj8F3IOxek=;
+ b=EVvhFvGXIART4yQnJzSCnmqCIz+RF9Jcs5REnqmMP7ZbxP4u+jDk48KVlxpu0uSY7D
+ ctgxlutfMbAnHGckrkvS9QIwbOJ/VxpV8ux4535gYtJDseDDVqdGpxa48Eq29cybMGOF
+ 60y8ItHMEflWXFAGu9ruLul7Bm7eBH29xBKoYV2JUHi7vSq+FUAxRHU2x5fQIStMpaJr
+ oYPzSFhybSoQ1lOGOJjHXKB8QRG45egU/bY1KEEqgC/yl2BLp4bdiZb0MxePpzfs0C0u
+ YOh0CYGpMvrYOSiLUwNaTjDF2YlbBDfuKchR/x5D9dV5Ci2K7ZbED0g0g63alz9FVtUy
+ 2pnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Y2jDAJQUkerTCXXMvvTfE74hBR7qHn7jlgj8F3IOxek=;
+ b=e/bEVHmFmhTjeNPwiTDQAaT5OPdrxFMLNE0Amdu3M3C4nttVN5Ic0pDUBMTHmNshgR
+ FujhL9VCj13gqYNvi4S++T/arf8FZZSXLQzcq9A+riNXM/Dhj0fD/iFR67FKr6SOax3d
+ WqHHsrM99XLCsenek0haLP450p3lRoRq3JeLtydGjNmHEDc0OxQUizSKiyddmfnh6kiC
+ DrGMr6NUXSK19DkW/9jW1bNlOpTwV2MsYPfIxGnsOVIhKyr8IVl5vFHCE5Ld/oJLGJgY
+ WCwymIWrexD65bq0DAHoi7zF+BClGfC8dbvOCb4v7FTJiudvDsA9pkK5bTS1pxM10svq
+ 7Ieg==
+X-Gm-Message-State: APjAAAUOoPlmfX+nAcuw9/CUAXUz1ZnTqioReEqBftpXwd/aborHECKf
+ ScgZmKFopqv5AKl1p5B5iizzJ6YtHnOwg4wNVss=
+X-Google-Smtp-Source: APXvYqw1qm380B4BWbVCmiIycOKESi9a7oTov5KY5LOjfDsbMYuzB2fHKV6N3BzUAKaikU60e7EskVx/m/fXRITtMfA=
+X-Received: by 2002:a05:6830:4cb:: with SMTP id
+ s11mr9918450otd.366.1567129731963; 
+ Thu, 29 Aug 2019 18:48:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <bcf71058f3494169b90ee051e0079bb6@inspur.com>
+ <d0bbfd57-1b31-a34f-6629-896e963e357e@linux.vnet.ibm.com>
+ <df0878a59968e5bbb35d29334ff5672a@linux.vnet.ibm.com>
+In-Reply-To: <df0878a59968e5bbb35d29334ff5672a@linux.vnet.ibm.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 30 Aug 2019 09:48:39 +0800
+Message-ID: <CAARXrtkzNKLsfCqNotJfVP52BRkXUyQcfH0KgHoNMbKU3=5GUw@mail.gmail.com>
+Subject: Re: Document about the REST interface
+To: Adriana Kobylak <anoo@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,34 +77,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?B?WGlhb2NoYW8gTWEgKOmprOWwj+i2hSk=?= <maxiaochao@inspur.com>,
+ openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+That is a good document (although it contains some non-English characters,
+which could be fixed later).
 
+I have a question that if it is meant to replace the existing REST API rela=
+ted
+document or not.
+If it is sent as a new document, my concern would be that we will have too =
+many
+documents with the same topic.
+How about split this document into parts:
+1. The REST APIs introduction to replace the current rest-api.md
+2. The REST cheatsheet part, to replace the REST-cheatsheet.md
 
-On Wed, 28 Aug 2019, at 00:09, Johnathan Mantey wrote:
-> Not really. I'm not sure where the code went.
-> 
->  I cloned the OpenBMC QEMU, made my change, and then pushed the change 
-> to "upstream". I have SHA "650af0e183 Fix compile error when using 
-> kernel 5.2" as the text.
+By "replace" I mean this new doc contains up-to-date information while the
+existing docs contain some out-of-date information, so the new doc could
+replace the existing ones.
 
-As you noted in your follow-up email you found the fix upstream. Further, the fix
-is contained in the QEMU v4.1 tag.
-
-Upstream open-embedded has already bumped QEMU to v4.1 - I guess we
-should backport that change to openbmc/openbmc and this will be resolved.
-I've Cc'ed Brad so he's across it.
-
-As an aside, while we have the openbmc/qemu repo on GitHub, it's not
-integrated into openbmc/openbmc, openbmc/qemu is a bit less volatile than
-Cedric's legoater/qemu aspeed-4.x branches (as it's used for OpenBMC CI
-purposes), but has more models implemented than what upstream typically
-has (I intend to update openbmc/qemu to 4.1 with some of the patches from
-legoater/qemu aspeed-4.2 on top in the near future). The QEMU that's built as
-part of the OpenBMC build process is the upstream release.
-
-Hope that helps.
-
-Andrew
+On Fri, Aug 30, 2019 at 1:53 AM Adriana Kobylak <anoo@linux.ibm.com> wrote:
+>
+> On 2019-08-29 06:28, vishwa wrote:
+> > Hi Ma,
+> >
+> > Thanks for putting this together. Could you please create a pull
+> > request so that it can go through the review process ?
+>
+> Here are the guides to submitting a patch via gerrit:
+>
+> https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-ch=
+anges-via-gerrit-server
+> https://github.com/openbmc/docs/blob/master/development/gerrit-setup.md
+>
+> >
+> > !! Vishwa !!
+> >
+> > On 8/29/19 3:17 PM, Xiaochao Ma (=E9=A9=AC=E5=B0=8F=E8=B6=85) wrote:
+> >
+> >> I wrote a document about the REST interface (contains the REDFISH
+> >> section ).
+> >> It contains all the commands in REST-cheatsheet.md ,
+> >> REDFISH-cheatsheet.md and a REST related document.
+> >> This document includes power, FW update, time settings, event log
+> >> and related commands.
+> >> All commands have been run on the fp5280g2 machine.
+> >> I want to upload this document to openbmc/docs because I think this
+> >> document is good for the community.
+> >> Can this document be accepted?
+> >> Here is the link:
+> >>
+> > https://github.com/inspur-bmc/openbmc-doc/blob/master/user's%20guide.md
