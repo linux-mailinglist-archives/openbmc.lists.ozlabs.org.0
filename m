@@ -1,76 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3DA2A4CF5
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 02:59:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 939B3A4CFA
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 03:00:32 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MBYx3ZWPzDqRg
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 10:59:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MBb03swyzDqKP
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 11:00:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=linaro.org
- (client-ip=2a00:1450:4864:20::441; helo=mail-wr1-x441.google.com;
- envelope-from=daniel.thompson@linaro.org; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::e42; helo=mail-vs1-xe42.google.com;
+ envelope-from=ulf.hansson@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.b="SzqqW5aR"; 
+ unprotected) header.d=linaro.org header.i=@linaro.org header.b="qp8yU+LP"; 
  dkim-atps=neutral
-Received: from mail-wr1-x441.google.com (mail-wr1-x441.google.com
- [IPv6:2a00:1450:4864:20::441])
+Received: from mail-vs1-xe42.google.com (mail-vs1-xe42.google.com
+ [IPv6:2607:f8b0:4864:20::e42])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Jzrs2phqzDqdh
- for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 20:49:49 +1000 (AEST)
-Received: by mail-wr1-x441.google.com with SMTP id q12so2877589wrj.12
- for <openbmc@lists.ozlabs.org>; Thu, 29 Aug 2019 03:49:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KX4x4jPdzF0YY
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 18:02:08 +1000 (AEST)
+Received: by mail-vs1-xe42.google.com with SMTP id j25so4179157vsq.12
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 01:02:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=jHeD3Kv+tcMAmS4H+Al9j1578BcUWQlA5QOhrftK1uI=;
- b=SzqqW5aRW4Dk4d6Y6jVRNDP+Rh3WbyRh3k50TxR1LeEohULvTL9Bj5hdTjKoTWslIs
- z/W5UBReyHzNQg80Xsmi4rwuXxQBvmYDHFqHTi/hZWkoL9/04zoHnejKiClOG8BrGxH+
- /5UVeX4auI4tiLjKX8ERhmRthajmadmWorm2eKbV/cHck6rq2UQrRZl0pcLIpHq3LaoS
- 2V9BqJYyd8+EEbTP9JWGTrdPmHG+OjYTFM7Fq5bkaz8kXWPR1BIzfJgfAxYlnPpNOKW+
- lQ6wdhg4GXen+v34r92oR+rVXG8sZog/5EOUXX7JmCrFw7EBFbzuU2vffUQdZcygASRr
- y4dw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zSReTBR+21k+gQlfPIxdDjT6LtoW1ARQm0j/COjHJ9U=;
+ b=qp8yU+LPUcX/mAFN/tdWTbxE8ZDUp2Z8cCy/SKuHHj80GZtnQ3tQP7JQDmbyIBAWoy
+ ZePqJezkftPXgjaRJ7H2pFtF5ZnZOQZy4N5kyyN4o2HhEhsa410M5iWSyc0l/Ynzaktm
+ YOSy3tWjasqTapLStwH3UrO5al31vEt96KXMWgXhv2YXTynO/2BcGjuL+2uj+TX6vHDJ
+ UVwmxzPe4wEYqJUHp6HIsvv7G9ymY37avF2pBFZHYsAo8M6r54t/hRz3V8vqsvpuFx4x
+ JuYF9njW9ZhqiqYVZqFshkjVEd+qOApUqzk1gOe47O82ybxuy80NG/F0a3bmeO2YRwQJ
+ 8eEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=jHeD3Kv+tcMAmS4H+Al9j1578BcUWQlA5QOhrftK1uI=;
- b=DMIWegXdyvNhDKcZnX8G8MjWPFLWPzvx2GdjD/XSlhH6Bf8VzueZov7Rh9CXhx/dpW
- ZEZpeQM97ak2wYlZdK3KE79Lm6vAgUP6HjxIveJVbbCDIOoM149D9GqUL+Vl7n/HgOtD
- GXVGxsXQIsH7IOfI8g8VpL6pUHikCw2BLxSGAvhJJS4iOoG2QADe/4/3IM+mMwHAB8gE
- rpcw+PT5XQsBv6E+twQO5ZKrsNaifptRX8vCd3pv4fiT0eUaTcHAprBV6di/PKjCD8Mj
- CkNVvqK+941jo5uSzOh5fm+Xl7VtP49bihU0ODpcj0cqLr0WOcfHyeJXdyx4UHdujNnD
- /7/Q==
-X-Gm-Message-State: APjAAAWnIiB/k8GzK84KHGgXgAODwwbzRWJIcLpJba/pFx32Uf3q2auN
- gNR49fr6bPsXyKu13fwIWGYFZA==
-X-Google-Smtp-Source: APXvYqz2qMe+fh3q/bTnYSOCuAtlMqCAz/KWKJ3lcS/jq5IqYKlKwb73QOH+7q7x/7umHXur6XZItg==
-X-Received: by 2002:adf:fc03:: with SMTP id i3mr5602097wrr.48.1567075784823;
- Thu, 29 Aug 2019 03:49:44 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net.
- [86.9.19.6])
- by smtp.gmail.com with ESMTPSA id s1sm4927621wrg.80.2019.08.29.03.49.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Aug 2019 03:49:44 -0700 (PDT)
-Date: Thu, 29 Aug 2019 11:49:42 +0100
-From: Daniel Thompson <daniel.thompson@linaro.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 1/2] dt-binding: hwrng: add NPCM RNG documentation
-Message-ID: <20190829104942.uyz5ms4m65hcqvmk@holly.lan>
-References: <20190828162617.237398-1-tmaimon77@gmail.com>
- <20190828162617.237398-2-tmaimon77@gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zSReTBR+21k+gQlfPIxdDjT6LtoW1ARQm0j/COjHJ9U=;
+ b=HQsR+eqm601AjA9v0FCR2syNsnon07YD/gDN14gcKZ76lhg9NP5XvbhoAlfqDBFjHg
+ QR+0BplTUsI31RHyoYrLksy4o8xnBShnFPLu33BXFu+nfvE3Bsd9/Wc8AAJTjomjtmN5
+ KGj1aLkmVQGAPNN6nIUmWPAdC80SU9y+zvpbwEpstwV0InTWERDkYe8jXaLUXxjLP++u
+ YuCsy/Mzk0p9q5rPlR2MfJWigkXoFQaJOVIJBUFgKhlDAkRZwkPHllZNMxm3FIEv7urn
+ QWGsUOzPFFlchl1Gfy9p0XDuSDWFGeGSHxxzaq/jkUA7dvIOSnRVe1rzw1e1EdEyZNIr
+ hxZQ==
+X-Gm-Message-State: APjAAAWBMs3Won7JhRWUE+kZ18GSwpgjs9rBONd2ZdqDhP88KybvTv+9
+ LLiIdPTmgtNWjgB52ROTg4IhoiRgYGsA7npGYhkq5Q==
+X-Google-Smtp-Source: APXvYqyOx0hFYInMfmpsUnvpCKFGXIHa/+Ahs3V3CNXSh7WcogIeV6A1MSfhHPGxYA3SEvRTgK+RozQPc8r1yR8QgSo=
+X-Received: by 2002:a67:983:: with SMTP id 125mr2338906vsj.191.1567152124259; 
+ Fri, 30 Aug 2019 01:02:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190828162617.237398-2-tmaimon77@gmail.com>
-User-Agent: NeoMutt/20180716
-X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:52 +1000
+References: <20190830074644.10936-1-andrew@aj.id.au>
+ <20190830074644.10936-2-andrew@aj.id.au>
+In-Reply-To: <20190830074644.10936-2-andrew@aj.id.au>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Fri, 30 Aug 2019 10:01:27 +0200
+Message-ID: <CAPDyKFrKXfB1F2dh63KrkCiKGbmbBWaAM16vJqtQncnF4YctQw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] mmc: sdhci-of-aspeed: Uphold clocks-on post-condition
+ of set_clock()
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Mon, 02 Sep 2019 10:34:51 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,57 +75,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
- herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
- avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, tali.perry1@gmail.com, vkoul@kernel.org,
- robh+dt@kernel.org, mpm@selenic.com, venture@google.com, tglx@linutronix.de,
- jens.wiklander@linaro.org, benjaminfair@google.com
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+ openbmc@lists.ozlabs.org, Ryan Chen <ryanchen.aspeed@gmail.com>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Aug 28, 2019 at 07:26:16PM +0300, Tomer Maimon wrote:
-> Added device tree binding documentation for Nuvoton BMC
-> NPCM Random Number Generator (RNG).
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+On Fri, 30 Aug 2019 at 09:46, Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+> The early-exit didn't seem to matter on the AST2500, but on the AST2600
+> the SD clock genuinely may not be running on entry to
+> aspeed_sdhci_set_clock(). Remove the early exit to ensure we always run
+> sdhci_enable_clk().
+>
+> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 > ---
->  .../bindings/rng/nuvoton,npcm-rng.txt           | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
-> new file mode 100644
-> index 000000000000..a697b4425fb3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
-> @@ -0,0 +1,17 @@
-> +NPCM SoC Random Number Generator
-> +
-> +Required properties:
-> +- compatible  : "nuvoton,npcm750-rng" for the NPCM7XX BMC.
-> +- reg         : Specifies physical base address and size of the registers.
-> +
-> +Optional property:
-> +- quality : estimated number of bits of true entropy per 1024 bits
-> +			read from the rng.
-> +			If this property is not defined, it defaults to 1000.
+>  drivers/mmc/host/sdhci-of-aspeed.c | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+> index d5acb5afc50f..a9175ca85696 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -55,9 +55,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
+>         int div;
+>         u16 clk;
+>
+> -       if (clock == host->clock)
+> -               return;
+> -
+>         sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+>
+>         if (clock == 0)
+> --
+> 2.20.1
+>
 
-Having a controllable quality implies that the numeric quality of the
-peripheral changes when it is stamped out on different SoCs (otherwise
-the driver can confidently set the quality without needing any hint
-from the DT). Is that really true here?
+Further down in aspeed_sdhci_set_clock() you should probably also
+remove the assignment of host->clock = clock, as that is already
+managed by sdhci_set_ios().
 
-
-Daniel.
-
-> +
-> +Example:
-> +
-> +rng: rng@f000b000 {
-> +	compatible = "nuvoton,npcm750-rng";
-> +	reg = <0xf000b000 0x8>;
-> +};
-> -- 
-> 2.18.0
-> 
+Kind regards
+Uffe
