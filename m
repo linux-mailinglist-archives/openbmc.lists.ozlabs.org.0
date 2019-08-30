@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7383A3345
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 10:57:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9270A3353
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:03:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KYJw0YGBzDqxB
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 18:57:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KYRV5V5yzDqtn
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:03:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,66 +16,62 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="TPM7Pe4t"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="JkbP/Lse"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Bkyifkoq"; dkim-atps=neutral
+ header.b="Z/sxAgZi"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KYHC5YY7zDqxZ
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 18:56:07 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQn4HF5zDqB5
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:41 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 35642220AF;
- Fri, 30 Aug 2019 04:56:05 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 04:56:05 -0400
+ by mailout.nyi.internal (Postfix) with ESMTP id 218A121C7D;
+ Fri, 30 Aug 2019 05:02:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=qgxOet6Vexw+I
- T/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=TPM7Pe4tFsC4IDIIRrlFeyxTCUoJx
- U8sG47Bh9HRqT+CmnlIhPMAOc6X+WVTGwEWIkKWrLUQGw+qxUP85jNA1mZosFduo
- cwfmIiBeRfbGizyPDpNmDauyoYPRMRbKBvXYXNvHxCMh7+ia8x9O0i5VHxhmcorl
- 0lI/32WCAuwAiP+5LFzQ3vYWMep0uazOAiaINQEDGla4mxTGRLW2RcdMyHKf7B39
- RjTbTFKc3NIbnRZNNcaSal1SNYHDCWQqLLmVITJgcQgnPUPbVYvOc6lLNK8ma272
- W8B9tG1b7B3ghNbpoTPKyCmRD+DYpOOj1TeBYvEmoMbtDdEhHDjiSPR7Q==
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm3; bh=YfOg6kVFIxpytB8V2lWuqBjFpG
+ J3tyADqfZr0OoUVzw=; b=JkbP/LseMrHG5PW3n0Agrw8nb0d9uueY13qlov1T8C
+ ZPV9Uu+7dU/8f7dOoW/vuV+Spco5mJun9GypANZTa5IM3H1isw0PZc10d4WANsGT
+ hjoURgshUxPFQBJgAjQCV+3/qXD4OCTIhy8Q9UWuW0ZwosBUVD7w7Z8k+x0Q4hxJ
+ Bs54+9QRTLdXSgWZh4GgHzpCHRHOZuSdmjaQKiuwXSWFlznzkWvE+9Z8rsFbOyBC
+ K/Vht316rPd4xiIgUx0LJuwZuulvCY6aYreEapy5q06EmigPhJltMJsCoARzdFqr
+ ebhV1qkTtyKBS1E3hhXrSPqtFZcuaa9XbuDJ+eK5cSSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=qgxOet6Vexw+IT/mOjeCHK3/miy/vj59++UWzoy9f4w=; b=Bkyifkoq
- Lcvu2eB/T+QbksMH5CjgdU1N8BMMPoG7bYrPIJ3Q9n57cxegrjUE5oN3D443Av0F
- nAwaPD6fULaQclumcwp+BR3Eihtk0zfWWndXjE8VmHuak+eVUtor53HwMcun/Jeo
- UddGAwRr+MonYW9RYJbMWMBCjZ7pyIMsFyTuLyxWMZnWvHFKTR8FmXXr1dCk4mBA
- 0876h8WZQdVoJwb6n6m+Qpk7wm8gMpn0Gq2N0e98bE8b2TwmB5lciNjLTJ/328Md
- 9I/8mMLLgvMu/gTJ3p7Ge5+EZwB8N8j9iuvLjQk55EH4BkXuW9ys5AfJAMq7FFPC
- ta9uVvOFYmUNMw==
-X-ME-Sender: <xms:peRoXQJCfUEiQPhSzK6NcVFOfnPT07I4FiPUkRJata6ataXT9F__Gw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgtdelucetufdoteggodetrfdotf
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=YfOg6kVFIxpytB8V2
+ lWuqBjFpGJ3tyADqfZr0OoUVzw=; b=Z/sxAgZiXbo9U0yFM5cb2pVKjPaq4RyYH
+ fSLquQjh0baELrBs/PqOsWDOOAbzpV3z2aNGOYKkbkET/jmZUPn2wusYwRkoJHb8
+ yl+6xB76HzyOwEBU1i6k2YSIET3o03tEo4JxGSPnQY4UvSFY5R9kxgh9UxD0sz/Q
+ CezRaQ/a1XvTap6BThCKXE5RD1cCmqYf69N9Wk9x9OqzA/01f/9iAzpBdqPJG7pp
+ xffn4k9OsMi5JQMIHxG1NyUTm/tPfniYS/3EtjGQLzoTp4T69vgSQSDzYXYVJmkh
+ 60wCHtOdvvyB2ODt6nUXPLcWfrkGHHbBaEFrkMMHpmZos2AkgvTFw==
+X-ME-Sender: <xms:LuZoXZBSImUPsI4CY1EoDiJg6qSc9ItFdti0meUQXW1x4pknT-KhjQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
- ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfkphepvddtfe
- drheejrddvudehrddujeeknecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfies
- rghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:peRoXXN91sEKUsh5POMiSklOekSvSHte2xf-Ltzx9ZCFCaWZMXRJdg>
- <xmx:peRoXYbd1qZjtCPtN8CcOGWNsAosjpETE2PLETzdRpQrVNumwxdyAA>
- <xmx:peRoXTxqGUoCW0uBqqb-gfYP99vPB_2sJnPR54NAuRyHfIbrwXfMUQ>
- <xmx:peRoXcRGrTHRDucCccU-MsDyED49GYYTpwd-nmn296g-IThyuGf0AA>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecuffhomhgrihhnpehoiihlrggsshdrohhrghenucfkphepvddtfedrhe
+ ejrddvudehrddujeeknecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
+ rdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:LuZoXX9O9_35ahkvBjpXZqT7QQWncVj23y4ZNP_qRlc9pJU9w8akqg>
+ <xmx:LuZoXaDJpKa59j1-iNb2FKsIPkzmIRJaikRDwsv4BNb5sk4heqt79Q>
+ <xmx:LuZoXRvwB7cjA2WS-nEKbJXyojP2LHOZTqlBi7DogX6ZaCkvh54-_A>
+ <xmx:L-ZoXdrd6EHKGr0-zgvXnWpQN2STbNz3HxvCepyu3nVnc6YBBltXNQ>
 Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
  [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 44D958005C;
- Fri, 30 Aug 2019 04:56:02 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 7ADA4D60063;
+ Fri, 30 Aug 2019 05:02:36 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 2/5] mmc: sdhci-of-aspeed: Drop redundant
- assignment to host->clock
-Date: Fri, 30 Aug 2019 18:26:29 +0930
-Message-Id: <20190830085632.12928-3-andrew@aj.id.au>
+Subject: [PATCH 0/5] mmc: sdhci-of-aspeed: Fixes for AST2600 eMMC
+Date: Fri, 30 Aug 2019 18:32:39 +0930
+Message-Id: <20190830090244.13566-1-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190830085632.12928-1-andrew@aj.id.au>
-References: <20190830085632.12928-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -89,41 +85,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-host->clock is already managed by sdhci_set_ios().
+Hello,
 
-Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- drivers/mmc/host/sdhci-of-aspeed.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+This series enables the eMMC onboard the AST2600 EVB. There's currently a
+limitation of running it at 52MHz, I'm still investigating that. Reads and
+writes are both functional.
 
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index d5acb5afc50f..6ae81c8af431 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -61,7 +61,7 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
- 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
- 
- 	if (clock == 0)
--		goto out;
-+		return;
- 
- 	for (div = 1; div < 256; div *= 2) {
- 		if ((host->max_clk / div) <= clock)
-@@ -72,9 +72,6 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
- 	clk = div << SDHCI_DIVIDER_SHIFT;
- 
- 	sdhci_enable_clk(host, clk);
--
--out:
--	host->clock = clock;
- }
- 
- static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
+The two critical patches (3/5 and 4/5) are on the linux-mmc list and can be
+found here:
+
+https://patchwork.ozlabs.org/project/linux-aspeed/list/?series=128207&state=%2A&archive=both
+
+Cheers,
+
+Andrew
+
+Andrew Jeffery (4):
+  mmc: sdhci-of-aspeed: Drop redundant assignment to host->clock
+  mmc: sdhci-of-aspeed: Uphold clocks-on post-condition of set_clock()
+  mmc: sdhci-of-aspeed: Allow max-frequency limitation of SDCLK
+  ARM: dts: ast2600-evb: eMMC configuration
+
+Wei Yongjun (1):
+  mmc: sdhci-of-aspeed: Fix return value check in aspeed_sdc_probe()
+
+ arch/arm/boot/dts/aspeed-ast2600-evb.dts |  8 ++++++-
+ arch/arm/boot/dts/aspeed-g6.dtsi         |  4 ++--
+ drivers/mmc/host/sdhci-of-aspeed.c       | 28 ++++++++++++++++--------
+ 3 files changed, 28 insertions(+), 12 deletions(-)
+
 -- 
 2.20.1
 
