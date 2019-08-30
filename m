@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5153CA335A
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:07:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8F7CA3361
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 11:07:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46KYWn6F6xzDqVb
-	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:07:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46KYXn3dvbzDr2P
+	for <lists+openbmc@lfdr.de>; Fri, 30 Aug 2019 19:07:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,42 +16,42 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="gbXyYUaM"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="lo4zR/78"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="cvbt9QVX"; dkim-atps=neutral
+ header.b="CWUE7K9P"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQx0nbfzDqtn
- for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:49 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46KYQz0hHDzDr2h
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Aug 2019 19:02:51 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 967E421C7A;
- Fri, 30 Aug 2019 05:02:46 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id AC55D21E44;
+ Fri, 30 Aug 2019 05:02:48 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:46 -0400
+ by compute4.internal (MEProxy); Fri, 30 Aug 2019 05:02:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=ws3fEvRN8j+zc
- dsqzJ6ZF8TPOCs6WkRGoLeC8W2y70E=; b=gbXyYUaMDGHpcGo/JsyQcGr+Gq5qu
- D7V8bU3oKiuyPok52rIkEYmCokOI3my0i+vs8iVcCrjpSTVZP6wnFGDSUPJz0l7w
- 93TR8mQLoXZqtC2jfNz0fa9d/iMX+q7WLVHqdHR2MUpuq/yGV7lJyP1hyAub0//Y
- m5m0Pl/YjkCaOAXm08RTRhfPOJQh5b98vEcjL7rMqxvw0Uf3VEtNHOvB+/nzU8L8
- vjm2KGBGf8oOgfB3jojhnvHlHj9a3sle/HeU7s6PjkJNa5UoHQ3Kc1dQXDHJDBb4
- cYIALvexm2sLP0QUw2Vo9HiEljwfhcSy9R2fEnr9uPkU8UpVMP4+vT6Aw==
+ :mime-version:content-transfer-encoding; s=fm3; bh=rm+5UcMSfAOhK
+ YwVFY13EEfKfl+FUXza08LZQXvzmmY=; b=lo4zR/78mgaV2NjVxyuwfT5UFuXUF
+ bDge13WPb2wHW1Lc+a8PSqsKUgx28IAFIx+pqVuKu3RBY2EUzfMzOiLKnhjNHe+K
+ 1qHq6iY0HsZOoyab+dcuPn1vboNwpRhQFIDHAhC0bUtLlFkcPcn+bNZ2u8ujZe7j
+ 2IlZwRmLFxCPuenlkMYgDfTftzvP5Ln3CN5UVPWodasyb3Vw+YKv3eDmQQ5Z8Fm1
+ wWFY3Smhk0lGIQIRqjX1ICCqozRJy78GdA5tNdUHin0AQlY8mRzCDbZjXWM+J3os
+ glC67ku5w7ZfS3E48YuiOP5tpIVzi0YrCxmvnw9sPIuGvWnWbDf3RTUyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=ws3fEvRN8j+zcdsqzJ6ZF8TPOCs6WkRGoLeC8W2y70E=; b=cvbt9QVX
- tFDOHaFmQGktFdc0hgnZ3WReSnitUjzo4M8z5PImSXrT/+H33zHgLL9I/b04kIB9
- 5v7wtFb4oZasVpwSuAEJx5EFi0VG9kPmIiClqfPslB0IdAfUdRRjzq/PKsUwSCfs
- /ZqA/gHN45FEw1kC0D/RxCpfsnw++GFdKzGnnuGgoGt5k7npUsgtwN3ZzE7td7i7
- yRjmtO1IeurVy+CJTTfiVYPdA7h8OSmNhl0ipPazeaMhGbotJE0/rJgmcOIXWfII
- uG2QTpj7Kk85Rn3Ojjf382A4j5gDI8SqFMOLd/Bc3NTFmLtFs5a3Ldl88KVHqNFy
- w1d7aL17ocs8UQ==
-X-ME-Sender: <xms:NuZoXScqiklHOnTiyRWLibL4M5f--Cbn3mhNbe0_-7PAXIuO-5FkmA>
+ fm3; bh=rm+5UcMSfAOhKYwVFY13EEfKfl+FUXza08LZQXvzmmY=; b=CWUE7K9P
+ 3dx/eC42K9e/Bj0QMnAVm0FBOhtcIV3X/QnJIDju2QhJLZjgp+RNDui+B88lpRN7
+ z0Tg0HDy+l69V90DZs5lrWkxdRWegEZoxrV7A87EpMm18Yk6iGgELmZZCn+vQvRT
+ XiW+ojYRBGKugwRs3rVVWxuC0aOlTF6FDMHxr2XbEwEcsp2fEdDpowsaITFvTMw0
+ +DqImqvvF+IC1OLJRiGS+22z/purOPeQZk/0DjJ2iARScDuQFtiXB96ZYCtVwOpV
+ M9pEKJ6vtLHej5pF+wrPaAJgtofg340+1HIoiGx04O2lqA6tnuAgb3ZoVYt8N4uF
+ 8qf+B6UYsDxcBA==
+X-ME-Sender: <xms:OOZoXY6qPuQhdRi2N9U3N-HDpc-z3gqOnYzA5GZvcbTGtbVwcWeBNg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
@@ -59,20 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeigedgudduucetufdoteggod
  jhdrihgurdgruheqnecukfhppedvtdefrdehjedrvdduhedrudejkeenucfrrghrrghmpe
  hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhi
  iigvpedv
-X-ME-Proxy: <xmx:NuZoXQXQaq-1pz43NYM4zDNf_s64C71FD-oOe-OVBS0ZW7Nmyzic9A>
- <xmx:NuZoXfHPKwXoMmLekL-n2-E7_PrtFILQzXZPaOJDWGQtEhBHNh6dbg>
- <xmx:NuZoXSOTrMKRlIj49Qfnj0YQHIfS1q_EFI5L9GoboZo9CWqs4eR2kw>
- <xmx:NuZoXVy1s5YqgFP8RXeBvKtMZOMgTDKIS0J_YQtwwQdLwPW4QxmDpw>
+X-ME-Proxy: <xmx:OOZoXYKlPZBYPhJvtnkScoenvjdbA73cIG-xvLTZo1KFk7wBq71bRA>
+ <xmx:OOZoXRnItiOrUq0igp9jE8SivANL2yiskwCaJ3huPSFRMSiyYDmBqQ>
+ <xmx:OOZoXZgDiGE0EuE3mAnlqIeMbt8yeTSzikunZ2n9eH5GaYQAefazdg>
+ <xmx:OOZoXcJxVc_To1_CeMFPUd_vXUYVGo8U9DOhLNPx0XD3b9P0HSYw9A>
 Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
  [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id E7030D6005B;
- Fri, 30 Aug 2019 05:02:44 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 04DDAD6005B;
+ Fri, 30 Aug 2019 05:02:46 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.2 4/5] mmc: sdhci-of-aspeed: Allow max-frequency
- limitation of SDCLK
-Date: Fri, 30 Aug 2019 18:32:43 +0930
-Message-Id: <20190830090244.13566-5-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.2 5/5] ARM: dts: ast2600-evb: eMMC configuration
+Date: Fri, 30 Aug 2019 18:32:44 +0930
+Message-Id: <20190830090244.13566-6-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190830090244.13566-1-andrew@aj.id.au>
 References: <20190830090244.13566-1-andrew@aj.id.au>
@@ -93,70 +92,57 @@ Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a get_max_clock() handler to sdhci-of-aspeed to report f_max as the
-maximum clock rate if it is set. This enables artificial limitation of
-the bus speed via max-frequency in the devicetree for e.g. the AST2600
-evaluation board where I am seeing errors at 200MHz.
+Enable the eMMC controller and limit it to 52MHz to avoid the host
+controller reporting error conditions.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/mmc/host/sdhci-of-aspeed.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/aspeed-ast2600-evb.dts | 8 +++++++-
+ arch/arm/boot/dts/aspeed-g6.dtsi         | 4 ++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index 0b75806ed69d..8962f6664381 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -52,16 +52,24 @@ static void aspeed_sdc_configure_8bit_mode(struct aspeed_sdc *sdc,
+diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+index 2cb92d2a1041..9613cff2ce3a 100644
+--- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
++++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+@@ -39,8 +39,14 @@
+ 	phy-handle = <&ethphy1>;
+ };
  
- static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
- {
-+	struct sdhci_pltfm_host *pltfm_host;
-+	unsigned long parent;
- 	int div;
- 	u16 clk;
- 
-+	pltfm_host = sdhci_priv(host);
-+	parent = clk_get_rate(pltfm_host->clk);
++&emmc_controller {
++	status = "okay";
++};
 +
- 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ &emmc {
+-	status = "disabled";
++	non-removable;
++	bus-width = <4>;
++	max-frequency = <52000000>;
+ };
  
- 	if (clock == 0)
- 		return;
+ &fsim0 {
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index d0507f797981..12569e502678 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -235,7 +235,7 @@
+ 				};
+ 			};
  
-+	if (WARN_ON(clock > host->max_clk))
-+		clock = host->max_clk;
-+
- 	for (div = 1; div < 256; div *= 2) {
--		if ((host->max_clk / div) <= clock)
-+		if ((parent / div) <= clock)
- 			break;
- 	}
- 	div >>= 1;
-@@ -71,6 +79,14 @@ static void aspeed_sdhci_set_clock(struct sdhci_host *host, unsigned int clock)
- 	sdhci_enable_clk(host, clk);
- }
+-			emmc: sdc@1e750000 {
++			emmc_controller: sdc@1e750000 {
+ 				compatible = "aspeed,ast2600-sd-controller";
+ 				reg = <0x1e750000 0x100>;
+ 				#address-cells = <1>;
+@@ -244,7 +244,7 @@
+ 				clocks = <&syscon ASPEED_CLK_GATE_EMMCCLK>;
+ 				status = "disabled";
  
-+static unsigned int aspeed_sdhci_get_max_clock(struct sdhci_host *host)
-+{
-+	if (host->mmc->f_max)
-+		return host->mmc->f_max;
-+
-+	return sdhci_pltfm_clk_get_max_clock(host);
-+}
-+
- static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
- {
- 	struct sdhci_pltfm_host *pltfm_priv;
-@@ -97,7 +113,7 @@ static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
- 
- static const struct sdhci_ops aspeed_sdhci_ops = {
- 	.set_clock = aspeed_sdhci_set_clock,
--	.get_max_clock = sdhci_pltfm_clk_get_max_clock,
-+	.get_max_clock = aspeed_sdhci_get_max_clock,
- 	.set_bus_width = aspeed_sdhci_set_bus_width,
- 	.get_timeout_clock = sdhci_pltfm_clk_get_max_clock,
- 	.reset = sdhci_reset,
+-				sdhci@1e750100 {
++				emmc: sdhci@1e750100 {
+ 					compatible = "aspeed,ast2600-sdhci";
+ 					reg = <0x100 0x100>;
+ 					sdhci,auto-cmd12;
 -- 
 2.20.1
 
