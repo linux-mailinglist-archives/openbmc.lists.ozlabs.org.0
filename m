@@ -1,85 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F10A9A4445
-	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 13:27:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04CBEA44E4
+	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 17:02:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46LDZx36kmzDrHp
-	for <lists+openbmc@lfdr.de>; Sat, 31 Aug 2019 21:27:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46LKMb3FKpzDr2p
+	for <lists+openbmc@lfdr.de>; Sun,  1 Sep 2019 01:02:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::542; helo=mail-pg1-x542.google.com;
+ envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="CuCpBywj"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46LDZD5t28zDr82
- for <openbmc@lists.ozlabs.org>; Sat, 31 Aug 2019 21:26:26 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x7VBLsWB174442
- for <openbmc@lists.ozlabs.org>; Sat, 31 Aug 2019 07:26:20 -0400
-Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2uqn2vnfp7-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Sat, 31 Aug 2019 07:26:20 -0400
-Received: from localhost
- by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Sat, 31 Aug 2019 12:26:18 +0100
-Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
- by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Sat, 31 Aug 2019 12:26:16 +0100
-Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
- [9.149.105.59])
- by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x7VBQFTE42860546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 31 Aug 2019 11:26:15 GMT
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6656EA404D;
- Sat, 31 Aug 2019 11:26:15 +0000 (GMT)
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 07C6EA4051;
- Sat, 31 Aug 2019 11:26:14 +0000 (GMT)
-Received: from [9.102.51.216] (unknown [9.102.51.216])
- by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Sat, 31 Aug 2019 11:26:13 +0000 (GMT)
-Subject: Re: How to configure the snmp trap
-To: xiuzhi <1450335857@qq.com>, openbmc <openbmc@lists.ozlabs.org>
-References: <mailman.1763.1567021708.372.openbmc@lists.ozlabs.org>
- <tencent_2C97DABC4F44BB346BFBDE36@qq.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Sat, 31 Aug 2019 16:56:10 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46LKLL1QZGzDr0V;
+ Sun,  1 Sep 2019 01:01:27 +1000 (AEST)
+Received: by mail-pg1-x542.google.com with SMTP id d10so468936pgo.5;
+ Sat, 31 Aug 2019 08:01:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=Z3F2/OBM2r9MZXkNsTFN/E8FK5FABjqdMx5/AO1nG/g=;
+ b=CuCpBywjeSbor/AUATEjJGeahuzzcf61kGRBxkCn9VujZBwt1OH7GBtazWd8HWWZ9V
+ uxDdha5Hkvd2WhaTH8sAlRpaXL+Sdo0o7Mq89dpGqtnhSkfhlfaSXCQiFMNKFCu/Bp6W
+ TgTMsPUw+KHQzZ6efA51vBlWkuMvzoHQLk5ywEnngDLduCoJl7Rr0oZSTLAMfTIAb2md
+ V3xxwyGQzyfuXqA+dazV/1F+2tjLV/+qIwZV9MSlmmmkhlmyNmEWuVv0ze729MlqqPVF
+ MJcATu8EWdnyFLtZZcCmk8Epyiv0aVbE7/tlOz1AiUbSaSKe6B43hnp0MEY8b8g/jet+
+ gmdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=Z3F2/OBM2r9MZXkNsTFN/E8FK5FABjqdMx5/AO1nG/g=;
+ b=j4XpBWgLrT4vXIU222G3siivuCgyV/5ak2V7y0srfq/uBAhk5AVPzpCF+HGKkX/cnT
+ Mu1iYF0ig0ZCV60/CpLh1gvlTnUI+KKj5nYCBUxSIMFkWJY5jSJdPdZDUQNELZFfnbvH
+ Xav7YB5uNyzuUb/q+canWR30mxpNBitSuLrnWXfqrcWmHZ6ZGq1dp5oRFISgp1/WjCuU
+ kKnK9hIDZnDvpJ86d71ClyTt/UVWPaL4xaTZuteBPYdIG60OO7CXhK1Hb2PTF8iMR9he
+ gRXAw7+eh60SXNG/v8h5f95+7qccbQx3jw0frH/ATdHQd0XNzet0SrXGISuHLfQmAkgM
+ j4Zg==
+X-Gm-Message-State: APjAAAXu/9t8bahYcP6RH08g5e9KcYLP4dVeAXDeoXp7UlQib6z61pGT
+ gSPLc4WI+yuL9sOY8bkq1Ic=
+X-Google-Smtp-Source: APXvYqxXttPAlJ1qKQngtS+ANawEYl7YbL2EVX15AVZnZuJHMlbx6iKicR8YpvckL1STr06dOyGfww==
+X-Received: by 2002:a17:90a:17aa:: with SMTP id
+ q39mr4272622pja.106.1567263683947; 
+ Sat, 31 Aug 2019 08:01:23 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id v18sm11994233pgl.87.2019.08.31.08.01.23
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 31 Aug 2019 08:01:23 -0700 (PDT)
+Date: Sat, 31 Aug 2019 08:01:22 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+Subject: Re: [PATCH v4 3/4] watchdog/aspeed: add support for dual boot
+Message-ID: <20190831150122.GA7207@roeck-us.net>
+References: <20190828102402.13155-1-i.mikhaylov@yadro.com>
+ <20190828102402.13155-4-i.mikhaylov@yadro.com>
 MIME-Version: 1.0
-In-Reply-To: <tencent_2C97DABC4F44BB346BFBDE36@qq.com>
-Content-Type: multipart/alternative;
- boundary="------------0BD4335FEFE013271DFB93DF"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19083111-0012-0000-0000-00000344F290
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19083111-0013-0000-0000-0000217F385C
-Message-Id: <352695cd-cee7-ec74-e2d0-87e8b52c5da8@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-08-31_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1908310135
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190828102402.13155-4-i.mikhaylov@yadro.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,108 +81,123 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+ linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ Alexander Amelkin <a.amelkin@yadro.com>, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------0BD4335FEFE013271DFB93DF
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+On Wed, Aug 28, 2019 at 01:24:01PM +0300, Ivan Mikhaylov wrote:
+> Set WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION into WDT_CLEAR_TIMEOUT_STATUS
+> to clear out boot code source and re-enable access to the primary SPI flash
+> chip while booted via wdt2 from the alternate chip.
+> 
+> AST2400 datasheet says:
+> "In the 2nd flash booting mode, all the address mapping to CS0# would be
+> re-directed to CS1#. And CS0# is not accessible under this mode. To access
+> CS0#, firmware should clear the 2nd boot mode register in the WDT2 status
+> register WDT30.bit[1]."
+> 
+> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 
-On 8/29/2019 4:01 PM, xiuzhi wrote:
-> Hi Ratan,
->   I am try to test the snmp trap feature on openbmc 2.8.0-dev.
-> There is no more snmp util commands such as snmptrap etc. expect  
->  phosphor-network-snmpconf .
-
-You need to configure the snmp trap endpoint via the REST 
-api(phosphor-rest-server),Please look at the configuration command at 
-the following link
-
-https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md
-
-We also had a configuration in phosphor-dbus-monitor where it is 
-configured that for which D-bus event, snmp traps need to be sent.
-
-https://github.com/openbmc/phosphor-dbus-monitor/blob/master/src/example/example.yaml
-
-phosphor-dbus-monitor, monitors the D-bus event, and as per the 
-phosphor-event configuration,snmp trap is  sent.
-
-Once you configure the SNMP trap endpoint and the phosphor-dbus-event 
-then you need to run the  snmptrapd outside the BMC to receive the SNMP 
-traps .
-
-You may run the snmptrapd inside the BMC also.
-
-NOTE: Make sure that wherever you are running the snmptrapd, firewall is 
-not blocking the packets.
-> The document ,
->   https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md 
-> ,  does not guide me to do the snmp trap test.
->   Would you like to give me a detail instruction to do the snmp trap test?
->
-> Best,
-> Xiuzhi
-
---------------0BD4335FEFE013271DFB93DF
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;
-      charset=windows-1252">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 8/29/2019 4:01 PM, xiuzhi wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:tencent_2C97DABC4F44BB346BFBDE36@qq.com">
-      <meta http-equiv="content-type" content="text/html;
-        charset=windows-1252">
-      <div>Hi Ratan,</div>
-      <div>  I am try to test the snmp trap feature on openbmc
-        2.8.0-dev.</div>
-      <div>There is no more snmp util commands such as snmptrap etc.
-        expect   phosphor-network-snmpconf .</div>
-    </blockquote>
-    <p>You need to configure the snmp trap endpoint via the REST
-      api(phosphor-rest-server),Please look at the configuration command
-      at the following link</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md">https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md</a></p>
-    We also had a configuration in phosphor-dbus-monitor where it is
-    configured that for which D-bus event, snmp traps need to be sent.<br>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-dbus-monitor/blob/master/src/example/example.yaml">https://github.com/openbmc/phosphor-dbus-monitor/blob/master/src/example/example.yaml</a></p>
-    <p>phosphor-dbus-monitor, monitors the D-bus event, and as per the
-      phosphor-event configuration,snmp trap is  sent.</p>
-    Once you configure the SNMP trap endpoint and the
-    phosphor-dbus-event then you need to run the  snmptrapd outside the
-    BMC to receive the SNMP traps .<br>
-    <p>You may run the snmptrapd inside the BMC also.</p>
-    NOTE: Make sure that wherever you are running the snmptrapd,
-    firewall is not blocking the packets.<br>
-    <blockquote type="cite"
-      cite="mid:tencent_2C97DABC4F44BB346BFBDE36@qq.com">
-      <div> The document ,</div>
-      <div>  <a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md">https://github.com/openbmc/phosphor-snmp/blob/master/docs/snmp-configuration.md</a>
-        ,  does not guide me to do the snmp trap test.</div>
-      <div>  Would you like to give me a detail instruction to do the
-        snmp trap test?<font face="arial" color="#333333"><span
-            style="font-size: 16px;"> </span></font></div>
-      <div><font face="arial" color="#333333"><span style="font-size:
-            16px;"><br>
-          </span></font></div>
-      <div><font face="arial" color="#333333"><span style="font-size:
-            16px;">Best,</span></font></div>
-      <div><font face="arial" color="#333333"><span style="font-size:
-            16px;">Xiuzhi</span></font></div>
-    </blockquote>
-  </body>
-</html>
-
---------------0BD4335FEFE013271DFB93DF--
-
+> ---
+>  drivers/watchdog/aspeed_wdt.c | 65 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 64 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+> index cc71861e033a..125dbd349b00 100644
+> --- a/drivers/watchdog/aspeed_wdt.c
+> +++ b/drivers/watchdog/aspeed_wdt.c
+> @@ -53,6 +53,8 @@ MODULE_DEVICE_TABLE(of, aspeed_wdt_of_table);
+>  #define   WDT_CTRL_ENABLE		BIT(0)
+>  #define WDT_TIMEOUT_STATUS	0x10
+>  #define   WDT_TIMEOUT_STATUS_BOOT_SECONDARY	BIT(1)
+> +#define WDT_CLEAR_TIMEOUT_STATUS	0x14
+> +#define   WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION	BIT(0)
+>  
+>  /*
+>   * WDT_RESET_WIDTH controls the characteristics of the external pulse (if
+> @@ -165,6 +167,60 @@ static int aspeed_wdt_restart(struct watchdog_device *wdd,
+>  	return 0;
+>  }
+>  
+> +/* access_cs0 shows if cs0 is accessible, hence the reverted bit */
+> +static ssize_t access_cs0_show(struct device *dev,
+> +			       struct device_attribute *attr, char *buf)
+> +{
+> +	struct aspeed_wdt *wdt = dev_get_drvdata(dev);
+> +	u32 status = readl(wdt->base + WDT_TIMEOUT_STATUS);
+> +
+> +	return sprintf(buf, "%u\n",
+> +		      !(status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY));
+> +}
+> +
+> +static ssize_t access_cs0_store(struct device *dev,
+> +				struct device_attribute *attr, const char *buf,
+> +				size_t size)
+> +{
+> +	struct aspeed_wdt *wdt = dev_get_drvdata(dev);
+> +	unsigned long val;
+> +
+> +	if (kstrtoul(buf, 10, &val))
+> +		return -EINVAL;
+> +
+> +	if (val)
+> +		writel(WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION,
+> +		       wdt->base + WDT_CLEAR_TIMEOUT_STATUS);
+> +
+> +	return size;
+> +}
+> +
+> +/*
+> + * This attribute exists only if the system has booted from the alternate
+> + * flash with 'alt-boot' option.
+> + *
+> + * At alternate flash the 'access_cs0' sysfs node provides:
+> + *   ast2400: a way to get access to the primary SPI flash chip at CS0
+> + *            after booting from the alternate chip at CS1.
+> + *   ast2500: a way to restore the normal address mapping from
+> + *            (CS0->CS1, CS1->CS0) to (CS0->CS0, CS1->CS1).
+> + *
+> + * Clearing the boot code selection and timeout counter also resets to the
+> + * initial state the chip select line mapping. When the SoC is in normal
+> + * mapping state (i.e. booted from CS0), clearing those bits does nothing for
+> + * both versions of the SoC. For alternate boot mode (booted from CS1 due to
+> + * wdt2 expiration) the behavior differs as described above.
+> + *
+> + * This option can be used with wdt2 (watchdog1) only.
+> + */
+> +static DEVICE_ATTR_RW(access_cs0);
+> +
+> +static struct attribute *bswitch_attrs[] = {
+> +	&dev_attr_access_cs0.attr,
+> +	NULL
+> +};
+> +ATTRIBUTE_GROUPS(bswitch);
+> +
+>  static const struct watchdog_ops aspeed_wdt_ops = {
+>  	.start		= aspeed_wdt_start,
+>  	.stop		= aspeed_wdt_stop,
+> @@ -306,9 +362,16 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	status = readl(wdt->base + WDT_TIMEOUT_STATUS);
+> -	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY)
+> +	if (status & WDT_TIMEOUT_STATUS_BOOT_SECONDARY) {
+>  		wdt->wdd.bootstatus = WDIOF_CARDRESET;
+>  
+> +		if (of_device_is_compatible(np, "aspeed,ast2400-wdt") ||
+> +		    of_device_is_compatible(np, "aspeed,ast2500-wdt"))
+> +			wdt->wdd.groups = bswitch_groups;
+> +	}
+> +
+> +	dev_set_drvdata(dev, wdt);
+> +
+>  	return devm_watchdog_register_device(dev, &wdt->wdd);
+>  }
+>  
