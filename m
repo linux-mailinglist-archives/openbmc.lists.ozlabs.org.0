@@ -2,83 +2,132 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46165A4D0E
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 03:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D5B7A4D54
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 04:48:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MBqj4nB6zDqTN
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 11:11:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MDz1449KzDqbG
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 12:47:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=4148ffab06=benwei@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="D8CwdeDQ"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="KYCwCzZC"; dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="HIlqEoTd"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="aa5Lpbq5"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46MBBS6ZJXzDqbq
- for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2019 10:42:40 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 036693CF;
- Sun,  1 Sep 2019 20:42:37 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 01 Sep 2019 20:42:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=sRIKNxUNiDM4JvqFVIu0fV+B55mKOSV
- TqrBuGQAv+X0=; b=D8CwdeDQPECh4W/HY1olr4d6qqn+yspfllqt/horL6cNiqV
- x5QrSIj77GADSo+7y4p1O6aO6km9FHr0vl3OAe5u4sNxN1wv7cyfuRvlHr9wJmPH
- kIsfVkHYkb4IKhC4K6EOW09HcXwnUgGqqIjQ71Ej6kLyWn6UBhrcX/ulhV3qICF1
- 3AG1LSoWMe3iS1XWBGoGXCY3FnPA/NgTupaOxUpzG3bp4fGM00EBnjOBgjwEgSmA
- iE6pfhoyCIhNnO/wIZG0RJeUlBNKll+DBPQiQfy3UnmIdG3CbLbvp0UFkygR/rnn
- 946V1ABgrD4tnvu2JXk+oY4PcUkrEvyvN5RNspQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=sRIKNx
- UNiDM4JvqFVIu0fV+B55mKOSVTqrBuGQAv+X0=; b=KYCwCzZChXOzSV806CQBmN
- wL26WEtZSdXXffCP87Zx7vLlctPBrhxSJVnuQIDNcZisT4NWMzeqw2216qPZHsAD
- sD3SWY75HXfd6VgTTaKzLLkqD5M9YIdlwCaUu+uyR98n1iuu34sVXp+JtWkhW90X
- NJ64gcM4Asi7PQcjidHtrM19BIEX9Ld+xU16DSAs9YyV/N+rvm+7PlgGOIZVG2a3
- tmA/2pQgd3KmGU3hB1PSj90tteW92z/IuM77LhR6dxA3ON18uahbmroTgj96Itju
- CUNYfjs+toSJlukzzEYv0MWfEPxSUuR+XXMTN4sXntFBZwDDzlm6aAuL4bPR/uRA
- ==
-X-ME-Sender: <xms:fWVsXS_5s7Wioxhv0TnJtNWP1WTVoKvYBNOcR-h1FXzuQdr1f91GHg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudeiledgfeekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:fWVsXdlcqPYDhR0G4eFIcBykHHkEXhzcuFu3hS7fPq7vRi7FkWx1uA>
- <xmx:fWVsXf0-VXLZyv1Utz8WcfszKjmcdy8PwPUl3WqLrOJNG2fluOPtQQ>
- <xmx:fWVsXYotCSr0aCt0biqF-qe47ZA-c_HUuKCZ0BEhfMsUenmDU4R3rw>
- <xmx:fWVsXfVsuSKzp8CDhRY7lGan6xqCKOVul4228KdcUXqbLrGpBwSUeQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 7A146E00A3; Sun,  1 Sep 2019 20:42:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-154-gfa7592a-fmstable-20190829v1
-Mime-Version: 1.0
-Message-Id: <f0c4588c-ac85-40dc-8744-e45e19d3c570@www.fastmail.com>
-In-Reply-To: <CACPK8XdMfg48O8mmzXXEPBBRcjPm7xhDjJCC3YdO6bAiJ8m1yA@mail.gmail.com>
-References: <20190830090244.13566-1-andrew@aj.id.au>
- <20190830090244.13566-4-andrew@aj.id.au>
- <CACPK8XdMfg48O8mmzXXEPBBRcjPm7xhDjJCC3YdO6bAiJ8m1yA@mail.gmail.com>
-Date: Mon, 02 Sep 2019 10:13:01 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.2_3/5]_mmc:_sdhci-of-aspeed:_Uphold_clo?=
- =?UTF-8?Q?cks-on_post-condition_of_set=5Fclock()?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46MDyJ5H3NzDqY7
+ for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2019 12:47:15 +1000 (AEST)
+Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x822ieuI003096; Sun, 1 Sep 2019 19:47:09 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=facebook; bh=SpeeiTT1702e+gajS4S7QkWKldtV+AL7UZ+seQ+Evzg=;
+ b=HIlqEoTdLWuEN6psaHSinTfJXvjEpiuF80EX90K7CX68VPNoxgwwOlJQCMx3IEPLX0Fi
+ nPKMHzcNgwBVv3B00URrl/fVRlowdJHPujlaqLR40ter/XDGctj0BYbuOQ/RT2yiWzbD
+ IC8ZJwlv8PpM+G3+5ksxV7VnWEWt0s98JUI= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uqpdj5f1j-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Sun, 01 Sep 2019 19:47:09 -0700
+Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
+ prn-hub03.TheFacebook.com (2620:10d:c081:35::127) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Sun, 1 Sep 2019 19:47:07 -0700
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Sun, 1 Sep 2019 19:47:07 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ISrnsDt5zM93XB1BRu+5LEaQ6+CHfWpxnRtoMGSDVZtHuzEVqe6xVlEBHikPhQ6UOexnd/oGoYQrC/M5AYB0x4IXhKEqmQcnnQKKaI/7eq2HVRaUm99a131oA4ib9/vb3gQt/vPWQqQHEj4fITzw7yfnQq5rfFzdou6TFGfD+7VvDw47dO4xydxfM9jt5MYIwGubVJBtzgdB8E8ENK2q31+bizeMfRoXDKsGSkui8o6T5iTLks06DoI2N/e5h8eGdfBGy3D5ZFP5dx+QD6S1D6cHZ0wZTPCWASehzqy5mc6KbM7Jr2o5nfNmgzB77i9z6XgVkhN1qVuKHEwDHtbvCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SpeeiTT1702e+gajS4S7QkWKldtV+AL7UZ+seQ+Evzg=;
+ b=XjL815FhWpO7EKCJFXskRObLiv1FU/ivBY2pLS6HyArD+9At3IiYs0xYEH+MfVD6t5sh7q4vX49QZyaj815uXxxuLj759AB2ptAZD5dtv7Wu6ovSEryI3QSY4N8N/wEkU98ct3Nt4oXxpDjPJl4Wglr/Mjm3Q/6oqPqQN3NAcH8+j4E9cIr218s8e9JYHOAv+IR5vA3mBdr0TsE/GEyPcuevnZZezpdUaHIe80SPvOvYT1j+P4+R5EsoZ2T7vx1HX7sQuUlsxbH0SEwtt0FRjfpMygQfvBs05NMTvj23op/UVe5Mwj0AskIT/qxsX0Z1fLBfgOgnXRTJ+Qy0riUkWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SpeeiTT1702e+gajS4S7QkWKldtV+AL7UZ+seQ+Evzg=;
+ b=aa5Lpbq5OSokIvtG1UDgeIbQfnbnFctGO2uTWG/rF0Hc6CesYdgKzjl3uI8VjRPpO7/DiLMY2aowI4jYpEtn/Z40l5o9b0WAOzwzHJzgDjhrgyS+QbJK9LZxf5Goye/oa6QCHVNW0gtGn9kzeI6snkQxqgE5KfG2aZpMGyYASis=
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com (10.255.155.143) by
+ CH2PR15MB3621.namprd15.prod.outlook.com (52.132.228.223) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2178.16; Mon, 2 Sep 2019 02:46:52 +0000
+Received: from CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::49a8:bb4e:fcce:aee7]) by CH2PR15MB3686.namprd15.prod.outlook.com
+ ([fe80::49a8:bb4e:fcce:aee7%4]) with mapi id 15.20.2220.021; Mon, 2 Sep 2019
+ 02:46:52 +0000
+From: Ben Wei <benwei@fb.com>
+To: Ben Wei <benwei@fb.com>, David Miller <davem@davemloft.net>,
+ "sam@mendozajonas.com" <sam@mendozajonas.com>, "netdev@vger.kernel.org"
+ <netdev@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: [PATCH net-next] net/ncsi: support unaligned payload size in NC-SI
+ cmd handler
+Thread-Topic: [PATCH net-next] net/ncsi: support unaligned payload size in
+ NC-SI cmd handler
+Thread-Index: AdVhOKsnD7LLLBrzTcm5Yllqe1NFWA==
+Date: Mon, 2 Sep 2019 02:46:52 +0000
+Message-ID: <CH2PR15MB368619179F403EAE47FD61F7A3BE0@CH2PR15MB3686.namprd15.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:180::4d27]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: bd3c89c4-5b02-4256-bf1c-08d72f4fcf5e
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:CH2PR15MB3621; 
+x-ms-traffictypediagnostic: CH2PR15MB3621:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <CH2PR15MB362195FE41D0BDD126A7F2EAA3BE0@CH2PR15MB3621.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 01480965DA
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(396003)(346002)(366004)(376002)(39860400002)(136003)(189003)(199004)(76116006)(102836004)(110136005)(14444005)(5660300002)(86362001)(33656002)(81156014)(2906002)(316002)(81166006)(7696005)(6436002)(4326008)(8936002)(66446008)(66556008)(64756008)(478600001)(66946007)(66476007)(186003)(486006)(53936002)(6506007)(52536014)(14454004)(2201001)(71200400001)(9686003)(25786009)(256004)(55016002)(6116002)(74316002)(71190400001)(2501003)(476003)(305945005)(99286004)(7736002)(46003)(8676002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CH2PR15MB3621;
+ H:CH2PR15MB3686.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: hZAuAbsgn/eL6gEkX6X/aVCyKq+ptKfqlWc3MhHl8PFQl6hTEIZxwn4mrx/C6t9D5M7Yde1Sc0p5n01kDBE8E7z5nCqvr7TJMsr+j8ne2j6ZODs9M25PscJ0gai0H9suRoviEuUq1mmpG3/H0uzaSxAC4yFK2Wx9KJ1bkoYmJTrL7WQW4HJ0QU/jQTZWqHXm2+rV2wsOXE116JySeFqNiJL918cekVqcbvWDh6ue594jPeWR96ZdlLEBmC45lELcY5yWD9MYDWhlRnwdhmFoBLSwChwHnmqF+8pxDnVeuZpdNVrBUvmQ033c2DEQkeABGRygl0VJaQ98drent/ucXxTYW152kOE7UR5UdeU7gPmiT5xcCtAVQ0yQFi1z/cndmsxemYZVT255+kCgvabEnB0UXzU14ptyUU/MGSXKlcI=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd3c89c4-5b02-4256-bf1c-08d72f4fcf5e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2019 02:46:52.2650 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: UqJ5y4lANzTqIxV1oP8uZoAdpf3p2HPpNhaiA39vxQXeEbT7wmpInIPguXzxNFTE
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR15MB3621
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-02_01:2019-08-29,2019-09-02 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ phishscore=0
+ malwarescore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ suspectscore=0 adultscore=0 bulkscore=0 mlxlogscore=909 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1906280000 definitions=main-1909020030
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,31 +139,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Ben Wei <benwei@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Update NC-SI command handler (both standard and OEM) to take into
+account of payload paddings in allocating skb (in case of payload
+size is not 32-bit aligned).
 
+The checksum field follows payload field, without taking payload
+padding into account can cause checksum being truncated, leading to
+dropped packets.
 
-On Mon, 2 Sep 2019, at 10:08, Joel Stanley wrote:
-> On Fri, 30 Aug 2019 at 09:02, Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> > The early-exit didn't seem to matter on the AST2500, but on the AST2600
-> > the SD clock genuinely may not be running on entry to
-> > aspeed_sdhci_set_clock(). Remove the early exit to ensure we always run
-> > sdhci_enable_clk().
-> >
-> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> 
-> I don't quite understand what this was doing in the original patch.
-> The fix is good though, I tested it.
+Signed-off-by: Ben Wei <benwei@fb.com>
+---
+ net/ncsi/ncsi-cmd.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-What do you mean? You already had questions about it?  Would have been nice
-to pipe up at the time if so :D
+diff --git a/net/ncsi/ncsi-cmd.c b/net/ncsi/ncsi-cmd.c
+index 0187e65176c0..42636ed3cf3a 100644
+--- a/net/ncsi/ncsi-cmd.c
++++ b/net/ncsi/ncsi-cmd.c
+@@ -213,17 +213,22 @@ static int ncsi_cmd_handler_oem(struct sk_buff *skb,
+ {
+ 	struct ncsi_cmd_oem_pkt *cmd;
+ 	unsigned int len;
++	/* NC-SI spec requires payload to be padded with 0
++	 * to 32-bit boundary before the checksum field.
++	 * Ensure the padding bytes are accounted for in
++	 * skb allocation
++	 */
++	unsigned short payload =3D ALIGN(nca->payload, 4);
+=20
+ 	len =3D sizeof(struct ncsi_cmd_pkt_hdr) + 4;
+-	if (nca->payload < 26)
++	if (payload < 26)
+ 		len +=3D 26;
+ 	else
+-		len +=3D nca->payload;
++		len +=3D payload;
+=20
+ 	cmd =3D skb_put_zero(skb, len);
+ 	memcpy(&cmd->mfr_id, nca->data, nca->payload);
+ 	ncsi_cmd_build_header(&cmd->cmd.common, nca);
+-
+ 	return 0;
+ }
+=20
+@@ -272,6 +277,7 @@ static struct ncsi_request *ncsi_alloc_command(struct n=
+csi_cmd_arg *nca)
+ 	struct net_device *dev =3D nd->dev;
+ 	int hlen =3D LL_RESERVED_SPACE(dev);
+ 	int tlen =3D dev->needed_tailroom;
++	int payload;
+ 	int len =3D hlen + tlen;
+ 	struct sk_buff *skb;
+ 	struct ncsi_request *nr;
+@@ -281,14 +287,17 @@ static struct ncsi_request *ncsi_alloc_command(struct=
+ ncsi_cmd_arg *nca)
+ 		return NULL;
+=20
+ 	/* NCSI command packet has 16-bytes header, payload, 4 bytes checksum.
++	 * Payload needs padding so that the checksum field follwoing payload is
++	 * aligned to 32bit boundary.
+ 	 * The packet needs padding if its payload is less than 26 bytes to
+ 	 * meet 64 bytes minimal ethernet frame length.
+ 	 */
+ 	len +=3D sizeof(struct ncsi_cmd_pkt_hdr) + 4;
+-	if (nca->payload < 26)
++	payload =3D ALIGN(nca->payload, 4);
++	if (payload < 26)
+ 		len +=3D 26;
+ 	else
+-		len +=3D nca->payload;
++		len +=3D payload;
+=20
+ 	/* Allocate skb */
+ 	skb =3D alloc_skb(len, GFP_ATOMIC);
+--=20
+2.17.1
 
-> 
-> Tested-by: Joel Stanley <joel@jms.id.au>
-
-Thanks,
-
-Andrew
