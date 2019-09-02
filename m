@@ -2,39 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C224A531D
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 11:42:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 751F6A533C
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 11:45:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46MQ9R2jrvzDqg5
-	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 19:42:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46MQDz5HrczDqRH
+	for <lists+openbmc@lfdr.de>; Mon,  2 Sep 2019 19:45:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
+ spf=fail (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=134.134.136.21; helo=orsmga101.jf.intel.com;
  envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ dmarc=fail (p=none dis=none) header.from=intel.com
+X-Greylist: delayed 67 seconds by postgrey-1.36 at bilbo;
+ Mon, 02 Sep 2019 19:42:58 AEST
+Received: from orsmga101.jf.intel.com (mga20.intel.com [134.134.136.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46MQ8g6z2yzDqc5
- for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2019 19:41:48 +1000 (AEST)
-X-Amp-Result: UNSCANNABLE
-X-Amp-File-Uploaded: False
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46MQ9t0HyVzDqf0
+ for <openbmc@lists.ozlabs.org>; Mon,  2 Sep 2019 19:42:57 +1000 (AEST)
+Received: from localhost by orsmga101.jf.intel.com; 02 Sep 2019 02:41:45 -0700
+Message-Id: <0f4eb2$2fgecj@orsmga002.jf.intel.com>
+Content-Type: multipart/mixed; boundary="===============8153665472552934590=="
+MIME-Version: 1.0
+Date: 02 Sep 2019 02:41:45 -0700
+To: openbmc@lists.ozlabs.org
+From: piotr.matuszczak@intel.com
+Subject: [ENCRYPTED ATTACHMENT] Collectd and librrd based telemetry collection
+X-BeenThere: openbmc@lists.ozlabs.org
+X-Mailman-Version: 2.1.29
+Precedence: list
+List-Id: Development list for OpenBMC <openbmc.lists.ozlabs.org>
+List-Unsubscribe: <https://lists.ozlabs.org/options/openbmc>,
+ <mailto:openbmc-request@lists.ozlabs.org?subject=unsubscribe>
+List-Archive: <http://lists.ozlabs.org/pipermail/openbmc/>
+List-Post: <mailto:openbmc@lists.ozlabs.org>
+List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
+List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
+ <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
+Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
+
+This is a multipart MIME message.
+--===============8153665472552934590==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+---------------------------------------------------------------------
+Intel Technology Poland sp. z o.o.
+ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII Wydz=
+ial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP 957-07-52-31=
+6 | Kapital zakladowy 200.000 PLN.
+
+Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego adresata=
+ i moze zawierac informacje poufne. W razie przypadkowego otrzymania tej wi=
+adomosci, prosimy o powiadomienie nadawcy oraz trwale jej usuniecie; jakiek=
+olwiek przegladanie lub rozpowszechnianie jest zabronione.
+This e-mail and any attachments may contain confidential material for the s=
+ole use of the intended recipient(s). If you are not the intended recipient=
+, please contact the sender and delete all copies; any review or distributi=
+on by others is strictly prohibited.
+
+
+--===============8153665472552934590==
+Content-Type: message/rfc822
+MIME-Version: 1.0
+Content-Disposition: attachment; filename="OriginalMessage.txt"
+
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2019 02:41:44 -0700
+  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 02 Sep 2019 02:41:44 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,457,1559545200"; 
- d="p7m'?scan'208";a="194017979"
+   d="p7m'?scan'208";a="194017979"
 Received: from irsmsx151.ger.corp.intel.com ([163.33.192.59])
- by orsmga002.jf.intel.com with ESMTP; 02 Sep 2019 02:41:43 -0700
+  by orsmga002.jf.intel.com with ESMTP; 02 Sep 2019 02:41:43 -0700
 Received: from irsmsx101.ger.corp.intel.com ([169.254.1.61]) by
  IRSMSX151.ger.corp.intel.com ([169.254.4.214]) with mapi id 14.03.0439.000;
  Mon, 2 Sep 2019 10:41:42 +0100
 From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
 To: "kunyi@google.com" <kunyi@google.com>
+CC: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Rapkiewicz, Pawel"
+	<pawel.rapkiewicz@intel.com>
 Subject: Collectd and librrd based telemetry collection
 Thread-Topic: Collectd and librrd based telemetry collection
 Thread-Index: AdVhbcUtcZodSC4oSfieck892xGqVw==
@@ -50,25 +100,11 @@ dlp-product: dlpe-windows
 dlp-version: 11.2.0.6
 dlp-reaction: no-action
 x-originating-ip: [163.33.239.181]
-Content-Type: application/pkcs7-mime; smime-type=signed-data; name="smime.p7m"
+Content-Type: application/pkcs7-mime; smime-type=signed-data;
+	name="smime.p7m"
 Content-Disposition: attachment; filename="smime.p7m"
 Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-BeenThere: openbmc@lists.ozlabs.org
-X-Mailman-Version: 2.1.29
-Precedence: list
-List-Id: Development list for OpenBMC <openbmc.lists.ozlabs.org>
-List-Unsubscribe: <https://lists.ozlabs.org/options/openbmc>,
- <mailto:openbmc-request@lists.ozlabs.org?subject=unsubscribe>
-List-Archive: <http://lists.ozlabs.org/pipermail/openbmc/>
-List-Post: <mailto:openbmc@lists.ozlabs.org>
-List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
-List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
- <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Rapkiewicz, Pawel" <pawel.rapkiewicz@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
-Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAaCAJIAEggUSQ29u
 dGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7DQoJYm91bmRhcnk9Ii0tLS09X05leHRQYXJ0XzAw
@@ -360,3 +396,5 @@ MWq7SIonb4ka0srzKNSLVmTNLNbd8ODGOTVOpXV5mS4zSQ/VbOBRI0mSXf8bQ0QCvuPj6R1r+cf0
 cMEIWSvBCIM6FOfyG3dal4KyRGm/80vCBFJjb6afnhcRjXEPiMw10TTN/QYGxSzcz32Kij5GFLeN
 rlrJy4doQ8MU0uvx0BRfyDIl+BjIBkEYzWq0BESJ1ipsfWiUOUyQrfFBS7vLm7eFh9znmpx0UGxb
 V34sAbfQGfYgbpxGEKFfAAAAAAAA
+
+--===============8153665472552934590==--
