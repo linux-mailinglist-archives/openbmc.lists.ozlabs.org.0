@@ -2,86 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA068A7279
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 20:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D3C5A72C4
+	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 20:50:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46NFbh39l3zDqrZ
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 04:19:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NGGm6MXzzDqqY
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 04:50:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=eajames@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="OgUbUA1y"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46NFZq0BMYzDqnF
- for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 04:18:57 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x83IIbT9066084; Tue, 3 Sep 2019 14:18:54 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2usu0bwc9f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Sep 2019 14:18:53 -0400
-Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x83IIrc0067817;
- Tue, 3 Sep 2019 14:18:53 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2usu0bwc8s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Sep 2019 14:18:53 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x83IEnKw028606;
- Tue, 3 Sep 2019 18:18:52 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma04wdc.us.ibm.com with ESMTP id 2us9fmx2th-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Sep 2019 18:18:52 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x83IIqx355116174
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Sep 2019 18:18:52 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4F2F3AE05F;
- Tue,  3 Sep 2019 18:18:52 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D79B0AE05C;
- Tue,  3 Sep 2019 18:18:51 +0000 (GMT)
-Received: from [9.41.179.222] (unknown [9.41.179.222])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  3 Sep 2019 18:18:51 +0000 (GMT)
-Subject: Re: [PATCH] i2c: busses: i2c-fsi.c: Add of_put_node() before break
-To: Wolfram Sang <wsa@the-dreams.de>,
- Nishka Dasgupta <nishkadg.linux@gmail.com>
-References: <20190706131911.3068-1-nishkadg.linux@gmail.com>
- <20190903181501.GJ2171@ninjato>
-From: Eddie James <eajames@linux.vnet.ibm.com>
-Message-ID: <ddca6d49-e52b-bf5d-48fd-44124b2de528@linux.vnet.ibm.com>
-Date: Tue, 3 Sep 2019 13:18:51 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NGG66KK1zDqbt
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 04:49:34 +1000 (AEST)
+Received: by mail-ot1-x32a.google.com with SMTP id 97so15018948otr.4
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Sep 2019 11:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=e7DPJm89OvllPke6vHXEZyJiMQTutOoFBJgNzG++DCs=;
+ b=OgUbUA1y+NLyFQgJ++E9JdwtT8NAK76mkJrqDaVgBdN2/lPPWvLbMmtAweck8l9BC+
+ DjVQUWmb8945+j4Z5w+B7eobqiDYNQP5i/zFr/ITrMD2p6VB5ULDRgJRtbkmfJzD9yn3
+ AgmhGKcH3tlX8Pwm+bdawEtHQcoU9jIoVu42HqDFJi6iQzhRUCcSEGrKB//7cc730X1U
+ mjFqTGobwpvSRaW8vAlR320Lv21ipOHNVhmrfxZsMdUN7QRZFOVUJU0iICoZE/PypfIA
+ u53jr1fF1y00EDlRDtNDhUOyuUS5rGmUU4F9cjfXRXT3kz9irUcZMvMJoaBwuNCK6beq
+ zQZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=e7DPJm89OvllPke6vHXEZyJiMQTutOoFBJgNzG++DCs=;
+ b=T5QU2MTrQ5ga/93vcNYpBr3Ce6ZG2z6tartPgL1cgEQ36JdlZPmhhWRuMR7X1aM+r5
+ SMjqjO3pL+Z5F8PBhlWBDGkAlaXbdcMJcgeIvySCfv6lWCHj6Rbqf4yeyDLHygekDj1P
+ rHgmvu6ylgtexSNDdMv1TahLM26zWCZD1rhm1hnJaobr8e1ScmBQ3NI2eCPrej693Pfa
+ /4fs+135e7S4qvFTz2o41LrHVfAkdteYeIl7Ext4w6sYJEW1cAWemptXOEYKKKqYVyNy
+ id246/UDtOYOnfC4bnB3YiUPeC6RLxgiP0pIPauD/hEMUeyex6D9y1HthL//9uz7xwFk
+ gTgw==
+X-Gm-Message-State: APjAAAUy3yxWBldqTVR8pBaONV8RfVjkVqq2eMkesXkCx0UbBMtFzLTk
+ WcIQ/x1EOo7QpOIThKLAM26egn2A5uVglbUsq08=
+X-Google-Smtp-Source: APXvYqxzUxtiLrNfMYfTwwIRvBnCWXJkCQPVdCjRJb1rnZStkLhIfg7ayh57ddYT/rVUL7+L8k/rPCqxx/YgSEGZCno=
+X-Received: by 2002:a9d:6d83:: with SMTP id x3mr10508217otp.263.1567536571195; 
+ Tue, 03 Sep 2019 11:49:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20190903181501.GJ2171@ninjato>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-03_04:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1909030181
+References: <643a0f27aed44f9b95a1d0287c2e204d@lenovo.com>
+In-Reply-To: <643a0f27aed44f9b95a1d0287c2e204d@lenovo.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Tue, 3 Sep 2019 13:49:15 -0500
+Message-ID: <CALLMt=qXUrUWZFP7nx9sMfse1Uh-HY6AjFwZLfVvJTxG_v9YaA@mail.gmail.com>
+Subject: Re: How to handle a specific platform application?
+To: Andrew MS1 Peng <pengms1@lenovo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,52 +74,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-i2c@vger.kernel.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sun, Sep 1, 2019 at 10:18 PM Andrew MS1 Peng <pengms1@lenovo.com> wrote:
+>
+> Hi Team,
+>
+> If we implemented a specific application on our platform such as FPGA com=
+munication tool, it's just used in our products rather than a general purpo=
+se application. Could I create a repo for it on our github and create a bb =
+file in our OpenBmc meta-layer to fetch it? Does it need to do OpenBmc gerr=
+it code review?
 
-On 9/3/19 1:15 PM, Wolfram Sang wrote:
-> On Sat, Jul 06, 2019 at 06:49:11PM +0530, Nishka Dasgupta wrote:
->> Each iteration of for_each_available_childe_of_node puts the previous
->> node, but in the case of a break from the middle of the loop, there
->> is no put, thus causing a memory leak. Add an of_node_put before the
->> break.
->> Issue found with Coccinelle.
->>
->> Signed-off-by: Nishka Dasgupta <nishkadg.linux@gmail.com>
->> ---
-> Eddie, are you okay with this change?
-
-
-Yes, sorry must have missed this when it first came in.
-
-Thanks.
-
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
+Yes, if there's no use cases for other openbmc users to utilize this new to=
+ol
+then putting in a separate github project and pointing a recipe that is wit=
+hin
+your meta layer makes sense. The only thing that would go through gerrit
+is your new recipe to use it.
 
 >
->>   drivers/i2c/busses/i2c-fsi.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/i2c/busses/i2c-fsi.c b/drivers/i2c/busses/i2c-fsi.c
->> index 1e2be2219a60..5e01875082c3 100644
->> --- a/drivers/i2c/busses/i2c-fsi.c
->> +++ b/drivers/i2c/busses/i2c-fsi.c
->> @@ -685,8 +685,10 @@ static int fsi_i2c_probe(struct device *dev)
->>   			continue;
->>   
->>   		port = kzalloc(sizeof(*port), GFP_KERNEL);
->> -		if (!port)
->> +		if (!port) {
->> +			of_node_put(np);
->>   			break;
->> +		}
->>   
->>   		port->master = i2c;
->>   		port->port = port_no;
->> -- 
->> 2.19.1
->>
+> Thanks,
+>
+> Andrew
