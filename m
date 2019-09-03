@@ -2,101 +2,101 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97139A60C1
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 07:39:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E59CA6413
+	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 10:35:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Mwkw6sJyzDqY5
-	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 15:39:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46N0dd6HSSzDqQM
+	for <lists+openbmc@lfdr.de>; Tue,  3 Sep 2019 18:35:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (helo)
+ smtp.helo=apc01-pu1-obe.outbound.protection.outlook.com
+ (client-ip=40.107.132.58; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=ctcchien@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=2a01:111:f400:fe44::708;
- helo=nam02-sn1-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
+ dmarc=none (p=none dis=none) header.from=nuvoton.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="N17fqZp+"; dkim-atps=neutral
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com
- (mail-sn1nam02on0708.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:fe44::708])
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.b="i+Are8u3"; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320058.outbound.protection.outlook.com [40.107.132.58])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Mwj12v9kzDqkL
- for <openbmc@lists.ozlabs.org>; Tue,  3 Sep 2019 15:38:10 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46N0cn2kqzzDqB4
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Sep 2019 18:34:47 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RpZtibnuG3Z0deWpMczH9/Lhz8X3/Pz9Bh90dYSK1sJ4p4LyLN+sqhfVMUhws9WtlOoPsW8J4ENr79lvoyr4TGlCTuQ2XOwBLf5kckJchyYsczvnJ5jR+3Ll2UEnh/4HolojqrFFUlXUmd4VmC396URvd264j/sBJG+TdBBbabo6j3LCvs5nX7IQjUM5qZy0ZDM53DLvCJ7989Z4WIzDD+62BbSoww5SrssCMx8shbf3V7O8iIWujjrxCLR+k+FXzl9cYS2FLHwpp3fjPod+BW0XdD8qgeDlu/0MraqRFiZv80JM2y9l/Sk/JgWV+JyzO0upfzxMfZRoAycNEudPzw==
+ b=RqU0qX4iorMVv56tLC/OjPXrYgEvbXXFBtynia6XnZvcPd0yOugw0dwOm+vnGMSIblQ5Zphk+PeYOfV41G8BiS4yEI74oeLfErW3aSyuUaEZ8HXMstyPRd9Y54RD9IhNPPyJy5X6Aba7NIIFuKUra3Lizo675Evp0vKDUFpyzKaWBFdm5x9e1sVu1UC+/56eg84LCtutoCpdxJM94AGWDtNbAR5xhATxRMAZbN3hdCT2pXCLIV3fr6YH9qLigFssrI4bvcusRI6sEvZCTX0ZeNHrXxt4iCiQeqL73nWwFQy1Bo6THaDSuZhRB1wUW/mPXcWLnXKD6sz6IOlm6lMsog==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zTMCgYeRhD37mlMjJzLzg/1iVbQIlcCcvqgjirsVsMw=;
- b=fS0rNxUt4q470WN0mVdfAxU+/IVsA764ODfv6qZPdIansWFdbTKoMLziEt7O+LChy/HQcc+Jc5aMNgf2icQAspZeTJaQS2qvpqYr3JrM4HLkrNHjz74xn0eJISxQrDxp79+lwQCNHWjAIyIoY3CpMj1iRwW05X625L7XkwWZUzCES8O7GcJlfArJTMf4YfDy9QINluv5lWwEH+nvfZO23e5QC5yd5evPHVIoqfPjcc/WlJMirXGj+2yua52hhoPGUm+1lUCsshAYnUexEkL87iOuc75DXaoL6NqDwcejB/SM+4sOXjJTT6+Y6eqxleeMoIN/tZ0r/WlO7y2yx07nRA==
+ bh=uTwCxoTh56i8xDFiIRQyTvcN9mHGr+oUwD496jpOXrk=;
+ b=QPjT1yD9lovNz2yuVuI2EF5Zywgr1/Pg0fqeguu18/CppheNBLV4MjDSeeXj3gKlKm4wLap7yD6Bw+0F4zs8jDy+lF7fHYA/vC8k8OvxD79Ttehi6qCCr8nJcDrnjJLPw8SFrOI7oopZE004e5r/393/wioweMwY4pxzva+uFF4fARifd14ppe6T9iATb/CBQ8uglNncGXNZEax96o/0fMnezHu0jJnHyX2vcTzYNal7v8k2OxtuyTA90roDIHYIzApJj6e6YH/WlIvc0ZrlhP/6xTLCmg/O+xrOsqrGTqgCWhvFCpvC//1WIUy8r7v/M8vTnTwoAw1z2eqfr7Snlw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zTMCgYeRhD37mlMjJzLzg/1iVbQIlcCcvqgjirsVsMw=;
- b=N17fqZp+W/tDzsmHy1NDuQA8cNxyn0O2lDKa/ZLvpZMsGwvH8kFy5Oc2tOKqBzqonqJ20cv7/G6CfPGXDWdf8JFLsQUwJUSjBPPEEHfjxdQGAttuj4Bxe3Dclu4EaG/FFYfplKYhKr7PYUl0qNYqUmIqX+PmRTh1/bOTPTw+Zls=
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com (20.179.56.209) by
- BYAPR21MB1160.namprd21.prod.outlook.com (20.179.56.78) with Microsoft SMTP
+ bh=uTwCxoTh56i8xDFiIRQyTvcN9mHGr+oUwD496jpOXrk=;
+ b=i+Are8u3HoG5PRr+NMcurSxwbIlluWUv+feRnHHq3TYgHI7jv5FkcIU3ZuTzqWrSnzKLWEzeHccRoesZSvXa2/UyKl2YaC59L9lj9ya9daRtigqZMNs3InNkKO3Y8GNpZJJFT4iUf/l27jN5BxnPrDa36pvDPZgP7GDZIFt4MSg=
+Received: from HK0PR03MB5123.apcprd03.prod.outlook.com (52.132.237.76) by
+ HK0PR03MB4148.apcprd03.prod.outlook.com (20.177.167.137) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2241.2; Tue, 3 Sep 2019 05:38:04 +0000
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::e805:a5bc:9f69:771b]) by BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::e805:a5bc:9f69:771b%9]) with mapi id 15.20.2241.012; Tue, 3 Sep 2019
- 05:38:04 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Canceled: Platform telemetry and health monitoring - PST AM 
-Thread-Topic: Platform telemetry and health monitoring - PST AM 
-Thread-Index: AdUtVLT+f0Z7NQ0DTpuduh/5oQIaZw==
-Importance: high
-X-Priority: 1
-Date: Tue, 3 Sep 2019 05:38:04 +0000
-Message-ID: <BYAPR21MB11914B564D4DAEC624C24553C8B90@BYAPR21MB1191.namprd21.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
+ 15.20.2241.5; Tue, 3 Sep 2019 08:34:41 +0000
+Received: from HK0PR03MB5123.apcprd03.prod.outlook.com
+ ([fe80::4cec:74fb:671:5050]) by HK0PR03MB5123.apcprd03.prod.outlook.com
+ ([fe80::4cec:74fb:671:5050%7]) with mapi id 15.20.2241.012; Tue, 3 Sep 2019
+ 08:34:41 +0000
+From: CS20 CTCchien <CTCCHIEN@nuvoton.com>
+To: Patrick Venture <venture@google.com>, CS20 KWLiu <KWLIU@nuvoton.com>,
+ Benjamin Fair <benjaminfair@google.com>
+Subject: =?iso-2022-jp?B?GyRCMnNaQBsoQjogcGhvc3Bob3ItaXBtaS1mbGFzaDogQSBwcm9ibGVt?=
+ =?iso-2022-jp?B?IGluIEJNQyBGVyB1cGRhdGUgb3ZlciBMUEM=?=
+Thread-Topic: phosphor-ipmi-flash: A problem in BMC FW update over LPC
+Thread-Index: AQHVYjJtV+qQLtHN5UmQiYITnttx3w==
+X-CallingTelephoneNumber: IPM.Note
+X-VoiceMessageDuration: 1
+X-FaxNumberOfPages: 0
+Date: Tue, 3 Sep 2019 08:34:40 +0000
+Message-ID: <HK0PR03MB5123490BEC19882216BC206BDFB90@HK0PR03MB5123.apcprd03.prod.outlook.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
 authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-ms-exchange-calendar-series-instance-id: BAAAAIIA4AB0xbcQGoLgCAfjCQNw5veoZxrVAQAAAAAAAAAAEAAAAErAeogCSh1JlndscP9neDA=
-x-originating-ip: [50.35.92.19]
-x-ms-office365-filtering-correlation-id: 3f171849-204d-494e-b604-08d73030e44e
-x-ms-office365-filtering-ht: Tenant
+ smtp.mailfrom=CTCCHIEN@nuvoton.com; 
+x-originating-ip: [60.250.194.161]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 883e769c-b3c1-4e1f-8837-08d73049908c
 x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(4618075)(2017052603328)(7193020);
- SRVR:BYAPR21MB1160; 
-x-ms-traffictypediagnostic: BYAPR21MB1160:MeetingMessage
-x-microsoft-antispam-prvs: <BYAPR21MB1160FA79C0A92456DB867025C8B90@BYAPR21MB1160.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2582;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:HK0PR03MB4148; 
+x-ms-traffictypediagnostic: HK0PR03MB4148:|HK0PR03MB4148:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK0PR03MB41486DB4EA022B6F68CF98A5DFB90@HK0PR03MB4148.apcprd03.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:913;
 x-forefront-prvs: 01494FA7F7
 x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(396003)(376002)(366004)(346002)(39860400002)(136003)(189003)(199004)(8936002)(86362001)(2501003)(8990500004)(66946007)(66476007)(66556008)(6436002)(76116006)(91956017)(66446008)(64756008)(81156014)(81166006)(71190400001)(9686003)(8676002)(71200400001)(1730700003)(6916009)(5640700003)(486006)(476003)(66066001)(52536014)(55016002)(10090500001)(7696005)(3846002)(186003)(74316002)(10290500003)(478600001)(6116002)(102836004)(26005)(81686011)(6506007)(14454004)(316002)(305945005)(4326008)(33656002)(22452003)(53936002)(256004)(54906003)(2906002)(5660300002)(7736002)(4743002)(7416002)(99286004)(25786009)(558084003)(2351001);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1160;
- H:BYAPR21MB1191.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
+ SFS:(10009020)(136003)(376002)(346002)(366004)(39850400004)(396003)(199004)(189003)(2906002)(74316002)(316002)(25786009)(476003)(99286004)(66946007)(52536014)(486006)(256004)(14444005)(110136005)(7696005)(33656002)(71200400001)(71190400001)(66446008)(64756008)(66556008)(66476007)(305945005)(8936002)(224303003)(7736002)(76116006)(66066001)(5660300002)(53936002)(4326008)(81166006)(81156014)(55016002)(6506007)(9686003)(15650500001)(14454004)(6436002)(186003)(26005)(4744005)(6116002)(478600001)(3846002)(102836004)(86362001);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB4148;
+ H:HK0PR03MB5123.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: nuvoton.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: dpRNcDu+rtbfDRRnVjrBBPdNYFs+bOPSYRobSdauiFEdMXQU3imM09LI7U3ytgpasD0fZPW2a7NUgwhxILZ/DG4W0ayexKP4k8EBFw3GZU1/ViNYnOI45KsSkq3xWf4SB+yml/MxkjrcD7k8ptqJqOUsYiEZyNV7i8rbbr6lsOodDTasyy37TaJP0Cp0RiJxLl6G05AJXtfsFVKFR0eg+enWb07ddcjmmc8/JrAqxn3RZJHnlt9zjaCyvBQ7AfO2HMc/M88g0rbHv21jTuzWCqnVk85l2JEb6osv80i67e6jjLhANrlNJUFGm3Sa1MxeNUznr+3A5WWCyxl0mPcgBPM4KPD2OftE256d9F1sqGWH3A/3wjN05UCHA1jm9YGeyEc+7JB9ML5Z6xzU7ZCyKcLBChAOgjtIk/IQXhvH/Sw=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_002_BYAPR21MB11914B564D4DAEC624C24553C8B90BYAPR21MB1191namp_"
+x-microsoft-antispam-message-info: UxJtGrbIpO+LViVVx/yhfH972ifvfqNEs6K8OrWw/1C2TBZWgx167ZpaOm2COTDndGHQ9uGMAwOwd5DiQXqjehpWkQa/S1eQIkOT9B6uxVQKemaRJN5l2mr4WDYAYE8VRYSDvUPsHEYinuIy6rEBg1jPlGpWkKC3Yj46hE8NdXCHafuRxXlQDc4aZWOQuuESz7FTM80C/FOiVtGty2olAtaUqE+GjovxB0u5dO59kCTpatdNmeVoH0hXsPSOBtqpl8LUsbbFVeqwJNtAmJofF7IUNos6lJKSRqyduaAgnttmL+IEKo1YLWEkc55Wkw8xlLnGZfS5BgmxiYhVIyPmCzUwV+NIkIYlV9gHmQPJPHmM7U+rsHVIYeUdlbJ6NPA1gG7fYHfrDjBBXQSEQxMPjfCLYjPnOyhQy3IVORuwoxY=
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3f171849-204d-494e-b604-08d73030e44e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2019 05:38:04.2122 (UTC)
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 883e769c-b3c1-4e1f-8837-08d73049908c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2019 08:34:41.0200 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KMXrweyWDD0/y3LQbaQHKkwWm9HJpJOSLiFvbittyIbpNoobQPJ8ZyBOUZ1QbIdhZEU7UagaYmrQBsBm+wA9Mg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1160
+X-MS-Exchange-CrossTenant-userprincipalname: xZ1N1EckQ7WVRc9vcFZA78dPwBkIuNkiMLYuPCkpTryre1Oz6HgUksmqIAugKcsjqvR6r7lXj5TOZ8rtFwV+OA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB4148
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,105 +108,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tom Sand <trsand@us.ibm.com>, "Tanous,
- Ed" <ed.tanous@intel.com>, Michael Lim <youhour@us.ibm.com>,
- Asmaa Mnebhi <Asmaa@mellanox.com>, Reed B Frandsen <rfrandse@us.ibm.com>,
- Dong Wei <Dong.Wei@arm.com>, "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>,
- Vijay Khemka <vijaykhemka@fb.com>,
- Matt Chen/WYHQ/Wiwynn <Matt_Chen@wiwynn.com>,
- James Morse <James.Morse@arm.com>,
- =?ks_c_5601-1987?B?QnVkZHkgSHVhbmcgKPzc9Lj7+Ck=?= <Buddy.Huang@quantatw.com>,
- Joe P Mulholland <jpmulhol@us.ibm.com>, Luke Chen <luke_chen@aspeedtech.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_002_BYAPR21MB11914B564D4DAEC624C24553C8B90BYAPR21MB1191namp_
-Content-Type: text/plain; charset="ks_c_5601-1987"
-Content-Transfer-Encoding: base64
-
-Q2FuY2VsbGluZyB0aGlzIHdlZWsgZHVlIHRvIE9TRkMgMjAxOSA=
-
---_002_BYAPR21MB11914B564D4DAEC624C24553C8B90BYAPR21MB1191namp_
-Content-Type: text/calendar; charset="utf-8"; method=CANCEL
-Content-Transfer-Encoding: base64
-
-QkVHSU46VkNBTEVOREFSDQpNRVRIT0Q6Q0FOQ0VMDQpQUk9ESUQ6TWljcm9zb2Z0IEV4Y2hhbmdl
-IFNlcnZlciAyMDEwDQpWRVJTSU9OOjIuMA0KQkVHSU46VlRJTUVaT05FDQpUWklEOlBhY2lmaWMg
-U3RhbmRhcmQgVGltZQ0KQkVHSU46U1RBTkRBUkQNCkRUU1RBUlQ6MTYwMTAxMDFUMDIwMDAwDQpU
-Wk9GRlNFVEZST006LTA3MDANClRaT0ZGU0VUVE86LTA4MDANClJSVUxFOkZSRVE9WUVBUkxZO0lO
-VEVSVkFMPTE7QllEQVk9MVNVO0JZTU9OVEg9MTENCkVORDpTVEFOREFSRA0KQkVHSU46REFZTElH
-SFQNCkRUU1RBUlQ6MTYwMTAxMDFUMDIwMDAwDQpUWk9GRlNFVEZST006LTA4MDANClRaT0ZGU0VU
-VE86LTA3MDANClJSVUxFOkZSRVE9WUVBUkxZO0lOVEVSVkFMPTE7QllEQVk9MlNVO0JZTU9OVEg9
-Mw0KRU5EOkRBWUxJR0hUDQpFTkQ6VlRJTUVaT05FDQpCRUdJTjpWRVZFTlQNCk9SR0FOSVpFUjtD
-Tj1OZWVyYWogTGFka2FuaTpNQUlMVE86bmVsYWRrQG1pY3Jvc29mdC5jb20NCkFUVEVOREVFO1JP
-TEU9UkVRLVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPVRSVUU7Q049b3Bl
-bmJtY0BsaQ0KIHN0cy5vemxhYnMub3JnOk1BSUxUTzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcN
-CkFUVEVOREVFO1JPTEU9T1BULVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQ
-PVRSVUU7Q049Sm9lIFAgTXVsaA0KIG9sbGFuZDpNQUlMVE86anBtdWxob2xAdXMuaWJtLmNvbQ0K
-QVRURU5ERUU7Uk9MRT1PUFQtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9
-VFJVRTtDTj1MdWtlIENoZW46DQogTUFJTFRPOmx1a2VfY2hlbkBhc3BlZWR0ZWNoLmNvbQ0KQVRU
-RU5ERUU7Uk9MRT1PUFQtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9VFJV
-RTtDTj1NYXR0IENoZW4vDQogV1lIUS9XaXd5bm46TUFJTFRPOk1hdHRfQ2hlbkB3aXd5bm4uY29t
-DQpBVFRFTkRFRTtST0xFPU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNW
-UD1UUlVFO0NOPURvbmcgV2VpOk0NCiBBSUxUTzpEb25nLldlaUBhcm0uY29tDQpBVFRFTkRFRTtS
-T0xFPU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NOPUpp
-dGVuZHJhX0sNCiB1bWFyNEBEZWxsLmNvbTpNQUlMVE86Sml0ZW5kcmFfS3VtYXI0QERlbGwuY29t
-DQpBVFRFTkRFRTtST0xFPU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNW
-UD1UUlVFO0NOPVJlZWQgQiBGcmENCiBuZHNlbjpNQUlMVE86cmZyYW5kc2VAdXMuaWJtLmNvbQ0K
-QVRURU5ERUU7Uk9MRT1PUFQtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9
-VFJVRTtDTj1NaWNoYWVsIExpDQogbTpNQUlMVE86eW91aG91ckB1cy5pYm0uY29tDQpBVFRFTkRF
-RTtST0xFPU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NO
-PUJ1ZGR5IEh1YW4NCiBnICjpu4PlpKnptLspOk1BSUxUTzpCdWRkeS5IdWFuZ0BxdWFudGF0dy5j
-b20NCkFUVEVOREVFO1JPTEU9T1BULVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtS
-U1ZQPVRSVUU7Q049VG9tIFNhbmQ6TQ0KIEFJTFRPOnRyc2FuZEB1cy5pYm0uY29tDQpBVFRFTkRF
-RTtST0xFPU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NO
-PUFzbWFhIE1uZWINCiBoaTpNQUlMVE86QXNtYWFAbWVsbGFub3guY29tDQpBVFRFTkRFRTtST0xF
-PU9QVC1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NOPVBhdWwu
-VmFuY2kNCiBsQGRlbGwuY29tOk1BSUxUTzpQYXVsLlZhbmNpbEBkZWxsLmNvbQ0KQVRURU5ERUU7
-Uk9MRT1PUFQtUEFSVElDSVBBTlQ7UEFSVFNUQVQ9TkVFRFMtQUNUSU9OO1JTVlA9VFJVRTtDTj0i
-VGFub3VzLCBFZCINCiA6TUFJTFRPOmVkLnRhbm91c0BpbnRlbC5jb20NCkFUVEVOREVFO1JPTEU9
-T1BULVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPVRSVUU7Q049Q2hyaXN0
-b3BoZQ0KIHIgQm9zdGljOk1BSUxUTzpjYm9zdGljQHVzLmlibS5jb20NCkFUVEVOREVFO1JPTEU9
-T1BULVBBUlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPVRSVUU7Q049SmFtZXMg
-TW9ycw0KIGU6TUFJTFRPOkphbWVzLk1vcnNlQGFybS5jb20NCkFUVEVOREVFO1JPTEU9T1BULVBB
-UlRJQ0lQQU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPVRSVUU7Q049VmlqYXkgS2hlbQ0K
-IGthOk1BSUxUTzp2aWpheWtoZW1rYUBmYi5jb20NCkFUVEVOREVFO1JPTEU9T1BULVBBUlRJQ0lQ
-QU5UO1BBUlRTVEFUPU5FRURTLUFDVElPTjtSU1ZQPVRSVUU7Q049a3VueWlAZ29vZw0KIGxlLmNv
-bTpNQUlMVE86a3VueWlAZ29vZ2xlLmNvbQ0KREVTQ1JJUFRJT047TEFOR1VBR0U9ZW4tVVM6Q2Fu
-Y2VsbGluZyB0aGlzIHdlZWsgZHVlIHRvIE9TRkMgMjAxOSANClVJRDowNDAwMDAwMDgyMDBFMDAw
-NzRDNUI3MTAxQTgyRTAwODAwMDAwMDAwNzBFNkY3QTg2NzFBRDUwMTAwMDAwMDAwMDAwMDAwMA0K
-IDAxMDAwMDAwMDRBQzA3QTg4MDI0QTFENDk5Njc3NkM3MEZGNjc3ODMwDQpSRUNVUlJFTkNFLUlE
-O1RaSUQ9UGFjaWZpYyBTdGFuZGFyZCBUaW1lOjIwMTkwOTAzVDA5MzAwMA0KU1VNTUFSWTtMQU5H
-VUFHRT1lbi1VUzpDYW5jZWxlZDogUGxhdGZvcm0gdGVsZW1ldHJ5IGFuZCBoZWFsdGggbW9uaXRv
-cmluZyAtDQogIFBTVCBBTSANCkRUU1RBUlQ7VFpJRD1QYWNpZmljIFN0YW5kYXJkIFRpbWU6MjAx
-OTA5MDNUMDkzMDAwDQpEVEVORDtUWklEPVBhY2lmaWMgU3RhbmRhcmQgVGltZToyMDE5MDkwM1Qx
-MDMwMDANCkNMQVNTOlBVQkxJQw0KUFJJT1JJVFk6MQ0KRFRTVEFNUDoyMDE5MDkwM1QwNTM4MDNa
-DQpUUkFOU1A6VFJBTlNQQVJFTlQNClNUQVRVUzpDQU5DRUxMRUQNClNFUVVFTkNFOjUNCkxPQ0FU
-SU9OO0xBTkdVQUdFPWVuLVVTOk1pY3Jvc29mdCBUZWFtcyBNZWV0aW5nDQpYLU1JQ1JPU09GVC1D
-RE8tQVBQVC1TRVFVRU5DRTo1DQpYLU1JQ1JPU09GVC1DRE8tT1dORVJBUFBUSUQ6MzUyNjEwMjc1
-DQpYLU1JQ1JPU09GVC1DRE8tQlVTWVNUQVRVUzpGUkVFDQpYLU1JQ1JPU09GVC1DRE8tSU5URU5E
-RURTVEFUVVM6RlJFRQ0KWC1NSUNST1NPRlQtQ0RPLUFMTERBWUVWRU5UOkZBTFNFDQpYLU1JQ1JP
-U09GVC1DRE8tSU1QT1JUQU5DRToyDQpYLU1JQ1JPU09GVC1DRE8tSU5TVFRZUEU6Mw0KWC1NSUNS
-T1NPRlQtU0tZUEVURUFNU01FRVRJTkdVUkw6aHR0cHM6Ly90ZWFtcy5taWNyb3NvZnQuY29tL2wv
-bWVldHVwLWpvaW4vDQogMTklM2FtZWV0aW5nX01EVTFORE0yWTJFdE9UWmtZeTAwWmpJNUxUa3pN
-RGN0TWpNeFpEWXlOemxoTmpReSU0MHRocmVhZC52Mi8NCiAwP2NvbnRleHQ9JTdiJTIyVGlkJTIy
-JTNhJTIyNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3JTIyJTJjJTIyTw0KIGlk
-JTIyJTNhJTIyMWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYzY1JTIyJTdkDQpYLU1J
-Q1JPU09GVC1TQ0hFRFVMSU5HU0VSVklDRVVQREFURVVSTDpodHRwczovL3NjaGVkLnNlcnZpY2Vz
-LnNreXBlLm5ldC90ZWENCiBtcy83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcv
-MWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYw0KIDY1LzE5X21lZXRpbmdfTURVMU5E
-TTJZMkV0T1Raa1l5MDBaakk1TFRrek1EY3RNak14WkRZeU56bGhOalF5QHRocmVhZC52Mi8wDQpY
-LU1JQ1JPU09GVC1TS1lQRVRFQU1TUFJPUEVSVElFUzp7ImNpZCI6IjE5Om1lZXRpbmdfTURVMU5E
-TTJZMkV0T1Raa1l5MDBaakkNCiA1TFRrek1EY3RNak14WkRZeU56bGhOalF5QHRocmVhZC52MiJc
-LCJwcml2YXRlIjp0cnVlXCwidHlwZSI6MFwsIm1pZCI6MFwsIg0KIHJpZCI6MFwsInVpZCI6bnVs
-bH0NClgtTUlDUk9TT0ZULU9OTElORU1FRVRJTkdFWFRFUk5BTExJTks6DQpYLU1JQ1JPU09GVC1P
-TkxJTkVNRUVUSU5HQ09ORkxJTks6Y29uZjpzaXA6bmVsYWRrQG1pY3Jvc29mdC5jb21cO2dydXVc
-O29wYXENCiB1ZT1hcHA6Y29uZjpmb2N1czppZDp0ZWFtczoyOjAhMTk6bWVldGluZ19NRFUxTkRN
-MlkyRXRPVFprWXkwMFpqSTVMVGt6TURjdA0KIE1qTXhaRFl5TnpsaE5qUXktdGhyZWFkLnYyITFj
-MjljMmY3ZDM4NjRjNWFhM2JjMGVlMTNiNDhiYzY1ITcyZjk4OGJmODZmMTQxDQogYWY5MWFiMmQ3
-Y2QwMTFkYjQ3DQpYLU1JQ1JPU09GVC1PTkxJTkVNRUVUSU5HSU5GT1JNQVRJT046eyJPbmxpbmVN
-ZWV0aW5nUHJvdmlkZXIiOjN9DQpYLU1JQ1JPU09GVC1ET05PVEZPUldBUkRNRUVUSU5HOkZBTFNF
-DQpYLU1JQ1JPU09GVC1ESVNBTExPVy1DT1VOVEVSOkZBTFNFDQpFTkQ6VkVWRU5UDQpFTkQ6VkNB
-TEVOREFSDQo=
-
---_002_BYAPR21MB11914B564D4DAEC624C24553C8B90BYAPR21MB1191namp_--
+CS20 CTCchien =1B$B4uK>2sZ@GgIuM97o=1B(B [phosphor-ipmi-flash: A problem in=
+ BMC FW update over LPC]=1B$B!#=1B(B
+________________________________
+________________________________
+ The privileged confidential information contained in this email is intende=
+d for use only by the addressees as indicated by the original sender of thi=
+s email. If you are not the addressee indicated in this email or are not re=
+sponsible for delivery of the email to such a person, please kindly reply t=
+o the sender indicating this fact and delete all copies of it from your com=
+puter and network server immediately. Your cooperation is highly appreciate=
+d. It is advised that any unauthorized use of confidential information of N=
+uvoton is strictly prohibited; and any information in this email irrelevant=
+ to the official business of Nuvoton shall be deemed as neither given nor e=
+ndorsed by Nuvoton.
