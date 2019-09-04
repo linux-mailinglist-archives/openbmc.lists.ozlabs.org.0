@@ -2,48 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 598D1A85D1
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 16:59:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CFE94A873F
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 20:21:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Nn5n45bnzDqNt
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 00:59:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NsbM5TjRzDqxQ
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 04:21:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (helo) smtp.helo=mga12.intel.com
- (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::d2b; helo=mail-io1-xd2b.google.com;
+ envelope-from=yuenn@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="AGcJSRBM"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com
+ [IPv6:2607:f8b0:4864:20::d2b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Nn4V3MRfzDqsy
- for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 00:57:56 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Sep 2019 07:57:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,467,1559545200"; d="scan'208";a="207503828"
-Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.250.100])
- ([172.22.250.100])
- by fmsmga004.fm.intel.com with ESMTP; 04 Sep 2019 07:57:53 -0700
-Subject: Re: BMCWeb changes login password
-To: openbmc@lists.ozlabs.org
-References: <959CAFA1E282D14FB901BE9A7BF4E7724E51562F@shsmsx102.ccr.corp.intel.com>
- <c73c4823-7fd1-0762-72d1-da1920897667@linux.ibm.com>
-From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
-Message-ID: <3160626c-d162-c7bb-1059-f8215dd69717@linux.intel.com>
-Date: Wed, 4 Sep 2019 16:57:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NsYx4ndXzDqx0
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 04:20:18 +1000 (AEST)
+Received: by mail-io1-xd2b.google.com with SMTP id p12so46392449iog.5
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Sep 2019 11:20:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=GMoKW/TVR0g0VumJcAbmNSdbLlQhm4L8p470/9peTe8=;
+ b=AGcJSRBMYdPWATlWVQBCTUNV9KeJ8c3aR6O53zeXu2fTMptoiBuQZoIsC5qHdnUqgO
+ f3O01ckEGkP9oqgf78I0M676xuitbOAou1fzqjSWyMGarUCtAlRwkelGq8o48v5Ldjs0
+ sCLyA8M+jShi9Bxfon+HxGdhKtUTSNTDqX6HBF5PRpgTLKnFo6jbdy2d+eHJ3pm5HDyV
+ 9wSCX22isLJTN8HuEnjaByILqud8+xFcLLAIoM2hLkpqGPxbLwzAAwdqkK+/9elkTtDU
+ uV4LnO33KLlXGD6Z7FTYOOGo4hY2Ohob4pC6wW4npvyqxz8cMjllEMyeoBtBqjjAU3A4
+ Y6yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=GMoKW/TVR0g0VumJcAbmNSdbLlQhm4L8p470/9peTe8=;
+ b=e3Z/pgq7k1ObD6S3GFJbs+aybckwZVmp/9fE8mD1/5I2AHI65672nyMwPdZ7lbDOJs
+ F+z1/FBNo3daeHvbDdCQnJR6sW2jjAcQ2trMhIuGUpBBxeHyfguhbTaFq0rmGduDgXSS
+ GVGBW8TMzceIr8ePULpXyzmx1hIHiW75uXbH8UFuMtsbJoc1ZtEiBHjWnIV9griLSFp2
+ 4e0WkKM9G7Een1OZl8ZxPXgCnIiTw1slu6o45+CxO0UXG2f9LRJrgvrKbHMcfHMXJs5Q
+ pNrMfdInO7G/xiJwNALlGORlQzsH8cW5ZMRRTJ09p+dGJ0y9ZdVyaudc/OADGr/wB3eP
+ K46g==
+X-Gm-Message-State: APjAAAV2vq4ZQB4ns7eEi540NMTZ/Jg6A/z/is+2awMb2AlPlBlQcPAw
+ vbh4zwUHjwCxZV5/gJY8CqDRdXx7kltbkeYTrJH9CSzJHEs/wcB6
+X-Google-Smtp-Source: APXvYqzP+4yhCJOLajFbKdXKBSDsuOfcg8gexP9lOC10NNwW6vEjTCvw6XUMU9zrQfSewYz5mzBmER36B/+U/rGQ0eE=
+X-Received: by 2002:a6b:f803:: with SMTP id o3mr6409891ioh.187.1567621215027; 
+ Wed, 04 Sep 2019 11:20:15 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c73c4823-7fd1-0762-72d1-da1920897667@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+From: Nancy Yuen <yuenn@google.com>
+Date: Wed, 4 Sep 2019 11:19:38 -0700
+Message-ID: <CADfYTpGtEP9_ewuK=DufvkWDmfO1gpyQnvPbC5vy9-+b4p=Hhg@mail.gmail.com>
+Subject: Redfish workshop in France 10/31
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000aa917a0591be413a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,19 +72,35 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04-Sep-19 04:06, Joseph Reynolds wrote:
-> 2. The scenario where we may want to ask for the old password is the 
-> "password change dialog".  This dialog is accessed when the user signs 
-> into the Web App login page and the web app informs the user that 
-> their password is expired and must be changed before they can access 
-> the BMC  The dialog asks for their new password (twice) ... and does 
-> it also ask for the old password? <== That's the question.
+--000000000000aa917a0591be413a
+Content-Type: text/plain; charset="UTF-8"
 
-FWIW, by the time the BMC is able to determine that user's password is 
-expired (and make sure that's indeed that user who's accessing the web 
-app), the user must have entered their password, so asking it once again 
-sounds like surplus step in this particular scenario.
+Free event, colocated with Open Source Summit Europe (search Redfish
+Workshop in the page):
+https://events.linuxfoundation.org/events/open-source-summit-europe-2019/program/co-located-events/
 
-regards,
-Alexander
+and here: http://trac.project-builder.org/wiki/RedfishWSEurope2019
 
+Registration required:
+https://framaforms.org/redfish-workshop-oss-europe-2019-registration-form-1567095132
+----------
+Nancy
+
+--000000000000aa917a0591be413a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Free event, colocated with Open Source Summit Europe =
+(search Redfish Workshop in the page):</div><a href=3D"https://events.linux=
+foundation.org/events/open-source-summit-europe-2019/program/co-located-eve=
+nts/">https://events.linuxfoundation.org/events/open-source-summit-europe-2=
+019/program/co-located-events/</a><div><br></div><div>and here:=C2=A0<a hre=
+f=3D"http://trac.project-builder.org/wiki/RedfishWSEurope2019">http://trac.=
+project-builder.org/wiki/RedfishWSEurope2019</a><br><div><br></div><div>Reg=
+istration required:=C2=A0<a href=3D"https://framaforms.org/redfish-workshop=
+-oss-europe-2019-registration-form-1567095132">https://framaforms.org/redfi=
+sh-workshop-oss-europe-2019-registration-form-1567095132</a><br><div><div><=
+div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature=
+">----------<br>Nancy</div></div></div></div></div></div>
+
+--000000000000aa917a0591be413a--
