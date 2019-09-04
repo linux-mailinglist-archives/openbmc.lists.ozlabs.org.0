@@ -1,47 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 963D8A92D6
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 22:11:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1136A9464
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 23:02:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Nw222l8bzDqlL
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 06:11:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Nx9V1vxJzDqMw
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 07:02:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (helo) smtp.helo=mga12.intel.com
- (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46NvyJ5M7dzDqlL
- for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 06:08:08 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Sep 2019 13:08:02 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,468,1559545200"; d="scan'208";a="185217621"
-Received: from maru.jf.intel.com ([10.54.51.77])
- by orsmga003.jf.intel.com with ESMTP; 04 Sep 2019 13:08:02 -0700
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Brendan Higgins <brendanhiggins@google.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Ryan Chen <ryan_chen@aspeedtech.com>, Tao Ren <taoren@fb.com>
-Subject: [PATCH dev-5.2 2/2] i2c: aspeed: add slave inactive timeout support
-Date: Wed,  4 Sep 2019 13:07:58 -0700
-Message-Id: <20190904200758.5420-3-jae.hyun.yoo@linux.intel.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
-References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NwYl5fclzDqKS
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 06:35:23 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x84KWcO2167016; Wed, 4 Sep 2019 16:35:15 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2uth14q80j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Sep 2019 16:35:15 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x84KUcPZ013084;
+ Wed, 4 Sep 2019 20:35:14 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma04wdc.us.ibm.com with ESMTP id 2us9fn5f54-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Sep 2019 20:35:14 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x84KZE8J40632704
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Sep 2019 20:35:14 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 27833AC05B;
+ Wed,  4 Sep 2019 20:35:14 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C1845AC059;
+ Wed,  4 Sep 2019 20:35:13 +0000 (GMT)
+Received: from talon7.ibm.com (unknown [9.41.179.222])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Sep 2019 20:35:13 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.2 1/2] ARM: dts: Aspeed: Add I2C busses to AST2600
+ and Tacoma
+Date: Wed,  4 Sep 2019 15:35:10 -0500
+Message-Id: <1567629311-7553-1-git-send-email-eajames@linux.ibm.com>
+X-Mailer: git-send-email 1.8.3.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-04_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1909040204
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,186 +78,709 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In case of multi-master environment, if a peer master incorrectly handles
-a bus in the middle of a transaction, I2C hardware hangs in slave state
-and it can't escape from the slave state, so this commit adds slave
-inactive timeout support to recover the bus in the case.
+Add all the I2C busses to the AST2600 dtsi. Set the busses status to
+"okay" and add all the devices present on the Tacoma card to the
+busses.
 
-Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
- drivers/i2c/busses/i2c-aspeed.c | 79 ++++++++++++++++++++++++++++++---
- 1 file changed, 73 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 384 ++++++++++++++++++++++++++++
+ arch/arm/boot/dts/aspeed-g6.dtsi            | 272 ++++++++++++++++++++
+ 2 files changed, 656 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 89317929bee4..92e1a249b393 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -70,10 +70,14 @@
- #define ASPEED_I2CD_TIME_SCL_HIGH_MASK			GENMASK(19, 16)
- #define ASPEED_I2CD_TIME_SCL_LOW_SHIFT			12
- #define ASPEED_I2CD_TIME_SCL_LOW_MASK			GENMASK(15, 12)
-+#define ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_SHIFT	8
-+#define ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK	GENMASK(9, 8)
- #define ASPEED_I2CD_TIME_BASE_DIVISOR_MASK		GENMASK(3, 0)
- #define ASPEED_I2CD_TIME_SCL_REG_MAX			GENMASK(3, 0)
-+
- /* 0x08 : I2CD Clock and AC Timing Control Register #2 */
--#define ASPEED_NO_TIMEOUT_CTRL				0
-+#define ASPEED_I2CD_TIMEOUT_CYCLES_SHIFT		0
-+#define ASPEED_I2CD_TIMEOUT_CYCLES_MASK			GENMASK(4, 0)
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index 0a38bc0..408af00 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -3,6 +3,7 @@
+ /dts-v1/;
  
- /* 0x0c : I2CD Interrupt Control Register &
-  * 0x10 : I2CD Interrupt Status Register
-@@ -81,6 +85,7 @@
-  * These share bit definitions, so use the same values for the enable &
-  * status bits.
-  */
-+#define ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT		BIT(15)
- #define ASPEED_I2CD_INTR_SDA_DL_TIMEOUT			BIT(14)
- #define ASPEED_I2CD_INTR_BUS_RECOVER_DONE		BIT(13)
- #define ASPEED_I2CD_INTR_SLAVE_MATCH			BIT(7)
-@@ -96,8 +101,11 @@
- 		 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
- 		 ASPEED_I2CD_INTR_ABNORMAL |				       \
- 		 ASPEED_I2CD_INTR_ARBIT_LOSS)
-+#define ASPEED_I2CD_INTR_SLAVE_ERRORS					       \
-+		ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT
- #define ASPEED_I2CD_INTR_ALL						       \
--		(ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
-+		(ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT |		       \
-+		 ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
- 		 ASPEED_I2CD_INTR_BUS_RECOVER_DONE |			       \
- 		 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
- 		 ASPEED_I2CD_INTR_ABNORMAL |				       \
-@@ -176,6 +184,7 @@ struct aspeed_i2c_bus {
- 							   u32 divisor);
- 	unsigned long			parent_clk_frequency;
- 	u32				bus_frequency;
-+	u32				hw_timeout_ms;
- 	/* Transaction state. */
- 	enum aspeed_i2c_master_state	master_state;
- 	struct i2c_msg			*msgs;
-@@ -276,6 +285,14 @@ static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
- }
+ #include "aspeed-g6.dtsi"
++#include <dt-bindings/leds/leds-pca955x.h>
  
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
-+static int aspeed_i2c_check_slave_error(u32 irq_status)
-+{
-+	if (irq_status & ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT)
-+		return -EIO;
+ / {
+ 	model = "Tacoma";
+@@ -37,3 +38,386 @@
+ &fsim0 {
+ 	status = "okay";
+ };
 +
-+	return 0;
-+}
++&i2c0 {
++	status = "okay";
++};
 +
- static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- {
- 	u32 command, irq_handled = 0;
-@@ -286,6 +303,14 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	if (!slave)
- 		return 0;
++&i2c1 {
++	status = "okay";
++};
++
++&i2c2 {
++	status = "okay";
++};
++
++&i2c3 {
++	status = "okay";
++
++	bmp: bmp280@77 {
++		compatible = "bosch,bmp280";
++		reg = <0x77>;
++		#io-channel-cells = <1>;
++	};
++
++	max31785@52 {
++		compatible = "maxim,max31785a";
++		reg = <0x52>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		fan@0 {
++			compatible = "pmbus-fan";
++			reg = <0>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@1 {
++			compatible = "pmbus-fan";
++			reg = <1>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@2 {
++			compatible = "pmbus-fan";
++			reg = <2>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@3 {
++			compatible = "pmbus-fan";
++			reg = <3>;
++			tach-pulses = <2>;
++			maxim,fan-rotor-input = "tach";
++			maxim,fan-pwm-freq = <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp = <2>;
++			maxim,fan-fault-pin-mon;
++		};
++	};
++
++	dps: dps310@76 {
++		compatible = "infineon,dps310";
++		reg = <0x76>;
++		#io-channel-cells = <0>;
++	};
++
++	pca0: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@8 {
++			reg = <8>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@9 {
++			reg = <9>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@10 {
++			reg = <10>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@11 {
++			reg = <11>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@12 {
++			reg = <12>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@13 {
++			reg = <13>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@14 {
++			reg = <14>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@15 {
++			reg = <15>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	power-supply@68 {
++		compatible = "ibm,cffps1";
++		reg = <0x68>;
++	};
++
++	power-supply@69 {
++		compatible = "ibm,cffps1";
++		reg = <0x69>;
++	};
++};
++
++&i2c4 {
++	status = "okay";
++
++	tmp423a@4c {
++		compatible = "ti,tmp423";
++		reg = <0x4c>;
++	};
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@71 {
++		compatible = "infineon,ir35221";
++		reg = <0x71>;
++	};
++};
++
++&i2c5 {
++	status = "okay";
++
++	tmp423a@4c {
++		compatible = "ti,tmp423";
++		reg = <0x4c>;
++	};
++
++	ir35221@70 {
++		compatible = "infineon,ir35221";
++		reg = <0x70>;
++	};
++
++	ir35221@71 {
++		compatible = "infineon,ir35221";
++		reg = <0x71>;
++	};
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++};
++
++&i2c8 {
++	status = "okay";
++};
++
++&i2c9 {
++	status = "okay";
++
++	tmp275@4a {
++		compatible = "ti,tmp275";
++		reg = <0x4a>;
++	};
++};
++
++&i2c10 {
++	status = "okay";
++};
++
++&i2c11 {
++	status = "okay";
++
++	pca9552: pca9552@60 {
++		compatible = "nxp,pca9552";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio-line-names = "PS_SMBUS_RESET_N", "APSS_RESET_N",
++			"GPU0_TH_OVERT_N_BUFF",	"GPU1_TH_OVERT_N_BUFF",
++			"GPU2_TH_OVERT_N_BUFF", "GPU3_TH_OVERT_N_BUFF",
++			"GPU4_TH_OVERT_N_BUFF",	"GPU5_TH_OVERT_N_BUFF",
++			"GPU0_PWR_GOOD_BUFF", "GPU1_PWR_GOOD_BUFF",
++			"GPU2_PWR_GOOD_BUFF", "GPU3_PWR_GOOD_BUFF",
++			"GPU4_PWR_GOOD_BUFF", "GPU5_PWR_GOOD_BUFF",
++			"12V_BREAKER_FLT_N", "THROTTLE_UNLATCHED_N";
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@8 {
++			reg = <8>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@9 {
++			reg = <9>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@10 {
++			reg = <10>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@11 {
++			reg = <11>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@12 {
++			reg = <12>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@13 {
++			reg = <13>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@14 {
++			reg = <14>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@15 {
++			reg = <15>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
++	rtc@32 {
++		compatible = "epson,rx8900";
++		reg = <0x32>;
++	};
++
++	eeprom@51 {
++		compatible = "atmel,24c64";
++		reg = <0x51>;
++	};
++
++	ucd90160@64 {
++		compatible = "ti,ucd90160";
++		reg = <0x64>;
++	};
++};
++
++&i2c12 {
++	status = "okay";
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&i2c14 {
++	status = "okay";
++};
++
++&i2c15 {
++	status = "okay";
++};
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 12569e5..0a8e08a 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -12,6 +12,22 @@
+ 	interrupt-parent = <&gic>;
  
-+	if (aspeed_i2c_check_slave_error(irq_status)) {
-+		dev_dbg(bus->dev, "received slave error interrupt: 0x%08x\n",
-+			irq_status);
-+		irq_handled |= (irq_status & ASPEED_I2CD_INTR_SLAVE_ERRORS);
-+		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
-+		return irq_handled;
-+	}
-+
- 	command = readl(bus->base + ASPEED_I2C_CMD_REG);
+ 	aliases {
++		i2c0 = &i2c0;
++		i2c1 = &i2c1;
++		i2c2 = &i2c2;
++		i2c3 = &i2c3;
++		i2c4 = &i2c4;
++		i2c5 = &i2c5;
++		i2c6 = &i2c6;
++		i2c7 = &i2c7;
++		i2c8 = &i2c8;
++		i2c9 = &i2c9;
++		i2c10 = &i2c10;
++		i2c11 = &i2c11;
++		i2c12 = &i2c12;
++		i2c13 = &i2c13;
++		i2c14 = &i2c14;
++		i2c15 = &i2c15;
+ 		serial4 = &uart5;
+ 	};
  
- 	/* Slave was requested, restart state machine. */
-@@ -602,7 +627,7 @@ static void aspeed_i2c_next_msg_or_stop(struct aspeed_i2c_bus *bus)
- 	}
- }
+@@ -255,6 +271,262 @@
+ 				};
+ 			};
  
--static int aspeed_i2c_is_irq_error(u32 irq_status)
-+static int aspeed_i2c_check_master_error(u32 irq_status)
- {
- 	if (irq_status & ASPEED_I2CD_INTR_ARBIT_LOSS)
- 		return -EAGAIN;
-@@ -633,9 +658,9 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 	 * should clear the command queue effectively taking us back to the
- 	 * INACTIVE state.
- 	 */
--	ret = aspeed_i2c_is_irq_error(irq_status);
-+	ret = aspeed_i2c_check_master_error(irq_status);
- 	if (ret) {
--		dev_dbg(bus->dev, "received error interrupt: 0x%08x\n",
-+		dev_dbg(bus->dev, "received master error interrupt: 0x%08x\n",
- 			irq_status);
- 		irq_handled |= (irq_status & ASPEED_I2CD_INTR_MASTER_ERRORS);
- 		if (bus->master_state != ASPEED_I2C_MASTER_INACTIVE) {
-@@ -1194,6 +1219,7 @@ static u32 aspeed_i2c_25xx_get_clk_reg_val(struct device *dev, u32 divisor)
- /* precondition: bus.lock has been acquired. */
- static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
- {
-+	u32 timeout_base_divisor, timeout_tick_us, timeout_cycles;
- 	u32 divisor, clk_reg_val;
- 
- 	divisor = DIV_ROUND_UP(bus->parent_clk_frequency, bus->bus_frequency);
-@@ -1202,8 +1228,46 @@ static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
- 			ASPEED_I2CD_TIME_THDSTA_MASK |
- 			ASPEED_I2CD_TIME_TACST_MASK);
- 	clk_reg_val |= bus->get_clk_reg_val(bus->dev, divisor);
++			i2c0: i2c-bus@1e78a80 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
 +
-+	if (bus->hw_timeout_ms) {
-+		u8 div_max = ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK >>
-+			     ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_SHIFT;
-+		u8 cycles_max = ASPEED_I2CD_TIMEOUT_CYCLES_MASK >>
-+				ASPEED_I2CD_TIMEOUT_CYCLES_SHIFT;
++				reg = <0x1e78a080 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c1_default>;
++				status = "disabled";
++			};
 +
-+		timeout_base_divisor = 0;
++			i2c1: i2c-bus@1e78a100 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
 +
-+		do {
-+			timeout_tick_us = 1000 * (16384 <<
-+						  (timeout_base_divisor << 1)) /
-+					  (bus->parent_clk_frequency / 1000);
++				reg = <0x1e78a100 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c2_default>;
++				status = "disabled";
++			};
 +
-+			if (timeout_base_divisor == div_max ||
-+			    timeout_tick_us * ASPEED_I2CD_TIMEOUT_CYCLES_MASK >=
-+			    bus->hw_timeout_ms * 1000)
-+				break;
-+		} while (timeout_base_divisor++ < div_max);
++			i2c2: i2c-bus@1e78a180 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
 +
-+		if (timeout_tick_us) {
-+			timeout_cycles = DIV_ROUND_UP(bus->hw_timeout_ms * 1000,
-+						      timeout_tick_us);
-+			if (timeout_cycles == 0)
-+				timeout_cycles = 1;
-+			else if (timeout_cycles > cycles_max)
-+				timeout_cycles = cycles_max;
-+		} else {
-+			timeout_cycles = 0;
-+		}
-+	} else {
-+		timeout_base_divisor = 0;
-+		timeout_cycles = 0;
-+	}
++				reg = <0x1e78a180 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c3_default>;
++				status = "disabled";
++			};
 +
-+	clk_reg_val |= FIELD_PREP(ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK,
-+				  timeout_base_divisor);
++			i2c3: i2c-bus@1e78a200 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
 +
- 	writel(clk_reg_val, bus->base + ASPEED_I2C_AC_TIMING_REG1);
--	writel(ASPEED_NO_TIMEOUT_CTRL, bus->base + ASPEED_I2C_AC_TIMING_REG2);
-+	writel(timeout_cycles, bus->base + ASPEED_I2C_AC_TIMING_REG2);
- 
- 	return 0;
- }
-@@ -1404,6 +1468,9 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
- 		}
- 	}
- 
-+	device_property_read_u32(&pdev->dev, "aspeed,hw-timeout-ms",
-+				 &bus->hw_timeout_ms);
++				reg = <0x1e78a200 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c4_default>;
++				status = "disabled";
++			};
 +
- 	/* Initialize the I2C adapter */
- 	spin_lock_init(&bus->lock);
- 	init_completion(&bus->cmd_complete);
++			i2c4: i2c-bus@1e78a280 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a280 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c5_default>;
++				status = "disabled";
++			};
++
++			i2c5: i2c-bus@1e78a300 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a300 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c6_default>;
++				status = "disabled";
++			};
++
++			i2c6: i2c-bus@380 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a380 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c7_default>;
++				status = "disabled";
++			};
++
++			i2c7: i2c-bus@1e78a400 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a400 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c8_default>;
++				status = "disabled";
++			};
++
++			i2c8: i2c-bus@1e78a480 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a480 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c9_default>;
++				status = "disabled";
++			};
++
++			i2c9: i2c-bus@1e78a500 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a500 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c10_default>;
++				status = "disabled";
++			};
++
++			i2c10: i2c-bus@1e78a580 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a580 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c11_default>;
++				status = "disabled";
++			};
++
++			i2c11: i2c-bus@1e78a600 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a600 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c12_default>;
++				status = "disabled";
++			};
++
++			i2c12: i2c-bus@1e78a680 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a680 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c13_default>;
++				status = "disabled";
++			};
++
++			i2c13: i2c-bus@1e78a700 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a700 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c14_default>;
++				status = "disabled";
++			};
++
++			i2c14: i2c-bus@1e78a780 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a780 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c15_default>;
++				status = "disabled";
++			};
++
++			i2c15: i2c-bus@1e78a800 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				#interrupt-cells = <1>;
++
++				reg = <0x1e78a800 0x80>;
++				compatible = "aspeed,ast2600-i2c-bus";
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				resets = <&syscon ASPEED_RESET_I2C>;
++				bus-frequency = <100000>;
++				interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
++				pinctrl-names = "default";
++				pinctrl-0 = <&pinctrl_i2c16_default>;
++				status = "disabled";
++			};
++
+ 			fsim0: fsi@1e79b000 {
+ 				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
+ 				reg = <0x1e79b000 0x94>;
 -- 
-2.23.0
+1.8.3.1
 
