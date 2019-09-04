@@ -1,49 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 998F8A77E2
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 02:28:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8B9EA77E5
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 02:37:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46NPn52r0HzDqqD
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 10:28:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NPzP703LzDqmT
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 10:37:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (helo) smtp.helo=mga12.intel.com
- (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46NPmV6mC9zDqVC
- for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 10:27:52 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 03 Sep 2019 17:27:49 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,465,1559545200"; d="scan'208";a="194527176"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.254.64.140])
- ([10.254.64.140])
- by orsmga002.jf.intel.com with ESMTP; 03 Sep 2019 17:27:49 -0700
-Subject: Re: phosphor-pid-control build failure with yocto head
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Patrick Venture <venture@google.com>
-References: <907F7F17-6EC3-4F83-A2E4-3BBE764C72DD@fuzziesquirrel.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <b6be6eda-703f-7daf-b0ee-e8ed5f778645@linux.intel.com>
-Date: Tue, 3 Sep 2019 17:27:49 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <907F7F17-6EC3-4F83-A2E4-3BBE764C72DD@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NPyl4bX1zDqYk
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 10:36:46 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from brads-mbp.dyn.fuzziesquirrel.com
+ (Brads-MBP.dyn.fuzziesquirrel.com [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 8B89E5C08D;
+ Tue,  3 Sep 2019 20:36:42 -0400 (EDT)
+Content-Type: text/plain;
+	charset=us-ascii;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [yocto] Build break in the latest openbmc tree.
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <9e7fa5a8-3ac4-a187-e878-2e6a24b1713d@linux.intel.com>
+Date: Tue, 3 Sep 2019 20:36:42 -0400
+Content-Transfer-Encoding: 7bit
+Message-Id: <6C9B290B-77CA-4324-9480-891F0DC1EB7D@fuzziesquirrel.com>
+References: <038f49d9-099e-dabd-2957-d31e7b8bbf41@linux.intel.com>
+ <628d5b4c-63d4-78b6-83d8-1781cbc86e0f@linux.intel.com>
+ <7694CCA3-89BD-44FE-90D1-99569476E980@fuzziesquirrel.com>
+ <fbcfc988-687f-55ad-1ca9-ace092f09a99@gmail.com>
+ <68bddbec8c08cbd9d31f561222bb3afde814a94b.camel@fuzziesquirrel.com>
+ <9e7fa5a8-3ac4-a187-e878-2e6a24b1713d@linux.intel.com>
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,45 +56,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: yocto@yoctoproject.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ akuster808 <akuster808@gmail.com>, James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/2/2019 1:15 AM, Brad Bishop wrote:
-> Hi James, Patrick
-> 
-> Updating our poky subtree to master HEAD exposes a build failure in 
-> phosphor-pid-control.
+at 5:16 PM, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
 
-Here's the bug, I've seen this before, it seems random when it happens 
-and changing a few lines can make it go away. Something to do with lto...
+> On 8/27/2019 5:00 PM, Brad Bishop wrote:
+>> On Sun, 2019-08-25 at 10:49 -0700, akuster808 wrote:
+>>> the meta-security layer should be fix now.
+>>>
+>>> please update and let me know if not.
+>> Thanks Armin!
+>> Jae, I've pulled this into OpenBMC.  Can you give it a try?
+>
+> Thanks Armin, Brad!
+>
+> I tried it using the latest tree and checked that the build breakage has
+> gone, but a new issue happened while it's building 'qemu-native'.
+>
+> | ERROR: Execution of  
+> '/home/yoojae/workspace/openbmc/build/tmp/work/x86_64-linux/qemu-native/4.1.0-r0/temp/run.do_configure.2396'  
+> failed with exit code 1:
+> | ERROR: unknown option --disable-libssh
+>
+> So I made a patch to fix the new issue.
+>
+> --- a/poky/meta/recipes-devtools/qemu/qemu.inc
+> +++ b/poky/meta/recipes-devtools/qemu/qemu.inc
+> @@ -137,7 +137,7 @@ PACKAGECONFIG[curses] =  
+> "--enable-curses,--disable-curses,ncurses,"
+>  PACKAGECONFIG[gtk+] = "--enable-gtk,--disable-gtk,gtk+3 gettext-native"
+>  PACKAGECONFIG[vte] = "--enable-vte,--disable-vte,vte gettext-native"
+>  PACKAGECONFIG[libcap-ng] = "--enable-cap-ng,--disable-cap-ng,libcap-ng,"
+> -PACKAGECONFIG[ssh] = "--enable-libssh,--disable-libssh,libssh,"
+> +PACKAGECONFIG[ssh] = "--enable-libssh2,--disable-libssh2,libssh2,"
+>  PACKAGECONFIG[gcrypt] = "--enable-gcrypt,--disable-gcrypt,libgcrypt,"
+>  PACKAGECONFIG[nettle] = "--enable-nettle,--disable-nettle,nettle"
+>  PACKAGECONFIG[libusb] = "--enable-libusb,--disable-libusb,libusb1"
+>
+> Brad,
+> Please apply this change into the qemu recipe.
 
-main.o swampd-util.o  ./.libs/libswampd.a -lstdc++fs -lphosphor_logging 
--lsdbusplus -lsystemd -lphosphor_dbus
-00:59:59 | lto1: internal compiler error: in add_symbol_to_partition_1, 
-at lto/lto-partition.c:154
-00:59:59 | Please submit a full bug report,
-00:59:59 | with preprocessed source if appropriate.
-00:59:59 | See <https://gcc.gnu.org/bugs/> for instructions.
-00:59:59 | lto-wrapper: fatal error: arm-openbmc-linux-gnueabi-g++ 
-returned 1 exit status
-00:59:59 | compilation terminated.
-00:59:59 | 
-/tmp/openbmc/work/armv7a-openbmc-linux-gnueabi/phosphor-pid-control/0.1+gitAUTOINC+35906cc3d0-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/9.2.0/ld: 
-error: lto-wrapper failed
-00:59:59 | collect2: error: ld returned 1 exit status
-00:59:59 | Makefile:919: recipe for target 'swampd' failed
-00:59:59 | make[2]: *** [swampd] Error 1
+Hi Jae
 
-What platform is gsj? We're currently behind tip, and it'll probably 
-take me some time to catch up to be able to try anything this new.
+Please send your patch to OE-Core.
 
-> 
-> GCC is asking for a bug to be opened.  Could find someone to have a look 
-> at this so we can continue to pick up poky changes?
-> 
-> If you would like an openbmc tree to pull give this a try:
-> 
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/24783
-> 
-> thx - brad
+FWIW I am able to build qemu-native without issue with OpenBMC 93ee980ed9  
+although I am not using meta-security.
+
+thx - brad
