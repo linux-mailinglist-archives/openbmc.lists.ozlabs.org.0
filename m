@@ -1,83 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E06AFA77FB
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 03:02:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F282BA784E
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 04:07:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46NQWt6DdZzDqjc
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 11:02:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NRyq4vCczDqng
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 12:06:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::430; helo=mail-pf1-x430.google.com;
- envelope-from=raj.khem@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Oy29v25V"; 
- dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46NQWF4X3rzDqWt
- for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 11:01:26 +1000 (AEST)
-Received: by mail-pf1-x430.google.com with SMTP id d15so2566834pfo.10
- for <openbmc@lists.ozlabs.org>; Tue, 03 Sep 2019 18:01:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:organization:message-id:date
- :user-agent:mime-version:in-reply-to:content-language;
- bh=yKWJZ+4T1YP63sphA1PKJOg/9P7OlpbmosLmR98z1A0=;
- b=Oy29v25VbGv9amZ6qO9J4VuAllWalrU/qT6XEeEiyU65HoWkJS8DodeS/y1u0le3OZ
- 8pw7c9XGrMXx1JngBqpVeMnNMA1Py3oM/BzSQyuAWtK1b5i16eUPTAUE/MfTUObm1c5l
- 7je0l0Ss+GM5A7JgEc1avrAuGL/5MXHP/VPAbOEzD+JwIgio14wOLMeJNGOccDPbD1D3
- xVmetF0299ijBou1YxCHi81fwBiJC/m9JYU0RU1mryGmczH/ZB7pZprnM/ph5zD1HBBD
- 8m3BsjEuD0Dawp13UDMo1uWVcLEqz1hl+tRJTJnHVnCnySlrGkceFtae7VYj9xj6N0Ou
- 6d9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:organization
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language;
- bh=yKWJZ+4T1YP63sphA1PKJOg/9P7OlpbmosLmR98z1A0=;
- b=HgKhxP5P8wlmuH9JAoqcUli4bMj2LKCEaOprT8bsdlRhMHOh+Uu4847i+YPAMBBpCS
- 1d4DXkUXYroGHA5er43k3T+h9F8pr2WYNz8v4kXTiomZ5aXVErcHd1+1FCfEzFIV3Wze
- /pmYI+/IE0GWWaVReN+rnisfjDpBv7rLMmyIhmXGD3QN2rS75glv9g9JI0JpoekgDZJx
- atHCVrvdeG0cNrd4NCnHzjedLPf7TvSBdQxqgMim5Wo6CMEirmOoNV4uEwI24NnQGbIU
- LffAulTygg88WWECHND9mkCN+jUqoXk8kvhCJ6iGic9vF+FP6lj3+hQ47j9UUm2qA7/S
- 3e+Q==
-X-Gm-Message-State: APjAAAUftDdK00ZUWAHzK8hVJS6iapo3w9Fbwl5El37WikoV4pKBRWYX
- LUON7scE7fJVDN01KH2YNkg=
-X-Google-Smtp-Source: APXvYqx4MHapjpKYlLrpwKmhpEaS+k57fW+QYGYpazlS10Uk/xCHvtIABxBS/RC+ktdHxS803MOjTA==
-X-Received: by 2002:aa7:8a4e:: with SMTP id n14mr17147602pfa.170.1567558882611; 
- Tue, 03 Sep 2019 18:01:22 -0700 (PDT)
-Received: from ?IPv6:2601:646:8500:1c20::7c7a? ([2601:646:8500:1c20::7c7a])
- by smtp.gmail.com with ESMTPSA id d16sm23944892pfd.81.2019.09.03.18.01.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Sep 2019 18:01:22 -0700 (PDT)
-Subject: Re: [yocto] Build break in the latest openbmc tree.
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, alistair.francis@wdc.com
-References: <038f49d9-099e-dabd-2957-d31e7b8bbf41@linux.intel.com>
- <628d5b4c-63d4-78b6-83d8-1781cbc86e0f@linux.intel.com>
- <7694CCA3-89BD-44FE-90D1-99569476E980@fuzziesquirrel.com>
- <fbcfc988-687f-55ad-1ca9-ace092f09a99@gmail.com>
- <68bddbec8c08cbd9d31f561222bb3afde814a94b.camel@fuzziesquirrel.com>
- <9e7fa5a8-3ac4-a187-e878-2e6a24b1713d@linux.intel.com>
- <6C9B290B-77CA-4324-9480-891F0DC1EB7D@fuzziesquirrel.com>
-From: Khem Raj <raj.khem@gmail.com>
-Organization: HIMVIS LLC
-Message-ID: <8d75f35e-fb35-7b7e-7945-f212a9519bce@gmail.com>
-Date: Tue, 3 Sep 2019 18:01:29 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NRyB0T9PzDqdh
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 12:06:25 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8421td2079435; Tue, 3 Sep 2019 22:06:19 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2ut1w83f3c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Sep 2019 22:06:19 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8424Peg010129;
+ Wed, 4 Sep 2019 02:06:18 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma02dal.us.ibm.com with ESMTP id 2uqgh73t4n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Sep 2019 02:06:18 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x8426HiA47120868
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Sep 2019 02:06:17 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1F1A613604F;
+ Wed,  4 Sep 2019 02:06:17 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5CD34136055;
+ Wed,  4 Sep 2019 02:06:16 +0000 (GMT)
+Received: from demeter.local (unknown [9.80.213.191])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Wed,  4 Sep 2019 02:06:16 +0000 (GMT)
+Subject: Re: BMCWeb changes login password
+To: "Wang, Kuiying" <kuiying.wang@intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <959CAFA1E282D14FB901BE9A7BF4E7724E51562F@shsmsx102.ccr.corp.intel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <c73c4823-7fd1-0762-72d1-da1920897667@linux.ibm.com>
+Date: Tue, 3 Sep 2019 21:06:14 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <6C9B290B-77CA-4324-9480-891F0DC1EB7D@fuzziesquirrel.com>
-Content-Type: multipart/mixed; boundary="------------4CDABB339191561D32D054E6"
+In-Reply-To: <959CAFA1E282D14FB901BE9A7BF4E7724E51562F@shsmsx102.ccr.corp.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-03_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1909040020
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,130 +86,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: yocto@yoctoproject.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- akuster808 <akuster808@gmail.com>, James Feist <james.feist@linux.intel.com>
+Cc: "Jia, Chunhui" <chunhui.jia@intel.com>, "Li, Yong B" <yong.b.li@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------4CDABB339191561D32D054E6
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+
+On 8/30/19 2:18 AM, Wang, Kuiying wrote:
+>
+> Currently only administrator is allowed to add user/modify user/change 
+> password.
+>
+> Administrator has the permission to change other users password or 
+> delete it directly.
+>
+> Administrator no need to know the old password of other users.
+>
+> For administrator to change itself password thing, still no need the 
+> old password, because administrator is already login a session.
+>
+> So we don’t need to add “input field to enter the old password”.
+>
+
+I don't think we are talking about the same things here.
+
+1. I agree that the BMC admin user should not have to enter the old 
+password when changing a user's password.  => However, we may want to 
+force the admin to re-enter their password when accessing a sensitive 
+feature such as changing someone's account.  Reference the link below -
+
+/https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#require-re-authentication-for-sensitive-features/
 
 
-
-On 9/3/19 5:36 PM, Brad Bishop wrote:
-> at 5:16 PM, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->=20
->> On 8/27/2019 5:00 PM, Brad Bishop wrote:
->>> On Sun, 2019-08-25 at 10:49 -0700, akuster808 wrote:
->>>> the meta-security layer should be fix now.
->>>>
->>>> please update and let me know if not.
->>> Thanks Armin!
->>> Jae, I've pulled this into OpenBMC.=C2=A0 Can you give it a try?
->>
->> Thanks Armin, Brad!
->>
->> I tried it using the latest tree and checked that the build breakage h=
-as
->> gone, but a new issue happened while it's building 'qemu-native'.
->>
->> | ERROR: Execution of
->> '/home/yoojae/workspace/openbmc/build/tmp/work/x86_64-linux/qemu-nativ=
-e/4.1.0-r0/temp/run.do_configure.2396'
->> failed with exit code 1:
->> | ERROR: unknown option --disable-libssh
->>
->> So I made a patch to fix the new issue.
->>
->> --- a/poky/meta/recipes-devtools/qemu/qemu.inc
->> +++ b/poky/meta/recipes-devtools/qemu/qemu.inc
->> @@ -137,7 +137,7 @@ PACKAGECONFIG[curses] =3D
->> "--enable-curses,--disable-curses,ncurses,"
->> =C2=A0PACKAGECONFIG[gtk+] =3D "--enable-gtk,--disable-gtk,gtk+3 gettex=
-t-native"
->> =C2=A0PACKAGECONFIG[vte] =3D "--enable-vte,--disable-vte,vte gettext-n=
-ative"
->> =C2=A0PACKAGECONFIG[libcap-ng] =3D "--enable-cap-ng,--disable-cap-ng,l=
-ibcap-ng,"
->> -PACKAGECONFIG[ssh] =3D "--enable-libssh,--disable-libssh,libssh,"
->> +PACKAGECONFIG[ssh] =3D "--enable-libssh2,--disable-libssh2,libssh2,"
->> =C2=A0PACKAGECONFIG[gcrypt] =3D "--enable-gcrypt,--disable-gcrypt,libg=
-crypt,"
->> =C2=A0PACKAGECONFIG[nettle] =3D "--enable-nettle,--disable-nettle,nett=
-le"
->> =C2=A0PACKAGECONFIG[libusb] =3D "--enable-libusb,--disable-libusb,libu=
-sb1"
->>
->> Brad,
->> Please apply this change into the qemu recipe.
->=20
-
-this was intentionally introduced in [1] although commit message did not
-mention about it so it could be unintended change, so I wonder if there
-is something more going on, is this packageconfig edited by some other
-bbappends from other layers in your setup
+2. The scenario where we may want to ask for the old password is the 
+"password change dialog".  This dialog is accessed when the user signs 
+into the Web App login page and the web app informs the user that their 
+password is expired and must be changed before they can access the BMC  
+The dialog asks for their new password (twice) ... and does it also ask 
+for the old password? <== That's the question.
 
 
-> Hi Jae
->=20
-> Please send your patch to OE-Core.
->=20
-> FWIW I am able to build qemu-native without issue with OpenBMC
-> 93ee980ed9 although I am not using meta-security.
->=20
-> thx - brad
+> But there is an open for multiple administrator user supporting, 
+> currently administrator user could add more administrator level users.
+>
+> And anyone of the administrators login, he could modify other 
+> administrator users like change password or delete it directly.
+>
+> I think it is *a bit security issue*. Have to restrict multiple 
+> administrator user or do not allow administrator to modify other 
+> administrator users.
+>
+According to Redfish spec 
+https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.7.0.pdf
+section 13.2.9 ("Privilege model/Authorization"), the predefined 
+"Administrator" role has the "ConfigureUsers" privilege.  It is my 
+understanding that the ConfigureUsers privilege is sufficient 
+(reference: section 13.2.6) to create, delete, and manage other user 
+accounts.
 
-[1]
-https://git.openembedded.org/openembedded-core/commit/?id=3D50a7dec956180=
-80962e56fd347f505e691b7ad6f
+Given this privilege model, I think you want to be able to trust your 
+Admin users, and give less-trusted users the Operator role (section 
+13.2.9).  If you were thinking of something more complicated, Redfish 
+allows you to define Custom roles and OEM privileges.
 
---------------4CDABB339191561D32D054E6
-Content-Type: application/pgp-keys;
- name="pEpkey.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="pEpkey.asc"
+- Joseph
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+> Thanks,
+>
+> Kwin.
+>
+> >//
+> >/On 8/28/19 3:20 AM, George Liu (//刘锡伟) wrote:/
+> >/>/
+> >/> I want to discuss with everyone about the solution to change the login/
+> >/> password./
+> >/>/
+> >/>   In the WEB, When the user needs to change the login password, the/
+> >/> current solution is to directly enter the new password twice to change/
+> >/> successfully, but the old password is not verified. the advantage is/
+> >/> that we can use the new password through this solution if we forget/
+> >/> the old password. but for the security reasons, I think should/
+> >/> verifying the old password instead of directly entering the new/
+> >/> password before change login password./
+> >/>/
+> >/> if everyone have any ideas or experience, please share, thanks!/
+> >/>/
+> >/Are you referring to the phosphor-webui design mentioned here?:/
+> >/https://github.com/ibm-openbmc/dev/issues/1048/
+> >//
+> >/OWASP has some recommendations:/
+> >//
+> >/https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#require-re-authentication-for-sensitive-features/
+> >//
+> >/https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html#step-4-allow-user-to-change-password-in-the-existing-session/
+> Thanks, the password change was mentioned in step 4.
+> I think should add an input field to enter the old password and verify it
+> when the form is submitted(phosphor-webui).
+> >//
+> >//
+> >/- Joseph/
+> >//
+> >
+>
 
-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
-=3Dsj8j
------END PGP PUBLIC KEY BLOCK-----
-
---------------4CDABB339191561D32D054E6--
