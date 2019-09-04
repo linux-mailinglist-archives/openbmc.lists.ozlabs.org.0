@@ -2,80 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0F75A77CA
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 02:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 998F8A77E2
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 02:28:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46NPW56yhWzDqpv
-	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 10:16:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NPn52r0HzDqqD
+	for <lists+openbmc@lfdr.de>; Wed,  4 Sep 2019 10:28:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="cOn1sGb2"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="QDntCloe"; dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+ spf=pass (helo) smtp.helo=mga12.intel.com
+ (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46NPT23TmJzDqml
- for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 10:14:30 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A3A42518;
- Tue,  3 Sep 2019 20:14:27 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 03 Sep 2019 20:14:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=W0iML2fIAlXSbOkfnY+zlAvfKjW42Nj
- hKZjTbe/fpq4=; b=cOn1sGb2LBRodVF9fvdVR9S+MK+VXXMK7UsQzkpKkxaUVOh
- C7Cemr7NfBcL8AO1q4d6Ibr1TxXXHlYkbXePHLld3WorYCcW5OIIt48uHwabc2rm
- HY2/prva7wAHTkJ57qvYEdvvfcRNmnKtoAMRs7k14ARr87QG9Bc+fs5z5t9dPGi6
- Ct3ICKzJIh9pnKXSlj1l3eojTs5wkT2f6igiXfHB9u+utpaoRFskz0VYOsUsJarF
- s++ImGigTbWeeRJzZycR6jkRM5H2Ihnq29IIAVwE+ijtsJ2GQF9P0IxHBKUA5Urn
- gcAYiOvF8d8nDtSmfHCKiiyo7CtOBi7R5zIfhsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=W0iML2
- fIAlXSbOkfnY+zlAvfKjW42NjhKZjTbe/fpq4=; b=QDntCloe/OtG/jedmABH/+
- sXr4hMYBqU3ddSKlZ3RmBEQ5HjDAeJar76JpegiHt0a0gFOH8RjUfOVWpFLMbrok
- iJEnPrnRJ2ypwTnKZMXWCIZVuPufHzcFA81Ya1u8WU3vP/JLYvVyIE03E3FSPUg9
- XI748+MLGD4CBO22EQul/hlpeyZ8gwZsVLP8E5PfPWND/XxP55nXdCpkTaIcuWYW
- YdSo6S4K7bk5ZoOHw3TGJxBiyoVVrgn2BkEu89ebTFYjBOV0V2kwoIYdUYd7Z4qD
- 3KX+e4UeSpSF3FRoInU/JmCSzooRVxuvJ8tjyN1vOmPKQrGXHvxHW1E5MaSVWd3g
- ==
-X-ME-Sender: <xms:4gFvXRc9hy_QBRfOoOfQ_dkFGQ4VwTt15WgvF89BABYUCaNIKk1pSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudejgedgvdelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:4gFvXTL01c6HD5XlJ1MirjvbEVbPdr2EhlvcDqEoHMgxMIWBmgUbnA>
- <xmx:4gFvXTAlUw2dzlRLNmc2z7-aGrPZVQdSZ2_miCOeTIo-g_zTFNlmGw>
- <xmx:4gFvXUgG7LmSXZApc5H_VUoSEqNe-MSxwQ0iCz-2XziL9LiH5v8OPQ>
- <xmx:4wFvXT3mZZuylvsHM70ghH8mgUQGHV2LkY9RBlmvtVDdCSESgqtqCw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 8A4B6E00A3; Tue,  3 Sep 2019 20:14:26 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-154-gfa7592a-fmstable-20190829v1
-Mime-Version: 1.0
-Message-Id: <07d807eb-2eed-4007-b769-07137d87bfba@www.fastmail.com>
-In-Reply-To: <20190902002911.18717-1-joel@jms.id.au>
-References: <20190902002911.18717-1-joel@jms.id.au>
-Date: Wed, 04 Sep 2019 09:44:53 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH linux dev-5.2] ARM: dts: aspeed: Add Tacoma machine
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NPmV6mC9zDqVC
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Sep 2019 10:27:52 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 03 Sep 2019 17:27:49 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,465,1559545200"; d="scan'208";a="194527176"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.254.64.140])
+ ([10.254.64.140])
+ by orsmga002.jf.intel.com with ESMTP; 03 Sep 2019 17:27:49 -0700
+Subject: Re: phosphor-pid-control build failure with yocto head
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Patrick Venture <venture@google.com>
+References: <907F7F17-6EC3-4F83-A2E4-3BBE764C72DD@fuzziesquirrel.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <b6be6eda-703f-7daf-b0ee-e8ed5f778645@linux.intel.com>
+Date: Tue, 3 Sep 2019 17:27:49 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <907F7F17-6EC3-4F83-A2E4-3BBE764C72DD@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,65 +55,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Mon, 2 Sep 2019, at 09:59, Joel Stanley wrote:
-> This is an AST2600 based BMC card for a Power9 system.
+On 9/2/2019 1:15 AM, Brad Bishop wrote:
+> Hi James, Patrick
 > 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  arch/arm/boot/dts/Makefile                  |  1 +
->  arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 39 +++++++++++++++++++++
->  2 files changed, 40 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+> Updating our poky subtree to master HEAD exposes a build failure in 
+> phosphor-pid-control.
+
+Here's the bug, I've seen this before, it seems random when it happens 
+and changing a few lines can make it go away. Something to do with lto...
+
+main.o swampd-util.o  ./.libs/libswampd.a -lstdc++fs -lphosphor_logging 
+-lsdbusplus -lsystemd -lphosphor_dbus
+00:59:59 | lto1: internal compiler error: in add_symbol_to_partition_1, 
+at lto/lto-partition.c:154
+00:59:59 | Please submit a full bug report,
+00:59:59 | with preprocessed source if appropriate.
+00:59:59 | See <https://gcc.gnu.org/bugs/> for instructions.
+00:59:59 | lto-wrapper: fatal error: arm-openbmc-linux-gnueabi-g++ 
+returned 1 exit status
+00:59:59 | compilation terminated.
+00:59:59 | 
+/tmp/openbmc/work/armv7a-openbmc-linux-gnueabi/phosphor-pid-control/0.1+gitAUTOINC+35906cc3d0-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/9.2.0/ld: 
+error: lto-wrapper failed
+00:59:59 | collect2: error: ld returned 1 exit status
+00:59:59 | Makefile:919: recipe for target 'swampd' failed
+00:59:59 | make[2]: *** [swampd] Error 1
+
+What platform is gsj? We're currently behind tip, and it'll probably 
+take me some time to catch up to be able to try anything this new.
+
 > 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 1b45e790e1e3..180405378b86 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1280,6 +1280,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->  	aspeed-bmc-opp-palmetto.dtb \
->  	aspeed-bmc-opp-romulus.dtb \
->  	aspeed-bmc-opp-swift.dtb \
-> +	aspeed-bmc-opp-tacoma.dtb \
->  	aspeed-bmc-opp-vesnin.dtb \
->  	aspeed-bmc-opp-witherspoon.dtb \
->  	aspeed-bmc-opp-zaius.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> new file mode 100644
-> index 000000000000..9ccd4c3db81a
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> @@ -0,0 +1,39 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +// Copyright 2019 IBM Corp.
-> +/dts-v1/;
-> +
-> +#include "aspeed-g6.dtsi"
-> +
-> +/ {
-> +	model = "Tacoma";
-> +	compatible = "ibm,tacoma-bmc", "aspeed,ast2600";
-> +
-> +	aliases {
-> +		serial4 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=ttyS4,115200n8";
-> +	};
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		reg = <0x80000000 0x80000000>;
-
-There's only 512M of RAM, so: reg = <0x80000000 0x20000000>;
-
-Looks fine otherwise.
-
-Andrew
+> GCC is asking for a bug to be opened.  Could find someone to have a look 
+> at this so we can continue to pick up poky changes?
+> 
+> If you would like an openbmc tree to pull give this a try:
+> 
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/24783
+> 
+> thx - brad
