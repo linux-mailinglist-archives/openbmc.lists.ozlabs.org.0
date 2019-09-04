@@ -1,63 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62E29A96C3
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 00:55:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1596CA96CD
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 01:02:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Nzgn2vbmzDqwB
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 08:55:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46NzqB1sYCzDr31
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 09:02:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::841; helo=mail-qt1-x841.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="S1tWJV/q"; 
- dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Nzfx72TPzDqlV
- for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 08:55:05 +1000 (AEST)
-Received: by mail-qt1-x841.google.com with SMTP id g13so38882qtj.4
- for <openbmc@lists.ozlabs.org>; Wed, 04 Sep 2019 15:55:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=oYBKlrJ4VGx5YSv//m6I/3jCuCWM6lncqtd/Xe63sxc=;
- b=S1tWJV/qFiLaLvlrKIPn5Mxf1bqC70H0MHh72j09iPuao3Ykiyi3rziUbchtyOa7zi
- 7ftDjM1SkbgjVb3rTqYfuqkOvwTpOIR+QSjK3ajLKbHt99rs4GM9jTl5Vti1C577Wkub
- /zmOW4pRa8JgIXdhaA/nWNWkrmhdquiwvlhWk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=oYBKlrJ4VGx5YSv//m6I/3jCuCWM6lncqtd/Xe63sxc=;
- b=a6IhNDAP4S5dwb0fDazSEKabb27vuEGUyQj4p8frtqCZG9Q9zWhVmidx9HX//sdn2O
- J2fY3n6WOoxBb1PwczUlatmtoLWCC0cv9Of+7ZT433pnMykVove2KQ9UWcdO6pNGIFFc
- 5HxyYqILf5+VvYTP8K7z6SMroaQTVvPTtRkyQoz8xSvfqlklI3IW2hgAuv2iMD4Mtjn6
- YfoWI/rbuv+RVLVP4vhsWEl9zTIQbkCkX4Jt5Ys+MJTuS0zJnc5unYhPiEucFT8R9PMn
- smkNYaJsNPauj8jUPFNuXD3nksrvPTjkj2F0CfJCBLW/KyssutLyKXjPKZvzNj7N6xMy
- FUlg==
-X-Gm-Message-State: APjAAAVTZPfHyK4a/TxvwnH7WM6PQsnq9Y2RbNHaShsca36EnkGXKX1G
- n7iexX0QhHx/NXfBvmS2r+rTTXaAFx0yFsbs4OE=
-X-Google-Smtp-Source: APXvYqx/vwpm59BLNFv1B2WZuCIs0NumOxvzU178gsKMy4C3b5MVTsO0eQDb/+vPUuf1IJpQ/YcvhvVU9DOUCeRnR54=
-X-Received: by 2002:ac8:4a01:: with SMTP id x1mr539647qtq.169.1567637701713;
- Wed, 04 Sep 2019 15:55:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
-In-Reply-To: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 4 Sep 2019 22:54:50 +0000
-Message-ID: <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46NzpP6kWLzDqc9
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 09:01:33 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 04 Sep 2019 16:01:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,468,1559545200"; d="scan'208";a="194887411"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
+ ([10.7.153.148])
+ by orsmga002.jf.intel.com with ESMTP; 04 Sep 2019 16:01:30 -0700
 Subject: Re: [PATCH dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Joel Stanley <joel@jms.id.au>
+References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
+ <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <ca423521-05a5-1fcd-27f1-bb5f68fa3c23@linux.intel.com>
+Date: Wed, 4 Sep 2019 16:01:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,40 +55,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Andrew Jeffery <andrew@aj.id.au>,
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ Brendan Higgins <brendanhiggins@google.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>, Tao Ren <taoren@fb.com>
+ Ryan Chen <ryan_chen@aspeedtech.com>, Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jae,
+Hi Joel,
 
-On Wed, 4 Sep 2019 at 20:08, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->
-> In case of multi-master environment, if a peer master incorrectly handles
-> a bus in the middle of a transaction, I2C hardware hangs in slave state
-> and it can't escape from the slave state, so this commit adds slave
-> inactive timeout support to recover the bus in the case.
->
-> By applying this change, SDA data-low and SCL clock-low timeout feature
-> also could be enabled which was disabled previously.
+On 9/4/2019 3:54 PM, Joel Stanley wrote:
+> Hi Jae,
+> 
+> On Wed, 4 Sep 2019 at 20:08, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>
+>> In case of multi-master environment, if a peer master incorrectly handles
+>> a bus in the middle of a transaction, I2C hardware hangs in slave state
+>> and it can't escape from the slave state, so this commit adds slave
+>> inactive timeout support to recover the bus in the case.
+>>
+>> By applying this change, SDA data-low and SCL clock-low timeout feature
+>> also could be enabled which was disabled previously.
+> 
+> Please consider sending your RFC patches to the upstream list. You
+> have a big backlog of patches now.
 
-Please consider sending your RFC patches to the upstream list. You
-have a big backlog of patches now.
+Thanks for the reminding. I can't send the RFC patches yet because QEMU
+H/W model isn't ready yet. I'm still waiting for the fix from Cedric.
 
-Cheers,
+Thanks,
+Jae
 
-Joel
-
->
-> Jae Hyun Yoo (2):
->   dt-bindings: i2c: aspeed: add hardware timeout support
->   i2c: aspeed: add slave inactive timeout support
->
->  .../devicetree/bindings/i2c/i2c-aspeed.txt    |  2 +
->  drivers/i2c/busses/i2c-aspeed.c               | 79 +++++++++++++++++--
->  2 files changed, 75 insertions(+), 6 deletions(-)
->
-> --
-> 2.23.0
->
+> 
+> Cheers,
+> 
+> Joel
+> 
+>>
+>> Jae Hyun Yoo (2):
+>>    dt-bindings: i2c: aspeed: add hardware timeout support
+>>    i2c: aspeed: add slave inactive timeout support
+>>
+>>   .../devicetree/bindings/i2c/i2c-aspeed.txt    |  2 +
+>>   drivers/i2c/busses/i2c-aspeed.c               | 79 +++++++++++++++++--
+>>   2 files changed, 75 insertions(+), 6 deletions(-)
+>>
+>> --
+>> 2.23.0
+>>
