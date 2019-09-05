@@ -1,66 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36784A979E
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 02:23:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4417CA97BC
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 02:55:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46P1d9635fzDqxq
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 10:23:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46P2KG6z4kzDqX9
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 10:54:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::335; helo=mail-ot1-x335.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="XQbuAtI5"; 
- dkim-atps=neutral
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
- [IPv6:2607:f8b0:4864:20::335])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46P1cX297XzDqw9
- for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 10:23:05 +1000 (AEST)
-Received: by mail-ot1-x335.google.com with SMTP id g19so330295otg.13
- for <openbmc@lists.ozlabs.org>; Wed, 04 Sep 2019 17:23:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=etjw9s1OYgYBlg01sssXMu9bLPew+LG1PLffme/oxTE=;
- b=XQbuAtI5LVdijthGh8qZByptvE52OJ+NctkuJ+gJscNJNSn3EAz4k3OfzeaCbc58Uh
- o59NgNtksTASagXZBjlv9mG6Q6rZtEvAEeGi+4e/a4J9FtiUUuHvqgPzwA8F0W9fAa9/
- 9w7/uogBfPROCqyaSWtVXmqixQIxTwbwxeXb54+sGqL02xCv9tJKr/QmiZo1Eg/xAU+N
- WecKC6B+kUDZhdMrPW74k3/kaC6nHRT8f6HLzcp5y5sY7D6bM47ZzigiG6uytJbmviPi
- TlrpVwslCU8LGp8Vzhr3x5FGmQy8dPdJiCdtDORy/plgqxMiFCw6PyGmLODL4Z8ILiql
- n4/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=etjw9s1OYgYBlg01sssXMu9bLPew+LG1PLffme/oxTE=;
- b=DU7eUsSZDkp1SU0JXNrcdlnxDuMZU3kQSENCNP5Bh24PlZibiKaA1CjtSHpm4IT3Q0
- wBg0EvllDFOzjXkoDpgzqdolNVPr3rbT2PZwgOMg7FESFKk90vl9pZEOcaqoRXj2oOXi
- 9PDzLPN3Q8yAvzKgrJxf4AtAC55vljRDQYb1oC2XY9X+ChvmGwtD7YbAaY7WkxiOxjEu
- HUcLcvmvn74pk7FdJIz5hArqXGbMv/2GLvJ4pQJTXFMYEPXOPYaA4ZBbOcZowe9913/N
- bynBpU7jeKA3LlGZVxAXe/n4Dnk3CWMJPh7/eakLZDnxKYtVOy6KnbROuZ3Nyy9I5MV7
- KBEg==
-X-Gm-Message-State: APjAAAUWYBLZwcOwmXKswPUPQ3d+PVdTOaRk5R2NOVegkn4pB1rTyF+g
- v7RoBVtDwYENjSC3cpLS30rdCtdcZSccAjucvB8=
-X-Google-Smtp-Source: APXvYqyw0R1aK/OeNYLi7hmQ3AmR5hfxjiZUqf88Qc470e8Rv5bzkpbUXyB9YgNnY7hHmnZi56V1wm2456A939uR0Uw=
-X-Received: by 2002:a9d:7c97:: with SMTP id q23mr269727otn.296.1567642981738; 
- Wed, 04 Sep 2019 17:23:01 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46P2Jb5ygMzDqPS
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 10:54:22 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 04 Sep 2019 17:54:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,468,1559545200"; d="scan'208";a="266844499"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.251.21.134])
+ ([10.251.21.134])
+ by orsmga001.jf.intel.com with ESMTP; 04 Sep 2019 17:54:20 -0700
+Subject: Re: [PATCH dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
+To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>
+References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
+ <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
+ <ca423521-05a5-1fcd-27f1-bb5f68fa3c23@linux.intel.com>
+ <e37f18a6-18f0-4768-96c7-fb4ad05fe03f@www.fastmail.com>
+ <d2ceccb7-2b1c-d944-76f2-ea284f4197f5@linux.intel.com>
+ <d602a97b-4555-43cc-b801-c87f3c2899b6@www.fastmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <35ff4cb2-0cc7-ba53-da71-980cc11a09de@linux.intel.com>
+Date: Wed, 4 Sep 2019 17:54:18 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <BYAPR21MB119113213476143717F0DAFBC8BB0@BYAPR21MB1191.namprd21.prod.outlook.com>
-In-Reply-To: <BYAPR21MB119113213476143717F0DAFBC8BB0@BYAPR21MB1191.namprd21.prod.outlook.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Wed, 4 Sep 2019 19:22:45 -0500
-Message-ID: <CALLMt=pGjG0MAofHA1G6732GjDQv+5YAhBHeng_NW9HYu-MyQQ@mail.gmail.com>
-Subject: Re: OpenBMC Validation and CI
-To: Neeraj Ladkani <neladk@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <d602a97b-4555-43cc-b801-c87f3c2899b6@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,24 +59,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>, Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Sep 4, 2019 at 7:05 PM Neeraj Ladkani <neladk@microsoft.com> wrote:
->
-> What is currently used openBMC validation framework and CI?  Can we use our infra to trigger CI ?
+On 9/4/2019 5:10 PM, Andrew Jeffery wrote:
+> 
+> 
+> On Thu, 5 Sep 2019, at 09:10, Jae Hyun Yoo wrote:
+>> Hi Andrew,
+>>
+>> On 9/4/2019 4:12 PM, Andrew Jeffery wrote:
+>>> On Thu, 5 Sep 2019, at 08:31, Jae Hyun Yoo wrote:
+>>>> Hi Joel,
+>>>>
+>>>> On 9/4/2019 3:54 PM, Joel Stanley wrote:
+>>>>> Hi Jae,
+>>>>>
+>>>>> On Wed, 4 Sep 2019 at 20:08, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>>>>>
+>>>>>> In case of multi-master environment, if a peer master incorrectly handles
+>>>>>> a bus in the middle of a transaction, I2C hardware hangs in slave state
+>>>>>> and it can't escape from the slave state, so this commit adds slave
+>>>>>> inactive timeout support to recover the bus in the case.
+>>>>>>
+>>>>>> By applying this change, SDA data-low and SCL clock-low timeout feature
+>>>>>> also could be enabled which was disabled previously.
+>>>>>
+>>>>> Please consider sending your RFC patches to the upstream list. You
+>>>>> have a big backlog of patches now.
+>>>>
+>>>> Thanks for the reminding. I can't send the RFC patches yet because QEMU
+>>>> H/W model isn't ready yet. I'm still waiting for the fix from Cedric.
+>>>
+>>> QEMU shouldn't be preventing you from sending patches upstream, rather
+>>> it prevents us from enabling the buffer mode support in the OpenBMC
+>>> kernel tree. You should be sending all patches upstream as early as possible.
+>>
+>> I met a QEMU issue when I was upstreaming a patch set last year:
+>> https://lists.ozlabs.org/pipermail/linux-aspeed/2018-September/000750.html
+>>
+>> If OpenBMC community accepts the QEMU issue, I can submit the RFC
+>> patches to upstream. Will submit the patch set soon to linux tree.
+> 
+> Ah, didn't realise it was Guenter that ran into it. We have some changes[1] in
+> Cedric's aspeed-4.2 qemu tree - do you mind testing it out? If those patches
+> resolve the issue Maybe we could point Guenter at that tree, though really we
+> should get the fixes upstream so this isn't an issue.
+> 
+> [1] https://github.com/legoater/qemu/compare/59dda66ab756e52e6a9c1ef89660d30b3769f63c...aspeed-4.2
+> 
 
-Should be possible. Are you interested in triggering CI on a meta-
-repo (i.e. bitbake) or a
-code repository? Did you want to run QEMU CI tests or the code repository CI?
-Or were you interested in hardware CI?
+Okay. I'll give it a try.
 
-The best documentation currently is at
-https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Workgroup#infrastructure-scripts
-
-Our current CI is based on docker containers running QEMU, unit tests
-(google test), and
-our openbmc-test-automation robot tests.
-
-Andrew
+Thanks,
+Jae
