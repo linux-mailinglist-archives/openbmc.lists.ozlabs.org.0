@@ -2,48 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52C22A97C2
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 02:57:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60D12A97E0
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 03:15:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46P2Mm29tgzDr0D
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 10:57:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46P2n66zxNzDqxq
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 11:15:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46P2M22lP6zDqtv
- for <openbmc@lists.ozlabs.org>; Thu,  5 Sep 2019 10:56:29 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Sep 2019 17:56:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,468,1559545200"; d="scan'208";a="266844874"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.251.21.134])
- ([10.251.21.134])
- by orsmga001.jf.intel.com with ESMTP; 04 Sep 2019 17:56:27 -0700
-Subject: Re: [PATCH dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
-To: Brendan Higgins <brendanhiggins@google.com>, Joel Stanley <joel@jms.id.au>
-References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
- <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
- <CAFd5g44dg3=FiW6QHLWtdoZzgP18ghQ0Fd40SGpBK1GYAHan-A@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <637a86f5-45b2-e37e-2bed-6a65b5cda477@linux.intel.com>
-Date: Wed, 4 Sep 2019 17:56:25 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46P2m92XdzzDqS4;
+ Thu,  5 Sep 2019 11:14:49 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ozlabs.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=ozlabs.org header.i=@ozlabs.org header.b="MAX0yV+2"; 
+ dkim-atps=neutral
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 46P2m83bY3z9s4Y;
+ Thu,  5 Sep 2019 11:14:48 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
+ t=1567646089; bh=VZEXu/8K0wET31tHvAZUGkrnyI6iOlA5d0sDOsyL6qU=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=MAX0yV+2PtlTCMb3yIbqhfIdafdziRZsbExW3+Qn3T+yml9P0YftaSBDKL9bme+OV
+ VOGYjqPI4PQBbvZoMsH/W7uLBaDPXEEm4f+9/TQiSakZS3FCGgd9CH7/P89OHdyjFM
+ dx0SWZgbF3Pr4bXI7jTaJDll8Ch1lfonfBG8G7XCxoEKuvysLTX6UfHb8j5o/gMvHz
+ XDc3e4LxiiVOtApTNh7yjtrvIPB2b8JyQA+2yXcRs+Gpx9rT64Ne+GxkCzmBwLU/re
+ mHp8fNxYujlsRbJ1ixkcRXvVAK3c5bBZV2VIH6jecueG/JZ1xipCn0OSaiM3X459QF
+ h5XZBivas2cFg==
+Message-ID: <a2ff0b6edb87d5495dd8e683e95d3b719e55f970.camel@ozlabs.org>
+Subject: Re: [PATCH v2 1/3] drivers/tty/serial/8250: Make Aspeed VUART SIRQ
+ polarity configurable
+From: Jeremy Kerr <jk@ozlabs.org>
+To: Oskar Senft <osk@google.com>, joel@jms.id.au, andrew@aj.id.au
+Date: Thu, 05 Sep 2019 09:14:44 +0800
+In-Reply-To: <20190731013404.243755-1-osk@google.com>
+References: <20190731013404.243755-1-osk@google.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-In-Reply-To: <CAFd5g44dg3=FiW6QHLWtdoZzgP18ghQ0Fd40SGpBK1GYAHan-A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -56,44 +58,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/4/2019 4:50 PM, Brendan Higgins wrote:
-> On Wed, Sep 4, 2019 at 3:55 PM Joel Stanley <joel@jms.id.au> wrote:
->>
->> Hi Jae,
->>
->> On Wed, 4 Sep 2019 at 20:08, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->>>
->>> In case of multi-master environment, if a peer master incorrectly handles
->>> a bus in the middle of a transaction, I2C hardware hangs in slave state
->>> and it can't escape from the slave state, so this commit adds slave
->>> inactive timeout support to recover the bus in the case.
->>>
->>> By applying this change, SDA data-low and SCL clock-low timeout feature
->>> also could be enabled which was disabled previously.
->>
->> Please consider sending your RFC patches to the upstream list. You
->> have a big backlog of patches now.
-> 
-> Joel, thanks for keeping track of this!
-> 
-> Sorry, for not keeping up with my emails, I don't think I have time to
-> continue to maintain this.
-> 
-> However, I don't want to hand this off in a bad state. I will try to
-> get up to date on all the emails in the coming weeks.
-> 
-> Jae, can you start sending things upstream as Joel suggested?
+Hi Oskar,
 
-Sure, I'll start upstreaming after taking some tests on Cedric's QEMU
-patch.
+Looks good to me, some minor comments though:
 
-Thanks,
-Jae
+> +
+> +What:		/sys/bus/platform/drivers/aspeed-vuart/*/sirq_polarity
+> +Date:		July 2019
+> +Contact:	Oskar Senft <osk@google.com>
+> +Description:	Configures the polarity of the serial interrupt to the
+> +		host via the BMC LPC bus.
 
+Can you mention what the value represents? 1/0 don't really indicate a
+specific polarity.
+
+Alternatively, we could use descriptive values (say, "active-low" /
+"idle-low").
+
+> @@ -310,6 +379,7 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+>  	struct resource *res;
+>  	u32 clk, prop;
+>  	int rc;
+> +	struct of_phandle_args espi_enabled_args;
+
+Minor: can you reverse-christmas-tree this?
+
+> @@ -402,6 +472,18 @@ static int aspeed_vuart_probe(struct platform_device *pdev)
+>  
+>  	vuart->line = rc;
+>  
+> +	rc = of_parse_phandle_with_fixed_args(
+> +		np, "espi-enabled", 2, 0, &espi_enabled_args);
+> +	if (rc < 0) {
+> +		dev_warn(&pdev->dev, "espi-enabled property not found\n");
+
+In the binding spec, you've listed this property at optional, but here
+we dev_warn() if its not present. Can we default to existing behaviour
+if it's not there?
+
+That may just be a matter of changing this to dev_debug.
+
+Cheers,
+
+
+Jeremy
 
