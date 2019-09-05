@@ -1,55 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5E98AAA3E
-	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 19:40:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7362DAABC3
+	for <lists+openbmc@lfdr.de>; Thu,  5 Sep 2019 21:10:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46PSd91tfXzDqmJ
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 03:40:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46PVdB1KyLzDr5D
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 05:10:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=sirena.co.uk
- (client-ip=2a01:7e01::f03c:91ff:fed4:a3b6; helo=heliosphere.sirena.org.uk;
- envelope-from=broonie@sirena.co.uk; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=sirena.org.uk header.i=@sirena.org.uk
- header.b="X1aHfL7d"; dkim-atps=neutral
-Received: from heliosphere.sirena.org.uk (heliosphere.sirena.org.uk
- [IPv6:2a01:7e01::f03c:91ff:fed4:a3b6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46PSc00JxYzDqfj
- for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2019 03:39:11 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=sirena.org.uk; s=20170815-heliosphere; h=Date:Message-Id:In-Reply-To:
- Subject:Cc:To:From:Sender:Reply-To:MIME-Version:Content-Type:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:References:
- List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
- List-Archive; bh=u/jyKCR0c7O6hZK0BTOZC8fGSA/TBitpvpVeuX5oSeg=; b=X1aHfL7dDGT4
- 4sdiGhPr11mNXThpPVHqTtxeO0JqBg4a8hCYnY6CHEJ9OkelbhUTd+PVE4Dr7sAMWtfzvu4iYkI8B
- XAo9rw+yB8C2qvPzEOJGG1VQukRA7Tml9rh6TMr59379boExPf1R/lr+FzTDuYdPU0rzNH5JnYszs
- eFIzg=;
-Received: from ypsilon.sirena.org.uk ([2001:470:1f1d:6b5::7])
- by heliosphere.sirena.org.uk with esmtpsa
- (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256) (Exim 4.92)
- (envelope-from <broonie@sirena.co.uk>)
- id 1i5vim-0005I9-PM; Thu, 05 Sep 2019 17:39:00 +0000
-Received: by ypsilon.sirena.org.uk (Postfix, from userid 1000)
- id 4B98F2742D17; Thu,  5 Sep 2019 18:39:00 +0100 (BST)
-From: Mark Brown <broonie@kernel.org>
-To: YueHaibing <yuehaibing@huawei.com>
-Subject: Applied "spi: npcm-fiu: remove set but not used variable 'retlen'" to
- the spi tree
-In-Reply-To: <20190905072436.23932-1-yuehaibing@huawei.com>
-X-Patchwork-Hint: ignore
-Message-Id: <20190905173900.4B98F2742D17@ypsilon.sirena.org.uk>
-Date: Thu,  5 Sep 2019 18:39:00 +0100 (BST)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
+ envelope-from=eajames@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46PVcQ3Xp4zDqs1
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2019 05:09:41 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x85J2TXK111757; Thu, 5 Sep 2019 15:09:33 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2uu72n2c4d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Sep 2019 15:09:32 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x85J0Fda003373;
+ Thu, 5 Sep 2019 19:09:32 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma03dal.us.ibm.com with ESMTP id 2uqgh7mpwg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Sep 2019 19:09:32 +0000
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x85J9Ujf46334232
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Sep 2019 19:09:30 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B16C6E052;
+ Thu,  5 Sep 2019 19:09:30 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CDB5E6E04C;
+ Thu,  5 Sep 2019 19:09:29 +0000 (GMT)
+Received: from [9.41.179.222] (unknown [9.41.179.222])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Sep 2019 19:09:29 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.2 2/2] i2c: Aspeed: Add AST2600 compatible
+To: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>,
+ openbmc@lists.ozlabs.org
+References: <1567629311-7553-1-git-send-email-eajames@linux.ibm.com>
+ <1567629311-7553-2-git-send-email-eajames@linux.ibm.com>
+ <a01c913e-1ae9-4aad-83a3-dec3dbd5b7f4@www.fastmail.com>
+From: Eddie James <eajames@linux.vnet.ibm.com>
+Message-ID: <d6ee4952-6d29-b0e9-08d1-6647472a2dad@linux.vnet.ibm.com>
+Date: Thu, 5 Sep 2019 14:09:29 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <a01c913e-1ae9-4aad-83a3-dec3dbd5b7f4@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-05_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1906280000 definitions=main-1909050177
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,79 +88,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- linux-spi@vger.kernel.org, Mark Brown <broonie@kernel.org>,
- tali.perry1@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The patch
 
-   spi: npcm-fiu: remove set but not used variable 'retlen'
+On 9/4/19 10:02 PM, Andrew Jeffery wrote:
+>
+> On Thu, 5 Sep 2019, at 06:05, Eddie James wrote:
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> Have you tested this on hardware? What was the outcome?
 
-has been applied to the spi tree at
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-5.4
+Yes. The I2C devices I accessed through hwmon worked fine, including the 
+PSU, tmp275, and ir35521. I didn't check every single device on every 
+bus, but everything seemed to probe up fine.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.  
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
 
 Thanks,
-Mark
 
-From a0ce1fd11e587be803eb2f299d478c962df3706f Mon Sep 17 00:00:00 2001
-From: YueHaibing <yuehaibing@huawei.com>
-Date: Thu, 5 Sep 2019 15:24:36 +0800
-Subject: [PATCH] spi: npcm-fiu: remove set but not used variable 'retlen'
+Eddie
 
-drivers/spi/spi-npcm-fiu.c: In function npcm_fiu_read:
-drivers/spi/spi-npcm-fiu.c:472:9: warning:
- variable retlen set but not used [-Wunused-but-set-variable]
 
-It is never used, so remove it.
-
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20190905072436.23932-1-yuehaibing@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
----
- drivers/spi/spi-npcm-fiu.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/drivers/spi/spi-npcm-fiu.c b/drivers/spi/spi-npcm-fiu.c
-index d9e2f58b104b..cb52fd8008d0 100644
---- a/drivers/spi/spi-npcm-fiu.c
-+++ b/drivers/spi/spi-npcm-fiu.c
-@@ -469,7 +469,6 @@ static int npcm_fiu_read(struct spi_mem *mem, const struct spi_mem_op *op)
- {
- 	u8 *data = op->data.buf.in;
- 	int i, readlen, currlen;
--	size_t retlen = 0;
- 	u8 *buf_ptr;
- 	u32 addr;
- 	int ret;
-@@ -494,8 +493,6 @@ static int npcm_fiu_read(struct spi_mem *mem, const struct spi_mem_op *op)
- 		currlen -= 16;
- 	} while (currlen > 0);
- 
--	retlen = i;
--
- 	return 0;
- }
- 
--- 
-2.20.1
-
+>
+> Andrew
+>
+>> ---
+>>   drivers/i2c/busses/i2c-aspeed.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+>> index 8931792..1943977 100644
+>> --- a/drivers/i2c/busses/i2c-aspeed.c
+>> +++ b/drivers/i2c/busses/i2c-aspeed.c
+>> @@ -1274,6 +1274,10 @@ static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus)
+>>   		.compatible = "aspeed,ast2500-i2c-bus",
+>>   		.data = aspeed_i2c_25xx_get_clk_reg_val,
+>>   	},
+>> +	{
+>> +		.compatible = "aspeed,ast2600-i2c-bus",
+>> +		.data = aspeed_i2c_25xx_get_clk_reg_val,
+>> +	},
+>>   	{ },
+>>   };
+>>   MODULE_DEVICE_TABLE(of, aspeed_i2c_bus_of_table);
+>> -- 
+>> 1.8.3.1
+>>
+>>
