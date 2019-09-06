@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD6AFAC14A
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 22:16:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AC3FAC14E
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 22:17:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Q83M45RMzDrF5
-	for <lists+openbmc@lfdr.de>; Sat,  7 Sep 2019 06:16:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Q84V0hfPzDrF2
+	for <lists+openbmc@lfdr.de>; Sat,  7 Sep 2019 06:17:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,26 +18,29 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Q82g5jg1zDrDT
- for <openbmc@lists.ozlabs.org>; Sat,  7 Sep 2019 06:16:09 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Q82j25TCzDrDT
+ for <openbmc@lists.ozlabs.org>; Sat,  7 Sep 2019 06:16:13 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 06 Sep 2019 13:16:07 -0700
+ 06 Sep 2019 13:16:08 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,474,1559545200"; d="scan'208";a="334989172"
+X-IronPort-AV: E=Sophos;i="5.64,474,1559545200"; d="scan'208";a="334989175"
 Received: from maru.jf.intel.com ([10.54.51.77])
- by orsmga004.jf.intel.com with ESMTP; 06 Sep 2019 13:16:07 -0700
+ by orsmga004.jf.intel.com with ESMTP; 06 Sep 2019 13:16:08 -0700
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Brendan Higgins <brendanhiggins@google.com>,
  Benjamin Herrenschmidt <benh@kernel.crashing.org>,
  Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  Ryan Chen <ryan_chen@aspeedtech.com>, Tao Ren <taoren@fb.com>
-Subject: [PATCH v2 dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
-Date: Fri,  6 Sep 2019 13:16:03 -0700
-Message-Id: <20190906201605.14540-1-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH v2 dev-5.2 1/2] dt-bindings: i2c: aspeed: add hardware timeout
+ support
+Date: Fri,  6 Sep 2019 13:16:04 -0700
+Message-Id: <20190906201605.14540-2-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20190906201605.14540-1-jae.hyun.yoo@linux.intel.com>
+References: <20190906201605.14540-1-jae.hyun.yoo@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -55,26 +58,29 @@ Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In case of multi-master environment, if a peer master incorrectly handles
-a bus in the middle of a transaction, I2C hardware hangs in slave state
-and it can't escape from the slave state, so this commit adds slave
-inactive timeout support to recover the bus in the case.
+Append a binding to support hardware timeout feature.
 
-By applying this change, SDA data-low and SCL clock-low timeout feature
-also could be enabled which was disabled previously.
-
+Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+---
 Changes since v1:
- - Made it use bus auto recovery feature so that bus can recover itself
-   automatically.
+ None
 
-Jae Hyun Yoo (2):
-  dt-bindings: i2c: aspeed: add hardware timeout support
-  i2c: aspeed: add slave inactive timeout support
+ Documentation/devicetree/bindings/i2c/i2c-aspeed.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
- .../devicetree/bindings/i2c/i2c-aspeed.txt    |  2 +
- drivers/i2c/busses/i2c-aspeed.c               | 82 +++++++++++++++++--
- 2 files changed, 78 insertions(+), 6 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+index e5b46885c15e..71de956ffa4f 100644
+--- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
++++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+@@ -29,6 +29,8 @@ Optional Properties:
+ 			  DMA mode instead of PIO or FIFO respectively, I2C
+ 			  can't use DMA mode. IF both DMA and buffer modes are
+ 			  enabled, DMA mode will be selected.
++- aspeed,hw-timeout-ms	: Hardware timeout in milliseconds. If it's not
++			  specified, the H/W timeout feature will be disabled.
+ 
+ Example:
+ 
 -- 
 2.23.0
 
