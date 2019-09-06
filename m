@@ -1,56 +1,148 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FF80AAF21
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 01:36:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAECBAB00F
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 03:18:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46PcXV59nlzDr63
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 09:36:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46PfnL0WKCzDr6L
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 11:17:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=41527672ed=taoren@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="oMgwGgNC"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="LSVQgPyA"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46PcWV4ssqzDqjX
- for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2019 09:35:48 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 05 Sep 2019 16:35:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,471,1559545200"; d="scan'208";a="334718445"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga004.jf.intel.com with ESMTP; 05 Sep 2019 16:35:45 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46PfmZ2Q3HzDr5l
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Sep 2019 11:17:13 +1000 (AEST)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x861Dn9I021346; Thu, 5 Sep 2019 18:16:58 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=pnPKH+c2eeb15POI6OA1DdxsJMEiyLR9lWIIOQ1S2G4=;
+ b=oMgwGgNCCm5WJGlYQ89QnETHxmSWHaG/8OxT9L0uC32H6N8NcCySk6bbqUw7F7jv8jGT
+ MctT3XedgoEx1lGR8pzRW4Sq1vEuccG0sVJoningL2hzxpFJ438jeAsSAwHGUpPwJXoF
+ jQNpU2VK3ZWXZCzu0g9x38c9+Xkc81tN5oc= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uu93b158k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Thu, 05 Sep 2019 18:16:58 -0700
+Received: from ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) by
+ ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Thu, 5 Sep 2019 18:16:57 -0700
+Received: from NAM04-CO1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.175) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Thu, 5 Sep 2019 18:16:57 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=eO1pAbv5aEu39l2/QS0OdEFjko+rMTkaAVlEgExOVxmXfVrlrdm3M9usl5REXNkJdWgl9Ig+NjEKvADV/HxwJhiKhu0g0ENRkuwfFNq1Cno4TPhduAZKp2YqETJpUR+z03JlkoXA505nacDjfmnkFOk8IdiYAoqjlELGVEbnPjUZMCyidRAnXZvIvXKVpNnYfNRyQzMwHgfhwtJ++KrEsrMGwNQF9C7r4J+8Lk1JXduKoE6TtVrNdhZ9ulXZL6h+1lHfLpx4EHv1n5QYmX2c/vko214lk2eAgS7+XnF8FpZff0dG2/Rkhzo90kyWiv8VodG8/+lwjpAZjOtk4uguEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pnPKH+c2eeb15POI6OA1DdxsJMEiyLR9lWIIOQ1S2G4=;
+ b=WFDItehb/rGKJpm6m0WDl/jSWmIYYgCC6XXrxgKgGlyOk5hLCXcEjDVQLygz/1RyRDCKbE1HXl+SSxBlCP1VhvrUbJvnkeHBW1WvlRqo68PdiiabeuOyh8TGh1SIBHXCNLyKLvvmbfBDPHMKoZ0yGKCdPA6iMx2RefDyverCmVTcHxjVi2AnjSzqfArMnZTKoCx3h2x+PobWd4cuyvu5QKF/VngnoLogjMHY8/aSIzdUzcUp0ucrhf6GS8IO0n6xEdBjpUZclinanOUsAlFm7UrFvzNWmk8XSkoV83MBXkWtuIZMnWUy8xr9z5v6Z5eNbRlXEHSf4Z7/KNurjZILqQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pnPKH+c2eeb15POI6OA1DdxsJMEiyLR9lWIIOQ1S2G4=;
+ b=LSVQgPyAgRei7lw1a12kKsrRGmAied1JBiAc2/WPo78sAeZwWhcVmMRQJ7VVbZZAYEmHStVLqMKr7sKcrm+UkiqIuOTIESw4YoGjXCMFbbWciw2V9aq7ZEUHaC1t+zlJXHnDhDplAJFzMEMdfgIu9hiJqqAXw5ga7AoIL6o1vQU=
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
+ MWHPR15MB1263.namprd15.prod.outlook.com (10.175.2.11) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2220.20; Fri, 6 Sep 2019 01:16:55 +0000
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::94f6:ca02:596c:801]) by MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::94f6:ca02:596c:801%9]) with mapi id 15.20.2220.022; Fri, 6 Sep 2019
+ 01:16:55 +0000
+From: Tao Ren <taoren@fb.com>
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Brendan Higgins
+ <brendanhiggins@google.com>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery
+ <andrew@aj.id.au>, Ryan Chen <ryan_chen@aspeedtech.com>
 Subject: Re: [PATCH dev-5.2 2/2] i2c: aspeed: add slave inactive timeout
  support
-To: Tao Ren <taoren@fb.com>, Brendan Higgins <brendanhiggins@google.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Thread-Topic: [PATCH dev-5.2 2/2] i2c: aspeed: add slave inactive timeout
+ support
+Thread-Index: AQHVY1yDI28Zw8bU0kuhZOCPC1aBFKcdq6AAgAAFmACAAAi4AIAABJ2AgAAcQoA=
+Date: Fri, 6 Sep 2019 01:16:55 +0000
+Message-ID: <0acba616-1c3c-53fc-cbc1-2bc19e48b4dc@fb.com>
 References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
  <20190904200758.5420-3-jae.hyun.yoo@linux.intel.com>
  <f0f1a11c-4e0a-0ac0-b1dd-d05931bf5b4e@fb.com>
  <438748a7-2952-d4b9-ea60-9090bf9e9aaa@linux.intel.com>
  <073a63d8-bea6-4c91-a6a8-0486abeb6027@fb.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <7ea704e7-22d4-047b-7b1c-65ccc9b61817@linux.intel.com>
-Date: Thu, 5 Sep 2019 16:35:45 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <073a63d8-bea6-4c91-a6a8-0486abeb6027@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ <7ea704e7-22d4-047b-7b1c-65ccc9b61817@linux.intel.com>
+In-Reply-To: <7ea704e7-22d4-047b-7b1c-65ccc9b61817@linux.intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: MWHPR1001CA0022.namprd10.prod.outlook.com
+ (2603:10b6:301:2a::35) To MWHPR15MB1216.namprd15.prod.outlook.com
+ (2603:10b6:320:22::17)
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2620:10d:c090:200::2:1461]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9f419c50-5d66-4654-7ed2-08d73267e825
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:MWHPR15MB1263; 
+x-ms-traffictypediagnostic: MWHPR15MB1263:
+x-microsoft-antispam-prvs: <MWHPR15MB126361249552CFB3CE0DAFB2B2BA0@MWHPR15MB1263.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0152EBA40F
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(346002)(136003)(366004)(39860400002)(396003)(189003)(199004)(102836004)(2906002)(186003)(478600001)(11346002)(64756008)(66476007)(7736002)(316002)(476003)(2616005)(66556008)(66446008)(99286004)(14444005)(386003)(25786009)(6506007)(4326008)(229853002)(53546011)(6486002)(71200400001)(256004)(71190400001)(76176011)(46003)(14454004)(486006)(58126008)(31696002)(305945005)(6512007)(8676002)(86362001)(65956001)(81156014)(81166006)(6436002)(6116002)(65806001)(5660300002)(36756003)(110136005)(52116002)(446003)(53936002)(31686004)(8936002)(66946007)(6246003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1263;
+ H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: daiMBFY5/FPHqPKEMJDcutlOMunSsQ6rdm0zX+OzEsmUbod5b6TY+WBo7cqEqq8LDQr9HyYUa6BWDfA0SSbpZSpBNfi4KKtgof+IK9asoHwPS2HliUii6rIoAaEXV1ODr49g5NW9iRvWQCveZHaL0Tk7PKKL35/NG1sWrTMe2wNglePndObwLjVoMOvrwZwDsXXCeqoyGdstcLNia+b3JPUgMi/3n0DLUwstg4kFFZ4bEeaqb5fWrrfhhdGiuZkFtA9KkxMITfE42QVueXmCCvW4B2TRGqN4TG26/47wN9bfAZdzoTHVvMjktqnwDIMv+pJrfsA1FXjY8YWqlTuz8gtXYFIw7hwcq2zmku7Urj7KZpU1NuqNl6ykFcuGXtyR9zB/SBP0Gm7LJQBqV8c6i2MmiUbh71Flvr24Ds8XLfk=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <278BFD62611FEF4EAA02B1BA62E50DB5@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f419c50-5d66-4654-7ed2-08d73267e825
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Sep 2019 01:16:55.6375 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ojuGVJhYW5dqBo/02xQKNR4jQ9JUGLWYy2ZAfj7bd2JaYtONLOg/mZ1KgUbUq+gR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1263
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-05_11:2019-09-04,2019-09-05 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ spamscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1906280000 definitions=main-1909060010
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,226 +158,227 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/5/2019 4:19 PM, Tao Ren wrote:
-> On 9/5/19 3:48 PM, Jae Hyun Yoo wrote:
->> Hi Tao,
->>
->> On 9/5/2019 3:28 PM, Tao Ren wrote:
->>> Hi Jae,
->>>
->>> On 9/4/19 1:07 PM, Jae Hyun Yoo wrote:
->>>> In case of multi-master environment, if a peer master incorrectly handles
->>>> a bus in the middle of a transaction, I2C hardware hangs in slave state
->>>> and it can't escape from the slave state, so this commit adds slave
->>>> inactive timeout support to recover the bus in the case.
->>>>
->>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>>
->>> I have a generic question on the patch: is it good enough to just enable slave_inactive_timeout and acknowledge the interrupt when it happens? Or do we need to reset the i2c controller to bring it out of slave state?
->>>
->>> I'm asking this because I hit an issue on my Minipack BMC where the slave_inactive_timeout interrupt was generated once every ~0.1 seconds (I set aspeed,hw-timeout-ms to 1000), and a few seconds later my BMC was rebooted (I guess watchdog timed out). Given the issue happened only once, I don't have chance to collect more information (such as why the repetitive interrupt was generated, why BMC rebooted, and etc.). Will share more if I met the problem again.
->>
->> Basic concept of this implementation is setting the slave state of
->> driver to ASPEED_I2C_SLAVE_INACTIVE to avoid calling of
->> aspeed_i2c_reset() directly from interrupt context. Instead, when a
->> master xfer happens after that, it will try bus recovery
->> through aspeed_i2c_recover_bus() and it will call aspeed_i2c_reset()
->> if needed.
->>
->> If this patch doesn't work in your case, test it again after adding
->> one line code into this driver. See below.
-> 
-> If bus_reset is really needed in this case, then I'd prefer to do it immediately or in a threaded_irq_handler if it's bad idea to call aspeed_i2c_reset() in hardware interrupt context. The reasons being:
-> 
-> 1) we don't know when userspace starts next master transfer.
-> 2) aspeed_i2c_recover_bus() is not triggered in aspeed_i2c_master_xfer() in my environment because bus is "idle" (I2CD14[16] == 0).
-> 
-
-Oh, so to support the case as well, probably we need to add a flag for
-indicating recovery needs when a master xfer comes then it could
-forcibly recover and reset the bus even if the bus is idle. Can you
-please test that with making code changes? Unfortunately, I can't
-reproduce the case in my system.
-
->>
->>>
->>>> ---
->>>>    drivers/i2c/busses/i2c-aspeed.c | 79 ++++++++++++++++++++++++++++++---
->>>>    1 file changed, 73 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
->>>> index 89317929bee4..92e1a249b393 100644
->>>> --- a/drivers/i2c/busses/i2c-aspeed.c
->>>> +++ b/drivers/i2c/busses/i2c-aspeed.c
->>>> @@ -70,10 +70,14 @@
->>>>    #define ASPEED_I2CD_TIME_SCL_HIGH_MASK            GENMASK(19, 16)
->>>>    #define ASPEED_I2CD_TIME_SCL_LOW_SHIFT            12
->>>>    #define ASPEED_I2CD_TIME_SCL_LOW_MASK            GENMASK(15, 12)
->>>> +#define ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_SHIFT    8
->>>> +#define ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK    GENMASK(9, 8)
->>>>    #define ASPEED_I2CD_TIME_BASE_DIVISOR_MASK        GENMASK(3, 0)
->>>>    #define ASPEED_I2CD_TIME_SCL_REG_MAX            GENMASK(3, 0)
->>>> +
->>>>    /* 0x08 : I2CD Clock and AC Timing Control Register #2 */
->>>> -#define ASPEED_NO_TIMEOUT_CTRL                0
->>>> +#define ASPEED_I2CD_TIMEOUT_CYCLES_SHIFT        0
->>>> +#define ASPEED_I2CD_TIMEOUT_CYCLES_MASK            GENMASK(4, 0)
->>>>      /* 0x0c : I2CD Interrupt Control Register &
->>>>     * 0x10 : I2CD Interrupt Status Register
->>>> @@ -81,6 +85,7 @@
->>>>     * These share bit definitions, so use the same values for the enable &
->>>>     * status bits.
->>>>     */
->>>> +#define ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT        BIT(15)
->>>>    #define ASPEED_I2CD_INTR_SDA_DL_TIMEOUT            BIT(14)
->>>>    #define ASPEED_I2CD_INTR_BUS_RECOVER_DONE        BIT(13)
->>>>    #define ASPEED_I2CD_INTR_SLAVE_MATCH            BIT(7)
->>>> @@ -96,8 +101,11 @@
->>>>             ASPEED_I2CD_INTR_SCL_TIMEOUT |                       \
->>>>             ASPEED_I2CD_INTR_ABNORMAL |                       \
->>>>             ASPEED_I2CD_INTR_ARBIT_LOSS)
->>>> +#define ASPEED_I2CD_INTR_SLAVE_ERRORS                           \
->>>> +        ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT
->>>>    #define ASPEED_I2CD_INTR_ALL                               \
->>>> -        (ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |                   \
->>>> +        (ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT |               \
->>>> +         ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |                   \
->>>>             ASPEED_I2CD_INTR_BUS_RECOVER_DONE |                   \
->>>>             ASPEED_I2CD_INTR_SCL_TIMEOUT |                       \
->>>>             ASPEED_I2CD_INTR_ABNORMAL |                       \
->>>> @@ -176,6 +184,7 @@ struct aspeed_i2c_bus {
->>>>                                   u32 divisor);
->>>>        unsigned long            parent_clk_frequency;
->>>>        u32                bus_frequency;
->>>> +    u32                hw_timeout_ms;
->>>>        /* Transaction state. */
->>>>        enum aspeed_i2c_master_state    master_state;
->>>>        struct i2c_msg            *msgs;
->>>> @@ -276,6 +285,14 @@ static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
->>>>    }
->>>>      #if IS_ENABLED(CONFIG_I2C_SLAVE)
->>>> +static int aspeed_i2c_check_slave_error(u32 irq_status)
->>>> +{
->>>> +    if (irq_status & ASPEED_I2CD_INTR_SLAVE_INACTIVE_TIMEOUT)
->>>> +        return -EIO;
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +
->>>>    static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>    {
->>>>        u32 command, irq_handled = 0;
->>>> @@ -286,6 +303,14 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>        if (!slave)
->>>>            return 0;
->>>>    +    if (aspeed_i2c_check_slave_error(irq_status)) {
->>>> +        dev_dbg(bus->dev, "received slave error interrupt: 0x%08x\n",
->>>> +            irq_status);
->>>> +        irq_handled |= (irq_status & ASPEED_I2CD_INTR_SLAVE_ERRORS);
->>>> +        bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
->>
->>                  aspeed_i2c_reset(bus);
->>
->> I didn't add it in this patch because I wanted to avoid calling of this
->> reset function from interrupt context but give it a try.
->>
->> Thanks,
->> Jae
-> 
-> I believe this will solve my problem, but let me test it and will share you results later.
-
-Please share this result too. It would be useful to complete making this
-patch.
-
-Thanks,
-Jae
-
->>>> +        return irq_handled;
->>>> +    }
->>>> +
->>>>        command = readl(bus->base + ASPEED_I2C_CMD_REG);
->>>>          /* Slave was requested, restart state machine. */
->>>> @@ -602,7 +627,7 @@ static void aspeed_i2c_next_msg_or_stop(struct aspeed_i2c_bus *bus)
->>>>        }
->>>>    }
->>>>    -static int aspeed_i2c_is_irq_error(u32 irq_status)
->>>> +static int aspeed_i2c_check_master_error(u32 irq_status)
->>>>    {
->>>>        if (irq_status & ASPEED_I2CD_INTR_ARBIT_LOSS)
->>>>            return -EAGAIN;
->>>> @@ -633,9 +658,9 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>         * should clear the command queue effectively taking us back to the
->>>>         * INACTIVE state.
->>>>         */
->>>> -    ret = aspeed_i2c_is_irq_error(irq_status);
->>>> +    ret = aspeed_i2c_check_master_error(irq_status);
->>>>        if (ret) {
->>>> -        dev_dbg(bus->dev, "received error interrupt: 0x%08x\n",
->>>> +        dev_dbg(bus->dev, "received master error interrupt: 0x%08x\n",
->>>>                irq_status);
->>>>            irq_handled |= (irq_status & ASPEED_I2CD_INTR_MASTER_ERRORS);
->>>>            if (bus->master_state != ASPEED_I2C_MASTER_INACTIVE) {
->>>> @@ -1194,6 +1219,7 @@ static u32 aspeed_i2c_25xx_get_clk_reg_val(struct device *dev, u32 divisor)
->>>>    /* precondition: bus.lock has been acquired. */
->>>>    static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
->>>>    {
->>>> +    u32 timeout_base_divisor, timeout_tick_us, timeout_cycles;
->>>>        u32 divisor, clk_reg_val;
->>>>          divisor = DIV_ROUND_UP(bus->parent_clk_frequency, bus->bus_frequency);
->>>> @@ -1202,8 +1228,46 @@ static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
->>>>                ASPEED_I2CD_TIME_THDSTA_MASK |
->>>>                ASPEED_I2CD_TIME_TACST_MASK);
->>>>        clk_reg_val |= bus->get_clk_reg_val(bus->dev, divisor);
->>>> +
->>>> +    if (bus->hw_timeout_ms) {
->>>> +        u8 div_max = ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK >>
->>>> +                 ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_SHIFT;
->>>> +        u8 cycles_max = ASPEED_I2CD_TIMEOUT_CYCLES_MASK >>
->>>> +                ASPEED_I2CD_TIMEOUT_CYCLES_SHIFT;
->>>> +
->>>> +        timeout_base_divisor = 0;
->>>> +
->>>> +        do {
->>>> +            timeout_tick_us = 1000 * (16384 <<
->>>> +                          (timeout_base_divisor << 1)) /
->>>> +                      (bus->parent_clk_frequency / 1000);
->>>> +
->>>> +            if (timeout_base_divisor == div_max ||
->>>> +                timeout_tick_us * ASPEED_I2CD_TIMEOUT_CYCLES_MASK >=
->>>> +                bus->hw_timeout_ms * 1000)
->>>> +                break;
->>>> +        } while (timeout_base_divisor++ < div_max);
->>>> +
->>>> +        if (timeout_tick_us) {
->>>> +            timeout_cycles = DIV_ROUND_UP(bus->hw_timeout_ms * 1000,
->>>> +                              timeout_tick_us);
->>>> +            if (timeout_cycles == 0)
->>>> +                timeout_cycles = 1;
->>>> +            else if (timeout_cycles > cycles_max)
->>>> +                timeout_cycles = cycles_max;
->>>> +        } else {
->>>> +            timeout_cycles = 0;
->>>> +        }
->>>> +    } else {
->>>> +        timeout_base_divisor = 0;
->>>> +        timeout_cycles = 0;
->>>> +    }
->>>> +
->>>> +    clk_reg_val |= FIELD_PREP(ASPEED_I2CD_TIME_TIMEOUT_BASE_DIVISOR_MASK,
->>>> +                  timeout_base_divisor);
->>>> +
->>>>        writel(clk_reg_val, bus->base + ASPEED_I2C_AC_TIMING_REG1);
->>>> -    writel(ASPEED_NO_TIMEOUT_CTRL, bus->base + ASPEED_I2C_AC_TIMING_REG2);
->>>> +    writel(timeout_cycles, bus->base + ASPEED_I2C_AC_TIMING_REG2);
->>>>          return 0;
->>>>    }
->>>> @@ -1404,6 +1468,9 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
->>>>            }
->>>>        }
->>>>    +    device_property_read_u32(&pdev->dev, "aspeed,hw-timeout-ms",
->>>> +                 &bus->hw_timeout_ms);
->>>> +
->>>>        /* Initialize the I2C adapter */
->>>>        spin_lock_init(&bus->lock);
->>>>        init_completion(&bus->cmd_complete);
->>>>
+SGkgSmFlLA0KDQpPbiA5LzUvMTkgNDozNSBQTSwgSmFlIEh5dW4gWW9vIHdyb3RlOg0KPiBPbiA5
+LzUvMjAxOSA0OjE5IFBNLCBUYW8gUmVuIHdyb3RlOg0KPj4gT24gOS81LzE5IDM6NDggUE0sIEph
+ZSBIeXVuIFlvbyB3cm90ZToNCj4+PiBIaSBUYW8sDQo+Pj4NCj4+PiBPbiA5LzUvMjAxOSAzOjI4
+IFBNLCBUYW8gUmVuIHdyb3RlOg0KPj4+PiBIaSBKYWUsDQo+Pj4+DQo+Pj4+IE9uIDkvNC8xOSAx
+OjA3IFBNLCBKYWUgSHl1biBZb28gd3JvdGU6DQo+Pj4+PiBJbiBjYXNlIG9mIG11bHRpLW1hc3Rl
+ciBlbnZpcm9ubWVudCwgaWYgYSBwZWVyIG1hc3RlciBpbmNvcnJlY3RseSBoYW5kbGVzDQo+Pj4+
+PiBhIGJ1cyBpbiB0aGUgbWlkZGxlIG9mIGEgdHJhbnNhY3Rpb24sIEkyQyBoYXJkd2FyZSBoYW5n
+cyBpbiBzbGF2ZSBzdGF0ZQ0KPj4+Pj4gYW5kIGl0IGNhbid0IGVzY2FwZSBmcm9tIHRoZSBzbGF2
+ZSBzdGF0ZSwgc28gdGhpcyBjb21taXQgYWRkcyBzbGF2ZQ0KPj4+Pj4gaW5hY3RpdmUgdGltZW91
+dCBzdXBwb3J0IHRvIHJlY292ZXIgdGhlIGJ1cyBpbiB0aGUgY2FzZS4NCj4+Pj4+DQo+Pj4+PiBT
+aWduZWQtb2ZmLWJ5OiBKYWUgSHl1biBZb28gPGphZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+
+DQo+Pj4+DQo+Pj4+IEkgaGF2ZSBhIGdlbmVyaWMgcXVlc3Rpb24gb24gdGhlIHBhdGNoOiBpcyBp
+dCBnb29kIGVub3VnaCB0byBqdXN0IGVuYWJsZSBzbGF2ZV9pbmFjdGl2ZV90aW1lb3V0IGFuZCBh
+Y2tub3dsZWRnZSB0aGUgaW50ZXJydXB0IHdoZW4gaXQgaGFwcGVucz8gT3IgZG8gd2UgbmVlZCB0
+byByZXNldCB0aGUgaTJjIGNvbnRyb2xsZXIgdG8gYnJpbmcgaXQgb3V0IG9mIHNsYXZlIHN0YXRl
+Pw0KPj4+Pg0KPj4+PiBJJ20gYXNraW5nIHRoaXMgYmVjYXVzZSBJIGhpdCBhbiBpc3N1ZSBvbiBt
+eSBNaW5pcGFjayBCTUMgd2hlcmUgdGhlIHNsYXZlX2luYWN0aXZlX3RpbWVvdXQgaW50ZXJydXB0
+IHdhcyBnZW5lcmF0ZWQgb25jZSBldmVyeSB+MC4xIHNlY29uZHMgKEkgc2V0IGFzcGVlZCxody10
+aW1lb3V0LW1zIHRvIDEwMDApLCBhbmQgYSBmZXcgc2Vjb25kcyBsYXRlciBteSBCTUMgd2FzIHJl
+Ym9vdGVkIChJIGd1ZXNzIHdhdGNoZG9nIHRpbWVkIG91dCkuIEdpdmVuIHRoZSBpc3N1ZSBoYXBw
+ZW5lZCBvbmx5IG9uY2UsIEkgZG9uJ3QgaGF2ZSBjaGFuY2UgdG8gY29sbGVjdCBtb3JlIGluZm9y
+bWF0aW9uIChzdWNoIGFzIHdoeSB0aGUgcmVwZXRpdGl2ZSBpbnRlcnJ1cHQgd2FzIGdlbmVyYXRl
+ZCwgd2h5IEJNQyByZWJvb3RlZCwgYW5kIGV0Yy4pLiBXaWxsIHNoYXJlIG1vcmUgaWYgSSBtZXQg
+dGhlIHByb2JsZW0gYWdhaW4uDQo+Pj4NCj4+PiBCYXNpYyBjb25jZXB0IG9mIHRoaXMgaW1wbGVt
+ZW50YXRpb24gaXMgc2V0dGluZyB0aGUgc2xhdmUgc3RhdGUgb2YNCj4+PiBkcml2ZXIgdG8gQVNQ
+RUVEX0kyQ19TTEFWRV9JTkFDVElWRSB0byBhdm9pZCBjYWxsaW5nIG9mDQo+Pj4gYXNwZWVkX2ky
+Y19yZXNldCgpIGRpcmVjdGx5IGZyb20gaW50ZXJydXB0IGNvbnRleHQuIEluc3RlYWQsIHdoZW4g
+YQ0KPj4+IG1hc3RlciB4ZmVyIGhhcHBlbnMgYWZ0ZXIgdGhhdCwgaXQgd2lsbCB0cnkgYnVzIHJl
+Y292ZXJ5DQo+Pj4gdGhyb3VnaCBhc3BlZWRfaTJjX3JlY292ZXJfYnVzKCkgYW5kIGl0IHdpbGwg
+Y2FsbCBhc3BlZWRfaTJjX3Jlc2V0KCkNCj4+PiBpZiBuZWVkZWQuDQo+Pj4NCj4+PiBJZiB0aGlz
+IHBhdGNoIGRvZXNuJ3Qgd29yayBpbiB5b3VyIGNhc2UsIHRlc3QgaXQgYWdhaW4gYWZ0ZXIgYWRk
+aW5nDQo+Pj4gb25lIGxpbmUgY29kZSBpbnRvIHRoaXMgZHJpdmVyLiBTZWUgYmVsb3cuDQo+Pg0K
+Pj4gSWYgYnVzX3Jlc2V0IGlzIHJlYWxseSBuZWVkZWQgaW4gdGhpcyBjYXNlLCB0aGVuIEknZCBw
+cmVmZXIgdG8gZG8gaXQgaW1tZWRpYXRlbHkgb3IgaW4gYSB0aHJlYWRlZF9pcnFfaGFuZGxlciBp
+ZiBpdCdzIGJhZCBpZGVhIHRvIGNhbGwgYXNwZWVkX2kyY19yZXNldCgpIGluIGhhcmR3YXJlIGlu
+dGVycnVwdCBjb250ZXh0LiBUaGUgcmVhc29ucyBiZWluZzoNCj4+DQo+PiAxKSB3ZSBkb24ndCBr
+bm93IHdoZW4gdXNlcnNwYWNlIHN0YXJ0cyBuZXh0IG1hc3RlciB0cmFuc2Zlci4NCj4+IDIpIGFz
+cGVlZF9pMmNfcmVjb3Zlcl9idXMoKSBpcyBub3QgdHJpZ2dlcmVkIGluIGFzcGVlZF9pMmNfbWFz
+dGVyX3hmZXIoKSBpbiBteSBlbnZpcm9ubWVudCBiZWNhdXNlIGJ1cyBpcyAiaWRsZSIgKEkyQ0Qx
+NFsxNl0gPT0gMCkuDQo+Pg0KPiANCj4gT2gsIHNvIHRvIHN1cHBvcnQgdGhlIGNhc2UgYXMgd2Vs
+bCwgcHJvYmFibHkgd2UgbmVlZCB0byBhZGQgYSBmbGFnIGZvcg0KPiBpbmRpY2F0aW5nIHJlY292
+ZXJ5IG5lZWRzIHdoZW4gYSBtYXN0ZXIgeGZlciBjb21lcyB0aGVuIGl0IGNvdWxkDQo+IGZvcmNp
+Ymx5IHJlY292ZXIgYW5kIHJlc2V0IHRoZSBidXMgZXZlbiBpZiB0aGUgYnVzIGlzIGlkbGUuIENh
+biB5b3UNCj4gcGxlYXNlIHRlc3QgdGhhdCB3aXRoIG1ha2luZyBjb2RlIGNoYW5nZXM/IFVuZm9y
+dHVuYXRlbHksIEkgY2FuJ3QNCj4gcmVwcm9kdWNlIHRoZSBjYXNlIGluIG15IHN5c3RlbS4NCg0K
+Tm90IHN1cmUgaWYgSSB1bmRlcnN0YW5kIGl0IGNvcnJlY3RseSwgYnV0IGdpdmVuIHdlIGFscmVh
+ZHkgcmVzZXQgdGhlIGJ1cyBpbiBpbnRlcnJ1cHQgaGFuZGxlciwgdGhlIGV4dHJhIGZsYWcgc2hv
+dWxkIG5vdCBiZSBuZWVkZWQ/DQoNCj4+Pg0KPj4+Pg0KPj4+Pj4gLS0tDQo+Pj4+PiDCoMKgIGRy
+aXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXNwZWVkLmMgfCA3OSArKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKystLS0NCj4+Pj4+IMKgwqAgMSBmaWxlIGNoYW5nZWQsIDczIGluc2VydGlvbnMoKyks
+IDYgZGVsZXRpb25zKC0pDQo+Pj4+Pg0KPj4+Pj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaTJjL2J1
+c3Nlcy9pMmMtYXNwZWVkLmMgYi9kcml2ZXJzL2kyYy9idXNzZXMvaTJjLWFzcGVlZC5jDQo+Pj4+
+PiBpbmRleCA4OTMxNzkyOWJlZTQuLjkyZTFhMjQ5YjM5MyAxMDA2NDQNCj4+Pj4+IC0tLSBhL2Ry
+aXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXNwZWVkLmMNCj4+Pj4+ICsrKyBiL2RyaXZlcnMvaTJjL2J1
+c3Nlcy9pMmMtYXNwZWVkLmMNCj4+Pj4+IEBAIC03MCwxMCArNzAsMTQgQEANCj4+Pj4+IMKgwqAg
+I2RlZmluZSBBU1BFRURfSTJDRF9USU1FX1NDTF9ISUdIX01BU0vCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIEdFTk1BU0soMTksIDE2KQ0KPj4+Pj4gwqDCoCAjZGVmaW5lIEFTUEVFRF9JMkNEX1RJTUVf
+U0NMX0xPV19TSElGVMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgMTINCj4+Pj4+IMKgwqAgI2RlZmlu
+ZSBBU1BFRURfSTJDRF9USU1FX1NDTF9MT1dfTUFTS8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgR0VO
+TUFTSygxNSwgMTIpDQo+Pj4+PiArI2RlZmluZSBBU1BFRURfSTJDRF9USU1FX1RJTUVPVVRfQkFT
+RV9ESVZJU09SX1NISUZUwqDCoMKgIDgNCj4+Pj4+ICsjZGVmaW5lIEFTUEVFRF9JMkNEX1RJTUVf
+VElNRU9VVF9CQVNFX0RJVklTT1JfTUFTS8KgwqDCoCBHRU5NQVNLKDksIDgpDQo+Pj4+PiDCoMKg
+ICNkZWZpbmUgQVNQRUVEX0kyQ0RfVElNRV9CQVNFX0RJVklTT1JfTUFTS8KgwqDCoMKgwqDCoMKg
+IEdFTk1BU0soMywgMCkNCj4+Pj4+IMKgwqAgI2RlZmluZSBBU1BFRURfSTJDRF9USU1FX1NDTF9S
+RUdfTUFYwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBHRU5NQVNLKDMsIDApDQo+Pj4+PiArDQo+Pj4+
+PiDCoMKgIC8qIDB4MDggOiBJMkNEIENsb2NrIGFuZCBBQyBUaW1pbmcgQ29udHJvbCBSZWdpc3Rl
+ciAjMiAqLw0KPj4+Pj4gLSNkZWZpbmUgQVNQRUVEX05PX1RJTUVPVVRfQ1RSTMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCAwDQo+Pj4+PiArI2RlZmluZSBBU1BFRURfSTJDRF9USU1FT1VU
+X0NZQ0xFU19TSElGVMKgwqDCoMKgwqDCoMKgIDANCj4+Pj4+ICsjZGVmaW5lIEFTUEVFRF9JMkNE
+X1RJTUVPVVRfQ1lDTEVTX01BU0vCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEdFTk1BU0soNCwgMCkN
+Cj4+Pj4+IMKgwqAgwqAgLyogMHgwYyA6IEkyQ0QgSW50ZXJydXB0IENvbnRyb2wgUmVnaXN0ZXIg
+Jg0KPj4+Pj4gwqDCoMKgICogMHgxMCA6IEkyQ0QgSW50ZXJydXB0IFN0YXR1cyBSZWdpc3Rlcg0K
+Pj4+Pj4gQEAgLTgxLDYgKzg1LDcgQEANCj4+Pj4+IMKgwqDCoCAqIFRoZXNlIHNoYXJlIGJpdCBk
+ZWZpbml0aW9ucywgc28gdXNlIHRoZSBzYW1lIHZhbHVlcyBmb3IgdGhlIGVuYWJsZSAmDQo+Pj4+
+PiDCoMKgwqAgKiBzdGF0dXMgYml0cy4NCj4+Pj4+IMKgwqDCoCAqLw0KPj4+Pj4gKyNkZWZpbmUg
+QVNQRUVEX0kyQ0RfSU5UUl9TTEFWRV9JTkFDVElWRV9USU1FT1VUwqDCoMKgwqDCoMKgwqAgQklU
+KDE1KQ0KPj4+Pj4gwqDCoCAjZGVmaW5lIEFTUEVFRF9JMkNEX0lOVFJfU0RBX0RMX1RJTUVPVVTC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIEJJVCgxNCkNCj4+Pj4+IMKgwqAgI2RlZmluZSBBU1BFRURf
+STJDRF9JTlRSX0JVU19SRUNPVkVSX0RPTkXCoMKgwqDCoMKgwqDCoCBCSVQoMTMpDQo+Pj4+PiDC
+oMKgICNkZWZpbmUgQVNQRUVEX0kyQ0RfSU5UUl9TTEFWRV9NQVRDSMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgQklUKDcpDQo+Pj4+PiBAQCAtOTYsOCArMTAxLDExIEBADQo+Pj4+PiDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIEFTUEVFRF9JMkNEX0lOVFJfU0NMX1RJTUVPVVQgfMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFwNCj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgQVNQRUVEX0kyQ0RfSU5UUl9BQk5PUk1BTCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgXA0KPj4+Pj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBBU1BF
+RURfSTJDRF9JTlRSX0FSQklUX0xPU1MpDQo+Pj4+PiArI2RlZmluZSBBU1BFRURfSTJDRF9JTlRS
+X1NMQVZFX0VSUk9SU8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgXA0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgIEFTUEVFRF9JMkNEX0lOVFJfU0xBVkVf
+SU5BQ1RJVkVfVElNRU9VVA0KPj4+Pj4gwqDCoCAjZGVmaW5lIEFTUEVFRF9JMkNEX0lOVFJfQUxM
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgIFwNCj4+Pj4+IC3CoMKgwqDCoMKgwqDCoCAoQVNQRUVEX0kyQ0RfSU5UUl9TREFfRExfVElN
+RU9VVCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFwNCj4+Pj4+ICvCoMKg
+wqDCoMKgwqDCoCAoQVNQRUVEX0kyQ0RfSU5UUl9TTEFWRV9JTkFDVElWRV9USU1FT1VUIHzCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFwNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgIEFTUEVF
+RF9JMkNEX0lOVFJfU0RBX0RMX1RJTUVPVVQgfMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCBcDQo+Pj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEFTUEVFRF9JMkNEX0lOVFJf
+QlVTX1JFQ09WRVJfRE9ORSB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFwN
+Cj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgQVNQRUVEX0kyQ0RfSU5UUl9TQ0xfVElNRU9V
+VCB8wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgXA0KPj4+Pj4g
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBBU1BFRURfSTJDRF9JTlRSX0FCTk9STUFMIHzCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBcDQo+Pj4+PiBAQCAtMTc2LDYg
+KzE4NCw3IEBAIHN0cnVjdCBhc3BlZWRfaTJjX2J1cyB7DQo+Pj4+PiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdTMyIGRp
+dmlzb3IpOw0KPj4+Pj4gwqDCoMKgwqDCoMKgIHVuc2lnbmVkIGxvbmfCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIHBhcmVudF9jbGtfZnJlcXVlbmN5Ow0KPj4+Pj4gwqDCoMKgwqDCoMKgIHUzMsKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBidXNfZnJlcXVlbmN5Ow0KPj4+Pj4gK8KgwqDCoCB1
+MzLCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaHdfdGltZW91dF9tczsNCj4+Pj4+IMKg
+wqDCoMKgwqDCoCAvKiBUcmFuc2FjdGlvbiBzdGF0ZS4gKi8NCj4+Pj4+IMKgwqDCoMKgwqDCoCBl
+bnVtIGFzcGVlZF9pMmNfbWFzdGVyX3N0YXRlwqDCoMKgIG1hc3Rlcl9zdGF0ZTsNCj4+Pj4+IMKg
+wqDCoMKgwqDCoCBzdHJ1Y3QgaTJjX21zZ8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKm1zZ3M7DQo+
+Pj4+PiBAQCAtMjc2LDYgKzI4NSwxNCBAQCBzdGF0aWMgaW50IGFzcGVlZF9pMmNfcmVjb3Zlcl9i
+dXMoc3RydWN0IGFzcGVlZF9pMmNfYnVzICpidXMpDQo+Pj4+PiDCoMKgIH0NCj4+Pj4+IMKgwqAg
+wqAgI2lmIElTX0VOQUJMRUQoQ09ORklHX0kyQ19TTEFWRSkNCj4+Pj4+ICtzdGF0aWMgaW50IGFz
+cGVlZF9pMmNfY2hlY2tfc2xhdmVfZXJyb3IodTMyIGlycV9zdGF0dXMpDQo+Pj4+PiArew0KPj4+
+Pj4gK8KgwqDCoCBpZiAoaXJxX3N0YXR1cyAmIEFTUEVFRF9JMkNEX0lOVFJfU0xBVkVfSU5BQ1RJ
+VkVfVElNRU9VVCkNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm4gLUVJTzsNCj4+Pj4+ICsN
+Cj4+Pj4+ICvCoMKgwqAgcmV0dXJuIDA7DQo+Pj4+PiArfQ0KPj4+Pj4gKw0KPj4+Pj4gwqDCoCBz
+dGF0aWMgdTMyIGFzcGVlZF9pMmNfc2xhdmVfaXJxKHN0cnVjdCBhc3BlZWRfaTJjX2J1cyAqYnVz
+LCB1MzIgaXJxX3N0YXR1cykNCj4+Pj4+IMKgwqAgew0KPj4+Pj4gwqDCoMKgwqDCoMKgIHUzMiBj
+b21tYW5kLCBpcnFfaGFuZGxlZCA9IDA7DQo+Pj4+PiBAQCAtMjg2LDYgKzMwMywxNCBAQCBzdGF0
+aWMgdTMyIGFzcGVlZF9pMmNfc2xhdmVfaXJxKHN0cnVjdCBhc3BlZWRfaTJjX2J1cyAqYnVzLCB1
+MzIgaXJxX3N0YXR1cykNCj4+Pj4+IMKgwqDCoMKgwqDCoCBpZiAoIXNsYXZlKQ0KPj4+Pj4gwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIDA7DQo+Pj4+PiDCoMKgICvCoMKgwqAgaWYgKGFzcGVl
+ZF9pMmNfY2hlY2tfc2xhdmVfZXJyb3IoaXJxX3N0YXR1cykpIHsNCj4+Pj4+ICvCoMKgwqDCoMKg
+wqDCoCBkZXZfZGJnKGJ1cy0+ZGV2LCAicmVjZWl2ZWQgc2xhdmUgZXJyb3IgaW50ZXJydXB0OiAw
+eCUwOHhcbiIsDQo+Pj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpcnFfc3RhdHVzKTsNCj4+
+Pj4+ICvCoMKgwqDCoMKgwqDCoCBpcnFfaGFuZGxlZCB8PSAoaXJxX3N0YXR1cyAmIEFTUEVFRF9J
+MkNEX0lOVFJfU0xBVkVfRVJST1JTKTsNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoCBidXMtPnNsYXZl
+X3N0YXRlID0gQVNQRUVEX0kyQ19TTEFWRV9JTkFDVElWRTsNCj4+Pg0KPj4+IMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFzcGVlZF9pMmNfcmVzZXQoYnVzKTsNCj4+Pg0KPj4+IEkg
+ZGlkbid0IGFkZCBpdCBpbiB0aGlzIHBhdGNoIGJlY2F1c2UgSSB3YW50ZWQgdG8gYXZvaWQgY2Fs
+bGluZyBvZiB0aGlzDQo+Pj4gcmVzZXQgZnVuY3Rpb24gZnJvbSBpbnRlcnJ1cHQgY29udGV4dCBi
+dXQgZ2l2ZSBpdCBhIHRyeS4NCj4+Pg0KPj4+IFRoYW5rcywNCj4+PiBKYWUNCj4+DQo+PiBJIGJl
+bGlldmUgdGhpcyB3aWxsIHNvbHZlIG15IHByb2JsZW0sIGJ1dCBsZXQgbWUgdGVzdCBpdCBhbmQg
+d2lsbCBzaGFyZSB5b3UgcmVzdWx0cyBsYXRlci4NCj4gDQo+IFBsZWFzZSBzaGFyZSB0aGlzIHJl
+c3VsdCB0b28uIEl0IHdvdWxkIGJlIHVzZWZ1bCB0byBjb21wbGV0ZSBtYWtpbmcgdGhpcw0KPiBw
+YXRjaC4NCj4gDQo+IFRoYW5rcywNCj4gSmFlDQoNCkFkZGluZyBhc3BlZWRfaTJjX3Jlc2V0KGJ1
+cykgZG9lcyBmaXggbXkgcHJvYmxlbS4gVGhhbmsgeW91IEphZS4NCg0KDQpDaGVlcnMsDQoNClRh
+bw0KDQo+Pj4+PiArwqDCoMKgwqDCoMKgwqAgcmV0dXJuIGlycV9oYW5kbGVkOw0KPj4+Pj4gK8Kg
+wqDCoCB9DQo+Pj4+PiArDQo+Pj4+PiDCoMKgwqDCoMKgwqAgY29tbWFuZCA9IHJlYWRsKGJ1cy0+
+YmFzZSArIEFTUEVFRF9JMkNfQ01EX1JFRyk7DQo+Pj4+PiDCoMKgIMKgwqDCoMKgwqAgLyogU2xh
+dmUgd2FzIHJlcXVlc3RlZCwgcmVzdGFydCBzdGF0ZSBtYWNoaW5lLiAqLw0KPj4+Pj4gQEAgLTYw
+Miw3ICs2MjcsNyBAQCBzdGF0aWMgdm9pZCBhc3BlZWRfaTJjX25leHRfbXNnX29yX3N0b3Aoc3Ry
+dWN0IGFzcGVlZF9pMmNfYnVzICpidXMpDQo+Pj4+PiDCoMKgwqDCoMKgwqAgfQ0KPj4+Pj4gwqDC
+oCB9DQo+Pj4+PiDCoMKgIC1zdGF0aWMgaW50IGFzcGVlZF9pMmNfaXNfaXJxX2Vycm9yKHUzMiBp
+cnFfc3RhdHVzKQ0KPj4+Pj4gK3N0YXRpYyBpbnQgYXNwZWVkX2kyY19jaGVja19tYXN0ZXJfZXJy
+b3IodTMyIGlycV9zdGF0dXMpDQo+Pj4+PiDCoMKgIHsNCj4+Pj4+IMKgwqDCoMKgwqDCoCBpZiAo
+aXJxX3N0YXR1cyAmIEFTUEVFRF9JMkNEX0lOVFJfQVJCSVRfTE9TUykNCj4+Pj4+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHJldHVybiAtRUFHQUlOOw0KPj4+Pj4gQEAgLTYzMyw5ICs2NTgsOSBAQCBz
+dGF0aWMgdTMyIGFzcGVlZF9pMmNfbWFzdGVyX2lycShzdHJ1Y3QgYXNwZWVkX2kyY19idXMgKmJ1
+cywgdTMyIGlycV9zdGF0dXMpDQo+Pj4+PiDCoMKgwqDCoMKgwqDCoCAqIHNob3VsZCBjbGVhciB0
+aGUgY29tbWFuZCBxdWV1ZSBlZmZlY3RpdmVseSB0YWtpbmcgdXMgYmFjayB0byB0aGUNCj4+Pj4+
+IMKgwqDCoMKgwqDCoMKgICogSU5BQ1RJVkUgc3RhdGUuDQo+Pj4+PiDCoMKgwqDCoMKgwqDCoCAq
+Lw0KPj4+Pj4gLcKgwqDCoCByZXQgPSBhc3BlZWRfaTJjX2lzX2lycV9lcnJvcihpcnFfc3RhdHVz
+KTsNCj4+Pj4+ICvCoMKgwqAgcmV0ID0gYXNwZWVkX2kyY19jaGVja19tYXN0ZXJfZXJyb3IoaXJx
+X3N0YXR1cyk7DQo+Pj4+PiDCoMKgwqDCoMKgwqAgaWYgKHJldCkgew0KPj4+Pj4gLcKgwqDCoMKg
+wqDCoMKgIGRldl9kYmcoYnVzLT5kZXYsICJyZWNlaXZlZCBlcnJvciBpbnRlcnJ1cHQ6IDB4JTA4
+eFxuIiwNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoCBkZXZfZGJnKGJ1cy0+ZGV2LCAicmVjZWl2ZWQg
+bWFzdGVyIGVycm9yIGludGVycnVwdDogMHglMDh4XG4iLA0KPj4+Pj4gwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBpcnFfc3RhdHVzKTsNCj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgIGly
+cV9oYW5kbGVkIHw9IChpcnFfc3RhdHVzICYgQVNQRUVEX0kyQ0RfSU5UUl9NQVNURVJfRVJST1JT
+KTsNCj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChidXMtPm1hc3Rlcl9zdGF0ZSAhPSBB
+U1BFRURfSTJDX01BU1RFUl9JTkFDVElWRSkgew0KPj4+Pj4gQEAgLTExOTQsNiArMTIxOSw3IEBA
+IHN0YXRpYyB1MzIgYXNwZWVkX2kyY18yNXh4X2dldF9jbGtfcmVnX3ZhbChzdHJ1Y3QgZGV2aWNl
+ICpkZXYsIHUzMiBkaXZpc29yKQ0KPj4+Pj4gwqDCoCAvKiBwcmVjb25kaXRpb246IGJ1cy5sb2Nr
+IGhhcyBiZWVuIGFjcXVpcmVkLiAqLw0KPj4+Pj4gwqDCoCBzdGF0aWMgaW50IGFzcGVlZF9pMmNf
+aW5pdF9jbGsoc3RydWN0IGFzcGVlZF9pMmNfYnVzICpidXMpDQo+Pj4+PiDCoMKgIHsNCj4+Pj4+
+ICvCoMKgwqAgdTMyIHRpbWVvdXRfYmFzZV9kaXZpc29yLCB0aW1lb3V0X3RpY2tfdXMsIHRpbWVv
+dXRfY3ljbGVzOw0KPj4+Pj4gwqDCoMKgwqDCoMKgIHUzMiBkaXZpc29yLCBjbGtfcmVnX3ZhbDsN
+Cj4+Pj4+IMKgwqAgwqDCoMKgwqDCoCBkaXZpc29yID0gRElWX1JPVU5EX1VQKGJ1cy0+cGFyZW50
+X2Nsa19mcmVxdWVuY3ksIGJ1cy0+YnVzX2ZyZXF1ZW5jeSk7DQo+Pj4+PiBAQCAtMTIwMiw4ICsx
+MjI4LDQ2IEBAIHN0YXRpYyBpbnQgYXNwZWVkX2kyY19pbml0X2NsayhzdHJ1Y3QgYXNwZWVkX2ky
+Y19idXMgKmJ1cykNCj4+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgQVNQRUVEX0ky
+Q0RfVElNRV9USERTVEFfTUFTSyB8DQo+Pj4+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IEFTUEVFRF9JMkNEX1RJTUVfVEFDU1RfTUFTSyk7DQo+Pj4+PiDCoMKgwqDCoMKgwqAgY2xrX3Jl
+Z192YWwgfD0gYnVzLT5nZXRfY2xrX3JlZ192YWwoYnVzLT5kZXYsIGRpdmlzb3IpOw0KPj4+Pj4g
+Kw0KPj4+Pj4gK8KgwqDCoCBpZiAoYnVzLT5od190aW1lb3V0X21zKSB7DQo+Pj4+PiArwqDCoMKg
+wqDCoMKgwqAgdTggZGl2X21heCA9IEFTUEVFRF9JMkNEX1RJTUVfVElNRU9VVF9CQVNFX0RJVklT
+T1JfTUFTSyA+Pg0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEFTUEVF
+RF9JMkNEX1RJTUVfVElNRU9VVF9CQVNFX0RJVklTT1JfU0hJRlQ7DQo+Pj4+PiArwqDCoMKgwqDC
+oMKgwqAgdTggY3ljbGVzX21heCA9IEFTUEVFRF9JMkNEX1RJTUVPVVRfQ1lDTEVTX01BU0sgPj4N
+Cj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgQVNQRUVEX0kyQ0RfVElNRU9V
+VF9DWUNMRVNfU0hJRlQ7DQo+Pj4+PiArDQo+Pj4+PiArwqDCoMKgwqDCoMKgwqAgdGltZW91dF9i
+YXNlX2Rpdmlzb3IgPSAwOw0KPj4+Pj4gKw0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgIGRvIHsNCj4+
+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRpbWVvdXRfdGlja191cyA9IDEwMDAgKiAoMTYz
+ODQgPDwNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCAodGltZW91dF9iYXNlX2Rpdmlzb3IgPDwgMSkpIC8NCj4+Pj4+ICvCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKGJ1cy0+cGFyZW50X2Nsa19mcmVxdWVu
+Y3kgLyAxMDAwKTsNCj4+Pj4+ICsNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmICh0
+aW1lb3V0X2Jhc2VfZGl2aXNvciA9PSBkaXZfbWF4IHx8DQo+Pj4+PiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIHRpbWVvdXRfdGlja191cyAqIEFTUEVFRF9JMkNEX1RJTUVPVVRfQ1lD
+TEVTX01BU0sgPj0NCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnVzLT5o
+d190aW1lb3V0X21zICogMTAwMCkNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgYnJlYWs7DQo+Pj4+PiArwqDCoMKgwqDCoMKgwqAgfSB3aGlsZSAodGltZW91dF9iYXNlX2Rp
+dmlzb3IrKyA8IGRpdl9tYXgpOw0KPj4+Pj4gKw0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgIGlmICh0
+aW1lb3V0X3RpY2tfdXMpIHsNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHRpbWVvdXRf
+Y3ljbGVzID0gRElWX1JPVU5EX1VQKGJ1cy0+aHdfdGltZW91dF9tcyAqIDEwMDAsDQo+Pj4+PiAr
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB0aW1lb3V0X3RpY2tfdXMpOw0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHRp
+bWVvdXRfY3ljbGVzID09IDApDQo+Pj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IHRpbWVvdXRfY3ljbGVzID0gMTsNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGVsc2Ug
+aWYgKHRpbWVvdXRfY3ljbGVzID4gY3ljbGVzX21heCkNCj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqAgdGltZW91dF9jeWNsZXMgPSBjeWNsZXNfbWF4Ow0KPj4+Pj4gK8KgwqDC
+oMKgwqDCoMKgIH0gZWxzZSB7DQo+Pj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0aW1lb3V0
+X2N5Y2xlcyA9IDA7DQo+Pj4+PiArwqDCoMKgwqDCoMKgwqAgfQ0KPj4+Pj4gK8KgwqDCoCB9IGVs
+c2Ugew0KPj4+Pj4gK8KgwqDCoMKgwqDCoMKgIHRpbWVvdXRfYmFzZV9kaXZpc29yID0gMDsNCj4+
+Pj4+ICvCoMKgwqDCoMKgwqDCoCB0aW1lb3V0X2N5Y2xlcyA9IDA7DQo+Pj4+PiArwqDCoMKgIH0N
+Cj4+Pj4+ICsNCj4+Pj4+ICvCoMKgwqAgY2xrX3JlZ192YWwgfD0gRklFTERfUFJFUChBU1BFRURf
+STJDRF9USU1FX1RJTUVPVVRfQkFTRV9ESVZJU09SX01BU0ssDQo+Pj4+PiArwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB0aW1lb3V0X2Jhc2VfZGl2aXNvcik7DQo+Pj4+PiArDQo+
+Pj4+PiDCoMKgwqDCoMKgwqAgd3JpdGVsKGNsa19yZWdfdmFsLCBidXMtPmJhc2UgKyBBU1BFRURf
+STJDX0FDX1RJTUlOR19SRUcxKTsNCj4+Pj4+IC3CoMKgwqAgd3JpdGVsKEFTUEVFRF9OT19USU1F
+T1VUX0NUUkwsIGJ1cy0+YmFzZSArIEFTUEVFRF9JMkNfQUNfVElNSU5HX1JFRzIpOw0KPj4+Pj4g
+K8KgwqDCoCB3cml0ZWwodGltZW91dF9jeWNsZXMsIGJ1cy0+YmFzZSArIEFTUEVFRF9JMkNfQUNf
+VElNSU5HX1JFRzIpOw0KPj4+Pj4gwqDCoCDCoMKgwqDCoMKgIHJldHVybiAwOw0KPj4+Pj4gwqDC
+oCB9DQo+Pj4+PiBAQCAtMTQwNCw2ICsxNDY4LDkgQEAgc3RhdGljIGludCBhc3BlZWRfaTJjX3By
+b2JlX2J1cyhzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KQ0KPj4+Pj4gwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgfQ0KPj4+Pj4gwqDCoMKgwqDCoMKgIH0NCj4+Pj4+IMKgwqAgK8KgwqDCoCBkZXZp
+Y2VfcHJvcGVydHlfcmVhZF91MzIoJnBkZXYtPmRldiwgImFzcGVlZCxody10aW1lb3V0LW1zIiwN
+Cj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmYnVzLT5od190aW1lb3V0
+X21zKTsNCj4+Pj4+ICsNCj4+Pj4+IMKgwqDCoMKgwqDCoCAvKiBJbml0aWFsaXplIHRoZSBJMkMg
+YWRhcHRlciAqLw0KPj4+Pj4gwqDCoMKgwqDCoMKgIHNwaW5fbG9ja19pbml0KCZidXMtPmxvY2sp
+Ow0KPj4+Pj4gwqDCoMKgwqDCoMKgIGluaXRfY29tcGxldGlvbigmYnVzLT5jbWRfY29tcGxldGUp
+Ow0KPj4+Pj4NCg==
