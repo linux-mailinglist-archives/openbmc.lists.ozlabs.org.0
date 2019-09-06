@@ -2,64 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90558AC0B1
-	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 21:42:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD6AFAC14A
+	for <lists+openbmc@lfdr.de>; Fri,  6 Sep 2019 22:16:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Q7Hh38d9zDrFl
-	for <lists+openbmc@lfdr.de>; Sat,  7 Sep 2019 05:42:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Q83M45RMzDrF5
+	for <lists+openbmc@lfdr.de>; Sat,  7 Sep 2019 06:16:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::733; helo=mail-qk1-x733.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="IU2LJGmL"; 
- dkim-atps=neutral
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com
- [IPv6:2607:f8b0:4864:20::733])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Q7H91cZPzDr6Z
- for <openbmc@lists.ozlabs.org>; Sat,  7 Sep 2019 05:41:55 +1000 (AEST)
-Received: by mail-qk1-x733.google.com with SMTP id d26so6882609qkk.2
- for <openbmc@lists.ozlabs.org>; Fri, 06 Sep 2019 12:41:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=pXcj/FKKYni9KhSFduTA3x48XXXp+cd3zSgbiVhJtOs=;
- b=IU2LJGmLcmlHiZpTCxCry4aS0x4CQmNQSllGUmDnJCja3B8Pr66cula3qG4eieZFmc
- 1MNjtA0cVQcyNcoYLIIBwiSrEfoCT8CgduT+Ft3I9RxzpsefQosTB7s8O2+HXWeMvmIx
- IIHIfUcHlVvnE7s6ytTNmZPKlX3cMCe+HrrlA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=pXcj/FKKYni9KhSFduTA3x48XXXp+cd3zSgbiVhJtOs=;
- b=it7M2oqggSszyJUlz3IjIjjdh2jKHHAs6P1/Ll5h6uSBLua0r+qMOSSnnHyB0Hq2e8
- YoFYS3qf/DhEyZaRl3L5GW9PejrGPnd9Ssfy1KGntNjbwm480VxEEcKsg13F8/P6Nw8e
- Do0JozpDJ8zCBvWkGCR1qO3OX9zy4Kc0qjfD9xaxOqen+9O9enEgqgQHVw6zUVmInGym
- HiCeQh1C1nULZTEX1e2hCsve29W4ahWyYiy/uXLPWgMWty9gSiC4QJEmHWuIQeVnmdxF
- 2ssKXvkxYmtCVdJ+z149K8+ErMdCuPB6CvMAAz/pg3w5lou/DbMA5T+ECR9PnQYxe/He
- FAkw==
-X-Gm-Message-State: APjAAAWo9vyIQxQCCX4KVWW+2nWyJYs/eC722UErfIZWVYOr2vTJRpRR
- twcEzo+/mJfXrQBLREtCLJu1rD1TYxwh1Z9ICFw=
-X-Google-Smtp-Source: APXvYqwXSDFR/JA2JFrZst2Sd9oxdI921O1v//xuQto9Omqfl92j2ApHde2cRt9LPxsI8bklX1NULA+E9PRHT8o2exY=
-X-Received: by 2002:a37:a44f:: with SMTP id n76mr10890737qke.414.1567798911703; 
- Fri, 06 Sep 2019 12:41:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Q82g5jg1zDrDT
+ for <openbmc@lists.ozlabs.org>; Sat,  7 Sep 2019 06:16:09 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 Sep 2019 13:16:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,474,1559545200"; d="scan'208";a="334989172"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga004.jf.intel.com with ESMTP; 06 Sep 2019 13:16:07 -0700
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, Tao Ren <taoren@fb.com>
+Subject: [PATCH v2 dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
+Date: Fri,  6 Sep 2019 13:16:03 -0700
+Message-Id: <20190906201605.14540-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-References: <18e1fb68-1607-0e01-5b21-171a83f94bd9@fb.com>
-In-Reply-To: <18e1fb68-1607-0e01-5b21-171a83f94bd9@fb.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 6 Sep 2019 19:41:39 +0000
-Message-ID: <CACPK8XcE+JMHCD_7TuH2EpWOyX14qGA6UGkGNFEsg3apA=sVpg@mail.gmail.com>
-Subject: Re: net/ncsi: BMC gets incorrect ipv6 link-local address
-To: Tao Ren <taoren@fb.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,29 +51,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Samuel Mendoza-Jonas <sam@mendozajonas.com>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 4 Sep 2019 at 21:34, Tao Ren <taoren@fb.com> wrote:
+In case of multi-master environment, if a peer master incorrectly handles
+a bus in the middle of a transaction, I2C hardware hangs in slave state
+and it can't escape from the slave state, so this commit adds slave
+inactive timeout support to recover the bus in the case.
 
-> I enabled NCSI_OEM_CMD_GET_MAC on my Yamp BMC to update BMC's MAC address=
- while bringing up eth0, but I notice BMC's ipv6-link-local address may be =
-derived from the old MAC address, which leads to DHCP failure when DHCPv6 s=
-erver assigns IP based on ipv6 link local address.
->
-> Currently I workaround the issue by restarting BMC's eth0 interface (whic=
-h refreshes ipv6 link local address based on the new MAC), but I'm looking =
-for an "official" fix. For example, shall we notify network layer when BMC =
-MAC address is updated?
+By applying this change, SDA data-low and SCL clock-low timeout feature
+also could be enabled which was disabled previously.
 
-Tao and I had a look through the code and couldn't find an obvious
-call that we should change. The NCSI layer appears to be doing the
-correct thing.
+Changes since v1:
+ - Made it use bus auto recovery feature so that bus can recover itself
+   automatically.
 
-I think the next step is to bring this up on the netdev mailing list.
+Jae Hyun Yoo (2):
+  dt-bindings: i2c: aspeed: add hardware timeout support
+  i2c: aspeed: add slave inactive timeout support
 
-Cheers,
+ .../devicetree/bindings/i2c/i2c-aspeed.txt    |  2 +
+ drivers/i2c/busses/i2c-aspeed.c               | 82 +++++++++++++++++--
+ 2 files changed, 78 insertions(+), 6 deletions(-)
 
-Joel
+-- 
+2.23.0
+
