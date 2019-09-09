@@ -2,79 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55A0DAC9AF
-	for <lists+openbmc@lfdr.de>; Sun,  8 Sep 2019 00:17:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00B1AAD1B0
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 03:54:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46QpgT0lWTzDqdb
-	for <lists+openbmc@lfdr.de>; Sun,  8 Sep 2019 08:16:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46RWRp3ms2zDqHZ
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 11:54:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="YmI8WuX1"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="gSGn1BhJ"; dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Qpfr3TrGzDqbm
- for <openbmc@lists.ozlabs.org>; Sun,  8 Sep 2019 08:16:19 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x87MCDpB115484; Sat, 7 Sep 2019 18:16:14 -0400
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2uv8mpgyr9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 07 Sep 2019 18:16:14 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x87MF4VS022608;
- Sat, 7 Sep 2019 22:16:13 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma01wdc.us.ibm.com with ESMTP id 2uv466e24c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 07 Sep 2019 22:16:13 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x87MGCm458655156
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 7 Sep 2019 22:16:12 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC489C6074;
- Sat,  7 Sep 2019 22:16:12 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 229C4C6072;
- Sat,  7 Sep 2019 22:16:12 +0000 (GMT)
-Received: from demeter.local (unknown [9.85.193.165])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Sat,  7 Sep 2019 22:16:11 +0000 (GMT)
-Subject: Re: Expired password + disabled power button design
-To: Ed Tanous <ed.tanous@intel.com>, openbmc@lists.ozlabs.org
-References: <af6cb67f-1d0f-1dcf-8b88-5b7950a5bc1b@linux.ibm.com>
- <008a1d47-3012-2007-af87-05f46392759f@intel.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <fc971dc4-3d19-f23a-15b8-3e1438e30c1d@linux.ibm.com>
-Date: Sat, 7 Sep 2019 17:16:10 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <008a1d47-3012-2007-af87-05f46392759f@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-07_11:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1906280000 definitions=main-1909070242
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46RWR22ZshzDqQ3;
+ Mon,  9 Sep 2019 11:53:33 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 10CBF666;
+ Sun,  8 Sep 2019 21:53:28 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 08 Sep 2019 21:53:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=heMFjdjLm+JvFR3BTNKLlq77Ee6tOAO
+ N0xWmiX14zOI=; b=YmI8WuX1c6avsekUIqvUMCvoL5nWhFoFIH5/qo6lETy4oD6
+ QJpJ+hZaKzUjzYutk7BvrTcJrJAiz93NZJ/fVza9Po0xCYaBw4Zf3GA1dPE2DdH6
+ /gLiU9I8M+/+QUjWk1dRId5eI0qvyTgg528yon0CYwj+/Hxj82NMI6d47KWydh9g
+ GmloJFgP1dXiKXi0MH3N0NUBojzpk+CKg3jUABf7KikhUMIq+RXmqSoWv2uwtW4P
+ xbE+Ho0JMt1gbWthpGd5o0DvOMpqa3pZddM8a05IXvcljURRd3nkbZI68bEENRT/
+ WmUay8+80ZZh5evknhzJV+X027qKRNZ4NM1X93Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=heMFjd
+ jLm+JvFR3BTNKLlq77Ee6tOAON0xWmiX14zOI=; b=gSGn1BhJpBwVTeKbLSPJA1
+ nxu2WvzJEwAB8CyiOc6NZ229kLL8jDpaxwZgQZ1ouxjdS9aho3AONtviggLXosSJ
+ ipunIvNZWwYyQe+Jg37Z9jVK5ct9kT9NhaJnHMm1956cX5w2bjm4PWnd3w1C6eTK
+ TVYGEUxIt2vSSDYAY08xtcJgMZ49qY1GX7ksbvjLRZVHfDHHomrllhDMMPIOqKUi
+ JiVHQU3hKHZV+7s1M/CWmOxw4m3HPzetsIDxgwc3Vh3VStHvrX+oD5OtALPwHjBL
+ xSWVM5aKfqvq96DN6BAx0t8IUjlg2WOQrh/5qpDNDeETBVT6N7m/bWlYQA7Ivb7g
+ ==
+X-ME-Sender: <xms:lrB1XScWpoS1AmB5PU0MLKUKeiGdl6CYlDuLyctnMRi9XZstGYI6eg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrudekhedghedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpeifihhnughofidrqddqqdhpihhnghenucfrrghrrghmpehmrghilhhfrhhomhep
+ rghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:lrB1XQdut5HhPiTBXjQBDcD9DwwNfNIczAWlXMW_KvqFBtXjmcs_Bg>
+ <xmx:lrB1XegPExrUQOkXqQV9GHlrPEzlgxNS2Omg0jHhJZvmMiFNtxUtug>
+ <xmx:lrB1XUQ_RyOIpSfLtN_-cNbLBFPNM5u3GafpvVUsTFXrmMKqhUSCdw>
+ <xmx:l7B1XSvhSHVcRDCU41Ecxe_h3Db164lAofWbrkTrQC_qRQYnbPmK1w>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 87B75E00A3; Sun,  8 Sep 2019 21:53:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-188-g385deb1-fmstable-20190905v2
+Mime-Version: 1.0
+Message-Id: <5f66333d-1621-4e36-b138-52453f61cc68@www.fastmail.com>
+In-Reply-To: <20190829071738.2523-1-andrew@aj.id.au>
+References: <20190829071738.2523-1-andrew@aj.id.au>
+Date: Mon, 09 Sep 2019 11:23:57 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: linux-gpio@vger.kernel.org, "Linus Walleij" <linus.walleij@linaro.org>
+Subject: =?UTF-8?Q?Re:_[PATCH_pinctrl/fixes]_pinctrl:_aspeed:_Fix_spurious_mux_fa?=
+ =?UTF-8?Q?ilures_on_the_AST2500?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,73 +88,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, John Wang <wangzqbj@inspur.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 9/5/19 4:02 PM, Ed Tanous wrote:
-> On 9/5/19 1:19 PM, Joseph Reynolds wrote:
->> HOWEVER, there is a hole in this design which extends the time window
->> indefinitely.  The scenario begins when the installer takes possession
->> of a new system (BMC + host) and plugs it into power.  At this point,
->> the BMC starts running and offering its services to network users.
->> The host remains powered off.  The installer then disregards the BMC
->> and uses the power button to boot the host system, then continues to
->> disregard the BMC when provisioning the host, either using physical
->> access to the host (not via the BMC), or a pre-configured host.  This
->> results in a fully-functional host and a BMC which still has its
->> default password.
->> THEREFORE, I am proposing a new "disabled power button" image
->> feature.  Normally, pressing the power button tells the BMC to power
->> on and boot the host.  With this design, if the BMC still has its
->> default expired password, it will ignore a power button press, and
->> will instead indicate to the operator to configure the BMC's password,
->> and try again.  Options for the BMC to indicate this are
->> machine-specific and include: messages to an operator panel, or LED
->> blink codes.  The recovery procedure is for the installer to access
->> the BMC, change its password, and try again to power on the server.
->>
-> This goes completely against one of the principals that some commercial
-> products hold dear:  The BMC should NEVER be able to brick the host.
->
-> In a perfect world, the BMC would never crash, get loaded with bad
-> firmware or brick itself.  In practice, this is far from the case.  In
-> general the primary avenue used to resolve these cases is a force
-> firmware update jumper, and a download of a new (fixed) firmware via KCS
-> or block transfer.  For that flow to function, the power button needs to
-> work, and the host needs to boot, otherwise the board is considered
-> bricked, and needs to be returned to the factory to be reflashed.
->
-> With all of the above said, if it's an option that can be disabled (and
-> hopefully disabled by default) I have no objection to it, but I don't
-> think it's an acceptable solution for most of the BMCs out on the market
-> today.
->
->
-> Another option for your scenario would also be to default the BMC to a
-> static IP of 0.0.0.0, and disable the NIC(s) by default.  To set up the
-> network, a user would need to log into the BMC the first time over an
-> in-band channel, set their password, then set up either a valid static
-> IP, or DHCP.  This is how some of the more security conscious BMCs I
-> know of get around this problem today.
 
-Thanks for your reply.  That helps.  We also don't want to brick our 
-systems. :-)
+On Thu, 29 Aug 2019, at 16:47, Andrew Jeffery wrote:
+> Commit 674fa8daa8c9 ("pinctrl: aspeed-g5: Delay acquisition of regmaps")
+> was determined to be a partial fix to the problem of acquiring the LPC
+> Host Controller and GFX regmaps: The AST2500 pin controller may need to
+> fetch syscon regmaps during expression evaluation as well as when
+> setting mux state. For example, this case is hit by attempting to export
+> pins exposing the LPC Host Controller as GPIOs.
+> 
+> An optional eval() hook is added to the Aspeed pinmux operation struct
+> and called from aspeed_sig_expr_eval() if the pointer is set by the
+> SoC-specific driver. This enables the AST2500 to perform the custom
+> action of acquiring its regmap dependencies as required.
+> 
+> John Wang tested the fix on an Inspur FP5280G2 machine (AST2500-based)
+> where the issue was found, and I've booted the fix on Witherspoon
+> (AST2500) and Palmetto (AST2400) machines, and poked at relevant pins
+> under QEMU by forcing mux configurations via devmem before exporting
+> GPIOs to exercise the driver.
+> 
+> Fixes: 7d29ed88acbb ("pinctrl: aspeed: Read and write bits in LPC and 
+> GFX controllers")
+> Fixes: 674fa8daa8c9 ("pinctrl: aspeed-g5: Delay acquisition of regmaps")
+> Reported-by: John Wang <wangzqbj@inspur.com>
+> Tested-by: John Wang <wangzqbj@inspur.com>
+> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> 
+> ---
+> Hi Linus,
+> 
+> The timing of merging the AST2600 (g6) driver and 674fa8daa8c9 ("pinctrl:
+> aspeed-g5: Delay acquisition of regmaps") caused a bit of a rough spot a
+> few weeks back. This fix doesn't cause any such disruption - I've
+> developed it on top of pinctrl/fixes and back-merged the result into
+> pinctrl/devel to test for build breakage (via CONFIG_COMPILE_TEST to
+> enable all of the g4, g5 and g6 drivers). All three ASPEED pinctrl
+> drivers built successfully, so it should be enough to simply take this
+> patch through pinctrl/fixes and leave pinctrl/devel as is for the 5.4
+> merge window.
+> ---
 
-How likely is the scenario described in the HOWEVER clause above? To 
-create this security exposure, the installer would have to connect a 
-network cable to the BMC and then not access the BMC via its network 
-connection.  Is that something that happens in practice?  Could this be 
-mitigated by installation instructions? The installation instructions 
-could state, for example, not to connect a network cable to the BMC 
-unless you then change the BMC's default password.  Then to emphasize 
-the point, the instructions could also state, for example, that you must 
-change the BMC's default password if you connect a network cable to it.
+Ping? Was hoping to get this merged before 5.3 is tagged.
 
-However, this approach doesn't feel secure by default.  I understand the 
-more general problem is how to securely provision your BMC. Does anyone 
-know where these discussions are happening?
-
-- Joseph
-
-
+Andrew
