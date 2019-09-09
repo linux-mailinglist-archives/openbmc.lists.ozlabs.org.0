@@ -2,43 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8346AD93B
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 14:40:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C27EADAA4
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 16:02:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Rnng1mcnzDqKg
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 22:40:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46RqcD64xtzDqNX
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 00:02:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2a00:1450:4864:20::52c; helo=mail-ed1-x52c.google.com;
+ envelope-from=osk@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="COq4BPmx"; 
+ dkim-atps=neutral
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com
+ [IPv6:2a00:1450:4864:20::52c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Rnms4FwbzDqB0
- for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2019 22:39:55 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x89CcfEp029014;
- Mon, 9 Sep 2019 15:38:41 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id CB24462CAA; Mon,  9 Sep 2019 15:38:41 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: mpm@selenic.com, herbert@gondor.apana.org.au, arnd@arndb.de,
- gregkh@linuxfoundation.org, robh+dt@kernel.org, mark.rutland@arm.com,
- avifishman70@gmail.com, tali.perry1@gmail.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, sumit.garg@linaro.org,
- jens.wiklander@linaro.org, vkoul@kernel.org, tglx@linutronix.de,
- joel@jms.id.au
-Subject: [PATCH v2 2/2] hwrng: npcm: add NPCM RNG driver
-Date: Mon,  9 Sep 2019 15:38:40 +0300
-Message-Id: <20190909123840.154745-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190909123840.154745-1-tmaimon77@gmail.com>
-References: <20190909123840.154745-1-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46RqZv6DdjzDqHg
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 00:01:25 +1000 (AEST)
+Received: by mail-ed1-x52c.google.com with SMTP id v38so13057780edm.7
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Sep 2019 07:01:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=VaBE61BB5p3R0WxaYYXFQ7eNf5dxGZPkxXppKPrG12g=;
+ b=COq4BPmxPKK5wpHzUBl40eUaK2UBm+2UxYl+2YCpHuMh6JkND8bwdwujyd0ZF1mEMT
+ yZk/fTQLs57Av7IU+wCK334y5E0QqjtGkGEZKkuxoYz6WHQmskwQIRYIfqNT8dIVlqfA
+ a2FM3GGYLqpBC5KsOaT6MJIj3j7lOWg1cl8tkDKygM+0kxpAo2t6RKonckQiYvowBUUe
+ Q+d4CiNqKOEaNGKQlTzUfJGrlAJm6qPZrTMfeTUaejO5L4aLnjvV7a1IOBDMYrF21rzE
+ 0H6YPUN10UiVtpC1yo0rLdAve5GdxvHVa1mIdrZ1d2gzpm1kzAlayRcP12sUrHhfUcb9
+ 7T7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=VaBE61BB5p3R0WxaYYXFQ7eNf5dxGZPkxXppKPrG12g=;
+ b=XzIfSO5n+JVMCsotevo5nnsr422JBFt4P5m5VdCAA5LGv5u4p1yVPvcQmIdWeL877G
+ h41j7F+vIbneFKHuq1txWJ+OGmBWfcaY6XNQev8C2fgIBrW1NmH8e7ftcx0B6ck5JTJC
+ mnr1pkymP/NmUb89zSJIa2hrvz36taKS66ne9eTbf6WESrVZthcJs8iPiGJ/1I/rOP72
+ R/3SB73nv+znpfISjaw9w1ToUS/7Cn0Ry7TEVzYNqHaDE2NRT5UIzq7H39aHPn2S/oO9
+ MLuUvXZTVMr+/CL0YaIyrSuPUlymkXkTnYnnEht0pnJvoDZIR/KlYtlc03fEYmHNLMOf
+ zAbw==
+X-Gm-Message-State: APjAAAXq7BNpv0Wjy3f7BsaZUbFYCS4P09KzaIeXtEQl0YkXd2g9aEdG
+ 7N/h/w/nGT2KUVMTE4TPNQs+MQZszAJd9Cj31PGSLQ==
+X-Google-Smtp-Source: APXvYqwF6MAaIF63N+wmfPuvotwdAcTo9sK0Mq85S+qrPE7P552SO6Wl2DTJ1fgFtqf76ujO3E5jdwFggic+XawMnus=
+X-Received: by 2002:a50:d718:: with SMTP id t24mr22110627edi.168.1568037681623; 
+ Mon, 09 Sep 2019 07:01:21 -0700 (PDT)
+MIME-Version: 1.0
+References: <befd14ce992e47dba06d993e04cec647@lenovo.com>
+In-Reply-To: <befd14ce992e47dba06d993e04cec647@lenovo.com>
+From: Oskar Senft <osk@google.com>
+Date: Mon, 9 Sep 2019 10:01:05 -0400
+Message-ID: <CABoTLcRrd2sgxa6qN9bQQxyfX4E4fWpX=xmxFVeiksU8sk9tbw@mail.gmail.com>
+Subject: Re: phosphor-ipmi-flash: Update over eSPI interface
+To: Harry Sung1 <hsung1@lenovo.com>
+Content-Type: multipart/alternative; boundary="0000000000000265ea05921f39e6"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,264 +72,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org
+Cc: Patrick Venture <venture@google.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Andrew MS1 Peng <pengms1@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+--0000000000000265ea05921f39e6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/char/hw_random/Kconfig    |  13 ++
- drivers/char/hw_random/Makefile   |   1 +
- drivers/char/hw_random/npcm-rng.c | 203 ++++++++++++++++++++++++++++++
- 3 files changed, 217 insertions(+)
- create mode 100644 drivers/char/hw_random/npcm-rng.c
+Hi Harry
 
-diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
-index 59f25286befe..87a1c30e7958 100644
---- a/drivers/char/hw_random/Kconfig
-+++ b/drivers/char/hw_random/Kconfig
-@@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
- 
- 	  If unsure, say Y.
- 
-+config HW_RANDOM_NPCM
-+	tristate "NPCM Random Number Generator support"
-+	depends on ARCH_NPCM || COMPILE_TEST
-+	default HW_RANDOM
-+	help
-+ 	  This driver provides support for the Random Number
-+	  Generator hardware available in Nuvoton NPCM SoCs.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called npcm-rng.
-+
-+ 	  If unsure, say Y.
-+
- endif # HW_RANDOM
- 
- config UML_RANDOM
-diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
-index 7c9ef4a7667f..17b6d4e6d591 100644
---- a/drivers/char/hw_random/Makefile
-+++ b/drivers/char/hw_random/Makefile
-@@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK)	+= mtk-rng.o
- obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
- obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
- obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
-+obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
-diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
-new file mode 100644
-index 000000000000..3ed396474563
---- /dev/null
-+++ b/drivers/char/hw_random/npcm-rng.c
-@@ -0,0 +1,203 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2019 Nuvoton Technology corporation.
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/io.h>
-+#include <linux/iopoll.h>
-+#include <linux/init.h>
-+#include <linux/random.h>
-+#include <linux/err.h>
-+#include <linux/platform_device.h>
-+#include <linux/hw_random.h>
-+#include <linux/delay.h>
-+#include <linux/of_irq.h>
-+#include <linux/pm_runtime.h>
-+
-+#define NPCM_RNGCS_REG		0x00	/* Control and status register */
-+#define NPCM_RNGD_REG		0x04	/* Data register */
-+#define NPCM_RNGMODE_REG	0x08	/* Mode register */
-+
-+#define NPCM_RNG_CLK_SET_25MHZ	GENMASK(4, 3) /* 20-25 MHz */
-+#define NPCM_RNG_DATA_VALID	BIT(1)
-+#define NPCM_RNG_ENABLE		BIT(0)
-+#define NPCM_RNG_M1ROSEL	BIT(1)
-+
-+#define NPCM_RNG_TIMEOUT_USEC	20000
-+#define NPCM_RNG_POLL_USEC	1000
-+
-+#define to_npcm_rng(p)	container_of(p, struct npcm_rng, rng)
-+
-+struct npcm_rng {
-+	void __iomem *base;
-+	struct hwrng rng;
-+};
-+
-+static int npcm_rng_init(struct hwrng *rng)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+	u32 val;
-+
-+	val = readl(priv->base + NPCM_RNGCS_REG);
-+	val |= NPCM_RNG_ENABLE;
-+	writel(val, priv->base + NPCM_RNGCS_REG);
-+
-+	return 0;
-+}
-+
-+static void npcm_rng_cleanup(struct hwrng *rng)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+	u32 val;
-+
-+	val = readl(priv->base + NPCM_RNGCS_REG);
-+	val &= ~NPCM_RNG_ENABLE;
-+	writel(val, priv->base + NPCM_RNGCS_REG);
-+}
-+
-+static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+	int retval = 0;
-+	int ready;
-+
-+	pm_runtime_get_sync((struct device *)priv->rng.priv);
-+
-+	while (max >= sizeof(u32)) {
-+		ready = readl(priv->base + NPCM_RNGCS_REG) &
-+			NPCM_RNG_DATA_VALID;
-+		if (!ready) {
-+			if (wait) {
-+				if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
-+						       ready,
-+						       ready & NPCM_RNG_DATA_VALID,
-+						       NPCM_RNG_POLL_USEC,
-+						       NPCM_RNG_TIMEOUT_USEC))
-+					break;
-+			} else {
-+				break;
-+			}
-+		}
-+
-+		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
-+		retval += sizeof(u32);
-+		buf += sizeof(u32);
-+		max -= sizeof(u32);
-+	}
-+
-+	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
-+	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
-+
-+	return retval || !wait ? retval : -EIO;
-+}
-+
-+static int npcm_rng_probe(struct platform_device *pdev)
-+{
-+	struct npcm_rng *priv;
-+	struct resource *res;
-+	bool pm_dis = false;
-+	u32 quality;
-+	int ret;
-+
-+	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	priv->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(priv->base))
-+		return PTR_ERR(priv->base);
-+
-+	priv->rng.name = pdev->name;
-+#ifndef CONFIG_PM
-+	pm_dis = true;
-+	priv->rng.init = npcm_rng_init;
-+	priv->rng.cleanup = npcm_rng_cleanup;
-+#endif
-+	priv->rng.read = npcm_rng_read;
-+	priv->rng.priv = (unsigned long)&pdev->dev;
-+	if (of_property_read_u32(pdev->dev.of_node, "quality", &quality))
-+		priv->rng.quality = 1000;
-+	else
-+		priv->rng.quality = quality;
-+
-+	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
-+	if (pm_dis)
-+		writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-+	else
-+		writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
-+		       priv->base + NPCM_RNGCS_REG);
-+
-+	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
-+			ret);
-+		return ret;
-+	}
-+
-+	dev_set_drvdata(&pdev->dev, priv);
-+	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
-+	pm_runtime_use_autosuspend(&pdev->dev);
-+	pm_runtime_enable(&pdev->dev);
-+
-+	return 0;
-+}
-+
-+static int npcm_rng_remove(struct platform_device *pdev)
-+{
-+	struct npcm_rng *priv = platform_get_drvdata(pdev);
-+
-+	hwrng_unregister(&priv->rng);
-+	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+
-+	return 0;
-+}
-+
-+#ifdef CONFIG_PM
-+static int npcm_rng_runtime_suspend(struct device *dev)
-+{
-+	struct npcm_rng *priv = dev_get_drvdata(dev);
-+
-+	npcm_rng_cleanup(&priv->rng);
-+
-+	return 0;
-+}
-+
-+static int npcm_rng_runtime_resume(struct device *dev)
-+{
-+	struct npcm_rng *priv = dev_get_drvdata(dev);
-+
-+	return npcm_rng_init(&priv->rng);
-+}
-+#endif
-+
-+static const struct dev_pm_ops npcm_rng_pm_ops = {
-+	SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
-+			   npcm_rng_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
-+};
-+
-+static const struct of_device_id rng_dt_id[] = {
-+	{ .compatible = "nuvoton,npcm750-rng",  },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, rng_dt_id);
-+
-+static struct platform_driver npcm_rng_driver = {
-+	.driver = {
-+		.name		= "npcm-rng",
-+		.pm		= &npcm_rng_pm_ops,
-+		.owner		= THIS_MODULE,
-+		.of_match_table = of_match_ptr(rng_dt_id),
-+	},
-+	.probe		= npcm_rng_probe,
-+	.remove		= npcm_rng_remove,
-+};
-+
-+module_platform_driver(npcm_rng_driver);
-+
-+MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_LICENSE("GPL v2");
--- 
-2.18.0
+What's the behavior on eSPI? I assume you still have the aspeed-lpc-ctrl
+enabled, right?
 
+Thanks
+Oskar.
+
+On Mon, Sep 9, 2019 at 4:41 AM Harry Sung1 <hsung1@lenovo.com> wrote:
+
+> Hi Patrick,
+>
+>
+>
+> I found =E2=80=9Cphosphor-ipmi-flash=E2=80=9D have not support flash over=
+ eSPI yet.
+>
+> May I ask if you have any plans to support flash over eSPI?
+>
+>
+>
+> I have done a simple test about shared memory between host and BMC :
+>
+> The shared memory is work after I set ESPI084 (source address) and ESPI08=
+8
+> (target address) registers.
+>
+> But it has an limitation that only 256 bytes are available on each page
+> (4KB).
+>
+>
+> For example, if host address starts to write from 0xFE0B0000 (BMC reserve=
+d
+> enough memory already)
+>
+> Writable area are:
+>
+> 0xFE0B0000 ~ 0xFE0B00FF
+>
+> 0xFE0B1000 ~ 0xFE0B10FF
+>
+> 0xFE0B2000 ~ 0xFE0B20FF
+>
+> 0xFE0B3000 ~ 0xFE0B30FF
+>
+> =E2=80=A6
+>
+> =E2=80=A6
+>
+> =E2=80=A6
+>
+>
+>
+>
+>
+> Thanks,
+> Harry
+>
+
+--0000000000000265ea05921f39e6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Harry<div><br></div><div>What&#39;s the behavior on eSP=
+I? I assume you still have the aspeed-lpc-ctrl enabled, right?</div><div><b=
+r></div><div>Thanks</div><div>Oskar.</div></div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 9, 2019 at 4:41 AM Ha=
+rry Sung1 &lt;<a href=3D"mailto:hsung1@lenovo.com" target=3D"_blank">hsung1=
+@lenovo.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+
+
+
+
+
+<div lang=3D"ZH-TW">
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Patrick,<u></u><u></u></span=
+></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I found =E2=80=9Cphosphor-ipmi-=
+flash=E2=80=9D have not support flash over eSPI yet.<u></u><u></u></span></=
+p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">May I ask if you have any plans=
+ to support flash over eSPI?<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I have done a simple test about=
+ shared memory between host and BMC :<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The shared memory is work after=
+ I set ESPI084 (source address) and ESPI088 (target address) registers.<u><=
+/u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">But it has an limitation that o=
+nly 256 bytes are available on each page (4KB).<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><br>
+For example, if host address starts to write from 0xFE0B0000 (BMC reserved =
+enough memory already)<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Writable area are:<u></u><u></u=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">0xFE0B000=
+0 ~ 0xFE0B00FF
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">0xFE0B100=
+0 ~ 0xFE0B10FF<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">0xFE0B200=
+0 ~ 0xFE0B20FF<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">0xFE0B300=
+0 ~ 0xFE0B30FF<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=E2=80=A6<u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=E2=80=A6<u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">=E2=80=A6<u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<br>
+Harry<u></u><u></u></span></p>
+</div>
+</div>
+
+</blockquote></div>
+
+--0000000000000265ea05921f39e6--
