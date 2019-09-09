@@ -2,68 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5C7BADE01
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 19:26:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AFCA4ADE03
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 19:27:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Rw773rFRzDqR1
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 03:26:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Rw923jnXzDqQB
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 03:27:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::642; helo=mail-pl1-x642.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="mBhCYX9Q"; 
- dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Rw6X2Zw1zDqLW
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 03:25:40 +1000 (AEST)
-Received: by mail-pl1-x642.google.com with SMTP id f19so6809854plr.3
- for <openbmc@lists.ozlabs.org>; Mon, 09 Sep 2019 10:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=5i0qbXNq/LE50tD4YNE1rL1HbHdbUiDtG/iqju0AAEg=;
- b=mBhCYX9QjCVEmIPwIwwjcQDo2S8Y1tSKzO4PiCWhN0vjO7Aj4cGzlB4tiKt/RlnSMA
- yeLExYYTo1pmyp22qC0moiqxVV9Mza8U8Klajad0C34KdxJy8XBotWTb7kKIj0rMomSj
- PUiY6/bx9j9K1em4LOeTtg/Fm0KFxM2wd3iti236YEwhfXmKE2xZN0UEsRZp3FH/iN1+
- WLRhdVrfIhnnBSGMu7kR1pxph2gEJiRKk6MLgUz0vQoPlqxnOggUbsgMFk7h3xZ4KZ8m
- Joj+62vLRY8E7767ELtEEietMnQM60R3NbLJ0EOcGUrRLncYc9rMpu8FdDDXIy1/PVGp
- CG2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=5i0qbXNq/LE50tD4YNE1rL1HbHdbUiDtG/iqju0AAEg=;
- b=EVpZedXyFFyfaBZq0DJz2oe8I5ArEj8BQd+mKGAG1UNZfU1jHygec2cdV3eU69Z9LI
- XZ7xTPA4PxfHfOsPJpozk7gpVbIXE60iaStl2OLTviX+VX51sWYeT561QNl73+t1kWXe
- NEKlnavj/8avD9K0SQQ3pNG9kMxwCiM7BBHQLChGLfrFJFFWM3C85QCy+g2Dz83BTfAb
- mbmdc3XzwLwPGV19ssbCrYw6Ff5zgYWwMI+CYEKTbPTwie5oW4OaNUqw2g1h09XgX/RD
- bajYtsRBR9cbCYBNOyBai5o/tr/sbZlQUSHQcYlZHt5cqGc/VkyhIIVMOoSLXeJ/mUF4
- WJQQ==
-X-Gm-Message-State: APjAAAXG/9dI1lc1L+Uut9aOjJmre1INrqo8Vr7BTF0Yi/x0FlKKPuPS
- BkGJnG4q58IVOakoCdrpTdSOREFKgUugxjSd8FgCBqN4Y40=
-X-Google-Smtp-Source: APXvYqwQC9TjopEHW753skb8mO0KD3LTind/gyRVbOogFtesjlFo/arHQSNuBNdDQaFL5gc/TrM7BgTh4g/+hnDpA1M=
-X-Received: by 2002:a17:902:7296:: with SMTP id
- d22mr25151753pll.179.1568049936234; 
- Mon, 09 Sep 2019 10:25:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Rw8J0ZvMzDqLW
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 03:27:11 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 Sep 2019 10:27:08 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,486,1559545200"; d="scan'208";a="189088576"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga006.jf.intel.com with ESMTP; 09 Sep 2019 10:27:08 -0700
+Subject: Re: [phosphor-pid-control] scaling issue
+To: Patrick Venture <venture@google.com>,
+ =?UTF-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>
+References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
+ <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
+ <369926533c3e448c9d1a0d28391fd688@quantatw.com>
+ <af485fc0d2c44f3e8927290ff6c95ea0@quantatw.com>
+ <CAO=notwuxuWKeKMY8mnse1wY1Nt6GNx4rcxHDokqXtkzyoLYYQ@mail.gmail.com>
+ <02128993d3064b53ac289500746666ab@quantatw.com>
+ <dbd75be40e2f4d41a5b621a5dc3b3df7@quantatw.com>
+ <CAO=notzTM-VLV14VdXWSukftABB1Tz4i-ixPOY5qn5cs_0-1Ng@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <bfe53d3d-0d00-0ac9-9a43-5b24e09ad309@linux.intel.com>
+Date: Mon, 9 Sep 2019 10:27:08 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-References: <907F7F17-6EC3-4F83-A2E4-3BBE764C72DD@fuzziesquirrel.com>
- <b6be6eda-703f-7daf-b0ee-e8ed5f778645@linux.intel.com>
- <CADKL2t6wCkJiZW+fy_UJeaYYR=Pb6-6wNFsX9Z5rU1ZoLkCYxA@mail.gmail.com>
-In-Reply-To: <CADKL2t6wCkJiZW+fy_UJeaYYR=Pb6-6wNFsX9Z5rU1ZoLkCYxA@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 9 Sep 2019 10:25:25 -0700
-Message-ID: <CAO=notwjCDRvd87S+UXRkhNAzpRb+raJYuv+G_adKQzJDWckvg@mail.gmail.com>
-Subject: Re: phosphor-pid-control build failure with yocto head
-To: Benjamin Fair <benjaminfair@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAO=notzTM-VLV14VdXWSukftABB1Tz4i-ixPOY5qn5cs_0-1Ng@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,62 +61,207 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 3, 2019 at 9:40 PM Benjamin Fair <benjaminfair@google.com> wrote:
->
-> On Tue, Sep 3, 2019 at 5:28 PM James Feist <james.feist@linux.intel.com> wrote:
-> >
-> > On 9/2/2019 1:15 AM, Brad Bishop wrote:
-> > > Hi James, Patrick
-> > >
-> > > Updating our poky subtree to master HEAD exposes a build failure in
-> > > phosphor-pid-control.
-> >
-> > Here's the bug, I've seen this before, it seems random when it happens
-> > and changing a few lines can make it go away. Something to do with lto...
-> >
-> > main.o swampd-util.o  ./.libs/libswampd.a -lstdc++fs -lphosphor_logging
-> > -lsdbusplus -lsystemd -lphosphor_dbus
-> > 00:59:59 | lto1: internal compiler error: in add_symbol_to_partition_1,
-> > at lto/lto-partition.c:154
-> > 00:59:59 | Please submit a full bug report,
-> > 00:59:59 | with preprocessed source if appropriate.
-> > 00:59:59 | See <https://gcc.gnu.org/bugs/> for instructions.
-> > 00:59:59 | lto-wrapper: fatal error: arm-openbmc-linux-gnueabi-g++
-> > returned 1 exit status
-> > 00:59:59 | compilation terminated.
-> > 00:59:59 |
-> > /tmp/openbmc/work/armv7a-openbmc-linux-gnueabi/phosphor-pid-control/0.1+gitAUTOINC+35906cc3d0-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/9.2.0/ld:
-> > error: lto-wrapper failed
-> > 00:59:59 | collect2: error: ld returned 1 exit status
-> > 00:59:59 | Makefile:919: recipe for target 'swampd' failed
-> > 00:59:59 | make[2]: *** [swampd] Error 1
-> >
-> > What platform is gsj? We're currently behind tip, and it'll probably
-> > take me some time to catch up to be able to try anything this new.
->
-> GSJ is a Quanta board with a Nuvoton NPCM7xx BMC.
->
-> This could be showing up there since the CPU cores are ARMv7 unlike in Aspeed.
+On 9/9/19 9:57 AM, Patrick Venture wrote:
+> On Thu, Sep 5, 2019 at 12:25 AM Hank Liou (劉晉翰) <Hank.Liou@quantatw.com> wrote:
+>>
+>> Hi Patrick,
+>>
+>>
+>> Sorry for not clearly stating our problem. We have the following issue:
+>>
+>>
+>> temp sensor gets 31(C) -> 31 / 0.255 = 121.57 -> pid uses 127.57 as input for temp sensor ->
+>>
+>> stepwise fan table output 100 duty -> full speed fan
+> 
+> Ok, so you're getting a dbus-based min/max value and you want to
+> ignore it?  
 
-Will this build if we drop the lto stuff?  I have seen this issue
-before, but I cannot recall the solution... but it did go-away at some
-point.  So, I'm confident it can be addressed.  I'm going to try
-building without lto and see if it's happy.
+What is providing the dbus-based min/max?
 
->
-> >
-> > >
-> > > GCC is asking for a bug to be opened.  Could find someone to have a look
-> > > at this so we can continue to pick up poky changes?
-> > >
-> > > If you would like an openbmc tree to pull give this a try:
-> > >
-> > > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/24783
-> > >
-> > > thx - brad
+> In the json configuration, if you set the values to 0,
+> they are set to the default (0), so there'd be no clean way to know to
+> ignore dbus in this case, without adding a small check to only
+> consider min/max from dbus when sensor is not temp/margin.  Basically,
+> only care about min/max on dbus if type is "fan"
+
+Why is the dbus-based min/max even there if you don't plan on using it?
+
+> 
+> If that's right, James do you have a cycle to look at this one-liner?
+> 
+>>
+>>
+>> As a result, fan will be at full speed while temp is low. Before the commit fc2e803 [1], this won't happen. The root cause is that, before fc2e803, pid will use config min/max, which is 0 in our case. This would not trigger scaling function, namely scaleSensorReading, in util.cpp. However, after such commit, min/max would be non-zero (-128/127 from DBus). This will trigger scaling function.
+>>
+>>
+>> [1] https://github.com/openbmc/phosphor-pid-control/commit/fc2e803f5d9256944e18c7c878a441606b1f121c
+>>
+>>
+>> Hank
+>>
+>>
+>> ________________________________
+>> From: Hank Liou (劉晉翰)
+>> Sent: Monday, September 2, 2019 4:52 PM
+>> To: Patrick Venture
+>> Cc: James Feist; openbmc@lists.ozlabs.org
+>> Subject: Re: [phosphor-pid-control] scaling issue
+>>
+>>
+>> Hi Patrick,
+>>
+>>
+>> Since we use phosphor-sel-logger [1] at the same time, we do assign min and max of temp sensors to Dbus (max: 127, min: -128). So in the present case, our temp value will be divided by 0.255 (also due to exponent is -3 here). This will cause re-scaling problem. Therefore there should be an statement to distinguish sensor types. If it is "temp", then one assigns 0 to the min and max from Dbus.
+>>
+>>
+>> [1] https://github.com/openbmc/phosphor-sel-logger/blob/3d300fca24b30864b3e9a4f5768cfe5e769458ae/include/sensorutils.hpp#L59
+>>
+>>
+>> Hank
+>>
+>>
+>> ________________________________
+>> From: Patrick Venture <venture@google.com>
+>> Sent: Friday, August 30, 2019 1:47 AM
+>> To: Hank Liou (劉晉翰)
+>> Cc: James Feist; openbmc@lists.ozlabs.org
+>> Subject: Re: [phosphor-pid-control] scaling issue
+>>
+>> PTAL - https://gerrit.openbmc-project.xyz/24827 - this is merged, and
+>> the srcrev bump should propagate into openbmc/openbmc in a day or two.
+>>
+>> On Wed, Aug 28, 2019 at 11:00 PM Hank Liou (劉晉翰) <Hank.Liou@quantatw.com> wrote:
+>>>
+>>> Hi Patrick,
+>>>
+>>> I think it's OK to parse the config min&max for temp sensors.
+>>>
+>>> Any suggestion?
+>>>
+>>> Thanks,
+>>> Hank
+>>>
+>>>> -----Original Message-----
+>>>> From: openbmc [mailto:openbmc-
+>>>> bounces+hank.liou=quantatw.com@lists.ozlabs.org] On Behalf Of Hank Liou
+>>>> (劉晉翰)
+>>>> Sent: Friday, August 23, 2019 4:31 PM
+>>>> To: Patrick Venture <venture@google.com>; James Feist
+>>>> <james.feist@linux.intel.com>
+>>>> Cc: openbmc@lists.ozlabs.org
+>>>> Subject: RE: [phosphor-pid-control] scaling issue
+>>>>
+>>>> Hi Patrick,
+>>>>
+>>>>> -----Original Message-----
+>>>>> From: Patrick Venture [mailto:venture@google.com]
+>>>>> Sent: Wednesday, August 21, 2019 10:32 PM
+>>>>> To: Hank Liou (劉晉翰) <Hank.Liou@quantatw.com>; James Feist
+>>>>> <james.feist@linux.intel.com>
+>>>>> Cc: openbmc@lists.ozlabs.org
+>>>>> Subject: Re: [phosphor-pid-control] scaling issue
+>>>>>
+>>>>> On Wed, Aug 21, 2019 at 1:11 AM Hank Liou (劉晉翰)
+>>>>> <Hank.Liou@quantatw.com> wrote:
+>>>>>>
+>>>>>> Hi All,
+>>>>>>
+>>>>>>
+>>>>>> After commit [1], I found my temp sensor reading would be re-scaled
+>>>>>> by
+>>>>> multiplying 1 over 255, making temperature into unfamiliar unit. Also
+>>>>> the fan rpm reading would lie in [0,1] interval, letting the fan input
+>>>>> to be 0 (since the input value of fan is from an integer array [2]). Are these
+>>>> normal behaviors?
+>>>>> Or do I miss something?
+>>>>>
+>>>>> Are you using dbus configuration or json?  If json, can you attach your config.
+>>>>> Since you're saying it was working and now isn't, I'm assuming there's
+>>>>> something about the config being treated differently with the code
+>>>>> changes in an unexpected way.
+>>>>
+>>>> I found pid control will first read min and max from dbus and then (before
+>>>> commit [1]) revise them if
+>>>>
+>>>> info->min != conf::inheritValueFromDbus (in dbus/dbuspassive.cpp)
+>>>>
+>>>> After value initialization, the min and max would be the ones in json file (Json
+>>>> file [3]). However, after commit [1] the min and max values of config would
+>>>> not be fed into the fan control process. The scaling issue is originated from
+>>>> commit [4] with the aim to treat fan rpm as percentage. It seems that commit
+>>>> [1] unexpectedly affects temp sensors in the sense that the temp is the
+>>>> integer reading not percentage. Before commit [1], it would not re-scale the
+>>>> temp reading since my min and max are 0 [6].
+>>>>
+>>>>
+>>>>
+>>>> There is another issue with commit [1]. Now the fan rpm would be something
+>>>> like
+>>>>
+>>>> 1500 / 20000 = 0.075
+>>>>
+>>>> where rpm max 20000 is from dbus. However the fan input function would
+>>>> transfer double into int, which is 0 for 0.075 (see [5]). Hence the fan input is 0
+>>>> not percentage. Is there something wrong?
+>>>>
+>>>> [1] https://github.com/openbmc/phosphor-pid-
+>>>> control/commit/fc2e803f5d9256944e18c7c878a441606b1f121c
+>>>> [2] https://github.com/openbmc/phosphor-pid-
+>>>> control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancontrolle
+>>>> r.cpp#L86
+>>>> [3]
+>>>>        {
+>>>>             "name": "fan1",
+>>>>             "type": "fan",
+>>>>             "readPath": "/sys/class/hwmon/hwmon1/fan1_input",
+>>>>             "writePath": "/sys/class/hwmon/hwmon1/pwm1",
+>>>>             "min": 0,
+>>>>             "max": 255
+>>>>         },
+>>>>         {
+>>>>             "name": "temp1",
+>>>>             "type": "temp",
+>>>>             "readPath": "/xyz/openbmc_project/sensors/temperature/temp1",
+>>>>             "writePath": "",
+>>>>             "min": 0,
+>>>>             "max": 0
+>>>>         }
+>>>> [4] https://github.com/openbmc/phosphor-pid-
+>>>> control/commit/75eb769d351434547899186f73ff70ae00d7934a
+>>>> [5] https://github.com/openbmc/phosphor-pid-
+>>>> control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancontrolle
+>>>> r.cpp#L64
+>>>> [6] https://github.com/openbmc/phosphor-pid-
+>>>> control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/dbus/dbuspassi
+>>>> ve.cpp#L158
+>>>>
+>>>>>
+>>>>>>
+>>>>>>
+>>>>>> [1]
+>>>>>> https://github.com/openbmc/phosphor-pid-
+>>>>> control/commit/fc2e803f5d92569
+>>>>>> 44e18c7c878a441606b1f121c
+>>>>>>
+>>>>>> [2]
+>>>>>> https://github.com/openbmc/phosphor-pid-
+>>>>> control/blob/a7ec8350d17b70153
+>>>>>> cebe666d3fbe88bddd02a1a/pid/fancontroller.cpp#L86
+>>>>>>
+>>>>>>
+>>>>>> Thanks,
+>>>>>>
+>>>>>>
+>>>>>> Hank Liou
+>>>>>>
+>>>>>> Quanta Computer Inc.
+>>>>>>
+>>>>>>
+>>>>
+>>>> Sincerely,
+>>>> Hank
