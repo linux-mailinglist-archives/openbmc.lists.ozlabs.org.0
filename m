@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB497AD7D9
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 13:26:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9EB5AD848
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 13:51:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Rm844zSdzDqPG
-	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 21:26:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46RmhP18mmzDqPj
+	for <lists+openbmc@lfdr.de>; Mon,  9 Sep 2019 21:51:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,23 +19,25 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Rm7S3d51zDqB0
- for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2019 21:25:56 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Rmgc0MrXzDqP1
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Sep 2019 21:50:18 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 Received: from brads-mbp.dyn.fuzziesquirrel.com
  (Brads-MBP.dyn.fuzziesquirrel.com [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 958005C09F;
- Mon,  9 Sep 2019 07:25:53 -0400 (EDT)
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 8FF135C09F;
+ Mon,  9 Sep 2019 07:50:14 -0400 (EDT)
 Content-Type: text/plain;
 	charset=utf-8;
 	delsp=yes;
 	format=flowed
 Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: IBM migrating to entity-manager
-Message-Id: <658B795A-BC17-49B9-BDD8-9AA262E3C1A5@fuzziesquirrel.com>
-Date: Mon, 9 Sep 2019 07:25:53 -0400
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Re: Persistent storage of AssetTag
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <MWHPR13MB1360F536BDF71319FE7FA457EDA40@MWHPR13MB1360.namprd13.prod.outlook.com>
+Date: Mon, 9 Sep 2019 07:50:14 -0400
+Message-Id: <B5261E52-3D09-460E-B2EB-60372868A790@fuzziesquirrel.com>
+References: <MWHPR13MB1360F536BDF71319FE7FA457EDA40@MWHPR13MB1360.namprd13.prod.outlook.com>
+To: Troy.Lee@vertiv.com
 X-Mailer: Apple Mail (2.3445.104.11)
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -49,35 +51,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Tom Joseph <tomjoseph@in.ibm.com>, gkeishin@in.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I just wanted to let everyone know that IBM will be migrating its OpenBMC=
- =20
-deployments to entity-manager/dbus-sensors=E2=80=A6eventually.
+at 5:28 AM, Troy.Lee@vertiv.com wrote:
 
-The migration is not trivial (a year or more?) and thus you will continue=
- =20
-to see IBM contribute to and support the =E2=80=9Cother=E2=80=9D (invento=
-ry-manager / =20
-hwmon) stack in the shorter term even though this is not our strategic =20
-direction.
+> We met an issue about persistent storage of AssetTag.
+> AssetTag is managed by phosphor-inventor-manager, and it was defined wi=
+th =20
+> assettag.yaml.
+> Though we could update the AssetTag with DCMI command over IPMI or DBus=
+, =20
+> but the value will not retain after BMC reboot.
+>
+> Does this behavior work as expect in OpenBMC? (AssetTag become empty =20
+> string after reboot)
 
-Some high level things that need to be done to entity-manager before IBM =
+I don=E2=80=99t see how.  George does our testing framework allow us to c=
+heck for =20
+things like this -after- rebooting the bmc?
+
+> Does anyone have suggestion how to change the YAML to have persistent =20
+> storage for Asset Tag?
+
+There should probably be a check to see if the objects exists already or =
 =20
-could switch:
+not here:
 
-- Support in frudevice for parsing additional fru formats such as IBMs =20
-=E2=80=9Cipz=E2=80=9D fru format VPD and PLDM fru format.
-- Support for importing host-firmware-only accessible fru information via=
- =20
-in-band channels like pldm or ipmi.
-
-I would encourage the rest of the OpenBMC community to think about how =20
-entity-manager could be enhanced to meet your needs and join IBM in this =
-=20
-migration - we are all better served collaborating around a single =20
-inventory / sensors stack.
-
-thx - brad
+https://github.com/openbmc/phosphor-inventory-manager/blob/master/manager=
+.cpp#L293
