@@ -1,70 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7AC1AEF72
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 18:21:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6FBEAF0A1
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 19:45:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46SVf61dp9zF1Qx
-	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 02:21:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46SXWJ3HNhzF1SB
+	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 03:45:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=yadro.com
- (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="nKEkTdMw"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="ls1qQ0lp"; 
  dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46SVdQ0BNFzF155
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 02:20:57 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 36F10435DB
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 16:20:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1568132451; x=1569946852; bh=STA9eVTGFYrEFhhMZhqgJzS+L
- pdYdiloRw3xSxKGHC4=; b=nKEkTdMwvjFK51rYIFJEiwXIMvlykwANuRZn0Lzyo
- 6+/xWr/LlCpZSVg3IhTu2Nm9hBKMzZGV23L6YnjnDN4l57n7Rs8ZgGMK36o2Q7Tu
- 1sEH4dWAUl6TY7ZBy2DVXFHDGFSC004Z6gtNXWMS0iuTg/ye/chvv2QfeMxGctHS
- QA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id K3Tkev7FhW5F for <openbmc@lists.ozlabs.org>;
- Tue, 10 Sep 2019 19:20:51 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id DF3C0412D2
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 19:20:51 +0300 (MSK)
-Received: from localhost.localdomain (172.17.15.69) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Tue, 10 Sep 2019 19:20:51 +0300
-Message-ID: <4f6a9fed5362bda485f93fcadc7b240bf759f335.camel@yadro.com>
-Subject: Re: exceeding match limit on watchers
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Date: Tue, 10 Sep 2019 19:20:47 +0300
-In-Reply-To: <a0c9b7f0ce642d219ed6c409a34442adea5611af.camel@yadro.com>
-References: <a0c9b7f0ce642d219ed6c409a34442adea5611af.camel@yadro.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46SXVS2gZpzF13w
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 03:45:03 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id g13so21355283qtj.4
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 10:45:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=L4r53n/P52k/vYYolZeiKK/H7mhZ1KJWLKwBDL6C9e8=;
+ b=ls1qQ0lpetrvsynn4WMzXwuEjZVGCN8cseIZ59ZahIHBmS6B+Y+jmN9jB7WLaB1mai
+ 0Q5FnB8uBveAZ0TzylAMrzp1cqssPS+nA1EvbDQTrQOnHCJjSfR8w6vLNxMzpRz3BxFV
+ c99HAlXXCgegK7SwMb/zm2uY4Krgww+eeqepc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=L4r53n/P52k/vYYolZeiKK/H7mhZ1KJWLKwBDL6C9e8=;
+ b=OGZx/sdT+kOXONqmNsihmgbTIdnOumlLjQ9a6qvPeV6AcSTY1+faDrW4R+AulAlsYa
+ dwoNbiQQRNHt24zv5FILWBC2PGlWlO+kFJoKSH6QUJT112skd6NBIcl+cknDfygNnR1i
+ gv8qR+pqXI6q4wQSauGCzwWoR7F8yd6cNQAUm9V+YDauI3zfZ7NGEPSolUVKAHFkOC6f
+ 62dopguoOxWVOgQyRY8QOezUtjax6mn4MYg7KalGRFr5SaCwrtKyUM9N2+gMrqX+nLcr
+ kZY1GD5pBJmdlK27ncb0FiWCYr5THc5xCZePjeg7KYNipKxBH0kiWoOhAWZ9/oOlNXhn
+ dPRQ==
+X-Gm-Message-State: APjAAAVWZtMqqbbyu/q5fqu0TZRQ+vNDx8CVXuMpV8XMdfX9d4HT3jI8
+ B5skn1BqEuUDbZsMpepbAIIVkR3c6Q/UhO/2O44=
+X-Google-Smtp-Source: APXvYqz2IgcI6DihTUPsaOg0ni/OsP7whnMQNZgjRxeJt4dxpiN5zoiVXqD1lsesyaN7iche2w3esddrvc5G6C8sAWI=
+X-Received: by 2002:aed:2ce7:: with SMTP id g94mr30407173qtd.255.1568137500145; 
+ Tue, 10 Sep 2019 10:45:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.17.15.69]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+References: <1567629311-7553-1-git-send-email-eajames@linux.ibm.com>
+ <1567629311-7553-2-git-send-email-eajames@linux.ibm.com>
+ <a01c913e-1ae9-4aad-83a3-dec3dbd5b7f4@www.fastmail.com>
+ <d6ee4952-6d29-b0e9-08d1-6647472a2dad@linux.vnet.ibm.com>
+In-Reply-To: <d6ee4952-6d29-b0e9-08d1-6647472a2dad@linux.vnet.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 10 Sep 2019 17:44:47 +0000
+Message-ID: <CACPK8XeWTB+ONK5p39Cj0rSGaB40pTSjVsCx7fYNCsdM8cx1EA@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.2 2/2] i2c: Aspeed: Add AST2600 compatible
+To: Eddie James <eajames@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,36 +72,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2019-09-05 at 16:20 +0300, Ivan Mikhaylov wrote:
-> Hello everyone!
-> 
-> Our VESNIN server has a lot of temperature sensors on it, so we tried to
-> attach
-> watchers via yaml for them. The sd_bus_add_match() returns -105 (ENOBUFS)
-> which
-> represents exceeding 'some limit', according to the the doc. First of all we
-> tried to figure out why it didn't work, and found that match() from sdbusplus
-> didn't raise any exception/warning/log, etc. in the event of errors, and just
-> passed through silently. I've created an issue for it:
-> https://github.com/openbmc/sdbusplus/issues/38 .
-> 
-> In manpage for sd_bus_add_match() there is no helpful information about
-> possible reasons for this over the limit case. I'm trying to figure it out
-> from
-> systemd code, with little success so far.
-> 
-> SD_BUS_ERROR_LIMITS_EXCEEDED
->   Some limited resource has been exhausted.
-> 
-> Maybe anybody knows what and where the limit is and where we can tweak it?
-> As far as I can see, there are only ulimit settings In systemd's system.conf.
-> 
-> Thanks.
+On Thu, 5 Sep 2019 at 19:10, Eddie James <eajames@linux.vnet.ibm.com> wrote:
+>
+>
+> On 9/4/19 10:02 PM, Andrew Jeffery wrote:
+> >
+> > On Thu, 5 Sep 2019, at 06:05, Eddie James wrote:
+> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> > Have you tested this on hardware? What was the outcome?
 
-dbus-daemon declines request from sd_bus_add_match with ENOBUFS, increasing
-"<limit name="max_match_rules_per_connection">1024</limit>" limit via dbus-
-1/system.conf helped.
+When probing I see these invalid resource warnings:
 
+[    7.179489] aspeed-i2c-bus 1e78a080.i2c-bus: invalid resource
+[    7.183615] aspeed-i2c-bus 1e78a080.i2c-bus: i2c bus 0 registered
+(byte mode), irq 25
+
+Can you please fix those?
+
+Cheers,
+
+Joel
