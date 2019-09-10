@@ -2,78 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 511AFAE91F
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 13:30:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8760AE95F
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 13:47:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46SN9l42wczDsxF
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 21:30:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46SNYn1PRkzDsNP
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 21:47:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linaro.org
- (client-ip=2a00:1450:4864:20::443; helo=mail-wr1-x443.google.com;
- envelope-from=daniel.thompson@linaro.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::342; helo=mail-ot1-x342.google.com;
+ envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linaro.org
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.b="dXbNB/04"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="JYWVdRe5"; 
  dkim-atps=neutral
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com
- [IPv6:2a00:1450:4864:20::443])
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
+ [IPv6:2607:f8b0:4864:20::342])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46SN9670JwzDqkT
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 21:29:28 +1000 (AEST)
-Received: by mail-wr1-x443.google.com with SMTP id l11so19436271wrx.5
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 04:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=0GF5M/Z2kwzroH5gkbeDVOgMn2NsaXM05m+OrHSEuCs=;
- b=dXbNB/047jTSQr0PWNuw4HHchJDoL9QVKE4SzJOfcd/2dkDcfO2I6cmT5ioFlh705T
- SkueVrhEAx2PY7702X8M7/BLSG2OjBDoLNNyyq2HlDOwzFB+SGXLnhIiFh77IOJWyJmz
- m9dZOk+EckrHOMo8E6SK7wlshR/Wgm71GJAf51akQPwmkEs70BRJiAS18PeSbCFcBSve
- 0qX2CaXAWt5MXgDyNFhdLcPO/LEsqyf3BaQC8Urp74uXYcmQwnlnXqtT8SRuQC5ipFqr
- WdkSJYYZWFM1zhKEhSt4FCk1XOFDwjWJf/TaI8sl7Zy7hDZwU/Q+H3miLneJCPtlc5NS
- eSRA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46SNY24pzYzDqjx
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 21:46:43 +1000 (AEST)
+Received: by mail-ot1-x342.google.com with SMTP id s28so18057399otd.4
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 04:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=S0O7D2s7VDjrEpmmMV3/ubzBk8Kasc1VuRf/+yWrcPk=;
+ b=JYWVdRe5yRUCdAG9V0zAVY+ppsRcKek/vH4gy4s4RX61JktgPxl3cwlsCZJGRMImOE
+ iDZUbNdN/p7+je54GkseBAzumFopfGC0IaTAkG70x6c24sYdB1BcXp6/Pn3MTi+XhH5k
+ yJdm/WGmhobxzq/iMjkXglhB/k0CO+DnslfFSZv6ofepp4/Epx3bKeWGZQiKLTqEyP2z
+ aZ9zcuYtrMkXYgHp/XDQhEyDAlx9hCIkmeRh1VwLTSPFRAxjWC4+uC2cXsvGIKYd6V1y
+ ZvtFC/iJfYCgVSgR0DkKS2ohrsH3skfqFwaqMdHOD2na8EOOcUZfSbFIF4VamBnWiYWE
+ 1Jeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=0GF5M/Z2kwzroH5gkbeDVOgMn2NsaXM05m+OrHSEuCs=;
- b=YRMu207Hgu/70zLAoqrIzSVHZiBaPodtjz7T/VGIUUvxvQgBKyx7KvpKl2fDoDzEju
- 7oxAP3NZNnl4CWQ+4ABRSlFHfr69OW48OjWrqLuw0rOIErEB0vJgMEZmAhSDyH0HCH8d
- g9I20Il+BmNzZqbC2I7Nntv1UvkYKqrX6E6V2IC3SjdKitAmPJnFw1HRuP9eZnEZ/FNn
- qRnZP8JmrZnI26xmXdgu/KD53rdErLVjRDt6WwAPac7K6v7ak5F4SNWSfY1RI2xDeD0b
- Fmpy6nkKKJkdNNnHuBDN6JpeklhLP0EfkOAeSYSkRw9Y2110wQFY24zrt+cNbhNxxZuv
- 4xMA==
-X-Gm-Message-State: APjAAAUJV9NWqwFncLaCutqnqcm4fpoEwOl2S/BqKIhMYDVB7Ms4dV/v
- I2BKMAl7PR2Hmi0TUlUzJUyKZg==
-X-Google-Smtp-Source: APXvYqxkM6ktiWCEM1gqn7xdCAq1H8SUHv1ONtgQMHWQlXL7zOYWsChPTUEBmgu+6sfEVtGq5LV5sQ==
-X-Received: by 2002:adf:f812:: with SMTP id s18mr27406526wrp.32.1568114964889; 
- Tue, 10 Sep 2019 04:29:24 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net.
- [86.9.19.6])
- by smtp.gmail.com with ESMTPSA id q14sm37141616wrc.77.2019.09.10.04.29.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2019 04:29:24 -0700 (PDT)
-Date: Tue, 10 Sep 2019 12:29:22 +0100
-From: Daniel Thompson <daniel.thompson@linaro.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 2/2] hwrng: npcm: add NPCM RNG driver
-Message-ID: <20190910112922.xqho33smx6zsmank@holly.lan>
-References: <20190828162617.237398-1-tmaimon77@gmail.com>
- <20190828162617.237398-3-tmaimon77@gmail.com>
- <20190829104721.tnjk3bqt3cq6iagr@holly.lan>
- <CAP6Zq1jXUhKjwBHiDKiKcpt_PiJQA61z2SUNg4_LztcnMMJ-Ng@mail.gmail.com>
- <20190909151033.f3inbbas4duzsmh5@holly.lan>
- <CAP6Zq1jZWap+BYoEZ3Hzni-0fxa1xAw2B8tGYHxuFbP0Lz0wpw@mail.gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=S0O7D2s7VDjrEpmmMV3/ubzBk8Kasc1VuRf/+yWrcPk=;
+ b=Kj8JJ2WTFfhk1PKq8mo2vuwrXzoauBm5JTFHoAdtFuLiJ6kaW3xoLErKQ39BJXzKnn
+ TttpuZLiY2OWt+etJDP+FjlcyYkamvKvgdGJLoxRu9bTT97qlgzi0IyN23QTp1D74Pcr
+ zUl9etZQLoZdqUG07KDKEbnjVa5WGwaU+kAJ+EQm1WoqzzXVRsxHrMp3OF9/ZNOrL+Lq
+ 1+fKpf1bAdYbyCsPqUv7ZSNBAta95uqUUZDzAgg9xPT7fVKFf6Dt7+vokDjQIP43QkwG
+ 3UpEKSjXKsJHAGyqA3Zx7e8ms7uU49bJ7mCBjA/EzdPmQzLmg3DTMKNmREdX3p/v6YQu
+ GdTw==
+X-Gm-Message-State: APjAAAVM0MlgN4obtFEyK+ik0VHf1DPLXfpKyfLHVDN56VYjpHED+Qmj
+ KrJnPJJ9Xdl73U5ReuF4iYyIBJ/rbJ78Mp48CnM=
+X-Google-Smtp-Source: APXvYqz9sP5be0HOA6PEFseQqn8VSBOwoJ9+fZTU3FATxjE/8nEe/4Q/OOudhrYN48DX8sCfsmKAmLqmAg3X9tuYsTw=
+X-Received: by 2002:a9d:7389:: with SMTP id j9mr1135452otk.269.1568116000322; 
+ Tue, 10 Sep 2019 04:46:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1jZWap+BYoEZ3Hzni-0fxa1xAw2B8tGYHxuFbP0Lz0wpw@mail.gmail.com>
-User-Agent: NeoMutt/20180716
+References: <20190909123840.154745-1-tmaimon77@gmail.com>
+ <20190909123840.154745-2-tmaimon77@gmail.com>
+ <20190910102505.vgyomi575ldrk2lq@holly.lan>
+In-Reply-To: <20190910102505.vgyomi575ldrk2lq@holly.lan>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Tue, 10 Sep 2019 14:55:44 +0300
+Message-ID: <CAP6Zq1igPJ5PvaA2YaC-=ngQOnatt4PFJj-QzaJCueDf6KA19A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-binding: hwrng: add NPCM RNG documentation
+To: Daniel Thompson <daniel.thompson@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000002a7a3805923175cd"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,246 +87,158 @@ Cc: Mark Rutland <mark.rutland@arm.com>, sumit.garg@linaro.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 10, 2019 at 01:52:35PM +0300, Tomer Maimon wrote:
-> Hi Daniel,
-> 
-> Thanks for your prompt reply,
-> 
-> 
-> 
-> On Mon, 9 Sep 2019 at 18:10, Daniel Thompson <daniel.thompson@linaro.org>
-> wrote:
-> 
-> > On Mon, Sep 09, 2019 at 05:31:30PM +0300, Tomer Maimon wrote:
-> > > Hi Daniel,
-> > >
-> > > appreciate your comments and sorry for the late reply
-> > >
-> > > On Thu, 29 Aug 2019 at 13:47, Daniel Thompson <
-> > daniel.thompson@linaro.org>
-> > > wrote:
-> > >
-> > > > On Wed, Aug 28, 2019 at 07:26:17PM +0300, Tomer Maimon wrote:
-> > > > > Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
-> > > > >
-> > > > > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> > > > > ---
-> > > > >  drivers/char/hw_random/Kconfig    |  13 ++
-> > > > >  drivers/char/hw_random/Makefile   |   1 +
-> > > > >  drivers/char/hw_random/npcm-rng.c | 207
-> > ++++++++++++++++++++++++++++++
-> > > > >  3 files changed, 221 insertions(+)
-> > > > >  create mode 100644 drivers/char/hw_random/npcm-rng.c
-> > > > >
-> > > > > diff --git a/drivers/char/hw_random/npcm-rng.c
-> > > > b/drivers/char/hw_random/npcm-rng.c
-> > > > > new file mode 100644
-> > > > > index 000000000000..5b4b1b6cb362
-> > > > > --- /dev/null
-> > > > > +++ b/drivers/char/hw_random/npcm-rng.c
-> > > > > @@ -0,0 +1,207 @@
-> > > > > +// SPDX-License-Identifier: GPL-2.0
-> > > > > +// Copyright (c) 2019 Nuvoton Technology corporation.
-> > > > > +
-> > > > > +#include <linux/kernel.h>
-> > > > > +#include <linux/module.h>
-> > > > > +#include <linux/io.h>
-> > > > > +#include <linux/iopoll.h>
-> > > > > +#include <linux/init.h>
-> > > > > +#include <linux/random.h>
-> > > > > +#include <linux/err.h>
-> > > > > +#include <linux/platform_device.h>
-> > > > > +#include <linux/hw_random.h>
-> > > > > +#include <linux/delay.h>
-> > > > > +#include <linux/of_irq.h>
-> > > > > +#include <linux/pm_runtime.h>
-> > > > > +
-> > > > > +#define NPCM_RNGCS_REG               0x00    /* Control and status
-> > > > register */
-> > > > > +#define NPCM_RNGD_REG                0x04    /* Data register */
-> > > > > +#define NPCM_RNGMODE_REG     0x08    /* Mode register */
-> > > > > +
-> > > > > +#define NPCM_RNG_CLK_SET_25MHZ       GENMASK(4, 3) /* 20-25 MHz */
-> > > > > +#define NPCM_RNG_DATA_VALID  BIT(1)
-> > > > > +#define NPCM_RNG_ENABLE              BIT(0)
-> > > > > +#define NPCM_RNG_M1ROSEL     BIT(1)
-> > > > > +
-> > > > > +#define NPCM_RNG_TIMEOUT_POLL        20
-> > > >
-> > > > Might be better to define this in real-world units (such as
-> > > > milliseconds) since the timeout is effectively the longest time the
-> > > > hardware can take to generate 4 bytes.
-> > > >
-> > > > > +
-> > > > > +#define to_npcm_rng(p)       container_of(p, struct npcm_rng, rng)
-> > > > > +
-> > > > > +struct npcm_rng {
-> > > > > +     void __iomem *base;
-> > > > > +     struct hwrng rng;
-> > > > > +};
-> > > > > +
-> > > > > +static int npcm_rng_init(struct hwrng *rng)
-> > > > > +{
-> > > > > +     struct npcm_rng *priv = to_npcm_rng(rng);
-> > > > > +     u32 val;
-> > > > > +
-> > > > > +     val = readl(priv->base + NPCM_RNGCS_REG);
-> > > > > +     val |= NPCM_RNG_ENABLE;
-> > > > > +     writel(val, priv->base + NPCM_RNGCS_REG);
-> > > > > +
-> > > > > +     return 0;
-> > > > > +}
-> > > > > +
-> > > > > +static void npcm_rng_cleanup(struct hwrng *rng)
-> > > > > +{
-> > > > > +     struct npcm_rng *priv = to_npcm_rng(rng);
-> > > > > +     u32 val;
-> > > > > +
-> > > > > +     val = readl(priv->base + NPCM_RNGCS_REG);
-> > > > > +     val &= ~NPCM_RNG_ENABLE;
-> > > > > +     writel(val, priv->base + NPCM_RNGCS_REG);
-> > > > > +}
-> > > > > +
-> > > > > +static bool npcm_rng_wait_ready(struct hwrng *rng, bool wait)
-> > > > > +{
-> > > > > +     struct npcm_rng *priv = to_npcm_rng(rng);
-> > > > > +     int timeout_cnt = 0;
-> > > > > +     int ready;
-> > > > > +
-> > > > > +     ready = readl(priv->base + NPCM_RNGCS_REG) &
-> > NPCM_RNG_DATA_VALID;
-> > > > > +     while ((ready == 0) && (timeout_cnt < NPCM_RNG_TIMEOUT_POLL)) {
-> > > > > +             usleep_range(500, 1000);
-> > > > > +             ready = readl(priv->base + NPCM_RNGCS_REG) &
-> > > > > +                     NPCM_RNG_DATA_VALID;
-> > > > > +             timeout_cnt++;
-> > > > > +     }
-> > > > > +
-> > > > > +     return !!ready;
-> > > > > +}
-> > > >
-> > > > This looks like an open-coded version of readl_poll_timeout()... better
-> > > > to use the library function.
-> > > >
-> > > > Also the sleep looks a bit long to me. What is the generation rate of
-> > > > the peripheral? Most RNG drivers have short intervals between data
-> > > > generation so they use delays rather than sleeps (a.k.a.
-> > > > readl_poll_timeout_atomic() ).
-> > >
-> > > the HWRNG generate byte of random data in a few milliseconds so it is
-> > > better to use the sleep command.
-> >
-> > That's fine, just use readl_poll_timeout() then.
-> >
-> >
-> > > > > +
-> > > > > +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max,
-> > bool
-> > > > wait)
-> > > > > +{
-> > > > > +     struct npcm_rng *priv = to_npcm_rng(rng);
-> > > > > +     int retval = 0;
-> > > > > +
-> > > > > +     pm_runtime_get_sync((struct device *)priv->rng.priv);
-> > > > > +
-> > > > > +     while (max >= sizeof(u32)) {
-> > > > > +             if (!npcm_rng_wait_ready(rng, wait))
-> > > > > +                     break;
-> > > >
-> > > > The code as currently written does not honour the wait parameter (e.g.
-> > > > it sleeps even when wait is false).
-> > > >
-> > > >
-> > > > > +
-> > > > > +             *(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
-> > > > > +             retval += sizeof(u32);
-> > > > > +             buf += sizeof(u32);
-> > > > > +             max -= sizeof(u32);
-> > > > > +     }
-> > > > > +
-> > > > > +     pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
-> > > > > +     pm_runtime_put_sync_autosuspend((struct device
-> > *)priv->rng.priv);
-> > > > > +
-> > > > > +     return retval || !wait ? retval : -EIO;
-> > > > > +}
-> > > > > +
-> > > > > +static int npcm_rng_probe(struct platform_device *pdev)
-> > > > > +{
-> > > > > +     struct npcm_rng *priv;
-> > > > > +     struct resource *res;
-> > > > > +     u32 quality;
-> > > > > +     int ret;
-> > > > > +
-> > > > > +     priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-> > > > > +     if (!priv)
-> > > > > +             return -ENOMEM;
-> > > > > +
-> > > > > +     res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > > > > +     priv->base = devm_ioremap_resource(&pdev->dev, res);
-> > > > > +     if (IS_ERR(priv->base))
-> > > > > +             return PTR_ERR(priv->base);
-> > > > > +
-> > > > > +     priv->rng.name = pdev->name;
-> > > > > +#ifndef CONFIG_PM
-> > > > > +     priv->rng.init = npcm_rng_init;
-> > > > > +     priv->rng.cleanup = npcm_rng_cleanup;
-> > > > > +#endif
-> > > > > +     priv->rng.read = npcm_rng_read;
-> > > > > +     priv->rng.priv = (unsigned long)&pdev->dev;
-> > > > > +     if (of_property_read_u32(pdev->dev.of_node, "quality",
-> > &quality))
-> > > > > +             priv->rng.quality = 1000;
-> > > > > +     else
-> > > > > +             priv->rng.quality = quality;
-> > > > > +
-> > > > > +     writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
-> > > > > +#ifndef CONFIG_PM
-> > > > > +     writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-> > > > > +#else
-> > > > > +     writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
-> > > > > +            priv->base + NPCM_RNGCS_REG);
-> > > > > +#endif
-> > > >
-> > > > If this initialization was moved to npcm_rng_init() then there would be
-> > > > no need for the additional ifdefing. It would also get rid of the
-> > > > (potentially slow) readl calls on the PM wakeup path.
-> > > >
-> > >
-> > > But when the Kernel have PM configuration than the priv->rng.init is not
-> > > set and
-> > > *add_early_randomness* function is called. for the *add_early_randomness*
-> > > success
-> > > the hwrng need to enabled in the probe.
-> >
-> > Sorry but I don't understand this reply.
-> >
-> > When CONFIG_PM is enabled then the probe function does not currently set
-> > NPCM_RNG_ENABLE; instead is relies on npcm_rng_init() being called by
-> >
-> 
-> Sorry maybe I miss understood, but when the  CONFIG_PM enabled so the
-> NPCM_RNG_ENABLE sets (the code use ifndef and not ifdef)
-> *#ifndef CONFIG_PM*
->        writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-> #else (*CONFIG_PM enabled*)
->        writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
->               priv->base + NPCM_RNGCS_REG);
-> #endif
-> 
-> And the hwrng needed to be enabled to run *add_early_randomness *function
-> successfully.
-> 
-> If the hwrng driver will relay on PM logic to enable the hwrng will be
-> disable when *add_early_randomness *function is called.
-> 
-> the PM logic (as part of pm_runtime_get_sync() ).
+--0000000000002a7a3805923175cd
+Content-Type: text/plain; charset="UTF-8"
 
-I ended up reading my mail out of order and replied to the v2 patch.
+Hi Daniel,
 
-The question is *why* the driver doesn't resume properly when adding
-early randomness! I think it is because the hwrng_register() is being
-called before PM runtime is enabled.
+Sorry but I have probably miss it, thanks a lot for your comment
+
+On Tue, 10 Sep 2019 at 13:25, Daniel Thompson <daniel.thompson@linaro.org>
+wrote:
+
+> On Mon, Sep 09, 2019 at 03:38:39PM +0300, Tomer Maimon wrote:
+> > Added device tree binding documentation for Nuvoton BMC
+> > NPCM Random Number Generator (RNG).
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  .../bindings/rng/nuvoton,npcm-rng.txt           | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> >  create mode 100644
+> Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+> >
+> > diff --git a/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+> b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+> > new file mode 100644
+> > index 000000000000..a697b4425fb3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+> > @@ -0,0 +1,17 @@
+> > +NPCM SoC Random Number Generator
+> > +
+> > +Required properties:
+> > +- compatible  : "nuvoton,npcm750-rng" for the NPCM7XX BMC.
+> > +- reg         : Specifies physical base address and size of the
+> registers.
+> > +
+> > +Optional property:
+> > +- quality : estimated number of bits of true entropy per 1024 bits
+> > +                     read from the rng.
+> > +                     If this property is not defined, it defaults to
+> 1000.
+>
+> There are pending unreplied review comments about this property (my own
+> as it happens):
+> https://patchwork.kernel.org/patch/11119371/
+>
+> No, there isn't different SoCs.
+we had checked the quality of the hwrng and the results we got are set as
+default.
+we been asked from one of our client to have a dynamic quality, they will
+like to be more strict when using the hwrng.
+is it problematic to add it?
+
+Having a controllable quality implies that the numeric quality of the
+peripheral changes when it is stamped out on different SoCs (otherwise
+the driver can confidently set the quality without needing any hint
+from the DT). Is that really true here?
 
 
-Daniel.
+> Daniel.
+>
+> > +
+> > +Example:
+> > +
+> > +rng: rng@f000b000 {
+> > +     compatible = "nuvoton,npcm750-rng";
+> > +     reg = <0xf000b000 0x8>;
+> > +};
+> > --
+> > 2.18.0
+> >
+>
+
+--0000000000002a7a3805923175cd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Daniel,<div><br></div><div>Sorry but I=
+ have probably miss it, thanks a lot for your comment</div></div><br><div c=
+lass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, 10 Sep 2=
+019 at 13:25, Daniel Thompson &lt;<a href=3D"mailto:daniel.thompson@linaro.=
+org">daniel.thompson@linaro.org</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">On Mon, Sep 09, 2019 at 03:38:39PM +0300, =
+Tomer Maimon wrote:<br>
+&gt; Added device tree binding documentation for Nuvoton BMC<br>
+&gt; NPCM Random Number Generator (RNG).<br>
+&gt; <br>
+&gt; Signed-off-by: Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@gmail.com"=
+ target=3D"_blank">tmaimon77@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 .../bindings/rng/nuvoton,npcm-rng.txt=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0| 17 +++++++++++++++++<br>
+&gt;=C2=A0 1 file changed, 17 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 Documentation/devicetree/bindings/rng/nuvoton=
+,npcm-rng.txt<br>
+&gt; <br>
+&gt; diff --git a/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.tx=
+t b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt<br>
+&gt; new file mode 100644<br>
+&gt; index 000000000000..a697b4425fb3<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt<br>
+&gt; @@ -0,0 +1,17 @@<br>
+&gt; +NPCM SoC Random Number Generator<br>
+&gt; +<br>
+&gt; +Required properties:<br>
+&gt; +- compatible=C2=A0 : &quot;nuvoton,npcm750-rng&quot; for the NPCM7XX =
+BMC.<br>
+&gt; +- reg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: Specifies physical base addr=
+ess and size of the registers.<br>
+&gt; +<br>
+&gt; +Optional property:<br>
+&gt; +- quality : estimated number of bits of true entropy per 1024 bits<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0read from the rng.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0If this property is not defined, it defaults to 1000.<br>
+<br>
+There are pending unreplied review comments about this property (my own<br>
+as it happens):<br>
+<a href=3D"https://patchwork.kernel.org/patch/11119371/" rel=3D"noreferrer"=
+ target=3D"_blank">https://patchwork.kernel.org/patch/11119371/</a><br>
+<br></blockquote><div>No, there isn&#39;t different SoCs.</div><div>we had =
+checked the quality of the hwrng and the results we got are set as default.=
+</div><div>we been asked from one of our client to have a dynamic quality, =
+they will like to be more strict when using the hwrng.</div><div>is it prob=
+lematic to add it?</div><pre class=3D"gmail-content" style=3D"box-sizing:bo=
+rder-box;overflow:auto;font-family:Menlo,Monaco,Consolas,&quot;Courier New&=
+quot;,monospace;font-size:13px;padding:9.5px;margin-top:0px;margin-bottom:1=
+0px;line-height:14.3px;color:rgb(51,51,51);word-break:break-all;border:0px;=
+border-radius:0px">Having a controllable quality implies that the numeric q=
+uality of the
+peripheral changes when it is stamped out on different SoCs (otherwise
+the driver can confidently set the quality without needing any hint
+from the DT). Is that really true here?=C2=A0</pre><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">
+<br>
+Daniel.<br>
+<br>
+&gt; +<br>
+&gt; +Example:<br>
+&gt; +<br>
+&gt; +rng: rng@f000b000 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0compatible =3D &quot;nuvoton,npcm750-rng&quot;;<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0reg =3D &lt;0xf000b000 0x8&gt;;<br>
+&gt; +};<br>
+&gt; -- <br>
+&gt; 2.18.0<br>
+&gt; <br>
+</blockquote></div></div>
+
+--0000000000002a7a3805923175cd--
