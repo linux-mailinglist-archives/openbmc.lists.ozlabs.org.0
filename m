@@ -1,54 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 768DCAE1E3
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 03:25:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86F67AE1E5
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 03:27:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46S6lv1FrkzDqRs
-	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 11:25:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46S6pZ04jVzDqRB
+	for <lists+openbmc@lfdr.de>; Tue, 10 Sep 2019 11:27:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
  envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46S6lH0Ym3zDqMx
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 11:24:41 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46S6p12hqFzDqMx
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 11:27:04 +1000 (AEST)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 09 Sep 2019 18:24:38 -0700
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 Sep 2019 18:27:01 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.64,487,1559545200"; 
- d="scan'208,217";a="200180088"
+ d="scan'208,217";a="200180545"
 Received: from unknown (HELO yongli3MOBL) ([10.239.197.120])
- by fmsmga001.fm.intel.com with ESMTP; 09 Sep 2019 18:24:36 -0700
+ by fmsmga001.fm.intel.com with ESMTP; 09 Sep 2019 18:27:00 -0700
 From: "Yong Li" <yong.b.li@linux.intel.com>
-To: "'Zheng Bao'" <fishbaoz@hotmail.com>,
-	<openbmc@lists.ozlabs.org>
+To: "'Zheng Bao'" <fishbaoz@hotmail.com>, "'Andrew Jeffery'" <andrew@aj.id.au>,
+ "'AKASH G J'" <akashgj91@gmail.com>, <openbmc@lists.ozlabs.org>
 References: <CAE33tLGxcBFHYzXQ7Uqdg03ZibvS4busoJT=iGTwLMb8TMD-2g@mail.gmail.com>
  <57995e3f-ef82-49b3-909a-054b5b9bef8e@www.fastmail.com>,
  <000001d55efc$36c53100$a44f9300$@linux.intel.com>
  <MN2PR04MB666979DC3506E051D6F44A54CDB50@MN2PR04MB6669.namprd04.prod.outlook.com>
-In-Reply-To: 
+In-Reply-To: <MN2PR04MB666979DC3506E051D6F44A54CDB50@MN2PR04MB6669.namprd04.prod.outlook.com>
 Subject: RE: Enable KCS interface in zaius
-Date: Tue, 10 Sep 2019 09:24:36 +0800
-Message-ID: <000901d56776$82cf6750$886e35f0$@linux.intel.com>
+Date: Tue, 10 Sep 2019 09:26:59 +0800
+Message-ID: <000e01d56776$d87696b0$8963c410$@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
- boundary="----=_NextPart_000_000A_01D567B9.90F3B8C0"
+ boundary="----=_NextPart_000_000F_01D567B9.E69D3210"
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJcB1X7Z8c6uIR1m/dKdfL+hCFWWQFjbNgiAoQUDF0Cosk6GKXhdpZQgAEVFHA=
+Thread-Index: AQJcB1X7Z8c6uIR1m/dKdfL+hCFWWQFjbNgiAoQUDF0Cosk6GKXijF1g
 Content-Language: en-us
 x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYjcwOGZmYmUtMDAwYS00ZjZiLWE1NjItYjJjODViMTgwOTlkIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiOEtSVmVZK0JrTlhEdStNUmhIeVFSTSs4MHZ4RGNGWmE5MW9TSktuVlo3VHZDOHk5MVREK0FQNXRnOW9IVWIySyJ9
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMWVhODJlNmEtZjVlZC00YzI3LWJkODEtMTQxZTBjYzA2Yzg3IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiOWlUZ3U5SnE4bWlMTlNlXC9EZXcrSjhqWkdoUWd3UEgxUExvWWNxMlVlZ2dcL3IweDZtdWNhUDJXNG5CdGdcLzJXMyJ9
 dlp-product: dlpe-windows
 dlp-version: 11.0.600.7
 dlp-reaction: no-action
@@ -68,12 +68,13 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is a multipart message in MIME format.
 
-------=_NextPart_000_000A_01D567B9.90F3B8C0
+------=_NextPart_000_000F_01D567B9.E69D3210
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 
-I also would like to know how did you perform the build?
+I would like to know how did you perform the build? Please perform the below
+commands:
 
  
 
@@ -91,36 +92,10 @@ Yong
 
  
 
-From: Yong Li <yong.b.li@linux.intel.com> 
-Sent: Monday, September 9, 2019 4:53 PM
-To: 'Zheng Bao' <fishbaoz@hotmail.com>; 'Andrew Jeffery' <andrew@aj.id.au>;
-'AKASH G J' <akashgj91@gmail.com>; 'openbmc@lists.ozlabs.org'
-<openbmc@lists.ozlabs.org>
-Subject: RE: Enable KCS interface in zaius
-
- 
-
-Can you find the image-mtd file? You can flash this file with this
-command(scp it to /tmp folder on the board):
-
- 
-
-flashcp /tmp/image-mtd /dev/mtd0
-
- 
-
-Thanks,
-
-Yong
-
-From: openbmc <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org
-<mailto:openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org> > On
-Behalf Of Zheng Bao
+From: Zheng Bao <fishbaoz@hotmail.com> 
 Sent: Saturday, September 7, 2019 7:34 PM
-To: Yong Li <yong.b.li@linux.intel.com <mailto:yong.b.li@linux.intel.com> >;
-'Andrew Jeffery' <andrew@aj.id.au <mailto:andrew@aj.id.au> >; 'AKASH G J'
-<akashgj91@gmail.com <mailto:akashgj91@gmail.com> >;
-openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org> 
+To: Yong Li <yong.b.li@linux.intel.com>; 'Andrew Jeffery' <andrew@aj.id.au>;
+'AKASH G J' <akashgj91@gmail.com>; openbmc@lists.ozlabs.org
 Subject: Re: Enable KCS interface in zaius
 
  
@@ -171,8 +146,7 @@ Suggest to check on this: https://github.com/Intel-BMC/openbmc
 Thanks,
 Yong
 -----Original Message-----
-From: openbmc <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org
-<mailto:openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org> >
+From: openbmc <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org>
 On Behalf Of Andrew Jeffery
 Sent: Friday, August 30, 2019 12:42 PM
 To: AKASH G J <akashgj91@gmail.com <mailto:akashgj91@gmail.com> >;
@@ -196,7 +170,7 @@ s2600wf. This should already have KCS IPMI enabled for you.
 Andrew
 
 
-------=_NextPart_000_000A_01D567B9.90F3B8C0
+------=_NextPart_000_000F_01D567B9.E69D3210
 Content-Type: text/html;
 	charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
@@ -204,6 +178,7 @@ Content-Transfer-Encoding: quoted-printable
 <html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
 xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
 xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" =
 xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
 xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
 http-equiv=3DContent-Type content=3D"text/html; =
@@ -247,16 +222,8 @@ p.msonormal0, li.msonormal0, div.msonormal0
 	margin-bottom:.0001pt;
 	font-size:11.0pt;
 	font-family:"Calibri",sans-serif;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
 span.EmailStyle20
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle21
-	{mso-style-type:personal-compose;
+	{mso-style-type:personal-reply;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
 .MsoChpDefault
@@ -273,9 +240,10 @@ div.WordSection1
 <o:shapelayout v:ext=3D"edit">
 <o:idmap v:ext=3D"edit" data=3D"1" />
 </o:shapelayout></xml><![endif]--></head><body lang=3DEN-US link=3Dblue =
-vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal>I also =
-would like to know how did you perform the build?<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>export =
+vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal>I would =
+like to know how did you perform the build? Please perform the below =
+commands:<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>export =
 TEMPLATECONF=3Dmeta-openbmc-mods/meta-wht/conf<o:p></o:p></p><p =
 class=3DMsoNormal>source oe-init-build-env<o:p></o:p></p><p =
 class=3DMsoNormal>bitbake intel-platforms<o:p></o:p></p><p =
@@ -285,35 +253,12 @@ class=3DMsoNormal>Yong<o:p></o:p></p><p =
 class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><div =
 style=3D'border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
 0in 0in'><p class=3DMsoNormal><a =
-name=3D"_____replyseparator"></a><b>From:</b> Yong Li =
-&lt;yong.b.li@linux.intel.com&gt; <br><b>Sent:</b> Monday, September 9, =
-2019 4:53 PM<br><b>To:</b> 'Zheng Bao' &lt;fishbaoz@hotmail.com&gt;; =
+name=3D"_____replyseparator"></a><b>From:</b> Zheng Bao =
+&lt;fishbaoz@hotmail.com&gt; <br><b>Sent:</b> Saturday, September 7, =
+2019 7:34 PM<br><b>To:</b> Yong Li &lt;yong.b.li@linux.intel.com&gt;; =
 'Andrew Jeffery' &lt;andrew@aj.id.au&gt;; 'AKASH G J' =
-&lt;akashgj91@gmail.com&gt;; 'openbmc@lists.ozlabs.org' =
-&lt;openbmc@lists.ozlabs.org&gt;<br><b>Subject:</b> RE: Enable KCS =
-interface in zaius<o:p></o:p></p></div></div><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Can you find =
-the image-mtd file? You can flash this file with this command(scp it to =
-/tmp folder on the board):<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>flashcp =
-/tmp/image-mtd /dev/mtd0<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
-class=3DMsoNormal>Yong<o:p></o:p></p><div><div =
-style=3D'border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
-0in 0in'><p class=3DMsoNormal><b>From:</b> openbmc &lt;<a =
-href=3D"mailto:openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.o=
-rg">openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org</a>&gt; =
-<b>On Behalf Of </b>Zheng Bao<br><b>Sent:</b> Saturday, September 7, =
-2019 7:34 PM<br><b>To:</b> Yong Li &lt;<a =
-href=3D"mailto:yong.b.li@linux.intel.com">yong.b.li@linux.intel.com</a>&g=
-t;; 'Andrew Jeffery' &lt;<a =
-href=3D"mailto:andrew@aj.id.au">andrew@aj.id.au</a>&gt;; 'AKASH G J' =
-&lt;<a href=3D"mailto:akashgj91@gmail.com">akashgj91@gmail.com</a>&gt;; =
-<a =
-href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><br>=
-<b>Subject:</b> Re: Enable KCS interface in =
-zaius<o:p></o:p></p></div></div><p =
+&lt;akashgj91@gmail.com&gt;; openbmc@lists.ozlabs.org<br><b>Subject:</b> =
+Re: Enable KCS interface in zaius<o:p></o:p></p></div></div><p =
 class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><p class=3DMsoNormal>I check =
 out the <a =
 href=3D"https://github.com/Intel-BMC/openbmc">https://github.com/Intel-BM=
@@ -373,5 +318,5 @@ processor for the<br>host, so perhaps it's better to start with an =
 x86-based platform such as the<br>s2600wf. This should already have KCS =
 IPMI enabled for =
 you.<br><br>Andrew<o:p></o:p></p></div></div></div></div></body></html>
-------=_NextPart_000_000A_01D567B9.90F3B8C0--
+------=_NextPart_000_000F_01D567B9.E69D3210--
 
