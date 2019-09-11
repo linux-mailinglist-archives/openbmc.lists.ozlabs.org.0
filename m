@@ -1,57 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76915B02B4
-	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 19:29:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7441B02B6
+	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 19:32:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46T85b01LMzF3qp
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 03:29:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46T89D4wZWzF3n1
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 03:32:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=178.32.124.17; helo=20.mo6.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 4201 seconds by postgrey-1.36 at bilbo;
- Thu, 12 Sep 2019 03:28:32 AEST
-Received: from 20.mo6.mail-out.ovh.net (20.mo6.mail-out.ovh.net
- [178.32.124.17])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46T84w68VnzF3pj
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 03:28:28 +1000 (AEST)
-Received: from player773.ha.ovh.net (unknown [10.109.160.12])
- by mo6.mail-out.ovh.net (Postfix) with ESMTP id 1B6471E0A61
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 18:13:17 +0200 (CEST)
-Received: from kaod.org (lfbn-1-2240-157.w90-76.abo.wanadoo.fr [90.76.60.157])
- (Authenticated sender: clg@kaod.org)
- by player773.ha.ovh.net (Postfix) with ESMTPSA id 93E9B9B4FC64;
- Wed, 11 Sep 2019 16:13:13 +0000 (UTC)
-Subject: Re: GPIO state in qemu
-To: Rashmica Gupta <rashmica.g@gmail.com>,
- James Feist <james.feist@linux.intel.com>, Joel Stanley <joel@jms.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CACPK8XdHwwQwc8-5uf319tX7v3Uh7CcG1rLRmTEK9oKQPYS0hw@mail.gmail.com>
- <6c036cfc-22d4-fd73-da83-60121e6433c2@linux.intel.com>
- <60430dd8-e3c5-e020-2ff7-cb4c536e20a0@kaod.org>
- <a9c7851e4cd92bb2de0fb7ec8eccf2f25f652c1a.camel@gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <793ed9ff-e78d-8177-3eee-0b51d4137489@kaod.org>
-Date: Wed, 11 Sep 2019 18:13:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46T88c49c6zF3nd
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 03:31:43 +1000 (AEST)
+X-Amp-Result: UNSCANNABLE
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2019 10:31:41 -0700
+X-IronPort-AV: E=Sophos;i="5.64,494,1559545200"; d="scan'208";a="185884516"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by fmsmga007-auth.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2019 10:31:40 -0700
+Date: Wed, 11 Sep 2019 10:31:39 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: Neeraj Ladkani <neladk@microsoft.com>
+Subject: Re: RMCP support
+Message-ID: <20190911173139.GE45301@mauery.jf.intel.com>
+References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <a9c7851e4cd92bb2de0fb7ec8eccf2f25f652c1a.camel@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 2097833005464914690
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrtdefgdejvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,67 +52,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/09/2019 03:12, Rashmica Gupta wrote:
-> On Mon, 2019-09-09 at 19:02 +0200, Cédric Le Goater wrote:
->> On 09/09/2019 18:20, James Feist wrote:
->>> On 9/6/19 11:05 AM, Joel Stanley wrote:
->>>> At the osfc hackathon today James and I were talking about Qemu's
->>>> new support for modelling GPIOs. Here's some documentation on how
->>>> it can be used.
->>>>
->>>> To set a pin's state in the monitor:
->>>>
->>>> qom-set gpio gpioA0 true
->>>>
->>>> To do the equivalent in code:
->>>>
->>>> object_property_set_bool(OBJECT(&s->gpio), true, "gpioA0",
->>>> &error_abort);
->>>
->>> I'm trying to use object_property_set_bool in hw/arm/aspeed.c in an
->>> i2c_init block and I'm noticing by the time uboot is reached that
->>> the registers are reset back to the default. 
->>
->> These routines are called before the machine and devices are reseted.
->>
->>> If I use qom-set it seems to work correctly. 
->>
->> The machine has been reseted.
->>
->>> Where is the correct place to put the object_property_set_bool so
->>> that it doesn't get reset by the time it's ready to be read? Does
->>> AspeedBoardConfig need a gpio_init as well as an i2c_init?
->>  
->> we would need to change the default reset value in the reset handler
->> of the GPIO device model : aspeed_gpio_reset(). We don't have a way 
->> to set default values yet, all 0s for now.
->>
->> Rashmica,
->>
->> Would it be complex to add a set of default values with which we 
->> could memset the ->sets array in the reset handler() like we do 
->> for SCU ? 
->>
-> 
-> I think it should be pretty straightforward. Do we want one statically
-> defined set of default values per SoC version?
+On 11-Sep-2019 05:27 AM, Neeraj Ladkani wrote:
+> Is there any plan to add RMCP support in IPMI LAN stack ?
 
-yes, to start with, like we do in SCU. 
+There are no plans for adding RMCP support. RMCP is horribly insecure; 
+even more insecure than the least secure RMCP+ cipher suites (not 
+counting cipher suite 0, which should not even be a thing.)
 
-But we would need a property for the specific needs of a board, which 
-value would override the default SoC reset values. 
+Not implementing RMCP was an intentional choice. RMCP+ is insecure, 
+especially with passwords shorter than 8 (as shown by Rick Altherr's 
+OSFC 2019 presentation). It is recommended that RMCP+ is only used with 
+cipher suite 17 and maximum length passwords (20 characters). Ideally, 
+it would not be used at all, preferring Redfish, which uses modern 
+crypto.
 
->> Having a different set of default values per machine would require 
->> a second set of properties under AspeedGPIOState and some slight 
->> rework of aspeed_gpio_get/set_pin.
-> 
-> Why would it require rework of get/set pin?
+Every open source IPMI utility out there supports RMCP+. That should be 
+used instead of RMCP.
 
-because we would only need the logic to set the value and the helper 
-aspeed_gpio_update() does more. 
-
-C.
-
+--Vernon
