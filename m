@@ -2,142 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83F69B0434
-	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 20:53:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A574B044D
+	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 20:56:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46T9yK0j7czF3v9
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 04:52:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TB2f1j8FzF3qS
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 04:56:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=415743da2f=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="alZY/QHO"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="HKmG0Zbe"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46T9xN4FfYzF3tR;
- Thu, 12 Sep 2019 04:52:07 +1000 (AEST)
-Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
- by m0001303.ppops.net (8.16.0.42/8.16.0.42) with SMTP id x8BIkwMk022615;
- Wed, 11 Sep 2019 11:51:05 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=Psmjm4TrrjahD1mccl3eyjBfOgfZTuFXftlDbmifvpU=;
- b=alZY/QHOFiL+gZynVDXPbhLaGqxB4rDolLz1HXxq0ivFqabmuTT/phGeJoiiZRZ81Mcz
- Ayk8j34ULiask0AZX6th7DtiQ1RBnOSJo0BPK6QPZV3URTsrBW0Q4KFXDXEaGVl2fnbM
- 7B0E7aOhT0OY6owR3kuxC7wLfUXStqDRIkM= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by m0001303.ppops.net with ESMTP id 2uy2yah581-7
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 11 Sep 2019 11:51:05 -0700
-Received: from ash-exhub204.TheFacebook.com (2620:10d:c0a8:83::4) by
- ash-exhub202.TheFacebook.com (2620:10d:c0a8:83::6) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Wed, 11 Sep 2019 11:50:42 -0700
-Received: from NAM01-BN3-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.100) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Wed, 11 Sep 2019 11:50:42 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jDE8FNWuPzTyCvlHV53PbVJQyUAUCBPIKQsjOSWKOxkEEFmhrQCbCL3VexuedgRI5ojexQlQ76ZVEFnlzRWOGYyJ7F67XrfSDTjHhpsNGT00P7EPXoEUmMEYOE3dFU3UaM0dLS7MAHiM1CLvcxnXOK3+sQqzffx+kJ80vDjFWIkBGIbz9Iq/rQoAGk8g4pzqqkgSm4lNvHvqIq8rEgmoKkQnl0OkLToTsk1Ath53ruGjRKr5CiqNItuH/GI+cm2YITW0ggjW7pJvjQisREYhBFG6AamfHNOe85fvabJroM/CYFSOhrx0AQu+3R4RDt8UW9uOJ7QrNUNsoRWjEMJXnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Psmjm4TrrjahD1mccl3eyjBfOgfZTuFXftlDbmifvpU=;
- b=TG1P2I1qY5F7tgyBAuxbQwV/deWQJio9hQatMuFkda8cUiXDgP+DoDEccD19ltKCeCXWXCM3d8G3FfTJsIyK5o1DVcAUjeg7MNk5yzLCZKn9ub5CAvYd3dgbx9qZeEaF0awChq1d5ohqArN/hBSqfEEHI6vDXecK+CCeJ6O3nZrCiE/J+IPn/aXDG/Wz+/Ya+yjDARZiQsLCrj7wQj+Bs0IhVDbUFGk/T88GyTACkT7ID7gZBYf1V/3fjFffyWydUhcNeo2HLOm9D76d5kZoxoZ5Ui5amcoYDOqXXn1k0FXsxJ99qCiq/2pAnnatRhHCbBXq6MPnQXWIQ9qphRr6PQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Psmjm4TrrjahD1mccl3eyjBfOgfZTuFXftlDbmifvpU=;
- b=HKmG0ZbemNVo1UQHVuZ/ScHySNxPH97iKlaUoaLI0wFi0e/O0DRgFmo1amsKfI9XERF7cgbSi/fohluUB8gsNf/OP7wcNKq/hUyXMGh3GeCO3nteE/DGtQID8J5tUJWw5ZMNgxj+gp4kFMheoDEtfMT1RUwBJ1wfvS+F/grsBZE=
-Received: from CY4PR15MB1269.namprd15.prod.outlook.com (10.172.177.11) by
- CY4PR15MB1304.namprd15.prod.outlook.com (10.172.181.135) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2241.19; Wed, 11 Sep 2019 18:50:41 +0000
-Received: from CY4PR15MB1269.namprd15.prod.outlook.com
- ([fe80::38b1:336:13e6:b02b]) by CY4PR15MB1269.namprd15.prod.outlook.com
- ([fe80::38b1:336:13e6:b02b%7]) with mapi id 15.20.2241.018; Wed, 11 Sep 2019
- 18:50:41 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Florian Fainelli <f.fainelli@gmail.com>, "David S. Miller"
- <davem@davemloft.net>, YueHaibing <yuehaibing@huawei.com>, Andrew Lunn
- <andrew@lunn.ch>, Kate Stewart <kstewart@linuxfoundation.org>, "Mauro
- Carvalho Chehab" <mchehab+samsung@kernel.org>, Luis Chamberlain
- <mcgrof@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
-Thread-Topic: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
-Thread-Index: AQHVaCL3HHZ/0IxjZ0GB2KAMVKzdAqcld28A//+WvACAAAU0AIABRQWAgAB2ZwD//48zAA==
-Date: Wed, 11 Sep 2019 18:50:41 +0000
-Message-ID: <76733CEB-14E1-4158-B642-5B7F74F97DE4@fb.com>
-References: <20190910213734.3112330-1-vijaykhemka@fb.com>
- <bd5eab2e-6ba6-9e27-54d4-d9534da9d5f7@gmail.com>
- <0797B1F1-883D-4129-AC16-794957ACCF1B@fb.com>
- <D79D04CC-4A02-4E51-8FDF-48B7C7EB6CC2@fb.com>
- <8A8392C8-5E5E-444D-AB1B-E0FAD3C29425@fb.com>
- <c9876340-c8d0-ba8b-2ae1-9900958f1834@gmail.com>
-In-Reply-To: <c9876340-c8d0-ba8b-2ae1-9900958f1834@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::1:a2f5]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: da7b063a-a3c6-4c08-6c53-08d736e8f1c7
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:CY4PR15MB1304; 
-x-ms-traffictypediagnostic: CY4PR15MB1304:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <CY4PR15MB1304E623E5374FE58F3A066DDDB10@CY4PR15MB1304.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
-x-forefront-prvs: 0157DEB61B
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(136003)(39860400002)(376002)(396003)(366004)(346002)(199004)(189003)(76176011)(81166006)(7736002)(81156014)(2616005)(11346002)(6512007)(53546011)(6246003)(6506007)(53936002)(99286004)(476003)(71190400001)(71200400001)(486006)(4326008)(316002)(25786009)(446003)(2201001)(110136005)(54906003)(36756003)(305945005)(478600001)(46003)(14444005)(91956017)(6116002)(256004)(186003)(2501003)(6436002)(102836004)(8676002)(5660300002)(2906002)(14454004)(33656002)(66556008)(66446008)(66476007)(66946007)(229853002)(86362001)(64756008)(8936002)(6486002)(76116006)(7416002)(921003)(1121003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR15MB1304;
- H:CY4PR15MB1269.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: eDfDMmzBEHkpQUiSblesHmXpsgQaKkao/mx12Nriwrk0sfAXXF8RnRH44oPCu2Lx2BhW6zJ5qmZ6FINGq2HjKEGJ3iu5CTm1MGYA9+yYrs9ZWkDecwd4R6FBqZYrdH3yGwWojv+/IJSWHtWw+ZxGmgJWp94KKYDsRE1vkNDIObQecbfSYnMSnZAxhwCtwtAI5aRQWuGNLH03eSw6W/s/zd+CbrrF6h+WYZajQNA87mgxHcbUg0wy6lskuhVDA/HBDxBqrSbQPamZ+SEzgCcc13VRJ8sw7bLUM1ZrivvOCMmWfd1MgRzw2S1OptrhPwHPA2OYFYxaISiFxHF1uqSMJ5FJvdYk7+5oXBJgBrBWGLx95oIWqMbwhjg2S915P9wQO190xSW9g7YvWzRhnqZH3ZRbXz2nyP7B408KAfn11+E=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <CF91FAE597BD7049BC70796950CBA69C@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TB244NFDzF3pj
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 04:56:11 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Sep 2019 11:56:09 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,492,1559545200"; d="scan'208";a="196982092"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
+ ([10.7.153.148])
+ by orsmga002.jf.intel.com with ESMTP; 11 Sep 2019 11:56:09 -0700
+Subject: Re: [PATCH dev-5.2 0/2] i2c: aspeed: Add H/W timeout support
+To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>,
+ Cedric Le Goater <clg@kaod.org>, Eddie James <eajames@linux.ibm.com>
+References: <20190904200758.5420-1-jae.hyun.yoo@linux.intel.com>
+ <CACPK8Xfzn3A7nCFqCbSm=6qsB-5dgJOcz1rgSGhRH=xojb4m_w@mail.gmail.com>
+ <ca423521-05a5-1fcd-27f1-bb5f68fa3c23@linux.intel.com>
+ <e37f18a6-18f0-4768-96c7-fb4ad05fe03f@www.fastmail.com>
+ <d2ceccb7-2b1c-d944-76f2-ea284f4197f5@linux.intel.com>
+ <d602a97b-4555-43cc-b801-c87f3c2899b6@www.fastmail.com>
+ <35ff4cb2-0cc7-ba53-da71-980cc11a09de@linux.intel.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <c8058df6-559d-7b78-f843-2e319219caaa@linux.intel.com>
+Date: Wed, 11 Sep 2019 11:56:09 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: da7b063a-a3c6-4c08-6c53-08d736e8f1c7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2019 18:50:41.1906 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kmnSXSt+Zl4dM0Ka29PooPFdPMK4avCERRzLJwdG7cNY1pW4uowEff1nFCqu/xOnRdrkjkSaOalzse7MWlTLJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR15MB1304
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
- definitions=2019-09-11_08:2019-09-11,2019-09-11 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- malwarescore=0
- clxscore=1015 mlxscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- mlxlogscore=428 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1906280000 definitions=main-1909110171
-X-FB-Internal: deliver
+In-Reply-To: <35ff4cb2-0cc7-ba53-da71-980cc11a09de@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,56 +61,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>
+Cc: Brendan Higgins <brendanhiggins@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCu+7v09uIDkvMTEvMTksIDExOjM0IEFNLCAiRmxvcmlhbiBGYWluZWxsaSIgPGYuZmFpbmVs
-bGlAZ21haWwuY29tPiB3cm90ZToNCg0KICAgIE9uIDkvMTEvMTkgMTE6MzAgQU0sIFZpamF5IEto
-ZW1rYSB3cm90ZToNCiAgICA+IA0KICAgID4gDQogICAgPiBPbiA5LzEwLzE5LCA0OjA4IFBNLCAi
-TGludXgtYXNwZWVkIG9uIGJlaGFsZiBvZiBWaWpheSBLaGVta2EiIDxsaW51eC1hc3BlZWQtYm91
-bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9yZyBvbiBiZWhhbGYgb2Ygdmlq
-YXlraGVta2FAZmIuY29tPiB3cm90ZToNCiAgICA+IA0KICAgID4gICAgIA0KICAgID4gICAgIA0K
-ICAgID4gICAgIE9uIDkvMTAvMTksIDM6NTAgUE0sICJMaW51eC1hc3BlZWQgb24gYmVoYWxmIG9m
-IFZpamF5IEtoZW1rYSIgPGxpbnV4LWFzcGVlZC1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBs
-aXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiB2aWpheWtoZW1rYUBmYi5jb20+IHdyb3RlOg0K
-ICAgID4gICAgIA0KICAgID4gICAgICAgICANCiAgICA+ICAgICAgICAgDQogICAgPiAgICAgICAg
-IE9uIDkvMTAvMTksIDM6MDUgUE0sICJGbG9yaWFuIEZhaW5lbGxpIiA8Zi5mYWluZWxsaUBnbWFp
-bC5jb20+IHdyb3RlOg0KICAgID4gICAgICAgICANCiAgICA+ICAgICAgICAgICAgIE9uIDkvMTAv
-MTkgMjozNyBQTSwgVmlqYXkgS2hlbWthIHdyb3RlOg0KICAgID4gICAgICAgICAgICAgPiBIVyBj
-aGVja3N1bSBnZW5lcmF0aW9uIGlzIG5vdCB3b3JraW5nIGZvciBBU1QyNTAwLCBzcGVjaWFsbHkg
-d2l0aCBJUFY2DQogICAgPiAgICAgICAgICAgICA+IG92ZXIgTkNTSS4gQWxsIFRDUCBwYWNrZXRz
-IHdpdGggSVB2NiBnZXQgZHJvcHBlZC4gQnkgZGlzYWJsaW5nIHRoaXMNCiAgICA+ICAgICAgICAg
-ICAgID4gaXQgd29ya3MgcGVyZmVjdGx5IGZpbmUgd2l0aCBJUFY2Lg0KICAgID4gICAgICAgICAg
-ICAgPiANCiAgICA+ICAgICAgICAgICAgID4gVmVyaWZpZWQgd2l0aCBJUFY2IGVuYWJsZWQgYW5k
-IGNhbiBkbyBzc2guDQogICAgPiAgICAgICAgICAgICANCiAgICA+ICAgICAgICAgICAgIEhvdyBh
-Ym91dCBJUHY0LCBkbyB0aGVzZSBwYWNrZXRzIGhhdmUgcHJvYmxlbT8gSWYgbm90LCBjYW4geW91
-IGNvbnRpbnVlDQogICAgPiAgICAgICAgICAgICBhZHZlcnRpc2luZyBORVRJRl9GX0lQX0NTVU0g
-YnV0IHRha2Ugb3V0IE5FVElGX0ZfSVBWNl9DU1VNPw0KICAgID4gICAgICAgICANCiAgICA+ICAg
-ICAgICAgSSBjaGFuZ2VkIGNvZGUgZnJvbSAobmV0ZGV2LT5od19mZWF0dXJlcyAmPSB+TkVUSUZf
-Rl9IV19DU1VNKSB0byANCiAgICA+ICAgICAgICAgKG5ldGRldi0+aHdfZmVhdHVyZXMgJj0gfk5F
-VElGX0ZfIElQVjZfQ1NVTSkuIEFuZCBpdCBpcyBub3Qgd29ya2luZy4gDQogICAgPiAgICAgICAg
-IERvbid0IGtub3cgd2h5LiBJUFY0IHdvcmtzIHdpdGhvdXQgYW55IGNoYW5nZSBidXQgSVB2NiBu
-ZWVkcyBIV19DU1VNDQogICAgPiAgICAgICAgIERpc2FibGVkLg0KICAgID4gICAgIA0KICAgID4g
-ICAgIE5vdyBJIGNoYW5nZWQgdG8NCiAgICA+ICAgICBuZXRkZXYtPmh3X2ZlYXR1cmVzICY9ICh+
-TkVUSUZfRl9IV19DU1VNKSB8IE5FVElGX0ZfSVBfQ1NVTTsNCiAgICA+ICAgICBBbmQgaXQgd29y
-a3MuDQogICAgPiANCiAgICA+IEkgaW52ZXN0aWdhdGVkIG1vcmUgb24gdGhlc2UgZmVhdHVyZXMg
-YW5kIGZvdW5kIHRoYXQgd2UgY2Fubm90IHNldCBORVRJRl9GX0lQX0NTVU0gDQogICAgPiBXaGls
-ZSBORVRJRl9GX0hXX0NTVU0gaXMgc2V0LiBTbyBJIGRpc2FibGVkIE5FVElGX0ZfSFdfQ1NVTSBm
-aXJzdCBhbmQgZW5hYmxlZA0KICAgID4gTkVUSUZfRl9JUF9DU1VNIGluIG5leHQgc3RhdGVtZW50
-LiBBbmQgaXQgd29ya3MgZmluZS4NCiAgICA+IA0KICAgID4gQnV0IGFzIHBlciBsaW5lIDE2NiBp
-biBpbmNsdWRlL2xpbnV4L3NrYnVmZi5oLCAgDQogICAgPiAqICAgTkVUSUZfRl9JUF9DU1VNIGFu
-ZCBORVRJRl9GX0lQVjZfQ1NVTSBhcmUgYmVpbmcgZGVwcmVjYXRlZCBpbiBmYXZvciBvZg0KICAg
-ID4gICogICBORVRJRl9GX0hXX0NTVU0uIE5ldyBkZXZpY2VzIHNob3VsZCB1c2UgTkVUSUZfRl9I
-V19DU1VNIHRvIGluZGljYXRlDQogICAgPiAgKiAgIGNoZWNrc3VtIG9mZmxvYWQgY2FwYWJpbGl0
-eS4NCiAgICA+IA0KICAgID4gUGxlYXNlIHN1Z2dlc3Qgd2hpY2ggb2YgYmVsb3cgMiBJIHNob3Vs
-ZCBkby4gQXMgYm90aCB3b3JrcyBmb3IgbWUuDQogICAgPiAxLiBEaXNhYmxlIGNvbXBsZXRlbHkg
-TkVUSUZfRl9IV19DU1VNIGFuZCBkbyBub3RoaW5nLiBUaGlzIGlzIG9yaWdpbmFsIHBhdGNoLg0K
-ICAgID4gMi4gRW5hYmxlIE5FVElGX0ZfSVBfQ1NVTSBpbiBhZGRpdGlvbiB0byAxLiBJIGNhbiBo
-YXZlIHYyIGlmIHRoaXMgaXMgYWNjZXB0ZWQuDQogICAgDQogICAgU291bmRzIGxpa2UgMiB3b3Vs
-ZCBsZWF2ZSB0aGUgb3B0aW9uIG9mIG9mZmxvYWRpbmcgSVB2NCBjaGVja3N1bQ0KICAgIG9mZmxv
-YWQsIHNvIHRoYXQgd291bGQgYmUgYSBiZXR0ZXIgbWlkZGxlIGdyb3VwIHRoYW4gZmxhdCBvdXQg
-ZGlzYWJsZQ0KICAgIGNoZWNrc3VtIG9mZmxvYWQgZm9yIGJvdGggSVB2NCBhbmQgSVB2Niwgbm8/
-DQpTb3VuZHMgZ29vZCwgSSB3aWxsIGhhdmUgdjIgYWZ0ZXIgbG90IG1vcmUgdGVzdGluZy4NCiAg
-ICAtLSANCiAgICBGbG9yaWFuDQogICAgDQoNCg==
+Hi Andrew,
+
+On 9/4/2019 5:54 PM, Jae Hyun Yoo wrote:
+> On 9/4/2019 5:10 PM, Andrew Jeffery wrote:
+>>
+>>
+>> On Thu, 5 Sep 2019, at 09:10, Jae Hyun Yoo wrote:
+>>> Hi Andrew,
+>>>
+>>> On 9/4/2019 4:12 PM, Andrew Jeffery wrote:
+>>>> On Thu, 5 Sep 2019, at 08:31, Jae Hyun Yoo wrote:
+>>>>> Hi Joel,
+>>>>>
+>>>>> On 9/4/2019 3:54 PM, Joel Stanley wrote:
+>>>>>> Hi Jae,
+>>>>>>
+>>>>>> On Wed, 4 Sep 2019 at 20:08, Jae Hyun Yoo 
+>>>>>> <jae.hyun.yoo@linux.intel.com> wrote:
+>>>>>>>
+>>>>>>> In case of multi-master environment, if a peer master incorrectly 
+>>>>>>> handles
+>>>>>>> a bus in the middle of a transaction, I2C hardware hangs in slave 
+>>>>>>> state
+>>>>>>> and it can't escape from the slave state, so this commit adds slave
+>>>>>>> inactive timeout support to recover the bus in the case.
+>>>>>>>
+>>>>>>> By applying this change, SDA data-low and SCL clock-low timeout 
+>>>>>>> feature
+>>>>>>> also could be enabled which was disabled previously.
+>>>>>>
+>>>>>> Please consider sending your RFC patches to the upstream list. You
+>>>>>> have a big backlog of patches now.
+>>>>>
+>>>>> Thanks for the reminding. I can't send the RFC patches yet because 
+>>>>> QEMU
+>>>>> H/W model isn't ready yet. I'm still waiting for the fix from Cedric.
+>>>>
+>>>> QEMU shouldn't be preventing you from sending patches upstream, rather
+>>>> it prevents us from enabling the buffer mode support in the OpenBMC
+>>>> kernel tree. You should be sending all patches upstream as early as 
+>>>> possible.
+>>>
+>>> I met a QEMU issue when I was upstreaming a patch set last year:
+>>> https://lists.ozlabs.org/pipermail/linux-aspeed/2018-September/000750.html 
+>>>
+>>>
+>>> If OpenBMC community accepts the QEMU issue, I can submit the RFC
+>>> patches to upstream. Will submit the patch set soon to linux tree.
+>>
+>> Ah, didn't realise it was Guenter that ran into it. We have some 
+>> changes[1] in
+>> Cedric's aspeed-4.2 qemu tree - do you mind testing it out? If those 
+>> patches
+>> resolve the issue Maybe we could point Guenter at that tree, though 
+>> really we
+>> should get the fixes upstream so this isn't an issue.
+>>
+>> [1] 
+>> https://github.com/legoater/qemu/compare/59dda66ab756e52e6a9c1ef89660d30b3769f63c...aspeed-4.2 
+>>
+>>
+> 
+> Okay. I'll give it a try.
+
+I've tested I2C buffer mode support in QEMU using:
+git://github.com/legoater/qemu.git
+SRCBRANCH = "aspeed-4.2"
+SRCREV = "1b31d645c448858eb7d11d463a4cb77df0ee7923"
+
+Checked that I2C buffer mode works on the latest QEMU H/W model.
+Thanks Cedric, Eddie for the H/W model implementation.
+
+I'll submit all I2C backlog patches into linux upstream.
+
+Cheers,
+Jae
