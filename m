@@ -2,75 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A00F2AF7F4
-	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 10:30:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12227AF85D
+	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 11:00:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Sw7n6x7vzF2Dd
-	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 18:30:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46SwpB3yKLzF1ys
+	for <lists+openbmc@lfdr.de>; Wed, 11 Sep 2019 19:00:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linaro.org
- (client-ip=2a00:1450:4864:20::442; helo=mail-wr1-x442.google.com;
- envelope-from=daniel.thompson@linaro.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.212; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=hsung1@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.b="u0pbm4Yk"; 
- dkim-atps=neutral
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com
- [IPv6:2a00:1450:4864:20::442])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.212])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Sw700SkkzDqlh
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 18:29:31 +1000 (AEST)
-Received: by mail-wr1-x442.google.com with SMTP id q14so23429950wrm.9
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 01:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=Zw/nRHbA6gamXFMmZttwtsUXOgGchhd99CivFz+b1ms=;
- b=u0pbm4YkiCRxVqqTlQ17p+Il0Iq7bPi7W8wjju8PlHbUVeulbXKRqd9omxqw5yeMVe
- /4ZRs6QTvbxt6r3tPNXanJbHRqH8t2HYKXN8n5Yf3Y/bfPCgSFYzjmwJejNbVJVzZEtl
- GsfTsXrQ9kKT/+4AjWaDBEWjJYJALxmMyhFSQ6V7Lu3IeeR5l7yGBrGdeLSAX5E/dVyD
- 0sqhmY1l0mg7KjOVKiw6XfTWzvAFqWDg9tuaAINSjscPW8bxXY+3NdNAAp/EdsvGoDAP
- Et1IKxclqpqnG4r/ju0lJkqb2EstcCx0tsWb+mLBtc2E5x0IlxUnHhlxfw/wtyKMIb/M
- BueQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=Zw/nRHbA6gamXFMmZttwtsUXOgGchhd99CivFz+b1ms=;
- b=pa9y/nN2XtIpE7oOdESBi4+O1b+9bAOAjMyFYwK/ic3ge5evGqBhIZtJQM8BUSMh+4
- 9OWx7MGwpLbKkRyrYYLoLr4jBCjHYBEUHIC/UjJNRmY35VKJzAIZuXj3GxtBSaSsm5BL
- hByCk8VhfwDffTE+3Z6KIAwE2xVlLjIyGEDLD/bQm5V/sydpgJIOI96InXFxwNuOmj5y
- q/Co2vQOVysYQsdC4BKL+Msnh15vWv8jv/1raFrOFf4AxrIkO1fnWjjO2pHABCjeVr52
- 0Y8yIqszjNTLwxmOux5EX9iYormNGrODrdvyq2G4QA7RP7rGbNsVvYx1zamPqqE8jH4P
- 3F9A==
-X-Gm-Message-State: APjAAAUpeT6FzTZL6hTVISY5r/sakoTiwr41HHkL+D7Z+/nl2EKrrMrw
- 6lgiZwK2ZPOK2ml8+sEDBENefg==
-X-Google-Smtp-Source: APXvYqzitrYD1GNdHxRYy6bTZs5uxP1EO8paIe/T9nQnXD2+EkqWuheIGfM1+1JX7yJBlp5XGl+wLA==
-X-Received: by 2002:a5d:43cc:: with SMTP id v12mr2981046wrr.75.1568190563862; 
- Wed, 11 Sep 2019 01:29:23 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net.
- [86.9.19.6])
- by smtp.gmail.com with ESMTPSA id a13sm36205561wrf.73.2019.09.11.01.29.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Sep 2019 01:29:22 -0700 (PDT)
-Date: Wed, 11 Sep 2019 09:29:20 +0100
-From: Daniel Thompson <daniel.thompson@linaro.org>
-To: Milton Miller II <miltonm@us.ibm.com>
-Subject: Re: [PATCH v2 2/2] hwrng: npcm: add NPCM RNG driver
-Message-ID: <20190911082920.4vxw7om5aqcfrxmy@holly.lan>
-References: <20190909123840.154745-3-tmaimon77@gmail.com>
- <20190909123840.154745-1-tmaimon77@gmail.com>
- <OFDC101E51.54765CB8-ON00258471.006F34B7-00258471.0072BCA7@notes.na.collabserv.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46SwnY6h04zDqfN
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 18:59:28 +1000 (AEST)
+Received: from [67.219.246.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-b.us-east-1.aws.symcld.net id C7/79-31668-D67B87D5;
+ Wed, 11 Sep 2019 08:59:25 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRWlGSWpSXmKPExsWS8eIhj27u9op
+ Yg+5mAYtTLS9YLA7397Nb7D2wkcWB2WPBplKP8zMWMgYwRbFm5iXlVySwZjQd2MBasFOi4var
+ 9SwNjBMkuhi5OIQE/jNKzL24hx3CecUosWP7JEYIZx+jxPsHu4EcTg42AVWJLc+esIDYIgJuE
+ rePvQWLMwskSFx4u50NxBYWsJC4+e44G0SNrcTmpQ+ZIGw9iWMNTUAbODhYgOZcvRcGEuYVsJ
+ S4vKcdrJxRQFbiyYJnTBAjxSXOXWxlB7ElBAQkluw5zwxhi0q8fPyPFcJWkGje85oFZCSzgKb
+ E+l36EK2KElO6H7JDjBeUODnzCcsERuFZSKbOQuiYhaRjFpKOBYwsqxjNkooy0zNKchMzc3QN
+ DQx0DQ2NdA10jQwt9BKrdJP0Sot1UxOLS3QN9RLLi/WKK3OTc1L08lJLNjECoyalgOHWDsb1s
+ 97oHWKU5GBSEuVtrq+IFeJLyk+pzEgszogvKs1JLT7EKMPBoSTBG70ZKCdYlJqeWpGWmQOMYJ
+ i0BAePkghvwlagNG9xQWJucWY6ROoUoyXHhJdzFzFzHDw6D0gembt0EbMQS15+XqqUOG8SSIM
+ ASENGaR7cOFiSucQoKyXMy8jAwCDEU5BalJtZgir/ilGcg1FJmHcFyBSezLwSuK3ApAH0iwiv
+ b0UpyEEliQgpqQYm7gXTTjPlv7OMetUSOVN9V07BPnu7ZVmOH1Y9VmdaHeG4+O+P/090pvw9N
+ k26rUZ14+N+770C8/N1J5zavjEkqG3TP2WjvKfSwts5J/F9Wn0lhIdh8sKr0bfzPpWmhGw+ke
+ 9xpqlY5tMbodcr0pqs7nd2v9/4n+/DvfUbkxyvqzzWVhJgmHzdVsd9ld6MG3UFd8PK90y1Cy5
+ 45b0ndGfJ1hjR0K/P/6tY+LOIquw/3zTrzIX15W+bmBT1Ha6ZGrEl8MrZ7WHPSL946exbqY9J
+ lY08c2enh9yL3VqgeGuWht+hH/H1lV1WWm6ntxr/2cQpPC/afFbmjfTuPz4Ghyyn+bG+mfhgY
+ WGO0urCBwG/lFiKMxINtZiLihMBmyqTE60DAAA=
+X-Env-Sender: hsung1@lenovo.com
+X-Msg-Ref: server-12.tower-386.messagelabs.com!1568192365!114948!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 5872 invoked from network); 11 Sep 2019 08:59:25 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-12.tower-386.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 11 Sep 2019 08:59:25 -0000
+Received: from pekwpmail05.lenovo.com (unknown [10.96.93.83])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 260A541A17B18411D23C;
+ Wed, 11 Sep 2019 04:59:23 -0400 (EDT)
+Received: from HKGWPEMAIL03.lenovo.com (10.128.3.71) by pekwpmail05.lenovo.com
+ (10.96.93.83) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Wed, 11 Sep
+ 2019 16:59:19 +0800
+Received: from HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903]) by
+ HKGWPEMAIL03.lenovo.com ([fe80::6151:c7db:16ab:b903%6]) with mapi id
+ 15.01.1591.008; Wed, 11 Sep 2019 16:59:00 +0800
+From: Harry Sung1 <hsung1@lenovo.com>
+To: Patrick Venture <venture@google.com>, Oskar Senft <osk@google.com>
+Subject: phosphor-ipmi-flash: Update over eSPI interface
+Thread-Topic: phosphor-ipmi-flash: Update over eSPI interface
+Thread-Index: AdVoeXtnGFbNqtfRQh+i+XRLnkTppg==
+Date: Wed, 11 Sep 2019 08:59:00 +0000
+Message-ID: <2634903dafda431988ffabd873710768@lenovo.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <OFDC101E51.54765CB8-ON00258471.006F34B7-00258471.0072BCA7@notes.na.collabserv.com>
-User-Agent: NeoMutt/20180716
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,171 +90,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
- herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
- avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
- tali.perry1@gmail.com, vkoul@kernel.org, robh+dt@kernel.org,
- benjaminfair@google.com, mpm@selenic.com, venture@google.com,
- tglx@linutronix.de, jens.wiklander@linaro.org, linux-kernel@vger.kernel.org,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: Andrew MS1 Peng <pengms1@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 10, 2019 at 08:53:13PM +0000, Milton Miller II wrote:
-> On September 9, 2019 around 7:40AM in somet timezone, Tomer Maimon wrote:
-> >+#define NPCM_RNG_TIMEOUT_USEC	20000
-> >+#define NPCM_RNG_POLL_USEC	1000
-> 
-> ...
-> 
-> >+static int npcm_rng_init(struct hwrng *rng)
-> >+{
-> >+	struct npcm_rng *priv = to_npcm_rng(rng);
-> >+	u32 val;
-> >+
-> >+	val = readl(priv->base + NPCM_RNGCS_REG);
-> >+	val |= NPCM_RNG_ENABLE;
-> >+	writel(val, priv->base + NPCM_RNGCS_REG);
-> >+
-> >+	return 0;
-> >+}
-> >+
-> >+static void npcm_rng_cleanup(struct hwrng *rng)
-> >+{
-> >+	struct npcm_rng *priv = to_npcm_rng(rng);
-> >+	u32 val;
-> >+
-> >+	val = readl(priv->base + NPCM_RNGCS_REG);
-> >+	val &= ~NPCM_RNG_ENABLE;
-> >+	writel(val, priv->base + NPCM_RNGCS_REG);
-> >+}
-> >+
-> >+static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max,
-> >bool wait)
-> >+{
-> >+	struct npcm_rng *priv = to_npcm_rng(rng);
-> >+	int retval = 0;
-> >+	int ready;
-> >+
-> >+	pm_runtime_get_sync((struct device *)priv->rng.priv);
-> >+
-> >+	while (max >= sizeof(u32)) {
-> >+		ready = readl(priv->base + NPCM_RNGCS_REG) &
-> >+			NPCM_RNG_DATA_VALID;
-> >+		if (!ready) {
-> >+			if (wait) {
-> >+				if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
-> >+						       ready,
-> >+						       ready & NPCM_RNG_DATA_VALID,
-> >+						       NPCM_RNG_POLL_USEC,
-> >+						       NPCM_RNG_TIMEOUT_USEC))
-> >+					break;
-> >+			} else {
-> >+				break;
-> 
-> This break is too far from the condition and deeply nested to follow.
-> 
-> And looking further, readl_poll_timeout will read and check the condition before
-> calling usleep, so the the initial readl and check is redundant
-> 
-> Rearrange to make wait determine if you call readl_poll_timeout or 
-> readl / compare / break.
-> 
-> >+			}
-> >+		}
-> >+
-> >+		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
-> >+		retval += sizeof(u32);
-> >+		buf += sizeof(u32);
-> >+		max -= sizeof(u32);
-> >+	}
-> >+
-> >+	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
-> >+	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
-> >+
-> >+	return retval || !wait ? retval : -EIO;
-> >+}
-> >+
-> >+static int npcm_rng_probe(struct platform_device *pdev)
-> >+{
-> >+	struct npcm_rng *priv;
-> >+	struct resource *res;
-> >+	bool pm_dis = false;
-> >+	u32 quality;
-> >+	int ret;
-> >+
-> >+	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-> >+	if (!priv)
-> >+		return -ENOMEM;
-> >+
-> >+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> >+	priv->base = devm_ioremap_resource(&pdev->dev, res);
-> >+	if (IS_ERR(priv->base))
-> >+		return PTR_ERR(priv->base);
-> >+
-> >+	priv->rng.name = pdev->name;
-> >+#ifndef CONFIG_PM
-> >+	pm_dis = true;
-> >+	priv->rng.init = npcm_rng_init;
-> >+	priv->rng.cleanup = npcm_rng_cleanup;
-> >+#endif
-> 
-> if you move this down you can use one if (ENABLED_CONFIG_PM) {}
-> 
-> >+	priv->rng.read = npcm_rng_read;
-> >+	priv->rng.priv = (unsigned long)&pdev->dev;
-> >+	if (of_property_read_u32(pdev->dev.of_node, "quality", &quality))
-> >+		priv->rng.quality = 1000;
-> >+	else
-> >+		priv->rng.quality = quality;
-> >+
-> >+	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
-> >+	if (pm_dis)
-> >+		writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-> >+	else
-> >+		writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
-> >+		       priv->base + NPCM_RNGCS_REG);
-> 
-> wait ... if we know the whole value here, why read/modify/write the value
-> in the init and cleanup hook?   Save the io read and write the known value
->  ... define the value to be written for clarity between enable/disable if
-> needed
-> 
-> 
-> 
-> >+
-> >+	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
-> >+	if (ret) {
-> >+		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
-> >+			ret);
-> 
-> need to disable if CONFIG_PM ?
-> 
-> >+		return ret;
-> >+	}
-> >+
-> >+	dev_set_drvdata(&pdev->dev, priv);
-> 
-> This should probably be before the register.
-> 
-> >+	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
-> 
-> So every 100ms power off, and if userspace does a read we
-> will poll every 1ms for upto 20ms.
-> 
-> If userspace says try once a second with -ENODELAY so no wait,
-> it never gets data.
-
-I didn't follow this.
-
-In the time before the device is suspended it should have generated
-data and this can be sent to the userspace. Providing the suspend delay
-is longer than the buffer size of the hardware then there won't
-necessarily be performance problems because the device is "full" when
-it is suspended.
-
-Of course if the hardware loses state when it is suspended then the
-driver would need extra code on the PM paths to preserve the data...
-
-
-Daniel.
+DQo+IE9uIE1vbiwgU2VwIDksIDIwMTkgYXQgNzowMSBBTSBPc2thciBTZW5mdCA8b3NrQGdvb2ds
+ZS5jb20+IHdyb3RlOg0KPiA+DQo+ID4gSGkgSGFycnkNCj4gPg0KPiA+IFdoYXQncyB0aGUgYmVo
+YXZpb3Igb24gZVNQST8gSSBhc3N1bWUgeW91IHN0aWxsIGhhdmUgdGhlIGFzcGVlZC1scGMtY3Ry
+bA0KPiBlbmFibGVkLCByaWdodD8NCj4gPg0KPiA+IFRoYW5rcw0KPiA+IE9za2FyLg0KDQpIaSBP
+c2thciwgDQpZZXMsIEkgc3RpbGwgZW5hYmxlZCB0aGUgYXNwZWVkLWxwYy1jdHJsIGluIG15IGJ1
+aWxkLiBCZWNhdXNlIHBob3NwaG9yLWlwbWktZmxhc2ggaGFzIHNvbWUgbWFuZGF0b3J5IGFjdGlv
+bnMgb24gL2Rldi9hc3BlZWQtbHBjLWN0cmwgYmVmb3JlIGZsYXNoIChzZXR0aW5ncyBmb3IgSElD
+UjUsIEhJQ1I3IGFuZCBISUNSOCkgZXZlbiB0aG91Z2ggdGhlc2Ugc2V0dGluZ3MgYXJlIG1lYW5p
+bmdsZXNzIGZvciBlU1BJLg0KDQpDdXJyZW50bHksIEkgc2V0IEVTUEkwODQgKHNvdXJjZSBhZGRy
+ZXNzKSBhbmQgRVNQSTA4OCAodGFyZ2V0IGFkZHJlc3MpIHJlZ2lzdGVycyBtYW51YWxseSBiZWNh
+dXNlIGxpbnV4IHNlZW1zIG5vdCBoYXZlIGEgZHJpdmVyIGNhbiBoZWxwIHVzIHRvIHNldCBFU1BJ
+MDg0IGFuZCBFU1BJMDg4Lg0KDQpEdWUgdG8gdGhlIGxpbWl0YXRpb24gb2YgQVNUMjUwMCwgd2Ug
+Y2FuIG9ubHkgd3JpdGUgMjU2IGJ5dGVzIGluIG9uZSB3cml0ZSBvcGVyYXRpb24gKHdyaXRlIHNo
+YXJlZCBtZW1vcnkpLg0KQmFzZWQgb24gdGhlIHRlc3QgcmVzdWx0LCBpdCB0YWtlcyBhYm91dCAz
+MCBtaW5zIHRvIHRyYW5zZmVyIGEgMzJNQiBpbWFnZSBvdmVyIGVTUEkuDQoNClRoYW5rcywNCkhh
+cnJ5DQo+ID4NCj4gPiBPbiBNb24sIFNlcCA5LCAyMDE5IGF0IDQ6NDEgQU0gSGFycnkgU3VuZzEg
+PGhzdW5nMUBsZW5vdm8uY29tPiB3cm90ZToNCj4gPj4NCj4gPj4gSGkgUGF0cmljaywNCj4gPj4N
+Cj4gPj4NCj4gPj4NCj4gPj4gSSBmb3VuZCDigJxwaG9zcGhvci1pcG1pLWZsYXNo4oCdIGhhdmUg
+bm90IHN1cHBvcnQgZmxhc2ggb3ZlciBlU1BJIHlldC4NCj4gPj4NCj4gPj4gTWF5IEkgYXNrIGlm
+IHlvdSBoYXZlIGFueSBwbGFucyB0byBzdXBwb3J0IGZsYXNoIG92ZXIgZVNQST8NCj4gPj4NCj4g
+Pj4NCj4gPj4NCj4gPj4gSSBoYXZlIGRvbmUgYSBzaW1wbGUgdGVzdCBhYm91dCBzaGFyZWQgbWVt
+b3J5IGJldHdlZW4gaG9zdCBhbmQgQk1DIDoNCj4gPj4NCj4gPj4gVGhlIHNoYXJlZCBtZW1vcnkg
+aXMgd29yayBhZnRlciBJIHNldCBFU1BJMDg0IChzb3VyY2UgYWRkcmVzcykgYW5kIEVTUEkwODgN
+Cj4gKHRhcmdldCBhZGRyZXNzKSByZWdpc3RlcnMuDQo+ID4+DQo+ID4+IEJ1dCBpdCBoYXMgYW4g
+bGltaXRhdGlvbiB0aGF0IG9ubHkgMjU2IGJ5dGVzIGFyZSBhdmFpbGFibGUgb24gZWFjaCBwYWdl
+ICg0S0IpLg0KPiA+Pg0KPiA+Pg0KPiA+PiBGb3IgZXhhbXBsZSwgaWYgaG9zdCBhZGRyZXNzIHN0
+YXJ0cyB0byB3cml0ZSBmcm9tIDB4RkUwQjAwMDAgKEJNQw0KPiA+PiByZXNlcnZlZCBlbm91Z2gg
+bWVtb3J5IGFscmVhZHkpDQo+ID4+DQo+ID4+IFdyaXRhYmxlIGFyZWEgYXJlOg0KPiA+Pg0KPiA+
+PiAweEZFMEIwMDAwIH4gMHhGRTBCMDBGRg0KPiA+Pg0KPiA+PiAweEZFMEIxMDAwIH4gMHhGRTBC
+MTBGRg0KPiA+Pg0KPiA+PiAweEZFMEIyMDAwIH4gMHhGRTBCMjBGRg0KPiA+Pg0KPiA+PiAweEZF
+MEIzMDAwIH4gMHhGRTBCMzBGRg0KPiA+Pg0KPiA+PiDigKYNCj4gPj4NCj4gPj4g4oCmDQo+ID4+
+DQo+ID4+IOKApg0KPiA+Pg0KPiA+Pg0KPiA+Pg0KPiA+Pg0KPiA+Pg0KPiA+PiBUaGFua3MsDQo+
+ID4+IEhhcnJ5DQo+IA0KPiBIYXJyeSwgY3VycmVudGx5IHRoZXJlJ3Mgbm8gcGxhbiB0byBpbXBs
+ZW1lbnQgaXQgYXMgSSBoYXZlIG5vIG1ldGhvZCBvZiB0ZXN0aW5nDQo+IGl0LCAgSG93ZXZlciwg
+aXQgc2hvdWxkIHByb3ZlIGZhaXJseSBzdHJhaWdodGZvcndhcmQgdG8gYWRkIGFub3RoZXIgb3B0
+aW9uIHRvDQo+IHRoZSB0cmFuc3BvcnQgbWVjaGFuaXNtIGxpc3QuICBQbGVhc2UgbGV0IG1lIGtu
+b3cgaWYgeW91IHJ1biBpbnRvIGFueQ0KPiBibG9ja2Vycy4NCg0KSGkgUGF0cmljaywNCkdvdCBp
+dC4gVGhlIGJldHRlciB3YXkgdG8gc2V0IGVTUEkgcmVnaXN0ZXIgaXMgc2V0dGluZyB0aGVtIGJ5
+IHRoZSBkcml2ZXIsIHJpZ2h0Pw0KRm9yIHF1aWNrIHZhbGlkYXRpb24sIEkgYW0gZ29pbmcgdG8g
+dXNlIHRoZSAiIGlwbWlscGMiIGludGVyZmFjZSBhbmQgc2V0IG5lY2Vzc2FyeSBlU1BJIHJlZ2lz
+dGVycyBtYW51YWxseS4gDQoNClRoYW5rcywNCkhhcnJ5DQo=
