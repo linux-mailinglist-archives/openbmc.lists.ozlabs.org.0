@@ -2,76 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 550E3BAD52
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33043BAD54
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:42:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cBV15XhBzDqLB
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 14:41:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cBW23hmyzDqN1
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 14:42:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com;
- envelope-from=rashmica.g@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=kernel.org
+ (client-ip=198.145.29.99; helo=mail.kernel.org; envelope-from=vkoul@kernel.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="lfAI/DCk"; 
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.b="ayIcBPmA"; 
  dkim-atps=neutral
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
- [IPv6:2607:f8b0:4864:20::432])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46SkR20kSszF1ms
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 11:12:43 +1000 (AEST)
-Received: by mail-pf1-x432.google.com with SMTP id q10so12589891pfl.0
- for <openbmc@lists.ozlabs.org>; Tue, 10 Sep 2019 18:12:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=message-id:subject:from:to:date:in-reply-to:references:user-agent
- :mime-version:content-transfer-encoding;
- bh=EYMI5WXiWjdR6Ij+VG7m+b1+Dyii6til07Wtqhi6oB4=;
- b=lfAI/DCkfA+6CQkXa4QkdfH2WXGLLLch7UEyqZIDOKIs5c8wlBUJhP4jdmvZFoXEjT
- X8KofvfCXWWfm3pWu2lGM97/YWmO2g5bbvoEkstY3L/IgXI/F7TNeExKZwIyx5vgoris
- Zr4JUyCJCVJqhEtP5ltwOfJRhuX7odO8jQX+2prKGAInPKrHzA1rWHNB7HF8pylh56v4
- GuPxmLRPV+S2lmFb/7VeatKqYm9DpHeHJ/079BnGNyJD9r8bVAgVazaWTLOamwikx73M
- 2j+xwNk1yIP27UmmXvmiGkEjCXs3EvzIcwaDj6fLjCbyq9+iBVtFl/aZQaSIhdnxb63R
- cCRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
- :references:user-agent:mime-version:content-transfer-encoding;
- bh=EYMI5WXiWjdR6Ij+VG7m+b1+Dyii6til07Wtqhi6oB4=;
- b=hK8vAEXOzNowcDdwJB1FAvni93BW9Bgq/avguiTHybSAhCMI0SBefTM6fIj30RQ6bL
- +AUPn0gGVUT3iQP9VrQuN5HZ/lICudJf5Gx8Ceilx832XdZnmKaKmjbRJAlPjqjvP2BB
- VdudUh5CNusu9S0GQdvRcfLepvvqMxmyeOI6bXwT/ECW/so0m5P56ZmYe5Qc8dYoMlU7
- jZUVLUIOyqGMXktCLNp27nui34McvVI4r9ua75iqTaM2cLL2xtvuTrRBhajX02ybJoRX
- SE8mQr+97nDoEHjYXBWdG0BxQ97Nk/0FE3NyVBtoEyK1d2s+UpyhEYk6DdAlS/k0qbSC
- Qvfg==
-X-Gm-Message-State: APjAAAUFnpjstMFC3sPhVd6krdIYgbIE6TCBs4ZdLGODWfiFynr7It5T
- FEsvUa3o8LEfKn5hPUEDBOg=
-X-Google-Smtp-Source: APXvYqzKo5JvbJKzsO99u6GXcMm9YzJqk7gyPkMpDp1kQFvdO7s6x/JZxgZei/4yJ7Wye6ZzlMED+Q==
-X-Received: by 2002:a63:494d:: with SMTP id y13mr31092966pgk.109.1568164360172; 
- Tue, 10 Sep 2019 18:12:40 -0700 (PDT)
-Received: from rashmica.ozlabs.ibm.com ([122.99.82.10])
- by smtp.googlemail.com with ESMTPSA id g2sm21557192pfm.32.2019.09.10.18.12.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Sep 2019 18:12:39 -0700 (PDT)
-Message-ID: <a9c7851e4cd92bb2de0fb7ec8eccf2f25f652c1a.camel@gmail.com>
-Subject: Re: GPIO state in qemu
-From: Rashmica Gupta <rashmica.g@gmail.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, James Feist
- <james.feist@linux.intel.com>, Joel Stanley <joel@jms.id.au>, OpenBMC
- Maillist <openbmc@lists.ozlabs.org>
-Date: Wed, 11 Sep 2019 11:12:34 +1000
-In-Reply-To: <60430dd8-e3c5-e020-2ff7-cb4c536e20a0@kaod.org>
-References: <CACPK8XdHwwQwc8-5uf319tX7v3Uh7CcG1rLRmTEK9oKQPYS0hw@mail.gmail.com>
- <6c036cfc-22d4-fd73-da83-60121e6433c2@linux.intel.com>
- <60430dd8-e3c5-e020-2ff7-cb4c536e20a0@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5 (3.30.5-1.fc29) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Tl7T6JtbzF4XL
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 02:47:49 +1000 (AEST)
+Received: from localhost (unknown [117.99.85.83])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 522ED20830;
+ Thu, 12 Sep 2019 16:47:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1568306866;
+ bh=Z7Klsx0EQczgLubsgIk5uElx4M0dhwRgXxx6ASoZUEM=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=ayIcBPmAbnC7L3gNfW1IcX/cpM3lbEo/wtyftE897vJQn7yJSYI0N1JVJXFJlVwQ8
+ beEkdFPhPb6AF3D9hpxXhyiC8ugc149ONF0A6JuGmSIbzybA7t9rneHrl75ObttLTQ
+ jjjN1y5B/c1XJXTVR7yhix2mOuiH/MARRqFsMEA0=
+Date: Thu, 12 Sep 2019 22:16:38 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>,
+ Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH v3 2/2] hwrng: npcm: add NPCM RNG driver
+Message-ID: <20190912164638.GB4392@vkoul-mobl>
+References: <20190912090149.7521-1-tmaimon77@gmail.com>
+ <20190912090149.7521-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190912090149.7521-3-tmaimon77@gmail.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
 X-Mailman-Approved-At: Mon, 23 Sep 2019 14:40:35 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -84,72 +60,257 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
+ herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
+ avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org,
+ mpm@selenic.com, venture@google.com, tglx@linutronix.de,
+ jens.wiklander@linaro.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2019-09-09 at 19:02 +0200, Cédric Le Goater wrote:
-> On 09/09/2019 18:20, James Feist wrote:
-> > On 9/6/19 11:05 AM, Joel Stanley wrote:
-> > > At the osfc hackathon today James and I were talking about Qemu's
-> > > new support for modelling GPIOs. Here's some documentation on how
-> > > it can be used.
-> > > 
-> > > To set a pin's state in the monitor:
-> > > 
-> > > qom-set gpio gpioA0 true
-> > > 
-> > > To do the equivalent in code:
-> > > 
-> > > object_property_set_bool(OBJECT(&s->gpio), true, "gpioA0",
-> > > &error_abort);
-> > 
-> > I'm trying to use object_property_set_bool in hw/arm/aspeed.c in an
-> > i2c_init block and I'm noticing by the time uboot is reached that
-> > the registers are reset back to the default. 
+On 12-09-19, 12:01, Tomer Maimon wrote:
+> Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+
+Is this a true RNG or a psedo RNG, in case of latter it should be added
+in drivers/crypto/. See crypto_register_rng()
+
 > 
-> These routines are called before the machine and devices are reseted.
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  drivers/char/hw_random/Kconfig    |  13 +++
+>  drivers/char/hw_random/Makefile   |   1 +
+>  drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++++++++
+>  3 files changed, 200 insertions(+)
+>  create mode 100644 drivers/char/hw_random/npcm-rng.c
 > 
-> > If I use qom-set it seems to work correctly. 
-> 
-> The machine has been reseted.
-> 
-> > Where is the correct place to put the object_property_set_bool so
-> > that it doesn't get reset by the time it's ready to be read? Does
-> > AspeedBoardConfig need a gpio_init as well as an i2c_init?
+> diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
+> index 59f25286befe..87a1c30e7958 100644
+> --- a/drivers/char/hw_random/Kconfig
+> +++ b/drivers/char/hw_random/Kconfig
+> @@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
 >  
-> we would need to change the default reset value in the reset handler
-> of the GPIO device model : aspeed_gpio_reset(). We don't have a way 
-> to set default values yet, all 0s for now.
-> 
-> Rashmica,
-> 
-> Would it be complex to add a set of default values with which we 
-> could memset the ->sets array in the reset handler() like we do 
-> for SCU ? 
->
-
-I think it should be pretty straightforward. Do we want one statically
-defined set of default values per SoC version?
-
-> Having a different set of default values per machine would require 
-> a second set of properties under AspeedGPIOState and some slight 
-> rework of aspeed_gpio_get/set_pin.
-> 
-
-Why would it require rework of get/set pin?
-
-> Didn't you have a patch for reset tolerant values some time ago ? 
+>  	  If unsure, say Y.
 >  
+> +config HW_RANDOM_NPCM
+> +	tristate "NPCM Random Number Generator support"
+> +	depends on ARCH_NPCM || COMPILE_TEST
+> +	default HW_RANDOM
+> +	help
+> + 	  This driver provides support for the Random Number
+> +	  Generator hardware available in Nuvoton NPCM SoCs.
+> +
+> +	  To compile this driver as a module, choose M here: the
+> +	  module will be called npcm-rng.
+> +
+> + 	  If unsure, say Y.
+> +
+>  endif # HW_RANDOM
+>  
+>  config UML_RANDOM
+> diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
+> index 7c9ef4a7667f..17b6d4e6d591 100644
+> --- a/drivers/char/hw_random/Makefile
+> +++ b/drivers/char/hw_random/Makefile
+> @@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK)	+= mtk-rng.o
+>  obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
+>  obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
+>  obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
+> +obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
+> diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
+> new file mode 100644
+> index 000000000000..b7c8c7e13a49
+> --- /dev/null
+> +++ b/drivers/char/hw_random/npcm-rng.c
+> @@ -0,0 +1,186 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +// Copyright (c) 2019 Nuvoton Technology corporation.
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/init.h>
+> +#include <linux/random.h>
+> +#include <linux/err.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/hw_random.h>
+> +#include <linux/delay.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/pm_runtime.h>
+> +
+> +#define NPCM_RNGCS_REG		0x00	/* Control and status register */
+> +#define NPCM_RNGD_REG		0x04	/* Data register */
+> +#define NPCM_RNGMODE_REG	0x08	/* Mode register */
+> +
+> +#define NPCM_RNG_CLK_SET_25MHZ	GENMASK(4, 3) /* 20-25 MHz */
+> +#define NPCM_RNG_DATA_VALID	BIT(1)
+> +#define NPCM_RNG_ENABLE		BIT(0)
+> +#define NPCM_RNG_M1ROSEL	BIT(1)
+> +
+> +#define NPCM_RNG_TIMEOUT_USEC	20000
+> +#define NPCM_RNG_POLL_USEC	1000
+> +
+> +#define to_npcm_rng(p)	container_of(p, struct npcm_rng, rng)
+> +
+> +struct npcm_rng {
+> +	void __iomem *base;
+> +	struct hwrng rng;
+> +};
+> +
+> +static int npcm_rng_init(struct hwrng *rng)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +
+> +	writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
+> +	       priv->base + NPCM_RNGCS_REG);
+> +
+> +	return 0;
+> +}
+> +
+> +static void npcm_rng_cleanup(struct hwrng *rng)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +
+> +	writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
+> +}
+> +
+> +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +	int retval = 0;
+> +	int ready;
+> +
+> +	pm_runtime_get_sync((struct device *)priv->rng.priv);
+> +
+> +	while (max >= sizeof(u32)) {
+> +		if (wait) {
+> +			if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
+> +					       ready,
+> +					       ready & NPCM_RNG_DATA_VALID,
+> +					       NPCM_RNG_POLL_USEC,
+> +					       NPCM_RNG_TIMEOUT_USEC))
+> +				break;
+> +		} else {
+> +			if ((readl(priv->base + NPCM_RNGCS_REG) &
+> +			    NPCM_RNG_DATA_VALID) == 0)
+> +				break;
+> +		}
+> +
+> +		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
+> +		retval += sizeof(u32);
+> +		buf += sizeof(u32);
+> +		max -= sizeof(u32);
+> +	}
+> +
+> +	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
+> +	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
+> +
+> +	return retval || !wait ? retval : -EIO;
+> +}
+> +
+> +static int npcm_rng_probe(struct platform_device *pdev)
+> +{
+> +	struct npcm_rng *priv;
+> +	struct resource *res;
+> +	int ret;
+> +
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	priv->base = devm_ioremap_resource(&pdev->dev, res);
+> +	if (IS_ERR(priv->base))
+> +		return PTR_ERR(priv->base);
+> +
+> +	dev_set_drvdata(&pdev->dev, priv);
+> +	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
+> +	pm_runtime_use_autosuspend(&pdev->dev);
+> +	pm_runtime_enable(&pdev->dev);
+> +
+> +#ifndef CONFIG_PM
+> +	priv->rng.init = npcm_rng_init;
+> +	priv->rng.cleanup = npcm_rng_cleanup;
+> +#endif
+> +	priv->rng.name = pdev->name;
+> +	priv->rng.read = npcm_rng_read;
+> +	priv->rng.priv = (unsigned long)&pdev->dev;
+> +	priv->rng.quality = 1000;
+> +
+> +	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
+> +
+> +	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
+> +			ret);
+> +		pm_runtime_disable(&pdev->dev);
+> +		pm_runtime_set_suspended(&pdev->dev);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int npcm_rng_remove(struct platform_device *pdev)
+> +{
+> +	struct npcm_rng *priv = platform_get_drvdata(pdev);
+> +
+> +	devm_hwrng_unregister(&pdev->dev, &priv->rng);
+> +	pm_runtime_disable(&pdev->dev);
+> +	pm_runtime_set_suspended(&pdev->dev);
+> +
+> +	return 0;
+> +}
+> +
+> +#ifdef CONFIG_PM
+> +static int npcm_rng_runtime_suspend(struct device *dev)
+> +{
+> +	struct npcm_rng *priv = dev_get_drvdata(dev);
+> +
+> +	npcm_rng_cleanup(&priv->rng);
+> +
+> +	return 0;
+> +}
+> +
+> +static int npcm_rng_runtime_resume(struct device *dev)
+> +{
+> +	struct npcm_rng *priv = dev_get_drvdata(dev);
+> +
+> +	return npcm_rng_init(&priv->rng);
+> +}
+> +#endif
+> +
+> +static const struct dev_pm_ops npcm_rng_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
+> +			   npcm_rng_runtime_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> +				pm_runtime_force_resume)
+> +};
+> +
+> +static const struct of_device_id rng_dt_id[] = {
+> +	{ .compatible = "nuvoton,npcm750-rng",  },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, rng_dt_id);
+> +
+> +static struct platform_driver npcm_rng_driver = {
+> +	.driver = {
+> +		.name		= "npcm-rng",
+> +		.pm		= &npcm_rng_pm_ops,
+> +		.of_match_table = of_match_ptr(rng_dt_id),
+> +	},
+> +	.probe		= npcm_rng_probe,
+> +	.remove		= npcm_rng_remove,
+> +};
+> +
+> +module_platform_driver(npcm_rng_driver);
+> +
+> +MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
+> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.18.0
 
-Yes, but it was a bit hacky and I didn't have a good way to test it. We
-need to share a property with the wdt and differentiate between a SoC
-reset, full system reset and a full wdt reset. Iirc we only use the
-reset tolerant values for a SoC reset? I assume we would want to set
-the default values for all three types of reset?
-
-
-
-> Thanks,
-> 
-> C.
-
+-- 
+~Vinod
