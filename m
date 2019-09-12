@@ -2,62 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27B68B144F
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 20:10:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98701B14B1
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 21:07:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TmyF4SwPzF3bG
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 04:09:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TpDX5njpzF4X7
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 05:07:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::343; helo=mail-ot1-x343.google.com;
- envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=4158dbe1fb=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="IUC0tILL"; 
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="Loexyj1P"; 
  dkim-atps=neutral
-Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com
- [IPv6:2607:f8b0:4864:20::343])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TmxY2DYRzF4rd
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 04:09:18 +1000 (AEST)
-Received: by mail-ot1-x343.google.com with SMTP id g19so26930435otg.13
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 11:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=4BXjjNT0FNwyTUJ2zYTJmvfaNspsfmqtZU4GNuYLei4=;
- b=IUC0tILLD8sywCCNK9SgeUy/KqTQeZL0s6ycDPcs5SI3TdRq3kbyPnUNMJscOzNbiq
- hBegB2AEk3r5ukgWiyj1Zv1mHHcabpWbHGy9+70IlT1i1gLYBBCqrJU8SBsPFy1F2QBv
- 7Xb0GmOVyJaBQn5Xb7ZQtHZd9gwDV/nrotP0xpgMY7r0RzPs/HxoUDyN1R3JmIWEzb68
- PGN3tXgpbu8ZhGfZfQZIF5RnjYI4RaZ4tP9jKGspymmeua9ENfm1e/ASEKng6CcNw9KP
- r/NN//1er+iw28rkOfw5nkmXtJpXkjvuTJnKVhVXGhr9zMgcRkT2Cx/qEyiuL1WCiPEI
- HRxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=4BXjjNT0FNwyTUJ2zYTJmvfaNspsfmqtZU4GNuYLei4=;
- b=EQ+MdYs2lbSVUDhdsBt/pqAfG2OBybwD095w3+gQDGqJ2Nh3HN7OKVtZT01cAxNCcS
- FTW6Zg6P8Kgthw4Fka3Q2QdRSstRrCL4KGYKr9yC038KZm+YLGRj2BK0i/c3fcYqXqv8
- Y+jSkNXFSC9I2oKBR8dnjaBq/QykhistjQRBw6X0TNxw0z2DAjGnPb/8ArnrXWVJfXE3
- 8VvDRPTWP1h2mLEfkVPfRzrXi5OF/KFZMxLfzcvOrlD/A3tGc68dBbT2BteeeAOSXtvt
- 4ZlNrIwFddjqRInJ7efFcBMZSu5js1CUcB6UAV6RTsJ63YRKN2cNJ397YM0c6I36oI2O
- r+VA==
-X-Gm-Message-State: APjAAAVs+zn3Eo/5FoNpFPDNJk2Am3wppZg0MRA/eZQRwXx30NEAyA0N
- 2gKFF7Y3tCNkPiRaysTqmVpC8O606y5o5MXiOxV3WkqNErM=
-X-Google-Smtp-Source: APXvYqxBYm34eosPsXeKX56e1EBbM3prKSdb+BAjCKV+FrYgEMroZPVYM/1xEhEUVeLFe0bjI9r4wJRzLO++Qfx84wA=
-X-Received: by 2002:a9d:7c97:: with SMTP id q23mr15584373otn.296.1568311755568; 
- Thu, 12 Sep 2019 11:09:15 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Tp9q5PqyzF3Dw
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 05:04:58 +1000 (AEST)
+Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x8CJ0mwW028604
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 12:04:54 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-type; s=facebook;
+ bh=WH/ktTfc54pI4Hqq22UNfMBhilMTMzVAZzYnwRWMNsA=;
+ b=Loexyj1Pr8iz2u1kwfPzSD+fckPUep7KBLxOB01cCpIRaCnM3M8w86Ea5PreO0lt+Ash
+ Ng6EEt0Ylb9W8z1Wrr6w1URzn285vGM14W7K7Nr801DW0Kl4G5Mnzox+w83uhHKnru07
+ HGZBcgPjFLY4rQ+dn57SLSWloJfZ4rl2mWM= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uytd88g65-13
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 12:04:54 -0700
+Received: from mx-out.facebook.com (2620:10d:c081:10::13) by
+ mail.thefacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.1.1713.5;
+ Thu, 12 Sep 2019 12:04:54 -0700
+Received: by devvm4117.prn2.facebook.com (Postfix, from userid 167582)
+ id CE0851353DBE2; Thu, 12 Sep 2019 12:04:53 -0700 (PDT)
+Smtp-Origin-Hostprefix: devvm
+From: Vijay Khemka <vijaykhemka@fb.com>
+Smtp-Origin-Hostname: devvm4117.prn2.facebook.com
+To: Samuel Mendoza-Jonas <sam@mendozajonas.com>, "David S. Miller"
+ <davem@davemloft.net>, <netdev@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Smtp-Origin-Cluster: prn2c23
+Subject: [PATCH] net/ncsi: Disable global multicast filter
+Date: Thu, 12 Sep 2019 12:04:50 -0700
+Message-ID: <20190912190451.2362220-1-vijaykhemka@fb.com>
+X-Mailer: git-send-email 2.17.1
+X-FB-Internal: Safe
 MIME-Version: 1.0
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Thu, 12 Sep 2019 13:08:59 -0500
-Message-ID: <CALLMt=riLoJPP3c9xo974wLVYceTmOpNzzEYwbhwRvP0yQXqkg@mail.gmail.com>
-Subject: running unit test CI framework on a mac
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-12_10:2019-09-11,2019-09-12 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ clxscore=1015 bulkscore=0
+ malwarescore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ spamscore=0 priorityscore=1501 phishscore=0 mlxscore=0 mlxlogscore=992
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1909120199
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,42 +79,206 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ vijaykhemka@fb.com, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A patch series was merged today that allows our CI unit test infrastructure
-to be run on a mac computer.
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/24923
+Disabling multicast filtering from NCSI if it is supported. As it
+should not filter any multicast packets. In current code, multicast
+filter is enabled and with an exception of optional field supported
+by device are disabled filtering.
 
-I didn't take the best of notes but I believe this is all I had to do to
-get it working:
+Mainly I see if goal is to disable filtering for IPV6 packets then let
+it disabled for every other types as well. As we are seeing issues with
+LLDP not working with this enabled filtering. And there are other issues
+with IPV6.
 
-# install docker
-(just internet search install directions)
+By Disabling this multicast completely, it is working for both IPV6 as
+well as LLDP.
 
-# Install flock
-https://github.com/discoteq/flock
-brew tap discoteq/discoteq
-brew install flock
+Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
+---
+ net/ncsi/internal.h    |  7 +--
+ net/ncsi/ncsi-manage.c | 98 +++++-------------------------------------
+ 2 files changed, 12 insertions(+), 93 deletions(-)
 
-# install newer bash and set as default
-https://itnext.io/upgrading-bash-on-macos-7138bd1066ba
+diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+index 0b3f0673e1a2..ad3fd7f1da75 100644
+--- a/net/ncsi/internal.h
++++ b/net/ncsi/internal.h
+@@ -264,9 +264,7 @@ enum {
+ 	ncsi_dev_state_config_ev,
+ 	ncsi_dev_state_config_sma,
+ 	ncsi_dev_state_config_ebf,
+-#if IS_ENABLED(CONFIG_IPV6)
+-	ncsi_dev_state_config_egmf,
+-#endif
++	ncsi_dev_state_config_dgmf,
+ 	ncsi_dev_state_config_ecnt,
+ 	ncsi_dev_state_config_ec,
+ 	ncsi_dev_state_config_ae,
+@@ -295,9 +293,6 @@ struct ncsi_dev_priv {
+ #define NCSI_DEV_RESET		8            /* Reset state of NC          */
+ 	unsigned int        gma_flag;        /* OEM GMA flag               */
+ 	spinlock_t          lock;            /* Protect the NCSI device    */
+-#if IS_ENABLED(CONFIG_IPV6)
+-	unsigned int        inet6_addr_num;  /* Number of IPv6 addresses   */
+-#endif
+ 	unsigned int        package_probe_id;/* Current ID during probe    */
+ 	unsigned int        package_num;     /* Number of packages         */
+ 	struct list_head    packages;        /* List of packages           */
+diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+index 755aab66dcab..bce8b443289d 100644
+--- a/net/ncsi/ncsi-manage.c
++++ b/net/ncsi/ncsi-manage.c
+@@ -14,7 +14,6 @@
+ #include <net/sock.h>
+ #include <net/addrconf.h>
+ #include <net/ipv6.h>
+-#include <net/if_inet6.h>
+ #include <net/genetlink.h>
+ 
+ #include "internal.h"
+@@ -978,9 +977,7 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
+ 	case ncsi_dev_state_config_ev:
+ 	case ncsi_dev_state_config_sma:
+ 	case ncsi_dev_state_config_ebf:
+-#if IS_ENABLED(CONFIG_IPV6)
+-	case ncsi_dev_state_config_egmf:
+-#endif
++	case ncsi_dev_state_config_dgmf:
+ 	case ncsi_dev_state_config_ecnt:
+ 	case ncsi_dev_state_config_ec:
+ 	case ncsi_dev_state_config_ae:
+@@ -1033,23 +1030,23 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
+ 		} else if (nd->state == ncsi_dev_state_config_ebf) {
+ 			nca.type = NCSI_PKT_CMD_EBF;
+ 			nca.dwords[0] = nc->caps[NCSI_CAP_BC].cap;
+-			if (ncsi_channel_is_tx(ndp, nc))
++			/* if multicast global filtering is supported then
++			 * disable it so that all multicast packet will be
++			 * forwarded to management controller
++			 */
++			if (nc->caps[NCSI_CAP_GENERIC].cap &
++			     NCSI_CAP_GENERIC_MC)
++				nd->state = ncsi_dev_state_config_dgmf;
++			else if (ncsi_channel_is_tx(ndp, nc))
+ 				nd->state = ncsi_dev_state_config_ecnt;
+ 			else
+ 				nd->state = ncsi_dev_state_config_ec;
+-#if IS_ENABLED(CONFIG_IPV6)
+-			if (ndp->inet6_addr_num > 0 &&
+-			    (nc->caps[NCSI_CAP_GENERIC].cap &
+-			     NCSI_CAP_GENERIC_MC))
+-				nd->state = ncsi_dev_state_config_egmf;
+-		} else if (nd->state == ncsi_dev_state_config_egmf) {
+-			nca.type = NCSI_PKT_CMD_EGMF;
+-			nca.dwords[0] = nc->caps[NCSI_CAP_MC].cap;
++		} else if (nd->state == ncsi_dev_state_config_dgmf) {
++			nca.type = NCSI_PKT_CMD_DGMF;
+ 			if (ncsi_channel_is_tx(ndp, nc))
+ 				nd->state = ncsi_dev_state_config_ecnt;
+ 			else
+ 				nd->state = ncsi_dev_state_config_ec;
+-#endif /* CONFIG_IPV6 */
+ 		} else if (nd->state == ncsi_dev_state_config_ecnt) {
+ 			if (np->preferred_channel &&
+ 			    nc != np->preferred_channel)
+@@ -1483,70 +1480,6 @@ int ncsi_process_next_channel(struct ncsi_dev_priv *ndp)
+ 	return -ENODEV;
+ }
+ 
+-#if IS_ENABLED(CONFIG_IPV6)
+-static int ncsi_inet6addr_event(struct notifier_block *this,
+-				unsigned long event, void *data)
+-{
+-	struct inet6_ifaddr *ifa = data;
+-	struct net_device *dev = ifa->idev->dev;
+-	struct ncsi_dev *nd = ncsi_find_dev(dev);
+-	struct ncsi_dev_priv *ndp = nd ? TO_NCSI_DEV_PRIV(nd) : NULL;
+-	struct ncsi_package *np;
+-	struct ncsi_channel *nc;
+-	struct ncsi_cmd_arg nca;
+-	bool action;
+-	int ret;
+-
+-	if (!ndp || (ipv6_addr_type(&ifa->addr) &
+-	    (IPV6_ADDR_LINKLOCAL | IPV6_ADDR_LOOPBACK)))
+-		return NOTIFY_OK;
+-
+-	switch (event) {
+-	case NETDEV_UP:
+-		action = (++ndp->inet6_addr_num) == 1;
+-		nca.type = NCSI_PKT_CMD_EGMF;
+-		break;
+-	case NETDEV_DOWN:
+-		action = (--ndp->inet6_addr_num == 0);
+-		nca.type = NCSI_PKT_CMD_DGMF;
+-		break;
+-	default:
+-		return NOTIFY_OK;
+-	}
+-
+-	/* We might not have active channel or packages. The IPv6
+-	 * required multicast will be enabled when active channel
+-	 * or packages are chosen.
+-	 */
+-	np = ndp->active_package;
+-	nc = ndp->active_channel;
+-	if (!action || !np || !nc)
+-		return NOTIFY_OK;
+-
+-	/* We needn't enable or disable it if the function isn't supported */
+-	if (!(nc->caps[NCSI_CAP_GENERIC].cap & NCSI_CAP_GENERIC_MC))
+-		return NOTIFY_OK;
+-
+-	nca.ndp = ndp;
+-	nca.req_flags = 0;
+-	nca.package = np->id;
+-	nca.channel = nc->id;
+-	nca.dwords[0] = nc->caps[NCSI_CAP_MC].cap;
+-	ret = ncsi_xmit_cmd(&nca);
+-	if (ret) {
+-		netdev_warn(dev, "Fail to %s global multicast filter (%d)\n",
+-			    (event == NETDEV_UP) ? "enable" : "disable", ret);
+-		return NOTIFY_DONE;
+-	}
+-
+-	return NOTIFY_OK;
+-}
+-
+-static struct notifier_block ncsi_inet6addr_notifier = {
+-	.notifier_call = ncsi_inet6addr_event,
+-};
+-#endif /* CONFIG_IPV6 */
+-
+ static int ncsi_kick_channels(struct ncsi_dev_priv *ndp)
+ {
+ 	struct ncsi_dev *nd = &ndp->ndev;
+@@ -1725,11 +1658,6 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 	}
+ 
+ 	spin_lock_irqsave(&ncsi_dev_lock, flags);
+-#if IS_ENABLED(CONFIG_IPV6)
+-	ndp->inet6_addr_num = 0;
+-	if (list_empty(&ncsi_dev_list))
+-		register_inet6addr_notifier(&ncsi_inet6addr_notifier);
+-#endif
+ 	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
+ 	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+ 
+@@ -1896,10 +1824,6 @@ void ncsi_unregister_dev(struct ncsi_dev *nd)
+ 
+ 	spin_lock_irqsave(&ncsi_dev_lock, flags);
+ 	list_del_rcu(&ndp->node);
+-#if IS_ENABLED(CONFIG_IPV6)
+-	if (list_empty(&ncsi_dev_list))
+-		unregister_inet6addr_notifier(&ncsi_inet6addr_notifier);
+-#endif
+ 	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+ 
+ 	ncsi_unregister_netlink(nd->dev);
+-- 
+2.17.1
 
-$ sw_vers
-ProductName:    Mac OS X
-ProductVersion:    10.14.6
-BuildVersion:    18G95
-$ ./openbmc-build-scripts/build-unit-test-docker.sh
-...
-Successfully built 10229cd01923
-Successfully tagged openbmc/ubuntu-unit-test:latest
-+ cleanup
-+ local status=0
-+ [[ -n /var/folders/d5/xkfh741n1vbg4khjdtwzw1gw0000gn/T/tmp.CptHYwFh ]]
-+ rm -f /var/folders/d5/xkfh741n1vbg4khjdtwzw1gw0000gn/T/tmp.CptHYwFh
-+ trap - EXIT ERR
-+ exit 0
-
-Let me know if you run into any issues.
-
-Andrew
