@@ -1,102 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 737C1B0750
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 05:47:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57C3AB0755
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 05:52:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TPq52g8xzF43G
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 13:47:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TPx41mxCzF43C
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 13:52:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (helo)
- smtp.helo=apc01-sg2-obe.outbound.protection.outlook.com
- (client-ip=40.107.131.79; helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=chli30@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=nuvoton.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=nuvoton.onmicrosoft.com
- header.i=@nuvoton.onmicrosoft.com header.b="unYJmLDq"; 
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::62a; helo=mail-pl1-x62a.google.com;
+ envelope-from=chyishian.jiang@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="E0D1OB9G"; 
  dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310079.outbound.protection.outlook.com [40.107.131.79])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
+ [IPv6:2607:f8b0:4864:20::62a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TPpY46s6zF3pW
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 13:46:59 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=N2ZCTsHQAwITWM1KBqdDJGU4+yyOfowOO2ej58mG7NCNNgdl4+EF3hheefUJWW7S8D0nHGiYnenjsVNqDUPs46j3F4rSKyIJOOhOsNcF3lT2RKq4bl+360ob9CyVgAi7Ga9Ew6HZKE5d16Byt5haOmGcLC6GSIL/MZPCQrawXYeW3DzzgqcdClk2Z8gnJB1xkoPNzIdwGH1dt9aEc5hFvKiBBVpM3SYKbEbzbp2DpnoDtuFTOUTe5RoecaooEvrVRwr5pJ39vXF6ZMZ5TPT8Yll5m7zEBxvIF/yfqt6mgG6+xmkSSRJAgx6/24gzy+9mITnWimeIh+7/vYXzf43tAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0AOV40iC+bhc1Q7uRACWaPUvhQwdW/bGUG0x2+9KKno=;
- b=GIgLJas4Z1cB/u/SsybgYwEp9X2UUy0C6RRRWxRhCXShG+y+VRiWymS2QWU5R9uuoDCUI4pUMA0rSvv5zXMPjmBiCFLPs802cvruzAH0o5t2nU+XHgnMovmVWwe+fQkSYN81V0/hOMtWy+7xHC1ugNTe+Oj9ftuK8MGukSJUOeR/GCJm+75JOBuh0ihFi4Wp2iAcFsAstzGhusUZ5avZuOxpJGdWYvviyrnswhjCld+hvRz+bAa41DmKK3P5lv6yIHdG3+Am70yO6bP4NRSyGfYiKvtOdDALlJP6xFDWGrjIYt0tGHEhpo/T3UCjn+5pT2R+/cLT9c6nIyKOE6j+Sw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
- dkim=pass header.d=nuvoton.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0AOV40iC+bhc1Q7uRACWaPUvhQwdW/bGUG0x2+9KKno=;
- b=unYJmLDqoy4DXFJAJIFa+fupwmqVCpJNC9Gr3/wAMv0Vx6LOKUIuUT7IuSa8P8Ck27zmS/us7StXnY9FrqyafQw7UUPtcrC0okjFbrMfVy5QAZodx2FCjQK7ZhPfcsWr9Flx0bb7SCy9/yCjXEH+3jiNhVJl6fr6ag8zomLWLcI=
-Received: from HK0PR03MB4660.apcprd03.prod.outlook.com (52.132.237.207) by
- HK0PR03MB4035.apcprd03.prod.outlook.com (20.177.165.78) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2263.13; Thu, 12 Sep 2019 03:46:54 +0000
-Received: from HK0PR03MB4660.apcprd03.prod.outlook.com
- ([fe80::50c:3a40:b235:8917]) by HK0PR03MB4660.apcprd03.prod.outlook.com
- ([fe80::50c:3a40:b235:8917%4]) with mapi id 15.20.2263.016; Thu, 12 Sep 2019
- 03:46:54 +0000
-From: CS20 CHLi30 <CHLI30@nuvoton.com>
-To: Wilfred Smith <wilfredsmith@fb.com>
-Subject: RE: Port 80H Snoop
-Thread-Topic: Port 80H Snoop
-Thread-Index: AQHVaPdArVWxHMOe+UiKld4czdVbSKcnRGpggAAEJYCAABLO8A==
-Date: Thu, 12 Sep 2019 03:46:54 +0000
-Message-ID: <HK0PR03MB46604880F50B30AF3789BE8CCFB00@HK0PR03MB4660.apcprd03.prod.outlook.com>
-References: <A9898780-E998-4D00-98D6-70DD8BD4C69E@fb.com>
- <HK0PR03MB466066F3FD37BB68F833E638CFB00@HK0PR03MB4660.apcprd03.prod.outlook.com>
- <F87104B2-56AC-479E-BEF0-8B764355D6AF@fb.com>
-In-Reply-To: <F87104B2-56AC-479E-BEF0-8B764355D6AF@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=CHLI30@nuvoton.com; 
-x-originating-ip: [60.250.194.160]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 95ec5e25-e2b0-4562-1941-08d73733daa7
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:HK0PR03MB4035; 
-x-ms-traffictypediagnostic: HK0PR03MB4035:|HK0PR03MB4035:
-x-ms-exchange-purlcount: 1
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR03MB4035A23EBFC829B2FEC5A077CFB00@HK0PR03MB4035.apcprd03.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1728;
-x-forefront-prvs: 01583E185C
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10009020)(376002)(136003)(366004)(396003)(39850400004)(346002)(199004)(189003)(13464003)(99286004)(52536014)(14444005)(486006)(446003)(966005)(478600001)(7736002)(8936002)(11346002)(6916009)(6116002)(3846002)(81166006)(14454004)(71200400001)(66574012)(81156014)(476003)(8676002)(71190400001)(7696005)(76176011)(54906003)(55016002)(6306002)(107886003)(102836004)(9686003)(53936002)(5024004)(2906002)(6436002)(256004)(186003)(66446008)(64756008)(66556008)(66476007)(26005)(53546011)(316002)(6506007)(305945005)(6246003)(66066001)(229853002)(4326008)(5660300002)(25786009)(74316002)(86362001)(33656002)(66946007)(76116006);
- DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB4035;
- H:HK0PR03MB4660.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: nuvoton.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: N04TSpSnNVJUy9yt7Y7+v5nCmvVDpIRS8Zm/T+3MJkegUVQXVO6UNcXq43n/syLnT1z9mGdTcjlQbkzlG3QlZxHdzWRq7anbX2sYpM69i/slNS5dzLHERRyrBMTc5wSQWsXhzezahbJZ4NNFT/POOfYqo6BJ4v8XcLORhhskpI/pKCKF4R0dCUvwPUR4neiJ5UbLZLOH05stY4mcKJfca+cxyB9fuwu/LH/AACOCdU6fjr6FXL/DVU5WGs0dOlaWzDJpNKzWvFtIMYi9Q2LQyaigBO0vy0PRpQDbqjZZ1o8q2y9xnX8sMt3mtwrvYbT6YVNX7svvtzjsPrQiAxfI1S6o63C5riOOS5F7FOBZByGaa5aoWCOBPpuNdIfdGYgcv9x3PQ1lwvnoNxEKZsHN2H0+FeIdJt4lX4FuMnAFN1A=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TPwY4WR8zF3qk
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 13:52:09 +1000 (AEST)
+Received: by mail-pl1-x62a.google.com with SMTP id bd8so11121716plb.6
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 20:52:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:message-id:in-reply-to:references:subject:mime-version;
+ bh=mvJSWVcluQ3MQV1wNVKO8tM5ujMrPb7BgK0YGfPy+xc=;
+ b=E0D1OB9G5+gOZxs8D7StM9Mjx34CR6eGroWTwfXPURFOCnLqRqV0wzlvB8nX76Fy29
+ wCW6S1w9HbhOVgidI1+1HsRdXNZX26TrZV0A6P8klbWIS+7y5O4okScFJspzk7ClTz6D
+ FKniLgGAj7qdQZn/rrDNJK5PPRRL/Nvq5Z2k/z0iynMoWOeUOk1tR8YtHiJUt21sK2Iu
+ GX8nXV3Ei6/a7kaxR4QaUdPXmlIasvDXipWrh8KDJoKNPsbrherQxgoDKg1fKOlPzWa0
+ ZpBO/D/a3Ryo0XsNLyO+9n9ZUsCLd04t2gGNpj+MIPGw3jgedhNAPJ064rkJdPpUUNJB
+ qJTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+ :subject:mime-version;
+ bh=mvJSWVcluQ3MQV1wNVKO8tM5ujMrPb7BgK0YGfPy+xc=;
+ b=XzXYAZHSa38q17tt1W42nOj4ZKJVcTSg/kMBiydwxj7C5MlJd1UFgsziAUbr40lf8L
+ qLbZyzIHV7QhzXS0iNOsJxyjRg1SH5XcoRBHhOUNeTTyYYRraGnd8m5Sq6Xx6P4lrAjo
+ CzH76o6t6vgxh5PswluZzGWW9kA8eIuSaQ9MoS6BlRDo2WgcAReATL98DxAq+D2kucFz
+ dsHqN2PFaDakd47CVl78Mgsuk4IEAHifnznyF2xYbX3RJw7eKrXAFz0uGzIUhIFngubL
+ l51k0MMD6m01vt4QFY740TJGwdZHg5eHmi0npKQF3agcx9bEsZhyj7zwvjZCiG53ZTWt
+ CyHQ==
+X-Gm-Message-State: APjAAAXENVB53fIfbEUasN+nsfqSS3N67L5bPHjyU3V2ilXn8zAHc+YU
+ a744Y55mqbFBp+aL9M6l3a3cf7at
+X-Google-Smtp-Source: APXvYqypHisIdrT0E/UoRBk/yZoLELXWxDdhtdQFETgQ8tBBWdAfhjE1BaX6pb0nQF0eU2P1gbf8rg==
+X-Received: by 2002:a17:902:6946:: with SMTP id
+ k6mr30713454plt.53.1568260326157; 
+ Wed, 11 Sep 2019 20:52:06 -0700 (PDT)
+Received: from [10.10.14.19] (220-135-135-179.HINET-IP.hinet.net.
+ [220.135.135.179])
+ by smtp.gmail.com with ESMTPSA id k22sm5861059pfa.87.2019.09.11.20.52.05
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 11 Sep 2019 20:52:05 -0700 (PDT)
+Date: Thu, 12 Sep 2019 11:51:58 +0800
+From: Samuel Jiang <chyishian.jiang@gmail.com>
+To: openbmc@lists.ozlabs.org, =?utf-8?Q?=E5=B8=B8=E6=99=93=E6=98=8E?=
+ <xiaoqian1641@163.com>
+Message-ID: <e1a257b0-a15f-4258-b34c-330f132913a2@Spark>
+In-Reply-To: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+Subject: Re: Fw:How to use gtest/gmock in openbmc
+X-Readdle-Message-ID: e1a257b0-a15f-4258-b34c-330f132913a2@Spark
 MIME-Version: 1.0
-X-OriginatorOrg: nuvoton.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95ec5e25-e2b0-4562-1941-08d73733daa7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2019 03:46:54.6518 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kbEGwqKEU/JH8q5Rvr/6YTOcVn0iP4TUgzBgLAKx69VAKXzvH5d3+vE13q9h+LZNYX7QllSTvubOIgzseqPK8A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB4035
+Content-Type: multipart/alternative; boundary="5d79c0e4_2a487cb0_305"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,70 +80,168 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- CS20 CHLi30 <CHLI30@nuvoton.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wilfred,
+--5d79c0e4_2a487cb0_305
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Yes, I also modified example code to track the history of the port 80h snoo=
-p values.
-The history will be saved to file with timestamp name for Host ON, OFF, and=
- enter BIOS conditions.
-T
-his patch is just an experiment hard coded some specific Port80H codes for =
-monitoring BIOS we used.
-These code should be configurable in a mature implementation, such as GUI/R=
-EST API entries for downloading/viewing these logs, but not done due to pri=
-ority change.
+Hi Johny,
 
-The link of patch for you refer it. Thanks.
-https://github.com/Nuvoton-Israel/openbmc/blob/master/meta-evb/meta-evb-nuv=
-oton/meta-evb-npcm750/recipes-phosphor/host/phosphor-host-postd/0001-suppor=
-t-npcm7xx-lpc-bpc0-and-snooper.patch
+> I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46ound=
+ the OpenBMC source code already had the test package,but it cannot be co=
+mpiled according to README.md.
+You need the compile environment first follow by build using the SDK docu=
+ment.
+update README.md step =C2=A0./configure =C2=A0 to =C2=A0./configure =24=7B=
+CON=46IGURE=5F=46LAGS=7D.
 
-Best regards,
-Tim
+I think it could be compiled after executing above steps.
 
------Original Message-----
-From: Wilfred Smith [mailto:wilfredsmith@fb.com]
-Sent: Thursday, September 12, 2019 9:56 AM
-To: CS20 CHLi30 <CHLI30@nuvoton.com>
-Cc: openbmc@lists.ozlabs.org
-Subject: Re: Port 80H Snoop
+Thanks,
 
-Tim, Many thanks. Are you also providing the ability to track the history o=
-f the port 80h snoop values? If not, are you aware of someone else having d=
-one so?
-
-Wilfred
-
-> On Sep 11, 2019, at 6:52 PM, CS20 CHLi30 <CHLI30@nuvoton.com> wrote:
+Samuel Jiang
+On Sep 12, 2019, 11:26 AM +0800, =E5=B8=B8=E6=99=93=E6=98=8E <xiaoqian164=
+1=40163.com>, wrote:
+> Hi, OpenBMC development member,
 >
-> Hello Wilfred Smith,
+> I'm learning openbmc via github.
+> I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46ound=
+ the OpenBMC source code already had the test package,but it cannot be co=
+mpiled according to README.md.
+> I think it may be my compilation method is not correct, Do you have any=
+ documentation about this =3F
 >
-> You can refer the module phosphor-host-postd and add file recipes-phospho=
-r/host/phosphor-host-postd_%.bbappend for changing your snoop device.
-> (ex: SNOOP_DEVICE =3D "npcm7xx-lpc-bpc0")
+> Could you tell me How to test =22sdeventplus=22 =3F
 >
-> Then, you can execute "snooper" program in shell prompt and you will see =
-the POST code be printed on console.
-> You can refer the attach file about screenshot for the result of snooper.=
- Thanks.
+> Thanks very mouch.
+> Johny
 >
-> Best regards,
-> Tim
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
+>
 
-________________________________
-________________________________
- The privileged confidential information contained in this email is intende=
-d for use only by the addressees as indicated by the original sender of thi=
-s email. If you are not the addressee indicated in this email or are not re=
-sponsible for delivery of the email to such a person, please kindly reply t=
-o the sender indicating this fact and delete all copies of it from your com=
-puter and network server immediately. Your cooperation is highly appreciate=
-d. It is advised that any unauthorized use of confidential information of N=
-uvoton is strictly prohibited; and any information in this email irrelevant=
- to the official business of Nuvoton shall be deemed as neither given nor e=
-ndorsed by Nuvoton.
+--5d79c0e4_2a487cb0_305
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+<html xmlns=3D=22http://www.w3.org/1999/xhtml=22>
+<head>
+<title></title>
+</head>
+<body>
+<div name=3D=22messageBodySection=22>
+<div dir=3D=22auto=22>Hi Johny,
+<div dir=3D=22auto=22><br /></div>
+<div dir=3D=22auto=22>
+<blockquote type=3D=22cite=22 class=3D=22spark=5Fquote=22 style=3D=22care=
+t-color: rgb(39, 39, 40); margin: 5px; padding-left: 10px; border-left-wi=
+dth: thin; border-left-style: solid; border-left-color: rgb(26, 188, 156)=
+;=22>
+<div style=3D=22line-height: 1.7; font-family: Arial;=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height: 1.7;=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height: 1.7;=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height: 1.7;=22>
+<div>I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46o=
+und the OpenBMC source code already had the test package,but it cannot be=
+ compiled according to README.md.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+<div dir=3D=22auto=22>You need the compile environment first follow by <a=
+ href=3D=22https://github.com/openbmc/openbmc/wiki/How-to-Build-using-the=
+-SDK=22>build using the SDK document</a>.</div>
+<div dir=3D=22auto=22>update README.md step &=23160;<span style=3D=22care=
+t-color: rgb(39, 39, 40);=22>./configure &=23160; to &=23160;</span><a hr=
+ef=3D=22https://www.yoctoproject.org/docs/2.1/sdk-manual/sdk-manual.html=22=
+>./configure =24=7BCON=46IGURE=5F=46LAGS=7D.</a></div>
+<div dir=3D=22auto=22><br /></div>
+<div dir=3D=22auto=22>I think it could be compiled after executing above =
+steps.&=23160;</div>
+</div>
+</div>
+<div name=3D=22messageSignatureSection=22><br />
+<div class=3D=22match=46ont=22>Thanks,
+<div><br /></div>
+<div>Samuel Jiang</div>
+</div>
+</div>
+<div name=3D=22messageReplySection=22>On Sep 12, 2019, 11:26 AM +0800, =E5=
+=B8=B8=E6=99=93=E6=98=8E &lt;xiaoqian1641=40163.com&gt;, wrote:<br />
+<blockquote type=3D=22cite=22 class=3D=22spark=5Fquote=22 style=3D=22marg=
+in: 5px 5px; padding-left: 10px; border-left: thin solid =231abc9c;=22>
+<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
+y:Arial=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
+y:Arial=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
+y:Arial=22>
+<div id=3D=22is=46orwardContent=22>
+<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
+y:Arial=22>
+<div>Hi, OpenBMC development member,</div>
+<div><br /></div>
+<div>I'm learning openbmc via github.</div>
+<div>I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46o=
+und the OpenBMC source code already had the test package,but it cannot be=
+ compiled according to README.md.</div>
+<div>I think it may be my compilation method is not correct, Do you have =
+any documentation about this =3F</div>
+<div><br /></div>
+<div>Could you tell me How to test =22sdeventplus=22 =3F</div>
+<div><br /></div>
+<div>Thanks very mouch.</div>
+<div>Johny</div>
+<div><br style=3D=22font-family: arial; font-size: medium;=22 /></div>
+</div>
+<br />
+<br />
+<span title=3D=22neteasefooter=22>
+<p></p>
+</span></div>
+</div>
+<br />
+<br />
+<span title=3D=22neteasefooter=22>
+<p></p>
+</span></div>
+</div>
+<br />
+<br />
+<span title=3D=22neteasefooter=22>
+<p></p>
+</span></div>
+</div>
+<br />
+<br />
+<span title=3D=22neteasefooter=22><br />
+<br />
+<br /></span></blockquote>
+</div>
+</body>
+</html>
+
+--5d79c0e4_2a487cb0_305--
+
