@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52136B0AE2
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 11:04:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CCF47B0AD6
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 11:03:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TXsK65wFzF3LG
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 19:04:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TXr33yhJzF48L
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 19:03:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,13 +19,13 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TXqL15gfzF47w
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TXqK6vTRzF47q
  for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 19:03:07 +1000 (AEST)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x8C91p8g011595;
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x8C91pjU011596;
  Thu, 12 Sep 2019 12:01:51 +0300
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 774EA628F1; Thu, 12 Sep 2019 12:01:51 +0300 (IDT)
+ id E198662A57; Thu, 12 Sep 2019 12:01:51 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: mpm@selenic.com, herbert@gondor.apana.org.au, arnd@arndb.de,
  gregkh@linuxfoundation.org, robh+dt@kernel.org, mark.rutland@arm.com,
@@ -33,10 +33,12 @@ To: mpm@selenic.com, herbert@gondor.apana.org.au, arnd@arndb.de,
  yuenn@google.com, benjaminfair@google.com, sumit.garg@linaro.org,
  jens.wiklander@linaro.org, vkoul@kernel.org, tglx@linutronix.de,
  joel@jms.id.au
-Subject: [PATCH v3 0/2] hwrng: npcm: add NPCM RNG driver support
-Date: Thu, 12 Sep 2019 12:01:47 +0300
-Message-Id: <20190912090149.7521-1-tmaimon77@gmail.com>
+Subject: [PATCH v3 1/2] dt-binding: hwrng: add NPCM RNG documentation
+Date: Thu, 12 Sep 2019 12:01:48 +0300
+Message-Id: <20190912090149.7521-2-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20190912090149.7521-1-tmaimon77@gmail.com>
+References: <20190912090149.7521-1-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,46 +56,33 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch set adds Random Number Generator (RNG) support 
-for the Nuvoton NPCM Baseboard Management Controller (BMC).
+Added device tree binding documentation for Nuvoton BMC
+NPCM Random Number Generator (RNG).
 
-The RNG driver we use power consumption when the RNG 
-is not required.
-
-The NPCM RNG driver tested on NPCM750 evaluation board.
-
-Addressed comments from:.
- - Daniel Thompson: https://lkml.org/lkml/2019/9/10/352
- - Milton Miller II : https://lkml.org/lkml/2019/9/10/847
- - Daniel Thompson: https://lkml.org/lkml/2019/9/10/294
-
-Changes since version 2:
- - Rearrange wait parameter in npcm_rng_read function.
- - Calling pm_runtime_enable function before hwrng_register function 
-   called to enable the hwrng before add_early_randomness called.
- - Remove quality dt-binding parameter in the driver and documentation.
- - Disable CONFIG_PM if devm_hwrng_register failed.
- - Remove owner setting in the driver struct.
-
-Changes since version 1:
- - Define timout in real-world units.
- - Using readl_poll_timeout in rng_read function.
- - Honor wait parameter in rng_read function.
- - Using local variable instead of #ifndef.
- - Remove probe print.
-
-Tomer Maimon (2):
-  dt-binding: hwrng: add NPCM RNG documentation
-  hwrng: npcm: add NPCM RNG driver
-
- .../bindings/rng/nuvoton,npcm-rng.txt         |  12 ++
- drivers/char/hw_random/Kconfig                |  13 ++
- drivers/char/hw_random/Makefile               |   1 +
- drivers/char/hw_random/npcm-rng.c             | 186 ++++++++++++++++++
- 4 files changed, 212 insertions(+)
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+---
+ .../devicetree/bindings/rng/nuvoton,npcm-rng.txt     | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
- create mode 100644 drivers/char/hw_random/npcm-rng.c
 
+diff --git a/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+new file mode 100644
+index 000000000000..65c04172fc8c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+@@ -0,0 +1,12 @@
++NPCM SoC Random Number Generator
++
++Required properties:
++- compatible  : "nuvoton,npcm750-rng" for the NPCM7XX BMC.
++- reg         : Specifies physical base address and size of the registers.
++
++Example:
++
++rng: rng@f000b000 {
++	compatible = "nuvoton,npcm750-rng";
++	reg = <0xf000b000 0x8>;
++};
 -- 
 2.18.0
 
