@@ -1,44 +1,101 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F1ACB0AE6
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 11:06:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A929B0AF9
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 11:09:26 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TXtY698NzF48j
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 19:05:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TXyV58gZzF498
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 19:09:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=hotmail.com
+ (client-ip=40.92.9.55; helo=nam04-bn3-obe.outbound.protection.outlook.com;
+ envelope-from=fishbaoz@hotmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=hotmail.com header.i=@hotmail.com header.b="jRZGpPFk"; 
+ dkim-atps=neutral
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com
+ (mail-oln040092009055.outbound.protection.outlook.com [40.92.9.55])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TXqL13QLzF47t
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 19:03:07 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x8C91qKd011597;
- Thu, 12 Sep 2019 12:01:52 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 4ADAB62CAA; Thu, 12 Sep 2019 12:01:52 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: mpm@selenic.com, herbert@gondor.apana.org.au, arnd@arndb.de,
- gregkh@linuxfoundation.org, robh+dt@kernel.org, mark.rutland@arm.com,
- avifishman70@gmail.com, tali.perry1@gmail.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, sumit.garg@linaro.org,
- jens.wiklander@linaro.org, vkoul@kernel.org, tglx@linutronix.de,
- joel@jms.id.au
-Subject: [PATCH v3 2/2] hwrng: npcm: add NPCM RNG driver
-Date: Thu, 12 Sep 2019 12:01:49 +0300
-Message-Id: <20190912090149.7521-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20190912090149.7521-1-tmaimon77@gmail.com>
-References: <20190912090149.7521-1-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TXxp1Fh0zDrCX
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 19:08:44 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZGyRtreJJ1nyTvglR7jvOfY3PQR/dG0FjPrdf9CYSc4Dk1UO4GIM1ZQGaLHMO9+tQi64KaXYfu7iZKrUhvU3MDTMiEK1drb0LChIw0dMbECF3Ix8N6JM6EXlNW6G8lc/hSnuGjMIy/1tSbtQvQzPh5oKxiwRhf7hwnqlktqOUCSafu1L6jxTJzZ6BANhmp28pkTPaiKVYYtalsu/0CjMenNUL3PTM4Irw8daj4kTRtSMDm803Onqxt2XaSSrv2cJ6j08nfqvoA75AsMjnpputK0QLHHpJ3/dzMCdwIdZa+2nW0SOenBP230T0/Ucf+L/pgmMACfdy0pMnINpMGLKJw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H+RiQGY8phrEF4D5hpJ+TzjSfN0/CPLCDDiUOaCmQ/A=;
+ b=DfiwpHBZ1Yr0rHAATF/SoyPcErmo+Fadh9vqCkfLJVDDdfdM0F0bGpY7lFk6X6YdchyOTktYgGXkvkxeZ5E1lE+OQ5dB6WCPT78FYIofqS4X2kvYwT5/hi9kjby227BD2PQoQlkxxH601W6P97NlEyC7a3aNqi4gcicgOgQjx4oY7FbDZgFuRXeIVm6ZP1LSrp1H2psOpQbxmwu8eUm8HOfKkAQ3oPC8Fr4NQ1QC1O/XrlOyFVPqu5EC557CnAn2B94M4LR8ate0/mF8akOKq2QDWDJz9R8MvYA3/x5HnHCHyFg9LJ7SaA3zWbtLxhAp/x4faym5wAI3KQF4cdcr9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H+RiQGY8phrEF4D5hpJ+TzjSfN0/CPLCDDiUOaCmQ/A=;
+ b=jRZGpPFktBXbY2IfhwP20QjljiQtoMXP2p8SjIqJ6G6r1N1mi5BstYPsZJ4cpIblNMYFUEOIP9Jd95/iHhTXR7VOiwszABWk8Qrlgh3QJkB4AJFgyMH/0NjBR0pN/ZdoGMrkccQu8tebm4iSnUVsnH4TgHA37bedExFc5G+YmC05y0mOQ05zLo9uGkYNPkC3U8/NadfW+oZGx9j4JSzcZRp0LoSboNljNzi12Bnt+nHSHSNFoCTQR3D5vkzsI9hDw0FIpErEk8NOUOa9CQnkAsIp3GasuHihrjGbVrSYvzudgZ4gohx/DWKZ4xu90Ev4QzF3OrvWXE56r1JPvIVTkA==
+Received: from CO1NAM04FT039.eop-NAM04.prod.protection.outlook.com
+ (10.152.90.54) by CO1NAM04HT184.eop-NAM04.prod.protection.outlook.com
+ (10.152.91.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2263.14; Thu, 12 Sep
+ 2019 09:08:39 +0000
+Received: from MN2PR04MB6669.namprd04.prod.outlook.com (10.152.90.58) by
+ CO1NAM04FT039.mail.protection.outlook.com (10.152.91.80) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2263.14 via Frontend Transport; Thu, 12 Sep 2019 09:08:39 +0000
+Received: from MN2PR04MB6669.namprd04.prod.outlook.com
+ ([fe80::647f:2fe9:ff83:e676]) by MN2PR04MB6669.namprd04.prod.outlook.com
+ ([fe80::647f:2fe9:ff83:e676%2]) with mapi id 15.20.2263.015; Thu, 12 Sep 2019
+ 09:08:39 +0000
+From: Zheng Bao <fishbaoz@hotmail.com>
+To: Yong Li <yong.b.li@linux.intel.com>, 'Andrew Jeffery' <andrew@aj.id.au>,
+ 'AKASH G J' <akashgj91@gmail.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: Enable KCS interface in zaius
+Thread-Topic: Enable KCS interface in zaius
+Thread-Index: AQHVXie2AsYNJ+CVFkiAFCdw53bpLacTHlaAgAAdxQCADEc8qIAErgeAgAOaM9k=
+Date: Thu, 12 Sep 2019 09:08:39 +0000
+Message-ID: <MN2PR04MB66693029C6009D3A03416A3FCDB00@MN2PR04MB6669.namprd04.prod.outlook.com>
+References: <CAE33tLGxcBFHYzXQ7Uqdg03ZibvS4busoJT=iGTwLMb8TMD-2g@mail.gmail.com>
+ <57995e3f-ef82-49b3-909a-054b5b9bef8e@www.fastmail.com>,
+ <000001d55efc$36c53100$a44f9300$@linux.intel.com>
+ <MN2PR04MB666979DC3506E051D6F44A54CDB50@MN2PR04MB6669.namprd04.prod.outlook.com>,
+ <000e01d56776$d87696b0$8963c410$@linux.intel.com>
+In-Reply-To: <000e01d56776$d87696b0$8963c410$@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:3FA7680A088498B5C2B505DFCAB4BBCAA2703ED4D92AA0E1B2B399643418145A;
+ UpperCasedChecksum:A412C362037AB83CF61FD92361C66F2BD4C9515C89B843193D5A934FB6B51C55;
+ SizeAsReceived:7070; Count:43
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn: [4Qu9amT8RLeYmcLkeoMQUdjk1WwRu/F5]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 43
+x-eopattributedmessage: 0
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(5050001)(7020095)(20181119110)(201702061078)(5061506573)(5061507331)(1603103135)(2017031320274)(2017031322404)(2017031323274)(2017031324274)(1601125500)(1603101475)(1701031045);
+ SRVR:CO1NAM04HT184; 
+x-ms-traffictypediagnostic: CO1NAM04HT184:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-message-info: kkayJWov7/imSqLzk4P36neLWOfEYmCy/6C5ZIRqnj2VDmwmA8Pli/XBcnb+PIyerPIuUKwgZZ+KxfCCl3D+OcFATnNuAp/aaiy7AtndzJtDl0HJ7qijJgRgbH7n+nZRGH71PgYAO5OL6mYxUHBqNzOleUFiqXc67N+jvc9PG8/6sc+GK2zU7GuArVcnbSTB
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_MN2PR04MB66693029C6009D3A03416A3FCDB00MN2PR04MB6669namp_"
+MIME-Version: 1.0
+X-OriginatorOrg: hotmail.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6eef4067-f264-4a0a-9711-08d73760cd30
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2019 09:08:39.4035 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1NAM04HT184
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,247 +107,420 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org,
- linux-crypto@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+--_000_MN2PR04MB66693029C6009D3A03416A3FCDB00MN2PR04MB6669namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/char/hw_random/Kconfig    |  13 +++
- drivers/char/hw_random/Makefile   |   1 +
- drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++++++++
- 3 files changed, 200 insertions(+)
- create mode 100644 drivers/char/hw_random/npcm-rng.c
+I use qemu to test the image. Got the result.
 
-diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
-index 59f25286befe..87a1c30e7958 100644
---- a/drivers/char/hw_random/Kconfig
-+++ b/drivers/char/hw_random/Kconfig
-@@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
- 
- 	  If unsure, say Y.
- 
-+config HW_RANDOM_NPCM
-+	tristate "NPCM Random Number Generator support"
-+	depends on ARCH_NPCM || COMPILE_TEST
-+	default HW_RANDOM
-+	help
-+ 	  This driver provides support for the Random Number
-+	  Generator hardware available in Nuvoton NPCM SoCs.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called npcm-rng.
-+
-+ 	  If unsure, say Y.
-+
- endif # HW_RANDOM
- 
- config UML_RANDOM
-diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
-index 7c9ef4a7667f..17b6d4e6d591 100644
---- a/drivers/char/hw_random/Makefile
-+++ b/drivers/char/hw_random/Makefile
-@@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK)	+= mtk-rng.o
- obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
- obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
- obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
-+obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
-diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
-new file mode 100644
-index 000000000000..b7c8c7e13a49
---- /dev/null
-+++ b/drivers/char/hw_random/npcm-rng.c
-@@ -0,0 +1,186 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2019 Nuvoton Technology corporation.
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/io.h>
-+#include <linux/iopoll.h>
-+#include <linux/init.h>
-+#include <linux/random.h>
-+#include <linux/err.h>
-+#include <linux/platform_device.h>
-+#include <linux/hw_random.h>
-+#include <linux/delay.h>
-+#include <linux/of_irq.h>
-+#include <linux/pm_runtime.h>
-+
-+#define NPCM_RNGCS_REG		0x00	/* Control and status register */
-+#define NPCM_RNGD_REG		0x04	/* Data register */
-+#define NPCM_RNGMODE_REG	0x08	/* Mode register */
-+
-+#define NPCM_RNG_CLK_SET_25MHZ	GENMASK(4, 3) /* 20-25 MHz */
-+#define NPCM_RNG_DATA_VALID	BIT(1)
-+#define NPCM_RNG_ENABLE		BIT(0)
-+#define NPCM_RNG_M1ROSEL	BIT(1)
-+
-+#define NPCM_RNG_TIMEOUT_USEC	20000
-+#define NPCM_RNG_POLL_USEC	1000
-+
-+#define to_npcm_rng(p)	container_of(p, struct npcm_rng, rng)
-+
-+struct npcm_rng {
-+	void __iomem *base;
-+	struct hwrng rng;
-+};
-+
-+static int npcm_rng_init(struct hwrng *rng)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+
-+	writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
-+	       priv->base + NPCM_RNGCS_REG);
-+
-+	return 0;
-+}
-+
-+static void npcm_rng_cleanup(struct hwrng *rng)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+
-+	writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-+}
-+
-+static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
-+{
-+	struct npcm_rng *priv = to_npcm_rng(rng);
-+	int retval = 0;
-+	int ready;
-+
-+	pm_runtime_get_sync((struct device *)priv->rng.priv);
-+
-+	while (max >= sizeof(u32)) {
-+		if (wait) {
-+			if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
-+					       ready,
-+					       ready & NPCM_RNG_DATA_VALID,
-+					       NPCM_RNG_POLL_USEC,
-+					       NPCM_RNG_TIMEOUT_USEC))
-+				break;
-+		} else {
-+			if ((readl(priv->base + NPCM_RNGCS_REG) &
-+			    NPCM_RNG_DATA_VALID) == 0)
-+				break;
-+		}
-+
-+		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
-+		retval += sizeof(u32);
-+		buf += sizeof(u32);
-+		max -= sizeof(u32);
-+	}
-+
-+	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
-+	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
-+
-+	return retval || !wait ? retval : -EIO;
-+}
-+
-+static int npcm_rng_probe(struct platform_device *pdev)
-+{
-+	struct npcm_rng *priv;
-+	struct resource *res;
-+	int ret;
-+
-+	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	priv->base = devm_ioremap_resource(&pdev->dev, res);
-+	if (IS_ERR(priv->base))
-+		return PTR_ERR(priv->base);
-+
-+	dev_set_drvdata(&pdev->dev, priv);
-+	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
-+	pm_runtime_use_autosuspend(&pdev->dev);
-+	pm_runtime_enable(&pdev->dev);
-+
-+#ifndef CONFIG_PM
-+	priv->rng.init = npcm_rng_init;
-+	priv->rng.cleanup = npcm_rng_cleanup;
-+#endif
-+	priv->rng.name = pdev->name;
-+	priv->rng.read = npcm_rng_read;
-+	priv->rng.priv = (unsigned long)&pdev->dev;
-+	priv->rng.quality = 1000;
-+
-+	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
-+
-+	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
-+	if (ret) {
-+		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
-+			ret);
-+		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_set_suspended(&pdev->dev);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int npcm_rng_remove(struct platform_device *pdev)
-+{
-+	struct npcm_rng *priv = platform_get_drvdata(pdev);
-+
-+	devm_hwrng_unregister(&pdev->dev, &priv->rng);
-+	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
-+
-+	return 0;
-+}
-+
-+#ifdef CONFIG_PM
-+static int npcm_rng_runtime_suspend(struct device *dev)
-+{
-+	struct npcm_rng *priv = dev_get_drvdata(dev);
-+
-+	npcm_rng_cleanup(&priv->rng);
-+
-+	return 0;
-+}
-+
-+static int npcm_rng_runtime_resume(struct device *dev)
-+{
-+	struct npcm_rng *priv = dev_get_drvdata(dev);
-+
-+	return npcm_rng_init(&priv->rng);
-+}
-+#endif
-+
-+static const struct dev_pm_ops npcm_rng_pm_ops = {
-+	SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
-+			   npcm_rng_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
-+};
-+
-+static const struct of_device_id rng_dt_id[] = {
-+	{ .compatible = "nuvoton,npcm750-rng",  },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, rng_dt_id);
-+
-+static struct platform_driver npcm_rng_driver = {
-+	.driver = {
-+		.name		= "npcm-rng",
-+		.pm		= &npcm_rng_pm_ops,
-+		.of_match_table = of_match_ptr(rng_dt_id),
-+	},
-+	.probe		= npcm_rng_probe,
-+	.remove		= npcm_rng_remove,
-+};
-+
-+module_platform_driver(npcm_rng_driver);
-+
-+MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_LICENSE("GPL v2");
--- 
-2.18.0
+$ qemu-system-arm -m 512 -M ast2500-evb -nographic  -drive file=3Dphosphor-=
+intel-platform-1.bin,format=3Draw,if=3Dmtd
 
+
+U-Boot 2016.07 (Sep 11 2019 - 21:38:56 +0000)
+
+SOC : AST2500-A1
+RST : 0x01
+PLL :     24 MHz
+CPU :    792 MHz
+MEM :   2.240 MHz, EEC: Disable, Cache: Disable
+VGA :    16 MiB
+DRAM :   init by SOC
+       Watchdog enabled
+DRAM:  496 MiB
+Flash: 32 MiB
+*** Warning - bad CRC, using default environment
+
+In:    serial
+Out:   serial
+Err:   serial
+Error: start and/or end address not on sector boundary
+Error: start and/or end address not on sector boundary
+Error: start and/or end address not on sector boundary
+
+
+Zheng
+________________________________
+From: Yong Li <yong.b.li@linux.intel.com>
+Sent: Tuesday, September 10, 2019 1:26 AM
+To: 'Zheng Bao' <fishbaoz@hotmail.com>; 'Andrew Jeffery' <andrew@aj.id.au>;=
+ 'AKASH G J' <akashgj91@gmail.com>; openbmc@lists.ozlabs.org <openbmc@lists=
+.ozlabs.org>
+Subject: RE: Enable KCS interface in zaius
+
+
+I would like to know how did you perform the build? Please perform the belo=
+w commands:
+
+
+
+export TEMPLATECONF=3Dmeta-openbmc-mods/meta-wht/conf
+
+source oe-init-build-env
+
+bitbake intel-platforms
+
+
+
+Thanks,
+
+Yong
+
+
+
+From: Zheng Bao <fishbaoz@hotmail.com>
+Sent: Saturday, September 7, 2019 7:34 PM
+To: Yong Li <yong.b.li@linux.intel.com>; 'Andrew Jeffery' <andrew@aj.id.au>=
+; 'AKASH G J' <akashgj91@gmail.com>; openbmc@lists.ozlabs.org
+Subject: Re: Enable KCS interface in zaius
+
+
+
+I check out the https://github.com/Intel-BMC/openbmc
+
+and build the board: meta-openbmc-mods/meta-wolfpass/conf
+
+
+
+But got the error,
+
+dd: failed to open '/home/baozheng/bmc/openbmc-github/build/tmp/deploy/imag=
+es/intel-ast2500/fitImage-rootfs-intel-ast2500.bin': No such file or direct=
+ory
+
+
+
+Did I miss something?
+
+
+
+Zheng
+
+
+
+
+
+________________________________
+
+From: openbmc <openbmc-bounces+fishbaoz=3Dhotmail.com@lists.ozlabs.org<mail=
+to:openbmc-bounces+fishbaoz=3Dhotmail.com@lists.ozlabs.org>> on behalf of Y=
+ong Li <yong.b.li@linux.intel.com<mailto:yong.b.li@linux.intel.com>>
+Sent: Friday, August 30, 2019 6:29 AM
+To: 'Andrew Jeffery' <andrew@aj.id.au<mailto:andrew@aj.id.au>>; 'AKASH G J'=
+ <akashgj91@gmail.com<mailto:akashgj91@gmail.com>>; openbmc@lists.ozlabs.or=
+g<mailto:openbmc@lists.ozlabs.org> <openbmc@lists.ozlabs.org<mailto:openbmc=
+@lists.ozlabs.org>>
+Subject: RE: Enable KCS interface in zaius
+
+
+
+It seems that the kernel needs to enable KCS, and disable BT.
+CONFIG_ASPEED_KCS_IPMI_BMC=3Dy
+
+Suggest to check on this: https://github.com/Intel-BMC/openbmc
+
+Thanks,
+Yong
+-----Original Message-----
+From: openbmc <openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org=
+<mailto:openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org>>
+On Behalf Of Andrew Jeffery
+Sent: Friday, August 30, 2019 12:42 PM
+To: AKASH G J <akashgj91@gmail.com<mailto:akashgj91@gmail.com>>; openbmc@li=
+sts.ozlabs.org<mailto:openbmc@lists.ozlabs.org>
+Subject: Re: Enable KCS interface in zaius
+
+
+
+On Thu, 29 Aug 2019, at 09:05, AKASH G J wrote:
+> Hi all,
+>
+> I am using server platform with Intel processor and Aspeed AST-2500
+> BMC. OpenBMC firmware with zaius configuration is used for BMC.
+>
+
+Zaius is an OpenPOWER platform (and our OpenPOWER platforms use the BT
+interface rather than KCS). You're using an Intel-based processor for the
+host, so perhaps it's better to start with an x86-based platform such as th=
+e
+s2600wf. This should already have KCS IPMI enabled for you.
+
+Andrew
+
+--_000_MN2PR04MB66693029C6009D3A03416A3FCDB00MN2PR04MB6669namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div><span>I use qemu to test the image. Got the result.<br>
+</span></div>
+<div><span><br>
+</span></div>
+<div><span>$ qemu-system-arm -m 512 -M ast2500-evb -nographic &nbsp;-drive =
+file=3Dphosphor-intel-platform-1.bin,format=3Draw,if=3Dmtd</span></div>
+<div><span></span></div>
+<div><br>
+</div>
+<div><br>
+</div>
+<div>U-Boot 2016.07 (Sep 11 2019 - 21:38:56 &#43;0000)<br>
+</div>
+<div><br>
+</div>
+<div>SOC : AST2500-A1<br>
+</div>
+<div>RST : 0x01<br>
+</div>
+<div>PLL : &nbsp; &nbsp; 24 MHz<br>
+</div>
+<div>CPU : &nbsp; &nbsp;792 MHz<br>
+</div>
+<div>MEM : &nbsp; 2.240 MHz, EEC: Disable, Cache: Disable<br>
+</div>
+<div>VGA : &nbsp; &nbsp;16 MiB<br>
+</div>
+<div>DRAM : &nbsp; init by SOC<br>
+</div>
+<div>&nbsp; &nbsp; &nbsp; &nbsp;Watchdog enabled<br>
+</div>
+<div>DRAM: &nbsp;496 MiB<br>
+</div>
+<div>Flash: 32 MiB<br>
+</div>
+<div>*** Warning - bad CRC, using default environment<br>
+</div>
+<div><br>
+</div>
+<div>In: &nbsp; &nbsp;serial<br>
+</div>
+<div>Out: &nbsp; serial<br>
+</div>
+<div>Err: &nbsp; serial<br>
+</div>
+<div>Error: start and/or end address not on sector boundary<br>
+</div>
+<div>Error: start and/or end address not on sector boundary<br>
+</div>
+<div>Error: start and/or end address not on sector boundary<br>
+</div>
+<div><br>
+</div>
+<span></span>
+<div>
+<div id=3D"appendonsend" style=3D"font-family: Calibri, Helvetica, sans-ser=
+if; font-size: 12pt; color: rgb(0, 0, 0);">
+</div>
+<div style=3D"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; col=
+or:rgb(0,0,0)">
+<br>
+</div>
+<div style=3D"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; col=
+or:rgb(0,0,0)">
+Zheng<br>
+</div>
+<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font style=3D"font-size:11pt" face=
+=3D"Calibri, sans-serif" color=3D"#000000"><b>From:</b> Yong Li &lt;yong.b.=
+li@linux.intel.com&gt;<br>
+<b>Sent:</b> Tuesday, September 10, 2019 1:26 AM<br>
+<b>To:</b> 'Zheng Bao' &lt;fishbaoz@hotmail.com&gt;; 'Andrew Jeffery' &lt;a=
+ndrew@aj.id.au&gt;; 'AKASH G J' &lt;akashgj91@gmail.com&gt;; openbmc@lists.=
+ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;<br>
+<b>Subject:</b> RE: Enable KCS interface in zaius</font>
+<div>&nbsp;</div>
+</div>
+<div lang=3D"EN-US">
+<div class=3D"x_WordSection1">
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+I would like to know how did you perform the build? Please perform the belo=
+w commands:</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+export TEMPLATECONF=3Dmeta-openbmc-mods/meta-wht/conf</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+source oe-init-build-env</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+bitbake intel-platforms</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+Thanks,</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+Yong</p>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+<div>
+<div style=3D"border:none; border-top:solid #E1E1E1 1.0pt; padding:3.0pt 0i=
+n 0in 0in">
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+<a name=3D"x______replyseparator"></a><b>From:</b> Zheng Bao &lt;fishbaoz@h=
+otmail.com&gt;
+<br>
+<b>Sent:</b> Saturday, September 7, 2019 7:34 PM<br>
+<b>To:</b> Yong Li &lt;yong.b.li@linux.intel.com&gt;; 'Andrew Jeffery' &lt;=
+andrew@aj.id.au&gt;; 'AKASH G J' &lt;akashgj91@gmail.com&gt;; openbmc@lists=
+.ozlabs.org<br>
+<b>Subject:</b> Re: Enable KCS interface in zaius</p>
+</div>
+</div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+I check out the <a href=3D"https://github.com/Intel-BMC/openbmc">https://gi=
+thub.com/Intel-BMC/openbmc</a></p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+and build the board: meta-openbmc-mods/meta-wolfpass/conf</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+But got the error,</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+dd: failed to open '/home/baozheng/bmc/openbmc-github/build/tmp/deploy/imag=
+es/intel-ast2500/fitImage-rootfs-intel-ast2500.bin': No such file or direct=
+ory</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+Did I miss something?</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+Zheng</p>
+</div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+</div>
+<div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+<span style=3D"font-size:12.0pt; color:black">&nbsp;</span></p>
+</div>
+<div class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11=
+pt; font-family: &quot;Calibri&quot;, sans-serif;text-align:center" align=
+=3D"center">
+<hr width=3D"98%" size=3D"3" align=3D"center">
+</div>
+<div id=3D"x_divRplyFwdMsg">
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+<b><span style=3D"color:black">From:</span></b><span style=3D"color:black">=
+ openbmc &lt;<a href=3D"mailto:openbmc-bounces&#43;fishbaoz=3Dhotmail.com@l=
+ists.ozlabs.org">openbmc-bounces&#43;fishbaoz=3Dhotmail.com@lists.ozlabs.or=
+g</a>&gt; on behalf of Yong Li &lt;<a href=3D"mailto:yong.b.li@linux.intel.=
+com">yong.b.li@linux.intel.com</a>&gt;<br>
+<b>Sent:</b> Friday, August 30, 2019 6:29 AM<br>
+<b>To:</b> 'Andrew Jeffery' &lt;<a href=3D"mailto:andrew@aj.id.au">andrew@a=
+j.id.au</a>&gt;; 'AKASH G J' &lt;<a href=3D"mailto:akashgj91@gmail.com">aka=
+shgj91@gmail.com</a>&gt;;
+<a href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a> &l=
+t;<a href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a>&=
+gt;<br>
+<b>Subject:</b> RE: Enable KCS interface in zaius</span> </p>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;">
+&nbsp;</p>
+</div>
+</div>
+<div>
+<div>
+<p class=3D"x_MsoNormal" style=3D"margin: 0in 0in 0.0001pt; font-size: 11pt=
+; font-family: &quot;Calibri&quot;, sans-serif;margin-bottom:12.0pt">
+It seems that the kernel needs to enable KCS, and disable BT. <br>
+CONFIG_ASPEED_KCS_IPMI_BMC=3Dy<br>
+<br>
+Suggest to check on this: <a href=3D"https://github.com/Intel-BMC/openbmc">=
+https://github.com/Intel-BMC/openbmc</a><br>
+<br>
+Thanks,<br>
+Yong<br>
+-----Original Message-----<br>
+From: openbmc &lt;<a href=3D"mailto:openbmc-bounces&#43;yong.b.li=3Dlinux.i=
+ntel.com@lists.ozlabs.org">openbmc-bounces&#43;yong.b.li=3Dlinux.intel.com@=
+lists.ozlabs.org</a>&gt;<br>
+On Behalf Of Andrew Jeffery<br>
+Sent: Friday, August 30, 2019 12:42 PM<br>
+To: AKASH G J &lt;<a href=3D"mailto:akashgj91@gmail.com">akashgj91@gmail.co=
+m</a>&gt;; <a href=3D"mailto:openbmc@lists.ozlabs.org">
+openbmc@lists.ozlabs.org</a><br>
+Subject: Re: Enable KCS interface in zaius<br>
+<br>
+<br>
+<br>
+On Thu, 29 Aug 2019, at 09:05, AKASH G J wrote:<br>
+&gt; Hi all,<br>
+&gt; <br>
+&gt; I am using server platform with Intel processor and Aspeed AST-2500 <b=
+r>
+&gt; BMC. OpenBMC firmware with zaius configuration is used for BMC.<br>
+&gt; <br>
+<br>
+Zaius is an OpenPOWER platform (and our OpenPOWER platforms use the BT<br>
+interface rather than KCS). You're using an Intel-based processor for the<b=
+r>
+host, so perhaps it's better to start with an x86-based platform such as th=
+e<br>
+s2600wf. This should already have KCS IPMI enabled for you.<br>
+<br>
+Andrew</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+--_000_MN2PR04MB66693029C6009D3A03416A3FCDB00MN2PR04MB6669namp_--
