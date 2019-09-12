@@ -2,73 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57C3AB0755
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 05:52:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7B61B080C
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 06:29:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TPx41mxCzF43C
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 13:52:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TQlG5mGFzF427
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 14:29:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::62a; helo=mail-pl1-x62a.google.com;
- envelope-from=chyishian.jiang@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::32d; helo=mail-ot1-x32d.google.com;
+ envelope-from=akashgj91@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="E0D1OB9G"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="bLKoPR+e"; 
  dkim-atps=neutral
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com
- [IPv6:2607:f8b0:4864:20::62a])
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com
+ [IPv6:2607:f8b0:4864:20::32d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TPwY4WR8zF3qk
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 13:52:09 +1000 (AEST)
-Received: by mail-pl1-x62a.google.com with SMTP id bd8so11121716plb.6
- for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 20:52:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TQkg4l9NzF41X
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 14:28:43 +1000 (AEST)
+Received: by mail-ot1-x32d.google.com with SMTP id n7so24794853otk.6
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Sep 2019 21:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:message-id:in-reply-to:references:subject:mime-version;
- bh=mvJSWVcluQ3MQV1wNVKO8tM5ujMrPb7BgK0YGfPy+xc=;
- b=E0D1OB9G5+gOZxs8D7StM9Mjx34CR6eGroWTwfXPURFOCnLqRqV0wzlvB8nX76Fy29
- wCW6S1w9HbhOVgidI1+1HsRdXNZX26TrZV0A6P8klbWIS+7y5O4okScFJspzk7ClTz6D
- FKniLgGAj7qdQZn/rrDNJK5PPRRL/Nvq5Z2k/z0iynMoWOeUOk1tR8YtHiJUt21sK2Iu
- GX8nXV3Ei6/a7kaxR4QaUdPXmlIasvDXipWrh8KDJoKNPsbrherQxgoDKg1fKOlPzWa0
- ZpBO/D/a3Ryo0XsNLyO+9n9ZUsCLd04t2gGNpj+MIPGw3jgedhNAPJ064rkJdPpUUNJB
- qJTg==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=pqdMSh8vmDk9NcVox/ik3mESuiG8aanc6iF1l52KMc4=;
+ b=bLKoPR+esNCy7Rl5iyyQ0NXquZU8b2z5l/lAKiqEcWThaxidryGwHhjeruTXJxORYW
+ pME3Hx5zBS0PW0Wjyo+LWbzNQmi3T06viH8Y8RgjzzEw1g5T/Sbjl9Hq3pcc8ZYNIH0W
+ bYq/2iY6pzHRxfiH1OalgDIle0a/CoZDz93LTK7G8yio0P52d8tYzAmRIWEuma5ptzkx
+ /qrxj1aL0eFL8RzdivTUBXNRE7L9re7Umlg3VgzSDkyQZtVvpwveENQkxOPhR8P96KfI
+ Gy2K6RySefq6826TAdbGBhhm7VqOOJeXWGpBx6+A0Qop5TYaOuJ+B8OhOVHS148Jd7X2
+ nxng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
- :subject:mime-version;
- bh=mvJSWVcluQ3MQV1wNVKO8tM5ujMrPb7BgK0YGfPy+xc=;
- b=XzXYAZHSa38q17tt1W42nOj4ZKJVcTSg/kMBiydwxj7C5MlJd1UFgsziAUbr40lf8L
- qLbZyzIHV7QhzXS0iNOsJxyjRg1SH5XcoRBHhOUNeTTyYYRraGnd8m5Sq6Xx6P4lrAjo
- CzH76o6t6vgxh5PswluZzGWW9kA8eIuSaQ9MoS6BlRDo2WgcAReATL98DxAq+D2kucFz
- dsHqN2PFaDakd47CVl78Mgsuk4IEAHifnznyF2xYbX3RJw7eKrXAFz0uGzIUhIFngubL
- l51k0MMD6m01vt4QFY740TJGwdZHg5eHmi0npKQF3agcx9bEsZhyj7zwvjZCiG53ZTWt
- CyHQ==
-X-Gm-Message-State: APjAAAXENVB53fIfbEUasN+nsfqSS3N67L5bPHjyU3V2ilXn8zAHc+YU
- a744Y55mqbFBp+aL9M6l3a3cf7at
-X-Google-Smtp-Source: APXvYqypHisIdrT0E/UoRBk/yZoLELXWxDdhtdQFETgQ8tBBWdAfhjE1BaX6pb0nQF0eU2P1gbf8rg==
-X-Received: by 2002:a17:902:6946:: with SMTP id
- k6mr30713454plt.53.1568260326157; 
- Wed, 11 Sep 2019 20:52:06 -0700 (PDT)
-Received: from [10.10.14.19] (220-135-135-179.HINET-IP.hinet.net.
- [220.135.135.179])
- by smtp.gmail.com with ESMTPSA id k22sm5861059pfa.87.2019.09.11.20.52.05
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 11 Sep 2019 20:52:05 -0700 (PDT)
-Date: Thu, 12 Sep 2019 11:51:58 +0800
-From: Samuel Jiang <chyishian.jiang@gmail.com>
-To: openbmc@lists.ozlabs.org, =?utf-8?Q?=E5=B8=B8=E6=99=93=E6=98=8E?=
- <xiaoqian1641@163.com>
-Message-ID: <e1a257b0-a15f-4258-b34c-330f132913a2@Spark>
-In-Reply-To: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
-References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
-Subject: Re: Fw:How to use gtest/gmock in openbmc
-X-Readdle-Message-ID: e1a257b0-a15f-4258-b34c-330f132913a2@Spark
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=pqdMSh8vmDk9NcVox/ik3mESuiG8aanc6iF1l52KMc4=;
+ b=D8C4dk89eQ9CFptHbYBfecmEPoSF6qhRz31AokWRJayQM6jyMRcxwB2XrXIltZoOGV
+ lGVC2to+KI6EaSPR/4MopGoRzmHgXKG0kN8uPdnz1Js7CCsj1Z9aiJsF2dwEBmVT8yfB
+ Hgdd5aGUIFfQdm7bfwDinlWb7mRGYwP16AOvScoomvgAr5rCwan8NEMgRE08AplcNlTR
+ m3l6B4DUchDKSnvp7A45tQkHS+LzldF0Yv3mlgv26Bv0KbpIvfPAR4bmQGiyDCJYL0fj
+ 3be8RcJqjl+5HaWUEhYCtrq/GbEWiCQqL1jO8O7lW2KqIITyYzRTOAEWIEg7gzwilfjM
+ TWww==
+X-Gm-Message-State: APjAAAWG/XCG2KmPIrTVCl26wpTA7RKEykbDQBP3SnCzzxoLqmg9mX7X
+ stQVQD3fvXlsmxd/9rJPtUw4nd4SbIU2eKXvjto=
+X-Google-Smtp-Source: APXvYqy644Qq3WFsT27OQHkRgq90/a/hdTP6BRFxH8yl+U3m8Qh2IG9203eACzUyT17nOyLuXbjMGT9RV31/91ygaN8=
+X-Received: by 2002:a9d:6209:: with SMTP id g9mr35646980otj.308.1568262519331; 
+ Wed, 11 Sep 2019 21:28:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="5d79c0e4_2a487cb0_305"
+References: <CAE33tLEzV8+n+cFVtnr0vYynsqn42+5APTtojHqWGb8A5GyG2g@mail.gmail.com>
+ <000001d56168$6da06960$48e13c20$@linux.intel.com>
+ <CAE33tLGNc3waqv7nqHVnNmXkkfk7WFYGCN986B3=0F=TUj=wMw@mail.gmail.com>
+ <CAE33tLHLxjOzwVpKoivafoRo3KntZg2qP2AVkcDDkyzfP4=gBA@mail.gmail.com>
+In-Reply-To: <CAE33tLHLxjOzwVpKoivafoRo3KntZg2qP2AVkcDDkyzfP4=gBA@mail.gmail.com>
+From: AKASH G J <akashgj91@gmail.com>
+Date: Thu, 12 Sep 2019 09:56:45 +0530
+Message-ID: <CAE33tLGmQDUbWN56k4CK+hY-T35PDqwrftwQ9Yeypq0eqzHrrw@mail.gmail.com>
+Subject: Re: Cannot connect to console server in s2600wf
+To: Yong Li <yong.b.li@linux.intel.com>
+Content-Type: multipart/alternative; boundary="0000000000006120340592539233"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,168 +75,214 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Yang, Cheng C" <cheng.c.yang@intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---5d79c0e4_2a487cb0_305
-Content-Type: text/plain; charset="utf-8"
+--0000000000006120340592539233
+Content-Type: text/plain; charset="UTF-8"
+
+Phosphor IPMI KCS DBus Bridge is working now. Just I enabled kcs_chan-3 in
+device tree.
+
+On Wed, Sep 11, 2019 at 5:40 PM AKASH G J <akashgj91@gmail.com> wrote:
+
+> This problem is solved by enabling vuart device in device tree. Now
+> obmc-console-server starts running.
+>
+> But *Phosphor IPMI KCS DBus Bridge service* is not running.
+>
+> *kcsbridged* binary is there in /usr/bin.
+>
+> On Wed, Sep 11, 2019 at 3:46 PM AKASH G J <akashgj91@gmail.com> wrote:
+>
+>> Sorry for the delay for reply.
+>>
+>> We want to get the host CPU console over the BMC console.
+>>
+>> I build OpenBMC firmware using the following steps.
+>>
+>> 1. export TEMPLATECONF=meta-intel/meta-s2600wf/conf/
+>> 2. . openbmc-env
+>> 3. bitbake obmc-phosphor-image
+>>
+>> */lib/systemd/system/obmc-console@.service* is available with content
+>>
+>> [Unit]
+>> Description=Phosphor Console Muxer listening on device /dev/%I
+>> BindsTo=dev-%i.device
+>> After=dev-%i.device
+>>
+>> [Service]
+>> ExecStart=/usr/bin/env obmc-console-server --config
+>> /etc/obmc-console.conf %i
+>> SyslogIdentifier=obmc-console-server
+>> Restart=always
+>>
+>> [Install]
+>> WantedBy=multi-user.target
+>>
+>> File*
+>> /etc/systemd/system/multi-user.target.wants/obmc-console@ttyVUART0.service*
+>> found.
+>>
+>> root@s2600wf:~# *ls -l /dev/ttyS**
+>> crw-rw----    1 root     dialout     4,  64 Aug 30 04:42 /dev/ttyS0
+>> crw-rw----    1 root     dialout     4,  65 Aug 30 04:42 /dev/ttyS1
+>> crw-rw----    1 root     dialout     4,  66 Aug 30 04:42 /dev/ttyS2
+>> crw-rw----    1 root     dialout     4,  67 Aug 30 04:42 /dev/ttyS3
+>> crw-------    1 root     tty         4,  68 Aug 30 04:45 /dev/ttyS4
+>> crw-rw----    1 root     dialout     4,  69 Aug 30 04:42 /dev/ttyS5
+>>
+>>
+>> Moreover */etc/obmc-console.conf* file not found.
+>>
+>> On Mon, Sep 2, 2019 at 1:58 PM Yong Li <yong.b.li@linux.intel.com> wrote:
+>>
+>>> Could you share more information:
+>>>
+>>> Do you want to use the SOL feature?
+>>>
+>>> How did you build the OpenBMC?
+>>>
+>>> There should be a systemd service:
+>>> /lib/systemd/system/obmc-console@.service. And check the file
+>>> /etc/systemd/system/multi-user.target.wants/obmc-console@*, is it
+>>> ttyS2?
+>>>
+>>> ls -l /dev/ttyS*, can you find these ttyS items?
+>>>
+>>>
+>>>
+>>> Thanks,
+>>>
+>>> Yong
+>>>
+>>>
+>>>
+>>> *From:* openbmc <openbmc-bounces+yong.b.li=
+>>> linux.intel.com@lists.ozlabs.org> *On Behalf Of *AKASH G J
+>>> *Sent:* Friday, August 30, 2019 8:27 PM
+>>> *To:* openbmc@lists.ozlabs.org
+>>> *Subject:* Cannot connect to console server in s2600wf
+>>>
+>>>
+>>>
+>>> Hi all,
+>>>
+>>>
+>>>
+>>> I am using OpenBMC Linux with s2600wf configuration.
+>>>
+>>>
+>>>
+>>> When I tried to execute 0bmc-console-client the following error came.
+>>>
+>>>
+>>>
+>>> root@s2600wf:~# obmc-console-client
+>>>
+>>> obmc-console-client: Can't connect to console server: Connection refused
+>>>
+>>>
+>>>
+>>> in *ps* command output also obmc-console-server not found.
+>>>
+>>>
+>>>
+>>>
+>>>
+>>> Thanks,
+>>>
+>>>
+>>>
+>>> Akash
+>>>
+>>
+
+--0000000000006120340592539233
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
 
-Hi Johny,
+<div dir=3D"ltr">Phosphor IPMI KCS DBus Bridge is working now. Just I enabl=
+ed kcs_chan-3 in device tree.<b><br></b></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Sep 11, 2019 at 5:40 PM AKA=
+SH G J &lt;<a href=3D"mailto:akashgj91@gmail.com">akashgj91@gmail.com</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div d=
+ir=3D"ltr"><div>This problem is solved by enabling vuart device in device t=
+ree. Now obmc-console-server starts running.</div><div><br></div><div>But <=
+b>Phosphor IPMI KCS DBus Bridge service</b> is not running.</div><div><br><=
+/div><div><b>kcsbridged</b> binary is there in /usr/bin.<br></div></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, S=
+ep 11, 2019 at 3:46 PM AKASH G J &lt;<a href=3D"mailto:akashgj91@gmail.com"=
+ target=3D"_blank">akashgj91@gmail.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Sorry for the delay =
+for reply.<br><br>We want to get the host CPU console over the BMC console.=
+<br><br>I build OpenBMC firmware using the following steps.<br><br>	1. expo=
+rt TEMPLATECONF=3Dmeta-intel/meta-s2600wf/conf/<br>	2. . openbmc-env<br>	3.=
+ bitbake obmc-phosphor-image<br><br><b>/lib/systemd/system/obmc-console@.se=
+rvice</b> is available with content<br><br>[Unit]<br>Description=3DPhosphor=
+ Console Muxer listening on device /dev/%I<br>BindsTo=3Ddev-%i.device<br>Af=
+ter=3Ddev-%i.device<br><br>[Service]<br>ExecStart=3D/usr/bin/env obmc-conso=
+le-server --config /etc/obmc-console.conf %i<br>SyslogIdentifier=3Dobmc-con=
+sole-server<br>Restart=3Dalways<br><br>[Install]<br>WantedBy=3Dmulti-user.t=
+arget<br><br>File<b> /etc/systemd/system/multi-user.target.wants/obmc-conso=
+le@ttyVUART0.service</b> found.<br><br>root@s2600wf:~# <b>ls -l /dev/ttyS*<=
+/b><br>crw-rw---- =C2=A0 =C2=A01 root =C2=A0 =C2=A0 dialout =C2=A0 =C2=A0 4=
+, =C2=A064 Aug 30 04:42 /dev/ttyS0<br>crw-rw---- =C2=A0 =C2=A01 root =C2=A0=
+ =C2=A0 dialout =C2=A0 =C2=A0 4, =C2=A065 Aug 30 04:42 /dev/ttyS1<br>crw-rw=
+---- =C2=A0 =C2=A01 root =C2=A0 =C2=A0 dialout =C2=A0 =C2=A0 4, =C2=A066 Au=
+g 30 04:42 /dev/ttyS2<br>crw-rw---- =C2=A0 =C2=A01 root =C2=A0 =C2=A0 dialo=
+ut =C2=A0 =C2=A0 4, =C2=A067 Aug 30 04:42 /dev/ttyS3<br>crw------- =C2=A0 =
+=C2=A01 root =C2=A0 =C2=A0 tty =C2=A0 =C2=A0 =C2=A0 =C2=A0 4, =C2=A068 Aug =
+30 04:45 /dev/ttyS4<br>crw-rw---- =C2=A0 =C2=A01 root =C2=A0 =C2=A0 dialout=
+ =C2=A0 =C2=A0 4, =C2=A069 Aug 30 04:42 /dev/ttyS5<br><br><br>Moreover <b>/=
+etc/obmc-console.conf</b> file not found.</div><br><div class=3D"gmail_quot=
+e"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Sep 2, 2019 at 1:58 PM Yon=
+g Li &lt;<a href=3D"mailto:yong.b.li@linux.intel.com" target=3D"_blank">yon=
+g.b.li@linux.intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex"><div lang=3D"EN-US"><div class=3D"gmail-m_-1078848493=
+095238769gmail-m_-4316240639763160658gmail-m_146702082709217010WordSection1=
+"><p class=3D"MsoNormal">Could you share more information:<u></u><u></u></p=
+><p class=3D"MsoNormal">Do you want to use the SOL feature? <u></u><u></u><=
+/p><p class=3D"MsoNormal">How did you build the OpenBMC?<u></u><u></u></p><=
+p class=3D"MsoNormal">There should be a systemd service: <a href=3D"mailto:=
+/lib/systemd/system/obmc-console@.service" target=3D"_blank">/lib/systemd/s=
+ystem/obmc-console@.service</a>. And check the file /etc/systemd/system/mul=
+ti-user.target.wants/obmc-console@*, is it ttyS2? <u></u><u></u></p><p clas=
+s=3D"MsoNormal">ls -l /dev/ttyS*, can you find these ttyS items?<u></u><u><=
+/u></p><p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p><p class=3D"MsoNormal=
+">Thanks,<u></u><u></u></p><p class=3D"MsoNormal">Yong<u></u><u></u></p><p =
+class=3D"MsoNormal"><u></u>=C2=A0<u></u></p><p class=3D"MsoNormal"><b>From:=
+</b> openbmc &lt;openbmc-bounces+<a href=3D"http://yong.b.li" target=3D"_bl=
+ank">yong.b.li</a>=3D<a href=3D"mailto:linux.intel.com@lists.ozlabs.org" ta=
+rget=3D"_blank">linux.intel.com@lists.ozlabs.org</a>&gt; <b>On Behalf Of </=
+b>AKASH G J<br><b>Sent:</b> Friday, August 30, 2019 8:27 PM<br><b>To:</b> <=
+a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.=
+ozlabs.org</a><br><b>Subject:</b> Cannot connect to console server in s2600=
+wf<u></u><u></u></p><p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p><div><di=
+v><p class=3D"MsoNormal">Hi all,<u></u><u></u></p></div><div><p class=3D"Ms=
+oNormal"><u></u>=C2=A0<u></u></p></div><div><p class=3D"MsoNormal">I am usi=
+ng OpenBMC Linux with s2600wf configuration.<u></u><u></u></p></div><div><p=
+ class=3D"MsoNormal"><u></u>=C2=A0<u></u></p></div><div><p class=3D"MsoNorm=
+al">When I tried to execute 0bmc-console-client the following error came.<u=
+></u><u></u></p></div><div><p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p><=
+/div><div><p class=3D"MsoNormal">root@s2600wf:~# obmc-console-client =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <=
+br>obmc-console-client: Can&#39;t connect to console server: Connection ref=
+used<u></u><u></u></p></div><div><p class=3D"MsoNormal"><u></u>=C2=A0<u></u=
+></p></div><div><p class=3D"MsoNormal">in <i>ps</i> command output also obm=
+c-console-server not found.<u></u><u></u></p></div><div><p class=3D"MsoNorm=
+al"><u></u>=C2=A0<u></u></p></div><div><p class=3D"MsoNormal"><u></u>=C2=A0=
+<u></u></p></div><div><p class=3D"MsoNormal">Thanks,<u></u><u></u></p></div=
+><div><p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p></div><div><p class=3D=
+"MsoNormal">Akash<u></u><u></u></p></div></div></div></div></blockquote></d=
+iv>
+</blockquote></div>
+</blockquote></div>
 
-> I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46ound=
- the OpenBMC source code already had the test package,but it cannot be co=
-mpiled according to README.md.
-You need the compile environment first follow by build using the SDK docu=
-ment.
-update README.md step =C2=A0./configure =C2=A0 to =C2=A0./configure =24=7B=
-CON=46IGURE=5F=46LAGS=7D.
-
-I think it could be compiled after executing above steps.
-
-Thanks,
-
-Samuel Jiang
-On Sep 12, 2019, 11:26 AM +0800, =E5=B8=B8=E6=99=93=E6=98=8E <xiaoqian164=
-1=40163.com>, wrote:
-> Hi, OpenBMC development member,
->
-> I'm learning openbmc via github.
-> I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46ound=
- the OpenBMC source code already had the test package,but it cannot be co=
-mpiled according to README.md.
-> I think it may be my compilation method is not correct, Do you have any=
- documentation about this =3F
->
-> Could you tell me How to test =22sdeventplus=22 =3F
->
-> Thanks very mouch.
-> Johny
->
->
->
->
->
->
->
->
->
->
->
->
-
---5d79c0e4_2a487cb0_305
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-<html xmlns=3D=22http://www.w3.org/1999/xhtml=22>
-<head>
-<title></title>
-</head>
-<body>
-<div name=3D=22messageBodySection=22>
-<div dir=3D=22auto=22>Hi Johny,
-<div dir=3D=22auto=22><br /></div>
-<div dir=3D=22auto=22>
-<blockquote type=3D=22cite=22 class=3D=22spark=5Fquote=22 style=3D=22care=
-t-color: rgb(39, 39, 40); margin: 5px; padding-left: 10px; border-left-wi=
-dth: thin; border-left-style: solid; border-left-color: rgb(26, 188, 156)=
-;=22>
-<div style=3D=22line-height: 1.7; font-family: Arial;=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height: 1.7;=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height: 1.7;=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height: 1.7;=22>
-<div>I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46o=
-und the OpenBMC source code already had the test package,but it cannot be=
- compiled according to README.md.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</blockquote>
-</div>
-<div dir=3D=22auto=22>You need the compile environment first follow by <a=
- href=3D=22https://github.com/openbmc/openbmc/wiki/How-to-Build-using-the=
--SDK=22>build using the SDK document</a>.</div>
-<div dir=3D=22auto=22>update README.md step &=23160;<span style=3D=22care=
-t-color: rgb(39, 39, 40);=22>./configure &=23160; to &=23160;</span><a hr=
-ef=3D=22https://www.yoctoproject.org/docs/2.1/sdk-manual/sdk-manual.html=22=
->./configure =24=7BCON=46IGURE=5F=46LAGS=7D.</a></div>
-<div dir=3D=22auto=22><br /></div>
-<div dir=3D=22auto=22>I think it could be compiled after executing above =
-steps.&=23160;</div>
-</div>
-</div>
-<div name=3D=22messageSignatureSection=22><br />
-<div class=3D=22match=46ont=22>Thanks,
-<div><br /></div>
-<div>Samuel Jiang</div>
-</div>
-</div>
-<div name=3D=22messageReplySection=22>On Sep 12, 2019, 11:26 AM +0800, =E5=
-=B8=B8=E6=99=93=E6=98=8E &lt;xiaoqian1641=40163.com&gt;, wrote:<br />
-<blockquote type=3D=22cite=22 class=3D=22spark=5Fquote=22 style=3D=22marg=
-in: 5px 5px; padding-left: 10px; border-left: thin solid =231abc9c;=22>
-<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
-y:Arial=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
-y:Arial=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
-y:Arial=22>
-<div id=3D=22is=46orwardContent=22>
-<div style=3D=22line-height:1.7;color:=23000000;font-size:14px;font-famil=
-y:Arial=22>
-<div>Hi, OpenBMC development member,</div>
-<div><br /></div>
-<div>I'm learning openbmc via github.</div>
-<div>I wanted to test the code of OpenBMC through Gtest/Gmock, And I =46o=
-und the OpenBMC source code already had the test package,but it cannot be=
- compiled according to README.md.</div>
-<div>I think it may be my compilation method is not correct, Do you have =
-any documentation about this =3F</div>
-<div><br /></div>
-<div>Could you tell me How to test =22sdeventplus=22 =3F</div>
-<div><br /></div>
-<div>Thanks very mouch.</div>
-<div>Johny</div>
-<div><br style=3D=22font-family: arial; font-size: medium;=22 /></div>
-</div>
-<br />
-<br />
-<span title=3D=22neteasefooter=22>
-<p></p>
-</span></div>
-</div>
-<br />
-<br />
-<span title=3D=22neteasefooter=22>
-<p></p>
-</span></div>
-</div>
-<br />
-<br />
-<span title=3D=22neteasefooter=22>
-<p></p>
-</span></div>
-</div>
-<br />
-<br />
-<span title=3D=22neteasefooter=22><br />
-<br />
-<br /></span></blockquote>
-</div>
-</body>
-</html>
-
---5d79c0e4_2a487cb0_305--
-
+--0000000000006120340592539233--
