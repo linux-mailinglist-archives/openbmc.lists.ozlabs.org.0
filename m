@@ -1,64 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95F75B0C3C
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 12:05:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96171B0D08
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 12:37:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46TZBv24T8zF3wH
-	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 20:05:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46TZvx0LtqzF4HG
+	for <lists+openbmc@lfdr.de>; Thu, 12 Sep 2019 20:37:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::32c; helo=mail-ot1-x32c.google.com;
- envelope-from=akashgj91@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="eGqBepuE"; 
- dkim-atps=neutral
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
- [IPv6:2607:f8b0:4864:20::32c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="NHMNQMg+"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="SXH9K8WE"; dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46TZB91R3gzDqg3
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 20:04:32 +1000 (AEST)
-Received: by mail-ot1-x32c.google.com with SMTP id 41so21707030oti.12
- for <openbmc@lists.ozlabs.org>; Thu, 12 Sep 2019 03:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=uXwwt6jSRo79mMrAR0OBk1Q6bGRXbqXI5JnUy69YnXY=;
- b=eGqBepuEEfGiKU+gL6QdCrolrMqIJKV7K/UfjndAxzZ8OU1LM+Z4OWjZ59L4SUN4x+
- acjl0jXJBL/rL6h85mtazSJFkGy/IDAQcw7YKlRnVup1i9tKm06bTW+5y7lzoFH4jqu/
- ajG4S0iOgDPijwmVT8Z+WnrDyCNoq8673YcKD+WGwCDCxWkg8AR9wmEUphSAhkPUHXZr
- FH1ibNKJguE9ZiY+m12Y/yr1I2XcfptuU3XGg+77FsoYxwhO34ag3668h+n9E+pZafoR
- zn9gW6iQT7Ngu8IQKmam43FBiov5Mow7QOkuvu8R40GD8FopSYE/8A78ekC5d7P4FgiT
- 2GYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=uXwwt6jSRo79mMrAR0OBk1Q6bGRXbqXI5JnUy69YnXY=;
- b=k4m02rDHelinBtpIx+o9/BsybIe/V/fmvW035b94li/01SSIAl/S5V90mgVo6eWHjB
- upP5IeVXNR9TmAkTlgWGkQM4YEJtAzEnkmSImv/U1yE6KLqH8NoWBJvnwWhS0atcR1iI
- +FWO4saKGk162m05lFZSd3yh9A1V8xPdfliU8QAOD6IboGdpEhZY3vLheabOQx2EzIus
- YIG/pEHU8b6F5tncTgFR4N4m2M8CxR/lTodFbw/e5L20s7LpXbPSgqwW5cTO8DPVuJis
- j9m5c3U5o3xGwj2a1KkTFkXX8x/1UNETuGcNxIqdLkX3QHPqpvRGzOA9w9DiA2klMCrf
- OEew==
-X-Gm-Message-State: APjAAAWtoTOiI1YSVzTZkm9q39uhJ/TTvcoO+DYlUzXFAqhr6u4Fr6Lh
- FhQr2dq7jTvJxL7YwuoYKCJd/htEFzELuWawbCC2rInNjJsQ5Q==
-X-Google-Smtp-Source: APXvYqxUmBrq2+Iv7+IKtsEGVqrUletEgY+qVmhOXPeL/mB1Tm98uhBZjd+DbRwtM4qLXKDWnnO8Gt2ee5Dl0t6HXmI=
-X-Received: by 2002:a05:6830:c1:: with SMTP id
- x1mr14376749oto.272.1568282668277; 
- Thu, 12 Sep 2019 03:04:28 -0700 (PDT)
-MIME-Version: 1.0
-From: AKASH G J <akashgj91@gmail.com>
-Date: Thu, 12 Sep 2019 15:32:35 +0530
-Message-ID: <CAE33tLGe+SLRoJiYU51wRGa30W18VvLyBV5mY9UeVU=wJzSTFQ@mail.gmail.com>
-Subject: Sensors not showing in ipmitool commands [S2600WF]
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000059a1f10592584338"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46TZgZ0YTrzF4CR;
+ Thu, 12 Sep 2019 20:26:32 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id CDAA322245;
+ Thu, 12 Sep 2019 06:26:27 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 12 Sep 2019 06:26:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=hH6krjDyM1ef7cBjth9GvNBMbTUI9b+
+ 39ETpeM1V4vs=; b=NHMNQMg+HFPouEvMQ00sKE/W0BsIAYFMCmqPDrTUQO6EqlR
+ 0wh/LUFfCkK9s3vYt2qjyKQvYd4tFrh0P/t00fYORmhhxbXQqQj4bzkZ2uaWfPk+
+ n3qrYCOHYv30kvYh+P+myvR4uJg/mKyMOd1Ay0Iz1wtq0QXaArzQieqCrNvwU2qs
+ 1bTfGjrhRV7DSto1+GrQ0gvyJyzfgBUEaRDfKugJ23ZYqC71h3fgj6CKARc/ZGw/
+ 4Ml53ei0IbK/SWxVNT4+jV2iUfiCOTU2NTrmow3LFuPGtUxQZa0Z5amAV6dj1w1s
+ MA10yj0+f/TMChNfXg04bVJXrWeX52EQDpSWS6Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=hH6krj
+ DyM1ef7cBjth9GvNBMbTUI9b+39ETpeM1V4vs=; b=SXH9K8WEkJux2WUVSDI78n
+ AOj3buJkf8DgR3jYi7VHNH2a3c4uqEsc/dGKY1uknNvnrgJfp6dJZk7gWVHwC9zi
+ S1SpNPI6ChUtzJEojbDYRGZP/EL2sMlMWX4KHJygDIapXlMsKS+9xPLdKbPhImRg
+ S4BoBRe+i1MpHIubusilRTqr5GB6nAVmchSAQItbTYxHHN5/67E/her2lw18oQiD
+ 8SxcH9CoFvKxXBcCBNHbzGTm7WltTmzg1kPQrxxAJxZp/F8v+/I6XLNTqRNck2I8
+ kN6nri4R6vUf4Pu2nWEfiH23TIZDHwTK/CofWJ58x/5u9IaUZgODEQWsTngifRPA
+ ==
+X-ME-Sender: <xms:Uh16XSVBjtb16JkF2tIvIYISZaCxuUrOVo92Ul0Z-4MDK0VbF0HJ-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrtdehgddviecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:Uh16XQL3Oxbb0GmE0XZZDmuKp1_PaBTv2QJpPgBENmsyMaV6XdHv1Q>
+ <xmx:Uh16XcveF0GiadG_lUbwsrsYyUrA5VLiSrWrVGY1iO1MG0bb3U-1fA>
+ <xmx:Uh16XVJ3HgoxVidgB2HsX8LfawoOQtQ02K13OoyzQrzvTnhobwfVEw>
+ <xmx:Ux16XUk7PROLbEoYHv_ELhTN8sOnkupa5QZJq7d4yxrADFT3zS1jnA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id DB132E00A9; Thu, 12 Sep 2019 06:26:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-237-gf35468d-fmstable-20190912v1
+Mime-Version: 1.0
+Message-Id: <c51f0ef0-cd1a-47db-8551-706c5864e0be@www.fastmail.com>
+In-Reply-To: <CACRpkdYW_PX7npB+b1YJ4pfFQNLVOsMx2hpKtntBeHg=C1j-Cg@mail.gmail.com>
+References: <20190829071738.2523-1-andrew@aj.id.au>
+ <CACRpkdYW_PX7npB+b1YJ4pfFQNLVOsMx2hpKtntBeHg=C1j-Cg@mail.gmail.com>
+Date: Thu, 12 Sep 2019 19:56:05 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Linus Walleij" <linus.walleij@linaro.org>
+Subject: =?UTF-8?Q?Re:_[PATCH_pinctrl/fixes]_pinctrl:_aspeed:_Fix_spurious_mux_fa?=
+ =?UTF-8?Q?ilures_on_the_AST2500?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,66 +89,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ John Wang <wangzqbj@inspur.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000059a1f10592584338
-Content-Type: text/plain; charset="UTF-8"
-
-Hi all,
-
-root@s2600wf:~# cat /etc/os-release
-ID="openbmc-phosphor"
-NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
-VERSION="2.8.0-dev"
-VERSION_ID="2.8.0-dev-309-g2e155a0-dirty"
-PRETTY_NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
-2.8.0"
-BUILD_ID="2.8.0-dev"
-OPENBMC_TARGET_MACHINE="s2600wf"
-
-While trying to get sensor readings using ipmitool it is showing error
-
-root@s2600wf:~# ipmitool -I dbus sdr type temperature
-Error obtaining SDR info: Requested sensor, data, or record not found
-Unable to open SDR for reading
 
 
-Temperature sensor readings are available in sysfs
+On Thu, 12 Sep 2019, at 17:53, Linus Walleij wrote:
+> On Thu, Aug 29, 2019 at 8:17 AM Andrew Jeffery <andrew@aj.id.au> wrote:
+> 
+> > Commit 674fa8daa8c9 ("pinctrl: aspeed-g5: Delay acquisition of regmaps")
+> > was determined to be a partial fix to the problem of acquiring the LPC
+> > Host Controller and GFX regmaps: The AST2500 pin controller may need to
+> > fetch syscon regmaps during expression evaluation as well as when
+> > setting mux state. For example, this case is hit by attempting to export
+> > pins exposing the LPC Host Controller as GPIOs.
+> >
+> > An optional eval() hook is added to the Aspeed pinmux operation struct
+> > and called from aspeed_sig_expr_eval() if the pointer is set by the
+> > SoC-specific driver. This enables the AST2500 to perform the custom
+> > action of acquiring its regmap dependencies as required.
+> >
+> > John Wang tested the fix on an Inspur FP5280G2 machine (AST2500-based)
+> > where the issue was found, and I've booted the fix on Witherspoon
+> > (AST2500) and Palmetto (AST2400) machines, and poked at relevant pins
+> > under QEMU by forcing mux configurations via devmem before exporting
+> > GPIOs to exercise the driver.
+> >
+> > Fixes: 7d29ed88acbb ("pinctrl: aspeed: Read and write bits in LPC and GFX controllers")
+> > Fixes: 674fa8daa8c9 ("pinctrl: aspeed-g5: Delay acquisition of regmaps")
+> > Reported-by: John Wang <wangzqbj@inspur.com>
+> > Tested-by: John Wang <wangzqbj@inspur.com>
+> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> 
+> Applied for fixes already yesterday!
 
-root@s2600wf:~# cat /sys/class/hwmon/hwmon*/temp1_input
-27000
-26312
-24750
-26562
-24000
+Thanks! Hoping to avoid such late fixes in the future...
 
-It is not showing when using ipmitool commands. How to add the sensor in
-s2600wf machine configuration?
-
-
-Thanks in advance.
-
-Akash
-
---00000000000059a1f10592584338
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi all,<br></div><div><br></div><div>root@s2600wf:~# =
-cat /etc/os-release</div>ID=3D&quot;openbmc-phosphor&quot;<br>NAME=3D&quot;=
-Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)&quot;<br>VERSI=
-ON=3D&quot;2.8.0-dev&quot;<br>VERSION_ID=3D&quot;2.8.0-dev-309-g2e155a0-dir=
-ty&quot;<br>PRETTY_NAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project =
-Reference Distro) 2.8.0&quot;<br>BUILD_ID=3D&quot;2.8.0-dev&quot;<br>OPENBM=
-C_TARGET_MACHINE=3D&quot;s2600wf&quot;<br><br>While trying to get sensor re=
-adings using ipmitool it is showing error<br><br>root@s2600wf:~# ipmitool -=
-I dbus sdr type temperature<br>Error obtaining SDR info: Requested sensor, =
-data, or record not found<br>Unable to open SDR for reading<br><br><br>Temp=
-erature sensor readings are available in sysfs<br><br>root@s2600wf:~# cat /=
-sys/class/hwmon/hwmon*/temp1_input<br>27000<br>26312<br>24750<br>26562<br>2=
-4000<br><br>It is not showing when using ipmitool commands. How to add the =
-sensor in s2600wf machine configuration?<br><div><br></div><div><br></div>T=
-hanks in advance.<br><br>Akash<br></div>
-
---00000000000059a1f10592584338--
+Andrew
