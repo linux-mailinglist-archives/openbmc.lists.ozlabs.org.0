@@ -2,115 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7ABCB1934
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 09:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 57053B1AC3
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 11:28:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46V7C02BT2zF5Gk
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 17:52:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46V9LW5VqKzF5LC
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 19:28:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=yadro.com
- (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linaro.org
+ (client-ip=2a00:1450:4864:20::442; helo=mail-wr1-x442.google.com;
+ envelope-from=daniel.thompson@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="oddzmY93"; 
+ dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=linaro.org header.i=@linaro.org header.b="QJ2EQbmd"; 
  dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com
+ [IPv6:2a00:1450:4864:20::442])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46V7BM5L5kzF5CV
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 17:51:39 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 3562842492
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 07:51:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:in-reply-to:mime-version:user-agent
- :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1568361065; x=
- 1570175466; bh=A3TQzgQq5+nIyY0a+SyO8uMdHgR3HEUG0dCHZEr/M90=; b=o
- ddzmY93kU4RcS5G0DNx/zvEuP/BEqVFvmPSztZXGvL75iQjvvsfKdqpz9bqoN3On
- UmCkKDi5ZRyMK8uCFI5Y35+RJlnkTyci7m5XKa64ss4J9aUzXyifsd/jOkfbDzZP
- RzEqeef9PKv0ieXDXKL+X1pVT/DA55XgJrguM0koig=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 7e71QV1WNOZj for <openbmc@lists.ozlabs.org>;
- Fri, 13 Sep 2019 10:51:05 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id E1C7442008
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 10:51:05 +0300 (MSK)
-Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 13
- Sep 2019 10:50:31 +0300
-Subject: Re: RMCP support
-To: <openbmc@lists.ozlabs.org>
-References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
- <20190911173139.GE45301@mauery.jf.intel.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
- 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
- dTYsE5wSxM06T2l/MILupCNZ7A==
-Organization: YADRO
-Message-ID: <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
-Date: Fri, 13 Sep 2019 10:50:31 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46V9Kn6DbFzF5KZ
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 19:28:11 +1000 (AEST)
+Received: by mail-wr1-x442.google.com with SMTP id a11so21598130wrx.1
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 02:28:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=KdWl9728cR3NNiz9k+CiAkkKPRvWRTcoTTHEAo/qVZc=;
+ b=QJ2EQbmdNJEE9UMfwolykX8/l+ediIZaceAqN/IPpUYMTVgSE54U4qllmgRK3Ux0Zt
+ 0dMb6acTKqq+xSxWQ1c8QiCU+xtyZ9W2+IsHEcdwvoWCTdHOhlFalGEk3sLBEA8tyk7O
+ q+UJO5xzm95lhGqDnvqYjGB2OKxAxguQ5FmXKe1ui6GE5P/B2N59jSn1XdcyHOV5VlBQ
+ DhWfn/E7VNn6/Dwe9vExWiTu85nA99BxTpmylJmHXHJkAyraYOHDJ3XIWPKg2s7mra3O
+ 40sEk0ZoIndUm0C87iC/mOGsJ2JeVmYYqNVDoNgnjRNe8k4lU3zy/lq1rFPwI/iUg4M7
+ Ccrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=KdWl9728cR3NNiz9k+CiAkkKPRvWRTcoTTHEAo/qVZc=;
+ b=XbrdFi6QskWupCR8hbJcOrC0630cPZZuTsTRVHS9myswBstkGePMwv9uS+ZGMCFnCW
+ FYi4WeqBCinidQe1dt/PdMZtIbwgf8XHP9NbOFcE39ZdBWSKtv8fFOw9UNXzN4Z3swos
+ Aryvr7hz76TvbO9Ba91bhT4H3uA9QQfSVSV7Dkj2KxX2Cf1C74TK7efuYN5Liyk2wtRK
+ jRYqz+f5S8HJXT1z9XaOJhbmG1LGXnYJ1FfsTdN/ukc3TSdKdl106ncZpHvuO2DdKIQu
+ Pf088wgPmxWTNqM6LDR3eQuO1xJ224KKxMmxG45eILDFim7MFUSKOv5oth8NUrh/lk1e
+ SLgg==
+X-Gm-Message-State: APjAAAWTvyqrR6mjtCkc+J2hLbgD1wQx1mxB2F4+WNh805ojvygtnhw8
+ XJTkq5vkgsIhwZ/9nw995vAMXQ==
+X-Google-Smtp-Source: APXvYqzdx/vM0/cxgvic+nxBUexn/uhZ9A+cfJck+MegqHD7tgtAwwwN4Psg7HJVSDd40ktpMINsVg==
+X-Received: by 2002:adf:e4ce:: with SMTP id v14mr6314573wrm.15.1568366887451; 
+ Fri, 13 Sep 2019 02:28:07 -0700 (PDT)
+Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net.
+ [86.9.19.6])
+ by smtp.gmail.com with ESMTPSA id s10sm3659226wmf.48.2019.09.13.02.28.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Sep 2019 02:28:06 -0700 (PDT)
+Date: Fri, 13 Sep 2019 10:28:05 +0100
+From: Daniel Thompson <daniel.thompson@linaro.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v3 2/2] hwrng: npcm: add NPCM RNG driver
+Message-ID: <20190913092805.4bemarnbh6jo3lxh@holly.lan>
+References: <20190912090149.7521-1-tmaimon77@gmail.com>
+ <20190912090149.7521-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190911173139.GE45301@mauery.jf.intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR"
-X-Originating-IP: [172.17.14.197]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190912090149.7521-3-tmaimon77@gmail.com>
+User-Agent: NeoMutt/20180716
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,83 +81,258 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
+ herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
+ avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, vkoul@kernel.org,
+ robh+dt@kernel.org, mpm@selenic.com, venture@google.com, tglx@linutronix.de,
+ jens.wiklander@linaro.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR
-Content-Type: multipart/mixed; boundary="65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa";
- protected-headers="v1"
-From: Alexander Amelkin <a.amelkin@yadro.com>
-To: openbmc@lists.ozlabs.org
-Message-ID: <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
-Subject: Re: RMCP support
-References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
- <20190911173139.GE45301@mauery.jf.intel.com>
-In-Reply-To: <20190911173139.GE45301@mauery.jf.intel.com>
+On Thu, Sep 12, 2019 at 12:01:49PM +0300, Tomer Maimon wrote:
+> Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
---65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
-11.09.2019 20:31, Vernon Mauery wrote:
-> On 11-Sep-2019 05:27 AM, Neeraj Ladkani wrote:
->> Is there any plan to add RMCP support in IPMI LAN stack ?
-> There are no plans for adding RMCP support. RMCP is horribly insecure; =
-
-> even more insecure than the least secure RMCP+ cipher suites (not=20
-> counting cipher suite 0, which should not even be a thing.)
->
-> Not implementing RMCP was an intentional choice. RMCP+ is insecure,=20
-> especially with passwords shorter than 8 (as shown by Rick Altherr's=20
-> OSFC 2019 presentation). It is recommended that RMCP+ is only used with=
-=20
-> cipher suite 17 and maximum length passwords (20 characters). Ideally, =
-
-> it would not be used at all, preferring Redfish, which uses modern=20
-> crypto.
->
-> Every open source IPMI utility out there supports RMCP+. That should be=
-=20
-> used instead of RMCP.
-
-What about RMCP pings used for device discovery as described in section 1=
-3.13 of
-IPMI specification?
-
-AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails to
-discover OpenBMC devices.
-
-With best regards,
-Alexander Amelkin,
-BIOS/BMC Team Lead, YADRO
-https://yadro.com
+Note, you are welcome to preseve this if you have to respin and
+change directory based on Vinod's feedback...
 
 
-
---65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa--
-
---A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJde0pHAAoJEOiTWHtbdBeNij8QAMoQQIQ6DZO6j+mLL8RG5oEw
-a8naJxKyZIn6cCyfoYdF7tTr5N0ZCWiM5BhpIqWg2/VCwM2X005NNCo29v/FXwxi
-c78G4nu5Be4blgUZbC1oyP9EswAxXXGPAQGo70Mv7Gmn80r2qjkEJys5QKireQKH
-KUWapCqbHht6mlaLIivatvKoX2Oq4KluRiCHJam86dJNuFv5zeyqMNmj/kvuhXYn
-VY+UJeA9sJnDTjr7q07rGXuBMmNRyWVePUQo5xARB9/81kVLVf1Hl5S1nCZxQ9E4
-oLpX4xHhrPuHRi4AWsmpNEnLMUdw7KMTZ1QHNfhGQWUodK6sLUvwegYeFQOzJAQ7
-IEiCcVY0ZOiZaNN3h5MN6FKDTwF+qh1YQ770klqvf58s61uhVGAop22t62osJbTZ
-/bVXxiKFHLgoThtgR9m6ZqAWejanPXdLaiMqtmT+I3dvXSIuBXVCB29q4V2CKNU+
-PHQZk2PH82fNNRpsQKPlJVJWhFiFyOkQSJLJWl9DoEmVbwmOzzxVWsCg/MEL135o
-4fAAJ4ivKFEFa3TF3v9Em/b+7NgDWTVkJYYWfqLMOetfAMdJiFoSQpgSyKcdkTKy
-5jNmsfwG6EklHN/xdhKtt1QU3jtOBV2uQpBySDpmolsfcem8hL0EHoeiUmAU3kiZ
-FsHoW8FNB1AkDA4RWkGn
-=4zFu
------END PGP SIGNATURE-----
-
---A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR--
+> ---
+>  drivers/char/hw_random/Kconfig    |  13 +++
+>  drivers/char/hw_random/Makefile   |   1 +
+>  drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++++++++
+>  3 files changed, 200 insertions(+)
+>  create mode 100644 drivers/char/hw_random/npcm-rng.c
+> 
+> diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
+> index 59f25286befe..87a1c30e7958 100644
+> --- a/drivers/char/hw_random/Kconfig
+> +++ b/drivers/char/hw_random/Kconfig
+> @@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
+>  
+>  	  If unsure, say Y.
+>  
+> +config HW_RANDOM_NPCM
+> +	tristate "NPCM Random Number Generator support"
+> +	depends on ARCH_NPCM || COMPILE_TEST
+> +	default HW_RANDOM
+> +	help
+> + 	  This driver provides support for the Random Number
+> +	  Generator hardware available in Nuvoton NPCM SoCs.
+> +
+> +	  To compile this driver as a module, choose M here: the
+> +	  module will be called npcm-rng.
+> +
+> + 	  If unsure, say Y.
+> +
+>  endif # HW_RANDOM
+>  
+>  config UML_RANDOM
+> diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
+> index 7c9ef4a7667f..17b6d4e6d591 100644
+> --- a/drivers/char/hw_random/Makefile
+> +++ b/drivers/char/hw_random/Makefile
+> @@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK)	+= mtk-rng.o
+>  obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
+>  obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
+>  obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
+> +obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
+> diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
+> new file mode 100644
+> index 000000000000..b7c8c7e13a49
+> --- /dev/null
+> +++ b/drivers/char/hw_random/npcm-rng.c
+> @@ -0,0 +1,186 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +// Copyright (c) 2019 Nuvoton Technology corporation.
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/io.h>
+> +#include <linux/iopoll.h>
+> +#include <linux/init.h>
+> +#include <linux/random.h>
+> +#include <linux/err.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/hw_random.h>
+> +#include <linux/delay.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/pm_runtime.h>
+> +
+> +#define NPCM_RNGCS_REG		0x00	/* Control and status register */
+> +#define NPCM_RNGD_REG		0x04	/* Data register */
+> +#define NPCM_RNGMODE_REG	0x08	/* Mode register */
+> +
+> +#define NPCM_RNG_CLK_SET_25MHZ	GENMASK(4, 3) /* 20-25 MHz */
+> +#define NPCM_RNG_DATA_VALID	BIT(1)
+> +#define NPCM_RNG_ENABLE		BIT(0)
+> +#define NPCM_RNG_M1ROSEL	BIT(1)
+> +
+> +#define NPCM_RNG_TIMEOUT_USEC	20000
+> +#define NPCM_RNG_POLL_USEC	1000
+> +
+> +#define to_npcm_rng(p)	container_of(p, struct npcm_rng, rng)
+> +
+> +struct npcm_rng {
+> +	void __iomem *base;
+> +	struct hwrng rng;
+> +};
+> +
+> +static int npcm_rng_init(struct hwrng *rng)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +
+> +	writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
+> +	       priv->base + NPCM_RNGCS_REG);
+> +
+> +	return 0;
+> +}
+> +
+> +static void npcm_rng_cleanup(struct hwrng *rng)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +
+> +	writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
+> +}
+> +
+> +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
+> +{
+> +	struct npcm_rng *priv = to_npcm_rng(rng);
+> +	int retval = 0;
+> +	int ready;
+> +
+> +	pm_runtime_get_sync((struct device *)priv->rng.priv);
+> +
+> +	while (max >= sizeof(u32)) {
+> +		if (wait) {
+> +			if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
+> +					       ready,
+> +					       ready & NPCM_RNG_DATA_VALID,
+> +					       NPCM_RNG_POLL_USEC,
+> +					       NPCM_RNG_TIMEOUT_USEC))
+> +				break;
+> +		} else {
+> +			if ((readl(priv->base + NPCM_RNGCS_REG) &
+> +			    NPCM_RNG_DATA_VALID) == 0)
+> +				break;
+> +		}
+> +
+> +		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
+> +		retval += sizeof(u32);
+> +		buf += sizeof(u32);
+> +		max -= sizeof(u32);
+> +	}
+> +
+> +	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
+> +	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
+> +
+> +	return retval || !wait ? retval : -EIO;
+> +}
+> +
+> +static int npcm_rng_probe(struct platform_device *pdev)
+> +{
+> +	struct npcm_rng *priv;
+> +	struct resource *res;
+> +	int ret;
+> +
+> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> +	if (!priv)
+> +		return -ENOMEM;
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	priv->base = devm_ioremap_resource(&pdev->dev, res);
+> +	if (IS_ERR(priv->base))
+> +		return PTR_ERR(priv->base);
+> +
+> +	dev_set_drvdata(&pdev->dev, priv);
+> +	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
+> +	pm_runtime_use_autosuspend(&pdev->dev);
+> +	pm_runtime_enable(&pdev->dev);
+> +
+> +#ifndef CONFIG_PM
+> +	priv->rng.init = npcm_rng_init;
+> +	priv->rng.cleanup = npcm_rng_cleanup;
+> +#endif
+> +	priv->rng.name = pdev->name;
+> +	priv->rng.read = npcm_rng_read;
+> +	priv->rng.priv = (unsigned long)&pdev->dev;
+> +	priv->rng.quality = 1000;
+> +
+> +	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
+> +
+> +	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
+> +	if (ret) {
+> +		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
+> +			ret);
+> +		pm_runtime_disable(&pdev->dev);
+> +		pm_runtime_set_suspended(&pdev->dev);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int npcm_rng_remove(struct platform_device *pdev)
+> +{
+> +	struct npcm_rng *priv = platform_get_drvdata(pdev);
+> +
+> +	devm_hwrng_unregister(&pdev->dev, &priv->rng);
+> +	pm_runtime_disable(&pdev->dev);
+> +	pm_runtime_set_suspended(&pdev->dev);
+> +
+> +	return 0;
+> +}
+> +
+> +#ifdef CONFIG_PM
+> +static int npcm_rng_runtime_suspend(struct device *dev)
+> +{
+> +	struct npcm_rng *priv = dev_get_drvdata(dev);
+> +
+> +	npcm_rng_cleanup(&priv->rng);
+> +
+> +	return 0;
+> +}
+> +
+> +static int npcm_rng_runtime_resume(struct device *dev)
+> +{
+> +	struct npcm_rng *priv = dev_get_drvdata(dev);
+> +
+> +	return npcm_rng_init(&priv->rng);
+> +}
+> +#endif
+> +
+> +static const struct dev_pm_ops npcm_rng_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
+> +			   npcm_rng_runtime_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> +				pm_runtime_force_resume)
+> +};
+> +
+> +static const struct of_device_id rng_dt_id[] = {
+> +	{ .compatible = "nuvoton,npcm750-rng",  },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(of, rng_dt_id);
+> +
+> +static struct platform_driver npcm_rng_driver = {
+> +	.driver = {
+> +		.name		= "npcm-rng",
+> +		.pm		= &npcm_rng_pm_ops,
+> +		.of_match_table = of_match_ptr(rng_dt_id),
+> +	},
+> +	.probe		= npcm_rng_probe,
+> +	.remove		= npcm_rng_remove,
+> +};
+> +
+> +module_platform_driver(npcm_rng_driver);
+> +
+> +MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
+> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> +MODULE_LICENSE("GPL v2");
+> -- 
+> 2.18.0
+> 
