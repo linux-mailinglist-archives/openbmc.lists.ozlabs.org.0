@@ -2,75 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13B79B2632
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 21:40:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7DA9B2637
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 21:46:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46VQwK4BVdzF4R3
-	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 05:40:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46VR2l4C9wzF5fW
+	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 05:46:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::244; helo=mail-oi1-x244.google.com;
- envelope-from=kurt.r.taylor@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="NasOx8VU"; 
- dkim-atps=neutral
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com
- [IPv6:2607:f8b0:4864:20::244])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46VQvZ4pR3zF3X4
- for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 05:39:52 +1000 (AEST)
-Received: by mail-oi1-x244.google.com with SMTP id k9so2649759oib.7
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 12:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=GmKkIaX1nAsLGSG2vSb8dcNEwXIUrpP5EOvNBVNrPos=;
- b=NasOx8VU52XLFWT3fWMbbpGqua6/e4+4Eg8+E2dlzD6LGwsycgl7t04CUikcMkCVYo
- 2dvY5LTk5qd8vgcBZf3b9oLaCOvEMKdS2dF+CysWAVScnTwe1fPFbNZ9Njc5jLLfe9q5
- S0RcK0p0kqj5Ai7k9BX1n57EMu1UDJT2y6+UfiMqTSLrwnCLS54WgEiOWmana4meJrhj
- fP7JhtUbMWplMT0W/8pr5nwaFePZS5F/J+uOmOIXAjuXuj32yv5Zt4pfNGuSTlm5uVDe
- skBmFTb4xZmytlms3gi3c9Q5xT+q4RWXKHDpS4afQCo6pl40t4+m7Fr5pYut/cuy9pYW
- afkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=GmKkIaX1nAsLGSG2vSb8dcNEwXIUrpP5EOvNBVNrPos=;
- b=a9B9E0GbkXRXdywUsqxuXNtP5vs/KqVfJ9Mxjt84M/k9LEEb59s8AZnHxf03zpvssJ
- ALwr+O4JKhZi9i3nqLMciPUBoobkEdjKXHnsTk+bCw3qK9A9c1SRlWDXggGrqwWD2SLd
- tRX1jQY7lW+rcdoBJV3HvX+bEnjuVkFOI2r9gZK1A9LOW88z3ikZHrENPvydMgKk4VU9
- ltiQMXBpMmKItjapffcc5Mw9Wn3rw5qLaBk26Fsv7xN3dRsrv235BDICQdFQ1Ivir2sf
- sMeD/T0u8m534+8pQf/xLv6Rr3P2U8iV8MYJ2CZ/IRbdqP6w/TRhJ/vayVrttjTLEzo1
- 2xwQ==
-X-Gm-Message-State: APjAAAVSaySm+cQE6ruqRHFHBIt100/jDfqjHPy2zi8Lrl8Zj8R8L09y
- u6zWhcCNFQScoq6Z57+MxugaXDP+
-X-Google-Smtp-Source: APXvYqwCWFQy8lleDLFULf2jIzPxGSxFUwZOt0rzuox0ocbMQQG7+ofJyi1nEtfUmow57PJVWp/79Q==
-X-Received: by 2002:aca:304b:: with SMTP id w72mr4850111oiw.126.1568403589762; 
- Fri, 13 Sep 2019 12:39:49 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id b5sm1254399oia.20.2019.09.13.12.39.48
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 13 Sep 2019 12:39:48 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46VR226zYwzF5QW
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 05:45:28 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 13 Sep 2019 12:45:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,492,1559545200"; d="scan'208";a="197661247"
+Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
+ by orsmga002.jf.intel.com with ESMTP; 13 Sep 2019 12:45:25 -0700
 Subject: Re: Rant regarding code review issues
 To: openbmc@lists.ozlabs.org
 References: <EB0500AF-9574-4007-BE55-B6E7384D027C@fb.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <935d08b4-3e01-87f9-8781-031c37163c0f@gmail.com>
-Date: Fri, 13 Sep 2019 14:39:48 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
+From: Ed Tanous <ed.tanous@intel.com>
+Message-ID: <f5205bbe-7320-67ee-2b2d-91c5cc185b02@intel.com>
+Date: Fri, 13 Sep 2019 12:45:25 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
 In-Reply-To: <EB0500AF-9574-4007-BE55-B6E7384D027C@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -87,35 +56,76 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/13/19 1:52 PM, Wilfred Smith wrote:
-> I believe this is a justified rant. This is not intended to offend, but to assert that the process is broken.
-
-Welcome to open source! :) Seriously, thanks for bringing this up. The 
-project belongs to the community. If you don't like something, feel free 
-to jump in IRC, come to a working group meeting, or do this (thanks 
-again) and suggest a fix.
-
+On 9/13/19 11:52 AM, Wilfred Smith wrote:
+> 
 > I strongly assert that there should be a formal list of commit rules. If the rules were actually documented and published, one could go through the checklist to ensure that the commit conforms. The result would be less time wasted by the committer and the reviewers, as well as more consistency.
 > 
-> When I go tooling down US-101 at 90 mph in the carpool lane, texting my illegal alien girlfriend as I’m driving to the convenience store, in a stolen red convertible, with a bottle of fine scotch in one hand and an unregistered AK in the other, at least I know which rules I’m violating or likely to be violating when I hear helicopters overhead.
-> 
-> But it sucks to have a commit booted for reasons that (a) I could not reasonably be expected to have known previously (because I read the documentation, of course) and (b) I may legitimately disagree with (e.g. the insanity that anyone holds to an 80-column rule instead of 132 in a day of 4K monitors and 75-character class names inside nested namespaces that are just as long, not counting fully decorated traits). Oh…right…just use “auto”.
+https://github.com/openbmc/docs
+
+> But it sucks to have a commit booted for reasons that (a) I could not reasonably be expected to have known previously (because I read the documentation, of course) and(b) I may legitimately disagree with (e.g. the insanity that anyone
+holds to an 80-column rule instead of 132 in a day of 4K monitors and
+75-character class names inside nested namespaces that are just as long,
+not counting fully decorated traits). Oh…right…just use “auto”.
+
+From the coding standard here:
+https://github.com/openbmc/docs/blob/master/cpp-style-and-conventions.md
+
+"Line length should be limited to 80 characters."
+
+You are welcome to disagree with that statement, but the recommended way
+to go about that would be to push a review to change to that rule,
+invoking a 132 character line length, and start a discussion about the
+above.  After that, follow up with changes to the clang-format, and
+commits to each repository to change the codebase to obey the new rule.
+I'm willing to bet if you did that, many people would agree with you,
+and we'd have a very productive discussion about it.
+
+It should be noted, for most code, all of this formatting is automatic
+via clang-format, which is documented on the next line in the file I linked.
+
+With all of the above, I'm struggling to see how you're wanting to
+improve here.  Do you think the documentation could be cleaned up?  Is
+the documentation too long to read?  Should we organize it in a
+different way so that the information above is easier to find?
+
 > 
 > The process should be somewhat predictable, preferably programmatic.
 
-As I said in the last sentence above, please propose fixes or just get 
-it done and see who complains. I am here-by empowering you! Help us fix it!
+Agreed, but throughout this email, I don't see any actionable suggestion
+on how this could be improved.  Could you focus a little more on what
+you think we could change to make this situation better?
 
+> 
 > Mind you, I have no problem with complying with the maintainer’s rules, but I’d like to have some chance at getting a trivial commit passed on the first shot. Two lines of BitBake config, that actually accomplish what is intended, fetches a half-dozen complaints?
+
+Assuming this is the review you're talking about:
+https://gerrit.openbmc-project.xyz/c/openbmc/meta-facebook/+/25145
+
+It was 7 lines of bitbake config, and it followed some project practices
+that are deprecated and trying to be removed.
+
+Interestingly enough, I'm not able to find where we document the 50/72
+rule for commit messages, although I know some editors will enforce it
+when you do your edits.  I would've expected it to be here:
+https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-changes
+Maybe that's an improvement to the docs you could propose?
+
 > 
 > It helps the maintainer if committers are able to self-police 98% of the issues, and makes the entire process seem less hostile.
+
+Agreed.  I'd also mention that in some cases (like the 50/27 rule and 80
+character line lengths) the CI could give faster feedback for obvious
+things.  Is that something you'd be willing to look into automating in
+the CI?  I'm sure a lot of people would appreciate you doing so.
+There's a lot of low hanging fruit here that could be added to CI to
+make the responses seem less hostile.
+
 > 
 > Also, there are too many places to put the same information. I quoted the warning messages I was remedying in the patch set comments, but summarized in the commit message because that seemed like the right thing to do. And that got me another downvote.
-> 
-> Now forgive me for my rant. I gotta pick up some M&M’s for my girlfriend before 5th period or she’ll be very cross with me.
 
-Funny stuff! Jump in IRC and start a conversation with one of the 
-maintainers, folks around here are usually very friendly and helpful.
-
-Kurt Taylor (krtaylor)
-
+At the end of the day, the commit message is what most people are
+looking at once the commit is merged, and you put a single line that
+wasn't very descriptive.  The maintainer pointed out that you already
+had the level of detail needed, you just failed to put it in the commit
+message.  Certainly, writing this email took longer than just updating
+the commit message with more detail?
