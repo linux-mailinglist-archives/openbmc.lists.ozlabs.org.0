@@ -1,92 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C5C3B25FE
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 21:25:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13B79B2632
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 21:40:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46VQZX2m5FzF4S2
-	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 05:25:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46VQwK4BVdzF4R3
+	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 05:40:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::244; helo=mail-oi1-x244.google.com;
+ envelope-from=kurt.r.taylor@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="NasOx8VU"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com
+ [IPv6:2607:f8b0:4864:20::244])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46VQYp2T8vzDq6J
- for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 05:24:28 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8DJMNfJ099636
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 15:24:21 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2uytca1hua-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 15:24:20 -0400
-Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x8DJMwCl100795
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 15:24:20 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2uytca1htp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2019 15:24:20 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8DJJajG004350;
- Fri, 13 Sep 2019 19:24:19 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma05wdc.us.ibm.com with ESMTP id 2uytdx98sd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Sep 2019 19:24:19 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8DJOIWs63897914
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Sep 2019 19:24:18 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C9FABE054;
- Fri, 13 Sep 2019 19:24:18 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA766BE051;
- Fri, 13 Sep 2019 19:24:17 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Fri, 13 Sep 2019 19:24:17 +0000 (GMT)
-Subject: Re: stack overflow tag for openbmc questions?
-To: Brandon Wyman <bjwyman@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CALLMt=o3+h7JpEdyFci7BXzpDyN2XvYvDmxOGLwOxaqn9OneNw@mail.gmail.com>
- <CAARXrtkOnosU2N6pvNUCxaRnjbXMBKP=iopC+92Gc0iUmzZL0Q@mail.gmail.com>
- <CALLMt=oQ1muBW+u49OaQkLJDhmqN+vKqSsxTisRARTjBdN0Zsw@mail.gmail.com>
- <3aa37f37-b9c9-f9bb-e125-7e1f998f1c3d@gmail.com>
- <CAK_vbW2gCBLu_VyzDK3OBHvvNQyHjUunHDyrMaaNmmrEVegmnQ@mail.gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <f3a4103f-9b54-0186-88f8-513eb1ae80bd@linux.ibm.com>
-Date: Fri, 13 Sep 2019 14:24:17 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46VQvZ4pR3zF3X4
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 05:39:52 +1000 (AEST)
+Received: by mail-oi1-x244.google.com with SMTP id k9so2649759oib.7
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 12:39:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=GmKkIaX1nAsLGSG2vSb8dcNEwXIUrpP5EOvNBVNrPos=;
+ b=NasOx8VU52XLFWT3fWMbbpGqua6/e4+4Eg8+E2dlzD6LGwsycgl7t04CUikcMkCVYo
+ 2dvY5LTk5qd8vgcBZf3b9oLaCOvEMKdS2dF+CysWAVScnTwe1fPFbNZ9Njc5jLLfe9q5
+ S0RcK0p0kqj5Ai7k9BX1n57EMu1UDJT2y6+UfiMqTSLrwnCLS54WgEiOWmana4meJrhj
+ fP7JhtUbMWplMT0W/8pr5nwaFePZS5F/J+uOmOIXAjuXuj32yv5Zt4pfNGuSTlm5uVDe
+ skBmFTb4xZmytlms3gi3c9Q5xT+q4RWXKHDpS4afQCo6pl40t4+m7Fr5pYut/cuy9pYW
+ afkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=GmKkIaX1nAsLGSG2vSb8dcNEwXIUrpP5EOvNBVNrPos=;
+ b=a9B9E0GbkXRXdywUsqxuXNtP5vs/KqVfJ9Mxjt84M/k9LEEb59s8AZnHxf03zpvssJ
+ ALwr+O4JKhZi9i3nqLMciPUBoobkEdjKXHnsTk+bCw3qK9A9c1SRlWDXggGrqwWD2SLd
+ tRX1jQY7lW+rcdoBJV3HvX+bEnjuVkFOI2r9gZK1A9LOW88z3ikZHrENPvydMgKk4VU9
+ ltiQMXBpMmKItjapffcc5Mw9Wn3rw5qLaBk26Fsv7xN3dRsrv235BDICQdFQ1Ivir2sf
+ sMeD/T0u8m534+8pQf/xLv6Rr3P2U8iV8MYJ2CZ/IRbdqP6w/TRhJ/vayVrttjTLEzo1
+ 2xwQ==
+X-Gm-Message-State: APjAAAVSaySm+cQE6ruqRHFHBIt100/jDfqjHPy2zi8Lrl8Zj8R8L09y
+ u6zWhcCNFQScoq6Z57+MxugaXDP+
+X-Google-Smtp-Source: APXvYqwCWFQy8lleDLFULf2jIzPxGSxFUwZOt0rzuox0ocbMQQG7+ofJyi1nEtfUmow57PJVWp/79Q==
+X-Received: by 2002:aca:304b:: with SMTP id w72mr4850111oiw.126.1568403589762; 
+ Fri, 13 Sep 2019 12:39:49 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id b5sm1254399oia.20.2019.09.13.12.39.48
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 13 Sep 2019 12:39:48 -0700 (PDT)
+Subject: Re: Rant regarding code review issues
+To: openbmc@lists.ozlabs.org
+References: <EB0500AF-9574-4007-BE55-B6E7384D027C@fb.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <935d08b4-3e01-87f9-8781-031c37163c0f@gmail.com>
+Date: Fri, 13 Sep 2019 14:39:48 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
+ Gecko/20100101 Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAK_vbW2gCBLu_VyzDK3OBHvvNQyHjUunHDyrMaaNmmrEVegmnQ@mail.gmail.com>
+In-Reply-To: <EB0500AF-9574-4007-BE55-B6E7384D027C@fb.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-13_09:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909130198
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,34 +87,35 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 9/13/19 1:52 PM, Wilfred Smith wrote:
+> I believe this is a justified rant. This is not intended to offend, but to assert that the process is broken.
 
-On 9/11/19 5:37 PM, Brandon Wyman wrote:
-> On Wed, Sep 4, 2019 at 9:07 AM krtaylor <kurt.r.taylor@gmail.com> wrote:
->> On 9/4/19 7:04 AM, Andrew Geissler wrote:
->>> On Wed, Sep 4, 2019 at 12:33 AM Lei YU <mine260309@gmail.com> wrote:
->>>> On Fri, Aug 30, 2019 at 2:59 AM Andrew Geissler <geissonator@gmail.com> wrote:
->>>>> As a community, we're getting more and more questions via
->>>>> IRC, the mailing list, and openbmc github issues. Any thoughts
->>>>> on creating a stack overflow tag to try and get a more searchable
->>>>> and consistent location for questions (i.e. openbmc)?
->>>>>
->>>>> Andrew
->>>> Done. Tag `openbmc` is created in StackOverflow :)
->>>> The wiki needs peer review though:
->>>> https://stackoverflow.com/review/suggested-edits/23960865
->> Just be careful about sharing code ideas or bug fixes there. The license
->> terms may be incompatible if that code wound up in our tree.
->>
->> I see no problems with answering usage/build questions there.
->>
->> Kurt Taylor (krtaylor)
->>
->>
-> Curious what this link was, and what there was to review, I clicked on
-> it. It looks to be too generic, not helpful, rejected. So, I guess we
-> don't (yet) have something to worry about on copying code.
+Welcome to open source! :) Seriously, thanks for bringing this up. The 
+project belongs to the community. If you don't like something, feel free 
+to jump in IRC, come to a working group meeting, or do this (thanks 
+again) and suggest a fix.
 
-Vote for my tag info!  Or edit to make it better! ~ 
-https://stackoverflow.com/tags/openbmc/info
+> I strongly assert that there should be a formal list of commit rules. If the rules were actually documented and published, one could go through the checklist to ensure that the commit conforms. The result would be less time wasted by the committer and the reviewers, as well as more consistency.
+> 
+> When I go tooling down US-101 at 90 mph in the carpool lane, texting my illegal alien girlfriend as I’m driving to the convenience store, in a stolen red convertible, with a bottle of fine scotch in one hand and an unregistered AK in the other, at least I know which rules I’m violating or likely to be violating when I hear helicopters overhead.
+> 
+> But it sucks to have a commit booted for reasons that (a) I could not reasonably be expected to have known previously (because I read the documentation, of course) and (b) I may legitimately disagree with (e.g. the insanity that anyone holds to an 80-column rule instead of 132 in a day of 4K monitors and 75-character class names inside nested namespaces that are just as long, not counting fully decorated traits). Oh…right…just use “auto”.
+> 
+> The process should be somewhat predictable, preferably programmatic.
 
-- Joseph
+As I said in the last sentence above, please propose fixes or just get 
+it done and see who complains. I am here-by empowering you! Help us fix it!
+
+> Mind you, I have no problem with complying with the maintainer’s rules, but I’d like to have some chance at getting a trivial commit passed on the first shot. Two lines of BitBake config, that actually accomplish what is intended, fetches a half-dozen complaints?
+> 
+> It helps the maintainer if committers are able to self-police 98% of the issues, and makes the entire process seem less hostile.
+> 
+> Also, there are too many places to put the same information. I quoted the warning messages I was remedying in the patch set comments, but summarized in the commit message because that seemed like the right thing to do. And that got me another downvote.
+> 
+> Now forgive me for my rant. I gotta pick up some M&M’s for my girlfriend before 5th period or she’ll be very cross with me.
+
+Funny stuff! Jump in IRC and start a conversation with one of the 
+maintainers, folks around here are usually very friendly and helpful.
+
+Kurt Taylor (krtaylor)
+
