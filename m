@@ -1,49 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6ECA1B2548
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 20:41:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57A43B254B
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 20:42:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46VPc94DQ9zF5Ck
-	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 04:41:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46VPdJ01hYzF5q4
+	for <lists+openbmc@lfdr.de>; Sat, 14 Sep 2019 04:42:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ header.from=linux.intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46VPbP2PsmzF4dx
- for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 04:40:48 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from brads-mbp.dyn.fuzziesquirrel.com
- (Brads-MBP.dyn.fuzziesquirrel.com [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 504105C09F;
- Fri, 13 Sep 2019 14:40:44 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: how to do large-ish IPC transfers
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <e0a953de-e329-7586-b072-c78294df452d@yadro.com>
-Date: Fri, 13 Sep 2019 14:40:44 -0400
-Message-Id: <62412D1A-F4CF-4044-9115-61C917F1E310@fuzziesquirrel.com>
-References: <0938D0E7-0B8A-4F34-8195-FDC8E7F7606C@fuzziesquirrel.com>
- <20190911183102.GF45301@mauery.jf.intel.com>
- <dc2c8eba-35ab-afa6-0f27-30fe6e8398d3@yadro.com>
- <8B34652D-4C2B-44F2-A05B-68D7C3B24279@fuzziesquirrel.com>
- <e0a953de-e329-7586-b072-c78294df452d@yadro.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46VPbs0vkkzF4ps
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 04:41:12 +1000 (AEST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 13 Sep 2019 11:41:09 -0700
+X-IronPort-AV: E=Sophos;i="5.64,492,1559545200"; d="scan'208";a="269508444"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by orsmga001-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 13 Sep 2019 11:41:09 -0700
+Date: Fri, 13 Sep 2019 11:41:08 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
 To: Alexander Amelkin <a.amelkin@yadro.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: RMCP support
+Message-ID: <20190913184108.GG45301@mauery.jf.intel.com>
+References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
+ <20190911173139.GE45301@mauery.jf.intel.com>
+ <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,46 +59,36 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 3:42 AM, Alexander Amelkin <a.amelkin@yadro.com> wrote:
+On 13-Sep-2019 10:50 AM, Alexander Amelkin wrote:
+> 11.09.2019 20:31, Vernon Mauery wrote:
+> > On 11-Sep-2019 05:27 AM, Neeraj Ladkani wrote:
+> >> Is there any plan to add RMCP support in IPMI LAN stack ?
+> > There are no plans for adding RMCP support. RMCP is horribly insecure; 
+> > even more insecure than the least secure RMCP+ cipher suites (not 
+> > counting cipher suite 0, which should not even be a thing.)
+> >
+> > Not implementing RMCP was an intentional choice. RMCP+ is insecure, 
+> > especially with passwords shorter than 8 (as shown by Rick Altherr's 
+> > OSFC 2019 presentation). It is recommended that RMCP+ is only used with 
+> > cipher suite 17 and maximum length passwords (20 characters). Ideally, 
+> > it would not be used at all, preferring Redfish, which uses modern 
+> > crypto.
+> >
+> > Every open source IPMI utility out there supports RMCP+. That should be 
+> > used instead of RMCP.
+> 
+> What about RMCP pings used for device discovery as described in section 13.13 of
+> IPMI specification?
 
-> 12.09.2019 16:24, Brad Bishop wrote:
->>> What is a 'file descriptor' you're referring to here? The Linux file =
-=20
->>> descriptor
->>> (the integer you get from open()) is process-specific and doesn't kee=
-p =20
->>> its
->>> meaning in another process' context.
->>
->> On Linux you can pass file descriptors (the ones returned by open) ove=
-r =20
->> unix
->> sockets.  The implementation of the =E2=80=98h=E2=80=99 DBus type reli=
-es on that.
->
-> Oh, great! Didn't know about that. Thanks.
->
-> Anyway, I think I'd just use message queues or sockets (directly). What=
-'s =20
-> the
-> profit of using a file whose descriptor is sent over a socket instead o=
-f =20
-> just
-> using the socket for communication?
+I don't have any problem in particular with RMCP Ping, but it is not 
+implemented. It is not required by RMCP+ as far as I can tell. The spec 
+calls out that is *is* required for RMCP, and can be implemented for 
+RMCP+.
 
-I feel like you might be trolling me a tiny bit on our usage of DBus but =
-=20
-I=E2=80=99ll answer just in case you aren=E2=80=99t=E2=80=A6
+> AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails to
+> discover OpenBMC devices.
 
-In this particular case we already have a socket established and are =20
-passing other data over it, using an existing protocol (DBus).  Obviously=
- =20
-we can=E2=80=99t stuff this file data onto that socket without breaking t=
-he =20
-protocol and all the code that implements it.  We could open yet another =
-=20
-socket for this but it seems simpler to me to just pass the fd over the =20
-existing one=E2=80=A6especially when the DBus protocol has allowances for=
- that.
+From what I can tell, the spec suggests that you send a Get Channel 
+Authentication Capabilities request to discover RMCP+ devices.
 
--brad
+--Vernon
