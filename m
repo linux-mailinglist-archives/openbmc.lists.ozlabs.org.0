@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 745A6B1914
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 09:43:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7ABCB1934
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 09:52:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46V70q4lrczF5Fw
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 17:43:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46V7C02BT2zF5Gk
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 17:52:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,44 +16,43 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="NO7RUdvc"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="oddzmY93"; 
  dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46V7036ylZzF5Bb
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 17:42:43 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46V7BM5L5kzF5CV
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 17:51:39 +1000 (AEST)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id DF5D242001;
- Fri, 13 Sep 2019 07:42:38 +0000 (UTC)
+ by mta-01.yadro.com (Postfix) with ESMTP id 3562842492
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 07:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
  content-type:content-type:in-reply-to:mime-version:user-agent
  :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1568360558; x=
- 1570174959; bh=XB88H8zMokjID2oIcTLRxlQqi1OzbOFJpQ7HEUvC52Q=; b=N
- O7RUdvcmQgTrxCzmg70hpPzewA41qs+yD0DTXkaCWivbR49I4WPnT0I3ea/FORzE
- At2SayNmvUWSyXUQA236jcGAgoGY1HcVxoshtKzz4igrn4M3BHyYR4meHwUeupGA
- 6js1c314GI2GrmsCTzZwHkJLQ8/aAgoB1HFNHYKgJ4=
+ :subject:received:received:received; s=mta-01; t=1568361065; x=
+ 1570175466; bh=A3TQzgQq5+nIyY0a+SyO8uMdHgR3HEUG0dCHZEr/M90=; b=o
+ ddzmY93kU4RcS5G0DNx/zvEuP/BEqVFvmPSztZXGvL75iQjvvsfKdqpz9bqoN3On
+ UmCkKDi5ZRyMK8uCFI5Y35+RJlnkTyci7m5XKa64ss4J9aUzXyifsd/jOkfbDzZP
+ RzEqeef9PKv0ieXDXKL+X1pVT/DA55XgJrguM0koig=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id GJojcrgJB96Q; Fri, 13 Sep 2019 10:42:38 +0300 (MSK)
+ with ESMTP id 7e71QV1WNOZj for <openbmc@lists.ozlabs.org>;
+ Fri, 13 Sep 2019 10:51:05 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
  [172.17.10.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id DC6024193F;
- Fri, 13 Sep 2019 10:42:37 +0300 (MSK)
+ by mta-01.yadro.com (Postfix) with ESMTPS id E1C7442008
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 10:51:05 +0300 (MSK)
 Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
  (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 13
- Sep 2019 10:42:05 +0300
-Subject: Re: how to do large-ish IPC transfers
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-References: <0938D0E7-0B8A-4F34-8195-FDC8E7F7606C@fuzziesquirrel.com>
- <20190911183102.GF45301@mauery.jf.intel.com>
- <dc2c8eba-35ab-afa6-0f27-30fe6e8398d3@yadro.com>
- <8B34652D-4C2B-44F2-A05B-68D7C3B24279@fuzziesquirrel.com>
+ Sep 2019 10:50:31 +0300
+Subject: Re: RMCP support
+To: <openbmc@lists.ozlabs.org>
+References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
+ <20190911173139.GE45301@mauery.jf.intel.com>
 From: Alexander Amelkin <a.amelkin@yadro.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
@@ -100,15 +99,15 @@ Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
  KijxDkPtWeXDLbMgH1kA46gTPJWxsm0c45w7c3aXhXl4hOgXp+iWDTOT83tJU0zoD9hYlpZf
  dTYsE5wSxM06T2l/MILupCNZ7A==
 Organization: YADRO
-Message-ID: <e0a953de-e329-7586-b072-c78294df452d@yadro.com>
-Date: Fri, 13 Sep 2019 10:42:03 +0300
+Message-ID: <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
+Date: Fri, 13 Sep 2019 10:50:31 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.7.2
 MIME-Version: 1.0
-In-Reply-To: <8B34652D-4C2B-44F2-A05B-68D7C3B24279@fuzziesquirrel.com>
+In-Reply-To: <20190911173139.GE45301@mauery.jf.intel.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="KzDbfL7fL4BT7awiZnd5T0pr1GfMhV9U2"
+ boundary="A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR"
 X-Originating-IP: [172.17.14.197]
 X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
  T-EXCH-02.corp.yadro.com (172.17.10.102)
@@ -123,58 +122,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---KzDbfL7fL4BT7awiZnd5T0pr1GfMhV9U2
-Content-Type: multipart/mixed; boundary="eauzxD40jBPy8ke6NGnOwf1DuxqCacrjP";
+--A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR
+Content-Type: multipart/mixed; boundary="65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa";
  protected-headers="v1"
 From: Alexander Amelkin <a.amelkin@yadro.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Cc: openbmc@lists.ozlabs.org
-Message-ID: <e0a953de-e329-7586-b072-c78294df452d@yadro.com>
-Subject: Re: how to do large-ish IPC transfers
-References: <0938D0E7-0B8A-4F34-8195-FDC8E7F7606C@fuzziesquirrel.com>
- <20190911183102.GF45301@mauery.jf.intel.com>
- <dc2c8eba-35ab-afa6-0f27-30fe6e8398d3@yadro.com>
- <8B34652D-4C2B-44F2-A05B-68D7C3B24279@fuzziesquirrel.com>
-In-Reply-To: <8B34652D-4C2B-44F2-A05B-68D7C3B24279@fuzziesquirrel.com>
+To: openbmc@lists.ozlabs.org
+Message-ID: <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
+Subject: Re: RMCP support
+References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
+ <20190911173139.GE45301@mauery.jf.intel.com>
+In-Reply-To: <20190911173139.GE45301@mauery.jf.intel.com>
 
---eauzxD40jBPy8ke6NGnOwf1DuxqCacrjP
+--65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Content-Language: en-US
 
-12.09.2019 16:24, Brad Bishop wrote:
->
->> What is a 'file descriptor' you're referring to here? The Linux file d=
-escriptor
->> (the integer you get from open()) is process-specific and doesn't keep=
- its
->> meaning in another process' context.
->
-> On Linux you can pass file descriptors (the ones returned by open) over=
- unix
-> sockets.=C2=A0 The implementation of the =E2=80=98h=E2=80=99 DBus type =
-relies on that.
+11.09.2019 20:31, Vernon Mauery wrote:
+> On 11-Sep-2019 05:27 AM, Neeraj Ladkani wrote:
+>> Is there any plan to add RMCP support in IPMI LAN stack ?
+> There are no plans for adding RMCP support. RMCP is horribly insecure; =
 
-Oh, great! Didn't know about that. Thanks.
+> even more insecure than the least secure RMCP+ cipher suites (not=20
+> counting cipher suite 0, which should not even be a thing.)
+>
+> Not implementing RMCP was an intentional choice. RMCP+ is insecure,=20
+> especially with passwords shorter than 8 (as shown by Rick Altherr's=20
+> OSFC 2019 presentation). It is recommended that RMCP+ is only used with=
+=20
+> cipher suite 17 and maximum length passwords (20 characters). Ideally, =
 
-Anyway, I think I'd just use message queues or sockets (directly). What's=
- the
-profit of using a file whose descriptor is sent over a socket instead of =
-just
-using the socket for communication?
+> it would not be used at all, preferring Redfish, which uses modern=20
+> crypto.
+>
+> Every open source IPMI utility out there supports RMCP+. That should be=
+=20
+> used instead of RMCP.
+
+What about RMCP pings used for device discovery as described in section 1=
+3.13 of
+IPMI specification?
+
+AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails to
+discover OpenBMC devices.
 
 With best regards,
-Alexander Amelkin
+Alexander Amelkin,
+BIOS/BMC Team Lead, YADRO
+https://yadro.com
 
 
 
---eauzxD40jBPy8ke6NGnOwf1DuxqCacrjP--
+--65ADZYRJfFkeco5rmXqbLe6OodLM2iAZa--
 
---KzDbfL7fL4BT7awiZnd5T0pr1GfMhV9U2
+--A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -182,19 +186,19 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCAAGBQJde0hLAAoJEOiTWHtbdBeNjnIP/3v5mI9DU/8ehknZlrGzYAvn
-6H4YbB2tk3Ag57WzIodl+D/dKc4xKt3uLt48ZruMbO6rNPu5k0FRr+JTBec9l4j0
-F0Vx8iyiQ6VhZPsELdNeBGpGT2nSXOuknTCfpp7g65t7MmKg7yQDubdzcuh1wEkJ
-j1uhyAzKLO92mUgJu8GtujN+03/N4QpKQ/1ZvcJTeLnvu6Dpb5G5zHXRx6W5HOyo
-ueDGMv91+WH8Ddlu0u032ee48L+nyRUsWowEZvNRkmBu/geGcMisc4MSYke1RpU7
-sixFYpYYAigkEu8UkDlcf5iP9pX66q9I/64dPd8+KLtgjTbpneWJ75L4H0O/fnaT
-y61xmhW/7ZB991zZCpadZbTIWDtfFg3w6hwHZbOppnpS90DR9oSVpkbzx+y0AllE
-ScKI5GNAuwpXrgvcHekN/Vb7dFMbZYEX2oEYHteABPL9UdsHA7RNGcwDNOG0yT9z
-ZQUSumVzcVHMBMnlVok4E2iLExHOCYXU4hXwoSX4cKn5Y5joVs8iPHjqPiLOXlyn
-iZw/D6VR8+aWMIXjnfH4sBHClABmtGVPzMnZ1D4qNd9oCgdCX44Q8vrcjjezTkzf
-15nPe3mcJr8WMGmd/kL9ZO/gUvVbL0T4FemNDhicBc+0R0SxM1/EEFqciMWcjB0s
-cisvG6Ird4iCSv08qKub
-=W5n0
+iQIcBAEBCAAGBQJde0pHAAoJEOiTWHtbdBeNij8QAMoQQIQ6DZO6j+mLL8RG5oEw
+a8naJxKyZIn6cCyfoYdF7tTr5N0ZCWiM5BhpIqWg2/VCwM2X005NNCo29v/FXwxi
+c78G4nu5Be4blgUZbC1oyP9EswAxXXGPAQGo70Mv7Gmn80r2qjkEJys5QKireQKH
+KUWapCqbHht6mlaLIivatvKoX2Oq4KluRiCHJam86dJNuFv5zeyqMNmj/kvuhXYn
+VY+UJeA9sJnDTjr7q07rGXuBMmNRyWVePUQo5xARB9/81kVLVf1Hl5S1nCZxQ9E4
+oLpX4xHhrPuHRi4AWsmpNEnLMUdw7KMTZ1QHNfhGQWUodK6sLUvwegYeFQOzJAQ7
+IEiCcVY0ZOiZaNN3h5MN6FKDTwF+qh1YQ770klqvf58s61uhVGAop22t62osJbTZ
+/bVXxiKFHLgoThtgR9m6ZqAWejanPXdLaiMqtmT+I3dvXSIuBXVCB29q4V2CKNU+
+PHQZk2PH82fNNRpsQKPlJVJWhFiFyOkQSJLJWl9DoEmVbwmOzzxVWsCg/MEL135o
+4fAAJ4ivKFEFa3TF3v9Em/b+7NgDWTVkJYYWfqLMOetfAMdJiFoSQpgSyKcdkTKy
+5jNmsfwG6EklHN/xdhKtt1QU3jtOBV2uQpBySDpmolsfcem8hL0EHoeiUmAU3kiZ
+FsHoW8FNB1AkDA4RWkGn
+=4zFu
 -----END PGP SIGNATURE-----
 
---KzDbfL7fL4BT7awiZnd5T0pr1GfMhV9U2--
+--A7YqF1PSnxJVI4UlFIL9LAdnCatIjCBqR--
