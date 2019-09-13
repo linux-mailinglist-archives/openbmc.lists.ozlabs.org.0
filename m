@@ -2,74 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57053B1AC3
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 11:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 883D9B1DE2
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 14:54:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46V9LW5VqKzF5LC
-	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 19:28:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46VFvF2h2pzF5VS
+	for <lists+openbmc@lfdr.de>; Fri, 13 Sep 2019 22:54:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linaro.org
- (client-ip=2a00:1450:4864:20::442; helo=mail-wr1-x442.google.com;
- envelope-from=daniel.thompson@linaro.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=41592e3fcd=wilfredsmith@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.b="QJ2EQbmd"; 
- dkim-atps=neutral
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com
- [IPv6:2a00:1450:4864:20::442])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="X4oOpKMi"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="BjdPAwgu"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46V9Kn6DbFzF5KZ
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 19:28:11 +1000 (AEST)
-Received: by mail-wr1-x442.google.com with SMTP id a11so21598130wrx.1
- for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 02:28:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=KdWl9728cR3NNiz9k+CiAkkKPRvWRTcoTTHEAo/qVZc=;
- b=QJ2EQbmdNJEE9UMfwolykX8/l+ediIZaceAqN/IPpUYMTVgSE54U4qllmgRK3Ux0Zt
- 0dMb6acTKqq+xSxWQ1c8QiCU+xtyZ9W2+IsHEcdwvoWCTdHOhlFalGEk3sLBEA8tyk7O
- q+UJO5xzm95lhGqDnvqYjGB2OKxAxguQ5FmXKe1ui6GE5P/B2N59jSn1XdcyHOV5VlBQ
- DhWfn/E7VNn6/Dwe9vExWiTu85nA99BxTpmylJmHXHJkAyraYOHDJ3XIWPKg2s7mra3O
- 40sEk0ZoIndUm0C87iC/mOGsJ2JeVmYYqNVDoNgnjRNe8k4lU3zy/lq1rFPwI/iUg4M7
- Ccrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=KdWl9728cR3NNiz9k+CiAkkKPRvWRTcoTTHEAo/qVZc=;
- b=XbrdFi6QskWupCR8hbJcOrC0630cPZZuTsTRVHS9myswBstkGePMwv9uS+ZGMCFnCW
- FYi4WeqBCinidQe1dt/PdMZtIbwgf8XHP9NbOFcE39ZdBWSKtv8fFOw9UNXzN4Z3swos
- Aryvr7hz76TvbO9Ba91bhT4H3uA9QQfSVSV7Dkj2KxX2Cf1C74TK7efuYN5Liyk2wtRK
- jRYqz+f5S8HJXT1z9XaOJhbmG1LGXnYJ1FfsTdN/ukc3TSdKdl106ncZpHvuO2DdKIQu
- Pf088wgPmxWTNqM6LDR3eQuO1xJ224KKxMmxG45eILDFim7MFUSKOv5oth8NUrh/lk1e
- SLgg==
-X-Gm-Message-State: APjAAAWTvyqrR6mjtCkc+J2hLbgD1wQx1mxB2F4+WNh805ojvygtnhw8
- XJTkq5vkgsIhwZ/9nw995vAMXQ==
-X-Google-Smtp-Source: APXvYqzdx/vM0/cxgvic+nxBUexn/uhZ9A+cfJck+MegqHD7tgtAwwwN4Psg7HJVSDd40ktpMINsVg==
-X-Received: by 2002:adf:e4ce:: with SMTP id v14mr6314573wrm.15.1568366887451; 
- Fri, 13 Sep 2019 02:28:07 -0700 (PDT)
-Received: from holly.lan (cpc141214-aztw34-2-0-cust773.18-1.cable.virginm.net.
- [86.9.19.6])
- by smtp.gmail.com with ESMTPSA id s10sm3659226wmf.48.2019.09.13.02.28.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Sep 2019 02:28:06 -0700 (PDT)
-Date: Fri, 13 Sep 2019 10:28:05 +0100
-From: Daniel Thompson <daniel.thompson@linaro.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v3 2/2] hwrng: npcm: add NPCM RNG driver
-Message-ID: <20190913092805.4bemarnbh6jo3lxh@holly.lan>
-References: <20190912090149.7521-1-tmaimon77@gmail.com>
- <20190912090149.7521-3-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46VFsw2cHNzF5VM
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 22:52:44 +1000 (AEST)
+Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x8DCoN48010222
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 05:52:39 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : content-type : content-id : content-transfer-encoding
+ : mime-version; s=facebook;
+ bh=SdDRO5mjCRH1ir1uStyTOhfbiSVNn4kdMYw0b7lTuDI=;
+ b=X4oOpKMiYb+ekJ+jYIsXJOF3QfqBd/4kVroc9nTqBdtGmdtNprsEgY14IpCDMuqet79t
+ 3Qq5WGMQfkhoDsPkMGMq5L1A7ttOyjrADCu3tDfUSuaIhFI6fUYEhd+wYIfbu1blOrpB
+ SYssR+cmMIfdLVSox9dmS+aD5ELtZsaoMSs= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2uytdg3wbf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Sep 2019 05:52:39 -0700
+Received: from ash-exopmbx101.TheFacebook.com (2620:10d:c0a8:82::b) by
+ ash-exhub203.TheFacebook.com (2620:10d:c0a8:83::5) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 13 Sep 2019 05:52:38 -0700
+Received: from ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) by
+ ash-exopmbx101.TheFacebook.com (2620:10d:c0a8:82::b) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 13 Sep 2019 05:52:37 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.175) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Fri, 13 Sep 2019 05:52:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Wx2GiblnGwKUX6WrTt+3reLhyUDUd4ibO+g713fKnWrI7OARkesHZUa6AhSUM13LieSBzMVJ4BQb9nEk2h5y0ydUd+xDRaKFYNnifyli3t76voPnXY01Mt5LW7d7JH46K8WMUE0s+pTqWlvv77Isj9OjVMrQSLrplOHx5HP8opo2sYxs6hnMm7SV+xhbsaV/qR/d/gGGFHnfNGdJMnbbhExFBNNtePuNcTzvOqvMW6YT/3Bc4JHFcF0PvSYg1gWo4XxSzVc68q5Op00kIIA0TroJ+CnOMjC0tz9STFpEtgBGuN2PS5RdQfi7+0YH8uoTG/EJCDYjl2DqoyQgbFXvxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SdDRO5mjCRH1ir1uStyTOhfbiSVNn4kdMYw0b7lTuDI=;
+ b=MVGDTS20Mu3rNtoDCdfBFBxVgzLLwvkPBzue+W1Qeu51Cb8lH/71EmmEi+7akQlqnsUeVQCGokzXYKivLsWOQh2KZ5CxDnzXLNcCPXyW/dadGAR5tK7efoVKAJQ6V+Z75uO9w9XOzj7IahCZK0tmZI4MNd6v926cm98E3wKBy3Aa8WNXLFF4v/XMFLcd9YeHBIMYtEDhjwb+jS4IQ59/7cOE7m1ggBooxFKbOnRV4s/nKF9sxpbNdRd+78I/XcsqJYmXWg9tnJ2bUynCAsQMep8BjZijq9I+q7/QRWjxiNsMNrpm92XLnLJk3MYtRSK1by0x4g117LR1nbLukiPJEg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SdDRO5mjCRH1ir1uStyTOhfbiSVNn4kdMYw0b7lTuDI=;
+ b=BjdPAwgurO1+JpA3YcUqpBKcm3or+vdlyCVLy/vcfLUC3ad+rcdmH4EeXZ8rV6JlA79VnctvIZsTx311s3UJENx3twaP4UaPSQiZDmKXmXyzsHgDbLJhjHPp/7fZXDYslbtniStbQBN5Z5ejDaAeOYbCGQgh5reMWzGapfZsURM=
+Received: from BN6PR15MB1810.namprd15.prod.outlook.com (10.174.115.23) by
+ BN6PR15MB1409.namprd15.prod.outlook.com (10.172.150.22) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2241.13; Fri, 13 Sep 2019 12:52:36 +0000
+Received: from BN6PR15MB1810.namprd15.prod.outlook.com
+ ([fe80::88a2:b916:be78:e602]) by BN6PR15MB1810.namprd15.prod.outlook.com
+ ([fe80::88a2:b916:be78:e602%9]) with mapi id 15.20.2241.022; Fri, 13 Sep 2019
+ 12:52:36 +0000
+From: Wilfred Smith <wilfredsmith@fb.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Current Minimal Binary Size
+Thread-Topic: Current Minimal Binary Size
+Thread-Index: AQHVajIeyf+yWFxwZUugNXVdz/Jv4Q==
+Date: Fri, 13 Sep 2019 12:52:36 +0000
+Message-ID: <B01C7B99-DEFC-4252-A402-38903C016238@fb.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [24.4.169.226]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9fb3da70-5352-4eb9-dfca-08d7384940c8
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:BN6PR15MB1409; 
+x-ms-traffictypediagnostic: BN6PR15MB1409:
+x-microsoft-antispam-prvs: <BN6PR15MB1409755AC94E5B56C5F45DFBBDB30@BN6PR15MB1409.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
+x-forefront-prvs: 0159AC2B97
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(396003)(39860400002)(136003)(346002)(366004)(199004)(189003)(6916009)(8936002)(66446008)(91956017)(64756008)(6486002)(53936002)(316002)(66066001)(36756003)(26005)(4744005)(81166006)(3846002)(6512007)(71200400001)(71190400001)(6436002)(1730700003)(81156014)(186003)(6116002)(25786009)(5640700003)(8676002)(5660300002)(33656002)(305945005)(256004)(99286004)(2906002)(2501003)(486006)(3480700005)(478600001)(2351001)(76116006)(6506007)(86362001)(14454004)(66556008)(102836004)(66476007)(66946007)(2616005)(476003)(7736002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BN6PR15MB1409;
+ H:BN6PR15MB1810.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: yz0R/ANBW+FBzkBmSvPCIdzAYanc4wCTcjoT9M23NdWZZgmNNbQBKIlWn9nC4rEL/3wf0VIcjHVOE9vlx3UuPSRBdt/mqzAoo0Zyk3AE/HLiLtNPqdM/VG9BRqa/ZnKoV0oIDRtVrmhXDj/eofWdusrqJnb7SM8m5NMZHVFMr4IgF1sRjI/RSq61nbvQ0QVYS+jmrTN3ni2IupAEyJDqCF0JlUcucBBIRL4z5wyJClQLPQsPHN2kZ96pI/4Fwg30z/FAR3LUmlpZZdMSlcmIJ9vsRUFlRMbzix0ew4NMTwjXTccmyJkn2/K+c06qT1iVpoyEG09nk11BcckVlxCAUSc4/exzOSnz9rbgAo84X4YAHPjEL5NnG8dUj1AqRsanGTx/Sz1BM1yhIV2BDAJiLjLicMGz6fZgcI/RaI/InFE=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <194224320BAA2D49A5E6F7BC162648D4@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190912090149.7521-3-tmaimon77@gmail.com>
-User-Agent: NeoMutt/20180716
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9fb3da70-5352-4eb9-dfca-08d7384940c8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Sep 2019 12:52:36.5809 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /Wj/yLnyHdQPKIOVMOVYitni8/X5mQV1nD3HbLHqEvpYPD0DcLwPZCX0YJBvkIcxOrbBlKJltr+6jI+CihZrKQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR15MB1409
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-13_06:2019-09-11,2019-09-13 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 mlxscore=0 malwarescore=0
+ impostorscore=0 clxscore=1015 adultscore=0 phishscore=0 mlxlogscore=608
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1909130125
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,258 +141,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
- herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
- avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, tali.perry1@gmail.com, vkoul@kernel.org,
- robh+dt@kernel.org, mpm@selenic.com, venture@google.com, tglx@linutronix.de,
- jens.wiklander@linaro.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Sep 12, 2019 at 12:01:49PM +0300, Tomer Maimon wrote:
-> Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-
-Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
-
-Note, you are welcome to preseve this if you have to respin and
-change directory based on Vinod's feedback...
-
-
-> ---
->  drivers/char/hw_random/Kconfig    |  13 +++
->  drivers/char/hw_random/Makefile   |   1 +
->  drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++++++++
->  3 files changed, 200 insertions(+)
->  create mode 100644 drivers/char/hw_random/npcm-rng.c
-> 
-> diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/Kconfig
-> index 59f25286befe..87a1c30e7958 100644
-> --- a/drivers/char/hw_random/Kconfig
-> +++ b/drivers/char/hw_random/Kconfig
-> @@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
->  
->  	  If unsure, say Y.
->  
-> +config HW_RANDOM_NPCM
-> +	tristate "NPCM Random Number Generator support"
-> +	depends on ARCH_NPCM || COMPILE_TEST
-> +	default HW_RANDOM
-> +	help
-> + 	  This driver provides support for the Random Number
-> +	  Generator hardware available in Nuvoton NPCM SoCs.
-> +
-> +	  To compile this driver as a module, choose M here: the
-> +	  module will be called npcm-rng.
-> +
-> + 	  If unsure, say Y.
-> +
->  endif # HW_RANDOM
->  
->  config UML_RANDOM
-> diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/Makefile
-> index 7c9ef4a7667f..17b6d4e6d591 100644
-> --- a/drivers/char/hw_random/Makefile
-> +++ b/drivers/char/hw_random/Makefile
-> @@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK)	+= mtk-rng.o
->  obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
->  obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
->  obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
-> +obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
-> diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_random/npcm-rng.c
-> new file mode 100644
-> index 000000000000..b7c8c7e13a49
-> --- /dev/null
-> +++ b/drivers/char/hw_random/npcm-rng.c
-> @@ -0,0 +1,186 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2019 Nuvoton Technology corporation.
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +#include <linux/init.h>
-> +#include <linux/random.h>
-> +#include <linux/err.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/hw_random.h>
-> +#include <linux/delay.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/pm_runtime.h>
-> +
-> +#define NPCM_RNGCS_REG		0x00	/* Control and status register */
-> +#define NPCM_RNGD_REG		0x04	/* Data register */
-> +#define NPCM_RNGMODE_REG	0x08	/* Mode register */
-> +
-> +#define NPCM_RNG_CLK_SET_25MHZ	GENMASK(4, 3) /* 20-25 MHz */
-> +#define NPCM_RNG_DATA_VALID	BIT(1)
-> +#define NPCM_RNG_ENABLE		BIT(0)
-> +#define NPCM_RNG_M1ROSEL	BIT(1)
-> +
-> +#define NPCM_RNG_TIMEOUT_USEC	20000
-> +#define NPCM_RNG_POLL_USEC	1000
-> +
-> +#define to_npcm_rng(p)	container_of(p, struct npcm_rng, rng)
-> +
-> +struct npcm_rng {
-> +	void __iomem *base;
-> +	struct hwrng rng;
-> +};
-> +
-> +static int npcm_rng_init(struct hwrng *rng)
-> +{
-> +	struct npcm_rng *priv = to_npcm_rng(rng);
-> +
-> +	writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
-> +	       priv->base + NPCM_RNGCS_REG);
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_rng_cleanup(struct hwrng *rng)
-> +{
-> +	struct npcm_rng *priv = to_npcm_rng(rng);
-> +
-> +	writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
-> +}
-> +
-> +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool wait)
-> +{
-> +	struct npcm_rng *priv = to_npcm_rng(rng);
-> +	int retval = 0;
-> +	int ready;
-> +
-> +	pm_runtime_get_sync((struct device *)priv->rng.priv);
-> +
-> +	while (max >= sizeof(u32)) {
-> +		if (wait) {
-> +			if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
-> +					       ready,
-> +					       ready & NPCM_RNG_DATA_VALID,
-> +					       NPCM_RNG_POLL_USEC,
-> +					       NPCM_RNG_TIMEOUT_USEC))
-> +				break;
-> +		} else {
-> +			if ((readl(priv->base + NPCM_RNGCS_REG) &
-> +			    NPCM_RNG_DATA_VALID) == 0)
-> +				break;
-> +		}
-> +
-> +		*(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
-> +		retval += sizeof(u32);
-> +		buf += sizeof(u32);
-> +		max -= sizeof(u32);
-> +	}
-> +
-> +	pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
-> +	pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
-> +
-> +	return retval || !wait ? retval : -EIO;
-> +}
-> +
-> +static int npcm_rng_probe(struct platform_device *pdev)
-> +{
-> +	struct npcm_rng *priv;
-> +	struct resource *res;
-> +	int ret;
-> +
-> +	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-> +	if (!priv)
-> +		return -ENOMEM;
-> +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	priv->base = devm_ioremap_resource(&pdev->dev, res);
-> +	if (IS_ERR(priv->base))
-> +		return PTR_ERR(priv->base);
-> +
-> +	dev_set_drvdata(&pdev->dev, priv);
-> +	pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
-> +	pm_runtime_use_autosuspend(&pdev->dev);
-> +	pm_runtime_enable(&pdev->dev);
-> +
-> +#ifndef CONFIG_PM
-> +	priv->rng.init = npcm_rng_init;
-> +	priv->rng.cleanup = npcm_rng_cleanup;
-> +#endif
-> +	priv->rng.name = pdev->name;
-> +	priv->rng.read = npcm_rng_read;
-> +	priv->rng.priv = (unsigned long)&pdev->dev;
-> +	priv->rng.quality = 1000;
-> +
-> +	writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
-> +
-> +	ret = devm_hwrng_register(&pdev->dev, &priv->rng);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "Failed to register rng device: %d\n",
-> +			ret);
-> +		pm_runtime_disable(&pdev->dev);
-> +		pm_runtime_set_suspended(&pdev->dev);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_rng_remove(struct platform_device *pdev)
-> +{
-> +	struct npcm_rng *priv = platform_get_drvdata(pdev);
-> +
-> +	devm_hwrng_unregister(&pdev->dev, &priv->rng);
-> +	pm_runtime_disable(&pdev->dev);
-> +	pm_runtime_set_suspended(&pdev->dev);
-> +
-> +	return 0;
-> +}
-> +
-> +#ifdef CONFIG_PM
-> +static int npcm_rng_runtime_suspend(struct device *dev)
-> +{
-> +	struct npcm_rng *priv = dev_get_drvdata(dev);
-> +
-> +	npcm_rng_cleanup(&priv->rng);
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_rng_runtime_resume(struct device *dev)
-> +{
-> +	struct npcm_rng *priv = dev_get_drvdata(dev);
-> +
-> +	return npcm_rng_init(&priv->rng);
-> +}
-> +#endif
-> +
-> +static const struct dev_pm_ops npcm_rng_pm_ops = {
-> +	SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
-> +			   npcm_rng_runtime_resume, NULL)
-> +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-> +				pm_runtime_force_resume)
-> +};
-> +
-> +static const struct of_device_id rng_dt_id[] = {
-> +	{ .compatible = "nuvoton,npcm750-rng",  },
-> +	{},
-> +};
-> +MODULE_DEVICE_TABLE(of, rng_dt_id);
-> +
-> +static struct platform_driver npcm_rng_driver = {
-> +	.driver = {
-> +		.name		= "npcm-rng",
-> +		.pm		= &npcm_rng_pm_ops,
-> +		.of_match_table = of_match_ptr(rng_dt_id),
-> +	},
-> +	.probe		= npcm_rng_probe,
-> +	.remove		= npcm_rng_remove,
-> +};
-> +
-> +module_platform_driver(npcm_rng_driver);
-> +
-> +MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
-> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> 2.18.0
-> 
+VGhlc2UgdmFsdWVzIG1heSBiZSBvZiB1c2UgdG8gc29tZW9uZSBlbHNlLiBJ4oCZdmUgYmVlbiBw
+dXR0aW5nIGVuZXJneSBpbnRvIHJlZHVjaW5nIGNvZGUgc2l6ZSBsYXRlbHkuIFRoZSBmb2xsb3dp
+bmcgYXJlIGFsbCB3aXRoIC1PcyBlbmFibGVkLg0KDQpTbWFsbGVzdCAuU08gKG9uZSBmdW5jdGlv
+biB3aXRoIG5vIHN0YXRlbWVudHMgaW4gdGhlIGJvZHkpIC0gOC4ySw0KU21hbGxlc3QgZXhlY3V0
+YWJsZSAobWFpbiB3aXRoIG9ubHkgYSByZXR1cm4gc3RhdGVtZW50KSAtIDEySw0KU21hbGxlc3Qg
+ZXhlY3V0YWJsZSB3aXRoIGEgcHJpbnRmIGFuZCByZXR1cm4gLSAxNEsNClNtYWxsZXN0IGV4ZWN1
+dGFibGUgd2l0aCBhIHN0ZDo6Y291dCBhbmQgcmV0dXJuIC0gMTAzSw0KDQpGb3IgY29tcGFyaXNv
+bjoNCiBTbWFsbGVzdCBleGVjdXRhYmxlIHdpdGggYSBwcmludGYgYW5kIHJldHVybiBvbiB4ODYt
+NjQgLSA4LjJLDQogU21hbGxlc3QgZXhlY3V0YWJsZSB3aXRoIGEgc3RkOjpjb3V0IGFuZCByZXR1
+cm4gb24geDg2LTY0IC0gNDJLDQoNCg0K
