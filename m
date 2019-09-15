@@ -2,140 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BA9B2E9A
-	for <lists+openbmc@lfdr.de>; Sun, 15 Sep 2019 08:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB6ADB2E9D
+	for <lists+openbmc@lfdr.de>; Sun, 15 Sep 2019 08:18:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46WK055F6rzF4sH
-	for <lists+openbmc@lfdr.de>; Sun, 15 Sep 2019 16:16:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46WK1g26NyzF6Mr
+	for <lists+openbmc@lfdr.de>; Sun, 15 Sep 2019 16:18:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=4161357f58=taoren@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::242; helo=mail-oi1-x242.google.com;
+ envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="FQQhywHX"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="TtUiShQd"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="JqwqrOkc"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x242.google.com (mail-oi1-x242.google.com
+ [IPv6:2607:f8b0:4864:20::242])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46WJyr4MmhzF4WJ
- for <openbmc@lists.ozlabs.org>; Sun, 15 Sep 2019 16:15:40 +1000 (AEST)
-Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- x8F6AE6i000891; Sat, 14 Sep 2019 23:15:33 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=a9BHm7LQ7D86DcssRjdBO23bqjxkbSCbFSzbzZJKYqU=;
- b=FQQhywHXIQ6G1STEDTU/8YNtOXXCFj7raeRAGKudeiFNWa4f0gw3GZRVcRwxOmGHoJM8
- FHKheCu5rEw1REG6owenTXYQDfwv4+hVI/ZvmXX1WvtPz650QZuOREsSdS4rXfA30AGu
- 7l0EAqrjqfcn67fCiBypqSdlBbL9W6qpjb0= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2v0v8atrx9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Sat, 14 Sep 2019 23:15:33 -0700
-Received: from ash-exhub102.TheFacebook.com (2620:10d:c0a8:82::f) by
- ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Sat, 14 Sep 2019 23:15:32 -0700
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.172) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Sat, 14 Sep 2019 23:15:32 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BcGoTj8lD9sYLwFkHKnnNNaNTwVgABtgWubrLB8spdiEKMklwrIw+lI1Z/kGFZFNJoxxLJ+JzNMJpzqlJM2PZqsuaya2pr1mTqUFokNPZX9JF9y2pVyhNLa16wqYymLXGMsHBTq3eQyhMqXRHt+BAvn+po3WDYimSI76ticDy/bZWOCpm/3iY8m88XIlHtr+gjkIDoymGwT7OTe2o6lWmrqU9k7aDpjYV8bknaIaAVipvmA0Fb+/AN6NKGShEmLY447S/VTqmhaO/5Z3/I9ATiPUfcdfPKa7cfhhB1O3lyJGLk1bX11HANdLY9lgrP0MPBEmgY5jgKyDkxWK9Zzb6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a9BHm7LQ7D86DcssRjdBO23bqjxkbSCbFSzbzZJKYqU=;
- b=I6BOZ3fzQA35beH+i+QjnkEV8jDGw/w2VteGaZV1qN17EXKgYU18Prch3h4ghvmtbUNERp3hJGCdN3xO2p++pDxZXhXZNGiQAY2f9ygSiU3nd1s85/Lwdb99A9D+oXe/LwzWznEf8SG/G0rfJeFUzOYhvJ0qkL3sZnwvag7q9/oJFv099XyNGJ6wD+BrIHg9+Tds90BNi6JAoKuhZG4jTQh3kKlGrWysdgHavRcRGyA9PVdJPoYgJwwdre4gL1jmfY1EpBQh8FaNH0TIUOh3+VL5GWmeljJCoIEYTdOhDBQ6wqkmc70r87Rn0w7I3JKttFwhIQscFapZ0gMGi7kFhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=a9BHm7LQ7D86DcssRjdBO23bqjxkbSCbFSzbzZJKYqU=;
- b=TtUiShQd+vUkMilC9bHEImwJuFsq0fh6d7NIGRSBHGawmstMFsyUGbQ/lrFAgfeQcwv7gMBC3hOBZ2WUihKlSOm7QR26fe82P6rPPmioVTsB0p+P28wCGyn2O6/1b5+/kW7PCjTDurA14ffMWPEBUBDk84boOUvmp12xiFGrbPI=
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
- MWHPR15MB1806.namprd15.prod.outlook.com (10.174.255.23) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2263.15; Sun, 15 Sep 2019 06:15:30 +0000
-Received: from MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2980:5c7f:8dde:174a]) by MWHPR15MB1216.namprd15.prod.outlook.com
- ([fe80::2980:5c7f:8dde:174a%9]) with mapi id 15.20.2263.021; Sun, 15 Sep 2019
- 06:15:30 +0000
-From: Tao Ren <taoren@fb.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH net-next v8 2/3] net: phy: add support for clause 37
- auto-negotiation
-Thread-Topic: [PATCH net-next v8 2/3] net: phy: add support for clause 37
- auto-negotiation
-Thread-Index: AQHVZ1Bi3JE3p3zeEkCydFApWQwsCKcrP8IAgAELiYA=
-Date: Sun, 15 Sep 2019 06:15:30 +0000
-Message-ID: <f18aece7-f554-751a-dcfb-f897a196a732@fb.com>
-References: <20190909204906.2191290-1-taoren@fb.com>
- <20190914141752.GC27922@lunn.ch>
-In-Reply-To: <20190914141752.GC27922@lunn.ch>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: MWHPR03CA0004.namprd03.prod.outlook.com
- (2603:10b6:300:117::14) To MWHPR15MB1216.namprd15.prod.outlook.com
- (2603:10b6:320:22::17)
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [2620:10d:c090:180::7bb3]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0f36ccd1-b0a8-44a5-70c4-08d739a41beb
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600166)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:MWHPR15MB1806; 
-x-ms-traffictypediagnostic: MWHPR15MB1806:
-x-microsoft-antispam-prvs: <MWHPR15MB1806FABFD02E0967EA96049DB28D0@MWHPR15MB1806.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:785;
-x-forefront-prvs: 01613DFDC8
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(376002)(39860400002)(136003)(396003)(346002)(199004)(189003)(65956001)(65806001)(64756008)(66476007)(66446008)(66556008)(4744005)(66946007)(5660300002)(71190400001)(256004)(6436002)(6486002)(2616005)(71200400001)(52116002)(305945005)(7416002)(478600001)(58126008)(14454004)(102836004)(186003)(7736002)(386003)(229853002)(6506007)(76176011)(46003)(316002)(53546011)(54906003)(446003)(4326008)(31696002)(6116002)(476003)(99286004)(2906002)(11346002)(31686004)(6246003)(6916009)(36756003)(8676002)(6512007)(8936002)(486006)(81166006)(81156014)(86362001)(53936002)(25786009);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1806;
- H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: 1J7/ZGyWThGBjjjOyPbdc2RaSZUuS/ZO7FQSQe1UNm6IlLTj61l9I+Q2DEXUDljBu7YOgv5dwZ8Vh87oGdaY9U9ywnaLFHd2t1elbiVQsj4kJkg7WAfOxxQWb2/6dXHoSLzsxn4HZFgd1H6C3O+C5P18PBEG5Dp0gSBYZneO6HnQuZrFoJP4aEA6aAPGyJwHLySjsbPFUt5933Eb6/SGZfCdC5V6NapH1L6HjkV0+nOvKH3WQkcN1lZiL2Q/iDldUnkXeQSwkIcs1nA1B0Rxhf3eFckR/Sgkwb4RObNWU3wBVXhjpI7GEBeCoLLJ2QYBThB+X9TxZ9dNtt09Z7Ur2s9K2+K+enG/dOtV5duQ9YwMQ4M+NTNv3GmFad93h+12VPZGktCaFF/KEA51bb/U4QsijGSTO1acpL5wdPsv2PY=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <19698D688129664786101BD59921B40C@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46WK1352gNzF6Mg
+ for <openbmc@lists.ozlabs.org>; Sun, 15 Sep 2019 16:17:43 +1000 (AEST)
+Received: by mail-oi1-x242.google.com with SMTP id o205so5825476oib.12
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Sep 2019 23:17:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=4qDXqFanGfXawlkOpr54BHtT7LpY9iPIgslSU4OBLUE=;
+ b=JqwqrOkcicOe5XsHNei+k7gkCS6W6zYx7wvH9vCg+lzRxUnTnOHF9LnRG0Mtzhs30s
+ J/1YkLsFKUEoxEeuGS1kZn3vSXBc0yZqIu6+N0goHfjSjIxsBut2kU76HkDLg1heznvo
+ YerbRBYq0phVODryqkyHqKXdBR0AT6XjdyVwB6f1LBGGfEnMDvgu7yl91Cr5RN9LT6LP
+ rZFxo6syx5n1P0KKb7Q0tXlbRY3yQxRE6nXSGtoVEtV7JLoBS8C/MAh5zYykuCtCHG1v
+ oQ8XSmxbrrKCbOsNkWbFta1IQ/zdPfagRZV7cYRG2k5lEwzdyXZJXnjP4eK2IbIjVWUG
+ JRgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=4qDXqFanGfXawlkOpr54BHtT7LpY9iPIgslSU4OBLUE=;
+ b=UAaaV74gw3oU5bSOtVuA5TOw1oNx07nR2NT/Cg3mX0uhclB8Jhqty6i3B4NhcxcjUW
+ hO/Js3Z5gsc+AsFElD1oqiqCpXe/bDhfsrrfy7orMzhy252mq/jFpDsaLmrHpMlX1xd4
+ OkbJRktIZsPzeSOSl+b6/ulJLOM+fjjNWHA7iDV19IHxvo8MNbRS1TFsgelPFUOzJO5z
+ cSDzlL9OyEd5nzADxkyK3C9TXtrwlAsN85sLAj7kPaOHwNDKknWM7Ci0wipi0qZst2aQ
+ kyFzwmT6+cwGCAQK0KF/3OiQOADqFaYPhsgX1TWQAOHklsQMuZJOIG5xZsRnIHgsj0U2
+ /hbQ==
+X-Gm-Message-State: APjAAAVTexzI4GqTZi5KXCBRptgiVXeAXoAv4gP64SIdLxpHB+g+fgNX
+ f9gNWcLQ2Yd5EejjezTZ7xirwlcNXUczmdFyL+U=
+X-Google-Smtp-Source: APXvYqzktJWTRu/dLHJIfrwpzA9DrXTyRj1dTNO99Tk+dJFWFQwJMecK2qvhlQqxfzKuH2ncAsnCrVNnL09+zpvU8Xs=
+X-Received: by 2002:aca:b286:: with SMTP id b128mr9738712oif.100.1568528259602; 
+ Sat, 14 Sep 2019 23:17:39 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0f36ccd1-b0a8-44a5-70c4-08d739a41beb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Sep 2019 06:15:30.5257 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: A/YjFhRQRV0+Y2EFAq/XtjHiJ+NBVHA8rLeG7g1zfDuU2ZR1mAK5Py3BcGpvfMbC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1806
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
- definitions=2019-09-15_03:2019-09-11,2019-09-15 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- impostorscore=0
- adultscore=0 mlxlogscore=832 priorityscore=1501 malwarescore=0 bulkscore=0
- spamscore=0 clxscore=1011 suspectscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1908290000 definitions=main-1909150067
-X-FB-Internal: deliver
+References: <20190912090149.7521-1-tmaimon77@gmail.com>
+ <20190912090149.7521-3-tmaimon77@gmail.com>
+ <20190912164638.GB4392@vkoul-mobl>
+In-Reply-To: <20190912164638.GB4392@vkoul-mobl>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 15 Sep 2019 09:26:42 +0300
+Message-ID: <CAP6Zq1i5eSB4=1m1-eOU5MmUv=6_ks34eN2xfLci7qxxS5xqdQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] hwrng: npcm: add NPCM RNG driver
+To: Vinod Koul <vkoul@kernel.org>
+Content-Type: multipart/alternative; boundary="000000000000bbdf6a05929171f8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -147,23 +74,609 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Florian Fainelli <f.fainelli@gmail.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Arun Parameswaran <arun.parameswaran@broadcom.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Justin Chen <justinpopo6@gmail.com>, Vladimir
- Oltean <olteanv@gmail.com>, "David S . Miller" <davem@davemloft.net>,
- Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>, sumit.garg@linaro.org,
+ linux-crypto@vger.kernel.org, Herbert Xu <herbert@gondor.apana.org.au>,
+ Arnd Bergmann <arnd@arndb.de>, devicetree <devicetree@vger.kernel.org>,
+ Avi Fishman <avifishman70@gmail.com>, Greg KH <gregkh@linuxfoundation.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ mpm@selenic.com, Patrick Venture <venture@google.com>,
+ Thomas Gleixner <tglx@linutronix.de>, jens.wiklander@linaro.org,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gOS8xNC8xOSA3OjE3IEFNLCBBbmRyZXcgTHVubiB3cm90ZToNCj4gT24gTW9uLCBTZXAgMDks
-IDIwMTkgYXQgMDE6NDk6MDZQTSAtMDcwMCwgVGFvIFJlbiB3cm90ZToNCj4+IEZyb206IEhlaW5l
-ciBLYWxsd2VpdCA8aGthbGx3ZWl0MUBnbWFpbC5jb20+DQo+Pg0KPj4gVGhpcyBwYXRjaCBhZGRz
-IHN1cHBvcnQgZm9yIGNsYXVzZSAzNyAxMDAwQmFzZS1YIGF1dG8tbmVnb3RpYXRpb24uDQo+Pg0K
-Pj4gU2lnbmVkLW9mZi1ieTogSGVpbmVyIEthbGx3ZWl0IDxoa2FsbHdlaXQxQGdtYWlsLmNvbT4N
-Cj4+IFNpZ25lZC1vZmYtYnk6IFRhbyBSZW4gPHRhb3JlbkBmYi5jb20+DQo+PiBUZXN0ZWQtYnk6
-IFJlbsOpIHZhbiBEb3JzdCA8b3BlbnNvdXJjZUB2ZG9yc3QuY29tPg0KPiANCj4gUmV2aWV3ZWQt
-Ynk6IEFuZHJldyBMdW5uIDxhbmRyZXdAbHVubi5jaD4NCj4gDQo+ICAgICBBbmRyZXcNCg0KVGhh
-bmtzIGEgbG90LCBBbmRyZXcuDQoNCg0KQ2hlZXJzLA0KDQpUYW8NCg==
+--000000000000bbdf6a05929171f8
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Vinod,
+
+Thanks for your notification.
+
+NPCM Hardware RNG is true RNG.
+
+Tomer
+
+On Thu, 12 Sep 2019 at 19:47, Vinod Koul <vkoul@kernel.org> wrote:
+
+> On 12-09-19, 12:01, Tomer Maimon wrote:
+> > Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.
+>
+> Is this a true RNG or a psedo RNG, in case of latter it should be added
+> in drivers/crypto/. See crypto_register_rng()
+>
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  drivers/char/hw_random/Kconfig    |  13 +++
+> >  drivers/char/hw_random/Makefile   |   1 +
+> >  drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++++++++
+> >  3 files changed, 200 insertions(+)
+> >  create mode 100644 drivers/char/hw_random/npcm-rng.c
+> >
+> > diff --git a/drivers/char/hw_random/Kconfig
+> b/drivers/char/hw_random/Kconfig
+> > index 59f25286befe..87a1c30e7958 100644
+> > --- a/drivers/char/hw_random/Kconfig
+> > +++ b/drivers/char/hw_random/Kconfig
+> > @@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE
+> >
+> >         If unsure, say Y.
+> >
+> > +config HW_RANDOM_NPCM
+> > +     tristate "NPCM Random Number Generator support"
+> > +     depends on ARCH_NPCM || COMPILE_TEST
+> > +     default HW_RANDOM
+> > +     help
+> > +       This driver provides support for the Random Number
+> > +       Generator hardware available in Nuvoton NPCM SoCs.
+> > +
+> > +       To compile this driver as a module, choose M here: the
+> > +       module will be called npcm-rng.
+> > +
+> > +       If unsure, say Y.
+> > +
+> >  endif # HW_RANDOM
+> >
+> >  config UML_RANDOM
+> > diff --git a/drivers/char/hw_random/Makefile
+> b/drivers/char/hw_random/Makefile
+> > index 7c9ef4a7667f..17b6d4e6d591 100644
+> > --- a/drivers/char/hw_random/Makefile
+> > +++ b/drivers/char/hw_random/Makefile
+> > @@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK) += mtk-rng.o
+> >  obj-$(CONFIG_HW_RANDOM_S390) += s390-trng.o
+> >  obj-$(CONFIG_HW_RANDOM_KEYSTONE) += ks-sa-rng.o
+> >  obj-$(CONFIG_HW_RANDOM_OPTEE) += optee-rng.o
+> > +obj-$(CONFIG_HW_RANDOM_NPCM) += npcm-rng.o
+> > diff --git a/drivers/char/hw_random/npcm-rng.c
+> b/drivers/char/hw_random/npcm-rng.c
+> > new file mode 100644
+> > index 000000000000..b7c8c7e13a49
+> > --- /dev/null
+> > +++ b/drivers/char/hw_random/npcm-rng.c
+> > @@ -0,0 +1,186 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2019 Nuvoton Technology corporation.
+> > +
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/io.h>
+> > +#include <linux/iopoll.h>
+> > +#include <linux/init.h>
+> > +#include <linux/random.h>
+> > +#include <linux/err.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/hw_random.h>
+> > +#include <linux/delay.h>
+> > +#include <linux/of_irq.h>
+> > +#include <linux/pm_runtime.h>
+> > +
+> > +#define NPCM_RNGCS_REG               0x00    /* Control and status
+> register */
+> > +#define NPCM_RNGD_REG                0x04    /* Data register */
+> > +#define NPCM_RNGMODE_REG     0x08    /* Mode register */
+> > +
+> > +#define NPCM_RNG_CLK_SET_25MHZ       GENMASK(4, 3) /* 20-25 MHz */
+> > +#define NPCM_RNG_DATA_VALID  BIT(1)
+> > +#define NPCM_RNG_ENABLE              BIT(0)
+> > +#define NPCM_RNG_M1ROSEL     BIT(1)
+> > +
+> > +#define NPCM_RNG_TIMEOUT_USEC        20000
+> > +#define NPCM_RNG_POLL_USEC   1000
+> > +
+> > +#define to_npcm_rng(p)       container_of(p, struct npcm_rng, rng)
+> > +
+> > +struct npcm_rng {
+> > +     void __iomem *base;
+> > +     struct hwrng rng;
+> > +};
+> > +
+> > +static int npcm_rng_init(struct hwrng *rng)
+> > +{
+> > +     struct npcm_rng *priv = to_npcm_rng(rng);
+> > +
+> > +     writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,
+> > +            priv->base + NPCM_RNGCS_REG);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static void npcm_rng_cleanup(struct hwrng *rng)
+> > +{
+> > +     struct npcm_rng *priv = to_npcm_rng(rng);
+> > +
+> > +     writel(NPCM_RNG_CLK_SET_25MHZ, priv->base + NPCM_RNGCS_REG);
+> > +}
+> > +
+> > +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bool
+> wait)
+> > +{
+> > +     struct npcm_rng *priv = to_npcm_rng(rng);
+> > +     int retval = 0;
+> > +     int ready;
+> > +
+> > +     pm_runtime_get_sync((struct device *)priv->rng.priv);
+> > +
+> > +     while (max >= sizeof(u32)) {
+> > +             if (wait) {
+> > +                     if (readl_poll_timeout(priv->base + NPCM_RNGCS_REG,
+> > +                                            ready,
+> > +                                            ready & NPCM_RNG_DATA_VALID,
+> > +                                            NPCM_RNG_POLL_USEC,
+> > +                                            NPCM_RNG_TIMEOUT_USEC))
+> > +                             break;
+> > +             } else {
+> > +                     if ((readl(priv->base + NPCM_RNGCS_REG) &
+> > +                         NPCM_RNG_DATA_VALID) == 0)
+> > +                             break;
+> > +             }
+> > +
+> > +             *(u32 *)buf = readl(priv->base + NPCM_RNGD_REG);
+> > +             retval += sizeof(u32);
+> > +             buf += sizeof(u32);
+> > +             max -= sizeof(u32);
+> > +     }
+> > +
+> > +     pm_runtime_mark_last_busy((struct device *)priv->rng.priv);
+> > +     pm_runtime_put_sync_autosuspend((struct device *)priv->rng.priv);
+> > +
+> > +     return retval || !wait ? retval : -EIO;
+> > +}
+> > +
+> > +static int npcm_rng_probe(struct platform_device *pdev)
+> > +{
+> > +     struct npcm_rng *priv;
+> > +     struct resource *res;
+> > +     int ret;
+> > +
+> > +     priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+> > +     if (!priv)
+> > +             return -ENOMEM;
+> > +
+> > +     res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> > +     priv->base = devm_ioremap_resource(&pdev->dev, res);
+> > +     if (IS_ERR(priv->base))
+> > +             return PTR_ERR(priv->base);
+> > +
+> > +     dev_set_drvdata(&pdev->dev, priv);
+> > +     pm_runtime_set_autosuspend_delay(&pdev->dev, 100);
+> > +     pm_runtime_use_autosuspend(&pdev->dev);
+> > +     pm_runtime_enable(&pdev->dev);
+> > +
+> > +#ifndef CONFIG_PM
+> > +     priv->rng.init = npcm_rng_init;
+> > +     priv->rng.cleanup = npcm_rng_cleanup;
+> > +#endif
+> > +     priv->rng.name = pdev->name;
+> > +     priv->rng.read = npcm_rng_read;
+> > +     priv->rng.priv = (unsigned long)&pdev->dev;
+> > +     priv->rng.quality = 1000;
+> > +
+> > +     writel(NPCM_RNG_M1ROSEL, priv->base + NPCM_RNGMODE_REG);
+> > +
+> > +     ret = devm_hwrng_register(&pdev->dev, &priv->rng);
+> > +     if (ret) {
+> > +             dev_err(&pdev->dev, "Failed to register rng device: %d\n",
+> > +                     ret);
+> > +             pm_runtime_disable(&pdev->dev);
+> > +             pm_runtime_set_suspended(&pdev->dev);
+> > +             return ret;
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int npcm_rng_remove(struct platform_device *pdev)
+> > +{
+> > +     struct npcm_rng *priv = platform_get_drvdata(pdev);
+> > +
+> > +     devm_hwrng_unregister(&pdev->dev, &priv->rng);
+> > +     pm_runtime_disable(&pdev->dev);
+> > +     pm_runtime_set_suspended(&pdev->dev);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +#ifdef CONFIG_PM
+> > +static int npcm_rng_runtime_suspend(struct device *dev)
+> > +{
+> > +     struct npcm_rng *priv = dev_get_drvdata(dev);
+> > +
+> > +     npcm_rng_cleanup(&priv->rng);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int npcm_rng_runtime_resume(struct device *dev)
+> > +{
+> > +     struct npcm_rng *priv = dev_get_drvdata(dev);
+> > +
+> > +     return npcm_rng_init(&priv->rng);
+> > +}
+> > +#endif
+> > +
+> > +static const struct dev_pm_ops npcm_rng_pm_ops = {
+> > +     SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,
+> > +                        npcm_rng_runtime_resume, NULL)
+> > +     SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+> > +                             pm_runtime_force_resume)
+> > +};
+> > +
+> > +static const struct of_device_id rng_dt_id[] = {
+> > +     { .compatible = "nuvoton,npcm750-rng",  },
+> > +     {},
+> > +};
+> > +MODULE_DEVICE_TABLE(of, rng_dt_id);
+> > +
+> > +static struct platform_driver npcm_rng_driver = {
+> > +     .driver = {
+> > +             .name           = "npcm-rng",
+> > +             .pm             = &npcm_rng_pm_ops,
+> > +             .of_match_table = of_match_ptr(rng_dt_id),
+> > +     },
+> > +     .probe          = npcm_rng_probe,
+> > +     .remove         = npcm_rng_remove,
+> > +};
+> > +
+> > +module_platform_driver(npcm_rng_driver);
+> > +
+> > +MODULE_DESCRIPTION("Nuvoton NPCM Random Number Generator Driver");
+> > +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> > +MODULE_LICENSE("GPL v2");
+> > --
+> > 2.18.0
+>
+> --
+> ~Vinod
+>
+
+--000000000000bbdf6a05929171f8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Vinod,<div><br></div><div>Thanks for your notification.=
+</div><div><br></div><div>NPCM Hardware RNG is true RNG.</div><div><br></di=
+v><div>Tomer</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">On Thu, 12 Sep 2019 at 19:47, Vinod Koul &lt;<a href=3D"m=
+ailto:vkoul@kernel.org">vkoul@kernel.org</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">On 12-09-19, 12:01, Tomer Maimon wr=
+ote:<br>
+&gt; Add Nuvoton NPCM BMC Random Number Generator(RNG) driver.<br>
+<br>
+Is this a true RNG or a psedo RNG, in case of latter it should be added<br>
+in drivers/crypto/. See crypto_register_rng()<br>
+<br>
+&gt; <br>
+&gt; Signed-off-by: Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@gmail.com"=
+ target=3D"_blank">tmaimon77@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 drivers/char/hw_random/Kconfig=C2=A0 =C2=A0 |=C2=A0 13 +++<br>
+&gt;=C2=A0 drivers/char/hw_random/Makefile=C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br=
+>
+&gt;=C2=A0 drivers/char/hw_random/npcm-rng.c | 186 ++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 3 files changed, 200 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 drivers/char/hw_random/npcm-rng.c<br>
+&gt; <br>
+&gt; diff --git a/drivers/char/hw_random/Kconfig b/drivers/char/hw_random/K=
+config<br>
+&gt; index 59f25286befe..87a1c30e7958 100644<br>
+&gt; --- a/drivers/char/hw_random/Kconfig<br>
+&gt; +++ b/drivers/char/hw_random/Kconfig<br>
+&gt; @@ -440,6 +440,19 @@ config HW_RANDOM_OPTEE<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0If unsure, say Y.<br>
+&gt;=C2=A0 <br>
+&gt; +config HW_RANDOM_NPCM<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0tristate &quot;NPCM Random Number Generator suppo=
+rt&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0depends on ARCH_NPCM || COMPILE_TEST<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0default HW_RANDOM<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0help<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0This driver provides support for the Rando=
+m Number<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0Generator hardware available in Nuvoton NP=
+CM SoCs.<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0To compile this driver as a module, choose=
+ M here: the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0module will be called npcm-rng.<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0If unsure, say Y.<br>
+&gt; +<br>
+&gt;=C2=A0 endif # HW_RANDOM<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 config UML_RANDOM<br>
+&gt; diff --git a/drivers/char/hw_random/Makefile b/drivers/char/hw_random/=
+Makefile<br>
+&gt; index 7c9ef4a7667f..17b6d4e6d591 100644<br>
+&gt; --- a/drivers/char/hw_random/Makefile<br>
+&gt; +++ b/drivers/char/hw_random/Makefile<br>
+&gt; @@ -39,3 +39,4 @@ obj-$(CONFIG_HW_RANDOM_MTK) +=3D mtk-rng.o<br>
+&gt;=C2=A0 obj-$(CONFIG_HW_RANDOM_S390) +=3D s390-trng.o<br>
+&gt;=C2=A0 obj-$(CONFIG_HW_RANDOM_KEYSTONE) +=3D ks-sa-rng.o<br>
+&gt;=C2=A0 obj-$(CONFIG_HW_RANDOM_OPTEE) +=3D optee-rng.o<br>
+&gt; +obj-$(CONFIG_HW_RANDOM_NPCM) +=3D npcm-rng.o<br>
+&gt; diff --git a/drivers/char/hw_random/npcm-rng.c b/drivers/char/hw_rando=
+m/npcm-rng.c<br>
+&gt; new file mode 100644<br>
+&gt; index 000000000000..b7c8c7e13a49<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/drivers/char/hw_random/npcm-rng.c<br>
+&gt; @@ -0,0 +1,186 @@<br>
+&gt; +// SPDX-License-Identifier: GPL-2.0<br>
+&gt; +// Copyright (c) 2019 Nuvoton Technology corporation.<br>
+&gt; +<br>
+&gt; +#include &lt;linux/kernel.h&gt;<br>
+&gt; +#include &lt;linux/module.h&gt;<br>
+&gt; +#include &lt;linux/io.h&gt;<br>
+&gt; +#include &lt;linux/iopoll.h&gt;<br>
+&gt; +#include &lt;linux/init.h&gt;<br>
+&gt; +#include &lt;linux/random.h&gt;<br>
+&gt; +#include &lt;linux/err.h&gt;<br>
+&gt; +#include &lt;linux/platform_device.h&gt;<br>
+&gt; +#include &lt;linux/hw_random.h&gt;<br>
+&gt; +#include &lt;linux/delay.h&gt;<br>
+&gt; +#include &lt;linux/of_irq.h&gt;<br>
+&gt; +#include &lt;linux/pm_runtime.h&gt;<br>
+&gt; +<br>
+&gt; +#define NPCM_RNGCS_REG=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A00x00=C2=A0 =C2=A0 /* Control and status register */<br>
+&gt; +#define NPCM_RNGD_REG=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 0x04=C2=A0 =C2=A0 /* Data register */<br>
+&gt; +#define NPCM_RNGMODE_REG=C2=A0 =C2=A0 =C2=A00x08=C2=A0 =C2=A0 /* Mode=
+ register */<br>
+&gt; +<br>
+&gt; +#define NPCM_RNG_CLK_SET_25MHZ=C2=A0 =C2=A0 =C2=A0 =C2=A0GENMASK(4, 3=
+) /* 20-25 MHz */<br>
+&gt; +#define NPCM_RNG_DATA_VALID=C2=A0 BIT(1)<br>
+&gt; +#define NPCM_RNG_ENABLE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 BIT(0)<br>
+&gt; +#define NPCM_RNG_M1ROSEL=C2=A0 =C2=A0 =C2=A0BIT(1)<br>
+&gt; +<br>
+&gt; +#define NPCM_RNG_TIMEOUT_USEC=C2=A0 =C2=A0 =C2=A0 =C2=A0 20000<br>
+&gt; +#define NPCM_RNG_POLL_USEC=C2=A0 =C2=A01000<br>
+&gt; +<br>
+&gt; +#define to_npcm_rng(p)=C2=A0 =C2=A0 =C2=A0 =C2=A0container_of(p, stru=
+ct npcm_rng, rng)<br>
+&gt; +<br>
+&gt; +struct npcm_rng {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0void __iomem *base;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct hwrng rng;<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +static int npcm_rng_init(struct hwrng *rng)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D to_npcm_rng(rng);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(NPCM_RNG_CLK_SET_25MHZ | NPCM_RNG_ENABLE,<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 priv-&gt;base + NPCM_RNGCS_=
+REG);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static void npcm_rng_cleanup(struct hwrng *rng)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D to_npcm_rng(rng);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(NPCM_RNG_CLK_SET_25MHZ, priv-&gt;base + NP=
+CM_RNGCS_REG);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rng_read(struct hwrng *rng, void *buf, size_t max, bo=
+ol wait)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D to_npcm_rng(rng);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int retval =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int ready;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_get_sync((struct device *)priv-&gt;rng=
+.priv);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0while (max &gt;=3D sizeof(u32)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (wait) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0if (readl_poll_timeout(priv-&gt;base + NPCM_RNGCS_REG,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ready,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ready &amp; NPCM_RNG_DATA_VALID,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 NPCM_RNG_POLL_USEC,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 NPCM_RNG_TIMEOUT_USEC))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0if ((readl(priv-&gt;base + NPCM_RNGCS_REG) &amp;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0NPCM_RNG_DATA_VALID) =3D=3D 0)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*(u32 *)buf =3D readl=
+(priv-&gt;base + NPCM_RNGD_REG);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0retval +=3D sizeof(u3=
+2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0buf +=3D sizeof(u32);=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0max -=3D sizeof(u32);=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_mark_last_busy((struct device *)priv-&=
+gt;rng.priv);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_put_sync_autosuspend((struct device *)=
+priv-&gt;rng.priv);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return retval || !wait ? retval : -EIO;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rng_probe(struct platform_device *pdev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct resource *res;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int ret;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv =3D devm_kzalloc(&amp;pdev-&gt;dev, sizeof(*=
+priv), GFP_KERNEL);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!priv)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENOMEM;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0res =3D platform_get_resource(pdev, IORESOURCE_ME=
+M, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;base =3D devm_ioremap_resource(&amp;pdev=
+-&gt;dev, res);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (IS_ERR(priv-&gt;base))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return PTR_ERR(priv-&=
+gt;base);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0dev_set_drvdata(&amp;pdev-&gt;dev, priv);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_set_autosuspend_delay(&amp;pdev-&gt;de=
+v, 100);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_use_autosuspend(&amp;pdev-&gt;dev);<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_enable(&amp;pdev-&gt;dev);<br>
+&gt; +<br>
+&gt; +#ifndef CONFIG_PM<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;rng.init =3D npcm_rng_init;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;rng.cleanup =3D npcm_rng_cleanup;<br>
+&gt; +#endif<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;<a href=3D"http://rng.name" rel=3D"noref=
+errer" target=3D"_blank">rng.name</a> =3D pdev-&gt;name;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;rng.read =3D npcm_rng_read;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;rng.priv =3D (unsigned long)&amp;pdev-&g=
+t;dev;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0priv-&gt;rng.quality =3D 1000;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(NPCM_RNG_M1ROSEL, priv-&gt;base + NPCM_RNG=
+MODE_REG);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ret =3D devm_hwrng_register(&amp;pdev-&gt;dev, &a=
+mp;priv-&gt;rng);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (ret) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_err(&amp;pdev-&gt=
+;dev, &quot;Failed to register rng device: %d\n&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0ret);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pm_runtime_disable(&a=
+mp;pdev-&gt;dev);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pm_runtime_set_suspen=
+ded(&amp;pdev-&gt;dev);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rng_remove(struct platform_device *pdev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D platform_get_drvdata(pd=
+ev);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0devm_hwrng_unregister(&amp;pdev-&gt;dev, &amp;pri=
+v-&gt;rng);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_disable(&amp;pdev-&gt;dev);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pm_runtime_set_suspended(&amp;pdev-&gt;dev);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +#ifdef CONFIG_PM<br>
+&gt; +static int npcm_rng_runtime_suspend(struct device *dev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D dev_get_drvdata(dev);<b=
+r>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0npcm_rng_cleanup(&amp;priv-&gt;rng);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rng_runtime_resume(struct device *dev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rng *priv =3D dev_get_drvdata(dev);<b=
+r>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return npcm_rng_init(&amp;priv-&gt;rng);<br>
+&gt; +}<br>
+&gt; +#endif<br>
+&gt; +<br>
+&gt; +static const struct dev_pm_ops npcm_rng_pm_ops =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0SET_RUNTIME_PM_OPS(npcm_rng_runtime_suspend,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 npcm_rng_runtime_resume, NULL)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pm_runtime_force_resume)<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +static const struct of_device_id rng_dt_id[] =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0{ .compatible =3D &quot;nuvoton,npcm750-rng&quot;=
+,=C2=A0 },<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0{},<br>
+&gt; +};<br>
+&gt; +MODULE_DEVICE_TABLE(of, rng_dt_id);<br>
+&gt; +<br>
+&gt; +static struct platform_driver npcm_rng_driver =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.driver =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.name=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;npcm-rng&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.pm=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &amp;npcm_rng_pm_ops,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.of_match_table =3D o=
+f_match_ptr(rng_dt_id),<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0},<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.probe=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D npcm=
+_rng_probe,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.remove=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D npcm=
+_rng_remove,<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +module_platform_driver(npcm_rng_driver);<br>
+&gt; +<br>
+&gt; +MODULE_DESCRIPTION(&quot;Nuvoton NPCM Random Number Generator Driver&=
+quot;);<br>
+&gt; +MODULE_AUTHOR(&quot;Tomer Maimon &lt;<a href=3D"mailto:tomer.maimon@n=
+uvoton.com" target=3D"_blank">tomer.maimon@nuvoton.com</a>&gt;&quot;);<br>
+&gt; +MODULE_LICENSE(&quot;GPL v2&quot;);<br>
+&gt; -- <br>
+&gt; 2.18.0<br>
+<br>
+-- <br>
+~Vinod<br>
+</blockquote></div>
+
+--000000000000bbdf6a05929171f8--
