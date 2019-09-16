@@ -1,83 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4674FB32D4
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 02:56:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C43F3B33DA
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 06:17:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Wnqs4TJtzF4s0
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 10:56:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46WtHF1B1vzF4pB
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 14:16:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com;
+ (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
  envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="lJhibjDY"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="ESMoxTDX"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="KggnkOKp"; dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ header.b="Pjph4bQZ"; dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46WnqD5YnZzF1Gj
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 10:55:52 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46WtGK6FzZzF1fx
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 14:16:08 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 3D59921FC6;
- Sun, 15 Sep 2019 20:55:50 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 4F15C22023;
+ Sun, 15 Sep 2019 23:45:18 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 15 Sep 2019 20:55:50 -0400
+ by compute4.internal (MEProxy); Sun, 15 Sep 2019 23:45:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=iKFd/dnBsy+soIdMQuDJMq9kj/VsGAN
- Q9p5qDA+p4OA=; b=lJhibjDY4t+TNi2nzaqoizHiFNdtDIJcN/5VCSGhAg+axE2
- N7md7jnqxbeFRQsMnPTKaDzPRD050V/jbndxvCbYy3qyWTeYFeZDRv/csSi2gv2r
- bf12TEcA1bBVYeDUd1Ry2k7fdOSRJr+oi+Xvr/yh2z66m0Nqpl+TDXhRfoTuTFTk
- 2A8JSCQr97T5TbpftYOOPzh+fK+fTkjFRrmZOjykvNGY314UhLRe38TiaMI8iZ3n
- DG9dP/Sx+edwU/oklFuURra7U8l4CXZyympJsxglEJ1irGV23hN5dx0yUSGFJ8j/
- Yptcdx+HsjjLlGnMArYPxBc5a7pcZE38oCyVmPw==
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=Z3tZX
+ Bhl9neT+yl+KaBmNVj4BceX64jCzX3XiLjmRw8=; b=ESMoxTDXCvjNqaiEM+a8e
+ HrfNSvymp3nKYv3mcVflq4yKk5j45peCEqPDjiYkz+Ia7xElAsuYpzsywzcZBMaU
+ jfkhGVZIvS232qDilknWGsvRb1QUGgiLVGin7U7Jm+64KO4Dixl9dxoitM4HlSms
+ pGGmHitYpdw+jMBZCAmkxDhbrrFFdAzSRK96do1svv8tD+709Iqk6eC2qQa8bIW3
+ RaGAQXQZaGj5hSFRjZe9KWci4QO3bLlyKQgCc1xozKJN0gXtzZOnTDUqhNQ5hQU6
+ Z0bI2HO3tekDaczHb4GrUzhU2X/uys3FYEPI7IX0X2tSNpxY9XSSbsxsbRcMOkLL
+ Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iKFd/d
- nBsy+soIdMQuDJMq9kj/VsGANQ9p5qDA+p4OA=; b=KggnkOKpABk553infsDlbQ
- H3Yn9wW1Qz7wlQ2mtIeqMAR+RCcK2E3bh1Ou1Kx3jsD9P8FShjHSOwPRiOcFCoIm
- f1o5KLubNH4X1qmkD6Wdf294ZEgbjcdxqtbIIFWp5cSwpj8gJadF1YpSjFY6IgWP
- 6Yp4Xh58GAMsMUpq/mbkbMnoYYncJeuJn5Soui0pT3HgoNF+LEaX723Rzl5eR25I
- wr0N6Y0XYUUslxYTJWEHkM0EzJul6H5XFv8WL8GbZ2reYtDh8HOleIN4mQIHnetQ
- CMmB6qi/tTB8RN/Wx/IfBByXVQAncRM4zMOq4E8cmZQK+ylLg5hhBF/CiMEfUF5g
- ==
-X-ME-Sender: <xms:ld1-XZ_itp9ElIQPKcjGG66tjfWEGf-KZrwx_eJOF8vdyVcVuj7SoQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddvgdegtdcutefuodetggdotefrodftvf
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=Z3tZXBhl9neT+yl+KaBmNVj4BceX64jCzX3XiLjmR
+ w8=; b=Pjph4bQZZzD/v8WYGhWB1A09T/DtduWG/tnvtGi3vpytVXaE6ycKGSnty
+ QchbciKfusjNNcJHZdJe/6AeH2gXBp8dZ3HDqi0XwBMwDVgA+PtF70DQ5kmcDxoJ
+ CnkQbX/Hn1psFC/KnjYbMY5sdg24S6MtaOu5B2pnvFaWWaHnrSgW3p7k3BNu9gvz
+ dv6yIqDUXpoezeOrhyZI+7OeyFCame+yGLf5oNhVhMadVZ85CgDoqVySXvXqoQbA
+ A5isCPxY0zNnnfM77cjPT6Ne8KN1ML9CC/e9JxWzbtApDcFUDz/VCuAJnXGUVPVb
+ FZdqy43s1Lp3nYsnLnyBpEsZoDxZw==
+X-ME-Sender: <xms:SwV_XdRjqPOF88jvS2zpRs7jey1PbcVWzsLdxqajTIo7ST4MDQV02w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddvgdejhecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:ld1-XVliuDe7SRcvQgwgDnvRTcUDSsRUrjw6uVwsvJQt7rOLam9pYA>
- <xmx:ld1-XWY1ne32o1913_RFhqOSHKtoEWeTCyNOBGezh1kio5sFjeLA1Q>
- <xmx:ld1-XVPoQiwbGBTA-GTseZ8f6JbdGfHJteQQZmvGzZexQqY9Zp0EiQ>
- <xmx:lt1-XYlED54cVHdxrobHIXOWCRGd-qtgYwt0LJIEYT9Xc_HuG23_Bw>
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:SwV_XRf_f8Y6acm4QZarDQbOqtQWENiExDIr6G2O4x6b8k5o8C27FQ>
+ <xmx:SwV_XbgQZEx9VHw48mKySuS8NJZDsmO03ffskwynZnucfD2hOpNJgA>
+ <xmx:SwV_XcIQNiFKB4w--t9UoVBevbPhBm0mdOzeR5vyj6Oja4dVGq39QA>
+ <xmx:TgV_XeyO_4hRhthqZOLcvkUU463GP8_cZxdYQs9upaOy0aikM2_isA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id C1754E00A9; Sun, 15 Sep 2019 20:55:49 -0400 (EDT)
+ id 983E1E00AC; Sun, 15 Sep 2019 23:45:15 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-237-gf35468d-fmstable-20190912v1
 Mime-Version: 1.0
-Message-Id: <3403737d-c75d-4893-9abc-1b03c3f3c947@www.fastmail.com>
-In-Reply-To: <FB97DABE-E6EC-41CF-8628-C2AD45029CED@fb.com>
-References: <mailman.578.1568408052.9379.openbmc@lists.ozlabs.org>
- <FB97DABE-E6EC-41CF-8628-C2AD45029CED@fb.com>
-Date: Mon, 16 Sep 2019 10:25:46 +0930
+Message-Id: <abc66266-d93b-4464-a720-2829bf663e08@www.fastmail.com>
+In-Reply-To: <B01C7B99-DEFC-4252-A402-38903C016238@fb.com>
+References: <B01C7B99-DEFC-4252-A402-38903C016238@fb.com>
+Date: Mon, 16 Sep 2019 13:15:50 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Wilfred Smith" <wilfredsmith@fb.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Rant regarding code review issues
-Content-Type: text/plain
+Subject: Re: Current Minimal Binary Size
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,56 +95,45 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Wilfred,
 
-On Sat, 14 Sep 2019, at 08:46, Wilfred Smith wrote:
-> Please, everyone, again my sincere apologies for upsetting anyone. I 
-> was frustrated and sought commiseration.
+On Fri, 13 Sep 2019, at 22:22, Wilfred Smith wrote:
+> These values may be of use to someone else. I=E2=80=99ve been putting =
+energy=20
+> into reducing code size lately. The following are all with -Os enabled=
+.
+>=20
+> Smallest .SO (one function with no statements in the body) - 8.2K
+> Smallest executable (main with only a return statement) - 12K
+> Smallest executable with a printf and return - 14K
+> Smallest executable with a std::cout and return - 103K
 
-An immediate problem I have with your approach is that you're ranting at
-the people that you're seeking commiseration from. I don't understand
-how you expect that to work unless you're trying to exploit cracks in the
-community.
+Out of curiosity, how are you generating these results? For instance usi=
+ng
+the Ubuntu ARM GCC cross compiler I have a smallest executable of less
+than half the size of what you list above:
 
-> 
-> I will endeavor to push content that addresses my concerns; hopefully 
-> that will serve the community better.
+$ arm-linux-gnueabi-gcc --version
+arm-linux-gnueabi-gcc (Ubuntu/Linaro 8.3.0-6ubuntu1) 8.3.0
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is =
+NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPO=
+SE.
 
-That would be appreciated. Please be aware that the outcome *may*
-be along the lines of "thanks for your concern, however we can't
-support your proposal for reasons X, Y and Z". There may be paths to
-resolve X, Y and Z, and if so, please try to work constructively with the
-people that raise them.
+$ cat empty.c
+int main(void)
+{
+        return 0;
+}
+$ make empty CC=3Darm-linux-gnueabi-gcc CFLAGS=3D-Os && arm-linux-gnueab=
+i-strip empty && ls -l empty
+arm-linux-gnueabi-gcc -Os  -Wl,-O1 -Wl,--hash-style=3Dgnu -Wl,--as-neede=
+d  empty.c   -o empty
+-rwxr-xr-x 1 andrew andrew 5544 Sep 16 13:08 empty
+$ size empty
+   text    data     bss     dec     hex filename
+    759     276       4    1039     40f empty
 
-> 
-> I do welcome these comments and will take them to heart. This is my 
-> first venture into open source IP. I think your patience will 
-> eventually be a worthwhile investment.
-
-People come and go in open-source communities with many timings and
-for many reasons. There's no stability in an open source community beyond
-what individuals put in. In general we can't expect that anyone is going to
-be present and working on ideas from one day to the next. The consequence
-is that it's a personal choice for each community member as to how much
-they invest in supporting other members of the community.
-
-How you engage with the community will determine how quickly and
-completely its existing members build trust in you - we can only make
-judgement on that by how you interact on the mailing list, IRC and through
-code review. You build my trust in you by rocking up consistently over time,
-with interesting patches, are responsive to reviews and are willing to iterate
-in response to reasonable requests. Your goal should be to achieve rough
-consensus on a patch and get it merged, especially when you are new to the
-community and even if some reviews seem unreasonable (though feel free to
-ask for justification). Over time as trust builds in you, if you disagree with
-particulars of how the community runs then you can start proposing that the
-community change to meet your needs, but be aware that there might be
-competing needs that drove the existence of the current conditions.
-
-In summary, it's down to each individual in the community to choose
-whether they have patience, whether and how much they want to invest, and
-how quickly you're progressing along their worthwhile-investment trajectory.
-Try to do things that will keep you on track for everyone in the community,
-especially in the early days of your participation here.
-
-Cheers,
+Admittedly it's not the SDK cross-compiler, but some more clarity
+on how you came to those numbers would be helpful.
 
 Andrew
