@@ -1,84 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C43F3B33DA
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 06:17:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 595D7B33E5
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 06:21:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46WtHF1B1vzF4pB
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 14:16:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46WtNy5vlSzF4nN
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 14:21:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ spf=pass (mailfrom) smtp.mailfrom=mendozajonas.com
  (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ envelope-from=sam@mendozajonas.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=mendozajonas.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="ESMoxTDX"; 
- dkim=pass (2048-bit key;
+ unprotected) header.d=mendozajonas.com header.i=@mendozajonas.com
+ header.b="IEINNKSg"; dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Pjph4bQZ"; dkim-atps=neutral
+ header.b="WzsJzHq8"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46WtGK6FzZzF1fx
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 14:16:08 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 4F15C22023;
- Sun, 15 Sep 2019 23:45:18 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 15 Sep 2019 23:45:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm3; bh=Z3tZX
- Bhl9neT+yl+KaBmNVj4BceX64jCzX3XiLjmRw8=; b=ESMoxTDXCvjNqaiEM+a8e
- HrfNSvymp3nKYv3mcVflq4yKk5j45peCEqPDjiYkz+Ia7xElAsuYpzsywzcZBMaU
- jfkhGVZIvS232qDilknWGsvRb1QUGgiLVGin7U7Jm+64KO4Dixl9dxoitM4HlSms
- pGGmHitYpdw+jMBZCAmkxDhbrrFFdAzSRK96do1svv8tD+709Iqk6eC2qQa8bIW3
- RaGAQXQZaGj5hSFRjZe9KWci4QO3bLlyKQgCc1xozKJN0gXtzZOnTDUqhNQ5hQU6
- Z0bI2HO3tekDaczHb4GrUzhU2X/uys3FYEPI7IX0X2tSNpxY9XSSbsxsbRcMOkLL
- Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46WtN30gzfzF4cy;
+ Mon, 16 Sep 2019 14:21:06 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 3331D2129D;
+ Sun, 15 Sep 2019 22:39:15 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Sun, 15 Sep 2019 22:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
+ mendozajonas.com; h=message-id:subject:from:to:cc:date
+ :in-reply-to:references:content-type:mime-version
+ :content-transfer-encoding; s=fm1; bh=6OpW8HhbwXo2Hu8BU/I+PUQwOL
+ AKU3qwgteJ0dZGU8o=; b=IEINNKSgO8ShfY+A4d1BkHyLrBwA9OBy53JmyZKN7s
+ n73E6XtYLolR3IinvnY5aqi9DSQgbnYtqz5vooqDHeutFkfUQEJhXM50cO+O7iQO
+ 1r9h2LEDH5aJS3ezGUMb/wmOteT0SRRt2HOi8uMsCMHcZz56rPYDsMKAfkfIHhuP
+ d+G66OVk5O5hM4FTVs9yeaA8fdEtXfSPCN7wvIQ2t9eVoTXUBIBO9V/rOuq0PU2Y
+ 2h6cuKSjM3UzgZUdzas70bdtF96C4gGkPakteE5A0bB+j/+GWdejKUvbfEBeTJgY
+ 6e4ZSPIFtkutMsmMPsNfdf5vWgEWI3G2JH9mbn7qBmpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=Z3tZXBhl9neT+yl+KaBmNVj4BceX64jCzX3XiLjmR
- w8=; b=Pjph4bQZZzD/v8WYGhWB1A09T/DtduWG/tnvtGi3vpytVXaE6ycKGSnty
- QchbciKfusjNNcJHZdJe/6AeH2gXBp8dZ3HDqi0XwBMwDVgA+PtF70DQ5kmcDxoJ
- CnkQbX/Hn1psFC/KnjYbMY5sdg24S6MtaOu5B2pnvFaWWaHnrSgW3p7k3BNu9gvz
- dv6yIqDUXpoezeOrhyZI+7OeyFCame+yGLf5oNhVhMadVZ85CgDoqVySXvXqoQbA
- A5isCPxY0zNnnfM77cjPT6Ne8KN1ML9CC/e9JxWzbtApDcFUDz/VCuAJnXGUVPVb
- FZdqy43s1Lp3nYsnLnyBpEsZoDxZw==
-X-ME-Sender: <xms:SwV_XdRjqPOF88jvS2zpRs7jey1PbcVWzsLdxqajTIo7ST4MDQV02w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddvgdejhecutefuodetggdotefrodftvf
+ :x-sasl-enc; s=fm3; bh=6OpW8HhbwXo2Hu8BU/I+PUQwOLAKU3qwgteJ0dZGU
+ 8o=; b=WzsJzHq8WWewUfKjmIcDQy9RodGsgZDWraYlrFH2hOm93T6P8VhemdQw2
+ ZbgVccEupijtXIrlibI6nX0p+P39de9p06zT0Yj8uLKYwoZymgjDe79tSrWpWIKv
+ OGF3ZWQhhsc3MsR52p30qiFuwXuK7OC2lYKRzP/96rZzcSphAnkujT22OFDvBl3n
+ q/BQYjj6ef5rsVbUX8pCtBKjprfimCBUogiSxueUgcLfII2jYzM6UcgMYAjyCKSf
+ GGTqll/SRT9MGgoulMG0GQBdpsGWxTWzVj+PU8EP+yymzXa2kxqMSluHUf7aJA4H
+ XY2/nSJY+9FBjWsSf5W/nX6hHzi3g==
+X-ME-Sender: <xms:0vV-XahDiBp_lIMZE2_IbMJvCBukrZKd6IVOAHVTQrnjP2yK7aHX6w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddvgdeivdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:SwV_XRf_f8Y6acm4QZarDQbOqtQWENiExDIr6G2O4x6b8k5o8C27FQ>
- <xmx:SwV_XbgQZEx9VHw48mKySuS8NJZDsmO03ffskwynZnucfD2hOpNJgA>
- <xmx:SwV_XcIQNiFKB4w--t9UoVBevbPhBm0mdOzeR5vyj6Oja4dVGq39QA>
- <xmx:TgV_XeyO_4hRhthqZOLcvkUU463GP8_cZxdYQs9upaOy0aikM2_isA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 983E1E00AC; Sun, 15 Sep 2019 23:45:15 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-237-gf35468d-fmstable-20190912v1
-Mime-Version: 1.0
-Message-Id: <abc66266-d93b-4464-a720-2829bf663e08@www.fastmail.com>
-In-Reply-To: <B01C7B99-DEFC-4252-A402-38903C016238@fb.com>
-References: <B01C7B99-DEFC-4252-A402-38903C016238@fb.com>
-Date: Mon, 16 Sep 2019 13:15:50 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Wilfred Smith" <wilfredsmith@fb.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Current Minimal Binary Size
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ fjughrpefkuffhvfffjghftggfggfgsehtjeertddtreejnecuhfhrohhmpefurghmuhgv
+ lhcuofgvnhguohiirgdqlfhonhgrshcuoehsrghmsehmvghnughoiigrjhhonhgrshdrtg
+ homheqnecukfhppedujeegrdduvdejrdduieegrdegheenucfrrghrrghmpehmrghilhhf
+ rhhomhepshgrmhesmhgvnhguohiirghjohhnrghsrdgtohhmnecuvehluhhsthgvrhfuih
+ iivgeptd
+X-ME-Proxy: <xmx:0vV-XdbkH6vMXjioTXH0Xh0FGix2YVyhyQk6FIZ8aWv8xIybEBQE9g>
+ <xmx:0vV-XbW0BwcUWot_7z3FiIzeR_K9T76IfJ8j4jLYlmvBkmJO9-O49Q>
+ <xmx:0vV-XWY6PwOGubhdKqUOiyVHcCQQiJFOA3OEdtdrkU3iN0LriU0nhQ>
+ <xmx:0_V-XSj2Tix6C29ADYYCeAY837sL9-l-OfCYkj5c37WrykGZQZ-9rA>
+Received: from Singularity (unknown [174.127.164.45])
+ by mail.messagingengine.com (Postfix) with ESMTPA id D930DD60057;
+ Sun, 15 Sep 2019 22:39:13 -0400 (EDT)
+Message-ID: <eb370d3280327b512828adc62b64656e65b22745.camel@mendozajonas.com>
+Subject: Re: [PATCH] net/ncsi: Disable global multicast filter
+From: Samuel Mendoza-Jonas <sam@mendozajonas.com>
+To: Vijay Khemka <vijaykhemka@fb.com>, "David S. Miller"
+ <davem@davemloft.net>,  netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Date: Sun, 15 Sep 2019 19:39:13 -0700
+In-Reply-To: <20190912190451.2362220-1-vijaykhemka@fb.com>
+References: <20190912190451.2362220-1-vijaykhemka@fb.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.4 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,50 +91,241 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ Christian Svensson <bluecmd@google.com>, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wilfred,
+On Thu, 2019-09-12 at 12:04 -0700, Vijay Khemka wrote:
+> Disabling multicast filtering from NCSI if it is supported. As it
+> should not filter any multicast packets. In current code, multicast
+> filter is enabled and with an exception of optional field supported
+> by device are disabled filtering.
+> 
+> Mainly I see if goal is to disable filtering for IPV6 packets then
+> let
+> it disabled for every other types as well. As we are seeing issues
+> with
+> LLDP not working with this enabled filtering. And there are other
+> issues
+> with IPV6.
+> 
+> By Disabling this multicast completely, it is working for both IPV6
+> as
+> well as LLDP.
+> 
+> Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
 
-On Fri, 13 Sep 2019, at 22:22, Wilfred Smith wrote:
-> These values may be of use to someone else. I=E2=80=99ve been putting =
-energy=20
-> into reducing code size lately. The following are all with -Os enabled=
-.
->=20
-> Smallest .SO (one function with no statements in the body) - 8.2K
-> Smallest executable (main with only a return statement) - 12K
-> Smallest executable with a printf and return - 14K
-> Smallest executable with a std::cout and return - 103K
+Hi Vijay,
 
-Out of curiosity, how are you generating these results? For instance usi=
-ng
-the Ubuntu ARM GCC cross compiler I have a smallest executable of less
-than half the size of what you list above:
+There are definitely some current issues with multicast filtering and
+IPv6 when behind NC-SI at the moment. It would be nice to make this
+configurable instead of disabling the component wholesale but I don't
+believe this actually *breaks* anyone's configuration. It would be nice
+to see some Tested-By's from the OpenBMC people though.
 
-$ arm-linux-gnueabi-gcc --version
-arm-linux-gnueabi-gcc (Ubuntu/Linaro 8.3.0-6ubuntu1) 8.3.0
-Copyright (C) 2018 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is =
-NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPO=
-SE.
+I'll have a look at the multicast issues, CC'ing in Chris too who IIRC
+was looking at similar issues for u-bmc in case he got further.
 
-$ cat empty.c
-int main(void)
-{
-        return 0;
-}
-$ make empty CC=3Darm-linux-gnueabi-gcc CFLAGS=3D-Os && arm-linux-gnueab=
-i-strip empty && ls -l empty
-arm-linux-gnueabi-gcc -Os  -Wl,-O1 -Wl,--hash-style=3Dgnu -Wl,--as-neede=
-d  empty.c   -o empty
--rwxr-xr-x 1 andrew andrew 5544 Sep 16 13:08 empty
-$ size empty
-   text    data     bss     dec     hex filename
-    759     276       4    1039     40f empty
+Acked-by: Samuel Mendoza-Jonas <sam@mendozajonas.com>
 
-Admittedly it's not the SDK cross-compiler, but some more clarity
-on how you came to those numbers would be helpful.
+> ---
+>  net/ncsi/internal.h    |  7 +--
+>  net/ncsi/ncsi-manage.c | 98 +++++-----------------------------------
+> --
+>  2 files changed, 12 insertions(+), 93 deletions(-)
+> 
+> diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
+> index 0b3f0673e1a2..ad3fd7f1da75 100644
+> --- a/net/ncsi/internal.h
+> +++ b/net/ncsi/internal.h
+> @@ -264,9 +264,7 @@ enum {
+>  	ncsi_dev_state_config_ev,
+>  	ncsi_dev_state_config_sma,
+>  	ncsi_dev_state_config_ebf,
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -	ncsi_dev_state_config_egmf,
+> -#endif
+> +	ncsi_dev_state_config_dgmf,
+>  	ncsi_dev_state_config_ecnt,
+>  	ncsi_dev_state_config_ec,
+>  	ncsi_dev_state_config_ae,
+> @@ -295,9 +293,6 @@ struct ncsi_dev_priv {
+>  #define NCSI_DEV_RESET		8            /* Reset state of
+> NC          */
+>  	unsigned int        gma_flag;        /* OEM GMA
+> flag               */
+>  	spinlock_t          lock;            /* Protect the NCSI
+> device    */
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -	unsigned int        inet6_addr_num;  /* Number of IPv6
+> addresses   */
+> -#endif
+>  	unsigned int        package_probe_id;/* Current ID during
+> probe    */
+>  	unsigned int        package_num;     /* Number of
+> packages         */
+>  	struct list_head    packages;        /* List of
+> packages           */
+> diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
+> index 755aab66dcab..bce8b443289d 100644
+> --- a/net/ncsi/ncsi-manage.c
+> +++ b/net/ncsi/ncsi-manage.c
+> @@ -14,7 +14,6 @@
+>  #include <net/sock.h>
+>  #include <net/addrconf.h>
+>  #include <net/ipv6.h>
+> -#include <net/if_inet6.h>
+>  #include <net/genetlink.h>
+>  
+>  #include "internal.h"
+> @@ -978,9 +977,7 @@ static void ncsi_configure_channel(struct
+> ncsi_dev_priv *ndp)
+>  	case ncsi_dev_state_config_ev:
+>  	case ncsi_dev_state_config_sma:
+>  	case ncsi_dev_state_config_ebf:
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -	case ncsi_dev_state_config_egmf:
+> -#endif
+> +	case ncsi_dev_state_config_dgmf:
+>  	case ncsi_dev_state_config_ecnt:
+>  	case ncsi_dev_state_config_ec:
+>  	case ncsi_dev_state_config_ae:
+> @@ -1033,23 +1030,23 @@ static void ncsi_configure_channel(struct
+> ncsi_dev_priv *ndp)
+>  		} else if (nd->state == ncsi_dev_state_config_ebf) {
+>  			nca.type = NCSI_PKT_CMD_EBF;
+>  			nca.dwords[0] = nc->caps[NCSI_CAP_BC].cap;
+> -			if (ncsi_channel_is_tx(ndp, nc))
+> +			/* if multicast global filtering is supported
+> then
+> +			 * disable it so that all multicast packet will
+> be
+> +			 * forwarded to management controller
+> +			 */
+> +			if (nc->caps[NCSI_CAP_GENERIC].cap &
+> +			     NCSI_CAP_GENERIC_MC)
+> +				nd->state = ncsi_dev_state_config_dgmf;
+> +			else if (ncsi_channel_is_tx(ndp, nc))
+>  				nd->state = ncsi_dev_state_config_ecnt;
+>  			else
+>  				nd->state = ncsi_dev_state_config_ec;
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -			if (ndp->inet6_addr_num > 0 &&
+> -			    (nc->caps[NCSI_CAP_GENERIC].cap &
+> -			     NCSI_CAP_GENERIC_MC))
+> -				nd->state = ncsi_dev_state_config_egmf;
+> -		} else if (nd->state == ncsi_dev_state_config_egmf) {
+> -			nca.type = NCSI_PKT_CMD_EGMF;
+> -			nca.dwords[0] = nc->caps[NCSI_CAP_MC].cap;
+> +		} else if (nd->state == ncsi_dev_state_config_dgmf) {
+> +			nca.type = NCSI_PKT_CMD_DGMF;
+>  			if (ncsi_channel_is_tx(ndp, nc))
+>  				nd->state = ncsi_dev_state_config_ecnt;
+>  			else
+>  				nd->state = ncsi_dev_state_config_ec;
+> -#endif /* CONFIG_IPV6 */
+>  		} else if (nd->state == ncsi_dev_state_config_ecnt) {
+>  			if (np->preferred_channel &&
+>  			    nc != np->preferred_channel)
+> @@ -1483,70 +1480,6 @@ int ncsi_process_next_channel(struct
+> ncsi_dev_priv *ndp)
+>  	return -ENODEV;
+>  }
+>  
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -static int ncsi_inet6addr_event(struct notifier_block *this,
+> -				unsigned long event, void *data)
+> -{
+> -	struct inet6_ifaddr *ifa = data;
+> -	struct net_device *dev = ifa->idev->dev;
+> -	struct ncsi_dev *nd = ncsi_find_dev(dev);
+> -	struct ncsi_dev_priv *ndp = nd ? TO_NCSI_DEV_PRIV(nd) : NULL;
+> -	struct ncsi_package *np;
+> -	struct ncsi_channel *nc;
+> -	struct ncsi_cmd_arg nca;
+> -	bool action;
+> -	int ret;
+> -
+> -	if (!ndp || (ipv6_addr_type(&ifa->addr) &
+> -	    (IPV6_ADDR_LINKLOCAL | IPV6_ADDR_LOOPBACK)))
+> -		return NOTIFY_OK;
+> -
+> -	switch (event) {
+> -	case NETDEV_UP:
+> -		action = (++ndp->inet6_addr_num) == 1;
+> -		nca.type = NCSI_PKT_CMD_EGMF;
+> -		break;
+> -	case NETDEV_DOWN:
+> -		action = (--ndp->inet6_addr_num == 0);
+> -		nca.type = NCSI_PKT_CMD_DGMF;
+> -		break;
+> -	default:
+> -		return NOTIFY_OK;
+> -	}
+> -
+> -	/* We might not have active channel or packages. The IPv6
+> -	 * required multicast will be enabled when active channel
+> -	 * or packages are chosen.
+> -	 */
+> -	np = ndp->active_package;
+> -	nc = ndp->active_channel;
+> -	if (!action || !np || !nc)
+> -		return NOTIFY_OK;
+> -
+> -	/* We needn't enable or disable it if the function isn't
+> supported */
+> -	if (!(nc->caps[NCSI_CAP_GENERIC].cap & NCSI_CAP_GENERIC_MC))
+> -		return NOTIFY_OK;
+> -
+> -	nca.ndp = ndp;
+> -	nca.req_flags = 0;
+> -	nca.package = np->id;
+> -	nca.channel = nc->id;
+> -	nca.dwords[0] = nc->caps[NCSI_CAP_MC].cap;
+> -	ret = ncsi_xmit_cmd(&nca);
+> -	if (ret) {
+> -		netdev_warn(dev, "Fail to %s global multicast filter
+> (%d)\n",
+> -			    (event == NETDEV_UP) ? "enable" :
+> "disable", ret);
+> -		return NOTIFY_DONE;
+> -	}
+> -
+> -	return NOTIFY_OK;
+> -}
+> -
+> -static struct notifier_block ncsi_inet6addr_notifier = {
+> -	.notifier_call = ncsi_inet6addr_event,
+> -};
+> -#endif /* CONFIG_IPV6 */
+> -
+>  static int ncsi_kick_channels(struct ncsi_dev_priv *ndp)
+>  {
+>  	struct ncsi_dev *nd = &ndp->ndev;
+> @@ -1725,11 +1658,6 @@ struct ncsi_dev *ncsi_register_dev(struct
+> net_device *dev,
+>  	}
+>  
+>  	spin_lock_irqsave(&ncsi_dev_lock, flags);
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -	ndp->inet6_addr_num = 0;
+> -	if (list_empty(&ncsi_dev_list))
+> -		register_inet6addr_notifier(&ncsi_inet6addr_notifier);
+> -#endif
+>  	list_add_tail_rcu(&ndp->node, &ncsi_dev_list);
+>  	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+>  
+> @@ -1896,10 +1824,6 @@ void ncsi_unregister_dev(struct ncsi_dev *nd)
+>  
+>  	spin_lock_irqsave(&ncsi_dev_lock, flags);
+>  	list_del_rcu(&ndp->node);
+> -#if IS_ENABLED(CONFIG_IPV6)
+> -	if (list_empty(&ncsi_dev_list))
+> -		unregister_inet6addr_notifier(&ncsi_inet6addr_notifier)
+> ;
+> -#endif
+>  	spin_unlock_irqrestore(&ncsi_dev_lock, flags);
+>  
+>  	ncsi_unregister_netlink(nd->dev);
 
-Andrew
