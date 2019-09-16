@@ -2,66 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABE34B360E
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 09:59:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24812B3676
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 10:37:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46WzDG2D53zF3Hj
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 17:59:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46X04H5xzkzF48J
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 18:37:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::32b; helo=mail-ot1-x32b.google.com;
- envelope-from=akashgj91@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=quantatw.com
+ (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=1558554e7=hank.liou@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="iDomNEPQ"; 
- dkim-atps=neutral
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
- [IPv6:2607:f8b0:4864:20::32b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46WzCX4qdWzF1rp
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 17:59:03 +1000 (AEST)
-Received: by mail-ot1-x32b.google.com with SMTP id 67so34725283oto.3
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 00:59:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=46KTOiBljX+YO4Vj0Yv6+FPEBKUIAJRKT8QSvs4J+P0=;
- b=iDomNEPQZlzhxxpsSnd4qr/9utp4szgTff6YEf98SQaVOn0kX6zJ8Hfrgw1ztwGSml
- XiI6YLq0RCpFsQOAWtlyVfEz2g6+7GDpmzgAR7b4u/RMzxmKynKpgHhKVRKI3tZL9RWb
- VdExhnmExs8OTuYowAFccLZ8vlpUsAttm8MNBfNPTNLCiCyPlS2Lv8insLzg/ropi93P
- 2My9W4sHPPdmD75O0YwwJ1OB4AS1ieWS9h9cCp9wxq/ZkOz10qXh1RP0PLEEJTkFhxVW
- lpQwDnI8oVzJIj5aZ/duKAg4PBC/3B4uvet0/x+En8SYOHfLlgI8YfiZW9BwUjC6BW3v
- w6bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=46KTOiBljX+YO4Vj0Yv6+FPEBKUIAJRKT8QSvs4J+P0=;
- b=T+iPSjVh2fzzjDSiavbYZ3tVzl0vatl9YEv8SEe8L/puGVSQp4YQVNGYMCNort6vgj
- QBm76JVbCC9akqAKJWLUyiWZMJbqktBfS91b8JwVoVLbSTooIdNmI0+GAoQH9ZXseAq8
- tKYTQN+i9z/UPYR0HDXr1C+Nh7yU531Xi7pyAkbAwYmIA12yc+lPXgTjs6YjjzdusTo+
- pjLn0RB2UurPnPzvZQd+hd10kAQXYHk/+nu3Wek1r3ScWlgR7IG/nu1tp+QLvO8DqTfd
- yig/kP3IwLTZY4AiBo71ofqwxhVfFwfL3jT/DL8ZLb7ACSs/nGIK8Mp9mMGjqKeJhnBJ
- FFNA==
-X-Gm-Message-State: APjAAAVq/DUA2eWcRjF0UG6d4Ijim1V6hFNcxO8l9HRCPF6NMJHlmB6H
- u030CD0U0SiognFnjminQE1mj/dXorbTwIssi0k=
-X-Google-Smtp-Source: APXvYqxMuDHYUEz3eTsAize+ADxyBHQqSTwri8vfPTcn0E3rzZWpODITvMN4r3Cz7hrRlC8wsTAv/gidrNMkruZD/PE=
-X-Received: by 2002:a9d:5a0b:: with SMTP id v11mr38715503oth.317.1568620740673; 
- Mon, 16 Sep 2019 00:59:00 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46X03d2YCPzF45p
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 18:37:12 +1000 (AEST)
+Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
+ by mx02.quantatw.com with ESMTP; 16 Sep 2019 16:37:08 +0800
+Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx09.quanta.corp
+ (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 16 Sep
+ 2019 16:37:08 +0800
+Received: from mailbx09.quanta.corp ([fe80::c501:1c2b:62fc:dd81]) by
+ mailbx09.quanta.corp ([fe80::c501:1c2b:62fc:dd81%6]) with mapi id
+ 15.01.1713.004; Mon, 16 Sep 2019 16:37:08 +0800
+From: =?utf-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>
+To: Patrick Venture <venture@google.com>
+Subject: RE: [phosphor-pid-control] scaling issue
+Thread-Topic: [phosphor-pid-control] scaling issue
+Thread-Index: AQHVV/XbtwEoqXVk+kGbiKtv2uj0UqcFJGgAgAE9VwCAC0qVsIAAQT+AgAYx+NeABJmE/IAGcF0AgAAIKACAAWYjoP///XOAgAADkACAADI+AIAJWILA
+Date: Mon, 16 Sep 2019 08:37:07 +0000
+Message-ID: <5a46202d21694717b1aa40b4ef5105ea@quantatw.com>
+References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
+ <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
+ <369926533c3e448c9d1a0d28391fd688@quantatw.com>
+ <af485fc0d2c44f3e8927290ff6c95ea0@quantatw.com>
+ <CAO=notwuxuWKeKMY8mnse1wY1Nt6GNx4rcxHDokqXtkzyoLYYQ@mail.gmail.com>
+ <02128993d3064b53ac289500746666ab@quantatw.com>
+ <dbd75be40e2f4d41a5b621a5dc3b3df7@quantatw.com>
+ <CAO=notzTM-VLV14VdXWSukftABB1Tz4i-ixPOY5qn5cs_0-1Ng@mail.gmail.com>
+ <bfe53d3d-0d00-0ac9-9a43-5b24e09ad309@linux.intel.com>
+ <4b7d382d292d45fdab63f4adcc40eded@quantatw.com>
+ <CAO=notxe++aFL-c-8Wb+Wyxc3FbLFRxytP4L=9ggz1sp5KgVpg@mail.gmail.com>
+ <CAO=notzzqC8hFa+j8NFR+7oW6y6Yh3R_HEP_+BG4y-E9U1uHaw@mail.gmail.com>
+ <CAO=notwpNRU7trh-E-L7DP+nyvNMLWVBRP729MnkBoaj+pYDCA@mail.gmail.com>
+In-Reply-To: <CAO=notwpNRU7trh-E-L7DP+nyvNMLWVBRP729MnkBoaj+pYDCA@mail.gmail.com>
+Accept-Language: en-US, zh-TW
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAE33tLGtWJ-aJKRPt812zc1yj8TVBVxcSR1KX5_NznoVxJg7Fg@mail.gmail.com>
- <OF0AEE1426.28DFDF49-ON00258477.0027585E-65258477.00278E77@notes.na.collabserv.com>
-In-Reply-To: <OF0AEE1426.28DFDF49-ON00258477.0027585E-65258477.00278E77@notes.na.collabserv.com>
-From: AKASH G J <akashgj91@gmail.com>
-Date: Mon, 16 Sep 2019 13:27:06 +0530
-Message-ID: <CAE33tLHTE3pLOAN9C1z5_CFFJ7fR-YkfRLQSZiP5LQ-r728oSg@mail.gmail.com>
-Subject: Re: CurrentBMCState: BMCState.NotReady
-To: George Keishing <gkeishin@in.ibm.com>
-Content-Type: multipart/related; boundary="000000000000091b6b0592a6fa16"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,203 +67,233 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000091b6b0592a6fa16
-Content-Type: multipart/alternative; boundary="000000000000091b690592a6fa15"
-
---000000000000091b690592a6fa15
-Content-Type: text/plain; charset="UTF-8"
-
-root@s2600wf:~# systemctl list-jobs --no-pager
-JOB UNIT                                                            TYPE
- STATE
-111 mapper-wait@-xyz-openbmc_project-state-host0.service            start
-running
-151 mapper-wait@-xyz-openbmc_project-Chassis-Control-Power0.service start
-running
-143 obmc-host-reset-running@0.target                                start
-waiting
-145 op-reset-chassis-on@0.service                                   start
-waiting
-169 xyz.openbmc_project.State.Host.service                          start
-waiting
-149 op-reset-chassis-running@0.service                              start
-waiting
-154 phosphor-reset-sensor-states@0.service                          start
-waiting
-163 xyz.openbmc_project.Time.Manager.service                        start
-waiting
-146 obmc-power-reset-on@0.target                                    start
-waiting
-141 phosphor-reset-host-check@0.service                             start
-waiting
-140 obmc-host-reset@0.target                                        start
-waiting
-109 phosphor-discover-system-state@0.service                        start
-waiting
-152 phosphor-reset-host-running@0.service                           start
-waiting
- 97 obmc-led-group-start@bmc_booted.service                         start
-waiting
-  1 multi-user.target                                               start
-waiting
-
-15 jobs listed.
-
-On Mon, Sep 16, 2019 at 12:42 PM George Keishing <gkeishin@in.ibm.com>
-wrote:
-
-> Probably the host services are still not up and started as per the log
-> there.
->
-> *systemctl list-jobs --no-pager | cat*
->
-> You can check like that to see what services are pending to complete and
-> perhaps take the journalctl --no-pager logs and see what services are
-> crashing out.
->
-> That should help where to look at.
->
->
-> *Thanks and Regards,*
->
->
-> [image: Inactive hide details for AKASH G J ---16-09-2019 12:08:46---Hi
-> all, root@s2600wf:~# cat /etc/os-release]AKASH G J ---16-09-2019
-> 12:08:46---Hi all, root@s2600wf:~# cat /etc/os-release
->
-> From: AKASH G J <akashgj91@gmail.com>
-> To: openbmc@lists.ozlabs.org
-> Date: 16-09-2019 12:08
-> Subject: [EXTERNAL] CurrentBMCState: BMCState.NotReady
-> Sent by: "openbmc" <openbmc-bounces+gkeishin=in.ibm.com@lists.ozlabs.org>
-> ------------------------------
->
->
->
-> Hi all,
->
-> root@s2600wf:~# cat /etc/os-release
-> ID="openbmc-phosphor"
-> NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
-> VERSION="2.8.0-dev"
-> VERSION_ID="2.8.0-dev-309-g2e155a0-dirty"
-> PRETTY_NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
-> 2.8.0"
-> BUILD_ID="2.8.0-dev"
-> OPENBMC_TARGET_MACHINE="s2600wf"
->
-> The BMC console shows that the BMC state is '*Not Ready*'.
->
-> root@s2600wf:~# obmcutil state
-> CurrentBMCState     : xyz.openbmc_project.State.BMC.BMCState.NotReady
-> CurrentPowerState   : xyz.openbmc_project.State.Chassis.PowerState.Off
-> Error finding '/xyz/openbmc_project/state/host0' service: No such file or
-> directory
->
->
-> Regards,
-> Akash
->
->
->
-
---000000000000091b690592a6fa15
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">root@s2600wf:~# systemctl list-jobs --no-pager<br>JOB UNIT=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TYPE =C2=A0ST=
-ATE =C2=A0<br>111 mapper-wait@-xyz-openbmc_project-state-host0.service =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0start running<br>151 mapper-wait@-xyz=
--openbmc_project-Chassis-Control-Power0.service start running<br>143 obmc-h=
-ost-reset-running@0.target =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0start waitin=
-g<br>145 op-reset-chassis-on@0.service =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 start waiting<br>169 xyz.openbmc_project.State.Host.service =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0start waiting<br>149 op-reset-chassis-running@0.service =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0start waiting<br>154 phosphor-reset-sensor-states@0=
-.service =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0start waiting<br>163 xyz.openbmc_project.Time.Manag=
-er.service =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0start waiting<br>146 obmc-power-reset-on@0.target =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0start waiting<br>141 phosph=
-or-reset-host-check@0.service =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 start waiting<br>140 o=
-bmc-host-reset@0.target =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0start waiting<br>109 phosphor-discover-system-state@0.serv=
-ice =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0start waiting<br>152 phosphor-reset-host-running@0.service =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 start waiting<br>=C2=A097 obmc-led-group-start@bmc_booted.ser=
-vice =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 start waiting<br>=C2=A0 1 multi-user.target =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 start=
- waiting<br><br>15 jobs listed.</div><br><div class=3D"gmail_quote"><div di=
-r=3D"ltr" class=3D"gmail_attr">On Mon, Sep 16, 2019 at 12:42 PM George Keis=
-hing &lt;<a href=3D"mailto:gkeishin@in.ibm.com">gkeishin@in.ibm.com</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div><p>=
-<font face=3D"Calibri">Probably the host services are still not up and star=
-ted as per the log there.</font><br><br><i><font face=3D"Calibri">systemctl=
-=C2=A0list-jobs --no-pager | cat</font></i> <br><br><font size=3D"2">You ca=
-n check like that to see what services are pending to complete and perhaps =
-take the   </font><font face=3D"Calibri">journalctl=C2=A0--no-pager</font> =
-<font size=3D"2">   logs and see what services are crashing out. </font><br=
-><br><font size=3D"2">That should help where to look at.</font><br><br><br>=
-<b><font size=3D"2" color=3D"#0000FF">Thanks and Regards,</font></b><br><br=
-><br><img src=3D"cid:16d3912748b308fca931" alt=3D"Inactive hide details for=
- AKASH G J ---16-09-2019 12:08:46---Hi all, root@s2600wf:~# cat /etc/os-rel=
-ease" width=3D"16" height=3D"16" border=3D"0"><font size=3D"2" color=3D"#42=
-4282">AKASH G J ---16-09-2019 12:08:46---Hi all, root@s2600wf:~# cat /etc/o=
-s-release</font><br><br><font size=3D"2" color=3D"#5F5F5F">From:        </f=
-ont><font size=3D"2">AKASH G J &lt;<a href=3D"mailto:akashgj91@gmail.com" t=
-arget=3D"_blank">akashgj91@gmail.com</a>&gt;</font><br><font size=3D"2" col=
-or=3D"#5F5F5F">To:        </font><font size=3D"2"><a href=3D"mailto:openbmc=
-@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a></font><br=
-><font size=3D"2" color=3D"#5F5F5F">Date:        </font><font size=3D"2">16=
--09-2019 12:08</font><br><font size=3D"2" color=3D"#5F5F5F">Subject:       =
- </font><font size=3D"2">[EXTERNAL] CurrentBMCState: BMCState.NotReady</fon=
-t><br><font size=3D"2" color=3D"#5F5F5F">Sent by:        </font><font size=
-=3D"2">&quot;openbmc&quot; &lt;openbmc-bounces+gkeishin=3D<a href=3D"mailto=
-:in.ibm.com@lists.ozlabs.org" target=3D"_blank">in.ibm.com@lists.ozlabs.org=
-</a>&gt;</font><br></p><hr style=3D"color:rgb(128,145,165)" width=3D"100%" =
-size=3D"2" noshade align=3D"left"><br><br><br>Hi all,<br><br>root@s2600wf:~=
-# cat /etc/os-release <br>ID=3D&quot;openbmc-phosphor&quot;<br>NAME=3D&quot=
-;Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)&quot;<br>VERS=
-ION=3D&quot;2.8.0-dev&quot;<br>VERSION_ID=3D&quot;2.8.0-dev-309-g2e155a0-di=
-rty&quot;<br>PRETTY_NAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project=
- Reference Distro) 2.8.0&quot;<br>BUILD_ID=3D&quot;2.8.0-dev&quot;<br>OPENB=
-MC_TARGET_MACHINE=3D&quot;s2600wf&quot;<br><br>The BMC console shows that t=
-he BMC state is &#39;<b>Not Ready</b>&#39;.<br><br>root@s2600wf:~# obmcutil=
- state<br>CurrentBMCState =C2=A0 =C2=A0 : xyz.openbmc_project.State.BMC.BMC=
-State.NotReady<br>CurrentPowerState =C2=A0 : xyz.openbmc_project.State.Chas=
-sis.PowerState.Off<br>Error finding &#39;/xyz/openbmc_project/state/host0&#=
-39; service: No such file or directory<br><br><br>Regards,<br>Akash<br><br>=
-<br>
-<p></p></div>
-</blockquote></div>
-
---000000000000091b690592a6fa15--
-
---000000000000091b6b0592a6fa16
-Content-Type: image/gif; name="graycol.gif"
-Content-Disposition: inline; filename="graycol.gif"
-Content-Transfer-Encoding: base64
-Content-ID: <16d3912748b308fca931>
-X-Attachment-Id: 16d3912748b308fca931
-
-R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
-ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
---000000000000091b6b0592a6fa16--
+SGkgUGF0cmljaywNCg0KVGhhbmtzIGZvciB5b3VyIGhlbHAuIFRoaXMgY2hhbmdlIGRvZXMgc29s
+dmUgdGhlIGlzc3VlLg0KDQpIYW5rDQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZy
+b206IFBhdHJpY2sgVmVudHVyZSBbbWFpbHRvOnZlbnR1cmVAZ29vZ2xlLmNvbV0NCj5TZW50OiBX
+ZWRuZXNkYXksIFNlcHRlbWJlciAxMSwgMjAxOSAxOjUyIEFNDQo+VG86IEhhbmsgTGlvdSAo5YqJ
+5pmJ57+wKSA8SGFuay5MaW91QHF1YW50YXR3LmNvbT4NCj5DYzogSmFtZXMgRmVpc3QgPGphbWVz
+LmZlaXN0QGxpbnV4LmludGVsLmNvbT47IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KPlN1Ympl
+Y3Q6IFJlOiBbcGhvc3Bob3ItcGlkLWNvbnRyb2xdIHNjYWxpbmcgaXNzdWUNCj4NCj5PbiBUdWUs
+IFNlcCAxMCwgMjAxOSBhdCA3OjUyIEFNIFBhdHJpY2sgVmVudHVyZSA8dmVudHVyZUBnb29nbGUu
+Y29tPg0KPndyb3RlOg0KPj4NCj4+IE9uIFR1ZSwgU2VwIDEwLCAyMDE5IGF0IDc6MzkgQU0gUGF0
+cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+DQo+d3JvdGU6DQo+PiA+DQo+PiA+IE9u
+IFR1ZSwgU2VwIDEwLCAyMDE5IGF0IDE6MDIgQU0gSGFuayBMaW91ICjlionmmYnnv7ApDQo+PEhh
+bmsuTGlvdUBxdWFudGF0dy5jb20+IHdyb3RlOg0KPj4gPiA+DQo+PiA+ID4gPi0tLS0tT3JpZ2lu
+YWwgTWVzc2FnZS0tLS0tDQo+PiA+ID4gPkZyb206IEphbWVzIEZlaXN0IFttYWlsdG86amFtZXMu
+ZmVpc3RAbGludXguaW50ZWwuY29tXQ0KPj4gPiA+ID5TZW50OiBUdWVzZGF5LCBTZXB0ZW1iZXIg
+MTAsIDIwMTkgMToyNyBBTQ0KPj4gPiA+ID5UbzogUGF0cmljayBWZW50dXJlIDx2ZW50dXJlQGdv
+b2dsZS5jb20+OyBIYW5rIExpb3UgKOWKieaZiee/sCkNCj4+ID4gPiA+PEhhbmsuTGlvdUBxdWFu
+dGF0dy5jb20+DQo+PiA+ID4gPkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4+ID4gPiA+
+U3ViamVjdDogUmU6IFtwaG9zcGhvci1waWQtY29udHJvbF0gc2NhbGluZyBpc3N1ZQ0KPj4gPiA+
+ID4NCj4+ID4gPiA+T24gOS85LzE5IDk6NTcgQU0sIFBhdHJpY2sgVmVudHVyZSB3cm90ZToNCj4+
+ID4gPiA+PiBPbiBUaHUsIFNlcCA1LCAyMDE5IGF0IDEyOjI1IEFNIEhhbmsgTGlvdSAo5YqJ5pmJ
+57+wKQ0KPj4gPiA+ID48SGFuay5MaW91QHF1YW50YXR3LmNvbT4gd3JvdGU6DQo+PiA+ID4gPj4+
+DQo+PiA+ID4gPj4+IEhpIFBhdHJpY2ssDQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+DQo+PiA+ID4g
+Pj4+IFNvcnJ5IGZvciBub3QgY2xlYXJseSBzdGF0aW5nIG91ciBwcm9ibGVtLiBXZSBoYXZlIHRo
+ZSBmb2xsb3dpbmcNCj5pc3N1ZToNCj4+ID4gPiA+Pj4NCj4+ID4gPiA+Pj4NCj4+ID4gPiA+Pj4g
+dGVtcCBzZW5zb3IgZ2V0cyAzMShDKSAtPiAzMSAvIDAuMjU1ID0gMTIxLjU3IC0+IHBpZCB1c2Vz
+DQo+PiA+ID4gPj4+IDEyNy41NyBhcyBpbnB1dCBmb3IgdGVtcCBzZW5zb3IgLT4NCj4+ID4gPiA+
+Pj4NCj4+ID4gPiA+Pj4gc3RlcHdpc2UgZmFuIHRhYmxlIG91dHB1dCAxMDAgZHV0eSAtPiBmdWxs
+IHNwZWVkIGZhbg0KPj4gPiA+ID4+DQo+PiA+ID4gPj4gT2ssIHNvIHlvdSdyZSBnZXR0aW5nIGEg
+ZGJ1cy1iYXNlZCBtaW4vbWF4IHZhbHVlIGFuZCB5b3Ugd2FudA0KPj4gPiA+ID4+IHRvIGlnbm9y
+ZSBpdD8NCj4+ID4gPg0KPj4gPiA+IFllcywgd2Ugd2FudCB0byBpZ25vcmUgaXQuDQo+PiA+DQo+
+PiA+IEl0IGxvb2tzIGxpa2UgdGhlIHNlbnNvciB2YWx1ZSBzY2FsaW5nIHNob3VsZCBiZSBpZ25v
+cmVkIGZvciBub24tZmFucy4NCj4+ID4gUGVyDQo+PiA+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
+Ym1jL3Bob3NwaG9yLXBpZC0NCj5jb250cm9sL2NvbW1pdC83NWViNzY5ZDM1MTQzDQo+PiA+IDQ1
+NDc4OTkxODZmNzNmZjcwYWUwMGQ3OTM0YSwgdGhpcyBjaGFuZ2Ugd2FzIG9ubHkgbWVhbnQgdG8g
+ZGVhbCB3aXRoDQo+PiA+IGEgZmFuIGNhc2Ugd2hlcmUgdGhlIGdvYWwgbG9va3MgbGlrZSBpdCB3
+YXMgdG8gdHJlYXQgdGhlIGZhbiB2YWx1ZXMNCj4+ID4gYXMgcGVyY2VudGFnZXMgb24gcmVhZGlu
+ZyB0aGUgc2Vuc29ycywgYW5kIG5vdCBvbmx5IG9uIHdyaXRpbmcgdGhlbQ0KPj4gPiBieSBsZXZl
+cmFnaW5nIHRoZSBtaW4vbWF4IGpzb24gc29tZXRpbWVzPw0KPj4gPg0KPj4gPiBJIGNhbiBjaGFu
+Z2UgdGhlIGRidXNwYXNzaXZlIGNvbnN0cnVjdG9yIHRvIHNldCB0aGUgdmFsdWVzIGJhY2sgdG8N
+Cj4+ID4gdGhlaXIgaW5wdXQgdmFsdWVzIChpZ25vcmluZyBkYnVzKSBpZiB0aGUgdHlwZSBpcyBu
+b3QgImZhbiIsIGJ1dCBJJ20NCj4+ID4gbm90IHN1cmUgdGhhdCBtYWtlcyBzZW5zZSBiZWNhdXNl
+IHRoZSByZWFsIHVzZS1jYXNlIGlzbid0IGNsZWFyIHRvDQo+PiA+IG1lLCBhbmQgSSBrbm93IHRo
+ZSBzY2FsaW5nIGZyb20gZGJ1cyBpcyBnb25lOg0KPj4gPiBodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy9waG9zcGhvci1waWQtDQo+Y29udHJvbC9zZWFyY2g/dXRmOD0lRTIlOUMlOQ0KPj4gPiAz
+JnE9aW5oZXJpdFZhbHVlRnJvbURidXMmdHlwZT0NCj4+ID4NCj4+ID4gSSdsbCBzdWJtaXQgdGhl
+IHBhdGNoIHJlYWwgcXVpY2ssIGJ1dCBJJ20gbm90IHN1cmUgaXQncyB0aGUgcmlnaHQNCj4+ID4g
+bG9uZy10ZXJtIGZpeC4gIEknZCBsaWtlIHRvIGNsZWFuIHRoaXMgdXAgaWYgcG9zc2libGUgc28g
+dGhhdCB3ZQ0KPj4gPiBkb24ndCBsZXZlcmFnZSAidW51c2VkIiBmZWF0dXJlcyBvZiBhIGNvbmZp
+Z3VyYXRpb24gYW5kIGluc3RlYWQNCj4+ID4gZXhwbGljaXRseSB1c2UgdGhlbSAob3Igbm90KS4N
+Cj4+DQo+PiBUaGlzIHBhdGNoIHNob3VsZCBhZGRyZXNzIHdoYXQgeW91J3JlIHNlZWluZy4gIE92
+ZXJhbGwsIEkgdGhpbmsgdGhlcmUNCj4+IHNob3VsZCBiZSBhIGxhcmdlciBjaGFuZ2UgYWRkcmVz
+c2luZyB0aGUgZ29hbCBvZiB0aGUgb3JpZ2luYWwgY2hhbmdlLg0KPj4NCj4+IGh0dHBzOi8vZ2Vy
+cml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLXBpZC1jb250cm9sLysv
+MjUNCj4+IDA3MA0KPg0KPkkgZGVjaWRlZCB0byB0YWtlIG9uIHRoZSBsYXJnZXIgY2hhbmdlIGJl
+Y2F1c2UgY2hhbmNlcyBhcmUgd2UgbWlnaHQgaGl0IGl0DQo+c29tZSBvdGhlciB3YXk6DQo+aHR0
+cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jLzI1MDcyLw0KPg0KPlRoaXMgbGV0cyB5
+b3Ugc3BlY2lmeSBhIGpzb24gY29uZmlndXJhdGlvbiBvcHRpb24gdGhhdCB3aWxsIGlnbm9yZSB0
+aGUNCj5NaW5WYWx1ZS9NYXhWYWx1ZSBwcm9wZXJ0aWVzIG9uIGRidXMuDQo+DQo+Pg0KPj4gPg0K
+Pj4gPiA+DQo+PiA+ID4gPg0KPj4gPiA+ID5XaGF0IGlzIHByb3ZpZGluZyB0aGUgZGJ1cy1iYXNl
+ZCBtaW4vbWF4Pw0KPj4gPiA+DQo+PiA+ID4gV2UgdXNlIGRidXMgbWluL21heCBmb3IgcGhvc3Bo
+b3Itc2VsLWxvZ2dlciB1dGlsaXR5LiBUaGUgZGJ1cyBtaW4vbWF4DQo+aXMgcHJvdmlkZWQgYnkg
+Y29uZmlnIGZpbGUgb2YgcGhvc3Bob3ItaHdtb24uDQo+PiA+ID4gSW4gb3VyIGNhc2UsIHRoZXkg
+YXJlIC0xMjgvMTI3IHJlc3BlY3RpdmVseS4NCj4+ID4gPg0KPj4gPiA+IEkgaGF2ZSBhbiBvYnNl
+cnZhdGlvbjoNCj4+ID4gPiBJIGZvdW5kIHRoYXQgd2hpbGUgZmFuIHJlYWRwYXRoIGlzIG9mIHRo
+ZSBmb3JtICIvc3lzLy4uLiIsIHRoZSBmYW4gaW5wdXQNCj53b3VsZCBub3QgYmUgcmVzY2FsZWQu
+IFRoZSBzYW1lIGlzIGZvciBvdGhlciBzZW5zb3JzIHNpbmNlIHRoZSBpbnB1dCB2YWx1ZQ0KPndv
+dWxkIG5vdCBlbnRlciByZXNjYWxpbmcgZnVuY3Rpb24uDQo+PiA+ID4gSG93ZXZlciwgaW4gb3Vy
+IGNhc2Ugd2UgZG9uJ3QgaGF2ZSBhIHN5cyBwYXRoIGZvciBzb21lIHRoZXJtYWwgc2Vuc29ycy4N
+Cj4+ID4gPg0KPj4gPiA+ID4NCj4+ID4gPiA+PiBJbiB0aGUganNvbiBjb25maWd1cmF0aW9uLCBp
+ZiB5b3Ugc2V0IHRoZSB2YWx1ZXMgdG8gMCwgdGhleSBhcmUNCj4+ID4gPiA+PiBzZXQgdG8gdGhl
+IGRlZmF1bHQgKDApLCBzbyB0aGVyZSdkIGJlIG5vIGNsZWFuIHdheSB0byBrbm93IHRvDQo+PiA+
+ID4gPj4gaWdub3JlIGRidXMgaW4gdGhpcyBjYXNlLCB3aXRob3V0IGFkZGluZyBhIHNtYWxsIGNo
+ZWNrIHRvIG9ubHkNCj4+ID4gPiA+PiBjb25zaWRlciBtaW4vbWF4IGZyb20gZGJ1cyB3aGVuIHNl
+bnNvciBpcyBub3QgdGVtcC9tYXJnaW4uDQo+PiA+ID4gPj4gQmFzaWNhbGx5LCBvbmx5IGNhcmUg
+YWJvdXQgbWluL21heCBvbiBkYnVzIGlmIHR5cGUgaXMgImZhbiINCj4+ID4gPiA+DQo+PiA+ID4N
+Cj4+ID4gPiBJIGFncmVlIHdpdGggdGhlIG9wdGlvbiB0byBhZGQgYSBjaGVjayBzaW5jZSB0aGUg
+bWluL21heCBpcyBvbmx5IGZvciBmYW4NCj5ub3cuDQo+PiA+ID4NCj4+ID4gPiA+V2h5IGlzIHRo
+ZSBkYnVzLWJhc2VkIG1pbi9tYXggZXZlbiB0aGVyZSBpZiB5b3UgZG9uJ3QgcGxhbiBvbiB1c2lu
+ZyBpdD8NCj4+ID4gPiA+DQo+PiA+ID4gPj4NCj4+ID4gPiA+PiBJZiB0aGF0J3MgcmlnaHQsIEph
+bWVzIGRvIHlvdSBoYXZlIGEgY3ljbGUgdG8gbG9vayBhdCB0aGlzIG9uZS1saW5lcj8NCj4+ID4g
+PiA+Pg0KPj4gPiA+ID4+Pg0KPj4gPiA+ID4+Pg0KPj4gPiA+ID4+PiBBcyBhIHJlc3VsdCwgZmFu
+IHdpbGwgYmUgYXQgZnVsbCBzcGVlZCB3aGlsZSB0ZW1wIGlzIGxvdy4NCj4+ID4gPiA+Pj4gQmVm
+b3JlIHRoZSBjb21taXQNCj4+ID4gPiA+ZmMyZTgwMyBbMV0sIHRoaXMgd29uJ3QgaGFwcGVuLiBU
+aGUgcm9vdCBjYXVzZSBpcyB0aGF0LCBiZWZvcmUNCj4+ID4gPiA+ZmMyZTgwMywgcGlkIHdpbGwg
+dXNlIGNvbmZpZyBtaW4vbWF4LCB3aGljaCBpcyAwIGluIG91ciBjYXNlLg0KPj4gPiA+ID5UaGlz
+IHdvdWxkIG5vdCB0cmlnZ2VyIHNjYWxpbmcgZnVuY3Rpb24sIG5hbWVseQ0KPj4gPiA+ID5zY2Fs
+ZVNlbnNvclJlYWRpbmcsIGluIHV0aWwuY3BwLiBIb3dldmVyLCBhZnRlciBzdWNoIGNvbW1pdCwN
+Cj4+ID4gPiA+bWluL21heCB3b3VsZCBiZSBub24temVybyAoLTEyOC8xMjcgZnJvbSBEQnVzKS4g
+VGhpcyB3aWxsIHRyaWdnZXINCj5zY2FsaW5nIGZ1bmN0aW9uLg0KPj4gPiA+ID4+Pg0KPj4gPiA+
+ID4+Pg0KPj4gPiA+ID4+PiBbMV0NCj4+ID4gPiA+Pj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5i
+bWMvcGhvc3Bob3ItcGlkLQ0KPj4gPiA+ID5jb250cm9sL2NvbW1pdC9mYzJlODAzZjVkOTI1Ng0K
+Pj4gPiA+ID4+PiA5NDRlMThjN2M4NzhhNDQxNjA2YjFmMTIxYw0KPj4gPiA+ID4+Pg0KPj4gPiA+
+ID4+Pg0KPj4gPiA+ID4+PiBIYW5rDQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+
+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo+PiA+ID4gPj4+IEZyb206IEhhbmsg
+TGlvdSAo5YqJ5pmJ57+wKQ0KPj4gPiA+ID4+PiBTZW50OiBNb25kYXksIFNlcHRlbWJlciAyLCAy
+MDE5IDQ6NTIgUE0NCj4+ID4gPiA+Pj4gVG86IFBhdHJpY2sgVmVudHVyZQ0KPj4gPiA+ID4+PiBD
+YzogSmFtZXMgRmVpc3Q7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KPj4gPiA+ID4+PiBTdWJq
+ZWN0OiBSZTogW3Bob3NwaG9yLXBpZC1jb250cm9sXSBzY2FsaW5nIGlzc3VlDQo+PiA+ID4gPj4+
+DQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+IEhpIFBhdHJpY2ssDQo+PiA+ID4gPj4+DQo+PiA+ID4g
+Pj4+DQo+PiA+ID4gPj4+IFNpbmNlIHdlIHVzZSBwaG9zcGhvci1zZWwtbG9nZ2VyIFsxXSBhdCB0
+aGUgc2FtZSB0aW1lLCB3ZSBkbw0KPj4gPiA+ID4+PiBhc3NpZ24gbWluDQo+PiA+ID4gPmFuZCBt
+YXggb2YgdGVtcCBzZW5zb3JzIHRvIERidXMgKG1heDogMTI3LCBtaW46IC0xMjgpLiBTbyBpbiB0
+aGUNCj4+ID4gPiA+cHJlc2VudCBjYXNlLCBvdXIgdGVtcCB2YWx1ZSB3aWxsIGJlIGRpdmlkZWQg
+YnkgMC4yNTUgKGFsc28gZHVlDQo+PiA+ID4gPnRvIGV4cG9uZW50IGlzIC0zIGhlcmUpLiBUaGlz
+IHdpbGwgY2F1c2UgcmUtc2NhbGluZyBwcm9ibGVtLg0KPj4gPiA+ID5UaGVyZWZvcmUgdGhlcmUg
+c2hvdWxkIGJlIGFuIHN0YXRlbWVudCB0byBkaXN0aW5ndWlzaCBzZW5zb3INCj4+ID4gPiA+dHlw
+ZXMuIElmIGl0IGlzICJ0ZW1wIiwgdGhlbiBvbmUgYXNzaWducyAwIHRvIHRoZSBtaW4gYW5kIG1h
+eCBmcm9tIERidXMuDQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+IFsxXQ0KPj4g
+PiA+ID4+PiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1zZWwtDQo+PiA+ID4g
+PmxvZ2dlci9ibG9iLzNkMzAwZmNhMjRiMzA4NjRiDQo+PiA+ID4gPj4+IDNlOWE0ZjU3NjhjZmU1
+ZTc2OTQ1OGFlL2luY2x1ZGUvc2Vuc29ydXRpbHMuaHBwI0w1OQ0KPj4gPiA+ID4+Pg0KPj4gPiA+
+ID4+Pg0KPj4gPiA+ID4+PiBIYW5rDQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+
+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo+PiA+ID4gPj4+IEZyb206IFBhdHJp
+Y2sgVmVudHVyZSA8dmVudHVyZUBnb29nbGUuY29tPg0KPj4gPiA+ID4+PiBTZW50OiBGcmlkYXks
+IEF1Z3VzdCAzMCwgMjAxOSAxOjQ3IEFNDQo+PiA+ID4gPj4+IFRvOiBIYW5rIExpb3UgKOWKieaZ
+iee/sCkNCj4+ID4gPiA+Pj4gQ2M6IEphbWVzIEZlaXN0OyBvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmcNCj4+ID4gPiA+Pj4gU3ViamVjdDogUmU6IFtwaG9zcGhvci1waWQtY29udHJvbF0gc2NhbGlu
+ZyBpc3N1ZQ0KPj4gPiA+ID4+Pg0KPj4gPiA+ID4+PiBQVEFMIC0gaHR0cHM6Ly9nZXJyaXQub3Bl
+bmJtYy1wcm9qZWN0Lnh5ei8yNDgyNyAtIHRoaXMgaXMNCj4+ID4gPiA+Pj4gbWVyZ2VkLCBhbmQg
+dGhlIHNyY3JldiBidW1wIHNob3VsZCBwcm9wYWdhdGUgaW50bw0KPm9wZW5ibWMvb3BlbmJtYyBp
+biBhIGRheSBvciB0d28uDQo+PiA+ID4gPj4+DQo+PiA+ID4gPj4+IE9uIFdlZCwgQXVnIDI4LCAy
+MDE5IGF0IDExOjAwIFBNIEhhbmsgTGlvdSAo5YqJ5pmJ57+wKQ0KPj4gPiA+ID48SGFuay5MaW91
+QHF1YW50YXR3LmNvbT4gd3JvdGU6DQo+PiA+ID4gPj4+Pg0KPj4gPiA+ID4+Pj4gSGkgUGF0cmlj
+aywNCj4+ID4gPiA+Pj4+DQo+PiA+ID4gPj4+PiBJIHRoaW5rIGl0J3MgT0sgdG8gcGFyc2UgdGhl
+IGNvbmZpZyBtaW4mbWF4IGZvciB0ZW1wIHNlbnNvcnMuDQo+PiA+ID4gPj4+Pg0KPj4gPiA+ID4+
+Pj4gQW55IHN1Z2dlc3Rpb24/DQo+PiA+ID4gPj4+Pg0KPj4gPiA+ID4+Pj4gVGhhbmtzLA0KPj4g
+PiA+ID4+Pj4gSGFuaw0KPj4gPiA+ID4+Pj4NCj4+ID4gPiA+Pj4+PiAtLS0tLU9yaWdpbmFsIE1l
+c3NhZ2UtLS0tLQ0KPj4gPiA+ID4+Pj4+IEZyb206IG9wZW5ibWMgW21haWx0bzpvcGVuYm1jLQ0K
+Pj4gPiA+ID4+Pj4+IGJvdW5jZXMraGFuay5saW91PXF1YW50YXR3LmNvbUBsaXN0cy5vemxhYnMu
+b3JnXSBPbiBCZWhhbGYNCj4+ID4gPiA+Pj4+PiBib3VuY2VzK09mIEhhbmsgTGlvdQ0KPj4gPiA+
+ID4+Pj4+ICjlionmmYnnv7ApDQo+PiA+ID4gPj4+Pj4gU2VudDogRnJpZGF5LCBBdWd1c3QgMjMs
+IDIwMTkgNDozMSBQTQ0KPj4gPiA+ID4+Pj4+IFRvOiBQYXRyaWNrIFZlbnR1cmUgPHZlbnR1cmVA
+Z29vZ2xlLmNvbT47IEphbWVzIEZlaXN0DQo+PiA+ID4gPj4+Pj4gPGphbWVzLmZlaXN0QGxpbnV4
+LmludGVsLmNvbT4NCj4+ID4gPiA+Pj4+PiBDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+
+PiA+ID4gPj4+Pj4gU3ViamVjdDogUkU6IFtwaG9zcGhvci1waWQtY29udHJvbF0gc2NhbGluZyBp
+c3N1ZQ0KPj4gPiA+ID4+Pj4+DQo+PiA+ID4gPj4+Pj4gSGkgUGF0cmljaywNCj4+ID4gPiA+Pj4+
+Pg0KPj4gPiA+ID4+Pj4+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4gPiA+ID4+Pj4+
+PiBGcm9tOiBQYXRyaWNrIFZlbnR1cmUgW21haWx0bzp2ZW50dXJlQGdvb2dsZS5jb21dDQo+PiA+
+ID4gPj4+Pj4+IFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDIxLCAyMDE5IDEwOjMyIFBNDQo+PiA+
+ID4gPj4+Pj4+IFRvOiBIYW5rIExpb3UgKOWKieaZiee/sCkgPEhhbmsuTGlvdUBxdWFudGF0dy5j
+b20+OyBKYW1lcw0KPkZlaXN0DQo+PiA+ID4gPj4+Pj4+IDxqYW1lcy5mZWlzdEBsaW51eC5pbnRl
+bC5jb20+DQo+PiA+ID4gPj4+Pj4+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4+ID4g
+PiA+Pj4+Pj4gU3ViamVjdDogUmU6IFtwaG9zcGhvci1waWQtY29udHJvbF0gc2NhbGluZyBpc3N1
+ZQ0KPj4gPiA+ID4+Pj4+Pg0KPj4gPiA+ID4+Pj4+PiBPbiBXZWQsIEF1ZyAyMSwgMjAxOSBhdCAx
+OjExIEFNIEhhbmsgTGlvdSAo5YqJ5pmJ57+wKQ0KPj4gPiA+ID4+Pj4+PiA8SGFuay5MaW91QHF1
+YW50YXR3LmNvbT4gd3JvdGU6DQo+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+Pj4gSGkgQWxs
+LA0KPj4gPiA+ID4+Pj4+Pj4NCj4+ID4gPiA+Pj4+Pj4+DQo+PiA+ID4gPj4+Pj4+PiBBZnRlciBj
+b21taXQgWzFdLCBJIGZvdW5kIG15IHRlbXAgc2Vuc29yIHJlYWRpbmcgd291bGQgYmUNCj4+ID4g
+PiA+Pj4+Pj4+IHJlLXNjYWxlZCBieQ0KPj4gPiA+ID4+Pj4+PiBtdWx0aXBseWluZyAxIG92ZXIg
+MjU1LCBtYWtpbmcgdGVtcGVyYXR1cmUgaW50byB1bmZhbWlsaWFyIHVuaXQuDQo+PiA+ID4gPj4+
+Pj4+IEFsc28gdGhlIGZhbiBycG0gcmVhZGluZyB3b3VsZCBsaWUgaW4gWzAsMV0gaW50ZXJ2YWws
+DQo+PiA+ID4gPj4+Pj4+IGxldHRpbmcgdGhlIGZhbiBpbnB1dCB0byBiZSAwIChzaW5jZSB0aGUg
+aW5wdXQgdmFsdWUgb2YgZmFuDQo+PiA+ID4gPj4+Pj4+IGlzIGZyb20gYW4gaW50ZWdlciBhcnJh
+eSBbMl0pLiBBcmUgdGhlc2UNCj4+ID4gPiA+Pj4+PiBub3JtYWwgYmVoYXZpb3JzPw0KPj4gPiA+
+ID4+Pj4+PiBPciBkbyBJIG1pc3Mgc29tZXRoaW5nPw0KPj4gPiA+ID4+Pj4+Pg0KPj4gPiA+ID4+
+Pj4+PiBBcmUgeW91IHVzaW5nIGRidXMgY29uZmlndXJhdGlvbiBvciBqc29uPyAgSWYganNvbiwg
+Y2FuIHlvdQ0KPj4gPiA+ID4+Pj4+PiBhdHRhY2ggeW91cg0KPj4gPiA+ID5jb25maWcuDQo+PiA+
+ID4gPj4+Pj4+IFNpbmNlIHlvdSdyZSBzYXlpbmcgaXQgd2FzIHdvcmtpbmcgYW5kIG5vdyBpc24n
+dCwgSSdtDQo+PiA+ID4gPj4+Pj4+IGFzc3VtaW5nIHRoZXJlJ3Mgc29tZXRoaW5nIGFib3V0IHRo
+ZSBjb25maWcgYmVpbmcgdHJlYXRlZA0KPj4gPiA+ID4+Pj4+PiBkaWZmZXJlbnRseSB3aXRoIHRo
+ZSBjb2RlIGNoYW5nZXMgaW4gYW4gdW5leHBlY3RlZCB3YXkuDQo+PiA+ID4gPj4+Pj4NCj4+ID4g
+PiA+Pj4+PiBJIGZvdW5kIHBpZCBjb250cm9sIHdpbGwgZmlyc3QgcmVhZCBtaW4gYW5kIG1heCBm
+cm9tIGRidXMNCj4+ID4gPiA+Pj4+PiBhbmQgdGhlbiAoYmVmb3JlIGNvbW1pdCBbMV0pIHJldmlz
+ZSB0aGVtIGlmDQo+PiA+ID4gPj4+Pj4NCj4+ID4gPiA+Pj4+PiBpbmZvLT5taW4gIT0gY29uZjo6
+aW5oZXJpdFZhbHVlRnJvbURidXMgKGluDQo+PiA+ID4gPj4+Pj4gaW5mby0+ZGJ1cy9kYnVzcGFz
+c2l2ZS5jcHApDQo+PiA+ID4gPj4+Pj4NCj4+ID4gPiA+Pj4+PiBBZnRlciB2YWx1ZSBpbml0aWFs
+aXphdGlvbiwgdGhlIG1pbiBhbmQgbWF4IHdvdWxkIGJlIHRoZQ0KPj4gPiA+ID4+Pj4+IG9uZXMg
+aW4ganNvbiBmaWxlIChKc29uIGZpbGUgWzNdKS4gSG93ZXZlciwgYWZ0ZXIgY29tbWl0IFsxXQ0K
+Pj4gPiA+ID4+Pj4+IHRoZSBtaW4gYW5kIG1heCB2YWx1ZXMgb2YgY29uZmlnIHdvdWxkIG5vdCBi
+ZSBmZWQgaW50byB0aGUgZmFuDQo+Y29udHJvbCBwcm9jZXNzLg0KPj4gPiA+ID4+Pj4+IFRoZSBz
+Y2FsaW5nIGlzc3VlIGlzIG9yaWdpbmF0ZWQgZnJvbSBjb21taXQgWzRdIHdpdGggdGhlIGFpbQ0K
+Pj4gPiA+ID4+Pj4+IHRvIHRyZWF0IGZhbiBycG0gYXMgcGVyY2VudGFnZS4gSXQgc2VlbXMgdGhh
+dCBjb21taXQgWzFdDQo+PiA+ID4gPj4+Pj4gdW5leHBlY3RlZGx5IGFmZmVjdHMgdGVtcCBzZW5z
+b3JzIGluIHRoZSBzZW5zZSB0aGF0IHRoZSB0ZW1wDQo+PiA+ID4gPj4+Pj4gaXMgdGhlIGludGVn
+ZXIgcmVhZGluZyBub3QgcGVyY2VudGFnZS4gQmVmb3JlIGNvbW1pdCBbMV0sIGl0DQo+PiA+ID4g
+Pj4+Pj4gd291bGQgbm90IHJlLXNjYWxlIHRoZQ0KPj4gPiA+ID50ZW1wIHJlYWRpbmcgc2luY2Ug
+bXkgbWluIGFuZCBtYXggYXJlIDAgWzZdLg0KPj4gPiA+ID4+Pj4+DQo+PiA+ID4gPj4+Pj4NCj4+
+ID4gPiA+Pj4+Pg0KPj4gPiA+ID4+Pj4+IFRoZXJlIGlzIGFub3RoZXIgaXNzdWUgd2l0aCBjb21t
+aXQgWzFdLiBOb3cgdGhlIGZhbiBycG0NCj4+ID4gPiA+Pj4+PiB3b3VsZCBiZSBzb21ldGhpbmcg
+bGlrZQ0KPj4gPiA+ID4+Pj4+DQo+PiA+ID4gPj4+Pj4gMTUwMCAvIDIwMDAwID0gMC4wNzUNCj4+
+ID4gPiA+Pj4+Pg0KPj4gPiA+ID4+Pj4+IHdoZXJlIHJwbSBtYXggMjAwMDAgaXMgZnJvbSBkYnVz
+LiBIb3dldmVyIHRoZSBmYW4gaW5wdXQNCj4+ID4gPiA+Pj4+PiBmdW5jdGlvbiB3b3VsZCB0cmFu
+c2ZlciBkb3VibGUgaW50byBpbnQsIHdoaWNoIGlzIDAgZm9yIDAuMDc1IChzZWUNCj5bNV0pLg0K
+Pj4gPiA+ID4+Pj4+IEhlbmNlIHRoZSBmYW4gaW5wdXQgaXMgMCBub3QgcGVyY2VudGFnZS4gSXMg
+dGhlcmUgc29tZXRoaW5nDQo+d3Jvbmc/DQo+PiA+ID4gPj4+Pj4NCj4+ID4gPiA+Pj4+PiBbMV0g
+aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlkLQ0KPj4gPiA+ID4+Pj4+IGNv
+bnRyb2wvY29tbWl0L2ZjMmU4MDNmNWQ5MjU2OTQ0ZTE4YzdjODc4YTQ0MTYwNmIxZjEyMWMNCj4+
+ID4gPiA+Pj4+PiBbMl0gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlkLQ0K
+Pj4gPiA+ID4+Pj4+DQo+PiA+ID4NCj4+Y29udHJvbC9ibG9iL2E3ZWM4MzUwZDE3YjcwMTUzY2Vi
+ZTY2NmQzZmJlODhiZGRkMDJhMWEvcGlkL2ZhbmNvbnQNCj4+ID4gPiA+cm8NCj4+ID4gPiA+Pj4+
+PiBsbGUNCj4+ID4gPiA+Pj4+PiByLmNwcCNMODYNCj4+ID4gPiA+Pj4+PiBbM10NCj4+ID4gPiA+
+Pj4+PiAgICAgICAgew0KPj4gPiA+ID4+Pj4+ICAgICAgICAgICAgICJuYW1lIjogImZhbjEiLA0K
+Pj4gPiA+ID4+Pj4+ICAgICAgICAgICAgICJ0eXBlIjogImZhbiIsDQo+PiA+ID4gPj4+Pj4gICAg
+ICAgICAgICAgInJlYWRQYXRoIjogIi9zeXMvY2xhc3MvaHdtb24vaHdtb24xL2ZhbjFfaW5wdXQi
+LA0KPj4gPiA+ID4+Pj4+ICAgICAgICAgICAgICJ3cml0ZVBhdGgiOiAiL3N5cy9jbGFzcy9od21v
+bi9od21vbjEvcHdtMSIsDQo+PiA+ID4gPj4+Pj4gICAgICAgICAgICAgIm1pbiI6IDAsDQo+PiA+
+ID4gPj4+Pj4gICAgICAgICAgICAgIm1heCI6IDI1NQ0KPj4gPiA+ID4+Pj4+ICAgICAgICAgfSwN
+Cj4+ID4gPiA+Pj4+PiAgICAgICAgIHsNCj4+ID4gPiA+Pj4+PiAgICAgICAgICAgICAibmFtZSI6
+ICJ0ZW1wMSIsDQo+PiA+ID4gPj4+Pj4gICAgICAgICAgICAgInR5cGUiOiAidGVtcCIsDQo+PiA+
+ID4gPj4+Pj4gICAgICAgICAgICAgInJlYWRQYXRoIjoNCj4+ID4gPiA+Ii94eXovb3BlbmJtY19w
+cm9qZWN0L3NlbnNvcnMvdGVtcGVyYXR1cmUvdGVtcDEiLA0KPj4gPiA+ID4+Pj4+ICAgICAgICAg
+ICAgICJ3cml0ZVBhdGgiOiAiIiwNCj4+ID4gPiA+Pj4+PiAgICAgICAgICAgICAibWluIjogMCwN
+Cj4+ID4gPiA+Pj4+PiAgICAgICAgICAgICAibWF4IjogMA0KPj4gPiA+ID4+Pj4+ICAgICAgICAg
+fQ0KPj4gPiA+ID4+Pj4+IFs0XSBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1w
+aWQtDQo+PiA+ID4gPj4+Pj4gY29udHJvbC9jb21taXQvNzVlYjc2OWQzNTE0MzQ1NDc4OTkxODZm
+NzNmZjcwYWUwMGQ3OTM0YQ0KPj4gPiA+ID4+Pj4+IFs1XSBodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy9waG9zcGhvci1waWQtDQo+PiA+ID4gPj4+Pj4NCj4+ID4gPg0KPj5jb250cm9sL2Jsb2Iv
+YTdlYzgzNTBkMTdiNzAxNTNjZWJlNjY2ZDNmYmU4OGJkZGQwMmExYS9waWQvZmFuY29udA0KPj4g
+PiA+ID5ybw0KPj4gPiA+ID4+Pj4+IGxsZQ0KPj4gPiA+ID4+Pj4+IHIuY3BwI0w2NA0KPj4gPiA+
+ID4+Pj4+IFs2XSBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1waWQtDQo+PiA+
+ID4gPj4+Pj4NCj4+ID4gPg0KPj5jb250cm9sL2Jsb2IvYTdlYzgzNTBkMTdiNzAxNTNjZWJlNjY2
+ZDNmYmU4OGJkZGQwMmExYS9kYnVzL2RidXNwYQ0KPj4gPiA+ID5zcw0KPj4gPiA+ID4+Pj4+IGkN
+Cj4+ID4gPiA+Pj4+PiB2ZS5jcHAjTDE1OA0KPj4gPiA+ID4+Pj4+DQo+PiA+ID4gPj4+Pj4+DQo+
+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+Pj4NCj4+ID4gPiA+Pj4+Pj4+IFsxXQ0KPj4gPiA+
+ID4+Pj4+Pj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItcGlkLQ0KPj4gPiA+
+ID4+Pj4+PiBjb250cm9sL2NvbW1pdC9mYzJlODAzZjVkOTI1NjkNCj4+ID4gPiA+Pj4+Pj4+IDQ0
+ZTE4YzdjODc4YTQ0MTYwNmIxZjEyMWMNCj4+ID4gPiA+Pj4+Pj4+DQo+PiA+ID4gPj4+Pj4+PiBb
+Ml0NCj4+ID4gPiA+Pj4+Pj4+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXBp
+ZC0NCj4+ID4gPiA+Pj4+Pj4gY29udHJvbC9ibG9iL2E3ZWM4MzUwZDE3YjcwMTUzDQo+PiA+ID4g
+Pj4+Pj4+PiBjZWJlNjY2ZDNmYmU4OGJkZGQwMmExYS9waWQvZmFuY29udHJvbGxlci5jcHAjTDg2
+DQo+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+Pj4NCj4+ID4gPiA+Pj4+Pj4+IFRoYW5rcywN
+Cj4+ID4gPiA+Pj4+Pj4+DQo+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+Pj4gSGFuayBMaW91
+DQo+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+Pj4gUXVhbnRhIENvbXB1dGVyIEluYy4NCj4+
+ID4gPiA+Pj4+Pj4+DQo+PiA+ID4gPj4+Pj4+Pg0KPj4gPiA+ID4+Pj4+DQo+PiA+ID4gPj4+Pj4g
+U2luY2VyZWx5LA0KPj4gPiA+ID4+Pj4+IEhhbmsNCg==
