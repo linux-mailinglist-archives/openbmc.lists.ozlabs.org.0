@@ -2,70 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92BF4B3D05
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 16:59:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27014B3DE3
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 17:45:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46X8Xx3MnWzF241
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 00:59:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46X9Z52cLLzF450
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 01:45:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2a00:1450:4864:20::52b; helo=mail-ed1-x52b.google.com;
- envelope-from=osk@google.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::542; helo=mail-pg1-x542.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Mcjy9B5T"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="kmhKXL5V"; 
  dkim-atps=neutral
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com
- [IPv6:2a00:1450:4864:20::52b])
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46X8Wz3GshzF1bv
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 00:58:55 +1000 (AEST)
-Received: by mail-ed1-x52b.google.com with SMTP id r9so324600edl.10
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 07:58:54 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46X9Y96N88zF43k
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 01:45:01 +1000 (AEST)
+Received: by mail-pg1-x542.google.com with SMTP id n9so242656pgc.1
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 08:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iuU3TiWDpfiLMx3PSDij3eXVBub/38KSPhchp4Xs2dY=;
- b=Mcjy9B5TrflLxb1kCSDzKTxYu7eiTLboz6a8JVnSxIpyLc1d4JdCcS1KFngZOJ1ffE
- d83oWPL0of/oMI5/83Tuo4oN/5xT4Z1oyJR/p7v9P324hE5kND4T3dj4TgN/+Ccoh3Y0
- qWSGwfyOH0dY598aB9yG/gXVtj/nDT/KoKiR1IrSpeqqq5r2azuFDd2PSi0vadDcUvOW
- bztifgQM7Zk+1v3niMPWaRjfseKWSGWhoSmmxVwZOpSEx1biKM+1FmE0Yg3FwYQ8mrWq
- fgNkAhS0VzeubfQy5Jm6FKVNueQqk6EBKx5kr7LbBGvpiEvCjCeuQ9dwILgn5H2ZZPUF
- q/Jg==
+ :cc:content-transfer-encoding;
+ bh=0RYiibXmglOKth3Njfs6u881DVcoL+HDWxIDif7EgJA=;
+ b=kmhKXL5VzLtvfkiu1oidwA6mDhgrgVvr8U+FWZijvSwp++2TvlkFY/Syu7f16aE0GK
+ /tEI9KpKhVFVId7lzXHz9sC1/t/2+RT4yPQtfOxZJajpIQPc/j7WjjaP2mDnIl0MXFZf
+ JaIiyY7Oere1sy3FJIJXt8vyuHLZOk7QMyunLxEqRFmWs5TBUa94o91ORcYrVGGZY5sh
+ HDgNpnUaa+fQ+iEgiALYmP/v/IGxh5vzTJj6GXyp+l4AUSSVyyTFmTUzVVDZ1Xpdh6mB
+ b5xOrSzT71z/hmtAJpwsTkLDr6PJBeDQt8HR2bVjjfdY0+6NWAxqFmwAWt3gACUkg8OV
+ B89A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iuU3TiWDpfiLMx3PSDij3eXVBub/38KSPhchp4Xs2dY=;
- b=pQupeoKClbg8Hs6aOD8EODCHkmayse2hNE45KSXrWmoa8/YIhInWyzRY4afc0DQrYE
- /RNTrSvoPzcBS4lzIUZ7wos+qxAlBUL3DA5+YV2rtQeL1CLOslupjZhBYwf/GQcI0oaO
- OBPs4H81kkH0SZuPG4/16OwtcASfVrW50aAFBoFsj5w7ONvm6N2BLC6Wz8Dxphckyj+s
- YOC9UNciv5Eu46n8oe4v1DhYREz1+Q7tDvFtR4jnNmjyk2nxFRcELeAswEksvFaCH9oB
- dm3p5Qa7q7X2mZVA+t0vFJaQKUeEOy4IO1ufj5eneFj9CBLETeSLkOLdW6wKcOui4zcL
- QWsQ==
-X-Gm-Message-State: APjAAAVEUDM2L1m2BNoVokTWIvjZ0Tq+TDuf1e/MEclLpmN9AEIBk25V
- zDS4jk6NHFLwxV5UK57gBTOrKZGNIe6ObSIeurtFRNOH
-X-Google-Smtp-Source: APXvYqyW9IWZl5fR5nhQIA86oalCt01BzbosFKtjhvk+wMFaZ2j87oxzoDL7eAXIz7WGrASMzI8Fmj7/ANvr10pOI8o=
-X-Received: by 2002:a17:906:4a51:: with SMTP id
- a17mr369532ejv.279.1568645929800; 
- Mon, 16 Sep 2019 07:58:49 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=0RYiibXmglOKth3Njfs6u881DVcoL+HDWxIDif7EgJA=;
+ b=HxsoEGj58t9hS8b1oc9xuWPYDYRokp5jRRddLm8D3lc+izrcNy9vR2Yl+2Y1sKwfRg
+ TwSAnXlz/aGCj7PglSUKldUQ/iBic1kdsbKaownyA/Hc0Ql3H9MWniLUn3PSw5xCD3li
+ vbsKlcTgpGMLl7kW/WhgR1JcJpdKHrRCPWkXSbPt26Z0TeNS5fiK1OK9HByo/KFpQVP8
+ iGr5q5WLZS8tP6QlDxU4xwDfzsCOma7ndgdJaCbMz2rRAn+mFBYvBFzoT2JxrnphEvrN
+ ePtEkQEGUMUxG1ZF1Zcmh4VWAk4GMYTOwIhVbOPotfpmzco+rSXaQdLRsWQ35hESqkDA
+ A9kg==
+X-Gm-Message-State: APjAAAUVskRU1wWb4LC08jp85WMVDMQ+ZBfqAXrRB2veKg+ineK+HJ91
+ nIKtYqAnBlhkysXd7/YlOOG/aFDx/8JXNGAlQTIKCQ==
+X-Google-Smtp-Source: APXvYqx5sZYBLI/wIY1hADODRR2d30TnTSTMhh6Gnf+9B1LfriLbEMR7g65AJaaQXJzKxumhkwHHXQeo4SaSo4/uYeM=
+X-Received: by 2002:a63:1f1f:: with SMTP id f31mr55945140pgf.353.1568648696199; 
+ Mon, 16 Sep 2019 08:44:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <69859184.bebd.16d1b45f5b3.Coremail.ouyangxuan10@163.com>
- <OF296529E4.5B358202-ON00258471.007740E2-00258471.00779A97@notes.na.collabserv.com>
- <546dbbbd-b38f-47cd-8e56-3f82ce383efb@www.fastmail.com>
- <CABoTLcRaLswO8pUQJeJ4dxoH+kbXR7J9pmRZ7ft8F2t+bQgeyA@mail.gmail.com>
- <cff298c.8724.16d3961f88b.Coremail.ouyangxuan10@163.com>
-In-Reply-To: <cff298c.8724.16d3961f88b.Coremail.ouyangxuan10@163.com>
-From: Oskar Senft <osk@google.com>
-Date: Mon, 16 Sep 2019 10:58:33 -0400
-Message-ID: <CABoTLcRyu2itAE6NkYHZUjHwaUKsGe1Upt2KwGp3FTJqsez-7Q@mail.gmail.com>
-Subject: Re: Re: how to use spi flash BIOS/Host firmware??
-To: www <ouyangxuan10@163.com>
-Content-Type: multipart/alternative; boundary="0000000000006d06730592acd7ce"
+References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
+ <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
+ <369926533c3e448c9d1a0d28391fd688@quantatw.com>
+ <af485fc0d2c44f3e8927290ff6c95ea0@quantatw.com>
+ <CAO=notwuxuWKeKMY8mnse1wY1Nt6GNx4rcxHDokqXtkzyoLYYQ@mail.gmail.com>
+ <02128993d3064b53ac289500746666ab@quantatw.com>
+ <dbd75be40e2f4d41a5b621a5dc3b3df7@quantatw.com>
+ <CAO=notzTM-VLV14VdXWSukftABB1Tz4i-ixPOY5qn5cs_0-1Ng@mail.gmail.com>
+ <bfe53d3d-0d00-0ac9-9a43-5b24e09ad309@linux.intel.com>
+ <4b7d382d292d45fdab63f4adcc40eded@quantatw.com>
+ <CAO=notxe++aFL-c-8Wb+Wyxc3FbLFRxytP4L=9ggz1sp5KgVpg@mail.gmail.com>
+ <CAO=notzzqC8hFa+j8NFR+7oW6y6Yh3R_HEP_+BG4y-E9U1uHaw@mail.gmail.com>
+ <CAO=notwpNRU7trh-E-L7DP+nyvNMLWVBRP729MnkBoaj+pYDCA@mail.gmail.com>
+ <5a46202d21694717b1aa40b4ef5105ea@quantatw.com>
+In-Reply-To: <5a46202d21694717b1aa40b4ef5105ea@quantatw.com>
+From: Patrick Venture <venture@google.com>
+Date: Mon, 16 Sep 2019 08:44:43 -0700
+Message-ID: <CAO=notzeTstrT6hOvu9qsF7c-LHYTxZsO7j5bH5w=w=e=rkzGg@mail.gmail.com>
+Subject: Re: [phosphor-pid-control] scaling issue
+To: =?UTF-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,226 +87,377 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006d06730592acd7ce
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Sep 16, 2019 at 1:37 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Ha=
+nk.Liou@quantatw.com> wrote:
+>
+> Hi Patrick,
+>
+> Thanks for your help. This change does solve the issue.
 
-Hi Byron
+No problem! I enjoy it when someone hits an edge case or a situation
+not yet considered.  We don't have nearly enough variety of
+configurations to really test quirks and unit-testing only covers so
+much.
 
-I have not verified that or how exactly this would work.
+I saw your review requesting the configuration change, and +1'd it.
+Presumably you're well on your way.
 
-The idea I heard floating around was to NOT use a kernel driver, but
-instead use a user-space tool like flashrom to access the BIOS SPI flash
-from the BMC.
+Thanks for your patience in this back-and-forth to resolve the issue.
 
-If you (or someone else) does go down this route, it would be great if it
-was reported back here.
-
-Oskar.
-
-On Mon, Sep 16, 2019 at 5:23 AM www <ouyangxuan10@163.com> wrote:
-
-> Dear Oskar=EF=BC=8C
 >
-> In current BMC kernel, if I add a bios flash partition on dts, it need ge=
-t
-> bios flash chip ip when loading spi driver, It may have a bad effect on
-> BIOS startup.
-> Could you explain in detail how this safe flash method is implemented? ho=
-w
-> can I modify it on bmc kernel(I guess need modify kernel) and user space?
+> Hank
 >
-> thanks=EF=BC=8C
-> Byron
->
->
->
-> At 2019-09-11 23:28:27, "Oskar Senft" <osk@google.com> wrote:
->
-> One option I heard of (unverified by me) is to use user-space-only
-> implementation (e.g. flashrom) on the BMC to dynamically access the host'=
-s
-> SPI "when it is safe to do so", without requiring a kernel driver on the
-> BMC.
->
-> The tricky part is "when it is safe to do so", but you could define
-> certain points in time, e.g. when the host is powered off or in reset.
->
-> Oskar.
->
-> On Tue, Sep 10, 2019 at 7:56 PM Andrew Jeffery <andrew@aj.id.au> wrote:
->
->>
->>
->> On Wed, 11 Sep 2019, at 07:16, Milton Miller II wrote:
->> > On September 10, 2019, Byron <ouyangxuan10@163.com> wrote:
->> >
->> > >Dear all,
->> > >
->> > >    I want to ask a question about how to spi driver flash host/bios
->> > >firmware? I don't want use mtd mode flash it, because the mtd mode
->> > >need read spi-id when BMC load spi driver, may be it is risky, it
->> > >need switch the  system spi to BMC when the host running, It may
->> > >break host startup. Do we have other solutions to solve this problem?
->> > >
->> >
->> > Indeed, we did have some initial hand-off issues especially as the
->> > Linux kernel spi nor layer matured.  Over time the assumptions that
->> > the bios had that the chip would be set to 4-byte addressing by
->> > default were not met by the kernel driver which switched to using
->> > 4-byte specific read and write commands.
->> >
->> > You probably have a few options:
->> >
->> > If you host is read-only, you can allocate a block of dram
->> > and point the lpc window to the dram.  The aspeed lpc
->> > controller drivers has ioctl calls for this.
->> >
->> > If you host is directly connected to the chip and you are
->> > using the spi mode mux, then you would need to handshake
->> > with your bios.
->> >
->> > If your host is using lpc to the aspeed chip and programming
->> > the controller directly, you probably have given full overtake
->> > of your bmc to the host.
->>
->> This is the case for ASPEED BMCs, so be conscious of threat models.
->>
->> >
->> > In Openpower systems, we have implemented a protocol to map
->> > sections of the SPI rom into memory, and use IPMI messages
->> > to page in and out windows from this access window in memory
->> > to the backing SPI chip. We also have a method.
->>
->> That sentence looks incomplete :)
->>
->> Anyway, yes, in OpenPOWER platform designs the BMC owns the flash
->> and we provide an abstract means for the host to access flash data such
->> that the BMC always remains in control. If you have questions on what
->> we've done there, don't hesitate to ask me.
->>
->> Any other mechanisms will require an explicit handshake as Milton
->> mentions and there may be some corner cases in the event of ungraceful
->> shutdowns of the host.
->>
->> Andrew
->>
->
->
->
->
-
---0000000000006d06730592acd7ce
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Byron<div><br></div><div>I have not=C2=A0verified that =
-or how exactly this would work.</div><div><br></div><div>The idea I heard f=
-loating around was to NOT use a kernel driver, but instead use a user-space=
- tool like flashrom to access the BIOS SPI flash from the BMC.</div><div><b=
-r></div><div>If you (or someone else) does go down this route, it would be =
-great if it was reported back here.</div><div><br></div><div>Oskar.</div></=
-div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On=
- Mon, Sep 16, 2019 at 5:23 AM www &lt;<a href=3D"mailto:ouyangxuan10@163.co=
-m" target=3D"_blank">ouyangxuan10@163.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex"><div style=3D"line-height:1.7;colo=
-r:rgb(0,0,0);font-size:14px;font-family:Arial"><div>Dear=C2=A0<span style=
-=3D"font-family:Helvetica,&quot;Microsoft Yahei&quot;,verdana">Oskar=EF=BC=
-=8C</span></div><div><span style=3D"font-family:Helvetica,&quot;Microsoft Y=
-ahei&quot;,verdana"><br></span></div><div><span style=3D"font-family:Helvet=
-ica,&quot;Microsoft Yahei&quot;,verdana">In current BMC kernel, if I add a =
-bios flash partition on dts, it need get bios flash chip ip when loading sp=
-i driver,=C2=A0</span><span style=3D"font-family:Helvetica,&quot;Microsoft =
-Yahei&quot;,verdana">It may have a bad effect on BIOS startup.</span></div>=
-<div><font face=3D"Helvetica, Microsoft Yahei, verdana">Could you explain i=
-n detail how this safe flash method is implemented? how can I modify it on =
-bmc kernel(I guess need modify kernel) and user space?=C2=A0</font></div><b=
-r><div>thanks=EF=BC=8C</div><div>Byron</div><br><br><div style=3D"zoom:1"><=
-/div><div id=3D"gmail-m_-6212424926330754351gmail-m_-2843237972321854470div=
-NeteaseMailCard"></div><br>At 2019-09-11 23:28:27, &quot;Oskar Senft&quot; =
-&lt;<a href=3D"mailto:osk@google.com" target=3D"_blank">osk@google.com</a>&=
-gt; wrote:<br> <blockquote id=3D"gmail-m_-6212424926330754351gmail-m_-28432=
-37972321854470isReplyContent" style=3D"padding-left:1ex;margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204)"><div dir=3D"ltr">One option I=
- heard of (unverified by me) is to use user-space-only implementation (e.g.=
- flashrom) on the BMC to dynamically access the host&#39;s SPI &quot;when i=
-t is safe to do so&quot;, without requiring=C2=A0a kernel driver on the BMC=
-.<div><br></div><div>The tricky part is &quot;when it is safe to do so&quot=
-;, but you could define certain points in time, e.g. when the host is power=
-ed off or in reset.</div><div><br></div><div>Oskar.</div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 10, 20=
-19 at 7:56 PM Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=
-=3D"_blank">andrew@aj.id.au</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex"><br>
-<br>
-On Wed, 11 Sep 2019, at 07:16, Milton Miller II wrote:<br>
-&gt; On September 10, 2019, Byron &lt;<a href=3D"mailto:ouyangxuan10@163.co=
-m" target=3D"_blank">ouyangxuan10@163.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; &gt;Dear all,<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 =C2=A0 I want to ask a question about how to spi driver fla=
-sh host/bios<br>
-&gt; &gt;firmware? I don&#39;t want use mtd mode flash it, because the mtd =
-mode<br>
-&gt; &gt;need read spi-id when BMC load spi driver, may be it is risky, it<=
-br>
-&gt; &gt;need switch the=C2=A0 system spi to BMC when the host running, It =
-may<br>
-&gt; &gt;break host startup. Do we have other solutions to solve this probl=
-em?<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; Indeed, we did have some initial hand-off issues especially as the <br=
->
-&gt; Linux kernel spi nor layer matured.=C2=A0 Over time the assumptions th=
-at <br>
-&gt; the bios had that the chip would be set to 4-byte addressing by <br>
-&gt; default were not met by the kernel driver which switched to using <br>
-&gt; 4-byte specific read and write commands.<br>
-&gt; <br>
-&gt; You probably have a few options:<br>
-&gt; <br>
-&gt; If you host is read-only, you can allocate a block of dram <br>
-&gt; and point the lpc window to the dram.=C2=A0 The aspeed lpc <br>
-&gt; controller drivers has ioctl calls for this.<br>
-&gt; <br>
-&gt; If you host is directly connected to the chip and you are <br>
-&gt; using the spi mode mux, then you would need to handshake <br>
-&gt; with your bios.<br>
-&gt; <br>
-&gt; If your host is using lpc to the aspeed chip and programming <br>
-&gt; the controller directly, you probably have given full overtake <br>
-&gt; of your bmc to the host.<br>
-<br>
-This is the case for ASPEED BMCs, so be conscious of threat models.<br>
-<br>
-&gt; <br>
-&gt; In Openpower systems, we have implemented a protocol to map <br>
-&gt; sections of the SPI rom into memory, and use IPMI messages <br>
-&gt; to page in and out windows from this access window in memory <br>
-&gt; to the backing SPI chip. We also have a method.<br>
-<br>
-That sentence looks incomplete :)<br>
-<br>
-Anyway, yes, in OpenPOWER platform designs the BMC owns the flash<br>
-and we provide an abstract means for the host to access flash data such<br>
-that the BMC always remains in control. If you have questions on what<br>
-we&#39;ve done there, don&#39;t hesitate to ask me.<br>
-<br>
-Any other mechanisms will require an explicit handshake as Milton<br>
-mentions and there may be some corner cases in the event of ungraceful<br>
-shutdowns of the host.<br>
-<br>
-Andrew<br>
-</blockquote></div>
-</blockquote></div><br><br><span title=3D"neteasefooter"><p>=C2=A0</p></spa=
-n></blockquote></div>
-
---0000000000006d06730592acd7ce--
+> >-----Original Message-----
+> >From: Patrick Venture [mailto:venture@google.com]
+> >Sent: Wednesday, September 11, 2019 1:52 AM
+> >To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Hank.Liou@quantatw.com>
+> >Cc: James Feist <james.feist@linux.intel.com>; openbmc@lists.ozlabs.org
+> >Subject: Re: [phosphor-pid-control] scaling issue
+> >
+> >On Tue, Sep 10, 2019 at 7:52 AM Patrick Venture <venture@google.com>
+> >wrote:
+> >>
+> >> On Tue, Sep 10, 2019 at 7:39 AM Patrick Venture <venture@google.com>
+> >wrote:
+> >> >
+> >> > On Tue, Sep 10, 2019 at 1:02 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=
+=B0)
+> ><Hank.Liou@quantatw.com> wrote:
+> >> > >
+> >> > > >-----Original Message-----
+> >> > > >From: James Feist [mailto:james.feist@linux.intel.com]
+> >> > > >Sent: Tuesday, September 10, 2019 1:27 AM
+> >> > > >To: Patrick Venture <venture@google.com>; Hank Liou (=E5=8A=89=E6=
+=99=89=E7=BF=B0)
+> >> > > ><Hank.Liou@quantatw.com>
+> >> > > >Cc: openbmc@lists.ozlabs.org
+> >> > > >Subject: Re: [phosphor-pid-control] scaling issue
+> >> > > >
+> >> > > >On 9/9/19 9:57 AM, Patrick Venture wrote:
+> >> > > >> On Thu, Sep 5, 2019 at 12:25 AM Hank Liou (=E5=8A=89=E6=99=89=
+=E7=BF=B0)
+> >> > > ><Hank.Liou@quantatw.com> wrote:
+> >> > > >>>
+> >> > > >>> Hi Patrick,
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> Sorry for not clearly stating our problem. We have the followi=
+ng
+> >issue:
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> temp sensor gets 31(C) -> 31 / 0.255 =3D 121.57 -> pid uses
+> >> > > >>> 127.57 as input for temp sensor ->
+> >> > > >>>
+> >> > > >>> stepwise fan table output 100 duty -> full speed fan
+> >> > > >>
+> >> > > >> Ok, so you're getting a dbus-based min/max value and you want
+> >> > > >> to ignore it?
+> >> > >
+> >> > > Yes, we want to ignore it.
+> >> >
+> >> > It looks like the sensor value scaling should be ignored for non-fan=
+s.
+> >> > Per
+> >> > https://github.com/openbmc/phosphor-pid-
+> >control/commit/75eb769d35143
+> >> > 4547899186f73ff70ae00d7934a, this change was only meant to deal with
+> >> > a fan case where the goal looks like it was to treat the fan values
+> >> > as percentages on reading the sensors, and not only on writing them
+> >> > by leveraging the min/max json sometimes?
+> >> >
+> >> > I can change the dbuspassive constructor to set the values back to
+> >> > their input values (ignoring dbus) if the type is not "fan", but I'm
+> >> > not sure that makes sense because the real use-case isn't clear to
+> >> > me, and I know the scaling from dbus is gone:
+> >> > https://github.com/openbmc/phosphor-pid-
+> >control/search?utf8=3D%E2%9C%9
+> >> > 3&q=3DinheritValueFromDbus&type=3D
+> >> >
+> >> > I'll submit the patch real quick, but I'm not sure it's the right
+> >> > long-term fix.  I'd like to clean this up if possible so that we
+> >> > don't leverage "unused" features of a configuration and instead
+> >> > explicitly use them (or not).
+> >>
+> >> This patch should address what you're seeing.  Overall, I think there
+> >> should be a larger change addressing the goal of the original change.
+> >>
+> >> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-pid-control/+/25
+> >> 070
+> >
+> >I decided to take on the larger change because chances are we might hit =
+it
+> >some other way:
+> >https://gerrit.openbmc-project.xyz/c/25072/
+> >
+> >This lets you specify a json configuration option that will ignore the
+> >MinValue/MaxValue properties on dbus.
+> >
+> >>
+> >> >
+> >> > >
+> >> > > >
+> >> > > >What is providing the dbus-based min/max?
+> >> > >
+> >> > > We use dbus min/max for phosphor-sel-logger utility. The dbus min/=
+max
+> >is provided by config file of phosphor-hwmon.
+> >> > > In our case, they are -128/127 respectively.
+> >> > >
+> >> > > I have an observation:
+> >> > > I found that while fan readpath is of the form "/sys/...", the fan=
+ input
+> >would not be rescaled. The same is for other sensors since the input val=
+ue
+> >would not enter rescaling function.
+> >> > > However, in our case we don't have a sys path for some thermal sen=
+sors.
+> >> > >
+> >> > > >
+> >> > > >> In the json configuration, if you set the values to 0, they are
+> >> > > >> set to the default (0), so there'd be no clean way to know to
+> >> > > >> ignore dbus in this case, without adding a small check to only
+> >> > > >> consider min/max from dbus when sensor is not temp/margin.
+> >> > > >> Basically, only care about min/max on dbus if type is "fan"
+> >> > > >
+> >> > >
+> >> > > I agree with the option to add a check since the min/max is only f=
+or fan
+> >now.
+> >> > >
+> >> > > >Why is the dbus-based min/max even there if you don't plan on usi=
+ng it?
+> >> > > >
+> >> > > >>
+> >> > > >> If that's right, James do you have a cycle to look at this one-=
+liner?
+> >> > > >>
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> As a result, fan will be at full speed while temp is low.
+> >> > > >>> Before the commit
+> >> > > >fc2e803 [1], this won't happen. The root cause is that, before
+> >> > > >fc2e803, pid will use config min/max, which is 0 in our case.
+> >> > > >This would not trigger scaling function, namely
+> >> > > >scaleSensorReading, in util.cpp. However, after such commit,
+> >> > > >min/max would be non-zero (-128/127 from DBus). This will trigger
+> >scaling function.
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> [1]
+> >> > > >>> https://github.com/openbmc/phosphor-pid-
+> >> > > >control/commit/fc2e803f5d9256
+> >> > > >>> 944e18c7c878a441606b1f121c
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> Hank
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> ________________________________
+> >> > > >>> From: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0)
+> >> > > >>> Sent: Monday, September 2, 2019 4:52 PM
+> >> > > >>> To: Patrick Venture
+> >> > > >>> Cc: James Feist; openbmc@lists.ozlabs.org
+> >> > > >>> Subject: Re: [phosphor-pid-control] scaling issue
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> Hi Patrick,
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> Since we use phosphor-sel-logger [1] at the same time, we do
+> >> > > >>> assign min
+> >> > > >and max of temp sensors to Dbus (max: 127, min: -128). So in the
+> >> > > >present case, our temp value will be divided by 0.255 (also due
+> >> > > >to exponent is -3 here). This will cause re-scaling problem.
+> >> > > >Therefore there should be an statement to distinguish sensor
+> >> > > >types. If it is "temp", then one assigns 0 to the min and max fro=
+m Dbus.
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> [1]
+> >> > > >>> https://github.com/openbmc/phosphor-sel-
+> >> > > >logger/blob/3d300fca24b30864b
+> >> > > >>> 3e9a4f5768cfe5e769458ae/include/sensorutils.hpp#L59
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> Hank
+> >> > > >>>
+> >> > > >>>
+> >> > > >>> ________________________________
+> >> > > >>> From: Patrick Venture <venture@google.com>
+> >> > > >>> Sent: Friday, August 30, 2019 1:47 AM
+> >> > > >>> To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0)
+> >> > > >>> Cc: James Feist; openbmc@lists.ozlabs.org
+> >> > > >>> Subject: Re: [phosphor-pid-control] scaling issue
+> >> > > >>>
+> >> > > >>> PTAL - https://gerrit.openbmc-project.xyz/24827 - this is
+> >> > > >>> merged, and the srcrev bump should propagate into
+> >openbmc/openbmc in a day or two.
+> >> > > >>>
+> >> > > >>> On Wed, Aug 28, 2019 at 11:00 PM Hank Liou (=E5=8A=89=E6=99=89=
+=E7=BF=B0)
+> >> > > ><Hank.Liou@quantatw.com> wrote:
+> >> > > >>>>
+> >> > > >>>> Hi Patrick,
+> >> > > >>>>
+> >> > > >>>> I think it's OK to parse the config min&max for temp sensors.
+> >> > > >>>>
+> >> > > >>>> Any suggestion?
+> >> > > >>>>
+> >> > > >>>> Thanks,
+> >> > > >>>> Hank
+> >> > > >>>>
+> >> > > >>>>> -----Original Message-----
+> >> > > >>>>> From: openbmc [mailto:openbmc-
+> >> > > >>>>> bounces+hank.liou=3Dquantatw.com@lists.ozlabs.org] On Behalf
+> >> > > >>>>> bounces+Of Hank Liou
+> >> > > >>>>> (=E5=8A=89=E6=99=89=E7=BF=B0)
+> >> > > >>>>> Sent: Friday, August 23, 2019 4:31 PM
+> >> > > >>>>> To: Patrick Venture <venture@google.com>; James Feist
+> >> > > >>>>> <james.feist@linux.intel.com>
+> >> > > >>>>> Cc: openbmc@lists.ozlabs.org
+> >> > > >>>>> Subject: RE: [phosphor-pid-control] scaling issue
+> >> > > >>>>>
+> >> > > >>>>> Hi Patrick,
+> >> > > >>>>>
+> >> > > >>>>>> -----Original Message-----
+> >> > > >>>>>> From: Patrick Venture [mailto:venture@google.com]
+> >> > > >>>>>> Sent: Wednesday, August 21, 2019 10:32 PM
+> >> > > >>>>>> To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Hank.Liou@quan=
+tatw.com>; James
+> >Feist
+> >> > > >>>>>> <james.feist@linux.intel.com>
+> >> > > >>>>>> Cc: openbmc@lists.ozlabs.org
+> >> > > >>>>>> Subject: Re: [phosphor-pid-control] scaling issue
+> >> > > >>>>>>
+> >> > > >>>>>> On Wed, Aug 21, 2019 at 1:11 AM Hank Liou (=E5=8A=89=E6=99=
+=89=E7=BF=B0)
+> >> > > >>>>>> <Hank.Liou@quantatw.com> wrote:
+> >> > > >>>>>>>
+> >> > > >>>>>>> Hi All,
+> >> > > >>>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>>> After commit [1], I found my temp sensor reading would be
+> >> > > >>>>>>> re-scaled by
+> >> > > >>>>>> multiplying 1 over 255, making temperature into unfamiliar =
+unit.
+> >> > > >>>>>> Also the fan rpm reading would lie in [0,1] interval,
+> >> > > >>>>>> letting the fan input to be 0 (since the input value of fan
+> >> > > >>>>>> is from an integer array [2]). Are these
+> >> > > >>>>> normal behaviors?
+> >> > > >>>>>> Or do I miss something?
+> >> > > >>>>>>
+> >> > > >>>>>> Are you using dbus configuration or json?  If json, can you
+> >> > > >>>>>> attach your
+> >> > > >config.
+> >> > > >>>>>> Since you're saying it was working and now isn't, I'm
+> >> > > >>>>>> assuming there's something about the config being treated
+> >> > > >>>>>> differently with the code changes in an unexpected way.
+> >> > > >>>>>
+> >> > > >>>>> I found pid control will first read min and max from dbus
+> >> > > >>>>> and then (before commit [1]) revise them if
+> >> > > >>>>>
+> >> > > >>>>> info->min !=3D conf::inheritValueFromDbus (in
+> >> > > >>>>> info->dbus/dbuspassive.cpp)
+> >> > > >>>>>
+> >> > > >>>>> After value initialization, the min and max would be the
+> >> > > >>>>> ones in json file (Json file [3]). However, after commit [1]
+> >> > > >>>>> the min and max values of config would not be fed into the f=
+an
+> >control process.
+> >> > > >>>>> The scaling issue is originated from commit [4] with the aim
+> >> > > >>>>> to treat fan rpm as percentage. It seems that commit [1]
+> >> > > >>>>> unexpectedly affects temp sensors in the sense that the temp
+> >> > > >>>>> is the integer reading not percentage. Before commit [1], it
+> >> > > >>>>> would not re-scale the
+> >> > > >temp reading since my min and max are 0 [6].
+> >> > > >>>>>
+> >> > > >>>>>
+> >> > > >>>>>
+> >> > > >>>>> There is another issue with commit [1]. Now the fan rpm
+> >> > > >>>>> would be something like
+> >> > > >>>>>
+> >> > > >>>>> 1500 / 20000 =3D 0.075
+> >> > > >>>>>
+> >> > > >>>>> where rpm max 20000 is from dbus. However the fan input
+> >> > > >>>>> function would transfer double into int, which is 0 for 0.07=
+5 (see
+> >[5]).
+> >> > > >>>>> Hence the fan input is 0 not percentage. Is there something
+> >wrong?
+> >> > > >>>>>
+> >> > > >>>>> [1] https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>> control/commit/fc2e803f5d9256944e18c7c878a441606b1f121c
+> >> > > >>>>> [2] https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>>
+> >> > >
+> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancont
+> >> > > >ro
+> >> > > >>>>> lle
+> >> > > >>>>> r.cpp#L86
+> >> > > >>>>> [3]
+> >> > > >>>>>        {
+> >> > > >>>>>             "name": "fan1",
+> >> > > >>>>>             "type": "fan",
+> >> > > >>>>>             "readPath": "/sys/class/hwmon/hwmon1/fan1_input"=
+,
+> >> > > >>>>>             "writePath": "/sys/class/hwmon/hwmon1/pwm1",
+> >> > > >>>>>             "min": 0,
+> >> > > >>>>>             "max": 255
+> >> > > >>>>>         },
+> >> > > >>>>>         {
+> >> > > >>>>>             "name": "temp1",
+> >> > > >>>>>             "type": "temp",
+> >> > > >>>>>             "readPath":
+> >> > > >"/xyz/openbmc_project/sensors/temperature/temp1",
+> >> > > >>>>>             "writePath": "",
+> >> > > >>>>>             "min": 0,
+> >> > > >>>>>             "max": 0
+> >> > > >>>>>         }
+> >> > > >>>>> [4] https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>> control/commit/75eb769d351434547899186f73ff70ae00d7934a
+> >> > > >>>>> [5] https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>>
+> >> > >
+> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancont
+> >> > > >ro
+> >> > > >>>>> lle
+> >> > > >>>>> r.cpp#L64
+> >> > > >>>>> [6] https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>>
+> >> > >
+> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/dbus/dbuspa
+> >> > > >ss
+> >> > > >>>>> i
+> >> > > >>>>> ve.cpp#L158
+> >> > > >>>>>
+> >> > > >>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>>> [1]
+> >> > > >>>>>>> https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>>> control/commit/fc2e803f5d92569
+> >> > > >>>>>>> 44e18c7c878a441606b1f121c
+> >> > > >>>>>>>
+> >> > > >>>>>>> [2]
+> >> > > >>>>>>> https://github.com/openbmc/phosphor-pid-
+> >> > > >>>>>> control/blob/a7ec8350d17b70153
+> >> > > >>>>>>> cebe666d3fbe88bddd02a1a/pid/fancontroller.cpp#L86
+> >> > > >>>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>>> Thanks,
+> >> > > >>>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>>> Hank Liou
+> >> > > >>>>>>>
+> >> > > >>>>>>> Quanta Computer Inc.
+> >> > > >>>>>>>
+> >> > > >>>>>>>
+> >> > > >>>>>
+> >> > > >>>>> Sincerely,
+> >> > > >>>>> Hank
