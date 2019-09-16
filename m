@@ -1,63 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E642B34BC
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 08:38:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26A14B355B
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 09:13:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46WxQN1N1szDqrX
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 16:38:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46WyBK1hmmzF4VL
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 17:12:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::22b; helo=mail-oi1-x22b.google.com;
- envelope-from=akashgj91@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=gkeishin@in.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="bdT3iZdP"; 
- dkim-atps=neutral
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
- [IPv6:2607:f8b0:4864:20::22b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=in.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46WxPr1kJTzF4T7
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 16:37:51 +1000 (AEST)
-Received: by mail-oi1-x22b.google.com with SMTP id 7so7384176oip.5
- for <openbmc@lists.ozlabs.org>; Sun, 15 Sep 2019 23:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=2Fbt5ctqPOZ7fjdbpHn6IGnUuAUjTK2yLvP81msdh0A=;
- b=bdT3iZdPWX8xHFB7raPShr1R+Q9Gr4zukhog360iOq7JMOUZHLV+CtIB7moGmj6yRN
- aACvIaOjaGZpeGzSXAi+w6plkc5YaPg3np9a+WWxCq0cBstO7oNNN9HPJKtcEiGby2AI
- yX6husfngQIZSplqvybdA7BPGMdTnRR5oOhAADvofyruI+GN5FkMSt1/VbFNgIx7k75L
- T8/UCYXfRUTer0oY7c50LRnwljZ/+ZYcoMJSkrFl8ltjUhRrPzZ0haLP+5tgxPYScaLs
- boINhfddIhLlWsbvS2hOYhWdgzXIOxtdX028ptlYLEH/S9Q3TYycotDTU2m3SjcZlkFv
- ZHCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=2Fbt5ctqPOZ7fjdbpHn6IGnUuAUjTK2yLvP81msdh0A=;
- b=FN8fx5oLW3YMg4JrbTcQRSs86WRAD+Nyu6r2+GpEPpGtF8jyjHb7usD/9CyRangy+x
- 3PCMnHCkN7D1YfaXEkujzGpDSaDFtxgJL9DMYCncDtPh54TFDkai8lzOGpIzs3Kn8abK
- +D1nAs7KjEalnvDpvlZbYT/ngfUmLX/2sZJVJvC/Lt1cPJGogS8wL28A5v3xAsHttPje
- JmiXL7Lz1Ioyz3aTba0gzZ7ueGYX2oBSubQs0uRhrBTg1P/pNPtp2mtO6llBFL0fbGvm
- Z/KmG0K75UhNCI8zNgs6Xy8yM/MA6XlBO6pwOxVPo4znBGv774kc4No1GVaQG9nV3V8q
- B6iw==
-X-Gm-Message-State: APjAAAWjDxLGdE/LMVy3Vbjma1Fse+Suz/uylR05uaOrz1AVXDt0xacU
- +UjgfbfKLerN9rrbgrRPoJahQT0gH3NJVWPG5QfLtIAorRU=
-X-Google-Smtp-Source: APXvYqwSToutL3qYg5W4x5+E4Hg21u8AWXRLAgpji5oYltL/MTxthYuWDQybaRMMOZf0tmA7P4B4GgxPqE4qKAYfL+g=
-X-Received: by 2002:aca:4406:: with SMTP id r6mr12826769oia.175.1568615867947; 
- Sun, 15 Sep 2019 23:37:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Wy9f2wQdzF44m
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 17:12:15 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8G77SRd113530
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 03:12:11 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.74])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v252chdhr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 03:12:11 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <gkeishin@in.ibm.com>;
+ Mon, 16 Sep 2019 07:12:10 -0000
+Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
+ by smtp.notes.na.collabserv.com (10.106.227.92) with
+ smtp.notes.na.collabserv.com ESMTP; Mon, 16 Sep 2019 07:12:07 -0000
+Received: from us1a3-mail113.a3.dal06.isc4sb.com ([10.146.6.4])
+ by us1a3-smtp06.a3.dal06.isc4sb.com
+ with ESMTP id 2019091607120702-160541 ;
+ Mon, 16 Sep 2019 07:12:07 +0000 
 MIME-Version: 1.0
-From: AKASH G J <akashgj91@gmail.com>
-Date: Mon, 16 Sep 2019 17:37:33 +0530
-Message-ID: <CAE33tLGtWJ-aJKRPt812zc1yj8TVBVxcSR1KX5_NznoVxJg7Fg@mail.gmail.com>
-Subject: CurrentBMCState: BMCState.NotReady
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000991e990592a5d724"
+In-Reply-To: <CAE33tLGtWJ-aJKRPt812zc1yj8TVBVxcSR1KX5_NznoVxJg7Fg@mail.gmail.com>
+To: AKASH G J <akashgj91@gmail.com>
+From: "George Keishing" <gkeishin@in.ibm.com>
+Date: Mon, 16 Sep 2019 12:42:03 +0530
+References: <CAE33tLGtWJ-aJKRPt812zc1yj8TVBVxcSR1KX5_NznoVxJg7Fg@mail.gmail.com>
+X-KeepSent: 0AEE1426:28DFDF49-00258477:0027585E;
+ type=4; name=$KeepSent
+X-Mailer: IBM Notes Release 10.0.1 November 29, 2018
+X-LLNOutbound: False
+X-Disclaimed: 39911
+X-TNEFEvaluated: 1
+Content-type: multipart/related; 
+ Boundary="0__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE"
+x-cbid: 19091607-3165-0000-0000-00000102DE5D
+X-IBM-SpamModules-Scores: BY=0.035264; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.386041; ST=0; TS=0; UL=0; ISC=; MB=0.002348
+X-IBM-SpamModules-Versions: BY=3.00011782; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000291; SDB=6.01262049; UDB=6.00667327; IPR=6.01043897; 
+ MB=3.00028643; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-16 07:12:09
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-16 02:31:01 - 6.00010412
+x-cbparentid: 19091607-3166-0000-0000-00001C35E6F2
+Message-Id: <OF0AEE1426.28DFDF49-ON00258477.0027585E-65258477.00278E77@notes.na.collabserv.com>
+Subject: Re:  CurrentBMCState: BMCState.NotReady
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-16_04:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,52 +80,126 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000991e990592a5d724
-Content-Type: text/plain; charset="UTF-8"
+--0__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE
+Content-type: multipart/alternative; 
+	Boundary="1__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE"
+
+
+--1__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE
+Content-Transfer-Encoding: quoted-printable
+Content-type: text/plain; charset=ISO-8859-1
+
+
+Probably the host services are still not up and started as per the log
+there.
+
+systemctl=A0list-jobs --no-pager | cat
+
+You can check like that to see what services are pending to complete and
+perhaps take the   journalctl=A0--no-pager    logs and see what services are
+crashing out.
+
+That should help where to look at.
+
+
+Thanks and Regards,
+
+
+
+
+From:	AKASH G J <akashgj91@gmail.com>
+To:	openbmc@lists.ozlabs.org
+Date:	16-09-2019 12:08
+Subject:	[EXTERNAL] CurrentBMCState: BMCState.NotReady
+Sent by:	"openbmc" <openbmc-bounces
+            +gkeishin=3Din.ibm.com@lists.ozlabs.org>
+
+
 
 Hi all,
 
 root@s2600wf:~# cat /etc/os-release
-ID="openbmc-phosphor"
-NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
-VERSION="2.8.0-dev"
-VERSION_ID="2.8.0-dev-309-g2e155a0-dirty"
-PRETTY_NAME="Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)
+ID=3D"openbmc-phosphor"
+NAME=3D"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)"
+VERSION=3D"2.8.0-dev"
+VERSION=5FID=3D"2.8.0-dev-309-g2e155a0-dirty"
+PRETTY=5FNAME=3D"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distr=
+o)
 2.8.0"
-BUILD_ID="2.8.0-dev"
-OPENBMC_TARGET_MACHINE="s2600wf"
+BUILD=5FID=3D"2.8.0-dev"
+OPENBMC=5FTARGET=5FMACHINE=3D"s2600wf"
 
-The BMC console shows that the BMC state is '*Not Ready*'.
+The BMC console shows that the BMC state is 'Not Ready'.
 
 root@s2600wf:~# obmcutil state
-CurrentBMCState     : xyz.openbmc_project.State.BMC.BMCState.NotReady
-CurrentPowerState   : xyz.openbmc_project.State.Chassis.PowerState.Off
-Error finding '/xyz/openbmc_project/state/host0' service: No such file or
+CurrentBMCState =A0 =A0 : xyz.openbmc=5Fproject.State.BMC.BMCState.NotReady
+CurrentPowerState =A0 : xyz.openbmc=5Fproject.State.Chassis.PowerState.Off
+Error finding '/xyz/openbmc=5Fproject/state/host0' service: No such file or
 directory
 
 
 Regards,
 Akash
 
---000000000000991e990592a5d724
-Content-Type: text/html; charset="UTF-8"
+
+--1__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE
 Content-Transfer-Encoding: quoted-printable
+Content-type: text/html; charset=ISO-8859-1
+Content-Disposition: inline
 
-<div dir=3D"ltr"><div>Hi all,</div><div><br></div><div>root@s2600wf:~# cat =
-/etc/os-release <br>ID=3D&quot;openbmc-phosphor&quot;<br>NAME=3D&quot;Phosp=
-hor OpenBMC (Phosphor OpenBMC Project Reference Distro)&quot;<br>VERSION=3D=
-&quot;2.8.0-dev&quot;<br>VERSION_ID=3D&quot;2.8.0-dev-309-g2e155a0-dirty&qu=
-ot;<br>PRETTY_NAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project Refer=
-ence Distro) 2.8.0&quot;<br>BUILD_ID=3D&quot;2.8.0-dev&quot;<br>OPENBMC_TAR=
-GET_MACHINE=3D&quot;s2600wf&quot;</div><div><br></div><div>The BMC console =
-shows that the BMC state is &#39;<b>Not Ready</b>&#39;.</div><div><br></div=
-><div>root@s2600wf:~# obmcutil state<br>CurrentBMCState =C2=A0 =C2=A0 : xyz=
-.openbmc_project.State.BMC.BMCState.NotReady<br>CurrentPowerState =C2=A0 : =
-xyz.openbmc_project.State.Chassis.PowerState.Off<br>Error finding &#39;/xyz=
-/openbmc_project/state/host0&#39; service: No such file or directory</div><=
-div><br></div><div><br></div><div>Regards,</div><div>Akash<br></div></div>
+<html><body><p><font face=3D"Calibri">Probably the host services are still =
+not up and started as per the log there.</font><br><br><i><font face=3D"Cal=
+ibri">systemctl=A0list-jobs --no-pager | cat</font></i> <br><br><font size=
+=3D"2">You can check like that to see what services are pending to complete=
+ and perhaps take the   </font><font face=3D"Calibri">journalctl=A0--no-pag=
+er</font> <font size=3D"2">   logs and see what services are crashing out. =
+</font><br><br><font size=3D"2">That should help where to look at.</font><b=
+r><br><br><b><font size=3D"2" color=3D"#0000FF">Thanks and Regards,</font><=
+/b><br><br><br><img width=3D"16" height=3D"16" src=3D"cid:1=5F=5F=3D8FBB0EE=
+4DFB4DECE8f9e8a93df938690918c8FB@" border=3D"0" alt=3D"Inactive hide detail=
+s for AKASH G J ---16-09-2019 12:08:46---Hi all, root@s2600wf:~# cat /etc/o=
+s-release"><font size=3D"2" color=3D"#424282">AKASH G J ---16-09-2019 12:08=
+:46---Hi all, root@s2600wf:~# cat /etc/os-release</font><br><br><font size=
+=3D"2" color=3D"#5F5F5F">From:        </font><font size=3D"2">AKASH G J &lt=
+;akashgj91@gmail.com&gt;</font><br><font size=3D"2" color=3D"#5F5F5F">To:  =
+      </font><font size=3D"2">openbmc@lists.ozlabs.org</font><br><font size=
+=3D"2" color=3D"#5F5F5F">Date:        </font><font size=3D"2">16-09-2019 12=
+:08</font><br><font size=3D"2" color=3D"#5F5F5F">Subject:        </font><fo=
+nt size=3D"2">[EXTERNAL] CurrentBMCState: BMCState.NotReady</font><br><font=
+ size=3D"2" color=3D"#5F5F5F">Sent by:        </font><font size=3D"2">&quot=
+;openbmc&quot; &lt;openbmc-bounces+gkeishin=3Din.ibm.com@lists.ozlabs.org&g=
+t;</font><br><hr width=3D"100%" size=3D"2" align=3D"left" noshade style=3D"=
+color:#8091A5; "><br><br><br>Hi all,<br><br>root@s2600wf:~# cat /etc/os-rel=
+ease <br>ID=3D&quot;openbmc-phosphor&quot;<br>NAME=3D&quot;Phosphor OpenBMC=
+ (Phosphor OpenBMC Project Reference Distro)&quot;<br>VERSION=3D&quot;2.8.0=
+-dev&quot;<br>VERSION=5FID=3D&quot;2.8.0-dev-309-g2e155a0-dirty&quot;<br>PR=
+ETTY=5FNAME=3D&quot;Phosphor OpenBMC (Phosphor OpenBMC Project Reference Di=
+stro) 2.8.0&quot;<br>BUILD=5FID=3D&quot;2.8.0-dev&quot;<br>OPENBMC=5FTARGET=
+=5FMACHINE=3D&quot;s2600wf&quot;<br><br>The BMC console shows that the BMC =
+state is '<b>Not Ready</b>'.<br><br>root@s2600wf:~# obmcutil state<br>Curre=
+ntBMCState =A0 =A0 : xyz.openbmc=5Fproject.State.BMC.BMCState.NotReady<br>C=
+urrentPowerState =A0 : xyz.openbmc=5Fproject.State.Chassis.PowerState.Off<b=
+r>Error finding '/xyz/openbmc=5Fproject/state/host0' service: No such file =
+or directory<br><br><br>Regards,<br>Akash<br><br><BR>
+</body></html>
 
---000000000000991e990592a5d724--
+--1__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE--
+
+
+--0__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE
+Content-type: image/gif; 
+	name="graycol.gif"
+Content-Disposition: inline; filename="graycol.gif"
+Content-ID: <1__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FB@>
+Content-Transfer-Encoding: base64
+
+R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
+ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
+
+
+--0__=8FBB0EE4DFB4DECE8f9e8a93df938690918c8FBB0EE4DFB4DECE--
+
