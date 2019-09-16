@@ -2,80 +2,133 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27014B3DE3
-	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 17:45:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A858BB4109
+	for <lists+openbmc@lfdr.de>; Mon, 16 Sep 2019 21:21:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46X9Z52cLLzF450
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 01:45:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XGM41WCyzF3Vb
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 05:21:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::542; helo=mail-pg1-x542.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=416284063b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="kmhKXL5V"; 
- dkim-atps=neutral
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [IPv6:2607:f8b0:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="bxNfD27k"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="Xkmy4mUL"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46X9Y96N88zF43k
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 01:45:01 +1000 (AEST)
-Received: by mail-pg1-x542.google.com with SMTP id n9so242656pgc.1
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 08:45:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=0RYiibXmglOKth3Njfs6u881DVcoL+HDWxIDif7EgJA=;
- b=kmhKXL5VzLtvfkiu1oidwA6mDhgrgVvr8U+FWZijvSwp++2TvlkFY/Syu7f16aE0GK
- /tEI9KpKhVFVId7lzXHz9sC1/t/2+RT4yPQtfOxZJajpIQPc/j7WjjaP2mDnIl0MXFZf
- JaIiyY7Oere1sy3FJIJXt8vyuHLZOk7QMyunLxEqRFmWs5TBUa94o91ORcYrVGGZY5sh
- HDgNpnUaa+fQ+iEgiALYmP/v/IGxh5vzTJj6GXyp+l4AUSSVyyTFmTUzVVDZ1Xpdh6mB
- b5xOrSzT71z/hmtAJpwsTkLDr6PJBeDQt8HR2bVjjfdY0+6NWAxqFmwAWt3gACUkg8OV
- B89A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=0RYiibXmglOKth3Njfs6u881DVcoL+HDWxIDif7EgJA=;
- b=HxsoEGj58t9hS8b1oc9xuWPYDYRokp5jRRddLm8D3lc+izrcNy9vR2Yl+2Y1sKwfRg
- TwSAnXlz/aGCj7PglSUKldUQ/iBic1kdsbKaownyA/Hc0Ql3H9MWniLUn3PSw5xCD3li
- vbsKlcTgpGMLl7kW/WhgR1JcJpdKHrRCPWkXSbPt26Z0TeNS5fiK1OK9HByo/KFpQVP8
- iGr5q5WLZS8tP6QlDxU4xwDfzsCOma7ndgdJaCbMz2rRAn+mFBYvBFzoT2JxrnphEvrN
- ePtEkQEGUMUxG1ZF1Zcmh4VWAk4GMYTOwIhVbOPotfpmzco+rSXaQdLRsWQ35hESqkDA
- A9kg==
-X-Gm-Message-State: APjAAAUVskRU1wWb4LC08jp85WMVDMQ+ZBfqAXrRB2veKg+ineK+HJ91
- nIKtYqAnBlhkysXd7/YlOOG/aFDx/8JXNGAlQTIKCQ==
-X-Google-Smtp-Source: APXvYqx5sZYBLI/wIY1hADODRR2d30TnTSTMhh6Gnf+9B1LfriLbEMR7g65AJaaQXJzKxumhkwHHXQeo4SaSo4/uYeM=
-X-Received: by 2002:a63:1f1f:: with SMTP id f31mr55945140pgf.353.1568648696199; 
- Mon, 16 Sep 2019 08:44:56 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46XGKx42VSzF3Tp;
+ Tue, 17 Sep 2019 05:20:29 +1000 (AEST)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x8GJIfEA015332; Mon, 16 Sep 2019 12:20:20 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=Oew4G9P3D9P5PcdUwAWt/GtP5TeZu2RHWPPLXqS1Eg8=;
+ b=bxNfD27k8O0LNjphIv+/RSiERHYn0whroiUSsEuc6jsZxfMBGpgyT23yP5xMieb70B/s
+ JcNfG5SDOhHEBPwnlGjbKwvfTtp5QJeo09Xok0OtyothbL1+N5YMU7IwoRZnar98m0ui
+ zINcnPC14yqa6sxa5qPxvvTzdIIxJlu75F4= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2v1fwsp47k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Mon, 16 Sep 2019 12:20:19 -0700
+Received: from prn-hub04.TheFacebook.com (2620:10d:c081:35::128) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Mon, 16 Sep 2019 12:20:19 -0700
+Received: from NAM02-BL2-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Mon, 16 Sep 2019 12:20:18 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=a3C3UBeb8f57223GqyuaWpRFCmHGmUfYGfnZT/0KGYvxYm1BJ1myg2mmEfAGhRfPUBKk6VRJrOGLX1+mg4rABtra7iHeEqhW1MKuhpcOtyHKto1E4am7RvmUdPGWqi+6Fe3Rn9cllvhTC+kC8FH4dVmGQAvc8X3oSKuzb/R6B9BhQli2RSzoTGMtTuEmXamzOaHjkwPa0kABAadsiTHk/TGNe+dfzsGugRWkMKjwFCm1opRS3dNg9HEvEFqImTgm/dcZ4Ug4hXYWKZaIrTczsXZxZDPQS2tylTZAq44kLEa7PBlXKSQCHSMyUx7UfsHNfdImii1wkl8BFKjVcWy6XQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Oew4G9P3D9P5PcdUwAWt/GtP5TeZu2RHWPPLXqS1Eg8=;
+ b=MqSa0qrfHG0KnAaxRitW/edKo5P+YSQqb7o9ZPaofqhuPZR0Je+CXWnM7OVHEziUm6AIJ+XkEuYzbx9zW1/4RoucH7N2FIPCFRokhkbx0wLBRblVN7s+eLlxm+pwpMgOM9lzZue9/UZ/7zwY978V43IO8cFaXmUCHF/9tDYXbuxDMASsORQYT1szV+nnlLS9uooY/s1dGlRvP36ljLcSaqY0GsIC+fkjQ1qcZ5QK+f5aw+lLKC67tClYzD2xqEHatq6cfP0wBCSvh/F4AeMTFLZm00+x01IrCPIGz2fvYzXsCbyvktIpS5DY84hvsS3wjfX3oUHmt4g07JoUBtgz9A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Oew4G9P3D9P5PcdUwAWt/GtP5TeZu2RHWPPLXqS1Eg8=;
+ b=Xkmy4mULQGe5nS+xdent+KIkcESrv/pisRT6vc5plq393TGAmpHTgEfY2l6kcOz396FaF8fsNLZe+mgeYmdBUtiockZRbk6IhCiX0FnfmACbnzc1QfBWOkAC9oFVZBU0MwZ1pUH1MCfB2clSQObAjAS8LEw9Yt6V9LZ1yA+WVCo=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3681.namprd15.prod.outlook.com (52.133.253.142) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2263.15; Mon, 16 Sep 2019 19:20:03 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::bc3e:c80f:b59e:98aa]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::bc3e:c80f:b59e:98aa%6]) with mapi id 15.20.2263.023; Mon, 16 Sep 2019
+ 19:20:03 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Samuel Mendoza-Jonas <sam@mendozajonas.com>, "David S. Miller"
+ <davem@davemloft.net>, "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] net/ncsi: Disable global multicast filter
+Thread-Topic: [PATCH] net/ncsi: Disable global multicast filter
+Thread-Index: AQHVaZ0NbQw1puXXZ0+6LB7mxUixK6ctnJ+AgACiRwA=
+Date: Mon, 16 Sep 2019 19:20:02 +0000
+Message-ID: <C2D47466-A743-43A1-A624-4BA0609B9351@fb.com>
+References: <20190912190451.2362220-1-vijaykhemka@fb.com>
+ <eb370d3280327b512828adc62b64656e65b22745.camel@mendozajonas.com>
+In-Reply-To: <eb370d3280327b512828adc62b64656e65b22745.camel@mendozajonas.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:306b]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c2e24eb2-9112-4015-75cb-08d73adadff5
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(5600167)(711020)(4605104)(1401327)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7193020);
+ SRVR:BY5PR15MB3681; 
+x-ms-traffictypediagnostic: BY5PR15MB3681:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR15MB3681A5F8B8E2CE98CD14C9D0DD8C0@BY5PR15MB3681.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:155;
+x-forefront-prvs: 0162ACCC24
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(199004)(189003)(14444005)(256004)(99286004)(33656002)(8676002)(25786009)(2906002)(54906003)(2501003)(4326008)(81166006)(81156014)(6116002)(110136005)(7736002)(53936002)(229853002)(6512007)(46003)(2616005)(76176011)(14454004)(498600001)(305945005)(71190400001)(8936002)(71200400001)(6246003)(6486002)(6436002)(11346002)(36756003)(446003)(102836004)(6506007)(5660300002)(186003)(2201001)(486006)(476003)(86362001)(76116006)(91956017)(66446008)(64756008)(66556008)(66476007)(66946007);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3681;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 1Oc7amX9wdiPIvlDmw0uSW35kSZGPMfNKosBuNJkgIsjJYE+zYhle/1UUDfGGkiLLFHIyaP3CsE7A+8CIo/UW5Z83nQUGKFJT2n6M0CRM+l/ntoh1edKTw43gIG1A+mx/u5yxxngo13rYqMqH31dUCmgty8Bt728Od7OTOsnaqi8UmfNLCvYLVqUvISpWuVz9YG68VdEMypKKerr6o0GEsPMmIHnjeJ6q99F3gPz4tHrQd2Xx7tT1xJcWLQ7x0GoyuKvxm+csxTNq2OPYAAt8y7RyckW52NvDPqX+VEJToS1OjEi4OvlJHR2XfXIMXGvRcq6s+jRGAWZeKZnl7lj4X6g5jAU/7Uvn9bLePhKGffOTUtq40zC/i6YuHqNGC/fWqPS/24d09KznD+upzADysfeJXwsx7HV5FNRUFAbU3A=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <34D6B03F7C02674E84A02530936DB74C@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <ce541dfc04cd4b879648c214efc74635@quantatw.com>
- <CAO=notz7XMi0i1TWM1t4H3GL1PC=H24wKY0_smJin1CAYVYSaQ@mail.gmail.com>
- <369926533c3e448c9d1a0d28391fd688@quantatw.com>
- <af485fc0d2c44f3e8927290ff6c95ea0@quantatw.com>
- <CAO=notwuxuWKeKMY8mnse1wY1Nt6GNx4rcxHDokqXtkzyoLYYQ@mail.gmail.com>
- <02128993d3064b53ac289500746666ab@quantatw.com>
- <dbd75be40e2f4d41a5b621a5dc3b3df7@quantatw.com>
- <CAO=notzTM-VLV14VdXWSukftABB1Tz4i-ixPOY5qn5cs_0-1Ng@mail.gmail.com>
- <bfe53d3d-0d00-0ac9-9a43-5b24e09ad309@linux.intel.com>
- <4b7d382d292d45fdab63f4adcc40eded@quantatw.com>
- <CAO=notxe++aFL-c-8Wb+Wyxc3FbLFRxytP4L=9ggz1sp5KgVpg@mail.gmail.com>
- <CAO=notzzqC8hFa+j8NFR+7oW6y6Yh3R_HEP_+BG4y-E9U1uHaw@mail.gmail.com>
- <CAO=notwpNRU7trh-E-L7DP+nyvNMLWVBRP729MnkBoaj+pYDCA@mail.gmail.com>
- <5a46202d21694717b1aa40b4ef5105ea@quantatw.com>
-In-Reply-To: <5a46202d21694717b1aa40b4ef5105ea@quantatw.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 16 Sep 2019 08:44:43 -0700
-Message-ID: <CAO=notzeTstrT6hOvu9qsF7c-LHYTxZsO7j5bH5w=w=e=rkzGg@mail.gmail.com>
-Subject: Re: [phosphor-pid-control] scaling issue
-To: =?UTF-8?B?SGFuayBMaW91ICjlionmmYnnv7Ap?= <Hank.Liou@quantatw.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-Network-Message-Id: c2e24eb2-9112-4015-75cb-08d73adadff5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Sep 2019 19:20:02.9562 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9SVZ8SR50LN3PHu8viGxa0wBOswgkTbQXyAWMhNwJewi9kCKZ0auRduiNq7+znUceE1NEdgHlmNpfD3MHiHd4g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3681
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
+ definitions=2019-09-16_07:2019-09-11,2019-09-16 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 adultscore=0 clxscore=1015 mlxscore=0
+ bulkscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1909160188
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,377 +140,171 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>, Christian
+ Svensson <bluecmd@google.com>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Sep 16, 2019 at 1:37 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Ha=
-nk.Liou@quantatw.com> wrote:
->
-> Hi Patrick,
->
-> Thanks for your help. This change does solve the issue.
-
-No problem! I enjoy it when someone hits an edge case or a situation
-not yet considered.  We don't have nearly enough variety of
-configurations to really test quirks and unit-testing only covers so
-much.
-
-I saw your review requesting the configuration change, and +1'd it.
-Presumably you're well on your way.
-
-Thanks for your patience in this back-and-forth to resolve the issue.
-
->
-> Hank
->
-> >-----Original Message-----
-> >From: Patrick Venture [mailto:venture@google.com]
-> >Sent: Wednesday, September 11, 2019 1:52 AM
-> >To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Hank.Liou@quantatw.com>
-> >Cc: James Feist <james.feist@linux.intel.com>; openbmc@lists.ozlabs.org
-> >Subject: Re: [phosphor-pid-control] scaling issue
-> >
-> >On Tue, Sep 10, 2019 at 7:52 AM Patrick Venture <venture@google.com>
-> >wrote:
-> >>
-> >> On Tue, Sep 10, 2019 at 7:39 AM Patrick Venture <venture@google.com>
-> >wrote:
-> >> >
-> >> > On Tue, Sep 10, 2019 at 1:02 AM Hank Liou (=E5=8A=89=E6=99=89=E7=BF=
-=B0)
-> ><Hank.Liou@quantatw.com> wrote:
-> >> > >
-> >> > > >-----Original Message-----
-> >> > > >From: James Feist [mailto:james.feist@linux.intel.com]
-> >> > > >Sent: Tuesday, September 10, 2019 1:27 AM
-> >> > > >To: Patrick Venture <venture@google.com>; Hank Liou (=E5=8A=89=E6=
-=99=89=E7=BF=B0)
-> >> > > ><Hank.Liou@quantatw.com>
-> >> > > >Cc: openbmc@lists.ozlabs.org
-> >> > > >Subject: Re: [phosphor-pid-control] scaling issue
-> >> > > >
-> >> > > >On 9/9/19 9:57 AM, Patrick Venture wrote:
-> >> > > >> On Thu, Sep 5, 2019 at 12:25 AM Hank Liou (=E5=8A=89=E6=99=89=
-=E7=BF=B0)
-> >> > > ><Hank.Liou@quantatw.com> wrote:
-> >> > > >>>
-> >> > > >>> Hi Patrick,
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> Sorry for not clearly stating our problem. We have the followi=
-ng
-> >issue:
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> temp sensor gets 31(C) -> 31 / 0.255 =3D 121.57 -> pid uses
-> >> > > >>> 127.57 as input for temp sensor ->
-> >> > > >>>
-> >> > > >>> stepwise fan table output 100 duty -> full speed fan
-> >> > > >>
-> >> > > >> Ok, so you're getting a dbus-based min/max value and you want
-> >> > > >> to ignore it?
-> >> > >
-> >> > > Yes, we want to ignore it.
-> >> >
-> >> > It looks like the sensor value scaling should be ignored for non-fan=
-s.
-> >> > Per
-> >> > https://github.com/openbmc/phosphor-pid-
-> >control/commit/75eb769d35143
-> >> > 4547899186f73ff70ae00d7934a, this change was only meant to deal with
-> >> > a fan case where the goal looks like it was to treat the fan values
-> >> > as percentages on reading the sensors, and not only on writing them
-> >> > by leveraging the min/max json sometimes?
-> >> >
-> >> > I can change the dbuspassive constructor to set the values back to
-> >> > their input values (ignoring dbus) if the type is not "fan", but I'm
-> >> > not sure that makes sense because the real use-case isn't clear to
-> >> > me, and I know the scaling from dbus is gone:
-> >> > https://github.com/openbmc/phosphor-pid-
-> >control/search?utf8=3D%E2%9C%9
-> >> > 3&q=3DinheritValueFromDbus&type=3D
-> >> >
-> >> > I'll submit the patch real quick, but I'm not sure it's the right
-> >> > long-term fix.  I'd like to clean this up if possible so that we
-> >> > don't leverage "unused" features of a configuration and instead
-> >> > explicitly use them (or not).
-> >>
-> >> This patch should address what you're seeing.  Overall, I think there
-> >> should be a larger change addressing the goal of the original change.
-> >>
-> >> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-pid-control/+/25
-> >> 070
-> >
-> >I decided to take on the larger change because chances are we might hit =
-it
-> >some other way:
-> >https://gerrit.openbmc-project.xyz/c/25072/
-> >
-> >This lets you specify a json configuration option that will ignore the
-> >MinValue/MaxValue properties on dbus.
-> >
-> >>
-> >> >
-> >> > >
-> >> > > >
-> >> > > >What is providing the dbus-based min/max?
-> >> > >
-> >> > > We use dbus min/max for phosphor-sel-logger utility. The dbus min/=
-max
-> >is provided by config file of phosphor-hwmon.
-> >> > > In our case, they are -128/127 respectively.
-> >> > >
-> >> > > I have an observation:
-> >> > > I found that while fan readpath is of the form "/sys/...", the fan=
- input
-> >would not be rescaled. The same is for other sensors since the input val=
-ue
-> >would not enter rescaling function.
-> >> > > However, in our case we don't have a sys path for some thermal sen=
-sors.
-> >> > >
-> >> > > >
-> >> > > >> In the json configuration, if you set the values to 0, they are
-> >> > > >> set to the default (0), so there'd be no clean way to know to
-> >> > > >> ignore dbus in this case, without adding a small check to only
-> >> > > >> consider min/max from dbus when sensor is not temp/margin.
-> >> > > >> Basically, only care about min/max on dbus if type is "fan"
-> >> > > >
-> >> > >
-> >> > > I agree with the option to add a check since the min/max is only f=
-or fan
-> >now.
-> >> > >
-> >> > > >Why is the dbus-based min/max even there if you don't plan on usi=
-ng it?
-> >> > > >
-> >> > > >>
-> >> > > >> If that's right, James do you have a cycle to look at this one-=
-liner?
-> >> > > >>
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> As a result, fan will be at full speed while temp is low.
-> >> > > >>> Before the commit
-> >> > > >fc2e803 [1], this won't happen. The root cause is that, before
-> >> > > >fc2e803, pid will use config min/max, which is 0 in our case.
-> >> > > >This would not trigger scaling function, namely
-> >> > > >scaleSensorReading, in util.cpp. However, after such commit,
-> >> > > >min/max would be non-zero (-128/127 from DBus). This will trigger
-> >scaling function.
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> [1]
-> >> > > >>> https://github.com/openbmc/phosphor-pid-
-> >> > > >control/commit/fc2e803f5d9256
-> >> > > >>> 944e18c7c878a441606b1f121c
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> Hank
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> ________________________________
-> >> > > >>> From: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0)
-> >> > > >>> Sent: Monday, September 2, 2019 4:52 PM
-> >> > > >>> To: Patrick Venture
-> >> > > >>> Cc: James Feist; openbmc@lists.ozlabs.org
-> >> > > >>> Subject: Re: [phosphor-pid-control] scaling issue
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> Hi Patrick,
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> Since we use phosphor-sel-logger [1] at the same time, we do
-> >> > > >>> assign min
-> >> > > >and max of temp sensors to Dbus (max: 127, min: -128). So in the
-> >> > > >present case, our temp value will be divided by 0.255 (also due
-> >> > > >to exponent is -3 here). This will cause re-scaling problem.
-> >> > > >Therefore there should be an statement to distinguish sensor
-> >> > > >types. If it is "temp", then one assigns 0 to the min and max fro=
-m Dbus.
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> [1]
-> >> > > >>> https://github.com/openbmc/phosphor-sel-
-> >> > > >logger/blob/3d300fca24b30864b
-> >> > > >>> 3e9a4f5768cfe5e769458ae/include/sensorutils.hpp#L59
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> Hank
-> >> > > >>>
-> >> > > >>>
-> >> > > >>> ________________________________
-> >> > > >>> From: Patrick Venture <venture@google.com>
-> >> > > >>> Sent: Friday, August 30, 2019 1:47 AM
-> >> > > >>> To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0)
-> >> > > >>> Cc: James Feist; openbmc@lists.ozlabs.org
-> >> > > >>> Subject: Re: [phosphor-pid-control] scaling issue
-> >> > > >>>
-> >> > > >>> PTAL - https://gerrit.openbmc-project.xyz/24827 - this is
-> >> > > >>> merged, and the srcrev bump should propagate into
-> >openbmc/openbmc in a day or two.
-> >> > > >>>
-> >> > > >>> On Wed, Aug 28, 2019 at 11:00 PM Hank Liou (=E5=8A=89=E6=99=89=
-=E7=BF=B0)
-> >> > > ><Hank.Liou@quantatw.com> wrote:
-> >> > > >>>>
-> >> > > >>>> Hi Patrick,
-> >> > > >>>>
-> >> > > >>>> I think it's OK to parse the config min&max for temp sensors.
-> >> > > >>>>
-> >> > > >>>> Any suggestion?
-> >> > > >>>>
-> >> > > >>>> Thanks,
-> >> > > >>>> Hank
-> >> > > >>>>
-> >> > > >>>>> -----Original Message-----
-> >> > > >>>>> From: openbmc [mailto:openbmc-
-> >> > > >>>>> bounces+hank.liou=3Dquantatw.com@lists.ozlabs.org] On Behalf
-> >> > > >>>>> bounces+Of Hank Liou
-> >> > > >>>>> (=E5=8A=89=E6=99=89=E7=BF=B0)
-> >> > > >>>>> Sent: Friday, August 23, 2019 4:31 PM
-> >> > > >>>>> To: Patrick Venture <venture@google.com>; James Feist
-> >> > > >>>>> <james.feist@linux.intel.com>
-> >> > > >>>>> Cc: openbmc@lists.ozlabs.org
-> >> > > >>>>> Subject: RE: [phosphor-pid-control] scaling issue
-> >> > > >>>>>
-> >> > > >>>>> Hi Patrick,
-> >> > > >>>>>
-> >> > > >>>>>> -----Original Message-----
-> >> > > >>>>>> From: Patrick Venture [mailto:venture@google.com]
-> >> > > >>>>>> Sent: Wednesday, August 21, 2019 10:32 PM
-> >> > > >>>>>> To: Hank Liou (=E5=8A=89=E6=99=89=E7=BF=B0) <Hank.Liou@quan=
-tatw.com>; James
-> >Feist
-> >> > > >>>>>> <james.feist@linux.intel.com>
-> >> > > >>>>>> Cc: openbmc@lists.ozlabs.org
-> >> > > >>>>>> Subject: Re: [phosphor-pid-control] scaling issue
-> >> > > >>>>>>
-> >> > > >>>>>> On Wed, Aug 21, 2019 at 1:11 AM Hank Liou (=E5=8A=89=E6=99=
-=89=E7=BF=B0)
-> >> > > >>>>>> <Hank.Liou@quantatw.com> wrote:
-> >> > > >>>>>>>
-> >> > > >>>>>>> Hi All,
-> >> > > >>>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>>> After commit [1], I found my temp sensor reading would be
-> >> > > >>>>>>> re-scaled by
-> >> > > >>>>>> multiplying 1 over 255, making temperature into unfamiliar =
-unit.
-> >> > > >>>>>> Also the fan rpm reading would lie in [0,1] interval,
-> >> > > >>>>>> letting the fan input to be 0 (since the input value of fan
-> >> > > >>>>>> is from an integer array [2]). Are these
-> >> > > >>>>> normal behaviors?
-> >> > > >>>>>> Or do I miss something?
-> >> > > >>>>>>
-> >> > > >>>>>> Are you using dbus configuration or json?  If json, can you
-> >> > > >>>>>> attach your
-> >> > > >config.
-> >> > > >>>>>> Since you're saying it was working and now isn't, I'm
-> >> > > >>>>>> assuming there's something about the config being treated
-> >> > > >>>>>> differently with the code changes in an unexpected way.
-> >> > > >>>>>
-> >> > > >>>>> I found pid control will first read min and max from dbus
-> >> > > >>>>> and then (before commit [1]) revise them if
-> >> > > >>>>>
-> >> > > >>>>> info->min !=3D conf::inheritValueFromDbus (in
-> >> > > >>>>> info->dbus/dbuspassive.cpp)
-> >> > > >>>>>
-> >> > > >>>>> After value initialization, the min and max would be the
-> >> > > >>>>> ones in json file (Json file [3]). However, after commit [1]
-> >> > > >>>>> the min and max values of config would not be fed into the f=
-an
-> >control process.
-> >> > > >>>>> The scaling issue is originated from commit [4] with the aim
-> >> > > >>>>> to treat fan rpm as percentage. It seems that commit [1]
-> >> > > >>>>> unexpectedly affects temp sensors in the sense that the temp
-> >> > > >>>>> is the integer reading not percentage. Before commit [1], it
-> >> > > >>>>> would not re-scale the
-> >> > > >temp reading since my min and max are 0 [6].
-> >> > > >>>>>
-> >> > > >>>>>
-> >> > > >>>>>
-> >> > > >>>>> There is another issue with commit [1]. Now the fan rpm
-> >> > > >>>>> would be something like
-> >> > > >>>>>
-> >> > > >>>>> 1500 / 20000 =3D 0.075
-> >> > > >>>>>
-> >> > > >>>>> where rpm max 20000 is from dbus. However the fan input
-> >> > > >>>>> function would transfer double into int, which is 0 for 0.07=
-5 (see
-> >[5]).
-> >> > > >>>>> Hence the fan input is 0 not percentage. Is there something
-> >wrong?
-> >> > > >>>>>
-> >> > > >>>>> [1] https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>> control/commit/fc2e803f5d9256944e18c7c878a441606b1f121c
-> >> > > >>>>> [2] https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>>
-> >> > >
-> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancont
-> >> > > >ro
-> >> > > >>>>> lle
-> >> > > >>>>> r.cpp#L86
-> >> > > >>>>> [3]
-> >> > > >>>>>        {
-> >> > > >>>>>             "name": "fan1",
-> >> > > >>>>>             "type": "fan",
-> >> > > >>>>>             "readPath": "/sys/class/hwmon/hwmon1/fan1_input"=
-,
-> >> > > >>>>>             "writePath": "/sys/class/hwmon/hwmon1/pwm1",
-> >> > > >>>>>             "min": 0,
-> >> > > >>>>>             "max": 255
-> >> > > >>>>>         },
-> >> > > >>>>>         {
-> >> > > >>>>>             "name": "temp1",
-> >> > > >>>>>             "type": "temp",
-> >> > > >>>>>             "readPath":
-> >> > > >"/xyz/openbmc_project/sensors/temperature/temp1",
-> >> > > >>>>>             "writePath": "",
-> >> > > >>>>>             "min": 0,
-> >> > > >>>>>             "max": 0
-> >> > > >>>>>         }
-> >> > > >>>>> [4] https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>> control/commit/75eb769d351434547899186f73ff70ae00d7934a
-> >> > > >>>>> [5] https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>>
-> >> > >
-> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/pid/fancont
-> >> > > >ro
-> >> > > >>>>> lle
-> >> > > >>>>> r.cpp#L64
-> >> > > >>>>> [6] https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>>
-> >> > >
-> >>control/blob/a7ec8350d17b70153cebe666d3fbe88bddd02a1a/dbus/dbuspa
-> >> > > >ss
-> >> > > >>>>> i
-> >> > > >>>>> ve.cpp#L158
-> >> > > >>>>>
-> >> > > >>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>>> [1]
-> >> > > >>>>>>> https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>>> control/commit/fc2e803f5d92569
-> >> > > >>>>>>> 44e18c7c878a441606b1f121c
-> >> > > >>>>>>>
-> >> > > >>>>>>> [2]
-> >> > > >>>>>>> https://github.com/openbmc/phosphor-pid-
-> >> > > >>>>>> control/blob/a7ec8350d17b70153
-> >> > > >>>>>>> cebe666d3fbe88bddd02a1a/pid/fancontroller.cpp#L86
-> >> > > >>>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>>> Thanks,
-> >> > > >>>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>>> Hank Liou
-> >> > > >>>>>>>
-> >> > > >>>>>>> Quanta Computer Inc.
-> >> > > >>>>>>>
-> >> > > >>>>>>>
-> >> > > >>>>>
-> >> > > >>>>> Sincerely,
-> >> > > >>>>> Hank
+DQoNCu+7v09uIDkvMTUvMTksIDc6MzkgUE0sICJTYW11ZWwgTWVuZG96YS1Kb25hcyIgPHNhbUBt
+ZW5kb3pham9uYXMuY29tPiB3cm90ZToNCg0KICAgIE9uIFRodSwgMjAxOS0wOS0xMiBhdCAxMjow
+NCAtMDcwMCwgVmlqYXkgS2hlbWthIHdyb3RlOg0KICAgID4gRGlzYWJsaW5nIG11bHRpY2FzdCBm
+aWx0ZXJpbmcgZnJvbSBOQ1NJIGlmIGl0IGlzIHN1cHBvcnRlZC4gQXMgaXQNCiAgICA+IHNob3Vs
+ZCBub3QgZmlsdGVyIGFueSBtdWx0aWNhc3QgcGFja2V0cy4gSW4gY3VycmVudCBjb2RlLCBtdWx0
+aWNhc3QNCiAgICA+IGZpbHRlciBpcyBlbmFibGVkIGFuZCB3aXRoIGFuIGV4Y2VwdGlvbiBvZiBv
+cHRpb25hbCBmaWVsZCBzdXBwb3J0ZWQNCiAgICA+IGJ5IGRldmljZSBhcmUgZGlzYWJsZWQgZmls
+dGVyaW5nLg0KICAgID4gDQogICAgPiBNYWlubHkgSSBzZWUgaWYgZ29hbCBpcyB0byBkaXNhYmxl
+IGZpbHRlcmluZyBmb3IgSVBWNiBwYWNrZXRzIHRoZW4NCiAgICA+IGxldA0KICAgID4gaXQgZGlz
+YWJsZWQgZm9yIGV2ZXJ5IG90aGVyIHR5cGVzIGFzIHdlbGwuIEFzIHdlIGFyZSBzZWVpbmcgaXNz
+dWVzDQogICAgPiB3aXRoDQogICAgPiBMTERQIG5vdCB3b3JraW5nIHdpdGggdGhpcyBlbmFibGVk
+IGZpbHRlcmluZy4gQW5kIHRoZXJlIGFyZSBvdGhlcg0KICAgID4gaXNzdWVzDQogICAgPiB3aXRo
+IElQVjYuDQogICAgPiANCiAgICA+IEJ5IERpc2FibGluZyB0aGlzIG11bHRpY2FzdCBjb21wbGV0
+ZWx5LCBpdCBpcyB3b3JraW5nIGZvciBib3RoIElQVjYNCiAgICA+IGFzDQogICAgPiB3ZWxsIGFz
+IExMRFAuDQogICAgPiANCiAgICA+IFNpZ25lZC1vZmYtYnk6IFZpamF5IEtoZW1rYSA8dmlqYXlr
+aGVta2FAZmIuY29tPg0KICAgIA0KICAgIEhpIFZpamF5LA0KICAgIA0KICAgIFRoZXJlIGFyZSBk
+ZWZpbml0ZWx5IHNvbWUgY3VycmVudCBpc3N1ZXMgd2l0aCBtdWx0aWNhc3QgZmlsdGVyaW5nIGFu
+ZA0KICAgIElQdjYgd2hlbiBiZWhpbmQgTkMtU0kgYXQgdGhlIG1vbWVudC4gSXQgd291bGQgYmUg
+bmljZSB0byBtYWtlIHRoaXMNCiAgICBjb25maWd1cmFibGUgaW5zdGVhZCBvZiBkaXNhYmxpbmcg
+dGhlIGNvbXBvbmVudCB3aG9sZXNhbGUgYnV0IEkgZG9uJ3QNCiAgICBiZWxpZXZlIHRoaXMgYWN0
+dWFsbHkgKmJyZWFrcyogYW55b25lJ3MgY29uZmlndXJhdGlvbi4gSXQgd291bGQgYmUgbmljZQ0K
+ICAgIHRvIHNlZSBzb21lIFRlc3RlZC1CeSdzIGZyb20gdGhlIE9wZW5CTUMgcGVvcGxlIHRob3Vn
+aC4NCiAgICANCiAgICBJJ2xsIGhhdmUgYSBsb29rIGF0IHRoZSBtdWx0aWNhc3QgaXNzdWVzLCBD
+QydpbmcgaW4gQ2hyaXMgdG9vIHdobyBJSVJDDQogICAgd2FzIGxvb2tpbmcgYXQgc2ltaWxhciBp
+c3N1ZXMgZm9yIHUtYm1jIGluIGNhc2UgaGUgZ290IGZ1cnRoZXIuDQoNClNhbSwNClRoZSBjdXJy
+ZW50IG11bHRpY2FzdCBpc3N1ZXMgZm9yIElQVjYgYXJlIHZlbmRvcidzIGlzc3Vlcy4gQW5kIGlm
+IHNvbWUgaXMgDQpub3Qgc3VwcG9ydGluZyBJUFY2IGZvcndhcmRpbmcgdG8gbWFuYWdlbWVudCBj
+b250cm9sbGVyIGJpdCBmaWVsZHMgaW4gDQpFR01GIHRoZW4gd2UgYXJlIGZpbHRlcmluZyBpdCBh
+bmQgYnkgZGlzYWJsaW5nIGZpbHRlcmluZyBpdCB3b3JrcyBmb3IgTWVsbGFub3gNCkFuZCBCcm9h
+ZGNvbSBjYXJkcy4gSSBoYXZlIHRlc3RlZCBpdC4gVGhhdCdzIHdoeSBJIGhhdmUgZGlzYWJsZWQg
+aXQgdG8gc3RhcnQgd2l0aA0KQW5kIGl0IGNhbiBiZSBlbmFibGVkIGZyb20gbmV0bGluayB1dGls
+aXR5IGlmIHJlcXVpcmVkLg0KICAgIA0KICAgIEFja2VkLWJ5OiBTYW11ZWwgTWVuZG96YS1Kb25h
+cyA8c2FtQG1lbmRvemFqb25hcy5jb20+DQogICAgDQogICAgPiAtLS0NCiAgICA+ICBuZXQvbmNz
+aS9pbnRlcm5hbC5oICAgIHwgIDcgKy0tDQogICAgPiAgbmV0L25jc2kvbmNzaS1tYW5hZ2UuYyB8
+IDk4ICsrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCiAgICA+IC0tDQog
+ICAgPiAgMiBmaWxlcyBjaGFuZ2VkLCAxMiBpbnNlcnRpb25zKCspLCA5MyBkZWxldGlvbnMoLSkN
+CiAgICA+IA0KICAgID4gZGlmZiAtLWdpdCBhL25ldC9uY3NpL2ludGVybmFsLmggYi9uZXQvbmNz
+aS9pbnRlcm5hbC5oDQogICAgPiBpbmRleCAwYjNmMDY3M2UxYTIuLmFkM2ZkN2YxZGE3NSAxMDA2
+NDQNCiAgICA+IC0tLSBhL25ldC9uY3NpL2ludGVybmFsLmgNCiAgICA+ICsrKyBiL25ldC9uY3Np
+L2ludGVybmFsLmgNCiAgICA+IEBAIC0yNjQsOSArMjY0LDcgQEAgZW51bSB7DQogICAgPiAgCW5j
+c2lfZGV2X3N0YXRlX2NvbmZpZ19ldiwNCiAgICA+ICAJbmNzaV9kZXZfc3RhdGVfY29uZmlnX3Nt
+YSwNCiAgICA+ICAJbmNzaV9kZXZfc3RhdGVfY29uZmlnX2ViZiwNCiAgICA+IC0jaWYgSVNfRU5B
+QkxFRChDT05GSUdfSVBWNikNCiAgICA+IC0JbmNzaV9kZXZfc3RhdGVfY29uZmlnX2VnbWYsDQog
+ICAgPiAtI2VuZGlmDQogICAgPiArCW5jc2lfZGV2X3N0YXRlX2NvbmZpZ19kZ21mLA0KICAgID4g
+IAluY3NpX2Rldl9zdGF0ZV9jb25maWdfZWNudCwNCiAgICA+ICAJbmNzaV9kZXZfc3RhdGVfY29u
+ZmlnX2VjLA0KICAgID4gIAluY3NpX2Rldl9zdGF0ZV9jb25maWdfYWUsDQogICAgPiBAQCAtMjk1
+LDkgKzI5Myw2IEBAIHN0cnVjdCBuY3NpX2Rldl9wcml2IHsNCiAgICA+ICAjZGVmaW5lIE5DU0lf
+REVWX1JFU0VUCQk4ICAgICAgICAgICAgLyogUmVzZXQgc3RhdGUgb2YNCiAgICA+IE5DICAgICAg
+ICAgICovDQogICAgPiAgCXVuc2lnbmVkIGludCAgICAgICAgZ21hX2ZsYWc7ICAgICAgICAvKiBP
+RU0gR01BDQogICAgPiBmbGFnICAgICAgICAgICAgICAgKi8NCiAgICA+ICAJc3BpbmxvY2tfdCAg
+ICAgICAgICBsb2NrOyAgICAgICAgICAgIC8qIFByb3RlY3QgdGhlIE5DU0kNCiAgICA+IGRldmlj
+ZSAgICAqLw0KICAgID4gLSNpZiBJU19FTkFCTEVEKENPTkZJR19JUFY2KQ0KICAgID4gLQl1bnNp
+Z25lZCBpbnQgICAgICAgIGluZXQ2X2FkZHJfbnVtOyAgLyogTnVtYmVyIG9mIElQdjYNCiAgICA+
+IGFkZHJlc3NlcyAgICovDQogICAgPiAtI2VuZGlmDQogICAgPiAgCXVuc2lnbmVkIGludCAgICAg
+ICAgcGFja2FnZV9wcm9iZV9pZDsvKiBDdXJyZW50IElEIGR1cmluZw0KICAgID4gcHJvYmUgICAg
+Ki8NCiAgICA+ICAJdW5zaWduZWQgaW50ICAgICAgICBwYWNrYWdlX251bTsgICAgIC8qIE51bWJl
+ciBvZg0KICAgID4gcGFja2FnZXMgICAgICAgICAqLw0KICAgID4gIAlzdHJ1Y3QgbGlzdF9oZWFk
+ICAgIHBhY2thZ2VzOyAgICAgICAgLyogTGlzdCBvZg0KICAgID4gcGFja2FnZXMgICAgICAgICAg
+ICovDQogICAgPiBkaWZmIC0tZ2l0IGEvbmV0L25jc2kvbmNzaS1tYW5hZ2UuYyBiL25ldC9uY3Np
+L25jc2ktbWFuYWdlLmMNCiAgICA+IGluZGV4IDc1NWFhYjY2ZGNhYi4uYmNlOGI0NDMyODlkIDEw
+MDY0NA0KICAgID4gLS0tIGEvbmV0L25jc2kvbmNzaS1tYW5hZ2UuYw0KICAgID4gKysrIGIvbmV0
+L25jc2kvbmNzaS1tYW5hZ2UuYw0KICAgID4gQEAgLTE0LDcgKzE0LDYgQEANCiAgICA+ICAjaW5j
+bHVkZSA8bmV0L3NvY2suaD4NCiAgICA+ICAjaW5jbHVkZSA8bmV0L2FkZHJjb25mLmg+DQogICAg
+PiAgI2luY2x1ZGUgPG5ldC9pcHY2Lmg+DQogICAgPiAtI2luY2x1ZGUgPG5ldC9pZl9pbmV0Ni5o
+Pg0KICAgID4gICNpbmNsdWRlIDxuZXQvZ2VuZXRsaW5rLmg+DQogICAgPiAgDQogICAgPiAgI2lu
+Y2x1ZGUgImludGVybmFsLmgiDQogICAgPiBAQCAtOTc4LDkgKzk3Nyw3IEBAIHN0YXRpYyB2b2lk
+IG5jc2lfY29uZmlndXJlX2NoYW5uZWwoc3RydWN0DQogICAgPiBuY3NpX2Rldl9wcml2ICpuZHAp
+DQogICAgPiAgCWNhc2UgbmNzaV9kZXZfc3RhdGVfY29uZmlnX2V2Og0KICAgID4gIAljYXNlIG5j
+c2lfZGV2X3N0YXRlX2NvbmZpZ19zbWE6DQogICAgPiAgCWNhc2UgbmNzaV9kZXZfc3RhdGVfY29u
+ZmlnX2ViZjoNCiAgICA+IC0jaWYgSVNfRU5BQkxFRChDT05GSUdfSVBWNikNCiAgICA+IC0JY2Fz
+ZSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZWdtZjoNCiAgICA+IC0jZW5kaWYNCiAgICA+ICsJY2Fz
+ZSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZGdtZjoNCiAgICA+ICAJY2FzZSBuY3NpX2Rldl9zdGF0
+ZV9jb25maWdfZWNudDoNCiAgICA+ICAJY2FzZSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZWM6DQog
+ICAgPiAgCWNhc2UgbmNzaV9kZXZfc3RhdGVfY29uZmlnX2FlOg0KICAgID4gQEAgLTEwMzMsMjMg
+KzEwMzAsMjMgQEAgc3RhdGljIHZvaWQgbmNzaV9jb25maWd1cmVfY2hhbm5lbChzdHJ1Y3QNCiAg
+ICA+IG5jc2lfZGV2X3ByaXYgKm5kcCkNCiAgICA+ICAJCX0gZWxzZSBpZiAobmQtPnN0YXRlID09
+IG5jc2lfZGV2X3N0YXRlX2NvbmZpZ19lYmYpIHsNCiAgICA+ICAJCQluY2EudHlwZSA9IE5DU0lf
+UEtUX0NNRF9FQkY7DQogICAgPiAgCQkJbmNhLmR3b3Jkc1swXSA9IG5jLT5jYXBzW05DU0lfQ0FQ
+X0JDXS5jYXA7DQogICAgPiAtCQkJaWYgKG5jc2lfY2hhbm5lbF9pc190eChuZHAsIG5jKSkNCiAg
+ICA+ICsJCQkvKiBpZiBtdWx0aWNhc3QgZ2xvYmFsIGZpbHRlcmluZyBpcyBzdXBwb3J0ZWQNCiAg
+ICA+IHRoZW4NCiAgICA+ICsJCQkgKiBkaXNhYmxlIGl0IHNvIHRoYXQgYWxsIG11bHRpY2FzdCBw
+YWNrZXQgd2lsbA0KICAgID4gYmUNCiAgICA+ICsJCQkgKiBmb3J3YXJkZWQgdG8gbWFuYWdlbWVu
+dCBjb250cm9sbGVyDQogICAgPiArCQkJICovDQogICAgPiArCQkJaWYgKG5jLT5jYXBzW05DU0lf
+Q0FQX0dFTkVSSUNdLmNhcCAmDQogICAgPiArCQkJICAgICBOQ1NJX0NBUF9HRU5FUklDX01DKQ0K
+ICAgID4gKwkJCQluZC0+c3RhdGUgPSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZGdtZjsNCiAgICA+
+ICsJCQllbHNlIGlmIChuY3NpX2NoYW5uZWxfaXNfdHgobmRwLCBuYykpDQogICAgPiAgCQkJCW5k
+LT5zdGF0ZSA9IG5jc2lfZGV2X3N0YXRlX2NvbmZpZ19lY250Ow0KICAgID4gIAkJCWVsc2UNCiAg
+ICA+ICAJCQkJbmQtPnN0YXRlID0gbmNzaV9kZXZfc3RhdGVfY29uZmlnX2VjOw0KICAgID4gLSNp
+ZiBJU19FTkFCTEVEKENPTkZJR19JUFY2KQ0KICAgID4gLQkJCWlmIChuZHAtPmluZXQ2X2FkZHJf
+bnVtID4gMCAmJg0KICAgID4gLQkJCSAgICAobmMtPmNhcHNbTkNTSV9DQVBfR0VORVJJQ10uY2Fw
+ICYNCiAgICA+IC0JCQkgICAgIE5DU0lfQ0FQX0dFTkVSSUNfTUMpKQ0KICAgID4gLQkJCQluZC0+
+c3RhdGUgPSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZWdtZjsNCiAgICA+IC0JCX0gZWxzZSBpZiAo
+bmQtPnN0YXRlID09IG5jc2lfZGV2X3N0YXRlX2NvbmZpZ19lZ21mKSB7DQogICAgPiAtCQkJbmNh
+LnR5cGUgPSBOQ1NJX1BLVF9DTURfRUdNRjsNCiAgICA+IC0JCQluY2EuZHdvcmRzWzBdID0gbmMt
+PmNhcHNbTkNTSV9DQVBfTUNdLmNhcDsNCiAgICA+ICsJCX0gZWxzZSBpZiAobmQtPnN0YXRlID09
+IG5jc2lfZGV2X3N0YXRlX2NvbmZpZ19kZ21mKSB7DQogICAgPiArCQkJbmNhLnR5cGUgPSBOQ1NJ
+X1BLVF9DTURfREdNRjsNCiAgICA+ICAJCQlpZiAobmNzaV9jaGFubmVsX2lzX3R4KG5kcCwgbmMp
+KQ0KICAgID4gIAkJCQluZC0+c3RhdGUgPSBuY3NpX2Rldl9zdGF0ZV9jb25maWdfZWNudDsNCiAg
+ICA+ICAJCQllbHNlDQogICAgPiAgCQkJCW5kLT5zdGF0ZSA9IG5jc2lfZGV2X3N0YXRlX2NvbmZp
+Z19lYzsNCiAgICA+IC0jZW5kaWYgLyogQ09ORklHX0lQVjYgKi8NCiAgICA+ICAJCX0gZWxzZSBp
+ZiAobmQtPnN0YXRlID09IG5jc2lfZGV2X3N0YXRlX2NvbmZpZ19lY250KSB7DQogICAgPiAgCQkJ
+aWYgKG5wLT5wcmVmZXJyZWRfY2hhbm5lbCAmJg0KICAgID4gIAkJCSAgICBuYyAhPSBucC0+cHJl
+ZmVycmVkX2NoYW5uZWwpDQogICAgPiBAQCAtMTQ4Myw3MCArMTQ4MCw2IEBAIGludCBuY3NpX3By
+b2Nlc3NfbmV4dF9jaGFubmVsKHN0cnVjdA0KICAgID4gbmNzaV9kZXZfcHJpdiAqbmRwKQ0KICAg
+ID4gIAlyZXR1cm4gLUVOT0RFVjsNCiAgICA+ICB9DQogICAgPiAgDQogICAgPiAtI2lmIElTX0VO
+QUJMRUQoQ09ORklHX0lQVjYpDQogICAgPiAtc3RhdGljIGludCBuY3NpX2luZXQ2YWRkcl9ldmVu
+dChzdHJ1Y3Qgbm90aWZpZXJfYmxvY2sgKnRoaXMsDQogICAgPiAtCQkJCXVuc2lnbmVkIGxvbmcg
+ZXZlbnQsIHZvaWQgKmRhdGEpDQogICAgPiAtew0KICAgID4gLQlzdHJ1Y3QgaW5ldDZfaWZhZGRy
+ICppZmEgPSBkYXRhOw0KICAgID4gLQlzdHJ1Y3QgbmV0X2RldmljZSAqZGV2ID0gaWZhLT5pZGV2
+LT5kZXY7DQogICAgPiAtCXN0cnVjdCBuY3NpX2RldiAqbmQgPSBuY3NpX2ZpbmRfZGV2KGRldik7
+DQogICAgPiAtCXN0cnVjdCBuY3NpX2Rldl9wcml2ICpuZHAgPSBuZCA/IFRPX05DU0lfREVWX1BS
+SVYobmQpIDogTlVMTDsNCiAgICA+IC0Jc3RydWN0IG5jc2lfcGFja2FnZSAqbnA7DQogICAgPiAt
+CXN0cnVjdCBuY3NpX2NoYW5uZWwgKm5jOw0KICAgID4gLQlzdHJ1Y3QgbmNzaV9jbWRfYXJnIG5j
+YTsNCiAgICA+IC0JYm9vbCBhY3Rpb247DQogICAgPiAtCWludCByZXQ7DQogICAgPiAtDQogICAg
+PiAtCWlmICghbmRwIHx8IChpcHY2X2FkZHJfdHlwZSgmaWZhLT5hZGRyKSAmDQogICAgPiAtCSAg
+ICAoSVBWNl9BRERSX0xJTktMT0NBTCB8IElQVjZfQUREUl9MT09QQkFDSykpKQ0KICAgID4gLQkJ
+cmV0dXJuIE5PVElGWV9PSzsNCiAgICA+IC0NCiAgICA+IC0Jc3dpdGNoIChldmVudCkgew0KICAg
+ID4gLQljYXNlIE5FVERFVl9VUDoNCiAgICA+IC0JCWFjdGlvbiA9ICgrK25kcC0+aW5ldDZfYWRk
+cl9udW0pID09IDE7DQogICAgPiAtCQluY2EudHlwZSA9IE5DU0lfUEtUX0NNRF9FR01GOw0KICAg
+ID4gLQkJYnJlYWs7DQogICAgPiAtCWNhc2UgTkVUREVWX0RPV046DQogICAgPiAtCQlhY3Rpb24g
+PSAoLS1uZHAtPmluZXQ2X2FkZHJfbnVtID09IDApOw0KICAgID4gLQkJbmNhLnR5cGUgPSBOQ1NJ
+X1BLVF9DTURfREdNRjsNCiAgICA+IC0JCWJyZWFrOw0KICAgID4gLQlkZWZhdWx0Og0KICAgID4g
+LQkJcmV0dXJuIE5PVElGWV9PSzsNCiAgICA+IC0JfQ0KICAgID4gLQ0KICAgID4gLQkvKiBXZSBt
+aWdodCBub3QgaGF2ZSBhY3RpdmUgY2hhbm5lbCBvciBwYWNrYWdlcy4gVGhlIElQdjYNCiAgICA+
+IC0JICogcmVxdWlyZWQgbXVsdGljYXN0IHdpbGwgYmUgZW5hYmxlZCB3aGVuIGFjdGl2ZSBjaGFu
+bmVsDQogICAgPiAtCSAqIG9yIHBhY2thZ2VzIGFyZSBjaG9zZW4uDQogICAgPiAtCSAqLw0KICAg
+ID4gLQlucCA9IG5kcC0+YWN0aXZlX3BhY2thZ2U7DQogICAgPiAtCW5jID0gbmRwLT5hY3RpdmVf
+Y2hhbm5lbDsNCiAgICA+IC0JaWYgKCFhY3Rpb24gfHwgIW5wIHx8ICFuYykNCiAgICA+IC0JCXJl
+dHVybiBOT1RJRllfT0s7DQogICAgPiAtDQogICAgPiAtCS8qIFdlIG5lZWRuJ3QgZW5hYmxlIG9y
+IGRpc2FibGUgaXQgaWYgdGhlIGZ1bmN0aW9uIGlzbid0DQogICAgPiBzdXBwb3J0ZWQgKi8NCiAg
+ICA+IC0JaWYgKCEobmMtPmNhcHNbTkNTSV9DQVBfR0VORVJJQ10uY2FwICYgTkNTSV9DQVBfR0VO
+RVJJQ19NQykpDQogICAgPiAtCQlyZXR1cm4gTk9USUZZX09LOw0KICAgID4gLQ0KICAgID4gLQlu
+Y2EubmRwID0gbmRwOw0KICAgID4gLQluY2EucmVxX2ZsYWdzID0gMDsNCiAgICA+IC0JbmNhLnBh
+Y2thZ2UgPSBucC0+aWQ7DQogICAgPiAtCW5jYS5jaGFubmVsID0gbmMtPmlkOw0KICAgID4gLQlu
+Y2EuZHdvcmRzWzBdID0gbmMtPmNhcHNbTkNTSV9DQVBfTUNdLmNhcDsNCiAgICA+IC0JcmV0ID0g
+bmNzaV94bWl0X2NtZCgmbmNhKTsNCiAgICA+IC0JaWYgKHJldCkgew0KICAgID4gLQkJbmV0ZGV2
+X3dhcm4oZGV2LCAiRmFpbCB0byAlcyBnbG9iYWwgbXVsdGljYXN0IGZpbHRlcg0KICAgID4gKCVk
+KVxuIiwNCiAgICA+IC0JCQkgICAgKGV2ZW50ID09IE5FVERFVl9VUCkgPyAiZW5hYmxlIiA6DQog
+ICAgPiAiZGlzYWJsZSIsIHJldCk7DQogICAgPiAtCQlyZXR1cm4gTk9USUZZX0RPTkU7DQogICAg
+PiAtCX0NCiAgICA+IC0NCiAgICA+IC0JcmV0dXJuIE5PVElGWV9PSzsNCiAgICA+IC19DQogICAg
+PiAtDQogICAgPiAtc3RhdGljIHN0cnVjdCBub3RpZmllcl9ibG9jayBuY3NpX2luZXQ2YWRkcl9u
+b3RpZmllciA9IHsNCiAgICA+IC0JLm5vdGlmaWVyX2NhbGwgPSBuY3NpX2luZXQ2YWRkcl9ldmVu
+dCwNCiAgICA+IC19Ow0KICAgID4gLSNlbmRpZiAvKiBDT05GSUdfSVBWNiAqLw0KICAgID4gLQ0K
+ICAgID4gIHN0YXRpYyBpbnQgbmNzaV9raWNrX2NoYW5uZWxzKHN0cnVjdCBuY3NpX2Rldl9wcml2
+ICpuZHApDQogICAgPiAgew0KICAgID4gIAlzdHJ1Y3QgbmNzaV9kZXYgKm5kID0gJm5kcC0+bmRl
+djsNCiAgICA+IEBAIC0xNzI1LDExICsxNjU4LDYgQEAgc3RydWN0IG5jc2lfZGV2ICpuY3NpX3Jl
+Z2lzdGVyX2RldihzdHJ1Y3QNCiAgICA+IG5ldF9kZXZpY2UgKmRldiwNCiAgICA+ICAJfQ0KICAg
+ID4gIA0KICAgID4gIAlzcGluX2xvY2tfaXJxc2F2ZSgmbmNzaV9kZXZfbG9jaywgZmxhZ3MpOw0K
+ICAgID4gLSNpZiBJU19FTkFCTEVEKENPTkZJR19JUFY2KQ0KICAgID4gLQluZHAtPmluZXQ2X2Fk
+ZHJfbnVtID0gMDsNCiAgICA+IC0JaWYgKGxpc3RfZW1wdHkoJm5jc2lfZGV2X2xpc3QpKQ0KICAg
+ID4gLQkJcmVnaXN0ZXJfaW5ldDZhZGRyX25vdGlmaWVyKCZuY3NpX2luZXQ2YWRkcl9ub3RpZmll
+cik7DQogICAgPiAtI2VuZGlmDQogICAgPiAgCWxpc3RfYWRkX3RhaWxfcmN1KCZuZHAtPm5vZGUs
+ICZuY3NpX2Rldl9saXN0KTsNCiAgICA+ICAJc3Bpbl91bmxvY2tfaXJxcmVzdG9yZSgmbmNzaV9k
+ZXZfbG9jaywgZmxhZ3MpOw0KICAgID4gIA0KICAgID4gQEAgLTE4OTYsMTAgKzE4MjQsNiBAQCB2
+b2lkIG5jc2lfdW5yZWdpc3Rlcl9kZXYoc3RydWN0IG5jc2lfZGV2ICpuZCkNCiAgICA+ICANCiAg
+ICA+ICAJc3Bpbl9sb2NrX2lycXNhdmUoJm5jc2lfZGV2X2xvY2ssIGZsYWdzKTsNCiAgICA+ICAJ
+bGlzdF9kZWxfcmN1KCZuZHAtPm5vZGUpOw0KICAgID4gLSNpZiBJU19FTkFCTEVEKENPTkZJR19J
+UFY2KQ0KICAgID4gLQlpZiAobGlzdF9lbXB0eSgmbmNzaV9kZXZfbGlzdCkpDQogICAgPiAtCQl1
+bnJlZ2lzdGVyX2luZXQ2YWRkcl9ub3RpZmllcigmbmNzaV9pbmV0NmFkZHJfbm90aWZpZXIpDQog
+ICAgPiA7DQogICAgPiAtI2VuZGlmDQogICAgPiAgCXNwaW5fdW5sb2NrX2lycXJlc3RvcmUoJm5j
+c2lfZGV2X2xvY2ssIGZsYWdzKTsNCiAgICA+ICANCiAgICA+ICAJbmNzaV91bnJlZ2lzdGVyX25l
+dGxpbmsobmQtPmRldik7DQogICAgDQogICAgDQoNCg==
