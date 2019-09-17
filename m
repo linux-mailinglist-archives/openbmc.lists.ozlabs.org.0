@@ -1,68 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD788B459D
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 04:45:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0025DB47B5
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 08:53:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46XSCf2nS0zF3vc
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 12:45:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XYjR2n7VzF145
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 16:53:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d29; helo=mail-io1-xd29.google.com;
+ (client-ip=2607:f8b0:4864:20::d2a; helo=mail-io1-xd2a.google.com;
  envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="EHPgV//V"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="U6tF+OVF"; 
  dkim-atps=neutral
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
- [IPv6:2607:f8b0:4864:20::d29])
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
+ [IPv6:2607:f8b0:4864:20::d2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46XSBy4dDwzF3tv
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 12:45:13 +1000 (AEST)
-Received: by mail-io1-xd29.google.com with SMTP id h144so3932729iof.7
- for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 19:45:13 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46XYhl2X53zF46s
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 16:52:53 +1000 (AEST)
+Received: by mail-io1-xd2a.google.com with SMTP id q10so5073219iop.2
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Sep 2019 23:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=ueDtEGeybenY0HkUhRy83UfWpdRMAFuLB/DZDaPflas=;
- b=EHPgV//VrRge/KZB6VXw2Lt7EcFo2z0/hy/6y+eDs8HCvs5PwnDh4O8eS0UA/4bcov
- H2yLUH8p/3/sJ6UTwekMliTB2yH/00i3bx8rwBkII30aXGMFBAsCEHefOZCKjLa7mBmB
- XWhnxU9NLeu6Dp8L8yBQfB5klv2pV2nb2slDthsnWjGxeBAV/NRX4H7b7s4f6c72ZQzP
- wF7ClIkwXRJFCBOvIMZ0IWkZlL9rDp0RoI6Nq/0/4EA6UOo4Ivp6xjIlbrhD4pQPhtgG
- Vi6gpCq+ocCWxEUjMHPcS4oiW58SwoU7SpE+bSBa5fElyQT7I+PN0tJYLFn6VL8e2WtM
- Usxg==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Uu9cmWbk/d2V5VEaCLuZcNBV0M0K5DIf+jMzwzRYd3A=;
+ b=U6tF+OVFMbNl1vjuZvFsHKMiUR2f/f1LoUaU71NXtdRuWqtLXFaw5Mg+gm0XeWg3Gb
+ 7dg9pFtV5bLEHCpGb57c68bH6YNfmHYRcCKePrgbFU63zZQYw3qKp/2TIU0PLzP+n9C8
+ 6QygvG+0fx5kVTeRWVkzllR0U72V4M1H9/4m64JUAvRz2KLp7DDRMtbvAfbZDe7cFua1
+ HkP3kgNn2uSHSksDU2obqUhAUodX57PtF1cJsKlaZt5kw4IfYq++oB0NZRUWKBhn28Or
+ 6sJyaP8QQbLQuhVvh2973TH8WQ3es2vLJUdBIvquYT+HqQowdlaDLrX9fJC2qy0yiT5K
+ LMpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=ueDtEGeybenY0HkUhRy83UfWpdRMAFuLB/DZDaPflas=;
- b=aiHy+kiiuaNF0srQ7ZTmvkVCjRnQNR8D+HKPuoqyz2m579hVULfgqxPopKIpeByz/Y
- 7OhVyOLL44HtH22gxt74aEJLFXTfquHDu5bqArjxyd9SlpuNuZVCRZIIVwZHPCGxF7Fx
- 6QxGISs3e9KU2Hx3G3HvvaiUXne7Y1HJnAc18jr8gQ1+3hJr8ov7RZrZ4cbFTpylSDZU
- BcV1DdYkTUOIbwy2Xcb26Qm8lQJLgmJvVuC/dSv7NoiPgorvdn/35JgEyqicxOV9Q/ub
- SIfcoiQ2NZib/kIwRvub+ymz8JlPl3UnsAv0zTmIsUIfrMQKGLUMtxQ8nRLm4IWMO/FL
- GPiA==
-X-Gm-Message-State: APjAAAX6Uja4iKxBR+lOwbWpYdKPisdKVWh5ixzDGDMLsZv1Z6ZWkK5O
- stIsiNkoK1becqBJtLJn95umwZJfrkKZw3LQNT5thCppgL4=
-X-Google-Smtp-Source: APXvYqxbdvtRd8i0hnIeJ2QJnDYLikWboXiO/6uFIj0GzJLFX0fRhwXHJKq73R9lnB55w/wHO0qGGADSEPVgr47ACrU=
-X-Received: by 2002:a6b:8e0f:: with SMTP id q15mr1250158iod.186.1568688310301; 
- Mon, 16 Sep 2019 19:45:10 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Uu9cmWbk/d2V5VEaCLuZcNBV0M0K5DIf+jMzwzRYd3A=;
+ b=WLn5hhud6jBb8447831AV0rh1fSM3XHZ2RCs1SynRehUIYVigLq3za+r2NUpLUnK3Q
+ 5MfzYSeoXfh7QqiY7/t4ykd17uyyMU3Dd/2Cisl+yRisbIPjt/i/og5BnLNgRVTjfPXK
+ EgOTU2e9vEXnbIPImzswYYdiuLP5Zai3txe1QUot+7HokceHHTR/UqqRnuUVVGmdm0oG
+ tuaL2w/oiUVHnKHQslEJv9ENkfhsOQJeFBrQYJY/88iJ0U147KM/8TVmCzXw1GbpwRsK
+ D4DPGKy/0V6ofCQfoBQzxZbLU35tkgqIUKUoXYEeM7OIHKoxfqMl+aldnMU0shlcVcZ5
+ 4ajg==
+X-Gm-Message-State: APjAAAU8MG4mDXstJ5prgs03NQZm4IMmqCz74MnvMxxg2jbG50Gap2zF
+ cBibiCooWpQwVpOc6aVX7HPagtYeW0/iv+L2pqHr2e7+
+X-Google-Smtp-Source: APXvYqw1RVJywy4K3b1yl7vemkCf2sjgPgHWuYK1FzmeG5p2rRaGnoz/w2Prm6XKeRkkgu+IHLDqIKuiVfvsJFmTF1s=
+X-Received: by 2002:a5d:8b47:: with SMTP id c7mr2117796iot.42.1568703169757;
+ Mon, 16 Sep 2019 23:52:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <05C62CB4-950C-42F4-9C17-41C91E54D9B4@fb.com>
-In-Reply-To: <05C62CB4-950C-42F4-9C17-41C91E54D9B4@fb.com>
 From: Lei YU <mine260309@gmail.com>
-Date: Tue, 17 Sep 2019 10:45:00 +0800
-Message-ID: <CAARXrtnDnsq9BQEftaeymEF1W9ehKCwuzUZLkKbkcXJ3a60RnQ@mail.gmail.com>
-Subject: Re: Phosphor code updater
-To: Vijay Khemka <vijaykhemka@fb.com>
+Date: Tue, 17 Sep 2019 14:52:39 +0800
+Message-ID: <CAARXrtm7YpjsWYJTXU6NsZJVBPDyZ1sLK_3bj6aYnXvYWQ5+gQ@mail.gmail.com>
+Subject: sdbusplus: use virtual destructor or not
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,42 +69,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 17, 2019 at 10:34 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> Hi Brad,
->
-> I looked into code updater from phosphor-software-manager as you suggeste=
-d last week. As per current implementation, it is copying all 4 partition u=
-boot, kernel, rootfs and rwfs. I wanted to make some modification to allow =
-user to choose whether to upgrade rwfs or not. This way, all persistent sto=
-rage can be retained after upgrade as well.
+This email is to discuss the destructors in sdbusplus.
 
-By default, image-rwfs is an empty image with size 0, and thus it will NOT =
-be
-updated to rwfs partition. So by default rwfs is preserved during code upda=
-te.
+In current sdbusplus, some classes are meant to be inherited, but they have
+non-virtual destructor.
+For example, `sdbusplus::server::object::object` is usually used to composite
+interfaces and let an implementation to inherit the object.
 
->
->
->
-> In my proposal, I will add another property named FactoryImageInstall whi=
-ch can be set as 1. =E2=80=9Dtrue=E2=80=9D means whole image would be insta=
-lled including rwfs and 2. =E2=80=9Cfalse=E2=80=9D means everything will be=
- installed except rwfs partition. This way, old rwfs partition will be reta=
-ined. This property will be under  xyz.openbmc_project.Software.Activation =
- interface.
->
->
->
-> Please provide your opinion. I will send patch soon.
->
->
->
-> Regards
->
-> -Vijay
+In most cases, this is fine because we usually do not write code to delete the
+base class.
+But in case some code is written to delete polymorphically demostrated as
+below, it is undefined behavior:
+
+```
+using SomeInterfacesInherit = sdbusplus::server::object::object<SomeInterfaces>;
+class Implement : public SomeInterfacesInherit
+{
+  ...
+};
+
+// We have undefined behavior with this!!
+std::unique_ptr<SomeInterfacesInherit> foo = std::make_unique<Implement>();
+```
+
+So the question I would like to bring up is, should we make such destructors
+virtual?
+
+Reference from Herb Sutter:
+> Guideline #4: A base class destructor should be either public and virtual,
+> or protected and nonvirtual.
+
+http://www.gotw.ca/publications/mill18.htm
