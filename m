@@ -2,50 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E1D5B580C
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 00:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CFACCB581E
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 00:40:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Xyb52ltJzF3LM
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 08:34:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Xyjq1cyfzF3yN
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 08:40:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46XyZQ4ZCFzF13V
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 08:33:48 +1000 (AEST)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Xyj95byJzF33g
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 08:39:40 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 17 Sep 2019 15:33:46 -0700
-X-IronPort-AV: E=Sophos;i="5.64,518,1559545200"; d="scan'208";a="270672659"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by orsmga001-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 17 Sep 2019 15:33:45 -0700
-Date: Tue, 17 Sep 2019 15:33:44 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Alexander Amelkin <a.amelkin@yadro.com>
-Subject: Re: RMCP support
-Message-ID: <20190917223344.GH45301@mauery.jf.intel.com>
-References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
- <20190911173139.GE45301@mauery.jf.intel.com>
- <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
- <20190913184108.GG45301@mauery.jf.intel.com>
- <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Sep 2019 15:39:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,518,1559545200"; d="scan'208";a="198844551"
+Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
+ by orsmga002.jf.intel.com with ESMTP; 17 Sep 2019 15:39:38 -0700
+Subject: Re: Updating BMC GUI Front End Framework
+To: Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ Derick Montague <Derick.Montague@ibm.com>, kuiying.wang@intel.com
+References: <959CAFA1E282D14FB901BE9A7BF4E7724E5253FB@shsmsx102.ccr.corp.intel.com>
+ <OFBF5B996D.FFFAE8E7-ON00258478.00712980-00258478.007222FC@notes.na.collabserv.com>
+ <cfc33111-4e2c-e46d-a4eb-4231168a9931@linux.vnet.ibm.com>
+From: Ed Tanous <ed.tanous@intel.com>
+Message-ID: <c4161dca-1575-23bc-2386-dee3cf5a6d54@intel.com>
+Date: Tue, 17 Sep 2019 15:39:38 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <cfc33111-4e2c-e46d-a4eb-4231168a9931@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,42 +56,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, deg.sse.openbmc@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 17-Sep-2019 12:16 PM, Alexander Amelkin wrote:
-> 13.09.2019 21:41, Vernon Mauery wrote:
-> >> What about RMCP pings used for device discovery as described in section 13.13 of
-> >> IPMI specification?
-> > I don't have any problem in particular with RMCP Ping, but it is not 
-> > implemented. It is not required by RMCP+ as far as I can tell. The spec 
-> > calls out that is *is* required for RMCP, and can be implemented for 
-> > RMCP+.
-> >
-> >> AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails to
-> >> discover OpenBMC devices.
-> > From what I can tell, the spec suggests that you send a Get Channel 
-> > Authentication Capabilities request to discover RMCP+ devices.
+On 9/17/19 3:13 PM, Gunnar Mills wrote:
 > 
-> True, but you can't send a broadcast GetChAuthCap and just gather all the
-> answers like you can do with RMCP ping.
+>>     2. The sizes of the libraries: Vue is about 80KB, much smaller
+>>     than Angular (500+KB), React(100KB).
+>>
+
+I have no idea where these numbers are coming from, but we need to pump
+the brakes a little.  Any framework we pick is going to require some
+non-standard modules, and be run through webpack minification and
+compression, which will significantly swing the result as we've seen
+with other modules we've tried to compare apples to apples.
+
+Rather than try to compare frameworks in a vacuum, I'd rather state that
+the "new" framework must be the same size or smaller than the existing
+for the same functionality.  If it's larger, why even upgrade given how
+precious flash space is to us?
+
+
+> I think some of the savings of Vue/React would be negated by the plugins
+> we would need but agree this is a benefit.
 > 
-> `idiscover` is much easier and faster to use than `idiscover -g -b 172.16.1.1 -e
-> 172.16.1.254`. The latter takes like 15 minutes to complete versus like 2
-> seconds for plain `idiscover`.
+>>
+>>     3. It is already used by big internet company like Gitlab/Alibaba.
+>>
+> Google and Wix are some companies using Angular.
+> Facebook, Uber, Instagram, and Paypal, are some companies using React.
 
-This seems like it might be a case of poor implementation. Surely it is 
-possible to send 254 GetChAuthCap requests in less than 15 minutes. They 
-could all be sent in milliseconds, with the responses coming in out of 
-order and compete performance-wise with a broadcast.
+All of the above is irrelevant.  I'm fairly certain Gitlab, Alibaba,
+Google, and Wix don't build BMCs (or embedded platforms) using those
+frameworks, so I'm not really sure why we're name dropping here.
 
-> Do you think implementing RMCP ping support in OpenBMC is feasible?
+Lets pick the one that works best for the BMC.
 
-I would not block a patch that implemented it, especially if it was a 
-configure option that could be enabled at build time.
+>>      
+>>
+>> Just adding a consensus of the 3 responders so far. Anyone else have
+>> any feedback on the future front-end framework for the GUI?
+> 
+> I think any of these frameworks would work. I would like to see more
+> discussion on this, specially around what benefits we are trying to gain.
+> 
 
-I don't have any plans of implementing it unless my marketing/management 
-teams require it. So far, everyone is fine without it.
+Completely agree.  I'm really worried we jumped directly to a new
+framework and complete rewrite.  Maybe that's where we'll end up, but
+I'd like to get some more concrete answers to why we would consider
+rewriting the webui from scratch.  Using something "modern" is not a
+good reason.  Security isn't a great reason, as that's largely outside
+the webui framework.
 
---Vernon
+IMHO good reasons include:
+1. Reducing the code size (both in binary and in LOC checked in)
+2. Reducing the number of bugs present, by introducing more robust concepts.
+3. Increasing load time and run time performance of the webui.
+4. Reducing the jankiness/brittleness of the build system (yes, I'll
+take the blame for this) by replacing the frameworks with something more
+standard that yocto already understands.
