@@ -2,35 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 203D7B56DF
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 22:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5B98B571F
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 22:47:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Xvj72WbSzF369
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 06:24:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XwCZ0wsBzF3pv
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 06:47:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ spf=pass (mailfrom) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46XvcX2FcszF31X
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 06:20:28 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 3/3] ARM: dts: aspeed: add Rainier system
-Date: Tue, 17 Sep 2019 16:20:39 -0400
-Message-Id: <20190917202039.25266-4-bradleyb@fuzziesquirrel.com>
-In-Reply-To: <20190917202039.25266-1-bradleyb@fuzziesquirrel.com>
-References: <20190917202039.25266-1-bradleyb@fuzziesquirrel.com>
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46XwBy3qgHzF3XY
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 06:46:49 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8HKTW1Q041182
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 16:46:45 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.109])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v36bws0n3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 16:46:45 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 17 Sep 2019 20:46:45 -0000
+Received: from us1b3-smtp05.a3dr.sjc01.isc4sb.com (10.122.203.183)
+ by smtp.notes.na.collabserv.com (10.122.47.48) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 17 Sep 2019 20:46:41 -0000
+Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
+ by us1b3-smtp05.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019091720464091-925371 ;
+ Tue, 17 Sep 2019 20:46:40 +0000 
+Subject: Re: Updating BMC GUI Front End Framework
+In-Reply-To: <959CAFA1E282D14FB901BE9A7BF4E7724E5253FB@shsmsx102.ccr.corp.intel.com>
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: ed.tanous@intel.com, kuiying.wang@intel.com
+Date: Tue, 17 Sep 2019 20:46:40 +0000
+Sensitivity: 
+References: <959CAFA1E282D14FB901BE9A7BF4E7724E5253FB@shsmsx102.ccr.corp.intel.com>
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-KeepSent: BF5B996D:FFFAE8E7-00258478:00712980;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 54787
+X-TNEFEvaluated: 1
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19091720-1429-0000-0000-0000004AFDAF
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.422781; ST=0; TS=0; UL=0; ISC=; MB=0.053613
+X-IBM-SpamModules-Versions: BY=3.00011791; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000291; SDB=6.01262788; UDB=6.00667778; IPR=6.01044647; 
+ MB=3.00028671; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-17 20:46:44
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-17 20:17:53 - 6.00010419
+x-cbparentid: 19091720-1430-0000-0000-0000244B157F
+Message-Id: <OFBF5B996D.FFFAE8E7-ON00258478.00712980-00258478.007222FC@notes.na.collabserv.com>
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 1 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-17_11:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -42,482 +85,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, deg.sse.openbmc@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Rainier is a new Power system with an AST2600.
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida S=
+ans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" >&=
+nbsp;</div>
+<blockquote data-history-content-modified=3D"1" data-history-expanded=3D"1"=
+ dir=3D"ltr" style=3D"border-left:solid #aaaaaa 2px; margin-left:5px; paddi=
+ng-left:5px; direction:ltr; margin-right:0px" ><div><p>Yes, it=E2=80=99s ti=
+me to do it.<o:p></o:p></p>
+<p>I suggest to use Vue, there are several reasons:<o:p></o:p></p>
+<p><!--[if !supportLists]-->1. MIT license <a href=3D"https://github.com/vu=
+ejs/vue/blob/dev/LICENSE" target=3D"_blank"> https://github.com/vuejs/vue/b=
+lob/dev/LICENSE</a><o:p></o:p></p>
+<p><!--[if !supportLists]-->2.&nbsp;The sizes of the libraries: Vue is abou=
+t 80KB, much smaller than Angular (500+KB), React(100KB).</p>
+<p>&nbsp; - It is sensitive on space for our OpenBMC embedded system. So Vu=
+e is the best candidate.<o:p></o:p></p>
+<p><!--[if !supportLists]-->3.&nbsp;It is already used by big internet comp=
+any like Gitlab/Alibaba.<o:p></o:p></p>
+<p><!--[if !supportLists]-->4. Vue is the most popular frameworks, accordin=
+g to the number of stars on GitHub projects for Angular, React, and Vue.<o:=
+p></o:p></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; Angular &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;React&nbsp; &nbsp; &nbsp; &nbsp; &nbsp=
+; Vue<o:p></o:p></p>
+<p># Watchers&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3.3k&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;3.7k&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 5.7k<o=
+:p></o:p></p>
+<p># Stars&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;71k&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 122k<o:p></o:p></p>
+<p># Forks &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; 11k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;16k&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 17k<o:p></o:p></p>
+<p><!--[if !supportLists]-->5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!--[end=
+if]-->Vue is two-way binding<o:p></o:p><!--[if !supportLists]--></p>
+<p>6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!--[endif]-->Vue is based on JS+=
+HTML, it=E2=80=99s easy for existing AngularJS developer to transfer, but n=
+ot like Angular (TS) and React (JSX)\</p>
+<div>- Kwin</div>
+<p style=3D"text-indent: -0.25in; margin: 0px 0px 0px 36pt;" ><o:p></o:p></=
+p>
+<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p><o:p></o:p></p>
+<div>&nbsp;</div>
+<div><o:p>&nbsp;</o:p></div>
+<div>Derick, thanks for looking into this.&nbsp; I agree a small footprint =
+and <o:p></o:p></div>
+<div>short learning curve are important criteria.&nbsp;&nbsp; Some other cr=
+iteria to <o:p></o:p></div>
+<div>consider:<o:p></o:p></div>
+<div>- Licensing terms, looking for permissive licenses like Apache 2.0 or =
+MIT.<o:p></o:p></div>
+<div>- Community support, especially for security fixes.<o:p></o:p></div>
+<div><o:p>&nbsp;</o:p></div>
+<div>- Joseph<o:p></o:p></div>
+<div><o:p>&nbsp;</o:p></div>
+<div>&nbsp;</div>
+<div><div>My first thought based on the size of the application, the need f=
+or a<o:p></o:p></div>
+<div>smaller footprint, and the benefit of&nbsp;a small learning curve woul=
+d<o:p></o:p></div>
+<div>be&nbsp;Vue. However, I'm just throwing that out there to start the<o:=
+p></o:p></div>
+<div>conversation.</div>
+<div>&nbsp;</div>
+<div>- Derick</div></div></div></blockquote>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Just adding a consensus of the 3 responders so far. Anyon=
+e else have any feedback on the future front-end framework for the GUI?</di=
+v></div><BR>
 
-Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
----
- arch/arm/boot/dts/Makefile                   |   3 +-
- arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts | 446 +++++++++++++++++++
- 2 files changed, 448 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 5af075c2f819..2f81a4be50a8 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1293,4 +1293,5 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
- 	aspeed-bmc-opp-witherspoon.dtb \
- 	aspeed-bmc-opp-zaius.dtb \
- 	aspeed-bmc-portwell-neptune.dtb \
--	aspeed-bmc-quanta-q71l.dtb
-+	aspeed-bmc-quanta-q71l.dtb \
-+	aspeed-bmc-opp-rainier.dtb
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts b/arch/arm/boot=
-/dts/aspeed-bmc-opp-rainier.dts
-new file mode 100644
-index 000000000000..485c8732eec1
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-@@ -0,0 +1,446 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2019 IBM Corp.
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+
-+/ {
-+	model =3D "Rainier";
-+	compatible =3D "ibm,rainier-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 =3D &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path =3D &uart5;
-+		bootargs =3D "console=3DttyS4,115200n8";
-+	};
-+
-+	memory@80000000 {
-+		device_type =3D "memory";
-+		reg =3D <0x80000000 0x80000000>;
-+	};
-+};
-+
-+&emmc_controller {
-+	status =3D "okay";
-+};
-+
-+&emmc {
-+	status =3D "okay";
-+};
-+
-+&fsim0 {
-+	status =3D "okay";
-+};
-+
-+&i2c0 {
-+	status =3D "okay";
-+};
-+
-+&i2c1 {
-+	status =3D "okay";
-+};
-+
-+&i2c2 {
-+	status =3D "okay";
-+};
-+
-+&i2c3 {
-+	status =3D "okay";
-+
-+	power-supply@68 {
-+		compatible =3D "ibm,cffps2";
-+		reg =3D <0x68>;
-+	};
-+
-+	power-supply@69 {
-+		compatible =3D "ibm,cffps2";
-+		reg =3D <0x69>;
-+	};
-+
-+	power-supply@6a {
-+		compatible =3D "ibm,cffps2";
-+		reg =3D <0x6a>;
-+	};
-+
-+	power-supply@6b {
-+		compatible =3D "ibm,cffps2";
-+		reg =3D <0x6b>;
-+	};
-+};
-+
-+&i2c4 {
-+	status =3D "okay";
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	tmp275@49 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x49>;
-+	};
-+
-+	tmp275@4a {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x4a>;
-+	};
-+};
-+
-+&i2c5 {
-+	status =3D "okay";
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	tmp275@49 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x49>;
-+	};
-+};
-+
-+&i2c6 {
-+	status =3D "okay";
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	tmp275@4a {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x4a>;
-+	};
-+
-+	tmp275@4b {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x4b>;
-+	};
-+};
-+
-+&i2c7 {
-+	status =3D "okay";
-+
-+	si7021-a20@20 {
-+		compatible =3D "silabs,si7020";
-+		reg =3D <0x20>;
-+	};
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	max31785@52 {
-+		compatible =3D "maxim,max31785a";
-+		reg =3D <0x52>;
-+		#address-cells =3D <1>;
-+		#size-cells =3D <0>;
-+
-+		fan@0 {
-+			compatible =3D "pmbus-fan";
-+			reg =3D <0>;
-+			tach-pulses =3D <2>;
-+			maxim,fan-rotor-input =3D "tach";
-+			maxim,fan-pwm-freq =3D <25000>;
-+			maxim,fan-dual-tach;
-+			maxim,fan-no-watchdog;
-+			maxim,fan-no-fault-ramp;
-+			maxim,fan-ramp =3D <2>;
-+			maxim,fan-fault-pin-mon;
-+		};
-+
-+		fan@1 {
-+			compatible =3D "pmbus-fan";
-+			reg =3D <1>;
-+			tach-pulses =3D <2>;
-+			maxim,fan-rotor-input =3D "tach";
-+			maxim,fan-pwm-freq =3D <25000>;
-+			maxim,fan-dual-tach;
-+			maxim,fan-no-watchdog;
-+			maxim,fan-no-fault-ramp;
-+			maxim,fan-ramp =3D <2>;
-+			maxim,fan-fault-pin-mon;
-+		};
-+
-+		fan@2 {
-+			compatible =3D "pmbus-fan";
-+			reg =3D <2>;
-+			tach-pulses =3D <2>;
-+			maxim,fan-rotor-input =3D "tach";
-+			maxim,fan-pwm-freq =3D <25000>;
-+			maxim,fan-dual-tach;
-+			maxim,fan-no-watchdog;
-+			maxim,fan-no-fault-ramp;
-+			maxim,fan-ramp =3D <2>;
-+			maxim,fan-fault-pin-mon;
-+		};
-+
-+		fan@3 {
-+			compatible =3D "pmbus-fan";
-+			reg =3D <3>;
-+			tach-pulses =3D <2>;
-+			maxim,fan-rotor-input =3D "tach";
-+			maxim,fan-pwm-freq =3D <25000>;
-+			maxim,fan-dual-tach;
-+			maxim,fan-no-watchdog;
-+			maxim,fan-no-fault-ramp;
-+			maxim,fan-ramp =3D <2>;
-+			maxim,fan-fault-pin-mon;
-+		};
-+	};
-+
-+	pca0: pca9552@60 {
-+		compatible =3D "nxp,pca9552";
-+		reg =3D <0x60>;
-+		#address-cells =3D <1>;
-+		#size-cells =3D <0>;
-+
-+		gpio-controller;
-+		#gpio-cells =3D <2>;
-+
-+		gpio@0 {
-+			reg =3D <0>;
-+		};
-+
-+		gpio@1 {
-+			reg =3D <1>;
-+		};
-+
-+		gpio@2 {
-+			reg =3D <2>;
-+		};
-+
-+		gpio@3 {
-+			reg =3D <3>;
-+		};
-+
-+		gpio@4 {
-+			reg =3D <4>;
-+		};
-+
-+		gpio@5 {
-+			reg =3D <5>;
-+		};
-+
-+		gpio@6 {
-+			reg =3D <6>;
-+		};
-+
-+		gpio@7 {
-+			reg =3D <7>;
-+		};
-+
-+		gpio@8 {
-+			reg =3D <8>;
-+		};
-+
-+		gpio@9 {
-+			reg =3D <9>;
-+		};
-+
-+		gpio@10 {
-+			reg =3D <10>;
-+		};
-+
-+		gpio@11 {
-+			reg =3D <11>;
-+		};
-+
-+		gpio@12 {
-+			reg =3D <12>;
-+		};
-+
-+		gpio@13 {
-+			reg =3D <13>;
-+		};
-+
-+		gpio@14 {
-+			reg =3D <14>;
-+		};
-+
-+		gpio@15 {
-+			reg =3D <15>;
-+		};
-+	};
-+
-+	dps: dps310@76 {
-+		compatible =3D "infineon,dps310";
-+		reg =3D <0x76>;
-+		#io-channel-cells =3D <0>;
-+	};
-+};
-+
-+&i2c8 {
-+	status =3D "okay";
-+
-+	ucd90320@b {
-+		compatible =3D "ti,ucd90160";
-+		reg =3D <0x0b>;
-+	};
-+
-+	ucd90320@c {
-+		compatible =3D "ti,ucd90160";
-+		reg =3D <0x0c>;
-+	};
-+
-+	ucd90320@11 {
-+		compatible =3D "ti,ucd90160";
-+		reg =3D <0x11>;
-+	};
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	tmp275@4a {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x4a>;
-+	};
-+};
-+
-+&i2c9 {
-+	status =3D "okay";
-+
-+	ir35221@42 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x42>;
-+	};
-+
-+	ir35221@43 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x43>;
-+	};
-+
-+	ir35221@44 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x44>;
-+	};
-+
-+	tmp423a@4c {
-+		compatible =3D "ti,tmp423";
-+		reg =3D <0x4c>;
-+	};
-+
-+	tmp423b@4d {
-+		compatible =3D "ti,tmp423";
-+		reg =3D <0x4d>;
-+	};
-+
-+	ir35221@72 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x72>;
-+	};
-+
-+	ir35221@73 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x73>;
-+	};
-+
-+	ir35221@74 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x74>;
-+	};
-+};
-+
-+&i2c10 {
-+	status =3D "okay";
-+
-+	ir35221@42 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x42>;
-+	};
-+
-+	ir35221@43 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x43>;
-+	};
-+
-+	ir35221@44 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x44>;
-+	};
-+
-+	tmp423a@4c {
-+		compatible =3D "ti,tmp423";
-+		reg =3D <0x4c>;
-+	};
-+
-+	tmp423b@4d {
-+		compatible =3D "ti,tmp423";
-+		reg =3D <0x4d>;
-+	};
-+
-+	ir35221@72 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x72>;
-+	};
-+
-+	ir35221@73 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x73>;
-+	};
-+
-+	ir35221@74 {
-+		compatible =3D "infineon,ir35221";
-+		reg =3D <0x74>;
-+	};
-+};
-+
-+&i2c11 {
-+	status =3D "okay";
-+
-+	tmp275@48 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x48>;
-+	};
-+
-+	tmp275@49 {
-+		compatible =3D "ti,tmp275";
-+		reg =3D <0x49>;
-+	};
-+};
-+
-+&i2c12 {
-+	status =3D "okay";
-+};
-+
-+&i2c13 {
-+	status =3D "okay";
-+};
-+
-+&i2c14 {
-+	status =3D "okay";
-+};
-+
-+&i2c15 {
-+	status =3D "okay";
-+};
-+
-+&sdc {
-+	status =3D "okay";
-+};
-+
-+&sdhci0 {
-+	status =3D "okay";
-+
-+	pinctrl-names =3D "default";
-+	pinctrl-0 =3D <&pinctrl_sd1_default>;
-+};
-+
-+&sdhci1 {
-+	status =3D "okay";
-+
-+	pinctrl-names =3D "default";
-+	pinctrl-0 =3D <&pinctrl_sd2_default>;
-+};
-+
-+&ibt {
-+	status =3D "okay";
-+};
---=20
-2.21.0
