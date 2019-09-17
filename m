@@ -1,50 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57FBCB57EB
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 00:17:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E1D5B580C
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 00:34:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46XyCW03VTzF3wd
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 08:17:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Xyb52ltJzF3LM
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 08:34:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46XyBp4q2hzF1dq
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 08:16:49 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46XyZQ4ZCFzF13V
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 08:33:48 +1000 (AEST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 17 Sep 2019 15:16:47 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,518,1559545200"; d="scan'208";a="198839658"
-Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
- by orsmga002.jf.intel.com with ESMTP; 17 Sep 2019 15:16:46 -0700
-Subject: Re: Updating BMC GUI Front End Framework
-To: Joseph Reynolds <jrey@linux.ibm.com>,
- Derick Montague <Derick.Montague@ibm.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <OF4FF7F8E2.9E3777F1-ON0025846D.004E7B10-0025846D.0051A226@notes.na.collabserv.com>
- <f81aec54-b597-c953-25da-f4f94307316d@linux.ibm.com>
-From: Ed Tanous <ed.tanous@intel.com>
-Message-ID: <787d34c7-87a5-8dfa-ab34-48f6a7f14c99@intel.com>
-Date: Tue, 17 Sep 2019 15:16:46 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Sep 2019 15:33:46 -0700
+X-IronPort-AV: E=Sophos;i="5.64,518,1559545200"; d="scan'208";a="270672659"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by orsmga001-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Sep 2019 15:33:45 -0700
+Date: Tue, 17 Sep 2019 15:33:44 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: Alexander Amelkin <a.amelkin@yadro.com>
+Subject: Re: RMCP support
+Message-ID: <20190917223344.GH45301@mauery.jf.intel.com>
+References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
+ <20190911173139.GE45301@mauery.jf.intel.com>
+ <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
+ <20190913184108.GG45301@mauery.jf.intel.com>
+ <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
 MIME-Version: 1.0
-In-Reply-To: <f81aec54-b597-c953-25da-f4f94307316d@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,23 +57,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/7/19 2:52 PM, Joseph Reynolds wrote:
-> - Community support, especially for security fixes.
+On 17-Sep-2019 12:16 PM, Alexander Amelkin wrote:
+> 13.09.2019 21:41, Vernon Mauery wrote:
+> >> What about RMCP pings used for device discovery as described in section 13.13 of
+> >> IPMI specification?
+> > I don't have any problem in particular with RMCP Ping, but it is not 
+> > implemented. It is not required by RMCP+ as far as I can tell. The spec 
+> > calls out that is *is* required for RMCP, and can be implemented for 
+> > RMCP+.
+> >
+> >> AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails to
+> >> discover OpenBMC devices.
+> > From what I can tell, the spec suggests that you send a Get Channel 
+> > Authentication Capabilities request to discover RMCP+ devices.
+> 
+> True, but you can't send a broadcast GetChAuthCap and just gather all the
+> answers like you can do with RMCP ping.
+> 
+> `idiscover` is much easier and faster to use than `idiscover -g -b 172.16.1.1 -e
+> 172.16.1.254`. The latter takes like 15 minutes to complete versus like 2
+> seconds for plain `idiscover`.
 
-In terms of the webui, the "UI" itself is executing in the browser
-context, and a majority of the webui "security" is a contract between
-bmcweb and the browser, which has next to nothing to do with the
-javascript itself.
+This seems like it might be a case of poor implementation. Surely it is 
+possible to send 254 GetChAuthCap requests in less than 15 minutes. They 
+could all be sent in milliseconds, with the responses coming in out of 
+order and compete performance-wise with a broadcast.
 
-If you search AngularJs in the CVE database, there's nothing against
-angularjs itself, only particular instances of AngularJS applications
-with bad containers, not the framework itself.
-https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=angularjs
+> Do you think implementing RMCP ping support in OpenBMC is feasible?
 
-We do need to make sure that whatever framework we move to supports the
-content-security-policy headers we have in place, but most of that is
-just appropriate configuration of the framework, and sticking to some
-rules when developing, rather than a framework choice itself.
+I would not block a patch that implemented it, especially if it was a 
+configure option that could be enabled at build time.
+
+I don't have any plans of implementing it unless my marketing/management 
+teams require it. So far, everyone is fine without it.
+
+--Vernon
