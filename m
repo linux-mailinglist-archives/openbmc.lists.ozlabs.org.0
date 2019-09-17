@@ -2,61 +2,33 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0106FB5691
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 21:58:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9909DB56D4
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 22:22:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Xv6l2NRnzDqLj
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 05:58:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XvfX3HD2zF3m2
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 06:22:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=209.85.167.193; helo=mail-oi1-f193.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-oi1-f193.google.com (mail-oi1-f193.google.com
- [209.85.167.193])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Xv5v1PMXzF3dx
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 05:57:20 +1000 (AEST)
-Received: by mail-oi1-f193.google.com with SMTP id 7so3985722oip.5
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 12:57:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=8OJcLjUpBrW1/qbYAiu6WuFYEuH8ShVscvI6okWWXn8=;
- b=kCVK2khml5jbiJZSFAExkf3WFARU35Jif2TlRL7KSPFqh+x7Zx71t0aS9/VfW1BnBr
- kVzi7xB421tvacOzGA0HLpK6xJ7UH1t6IowIT9EMS8SHb/rfei661ermDExxcGjLquAI
- 3ie+4JM2M7tqItN7lfVpVB96mlBFAev8jK7tZ6O/p6a/L/4btu9Tui3TP4dp4Uy9iL5W
- GEsV3U0o15zW313Jr9n3IAK/EaD2z1BC6PGS4cEjNWdGG7bny6P3j5a850XK9yOYDKFm
- 99ch4CM2j7KaSaMpzXtqYcQ3Z9O9ePQy6cP5NepGgdAIPCzyYehknMA+5Q4z/thmDxAs
- /TVQ==
-X-Gm-Message-State: APjAAAW3PIvbmviKmtviFsy96I99rNaevT4Pp6SoJTbJ91BkR2yTZuVO
- pbOfVeQqqONYvO/vR5R91g==
-X-Google-Smtp-Source: APXvYqyZSU4eFtO2Ik2YQkAoBuTSYow+Kn3ZPm23D3N/+ENyPy94zmiHTTWDOHk5oVigXiOADvOO7w==
-X-Received: by 2002:aca:4c84:: with SMTP id z126mr5362414oia.86.1568750238166; 
- Tue, 17 Sep 2019 12:57:18 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id y137sm1092025oie.53.2019.09.17.12.57.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Sep 2019 12:57:17 -0700 (PDT)
-Date: Tue, 17 Sep 2019 14:57:16 -0500
-From: Rob Herring <robh@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-binding: hwrng: add NPCM RNG documentation
-Message-ID: <20190917195716.GA25687@bogus>
-References: <20190912090149.7521-1-tmaimon77@gmail.com>
- <20190912090149.7521-2-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46XvcV69jRzF33j
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 06:20:25 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: joel@jms.id.au
+Subject: [PATCH linux dev-5.3 0/3] ARM: dts: aspeed-g6 lpc, rainier
+Date: Tue, 17 Sep 2019 16:20:36 -0400
+Message-Id: <20190917202039.25266-1-bradleyb@fuzziesquirrel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190912090149.7521-2-tmaimon77@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,25 +40,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, sumit.garg@linaro.org, linux-crypto@vger.kernel.org,
- herbert@gondor.apana.org.au, arnd@arndb.de, devicetree@vger.kernel.org,
- avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
- Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org,
- tali.perry1@gmail.com, vkoul@kernel.org, robh+dt@kernel.org, mpm@selenic.com,
- venture@google.com, tglx@linutronix.de, jens.wiklander@linaro.org,
- benjaminfair@google.com
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 12 Sep 2019 12:01:48 +0300, Tomer Maimon wrote:
-> Added device tree binding documentation for Nuvoton BMC
-> NPCM Random Number Generator (RNG).
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../devicetree/bindings/rng/nuvoton,npcm-rng.txt     | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
-> 
+Hello
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+This is a quick attempt at wiring up some of the LPC bits on the
+AST2600, and then using it on a new board, Rainier, a new POWER system
+with an AST2600.  The only verification performed was ensuring the
+kernel still booted and the ibt device probed using the Rainier device
+tree atop the ast2600-evb qemu model.  Please review.
+
+thx! - brad
+
+Brad Bishop (3):
+  ARM: aspeed-g6: lpc: add compatible strings
+  ARM: dts: aspeed-g6: Add lpc devices
+  ARM: dts: aspeed: add Rainier system
+
+ .../bindings/ipmi/aspeed,ast2400-ibt-bmc.txt  |   3 +-
+ .../devicetree/bindings/mfd/aspeed-lpc.txt    |   8 +-
+ arch/arm/boot/dts/Makefile                    |   3 +-
+ arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts  | 446 ++++++++++++++++++
+ arch/arm/boot/dts/aspeed-g6.dtsi              |  91 ++++
+ drivers/char/ipmi/bt-bmc.c                    |   1 +
+ drivers/char/ipmi/kcs_bmc_aspeed.c            |   1 +
+ drivers/reset/reset-simple.c                  |   1 +
+ drivers/soc/aspeed/aspeed-lpc-ctrl.c          |   1 +
+ drivers/soc/aspeed/aspeed-lpc-snoop.c         |   2 +
+ 10 files changed, 554 insertions(+), 3 deletions(-)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
+
+--=20
+2.21.0
