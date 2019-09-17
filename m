@@ -1,51 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D7C8B4C2E
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 12:48:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78B3AB519A
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 17:34:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46XfwX617dzDqc5
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 20:48:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XnGC2ZC2zDrgs
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 01:34:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=protonmail.com
- (client-ip=185.70.40.135; helo=mail-40135.protonmail.ch;
- envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="K0Vjipfm"; 
- dkim-atps=neutral
-X-Greylist: delayed 419 seconds by postgrey-1.36 at bilbo;
- Tue, 17 Sep 2019 20:47:41 AEST
-Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
- [185.70.40.135])
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=msbarth@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Xfvd3jnHzF3jm
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 20:47:40 +1000 (AEST)
-Date: Tue, 17 Sep 2019 10:40:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1568716833;
- bh=qgET4U3E+S1S2TO3w0kASUITuI2eFrouBQZvlN2ue5k=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=K0Vjipfmm6o7pUquawaHQJHvNz5lbvgwfped5o+rEn97SK/2Jn4PUlmz03NAqJ0V9
- l0+0eT5pLdzVex/lADBHLV/SvI7f3CHQP1zPHMMKUTXS8uC6ZuAy0uz6c4DFojiejy
- W6dPzQBJg1hRa4nYKJWAsJ4MDRvOX9eWDJFF5xT8=
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: rgrs <rgrs@protonmail.com>
-Subject: Fan PWM monitoring and control
-Message-ID: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Xn3m6c3YzF40Y
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 01:25:08 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8HEtDdA125500
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 11:07:47 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2v2yrqf71g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 11:07:47 -0400
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x8HEttNr128682
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 11:07:47 -0400
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2v2yrqf70s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2019 11:07:46 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8HEjHda013166;
+ Tue, 17 Sep 2019 15:07:46 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma02wdc.us.ibm.com with ESMTP id 2v0swj9k9k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Sep 2019 15:07:46 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x8HF7jnr51315022
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Sep 2019 15:07:45 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E067AC05F;
+ Tue, 17 Sep 2019 15:07:45 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5825FAC059;
+ Tue, 17 Sep 2019 15:07:45 +0000 (GMT)
+Received: from [9.10.99.12] (unknown [9.10.99.12])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Sep 2019 15:07:45 +0000 (GMT)
+Subject: Re: Fan PWM monitoring and control
+To: rgrs <rgrs@protonmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
+From: Matthew Barth <msbarth@linux.ibm.com>
+Message-ID: <87e610aa-72c7-32d2-9281-2c89023d397a@linux.ibm.com>
+Date: Tue, 17 Sep 2019 10:07:44 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_9aea47b8f39073b172ed7e7687086e15"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+In-Reply-To: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-17_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1909170144
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,96 +93,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
 
---b1_9aea47b8f39073b172ed7e7687086e15
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+On 9/17/19 5:40 AM, rgrs wrote:
+> Hi,
+> 
+> I need some help with phosphor hwmon related to fan sensors.
+> 
+> I'm trying to control Fans in a server motherboard using ADT7462 
+> controller. Hw mon porting is done and the sysfs interfaces are working 
+> as expected.
+> 
+> While I am able to read RPM, i don't find pwm/target to control the fans 
+> exposed as dbus objects.
+Do you have the hwmon config set similar to this to denote the fan 
+targets are of PWM type?
 
-SGksCgpJIG5lZWQgc29tZSBoZWxwIHdpdGggcGhvc3Bob3IgaHdtb24gcmVsYXRlZCB0byBmYW4g
-c2Vuc29ycy4KCkknbSB0cnlpbmcgdG8gY29udHJvbCBGYW5zIGluIGEgc2VydmVyIG1vdGhlcmJv
-YXJkIHVzaW5nIEFEVDc0NjIgY29udHJvbGxlci4gSHcgbW9uIHBvcnRpbmcgaXMgZG9uZSBhbmQg
-dGhlIHN5c2ZzIGludGVyZmFjZXMgYXJlIHdvcmtpbmcgYXMgZXhwZWN0ZWQuCgpXaGlsZSBJIGFt
-IGFibGUgdG8gcmVhZCBSUE0sIGkgZG9uJ3QgZmluZCBwd20vdGFyZ2V0IHRvIGNvbnRyb2wgdGhl
-IGZhbnMgZXhwb3NlZCBhcyBkYnVzIG9iamVjdHMuCgojIGJ1c2N0bCAtLW5vLXBhZ2UgdHJlZSB4
-eXoub3BlbmJtY19wcm9qZWN0LkZhblNlbnNvcgpGYWlsZWQgdG8gaW50cm9zcGVjdCBvYmplY3Qg
-LyBvZiBzZXJ2aWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuRmFuU2Vuc29yOiBUaGUgbmFtZSBpcyBu
-b3QgYWN0aXZhdGFibGUKTm8gb2JqZWN0cyBkaXNjb3ZlcmVkLgoKSSBjYW1lIGFjcm9zcyB0aGlz
-IHBvc3QsIEkgdGhpbmsgaXQgaXMgc2ltaWxhciB0byBteSBpc3N1ZS4gKGh0dHBzOi8vZ2Vycml0
-Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLWh3bW9uLysvODM1MykKClBs
-ZWFzZSBzb21lb25lIHBvaW50IHRvIGxhdGVzdCBkb2N1bWVudGF0aW9uIG9yIHJlZmVyZW5jZSBG
-YW4gcG9ydGluZyBmcm9tIG9wZW5CTUMgcmVwbz8KV2hhdCBhcmUgdGhlIGV4YWN0IGZpZWxkcyBp
-biBZQU1MIHRoYXQgYXJlIHVzZWQgY3JlYXRlIEZhblBXTSBvYmplY3RzLgoKKEknbSB1c2luZyBG
-ZWIgcmVsZWFzZSBpbiBteSBzYW5kYm94LCBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2Nz
-L2Jsb2IvbWFzdGVyL3JlbGVhc2UvcmVsZWFzZS1ub3Rlcy5tZCMyNi1mZWItNC0yMDE5KQoKVGhh
-bmtzLApSYWo=
+https://github.com/openbmc/openbmc/blob/master/meta-ibm/meta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/pwm-tacho-controller%401e786000.conf
+> 
+> # busctl --no-page tree xyz.openbmc_project.FanSensor
+> Failed to introspect object / of service xyz.openbmc_project.FanSensor: 
+> The name is not activatable
+> No objects discovered.
+That does not look like a hwmon service name. If you are using 
+phosphor-objmgr, you can use `# mapper get-service 
+/xyz/openbmc_project/sensors/fan_tach` otherwise you'll need to find the 
+hwmon service name associated with your fan controller device.
+> 
+> I came across this post, I think it is similar to my issue. 
+> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/8353)
+> 
+> Please someone point to latest documentation or reference Fan porting 
+> from openBMC repo?
+> What are the exact fields in YAML that are used create FanPWM objects.
+The Romulus machine should be a good reference for PWM based fan control 
+using phosphor-hwmon. It uses the 
+phosphor-fan-presence/[control|monitor] apps for controlling and 
+monitoring fans
 
+https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus
+> 
+> (I'm using Feb release in my sandbox, 
+> https://github.com/openbmc/docs/blob/master/release/release-notes.md#26-feb-4-2019)
+> 
+> Thanks,
+> Raj
 
---b1_9aea47b8f39073b172ed7e7687086e15
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1mYW1pbHk6Q2FsaWJy
-aSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPkhpLDxicj48L2Rpdj48ZGl2IHN0eWxlPSJj
-b2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZl
-dGljYSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
-c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
-Ij5JIG5lZWQgc29tZSBoZWxwIHdpdGggcGhvc3Bob3IgaHdtb24gcmVsYXRlZCB0byBmYW4gc2Vu
-c29ycy48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9u
-dC1mYW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPjxicj48L2Rpdj48
-ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJp
-LEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+SSdtIHRyeWluZyB0byBjb250cm9sIEZhbnMg
-aW4gYSBzZXJ2ZXIgbW90aGVyYm9hcmQgdXNpbmcgQURUNzQ2Mg0KY29udHJvbGxlci4gSHcgbW9u
-IHBvcnRpbmcgaXMgZG9uZSBhbmQgdGhlIHN5c2ZzIGludGVyZmFjZXMgYXJlIHdvcmtpbmcNCmFz
-IGV4cGVjdGVkLjxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJw
-dDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+PGJyPjwv
-ZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNh
-bGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5XaGlsZSBJIGFtIGFibGUgdG8gcmVh
-ZCBSUE0sIGkgZG9uJ3QgZmluZCBwd20vdGFyZ2V0IHRvIGNvbnRyb2wgdGhlIGZhbnMgZXhwb3Nl
-ZCBhcyBkYnVzIG9iamVjdHMuPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
-c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
-Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1m
-YW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPjxkaXY+PHNwYW4+IyBi
-dXNjdGwgLS1uby1wYWdlIHRyZWUgeHl6Lm9wZW5ibWNfcHJvamVjdC5GYW5TZW5zb3I8YnI+IDwv
-c3Bhbj4gPC9kaXY+PGRpdj5GYWlsZWQgdG8gaW50cm9zcGVjdCBvYmplY3QgLyBvZiBzZXJ2aWNl
-IHh5ei5vcGVuYm1jX3Byb2plY3QuRmFuU2Vuc29yOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFi
-bGU8YnI+PC9kaXY+PGRpdj48c3Bhbj5ObyBvYmplY3RzIGRpc2NvdmVyZWQuPC9zcGFuPjxicj48
-L2Rpdj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZh
-bWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYg
-c3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJp
-YWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5JIGNhbWUgYWNyb3NzIHRoaXMgcG9zdCwgSSB0aGlu
-ayBpdCBpcyBzaW1pbGFyIHRvIG15IGlzc3VlLiAoPGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3Bl
-bmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvcGhvc3Bob3ItaHdtb24vKy84MzUzIiB0YXJnZXQ9
-Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIiBkYXRhLWF1dGg9Ik5vdEFwcGxpY2Fi
-bGUiPmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9y
-LWh3bW9uLysvODM1MzwvYT4pPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
-c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
-Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1m
-YW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPlBsZWFzZSBzb21lb25l
-ICBwb2ludCB0byBsYXRlc3QgZG9jdW1lbnRhdGlvbiBvciByZWZlcmVuY2UgRmFuIHBvcnRpbmcg
-ZnJvbSBvcGVuQk1DIHJlcG8/PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
-c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
-Ij5XaGF0IGFyZSB0aGUgZXhhY3QgZmllbGRzIGluIFlBTUwgdGhhdCBhcmUgdXNlZCBjcmVhdGUg
-RmFuUFdNIG9iamVjdHMuIDxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNp
-emU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+
-PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFt
-aWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij4oSSdtIHVzaW5nIEZlYiBy
-ZWxlYXNlIGluIG15IHNhbmRib3gsIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1j
-L2RvY3MvYmxvYi9tYXN0ZXIvcmVsZWFzZS9yZWxlYXNlLW5vdGVzLm1kIzI2LWZlYi00LTIwMTki
-Pmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvcmVsZWFzZS9yZWxl
-YXNlLW5vdGVzLm1kIzI2LWZlYi00LTIwMTk8L2E+KTxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xv
-cjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGlj
-YSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6
-ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5U
-aGFua3MsPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2Zv
-bnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5SYWo8YnI+PC9k
-aXY+
-
-
-
---b1_9aea47b8f39073b172ed7e7687086e15--
-
+Matt
