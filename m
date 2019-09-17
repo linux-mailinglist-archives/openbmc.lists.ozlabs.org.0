@@ -1,117 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DE07B4A2A
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 11:17:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D7C8B4C2E
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 12:48:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Xctv2QBzzF4G1
-	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 19:16:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46XfwX617dzDqc5
+	for <lists+openbmc@lfdr.de>; Tue, 17 Sep 2019 20:48:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=yadro.com
- (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
+ spf=pass (mailfrom) smtp.mailfrom=protonmail.com
+ (client-ip=185.70.40.135; helo=mail-40135.protonmail.ch;
+ envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="KQJNPaUD"; 
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="K0Vjipfm"; 
  dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+X-Greylist: delayed 419 seconds by postgrey-1.36 at bilbo;
+ Tue, 17 Sep 2019 20:47:41 AEST
+Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
+ [185.70.40.135])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Xct96ccSzF422
- for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 19:16:17 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 063B9411F9;
- Tue, 17 Sep 2019 09:16:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:in-reply-to:mime-version:user-agent
- :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1568711771; x=
- 1570526172; bh=ScRjRDz+HJ2vinOMr+1FdXoHrTlAJs86cP7gDfK4znA=; b=K
- QJNPaUDxwTendINg0kkR1AQao/NuJt5dYN95w/gPkmOUYsKnTDeZEwAGe8rpXNST
- blx1aPwjI1UpKsfKVuXaFOnd0HWpK0XEErGvI5pWW3Dg1hsFbNDiKwpIKoKdXjUs
- 0fVvrnTm41hDiCcEWRJdvuu4P2koR5e9B8aQ2iT96o=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id ilv2ToZVSCHz; Tue, 17 Sep 2019 12:16:11 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 9BF6E41908;
- Tue, 17 Sep 2019 12:16:11 +0300 (MSK)
-Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 17
- Sep 2019 12:16:11 +0300
-Subject: Re: RMCP support
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
- <20190911173139.GE45301@mauery.jf.intel.com>
- <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
- <20190913184108.GG45301@mauery.jf.intel.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
- 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
- dTYsE5wSxM06T2l/MILupCNZ7A==
-Organization: YADRO
-Message-ID: <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
-Date: Tue, 17 Sep 2019 12:16:10 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Xfvd3jnHzF3jm
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Sep 2019 20:47:40 +1000 (AEST)
+Date: Tue, 17 Sep 2019 10:40:30 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1568716833;
+ bh=qgET4U3E+S1S2TO3w0kASUITuI2eFrouBQZvlN2ue5k=;
+ h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+ b=K0Vjipfmm6o7pUquawaHQJHvNz5lbvgwfped5o+rEn97SK/2Jn4PUlmz03NAqJ0V9
+ l0+0eT5pLdzVex/lADBHLV/SvI7f3CHQP1zPHMMKUTXS8uC6ZuAy0uz6c4DFojiejy
+ W6dPzQBJg1hRa4nYKJWAsJ4MDRvOX9eWDJFF5xT8=
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: rgrs <rgrs@protonmail.com>
+Subject: Fan PWM monitoring and control
+Message-ID: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-In-Reply-To: <20190913184108.GG45301@mauery.jf.intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="pFaKoMbNyJA0DtSUDnx2MpBhczMG7LM80"
-X-Originating-IP: [172.17.14.197]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Type: multipart/alternative;
+ boundary="b1_9aea47b8f39073b172ed7e7687086e15"
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,87 +57,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Reply-To: rgrs <rgrs@protonmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---pFaKoMbNyJA0DtSUDnx2MpBhczMG7LM80
-Content-Type: multipart/mixed; boundary="OPzmCq3ZenVlk7Dhx5rO0fQbm5ESA57aB";
- protected-headers="v1"
-From: Alexander Amelkin <a.amelkin@yadro.com>
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-Cc: openbmc@lists.ozlabs.org
-Message-ID: <2ed2b99b-23c1-88bb-7895-9e58706e6f7e@yadro.com>
-Subject: Re: RMCP support
-References: <BYAPR21MB119102ED346FC31306D07911C8B10@BYAPR21MB1191.namprd21.prod.outlook.com>
- <20190911173139.GE45301@mauery.jf.intel.com>
- <3a091956-820f-5576-c620-8169e45ffb22@yadro.com>
- <20190913184108.GG45301@mauery.jf.intel.com>
-In-Reply-To: <20190913184108.GG45301@mauery.jf.intel.com>
+This is a multi-part message in MIME format.
 
---OPzmCq3ZenVlk7Dhx5rO0fQbm5ESA57aB
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+--b1_9aea47b8f39073b172ed7e7687086e15
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-13.09.2019 21:41, Vernon Mauery wrote:
->> What about RMCP pings used for device discovery as described in sectio=
-n 13.13 of
->> IPMI specification?
-> I don't have any problem in particular with RMCP Ping, but it is not=20
-> implemented. It is not required by RMCP+ as far as I can tell. The spec=
-=20
-> calls out that is *is* required for RMCP, and can be implemented for=20
-> RMCP+.
->
->> AFAIK, it's not supported in OpenBMC and so `ipmiutil discover` fails =
-to
->> discover OpenBMC devices.
-> From what I can tell, the spec suggests that you send a Get Channel=20
-> Authentication Capabilities request to discover RMCP+ devices.
-
-True, but you can't send a broadcast GetChAuthCap and just gather all the=
-
-answers like you can do with RMCP ping.
-
-`idiscover` is much easier and faster to use than `idiscover -g -b 172.16=
-=2E1.1 -e
-172.16.1.254`. The latter takes like 15 minutes to complete versus like 2=
-
-seconds for plain `idiscover`.
-
-Do you think implementing RMCP ping support in OpenBMC is feasible?
-
-With best regards,
-Alexander Amelkin,
-BIOS/BMC Team Lead, YADRO
-https://yadro.com
+SGksCgpJIG5lZWQgc29tZSBoZWxwIHdpdGggcGhvc3Bob3IgaHdtb24gcmVsYXRlZCB0byBmYW4g
+c2Vuc29ycy4KCkknbSB0cnlpbmcgdG8gY29udHJvbCBGYW5zIGluIGEgc2VydmVyIG1vdGhlcmJv
+YXJkIHVzaW5nIEFEVDc0NjIgY29udHJvbGxlci4gSHcgbW9uIHBvcnRpbmcgaXMgZG9uZSBhbmQg
+dGhlIHN5c2ZzIGludGVyZmFjZXMgYXJlIHdvcmtpbmcgYXMgZXhwZWN0ZWQuCgpXaGlsZSBJIGFt
+IGFibGUgdG8gcmVhZCBSUE0sIGkgZG9uJ3QgZmluZCBwd20vdGFyZ2V0IHRvIGNvbnRyb2wgdGhl
+IGZhbnMgZXhwb3NlZCBhcyBkYnVzIG9iamVjdHMuCgojIGJ1c2N0bCAtLW5vLXBhZ2UgdHJlZSB4
+eXoub3BlbmJtY19wcm9qZWN0LkZhblNlbnNvcgpGYWlsZWQgdG8gaW50cm9zcGVjdCBvYmplY3Qg
+LyBvZiBzZXJ2aWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuRmFuU2Vuc29yOiBUaGUgbmFtZSBpcyBu
+b3QgYWN0aXZhdGFibGUKTm8gb2JqZWN0cyBkaXNjb3ZlcmVkLgoKSSBjYW1lIGFjcm9zcyB0aGlz
+IHBvc3QsIEkgdGhpbmsgaXQgaXMgc2ltaWxhciB0byBteSBpc3N1ZS4gKGh0dHBzOi8vZ2Vycml0
+Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLWh3bW9uLysvODM1MykKClBs
+ZWFzZSBzb21lb25lIHBvaW50IHRvIGxhdGVzdCBkb2N1bWVudGF0aW9uIG9yIHJlZmVyZW5jZSBG
+YW4gcG9ydGluZyBmcm9tIG9wZW5CTUMgcmVwbz8KV2hhdCBhcmUgdGhlIGV4YWN0IGZpZWxkcyBp
+biBZQU1MIHRoYXQgYXJlIHVzZWQgY3JlYXRlIEZhblBXTSBvYmplY3RzLgoKKEknbSB1c2luZyBG
+ZWIgcmVsZWFzZSBpbiBteSBzYW5kYm94LCBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2Nz
+L2Jsb2IvbWFzdGVyL3JlbGVhc2UvcmVsZWFzZS1ub3Rlcy5tZCMyNi1mZWItNC0yMDE5KQoKVGhh
+bmtzLApSYWo=
 
 
+--b1_9aea47b8f39073b172ed7e7687086e15
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
---OPzmCq3ZenVlk7Dhx5rO0fQbm5ESA57aB--
+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1mYW1pbHk6Q2FsaWJy
+aSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPkhpLDxicj48L2Rpdj48ZGl2IHN0eWxlPSJj
+b2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZl
+dGljYSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
+c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
+Ij5JIG5lZWQgc29tZSBoZWxwIHdpdGggcGhvc3Bob3IgaHdtb24gcmVsYXRlZCB0byBmYW4gc2Vu
+c29ycy48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9u
+dC1mYW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPjxicj48L2Rpdj48
+ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJp
+LEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+SSdtIHRyeWluZyB0byBjb250cm9sIEZhbnMg
+aW4gYSBzZXJ2ZXIgbW90aGVyYm9hcmQgdXNpbmcgQURUNzQ2Mg0KY29udHJvbGxlci4gSHcgbW9u
+IHBvcnRpbmcgaXMgZG9uZSBhbmQgdGhlIHN5c2ZzIGludGVyZmFjZXMgYXJlIHdvcmtpbmcNCmFz
+IGV4cGVjdGVkLjxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJw
+dDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+PGJyPjwv
+ZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNh
+bGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5XaGlsZSBJIGFtIGFibGUgdG8gcmVh
+ZCBSUE0sIGkgZG9uJ3QgZmluZCBwd20vdGFyZ2V0IHRvIGNvbnRyb2wgdGhlIGZhbnMgZXhwb3Nl
+ZCBhcyBkYnVzIG9iamVjdHMuPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
+c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
+Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1m
+YW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPjxkaXY+PHNwYW4+IyBi
+dXNjdGwgLS1uby1wYWdlIHRyZWUgeHl6Lm9wZW5ibWNfcHJvamVjdC5GYW5TZW5zb3I8YnI+IDwv
+c3Bhbj4gPC9kaXY+PGRpdj5GYWlsZWQgdG8gaW50cm9zcGVjdCBvYmplY3QgLyBvZiBzZXJ2aWNl
+IHh5ei5vcGVuYm1jX3Byb2plY3QuRmFuU2Vuc29yOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFi
+bGU8YnI+PC9kaXY+PGRpdj48c3Bhbj5ObyBvYmplY3RzIGRpc2NvdmVyZWQuPC9zcGFuPjxicj48
+L2Rpdj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZh
+bWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYg
+c3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJp
+YWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5JIGNhbWUgYWNyb3NzIHRoaXMgcG9zdCwgSSB0aGlu
+ayBpdCBpcyBzaW1pbGFyIHRvIG15IGlzc3VlLiAoPGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3Bl
+bmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvcGhvc3Bob3ItaHdtb24vKy84MzUzIiB0YXJnZXQ9
+Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIiBkYXRhLWF1dGg9Ik5vdEFwcGxpY2Fi
+bGUiPmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9y
+LWh3bW9uLysvODM1MzwvYT4pPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
+c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
+Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6YmxhY2s7Zm9udC1zaXplOjEycHQ7Zm9udC1m
+YW1pbHk6Q2FsaWJyaSxBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjsiPlBsZWFzZSBzb21lb25l
+ICBwb2ludCB0byBsYXRlc3QgZG9jdW1lbnRhdGlvbiBvciByZWZlcmVuY2UgRmFuIHBvcnRpbmcg
+ZnJvbSBvcGVuQk1DIHJlcG8/PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQt
+c2l6ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7
+Ij5XaGF0IGFyZSB0aGUgZXhhY3QgZmllbGRzIGluIFlBTUwgdGhhdCBhcmUgdXNlZCBjcmVhdGUg
+RmFuUFdNIG9iamVjdHMuIDxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpibGFjaztmb250LXNp
+emU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmOyI+
+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2ZvbnQtZmFt
+aWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij4oSSdtIHVzaW5nIEZlYiBy
+ZWxlYXNlIGluIG15IHNhbmRib3gsIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1j
+L2RvY3MvYmxvYi9tYXN0ZXIvcmVsZWFzZS9yZWxlYXNlLW5vdGVzLm1kIzI2LWZlYi00LTIwMTki
+Pmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvcmVsZWFzZS9yZWxl
+YXNlLW5vdGVzLm1kIzI2LWZlYi00LTIwMTk8L2E+KTxicj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xv
+cjpibGFjaztmb250LXNpemU6MTJwdDtmb250LWZhbWlseTpDYWxpYnJpLEFyaWFsLEhlbHZldGlj
+YSxzYW5zLXNlcmlmOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6
+ZToxMnB0O2ZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5U
+aGFua3MsPGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOmJsYWNrO2ZvbnQtc2l6ZToxMnB0O2Zv
+bnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7Ij5SYWo8YnI+PC9k
+aXY+
 
---pFaKoMbNyJA0DtSUDnx2MpBhczMG7LM80
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCAAGBQJdgKRaAAoJEOiTWHtbdBeN50kP/iAickiKSWlmg0jVzNvhRoHe
-gpgcVhnQMN7XP6d3Kc5fUOCdsE+3/FMc5dfzVXugqBo5mfhjGt6Z3Pna7waA59Yk
-FO33TEJG6kcDHtORceRlyTozrbgyoszTzrIKRaGvFKIFwfNR0eDjGDC+6PuWosDJ
-WnkRIgiQjGasTiPUQBTkNzPA1j4EBja0G1g5wWoOA0dJouUpK402Kiadt20AqBL/
-4jLhiH8KZjmsHZdmYbXob0iEgFzo66jejWAZyyIyxpFyvj5fdJLvBZWaSCOPX2ex
-pPOf8pxIeTPU5dZOlpeO/xTMBOStAiPDt07MFn0vP7t2ygDrUCEeismMxCVp522M
-OXHsGnfmWtwpP7ziUbJJuCXhY0Aj08A0qrVebnUMMHWit60RB0b8NI0FvYqGP95Q
-BIiRtNAd/5W+KETfrQif7qI/oHJayMMB8Nt55y7EM+Lip4wU1pmtMdnwArYgnJ/p
-TLpPtO+Rv805OksURs3/RF39U/F7U0EgHTgkuEM1kNiAvEVzjsUM/oqUm+4BB2a6
-YklW6+Yud/IUYT2uWJQaEtJZyOx5H9m1NqrNOtl2bVLwS+lHUHJbG9o9+5nSMhGy
-iI3QBIegh0kIRoX77jfcCHIF+kSnYy1JqHao09j2xSF6dERMRP5rMRwVo0+oCKl6
-S3vUHsJBZgz8TGGP2fe+
-=/rtf
------END PGP SIGNATURE-----
+--b1_9aea47b8f39073b172ed7e7687086e15--
 
---pFaKoMbNyJA0DtSUDnx2MpBhczMG7LM80--
