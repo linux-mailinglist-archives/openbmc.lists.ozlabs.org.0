@@ -1,57 +1,42 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4066B6C8F
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 21:30:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78C9AB6E07
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 22:42:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46YVSZ0kr5zF4jx
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 05:30:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46YX2w4FxQzF4mN
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 06:42:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=temperror (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=178.32.97.215; helo=14.mo1.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 8841 seconds by postgrey-1.36 at bilbo;
- Thu, 19 Sep 2019 05:29:50 AEST
-Received: from 14.mo1.mail-out.ovh.net (14.mo1.mail-out.ovh.net
- [178.32.97.215])
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46YVRf47b4zF4gP
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 05:29:43 +1000 (AEST)
-Received: from player687.ha.ovh.net (unknown [10.108.54.36])
- by mo1.mail-out.ovh.net (Postfix) with ESMTP id 5D57B18F86E
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 19:02:21 +0200 (CEST)
-Received: from kaod.org (lfbn-1-2240-157.w90-76.abo.wanadoo.fr [90.76.60.157])
- (Authenticated sender: clg@kaod.org)
- by player687.ha.ovh.net (Postfix) with ESMTPSA id 522F59EDE350;
- Wed, 18 Sep 2019 17:02:18 +0000 (UTC)
-Subject: Re: [PATCH linux dev-5.2 v2 3/4] ARM: dts: Aspeed: ast2600: Add I2C
- busses
-To: Eddie James <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <1568391353-32584-1-git-send-email-eajames@linux.ibm.com>
- <1568391353-32584-4-git-send-email-eajames@linux.ibm.com>
- <9f747c91-0988-2eb1-7387-6bb5edff8611@kaod.org>
- <7079ed45-7bfe-f580-2829-5d984c520608@linux.ibm.com>
- <41fe74ea-4186-e059-401d-f6a6ed39e4ec@kaod.org>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <c5a539f1-2304-0ef3-b6a2-9ee96614924b@kaod.org>
-Date: Wed, 18 Sep 2019 19:02:17 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <41fe74ea-4186-e059-401d-f6a6ed39e4ec@kaod.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 7141583112286014379
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrudekgddutdekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46YX2939WnzF4hP
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 06:41:19 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 5D04F6DECB
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 16:41:14 -0400 (EDT)
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain;
+	charset=utf-8;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Feedback on documentation philosophy requested
+Message-Id: <507D4043-19B5-43ED-B28B-408D4BC504E6@fuzziesquirrel.com>
+Date: Wed, 18 Sep 2019 16:41:14 -0400
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3445.104.11)
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,33 +48,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 18/09/2019 17:57, Cédric Le Goater wrote:
-> On 18/09/2019 16:53, Eddie James wrote:
->>
->> On 9/18/19 5:18 AM, Cédric Le Goater wrote:
->>> On 13/09/2019 18:15, Eddie James wrote:
->>>> Add all the I2C busses to the AST2600 dtsi and set their required
->>>> properties.
->>>>
->>> The DT defines an interrupt per I2C bus but this is not how the I2C
->>> driver operates. It still uses the old mode from the Aspeed AST2500.
->>
->>
->> Oh? The I2C interrupt controller driver is a separate driver, which I didn't include a node for in the AST2600 dts. As far as I can tell the I2C bus driver just asks for it's interrupt and uses it, so by setting each bus to it's GIC interrupt line (instead of the line from the I2C interrupt controller like in the AST2500), the I2C driver receives the correct interrupt.
-> 
-> ok. I am seeing this from the I2C model side and that is where the 
-> problem must be. I will dig in QEMU.
+Hello OpenBMCers
 
-We now have one irq per bus and the I2C model needs some rework for 
-the AST2600 because we only had one with the previous Aspeed SoC.
+Over here at IBM we are just getting started on a large-ish project.  The=
+ =20
+effect of which I=E2=80=99d like to focus on with this thread is that we =
+will be =20
+generating a fair amount of documentation.
 
-Are you sure of the I2C IRQ number range ? Shouldn't we using range
-142-157 instead ? 
+I=E2=80=99m not talking about documentation for existing function.  There=
+ is =20
+certainly a need for that too but that is also something to tackle in =20
+another thread.  Rather, I=E2=80=99m talking about new designs and docume=
+ntation =20
+for new features.
 
-Thanks,
+Some of the new features we=E2=80=99ll be documenting will -not- be inter=
+esting to =20
+some/many/most/all in the OpenBMC community.  For the features that fall =
+=20
+more towards the most/all end of that spectrum, I ask for your thoughts o=
+n =20
+a couple points:
 
-C.
+- Should these docs and designs be segregated somehow?  Would they become=
+ a =20
+burden on the rest of the community if not?
+
+- I=E2=80=99d like to contribute a process around documentation that help=
+s =20
+contributors figure out where and how to document things like this.  A =20
+really rough thought I have here is some kind of flow chart or decision =20
+tree that could be applied to a document or set of documents, the output =
+of =20
+which would be how to break up your documentation into pieces and/or wher=
+e =20
+to put it/them.  Does anyone have any ideas here?
+
+As you ponder these questions a couple things to keep in your head:
+
+- At the moment all designs are unconditionally found in =20
+openbmc/docs/designs.
+
+- We have documentation in openbmc/docs, *-dbus-interfaces, and various =20
+sub-project repo READMEs.  Any others?
+
+- My observation is that the project is headed away from micro services a=
+nd =20
+towards larger applications - highly configurable at build time.  bmcweb =
+=20
+and phosphor-logging are great examples of this.  Think Linux/KBuild (but=
+ =20
+without modules).  What this means is that code with relatively few users=
+ =20
+(or even just one) goes in the same codebase as the code with many users.=
+  =20
+This seems counter to segregating documentation and designs of the code =20
+with few users.
+
+- An example of an un-interesting feature might be the support we=E2=80=99=
+ll add =20
+for the hardware management console.  The HMC is a management appliance w=
+e =20
+sell and it has a custom REST API [1], which we=E2=80=99ll implement in b=
+mcweb =20
+(tucked behind cmake flags that compile the support out of course, as =20
+described in the previous bullet).
+
+A couple simple ideas that have been thrown around=E2=80=A6
+
+- put vendor subfolders in openbmc/docs/designs
+
+- document vendor specific features in meta-<vendor>/docs
+
+If you are still reading, thanks!  I look forward to hearing your ideas.
+
+-brad
+
+[1] =20
+https://www.ibm.com/support/knowledgecenter/TI0003N/p8hat/p8hat_partition=
+ingwithanhmc.htm
