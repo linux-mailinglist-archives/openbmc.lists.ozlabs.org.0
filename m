@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D93E1B6E7C
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 22:52:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D893B6ED9
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 23:30:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46YXGg4lDJzF4mC
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 06:52:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46YY721PplzF4Zf
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 07:30:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,49 +19,47 @@ Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46YXFZ2NLXzF4js
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 06:51:13 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46YY6G6Yc4zF4ZG
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 07:29:58 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8IKlXI3022141
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 16:51:09 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v3se6n2fp-1
+ x8ILKOr5109551
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 17:29:54 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v3vdng8qd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 16:51:08 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8IKkXnX022067
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:08 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma04dal.us.ibm.com with ESMTP id 2v37jvtchs-1
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 17:29:54 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8ILGtxB028640
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:53 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma03dal.us.ibm.com with ESMTP id 2v3vbu82mm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:08 +0000
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:53 +0000
 Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
  [9.57.199.108])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8IKp7kO51773698
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x8ILTrhk50790660
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:07 GMT
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:53 GMT
 Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C9C8B2064
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0D57EB2066
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:53 +0000 (GMT)
 Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A7D1B205F
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D1F76B2064
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:52 +0000 (GMT)
 Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
  by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 20:51:07 +0000 (GMT)
-Subject: Re: Security Working Group meeting - Wednesday September 18
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 21:29:52 +0000 (GMT)
 From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Staging plans to remove network IPMI support?
 To: openbmc <openbmc@lists.ozlabs.org>
-References: <bed91be2-18f2-8572-89df-d60b4d2d8365@linux.ibm.com>
-Message-ID: <ac534282-bc59-4983-de88-c39b3a4c7aa1@linux.ibm.com>
-Date: Wed, 18 Sep 2019 15:51:06 -0500
+Message-ID: <24ab3a70-2752-e2ba-5a37-41ee35f8aa92@linux.ibm.com>
+Date: Wed, 18 Sep 2019 16:29:52 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
  Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <bed91be2-18f2-8572-89df-d60b4d2d8365@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -73,7 +71,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909180179
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1909180182
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,41 +86,30 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The OpenBMC security working group discussed a desire to remove 
+out-of-band network IPMI support from the OpenBMC firmware stack, here: 
+https://lists.ozlabs.org/pipermail/openbmc/2019-September/018319.html
 
-On 9/17/19 6:32 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday September 18 at 10:00am PDT.
->
-> Current topics:
-> - Development work:
->     1. IPMI authority question - 
-> https://lists.ozlabs.org/pipermail/openbmc/2019-August/017905.html 
->     2. Multiple admin security question - 
-> https://lists.ozlabs.org/pipermail/openbmc/2019-August/017910.html  
-> - OCP Secure Firmware Development Best Practices (goo.gl/uEoAh4)  
-> - Expired password design 
+This would affect out-of-band (network IPMI) only, in repository 
+https://github.com/openbmc/phosphor-net-ipmid. The host IPMI support is 
+a separate topic.
 
-Thanks to everyone who attended the meeting.  The minutes are in the 
-link below.  Click the link, then click "Meeting Minutes". Highlights:
+The *main idea* is a staging plan to remove network IPMI support over a 
+period of years, like in this progression:
 
-- We discussed the design and implementation of IPMI authority 
-Role=admin access.
-- We discussed the expired password design, including interfaces that 
-will be able to change the password.
-- We briefly reviewed the existence of the OpenBMC network threat model 
-and the overall BMC threat model currently in review.
-- We glanced at the mutual TLS (mTLS) reviews in progress 
-- We discussed the desire and plans to deprecate out-of-band IPMI 
-network access to the BMC.  I'll send an email with more on this topic.
-- We discussed emerging firmware recommendations such as the "CSIS 
-Secure Firmware Development Best Practices" and how we would use those 
-recommendations.
-
-- Joseph
-
->
-> Access, agenda, and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
->
-> - Joseph
-
+1. Tell everyone the plans at each stage below. For example: emails to 
+the group, mention in the release notes, update 
+https://github.com/openbmc/phosphor-net-ipmid/blob/master/README.mdand 
+the ipmitool repo. 2. Implement the Redfish ManagerNetworkProtocol - 
+defined in the DMTF Redfish Resource and Schema Guide DSP2046 
+https://www.dmtf.org/dsp/DSP2046.  This gives the BMC admin an interface 
+to disable out-of-band network IPMI.That means stopping the IPMI network 
+service and closing its port. 3. Change the IPMI ManagerNetworkProtocol 
+setting to be disabled by default.  After this, BMC admins have to take 
+an explicit action to enable IPMI access.By this point it should be 
+possible to learn how to migrate from IPMI to Redfish APIs. 4. Remove 
+IPMI from the default OpenBMC configuration. This means network IPMI is 
+not built into the BMC firmware image. After this, project who want to 
+use network IPMI willhave to explicitly add it to their image. This will 
+hopefully be a wake-up call to anyone who is still using network IPMI. 
+5. Remove all references to network IPMI from OpenBMC. Discussion? - Joseph
