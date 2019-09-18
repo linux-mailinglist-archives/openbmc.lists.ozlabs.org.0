@@ -1,82 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66D46B66B5
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 17:06:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1C98B679D
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 18:00:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46YNc10Fk2zF3w5
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 01:06:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46YPpJ0bQnzF4kB
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 02:00:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::633; helo=mail-pl1-x633.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="E2lEj+oH"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com
+ [IPv6:2607:f8b0:4864:20::633])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46YNKs5vCXzF3WN
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 00:54:25 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8IEqbIq097990; Wed, 18 Sep 2019 10:54:18 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2v3m2eee8v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Sep 2019 10:53:58 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8IEoSTx025333;
- Wed, 18 Sep 2019 14:53:39 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma04dal.us.ibm.com with ESMTP id 2v37jvqkym-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Sep 2019 14:53:39 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8IErbwg55443798
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Sep 2019 14:53:37 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A7ABFBE056;
- Wed, 18 Sep 2019 14:53:37 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 02C99BE04F;
- Wed, 18 Sep 2019 14:53:36 +0000 (GMT)
-Received: from [9.80.232.134] (unknown [9.80.232.134])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed, 18 Sep 2019 14:53:36 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.2 v2 3/4] ARM: dts: Aspeed: ast2600: Add I2C
- busses
-To: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-References: <1568391353-32584-1-git-send-email-eajames@linux.ibm.com>
- <1568391353-32584-4-git-send-email-eajames@linux.ibm.com>
- <9f747c91-0988-2eb1-7387-6bb5edff8611@kaod.org>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <7079ed45-7bfe-f580-2829-5d984c520608@linux.ibm.com>
-Date: Wed, 18 Sep 2019 09:53:36 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46YPnV5yWMzF4fm
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 01:59:57 +1000 (AEST)
+Received: by mail-pl1-x633.google.com with SMTP id u12so134596pls.12
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 08:59:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=BeSr5s465PJHyDiz2DUorAwfuxZMJVjwJ4wWgwH7Iic=;
+ b=E2lEj+oHvursBBV+Q2+4dvJZywRmRQzX174gr0pXMXZMkq18IfzQM4e5yZ+Js6R9lb
+ 9lkUpZxmYhT4lLpQX26w+kBzvg4wbkDUjVr/7/rZhpOBKN4czruDrExTvObeH/DZELY5
+ oUaN9uAXP4GRx6WXOM4CeTx5pmWhLdCo0w4ah16aq8QCTjwLuUkk5S7wbp1i3qh88p1H
+ HNKAF24DdOdhId5ZFzwFsGJLYSDBgL5crZdklA2d9N0jWsHL9RrLl+Da9fQ7luMuqBlb
+ zJJ9D8D0LR2Zh2I13SxcYt3b/dvehkZ1v3UFbEv++3JX64jxtgsJ1brtiRkiwJgx/bmF
+ FTNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=BeSr5s465PJHyDiz2DUorAwfuxZMJVjwJ4wWgwH7Iic=;
+ b=lPFmn2hIfAVU5l2LXR+C+tR0Au7pBd48t+FRh9GUf/aOmZBx2C7t+VSjhfDPxLz+oa
+ oidDukQUmu6t1nyhmegDitGB5X9k3B/EKovRtDmwPJvJcXoGfsd7SFNskJwxj9s1Dae+
+ WdS2DIxigK6WGagNnCpFKBSz1sjaRX/jA4zNoHZ5RSJ05wtgX1EBh722YQy89vI+8lNM
+ IRQg/HyvaqEtlxAmg8BXWmjKtN5UqltaplCqwmXJ+pEMd5fiOHXPfM/FseiCGrapMUe+
+ m78b7Nxp1cCBv6+58j3Cfg3nwltl81I2rqs0CjP6q2NZF5RrD5S6v9HzxvW2kPQt6MLX
+ 5/sg==
+X-Gm-Message-State: APjAAAXzWp1ZGcZZak+tCgwCtFqQ9wGfKX86FvKFR2nguwZY79z+DiUz
+ YgnVdXwmOReMuAPpfurAm1CKrt1G/a5x7qDG5ZDRjA==
+X-Google-Smtp-Source: APXvYqzkmJruK1COpggfcd0yc12w6VygOIjvAHZ9lCC2sTuaUfw/cSn4UXP0gZkNkrOHKPGcG2lX4VCreD3jdjVB94c=
+X-Received: by 2002:a17:902:760a:: with SMTP id
+ k10mr4779192pll.183.1568822393620; 
+ Wed, 18 Sep 2019 08:59:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <9f747c91-0988-2eb1-7387-6bb5edff8611@kaod.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-18_08:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909180147
+References: <HK0PR03MB5123D25A4F88B901BFB853DFDF8E0@HK0PR03MB5123.apcprd03.prod.outlook.com>
+In-Reply-To: <HK0PR03MB5123D25A4F88B901BFB853DFDF8E0@HK0PR03MB5123.apcprd03.prod.outlook.com>
+From: Patrick Venture <venture@google.com>
+Date: Wed, 18 Sep 2019 08:59:42 -0700
+Message-ID: <CAO=notwyv46-oo8McimPcr1tq+TchK0A9Jc-LxyHPnU=WGcYjQ@mail.gmail.com>
+Subject: Re: code review about phosphor-ipmi-flash
+To: CS20 CTCchien <CTCCHIEN@nuvoton.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,329 +76,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au
+Cc: Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Sep 18, 2019 at 1:13 AM CS20 CTCchien <CTCCHIEN@nuvoton.com> wrote:
+>
+> Hello Patrick,
+>
+>
+>
+> You have a comment in this link about recipes-phosphor/flash/phosphor-sof=
+tware-manager_%.bbappend
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/meta-nuvoton/+/25220/2/recip=
+es-phosphor/flash/phosphor-software-manager_%2525.bbappend#1
+>
+>
+>
+> do you mean I should use "verify-signature-nuvoton" instead of "verify-si=
+gnature" ?
 
-On 9/18/19 5:18 AM, Cédric Le Goater wrote:
-> On 13/09/2019 18:15, Eddie James wrote:
->> Add all the I2C busses to the AST2600 dtsi and set their required
->> properties.
->>
-> The DT defines an interrupt per I2C bus but this is not how the I2C
-> driver operates. It still uses the old mode from the Aspeed AST2500.
+No, I'm saying your bbappend file is overriding the PACKAGECONFIG with
+a weak default that'll be applied to any machine in a multi-machine
+environment that parses that bbappend file.  Your other bbappend does
+the same thing.  We use machine or other overrides to safely allow
+modifying only select systems.
 
+https://github.com/openbmc/meta-nuvoton/blob/master/conf/machine/include/nu=
+voton.inc#L6
 
-Oh? The I2C interrupt controller driver is a separate driver, which I 
-didn't include a node for in the AST2600 dts. As far as I can tell the 
-I2C bus driver just asks for it's interrupt and uses it, so by setting 
-each bus to it's GIC interrupt line (instead of the line from the I2C 
-interrupt controller like in the AST2500), the I2C driver receives the 
-correct interrupt.
+This is an example of the override.  In this case, if a MACHINE
+includes that file, they'll have that override available to them, and
+so recipes with
 
-Thanks,
+PACKAGECONFIG_nuvoton ... will be picked up, but only for them.
 
-Eddie
+Similarly, all the items in this file:
+https://gerrit.openbmc-project.xyz/c/openbmc/meta-nuvoton/+/25220/2/recipes=
+-phosphor/ipmi/phosphor-ipmi-flash_%2525.bbappend
 
+Can be locked by a machine override.
+
+However, from the discussion with Brad, you're going to want to take
+the values you're defining, "0xc0008000, 0xF0848000" ... and add them
+to the core recipe itself with useful names. Right above this:
+https://github.com/openbmc/meta-phosphor/blob/master/recipes-phosphor/ipmi/=
+phosphor-ipmi-flash_git.bb#L38
+
+Then if someone wants to enable a specific nuvoton feature, they
+assign IPMI_FLASH_BMC_ADDRESS_theirmachine =3D NUVOTON_FLASH_PCIVGA ...
+or whatever in their bbappend.
 
 >
-> C.
+> Thanks
 >
->   
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   arch/arm/boot/dts/aspeed-g6.dtsi | 272 +++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 272 insertions(+)
->>
->> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
->> index f3edcff..916503a 100644
->> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
->> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
->> @@ -12,6 +12,22 @@
->>   	interrupt-parent = <&gic>;
->>   
->>   	aliases {
->> +		i2c0 = &i2c0;
->> +		i2c1 = &i2c1;
->> +		i2c2 = &i2c2;
->> +		i2c3 = &i2c3;
->> +		i2c4 = &i2c4;
->> +		i2c5 = &i2c5;
->> +		i2c6 = &i2c6;
->> +		i2c7 = &i2c7;
->> +		i2c8 = &i2c8;
->> +		i2c9 = &i2c9;
->> +		i2c10 = &i2c10;
->> +		i2c11 = &i2c11;
->> +		i2c12 = &i2c12;
->> +		i2c13 = &i2c13;
->> +		i2c14 = &i2c14;
->> +		i2c15 = &i2c15;
->>   		serial4 = &uart5;
->>   	};
->>   
->> @@ -281,6 +297,262 @@
->>   				};
->>   			};
->>   
->> +			i2c0: i2c-bus@1e78a080 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a080 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c1_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c1: i2c-bus@1e78a100 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a100 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c2_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c2: i2c-bus@1e78a180 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a180 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c3_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c3: i2c-bus@1e78a200 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a200 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c4_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c4: i2c-bus@1e78a280 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a280 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c5_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c5: i2c-bus@1e78a300 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a300 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c6_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c6: i2c-bus@1e78a380 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a380 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c7_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c7: i2c-bus@1e78a400 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a400 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c8_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c8: i2c-bus@1e78a480 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a480 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c9_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c9: i2c-bus@1e78a500 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a500 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c10_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c10: i2c-bus@1e78a580 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a580 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c11_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c11: i2c-bus@1e78a600 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a600 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c12_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c12: i2c-bus@1e78a680 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a680 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c13_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c13: i2c-bus@1e78a700 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a700 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c14_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c14: i2c-bus@1e78a780 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a780 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c15_default>;
->> +				status = "disabled";
->> +			};
->> +
->> +			i2c15: i2c-bus@1e78a800 {
->> +				#address-cells = <1>;
->> +				#size-cells = <1>;
->> +				#interrupt-cells = <1>;
->> +
->> +				reg = <0x1e78a800 0x80>;
->> +				compatible = "aspeed,ast2600-i2c-bus";
->> +				clocks = <&syscon ASPEED_CLK_APB1>;
->> +				resets = <&syscon ASPEED_RESET_I2C>;
->> +				bus-frequency = <100000>;
->> +				interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
->> +				pinctrl-names = "default";
->> +				pinctrl-0 = <&pinctrl_i2c16_default>;
->> +				status = "disabled";
->> +			};
->> +
->>   			fsim0: fsi@1e79b000 {
->>   				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
->>   				reg = <0x1e79b000 0x94>;
->>
+>
+>
+>
+>
+> B.R.
+>
+> Medad
+>
+> ________________________________
+> The privileged confidential information contained in this email is intend=
+ed for use only by the addressees as indicated by the original sender of th=
+is email. If you are not the addressee indicated in this email or are not r=
+esponsible for delivery of the email to such a person, please kindly reply =
+to the sender indicating this fact and delete all copies of it from your co=
+mputer and network server immediately. Your cooperation is highly appreciat=
+ed. It is advised that any unauthorized use of confidential information of =
+Nuvoton is strictly prohibited; and any information in this email irrelevan=
+t to the official business of Nuvoton shall be deemed as neither given nor =
+endorsed by Nuvoton.
