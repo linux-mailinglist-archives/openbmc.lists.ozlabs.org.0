@@ -2,53 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EAD7B6384
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 14:46:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A880B63F9
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 15:02:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46YKTn3P60zF4SM
-	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 22:46:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46YKrs2gYBzF4SY
+	for <lists+openbmc@lfdr.de>; Wed, 18 Sep 2019 23:02:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=178.33.250.45; helo=2.mo179.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::22b; helo=mail-oi1-x22b.google.com;
+ envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 4196 seconds by postgrey-1.36 at bilbo;
- Wed, 18 Sep 2019 22:45:15 AEST
-Received: from 2.mo179.mail-out.ovh.net (2.mo179.mail-out.ovh.net
- [178.33.250.45])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="HPvL7XZ6"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46YKSq4r8yzF4RC
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 22:45:11 +1000 (AEST)
-Received: from player688.ha.ovh.net (unknown [10.109.143.79])
- by mo179.mail-out.ovh.net (Postfix) with ESMTP id D8819142AE7
- for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 12:18:50 +0200 (CEST)
-Received: from kaod.org (lfbn-1-2240-157.w90-76.abo.wanadoo.fr [90.76.60.157])
- (Authenticated sender: clg@kaod.org)
- by player688.ha.ovh.net (Postfix) with ESMTPSA id 163A99DDDAA2;
- Wed, 18 Sep 2019 10:18:45 +0000 (UTC)
-Subject: Re: [PATCH linux dev-5.2 v2 3/4] ARM: dts: Aspeed: ast2600: Add I2C
- busses
-To: Eddie James <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <1568391353-32584-1-git-send-email-eajames@linux.ibm.com>
- <1568391353-32584-4-git-send-email-eajames@linux.ibm.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <9f747c91-0988-2eb1-7387-6bb5edff8611@kaod.org>
-Date: Wed, 18 Sep 2019 12:18:44 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46YKqV4Fx9zF4RX
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 23:01:23 +1000 (AEST)
+Received: by mail-oi1-x22b.google.com with SMTP id w6so5832957oie.11
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Sep 2019 06:01:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=h9X5QtDFygyTkQIe5SH4PQlKQvEg03oIM8ONBSUChaM=;
+ b=HPvL7XZ6eQgSaUnEa1WjhBwg1UcNeW6gp+JX+HJg5uvQsptlD/Eh51qg8+9N4MS/GR
+ fn83vrvBDdZeATx4rQuPUtO7b8X4cN62c6VOUpUkqrso2tXLhmatvq6hZuuiuduBpom4
+ KLM31V1o3PAs4XoZhTaMIXaOelIrjVgUPbi1uM5lFP+FGJzeZc50fwPbdZKm+8Ex/Ac/
+ 1yf3zmlOMi7Jyb9YooCQXy1FCEYb3Dxmm7ZbX4fxyMJgIPqQatC77X8e5oEJqYnoXGAZ
+ KFrNRJvoPJrUXgBDvo+DNmTgvYICdHV0AKQwIEaoW9WY3tTqUvaFC1hz7gwINYoCghRX
+ LeHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=h9X5QtDFygyTkQIe5SH4PQlKQvEg03oIM8ONBSUChaM=;
+ b=lAFHblyTydyoYsQvXzCazWgIo/0S0SYB695DN2MZ4vR76hZ580TPyXSj/vCSWDIrbq
+ wXTrJUGZtlFaL8Y1/KwgRC5w3chS6rGn5ID26UaL56y4tOuzmh+M5l4ovlgEfjnmWMjd
+ Kvw7NP+sHzKcg2prDDHEgUb/3Cl4s1rU66x/rpkN/PDYKHp9BweZnmoIJ31AzIRx9Eoz
+ CS7OJAYrz3zx+kgcnJlL30XEHc0TryC8JAqtN+X3RRzRU6qbad6jGDPMKhX7NyJ5xfjU
+ dLU0FjMSloyX3L8GwNI9H82rkfAUDABqdpF+iIsiuZvXcwOWCLgWbFq9kXivjVyCE3C0
+ dQmA==
+X-Gm-Message-State: APjAAAVirBw8krsrjk9tORYkZ/7QRsbmkYfXqvRBqKRaK/umfn+L2+ph
+ OmnzF/1USRCuR/t5lUiQ3aF3l0UNIDkftIcztC0=
+X-Google-Smtp-Source: APXvYqxSeo9FJDDFYvRcL9zBJUDi7BY59SSqygoz5/eHkIUTlofMdRsqyiiodxMwO0FkF3pBDXGZcOa6RblB2d0xSUo=
+X-Received: by 2002:aca:ed15:: with SMTP id l21mr2137276oih.158.1568811680215; 
+ Wed, 18 Sep 2019 06:01:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1568391353-32584-4-git-send-email-eajames@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Ovh-Tracer-Id: 327073926204459987
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrudekgddviecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+References: <DECB9459-108C-40DF-AB18-65A38169223D@fb.com>
+ <e9f88063-77e0-42e4-b63d-92d5b8d8c299@www.fastmail.com>
+In-Reply-To: <e9f88063-77e0-42e4-b63d-92d5b8d8c299@www.fastmail.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Wed, 18 Sep 2019 08:01:04 -0500
+Message-ID: <CALLMt=r15qn+kFJdTWpbAzorjr+kfBoyz2mOJ3QsTwrfJKDUhw@mail.gmail.com>
+Subject: Re: BitBake Apache License and Packaging for OpenBMC Components
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,315 +75,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au
+Cc: Andrew Geissler <andrewg@us.ibm.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Wilfred Smith <wilfredsmith@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 13/09/2019 18:15, Eddie James wrote:
-> Add all the I2C busses to the AST2600 dtsi and set their required
-> properties.
-> 
+On Tue, Sep 17, 2019 at 6:59 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+>
+> > (5) How should I handle being in a subdirectory of a repository? The
+> > code I=E2=80=99m checking in will go into openbmc-tools. How does that =
+work for
+> > CI?
+>
+> There isn't any CI for openbmc-tools at the moment, as it was originally
+> intended as a collection of quick hacks that made people's lives easier
+> without any particular guarantees. This was done to lower the bar for
+> entry and get people contributing their scripts.
+>
+> CI is probably something we need to think about though, so I've added
+> Andrew G in To/Cc:
 
-The DT defines an interrupt per I2C bus but this is not how the I2C 
-driver operates. It still uses the old mode from the Aspeed AST2500.
+I know for openbmc-build-scripts I did eventually make a jenkins job
+that does basic validation of the scripts it can (building docker container=
+s).
+We were getting some regressions which were breaking our CI so this was
+a quick way to make sure the docker containers at least built when the
+scripts were updated.
 
-C.  
+We could do something similar with this repo, even if it's just running --h=
+elp
+of the tools to ensure they execute. We could get more complex and
+connect them up to a QEMU session running openbmc to validate
+more. I don't have any bandwidth to do much here though so someone
+else would need to drive it.
 
- 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  arch/arm/boot/dts/aspeed-g6.dtsi | 272 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 272 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-> index f3edcff..916503a 100644
-> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
-> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-> @@ -12,6 +12,22 @@
->  	interrupt-parent = <&gic>;
->  
->  	aliases {
-> +		i2c0 = &i2c0;
-> +		i2c1 = &i2c1;
-> +		i2c2 = &i2c2;
-> +		i2c3 = &i2c3;
-> +		i2c4 = &i2c4;
-> +		i2c5 = &i2c5;
-> +		i2c6 = &i2c6;
-> +		i2c7 = &i2c7;
-> +		i2c8 = &i2c8;
-> +		i2c9 = &i2c9;
-> +		i2c10 = &i2c10;
-> +		i2c11 = &i2c11;
-> +		i2c12 = &i2c12;
-> +		i2c13 = &i2c13;
-> +		i2c14 = &i2c14;
-> +		i2c15 = &i2c15;
->  		serial4 = &uart5;
->  	};
->  
-> @@ -281,6 +297,262 @@
->  				};
->  			};
->  
-> +			i2c0: i2c-bus@1e78a080 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a080 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c1_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c1: i2c-bus@1e78a100 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a100 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c2_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c2: i2c-bus@1e78a180 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a180 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c3_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c3: i2c-bus@1e78a200 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a200 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c4_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c4: i2c-bus@1e78a280 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a280 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c5_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c5: i2c-bus@1e78a300 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a300 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c6_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c6: i2c-bus@1e78a380 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a380 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c7_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c7: i2c-bus@1e78a400 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a400 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c8_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c8: i2c-bus@1e78a480 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a480 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c9_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c9: i2c-bus@1e78a500 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a500 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c10_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c10: i2c-bus@1e78a580 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a580 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c11_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c11: i2c-bus@1e78a600 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a600 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c12_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c12: i2c-bus@1e78a680 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a680 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c13_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c13: i2c-bus@1e78a700 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a700 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c14_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c14: i2c-bus@1e78a780 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a780 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c15_default>;
-> +				status = "disabled";
-> +			};
-> +
-> +			i2c15: i2c-bus@1e78a800 {
-> +				#address-cells = <1>;
-> +				#size-cells = <1>;
-> +				#interrupt-cells = <1>;
-> +
-> +				reg = <0x1e78a800 0x80>;
-> +				compatible = "aspeed,ast2600-i2c-bus";
-> +				clocks = <&syscon ASPEED_CLK_APB1>;
-> +				resets = <&syscon ASPEED_RESET_I2C>;
-> +				bus-frequency = <100000>;
-> +				interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
-> +				pinctrl-names = "default";
-> +				pinctrl-0 = <&pinctrl_i2c16_default>;
-> +				status = "disabled";
-> +			};
-> +
->  			fsim0: fsi@1e79b000 {
->  				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
->  				reg = <0x1e79b000 0x94>;
-> 
+Would we want a run-ci.sh in each subdirectory where a tool owner
+could configure it to setup their env and run their tests? Most of the
+tools are python, is there a python CI framework we should look at?
+Maybe easier to have a master script from the root dir that runs all
+CI for all tools? Just throwing some thoughts out.
 
+Andrew
+
+
+>
+> Cheers,
+>
+> Andrew
