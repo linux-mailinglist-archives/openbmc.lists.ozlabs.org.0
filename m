@@ -2,53 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A369EB7841
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 13:12:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E0138B7A37
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 15:12:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46YvLn2QRFzF543
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 21:12:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Yy1h4hTYzF56d
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 23:12:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=163.com
- (client-ip=220.181.13.124; helo=m13-124.163.com;
- envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="L8KNeTLH"; 
- dkim-atps=neutral
-Received: from m13-124.163.com (m13-124.163.com [220.181.13.124])
- by lists.ozlabs.org (Postfix) with ESMTP id 46Yv8b4CDVzDr40
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 21:03:07 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=9cHMM
- MzE0djhklOwNtawN9lewS4Z1RVPjD5a32+irBw=; b=L8KNeTLHyFvYm0Aqm/D3L
- kq0OesfjR1PNK2HAa9zfvWNL4f5wH8HnoTfKHLpptmLvZ14izJ6GWWrwxWS27toZ
- jxXe2KtQaaLrpIR1aWMDToh8BCHBurWL9wWB0/6JU0ArNOQU2kBeU++IAVk4zz2o
- 2Bi/JnNMKNjIATqQCrIdpE=
-Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr124 (Coremail) ; Thu, 19 Sep 2019 19:03:02 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Thu, 19 Sep 2019 19:03:02 +0800 (CST)
-From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
-To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
-Subject: sdbusplus make check error
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-In-Reply-To: <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
-References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
- <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
-X-CM-CTRLDATA: zeThg2Zvb3Rlcl9odG09Mjk1NDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_188927_2119167520.1568890982246"
-MIME-Version: 1.0
-Message-ID: <491fd747.c3f7.16d49308f66.Coremail.xiaoqian1641@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: fMGowADHz9tmYINdrLQvAQ--.32826W
-X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiSgs1fFPAHsUsfgABsT
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Yy0s6lFxzF55y
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 23:11:40 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 659F26DECB;
+ Thu, 19 Sep 2019 09:11:36 -0400 (EDT)
+Content-Type: text/plain;
+	charset=utf-8;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: src-uri-bad in flashd and chassisd recipes
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <BE45DB48-278B-4D7A-AEA4-4D227484788A@fb.com>
+Date: Thu, 19 Sep 2019 09:11:36 -0400
+Message-Id: <0757A8A6-6E11-4D79-A881-876DFB948751@fuzziesquirrel.com>
+References: <1558DF2D-BC3C-489C-AC4A-9DF7F8332E01@fb.com>
+ <277CCA1F-5D7F-4CC1-B7D3-4D7CAAA9593F@fuzziesquirrel.com>
+ <BE45DB48-278B-4D7A-AEA4-4D227484788A@fb.com>
+To: Wilfred Smith <wilfredsmith@fb.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,104 +52,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_188927_2119167520.1568890982246
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+at 6:43 PM, Wilfred Smith <wilfredsmith@fb.com> wrote:
 
-SGmjrEFsbCwKCgpJJ20gcnVubmluZyB0ZXN0cyBpbiBTREsgLiBJbiBzZGJ1c3BsdXMsIGZvbGxv
-dyB0aGUgc3RlcHM6Ci4vYm9vdHN0cmFwLnNoCi4vY29uZmlndXJlICR7Q09ORklHVVJFX0ZMQUdT
-fSAtLWVuYWJsZS1vZS1zZGsKbWFrZSBjaGVjawp3aGVuICJtYWtlIGNoZWNrIiwgSXQgc2hvd3Mg
-bmV4dCAsIEkgZG9uJ3Qga29udyB3aGF0IHdlbnQgd3JvbmcsIGFuZCBob3cgdG8gZml4IGl0Pwpt
-YWtlWzNdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1h
-a2UgIGNoZWNrLVRFU1RTCm1ha2VbM106IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
-c2RidXNwbHVzL3Rlc3QnCm1ha2VbNF06IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
-c2RidXNwbHVzL3Rlc3QnCkZBSUw6IGJ1c19saXN0X25hbWVzCkZBSUw6IGJ1c19tYXRjaApGQUlM
-OiBleGNlcHRpb25fc2RidXNfZXJyb3IKRkFJTDogbWVzc2FnZV9hcHBlbmQKRkFJTDogbWVzc2Fn
-ZV9yZWFkCkZBSUw6IG1lc3NhZ2VfbmF0aXZlX3R5cGVzCkZBSUw6IG1lc3NhZ2VfdHlwZXMKRkFJ
-TDogdXRpbGl0eV90dXBsZV90b19hcnJheQpGQUlMOiB1dGlsaXR5X3R5cGVfdHJhaXRzCkZBSUw6
-IHZ0YWJsZV92dGFibGUKRkFJTDogdGltZXIKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpUZXN0c3VpdGUg
-c3VtbWFyeSBmb3Igc2RidXNwbHVzIDEuMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgVE9UQUw6IDEx
-CiMgUEFTUzogIDAKIyBTS0lQOiAgMAojIFhGQUlMOiAwCiMgRkFJTDogIDExCiMgWFBBU1M6IDAK
-IyBFUlJPUjogMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ClNlZSB0ZXN0L3Rlc3Qtc3VpdGUubG9nClBs
-ZWFzZSByZXBvcnQgdG8gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvc2RidXNwbHVzL2lzc3Vl
-cwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09Cm1ha2VbNF06ICoqKiBbdGVzdC1zdWl0ZS5sb2ddIEVycm9y
-IDEKbWFrZVs0XTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0
-JwptYWtlWzNdOiAqKiogW2NoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbM106IExlYXZpbmcgZGly
-ZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVsyXTogKioqIFtjaGVjay1h
-bV0gRXJyb3IgMgptYWtlWzJdOiBUYXJnZXQgYGNoZWNrJyBub3QgcmVtYWRlIGJlY2F1c2Ugb2Yg
-ZXJyb3JzLgptYWtlWzJdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVz
-L3Rlc3QnCm1ha2VbMV06ICoqKiBbY2hlY2stcmVjdXJzaXZlXSBFcnJvciAxCm1ha2VbMV06IFRh
-cmdldCBgY2hlY2snIG5vdCByZW1hZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMV06IExlYXZp
-bmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMnCm1ha2U6IFtjaGVjay1jb2RlLWNv
-dmVyYWdlXSBFcnJvciAyIChpZ25vcmVkKQptYWtlWzFdOiBFbnRlcmluZyBkaXJlY3RvcnkgYC9o
-b21lL3Jvb3QxL3NkYnVzcGx1cycKICBMQ09WICAgLS1jYXB0dXJlIHNkYnVzcGx1cy0xLjAtY292
-ZXJhZ2UuaW5mbwpnZW5pbmZvOiBFUlJPUjogbm8gLmdjZGEgZmlsZXMgZm91bmQgaW4gLiEKbWFr
-ZVsxXTogKioqIFtjb2RlLWNvdmVyYWdlLWNhcHR1cmVdIEVycm9yIDI1NQptYWtlWzFdOiBMZWF2
-aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzJwptYWtlOiAqKiogW2NoZWNrLWNv
-ZGUtY292ZXJhZ2VdIEVycm9yIDIKCgpKb2hueQpUaGFua3MKCgoKCiA=
-------=_Part_188927_2119167520.1568890982246
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+> It would be good for their authors/maintainers to check that I haven=E2=
+=80=99t =20
+> done anything stupid during the code review.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjc7Ij48ZGl2IHN0
-eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTog
-MTRweDsiPkhpo6xBbGwsPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9u
-dC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0i
-Y29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7
-Ij5JJ20gcnVubmluZyA8c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IGFyaWFsOyB3aGl0ZS1zcGFj
-ZTogcHJlLXdyYXA7Ij4gdGVzdHMgaW4gU0RLIC4gSW4gc2RidXNwbHVzLCBmb2xsb3cgdGhlIHN0
-ZXBzOjwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSIiPjxwcmUgc3R5bGU9ImNvbG9yOiByZ2IoMCwg
-MCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyB3aWR0aDogMTA3Ni4z
-NHB4OyI+Li9ib290c3RyYXAuc2gKLi9jb25maWd1cmUgJHtDT05GSUdVUkVfRkxBR1N9IC0tZW5h
-YmxlLW9lLXNkawptYWtlIGNoZWNrPC9wcmU+PHByZSBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAw
-KTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7IHdpZHRoOiAxMDc2LjM0cHg7
-Ij48Yj53aGVuICJtYWtlIGNoZWNrIiwgSXQgc2hvd3MgbmV4dCAsIEkgZG9uJ3Qga29udyB3aGF0
-IHdlbnQgd3JvbmcsIGFuZCBob3cgdG8gZml4IGl0PzwvYj4gPC9wcmU+PHByZSBzdHlsZT0id2lk
-dGg6IDEwNzYuMzRweDsiPm1ha2VbM106IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9z
-ZGJ1c3BsdXMvdGVzdCcKbWFrZSAgY2hlY2stVEVTVFMKbWFrZVszXTogRW50ZXJpbmcgZGlyZWN0
-b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVs0XTogRW50ZXJpbmcgZGlyZWN0
-b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKRkFJTDogYnVzX2xpc3RfbmFtZXMKRkFJ
-TDogYnVzX21hdGNoCkZBSUw6IGV4Y2VwdGlvbl9zZGJ1c19lcnJvcgpGQUlMOiBtZXNzYWdlX2Fw
-cGVuZApGQUlMOiBtZXNzYWdlX3JlYWQKRkFJTDogbWVzc2FnZV9uYXRpdmVfdHlwZXMKRkFJTDog
-bWVzc2FnZV90eXBlcwpGQUlMOiB1dGlsaXR5X3R1cGxlX3RvX2FycmF5CkZBSUw6IHV0aWxpdHlf
-dHlwZV90cmFpdHMKRkFJTDogdnRhYmxlX3Z0YWJsZQpGQUlMOiB0aW1lcgo9PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09ClRlc3RzdWl0ZSBzdW1tYXJ5IGZvciBzZGJ1c3BsdXMgMS4wCj09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT0KIyBUT1RBTDogMTEKIyBQQVNTOiAgMAojIFNLSVA6ICAwCiMgWEZBSUw6IDAKIyBGQUlM
-OiAgMTEKIyBYUEFTUzogMAojIEVSUk9SOiAwCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KU2VlIHRlc3Qv
-dGVzdC1zdWl0ZS5sb2cKUGxlYXNlIHJlcG9ydCB0byBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
-Yy9zZGJ1c3BsdXMvaXNzdWVzCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KbWFrZVs0XTogKioqIFt0ZXN0
-LXN1aXRlLmxvZ10gRXJyb3IgMQptYWtlWzRdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9v
-dDEvc2RidXNwbHVzL3Rlc3QnCm1ha2VbM106ICoqKiBbY2hlY2stVEVTVFNdIEVycm9yIDIKbWFr
-ZVszXTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0JwptYWtl
-WzJdOiAqKiogW2NoZWNrLWFtXSBFcnJvciAyCm1ha2VbMl06IFRhcmdldCBgY2hlY2snIG5vdCBy
-ZW1hZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMl06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9t
-ZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVsxXTogKioqIFtjaGVjay1yZWN1cnNpdmVdIEVy
-cm9yIDEKbWFrZVsxXTogVGFyZ2V0IGBjaGVjaycgbm90IHJlbWFkZSBiZWNhdXNlIG9mIGVycm9y
-cy4KbWFrZVsxXTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cycKbWFr
-ZTogW2NoZWNrLWNvZGUtY292ZXJhZ2VdIEVycm9yIDIgKGlnbm9yZWQpCm1ha2VbMV06IEVudGVy
-aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzJwogIExDT1YgICAtLWNhcHR1cmUg
-c2RidXNwbHVzLTEuMC1jb3ZlcmFnZS5pbmZvCmdlbmluZm86IEVSUk9SOiBubyAuZ2NkYSBmaWxl
-cyBmb3VuZCBpbiAuIQptYWtlWzFdOiAqKiogW2NvZGUtY292ZXJhZ2UtY2FwdHVyZV0gRXJyb3Ig
-MjU1Cm1ha2VbMV06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMnCm1h
-a2U6ICoqKiBbY2hlY2stY29kZS1jb3ZlcmFnZV0gRXJyb3IgMjxmb250IGZhY2U9IkFyaWFsIj4K
-PC9mb250PjwvcHJlPjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5
-OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiBy
-Z2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+Sm9obnk8
-L2Rpdj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTog
-QXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPlRoYW5rczwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4g
-dGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+PC9kaXY+PGJyPjxicj48
-c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_188927_2119167520.1568890982246--
-
+That would be me.  I will certainly do that.
