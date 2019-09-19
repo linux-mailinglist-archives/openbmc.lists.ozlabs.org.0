@@ -1,55 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04704B773A
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 12:18:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A369EB7841
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 13:12:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Yt8P0xg7zF4XZ
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 20:17:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46YvLn2QRFzF543
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 21:12:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=protonmail.com
- (client-ip=185.70.40.133; helo=mail-40133.protonmail.ch;
- envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
+ spf=pass (mailfrom) smtp.mailfrom=163.com
+ (client-ip=220.181.13.124; helo=m13-124.163.com;
+ envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="YPYhFwez"; 
+ unprotected) header.d=163.com header.i=@163.com header.b="L8KNeTLH"; 
  dkim-atps=neutral
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch
- [185.70.40.133])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Yt7R39zRzF4X6
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 20:17:05 +1000 (AEST)
-Date: Thu, 19 Sep 2019 10:16:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1568888220;
- bh=JJ7RmXDtHsPP16T2sC2MwJT7LPpWkhpUn9dH3SB5U1Q=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=YPYhFwezEhwngid8xqi57kLtLX6qKlnLVeaOXlMWcCa3H7VBkRJv3RI7TIp1m4Nq6
- XwGJ6VEAF9ntA+ZfhDt8wIGkn4kHzIyUQbTXFXg5alXNwy2rMjXYuqAPoJYIVCWmGL
- 75FWO2pqmsungTAfEGx5tfHpm8MTVffKoxuL0uWo=
-To: Patrick Venture <venture@google.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Fan PWM monitoring and control
-Message-ID: <Eoms3BmA_hZ-IwjRbWQGhnKCH-ijQ3Am7q1DrTqo73DtZSdsXaMbAcVInBw-SBdTgeqbpsHRuqvkEoAM04KKIqvJnsIv67WATAPVeM9TGv8=@protonmail.com>
-In-Reply-To: <CAO=notxUENhPn4bYZVzgyuy-tn6OxP3ojE29MBtXHLGAgkfj_w@mail.gmail.com>
-References: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
- <87e610aa-72c7-32d2-9281-2c89023d397a@linux.ibm.com>
- <CAO=notzaok+dsfR0uRJUy2ZGHMiMZZC9Jm704B5HfCS8CLPnEQ@mail.gmail.com>
- <_Nl9cDEblRON25jUEVZy-xP4bxr_xoMpODmc9FCcRWNpgk3sFL_ZHmcHAwVQaEdzB1V8KjJ1k3U_a90MQMP2nIzosFt_jwC3j3vSPxTvEGs=@protonmail.com>
- <CAO=notxUENhPn4bYZVzgyuy-tn6OxP3ojE29MBtXHLGAgkfj_w@mail.gmail.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+Received: from m13-124.163.com (m13-124.163.com [220.181.13.124])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46Yv8b4CDVzDr40
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 21:03:07 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=9cHMM
+ MzE0djhklOwNtawN9lewS4Z1RVPjD5a32+irBw=; b=L8KNeTLHyFvYm0Aqm/D3L
+ kq0OesfjR1PNK2HAa9zfvWNL4f5wH8HnoTfKHLpptmLvZ14izJ6GWWrwxWS27toZ
+ jxXe2KtQaaLrpIR1aWMDToh8BCHBurWL9wWB0/6JU0ArNOQU2kBeU++IAVk4zz2o
+ 2Bi/JnNMKNjIATqQCrIdpE=
+Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr124 (Coremail) ; Thu, 19 Sep 2019 19:03:02 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Thu, 19 Sep 2019 19:03:02 +0800 (CST)
+From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
+To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
+Subject: sdbusplus make check error
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+ <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+X-CM-CTRLDATA: zeThg2Zvb3Rlcl9odG09Mjk1NDo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_188927_2119167520.1568890982246"
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="b1_63482ded74719489de69bb8c51a6654e"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM autolearn=ham
- autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+Message-ID: <491fd747.c3f7.16d49308f66.Coremail.xiaoqian1641@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: fMGowADHz9tmYINdrLQvAQ--.32826W
+X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiSgs1fFPAHsUsfgABsT
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,350 +60,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
-
---b1_63482ded74719489de69bb8c51a6654e
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Patrick, Lei,
-
-Thank you, I made some changes according your comments
-- added Mutability::Read to fan yaml.
-- I didn't see ipmi-sensor-inventory.yaml of romulus having fan sensors, so=
- removed them from IPMI.
-
-Now,"busctl monitor" displays Fan tach reads, no pwm writes.
-Is there any way to manually set PWM value and test this?
-How do I verify PWM values are being written to ADT7462?
-
-Another observation is Inventory.Item seems to have invalid(stale) entries.
-IPMI sensor names appear in inventory even after removing from IPMI sensor =
-yaml files (exported JSON in attachment).
-
-Logs:
------
-
-# busctl monitor | grep -i fan
-Monitoring bus message stream.
-  Sender=3D:1.45  Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN0  Interf=
-ace=3Dorg.freedesktop.DBus.Properties  Member=3DPropertiesChanged
-  Sender=3D:1.45  Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN1  Interf=
-ace=3Dorg.freedesktop.DBus.Properties  Member=3DPropertiesChanged
-  Sender=3D:1.45  Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN2  Interf=
-ace=3Dorg.freedesktop.DBus.Properties  Member=3DPropertiesChanged
-  [...]
-  Sender=3D:1.45  Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN1  Interf=
-ace=3Dorg.freedesktop.DBus.Properties  Member=3DPropertiesChanged
-  Sender=3D:1.45  Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN3  Interf=
-ace=3Dorg.freedesktop.DBus.Properties  Member=3DPropertiesChanged
-^C
-
-
-# busctl get-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/open=
-bmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPwm Target
-t 0
-# busctl set-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/open=
-bmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPwm Target=
- 8000
-Failed to create bus message: Invalid argument
-
-# busctl introspect --no-pager xyz.openbmc_project.Hwmon-2429843755.Hwmon1 =
-/xyz/openbmc_project/sensors/fan_tach/FAN1
-NAME                                                  TYPE      SIGNATURE R=
-ESULT/VALUE                             FLAGS
-org.freedesktop.DBus.Introspectable                   interface -         -=
-                                        -
-.Introspect                                           method    -         s=
-                                        -
-org.freedesktop.DBus.Peer                             interface -         -=
-                                        -
-.GetMachineId                                         method    -         s=
-                                        -
-.Ping                                                 method    -         -=
-                                        -
-org.freedesktop.DBus.Properties                       interface -         -=
-                                        -
-.Get                                                  method    ss        v=
-                                        -
-.GetAll                                               method    s         a=
-{sv}                                    -
-.Set                                                  method    ssv       -=
-                                        -
-.PropertiesChanged                                    signal    sa{sv}as  -=
-                                        -
-xyz.openbmc_project.Control.FanPwm                    interface -         -=
-                                        -
-.Target                                               property  t         0=
-                                        emits-change writable
-xyz.openbmc_project.Sensor.Value                      interface -         -=
-                                        -
-.MaxValue                                             property  x         0=
-                                        emits-change writable
-.MinValue                                             property  x         0=
-                                        emits-change writable
-.Scale                                                property  x         0=
-                                        emits-change writable
-.Unit                                                 property  s         "=
-xyz.openbmc_project.Sensor.Value.Unit.=E2=80=A6 emits-change writable
-.Value                                                property  x         2=
-983                                     emits-change writable
-xyz.openbmc_project.State.Decorator.OperationalStatus interface -         -=
-                                        -
-.Functional                                           property  b         t=
-rue                                     emits-change writable
-
-
-
-Thanks,
-Raj
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Wednesday, September 18, 2019 9:35 PM, Patrick Venture <venture@google.c=
-om> wrote:
-
-> On Wed, Sep 18, 2019 at 2:30 AM rgrs rgrs@protonmail.com wrote:
->
-> > Hi Patrick, Matt,
-> > I tried instructions from this wiki: https://developer.ibm.com/linuxonp=
-ower/2019/01/07/how-to-port-openbmc/
-> > There is no GPIO to detect presence of fans, so tach readings is used i=
-nstead.
-> > Here's what I did while trying to enable Fan control:
-> >
-> > 1.  Added Fan tach sensor in hwmon (adt7462.conf) is in the form LABEL=
-=3DFANx_RPM
-> > 2.  "ipmi-sensor-inventory.yaml" has below config:
-> >
-> > 60: &fan_tach
-> > sensorType: 0x04
-> > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
-> > sensorReadingType: 0x01
-> > multiplierM: 100
-> > offsetB: 0
-> > bExp: 0
-> > unit: xyz.openbmc_project.Sensor.Value.Unit.RPMS
-> > scale: 0
-> > rExp: 0
-> > serviceInterface: org.freedesktop.DBus.Properties
-> > readingType: readingData
-> > interfaces:
-> > xyz.openbmc_project.Sensor.Value:
-> > Value:
-> > Offsets:
-> > 0xFF:
-> > type: int64_t
-> > and FAN PWM as
-> > 89: &fanpwm
-> > sensorType: 0x04
-> > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
-> > sensorReadingType: 0x01
-> > multiplierM: 1
-> > offsetB: 0
-> > bExp: 0
-> > mutability: Mutability::Write
->
-> You may need to add ::Read here too, I'm not sure anymore, but you can
-> check the script that builds this:
->
-> https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/writes=
-ensor.mako.cpp#L69
->
-> It'll default to read, but if you've only set write, I don't know.
->
-> >     serviceInterface: org.freedesktop.DBus.Properties
-> >     readingType: readingData
-> >     interfaces:
-> >         xyz.openbmc_project.Control.FanPwm:
-> >             Target:
-> >                 Offsets:
-> >                     0xFF:
-> >                         type: uint64_t
-> >
-> >
-> > 3.  I copied meta-romulus/recipes-phosphor/fans to my platform and chan=
-ged FAN names from "fanx" to "FANx_RPM" in yaml files.
-> >
-> > This is what get in busctl tree related to Fans:
-> > (I expected to see FanPwm entries in busctl and I'm not sure why there =
-are multiple entries in inventory).
-> > Service xyz.openbmc_project.Hwmon-2429843755.Hwmon1:
-> > `-/xyz`-/xyz/openbmc_project
-> > `-/xyz/openbmc_project/sensors |-/xyz/openbmc_project/sensors/fan_tach =
-| |-/xyz/openbmc_project/sensors/fan_tach/FAN0_RPM | |-/xyz/openbmc_project=
-/sensors/fan_tach/FAN1_RPM | |-/xyz/openbmc_project/sensors/fan_tach/FAN2_R=
-PM |`-/xyz/openbmc_project/sensors/fan_tach/FAN3_RPM
-> > `-/xyz/openbmc_project/sensors/temperature`-/xyz/openbmc_project/sensor=
-s/temperature/BACKPLANE_TEMP
->
-> You don't get a separate entry for the PWM from phosphor-hwmon.
->
-> It's a separate interface on the same service and path.
->
-> I recommend you introspect on the path and see what interfaces are
-> available (as well as adding "| read" above):
->
-> busctl introspect --no-pager
-> xyz.openbmc_project.Hwmon-2429843755.Hwmon1
-> /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
->
-> > Service xyz.openbmc_project.Inventory.Manager:
-> > `-/xyz`-/xyz/openbmc_project
-> > `-/xyz/openbmc_project/inventory`-/xyz/openbmc_project/inventory/system
-> > `-/xyz/openbmc_project/inventory/system/chassis`-/xyz/openbmc_project/i=
-nventory/system/chassis/motherboard
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0
-> > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0/FAN0=
- |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0_RPM |`-/x=
-yz/openbmc_project/inventory/system/chassis/motherboard/FAN0_RPM/FAN0_RPM
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1
-> > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1/FAN1=
- |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1_RPM |`-/x=
-yz/openbmc_project/inventory/system/chassis/motherboard/FAN1_RPM/FAN1_RPM
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2
-> > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2/FAN2=
- |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2_RPM |`-/x=
-yz/openbmc_project/inventory/system/chassis/motherboard/FAN2_RPM/FAN2_RPM
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3
-> > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3/FAN3=
- |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3_RPM |`-/x=
-yz/openbmc_project/inventory/system/chassis/motherboard/FAN3_RPM/FAN3_RPM
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan0
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan1
-> > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan2
-> > `-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan3
-> > Thanks,
-> > Raj
-> > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Origina=
-l Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
-=90
-> > On Tuesday, September 17, 2019 9:18 PM, Patrick Venture venture@google.=
-com wrote:
-> >
-> > > On Tue, Sep 17, 2019 at 8:32 AM Matthew Barth msbarth@linux.ibm.com w=
-rote:
-> > >
-> > > > On 9/17/19 5:40 AM, rgrs wrote:
-> > > >
-> > > > > Hi,
-> > > > > I need some help with phosphor hwmon related to fan sensors.
-> > > > > I'm trying to control Fans in a server motherboard using ADT7462
-> > > > > controller. Hw mon porting is done and the sysfs interfaces are w=
-orking
-> > > > > as expected.
-> > > > > While I am able to read RPM, i don't find pwm/target to control t=
-he fans
-> > > > > exposed as dbus objects.
-> > > > > Do you have the hwmon config set similar to this to denote the fa=
-n
-> > > > > targets are of PWM type?
-> > > >
-> > > > https://github.com/openbmc/openbmc/blob/master/meta-ibm/meta-romulu=
-s/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/pwm-tacho-cont=
-roller%401e786000.conf
-> > > >
-> > > > > busctl --no-page tree xyz.openbmc_project.FanSensor
-> > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> > > > > Failed to introspect object / of service xyz.openbmc_project.FanS=
-ensor:
-> > > > > The name is not activatable
-> > > > > No objects discovered.
-> > > > > That does not look like a hwmon service name. If you are using
-> > > > > phosphor-objmgr, you can use `# mapper get-service /xyz/openbmc_p=
-roject/sensors/fan_tach` otherwise you'll need to find the
-> > > > > hwmon service name associated with your fan controller device.
-> > >
-> > > running`busctl tree --no-pager` will just list everything, and you
-> > > should see your fans in there. You can use the mapper too. I was
-> > > curious, are you using entity-manager/dbus-sensors? When you mention
-> > > FanSensor as the service, that's what it sounds like.
-> > >
-> > > > > I came across this post, I think it is similar to my issue.
-> > > > > (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/83=
-53)
-> > > > > Please someone point to latest documentation or reference Fan por=
-ting
-> > > > > from openBMC repo?
-> > > > > What are the exact fields in YAML that are used create FanPWM obj=
-ects.
-> > > > > The Romulus machine should be a good reference for PWM based fan =
-control
-> > > > > using phosphor-hwmon. It uses the
-> > > > > phosphor-fan-presence/[control|monitor] apps for controlling and
-> > > > > monitoring fans
-> > > >
-> > > > https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulu=
-s
-> > > >
-> > > > > (I'm using Feb release in my sandbox,
-> > > > > https://github.com/openbmc/docs/blob/master/release/release-notes=
-.md#26-feb-4-2019)
-> > > > > Thanks,
-> > > > > Raj
-> > > >
-> > > > Matt
-
-
-
---b1_63482ded74719489de69bb8c51a6654e
-Content-Type: application/json; name="export_inventory.json"
+------=_Part_188927_2119167520.1568890982246
+Content-Type: text/plain; charset=GBK
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=export_inventory.json
 
-eyIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtIjp7IkFzc2V0VGFnIjoiIiwi
-QnVpbGREYXRlIjoiIiwiTWFudWZhY3R1cmVyIjoiIiwiTW9kZWwiOiIiLCJQYXJ0TnVtYmVyIjoi
-IiwiUHJlc2VudCI6ZmFsc2UsIlByZXR0eU5hbWUiOiIiLCJTZXJpYWxOdW1iZXIiOiIifSwiL3h5
-ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3RlbS9jaGFzc2lzL2FjdGl2YXRpb24iOnsi
-ZW5kcG9pbnRzIjpbIi94eXovb3BlbmJtY19wcm9qZWN0L3NvZnR3YXJlL2UyOWU1YjQ3IiwiL3h5
-ei9vcGVuYm1jX3Byb2plY3Qvc29mdHdhcmUvN2IxZDkxMDAiXX0sIi94eXovb3BlbmJtY19wcm9q
-ZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4wIjp7IkZ1bmN0aW9u
-YWwiOnRydWUsIlByZXNlbnQiOnRydWUsIlByZXR0eU5hbWUiOiJGQU4wIn0sIi94eXovb3BlbmJt
-Y19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4wL0ZBTjAi
-OnsiRnVuY3Rpb25hbCI6dHJ1ZX0sIi94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0
-ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4wX1JQTSI6eyJGdW5jdGlvbmFsIjpmYWxzZSwiUHJl
-c2VudCI6ZmFsc2UsIlByZXR0eU5hbWUiOiJGQU4wX1JQTSJ9LCIveHl6L29wZW5ibWNfcHJvamVj
-dC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvRkFOMF9SUE0vRkFOMF9SUE0i
-OnsiRnVuY3Rpb25hbCI6ZmFsc2V9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lz
-dGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvRkFOMSI6eyJGdW5jdGlvbmFsIjp0cnVlLCJQcmVzZW50
-Ijp0cnVlLCJQcmV0dHlOYW1lIjoiRkFOMSJ9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRv
-cnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvRkFOMS9GQU4xIjp7IkZ1bmN0aW9uYWwiOnRy
-dWV9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVy
-Ym9hcmQvRkFOMV9SUE0iOnsiRnVuY3Rpb25hbCI6ZmFsc2UsIlByZXNlbnQiOmZhbHNlLCJQcmV0
-dHlOYW1lIjoiRkFOMV9SUE0ifSwiL3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3Rl
-bS9jaGFzc2lzL21vdGhlcmJvYXJkL0ZBTjFfUlBNL0ZBTjFfUlBNIjp7IkZ1bmN0aW9uYWwiOmZh
-bHNlfSwiL3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3RlbS9jaGFzc2lzL21vdGhl
-cmJvYXJkL0ZBTjIiOnsiRnVuY3Rpb25hbCI6dHJ1ZSwiUHJlc2VudCI6dHJ1ZSwiUHJldHR5TmFt
-ZSI6IkZBTjIifSwiL3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3RlbS9jaGFzc2lz
-L21vdGhlcmJvYXJkL0ZBTjIvRkFOMiI6eyJGdW5jdGlvbmFsIjp0cnVlfSwiL3h5ei9vcGVuYm1j
-X3Byb2plY3QvaW52ZW50b3J5L3N5c3RlbS9jaGFzc2lzL21vdGhlcmJvYXJkL0ZBTjJfUlBNIjp7
-IkZ1bmN0aW9uYWwiOmZhbHNlLCJQcmVzZW50IjpmYWxzZSwiUHJldHR5TmFtZSI6IkZBTjJfUlBN
-In0sIi94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJi
-b2FyZC9GQU4yX1JQTS9GQU4yX1JQTSI6eyJGdW5jdGlvbmFsIjpmYWxzZX0sIi94eXovb3BlbmJt
-Y19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4zIjp7IkZ1
-bmN0aW9uYWwiOnRydWUsIlByZXNlbnQiOnRydWUsIlByZXR0eU5hbWUiOiJGQU4zIn0sIi94eXov
-b3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4z
-L0ZBTjMiOnsiRnVuY3Rpb25hbCI6dHJ1ZX0sIi94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9y
-eS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9GQU4zX1JQTSI6eyJGdW5jdGlvbmFsIjpmYWxz
-ZSwiUHJlc2VudCI6ZmFsc2UsIlByZXR0eU5hbWUiOiJGQU4zX1JQTSJ9LCIveHl6L29wZW5ibWNf
-cHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvRkFOM19SUE0vRkFO
-M19SUE0iOnsiRnVuY3Rpb25hbCI6ZmFsc2V9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRv
-cnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvZmFuMCI6eyJQcmVzZW50Ijp0cnVlLCJQcmV0
-dHlOYW1lIjoiZmFuMCJ9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2No
-YXNzaXMvbW90aGVyYm9hcmQvZmFuMSI6eyJQcmVzZW50Ijp0cnVlLCJQcmV0dHlOYW1lIjoiZmFu
-MSJ9LCIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVy
-Ym9hcmQvZmFuMiI6eyJQcmVzZW50Ijp0cnVlLCJQcmV0dHlOYW1lIjoiZmFuMiJ9LCIveHl6L29w
-ZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvZmFuMyI6
-eyJQcmVzZW50Ijp0cnVlLCJQcmV0dHlOYW1lIjoiZmFuMyJ9fQo=
+SGmjrEFsbCwKCgpJJ20gcnVubmluZyB0ZXN0cyBpbiBTREsgLiBJbiBzZGJ1c3BsdXMsIGZvbGxv
+dyB0aGUgc3RlcHM6Ci4vYm9vdHN0cmFwLnNoCi4vY29uZmlndXJlICR7Q09ORklHVVJFX0ZMQUdT
+fSAtLWVuYWJsZS1vZS1zZGsKbWFrZSBjaGVjawp3aGVuICJtYWtlIGNoZWNrIiwgSXQgc2hvd3Mg
+bmV4dCAsIEkgZG9uJ3Qga29udyB3aGF0IHdlbnQgd3JvbmcsIGFuZCBob3cgdG8gZml4IGl0Pwpt
+YWtlWzNdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1h
+a2UgIGNoZWNrLVRFU1RTCm1ha2VbM106IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
+c2RidXNwbHVzL3Rlc3QnCm1ha2VbNF06IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
+c2RidXNwbHVzL3Rlc3QnCkZBSUw6IGJ1c19saXN0X25hbWVzCkZBSUw6IGJ1c19tYXRjaApGQUlM
+OiBleGNlcHRpb25fc2RidXNfZXJyb3IKRkFJTDogbWVzc2FnZV9hcHBlbmQKRkFJTDogbWVzc2Fn
+ZV9yZWFkCkZBSUw6IG1lc3NhZ2VfbmF0aXZlX3R5cGVzCkZBSUw6IG1lc3NhZ2VfdHlwZXMKRkFJ
+TDogdXRpbGl0eV90dXBsZV90b19hcnJheQpGQUlMOiB1dGlsaXR5X3R5cGVfdHJhaXRzCkZBSUw6
+IHZ0YWJsZV92dGFibGUKRkFJTDogdGltZXIKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpUZXN0c3VpdGUg
+c3VtbWFyeSBmb3Igc2RidXNwbHVzIDEuMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgVE9UQUw6IDEx
+CiMgUEFTUzogIDAKIyBTS0lQOiAgMAojIFhGQUlMOiAwCiMgRkFJTDogIDExCiMgWFBBU1M6IDAK
+IyBFUlJPUjogMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ClNlZSB0ZXN0L3Rlc3Qtc3VpdGUubG9nClBs
+ZWFzZSByZXBvcnQgdG8gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvc2RidXNwbHVzL2lzc3Vl
+cwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09Cm1ha2VbNF06ICoqKiBbdGVzdC1zdWl0ZS5sb2ddIEVycm9y
+IDEKbWFrZVs0XTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0
+JwptYWtlWzNdOiAqKiogW2NoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbM106IExlYXZpbmcgZGly
+ZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVsyXTogKioqIFtjaGVjay1h
+bV0gRXJyb3IgMgptYWtlWzJdOiBUYXJnZXQgYGNoZWNrJyBub3QgcmVtYWRlIGJlY2F1c2Ugb2Yg
+ZXJyb3JzLgptYWtlWzJdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVz
+L3Rlc3QnCm1ha2VbMV06ICoqKiBbY2hlY2stcmVjdXJzaXZlXSBFcnJvciAxCm1ha2VbMV06IFRh
+cmdldCBgY2hlY2snIG5vdCByZW1hZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMV06IExlYXZp
+bmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMnCm1ha2U6IFtjaGVjay1jb2RlLWNv
+dmVyYWdlXSBFcnJvciAyIChpZ25vcmVkKQptYWtlWzFdOiBFbnRlcmluZyBkaXJlY3RvcnkgYC9o
+b21lL3Jvb3QxL3NkYnVzcGx1cycKICBMQ09WICAgLS1jYXB0dXJlIHNkYnVzcGx1cy0xLjAtY292
+ZXJhZ2UuaW5mbwpnZW5pbmZvOiBFUlJPUjogbm8gLmdjZGEgZmlsZXMgZm91bmQgaW4gLiEKbWFr
+ZVsxXTogKioqIFtjb2RlLWNvdmVyYWdlLWNhcHR1cmVdIEVycm9yIDI1NQptYWtlWzFdOiBMZWF2
+aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzJwptYWtlOiAqKiogW2NoZWNrLWNv
+ZGUtY292ZXJhZ2VdIEVycm9yIDIKCgpKb2hueQpUaGFua3MKCgoKCiA=
+------=_Part_188927_2119167520.1568890982246
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-
---b1_63482ded74719489de69bb8c51a6654e--
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjc7Ij48ZGl2IHN0
+eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTog
+MTRweDsiPkhpo6xBbGwsPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9u
+dC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0i
+Y29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7
+Ij5JJ20gcnVubmluZyA8c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IGFyaWFsOyB3aGl0ZS1zcGFj
+ZTogcHJlLXdyYXA7Ij4gdGVzdHMgaW4gU0RLIC4gSW4gc2RidXNwbHVzLCBmb2xsb3cgdGhlIHN0
+ZXBzOjwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSIiPjxwcmUgc3R5bGU9ImNvbG9yOiByZ2IoMCwg
+MCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyB3aWR0aDogMTA3Ni4z
+NHB4OyI+Li9ib290c3RyYXAuc2gKLi9jb25maWd1cmUgJHtDT05GSUdVUkVfRkxBR1N9IC0tZW5h
+YmxlLW9lLXNkawptYWtlIGNoZWNrPC9wcmU+PHByZSBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAw
+KTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7IHdpZHRoOiAxMDc2LjM0cHg7
+Ij48Yj53aGVuICJtYWtlIGNoZWNrIiwgSXQgc2hvd3MgbmV4dCAsIEkgZG9uJ3Qga29udyB3aGF0
+IHdlbnQgd3JvbmcsIGFuZCBob3cgdG8gZml4IGl0PzwvYj4gPC9wcmU+PHByZSBzdHlsZT0id2lk
+dGg6IDEwNzYuMzRweDsiPm1ha2VbM106IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9z
+ZGJ1c3BsdXMvdGVzdCcKbWFrZSAgY2hlY2stVEVTVFMKbWFrZVszXTogRW50ZXJpbmcgZGlyZWN0
+b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVs0XTogRW50ZXJpbmcgZGlyZWN0
+b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKRkFJTDogYnVzX2xpc3RfbmFtZXMKRkFJ
+TDogYnVzX21hdGNoCkZBSUw6IGV4Y2VwdGlvbl9zZGJ1c19lcnJvcgpGQUlMOiBtZXNzYWdlX2Fw
+cGVuZApGQUlMOiBtZXNzYWdlX3JlYWQKRkFJTDogbWVzc2FnZV9uYXRpdmVfdHlwZXMKRkFJTDog
+bWVzc2FnZV90eXBlcwpGQUlMOiB1dGlsaXR5X3R1cGxlX3RvX2FycmF5CkZBSUw6IHV0aWxpdHlf
+dHlwZV90cmFpdHMKRkFJTDogdnRhYmxlX3Z0YWJsZQpGQUlMOiB0aW1lcgo9PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09ClRlc3RzdWl0ZSBzdW1tYXJ5IGZvciBzZGJ1c3BsdXMgMS4wCj09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT0KIyBUT1RBTDogMTEKIyBQQVNTOiAgMAojIFNLSVA6ICAwCiMgWEZBSUw6IDAKIyBGQUlM
+OiAgMTEKIyBYUEFTUzogMAojIEVSUk9SOiAwCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KU2VlIHRlc3Qv
+dGVzdC1zdWl0ZS5sb2cKUGxlYXNlIHJlcG9ydCB0byBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJt
+Yy9zZGJ1c3BsdXMvaXNzdWVzCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KbWFrZVs0XTogKioqIFt0ZXN0
+LXN1aXRlLmxvZ10gRXJyb3IgMQptYWtlWzRdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9v
+dDEvc2RidXNwbHVzL3Rlc3QnCm1ha2VbM106ICoqKiBbY2hlY2stVEVTVFNdIEVycm9yIDIKbWFr
+ZVszXTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0JwptYWtl
+WzJdOiAqKiogW2NoZWNrLWFtXSBFcnJvciAyCm1ha2VbMl06IFRhcmdldCBgY2hlY2snIG5vdCBy
+ZW1hZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMl06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9t
+ZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVsxXTogKioqIFtjaGVjay1yZWN1cnNpdmVdIEVy
+cm9yIDEKbWFrZVsxXTogVGFyZ2V0IGBjaGVjaycgbm90IHJlbWFkZSBiZWNhdXNlIG9mIGVycm9y
+cy4KbWFrZVsxXTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cycKbWFr
+ZTogW2NoZWNrLWNvZGUtY292ZXJhZ2VdIEVycm9yIDIgKGlnbm9yZWQpCm1ha2VbMV06IEVudGVy
+aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzJwogIExDT1YgICAtLWNhcHR1cmUg
+c2RidXNwbHVzLTEuMC1jb3ZlcmFnZS5pbmZvCmdlbmluZm86IEVSUk9SOiBubyAuZ2NkYSBmaWxl
+cyBmb3VuZCBpbiAuIQptYWtlWzFdOiAqKiogW2NvZGUtY292ZXJhZ2UtY2FwdHVyZV0gRXJyb3Ig
+MjU1Cm1ha2VbMV06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMnCm1h
+a2U6ICoqKiBbY2hlY2stY29kZS1jb3ZlcmFnZV0gRXJyb3IgMjxmb250IGZhY2U9IkFyaWFsIj4K
+PC9mb250PjwvcHJlPjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5
+OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiBy
+Z2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+Sm9obnk8
+L2Rpdj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTog
+QXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPlRoYW5rczwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4g
+dGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+PC9kaXY+PGJyPjxicj48
+c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
+------=_Part_188927_2119167520.1568890982246--
 
