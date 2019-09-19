@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31DC7B7E27
-	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 17:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66031B7E2F
+	for <lists+openbmc@lfdr.de>; Thu, 19 Sep 2019 17:30:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Z13D3LvCzF1kR
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 01:28:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46Z1535xT1zF4qh
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 01:30:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,15 +19,14 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Z0wx3wmlzDrCW
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 01:23:29 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Z0wy4FqmzDrFb
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 01:23:30 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
 To: joel@jms.id.au
-Subject: [PATCH v2 linux dev-5.3 2/4] ARM: aspeed-g6: lpc: add compatible
- strings
-Date: Thu, 19 Sep 2019 11:23:33 -0400
-Message-Id: <20190919152340.23133-3-bradleyb@fuzziesquirrel.com>
+Subject: [PATCH v2 linux dev-5.3 3/4] ARM: dts: aspeed-g6: Add lpc devices
+Date: Thu, 19 Sep 2019 11:23:34 -0400
+Message-Id: <20190919152340.23133-4-bradleyb@fuzziesquirrel.com>
 In-Reply-To: <20190919152340.23133-1-bradleyb@fuzziesquirrel.com>
 References: <20190919152340.23133-1-bradleyb@fuzziesquirrel.com>
 MIME-Version: 1.0
@@ -47,88 +46,115 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Assume the AST2600 SoC contains the same LPC devices as the AST2500.
+Assume everything is the same as G5, except the interrupt is updated.
 
 Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 ---
-v2:
-  - removed DT binding documentation changes
----
- drivers/char/ipmi/bt-bmc.c            | 1 +
- drivers/char/ipmi/kcs_bmc_aspeed.c    | 1 +
- drivers/reset/reset-simple.c          | 1 +
- drivers/soc/aspeed/aspeed-lpc-ctrl.c  | 1 +
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 ++
- 5 files changed, 6 insertions(+)
+ arch/arm/boot/dts/aspeed-g6.dtsi | 91 ++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-diff --git a/drivers/char/ipmi/bt-bmc.c b/drivers/char/ipmi/bt-bmc.c
-index 40b9927c072c..0e600449931b 100644
---- a/drivers/char/ipmi/bt-bmc.c
-+++ b/drivers/char/ipmi/bt-bmc.c
-@@ -513,6 +513,7 @@ static int bt_bmc_remove(struct platform_device *pdev=
-)
- static const struct of_device_id bt_bmc_match[] =3D {
- 	{ .compatible =3D "aspeed,ast2400-ibt-bmc" },
- 	{ .compatible =3D "aspeed,ast2500-ibt-bmc" },
-+	{ .compatible =3D "aspeed,ast2600-ibt-bmc" },
- 	{ },
- };
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-=
+g6.dtsi
+index 72038c16f541..b4991cbe1f36 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -249,6 +249,97 @@
+ 				status =3D "disabled";
+ 			};
 =20
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_b=
-mc_aspeed.c
-index 3c955946e647..a0a8bb89c9b3 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -301,6 +301,7 @@ static int aspeed_kcs_remove(struct platform_device *=
-pdev)
- static const struct of_device_id ast_kcs_bmc_match[] =3D {
- 	{ .compatible =3D "aspeed,ast2400-kcs-bmc" },
- 	{ .compatible =3D "aspeed,ast2500-kcs-bmc" },
-+	{ .compatible =3D "aspeed,ast2600-kcs-bmc" },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, ast_kcs_bmc_match);
-diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
-index 1154f7b1f4dd..2fe9c889a75a 100644
---- a/drivers/reset/reset-simple.c
-+++ b/drivers/reset/reset-simple.c
-@@ -125,6 +125,7 @@ static const struct of_device_id reset_simple_dt_ids[=
-] =3D {
- 		.data =3D &reset_simple_active_low },
- 	{ .compatible =3D "aspeed,ast2400-lpc-reset" },
- 	{ .compatible =3D "aspeed,ast2500-lpc-reset" },
-+	{ .compatible =3D "aspeed,ast2600-lpc-reset" },
- 	{ .compatible =3D "bitmain,bm1880-reset",
- 		.data =3D &reset_simple_active_low },
- 	{ /* sentinel */ },
-diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c b/drivers/soc/aspeed/as=
-peed-lpc-ctrl.c
-index 01ed21e8bfee..12e4421dee37 100644
---- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-@@ -291,6 +291,7 @@ static int aspeed_lpc_ctrl_remove(struct platform_dev=
-ice *pdev)
- static const struct of_device_id aspeed_lpc_ctrl_match[] =3D {
- 	{ .compatible =3D "aspeed,ast2400-lpc-ctrl" },
- 	{ .compatible =3D "aspeed,ast2500-lpc-ctrl" },
-+	{ .compatible =3D "aspeed,ast2600-lpc-ctrl" },
- 	{ },
- };
-=20
-diff --git a/drivers/soc/aspeed/aspeed-lpc-snoop.c b/drivers/soc/aspeed/a=
-speed-lpc-snoop.c
-index 48f7ac238861..c7b4ac066b40 100644
---- a/drivers/soc/aspeed/aspeed-lpc-snoop.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-snoop.c
-@@ -325,6 +325,8 @@ static const struct of_device_id aspeed_lpc_snoop_mat=
-ch[] =3D {
- 	  .data =3D &ast2400_model_data },
- 	{ .compatible =3D "aspeed,ast2500-lpc-snoop",
- 	  .data =3D &ast2500_model_data },
-+	{ .compatible =3D "aspeed,ast2600-lpc-snoop",
-+	  .data =3D &ast2500_model_data },
- 	{ },
- };
-=20
++			lpc: lpc@1e789000 {
++				compatible =3D "aspeed,ast2600-lpc", "simple-mfd";
++				reg =3D <0x1e789000 0x1000>;
++
++				#address-cells =3D <1>;
++				#size-cells =3D <1>;
++				ranges =3D <0x0 0x1e789000 0x1000>;
++
++				lpc_bmc: lpc-bmc@0 {
++					compatible =3D "aspeed,ast2600-lpc-bmc", "simple-mfd", "syscon";
++					reg =3D <0x0 0x80>;
++					reg-io-width =3D <4>;
++
++					#address-cells =3D <1>;
++					#size-cells =3D <1>;
++					ranges =3D <0x0 0x0 0x80>;
++
++					kcs1: kcs1@0 {
++						compatible =3D "aspeed,ast2600-kcs-bmc";
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						kcs_chan =3D <1>;
++						status =3D "disabled";
++					};
++					kcs2: kcs2@0 {
++						compatible =3D "aspeed,ast2600-kcs-bmc";
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						kcs_chan =3D <2>;
++						status =3D "disabled";
++					};
++					kcs3: kcs3@0 {
++						compatible =3D "aspeed,ast2600-kcs-bmc";
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						kcs_chan =3D <3>;
++						status =3D "disabled";
++					};
++				};
++
++				lpc_host: lpc-host@80 {
++					compatible =3D "aspeed,ast2600-lpc-host", "simple-mfd", "syscon";
++					reg =3D <0x80 0x1e0>;
++					reg-io-width =3D <4>;
++
++					#address-cells =3D <1>;
++					#size-cells =3D <1>;
++					ranges =3D <0x0 0x80 0x1e0>;
++
++					kcs4: kcs4@0 {
++						compatible =3D "aspeed,ast2600-kcs-bmc";
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						kcs_chan =3D <4>;
++						status =3D "disabled";
++					};
++
++					lpc_ctrl: lpc-ctrl@0 {
++						compatible =3D "aspeed,ast2600-lpc-ctrl";
++						reg =3D <0x0 0x80>;
++						clocks =3D <&syscon ASPEED_CLK_GATE_LCLK>;
++						status =3D "disabled";
++					};
++
++					lpc_snoop: lpc-snoop@0 {
++						compatible =3D "aspeed,ast2600-lpc-snoop";
++						reg =3D <0x0 0x80>;
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						status =3D "disabled";
++					};
++
++					lhc: lhc@20 {
++						compatible =3D "aspeed,ast2600-lhc";
++						reg =3D <0x20 0x24 0x48 0x8>;
++					};
++
++					lpc_reset: reset-controller@18 {
++						compatible =3D "aspeed,ast2600-lpc-reset";
++						reg =3D <0x18 0x4>;
++						#reset-cells =3D <1>;
++					};
++
++					ibt: ibt@c0 {
++						compatible =3D "aspeed,ast2600-ibt-bmc";
++						reg =3D <0xc0 0x18>;
++						interrupts =3D <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
++						status =3D "disabled";
++					};
++
++					sio_regs: regs {
++						compatible =3D "aspeed,bmc-misc";
++					};
++				};
++			};
++
+ 			sdc: sdc@1e740000 {
+ 				compatible =3D "aspeed,ast2600-sd-controller";
+ 				reg =3D <0x1e740000 0x100>;
 --=20
 2.21.0
