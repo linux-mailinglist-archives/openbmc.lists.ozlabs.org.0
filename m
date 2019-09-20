@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47C24B8B10
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 08:31:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7FD7B8B2E
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 08:39:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZP5464t9zDrJ1
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 16:31:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZPFG4f9qzF3ZN
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 16:38:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,67 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="c3kaBZ7h"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="mioQjlHA"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="NuPpM1vz"; dkim-atps=neutral
+ header.b="uiyHEWYs"; dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ZP4K04v6zDqMn
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 16:31:12 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ZPC20Wp1zF3RG
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 16:37:02 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 0FE2D21F18;
- Fri, 20 Sep 2019 02:31:10 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 75BAA21FB5;
+ Fri, 20 Sep 2019 02:36:59 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Fri, 20 Sep 2019 02:31:10 -0400
+ by compute4.internal (MEProxy); Fri, 20 Sep 2019 02:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=V8N+fIObOKPRG1ocfc8CKZ2evcsjHoY
- UDj/YkpnCdpQ=; b=c3kaBZ7hZf+iLBR1YQUxfpgGd79DhHSyFwRNMsABqtGzvpG
- gTykGcMxnzZqOjH7zjXog1O7NlzCxj7IWtglA3gNWsfDQ5e8M9Q5j266arW1MFow
- tGnv/6IpSS5v9oMUgwnF15V8CsoW08BEdhCUzUTsViPB/Gt7noUBTC7yQlvaztp4
- IcmphacpW03RhT1XS2XmLagYllJaniKyqzxD41TntMStePQBW0Sc8biU0TQUfymg
- E/O9sqgBLbBrP5wWCZSuqVBq1PO2CJSTB7R785kDCqypZ6hYjHuXY0s5YEaWkbyo
- IaeWwPua4rvclEWN6nzhntu97eQJ4uNuPOKlj2w==
+ :subject:content-type; s=fm3; bh=ThZnXG1o/cxMDnrFNz+sWVZZHIKlbYO
+ q0g6xFIiKFjU=; b=mioQjlHA3Wa5d4j9686NsbvZNg/i09iRqJ7QsraxDb8tfB/
+ 7GaqxDf3VM/T7eTCyYZSFN4tncT4I94HZbkTCLVksLNDKHMB4/EsbuXjhsoom2BI
+ akStUcJBknE5DRoKrMs0J1y4WN84jdXoB+ni1wgN7ZLGuB5Glatu6KSn6/st2Iva
+ q94KfvRBhcuhdxT8RrojgEoW7t1s1ovja+78zeho0hUMl7u2JTHomw7C/Myu9b+k
+ lM/oFO426fvBG5gGkHcuZRJI4DV5egLc1U1vPPxz1j8nIV7C8mkTDngZ5Wr+f3lg
+ miWvPXdytjnTxkDytXmsnhhe9ZTyFp6iHzUeGmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=V8N+fI
- ObOKPRG1ocfc8CKZ2evcsjHoYUDj/YkpnCdpQ=; b=NuPpM1vzqutbuavmC8lhVY
- 4tGO4bCFOl7wPGsMpPeJKWRQLYloPn3ThYeqdrEI1b9aTdq+nwqYPa1+0kVPj/BT
- BHpBSZVIbU4OqqpYSX8p15/j0/kuqiejEIhdbcOFYlD6pZYvrhhiWNfELvMiySJu
- Z6dwk2k1vpx5Ve3rsIVv14cCOaSF5QRIh63hQ8IBBkWvACKNsc+QHm3EgkuRZcHv
- 2fR4IJsJwra58lh/JONjqSuFSzcALLWL8XouPsuzoEy8ZkQ0CZKsKqlV1NciTTO2
- D+ZiZi6rT4nWY064XIHocIHNhbN5oFVrfGX5Q9Tj2BamvyiyrvOEfQWlS2WI9KPg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ThZnXG
+ 1o/cxMDnrFNz+sWVZZHIKlbYOq0g6xFIiKFjU=; b=uiyHEWYsTXDMtJO5I654zr
+ UEMXPWy0MtiaDj8aX0CeqXoSxgk/R7mnJ4a4F8qh9nGibhTXzJPBnealgIRLn+un
+ XTPwMqOecaXKxwXAUmODfYQiIhTRetHtuMET0YSC2FDtQYUzlqPR//rUkGPojSQT
+ w26L/x2vCAA7/57eyOBT1Orum1i5Un4iOnxw6VGLjk1WgA7plU8BySImKqiX6MWg
+ JUHqF5erzztbfB6+BzbHepBHLC2JIhs2AVvHQxVLBSbdtaSNgISOcXBVXn9XbVzU
+ TfSs2S/D1dOKEKARUluRA5HTGAhCZmZbk1892jMbC4eVvg6uk8R2s6e1J99/mvfA
  ==
-X-ME-Sender: <xms:LHKEXebP0Dw07nrImalrC50Zm2ckFDM9eSiJGrwTX2xy8rYTCN1l2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddugddutdekucetufdoteggodetrfdotf
+X-ME-Sender: <xms:i3OEXYo7UbAjVhsuVFfilXnWHdafa_3It9n7TTdwLNuf5jpz0cvVlw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddugdduuddtucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgepud
-X-ME-Proxy: <xmx:LHKEXX0rIasac_AlnAt2Z8OcuiX1ElrqaDgrHP6DRbi8nS3sqLiLCg>
- <xmx:LHKEXRwJnfXCDXPpcUnsOHSYlwTPnWamSAOqeLha9R_9fznAglaOLQ>
- <xmx:LHKEXf78i8i1dfgz-MV1A2Zemi8vHhy-b3BtzmPbAEoT-_622NMsfw>
- <xmx:LnKEXZFQJEDm0808zG5GzusaAjwTTtEvRSSkm23nRv9YP6yZjmrdIA>
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:i3OEXQiTuLrC171xAXL-pcjWfWUqUey0224WsFtwSpcxk_zWJjcnTQ>
+ <xmx:i3OEXRxhja4VVIR9-trUTMh4o9ELOf59qsAb2aQxFBAG9fVA9rovEA>
+ <xmx:i3OEXdiBjJTDJMLicaFxyR1eveoJPqP0Egks2mQJsYc-Mt8mhBYzwQ>
+ <xmx:i3OEXXdSDR8pqItbKHKjKG0O0UKBf6H_hsIwW4t2k6MPBM0H0WEoBw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A5C6CE00A9; Fri, 20 Sep 2019 02:31:08 -0400 (EDT)
+ id E8A69E00A9; Fri, 20 Sep 2019 02:36:58 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-238-g170a812-fmstable-20190913v1
 Mime-Version: 1.0
-Message-Id: <f2cae818-a373-4a2e-825b-e90165410758@www.fastmail.com>
-In-Reply-To: <20190919152340.23133-3-bradleyb@fuzziesquirrel.com>
+Message-Id: <9196f950-59ea-4e7f-82f7-29769e0a2c81@www.fastmail.com>
+In-Reply-To: <20190919152340.23133-4-bradleyb@fuzziesquirrel.com>
 References: <20190919152340.23133-1-bradleyb@fuzziesquirrel.com>
- <20190919152340.23133-3-bradleyb@fuzziesquirrel.com>
-Date: Fri, 20 Sep 2019 16:01:43 +0930
+ <20190919152340.23133-4-bradleyb@fuzziesquirrel.com>
+Date: Fri, 20 Sep 2019 16:07:34 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
  "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v2_linux_dev-5.3_2/4]_ARM:_aspeed-g6:_lpc:_add_comp?=
- =?UTF-8?Q?atible_strings?=
+Subject: Re: [PATCH v2 linux dev-5.3 3/4] ARM: dts: aspeed-g6: Add lpc devices
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,21 +96,118 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Fri, 20 Sep 2019, at 00:53, Brad Bishop wrote:
-> Assume the AST2600 SoC contains the same LPC devices as the AST2500.
+> Assume everything is the same as G5, except the interrupt is updated.
 > 
 > Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 > ---
-> v2:
->   - removed DT binding documentation changes
-> ---
->  drivers/char/ipmi/bt-bmc.c            | 1 +
->  drivers/char/ipmi/kcs_bmc_aspeed.c    | 1 +
->  drivers/reset/reset-simple.c          | 1 +
->  drivers/soc/aspeed/aspeed-lpc-ctrl.c  | 1 +
->  drivers/soc/aspeed/aspeed-lpc-snoop.c | 2 ++
->  5 files changed, 6 insertions(+)
+>  arch/arm/boot/dts/aspeed-g6.dtsi | 91 ++++++++++++++++++++++++++++++++
+>  1 file changed, 91 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+> index 72038c16f541..b4991cbe1f36 100644
+> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+> @@ -249,6 +249,97 @@
+>  				status = "disabled";
+>  			};
+>  
+> +			lpc: lpc@1e789000 {
+> +				compatible = "aspeed,ast2600-lpc", "simple-mfd";
+> +				reg = <0x1e789000 0x1000>;
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <1>;
+> +				ranges = <0x0 0x1e789000 0x1000>;
+> +
+> +				lpc_bmc: lpc-bmc@0 {
+> +					compatible = "aspeed,ast2600-lpc-bmc", "simple-mfd", "syscon";
+> +					reg = <0x0 0x80>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x0 0x80>;
+> +
+> +					kcs1: kcs1@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <1>;
+> +						status = "disabled";
+> +					};
+> +					kcs2: kcs2@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <2>;
+> +						status = "disabled";
+> +					};
+> +					kcs3: kcs3@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <3>;
+> +						status = "disabled";
+> +					};
+> +				};
+> +
+> +				lpc_host: lpc-host@80 {
+> +					compatible = "aspeed,ast2600-lpc-host", "simple-mfd", "syscon";
+> +					reg = <0x80 0x1e0>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x80 0x1e0>;
+> +
+> +					kcs4: kcs4@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <4>;
+> +						status = "disabled";
+> +					};
 
-Also should be split for upstreaming, but as with the bindings the changes
-are fine in principle.
+I've got some patches floating around that I need to respin that adjust the kcs binding.
+The new dtsi with the existing binding means we're going to increase the amplification
+of dtc warnings :(
+
+> +
+> +					lpc_ctrl: lpc-ctrl@0 {
+> +						compatible = "aspeed,ast2600-lpc-ctrl";
+> +						reg = <0x0 0x80>;
+> +						clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lpc_snoop: lpc-snoop@0 {
+> +						compatible = "aspeed,ast2600-lpc-snoop";
+> +						reg = <0x0 0x80>;
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lhc: lhc@20 {
+> +						compatible = "aspeed,ast2600-lhc";
+> +						reg = <0x20 0x24 0x48 0x8>;
+> +					};
+> +
+> +					lpc_reset: reset-controller@18 {
+> +						compatible = "aspeed,ast2600-lpc-reset";
+> +						reg = <0x18 0x4>;
+> +						#reset-cells = <1>;
+> +					};
+> +
+> +					ibt: ibt@c0 {
+> +						compatible = "aspeed,ast2600-ibt-bmc";
+> +						reg = <0xc0 0x18>;
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +
+> +					sio_regs: regs {
+> +						compatible = "aspeed,bmc-misc";
+> +					};
+
+Can you please split the sio_regs one out to a separate patch? The necessary
+patches got nak'ed upstream a while back and I haven't circled back around
+to implement something more palatable. Put the patch adding it at the top of
+your series, then you can send the earlier ones upstream.
 
 Andrew
