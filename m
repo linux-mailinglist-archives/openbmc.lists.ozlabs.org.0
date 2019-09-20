@@ -2,74 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 323A6BAD55
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:42:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB9BBAD56
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:43:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cBWz4t8CzDqKS
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 14:42:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cBXy6kKmzDqLk
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 14:43:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=thalerj@us.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.3; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=dlin23@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.3])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Z4r00gFtzF3Kc
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 04:19:24 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8JIDBjj146876
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 14:19:22 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.81])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v4bjk8u0k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 14:19:21 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <thalerj@us.ibm.com>;
- Thu, 19 Sep 2019 18:19:21 -0000
-Received: from us1a3-smtp08.a3.dal06.isc4sb.com (10.146.103.57)
- by smtp.notes.na.collabserv.com (10.106.227.88) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 19 Sep 2019 18:19:11 -0000
-Received: from us1a3-mail169.a3.dal06.isc4sb.com ([10.146.71.113])
- by us1a3-smtp08.a3.dal06.isc4sb.com
- with ESMTP id 2019091918191110-785554 ;
- Thu, 19 Sep 2019 18:19:11 +0000 
-To: kunyi@google.com, vijaykhemka@fb.com, "OpenBMC Maillist"
- <openbmc@lists.ozlabs.org>, Paul.Vancil@dell.com,
- neladk@microsoft.com, gmills@linux.vnet.ibm.com, vishwa
- <vishwa@linux.vnet.ibm.com>
-Subject: Telemetry Streaming from OpenBMC
-From: "Justin Thaler" <thalerj@us.ibm.com>
-Date: Thu, 19 Sep 2019 13:19:12 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ZNsD31qlzF3NY
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 16:21:34 +1000 (AEST)
+Received: from [67.219.246.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-3.bemta.az-b.us-east-1.aws.symcld.net id 0A/91-21607-BEF648D5;
+ Fri, 20 Sep 2019 06:21:31 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHKsWRWlGSWpSXmKPExsWSLveKTfdlfku
+ swf3nFhanWl6wODB6nJ+xkDGAMYo1My8pvyKBNWP3tpPMBUdCKrbenMHSwPjNp4uRi0NIYD6T
+ xPaGzYxdjJxAzmtGiV8HnCAS+xkllr+4y9LFyMHBJqAqcX8aN0iNiIC+xK5Ju9lAbGEBaYlDz
+ c/YIeIKEqv2/2CFsPUkZhz+CBZnAWqdfLaZBcTmFbCUOLVnChOIzSggK/FkwTMwm1lAXOLcxV
+ awegkBAYkle84zQ9iiEi8f/2OFsBUkmve8ZoGoT5CY3DyLFWKmoMTJmU9YJjAKzkIyahaSsll
+ IyiDiOhILdn9ig7C1JZYtfM0MY5858JgJWXwBI/sqRtOkosz0jJLcxMwcXUMDA11DQyNdQ10L
+ C73EKt0kvdJi3dTE4hJdQ73E8mK94src5JwUvbzUkk2MwIhJKWCM2MF4YtYbvUOMkhxMSqK8L
+ nYtsUJ8SfkplRmJxRnxRaU5qcWHGGU4OJQkeP/nAuUEi1LTUyvSMnOA0QuTluDgURLh/ZgHlO
+ YtLkjMLc5Mh0idYrTnmPBy7iJmjoNH5wHJj6uWAMnvIFKIJS8/L1VKnPcJSJsASFtGaR7cUFi
+ yucQoKyXMy8jAwCDEU5BalJtZgir/ilGcg1FJmLcRZApPZl4J3O5XQGcxAZ1lF9EIclZJIkJK
+ qoHpkFNG87Kuyyfzvc9fPzZVZHE2d8Hz3qK3R6oL6670h/bMXiHscLhD4e/ktxPeOzGJ6tlYT
+ 43n//J7QlO515nVE440rf6rwHb79vc/b5dmcDq9fMjQsCYg3PSs9kVtzc3vRWYoHug/s5yd++
+ Se3ktmnut3GfgveGPx4v2u6VP9V725sDmKy+9n7+Q/x0/PlngpYl/pUy93pJolbKKkcad/F5u
+ eot/n1tDAW5df3gzP56hst217ufhx0X2FB1rzuHe1RjueOvDqss+fC4eFuC45efx3C1iR6ZGo
+ 1sFyit1souW2T/euV/VsC8mPS7Kuvrcw+MV0lgUf7O9I3hXcv0MuegIzl1BzbpLhgrIp65T8l
+ ViKMxINtZiLihMB3X21pLEDAAA=
+X-Env-Sender: dlin23@lenovo.com
+X-Msg-Ref: server-10.tower-386.messagelabs.com!1568960487!89645!1
+X-Originating-IP: [103.30.234.6]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 2545 invoked from network); 20 Sep 2019 06:21:29 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.6)
+ by server-10.tower-386.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 20 Sep 2019 06:21:29 -0000
+Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 0DBEC8B70F749CEE488D
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 14:21:27 +0800 (CST)
+Received: from HKGWPEMAIL02.lenovo.com (10.128.3.70) by
+ HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Fri, 20 Sep 2019 14:21:05 +0800
+Received: from HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba]) by
+ HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba%12]) with mapi id
+ 15.01.1591.008; Fri, 20 Sep 2019 14:21:26 +0800
+From: Derek Lin23 <dlin23@lenovo.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: PECI sensor rename
+Thread-Topic: PECI sensor rename
+Thread-Index: AdVvczEc4JIh9rDeSauE2DE3VmlT5g==
+Date: Fri, 20 Sep 2019 06:21:26 +0000
+Message-ID: <f59e0897a48c4922b82ff0110df5a33c@lenovo.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: multipart/alternative;
+ boundary="_000_f59e0897a48c4922b82ff0110df5a33clenovocom_"
 MIME-Version: 1.0
-X-KeepSent: 55B322CE:9F04B4EE-0025847A:006361B7;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 9.0.1FP7 Octobe4, 2013
-X-LLNOutbound: False
-X-Disclaimed: 35223
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset="UTF-8"
-x-cbid: 19091918-3067-0000-0000-000000C3395A
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.406879; ST=0; TS=0; UL=0; ISC=; MB=0.014723
-X-IBM-SpamModules-Versions: BY=3.00011803; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01263668; UDB=6.00668322; IPR=6.01045553; 
- MB=3.00028711; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-19 18:19:18
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-09-19 16:40:48 - 6.00010426
-x-cbparentid: 19091918-3068-0000-0000-000011E2652F
-Message-Id: <OF55B322CE.9F04B4EE-ON0025847A.006361B7-8625847A.0064A24B@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-19_05:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
 X-Mailman-Approved-At: Mon, 23 Sep 2019 14:40:35 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -82,49 +91,235 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Todd Rosedahl <rosedahl@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQWxsLA0KDQpJ4oCZbSBub3Qgc3VyZSBpZiB0aGlzIHNob3VsZCBiZSBhIHNlcGFyYXRlIG5v
-dGUgb3Igbm90LiBJJ3ZlIGFsc28gbm90IGJlZW4gDQphYmxlIHRvIGpvaW4gdGhpcyB3b3JrZ3Jv
-dXAsIGhvd2V2ZXIgYWxsIG9mIG15IGNvbmNlcm5zIGFwcGVhciB0byBoYXZlIA0KYmVlbiBkaXNj
-dXNzZWQuIC4gSeKAmXZlIHN0YXJ0ZWQgcmV2aWV3aW5nIHNvbWUgb2YgdGhlIHRlbGVtZXRyeSAN
-CmNvbnZlcnNhdGlvbiBmb3Igb3BlbmJtYywgYW5kIGhhdmUgdGFrZW4gc29tZSB0aW1lIHJldmll
-dyB0aGUgd2lraSBhbmQgDQpoYXZlIGFsc28gcmV2aWV3ZWQgdGhlIGRvY3VtZW50IHByb3Bvc2Fs
-LiBCYXNlZCBvbiBteSBleHBlcmllbmNlLCB0aGVyZeKAmXMgDQp0d28gY29yZSB1c2UgY2FzZXM6
-IHRlbGVtZXRyeSBzdHJlYW1zLCBhbmQgdGVsZW1ldHJ5IHJlcG9ydHMuIFRoZSBSZXBvcnRzIA0K
-YXJlIGEgY29sbGVjdCBhbmQgYW5hbHl6ZSBsYXRlciBtZXRob2QsIHR5cGljYWxseSB1c2VkIGZv
-ciBzeXN0ZW0gDQpwcm9maWxpbmcsIGpvYiBwcm9maWxpbmcsIGFuZCBhbmFseXRpY3Mgb2YgZGF0
-YSBjZW50ZXIgdXNhZ2Ugb3ZlciB0aW1lLiANCkZvciB0aGUgc3RyZWFtcywgdGhlc2UgYXJlIGJl
-aW5nIHVzZWQgdG8gYWxsb3cgdGhlIGRhdGEgY2VudGVyIHRvIHJlYWN0IHRvIA0KY2hhbmdlcyBh
-Y3Jvc3MgdGhlIG1hbmFnZWQgc3lzdGVtcywgbGlrZSBpbmNyZWFzaW5nIHdhdGVyIGZsb3csIGNv
-b2xpbmcgDQpjYXBhY2l0eSwgb3IgcG93ZXIgdGhyb3R0bGluZyBzeXN0ZW1zIHRvIHByZXZlbnQg
-b3ZlciBzdWJzY3JpcHRpb25zIG9uIHRoZSANCmRhdGEgY2VudGVy4oCZcyBwb3dlciBncmlkLg0K
-DQpJ4oCZZCBsaWtlIHRvIGFzayBhYm91dCB0aGUgc3RyZWFtcyBzaW5jZSB0aGUgcmVwb3J0IHBv
-cnRpb24gb2YgdGhpbmdzIHNlZW1zIA0KZXhjZXB0aW9uYWxseSB3ZWxsIGNvdmVyZWQuIFdpdGgg
-cHJldmlvdXMgdmVyc2lvbnMgb2Ygb3BlbkJNQyBJIHdhcyBhYmxlIA0KdG8gbGV2ZXJhZ2Ugd2Vi
-c29ja2V0cyB0byBnZXQgdXBkYXRlcyBvbiBzZW5zb3IgdmFsdWVzIG9uIGNoYW5nZS4gVGhpcyAN
-CnR1cm5lZCBvdXQgdG8gYmUgcHJldHR5IG5ldHdvcmsgZWZmaWNpZW50IGFuZCBpcyBhYmxlIHRv
-IGRyaXZlIDEvcyB1cGRhdGVzIA0Kb24gYWxsIHRoZSBzZW5zb3JzIGluIGEgc3lzdGVtLiBJdCBk
-b2VzbuKAmXQgaGF2ZSBhbiBpbXBhY3Qgb24gb3RoZXIgDQptb25pdG9yaW5nIHNlcnZpY2VzIGVp
-dGhlci4gVGhhdCBiZWluZyBzYWlkLCBJ4oCZdmUgYmVlbiByZWFkaW5nIHRocm91Z2ggdGhlIA0K
-cmVkZmlzaCB0ZWxlbWV0cnkgYW5kIGV2ZW50aW5nIHNlcnZpY2VzIGFuZCB3YXMgbG9va2luZyBm
-b3Igc29tZSBoZWxwIGFuZCANCm9yIGd1aWRhbmNlLiBGb3IgcmVmZXJlbmNlIEkgd2FzIGxvb2tp
-bmcgYXQgdGhpcyBkb2N1bWVudCANCmh0dHBzOi8vd3d3LmRtdGYub3JnL3NpdGVzL2RlZmF1bHQv
-ZmlsZXMvc3RhbmRhcmRzL2RvY3VtZW50cy9EU1AwMjY2XzEuNi4wLnBkZiANCi4NCg0KSWYgSSBk
-byBzdWJzY3JpYmUgdXNpbmcgU1NFIGFuZCB0ZWxlbWV0cnkgcmVwb3J0cywgaXQgc2VlbXMgdG8g
-YmUgc2V0dXAgdG8gDQpnZXQgYSBmdWxsIHNldCBvZiByZWFkaW5ncyBvdmVyIHRpbWUgYW5kIG9u
-bHkgc2VuZCB3aGVuIHRoZSByZXBvcnQgaXMgDQpjb21wbGV0ZS4gQ2FuIEkgdXNlIHRoZXNlIHJl
-cG9ydHMgdG8gZ2V0IHVwZGF0ZXMgZXZlcnkgc2Vjb25kPyBJZiBJIA0Kc3Vic2NyaWJlIHRvIGFu
-IGVuZHBvaW50LCBJIGFsc28gc2VlbSB0byBnZXQgdGhlIGVudGlyZSBlbmRwb2ludCBhbmQgSeKA
-mW0gDQpub3Qgc3VyZSBpZiB0aGlzIHdvdWxkIG1lZXQgYSBnb2FsIG9mIGdldHRpbmcgdGhlIGxh
-cmdlIGNsdXN0ZXIgKDMwMCANCnN5c3RlbXMpIHdvcnRoIG9mIHVwZGF0ZXMgYXQgYSBkYXRhIHJh
-dGUgb2YgbGVzcyB0aGFuIDIwIE1iL3MuIEkgd291bGQgDQphcHByZWNpYXRlIGFueSBhZHZpY2Ug
-b24gbGV2ZXJhZ2luZyByZWRmaXNoIHN0YW5kYXJkcyB0byBzdHJlYW0gc2Vuc29yIA0KcmVhZGlu
-Z3MgZm9yIGFuIE9wZW5CTUMgc3lzdGVtLiBJZiBJJ20gbm90IGFibGUgdG8gdXNlIHJlZGZpc2gs
-IEknZCBiZSANCmhhcHB5IHRvIGVsYWJvcmF0ZSBtb3JlIG9uIHRoZSB3ZWJzb2NrZXQgbWV0aG9k
-IEkgdXNlZCB3aXRoIHRoZSBwaG9zcGhvciANCndlYnNlcnZlciBhbmQgZGlzY3VzcyBvcHRpb25z
-IGZvciB0aGUgY3VycmVudC9mdXR1cmUgQk1DIHZlcnNpb25zIA0KbGV2ZXJhZ2luZyBibWN3ZWIu
-IA0KDQpUaGFua3MsDQpKdXN0aW4gVGhhbGVyDQpTZW5pb3IgUkFTIEVuZ2luZWVyDQoNCg==
+--_000_f59e0897a48c4922b82ff0110df5a33clenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Team:
+
+          I have a question for how to rename PECI sensor in cpu-sensor.
+          Currently, I am using peci-dimmtemp & peci-cputemp drivers under =
+Kernel to read DIMM and CPU temperatures.
+          So, under /sys/class/hwmon directories, I can find the correspond=
+ing CPU & DIMM label names and temperatures.
+
+          Now, my question is how do I change the label names of each corre=
+sponding temperature in cpu-sensor component.
+
+          Here is the snapshot of my cpu-sensor using busctl. My goal is to=
+ show temperature name to be something else other than "Die_CPU1" or "DIMM_=
+C1_CPU1".
+
+                    root@abc/sys/class/hwmon/hwmon23# busctl tree --no-page=
+ xyz.openbmc_project.CPUSensor
+                   ...
+                   /xyz/openbmc_project/sensors
+      mq/xyz/openbmc_project/sensors/temperature
+        tq/xyz/openbmc_project/sensors/temperature/Core_0_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_10_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_11_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_12_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_13_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_14_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_15_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_17_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_2_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_3_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_4_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_5_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_6_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_7_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/Core_9_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/DIMM_C1_CPU1
+        tq/xyz/openbmc_project/sensors/temperature/DIMM_C2_CPU1
+        mq/xyz/openbmc_project/sensors/temperature/Die_CPU1
+                   ...
+
+          I understand that "Die" comes from peci-cputemp driver and "DIMM_=
+C1" comes from peci-dimmtemp driver. Besides rewriting the label names in t=
+he drivers, do I have other options?
+
+Thank you,
+
+Derek
+
+
+--_000_f59e0897a48c4922b82ff0110df5a33clenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Team:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; I have a question for how to rename PECI sensor in =
+cpu-sensor.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Currently, I am using peci-dimmtemp &amp; peci-cput=
+emp drivers under Kernel to read DIMM and CPU temperatures.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; So, under /sys/class/hwmon directories, I can find =
+the corresponding CPU &amp; DIMM label names and temperatures.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Now, my question is how do I change the label names=
+ of each corresponding temperature in cpu-sensor component.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Here is the snapshot of my cpu-sensor using busctl.=
+ My goal is to show temperature name to be something else other than &#8220=
+;Die_CPU1&#8221; or &#8220;DIMM_C1_CPU1&#8221;.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp; root@abc/sys/class/hwmon/hwmon23# busctl tree --no-page xyz.openbmc_pro=
+ject.CPUSensor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#8230;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; /xyz/openbmc_project/sensors<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+mq/xyz/openbmc_project/sensors/temperature<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_0_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_10_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_11_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_12_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_13_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_14_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_15_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_17_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_2_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_3_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_4_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;tq/xyz/openbmc_project/sensors/temperature/Core_5_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_6_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_7_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/Core_9_CPU1<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp; &nbsp;tq/xyz/openbmc_project/sensors/temperature/DIMM_C1_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; tq/xyz/openbmc_project/sensors/temperature/DIMM_C2_CPU1<o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; mq/xyz/openbmc_project/sensors/temperature/Die_CPU1<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; &#8230;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; I understand that &#8220;Die&#8221; comes from peci=
+-cputemp driver and &#8220;DIMM_C1&#8221; comes from peci-dimmtemp driver. =
+Besides rewriting the label names in the drivers, do I have other options?
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thank you,<o:p></o:p></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Derek<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_f59e0897a48c4922b82ff0110df5a33clenovocom_--
