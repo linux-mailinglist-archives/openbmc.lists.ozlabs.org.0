@@ -1,75 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C078B88F2
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 03:33:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7FF2B8938
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 04:22:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZGT970MzzF59J
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 11:33:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZHY568HRzF4yJ
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 12:22:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=netronome.com
- (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
- envelope-from=jakub.kicinski@netronome.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d29; helo=mail-io1-xd29.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=netronome.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=netronome-com.20150623.gappssmtp.com
- header.i=@netronome-com.20150623.gappssmtp.com header.b="Nsd2d5oy"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="BcBbcXmT"; 
  dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
+ [IPv6:2607:f8b0:4864:20::d29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ZGSG6xQtzF58n
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 11:32:59 +1000 (AEST)
-Received: by mail-qt1-x843.google.com with SMTP id u40so6745895qth.11
- for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 18:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=netronome-com.20150623.gappssmtp.com; s=20150623;
- h=date:from:to:cc:subject:message-id:in-reply-to:references
- :organization:mime-version:content-transfer-encoding;
- bh=4WJMMHDuZxH7H+MD/oT0vES1nWQCHy0CADTJt4JAwSY=;
- b=Nsd2d5oy3zJZ6+4K0fDPrZFEeWRHQCPNIL7xJqrVH5mwFhUoaCE5294BuSftfWTEfW
- FoneG6mhBPB7KrzuKN8pCBZTI9W/vsxR+BgBEGX54AXT27G103KuwXW4il+9makgIXjj
- 3xwz5f6iDxN0l2rKNaRxmgLJYgfqAp31oqT7aI32smXSHEhZ1ZXD24s/BkwysXbDvsTq
- wCWzzEehWDoScsgYAlTxX+bC5O9qEn8NxQnCZxcfwaqgcgPFop4SVJxwHV6Gx2jN0XVZ
- 0niXrJkhkCeZu/y14Dl0gKMt1i0wxBrVDKa5vCdHqbnMTNHn/mmf92xaRUXCr9NmwnmV
- QNlA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ZHXD1s8ZzF44n
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 12:21:31 +1000 (AEST)
+Received: by mail-io1-xd29.google.com with SMTP id q1so12733883ion.1
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Sep 2019 19:21:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=Z2FwdQ1UvLQGnl3/+C1SWY/EurSEZc/u4BcQ5LgSZ8I=;
+ b=BcBbcXmTIzxvFk5vwjuYMv698BHtpxqyo22uLp1xFvp9va37fN3C6EaX0VvVsreqrc
+ /MQg3Gevsph4fkb11N95hrB5EbnN+AEuSA6tdB67hOhi7UMolISV6auIrJO0LFbJW6qq
+ UCwoeuhJvaR5UUugqfqYd92lUUXsxeZ+rQXEAcfvq4F5C6tfpzlReRcncgrg+tpwSbwu
+ jsu0ZzJdPxDZ6SB8OUIe31xdLGTc0T/MHOob+9IcdFvJQRMdzMwIIEAHxLkbHAp0C5Rc
+ IFb5nxypHXmkweW2b7ihSPW1m2FiY+kxV5n7mQV/5CNhR5AXfKPR+DZ5KXfv62mnKSC1
+ HFVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
- :references:organization:mime-version:content-transfer-encoding;
- bh=4WJMMHDuZxH7H+MD/oT0vES1nWQCHy0CADTJt4JAwSY=;
- b=WEFlDos2KHr27n9nPSAhEpLbm1wOQVKkymiHan/Yii6etLb28qKAV5uFOL8ELttq6q
- YA8qDXqFhQMvhbDAFuPOd4eyDN2EqpcZLQKxogRoRNoHuNXslRPafDIGjgik2rWp0bK/
- 5dBm6fgzp8SJ9Yw3yjKsKr3/rnojTB2HU4QBaroqDUQF5j8z+C1YaggCxiex0cRtwaWw
- U/GH3YQBvH9QcWiBBKVP6rdDeY0hU+QAgte3lA2++oNyN6u2fcUHFhnkjCAdc+Le2VrC
- KjJ7X7J4bunl9Qeo4vw9EF8Zi/c/DL8Dn+3vljgnUpudbnfEiYwKL+gyIG3BgoPBY3NC
- UGlQ==
-X-Gm-Message-State: APjAAAXO2dp14xfQTmdclGuAyw/FW09Z2nQEiOGuKHO6AcNkU6J093eO
- 8M3TOEvjrcgNNLNSHoMuBi5moQ==
-X-Google-Smtp-Source: APXvYqzdTUjTpFbUoVoc+ebm0vlKwxHAf0leKDBwPoI+8ipofZyrSm/CRN202t6ONi2mShSkv3jh9w==
-X-Received: by 2002:a0c:946f:: with SMTP id i44mr10787876qvi.133.1568943175743; 
- Thu, 19 Sep 2019 18:32:55 -0700 (PDT)
-Received: from cakuba.netronome.com ([66.60.152.14])
- by smtp.gmail.com with ESMTPSA id 54sm227866qts.75.2019.09.19.18.32.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Sep 2019 18:32:55 -0700 (PDT)
-Date: Thu, 19 Sep 2019 18:32:52 -0700
-From: Jakub Kicinski <jakub.kicinski@netronome.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: [PATCH] net/ncsi: Disable global multicast filter
-Message-ID: <20190919183252.5cb041b2@cakuba.netronome.com>
-In-Reply-To: <20190912190451.2362220-1-vijaykhemka@fb.com>
-References: <20190912190451.2362220-1-vijaykhemka@fb.com>
-Organization: Netronome Systems, Ltd.
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=Z2FwdQ1UvLQGnl3/+C1SWY/EurSEZc/u4BcQ5LgSZ8I=;
+ b=E7eGqx7iREGGSrDTZURWnaXhzzNm4TbhiZjAveQtoUuBABVW8A79Ko5PdTSbGJt6ZJ
+ 8DvPUBGZfiLDjknuiXC76otGH1bQ3D3URszvVl9Z8YURsn4VI9zbCYPm1uvRHPuVXUp+
+ OYgJuQNjEeyozTJxWCWdWYtxdIhMMtifJFmkjqhIkGdZ53g8CK7pAlkd0SMly2560w0Z
+ u0dHe0pcmcVBzGGQCWkvFxz/QvWd6kHsY8Qx7vIp6aERKMHBZkWgqaof88l7/5xT5Sze
+ LtNz5qwE1nELNSWUdJYoICmCi2evAApobh+CpiNJqpwGVGxJhAKL8YOMhiKq6ne6Mr04
+ t3Zg==
+X-Gm-Message-State: APjAAAVB5vMS7B06JAk+xSZxL+sEsPyuQUd/l/1TbFkY18h3VJqDFNyt
+ LX35+By4e4GJq2If7c4ZKiM0YRqSykYcSwoH1f0sMgl3jPc=
+X-Google-Smtp-Source: APXvYqyQVDvUkFlRlcTQr1iT/RWfEDrACI+yunTcmiAdfcjlgeKhs+ngPBehaReJFH4ZBnG+7TVn3YMAL4IfJWbK2yo=
+X-Received: by 2002:a6b:720a:: with SMTP id n10mr6174001ioc.64.1568946086479; 
+ Thu, 19 Sep 2019 19:21:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <90E110C3-D171-4E85-9558-D1A0631C265A@fb.com>
+In-Reply-To: <90E110C3-D171-4E85-9558-D1A0631C265A@fb.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 20 Sep 2019 10:21:14 +0800
+Message-ID: <CAARXrtmM9iHd0ohOo5Ah=O-_XBvx-abggt4jf+7wuMqhF=y_5A@mail.gmail.com>
+Subject: Re: Machine name in Code update
+To: Vijay Khemka <vijaykhemka@fb.com>, Adriana Kobylak <anoo@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,39 +74,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, netdev@vger.kernel.org,
+Cc: "ed.tanous@intel.com" <ed.tanous@intel.com>,
  "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- linux-kernel@vger.kernel.org, Samuel Mendoza-Jonas <sam@mendozajonas.com>,
- "David S. Miller" <davem@davemloft.net>
+ Ben Wei <benwei@fb.com>, Amithash Prasad <amithash@fb.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 12 Sep 2019 12:04:50 -0700, Vijay Khemka wrote:
-> Disabling multicast filtering from NCSI if it is supported. As it
-> should not filter any multicast packets. In current code, multicast
-> filter is enabled and with an exception of optional field supported
-> by device are disabled filtering.
-> 
-> Mainly I see if goal is to disable filtering for IPV6 packets then let
-> it disabled for every other types as well. As we are seeing issues with
-> LLDP not working with this enabled filtering. And there are other issues
-> with IPV6.
-> 
-> By Disabling this multicast completely, it is working for both IPV6 as
-> well as LLDP.
-> 
-> Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
+On Fri, Sep 20, 2019 at 2:15 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
+>
+> Team,
+>
+> I am trying to add a feature of verifying machine name while upgrading BM=
+C image. I have submitted a couple of patches, 1. Which adds machine name i=
+n manifest file and 2. Which verifies machine name from manifest to os-rele=
+ase file. Below are 2 gerrit review patch.
+>
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-phosphor/+/25324/
+>
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-bmc-code-mgmt/+/2=
+5344/
+>
+>
+> I have received some valuable feedback on design approach and I agreed wi=
+th some of them. Let me explain complete thought here and please provide yo=
+ur valuable feedback as well as new ideas.
+>
+>
+>
+> Currently available:
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Currently, Software updater updates image based on version reading and pu=
+rpose from manifest file.
+>
+> I find here a security issues of upgrading an image which was built for d=
+ifferent machine and upgraded to BMC with different platform.
+>
 
-> @@ -1033,23 +1030,23 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
->  		} else if (nd->state == ncsi_dev_state_config_ebf) {
->  			nca.type = NCSI_PKT_CMD_EBF;
->  			nca.dwords[0] = nc->caps[NCSI_CAP_BC].cap;
-> -			if (ncsi_channel_is_tx(ndp, nc))
-> +			/* if multicast global filtering is supported then
-> +			 * disable it so that all multicast packet will be
-> +			 * forwarded to management controller
-> +			 */
-> +			if (nc->caps[NCSI_CAP_GENERIC].cap &
-> +			     NCSI_CAP_GENERIC_MC)
++ @Adriana Kobylak
 
-Applied, looks like an unnecessary space sneaked in here, I removed it.
+And here is my thought:
+* Initially I wanted to add such check to make sure a BMC is not updated wi=
+th
+  a different BMC build.
+* Later the signature and verification code is added, and the tarball conta=
+ins
+  signatures.
+  In practice and in field, the deployed BMCs will not be using the "defaul=
+t"
+openbmc key, and thus any update shall be using a signed tarball. The one w=
+ho
+generates the signed tarball shall make sure the build matches the machine.
+
+So I think the "security issue" is not really a problem.
+
+But I still like the idea to check the machine name to prevent incorrect
+updates accidentally.
+
+>
+> Design approach:
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> As I see that while building image, there is a /etc/os-release file which=
+ gets created and includes version, machine name as OPENBMC_TARGET_MACHINE.=
+ This machine name is nothing but a MACHINE defined in bitbake environment.=
+ So I thought of using same MACHINE value to be appended in MANIFEST file w=
+hich is being parsed by updater. And verify this against running image rele=
+ase file before validating image. There are following question comes here.
+>
+>
+>
+> Backward compatibility : For this we can allow image upgrade if machine n=
+ame is not defined in MANIFEST file or if it is defined than it should matc=
+h to current running image.
+
+Yes, I prefer to keep backward compatibility for a few release cycles.
+E.g. in 2.7 and 2.8, let's make it support tarballs without machine name.
+And in 2.9, make machine name mandatory.
+What do you think?
+
+> Validation level: Current code updater supports upgrade for host, bmc and=
+ psu all firmware. So I am not sure if machine name is going to be same for=
+ all components or it is different. In my understanding, all components sho=
+uld have same machine name if they are part of single machine. I am open to=
+ discuss this point as I am not sure how everyone else is defining it.
+
+I agree with this one.
+Adding machine name for all tarballs (BMC, host, PSU) makes sure the image =
+is
+for a specific machine.
+Even if an image is meant to support multiple systems (e.g. a PSU image may=
+ be
+used on different systems with the same PSU), the update image could be
+generated (and signed) for the specific machine as well.
