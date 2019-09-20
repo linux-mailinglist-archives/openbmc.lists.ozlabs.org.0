@@ -1,93 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D79A3B95BB
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 18:34:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66C33B95D6
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 18:38:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZfSs4swxzF0Qm
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 02:34:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZfXT0HMRzF3bh
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 02:38:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
  (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=msbarth@linux.ibm.com; receiver=<UNKNOWN>)
+ envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
+ dmarc=none (p=none dis=none) header.from=us.ibm.com
 Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Zf6p3qqQzF3XK
- for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 02:19:14 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Zf883H5qzDqkR
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 02:20:23 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
  by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8KGGB9O050751; Fri, 20 Sep 2019 12:19:08 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2v508mvvdc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Sep 2019 12:19:07 -0400
-Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x8KGHLr6053878;
- Fri, 20 Sep 2019 12:19:07 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2v508mvvd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Sep 2019 12:19:07 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8KGAnrN020486;
- Fri, 20 Sep 2019 16:19:06 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma05wdc.us.ibm.com with ESMTP id 2v3vbu7a4f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Sep 2019 16:19:06 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8KGJ66545613336
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Sep 2019 16:19:06 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 730BAAC05B;
- Fri, 20 Sep 2019 16:19:06 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 17BFDAC05E;
- Fri, 20 Sep 2019 16:19:06 +0000 (GMT)
-Received: from [9.10.99.12] (unknown [9.10.99.12])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 20 Sep 2019 16:19:05 +0000 (GMT)
-Subject: Re: Fan PWM monitoring and control
-To: rgrs <rgrs@protonmail.com>
-References: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
- <87e610aa-72c7-32d2-9281-2c89023d397a@linux.ibm.com>
- <CAO=notzaok+dsfR0uRJUy2ZGHMiMZZC9Jm704B5HfCS8CLPnEQ@mail.gmail.com>
- <_Nl9cDEblRON25jUEVZy-xP4bxr_xoMpODmc9FCcRWNpgk3sFL_ZHmcHAwVQaEdzB1V8KjJ1k3U_a90MQMP2nIzosFt_jwC3j3vSPxTvEGs=@protonmail.com>
- <CAO=notxUENhPn4bYZVzgyuy-tn6OxP3ojE29MBtXHLGAgkfj_w@mail.gmail.com>
- <Eoms3BmA_hZ-IwjRbWQGhnKCH-ijQ3Am7q1DrTqo73DtZSdsXaMbAcVInBw-SBdTgeqbpsHRuqvkEoAM04KKIqvJnsIv67WATAPVeM9TGv8=@protonmail.com>
- <b8234b9b-1409-33dc-930f-21b8aab590e2@linux.ibm.com>
- <DPtOWfYe4jWodafub9fy5O2kam1xxcqYVW-AwwODBWTmNr0VBvHQulRT6eAywSOxzlmbCuHhLW9vJ_alhSn-fuDwyh_KvJdUYz4AqWcThTE=@protonmail.com>
- <LgdPnRYBfplNFAYHlgeIeqcfaFAY3YBlIY29oEdpPzlBlptZTxYA7eQDOAJL9IWz_b_GYz9PCAMxoudn2QA1ArWs1r74LSBcdkOdlXQ1Slk=@protonmail.com>
-From: Matthew Barth <msbarth@linux.ibm.com>
-Message-ID: <afa59982-3c5f-8939-bd05-88d1815a2c6f@linux.ibm.com>
-Date: Fri, 20 Sep 2019 11:19:05 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ x8KGBvlq096145
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 12:20:21 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.119])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2v51p59cea-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 12:20:21 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Fri, 20 Sep 2019 16:20:19 -0000
+Received: from us1b3-smtp05.a3dr.sjc01.isc4sb.com (10.122.203.183)
+ by smtp.notes.na.collabserv.com (10.122.182.123) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 20 Sep 2019 16:20:15 -0000
+Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
+ by us1b3-smtp05.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019092016201502-646270 ;
+ Fri, 20 Sep 2019 16:20:15 +0000 
+In-Reply-To: <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: James Feist <james.feist@linux.intel.com>
+Date: Fri, 20 Sep 2019 16:20:14 +0000
 MIME-Version: 1.0
-In-Reply-To: <LgdPnRYBfplNFAYHlgeIeqcfaFAY3YBlIY29oEdpPzlBlptZTxYA7eQDOAJL9IWz_b_GYz9PCAMxoudn2QA1ArWs1r74LSBcdkOdlXQ1Slk=@protonmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>,
+ <c558c87c-7929-b9d2-8970-531f39979f38@linux.intel.com>
+ <1bbdbc81-69a5-484e-9ee8-ba62a710e8fe@www.fastmail.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-LLNOutbound: False
+X-Disclaimed: 10651
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 19092016-3975-0000-0000-000000637D70
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.076070
+X-IBM-SpamModules-Versions: BY=3.00011809; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01264098; UDB=6.00668586; IPR=6.01045994; 
+ MB=3.00028728; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-20 16:20:18
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-20 15:49:17 - 6.00010430
+x-cbparentid: 19092016-3976-0000-0000-000011B1926C
+Message-Id: <OFB4439398.C2024144-ON0025847B.0059AC2A-0025847B.0059BE4A@notes.na.collabserv.com>
+Subject: RE: phosphor-isolation
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
  definitions=2019-09-20_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909200145
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,278 +84,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On September 20, 2019, around 10:56AM in some timezone, James Feist wrote:
+>On 9/19/19 8:47 PM, Andrew Jeffery wrote:
+>> On Fri, 20 Sep 2019, at 03:03, James Feist wrote:
+>>> I enabled phosphor-isolation on my system and noticed that kcs no
+>>>longer
+>>> worked afterwards. Commenting out this section:
+>>>
+>>>
 
+>>>
+>>> +	/* iLPC2AHB */
+>>> +	val =3D readl(AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
+>>> +	val |=3D SCU=5FHW=5FSTRAP=5FLPC=5FDEC=5FSUPER=5FIO;
+>>> +	writel(val, AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
+>>>
+>>>
+>>> Seems to make KCS work again.
 
-On 9/20/19 4:55 AM, rgrs wrote:
-> Hi Matt,
-> 
-> I'm able to control fan speed via busctl.
-> 
-> root@saber:/sys/class/hwmon/hwmon0# busctl set-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPwm Target t '250'
-> 
-> root@saber:/sys/class/hwmon/hwmon0# cat fan*_input
-> 12498
-> 0
+That configuration is disabling superio decoding, which means the host
+will no longer be able to configure the superio hardware on the LPC bus.
+
+>>=20
+>> That is an unexpected result. Have you asked ASPEED about it? I've
+>> added
+>> Ryan to Cc. I must admit I didn't test the patch with systems that
+>> use KCS
+>> because OpenPOWER exclusively uses BT for IPMI (though we're
+>> starting
+>> to exploit the KCS interfaces for an LPC MCTP binding).
+>>=20
+>> Having said that, the systems that we're testing our LPC MCTP
+>> binding on
+>> would have this patch applied, so presumably we're not seeing the
+>> same
+>> effect there. They're 2500-based systems, is that what you're
+>> testing with?
 >
-Great! that's progress.
+>Yes I am.
+>
 
-> I need a way to verify if the sensor associations are working properly that fans will ramp up when associated temperature sensor's value increases.
-> 
-Be sure that your fans.yaml contains the correct sensor name ("FAN0", 
-etc..) for each fan that contains the Target property on the FanPwm 
-interface.
+As an outside observer without hardware, can you check:
 
-You can use busctl to monitor the target pwm sensor changes based on 
-what you configured within events.yaml for speed increases. This would 
-show that fan control is requesting updated targets to hwmon. Then hwmon 
-would write these values out to the pwm sysfs file for your fan 
-controller device.
-> Thanks,
-> Raj
-> 
-> 
-> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-> On Friday, September 20, 2019 2:57 PM, rgrs <rgrs@protonmail.com> wrote:
-> 
->> Hi Matt,
->>
->>>> Not sure I follow what you mean by "no pwm writes", is there an
->>
->> application writing to the fan sensor's pwm interface target property?
->>
->> I thought phoshor-fan control writes to pwm to increase fan speed based on temperature sensors mentioned in events.yaml
->> (recipes-phosphor/fans/phosphor-fan-control-events-config/events.yaml)
->>
->> Is it not the case?
->>
->> Thanks,
->> Raj
->>
->> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
->> On Thursday, September 19, 2019 8:26 PM, Matthew Barth msbarth@linux.ibm.com wrote:
->>
->>> On 9/19/19 5:16 AM, rgrs wrote:
->>>
->>>> Hi Patrick, Lei,
->>>> Thank you, I made some changes according your comments
->>>>
->>>> -   added Mutability::Read to fan yaml.
->>>> -   I didn't see ipmi-sensor-inventory.yaml of romulus having fan sensors, so removed them from IPMI.
->>>>
->>>> Now,"busctl monitor" displays Fan tach reads, no pwm writes.
->>>
->>> Not sure I follow what you mean by "no pwm writes", is there an
->>> application writing to the fan sensor's pwm interface target property?
->>>
->>>> Is there any way to manually set PWM value and test this?
->>>> How do I verify PWM values are being written to ADT7462?
->>>
->>> If no other application are writing to the PWM sysfs entries, you should
->>> be able to `echo` a value to each fan's PWM sysfs file to alter the fan
->>> speeds.
->>>
->>>> Another observation is Inventory.Item seems to have invalid(stale) entries.
->>>
->>> I believe inventory is persisted by default so that could explain why
->>> these entries are still showing up. These are persisted under
->>> `/var/lib/phosphor-inventory-manager/..`.
->>>
->>>> IPMI sensor names appear in inventory even after removing from IPMI sensor yaml files (exported JSON in attachment).
->>>> Logs:
->>>>
->>>> busctl monitor | grep -i fan
->>>> =============================
->>>> Monitoring bus message stream.
->>>> Sender=:1.45 Path=/xyz/openbmc_project/sensors/fan_tach/FAN0 Interface=org.freedesktop.DBus.Properties Member=PropertiesChanged
->>>> Sender=:1.45 Path=/xyz/openbmc_project/sensors/fan_tach/FAN1 Interface=org.freedesktop.DBus.Properties Member=PropertiesChanged
->>>> Sender=:1.45 Path=/xyz/openbmc_project/sensors/fan_tach/FAN2 Interface=org.freedesktop.DBus.Properties Member=PropertiesChanged
->>>> [...]
->>>> Sender=:1.45 Path=/xyz/openbmc_project/sensors/fan_tach/FAN1 Interface=org.freedesktop.DBus.Properties Member=PropertiesChanged
->>>> Sender=:1.45 Path=/xyz/openbmc_project/sensors/fan_tach/FAN3 Interface=org.freedesktop.DBus.Properties Member=PropertiesChanged
->>>> ^C
->>>> busctl get-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPwm Target
->>>> =====================================================================================================================================================
->>>> t 0
->>>> busctl set-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPwm Target 8000
->>>> ==========================================================================================================================================================
->>>
->>> This is not a valid call to `busctl set-property...`, its missing the
->>> property's signature type (refer to `busctl help`). Also, a target PWM
->>> of 8000 is invalid, PWM is 0 - 255.
->>>
->>>> Failed to create bus message: Invalid argument
->>>> busctl introspect --no-pager xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN1
->>>> ====================================================================================================================
->>>> NAME TYPE SIGNATURE RESULT/VALUE FLAGS
->>>> org.freedesktop.DBus.Introspectable interface - - -
->>>> .Introspect method - s -
->>>> org.freedesktop.DBus.Peer interface - - -
->>>> .GetMachineId method - s -
->>>> .Ping method - - -
->>>> org.freedesktop.DBus.Properties interface - - -
->>>> .Get method ss v -
->>>> .GetAll method s a{sv} -
->>>> .Set method ssv - -
->>>> .PropertiesChanged signal sa{sv}as - -
->>>> xyz.openbmc_project.Control.FanPwm interface - - -
->>>> .Target property t 0 emits-change writable
->>>> xyz.openbmc_project.Sensor.Value interface - - -
->>>> .MaxValue property x 0 emits-change writable
->>>> .MinValue property x 0 emits-change writable
->>>> .Scale property x 0 emits-change writable
->>>> .Unit property s "xyz.openbmc_project.Sensor.Value.Unit.… emits-change writable
->>>> .Value property x 2983 emits-change writable
->>>> xyz.openbmc_project.State.Decorator.OperationalStatus interface - - -
->>>> .Functional property b true emits-change writable
->>>> Thanks,
->>>> Raj
->>>> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
->>>> On Wednesday, September 18, 2019 9:35 PM, Patrick Venture venture@google.com wrote:
->>>>
->>>>> On Wed, Sep 18, 2019 at 2:30 AM rgrs rgrs@protonmail.com wrote:
->>>>>
->>>>>> Hi Patrick, Matt,
->>>>>> I tried instructions from this wiki: https://developer.ibm.com/linuxonpower/2019/01/07/how-to-port-openbmc/
->>>>>> There is no GPIO to detect presence of fans, so tach readings is used instead.
->>>>>> Here's what I did while trying to enable Fan control:
->>>>>>
->>>>>> 1.  Added Fan tach sensor in hwmon (adt7462.conf) is in the form LABEL=FANx_RPM
->>>>>> 2.  "ipmi-sensor-inventory.yaml" has below config:
->>>>>>
->>>>>> 60: &fan_tach
->>>>>> sensorType: 0x04
->>>>>> path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
->>>>>> sensorReadingType: 0x01
->>>>>> multiplierM: 100
->>>>>> offsetB: 0
->>>>>> bExp: 0
->>>>>> unit: xyz.openbmc_project.Sensor.Value.Unit.RPMS
->>>>>> scale: 0
->>>>>> rExp: 0
->>>>>> serviceInterface: org.freedesktop.DBus.Properties
->>>>>> readingType: readingData
->>>>>> interfaces:
->>>>>> xyz.openbmc_project.Sensor.Value:
->>>>>> Value:
->>>>>> Offsets:
->>>>>> 0xFF:
->>>>>> type: int64_t
->>>>>> and FAN PWM as
->>>>>> 89: &fanpwm
->>>>>> sensorType: 0x04
->>>>>> path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
->>>>>> sensorReadingType: 0x01
->>>>>> multiplierM: 1
->>>>>> offsetB: 0
->>>>>> bExp: 0
->>>>>> mutability: Mutability::Write
->>>>>
->>>>> You may need to add ::Read here too, I'm not sure anymore, but you can
->>>>> check the script that builds this:
->>>>> https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/writesensor.mako.cpp#L69
->>>>> It'll default to read, but if you've only set write, I don't know.
->>>>>
->>>>>>       serviceInterface: org.freedesktop.DBus.Properties
->>>>>>       readingType: readingData
->>>>>>       interfaces:
->>>>>>           xyz.openbmc_project.Control.FanPwm:
->>>>>>               Target:
->>>>>>                   Offsets:
->>>>>>                       0xFF:
->>>>>>                           type: uint64_t
->>>>>>
->>>>>>
->>>>>> 3.  I copied meta-romulus/recipes-phosphor/fans to my platform and changed FAN names from "fanx" to "FANx_RPM" in yaml files.
->>>>>>
->>>>>> This is what get in busctl tree related to Fans:
->>>>>> (I expected to see FanPwm entries in busctl and I'm not sure why there are multiple entries in inventory).
->>>>>> Service xyz.openbmc_project.Hwmon-2429843755.Hwmon1:
->>>>>> `-/xyz`-/xyz/openbmc_project
->>>>>> `-/xyz/openbmc_project/sensors |-/xyz/openbmc_project/sensors/fan_tach | |-/xyz/openbmc_project/sensors/fan_tach/FAN0_RPM | |-/xyz/openbmc_project/sensors/fan_tach/FAN1_RPM | |-/xyz/openbmc_project/sensors/fan_tach/FAN2_RPM |`-/xyz/openbmc_project/sensors/fan_tach/FAN3_RPM
->>>>>> `-/xyz/openbmc_project/sensors/temperature`-/xyz/openbmc_project/sensors/temperature/BACKPLANE_TEMP
->>>>>
->>>>> You don't get a separate entry for the PWM from phosphor-hwmon.
->>>>> It's a separate interface on the same service and path.
->>>>> I recommend you introspect on the path and see what interfaces are
->>>>> available (as well as adding "| read" above):
->>>>> busctl introspect --no-pager
->>>>> xyz.openbmc_project.Hwmon-2429843755.Hwmon1
->>>>> /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
->>>>>
->>>>>> Service xyz.openbmc_project.Inventory.Manager:
->>>>>> `-/xyz`-/xyz/openbmc_project
->>>>>> `-/xyz/openbmc_project/inventory`-/xyz/openbmc_project/inventory/system
->>>>>> `-/xyz/openbmc_project/inventory/system/chassis`-/xyz/openbmc_project/inventory/system/chassis/motherboard
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0
->>>>>> | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0/FAN0 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0_RPM/FAN0_RPM
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1
->>>>>> | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1/FAN1 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1_RPM/FAN1_RPM
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2
->>>>>> | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2/FAN2 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2_RPM/FAN2_RPM
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3
->>>>>> | `-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3/FAN3 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3_RPM/FAN3_RPM
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan0
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan1
->>>>>> |-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan2
->>>>>> `-/xyz/openbmc_project/inventory/system/chassis/motherboard/fan3
->>>>>> Thanks,
->>>>>> Raj
->>>>>> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
->>>>>> On Tuesday, September 17, 2019 9:18 PM, Patrick Venture venture@google.com wrote:
->>>>>>
->>>>>>> On Tue, Sep 17, 2019 at 8:32 AM Matthew Barth msbarth@linux.ibm.com wrote:
->>>>>>>
->>>>>>>> On 9/17/19 5:40 AM, rgrs wrote:
->>>>>>>>
->>>>>>>>> Hi,
->>>>>>>>> I need some help with phosphor hwmon related to fan sensors.
->>>>>>>>> I'm trying to control Fans in a server motherboard using ADT7462
->>>>>>>>> controller. Hw mon porting is done and the sysfs interfaces are working
->>>>>>>>> as expected.
->>>>>>>>> While I am able to read RPM, i don't find pwm/target to control the fans
->>>>>>>>> exposed as dbus objects.
->>>>>>>>> Do you have the hwmon config set similar to this to denote the fan
->>>>>>>>> targets are of PWM type?
->>>>>>>>
->>>>>>>> https://github.com/openbmc/openbmc/blob/master/meta-ibm/meta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/pwm-tacho-controller%401e786000.conf
->>>>>>>>
->>>>>>>>> busctl --no-page tree xyz.openbmc_project.FanSensor
->>>>>>>>> ====================================================
->>>>>>>>> Failed to introspect object / of service xyz.openbmc_project.FanSensor:
->>>>>>>>> The name is not activatable
->>>>>>>>> No objects discovered.
->>>>>>>>> That does not look like a hwmon service name. If you are using
->>>>>>>>> phosphor-objmgr, you can use `# mapper get-service /xyz/openbmc_project/sensors/fan_tach` otherwise you'll need to find the
->>>>>>>>> hwmon service name associated with your fan controller device.
->>>>>>>
->>>>>>> running`busctl tree --no-pager` will just list everything, and you
->>>>>>> should see your fans in there. You can use the mapper too. I was
->>>>>>> curious, are you using entity-manager/dbus-sensors? When you mention
->>>>>>> FanSensor as the service, that's what it sounds like.
->>>>>>>
->>>>>>>>> I came across this post, I think it is similar to my issue.
->>>>>>>>> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/8353)
->>>>>>>>> Please someone point to latest documentation or reference Fan porting
->>>>>>>>> from openBMC repo?
->>>>>>>>> What are the exact fields in YAML that are used create FanPWM objects.
->>>>>>>>> The Romulus machine should be a good reference for PWM based fan control
->>>>>>>>> using phosphor-hwmon. It uses the
->>>>>>>>> phosphor-fan-presence/[control|monitor] apps for controlling and
->>>>>>>>> monitoring fans
->>>>>>>>
->>>>>>>> https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus
->>>>>>>>
->>>>>>>>> (I'm using Feb release in my sandbox,
->>>>>>>>> https://github.com/openbmc/docs/blob/master/release/release-notes.md#26-feb-4-2019)
->>>>>>>>> Thanks,
->>>>>>>>> Raj
->>>>>>>>
->>>>>>>> Matt
-> 
-> 
+(1) Did you check from the OS or just from a BIOS inventory?
+
+(2) Is there code to enable the KCS peripheral from the bmc
+
+(3) Will the host try to use the KCS even though it can
+    not find the superio to choose the port and interrupt?
+
+
+
+
+
+>>>=20
+>>> Do we need this part set? If so, should we
+>>> create a phosphor-isolation-kcs and phosphor-isolation-bt?
+>>=20
+>> I hope not, given that leaving the SuperIO decoding enable allows
+>the
+>> host to (slowly) scrape BMC memory (or if iLPC2AHB writes are
+>> allowed,
+>> open faster backdoors). We should root-cause the issue before
+>> exploring this path.
+>>=20
+>> Andrew
+
