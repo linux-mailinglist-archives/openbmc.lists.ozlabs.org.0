@@ -1,78 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66C33B95D6
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 18:38:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E486FB96E5
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 20:02:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZfXT0HMRzF3bh
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 02:38:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZhQQ30F6zF3g7
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 04:02:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
  (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
 Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Zf883H5qzDqkR
- for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 02:20:23 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8KGBvlq096145
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 12:20:21 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.119])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2v51p59cea-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 12:20:21 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Fri, 20 Sep 2019 16:20:19 -0000
-Received: from us1b3-smtp05.a3dr.sjc01.isc4sb.com (10.122.203.183)
- by smtp.notes.na.collabserv.com (10.122.182.123) with
- smtp.notes.na.collabserv.com ESMTP; Fri, 20 Sep 2019 16:20:15 -0000
-Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
- by us1b3-smtp05.a3dr.sjc01.isc4sb.com
- with ESMTP id 2019092016201502-646270 ;
- Fri, 20 Sep 2019 16:20:15 +0000 
-In-Reply-To: <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: James Feist <james.feist@linux.intel.com>
-Date: Fri, 20 Sep 2019 16:20:14 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ZhPc69FXzDrF4
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 04:02:11 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8KHpuik018338; Fri, 20 Sep 2019 14:02:05 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v52273v85-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Sep 2019 14:02:05 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8KI0XsJ022738;
+ Fri, 20 Sep 2019 18:02:04 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma03dal.us.ibm.com with ESMTP id 2v3vbuuxyk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Sep 2019 18:02:04 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x8KI233B39125276
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Sep 2019 18:02:03 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 26BE6C6055;
+ Fri, 20 Sep 2019 18:02:03 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C38C8C6059;
+ Fri, 20 Sep 2019 18:02:02 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Fri, 20 Sep 2019 18:02:02 +0000 (GMT)
+Subject: Re: Staging plans to remove network IPMI support?
+To: Vernon Mauery <vernon.mauery@linux.intel.com>
+References: <24ab3a70-2752-e2ba-5a37-41ee35f8aa92@linux.ibm.com>
+ <9ad6bc40-8b34-1c54-c1f6-abd5d0ee1672@linux.ibm.com>
+ <20190920154835.GJ45301@mauery.jf.intel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <a9b5b58a-d9d4-23e3-8f5a-7f1c3b19f207@linux.ibm.com>
+Date: Fri, 20 Sep 2019 13:02:01 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>,
- <c558c87c-7929-b9d2-8970-531f39979f38@linux.intel.com>
- <1bbdbc81-69a5-484e-9ee8-ba62a710e8fe@www.fastmail.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
- SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
-X-LLNOutbound: False
-X-Disclaimed: 10651
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 19092016-3975-0000-0000-000000637D70
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.076070
-X-IBM-SpamModules-Versions: BY=3.00011809; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01264098; UDB=6.00668586; IPR=6.01045994; 
- MB=3.00028728; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-20 16:20:18
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-09-20 15:49:17 - 6.00010430
-x-cbparentid: 19092016-3976-0000-0000-000011B1926C
-Message-Id: <OFB4439398.C2024144-ON0025847B.0059AC2A-0025847B.0059BE4A@notes.na.collabserv.com>
-Subject: RE: phosphor-isolation
+In-Reply-To: <20190920154835.GJ45301@mauery.jf.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-20_05:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+ definitions=2019-09-20_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1909200150
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,75 +87,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On September 20, 2019, around 10:56AM in some timezone, James Feist wrote:
->On 9/19/19 8:47 PM, Andrew Jeffery wrote:
->> On Fri, 20 Sep 2019, at 03:03, James Feist wrote:
->>> I enabled phosphor-isolation on my system and noticed that kcs no
->>>longer
->>> worked afterwards. Commenting out this section:
->>>
->>>
 
->>>
->>> +	/* iLPC2AHB */
->>> +	val =3D readl(AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
->>> +	val |=3D SCU=5FHW=5FSTRAP=5FLPC=5FDEC=5FSUPER=5FIO;
->>> +	writel(val, AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
->>>
->>>
->>> Seems to make KCS work again.
-
-That configuration is disabling superio decoding, which means the host
-will no longer be able to configure the superio hardware on the LPC bus.
-
->>=20
->> That is an unexpected result. Have you asked ASPEED about it? I've
->> added
->> Ryan to Cc. I must admit I didn't test the patch with systems that
->> use KCS
->> because OpenPOWER exclusively uses BT for IPMI (though we're
->> starting
->> to exploit the KCS interfaces for an LPC MCTP binding).
->>=20
->> Having said that, the systems that we're testing our LPC MCTP
->> binding on
->> would have this patch applied, so presumably we're not seeing the
->> same
->> effect there. They're 2500-based systems, is that what you're
->> testing with?
+On 9/20/19 10:48 AM, Vernon Mauery wrote:
+> On 18-Sep-2019 04:34 PM, Joseph Reynolds wrote:
+>> Re-sending to fix up formatting error:
+>>
+>> The OpenBMC security working group discussed a desire to remove out-of-band
+>> network IPMI support from the OpenBMC firmware stack, here:
+>> https://lists.ozlabs.org/pipermail/openbmc/2019-September/018319.html
+>>
+>> This would affect out-of-band (network IPMI) only, in repository
+>> https://github.com/openbmc/phosphor-net-ipmid. The host IPMI support is
+>> a separate topic.
+>>
+>> The *main idea* is a staging plan to remove network IPMI support over a
+>> period of years, like in this progression:
+> This may be a year 3030 topic; I would not worry too much about it for
+> now. By the time RMCP+ is gone, BMCs may not even be a thing anymore :)
 >
->Yes I am.
+> But in all seriousness, telnet and rlogin stayed on for YEARS beyond
+> their welcome. It will be a difficult task to wean users off RMCP+. It
+> is so easy to use and we are all used to it. Redfish is so complicated
+> and we don't have the tooling to make it work as smoothly as RMCP+.
 >
+> Basically what I am saying is that we need buy-in from the end users. So
+> far, for all its wonder and glory, Redfish really has been a hard sell.
+> For all the warts and flaws of RMCP+ over IPMI, people *need* it. People
+> are not rational and do not make security decisions based on logic.
 
-As an outside observer without hardware, can you check:
+Agreed :)
 
-(1) Did you check from the OS or just from a BIOS inventory?
+Do you think it would be helpful to add the staging plan discussed here 
+to the "Provide alternatives to network IPMI" wish list item? See 
+https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list
 
-(2) Is there code to enable the KCS peripheral from the bmc
+>
+>> 1. Tell everyone the plans at each stage below. For example: emails to the
+>> group, mention in the release notes, update
+>> https://github.com/openbmc/phosphor-net-ipmid/blob/master/README.md and the
+>> ipmitool repo.
+> We can certainly add something to the README, but we do need to set some
+> expectations on how much people actually read documentation. Adding
+> something there will not have nearly as much effect as putting a big red
+> banner on the bmcweb console that says "IPMI over RMCP+ is enabled and
+> is insecure. You might consider disabling it and using the Redfish
+> protocol instead"
 
-(3) Will the host try to use the KCS even though it can
-    not find the superio to choose the port and interrupt?
+Good idea.  Like a security health check for the BMC's interfaces. I'm 
+tracking an issue (work item) to disable IPMI via Redfish (here 
+https://github.com/ibm-openbmc/dev/issues/612), and I've added this as a 
+suggestion.
 
+>
+> OpenBMC does not own the ipmitool project (or any of the other
+> opensource utilities that speak RMCP+), so we will need to reach out. It
+> turns out that the ipmitool maintainer is a member of the OpenBMC
+> community, so we can hopefully leverage that relationship.
+>
+>> 2. Implement the Redfish ManagerNetworkProtocol - defined in the DMTF
+>> Redfish Resource and Schema Guide DSP2046 https://www.dmtf.org/dsp/DSP2046.
+>> This gives the BMC admin an interface to disable out-of-band network
+>> IPMI.That means stopping the IPMI network service and closing its port.
+> I keep hearing stories about redfish not being united and common enough
+> to be useful. Does the spec need to grow or do we just need to make sure
+> that it is always implemented according to the spec?
 
+My reading is that OpenBMC is committed to Redfish and member of the 
+OpenBMC community are actively working to enhance Redfish to do what we 
+need.
 
-
-
->>>=20
->>> Do we need this part set? If so, should we
->>> create a phosphor-isolation-kcs and phosphor-isolation-bt?
->>=20
->> I hope not, given that leaving the SuperIO decoding enable allows
->the
->> host to (slowly) scrape BMC memory (or if iLPC2AHB writes are
->> allowed,
->> open faster backdoors). We should root-cause the issue before
->> exploring this path.
->>=20
->> Andrew
+- Joseph
+>
+>> 3. Change the IPMI ManagerNetworkProtocol setting to be disabled by
+>> default.  After this, BMC admins have to take an explicit action to enable
+>> IPMI access.
+> I would hope that long before we disable netipmid by default, Redfish
+> would be the main mechanism for accessing the BMC.
+>
+>> By this point it should be possible to learn how to migrate from
+>> IPMI to Redfish APIs.
+> No, people should be learning how to migrate from IPMI to Redfish right
+> now, long before we attempt to disable RMCP+/IPMI by default.
+>
+>> 4. Remove IPMI from the default OpenBMC configuration. This means network
+>> IPMI is not built into the BMC firmware image. After this, project who want
+>> to use network IPMI will have to explicitly add it to their image. This will
+>> hopefully be a wake-up call to anyone who is still using network IPMI.
+> I think this step could be moved up. Not every OEM user of OpenBMC wants
+> to include netipmid in their builds today. Adding a package to an image
+> is just as easy as removing it. We could make it NOT part of the image
+> by default and require all OEMs that want it to add it to their image.
+>
+>> 5. Remove all references to network IPMI from OpenBMC.
+> I am not sure this is ever necessary. This is not a nanny state. If
+> someone wants openBMC to have insecure packages on their builds, that is
+> up to them. We can disable the package by default, but I think that is
+> as far as we need to go.
+>
+> --Vernon
 
