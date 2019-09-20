@@ -2,129 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0ED35B974F
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 20:37:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 744D4B981D
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 21:53:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZjBq4Q9NzF3m1
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 04:37:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZksR46SpzF3n7
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 05:52:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=4166e25665=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=us.ibm.com
+ (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
+ envelope-from=miltonm@us.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="QPVor7u7"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="WyLvXQLU"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+ dmarc=none (p=none dis=none) header.from=us.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ZjBC466vzF3hj
- for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 04:37:22 +1000 (AEST)
-Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
- by m0001303.ppops.net (8.16.0.42/8.16.0.42) with SMTP id x8KIbHNo002746
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 11:37:20 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : content-type : content-id : content-transfer-encoding
- : mime-version; s=facebook;
- bh=stK1p3X8QbrU4399EuJtoYaqJ4/DQxPRXnVyQlIQ+AY=;
- b=QPVor7u7w4AiCdQwbyWwJQcqQ63YVK1/9u5gw/M+3keoc5qJVAh0jf+2fEwxDibvnZSx
- X6F0i4uu8s2TUm8QjFHJoKdJpUftj1eM69K9ORJl+PDM9A81ZWOu307rLlcvdgM9QJOE
- Efr/qxxdHl1Ewi3aX2pJpMtUUSnbGQQr4Ys= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by m0001303.ppops.net with ESMTP id 2v51ecrv6k-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 11:37:20 -0700
-Received: from prn-hub03.TheFacebook.com (2620:10d:c081:35::127) by
- prn-hub02.TheFacebook.com (2620:10d:c081:35::126) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.1.1713.5; Fri, 20 Sep 2019 11:36:59 -0700
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com (192.168.54.28)
- by o365-in.thefacebook.com (192.168.16.27) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
- via Frontend Transport; Fri, 20 Sep 2019 11:36:59 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fOVDDjUQA4H2WGM75DvqZOHwmmADpBOib3NAp+SinG3794rTnr9GR2ro6jCQThDD4XzTUVuDvWt4cjfIwKwEIK0oolF30l3Yb5rKmgfUAMfbC7JHXdtu639E//gPW0u0Hg4lpnfpORj3yJf6xYLVZGHxhO+Fr5yE6jqMR2qOa667IeJWrPpSNPBeJpK4UuT3aSYDcpYw8wH5eAW5VSk9E/KL9F1ulxYy7DPvy3xrRnwc4pwKxh4+d/dH/Q70YxcTXGABAccUJVeFi9wQHCUV4FQZ4DFNmsAkwBm/r3X/pcAoHToDHWndtcpXn1VyPbMVH3lzbKhQBeKjXmNjnoO2TA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=stK1p3X8QbrU4399EuJtoYaqJ4/DQxPRXnVyQlIQ+AY=;
- b=E/PW+vkDNI53Pv/Ddah/IJ65/NMWiw3K5sG7vUNnvOBWVopuGpJbJ7GJvJJUT+tK/wcNgKlwLOwZKjpPHRMiYbkPWigQtUL6ZunHlV4T/dgxEQa2cHWmJu/4ecKuh0o3o114s45uvppX7AwtozP4iG9SX32CRh5yK1PAKV9R2w2JAF0T8Lu8y1R0HhveANh6MS/ZCM+foFvycqRXJLnhVVr5nqFhfbtlW5BUrKN6Dd2qPoLTw4ZO9lp9/TlHYmPMkvNRvbHrmE7j36/uSwe+YI7ID4ZYPQKxsBrBEOu90ZU9wvnmbAPgrVQrrFw/lMEdkaop52e1kYYo6AJvZvijqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=stK1p3X8QbrU4399EuJtoYaqJ4/DQxPRXnVyQlIQ+AY=;
- b=WyLvXQLUKNx59VvtTUcg5siNsj93NA+qaHIugGderMEBlFoL7HyvupwUQrdNw3Q1r6CS26hoV4I+UwgnMaVJ6UsoN8tqTcZf0dPOd5UlIX9W1OueVZI1FypibtkXRmWWYW5FlKdnxsFzr2ZlTP2yHsELZ+LYPKkd8PMLvD+c4vc=
-Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
- BY5PR15MB3619.namprd15.prod.outlook.com (52.133.253.28) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2284.20; Fri, 20 Sep 2019 18:36:44 +0000
-Received: from BY5PR15MB3636.namprd15.prod.outlook.com
- ([fe80::bc3e:c80f:b59e:98aa]) by BY5PR15MB3636.namprd15.prod.outlook.com
- ([fe80::bc3e:c80f:b59e:98aa%6]) with mapi id 15.20.2284.023; Fri, 20 Sep 2019
- 18:36:44 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Wilfred Smith <wilfredsmith@fb.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: [Potential Spoof] Utility Error Output
-Thread-Topic: [Potential Spoof] Utility Error Output
-Thread-Index: AQHVb+Ja7owlKn8/SEyQFJMSqRmz8Q==
-Date: Fri, 20 Sep 2019 18:36:44 +0000
-Message-ID: <95F192E7-9726-486D-8191-8780F4D7E7CA@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::3:153b]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 00408530-ea8b-4c1f-9e20-08d73df97ce2
-x-microsoft-antispam: BCL:0; PCL:0;
- RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600167)(711020)(4605104)(1401327)(2017052603328)(7193020);
- SRVR:BY5PR15MB3619; 
-x-ms-traffictypediagnostic: BY5PR15MB3619:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BY5PR15MB3619D2BAEE394B20CBF20E4ADD880@BY5PR15MB3619.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1824;
-x-forefront-prvs: 0166B75B74
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(39860400002)(376002)(396003)(346002)(136003)(189003)(199004)(305945005)(6116002)(2501003)(71190400001)(86362001)(7736002)(486006)(71200400001)(102836004)(2616005)(14454004)(478600001)(6506007)(186003)(36756003)(25786009)(256004)(476003)(99286004)(46003)(6246003)(81156014)(33656002)(81166006)(8676002)(4744005)(91956017)(76116006)(8936002)(5660300002)(66946007)(316002)(110136005)(64756008)(6436002)(6486002)(229853002)(2906002)(66446008)(66556008)(66476007)(6512007);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3619;
- H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: iukk08ul1Jhn1lefQhRGY8V2/iv9a+2GzzxLWH7ARehdlzOJn0t2jVVv1/jc8h4Uv6HU26lFk6GWF/5DYBSaGUSVK8BNCu1ZbLgkQqm+HATEOFARysk9Hi+A04seSEbUI7+KiUVvyKcLy+u8p13LiLLNb40JdXK0d2AEA/vvzUhY3b6Hf+EdcS/YZjSFf+p8PidiDGNSi+Os6eK2qD1BnpXfHZen0MqAXCkWwRdlF79W0s+k3qinsik/b2ZA9o6EcsdHF7cEEv9rU8yjHIbH6IWHs9jL0CeSXWDaRNf2jYQspxcV3CZ6DRNrzSQkXSGyRbw8sqU/FxMi+n5X0/RxeJFNu/oUnfRBrTkQJcmo85jWzCNiOxd4c2qiSAJYuRqQPFz71f7vj/Hoj6Xmn9UQeetUkGWduJZgAdLhDfDIF9k=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <26DD4E20CD854E46A41BD3BCF0797474@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46Zkqn6bP3zF10g
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 05:51:33 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8KJlu3E016049
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 15:51:29 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.110])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v53r5k71k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 15:51:28 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Fri, 20 Sep 2019 19:51:27 -0000
+Received: from us1b3-smtp08.a3dr.sjc01.isc4sb.com (10.122.203.190)
+ by smtp.notes.na.collabserv.com (10.122.47.50) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 20 Sep 2019 19:51:23 -0000
+Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
+ by us1b3-smtp08.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019092019512336-793399 ;
+ Fri, 20 Sep 2019 19:51:23 +0000 
+In-Reply-To: <dd3f64aa-e053-6c33-bf3e-fa6031eafb57@linux.intel.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: James Feist <james.feist@linux.intel.com>
+Date: Fri, 20 Sep 2019 19:51:23 +0000
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00408530-ea8b-4c1f-9e20-08d73df97ce2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Sep 2019 18:36:44.5743 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: z3MIaVdwblcBwaVWSYLf/SNGIfpWKsV/dA1jDHWVMbJtUa1r1Y2cxWrf5pz6fbi4b/Q0dIyo+fbJui0eLhkzqQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3619
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.70,1.0.8
- definitions=2019-09-20_06:2019-09-20,2019-09-20 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- bulkscore=0 mlxscore=0
- malwarescore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999
- impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1908290000 definitions=main-1909200153
-X-FB-Internal: deliver
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <dd3f64aa-e053-6c33-bf3e-fa6031eafb57@linux.intel.com>,
+ <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>
+ <c558c87c-7929-b9d2-8970-531f39979f38@linux.intel.com>
+ <1bbdbc81-69a5-484e-9ee8-ba62a710e8fe@www.fastmail.com>
+ <OFB4439398.C2024144-ON0025847B.0059AC2A-0025847B.0059BE4A@notes.na.collabserv.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-LLNOutbound: False
+X-Disclaimed: 46019
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 19092019-1059-0000-0000-00000055E279
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.400847; ST=0; TS=0; UL=0; ISC=; MB=0.053833
+X-IBM-SpamModules-Versions: BY=3.00011810; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01264168; UDB=6.00668628; IPR=6.01046064; 
+ MB=3.00028731; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-20 19:51:27
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-20 15:07:34 - 6.00010430
+x-cbparentid: 19092019-1060-0000-0000-000000A913CD
+Message-Id: <OF52BAE312.D498BA87-ON0025847B.006B382A-0025847B.006D131E@notes.na.collabserv.com>
+Subject: RE: phosphor-isolation
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-20_07:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,25 +86,115 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCu+7v09uIDkvMjAvMTksIDExOjE1IEFNLCAib3BlbmJtYyBvbiBiZWhhbGYgb2YgV2lsZnJl
-ZCBTbWl0aCIgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJz
-Lm9yZyBvbiBiZWhhbGYgb2Ygd2lsZnJlZHNtaXRoQGZiLmNvbT4gd3JvdGU6DQoNCiAgICBPbmUg
-b2YgdGhlIGNvZGUgcmV2aWV3IGNvbW1lbnRzIGZvciBteSBGUlUgZHVtcCB1dGlsaXR5IHdhcyB0
-aGF0IEkgc2hvdWxkIHdyaXRlIHRoZSByZXN1bHRzIHRvIHBob3NwaG9yIGxvZy4NCiAgICANCiAg
-ICBTaG91bGQgdGhlIG91dHB1dCBvZiBhIHV0aWxpdHkgdGhhdCBpcyBiZWluZyB1c2VkIGZyb20g
-YSBzaGVsbCBwcm9tcHQgYmUgZGlzcGxheWVkIG9uIHRoZSBjb25zb2xlIG9yIHNlbnQgdG8gdGhl
-IHBob3NwaG9yIGxvZyBkZXN0aW5hdGlvbj8NCiAgICANCiAgICBJ4oCZbSB0aGlua2luZyB0aGF0
-IGl04oCZcyBiZXN0IHRvIHJvdXRlIGl0IHNvbGVseSB0byB0aGUgY29uc29sZSBmb3IgdGhyZWUg
-cmVhc29uczoNCiAgICAJLSBpZiB0aGVyZeKAmXMgc29tZXRoaW5nIHdyb25nIHdpdGggbG9nZ2lu
-ZywgdGhlIHV0aWxpdHkgYmVjb21lcyB3b3J0aGxlc3MNCiAgICAJLSBXaGVuIEnigJltIGludGVy
-YWN0aXZlbHkgcnVubmluZyBhIHV0aWxpdHksIGl0IHNlZW1zIHN0cmFuZ2UgdG8gZ28gdGhlIGxv
-ZyBmb3IgdGhlIHJlc3VsdCBvZiB3aGF0IEkganVzdCBkaWQuDQogICAgCS0gVGhlIG91dHB1dCBv
-ZiB0aGUgdXRpbGl0eSB3aWxsIG9mdGVuIGJlIHVzZWZ1bCBmb3IgbG9naWMgd2l0aGluIGEgc2Ny
-aXB0LiBEaWdnaW5nIHRoZSBpbmZvcm1hdGlvbiBvdXQgb2YgdGhlIGxvZyBjb21wbGljYXRlcyB0
-aGF0Lg0KICAgIA0KICAgIENvbW1lbnRzIGFwcHJlY2lhdGVkLA0KDQpZb3Ugc2hvdWxkIGhhdmUg
-YWxsIGVycm9yIGFuZCBpbmZvcm1hdGlvbiBsb2cgc2hvdWxkIGdvIHRvIHBob3NwaG9yIGxvZy4g
-QW5kIG91dHB1dCByZXN1bHQgc2hvdWxkIGdvIHRvIGNvbnNvbGUuDQogICAgDQogICAgV2lsZnJl
-ZA0KDQo=
+Around 09/20/2019 01:16PM in some timezone James Feist wrote:>On 9/20/19 9:=
+20 AM, Milton Miller II wrote:
+>> On September 20, 2019, around 10:56AM in some timezone, James Feist wrot=
+e:
+>>> On 9/19/19 8:47 PM, Andrew Jeffery wrote:
+>>>> On Fri, 20 Sep 2019, at 03:03, James Feist wrote:
+>>>>> I enabled phosphor-isolation on my system and noticed that kcs
+>>>>> >no
+>>>>> longer
+>>>>> worked afterwards. Commenting out this section:
+>>>>>
+>>>>>
+>>=20
+>>>>>
+>>>>> +	/* iLPC2AHB */
+>>>>> +	val =3D readl(AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
+>>>>> +	val |=3D SCU=5FHW=5FSTRAP=5FLPC=5FDEC=5FSUPER=5FIO;
+>>>>> +	writel(val, AST=5FSCU=5FBASE + AST=5FSCU=5FHW=5FSTRAP1);
+>>>>>
+>>>>>
+>>>>> Seems to make KCS work again.
+>>=20
+>> That configuration is disabling superio decoding, which means the
+>host
+>> will no longer be able to configure the superio hardware on the LPC
+>bus.
+>>=20
+>>>>
+>>>> That is an unexpected result. Have you asked ASPEED about it?
+>>>> I've
+>>>> added
+>>>> Ryan to Cc. I must admit I didn't test the patch with systems
+>>>> that
+>>>> use KCS
+>>>> because OpenPOWER exclusively uses BT for IPMI (though we're
+>>>> starting
+>>>> to exploit the KCS interfaces for an LPC MCTP binding).
+>>>>
+>>>> Having said that, the systems that we're testing our LPC MCTP
+>>>> binding on
+>>>> would have this patch applied, so presumably we're not seeing the
+>>>> same
+>>>> effect there. They're 2500-based systems, is that what you're
+>>>> testing with?
+>>>
+>>> Yes I am.
+>>>
+>>=20
+>> As an outside observer without hardware, can you check:
+>>=20
+>> (1) Did you check from the OS or just from a BIOS inventory?
+>
+>Attempting to send ipmi commands from uefi/linux stopped working.
+>Linux=20
+>driver on host reported issues communicating to bmc.
+>
+>>=20
+>> (2) Is there code to enable the KCS peripheral from the bmc
+>
+>There is a driver and kcsbridged.
+
+Those are probably drivers to respond to data sent=20
+over the bridge.  I was looking more to "is the KCS=20
+peripherial enabled on the LPC bus at the expected=20
+address?"
+
+If you add mem.devmem=3Dy [1] to the kernel command line=20
+you can use devmem at runtime to reverse that bit via=20
+/dev/mem and then use an sio configuration tool from=20
+the host to query how its configured. =20
+
+
+There is probably another way to do it from the bmc=20
+side but I don't know where to start looking (probably=20
+somewhere in the lpc space).
+
+
+[1] https://github.com/openbmc/linux/blob/707b68f43a8cc94fe5dcc4e35dad77882=
+8ca9cc9/drivers/char/mem.c#L921
+
+>>=20
+>> (3) Will the host try to use the KCS even though it can
+>>      not find the superio to choose the port and interrupt?
+>
+>Yes.
+>
+>>=20
+>>=20
+>>=20
+>>=20
+>>=20
+>>>>>
+>>>>> Do we need this part set? If so, should we
+>>>>> create a phosphor-isolation-kcs and phosphor-isolation-bt?
+>>>>
+>>>> I hope not, given that leaving the SuperIO decoding enable allows
+>>>> the
+>>>> host to (slowly) scrape BMC memory (or if iLPC2AHB writes are
+>>>> allowed,
+>>>> open faster backdoors). We should root-cause the issue before
+>>>> exploring this path.
+>>>>
+>>>> Andrew
+
+milton
+
