@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3C41B8B7D
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 09:26:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B430B8C54
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 10:05:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ZQHz2QnmzF1DH
-	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 17:26:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ZR8c3Y6TzDqkS
+	for <lists+openbmc@lfdr.de>; Fri, 20 Sep 2019 18:05:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,67 +16,67 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VSmj2+Ap"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Tcbrymqk"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="j+DijtnC"; dkim-atps=neutral
+ header.b="m1+E+q3p"; dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ZQH01GDjzDrJJ
- for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 17:25:31 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ZR7Z4z5dzF13s
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Sep 2019 18:04:09 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id BAD4C220A3;
- Fri, 20 Sep 2019 03:25:28 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 93B4F21FC1;
+ Fri, 20 Sep 2019 04:04:06 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Fri, 20 Sep 2019 03:25:28 -0400
+ by compute4.internal (MEProxy); Fri, 20 Sep 2019 04:04:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=n1zeXnL4KonDLs7cHZ5CL8htJCsSQI+
- wsAF9aKsEjJs=; b=VSmj2+ApZ7hKETk7+uU0n29xQCn0YnHFz5WbfQCLDnODhvm
- USpG6+C5N75WT6AhKerlVHS6Lp/+q48dxlQ+7LRwv6d/9xqjhzLqFagHSxHOrngW
- PLZl7XaiOnnJXxKaGtJ49sUSC2OcpmD4VQ5PL1zsRihZxJb3Wwd0xhg9nF549dOV
- csRQbIFn8DmWMZbH48SUV3Gmb+b7+klZ09mkIXgJdXKuY9cVOjGCVPZlVDixJmiF
- QU+M5uShiGqZLJ6lG29jcuG6+G57SwEr1Zc36GHkAQdk8FY4oH/sAdqxqSHzjjIz
- 2u3Zn3T75W9yuFeUl2qpmmk9DVEsFihElStPRLA==
+ :subject:content-type; s=fm3; bh=rc7k28qh2A+sIuoKolBp9bERk2cUzwG
+ X578XC0wZ05Q=; b=TcbrymqknnJX8XinL+peAYi0Eh4M3XKPG2vQfTx0s+RL7ha
+ 9qDi3qKdIFXGKQEywgs+mLYra0/DWmpPceL+7x4DkW81ZCZtCGCpauzjC2wX02xm
+ yvjQTrBQIHXGMOJ6BwvOwI+rFSIiYDLASCrEBe2r4M1hwmR64e0JCNvjKAhQ1ghh
+ NQb3Lj6K92Dn+t/xZkeCoBCCIFMX23nLFbqVCZbHNdzcBo/3o0VowoSzt6HVhJDI
+ 0VmBLdoABwGcDxax9tcOJgXobgM6kci9siodHQGmakh+WAecX07sPDin6iJWGtZe
+ 1DmmS458+M3FdZtfSRX5SLAo9L06qhXfJsT+/GQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=n1zeXn
- L4KonDLs7cHZ5CL8htJCsSQI+wsAF9aKsEjJs=; b=j+DijtnC0vysGeWleg+7V3
- NZJ1rAViBLIFfGlRweIJvMBCB7fzrB38AHYyIsMxJr0GU0vQNXX/SYI5K0/F+9CK
- drP7C3jKlmYe7yuaUmWrQuJlUkFBK7ZT0uo3Q8NcDQvDRjByHGxupoWIMSV4dmTA
- ZIVUrEqSWBjGUOJJOgqq2C+xQPeFS8STF66BiA4vaj+kzucwUnnbU4li6Pc500F8
- a5NGprqqVMkcwKuusIt6bzMphrRQ2E+DuNSrYyS24Kbd78V4eS2InOOGhm1AQCFU
- +Rh6sGNz58IuIPtPJP4w2cLIcbN66sybltoeCeUv7OCEIISIdLNAFzhModGn0UBg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=rc7k28
+ qh2A+sIuoKolBp9bERk2cUzwGX578XC0wZ05Q=; b=m1+E+q3pEOmdaRBWANPTu7
+ Q3s/CXfMnAatD5E21SyolcJuN4DT4L7CkWeD78Vll1U0F0GWhLsJJApYQzDORjGA
+ yT4h0H/tO5sPPNB22Ini8ckQ2vc4y+gl2QHLrkA82/LDWgbXcooXfpd/anH0wix1
+ zlndgjsdHB/XQIpDOMySux8AnHnSsuhLOTzFWyVCXSuOx5NOOJrwlaUKD4YXpFu4
+ dINXbQokE1dqT3Jj2tVhv1PW/Wfabvy89YJ7MX+hcomGcwmrZ/xYY8FQ3Vl1cAbr
+ NSEDuFw/Hn0n+nBKNBOmSHMd8WO+FC8ceXXQ616//R873YMgD4OPcfETXit1e+6A
  ==
-X-ME-Sender: <xms:536EXV_UaXyisedEnfAtxsihaq1ywNjyLveQyCr1LU93YT4q4nrPCA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddugdduudelucetufdoteggodetrfdotf
+X-ME-Sender: <xms:9YeEXXMRQF2T6RenwzGiDQczvffKy-iVbZ66N-6Mji_B4dNmCT4iSg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddugdduvdejucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:536EXWdwu9SQE-MDcQicNETvtgcBz2BYRHesal20svZ85qKp23gvXw>
- <xmx:536EXdnlU0Zmqv7MHWiHIfz8xPkQ71SZbPm2Kf4kk1rNZGk-RJaTzA>
- <xmx:536EXcuNQ3C7iVf75FvlQGVl-bl1CdelkTwRevRUSvi_GcR_NBbSpg>
- <xmx:6H6EXei0oD4547suMfgQ7yNAai-3lj3I9Yi67Uc7HIyZpL7l97xk1w>
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehgihhthhhusgdrtghomhenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
+ vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:9YeEXSvJa1VitNLUrmGF6G1YZhVFPOhJyZthvrWHph6tdrYcXL4IRw>
+ <xmx:9YeEXfJ4CiFtdJB9ec12dxt5EqQc0IN94P2duOteWnJVxILLEd5U9g>
+ <xmx:9YeEXTmB1RrkAYv2qVaKDxuVFLbrSyaljfhVGnj7dA_x6xEVGO0jcQ>
+ <xmx:9oeEXYJ3z4Jpgxuv6tT04AQXKX3EBblMEgDrVOH8GdhDMMXlNSRDRA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id C340DE00A9; Fri, 20 Sep 2019 03:25:27 -0400 (EDT)
+ id 523E1E00A9; Fri, 20 Sep 2019 04:04:05 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-238-g170a812-fmstable-20190913v1
 Mime-Version: 1.0
-Message-Id: <ec008c39-5c2d-4b52-a0a5-09b6ffa9b2a8@www.fastmail.com>
-In-Reply-To: <20190919152340.23133-5-bradleyb@fuzziesquirrel.com>
+Message-Id: <7c82ee22-bb01-426b-9e8f-d1023d6495b0@www.fastmail.com>
+In-Reply-To: <20190919152340.23133-9-bradleyb@fuzziesquirrel.com>
 References: <20190919152340.23133-1-bradleyb@fuzziesquirrel.com>
- <20190919152340.23133-5-bradleyb@fuzziesquirrel.com>
-Date: Fri, 20 Sep 2019 16:55:15 +0930
+ <20190919152340.23133-9-bradleyb@fuzziesquirrel.com>
+Date: Fri, 20 Sep 2019 17:34:42 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
  "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH v2 linux dev-5.3 4/4] ARM: dts: aspeed: add Rainier system
+Subject: Re: [PATCH v2 linux dev-5.3 3/4] ARM: dts: aspeed-g6: Add lpc devices
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -96,549 +96,122 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Fri, 20 Sep 2019, at 00:53, Brad Bishop wrote:
-> Rainier is a new Power system with an AST2600.
+> Assume everything is the same as G5, except the interrupt is updated.
+
+KCS, BT, mailbox and so forth are actually on separate IRQs now.
+
+Take a look at the SDK devicetree:
+
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-dev-v5.1/arch/arm/boot/dts/aspeed-g6.dtsi
+
 > 
 > Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 > ---
-> v2:
->   - reordered rainier DT elements (alphabetized).
->   - added rainier rtc, lpc-ctl, reserved memory, mac devices
-> ---
->  arch/arm/boot/dts/Makefile                   |   3 +-
->  arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts | 485 +++++++++++++++++++
->  2 files changed, 487 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
+>  arch/arm/boot/dts/aspeed-g6.dtsi | 91 ++++++++++++++++++++++++++++++++
+>  1 file changed, 91 insertions(+)
 > 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 5af075c2f819..2f81a4be50a8 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1293,4 +1293,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->  	aspeed-bmc-opp-witherspoon.dtb \
->  	aspeed-bmc-opp-zaius.dtb \
->  	aspeed-bmc-portwell-neptune.dtb \
-> -	aspeed-bmc-quanta-q71l.dtb
-> +	aspeed-bmc-quanta-q71l.dtb \
-> +	aspeed-bmc-opp-rainier.dtb
-
-Rainier isn't an OpenPOWER Platform so we should drop the 'opp' or
-potentially substitute it with 'ibm' ("aspeed-bmc-ibm-rainier.dtb").
-
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-> new file mode 100644
-> index 000000000000..5f45b1effe4a
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-> @@ -0,0 +1,485 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +// Copyright 2019 IBM Corp.
-> +/dts-v1/;
-> +
-> +#include "aspeed-g6.dtsi"
-> +
-> +/ {
-> +	model = "Rainier";
-> +	compatible = "ibm,rainier-bmc", "aspeed,ast2600";
-> +
-> +	aliases {
-> +		serial4 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=ttyS4,115200n8";
-> +	};
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		reg = <0x80000000 0x80000000>;
-
-Do we have 2GiB? According to the schematic I have it should be 1GiB.
-My schematic could be out of date though.
-
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		flash_memory: region@98000000 {
-> +			no-map;
-> +			reg = <0x98000000 0x04000000>; /* 64M */
-
-That's a strange place to put it given we have much more memory :) We
-picked that address for the AST2500-based OPP systems because it's
-the lowest usable address below the VGA region. If we have more RAM
-then we should move it up.
-
-> +		};
-> +	};
-> +
-> +};
-> +
-> +&emmc_controller {
-> +	status = "okay";
-> +};
-> +
-> +&emmc {
-> +	status = "okay";
-> +};
-> +
-> +&fsim0 {
-> +	status = "okay";
-> +};
-> +
-> +&ibt {
-> +	status = "okay";
-> +};
-> +
-> +&i2c0 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c2 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c3 {
-> +	status = "okay";
-> +
-> +	power-supply@68 {
-> +		compatible = "ibm,cffps2";
-> +		reg = <0x68>;
-> +	};
-> +
-> +	power-supply@69 {
-> +		compatible = "ibm,cffps2";
-> +		reg = <0x69>;
-> +	};
-> +
-> +	power-supply@6a {
-> +		compatible = "ibm,cffps2";
-> +		reg = <0x6a>;
-> +	};
-> +
-> +	power-supply@6b {
-> +		compatible = "ibm,cffps2";
-> +		reg = <0x6b>;
-> +	};
-> +};
-> +
-> +&i2c4 {
-> +	status = "okay";
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	tmp275@49 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x49>;
-> +	};
-> +
-> +	tmp275@4a {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x4a>;
-> +	};
-> +};
-> +
-> +&i2c5 {
-> +	status = "okay";
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	tmp275@49 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x49>;
-> +	};
-> +};
-> +
-> +&i2c6 {
-> +	status = "okay";
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	tmp275@4a {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x4a>;
-> +	};
-> +
-> +	tmp275@4b {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x4b>;
-> +	};
-> +};
-> +
-> +&i2c7 {
-> +	status = "okay";
-> +
-> +	si7021-a20@20 {
-> +		compatible = "silabs,si7020";
-> +		reg = <0x20>;
-> +	};
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	max31785@52 {
-> +		compatible = "maxim,max31785a";
-> +		reg = <0x52>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		fan@0 {
-> +			compatible = "pmbus-fan";
-> +			reg = <0>;
-> +			tach-pulses = <2>;
-> +			maxim,fan-rotor-input = "tach";
-> +			maxim,fan-pwm-freq = <25000>;
-> +			maxim,fan-dual-tach;
-> +			maxim,fan-no-watchdog;
-> +			maxim,fan-no-fault-ramp;
-> +			maxim,fan-ramp = <2>;
-> +			maxim,fan-fault-pin-mon;
-> +		};
-> +
-> +		fan@1 {
-> +			compatible = "pmbus-fan";
-> +			reg = <1>;
-> +			tach-pulses = <2>;
-> +			maxim,fan-rotor-input = "tach";
-> +			maxim,fan-pwm-freq = <25000>;
-> +			maxim,fan-dual-tach;
-> +			maxim,fan-no-watchdog;
-> +			maxim,fan-no-fault-ramp;
-> +			maxim,fan-ramp = <2>;
-> +			maxim,fan-fault-pin-mon;
-> +		};
-> +
-> +		fan@2 {
-> +			compatible = "pmbus-fan";
-> +			reg = <2>;
-> +			tach-pulses = <2>;
-> +			maxim,fan-rotor-input = "tach";
-> +			maxim,fan-pwm-freq = <25000>;
-> +			maxim,fan-dual-tach;
-> +			maxim,fan-no-watchdog;
-> +			maxim,fan-no-fault-ramp;
-> +			maxim,fan-ramp = <2>;
-> +			maxim,fan-fault-pin-mon;
-> +		};
-> +
-> +		fan@3 {
-> +			compatible = "pmbus-fan";
-> +			reg = <3>;
-> +			tach-pulses = <2>;
-> +			maxim,fan-rotor-input = "tach";
-> +			maxim,fan-pwm-freq = <25000>;
-> +			maxim,fan-dual-tach;
-> +			maxim,fan-no-watchdog;
-> +			maxim,fan-no-fault-ramp;
-> +			maxim,fan-ramp = <2>;
-> +			maxim,fan-fault-pin-mon;
-> +		};
-> +	};
-> +
-> +	pca0: pca9552@60 {
-> +		compatible = "nxp,pca9552";
-> +		reg = <0x60>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		gpio-controller;
-> +		#gpio-cells = <2>;
-> +
-> +		gpio@0 {
-> +			reg = <0>;
-> +		};
-> +
-> +		gpio@1 {
-> +			reg = <1>;
-> +		};
-> +
-> +		gpio@2 {
-> +			reg = <2>;
-> +		};
-> +
-> +		gpio@3 {
-> +			reg = <3>;
-> +		};
-> +
-> +		gpio@4 {
-> +			reg = <4>;
-> +		};
-> +
-> +		gpio@5 {
-> +			reg = <5>;
-> +		};
-> +
-> +		gpio@6 {
-> +			reg = <6>;
-> +		};
-> +
-> +		gpio@7 {
-> +			reg = <7>;
-> +		};
-> +
-> +		gpio@8 {
-> +			reg = <8>;
-> +		};
-> +
-> +		gpio@9 {
-> +			reg = <9>;
-> +		};
-> +
-> +		gpio@10 {
-> +			reg = <10>;
-> +		};
-> +
-> +		gpio@11 {
-> +			reg = <11>;
-> +		};
-> +
-> +		gpio@12 {
-> +			reg = <12>;
-> +		};
-> +
-> +		gpio@13 {
-> +			reg = <13>;
-> +		};
-> +
-> +		gpio@14 {
-> +			reg = <14>;
-> +		};
-> +
-> +		gpio@15 {
-> +			reg = <15>;
-> +		};
-> +	};
-> +
-> +	dps: dps310@76 {
-> +		compatible = "infineon,dps310";
-> +		reg = <0x76>;
-> +		#io-channel-cells = <0>;
-> +	};
-> +};
-> +
-> +&i2c8 {
-> +	status = "okay";
-> +
-> +	ucd90320@b {
-> +		compatible = "ti,ucd90160";
-> +		reg = <0x0b>;
-> +	};
-> +
-> +	ucd90320@c {
-> +		compatible = "ti,ucd90160";
-> +		reg = <0x0c>;
-> +	};
-> +
-> +	ucd90320@11 {
-> +		compatible = "ti,ucd90160";
-> +		reg = <0x11>;
-> +	};
-> +
-> +	rtc@32 {
-> +		compatible = "epson,rx8900";
-> +		reg = <0x32>;
-> +	};
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	tmp275@4a {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x4a>;
-> +	};
-> +};
-> +
-> +&i2c9 {
-> +	status = "okay";
-> +
-> +	ir35221@42 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x42>;
-> +	};
-> +
-> +	ir35221@43 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x43>;
-> +	};
-> +
-> +	ir35221@44 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x44>;
-> +	};
-> +
-> +	tmp423a@4c {
-> +		compatible = "ti,tmp423";
-> +		reg = <0x4c>;
-> +	};
-> +
-> +	tmp423b@4d {
-> +		compatible = "ti,tmp423";
-> +		reg = <0x4d>;
-> +	};
-> +
-> +	ir35221@72 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x72>;
-> +	};
-> +
-> +	ir35221@73 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x73>;
-> +	};
-> +
-> +	ir35221@74 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x74>;
-> +	};
-> +};
-> +
-> +&i2c10 {
-> +	status = "okay";
-> +
-> +	ir35221@42 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x42>;
-> +	};
-> +
-> +	ir35221@43 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x43>;
-> +	};
-> +
-> +	ir35221@44 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x44>;
-> +	};
-> +
-> +	tmp423a@4c {
-> +		compatible = "ti,tmp423";
-> +		reg = <0x4c>;
-> +	};
-> +
-> +	tmp423b@4d {
-> +		compatible = "ti,tmp423";
-> +		reg = <0x4d>;
-> +	};
-> +
-> +	ir35221@72 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x72>;
-> +	};
-> +
-> +	ir35221@73 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x73>;
-> +	};
-> +
-> +	ir35221@74 {
-> +		compatible = "infineon,ir35221";
-> +		reg = <0x74>;
-> +	};
-> +};
-> +
-> +&i2c11 {
-> +	status = "okay";
-> +
-> +	tmp275@48 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x48>;
-> +	};
-> +
-> +	tmp275@49 {
-> +		compatible = "ti,tmp275";
-> +		reg = <0x49>;
-> +	};
-> +};
-> +
-> +&i2c12 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c13 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c14 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c15 {
-> +	status = "okay";
-> +};
-
-It might be worth splitting out the i2c bits as the support isn't yet
-upstream.
-
-> +
-> +&lpc_ctrl {
-> +	status = "okay";
-> +	memory-region = <&flash_memory>;
-> +	flash = <&spi1>;
-
-Drop the flash property as we won't be using that.
-
-> +};
-> +
-> +&mac0 {
-> +	status = "okay";
-> +};
-> +
-> +&mac1 {
-> +	status = "okay";
-> +};
-> +
-> +&mac2 {
-> +	status = "okay";
-> +};
-> +
-> +&mac3 {
-> +	status = "okay";
-> +};
-
-Only MACs 3 and 4 are connected. Both should also have use-ncsi and request
-the RMII pinmux.
-
-> +
-> +&sdc {
-> +	status = "okay";
-> +};
-> +
-> +&sdhci0 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_sd1_default>;
-> +};
-> +
-> +&sdhci1 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_sd2_default>;
-> +};
-
-We're only using the eMMC controller (i.e. neither of the two SD slots),
-so we shouldn't be enabling these.
-
-Andrew
+> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+> index 72038c16f541..b4991cbe1f36 100644
+> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+> @@ -249,6 +249,97 @@
+>  				status = "disabled";
+>  			};
+>  
+> +			lpc: lpc@1e789000 {
+> +				compatible = "aspeed,ast2600-lpc", "simple-mfd";
+> +				reg = <0x1e789000 0x1000>;
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <1>;
+> +				ranges = <0x0 0x1e789000 0x1000>;
+> +
+> +				lpc_bmc: lpc-bmc@0 {
+> +					compatible = "aspeed,ast2600-lpc-bmc", "simple-mfd", "syscon";
+> +					reg = <0x0 0x80>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x0 0x80>;
+> +
+> +					kcs1: kcs1@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <1>;
+> +						status = "disabled";
+> +					};
+> +					kcs2: kcs2@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <2>;
+> +						status = "disabled";
+> +					};
+> +					kcs3: kcs3@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <3>;
+> +						status = "disabled";
+> +					};
+> +				};
+> +
+> +				lpc_host: lpc-host@80 {
+> +					compatible = "aspeed,ast2600-lpc-host", "simple-mfd", "syscon";
+> +					reg = <0x80 0x1e0>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x80 0x1e0>;
+> +
+> +					kcs4: kcs4@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <4>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lpc_ctrl: lpc-ctrl@0 {
+> +						compatible = "aspeed,ast2600-lpc-ctrl";
+> +						reg = <0x0 0x80>;
+> +						clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lpc_snoop: lpc-snoop@0 {
+> +						compatible = "aspeed,ast2600-lpc-snoop";
+> +						reg = <0x0 0x80>;
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lhc: lhc@20 {
+> +						compatible = "aspeed,ast2600-lhc";
+> +						reg = <0x20 0x24 0x48 0x8>;
+> +					};
+> +
+> +					lpc_reset: reset-controller@18 {
+> +						compatible = "aspeed,ast2600-lpc-reset";
+> +						reg = <0x18 0x4>;
+> +						#reset-cells = <1>;
+> +					};
+> +
+> +					ibt: ibt@c0 {
+> +						compatible = "aspeed,ast2600-ibt-bmc";
+> +						reg = <0xc0 0x18>;
+> +						interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +
+> +					sio_regs: regs {
+> +						compatible = "aspeed,bmc-misc";
+> +					};
+> +				};
+> +			};
+> +
+>  			sdc: sdc@1e740000 {
+>  				compatible = "aspeed,ast2600-sd-controller";
+>  				reg = <0x1e740000 0x100>;
+> -- 
+> 2.21.0
+>
