@@ -2,59 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 780DDB9BB4
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 02:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DDB3B9D7B
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 12:57:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46Zs8q6kzqzF4M4
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 10:36:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46b6wN4wg9zDqSH
+	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 20:56:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=aspeedtech.com
- (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com;
- envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46Zs826ccbzF1fH
- for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 10:36:01 +1000 (AEST)
-Received: from mail.aspeedtech.com (twmbx02.aspeed.com [192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id x8L0IwO0044229;
- Sat, 21 Sep 2019 08:18:58 +0800 (GMT-8)
- (envelope-from ryan_chen@aspeedtech.com)
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.620.29; Sat, 21 Sep
- 2019 08:34:13 +0800
-Received: from TWMBX02.aspeed.com ([fe80::997d:c0a7:f01f:e1a7]) by
- TWMBX02.aspeed.com ([fe80::997d:c0a7:f01f:e1a7%12]) with mapi id
- 15.00.0620.020; Sat, 21 Sep 2019 08:34:12 +0800
-From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: James Feist <james.feist@linux.intel.com>, Milton Miller II
- <miltonm@us.ibm.com>
-Subject: RE: phosphor-isolation
-Thread-Topic: phosphor-isolation
-Thread-Index: AQHVbxBlbv6RMAwo/kWP8E+fHz4LJaczaAMAgADLXgCAAAbyAIAAIIYAgADt9vA=
-Date: Sat, 21 Sep 2019 00:34:11 +0000
-Message-ID: <09a8b629e6dc4ee1a0056d345ad39d5a@TWMBX02.aspeed.com>
-References: <4ae96d16-addd-2ee9-0f96-867116fba5c6@linux.intel.com>
- <c558c87c-7929-b9d2-8970-531f39979f38@linux.intel.com>
- <1bbdbc81-69a5-484e-9ee8-ba62a710e8fe@www.fastmail.com>
- <OFB4439398.C2024144-ON0025847B.0059AC2A-0025847B.0059BE4A@notes.na.collabserv.com>
- <dd3f64aa-e053-6c33-bf3e-fa6031eafb57@linux.intel.com>
-In-Reply-To: <dd3f64aa-e053-6c33-bf3e-fa6031eafb57@linux.intel.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.168.0.81]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46b6vj0KFPzDqSF
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 20:56:15 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 21 Sep 2019 03:56:09 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,532,1559545200"; 
+ d="scan'208,217";a="339216625"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.255.28.44])
+ by orsmga004.jf.intel.com with ESMTP; 21 Sep 2019 03:56:09 -0700
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: <alpankum@in.ibm.com>
+Subject: HostWatchdogTimer related changes
+Date: Sat, 21 Sep 2019 18:56:09 +0800
+Message-ID: <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
 MIME-Version: 1.0
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com x8L0IwO0044229
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_000_0001_01D570AE.3BC14540"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdVwat2tcVuqMdFgRiSRdAJEkXhtkQ==
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZTUzZGNhZjQtZDVlMS00OGRlLTk2NTMtMDNjOGIxM2YxNWFkIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUXVjTjZcL2s4WTNReVBaamZkVFJlSW9QcFJieUVHUkQzUkpvbmZmeFhCUGZKVXJNU210d0l2Z2ZnVkZjWkVYbzUifQ==
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,56 +58,128 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: 'OpenBMC Maillist' <openbmc@lists.ozlabs.org>, "Tanous,
+ Ed" <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8gSmFtZXMsDQoJVGhpcyBwYXRjaCBpcyBqdXN0IGVuYWJsZSBMUEMgZGVjb2RlIGZvciAw
-eDJlLzB4NGUuIGFsc28gbm90IGVmZmVjdCBLQ1MuIA0KCUNvdWxkIHlvdSBjaGVjayB0aGUgU0NV
-MGNbOF0gZGlzYWJsZSBvciBub3Q/DQpSeWFuDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
-DQpGcm9tOiBKYW1lcyBGZWlzdCBbbWFpbHRvOmphbWVzLmZlaXN0QGxpbnV4LmludGVsLmNvbV0g
-DQpTZW50OiBTYXR1cmRheSwgU2VwdGVtYmVyIDIxLCAyMDE5IDI6MTcgQU0NClRvOiBNaWx0b24g
-TWlsbGVyIElJIDxtaWx0b25tQHVzLmlibS5jb20+DQpDYzogQW5kcmV3IEplZmZlcnkgPGFuZHJl
-d0Bhai5pZC5hdT47IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47
-IFJ5YW4gQ2hlbiA8cnlhbl9jaGVuQGFzcGVlZHRlY2guY29tPg0KU3ViamVjdDogUmU6IHBob3Nw
-aG9yLWlzb2xhdGlvbg0KDQpPbiA5LzIwLzE5IDk6MjAgQU0sIE1pbHRvbiBNaWxsZXIgSUkgd3Jv
-dGU6DQo+IE9uIFNlcHRlbWJlciAyMCwgMjAxOSwgYXJvdW5kIDEwOjU2QU0gaW4gc29tZSB0aW1l
-em9uZSwgSmFtZXMgRmVpc3Qgd3JvdGU6DQo+PiBPbiA5LzE5LzE5IDg6NDcgUE0sIEFuZHJldyBK
-ZWZmZXJ5IHdyb3RlOg0KPj4+IE9uIEZyaSwgMjAgU2VwIDIwMTksIGF0IDAzOjAzLCBKYW1lcyBG
-ZWlzdCB3cm90ZToNCj4+Pj4gSSBlbmFibGVkIHBob3NwaG9yLWlzb2xhdGlvbiBvbiBteSBzeXN0
-ZW0gYW5kIG5vdGljZWQgdGhhdCBrY3Mgbm8gDQo+Pj4+IGxvbmdlciB3b3JrZWQgYWZ0ZXJ3YXJk
-cy4gQ29tbWVudGluZyBvdXQgdGhpcyBzZWN0aW9uOg0KPj4+Pg0KPj4+Pg0KPiANCj4+Pj4NCj4+
-Pj4gKwkvKiBpTFBDMkFIQiAqLw0KPj4+PiArCXZhbCA9IHJlYWRsKEFTVF9TQ1VfQkFTRSArIEFT
-VF9TQ1VfSFdfU1RSQVAxKTsNCj4+Pj4gKwl2YWwgfD0gU0NVX0hXX1NUUkFQX0xQQ19ERUNfU1VQ
-RVJfSU87DQo+Pj4+ICsJd3JpdGVsKHZhbCwgQVNUX1NDVV9CQVNFICsgQVNUX1NDVV9IV19TVFJB
-UDEpOw0KPj4+Pg0KPj4+Pg0KPj4+PiBTZWVtcyB0byBtYWtlIEtDUyB3b3JrIGFnYWluLg0KPiAN
-Cj4gVGhhdCBjb25maWd1cmF0aW9uIGlzIGRpc2FibGluZyBzdXBlcmlvIGRlY29kaW5nLCB3aGlj
-aCBtZWFucyB0aGUgaG9zdCANCj4gd2lsbCBubyBsb25nZXIgYmUgYWJsZSB0byBjb25maWd1cmUg
-dGhlIHN1cGVyaW8gaGFyZHdhcmUgb24gdGhlIExQQyBidXMuDQo+IA0KPj4+DQo+Pj4gVGhhdCBp
-cyBhbiB1bmV4cGVjdGVkIHJlc3VsdC4gSGF2ZSB5b3UgYXNrZWQgQVNQRUVEIGFib3V0IGl0PyBJ
-J3ZlIA0KPj4+IGFkZGVkIFJ5YW4gdG8gQ2MuIEkgbXVzdCBhZG1pdCBJIGRpZG4ndCB0ZXN0IHRo
-ZSBwYXRjaCB3aXRoIHN5c3RlbXMgDQo+Pj4gdGhhdCB1c2UgS0NTIGJlY2F1c2UgT3BlblBPV0VS
-IGV4Y2x1c2l2ZWx5IHVzZXMgQlQgZm9yIElQTUkgKHRob3VnaCANCj4+PiB3ZSdyZSBzdGFydGlu
-ZyB0byBleHBsb2l0IHRoZSBLQ1MgaW50ZXJmYWNlcyBmb3IgYW4gTFBDIE1DVFAgDQo+Pj4gYmlu
-ZGluZykuDQo+Pj4NCj4+PiBIYXZpbmcgc2FpZCB0aGF0LCB0aGUgc3lzdGVtcyB0aGF0IHdlJ3Jl
-IHRlc3Rpbmcgb3VyIExQQyBNQ1RQIA0KPj4+IGJpbmRpbmcgb24gd291bGQgaGF2ZSB0aGlzIHBh
-dGNoIGFwcGxpZWQsIHNvIHByZXN1bWFibHkgd2UncmUgbm90IA0KPj4+IHNlZWluZyB0aGUgc2Ft
-ZSBlZmZlY3QgdGhlcmUuIFRoZXkncmUgMjUwMC1iYXNlZCBzeXN0ZW1zLCBpcyB0aGF0IA0KPj4+
-IHdoYXQgeW91J3JlIHRlc3Rpbmcgd2l0aD8NCj4+DQo+PiBZZXMgSSBhbS4NCj4+DQo+IA0KPiBB
-cyBhbiBvdXRzaWRlIG9ic2VydmVyIHdpdGhvdXQgaGFyZHdhcmUsIGNhbiB5b3UgY2hlY2s6DQo+
-IA0KPiAoMSkgRGlkIHlvdSBjaGVjayBmcm9tIHRoZSBPUyBvciBqdXN0IGZyb20gYSBCSU9TIGlu
-dmVudG9yeT8NCg0KQXR0ZW1wdGluZyB0byBzZW5kIGlwbWkgY29tbWFuZHMgZnJvbSB1ZWZpL2xp
-bnV4IHN0b3BwZWQgd29ya2luZy4gTGludXggZHJpdmVyIG9uIGhvc3QgcmVwb3J0ZWQgaXNzdWVz
-IGNvbW11bmljYXRpbmcgdG8gYm1jLg0KDQo+IA0KPiAoMikgSXMgdGhlcmUgY29kZSB0byBlbmFi
-bGUgdGhlIEtDUyBwZXJpcGhlcmFsIGZyb20gdGhlIGJtYw0KDQpUaGVyZSBpcyBhIGRyaXZlciBh
-bmQga2NzYnJpZGdlZC4NCj4gDQo+ICgzKSBXaWxsIHRoZSBob3N0IHRyeSB0byB1c2UgdGhlIEtD
-UyBldmVuIHRob3VnaCBpdCBjYW4NCj4gICAgICBub3QgZmluZCB0aGUgc3VwZXJpbyB0byBjaG9v
-c2UgdGhlIHBvcnQgYW5kIGludGVycnVwdD8NCg0KWWVzLg0KDQo+IA0KPiANCj4gDQo+IA0KPiAN
-Cj4+Pj4NCj4+Pj4gRG8gd2UgbmVlZCB0aGlzIHBhcnQgc2V0PyBJZiBzbywgc2hvdWxkIHdlIGNy
-ZWF0ZSBhIA0KPj4+PiBwaG9zcGhvci1pc29sYXRpb24ta2NzIGFuZCBwaG9zcGhvci1pc29sYXRp
-b24tYnQ/DQo+Pj4NCj4+PiBJIGhvcGUgbm90LCBnaXZlbiB0aGF0IGxlYXZpbmcgdGhlIFN1cGVy
-SU8gZGVjb2RpbmcgZW5hYmxlIGFsbG93cw0KPj4gdGhlDQo+Pj4gaG9zdCB0byAoc2xvd2x5KSBz
-Y3JhcGUgQk1DIG1lbW9yeSAob3IgaWYgaUxQQzJBSEIgd3JpdGVzIGFyZSANCj4+PiBhbGxvd2Vk
-LCBvcGVuIGZhc3RlciBiYWNrZG9vcnMpLiBXZSBzaG91bGQgcm9vdC1jYXVzZSB0aGUgaXNzdWUg
-DQo+Pj4gYmVmb3JlIGV4cGxvcmluZyB0aGlzIHBhdGguDQo+Pj4NCj4+PiBBbmRyZXcNCj4gDQo=
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0001_01D570AE.3BC14540
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+ 
+
+I noticed there is a code review submitted my you:
+
+https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/       
+
+ 
+
+I noticed there is no any update for several days. I am working on the
+related feature too:
+
+https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/
+
+ 
+
+Could you please check on them?
+
+ 
+
+If there is any comments/questions, just let me know.
+
+ 
+
+Thanks,
+
+Yong
+
+ 
+
+
+------=_NextPart_000_0001_01D570AE.3BC14540
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Hi,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I noticed =
+there is a code review submitted my you:<o:p></o:p></p><p =
+class=3DMsoNormal><a =
+href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/">h=
+ttps://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/</a>&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I noticed =
+there is no any update for several days. I am working on the related =
+feature too:<o:p></o:p></p><p class=3DMsoNormal><a =
+href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/">h=
+ttps://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/</a><o:p></o=
+:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Could you please check on them?<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>If there is =
+any comments/questions, just let me know.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
+class=3DMsoNormal>Yong<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_000_0001_01D570AE.3BC14540--
+
