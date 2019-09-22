@@ -2,51 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DDB3B9D7B
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 12:57:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EA3CBA1BE
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 12:14:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46b6wN4wg9zDqSH
-	for <lists+openbmc@lfdr.de>; Sat, 21 Sep 2019 20:56:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46bjwj4BHnzDqQh
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 20:14:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ spf=pass (mailfrom) smtp.mailfrom=qq.com
+ (client-ip=183.3.255.84; helo=qq.com; envelope-from=1181052146@qq.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.b="LrVBFykP"; 
+ dkim-atps=neutral
+X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
+ Sun, 22 Sep 2019 20:13:38 AEST
+Received: from qq.com (smtpbg449.qq.com [183.3.255.84])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46b6vj0KFPzDqSF
- for <openbmc@lists.ozlabs.org>; Sat, 21 Sep 2019 20:56:15 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 21 Sep 2019 03:56:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,532,1559545200"; 
- d="scan'208,217";a="339216625"
-Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
- ([10.255.28.44])
- by orsmga004.jf.intel.com with ESMTP; 21 Sep 2019 03:56:09 -0700
-From: "Yong Li" <yong.b.li@linux.intel.com>
-To: <alpankum@in.ibm.com>
-Subject: HostWatchdogTimer related changes
-Date: Sat, 21 Sep 2019 18:56:09 +0800
-Message-ID: <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46bjw20mkhzDqPF
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 20:13:37 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1569147119; bh=rsAvXfsHTZ7qGc2viuAJHLvqQYMk4gjE/cOdUeEdBJY=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=LrVBFykPMQSXp8jvj0UITpctFehQqvlv1PCAkKEKkOltaALvo6GyN0+S2ZlxdPhsV
+ ZskEYxqL/3/IeGewXs/D+zAgJmnegRocRpIDgUG3UhfI5qXRyjw2pEXDdAnjrt1zH8
+ bR3wsmCbK9TTfZ6PWOaHWwLcGm26ionlKezf4VYc=
+X-QQ-FEAT: u/EYRCx6PxgYAP5u0OBqINOcgmp8v+yRseFwBH0tUnLDdsIxsYrNt8blvVb1n
+ t9ADlp7sX57kzt+XyxFoNWyqRT21aU2NQZi4JApR9gavX3KRBZ2T1HtSF/qkkGdbtXxOPsF
+ LjcpYmCNoPJ4lKfcdOIOhBvP93ZOnPCHzGrPO8qbPKnGDRqOrQ/05lptn+P5REagjp0xoPX
+ Ci3Ra01dgXEkb2+7sZCwDgn4RFx0KCCYDfK7myy7q2kt4lAe/pXlw3TS9I2VAstlOkva991
+ ibBAivpuhn6fEJYcRuB4mjKeU4DV2QTIm3AA==
+X-QQ-SSF: 00000000000000F000000000000000S
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 106.121.169.154
+X-QQ-STYLE: 
+X-QQ-mid: webmail166t1569147118t5946349
+From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
+To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
+Subject: about openbmc IRC
+Mime-Version: 1.0
 Content-Type: multipart/alternative;
- boundary="----=_NextPart_000_0001_01D570AE.3BC14540"
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdVwat2tcVuqMdFgRiSRdAJEkXhtkQ==
-Content-Language: en-us
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZTUzZGNhZjQtZDVlMS00OGRlLTk2NTMtMDNjOGIxM2YxNWFkIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUXVjTjZcL2s4WTNReVBaamZkVFJlSW9QcFJieUVHUkQzUkpvbmZmeFhCUGZKVXJNU210d0l2Z2ZnVkZjWkVYbzUifQ==
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: no-action
+ boundary="----=_NextPart_5D8748EE_0A572E98_58CB7812"
+Content-Transfer-Encoding: 8Bit
+Date: Sun, 22 Sep 2019 18:11:58 +0800
+X-Priority: 3
+Message-ID: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Sun, 22 Sep 2019 18:11:59 +0800 (CST)
+Feedback-ID: webmail:qq.com:bgforeign:bgforeign2
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,128 +71,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: 'OpenBMC Maillist' <openbmc@lists.ozlabs.org>, "Tanous,
- Ed" <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multipart message in MIME format.
+This is a multi-part message in MIME format.
 
-------=_NextPart_000_0001_01D570AE.3BC14540
+------=_NextPart_5D8748EE_0A572E98_58CB7812
 Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-Hi,
+RGVhcjoNCg0KDQppIGhhdmUgcmVnaXN0ZSBvbiBSaW90OiAjb3BlbmJtYzptYXRyaXgub3Jn
+DQphbmQgaSB3YW50IHRvIGpvaW4gb3BlbmJtYywgYnV0IGV2ZW55IGkgam9pbiwgaSB3YXMg
+a2ljayBvZmYgYnkgQGFwcHNlcnZpY2UtaXJjOm1hdHJpeC5vcmcNCndpdGggdGhlIGVycm9y
+Og0KDQpZb3Ugd2VyZSBraWNrZWQgZnJvbSBvcGVuYm1jIGJ5IEBhcHBzZXJ2aWNlLWlyYzpt
+YXRyaXgub3JnDQoNClJlYXNvbjogSVJDIGVycm9yIG9uICNvcGVuYm1jOiBlcnJfbmVlZHJl
+Z2dlZG5pY2sNCg0KDQoNCmkgaGF2ZSByZWdpc3RlciBpbiBSaW90OiAjb3BlbmJtYzptYXRy
+aXgub3JnIGFzIG5pY2sgbmFtZSB6aHVhbnllc2hpdGkuDQpob3cgY2FuIGkgam9pbiBvcGVu
+Ym1jPw0KDQoNCkJlc3QgUmVnYXJkcyE=
 
- 
-
-I noticed there is a code review submitted my you:
-
-https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/       
-
- 
-
-I noticed there is no any update for several days. I am working on the
-related feature too:
-
-https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/
-
- 
-
-Could you please check on them?
-
- 
-
-If there is any comments/questions, just let me know.
-
- 
-
-Thanks,
-
-Yong
-
- 
-
-
-------=_NextPart_000_0001_01D570AE.3BC14540
+------=_NextPart_5D8748EE_0A572E98_58CB7812
 Content-Type: text/html;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:SimSun;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.25in 1.0in 1.25in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
-link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
-class=3DMsoNormal>Hi,<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I noticed =
-there is a code review submitted my you:<o:p></o:p></p><p =
-class=3DMsoNormal><a =
-href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/">h=
-ttps://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/</a>&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>I noticed =
-there is no any update for several days. I am working on the related =
-feature too:<o:p></o:p></p><p class=3DMsoNormal><a =
-href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/">h=
-ttps://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/</a><o:p></o=
-:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>Could you please check on them?<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>If there is =
-any comments/questions, just let me know.<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
-class=3DMsoNormal>Yong<o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
-------=_NextPart_000_0001_01D570AE.3BC14540--
+PGRpdj5EZWFyOjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+aSBoYXZlIHJlZ2lzdGUgb24m
+bmJzcDs8c3BhbiBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6
+IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVv
+dDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVt
+b2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkg
+U3ltYm9sJnF1b3Q7OyBmb250LXNpemU6IDE2cHg7Ij5SaW90Ojwvc3Bhbj48c3BhbiBzdHls
+ZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0s
+IEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwg
+QXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVv
+dDtTZWdvZSBVSSBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgU3ltYm9sJnF1b3Q7OyBm
+b250LXNpemU6IDE2cHg7Ij4mbmJzcDs8L3NwYW4+PGEgaHJlZj0iaHR0cHM6Ly9yaW90Lmlt
+L2FwcC8jL3Jvb20vI29wZW5ibWM6bWF0cml4Lm9yZyIgcmVsPSJub2ZvbGxvdyIgc3R5bGU9
+ImZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90
+O1NlZ29lIFVJJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtB
+cHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDssICZx
+dW90O1NlZ29lIFVJIFN5bWJvbCZxdW90OzsgZm9udC1zaXplOiAxNnB4OyBiYWNrZ3JvdW5k
+LWNvbG9yOiBpbml0aWFsOyBib3gtc2l6aW5nOiBib3JkZXItYm94OyBjb2xvcjogcmdiKDMs
+IDEwMiwgMjE0KTsgdGV4dC1kZWNvcmF0aW9uLWxpbmU6IG5vbmU7Ij4jb3BlbmJtYzptYXRy
+aXgub3JnPC9hPjwvZGl2PjxkaXY+YW5kIGkgd2FudCB0byBqb2luIG9wZW5ibWMsIGJ1dCBl
+dmVueSBpIGpvaW4sIGkgd2FzIGtpY2sgb2ZmIGJ5Jm5ic3A7PHNwYW4gc3R5bGU9ImJhY2tn
+cm91bmQtY29sb3I6IHJnYigyNDIsIDI0NSwgMjQ4KTsgY29sb3I6IHJnYig0NiwgNDcsIDUw
+KTsgZm9udC1mYW1pbHk6IE51bml0bywgVHdlbW9qaSwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1v
+amkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7LCAmcXVvdDtOb3RvIENvbG9y
+IEVtb2ppJnF1b3Q7LCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6
+IDE4cHg7Ij5AYXBwc2VydmljZS1pcmM6bWF0cml4Lm9yZzwvc3Bhbj48L2Rpdj48ZGl2Pndp
+dGggdGhlIGVycm9yOjwvZGl2PjxkaXY+PGgzIHN0eWxlPSJmb250LXNpemU6IDE4cHg7IG1h
+cmdpbjogNHB4OyBjb2xvcjogcmdiKDQ2LCA0NywgNTApOyBmb250LWZhbWlseTogTnVuaXRv
+LCBUd2Vtb2ppLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2Ug
+VUkgRW1vamkmcXVvdDssICZxdW90O05vdG8gQ29sb3IgRW1vamkmcXVvdDssIEFyaWFsLCBI
+ZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDIsIDI0NSwg
+MjQ4KTsiPllvdSB3ZXJlIGtpY2tlZCBmcm9tIG9wZW5ibWMgYnkgQGFwcHNlcnZpY2UtaXJj
+Om1hdHJpeC5vcmc8L2gzPjxwIHN0eWxlPSJvdmVyZmxvdy13cmFwOiBicmVhay13b3JkOyBt
+YXJnaW46IDRweDsgY29sb3I6IHJnYig0NiwgNDcsIDUwKTsgZm9udC1mYW1pbHk6IE51bml0
+bywgVHdlbW9qaSwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29l
+IFVJIEVtb2ppJnF1b3Q7LCAmcXVvdDtOb3RvIENvbG9yIEVtb2ppJnF1b3Q7LCBBcmlhbCwg
+SGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE1cHg7IGJhY2tncm91bmQtY29s
+b3I6IHJnYigyNDIsIDI0NSwgMjQ4KTsiPlJlYXNvbjogSVJDIGVycm9yIG9uICNvcGVuYm1j
+OiBlcnJfbmVlZHJlZ2dlZG5pY2s8L3A+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5pIGhh
+dmUgcmVnaXN0ZXIgaW4mbmJzcDs8c3BhbiBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2
+KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1
+b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90
+O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90Oywg
+JnF1b3Q7U2Vnb2UgVUkgU3ltYm9sJnF1b3Q7OyBmb250LXNpemU6IDE2cHg7Ij5SaW90OiZu
+YnNwOzwvc3Bhbj48YSBocmVmPSJodHRwczovL3Jpb3QuaW0vYXBwLyMvcm9vbS8jb3BlbmJt
+YzptYXRyaXgub3JnIiByZWw9Im5vZm9sbG93IiBzdHlsZT0iYm94LXNpemluZzogYm9yZGVy
+LWJveDsgY29sb3I6IHJnYigzLCAxMDIsIDIxNCk7IHRleHQtZGVjb3JhdGlvbi1saW5lOiBu
+b25lOyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAm
+cXVvdDtTZWdvZSBVSSZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgJnF1
+b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7
+LCAmcXVvdDtTZWdvZSBVSSBTeW1ib2wmcXVvdDs7IGZvbnQtc2l6ZTogMTZweDsiPiNvcGVu
+Ym1jOm1hdHJpeC5vcmc8L2E+Jm5ic3A7YXMgbmljayBuYW1lIHpodWFueWVzaGl0aS48L2Rp
+dj48ZGl2PmhvdyBjYW4gaSBqb2luIG9wZW5ibWM/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
+dj5CZXN0IFJlZ2FyZHMhPC9kaXY+PGRpdj48YnI+PC9kaXY+
+
+------=_NextPart_5D8748EE_0A572E98_58CB7812--
+
+
 
