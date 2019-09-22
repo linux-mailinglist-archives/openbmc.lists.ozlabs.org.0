@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5535BA2B1
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08DECBA2B2
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:41:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46bn9H1mXQzDqCw
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:40:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46bnBj3j0lzDq9s
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:41:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,42 +16,42 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="eq8/OFu8"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="D3XVQMlj"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="SyOWOe1M"; dkim-atps=neutral
+ header.b="BrgyWpFN"; dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46bn4q0SF1zDqP1
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:36:26 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46bn4v1Ws8zDqLh
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:36:31 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 7597C20FE3;
- Sun, 22 Sep 2019 08:36:24 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id A181521240;
+ Sun, 22 Sep 2019 08:36:28 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Sun, 22 Sep 2019 08:36:24 -0400
+ by compute4.internal (MEProxy); Sun, 22 Sep 2019 08:36:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=4L2uciMlwPKw6
- NVgmSskfFKGJ+TIqBRdUNzu7aGn5q0=; b=eq8/OFu80gxEylhTqToD6moii/vUq
- ZKeq+hnrb4HCXsi8RqR0206l0lG27Eb//UikoSBg0YcfNlZEbaaMGDRybs9bjwDq
- 8OybWgrZAxLi+JTOoPBXPDzhepldSKaBoKE+/xIX7iP/4EB80q5FZhmnbayCW7FN
- 6SPPaQMIay8UytHfUB/pXUliFkf6OMyRheXrIvbBYkCfny+1qbWIejr6cCoj0lPj
- De//rANEPT3aRJ7d2dSdPNjjtOSUXQnEhRvhw4CNOblial++KGH7xObtdNZbPA4R
- g79WXCt+nXGBPOvi7mKCQd70orDN696XQgCTprbC8aNebhWw1gMQxtTPA==
+ :mime-version:content-transfer-encoding; s=fm3; bh=X0tNDnU/r3W54
+ sgxPYsd0sE8L1c+6bS2X6q2oGWr2FY=; b=D3XVQMljrTuM/Fjefw7WJnW+elGzm
+ oa8ZewGUP5Mw7nIWfkaPn917wR4Q8TryvfYpPYaNCcjhnqebW1RWOrNV+higjgIR
+ qGvxWKkLc8E7VYGToMuSzC1WfQoHYVNRthwmn/YNrsDxgrluaAALmboea9cxTlGL
+ M+8qespRB7jhQ9v09AD1wxq3tm/PytnC5viH99xkUSG7p+VzYlRDoirdvOZZ85f9
+ L5Ne7zCZqdbJuIKwB2TsBPivJnDHnclz07jCaVmi2iaGUcUb0rr9jw7Nq8CRd7iH
+ BjwUyNpiAbPdYaqLB6T5E4DusNn95MTy/kwWpER5GotRp0izVvmsK4ZyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=4L2uciMlwPKw6NVgmSskfFKGJ+TIqBRdUNzu7aGn5q0=; b=SyOWOe1M
- NAjkQsPMU+4moN/G4eBj0d6+Loh/U6zTBEyeERg/URZ+xQkObUQwMSzcjc4ZZRQl
- Oy0+pIgHjv0hJxSqlZ+naOn8RAMKjO6lQ1Va27jMKFDhp/aFan45RsUkv1k6TzJf
- 8W0Imu5zlPQAbSm1JooZqNGXARma+UkhylqSO2wKwuWZ0AWQdW7jK0XrWzmd2DWq
- lvbPTPhiS60av1WLkA2YDpeeY20CgpS4xDamj6ZCddacC2QZML0GUrMuzSCr5D/j
- erdMN+DfNiqN4H/Gjof4EBDCBc6+gY3jGcycsx6QP94Je6sCaCRRbT+WqkRVRIcP
- RpqunDqXwrXzTg==
-X-ME-Sender: <xms:yGqHXbtHKoBlyNC4ZY5BFeqlQ-RHuWQn6J4w37SqrVmogLSeH7KeJg>
+ fm3; bh=X0tNDnU/r3W54sgxPYsd0sE8L1c+6bS2X6q2oGWr2FY=; b=BrgyWpFN
+ sQj+25LW3JUFIJ4sZNq7q/YmTQg8rWzAR+/hjCjmswqFqEQgna3ogmTs1zyYElH3
+ mHoGgJNRAURUJPostC6prwbhudvYMKuNmUYUiAJy1HCgfiutHNITugWSRfPj5HhO
+ 1hALQoYDezTpGFTzDeqP86wzE6djqe9a/9Hzkzd2zsEQg6f9s73FolEkh69uZEMS
+ +XBWp7jWKTxOjYY4Hp16GMKAo1DrgMlvZF7y5h7JH2TRLkuDT+BwJi8CYi+mJ65O
+ hNiyqE3jIyQ+9sJkASi+68wzNelUl/477uJzrc54vVUM9JwwVHUlUwzbhp3PzJVq
+ xbRassxBCbdT+g==
+X-ME-Sender: <xms:zGqHXZiihhQ6RpwOCX9nh4a8Khr9PKak8JI1p0GsRxi9F3RzOC8rnQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeigdehgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeigdehgecutefuodetggdote
  rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
  grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
  vgepud
-X-ME-Proxy: <xmx:yGqHXTVCNR4AUxmc-Egd6SUdw_sYt3lDM7DmRwYDUKDCPNYrg3EcPQ>
- <xmx:yGqHXYdgK142CfcNxQjaK5cZG2bdqMiN9aUW8KZHKdPOr-PaXTL5tw>
- <xmx:yGqHXeKMDsV3ozyzZxxfHHQ9nsjfx37iWwnayLbshFMWz094Mqii-g>
- <xmx:yGqHXWx_MJq7CLn9M1Dhu7DgjhVgqusZC9hJqaodFl7bUu7kAJe8iA>
+X-ME-Proxy: <xmx:zGqHXVbnxNC-aXmZVrqKtdaEVVVNOlRMlQJB1cGnjkcyftZTjioycQ>
+ <xmx:zGqHXSCSFPAM0wTkuyGyeDcIM2Bb7oNJGpcHQehm_CVeboKsAV3OJQ>
+ <xmx:zGqHXc5jOipXhuHJ-0dTdoRZWuj1IAHv_bq56qCMSI9iev6YEIMhTg>
+ <xmx:zGqHXXA0VuXGc-0roIb7ShItr0j09AN6V4xHO85lJlLljQnbXa4mmw>
 Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id BBB258005A;
- Sun, 22 Sep 2019 08:36:22 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id EC0F680059;
+ Sun, 22 Sep 2019 08:36:26 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 2/6] dt-bindings: net: ftgmac100: Describe clock
- properties
-Date: Sun, 22 Sep 2019 22:06:56 +0930
-Message-Id: <20190922123700.749-3-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 4/6] clk: ast2600: Add RMII RCLK gates for all
+ four MACs
+Date: Sun, 22 Sep 2019 22:06:58 +0930
+Message-Id: <20190922123700.749-5-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190922123700.749-1-andrew@aj.id.au>
 References: <20190922123700.749-1-andrew@aj.id.au>
@@ -92,31 +92,83 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Critically, the AST2600 requires ungating the RMII RCLK if e.g. NCSI is
-in use.
+RCLK is a fixed 50MHz clock derived from HPLL that is described by a
+single gate for each MAC.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- Documentation/devicetree/bindings/net/ftgmac100.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/clk/clk-ast2600.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt b/Documentation/devicetree/bindings/net/ftgmac100.txt
-index 04cc0191b7dd..c443b0b84be5 100644
---- a/Documentation/devicetree/bindings/net/ftgmac100.txt
-+++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
-@@ -24,6 +24,12 @@ Optional properties:
- - no-hw-checksum: Used to disable HW checksum support. Here for backward
-   compatibility as the driver now should have correct defaults based on
-   the SoC.
-+- clocks: In accordance with the generic clock bindings. Must describe the MAC
-+  IP clock, and optionally an RMII RCLK gate for the AST2600.
-+- clock-names:
+diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
+index 1c1bb39bb04e..45531495391c 100644
+--- a/drivers/clk/clk-ast2600.c
++++ b/drivers/clk/clk-ast2600.c
+@@ -15,7 +15,7 @@
+ 
+ #include "clk-aspeed.h"
+ 
+-#define ASPEED_G6_NUM_CLKS		67
++#define ASPEED_G6_NUM_CLKS		71
+ 
+ #define ASPEED_G6_SILICON_REV		0x004
+ 
+@@ -40,6 +40,9 @@
+ 
+ #define ASPEED_G6_STRAP1		0x500
+ 
++#define ASPEED_MAC12_CLK_DLY		0x340
++#define ASPEED_MAC34_CLK_DLY		0x350
 +
-+      - "MACCLK": The MAC IP clock
-+      - "RCLK": Clock gate for the RMII RCLK
+ /* Globally visible clocks */
+ static DEFINE_SPINLOCK(aspeed_g6_clk_lock);
  
- Example:
+@@ -494,6 +497,22 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
+ 		return PTR_ERR(hw);
+ 	aspeed_g6_clk_data->hws[ASPEED_CLK_MAC12] = hw;
  
++	/* RMII1 50MHz (RCLK) output enable */
++	hw = clk_hw_register_gate(dev, "rmii1_rclk", "hpll", 0,
++			scu_g6_base + ASPEED_MAC12_CLK_DLY, 29, 0,
++			&aspeed_g6_clk_lock);
++	if (IS_ERR(hw))
++		return PTR_ERR(hw);
++	aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC1RCLK] = hw;
++
++	/* RMII2 50MHz (RCLK) output enable */
++	hw = clk_hw_register_gate(dev, "rmii2_rclk", "hpll", 0,
++			scu_g6_base + ASPEED_MAC12_CLK_DLY, 30, 0,
++			&aspeed_g6_clk_lock);
++	if (IS_ERR(hw))
++		return PTR_ERR(hw);
++	aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC2RCLK] = hw;
++
+ 	/* MAC3/4 AHB bus clock divider */
+ 	hw = clk_hw_register_divider_table(dev, "mac34", "hpll", 0,
+ 			scu_g6_base + 0x310, 24, 3, 0,
+@@ -503,6 +522,22 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
+ 		return PTR_ERR(hw);
+ 	aspeed_g6_clk_data->hws[ASPEED_CLK_MAC34] = hw;
+ 
++	/* RMII3 50MHz (RCLK) output enable */
++	hw = clk_hw_register_gate(dev, "rmii3_rclk", "hpll", 0,
++			scu_g6_base + ASPEED_MAC34_CLK_DLY, 29, 0,
++			&aspeed_g6_clk_lock);
++	if (IS_ERR(hw))
++		return PTR_ERR(hw);
++	aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC3RCLK] = hw;
++
++	/* RMII4 50MHz (RCLK) output enable */
++	hw = clk_hw_register_gate(dev, "rmii4_rclk", "hpll", 0,
++			scu_g6_base + ASPEED_MAC34_CLK_DLY, 30, 0,
++			&aspeed_g6_clk_lock);
++	if (IS_ERR(hw))
++		return PTR_ERR(hw);
++	aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC4RCLK] = hw;
++
+ 	/* LPC Host (LHCLK) clock divider */
+ 	hw = clk_hw_register_divider_table(dev, "lhclk", "hpll", 0,
+ 			scu_g6_base + ASPEED_G6_CLK_SELECTION1, 20, 3, 0,
 -- 
 2.20.1
 
