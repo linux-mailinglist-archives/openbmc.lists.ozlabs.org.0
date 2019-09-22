@@ -1,65 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EA3CBA1BE
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 12:14:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73C10BA297
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:20:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46bjwj4BHnzDqQh
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 20:14:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46bmkq0nCmzDqJg
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:20:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=183.3.255.84; helo=qq.com; envelope-from=1181052146@qq.com;
- receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.209; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=liuyh21@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="LrVBFykP"; 
- dkim-atps=neutral
-X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
- Sun, 22 Sep 2019 20:13:38 AEST
-Received: from qq.com (smtpbg449.qq.com [183.3.255.84])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.209])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46bjw20mkhzDqPF
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 20:13:37 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1569147119; bh=rsAvXfsHTZ7qGc2viuAJHLvqQYMk4gjE/cOdUeEdBJY=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=LrVBFykPMQSXp8jvj0UITpctFehQqvlv1PCAkKEKkOltaALvo6GyN0+S2ZlxdPhsV
- ZskEYxqL/3/IeGewXs/D+zAgJmnegRocRpIDgUG3UhfI5qXRyjw2pEXDdAnjrt1zH8
- bR3wsmCbK9TTfZ6PWOaHWwLcGm26ionlKezf4VYc=
-X-QQ-FEAT: u/EYRCx6PxgYAP5u0OBqINOcgmp8v+yRseFwBH0tUnLDdsIxsYrNt8blvVb1n
- t9ADlp7sX57kzt+XyxFoNWyqRT21aU2NQZi4JApR9gavX3KRBZ2T1HtSF/qkkGdbtXxOPsF
- LjcpYmCNoPJ4lKfcdOIOhBvP93ZOnPCHzGrPO8qbPKnGDRqOrQ/05lptn+P5REagjp0xoPX
- Ci3Ra01dgXEkb2+7sZCwDgn4RFx0KCCYDfK7myy7q2kt4lAe/pXlw3TS9I2VAstlOkva991
- ibBAivpuhn6fEJYcRuB4mjKeU4DV2QTIm3AA==
-X-QQ-SSF: 00000000000000F000000000000000S
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 106.121.169.154
-X-QQ-STYLE: 
-X-QQ-mid: webmail166t1569147118t5946349
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: about openbmc IRC
-Mime-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46bmjg6bLszDqP3
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:19:47 +1000 (AEST)
+Received: from [67.219.247.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-d.us-east-1.aws.symcld.net id 63/F5-29237-ED6678D5;
+ Sun, 22 Sep 2019 12:19:42 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRWlGSWpSXmKPExsWSLveKXfdeWnu
+ swd8l4hanWl6wODB6nJ+xkDGAMYo1My8pvyKBNaNh7yy2gu0SFQev3mFvYPwr2sXIxSEkMI9J
+ 4u3rRmYI5yWjxLxnWxkhnD2MEg8WLmPrYuTgYBPQlpi+P7WLkZNDREBfYtek3WwgtrCAlERD7
+ 29miLi8xM/dx1khbD2JW9fvMoLYLAKqEss3vmMBGcMrYCnxajIvSJhRQFZi2qP7TCA2s4C4xN
+ xps8BaJQQEJJbsOc8MYYtKvHz8DyquIDHj7Rao+gSJ9+uWsYPYvAKCEidnPmGZwCg4C8moWUj
+ KZiEpg4jrSCzY/YkNwtaWWLbwNTOMfebAYyZk8QWM7KsYzZKKMtMzSnITM3N0DQ0MdA0NjXQt
+ dA3NzfUSq3RT9EqLdVMTi0t0DfUSy4v1iitzk3NS9PJSSzYxAmMmpYBj4w7GjbPe6B1ilORgU
+ hLlNXnUFivEl5SfUpmRWJwRX1Sak1p8iFGGg0NJgtcnpT1WSLAoNT21Ii0zBxi/MGkJDh4lEd
+ 5XIGne4oLE3OLMdIjUKUZ7jgkv5y5i5jh4dB6Q/LhqCZD8DiKFWPLy81KlxHltQNoEQNoySvP
+ ghsLSzSVGWSlhXkYGBgYhnoLUotzMElT5V4ziHIxKwrz/koGm8GTmlcDtfgV0FhPQWfN9W0HO
+ KklESEk1MC1uPqS7dRNbftKnSL/sKUZy3T4zN870Wznx6M153Q/n/2V/w+/LJSHwfXfro31nI
+ q+UKdi+v1b0dgnvkXn8q777PpxpxKD+1DL89QU70daJE9c9nSiSFW3oHhy74OaZvkXZj14ctm
+ dftkbrjr3x7f4T6jw3crS5fh7OCrOLOSFzMmfldOWQi7cccyc3P2kL6IkrSix2Uq/YfeFyRrd
+ q+u75nZ6R2VsbI94yWd5c4nos/Wz7mpdbIldxsR7e0F6fqhGRdURDJOrBs9b/R259fP5BPTju
+ xL4LZ6/H/Oq4zB6ZOVHn9IHyaSJntsq9e6NeaXN2lYgnU5+W8fMLrKU29dHfU1/L5Uef47iUO
+ P8j/zUlluKMREMt5qLiRABuWwWlsgMAAA==
+X-Env-Sender: liuyh21@lenovo.com
+X-Msg-Ref: server-15.tower-426.messagelabs.com!1569154780!274111!1
+X-Originating-IP: [103.30.234.7]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 25294 invoked from network); 22 Sep 2019 12:19:42 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.7)
+ by server-15.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 22 Sep 2019 12:19:42 -0000
+Received: from pekwpmail02.lenovo.com (unknown [10.96.93.80])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 93FA5AFB4A7FBB49FF22
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 20:19:39 +0800 (CST)
+Received: from pekwpmail05.lenovo.com (10.96.93.83) by pekwpmail02.lenovo.com
+ (10.96.93.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Sun, 22 Sep
+ 2019 20:19:39 +0800
+Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
+ pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
+ 15.01.1591.008; Sun, 22 Sep 2019 20:19:39 +0800
+From: Yonghui YH21 Liu <liuyh21@lenovo.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: IPMI SEL Event ID
+Thread-Topic: IPMI SEL Event ID
+Thread-Index: AdVxP4aNP7Fu+Ov3SsCvstO4fphlWg==
+Date: Sun, 22 Sep 2019 12:19:38 +0000
+Message-ID: <1082e383cba94367945d14175a0d787b@lenovo.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.96.12.251]
 Content-Type: multipart/alternative;
- boundary="----=_NextPart_5D8748EE_0A572E98_58CB7812"
-Content-Transfer-Encoding: 8Bit
-Date: Sun, 22 Sep 2019 18:11:58 +0800
-X-Priority: 3
-Message-ID: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Sun, 22 Sep 2019 18:11:59 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign2
-X-QQ-Bgrelay: 1
+ boundary="_000_1082e383cba94367945d14175a0d787blenovocom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,82 +93,96 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+--_000_1082e383cba94367945d14175a0d787blenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-------=_NextPart_5D8748EE_0A572E98_58CB7812
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+HI All,
+         I find the new SEL event ID is not from base number(1) after I run=
+ "ipmitool sel clear" command.
+         Is it the OpenBMC default design rule ? If not, any plan to fix th=
+e issue?
 
-RGVhcjoNCg0KDQppIGhhdmUgcmVnaXN0ZSBvbiBSaW90OiAjb3BlbmJtYzptYXRyaXgub3Jn
-DQphbmQgaSB3YW50IHRvIGpvaW4gb3BlbmJtYywgYnV0IGV2ZW55IGkgam9pbiwgaSB3YXMg
-a2ljayBvZmYgYnkgQGFwcHNlcnZpY2UtaXJjOm1hdHJpeC5vcmcNCndpdGggdGhlIGVycm9y
-Og0KDQpZb3Ugd2VyZSBraWNrZWQgZnJvbSBvcGVuYm1jIGJ5IEBhcHBzZXJ2aWNlLWlyYzpt
-YXRyaXgub3JnDQoNClJlYXNvbjogSVJDIGVycm9yIG9uICNvcGVuYm1jOiBlcnJfbmVlZHJl
-Z2dlZG5pY2sNCg0KDQoNCmkgaGF2ZSByZWdpc3RlciBpbiBSaW90OiAjb3BlbmJtYzptYXRy
-aXgub3JnIGFzIG5pY2sgbmFtZSB6aHVhbnllc2hpdGkuDQpob3cgY2FuIGkgam9pbiBvcGVu
-Ym1jPw0KDQoNCkJlc3QgUmVnYXJkcyE=
-
-------=_NextPart_5D8748EE_0A572E98_58CB7812
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-PGRpdj5EZWFyOjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+aSBoYXZlIHJlZ2lzdGUgb24m
-bmJzcDs8c3BhbiBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6
-IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVv
-dDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVt
-b2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkg
-U3ltYm9sJnF1b3Q7OyBmb250LXNpemU6IDE2cHg7Ij5SaW90Ojwvc3Bhbj48c3BhbiBzdHls
-ZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0s
-IEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwg
-QXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVv
-dDtTZWdvZSBVSSBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgU3ltYm9sJnF1b3Q7OyBm
-b250LXNpemU6IDE2cHg7Ij4mbmJzcDs8L3NwYW4+PGEgaHJlZj0iaHR0cHM6Ly9yaW90Lmlt
-L2FwcC8jL3Jvb20vI29wZW5ibWM6bWF0cml4Lm9yZyIgcmVsPSJub2ZvbGxvdyIgc3R5bGU9
-ImZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90
-O1NlZ29lIFVJJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtB
-cHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDssICZx
-dW90O1NlZ29lIFVJIFN5bWJvbCZxdW90OzsgZm9udC1zaXplOiAxNnB4OyBiYWNrZ3JvdW5k
-LWNvbG9yOiBpbml0aWFsOyBib3gtc2l6aW5nOiBib3JkZXItYm94OyBjb2xvcjogcmdiKDMs
-IDEwMiwgMjE0KTsgdGV4dC1kZWNvcmF0aW9uLWxpbmU6IG5vbmU7Ij4jb3BlbmJtYzptYXRy
-aXgub3JnPC9hPjwvZGl2PjxkaXY+YW5kIGkgd2FudCB0byBqb2luIG9wZW5ibWMsIGJ1dCBl
-dmVueSBpIGpvaW4sIGkgd2FzIGtpY2sgb2ZmIGJ5Jm5ic3A7PHNwYW4gc3R5bGU9ImJhY2tn
-cm91bmQtY29sb3I6IHJnYigyNDIsIDI0NSwgMjQ4KTsgY29sb3I6IHJnYig0NiwgNDcsIDUw
-KTsgZm9udC1mYW1pbHk6IE51bml0bywgVHdlbW9qaSwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1v
-amkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7LCAmcXVvdDtOb3RvIENvbG9y
-IEVtb2ppJnF1b3Q7LCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6
-IDE4cHg7Ij5AYXBwc2VydmljZS1pcmM6bWF0cml4Lm9yZzwvc3Bhbj48L2Rpdj48ZGl2Pndp
-dGggdGhlIGVycm9yOjwvZGl2PjxkaXY+PGgzIHN0eWxlPSJmb250LXNpemU6IDE4cHg7IG1h
-cmdpbjogNHB4OyBjb2xvcjogcmdiKDQ2LCA0NywgNTApOyBmb250LWZhbWlseTogTnVuaXRv
-LCBUd2Vtb2ppLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2Ug
-VUkgRW1vamkmcXVvdDssICZxdW90O05vdG8gQ29sb3IgRW1vamkmcXVvdDssIEFyaWFsLCBI
-ZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDIsIDI0NSwg
-MjQ4KTsiPllvdSB3ZXJlIGtpY2tlZCBmcm9tIG9wZW5ibWMgYnkgQGFwcHNlcnZpY2UtaXJj
-Om1hdHJpeC5vcmc8L2gzPjxwIHN0eWxlPSJvdmVyZmxvdy13cmFwOiBicmVhay13b3JkOyBt
-YXJnaW46IDRweDsgY29sb3I6IHJnYig0NiwgNDcsIDUwKTsgZm9udC1mYW1pbHk6IE51bml0
-bywgVHdlbW9qaSwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29l
-IFVJIEVtb2ppJnF1b3Q7LCAmcXVvdDtOb3RvIENvbG9yIEVtb2ppJnF1b3Q7LCBBcmlhbCwg
-SGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE1cHg7IGJhY2tncm91bmQtY29s
-b3I6IHJnYigyNDIsIDI0NSwgMjQ4KTsiPlJlYXNvbjogSVJDIGVycm9yIG9uICNvcGVuYm1j
-OiBlcnJfbmVlZHJlZ2dlZG5pY2s8L3A+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5pIGhh
-dmUgcmVnaXN0ZXIgaW4mbmJzcDs8c3BhbiBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2
-KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1
-b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZxdW90
-O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90Oywg
-JnF1b3Q7U2Vnb2UgVUkgU3ltYm9sJnF1b3Q7OyBmb250LXNpemU6IDE2cHg7Ij5SaW90OiZu
-YnNwOzwvc3Bhbj48YSBocmVmPSJodHRwczovL3Jpb3QuaW0vYXBwLyMvcm9vbS8jb3BlbmJt
-YzptYXRyaXgub3JnIiByZWw9Im5vZm9sbG93IiBzdHlsZT0iYm94LXNpemluZzogYm9yZGVy
-LWJveDsgY29sb3I6IHJnYigzLCAxMDIsIDIxNCk7IHRleHQtZGVjb3JhdGlvbi1saW5lOiBu
-b25lOyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAm
-cXVvdDtTZWdvZSBVSSZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgJnF1
-b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7
-LCAmcXVvdDtTZWdvZSBVSSBTeW1ib2wmcXVvdDs7IGZvbnQtc2l6ZTogMTZweDsiPiNvcGVu
-Ym1jOm1hdHJpeC5vcmc8L2E+Jm5ic3A7YXMgbmljayBuYW1lIHpodWFueWVzaGl0aS48L2Rp
-dj48ZGl2PmhvdyBjYW4gaSBqb2luIG9wZW5ibWM/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj5CZXN0IFJlZ2FyZHMhPC9kaXY+PGRpdj48YnI+PC9kaXY+
-
-------=_NextPart_5D8748EE_0A572E98_58CB7812--
+Thanks
 
 
+--_000_1082e383cba94367945d14175a0d787blenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:\5B8B\4F53;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@\5B8B\4F53";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-CN" link=3D"blue" vlink=3D"purple" style=3D"text-justify-t=
+rim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">HI All,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; I find the new SEL event ID is not from base number(1) af=
+ter I run &#8220;ipmitool sel clear&#8221; command.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; Is it the OpenBMC default design rule ? If not, any plan =
+to fix the issue?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_1082e383cba94367945d14175a0d787blenovocom_--
