@@ -1,82 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C644DBA2B4
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:43:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AEB9BABB9
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:48:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46bnFF42LvzDqRY
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:43:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46c00n3jyMzDqV9
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:48:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::72a; helo=mail-qk1-x72a.google.com;
+ envelope-from=emilyshaffer@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="kS69lLJH"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="G5Bb8KYv"; dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.b="UbaS/qhj"; 
+ dkim-atps=neutral
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
+ [IPv6:2607:f8b0:4864:20::72a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46bn4z2b2GzDqLh
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:36:35 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id ED31A20F20;
- Sun, 22 Sep 2019 08:36:32 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Sun, 22 Sep 2019 08:36:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=n43poYL6+ZgDU
- TjCMsbfm9PHODmbYTvFAfggqzYavtw=; b=kS69lLJHq5GBkE+jRCZjC98QfZoJl
- 3u8qfdP4KSaRHjCHUmq1eMlJIWuEBQzwKJlf60Yb/RAaBzx1Eo7D803jbHaAcWQu
- HqrHLtcC8lR2QXplcefhpG24Ue05tnTO2SbbFojS/kXQAMlOYpADjqbuavj/dsFM
- Yf737u9RgY/UsvfjZc2x/TdMn9gXijwgnD1sUHkrbLdY0w283xnu8XZZ6YMLjNRB
- zhYrf4vT8gPNxcwmBmBogNdES8eAD2qlFLVzfZZs5S/YcxH44IMUQLQTfdbs6FOS
- B6zv8hGTv1Nhses4PrZwlwemHURNbph/7mH5YUAlXg/FhFGzwP1V4VYuw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=n43poYL6+ZgDUTjCMsbfm9PHODmbYTvFAfggqzYavtw=; b=G5Bb8KYv
- 40kbICEdSUVjCj8rUcfHYEmvv9iAObvz5HQ/cO77GDxQnYQd6tLzvkMHkcbYzNJ3
- 1sZQO5VO7cSVTyOVhO8Ftl4QyKor6JDijsDywJb+ikv5rpMl2C5e4ZG9vAolOfr7
- pOebEkeNVb6w3e6gKlOmIm/2PiN8ufWAnuJ+nfR9AULIKBkYRYGd9kyfStXsUkNG
- vHsQg2SqtggLir9dvGZCPzqvfGCud3YdFZHKr5VJIGGkoJKxuYPEUBe3NU+xNR9y
- dMNoxjPto7i0843xx8i4u0GKb2Ulrnk4Wk3ETUNHFNcS2PkigbrAeXOqSriWE6qm
- hY/OT7MxIuzTsA==
-X-ME-Sender: <xms:0GqHXbFe-XhxCD8T4XbHIKh6gddu9eC4-rsp7S8-1JfK57qLmSRHXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeigdehgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
- ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
- grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
- vgepge
-X-ME-Proxy: <xmx:0GqHXSb8Nf3CLKCGXxAIdX9FJ3Fd4E7NCw8cpInMhCuQ171Wspw8sw>
- <xmx:0GqHXQDZCwgVwKML07yeOcmEPjqU_M9r_pgBdHFY4gUFIuFBRz__Cg>
- <xmx:0GqHXRBQZuc71NOsgYvXMMt9ADMlBop-r5RfJj-JjihtdmB2RnjVjQ>
- <xmx:0GqHXd7QAdJCS9w-7tzRKAUubRdDEdAiKhI6uCcNDpaU3c84H8I_Vw>
-Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 2889880059;
- Sun, 22 Sep 2019 08:36:30 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 6/6] ARM: dts: tacoma: Enable 50MHz RMII RCLK
- for NCSI
-Date: Sun, 22 Sep 2019 22:07:00 +0930
-Message-Id: <20190922123700.749-7-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190922123700.749-1-andrew@aj.id.au>
-References: <20190922123700.749-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46c00D0L9BzDqMT
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 06:48:09 +1000 (AEST)
+Received: by mail-qk1-x72a.google.com with SMTP id z67so13229740qkb.12
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 13:48:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=VCX49GIdE0EguWYCmLaeITZwy9NYyCS40lKVawU6nTY=;
+ b=UbaS/qhjSOGyrBAsePkGpmg9KzWqWGGN/VW45PPAbWjBSmXzj2K3OLDTHreCWQeR1o
+ f8PXNP9TO24+6p/SVOFuV5Aszl5tdGIu61ehfWXk9YsJygOP4RXkC17ihcg41pux8E05
+ 9pTK1lq4bonOvae9JSSWE7pjRPU5htSmQg8pXa4txQge34nexnh7gBR1aXnK5GfXkWNd
+ B742rJOSpln+g3Zc2Va8rMFNZoM50+nhiBlAPogvScasiHu395QV5K+X3FLb02OnO1Vz
+ RjHz3dqOVN2oiPbExX9WcUDVgx7sluo53ZmvbPkQPCSDYEP02HvX5/cquu67fYe0lmHb
+ sGnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=VCX49GIdE0EguWYCmLaeITZwy9NYyCS40lKVawU6nTY=;
+ b=uYJ/rk0SfejO8czXP9UBcyTRg50vcg8ORC5npcqxdEPFZlhGx9Ki9ZgR5IwRjgKo8G
+ wVcL7ZkQ6ciIPRdOqM+D47bu/4yZCBDoXshsk8Cm2OCeylqmjGG8lK7Tns8GRrE+pwTx
+ TARzYD4mp+QgEoPQepzqPWjEyMnwi47nPW1e5IAUPv3KXKeECVNxbundEUAbn1udCMMp
+ p3Dn3fYZfoCUH1Ee2PMRrOEaJufZd4kSHAkBTqg3NjRXnb1KUGiz09nl4XtRr5C2FVmd
+ kgm+OoNIaFtAKGXCodA/Kd+XcbFHMntlLE1gLQVxcal+6Ngz7oMPzkApAHJPh5/6g01/
+ +NTg==
+X-Gm-Message-State: APjAAAVoU7u6JD1+hwxkSqL0ICX6xgoO2eFZXcZzeSNkvSby4WwJHroo
+ DpHd0nwGaD+L9GRkteN4iRxhkBJzPXy5ldKeKqIq1A==
+X-Google-Smtp-Source: APXvYqyTgGddb3UFe+bYW5MMJshM8v2gaT1/eFXRCr+I/90vAERwFpLEx+GyXXoShHa23CoZTpLQTZBFFl9iWlOuhzc=
+X-Received: by 2002:a37:a409:: with SMTP id n9mr13882666qke.485.1569185285199; 
+ Sun, 22 Sep 2019 13:48:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
+In-Reply-To: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
+From: Emily Shaffer <emilyshaffer@google.com>
+Date: Sun, 22 Sep 2019 13:47:53 -0700
+Message-ID: <CAJoAoZ=eq0zthCz_7CphnP5tg=8c_b=HmbS62Dm6L5V54bxSKA@mail.gmail.com>
+Subject: Re: about openbmc IRC
+To: =?UTF-8?B?5Y2X6YeO44Og44Or44K344Ko44Op44K0?= <1181052146@qq.com>
+Content-Type: multipart/alternative; boundary="000000000000834f1205932a6ba3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,31 +72,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Tacoma uses MAC3 for its NCSI-based interface to the outside world.
+--000000000000834f1205932a6ba3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 3 +++
- 1 file changed, 3 insertions(+)
+Hi,
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index 408af001c06c..854b0a532a01 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -28,6 +28,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii3_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC3RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
--- 
-2.20.1
+You need to register your nick with Freenode's NickServ.
 
+https://freenode.net/kb/answer/registration
+
+On Sun, Sep 22, 2019, 3:14 AM =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=
+=E3=82=A8=E3=83=A9=E3=82=B4 <1181052146@qq.com> wrote:
+
+> Dear:
+>
+> i have registe on Riot: #openbmc:matrix.org
+> <https://riot.im/app/#/room/%23openbmc:matrix.org>
+> and i want to join openbmc, but eveny i join, i was kick off by
+> @appservice-irc:matrix.org
+> with the error:
+> You were kicked from openbmc by @appservice-irc:matrix.org
+>
+> Reason: IRC error on #openbmc: err_needreggednick
+>
+> i have register in Riot: #openbmc:matrix.org
+> <https://riot.im/app/#/room/%23openbmc:matrix.org> as nick name
+> zhuanyeshiti.
+> how can i join openbmc?
+>
+> Best Regards!
+>
+>
+
+--000000000000834f1205932a6ba3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Hi,<div dir=3D"auto"><br></div><div dir=3D"auto">You need=
+ to register your nick with Freenode&#39;s NickServ.</div><div dir=3D"auto"=
+><br></div><div dir=3D"auto"><a href=3D"https://freenode.net/kb/answer/regi=
+stration">https://freenode.net/kb/answer/registration</a></div></div><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep =
+22, 2019, 3:14 AM =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=
+=83=A9=E3=82=B4 &lt;<a href=3D"mailto:1181052146@qq.com">1181052146@qq.com<=
+/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div>Dear:</div><div=
+><br></div><div>i have registe on=C2=A0<span style=3D"color:rgb(36,41,46);f=
+ont-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,=
+Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&=
+quot;Segoe UI Symbol&quot;;font-size:16px">Riot:</span><span style=3D"color=
+:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&=
+quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe =
+UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16px">=C2=A0</span><a =
+href=3D"https://riot.im/app/#/room/%23openbmc:matrix.org" rel=3D"nofollow n=
+oreferrer" style=3D"font-family:-apple-system,BlinkMacSystemFont,&quot;Sego=
+e UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;S=
+egoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16px;background-c=
+olor:initial;box-sizing:border-box;color:rgb(3,102,214);text-decoration-lin=
+e:none" target=3D"_blank">#openbmc:matrix.org</a></div><div>and i want to j=
+oin openbmc, but eveny i join, i was kick off by=C2=A0<span style=3D"backgr=
+ound-color:rgb(242,245,248);color:rgb(46,47,50);font-family:Nunito,Twemoji,=
+&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Noto Color E=
+moji&quot;,Arial,Helvetica,sans-serif;font-size:18px">@appservice-irc:<a hr=
+ef=3D"http://matrix.org" target=3D"_blank" rel=3D"noreferrer">matrix.org</a=
+></span></div><div>with the error:</div><div><h3 style=3D"font-size:18px;ma=
+rgin:4px;color:rgb(46,47,50);font-family:Nunito,Twemoji,&quot;Apple Color E=
+moji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Noto Color Emoji&quot;,Arial,He=
+lvetica,sans-serif;background-color:rgb(242,245,248)">You were kicked from =
+openbmc by @appservice-irc:<a href=3D"http://matrix.org" target=3D"_blank" =
+rel=3D"noreferrer">matrix.org</a></h3><p style=3D"margin:4px;color:rgb(46,4=
+7,50);font-family:Nunito,Twemoji,&quot;Apple Color Emoji&quot;,&quot;Segoe =
+UI Emoji&quot;,&quot;Noto Color Emoji&quot;,Arial,Helvetica,sans-serif;font=
+-size:15px;background-color:rgb(242,245,248)">Reason: IRC error on #openbmc=
+: err_needreggednick</p></div><div><br></div><div>i have register in=C2=A0<=
+span style=3D"color:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemF=
+ont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji=
+&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16p=
+x">Riot:=C2=A0</span><a href=3D"https://riot.im/app/#/room/%23openbmc:matri=
+x.org" rel=3D"nofollow noreferrer" style=3D"box-sizing:border-box;color:rgb=
+(3,102,214);text-decoration-line:none;font-family:-apple-system,BlinkMacSys=
+temFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color E=
+moji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size=
+:16px" target=3D"_blank">#openbmc:matrix.org</a>=C2=A0as nick name zhuanyes=
+hiti.</div><div>how can i join openbmc?</div><div><br></div><div>Best Regar=
+ds!</div><div><br></div></blockquote></div>
+
+--000000000000834f1205932a6ba3--
