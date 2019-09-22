@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECA87BA2A2
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:37:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29FDABA2AD
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 14:38:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46bn5h3KTfzDqP7
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:37:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46bn6x6K6CzDqPf
+	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:38:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,62 +16,62 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="oEv8wg03"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="KET8opnk"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Aqst8wqR"; dkim-atps=neutral
+ header.b="Ulcj1wxa"; dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46bn4p4CvhzDqP0
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:36:25 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46bn4r6q1MzDqP7
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:36:28 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 4F64720F20;
- Sun, 22 Sep 2019 08:36:22 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 98E8E210D8;
+ Sun, 22 Sep 2019 08:36:26 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Sun, 22 Sep 2019 08:36:22 -0400
+ by compute4.internal (MEProxy); Sun, 22 Sep 2019 08:36:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=80t49yUmTjxMS
- nA8I9JIsl6t600IjN1hqbYbWjxh6s8=; b=oEv8wg03Z3a6aRKnaxl5kKlDl+ZtA
- j1P1aFEko3HYI7zktqNKqHPFwmOauGk1jNw/Z9eKW7I7anYGyY0AXLr+EK2PFlBU
- Y7y9DR/rD0ql3Z6Z3LGFy4bXfYrP+BuIlaLUeKSKRod78D/ETyO9v0d+Yjq7plZr
- GtCXxpPf8M/3yn8m80qyzmKV6KMRYLHn1jkSAxpxyQmX6uKhFfIBy2zqw6dlQ4J5
- XEoZkqMxRYW47Qf5Ld60M77Vh97qTFgUpY9k2f9odxOD5fQt4yD7SA4xtQOYBorV
- iDsuW+auzrDPGDkWcqc7+f/eYDy2fw0OUmMEi4V0pNmXvEFXhRzvuVzlg==
+ :mime-version:content-transfer-encoding; s=fm3; bh=Pm0kXIjD5EnSX
+ CMvxmhv05EI+M+VF9thTQPnyey0/W0=; b=KET8opnk8xlrLsVWJprRI+NUsH7R4
+ R1x+FXbxOTOD3/fobol7JLZMBjmQMYD7aK4+ldGYdtD8EQkkXTev32IkH7AxUM1A
+ +icxUw0dXtMnUvi3EBsAFQIty5kDAwHotxOtrM+LlZTW3tMMsqgTSJPJarVk8iGK
+ YkEt/RPy/0Aj1nXDfC3gIOuZb1WOQNeJsl9Id2xmT1ksMy1JQ3Gq0wGPTaFY0aU7
+ MFynPH+7f6CCYaugXuYI+mxyrhAvQaANdRiBjuUR0H5a8vRa3PNiXkdddAv20uWo
+ 1LDYnuYk03HTIq1gX1g82bhOwRNMKbZKfZ7AfvWbSGRIAQTTinNSB2okg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=80t49yUmTjxMSnA8I9JIsl6t600IjN1hqbYbWjxh6s8=; b=Aqst8wqR
- PP2s5gk48cBEFXx4ayAymyE8tkw3C3J2EIFn8cM7mtvUzGt/a8/PZkNpwwR4ulDf
- 2aO2wab0p800ZxHn6P3F7EmHItKxUC7DoRxn8sAhA+Gz3Luy8dZ7yUCxxliN7wbt
- AGABVgM94u7XQ2cJFdF+vVWas+DauQjJc9FXinpmiGyyf7YIjGxUGUq5J+LnvLvA
- o33HN/EOVLNwI2sMT1S8F+x2/nubiWf874RT/fH73SkaNZFCt1sOXKbWEw6Rh+5A
- a2rWQ10wA5GwbPhY6uQVEhA8nyXRxyuGEz9JkbySqa/o2NLAne2VaZvMFljfNlrk
- kXUo05+J908JZQ==
-X-ME-Sender: <xms:xmqHXU4eAyt_W4sIrHgNqPs1KAzTgdErSGmwOtd5V3wUx2EaKFB1HA>
+ fm3; bh=Pm0kXIjD5EnSXCMvxmhv05EI+M+VF9thTQPnyey0/W0=; b=Ulcj1wxa
+ gDLzRalrsw8oY4ptLW9eOiT10UXMkC3/ZDOYYucZzz4h3Cq5QHoGNFkQGvcDZwIU
+ S95xX5gH2Zythg9Lw4w/ytHK+6HYh33wycFCYVngH9rRHj4AsuOyJHkVrEXOJOCo
+ xrij7s54gUyPdG6J4nnSjONJkCONsIO/vP7TVcz68KJv6MMyd9FE2RqH1Z2BBUKS
+ rUYZNSOQ0jHda7sWF3hjHhuBcJCtI78HYnb4lrJxop2HlA71XqCKpCvHlX9NMeVu
+ aLzsZNZiibh4VK4HVI7CfIil44W/5tSgd906Vggwoso6Gfx7PJvWtA8fVCLVD6Mq
+ MLztHcPX/ubHYw==
+X-ME-Sender: <xms:ymqHXdpIqFrSqi7h4-Wo_n1ciL_3LBWFU8dU4yMEW4BfTigSa2fgEw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeigdehgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
  rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
  grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
- vgeptd
-X-ME-Proxy: <xmx:xmqHXRpl-Mulgj2OowBHiSw-I3hT8UIwU-_pO6g3h7wG06NdNk6COw>
- <xmx:xmqHXcDnvsODjPeQm7w3ouV2MCoq6oGKArl9smM2bkhdotw4C_9Elw>
- <xmx:xmqHXaRiDf6FsUKWsU-vs5jnbJe4rCQaVNKrzId5vSJzxnCXoaqkwg>
- <xmx:xmqHXSXH-OY2la9ffxv5vALCCPVLFa3naxjkCpD14xNsH6vSIGBcNw>
+ vgepud
+X-ME-Proxy: <xmx:ymqHXSAHheONpyQRxylmCtagw8zV726fCcGJXgZdtHrrcC68Qk1HLw>
+ <xmx:ymqHXTfKHa9H9EqdbjXO76b1lvbYX_Jdb_Nh4Jn-5ZwMdw9GGSmAFg>
+ <xmx:ymqHXcAu0ftqdMkevWIDYPuFgJvBA61er9QduUYJDCozQESivQ-o2Q>
+ <xmx:ymqHXR5iAR3OA3soia0a9y0MrUBrUmsSSSMuJRFwE1sZpCzGcr1pRA>
 Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 7DD078005C;
- Sun, 22 Sep 2019 08:36:20 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id C769880059;
+ Sun, 22 Sep 2019 08:36:24 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 1/6] dt-bindings: net: ftgmac100: Document
- AST2600 compatible
-Date: Sun, 22 Sep 2019 22:06:55 +0930
-Message-Id: <20190922123700.749-2-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 3/6] dt-bindings: clock: Add AST2600 RMII RCLK
+ gate definitions
+Date: Sun, 22 Sep 2019 22:06:57 +0930
+Message-Id: <20190922123700.749-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190922123700.749-1-andrew@aj.id.au>
 References: <20190922123700.749-1-andrew@aj.id.au>
@@ -92,26 +92,30 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600 contains an FTGMAC100-compatible MAC, although it no-longer
-contains an MDIO controller.
+The AST2600 has an explicit gate for the RMII RCLK for each of the four
+MACs.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- Documentation/devicetree/bindings/net/ftgmac100.txt | 1 +
- 1 file changed, 1 insertion(+)
+ include/dt-bindings/clock/ast2600-clock.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt b/Documentation/devicetree/bindings/net/ftgmac100.txt
-index 72e7aaf7242e..04cc0191b7dd 100644
---- a/Documentation/devicetree/bindings/net/ftgmac100.txt
-+++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
-@@ -9,6 +9,7 @@ Required properties:
+diff --git a/include/dt-bindings/clock/ast2600-clock.h b/include/dt-bindings/clock/ast2600-clock.h
+index 38074a5f7296..ac567fc84a87 100644
+--- a/include/dt-bindings/clock/ast2600-clock.h
++++ b/include/dt-bindings/clock/ast2600-clock.h
+@@ -84,6 +84,11 @@
+ #define ASPEED_CLK_MAC34		65
+ #define ASPEED_CLK_USBPHY_40M		66
  
-      - "aspeed,ast2400-mac"
-      - "aspeed,ast2500-mac"
-+     - "aspeed,ast2600-mac"
- 
- - reg: Address and length of the register set for the device
- - interrupts: Should contain ethernet controller interrupt
++#define ASPEED_CLK_GATE_MAC1RCLK	67
++#define ASPEED_CLK_GATE_MAC2RCLK	68
++#define ASPEED_CLK_GATE_MAC3RCLK	69
++#define ASPEED_CLK_GATE_MAC4RCLK	70
++
+ /* Only list resets here that are not part of a gate */
+ #define ASPEED_RESET_ADC		55
+ #define ASPEED_RESET_JTAG_MASTER2	54
 -- 
 2.20.1
 
