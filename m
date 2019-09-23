@@ -1,65 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE19FBAD76
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:26:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34962BAD77
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:27:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cCVM3WnpzDqMw
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:26:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cCWN4kVDzDqLX
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:27:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::842; helo=mail-qt1-x842.google.com;
+ (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
  envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="RGqLDX1H"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="FGte+XEH"; 
  dkim-atps=neutral
-Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com
- [IPv6:2607:f8b0:4864:20::842])
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cCTr5YKxzDqK3
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 15:26:06 +1000 (AEST)
-Received: by mail-qt1-x842.google.com with SMTP id w14so11260037qto.9
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:26:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cCVs0w2kzDqN3
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 15:27:00 +1000 (AEST)
+Received: by mail-qt1-x843.google.com with SMTP id u40so15674255qth.11
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=FKuCCgwN2il3UI1pgwGpVDwO/KHhxYC1LWBiDfVB3LA=;
- b=RGqLDX1HwJiwel0IVQxGQsvyDcGbZUzLqhYWpoMlE3fuVxOam04Oir7EJqhquMw/dC
- 2etVPc8EUdlusp3FNGw2lMlx8HsSbovM1N0iKw+55F4axbzt1vXUAfAvdM/IiM/Vfnkm
- tT8qeUikLsm+OfTvD380q3dtawHImvMiYNq6k=
+ :cc; bh=D82Pn+oiyxZd3Jvz2nrbESa+J6BjYc35YgwCmrcCWQ0=;
+ b=FGte+XEHuHWECPurKhz1UrsUKF+3GOsld+HQ0iWl4ammxbSIOo9zgWa4cwks6pDJDO
+ Zn/A0xH/fN3GmC8oMx5Sa5WAygnjhDmQu/y3i/2XwTH4dOXOcgHE+UWgJBbpTozkGKKY
+ 2hOn4FC3OBh2r0MKXJ9RbiTcue44N3sw6FZ3g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=FKuCCgwN2il3UI1pgwGpVDwO/KHhxYC1LWBiDfVB3LA=;
- b=VYs21E2qIoLyMjFY/SIBniYxHGT/NlKxux3fED0kF4nO9f9vOFvDNv9j3Q9CGs8yIH
- DisD7+dNGgQgQLYdXKYgr6SNIWUW5lkHZ6371rBZ0t6ENs8lYgp83v8kDB2n0y5ubsyA
- tsw7IfODHefUf6HxweinhuY/sSddUxoKsAhyz1aUXBvIBrsXn1jHsChLOyVwm/bFRrJ1
- ZHDJQVAKNM5h7efMKCub3kL++yv4wMhqxLHjpsLiltvzy+Rqh0z24jVHFupv4q/yC7q+
- fR/gEn84x4V147J9nnCSdrFyBX0O+L5v+d5rmP990acnTbP/IHK/VZAaWokimxt7+JQo
- HbDw==
-X-Gm-Message-State: APjAAAVk59IMpIfZXJUj+P9ilVEcLRSRVKWRennHYfch1Rdy6xLPJ16J
- tfT39nbIlJZoa21daj+wA0111fppWcmoUnS6F3Q/6w==
-X-Google-Smtp-Source: APXvYqzKBwzZCuDjYshXPz9MjM0KZQd+S+oQwUElEpxN7W4bgZMQ2KKsp6QicXGrM99wlTlVbvhrYAckE0geDg2ISQU=
-X-Received: by 2002:aed:2ce7:: with SMTP id g94mr15309235qtd.255.1569216363965; 
- Sun, 22 Sep 2019 22:26:03 -0700 (PDT)
+ bh=D82Pn+oiyxZd3Jvz2nrbESa+J6BjYc35YgwCmrcCWQ0=;
+ b=jKxZl4F6w/h1cRRTxIcapkvhvyYG1MwG5zQ7dI0nNMoBlWN8JzyBkelOUvaRygpNC7
+ eAATSmhjfHlyJxc7/F1qsRGCH5Bu4s0J42LEHdxNH6PP6MaLcyXP6tpB5qBxSrl8e0sM
+ f14XvlW+Z9DOWTuIzs/a/Lvs0duyt/iRF7FlNzJuX16Yvapq1xWv+n0TMHCUH3afhAEx
+ Zv1cnh/QVIcLTVkllozRPH4JA5u0wGVUMcIxers1Q+bZdKuEFsMcmjzfr1yYXHFEUci7
+ Ny1V52U5T2yMjoJqfvg3mEs207RmzWI79sx9QwUlDkI8lC8DoY9yArVEx+gFO1mDUYLA
+ Ilnw==
+X-Gm-Message-State: APjAAAXR55UV1R5kW3c0SjN33ClfTDE98ZPnzzm1rpb1uTCT9n2PfW8Z
+ /fjawz6Rbpu63e2aT+CjOWiEqAUmxhIXOuoPC+g=
+X-Google-Smtp-Source: APXvYqxEGxuM/FPa9KclsbGHPt7qbsJQYHAAfWAp+WaIh/kNNBg1eib50oWWQ3AfLip21yJZ0mUZeSHRHsZjk1llj40=
+X-Received: by 2002:ac8:2d8b:: with SMTP id p11mr15657158qta.220.1569216417419; 
+ Sun, 22 Sep 2019 22:26:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190922123700.749-1-andrew@aj.id.au>
- <20190922123700.749-4-andrew@aj.id.au>
- <CACPK8XdHCM6h52vXFqF-3vzXfG+2--12nYM=3MdQQvdM1rMcGg@mail.gmail.com>
- <e45238b0-e1ad-4de1-9b18-15872ffc520f@www.fastmail.com>
-In-Reply-To: <e45238b0-e1ad-4de1-9b18-15872ffc520f@www.fastmail.com>
+ <20190922123700.749-3-andrew@aj.id.au>
+ <CACPK8Xf_ciMEtayQ78yUo=YhrovRMe65xuwviE+DWXDSuQb5-Q@mail.gmail.com>
+ <96f5dc1d-2347-4d9c-8fa2-e938ac952664@www.fastmail.com>
+In-Reply-To: <96f5dc1d-2347-4d9c-8fa2-e938ac952664@www.fastmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 23 Sep 2019 05:25:52 +0000
-Message-ID: <CACPK8XdK1HYaDkywgFSauU7VCqMNjU49JY2azyqwc7MXPeA49A@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.3 3/6] dt-bindings: clock: Add AST2600 RMII
- RCLK gate definitions
+Date: Mon, 23 Sep 2019 05:26:46 +0000
+Message-ID: <CACPK8XcQp-VcOz8N20fwURYK+4j-Nk7_ENqJVpAXu55hQxEkZA@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.3 2/6] dt-bindings: net: ftgmac100: Describe
+ clock properties
 To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -77,32 +77,47 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 23 Sep 2019 at 05:11, Andrew Jeffery <andrew@aj.id.au> wrote:
+On Mon, 23 Sep 2019 at 05:14, Andrew Jeffery <andrew@aj.id.au> wrote:
 >
 >
 >
 > On Mon, 23 Sep 2019, at 14:28, Joel Stanley wrote:
 > > On Sun, 22 Sep 2019 at 12:36, Andrew Jeffery <andrew@aj.id.au> wrote:
 > > >
-> > > The AST2600 has an explicit gate for the RMII RCLK for each of the four
-> > > MACs.
+> > > Critically, the AST2600 requires ungating the RMII RCLK if e.g. NCSI is
+> > > in use.
 > > >
 > > > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> >
-> > Put this in the same patch as the clock driver changes when you respin.
->
-> I initially did what you suggested and checkpatch complained. It's explicitly documented that DT header changes should be separate in the dt-specific submitting-patches documentation.
-
-That's silly. I would ignore that recommendation, but it's your call.
-
->
+> > > ---
+> > >  Documentation/devicetree/bindings/net/ftgmac100.txt | 6 ++++++
+> > >  1 file changed, 6 insertions(+)
 > > >
-> > > +#define ASPEED_CLK_GATE_MAC1RCLK       67
-> > > +#define ASPEED_CLK_GATE_MAC2RCLK       68
-> > > +#define ASPEED_CLK_GATE_MAC3RCLK       69
-> > > +#define ASPEED_CLK_GATE_MAC4RCLK       70
+> > > diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt b/Documentation/devicetree/bindings/net/ftgmac100.txt
+> > > index 04cc0191b7dd..c443b0b84be5 100644
+> > > --- a/Documentation/devicetree/bindings/net/ftgmac100.txt
+> > > +++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
+> > > @@ -24,6 +24,12 @@ Optional properties:
+> > >  - no-hw-checksum: Used to disable HW checksum support. Here for backward
+> > >    compatibility as the driver now should have correct defaults based on
+> > >    the SoC.
+> > > +- clocks: In accordance with the generic clock bindings. Must describe the MAC
+> > > +  IP clock, and optionally an RMII RCLK gate for the AST2600.
 > >
-> > Nit: You call them MACnCLK here, but rmmin_clk in is the gate name.
-> > Please pick one and use it in both places.
+> > perhaps: "and optionally a RMII clock if RMII or NC-SI is used"
+> >
+> > We should implement this for the ast2500 too.
 >
-> Ack
+> Hmm, I didn't think to check because it has always worked, but I assume that's because u-boot was NCSI enabled and left the clocks ungated.
+
+Yeah spot on. This is something we hit when doing bringup of the
+ast2500 NCSI, and we "fixed" it by having u-boot enable the clocks.
+
+>
+> Will fix in a v2.
+
+Cheers
+
+>
+> Thanks,
+>
+> Andrew
