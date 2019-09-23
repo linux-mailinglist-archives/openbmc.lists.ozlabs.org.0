@@ -1,78 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FBFAC8801
-	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 14:11:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0332AC880C
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 14:13:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46jw3h3xwNzDqXd
-	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 22:11:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46jw576mYqzDqXv
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 22:12:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=alpankum@in.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=163.com
+ (client-ip=220.181.13.60; helo=m13-60.163.com;
+ envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cF2S6lMRzDqHn
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 16:35:54 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8N6VrQ5036653
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 02:35:51 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.82])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v6qb1tujs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 02:35:51 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <alpankum@in.ibm.com>;
- Mon, 23 Sep 2019 06:35:51 -0000
-Received: from us1a3-smtp04.a3.dal06.isc4sb.com (10.106.154.237)
- by smtp.notes.na.collabserv.com (10.106.227.105) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 23 Sep 2019 06:35:47 -0000
-Received: from us1a3-mail215.a3.dal06.isc4sb.com ([10.146.77.137])
- by us1a3-smtp04.a3.dal06.isc4sb.com
- with ESMTP id 2019092306354702-140279 ;
- Mon, 23 Sep 2019 06:35:47 +0000 
-In-Reply-To: <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
-From: "Alpana Kumari1" <alpankum@in.ibm.com>
-To: yong.b.li@linux.intel.com
-Date: Mon, 23 Sep 2019 06:35:46 +0000
-Sensitivity: 
-References: <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
- SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
-X-LLNOutbound: False
-X-Disclaimed: 18551
-X-TNEFEvaluated: 1
-Content-Type: text/html; charset=UTF-8
-x-cbid: 19092306-9463-0000-0000-000000E5E642
-X-IBM-SpamModules-Scores: BY=0.174326; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.417846; ST=0; TS=0; UL=0; ISC=; MB=0.141190
-X-IBM-SpamModules-Versions: BY=3.00011825; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01265295; UDB=6.00669333; IPR=6.01047239; 
- MB=3.00028761; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-23 06:35:50
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-09-23 04:35:03 - 6.00010440
-x-cbparentid: 19092306-9464-0000-0000-000028B4FB00
-Message-Id: <OF2C925502.61CFC61B-ON0025847E.0023D3A6-0025847E.00243BE6@notes.na.collabserv.com>
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 2 URL's were un-rewritten
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="Ulnry3ng"; 
+ dkim-atps=neutral
+Received: from m13-60.163.com (m13-60.163.com [220.181.13.60])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46cG6W22syzDqL8
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 17:24:29 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=GjW1Y
+ reSQz/uB1Iy0jHcDr4faZ42v4vrHW+NWCw9AbA=; b=Ulnry3ngHm5V1qXvnLoem
+ zwO3aA3M2RCtZewhv4xvbOdtoiMSE8uN6JLg2nw1HSfC0uiMN+l8QdQmKXUWVv2M
+ PWzWcW43j+LT8LsuUUUFaUIgHUd34IWIBsGYdvLO00jn2foh7btSwH49NwOA6B21
+ 5N6Baji38LUTPTc1eloR4c=
+Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr60 (Coremail) ; Mon, 23 Sep 2019 15:24:24 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Mon, 23 Sep 2019 15:24:24 +0800 (CST)
+From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
+To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
+Subject: How to make OpenBMC Web automatically redirect  to HTTPS
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+ <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+X-CM-CTRLDATA: ThoYJmZvb3Rlcl9odG09MTA2OTo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_112906_98870577.1569223464425"
 MIME-Version: 1.0
-Subject: Re:  HostWatchdogTimer related changes
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-23_02:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
-X-Mailman-Approved-At: Wed, 02 Oct 2019 22:06:34 +1000
+Message-ID: <30bad7e3.7644.16d5d01d5e9.Coremail.xiaoqian1641@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: PMGowADXDYkoc4hdhCfbAA--.32436W
+X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiSgg5fFPAHxN0zQAAsh
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Mailman-Approved-At: Wed, 02 Oct 2019 22:06:35 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,58 +61,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, ed.tanous@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Hi,</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >yes, It was on hold for long time, and later it was decid=
-ed&nbsp; not to&nbsp; make this change.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Closed now.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Thanks,</div>
-<div dir=3D"ltr" >Alpana</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
--left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
-margin-right:0px" >----- Original message -----<br>From: "Yong Li" &lt;yong=
-.b.li@linux.intel.com&gt;<br>To: &lt;alpankum@in.ibm.com&gt;<br>Cc: "Tanous=
-, Ed" &lt;ed.tanous@intel.com&gt;, "'OpenBMC Maillist'" &lt;openbmc@lists.o=
-zlabs.org&gt;<br>Subject: [EXTERNAL] HostWatchdogTimer related changes<br>D=
-ate: Sat, Sep 21, 2019 4:26 PM<br>&nbsp;<br><!--Notes ACF
-<meta http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf8" >--><=
-!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit" >
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-<div><p style=3D"margin: 0px;" >Hi,<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
-<p style=3D"margin: 0px;" >I noticed there is a code review submitted my yo=
-u:<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><a href=3D"https://gerrit.openbmc-project.xyz/#/=
-c/openbmc/bmcweb/+/20308/" target=3D"_blank">https://gerrit.openbmc-project=
-.xyz/#/c/openbmc/bmcweb/+/20308/</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o=
-:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
-<p style=3D"margin: 0px;" >I noticed there is no any update for several day=
-s. I am working on the related feature too:<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><a href=3D"https://gerrit.openbmc-project.xyz/#/=
-c/openbmc/bmcweb/+/24532/" target=3D"_blank">https://gerrit.openbmc-project=
-.xyz/#/c/openbmc/bmcweb/+/24532/</a><o:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
-<p style=3D"margin: 0px;" >Could you please check on them?<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
-<p style=3D"margin: 0px;" >If there is any comments/questions, just let me =
-know.<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
-<p style=3D"margin: 0px;" >Thanks,<o:p></o:p></p>
-<p style=3D"margin: 0px;" >Yong<o:p></o:p></p>
-<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p></div></blockquote>
-<div dir=3D"ltr" >&nbsp;</div></div><BR>
+------=_Part_112906_98870577.1569223464425
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
+
+SGmjrEFsbCwKCgpXaGVuIEkgbG9naW4gT3BlbkJNQyBXZWIsIEkgbXVzdCBpbnB1dCAiaHR0cHM6
+Ly8xMC4wLjE1LjQzIiBpbnN0ZWFkIG9mICIxMC4wLjE1LjQzIgoKCkhvdyB0byBtYWtlIE9wZW5C
+TUMgV2ViIGF1dG9tYXRpY2FsbHkgcmVkaXJlY3QgIHRvIEhUVFBTID8KCgoKCkpvaG55ClRoYW5r
+cwoKCgoKIA==
+------=_Part_112906_98870577.1569223464425
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjc7Ij48ZGl2IHN0
+eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTog
+MTRweDsiPkhpo6xBbGwsPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9u
+dC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0i
+Y29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7
+Ij5XaGVuIEkgbG9naW4gT3BlbkJNQyBXZWIsIEkgbXVzdCBpbnB1dCAiPGEgaHJlZj0iaHR0cHM6
+Ly8xMC4wLjE1LjQzJnF1b3Q7LCIgX3NyYz0iaHR0cHM6Ly8xMC4wLjE1LjQzJnF1b3Q7LCI+aHR0
+cHM6Ly8xMC4wLjE1LjQzIjwvYT4mbmJzcDtpbnN0ZWFkIG9mICIxMC4wLjE1LjQzIjwvZGl2Pjxk
+aXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1z
+aXplOiAxNHB4OyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9IiI+SG93IHRvIG1ha2UgT3BlbkJNQyBX
+ZWIgYXV0b21hdGljYWxseSByZWRpcmVjdCZuYnNwOyB0byBIVFRQUyA/PC9kaXY+PGRpdiBzdHls
+ZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0
+cHg7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1p
+bHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6
+IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij5Kb2hu
+eTwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlh
+bDsgZm9udC1zaXplOiAxNHB4OyI+VGhhbmtzPC9kaXY+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRs
+ZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj48L2Rpdj48YnI+PGJyPjxzcGFu
+IHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8L3A+PC9zcGFuPg==
+------=_Part_112906_98870577.1569223464425--
 
