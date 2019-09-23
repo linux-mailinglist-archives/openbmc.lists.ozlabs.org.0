@@ -1,66 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AEB9BABB9
-	for <lists+openbmc@lfdr.de>; Sun, 22 Sep 2019 22:48:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15178BAC6A
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 03:40:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46c00n3jyMzDqV9
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 06:48:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46c6TV1HGxzDqM4
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 11:40:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::72a; helo=mail-qk1-x72a.google.com;
- envelope-from=emilyshaffer@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=manojeda@in.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="UbaS/qhj"; 
- dkim-atps=neutral
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
- [IPv6:2607:f8b0:4864:20::72a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=in.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46c00D0L9BzDqMT
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 06:48:09 +1000 (AEST)
-Received: by mail-qk1-x72a.google.com with SMTP id z67so13229740qkb.12
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 13:48:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=VCX49GIdE0EguWYCmLaeITZwy9NYyCS40lKVawU6nTY=;
- b=UbaS/qhjSOGyrBAsePkGpmg9KzWqWGGN/VW45PPAbWjBSmXzj2K3OLDTHreCWQeR1o
- f8PXNP9TO24+6p/SVOFuV5Aszl5tdGIu61ehfWXk9YsJygOP4RXkC17ihcg41pux8E05
- 9pTK1lq4bonOvae9JSSWE7pjRPU5htSmQg8pXa4txQge34nexnh7gBR1aXnK5GfXkWNd
- B742rJOSpln+g3Zc2Va8rMFNZoM50+nhiBlAPogvScasiHu395QV5K+X3FLb02OnO1Vz
- RjHz3dqOVN2oiPbExX9WcUDVgx7sluo53ZmvbPkQPCSDYEP02HvX5/cquu67fYe0lmHb
- sGnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=VCX49GIdE0EguWYCmLaeITZwy9NYyCS40lKVawU6nTY=;
- b=uYJ/rk0SfejO8czXP9UBcyTRg50vcg8ORC5npcqxdEPFZlhGx9Ki9ZgR5IwRjgKo8G
- wVcL7ZkQ6ciIPRdOqM+D47bu/4yZCBDoXshsk8Cm2OCeylqmjGG8lK7Tns8GRrE+pwTx
- TARzYD4mp+QgEoPQepzqPWjEyMnwi47nPW1e5IAUPv3KXKeECVNxbundEUAbn1udCMMp
- p3Dn3fYZfoCUH1Ee2PMRrOEaJufZd4kSHAkBTqg3NjRXnb1KUGiz09nl4XtRr5C2FVmd
- kgm+OoNIaFtAKGXCodA/Kd+XcbFHMntlLE1gLQVxcal+6Ngz7oMPzkApAHJPh5/6g01/
- +NTg==
-X-Gm-Message-State: APjAAAVoU7u6JD1+hwxkSqL0ICX6xgoO2eFZXcZzeSNkvSby4WwJHroo
- DpHd0nwGaD+L9GRkteN4iRxhkBJzPXy5ldKeKqIq1A==
-X-Google-Smtp-Source: APXvYqyTgGddb3UFe+bYW5MMJshM8v2gaT1/eFXRCr+I/90vAERwFpLEx+GyXXoShHa23CoZTpLQTZBFFl9iWlOuhzc=
-X-Received: by 2002:a37:a409:: with SMTP id n9mr13882666qke.485.1569185285199; 
- Sun, 22 Sep 2019 13:48:05 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46c6Sh2W0SzDqLs
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 11:39:41 +1000 (AEST)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8N1b3Wb099720
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 21:39:37 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.73])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v6c4ebbq4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 21:39:37 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <manojeda@in.ibm.com>;
+ Mon, 23 Sep 2019 01:39:37 -0000
+Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
+ by smtp.notes.na.collabserv.com (10.106.227.90) with
+ smtp.notes.na.collabserv.com ESMTP; Mon, 23 Sep 2019 01:39:34 -0000
+Received: from us1a3-mail220.a3.dal06.isc4sb.com ([10.146.71.127])
+ by us1a3-smtp06.a3.dal06.isc4sb.com
+ with ESMTP id 2019092301393386-613632 ;
+ Mon, 23 Sep 2019 01:39:33 +0000 
+In-Reply-To: 
+Subject: Proposal for 2 properties for Nameservers
+From: "Manojkiran Eda" <manojeda@in.ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Mon, 23 Sep 2019 01:39:33 +0000
+Sensitivity: 
+References: 
 MIME-Version: 1.0
-References: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
-In-Reply-To: <tencent_EE059DB8386C7CA8A9276439F847CB8B4D0A@qq.com>
-From: Emily Shaffer <emilyshaffer@google.com>
-Date: Sun, 22 Sep 2019 13:47:53 -0700
-Message-ID: <CAJoAoZ=eq0zthCz_7CphnP5tg=8c_b=HmbS62Dm6L5V54bxSKA@mail.gmail.com>
-Subject: Re: about openbmc IRC
-To: =?UTF-8?B?5Y2X6YeO44Og44Or44K344Ko44Op44K0?= <1181052146@qq.com>
-Content-Type: multipart/alternative; boundary="000000000000834f1205932a6ba3"
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-LLNOutbound: False
+X-Disclaimed: 22703
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19092301-8877-0000-0000-000001338F4F
+X-IBM-SpamModules-Scores: BY=0.13013; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40304; ST=0; TS=0; UL=0; ISC=; MB=0.070070
+X-IBM-SpamModules-Versions: BY=3.00011824; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01265209; UDB=6.00669274; IPR=6.01047140; 
+ MB=3.00028757; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-23 01:39:36
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-22 21:23:42 - 6.00010439
+x-cbparentid: 19092301-8878-0000-0000-00000445A03D
+Message-Id: <OFDC47175F.41C9D828-ON0025847E.0008C328-0025847E.00091D63@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-22_09:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,94 +82,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000834f1205932a6ba3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family=
+:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" ><div>Hi Al=
+l,</div>
+<div>&nbsp;</div>
+<div>This mail is regarding , the proposal for adding an additional propert=
+y `StaticNameservers` and also for changing the definition of the existing =
+`Nameservers` property.</div>
+<div>&nbsp;</div>
+<div>- Currently, we have a single DBUS property under Ethernet interface n=
+amed `Nameservers` that captures only StaticNameservers configured on the s=
+ystem. It does not populate the information regarding the DNS information t=
+hat is obtained by DHCP server.</div>
+<div>&nbsp;</div>
+<div>It is also to be noted that the static &amp; dynamic configuration can=
+ co-exist at the same time(means we might have the DNS set manually by user=
+ and also by the DHCP Server at the same time).</div>
+<div>&nbsp;</div>
+<div>As per the discussion with Ratan &amp; Wak(https://gerrit.openbmc-proj=
+ect.xyz/#/c/openbmc/phosphor-networkd/+/24224/),we had come to a conclusion=
+ that we need have two properties in the Backend for nameservers (similar t=
+o what we have in redfish):</div>
+<div>&nbsp;</div>
+<div>1. Nameservers - A read only property which captures the current names=
+ervers on the system (which may be static or/and dynamic)<br>2. StaticNames=
+ervers - A writeable property which captures only the static nameservers.</=
+div>
+<div>&nbsp;</div>
+<div>Please let me know, if anyone have concerns with this proposal.</div>
+<div>&nbsp;</div>
+<div>Thanks,<br>Manoj</div></div></div></div><BR>
 
-Hi,
-
-You need to register your nick with Freenode's NickServ.
-
-https://freenode.net/kb/answer/registration
-
-On Sun, Sep 22, 2019, 3:14 AM =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=
-=E3=82=A8=E3=83=A9=E3=82=B4 <1181052146@qq.com> wrote:
-
-> Dear:
->
-> i have registe on Riot: #openbmc:matrix.org
-> <https://riot.im/app/#/room/%23openbmc:matrix.org>
-> and i want to join openbmc, but eveny i join, i was kick off by
-> @appservice-irc:matrix.org
-> with the error:
-> You were kicked from openbmc by @appservice-irc:matrix.org
->
-> Reason: IRC error on #openbmc: err_needreggednick
->
-> i have register in Riot: #openbmc:matrix.org
-> <https://riot.im/app/#/room/%23openbmc:matrix.org> as nick name
-> zhuanyeshiti.
-> how can i join openbmc?
->
-> Best Regards!
->
->
-
---000000000000834f1205932a6ba3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hi,<div dir=3D"auto"><br></div><div dir=3D"auto">You need=
- to register your nick with Freenode&#39;s NickServ.</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto"><a href=3D"https://freenode.net/kb/answer/regi=
-stration">https://freenode.net/kb/answer/registration</a></div></div><br><d=
-iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Sep =
-22, 2019, 3:14 AM =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=
-=83=A9=E3=82=B4 &lt;<a href=3D"mailto:1181052146@qq.com">1181052146@qq.com<=
-/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div>Dear:</div><div=
-><br></div><div>i have registe on=C2=A0<span style=3D"color:rgb(36,41,46);f=
-ont-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,=
-Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&=
-quot;Segoe UI Symbol&quot;;font-size:16px">Riot:</span><span style=3D"color=
-:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&=
-quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe =
-UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16px">=C2=A0</span><a =
-href=3D"https://riot.im/app/#/room/%23openbmc:matrix.org" rel=3D"nofollow n=
-oreferrer" style=3D"font-family:-apple-system,BlinkMacSystemFont,&quot;Sego=
-e UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;S=
-egoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16px;background-c=
-olor:initial;box-sizing:border-box;color:rgb(3,102,214);text-decoration-lin=
-e:none" target=3D"_blank">#openbmc:matrix.org</a></div><div>and i want to j=
-oin openbmc, but eveny i join, i was kick off by=C2=A0<span style=3D"backgr=
-ound-color:rgb(242,245,248);color:rgb(46,47,50);font-family:Nunito,Twemoji,=
-&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Noto Color E=
-moji&quot;,Arial,Helvetica,sans-serif;font-size:18px">@appservice-irc:<a hr=
-ef=3D"http://matrix.org" target=3D"_blank" rel=3D"noreferrer">matrix.org</a=
-></span></div><div>with the error:</div><div><h3 style=3D"font-size:18px;ma=
-rgin:4px;color:rgb(46,47,50);font-family:Nunito,Twemoji,&quot;Apple Color E=
-moji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Noto Color Emoji&quot;,Arial,He=
-lvetica,sans-serif;background-color:rgb(242,245,248)">You were kicked from =
-openbmc by @appservice-irc:<a href=3D"http://matrix.org" target=3D"_blank" =
-rel=3D"noreferrer">matrix.org</a></h3><p style=3D"margin:4px;color:rgb(46,4=
-7,50);font-family:Nunito,Twemoji,&quot;Apple Color Emoji&quot;,&quot;Segoe =
-UI Emoji&quot;,&quot;Noto Color Emoji&quot;,Arial,Helvetica,sans-serif;font=
--size:15px;background-color:rgb(242,245,248)">Reason: IRC error on #openbmc=
-: err_needreggednick</p></div><div><br></div><div>i have register in=C2=A0<=
-span style=3D"color:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemF=
-ont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji=
-&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size:16p=
-x">Riot:=C2=A0</span><a href=3D"https://riot.im/app/#/room/%23openbmc:matri=
-x.org" rel=3D"nofollow noreferrer" style=3D"box-sizing:border-box;color:rgb=
-(3,102,214);text-decoration-line:none;font-family:-apple-system,BlinkMacSys=
-temFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color E=
-moji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;font-size=
-:16px" target=3D"_blank">#openbmc:matrix.org</a>=C2=A0as nick name zhuanyes=
-hiti.</div><div>how can i join openbmc?</div><div><br></div><div>Best Regar=
-ds!</div><div><br></div></blockquote></div>
-
---000000000000834f1205932a6ba3--
