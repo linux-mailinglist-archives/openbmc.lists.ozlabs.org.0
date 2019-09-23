@@ -1,51 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D7E4BB73E
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 16:54:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5251BB7F4
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 17:31:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cS650Cs4zDqLd
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 00:54:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cSwg2Gm5zDqHx
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 01:31:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=163.com
- (client-ip=220.181.13.86; helo=m13-86.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="aCK/fW9a"; 
- dkim-atps=neutral
-Received: from m13-86.163.com (m13-86.163.com [220.181.13.86])
- by lists.ozlabs.org (Postfix) with ESMTP id 46cS5K6fTGzDqCY
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 00:54:06 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=68yhp
- 6Mo2LRAn6Km9oq6kyIr7RaYrGFdvfmCRvgD4jQ=; b=aCK/fW9a5LhI+Hfb9Qaoh
- TGTuN9g8CjQjK4PkfKjxSoHJBbCU0IETyiVUeUTqmScYGAPa5bEOnJvCpmfBSIqG
- TNa/FJhn54NXHaD4unXSFtJL/aTOWrHDKwmTdq6q+dNWyHHLnGk+hZkKUqzHXhvp
- IDLkIEcIVefjfLEbrltOy4=
-Received: from ouyangxuan10$163.com ( [221.219.103.57] ) by
- ajax-webmail-wmsvr86 (Coremail) ; Mon, 23 Sep 2019 22:53:59 +0800 (CST)
-X-Originating-IP: [221.219.103.57]
-Date: Mon, 23 Sep 2019 22:53:59 +0800 (CST)
-From: www <ouyangxuan10@163.com>
-To: openbmc@lists.ozlabs.org
-Subject: why cow cannot upload *.bin file ?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-X-CM-CTRLDATA: GjFeFWZvb3Rlcl9odG09MzkwOjU2
-Content-Type: multipart/alternative; 
- boundary="----=_Part_148340_197596382.1569250439224"
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cSsq514bzDqJR
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 01:29:18 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8NFRCHK059004; Mon, 23 Sep 2019 11:29:10 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v6yqxjsvx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Sep 2019 11:29:10 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8NFAM5C032150;
+ Mon, 23 Sep 2019 15:29:09 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 2v5bg71j72-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 23 Sep 2019 15:29:09 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x8NFT8X713959836
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 23 Sep 2019 15:29:08 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8164028060;
+ Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 570212805E;
+ Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Proposal to merge code into openbmc 2.7 warrior branch
+To: openbmc <openbmc@lists.ozlabs.org>
+Message-ID: <586101dc-f7bd-37f8-9377-0ecbb3d4fc88@linux.ibm.com>
+Date: Mon, 23 Sep 2019 10:29:07 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-Message-ID: <146fa66a.9acd.16d5e9d7038.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: VsGowABndnaH3IhdxMj+AA--.51764W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiLgc52lSIkKvidAAAs7
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-23_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1909230146
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,26 +85,53 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_148340_197596382.1569250439224
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+This proposal is to merge code into the [OpenBMC 2.7 warrior fix 
+branch][].  There are three sets of changes:
+1. Refresh our warrior branch with fixes from the yocto warrior branch.
+2. Customize SSH ciphers to harmonize with our HTTPS ciphers.
+3. Pick up a fix to make it easier to downgrade to earlier releases.
 
-RGVhciBhbGwsCgoKd2hlbiBJIHVzZSBjb3cgdXBsb2FkICouYmluIHRvIEJNQywgaXQgcmV0dXJu
-IGVycm9yIHdpbGwgcXVpY2tseSwgYW5kIEkgY2FuIGNvbmZpcm0gdGhhdCB0aGUgbWlycm9yIGZp
-bGUgaGFzIG5vdCBiZWVuIHVwbG9hZGVkIGludG8gdGhlIEJNQywgYnV0IGl0IGhhcyBiZWVuIHJl
-dHVybmVkIGluY29ycmVjdGx5KGp1c3Qgb25lIG9yIHR3byBzZWNvbmQpLCB3aHk/IAoKCnRoYW5r
-cywKQnlyb24=
-------=_Part_148340_197596382.1569250439224
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Details for each of these are below.  Can we get these merged?
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj53aGVuIEkgdXNlIGNvdyB1cGxvYWQgKi5iaW4gdG8gQk1DLCBpdCByZXR1cm4gZXJyb3Igd2ls
-bCBxdWlja2x5LCBhbmQgSSBjYW4gY29uZmlybSB0aGF0IHRoZSBtaXJyb3IgZmlsZSBoYXMgbm90
-IGJlZW4gdXBsb2FkZWQgaW50byB0aGUgQk1DLCBidXQgaXQgaGFzIGJlZW4gcmV0dXJuZWQgaW5j
-b3JyZWN0bHkoanVzdCBvbmUgb3IgdHdvIHNlY29uZCksIHdoeT8mbmJzcDs8L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PnRoYW5rcyw8L2Rpdj48ZGl2PkJ5cm9uPC9kaXY+PC9kaXY+PGJyPjxicj48
-c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_148340_197596382.1569250439224--
+References:
+- [OpenBMC 2.7 warrior fix branch]: 
+https://github.com/openbmc/openbmc/tree/warrior
+- [release notes]: 
+https://github.com/openbmc/docs/blob/master/release/release-notes.md
+
+
+- Joseph
+
+
+
+1. Pick up fixes from yocto branch=warrior.  This has security fixes 
+that we should pick up.
+
+
+2. Pick up the [SSH dropbear patch] to disable medium strength ciphers 
+which brings SSH close to parity with [BMCWeb HTTPS ciphers][].  
+Specifically, it removes medium strength ciphers, leaving only strong 
+ciphers  (Note that BMCWeb offers additional strong HTTPS ciphers which 
+our Dropbear SSH server does not yet support.)  This change is in the 
+yocto master branch, so it is the new behavior going forward, but was 
+not accepted into yocto branch=warrior because it is a configuration 
+change and not a fix. We consider this to be a security fix.  We should 
+pick it up to match the ciphers accepted by our HTTPS server.
+
+References:
+- [SSH dropbear patch]: 
+http://cgit.openembedded.org/openembedded-core/tree/meta/recipes-core/dropbear/dropbear/dropbear-disable-weak-ciphers.patch?h=master
+- [BMCWeb https config]: 
+https://github.com/openbmc/bmcweb/blob/27062605f8ddbafeec691ed9556fe90f2c1ab8d2/include/ssl_key_handler.hpp
+
+
+3. Pick up the [nginx patch][] to mitigate a problem downgrading from 
+2.7 to earlier releases.  The underlying [nginx downgrade issue][] is in 
+OpenBMC, so that's where the fix should go.  This should be merged into 
+openbmc master branch first, then picked up by branch=warrior.
+
+Refernces:
+- [nginx patch]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm/+/23203
+- [nginx downgrade issue]: https://github.com/openbmc/openbmc/issues/3564
 
