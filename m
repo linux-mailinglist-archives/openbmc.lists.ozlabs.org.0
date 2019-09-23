@@ -2,62 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB65BBAD84
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:43:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D5EBBADC2
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 08:27:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cCsX5WnGzDqM3
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:43:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cDrP1MGpzDqMp
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 16:27:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=quantatw.com
- (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=162af5dca=will.liang@quantatw.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-X-Greylist: delayed 70 seconds by postgrey-1.36 at bilbo;
- Mon, 23 Sep 2019 15:42:34 AEST
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 46cCrp2F6BzDqFF
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 15:42:32 +1000 (AEST)
-Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
- by mx02.quantatw.com with ESMTP; 23 Sep 2019 13:41:18 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
- (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 23 Sep
- 2019 13:41:16 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Mon, 23 Sep 2019 13:41:15 +0800
-From: =?big5?B?V2lsbCBMaWFuZyAoseelw7liKQ==?= <Will.Liang@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Questions of openbmc-test-automation
-Thread-Topic: Questions of openbmc-test-automation
-Thread-Index: AdVx0P1eBqQZB68LR7SxY3B/v1ijag==
-Date: Mon, 23 Sep 2019 05:41:15 +0000
-Message-ID: <a1b7c13a259b4e259796bbcf07834ae7@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-24928.000
-x-tm-as-result: No-10--4.692600-5.000000
-x-tmase-matchedrid: GBgFBUqwD4Gb5g0gI2gnR5zEHTUOuMX33dCmvEa6IiEwneWeZqRldCEP
- i3T0m113CxmBUpvLT/j0MrpnqoHQfET9KnQ8PcbHR4PPMO+JjQ6sU/iX0A2wjzLylsg8ZKqliMD
- 6wB/IizLcywuObjo1nJEOYQ7YFMsPTweK12oEGfsNWST4IbzspxfbPFE2GHrVvGAx/1ATZ5t/HZ
- ivtns2jD1Lbqp/vHdw703hU3XN9hy35J/JantqGgPZZctd3P4BReO1woEOVTeXBXaJoB9JZ4MbH
- 85DUZXy3QfwsVk0Ubt2gyyw2xTBhZx/gxjdJPCdUQwf3wYrZIXgVildYWheOP78OJA8oFEt0LK8
- sRJ+ftfiQG4tWCftl/qCCqMDdU6iRuK0Zqqt8HTzPQ4scHsdE7ZyCaqBVvUQlCuyVnTLq5sVeXF
- y3Qdw7wCsa7rqKSmJmFdpTdj6xmo=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--4.692600-5.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-24928.000
-x-tm-snts-smtp: E060C1EF3195816F6E49C0E3A1086F1D776358118A125DAB91B556C5C88248CE2000:B
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="inbXuWBJ"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="TllAOK5f"; dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cDqc435NzDqLg
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 16:26:35 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 7650C2206E;
+ Mon, 23 Sep 2019 02:26:31 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Mon, 23 Sep 2019 02:26:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=xXlKD
+ VcPTYISOQjCV5QKQtw/sqJYoC81tv0W4xO5muM=; b=inbXuWBJx82gNuGRzz86b
+ MmW5Q5z4EIdGPijS7l05M3gVn+u3GVj+bNi3qWQzyc7B6StbL9GBGJMTZ4pYxUba
+ or0ZZ36cibUU6SAgKCZ36lI3a5wdgEQ3mAKjHNMzcc329i2Yq/7uSxb2+T4uLag8
+ gVs/6J0MhhRjRnfXO84Sgu/cdKRlldLC+ZPnEiXbDpvTKhQ29J/NF88SlqQB7WYR
+ 2iUPnwMzGIbLU3t+Wt7rY8PWUaaE5J3+oa8bna0aykcOzZvgIyh9XWuXER0iKyiu
+ OFZWN37v3Que/MyWrnRwGL098VGF2jdboJpr2hriqTQ+xolY65NxgGcm7q9J/pFV
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=xXlKDVcPTYISOQjCV5QKQtw/sqJYoC81tv0W4xO5m
+ uM=; b=TllAOK5fkT4DKpRW038iLYnJoYUXaiqOBTu2Z6peB42xY9gH7pTjSNMji
+ jcdb8iGGZj3b1Y/b1FhCMoesTZkORUzjgy2dqdsjMf/BxdxqsoYDI68Tv+1l3xDd
+ e7QkxyjGEa8fUZyqXRsqp5XtH8O/9Bz2VblQj9Sc9lYDKKdGDS0K2DxRD8PppFvA
+ icb7yIC7+BpIXWQ8k7gPBT5+JmGbQCyBzgue7S0tOYPHhBdOgh9Vbdo/XeS+4VJM
+ EkcxT6h14rZFQWjM+HyryetCyu592T+DeJagpVOjjCQEb+GQXwvE4BsT5hNzYRC7
+ K2aFTNQsMiXEIXQ7oJEhTINcWBwUg==
+X-ME-Sender: <xms:lmWIXWQY2fNRbgKsGhzpaG-SfuMx_2QS_4AfPnoYw92aG-GlacDj-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdejgdduudduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrg
+ hrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushht
+ vghrufhiiigvpedt
+X-ME-Proxy: <xmx:lmWIXQAwrrQEyrc1aA2MzLbaXscwNxaKHelqnIvyBKfsh9F8mvo1xg>
+ <xmx:lmWIXe1c9W555X4b9iC-pkJXcsr1moO5rDsebtwKEEf3nffeE-MzXA>
+ <xmx:lmWIXWWIcO-ul3eAwVTsU-oLtmaCzDvucn54xseGKdukyukJx8UlQA>
+ <xmx:l2WIXa1wqONl8l9k5YItLsUa-82_rCj903Xzbnv_VWDIahb41UpgtA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 760E7E00A5; Mon, 23 Sep 2019 02:26:30 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-238-g170a812-fmstable-20190913v1
+Mime-Version: 1.0
+Message-Id: <d36969ea-b675-42ab-9d82-677b9f81015d@www.fastmail.com>
+In-Reply-To: <21e873ea-4873-5bac-0433-3f4dbb70be97@kaod.org>
+References: <20190922123700.749-1-andrew@aj.id.au>
+ <20190922123700.749-6-andrew@aj.id.au>
+ <21e873ea-4873-5bac-0433-3f4dbb70be97@kaod.org>
+Date: Mon, 23 Sep 2019 15:56:06 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ "Joel Stanley" <joel@jms.id.au>
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_5/6]_net:_ftgmac100:_Ungate_RCLK_for_?=
+ =?UTF-8?Q?RMII_on_AST2600?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,27 +93,129 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGksDQoNCkkgdXNlIHRoZSAib3BlbmJtYy10ZXN0LWF1dG9tYXRpb24iIHBhY2thZ2UgdG8gdGVz
-dCBvdXIgcHJvamVjdC4NCkFuZCBJIGp1c3Qgd2FudCB0byBpbXBsZW1lbnQgdGhlIElQTUkgdGVz
-dCBjYXNlIGJlY2F1c2Ugb3VyIHBsYXRmb3JtIGRvZXMgbm90IHN1cHBvcnQgUkVERklTSCAoSVBN
-SSBvbmx5KS4NCkJ1dCBJIGZvdW5kIHRoYXQgaW4gdGhlIElQTUkgdGVzdCBjYXNlLCBpdCB1c2Ug
-dGhlIFJFRklTSCBjb21tYW5kIGFzIHdlbGwgKGVnIFJlZGZpc2ggcG93ZXIgb25bMF0pLg0KDQpb
-MF0gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy10ZXN0LWF1dG9tYXRpb24vYmxv
-Yi8yYTUyMGVlMzdjNzJlYTg0N2NhMmQ2Yzc3MzQ5M2E2ZGQ3NTJjODI3L2lwbWkvdGVzdF9pcG1p
-X3Nkci5yb2JvdCNMNTkNCg0KTXkgcXVlc3Rpb25zIGFyZSBmb2xsb3dpbmc6DQoxLiBBcmUgdGhl
-cmUgb3RoZXIgd2F5cyB0byBhdm9pZCB1c2luZyB0aGUgUmVkZmlzaCBjb21tYW5kcz8NCjIuIElz
-IGl0IHBvc3NpYmxlIHRvIGFkZCBwYXJhbWV0ZXIoZXg6UFJPVE9DT0wpIG9uIHRoZSBjb21tYW5k
-IGxpbmUgdG8gc2VsZWN0IHRoZSBwcm90b2NvbCB0byB1c2U/DQpGb3IgZXhhbXBsZToNCi0gYWRk
-IHRoZSBuZXcga2V5d29yZCBtYXliZSBsaWtlICJQb3dlciBPbiIuDQotIGFuZCB0aGUgbmV3IGtl
-eXdvcmQgInBvd2VyIG9uIiBjYW4gdXNlIHRoZSBuZXcgcGFyYW1ldGVyIHRvIGNob29zZSB3aGF0
-IHByb3RvY29sIGJlIHVzZWQoZGVmYXVsdCBwcm90b2NvbCBpcyBSRURGSVNIIGlmIG5vdCBzZXQp
-Lg0KLSB0aGUgbmV3IGtleXdvcmQgbGlrZSBiZWxvdzoNClBvd2VyIE9uDQogICAgW0RvY3VtZW50
-YXRpb25dICBzZWxlY3QgdGhlIGV4ZWN1dGUgcHJvdG9jb2wuDQogICAgW0FyZ3VtZW50c10gICR7
-c3RhY2tfbW9kZX09JHtzdGFja19tb2RlfSAgJHtxdWlldH09JHtxdWlldH0NCg0KICAgIFJ1biBL
-ZXl3b3JkIElmICAnJHtQUk9UT0NPTH0nID09ICdSZWRmaXNoJw0KICAgIC4uLiAgIFJlZGZpc2gg
-UG93ZXIgT24gICAgc3RhY2tfbW9kZT1za2lwICAgIHF1aWV0PTANCiAgICAuLi4gICBFTFNFICAg
-IElQTUkgUG93ZXIgT24gICAgc3RhY2tfbW9kZT1za2lwICAgIHF1aWV0PTANCg0KQlJzDQpXaWxs
-DQo=
+
+
+On Mon, 23 Sep 2019, at 15:42, C=C3=A9dric Le Goater wrote:
+> On 22/09/2019 14:36, Andrew Jeffery wrote:
+> > The 50MHz RMII RCLK has to be enabled before the interface will func=
+tion.
+> >=20
+> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> > ---
+> >  drivers/net/ethernet/faraday/ftgmac100.c | 43 ++++++++++++++++++++-=
+---
+> >  1 file changed, 36 insertions(+), 7 deletions(-)
+> >=20
+> > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/=
+ethernet/faraday/ftgmac100.c
+> > index 9b7af94a40bb..21a58aad1a19 100644
+> > --- a/drivers/net/ethernet/faraday/ftgmac100.c
+> > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
+> > @@ -90,6 +90,9 @@ struct ftgmac100 {
+> >  	struct mii_bus *mii_bus;
+> >  	struct clk *clk;
+> > =20
+> > +	/* 2600 RMII clock gate */
+> > +	struct clk *rclk;
+> > +
+> >  	/* Link management */
+> >  	int cur_speed;
+> >  	int cur_duplex;
+> > @@ -1718,11 +1721,27 @@ static void ftgmac100_ncsi_handler(struct nc=
+si_dev *nd)
+> >  		   nd->link_up ? "up" : "down");
+> >  }
+> > =20
+> > -static void ftgmac100_setup_clk(struct ftgmac100 *priv)
+> > +static int ftgmac100_setup_clk(struct ftgmac100 *priv)
+> >  {
+> > -	priv->clk =3D devm_clk_get(priv->dev, NULL);
+> > -	if (IS_ERR(priv->clk))
+> > -		return;
+> > +	struct clk *clk;
+> > +	bool is_ast2600;
+> > +
+> > +	is_ast2600 =3D of_device_is_compatible(priv->dev->of_node,
+> > +					     "aspeed,ast2600-mac");
+>=20
+> why is ast2600 particular ?=20
+
+It isn't, as Joel pointed out. We need this for at least the 2500 as wel=
+l, but I didn't think to check as u-boot has been leaving the clock unga=
+ted.
+
+>=20
+> > +	clk =3D devm_clk_get(priv->dev, NULL /* MACCLK */);
+> > +	if (IS_ERR(clk))
+> > +		return PTR_ERR(clk);
+> > +	priv->clk =3D clk;
+> > +
+> > +	clk =3D devm_clk_get_optional(priv->dev, "RCLK");
+> > +	if (!clk && is_ast2600 && priv->use_ncsi) {
+> > +		dev_err(priv->dev, "Cannot ungate RCLK");
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	priv->rclk =3D clk;
+> > +	clk_prepare_enable(priv->rclk);
+> > =20
+> >  	clk_prepare_enable(priv->clk);
+> > =20
+> > @@ -1732,6 +1751,8 @@ static void ftgmac100_setup_clk(struct ftgmac1=
+00 *priv)
+> >  	 */
+> >  	clk_set_rate(priv->clk, priv->use_ncsi ? FTGMAC_25MHZ :
+> >  			FTGMAC_100MHZ);
+> > +
+> > +	return 0;
+> >  }
+> > =20
+> >  static int ftgmac100_probe(struct platform_device *pdev)
+> > @@ -1853,8 +1874,11 @@ static int ftgmac100_probe(struct platform_de=
+vice *pdev)
+> >  			goto err_setup_mdio;
+> >  	}
+> > =20
+> > -	if (priv->is_aspeed)
+> > -		ftgmac100_setup_clk(priv);
+> > +	if (priv->is_aspeed) {
+> > +		err =3D ftgmac100_setup_clk(priv);
+> > +		if (err)
+> > +			goto err_ncsi_dev;
+> > +	}
+> > =20
+> >  	/* Default ring sizes */
+> >  	priv->rx_q_entries =3D priv->new_rx_q_entries =3D DEF_RX_QUEUE_ENT=
+RIES;
+> > @@ -1886,8 +1910,11 @@ static int ftgmac100_probe(struct platform_de=
+vice *pdev)
+> > =20
+> >  	return 0;
+> > =20
+> > -err_ncsi_dev:
+> >  err_register_netdev:
+> > +	if (priv->rclk)
+> > +		clk_disable_unprepare(priv->rclk);
+> > +	clk_disable_unprepare(priv->clk);
+> > +err_ncsi_dev:
+> >  	ftgmac100_destroy_mdio(netdev);
+> >  err_setup_mdio:
+> >  	iounmap(priv->base);
+> > @@ -1909,6 +1936,8 @@ static int ftgmac100_remove(struct platform_de=
+vice *pdev)
+> > =20
+> >  	unregister_netdev(netdev);
+> > =20
+> > +	if (priv->rclk)
+> > +		clk_disable_unprepare(priv->rclk);
+> >  	clk_disable_unprepare(priv->clk);
+> > =20
+> >  	/* There's a small chance the reset task will have been re-queued,=
+
+> >=20
+>=20
+>
