@@ -1,63 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E231BAD61
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:01:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA6D2BAD62
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:02:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cBws6vG4zDqLM
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:01:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cByT3cQpzDqKf
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:02:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::741; helo=mail-qk1-x741.google.com;
+ (client-ip=2607:f8b0:4864:20::842; helo=mail-qt1-x842.google.com;
  envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="Yh5c0yDf"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="LjDdGo3x"; 
  dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
+Received: from mail-qt1-x842.google.com (mail-qt1-x842.google.com
+ [IPv6:2607:f8b0:4864:20::842])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cBtN4qhFzDqLF
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 14:58:52 +1000 (AEST)
-Received: by mail-qk1-x741.google.com with SMTP id y144so14005578qkb.7
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 21:58:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cBtS14YWzDqKR
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 14:58:56 +1000 (AEST)
+Received: by mail-qt1-x842.google.com with SMTP id c21so15601377qtj.12
+ for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 21:58:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yuPVA4YNUgdfVSz2wP8la6nheq6ek02FsCGDFsnMW2Q=;
- b=Yh5c0yDfwXy8AOPub4Uu/d1+e2vxgtJJ1X4Zkhv/AFFRGuSEB11/Cd8P5p3yiyOb1d
- hdMJgQ9TcGfrmmgyFKUhk4LNJZ5hPuTJTabXvOOW9XBrEBg5f5a5NIYeKoku0Reqko71
- IfI+BcY1uLJ9w9gAVViHDnm2Amj+nfvN5xCwc=
+ :cc; bh=ltSpkGx9JxwEV0YUbXRmwA8GimmkxvyE+wL0KnnbJnI=;
+ b=LjDdGo3xDA+bFpsDVDCpOUcjWct0CQO10OT/rdZD8eqAsA9Ds2qtzBrLWaW1+p9uEr
+ PYg6zKMkcKrvU1/Y3WkhTrt+7nMb8BbQS65tr5Coq9loZBGKV1dR5OP/4CloG3yrHs7w
+ K7zvTEG/erIPhvzHQdupigotpChRqw8rxxgdU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=yuPVA4YNUgdfVSz2wP8la6nheq6ek02FsCGDFsnMW2Q=;
- b=O0eVun/4rrJ08LeeFqWznsqNqF1DtFgArvaYiVneExSKTCWkRXUuBeuMHBEN1e0yBB
- Q6h1GOiAjmEYSKsaGq0s5o9RgcfI04r2agn5iue1O+h6aGvHyo3RDHL+9NHAWyuERFZ4
- Yc+9gRt5aGRqv8WxO52YKHARoHo9FlXzsvQej0NtoP/EVAo5GUWfoPfV8PJbviCO2gMN
- VM5ny7K70H8gNee+k5UQ1CS2Ods4+oKodMykOssACzhfgXmpQHn9Rt7dFfV1rBDaVZKR
- TWk0Vj6XzM6uD8Jhd7LGsBb+v8aP6yO+BXnP9OMpybv49M6AjwFIQrEYGsriNxh46IWs
- LncQ==
-X-Gm-Message-State: APjAAAX2LGqrgWZvljs32Gaw0fYSbIvgi/ll0EJyNTyDpYiE5nEI0blz
- cX1UGzSuhrYsNdPm0Jc+eSGtxiejoA1GfHnddwFn4A==
-X-Google-Smtp-Source: APXvYqyb5ARsfZ/a8yqN4bNUlVC8BIINrBdGp78z6JXTrznssGUAUHIrgcgxLpIjG4n+WiQChd1ku/ERSV9vRgBqUvk=
-X-Received: by 2002:a37:4a54:: with SMTP id x81mr15414547qka.292.1569214730035; 
- Sun, 22 Sep 2019 21:58:50 -0700 (PDT)
+ bh=ltSpkGx9JxwEV0YUbXRmwA8GimmkxvyE+wL0KnnbJnI=;
+ b=FiBMexmMavrOPZQQiZzskNFSRTc69b3mOVoHxrQrKWxRVdhFcGDSDc8lyTRc8souCU
+ m8ZKH1BTe+uafV6mHLjPMVlTCFO9k9shZgsCSz1qpU3AnhRXPq7ZvyJGAAAS8cemTCNx
+ B67sZZNC7egdaJY+lkqS2w5ETTvWfENy1wea8RCIUA0YogPGc2yYedxE5knYrl5l/siH
+ Ohq/tzWUU/vmLDM2qVQurmbxHCjUibkSwL8IdN47VgxASeizRo+sj6pP9cNNg9iBdPgH
+ H/0IgxoWhFf/N+8pOliPgIuNaMT5A0YjyFF58kMMw7HLtOzJmejy1n6wO6c6Y9t2SHew
+ TmZw==
+X-Gm-Message-State: APjAAAVAAwyR5Gs8bxeVMSEMfA5MmzI/H67LJW9Klgjeo4pjc+21R3Pe
+ kqgTVDUqxcwMZbqfUTwrAALVlL8sdA0F+jk0o+c=
+X-Google-Smtp-Source: APXvYqywfO6h10D6cluc2ghZjRmmncexRbksh7iN8o9E93bcfir3DDqUThGYOhi/3NaBK+3eF81+JbluqAobSVJBU0U=
+X-Received: by 2002:ac8:2f81:: with SMTP id l1mr15696209qta.269.1569214733389; 
+ Sun, 22 Sep 2019 21:58:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20190922123700.749-1-andrew@aj.id.au>
- <20190922123700.749-5-andrew@aj.id.au>
-In-Reply-To: <20190922123700.749-5-andrew@aj.id.au>
+ <20190922123700.749-3-andrew@aj.id.au>
+In-Reply-To: <20190922123700.749-3-andrew@aj.id.au>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 23 Sep 2019 04:58:38 +0000
-Message-ID: <CACPK8XccXtSrcavpXBERE4cHRQmJzbSa5g61cM+6n_nGTb51bQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.3 4/6] clk: ast2600: Add RMII RCLK gates for
- all four MACs
+Date: Mon, 23 Sep 2019 04:58:42 +0000
+Message-ID: <CACPK8Xf_ciMEtayQ78yUo=YhrovRMe65xuwviE+DWXDSuQb5-Q@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.3 2/6] dt-bindings: net: ftgmac100: Describe
+ clock properties
 To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -77,97 +77,37 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Sun, 22 Sep 2019 at 12:36, Andrew Jeffery <andrew@aj.id.au> wrote:
 >
-> RCLK is a fixed 50MHz clock derived from HPLL that is described by a
-> single gate for each MAC.
-
-This is true for the AST2500 as well (SCU48). For completeness, can we
-have a patch that enables that?
-
+> Critically, the AST2600 requires ungating the RMII RCLK if e.g. NCSI is
+> in use.
+>
 > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 > ---
->  drivers/clk/clk-ast2600.c | 37 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 36 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/net/ftgmac100.txt | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
-> index 1c1bb39bb04e..45531495391c 100644
-> --- a/drivers/clk/clk-ast2600.c
-> +++ b/drivers/clk/clk-ast2600.c
-> @@ -15,7 +15,7 @@
->
->  #include "clk-aspeed.h"
->
-> -#define ASPEED_G6_NUM_CLKS             67
-> +#define ASPEED_G6_NUM_CLKS             71
->
->  #define ASPEED_G6_SILICON_REV          0x004
->
-> @@ -40,6 +40,9 @@
->
->  #define ASPEED_G6_STRAP1               0x500
->
-> +#define ASPEED_MAC12_CLK_DLY           0x340
-> +#define ASPEED_MAC34_CLK_DLY           0x350
+> diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt b/Documentation/devicetree/bindings/net/ftgmac100.txt
+> index 04cc0191b7dd..c443b0b84be5 100644
+> --- a/Documentation/devicetree/bindings/net/ftgmac100.txt
+> +++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
+> @@ -24,6 +24,12 @@ Optional properties:
+>  - no-hw-checksum: Used to disable HW checksum support. Here for backward
+>    compatibility as the driver now should have correct defaults based on
+>    the SoC.
+> +- clocks: In accordance with the generic clock bindings. Must describe the MAC
+> +  IP clock, and optionally an RMII RCLK gate for the AST2600.
+
+perhaps: "and optionally a RMII clock if RMII or NC-SI is used"
+
+We should implement this for the ast2500 too.
+
+
+> +- clock-names:
 > +
->  /* Globally visible clocks */
->  static DEFINE_SPINLOCK(aspeed_g6_clk_lock);
+> +      - "MACCLK": The MAC IP clock
+> +      - "RCLK": Clock gate for the RMII RCLK
 >
-> @@ -494,6 +497,22 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
->                 return PTR_ERR(hw);
->         aspeed_g6_clk_data->hws[ASPEED_CLK_MAC12] = hw;
+>  Example:
 >
-> +       /* RMII1 50MHz (RCLK) output enable */
-> +       hw = clk_hw_register_gate(dev, "rmii1_rclk", "hpll", 0,
-> +                       scu_g6_base + ASPEED_MAC12_CLK_DLY, 29, 0,
-> +                       &aspeed_g6_clk_lock);
-
-We know that this is a 50MHz clock that comes from HPLL. We could
-describe that in the driver by creating a RCLK and then these four
-gates hang off of that parent.
-
-This would only be for completeness and correctness, it doesn't bring
-any added functionality to the system.
-
-
-
-
-> +       if (IS_ERR(hw))
-> +               return PTR_ERR(hw);
-> +       aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC1RCLK] = hw;
-> +
-> +       /* RMII2 50MHz (RCLK) output enable */
-> +       hw = clk_hw_register_gate(dev, "rmii2_rclk", "hpll", 0,
-> +                       scu_g6_base + ASPEED_MAC12_CLK_DLY, 30, 0,
-> +                       &aspeed_g6_clk_lock);
-> +       if (IS_ERR(hw))
-> +               return PTR_ERR(hw);
-> +       aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC2RCLK] = hw;
-> +
->         /* MAC3/4 AHB bus clock divider */
->         hw = clk_hw_register_divider_table(dev, "mac34", "hpll", 0,
->                         scu_g6_base + 0x310, 24, 3, 0,
-> @@ -503,6 +522,22 @@ static int aspeed_g6_clk_probe(struct platform_device *pdev)
->                 return PTR_ERR(hw);
->         aspeed_g6_clk_data->hws[ASPEED_CLK_MAC34] = hw;
->
-> +       /* RMII3 50MHz (RCLK) output enable */
-> +       hw = clk_hw_register_gate(dev, "rmii3_rclk", "hpll", 0,
-> +                       scu_g6_base + ASPEED_MAC34_CLK_DLY, 29, 0,
-> +                       &aspeed_g6_clk_lock);
-> +       if (IS_ERR(hw))
-> +               return PTR_ERR(hw);
-> +       aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC3RCLK] = hw;
-> +
-> +       /* RMII4 50MHz (RCLK) output enable */
-> +       hw = clk_hw_register_gate(dev, "rmii4_rclk", "hpll", 0,
-> +                       scu_g6_base + ASPEED_MAC34_CLK_DLY, 30, 0,
-> +                       &aspeed_g6_clk_lock);
-> +       if (IS_ERR(hw))
-> +               return PTR_ERR(hw);
-> +       aspeed_g6_clk_data->hws[ASPEED_CLK_GATE_MAC4RCLK] = hw;
-> +
->         /* LPC Host (LHCLK) clock divider */
->         hw = clk_hw_register_divider_table(dev, "lhclk", "hpll", 0,
->                         scu_g6_base + ASPEED_G6_CLK_SELECTION1, 20, 3, 0,
 > --
 > 2.20.1
 >
