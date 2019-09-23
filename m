@@ -2,51 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1D22BADFC
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 08:49:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EFC3BAE40
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 09:01:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cFLD4snxzDqMV
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 16:49:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cFcC17vwzDqJk
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 17:01:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=46.105.37.72; helo=4.mo177.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from 4.mo177.mail-out.ovh.net (4.mo177.mail-out.ovh.net
- [46.105.37.72])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cFKd5Wb1zDqJh
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 16:49:05 +1000 (AEST)
-Received: from player729.ha.ovh.net (unknown [10.108.42.82])
- by mo177.mail-out.ovh.net (Postfix) with ESMTP id 1FF4F10BA13
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 08:12:44 +0200 (CEST)
-Received: from kaod.org (lfbn-1-2240-157.w90-76.abo.wanadoo.fr [90.76.60.157])
- (Authenticated sender: clg@kaod.org)
- by player729.ha.ovh.net (Postfix) with ESMTPSA id 394CCA4034B6;
- Mon, 23 Sep 2019 06:12:42 +0000 (UTC)
-Subject: Re: [PATCH linux dev-5.3 5/6] net: ftgmac100: Ungate RCLK for RMII on
- AST2600
-To: Andrew Jeffery <andrew@aj.id.au>, joel@jms.id.au
-References: <20190922123700.749-1-andrew@aj.id.au>
- <20190922123700.749-6-andrew@aj.id.au>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <21e873ea-4873-5bac-0433-3f4dbb70be97@kaod.org>
-Date: Mon, 23 Sep 2019 08:12:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cFbd2JfpzDqDl
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 17:01:16 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Sep 2019 00:01:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,539,1559545200"; 
+ d="scan'208,217";a="218447034"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.239.196.255])
+ by fmsmga002.fm.intel.com with ESMTP; 23 Sep 2019 00:01:11 -0700
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: "'Alpana Kumari1'" <alpankum@in.ibm.com>
+References: <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
+ <OF2C925502.61CFC61B-ON0025847E.0023D3A6-0025847E.00243BE6@notes.na.collabserv.com>
+In-Reply-To: <OF2C925502.61CFC61B-ON0025847E.0023D3A6-0025847E.00243BE6@notes.na.collabserv.com>
+Subject: RE: HostWatchdogTimer related changes
+Date: Mon, 23 Sep 2019 15:01:11 +0800
+Message-ID: <000401d571dc$af8e2590$0eaa70b0$@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20190922123700.749-6-andrew@aj.id.au>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Ovh-Tracer-Id: 7087539916975999746
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrvdejgddutdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddm
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_000_0005_01D5721F.BDB2C520"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHvE8x/hp6gygUYXrPFFr6m2A8EYwJm2igupvJaZGA=
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZjhiZTMzYjUtY2U3YS00ZGE3LTk2MWUtODU2N2NmYjdlNzg0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiK2lvQ3JTWDlrdmVJSmpkV1Ruc3QwR0JVRFlQckZKR2EwZDBiZ3pscUI3anpKVnhUTVA1ejNoOUQwc3dSRVliSiJ9
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: request-justification,no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,110 +61,269 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, ed.tanous@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 22/09/2019 14:36, Andrew Jeffery wrote:
-> The 50MHz RMII RCLK has to be enabled before the interface will function.
-> 
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> ---
->  drivers/net/ethernet/faraday/ftgmac100.c | 43 ++++++++++++++++++++----
->  1 file changed, 36 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
-> index 9b7af94a40bb..21a58aad1a19 100644
-> --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> @@ -90,6 +90,9 @@ struct ftgmac100 {
->  	struct mii_bus *mii_bus;
->  	struct clk *clk;
->  
-> +	/* 2600 RMII clock gate */
-> +	struct clk *rclk;
-> +
->  	/* Link management */
->  	int cur_speed;
->  	int cur_duplex;
-> @@ -1718,11 +1721,27 @@ static void ftgmac100_ncsi_handler(struct ncsi_dev *nd)
->  		   nd->link_up ? "up" : "down");
->  }
->  
-> -static void ftgmac100_setup_clk(struct ftgmac100 *priv)
-> +static int ftgmac100_setup_clk(struct ftgmac100 *priv)
->  {
-> -	priv->clk = devm_clk_get(priv->dev, NULL);
-> -	if (IS_ERR(priv->clk))
-> -		return;
-> +	struct clk *clk;
-> +	bool is_ast2600;
-> +
-> +	is_ast2600 = of_device_is_compatible(priv->dev->of_node,
-> +					     "aspeed,ast2600-mac");
+This is a multipart message in MIME format.
 
-why is ast2600 particular ? 
+------=_NextPart_000_0005_01D5721F.BDB2C520
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +	clk = devm_clk_get(priv->dev, NULL /* MACCLK */);
-> +	if (IS_ERR(clk))
-> +		return PTR_ERR(clk);
-> +	priv->clk = clk;
-> +
-> +	clk = devm_clk_get_optional(priv->dev, "RCLK");
-> +	if (!clk && is_ast2600 && priv->use_ncsi) {
-> +		dev_err(priv->dev, "Cannot ungate RCLK");
-> +		return -EINVAL;
-> +	}
-> +
-> +	priv->rclk = clk;
-> +	clk_prepare_enable(priv->rclk);
->  
->  	clk_prepare_enable(priv->clk);
->  
-> @@ -1732,6 +1751,8 @@ static void ftgmac100_setup_clk(struct ftgmac100 *priv)
->  	 */
->  	clk_set_rate(priv->clk, priv->use_ncsi ? FTGMAC_25MHZ :
->  			FTGMAC_100MHZ);
-> +
-> +	return 0;
->  }
->  
->  static int ftgmac100_probe(struct platform_device *pdev)
-> @@ -1853,8 +1874,11 @@ static int ftgmac100_probe(struct platform_device *pdev)
->  			goto err_setup_mdio;
->  	}
->  
-> -	if (priv->is_aspeed)
-> -		ftgmac100_setup_clk(priv);
-> +	if (priv->is_aspeed) {
-> +		err = ftgmac100_setup_clk(priv);
-> +		if (err)
-> +			goto err_ncsi_dev;
-> +	}
->  
->  	/* Default ring sizes */
->  	priv->rx_q_entries = priv->new_rx_q_entries = DEF_RX_QUEUE_ENTRIES;
-> @@ -1886,8 +1910,11 @@ static int ftgmac100_probe(struct platform_device *pdev)
->  
->  	return 0;
->  
-> -err_ncsi_dev:
->  err_register_netdev:
-> +	if (priv->rclk)
-> +		clk_disable_unprepare(priv->rclk);
-> +	clk_disable_unprepare(priv->clk);
-> +err_ncsi_dev:
->  	ftgmac100_destroy_mdio(netdev);
->  err_setup_mdio:
->  	iounmap(priv->base);
-> @@ -1909,6 +1936,8 @@ static int ftgmac100_remove(struct platform_device *pdev)
->  
->  	unregister_netdev(netdev);
->  
-> +	if (priv->rclk)
-> +		clk_disable_unprepare(priv->rclk);
->  	clk_disable_unprepare(priv->clk);
->  
->  	/* There's a small chance the reset task will have been re-queued,
-> 
+Hi Alpana,
+
+=20
+
+Thanks for your update! Just curious why =E2=80=9Cnot to make this =
+change=E2=80=9D?  I think it is useful to add it into redfish.
+
+=20
+
+Thanks,
+
+Yong
+
+From: Alpana Kumari1 <alpankum@in.ibm.com>=20
+Sent: Monday, September 23, 2019 2:36 PM
+To: yong.b.li@linux.intel.com
+Cc: ed.tanous@intel.com; openbmc@lists.ozlabs.org
+Subject: Re: HostWatchdogTimer related changes
+
+=20
+
+Hi,
+
+=20
+
+yes, It was on hold for long time, and later it was decided  not to  =
+make this change.
+
+=20
+
+Closed now.
+
+=20
+
+=20
+
+Thanks,
+
+Alpana
+
+=20
+
+----- Original message -----
+From: "Yong Li" <yong.b.li@linux.intel.com =
+<mailto:yong.b.li@linux.intel.com> >
+To: <alpankum@in.ibm.com <mailto:alpankum@in.ibm.com> >
+Cc: "Tanous, Ed" <ed.tanous@intel.com <mailto:ed.tanous@intel.com> >, =
+"'OpenBMC Maillist'" <openbmc@lists.ozlabs.org =
+<mailto:openbmc@lists.ozlabs.org> >
+Subject: [EXTERNAL] HostWatchdogTimer related changes
+Date: Sat, Sep 21, 2019 4:26 PM
+=20
+
+Hi,
+
+=20
+
+I noticed there is a code review submitted my you:
+
+https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/      =20
+
+=20
+
+I noticed there is no any update for several days. I am working on the =
+related feature too:
+
+https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/
+
+=20
+
+Could you please check on them?
+
+=20
+
+If there is any comments/questions, just let me know.
+
+=20
+
+Thanks,
+
+Yong
+
+=20
+
+=20
+
+=20
+
+
+------=_NextPart_000_0005_01D5721F.BDB2C520
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta =
+name=3DGenerator content=3D"Microsoft Word 15 (filtered =
+medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=E5=AE=8B=E4=BD=93;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@=E5=AE=8B=E4=BD=93";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle20
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle21
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US link=3Dblue =
+vlink=3Dpurple><div class=3DWordSection1><p class=3DMsoNormal>Hi =
+Alpana,<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Thanks for your update! Just curious why =E2=80=9Cnot =
+to make this change=E2=80=9D?=C2=A0 I think it is useful to add it into =
+redfish.<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
+class=3DMsoNormal>Yong<o:p></o:p></p><p class=3DMsoNormal><a =
+name=3D"_____replyseparator"></a><b>From:</b> Alpana Kumari1 =
+&lt;alpankum@in.ibm.com&gt; <br><b>Sent:</b> Monday, September 23, 2019 =
+2:36 PM<br><b>To:</b> yong.b.li@linux.intel.com<br><b>Cc:</b> =
+ed.tanous@intel.com; openbmc@lists.ozlabs.org<br><b>Subject:</b> Re: =
+HostWatchdogTimer related changes<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><div><div><p =
+class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Hi,<o:p></o:p><=
+/span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>yes, It was on =
+hold for long time, and later it was decided&nbsp; not to&nbsp; make =
+this change.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Closed =
+now.<o:p></o:p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Thanks,<o:p></o=
+:p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Alpana<o:p></o:=
+p></span></p></div><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div><blockquote style=3D'border:none;border-left:solid =
+#AAAAAA 1.5pt;padding:0in 0in 0in =
+4.0pt;margin-left:3.75pt;margin-top:5.0pt;margin-right:0in;margin-bottom:=
+5.0pt'><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>----- Original =
+message -----<br>From: &quot;Yong Li&quot; &lt;<a =
+href=3D"mailto:yong.b.li@linux.intel.com">yong.b.li@linux.intel.com</a>&g=
+t;<br>To: &lt;<a =
+href=3D"mailto:alpankum@in.ibm.com">alpankum@in.ibm.com</a>&gt;<br>Cc: =
+&quot;Tanous, Ed&quot; &lt;<a =
+href=3D"mailto:ed.tanous@intel.com">ed.tanous@intel.com</a>&gt;, =
+&quot;'OpenBMC Maillist'&quot; &lt;<a =
+href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a>&gt;=
+<br>Subject: [EXTERNAL] HostWatchdogTimer related changes<br>Date: Sat, =
+Sep 21, 2019 4:26 PM<br>&nbsp;<o:p></o:p></span></p><div><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Hi,<o:p></o:p><=
+/span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>I noticed =
+there is a code review submitted my you:<o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'><a =
+href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/" =
+target=3D"_blank">https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+=
+/20308/</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>I noticed =
+there is no any update for several days. I am working on the related =
+feature too:<o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'><a =
+href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/" =
+target=3D"_blank">https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+=
+/24532/</a><o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Could you =
+please check on them?<o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>If there is =
+any comments/questions, just let me know.<o:p></o:p></span></p><p =
+style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Thanks,<o:p></o=
+:p></span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>Yong<o:p></o:p>=
+</span></p><p style=3D'margin:0in;margin-bottom:.0001pt'><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div></blockquote><div><p class=3DMsoNormal><span =
+style=3D'font-size:10.0pt;font-family:"Arial",sans-serif'>&nbsp;<o:p></o:=
+p></span></p></div></div><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p></div></body></html>
+------=_NextPart_000_0005_01D5721F.BDB2C520--
 
