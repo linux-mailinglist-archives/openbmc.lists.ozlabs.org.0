@@ -2,75 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5251BB7F4
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 17:31:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D20F9BBA89
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 19:29:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cSwg2Gm5zDqHx
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 01:31:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cWX71W5MzDqMN
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 03:29:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cSsq514bzDqJR
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 01:29:18 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8NFRCHK059004; Mon, 23 Sep 2019 11:29:10 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v6yqxjsvx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2019 11:29:10 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8NFAM5C032150;
- Mon, 23 Sep 2019 15:29:09 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 2v5bg71j72-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Sep 2019 15:29:09 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8NFT8X713959836
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 23 Sep 2019 15:29:08 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8164028060;
- Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 570212805E;
- Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS;
- Mon, 23 Sep 2019 15:29:08 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Proposal to merge code into openbmc 2.7 warrior branch
-To: openbmc <openbmc@lists.ozlabs.org>
-Message-ID: <586101dc-f7bd-37f8-9377-0ecbb3d4fc88@linux.ibm.com>
-Date: Mon, 23 Sep 2019 10:29:07 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cWWF72WYzDqLh
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 03:28:24 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Sep 2019 10:28:15 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,541,1559545200"; d="scan'208";a="195432021"
+Received: from linux.intel.com ([10.54.29.200])
+ by FMSMGA003.fm.intel.com with ESMTP; 23 Sep 2019 10:28:13 -0700
+Received: from [10.241.245.57] (unknown [10.241.245.57])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id E2B3E58045B;
+ Mon, 23 Sep 2019 10:28:10 -0700 (PDT)
+Subject: Re: Question for ACPI status
+To: Payne Yang <pyang4@lenovo.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>
+References: <01040816e6cf4b429f137cfbf727742c@lenovo.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <6d1b4c56-4622-f778-97ed-7a789917c48c@linux.intel.com>
+Date: Mon, 23 Sep 2019 10:28:10 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <01040816e6cf4b429f137cfbf727742c@lenovo.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-23_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909230146
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,56 +59,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This proposal is to merge code into the [OpenBMC 2.7 warrior fix 
-branch][].  There are three sets of changes:
-1. Refresh our warrior branch with fixes from the yocto warrior branch.
-2. Customize SSH ciphers to harmonize with our HTTPS ciphers.
-3. Pick up a fix to make it easier to downgrade to earlier releases.
+On 8/24/2019 9:37 PM, Payne Yang wrote:
+> Hi Vernon,
+> 
+> Thanks for your quick reply.
+> Please see my comment as below.
+> 
+>> -----Original Message-----
+>> From: Vernon Mauery <vernon.mauery@linux.intel.com>
+>> Sent: Saturday, August 24, 2019 4:11 AM
+>> To: Payne Yang <pyang4@lenovo.com>
+>> Cc: openbmc@lists.ozlabs.org
+>> Subject: [External] Re: Question for ACPI status
+>>
+>> On 23-Aug-2019 09:18 AM, Payne Yang wrote:
+>>> Hi Team,
+>>>
+>>> Is there any ACPI service to update the ACPI state ?
+>>> I could find that the property of ACPI state is defined in dbus, and the ipmi
+>> command is also done in package "phosphor-host-ipmid".
+>>> https://github.com/openbmc/phosphor-host-ipmid/blob/b90a53280c74e8c
+>> 65e8
+>>> dc58c8964d93a08cfd65e/apphandler.cpp#L202
+>>>
+>>> However, I could not find other services to update the property
+>> "ACPIPowerState".
+>>> https://github.com/search?q=org%3Aopenbmc+ACPIPowerState&type=Code
+>>
+>> That is because the host is the only entity that should be modifying that
+>> property.
+> [Payne]
+> Yes, I know that the host is the only entity.
+> Therefore, the host may need to send set ACPI state to BMC when it is shutdown.
+> 
+>>
+>>> Do I miss something ?
+>>> If yes, please help to share your comment or suggestion:)
+>>
+>> According to the IPMI specification:
+>> 	The Set ACPI Power State command can also be used as a mechanism
+>> for
+>> 	setting elements of the platform management subsystem to a
+>> 	particular power state. This is an independent setting that may not
+>> 	necessarily match the actual power state of the system. This command
+>> 	is used to enable the reporting of the power state, it does not
+>> 	control or change the power state.
+>>
+> [Payne]
+> It is correct.
+> However, actually, I just want to make the power state correct.
+> 
+>>> If no, it seems to me that I have to write a service as ACPI state monitor.
+>>
+>> Your particular platform may have different needs than other platforms
+>> running OpenBMC. A platform that needs to effect system-wide changes
+>> based on the Host-reported state (or possibly intended state) could listen for
+>> the property changed signal for the ACPIPowerState property and take
+>> action.
+>>
+>> But as the command is currently written, it conforms to the IPMI
+>> specification. There just happens to be no public consumers of that
+>> property.
+>>
+> [Payne]
+> Well, as I said previous, I just want to correct the power state.
+> My system is with a PWRGOOD pin connect to BMC as other platforms, but there is no service to monitor the PWRGOOD pin if the host shutdown is not caused by BMC.
+> In entity manager, the power state won`t change if there is no service to set the power related property.
+> Therefore, I want to clarify if I miss some package which could monitor PWRGOOD pin even if the PWRGOOD state change is not caused by BMC (eg. "shutdown/init 0" command in OS, "reset -s" command in BIOS shell or global reset).
+> If there is no service, I may have service design to monitor PWRGOOD pin to handle this situation.
+> And it may be better to sync the power state and ACPI state:)
+> 
+Hi Payne,
 
-Details for each of these are below.  Can we get these merged?
+Were you able to get this resolved?
 
-References:
-- [OpenBMC 2.7 warrior fix branch]: 
-https://github.com/openbmc/openbmc/tree/warrior
-- [release notes]: 
-https://github.com/openbmc/docs/blob/master/release/release-notes.md
+You are correct that the IPMI power state should follow the PWRGOOD pin 
+and be updated based on changes to the pin state.  I think the 
+phosphor-state-manager can track the state of the PWRGOOD pin using the 
+"pgood" DBus property.  Which is intended to keep the IPMI power status 
+in sync with the PWRGOOD pin.
 
+However, from what we can see in the IPMI spec, the ACPI state is set by 
+the "Set ACPI Power State" command and is not supposed to be in sync 
+with the actual system power state (PWRGOOD pin).
 
-- Joseph
+Regards,
+-Jason
 
-
-
-1. Pick up fixes from yocto branch=warrior.  This has security fixes 
-that we should pick up.
-
-
-2. Pick up the [SSH dropbear patch] to disable medium strength ciphers 
-which brings SSH close to parity with [BMCWeb HTTPS ciphers][].  
-Specifically, it removes medium strength ciphers, leaving only strong 
-ciphers  (Note that BMCWeb offers additional strong HTTPS ciphers which 
-our Dropbear SSH server does not yet support.)  This change is in the 
-yocto master branch, so it is the new behavior going forward, but was 
-not accepted into yocto branch=warrior because it is a configuration 
-change and not a fix. We consider this to be a security fix.  We should 
-pick it up to match the ciphers accepted by our HTTPS server.
-
-References:
-- [SSH dropbear patch]: 
-http://cgit.openembedded.org/openembedded-core/tree/meta/recipes-core/dropbear/dropbear/dropbear-disable-weak-ciphers.patch?h=master
-- [BMCWeb https config]: 
-https://github.com/openbmc/bmcweb/blob/27062605f8ddbafeec691ed9556fe90f2c1ab8d2/include/ssl_key_handler.hpp
-
-
-3. Pick up the [nginx patch][] to mitigate a problem downgrading from 
-2.7 to earlier releases.  The underlying [nginx downgrade issue][] is in 
-OpenBMC, so that's where the fix should go.  This should be merged into 
-openbmc master branch first, then picked up by branch=warrior.
-
-Refernces:
-- [nginx patch]: 
-https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm/+/23203
-- [nginx downgrade issue]: https://github.com/openbmc/openbmc/issues/3564
-
+>> --Vernon
+> 
+> Best Regards,
+> Payne
+> 
+> 
