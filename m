@@ -1,67 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34962BAD77
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:27:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64356BAD7A
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 07:32:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cCWN4kVDzDqLX
-	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:27:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cCdG1W6czDqKb
+	for <lists+openbmc@lfdr.de>; Mon, 23 Sep 2019 15:32:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="FGte+XEH"; 
- dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="aoFkXU54"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="A8d0Kt2D"; dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cCVs0w2kzDqN3
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 15:27:00 +1000 (AEST)
-Received: by mail-qt1-x843.google.com with SMTP id u40so15674255qth.11
- for <openbmc@lists.ozlabs.org>; Sun, 22 Sep 2019 22:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=D82Pn+oiyxZd3Jvz2nrbESa+J6BjYc35YgwCmrcCWQ0=;
- b=FGte+XEHuHWECPurKhz1UrsUKF+3GOsld+HQ0iWl4ammxbSIOo9zgWa4cwks6pDJDO
- Zn/A0xH/fN3GmC8oMx5Sa5WAygnjhDmQu/y3i/2XwTH4dOXOcgHE+UWgJBbpTozkGKKY
- 2hOn4FC3OBh2r0MKXJ9RbiTcue44N3sw6FZ3g=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=D82Pn+oiyxZd3Jvz2nrbESa+J6BjYc35YgwCmrcCWQ0=;
- b=jKxZl4F6w/h1cRRTxIcapkvhvyYG1MwG5zQ7dI0nNMoBlWN8JzyBkelOUvaRygpNC7
- eAATSmhjfHlyJxc7/F1qsRGCH5Bu4s0J42LEHdxNH6PP6MaLcyXP6tpB5qBxSrl8e0sM
- f14XvlW+Z9DOWTuIzs/a/Lvs0duyt/iRF7FlNzJuX16Yvapq1xWv+n0TMHCUH3afhAEx
- Zv1cnh/QVIcLTVkllozRPH4JA5u0wGVUMcIxers1Q+bZdKuEFsMcmjzfr1yYXHFEUci7
- Ny1V52U5T2yMjoJqfvg3mEs207RmzWI79sx9QwUlDkI8lC8DoY9yArVEx+gFO1mDUYLA
- Ilnw==
-X-Gm-Message-State: APjAAAXR55UV1R5kW3c0SjN33ClfTDE98ZPnzzm1rpb1uTCT9n2PfW8Z
- /fjawz6Rbpu63e2aT+CjOWiEqAUmxhIXOuoPC+g=
-X-Google-Smtp-Source: APXvYqxEGxuM/FPa9KclsbGHPt7qbsJQYHAAfWAp+WaIh/kNNBg1eib50oWWQ3AfLip21yJZ0mUZeSHRHsZjk1llj40=
-X-Received: by 2002:ac8:2d8b:: with SMTP id p11mr15657158qta.220.1569216417419; 
- Sun, 22 Sep 2019 22:26:57 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cCcl3Fw8zDqHJ
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 15:32:07 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id C6906432;
+ Mon, 23 Sep 2019 01:32:04 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Mon, 23 Sep 2019 01:32:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=7kh2bIy80eP8bJUhI1c90QUtsKmYyWf
+ zIiBGg7ryI8c=; b=aoFkXU54/ZIMbhvP0nAjpdXs4Iwi25bWyw1GIq88ws9wI3D
+ 8aW1XEGhdj9M27/pjsvGsjE8JDniknDSR2rfwaFcf+ua/SEMTV3NDtxCd1U87GX8
+ qfodDdV8mJREHpTGf/7km9C3e+qNvbE5b9BazT2FT5GfLS1vWr1W+Dw4D+jVhgMr
+ pOgCSnOD6bZsvkwfpYZjgN/55/2KFOsiBDjSJYJrU6eSgXcmHPJne48DNB+RA22G
+ rn3qhGaINjWD/yqjb0q+OKvUO4FLptorenxrNmltCKbc4xQtz4XIv85dZKH/KBbk
+ btn92gPE2kQpujBvI5sbmNUKB40smheNMaK7wQw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=7kh2bI
+ y80eP8bJUhI1c90QUtsKmYyWfzIiBGg7ryI8c=; b=A8d0Kt2DsYW74vk8Gto8q+
+ ScXA9C4n1UskMUwFeEh/604lUqPkP6aqhatDP4UgBfg/kS0CWuNbSYhsJLVViNMd
+ UauZuG57r2c8tmQHGAGKzLK821GgyvThW/ROv5hQJkQcJFncTC0IHvHXxB5w5Cym
+ CTRRVNk/NYlC958M32NMjAh412GgjJ19pRMFAXG+AEE/Th/nJbBi/M8x3rdsq+kV
+ +7O6CE0r7LKHtAhqQbb2B1QC9F0UB9o3Q8LJsxkewReo6zs692WgF/DVaIN5iXRK
+ h/bllEK2nqabX26in8Bn2Oj0revfzKt5v7shpbf52bIP/i82vZRNcCY3As265pIw
+ ==
+X-ME-Sender: <xms:01iIXerAJOWk5pMvO9x8a6D_2yOzEt1u1YmrL606pnYLzj0lTakpxw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdejgdellecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:01iIXYPrJj8-PKq-BxkJ-HRiYsfx0B1Ecm5mwUic9p4BQwyKHEdTqQ>
+ <xmx:01iIXbABM717Q3XD-32IzzYFhoNnQxPZOV4Ju4wsR2fuOhICBMsC_Q>
+ <xmx:01iIXVOSGicGlwESIGx5hC0K0Uq7rQUPCD6Z6jug3DQZU3LlRwvkAQ>
+ <xmx:1FiIXcTpsdd5fZPUmGIfghGoMYwCYYfbJh6tOP-8_y-ECvUiJ501XQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id B3533E00A5; Mon, 23 Sep 2019 01:32:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-238-g170a812-fmstable-20190913v1
+Mime-Version: 1.0
+Message-Id: <383cb8cd-c650-49b4-8479-c6ea2140b0c0@www.fastmail.com>
+In-Reply-To: <CACPK8XdK1HYaDkywgFSauU7VCqMNjU49JY2azyqwc7MXPeA49A@mail.gmail.com>
 References: <20190922123700.749-1-andrew@aj.id.au>
- <20190922123700.749-3-andrew@aj.id.au>
- <CACPK8Xf_ciMEtayQ78yUo=YhrovRMe65xuwviE+DWXDSuQb5-Q@mail.gmail.com>
- <96f5dc1d-2347-4d9c-8fa2-e938ac952664@www.fastmail.com>
-In-Reply-To: <96f5dc1d-2347-4d9c-8fa2-e938ac952664@www.fastmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 23 Sep 2019 05:26:46 +0000
-Message-ID: <CACPK8XcQp-VcOz8N20fwURYK+4j-Nk7_ENqJVpAXu55hQxEkZA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.3 2/6] dt-bindings: net: ftgmac100: Describe
- clock properties
-To: Andrew Jeffery <andrew@aj.id.au>
-Content-Type: text/plain; charset="UTF-8"
+ <20190922123700.749-4-andrew@aj.id.au>
+ <CACPK8XdHCM6h52vXFqF-3vzXfG+2--12nYM=3MdQQvdM1rMcGg@mail.gmail.com>
+ <e45238b0-e1ad-4de1-9b18-15872ffc520f@www.fastmail.com>
+ <CACPK8XdK1HYaDkywgFSauU7VCqMNjU49JY2azyqwc7MXPeA49A@mail.gmail.com>
+Date: Mon, 23 Sep 2019 15:01:42 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_3/6]_dt-bindings:_clock:_Add_AST2600_?=
+ =?UTF-8?Q?RMII_RCLK_gate_definitions?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,47 +96,29 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 23 Sep 2019 at 05:14, Andrew Jeffery <andrew@aj.id.au> wrote:
->
->
->
-> On Mon, 23 Sep 2019, at 14:28, Joel Stanley wrote:
-> > On Sun, 22 Sep 2019 at 12:36, Andrew Jeffery <andrew@aj.id.au> wrote:
-> > >
-> > > Critically, the AST2600 requires ungating the RMII RCLK if e.g. NCSI is
-> > > in use.
-> > >
-> > > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > > ---
-> > >  Documentation/devicetree/bindings/net/ftgmac100.txt | 6 ++++++
-> > >  1 file changed, 6 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt b/Documentation/devicetree/bindings/net/ftgmac100.txt
-> > > index 04cc0191b7dd..c443b0b84be5 100644
-> > > --- a/Documentation/devicetree/bindings/net/ftgmac100.txt
-> > > +++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
-> > > @@ -24,6 +24,12 @@ Optional properties:
-> > >  - no-hw-checksum: Used to disable HW checksum support. Here for backward
-> > >    compatibility as the driver now should have correct defaults based on
-> > >    the SoC.
-> > > +- clocks: In accordance with the generic clock bindings. Must describe the MAC
-> > > +  IP clock, and optionally an RMII RCLK gate for the AST2600.
+
+
+On Mon, 23 Sep 2019, at 14:55, Joel Stanley wrote:
+> On Mon, 23 Sep 2019 at 05:11, Andrew Jeffery <andrew@aj.id.au> wrote:
 > >
-> > perhaps: "and optionally a RMII clock if RMII or NC-SI is used"
 > >
-> > We should implement this for the ast2500 too.
->
-> Hmm, I didn't think to check because it has always worked, but I assume that's because u-boot was NCSI enabled and left the clocks ungated.
+> >
+> > On Mon, 23 Sep 2019, at 14:28, Joel Stanley wrote:
+> > > On Sun, 22 Sep 2019 at 12:36, Andrew Jeffery <andrew@aj.id.au> wrote:
+> > > >
+> > > > The AST2600 has an explicit gate for the RMII RCLK for each of the four
+> > > > MACs.
+> > > >
+> > > > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> > >
+> > > Put this in the same patch as the clock driver changes when you respin.
+> >
+> > I initially did what you suggested and checkpatch complained. It's explicitly documented that DT header changes should be separate in the dt-specific submitting-patches documentation.
+> 
+> That's silly.
 
-Yeah spot on. This is something we hit when doing bringup of the
-ast2500 NCSI, and we "fixed" it by having u-boot enable the clocks.
+No arguments here :)
 
->
-> Will fix in a v2.
+> I would ignore that recommendation, but it's your call.
 
-Cheers
-
->
-> Thanks,
->
-> Andrew
+Yeah, was conflicted but given it was all fairly explicitly requested I figured splitting it was likely the path of least resistance.
