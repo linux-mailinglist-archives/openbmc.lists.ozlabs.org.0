@@ -1,55 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2E41C880E
-	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 14:14:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35639C8812
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 14:15:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46jw6b2sBszDqZH
-	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 22:14:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46jw7s23qszDqNH
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 22:15:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=163.com
- (client-ip=220.181.13.60; helo=m13-60.163.com;
- envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=in.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=alpankum@in.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="DGB77aqD"; 
- dkim-atps=neutral
-Received: from m13-60.163.com (m13-60.163.com [220.181.13.60])
- by lists.ozlabs.org (Postfix) with ESMTP id 46cGGN3h1NzDqFC
- for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 17:31:23 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=juMkd
- MiYVxuHyXjvuZEnL8/bJrDSwKzMqZGltGy4W0I=; b=DGB77aqDZTMIl4FkPIc60
- raj5msp933EBQ1//EZiv4q95azBOqUUxiEhGixAt/hFk30yfVvcYc3TudWO2RdTT
- w7358boggQfvUutMzeSQ6sGfCE/oQfiWmONVJV69OO9TMAZP1/JOdMgP4M9ibe90
- nCnjxgJZqJMXmpBZLjRdSM=
-Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr60 (Coremail) ; Mon, 23 Sep 2019 15:31:20 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Mon, 23 Sep 2019 15:31:20 +0800 (CST)
-From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
-To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
-Subject: How to make OpenBMC Web automatically redirect  to HTTPS
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-In-Reply-To: <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
-References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
- <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
-X-CM-CTRLDATA: jHYbeGZvb3Rlcl9odG09MTIwNzo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_114889_538291347.1569223880672"
+ dmarc=none (p=none dis=none) header.from=in.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cGGr1ddNzDqH6
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 17:31:47 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x8N7RsUb019637
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 03:31:45 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.114])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2v6qedm8gs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 03:31:44 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <alpankum@in.ibm.com>;
+ Mon, 23 Sep 2019 07:31:44 -0000
+Received: from us1b3-smtp03.a3dr.sjc01.isc4sb.com (10.122.7.173)
+ by smtp.notes.na.collabserv.com (10.122.47.58) with
+ smtp.notes.na.collabserv.com ESMTP; Mon, 23 Sep 2019 07:31:41 -0000
+Received: from us1b3-mail213.a3dr.sjc03.isc4sb.com ([10.168.5.53])
+ by us1b3-smtp03.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019092307314153-185002 ;
+ Mon, 23 Sep 2019 07:31:41 +0000 
+In-Reply-To: <000401d571dc$af8e2590$0eaa70b0$@linux.intel.com>
+From: "Alpana Kumari1" <alpankum@in.ibm.com>
+To: yong.b.li@linux.intel.com
+Date: Mon, 23 Sep 2019 07:31:40 +0000
+Sensitivity: 
+References: <000401d571dc$af8e2590$0eaa70b0$@linux.intel.com>,
+ <000001d5706b$2d921e60$88b65b20$@linux.intel.com>
+ <OF2C925502.61CFC61B-ON0025847E.0023D3A6-0025847E.00243BE6@notes.na.collabserv.com>
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
+ SCN1812108_20180501T0841_FP57 August 05, 2019 at 12:42
+X-KeepSent: E885D3E0:61402ED5-0025847E:00293620;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 61363
+X-TNEFEvaluated: 1
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19092307-1639-0000-0000-00000072A443
+X-IBM-SpamModules-Scores: BY=0.171295; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.360817; ST=0; TS=0; UL=0; ISC=; MB=0.005921
+X-IBM-SpamModules-Versions: BY=3.00011825; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01265314; UDB=6.00669344; IPR=6.01047257; 
+ MB=3.00028761; MTD=3.00000008; XFM=3.00000015; UTC=2019-09-23 07:31:44
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-09-23 04:41:10 - 6.00010440
+x-cbparentid: 19092307-1640-0000-0000-000000B5ACD2
+Message-Id: <OFE885D3E0.61402ED5-ON0025847E.00293620-0025847E.00295A2B@notes.na.collabserv.com>
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 2 URL's were un-rewritten
 MIME-Version: 1.0
-Message-ID: <3453213a.7858.16d5d082fe1.Coremail.xiaoqian1641@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: PMGowADH_YjIdIhdjirbAA--.32868W
-X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiHQc5fFSIh6HeuAABsC
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Mailman-Approved-At: Wed, 02 Oct 2019 22:06:35 +1000
+Subject: RE: HostWatchdogTimer related changes
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-09-23_02:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
+X-Mailman-Approved-At: Wed, 02 Oct 2019 22:06:34 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,43 +88,131 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, ed.tanous@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_114889_538291347.1569223880672
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
-
-SGmjrEFsbCwKCgpXaGVuIEkgbG9naW4gT3BlbkJNQyBXZWIsIEkgbXVzdCBpbnB1dCAiaHR0cHM6
-Ly8xMC4wLjE1LjQzIiBpbnN0ZWFkIG9mICIxMC4wLjE1LjQzIgoKCkhvdyB0byBtYWtlIE9wZW5C
-TUMgV2ViIGF1dG9tYXRpY2FsbHkgcmVkaXJlY3QgIHRvIEhUVFBTID8KCgoKCkpvaG55ClRoYW5r
-cwoKCgoKIAoKCgoKCiA=
-------=_Part_114889_538291347.1569223880672
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNztjb2xvcjojMDAw
-MDAwO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48ZGl2IHN0eWxlPSJsaW5lLWhl
-aWdodDogMS43OyI+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6
-IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij5IaaOsQWxsLDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9y
-OiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJy
-PjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlh
-bDsgZm9udC1zaXplOiAxNHB4OyI+V2hlbiBJIGxvZ2luIE9wZW5CTUMgV2ViLCBJIG11c3QgaW5w
-dXQgIjxhIGhyZWY9Imh0dHBzOi8vMTAuMC4xNS40MyZxdW90OywiIF9zcmM9Imh0dHBzOi8vMTAu
-MC4xNS40MyZxdW90OywiPmh0dHBzOi8vMTAuMC4xNS40MyI8L2E+Jm5ic3A7aW5zdGVhZCBvZiAi
-MTAuMC4xNS40MyI8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZh
-bWlseTogQXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSIiPkhv
-dyB0byBtYWtlIE9wZW5CTUMgV2ViIGF1dG9tYXRpY2FsbHkgcmVkaXJlY3QmbmJzcDsgdG8gSFRU
-UFMgPzwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBB
-cmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2Io
-MCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJyPjwvZGl2
-PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9u
-dC1zaXplOiAxNHB4OyI+Sm9obnk8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDAp
-OyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPlRoYW5rczwvZGl2PjwvZGl2
-Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwv
-c3Bhbj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8
-L3A+PC9zcGFuPg==
-------=_Part_114889_538291347.1569223880672--
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
+elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Hi,</div>
+<div dir=3D"ltr" >please check&nbsp; <span class=3D"style-scope gr-account-=
+label" ><span class=3D"text  style-scope gr-account-label" ><span class=3D"=
+name style-scope gr-account-label" >Vishwanatha Subbanna</span></span></spa=
+n>'s&nbsp; comment on Patch set 8 here-</div>
+<div dir=3D"ltr" ><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/b=
+mcweb/+/19751">https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/19751<=
+/a></div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >Thanks,</div>
+<div dir=3D"ltr" >Alpana</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
+-left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
+margin-right:0px" >----- Original message -----<br>From: "Yong Li" &lt;yong=
+.b.li@linux.intel.com&gt;<br>To: "'Alpana Kumari1'" &lt;alpankum@in.ibm.com=
+&gt;<br>Cc: &lt;ed.tanous@intel.com&gt;, &lt;openbmc@lists.ozlabs.org&gt;<b=
+r>Subject: [EXTERNAL] RE: HostWatchdogTimer related changes<br>Date: Mon, S=
+ep 23, 2019 12:31 PM<br>&nbsp;<br><!--Notes ACF
+<meta http-equiv=3DContent-Type content=3D"text/html; charset=3Dutf8" >--><=
+!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit" >
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+<div><p style=3D"margin: 0px;" >Hi Alpana,<o:p></o:p></p>
+<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
+<p style=3D"margin: 0px;" >Thanks for your update! Just curious why =E2=80=
+=9Cnot to make this change=E2=80=9D?&nbsp; I think it is useful to add it i=
+nto redfish.<o:p></o:p></p>
+<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
+<p style=3D"margin: 0px;" >Thanks,<o:p></o:p></p>
+<p style=3D"margin: 0px;" >Yong<o:p></o:p></p>
+<p style=3D"margin: 0px;" ><a name=3D"_____replyseparator" target=3D"_blank=
+" ></a><b>From:</b> Alpana Kumari1 &lt;alpankum@in.ibm.com&gt;<br><b>Sent:<=
+/b> Monday, September 23, 2019 2:36 PM<br><b>To:</b> yong.b.li@linux.intel.=
+com<br><b>Cc:</b> ed.tanous@intel.com; openbmc@lists.ozlabs.org<br><b>Subje=
+ct:</b> Re: HostWatchdogTimer related changes<o:p></o:p></p>
+<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p>
+<div><div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-f=
+amily:&quot;Arial&quot;,sans-serif" >Hi,<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >yes, It was on hold for long time, and late=
+r it was decided&nbsp; not to&nbsp; make this change.<o:p></o:p></span></p>=
+</div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >Closed now.<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >Thanks,<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >Alpana<o:p></o:p></span></p></div>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div>
+<blockquote style=3D"border:none;border-left:solid #AAAAAA 1.5pt;padding:0i=
+n 0in 0in 4.0pt;margin-left:3.75pt;margin-top:5.0pt;margin-right:0in;margin=
+-bottom:5.0pt" ><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;=
+font-family:&quot;Arial&quot;,sans-serif" >----- Original message -----<br>=
+From: "Yong Li" &lt;<a href=3D"mailto:yong.b.li@linux.intel.com" target=3D"=
+_blank">yong.b.li@linux.intel.com</a>&gt;<br>To: &lt;<a href=3D"mailto:alpa=
+nkum@in.ibm.com" target=3D"_blank">alpankum@in.ibm.com</a>&gt;<br>Cc: "Tano=
+us, Ed" &lt;<a href=3D"mailto:ed.tanous@intel.com" target=3D"_blank">ed.tan=
+ous@intel.com</a>&gt;, "'OpenBMC Maillist'" &lt;<a href=3D"mailto:openbmc@l=
+ists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>Subj=
+ect: [EXTERNAL] HostWatchdogTimer related changes<br>Date: Sat, Sep 21, 201=
+9 4:26 PM<br>&nbsp;<o:p></o:p></span></p>
+<div><p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-siz=
+e:10.0pt;font-family:&quot;Arial&quot;,sans-serif" >Hi,<o:p></o:p></span></=
+p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >I noticed there is a code re=
+view submitted my you:<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" ><a href=3D"https://gerrit.op=
+enbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/" target=3D"_blank">https://ge=
+rrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/20308/</a>&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; <o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >I noticed there is no any up=
+date for several days. I am working on the related feature too:<o:p></o:p><=
+/span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" ><a href=3D"https://gerrit.op=
+enbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/" target=3D"_blank">https://ge=
+rrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/24532/</a><o:p></o:p></span><=
+/p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >Could you please check on th=
+em?<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >If there is any comments/que=
+stions, just let me know.<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >Thanks,<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >Yong<o:p></o:p></span></p>
+<p style=3D"margin:0in;margin-bottom:.0001pt" ><span style=3D"font-size:10.=
+0pt;font-family:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p>=
+</div></blockquote>
+<div><p style=3D"margin: 0px;" ><span style=3D"font-size:10.0pt;font-family=
+:&quot;Arial&quot;,sans-serif" >&nbsp;<o:p></o:p></span></p></div></div>
+<p style=3D"margin: 0px;" ><o:p>&nbsp;</o:p></p></div></blockquote>
+<div dir=3D"ltr" >&nbsp;</div></div><BR>
 
