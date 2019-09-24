@@ -2,83 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0390BC789
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 14:05:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D068ABC7B2
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 14:13:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46d0JW4pZkzDqPG
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 22:05:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46d0T81LL5zDqSp
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 22:13:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=ratagupt@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46d0Hj36ChzDqPG
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 22:05:04 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8OC4l65012117
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 08:05:00 -0400
-Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v7gh1e4dg-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 08:04:56 -0400
-Received: from localhost
- by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Tue, 24 Sep 2019 13:04:22 +0100
-Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
- by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Tue, 24 Sep 2019 13:04:19 +0100
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id x8OC4JbK29229440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 12:04:19 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED80F11C05E
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 12:04:18 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D34011C054
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 12:04:18 +0000 (GMT)
-Received: from [9.80.223.88] (unknown [9.80.223.88])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 12:04:17 +0000 (GMT)
-Subject: Re: Change the password through the REST interface
-To: openbmc@lists.ozlabs.org
-References: <23454dbb362e4d5198d0733d0f49fda9@inspur.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Tue, 24 Sep 2019 17:34:14 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ spf=pass (mailfrom) smtp.mailfrom=163.com
+ (client-ip=220.181.13.98; helo=m13-98.163.com;
+ envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="akzW4vJ9"; 
+ dkim-atps=neutral
+Received: from m13-98.163.com (m13-98.163.com [220.181.13.98])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46d0Ng6pKhzDqTh
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 22:09:21 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=SevLv
+ u2fRWOltuxCew/5HCKvXJcoBZuT457dHf7nLC4=; b=akzW4vJ9aaO75YTlN1m6R
+ U5Smqu8SI+3lSx1zAu2IFn9e/2de1gKUfp36nLyfG1SOuA6cQWnAXNpHNnvL8AqL
+ PCoxQciKemylLCo1VtOMHptULMQuURJY8oekbGRpAxKCfM/aY59vNUtz6ZzTG89v
+ E3/e4Qip3Vo6ql/oNGJFRA=
+Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr98 (Coremail) ; Tue, 24 Sep 2019 20:09:13 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Tue, 24 Sep 2019 20:09:13 +0800 (CST)
+From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
+To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
+Subject: sdbusplus make check error
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+ <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+X-CM-CTRLDATA: SzsEGGZvb3Rlcl9odG09MzA5Mjo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_181954_272259895.1569326953150"
 MIME-Version: 1.0
-In-Reply-To: <23454dbb362e4d5198d0733d0f49fda9@inspur.com>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19092412-4275-0000-0000-0000036A7576
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19092412-4276-0000-0000-0000387CED12
-Message-Id: <fe526562-865e-1fdb-e780-721bf087d07d@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-24_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909240123
+Message-ID: <49a51252.bd96.16d632cf2be.Coremail.xiaoqian1641@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: YsGowAA3P8NpB4pd7WdCAQ--.29182W
+X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiShI6fFPAHzA4zQABsW
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,34 +63,104 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+------=_Part_181954_272259895.1569326953150
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Which webserver(bmcweb/phosphor-rest-server) you are using it?
+SGmjrEFsbCwKCgpJJ20gcnVubmluZyB0ZXN0cyBpbiBTREsgLiBJbiBzZGJ1c3BsdXMsIGZvbGxv
+dyB0aGUgc3RlcHM6Ci4vYm9vdHN0cmFwLnNoCi4vY29uZmlndXJlICR7Q09ORklHVVJFX0ZMQUdT
+fSAtLWVuYWJsZS1vZS1zZGsKbWFrZSBjaGVjawp3aGVuICJtYWtlIGNoZWNrIiwgSXQgc2hvd3Mg
+bmV4dCAsIEkgZG9uJ3Qga29udyB3aGF0IHdlbnQgd3JvbmcsIGFuZCBob3cgdG8gZml4IGl0Pwpt
+YWtlWzNdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1h
+a2UgIGNoZWNrLVRFU1RTCm1ha2VbM106IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
+c2RidXNwbHVzL3Rlc3QnCm1ha2VbNF06IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEv
+c2RidXNwbHVzL3Rlc3QnCkZBSUw6IGJ1c19saXN0X25hbWVzCkZBSUw6IGJ1c19tYXRjaApGQUlM
+OiBleGNlcHRpb25fc2RidXNfZXJyb3IKRkFJTDogbWVzc2FnZV9hcHBlbmQKRkFJTDogbWVzc2Fn
+ZV9yZWFkCkZBSUw6IG1lc3NhZ2VfbmF0aXZlX3R5cGVzCkZBSUw6IG1lc3NhZ2VfdHlwZXMKRkFJ
+TDogdXRpbGl0eV90dXBsZV90b19hcnJheQpGQUlMOiB1dGlsaXR5X3R5cGVfdHJhaXRzCkZBSUw6
+IHZ0YWJsZV92dGFibGUKRkFJTDogdGltZXIKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpUZXN0c3VpdGUg
+c3VtbWFyeSBmb3Igc2RidXNwbHVzIDEuMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgVE9UQUw6IDEx
+CiMgUEFTUzogIDAKIyBTS0lQOiAgMAojIFhGQUlMOiAwCiMgRkFJTDogIDExCiMgWFBBU1M6IDAK
+IyBFUlJPUjogMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ClNlZSB0ZXN0L3Rlc3Qtc3VpdGUubG9nClBs
+ZWFzZSByZXBvcnQgdG8gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvc2RidXNwbHVzL2lzc3Vl
+cwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09Cm1ha2VbNF06ICoqKiBbdGVzdC1zdWl0ZS5sb2ddIEVycm9y
+IDEKbWFrZVs0XTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0
+JwptYWtlWzNdOiAqKiogW2NoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbM106IExlYXZpbmcgZGly
+ZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMvdGVzdCcKbWFrZVsyXTogKioqIFtjaGVjay1h
+bV0gRXJyb3IgMgptYWtlWzJdOiBUYXJnZXQgYGNoZWNrJyBub3QgcmVtYWRlIGJlY2F1c2Ugb2Yg
+ZXJyb3JzLgptYWtlWzJdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVz
+L3Rlc3QnCm1ha2VbMV06ICoqKiBbY2hlY2stcmVjdXJzaXZlXSBFcnJvciAxCm1ha2VbMV06IFRh
+cmdldCBgY2hlY2snIG5vdCByZW1hZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMV06IExlYXZp
+bmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9zZGJ1c3BsdXMnCm1ha2U6IFtjaGVjay1jb2RlLWNv
+dmVyYWdlXSBFcnJvciAyIChpZ25vcmVkKQptYWtlWzFdOiBFbnRlcmluZyBkaXJlY3RvcnkgYC9o
+b21lL3Jvb3QxL3NkYnVzcGx1cycKICBMQ09WICAgLS1jYXB0dXJlIHNkYnVzcGx1cy0xLjAtY292
+ZXJhZ2UuaW5mbwpnZW5pbmZvOiBFUlJPUjogbm8gLmdjZGEgZmlsZXMgZm91bmQgaW4gLiEKbWFr
+ZVsxXTogKioqIFtjb2RlLWNvdmVyYWdlLWNhcHR1cmVdIEVycm9yIDI1NQptYWtlWzFdOiBMZWF2
+aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzJwptYWtlOiAqKiogW2NoZWNrLWNv
+ZGUtY292ZXJhZ2VdIEVycm9yIDIKCgpKb2hueQpUaGFua3MKCgoKCiAKCgoKCgog
+------=_Part_181954_272259895.1569326953150
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-If bmcweb then use the redfish API to change the password.
-
-Ratan
-
-On 24/09/19 7:08 AM, Xiaochao Ma (ÂíÐ¡³¬) wrote:
-> Hi, all
->
-> I'm trying to change the user's password through the REST interface.
->
-> Feedback is "The specified method cannot be found"
->
-> The'busctl introspect'command also failed to find this method.
->
-> What may be the cause? Is there any other way to change passwords through REST?
->
-> $ curl -k -H "X-Auth-Token: $token" -H "Content-Type: application/json"
-> -d "{\"data\": [\"1qaz@WSX\"] }" -X POST
-> https://${bmc}/xyz/openbmc_project/user/xiao/action/SetPassword
-> {
->    "data": {
->      "description": "The specified method cannot be found"
->    },
->    "message": "404 Not Found",
->    "status": "error"
-> }
->
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNztjb2xvcjojMDAw
+MDAwO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48ZGl2IHN0eWxlPSJsaW5lLWhl
+aWdodDogMS43OyI+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6
+IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij5IaaOsQWxsLDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9y
+OiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4OyI+PGJy
+PjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlh
+bDsgZm9udC1zaXplOiAxNHB4OyI+SSdtIHJ1bm5pbmcgPHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5
+OiBhcmlhbDsgd2hpdGUtc3BhY2U6IHByZS13cmFwOyI+IHRlc3RzIGluIFNESyAuIEluIHNkYnVz
+cGx1cywgZm9sbG93IHRoZSBzdGVwczo8L3NwYW4+PC9kaXY+PGRpdiBzdHlsZT0iIj48cHJlIHN0
+eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTog
+MTRweDsgd2lkdGg6IDEwNzYuMzRweDsiPi4vYm9vdHN0cmFwLnNoCi4vY29uZmlndXJlICR7Q09O
+RklHVVJFX0ZMQUdTfSAtLWVuYWJsZS1vZS1zZGsKbWFrZSBjaGVjazwvcHJlPjxwcmUgc3R5bGU9
+ImNvbG9yOiByZ2IoMCwgMCwgMCk7IGZvbnQtZmFtaWx5OiBBcmlhbDsgZm9udC1zaXplOiAxNHB4
+OyB3aWR0aDogMTA3Ni4zNHB4OyI+PGI+d2hlbiAibWFrZSBjaGVjayIsIEl0IHNob3dzIG5leHQg
+LCBJIGRvbid0IGtvbncgd2hhdCB3ZW50IHdyb25nLCBhbmQgaG93IHRvIGZpeCBpdD88L2I+IDwv
+cHJlPjxwcmUgc3R5bGU9IndpZHRoOiAxMDc2LjM0cHg7Ij5tYWtlWzNdOiBMZWF2aW5nIGRpcmVj
+dG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1ha2UgIGNoZWNrLVRFU1RTCm1ha2Vb
+M106IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1ha2Vb
+NF06IEVudGVyaW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCkZBSUw6
+IGJ1c19saXN0X25hbWVzCkZBSUw6IGJ1c19tYXRjaApGQUlMOiBleGNlcHRpb25fc2RidXNfZXJy
+b3IKRkFJTDogbWVzc2FnZV9hcHBlbmQKRkFJTDogbWVzc2FnZV9yZWFkCkZBSUw6IG1lc3NhZ2Vf
+bmF0aXZlX3R5cGVzCkZBSUw6IG1lc3NhZ2VfdHlwZXMKRkFJTDogdXRpbGl0eV90dXBsZV90b19h
+cnJheQpGQUlMOiB1dGlsaXR5X3R5cGVfdHJhaXRzCkZBSUw6IHZ0YWJsZV92dGFibGUKRkFJTDog
+dGltZXIKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PQpUZXN0c3VpdGUgc3VtbWFyeSBmb3Igc2RidXNwbHVz
+IDEuMAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09CiMgVE9UQUw6IDExCiMgUEFTUzogIDAKIyBTS0lQOiAg
+MAojIFhGQUlMOiAwCiMgRkFJTDogIDExCiMgWFBBU1M6IDAKIyBFUlJPUjogMAo9PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09ClNlZSB0ZXN0L3Rlc3Qtc3VpdGUubG9nClBsZWFzZSByZXBvcnQgdG8gaHR0cHM6
+Ly9naXRodWIuY29tL29wZW5ibWMvc2RidXNwbHVzL2lzc3Vlcwo9PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+Cm1ha2VbNF06ICoqKiBbdGVzdC1zdWl0ZS5sb2ddIEVycm9yIDEKbWFrZVs0XTogTGVhdmluZyBk
+aXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cy90ZXN0JwptYWtlWzNdOiAqKiogW2NoZWNr
+LVRFU1RTXSBFcnJvciAyCm1ha2VbM106IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9yb290MS9z
+ZGJ1c3BsdXMvdGVzdCcKbWFrZVsyXTogKioqIFtjaGVjay1hbV0gRXJyb3IgMgptYWtlWzJdOiBU
+YXJnZXQgYGNoZWNrJyBub3QgcmVtYWRlIGJlY2F1c2Ugb2YgZXJyb3JzLgptYWtlWzJdOiBMZWF2
+aW5nIGRpcmVjdG9yeSBgL2hvbWUvcm9vdDEvc2RidXNwbHVzL3Rlc3QnCm1ha2VbMV06ICoqKiBb
+Y2hlY2stcmVjdXJzaXZlXSBFcnJvciAxCm1ha2VbMV06IFRhcmdldCBgY2hlY2snIG5vdCByZW1h
+ZGUgYmVjYXVzZSBvZiBlcnJvcnMuCm1ha2VbMV06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9y
+b290MS9zZGJ1c3BsdXMnCm1ha2U6IFtjaGVjay1jb2RlLWNvdmVyYWdlXSBFcnJvciAyIChpZ25v
+cmVkKQptYWtlWzFdOiBFbnRlcmluZyBkaXJlY3RvcnkgYC9ob21lL3Jvb3QxL3NkYnVzcGx1cycK
+ICBMQ09WICAgLS1jYXB0dXJlIHNkYnVzcGx1cy0xLjAtY292ZXJhZ2UuaW5mbwpnZW5pbmZvOiBF
+UlJPUjogbm8gLmdjZGEgZmlsZXMgZm91bmQgaW4gLiEKbWFrZVsxXTogKioqIFtjb2RlLWNvdmVy
+YWdlLWNhcHR1cmVdIEVycm9yIDI1NQptYWtlWzFdOiBMZWF2aW5nIGRpcmVjdG9yeSBgL2hvbWUv
+cm9vdDEvc2RidXNwbHVzJwptYWtlOiAqKiogW2NoZWNrLWNvZGUtY292ZXJhZ2VdIEVycm9yIDI8
+Zm9udCBmYWNlPSJBcmlhbCI+CjwvZm9udD48L3ByZT48ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAs
+IDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQtc2l6ZTogMTRweDsiPjxicj48L2Rpdj48
+ZGl2IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogQXJpYWw7IGZvbnQt
+c2l6ZTogMTRweDsiPkpvaG55PC9kaXY+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6IHJnYigwLCAw
+LCAwKTsgZm9udC1mYW1pbHk6IEFyaWFsOyBmb250LXNpemU6IDE0cHg7Ij5UaGFua3M8L2Rpdj48
+L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8L3A+PC9z
+cGFuPjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwv
+cD48L3NwYW4+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5i
+c3A7PC9wPjwvc3Bhbj4=
+------=_Part_181954_272259895.1569326953150--
 
