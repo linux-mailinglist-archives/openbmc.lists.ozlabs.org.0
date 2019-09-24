@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAEE5BD333
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 21:59:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96785BD338
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 22:01:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dBq73V0BzDqfB
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:59:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dBrt0hZ3zDqPG
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:01:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,15 +19,15 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dBYf55g7zDqZx
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 05:47:50 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dBYh3wWJzDqZx
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 05:47:52 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
 To: joel@jms.id.au
-Subject: [PATCH v3 linux dev-5.3 09/10] ARM: dts: aspeed: rainier: Add mac
+Subject: [PATCH v3 linux dev-5.3 10/10] ARM: dts: aspeed: rainier: Add i2c
  devices
-Date: Tue, 24 Sep 2019 15:47:58 -0400
-Message-Id: <20190924194759.26854-10-bradleyb@fuzziesquirrel.com>
+Date: Tue, 24 Sep 2019 15:47:59 -0400
+Message-Id: <20190924194759.26854-11-bradleyb@fuzziesquirrel.com>
 In-Reply-To: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
 References: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
 MIME-Version: 1.0
@@ -47,37 +47,417 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Rainier contains two network devices.
-
 Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 ---
 v3: new for v3
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 393 +++++++++++++++++++
+ 1 file changed, 393 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot=
 /dts/aspeed-bmc-ibm-rainier.dts
-index f56a7dddba62..f448fa5df43a 100644
+index f448fa5df43a..be149aa5251e 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -55,3 +55,17 @@
+@@ -51,6 +51,399 @@
+ 	status =3D "okay";
+ };
+=20
++&i2c0 {
++	status =3D "okay";
++};
++
++&i2c1 {
++	status =3D "okay";
++};
++
++&i2c2 {
++	status =3D "okay";
++};
++
++&i2c3 {
++	status =3D "okay";
++
++	power-supply@68 {
++		compatible =3D "ibm,cffps2";
++		reg =3D <0x68>;
++	};
++
++	power-supply@69 {
++		compatible =3D "ibm,cffps2";
++		reg =3D <0x69>;
++	};
++
++	power-supply@6a {
++		compatible =3D "ibm,cffps2";
++		reg =3D <0x6a>;
++	};
++
++	power-supply@6b {
++		compatible =3D "ibm,cffps2";
++		reg =3D <0x6b>;
++	};
++};
++
++&i2c4 {
++	status =3D "okay";
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	tmp275@49 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x49>;
++	};
++
++	tmp275@4a {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x4a>;
++	};
++};
++
++&i2c5 {
++	status =3D "okay";
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	tmp275@49 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x49>;
++	};
++};
++
++&i2c6 {
++	status =3D "okay";
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	tmp275@4a {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x4a>;
++	};
++
++	tmp275@4b {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x4b>;
++	};
++};
++
++&i2c7 {
++	status =3D "okay";
++
++	si7021-a20@20 {
++		compatible =3D "silabs,si7020";
++		reg =3D <0x20>;
++	};
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	max31785@52 {
++		compatible =3D "maxim,max31785a";
++		reg =3D <0x52>;
++		#address-cells =3D <1>;
++		#size-cells =3D <0>;
++
++		fan@0 {
++			compatible =3D "pmbus-fan";
++			reg =3D <0>;
++			tach-pulses =3D <2>;
++			maxim,fan-rotor-input =3D "tach";
++			maxim,fan-pwm-freq =3D <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp =3D <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@1 {
++			compatible =3D "pmbus-fan";
++			reg =3D <1>;
++			tach-pulses =3D <2>;
++			maxim,fan-rotor-input =3D "tach";
++			maxim,fan-pwm-freq =3D <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp =3D <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@2 {
++			compatible =3D "pmbus-fan";
++			reg =3D <2>;
++			tach-pulses =3D <2>;
++			maxim,fan-rotor-input =3D "tach";
++			maxim,fan-pwm-freq =3D <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp =3D <2>;
++			maxim,fan-fault-pin-mon;
++		};
++
++		fan@3 {
++			compatible =3D "pmbus-fan";
++			reg =3D <3>;
++			tach-pulses =3D <2>;
++			maxim,fan-rotor-input =3D "tach";
++			maxim,fan-pwm-freq =3D <25000>;
++			maxim,fan-dual-tach;
++			maxim,fan-no-watchdog;
++			maxim,fan-no-fault-ramp;
++			maxim,fan-ramp =3D <2>;
++			maxim,fan-fault-pin-mon;
++		};
++	};
++
++	pca0: pca9552@60 {
++		compatible =3D "nxp,pca9552";
++		reg =3D <0x60>;
++		#address-cells =3D <1>;
++		#size-cells =3D <0>;
++
++		gpio-controller;
++		#gpio-cells =3D <2>;
++
++		gpio@0 {
++			reg =3D <0>;
++		};
++
++		gpio@1 {
++			reg =3D <1>;
++		};
++
++		gpio@2 {
++			reg =3D <2>;
++		};
++
++		gpio@3 {
++			reg =3D <3>;
++		};
++
++		gpio@4 {
++			reg =3D <4>;
++		};
++
++		gpio@5 {
++			reg =3D <5>;
++		};
++
++		gpio@6 {
++			reg =3D <6>;
++		};
++
++		gpio@7 {
++			reg =3D <7>;
++		};
++
++		gpio@8 {
++			reg =3D <8>;
++		};
++
++		gpio@9 {
++			reg =3D <9>;
++		};
++
++		gpio@10 {
++			reg =3D <10>;
++		};
++
++		gpio@11 {
++			reg =3D <11>;
++		};
++
++		gpio@12 {
++			reg =3D <12>;
++		};
++
++		gpio@13 {
++			reg =3D <13>;
++		};
++
++		gpio@14 {
++			reg =3D <14>;
++		};
++
++		gpio@15 {
++			reg =3D <15>;
++		};
++	};
++
++	dps: dps310@76 {
++		compatible =3D "infineon,dps310";
++		reg =3D <0x76>;
++		#io-channel-cells =3D <0>;
++	};
++};
++
++&i2c8 {
++	status =3D "okay";
++
++	ucd90320@b {
++		compatible =3D "ti,ucd90160";
++		reg =3D <0x0b>;
++	};
++
++	ucd90320@c {
++		compatible =3D "ti,ucd90160";
++		reg =3D <0x0c>;
++	};
++
++	ucd90320@11 {
++		compatible =3D "ti,ucd90160";
++		reg =3D <0x11>;
++	};
++
++	rtc@32 {
++		compatible =3D "epson,rx8900";
++		reg =3D <0x32>;
++	};
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	tmp275@4a {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x4a>;
++	};
++};
++
++&i2c9 {
++	status =3D "okay";
++
++	ir35221@42 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x42>;
++	};
++
++	ir35221@43 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x43>;
++	};
++
++	ir35221@44 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x44>;
++	};
++
++	tmp423a@4c {
++		compatible =3D "ti,tmp423";
++		reg =3D <0x4c>;
++	};
++
++	tmp423b@4d {
++		compatible =3D "ti,tmp423";
++		reg =3D <0x4d>;
++	};
++
++	ir35221@72 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x72>;
++	};
++
++	ir35221@73 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x73>;
++	};
++
++	ir35221@74 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x74>;
++	};
++};
++
++&i2c10 {
++	status =3D "okay";
++
++	ir35221@42 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x42>;
++	};
++
++	ir35221@43 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x43>;
++	};
++
++	ir35221@44 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x44>;
++	};
++
++	tmp423a@4c {
++		compatible =3D "ti,tmp423";
++		reg =3D <0x4c>;
++	};
++
++	tmp423b@4d {
++		compatible =3D "ti,tmp423";
++		reg =3D <0x4d>;
++	};
++
++	ir35221@72 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x72>;
++	};
++
++	ir35221@73 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x73>;
++	};
++
++	ir35221@74 {
++		compatible =3D "infineon,ir35221";
++		reg =3D <0x74>;
++	};
++};
++
++&i2c11 {
++	status =3D "okay";
++
++	tmp275@48 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x48>;
++	};
++
++	tmp275@49 {
++		compatible =3D "ti,tmp275";
++		reg =3D <0x49>;
++	};
++};
++
++&i2c12 {
++	status =3D "okay";
++};
++
++&i2c13 {
++	status =3D "okay";
++};
++
++&i2c14 {
++	status =3D "okay";
++};
++
++&i2c15 {
++	status =3D "okay";
++};
++
+ &lpc_ctrl {
  	status =3D "okay";
  	memory-region =3D <&flash_memory>;
- };
-+
-+&mac2 {
-+	status =3D "okay";
-+	pinctrl-names =3D "default";
-+	pinctrl-0 =3D <&pinctrl_rmii3_default>;
-+	use-ncsi;
-+};
-+
-+&mac3 {
-+	status =3D "okay";
-+	pinctrl-names =3D "default";
-+	pinctrl-0 =3D <&pinctrl_rmii4_default>;
-+	use-ncsi;
-+};
 --=20
 2.21.0
