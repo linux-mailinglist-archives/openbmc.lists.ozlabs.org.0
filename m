@@ -1,69 +1,144 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F72BCBC7
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 17:48:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E84FCBD28C
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 21:22:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46d5F46tBtzDqVn
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 01:48:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dB0c470FzDqd7
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:22:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::542; helo=mail-pg1-x542.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=4170c4e664=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Zpt0gtUE"; 
- dkim-atps=neutral
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [IPv6:2607:f8b0:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="J3oJEU/y"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="P5FrKCDt"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46d5Cy1YGczDqVk
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 01:47:09 +1000 (AEST)
-Received: by mail-pg1-x542.google.com with SMTP id a24so1558082pgj.2
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 08:47:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=IlIAhuj38yJYTHw8PYRy8cgPlkkm91WHnjYP+NhCtg0=;
- b=Zpt0gtUEO4Qba6Y0FB6x4s+L+06nwxBOl0P0L3cgCWOI/p3OO7AkOz6thKNcErz+1G
- JuqSytBCwLfqZwxNX81mUeDkESgiCzD/QtsxQq0OVVXPbCNcm+u5k/ES6cuEEkviXzDO
- 0g2g4rtQrFrJ5bMGI6CtzVw4E2iIfr+e6b7zhUhFJuKpAlh5ar97NNa+CQCkwrXnUeHx
- 4SWMBZOZbxu5iTu4MGa/7KCBi3DEySpG1uAcPoprxK2gzchWLUto1yJbOq8F7A3uBCHX
- giWAhPM5e38mlmGR45m+pWEwboSsNxYdzHgWmJ2eGrZOhQecoFc3L/D4RGR+kpg7YES3
- HmAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=IlIAhuj38yJYTHw8PYRy8cgPlkkm91WHnjYP+NhCtg0=;
- b=bikG9wXCJZlRVH+Zmc6+JvIcFr6okVdr9iBw7qHc2yZp29HISuFtXF9ignrBNOrBfp
- ngpGf0fzcIaWmB+dSAFq3BLtBSFTrMOqE3p4wTWvE3gi1BdyF+b754Oe68rKyJ86RPGT
- aQMoym5Gw3ccI4z4uICoMzBdTLhhTF0zEyfZK7IGGHFK0SLp8lQPI6RmZBZmfVc1f6y/
- Hgu1Q1nM1lp8sbwuL7GTB9TybhWR7QQnAZYSuxC+84hrT5MLEUbwdlEk41ShyZC5tCMm
- IbJm6vWvwcltkGqWABAb4SHT+Q3+4Em3wBZrEjRzHHkCzX5z7cBhv+K5JecSuJrV6Koh
- IA2Q==
-X-Gm-Message-State: APjAAAXMf3imliDSLmEUJRriw8Q0MCPbVM6Ujh1vhveZb4EmcrSeCLJN
- wET4TDnadq7V0xjjFB2/C7WFtcO3IVP0VmuAWg5udw==
-X-Google-Smtp-Source: APXvYqyNufS3INRXtHyk9nLBniF1aKjsWCCaFBOpZu2vASRzoYxWx6IM8wN8dDYtKNOLEkGqgxVSrBjWH7TzQ8io5ug=
-X-Received: by 2002:a17:90a:be13:: with SMTP id
- a19mr697499pjs.55.1569340027524; 
- Tue, 24 Sep 2019 08:47:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46d7RP4kX3zDqGv;
+ Wed, 25 Sep 2019 03:27:05 +1000 (AEST)
+Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x8OHK2TF019779; Tue, 24 Sep 2019 10:26:03 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=h8Q4F8eezugsr5weNnKhptLbffREhARy57Ig5U4cGVk=;
+ b=J3oJEU/yOWH/Lq5HA7oUpwlOLzNC8zwhKLBVKmv6qmWDHBC0I9geRcx5+u4AWS6wlAgR
+ oqqYqckjZ0+TfWwXd3fY6cMWDnMFzPZ2Hzy2M1ITPSOXRX/ffJ63+pVwadf70L3z1R4j
+ QIdy/QzAOs3dS5ygNpd1duYvMEP7WhOJoj4= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2v7q74846c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Tue, 24 Sep 2019 10:26:03 -0700
+Received: from prn-mbx06.TheFacebook.com (2620:10d:c081:6::20) by
+ prn-hub06.TheFacebook.com (2620:10d:c081:35::130) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 24 Sep 2019 10:26:02 -0700
+Received: from prn-hub02.TheFacebook.com (2620:10d:c081:35::126) by
+ prn-mbx06.TheFacebook.com (2620:10d:c081:6::20) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 24 Sep 2019 10:26:02 -0700
+Received: from NAM02-BL2-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.26) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Tue, 24 Sep 2019 10:26:02 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ApLe0JGOKGqKxQ+53Xm0AaYESojgdRFEQmkJYVVxvKE05E5w4G9FSwDu/qAKHLvpX3On2qA1bYDCJ8iGNrxvwEw/gURPjJH3jRoxqDeqWxRayJ8JNtWIMLxvjELiaYHb0JQwvgnKT9Kj2KLQv2NaOq7EUoAAOYKoVbqmTZuE6LQQ4owO4tGzpf9gQ81jsH6s+tJyMDN1FEJ0i9uvGsDJEubFjW/gdcnbjizC6lo3N7NSP3ctNYOY0YTNzsr/eWtUXF6yj19GN/YuSp+BpxqzUAr4gyByMUVU15EVbJVA69Ys4/R75ky1GBxH1U18Dmbc+DVik/phsPFiOximsNeogw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h8Q4F8eezugsr5weNnKhptLbffREhARy57Ig5U4cGVk=;
+ b=Cl8iew7/gX/Hdg80K9+K33oAylSxOFMMyG4FtST/C3qqp6s439aTt14Gi5Dj+XfzsSKQ35ZQ3Uyttsfyis4r/4GM+Pz4S4IAZcc3ECLjWy3AB+6EE8/pcUlBYxOeER93VTA0lUs1ZYq51SpSQOyjGH0li6MWo4j8EbPoVlPd8/vr1HXDfjTx6DLPedRs9AEa8ypJiJyvqEdU9hjgbr8ohJN70Y3PG/w3Bl4XQ/WsjKcLmg+YvQv3gqGwYrhiUzskUEhs/XvzoSaOPWCEN6blORnqYmCGI94mBLqw3G0LQRSBJ9pkqj/QzTztDXr6vaFFCTz3gkN9qUl93zxMj2b6Ig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h8Q4F8eezugsr5weNnKhptLbffREhARy57Ig5U4cGVk=;
+ b=P5FrKCDt3BRtmjk6KUo0KOm0OQxgxzwt9hFOtrahJ5PY9I/PadpTF4DOwErw4ekDncT9cOhz3A3+127EqgFHEKNp3kTCMnVVHChYTGLsOfWpnJw8YmgeOI3rp1XZTYPALLNwXj24bpNG9qSnNPTrvLFjVmxC7XHjpIdPz0YirA4=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3524.namprd15.prod.outlook.com (52.133.252.12) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2284.26; Tue, 24 Sep 2019 17:26:01 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::bc3e:c80f:b59e:98aa]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::bc3e:c80f:b59e:98aa%6]) with mapi id 15.20.2284.023; Tue, 24 Sep 2019
+ 17:26:01 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "David S. Miller" <davem@davemloft.net>, Florian Fainelli
+ <f.fainelli@gmail.com>, YueHaibing <yuehaibing@huawei.com>, Andrew Lunn
+ <andrew@lunn.ch>, Kate Stewart <kstewart@linuxfoundation.org>, "Mauro
+ Carvalho Chehab" <mchehab+samsung@kernel.org>, Luis Chamberlain
+ <mcgrof@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "joel@jms.id.au" <joel@jms.id.au>
+Subject: Re: [PATCH v2] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Topic: [PATCH v2] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Index: AQHVaNxN2w/kFAC/x0er+VWda7SKWKcv1qsAgArchwA=
+Date: Tue, 24 Sep 2019 17:26:00 +0000
+Message-ID: <D8D8FCD0-4C30-4734-B2BD-4BCF2D90950B@fb.com>
+References: <20190911194453.2595021-1-vijaykhemka@fb.com>
+ <8C4C62C8-8835-4D33-B317-A75DD1DBB7A3@fb.com>
+In-Reply-To: <8C4C62C8-8835-4D33-B317-A75DD1DBB7A3@fb.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:d29f]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9bb39c2a-f84a-4ffb-b601-08d741144536
+x-microsoft-antispam: BCL:0; PCL:0;
+ RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600167)(711020)(4605104)(1401327)(2017052603328)(7193020);
+ SRVR:BY5PR15MB3524; 
+x-ms-traffictypediagnostic: BY5PR15MB3524:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR15MB3524A32CEA8402AF4D230D97DD840@BY5PR15MB3524.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5516;
+x-forefront-prvs: 0170DAF08C
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(346002)(376002)(366004)(136003)(39860400002)(396003)(189003)(199004)(14444005)(229853002)(6506007)(478600001)(316002)(256004)(53546011)(476003)(2616005)(2906002)(71200400001)(102836004)(86362001)(7416002)(6116002)(486006)(2501003)(46003)(99286004)(14454004)(5660300002)(186003)(6436002)(71190400001)(446003)(305945005)(54906003)(6246003)(33656002)(66446008)(76176011)(6486002)(66556008)(2201001)(11346002)(64756008)(7736002)(25786009)(81166006)(66946007)(110136005)(66476007)(6512007)(8936002)(36756003)(81156014)(4326008)(8676002)(91956017)(76116006)(921003)(1121003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3524;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: 2b4b61OlhaN/ZIccfMqqpKVyU6dQOgd0KIMz+i1qP+RVkx2PjxORao9IbpA9oYCso/HUNEeR8kh6WZE5HKRGcRt5tDKJ5U0flgEEhcRFdKKmvDFFasaMM9pmFzulrDZk2Hkbz3L74SXW+BXoNAsOw8znyw6oWqZ05swBOLgOYIb5LuMEHNtX+O7OFpmOV/BfvHl+Mt6s3pCmdLaaOUJxOp/WwGbFm74ld8+MM8CVkNRmFYqhzoiiJWJg5FBkoqJNSg1tENQZhyqDkcpeG5a26BQOEqPFwyaL7ayNwS5Mo3zOWo58xqwHXRReaOClanjenHPAkNTGOztJgYVVVISTYE6djQjofzyinOE1ix898NHT9YBAMYWkdzYi48bw7FoIDrFD3zVwoObrUP/OfcaCvFGKmo7hcf+hzLp4V3XyNo8=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <F546C34149EB2C438CC2E7F3EDE9E547@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAO=notyvvVCNr3GG3fvWkXfUc_NA+ge-KyB7capWGymNBYQb2A@mail.gmail.com>
- <f6f6856a-0a84-3ff9-b624-5575169284ac@linux.intel.com>
- <CAO=notxGB2K7KefGS1=QMxH21qF0niWXvxJyqWCCbZMu4j2QRg@mail.gmail.com>
-In-Reply-To: <CAO=notxGB2K7KefGS1=QMxH21qF0niWXvxJyqWCCbZMu4j2QRg@mail.gmail.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 24 Sep 2019 08:46:56 -0700
-Message-ID: <CAO=notw4f5C2s=Ww6ggrumvU7Qr5oW3FkWb7Daw_SV5o=psPBQ@mail.gmail.com>
-Subject: Re: MACHINE=s2600wf bitbake obmc-phosphor-image at HEAD fails
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9bb39c2a-f84a-4ffb-b601-08d741144536
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Sep 2019 17:26:00.9501 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ovmbaMilkLgnaE9LojwdBz3aZT65qiH6kRuUjegfAnK2vOVKy1juqU27I6MM+6hCmspmEv/LQtwA9RWdijrQWg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3524
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-09-24_07:2019-09-23,2019-09-24 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ malwarescore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 lowpriorityscore=0
+ mlxscore=0 impostorscore=0 phishscore=0 bulkscore=0 adultscore=0
+ spamscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1908290000 definitions=main-1909240151
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,87 +150,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 24, 2019 at 8:45 AM Patrick Venture <venture@google.com> wrote:
->
-> On Tue, Sep 24, 2019 at 8:41 AM James Feist <james.feist@linux.intel.com> wrote:
-> >
-> > On 9/23/19 8:06 PM, Patrick Venture wrote:
-> > > I'm hitting a build failure with intel-ipmi-oem on this platform.
-> >
-> > This should have fixed it:
-> > https://github.com/openbmc/intel-ipmi-oem/commit/28c7290ce54fe46c9fd82fdcd1702088d621e694
-> >
-> > Maybe you don't have the bump yet?
->
-> The bump hasn't gone through.  It looks like openbmc/openbmc is pretty
-> far behind for that recipe.
-
-Looks like this should address it:
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/25491
->
-> >
-> > -James
-> >
-> > >
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:1849:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  1849 |         *(ctx->yield), ec, "xyz.openbmc_project.Settings",
-> > > |       |         ^~~~~~~~~~~~~
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
-> > > In function 'int ipmi::getCRConfig(ipmi::Context::ptr, const string&,
-> > > ipmi::crConfigVariant&, std::chrono::microseconds)':
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:1869:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  1869 |         *(ctx->yield), ec, "xyz.openbmc_project.Settings",
-> > > |       |         ^~~~~~~~~~~~~
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
-> > > In function 'ipmi::RspType<unsigned char, unsigned char>
-> > > ipmi::ipmiGetSecurityMode(ipmi::Context::ptr)':
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2486:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  2486 |         *ctx->yield, ec, restricionModeService,
-> > > restricionModeBasePath,
-> > > |       |         ^~~~~~~~~~~
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2500:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  2500 |         *ctx->yield, ec, specialModeService, specialModeBasePath,
-> > > |       |         ^~~~~~~~~~~
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
-> > > In function 'ipmi::RspType<>
-> > > ipmi::ipmiSetSecurityMode(ipmi::Context::ptr, uint8_t)':
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2552:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  2552 |         *ctx->yield, ec, restricionModeService,
-> > > restricionModeBasePath,
-> > > |       |         ^~~~~~~~~~~
-> > > | /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2581:9:
-> > > error: no match for 'operator*' (operand type is
-> > > 'boost::asio::yield_context' {aka
-> > > 'boost::asio::basic_yield_context<boost::asio::executor_binder<void
-> > > (*)(), boost::asio::executor> >'})
-> > > |  2581 |         *ctx->yield, ec, restricionModeService,
-> > > restricionModeBasePath,
-> > > |       |         ^~~~~~~~~~~
-> > >
-> > >
-> > > Patrick
-> > >
+Rmxvcmlhbi9Kb2VsLA0KQ2FuIHlvdSBwbGVhc2UgbG9vayBpbnRvIGJlbG93IHBhdGNoIGFuZCBs
+ZXQgbWUga25vdyB3aG8gY2FuIGFwcGx5IHRoaXMuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQrvu79P
+biA5LzE3LzE5LCAxMjozNCBQTSwgIlZpamF5IEtoZW1rYSIgPHZpamF5a2hlbWthQGZiLmNvbT4g
+d3JvdGU6DQoNCiAgICBQbGVhc2UgcmV2aWV3IGJlbG93IHBhdGNoIGFuZCBwcm92aWRlIHlvdXIg
+dmFsdWFibGUgZmVlZGJhY2suDQogICAgDQogICAgUmVnYXJkcw0KICAgIC1WaWpheQ0KICAgIA0K
+ICAgIE9uIDkvMTEvMTksIDE6MDUgUE0sICJWaWpheSBLaGVta2EiIDx2aWpheWtoZW1rYUBmYi5j
+b20+IHdyb3RlOg0KICAgIA0KICAgICAgICBIVyBjaGVja3N1bSBnZW5lcmF0aW9uIGlzIG5vdCB3
+b3JraW5nIGZvciBBU1QyNTAwLCBzcGVjaWFsbHkgd2l0aCBJUFY2DQogICAgICAgIG92ZXIgTkNT
+SS4gQWxsIFRDUCBwYWNrZXRzIHdpdGggSVB2NiBnZXQgZHJvcHBlZC4gQnkgZGlzYWJsaW5nIHRo
+aXMNCiAgICAgICAgaXQgd29ya3MgcGVyZmVjdGx5IGZpbmUgd2l0aCBJUFY2LiBBcyBpdCB3b3Jr
+cyBmb3IgSVBWNCBzbyBlbmFibGVkDQogICAgICAgIGh3IGNoZWNrc3VtIGJhY2sgZm9yIElQVjQu
+DQogICAgICAgIA0KICAgICAgICBWZXJpZmllZCB3aXRoIElQVjYgZW5hYmxlZCBhbmQgY2FuIGRv
+IHNzaC4NCiAgICAgICAgDQogICAgICAgIFNpZ25lZC1vZmYtYnk6IFZpamF5IEtoZW1rYSA8dmlq
+YXlraGVta2FAZmIuY29tPg0KICAgICAgICAtLS0NCiAgICAgICAgQ2hhbmdlcyBzaW5jZSB2MToN
+CiAgICAgICAgIEVuYWJsZWQgSVBWNCBodyBjaGVja3N1bSBnZW5lcmF0aW9uIGFzIGl0IHdvcmtz
+IGZvciBJUFY0Lg0KICAgICAgICANCiAgICAgICAgIGRyaXZlcnMvbmV0L2V0aGVybmV0L2ZhcmFk
+YXkvZnRnbWFjMTAwLmMgfCAxMyArKysrKysrKysrKystDQogICAgICAgICAxIGZpbGUgY2hhbmdl
+ZCwgMTIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KICAgICAgICANCiAgICAgICAgZGlm
+ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZhcmFkYXkvZnRnbWFjMTAwLmMgYi9kcml2
+ZXJzL25ldC9ldGhlcm5ldC9mYXJhZGF5L2Z0Z21hYzEwMC5jDQogICAgICAgIGluZGV4IDAzMGZl
+ZDY1MzkzZS4uMDI1NWEyOGQyOTU4IDEwMDY0NA0KICAgICAgICAtLS0gYS9kcml2ZXJzL25ldC9l
+dGhlcm5ldC9mYXJhZGF5L2Z0Z21hYzEwMC5jDQogICAgICAgICsrKyBiL2RyaXZlcnMvbmV0L2V0
+aGVybmV0L2ZhcmFkYXkvZnRnbWFjMTAwLmMNCiAgICAgICAgQEAgLTE4NDIsOCArMTg0MiwxOSBA
+QCBzdGF0aWMgaW50IGZ0Z21hYzEwMF9wcm9iZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2
+KQ0KICAgICAgICAgCS8qIEFTVDI0MDAgIGRvZXNuJ3QgaGF2ZSB3b3JraW5nIEhXIGNoZWNrc3Vt
+IGdlbmVyYXRpb24gKi8NCiAgICAgICAgIAlpZiAobnAgJiYgKG9mX2RldmljZV9pc19jb21wYXRp
+YmxlKG5wLCAiYXNwZWVkLGFzdDI0MDAtbWFjIikpKQ0KICAgICAgICAgCQluZXRkZXYtPmh3X2Zl
+YXR1cmVzICY9IH5ORVRJRl9GX0hXX0NTVU07DQogICAgICAgICsNCiAgICAgICAgKwkvKiBBU1Qy
+NTAwIGRvZXNuJ3QgaGF2ZSB3b3JraW5nIEhXIGNoZWNrc3VtIGdlbmVyYXRpb24gZm9yIElQVjYN
+CiAgICAgICAgKwkgKiBidXQgaXQgd29ya3MgZm9yIElQVjQsIHNvIGRpc2FibGluZyBodyBjaGVj
+a3N1bSBhbmQgZW5hYmxpbmcNCiAgICAgICAgKwkgKiBpdCBmb3Igb25seSBJUFY0Lg0KICAgICAg
+ICArCSAqLw0KICAgICAgICArCWlmIChucCAmJiAob2ZfZGV2aWNlX2lzX2NvbXBhdGlibGUobnAs
+ICJhc3BlZWQsYXN0MjUwMC1tYWMiKSkpIHsNCiAgICAgICAgKwkJbmV0ZGV2LT5od19mZWF0dXJl
+cyAmPSB+TkVUSUZfRl9IV19DU1VNOw0KICAgICAgICArCQluZXRkZXYtPmh3X2ZlYXR1cmVzIHw9
+IE5FVElGX0ZfSVBfQ1NVTTsNCiAgICAgICAgKwl9DQogICAgICAgICsNCiAgICAgICAgIAlpZiAo
+bnAgJiYgb2ZfZ2V0X3Byb3BlcnR5KG5wLCAibm8taHctY2hlY2tzdW0iLCBOVUxMKSkNCiAgICAg
+ICAgLQkJbmV0ZGV2LT5od19mZWF0dXJlcyAmPSB+KE5FVElGX0ZfSFdfQ1NVTSB8IE5FVElGX0Zf
+UlhDU1VNKTsNCiAgICAgICAgKwkJbmV0ZGV2LT5od19mZWF0dXJlcyAmPSB+KE5FVElGX0ZfSFdf
+Q1NVTSB8IE5FVElGX0ZfUlhDU1VNDQogICAgICAgICsJCQkJCSB8IE5FVElGX0ZfSVBfQ1NVTSk7
+DQogICAgICAgICAJbmV0ZGV2LT5mZWF0dXJlcyB8PSBuZXRkZXYtPmh3X2ZlYXR1cmVzOw0KICAg
+ICAgICAgDQogICAgICAgICAJLyogcmVnaXN0ZXIgbmV0d29yayBkZXZpY2UgKi8NCiAgICAgICAg
+LS0gDQogICAgICAgIDIuMTcuMQ0KICAgICAgICANCiAgICAgICAgDQogICAgDQogICAgDQoNCg==
