@@ -1,97 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB26CBC0CE
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 05:53:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D438BC111
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 06:28:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cnNK0CFQzDqRX
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 13:53:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cp923mBYzDqSG
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 14:28:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=microsoft.com
- (client-ip=40.107.71.110; helo=nam05-by2-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
+ spf=pass (mailfrom) smtp.mailfrom=protonmail.com
+ (client-ip=185.70.40.133; helo=mail-40133.protonmail.ch;
+ envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="bWSmGlwj"; dkim-atps=neutral
-Received: from NAM05-BY2-obe.outbound.protection.outlook.com
- (mail-eopbgr710110.outbound.protection.outlook.com [40.107.71.110])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="U2Gqy11E"; 
+ dkim-atps=neutral
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch
+ [185.70.40.133])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46cnMW6rxCzDqQs
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 13:52:38 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=oXfSxJuyoUf2yxCvhkfLcxDnW6pZRd9HO0R1pvOhU22PgoR87/hOWF1ILRqN5RrNxXcSR6XfD42WDSLn5BN2cfFggDBIFH9YiewN4Ngx6NVD5v1EaL2mDDfpoP9LHKnE5FkiDeouP4hNZN/kHFNZ03mX59dziqb8unHx9CvkpiTd4nDz72Hjhey2F6dkFLaJN26BtxWE6YHPZwgq52eGtOTCvUNiILbDAHAf/0KxItG3vZhosqieKdQkCx7z36mPDdM0Jm184b8/MFtIrYsDfGGj58vN4SqifD2CVT609Vz2n+Cba4BuMzc9LBfOp4c3sNqkmjRTS+gv2SO1RqI4vQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1foMUBStNg30ehSbnoEKnma3Z0DpriLWwQrTUcedxAU=;
- b=KAL+HDjK1mv3VLF0OAyXIkJh+L6PB7t+SKfue2kBB+KgSnlQqCkD725AupynAS2QeLyQpYzvR4foSMA6mKHmemWyXus7ggp89dtDE7iV+31W7cTO4ZRJRn0KoDz0UxwbZbKtgCAVXlWst6vsyfTkok1MEwuSobyYU55txzRXqaW0MR7ZWJpZgbd2TbfdYGbDDAjlyKL1JbDUp8rZWBX+51MQnsRcWKD17w+y17LjG4TGNxgOYn2ROkMt2gTe17VbO6AgVsPpDH521ZtQFTHD2eGexmYBkZ8Oe4CHp+Axex2ojfDX/BPwA42xjqm5SD2CBLHW0K1tOmdx3YQVDIhvhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1foMUBStNg30ehSbnoEKnma3Z0DpriLWwQrTUcedxAU=;
- b=bWSmGlwj7peAGmWttOG9zcWD+oCo3YtPxMkzPOVENMZ8BaOlGgyzRTANydiILksiXjBfG/pRVnDzZUMtMu3DHV1rVXf7eG0kRFpf0QSFd2ynwc+ujFjcWJ9keMB+5VVdJw2RUzEg3qasPoeDsUQzSTcwWtJtE3satM/o0/hDS0I=
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com (20.179.56.209) by
- BYAPR21MB1221.namprd21.prod.outlook.com (20.179.57.76) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2327.6; Tue, 24 Sep 2019 03:52:33 +0000
-Received: from BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::3c52:4e1f:202:b5db]) by BYAPR21MB1191.namprd21.prod.outlook.com
- ([fe80::3c52:4e1f:202:b5db%7]) with mapi id 15.20.2305.000; Tue, 24 Sep 2019
- 03:52:33 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Platform Telemetry workgroup- bi-weekly sync 
-Thread-Topic: Platform Telemetry workgroup- bi-weekly sync 
-Thread-Index: AdVyi2uS47ovS1jOTeK/p2xl45QzrAAABGNA
-Date: Tue, 24 Sep 2019 03:52:33 +0000
-Message-ID: <BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840@BYAPR21MB1191.namprd21.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-ms-exchange-calendar-series-instance-id: BAAAAIIA4AB0xbcQGoLgCAAAAAAwQKuQUHLVAQAAAAAAAAAAEAAAAG9ABZX2S+ZPmzvlyGFC47c=
-x-originating-ip: [50.54.140.107]
-x-ms-office365-filtering-correlation-id: 212e724a-f6e4-4c8d-06fc-08d740a2a1a0
-x-ms-office365-filtering-ht: Tenant
-x-ms-traffictypediagnostic: BYAPR21MB1221:MeetingMessage
-x-ms-exchange-purlcount: 6
-x-microsoft-antispam-prvs: <BYAPR21MB1221594B85E107EEF2F123DBC8840@BYAPR21MB1221.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2887;
-x-forefront-prvs: 0170DAF08C
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(396003)(39860400002)(346002)(376002)(366004)(136003)(9763003)(189003)(199004)(74316002)(66066001)(7736002)(5660300002)(236005)(6436002)(6306002)(5640700003)(9686003)(33656002)(55016002)(54896002)(52536014)(71200400001)(66476007)(66556008)(66446008)(6916009)(64756008)(66946007)(4744005)(71190400001)(256004)(2351001)(86362001)(476003)(486006)(10290500003)(316002)(2501003)(25786009)(6506007)(7696005)(99286004)(102836004)(76116006)(10090500001)(26005)(186003)(606006)(8990500004)(790700001)(6116002)(14454004)(3846002)(4743002)(8676002)(22452003)(81166006)(81156014)(1730700003)(8936002)(2906002)(478600001);
- DIR:OUT; SFP:1102; SCL:1; SRVR:BYAPR21MB1221;
- H:BYAPR21MB1191.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: C6Y6aNycYmECf3N1fjoErFtg9SHGu5sZiQ9YgCqX6Au19kiHlN8+1S1n3ItR0hcuD8ygMpZsfc2CLik22ExWNgAFwl1fJtNhdN9NENds3M+vmiXVU4AcJ+qaJlrf70zCD0S/g07bvhfF3tuwULruFU6V4JkzeXRdrM2JmbFCu9vxBi3NJSGZIWDSeXsYNdg3X1vJnG4OUOb/eXj+cEsa7/7ICWs2q8ZOa/33iG1qs5HhYfIs0BCF/YYrDYuqcV53VWI6peZYae2GHjtZEdP34kYIXLVNipV+qZ72FtNL+JDnr6zjjdnuwR58tLx+2LiY8r+fY4NgY66nqG6yrc4olEVUXrLk+r2AqolysyuxRhnz81WSB2EELTIdwsYIqAkfkZMoXry12UEMgx9S+ABJF8KGOgIgXGIKEGfSTrMUjqYu44Wl+8b9qDhCbV/rtF+b6S4k56QJj0bKQmVnjW08gA==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840BYAPR21MB1191namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cp5Y4xvYzDqRr
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 14:25:34 +1000 (AEST)
+Date: Tue, 24 Sep 2019 04:25:22 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1569299126;
+ bh=pTFTc8O3HZlMJ20AlrH361dkQNzvnGEHDSwwPGf8184=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=U2Gqy11EsIhk4mNFCNUeFDY6GdWwoBbLuDCwui0AGk/TzZJAM4AyrVs0FP4UAdUYC
+ poDqUBulownj068ro+ghyIee3/AFIPOuD7aGE2yc/FFvGw/dPHScCRA/hK+HlFeOhK
+ l7vIEioB5nUzret7CSjej4LPz5bsES60sVmMf0RE=
+To: Matthew Barth <msbarth@linux.ibm.com>
+From: rgrs <rgrs@protonmail.com>
+Subject: Re: Fan PWM monitoring and control
+Message-ID: <gCqa3KLpxkaqddp6pnOMKmLCTSjvpuoQHlS5siDs3JCFv3NeXvKc4xul_Ri83w76neUFnIQhrxDDTuXQyTxHYt3hEPCVvmnWi2dHRSs5iKY=@protonmail.com>
+In-Reply-To: <afa59982-3c5f-8939-bd05-88d1815a2c6f@linux.ibm.com>
+References: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
+ <87e610aa-72c7-32d2-9281-2c89023d397a@linux.ibm.com>
+ <CAO=notzaok+dsfR0uRJUy2ZGHMiMZZC9Jm704B5HfCS8CLPnEQ@mail.gmail.com>
+ <_Nl9cDEblRON25jUEVZy-xP4bxr_xoMpODmc9FCcRWNpgk3sFL_ZHmcHAwVQaEdzB1V8KjJ1k3U_a90MQMP2nIzosFt_jwC3j3vSPxTvEGs=@protonmail.com>
+ <CAO=notxUENhPn4bYZVzgyuy-tn6OxP3ojE29MBtXHLGAgkfj_w@mail.gmail.com>
+ <Eoms3BmA_hZ-IwjRbWQGhnKCH-ijQ3Am7q1DrTqo73DtZSdsXaMbAcVInBw-SBdTgeqbpsHRuqvkEoAM04KKIqvJnsIv67WATAPVeM9TGv8=@protonmail.com>
+ <b8234b9b-1409-33dc-930f-21b8aab590e2@linux.ibm.com>
+ <DPtOWfYe4jWodafub9fy5O2kam1xxcqYVW-AwwODBWTmNr0VBvHQulRT6eAywSOxzlmbCuHhLW9vJ_alhSn-fuDwyh_KvJdUYz4AqWcThTE=@protonmail.com>
+ <LgdPnRYBfplNFAYHlgeIeqcfaFAY3YBlIY29oEdpPzlBlptZTxYA7eQDOAJL9IWz_b_GYz9PCAMxoudn2QA1ArWs1r74LSBcdkOdlXQ1Slk=@protonmail.com>
+ <afa59982-3c5f-8939-bd05-88d1815a2c6f@linux.ibm.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 212e724a-f6e4-4c8d-06fc-08d740a2a1a0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Sep 2019 03:52:33.5574 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8PAjDw7K1wEA06PTWzpnbFMmUwWk6niRa1DDo+Ss+FT1gWHjofikRbfg8uKVMr6DdExcIRYH3LrA2fH6hrk/AQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR21MB1221
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM autolearn=ham
+ autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,285 +67,455 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: rgrs <rgrs@protonmail.com>
+Cc: Patrick Venture <venture@google.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840BYAPR21MB1191namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Thanks Matt :) It works now.
 
-Resending the invite
+I have one small issue on configuration of ADT7462.
+After AC power cycle, it defaults to "automatic" fan control.
+We need to change this "manual" so that phosphor-fan control register write=
+s are not ignored by ADT7462.
 
-___________________________________________________________________________=
-_____
-Join Microsoft Teams Meeting<https://teams.microsoft.com/l/meetup-join/19%3=
-ameeting_NjQ4OTFmNzYtNTlhOS00N2Q1LTlkYzUtNDBjYWQ0OGQ2OGJi%40thread.v2/0?con=
-text=3D%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%2=
-2%3a%221c29c2f7-d386-4c5a-a3bc-0ee13b48bc65%22%7d>
-+1 323-849-4874<tel:+1%20323-849-4874,,63604949#>   United States, Los Ange=
-les (Toll)
-(866) 679-9995<tel:(866)%20679-9995,,63604949#>   (Toll-free)
-Conference ID: 636 049 49#
-Local numbers<https://dialin.teams.microsoft.com/8551f4c1-bea3-441a-8738-69=
-aa517a91c5?id=3D63604949> | Reset PIN<https://mysettings.lync.com/pstnconfe=
-rencing> | Learn more about Teams<https://go.microsoft.com/fwlink/?linkid=
-=3D857250> | Meeting options<https://teams.microsoft.com/meetingOptions/?or=
-ganizerId=3D1c29c2f7-d386-4c5a-a3bc-0ee13b48bc65&tenantId=3D72f988bf-86f1-4=
-1af-91ab-2d7cd011db47&threadId=3D19_meeting_NjQ4OTFmNzYtNTlhOS00N2Q1LTlkYzU=
-tNDBjYWQ0OGQ2OGJi@thread.v2&messageId=3D0&language=3Den-US>
-Join with a video conferencing device
-813878896@t.plcm.vc<mailto:813878896@t.plcm.vc> VTC Conference ID: 01798859=
-1
-Alternate VTC dialing instructions<https://dialin.plcm.vc/teams/?key=3D8138=
-78896&conf=3D017988591>
-___________________________________________________________________________=
-_____
+I came across https://github.com/openbmc/docs/blob/master/sensor-architectu=
+re.md
 
 
---_000_BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840BYAPR21MB1191namp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Segoe UI";
-	panose-1:2 11 5 2 4 2 4 2 2 3;}
-@font-face
-	{font-family:"Segoe UI Semibold";
-	panose-1:2 11 7 2 4 2 4 2 2 3;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0in;
-	mso-margin-bottom-alt:auto;
-	margin-left:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle18
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Resending the invite<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"color:gray">_________________________=
-_______________________________________________________</span>
-<o:p></o:p></p>
-<div>
-<div style=3D"margin-top:.25in;margin-bottom:7.5pt">
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"https://teams.microsoft.com/l/meetup-join/=
-19%3ameeting_NjQ4OTFmNzYtNTlhOS00N2Q1LTlkYzUtNDBjYWQ0OGQ2OGJi%40thread.v2/0=
-?context=3D%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22O=
-id%22%3a%221c29c2f7-d386-4c5a-a3bc-0ee13b48bc65%22%7d" target=3D"_blank"><s=
-pan style=3D"font-size:13.5pt;font-family:&quot;Segoe UI Semibold&quot;,san=
-s-serif;color:#6264A7">Join
- Microsoft Teams Meeting</span></a> <o:p></o:p></span></p>
-</div>
-<div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"tel:&#43;1%20323-849-4874,,63604949# " tar=
-get=3D"_blank"><span style=3D"font-size:10.5pt;color:#6264A7;text-decoratio=
-n:none">&#43;1 323-849-4874</span></a>
-</span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424">&nbsp; United States, Los Angeles (Toll)
-</span><span style=3D"font-family:&quot;Segoe UI&quot;,sans-serif;color:#25=
-2424"><o:p></o:p></span></p>
-</div>
-<div style=3D"margin-bottom:3.0pt">
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"tel:(866)%20679-9995,,63604949# " target=
-=3D"_blank"><span style=3D"font-size:10.5pt;color:#6264A7;text-decoration:n=
-one">(866) 679-9995</span></a>
-</span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424">&nbsp; (Toll-free)
-</span><span style=3D"font-family:&quot;Segoe UI&quot;,sans-serif;color:#25=
-2424"><o:p></o:p></span></p>
-</div>
-</div>
-<div style=3D"margin-top:7.5pt;margin-bottom:15.0pt">
-<p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Seg=
-oe UI&quot;,sans-serif;color:#252424">Conference ID:
-</span><span style=3D"font-size:10.5pt;font-family:&quot;Segoe UI&quot;,san=
-s-serif;color:#252424">636 049 49#
-</span><span style=3D"font-family:&quot;Segoe UI&quot;,sans-serif;color:#25=
-2424"><o:p></o:p></span></p>
-</div>
-<div style=3D"margin-bottom:.25in">
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Segoe UI&quot;,sans=
--serif;color:#252424"><a href=3D"https://dialin.teams.microsoft.com/8551f4c=
-1-bea3-441a-8738-69aa517a91c5?id=3D63604949" target=3D"_blank"><span style=
-=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Local
- numbers</span></a> | <a href=3D"https://mysettings.lync.com/pstnconferenci=
-ng" target=3D"_blank">
-<span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Reset PI=
-N</span></a> |
-<a href=3D"https://go.microsoft.com/fwlink/?linkid=3D857250" target=3D"_bla=
-nk"><span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Lear=
-n more about Teams</span></a> |
-<a href=3D"https://teams.microsoft.com/meetingOptions/?organizerId=3D1c29c2=
-f7-d386-4c5a-a3bc-0ee13b48bc65&amp;tenantId=3D72f988bf-86f1-41af-91ab-2d7cd=
-011db47&amp;threadId=3D19_meeting_NjQ4OTFmNzYtNTlhOS00N2Q1LTlkYzUtNDBjYWQ0O=
-GQ2OGJi@thread.v2&amp;messageId=3D0&amp;language=3Den-US" target=3D"_blank"=
+> ENABLE
+>   Will write a value to a pwmN_enable file on startup if present.
 >
-<span style=3D"font-size:9.0pt;color:#6264A7;text-decoration:none">Meeting =
-options</span></a>
-<o:p></o:p></span></p>
-</div>
-<div style=3D"margin-bottom:3.0pt">
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif;color:#252424">Join with a video conferencing devic=
-e
-<o:p></o:p></span></p>
-</div>
-<div style=3D"margin-bottom:3.0pt">
-<p class=3D"MsoNormal"><span class=3D"MsoHyperlink"><span style=3D"font-siz=
-e:9.0pt;font-family:&quot;Segoe UI&quot;,sans-serif;color:#6264A7;text-deco=
-ration:none"><a href=3D"mailto:813878896@t.plcm.vc">813878896@t.plcm.vc</a>=
-</span></span><span style=3D"font-size:9.0pt;font-family:&quot;Segoe UI&quo=
-t;,sans-serif;color:#252424">
- VTC Conference ID: 017988591 <o:p></o:p></span></p>
-</div>
-<div style=3D"margin-bottom:15.0pt">
-<p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Seg=
-oe UI&quot;,sans-serif;color:#252424"><a href=3D"https://dialin.plcm.vc/tea=
-ms/?key=3D813878896&amp;conf=3D017988591"><span style=3D"color:#6264A7;text=
--decoration:none">Alternate VTC dialing instructions</span></a>
-<o:p></o:p></span></p>
-</div>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"color:gray">_________________________=
-_______________________________________________________</span>
-<o:p></o:p></p>
-</div>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+>  ENABLE_fan1 =3D 2 #Write a 2 to pwm1_enable
 
---_000_BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840BYAPR21MB1191namp_
-Content-Type: text/calendar; charset="utf-8"; method=REQUEST
-Content-Transfer-Encoding: base64
+But this doesn't seem to work. We need it to be initialized to '1'.
+(It always defaults to 2 after AC cycle)
 
-QkVHSU46VkNBTEVOREFSDQpNRVRIT0Q6UkVRVUVTVA0KUFJPRElEOk1pY3Jvc29mdCBFeGNoYW5n
-ZSBTZXJ2ZXIgMjAxMA0KVkVSU0lPTjoyLjANCkJFR0lOOlZUSU1FWk9ORQ0KVFpJRDpQYWNpZmlj
-IFN0YW5kYXJkIFRpbWUNCkJFR0lOOlNUQU5EQVJEDQpEVFNUQVJUOjE2MDEwMTAxVDAyMDAwMA0K
-VFpPRkZTRVRGUk9NOi0wNzAwDQpUWk9GRlNFVFRPOi0wODAwDQpSUlVMRTpGUkVRPVlFQVJMWTtJ
-TlRFUlZBTD0xO0JZREFZPTFTVTtCWU1PTlRIPTExDQpFTkQ6U1RBTkRBUkQNCkJFR0lOOkRBWUxJ
-R0hUDQpEVFNUQVJUOjE2MDEwMTAxVDAyMDAwMA0KVFpPRkZTRVRGUk9NOi0wODAwDQpUWk9GRlNF
-VFRPOi0wNzAwDQpSUlVMRTpGUkVRPVlFQVJMWTtJTlRFUlZBTD0xO0JZREFZPTJTVTtCWU1PTlRI
-PTMNCkVORDpEQVlMSUdIVA0KRU5EOlZUSU1FWk9ORQ0KQkVHSU46VkVWRU5UDQpPUkdBTklaRVI7
-Q049TmVlcmFqIExhZGthbmk6TUFJTFRPOm5lbGFka0BtaWNyb3NvZnQuY29tDQpBVFRFTkRFRTtS
-T0xFPVJFUS1QQVJUSUNJUEFOVDtQQVJUU1RBVD1ORUVEUy1BQ1RJT047UlNWUD1UUlVFO0NOPW9w
-ZW5ibWNAbGkNCiBzdHMub3psYWJzLm9yZzpNQUlMVE86b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-DQpERVNDUklQVElPTjtMQU5HVUFHRT1lbi1VUzpSZXNlbmRpbmcgdGhlIGludml0ZVxuXG5fX19f
-X19fX19fX19fX19fX19fX19fX18NCiBfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX1xuSm9pbiBNaWNyb3NvZnQgVA0KIGVhbXMgTWVldGluZzxo
-dHRwczovL3RlYW1zLm1pY3Jvc29mdC5jb20vbC9tZWV0dXAtam9pbi8xOSUzYW1lZXRpbmdfTmpR
-NE9UDQogRm1Oell0TlRsaE9TMDBOMlExTFRsa1l6VXROREJqWVdRME9HUTJPR0ppJTQwdGhyZWFk
-LnYyLzA/Y29udGV4dD0lN2IlMjJUaWQNCiAlMjIlM2ElMjI3MmY5ODhiZi04NmYxLTQxYWYtOTFh
-Yi0yZDdjZDAxMWRiNDclMjIlMmMlMjJPaWQlMjIlM2ElMjIxYzI5YzJmNw0KIC1kMzg2LTRjNWEt
-YTNiYy0wZWUxM2I0OGJjNjUlMjIlN2Q+XG4rMSAzMjMtODQ5LTQ4NzQ8dGVsOisxJTIwMzIzLTg0
-OS00ODc0DQogXCxcLDYzNjA0OTQ5Iz4gICBVbml0ZWQgU3RhdGVzXCwgTG9zIEFuZ2VsZXMgKFRv
-bGwpXG4oODY2KSA2NzktOTk5NTx0ZWw6KDgNCiA2NiklMjA2NzktOTk5NVwsXCw2MzYwNDk0OSM+
-ICAgKFRvbGwtZnJlZSlcbkNvbmZlcmVuY2UgSUQ6IDYzNiAwNDkgNDkjXG5Mbw0KIGNhbCBudW1i
-ZXJzPGh0dHBzOi8vZGlhbGluLnRlYW1zLm1pY3Jvc29mdC5jb20vODU1MWY0YzEtYmVhMy00NDFh
-LTg3MzgtNjlhDQogYTUxN2E5MWM1P2lkPTYzNjA0OTQ5PiB8IFJlc2V0IFBJTjxodHRwczovL215
-c2V0dGluZ3MubHluYy5jb20vcHN0bmNvbmZlcmUNCiBuY2luZz4gfCBMZWFybiBtb3JlIGFib3V0
-IFRlYW1zPGh0dHBzOi8vZ28ubWljcm9zb2Z0LmNvbS9md2xpbmsvP2xpbmtpZD04NQ0KIDcyNTA+
-IHwgTWVldGluZyBvcHRpb25zPGh0dHBzOi8vdGVhbXMubWljcm9zb2Z0LmNvbS9tZWV0aW5nT3B0
-aW9ucy8/b3JnYW5pDQogemVySWQ9MWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYzY1
-JnRlbmFudElkPTcyZjk4OGJmLTg2ZjEtNDFhZi05MWENCiBiLTJkN2NkMDExZGI0NyZ0aHJlYWRJ
-ZD0xOV9tZWV0aW5nX05qUTRPVEZtTnpZdE5UbGhPUzAwTjJRMUxUbGtZelV0TkRCallXUQ0KIDBP
-R1EyT0dKaUB0aHJlYWQudjImbWVzc2FnZUlkPTAmbGFuZ3VhZ2U9ZW4tVVM+XG5Kb2luIHdpdGgg
-YSB2aWRlbyBjb25mZXJlDQogbmNpbmcgZGV2aWNlXG44MTM4Nzg4OTZAdC5wbGNtLnZjPG1haWx0
-bzo4MTM4Nzg4OTZAdC5wbGNtLnZjPiBWVEMgQ29uZmVyZW4NCiBjZSBJRDogMDE3OTg4NTkxXG5B
-bHRlcm5hdGUgVlRDIGRpYWxpbmcgaW5zdHJ1Y3Rpb25zPGh0dHBzOi8vZGlhbGluLnBsY20udg0K
-IGMvdGVhbXMvP2tleT04MTM4Nzg4OTYmY29uZj0wMTc5ODg1OTE+XG5fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fDQogX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX1xuXG4NClJSVUxFOkZSRVE9V0VFS0xZO0lOVEVSVkFMPTI7QllEQVk9VFU7V0tT
-VD1TVQ0KVUlEOjA0MDAwMDAwODIwMEUwMDA3NEM1QjcxMDFBODJFMDA4MDAwMDAwMDAzMDQwQUI5
-MDUwNzJENTAxMDAwMDAwMDAwMDAwMDAwDQogMDEwMDAwMDAwNkY0MDA1OTVGNjRCRTY0RjlCM0JF
-NUM4NjE0MkUzQjcNClNVTU1BUlk7TEFOR1VBR0U9ZW4tVVM6UGxhdGZvcm0gVGVsZW1ldHJ5IHdv
-cmtncm91cC0gYmktd2Vla2x5IHN5bmMgDQpEVFNUQVJUO1RaSUQ9UGFjaWZpYyBTdGFuZGFyZCBU
-aW1lOjIwMTkxMDAxVDA5MzAwMA0KRFRFTkQ7VFpJRD1QYWNpZmljIFN0YW5kYXJkIFRpbWU6MjAx
-OTEwMDFUMTAzMDAwDQpDTEFTUzpQVUJMSUMNClBSSU9SSVRZOjUNCkRUU1RBTVA6MjAxOTA5MjRU
-MDM1MjMwWg0KVFJBTlNQOk9QQVFVRQ0KU1RBVFVTOkNPTkZJUk1FRA0KU0VRVUVOQ0U6MA0KTE9D
-QVRJT047TEFOR1VBR0U9ZW4tVVM6TWljcm9zb2Z0IFRlYW1zIE1lZXRpbmcNClgtTUlDUk9TT0ZU
-LUNETy1BUFBULVNFUVVFTkNFOjANClgtTUlDUk9TT0ZULUNETy1PV05FUkFQUFRJRDotMTEzMDkx
-NTg2OQ0KWC1NSUNST1NPRlQtQ0RPLUJVU1lTVEFUVVM6VEVOVEFUSVZFDQpYLU1JQ1JPU09GVC1D
-RE8tSU5URU5ERURTVEFUVVM6QlVTWQ0KWC1NSUNST1NPRlQtQ0RPLUFMTERBWUVWRU5UOkZBTFNF
-DQpYLU1JQ1JPU09GVC1DRE8tSU1QT1JUQU5DRToxDQpYLU1JQ1JPU09GVC1DRE8tSU5TVFRZUEU6
-MQ0KWC1NSUNST1NPRlQtU0tZUEVURUFNU01FRVRJTkdVUkw6aHR0cHM6Ly90ZWFtcy5taWNyb3Nv
-ZnQuY29tL2wvbWVldHVwLWpvaW4vDQogMTklM2FtZWV0aW5nX05qUTRPVEZtTnpZdE5UbGhPUzAw
-TjJRMUxUbGtZelV0TkRCallXUTBPR1EyT0dKaSU0MHRocmVhZC52Mi8NCiAwP2NvbnRleHQ9JTdi
-JTIyVGlkJTIyJTNhJTIyNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3JTIyJTJj
-JTIyTw0KIGlkJTIyJTNhJTIyMWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYzY1JTIy
-JTdkDQpYLU1JQ1JPU09GVC1TQ0hFRFVMSU5HU0VSVklDRVVQREFURVVSTDpodHRwczovL3NjaGVk
-LnNlcnZpY2VzLnNreXBlLm5ldC90ZWENCiBtcy83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdj
-ZDAxMWRiNDcvMWMyOWMyZjctZDM4Ni00YzVhLWEzYmMtMGVlMTNiNDhiYw0KIDY1LzE5X21lZXRp
-bmdfTmpRNE9URm1Oell0TlRsaE9TMDBOMlExTFRsa1l6VXROREJqWVdRME9HUTJPR0ppQHRocmVh
-ZC52Mi8wDQpYLU1JQ1JPU09GVC1TS1lQRVRFQU1TUFJPUEVSVElFUzp7ImNpZCI6IjE5Om1lZXRp
-bmdfTmpRNE9URm1Oell0TlRsaE9TMDBOMlENCiAxTFRsa1l6VXROREJqWVdRME9HUTJPR0ppQHRo
-cmVhZC52MiJcLCJwcml2YXRlIjp0cnVlXCwidHlwZSI6MFwsIm1pZCI6MFwsIg0KIHJpZCI6MFws
-InVpZCI6bnVsbH0NClgtTUlDUk9TT0ZULU9OTElORU1FRVRJTkdFWFRFUk5BTExJTks6DQpYLU1J
-Q1JPU09GVC1PTkxJTkVNRUVUSU5HQ09ORkxJTks6Y29uZjpzaXA6bmVsYWRrQG1pY3Jvc29mdC5j
-b21cO2dydXVcO29wYXENCiB1ZT1hcHA6Y29uZjpmb2N1czppZDp0ZWFtczoyOjAhMTk6bWVldGlu
-Z19OalE0T1RGbU56WXROVGxoT1MwME4yUTFMVGxrWXpVdA0KIE5EQmpZV1EwT0dRMk9HSmktdGhy
-ZWFkLnYyITFjMjljMmY3ZDM4NjRjNWFhM2JjMGVlMTNiNDhiYzY1ITcyZjk4OGJmODZmMTQxDQog
-YWY5MWFiMmQ3Y2QwMTFkYjQ3DQpYLU1JQ1JPU09GVC1ET05PVEZPUldBUkRNRUVUSU5HOkZBTFNF
-DQpYLU1JQ1JPU09GVC1ESVNBTExPVy1DT1VOVEVSOkZBTFNFDQpYLU1JQ1JPU09GVC1MT0NBVElP
-TlM6WyB7ICJEaXNwbGF5TmFtZSIgOiAiTWljcm9zb2Z0IFRlYW1zIE1lZXRpbmciXCwgIkxvY2EN
-CiB0aW9uQW5ub3RhdGlvbiIgOiAiIlwsICJMb2NhdGlvblNvdXJjZSIgOiAwXCwgIlVucmVzb2x2
-ZWQiIDogZmFsc2VcLCAiTG9jYQ0KIHRpb25VcmkiIDogIiIgfSBdDQpCRUdJTjpWQUxBUk0NCkRF
-U0NSSVBUSU9OOlJFTUlOREVSDQpUUklHR0VSO1JFTEFURUQ9U1RBUlQ6LVBUMTVNDQpBQ1RJT046
-RElTUExBWQ0KRU5EOlZBTEFSTQ0KRU5EOlZFVkVOVA0KRU5EOlZDQUxFTkRBUg0K
+Is host-power-on script a good place to "echo 1 > pwmN_enable"?
+(planning to add a script to initialize before host power on)
 
---_000_BYAPR21MB11914DE3FBEFA6BDCE9935BDC8840BYAPR21MB1191namp_--
+Thanks,
+Raj
+
+
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Friday, September 20, 2019 9:49 PM, Matthew Barth <msbarth@linux.ibm.com=
+> wrote:
+
+> On 9/20/19 4:55 AM, rgrs wrote:
+>
+> > Hi Matt,
+> > I'm able to control fan speed via busctl.
+> > root@saber:/sys/class/hwmon/hwmon0# busctl set-property xyz.openbmc_pro=
+ject.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz=
+.openbmc_project.Control.FanPwm Target t '250'
+> > root@saber:/sys/class/hwmon/hwmon0# cat fan*_input
+> > 12498
+> > 0
+>
+> Great! that's progress.
+>
+> > I need a way to verify if the sensor associations are working properly =
+that fans will ramp up when associated temperature sensor's value increases=
+.
+>
+> Be sure that your fans.yaml contains the correct sensor name ("FAN0",
+> etc..) for each fan that contains the Target property on the FanPwm
+> interface.
+>
+> You can use busctl to monitor the target pwm sensor changes based on
+> what you configured within events.yaml for speed increases. This would
+> show that fan control is requesting updated targets to hwmon. Then hwmon
+> would write these values out to the pwm sysfs file for your fan
+> controller device.
+>
+> > Thanks,
+> > Raj
+> > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Origina=
+l Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
+=90
+> > On Friday, September 20, 2019 2:57 PM, rgrs rgrs@protonmail.com wrote:
+> >
+> > > Hi Matt,
+> > >
+> > > > > Not sure I follow what you mean by "no pwm writes", is there an
+> > >
+> > > application writing to the fan sensor's pwm interface target property=
+?
+> > > I thought phoshor-fan control writes to pwm to increase fan speed bas=
+ed on temperature sensors mentioned in events.yaml
+> > > (recipes-phosphor/fans/phosphor-fan-control-events-config/events.yaml=
+)
+> > > Is it not the case?
+> > > Thanks,
+> > > Raj
+> > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Origi=
+nal Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
+=90
+> > > On Thursday, September 19, 2019 8:26 PM, Matthew Barth msbarth@linux.=
+ibm.com wrote:
+> > >
+> > > > On 9/19/19 5:16 AM, rgrs wrote:
+> > > >
+> > > > > Hi Patrick, Lei,
+> > > > > Thank you, I made some changes according your comments
+> > > > >
+> > > > > -   added Mutability::Read to fan yaml.
+> > > > > -   I didn't see ipmi-sensor-inventory.yaml of romulus having fan=
+ sensors, so removed them from IPMI.
+> > > > >
+> > > > > Now,"busctl monitor" displays Fan tach reads, no pwm writes.
+> > > >
+> > > > Not sure I follow what you mean by "no pwm writes", is there an
+> > > > application writing to the fan sensor's pwm interface target proper=
+ty?
+> > > >
+> > > > > Is there any way to manually set PWM value and test this?
+> > > > > How do I verify PWM values are being written to ADT7462?
+> > > >
+> > > > If no other application are writing to the PWM sysfs entries, you s=
+hould
+> > > > be able to `echo` a value to each fan's PWM sysfs file to alter the=
+ fan
+> > > > speeds.
+> > > >
+> > > > > Another observation is Inventory.Item seems to have invalid(stale=
+) entries.
+> > > >
+> > > > I believe inventory is persisted by default so that could explain w=
+hy
+> > > > these entries are still showing up. These are persisted under
+> > > > `/var/lib/phosphor-inventory-manager/..`.
+> > > >
+> > > > > IPMI sensor names appear in inventory even after removing from IP=
+MI sensor yaml files (exported JSON in attachment).
+> > > > > Logs:
+> > > > >
+> > > > > busctl monitor | grep -i fan
+> > > > >
+> > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> > > > >
+> > > > > Monitoring bus message stream.
+> > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN0 =
+Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChanged
+> > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN1 =
+Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChanged
+> > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN2 =
+Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChanged
+> > > > > [...]
+> > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN1 =
+Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChanged
+> > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_tach/FAN3 =
+Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChanged
+> > > > > ^C
+> > > > > busctl get-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /=
+xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPw=
+m Target
+> > > > >
+> > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> > > > >
+> > > > > t 0
+> > > > > busctl set-property xyz.openbmc_project.Hwmon-2429843755.Hwmon1 /=
+xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Control.FanPw=
+m Target 8000
+> > > > >
+> > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > > >
+> > > > This is not a valid call to `busctl set-property...`, its missing t=
+he
+> > > > property's signature type (refer to `busctl help`). Also, a target =
+PWM
+> > > > of 8000 is invalid, PWM is 0 - 255.
+> > > >
+> > > > > Failed to create bus message: Invalid argument
+> > > > > busctl introspect --no-pager xyz.openbmc_project.Hwmon-2429843755=
+.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN1
+> > > > >
+> > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > > > >
+> > > > > NAME TYPE SIGNATURE RESULT/VALUE FLAGS
+> > > > > org.freedesktop.DBus.Introspectable interface - - -
+> > > > > .Introspect method - s -
+> > > > > org.freedesktop.DBus.Peer interface - - -
+> > > > > .GetMachineId method - s -
+> > > > > .Ping method - - -
+> > > > > org.freedesktop.DBus.Properties interface - - -
+> > > > > .Get method ss v -
+> > > > > .GetAll method s a{sv} -
+> > > > > .Set method ssv - -
+> > > > > .PropertiesChanged signal sa{sv}as - -
+> > > > > xyz.openbmc_project.Control.FanPwm interface - - -
+> > > > > .Target property t 0 emits-change writable
+> > > > > xyz.openbmc_project.Sensor.Value interface - - -
+> > > > > .MaxValue property x 0 emits-change writable
+> > > > > .MinValue property x 0 emits-change writable
+> > > > > .Scale property x 0 emits-change writable
+> > > > > .Unit property s "xyz.openbmc_project.Sensor.Value.Unit.=E2=80=
+=A6 emits-change writable
+> > > > > .Value property x 2983 emits-change writable
+> > > > > xyz.openbmc_project.State.Decorator.OperationalStatus interface -=
+ - -
+> > > > > .Functional property b true emits-change writable
+> > > > > Thanks,
+> > > > > Raj
+> > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
+=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
+=90=E2=80=90
+> > > > > On Wednesday, September 18, 2019 9:35 PM, Patrick Venture venture=
+@google.com wrote:
+> > > > >
+> > > > > > On Wed, Sep 18, 2019 at 2:30 AM rgrs rgrs@protonmail.com wrote:
+> > > > > >
+> > > > > > > Hi Patrick, Matt,
+> > > > > > > I tried instructions from this wiki: https://developer.ibm.co=
+m/linuxonpower/2019/01/07/how-to-port-openbmc/
+> > > > > > > There is no GPIO to detect presence of fans, so tach readings=
+ is used instead.
+> > > > > > > Here's what I did while trying to enable Fan control:
+> > > > > > >
+> > > > > > > 1.  Added Fan tach sensor in hwmon (adt7462.conf) is in the f=
+orm LABEL=3DFANx_RPM
+> > > > > > > 2.  "ipmi-sensor-inventory.yaml" has below config:
+> > > > > > >
+> > > > > > > 60: &fan_tach
+> > > > > > > sensorType: 0x04
+> > > > > > > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
+> > > > > > > sensorReadingType: 0x01
+> > > > > > > multiplierM: 100
+> > > > > > > offsetB: 0
+> > > > > > > bExp: 0
+> > > > > > > unit: xyz.openbmc_project.Sensor.Value.Unit.RPMS
+> > > > > > > scale: 0
+> > > > > > > rExp: 0
+> > > > > > > serviceInterface: org.freedesktop.DBus.Properties
+> > > > > > > readingType: readingData
+> > > > > > > interfaces:
+> > > > > > > xyz.openbmc_project.Sensor.Value:
+> > > > > > > Value:
+> > > > > > > Offsets:
+> > > > > > > 0xFF:
+> > > > > > > type: int64_t
+> > > > > > > and FAN PWM as
+> > > > > > > 89: &fanpwm
+> > > > > > > sensorType: 0x04
+> > > > > > > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
+> > > > > > > sensorReadingType: 0x01
+> > > > > > > multiplierM: 1
+> > > > > > > offsetB: 0
+> > > > > > > bExp: 0
+> > > > > > > mutability: Mutability::Write
+> > > > > >
+> > > > > > You may need to add ::Read here too, I'm not sure anymore, but =
+you can
+> > > > > > check the script that builds this:
+> > > > > > https://github.com/openbmc/phosphor-host-ipmid/blob/master/scri=
+pts/writesensor.mako.cpp#L69
+> > > > > > It'll default to read, but if you've only set write, I don't kn=
+ow.
+> > > > > >
+> > > > > > >       serviceInterface: org.freedesktop.DBus.Properties
+> > > > > > >       readingType: readingData
+> > > > > > >       interfaces:
+> > > > > > >           xyz.openbmc_project.Control.FanPwm:
+> > > > > > >               Target:
+> > > > > > >                   Offsets:
+> > > > > > >                       0xFF:
+> > > > > > >                           type: uint64_t
+> > > > > > >
+> > > > > > >
+> > > > > > > 3.  I copied meta-romulus/recipes-phosphor/fans to my platfor=
+m and changed FAN names from "fanx" to "FANx_RPM" in yaml files.
+> > > > > > >
+> > > > > > > This is what get in busctl tree related to Fans:
+> > > > > > > (I expected to see FanPwm entries in busctl and I'm not sure =
+why there are multiple entries in inventory).
+> > > > > > > Service xyz.openbmc_project.Hwmon-2429843755.Hwmon1:
+> > > > > > > `-/xyz`-/xyz/openbmc_project
+> > > > > > > `-/xyz/openbmc_project/sensors |-/xyz/openbmc_project/sensors=
+/fan_tach | |-/xyz/openbmc_project/sensors/fan_tach/FAN0_RPM | |-/xyz/openb=
+mc_project/sensors/fan_tach/FAN1_RPM | |-/xyz/openbmc_project/sensors/fan_t=
+ach/FAN2_RPM |`-/xyz/openbmc_project/sensors/fan_tach/FAN3_RPM
+> > > > > > > `-/xyz/openbmc_project/sensors/temperature`-/xyz/openbmc_proj=
+ect/sensors/temperature/BACKPLANE_TEMP
+> > > > > >
+> > > > > > You don't get a separate entry for the PWM from phosphor-hwmon.
+> > > > > > It's a separate interface on the same service and path.
+> > > > > > I recommend you introspect on the path and see what interfaces =
+are
+> > > > > > available (as well as adding "| read" above):
+> > > > > > busctl introspect --no-pager
+> > > > > > xyz.openbmc_project.Hwmon-2429843755.Hwmon1
+> > > > > > /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
+> > > > > >
+> > > > > > > Service xyz.openbmc_project.Inventory.Manager:
+> > > > > > > `-/xyz`-/xyz/openbmc_project
+> > > > > > > `-/xyz/openbmc_project/inventory`-/xyz/openbmc_project/invent=
+ory/system
+> > > > > > > `-/xyz/openbmc_project/inventory/system/chassis`-/xyz/openbmc=
+_project/inventory/system/chassis/motherboard
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
+AN0
+> > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard=
+/FAN0/FAN0 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0=
+_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN0_RPM/=
+FAN0_RPM
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
+AN1
+> > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard=
+/FAN1/FAN1 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1=
+_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN1_RPM/=
+FAN1_RPM
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
+AN2
+> > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard=
+/FAN2/FAN2 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2=
+_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN2_RPM/=
+FAN2_RPM
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
+AN3
+> > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/motherboard=
+/FAN3/FAN3 |-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3=
+_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN3_RPM/=
+FAN3_RPM
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/f=
+an0
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/f=
+an1
+> > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/motherboard/f=
+an2
+> > > > > > > `-/xyz/openbmc_project/inventory/system/chassis/motherboard/f=
+an3
+> > > > > > > Thanks,
+> > > > > > > Raj
+> > > > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
+=E2=80=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
+=E2=80=90=E2=80=90
+> > > > > > > On Tuesday, September 17, 2019 9:18 PM, Patrick Venture ventu=
+re@google.com wrote:
+> > > > > > >
+> > > > > > > > On Tue, Sep 17, 2019 at 8:32 AM Matthew Barth msbarth@linux=
+.ibm.com wrote:
+> > > > > > > >
+> > > > > > > > > On 9/17/19 5:40 AM, rgrs wrote:
+> > > > > > > > >
+> > > > > > > > > > Hi,
+> > > > > > > > > > I need some help with phosphor hwmon related to fan sen=
+sors.
+> > > > > > > > > > I'm trying to control Fans in a server motherboard usin=
+g ADT7462
+> > > > > > > > > > controller. Hw mon porting is done and the sysfs interf=
+aces are working
+> > > > > > > > > > as expected.
+> > > > > > > > > > While I am able to read RPM, i don't find pwm/target to=
+ control the fans
+> > > > > > > > > > exposed as dbus objects.
+> > > > > > > > > > Do you have the hwmon config set similar to this to den=
+ote the fan
+> > > > > > > > > > targets are of PWM type?
+> > > > > > > > >
+> > > > > > > > > https://github.com/openbmc/openbmc/blob/master/meta-ibm/m=
+eta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/pwm-=
+tacho-controller%401e786000.conf
+> > > > > > > > >
+> > > > > > > > > > busctl --no-page tree xyz.openbmc_project.FanSensor
+> > > > > > > > > >
+> > > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > > > > > > > > >
+> > > > > > > > > > Failed to introspect object / of service xyz.openbmc_pr=
+oject.FanSensor:
+> > > > > > > > > > The name is not activatable
+> > > > > > > > > > No objects discovered.
+> > > > > > > > > > That does not look like a hwmon service name. If you ar=
+e using
+> > > > > > > > > > phosphor-objmgr, you can use `# mapper get-service /xyz=
+/openbmc_project/sensors/fan_tach` otherwise you'll need to find the
+> > > > > > > > > > hwmon service name associated with your fan controller =
+device.
+> > > > > > > >
+> > > > > > > > running`busctl tree --no-pager` will just list everything, =
+and you
+> > > > > > > > should see your fans in there. You can use the mapper too. =
+I was
+> > > > > > > > curious, are you using entity-manager/dbus-sensors? When yo=
+u mention
+> > > > > > > > FanSensor as the service, that's what it sounds like.
+> > > > > > > >
+> > > > > > > > > > I came across this post, I think it is similar to my is=
+sue.
+> > > > > > > > > > (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-=
+hwmon/+/8353)
+> > > > > > > > > > Please someone point to latest documentation or referen=
+ce Fan porting
+> > > > > > > > > > from openBMC repo?
+> > > > > > > > > > What are the exact fields in YAML that are used create =
+FanPWM objects.
+> > > > > > > > > > The Romulus machine should be a good reference for PWM =
+based fan control
+> > > > > > > > > > using phosphor-hwmon. It uses the
+> > > > > > > > > > phosphor-fan-presence/[control|monitor] apps for contro=
+lling and
+> > > > > > > > > > monitoring fans
+> > > > > > > > >
+> > > > > > > > > https://github.com/openbmc/openbmc/tree/master/meta-ibm/m=
+eta-romulus
+> > > > > > > > >
+> > > > > > > > > > (I'm using Feb release in my sandbox,
+> > > > > > > > > > https://github.com/openbmc/docs/blob/master/release/rel=
+ease-notes.md#26-feb-4-2019)
+> > > > > > > > > > Thanks,
+> > > > > > > > > > Raj
+> > > > > > > > >
+> > > > > > > > > Matt
+
+
