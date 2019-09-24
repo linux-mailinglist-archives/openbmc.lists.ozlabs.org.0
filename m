@@ -2,60 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85F54BC089
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 04:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1B58BC09D
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 05:07:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46cm8R0TFCzDqCc
-	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 12:57:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46cmML2JFlzDq83
+	for <lists+openbmc@lfdr.de>; Tue, 24 Sep 2019 13:07:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=kuiying.wang@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::42f; helo=mail-pf1-x42f.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="brD6/RC3"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com
+ [IPv6:2607:f8b0:4864:20::42f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46clxT4FXzzDqRw
- for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 12:48:27 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 23 Sep 2019 19:48:24 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,542,1559545200"; d="scan'208";a="189232494"
-Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
- by fmsmga007.fm.intel.com with ESMTP; 23 Sep 2019 19:48:24 -0700
-Received: from fmsmsx126.amr.corp.intel.com (10.18.125.43) by
- FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 23 Sep 2019 19:48:23 -0700
-Received: from shsmsx154.ccr.corp.intel.com (10.239.6.54) by
- FMSMSX126.amr.corp.intel.com (10.18.125.43) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 23 Sep 2019 19:48:23 -0700
-Received: from shsmsx102.ccr.corp.intel.com ([169.254.2.113]) by
- SHSMSX154.ccr.corp.intel.com ([169.254.7.195]) with mapi id 14.03.0439.000;
- Tue, 24 Sep 2019 10:48:21 +0800
-From: "Wang, Kuiying" <kuiying.wang@intel.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: RE: OpenBMC CVE issues in openssl
-Thread-Topic: OpenBMC CVE issues in openssl
-Thread-Index: AdVyfreiWxhXubG7QG+GhqVvf1a70///f3eA//95KAA=
-Date: Tue, 24 Sep 2019 02:48:21 +0000
-Message-ID: <959CAFA1E282D14FB901BE9A7BF4E7724E52C90B@shsmsx102.ccr.corp.intel.com>
-References: <959CAFA1E282D14FB901BE9A7BF4E7724E52C8BD@shsmsx102.ccr.corp.intel.com>
- <FAD2D9A0-A730-4A28-9798-0B8B3228E14F@fuzziesquirrel.com>
-In-Reply-To: <FAD2D9A0-A730-4A28-9798-0B8B3228E14F@fuzziesquirrel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.239.127.40]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46cmLc3qXjzDq6M
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Sep 2019 13:06:48 +1000 (AEST)
+Received: by mail-pf1-x42f.google.com with SMTP id b128so318423pfa.1
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Sep 2019 20:06:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=ZdbcvK5Xj85oiLodFpu0Hf2YjmpcBcGMKI7AwmxdDnI=;
+ b=brD6/RC3HBSyPNdyqxvh+IJ+5ZUMUahQznSmpEshw3FNRxvEWDKziF1sW5lJaHSL8x
+ Ux1lC+mpkstbu3ITMExaZnhgSvp+iveYg2Nrqt1F+Lx6CBWMG05/SLh2ZNRny7K11dN+
+ 1NCwpc37tVtSfDULRaUIAoiK59Ck8nDzI/kY11uuM+aV0lcQ8hG1gLXWRX36k0lza+Cc
+ 1QLkHuNbUQyftRUuiD6v2IDKOwG4uT8xFSHBJYdnc9l9xyJozaCPQYBEXzfBlOd9c3Of
+ EAgpClee+d0wheaQlZH1q+qXIX4jPkuPlsAbaP5dXFE4LwUeVSHdu8eA5IxUJVY3o44I
+ w8Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=ZdbcvK5Xj85oiLodFpu0Hf2YjmpcBcGMKI7AwmxdDnI=;
+ b=tWKTgWyTPd2rTJ3x7j1sEYyMKsoHBXPkxXqYtzrzy4/fvo6baM1niWP0YZC5fyB7Xs
+ FFNw4Ac092GMIcDCeyPJPNn+0SQdFNSIKwsSPbHhOo51ydN/SzWKEvEeu2eBukbe12V4
+ uddOWIlzrmjt6j59erx2I4cVF9OlBBIYOrItXiD4/dG2viKjwd6l+mxgxgI33Y5AZFj8
+ 2jKtqOx3YzQbZUqY5geSh5yc42bIo0xmuVSkjRIHBDwYg3wSa13ZTeVUMU/fodrtKA7A
+ jNQ/xcEcKZmMEeGfxgHIMHK/fTkDBYcaWF/36ps5pPJKtPRemH1xBHx1P5xJCa73FmY6
+ SgJA==
+X-Gm-Message-State: APjAAAVm1UJ5cCHjUdQlxucetgVMn8AFfvlOW2s0TlQCEXo2SIuZIv6K
+ hwhxQmn/1CRFlf6hjUYIlaGnt52LYLveZ0iaZ+ITbw==
+X-Google-Smtp-Source: APXvYqwtV/wz2ML9/qY3dqmdN1YMoEk2+AtGJotM/brcWdljjDbEBcRpk7tkbaONfY+8fWiuRMGDr7bTIt0ZTkiTSFI=
+X-Received: by 2002:a17:90a:be13:: with SMTP id
+ a19mr434774pjs.55.1569294405351; 
+ Mon, 23 Sep 2019 20:06:45 -0700 (PDT)
 MIME-Version: 1.0
+From: Patrick Venture <venture@google.com>
+Date: Mon, 23 Sep 2019 20:06:34 -0700
+Message-ID: <CAO=notyvvVCNr3GG3fvWkXfUc_NA+ge-KyB7capWGymNBYQb2A@mail.gmail.com>
+Subject: MACHINE=s2600wf bitbake obmc-phosphor-image at HEAD fails
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,56 +70,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Jia, Chunhui" <chunhui.jia@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Mihm,
- James" <james.mihm@intel.com>, "Shi, Yilei" <yilei.shi@intel.com>, "Xu,
- Qiang" <qiang.xu@intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad,
-Ok sure.
-I prefer to upgrading openssl related separately first and then others.
-Because I have urgent requirement for the latest version to fix security is=
-sues, do you agree on that?
+I'm hitting a build failure with intel-ipmi-oem on this platform.
 
-That means I submit another patch just to upgrading openssl to 1.1.1d, is i=
-t acceptable?
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:1849:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  1849 |         *(ctx->yield), ec, "xyz.openbmc_project.Settings",
+|       |         ^~~~~~~~~~~~~
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
+In function 'int ipmi::getCRConfig(ipmi::Context::ptr, const string&,
+ipmi::crConfigVariant&, std::chrono::microseconds)':
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:1869:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  1869 |         *(ctx->yield), ec, "xyz.openbmc_project.Settings",
+|       |         ^~~~~~~~~~~~~
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
+In function 'ipmi::RspType<unsigned char, unsigned char>
+ipmi::ipmiGetSecurityMode(ipmi::Context::ptr)':
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2486:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  2486 |         *ctx->yield, ec, restricionModeService,
+restricionModeBasePath,
+|       |         ^~~~~~~~~~~
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2500:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  2500 |         *ctx->yield, ec, specialModeService, specialModeBasePath,
+|       |         ^~~~~~~~~~~
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:
+In function 'ipmi::RspType<>
+ipmi::ipmiSetSecurityMode(ipmi::Context::ptr, uint8_t)':
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2552:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  2552 |         *ctx->yield, ec, restricionModeService,
+restricionModeBasePath,
+|       |         ^~~~~~~~~~~
+| /usr/local/google/git/workspaces/ci_test_area/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+f267a67dff-r0/git/src/oemcommands.cpp:2581:9:
+error: no match for 'operator*' (operand type is
+'boost::asio::yield_context' {aka
+'boost::asio::basic_yield_context<boost::asio::executor_binder<void
+(*)(), boost::asio::executor> >'})
+|  2581 |         *ctx->yield, ec, restricionModeService,
+restricionModeBasePath,
+|       |         ^~~~~~~~~~~
 
-Thanks,
-Kwin.
 
------Original Message-----
-From: Brad Bishop [mailto:bradleyb@fuzziesquirrel.com]=20
-Sent: Tuesday, September 24, 2019 10:41 AM
-To: Wang, Kuiying <kuiying.wang@intel.com>
-Cc: openbmc@lists.ozlabs.org; Jia, Chunhui <chunhui.jia@intel.com>; Shi, Yi=
-lei <yilei.shi@intel.com>; Mihm, James <james.mihm@intel.com>; Xu, Qiang <q=
-iang.xu@intel.com>
-Subject: Re: OpenBMC CVE issues in openssl
-
-at 10:25 PM, Wang, Kuiying <kuiying.wang@intel.com> wrote:
-
-> Hi Brad,
-> Openssl is already upgrade to 1.1.1d, so please help sync to the=20
-> latest version.
-> https://github.com/openembedded/openembedded-core/tree/master/meta/rec
-> ipes-connectivity/openssl
->
-> Please let me know, if you need me to submit patch for this upgrading.
->
-> Thanks,
-> Kwin.
-
-Hi Kwin
-
-I pushed a change last week that picks it up: =20
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/25306
-
-Something broke though, so that will need to get debugged before we can pic=
-k it up.  If you are able to help you could cherry-pick this change and do =
-some builds and/or testing.
-
-thanks!
-
--brad
+Patrick
