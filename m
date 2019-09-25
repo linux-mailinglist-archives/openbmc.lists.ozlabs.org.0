@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BDCCBD757
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:25:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11506BD75B
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:29:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dQ2Y3m8qzDqP4
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:25:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dQ711qxhzDqkT
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:29:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,71 +16,67 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="ItYjP81L"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="fEjGN5GY"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="h3qnbQoU"; dkim-atps=neutral
+ header.b="H+jN27zo"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dPvd6W5DzDqD1
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:19:09 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dQ6C6nkGzDqB3
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:28:19 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 692AA22274;
- Wed, 25 Sep 2019 00:19:07 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id C51A2220F4;
+ Wed, 25 Sep 2019 00:28:16 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 00:19:07 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 00:28:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm3; bh=kNu/a
- QQjYtLVqquU1Cb5DxXnpIy36B3GSnLoBl/TZyY=; b=ItYjP81LonxD79kK413wT
- h0soeAdwCM6lM+UMtFbUwyTh+pmU1S8tHSjFv3DjaApX5CymLuuLcRlXKqTHXtYg
- 27fHZOyYTJAefzYvT1Jfv8XN/yh1jKxcd9nq8UpouxPwHjLKW7C8IOJxi0LQdJc4
- 99WGvvwvu0fnx5sOsSaCfDLboM5gqq3fwjsBZRhkTak0Ej0nGAs2gE55aRUr37Os
- 7GTcGPV1Md5IYo/pxY5HglpCdcS2DuZX8MKee/7WWNX+GImUUl0irvykEdBIT7Fx
- Lt3Fuw1c3WfYIDU2o6/KBoOE0X4rRjgvwCWuVudxYXqPf2xjxH3XW/L1A4W9Elpx
- Q==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=Do6owN9rq6FwSm9C9xkYcp4wIRGmcFN
+ vlbeAP0ujpZw=; b=fEjGN5GYHuuuzRyCfQXMX9Q8ogWC1jiXxP1IrO/wQ1+sLvo
+ whpfpI9Ahjy4x/hP9pP+whvbbBa+q0swd3ovyFXFQeVdeGrRCW66TYC1uwnDyhd+
+ tJJY+fJhaf7duBgi1DCvaeOVDeEgXGXAr9tr35wyozeJGtJrE1qT1lHBOrWzSvAm
+ yXUYaBShm/jzK/M9Exs4AbDnjwreq4fOa1g2t0vQ9k330hscC4IrPsbBkLI4Yj9o
+ HKJ/WuEMqvCInU8cKV03gc6V2v42EBKkfOVBPbhoOSziBusicEVEiA1o6CdmCQFZ
+ WqFifDJqztPRTRMfcj4XhQ+qbs94eNhbBQ06fDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=kNu/aQQjYtLVqquU1Cb5DxXnpIy36B3GSnLoBl/TZ
- yY=; b=h3qnbQoU67BpWnLcNrwBiJHFEDHWXk0tdBz+3kQjwQSmRDow2EMUQqQ/W
- l5SJFbP9n3PbzgbSIAqZ5PNu/dIMb5nyEQ7vGYAszxR3CkX8zRizzAYbPrBidldA
- DSlZrkQ/X1w34G7jvrUv2l8DwSma5OyERk//OLhT5OlVzcH6qxNpLj/0JXlivnLu
- cu9n4rfLBEUsDQPwDKYNW63PRZcU15M8kZK967DyBbCoo7LBUmO3GrECEFz2c9Sq
- I+xejw3/Rq/PLjej9ffnRyEo/5naWL6wJ2Qy1FrwXjcpEp4P9Hq6QSVT6DM+x0NE
- BVlORjDw5dYqjBh8g96dUstpeTzXA==
-X-ME-Sender: <xms:u-qKXVHXyTCvh3MHQIzOPg8E3u8HorGWOcGfm6wohK6yWyrb8KisoA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdekfecutefuodetggdotefrodftvf
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Do6owN
+ 9rq6FwSm9C9xkYcp4wIRGmcFNvlbeAP0ujpZw=; b=H+jN27zoRPh6lxDMiaNA6c
+ 49TlX2couLiN7lT5x3wOpTZDntPGsR6m6AVulqhvBc6UvX+ZesGy1MM9soqgMV8U
+ WrKJCJZSy+dQf31TgSJxcMcby7OCJBX+b6nfvIkCBYjQyHdJSE5mpJ0gYLEDWbbu
+ wX0K2sR6C3N8NNSN1RZB+7s+q1YjXDyQyFWFFqZJlY4A8WJ4gPf9PY/5vj026Z8o
+ lQKsGbwE8hDHECY+ZzQaefYYUw8LqJ37tAdxw7ORexCC+m+uc9mm+o+gUYJaZqqj
+ UcuT+sWiB8NnGB6yEAF0OxfTf9WMbn3GsR5oP1gA07eSZ03ZQrK0MUiEO8qCwJsA
+ ==
+X-ME-Sender: <xms:4OyKXQOMdhoVk8ABpQC8uC2PckI043hg9z89PVvM45boZgp5L27s5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdekhecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:u-qKXVN94keOopGBJlQmu1GTxq6nGkgiWCPNZfvz4x8Yb9l84NZb8A>
- <xmx:u-qKXe-uuv3HYyycVuYLE0z5OXyL932yfE25tqW-mOg8r7KngNwfLg>
- <xmx:u-qKXZRD5bUkTPHdnfdnXMZgucGsNQPqfl5GS-4LUsuHrovMr8_N6g>
- <xmx:u-qKXesKEvbvJR-7Ae7s_y7dZC8ZroC1nMCl6X9174qK8JpFVWIaeg>
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+ dtreertdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgif
+ segrjhdrihgurdgruheqnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:4OyKXV12eHbYdyEslxkCLgbbwgOXgQJ6Hlg11NrAWyyD0GGD-mBHnw>
+ <xmx:4OyKXXp_1FQde5UCyozgk3Ti3V0WFYQGfComCNqUuyd4xMWATrWAng>
+ <xmx:4OyKXdvrvoS8vKwEHyhqhJHqsk2hcPcVpnamDI1yt8FSR0iK8rhPtw>
+ <xmx:4OyKXQzJW8TeA320xZ3z_qpPgojsfoxUyFfKRvEd3Wyp5dxY7h3bvg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 01C1FE00AF; Wed, 25 Sep 2019 00:19:06 -0400 (EDT)
+ id 21025E00AF; Wed, 25 Sep 2019 00:28:16 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <6e217a0f-6f60-4b0a-92a5-4e1dfc2332bf@www.fastmail.com>
-In-Reply-To: <FE94089C-4420-4D02-920F-C9BFFDE35F5D@fb.com>
-References: <20190922123700.749-1-andrew@aj.id.au>
- <20190922123700.749-3-andrew@aj.id.au>
- <FE94089C-4420-4D02-920F-C9BFFDE35F5D@fb.com>
-Date: Wed, 25 Sep 2019 13:49:49 +0930
+Message-Id: <9f7cc18d-2164-4a39-8f47-1a3ef3220685@www.fastmail.com>
+In-Reply-To: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
+References: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
+Date: Wed, 25 Sep 2019 13:58:58 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Vijay Khemka" <vijaykhemka@fb.com>, "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_2/6]_dt-bindings:_net:_ftgmac100:_Des?=
- =?UTF-8?Q?cribe_clock_properties?=
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Stephen Beckwith" <embeddedsteve@gmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: Unable to boot OpenBMC image in QEMU for AST2500
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,52 +88,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Tue, 24 Sep 2019, at 08:50, Vijay Khemka wrote:
->=20
->=20
-> =EF=BB=BFOn 9/22/19, 5:40 AM, "openbmc on behalf of Andrew Jeffery"=20=
+On Tue, 24 Sep 2019, at 06:16, Stephen Beckwith wrote:
+> Greetings,
+>  I am working on a Proof-of-Concept for OpenBMC. I am familiar with 
+> SP/BMC setups using proprietary code. I have successfully built the 
+> OpenBMC project (in a VM running Ubuntu 18.04) as well as 
+> building/installing the eSDK. Note: system was built from a ZIP from 
+> github, git clone failed due to access rights.
 
-> <openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org on behalf of=20=
+How are you cloning it? Might be some issue with SSH vs HTTPS.
 
-> andrew@aj.id.au> wrote:
->=20
->     Critically, the AST2600 requires ungating the RMII RCLK if e.g. NC=
-SI is
->     in use.
->    =20
->     Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
->     ---
->      Documentation/devicetree/bindings/net/ftgmac100.txt | 6 ++++++
->      1 file changed, 6 insertions(+)
->    =20
->     diff --git a/Documentation/devicetree/bindings/net/ftgmac100.txt=20=
+>  When I completed the process, I tried to load the available image into 
+> QEMU for ARM (which was also built) and received the following 
+> error(s), depending upon the directory from which this is run (which is 
+> also a question, why the difference?)
+>  I was successful in booting the Poky example from Yocto for both x86 
+> and ARM into the respective QEMU machines, for the minimal image. 
+>  Any pointers would be greatly provided.
+> 
+> Regards,
+> Stephen Beckwith
+> 
+> Failure #1: QEMU Hangs:
+> ==> Fresh shell:
+> 
+> sbeckwit@ubuntu:~/yocto_dev/openbmc-master/build$ runqemu qemuarm
+> runqemu - INFO - Running MACHINE=qemuarm bitbake -e...
 
-> b/Documentation/devicetree/bindings/net/ftgmac100.txt
->     index 04cc0191b7dd..c443b0b84be5 100644
->     --- a/Documentation/devicetree/bindings/net/ftgmac100.txt
->     +++ b/Documentation/devicetree/bindings/net/ftgmac100.txt
->     @@ -24,6 +24,12 @@ Optional properties:
->      - no-hw-checksum: Used to disable HW checksum support. Here for=20=
+You're running with the wrong qemu machine - the generic 'qemuarm' machine
+won't work for the images the build produces. You need to use one of the
+BMC-specific machines instead. Note that OpenBMC doesn't properly
+integrate into the runqemu scripts, and you're often better served by invoking
+it manually or (and!) sending a patch to make runqemu work properly.
 
-> backward
->        compatibility as the driver now should have correct defaults=20=
+We have some info on running qemu manually in the cheatsheet in the docs
+repo:
 
-> based on
->        the SoC.
-> This is still used for IPV6 as hw checksum for IPV6 packets is still=20=
+https://github.com/openbmc/docs/blob/master/cheatsheet.md#using-qemu
 
-> broken in ast2500
-
-I'm not removing it :) I think you've made the same mistake that I've ma=
-de
-in the past and interpreted the '-' as a diff marker rather than the bul=
-let
-marker in the text.
+Hope that helps,
 
 Andrew
