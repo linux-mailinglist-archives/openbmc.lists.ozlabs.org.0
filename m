@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12590BE1B7
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 17:52:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6171EBE1C5
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 17:54:32 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46djHm5B61zDqXN
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 01:52:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46djKx6NdxzDqWS
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 01:54:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,69 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="c84El+61"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="OcStOaTa"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="IhtErmMv"; dkim-atps=neutral
+ header.b="gkgV0Rof"; dkim-atps=neutral
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
  [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dhtz6X1VzDqkj
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 01:34:35 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46djHC2MrYzDqjn
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 01:52:07 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id C30B24E4;
- Wed, 25 Sep 2019 11:34:33 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 11:34:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=HRs8+Drky/wML
- PBWMOY2iD1lfUMpX4sV0TrXZyTmoQQ=; b=c84El+61IKPxb61VzCYLJ4aa3ogkJ
- wXDRrtL3+mBad5mJQMLnCVCUAtKHXQB5K+7Gb+TwuuhckqbWHrEVjVlmAJOTvICF
- 9jSgE9zGhTMjTP9qu4KMLENRVGDn8kWofaUKPwSc+kTyVnGBG7yVE6YwEn9vX7SL
- STrVOChL3TOc7PrKaNuKI69uDB211VGCb4xUXPpb+TRlbNmGm8eNykvba9I43PRH
- WlanJBY2OdBazzs58/Str3dqKY2RZUIET6p2FLgensL41qIbtD2sDENKWgr9Od8q
- VnRoWwj8THSsYd8EBOcNrRngR4SFp/g+TOqXFxF4QKpdovVmBkS02/yDg==
+ by mailout.west.internal (Postfix) with ESMTP id 049B939C;
+ Wed, 25 Sep 2019 11:52:03 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 11:52:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=kNw6n
+ 5Iiv5ZOR7o/56oc8tZAaFKl0CYDa5THXmULjjg=; b=OcStOaTaSQAW0KD//dHKM
+ 0iB7FBqhRiUqJd2NOQlkx53skeKhh2NviPDQR5npjlMdyL1ei/l3uT1L1gngb3/T
+ fbGwISsWKK4Jv3SrwDWr4OACmtblq2kbU8EQMYyzZEPZVcpElQb3GmqVOA7aU5ge
+ qV6a4PAeBHqggU2ITx+HvbuZTjjZnQY8x2wdr3K+DEOrDyh6W30QNQM0wkK5zcSg
+ c7yUq/Lm4+xe2r7fMlrXwtwKLVfIQXf6KLhi66KTEdKyrV0f2Hj6A0+Wrhzwa78s
+ Mz+K4wGIp6S1CUPuVy8lS/wzvWyP5xgqpH9jJGkYtzLkhXNFVNSNQXMjbEQLpT0j
+ Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=HRs8+Drky/wMLPBWMOY2iD1lfUMpX4sV0TrXZyTmoQQ=; b=IhtErmMv
- CSWPfNU4EZ5JeZSR9SAPCnPO7Dy7VejYnAwPz0Nwx6QwZrs47Z51YM2wPPLwSfER
- t7TZarLRpXzMXdv3O7nwgmBiuZk+u1LeHIIPUsA4HKyy4fWr9uJfcFYXx6aNXkH8
- diFZP9MjpqcBkP5OlAGFyG3TzgeVS32FH/WZEfQiQDkj+Vvt3rAZq7g/I/VN9+HV
- HTcX4yilAyOgTA+IJuT5u7YStDG7O5BZYa1OR5QNxBE0ouzgh0RxAZYt881+c1I1
- ltJDaryJIEA/9ng+rHu3GtYm0J38BNr4kHMMce4uzZQkecW1QxUraEqJLZm3BFNA
- xFix+VQjZ0DICA==
-X-ME-Sender: <xms:CYmLXbDApz87OrjQcIZZWm4WaXPeiCGjPesiB0Ma7ga_JE834pqh7w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedvgdeltdcutefuodetggdotefrodftvf
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=kNw6n5Iiv5ZOR7o/56oc8tZAaFKl0CYDa5THXmULj
+ jg=; b=gkgV0RofxkcC06CGO5hevKPc+IieIsIZdcKGl9plj1zBZmRvoXYX9Vh6n
+ MC6OCGuZbW0DUZFWdxm2tzu5jkwWuqi1099hC73EHk4nRLyQlpDrfj5v1eeZyqfa
+ w5zazQfSndab/covUx1Pa2XnlRDGdwpBjQfohLAnJXzcp57o9VFAZBfYmM9/uEIk
+ TI/NaN8SslR76THF59hB59nq09wR+qSwcnmnkAD56teFds37bf/SaLbe7tyVRZBh
+ A/vtUoCp6URCMw/al+bGXA8H0aBNyK22vD17Ug4Hz9eaq4xppOo3Al+c/+KEZ+cr
+ d8mldCUhzf3Tss/sGzyIqxJewEv1w==
+X-ME-Sender: <xms:I42LXbsJzv-8nR9s_KIVjcZAxYe7ltF9xPLJi442tPt2nRdFjWvCFw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedvgdelhecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
- ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
- grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
- vgepie
-X-ME-Proxy: <xmx:CYmLXV5kHNyEOqsm0adzLfSP5NbsLrmsDmiZkX70LVP-j00Vj1p43Q>
- <xmx:CYmLXUdtmXfbdAuy1knSGpH74Vw8ZUw9kX30Z2FxNSEJS3WPuhvy4w>
- <xmx:CYmLXbvnf1qfeSzgWUc3LoZi61M4z2ssW4F6bKfM2WJLzm5QNp26ww>
- <xmx:CYmLXQIn8RTCdjKVRqnh5KiO0N-l1_gyHXMV0PaqiBDd1dfqOjqBFg>
-Received: from localhost.localdomain (203-57-215-178.dyn.iinet.net.au
- [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 82DFBD60057;
- Wed, 25 Sep 2019 11:34:31 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 v2 8/8] ARM: dts: aspeed: Add RCLK to MAC clocks
- for RMII interfaces
-Date: Thu, 26 Sep 2019 01:04:39 +0930
-Message-Id: <20190925153439.27475-9-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190925153439.27475-1-andrew@aj.id.au>
-References: <20190925153439.27475-1-andrew@aj.id.au>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
+ ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
+ fiesrghjrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:I42LXQr0lvyDYg1CqLbMjf5ci1U74z2dphx5SeFC1A4m0cY__dNq9g>
+ <xmx:I42LXTZbLver-6LI1qn9xfvm5TB8iR1fuVBjWo0Ic9_vqsdNXQQkfg>
+ <xmx:I42LXQz1jyXPaq_1j0Pr7zPPxurdyIe8kMkEDGGDZQ6duqrMVd8WHQ>
+ <xmx:I42LXR4sFNMUV6DIotzOsqQRpXopgVszBRKfzObsZVBv1WukEeATsQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 8634EE00AF; Wed, 25 Sep 2019 11:52:03 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
+Mime-Version: 1.0
+Message-Id: <a1767b7c-1769-40ff-b3d7-8e9adc7d234e@www.fastmail.com>
+In-Reply-To: <CAN34fowhEKe0fTv+AVN-++5GoySugobjegb=5Lghi7VYXNLmdg@mail.gmail.com>
+References: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
+ <9f7cc18d-2164-4a39-8f47-1a3ef3220685@www.fastmail.com>
+ <CAN34fowhEKe0fTv+AVN-++5GoySugobjegb=5Lghi7VYXNLmdg@mail.gmail.com>
+Date: Thu, 26 Sep 2019 01:22:41 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Stephen Beckwith" <embeddedsteve@gmail.com>
+Subject: Re: Unable to boot OpenBMC image in QEMU for AST2500
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,266 +90,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We need to ungate RCLK on AST2500- and AST2600-based platforms for RMII
-to function. RMII interfaces are commonly used for NCSI.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-arm-stardragon4800-rep2.dts | 3 +++
- arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts      | 3 +++
- arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts           | 3 +++
- arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts         | 3 +++
- arch/arm/boot/dts/aspeed-bmc-inspur-on5263m5.dts         | 3 +++
- arch/arm/boot/dts/aspeed-bmc-intel-s2600wf.dts           | 3 +++
- arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts            | 3 +++
- arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts         | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-lanyang.dts             | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts              | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts             | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-swift.dts               | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts              | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts         | 3 +++
- arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts               | 3 +++
- arch/arm/boot/dts/aspeed-bmc-portwell-neptune.dts        | 6 ++++++
- 16 files changed, 51 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-arm-stardragon4800-rep2.dts b/arch/arm/boot/dts/aspeed-bmc-arm-stardragon4800-rep2.dts
-index 521afbea2c5b..f82dba54aa77 100644
---- a/arch/arm/boot/dts/aspeed-bmc-arm-stardragon4800-rep2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-arm-stardragon4800-rep2.dts
-@@ -92,6 +92,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii2_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC2CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC2RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-index 682f729ea25e..0f30919fde3d 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
-@@ -126,6 +126,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-index 4e09a9cf32b7..32f7ef9db0a1 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts
-@@ -90,6 +90,9 @@
- 	no-hw-checksum;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- };
- 
- &i2c0 {
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-index 2339913b2171..e65207b938f8 100644
---- a/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-fp5280g2.dts
-@@ -273,6 +273,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-inspur-on5263m5.dts b/arch/arm/boot/dts/aspeed-bmc-inspur-on5263m5.dts
-index 2337ee23f5c4..58a746b72d98 100644
---- a/arch/arm/boot/dts/aspeed-bmc-inspur-on5263m5.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-inspur-on5263m5.dts
-@@ -77,6 +77,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-intel-s2600wf.dts b/arch/arm/boot/dts/aspeed-bmc-intel-s2600wf.dts
-index 22dade6393d0..ae571129b6ec 100644
---- a/arch/arm/boot/dts/aspeed-bmc-intel-s2600wf.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-intel-s2600wf.dts
-@@ -69,6 +69,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-index d3695a32e8e0..d966616fb34a 100644
---- a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr630.dts
-@@ -133,6 +133,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts
-index 118eb8bbbf1b..8193fadeaec1 100644
---- a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts
-@@ -139,6 +139,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-lanyang.dts b/arch/arm/boot/dts/aspeed-bmc-opp-lanyang.dts
-index de95112e2a04..89dedaa920c5 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-lanyang.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-lanyang.dts
-@@ -178,6 +178,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-index e55cc454b17f..52e88b09c08b 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-@@ -449,6 +449,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts b/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
-index bb513f245a5e..a2eef507ffbb 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
-@@ -162,6 +162,9 @@
- 
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- };
- 
- &i2c1 {
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
-index f67fef1ac5e1..f6197c70c231 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-swift.dts
-@@ -322,6 +322,9 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
- 	use-ncsi;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- };
- 
- &i2c2 {
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index 408af001c06c..854b0a532a01 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -28,6 +28,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii3_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC3RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-index 7b8c997b59d9..c677b7f0fee3 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-@@ -295,6 +295,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts b/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-index 3c514dfc7fee..51e749b33fd3 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-@@ -189,6 +189,9 @@
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-portwell-neptune.dts b/arch/arm/boot/dts/aspeed-bmc-portwell-neptune.dts
-index 33d704541de6..7cac89c7aca6 100644
---- a/arch/arm/boot/dts/aspeed-bmc-portwell-neptune.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-portwell-neptune.dts
-@@ -80,12 +80,18 @@
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii1_default
- 		     &pinctrl_mdio1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- };
- 
- &mac1 {
- 	status = "okay";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii2_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC2CLK>,
-+		 <&syscon ASPEED_CLK_GATE_MAC2RCLK>;
-+	clock-names = "MACCLK", "RCLK";
- 	use-ncsi;
- };
- 
--- 
-2.20.1
+On Wed, 25 Sep 2019, at 22:52, Stephen Beckwith wrote:
+> 2) re: qemu machine - the qemu machine being used is the one that was=20=
 
+> built as part fo the opembmc project. If this qemu machine won=E2=80=99=
+t work,=20
+> then why is it built as part of the project?
+
+Because no-one has looked at removing it from the poky build
+configurations that openbmc inherits. Regardless, removing it isn't the
+right way to deal with the issue.
+
+> Why are there 13 copies of=20
+> this machine scattered through out the filesystem, consuming ~ 564MB o=
+f=20
+> space, if it=E2=80=99s the =E2=80=9Cwrong=E2=80=9D machine?=20
+
+This is a question best asked of the upstream yocto project.
+
+>  - so where do I obtain the =E2=80=9CBMC-specific machine=E2=80=9D ?
+
+By running `qemu-system-arm -M ? | grep bmc`. It will give you output li=
+ke:
+
+$ qemu-system-arm -M ? | grep bmc
+palmetto-bmc         OpenPOWER Palmetto BMC (ARM926EJ-S)
+rainier-bmc          Aspeed AST2600 EVB (Cortex A7)
+romulus-bmc          OpenPOWER Romulus BMC (ARM1176)
+swift-bmc            OpenPOWER Swift BMC (ARM1176)
+tacoma-bmc           Aspeed AST2600 EVB (Cortex A7)
+witherspoon-bmc      OpenPOWER Witherspoon BMC (ARM1176)
+
+You need to pick an appropriate one to run your image:
+
+ARM926EJ-S: AST2400
+ARM1176: AST2500
+Cortex A7: AST2600
+
+The remaining differences between listed machines are what peripherals
+are attached to e.g. the I2C buses.
+
+>=20
+> 3) if OpenBMC doesn=E2=80=99t properly integrate into the rumqemu scri=
+pts,=20
+> then: A) why is this script here?
+
+It is provided by the upstream yocto project.
+
+> B) why hasn=E2=80=99t anyone taken the=20
+> time/effort to correct the script so that it will integrate properly=20=
+
+> with OpenBMC?=20
+
+Because no-one sees it as something worth spending time on? I've
+wanted to get it done since writing the initial QEMU support for the
+ASPEED chips, but it lives at the bottom of my todo list. I've asked
+other people asking questions like you to do it as well, but it hasn't
+been done yet by them either, so I can only assume it lives at the
+bottom of their todo lists too. I'd love it if you contributed a patch
+to fix it :)
+
+Andrew
