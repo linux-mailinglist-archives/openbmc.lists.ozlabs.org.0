@@ -2,83 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E19F4BD664
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 04:35:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C43F3BD68F
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:07:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dMcP2V3hzDqQm
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 12:35:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dNJq2PP8zDqT7
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 13:07:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.246.112; helo=mail1.bemta23.messagelabs.com;
+ envelope-from=pyang4@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Ji5J1phd"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="GnSLJGgY"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.112])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dMbn2R7BzDqNQ
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 12:35:17 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id C92FB221D8;
- Tue, 24 Sep 2019 22:35:14 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 24 Sep 2019 22:35:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=R8hCktazs/vjO+3P4ZlFQqB242Rj8cr
- DrT4f/iJd2ZE=; b=Ji5J1phdNTNlEdISJ/qnooCAETsdXG1wfrBO1Si2JOn93y+
- n3BqEZ8yuwgzLRUF/2+RW0gqbdEpm3wFY7kNPijpwmAhYjcrN7hpiE5DjsxN1E3U
- jzmMD7+h1ZRjv6hn/9SWLOEXrE+cMZzwY8rJVbPrAaa9iS23+rKioVBtYCbrQsOy
- uq52OzT/QyXsxja8kPhMw8OMHp4F9agyhdRMpZEm4MjNedk57FIxGQjbrIhy9D/8
- ILqCEQROrGu4HOco/obMQW9WYnGGqgLIyjEtHbX5qMmvlyXvmfYlMEdwUoTk9cUa
- 0SE/9FE5HVCEDn6UYUhoYXyonixCo87iB+1JHsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=R8hCkt
- azs/vjO+3P4ZlFQqB242Rj8crDrT4f/iJd2ZE=; b=GnSLJGgY1hKBKjUUUeC99L
- yLbo3KCxIG6AWowVE7vaAiHMMiTkKyZFGUkR21ZfSZQwwK81VEJvnT++WuYNCYEG
- fgXc4pFK9hy4W6S1tNfNrCiYOHyUV0TpxhGQEz6dEbWjOwHN9iKPYtsjCQCPe5Y8
- 30opTriTcMVn9SxqtIMIw/AocHuM7lFltq1XlqXfEh1e/nncNWv0ZprvQRyRdc0o
- 75vBLvJ46Ki1Yn5WMOsRzWPQ8xcu8uOR8AKDEZOsHz2KDZ8DhvneXJoPg7o1z0IV
- oum0eFoVWznKB/mHHAYmjItGiSlC9Q3NLFg5vOJZTd56JtefLvmZa4aCkmLNtzew
- ==
-X-ME-Sender: <xms:YdKKXWjd32AqcWyOo1bhf3_O5_hjMZb4vS7TkqC6Fz5ZXjyA3yWwMw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdeiudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedu
-X-ME-Proxy: <xmx:YdKKXeoFeKZDRu3FAwxxaZcSiO6GrxMk4F5VwfKug6ZmNvvubFI0Rw>
- <xmx:YdKKXVfPfWaRP5gtqziOwej0iY9UpsqPYikC9Sf0VTOT18ImV7-8Bw>
- <xmx:YdKKXZxfNNL9NVpnUXBcc0_4yijihANFayyoQ-p-URjneB98lZ4D3w>
- <xmx:YtKKXTheZzZfvtiqoP3CUU-bMYHIBJBEF2BxUtEjq21tSrx-qXnecQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 52DCBE00AF; Tue, 24 Sep 2019 22:35:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
-Mime-Version: 1.0
-Message-Id: <398ceb70-1f6a-46d0-8c19-8c95959d2a6b@www.fastmail.com>
-In-Reply-To: <20190924194759.26854-3-bradleyb@fuzziesquirrel.com>
-References: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
- <20190924194759.26854-3-bradleyb@fuzziesquirrel.com>
-Date: Wed, 25 Sep 2019 12:05:56 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
- "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_02/10]_dt-bindings:_ipmi:_Add_aspe?=
- =?UTF-8?Q?ed-g6_compatible_strings?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dNHL2cCXzDqWt
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 13:05:58 +1000 (AEST)
+Received: from [67.219.247.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-6.bemta.az-d.us-east-1.aws.symcld.net id 4D/53-19565-D89DA8D5;
+ Wed, 25 Sep 2019 03:05:49 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRWlGSWpSXmKPExsWSLveKXbfnZle
+ swbfrNhanWl6wODB6nJ+xkDGAMYo1My8pvyKBNePGwb1sBXNMKn4dWs3SwPhUv4uRi0NIYD6T
+ xNPlG5khnNeMEvOXf2OCcPYxSsy+vIeti5GTg01ARWLO0h0sILaIgKXEkgftYHFhATmJnit/o
+ OLKEp+2LQNq5gCy9SR+dSeDhFkEVCXuH14NVs4L1Hrk6DJmEJtRQEzi+6k1TCA2s4C4xLmLre
+ wgtoSAgMSSPeeZIWxRiZeP/7FC2AoSzXtes0DUJ0g8+7SFEWKmoMTJmU9YJjAKzkIyahaSsll
+ IyiDiOhILdn9ig7C1JZYtfM0MY5858JgJWXwBI/sqRrOkosz0jJLcxMwcXUMDA11DQyNdC11D
+ c3O9xCrdFL3SYt3UxOISXUO9xPJiveLK3OScFL281JJNjMCoSSng2LiDceOsN3qHGCU5mJREe
+ S8t7IoV4kvKT6nMSCzOiC8qzUktPsQow8GhJMH78DpQTrAoNT21Ii0zBxjBMGkJDh4lEV6vG0
+ Bp3uKCxNzizHSI1ClGe44JL+cuYuY4eHQekPy4agmQ/A4ihVjy8vNSpcR5rUHaBEDaMkrz4Ib
+ CEs4lRlkpYV5GBgYGIZ6C1KLczBJU+VeM4hyMSsK8t0Fu48nMK4Hb/QroLCags5SdO0HOKklE
+ SEk1MM1u2vVMjqtyptE0hmvzN1z0E33zxvbZW16mC3NKKz6nvHfZ4zPly/8MG4n8i2G7rzoEb
+ bjmbfit8Om5PYrr4iQ1zJ/8eHOa9fU+7jn7d57IYsgUnjr94Js37UwPfgTcTRaP292u+DzZry
+ E3KfnixYV1e96fnz/Ra1nJA24LodzdrNo608R3M5wv+r2NYbXEL8noyP8lmkds/19KUdljccZ
+ /24J/1//80jhfrB7LLfx/Z7L0jD1SqkKP5UIlYvjyIiY8KzhnvfuET0u17eemzlzpaVHBog/P
+ Hb6hM11YeaOBsdqxyyZmXGVKSkqGn1wzl2yb7hKwzyuLTcL/RCi3S9imPSuSOlW1uc/niK5Wd
+ 1FiKc5INNRiLipOBAAbwb9dswMAAA==
+X-Env-Sender: pyang4@lenovo.com
+X-Msg-Ref: server-9.tower-426.messagelabs.com!1569380746!216782!1
+X-Originating-IP: [103.30.234.7]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 14013 invoked from network); 25 Sep 2019 03:05:48 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.7)
+ by server-9.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 25 Sep 2019 03:05:48 -0000
+Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id D9E2C7F6C87FAA44AA71
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 11:05:45 +0800 (CST)
+Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
+ HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Wed, 25 Sep 2019 11:05:22 +0800
+Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
+ HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
+ 15.01.1591.008; Wed, 25 Sep 2019 11:05:45 +0800
+From: Payne Yang <pyang4@lenovo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Question for upstream
+Thread-Topic: Question for upstream
+Thread-Index: AdVzS8dMMm/mx/KnSbqgbxHwkKZVJw==
+Date: Wed, 25 Sep 2019 03:05:45 +0000
+Message-ID: <6bb44c8941db46efb2e7e2a0da39d2db@lenovo.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: multipart/alternative;
+ boundary="_000_6bb44c8941db46efb2e7e2a0da39d2dblenovocom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,16 +90,205 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_6bb44c8941db46efb2e7e2a0da39d2dblenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Team,
+
+I reference package dbus-sensors to implement feature for FPGA monitor.
+Which way is correct for upstream ??
+
+1.      Use patch file and add bbappend on dbus-sensors
+
+2.      Create oem folder in my meta-XXX/recipes-phosphor/XXX-sensors inclu=
+ding some common header from dbus-sensors (eg. Utils.cpp & Utils.hpp)
+
+3.      Create Pull Request on dbus-sensors for my implementation
+
+Best Regards,
+Payne
 
 
-On Wed, 25 Sep 2019, at 05:17, Brad Bishop wrote:
-> The AST2600 SoC contains the same IPMI devices (KCS and BT) as the
-> AST2500.
-> 
-> Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
+--_000_6bb44c8941db46efb2e7e2a0da39d2dblenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-para-margin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:0cm;
+	mso-para-margin-left:2.0gd;
+	mso-para-margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:192233466;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1429326624 1897398956 67698713 67698715 67698703 67=
+698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%2\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:48.0pt;
+	text-indent:-24.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:72.0pt;
+	text-indent:-24.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:96.0pt;
+	text-indent:-24.0pt;}
+@list l0:level5
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%5\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:120.0pt;
+	text-indent:-24.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:144.0pt;
+	text-indent:-24.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-24.0pt;}
+@list l0:level8
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%8\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:192.0pt;
+	text-indent:-24.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:216.0pt;
+	text-indent:-24.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Team,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I reference package dbus-sensor=
+s to implement feature for FPGA monitor.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Which way is correct for upstre=
+am ??<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;mso-para-margin-l=
+eft:0gd;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">1=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">Use patch file and add =
+bbappend on dbus-sensors<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;mso-para-margin-l=
+eft:0gd;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">2=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">Create oem folder in my=
+ meta-XXX/recipes-phosphor/XXX-sensors including some common header from db=
+us-sensors (eg. Utils.cpp &amp; Utils.hpp)<o:p></o:p></span></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;mso-para-margin-l=
+eft:0gd;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">3=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">Create Pull Request on =
+dbus-sensors for my implementation<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Payne<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_6bb44c8941db46efb2e7e2a0da39d2dblenovocom_--
