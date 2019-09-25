@@ -2,45 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D1B4BDE39
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:44:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E946BDE60
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:55:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dd6x0nXCzDqkg
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 22:44:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ddMQ1550zDqfb
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 22:55:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=46.105.47.167; helo=11.mo5.mail-out.ovh.net;
+ (client-ip=178.33.109.111; helo=2.mo5.mail-out.ovh.net;
  envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from 11.mo5.mail-out.ovh.net (11.mo5.mail-out.ovh.net
- [46.105.47.167])
+X-Greylist: delayed 580 seconds by postgrey-1.36 at bilbo;
+ Wed, 25 Sep 2019 22:53:42 AEST
+Received: from 2.mo5.mail-out.ovh.net (2.mo5.mail-out.ovh.net [178.33.109.111])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dd655shfzDqjJ
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:43:56 +1000 (AEST)
-Received: from player698.ha.ovh.net (unknown [10.108.42.170])
- by mo5.mail-out.ovh.net (Postfix) with ESMTP id 140E924B6C6
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:43:51 +0200 (CEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ddKL1pS7zDqml
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:53:40 +1000 (AEST)
+Received: from player698.ha.ovh.net (unknown [10.108.54.172])
+ by mo5.mail-out.ovh.net (Postfix) with ESMTP id 51FF424DE3B
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:43:56 +0200 (CEST)
 Received: from kaod.org (lfbn-1-2229-223.w90-76.abo.wanadoo.fr [90.76.50.223])
  (Authenticated sender: clg@kaod.org)
- by player698.ha.ovh.net (Postfix) with ESMTPSA id 7092EA33E0B1;
- Wed, 25 Sep 2019 12:43:47 +0000 (UTC)
+ by player698.ha.ovh.net (Postfix) with ESMTPSA id E509CA33E0F8;
+ Wed, 25 Sep 2019 12:43:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 11/13] mtd: spi-nor: aspeed: Introduce a HCLK
- mask for training
-Date: Wed, 25 Sep 2019 14:42:37 +0200
-Message-Id: <20190925124239.27897-12-clg@kaod.org>
+Subject: [PATCH linux dev-5.3 12/13] mtd: spi-nor: aspeed: check upper freq
+ limit when doing training
+Date: Wed, 25 Sep 2019 14:42:38 +0200
+Message-Id: <20190925124239.27897-13-clg@kaod.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190925124239.27897-1-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 6991556950043298562
+X-Ovh-Tracer-Id: 6992964321742588674
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
 X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrfedvgdehiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -60,66 +61,24 @@ Cc: Andrew Jeffery <andrew@aj.id.au>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600 handles more HCLK divisors than its predecessors.
-
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- drivers/mtd/spi-nor/aspeed-smc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/aspeed-smc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/spi-nor/aspeed-smc.c b/drivers/mtd/spi-nor/aspeed-smc.c
-index 768394068bd4..c6a80fdf51ef 100644
+index c6a80fdf51ef..48164d819a37 100644
 --- a/drivers/mtd/spi-nor/aspeed-smc.c
 +++ b/drivers/mtd/spi-nor/aspeed-smc.c
-@@ -41,6 +41,7 @@ struct aspeed_smc_info {
- 	u8 we0;			/* shift for write enable bit for CE0 */
- 	u8 ctl0;		/* offset in regs of ctl for CE0 */
- 	u8 timing;		/* offset in regs of timing */
-+	u32 hclk_mask;          /* clock frequency mask in CEx Control reg */
- 	u32 hdiv_max;           /* Max HCLK divisor on read timing reg */
+@@ -1075,7 +1075,7 @@ static int aspeed_smc_optimize_read(struct aspeed_smc_chip *chip,
  
- 	void (*set_4b)(struct aspeed_smc_chip *chip);
-@@ -75,6 +76,7 @@ static const struct aspeed_smc_info fmc_2400_info = {
- 	.we0 = 16,
- 	.ctl0 = 0x10,
- 	.timing = 0x94,
-+	.hclk_mask = 0xfffff0ff,
- 	.hdiv_max = 1,
- 	.set_4b = aspeed_smc_chip_set_4b,
- 	.optimize_read = aspeed_smc_optimize_read,
-@@ -91,6 +93,7 @@ static const struct aspeed_smc_info spi_2400_info = {
- 	.we0 = 0,
- 	.ctl0 = 0x04,
- 	.timing = 0x14,
-+	.hclk_mask = 0xfffff0ff,
- 	.hdiv_max = 1,
- 	.set_4b = aspeed_smc_chip_set_4b_spi_2400,
- 	.optimize_read = aspeed_smc_optimize_read,
-@@ -105,6 +108,7 @@ static const struct aspeed_smc_info fmc_2500_info = {
- 	.we0 = 16,
- 	.ctl0 = 0x10,
- 	.timing = 0x94,
-+	.hclk_mask = 0xfffff0ff,
- 	.hdiv_max = 1,
- 	.set_4b = aspeed_smc_chip_set_4b,
- 	.optimize_read = aspeed_smc_optimize_read,
-@@ -121,6 +125,7 @@ static const struct aspeed_smc_info spi_2500_info = {
- 	.we0 = 16,
- 	.ctl0 = 0x10,
- 	.timing = 0x94,
-+	.hclk_mask = 0xfffff0ff,
- 	.hdiv_max = 1,
- 	.set_4b = aspeed_smc_chip_set_4b,
- 	.optimize_read = aspeed_smc_optimize_read,
-@@ -1053,7 +1058,7 @@ static int aspeed_smc_optimize_read(struct aspeed_smc_chip *chip,
- 	memcpy_fromio(golden_buf, chip->ahb_base, CALIBRATE_BUF_SIZE);
+ 		/* Compare timing to max */
+ 		freq = ahb_freq / i;
+-		if (freq >= max_freq)
++		if (freq > max_freq)
+ 			continue;
  
- 	/* Establish our read mode with freq field set to 0 (HCLK/16) */
--	chip->ctl_val[smc_read] = save_read_val & 0xfffff0ff;
-+	chip->ctl_val[smc_read] = save_read_val & info->hclk_mask;
- 
- 	/* Check if calibration data is suitable */
- 	if (!aspeed_smc_check_calib_data(golden_buf, CALIBRATE_BUF_SIZE)) {
+ 		/* Set the timing */
 -- 
 2.21.0
 
