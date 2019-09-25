@@ -2,60 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55EEBBD941
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 09:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA2B6BDB48
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 11:42:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dVN000FWzDqg7
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 17:40:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dY4450s0zDqkf
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 19:41:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::834; helo=mail-qt1-x834.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ spf=pass (mailfrom) smtp.mailfrom=protonmail.com
+ (client-ip=185.70.40.135; helo=mail-40135.protonmail.ch;
+ envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="Js65Irpy"; 
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="KCDYQrBu"; 
  dkim-atps=neutral
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com
- [IPv6:2607:f8b0:4864:20::834])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
+ [185.70.40.135])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dVMN6BB2zDqYp
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 17:40:00 +1000 (AEST)
-Received: by mail-qt1-x834.google.com with SMTP id o12so5434345qtf.3
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 00:40:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=FGv5brbukmJdmrjN9Kcl0sn1KzD+RdKdFB6ZraUDH64=;
- b=Js65IrpyoC2TiOzz6/Ld5He2m2kuVOYbSMbLpVm3IRtDlj5cvWAnElICJkmOqUNc4y
- tt59W8VkFBZQFIt2BVTFIyQvjx1ORExZPUoY317M+1wf1Cqpccey2qBDZ1EA3s6R6Yb4
- p+yQxpbk2X6z8JpgDCU86Z84CzjidxXsEtg98=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=FGv5brbukmJdmrjN9Kcl0sn1KzD+RdKdFB6ZraUDH64=;
- b=aOg1FzllOjyMkrirvLhNqQSR5zY8fHdCiSSojF1l3BLRi9a9lAmSePnrWRpZtq/IRA
- RLK40lhinrWBexyVde/2qVygOHvtV8O/NRHc7OyNJKHRXHf+0HmHK7Gpouok/MQWgavp
- erM1gdLTdsV7YTDZDzXFFPhLUuPdPWfIfG3dPEmeU8xL4dlpv394cCoAOWHVpQ+nUdqr
- bJW7GClAl5qx8I8xBwyh+QjSp45qMBe/B2LGcP0h1EhLqeY3wONcWL2bK3/T7V63ksIc
- 8PMJU0w7hGWGip0kwqZ+3gUBzgE2sPAoLCARF6jJv1TgzfPH0mwIUHuuRrkwBVj2NIA/
- pJEQ==
-X-Gm-Message-State: APjAAAWpAb+jRphbyna1dXmBZiyd12k5H3qHfjUhRD+0GpLbInlASR2x
- 9S7Aw3AGUCytdXOXM8ClQChD5E9rzWW+ykJifqyIQw==
-X-Google-Smtp-Source: APXvYqyWappE28auy/mioGmha04l4flzsB0hdO8nZzWfp0XF45+BVDj5Lu6NVvFt18FUmMQQJ+F/UFcytYrnAZv9ZfM=
-X-Received: by 2002:aed:2ce7:: with SMTP id g94mr7244104qtd.255.1569397196657; 
- Wed, 25 Sep 2019 00:39:56 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dY3K12RRzDqd2
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 19:41:13 +1000 (AEST)
+Date: Wed, 25 Sep 2019 09:41:00 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1569404467;
+ bh=SmMZcXIGbIpxyixzL5zD34vquhyUWt+2jJKC6iPJrk4=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=KCDYQrBuXL6YczBKcD9Dz8QKkGgnXAJx82IDyd29bdPKT+lA6D1pesBZWDnyzn38T
+ 7c7nUM9sAAo8z+Ly2ZWfud5s+vjt5RnqiMTYvWaTC6xxUnULV5oohWf1p7narBVvWr
+ 3WgWyxdxnU75HukLDQyFBlm2gTeQm0ctRWoOfMPg=
+To: Sivas Srr <sivas.srr@in.ibm.com>
+From: rgrs <rgrs@protonmail.com>
+Subject: Re:  How can I reset BMC to factory-defaults?
+Message-ID: <7cDqLrOPZZcry6k6gn7fz44KkaZi92s3mqL9QJbffI14tafVbW__E6ni9AWVrb-d4Ez6aRrmOwIg2M-oJZiLKxQemROcXEmU-q2xf66ju88=@protonmail.com>
+In-Reply-To: <OFE52CB78F.11769FB0-ON00258480.0026802E-00258480.00275FD3@notes.na.collabserv.com>
+References: <gcJgOuxYS4Cxh1DTuyIwbad8Dep30bKCasyE2I4YOJ8K4SZ-nuK9SWjh9Jaural_Eo3mSVWHiCGEk6QZZHUUAe3F9UhsQYTuXumP6_aitGE=@protonmail.com>
+ <OFE52CB78F.11769FB0-ON00258480.0026802E-00258480.00275FD3@notes.na.collabserv.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 25 Sep 2019 17:09:44 +0930
-Message-ID: <CACPK8XcK+_ZSgYxpzyFVZgFTxv_11XsBUwQD7SLNgz6zyk0Duw@mail.gmail.com>
-Subject: LPC irq nobody cared errors
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000006b19ef05935bc2ae"
+Content-Type: multipart/alternative;
+ boundary="b1_686cd26304b0a14022f2420fcefbcb6c"
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,70 +59,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: rgrs <rgrs@protonmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006b19ef05935bc2ae
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-Hello Jae,
+--b1_686cd26304b0a14022f2420fcefbcb6c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I noticed that Intel has a sizable out of tree kernel patch set. It would
-be great if you could contribute this code to the OpenBMC kernel tree (and
-upstream) so the community can benefit from your hard work.
+VGhhbmtzIFNpdmFzIDopIEkgd2FzIGFibGUgdG8gcmVjb3ZlciBteSBzeXN0ZW0uCgp+cmFqCgri
+gJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDigJDigJDigJDigJDigJDigJDi
+gJAKT24gV2VkbmVzZGF5LCBTZXB0ZW1iZXIgMjUsIDIwMTkgMTI6NDAgUE0sIFNpdmFzIFNyciA8
+c2l2YXMuc3JyQGluLmlibS5jb20+IHdyb3RlOgoKPiBIaSBSYWosCj4KPiBGb3IgZmFjdG9yeSBy
+ZXNldCwKPiB5b3UgY2FuIGlzc3VlIGZvbGxvd2luZyBjb21tYW5kcyBhdCBPcGVuQk1DIHByb21w
+dC4KPiAvc2Jpbi9md19zZXRlbnYgcndyZXNldCB0cnVlCj4KPiBBZnRlciB0aGUgYWJvdmUgY29t
+bWFuZCwgRG8gQk1DIHJlYm9vdC4gQnV0IHlvdSBzaG91bGQgaGF2ZSB5b3VyIHNlcmlhbCBjb25u
+ZWN0aW9uIHdpdGggeW91Lgo+IEJlY2F1c2UgeW91IHdpbGwgbG9vc2UgeW91ciBCTUMgSVAgYWRk
+cmVzcyBzZXR0aW5ncyBhcyB3ZWxsLgo+Cj4gWW91IGNhbiBkbyBmYWN0b3J5IHJlc2V0IGZyb20g
+VS1ib290IHByb21wdCBhcyB3ZWxsLgo+IHNldGVudiByd3Jlc2V0IHRydWUKPiBzYXZlZW52Cj4K
+PiBUaGVuIGxldCBpdCBib290LiBPbmNlIGl0IGJvb3RlZCB0byBCTUMsIHlvdSBjYW4gY29uZmly
+bSBieSBjaGVja2luZyB5b3VyIEJNQyBpcCBhZGRyZXNzIGV0Yy4KPgo+IFd0aWggcmVnYXJkcywK
+PiBTaXZhcwo+Cj4+IC0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0tLS0KPj4gRnJvbTogcmdycyA8
+cmdyc0Bwcm90b25tYWlsLmNvbT4KPj4gU2VudCBieTogIm9wZW5ibWMiIDxvcGVuYm1jLWJvdW5j
+ZXMrc2l2YXMuc3JyPWluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZz4KPj4gVG86ICJvcGVuYm1j
+QGxpc3RzLm96bGFicy5vcmciIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+Cj4+IENjOgo+PiBT
+dWJqZWN0OiBbRVhURVJOQUxdIEhvdyBjYW4gSSByZXNldCBCTUMgdG8gZmFjdG9yeS1kZWZhdWx0
+cz8KPj4gRGF0ZTogV2VkLCBTZXAgMjUsIDIwMTkgMTI6MjIgUE0KPj4KPj4gSGkgRXZlcnlvbmUs
+Cj4+Cj4+IEkgdGhpbmsgbXkgZmxhc2gvZmlsZXN5c3RlbSBpcyBjb3JydXB0LCBJIGdldCBuZXcg
+Y2VydHMgZ2VuZXJhdGVkIGF0IGV2ZXJ5IHJlYm9vdCBvZiBCTUMuCj4+IE5vbmUgb2YgdGhlIHNl
+dHRpbmdzIGFyZSBwZXJzaXN0ZW50Lgo+Pgo+PiBJcyB0aGVyZSBhIHdheSB0byByZXN0b3JlL3Jl
+Y3JlYXRlIHRoZSBwYXJ0aXRpb25zIHdpdGhvdXQgdXNpbmcgU1BJIHByb2dyYW1tZXI/Cj4+Cj4+
+IFRoYW5rcywKPj4gUmFq
 
-In particular, I hit an issue today that is fixed by these three patches:
 
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0044-misc-Add-clock-control-logic-into-Aspeed-LPC-SNOOP-d.patch
+--b1_686cd26304b0a14022f2420fcefbcb6c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0043-char-ipmi-Add-clock-control-logic-into-Aspeed-LPC-BT.patch
+PGRpdj5UaGFua3MgU2l2YXMgOikgSSB3YXMgYWJsZSB0byByZWNvdmVyIG15IHN5c3RlbS48YnI+
+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxv
+Y2siPjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXVzZXIgcHJvdG9ubWFp
+bF9zaWduYXR1cmVfYmxvY2stZW1wdHkiPjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWls
+X3NpZ25hdHVyZV9ibG9jay1wcm90b24iPn5yYWo8YnI+PC9kaXY+PC9kaXY+PGRpdj48YnI+PC9k
+aXY+PGRpdj7igJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDigJDigJDigJDi
+gJDigJDigJDigJA8YnI+PC9kaXY+PGRpdj4gT24gV2VkbmVzZGF5LCBTZXB0ZW1iZXIgMjUsIDIw
+MTkgMTI6NDAgUE0sIFNpdmFzIFNyciAmbHQ7c2l2YXMuc3JyQGluLmlibS5jb20mZ3Q7IHdyb3Rl
+Ojxicj48L2Rpdj48ZGl2PiA8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9InByb3Rvbm1haWxf
+cXVvdGUiIHR5cGU9ImNpdGUiPjxkaXYgZGlyPSJsdHIiIHN0eWxlPSJmb250LWZhbWlseTpBcmlh
+bCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMHB0Ij48ZGl2IGRpcj0ibHRyIj5I
+aSBSYWosPGJyPjwvZGl2PjxkaXYgZGlyPSJsdHIiPiZuYnNwOzxicj48L2Rpdj48ZGl2IGRpcj0i
+bHRyIj5Gb3IgZmFjdG9yeSByZXNldCw8YnI+PC9kaXY+PGRpdiBkaXI9Imx0ciI+eW91IGNhbiBp
+c3N1ZSBmb2xsb3dpbmcgY29tbWFuZHMgYXQgT3BlbkJNQyBwcm9tcHQuPGJyPjwvZGl2PjxkaXYg
+ZGlyPSJsdHIiPi9zYmluL2Z3X3NldGVudiByd3Jlc2V0IHRydWU8YnI+PC9kaXY+PGRpdiBkaXI9
+Imx0ciI+PGRpdiBzdHlsZT0ibWFyZ2luLWJvdHRvbTowY207bWFyZ2luLWJvdHRvbTouMDAwMXB0
+O2xpbmUtaGVpZ2h0OiZhbXA7I3hBOyI+Jm5ic3A7PGJyPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdp
+bi1ib3R0b206MGNtO21hcmdpbi1ib3R0b206LjAwMDFwdDtsaW5lLWhlaWdodDomYW1wOyN4QTsi
+PkFmdGVyIHRoZSBhYm92ZSBjb21tYW5kLCBEbyBCTUMgcmVib290LiBCdXQgeW91IHNob3VsZCBo
+YXZlIHlvdXIgc2VyaWFsIGNvbm5lY3Rpb24gd2l0aCB5b3UuPGJyPjwvZGl2PjxkaXYgc3R5bGU9
+Im1hcmdpbi1ib3R0b206MGNtO21hcmdpbi1ib3R0b206LjAwMDFwdDtsaW5lLWhlaWdodDomYW1w
+OyN4QTsiPkJlY2F1c2UgeW91IHdpbGwgbG9vc2UgeW91ciBCTUMgSVAgYWRkcmVzcyBzZXR0aW5n
+cyBhcyB3ZWxsLjxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW4tYm90dG9tOjBjbTttYXJnaW4t
+Ym90dG9tOi4wMDAxcHQ7bGluZS1oZWlnaHQ6JmFtcDsjeEE7Ij4mbmJzcDs8YnI+PC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luLWJvdHRvbTowY207bWFyZ2luLWJvdHRvbTouMDAwMXB0O2xpbmUtaGVp
+Z2h0OiZhbXA7I3hBOyI+WW91IGNhbiBkbyBmYWN0b3J5IHJlc2V0IGZyb20gVS1ib290IHByb21w
+dCBhcyB3ZWxsLjxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW4tYm90dG9tOjBjbTttYXJnaW4t
+Ym90dG9tOi4wMDAxcHQ7bGluZS1oZWlnaHQ6JmFtcDsjeEE7Ij48ZGl2IHN0eWxlPSJtYXJnaW4t
+Ym90dG9tOjBjbTttYXJnaW4tYm90dG9tOi4wMDAxcHQ7bGluZS1oZWlnaHQ6JmFtcDsjeEE7Ij5z
+ZXRlbnYgcndyZXNldCB0cnVlPGJyPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbi1ib3R0b206MGNt
+O21hcmdpbi1ib3R0b206LjAwMDFwdDtsaW5lLWhlaWdodDomYW1wOyN4QTsiPnNhdmVlbnY8YnI+
+PC9kaXY+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luLWJvdHRvbTowY207bWFyZ2luLWJvdHRvbTou
+MDAwMXB0O2xpbmUtaGVpZ2h0OiZhbXA7I3hBOyI+Jm5ic3A7PGJyPjwvZGl2PjxkaXYgc3R5bGU9
+Im1hcmdpbi1ib3R0b206MGNtO21hcmdpbi1ib3R0b206LjAwMDFwdDtsaW5lLWhlaWdodDomYW1w
+OyN4QTsiPlRoZW4gbGV0IGl0IGJvb3QuIE9uY2UgaXQgYm9vdGVkIHRvIEJNQywgeW91IGNhbiBj
+b25maXJtIGJ5IGNoZWNraW5nIHlvdXIgQk1DIGlwIGFkZHJlc3MgZXRjLjxicj48L2Rpdj48ZGl2
+IHN0eWxlPSJtYXJnaW4tYm90dG9tOjBjbTttYXJnaW4tYm90dG9tOi4wMDAxcHQ7bGluZS1oZWln
+aHQ6JmFtcDsjeEE7Ij4mbmJzcDs8YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luLWJvdHRvbTow
+Y207bWFyZ2luLWJvdHRvbTouMDAwMXB0O2xpbmUtaGVpZ2h0OiZhbXA7I3hBOyI+V3RpaCByZWdh
+cmRzLDxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW4tYm90dG9tOjBjbTttYXJnaW4tYm90dG9t
+Oi4wMDAxcHQ7bGluZS1oZWlnaHQ6JmFtcDsjeEE7Ij5TaXZhczxicj48L2Rpdj48L2Rpdj48ZGl2
+IGRpcj0ibHRyIj4mbmJzcDs8YnI+PC9kaXY+PGJsb2NrcXVvdGUgZGF0YS1oaXN0b3J5LWNvbnRl
+bnQtbW9kaWZpZWQ9IjEiIGRpcj0ibHRyIiBzdHlsZT0iYm9yZGVyLWxlZnQ6c29saWQgI2FhYWFh
+YSAycHg7IG1hcmdpbi1sZWZ0OjVweDsgcGFkZGluZy1sZWZ0OjVweDsgZGlyZWN0aW9uOmx0cjsg
+bWFyZ2luLXJpZ2h0OjBweCI+PGRpdj4tLS0tLSBPcmlnaW5hbCBtZXNzYWdlIC0tLS0tPGJyPjwv
+ZGl2PjxkaXY+RnJvbTogcmdycyAmbHQ7cmdyc0Bwcm90b25tYWlsLmNvbSZndDs8YnI+PC9kaXY+
+PGRpdj5TZW50IGJ5OiAib3BlbmJtYyIgJmx0O29wZW5ibWMtYm91bmNlcytzaXZhcy5zcnI9aW4u
+aWJtLmNvbUBsaXN0cy5vemxhYnMub3JnJmd0Ozxicj48L2Rpdj48ZGl2PlRvOiAib3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnIiAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj48L2Rp
+dj48ZGl2PkNjOjxicj48L2Rpdj48ZGl2PlN1YmplY3Q6IFtFWFRFUk5BTF0gSG93IGNhbiBJIHJl
+c2V0IEJNQyB0byBmYWN0b3J5LWRlZmF1bHRzPzxicj48L2Rpdj48ZGl2PkRhdGU6IFdlZCwgU2Vw
+IDI1LCAyMDE5IDEyOjIyIFBNPGJyPjwvZGl2PjxkaXY+Jm5ic3A7PGJyPjwvZGl2PjxkaXY+PHNw
+YW4gc3R5bGU9ImZvbnQtc2l6ZToxNnB4Ij5IaSBFdmVyeW9uZSw8L3NwYW4+PGJyPjwvZGl2Pjxk
+aXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxNnB4Ij5JIHRoaW5rIG15
+IGZsYXNoL2ZpbGVzeXN0ZW0gaXMgY29ycnVwdCwgSSBnZXQgbmV3IGNlcnRzIGdlbmVyYXRlZCBh
+dCBldmVyeSByZWJvb3Qgb2YgQk1DLjwvc3Bhbj48YnI+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0i
+Zm9udC1zaXplOjE2cHgiPk5vbmUgb2YgdGhlIHNldHRpbmdzIGFyZSBwZXJzaXN0ZW50LiA8L3Nw
+YW4+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+NnB4Ij5JcyB0aGVyZSBhIHdheSB0byByZXN0b3JlL3JlY3JlYXRlIHRoZSBwYXJ0aXRpb25zIHdp
+dGhvdXQgdXNpbmcgU1BJIHByb2dyYW1tZXI/PC9zcGFuPjxicj48L2Rpdj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTZweCI+VGhhbmtzLDwvc3Bhbj48YnI+PC9k
+aXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjE2cHgiPlJhajwvc3Bhbj48YnI+PC9kaXY+
+PC9ibG9ja3F1b3RlPjxkaXYgZGlyPSJsdHIiPiZuYnNwOzxicj48L2Rpdj48L2Rpdj48L2Jsb2Nr
+cXVvdGU+PGRpdj48YnI+PC9kaXY+
 
-https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-kernel/linux/linux-aspeed/0045-char-ipmi-Add-clock-control-logic-into-Aspeed-LPC-KC.patch
 
-If you could clean them up and submit them that would be appreciated.
 
-Cheers,
+--b1_686cd26304b0a14022f2420fcefbcb6c--
 
-Jeol
-
---0000000000006b19ef05935bc2ae
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hello Jae,<br>
-<br>
-I noticed that Intel has a sizable out of tree kernel patch set. It would b=
-e great if you could contribute this code to the OpenBMC kernel tree (and u=
-pstream) so the community can benefit from your hard work.<br>
-<br>
-In particular, I hit an issue today that is fixed by these three patches:<b=
-r>
-<br>
-<a href=3D"https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mod=
-s/meta-common/recipes-kernel/linux/linux-aspeed/0044-misc-Add-clock-control=
--logic-into-Aspeed-LPC-SNOOP-d.patch" rel=3D"noreferrer noreferrer" target=
-=3D"_blank">https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mo=
-ds/meta-common/recipes-kernel/linux/linux-aspeed/0044-misc-Add-clock-contro=
-l-logic-into-Aspeed-LPC-SNOOP-d.patch</a><br>
-<br>
-<a href=3D"https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mod=
-s/meta-common/recipes-kernel/linux/linux-aspeed/0043-char-ipmi-Add-clock-co=
-ntrol-logic-into-Aspeed-LPC-BT.patch" rel=3D"noreferrer noreferrer" target=
-=3D"_blank">https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mo=
-ds/meta-common/recipes-kernel/linux/linux-aspeed/0043-char-ipmi-Add-clock-c=
-ontrol-logic-into-Aspeed-LPC-BT.patch</a><br>
-<br>
-<a href=3D"https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mod=
-s/meta-common/recipes-kernel/linux/linux-aspeed/0045-char-ipmi-Add-clock-co=
-ntrol-logic-into-Aspeed-LPC-KC.patch" rel=3D"noreferrer noreferrer" target=
-=3D"_blank">https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mo=
-ds/meta-common/recipes-kernel/linux/linux-aspeed/0045-char-ipmi-Add-clock-c=
-ontrol-logic-into-Aspeed-LPC-KC.patch</a><br>
-<br>
-If you could clean them up and submit them that would be appreciated.<br>
-<br>
-Cheers,<br>
-<br>
-Jeol<br></div>
-
---0000000000006b19ef05935bc2ae--
