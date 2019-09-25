@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5B5BBD68E
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:06:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AEC9BD690
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:08:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dNHb2jWWzDqbY
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 13:06:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dNKw6gpZzDqhK
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 13:08:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="bqZwmF7c"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="G07Wvurw"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="TxhhV9qm"; dkim-atps=neutral
+ header.b="JKH9XoX+"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dNGv51l4zDqJX
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 13:05:43 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dNHY4HW4zDqbX
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 13:06:17 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 58953222BD;
- Tue, 24 Sep 2019 23:05:40 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 0B4D9222BD;
+ Tue, 24 Sep 2019 23:06:13 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 24 Sep 2019 23:05:40 -0400
+ by compute4.internal (MEProxy); Tue, 24 Sep 2019 23:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=Y+ibk0UUYEbmzKl8cfmwXCqMgHVieAb
- FrO9zd+Qk4fs=; b=bqZwmF7ce9U8njZjQjOyqwshOxjEdbyyQfvSUWiIvstZqDs
- zn06335sYOpeguqrvVRSFUJvzBT1T6eYOvJC9jzfCeUmyIczwdK3pgUt9tyELhhG
- BsNok352oAc7vVMLmNdW65Vbm1/I407cU6u+D4qC057H7vH/sPT6vFf0lFRfqJ84
- QzwRq0peOQfZquhx9rrfGJ4vB6hyMwFDYM3HWMoGIHlx1tc2hcy7+9CoU28updW4
- PL8Mqkue/pkPCgfCDnEvt9UZVhdnw4xIg2kpovyM1bqHda9dDBEwjkAtqudymZcg
- SERYWUKKtBBdODZRi3nJR41i1ozql0mce6D+IMA==
+ :subject:content-type; s=fm3; bh=4PCEJnBsGFuT+atiHfg/PLDEWIBC7+j
+ gsRdmtKGcxq4=; b=G07Wvurw2kcuc3Q8/btiCn+PhJ2jIWPKS9b6n9nKEOQwxY8
+ 2V+zZwAr96gMS190o7XGyE1tDpNjrX1VjZpbEU+7yG8Qgp5Hws2oYs5JT4YqFUIs
+ 239xaxiUJ3cbM43NIO1zjaHT+j7Ht6Hgxo9gblcq3sO96QlivK3hh2IaaATtHj0H
+ /hXUS0R2KkrmH5EEeIHmFpx3xXTRR+uBk+d4zv/bZyaXiFEDr9TbULW4mlomA/Ty
+ P/We3iahz9rWQGrozjPDYHiqdQ0ALUDYbz2t3CaOiCNKO6af4tHN3fNyNOp4iTQt
+ 7vNJbsQr1pjvKuuIC/I9p3KQY0SVoof9J3AxVMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Y+ibk0
- UUYEbmzKl8cfmwXCqMgHVieAbFrO9zd+Qk4fs=; b=TxhhV9qm5YA5wDh91zUpYY
- W9qB/oOeGZ+r6nwDbrWWZ3XPXDIQW1AD0UH4WS63T54GxX24QVuNjEqD2D4mGz0O
- AKQvpAQc65PTtRrtWMM7MwBlrH4Oxouf1sj0zRG3pOb/HgY4i8F0VPQP8k/Fskde
- 0yOu3tSDvpniMy58wMFERfguTeFaM6edVvPAMXqK6LEedsguwzHoHU/+Orb2iOCo
- 6T33DZLxX0Tew+PwyyKeG8g+YFKUxG8dAtB0Il9Z7dfYy7OG3UBZR1NCQSpTplRy
- pMk+G21KUeDknEAPj7SlbgBGR+tL5gx7cFzxH6DqV6ySAn+gAGCZRBv/bvgbuYYA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=4PCEJn
+ BsGFuT+atiHfg/PLDEWIBC7+jgsRdmtKGcxq4=; b=JKH9XoX+YwA/n88OOJ0ab9
+ mcHnDy2aNDCNVJZzI8wdmCU1m/TvmQIvzkKeRahhTtSEa7x+/vqJ8BI7mmxy9sf2
+ oRMj2myzK24UD5uVlyXhmTjc5wE1LmL+A70sOaR83X9SxBRRpuaYR+5cR0YXKvs9
+ CEbABbz9DTV/PsOkpqZDZPUeGy05Jvlrh5waJB79AEUcxxYT8WliGbbcnqcFXezo
+ 3cQT5R27T3N0c1z8plOHPlHSt2nUMHrRIv2qB6vB0f4sUMxXGoEwO5ri7GItrGSl
+ 15mjG/JJMOzTTerMHNjcN9EjSc3aR0wqEslLbTwvv4mOMTftBUDBHXyHH4KciLEw
  ==
-X-ME-Sender: <xms:gtmKXX1UknzvcK41h7XZ8963va2rTvxFzw3MS_hLuR4ovXxE6gXJ3w>
+X-ME-Sender: <xms:pNmKXecwiICCJE6kjqqCasQhbxasEw3mznXVL-imqe4pkPSZGHn6_w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdeikecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
  hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:gtmKXZEDGgPqKMgSiPqZU1iAsvmhiXBHIsHE7qo1foo1RkGqYqmbag>
- <xmx:gtmKXacvzNL0wp3ijsiwjlXSOavGirh4yzU6ylWU3INYKaMcpDoLTg>
- <xmx:gtmKXXTHaWGZ9uNd7_OnQPBZ_PvkeS0yXvAhU1_bXs4Q3viGAyZzUQ>
- <xmx:hNmKXetn9fCL08bZAqqQUQMBRUQKDE6a5vFh006d5r0qS7x6NVBg_A>
+ ufhiiigvpedu
+X-ME-Proxy: <xmx:pNmKXTZQ-wxgUDzcjiuWcXiW0vNa09sDzE2g_ipy5t4xmW8AVOwPZQ>
+ <xmx:pNmKXeoF8Cr0R1uKSSb25zc1ESDPANNLqgbIb4VjlmjtjwDGEEPzJA>
+ <xmx:pNmKXcN-0hoyX-AkmOKg6zyDjTLcaXw4UylckfgAiDhqFY96WhOiGg>
+ <xmx:pdmKXVEVpyGDkG53VPi1CffQmOv6oNP6awrS14C8PE_ma-1E2pObzw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 5B6B1E00AF; Tue, 24 Sep 2019 23:05:38 -0400 (EDT)
+ id C7819E00AF; Tue, 24 Sep 2019 23:06:12 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <96c312f3-0ec1-41fc-a7c8-277aa5450459@www.fastmail.com>
-In-Reply-To: <20190924194759.26854-5-bradleyb@fuzziesquirrel.com>
+Message-Id: <9b1003aa-2dc7-4b7f-9b44-5055ba450375@www.fastmail.com>
+In-Reply-To: <20190924194759.26854-6-bradleyb@fuzziesquirrel.com>
 References: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
- <20190924194759.26854-5-bradleyb@fuzziesquirrel.com>
-Date: Wed, 25 Sep 2019 12:36:22 +0930
+ <20190924194759.26854-6-bradleyb@fuzziesquirrel.com>
+Date: Wed, 25 Sep 2019 12:36:55 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
  "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_04/10]_ipmi:_aspeed-g6:_Add_compat?=
- =?UTF-8?Q?ible_strings?=
+Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_05/10]_reset:_simple:_Add_AST2600_?=
+ =?UTF-8?Q?compatibility_string?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,8 +97,30 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 05:17, Brad Bishop wrote:
-> The AST2600 SoC contains the same IPMI (BT/KCS) devices as the AST2500.
+> The AST2600 SoC contains the same LPC register set as the AST2500.
 > 
 > Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+
+> ---
+> v3: new for v3
+> ---
+>  drivers/reset/reset-simple.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
+> index 1154f7b1f4dd..2fe9c889a75a 100644
+> --- a/drivers/reset/reset-simple.c
+> +++ b/drivers/reset/reset-simple.c
+> @@ -125,6 +125,7 @@ static const struct of_device_id reset_simple_dt_ids[] = {
+>  		.data = &reset_simple_active_low },
+>  	{ .compatible = "aspeed,ast2400-lpc-reset" },
+>  	{ .compatible = "aspeed,ast2500-lpc-reset" },
+> +	{ .compatible = "aspeed,ast2600-lpc-reset" },
+>  	{ .compatible = "bitmain,bm1880-reset",
+>  		.data = &reset_simple_active_low },
+>  	{ /* sentinel */ },
+> -- 
+> 2.21.0
+>
