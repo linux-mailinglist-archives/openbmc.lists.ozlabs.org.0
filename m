@@ -2,81 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11506BD75B
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:29:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 528C9BD78C
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 07:01:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dQ711qxhzDqkT
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:29:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dQrQ6GwSzDqhR
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 15:01:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=lenovo.com
+ (client-ip=67.219.250.1; helo=mail1.bemta24.messagelabs.com;
+ envelope-from=pyang4@lenovo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="fEjGN5GY"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="H+jN27zo"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
+ [67.219.250.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dQ6C6nkGzDqB3
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:28:19 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id C51A2220F4;
- Wed, 25 Sep 2019 00:28:16 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 00:28:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=Do6owN9rq6FwSm9C9xkYcp4wIRGmcFN
- vlbeAP0ujpZw=; b=fEjGN5GYHuuuzRyCfQXMX9Q8ogWC1jiXxP1IrO/wQ1+sLvo
- whpfpI9Ahjy4x/hP9pP+whvbbBa+q0swd3ovyFXFQeVdeGrRCW66TYC1uwnDyhd+
- tJJY+fJhaf7duBgi1DCvaeOVDeEgXGXAr9tr35wyozeJGtJrE1qT1lHBOrWzSvAm
- yXUYaBShm/jzK/M9Exs4AbDnjwreq4fOa1g2t0vQ9k330hscC4IrPsbBkLI4Yj9o
- HKJ/WuEMqvCInU8cKV03gc6V2v42EBKkfOVBPbhoOSziBusicEVEiA1o6CdmCQFZ
- WqFifDJqztPRTRMfcj4XhQ+qbs94eNhbBQ06fDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Do6owN
- 9rq6FwSm9C9xkYcp4wIRGmcFNvlbeAP0ujpZw=; b=H+jN27zoRPh6lxDMiaNA6c
- 49TlX2couLiN7lT5x3wOpTZDntPGsR6m6AVulqhvBc6UvX+ZesGy1MM9soqgMV8U
- WrKJCJZSy+dQf31TgSJxcMcby7OCJBX+b6nfvIkCBYjQyHdJSE5mpJ0gYLEDWbbu
- wX0K2sR6C3N8NNSN1RZB+7s+q1YjXDyQyFWFFqZJlY4A8WJ4gPf9PY/5vj026Z8o
- lQKsGbwE8hDHECY+ZzQaefYYUw8LqJ37tAdxw7ORexCC+m+uc9mm+o+gUYJaZqqj
- UcuT+sWiB8NnGB6yEAF0OxfTf9WMbn3GsR5oP1gA07eSZ03ZQrK0MUiEO8qCwJsA
- ==
-X-ME-Sender: <xms:4OyKXQOMdhoVk8ABpQC8uC2PckI043hg9z89PVvM45boZgp5L27s5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdekhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
- dtreertdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgif
- segrjhdrihgurdgruheqnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:4OyKXV12eHbYdyEslxkCLgbbwgOXgQJ6Hlg11NrAWyyD0GGD-mBHnw>
- <xmx:4OyKXXp_1FQde5UCyozgk3Ti3V0WFYQGfComCNqUuyd4xMWATrWAng>
- <xmx:4OyKXdvrvoS8vKwEHyhqhJHqsk2hcPcVpnamDI1yt8FSR0iK8rhPtw>
- <xmx:4OyKXQzJW8TeA320xZ3z_qpPgojsfoxUyFfKRvEd3Wyp5dxY7h3bvg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 21025E00AF; Wed, 25 Sep 2019 00:28:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
-Mime-Version: 1.0
-Message-Id: <9f7cc18d-2164-4a39-8f47-1a3ef3220685@www.fastmail.com>
-In-Reply-To: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
-References: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
-Date: Wed, 25 Sep 2019 13:58:58 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Stephen Beckwith" <embeddedsteve@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Unable to boot OpenBMC image in QEMU for AST2500
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dQqV26PFzDqfr
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 15:00:36 +1000 (AEST)
+Received: from [67.219.250.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-1.bemta.az-a.us-west-2.aws.symcld.net id 43/DE-26045-174FA8D5;
+ Wed, 25 Sep 2019 05:00:33 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRWlGSWpSXmKPExsWSLveKTTf/S1e
+ swZVT4haHd3hanGp5weLA5LF4z0smj/MzFjIGMEWxZuYl5VcksGb82D+RrWADc8Wx3XvYGhhf
+ M3UxcnIICTQwSUx8FQphv2aUOHYvGcLexygx7aEOiM0moCIxZ+kOFhBbREBN4uzc48wgNrOAp
+ cTmj5fYQWxhASOJwz17oWqMJT72TGSHsK0kpu+aAxTn4GARUJV4NdkfJMwL1Lr4/0NWiFXZEk
+ 3X7oOVcwrYSty//hLsNEYBMYnvp9YwQawSlzh3sRWsRkJAQGLJnvPMELaoxMvH/1ghbAWJ5j2
+ vWSDqdSQW7P7EBmFrSyxb+JoZYq+gxMmZT1gmMIrOQjJ2FpKWWUhaZiFpWcDIsorRPKkoMz2j
+ JDcxM0fX0MBA19DQSNfQ2EDX2EQvsUo3Ua+0WLc8tbhE10gvsbxYr7gyNzknRS8vtWQTIzC2U
+ gqalHYwnpn1Ru8QoyQHk5Io76WFXbFCfEn5KZUZicUZ8UWlOanFhxhlODiUJHgrPgLlBItS01
+ Mr0jJzgHEOk5bg4FES4eX6DJTmLS5IzC3OTIdInWI05pjwcu4iZo6DR+ctYhZiycvPS5US533
+ /CahUAKQ0ozQPbhAs/VxilJUS5mVkYGAQ4ilILcrNLEGVf8UozsGoJMxrDLKQJzOvBG7fK6BT
+ mIBOUXbuBDmlJBEhJdXAxPU1aP0aJeUyM4Hq3VsTg461rtnsnF3Ovj+g9zW/76PCp2pmocuKI
+ jMTb8lpPzxzaHvorw+tuu6xbwI+/DVxX8wXu3ACH4P89uLSKb62V4+esqznmbns/NUd9kUaxV
+ K7ZlzZveHo+433/Q9bT2jav7ilplIogL1/LduJTXsncCr3nTh71exvSirDIhH+R8pBV9bybfu
+ r9dOqsLXNzbinoXXDj/D1gg+8pl7I/DqD+e5X+94eidxSRtarHK1dH3kUGLMtqp022ez2rwgO
+ 9yq3di3veG3FJGARLGXdYn02KDpFJWfxkTZDp6dKIg+fzHqzK5zrqdUNbWOGteseHrSonf76z
+ 8nQhz8CJjLOihRTYinOSDTUYi4qTgQAQGL2J7oDAAA=
+X-Env-Sender: pyang4@lenovo.com
+X-Msg-Ref: server-27.tower-326.messagelabs.com!1569387628!17103!1
+X-Originating-IP: [103.30.234.6]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 23502 invoked from network); 25 Sep 2019 05:00:31 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.6)
+ by server-27.tower-326.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 25 Sep 2019 05:00:31 -0000
+Received: from HKGWPEMAIL02.lenovo.com (unknown [10.128.3.70])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 2BD73E8170D3EF6FE83C;
+ Wed, 25 Sep 2019 13:00:28 +0800 (CST)
+Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
+ HKGWPEMAIL02.lenovo.com (10.128.3.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Wed, 25 Sep 2019 13:00:27 +0800
+Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
+ HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
+ 15.01.1591.008; Wed, 25 Sep 2019 13:00:27 +0800
+From: Payne Yang <pyang4@lenovo.com>
+To: "Tanous, Ed" <ed.tanous@intel.com>
+Subject: RE: [External]  Re: Question for upstream
+Thread-Topic: [External]  Re: Question for upstream
+Thread-Index: AdVzS8dMMm/mx/KnSbqgbxHwkKZVJwABvzMtAAKqmhA=
+Date: Wed, 25 Sep 2019 05:00:27 +0000
+Message-ID: <4f41e599eba54f1cb2a85defacd42578@lenovo.com>
+References: <6bb44c8941db46efb2e7e2a0da39d2db@lenovo.com>
+ <4053AD86-2951-40CD-93D2-FEB381B7B14A@intel.com>
+In-Reply-To: <4053AD86-2951-40CD-93D2-FEB381B7B14A@intel.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,49 +93,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Tanous,
 
+Got it.
+By the way, I have to include a specific fpga library in this implementatio=
+n.
+Should I update it also ?
 
-On Tue, 24 Sep 2019, at 06:16, Stephen Beckwith wrote:
-> Greetings,
->  I am working on a Proof-of-Concept for OpenBMC. I am familiar with 
-> SP/BMC setups using proprietary code. I have successfully built the 
-> OpenBMC project (in a VM running Ubuntu 18.04) as well as 
-> building/installing the eSDK. Note: system was built from a ZIP from 
-> github, git clone failed due to access rights.
-
-How are you cloning it? Might be some issue with SSH vs HTTPS.
-
->  When I completed the process, I tried to load the available image into 
-> QEMU for ARM (which was also built) and received the following 
-> error(s), depending upon the directory from which this is run (which is 
-> also a question, why the difference?)
->  I was successful in booting the Poky example from Yocto for both x86 
-> and ARM into the respective QEMU machines, for the minimal image. 
->  Any pointers would be greatly provided.
-> 
-> Regards,
-> Stephen Beckwith
-> 
-> Failure #1: QEMU Hangs:
-> ==> Fresh shell:
-> 
-> sbeckwit@ubuntu:~/yocto_dev/openbmc-master/build$ runqemu qemuarm
-> runqemu - INFO - Running MACHINE=qemuarm bitbake -e...
-
-You're running with the wrong qemu machine - the generic 'qemuarm' machine
-won't work for the images the build produces. You need to use one of the
-BMC-specific machines instead. Note that OpenBMC doesn't properly
-integrate into the runqemu scripts, and you're often better served by invoking
-it manually or (and!) sending a patch to make runqemu work properly.
-
-We have some info on running qemu manually in the cheatsheet in the docs
-repo:
-
-https://github.com/openbmc/docs/blob/master/cheatsheet.md#using-qemu
-
-Hope that helps,
-
-Andrew
+> -----Original Message-----
+> From: Tanous, Ed <ed.tanous@intel.com>
+> Sent: Wednesday, September 25, 2019 11:39 AM
+> To: Payne Yang <pyang4@lenovo.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: [External] Re: Question for upstream
+>=20
+> Create a gerrit review on dbus-sensors with your implementation.
