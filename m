@@ -1,48 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 355DDBDE49
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:50:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2157FBDEC3
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 15:17:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ddF11YV9zDq6B
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 22:49:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ddrl25XlzDqWS
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 23:17:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=46.105.39.61; helo=2.mo178.mail-out.ovh.net;
+ (client-ip=46.105.34.219; helo=4.mo173.mail-out.ovh.net;
  envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 352 seconds by postgrey-1.36 at bilbo;
- Wed, 25 Sep 2019 22:49:15 AEST
-Received: from 2.mo178.mail-out.ovh.net (2.mo178.mail-out.ovh.net
- [46.105.39.61])
+Received: from 4.mo173.mail-out.ovh.net (4.mo173.mail-out.ovh.net
+ [46.105.34.219])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ddDC3pjKzDqhN
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:49:14 +1000 (AEST)
-Received: from player698.ha.ovh.net (unknown [10.108.57.50])
- by mo178.mail-out.ovh.net (Postfix) with ESMTP id A34457A515
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:43:17 +0200 (CEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ddSG5zwszDqn4
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:59:41 +1000 (AEST)
+Received: from player698.ha.ovh.net (unknown [10.108.35.122])
+ by mo173.mail-out.ovh.net (Postfix) with ESMTP id 3098311ABF3
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:43:21 +0200 (CEST)
 Received: from kaod.org (lfbn-1-2229-223.w90-76.abo.wanadoo.fr [90.76.50.223])
  (Authenticated sender: clg@kaod.org)
- by player698.ha.ovh.net (Postfix) with ESMTPSA id E4991A33DE73;
- Wed, 25 Sep 2019 12:43:12 +0000 (UTC)
+ by player698.ha.ovh.net (Postfix) with ESMTPSA id 7C047A33DF06;
+ Wed, 25 Sep 2019 12:43:17 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 04/13] ARM: dts: ast2600-evb: Enable FMC and SPI
- devices
-Date: Wed, 25 Sep 2019 14:42:30 +0200
-Message-Id: <20190925124239.27897-5-clg@kaod.org>
+Subject: [PATCH linux dev-5.3 05/13] mtd: spi-nor: Add support for w25q512jv
+Date: Wed, 25 Sep 2019 14:42:31 +0200
+Message-Id: <20190925124239.27897-6-clg@kaod.org>
 X-Mailer: git-send-email 2.21.0
 In-Reply-To: <20190925124239.27897-1-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 6981986798419086082
+X-Ovh-Tracer-Id: 6983112699535330050
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
 X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrfedvgdehiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -64,41 +61,22 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- arch/arm/boot/dts/aspeed-ast2600-evb.dts | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/mtd/spi-nor/spi-nor.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-index da8c931c7295..7bcafb027afa 100644
---- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-+++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-@@ -88,3 +88,27 @@
- &fsim0 {
- 	status = "okay";
- };
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-max-frequency = <100000000>;
-+	};
-+};
+diff --git a/drivers/mtd/spi-nor/spi-nor.c b/drivers/mtd/spi-nor/spi-nor.c
+index 0034e7751239..ff6b719fd267 100644
+--- a/drivers/mtd/spi-nor/spi-nor.c
++++ b/drivers/mtd/spi-nor/spi-nor.c
+@@ -2151,6 +2151,8 @@ static const struct flash_info spi_nor_ids[] = {
+ 	{ "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16, SECT_4K) },
+ 	{ "w25q128", INFO(0xef4018, 0, 64 * 1024, 256, SECT_4K) },
+ 	{ "w25q256", INFO(0xef4019, 0, 64 * 1024, 512, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
++	{ "w25q512jv", INFO(0xef4020, 0, 64 * 1024, 1024, SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
++			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB) },
+ 	{ "w25m512jv", INFO(0xef7119, 0, 64 * 1024, 1024,
+ 			SECT_4K | SPI_NOR_QUAD_READ | SPI_NOR_DUAL_READ) },
+ 
 -- 
 2.21.0
 
