@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C60ADBDE8C
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 15:08:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C3CDBDE8F
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 15:09:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dddv3bHCzDqRv
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 23:08:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ddgH0c1CzDqVj
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 23:09:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,14 +19,15 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ddNh6t6czDqC0
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:56:36 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ddNj5tWvzDq6B
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 22:56:37 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
 To: joel@jms.id.au
-Subject: [PATCH v4 linuux dev-5.3 07/10] ARM: dts: aspeed: Add Rainier system
-Date: Wed, 25 Sep 2019 08:56:07 -0400
-Message-Id: <20190925125610.12096-8-bradleyb@fuzziesquirrel.com>
+Subject: [PATCH v4 linuux dev-5.3 08/10] ARM: dts: aspeed-g6: Expose SuperIO
+ scratch registers
+Date: Wed, 25 Sep 2019 08:56:08 -0400
+Message-Id: <20190925125610.12096-9-bradleyb@fuzziesquirrel.com>
 In-Reply-To: <20190925125610.12096-1-bradleyb@fuzziesquirrel.com>
 References: <20190925125610.12096-1-bradleyb@fuzziesquirrel.com>
 MIME-Version: 1.0
@@ -46,101 +47,30 @@ Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Rainier is a new IBM server with POWER host processors and an AST2600
-BMC.
-
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 ---
-v4:
-  - align reserved memory region
-v3:
-  - removed i2c, mac
-  - moved reserved memory
-  - set correct memory size
-v2:
-  - reordered rainier DT elements (alphabetized).
-  - added rainier rtc, lpc-ctl, reserved memory, mac devices
+v4: add Andrew's ack
+v3: new for v3
 ---
- arch/arm/boot/dts/Makefile                   |  1 +
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 57 ++++++++++++++++++++
- 2 files changed, 58 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+ arch/arm/boot/dts/aspeed-g6.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 5af075c2f819..3ad9706337a2 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1278,6 +1278,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
- 	aspeed-bmc-facebook-wedge40.dtb \
- 	aspeed-bmc-facebook-wedge100.dtb \
- 	aspeed-bmc-facebook-yamp.dtb \
-+	aspeed-bmc-ibm-rainier.dtb \
- 	aspeed-bmc-intel-s2600wf.dtb \
- 	aspeed-bmc-inspur-fp5280g2.dtb \
- 	aspeed-bmc-lenovo-hr630.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot=
-/dts/aspeed-bmc-ibm-rainier.dts
-new file mode 100644
-index 000000000000..080cd51b2a41
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -0,0 +1,57 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright 2019 IBM Corp.
-+/dts-v1/;
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-=
+g6.dtsi
+index 3b42404b2ace..d09f0bdefa43 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -333,6 +333,10 @@
+ 						interrupts =3D <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
+ 						status =3D "disabled";
+ 					};
 +
-+#include "aspeed-g6.dtsi"
-+
-+/ {
-+	model =3D "Rainier";
-+	compatible =3D "ibm,rainier-bmc", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 =3D &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path =3D &uart5;
-+		bootargs =3D "console=3DttyS4,115200n8";
-+	};
-+
-+	memory@80000000 {
-+		device_type =3D "memory";
-+		reg =3D <0x80000000 0x40000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells =3D <1>;
-+		#size-cells =3D <1>;
-+		ranges;
-+
-+		flash_memory: region@B8000000 {
-+			no-map;
-+			reg =3D <0xB8000000 0x04000000>; /* 64M */
-+		};
-+	};
-+
-+};
-+
-+&emmc_controller {
-+	status =3D "okay";
-+};
-+
-+&emmc {
-+	status =3D "okay";
-+};
-+
-+&fsim0 {
-+	status =3D "okay";
-+};
-+
-+&ibt {
-+	status =3D "okay";
-+};
-+
-+&lpc_ctrl {
-+	status =3D "okay";
-+	memory-region =3D <&flash_memory>;
-+};
++					sio_regs: regs {
++						compatible =3D "aspeed,bmc-misc";
++					};
+ 				};
+ 			};
+=20
 --=20
 2.21.0
