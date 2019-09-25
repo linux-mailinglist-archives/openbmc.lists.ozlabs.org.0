@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C483BD72A
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:22:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2030BD72B
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 06:24:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dPzq3NnQzDqkJ
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:22:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dQ1L3m8dzDqkb
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 14:24:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="aMjVY6Vi"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="XdHrSpNl"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="IlnmRwen"; dkim-atps=neutral
+ header.b="XkZjjyHA"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dPgM4D9QzDqZn
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:08:30 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dPhT74QTzDqZb
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 14:09:29 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id A82CD22221;
- Wed, 25 Sep 2019 00:08:26 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 3FE0A221DF;
+ Wed, 25 Sep 2019 00:09:26 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 00:08:26 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 00:09:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=Zalv6S3xlfdeKNUROTIlMVSWmSAuKBl
- n5rDL7vl3qfc=; b=aMjVY6ViEKsrkpCrwKqqhyQkVKI2IfbfI49MNwTtlbdxGDT
- PrgoaGyF3IhNBDsaw5djSywF69BaLdfqMwOQWxqHm20OhORMg2WiFiiAmY3tP8CQ
- 0r7dlNW+klZFSdGpG0D6ZdY9OUsHAVBgeuAUduqHAcLs++ujXSFwG6dbUKU2rxtH
- iactIX3oV4RMzA/j3IU022nSJz0DCQkuG3zrGOCd0SzBL7DHKrtfeSg9wimLF+55
- 7FFUL8I0yOeo3V0Y9KbeZ8Qceyqk3wx6aTnOp9z2BY9GkD6Mv+pGY7HZYkwvXDrd
- Lg6lwfKl60BuUQ19BRJGA182znMqOyU3uOl4w8Q==
+ :subject:content-type; s=fm3; bh=F1IPdjahKd8pvdWHPRHHhRgJ1DMaf1u
+ vzFAl1o4XONY=; b=XdHrSpNln2oEZtJKRoLBi5yq/zowwK//unU7mzaM3fvA4Uc
+ iLjjac+pSGsxtZylVMGslxQnqdj7DbuQ0OwpNT+swLysvc3YZS9lbzp9bzZmHWQ0
+ QSmVNqsPiw2Cs3qH1VPY5KL+eJ4WqifJktFiM1li7n1f+39QwcDaXBM5mURr0XqB
+ MF0ciVbLNqtUtUCgxr5EmQgxBZt0/hxNIfTJRoG9WzhgToIdpT0jgUm5YKdKcfHE
+ 2dQCjwiw274Up+vfYU9xJR0zbyBKlZuVkYzNd3hrMTULbgEt/GGMRKba6fzmQ1kr
+ mggMkI3wPqxl2u9Vk/1BjcvyH7IDtG/uCXtVkAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Zalv6S
- 3xlfdeKNUROTIlMVSWmSAuKBln5rDL7vl3qfc=; b=IlnmRwenb+Q/LJtvQIijr9
- O0zTHr1PrXj2bQB6NjNDC49FU7wg7xwQ/L6ckD51xwCCMBaxIGRZ+vtmid5TFC2y
- LqAUXiLlTFa7hC9E5KXDUM49fg5YuyeTOAUtQFb1aUufUlZzRa02ExvNe5HS8GbB
- pFD7IXUoIqU3V/Ev9lDOmFB6XPVu2r+4kkCJjURFAsYJ0dA6GtoZkwrcscPvlj3z
- To8HOSIrfnanTTdca8s2luX2LeKiY4kV06XABooH+9FD/o/uRgipMgM+35uSQOC+
- n47afxjxTzyR9fkeX7vKvic8+fgdFyB+BPy5kWmGYJuyfzNnnzMtMJWdCUKNLsxA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=F1IPdj
+ ahKd8pvdWHPRHHhRgJ1DMaf1uvzFAl1o4XONY=; b=XkZjjyHAg3CgiJsSc75VOS
+ wXWzA93aVXZ+Y8CotHFx6Kls9jlr43fSGTFRKBhMG8KnPgL3MBxESPCA5m2zz/At
+ HdN9YMBwtwm47kCJe1wMKwcoXUzaRZiQ3WZ0gpL2fqZXCF3d86yepbNKqr9QGdfF
+ XdjsiNNXBQ0T3rzumvBnni2GlVLhQizFlHLF6LbJVwbm5AQuPb0LQrLXZ9HY6n3D
+ pb2+SSEy5lHe5oejs2vWkyXTdyYutS2DQnp41ZTvKn3JCJMK1ecHiT+x+CDIDADz
+ TrqO9/Vbm6br0uR/eg1RzAYBVaBFZhOznRZKk17tqdQSzEmbYFV6lcO6vQo/cNBA
  ==
-X-ME-Sender: <xms:OeiKXb2MLDBeay7eafHpRIueksPYLbYYmgg57TRKzaniXZb9EGfeBg>
+X-ME-Sender: <xms:duiKXddt1AXAGJaY1eAjP7sw7sivl247DheFI5mKJ1zQ4eZlJ9Bjcw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdekudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
  hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:OeiKXfcXuMgygvwlzMXr1UFFy8Brwj-q8OLAmGq_8Vo1lkQYCdNrlQ>
- <xmx:OeiKXYUgwvgnSjgpE3YrKbxn5s1PrZ9OJaTMG7bPfDAElb1DtVw0eA>
- <xmx:OeiKXV_ou8jDMlIoBAQ0UCinBHPu2IDj2MMcin8cRuo4qiwZBUHvNw>
- <xmx:OuiKXYPRRRWgkuPG2-jIMeZoozHFV4Q1S6dPRe8xm9IjPrKLgqVuGQ>
+ ufhiiigvpedu
+X-ME-Proxy: <xmx:duiKXffjeqso8P3DU_AcflJN3Aws4L4IKhZVmH_mmS0qFfY9Wq-o6g>
+ <xmx:duiKXRjngYcgr8wHe_jHeZ7g9elqYbOMAOvismllBL38Gg8w-w4nWg>
+ <xmx:duiKXbT-DVHIcNcZys3eWSnW5G3RvEZSwcMhZKFz61NcfXnOddcpEg>
+ <xmx:duiKXYQMhUPKoN7DLReCrgTBh6DsIh6aUO_b9AT_x40JFTRkjCyTzA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id C9D18E00AF; Wed, 25 Sep 2019 00:08:25 -0400 (EDT)
+ id 0C656E00AF; Wed, 25 Sep 2019 00:09:26 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <e6503648-afa7-48ea-b803-5768512fa493@www.fastmail.com>
-In-Reply-To: <20190924194759.26854-8-bradleyb@fuzziesquirrel.com>
+Message-Id: <c548c6bf-e6ce-424f-91de-6cbddace034c@www.fastmail.com>
+In-Reply-To: <20190924194759.26854-9-bradleyb@fuzziesquirrel.com>
 References: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
- <20190924194759.26854-8-bradleyb@fuzziesquirrel.com>
-Date: Wed, 25 Sep 2019 13:39:08 +0930
+ <20190924194759.26854-9-bradleyb@fuzziesquirrel.com>
+Date: Wed, 25 Sep 2019 13:40:08 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
  "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_07/10]_ARM:_dts:_aspeed:_Add_Raini?=
- =?UTF-8?Q?er_system?=
+Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_08/10]_ARM:_dts:_aspeed-g6:_Expose?=
+ =?UTF-8?Q?_SuperIO_scratch_registers?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,77 +97,8 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 05:17, Brad Bishop wrote:
-> Rainier is a new IBM server with POWER host processors and an AST2600
-> BMC.
-> 
 > Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
-> ---
-> v3:
->   - removed i2c, mac
->   - moved reserved memory
->   - set correct memory size
-> v2:
->   - reordered rainier DT elements (alphabetized).
->   - added rainier rtc, lpc-ctl, reserved memory, mac devices
-> ---
->  arch/arm/boot/dts/Makefile                   |  1 +
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 57 ++++++++++++++++++++
->  2 files changed, 58 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 5af075c2f819..3ad9706337a2 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1278,6 +1278,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->  	aspeed-bmc-facebook-wedge40.dtb \
->  	aspeed-bmc-facebook-wedge100.dtb \
->  	aspeed-bmc-facebook-yamp.dtb \
-> +	aspeed-bmc-ibm-rainier.dtb \
->  	aspeed-bmc-intel-s2600wf.dtb \
->  	aspeed-bmc-inspur-fp5280g2.dtb \
->  	aspeed-bmc-lenovo-hr630.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> new file mode 100644
-> index 000000000000..f56a7dddba62
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -0,0 +1,57 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +// Copyright 2019 IBM Corp.
-> +/dts-v1/;
-> +
-> +#include "aspeed-g6.dtsi"
-> +
-> +/ {
-> +	model = "Rainier";
-> +	compatible = "ibm,rainier-bmc", "aspeed,ast2600";
-> +
-> +	aliases {
-> +		serial4 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=ttyS4,115200n8";
-> +	};
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		reg = <0x80000000 0x40000000>;
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		flash_memory: region@BB000000 {
-> +			no-map;
-> +			reg = <0xBB000000 0x04000000>; /* 64M */
 
-Probably should have warned you that the region needs to be naturally aligned, so
-the address should be 0xb8000000.
+I really should fix this junk some day.
 
-Andrew
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
