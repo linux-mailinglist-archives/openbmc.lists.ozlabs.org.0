@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AEC9BD690
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:08:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9F44BD6A0
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 05:18:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dNKw6gpZzDqhK
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 13:08:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dNYb30zlzDqgS
+	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 13:18:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="G07Wvurw"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="OSkWz+5m"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="JKH9XoX+"; dkim-atps=neutral
+ header.b="1DVZMjpK"; dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
  [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dNHY4HW4zDqbX
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 13:06:17 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dNXv3PNVzDqWb
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 13:17:51 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 0B4D9222BD;
- Tue, 24 Sep 2019 23:06:13 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id E673822165;
+ Tue, 24 Sep 2019 23:17:48 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 24 Sep 2019 23:06:13 -0400
+ by compute4.internal (MEProxy); Tue, 24 Sep 2019 23:17:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=4PCEJnBsGFuT+atiHfg/PLDEWIBC7+j
- gsRdmtKGcxq4=; b=G07Wvurw2kcuc3Q8/btiCn+PhJ2jIWPKS9b6n9nKEOQwxY8
- 2V+zZwAr96gMS190o7XGyE1tDpNjrX1VjZpbEU+7yG8Qgp5Hws2oYs5JT4YqFUIs
- 239xaxiUJ3cbM43NIO1zjaHT+j7Ht6Hgxo9gblcq3sO96QlivK3hh2IaaATtHj0H
- /hXUS0R2KkrmH5EEeIHmFpx3xXTRR+uBk+d4zv/bZyaXiFEDr9TbULW4mlomA/Ty
- P/We3iahz9rWQGrozjPDYHiqdQ0ALUDYbz2t3CaOiCNKO6af4tHN3fNyNOp4iTQt
- 7vNJbsQr1pjvKuuIC/I9p3KQY0SVoof9J3AxVMA==
+ :subject:content-type; s=fm3; bh=LPTOGhV9k9cBivflQQEQ0DkC+lEllIx
+ FLIGTfKClO8Q=; b=OSkWz+5mbPbfoAg9wUf9eMaNpS7qi9SuJlLZWAXsQRjc39C
+ MA2VshPV5Hf/LYf0xU0fVuPKByoJcX+FJYVJ3iOgKNz31UuhenwhDNiiSePHPB6t
+ 5+q6oGAvYaUdpCIhPKfakjGzdiFVQImQ6Bxs//2YQwzD++yF0BIEo/PT+rAEFO8c
+ otgdwbQfVWuNn3HsjcMfUJtzrr6xAVnYd5AwGtnuULg32GIEp2WQdlU+III1hvxB
+ yrcyAzcAtQb9t2o3e57/D7saIoUIByPh4wdCvYoYqgTdyqxld+MfghbLv6oBJCWp
+ 8dV2Pm8m/42VC3NOHtal8z6jm2jATXGB3tm5Wlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=4PCEJn
- BsGFuT+atiHfg/PLDEWIBC7+jgsRdmtKGcxq4=; b=JKH9XoX+YwA/n88OOJ0ab9
- mcHnDy2aNDCNVJZzI8wdmCU1m/TvmQIvzkKeRahhTtSEa7x+/vqJ8BI7mmxy9sf2
- oRMj2myzK24UD5uVlyXhmTjc5wE1LmL+A70sOaR83X9SxBRRpuaYR+5cR0YXKvs9
- CEbABbz9DTV/PsOkpqZDZPUeGy05Jvlrh5waJB79AEUcxxYT8WliGbbcnqcFXezo
- 3cQT5R27T3N0c1z8plOHPlHSt2nUMHrRIv2qB6vB0f4sUMxXGoEwO5ri7GItrGSl
- 15mjG/JJMOzTTerMHNjcN9EjSc3aR0wqEslLbTwvv4mOMTftBUDBHXyHH4KciLEw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=LPTOGh
+ V9k9cBivflQQEQ0DkC+lEllIxFLIGTfKClO8Q=; b=1DVZMjpKlL+B/9Wex8BP9S
+ tJHHIn1QkNKKbBu7l/t1rF/QECnysuMykmVahZwSh6rpt1n/bcv93pcGxkRMA7dB
+ S2OEvB3YEOVioUtuGj+SYUKRmPvGNs1kTF0k2d15keXPfFAMe4jab34yki23HSuU
+ BMypV02hfmi2jyLmghdXjraKunjqgSHgC8ZtjA/IcNJB4yrmjYUKoxwevwHZQiy1
+ StjQEAQKC+6B1qPOydIfdRq9iZBKQEo9+J/UMakQJ4NBUlzseUINJ3dba6T/zCKl
+ AzOy953zgBWWFZKgQ6HhlT+WaEnwsI13y/UIvQJMfG6C+7HNTBBTnqCWRiBEXvoQ
  ==
-X-ME-Sender: <xms:pNmKXecwiICCJE6kjqqCasQhbxasEw3mznXVL-imqe4pkPSZGHn6_w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdeikecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:XNyKXbqADaeFqLa5HMBPfbulbkcGz1HHlDqsbkjZp5otrjC2CWFlug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfedugdejtdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
  hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedu
-X-ME-Proxy: <xmx:pNmKXTZQ-wxgUDzcjiuWcXiW0vNa09sDzE2g_ipy5t4xmW8AVOwPZQ>
- <xmx:pNmKXeoF8Cr0R1uKSSb25zc1ESDPANNLqgbIb4VjlmjtjwDGEEPzJA>
- <xmx:pNmKXcN-0hoyX-AkmOKg6zyDjTLcaXw4UylckfgAiDhqFY96WhOiGg>
- <xmx:pdmKXVEVpyGDkG53VPi1CffQmOv6oNP6awrS14C8PE_ma-1E2pObzw>
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:XNyKXYhNaigj-LeCdeYuILQzoPq81k6BxKROsolO1vLGm8DJqa9fDw>
+ <xmx:XNyKXZDSvgEs2XIMK858ZhYr4G0RP5DytoNkS_Zr781JK0C9n6gJrg>
+ <xmx:XNyKXQvd6V2faiOEeglotLGwBOF7zZQS5f8RqttXtcLTUnw_nhgDUA>
+ <xmx:XNyKXWYGyZISz32wXsCL2A7-_bDl5DWdk7lLVGyXwSEo3mKjUndoiw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id C7819E00AF; Tue, 24 Sep 2019 23:06:12 -0400 (EDT)
+ id 417A3E00AF; Tue, 24 Sep 2019 23:17:48 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <9b1003aa-2dc7-4b7f-9b44-5055ba450375@www.fastmail.com>
-In-Reply-To: <20190924194759.26854-6-bradleyb@fuzziesquirrel.com>
+Message-Id: <41308a72-f434-449e-8325-1fd39d64ad77@www.fastmail.com>
+In-Reply-To: <20190924194759.26854-7-bradleyb@fuzziesquirrel.com>
 References: <20190924194759.26854-1-bradleyb@fuzziesquirrel.com>
- <20190924194759.26854-6-bradleyb@fuzziesquirrel.com>
-Date: Wed, 25 Sep 2019 12:36:55 +0930
+ <20190924194759.26854-7-bradleyb@fuzziesquirrel.com>
+Date: Wed, 25 Sep 2019 12:48:32 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
  "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_05/10]_reset:_simple:_Add_AST2600_?=
- =?UTF-8?Q?compatibility_string?=
+Subject: =?UTF-8?Q?Re:_[PATCH_v3_linux_dev-5.3_06/10]_ARM:_dts:_aspeed-g6:_Add_lp?=
+ =?UTF-8?Q?c_devices?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,30 +97,122 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 05:17, Brad Bishop wrote:
-> The AST2600 SoC contains the same LPC register set as the AST2500.
+> Everything is the same as G5, except the devices have their own
+> interrupt now.
 > 
 > Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Haven't cross-checked the IRQs but things look vaguely right. I would whinge 
+about ordering of some of the nodes, but I don't really care enough because
+I don't like any of it anyway :)
+
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
 
 > ---
-> v3: new for v3
+> v2: new for v2
+> v3: fixed broken ipmi/lpc interrupts
 > ---
->  drivers/reset/reset-simple.c | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm/boot/dts/aspeed-g6.dtsi | 87 ++++++++++++++++++++++++++++++++
+>  1 file changed, 87 insertions(+)
 > 
-> diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
-> index 1154f7b1f4dd..2fe9c889a75a 100644
-> --- a/drivers/reset/reset-simple.c
-> +++ b/drivers/reset/reset-simple.c
-> @@ -125,6 +125,7 @@ static const struct of_device_id reset_simple_dt_ids[] = {
->  		.data = &reset_simple_active_low },
->  	{ .compatible = "aspeed,ast2400-lpc-reset" },
->  	{ .compatible = "aspeed,ast2500-lpc-reset" },
-> +	{ .compatible = "aspeed,ast2600-lpc-reset" },
->  	{ .compatible = "bitmain,bm1880-reset",
->  		.data = &reset_simple_active_low },
->  	{ /* sentinel */ },
+> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+> index 72038c16f541..3b42404b2ace 100644
+> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+> @@ -249,6 +249,93 @@
+>  				status = "disabled";
+>  			};
+>  
+> +			lpc: lpc@1e789000 {
+> +				compatible = "aspeed,ast2600-lpc", "simple-mfd";
+> +				reg = <0x1e789000 0x1000>;
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <1>;
+> +				ranges = <0x0 0x1e789000 0x1000>;
+> +
+> +				lpc_bmc: lpc-bmc@0 {
+> +					compatible = "aspeed,ast2600-lpc-bmc", "simple-mfd", "syscon";
+> +					reg = <0x0 0x80>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x0 0x80>;
+> +
+> +					kcs1: kcs1@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <1>;
+> +						status = "disabled";
+> +					};
+> +					kcs2: kcs2@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <2>;
+> +						status = "disabled";
+> +					};
+> +					kcs3: kcs3@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <3>;
+> +						status = "disabled";
+> +					};
+> +				};
+> +
+> +				lpc_host: lpc-host@80 {
+> +					compatible = "aspeed,ast2600-lpc-host", "simple-mfd", "syscon";
+> +					reg = <0x80 0x1e0>;
+> +					reg-io-width = <4>;
+> +
+> +					#address-cells = <1>;
+> +					#size-cells = <1>;
+> +					ranges = <0x0 0x80 0x1e0>;
+> +
+> +					kcs4: kcs4@0 {
+> +						compatible = "aspeed,ast2600-kcs-bmc";
+> +						interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+> +						kcs_chan = <4>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lpc_ctrl: lpc-ctrl@0 {
+> +						compatible = "aspeed,ast2600-lpc-ctrl";
+> +						reg = <0x0 0x80>;
+> +						clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lpc_snoop: lpc-snoop@0 {
+> +						compatible = "aspeed,ast2600-lpc-snoop";
+> +						reg = <0x0 0x80>;
+> +						interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +
+> +					lhc: lhc@20 {
+> +						compatible = "aspeed,ast2600-lhc";
+> +						reg = <0x20 0x24 0x48 0x8>;
+> +					};
+> +
+> +					lpc_reset: reset-controller@18 {
+> +						compatible = "aspeed,ast2600-lpc-reset";
+> +						reg = <0x18 0x4>;
+> +						#reset-cells = <1>;
+> +					};
+> +
+> +					ibt: ibt@c0 {
+> +						compatible = "aspeed,ast2600-ibt-bmc";
+> +						reg = <0xc0 0x18>;
+> +						interrupts = <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>;
+> +						status = "disabled";
+> +					};
+> +				};
+> +			};
+> +
+>  			sdc: sdc@1e740000 {
+>  				compatible = "aspeed,ast2600-sd-controller";
+>  				reg = <0x1e740000 0x100>;
 > -- 
 > 2.21.0
 >
