@@ -2,70 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C45DBF794
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 19:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB0B2BF7EB
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 19:50:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fMMv64fKzDqt3
-	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 03:28:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fMs03S4TzDqdp
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 03:50:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::d35; helo=mail-io1-xd35.google.com;
- envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="CgFw0rY2"; 
- dkim-atps=neutral
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
- [IPv6:2607:f8b0:4864:20::d35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fMM22JVCzDqs1
- for <openbmc@lists.ozlabs.org>; Fri, 27 Sep 2019 03:27:41 +1000 (AEST)
-Received: by mail-io1-xd35.google.com with SMTP id j4so8565315iog.11
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 10:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=96Ks+efXw+IwdOOwAQKZGZTnlYYyJ70xyDtrUGXkxD0=;
- b=CgFw0rY2v2JZnsGOsSGLR/nz+Nbwgmr+2X2Bv3WznIZFBm88X/oxQtnW6hYeUrqU0M
- fxruT6kjuBYvZieIPWPYHOIFkXGctE0mkESPLXvQ+JxZZmS+GBKp/3IH5JdxWL0LUPDd
- v6ngQ8Tu8eIhBfx5iDqfbHg8XC9hPvQC3TjR4B5HJFGhzV/UPU1RagGZYmsvbZdTSAOf
- giUZ9nb/L4/NZVidmwC5NWbalIIe9B4w6rVHkGXnZ8XJ4e7Y8U1uG7Rj9mMCEqtuv6GI
- 8LNUettMWhFLc1MOrbFj/KWgC2/9t4T/zu9sJ0AXqu2dFRjFYplNFuMiZocjawbKHHSG
- pYFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=96Ks+efXw+IwdOOwAQKZGZTnlYYyJ70xyDtrUGXkxD0=;
- b=R3xkRK0DgvCnoGVnWs4NoHK3uEixi3Iw94FMfB994yjW9SJ3eOtZeo4HUWvBvvB9H3
- eRzZ3MwsdzaJCikMeYlxEY+UTUS5CO/XLepNU54NVoyrIPG2VWtRYCUiYMGw0n/ZLrdI
- zBjrNlNwHmDFpGZGAUAAKHQIdT9UHF6BNnH2bEOVTdNUGU8zujc7V2Nt8nm+Xc8DeoIa
- DkiEzTAstxXIQRP9K8GKWW/xpMbnq8R1cPBWsRciVvX2QKtNtPZlTCiQKW81ckHlqiY6
- YWFamt2SbY6LQuLst2P6KZHhTxDsiVnAEqNS4opnOebmfOeG+CH5CmctBqg5MhYs7ytM
- o85g==
-X-Gm-Message-State: APjAAAW5gA9m1zujrgtk9EkGxuouKDOzDqxSpzLs2nIaD9EeuEioDVnO
- 3xdgxvcwsWwlVXYYy3GsTnmSH8TkFynUdpxEjxDAtA==
-X-Google-Smtp-Source: APXvYqylhvRN0vFzd3SWVXJ2W20CY7llCBppB9jVF2CGAmDG+WZAA//PnbtEPh6zlfiPoWF4y8WDWyzDtxePem7iRZc=
-X-Received: by 2002:a92:910e:: with SMTP id t14mr3702667ild.40.1569518857577; 
- Thu, 26 Sep 2019 10:27:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fMr94PjnzDqqD
+ for <openbmc@lists.ozlabs.org>; Fri, 27 Sep 2019 03:49:27 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 26 Sep 2019 10:49:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,552,1559545200"; 
+ d="scan'208,217";a="390806350"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.166.18])
+ ([10.252.166.18])
+ by fmsmga006.fm.intel.com with ESMTP; 26 Sep 2019 10:49:22 -0700
+Subject: Re: User management via WebUI vs ipmitool
+To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>
+References: <cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com>
+ <12335442-8818-d0f5-da44-14a0addc0140@linux.vnet.ibm.com>
+ <CAAMkS11b3PShKFRW+1RHLDsrbbP+G3Az5g-WjMGkT_97b0rOYg@mail.gmail.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <4ced6939-d1b7-5369-77b8-25671141ec20@linux.intel.com>
+Date: Thu, 26 Sep 2019 23:19:21 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <E413464F-B8BD-469C-8B58-432C25DEE77C@fuzziesquirrel.com>
- <CAARXrt=SpBeZ+kcg5zjTZ2mHr7Q1YCbNLPJrqaqsBwbv8-AfDA@mail.gmail.com>
- <22c0f2b4-1411-5690-3d19-b0a90890e642@linux.vnet.ibm.com>
- <D7110269-FC33-4C7F-85A6-5A2B26B7FD52@fuzziesquirrel.com>
-In-Reply-To: <D7110269-FC33-4C7F-85A6-5A2B26B7FD52@fuzziesquirrel.com>
-From: Kun Yi <kunyi@google.com>
-Date: Thu, 26 Sep 2019 10:27:11 -0700
-Message-ID: <CAGMNF6WsX90bDc5bLPO+f1y8MVwsEegSciyo6kiySA6fFT43gQ@mail.gmail.com>
-Subject: Re: witherspoon-pfault-analysis repository rename to phosphor-power
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAAMkS11b3PShKFRW+1RHLDsrbbP+G3Az5g-WjMGkT_97b0rOYg@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------EE960345AC8D7A0C9EC9205F"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,44 +58,487 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Shawn McCarney <shawnmm@linux.vnet.ibm.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Matt Spinler <mspinler@gmail.com>,
- Brandon Wyman <bjwyman@gmail.com>, derekh@us.ibm.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ rgrs <rgrs@protonmail.com>, ratagupt@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Just found out this thread.. I'm starting to explore extending the
-capabilities. In particular, I'm looking at VRMs which can hold device
-specific NV fault logs and export them over D-Bus, and then realize
-that if the NV faults can be exported to debugfs, the design would be
-similar to what witherspoon-pfault-analysis is doing.
+This is a multi-part message in MIME format.
+--------------EE960345AC8D7A0C9EC9205F
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Brad, thanks for kicking off the effort. Was the transition already in-prog=
-ress?
+yes, this is known problem, and there are changes under review which 
+will fix the same as well. If i remember correctly, there should be an 
+issue already for this.
 
-On Mon, Sep 9, 2019 at 5:00 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wr=
-ote:
+Issue: NoAccess is not in Redfish roles, and hence AccountService will 
+not be able to get users with that privilege.
+
+Following changes under review will fix the same.
+
+1. https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/23962/
+
+2.https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-user-manager/+/24784/
+
+regards,
+
+Richard
+
+On 9/26/2019 3:02 PM, Rahul Maheshwari wrote:
+> Gunnar
+> I tested and found that this problem is only seen when we don't assign 
+> privilege to user after creating using IPMItool. See below steps for 
+> more details.
 >
-> at 11:39 AM, Shawn McCarney <shawnmm@linux.vnet.ibm.com> wrote:
+> Step to hit the problem and fix it up.
+> 1. Create IPMI user using below command
+>  ipmitool -I lanplus -H <BMC_IP> -U root -P 0penBmc user set name 2 
+> user_ipmi
 >
-> > On 8/21/2019 9:18 PM, Lei YU wrote:
-> >> It's noticed that there is `phosphor-power-monitor`, is it the repo to
-> >> hold the
-> >> previous `witherspoon-pfault-analysis`, or it is a separated one from
-> >> `phosphor-power`?
-> >
-> > I believe the plan is to rename 'witherspoon-pfault-analysis' to
-> > 'phosphor-power' and then remove 'phosphor-power-monitor'.  Brad is sti=
-ll
-> > working through the details.
+> 2. Login to GUI and navigate to user account page(here you will see no 
+> user exist message in GUI's user page)
 >
-> Yes this is (still) the plan.  I=E2=80=99m hoping to get this wrapped up =
-this week.
+> 3. Now assign any privilege to user using below command
+>  ipmitool -I lanplus -H <BMC_IP> -U root -P 0penBmc channel setaccess 
+> 1 2 privilege=2
 >
-> -brad
+> 4. Now refresh the GUI user page(here you will see that all users are 
+> visible now).
+>
+> This problem is not with Redfish as we are able to see all users 
+> after creating user using IPMI without any permission. So this seem 
+> like a problem which need to be fixed from GUI side.
+>
+> $ curl -k -H "X-Auth-Token: $bmc_token" -X GET 
+> https://${BMC_IP}/redfish/v1/AccountService/Accounts/
+> {
+>   "@odata.context": 
+> "/redfish/v1/$metadata#ManagerAccountCollection.ManagerAccountCollection",
+>   "@odata.id <http://odata.id>": "/redfish/v1/AccountService/Accounts",
+>   "@odata.type": "#ManagerAccountCollection.ManagerAccountCollection",
+>   "Description": "BMC User Accounts",
+>   "Members": [
+>     {
+>       "@odata.id <http://odata.id>": 
+> "/redfish/v1/AccountService/Accounts/user_ipmi"
+>     },
+>     {
+>       "@odata.id <http://odata.id>": 
+> "/redfish/v1/AccountService/Accounts/root"
+>     }
+>   ],
+>   "Members@odata.count": 2,
+>   "Name": "Accounts Collection"
+>
+> Thanks
+> Rahul
+>
+> On Thu, Sep 26, 2019 at 3:13 AM Gunnar Mills 
+> <gmills@linux.vnet.ibm.com <mailto:gmills@linux.vnet.ibm.com>> wrote:
+>
+>
+>     On 9/25/2019 5:20 AM, rgrs wrote:
+>>
+>>     Is there any difference in user management from WebUI and ipmitool?
+>>     When I add user via WebUI, a user is created and deleted
+>>     immediately. Not sure why.
+>
+>     The WebUI uses the Redfish API to create/update/delete users.
+>     https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616
+>
+>      Ratan or Richard do you know what is going on here?
+>
+>>     When I add user via IPMItool, users are getting added but WebUI
+>>     user configuration page is blank.
+>
+>     I thought IPMI and Redfish users were treated the same in
+>     phosphor-user-manager.
+>
+>     What version of OpenBMC?
+>
+>>
+>>     *_Logs:_*
+>>     *journalctl (User creation with WebUI):*
+>>     Sep 25 09:17:52 mybmc nslcd[1127]: [200854] <passwd="TestUser">
+>>     no available LDAP server found: Server is unavailable: Transport
+>>     endpoint is not connected
+>>     Sep 25 09:17:52 mybmc nslcd[1127]: [b127f8] <passwd=1000> no
+>>     available LDAP server found: Server is unavailable: Transport
+>>     endpoint is not connected
+>>     Sep 25 09:17:52 mybmc useradd[1816]: new user: name=TestUser,
+>>     UID=1000, GID=100, home=/home/TestUser, shell=/bin/sh
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'web'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
+>>     'redfish'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
+>>     'priv-admin'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'ipmi'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
+>>     group 'web'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
+>>     group 'redfish'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
+>>     group 'priv-admin'
+>>     Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
+>>     group 'ipmi'
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/passwd` was written to
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/passwd` was moved into place, adding watch
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/group` was written to
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/group` was moved into place, adding watch
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/passwd` (27)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/group` (28)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/passwd` (27)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/group` (28)
+>>     Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:52 mybmc phosphor-user-manager[1119]: User created
+>>     successfully
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete user 'TestUser'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group
+>>     'web'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group
+>>     'redfish'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group
+>>     'priv-admin'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group
+>>     'ipmi'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
+>>     shadow group 'web'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
+>>     shadow group 'redfish'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
+>>     shadow group 'priv-admin'
+>>     Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
+>>     shadow group 'ipmi'
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/passwd` was written to
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/passwd` was moved into place, adding watch
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/group` was written to
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+>>     `/etc/group` was moved into place, adding watch
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/passwd` (29)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/group` (30)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/passwd` (29)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
+>>     `/etc/group` (30)
+>>     Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
+>>     `/etc` (2)
+>>     Sep 25 09:17:53 mybmc phosphor-user-manager[1119]: User deleted
+>>     successfully
+>>
 
+--------------EE960345AC8D7A0C9EC9205F
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>yes, this is known problem, and there are changes under review
+      which will fix the same as well. If i remember correctly, there
+      should be an issue already for this.<br>
+    </p>
+    <p>Issue: NoAccess is not in Redfish roles, and hence AccountService
+      will not be able to get users with that privilege.</p>
+    <p>Following changes under review will fix the same. <br>
+    </p>
+    <p>1. <a
+        href="https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/23962/">https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/23962/</a></p>
+    <p>2.<a
+href="https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-user-manager/+/24784/">https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-user-manager/+/24784/</a></p>
+    <p>regards,</p>
+    <p>Richard<br>
+    </p>
+    <div class="moz-cite-prefix">On 9/26/2019 3:02 PM, Rahul Maheshwari
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAAMkS11b3PShKFRW+1RHLDsrbbP+G3Az5g-WjMGkT_97b0rOYg@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">Gunnar<br>
+        I tested and found that this problem is only seen when we don't
+        assign privilege to user after creating using IPMItool. See
+        below steps for more details. <br>
+         <br>
+        Step to hit the problem and fix it up.<br>
+        1. Create IPMI user using below command<br>
+         ipmitool -I lanplus -H &lt;BMC_IP&gt; -U root -P 0penBmc user
+        set name 2 user_ipmi<br>
+        <br>
+        2. Login to GUI and navigate to user account page(here you will
+        see no user exist message in GUI's user page)<br>
+        <br>
+        3. Now assign any privilege to user using below command<br>
+         ipmitool -I lanplus -H &lt;BMC_IP&gt; -U root -P 0penBmc
+        channel setaccess 1 2 privilege=2<br>
+         <br>
+        4. Now refresh the GUI user page(here you will see that all
+        users are visible now).
+        <div><br>
+        </div>
+        <div>This problem is not with Redfish as we are able to see all
+          users after creating user using IPMI without any permission.
+          So this seem like a problem which need to be fixed from GUI
+          side.<br>
+          <div><br>
+          </div>
+          <div>$ curl -k -H "X-Auth-Token: $bmc_token" -X GET
+            <a class="moz-txt-link-freetext" href="https://$">https://$</a>{BMC_IP}/redfish/v1/AccountService/Accounts/<br>
+            {<br>
+              "@odata.context":
+"/redfish/v1/$metadata#ManagerAccountCollection.ManagerAccountCollection",<br>
+              "@<a href="http://odata.id" moz-do-not-send="true">odata.id</a>":
+            "/redfish/v1/AccountService/Accounts",<br>
+              "@odata.type":
+            "#ManagerAccountCollection.ManagerAccountCollection",<br>
+              "Description": "BMC User Accounts",<br>
+              "Members": [<br>
+                {<br>
+                  "@<a href="http://odata.id" moz-do-not-send="true">odata.id</a>":
+            "/redfish/v1/AccountService/Accounts/user_ipmi"<br>
+                },<br>
+                {<br>
+                  "@<a href="http://odata.id" moz-do-not-send="true">odata.id</a>":
+            "/redfish/v1/AccountService/Accounts/root"<br>
+                }<br>
+              ],<br>
+              <a class="moz-txt-link-rfc2396E" href="mailto:Members@odata.count">"Members@odata.count"</a>: 2,<br>
+              "Name": "Accounts Collection"<br>
+          </div>
+          <div><br>
+          </div>
+          <div>Thanks</div>
+          <div>Rahul</div>
+        </div>
+      </div>
+      <br>
+      <div class="gmail_quote">
+        <div dir="ltr" class="gmail_attr">On Thu, Sep 26, 2019 at 3:13
+          AM Gunnar Mills &lt;<a href="mailto:gmills@linux.vnet.ibm.com"
+            moz-do-not-send="true">gmills@linux.vnet.ibm.com</a>&gt;
+          wrote:<br>
+        </div>
+        <blockquote class="gmail_quote" style="margin:0px 0px 0px
+          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+          <div bgcolor="#FFFFFF">
+            <p><br>
+            </p>
+            <div>On 9/25/2019 5:20 AM, rgrs wrote:<br>
+            </div>
+            <blockquote type="cite">
+              <div><br>
+              </div>
+              <div>Is there any difference in user management from WebUI
+                and ipmitool?<br>
+              </div>
+              <div>When I add user via WebUI, a user is created and
+                deleted immediately. Not sure why.<br>
+              </div>
+            </blockquote>
+            <p>The WebUI uses the Redfish API to create/update/delete
+              users. <br>
+              <a
+href="https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616"
+                target="_blank" moz-do-not-send="true">https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616</a><br>
+            </p>
+            <p> Ratan or Richard do you know what is going on here?</p>
+            <blockquote type="cite">
+              <div>When I add user via IPMItool, users are getting added
+                but WebUI user configuration page is blank.<br>
+              </div>
+            </blockquote>
+            <br>
+            I thought IPMI and Redfish users were treated the same in
+            phosphor-user-manager.<br>
+            <br>
+            What version of OpenBMC?<br>
+            <br>
+            <blockquote type="cite">
+              <div><br>
+              </div>
+              <div><b><u>Logs:</u></b><br>
+              </div>
+              <div><b>journalctl (User creation with WebUI):</b><br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nslcd[1127]: [200854]
+                &lt;passwd="TestUser"&gt; no available LDAP server
+                found: Server is unavailable: Transport endpoint is not
+                connected<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nslcd[1127]: [b127f8]
+                &lt;passwd=1000&gt; no available LDAP server found:
+                Server is unavailable: Transport endpoint is not
+                connected<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: new user:
+                name=TestUser, UID=1000, GID=100, home=/home/TestUser,
+                shell=/bin/sh<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to group 'web'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to group 'redfish'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to group 'priv-admin'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to group 'ipmi'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to shadow group 'web'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to shadow group 'redfish'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to shadow group 'priv-admin'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser'
+                to shadow group 'ipmi'<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+                `/etc/passwd` was written to<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+                `/etc/passwd` was moved into place, adding watch<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+                `/etc/group` was written to<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
+                `/etc/group` was moved into place, adding watch<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/passwd` (27)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/group` (28)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/passwd` (27)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/group` (28)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:52 mybmc phosphor-user-manager[1119]:
+                User created successfully<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete user
+                'TestUser'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from group 'web'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from group 'redfish'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from group 'priv-admin'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from group 'ipmi'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from shadow group 'web'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from shadow group 'redfish'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from shadow group 'priv-admin'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc userdel[1822]: delete
+                'TestUser' from shadow group 'ipmi'<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+                `/etc/passwd` was written to<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+                `/etc/passwd` was moved into place, adding watch<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+                `/etc/group` was written to<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
+                `/etc/group` was moved into place, adding watch<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/passwd` (29)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/group` (30)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/passwd` (29)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                file `/etc/group` (30)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring
+                directory `/etc` (2)<br>
+              </div>
+              <div>Sep 25 09:17:53 mybmc phosphor-user-manager[1119]:
+                User deleted successfully<br>
+              </div>
+              <div><br>
+              </div>
+            </blockquote>
+          </div>
+        </blockquote>
+      </div>
+    </blockquote>
+  </body>
+</html>
 
---=20
-Regards,
-Kun
+--------------EE960345AC8D7A0C9EC9205F--
