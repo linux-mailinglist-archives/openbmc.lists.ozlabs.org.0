@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 815A7BEA5A
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:00:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 818E5BEA5D
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:01:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dymg6GxWzDqbk
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:00:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dypH2q3bzDqcH
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:01:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="AZAQHCwQ"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="AYV4+SLq"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ivB0j+qv"; dkim-atps=neutral
+ header.b="FaXPvDZD"; dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dylz75fDzDqYX
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 11:59:27 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dymN09v9zDqcF
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 11:59:48 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A36B564B;
- Wed, 25 Sep 2019 21:59:25 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id E03125B5;
+ Wed, 25 Sep 2019 21:59:45 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 21:59:25 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 21:59:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm3; bh=MjZNF
- DOTXMAKRP/N2qvGGPOiVUv+GpDn3dGN4JwIKYE=; b=AZAQHCwQ7UHRDUkijXwPm
- s+GAck+lglFEKXc2i7p3hRflGPR2f+wclUh+dJc2sjpTXBsisFBWaa69e9FKAx/o
- j5vWei9K3gh7AYpMkDgk5qmP9mftH7t10XwxMLQ3GLqVydPHjGomkdnYEaSKRRES
- cb+ilKOuLXh8jj/HkSGqvUVyRqG8uf5FHGvzmJkSMgiW5noPbM7tQtRQBaa4PSjq
- NYWzEbvB28vJS8T4Dn2Z+cQkE1N6BMcakVxh+FSOpRwxlp4WDm99m41ulfUuWrj/
- svpGfW5g5pGfLrv1XZ6St9j/OK1FZRmePayKmRQHmG/GDt4o40SbJATHI02spDXy
- g==
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=Bus1u
+ wnz4pgSuz7iWqAg9YtgDocth0wFekjn7aESKoQ=; b=AYV4+SLqEBr8xrE5F/rb6
+ Vrl1/hg6wjujAci91EntRCVLWb9DD3jqE14vx2+HOzF5492GAFnkljD9YikKh078
+ gsZltnoUUXs/gMad0d3NnEuX9GJWfx2jVxFK0ig3Z/k+893ZveV17nZVyYRyC0y4
+ WBPc+ZS6pUIdpLkh94pPczg/4e+Jgb/sgezRydqbx8rVuEXTgQIheiYivQ20uWsK
+ bj0Yoq0XzMUBMaBvv5XVpH6Qvw1sarOUecj/+Ie2dR/DyNdz0ygFEeKcQtX4/J1D
+ z/vyfpagvjBhjFQKkuXiv3K9adTE8x00eorEqW2GWxUUcncOJYBv9BeCPDwHBWCN
+ w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=MjZNFDOTXMAKRP/N2qvGGPOiVUv+GpDn3dGN4JwIK
- YE=; b=ivB0j+qv3Ag81txvegtg3RPvnUfnO+vO7a4sEHREMfat9IBlRDyHrlzsT
- wJSSu/upLzRSRGpjBiaKomaRS1DFZSR8joK2VzzIG+00EpYK7FRhIBP75cv8G01r
- 9VOzVCy1oRZN5bCzMV4cOUDIwHK+GrgZ3pdGj8F1X2e4sGLc4saEw4znBzeeWLjk
- TrpZ8nblg9zjTV22kjXltvEkD+pEFXraDd6E/6BoxDRwcZxcEe2DVmMFSZxNh0ho
- hEAGqhnX0LxIsFNzR2IrK5VqNYM4ujSF+inVLUERMf0ysSUOETbJA7yi0p2Ofhim
- LCZz2RItedB0uhVrwmcXwWI7ctUdA==
-X-ME-Sender: <xms:fRuMXXyzmNsfaveVuAT_5bErQYdAKfTHhdB1o_EIc0CrS-8x5KMnYg>
+ :x-sasl-enc; s=fm3; bh=Bus1uwnz4pgSuz7iWqAg9YtgDocth0wFekjn7aESK
+ oQ=; b=FaXPvDZDNyCy4ioJxiHKkvwFEcCsQHwlEadnoRWCZsK237t+giGHyPXtP
+ Yz8KICe9oXCXJ+JWgJps4jgmdHYakfjvEbcs9cFieJfbQOq8I6UehZaUvj21gtSY
+ VwTE+ye4LJRO0DnsjEdPRCQplsjKDqWsnInMIDwaEdd9M/RWcY5HZjBO7ekoY7XW
+ xdAATyfUMbTmM5rMaE4mqjruZS8T91e9FXWZbE03uofm25JHu1GybdsXV7ElROJz
+ NlhKl/7Sy4T/0DataY6rRW6Yp1DoyEuG9XR8p35kEHrJlbXrzCgIGeoFIfurnV6U
+ FhczrgW7PjUM4ZopHZVtyA9zHMMTg==
+X-ME-Sender: <xms:kRuMXXl5a6VNf0mnJl4M3cEuEG2EmByOZrgKsp8uV3YBZVsMm8Aw2g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdehvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgepud
-X-ME-Proxy: <xmx:fRuMXTjJulAz3LbtZ7QsJL_sfodB2XMhK6brPW7iUiu8cBX-5kRLBw>
- <xmx:fRuMXcXpmgGheysSWG1gOrVhkjBCKTD9LGwGL2JOezn742bCzztdBw>
- <xmx:fRuMXV2Ql0PfhKIBNHGNIqk-onyyqzIXF-fBfek5s_o2jp5wKu-eMg>
- <xmx:fRuMXeX4icGYTdlcon5pS70rVvkxShiqAMb50kmcR0YTaQ4CaAbmsg>
+ rhfuihiivgepvd
+X-ME-Proxy: <xmx:kRuMXVFBQpH5TeDMrJJVlL5LAD_Vnedc1eEEzYIn0b2YN04hXXQPOg>
+ <xmx:kRuMXadOqBQMU69DA1fQsK3gRNDI4EDdVgHk7JNoET1EbZFGDrjgGQ>
+ <xmx:kRuMXXaU6qKHxyoM-JmZACZEmLxqXImS9kB1sJu1_9tFUoASEM16gQ>
+ <xmx:kRuMXVXy7qgVuhzfVc9R4vUvKoPODlQLEOnxiVpKSUXsehYrTDN1xg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 20A92E00A5; Wed, 25 Sep 2019 21:59:25 -0400 (EDT)
+ id 56078E00A5; Wed, 25 Sep 2019 21:59:45 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <5bc3cde3-fd39-4abf-81e4-b54990b47084@www.fastmail.com>
-In-Reply-To: <20190925124239.27897-8-clg@kaod.org>
+Message-Id: <44faf5a8-e5d4-42b3-89fd-111da12cac02@www.fastmail.com>
+In-Reply-To: <20190925124239.27897-9-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
- <20190925124239.27897-8-clg@kaod.org>
-Date: Thu, 26 Sep 2019 11:30:07 +0930
+ <20190925124239.27897-9-clg@kaod.org>
+Date: Thu, 26 Sep 2019 11:30:27 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_07/13]_mtd:_spi-nor:_aspeed:_Introduc?=
- =?UTF-8?Q?e_segment_operations?=
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_08/13]_mtd:_spi-nor:_aspeed:_add_init?=
+ =?UTF-8?Q?ial_support_for_ast2600?=
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -97,228 +97,125 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 22:12, C=C3=A9dric Le Goater wrote:
-> AST2600 will use a different encoding for the addresses defined in the=
-
-> Segment Register.
+> The Segment Registers of the AST2600 have a different encoding. A 1MB
+> unit is used and the address range of a flash SPI slave is encoded
+> with offsets in the overall controller window. The previous SoC
+> AST2400 and AST2500 used absolute addresses. Only bits [27:20] are
+> relevant and the end address is an upper bound limit.
+>=20
+> SPI training yet to come.
 >=20
 > Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
 
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
 
 > ---
->  drivers/mtd/spi-nor/aspeed-smc.c | 76 +++++++++++++++++++++++--------=
--
->  1 file changed, 56 insertions(+), 20 deletions(-)
+>  drivers/mtd/spi-nor/aspeed-smc.c | 73 +++++++++++++++++++++++++++++++=
++
+>  1 file changed, 73 insertions(+)
 >=20
 > diff --git a/drivers/mtd/spi-nor/aspeed-smc.c b/drivers/mtd/spi-nor/as=
 peed-smc.c
-> index b3a128ada320..4e768092a965 100644
+> index 4e768092a965..6c5ecea21882 100644
 > --- a/drivers/mtd/spi-nor/aspeed-smc.c
 > +++ b/drivers/mtd/spi-nor/aspeed-smc.c
-> @@ -32,6 +32,7 @@ enum aspeed_smc_flash_type {
+> @@ -115,6 +115,39 @@ static const struct aspeed_smc_info spi_2500_info=
+ =3D {
+>  	.segment_reg =3D aspeed_smc_segment_reg,
 >  };
 > =20
->  struct aspeed_smc_chip;
-> +struct aspeed_smc_controller;
-> =20
->  struct aspeed_smc_info {
->  	u32 maxsize;		/* maximum size of chip window */
-> @@ -43,12 +44,22 @@ struct aspeed_smc_info {
-> =20
->  	void (*set_4b)(struct aspeed_smc_chip *chip);
->  	int (*optimize_read)(struct aspeed_smc_chip *chip, u32 max_freq);
-> +	u32 (*segment_start)(struct aspeed_smc_controller *controller, u32 r=
-eg);
-> +	u32 (*segment_end)(struct aspeed_smc_controller *controller, u32 reg=
-);
-> +	u32 (*segment_reg)(struct aspeed_smc_controller *controller,
-> +			   u32 start, u32 end);
->  };
-> =20
->  static void aspeed_smc_chip_set_4b_spi_2400(struct aspeed_smc_chip *c=
-hip);
->  static void aspeed_smc_chip_set_4b(struct aspeed_smc_chip *chip);
->  static int aspeed_smc_optimize_read(struct aspeed_smc_chip *chip,
->  				     u32 max_freq);
-> +static u32 aspeed_smc_segment_start(
+> +static u32 aspeed_smc_segment_start_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 reg);
-> +static u32 aspeed_smc_segment_end(
+> +static u32 aspeed_smc_segment_end_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 reg);
-> +static u32 aspeed_smc_segment_reg(
+> +static u32 aspeed_smc_segment_reg_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 start, u32 end);
-> =20
->  static const struct aspeed_smc_info fmc_2400_info =3D {
->  	.maxsize =3D 64 * 1024 * 1024,
-> @@ -59,6 +70,9 @@ static const struct aspeed_smc_info fmc_2400_info =3D=
- {
->  	.timing =3D 0x94,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> +	.segment_start =3D aspeed_smc_segment_start,
-> +	.segment_end =3D aspeed_smc_segment_end,
-> +	.segment_reg =3D aspeed_smc_segment_reg,
->  };
-> =20
->  static const struct aspeed_smc_info spi_2400_info =3D {
-> @@ -70,6 +84,7 @@ static const struct aspeed_smc_info spi_2400_info =3D=
- {
->  	.timing =3D 0x14,
->  	.set_4b =3D aspeed_smc_chip_set_4b_spi_2400,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> +	/* No segment registers */
->  };
-> =20
->  static const struct aspeed_smc_info fmc_2500_info =3D {
-> @@ -81,6 +96,9 @@ static const struct aspeed_smc_info fmc_2500_info =3D=
- {
->  	.timing =3D 0x94,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> +	.segment_start =3D aspeed_smc_segment_start,
-> +	.segment_end =3D aspeed_smc_segment_end,
-> +	.segment_reg =3D aspeed_smc_segment_reg,
->  };
-> =20
->  static const struct aspeed_smc_info spi_2500_info =3D {
-> @@ -92,6 +110,9 @@ static const struct aspeed_smc_info spi_2500_info =3D=
- {
->  	.timing =3D 0x94,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> +	.segment_start =3D aspeed_smc_segment_start,
-> +	.segment_end =3D aspeed_smc_segment_end,
-> +	.segment_reg =3D aspeed_smc_segment_reg,
->  };
-> =20
+> +
+> +static const struct aspeed_smc_info fmc_2600_info =3D {
+> +	.maxsize =3D 256 * 1024 * 1024,
+> +	.nce =3D 3,
+> +	.hastype =3D false, /* SPI Only */
+> +	.we0 =3D 16,
+> +	.ctl0 =3D 0x10,
+> +	.timing =3D 0x94,
+> +	.set_4b =3D aspeed_smc_chip_set_4b,
+> +	.segment_start =3D aspeed_smc_segment_start_ast2600,
+> +	.segment_end =3D aspeed_smc_segment_end_ast2600,
+> +	.segment_reg =3D aspeed_smc_segment_reg_ast2600,
+> +};
+> +
+> +static const struct aspeed_smc_info spi_2600_info =3D {
+> +	.maxsize =3D 256 * 1024 * 1024,
+> +	.nce =3D 2,
+> +	.hastype =3D false,
+> +	.we0 =3D 16,
+> +	.ctl0 =3D 0x10,
+> +	.timing =3D 0x94,
+> +	.set_4b =3D aspeed_smc_chip_set_4b,
+> +	.segment_start =3D aspeed_smc_segment_start_ast2600,
+> +	.segment_end =3D aspeed_smc_segment_end_ast2600,
+> +	.segment_reg =3D aspeed_smc_segment_reg_ast2600,
+> +};
+> +
 >  enum aspeed_smc_ctl_reg_value {
-> @@ -201,22 +222,33 @@ struct aspeed_smc_controller {
->  	(CONTROL_AAF_MODE | CONTROL_CE_INACTIVE_MASK | CONTROL_CLK_DIV4 | \
->  	 CONTROL_CLOCK_FREQ_SEL_MASK | CONTROL_LSB_FIRST | CONTROL_CLOCK_MOD=
-E_3)
-> =20
-> -/*
-> - * The Segment Register uses a 8MB unit to encode the start address
-> - * and the end address of the mapping window of a flash SPI slave :
-> - *
-> - *        | byte 1 | byte 2 | byte 3 | byte 4 |
-> - *        +--------+--------+--------+--------+
-> - *        |  end   |  start |   0    |   0    |
-> - */
->  #define SEGMENT_ADDR_REG0		0x30
-> -#define SEGMENT_ADDR_START(_r)		((((_r) >> 16) & 0xFF) << 23)
-> -#define SEGMENT_ADDR_END(_r)		((((_r) >> 24) & 0xFF) << 23)
-> -#define SEGMENT_ADDR_VALUE(start, end)					\
-> -	(((((start) >> 23) & 0xFF) << 16) | ((((end) >> 23) & 0xFF) << 24))
->  #define SEGMENT_ADDR_REG(controller, cs)	\
->  	((controller)->regs + SEGMENT_ADDR_REG0 + (cs) * 4)
-> =20
+>  	smc_base,		/* base value without mode for other commands */
+>  	smc_read,		/* command reg for (maybe fast) reads */
+> @@ -249,6 +282,44 @@ static u32 aspeed_smc_segment_reg(
+>  {
+>  	return (((start >> 23) & 0xFF) << 16) | (((end >> 23) & 0xFF) << 24)=
+;
+>  }
+> +
 > +/*
-> + * The Segment Registers of the AST2400 and AST2500 have a 8MB
-> + * unit. The address range of a flash SPI slave is encoded with
-> + * absolute addresses which should be part of the overall controller
-> + * window.
+> + * The Segment Registers of the AST2600 have a 1MB unit. The address
+> + * range of a flash SPI slave is encoded with offsets in the overall
+> + * controller window. The previous SoC AST2400 and AST2500 used
+> + * absolute addresses. Only bits [27:20] are relevant and the end
+> + * address is an upper bound limit.
 > + */
-> +static u32 aspeed_smc_segment_start(
+> +
+> +#define AST2600_SEG_ADDR_MASK 0x0ff00000
+> +
+> +static u32 aspeed_smc_segment_start_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 reg)
 > +{
-> +	return ((reg >> 16) & 0xFF) << 23;
+> +	uint32_t start_offset =3D (reg << 16) & AST2600_SEG_ADDR_MASK;
+> +
+> +	return controller->ahb_base_phy + start_offset;
 > +}
 > +
-> +static u32 aspeed_smc_segment_end(
+> +static u32 aspeed_smc_segment_end_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 reg)
 > +{
-> +	return ((reg >> 24) & 0xFF) << 23;
+> +	uint32_t end_offset =3D reg & AST2600_SEG_ADDR_MASK;
+> +
+> +	/* segment is disabled */
+> +	if (!end_offset)
+> +		return controller->ahb_base_phy;
+> +
+> +	return controller->ahb_base_phy + end_offset + 0x100000;
 > +}
 > +
-> +static u32 aspeed_smc_segment_reg(
+> +static u32 aspeed_smc_segment_reg_ast2600(
 > +	struct aspeed_smc_controller *controller, u32 start, u32 end)
 > +{
-> +	return (((start >> 23) & 0xFF) << 16) | (((end >> 23) & 0xFF) << 24)=
-;
+> +    return ((start & AST2600_SEG_ADDR_MASK) >> 16) |
+> +	    ((end - 1) & AST2600_SEG_ADDR_MASK);
 > +}
+> +
 >  /*
 >   * Switch to turn off read optimisation if needed
 >   */
-> @@ -519,16 +551,19 @@ static void __iomem *aspeed_smc_chip_base(struct=
-=20
-> aspeed_smc_chip *chip,
->  					  struct resource *res)
->  {
->  	struct aspeed_smc_controller *controller =3D chip->controller;
-> +	const struct aspeed_smc_info *info =3D controller->info;
->  	u32 offset =3D 0;
->  	u32 reg;
-> =20
-> -	if (controller->info->nce > 1) {
-> +	if (info->nce > 1) {
->  		reg =3D readl(SEGMENT_ADDR_REG(controller, chip->cs));
-> =20
-> -		if (SEGMENT_ADDR_START(reg) >=3D SEGMENT_ADDR_END(reg))
-> +		if (info->segment_start(controller, reg) >=3D
-> +		    info->segment_end(controller, reg)) {
->  			return NULL;
-> +		}
-> =20
-> -		offset =3D SEGMENT_ADDR_START(reg) - res->start;
-> +		offset =3D info->segment_start(controller, reg) - res->start;
->  	}
-> =20
->  	return controller->ahb_base + offset;
-> @@ -538,6 +573,7 @@ static u32 chip_set_segment(struct aspeed_smc_chip=
-=20
-> *chip, u32 cs, u32 start,
->  			    u32 size)
->  {
->  	struct aspeed_smc_controller *controller =3D chip->controller;
-> +	const struct aspeed_smc_info *info =3D controller->info;
->  	void __iomem *seg_reg;
->  	u32 seg_oldval, seg_newval, end;
->  	u32 ahb_base_phy =3D controller->ahb_base_phy;
-> @@ -551,7 +587,7 @@ static u32 chip_set_segment(struct aspeed_smc_chip=
-=20
-> *chip, u32 cs, u32 start,
->  	 * previous segment
->  	 */
->  	if (!size)
-> -		size =3D SEGMENT_ADDR_END(seg_oldval) - start;
-> +		size =3D info->segment_end(controller, seg_oldval) - start;
-> =20
->  	/*
->  	 * The segment cannot exceed the maximum window size of the
-> @@ -564,7 +600,7 @@ static u32 chip_set_segment(struct aspeed_smc_chip=
-=20
-> *chip, u32 cs, u32 start,
->  	}
-> =20
->  	end =3D start + size;
-> -	seg_newval =3D SEGMENT_ADDR_VALUE(start, end);
-> +	seg_newval =3D info->segment_reg(controller, start, end);
->  	writel(seg_newval, seg_reg);
-> =20
->  	/*
-> @@ -575,8 +611,8 @@ static u32 chip_set_segment(struct aspeed_smc_chip=
-=20
-> *chip, u32 cs, u32 start,
->  	if (seg_newval !=3D readl(seg_reg)) {
->  		dev_err(chip->nor.dev, "CE%d window invalid", cs);
->  		writel(seg_oldval, seg_reg);
-> -		start =3D SEGMENT_ADDR_START(seg_oldval);
-> -		end =3D SEGMENT_ADDR_END(seg_oldval);
-> +		start =3D info->segment_start(controller, seg_oldval);
-> +		end =3D info->segment_end(controller, seg_oldval);
->  		size =3D end - start;
->  	}
-> =20
-> @@ -639,7 +675,7 @@ static u32 aspeed_smc_chip_set_segment(struct=20
-> aspeed_smc_chip *chip)
->  	if (chip->cs) {
->  		u32 prev =3D readl(SEGMENT_ADDR_REG(controller, chip->cs - 1));
-> =20
-> -		start =3D SEGMENT_ADDR_END(prev);
-> +		start =3D controller->info->segment_end(controller, prev);
->  	} else {
->  		start =3D ahb_base_phy;
->  	}
+> @@ -536,6 +607,8 @@ static const struct of_device_id aspeed_smc_matche=
+s[] =3D {
+>  	{ .compatible =3D "aspeed,ast2400-spi", .data =3D &spi_2400_info },
+>  	{ .compatible =3D "aspeed,ast2500-fmc", .data =3D &fmc_2500_info },
+>  	{ .compatible =3D "aspeed,ast2500-spi", .data =3D &spi_2500_info },
+> +	{ .compatible =3D "aspeed,ast2600-fmc", .data =3D &fmc_2600_info },
+> +	{ .compatible =3D "aspeed,ast2600-spi", .data =3D &spi_2600_info },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, aspeed_smc_matches);
 > --=20
 > 2.21.0
 >=20
