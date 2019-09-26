@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39DC5BEA6B
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:10:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D706BEA72
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:12:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dz0H4kjyzDqTT
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:10:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dz2f28BjzDqcP
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:12:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="pENWomWG"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Yny1+lEB"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="DloojewZ"; dkim-atps=neutral
+ header.b="bw2rlWEi"; dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dyzh6H0qzDqRM
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 12:09:36 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dz2417x7zDqc8
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 12:11:39 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id AA578654;
- Wed, 25 Sep 2019 22:09:33 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 787A75B4;
+ Wed, 25 Sep 2019 22:11:37 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 22:09:33 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 22:11:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm3; bh=Oxpbd
- IZgGBsrKU+JKFs/5QhSKD+OtLHdIVTXz9pqueM=; b=pENWomWGvcrZOoy+m/vQG
- 7T0xO+tSEfjRcU2atFFJKb42tPNjSImK8Yy9wLn64czeMNf/IdjOzd4jtwzYgAbP
- VApw/dpD+JWfqWTXdb5VFI5JuQTTuTglvVM72rQtSVV/vKHgUIvUI6EJyuJS/ZWS
- MGEQHB0JvR3tfT85I7wyc41uD0BD2XJ2g3tRyUNNIujWd8B6b0qYm0mAD4qyt+8O
- uVaJqYoUEButT/xNGWpp7VJySvd6eXUt84rVMrJBMO6Kmmp3XaVPZ6qJ0SX3QD80
- Rq6wLiL89Vglhsj01AhMOYH4r9pphJeHxsCebZLXNNz+jam6HX3VwNCNZX6E6kpm
- w==
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=yiREJ
+ q/6y8qrTt+kPFP3d2fTunrqTgxhUjgoaW1viUM=; b=Yny1+lEB9jauxpbbps/ju
+ 5dtAXNccCa4uxtH9ELyg5aVMNO4rbeTCXxd1N7Nq/wtNMcSx32+Dn+RnmAOsZeDC
+ +bIIRyosrlTxbM0j+TB7fO+Tz2UG1krHBQvVGlMm5zIqOFiJAvKX2ZW1JMJ5XgWG
+ h1qkMic4UKTRg0IOfSR334Zrjfrxxc/zigezOLPy7GMPtVSbLD+mu8N2va7Xmk69
+ B134JHsrsgYkGikmXV1mt5x+f5FmN/fe0a59FVcnql63KkqhocGnQNr7tGkbri8X
+ KHIRSeHyzT5yGEmVBDf7IU3vb82XCnIbdXmAEuVFToIg/ikoS2MREwCQ5wLmpLQF
+ g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=OxpbdIZgGBsrKU+JKFs/5QhSKD+OtLHdIVTXz9pqu
- eM=; b=DloojewZeRnYgjG1sWdwEgfHsT9HYYd8+mfdeONXvYlr90XEhGVsqjX2p
- 13D3umlhYegQvuuCgB/g067GotMV6BRWM2TM7tr8GRKV8lkJH85qZngJPLaBnmIO
- tGQOTXBe1Q8cuoLOkjVZ9xhuKq/noq+5IhFpV7PUJcA3h9hijZ0W67SahQgnMpjs
- RYgXnTunQ6wo2l7nQqsyBW4J2fkeqRaQNkeqtoKLyIRAr5UfIiCM53JIYTpOy213
- vcCecd7d+T5tWQtOpCSnR7JJQO0m5+S8qk57fnGgMdMLCQzv+FD45sdWd36ilgCQ
- 1+Vew3bPpw8INTsGCdKtu5Gj6eVfQ==
-X-ME-Sender: <xms:3B2MXW0kmsU0zy-_Z7P01zkBX8O7Ai1J36tqTC_juulIAjTJ7-NgJw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdehgecutefuodetggdotefrodftvf
+ :x-sasl-enc; s=fm3; bh=yiREJq/6y8qrTt+kPFP3d2fTunrqTgxhUjgoaW1vi
+ UM=; b=bw2rlWEihpMZIyjmFvZSLRXbQpuXQYNmFcJPpME5edFxbUAbdaoYe7VyQ
+ HcSi8nYvUlMF21yYr4SENxeM7gvroGMS7o3sXCdbHW/4fchkCByGUHjbxXCzdZ7y
+ mS/i3EIUpU7ycmMsC7GcznsMsr5n6MLa2WEvwiEyi6Az2nnwgdBvusa5H0sqZSbx
+ JXpW74mJPLznubZE50QrjlMM2E0AgBpmu1XIYH/BQ8i1Oey7DFMmEh1R/CCEp/4i
+ Mn5XalmPzq118cYZhRM093xzuQ7s40f/IcQMw9CN12JhyyrzOK8Za3QvNYRO9MzX
+ 1Ql3crMUqiaB+tHZr3B5/oezxhOIA==
+X-ME-Sender: <xms:Vx6MXfauK1axv49RLMlgvN53FdVkUY8SCH9vyshV8vlbqJ1qiH4Xrw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdehhecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
  rhfuihiivgeptd
-X-ME-Proxy: <xmx:3B2MXSe8PYv_2aZs_VFGFA-iZ_XcTVcf9hQO-x8Hb6Ef4XKC8Sdb_A>
- <xmx:3B2MXXZkR9aFaI03epBbxX5eUEKvD_OOlU5l_nmp5OictVzYFdIRmg>
- <xmx:3B2MXXVIqI1AbxVXZT8HoPtBZHjyQiiQyco64fZiRoZrDUaLQQeezg>
- <xmx:3R2MXZX781vyAJtTOLUhR5Ax_Rjul0FUKa9zDV0usVqPamji4f5XaA>
+X-ME-Proxy: <xmx:Vx6MXSp4ty-a1AS0_CZLK7GTRIXUGs6JnkBUOCSOBaY7HE9iJKibTw>
+ <xmx:Vx6MXc_Sdhutz73j1GIPmKRQfhq7-CzzkygjS1TFW0ImkTKtpHikDw>
+ <xmx:Vx6MXZ_F0FqWutp3fNH0fhng1s2vSY7qD7IXntb-bWpq2Z34XOar0Q>
+ <xmx:WR6MXRfUvgf7_vajgAC5trIR8-Rbg2VxEiTa2zLECDpM2oplfWLURw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id F38DEE00A5; Wed, 25 Sep 2019 22:09:31 -0400 (EDT)
+ id 8F005E00A5; Wed, 25 Sep 2019 22:11:35 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <6a83af7b-6bb1-459b-a75b-b84a006524bd@www.fastmail.com>
-In-Reply-To: <20190925124239.27897-12-clg@kaod.org>
+Message-Id: <2b4f6932-084b-4279-8631-f03af054496a@www.fastmail.com>
+In-Reply-To: <20190925124239.27897-13-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
- <20190925124239.27897-12-clg@kaod.org>
-Date: Thu, 26 Sep 2019 11:40:14 +0930
+ <20190925124239.27897-13-clg@kaod.org>
+Date: Thu, 26 Sep 2019 11:42:17 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_11/13]_mtd:_spi-nor:_aspeed:_Introduc?=
- =?UTF-8?Q?e_a_HCLK_mask_for_training?=
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_12/13]_mtd:_spi-nor:_aspeed:_check_up?=
+ =?UTF-8?Q?per_freq_limit_when_doing_training?=
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -97,78 +97,31 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 22:12, C=C3=A9dric Le Goater wrote:
-> The AST2600 handles more HCLK divisors than its predecessors.
->=20
 > Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
+> ---
+>  drivers/mtd/spi-nor/aspeed-smc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/mtd/spi-nor/aspeed-smc.c=20
+> b/drivers/mtd/spi-nor/aspeed-smc.c
+> index c6a80fdf51ef..48164d819a37 100644
+> --- a/drivers/mtd/spi-nor/aspeed-smc.c
+> +++ b/drivers/mtd/spi-nor/aspeed-smc.c
+> @@ -1075,7 +1075,7 @@ static int aspeed_smc_optimize_read(struct=20
+> aspeed_smc_chip *chip,
+> =20
+>  		/* Compare timing to max */
+>  		freq =3D ahb_freq / i;
+> -		if (freq >=3D max_freq)
+> +		if (freq > max_freq)
+>  			continue;
+
+Heh.
 
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
 
-> ---
->  drivers/mtd/spi-nor/aspeed-smc.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/mtd/spi-nor/aspeed-smc.c b/drivers/mtd/spi-nor/as=
-peed-smc.c
-> index 768394068bd4..c6a80fdf51ef 100644
-> --- a/drivers/mtd/spi-nor/aspeed-smc.c
-> +++ b/drivers/mtd/spi-nor/aspeed-smc.c
-> @@ -41,6 +41,7 @@ struct aspeed_smc_info {
->  	u8 we0;			/* shift for write enable bit for CE0 */
->  	u8 ctl0;		/* offset in regs of ctl for CE0 */
->  	u8 timing;		/* offset in regs of timing */
-> +	u32 hclk_mask;          /* clock frequency mask in CEx Control reg *=
-/
->  	u32 hdiv_max;           /* Max HCLK divisor on read timing reg */
 > =20
->  	void (*set_4b)(struct aspeed_smc_chip *chip);
-> @@ -75,6 +76,7 @@ static const struct aspeed_smc_info fmc_2400_info =3D=
- {
->  	.we0 =3D 16,
->  	.ctl0 =3D 0x10,
->  	.timing =3D 0x94,
-> +	.hclk_mask =3D 0xfffff0ff,
->  	.hdiv_max =3D 1,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> @@ -91,6 +93,7 @@ static const struct aspeed_smc_info spi_2400_info =3D=
- {
->  	.we0 =3D 0,
->  	.ctl0 =3D 0x04,
->  	.timing =3D 0x14,
-> +	.hclk_mask =3D 0xfffff0ff,
->  	.hdiv_max =3D 1,
->  	.set_4b =3D aspeed_smc_chip_set_4b_spi_2400,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> @@ -105,6 +108,7 @@ static const struct aspeed_smc_info fmc_2500_info =
-=3D=20
-> {
->  	.we0 =3D 16,
->  	.ctl0 =3D 0x10,
->  	.timing =3D 0x94,
-> +	.hclk_mask =3D 0xfffff0ff,
->  	.hdiv_max =3D 1,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> @@ -121,6 +125,7 @@ static const struct aspeed_smc_info spi_2500_info =
-=3D=20
-> {
->  	.we0 =3D 16,
->  	.ctl0 =3D 0x10,
->  	.timing =3D 0x94,
-> +	.hclk_mask =3D 0xfffff0ff,
->  	.hdiv_max =3D 1,
->  	.set_4b =3D aspeed_smc_chip_set_4b,
->  	.optimize_read =3D aspeed_smc_optimize_read,
-> @@ -1053,7 +1058,7 @@ static int aspeed_smc_optimize_read(struct=20
-> aspeed_smc_chip *chip,
->  	memcpy_fromio(golden_buf, chip->ahb_base, CALIBRATE_BUF_SIZE);
-> =20
->  	/* Establish our read mode with freq field set to 0 (HCLK/16) */
-> -	chip->ctl_val[smc_read] =3D save_read_val & 0xfffff0ff;
-> +	chip->ctl_val[smc_read] =3D save_read_val & info->hclk_mask;
-> =20
->  	/* Check if calibration data is suitable */
->  	if (!aspeed_smc_check_calib_data(golden_buf, CALIBRATE_BUF_SIZE)) {
+>  		/* Set the timing */
 > --=20
 > 2.21.0
 >=20
