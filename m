@@ -2,86 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C1B1BE7D1
-	for <lists+openbmc@lfdr.de>; Wed, 25 Sep 2019 23:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B006BE9D4
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 02:53:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ds4167YFzDqdP
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 07:42:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dxJ76c87zDqkd
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 10:53:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=gmills@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="pHSTosVz"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="v6sAGcLR"; dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ds3P3jLGzDqdP
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 07:42:24 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8PLWwAN025811; Wed, 25 Sep 2019 17:42:18 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v8dx9w5ra-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Sep 2019 17:42:18 -0400
-Received: from m0098396.ppops.net (m0098396.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x8PLY51h029243;
- Wed, 25 Sep 2019 17:42:18 -0400
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v8dx9w5qt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Sep 2019 17:42:18 -0400
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8PLeImA013176;
- Wed, 25 Sep 2019 21:42:17 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma03wdc.us.ibm.com with ESMTP id 2v5bg79jen-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Sep 2019 21:42:17 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8PLgGTo8389172
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Sep 2019 21:42:16 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A875124052;
- Wed, 25 Sep 2019 21:42:16 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 50DA8124054;
- Wed, 25 Sep 2019 21:42:14 +0000 (GMT)
-Received: from [9.102.45.89] (unknown [9.102.45.89])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 25 Sep 2019 21:42:13 +0000 (GMT)
-Subject: Re: User management via WebUI vs ipmitool
-To: rgrs <rgrs@protonmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- ratagupt@linux.vnet.ibm.com, richard.marian.thomaiyar@linux.intel.com
-References: <cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Message-ID: <12335442-8818-d0f5-da44-14a0addc0140@linux.vnet.ibm.com>
-Date: Wed, 25 Sep 2019 16:42:11 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com>
-Content-Type: multipart/alternative;
- boundary="------------B02F16C9782AF2653166CC37"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-25_10:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909250174
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dxHQ4blBzDqhk
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 10:53:05 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 8E7ED613;
+ Wed, 25 Sep 2019 20:53:01 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 20:53:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=oJyHVYcm0yUNdX4wWRrdICWirTCMN27
+ XGC/5uxg8mPY=; b=pHSTosVz8Vu/zs5acltYg+vEyd0+EFCV1lVlEbTolHosBaF
+ E3p6X5Ggrlzv8jcVELaq/ERBJPxy1U+XRsQek7aWDP/6iKt5k4Kv5/HQrEoTHK2r
+ n9ygz9RBoNS6DEJ9xowjwrOAIIg0xgUc2zC4Td/Znt9EeVYwT0pqyJIvt2tdHN0X
+ uMCiPosvNGtxTwQ1mpOKoZ4WTCf9w7TeNE7xhSzk8wx9ZSVneLtiNlawZ7VzooMK
+ 5FUR3COy7SKwEsRRbS6TQfbwUsQNKVjTY8dj8VQ7Zazk3Cg8BWOz6yQu127mcBar
+ J7Ek+nPFnT3MPrGnqGCrPpIAx+CyK/FkOdDZmkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=oJyHVY
+ cm0yUNdX4wWRrdICWirTCMN27XGC/5uxg8mPY=; b=v6sAGcLRpjzk7iGzI88apd
+ 2fkW91TPMP66FtaHQKVwEHaGHkDhNZF4ZiWTSLgrEI9nDKW2hygyurqUgzGBsXZn
+ mmbG/CHtSzNlDvrkxzsspdmY4v3HmRjJjEkH20K7wZgd8rfLPzSU3n85sPrckBGA
+ cGTAoM9vWc6nHE7aGiAEXCeKm6NlgBfzB5tnUdCjiD40jPB2aTCjWDotgPQmez8f
+ AbMdWEYxcrl5NLbnJvoBkDjVC2SzKt7Xob5DeDWzsKfgCSFmJLnW0XG99WhDzjYc
+ 6V0aPSipiuT07gRgruaRtBXI8dTUA6lP3KS47nYL72ZlUK1Gz8+PDywD/BOOSZgQ
+ ==
+X-ME-Sender: <xms:7AuMXWG0eZkpoMN5nhMVAIbPsdXGSXWEjHKHsO9XhXorTp1Q8WiFpA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdeflecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:7AuMXbnocbkTqlH8H8K4GKxSwsgMhsQ_x1o5OacLFA-7Wdpuzfj2KQ>
+ <xmx:7AuMXbI5zQYOC5zxRelYfN1TVVnpo0jZ10b6Trt4Xk2HNeR9vVhbBA>
+ <xmx:7AuMXUaGTuIVgv-8T8IKBo2ErdRns2NtnlRJIEjQKWSGPlRn_4o_uA>
+ <xmx:7QuMXYYnW6pN-f_lyTWR29YQmeJEOI4r9-_vuBjUzFJkg9hWVD3k-w>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 025E0E00A5; Wed, 25 Sep 2019 20:52:59 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
+Mime-Version: 1.0
+Message-Id: <02fdf035-a275-4f27-897d-8d5cc84d6db5@www.fastmail.com>
+In-Reply-To: <20190925125610.12096-2-bradleyb@fuzziesquirrel.com>
+References: <20190925125610.12096-1-bradleyb@fuzziesquirrel.com>
+ <20190925125610.12096-2-bradleyb@fuzziesquirrel.com>
+Date: Thu, 26 Sep 2019 10:23:42 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
+ "Joel Stanley" <joel@jms.id.au>
+Subject: =?UTF-8?Q?Re:_[PATCH_v4_linuux_dev-5.3_01/10]_dt-bindings:_aspeed-lpc:_A?=
+ =?UTF-8?Q?dd_G6_compatible_strings?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,301 +90,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------B02F16C9782AF2653166CC37
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
 
-On 9/25/2019 5:20 AM, rgrs wrote:
+On Wed, 25 Sep 2019, at 22:26, Brad Bishop wrote:
+> The AST2600 datasheet indicates the same register set behind the LPC
+> controller address space.
+> 
+> Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
+
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+
+> ---
+>   v4: fix commit message
+>   v3: move ipmi binding updates to a separate patch
+>   v2: new for v2
+> ---
+>  Documentation/devicetree/bindings/mfd/aspeed-lpc.txt | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt 
+> b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> index 86446074e206..e1197bab57bb 100644
+> --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> @@ -46,6 +46,7 @@ Required properties
+>  - compatible:	One of:
+>  		"aspeed,ast2400-lpc", "simple-mfd"
+>  		"aspeed,ast2500-lpc", "simple-mfd"
+> +		"aspeed,ast2600-lpc", "simple-mfd"
+>  
+>  - reg:		contains the physical address and length values of the Aspeed
+>                  LPC memory region.
+> @@ -64,6 +65,7 @@ BMC Node
+>  - compatible:	One of:
+>  		"aspeed,ast2400-lpc-bmc"
+>  		"aspeed,ast2500-lpc-bmc"
+> +		"aspeed,ast2600-lpc-bmc"
+>  
+>  - reg:		contains the physical address and length values of the
+>                  H8S/2168-compatible LPC controller memory region
+> @@ -74,6 +76,7 @@ Host Node
+>  - compatible:   One of:
+>  		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
+>  		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
+> +		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
+>  
+>  - reg:		contains the address and length values of the host-related
+>                  register space for the Aspeed LPC controller
+> @@ -128,6 +131,7 @@ Required properties:
+>  - compatible:	One of:
+>  		"aspeed,ast2400-lpc-ctrl";
+>  		"aspeed,ast2500-lpc-ctrl";
+> +		"aspeed,ast2600-lpc-ctrl";
+>  
+>  - reg:		contains offset/length values of the host interface controller
+>  		memory regions
+> @@ -168,6 +172,7 @@ Required properties:
+>  - compatible:	One of:
+>  		"aspeed,ast2400-lhc";
+>  		"aspeed,ast2500-lhc";
+> +		"aspeed,ast2600-lhc";
+>  
+>  - reg:		contains offset/length values of the LHC memory regions. In the
+>  		AST2400 and AST2500 there are two regions.
+> @@ -187,7 +192,8 @@ state of the LPC bus. Some systems may chose to 
+> modify this configuration.
+>  
+>  Required properties:
+>  
+> - - compatible:		"aspeed,ast2500-lpc-reset" or
+> + - compatible:		"aspeed,ast2600-lpc-reset" or
+> +			"aspeed,ast2500-lpc-reset"
+>  			"aspeed,ast2400-lpc-reset"
+>   - reg:			offset and length of the IP in the LHC memory region
+>   - #reset-controller	indicates the number of reset cells expected
+> -- 
+> 2.21.0
 >
-> Is there any difference in user management from WebUI and ipmitool?
-> When I add user via WebUI, a user is created and deleted immediately. 
-> Not sure why.
-
-The WebUI uses the Redfish API to create/update/delete users.
-https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616
-
-  Ratan or Richard do you know what is going on here?
-
-> When I add user via IPMItool, users are getting added but WebUI user 
-> configuration page is blank.
-
-I thought IPMI and Redfish users were treated the same in 
-phosphor-user-manager.
-
-What version of OpenBMC?
-
->
-> *_Logs:_*
-> *journalctl (User creation with WebUI):*
-> Sep 25 09:17:52 mybmc nslcd[1127]: [200854] <passwd="TestUser"> no 
-> available LDAP server found: Server is unavailable: Transport endpoint 
-> is not connected
-> Sep 25 09:17:52 mybmc nslcd[1127]: [b127f8] <passwd=1000> no available 
-> LDAP server found: Server is unavailable: Transport endpoint is not 
-> connected
-> Sep 25 09:17:52 mybmc useradd[1816]: new user: name=TestUser, 
-> UID=1000, GID=100, home=/home/TestUser, shell=/bin/sh
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'web'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'redfish'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'priv-admin'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group 'ipmi'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow group 'web'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow group 
-> 'redfish'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow group 
-> 'priv-admin'
-> Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow group 'ipmi'
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file `/etc/passwd` 
-> was written to
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file `/etc/passwd` 
-> was moved into place, adding watch
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file `/etc/group` was 
-> written to
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file `/etc/group` was 
-> moved into place, adding watch
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file `/etc/passwd` (27)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file `/etc/group` (28)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file `/etc/passwd` (27)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file `/etc/group` (28)
-> Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:52 mybmc phosphor-user-manager[1119]: User created 
-> successfully
-> Sep 25 09:17:53 mybmc userdel[1822]: delete user 'TestUser'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group 'web'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group 
-> 'redfish'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group 
-> 'priv-admin'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from group 'ipmi'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from shadow 
-> group 'web'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from shadow 
-> group 'redfish'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from shadow 
-> group 'priv-admin'
-> Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from shadow 
-> group 'ipmi'
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file `/etc/passwd` 
-> was written to
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file `/etc/passwd` 
-> was moved into place, adding watch
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file `/etc/group` was 
-> written to
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file `/etc/group` was 
-> moved into place, adding watch
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file `/etc/passwd` (29)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file `/etc/group` (30)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file `/etc/passwd` (29)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file `/etc/group` (30)
-> Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory `/etc` (2)
-> Sep 25 09:17:53 mybmc phosphor-user-manager[1119]: User deleted 
-> successfully
->
-
---------------B02F16C9782AF2653166CC37
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 9/25/2019 5:20 AM, rgrs wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <div><br>
-      </div>
-      <div>Is there any difference in user management from WebUI and
-        ipmitool?<br>
-      </div>
-      <div>When I add user via WebUI, a user is created and deleted
-        immediately. Not sure why.<br>
-      </div>
-    </blockquote>
-    <p>The WebUI uses the Redfish API to create/update/delete users. <br>
-<a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616">https://github.com/openbmc/phosphor-webui/blob/418db63c77aad03fe3401c7acd9f9792fab96a68/app/common/services/api-utils.js#L616</a><br>
-    </p>
-    <p> Ratan or Richard do you know what is going on here?</p>
-    <blockquote type="cite"
-cite="mid:cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com">
-      <div>When I add user via IPMItool, users are getting added but
-        WebUI user configuration page is blank.<br>
-      </div>
-    </blockquote>
-    <br>
-    I thought IPMI and Redfish users were treated the same in
-    phosphor-user-manager.<br>
-    <br>
-    What version of OpenBMC?<br>
-    <br>
-    <blockquote type="cite"
-cite="mid:cxuypplMD4p5tYjtGnd1FnZAXWYwCuvRn7U6qlQ_E8fkPDnIiesmEvIbWSz4GAMH7Zm70_WwNHHS77ykmQKJsRVT6tXvOeFL4vexQ250E0I=@protonmail.com">
-      <div><br>
-      </div>
-      <div><b><u>Logs:</u></b><br>
-      </div>
-      <div><b>journalctl (User creation with WebUI):</b><br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nslcd[1127]: [200854]
-        &lt;passwd="TestUser"&gt; no available LDAP server found: Server
-        is unavailable: Transport endpoint is not connected<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nslcd[1127]: [b127f8]
-        &lt;passwd=1000&gt; no available LDAP server found: Server is
-        unavailable: Transport endpoint is not connected<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: new user: name=TestUser,
-        UID=1000, GID=100, home=/home/TestUser, shell=/bin/sh<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
-        'web'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
-        'redfish'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
-        'priv-admin'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to group
-        'ipmi'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
-        group 'web'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
-        group 'redfish'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
-        group 'priv-admin'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc useradd[1816]: add 'TestUser' to shadow
-        group 'ipmi'<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
-        `/etc/passwd` was written to<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
-        `/etc/passwd` was moved into place, adding watch<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
-        `/etc/group` was written to<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitored file
-        `/etc/group` was moved into place, adding watch<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/passwd` (27)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/group` (28)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/passwd` (27)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/group` (28)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:52 mybmc phosphor-user-manager[1119]: User
-        created successfully<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete user 'TestUser'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        group 'web'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        group 'redfish'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        group 'priv-admin'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        group 'ipmi'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        shadow group 'web'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        shadow group 'redfish'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        shadow group 'priv-admin'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc userdel[1822]: delete 'TestUser' from
-        shadow group 'ipmi'<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
-        `/etc/passwd` was written to<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
-        `/etc/passwd` was moved into place, adding watch<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
-        `/etc/group` was written to<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitored file
-        `/etc/group` was moved into place, adding watch<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/passwd` (29)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/group` (30)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/passwd` (29)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring file
-        `/etc/group` (30)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc nscd[1092]: 1092 monitoring directory
-        `/etc` (2)<br>
-      </div>
-      <div>Sep 25 09:17:53 mybmc phosphor-user-manager[1119]: User
-        deleted successfully<br>
-      </div>
-      <div><br>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------B02F16C9782AF2653166CC37--
-
