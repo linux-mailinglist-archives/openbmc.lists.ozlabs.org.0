@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6720ABF48E
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 15:59:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FB48BF491
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 16:01:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fGkW62qBzDqWh
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:59:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fGmd4LrhzDqWk
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 00:01:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,62 +16,62 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="gA/PV6iB"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="ZE5WnbBW"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="re6PQOP1"; dkim-atps=neutral
+ header.b="gHIiHcPi"; dkim-atps=neutral
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
  [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fGCT0dDVzDqq3
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:49 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fGCW1Fm2zDqrN
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:51 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id B678971C;
- Thu, 26 Sep 2019 09:35:46 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 0D56F71F;
+ Thu, 26 Sep 2019 09:35:48 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:47 -0400
+ by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=O+pg8BkuiYHoH
- 5p2pfDfYlzd8HCIcAYvvlvoaWvakCQ=; b=gA/PV6iBlNyURiX35fKmTkXj4N3+z
- NtLgbF367ua2jkHs9HRTRSFm1Zf7tYOUqC9iMHWQ706eHMElUcNPOsBe4do1zJAO
- 04iJ8S93Nk1t8CfdLe0voKTE8vSZ6zoFrR/uTyeUNqjChHqTem8o6Z2xvU+FaU9q
- O7IuFYCKIdcUJE+cN5kEgJ5r0dJ2Oes6y6CHQo+Vl1prJLZNSg/H460eEE7drjfh
- ri2xMVKaj07CpAAQYpTNjzRSmrTbwNhoCrWmqNmDVF1HzIgAop28ABGpLMU8bgoY
- LJ9OUydVbO+ITOFQVcip6DmnIRid2+IpJmiYrEYRdbQkHv6WG4SVvnyEg==
+ :mime-version:content-transfer-encoding; s=fm3; bh=X7ByzFya/YVPi
+ KyPOxtsue3F6yEjygv3kl0y1LRBbYk=; b=ZE5WnbBWI8wvesQHIAkGDWzTF1Wls
+ GGvVA7u2Oq0noLgKBEGe06PaaoCasCibV9DDk6lgYYoAXNXvTCfCvcSEjdqYlggB
+ rHx79hWmTXuN/QrE81H6+eztA/JuLg62KGUKLeRvWqwnOjbYFT5aeQ6p903qDJK/
+ BAj+DzfNlf5a6/d8sjOemXCwCvBXWMLBmFgIj0uEF8LCoWn84a66vzW1OxpCpTBo
+ dbgNdfUWDIi51Eb344tRNweJ2IbOpGAOwTywUYzOG/JUKapYRx9tQY05Ns+5pPdX
+ EQnrZ1K7wBV26SXgDEruhPSG1WlhqjTrzobi0Rridopmmrnz4k0OaBKDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=O+pg8BkuiYHoH5p2pfDfYlzd8HCIcAYvvlvoaWvakCQ=; b=re6PQOP1
- TzsBlN/CKL7Z7fC4XIXII0AecXY5ZYIKcl9FFjEpMSjZMKMIUCiRdX3kDJnYdyl9
- JjTF6boGb75Ngp593l93GHhTG1RqJ+pW4YCSpZGv2o2dfIBid07Qfp6hYj2t7u1n
- uMJPQe0vgqewWSygmOmnOQ7FoTzWoAVHlEcsUhZSxjbpaxRd9hqBJAOanqXqtuOr
- xhMopa9Git88GUDKT4vnZjsBm7s6iuUhU4bGkXqvcMO85rM4umyyCmQ6FpC/k2cU
- SNZGwpAN4bWp0vG5oHwsTjJ9tP5f0lQCuVJLrC+CEQ3w4OvJg4SLtgv5whon1gQp
- EUQqoCoicVgkhg==
-X-ME-Sender: <xms:sr6MXR_jC1sdzMfTYYpNSrDlguc4CQXEHStEtZl9TLBcG3TLJH9zxQ>
+ fm3; bh=X7ByzFya/YVPiKyPOxtsue3F6yEjygv3kl0y1LRBbYk=; b=gHIiHcPi
+ OFqRZuazLEYPk6dTs2BX/t1yBfA0Z576Moqm1e+MifQvmS/ppa+ecLl7mmqHXr2T
+ qYiheDmn+IV4373YpfCg6Pld/1BJfEc3BDINmKLKtpuG3CGJO/soQ+g3Hd+j5xym
+ w3S5cwG82/x0dQL13BqfkhG4xg8kY4rX39eCtK81Dl8o/JJaHjp5FIHLVVCsy9jk
+ O6jWwEhkPUmGKuLYTX3oMfnPRpxXIPl6Dwl7v4Idp9AbdL1ejMd/w1SWRDjFNJaU
+ si4BV11YmFQWJKwUwH1AD2BYnYfpSHnDICdX8lZe946a1oeojQrgnbhBqLTN0D38
+ Vh2BZB316jRMKw==
+X-ME-Sender: <xms:tL6MXX_bGTC-FYz5I3C39AdPrfRL_aaLX2TQ5fv0JWzPrF7wB3CEog>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdeiiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
  rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
  grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
- vgepuddt
-X-ME-Proxy: <xmx:sr6MXcd4EXI1t4EG9jCo2-X5qyDf0NTSOM1mZ11QUkERjYJ-rDiKgw>
- <xmx:sr6MXXIrGRP6F9Sp3s6RQ78wPnHteAXzcw34auAcSK7kz07aG0sWmQ>
- <xmx:sr6MXWQRVA7kQHo_MlILm2jHKa3uIQU9Zh5sSXIDESYG0a9-n-mT6w>
- <xmx:sr6MXRNDmIIFYOzuT4fHQeZCJk8erAP4LsDCXpMS_d2bWkN7RCH8_Q>
+ vgepuddv
+X-ME-Proxy: <xmx:tL6MXarsLUYeOewGzerfAEBFzQpeTkKoJEIMa6SHuotUhrQNUZDViw>
+ <xmx:tL6MXaHS1W7KuJIFae2lf-YP_qDBawarWPJSbIQ9CuC5sPHNQKZz2w>
+ <xmx:tL6MXamMaTuw_KqMA_JXtRjs3q5s6f5n4Ix29JDJJLLEANmEjiduTg>
+ <xmx:tL6MXatqW1Yh4wpJ-mYZYaKdBQksmW-_IxS879yywI_1cng_KmbrXg>
 Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 82F30D60068;
- Thu, 26 Sep 2019 09:35:44 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id BB9A8D6006A;
+ Thu, 26 Sep 2019 09:35:46 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 13/15] ARM: dts: aspeed-g6: Add pinctrl
- properties to MDIO nodes
-Date: Thu, 26 Sep 2019 23:06:06 +0930
-Message-Id: <20190926133608.30566-14-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 14/15] ARM: dts: ast2600-evb: Add pinmux
+ properties for enabled MACs
+Date: Thu, 26 Sep 2019 23:06:07 +0930
+Message-Id: <20190926133608.30566-15-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190926133608.30566-1-andrew@aj.id.au>
 References: <20190926133608.30566-1-andrew@aj.id.au>
@@ -93,54 +93,47 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, johnny_huang@aspeedtech.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This way enabling the MDIO controllers automatically requests the right
-pinmux configuration.
+All 2600-evb MACs use RGMII/MDIO.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- arch/arm/boot/dts/aspeed-g6.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/boot/dts/aspeed-ast2600-evb.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index ec791b54b81a..6ad1bc094f1c 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -165,6 +165,8 @@
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			status = "disabled";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pinctrl_mdio1_default>;
- 		};
+diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+index 0b3d3978c4d3..0392e9162f11 100644
+--- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
++++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+@@ -55,6 +55,9 @@
  
- 		mdio1: mdio@1e650008 {
-@@ -173,6 +175,8 @@
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			status = "disabled";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pinctrl_mdio2_default>;
- 		};
+ 	phy-mode = "rgmii";
+ 	phy-handle = <&ethphy1>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default>;
+ };
  
- 		mdio2: mdio@1e650010 {
-@@ -181,6 +185,8 @@
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			status = "disabled";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pinctrl_mdio3_default>;
- 		};
+ &mac2 {
+@@ -62,6 +65,9 @@
  
- 		mdio3: mdio@1e650018 {
-@@ -189,6 +195,8 @@
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			status = "disabled";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&pinctrl_mdio4_default>;
- 		};
+ 	phy-mode = "rgmii";
+ 	phy-handle = <&ethphy2>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii3_default>;
+ };
  
- 		mac0: ftgmac@1e660000 {
+ &mac3 {
+@@ -69,6 +75,9 @@
+ 
+ 	phy-mode = "rgmii";
+ 	phy-handle = <&ethphy3>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii4_default>;
+ };
+ 
+ &emmc_controller {
 -- 
 2.20.1
 
