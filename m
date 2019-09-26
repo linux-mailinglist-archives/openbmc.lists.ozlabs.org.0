@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D706BEA72
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1265ABEA7D
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 04:13:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dz2f28BjzDqcP
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:12:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dz4b1MVszDqmJ
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 12:13:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Yny1+lEB"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="E8JrBsRa"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="bw2rlWEi"; dkim-atps=neutral
+ header.b="SMAgSj6P"; dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dz2417x7zDqc8
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 12:11:39 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dz4170rGzDqc8
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 12:13:21 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 787A75B4;
- Wed, 25 Sep 2019 22:11:37 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 613763F7;
+ Wed, 25 Sep 2019 22:13:19 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 22:11:37 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 22:13:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm3; bh=yiREJ
- q/6y8qrTt+kPFP3d2fTunrqTgxhUjgoaW1viUM=; b=Yny1+lEB9jauxpbbps/ju
- 5dtAXNccCa4uxtH9ELyg5aVMNO4rbeTCXxd1N7Nq/wtNMcSx32+Dn+RnmAOsZeDC
- +bIIRyosrlTxbM0j+TB7fO+Tz2UG1krHBQvVGlMm5zIqOFiJAvKX2ZW1JMJ5XgWG
- h1qkMic4UKTRg0IOfSR334Zrjfrxxc/zigezOLPy7GMPtVSbLD+mu8N2va7Xmk69
- B134JHsrsgYkGikmXV1mt5x+f5FmN/fe0a59FVcnql63KkqhocGnQNr7tGkbri8X
- KHIRSeHyzT5yGEmVBDf7IU3vb82XCnIbdXmAEuVFToIg/ikoS2MREwCQ5wLmpLQF
- g==
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=DyMTJ
+ z9/FJn6PL+Ekjsttgc+M66dqxvuqPvb7C2vQ28=; b=E8JrBsRa5HhaeWOHScKDg
+ WwFpJYHOD/vd4SjSUbjH/wu0bMaYdFk2JiqgSctTAMJOP/OOIJ8+mNvp7rWd+w1+
+ lfaqw8wZ63Qxri0wQ4nOSgwPYl0A+MdvDcehx4Mnp/Hok4cGM4KyT7+UknYSjnuS
+ 9NEWdaKB71qOMK3Gy06XgOOnJzirifdkVhJ1hgx4Qoj6ShxtE7AfTSj/B/mm3nCI
+ PgjC1oOHjvwFYpXV9laYB0HBZfZtamBWm3UzRzEy0aLNXQnB1/U7kPyj9YS3vk+w
+ ZYv8Q+mZlCp3BA33eYY9IbW2WzfEZSnjkWm4YP1hN0i8eBVkmY2u6jKg9xlyHOaA
+ Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=yiREJq/6y8qrTt+kPFP3d2fTunrqTgxhUjgoaW1vi
- UM=; b=bw2rlWEihpMZIyjmFvZSLRXbQpuXQYNmFcJPpME5edFxbUAbdaoYe7VyQ
- HcSi8nYvUlMF21yYr4SENxeM7gvroGMS7o3sXCdbHW/4fchkCByGUHjbxXCzdZ7y
- mS/i3EIUpU7ycmMsC7GcznsMsr5n6MLa2WEvwiEyi6Az2nnwgdBvusa5H0sqZSbx
- JXpW74mJPLznubZE50QrjlMM2E0AgBpmu1XIYH/BQ8i1Oey7DFMmEh1R/CCEp/4i
- Mn5XalmPzq118cYZhRM093xzuQ7s40f/IcQMw9CN12JhyyrzOK8Za3QvNYRO9MzX
- 1Ql3crMUqiaB+tHZr3B5/oezxhOIA==
-X-ME-Sender: <xms:Vx6MXfauK1axv49RLMlgvN53FdVkUY8SCH9vyshV8vlbqJ1qiH4Xrw>
+ :x-sasl-enc; s=fm3; bh=DyMTJz9/FJn6PL+Ekjsttgc+M66dqxvuqPvb7C2vQ
+ 28=; b=SMAgSj6PgQU/qKorN0k60meKdXDa7xA4EdzkjZMSbv+VCdzD2X3w6cWzH
+ VI5aW8iQ/emHXeE2wom0OydAA/5K/HXMgWZIyCV2vFSg6VcpK6RZFXabqbX+eMX4
+ F3tr3sGMEo3Zzd9gBUQQwRImqvXEUR3hjHi0fObn86FFcC7kkouHVsADDC5yr58P
+ 2h4F7vQOuWk+X/y8ylq4xTdTkGDNWeG20n5rXjFMi0f1rxPot7ypPTf380CYCkUp
+ 8ZwVR0rC9xtB7wUAtQcpvhLz+0W9As2mtJjKLG3qysucIEF6Csx0OOj/rMxQ+09M
+ Fn/mBLQcu4LYgBnrHZmhVYf25WaSQ==
+X-ME-Sender: <xms:vh6MXUDZLn1brtgAJxHBIp_WretXIPCSwaBy2KKngKufKL5iT5uy0g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdehhecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:Vx6MXSp4ty-a1AS0_CZLK7GTRIXUGs6JnkBUOCSOBaY7HE9iJKibTw>
- <xmx:Vx6MXc_Sdhutz73j1GIPmKRQfhq7-CzzkygjS1TFW0ImkTKtpHikDw>
- <xmx:Vx6MXZ_F0FqWutp3fNH0fhng1s2vSY7qD7IXntb-bWpq2Z34XOar0Q>
- <xmx:WR6MXRfUvgf7_vajgAC5trIR8-Rbg2VxEiTa2zLECDpM2oplfWLURw>
+ rhfuihiivgepud
+X-ME-Proxy: <xmx:vh6MXdxs--wFKxsAXCLD6BqfxwNonJTu5mf8s_Kp0zb71C4TPxuyTg>
+ <xmx:vh6MXXHGChqQGmit0dJar0QQJWK7WY4ncNFxN5TLwndBPnBT21TL_w>
+ <xmx:vh6MXT6Mbb-dpa1bsDSkmaKE4_xy8Vfv65ky-mac4XzLJOfmD6MdNg>
+ <xmx:vx6MXdaLKkfMPve5_2nJb6Pk4ktW42QfdNjaLEebNltkwBUFF2ryzA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 8F005E00A5; Wed, 25 Sep 2019 22:11:35 -0400 (EDT)
+ id D914FE00A5; Wed, 25 Sep 2019 22:13:18 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <2b4f6932-084b-4279-8631-f03af054496a@www.fastmail.com>
-In-Reply-To: <20190925124239.27897-13-clg@kaod.org>
+Message-Id: <233401e3-9b67-42e8-b9aa-bbbef424171a@www.fastmail.com>
+In-Reply-To: <20190925124239.27897-14-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
- <20190925124239.27897-13-clg@kaod.org>
-Date: Thu, 26 Sep 2019 11:42:17 +0930
+ <20190925124239.27897-14-clg@kaod.org>
+Date: Thu, 26 Sep 2019 11:44:01 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_12/13]_mtd:_spi-nor:_aspeed:_check_up?=
- =?UTF-8?Q?per_freq_limit_when_doing_training?=
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_13/13]_mtd:_spi-nor:_aspeed:_add_supp?=
+ =?UTF-8?Q?ort_for_AST2600_training?=
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -97,31 +97,130 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 25 Sep 2019, at 22:12, C=C3=A9dric Le Goater wrote:
+
+Would prefer some description here, this patch gets complex. At least fo=
+r me,
+probably because I'm not familiar with the flash training routine.
+
 > Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
 > ---
->  drivers/mtd/spi-nor/aspeed-smc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/mtd/spi-nor/aspeed-smc.c | 68 +++++++++++++++++++++++++++++++=
++
+>  1 file changed, 68 insertions(+)
 >=20
-> diff --git a/drivers/mtd/spi-nor/aspeed-smc.c=20
-> b/drivers/mtd/spi-nor/aspeed-smc.c
-> index c6a80fdf51ef..48164d819a37 100644
+> diff --git a/drivers/mtd/spi-nor/aspeed-smc.c b/drivers/mtd/spi-nor/as=
+peed-smc.c
+> index 48164d819a37..e9bc89755912 100644
 > --- a/drivers/mtd/spi-nor/aspeed-smc.c
 > +++ b/drivers/mtd/spi-nor/aspeed-smc.c
-> @@ -1075,7 +1075,7 @@ static int aspeed_smc_optimize_read(struct=20
+> @@ -142,6 +142,9 @@ static u32 aspeed_smc_segment_end_ast2600(
+>  static u32 aspeed_smc_segment_reg_ast2600(
+>  	struct aspeed_smc_controller *controller, u32 start, u32 end);
+> =20
+> +static int aspeed_smc_calibrate_reads_ast2600(struct aspeed_smc_chip=20=
+
+> *chip,
+> +	      u32 hdiv, const u8 *golden_buf, u8 *test_buf);
+> +
+>  static const struct aspeed_smc_info fmc_2600_info =3D {
+>  	.maxsize =3D 256 * 1024 * 1024,
+>  	.nce =3D 3,
+> @@ -149,7 +152,11 @@ static const struct aspeed_smc_info fmc_2600_info=
+=20
+> =3D {
+>  	.we0 =3D 16,
+>  	.ctl0 =3D 0x10,
+>  	.timing =3D 0x94,
+> +	.hclk_mask =3D 0xf0fff0ff,
+> +	.hdiv_max =3D 2,
+>  	.set_4b =3D aspeed_smc_chip_set_4b,
+> +	.optimize_read =3D aspeed_smc_optimize_read,
+> +	.calibrate =3D aspeed_smc_calibrate_reads_ast2600,
+>  	.segment_start =3D aspeed_smc_segment_start_ast2600,
+>  	.segment_end =3D aspeed_smc_segment_end_ast2600,
+>  	.segment_reg =3D aspeed_smc_segment_reg_ast2600,
+> @@ -162,7 +169,11 @@ static const struct aspeed_smc_info spi_2600_info=
+=20
+> =3D {
+>  	.we0 =3D 16,
+>  	.ctl0 =3D 0x10,
+>  	.timing =3D 0x94,
+> +	.hclk_mask =3D 0xf0fff0ff,
+> +	.hdiv_max =3D 2,
+>  	.set_4b =3D aspeed_smc_chip_set_4b,
+> +	.optimize_read =3D aspeed_smc_optimize_read,
+> +	.calibrate =3D aspeed_smc_calibrate_reads_ast2600,
+>  	.segment_start =3D aspeed_smc_segment_start_ast2600,
+>  	.segment_end =3D aspeed_smc_segment_end_ast2600,
+>  	.segment_reg =3D aspeed_smc_segment_reg_ast2600,
+> @@ -1101,6 +1112,63 @@ static int aspeed_smc_optimize_read(struct=20
 > aspeed_smc_chip *chip,
+>  	return 0;
+>  }
 > =20
->  		/* Compare timing to max */
->  		freq =3D ahb_freq / i;
-> -		if (freq >=3D max_freq)
-> +		if (freq > max_freq)
->  			continue;
+> +#define TIMING_DELAY_DI         BIT(3)
+> +#define TIMING_DELAY_HCYCLE_MAX     5
+> +
+> +static int aspeed_smc_calibrate_reads_ast2600(struct aspeed_smc_chip=20=
 
-Heh.
+> *chip, u32 hdiv,
+> +					      const u8 *golden_buf, u8 *test_buf)
+> +{
+> +	struct aspeed_smc_controller *controller =3D chip->controller;
+> +	const struct aspeed_smc_info *info =3D controller->info;
+> +	int hcycle;
+> +	u32 shift =3D (hdiv - 2) << 3;
+> +	u32 mask =3D ~(0xfu << shift);
+> +	u32 fread_timing_val =3D 0;
+> +
+> +	for (hcycle =3D 0; hcycle <=3D TIMING_DELAY_HCYCLE_MAX; hcycle++) {
+> +		int delay_ns;
+> +		bool pass =3D false;
+> +
+> +		fread_timing_val &=3D mask;
+> +		fread_timing_val |=3D hcycle << shift;
+> +
+> +		/* no DI input delay first  */
+> +		writel(fread_timing_val, controller->regs + info->timing);
+> +		pass =3D aspeed_smc_check_reads(chip, golden_buf, test_buf);
+> +		dev_dbg(chip->nor.dev,
+> +			"  * [%08x] %d HCLK delay, DI delay none : %s",
+> +			fread_timing_val, hcycle, pass ? "PASS" : "FAIL");
+> +		if (pass)
+> +			return 0;
+> +
+> +		/* Add DI input delays  */
+> +		fread_timing_val &=3D mask;
+> +		fread_timing_val |=3D (TIMING_DELAY_DI | hcycle) << shift;
+> +
+> +		for (delay_ns =3D 0; delay_ns < 0x10; delay_ns++) {
+> +			fread_timing_val &=3D ~(0xf << (4 + shift));
+> +			fread_timing_val |=3D delay_ns << (4 + shift);
+> +
+> +			writel(fread_timing_val, controller->regs + info->timing);
+> +			pass =3D aspeed_smc_check_reads(chip, golden_buf, test_buf);
+> +			dev_dbg(chip->nor.dev,
+> +				"  * [%08x] %d HCLK delay, DI delay %d.%dns : %s",
+> +				fread_timing_val, hcycle, (delay_ns + 1)/2,
+> +				(delay_ns + 1) & 1 ? 5 : 5, pass ? "PASS" : "FAIL");
+> +			/*
+> +			 * TODO: This is optimistic. We should look
+> +			 * for a working interval and save the middle
+> +			 * value in the read timing register.
+> +			 */
+> +			if (pass)
+> +				return 0;
+> +		}
+> +	}
+> +
+> +	/* No good setting for this frequency */
+> +	return -1;
+> +}
+> +
+>  static int aspeed_smc_chip_setup_finish(struct aspeed_smc_chip *chip)=
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-
-> =20
->  		/* Set the timing */
+>  {
+>  	struct aspeed_smc_controller *controller =3D chip->controller;
 > --=20
 > 2.21.0
 >=20
