@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51AC3BEA46
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 03:41:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B009BEA47
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 03:43:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46dyMZ0lg5zDqdj
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 11:41:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46dyP770xSzDqdj
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 11:43:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,68 +16,68 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="URB3Tioh"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="BPAMiQWm"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="nQTvxxd9"; dkim-atps=neutral
+ header.b="nc1qmY6W"; dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46dyB537xLzDqkR
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 11:33:33 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46dyGz11zszDqD8
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 11:37:46 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id DFCEB4FB;
- Wed, 25 Sep 2019 21:33:29 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 7F485635;
+ Wed, 25 Sep 2019 21:37:44 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 25 Sep 2019 21:33:30 -0400
+ by compute4.internal (MEProxy); Wed, 25 Sep 2019 21:37:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm3; bh=OOZmy
- DHR+DE218jmJYW+rV1BFHXoO5X1clUnPoblUcE=; b=URB3TiohsxQUuDY2DVcKg
- tHMESICl9JdsIROhR2br+9VI3FyrA+5csDD85uLrhqaxQRkkjk5lCn/rfRKqqn5f
- Y3os9kQCxxP3nyrLUX1nP/uI+97W4KRGhXO9N/G5/Ipe9N1IBigp6RlqbEzevOlX
- wQZQxAFvVWr3mBq41Ejtyh6ntsrjfvkBiPb/2baRsDxdqOVZ4claTcTy89ObxThl
- +fMS+CPeXUPqZ6H/tKVuEbAnyp8YShuvydxr/1Um5go2FN57Dr59aap3F+FFhPMH
- pNL5tOKIjMgRilLg7g43yjsBs8DnRzEhbXgz9pWCOi9Kh0LjmVndOGnmHKF3FX5W
- g==
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=eLUZ9
+ BwkxUIYVNhkreXYvX/CbcnZjdcZAVVYq4e9/y4=; b=BPAMiQWmGQiN2aNo3IvV9
+ neaUWqRk5lNRuAhBs0eryV105aGwTfPKM6Ts3tcfMyt3Fuy436oE4kitLeiJfAYE
+ hepyuwElwOMdMmzaRM/mVbY/9xhu5PuyHtzUdySBAY7MhonQjtRSN275SxYdhCXL
+ VgdOY0qhMT0k8k0swytZZv14Y16RR4oJ8MepcQmA6gbwjZ5oVoZCLQOgWEoUU9M7
+ 2nWU91EO7VeR4tEsBcjKuRTFlIM5POZ1nYVpuDgW49y6AFTGv//cilnj494CJIHw
+ MGn2UmtjI1pmvBAGiYvDrkcYxIl9dfmVak408E4HxlVJM2spiJd0JQmcqVJSwbHJ
+ Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:content-type
  :date:from:in-reply-to:message-id:mime-version:references
  :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=OOZmyDHR+DE218jmJYW+rV1BFHXoO5X1clUnPoblU
- cE=; b=nQTvxxd9mAxSF3Kx+f794Qg7gUiYTPNhGA7tWmrhQ0CmUg6+uQM7fMo/6
- KYn91SJqK4sJ/avtYAGE+NYowUhVwsgUgI7FXKFXesRpUNxrEf65WI3sDro5SCx0
- 22wF1IRfRPpZJXa0/iwxTlSGKPQfJ5dyAFPyFld8sbw9IKTGjymgf7DYp0+2a7LW
- xPc1kr16adp6v5a/zzWgIZKpDqiOBKA/NdWy9o7mbs9xvFKX8NHzlCuEuhjUQrVq
- pYTtj6Ezq0p6kTNESTT4fNokZZcRea/jFTEQmOBLCgaaHmY37B+LAnM6tFxUZ/tK
- QtHTkUU2KO+F2dw2kNPe48AQyjStA==
-X-ME-Sender: <xms:aBWMXZQJ-wN-AYQS8nn0_x5M9uIVxspbUqpkWKeDN0pmvfksQKed0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdegjecutefuodetggdotefrodftvf
+ :x-sasl-enc; s=fm3; bh=eLUZ9BwkxUIYVNhkreXYvX/CbcnZjdcZAVVYq4e9/
+ y4=; b=nc1qmY6WwK2f+VS7+DIvHubSYMkzsfAm26wY8lGU7Xov7oNnwR6s9kA9b
+ ar2aWHnVwVYc0YyeH7a41cqA4wJB2NuXn0Vj0dbF+BLO4ckXZQ7WG49Ot8wx6/LG
+ IcqdQaXtrTdE65bCnoSCQWwLSEkqMb2cLPQuU4BzyxYtG8N9H7ur8ACEia79sH5q
+ Ds8oy9GiVui8c3cFDL7uiHFgX29iAKLmxwZgDnVDxqsBWAAltwB0qPB+qj7M+q7r
+ OT9/cjt86wYRepBiKR/jGqFnvgzhFQvp35tTVAv7Tj0g+N0JzvYjy42cXwhHvNjL
+ 7kb/7t6kOZ3TNa2kV74wTd6u8x2DA==
+X-ME-Sender: <xms:ZxaMXUDMoTKQEvbilA9fhhqIuT2xzlniW099khtEeVnfnyfU-q6wUA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeefgdegkecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
  rhfuihiivgeptd
-X-ME-Proxy: <xmx:aBWMXe-3kksDyllOeC6k3rhQFSuOysi4WkY-7Hcj-eRbzvPaWsB9AA>
- <xmx:aBWMXV9x3dX3TBXTGy-esWLZ0nb6kLayq1bVWncTkUB7DvpC-nIxJA>
- <xmx:aBWMXckBRNfGinuaqK0LYHLHjOre35YarvqLwnAz_fLQ7jyCbnvCaw>
- <xmx:aRWMXUpTZgL7e8Q25hPHi-ix-x53H0c_8PsTRTyFCS3WoCNkiPKswg>
+X-ME-Proxy: <xmx:ZxaMXVjY7jdhqXpvoEjZWpxTaGfkVgn7aaRB_km3nmnL55z6FrvI3Q>
+ <xmx:ZxaMXf3E11egNsAX1AJi_yQkIRB2JWjZ_CzNVTG0IuIY5kjgZzRTcw>
+ <xmx:ZxaMXXJDiGYw26oo_IafjQb_u29J6p9HaoFWcXSnXZVgcMO2jvG8og>
+ <xmx:aBaMXVxZ5dGcrX4u5-jNgnQWnUke4q9_0hShgCb3JjK1muA9guiMlw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 99960E00A5; Wed, 25 Sep 2019 21:33:28 -0400 (EDT)
+ id 286FFE00A5; Wed, 25 Sep 2019 21:37:43 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <3b2c92f5-ee69-4805-a0ab-fbded61135d1@www.fastmail.com>
-In-Reply-To: <20190925124239.27897-3-clg@kaod.org>
+Message-Id: <fb4ecaf8-6144-4738-a43f-4e97ce50b8d9@www.fastmail.com>
+In-Reply-To: <20190925124239.27897-5-clg@kaod.org>
 References: <20190925124239.27897-1-clg@kaod.org>
- <20190925124239.27897-3-clg@kaod.org>
-Date: Thu, 26 Sep 2019 11:04:11 +0930
+ <20190925124239.27897-5-clg@kaod.org>
+Date: Thu, 26 Sep 2019 11:08:25 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_02/13]_ARM:_dts:_aspeed:_rainier:_Ena?=
- =?UTF-8?Q?ble_FMC_and_SPI_devices?=
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_04/13]_ARM:_dts:_ast2600-evb:_Enable_?=
+ =?UTF-8?Q?FMC_and_SPI_devices?=
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -102,17 +102,17 @@ On Wed, 25 Sep 2019, at 22:12, C=C3=A9dric Le Goater wrote:
 Acked-by: Andrew Jeffery <andrew@aj.id.au>
 
 > ---
->  arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts | 31 +++++++++++++++++++=
+>  arch/arm/boot/dts/aspeed-ast2600-evb.dts | 24 +++++++++++++++++++++++=
 +
->  1 file changed, 31 insertions(+)
+>  1 file changed, 24 insertions(+)
 >=20
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts=20
-> b/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-> index 485c8732eec1..5e5bc78bdce4 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-rainier.dts
-> @@ -444,3 +444,34 @@
->  &ibt {
+> diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts=20
+> b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+> index da8c931c7295..7bcafb027afa 100644
+> --- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+> +++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+> @@ -88,3 +88,27 @@
+>  &fsim0 {
 >  	status =3D "okay";
 >  };
 > +
@@ -124,13 +124,6 @@ Acked-by: Andrew Jeffery <andrew@aj.id.au>
 > +		label =3D "bmc";
 > +		spi-max-frequency =3D <50000000>;
 > +#include "openbmc-flash-layout.dtsi"
-> +	};
-> +
-> +	flash@1 {
-> +		status =3D "okay";
-> +		m25p,fast-read;
-> +		label =3D "alt-bmc";
-> +		spi-max-frequency =3D <50000000>;
 > +	};
 > +};
 > +
