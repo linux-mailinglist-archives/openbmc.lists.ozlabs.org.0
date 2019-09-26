@@ -1,74 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78206BEC08
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 08:34:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEB21BEC0E
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 08:36:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46f4sk1V00zDqmT
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 16:34:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46f4vV40zxzDqng
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 16:36:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::642; helo=mail-pl1-x642.google.com;
+ (client-ip=2607:f8b0:4864:20::841; helo=mail-qt1-x841.google.com;
  envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Wut8al0B"; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="bj30pD+/"; 
  dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46f4ph5xv3zDqm9
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 16:32:12 +1000 (AEST)
-Received: by mail-pl1-x642.google.com with SMTP id y10so890526plp.2
- for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 23:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=j8hQdm4C+zYbtaBhERaACtb7ruwCDDeqedChaL1Ac38=;
- b=Wut8al0Bsco+RmUJ51Hl0AMLSwmQeUyn4/kZ6RTPpk8U4ugYA9kEopxEOWyvP1zIzs
- N4ti/2TwEOP21qDgklPyU0Hji7vhqfe+7DwXwRV5QxlEsAs/JkeT/pvOjVcdQqnVU8C0
- 40ZYiM9ZA+5jaLOupxfXl1JBE2xtclFOjs5tkBctUUBBxNnR87F/1aaa1s6FGKMq27pV
- oC2kzE+8hgyw5LahvXEHjglytkSbPc7/5ko7rDFxlievjxQ1zHyGYl+hFQvWsZJxgiA2
- QF/8qxqKPnO7SP8maGlq3tOrkqyztSyJZ8wSsv6KGJ+jbirHxdtBNmhaLcztB8OxhytV
- hJ2g==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46f4py6s63zDqnK
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 16:32:26 +1000 (AEST)
+Received: by mail-qt1-x841.google.com with SMTP id c3so1461252qtv.10
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Sep 2019 23:32:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=phIbuYJ4lNko0nLxvR0dmd+35JgIR+leek2J73wqD+0=;
+ b=bj30pD+/msQCaVBFPgE2Jwwd8kjIBzcBicbO1SB2jnTlrXYK8LAkV2f1uizHjyJtIF
+ y0xourk32RjM/f8Z6CsNCIJrEOOOYvf80mm5zKcSg3vPyrNSUFk1Mjv04+AkkayDo72L
+ UegifsDdk0xEdT61OjC4IUqrkfBOaqpjdN/QY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=j8hQdm4C+zYbtaBhERaACtb7ruwCDDeqedChaL1Ac38=;
- b=SycqRxPBJnWofbJmaE0zn6cfbxkGui+5B1MVUopcNYaolbhrjGGmrpy4BFKo1pjqNG
- O/KnvVkyf1WjIlrtE+bAjqSbw0rlL7LCTb6U17gSOBHeNj2Q/dXK+XAi4i+TIQ9qF+F5
- Q8DHMSyLItKOEscadFPKsy8Y1c0KHJQgD+YVdlHY5q61xczxbdWx6SnsNZ5vVb/HuC8n
- 85axd55fW3gUmQA6GNCXgdjt0el6gmn+AgNycL5TsHtEVs9eRH6D3Bv5wUhIGMIUfaIt
- LWHzUW8g/zebs+WzoJZNb2hC/N6pVLKLmJmGiekgY27/k3kgmXyLgXGaX2hs6iR/RDQR
- C4ZA==
-X-Gm-Message-State: APjAAAVvOYMA806BX6gRHzJ/yn3uZI8Cr3eNJwnHiYj3s9Bw+DDsjW4/
- umJz9kGoqsVrZtfJ+10oMO0hYben
-X-Google-Smtp-Source: APXvYqwUdhjCHgHIsVJpKP0yHBxoLHzgn7xERhS7pbijmiGqiuN+8ZYFtvZSYe2IwhLnsvlVrADGKA==
-X-Received: by 2002:a17:902:59db:: with SMTP id
- d27mr2023569plj.253.1569479529604; 
- Wed, 25 Sep 2019 23:32:09 -0700 (PDT)
-Received: from voyager.ibm.com ([36.255.48.244])
- by smtp.gmail.com with ESMTPSA id i6sm1899984pfq.20.2019.09.25.23.32.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Sep 2019 23:32:09 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 2/2] ARM: dts: aspeed: ast2600evb: Use custom
- flash layout
-Date: Thu, 26 Sep 2019 16:01:57 +0930
-Message-Id: <20190926063157.22743-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20190926063157.22743-1-joel@jms.id.au>
-References: <20190926063157.22743-1-joel@jms.id.au>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=phIbuYJ4lNko0nLxvR0dmd+35JgIR+leek2J73wqD+0=;
+ b=Q5Wsx4IIV203Gn1jTqhppj0Wv2eBgNCkIrtXRDpkDoCMd3/5ZnvrfBCAwOEhsf3McG
+ DIB6Jy5OsNvOIe1jeBkqevCMN+Oh+7W+dH3cDJ/ofBfTji7dTokNuNd9YR4lsLXse31s
+ c1AacKhP+Wp7NbFrIQMDcnFQz29A5qIrJ/afsthjjL3Nz5nI0CvEvECpsa/R002j5QY+
+ rfZXPBK6xdZEywomPC3XiuiGdI+gQMrOvp8mNo/SwpcExIups63rGzndMICb2opJ1G7G
+ ZWRCQ5UkYdSYB3DURgKiVKwGznC6EVlZH0II5w/EG2zj3rVrBujlz58bHdfJ43vuXGkO
+ Ze2w==
+X-Gm-Message-State: APjAAAVO7dfgnyE7aJ7zeayLsGxdro8x7bF18VOBqgucHK9yxUstedEH
+ MS/7YxK/QMJs5c+8z55Sbk/bQtAaUWM4ilQQG74=
+X-Google-Smtp-Source: APXvYqwHJu4j8aAu4yk9OlipSDMC6jR33IT/xU+EYZzmy+cJCdM8ihh1cniVMQuUOpodUti8NqFikypTU3ncKcccgYw=
+X-Received: by 2002:ac8:2e94:: with SMTP id h20mr2406605qta.234.1569479542749; 
+ Wed, 25 Sep 2019 23:32:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20190926023230.29810-1-bradleyb@fuzziesquirrel.com>
+ <20190926023230.29810-2-bradleyb@fuzziesquirrel.com>
+In-Reply-To: <20190926023230.29810-2-bradleyb@fuzziesquirrel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 26 Sep 2019 06:32:10 +0000
+Message-ID: <CACPK8XfrpyShBfpKaZ+_yLadJJHWpXYzD3F1WYApL2zFUL8yDg@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.3 1/2] ARM: dts: Add 128MiB OpenBMC flash
+ layout
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,63 +71,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600 u-boot and kernel images have outgrown the OpenBMC layout.
-While BMC machines use 128MB SPI NOR chips, we only have 64MB on the EVB
-so use a layout that has a smaller region for the ro and rw filesystems.
+On Thu, 26 Sep 2019 at 02:31, Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>
+> This is an alternate layout used by OpenBMC systems.  It describes the
+> fixed flash layout for 128MiB devices.
+>
+> Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
+> ---
+>  .../boot/dts/openbmc-flash-layout-128.dtsi    | 32 +++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/openbmc-flash-layout-128.dtsi
+>
+> diff --git a/arch/arm/boot/dts/openbmc-flash-layout-128.dtsi b/arch/arm/boot/dts/openbmc-flash-layout-128.dtsi
+> new file mode 100644
+> index 000000000000..4e2819a8dac6
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/openbmc-flash-layout-128.dtsi
+> @@ -0,0 +1,32 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +
+> +partitions {
+> +       compatible = "fixed-partitions";
+> +       #address-cells = <1>;
+> +       #size-cells = <1>;
+> +
+> +       u-boot@0 {
+> +               reg = <0x0 0x60000>;
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-ast2600-evb.dts | 32 +++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+This is 384KB, which is too small for the ast2600 u-boot.
 
-diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-index 7bcafb027afa..0b3d3978c4d3 100644
---- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-+++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-@@ -96,7 +96,37 @@
- 		m25p,fast-read;
- 		label = "bmc";
- 		spi-max-frequency = <50000000>;
--#include "openbmc-flash-layout.dtsi"
-+
-+		partitions {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			u-boot@0 {
-+				reg = <0x0 0xe0000>; // 896KB
-+				label = "u-boot";
-+			};
-+
-+			u-boot-env@e0000 {
-+				reg = <0xe0000 0x20000>; // 128KB
-+				label = "u-boot-env";
-+			};
-+
-+			kernel@100000 {
-+				reg = <0x100000 0x900000>; // 9MB
-+				label = "kernel";
-+			};
-+
-+			rofs@a00000 {
-+				reg = <0xa00000 0x2000000>; // 32MB
-+				label = "rofs";
-+			};
-+
-+			rwfs@6000000 {
-+				reg = <0x2a00000 0x1600000>; // 22MB
-+				label = "rwfs";
-+			};
-+		};
- 	};
- };
- 
--- 
-2.23.0
+ I suggest we make it 896KB. This is 1MB - 128KB for the environment.
 
+> +               label = "u-boot";
+> +       };
+> +
+> +       u-boot-env@60000 {
+> +               reg = <0x60000 0x20000>;
+> +               label = "u-boot-env";
+> +       };
+> +
+> +       kernel@80000 {
+> +               reg = <0x80000 0x780000>;
+
+I suggest we make this bigger. 9MB seems like a nice round number;
+that means we end up with 10MB for u-boot + env + FIT.
+
+I will send a patch for review with my proposal.
+
+Cheers,
+
+Joel
+
+> +               label = "kernel";
+> +       };
+> +
+> +       rofs@800000 {
+> +               reg = <0x800000 0x5800000>;
+> +               label = "rofs";
+> +       };
+> +
+> +       rwfs@6000000 {
+> +               reg = <0x6000000 0x2000000>;
+> +               label = "rwfs";
+> +       };
+> +};
+> --
+> 2.21.0
