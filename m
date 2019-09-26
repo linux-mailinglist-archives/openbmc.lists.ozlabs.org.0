@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED6D7BF451
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 15:47:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5889DBF457
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 15:48:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fGSQ2fpWzDqnc
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:47:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fGV4665lzDq9j
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:48:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,42 +16,42 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="iJuZhk5I"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="i3v/qRGz"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="XLmO53IS"; dkim-atps=neutral
+ header.b="leOPpxPr"; dkim-atps=neutral
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
  [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fGC521tgzDqnD
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:29 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fGC75mGYzDqrF
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:31 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 2AB3F63A;
- Thu, 26 Sep 2019 09:35:27 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 7CF6B711;
+ Thu, 26 Sep 2019 09:35:29 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:27 -0400
+ by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=RBdI+kzIqst2g
- iudBspBq4W5hi6wQi6JtxNFqHziboU=; b=iJuZhk5IW6GlK+SgTuNRZsiKLwuvR
- e/U7pKH0PuLlACg3KcS5Pmk8V72T0s0X0Vg9fCKDOC3MD9fo+vM3pRrKYLWvnf9t
- C9Ymz4m0Ykkmgp24O1N+aARmO6GvvlQ/PlQssW2DuVJBlKzVaGmMuUbr1c1rB6ps
- PNbmgS3+CEmxtpOcnRXjjeA4zsYJ9gBk2CcoM+1qXOPWfIDUn0M3ZIsBWfEOq5C2
- dgK+XaHzD+7RuzGSO/t/Nhmoavtim9SYKPhy1Yxec3WmCiB1OzGOwAviQUJuVOF8
- VKaw6TPdJiv4SKt+Fx8fPFqMTOO/VjwnU9evQVbUFFUtvKvRhseV9FxGg==
+ :mime-version:content-transfer-encoding; s=fm3; bh=jlWllcUTVv5SX
+ 2RtZ9JYjgUykmxfyTIbsbM3/crA7Bk=; b=i3v/qRGzbRC9dH7tG+y7SRw6m+QFj
+ JpG+qHPin12PX1ueTehyaeruE8aKXoyrNPNpL5hjFjlhggBAakWnms5dmITbCpB6
+ NFkxhNZ5/CJYB/kl1os5Xllu3Aqr0giIMK25oRfB7Gcjt/mPE0C74/PtfsJ7CI9E
+ jUya2gcMOckVoULFrongo/6Dxx6+7UyolCCUYPfQpFoo+dPMToveQnDHGBixeMf7
+ pXdFG9rIFM4eDRRZldmm656vGS038lpWB1YlsQtth7ABBT3uMbEwN5UKD9rsD3ya
+ d87Kik8m6u4MiFjyzUWjPCq+TnY7fB9l4s81YVr1UqKw0fYGqu0ebJD+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=RBdI+kzIqst2giudBspBq4W5hi6wQi6JtxNFqHziboU=; b=XLmO53IS
- OnorYWxZDsOczH4XZBaQ6T36sy/tLURvYEqaW7daOPsH6p2JpAJg/BvLnE8QjDyt
- phDLv/OR3tjWBft36UthgdTom0H90vpCBV7VCzqCsi0KFXmwCSs/8dG1AoBNEvqU
- f+vZAVbR7mLuu9ghu+84MTsrbFU5p35337dDZa0kEaMlzdXwG2dAPK3BKqusxSm1
- Vo09QbaUY2Jb8IF8012v3nmQM4sjTdzP8TYE78RWfc9hlOBSgrEx0BK8al7FQMTz
- wKS0zk9jcnNPUQeTGSY9qTEami/Q6x7hVN5OxFjlWZlsMnlbSLUTPFTA31Oau6MT
- 8IYawzbFS5FtJg==
-X-ME-Sender: <xms:nr6MXVgVVJoI1EwsXQpF-JjwBdcPO7ZBXyH4vqiMeJHQ6L-0Vbzl4w>
+ fm3; bh=jlWllcUTVv5SX2RtZ9JYjgUykmxfyTIbsbM3/crA7Bk=; b=leOPpxPr
+ sEjJhn+UlDFDzu7KeSjKgnmx19KJpTD7ySU6cLQfbdrivR9CFkcI3A8OCwjX+PD3
+ QnO65J5SmBVAcS/MBMLlmQCn9qFPf7QoSRfSi+vWh7UjOBWIHaMoEYQaemM6cg1e
+ r/2sk1RS6LLWWUFVG835jH2Ehu5kKrhsEVWlfdqNTf4HfCZNxJNfTDP28pi02xsL
+ uGhJxuKvbPuwSetMlYa4fGrENzrd3RzvyN3O6PmB8l93FoeyRigl62fsDzdUzVt+
+ SZL4RA1iEcL7FhraFWELko0Ujp9eOi9CGA7oU4Vp2r9lCUUXaxvtbUf69xPQ4++6
+ +o89dPk4tQPplg==
+X-ME-Sender: <xms:ob6MXaAjkts5EY_3NLqiHVFepJX6XFBMLLYaPY0nXDRBaMSTM3iH2g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdeiiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdeiiecutefuodetggdote
  rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
  grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
  vgepvd
-X-ME-Proxy: <xmx:nr6MXYgTBH4wvcApvl8LaacwoL04P4WvObGBygOCVwPn_HL_sLvfCQ>
- <xmx:nr6MXdd2nqslfKy9E_LFKAgifb3E7gXCJ99y3UwaZl8zJOyuiidORQ>
- <xmx:nr6MXcHXtNCqeNpboia3cjk03609Jv459skdoMeE7wugYduCTYnebg>
- <xmx:nr6MXUs1JBDm6ZiyPPAO18iq3ceXcS_Du7PqefxINe7KBAYuy3chTA>
+X-ME-Proxy: <xmx:ob6MXYzg3wH-R13roUhFNfKoJxb9r9FRKXCgrUlxoMPMaindWtkVQw>
+ <xmx:ob6MXYlQyxrqYaGzhCQPQthaZmaHiUmFByhhvB5HOrIZuP_HYHwtow>
+ <xmx:ob6MXdFpNy7Q08hfeRDWdzn2d96ToxR6PEeodc-iOWRqKoy3mR8fSQ>
+ <xmx:ob6MXWSqr_1-YZPtkigOJ0wqTm_hHCBQfXBNwWCtOUjHq_8HJmYuYw>
 Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id E1358D6005B;
- Thu, 26 Sep 2019 09:35:24 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 3367CD60063;
+ Thu, 26 Sep 2019 09:35:26 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 05/15] pinctrl: aspeed-g6: Rename SD3 to EMMC
- and rework pin groups
-Date: Thu, 26 Sep 2019 23:05:58 +0930
-Message-Id: <20190926133608.30566-6-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 06/15] pinctrl: aspeed-g6: Add AST2600 I3C1 and
+ I3C2 pinmux config
+Date: Thu, 26 Sep 2019 23:05:59 +0930
+Message-Id: <20190926133608.30566-7-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190926133608.30566-1-andrew@aj.id.au>
 References: <20190926133608.30566-1-andrew@aj.id.au>
@@ -95,170 +95,92 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Johnny Huang <johnny_huang@aspeedtech.com>
 
-AST2600 EMMC support 3 types DAT bus sizes (1, 4 and 8-bit),
-corresponding to 3 groups: EMMCG1, EMMCG4 and EMMCG8
+These pins only expose a single function but are not fixed-function as
+their I3C capability can be disabled.
 
 Signed-off-by: Johnny Huang <johnny_huang@aspeedtech.com>
+[AJ: Tweak commit message, sort pins list]
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 72 ++++++++++------------
- drivers/pinctrl/aspeed/pinmux-aspeed.h     |  1 +
- 2 files changed, 33 insertions(+), 40 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 30 +++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index dc17cf3d3549..c6800d220920 100644
+index c6800d220920..49fc4824ccee 100644
 --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
 +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -1440,74 +1440,72 @@ FUNC_GROUP_DECL(RGMII2, D4, C2, C1, D3, E4, F5, D2, E3, D1, F4, E2, E1);
- FUNC_GROUP_DECL(RMII2, D4, C2, C1, D3, D2, D1, F4, E2, E1);
+@@ -37,7 +37,7 @@
+ #define SCU510		0x510 /* Hardware Strap 2 */
+ #define SCU694		0x694 /* Multi-function Pin Control #25 */
  
- #define AB4 232
--SIG_EXPR_LIST_DECL_SESG(AB4, SD3CLK, SD3, SIG_DESC_SET(SCU400, 24));
--PIN_DECL_1(AB4, GPIO18D0, SD3CLK);
-+SIG_EXPR_LIST_DECL_SEMG(AB4, EMMCCLK, EMMCG1, EMMC, SIG_DESC_SET(SCU400, 24));
-+PIN_DECL_1(AB4, GPIO18D0, EMMCCLK);
+-#define ASPEED_G6_NR_PINS 248
++#define ASPEED_G6_NR_PINS 252
  
- #define AA4 233
--SIG_EXPR_LIST_DECL_SESG(AA4, SD3CMD, SD3, SIG_DESC_SET(SCU400, 25));
--PIN_DECL_1(AA4, GPIO18D1, SD3CMD);
-+SIG_EXPR_LIST_DECL_SEMG(AA4, EMMCCMD, EMMCG1, EMMC, SIG_DESC_SET(SCU400, 25));
-+PIN_DECL_1(AA4, GPIO18D1, EMMCCMD);
+ #define M24 0
+ SIG_EXPR_LIST_DECL_SESG(M24, MDC3, MDIO3, SIG_DESC_SET(SCU410, 0));
+@@ -1542,6 +1542,26 @@ GROUP_DECL(I3C4, AE25, AF24);
+ FUNC_DECL_2(I3C4, HVI3C4, I3C4);
+ FUNC_GROUP_DECL(FSI2, AE25, AF24);
  
- #define AC4 234
--SIG_EXPR_LIST_DECL_SESG(AC4, SD3DAT0, SD3, SIG_DESC_SET(SCU400, 26));
--PIN_DECL_1(AC4, GPIO18D2, SD3DAT0);
-+SIG_EXPR_LIST_DECL_SEMG(AC4, EMMCDAT0, EMMCG1, EMMC, SIG_DESC_SET(SCU400, 26));
-+PIN_DECL_1(AC4, GPIO18D2, EMMCDAT0);
++#define AF23 248
++SIG_EXPR_LIST_DECL_SESG(AF23, I3C1SCL, I3C1, SIG_DESC_SET(SCU438, 16));
++PIN_DECL_(AF23, SIG_EXPR_LIST_PTR(AF23, I3C1SCL));
++
++#define AE24 249
++SIG_EXPR_LIST_DECL_SESG(AE24, I3C1SDA, I3C1, SIG_DESC_SET(SCU438, 17));
++PIN_DECL_(AE24, SIG_EXPR_LIST_PTR(AE24, I3C1SDA));
++
++FUNC_GROUP_DECL(I3C1, AF23, AE24);
++
++#define AF22 250
++SIG_EXPR_LIST_DECL_SESG(AF22, I3C2SCL, I3C2, SIG_DESC_SET(SCU438, 18));
++PIN_DECL_(AF22, SIG_EXPR_LIST_PTR(AF22, I3C2SCL));
++
++#define AE22 251
++SIG_EXPR_LIST_DECL_SESG(AE22, I3C2SDA, I3C2, SIG_DESC_SET(SCU438, 19));
++PIN_DECL_(AE22, SIG_EXPR_LIST_PTR(AE22, I3C2SDA));
++
++FUNC_GROUP_DECL(I3C2, AF22, AE22);
++
+ /* Pins, groups and functions are sort(1):ed alphabetically for sanity */
  
- #define AA5 235
--SIG_EXPR_LIST_DECL_SESG(AA5, SD3DAT1, SD3, SIG_DESC_SET(SCU400, 27));
--PIN_DECL_1(AA5, GPIO18D3, SD3DAT1);
-+SIG_EXPR_LIST_DECL_SEMG(AA5, EMMCDAT1, EMMCG4, EMMC, SIG_DESC_SET(SCU400, 27));
-+PIN_DECL_1(AA5, GPIO18D3, EMMCDAT1);
- 
- #define Y5 236
--SIG_EXPR_LIST_DECL_SESG(Y5, SD3DAT2, SD3, SIG_DESC_SET(SCU400, 28));
--PIN_DECL_1(Y5, GPIO18D4, SD3DAT2);
-+SIG_EXPR_LIST_DECL_SEMG(Y5, EMMCDAT2, EMMCG4, EMMC, SIG_DESC_SET(SCU400, 28));
-+PIN_DECL_1(Y5, GPIO18D4, EMMCDAT2);
- 
- #define AB5 237
--SIG_EXPR_LIST_DECL_SESG(AB5, SD3DAT3, SD3, SIG_DESC_SET(SCU400, 29));
--PIN_DECL_1(AB5, GPIO18D5, SD3DAT3);
-+SIG_EXPR_LIST_DECL_SEMG(AB5, EMMCDAT3, EMMCG4, EMMC, SIG_DESC_SET(SCU400, 29));
-+PIN_DECL_1(AB5, GPIO18D5, EMMCDAT3);
- 
- #define AB6 238
--SIG_EXPR_LIST_DECL_SESG(AB6, SD3CD, SD3, SIG_DESC_SET(SCU400, 30));
--PIN_DECL_1(AB6, GPIO18D6, SD3CD);
-+SIG_EXPR_LIST_DECL_SEMG(AB6, EMMCCD, EMMCG1, EMMC, SIG_DESC_SET(SCU400, 30));
-+PIN_DECL_1(AB6, GPIO18D6, EMMCCD);
- 
- #define AC5 239
--SIG_EXPR_LIST_DECL_SESG(AC5, SD3WP, SD3, SIG_DESC_SET(SCU400, 31));
--PIN_DECL_1(AC5, GPIO18D7, SD3WP);
-+SIG_EXPR_LIST_DECL_SEMG(AC5, EMMCWP, EMMCG1, EMMC, SIG_DESC_SET(SCU400, 31));
-+PIN_DECL_1(AC5, GPIO18D7, EMMCWP);
- 
--FUNC_GROUP_DECL(SD3, AB4, AA4, AC4, AA5, Y5, AB5, AB6, AC5);
-+GROUP_DECL(EMMCG1, AB4, AA4, AC4, AB6, AC5);
-+GROUP_DECL(EMMCG4, AB4, AA4, AC4, AA5, Y5, AB5, AB6, AC5);
- 
- #define Y1 240
- SIG_EXPR_LIST_DECL_SEMG(Y1, FWSPIDCS, FWSPID, FWSPID, SIG_DESC_SET(SCU500, 3));
- SIG_EXPR_LIST_DECL_SESG(Y1, VBCS, VB, SIG_DESC_SET(SCU500, 5));
--SIG_EXPR_LIST_DECL_SESG(Y1, SD3DAT4, SD3DAT4, SIG_DESC_SET(SCU404, 0));
--PIN_DECL_3(Y1, GPIO18E0, FWSPIDCS, VBCS, SD3DAT4);
--FUNC_GROUP_DECL(SD3DAT4, Y1);
-+SIG_EXPR_LIST_DECL_SEMG(Y1, EMMCDAT4, EMMCG8, EMMC, SIG_DESC_SET(SCU404, 0));
-+PIN_DECL_3(Y1, GPIO18E0, FWSPIDCS, VBCS, EMMCDAT4);
- 
- #define Y2 241
- SIG_EXPR_LIST_DECL_SEMG(Y2, FWSPIDCK, FWSPID, FWSPID, SIG_DESC_SET(SCU500, 3));
- SIG_EXPR_LIST_DECL_SESG(Y2, VBCK, VB, SIG_DESC_SET(SCU500, 5));
--SIG_EXPR_LIST_DECL_SESG(Y2, SD3DAT5, SD3DAT5, SIG_DESC_SET(SCU404, 1));
--PIN_DECL_3(Y2, GPIO18E1, FWSPIDCK, VBCK, SD3DAT5);
--FUNC_GROUP_DECL(SD3DAT5, Y2);
-+SIG_EXPR_LIST_DECL_SEMG(Y2, EMMCDAT5, EMMCG8, EMMC, SIG_DESC_SET(SCU404, 1));
-+PIN_DECL_3(Y2, GPIO18E1, FWSPIDCK, VBCK, EMMCDAT5);
- 
- #define Y3 242
- SIG_EXPR_LIST_DECL_SEMG(Y3, FWSPIDMOSI, FWSPID, FWSPID,
- 			SIG_DESC_SET(SCU500, 3));
- SIG_EXPR_LIST_DECL_SESG(Y3, VBMOSI, VB, SIG_DESC_SET(SCU500, 5));
--SIG_EXPR_LIST_DECL_SESG(Y3, SD3DAT6, SD3DAT6, SIG_DESC_SET(SCU404, 2));
--PIN_DECL_3(Y3, GPIO18E2, FWSPIDMOSI, VBMOSI, SD3DAT6);
--FUNC_GROUP_DECL(SD3DAT6, Y3);
-+SIG_EXPR_LIST_DECL_SEMG(Y3, EMMCDAT6, EMMCG8, EMMC, SIG_DESC_SET(SCU404, 2));
-+PIN_DECL_3(Y3, GPIO18E2, FWSPIDMOSI, VBMOSI, EMMCDAT6);
- 
- #define Y4 243
- SIG_EXPR_LIST_DECL_SEMG(Y4, FWSPIDMISO, FWSPID, FWSPID,
- 			SIG_DESC_SET(SCU500, 3));
- SIG_EXPR_LIST_DECL_SESG(Y4, VBMISO, VB, SIG_DESC_SET(SCU500, 5));
--SIG_EXPR_LIST_DECL_SESG(Y4, SD3DAT7, SD3DAT7, SIG_DESC_SET(SCU404, 3));
--PIN_DECL_3(Y4, GPIO18E3, FWSPIDMISO, VBMISO, SD3DAT7);
--FUNC_GROUP_DECL(SD3DAT7, Y4);
-+SIG_EXPR_LIST_DECL_SEMG(Y4, EMMCDAT7, EMMCG8, EMMC, SIG_DESC_SET(SCU404, 3));
-+PIN_DECL_3(Y4, GPIO18E3, FWSPIDMISO, VBMISO, EMMCDAT7);
- 
- GROUP_DECL(FWSPID, Y1, Y2, Y3, Y4);
- GROUP_DECL(FWQSPID, Y1, Y2, Y3, Y4, AE12, AF12);
-+GROUP_DECL(EMMCG8, AB4, AA4, AC4, AA5, Y5, AB5, AB6, AC5, Y1, Y2, Y3, Y4);
- FUNC_DECL_2(FWSPID, FWSPID, FWQSPID);
- FUNC_GROUP_DECL(VB, Y1, Y2, Y3, Y4);
--
-+FUNC_DECL_3(EMMC, EMMCG1, EMMCG4, EMMCG8);
- /*
-  * FIXME: Confirm bits and priorities are the right way around for the
-  * following 4 pins
-@@ -1968,11 +1966,9 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
- 	ASPEED_PINCTRL_GROUP(SALT9G1),
- 	ASPEED_PINCTRL_GROUP(SD1),
- 	ASPEED_PINCTRL_GROUP(SD2),
--	ASPEED_PINCTRL_GROUP(SD3),
--	ASPEED_PINCTRL_GROUP(SD3DAT4),
--	ASPEED_PINCTRL_GROUP(SD3DAT5),
--	ASPEED_PINCTRL_GROUP(SD3DAT6),
--	ASPEED_PINCTRL_GROUP(SD3DAT7),
-+	ASPEED_PINCTRL_GROUP(EMMCG1),
-+	ASPEED_PINCTRL_GROUP(EMMCG4),
-+	ASPEED_PINCTRL_GROUP(EMMCG8),
- 	ASPEED_PINCTRL_GROUP(SGPM1),
- 	ASPEED_PINCTRL_GROUP(SGPS1),
- 	ASPEED_PINCTRL_GROUP(SIOONCTRL),
-@@ -2051,6 +2047,7 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
- 	ASPEED_PINCTRL_FUNC(ADC8),
- 	ASPEED_PINCTRL_FUNC(ADC9),
- 	ASPEED_PINCTRL_FUNC(BMCINT),
-+	ASPEED_PINCTRL_FUNC(EMMC),
- 	ASPEED_PINCTRL_FUNC(ESPI),
- 	ASPEED_PINCTRL_FUNC(ESPIALT),
- 	ASPEED_PINCTRL_FUNC(FSI1),
-@@ -2183,11 +2180,6 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
- 	ASPEED_PINCTRL_FUNC(SALT9),
- 	ASPEED_PINCTRL_FUNC(SD1),
- 	ASPEED_PINCTRL_FUNC(SD2),
--	ASPEED_PINCTRL_FUNC(SD3),
--	ASPEED_PINCTRL_FUNC(SD3DAT4),
--	ASPEED_PINCTRL_FUNC(SD3DAT5),
--	ASPEED_PINCTRL_FUNC(SD3DAT6),
--	ASPEED_PINCTRL_FUNC(SD3DAT7),
- 	ASPEED_PINCTRL_FUNC(SGPM1),
- 	ASPEED_PINCTRL_FUNC(SGPS1),
- 	ASPEED_PINCTRL_FUNC(SIOONCTRL),
-diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.h b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-index a2c0d52e4f7b..08c70ea5b582 100644
---- a/drivers/pinctrl/aspeed/pinmux-aspeed.h
-+++ b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-@@ -738,6 +738,7 @@ struct aspeed_pin_desc {
- 	static const char *FUNC_SYM(func)[] = { __VA_ARGS__ }
- 
- #define FUNC_DECL_2(func, one, two) FUNC_DECL_(func, #one, #two)
-+#define FUNC_DECL_3(func, one, two, three) FUNC_DECL_(func, #one, #two, #three)
- 
- #define FUNC_GROUP_DECL(func, ...) \
- 	GROUP_DECL(func, __VA_ARGS__); \
+ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
+@@ -1633,6 +1653,8 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
+ 	ASPEED_PINCTRL_PIN(AE16),
+ 	ASPEED_PINCTRL_PIN(AE18),
+ 	ASPEED_PINCTRL_PIN(AE19),
++	ASPEED_PINCTRL_PIN(AE22),
++	ASPEED_PINCTRL_PIN(AE24),
+ 	ASPEED_PINCTRL_PIN(AE25),
+ 	ASPEED_PINCTRL_PIN(AE26),
+ 	ASPEED_PINCTRL_PIN(AE7),
+@@ -1642,6 +1664,8 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
+ 	ASPEED_PINCTRL_PIN(AF12),
+ 	ASPEED_PINCTRL_PIN(AF14),
+ 	ASPEED_PINCTRL_PIN(AF15),
++	ASPEED_PINCTRL_PIN(AF22),
++	ASPEED_PINCTRL_PIN(AF23),
+ 	ASPEED_PINCTRL_PIN(AF24),
+ 	ASPEED_PINCTRL_PIN(AF25),
+ 	ASPEED_PINCTRL_PIN(AF7),
+@@ -1855,6 +1879,8 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
+ 	ASPEED_PINCTRL_GROUP(I2C7),
+ 	ASPEED_PINCTRL_GROUP(I2C8),
+ 	ASPEED_PINCTRL_GROUP(I2C9),
++	ASPEED_PINCTRL_GROUP(I3C1),
++	ASPEED_PINCTRL_GROUP(I3C2),
+ 	ASPEED_PINCTRL_GROUP(I3C3),
+ 	ASPEED_PINCTRL_GROUP(I3C4),
+ 	ASPEED_PINCTRL_GROUP(I3C5),
+@@ -2087,6 +2113,8 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
+ 	ASPEED_PINCTRL_FUNC(I2C7),
+ 	ASPEED_PINCTRL_FUNC(I2C8),
+ 	ASPEED_PINCTRL_FUNC(I2C9),
++	ASPEED_PINCTRL_FUNC(I3C1),
++	ASPEED_PINCTRL_FUNC(I3C2),
+ 	ASPEED_PINCTRL_FUNC(I3C3),
+ 	ASPEED_PINCTRL_FUNC(I3C4),
+ 	ASPEED_PINCTRL_FUNC(I3C5),
 -- 
 2.20.1
 
