@@ -2,79 +2,43 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6988BFACA
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:00:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D838BFB52
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 00:28:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fS531wsdzDqw4
-	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 07:00:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fV2G51Q5zDqys
+	for <lists+openbmc@lfdr.de>; Fri, 27 Sep 2019 08:28:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=shawnmm@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fS4K5Z9fzDqcK
- for <openbmc@lists.ozlabs.org>; Fri, 27 Sep 2019 07:00:17 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x8QKqgxf125707; Thu, 26 Sep 2019 17:00:12 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2v93f8aqnn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Sep 2019 17:00:12 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x8QKttNl026647;
- Thu, 26 Sep 2019 21:00:09 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 2v5bg7xxv7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 26 Sep 2019 21:00:09 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x8QL08f355378228
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Sep 2019 21:00:08 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D45212405E;
- Thu, 26 Sep 2019 21:00:07 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 72BFD12405B;
- Thu, 26 Sep 2019 21:00:07 +0000 (GMT)
-Received: from [9.10.99.13] (unknown [9.10.99.13])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu, 26 Sep 2019 21:00:07 +0000 (GMT)
-Subject: Re: Is it required that regulator sensors implement threshold
- interfaces?
-To: Ed Tanous <ed.tanous@intel.com>, openbmc@lists.ozlabs.org
-References: <0519f084-a20d-a338-2875-c5a4110e02ff@linux.vnet.ibm.com>
- <1dd65323-231d-8a18-40d4-a0e00c48a184@intel.com>
-From: Shawn McCarney <shawnmm@linux.vnet.ibm.com>
-Message-ID: <ee061e94-a469-9f1c-b207-86acfbdfbafd@linux.vnet.ibm.com>
-Date: Thu, 26 Sep 2019 16:00:06 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fV1N0Qp2zDqxf;
+ Fri, 27 Sep 2019 08:27:50 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 26 Sep 2019 15:27:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,553,1559545200"; d="scan'208";a="192972129"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga003.jf.intel.com with ESMTP; 26 Sep 2019 15:27:46 -0700
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Eddie James <eajames@linux.ibm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH] media: aspeed: clear garbage interrupts
+Date: Thu, 26 Sep 2019 15:27:43 -0700
+Message-Id: <20190926222743.18546-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-In-Reply-To: <1dd65323-231d-8a18-40d4-a0e00c48a184@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-09-26_08:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1909260163
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,36 +50,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@intel.com>,
+ linux-aspeed@lists.ozlabs.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ed.  Thanks for the information and feedback.
+From: Jae Hyun Yoo <jae.hyun.yoo@intel.com>
 
-On 9/26/2019 3:07 PM, Ed Tanous wrote:
-> For some implementations, these are used to appropriately scale the SDR,
-> and provide the redfish interfaces for those properties.
+CAPTURE_COMPLETE and FRAME_COMPLETE interrupts come even when these
+are disabled in the VE_INTERRUPT_CTRL register and eventually this
+behavior causes disabling irq itself like below:
 
-What is SDR?  Sorry I'm not familiar with that acronym.
+[10055.108784] irq 23: nobody cared (try booting with the "irqpoll" option)
+[10055.115525] CPU: 0 PID: 331 Comm: swampd Tainted: G        W         5.3.0-4fde000-dirty-d683e2e #1
+[10055.124565] Hardware name: Generic DT based system
+[10055.129355] Backtrace:
+[10055.131854] [<80107d7c>] (dump_backtrace) from [<80107fb0>] (show_stack+0x20/0x24)
+[10055.139431]  r7:00000017 r6:00000001 r5:00000000 r4:9d51dc00
+[10055.145120] [<80107f90>] (show_stack) from [<8074bf50>] (dump_stack+0x20/0x28)
+[10055.152361] [<8074bf30>] (dump_stack) from [<80150ffc>] (__report_bad_irq+0x40/0xc0)
+[10055.160109] [<80150fbc>] (__report_bad_irq) from [<80150f2c>] (note_interrupt+0x23c/0x294)
+[10055.168374]  r9:015b6e60 r8:00000000 r7:00000017 r6:00000001 r5:00000000 r4:9d51dc00
+[10055.176136] [<80150cf0>] (note_interrupt) from [<8014df1c>] (handle_irq_event_percpu+0x88/0x98)
+[10055.184835]  r10:7eff7910 r9:015b6e60 r8:00000000 r7:9d417600 r6:00000001 r5:00000002
+[10055.192657]  r4:9d51dc00 r3:00000000
+[10055.196248] [<8014de94>] (handle_irq_event_percpu) from [<8014df64>] (handle_irq_event+0x38/0x4c)
+[10055.205113]  r5:80b56d50 r4:9d51dc00
+[10055.208697] [<8014df2c>] (handle_irq_event) from [<80151f1c>] (handle_level_irq+0xbc/0x12c)
+[10055.217037]  r5:80b56d50 r4:9d51dc00
+[10055.220623] [<80151e60>] (handle_level_irq) from [<8014d4b8>] (generic_handle_irq+0x30/0x44)
+[10055.229052]  r5:80b56d50 r4:00000017
+[10055.232648] [<8014d488>] (generic_handle_irq) from [<8014d524>] (__handle_domain_irq+0x58/0xb4)
+[10055.241356] [<8014d4cc>] (__handle_domain_irq) from [<801021e4>] (avic_handle_irq+0x68/0x70)
+[10055.249797]  r9:015b6e60 r8:00c5387d r7:00c5387d r6:ffffffff r5:9dd33fb0 r4:9d402380
+[10055.257539] [<8010217c>] (avic_handle_irq) from [<80101e34>] (__irq_usr+0x54/0x80)
+[10055.265105] Exception stack(0x9dd33fb0 to 0x9dd33ff8)
+[10055.270152] 3fa0:                                     015d0530 00000000 00000000 015d0538
+[10055.278328] 3fc0: 015d0530 015b6e60 00000000 00000000 0052c5d0 015b6e60 7eff7910 7eff7918
+[10055.286496] 3fe0: 76ce5614 7eff7908 0050e2f4 76a3a08c 20000010 ffffffff
+[10055.293104]  r5:20000010 r4:76a3a08c
+[10055.296673] handlers:
+[10055.298967] [<79f218a5>] irq_default_primary_handler threaded [<1de88514>] aspeed_video_irq
+[10055.307344] Disabling IRQ #23
 
-> I'm not really following why you wouldn't want to implement
-> those.
+To fix this issue, this commit makes the interrupt handler clear
+these garbage interrupts. This driver enables and uses only
+COMP_COMPLETE interrupt instead for frame handling.
 
-The problem is one of scale.  Some of the systems where my application 
-will run may have 30+ voltage rails.  30 rails * 9 sensors per rail = 
-270 MinValues and MaxValues.  I'd rather not ask the hardware engineers 
-to provide 540 data values unless absolutely necessary.
+Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@intel.com>
+---
+ drivers/media/platform/aspeed-video.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
->    They don't have to be exact, and there are plenty of cases where
-> they are set to INT8_MAX and INT8_MIN.  Usually you will know based on
-> the spec you're implementing if the values fall into a
-> uint8/int8/int16/uint16 range, and you can just put in the specified
-> range limits.
-
-That's probably a better approach that setting both min and max to 0.  I 
-was just wondering if anything (especially IPMI) would break if I set 
-all the sensor min/max values to INT16_MIN/INT16_MAX.
-
-Thanks!
-
-Shawn
+diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+index eb12f3793062..e842f99d20a9 100644
+--- a/drivers/media/platform/aspeed-video.c
++++ b/drivers/media/platform/aspeed-video.c
+@@ -606,6 +606,16 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+ 			aspeed_video_start_frame(video);
+ 	}
+ 
++	/*
++	 * CAPTURE_COMPLETE and FRAME_COMPLETE interrupts come even when these
++	 * are disabled in the VE_INTERRUPT_CTRL register so clear them to
++	 * prevent unnecessary interrupt calls.
++	 */
++	if (sts & VE_INTERRUPT_CAPTURE_COMPLETE)
++		sts &= ~VE_INTERRUPT_CAPTURE_COMPLETE;
++	if (sts & VE_INTERRUPT_FRAME_COMPLETE)
++		sts &= ~VE_INTERRUPT_FRAME_COMPLETE;
++
+ 	return sts ? IRQ_NONE : IRQ_HANDLED;
+ }
+ 
+-- 
+2.23.0
 
