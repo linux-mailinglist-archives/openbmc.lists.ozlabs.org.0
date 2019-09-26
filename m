@@ -1,83 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C013BF331
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 14:42:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFE48BF38E
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 14:56:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fF1l4hfKzDqkS
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 22:42:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fFLC3NLdzDqnx
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 22:56:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=qq.com
+ (client-ip=183.3.255.70; helo=qq.com; envelope-from=1181052146@qq.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="GN95cINM"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="gYN9wyCh"; dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.b="DTray6Iv"; 
+ dkim-atps=neutral
+Received: from qq.com (smtpbg444.qq.com [183.3.255.70])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fF0t6YT5zDqTx
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 22:41:33 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 77311651;
- Thu, 26 Sep 2019 08:41:29 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 26 Sep 2019 08:41:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=plvTf/jNa0JhMgfAGElM8Vw62bc6YqX
- x+hHqhWQ66KQ=; b=GN95cINM3ownXKOlk2quBBdxeteddKpCdRXtxg7QVn527AE
- LDfckfyDBcw9wCE6Xsy9zx6cdjcEesKzZ6uszAM8vduL5MVbFDSFGLMEYbXkWnn5
- G2c9t6NxBS+e9kHMRmxkzfu2KZ+bP7AIjMO7C6UoUYHDzG4zHbU6Y5swDx1xTFhX
- dz/E+O7VV1lw67Vr1rpfPcXom0bw4h8jd6ZKFWaMpu+7C6gGJtgxYlQnOUsu+46v
- B9GxkAEJiPXXYoBuoeBRebpsXUG+fcLrsS6pTmIaGNlrEIDVjkuZs0o4gHU0TyIC
- oxMZAfYEr1U9PNRIg+qeM8o09nS6LU1/z3z0srA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=plvTf/
- jNa0JhMgfAGElM8Vw62bc6YqXx+hHqhWQ66KQ=; b=gYN9wyChxMlrJ0PWIFO0SN
- iwwMzyYKhjCD8yzAfEtaMNNWMPtQaemZ9PA9w8kcSb0BI85dZqYSxC0ZqRDS0gud
- K1mREJyoTnciZk7Kh7yvNdTAlH8QzDqAeOWpNMOnupSVCZlivXEvRYx7cExc/N+q
- 6W5XaaXClJqPaZnBvJjhxrNd5Tj213mas6Uyp/UL5EOsvJ1UnhfZ3FB2GU8VBZjd
- mZcNN7derwoAds7xrHWNldvP2TMOpKD6dWYv4382B7CP5wpokM1DfnkXftU0+sO2
- 0W98N3/PqlcV1x2YGhzqlK+t8+XDfNJTEwAMTgMKXawmXi23VVAYAILfNsi2tC1A
- ==
-X-ME-Sender: <xms:-LGMXY9OC80M1382nEhomazpb04ZYWlVeroHaQrCROnn-mK7iv2yyA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdehhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
- hinhepohiilhgrsghsrdhorhhgnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
- fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:-LGMXQoumuN92bqWld04NzchPZoc08p4XHXjRZTHdfGaPNWckrTZ-A>
- <xmx:-LGMXZm0O5s8Y7jBxl2qNj_mWbSOjLyWNG1pvAeh3uayvjs29l6MlQ>
- <xmx:-LGMXdavgUTK1sA1bTSPlEOQV-6z82_SFTMSGn_n33WDINPxlq0jRg>
- <xmx:-bGMXZQasPMgcAHF2RJkJv33zZ3bcYYrQKpldmOUEbmsBQZEfucwLw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 511C8E00A5; Thu, 26 Sep 2019 08:41:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fFJH2YQ5zDqBS
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 22:54:54 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1569502462; bh=4hP2V0OxyR2VyoKZ9u7+ZCQqo75D9zBQ1CjEqvQUhDs=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=DTray6IvWVYnK3pnZifl9hZ1LWCTad/rkkwP4RQy7cJTALKJYH1St+xUH0vLmX89j
+ NtfBh03rb/o7e+VmCfiuM63x7d1Ik0Lln2P5gs5tdQBeLk9S+1H0mJq8NFQeDYQ0gv
+ d3ed3aTqTVa5WEPP2F0UttT6ahxof+JvXehQ5Fxo=
+X-QQ-FEAT: SDGPAIwMd/LFulM1rDL4/mhxGSKhL3kE2dEMU/afxM30roygt4hYSiAwPqU+F
+ 8gkxWp0CQwmfZo/WW2Uv5il6d7ROA60x8iaKjYEhysKLXnZBKED6CI7GHfW2srWU8JCzJKW
+ Xw8HGIHb4KT7F58HtLRdHj5OnhO1PSSg8iSvdZawb84vmo6bkcPcWQPEiiOg4XEB0hA7m4v
+ onU86zJLDneHt+o5SNXnATdzXAg+s56M+Dg/1K8RDw8hyU0pPki23Dg8/slTp8Dvbax/5Og
+ r/rBs00pSkM0IkywuhZHvOhoUUl3kLwzCTZg==
+X-QQ-SSF: 00000000000000F000000000000000S
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 106.121.158.255
+X-QQ-STYLE: 
+X-QQ-mid: webmail166t1569502460t109288
+From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
+To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
+Subject: how can i use ipmitool to interact with openbmc which boot from
+ qemu-system-arm
 Mime-Version: 1.0
-Message-Id: <c2557746-2ef5-47ba-91d6-236a36a52e44@www.fastmail.com>
-In-Reply-To: <MN2PR04MB66690AB5ACEC2097E729B50CCD860@MN2PR04MB6669.namprd04.prod.outlook.com>
-References: <MN2PR04MB66691B6B826B456D250D21E9CD860@MN2PR04MB6669.namprd04.prod.outlook.com>
- <MN2PR04MB66690AB5ACEC2097E729B50CCD860@MN2PR04MB6669.namprd04.prod.outlook.com>
-Date: Thu, 26 Sep 2019 22:12:11 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Zheng Bao" <fishbaoz@hotmail.com>,
- "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
-Subject: Re: [AST2500]The eth0 interface can not work
-Content-Type: text/plain
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5D8CB4FC_0BA4C970_162FB9E5"
+Content-Transfer-Encoding: 8Bit
+Date: Thu, 26 Sep 2019 20:54:20 +0800
+X-Priority: 3
+Message-ID: <tencent_7C14F1899E03C3479BFA6A169AFF9DFCCC06@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Thu, 26 Sep 2019 20:54:21 +0800 (CST)
+Feedback-ID: webmail:qq.com:bgforeign:bgforeign4
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,72 +73,55 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Zheng,
+This is a multi-part message in MIME format.
 
-On Thu, 26 Sep 2019, at 20:19, Zheng Bao wrote:
->  
-> The whole dmesg is here.
-> 
-> root@s2600wf:~# dmesg
-> [ 0.000000] Booting Linux on physical CPU 0x0
-> [ 0.000000] Linux version 5.2.14-9f4f5ff (oe-user@oe-host) (gcc version 
+------=_NextPart_5D8CB4FC_0BA4C970_162FB9E5
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-*snip*
+R3JlZXRpbmdzOg0KaSBoYXZlIGJ1aWxkIGEgb3BlbmJtYyBpbWFnZSwgYW5kIGJvb3Qgd2l0
+aCBxZW11Og0KDQoNCiNxZW11LXN5c3RlbS1hcm0gLW0gMjU2IC1NIHBhbG1ldHRvLWJtYyAt
+bm9ncmFwaGljIC1kcml2ZSBmaWxlPS9ob21lL29wZW5ibWMvb3BlbmJtYy9idWlsZC90bXAv
+ZGVwbG95L2ltYWdlcy9wYWxtZXR0by9vYm1jLXBob3NwaG9yLWltYWdlLXBhbG1ldHRvLTIw
+MTkwOTI2MTIzMDU3LnN0YXRpYy5tdGQsZm9ybWF0PXJhdyxpZj1tdGQgLW5ldCBuaWMgLW5l
+dCB1c2VyLGhvc3Rmd2Q9OjEyNy4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6
+MjQ0My06NDQzLGhvc3RuYW1lPXFlbXUNCg0KDQphbmQgd2hlbiBpIHJ1biB0aGUgZm9sbG93
+aW5nIGNvbW1hbmQgaW4gbXkgdWJ1bnR1MTguMDQ6DQoNCg0KI2N1cmwgLWMgY2phciAtYiBj
+amFyIC1rIC1IICJDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24iIC1YIFBPU1QgaHR0
+cHM6Ly8xMjcuMC4wLjE6MjQ0My9sb2dpbiAtZCAie1wiZGF0YVwiOiBbIFwicm9vdFwiLCBc
+IjBwZW5CbWNcIiBdIH0iDQoNCg0KaXQgd29ya3Mgd2VsbCwgYnV0IHdoZW4gaSB0cnkgdG8g
+dXNlIGltcGl0b29sOg0KDQoNCiNpcG1pdG9vbCAtSCAxMjcuMC4wLjEgLUkgbGFucGx1cyAt
+VSByb290IC1QIDBwZW5CbWMgcG93ZXIgc3RhdHVzDQoNCg0KaSBnb3QgIkVycm9yOiB1bmFi
+bGUgdG8gZXN0YWJsaXNoIElQTUkgdjIgLyBSTUNQKyBzZXNzaW9uIi4gaG93IGNhbiBpIGRv
+Pw0KDQoNClRoYW5rcyENCkxpdSBIb25nd2Vp
 
-> [ 2.465681] aspeed-smc 1e630000.spi: Using 50 MHz SPI frequency
-> [ 2.471803] aspeed-smc 1e630000.spi: unrecognized JEDEC id bytes: 00 00 
-> 00 00 00 00
-> [ 2.479490] aspeed-smc 1e630000.spi: Aspeed SMC probe failed -2
-> [ 2.490339] aspeed-smc: probe of 1e630000.spi failed with error -2
-> [ 2.498232] libphy: Fixed MDIO Bus: probed
-> [ 2.503372] ftgmac100 1e660000.ethernet: Error applying setting, 
-> reverse things back
+------=_NextPart_5D8CB4FC_0BA4C970_162FB9E5
+Content-Type: text/html;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-Your pinmux request for MAC1 failed. What does your devicetree look like?
+PGRpdj5HcmVldGluZ3M6PC9kaXY+PGRpdj5pIGhhdmUgYnVpbGQgYSBvcGVuYm1jIGltYWdl
+LCBhbmQgYm9vdCB3aXRoIHFlbXU6PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48ZGl2PiNx
+ZW11LXN5c3RlbS1hcm0gLW0gMjU2IC1NIHBhbG1ldHRvLWJtYyAtbm9ncmFwaGljIC1kcml2
+ZSBmaWxlPS9ob21lL29wZW5ibWMvb3BlbmJtYy9idWlsZC90bXAvZGVwbG95L2ltYWdlcy9w
+YWxtZXR0by9vYm1jLXBob3NwaG9yLWltYWdlLXBhbG1ldHRvLTIwMTkwOTI2MTIzMDU3LnN0
+YXRpYy5tdGQsZm9ybWF0PXJhdyxpZj1tdGQgLW5ldCBuaWMgLW5ldCB1c2VyLGhvc3Rmd2Q9
+OjEyNy4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6MjQ0My06NDQzLGhvc3Ru
+YW1lPXFlbXU8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PmFuZCB3aGVuIGkgcnVuIHRoZSBm
+b2xsb3dpbmcgY29tbWFuZCBpbiBteSB1YnVudHUxOC4wNDo8L2Rpdj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PjxkaXY+I2N1cmwgLWMgY2phciAtYiBjamFyIC1rIC1IICJDb250ZW50LVR5cGU6
+IGFwcGxpY2F0aW9uL2pzb24iIC1YIFBPU1QgaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0My9sb2dp
+biAtZCAie1wiZGF0YVwiOiBbIFwicm9vdFwiLCBcIjBwZW5CbWNcIiBdIH0iPC9kaXY+PGRp
+dj48YnI+PC9kaXY+PGRpdj5pdCB3b3JrcyB3ZWxsLCBidXQgd2hlbiBpIHRyeSB0byB1c2Ug
+aW1waXRvb2w6PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj4jaXBtaXRvb2wgLUggMTI3LjAu
+MC4xIC1JIGxhbnBsdXMgLVUgcm9vdCAtUCAwcGVuQm1jIHBvd2VyIHN0YXR1czwvZGl2Pjxk
+aXY+PGJyPjwvZGl2PjxkaXY+aSBnb3QgIkVycm9yOiB1bmFibGUgdG8gZXN0YWJsaXNoIElQ
+TUkgdjIgLyBSTUNQKyBzZXNzaW9uIi4gaG93IGNhbiBpIGRvPzwvZGl2PjxkaXY+PGJyPjwv
+ZGl2PjxkaXY+VGhhbmtzITwvZGl2PjxkaXY+TGl1IEhvbmd3ZWk8L2Rpdj48ZGl2PjwvZGl2
+PjwvZGl2PjxkaXY+PC9kaXY+PC9kaXY+
 
-Building a kernel with CONFIG_DEBUG_PINCTRL=y might help.
+------=_NextPart_5D8CB4FC_0BA4C970_162FB9E5--
 
-> [ 2.511509] ftgmac100 1e660000.ethernet: Generated random MAC address 
-> 52:47:da:92:a3:e6
-> [ 2.519554] ftgmac100 1e660000.ethernet: Using NCSI interface
-> [ 2.526596] ftgmac100 1e660000.ethernet eth0: irq 19, mapped at e846443e
-> [ 2.533818] ftgmac100 1e680000.ethernet: Error applying setting, 
-> reverse things back
 
-Same issue here
 
-> [ 2.541937] ftgmac100 1e680000.ethernet: Generated random MAC address 
-> 0a:4f:a7:ea:22:b3
-> [ 2.556726] libphy: ftgmac100_mdio: probed
-> [ 2.560953] ftgmac100 1e680000.ethernet (unnamed net_device) 
-> (uninitialized): eth%d: no PHY found
-> [ 2.569918] ftgmac100 1e680000.ethernet: MII Probe failed!
-
-This kind of failure isn't entirely surprising in light of the above.
-
-> 
-> *From:* openbmc <openbmc-bounces+fishbaoz=hotmail.com@lists.ozlabs.org> 
-> on behalf of Zheng Bao <fishbaoz@hotmail.com>
-> *Sent:* Thursday, September 26, 2019 10:47 AM
-> *To:* OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> *Subject:* [AST2500]The eth0 interface can not work 
-> [ 15.634717] 8021q: adding VLAN 0 to HW filter on device eth0
-> [ 32.249877] ftgmac100 1e660000.ethernet eth0: NCSI: No channel found 
-> to configure!
-> [ 33.289813] ftgmac100 1e660000.ethernet eth0: Wrong NCSI state 0x100 
-> in workqueue
-> 
->  I tried to use the network on AST2500. Everything seems to be good and 
-> I can use ping and webui,
->  until I rebuilt an image.
->  The part of dmesg is above. I can not trace back to a working image.  
-
-Are you building the right image for your hardware? What platform are
-you trying your build on? Is it actually an s2600wf? What source tree
-are you building from? Beware that Intel have an OpenBMC fork that
-contains patches that they haven't yet got merged into upstream
-OpenBMC that may provide better support for their platforms:
-
-https://lists.ozlabs.org/pipermail/openbmc/2019-September/018488.html
-
-Andrew
