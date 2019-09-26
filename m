@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0C24BF42F
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 15:38:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06CF6BF441
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 15:41:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46fGGX5pGkzDqnD
-	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:38:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46fGKS488WzDqbt
+	for <lists+openbmc@lfdr.de>; Thu, 26 Sep 2019 23:41:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,61 +16,62 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Ku3ksd8x"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="WGJwBsfF"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="SIoD9min"; dkim-atps=neutral
+ header.b="F5vnmBQ3"; dkim-atps=neutral
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
  [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46fGBw1BvzzDqjJ
- for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:20 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46fGBy1XTGzDqjJ
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Sep 2019 23:35:22 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id CE1436D0;
- Thu, 26 Sep 2019 09:35:17 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 0E764719;
+ Thu, 26 Sep 2019 09:35:19 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:18 -0400
+ by compute4.internal (MEProxy); Thu, 26 Sep 2019 09:35:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=M6CdlY9WjEBXg
- l7K1ZF2GhMiCG6h+wPB9CjXBLMviWo=; b=Ku3ksd8xJUO0eFl3xMCnRVUUYQm50
- feAgZ5V6LUow/mZ963YQD9UpKgir+7yxQ3RuENiq9AgchjRH27/1V79WQByVS1A1
- dzLwUn1rwBZLTAk+ZbTEBiuH7/Dkdxz8M5o9J9bZt+MjntN6k8mYX29AFOQDbFHL
- WILpzHUmR2fTeoocM+gHBvP00/WDzt1dUkaGqCFYj4zPdLA2BlzVd/5+1Hjk5Aib
- XjT0dbHJMlpqNb/2snUgWY1Jll/JDQA6oxCxlPcRtGs85TEYlb3atkHNQPJr0Fxn
- F3OqMWp0N0Wcwda2NQt4YZRMH7140H8BMofIoKrbZxypzt9RugVTNcWew==
+ :mime-version:content-transfer-encoding; s=fm3; bh=M1iyDZQoxGoqP
+ BEuWgwS+K5O8DqyhEij/CquYJUJoaw=; b=WGJwBsfFh1kL5ZHM74Z4v2Pbg6EKm
+ u/MfOmVw7kmC/Eu/416Tbw4nUI71GOfZPH/KosKZOLDHmbbmWhWc3JlV0Zc3cGtL
+ YDLyJ9TB4ctm83fVHi3qNlzvAQw0gYKuqZFJmHyIQTRLvA8I9Zg5Oz8uaSOUUUvL
+ YUnazhQvdxI8banHQWF3vSvCA4mxiAc/XR1evjoCQlJd2Ygeq7VtKLZvlqIZWQz4
+ Vhua8pTO/zSJd6xARi/1q+3GItfWNRsSGMTH7usbembfLKUcFJzjDi6DQAMXmzu6
+ egDDJlgil67JftqyATRiUBSlbkRHRpoGzTeryqRS5q+WLa/eJ+n8i5sYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=M6CdlY9WjEBXgl7K1ZF2GhMiCG6h+wPB9CjXBLMviWo=; b=SIoD9min
- EAWMl/QxtRDFiQGxHqvtEbx+UCP3MQW2rgQ3CS53AKgzSDai2SvpFguNuDUuQQof
- b/OZ6EjVhH3EYofZj/FmjghyuxjV4x1jIb/N9bcJQdA41tL3m+6sSP3V6DXaH9f3
- PabZZNbrdCmIf4TuZSM2HLBbD404GQBf0EVIo1NC8deeC/ICTfRZPhJjN/a9tgVz
- 29hG8T3YVoPurM+uqKVgZFD9KDl3oGr0kvtbnoTgTzS+KO+j4A29/ajpAbVel6gj
- KoP4x6VvJ+ClYb54VD8opxpvlGEIdvnKgagH30SUjG7/IRCv+o2FrnuWP8vCYY7j
- DygpDZf+3QUE3A==
-X-ME-Sender: <xms:lb6MXRONJaq7YPJ4mCNH8zxuJaXYQPn5fndVkVkXCAPw6bZ52RFU1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdeihecutefuodetggdotefrodftvf
+ fm3; bh=M1iyDZQoxGoqPBEuWgwS+K5O8DqyhEij/CquYJUJoaw=; b=F5vnmBQ3
+ yDTMJ00ffqlRjbcv/RBlHYcGn8jopZvh9+AOFavmXwV0wvI97aOL2jIT+vREotV/
+ QxDhgyDUWMfGTX5I+Yq2Hi31jQNVE47/GYFxI5Y4CHnMuEn3LiKcqqIDIp0MjHMA
+ 2TW06FwomA+ECZ+1wYgfzHjybzhTBUIvIiL70tgMd/f4NEvJi6+lRc3zrRwoFtpz
+ H4mrJLhLqZ52QIPcCbK+/RqIIBN3PBGHDcMOxauzUbZBzmQJtd9a1gYBWdl5iiOM
+ ZHTcWzsFjYRV4rGHQWuxkEb8t/fSOp6syq/mEWbwLUufXY24iD/DDhV2O0F0NzYm
+ rUPvjn6jJI9Spw==
+X-ME-Sender: <xms:l76MXe5YiI7sszGMmgtrShcmmE_yXSVvjhT1fKiGors3x6MAxjmgoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrfeeggdeiiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
  rdhiugdrrghuqeenucfkphepvddtfedrheejrddvudehrddujeeknecurfgrrhgrmhepmh
  grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihii
  vgeptd
-X-ME-Proxy: <xmx:lb6MXe5BcEWKQJFNmtqhoIdKg08BSfKCwmoL_2d-2q5FVzU_GJ1rYg>
- <xmx:lb6MXfRceKWhT4mORNwfEilduAHdApWUm3CnhUYz2tnBJxlDGERAKA>
- <xmx:lb6MXTDQgN9IR1zgCuMaVi7DVazYKI-Wt7VmL9Gfx4fSaiPeNpiqFA>
- <xmx:lb6MXfCAmFyaCHNpa7ueE7MxW7NVZ1PlY2vxG7vVjKjFrqY_5DgLVA>
+X-ME-Proxy: <xmx:l76MXTnoil0A3V1c_hjpklAUHCRkkvuOw68N5AZ17RzMZf7MQq9m-w>
+ <xmx:l76MXVcKBJSmL3C5wiyGDwDpmrTsroXlOpe89P9GghzjFKUl7fTfJg>
+ <xmx:l76MXZQg8eVYJTSv7CtXVJqAwOSz0hR457K4svn8p_SVeZf7m_5pKw>
+ <xmx:l76MXcNzIdygJYdchxF33hz2ZNwCzDBgq6vw2hk5y_23729PTAk7Lw>
 Received: from mistburn.lan (203-57-215-178.dyn.iinet.net.au [203.57.215.178])
- by mail.messagingengine.com (Postfix) with ESMTPA id 9F487D60063;
- Thu, 26 Sep 2019 09:35:14 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id A7DCCD6005F;
+ Thu, 26 Sep 2019 09:35:17 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 01/15] pinctrl: aspeed-g6: Sort pins for sanity
-Date: Thu, 26 Sep 2019 23:05:54 +0930
-Message-Id: <20190926133608.30566-2-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 02/15] pinctrl: aspeed-g6: Fix I2C14 SDA
+ description
+Date: Thu, 26 Sep 2019 23:05:55 +0930
+Message-Id: <20190926133608.30566-3-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190926133608.30566-1-andrew@aj.id.au>
 References: <20190926133608.30566-1-andrew@aj.id.au>
@@ -92,90 +93,30 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, johnny_huang@aspeedtech.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Some pins crept in that weren't ordered in the list.
+The I2C function the pin participated in was incorrectly named SDA14
+which lead to a failure to mux:
 
+[    6.884344] No function I2C14 found on pin 7 (7). Found signal(s) MACLINK4, SDA14, GPIOA7 for function(s) MACLINK4, SDA14, GPIOA7
+
+Fixes: 58dc52ad00a0 ("pinctrl: aspeed: Add AST2600 pinmux support")
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index 648ddb7f038a..ff208b7c75a8 100644
+index ff208b7c75a8..9079655cc818 100644
 --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
 +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -1574,6 +1574,8 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(A3),
- 	ASPEED_PINCTRL_PIN(AA11),
- 	ASPEED_PINCTRL_PIN(AA12),
-+	ASPEED_PINCTRL_PIN(AA16),
-+	ASPEED_PINCTRL_PIN(AA17),
- 	ASPEED_PINCTRL_PIN(AA23),
- 	ASPEED_PINCTRL_PIN(AA24),
- 	ASPEED_PINCTRL_PIN(AA25),
-@@ -1585,6 +1587,8 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(AB11),
- 	ASPEED_PINCTRL_PIN(AB12),
- 	ASPEED_PINCTRL_PIN(AB15),
-+	ASPEED_PINCTRL_PIN(AB16),
-+	ASPEED_PINCTRL_PIN(AB17),
- 	ASPEED_PINCTRL_PIN(AB18),
- 	ASPEED_PINCTRL_PIN(AB19),
- 	ASPEED_PINCTRL_PIN(AB22),
-@@ -1602,6 +1606,7 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(AC11),
- 	ASPEED_PINCTRL_PIN(AC12),
- 	ASPEED_PINCTRL_PIN(AC15),
-+	ASPEED_PINCTRL_PIN(AC16),
- 	ASPEED_PINCTRL_PIN(AC17),
- 	ASPEED_PINCTRL_PIN(AC18),
- 	ASPEED_PINCTRL_PIN(AC19),
-@@ -1619,6 +1624,7 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(AD12),
- 	ASPEED_PINCTRL_PIN(AD14),
- 	ASPEED_PINCTRL_PIN(AD15),
-+	ASPEED_PINCTRL_PIN(AD16),
- 	ASPEED_PINCTRL_PIN(AD19),
- 	ASPEED_PINCTRL_PIN(AD20),
- 	ASPEED_PINCTRL_PIN(AD22),
-@@ -1634,8 +1640,11 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(AE12),
- 	ASPEED_PINCTRL_PIN(AE14),
- 	ASPEED_PINCTRL_PIN(AE15),
-+	ASPEED_PINCTRL_PIN(AE16),
- 	ASPEED_PINCTRL_PIN(AE18),
- 	ASPEED_PINCTRL_PIN(AE19),
-+	ASPEED_PINCTRL_PIN(AE25),
-+	ASPEED_PINCTRL_PIN(AE26),
- 	ASPEED_PINCTRL_PIN(AE7),
- 	ASPEED_PINCTRL_PIN(AE8),
- 	ASPEED_PINCTRL_PIN(AF10),
-@@ -1643,6 +1652,8 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(AF12),
- 	ASPEED_PINCTRL_PIN(AF14),
- 	ASPEED_PINCTRL_PIN(AF15),
-+	ASPEED_PINCTRL_PIN(AF24),
-+	ASPEED_PINCTRL_PIN(AF25),
- 	ASPEED_PINCTRL_PIN(AF7),
- 	ASPEED_PINCTRL_PIN(AF8),
- 	ASPEED_PINCTRL_PIN(AF9),
-@@ -1792,17 +1803,6 @@ static struct pinctrl_pin_desc aspeed_g6_pins[ASPEED_G6_NR_PINS] = {
- 	ASPEED_PINCTRL_PIN(Y3),
- 	ASPEED_PINCTRL_PIN(Y4),
- 	ASPEED_PINCTRL_PIN(Y5),
--	ASPEED_PINCTRL_PIN(AB16),
--	ASPEED_PINCTRL_PIN(AA17),
--	ASPEED_PINCTRL_PIN(AB17),
--	ASPEED_PINCTRL_PIN(AE16),
--	ASPEED_PINCTRL_PIN(AC16),
--	ASPEED_PINCTRL_PIN(AA16),
--	ASPEED_PINCTRL_PIN(AD16),
--	ASPEED_PINCTRL_PIN(AF25),
--	ASPEED_PINCTRL_PIN(AE26),
--	ASPEED_PINCTRL_PIN(AE25),
--	ASPEED_PINCTRL_PIN(AF24),
- };
+@@ -87,7 +87,7 @@ FUNC_GROUP_DECL(MACLINK3, L23);
  
- static const struct aspeed_pin_group aspeed_g6_groups[] = {
+ #define K25 7
+ SIG_EXPR_LIST_DECL_SESG(K25, MACLINK4, MACLINK4, SIG_DESC_SET(SCU410, 7));
+-SIG_EXPR_LIST_DECL_SESG(K25, SDA14, SDA14, SIG_DESC_SET(SCU4B0, 7));
++SIG_EXPR_LIST_DECL_SESG(K25, SDA14, I2C14, SIG_DESC_SET(SCU4B0, 7));
+ PIN_DECL_2(K25, GPIOA7, MACLINK4, SDA14);
+ FUNC_GROUP_DECL(MACLINK4, K25);
+ 
 -- 
 2.20.1
 
