@@ -2,70 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 880A0C13CA
-	for <lists+openbmc@lfdr.de>; Sun, 29 Sep 2019 09:35:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B52E8C13DD
+	for <lists+openbmc@lfdr.de>; Sun, 29 Sep 2019 09:50:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46gy4g1zN5zDqgw
-	for <lists+openbmc@lfdr.de>; Sun, 29 Sep 2019 17:35:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46gyPs3gJ7zDqjJ
+	for <lists+openbmc@lfdr.de>; Sun, 29 Sep 2019 17:50:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=qq.com
- (client-ip=183.3.255.61; helo=qq.com; envelope-from=1181052146@qq.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="bpszrKIv"; 
- dkim-atps=neutral
-Received: from qq.com (smtpbg442.qq.com [183.3.255.61])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46gy3r6qm4zDqbf
- for <openbmc@lists.ozlabs.org>; Sun, 29 Sep 2019 17:34:55 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1569742474; bh=TU9BihcpOtbKoQAFKSCzBVf88GAzLFKa1o9MNznxxn4=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=bpszrKIvdz+UquhUBSbMzyzN0aAcsiqrnrQhp3ilcVO4Z9zJQ/cyKErAUTMq8JTiA
- lqPnLyTgdpFLEnEJZTDpGvCeV6KcziOt2j+v/zgLxGTx+j1HQ2WrKhwjGaSqq6wjOS
- psCmqmkn6QiAK2EeokaQppBCufEL3V366KgY2qqw=
-X-QQ-FEAT: iQygIJK8D+e1YTFfKCwDKMPBpEZuggFJdl2vwOB3wim/gkmKj8UHe2+9cD5sa
- NdFtrhEPK68cKxXRIk6wdsh5lNhLxEab9plaGldoTls4HBN+cq5kG6FpRnrp2JPkmQE08Jr
- JcEtAOM4j5bMiHKGoIpsWSv6JV0GORxWDafL2RrTvLv3iE/aTJaw42uYcQI2CkGhVfviLsl
- N00PhM84jKrDfCSlpx+FtKdInLCEvWRx6WwW5NsEt+3HGf2zuX09ctsk23394UaAljSjNEE
- OGVyKqiAtXnHt9aazaNHs0F4w8/w2aLamNjt9OVEaYRHrT
-X-QQ-SSF: 00000000000000F000000000000000R
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 106.121.164.170
-In-Reply-To: <tencent_34EA53595EFE6AF25F53F427650E7D1F1708@qq.com>
-References: <tencent_7C14F1899E03C3479BFA6A169AFF9DFCCC06@qq.com>
- <1ba3bebe-1a93-4848-a2ed-979e31c7b708@www.fastmail.com>
- <tencent_34EA53595EFE6AF25F53F427650E7D1F1708@qq.com>
-X-QQ-STYLE: 
-X-QQ-mid: webmail166t1569742473t5090661
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?QW5kcmV3IEplZmZlcnk=?=" <andrew@aj.id.au>,
- "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: =?gb18030?B?u9i4tKO6IGhvdyBjYW4gaSB1c2UgaXBtaXRvb2wg?=
- =?gb18030?B?dG8gaW50ZXJhY3Qgd2l0aCBvcGVuYm1jIHdoaWNo?=
- =?gb18030?B?IGJvb3QgZnJvbSBxZW11LXN5c3RlbS1hcm0=?=
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5D905E88_0CDD9540_4A8E79E8"
-Content-Transfer-Encoding: 8Bit
-Date: Sun, 29 Sep 2019 15:34:32 +0800
-X-Priority: 3
-Message-ID: <tencent_AEA99F5038687CB8AB0765B1F867C9EB4C0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 1148904225
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Sun, 29 Sep 2019 15:34:33 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign4
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46gyLV2CVgzDqbf
+ for <openbmc@lists.ozlabs.org>; Sun, 29 Sep 2019 17:47:45 +1000 (AEST)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 29 Sep 2019 00:47:41 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,562,1559545200"; d="scan'208";a="189926987"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.239.196.61])
+ by fmsmga008.fm.intel.com with ESMTP; 29 Sep 2019 00:47:39 -0700
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: "'Vijay Khemka'" <vijaykhemka@fb.com>, "'Kun Yi'" <kunyi@google.com>,
+ "'Joel Stanley'" <joel@jms.id.au>, "'Andrew Jeffery'" <andrew@aj.id.au>,
+ "'OpenBMC Maillist'" <openbmc@lists.ozlabs.org>
+References: <CAGMNF6XaNL1HGf7=zKeJrO7CBH_1Y+yhUJi9FQRQ--2V9U+KUA@mail.gmail.com>
+ <E6FDE343-5FC6-4493-9D53-BE6317525DB7@fb.com>
+In-Reply-To: <E6FDE343-5FC6-4493-9D53-BE6317525DB7@fb.com>
+Subject: RE: Accessing kernel panic information without BMC console?
+Date: Sun, 29 Sep 2019 15:47:38 +0800
+Message-ID: <000201d5769a$2b91bc30$82b53490$@linux.intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQG0LG6TYa/CxU+/JEaGo3dvibi+vgJCn0tEp3LFn0A=
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZTFmZDJhMTUtM2NiZS00NWFmLTgwNjktNjY2MTNlMmM3ZTE1IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoid3RzenQ5cEdBUGNOWXhtXC9wWUpFT0QrdHhWVGRkV24xNUZVRnVMRmVTbW1MQTFUR3ZneVpyVllsZEJpVGRSU0kifQ==
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: request-justification,no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,159 +66,61 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+I am working on this ramoops feature too, and it works on ast2500, just =
+enable some kernel config and modify the dts.
 
-------=_NextPart_5D905E88_0CDD9540_4A8E79E8
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+I will send out a patch about this change later.
 
-RGVhciBNci4gQW5kcmV3IGFuZCBvcGVuYm1jOg0KDQoNClRoYW5rcyBhIGxvdCBmb3IgeW91
-ciBoZWxwaW5nLg0KYmVjYXVzZSBpcG1pdG9vbCB1c2UgdWRwLCBzbyBteSBwcmV2aW91cyBj
-aGFuZ2VzIGZvciBxZW11IGNtZGxpbmUgYXJlIG5vdCByaWdodC4gaSBjaGFuZ2UgaXQgYXMg
-Zm9sbG93czoNCg0KDQojcWVtdS1zeXN0ZW0tYXJtIC1tIDI1NiAtTSBwYWxtZXR0by1ibWMg
-LW5vZ3JhcGhpYyAtZHJpdmUgZmlsZT0vaG9tZS9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1w
-L2RlcGxveS9pbWFnZXMvcGFsbWV0dG8vb2JtYy1waG9zcGhvci1pbWFnZS1wYWxtZXR0by0y
-MDE5MDkyNjEyMzA1Ny5zdGF0aWMubXRkLGZvcm1hdD1yYXcsaWY9bXRkIC1uZXQgbmljIC1u
-ZXQgdXNlcixob3N0ZndkPToxMjcuMC4wLjE6MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4x
-OjI0NDMtOjQ0Myxob3N0ZndkPXVkcDoxMjcuMC4wLjE6MjYyMy06NjIzLGhvc3RuYW1lPXFl
-bXUNCg0KDQpjaGFuZ2UgImhvc3Rmd2Q9OjEyNy4wLjAuMToyNjIzLTo2MjMiIHRvICJob3N0
-ZndkPXVkcDoxMjcuMC4wLjE6MjYyMy06NjIzIi4NCg0KDQphbmQgaSBydW46DQojaXBtaXRv
-b2wgLUggMTI3LjAuMC4xIC1JIGxhbnBsdXMgLXAgMjYyMyAgLVUgcm9vdCAtUCAwcGVuQm1j
-IHBvd2VyIHN0YXR1cw0KYW5kIGkgZ290Og0KQ2hhc3NpcyBQb3dlciBpcyBvZmYNCg0KDQpp
-dCBzZWVtcyBpcG1pdG9vbCB3b3JrcyB3ZWxsIHRvZ2V0aGVyIHdpdGggcWVtdV5fXi4NCg0K
-DQpUaGFua3MhDQpMaXUgSG9uZ3dlaSAvVUNBUw0KDQoNCg0KDQotLS0tLS0tLS0tLS0tLS0t
-LS0g1K3KvNPKvP4gLS0tLS0tLS0tLS0tLS0tLS0tDQq3orz+yMs6ICLEz9KwpeCl66W3pail
-6aW0IjwxMTgxMDUyMTQ2QHFxLmNvbT47DQq3osvNyrG85DogMjAxOcTqOdTCMjfI1SjQx8ba
-zuUpINbQzucxMjozNw0KytW8/sjLOiAiQW5kcmV3IEplZmZlcnkiPGFuZHJld0Bhai5pZC5h
-dT47Im9wZW5ibWMiPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47DQoNCtb3zOI6ILvYuLSj
-uiBob3cgY2FuIGkgdXNlIGlwbWl0b29sIHRvIGludGVyYWN0IHdpdGggb3BlbmJtYyB3aGlj
-aCBib290IGZyb20gcWVtdS1zeXN0ZW0tYXJtDQoNCg0KDQpEZWFyIEFuZHJldzoNCmkgaGF2
-ZSBjaGFuZ2UgbXkgcWVtdSBjb21tYW5kIGxpbmUNCiNxZW11LXN5c3RlbS1hcm0gLW0gMjU2
-IC1NIHBhbG1ldHRvLWJtYyAtbm9ncmFwaGljIC1kcml2ZSBmaWxlPS9ob21lL29wZW5ibWMv
-b3BlbmJtYy9idWlsZC90bXAvZGVwbG95L2ltYWdlcy9wYWxtZXR0by9vYm1jLXBob3NwaG9y
-LWltYWdlLXBhbG1ldHRvLTIwMTkwOTI2MTIzMDU3LnN0YXRpYy5tdGQsZm9ybWF0PXJhdyxp
-Zj1tdGQgLW5ldCBuaWMgLW5ldCB1c2VyLGhvc3Rmd2Q9OjEyNy4wLjAuMToyMjIyLToyMixo
-b3N0ZndkPToxMjcuMC4wLjE6MjQ0My06NDQzLGhvc3Rmd2Q9OjEyNy4wLjAuMToyNjIzLTo2
-MjMsaG9zdG5hbWU9cWVtdQ0KDQoNCmFkZCAiaG9zdGZ3ZD06MTI3LjAuMC4xOjI2MjMtOjYy
-MyIsDQpidXQgd2hlbiBpIHVzZSBpcG1pdG9vbA0KI2lwbWl0b29sIC1IIDEyNy4wLjAuMSAt
-SSBsYW5wbHVzIC1VIHJvb3QgLVAgMHBlbkJtYyBwb3dlciBzdGF0dXMNCm9yDQojaXBtaXRv
-b2wgLUggMTI3LjAuMC4xIC1wIDI2MjMgLUkgbGFucGx1cyAtVSByb290IC1QIDBwZW5CbWMg
-cG93ZXIgc3RhdHVzDQpuZWl0aGVyIG9mIHRoZW0gd29yaywgaSBzZWFyY2ggZnJvbSBpbnRl
-cm5ldCwgdGhleSB0b2xkIG1lIHRoZSBwb3J0IGZvciBSTUNQIGlmIDYyMywgaXMgaXQgcmln
-aHQ/IGFuZCB3aGF0IGNhbiBpIGRvIHRvIGdldCBpcG1pdG9vbCB3b3JrIGZvciBxZW11Pw0K
-DQoNClRoYW5rcyENCkxpdSBIb25nd2VpDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tINStyrzT
-yrz+IC0tLS0tLS0tLS0tLS0tLS0tLQ0Kt6K8/sjLOiAiQW5kcmV3IEplZmZlcnkiPGFuZHJl
-d0Bhai5pZC5hdT47DQq3osvNyrG85DogMjAxOcTqOdTCMjbI1SjQx8bay8QpIM3tyc8xMDoz
-MA0KytW8/sjLOiAixM/SsKXgpeult6WopemltCI8MTE4MTA1MjE0NkBxcS5jb20+OyJvcGVu
-Ym1jIjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+Ow0KDQrW98ziOiBSZTogaG93IGNhbiBp
-IHVzZSBpcG1pdG9vbCB0byBpbnRlcmFjdCB3aXRoIG9wZW5ibWMgd2hpY2ggYm9vdCBmcm9t
-IHFlbXUtc3lzdGVtLWFybQ0KDQoNCg0KDQoNCk9uIFRodSwgMjYgU2VwIDIwMTksIGF0IDIy
-OjI0LCDEz9KwpeCl66W3pail6aW0IHdyb3RlOg0KPiBHcmVldGluZ3M6DQo+IGkgaGF2ZSBi
-dWlsZCBhIG9wZW5ibWMgaW1hZ2UsIGFuZCBib290IHdpdGggcWVtdToNCj4gDQo+ICNxZW11
-LXN5c3RlbS1hcm0gLW0gMjU2IC1NIHBhbG1ldHRvLWJtYyAtbm9ncmFwaGljIC1kcml2ZSAN
-Cj4gZmlsZT0vaG9tZS9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL2RlcGxveS9pbWFnZXMv
-cGFsbWV0dG8vb2JtYy1waG9zcGhvci1pbWFnZS1wYWxtZXR0by0yMDE5MDkyNjEyMzA1Ny5z
-dGF0aWMubXRkLGZvcm1hdD1yYXcsaWY9bXRkIC1uZXQgbmljIC1uZXQgdXNlcixob3N0Zndk
-PToxMjcuMC4wLjE6MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4xOjI0NDMtOjQ0Myxob3N0
-bmFtZT1xZW11DQo+IA0KPiBhbmQgd2hlbiBpIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQg
-aW4gbXkgdWJ1bnR1MTguMDQ6DQo+IA0KPiAjY3VybCAtYyBjamFyIC1iIGNqYXIgLWsgLUgg
-IkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbiIgLVggUE9TVCANCj4gaHR0cHM6Ly8x
-MjcuMC4wLjE6MjQ0My9sb2dpbiAtZCAie1wiZGF0YVwiOiBbIFwicm9vdFwiLCBcIjBwZW5C
-bWNcIiBdIH0iDQo+IA0KPiBpdCB3b3JrcyB3ZWxsLCBidXQgd2hlbiBpIHRyeSB0byB1c2Ug
-aW1waXRvb2w6DQo+IA0KPiAjaXBtaXRvb2wgLUggMTI3LjAuMC4xIC1JIGxhbnBsdXMgLVUg
-cm9vdCAtUCAwcGVuQm1jIHBvd2VyIHN0YXR1cw0KPiANCj4gaSBnb3QgIkVycm9yOiB1bmFi
-bGUgdG8gZXN0YWJsaXNoIElQTUkgdjIgLyBSTUNQKyBzZXNzaW9uIi4gaG93IGNhbiBpIGRv
-Pw0KDQpZb3UgbmVlZCB0byBhZGQgYW5vdGhlciAnaG9zdGZ3ZCcgdG8gdGhlIGNvbW1hbmRs
-aW5lIHRvIGV4cG9zZSB0aGUNClJDTVArIHBvcnQuIEF0IHRoZSBtb21lbnQgeW91J3JlIG9u
-bHkgZXhwb3NpbmcgU1NIICgyMikgYW5kIEhUVFBTICg0NDMpDQoNCkFuZHJldw==
+Thanks,
+Yong
+-----Original Message-----
+From: openbmc =
+<openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org> On Behalf =
+Of Vijay Khemka
+Sent: Saturday, September 28, 2019 6:28 AM
+To: Kun Yi <kunyi@google.com>; Joel Stanley <joel@jms.id.au>; Andrew =
+Jeffery <andrew@aj.id.au>; OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Re: Accessing kernel panic information without BMC console?
 
-------=_NextPart_5D905E88_0CDD9540_4A8E79E8
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
 
-PGRpdj5EZWFyIE1yLiBBbmRyZXcgYW5kIG9wZW5ibWM6PC9kaXY+PGRpdj48YnI+PC9kaXY+
-PGRpdj5UaGFua3MgYSBsb3QgZm9yIHlvdXIgaGVscGluZy48L2Rpdj48ZGl2PmJlY2F1c2Ug
-aXBtaXRvb2wgdXNlIHVkcCwgc28gbXkgcHJldmlvdXMgY2hhbmdlcyBmb3IgcWVtdSBjbWRs
-aW5lIGFyZSBub3QgcmlnaHQuIGkgY2hhbmdlIGl0IGFzIGZvbGxvd3M6PC9kaXY+PGRpdj48
-YnI+PC9kaXY+PGRpdj4jcWVtdS1zeXN0ZW0tYXJtIC1tIDI1NiAtTSBwYWxtZXR0by1ibWMg
-LW5vZ3JhcGhpYyAtZHJpdmUgZmlsZT0vaG9tZS9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1w
-L2RlcGxveS9pbWFnZXMvcGFsbWV0dG8vb2JtYy1waG9zcGhvci1pbWFnZS1wYWxtZXR0by0y
-MDE5MDkyNjEyMzA1Ny5zdGF0aWMubXRkLGZvcm1hdD1yYXcsaWY9bXRkIC1uZXQgbmljIC1u
-ZXQgdXNlcixob3N0ZndkPToxMjcuMC4wLjE6MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4x
-OjI0NDMtOjQ0Myw8Zm9udCBjb2xvcj0iI2ZmMDAwMCI+aG9zdGZ3ZD11ZHA6MTI3LjAuMC4x
-OjI2MjMtOjYyMyw8L2ZvbnQ+aG9zdG5hbWU9cWVtdTwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
-aXY+Y2hhbmdlICJob3N0ZndkPToxMjcuMC4wLjE6MjYyMy06NjIzIiB0byAiaG9zdGZ3ZD11
-ZHA6MTI3LjAuMC4xOjI2MjMtOjYyMyIuPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48ZGl2
-PmFuZCBpIHJ1bjo8L2Rpdj48ZGl2PiNpcG1pdG9vbCAtSCAxMjcuMC4wLjEgLUkgbGFucGx1
-cyAtcCAyNjIzJm5ic3A7Jm5ic3A7LVUgcm9vdCAtUCAwcGVuQm1jIHBvd2VyIHN0YXR1czwv
-ZGl2PjxkaXY+YW5kIGkgZ290OjwvZGl2PjxkaXY+Q2hhc3NpcyBQb3dlciBpcyBvZmY8L2Rp
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2Pml0IHNlZW1zIGlwbWl0b29sIHdvcmtzIHdlbGwgdG9n
-ZXRoZXIgd2l0aCBxZW11Xl9eLjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhhbmtzITwv
-ZGl2PjxkaXY+TGl1IEhvbmd3ZWkgL1VDQVM8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6IDEycHg7Zm9udC1mYW1pbHk6IEFyaWFs
-IE5hcnJvdztwYWRkaW5nOjJweCAwIDJweCAwOyI+LS0tLS0tLS0tLS0tLS0tLS0tJm5ic3A7
-1K3KvNPKvP4mbmJzcDstLS0tLS0tLS0tLS0tLS0tLS08L2Rpdj48ZGl2IHN0eWxlPSJmb250
-LXNpemU6IDEycHg7YmFja2dyb3VuZDojZWZlZmVmO3BhZGRpbmc6OHB4OyI+PGRpdj48Yj63
-orz+yMs6PC9iPiZuYnNwOyLEz9KwpeCl66W3pail6aW0IiZsdDsxMTgxMDUyMTQ2QHFxLmNv
-bSZndDs7PC9kaXY+PGRpdj48Yj63osvNyrG85Do8L2I+Jm5ic3A7MjAxOcTqOdTCMjfI1SjQ
-x8bazuUpINbQzucxMjozNzwvZGl2PjxkaXY+PGI+ytW8/sjLOjwvYj4mbmJzcDsiQW5kcmV3
-IEplZmZlcnkiJmx0O2FuZHJld0Bhai5pZC5hdSZndDs7Im9wZW5ibWMiJmx0O29wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZyZndDs7PHdicj48L2Rpdj48ZGl2PjwvZGl2PjxkaXY+PGI+1vfM
-4jo8L2I+Jm5ic3A7u9i4tKO6IGhvdyBjYW4gaSB1c2UgaXBtaXRvb2wgdG8gaW50ZXJhY3Qg
-d2l0aCBvcGVuYm1jIHdoaWNoIGJvb3QgZnJvbSBxZW11LXN5c3RlbS1hcm08L2Rpdj48L2Rp
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2PkRlYXIgQW5kcmV3OjwvZGl2PjxkaXY+aSBoYXZlIGNo
-YW5nZSBteSBxZW11IGNvbW1hbmQgbGluZTwvZGl2PjxkaXY+PGRpdj4jcWVtdS1zeXN0ZW0t
-YXJtIC1tIDI1NiAtTSBwYWxtZXR0by1ibWMgLW5vZ3JhcGhpYyAtZHJpdmUgZmlsZT0vaG9t
-ZS9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL2RlcGxveS9pbWFnZXMvcGFsbWV0dG8vb2Jt
-Yy1waG9zcGhvci1pbWFnZS1wYWxtZXR0by0yMDE5MDkyNjEyMzA1Ny5zdGF0aWMubXRkLGZv
-cm1hdD1yYXcsaWY9bXRkIC1uZXQgbmljIC1uZXQgdXNlcixob3N0ZndkPToxMjcuMC4wLjE6
-MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4xOjI0NDMtOjQ0Myw8Zm9udCBjb2xvcj0iI2Zm
-MDAwMCI+aG9zdGZ3ZD06MTI3LjAuMC4xOjI2MjMtOjYyMyw8L2ZvbnQ+aG9zdG5hbWU9cWVt
-dTwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+YWRkICJob3N0ZndkPToxMjcuMC4wLjE6MjYy
-My06NjIzIiw8L2Rpdj48ZGl2PmJ1dCB3aGVuIGkgdXNlIGlwbWl0b29sPC9kaXY+PGRpdj4j
-aXBtaXRvb2wgLUggMTI3LjAuMC4xIC1JIGxhbnBsdXMgLVUgcm9vdCAtUCAwcGVuQm1jIHBv
-d2VyIHN0YXR1czwvZGl2PjxkaXY+b3I8L2Rpdj48ZGl2PiNpcG1pdG9vbCAtSCAxMjcuMC4w
-LjEgLXAgMjYyMyAtSSBsYW5wbHVzIC1VIHJvb3QgLVAgMHBlbkJtYyBwb3dlciBzdGF0dXM8
-L2Rpdj48ZGl2Pm5laXRoZXIgb2YgdGhlbSB3b3JrLCBpIHNlYXJjaCBmcm9tIGludGVybmV0
-LCB0aGV5IHRvbGQgbWUgdGhlIHBvcnQgZm9yIFJNQ1AgaWYgNjIzLCBpcyBpdCByaWdodD8g
-YW5kIHdoYXQgY2FuIGkgZG8gdG8gZ2V0IGlwbWl0b29sIHdvcmsgZm9yIHFlbXU/PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj5UaGFua3MhPC9kaXY+PGRpdj5MaXUgSG9uZ3dlaTwvZGl2
-PjxkaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtmb250LWZhbWls
-eTogQXJpYWwgTmFycm93O3BhZGRpbmc6MnB4IDAgMnB4IDA7Ij4tLS0tLS0tLS0tLS0tLS0t
-LS0g1K3KvNPKvP4gLS0tLS0tLS0tLS0tLS0tLS0tPC9kaXY+PGRpdiBzdHlsZT0iZm9udC1z
-aXplOiAxMnB4O2JhY2tncm91bmQ6I2VmZWZlZjtwYWRkaW5nOjhweDsiPjxkaXY+PGI+t6K8
-/sjLOjwvYj4mbmJzcDsiQW5kcmV3IEplZmZlcnkiJmx0O2FuZHJld0Bhai5pZC5hdSZndDs7
-PC9kaXY+PGRpdj48Yj63osvNyrG85Do8L2I+Jm5ic3A7MjAxOcTqOdTCMjbI1SjQx8bay8Qp
-IM3tyc8xMDozMDwvZGl2PjxkaXY+PGI+ytW8/sjLOjwvYj4mbmJzcDsixM/SsKXgpeult6Wo
-pemltCImbHQ7MTE4MTA1MjE0NkBxcS5jb20mZ3Q7OyJvcGVuYm1jIiZsdDtvcGVuYm1jQGxp
-c3RzLm96bGFicy5vcmcmZ3Q7Ozx3YnI+PC9kaXY+PGRpdj48L2Rpdj48ZGl2PjxiPtb3zOI6
-PC9iPiZuYnNwO1JlOiBob3cgY2FuIGkgdXNlIGlwbWl0b29sIHRvIGludGVyYWN0IHdpdGgg
-b3BlbmJtYyB3aGljaCBib290IGZyb20gcWVtdS1zeXN0ZW0tYXJtPC9kaXY+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PGJyPjxicj5PbiBUaHUsIDI2IFNlcCAyMDE5LCBhdCAyMjoyNCwgxM/S
-sKXgpeult6WopemltCB3cm90ZTo8YnI+Jmd0OyBHcmVldGluZ3M6PGJyPiZndDsgaSBoYXZl
-IGJ1aWxkIGEgb3BlbmJtYyBpbWFnZSwgYW5kIGJvb3Qgd2l0aCBxZW11Ojxicj4mZ3Q7IDxi
-cj4mZ3Q7ICNxZW11LXN5c3RlbS1hcm0gLW0gMjU2IC1NIHBhbG1ldHRvLWJtYyAtbm9ncmFw
-aGljIC1kcml2ZSA8YnI+Jmd0OyBmaWxlPS9ob21lL29wZW5ibWMvb3BlbmJtYy9idWlsZC90
-bXAvZGVwbG95L2ltYWdlcy9wYWxtZXR0by9vYm1jLXBob3NwaG9yLWltYWdlLXBhbG1ldHRv
-LTIwMTkwOTI2MTIzMDU3LnN0YXRpYy5tdGQsZm9ybWF0PXJhdyxpZj1tdGQgLW5ldCBuaWMg
-LW5ldCB1c2VyLGhvc3Rmd2Q9OjEyNy4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4w
-LjE6MjQ0My06NDQzLGhvc3RuYW1lPXFlbXU8YnI+Jmd0OyA8YnI+Jmd0OyBhbmQgd2hlbiBp
-IHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQgaW4gbXkgdWJ1bnR1MTguMDQ6PGJyPiZndDsg
-PGJyPiZndDsgI2N1cmwgLWMgY2phciAtYiBjamFyIC1rIC1IICJDb250ZW50LVR5cGU6IGFw
-cGxpY2F0aW9uL2pzb24iIC1YIFBPU1QgPGJyPiZndDsgaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0
-My9sb2dpbiAtZCAie1wiZGF0YVwiOiBbIFwicm9vdFwiLCBcIjBwZW5CbWNcIiBdIH0iPGJy
-PiZndDsgPGJyPiZndDsgaXQgd29ya3Mgd2VsbCwgYnV0IHdoZW4gaSB0cnkgdG8gdXNlIGlt
-cGl0b29sOjxicj4mZ3Q7IDxicj4mZ3Q7ICNpcG1pdG9vbCAtSCAxMjcuMC4wLjEgLUkgbGFu
-cGx1cyAtVSByb290IC1QIDBwZW5CbWMgcG93ZXIgc3RhdHVzPGJyPiZndDsgPGJyPiZndDsg
-aSBnb3QgIkVycm9yOiB1bmFibGUgdG8gZXN0YWJsaXNoIElQTUkgdjIgLyBSTUNQKyBzZXNz
-aW9uIi4gaG93IGNhbiBpIGRvPzxicj48YnI+WW91IG5lZWQgdG8gYWRkIGFub3RoZXIgJ2hv
-c3Rmd2QnIHRvIHRoZSBjb21tYW5kbGluZSB0byBleHBvc2UgdGhlPGJyPlJDTVArIHBvcnQu
-IEF0IHRoZSBtb21lbnQgeW91J3JlIG9ubHkgZXhwb3NpbmcgU1NIICgyMikgYW5kIEhUVFBT
-ICg0NDMpPGJyPjxicj5BbmRyZXc8YnI+PC9kaXY+PC9kaXY+
 
-------=_NextPart_5D905E88_0CDD9540_4A8E79E8--
+=EF=BB=BFOn 9/27/19, 3:05 PM, "openbmc on behalf of Kun Yi" =
+<openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org on behalf of =
+kunyi@google.com> wrote:
 
+    Hello there,
+   =20
+    Wonder whether anyone has had experience persisting kernel panic
+    information or sending them through network? For a lot of our =
+devices
+    the console is either unconnected or served by obmc-console-client
+    only, which wouldn't be able to capture kernel oops.
+   =20
+    We are starting to look into these tools:
+   =20
+    https://www.kernel.org/doc/html/v5.3/admin-guide/ramoops.html
+    Ramoops says it requires persistent RAM.. Which may make it =
+infeasible
+    since we don't persist memory (or, we try not to).
+   =20
+    =
+https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__linux.die.net_man_=
+8_netdump&d=3DDwIBaQ&c=3D5VD0RTtNlTh3ycd41b3MUw&r=3Dv9MU0Ki9pWnTXCWwjHPVg=
+pnCR80vXkkcrIaqU7USl5g&m=3D0H6Yf0igviHCOSHAbOPQxxM-_B0Lh1EyZm4dpdMqe2g&s=3D=
+H3n57FRZwV0z_wOHqmaiRa-kQ6h3doWg712SV4ez-GU&e=3D=20
+    netdump seems promising.
+   =20
+    https://www.kernel.org/doc/html/v5.3/admin-guide/kdump/kdump.html
+    It seems we need more pieces to get kdump working. Have anyone tried
+    kexec/kdump on their platforms?
+
+I have used kdump in past was very happy with it. Yes, it needs lot more =
+pieces to make it work.
+   =20
+   =20
+   =20
+    Regards,
+    Kun
+   =20
 
 
