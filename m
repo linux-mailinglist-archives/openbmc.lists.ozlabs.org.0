@@ -2,45 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41B56C2231
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD5A9C24D0
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 18:04:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hk4L55MtzDqM1
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 23:38:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hnJz12GZzDqDL
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2019 02:04:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ spf=pass (mailfrom) smtp.mailfrom=kaod.org
+ (client-ip=188.165.38.119; helo=11.mo6.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=kaod.org
+X-Greylist: delayed 16801 seconds by postgrey-1.36 at bilbo;
+ Tue, 01 Oct 2019 02:03:44 AEST
+Received: from 11.mo6.mail-out.ovh.net (11.mo6.mail-out.ovh.net
+ [188.165.38.119])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hk3d3P4VzDqLR
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 23:37:31 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 1B9A014881;
- Mon, 30 Sep 2019 09:37:27 -0400 (EDT)
-Content-Type: text/plain;
-	charset=us-ascii;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: i2c-dev wrapper
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <000701d5772d$ed76d7c0$c8648740$@linux.intel.com>
-Date: Mon, 30 Sep 2019 09:37:26 -0400
-Content-Transfer-Encoding: 7bit
-Message-Id: <FDFFF800-7927-4BF9-B9E0-DD7F44BC4730@fuzziesquirrel.com>
-References: <E3DA1B69-7DA0-4E92-A6EB-BFBB7ADC50CC@fuzziesquirrel.com>
- <7bbd7b65-9cb7-8ca5-4d60-51d48e8735d1@fb.com>
- <000701d5772d$ed76d7c0$c8648740$@linux.intel.com>
-To: Yong Li <yong.b.li@linux.intel.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hnJJ3mbSzDqCh
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2019 02:03:39 +1000 (AEST)
+Received: from player779.ha.ovh.net (unknown [10.108.42.75])
+ by mo6.mail-out.ovh.net (Postfix) with ESMTP id 05E121E3843
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 12:06:20 +0200 (CEST)
+Received: from kaod.org (lfbn-1-2229-223.w90-76.abo.wanadoo.fr [90.76.50.223])
+ (Authenticated sender: clg@kaod.org)
+ by player779.ha.ovh.net (Postfix) with ESMTPSA id 9DD62A45D780;
+ Mon, 30 Sep 2019 10:06:16 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH 3/3] ARM: dts: aspeed: tacoma: Re-enable CS1
+Date: Mon, 30 Sep 2019 12:05:56 +0200
+Message-Id: <20190930100556.26489-4-clg@kaod.org>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20190930100556.26489-1-clg@kaod.org>
+References: <20190930100556.26489-1-clg@kaod.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 15248062439624837890
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrgedvgddvtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,43 +56,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- shawnmm@linux.ibm.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 9:25 PM, Yong Li <yong.b.li@linux.intel.com> wrote:
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+---
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> FYI, there is an i2c Write/Read API in libpmid for ipmi commands:
-> https://github.com/openbmc/phosphor-host-ipmid/blob/master/libipmid/utils.cpp#L403
->
-> Thanks,
-> Yong
->
-> -----Original Message-----
-> From: openbmc  
-> <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org> On Behalf Of  
-> Tao Ren
-> Sent: Monday, September 30, 2019 9:00 AM
-> To: Brad Bishop <bradleyb@fuzziesquirrel.com>; OpenBMC Maillist  
-> <openbmc@lists.ozlabs.org>
-> Cc: shawnmm@linux.ibm.com
-> Subject: Re: i2c-dev wrapper
->
-> On 9/27/19 4:54 AM, Brad Bishop wrote:
->> Does anyone have a favorite i2c-dev API wrapper?  Preferably but not  
->> necessarily in C++?
->
-> i2c-tools (below url) provides several easy-to-use APIs. Maybe you are  
-> looking for more APIs?
->
-> https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/tree/include/i2c/smbus.h
->
->
-> Cheers,
->
-> Tao
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index 942eb974cca2..a923fffbb5a4 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -35,7 +35,7 @@
+ 	};
+ 
+ 	flash@1 {
+-		status = "disabled";
++		status = "okay";
+ 		m25p,fast-read;
+ 		label = "alt-bmc";
+ 		spi-max-frequency = <50000000>;
+-- 
+2.21.0
 
-Thanks Tao and Yong for these pointers.  Will have a look!
-
--brad
