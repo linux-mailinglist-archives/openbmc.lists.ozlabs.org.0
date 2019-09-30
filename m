@@ -2,70 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44400C21A1
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:16:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 41B56C2231
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:38:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hjb36737zDqLT
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 23:16:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hk4L55MtzDqM1
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 23:38:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::444; helo=mail-pf1-x444.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="K+x5g7kh"; 
- dkim-atps=neutral
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
- [IPv6:2607:f8b0:4864:20::444])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hjYL5Z0MzDqLT
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 23:14:46 +1000 (AEST)
-Received: by mail-pf1-x444.google.com with SMTP id q10so5618613pfl.0
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 06:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=tJEDDw3yOxrb71VC5CKbXIkJUsvnUza1w90ltv46DTs=;
- b=K+x5g7khunftljJLZIgmeOIpYH76mPtnLXbqVBZ8KuZUPtvYEvPR5MMwAVAXUvIoB+
- aj0ZxkQ/wNglDyyCC7rsb+rJdZztc0wE0+Ta93IibSp2jERAyN/ubwz6UwedyyXC1vaV
- NAUTqsvmvozN33SaaEtxruvbbbl54D2zsxYsJ/PkhodkeOvz4WdyWR3jEW6oumrmagyX
- Dz0kjYGzDnNHGTei2kZhyCGaVd4bDMFayuPXGgXZvnNPoRHCdUNK0mcHIqWZNhCXS6b/
- Jl/iURDz1vUuzMfqRmLw5hJ+zkDFnAiqdDVY/cyy3kcVhHbFQ7KeF+nOPsARPsal0Ok/
- Dk6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=tJEDDw3yOxrb71VC5CKbXIkJUsvnUza1w90ltv46DTs=;
- b=RQnpWueOVwpoDdkCyil1RWqosk9Fdr2OW7ZQ32eM0Piqjb6CvfxVSWijLVeKcEjDOM
- HaSAW2lbFCWZu/dl1WAVcDQ4tmxGxg3INJiG21u2c23rQu3F119zZzaDOJ/d6kFU8AEL
- nzGKVBr1GvDVD6WfyfO7SlHVra63+K3gh0N3JsO4XNJrcfi+/LDG4Fbnsj91sjZ0ibG9
- Osmi0d3cyuOrtxzx8QeMYR8nrmGGDZILgHk2NC8un6SMQ0zHEvf8VDisGwwLBAk9K2VX
- 5BtXXiqrVmAsGCk0Wp9kOz2k15N03c5uhPcQjbWQD9W7+uk01mypvuIuyeeONYGWk8Ge
- rAeA==
-X-Gm-Message-State: APjAAAX5RBNA6+Pj8ewEKmE7jLmA7GWkau3c3PsZf+juUso1LyyPoHXW
- MPRkcGPMylCCYxCxewArROE=
-X-Google-Smtp-Source: APXvYqwNpnOToFvHsZh2/ycIPEob2UFuQ9nps8f4cvU29tuzJvkiFqNGKyqPvjt3syNYDIHPQP+FCA==
-X-Received: by 2002:a63:5f09:: with SMTP id t9mr24244532pgb.51.1569849283679; 
- Mon, 30 Sep 2019 06:14:43 -0700 (PDT)
-Received: from voyager.lan ([45.124.203.15])
- by smtp.gmail.com with ESMTPSA id e14sm12542848pjt.8.2019.09.30.06.14.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 30 Sep 2019 06:14:43 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Felipe Balbi <balbi@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH] usb: gadget: Quieten gadget config message
-Date: Mon, 30 Sep 2019 22:44:34 +0930
-Message-Id: <20190930131434.12388-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.23.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hk3d3P4VzDqLR
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 23:37:31 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 1B9A014881;
+ Mon, 30 Sep 2019 09:37:27 -0400 (EDT)
+Content-Type: text/plain;
+	charset=us-ascii;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: i2c-dev wrapper
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <000701d5772d$ed76d7c0$c8648740$@linux.intel.com>
+Date: Mon, 30 Sep 2019 09:37:26 -0400
+Content-Transfer-Encoding: 7bit
+Message-Id: <FDFFF800-7927-4BF9-B9E0-DD7F44BC4730@fuzziesquirrel.com>
+References: <E3DA1B69-7DA0-4E92-A6EB-BFBB7ADC50CC@fuzziesquirrel.com>
+ <7bbd7b65-9cb7-8ca5-4d60-51d48e8735d1@fb.com>
+ <000701d5772d$ed76d7c0$c8648740$@linux.intel.com>
+To: Yong Li <yong.b.li@linux.intel.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,39 +52,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org
+Cc: Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ shawnmm@linux.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On a system that often re-configures a USB gadget device the kernel log
-is filled with:
+at 9:25 PM, Yong Li <yong.b.li@linux.intel.com> wrote:
 
-  configfs-gadget gadget: high-speed config #1: c
+> FYI, there is an i2c Write/Read API in libpmid for ipmi commands:
+> https://github.com/openbmc/phosphor-host-ipmid/blob/master/libipmid/utils.cpp#L403
+>
+> Thanks,
+> Yong
+>
+> -----Original Message-----
+> From: openbmc  
+> <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org> On Behalf Of  
+> Tao Ren
+> Sent: Monday, September 30, 2019 9:00 AM
+> To: Brad Bishop <bradleyb@fuzziesquirrel.com>; OpenBMC Maillist  
+> <openbmc@lists.ozlabs.org>
+> Cc: shawnmm@linux.ibm.com
+> Subject: Re: i2c-dev wrapper
+>
+> On 9/27/19 4:54 AM, Brad Bishop wrote:
+>> Does anyone have a favorite i2c-dev API wrapper?  Preferably but not  
+>> necessarily in C++?
+>
+> i2c-tools (below url) provides several easy-to-use APIs. Maybe you are  
+> looking for more APIs?
+>
+> https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/tree/include/i2c/smbus.h
+>
+>
+> Cheers,
+>
+> Tao
 
-Reduce the verbosity of this print to debug.
+Thanks Tao and Yong for these pointers.  Will have a look!
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- drivers/usb/gadget/composite.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
-index 76883ff4f5bb..b49ec81194c6 100644
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -780,9 +780,9 @@ static int set_config(struct usb_composite_dev *cdev,
- 		result = 0;
- 	}
- 
--	INFO(cdev, "%s config #%d: %s\n",
--	     usb_speed_string(gadget->speed),
--	     number, c ? c->label : "unconfigured");
-+	DBG(cdev, "%s config #%d: %s\n",
-+	    usb_speed_string(gadget->speed),
-+	    number, c ? c->label : "unconfigured");
- 
- 	if (!c)
- 		goto done;
--- 
-2.23.0
-
+-brad
