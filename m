@@ -1,56 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBE9EC19F7
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 03:26:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 594E1C1A13
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 04:06:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hPqW27NyzDqNs
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 11:25:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hQkY6SB2zDqNW
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 12:06:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SI7sutPc"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="RjzV6O3Q"; dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hPpt6TWczDqN7
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 11:25:24 +1000 (AEST)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 29 Sep 2019 18:25:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.64,565,1559545200"; d="scan'208";a="197398661"
-Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
- ([10.239.196.61])
- by FMSMGA003.fm.intel.com with ESMTP; 29 Sep 2019 18:25:21 -0700
-From: "Yong Li" <yong.b.li@linux.intel.com>
-To: "'Tao Ren'" <taoren@fb.com>, "'Brad Bishop'" <bradleyb@fuzziesquirrel.com>,
- "'OpenBMC Maillist'" <openbmc@lists.ozlabs.org>
-References: <E3DA1B69-7DA0-4E92-A6EB-BFBB7ADC50CC@fuzziesquirrel.com>
- <7bbd7b65-9cb7-8ca5-4d60-51d48e8735d1@fb.com>
-In-Reply-To: <7bbd7b65-9cb7-8ca5-4d60-51d48e8735d1@fb.com>
-Subject: RE: i2c-dev wrapper
-Date: Mon, 30 Sep 2019 09:25:20 +0800
-Message-ID: <000701d5772d$ed76d7c0$c8648740$@linux.intel.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hQjv6jFMzDqN9
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 12:06:11 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id BDE383DC;
+ Sun, 29 Sep 2019 22:06:07 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 29 Sep 2019 22:06:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm3; bh=d8pIO
+ +fOCq7Fu0Wfdlu+L68sQtaeCjMMjL8uuF0FdKQ=; b=SI7sutPcWrC8qYKlXGCJx
+ TTikUUs5jbozpFwWcjGTS2083ULRveFV7w3uKdkQglA5DW1BaODJJ/X+eluqRKqr
+ OVyI+cK7ptRWlNt8X4Ias4J49xzw8dCzWdaHjIA/gXdMxewR3LK/WdmgMAHb4AoD
+ +S1P+ZfjTCUwTmkbbyMwHuO+CmC5CR/r+fQDEXMU4UyPwMHv6QlLC1DwEQ83zwGI
+ w4EYx57fKV9BYLWNRiBxDIt3XjA1xs/axOYbc8yurCxYpOmMAGD0vd3EBcycfCF5
+ VCAmF44+Pe12Ow5yIbpOk6wXQ3G8Vv/f53Zd5HOT1ECBbMpFrilhLVzf57mk0Qkx
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm3; bh=d8pIO+fOCq7Fu0Wfdlu+L68sQtaeCjMMjL8uuF0Fd
+ KQ=; b=RjzV6O3QHWCZ0UEY2YNSA/LjAB7Hrx8sTKLlz2u0l8+j9p3yyjkCHRx9b
+ 7YVL+gREiBDDY0aFy8gBDXDO/U5Nr+mtgxCySmtQrQm/vpHQ4cqGlcNLSARnYvkP
+ BYaarqi4nXtBa7OCegug/nMiutJ2TW8Owqy/H+2XwynjPWJgBOTi5u+qUBcAcqCf
+ lSO8AU775z1291QHtpERvbdVRFnpGLX0r2O1isgT0B1tK+c8XSNTgSWrzirq7K7A
+ ZtTqJELhjeU6q7RVbcEFLaO9bg4U+++0Hq9ATHt9wQmcGdFVwiwNpObfrLS+xJoa
+ IaigeFc1xTQrJOxoXJqpnXI6x09/Q==
+X-ME-Sender: <xms:DmORXYeY84YCxrawYOhjIf5D1C69i78M5FEyarbr7GOlqvlD5VGy3Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgedugdehgecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
+ ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
+ fiesrghjrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:DmORXQvbomQThd66nan06-SdJQXjPG2W-nRsJgtQ2M1ZMteJEZveRw>
+ <xmx:DmORXXgwMTsrFUUhiAT1gXcUGRykHccMq3JpNzVate5YOSuBgYveCA>
+ <xmx:DmORXQu_xzF-ulIHybSN7TiY83irx7uRYuPDjUb8-OFqtg2PGLk5vQ>
+ <xmx:D2ORXQkg5EIsWOb0O45hDszI65zaqELY6naE97SCqwp4RppK_xc0_g>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D7675E00A5; Sun, 29 Sep 2019 22:06:06 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
+Mime-Version: 1.0
+Message-Id: <e3883ab8-7318-4033-ad4c-94018bb0dac0@www.fastmail.com>
+In-Reply-To: <tencent_AEA99F5038687CB8AB0765B1F867C9EB4C0A@qq.com>
+References: <tencent_7C14F1899E03C3479BFA6A169AFF9DFCCC06@qq.com>
+ <1ba3bebe-1a93-4848-a2ed-979e31c7b708@www.fastmail.com>
+ <tencent_34EA53595EFE6AF25F53F427650E7D1F1708@qq.com>
+ <tencent_AEA99F5038687CB8AB0765B1F867C9EB4C0A@qq.com>
+Date: Mon, 30 Sep 2019 11:36:54 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?=E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=83=A9?=
+ =?UTF-8?Q?=E3=82=B4?= <1181052146@qq.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+Subject: =?UTF-8?Q?Re:_=E5=9B=9E=E5=A4=8D=EF=BC=9A_how_can_i_use_ipmitool_to_inte?=
+ =?UTF-8?Q?ract_with_openbmc_which_boot_from_qemu-system-arm?=
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKIKT5QsjSXV2it0HP1cB5yV81ikwFxnmHfpdJ7t8A=
-Content-Language: en-us
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZWM3YTZlOTktZDgxOC00MDg4LWIwODUtYmY2YWQ2ZmFjNWJiIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiYjFuR0NxZ290ZDBTYUdEQ01GY0FcL1U2N3NhZEhLWTR0S3VDaGhHV01WOVlodjltaUNmWXVpTGJQYWl4V1pPV0IifQ==
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: request-justification,no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,39 +94,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: shawnmm@linux.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-FYI, there is an i2c Write/Read API in libpmid for ipmi commands:
-https://github.com/openbmc/phosphor-host-ipmid/blob/master/libipmid/utils=
-.cpp#L403
+Hello Liu,
 
-Thanks,
-Yong
+On Sun, 29 Sep 2019, at 17:04, =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=
+=B7=E3=82=A8=E3=83=A9=E3=82=B4 wrote:
+> Dear Mr. Andrew and openbmc:
+>=20
+> Thanks a lot for your helping.
+> because ipmitool use udp, so my previous changes for qemu cmdline are=20=
 
------Original Message-----
-From: openbmc =
-<openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org> On Behalf =
-Of Tao Ren
-Sent: Monday, September 30, 2019 9:00 AM
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>; OpenBMC Maillist =
-<openbmc@lists.ozlabs.org>
-Cc: shawnmm@linux.ibm.com
-Subject: Re: i2c-dev wrapper
+> not right. i change it as follows:
+>=20
+> #qemu-system-arm -m 256 -M palmetto-bmc -nographic -drive=20
+> file=3D/home/openbmc/openbmc/build/tmp/deploy/images/palmetto/obmc-pho=
+sphor-image-palmetto-20190926123057.static.mtd,format=3Draw,if=3Dmtd -ne=
+t nic -net user,hostfwd=3D:127.0.0.1:2222-:22,hostfwd=3D:127.0.0.1:2443-=
+:443,hostfwd=3Dudp:127.0.0.1:2623-:623,hostname=3Dqemu
+>=20
+> change "hostfwd=3D:127.0.0.1:2623-:623" to "hostfwd=3Dudp:127.0.0.1:26=
+23-:623".
+>=20
+> and i run:
+> #ipmitool -H 127.0.0.1 -I lanplus -p 2623 -U root -P 0penBmc power sta=
+tus
+> and i got:
+> Chassis Power is off
+>=20
+> it seems ipmitool works well together with qemu^_^.
 
-On 9/27/19 4:54 AM, Brad Bishop wrote:
-> Does anyone have a favorite i2c-dev API wrapper?  Preferably but not =
-necessarily in C++?
+Awesome! Also, thanks for following up your questions with the solution,=
 
-i2c-tools (below url) provides several easy-to-use APIs. Maybe you are =
-looking for more APIs?
+that's a great help to others who might try to do the same thing.
 
-https://git.kernel.org/pub/scm/utils/i2c-tools/i2c-tools.git/tree/include=
-/i2c/smbus.h
-
-
-Cheers,
-
-Tao
-
+Andrew
