@@ -1,88 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 594E1C1A13
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 04:06:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B5F9C1B2D
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 07:58:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hQkY6SB2zDqNW
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 12:06:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hWsY6TKwzDqMK
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:58:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com;
+ (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com;
  envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SI7sutPc"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="aHYkeGsU"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="RjzV6O3Q"; dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
+ header.b="QJcg9pf+"; dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hQjv6jFMzDqN9
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 12:06:11 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hWrq1BT7zDqKW
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 15:57:29 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id BDE383DC;
- Sun, 29 Sep 2019 22:06:07 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 30D1F4ED;
+ Mon, 30 Sep 2019 01:57:25 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 29 Sep 2019 22:06:07 -0400
+ by compute4.internal (MEProxy); Mon, 30 Sep 2019 01:57:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm3; bh=d8pIO
- +fOCq7Fu0Wfdlu+L68sQtaeCjMMjL8uuF0FdKQ=; b=SI7sutPcWrC8qYKlXGCJx
- TTikUUs5jbozpFwWcjGTS2083ULRveFV7w3uKdkQglA5DW1BaODJJ/X+eluqRKqr
- OVyI+cK7ptRWlNt8X4Ias4J49xzw8dCzWdaHjIA/gXdMxewR3LK/WdmgMAHb4AoD
- +S1P+ZfjTCUwTmkbbyMwHuO+CmC5CR/r+fQDEXMU4UyPwMHv6QlLC1DwEQ83zwGI
- w4EYx57fKV9BYLWNRiBxDIt3XjA1xs/axOYbc8yurCxYpOmMAGD0vd3EBcycfCF5
- VCAmF44+Pe12Ow5yIbpOk6wXQ3G8Vv/f53Zd5HOT1ECBbMpFrilhLVzf57mk0Qkx
- A==
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=PhI1+oj9tFKK+Rt9+Q+kPMffCoIu4od
+ Wpg7qbOqF6gE=; b=aHYkeGsUWdEt0ordPTl6lNKrxGCCsExbHGjsWPh1OTgsNjU
+ GadDCG3Ro7Cca7ghqAABRlW5rczZxb7YyEK+hHwoQbT40bhhk7BbccuQkTOEVPg5
+ X7f0ZGMJOg3l0uNu5cG+nBXavmBXfWLxgQOEM066rCQe5R//Azj3oGEgq7CVQxQj
+ UCMUh0vvgfeTsvXIcr+Qn9IYqc4guz+AvGtkD6BYnr+IkiJd2bMB6OPveOclhNbD
+ eTXRaeVEdkOP2ZVkwmINiJHv2/wCM82KARBZQurWHS1auSJKOMQiCFsmm5sXQlQA
+ 3tW+hOd0blsYfjpkTlSRCiDzxyHFLD2j9CUZhZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=d8pIO+fOCq7Fu0Wfdlu+L68sQtaeCjMMjL8uuF0Fd
- KQ=; b=RjzV6O3QHWCZ0UEY2YNSA/LjAB7Hrx8sTKLlz2u0l8+j9p3yyjkCHRx9b
- 7YVL+gREiBDDY0aFy8gBDXDO/U5Nr+mtgxCySmtQrQm/vpHQ4cqGlcNLSARnYvkP
- BYaarqi4nXtBa7OCegug/nMiutJ2TW8Owqy/H+2XwynjPWJgBOTi5u+qUBcAcqCf
- lSO8AU775z1291QHtpERvbdVRFnpGLX0r2O1isgT0B1tK+c8XSNTgSWrzirq7K7A
- ZtTqJELhjeU6q7RVbcEFLaO9bg4U+++0Hq9ATHt9wQmcGdFVwiwNpObfrLS+xJoa
- IaigeFc1xTQrJOxoXJqpnXI6x09/Q==
-X-ME-Sender: <xms:DmORXYeY84YCxrawYOhjIf5D1C69i78M5FEyarbr7GOlqvlD5VGy3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgedugdehgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
- ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=PhI1+o
+ j9tFKK+Rt9+Q+kPMffCoIu4odWpg7qbOqF6gE=; b=QJcg9pf+C7xVeqA4DzGRtW
+ 8/37mVB1mZK0wRuK/uj9UeMLl4kjezKcCiZ+BWRiP5H4KxI1c7loNdLd4nLvev0d
+ 9DrBZR0OAHqEDLNEx2veQiJypVYvJqR7F7KNuIQl8NzI0jhuKgZgdjQYMgnJLMv3
+ Q9yjdTvR+KJtmIX0NuUmeRL51/+RQspsEYUN6p27r2L7b7cpPg7+esKvAC1cGo8X
+ YFXD1Y1byEjjshmRGkEjYR73Fl2GPiL8ccvAp1aNOQRRDtMaEMEjsTFqcDVWXI+x
+ 3pdF3n5AOSdjxzUoZ2S9yS9EAwYLpaSndmFwklWJfyGKCvxAsfuA0xHpB4WgK1Og
+ ==
+X-ME-Sender: <xms:RJmRXY15dIDAnBDCxaUEnY1U7R97n4wzunh88aLtO6faKBXalMvkUQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgedugddutddtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
+ ertderredtnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
  fiesrghjrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
  grjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:DmORXQvbomQThd66nan06-SdJQXjPG2W-nRsJgtQ2M1ZMteJEZveRw>
- <xmx:DmORXXgwMTsrFUUhiAT1gXcUGRykHccMq3JpNzVate5YOSuBgYveCA>
- <xmx:DmORXQu_xzF-ulIHybSN7TiY83irx7uRYuPDjUb8-OFqtg2PGLk5vQ>
- <xmx:D2ORXQkg5EIsWOb0O45hDszI65zaqELY6naE97SCqwp4RppK_xc0_g>
+X-ME-Proxy: <xmx:RJmRXZa3MT4QH3VcWfC4KcCRTsfagXuYbkA4xOXoTnWBBgS0sT3LqA>
+ <xmx:RJmRXW5k8GnYrZanJEo8Qv7u3ymCuAU-13bCnlqG8p9mvO1cHcz6fQ>
+ <xmx:RJmRXfI3-m0-B5lNQmUoLB2ishIJazpmXX1A-pAt7fkEV1e5knooMg>
+ <xmx:RJmRXfFEzajB6X79Up0u4dRZuoGhy9VGfVKMCIJkLn-Kz3d2NAFkAg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D7675E00A5; Sun, 29 Sep 2019 22:06:06 -0400 (EDT)
+ id 59A2EE00A5; Mon, 30 Sep 2019 01:57:24 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
 Mime-Version: 1.0
-Message-Id: <e3883ab8-7318-4033-ad4c-94018bb0dac0@www.fastmail.com>
-In-Reply-To: <tencent_AEA99F5038687CB8AB0765B1F867C9EB4C0A@qq.com>
-References: <tencent_7C14F1899E03C3479BFA6A169AFF9DFCCC06@qq.com>
- <1ba3bebe-1a93-4848-a2ed-979e31c7b708@www.fastmail.com>
- <tencent_34EA53595EFE6AF25F53F427650E7D1F1708@qq.com>
- <tencent_AEA99F5038687CB8AB0765B1F867C9EB4C0A@qq.com>
-Date: Mon, 30 Sep 2019 11:36:54 +0930
+Message-Id: <6089f3a1-e893-4a52-b812-331295f51b8a@www.fastmail.com>
+In-Reply-To: <CAN34fow3D8f=LSY=gS51WxYAcE9Gfrk7_=7Rbppjc4zDF+Pkaw@mail.gmail.com>
+References: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
+ <9f7cc18d-2164-4a39-8f47-1a3ef3220685@www.fastmail.com>
+ <CAN34fowhEKe0fTv+AVN-++5GoySugobjegb=5Lghi7VYXNLmdg@mail.gmail.com>
+ <a1767b7c-1769-40ff-b3d7-8e9adc7d234e@www.fastmail.com>
+ <CAN34fow3D8f=LSY=gS51WxYAcE9Gfrk7_=7Rbppjc4zDF+Pkaw@mail.gmail.com>
+Date: Mon, 30 Sep 2019 15:28:12 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: =?UTF-8?Q?=E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=83=A9?=
- =?UTF-8?Q?=E3=82=B4?= <1181052146@qq.com>,
- openbmc <openbmc@lists.ozlabs.org>
-Subject: =?UTF-8?Q?Re:_=E5=9B=9E=E5=A4=8D=EF=BC=9A_how_can_i_use_ipmitool_to_inte?=
- =?UTF-8?Q?ract_with_openbmc_which_boot_from_qemu-system-arm?=
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Stephen Beckwith" <embeddedsteve@gmail.com>
+Subject: Re: Unable to boot OpenBMC image in QEMU for AST2500
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,39 +90,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Liu,
 
-On Sun, 29 Sep 2019, at 17:04, =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=
-=B7=E3=82=A8=E3=83=A9=E3=82=B4 wrote:
-> Dear Mr. Andrew and openbmc:
->=20
-> Thanks a lot for your helping.
-> because ipmitool use udp, so my previous changes for qemu cmdline are=20=
 
-> not right. i change it as follows:
->=20
-> #qemu-system-arm -m 256 -M palmetto-bmc -nographic -drive=20
-> file=3D/home/openbmc/openbmc/build/tmp/deploy/images/palmetto/obmc-pho=
-sphor-image-palmetto-20190926123057.static.mtd,format=3Draw,if=3Dmtd -ne=
-t nic -net user,hostfwd=3D:127.0.0.1:2222-:22,hostfwd=3D:127.0.0.1:2443-=
-:443,hostfwd=3Dudp:127.0.0.1:2623-:623,hostname=3Dqemu
->=20
-> change "hostfwd=3D:127.0.0.1:2623-:623" to "hostfwd=3Dudp:127.0.0.1:26=
-23-:623".
->=20
-> and i run:
-> #ipmitool -H 127.0.0.1 -I lanplus -p 2623 -U root -P 0penBmc power sta=
-tus
-> and i got:
-> Chassis Power is off
->=20
-> it seems ipmitool works well together with qemu^_^.
+On Thu, 26 Sep 2019, at 06:14, Stephen Beckwith wrote:
 
-Awesome! Also, thanks for following up your questions with the solution,=
+> 4) I then, as you suggested, reviewed the documentation (again) and 
+> crafted some minimal parameters to running QEMU. And Behold:
+> Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 0.1.0 
+> evb-ast2500 ttyS4
+> 
+> evb-ast2500 login: root
+> Password: 
+> root@evb-ast2500:~# uname -a
+> Linux evb-ast2500 5.2.0-c01e98d #1 Wed Sep 25 16:54:08 UTC 2019 armv6l 
+> GNU/Linux
 
-that's a great help to others who might try to do the same thing.
+Great!
+
+> 5) RE: runqemu script - My Python is rusty, but I'll take a gander at 
+> it, since I will have some time here, as we are only working on an 
+> initial PoC for this. The next attempt will be to try and see if we can 
+> boot this on our reference platform (AST2500 based). 
+>  - I maybe getting back to you should I have an update on this script.
+
+Okay, thanks :)
 
 Andrew
