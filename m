@@ -2,83 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B5F9C1B2D
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 07:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77F7EC1E9E
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 12:06:46 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hWsY6TKwzDqMK
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:58:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hdNM4XMpzDqN5
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 20:06:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=kaod.org
+ (client-ip=46.105.51.53; helo=5.mo178.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="aHYkeGsU"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="QJcg9pf+"; dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+ dmarc=none (p=none dis=none) header.from=kaod.org
+Received: from 5.mo178.mail-out.ovh.net (5.mo178.mail-out.ovh.net
+ [46.105.51.53])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hWrq1BT7zDqKW
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 15:57:29 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 30D1F4ED;
- Mon, 30 Sep 2019 01:57:25 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 30 Sep 2019 01:57:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=PhI1+oj9tFKK+Rt9+Q+kPMffCoIu4od
- Wpg7qbOqF6gE=; b=aHYkeGsUWdEt0ordPTl6lNKrxGCCsExbHGjsWPh1OTgsNjU
- GadDCG3Ro7Cca7ghqAABRlW5rczZxb7YyEK+hHwoQbT40bhhk7BbccuQkTOEVPg5
- X7f0ZGMJOg3l0uNu5cG+nBXavmBXfWLxgQOEM066rCQe5R//Azj3oGEgq7CVQxQj
- UCMUh0vvgfeTsvXIcr+Qn9IYqc4guz+AvGtkD6BYnr+IkiJd2bMB6OPveOclhNbD
- eTXRaeVEdkOP2ZVkwmINiJHv2/wCM82KARBZQurWHS1auSJKOMQiCFsmm5sXQlQA
- 3tW+hOd0blsYfjpkTlSRCiDzxyHFLD2j9CUZhZg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=PhI1+o
- j9tFKK+Rt9+Q+kPMffCoIu4odWpg7qbOqF6gE=; b=QJcg9pf+C7xVeqA4DzGRtW
- 8/37mVB1mZK0wRuK/uj9UeMLl4kjezKcCiZ+BWRiP5H4KxI1c7loNdLd4nLvev0d
- 9DrBZR0OAHqEDLNEx2veQiJypVYvJqR7F7KNuIQl8NzI0jhuKgZgdjQYMgnJLMv3
- Q9yjdTvR+KJtmIX0NuUmeRL51/+RQspsEYUN6p27r2L7b7cpPg7+esKvAC1cGo8X
- YFXD1Y1byEjjshmRGkEjYR73Fl2GPiL8ccvAp1aNOQRRDtMaEMEjsTFqcDVWXI+x
- 3pdF3n5AOSdjxzUoZ2S9yS9EAwYLpaSndmFwklWJfyGKCvxAsfuA0xHpB4WgK1Og
- ==
-X-ME-Sender: <xms:RJmRXY15dIDAnBDCxaUEnY1U7R97n4wzunh88aLtO6faKBXalMvkUQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgedugddutddtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
- ertderredtnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
- fiesrghjrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
- grjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:RJmRXZa3MT4QH3VcWfC4KcCRTsfagXuYbkA4xOXoTnWBBgS0sT3LqA>
- <xmx:RJmRXW5k8GnYrZanJEo8Qv7u3ymCuAU-13bCnlqG8p9mvO1cHcz6fQ>
- <xmx:RJmRXfI3-m0-B5lNQmUoLB2ishIJazpmXX1A-pAt7fkEV1e5knooMg>
- <xmx:RJmRXfFEzajB6X79Up0u4dRZuoGhy9VGfVKMCIJkLn-Kz3d2NAFkAg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 59A2EE00A5; Mon, 30 Sep 2019 01:57:24 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-305-g4111847-fmstable-20190924v1
-Mime-Version: 1.0
-Message-Id: <6089f3a1-e893-4a52-b812-331295f51b8a@www.fastmail.com>
-In-Reply-To: <CAN34fow3D8f=LSY=gS51WxYAcE9Gfrk7_=7Rbppjc4zDF+Pkaw@mail.gmail.com>
-References: <CAN34fowBHmprS9Wmo+GQkDEtxsz2s514j5+zO-rGvTWeMnzjOg@mail.gmail.com>
- <9f7cc18d-2164-4a39-8f47-1a3ef3220685@www.fastmail.com>
- <CAN34fowhEKe0fTv+AVN-++5GoySugobjegb=5Lghi7VYXNLmdg@mail.gmail.com>
- <a1767b7c-1769-40ff-b3d7-8e9adc7d234e@www.fastmail.com>
- <CAN34fow3D8f=LSY=gS51WxYAcE9Gfrk7_=7Rbppjc4zDF+Pkaw@mail.gmail.com>
-Date: Mon, 30 Sep 2019 15:28:12 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Stephen Beckwith" <embeddedsteve@gmail.com>
-Subject: Re: Unable to boot OpenBMC image in QEMU for AST2500
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hdMr11zNzDqLs
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 20:06:12 +1000 (AEST)
+Received: from player779.ha.ovh.net (unknown [10.108.54.36])
+ by mo178.mail-out.ovh.net (Postfix) with ESMTP id 4746C768FF
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 12:06:07 +0200 (CEST)
+Received: from kaod.org (lfbn-1-2229-223.w90-76.abo.wanadoo.fr [90.76.50.223])
+ (Authenticated sender: clg@kaod.org)
+ by player779.ha.ovh.net (Postfix) with ESMTPSA id A300DA45D6BD;
+ Mon, 30 Sep 2019 10:06:03 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH 0/3] mtd: spi-nor: aspeed: fix support for multiple CS on the
+ ast2600
+Date: Mon, 30 Sep 2019 12:05:53 +0200
+Message-Id: <20190930100556.26489-1-clg@kaod.org>
+X-Mailer: git-send-email 2.21.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 15244403266667186946
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrgedvgddvudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,33 +53,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hello,
 
+The ast2600 driver does not set correctly the segment register values
+when multiple CS are available. This blocks accesses to the CS0 and
+Linux fails to boot. The series fixes this issue.
 
-On Thu, 26 Sep 2019, at 06:14, Stephen Beckwith wrote:
+Tested on the IBM Tacoma board.
 
-> 4) I then, as you suggested, reviewed the documentation (again) and 
-> crafted some minimal parameters to running QEMU. And Behold:
-> Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 0.1.0 
-> evb-ast2500 ttyS4
-> 
-> evb-ast2500 login: root
-> Password: 
-> root@evb-ast2500:~# uname -a
-> Linux evb-ast2500 5.2.0-c01e98d #1 Wed Sep 25 16:54:08 UTC 2019 armv6l 
-> GNU/Linux
+Thanks,
 
-Great!
+C.
 
-> 5) RE: runqemu script - My Python is rusty, but I'll take a gander at 
-> it, since I will have some time here, as we are only working on an 
-> initial PoC for this. The next attempt will be to try and see if we can 
-> boot this on our reference platform (AST2500 based). 
->  - I maybe getting back to you should I have an update on this script.
+Cédric Le Goater (3):
+  mtd: spi-nor: aspeed: fix training of multiple CS on the AST2600
+  mtd: spi-nor: aspeed: Disable zero size segments on the AST2600
+  ARM: dts: aspeed: tacoma: Re-enable CS1
 
-Okay, thanks :)
+ drivers/mtd/spi-nor/aspeed-smc.c            | 17 +++++++++++------
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts |  2 +-
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-Andrew
+-- 
+2.21.0
+
