@@ -1,49 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 270EDC1EE0
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 12:24:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44400C21A1
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 15:16:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46hdmc669szDqKw
-	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 20:24:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46hjb36737zDqLT
+	for <lists+openbmc@lfdr.de>; Mon, 30 Sep 2019 23:16:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=46.105.47.167; helo=11.mo5.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::444; helo=mail-pf1-x444.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from 11.mo5.mail-out.ovh.net (11.mo5.mail-out.ovh.net
- [46.105.47.167])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="K+x5g7kh"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
+ [IPv6:2607:f8b0:4864:20::444])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46hdm43pbhzDqDG
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 20:23:47 +1000 (AEST)
-Received: from player779.ha.ovh.net (unknown [10.109.143.183])
- by mo5.mail-out.ovh.net (Postfix) with ESMTP id D4AED250A0D
- for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 12:06:16 +0200 (CEST)
-Received: from kaod.org (lfbn-1-2229-223.w90-76.abo.wanadoo.fr [90.76.50.223])
- (Authenticated sender: clg@kaod.org)
- by player779.ha.ovh.net (Postfix) with ESMTPSA id 35FCCA45D73A;
- Mon, 30 Sep 2019 10:06:12 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH 2/3] mtd: spi-nor: aspeed: Disable zero size segments on the
- AST2600
-Date: Mon, 30 Sep 2019 12:05:55 +0200
-Message-Id: <20190930100556.26489-3-clg@kaod.org>
-X-Mailer: git-send-email 2.21.0
-In-Reply-To: <20190930100556.26489-1-clg@kaod.org>
-References: <20190930100556.26489-1-clg@kaod.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46hjYL5Z0MzDqLT
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 23:14:46 +1000 (AEST)
+Received: by mail-pf1-x444.google.com with SMTP id q10so5618613pfl.0
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Sep 2019 06:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=tJEDDw3yOxrb71VC5CKbXIkJUsvnUza1w90ltv46DTs=;
+ b=K+x5g7khunftljJLZIgmeOIpYH76mPtnLXbqVBZ8KuZUPtvYEvPR5MMwAVAXUvIoB+
+ aj0ZxkQ/wNglDyyCC7rsb+rJdZztc0wE0+Ta93IibSp2jERAyN/ubwz6UwedyyXC1vaV
+ NAUTqsvmvozN33SaaEtxruvbbbl54D2zsxYsJ/PkhodkeOvz4WdyWR3jEW6oumrmagyX
+ Dz0kjYGzDnNHGTei2kZhyCGaVd4bDMFayuPXGgXZvnNPoRHCdUNK0mcHIqWZNhCXS6b/
+ Jl/iURDz1vUuzMfqRmLw5hJ+zkDFnAiqdDVY/cyy3kcVhHbFQ7KeF+nOPsARPsal0Ok/
+ Dk6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=tJEDDw3yOxrb71VC5CKbXIkJUsvnUza1w90ltv46DTs=;
+ b=RQnpWueOVwpoDdkCyil1RWqosk9Fdr2OW7ZQ32eM0Piqjb6CvfxVSWijLVeKcEjDOM
+ HaSAW2lbFCWZu/dl1WAVcDQ4tmxGxg3INJiG21u2c23rQu3F119zZzaDOJ/d6kFU8AEL
+ nzGKVBr1GvDVD6WfyfO7SlHVra63+K3gh0N3JsO4XNJrcfi+/LDG4Fbnsj91sjZ0ibG9
+ Osmi0d3cyuOrtxzx8QeMYR8nrmGGDZILgHk2NC8un6SMQ0zHEvf8VDisGwwLBAk9K2VX
+ 5BtXXiqrVmAsGCk0Wp9kOz2k15N03c5uhPcQjbWQD9W7+uk01mypvuIuyeeONYGWk8Ge
+ rAeA==
+X-Gm-Message-State: APjAAAX5RBNA6+Pj8ewEKmE7jLmA7GWkau3c3PsZf+juUso1LyyPoHXW
+ MPRkcGPMylCCYxCxewArROE=
+X-Google-Smtp-Source: APXvYqwNpnOToFvHsZh2/ycIPEob2UFuQ9nps8f4cvU29tuzJvkiFqNGKyqPvjt3syNYDIHPQP+FCA==
+X-Received: by 2002:a63:5f09:: with SMTP id t9mr24244532pgb.51.1569849283679; 
+ Mon, 30 Sep 2019 06:14:43 -0700 (PDT)
+Received: from voyager.lan ([45.124.203.15])
+ by smtp.gmail.com with ESMTPSA id e14sm12542848pjt.8.2019.09.30.06.14.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 30 Sep 2019 06:14:43 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Felipe Balbi <balbi@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: [PATCH] usb: gadget: Quieten gadget config message
+Date: Mon, 30 Sep 2019 22:44:34 +0930
+Message-Id: <20190930131434.12388-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 15246936541461842690
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrgedvgddvudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,41 +77,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A disabled segment for a CS should have a zero value in its segment
-register. The driver was generating an incorrect value which
-overlapped with segment CS0. Accesses to the flash were blocked and
-Linux hung.
+On a system that often re-configures a USB gadget device the kernel log
+is filled with:
 
-Fixes: 3635b880313a ("mtd: spi-nor: aspeed: add initial support for ast2600")
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
+  configfs-gadget gadget: high-speed config #1: c
+
+Reduce the verbosity of this print to debug.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/mtd/spi-nor/aspeed-smc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/composite.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/aspeed-smc.c b/drivers/mtd/spi-nor/aspeed-smc.c
-index ad9e04fdb8ad..ff367c70001d 100644
---- a/drivers/mtd/spi-nor/aspeed-smc.c
-+++ b/drivers/mtd/spi-nor/aspeed-smc.c
-@@ -347,8 +347,12 @@ static u32 aspeed_smc_segment_end_ast2600(
- static u32 aspeed_smc_segment_reg_ast2600(
- 	struct aspeed_smc_controller *controller, u32 start, u32 end)
- {
--    return ((start & AST2600_SEG_ADDR_MASK) >> 16) |
--	    ((end - 1) & AST2600_SEG_ADDR_MASK);
-+	/* disable zero size segments */
-+	if (start == end)
-+		return 0;
-+
-+	return ((start & AST2600_SEG_ADDR_MASK) >> 16) |
-+		((end - 1) & AST2600_SEG_ADDR_MASK);
- }
+diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
+index 76883ff4f5bb..b49ec81194c6 100644
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -780,9 +780,9 @@ static int set_config(struct usb_composite_dev *cdev,
+ 		result = 0;
+ 	}
  
- /*
+-	INFO(cdev, "%s config #%d: %s\n",
+-	     usb_speed_string(gadget->speed),
+-	     number, c ? c->label : "unconfigured");
++	DBG(cdev, "%s config #%d: %s\n",
++	    usb_speed_string(gadget->speed),
++	    number, c ? c->label : "unconfigured");
+ 
+ 	if (!c)
+ 		goto done;
 -- 
-2.21.0
+2.23.0
 
