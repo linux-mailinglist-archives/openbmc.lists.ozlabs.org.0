@@ -2,59 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6451C2ED1
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2019 10:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2C4FC3A10
+	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2019 18:10:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46jC7T2gk5zDqSF
-	for <lists+openbmc@lfdr.de>; Tue,  1 Oct 2019 18:27:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46jPQ22D6RzDqVn
+	for <lists+openbmc@lfdr.de>; Wed,  2 Oct 2019 02:10:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=protonmail.com
- (client-ip=185.70.40.135; helo=mail-40135.protonmail.ch;
- envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="UY2UQu57"; 
- dkim-atps=neutral
-Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
- [185.70.40.135])
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46jC6j08DqzDqRK
- for <openbmc@lists.ozlabs.org>; Tue,  1 Oct 2019 18:26:49 +1000 (AEST)
-Date: Tue, 01 Oct 2019 08:26:39 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1569918402;
- bh=K8QyvojGtf47PGCVSq47KCaVTgJcBhPz5BnL+DRnups=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=UY2UQu57KimmN/CTAMM1xCOp9pQ4OqQjuyIvSw8HDa3v9m79Q5ntylBSrqjFj2pGD
- gXso7ArCNFNprdYcr5VcaQnqrKEkCgrSQc1A03HuQHhHX/8rV0l9obg5VNXwgDLLTa
- JOzm40SMqs7ADgAlYkm/zCXt6Wt90gIzJXMf3sEY=
-To: Matthew Barth <msbarth@linux.ibm.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Fan PWM monitoring and control
-Message-ID: <ZLN_18f1vSxMDoAUYnI369dyjZFCsNqsRHx-byYYTrn0qH9FCIpVcKR5vMlgshaYPGN3jsf-LXDA3Z30zYzNqgmmCQS6L4NXjzMEzQlpjis=@protonmail.com>
-In-Reply-To: <8695ea1c-5fef-366d-a8b4-893fdd85eff3@linux.ibm.com>
-References: <xsccJqqcmgguxAh42ykWadNuaYHHgIw0933Bk0tYCREDFQMFzoE43c9ULehB-J0Em4kobpg-P8xmKd5ukb9AdyIO9-JYrY8DrNAcVFkURyM=@protonmail.com>
- <b8234b9b-1409-33dc-930f-21b8aab590e2@linux.ibm.com>
- <DPtOWfYe4jWodafub9fy5O2kam1xxcqYVW-AwwODBWTmNr0VBvHQulRT6eAywSOxzlmbCuHhLW9vJ_alhSn-fuDwyh_KvJdUYz4AqWcThTE=@protonmail.com>
- <LgdPnRYBfplNFAYHlgeIeqcfaFAY3YBlIY29oEdpPzlBlptZTxYA7eQDOAJL9IWz_b_GYz9PCAMxoudn2QA1ArWs1r74LSBcdkOdlXQ1Slk=@protonmail.com>
- <afa59982-3c5f-8939-bd05-88d1815a2c6f@linux.ibm.com>
- <gCqa3KLpxkaqddp6pnOMKmLCTSjvpuoQHlS5siDs3JCFv3NeXvKc4xul_Ri83w76neUFnIQhrxDDTuXQyTxHYt3hEPCVvmnWi2dHRSs5iKY=@protonmail.com>
- <50f3d08c-192f-acb9-ab5e-bb33919caf2b@linux.ibm.com>
- <lf0ii4u9DsgrAvxZDnYUOqF2u7t3KtPW5LDaZVTq7raeSKUbeVrIdIQlec-d6Ex_Q70t8nQlI_VfTbuIQh1FMrEPlurk0H9YNPXxqkKXQ-A=@protonmail.com>
- <8695ea1c-5fef-366d-a8b4-893fdd85eff3@linux.ibm.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46jPPH0pt5zDqJL
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Oct 2019 02:10:08 +1000 (AEST)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 01 Oct 2019 09:10:05 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.64,571,1559545200"; 
+ d="p7m'?scan'208";a="216119418"
+Received: from irsmsx102.ger.corp.intel.com ([163.33.3.155])
+ by fmsmga004.fm.intel.com with ESMTP; 01 Oct 2019 09:10:02 -0700
+Received: from irsmsx101.ger.corp.intel.com ([169.254.1.129]) by
+ IRSMSX102.ger.corp.intel.com ([169.254.2.160]) with mapi id 14.03.0439.000;
+ Tue, 1 Oct 2019 17:10:02 +0100
+From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
+To: 'Justin Thaler' <thalerj@us.ibm.com>, "kunyi@google.com"
+ <kunyi@google.com>, "vijaykhemka@fb.com" <vijaykhemka@fb.com>, "OpenBMC
+ Maillist" <openbmc@lists.ozlabs.org>, "Paul.Vancil@dell.com"
+ <Paul.Vancil@dell.com>, "neladk@microsoft.com" <neladk@microsoft.com>,
+ "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>, vishwa
+ <vishwa@linux.vnet.ibm.com>
+Subject: RE: Telemetry Streaming from OpenBMC
+Thread-Topic: Telemetry Streaming from OpenBMC
+Thread-Index: AQHVccljSwy/8vA3Ok+eZpLwGwibCac6dWgg
+Date: Tue, 1 Oct 2019 16:10:01 +0000
+Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D789F9E367@IRSMSX101.ger.corp.intel.com>
+References: <OF55B322CE.9F04B4EE-ON0025847A.006361B7-8625847A.0064A24B@notes.na.collabserv.com>
+In-Reply-To: <OF55B322CE.9F04B4EE-ON0025847A.006361B7-8625847A.0064A24B@notes.na.collabserv.com>
+Accept-Language: pl-PL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYWUwNjc0NDQtODcyMy00NzQ5LTk3ZjUtZWJlOGQ5MjFiZDM3IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUnR1UEpXUWJ5S3FYN2pFd1lRMFZ1U09RcGQ2UHIxc1FHWGd2N0hzUmlUNkdhd1prNVczVnVUdE9BTk9ERVBPXC8ifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [163.33.239.182]
+Content-Type: application/pkcs7-mime; smime-type=signed-data; name="smime.p7m"
+Content-Disposition: attachment; filename="smime.p7m"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM autolearn=ham
- autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,555 +73,403 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: Todd Rosedahl <rosedahl@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Matt,
-
-Please can you help me with mapping values in events.yaml?
-(https://github.com/openbmc/phosphor-fan-presence/blob/master/control/examp=
-le/events.yaml)
-
-How are these values derived?
-How do I make sure, that this is valid for my platform?
-Please can you point to documentation regarding this, i am not able to find=
- from github search.
-
-#      actions:
-#          - name: set_floor_from_average_sensor_value
-#            map:
-#                value:
-#                    - 27000: 3500
-#                    - 32000: 4600
-#                    - 37000: 5200
-#                    - 40000: 5800
-#                type: std::map<int64_t, uint64_t>
-#          - name: set_ceiling_from_average_sensor_value
-#            map:
-#                value:
-#                    - 25000: 7200
-#                    - 27000: 10500
-#                type: std::map<int64_t, uint64_t>
-
-
-
-
-Thanks,
-Raj
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Thursday, September 26, 2019 8:19 PM, Matthew Barth <msbarth@linux.ibm.c=
-om> wrote:
-
-> On 9/25/19 1:45 AM, rgrs wrote:
->
-> > Hi Matt,
-> >
-> > > Is the `pwm[#]_enable` sysfs file set to a '1' at any point after the=
- AC cycle (i.e. after a poweron?)?
-> >
-> > No
-> >
-> > > If you think the configs are set correctly, is the hwmon service for =
-the pwm devices running after the AC cycle while at BMC standby?
-> >
-> > I'm not sure, I think phosphor-fan starts after chassis power-on.
->
-> I was asking if the hwmon service is started at BMC standby. It sounds
-> like it still may be config related but I'm not able to determine where
-> it may be. If you believe that hwmon is not setting the pwm[#]_enable
-> file correctly, please debug and provide a fix if that's the case, it'd
-> be much appreciated!
->
-> Matt
->
-> > Thanks,
-> > Raj
-> > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Origina=
-l Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
-=90
-> > On Tuesday, September 24, 2019 8:25 PM, Matthew Barth msbarth@linux.ibm=
-.com wrote:
-> >
-> > > On 9/23/19 11:25 PM, rgrs wrote:
-> > >
-> > > > Thanks Matt :) It works now.
-> > > > I have one small issue on configuration of ADT7462.
-> > > > After AC power cycle, it defaults to "automatic" fan control.
-> > > > We need to change this "manual" so that phosphor-fan control regist=
-er writes are not ignored by ADT7462.
-> > > > I came across https://github.com/openbmc/docs/blob/master/sensor-ar=
-chitecture.md
-> > > >
-> > > > > ENABLE
-> > > > > Will write a value to a pwmN_enable file on startup if present.
-> > > > > ENABLE_fan1 =3D 2 #Write a 2 to pwm1_enable
-> > > >
-> > > > But this doesn't seem to work. We need it to be initialized to '1'.
-> > > > (It always defaults to 2 after AC cycle)
-> > >
-> > > This sounds like the correct hwmon config to use to set it to a '1' u=
-pon
-> > > hwmon starting after an AC cycle. First ensure your hwmon config has
-> > > these `ENABLE_fan[#]` entries set to a corresponding `pwm[#]_enable`
-> > > file in sysfs.
-> > > Is the `pwm[#]_enable` sysfs file set to a '1' at any point after the=
- AC
-> > > cycle (i.e. after a poweron?)? If you think the configs are set
-> > > correctly, is the hwmon service for the pwm devices running after the=
- AC
-> > > cycle while at BMC standby?
-> > >
-> > > > Is host-power-on script a good place to "echo 1 > pwmN_enable"?
-> > > > (planning to add a script to initialize before host power on)
-> > > > Thanks,
-> > > > Raj
-> > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Ori=
-ginal Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90
-> > > > On Friday, September 20, 2019 9:49 PM, Matthew Barth msbarth@linux.=
-ibm.com wrote:
-> > > >
-> > > > > On 9/20/19 4:55 AM, rgrs wrote:
-> > > > >
-> > > > > > Hi Matt,
-> > > > > > I'm able to control fan speed via busctl.
-> > > > > > root@saber:/sys/class/hwmon/hwmon0# busctl set-property xyz.ope=
-nbmc_project.Hwmon-2429843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/=
-FAN0 xyz.openbmc_project.Control.FanPwm Target t '250'
-> > > > > > root@saber:/sys/class/hwmon/hwmon0# cat fan*_input
-> > > > > > 12498
-> > > > > > 0
-> > > > >
-> > > > > Great! that's progress.
-> > > > >
-> > > > > > I need a way to verify if the sensor associations are working p=
-roperly that fans will ramp up when associated temperature sensor's value i=
-ncreases.
-> > > > >
-> > > > > Be sure that your fans.yaml contains the correct sensor name ("FA=
-N0",
-> > > > > etc..) for each fan that contains the Target property on the FanP=
-wm
-> > > > > interface.
-> > > > > You can use busctl to monitor the target pwm sensor changes based=
- on
-> > > > > what you configured within events.yaml for speed increases. This =
-would
-> > > > > show that fan control is requesting updated targets to hwmon. The=
-n hwmon
-> > > > > would write these values out to the pwm sysfs file for your fan
-> > > > > controller device.
-> > > > >
-> > > > > > Thanks,
-> > > > > > Raj
-> > > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
-=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
-=90=E2=80=90
-> > > > > > On Friday, September 20, 2019 2:57 PM, rgrs rgrs@protonmail.com=
- wrote:
-> > > > > >
-> > > > > > > Hi Matt,
-> > > > > > >
-> > > > > > > > > Not sure I follow what you mean by "no pwm writes", is th=
-ere an
-> > > > > > >
-> > > > > > > application writing to the fan sensor's pwm interface target =
-property?
-> > > > > > > I thought phoshor-fan control writes to pwm to increase fan s=
-peed based on temperature sensors mentioned in events.yaml
-> > > > > > > (recipes-phosphor/fans/phosphor-fan-control-events-config/eve=
-nts.yaml)
-> > > > > > > Is it not the case?
-> > > > > > > Thanks,
-> > > > > > > Raj
-> > > > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90=E2=80=90
-> > > > > > > On Thursday, September 19, 2019 8:26 PM, Matthew Barth msbart=
-h@linux.ibm.com wrote:
-> > > > > > >
-> > > > > > > > On 9/19/19 5:16 AM, rgrs wrote:
-> > > > > > > >
-> > > > > > > > > Hi Patrick, Lei,
-> > > > > > > > > Thank you, I made some changes according your comments
-> > > > > > > > >
-> > > > > > > > > -   added Mutability::Read to fan yaml.
-> > > > > > > > > -   I didn't see ipmi-sensor-inventory.yaml of romulus ha=
-ving fan sensors, so removed them from IPMI.
-> > > > > > > > >
-> > > > > > > > > Now,"busctl monitor" displays Fan tach reads, no pwm writ=
-es.
-> > > > > > > >
-> > > > > > > > Not sure I follow what you mean by "no pwm writes", is ther=
-e an
-> > > > > > > > application writing to the fan sensor's pwm interface targe=
-t property?
-> > > > > > > >
-> > > > > > > > > Is there any way to manually set PWM value and test this?
-> > > > > > > > > How do I verify PWM values are being written to ADT7462?
-> > > > > > > >
-> > > > > > > > If no other application are writing to the PWM sysfs entrie=
-s, you should
-> > > > > > > > be able to `echo` a value to each fan's PWM sysfs file to a=
-lter the fan
-> > > > > > > > speeds.
-> > > > > > > >
-> > > > > > > > > Another observation is Inventory.Item seems to have inval=
-id(stale) entries.
-> > > > > > > >
-> > > > > > > > I believe inventory is persisted by default so that could e=
-xplain why
-> > > > > > > > these entries are still showing up. These are persisted und=
-er
-> > > > > > > > `/var/lib/phosphor-inventory-manager/..`.
-> > > > > > > >
-> > > > > > > > > IPMI sensor names appear in inventory even after removing=
- from IPMI sensor yaml files (exported JSON in attachment).
-> > > > > > > > > Logs:
-> > > > > > > > > busctl monitor | grep -i fan
-> > > > > > > > >
-> > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > > > >
-> > > > > > > > > Monitoring bus message stream.
-> > > > > > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_ta=
-ch/FAN0 Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChan=
-ged
-> > > > > > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_ta=
-ch/FAN1 Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChan=
-ged
-> > > > > > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_ta=
-ch/FAN2 Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChan=
-ged
-> > > > > > > > > [...]
-> > > > > > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_ta=
-ch/FAN1 Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChan=
-ged
-> > > > > > > > > Sender=3D:1.45 Path=3D/xyz/openbmc_project/sensors/fan_ta=
-ch/FAN3 Interface=3Dorg.freedesktop.DBus.Properties Member=3DPropertiesChan=
-ged
-> > > > > > > > > ^C
-> > > > > > > > > busctl get-property xyz.openbmc_project.Hwmon-2429843755.=
-Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Contr=
-ol.FanPwm Target
-> > > > > > > > >
-> > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > > > >
-> > > > > > > > > t 0
-> > > > > > > > > busctl set-property xyz.openbmc_project.Hwmon-2429843755.=
-Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN0 xyz.openbmc_project.Contr=
-ol.FanPwm Target 8000
-> > > > > > > > >
-> > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > > >
-> > > > > > > > This is not a valid call to `busctl set-property...`, its m=
-issing the
-> > > > > > > > property's signature type (refer to `busctl help`). Also, a=
- target PWM
-> > > > > > > > of 8000 is invalid, PWM is 0 - 255.
-> > > > > > > >
-> > > > > > > > > Failed to create bus message: Invalid argument
-> > > > > > > > > busctl introspect --no-pager xyz.openbmc_project.Hwmon-24=
-29843755.Hwmon1 /xyz/openbmc_project/sensors/fan_tach/FAN1
-> > > > > > > > >
-> > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > > > >
-> > > > > > > > > NAME TYPE SIGNATURE RESULT/VALUE FLAGS
-> > > > > > > > > org.freedesktop.DBus.Introspectable interface - - -
-> > > > > > > > > .Introspect method - s -
-> > > > > > > > > org.freedesktop.DBus.Peer interface - - -
-> > > > > > > > > .GetMachineId method - s -
-> > > > > > > > > .Ping method - - -
-> > > > > > > > > org.freedesktop.DBus.Properties interface - - -
-> > > > > > > > > .Get method ss v -
-> > > > > > > > > .GetAll method s a{sv} -
-> > > > > > > > > .Set method ssv - -
-> > > > > > > > > .PropertiesChanged signal sa{sv}as - -
-> > > > > > > > > xyz.openbmc_project.Control.FanPwm interface - - -
-> > > > > > > > > .Target property t 0 emits-change writable
-> > > > > > > > > xyz.openbmc_project.Sensor.Value interface - - -
-> > > > > > > > > .MaxValue property x 0 emits-change writable
-> > > > > > > > > .MinValue property x 0 emits-change writable
-> > > > > > > > > .Scale property x 0 emits-change writable
-> > > > > > > > > .Unit property s "xyz.openbmc_project.Sensor.Value.Unit.=
-=E2=80=A6 emits-change writable
-> > > > > > > > > .Value property x 2983 emits-change writable
-> > > > > > > > > xyz.openbmc_project.State.Decorator.OperationalStatus int=
-erface - - -
-> > > > > > > > > .Functional property b true emits-change writable
-> > > > > > > > > Thanks,
-> > > > > > > > > Raj
-> > > > > > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90=E2=80=90
-> > > > > > > > > On Wednesday, September 18, 2019 9:35 PM, Patrick Venture=
- venture@google.com wrote:
-> > > > > > > > >
-> > > > > > > > > > On Wed, Sep 18, 2019 at 2:30 AM rgrs rgrs@protonmail.co=
-m wrote:
-> > > > > > > > > >
-> > > > > > > > > > > Hi Patrick, Matt,
-> > > > > > > > > > > I tried instructions from this wiki: https://develope=
-r.ibm.com/linuxonpower/2019/01/07/how-to-port-openbmc/
-> > > > > > > > > > > There is no GPIO to detect presence of fans, so tach =
-readings is used instead.
-> > > > > > > > > > > Here's what I did while trying to enable Fan control:
-> > > > > > > > > > >
-> > > > > > > > > > > 1.  Added Fan tach sensor in hwmon (adt7462.conf) is =
-in the form LABEL=3DFANx_RPM
-> > > > > > > > > > > 2.  "ipmi-sensor-inventory.yaml" has below config:
-> > > > > > > > > > >
-> > > > > > > > > > > 60: &fan_tach
-> > > > > > > > > > > sensorType: 0x04
-> > > > > > > > > > > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
-> > > > > > > > > > > sensorReadingType: 0x01
-> > > > > > > > > > > multiplierM: 100
-> > > > > > > > > > > offsetB: 0
-> > > > > > > > > > > bExp: 0
-> > > > > > > > > > > unit: xyz.openbmc_project.Sensor.Value.Unit.RPMS
-> > > > > > > > > > > scale: 0
-> > > > > > > > > > > rExp: 0
-> > > > > > > > > > > serviceInterface: org.freedesktop.DBus.Properties
-> > > > > > > > > > > readingType: readingData
-> > > > > > > > > > > interfaces:
-> > > > > > > > > > > xyz.openbmc_project.Sensor.Value:
-> > > > > > > > > > > Value:
-> > > > > > > > > > > Offsets:
-> > > > > > > > > > > 0xFF:
-> > > > > > > > > > > type: int64_t
-> > > > > > > > > > > and FAN PWM as
-> > > > > > > > > > > 89: &fanpwm
-> > > > > > > > > > > sensorType: 0x04
-> > > > > > > > > > > path: /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
-> > > > > > > > > > > sensorReadingType: 0x01
-> > > > > > > > > > > multiplierM: 1
-> > > > > > > > > > > offsetB: 0
-> > > > > > > > > > > bExp: 0
-> > > > > > > > > > > mutability: Mutability::Write
-> > > > > > > > > >
-> > > > > > > > > > You may need to add ::Read here too, I'm not sure anymo=
-re, but you can
-> > > > > > > > > > check the script that builds this:
-> > > > > > > > > > https://github.com/openbmc/phosphor-host-ipmid/blob/mas=
-ter/scripts/writesensor.mako.cpp#L69
-> > > > > > > > > > It'll default to read, but if you've only set write, I =
-don't know.
-> > > > > > > > > >
-> > > > > > > > > > >         serviceInterface: org.freedesktop.DBus.Proper=
-ties
-> > > > > > > > > > >         readingType: readingData
-> > > > > > > > > > >         interfaces:
-> > > > > > > > > > >             xyz.openbmc_project.Control.FanPwm:
-> > > > > > > > > > >                 Target:
-> > > > > > > > > > >                     Offsets:
-> > > > > > > > > > >                         0xFF:
-> > > > > > > > > > >                             type: uint64_t
-> > > > > > > > > > >
-> > > > > > > > > > >
-> > > > > > > > > > > 3.  I copied meta-romulus/recipes-phosphor/fans to my=
- platform and changed FAN names from "fanx" to "FANx_RPM" in yaml files.
-> > > > > > > > > > >
-> > > > > > > > > > > This is what get in busctl tree related to Fans:
-> > > > > > > > > > > (I expected to see FanPwm entries in busctl and I'm n=
-ot sure why there are multiple entries in inventory).
-> > > > > > > > > > > Service xyz.openbmc_project.Hwmon-2429843755.Hwmon1:
-> > > > > > > > > > > `-/xyz`-/xyz/openbmc_project
-> > > > > > > > > > > `-/xyz/openbmc_project/sensors |-/xyz/openbmc_project=
-/sensors/fan_tach | |-/xyz/openbmc_project/sensors/fan_tach/FAN0_RPM | |-/x=
-yz/openbmc_project/sensors/fan_tach/FAN1_RPM | |-/xyz/openbmc_project/senso=
-rs/fan_tach/FAN2_RPM |`-/xyz/openbmc_project/sensors/fan_tach/FAN3_RPM
-> > > > > > > > > > > `-/xyz/openbmc_project/sensors/temperature`-/xyz/open=
-bmc_project/sensors/temperature/BACKPLANE_TEMP
-> > > > > > > > > >
-> > > > > > > > > > You don't get a separate entry for the PWM from phospho=
-r-hwmon.
-> > > > > > > > > > It's a separate interface on the same service and path.
-> > > > > > > > > > I recommend you introspect on the path and see what int=
-erfaces are
-> > > > > > > > > > available (as well as adding "| read" above):
-> > > > > > > > > > busctl introspect --no-pager
-> > > > > > > > > > xyz.openbmc_project.Hwmon-2429843755.Hwmon1
-> > > > > > > > > > /xyz/openbmc_project/sensors/fan_tach/FAN0_RPM
-> > > > > > > > > >
-> > > > > > > > > > > Service xyz.openbmc_project.Inventory.Manager:
-> > > > > > > > > > > `-/xyz`-/xyz/openbmc_project
-> > > > > > > > > > > `-/xyz/openbmc_project/inventory`-/xyz/openbmc_projec=
-t/inventory/system
-> > > > > > > > > > > `-/xyz/openbmc_project/inventory/system/chassis`-/xyz=
-/openbmc_project/inventory/system/chassis/motherboard
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/FAN0
-> > > > > > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/mot=
-herboard/FAN0/FAN0 |-/xyz/openbmc_project/inventory/system/chassis/motherbo=
-ard/FAN0_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
-AN0_RPM/FAN0_RPM
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/FAN1
-> > > > > > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/mot=
-herboard/FAN1/FAN1 |-/xyz/openbmc_project/inventory/system/chassis/motherbo=
-ard/FAN1_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
-AN1_RPM/FAN1_RPM
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/FAN2
-> > > > > > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/mot=
-herboard/FAN2/FAN2 |-/xyz/openbmc_project/inventory/system/chassis/motherbo=
-ard/FAN2_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
-AN2_RPM/FAN2_RPM
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/FAN3
-> > > > > > > > > > > | `-/xyz/openbmc_project/inventory/system/chassis/mot=
-herboard/FAN3/FAN3 |-/xyz/openbmc_project/inventory/system/chassis/motherbo=
-ard/FAN3_RPM |`-/xyz/openbmc_project/inventory/system/chassis/motherboard/F=
-AN3_RPM/FAN3_RPM
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/fan0
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/fan1
-> > > > > > > > > > > |-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/fan2
-> > > > > > > > > > > `-/xyz/openbmc_project/inventory/system/chassis/mothe=
-rboard/fan3
-> > > > > > > > > > > Thanks,
-> > > > > > > > > > > Raj
-> > > > > > > > > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90=E2=80=90 Original Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90=E2=80=90=E2=80=90
-> > > > > > > > > > > On Tuesday, September 17, 2019 9:18 PM, Patrick Ventu=
-re venture@google.com wrote:
-> > > > > > > > > > >
-> > > > > > > > > > > > On Tue, Sep 17, 2019 at 8:32 AM Matthew Barth msbar=
-th@linux.ibm.com wrote:
-> > > > > > > > > > > >
-> > > > > > > > > > > > > On 9/17/19 5:40 AM, rgrs wrote:
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > > Hi,
-> > > > > > > > > > > > > > I need some help with phosphor hwmon related to=
- fan sensors.
-> > > > > > > > > > > > > > I'm trying to control Fans in a server motherbo=
-ard using ADT7462
-> > > > > > > > > > > > > > controller. Hw mon porting is done and the sysf=
-s interfaces are working
-> > > > > > > > > > > > > > as expected.
-> > > > > > > > > > > > > > While I am able to read RPM, i don't find pwm/t=
-arget to control the fans
-> > > > > > > > > > > > > > exposed as dbus objects.
-> > > > > > > > > > > > > > Do you have the hwmon config set similar to thi=
-s to denote the fan
-> > > > > > > > > > > > > > targets are of PWM type?
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > https://github.com/openbmc/openbmc/blob/master/me=
-ta-ibm/meta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/=
-apb/pwm-tacho-controller%401e786000.conf
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > > busctl --no-page tree xyz.openbmc_project.FanSe=
-nsor
-> > > > > > > > > > > > > >
-> > > > > > > > > > > > > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > > > > > > > > > > > >
-> > > > > > > > > > > > > > Failed to introspect object / of service xyz.op=
-enbmc_project.FanSensor:
-> > > > > > > > > > > > > > The name is not activatable
-> > > > > > > > > > > > > > No objects discovered.
-> > > > > > > > > > > > > > That does not look like a hwmon service name. I=
-f you are using
-> > > > > > > > > > > > > > phosphor-objmgr, you can use `# mapper get-serv=
-ice /xyz/openbmc_project/sensors/fan_tach` otherwise you'll need to find th=
-e
-> > > > > > > > > > > > > > hwmon service name associated with your fan con=
-troller device.
-> > > > > > > > > > > >
-> > > > > > > > > > > > running`busctl tree --no-pager` will just list ever=
-ything, and you
-> > > > > > > > > > > > should see your fans in there. You can use the mapp=
-er too. I was
-> > > > > > > > > > > > curious, are you using entity-manager/dbus-sensors?=
- When you mention
-> > > > > > > > > > > > FanSensor as the service, that's what it sounds lik=
-e.
-> > > > > > > > > > > >
-> > > > > > > > > > > > > > I came across this post, I think it is similar =
-to my issue.
-> > > > > > > > > > > > > > (https://gerrit.openbmc-project.xyz/c/openbmc/p=
-hosphor-hwmon/+/8353)
-> > > > > > > > > > > > > > Please someone point to latest documentation or=
- reference Fan porting
-> > > > > > > > > > > > > > from openBMC repo?
-> > > > > > > > > > > > > > What are the exact fields in YAML that are used=
- create FanPWM objects.
-> > > > > > > > > > > > > > The Romulus machine should be a good reference =
-for PWM based fan control
-> > > > > > > > > > > > > > using phosphor-hwmon. It uses the
-> > > > > > > > > > > > > > phosphor-fan-presence/[control|monitor] apps fo=
-r controlling and
-> > > > > > > > > > > > > > monitoring fans
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > https://github.com/openbmc/openbmc/tree/master/me=
-ta-ibm/meta-romulus
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > > (I'm using Feb release in my sandbox,
-> > > > > > > > > > > > > > https://github.com/openbmc/docs/blob/master/rel=
-ease/release-notes.md#26-feb-4-2019)
-> > > > > > > > > > > > > > Thanks,
-> > > > > > > > > > > > > > Raj
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > Matt
-
-
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAaCAJIAEgg38Q29u
+dGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7DQoJYm91bmRhcnk9Ii0tLS09X05leHRQYXJ0XzAw
+MF8wMEExXzAxRDU3ODgzLjcwMDgyQUQwIg0KWC1NUy1UTkVGLUNvcnJlbGF0b3I6IDxEQkEyNEVF
+RTk5QTNCMzQ4OUZGNDcyRjVFOTRERTZENzg5RjlEMjE0QElSU01TWDEwMS5nZXIuY29ycC5pbnRl
+bC5jb20+DQoNClRoaXMgaXMgYSBtdWx0aXBhcnQgbWVzc2FnZSBpbiBNSU1FIGZvcm1hdC4NCg0K
+LS0tLS0tPV9OZXh0UGFydF8wMDBfMDBBMV8wMUQ1Nzg4My43MDA4MkFEMA0KQ29udGVudC1UeXBl
+OiB0ZXh0L3BsYWluOw0KCWNoYXJzZXQ9InV0Zi04Ig0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGlu
+ZzogOGJpdA0KDQpIaSwgDQoNClNvcnJ5IGZvciB0aGUgbGF0ZSByZXNwb25zZS4gRm9yIG5vdyBz
+dHJlYW1pbmcgc2hhbGwgYmUgc3VwcG9ydGVkIGJ5IHRoZQ0KUmVkZmlzaCB0ZWxlbWV0cnkgc2Vy
+dmljZS4gRXZlcnkgbWV0cmljIHJlcG9ydCBjYW4gYmUgY29uZmlndXJlZCB0byBiZQ0KcHVzaGVk
+IG91dCBhcyB0aGUgcmVkZmlzaCBldmVudC4gQ3VycmVudGx5IHRoaXMgaXMgd29yayBpbiBwcm9n
+cmVzcy4gDQoNCkJSDQpQaW90ciBNYXR1c3pjemFrDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdl
+LS0tLS0NCkZyb206IG9wZW5ibWMNClttYWlsdG86b3BlbmJtYy1ib3VuY2VzK3Bpb3RyLm1hdHVz
+emN6YWs9aW50ZWwuY29tQGxpc3RzLm96bGFicy5vcmddIE9uDQpCZWhhbGYgT2YgSnVzdGluIFRo
+YWxlcg0KU2VudDogVGh1cnNkYXksIFNlcHRlbWJlciAxOSwgMjAxOSA4OjE5IFBNDQpUbzoga3Vu
+eWlAZ29vZ2xlLmNvbTsgdmlqYXlraGVta2FAZmIuY29tOyBPcGVuQk1DIE1haWxsaXN0DQo8b3Bl
+bmJtY0BsaXN0cy5vemxhYnMub3JnPjsgUGF1bC5WYW5jaWxAZGVsbC5jb207IG5lbGFka0BtaWNy
+b3NvZnQuY29tOw0KZ21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbTsgdmlzaHdhIDx2aXNod2FAbGlu
+dXgudm5ldC5pYm0uY29tPg0KQ2M6IFRvZGQgUm9zZWRhaGwgPHJvc2VkYWhsQHVzLmlibS5jb20+
+DQpTdWJqZWN0OiBUZWxlbWV0cnkgU3RyZWFtaW5nIGZyb20gT3BlbkJNQw0KDQpIaSBBbGwsDQoN
+CknigJltIG5vdCBzdXJlIGlmIHRoaXMgc2hvdWxkIGJlIGEgc2VwYXJhdGUgbm90ZSBvciBub3Qu
+IEkndmUgYWxzbyBub3QgYmVlbg0KYWJsZSB0byBqb2luIHRoaXMgd29ya2dyb3VwLCBob3dldmVy
+IGFsbCBvZiBteSBjb25jZXJucyBhcHBlYXIgdG8gaGF2ZSBiZWVuDQpkaXNjdXNzZWQuIC4gSeKA
+mXZlIHN0YXJ0ZWQgcmV2aWV3aW5nIHNvbWUgb2YgdGhlIHRlbGVtZXRyeSBjb252ZXJzYXRpb24g
+Zm9yDQpvcGVuYm1jLCBhbmQgaGF2ZSB0YWtlbiBzb21lIHRpbWUgcmV2aWV3IHRoZSB3aWtpIGFu
+ZCBoYXZlIGFsc28gcmV2aWV3ZWQgdGhlDQpkb2N1bWVudCBwcm9wb3NhbC4gQmFzZWQgb24gbXkg
+ZXhwZXJpZW5jZSwgdGhlcmXigJlzIHR3byBjb3JlIHVzZSBjYXNlczoNCnRlbGVtZXRyeSBzdHJl
+YW1zLCBhbmQgdGVsZW1ldHJ5IHJlcG9ydHMuIFRoZSBSZXBvcnRzIGFyZSBhIGNvbGxlY3QgYW5k
+DQphbmFseXplIGxhdGVyIG1ldGhvZCwgdHlwaWNhbGx5IHVzZWQgZm9yIHN5c3RlbSBwcm9maWxp
+bmcsIGpvYiBwcm9maWxpbmcsDQphbmQgYW5hbHl0aWNzIG9mIGRhdGEgY2VudGVyIHVzYWdlIG92
+ZXIgdGltZS4gDQpGb3IgdGhlIHN0cmVhbXMsIHRoZXNlIGFyZSBiZWluZyB1c2VkIHRvIGFsbG93
+IHRoZSBkYXRhIGNlbnRlciB0byByZWFjdCB0bw0KY2hhbmdlcyBhY3Jvc3MgdGhlIG1hbmFnZWQg
+c3lzdGVtcywgbGlrZSBpbmNyZWFzaW5nIHdhdGVyIGZsb3csIGNvb2xpbmcNCmNhcGFjaXR5LCBv
+ciBwb3dlciB0aHJvdHRsaW5nIHN5c3RlbXMgdG8gcHJldmVudCBvdmVyIHN1YnNjcmlwdGlvbnMg
+b24gdGhlDQpkYXRhIGNlbnRlcuKAmXMgcG93ZXIgZ3JpZC4NCg0KSeKAmWQgbGlrZSB0byBhc2sg
+YWJvdXQgdGhlIHN0cmVhbXMgc2luY2UgdGhlIHJlcG9ydCBwb3J0aW9uIG9mIHRoaW5ncyBzZWVt
+cw0KZXhjZXB0aW9uYWxseSB3ZWxsIGNvdmVyZWQuIFdpdGggcHJldmlvdXMgdmVyc2lvbnMgb2Yg
+b3BlbkJNQyBJIHdhcyBhYmxlIHRvDQpsZXZlcmFnZSB3ZWJzb2NrZXRzIHRvIGdldCB1cGRhdGVz
+IG9uIHNlbnNvciB2YWx1ZXMgb24gY2hhbmdlLiBUaGlzIHR1cm5lZA0Kb3V0IHRvIGJlIHByZXR0
+eSBuZXR3b3JrIGVmZmljaWVudCBhbmQgaXMgYWJsZSB0byBkcml2ZSAxL3MgdXBkYXRlcyBvbiBh
+bGwNCnRoZSBzZW5zb3JzIGluIGEgc3lzdGVtLiBJdCBkb2VzbuKAmXQgaGF2ZSBhbiBpbXBhY3Qg
+b24gb3RoZXIgbW9uaXRvcmluZw0Kc2VydmljZXMgZWl0aGVyLiBUaGF0IGJlaW5nIHNhaWQsIEni
+gJl2ZSBiZWVuIHJlYWRpbmcgdGhyb3VnaCB0aGUgcmVkZmlzaA0KdGVsZW1ldHJ5IGFuZCBldmVu
+dGluZyBzZXJ2aWNlcyBhbmQgd2FzIGxvb2tpbmcgZm9yIHNvbWUgaGVscCBhbmQgb3INCmd1aWRh
+bmNlLiBGb3IgcmVmZXJlbmNlIEkgd2FzIGxvb2tpbmcgYXQgdGhpcyBkb2N1bWVudA0KaHR0cHM6
+Ly93d3cuZG10Zi5vcmcvc2l0ZXMvZGVmYXVsdC9maWxlcy9zdGFuZGFyZHMvZG9jdW1lbnRzL0RT
+UDAyNjZfMS42LjAucA0KZGYNCi4NCg0KSWYgSSBkbyBzdWJzY3JpYmUgdXNpbmcgU1NFIGFuZCB0
+ZWxlbWV0cnkgcmVwb3J0cywgaXQgc2VlbXMgdG8gYmUgc2V0dXAgdG8NCmdldCBhIGZ1bGwgc2V0
+IG9mIHJlYWRpbmdzIG92ZXIgdGltZSBhbmQgb25seSBzZW5kIHdoZW4gdGhlIHJlcG9ydCBpcw0K
+Y29tcGxldGUuIENhbiBJIHVzZSB0aGVzZSByZXBvcnRzIHRvIGdldCB1cGRhdGVzIGV2ZXJ5IHNl
+Y29uZD8gSWYgSQ0Kc3Vic2NyaWJlIHRvIGFuIGVuZHBvaW50LCBJIGFsc28gc2VlbSB0byBnZXQg
+dGhlIGVudGlyZSBlbmRwb2ludCBhbmQgSeKAmW0gbm90DQpzdXJlIGlmIHRoaXMgd291bGQgbWVl
+dCBhIGdvYWwgb2YgZ2V0dGluZyB0aGUgbGFyZ2UgY2x1c3RlciAoMzAwDQpzeXN0ZW1zKSB3b3J0
+aCBvZiB1cGRhdGVzIGF0IGEgZGF0YSByYXRlIG9mIGxlc3MgdGhhbiAyMCBNYi9zLiBJIHdvdWxk
+DQphcHByZWNpYXRlIGFueSBhZHZpY2Ugb24gbGV2ZXJhZ2luZyByZWRmaXNoIHN0YW5kYXJkcyB0
+byBzdHJlYW0gc2Vuc29yDQpyZWFkaW5ncyBmb3IgYW4gT3BlbkJNQyBzeXN0ZW0uIElmIEknbSBu
+b3QgYWJsZSB0byB1c2UgcmVkZmlzaCwgSSdkIGJlIGhhcHB5DQp0byBlbGFib3JhdGUgbW9yZSBv
+biB0aGUgd2Vic29ja2V0IG1ldGhvZCBJIHVzZWQgd2l0aCB0aGUgcGhvc3Bob3Igd2Vic2VydmVy
+DQphbmQgZGlzY3VzcyBvcHRpb25zIGZvciB0aGUgY3VycmVudC9mdXR1cmUgQk1DIHZlcnNpb25z
+IGxldmVyYWdpbmcgYm1jd2ViLiANCg0KVGhhbmtzLA0KSnVzdGluIFRoYWxlcg0KU2VuaW9yIFJB
+UyBFbmdpbmVlcg0KDQoNCi0tLS0tLT1fTmV4dFBhcnRfMDAwXzAwQTFfMDFENTc4ODMuNzAwODJB
+RDANCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vbXMtdG5lZjsNCgluYW1lPSJ3aW5tYWlsLmRh
+dCINCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJhc2U2NA0KQ29udGVudC1EaXNwb3NpdGlv
+bjogYXR0YWNobWVudDsNCglmaWxlbmFtZT0id2lubWFpbC5kYXQiDQoNCgSCEABlSjgrSWpzUUFR
+YVFDQUFFQUFBQUFBQUJBQUVBQVFlUUJnQUlBQUFBNGdRQUFBQUFBQURtQUFFSWdBY0FHQUFBQUVs
+UVRTNU5hV055DQpiM052Wm5RZ1RXRnBiQzVPYjNSbEFERUlBUU9RQmdCd0l3QUFRQUFBQUFzQUFn
+QUJBQUFBQXdBbUFBQUFBQUFMQUNrQUFBQUFBQXNBDQpLd0FBQUFBQUF3QXVBQUFBQUFBZUFIQUFB
+UUFBQUNFQUFBQlVaV3hsYldWMGNua2dVM1J5WldGdGFXNW5JR1p5YjIwZ1QzQmxia0pODQpRd0FB
+QUFBQ0FYRUFBUUFBQUJzQUFBQUJBZFZ4eVdOTERML3k4RGM2VDU1bWt2QWJDSnNKcHpwMWFDQUFD
+d0FCRGdBQUFBQUNBUW9PDQpBUUFBQUM0QUFBQUFBQUFBSG5RclZDQnZ0MGF6OGhNY1ZIc2RId0VB
+MkticWtWb1h3RUdDOFNsbEZHT0c5UUN3TTdYNTB3QUFBQUFEDQpBQ01PdUFNQUFCNEFLQTRCQUFB
+QWpRQUFBREF3TURBd01EQXlBVTkxZEd4dmIydEpVaTVwYm5SbGJDNWpiMjB2YnoxSmJuUmxiQzl2
+DQpkVDFGZUdOb1lXNW5aU0JCWkcxcGJtbHpkSEpoZEdsMlpTQkhjbTkxY0NBb1JsbEVTVUpQU0VZ
+eU0xTlFSRXhVS1M5amJqMVNaV05wDQpjR2xsYm5SekwyTnVQWEJ0WVhSMWMzcGpBWEJwYjNSeUxt
+MWhkSFZ6ZW1ONllXdEFhVzUwWld3dVkyOXRBQUFBQUI0QUtRNEJBQUFBDQpqUUFBQURBd01EQXdN
+REF5QVU5MWRHeHZiMnRKVWk1cGJuUmxiQzVqYjIwdmJ6MUpiblJsYkM5dmRUMUZlR05vWVc1blpT
+QkJaRzFwDQpibWx6ZEhKaGRHbDJaU0JIY205MWNDQW9SbGxFU1VKUFNFWXlNMU5RUkV4VUtTOWpi
+ajFTWldOcGNHbGxiblJ6TDJOdVBYQnRZWFIxDQpjM3BqQVhCcGIzUnlMbTFoZEhWemVtTjZZV3RB
+YVc1MFpXd3VZMjl0QUFBQUFBTUFMdzYxQXdBQUFnRVBNQUVBQUFCR0FBQUFBQUFBDQpBQjUwSzFR
+Z2I3ZEdzL0lUSEZSN0hSOEhBTmltNnBGYUY4QkJndkVwWlJSamh2VUFzRE96U0I0QUFCV2crZWhz
+QmVWQ3VId1N5NFBNDQoyU3NBQ014dlBOb0FBQUFBQ3dBV01BRUFBQUFDQVJrd0FRQUFBQkFBQUFB
+dnZwVGNuVlQ2VEtiWThoMTBvSFFTQWdFYk1BRUFBQUFNDQpBQUFBQUFBQUFEQW5ZYncxZE5VQkF3
+RGVQK245QUFBREFQRS9GUVFBQUI0QStEOEJBQUFBRWdBQUFFMWhkSFZ6ZW1ONllXc3NJRkJwDQpi
+M1J5QUFBQUhnRDZQd0VBQUFBYkFBQUFjR2x2ZEhJdWJXRjBkWE42WTNwaGEwQnBiblJsYkM1amIy
+MEFBQUlCK3o4QkFBQUFjZ0FBDQpBQUFBQUFEY3AwREl3RUlRR3JTNUNBQXJMK0dDQVFBQUFBQUFB
+QUF2VHoxSlRsUkZUQzlQVlQxRldFTklRVTVIUlNCQlJFMUpUa2xUDQpWRkpCVkVsV1JTQkhVazlW
+VUNBb1JsbEVTVUpQU0VZeU0xTlFSRXhVS1M5RFRqMVNSVU5KVUVsRlRsUlRMME5PUFZCTlFWUlZV
+MXBEDQpBQUFBQXdEOVArUUVBQUFEQUFsWkFRQUFBQXNBUElBSUlBWUFBQUFBQU1BQUFBQUFBQUJH
+QUFBQUFCU0ZBQUFCQUFBQUF3QS9nQWdnDQpCZ0FBQUFBQXdBQUFBQUFBQUVZQUFBQUFFSVVBQUFB
+QUFBQUxBRXVBQ0NBR0FBQUFBQURBQUFBQUFBQUFSZ0FBQUFBRGhRQUFBQUFBDQpBQU1BYjRBSUlB
+WUFBQUFBQU1BQUFBQUFBQUJHQUFBQUFBR0ZBQUFBQUFBQUhnQjlnSVlEQWdBQUFBQUF3QUFBQUFB
+QUFFWUJBQUFBDQpHZ0FBQUdNQWJ3QnVBSFFBWlFCdUFIUUFMUUIwQUhrQWNBQmxBQUFBQUFBQkFB
+QUFQUUFBQUdGd2NHeHBZMkYwYVc5dUwzQnJZM00zDQpMVzFwYldVN2MyMXBiV1V0ZEhsd1pUMXph
+V2R1WldRdFpHRjBZVHR1WVcxbFBYTnRhVzFsTG5BM2JRQUFBQUFMQUoyQUNDQUdBQUFBDQpBQURB
+QUFBQUFBQUFSZ0FBQUFBR2hRQUFBQUFBQUFzQW40QUlJQVlBQUFBQUFNQUFBQUFBQUFCR0FBQUFB
+QTZGQUFBQUFBQUFBd0NpDQpnQWdnQmdBQUFBQUF3QUFBQUFBQUFFWUFBQUFBR0lVQUFBQUFBQUFM
+QUxlQUNDQUdBQUFBQUFEQUFBQUFBQUFBUmdBQUFBQ0NoUUFBDQpBQUFBQUI0QTZZQUlJQVlBQUFB
+QUFNQUFBQUFBQUFCR0FBQUFBTmlGQUFBQkFBQUFDUUFBQUVsUVRTNU9iM1JsQUFBQUFBSUI3WU9B
+DQpkanBPZXJmUUVaMmxBTUJQMWxhRkFRQUFBQ3dBQUFCSkFHNEFkQUJsQUhJQWJnQmxBSFFBSUFC
+REFHZ0FZUUJ5QUhNQVpRQjBBQ0FBDQpRZ0J2QUdRQWVRQUFBQUVBQUFDMUNnQUFEUW90TFMwdExV
+OXlhV2RwYm1Gc0lFMWxjM05oWjJVdExTMHRMUTBLUm5KdmJUb2diM0JsDQpibUp0WXlCYmJXRnBi
+SFJ2T205d1pXNWliV010WW05MWJtTmxjeXR3YVc5MGNpNXRZWFIxYzNwamVtRnJQV2x1ZEdWc0xt
+TnZiVUJzDQphWE4wY3k1dmVteGhZbk11YjNKblhTQlBiaUJDWldoaGJHWWdUMllnU25WemRHbHVJ
+RlJvWVd4bGNnMEtVMlZ1ZERvZ1ZHaDFjbk5rDQpZWGtzSUZObGNIUmxiV0psY2lBeE9Td2dNakF4
+T1NBNE9qRTVJRkJORFFwVWJ6b2dhM1Z1ZVdsQVoyOXZaMnhsTG1OdmJUc2dkbWxxDQpZWGxyYUdW
+dGEyRkFabUl1WTI5dE95QlBjR1Z1UWsxRElFMWhhV3hzYVhOMElEeHZjR1Z1WW0xalFHeHBjM1J6
+TG05NmJHRmljeTV2DQpjbWMrT3lCUVlYVnNMbFpoYm1OcGJFQmtaV3hzTG1OdmJUc2dibVZzWVdS
+clFHMXBZM0p2YzI5bWRDNWpiMjA3SUdkdGFXeHNjMEJzDQphVzUxZUM1MmJtVjBMbWxpYlM1amIy
+MDdJSFpwYzJoM1lTQThkbWx6YUhkaFFHeHBiblY0TG5adVpYUXVhV0p0TG1OdmJUNE5Da05qDQpP
+aUJVYjJSa0lGSnZjMlZrWVdoc0lEeHliM05sWkdGb2JFQjFjeTVwWW0wdVkyOXRQZzBLVTNWaWFt
+VmpkRG9nVkdWc1pXMWxkSEo1DQpJRk4wY21WaGJXbHVaeUJtY205dElFOXdaVzVDVFVNTkNnMEtT
+R2tnUVd4c0xBMEtEUXBKNG9DWmJTQnViM1FnYzNWeVpTQnBaaUIwDQphR2x6SUhOb2IzVnNaQ0Jp
+WlNCaElITmxjR0Z5WVhSbElHNXZkR1VnYjNJZ2JtOTBMaUJKSjNabElHRnNjMjhnYm05MElHSmxa
+VzRnDQpZV0pzWlNCMGJ5QnFiMmx1SUhSb2FYTWdkMjl5YTJkeWIzVndMQ0JvYjNkbGRtVnlJR0Zz
+YkNCdlppQnRlU0JqYjI1alpYSnVjeUJoDQpjSEJsWVhJZ2RHOGdhR0YyWlNCaVpXVnVJR1JwYzJO
+MWMzTmxaQzRnTGlCSjRvQ1pkbVVnYzNSaGNuUmxaQ0J5WlhacFpYZHBibWNnDQpjMjl0WlNCdlpp
+QjBhR1VnZEdWc1pXMWxkSEo1SUdOdmJuWmxjbk5oZEdsdmJpQm1iM0lnYjNCbGJtSnRZeXdnWVc1
+a0lHaGhkbVVnDQpkR0ZyWlc0Z2MyOXRaU0IwYVcxbElISmxkbWxsZHlCMGFHVWdkMmxyYVNCaGJt
+UWdhR0YyWlNCaGJITnZJSEpsZG1sbGQyVmtJSFJvDQpaU0JrYjJOMWJXVnVkQ0J3Y205d2IzTmhi
+QzRnUW1GelpXUWdiMjRnYlhrZ1pYaHdaWEpwWlc1alpTd2dkR2hsY21YaWdKbHpJSFIzDQpieUJq
+YjNKbElIVnpaU0JqWVhObGN6b2dkR1ZzWlcxbGRISjVJSE4wY21WaGJYTXNJR0Z1WkNCMFpXeGxi
+V1YwY25rZ2NtVndiM0owDQpjeTRnVkdobElGSmxjRzl5ZEhNZ1lYSmxJR0VnWTI5c2JHVmpkQ0Jo
+Ym1RZ1lXNWhiSGw2WlNCc1lYUmxjaUJ0WlhSb2IyUXNJSFI1DQpjR2xqWVd4c2VTQjFjMlZrSUda
+dmNpQnplWE4wWlcwZ2NISnZabWxzYVc1bkxDQnFiMklnY0hKdlptbHNhVzVuTENCaGJtUWdZVzVo
+DQpiSGwwYVdOeklHOW1JR1JoZEdFZ1kyVnVkR1Z5SUhWellXZGxJRzkyWlhJZ2RHbHRaUzRnRFFw
+R2IzSWdkR2hsSUhOMGNtVmhiWE1zDQpJSFJvWlhObElHRnlaU0JpWldsdVp5QjFjMlZrSUhSdklH
+RnNiRzkzSUhSb1pTQmtZWFJoSUdObGJuUmxjaUIwYnlCeVpXRmpkQ0IwDQpieUJqYUdGdVoyVnpJ
+R0ZqY205emN5QjBhR1VnYldGdVlXZGxaQ0J6ZVhOMFpXMXpMQ0JzYVd0bElHbHVZM0psWVhOcGJt
+Y2dkMkYwDQpaWElnWm14dmR5d2dZMjl2YkdsdVp5QmpZWEJoWTJsMGVTd2diM0lnY0c5M1pYSWdk
+R2h5YjNSMGJHbHVaeUJ6ZVhOMFpXMXpJSFJ2DQpJSEJ5WlhabGJuUWdiM1psY2lCemRXSnpZM0pw
+Y0hScGIyNXpJRzl1SUhSb1pTQmtZWFJoSUdObGJuUmxjdUtBbVhNZ2NHOTNaWElnDQpaM0pwWkM0
+TkNnMEtTZUtBbVdRZ2JHbHJaU0IwYnlCaGMyc2dZV0p2ZFhRZ2RHaGxJSE4wY21WaGJYTWdjMmx1
+WTJVZ2RHaGxJSEpsDQpjRzl5ZENCd2IzSjBhVzl1SUc5bUlIUm9hVzVuY3lCelpXVnRjeUJsZUdO
+bGNIUnBiMjVoYkd4NUlIZGxiR3dnWTI5MlpYSmxaQzRnDQpWMmwwYUNCd2NtVjJhVzkxY3lCMlpY
+SnphVzl1Y3lCdlppQnZjR1Z1UWsxRElFa2dkMkZ6SUdGaWJHVWdkRzhnYkdWMlpYSmhaMlVnDQpk
+MlZpYzI5amEyVjBjeUIwYnlCblpYUWdkWEJrWVhSbGN5QnZiaUJ6BIIQAFpXNXpiM0lnZG1Gc2RX
+VnpJRzl1SUdOb1lXNW5aUzRnVkdocA0KY3lCMGRYSnVaV1FnYjNWMElIUnZJR0psSUhCeVpYUjBl
+U0J1WlhSM2IzSnJJR1ZtWm1samFXVnVkQ0JoYm1RZ2FYTWdZV0pzWlNCMA0KYnlCa2NtbDJaU0F4
+TDNNZ2RYQmtZWFJsY3lCdmJpQmhiR3dnZEdobElITmxibk52Y25NZ2FXNGdZU0J6ZVhOMFpXMHVJ
+RWwwSUdSdg0KWlhOdTRvQ1pkQ0JvWVhabElHRnVJR2x0Y0dGamRDQnZiaUJ2ZEdobGNpQnRiMjVw
+ZEc5eWFXNW5JSE5sY25acFkyVnpJR1ZwZEdobA0KY2k0Z1ZHaGhkQ0JpWldsdVp5QnpZV2xrTENC
+SjRvQ1pkbVVnWW1WbGJpQnlaV0ZrYVc1bklIUm9jbTkxWjJnZ2RHaGxJSEpsWkdacA0KYzJnZ2RH
+VnNaVzFsZEhKNUlHRnVaQ0JsZG1WdWRHbHVaeUJ6WlhKMmFXTmxjeUJoYm1RZ2QyRnpJR3h2YjJ0
+cGJtY2dabTl5SUhOdg0KYldVZ2FHVnNjQ0JoYm1RZ2IzSWdaM1ZwWkdGdVkyVXVJRVp2Y2lCeVpX
+WmxjbVZ1WTJVZ1NTQjNZWE1nYkc5dmEybHVaeUJoZENCMA0KYUdseklHUnZZM1Z0Wlc1MElHaDBk
+SEJ6T2k4dmQzZDNMbVJ0ZEdZdWIzSm5MM05wZEdWekwyUmxabUYxYkhRdlptbHNaWE12YzNSaA0K
+Ym1SaGNtUnpMMlJ2WTNWdFpXNTBjeTlFVTFBd01qWTJYekV1Tmk0d0xuQmtaZzBLTGcwS0RRcEpa
+aUJKSUdSdklITjFZbk5qY21saQ0KWlNCMWMybHVaeUJUVTBVZ1lXNWtJSFJsYkdWdFpYUnllU0J5
+WlhCdmNuUnpMQ0JwZENCelpXVnRjeUIwYnlCaVpTQnpaWFIxY0NCMA0KYnlCblpYUWdZU0JtZFd4
+c0lITmxkQ0J2WmlCeVpXRmthVzVuY3lCdmRtVnlJSFJwYldVZ1lXNWtJRzl1YkhrZ2MyVnVaQ0Iz
+YUdWdQ0KSUhSb1pTQnlaWEJ2Y25RZ2FYTWdZMjl0Y0d4bGRHVXVJRU5oYmlCSklIVnpaU0IwYUdW
+elpTQnlaWEJ2Y25SeklIUnZJR2RsZENCMQ0KY0dSaGRHVnpJR1YyWlhKNUlITmxZMjl1WkQ4Z1NX
+WWdTU0J6ZFdKelkzSnBZbVVnZEc4Z1lXNGdaVzVrY0c5cGJuUXNJRWtnWVd4eg0KYnlCelpXVnRJ
+SFJ2SUdkbGRDQjBhR1VnWlc1MGFYSmxJR1Z1WkhCdmFXNTBJR0Z1WkNCSjRvQ1piU0J1YjNRZ2Mz
+VnlaU0JwWmlCMA0KYUdseklIZHZkV3hrSUcxbFpYUWdZU0JuYjJGc0lHOW1JR2RsZEhScGJtY2dk
+R2hsSUd4aGNtZGxJR05zZFhOMFpYSWdLRE13TUEwSw0KYzNsemRHVnRjeWtnZDI5eWRHZ2diMlln
+ZFhCa1lYUmxjeUJoZENCaElHUmhkR0VnY21GMFpTQnZaaUJzWlhOeklIUm9ZVzRnTWpBZw0KVFdJ
+dmN5NGdTU0IzYjNWc1pDQmhjSEJ5WldOcFlYUmxJR0Z1ZVNCaFpIWnBZMlVnYjI0Z2JHVjJaWEpo
+WjJsdVp5QnlaV1JtYVhObw0KSUhOMFlXNWtZWEprY3lCMGJ5QnpkSEpsWVcwZ2MyVnVjMjl5SUhK
+bFlXUnBibWR6SUdadmNpQmhiaUJQY0dWdVFrMURJSE41YzNSbA0KYlM0Z1NXWWdTU2R0SUc1dmRD
+QmhZbXhsSUhSdklIVnpaU0J5WldSbWFYTm9MQ0JKSjJRZ1ltVWdhR0Z3Y0hrZ2RHOGdaV3hoWW05
+eQ0KWVhSbElHMXZjbVVnYjI0Z2RHaGxJSGRsWW5OdlkydGxkQ0J0WlhSb2IyUWdTU0IxYzJWa0lI
+ZHBkR2dnZEdobElIQm9iM053YUc5eQ0KSUhkbFluTmxjblpsY2lCaGJtUWdaR2x6WTNWemN5QnZj
+SFJwYjI1eklHWnZjaUIwYUdVZ1kzVnljbVZ1ZEM5bWRYUjFjbVVnUWsxRA0KSUhabGNuTnBiMjV6
+SUd4bGRtVnlZV2RwYm1jZ1ltMWpkMlZpTGlBTkNnMEtWR2hoYm10ekxBMEtTblZ6ZEdsdUlGUm9Z
+V3hsY2cwSw0KVTJWdWFXOXlJRkpCVXlCRmJtZHBibVZsY2cwS0RRb0FBQUFlQUdPRUtRTUNBQUFB
+QUFEQUFBQUFBQUFBUmdFQUFBQW9BQUFBV0FBdA0KQUZRQVNRQlVBRlVBVXdBdEFFMEFaUUIwQUdF
+QVpBQmhBSFFBWVFBdEFEUUFNQUFBQUFFQUFBQ3RBUUFBWlhsS1JGbFlVbXhhTWpsNQ0KWlZWNGFG
+bHRWbk5qZVVrMlNXbEpjMGxyTVd4a1IwWnJXVmhTYUVscWNEZEpiVFY2U1dwdmFXRklVakJqUkhC
+alRERjNkbVF6WkROTQ0KYmxKd1pFaFdla3h0VG5aaVZuZDJZbTVPWTB3d2JIVmtSMVp6VFhsSmMw
+bHRiR3RKYW05cFdWZFZkMDVxWXpCT1JGRjBUMFJqZVUxNQ0KTURCT2VsRTFURlJyTTFwcVZYUmFW
+MHBzVDBkUk5VMXFSbWxhUkUwelNXbDNhV05JU25aalNFMXBUMngwTjBsdE5HbFBhVXBFVmtaQw0K
+UkdKSFJucGpNbXh0WVZkT2FHUkhiSFppYVVselNXNWFhR0pJVFdsUGJIUTNTVzVhYUdKSVZteEph
+bTlwVVRGU1VWZ3dOVlZKYmpGaw0KWmxZeE9VeERTbFJrVjBweFdsZE9NRlJIUm1sYVYzaDZTV3B3
+WWxoVGQybFdSVEZFVm0xV2VXTXliSFppYVVrMlNXcEZNMHhxUlhkTQ0KYWtVMFRVUlJkVTVFYTJs
+TVEwcFZZMjVXZW1SSFZtdFVSMFpwV2xkNFNWbFlUbTlKYW05cFZXNVNNVlZGY0ZoVlYwbzFVek5H
+V1U0eQ0KY0Vaa01XeFNUVVphTVZVd09WSmpSMUV5VlVoSmVHTXhSa2hYUjJReVRqQm9lbFZ0YkZW
+T2EyUm9aREZ3Y2s1V1kzcFdibFpWWkVVNQ0KUWxSck9VVlNWa0pRV0VNNGFXWlJQVDBBQUFBQUhn
+QmtoQ2tEQWdBQUFBQUF3QUFBQUFBQUFFWUJBQUFBSkFBQUFFTUFWQUJRQUVNQQ0KYkFCaEFITUFj
+d0JwQUdZQWFRQmpBR0VBZEFCcEFHOEFiZ0FBQUFFQUFBQUhBQUFBUTFSUVgwNVVBQUFlQUdXRUtR
+TUNBQUFBQUFEQQ0KQUFBQUFBQUFSZ0VBQUFBdUFBQUFWQUJwQUhRQWRRQnpBRU1BVkFCUUFFTUFi
+QUJoQUhNQWN3QnBBR1lBYVFCakFHRUFkQUJwQUc4QQ0KYmdBQUFBQUFBUUFBQUFjQUFBQkRWRkJm
+VGxRQUFCNEFab1FwQXdJQUFBQUFBTUFBQUFBQUFBQkdBUUFBQUNvQUFBQlVBR2tBZEFCMQ0KQUhN
+QVR3QnlBR2tBWndCcEFHNEFZUUJzQUVVQWJnQjBBSElBZVFCSkFFUUFBQUFBQUFFQUFBQ1FBQUFB
+VWtGZk1EQXdNREF3TURBeA0KUlRjME1rSTFOREl3TmtaQ056UTJRak5HTWpFek1VTTFORGRDTVVR
+eFJqQTNNREF4TlVFd1JqbEZPRFpETURWRk5UUXlRamczUXpFeQ0KUTBJNE0wTkRSRGt5UWpBd01E
+aERRelpHTXpnd09EQXdNREJFUWtFeU5FVkZSVGs1UVROQ016UTRPVVpHTkRjeVJqVkZPVFJFUlRa
+RQ0KTnpBd01EQTRPVVk0T1VSRlJUQXdNREFBSGdDVWhDa0RBZ0FBQUFBQXdBQUFBQUFBQUVZQkFB
+QUFJZ0FBQUZRQVRBQlRBR0VBZGdCbA0KQUdRQVV3QmxBR0VBY2dCakFHZ0FTd0JsQUhrQUFBQUFB
+QUVBQUFBaEFBQUFOVGc0UWpNNVFrSTVOVUpDUlVVMFFrRkVORFU0UkVReg0KTTBSRU1UWTNNRE1B
+QUFBQUhnQ1ZoSVlEQWdBQUFBQUF3QUFBQUFBQUFFWUJBQUFBS0FBQUFIZ0FMUUIwQUdrQWRBQjFB
+SE1BTFFCdA0KQUdVQWRBQmhBR1FBWVFCMEFHRUFMUUEwQURBQUFBQUJBQUFBclFFQUFHVjVTa1Ja
+V0ZKc1dqSTVlV1ZWZUdoWmJWWnpZM2xKTmtscA0KU1hOSmF6RnNaRWRHYTFsWVVtaEphbkEzU1cw
+MWVrbHFiMmxoU0ZJd1kwUndZMHd4ZDNaa00yUXpURzVTY0dSSVZucE1iVTUyWWxaMw0KZG1KdVRt
+Tk1NR3gxWkVkV2MwMTVTWE5KYld4clNXcHZhVmxYVlhkT2FtTXdUa1JSZEU5RVkzbE5lVEF3VG5w
+Uk5VeFVhek5hYWxWMA0KV2xkS2JFOUhVVFZOYWtacFdrUk5NMGxwZDJsalNFcDJZMGhOYVU5c2RE
+ZEpiVFJwVDJsS1JGWkdRa1JpUjBaNll6SnNiV0ZYVG1oaw0KUjJ4MlltbEpjMGx1V21oaVNFMXBU
+MngwTjBsdVdtaGlTRlpzU1dwdmFWRXhVbEZZTURWVlNXNHhaR1pXTVRsTVEwcFVaRmRLY1ZwWA0K
+VGpCVVIwWnBXbGQ0ZWtscWNHSllVM2RwVmtVeFJGWnRWbmxqTW14MlltbEpOa2xxUlROTWFrVjNU
+R3BGTkUxRVVYVk9SR3RwVEVOSw0KVldOdVZucGtSMVpyVkVkR2FWcFhlRWxaV0U1dlNXcHZhVlZ1
+VWpGVlJYQllWVmRLTlZNelJsbE9NbkJHWkRGc1VrMUdXakZWTURsUw0KWTBkUk1sVklTWGhqTVVa
+SVYwZGtNazR3YUhwVmJXeFZUbXRrYUdReGNISk9WbU42Vm01V1ZXUkZPVUpVYXpsRlVsWkNVRmhE
+T0dsbQ0KVVQwOUFBQUFBQjRBbG9TR0F3SUFBQUFBQU1BQUFBQUFBQUJHQVFBQUFDZ0FBQUI0QUMw
+QVl3QjBBSEFBWXdCc0FHRUFjd0J6QUdrQQ0KWmdCcEFHTUFZUUIwQUdrQWJ3QnVBQUFBQVFBQUFB
+Y0FBQUJEVkZCZlRsUUFBQjRBcUlTR0F3SUFBQUFBQU1BQUFBQUFBQUJHQVFBQQ0KQUJnQUFBQmtB
+R3dBY0FBdEFIQUFjZ0J2QUdRQWRRQmpBSFFBQUFBQkFBQUFEUUFBQUdSc2NHVXRkMmx1Wkc5M2N3
+QUFBQUFlQUttRQ0KaGdNQ0FBQUFBQURBQUFBQUFBQUFSZ0VBQUFBWUFBQUFaQUJzQUhBQUxRQjJB
+R1VBY2dCekFHa0Fid0J1QUFBQUFRQUFBQWtBQUFBeA0KTVMEghAANHlMakF1TmdBQUFBQWVBS3FF
+aGdNQ0FBQUFBQURBQUFBQUFBQUFSZ0VBQUFBYUFBQUFaQUJzQUhBQUxRQnlBR1VBWVFCakFIUUEN
+CmFRQnZBRzRBQUFBQUFBRUFBQUFnQUFBQWNtVnhkV1Z6ZEMxcWRYTjBhV1pwWTJGMGFXOXVMRzV2
+TFdGamRHbHZiZ0FEQUxTRUtRTUMNCkFBQUFBQURBQUFBQUFBQUFSZ0VBQUFBVUFBQUFaQUJzQUhB
+QUxRQnpBR0VBZGdCbEFHUUFBQUFCQUFBQUhnRERoQ2tEQWdBQUFBQUENCndBQUFBQUFBQUVZQkFB
+QUFMQUFBQUZRQWFRQjBBSFVBY3dCVEFHVUFiZ0JrQUZVQWN3QnBBRzRBWndCQkFHTUFZd0J2QUhV
+QWJnQjANCkFBQUFBUUFBQUFVQkFBQmxlVXBDV2tkU2VWcFlUbnBKYW05cFdFTTVkbEJWYkhWa1Ix
+WnpXRU01ZG1SVU1VWmxSMDV2V1ZjMWJscFQNClFrSmFSekZ3WW0xc2VtUklTbWhrUjJ3eVdsTkNT
+R050T1RGalEwRnZVbXhzUlZOVlNsQlRSVmw1VFRGT1VWSkZlRlZMVm5kMldUSTANCk9WVnRWbXBo
+V0VKd1dsYzFNR014ZDNaWk1qUTVZMGN4YUdSSVZucGxiVTFwVEVOS1JXSXlNV2hoVnpScFQybEtj
+R0p1VW14aVF6VnENCllqSXdhVXhEU2s5WlZ6RnNTV3B2YVZSWFJqQmtXRTQyV1ROd2FHRjVkMmRW
+UjJ4MlpFaEphVXhEU2xSVVZsSlJVVmRTYTJOdFZucGoNCmVVazJTVzVDY0dJelVubE1iVEZvWkVo
+V2VtVnRUalpaVjNSQllWYzFNRnBYZDNWWk1qbDBTVzR3UFFBQUFBQWVBTVNFS1FNQ0FBQUENCkFB
+REFBQUFBQUFBQVJnRUFBQUFXQUFBQVZBQnBBSFFBZFFCekFFd0Fid0JuQUVrQVJBQUFBQUFBQVFB
+QUFCSUFBQUJOWVdsc1NYUmwNCmJTQTFPVEZEUWpSQk1RQUFBQXNBSHc0QUFBQUFBZ0g0RHdFQUFB
+QVFBQUFBRlk4bVNZY2xxVTZVd2VFV0pvTkxad0lCK2c4QkFBQUENCkVBQUFBQjUwSzFRZ2I3ZEdz
+L0lUSEZSN0hSOERBUDRQQlFBQUFBTUFEVFQ5UDYwT0F3QVBOUDAvclE0Q0FSUTBBUUFBQUJBQUFB
+QlUNCmxLSEFLWDhRRzZXSENBQXJLaVVYQWdIaVpRRUFBQUFVQUFBQTNFRTh3Uml1aDBLU3FFRjRl
+cC9CelFBSnhLc0NBZU5sQVFBQUFDd0ENCkFBQVcyNkpPN3BtanMwaWY5SEwxNlUzbTF3QUFpZm5W
+NlJUY1FUekJHSzZIUXBLb1FYaDZuOEhOQUFuRXF3SUJDUkFCQUFBQVdRZ0ENCkFGVUlBQUJCRFFB
+QVRGcEdkWisxZ2k0REFBb0FjbU53WnpFeU5TSXlBME4wWlhnRlFtSnAvbVFFQUFNd0FRTUI5d3FB
+QXFRRDR3a0MNCkFHTm9Dc0J6WlhRdy9pQUhFd0tBRUhNQVVBUldDRlVIc3U4U1JRNVJBd0VSUnpJ
+R0FBYkRFa1YrTXdSR0VVa1RXeEpUQ084Sjl6dmINCkdUOE9NRFVTUWd4Z1l3QlFDd2taQVdRek5o
+SFFDNllnU0drdUxBcmpDb1FLZ0ZNRnNISjVoaUFDRUFYQWRHaGxJQXRnWlE2d0lCbEENCmMzQUNJ
+QkdnTGlRZ1JnV3hibThINEhOMGFSbEFZVzBMZ0djaFVCRndiTVVESUdJZjBITjFjQ0J3QUNDdkNZ
+QWlVQjlRSDdKU0NZQm0NCkJBRGlhQitnWld4bEI0QWhjQjlRbVJHZ2NuWU40Q0N4UlhZRWtKOGZV
+Q1JpRGVBZ01TTENJR01Ea1dzaVlRV2diaVBRWndod0l3RjANCjhtOGlVbkIxSWdBakFRaGdCVURl
+WVFRZ0g3SVpRU1BUWlNWZ0FqRGRJTUJEQ0hBWlFBSXdiQ05DRDFHMUQxRjNCYkJyS3dBRG9IQUQN
+CllFOEp3UVFRSU1BZVdrSlNIbFJRUEdsdklYQUYwQ0FBS0NCNlkxaDZZV3NlV2g1VUxTL0NUejBG
+RUdjTGdBZEFCZEFzRVdGblZtVXYNCnd4NVVSZ05oT2lod2NPa0o4R0p0SmdCYkFNQURFQ2V3U2pv
+eUpTMEc0SFZ1SlJCenRDdHdMYkl1QU1BdUpqMExnRVVrSVM0Rm9HMUENCmJBUUFkQ2tzTUc5NkMy
+QmlOaEZ5WjBoZElFOERvRUpsSWhGbXF6YmdOM0JLS0NCMEs1RlVJaEUvQkpBZXRTblJNZ0E0TUFo
+d2MyVDgNCllYa2VNQVpnQlRBa1VDSmdCY0FjTVRrZU1BSFFPcEFnT0RvcE92RlFUUjVVVkRNQUlH
+dkJNOEI1YVVCbmJ5dmdKRUNwTllJN0lDVHcNCmFqbXdheC9Bc0cxcllVQVBFRHowVHpJeE9FSk5R
+eTN4QXhBMTBpQThpeklsTmM4K1BUQlFZWFUxY09wV0FIQmpBeEJBQVFBaU1EejANCndtNGtNR0Zr
+YTBBaHNBVUEyRzl6YndHQVBQUm5JYkFpTUlKelFDRnVkWGd1ZGtMQW5TbndhVEpnUFBZaUFIZGhQ
+NUNYUmRSRWp3TncNClBoNVVRMk01TVY4RWNDTVFDQUFSb0RtZ2FBTWdQQnREWVVrVFFDZ2dSMjFU
+ZFdMdWFnV1FPU0lrTjFNaGR3TlNQb1l2SGxvZUVCSGcNCklqQXNIbHBKWFBnbk9USk5JQ0VnQlVB
+aWtCbEEzeXNBTjNBcXd5SUFDR0JzSXhFZjBQOUdJQkdnQ3JFZ0FsQVJIOUFnOHlueC9Fa24NCkpX
+QW9zRVJnSjhCUUVpSmdud253S0xBQ1lCL1FKN0ZxYnl1UmJ5ckRLMElKd0FoZ2NCNHdVVEIzL3lt
+eEJjQWlJa09RSmFBZlVDY0INCkpSRDdCS0FFSUdFaXNDR1FINUVud0JGdzkxTmhWQ01QUVdNb0lF
+a0JJTUJUSWY5UHNsTmhJV0FLd0NMeUdVQWs4QWZRL3lIREEzQlMNCm9WQ3lWS0VrTnljQkpXSC9N
+TkEzOEFJZ0gyTXlKUjR3QUhBakVQdFlrd0dRYTFSQlc2TTM4RnZCV3dUN0g2TUQ4R3RPZ0Y2blU1
+TmINCkJDZUMrUi9CWkc5WllBZUFBakFyc2lCdy96RFFOWEEzRUNqQUtGSURvRmN4RHNEL01qQUln
+VFBSSGpBZnNSbEFUN0lvMGI4clFDYngNClVIRW9JQ2JoWkNGek1nRDdKQ2toYzNOZWhDUW9KaVFz
+TVRndy95T0NhYk1vc0ZCeFJpQVlzU1JBUzNEblhwTUFjQWRBZVhvZjFBWEENCkpHSDFVVEJrWlhG
+NU5DQW1rQ0l3SDFEblp0RWpFQjl5YzNraFlDUlFLN0xiSTlCR3dXY2VNRlR3WW03NmE4ZjlOL0Jq
+QkNCWEFUbWcNCkFaQW1nQ25SL3hPaEtDQXc0U2h3Vm9KZjRpeEdJT0wvSDdKb0p4K3hadUZxNGlK
+Z0ljSnVBLzhuc1NJaElURmlvM0hKSjdFaGdXdVINCi95ZXhFV0VoMEFlUkFOQkRZU2pVQTRIL01P
+RWpFRzZVYUlFMTBGOVFLNEVGQU44aGtBQ1FJZEZHRUd5aVpuYVJIakQvQmFBRzhDSEMNCkpwQUtz
+RUhnYldBZU1QOEZzU0J3Vm1BZmtnTmdBa0I4dzNwRi95ZWlLOEFwczNMRUlwQTJjQVVEWFpGL2NX
+RlZJbmI3WmVSOTVBbkENCkR6QXU3MDd2SXhCNjAzWkNjeXR3QWFBb2d2OTBLU0ZRZXlGVW9Ta0RK
+a01pd2wyUy8xdnpJY0ZSQVFuZ2YwRU93Q1VRZ09PL2JiTlcNCllDSXhCYUFsWVZtaVYzMWcveVFB
+ZjZJdHNDZ2dQVUJkUVlFRU4zRDdNaUkrMGtsN3dWZlJWSVVrUUNWaC8zS1NWbUEyY0dMd1gxQnEN
+CnNTZXhNUEQvQlVBaW9IR3hCNUZkb1JHZ0FJQUZzZjUyQjBBS1VJRXplSlJxQWc5UkxpRC9CS0Fv
+VlNlMUdVQUNRQjlRUlFFclE3OEINCkVRM2daU0ZycEE5UlZIWmtCUkQ1VTJFeEx3UWdqNWtpSW5R
+amtGUC9LdkZVVVc2RlV5RUZRR0xnQjVBTGtQOVB3UVZBWVhRRG9BZHcNCmZUR0FBWWdCLzJXU0ph
+QUNJSDFnQmJBaHd5VFVpUUgvaXZFRWtHb0NJQUIxaFREUUR6QWVNRDlhQmxRaklZRVBRQ0hSZmtK
+MVovOGsNCkFTa0pKQ2hlb2ltem02dGVvbzBpZlJqUWIyRUFUTUp1WWx1eUg4QnMvbkJla3dXeEox
+QVBNRUhCSUxVWlFQNW1aYkdHc28wRW94YWQNCkVTckRZdWVLYUFKQWNHZFFMeTkzcU5EMExtUU9v
+R1kya3BZZ2ZXQUhrT1l2QVFGQmNYUXZiekdwMFZxQkgxNndDeEdwNFdMMXFlQkUNClUxQUFNREky
+Tmw4eExqYm9MakF1ajZCbUhsU0RmRGR3UDQwQVl1Q0FaaUpoS0NBaHdsTlQva1ZvcjJtekhqQjlZ
+SWkxSjdRUm9mY2kNCm9JOFdSaUJtUVlBRElCR2hWdkx2bnRWeFlYTG1wR1J1S3BHUVFhS3gveC9B
+Z1dRbUpROVJOWkVMVUJHd0lMSCtRd09SalFCbTBuVDANCmFaV1BIbFp5OHlTaUp3RmtQMU13cm5L
+dTZIWkMvd09ndGdFZ2NEVXhuZUZUaElqQ2p4Yi9IN0toa2xCeHZMWmVrMCt2VUxVclFQOVINClVn
+ZUFzeU04a0RCeFZ3R1BVYUd6UHgrME5yQW00UXBBYnJFRndDZ3o3akFCUUI1amVrVXBLektMQVZj
+Qi80K1duUkZHSUhHelVpTlgNCkFhcWhLTkx6QTVFZDRVMWlsaUJUSWNGMVYvSGZHVUJCNENBQ0FI
+Q2hFV1FrOG1SaS80M2xJY0lwTnFybko2SWhaSkEydERmZkgzSUQNCmtUNldtRmV1Y1NmQVZGUjI5
+MmJTS1RXZDRTZFJjeEZ3SXJBalFmOG53RUxSQnVCU0l3UmdVSEdCVlk1MzMyelZ1RVNpc1lyeUg3
+SncNClVUQWdZUDlSTUFYQWpuSWswVmFTWHJGWk5USVIvNEQwSDNaWllDcERxbkFva0ZCaVB0SS9p
+OGZMR1RKaGpuRXNURGd4Ym1zL2FJQWUNClZEZlBPTk10c0FYQVVrRjlCZkJGSWRBTGdBbmdPSVVl
+VkgwQjRRQUFBQUFDQVg4QUFRQUFBRWdBQUFBOFJFSkJNalJGUlVVNU9VRXoNClFqTTBPRGxHUmpR
+M01rWTFSVGswUkVVMlJEYzRPVVk1UkRJeE5FQkpVbASCASdOTlUxZ3hNREV1WjJWeUxtTnZjbkF1
+YVc1MFpXd3VZMjl0DQpQZ0FEQUFZUVkyRk1mQU1BQnhDR0NRQUFBd0FRRUFBQUFBQURBQkVRQUFB
+QUFCNEFDQkFCQUFBQVpRQUFBRWhKTEZOUFVsSlpSazlTDQpWRWhGVEVGVVJWSkZVMUJQVGxORlJr
+OVNUazlYVTFSU1JVRk5TVTVIVTBoQlRFeENSVk5WVUZCUFVsUkZSRUpaVkVoRlVrVkVSa2xUDQpT
+RlJGVEVWTlJWUlNXVk5GVWxaSlEwVkZWa1ZTV1UxRlZGSkpRMUpGVUU4QUFBQUFVTUU9DQoNCi0t
+LS0tLT1fTmV4dFBhcnRfMDAwXzAwQTFfMDFENTc4ODMuNzAwODJBRDAtLQ0KAAAAAAAAoIIUgjCC
+BDYwggMeoAMCAQICAQEwDQYJKoZIhvcNAQEFBQAwbzELMAkGA1UEBhMCU0UxFDASBgNVBAoTC0Fk
+ZFRydXN0IEFCMSYwJAYDVQQLEx1BZGRUcnVzdCBFeHRlcm5hbCBUVFAgTmV0d29yazEiMCAGA1UE
+AxMZQWRkVHJ1c3QgRXh0ZXJuYWwgQ0EgUm9vdDAeFw0wMDA1MzAxMDQ4MzhaFw0yMDA1MzAxMDQ4
+MzhaMG8xCzAJBgNVBAYTAlNFMRQwEgYDVQQKEwtBZGRUcnVzdCBBQjEmMCQGA1UECxMdQWRkVHJ1
+c3QgRXh0ZXJuYWwgVFRQIE5ldHdvcmsxIjAgBgNVBAMTGUFkZFRydXN0IEV4dGVybmFsIENBIFJv
+b3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC39xoz5vIABC054E5b7R+8bA/Ntfoj
+ts7emxEzl6QpTH2Tn71KvJPtAxrjj8/lbVBa1pcplFqAsEl62y6V/bjKvzc4LR4+kUGtcFbH8E8/
+6DKedMrIkFTpxl8PeJ2aQDwOrGGqXhSPnoehalDc15pOrwWzpnGUnHGzUGAKxxOdOAeGAqjpqGkm
+GJCrTLBPI6s6T4TY386f4Wlvu9dC12tE5Met7m1BX3JacQg3s3llpFmglDf3AC8NwpJy2tA4ctsU
+qEXEXSp9t7TWxO6szRNEt8kr3UMAJfphuWlqWCMRt6czj1Z1WfXNKddGtworZbbTQm8Vsrh7++/p
+XVPVNFonAgMBAAGjgdwwgdkwHQYDVR0OBBYEFK29mHo0tCb3+sQmVO8DveAky1QaMAsGA1UdDwQE
+AwIBBjAPBgNVHRMBAf8EBTADAQH/MIGZBgNVHSMEgZEwgY6AFK29mHo0tCb3+sQmVO8DveAky1Qa
+oXOkcTBvMQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRy
+dXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBS
+b290ggEBMA0GCSqGSIb3DQEBBQUAA4IBAQCwm+CFJcLWI+IPlgaSnUGYnNmEeYHZHlsUByM2ZY+w
+2He7rEFsR2CDUbD5Mj3n/PYmE8eAFqW/WvyHz3h5iSGa4kwHCoY1vPLeUcTSlrfcfk7ucP0cOesM
+AlEULY69FuDB30Z15ySt7PRCtIWTcBBnup0GNUoY0yt6zFFCoXpj0ea7ocUrwja+Ew3mvWN+eXun
+CQ1Aq2rdj4rD9vaMGkIFUdRF9Z+nYiFoFSBDPJnnfL0k2KmRF3OIP1YbMTgYtHEPms3IDp6OLhvh
+jJiDyx8x8URMxgRzSXZgD8f4vReAay7pzEwOWpp5DyAKLtWeYyYeVZKU2IIXWnvQvMePToYEMIIE
+6zCCA9OgAwIBAgIQUukCyhHoRJ2UZTgvoxowuzANBgkqhkiG9w0BAQUFADBvMQswCQYDVQQGEwJT
+RTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFkZFRydXN0IEV4dGVybmFsIFRUUCBO
+ZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBFeHRlcm5hbCBDQSBSb290MB4XDTEzMDMxOTAwMDAw
+MFoXDTIwMDUzMDEwNDgzOFoweTELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRQwEgYDVQQHEwtT
+YW50YSBDbGFyYTEaMBgGA1UEChMRSW50ZWwgQ29ycG9yYXRpb24xKzApBgNVBAMTIkludGVsIEV4
+dGVybmFsIEJhc2ljIElzc3VpbmcgQ0EgNEEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+AQDgsMyAndhJVfoD2wT6OMfdv4XddrzrPcssq7/pa+Mh29RvGejPaqe+X1QpAjewTXNRFDGt+C+0
+/Rs+C3W4PAB8tzofl6qfKL7sWs+xMYJHiDAOarVaRNCA0M1dSBvvV73/qx+r5Z8IOmLxJxqCXIsJ
+GnumH9XrRxuK0G+dkV6UoIMGHffZLoobdsB2c0YH++TzpvAOVjqiYOzr9Gx83DNBXCj8zeg+u7Hr
+LrPIihG6V+RUQ1szT/1GvNA6XIrhblWTgQSx9baOUJXhbzdAqpFxwAohTHDar8egdU9tsROusuYT
+pFFn/55aWQZaX6a3HjYc6A6ZfQFF1NGj28fvJ4GjAgMBAAGjggF3MIIBczAfBgNVHSMEGDAWgBSt
+vZh6NLQm9/rEJlTvA73gJMtUGjAdBgNVHQ4EFgQUHmkqtNwo/kcYTiELP7ysES/wmPUwDgYDVR0P
+AQH/BAQDAgGGMBIGA1UdEwEB/wQIMAYBAf8CAQAwNgYDVR0lBC8wLQYIKwYBBQUHAwQGCisGAQQB
+gjcKAwQGCisGAQQBgjcKAwwGCSsGAQQBgjcVBTAXBgNVHSAEEDAOMAwGCiqGSIb4TQEFAWkwSQYD
+VR0fBEIwQDA+oDygOoY4aHR0cDovL2NybC50cnVzdC1wcm92aWRlci5jb20vQWRkVHJ1c3RFeHRl
+cm5hbENBUm9vdC5jcmwwOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vb2NzcC50
+cnVzdC1wcm92aWRlci5jb20wNQYDVR0eBC4wLKAqMAuBCWludGVsLmNvbTAboBkGCisGAQQBgjcU
+AgOgCwwJaW50ZWwuY29tMA0GCSqGSIb3DQEBBQUAA4IBAQApws2j/ZKjUmeiLwbtblDoVI+rV+bI
+pbexIN/Vqa/IeSMSB3bmfswpEcYSZHHGjOI8qlyZt9dhT4nSDnrScKjmA8XvxZ3tmbNyYJybVQUV
+8jF/DpADX1tGlMLxswxpJISXzLf0+DBr4cQ2ag9mwzrcN1nrOIOc+pxJtx9izyp3+bl3baulerkg
+ZVS1fotftH+FJLD/ex8BOcEuCIm2KVXJjs4YaZgoIBLYjTiK29JLVa15xdO305kPI1uXsu05sGuA
+wuFmSklb6k5H1/eHlUbZLm4qQDtOH00L0ShJx3BAIAjD5RYptJDQiyPZQUvt8cq+apYpVMv3yxHO
+8jex40LgMIIFhTCCBG2gAwIBAgITMwAA0SUHGHxKvKte8AAAAADRJTANBgkqhkiG9w0BAQUFADB5
+MQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFDASBgNVBAcTC1NhbnRhIENsYXJhMRowGAYDVQQK
+ExFJbnRlbCBDb3Jwb3JhdGlvbjErMCkGA1UEAxMiSW50ZWwgRXh0ZXJuYWwgQmFzaWMgSXNzdWlu
+ZyBDQSA0QTAeFw0xOTA0MTAwNjQyNDBaFw0yMDA0MDQwNjQyNDBaMEcxGjAYBgNVBAMTEU1hdHVz
+emN6YWssIFBpb3RyMSkwJwYJKoZIhvcNAQkBFhpwaW90ci5tYXR1c3pjemFrQGludGVsLmNvbTCC
+ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALNDSgJyuvPJQfY28LoAH9CW9CJ/Yq0sLni3
+iG2U58Gizpk1xVUNc6bw6GnvJUgT3ugCTfTMDk/VPGMmU7CZjHKrVDx/41JFGIVqrvRZDG9oZYl7
+zt8HPgISEOxYbEFJ3mvuRFzdhLTwqS7npENnFm0fNZTJBgRNxOfab4sQ+lbZaGzTz7H0BXngMCbB
+lwP7igpZB5eclBeTh9sRSG0MJ8LRpOlctDAc6/aWwMg8jWdiZF8crzinrPeCsuZGGRgU58gr3XF6
+qW5eZlJhyRCK2mVkU8d6cKkSxWPGKtWrRlsPGHZqX5HNAgM8k19x3jhilCHLpRMUFv5Z+pDD6g8Q
+SokCAwEAAaOCAjYwggIyMAsGA1UdDwQEAwIHgDA8BgkrBgEEAYI3FQcELzAtBiUrBgEEAYI3FQiG
+w4x1hJnlUYP9gSiFjp9TgpHACWeB3r05lfBDAgFkAgELMB8GA1UdJQQYMBYGCCsGAQUFBwMEBgor
+BgEEAYI3CgMMMCkGCSsGAQQBgjcVCgQcMBowCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoDDDBRBgNV
+HREESjBIoCoGCisGAQQBgjcUAgOgHAwacGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb22BGnBpb3Ry
+Lm1hdHVzemN6YWtAaW50ZWwuY29tMB0GA1UdDgQWBBR9UfOcoCydpTiiYiMiOcXqQ2qlZzAfBgNV
+HSMEGDAWgBQeaSq03Cj+RxhOIQs/vKwRL/CY9TBlBgNVHR8EXjBcMFqgWKBWhlRodHRwOi8vd3d3
+LmludGVsLmNvbS9yZXBvc2l0b3J5L0NSTC9JbnRlbCUyMEV4dGVybmFsJTIwQmFzaWMlMjBJc3N1
+aW5nJTIwQ0ElMjA0QS5jcmwwgZ4GCCsGAQUFBwEBBIGRMIGOMGkGCCsGAQUFBzAChl1odHRwOi8v
+d3d3LmludGVsLmNvbS9yZXBvc2l0b3J5L2NlcnRpZmljYXRlcy9JbnRlbCUyMEV4dGVybmFsJTIw
+QmFzaWMlMjBJc3N1aW5nJTIwQ0ElMjA0QS5jcnQwIQYIKwYBBQUHMAGGFWh0dHA6Ly9vY3NwLmlu
+dGVsLmNvbTANBgkqhkiG9w0BAQUFAAOCAQEAwf7wOEAApv9APIXI9/vn666y7pyaFgnrLpND4eGt
+HyQh6olBviUNpdbC9cDS75N9wewq9f8s4Zs0R+SARSL10fBzcaewh572GrGKOG7rHobIrcQMQcLj
+eTdJNs/Jrw/2+5CKyMCO/MVo1O9Bm6mRwdg4VXQQ3JWIfYRhyLcg77xscZOdo4ifJOoShVdqIo+G
+E045UNxW2DD8grm24jWMHO6P65EP3r0xwAXZVp/kntGtRxiNZsEYSr1uu/4KVEUXcXq+B0QHTlAp
+undlBgYDneRfv4tnb9kTFZfKuDyVCXTurem6jrfUl5EDKAg9DHeR5RX5xfqqaLLWWqgELjPq7DCC
+BcwwggS0oAMCAQICEzMAANQRPHg0Dy74kxkAAAAA1BEwDQYJKoZIhvcNAQEFBQAweTELMAkGA1UE
+BhMCVVMxCzAJBgNVBAgTAkNBMRQwEgYDVQQHEwtTYW50YSBDbGFyYTEaMBgGA1UEChMRSW50ZWwg
+Q29ycG9yYXRpb24xKzApBgNVBAMTIkludGVsIEV4dGVybmFsIEJhc2ljIElzc3VpbmcgQ0EgNEEw
+HhcNMTkwNzA1MDY1NTE4WhcNMjAwNTMwMTA0ODM4WjBHMRowGAYDVQQDExFNYXR1c3pjemFrLCBQ
+aW90cjEpMCcGCSqGSIb3DQEJARYacGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb20wggEiMA0GCSqG
+SIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2nb0IEzaaIj2P3a9/yvzwEoh5jDg3zHRIchVpI9OvvKfM
+mehktZ0hLDJC286iNLfGORfvioJ6saXSGe/0E3hrcRkV+KDlugh/GC1qeYaTEdc/PUH5BuG3mAjA
+85yK+bWhCzzg3CLi4BvbljJErOMEEHsjBQdNTeGZ2phFiFal3WtEW3T0jadhvhAslvnr6o08oKEx
+DQY7jsz5vxi4IdV5L/Ax8M29JpaOoekdDrSkzEfwO5eACzj2JychxmIh/qVwPZwkVDdHwbQVSKR1
+coU7DzdiTS1ezx0kIHqmLe9HpHrg1GYflnQZ67ifWvdwamvASL1WkNbnlaZfMcpU0WiRAgMBAAGj
+ggJ9MIICeTALBgNVHQ8EBAMCBDAwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIhsOMdYSZ5VGD
+/YEohY6fU4KRwAlnhLnZQYeE/04CAWQCAQ8wRAYJKoZIhvcNAQkPBDcwNTAOBggqhkiG9w0DAgIC
+AIAwDgYIKoZIhvcNAwQCAgCAMAcGBSsOAwIHMAoGCCqGSIb3DQMHMB8GA1UdJQQYMBYGCCsGAQUF
+BwMEBgorBgEEAYI3CgMEMCkGCSsGAQQBgjcVCgQcMBowCgYIKwYBBQUHAwQwDAYKKwYBBAGCNwoD
+BDBRBgNVHREESjBIoCoGCisGAQQBgjcUAgOgHAwacGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb22B
+GnBpb3RyLm1hdHVzemN6YWtAaW50ZWwuY29tMB0GA1UdDgQWBBRwVBDQhinkyB2HeyCiykfW30Gc
+bDAfBgNVHSMEGDAWgBQeaSq03Cj+RxhOIQs/vKwRL/CY9TBlBgNVHR8EXjBcMFqgWKBWhlRodHRw
+Oi8vd3d3LmludGVsLmNvbS9yZXBvc2l0b3J5L0NSTC9JbnRlbCUyMEV4dGVybmFsJTIwQmFzaWMl
+MjBJc3N1aW5nJTIwQ0ElMjA0QS5jcmwwgZ4GCCsGAQUFBwEBBIGRMIGOMGkGCCsGAQUFBzAChl1o
+dHRwOi8vd3d3LmludGVsLmNvbS9yZXBvc2l0b3J5L2NlcnRpZmljYXRlcy9JbnRlbCUyMEV4dGVy
+bmFsJTIwQmFzaWMlMjBJc3N1aW5nJTIwQ0ElMjA0QS5jcnQwIQYIKwYBBQUHMAGGFWh0dHA6Ly9v
+Y3NwLmludGVsLmNvbTANBgkqhkiG9w0BAQUFAAOCAQEARhB6JMrEJj6mV35h3IrB9QQlB0pitJ2S
+ZcXlpNmH5TkWRqP6/gmKk2iTebTxorcoLwe5xMbcW767u4hp0Zx+8G4pu8Ftkey9ppi8+6eE83yI
+ZNzF1Uom7yyPwds/UY8elLwpP3GMz0VOOu7ecNVcf1Rru9ObkR8xNTQgAzcxTex475Wv6H1qgnii
+8boBOLXt5P8dp9jkwQkVm+q1hhpPmEo6lGt0QDTDG4ZuA6DRAZX435VOFffvYTwcnWVFBXW/RnMY
+15mrdQd2zllt+RdLDrH4UQn2LeSQefaFQUsQnJtcJyIDEz/wWki4RfvJdg2n7HewrHMumBkndkUA
+n+9vCTGCA/kwggP1AgEBMIGQMHkxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEUMBIGA1UEBxML
+U2FudGEgQ2xhcmExGjAYBgNVBAoTEUludGVsIENvcnBvcmF0aW9uMSswKQYDVQQDEyJJbnRlbCBF
+eHRlcm5hbCBCYXNpYyBJc3N1aW5nIENBIDRBAhMzAADRJQcYfEq8q17wAAAAANElMAkGBSsOAwIa
+BQCgggI9MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTE5MTAwMTE2
+MDk1OVowIwYJKoZIhvcNAQkEMRYEFMTcE/5eCOMKxVYYPB4X4C63QCRmMIGTBgkqhkiG9w0BCQ8x
+gYUwgYIwCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjAKBggqhkiG9w0DBzALBglghkgBZQMEAQIw
+DgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMAcGBSsOAwIaMAsGCWCGSAFlAwQCAzALBglg
+hkgBZQMEAgIwCwYJYIZIAWUDBAIBMIGhBgkrBgEEAYI3EAQxgZMwgZAweTELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgTAkNBMRQwEgYDVQQHEwtTYW50YSBDbGFyYTEaMBgGA1UEChMRSW50ZWwgQ29ycG9y
+YXRpb24xKzApBgNVBAMTIkludGVsIEV4dGVybmFsIEJhc2ljIElzc3VpbmcgQ0EgNEECEzMAANQR
+PHg0Dy74kxkAAAAA1BEwgaMGCyqGSIb3DQEJEAILMYGToIGQMHkxCzAJBgNVBAYTAlVTMQswCQYD
+VQQIEwJDQTEUMBIGA1UEBxMLU2FudGEgQ2xhcmExGjAYBgNVBAoTEUludGVsIENvcnBvcmF0aW9u
+MSswKQYDVQQDEyJJbnRlbCBFeHRlcm5hbCBCYXNpYyBJc3N1aW5nIENBIDRBAhMzAADUETx4NA8u
++JMZAAAAANQRMA0GCSqGSIb3DQEBAQUABIIBAG6XRmapif6rYksiXAilFw/zdxsghr9bm4KSbtGe
+/vE0xUhfwxibDqMV1dba8m151NogpumDXkjtGaEjy4oNKI/JGYCFN1OGzAzaYq8sgdvnH7KwO6sx
+AF3Mpv8pna/24kxmYRT7KHhrYAliO81p6Rh6ubyNvApGdsnPOf4BSsvLQpnLaVSdxXMvr2BP6yZo
+ZQGTsiQ/rLeW+95GulmyRtZPz7rC8FfKEyykg8mL5rkVov/8c9ThX7L15jxJUPnaeQjTUYXU7jCy
+zw108WWrKrK0rhL49cv+/C1KJtc7I/V63bHHtToxohxz1Au8hMcOVLvSBFcCphKR4Ak330OKcRUA
+AAAAAAA=
