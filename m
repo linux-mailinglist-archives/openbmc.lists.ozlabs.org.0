@@ -1,81 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3259C952F
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 01:49:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC367C9544
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 01:56:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46kCXs25PkzDqXJ
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 09:49:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46kChP3V6kzDqSv
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 09:56:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="PX2iEXbP"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="wUdb+Crd"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46kCVL32X0zDqWW
- for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 09:47:22 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x92Ng04M110316; Wed, 2 Oct 2019 19:47:14 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vd0vh7x56-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2019 19:47:14 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x92Niv1t014517;
- Wed, 2 Oct 2019 23:47:13 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma04wdc.us.ibm.com with ESMTP id 2v9y587pt1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Oct 2019 23:47:12 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x92NlCaE33227152
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Oct 2019 23:47:12 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE50DBE051;
- Wed,  2 Oct 2019 23:47:11 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD256BE04F;
- Wed,  2 Oct 2019 23:47:11 +0000 (GMT)
-Received: from [9.211.121.154] (unknown [9.211.121.154])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed,  2 Oct 2019 23:47:11 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.3 4/4] ARM: dts: tacoma: Enable LPC Firmware
- region
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46kCgd6s8XzDqSm
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 09:55:25 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 57741220CB;
+ Wed,  2 Oct 2019 19:55:23 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 02 Oct 2019 19:55:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=NbenJKZa8ztcrdKfeBCv0Zkjstz4rKR
+ qZMa22PICOe4=; b=PX2iEXbPPT0Tvq7QCZlwYtY+PTdLleX6TLgQvnjd4Ssnt8x
+ cI+bO9rf9q4HL3JywS1CWQfbqhr2W5CE3I4gm0oH8NuI4O4kDliBTXcKyIPZ4Fb/
+ p5T69Gh8Tqs6eCiqCLHFSmBPMZ8XBwDivGrdBUoX9QqOXmCTlYEsA82fF7Hfec2t
+ LFQXH28vFFTHFhgJ8tCpHpNUxTruiFUPj0QwxZFggW8p+9hlfa8yk09oD3zprNRf
+ t9iu/m41uk2OSAjT21sZnglGOTeZW67aJ1t4+oVzk1E5lhFcljH1fSGQLLdUZ0sw
+ dOufy5IUq4YLm/jKUdhugqzCav3eHZpydYdPnFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=NbenJK
+ Za8ztcrdKfeBCv0Zkjstz4rKRqZMa22PICOe4=; b=wUdb+Crdwy/mF2TfeMxeKt
+ 0Cldjc7amFc2cfEE5nqqeDkoNerb8VsJweHkRyAX9PKD3/fES97SqvsrSY71bDsx
+ fPTC9tMrNmiP+ksNvfrKrA6CTTC8CqJv/RicGWE8sxDpUn4Aq67VmFPvAEgVOC+5
+ wj69lZdp8Lgq6pq05ZG2/q5A4NEplAkxM8dXJw5S/fFMXVSRhm0N/TJmGkJaP50u
+ Ct39HJO0O3fzEJJzlUZChLHrwgieMbqYIO+L+Z2FRE5H1Gl51n4RqvHwp0164RIx
+ TYfc4WRDBzafAnuH+rt16hRvDxA2Qj11HLXS0kqYa2ZaL42/Wpzan0LP9/KfT5qw
+ ==
+X-ME-Sender: <xms:6jiVXRBvZzooo9MnR8LrImaKT4rfyOC-lX2aCfFw3FpgLxd1P4yI0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgeejgddviecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
+ hinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
+ fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:6ziVXdOJ7reSx3NoXUuCY0rh-cIPe6qM35rEP1SxbhpJqvkVUUmZWA>
+ <xmx:6ziVXUoodxcR5biUYWf3UMorFzVrOOLYitSfGEBqjp9J8yemjCY0xw>
+ <xmx:6ziVXUKGl5fsvEHA8SlfUQI0StZbL3Y-Rre7mVfyK6X33F4IPK-SPA>
+ <xmx:6ziVXZF2zQJlieR28IWIsrggDxv89noAl53Ki_t-knEAiG70g5R2bw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E2F16E00A6; Wed,  2 Oct 2019 19:55:22 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-359-g64bf1af-fmstable-20191002v2
+Mime-Version: 1.0
+Message-Id: <8b4a6b60-0d9c-45be-8cfe-87a80b818947@www.fastmail.com>
+In-Reply-To: <20191002102328.5196-2-joel@jms.id.au>
 References: <20191002102328.5196-1-joel@jms.id.au>
- <20191002102328.5196-5-joel@jms.id.au>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <8251d7d5-51a4-1f62-d9f1-563e8afe5c21@linux.ibm.com>
-Date: Wed, 2 Oct 2019 18:47:11 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20191002102328.5196-5-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-02_10:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910020193
+ <20191002102328.5196-2-joel@jms.id.au>
+Date: Thu, 03 Oct 2019 09:26:11 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_1/4]_ARM:_dts:_aspeed-g6:_Add_VUART_d?=
+ =?UTF-8?Q?escriptions?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,53 +89,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 10/2/19 5:23 AM, Joel Stanley wrote:
-> Required to provide the host firmware to on Tacoma.
 
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
-
->
+On Wed, 2 Oct 2019, at 19:53, Joel Stanley wrote:
+> The AST2600 has two VUART devices.
+> 
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->   arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 17 +++++++++++++++++
->   1 file changed, 17 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> index 02eeea6a9bd2..55d5227caf69 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> @@ -22,6 +22,17 @@
->   		device_type = "memory";
->   		reg = <0x80000000 0x40000000>;
->   	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		flash_memory: region@98000000 {
-> +			no-map;
-> +			reg = <0x98000000 0x2000000>; /* 32M */
-> +		};
-> +	};
->   };
->   
->   &fmc {
-> @@ -447,3 +458,9 @@
->   &vuart1 {
->   	status = "okay";
->   };
-> +
-> +&lpc_ctrl {
-> +	status = "okay";
-> +	memory-region = <&flash_memory>;
-> +	flash = <&spi1>;
-> +};
+>  arch/arm/boot/dts/aspeed-g6.dtsi | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+> index 5bea04b67b5c..2ad90a906266 100644
+> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+> @@ -29,6 +29,8 @@
+>  		i2c14 = &i2c14;
+>  		i2c15 = &i2c15;
+>  		serial4 = &uart5;
+> +		serial5 = &vuart1;
+> +		serial6 = &vuart2;
+>  	};
+>  
+>  
+> @@ -475,6 +477,26 @@
+>  				};
+>  			};
+>  
+> +			vuart1: serial@1e787000 {
+> +				compatible = "aspeed,ast2500-vuart";
+> +				reg = <0x1e787000 0x40>;
+> +				reg-shift = <2>;
+> +				interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
+
+For anyone playing along the IRQ isn't documented in current releases of the
+datasheet, but you can find it in the SDK devicetree:
+
+https://github.com/AspeedTech-BMC/linux/blob/3f525e22080917f5569fb853f348f5ecb089a0d9/arch/arm/boot/dts/aspeed-g6.dtsi#L516
+
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
