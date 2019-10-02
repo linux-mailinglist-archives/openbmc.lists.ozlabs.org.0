@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC367C9544
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 01:56:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 153A4C9546
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 01:57:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46kChP3V6kzDqSv
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 09:56:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46kCk26TxHzDqW8
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 09:57:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,67 +16,66 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="PX2iEXbP"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="iWosrl3l"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="wUdb+Crd"; dkim-atps=neutral
+ header.b="Cg6RrbIU"; dkim-atps=neutral
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
  [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46kCgd6s8XzDqSm
- for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 09:55:25 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46kCj60bJZzDqWH
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 09:56:42 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 57741220CB;
- Wed,  2 Oct 2019 19:55:23 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 60BB4220E1;
+ Wed,  2 Oct 2019 19:56:39 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 02 Oct 2019 19:55:23 -0400
+ by compute4.internal (MEProxy); Wed, 02 Oct 2019 19:56:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=NbenJKZa8ztcrdKfeBCv0Zkjstz4rKR
- qZMa22PICOe4=; b=PX2iEXbPPT0Tvq7QCZlwYtY+PTdLleX6TLgQvnjd4Ssnt8x
- cI+bO9rf9q4HL3JywS1CWQfbqhr2W5CE3I4gm0oH8NuI4O4kDliBTXcKyIPZ4Fb/
- p5T69Gh8Tqs6eCiqCLHFSmBPMZ8XBwDivGrdBUoX9QqOXmCTlYEsA82fF7Hfec2t
- LFQXH28vFFTHFhgJ8tCpHpNUxTruiFUPj0QwxZFggW8p+9hlfa8yk09oD3zprNRf
- t9iu/m41uk2OSAjT21sZnglGOTeZW67aJ1t4+oVzk1E5lhFcljH1fSGQLLdUZ0sw
- dOufy5IUq4YLm/jKUdhugqzCav3eHZpydYdPnFQ==
+ :subject:content-type; s=fm3; bh=46TELnxz/mm0bxpvJdgDgggp6UpfQ1F
+ KgUXpGdgZmmk=; b=iWosrl3loHN1FcP2Lv/uiQBkFG9+4NQxhwa22FCAWb009TX
+ foH9YOfahvzfYGrNwPO7fvEF5XKtRebwz9CWPHVyyBmywZeeXvqpSJM2MBKJzpW4
+ lgOxcQjz+sB274DjnBO/59+5QMQV4QHxiuWpNyVSPt+RkpEQtWqGE/3rnF7tMSgv
+ 5cdsrwPzIEWx2KBb61DTUggDuZ9/MB8srpv32HTJ4UTVUyKOtE7M62XUzfEO6n7F
+ 4z0posU4GT1UN7290xqwjFRFddR6pFEy78bhuGVYdRGa0tvpnOYI0MWUAj0Myawi
+ FipoUythYhgNynGUtok6SIIiKpqwIih4W4IM2ZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=NbenJK
- Za8ztcrdKfeBCv0Zkjstz4rKRqZMa22PICOe4=; b=wUdb+Crdwy/mF2TfeMxeKt
- 0Cldjc7amFc2cfEE5nqqeDkoNerb8VsJweHkRyAX9PKD3/fES97SqvsrSY71bDsx
- fPTC9tMrNmiP+ksNvfrKrA6CTTC8CqJv/RicGWE8sxDpUn4Aq67VmFPvAEgVOC+5
- wj69lZdp8Lgq6pq05ZG2/q5A4NEplAkxM8dXJw5S/fFMXVSRhm0N/TJmGkJaP50u
- Ct39HJO0O3fzEJJzlUZChLHrwgieMbqYIO+L+Z2FRE5H1Gl51n4RqvHwp0164RIx
- TYfc4WRDBzafAnuH+rt16hRvDxA2Qj11HLXS0kqYa2ZaL42/Wpzan0LP9/KfT5qw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=46TELn
+ xz/mm0bxpvJdgDgggp6UpfQ1FKgUXpGdgZmmk=; b=Cg6RrbIUjcM5cWXh3sT5sX
+ KmcJdL5Y8Vu4FBznlCbs2Xq/+4nekUTZBIFG1V28nQBsQLeIB/FwPufVhHRiBEbR
+ anBP3iTapF/rqgPAB7ARdS5CH8zId39LPFBBIK3aK+kRQ6UP5ZfWcWjgSE8fN5Iy
+ mhBMolq6bAxyqFv2a+ML7GjIsoHJU6Qj2kMvtIO1r3z7rDVYSsyBnntU7lzTQW4N
+ dx/pStmWvNEBn/t5ltfU+42VDBS+ESnM60oR/bn3S2t8if/csyonEAJFJmnT/1fo
+ ST6ww4FKcMXDBzXqzGw8Kp9JX+hS8a5EL1hLYJiF8OGbvpZhXNSOJXQWDrBzjlOw
  ==
-X-ME-Sender: <xms:6jiVXRBvZzooo9MnR8LrImaKT4rfyOC-lX2aCfFw3FpgLxd1P4yI0g>
+X-ME-Sender: <xms:NzmVXcIID7uTFGLCWDx1HzODZXSz1uPUi23g491waxLJMtxHb8iUlw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgeejgddviecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
- hinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
- fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:6ziVXdOJ7reSx3NoXUuCY0rh-cIPe6qM35rEP1SxbhpJqvkVUUmZWA>
- <xmx:6ziVXUoodxcR5biUYWf3UMorFzVrOOLYitSfGEBqjp9J8yemjCY0xw>
- <xmx:6ziVXUKGl5fsvEHA8SlfUQI0StZbL3Y-Rre7mVfyK6X33F4IPK-SPA>
- <xmx:6ziVXZF2zQJlieR28IWIsrggDxv89noAl53Ki_t-knEAiG70g5R2bw>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:NzmVXWOr5hzzyQntN038ojigW-HaZUZJKg7iONw6l97aJ0CUtxrEjg>
+ <xmx:NzmVXflD87WSsOrrVrI5AEdvxDetZzgYHT4XH8lr7a8dUheItcP_tw>
+ <xmx:NzmVXRWSlmjNUsGvTszwtdaGfxpVPMvDPN5LacCCDlfHWFE7ghb5Vw>
+ <xmx:NzmVXVCG9U7pHRju42ZTDYlT1K32mi9pbdxKNeiXzb_U20mpansfnA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E2F16E00A6; Wed,  2 Oct 2019 19:55:22 -0400 (EDT)
+ id 36EE1E00A5; Wed,  2 Oct 2019 19:56:39 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-359-g64bf1af-fmstable-20191002v2
 Mime-Version: 1.0
-Message-Id: <8b4a6b60-0d9c-45be-8cfe-87a80b818947@www.fastmail.com>
-In-Reply-To: <20191002102328.5196-2-joel@jms.id.au>
+Message-Id: <c6399a1d-e6be-4c52-a8dc-332cb8be67f3@www.fastmail.com>
+In-Reply-To: <20191002102328.5196-3-joel@jms.id.au>
 References: <20191002102328.5196-1-joel@jms.id.au>
- <20191002102328.5196-2-joel@jms.id.au>
-Date: Thu, 03 Oct 2019 09:26:11 +0930
+ <20191002102328.5196-3-joel@jms.id.au>
+Date: Thu, 03 Oct 2019 09:27:27 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_1/4]_ARM:_dts:_aspeed-g6:_Add_VUART_d?=
- =?UTF-8?Q?escriptions?=
+Subject: Re: [PATCH linux dev-5.3 2/4] ARM: dts: aspeed: tacoma: Enable VUART1
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,39 +96,9 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Wed, 2 Oct 2019, at 19:53, Joel Stanley wrote:
-> The AST2600 has two VUART devices.
+> Like most OpenPower machines the VUART is expected to be at /dev/ttyS5
+> for communication with the host over LPC.
 > 
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  arch/arm/boot/dts/aspeed-g6.dtsi | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-> index 5bea04b67b5c..2ad90a906266 100644
-> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
-> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-> @@ -29,6 +29,8 @@
->  		i2c14 = &i2c14;
->  		i2c15 = &i2c15;
->  		serial4 = &uart5;
-> +		serial5 = &vuart1;
-> +		serial6 = &vuart2;
->  	};
->  
->  
-> @@ -475,6 +477,26 @@
->  				};
->  			};
->  
-> +			vuart1: serial@1e787000 {
-> +				compatible = "aspeed,ast2500-vuart";
-> +				reg = <0x1e787000 0x40>;
-> +				reg-shift = <2>;
-> +				interrupts = <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>;
-
-For anyone playing along the IRQ isn't documented in current releases of the
-datasheet, but you can find it in the SDK devicetree:
-
-https://github.com/AspeedTech-BMC/linux/blob/3f525e22080917f5569fb853f348f5ecb089a0d9/arch/arm/boot/dts/aspeed-g6.dtsi#L516
 
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
