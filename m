@@ -1,83 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86BBDC955E
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 02:07:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2275BC9564
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 02:10:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46kCxH696RzDqTP
-	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 10:07:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46kD1D5Hx4zDqW5
+	for <lists+openbmc@lfdr.de>; Thu,  3 Oct 2019 10:10:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::743; helo=mail-qk1-x743.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Bzu8Ts9R"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Z373g6b4"; dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="KKfjuOIA"; 
+ dkim-atps=neutral
+Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com
+ [IPv6:2607:f8b0:4864:20::743])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46kCwf3bzNzDqSm
- for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 10:06:42 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 6DB92534;
- Wed,  2 Oct 2019 20:06:39 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 02 Oct 2019 20:06:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=HjNWu0bDiQiNHDXrRln9qyNrNOVkaPn
- bYeTNWifveEI=; b=Bzu8Ts9RMWXu/bzxutngxjxkIURTVoJG7dvHGMd0jjrp+Bg
- 8DlG6s3SZgkOflCkCsj5RrgVAah/1GihAsQQltpvl/GWuKThe+vv7KvbIoerku9c
- Zd85CsvYDdh6gcO6o2n4225bdD0HLaERmS9wRvVR3GggrWguWKcbaxOgHstBsNG8
- M8ns7LhY4y2c0+hB2jurYBhb4oSpuooRDEJ92P3YclUT0PCH25xjsCE95xv5usyk
- evP9doFtA+cKjdlmzinC9/kkt3NhCArb0Dw39Ia50sJqy5LlxKxQK6MMNrvrHPL0
- QJ3beMHtHCw7Twvx7K/s9TY2E1g1CDe0f4cXbvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=HjNWu0
- bDiQiNHDXrRln9qyNrNOVkaPnbYeTNWifveEI=; b=Z373g6b43Nru/O2BBm/dFU
- QNe4//kb9xLTjiQftIoKIiOX7OlkQAzbEZdlWL3afhroVsfGvLM5NmFltiCOkhBH
- jzGQEDb775EQGEu9YBI2P0ZBuZU+18ZZNFXD+lNvlZytIDdXsjOFu9M3hNiQlLvw
- T4i1GBfz3OI35BJMdmZeXUIh1JK4fq1/gS+ugvVK0/A8uEuHm6wqmxw3UW6Fv/ir
- gtxoJVR0F1dY/TZhmVCcxsTXSnFGbEtqVfZbJOyhDQWWhYxFvsTksfix3txEaJDx
- RF04sCxCa7xWhSppn4qNrCs0va3E3i5hdiiJWLc2yQbeQ5GQgr4fyPQmG6G04WZw
- ==
-X-ME-Sender: <xms:jjuVXYZLPbgoMVAdDq3pLJTCcoWeL-kU9xGCayGJD_XiYg4ki77c1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrgeejgddvkecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:jjuVXfGeFULOfpldSMFruvc6Z1CwCncFNgDhypljMGUIhucqSh581w>
- <xmx:jjuVXekXmRiX3fThJONVZOdl8kynWN5YvvhsQ9EFatb-SNhyIPORog>
- <xmx:jjuVXezi2gzNr1Ay4Wcy6UsCyw04SueM4arCLNI3uD7TpJNGl_NW4g>
- <xmx:jzuVXcddHUVpCnfnKWD6rxPYMZCX2rOmEeao39aer42tqU2Hp1s-Tw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 30823E00A5; Wed,  2 Oct 2019 20:06:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-359-g64bf1af-fmstable-20191002v2
-Mime-Version: 1.0
-Message-Id: <71992bb4-445f-45b9-aa0a-5eaf0dc71cbe@www.fastmail.com>
-In-Reply-To: <20191002102328.5196-5-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46kD0d1PmZzDqC0
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Oct 2019 10:10:08 +1000 (AEST)
+Received: by mail-qk1-x743.google.com with SMTP id q203so606144qke.1
+ for <openbmc@lists.ozlabs.org>; Wed, 02 Oct 2019 17:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Wa+c/hXxwS+jqDAivgo8iHbkNxCIIllfKQ4qiyL9MEs=;
+ b=KKfjuOIAd7I+ca7TXiQApchrH0XtYYiN3WhJmYXmJS4MHsTXO0R3TB0DFKEXRYpDqj
+ uaeFUt9osmm2I1YHbJmmLuWa11Ok1locibWK/hFxXR9V92uJtrVSbYCfJOLEeJBMaWj0
+ 4LR5HcL32A7HPIG7fpl98fM1X9lUk3rVWD7D4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Wa+c/hXxwS+jqDAivgo8iHbkNxCIIllfKQ4qiyL9MEs=;
+ b=RDzxXxMCrx/gYjug0FV0cpAAEURpv9Xf/ADv+Tw7gFQzCiHQ9biZW1ASeRPd/kPdbX
+ 8RwOB4x3c2FeCi2TwJ5Z7CcAV38H81UAFYrAtGQBHf9kmEw9b3kK/K+yecZ9mEdWS/NO
+ aRiPaLI/uJz4KPfXNfW9OIMJDyQQ6LXdNuAwl/MkiumNcj/wd6SvR9a+E+IFEMf09zYQ
+ Bbgk1h+RUKICn+MAwrFOHlZwxVawcFmfZwOhf4BsTMROBxlYl1R9wR+s0QsNl4xYuq9+
+ kx9UPBXwAcHc6q5PFU5O4XTkjq4HUl3OFubOjKP5viiuL/GSvKi68i0c3+WtFe5/kD94
+ mYnA==
+X-Gm-Message-State: APjAAAVlb1C8dfMjcrkCKlCq0XfyQ67sTB0QfGxEtISWZemN35kqbf/F
+ EaWqxnvSulYZFPQtWlG+Jr7DEi99O5NreHvuDXI=
+X-Google-Smtp-Source: APXvYqzLGZeiFpEpmsHF8p5XDMs5gJlFY65GWpboMtn1O4GcdKmZe/y0vQxOHXzDwdKGAfUHKVOrfguaf3DsKxycVB8=
+X-Received: by 2002:a37:a44f:: with SMTP id n76mr1667811qke.414.1570061404755; 
+ Wed, 02 Oct 2019 17:10:04 -0700 (PDT)
+MIME-Version: 1.0
 References: <20191002102328.5196-1-joel@jms.id.au>
  <20191002102328.5196-5-joel@jms.id.au>
-Date: Thu, 03 Oct 2019 09:37:27 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_4/4]_ARM:_dts:_tacoma:_Enable_LPC_Fir?=
- =?UTF-8?Q?mware_region?=
-Content-Type: text/plain
+ <71992bb4-445f-45b9-aa0a-5eaf0dc71cbe@www.fastmail.com>
+In-Reply-To: <71992bb4-445f-45b9-aa0a-5eaf0dc71cbe@www.fastmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 3 Oct 2019 00:09:53 +0000
+Message-ID: <CACPK8XdzgOHVwwPmrecmGqyG5P2vMwLrdHK3zTYq32VfnAzhSA@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.3 4/4] ARM: dts: tacoma: Enable LPC Firmware
+ region
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,44 +72,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Eddie James <eajames@linux.ibm.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, 3 Oct 2019 at 00:06, Andrew Jeffery <andrew@aj.id.au> wrote:
+> > +             flash_memory: region@98000000 {
+> > +                     no-map;
+> > +                     reg = <0x98000000 0x2000000>; /* 32M */
+>
+> Should put this at 0xba000000 if we're going to use 32M, or if you want to
+> use 64M like Rainier then 0xb8000000.
+>
+> 0x98000000 isn't wrong but it fragments the address space more than
+> necessary.
 
+Good point. I'll move it to 0xba000000.
 
-On Wed, 2 Oct 2019, at 19:53, Joel Stanley wrote:
-> Required to provide the host firmware to on Tacoma.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> index 02eeea6a9bd2..55d5227caf69 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-> @@ -22,6 +22,17 @@
->  		device_type = "memory";
->  		reg = <0x80000000 0x40000000>;
->  	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		flash_memory: region@98000000 {
-> +			no-map;
-> +			reg = <0x98000000 0x2000000>; /* 32M */
-
-Should put this at 0xba000000 if we're going to use 32M, or if you want to
-use 64M like Rainier then 0xb8000000.
-
-0x98000000 isn't wrong but it fragments the address space more than
-necessary.
-
-Andrew
+Thanks for the review.
