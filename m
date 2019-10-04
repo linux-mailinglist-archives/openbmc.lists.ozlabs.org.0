@@ -2,62 +2,42 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78893CBFAD
-	for <lists+openbmc@lfdr.de>; Fri,  4 Oct 2019 17:46:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FDBBCC010
+	for <lists+openbmc@lfdr.de>; Fri,  4 Oct 2019 18:05:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46lDkL6L5VzDqfP
-	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2019 01:46:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46lF8L1FLBzDqcj
+	for <lists+openbmc@lfdr.de>; Sat,  5 Oct 2019 02:05:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::529; helo=mail-pg1-x529.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="cPiJ8R5Y"; 
- dkim-atps=neutral
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com
- [IPv6:2607:f8b0:4864:20::529])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=gondor.apana.org.au
+ (client-ip=216.24.177.18; helo=fornost.hmeau.com;
+ envelope-from=herbert@gondor.apana.org.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=gondor.apana.org.au
+X-Greylist: delayed 2024 seconds by postgrey-1.36 at bilbo;
+ Sat, 05 Oct 2019 02:04:26 AEST
+Received: from fornost.hmeau.com (helcar.hmeau.com [216.24.177.18])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46lDj63sQLzDqdq
- for <openbmc@lists.ozlabs.org>; Sat,  5 Oct 2019 01:45:12 +1000 (AEST)
-Received: by mail-pg1-x529.google.com with SMTP id q1so3998919pgb.0
- for <openbmc@lists.ozlabs.org>; Fri, 04 Oct 2019 08:45:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=mByU6edxI1o7q7++ia/8fTT7m5fl6XoVtGE3vLSDTjU=;
- b=cPiJ8R5YbYYY2jWBcxXEh3nHZGaEdBGPiOYsBpjyPY971bRBEdvUi8qYjkVIHvK5jc
- LQEMz/VWE6QruAfzUDnTr5mMsyLAKGQEwZsRO5U//Y/i7FyJ0GOQvJOghlNvvUrYkwob
- ETgHyLsTNmcyxoYheIxrOIrYIpM/gT5m1W4jupHwu6DpKfJWOKQBE73H3u1VsQx6hJIE
- YPorwp4ZcOCv+JxMc+nbjo+npn/75BovvpzANJa7CrfQIsthtnn9T+tVk4CRRMctcfV3
- GjA7rGuQOairlu+4KVxq8ZNk1JNgZnb7jehZaTRsI07YW63I5N9jBMUBZrLlyMPbw+j7
- RTRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=mByU6edxI1o7q7++ia/8fTT7m5fl6XoVtGE3vLSDTjU=;
- b=IATOBqSXyzXt/Kf2AnVFWu0Pj+Hmu0OK0d1aZiRBxSQU1C65tdFdU+lVDbtVjwk6M5
- +yutWAxn9WWmOBdJfPYWWT9MGjtHuk+2QlZpvljQJ4+OKa85toJhHxMaZhHrAwr51kA0
- Z2qPBuW9Qs4tpb957bvD9+Tt+o9lJ1MWQTODTqF1hTQgyjU1UGiQ2SIdWmVqmQJUl5E9
- FIEj1JaSVKWoBoYTbH1/qCH2XEKoRwfs9E2c30RQVuGtmzX7UvIbw7gnDVcis7FT1L4l
- dJ68tqDNNDlLPRVhH2MVv74LoQKypwMDxGadrRegLDhIJPI0RhN31dS2WYEFSrCpGMKB
- jP1g==
-X-Gm-Message-State: APjAAAUo5sUav4m245t/KMsemZM4UX11zrvF1/3CF+BDSGuKyyL5DSxz
- xxey1bUpqKMEB4AwaGuUsv+jL6zDDqZom60qz0YsNS6F3WE=
-X-Google-Smtp-Source: APXvYqw8yJ48LtHTlgqipYCoqfanYx4sbaS4cTRy3adTSaEe5pwd71Ilq1rzXqINGL3ePoN0mC0q8L3ZJTkFRMI4ZwU=
-X-Received: by 2002:a63:cb4f:: with SMTP id m15mr15870415pgi.292.1570203908637; 
- Fri, 04 Oct 2019 08:45:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46lF7G3PrHzDqcT
+ for <openbmc@lists.ozlabs.org>; Sat,  5 Oct 2019 02:04:26 +1000 (AEST)
+Received: from gwarestrin.arnor.me.apana.org.au ([192.168.0.7])
+ by fornost.hmeau.com with smtp (Exim 4.89 #2 (Debian))
+ id 1iGPWu-0000ro-GG; Sat, 05 Oct 2019 01:30:05 +1000
+Received: by gwarestrin.arnor.me.apana.org.au (sSMTP sendmail emulation);
+ Sat, 05 Oct 2019 01:29:56 +1000
+Date: Sat, 5 Oct 2019 01:29:56 +1000
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v3 0/2] hwrng: npcm: add NPCM RNG driver support
+Message-ID: <20191004152956.GE5148@gondor.apana.org.au>
+References: <20190912090149.7521-1-tmaimon77@gmail.com>
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Fri, 4 Oct 2019 08:44:54 -0700
-Message-ID: <CAO=notzdWjU+9=QDDNinY4sOwfeOQOryF1CLf=xk0p1v3Oimiw@mail.gmail.com>
-Subject: Testing userspace code
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190912090149.7521-1-tmaimon77@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,17 +49,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: mark.rutland@arm.com, sumit.garg@linaro.org, benjaminfair@google.com,
+ arnd@arndb.de, devicetree@vger.kernel.org, avifishman70@gmail.com,
+ gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tali.perry1@gmail.com, vkoul@kernel.org,
+ robh+dt@kernel.org, mpm@selenic.com, venture@google.com, tglx@linutronix.de,
+ jens.wiklander@linaro.org, linux-crypto@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I've been working on designing a test infrastructure focused on
-userspace aspects of openbmc, and since most daemons only need to
-speak dbus -- I wanted to reach out to see if any team has already
-designed/implemented a system that takes an environment description
-and creates a dbus representation?
+On Thu, Sep 12, 2019 at 12:01:47PM +0300, Tomer Maimon wrote:
+> This patch set adds Random Number Generator (RNG) support 
+> for the Nuvoton NPCM Baseboard Management Controller (BMC).
+> 
+> The RNG driver we use power consumption when the RNG 
+> is not required.
+> 
+> The NPCM RNG driver tested on NPCM750 evaluation board.
+> 
+> Addressed comments from:.
+>  - Daniel Thompson: https://lkml.org/lkml/2019/9/10/352
+>  - Milton Miller II : https://lkml.org/lkml/2019/9/10/847
+>  - Daniel Thompson: https://lkml.org/lkml/2019/9/10/294
+> 
+> Changes since version 2:
+>  - Rearrange wait parameter in npcm_rng_read function.
+>  - Calling pm_runtime_enable function before hwrng_register function 
+>    called to enable the hwrng before add_early_randomness called.
+>  - Remove quality dt-binding parameter in the driver and documentation.
+>  - Disable CONFIG_PM if devm_hwrng_register failed.
+>  - Remove owner setting in the driver struct.
+> 
+> Changes since version 1:
+>  - Define timout in real-world units.
+>  - Using readl_poll_timeout in rng_read function.
+>  - Honor wait parameter in rng_read function.
+>  - Using local variable instead of #ifndef.
+>  - Remove probe print.
+> 
+> Tomer Maimon (2):
+>   dt-binding: hwrng: add NPCM RNG documentation
+>   hwrng: npcm: add NPCM RNG driver
+> 
+>  .../bindings/rng/nuvoton,npcm-rng.txt         |  12 ++
+>  drivers/char/hw_random/Kconfig                |  13 ++
+>  drivers/char/hw_random/Makefile               |   1 +
+>  drivers/char/hw_random/npcm-rng.c             | 186 ++++++++++++++++++
+>  4 files changed, 212 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/rng/nuvoton,npcm-rng.txt
+>  create mode 100644 drivers/char/hw_random/npcm-rng.c
 
-The idea, one daemon runs and owns all the dbus objects expected, and
-ipmid/bmcweb etc can be tested by talking to that daemon.
-
-Thanks,
-Patrick
+All applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
