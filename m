@@ -1,43 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B445CED3C
-	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2019 22:15:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83A88CED60
+	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2019 22:23:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46nBZ024DvzDqMT
-	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 07:15:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46nBkp2rKzzDqMT
+	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 07:23:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::d33; helo=mail-io1-xd33.google.com;
+ envelope-from=kunyi@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="s9OKghsd"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
+ [IPv6:2607:f8b0:4864:20::d33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46nBYN63MtzDqLN
- for <openbmc@lists.ozlabs.org>; Tue,  8 Oct 2019 07:15:20 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 5964914C5B
- for <openbmc@lists.ozlabs.org>; Mon,  7 Oct 2019 16:15:17 -0400 (EDT)
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: Feedback on documentation philosophy requested
-Date: Mon, 7 Oct 2019 16:15:17 -0400
-References: <507D4043-19B5-43ED-B28B-408D4BC504E6@fuzziesquirrel.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-In-Reply-To: <507D4043-19B5-43ED-B28B-408D4BC504E6@fuzziesquirrel.com>
-Message-Id: <DEAFC8E2-2995-4298-89FD-B3A4635A51CD@fuzziesquirrel.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46nBkD0WwyzDqLN
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Oct 2019 07:22:59 +1100 (AEDT)
+Received: by mail-io1-xd33.google.com with SMTP id q10so31664811iop.2
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Oct 2019 13:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=xpRtcItye3u6RGpN6w1JdyANSTs/2ZvGEqFugOw/cqY=;
+ b=s9OKghsdtkD6p2dWINqSfURMlbE+E5KJYFny7Nr+KvPVkGMGMbS0khdKNGKOSWYDpZ
+ HWBgk8iw14X4RONvM7KbAruOlee6DsJtEjstJFHzi0bgwZ0OuF5osdkARR9licKe+Eaa
+ J+o0eMuQ20Zr11e4UCaCLmxBYaqc9oIXWe02IfUj91wsr9TonY64Mk0PHfa8ZYc3IBXb
+ 4HvC+kxEu7TG1mUiKPactNsr2uovv+gq/3M57QHFXET59fDqOg1goRvf2WC3/tSPmhhK
+ A7NSsGrGYBb8zpn339TwmrYs8o+Xoo2bKavdPZrfdI50wWC3zPPXpFyqEVBbQmySIFQ2
+ iO1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=xpRtcItye3u6RGpN6w1JdyANSTs/2ZvGEqFugOw/cqY=;
+ b=j+Pl3dFDoLTnPG2yq5lzmh6V4dXzoze82yRNvM3zKSeYs9b0lKC0G3UlLrClVNLbMM
+ nRTAQDM5k0lWDq51Ye1yNvgJNbI8ukFj+GmYLNrLkFdpu8bA9pvfmCNJWFTs647fNtMt
+ hVh4JjyrhUCcCRJk1WsjrswkCJ6+k+Fae976KnAxfJ5xtG/D7oJIuqq69PcOVKp/iFvl
+ DAUuSDCqBUhayoUdttuHG0speqPGJ2Brrwl2kz7UQIFyam4VXurRfRoX1W+K+gGC8IWq
+ d07E437sxqMvwRAzw0AgU+ks5WVSnLqNgOl70lyUauoQVmqjldp4xBjWQ3cyoHWfACgJ
+ GM/w==
+X-Gm-Message-State: APjAAAWQzlE7RQxxMq9hXNnQ+Cxs4INIBp/yu1rDtmfeRif12kDV6L3l
+ J/fDrpwOb29P4vCvWfoy5496Do4MWopag6nAMn4d6w==
+X-Google-Smtp-Source: APXvYqwiWA0nNN91sECvBmt1oGOUv1ulf0cltyMACzeJf2LoduEAVf59L4lvLeaCh/1mkq+YDCYjWsjYKnVF8yqRoM0=
+X-Received: by 2002:a6b:e016:: with SMTP id z22mr12427615iog.59.1570479775869; 
+ Mon, 07 Oct 2019 13:22:55 -0700 (PDT)
+MIME-Version: 1.0
+References: <7050D8BB-A7B0-4CA5-AA56-8AB61D762AEB@fuzziesquirrel.com>
+ <CAPnigK=c+rpWLtB7XbaPPM3s2V8TAbgRgqKChUTKkNpUtC836Q@mail.gmail.com>
+In-Reply-To: <CAPnigK=c+rpWLtB7XbaPPM3s2V8TAbgRgqKChUTKkNpUtC836Q@mail.gmail.com>
+From: Kun Yi <kunyi@google.com>
+Date: Mon, 7 Oct 2019 13:22:29 -0700
+Message-ID: <CAGMNF6VCJxS_ewJkpvGAUwtiJrgVUSp2ajeVeN+k7hZoiXj8gg@mail.gmail.com>
+Subject: Re: unit test build failure in phosphor-hwmon
+To: William Kennington <wak@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -50,93 +75,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, wangkair@cn.ibm.com,
+ Andrew Geissler <geissonator@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Bumping this thread in case anyone had intended to reply but forgot.
+What's the test build error message with meson?
 
-thx! - brad
+On Mon, Oct 7, 2019 at 1:05 PM William Kennington <wak@google.com> wrote:
+>
+> Well, the unit test environment is using gcc 9.x.x for what that's worth.
+>
+> On Mon, Oct 7, 2019 at 1:02 PM Brad Bishop <bradleyb@fuzziesquirrel.com> =
+wrote:
+> >
+> > I was trying to get meson going in phosphor-hwmon today and I stumbled =
+on a
+> > unit test that doesn=E2=80=99t build under gcc 9.1.0.  The failing test=
+ is the
+> > average test.
+> >
+> > I just thought I=E2=80=99d quick throw this out there in case anyone fe=
+els like
+> > having a look.  Also, I think this means our repository CI environment =
+has
+> > gotten out of sync with upstream Yocto?
+> >
+> > I realize =E2=80=9Cpatches welcome=E2=80=9D applies here for both issue=
+s :-) but I just
+> > wanted to broadcast them.
+> >
+> > thx -brad
 
-> Hello OpenBMCers
->
-> Over here at IBM we are just getting started on a large-ish project.  T=
-he =20
-> effect of which I=E2=80=99d like to focus on with this thread is that w=
-e will be =20
-> generating a fair amount of documentation.
->
-> I=E2=80=99m not talking about documentation for existing function.  The=
-re is =20
-> certainly a need for that too but that is also something to tackle in =20
-> another thread.  Rather, I=E2=80=99m talking about new designs and docu=
-mentation =20
-> for new features.
->
-> Some of the new features we=E2=80=99ll be documenting will -not- be int=
-eresting =20
-> to some/many/most/all in the OpenBMC community.  For the features that =
-=20
-> fall more towards the most/all end of that spectrum, I ask for your =20
-> thoughts on a couple points:
->
-> - Should these docs and designs be segregated somehow?  Would they beco=
-me =20
-> a burden on the rest of the community if not?
->
-> - I=E2=80=99d like to contribute a process around documentation that he=
-lps =20
-> contributors figure out where and how to document things like this.  A =
-=20
-> really rough thought I have here is some kind of flow chart or decision=
- =20
-> tree that could be applied to a document or set of documents, the outpu=
-t =20
-> of which would be how to break up your documentation into pieces and/or=
- =20
-> where to put it/them.  Does anyone have any ideas here?
->
-> As you ponder these questions a couple things to keep in your head:
->
-> - At the moment all designs are unconditionally found in =20
-> openbmc/docs/designs.
->
-> - We have documentation in openbmc/docs, *-dbus-interfaces, and various=
- =20
-> sub-project repo READMEs.  Any others?
->
-> - My observation is that the project is headed away from micro services=
- =20
-> and towards larger applications - highly configurable at build time.  =20
-> bmcweb and phosphor-logging are great examples of this.  Think =20
-> Linux/KBuild (but without modules).  What this means is that code with =
-=20
-> relatively few users (or even just one) goes in the same codebase as th=
-e =20
-> code with many users.  This seems counter to segregating documentation =
-=20
-> and designs of the code with few users.
->
-> - An example of an un-interesting feature might be the support we=E2=80=
-=99ll add =20
-> for the hardware management console.  The HMC is a management appliance=
- =20
-> we sell and it has a custom REST API [1], which we=E2=80=99ll implement=
- in bmcweb =20
-> (tucked behind cmake flags that compile the support out of course, as =20
-> described in the previous bullet).
->
-> A couple simple ideas that have been thrown around=E2=80=A6
->
-> - put vendor subfolders in openbmc/docs/designs
->
-> - document vendor specific features in meta-<vendor>/docs
->
-> If you are still reading, thanks!  I look forward to hearing your ideas=
-.
->
-> -brad
->
-> [1] =20
-> https://www.ibm.com/support/knowledgecenter/TI0003N/p8hat/p8hat_partiti=
-oningwithanhmc.htm
 
+
+--=20
+Regards,
+Kun
