@@ -2,67 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 739B3CEDD2
-	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2019 22:43:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7446CEDD5
+	for <lists+openbmc@lfdr.de>; Mon,  7 Oct 2019 22:44:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46nC9S1tZNzDqLp
-	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 07:43:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46nCBq4JJHzDqMF
+	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 07:44:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2607:f8b0:4864:20::430; helo=mail-pf1-x430.google.com;
- envelope-from=venture@google.com; receiver=<UNKNOWN>)
+ (client-ip=2a00:1450:4864:20::244; helo=mail-lj1-x244.google.com;
+ envelope-from=wak@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="HM3UWTM7"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="jgCGX9VW"; 
  dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com
+ [IPv6:2a00:1450:4864:20::244])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46nC8x11bLzDqCT
- for <openbmc@lists.ozlabs.org>; Tue,  8 Oct 2019 07:42:40 +1100 (AEDT)
-Received: by mail-pf1-x430.google.com with SMTP id x127so9389842pfb.7
- for <openbmc@lists.ozlabs.org>; Mon, 07 Oct 2019 13:42:40 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46nCBJ5f0PzDqCT
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Oct 2019 07:43:52 +1100 (AEDT)
+Received: by mail-lj1-x244.google.com with SMTP id 7so15171144ljw.7
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Oct 2019 13:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=EEwEQ/q/3jOS6POYgzq5+HhhTX8QnQLdxcjfAgVa3wM=;
- b=HM3UWTM7ZTpHhHGKEG95xW0CIJOyunqlkpvIv9mZM+zkRi76F0NGx/h0cThkJ8d1V6
- dXNqcviOpmXSCD5LVgky687K8cUrUnDjbfM3c2nClUGKMY4TAMq5jT6uYXUos9zJ5s1C
- tFnFwcR2lK7xtOT90EaqAivAdp/qGMmRobnmycJNB2F4Bayj0CyRqBMkFpzaE9uZ4Cqm
- 0M2ey1RWtAZBLn1flrwhuNKnZrWgy+XwsAtVjTQft5JFGwaNGgsq8Bb+Sf6hS7n+infg
- Gg83pFV0vfz8ks/wFnpQvNnzxegVvXvM9YSPL1TJsVO2ABnnnpxv4peWJL2DyxFRowew
- Pg+A==
+ :cc; bh=ZCWX8EkBVDqulPwFJqGr5f9ZD/Q2dFjQMLKvdb0bs+0=;
+ b=jgCGX9VWOlU/KqT+ET4HlT2r9tsCrd0JFdjNPWNTzbn4k1QS7kiw4iapFiVvpyjHtp
+ N1mMmKiab5/7aBPlocPofgdYE0DyghlcPvXoWOm26B7ytWUFDfNy1Rnv+PZcG7PUDXjI
+ 2ZIEIfmqio0RoGK7tKNyC9FDKPA3dkV4rXWn+i1wp11o7QNWr7bBXk8IgwbDC1DMkbDn
+ glItp8p8OX0LzgVRos3pYRgJSTzvOJAur3NYGCMIoRS0nVgpDw/auMcZ5BmiPc6B9ivf
+ 1hkNYV3u8/vr/TszIl+60quaez49oc90be2HqWzBzkjPf6urE/oQTi/1dN3AE+1tNqnq
+ WL4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=EEwEQ/q/3jOS6POYgzq5+HhhTX8QnQLdxcjfAgVa3wM=;
- b=d7/XlK1IdGApPCuWLLXbXF46lG5RAwP6FV6N0dM+yzXAmCDjHRK1rpQPAi4UgjbxZ7
- 7hO3yKU7CTLrTU86iL3oz4/KOEdBhpvk1YL/Qjv2cejVLkIYiDzt9gsn4WDeUGhLEub1
- kTc/wpQB8AlQxvlPonE86pLO+tZQGBDMu/RKUJ6AmOi/j5KrSIs4CovA8F+T2vXhgeqr
- g+Fc7H4U3CXayJfescuMptsDcR5apFLfEaFy80hvJL5P8isKs+FHEkkvLcizIaqs6Ivw
- jYvMlQShAk4qj+SgHPrQ55I+Ck6uGSMQkKEQ+zkGR+/MFKGc85PmyTm8Czhm52ymwUmz
- ZSWg==
-X-Gm-Message-State: APjAAAXl69b0hn/1lkxSBw/3ZxwWEqifnmAyD/DyUiiG7/gOSr7V+4tf
- UHPO61bqgI2RtFKrcf+aC93F4H6Eee4LlEysDZ3C6KQioWU=
-X-Google-Smtp-Source: APXvYqz/znFs4FRIEHENbvSqr7rPpU1XXdRTS2qE9FK8ohZ6DqgU4OJSuHvN4MLrEX+UtUNQ9rFwWw81kA/zYuYGyGE=
-X-Received: by 2002:a63:cb4f:: with SMTP id m15mr32009152pgi.292.1570480956729; 
- Mon, 07 Oct 2019 13:42:36 -0700 (PDT)
+ bh=ZCWX8EkBVDqulPwFJqGr5f9ZD/Q2dFjQMLKvdb0bs+0=;
+ b=hx8BNBZn4rnsV9XR1Q2uDW5G4FU9ihbnjk8X4Elb2P7NJIHPdOqe9ESBmvFIAp3y/H
+ 0ANOnsR4+2RdiSmQvobfHA9YpAvCTIh6X1XG47YhGfw5K2pMJX9Ij8dkiV2DmWqBHnyG
+ jy/ODbSydc6FmhcAWbmX3ExxJ99/OePVfDrVtQzYRfDFmfvFlIgwmgQWivWvmHYIueIp
+ WV1vy196knmDDZXTpCZGYHefjsjCtBZ/kqQpi5GrmVlBRls5q5DqrzGlV4PJP8Qe0vxc
+ Y98wnZOMulKdXRWhx+5Oj4DAemZjzgatuEWMMJHgHLQ3XnYovqg0sorL5+GH245tDOyi
+ CoyA==
+X-Gm-Message-State: APjAAAVYjQoZmrWSOt0FQR+GOg4wxHHeax79qPEr45Dnc6ovYv+LsVZY
+ c3BIZ6uxZFlwBKRI1zxiJNjgs+bFM6KtirJTnN9Pxg==
+X-Google-Smtp-Source: APXvYqx+EVEbNUEWRuYJlibmTvCBJYVLbmRSCLMaU+g/F5YaQFGertQ9tXFh76IyPKAtVx3E83B6IGTHm+Vf4mzNqZE=
+X-Received: by 2002:a2e:9ac1:: with SMTP id p1mr19618318ljj.179.1570481026767; 
+ Mon, 07 Oct 2019 13:43:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <7050D8BB-A7B0-4CA5-AA56-8AB61D762AEB@fuzziesquirrel.com>
  <CAPnigK=c+rpWLtB7XbaPPM3s2V8TAbgRgqKChUTKkNpUtC836Q@mail.gmail.com>
  <CAGMNF6VCJxS_ewJkpvGAUwtiJrgVUSp2ajeVeN+k7hZoiXj8gg@mail.gmail.com>
  <46DC7782-8F89-4890-9876-E54895CC8C98@fuzziesquirrel.com>
-In-Reply-To: <46DC7782-8F89-4890-9876-E54895CC8C98@fuzziesquirrel.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 7 Oct 2019 13:42:25 -0700
-Message-ID: <CAO=notyDgrSBRsKcuT0vwFLQi91hAco4dH7v=NPeK__+-PhpEQ@mail.gmail.com>
+ <CAO=notyDgrSBRsKcuT0vwFLQi91hAco4dH7v=NPeK__+-PhpEQ@mail.gmail.com>
+In-Reply-To: <CAO=notyDgrSBRsKcuT0vwFLQi91hAco4dH7v=NPeK__+-PhpEQ@mail.gmail.com>
+From: William Kennington <wak@google.com>
+Date: Mon, 7 Oct 2019 13:43:35 -0700
+Message-ID: <CAPnigKk4_fAD-Y-W_Uu4Z4-ZXq-SKvS+MDtgth=WZsYHLSf4eQ@mail.gmail.com>
 Subject: Re: unit test build failure in phosphor-hwmon
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Patrick Venture <venture@google.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,24 +77,31 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>, wangkair@cn.ibm.com,
- Andrew Geissler <geissonator@yahoo.com>, William Kennington <wak@google.com>
+ Matt Spinler <mspinler@linux.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, wangkair@cn.ibm.com,
+ Andrew Geissler <geissonator@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 7, 2019 at 1:31 PM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
->
-> at 4:22 PM, Kun Yi <kunyi@google.com> wrote:
->
-> > What's the test build error message with meson?
->
-> It fails the same way with autotools...
->
-> I created a gist with the failure here:
->
-> https://gist.github.com/bradbishop/0f18c71f734a8459dcab0ea886528b4f
+Looks like someone is comparing longs to uint64_t's or something,
+which works on 64 bit arches but not 32-bit ones where unint64_t is
+long long int.
 
-Thanks, my CI checkout must be stale.
-
+On Mon, Oct 7, 2019 at 1:42 PM Patrick Venture <venture@google.com> wrote:
 >
-> thanks Kun!
+> On Mon, Oct 7, 2019 at 1:31 PM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+> >
+> > at 4:22 PM, Kun Yi <kunyi@google.com> wrote:
+> >
+> > > What's the test build error message with meson?
+> >
+> > It fails the same way with autotools...
+> >
+> > I created a gist with the failure here:
+> >
+> > https://gist.github.com/bradbishop/0f18c71f734a8459dcab0ea886528b4f
+>
+> Thanks, my CI checkout must be stale.
+>
+> >
+> > thanks Kun!
