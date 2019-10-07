@@ -2,48 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9820DCEEF3
-	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 00:17:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF9FDCEF76
+	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 01:14:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46nFGC2mxRzDqMK
-	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 09:17:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46nGWZ3scmzDqLt
+	for <lists+openbmc@lfdr.de>; Tue,  8 Oct 2019 10:14:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46nFFf5rHXzDqJC
- for <openbmc@lists.ozlabs.org>; Tue,  8 Oct 2019 09:16:53 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 2996D1866D1;
- Mon,  7 Oct 2019 18:16:49 -0400 (EDT)
-Content-Type: text/plain;
-	charset=us-ascii;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: unit test build failure in phosphor-hwmon
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <CAPnigKk4_fAD-Y-W_Uu4Z4-ZXq-SKvS+MDtgth=WZsYHLSf4eQ@mail.gmail.com>
-Date: Mon, 7 Oct 2019 18:16:48 -0400
-Content-Transfer-Encoding: 7bit
-Message-Id: <EB769CC4-2C13-4A23-9784-E22B1D822C46@fuzziesquirrel.com>
-References: <7050D8BB-A7B0-4CA5-AA56-8AB61D762AEB@fuzziesquirrel.com>
- <CAPnigK=c+rpWLtB7XbaPPM3s2V8TAbgRgqKChUTKkNpUtC836Q@mail.gmail.com>
- <CAGMNF6VCJxS_ewJkpvGAUwtiJrgVUSp2ajeVeN+k7hZoiXj8gg@mail.gmail.com>
- <46DC7782-8F89-4890-9876-E54895CC8C98@fuzziesquirrel.com>
- <CAO=notyDgrSBRsKcuT0vwFLQi91hAco4dH7v=NPeK__+-PhpEQ@mail.gmail.com>
- <CAPnigKk4_fAD-Y-W_Uu4Z4-ZXq-SKvS+MDtgth=WZsYHLSf4eQ@mail.gmail.com>
-To: William Kennington <wak@google.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46nGVl3Sm8zDqKT;
+ Tue,  8 Oct 2019 10:13:18 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2019 16:13:14 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,269,1566889200"; d="scan'208";a="218109559"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by fmsmga004.fm.intel.com with ESMTP; 07 Oct 2019 16:13:14 -0700
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>
+Subject: [PATCH 0/5] i2c: aspeed: Add buffer and DMA modes support
+Date: Mon,  7 Oct 2019 16:13:08 -0700
+Message-Id: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.23.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,23 +52,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>, Andrew Geissler <geissonator@yahoo.com>,
- wangkair@cn.ibm.com
+Cc: devicetree@vger.kernel.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 4:43 PM, William Kennington <wak@google.com> wrote:
+This patch series adds buffer mode and DMA mode transfer support for the
+Aspeed I2C driver. With this change, default transfer mode will be set to
+buffer mode for better performance, and DMA mode can be selectively used
+depends on platform configuration.
 
-> Looks like someone is comparing longs to uint64_t's or something,
-> which works on 64 bit arches but not 32-bit ones where unint64_t is
-> long long int.
+* Buffer mode
+  AST2400:
+    It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
+    0x1e78a800 to 0x1e78afff that can be used for all busses with
+    buffer pool manipulation. To simplify implementation for supporting
+    both AST2400 and AST2500, it assigns each 128 Bytes per bus without
+    using buffer pool manipulation so total 1792 Bytes of I2C SRAM
+    buffer will be used.
 
-This was most definitely the problem:
+  AST2500:
+    It has 16 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
+    page selection' bit field in the Function control register, and
+    neither 'base address pointer' bit field in the Pool buffer control
+    register it has. To simplify implementation for supporting both
+    AST2400 and AST2500, it writes zeros on those register bit fields
+    but it's okay because it does nothing in AST2500.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/25879/1
+* DMA mode
+  Only AST2500 and later versions support DMA mode under some limitations:
+    I2C is sharing the DMA H/W with UHCI host controller and MCTP
+    controller. Since those controllers operate with DMA mode only, I2C
+    has to use buffer mode or byte mode instead if one of those
+    controllers is enabled. Also make sure that if SD/eMMC or Port80
+    snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
+    use DMA mode.
 
-Thanks William!
+Please review it.
 
--brad
+-Jae
+
+Jae Hyun Yoo (5):
+  dt-bindings: i2c: aspeed: add buffer and DMA mode transfer support
+  ARM: dts: aspeed: add I2C buffer mode support
+  i2c: aspeed: fix master pending state handling
+  i2c: aspeed: add buffer mode transfer support
+  i2c: aspeed: add DMA mode transfer support
+
+ .../devicetree/bindings/i2c/i2c-aspeed.txt    |  67 ++-
+ arch/arm/boot/dts/aspeed-g4.dtsi              |  47 +-
+ arch/arm/boot/dts/aspeed-g5.dtsi              |  47 +-
+ drivers/i2c/busses/i2c-aspeed.c               | 513 ++++++++++++++++--
+ 4 files changed, 588 insertions(+), 86 deletions(-)
+
+-- 
+2.23.0
+
