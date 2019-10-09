@@ -1,52 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 803F2D049A
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 02:09:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53FEAD055F
+	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 03:55:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46nvj35W0WzDqKq
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 11:09:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ny3923yMzDqKT
+	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 12:55:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (helo)
+ smtp.helo=apc01-pu1-obe.outbound.protection.outlook.com
+ (client-ip=40.107.132.80; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=chli30@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=nuvoton.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.b="eVJ4c+y9"; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320080.outbound.protection.outlook.com [40.107.132.80])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46nvhJ3sRpzDqHb;
- Wed,  9 Oct 2019 11:08:47 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 08 Oct 2019 17:08:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,273,1566889200"; d="scan'208";a="187465243"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga008.jf.intel.com with ESMTP; 08 Oct 2019 17:08:44 -0700
-Subject: Re: [PATCH 4/5] i2c: aspeed: add buffer mode transfer support
-To: Brendan Higgins <brendanhiggins@google.com>
-References: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
- <20191007231313.4700-5-jae.hyun.yoo@linux.intel.com>
- <20191008201254.GC155928@google.com>
- <29436b73-3473-d34d-0c7a-6f78ff077002@linux.intel.com>
- <CAFd5g4522cSkS_-aJHjc3fqM9nYRjs4DmQx9te3PcPMh8WEMBg@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <36c4d421-2a9f-bee0-5cdb-4a2114f7870f@linux.intel.com>
-Date: Tue, 8 Oct 2019 17:08:44 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <CAFd5g4522cSkS_-aJHjc3fqM9nYRjs4DmQx9te3PcPMh8WEMBg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ny2Q39rwzDqJj
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Oct 2019 12:54:36 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DUfIHqrR3kutBKN/PaXuU7kDXvydIObBrKyA8yZvxperGEjmjVsU5ReJQzhi46Y1D2E3Zu9U3j1R9m9nmcHonCnGpni2ZB+oGYnPHk5E9HU1ZxKKvb45nZr/HKhgKwl6/CBY/26yC/955r6iM2xb+KAI3KRXzuMmuClkgQgjh4gJDkd0w8MVd3hEwbUpKYHbKfIIHawkc6H34//QsuG/tLBFcAExk0Af/fwRLByedY5KzfFBf4d5pMhRmhSvRB0ptG4m1Lf9kg1OLKHgn2hRIaQPfvzMzmAPVgfnX9QbgojAmnPRP7oOXUWerSVCHedoMW1tccLLIAcuSdBFSInEKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ibuzs7YJ0ekKnI2KqTJHJOF2bz8LdX5iTLUOhTVPErs=;
+ b=gZuy9WYrK6KWASi2IRE1Y2Zj2TiS773/hYHyumz0gGvAFtVZyQmoH9TW1mPahh5gk9lH8FaTZM+BJRfX57J1QwnrmDJcZqmdHwRz7nIIWp/DAdIr+8/h7p3xwgxR06p7gUnxGwtC9hDLZsybjmSM7l96bQv6WaP85h6TApgXkwgjhHuC62SX7dFfIE+wl7HlAWHcw0DCWCdgIa6P9+s/xEMnwp1auckCorNJaBEF0OutJU/rBVOdkFP0Z/xcSmCw3qEdjfs2ILXzWkRg3Z7JVG8SbsIKpNDEKjedUbNn6vXsIiHXImmZwuOGYRVfQkNtL/SxBkX12KBWjHeRX5bc3A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ibuzs7YJ0ekKnI2KqTJHJOF2bz8LdX5iTLUOhTVPErs=;
+ b=eVJ4c+y9ink25K9fx1S0yXuzutecG2J8zO4ncqmYc627NVmyUO/s/1A+9WRpZAIt+zfj/oye2cygXaswZmkzWwCPRdhMpdx5U1NL27tcNJvi+E2jNlnN/Z1m9fPrBsXaMDmx+XC1J7/V8DAg4NA9wdlMqwAQlqvAri3B3CoCX7c=
+Received: from HK0PR03MB4660.apcprd03.prod.outlook.com (52.132.237.207) by
+ HK0PR03MB5106.apcprd03.prod.outlook.com (52.132.239.143) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.11; Wed, 9 Oct 2019 01:54:30 +0000
+Received: from HK0PR03MB4660.apcprd03.prod.outlook.com
+ ([fe80::f813:7ba2:f7b:6862]) by HK0PR03MB4660.apcprd03.prod.outlook.com
+ ([fe80::f813:7ba2:f7b:6862%3]) with mapi id 15.20.2347.016; Wed, 9 Oct 2019
+ 01:54:30 +0000
+From: CS20 CHLi30 <CHLI30@nuvoton.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Intel CPU Crashdump utilities for dumping CPU Crashdump and registers
+ over PECI
+Thread-Topic: Intel CPU Crashdump utilities for dumping CPU Crashdump and
+ registers over PECI
+Thread-Index: AdV+QIor2M+4UKtIQhSTc3Lhz9f/Iw==
+Date: Wed, 9 Oct 2019 01:54:30 +0000
+Message-ID: <HK0PR03MB466005C24CC229FBD1EEB94FCF950@HK0PR03MB4660.apcprd03.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=CHLI30@nuvoton.com; 
+x-originating-ip: [60.250.194.160]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 103c8f1d-819b-4b8c-f33b-08d74c5ba019
+x-ms-traffictypediagnostic: HK0PR03MB5106:|HK0PR03MB5106:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK0PR03MB510616535FBAC80BE4CF9D43CF950@HK0PR03MB5106.apcprd03.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 018577E36E
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10009020)(346002)(396003)(136003)(366004)(39840400004)(376002)(53754006)(199004)(189003)(478600001)(86362001)(66946007)(316002)(66066001)(9686003)(6306002)(54896002)(476003)(6436002)(76116006)(486006)(66446008)(7736002)(64756008)(66476007)(1730700003)(81156014)(8676002)(25786009)(2351001)(52536014)(7696005)(81166006)(66556008)(99286004)(256004)(33656002)(4326008)(71190400001)(6506007)(5660300002)(71200400001)(74316002)(14454004)(102836004)(2501003)(107886003)(2906002)(6116002)(186003)(26005)(790700001)(3846002)(14444005)(8936002)(6916009)(55016002)(5640700003);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB5106;
+ H:HK0PR03MB4660.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: nuvoton.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: dJt+APx+VQ6CN6so4r7qXdu8RQzjqEDccFzXaluj1rb13Qa2REIPo/6QwjVEn+4ZGr5xQPLv79sHMXvnuxZ/lrQ92qpbdeGoadsCk0NztsUBq3ll7x9cy3/8N/su5thBxsK+YUACf3HTiGvxn36/OdElZHF8KZSKVhN5XiyDd41qjPfytmDPYLKOYMx8jt9I0Y10Oye4KixuevP3zaXI3mIBtcsw+L4hgMZEbewWgvUu3h/aLIqYV82augfW36Q5BR4WxpT0Qzv+XHsrYyNbqSkrssa3YPbf+6WlNlfLunYB8nkYivn+OaZ+6lgusozI/+tJlCM5nS4CXDbGVyJykjnOIuZZLoxOJG1UpcuImH8GzKtAqfDTEdOuyxOlXdWBI92her+dRQ2g2Bi5poIOf0Wch65EVlNyCnIVJd71+HY=
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR03MB466005C24CC229FBD1EEB94FCF950HK0PR03MB4660apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 103c8f1d-819b-4b8c-f33b-08d74c5ba019
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Oct 2019 01:54:30.7754 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: /Cc3HgHti8hiMMbRDClRbdKRlhTzk6Nnc539Mo5KcXFdKEM8nUIJ60DjEar0trB/NTqXLuT9EB+TT3UHhJJzWQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB5106
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,247 +103,184 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Rob Herring <robh+dt@kernel.org>, Tao Ren <taoren@fb.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-i2c@vger.kernel.org
+Cc: CS20 CHLi30 <CHLI30@nuvoton.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/8/2019 4:15 PM, Brendan Higgins wrote:
-> On Tue, Oct 8, 2019 at 2:10 PM Jae Hyun Yoo
-> <jae.hyun.yoo@linux.intel.com> wrote:
->>
->> Hi Brendan,
->>
->> On 10/8/2019 1:12 PM, Brendan Higgins wrote:
->>> On Mon, Oct 07, 2019 at 04:13:12PM -0700, Jae Hyun Yoo wrote:
->>>> Byte mode currently this driver uses makes lots of interrupt call
->>>
->>> nit: Drop "Byte mode".
->>
->> 'Byte mode' is one of modes which is described in the datasheet.
->>
->> Would it be better if I change it like below?
->> "This driver uses byte mode that makes lots of interrupt call ..."
-> 
-> Yeah, I think that would probably be clearer.
+--_000_HK0PR03MB466005C24CC229FBD1EEB94FCF950HK0PR03MB4660apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Okay. Will change it.
+Hi All,
 
->>>> which isn't good for performance and it makes the driver very
->>>> timing sensitive. To improve performance of the driver, this commit
->>>> adds buffer mode transfer support which uses I2C SRAM buffer
->>>> instead of using a single byte buffer.
->>>
->>> nit: Please use imperative mood.
->>
->> I used imperative mood in commit title. The commit message is okay as it
->> is.
-> 
-> Hey, that's just what I have been told in the past. I don't actually
-> feel strongly about it though. If no one else cares, then it is fine.
+We found that oem system log type didn't show any log entries on "System lo=
+gs" page in WebUI.
+Even we had modify bmcweb_%.bbappend to enable these options as below:
 
-Yeah, I suggested that in the past on a commit title of your patch not
-on a commit message body. Anyway, it's not a strict rule.
+bmcweb_%.bbappend:
+# Enable CPU Log and Raw PECI support
+EXTRA_OECMAKE +=3D "-DBMCWEB_ENABLE_REDFISH_CPU_LOG=3DON"
+EXTRA_OECMAKE +=3D "-DBMCWEB_ENABLE_REDFISH_RAW_PECI=3DON"
 
->>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->>>> Tested-by: Tao Ren <taoren@fb.com>
->>>> ---
->>>>    drivers/i2c/busses/i2c-aspeed.c | 297 ++++++++++++++++++++++++++++----
->>>>    1 file changed, 263 insertions(+), 34 deletions(-)
->>>>
->>>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
->>>> index 40f6cf98d32e..37d1a7fa2f87 100644
->>>> --- a/drivers/i2c/busses/i2c-aspeed.c
->>>> +++ b/drivers/i2c/busses/i2c-aspeed.c
-> [...]
->>>> @@ -238,6 +260,7 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>    {
->>>>       u32 command, irq_handled = 0;
->>>>       struct i2c_client *slave = bus->slave;
->>>> +    int i, len;
->>>>       u8 value;
->>>>
->>>>       if (!slave)
->>>> @@ -260,7 +283,12 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>
->>>>       /* Slave was sent something. */
->>>>       if (irq_status & ASPEED_I2CD_INTR_RX_DONE) {
->>>> -            value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
->>>> +            if (bus->buf_base &&
->>>> +                bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
->>>> +                !(irq_status & ASPEED_I2CD_INTR_NORMAL_STOP))
->>>
->>> I think checking for the buf_base all over the place makes this really
->>> complicated and hard to read.
->>>
->>> It might be better to just split this out and have separate handlers
->>> based on what mode the driver is running in.
->>
->> I think you're saying about splitting this irq handler out to:
->> aspeed_i2c_slave_byte_mode_irq()
->> aspeed_i2c_slave_buffer_mode_irq()
->> aspeed_i2c_slave_dma_mode_irq()
->>
->> Yes, I can do like that but it will bring us two bad things:
->> 1. It makes big chunks of duplicate code because most of interrupt
->>      handling logic is the same.
->> 2. If we are going to change something in irq routine, we need to
->>      touch all irq routines if the change is commonly used.
->>
->> I think, the way this patch uses is better.
-> 
-> I think there are other alternatives. For example, I think you could
-> abstract over the buffer reading mechanism here.
-> 
-> We might have a method on aspeed_i2c_bus called handle_rx_done() or
-> something like that which could get called here.
-> 
-> I just really don't want to grow the McCabe's complexity of this
-> function much more, it is really too high as it is. Nevertheless, I am
-> open to other suggestions on how to improve this function.
+In bmcweb/redfish-core/lib/log_services.hpp, we found that seems need to in=
+clude com.intel.crashdump.service.
+Then the crashdump daemon will help to dump CPU Crashdump and registers ove=
+r PECI.
 
-Okay, Using of abstract functions would be a better way to simplify it.
-Will update it in the next spin.
+Thus, we include crashdump_git.bb recipe to build this daemon, but we got b=
+uild fail due to fetch fail.
+Could someone help us to check whether the SRC_URI of crashdump already mov=
+e to the other source? Thanks.
 
->>>> +                    value = readb(bus->buf_base);
->>>> +            else
->>>> +                    value = readl(bus->base + ASPEED_I2C_BYTE_BUF_REG) >> 8;
->>>>               /* Handle address frame. */
->>>>               if (bus->slave_state == ASPEED_I2C_SLAVE_START) {
->>>>                       if (value & 0x1)
->>>> @@ -275,6 +303,20 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
->>>>
->>>>       /* Slave was asked to stop. */
->>>>       if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
->>>> +            if (bus->slave_state == ASPEED_I2C_SLAVE_WRITE_RECEIVED &&
->>>> +                irq_status & ASPEED_I2CD_INTR_RX_DONE) {
->>>> +                    if (bus->buf_base) {
->>>> +                            len = FIELD_GET(ASPEED_I2CD_BUF_RX_COUNT_MASK,
->>>> +                                            readl(bus->base +
->>>> +                                                  ASPEED_I2C_BUF_CTRL_REG));
->>>
->>> It looks like you have a lot of improvements in here unrelated to adding
->>> support for buffer mode.
->>>
->>> I really appreciate the improvements, but it makes it harder to
->>> understand what buffer features you are adding vs. what
->>> improvments/modernizations you are making.
->>>
->>> Can you split this commit up?
->>
->> No, this isn't an improvement. This code will not be executed if
->> transfer mode is byte mode. This is added because data handling pattern
->> is different in buffer mode so the collected data in buffer mode should
->> be sent when it recieves RX_DONE.
-> 
-> Oh sorry about that, I saw the switch to the
-> devm_platform_ioremap_resource below and saw all the FIELD_{GET|PREP}
-> and assumed that some of them were improvements. If
-> devm_platform_ioremap_resource is the only one, that's fine.
-> 
-> Actually, would you mind (in a separate commit), update the existing
-> usages to FIELD_{GET|PREP}? It's kind of jarring going back and forth
-> between them.
+crashdump_git.bb:
+SRC_URI =3D "git://git@github.com/Intel-BMC/crashdump;protocol=3Dssh;nobran=
+ch=3D1"
+SRCREV =3D "c99e4fb7727545501fe65b90a8a97e84d469d45e"
 
-No. Will do that later using a separate commit.
+build fail log:
+Fetcher failure for URL: 'git://git@github.com/Intel-BMC/crashdump;protocol=
+=3Dssh;nobranch=3D1'. Unable to fetch URL from any source.
 
->>>> +                            for (i = 0; i < len; i++) {
->>>> +                                    value = readb(bus->buf_base + i);
->>>> +                                    i2c_slave_event(slave,
->>>> +                                                    I2C_SLAVE_WRITE_RECEIVED,
->>>> +                                                    &value);
->>>> +                            }
->>>> +                    }
->>>> +            }
->>>>               irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
->>>>               bus->slave_state = ASPEED_I2C_SLAVE_STOP;
->>>>       }
-> [....]
->>>> @@ -990,6 +1180,45 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
->>>>               bus->get_clk_reg_val = (u32 (*)(struct device *, u32))
->>>>                               match->data;
->>>>
->>>> +    /*
->>>> +     * Enable I2C SRAM in case of AST2500.
->>>> +     * SRAM is enabled by default in AST2400 and AST2600.
->>>> +     */
->>>
->>> This probe function is already pretty complicated as it is. Can we move
->>> this to a helper function (especially since it only applies to the
->>> 25xx)?
->>
->> Okay, that would be better. I'll add this transfer mode setting logic
->> as a helper function.
->>
->>>> +    if (of_device_is_compatible(pdev->dev.of_node,
->>>> +                                "aspeed,ast2500-i2c-bus")) {
->>>> +            struct regmap *gr_regmap = syscon_regmap_lookup_by_compatible("aspeed,ast2500-i2c-gr");
->>>
->>> So this memory is global, right? It is shared by all the busses?
->>
->> Yes, this is global register area which can be shared by all busses.
->>
->>> If I am reading this right, then I think we need to protect so that only
->>> one bus is accessing this memory at a time.
->>
->> It will not be accessed at run time but only at probing time. Since we
->> don't use multi-threaded probing, we don't need to protect it.
-> 
-> What if this is loaded as a module?
+Sincerely,
+Tim Lee
+________________________________
+The privileged confidential information contained in this email is intended=
+ for use only by the addressees as indicated by the original sender of this=
+ email. If you are not the addressee indicated in this email or are not res=
+ponsible for delivery of the email to such a person, please kindly reply to=
+ the sender indicating this fact and delete all copies of it from your comp=
+uter and network server immediately. Your cooperation is highly appreciated=
+. It is advised that any unauthorized use of confidential information of Nu=
+voton is strictly prohibited; and any information in this email irrelevant =
+to the official business of Nuvoton shall be deemed as neither given nor en=
+dorsed by Nuvoton.
 
-Loading modules at the same time? This driver just enables the bit. It
-doesn't have a bit clearing code so it would be safe even in that case.
+--_000_HK0PR03MB466005C24CC229FBD1EEB94FCF950HK0PR03MB4660apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Actually, I2C SRAM doesn't need to be disabled, means that the SRAM can
-be left as enabled for all xfer modes. It's an unnecessary control so
-Aspeed removed this register setting in AST2600 after enabling the SRAM
-always by default.
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi All,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">We found that oem system log ty=
+pe didn't show any log entries on &#8220;System logs&#8221; page in WebUI.<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Even we had modify <b>bmcweb_%.=
+bbappend</b> to enable these options as below:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">bmcweb_%.bbappend:<o:p></o:p=
+></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"># Enable CPU Log and Raw PECI s=
+upport<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">EXTRA_OECMAKE &#43;=3D &quot;-D=
+BMCWEB_ENABLE_REDFISH_CPU_LOG=3DON&quot;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">EXTRA_OECMAKE &#43;=3D &quot;-D=
+BMCWEB_ENABLE_REDFISH_RAW_PECI=3DON&quot;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">In <b>bmcweb/redfish-core/lib/l=
+og_services.hpp</b>, we found that seems need to include
+<span style=3D"color:#7030A0">com.intel.crashdump.service</span>.<o:p></o:p=
+></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Then the crashdump daemon will =
+help to dump CPU Crashdump and registers over PECI.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thus, we include crashdump_git.=
+bb recipe to build this daemon, but we got build fail due to fetch fail.<o:=
+p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Could someone help us to check =
+whether the SRC_URI of crashdump already move to the other source? Thanks.<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">crashdump_git.bb:<o:p></o:p>=
+</span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">SRC_URI =3D &quot;git://git@git=
+hub.com/Intel-BMC/crashdump;protocol=3Dssh;nobranch=3D1&quot;<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">SRCREV =3D &quot;c99e4fb7727545=
+501fe65b90a8a97e84d469d45e&quot;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">build fail log:<o:p></o:p></=
+span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Fetcher failure for URL: 'git:/=
+/git@github.com/Intel-BMC/crashdump;protocol=3Dssh;nobranch=3D1'. Unable to=
+ fetch URL from any source.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Sincerely,<o:p></o:p></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Tim Lee<o:p></o:p></span></p>
+</div>
+<hr align=3D"center" width=3D"100%">
+<span style=3D"font-size:12pt;line-height:0.7;font-family: 'Arial'; color:#=
+808080">The privileged confidential information contained in this email is =
+intended for use only by the addressees as indicated by the original sender=
+ of this email. If you are not the
+ addressee indicated in this email or are not responsible for delivery of t=
+he email to such a person, please kindly reply to the sender indicating thi=
+s fact and delete all copies of it from your computer and network server im=
+mediately. Your cooperation is highly
+ appreciated. It is advised that any unauthorized use of confidential infor=
+mation of Nuvoton is strictly prohibited; and any information in this email=
+ irrelevant to the official business of Nuvoton shall be deemed as neither =
+given nor endorsed by Nuvoton.
+</span>
+</body>
+</html>
 
-> Also, it seems as though turning on SRAM should only happen once. Is
-> this correct?
-
-It's a global setting which affects all busses so it can be set just
-once. Since we don't need to clear the bit, each bus driver enables the
-bit without checking the bit that is simple way.
-
-Thanks,
-
-Jae
-
->>>> +            if (IS_ERR(gr_regmap))
->>>> +                    ret = PTR_ERR(gr_regmap);
->>>> +            else
->>>> +                    ret = regmap_update_bits(gr_regmap,
->>>> +                                             ASPEED_I2CG_GLOBAL_CTRL_REG,
->>>> +                                             ASPEED_I2CG_SRAM_BUFFER_EN,
->>>> +                                             ASPEED_I2CG_SRAM_BUFFER_EN);
->>>> +
->>>> +            if (ret)
->>>> +                    sram_enabled = false;
->>>> +    }
->>>> +
->>>> +    if (sram_enabled) {
->>>> +            struct resource *res = platform_get_resource(pdev,
->>>> +                                                         IORESOURCE_MEM, 1);
->>>> +
->>>> +            if (res && resource_size(res) >= 2)
->>>> +                    bus->buf_base = devm_ioremap_resource(&pdev->dev, res);
->>>> +
->>>> +            if (!IS_ERR_OR_NULL(bus->buf_base)) {
->>>> +                    bus->buf_size = resource_size(res);
->>>> +                    if (of_device_is_compatible(pdev->dev.of_node,
->>>> +                                                "aspeed,ast2400-i2c-bus")) {
->>>> +                            bus->buf_page = ((res->start >> 8) &
->>>> +                                             GENMASK(3, 0)) - 8;
->>>> +                            bus->buf_offset = (res->start >> 2) &
->>>> +                                              ASPEED_I2CD_BUF_OFFSET_MASK;
->>>> +                    }
->>>> +            }
->>>> +    }
-> [...]
-> 
-> Cheers
-> 
+--_000_HK0PR03MB466005C24CC229FBD1EEB94FCF950HK0PR03MB4660apcp_--
