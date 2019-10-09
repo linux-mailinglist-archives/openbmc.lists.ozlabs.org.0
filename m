@@ -2,46 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2D0ED1ADA
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 23:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AFDFD1C22
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 00:46:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46pRy13FG8zDqXZ
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 08:22:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pTqK04DfzDqYj
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 09:46:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (helo) smtp.helo=mga12.intel.com
- (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="omZQsiim"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="SlaloSVV"; dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46pRvr1LflzDqW8;
- Thu, 10 Oct 2019 08:20:38 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 09 Oct 2019 14:20:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,277,1566889200"; d="scan'208";a="368866255"
-Received: from maru.jf.intel.com ([10.54.51.77])
- by orsmga005.jf.intel.com with ESMTP; 09 Oct 2019 14:20:35 -0700
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Brendan Higgins <brendanhiggins@google.com>,
- Wolfram Sang <wsa@the-dreams.de>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
- Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
-Subject: [PATCH] i2c: aspeed: fix master pending state handling
-Date: Wed,  9 Oct 2019 14:20:34 -0700
-Message-Id: <20191009212034.20325-1-jae.hyun.yoo@linux.intel.com>
-X-Mailer: git-send-email 2.23.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pTpH5fpyzDqW8
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 09:45:58 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id AD85922136;
+ Wed,  9 Oct 2019 18:45:54 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 09 Oct 2019 18:45:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=BfLbljg8Ml0iwdTyvuOjdBCRfVPwKFZ
+ gbVyN513g31c=; b=omZQsiim+e2TgOLeIh5zUUFp11wr0Gn1wY4vfxKVmAdxVqX
+ 4Ap+e80kXEVH1j0BVBe66ifw/Df5BIS/YqsWv/RIxIwoi5cpXEsekohGaGsfLg7o
+ fJ4FBlfSBBUDnWFQddB898064AZjC/u2MUdUapyE/xxBqREMs5uTWN5UQ80PReJg
+ WA+hxiw75fIZy6+XBX/boWYG6Y6wk7KUyQtuHscAQAAUUYSLUwbhUA76Y0JpaTkj
+ itS+oNuqYXjTqGtxno0/dA0L813bBaJG+XBFTM7L4GqbASODPyBLUBKLXzHOJRDN
+ CsnK4amkcnBAs+NcbI9vXpmRRUkte1rKZWvfWlA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=BfLblj
+ g8Ml0iwdTyvuOjdBCRfVPwKFZgbVyN513g31c=; b=SlaloSVVkk/S/1uMXuT+Fl
+ a3DVNa1ihP0LD2jly++J9a2A687tsTQm9WaFygsB5g5YIXgda5vlsyYXgfYdm8g0
+ W0tA0If4Yfsg8h2LxiNKnXgDv2AURiUcLc4vNFPMM4Y9z0FS5m/4mwWBQS98rcz4
+ mCcCjKJVko2JSoyqEN+H+7LJ0a4at1KnPujwI0rfjOzd5ZngYyy2Zcitc9uD3MHI
+ aMm61YrENPTdLmRBaqs6f9+nyxIVjWzcJo+9F3Z1suC0Co3WFJreD0p0rk+eqFV3
+ 3IZ1JW6L1CmzCn59MCK/rh1vpZ0y+YpRE1obkdPCZLaCWbqt5B9BNgEcd/S3xkQA
+ ==
+X-ME-Sender: <xms:ImOeXeRC29yld7KIBz5RsApDM4PAVZivFBVRWWZgUUBZzFOJVMO7vA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedriedvgdduhecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
+ hinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
+ fiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:ImOeXUPpQq9in6cCWB-4AshvqSFoaytPop1WBBQ1uqiUZZsLGrpTrQ>
+ <xmx:ImOeXSvGpbs9SJMejIqsUseC4Zg6PVmgecDlWrD79mbywF15YRKdUw>
+ <xmx:ImOeXQRyVyaBc07J8n2NKVilKpN2GZeI2-PyjRTPFSyOXoKLnTn14g>
+ <xmx:ImOeXbNFP2BMKRofsgMlRsmdvaZk9ncMprAg5n6P0rHCz9QRf9_pIw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 1ACE3E00A5; Wed,  9 Oct 2019 18:45:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
+Mime-Version: 1.0
+Message-Id: <06d793dc-a0f0-4917-a0c7-135767f6c19b@www.fastmail.com>
+In-Reply-To: <81DE4370-D135-48EE-A8FC-B079C4CE3648@fb.com>
+References: <81DE4370-D135-48EE-A8FC-B079C4CE3648@fb.com>
+Date: Thu, 10 Oct 2019 09:16:48 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Vijay Khemka" <vijaykhemka@fb.com>
+Subject: Re: speed-bmc-misc driver
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,138 +87,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In case of master pending state, it should not trigger a master
-command, otherwise data could be corrupted because this H/W shares
-the same data buffer for slave and master operations. It also means
-that H/W command queue handling is unreliable because of the buffer
-sharing issue. To fix this issue, it clears command queue if a
-master command is queued in pending state to use S/W solution
-instead of H/W command queue handling. Also, it refines restarting
-mechanism of the pending master command.
+Hi Vijay,
 
-Fixes: 2e57b7cebb98 ("i2c: aspeed: Add multi-master use case support")
-Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
----
- drivers/i2c/busses/i2c-aspeed.c | 54 +++++++++++++++++++++------------
- 1 file changed, 34 insertions(+), 20 deletions(-)
+On Thu, 10 Oct 2019, at 04:17, Vijay Khemka wrote:
+>  
+> Hi Andrew,
+> 
+> I saw this driver in LF aspeed Linux 
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index fa66951b05d0..7b098ff5f5dd 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -108,6 +108,12 @@
- #define ASPEED_I2CD_S_TX_CMD				BIT(2)
- #define ASPEED_I2CD_M_TX_CMD				BIT(1)
- #define ASPEED_I2CD_M_START_CMD				BIT(0)
-+#define ASPEED_I2CD_MASTER_CMDS_MASK					       \
-+		(ASPEED_I2CD_M_STOP_CMD |				       \
-+		 ASPEED_I2CD_M_S_RX_CMD_LAST |				       \
-+		 ASPEED_I2CD_M_RX_CMD |					       \
-+		 ASPEED_I2CD_M_TX_CMD |					       \
-+		 ASPEED_I2CD_M_START_CMD)
- 
- /* 0x18 : I2CD Slave Device Address Register   */
- #define ASPEED_I2CD_DEV_ADDR_MASK			GENMASK(6, 0)
-@@ -336,18 +342,19 @@ static void aspeed_i2c_do_start(struct aspeed_i2c_bus *bus)
- 	struct i2c_msg *msg = &bus->msgs[bus->msgs_index];
- 	u8 slave_addr = i2c_8bit_addr_from_msg(msg);
- 
--	bus->master_state = ASPEED_I2C_MASTER_START;
--
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
- 	/*
- 	 * If it's requested in the middle of a slave session, set the master
- 	 * state to 'pending' then H/W will continue handling this master
- 	 * command when the bus comes back to the idle state.
- 	 */
--	if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE)
-+	if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE) {
- 		bus->master_state = ASPEED_I2C_MASTER_PENDING;
-+		return;
-+	}
- #endif /* CONFIG_I2C_SLAVE */
- 
-+	bus->master_state = ASPEED_I2C_MASTER_START;
- 	bus->buf_index = 0;
- 
- 	if (msg->flags & I2C_M_RD) {
-@@ -422,20 +429,6 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- 		}
- 	}
- 
--#if IS_ENABLED(CONFIG_I2C_SLAVE)
--	/*
--	 * A pending master command will be started by H/W when the bus comes
--	 * back to idle state after completing a slave operation so change the
--	 * master state from 'pending' to 'start' at here if slave is inactive.
--	 */
--	if (bus->master_state == ASPEED_I2C_MASTER_PENDING) {
--		if (bus->slave_state != ASPEED_I2C_SLAVE_INACTIVE)
--			goto out_no_complete;
--
--		bus->master_state = ASPEED_I2C_MASTER_START;
--	}
--#endif /* CONFIG_I2C_SLAVE */
--
- 	/* Master is not currently active, irq was for someone else. */
- 	if (bus->master_state == ASPEED_I2C_MASTER_INACTIVE ||
- 	    bus->master_state == ASPEED_I2C_MASTER_PENDING)
-@@ -462,11 +455,15 @@ static u32 aspeed_i2c_master_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
- 		/*
- 		 * If a peer master starts a xfer immediately after it queues a
--		 * master command, change its state to 'pending' then H/W will
--		 * continue the queued master xfer just after completing the
--		 * slave mode session.
-+		 * master command, clear the queued master command and change
-+		 * its state to 'pending'. To simplify handling of pending
-+		 * cases, it uses S/W solution instead of H/W command queue
-+		 * handling.
- 		 */
- 		if (unlikely(irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH)) {
-+			writel(readl(bus->base + ASPEED_I2C_CMD_REG) &
-+				~ASPEED_I2CD_MASTER_CMDS_MASK,
-+			       bus->base + ASPEED_I2C_CMD_REG);
- 			bus->master_state = ASPEED_I2C_MASTER_PENDING;
- 			dev_dbg(bus->dev,
- 				"master goes pending due to a slave start\n");
-@@ -629,6 +626,14 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
- 			irq_handled |= aspeed_i2c_master_irq(bus,
- 							     irq_remaining);
- 	}
-+
-+	/*
-+	 * Start a pending master command at here if a slave operation is
-+	 * completed.
-+	 */
-+	if (bus->master_state == ASPEED_I2C_MASTER_PENDING &&
-+	    bus->slave_state == ASPEED_I2C_SLAVE_INACTIVE)
-+		aspeed_i2c_do_start(bus);
- #else
- 	irq_handled = aspeed_i2c_master_irq(bus, irq_remaining);
- #endif /* CONFIG_I2C_SLAVE */
-@@ -691,6 +696,15 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
- 		     ASPEED_I2CD_BUS_BUSY_STS))
- 			aspeed_i2c_recover_bus(bus);
- 
-+		/*
-+		 * If timed out and the state is still pending, drop the pending
-+		 * master command.
-+		 */
-+		spin_lock_irqsave(&bus->lock, flags);
-+		if (bus->master_state == ASPEED_I2C_MASTER_PENDING)
-+			bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
-+		spin_unlock_irqrestore(&bus->lock, flags);
-+
- 		return -ETIMEDOUT;
- 	}
- 
--- 
-2.23.0
+What do you mean by "LF aspeed Linux"? The only place this driver lives is
+in the OpenBMC kernel tree (openbmc/linux on github).
 
+> and was wondering how to use. Can 
+> you please suggest some usage example like device tree entry as well as 
+> sysfs interface.
+
+Honestly, I wouldn't recommend using (yet). It can't be upstreamed in its
+current form (I've tried), and so using it as is comes with userspace-breaking
+changes in the future. I reserve the right to break your machines if you do
+make use of it when I get the time to rework the patches.
+
+Having said that, its purpose is to expose arbitrary fields in arbitrary registers
+on the BMC to userspace via sysfs. This is useful when the field's value is
+entirely determined by userspace policy and there's no need for additional
+kernel infrastructure around the configuration.
+
+Originally this was intended to expose to userspace the bits that control the
+state of the ASPEED hardware backdoors, but we changed tack on the
+solution to CVE-2019-6260 before the bmc-misc idea got very far.
+
+However you can find some slightly abusive uses if you search the dtsis:
+
+https://github.com/openbmc/linux/blob/dev-5.3/arch/arm/boot/dts/aspeed-g5.dtsi#L1682
+
+In that instance we're exposing the SuperIO scratch registers to userspace
+using this mechanism. The attributes can be found in sysfs associated with
+the devicetree node. I did have a hack to add a sysfs class for them, but that
+was even more controversial than the general concept of the "driver" so
+you're going to have to cope with changes to the devicetree potentially
+breaking userspace unless you're willing to rework the patches yourself.
+
+Hope that helps.
+
+Andrew
