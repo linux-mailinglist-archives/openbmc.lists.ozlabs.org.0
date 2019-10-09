@@ -2,48 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A18DED084F
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 09:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 207A0D086E
+	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 09:38:32 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46p5X85dPTzDqLV
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 18:32:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46p5g92qBNzDqPc
+	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 18:38:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=protonmail.com
- (client-ip=185.70.40.136; helo=mail-40136.protonmail.ch;
- envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="DpQekKqu"; 
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d34; helo=mail-io1-xd34.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="YNBVIdzz"; 
  dkim-atps=neutral
-Received: from mail-40136.protonmail.ch (mail-40136.protonmail.ch
- [185.70.40.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
+ [IPv6:2607:f8b0:4864:20::d34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46p5WF6GdvzDqLN
- for <openbmc@lists.ozlabs.org>; Wed,  9 Oct 2019 18:31:34 +1100 (AEDT)
-Date: Wed, 09 Oct 2019 07:31:21 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1570606288;
- bh=re//ZUab6jXxUB7ZGS7TeP197w6nCY1kk3iKE4RgPo4=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=DpQekKquLHtcDfpLJNYnibVGx3NI5u4Lxs+3GML1RjXvcHITcvOVFVCSTAeQ9HwlR
- wHdvqDqiIfsO5wA9gZqpKj/C7aL0bIKiVcXinkwpsr9G2QPKNMLWDb0Fjq4yP64a0L
- 2xVnuHiUZqfuFBblNgPbnKebtJzV45amXy2losYA=
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: rgrs <rgrs@protonmail.com>
-Subject: Image verfication failure doesn't prevent BMC update
-Message-ID: <04OHMEtrxc_iJdSbU6rDJXL_UCRii-RCTkBIgd3MYtzMqT-foopH3hioArbdi8gI4E1aQmmpui8dpvT8SdspVITAnycKL498kmbuSiK4dpc=@protonmail.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46p5fP1yM9zDqLq
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Oct 2019 18:37:47 +1100 (AEDT)
+Received: by mail-io1-xd34.google.com with SMTP id u8so2856852iom.5
+ for <openbmc@lists.ozlabs.org>; Wed, 09 Oct 2019 00:37:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=IRuIeF+goexMmD+UZSdra03QKAJ5Xqsi12mIS8ZMJVE=;
+ b=YNBVIdzzyVcFoGG/REcFPdGEQPrMLE3fmTgOe/NyASKlGrzzgUUe6R2NtgboNQze+7
+ 9TUGUtbBweLMU8qeJjKg5w+wmXLz4j8vmKsIUnWEgsOiK+iICXs4U+A+OtSPzCWeFfKx
+ 4WE3OdaHYgjjj7J0bKSjy39pSOycEN85D0Etz4krTsS5OZo9hXfesy1JzD5xJzSqLesG
+ bvKYjiCQQFxiZ/dHTKIEbOFLYW6vbnLrDysQuCbdx7xoaa8A1dk5xHcL21FlMkPblo5X
+ 5v0EHV9cRR2MTxHQFiguIkXIajQvMVmuvqVEYt/x/UnooRQSqkvMLnO2mCHvhqPfbPFF
+ HpKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=IRuIeF+goexMmD+UZSdra03QKAJ5Xqsi12mIS8ZMJVE=;
+ b=PGwtLBpuk6h5Z5r6bWoQaAPHms//9xbDg/eeg81b/wTTPxq7pfJkf8BwBudo3AmPfZ
+ n3tR1FVbWjnu2tg8S5Fh2atPoZ+mqUC01FO/sEqTYWWFUompDWh4KCjQdKpy6S5JOMxK
+ kykL9qVtem0e5ugbqPUh6dq/a3XFOFiiWnquVFd/G8tmxNKoErB/xhZgyQeH182nG59o
+ 8E9eSYjnINTzRO013tOUFzlZDo5ftBQjEV6fuj8XskMti5++ziM3/45z96G49WOLX6TW
+ tk5Ce9dbgv43oTXtma9kPpZpU0CT+KHNFM133xKKt3rbLFnMxqU0nc0d68nGgBsBMuTH
+ Tikw==
+X-Gm-Message-State: APjAAAWUG1OhiuV76lehdr3M5nxDhc+w4tzHAlbdepUFYIh/WVJC+VnV
+ FjXS8OLCqsH8obrhvctd6TTXuw+LLLJyuE5Avig=
+X-Google-Smtp-Source: APXvYqxl9w8DKgtXxctJ8m8D8lzPvzEmdgTvvppqLEQI9q9CVhwe5jUqCFU9FiK9vQdeb1+50dE706a9eA8TKP71A5E=
+X-Received: by 2002:a92:a103:: with SMTP id v3mr1976132ili.52.1570606663651;
+ Wed, 09 Oct 2019 00:37:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_f00525e609d3d4e1603f8dcb06d7cf96"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+References: <04OHMEtrxc_iJdSbU6rDJXL_UCRii-RCTkBIgd3MYtzMqT-foopH3hioArbdi8gI4E1aQmmpui8dpvT8SdspVITAnycKL498kmbuSiK4dpc=@protonmail.com>
+In-Reply-To: <04OHMEtrxc_iJdSbU6rDJXL_UCRii-RCTkBIgd3MYtzMqT-foopH3hioArbdi8gI4E1aQmmpui8dpvT8SdspVITAnycKL498kmbuSiK4dpc=@protonmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Wed, 9 Oct 2019 15:37:32 +0800
+Message-ID: <CAARXrtkqKhQ-4ww+7s-1tZ58gQXVwcwe66oMK_qbDNRjMyuBzA@mail.gmail.com>
+Subject: Re: Image verfication failure doesn't prevent BMC update
+To: rgrs <rgrs@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,240 +72,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+It is most likely the field mode is not enabled.
+See the related code at
+https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/85c356f76fe07db3c1253c48f5b35c5811a15c07/activation.cpp#L180
 
---b1_f00525e609d3d4e1603f8dcb06d7cf96
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-SGkgQWxsLAoKSSBhbSB0cnlpbmcgdG8gc2lnbiBteSBpbWFnZSB3aXRoIE9FTSBrZXlzIGluc3Rl
-YWQgb2YgZGVmYXVsdCBPcGVuQk1DLnByaXYgd2hpY2ggaXMgcGFydCBvZiB0aGUgcmVwby4KV2hl
-biBJIHRyaWVkIHRvIHVwZGF0ZSBPRU0gc2lnbmVkIEJNQywgcGhvc3Bob3ItaW1hZ2UtdXBkYXRl
-ciBsb2dzIG1lc3NhZ2VzIHJlbGF0ZWQgdG8gIlNpZ25hdHVyZSB2YWxpZGF0aW9uIGZhaWxlZCIK
-QnV0IHRoZSBmbGFzaGluZyBjb250aW51ZWQgYW5kIGFjdGl2YXRpb24gd2FzIHN1Y2Nlc3NmdWwu
-CgpJIGV4cGVjdGVkIGZsYXNoIHByb2NlZHVyZSB0byBmYWlsIHNpbmNlLCBkZWZhdWx0IHByaXZh
-dGUga2V5IChPcGVuQk1DLnByaXYsUlNBLTEwMjQsU0hBMjU2KSBpcyBkaWZmZXJlbnQgZnJvbSBP
-RU0gcHJpdmF0ZSBrZXkgKFJTQS0yMDQ4LFNIQTI1NikKCkxvZzoKClNlcCAxNyAwOTo0NDo1MCBs
-aG9zdCBwaG9zcGhvci12ZXJzaW9uLXNvZnR3YXJlLW1hbmFnZXJbMTM1MF06IFVudGFyaW5nClNl
-cCAxNyAwOTo0NDo1MCBsaG9zdCBwaG9zcGhvci1tYXBwZXJbMTEzNV06IEZvdW5kIGludmFsaWQg
-YXNzb2NpYXRpb24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8xMWRhYTgy
-MwpTZXAgMTcgMDk6NDQ6NTAgbGhvc3QgcGhvc3Bob3ItbWFwcGVyWzExMzVdOiBGb3VuZCBpbnZh
-bGlkIGFzc29jaWF0aW9uIG9uIHBhdGggL3h5ei9vcGVuYm1jX3Byb2plY3Qvc29mdHdhcmUvMTFk
-YWE4MjMKU2VwIDE3IDA5OjQ0OjUxIGxob3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06
-IEJNQyBpbWFnZSBhY3RpdmF0aW5nIC0gQk1DIHJlYm9vdHMgYXJlIGRpc2FibGVkLgpTZXAgMTcg
-MDk6NDQ6NTEgbGhvc3QgcGhvc3Bob3ItaW1hZ2UtdXBkYXRlclsxMzE2XTogRVZQX0RpZ2VzdFZl
-cmlmeUZpbmFsOlNpZ25hdHVyZSB2YWxpZGF0aW9uIGZhaWxlZAoKU2VwIDE3IDA5OjQ0OjUxIGxo
-b3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06IFN5c3RlbSBsZXZlbCBTaWduYXR1cmUg
-VmFsaWRhdGlvbiBmYWlsZWQKClNlcCAxNyAwOTo0NDo1MSBsaG9zdCBwaG9zcGhvci1pbWFnZS11
-cGRhdGVyWzEzMTZdOiBFcnJvciBvY2N1cnJlZCBkdXJpbmcgaW1hZ2UgdmFsaWRhdGlvbgoKU2Vw
-IDE3IDA5OjQ0OjUxIGxob3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06IFRoZSBvcGVy
-YXRpb24gZmFpbGVkIGludGVybmFsbHkuClNlcCAxNyAwOTo0NDo1MSBsaG9zdCBwaG9zcGhvci1s
-b2ctbWFuYWdlclsxMTE0XTogRmFpbGVkIHRvIGZpbmQgbWV0YWRhdGEKU2VwIDE3IDA5OjQ0OjUx
-IGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIEVuYWJsZSBhIGd1YXJkIHRoYXQgYmxvY2tzIEJN
-QyByZWJvb3QuLi4KU2VwIDE3IDA5OjQ0OjUxIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFVw
-ZGF0ZXMgdGhlIHUtYm9vdCB2YXJpYWJsZSB0byBwb2ludCBCTUMgdmVyc2lvbiB0byAyNTkwNGE5
-MS4uLgpTZXAgMTcgMDk6NDQ6NTEgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRpbmcgU2V0IFUtQm9v
-dCBlbnZpcm9ubWVudCB2YXJpYWJsZS4uLgpTZXAgMTcgMDk6NDQ6NTEgbGhvc3Qgc3lzdGVtZFsx
-XTogQ3JlYXRlZCBzbGljZSBzeXN0ZW0tb2JtY1x4MmRmbGFzaFx4MmRibWNceDJkdWJpcm9ceDJk
-cmVtb3ZlLnNsaWNlLgpTZXAgMTcgMDk6NDQ6NTIgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRpbmcg
-RGVsZXRlcyByZWFkLW9ubHkgYW5kIGtlcm5lbCB1Ymkgdm9sdW1lIGQ0YTM5MjU3Li4uClNlcCAx
-NyAwOTo0NDo1MiBsaG9zdCBzeXN0ZW1kWzFdOiByZWJvb3QtZ3VhcmQtZW5hYmxlLnNlcnZpY2U6
-IFN1Y2NlZWRlZC4KU2VwIDE3IDA5OjQ0OjUyIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0ZWQgRW5h
-YmxlIGEgZ3VhcmQgdGhhdCBibG9ja3MgQk1DIHJlYm9vdC4KU2VwIDE3IDA5OjQ0OjU0IGxob3N0
-IGtlcm5lbDogYmxvY2sgdWJpYmxvY2swXzA6IHJlbGVhc2VkClNlcCAxNyAwOTo0NDo1NCBsaG9z
-dCBzeXN0ZW1kWzFdOiBtZWRpYS1yb2ZzXHgyZGQ0YTM5MjU3Lm1vdW50OiBTdWNjZWVkZWQuClNl
-cCAxNyAwOTo0NDo1NSBsaG9zdCBzeXN0ZW1kWzFdOiBvYm1jLWZsYXNoLWJtYy1zZXRlbnZAZDRh
-MzkyNTcuc2VydmljZTogU3VjY2VlZGVkLgpTZXAgMTcgMDk6NDQ6NTUgbGhvc3Qgc3lzdGVtZFsx
-XTogU3RhcnRlZCBTZXQgVS1Cb290IGVudmlyb25tZW50IHZhcmlhYmxlLgpTZXAgMTcgMDk6NDQ6
-NTUgbGhvc3Qgc3lzdGVtZFsxXTogQ3JlYXRlZCBzbGljZSBzeXN0ZW0tb2JtY1x4MmRmbGFzaFx4
-MmRibWNceDJkdWJpcm8uc2xpY2UuClNlcCAxNyAwOTo0NDo1NSBsaG9zdCBzeXN0ZW1kWzFdOiBT
-dGFydGluZyBTdG9yZSByZWFkLW9ubHkgaW1hZ2VzIDExZGFhODIzIHRvIEJNQyBzdG9yYWdlLi4u
-ClNlcCAxNyAwOTo0NDo1NSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGluZyBDcmVhdGUgQk1DIHJl
-YWQtd3JpdGUgdWJpIHZvbHVtZS4uLgpTZXAgMTcgMDk6NDQ6NTcgbGhvc3Qgc3lzdGVtZFsxXTog
-U3RhcnRpbmcgSG9zdG5hbWUgU2VydmljZS4uLgpTZXAgMTcgMDk6NDQ6NTggbGhvc3Qgc3lzdGVt
-ZFsxNjEwXTogc3lzdGVtZC1ob3N0bmFtZWQuc2VydmljZTogUHJpdmF0ZU5ldHdvcms9eWVzIGlz
-IGNvbmZpZ3VyZWQsIGJ1dCB0aGUga2VybmVsIGRvZXMgbm90IHN1cHBvcnQgbmV0d29yayBuYW1l
-c3BhY2VzLCBpZ25vcmluZy4KU2VwIDE3IDA5OjQ0OjU4IGxob3N0IHN5c3RlbWRbMV06IG9ibWMt
-Zmxhc2gtYm1jLXViaXJ3LnNlcnZpY2U6IFN1Y2NlZWRlZC4KU2VwIDE3IDA5OjQ0OjU4IGxob3N0
-IHN5c3RlbWRbMV06IFN0YXJ0ZWQgQ3JlYXRlIEJNQyByZWFkLXdyaXRlIHViaSB2b2x1bWUuClNl
-cCAxNyAwOTo0NDo1OSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGVkIEhvc3RuYW1lIFNlcnZpY2Uu
-ClNlcCAxNyAwOTo0NTowMCBsaG9zdCBwaG9zcGhvci1kdW1wLW1hbmFnZXJbMTEzNl06IFR1ZSBT
-ZXAgMTcgMDk6NDU6MDAgVVRDIDIwMTkgUmVwb3J0IGlzIGF2YWlsYWJsZSBpbiAvdmFyL2xpYi9w
-aG9zcGhvci1kZWJ1Zy1jb2xsZWN0b3IvZHVtcHMvMwpTZXAgMTcgMDk6NDU6MDEgbGhvc3Qgc3lz
-dGVtZFsxXTogb2JtYy1mbGFzaC1ibWMtdWJpcm8tcmVtb3ZlQGQ0YTM5MjU3LnNlcnZpY2U6IFN1
-Y2NlZWRlZC4KU2VwIDE3IDA5OjQ1OjAxIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0ZWQgRGVsZXRl
-cyByZWFkLW9ubHkgYW5kIGtlcm5lbCB1Ymkgdm9sdW1lIGQ0YTM5MjU3LgpTZXAgMTcgMDk6NDU6
-MDEgbGhvc3QgcGhvc3Bob3ItZHVtcC1tYW5hZ2VyWzExMzZdOiBUdWUgU2VwIDE3IDA5OjQ1OjAx
-IFVUQyAyMDE5IFN1Y2Nlc3NmdWxseSBjb21wbGV0ZWQKU2VwIDE3IDA5OjQ1OjE4IGxob3N0IHN5
-c3RlbWRbMV06IG9ibWMtZmxhc2gtYm1jLXVwZGF0ZXVib290dmFyc0AyNTkwNGE5MS5zZXJ2aWNl
-OiBTdWNjZWVkZWQuClNlcCAxNyAwOTo0NToxOCBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGVkIFVw
-ZGF0ZXMgdGhlIHUtYm9vdCB2YXJpYWJsZSB0byBwb2ludCBCTUMgdmVyc2lvbiB0byAyNTkwNGE5
-MS4KU2VwIDE3IDA5OjQ1OjI5IGxob3N0IHN5c3RlbWRbMV06IHN5c3RlbWQtaG9zdG5hbWVkLnNl
-cnZpY2U6IFN1Y2NlZWRlZC4KU2VwIDE3IDA5OjQ2OjI4IGxob3N0IG9ibWMtZmxhc2gtYm1jWzE2
-NTldOiBWb2x1bWUgSUQgMCwgc2l6ZSAyODcgTEVCcyAoMTg3NzIwOTYgYnl0ZXMsIDE3LjkgTWlC
-KSwgTEVCIHNpemUgNjU0MDggYnl0ZXMgKDYzLjggS2lCKSwgc3RhdGljLCBuYW1lICJyb2ZzLTEx
-ZGFhODIzIiwgYWxpZ25tZW50IDEKU2VwIDE3IDA5OjQ3OjEyIGxob3N0IGtlcm5lbDogYmxvY2sg
-dWJpYmxvY2swXzA6IGNyZWF0ZWQgZnJvbSB1YmkwOjAocm9mcy0xMWRhYTgyMykKU2VwIDE3IDA5
-OjQ3OjI0IGxob3N0IG9ibWMtZmxhc2gtYm1jWzE3MDJdOiBWb2x1bWUgSUQgMSwgc2l6ZSAzNyBM
-RUJzICgyNDIwMDk2IGJ5dGVzLCAyLjMgTWlCKSwgTEVCIHNpemUgNjU0MDggYnl0ZXMgKDYzLjgg
-S2lCKSwgc3RhdGljLCBuYW1lICJrZXJuZWwtMTFkYWE4MjMiLCBhbGlnbm1lbnQgMQpTZXAgMTcg
-MDk6NDc6MzIgbGhvc3Qgb2JtYy1mbGFzaC1ibWNbMTcwMl06IFZvbHVtZSBJRCAyLCBzaXplIDM3
-IExFQnMgKDI0MjAwOTYgYnl0ZXMsIDIuMyBNaUIpLCBMRUIgc2l6ZSA2NTQwOCBieXRlcyAoNjMu
-OCBLaUIpLCBzdGF0aWMsIG5hbWUgImtlcm5lbC0xMWRhYTgyMyIsIGFsaWdubWVudCAxClNlcCAx
-NyAwOTo0Nzo0MCBsaG9zdCBvYm1jLWZsYXNoLWJtY1sxNzY5XTogWzEzMEIgYmxvYiBkYXRhXQpT
-ZXAgMTcgMDk6NDc6NDEgbGhvc3Qgb2JtYy1mbGFzaC1ibWNbMTc2OV06IFsxLjlLIGJsb2IgZGF0
-YV0KU2VwIDE3IDA5OjQ3OjQxIGxob3N0IG9ibWMtZmxhc2gtYm1jWzE3NjldOiBbMi4xSyBibG9i
-IGRhdGFdClNlcCAxNyAwOTo0Nzo0MSBsaG9zdCBzeXN0ZW1kWzFdOiBvYm1jLWZsYXNoLWJtYy11
-Ymlyb0AxMWRhYTgyMy5zZXJ2aWNlOiBTdWNjZWVkZWQuClNlcCAxNyAwOTo0Nzo0MSBsaG9zdCBz
-eXN0ZW1kWzFdOiBTdGFydGVkIFN0b3JlIHJlYWQtb25seSBpbWFnZXMgMTFkYWE4MjMgdG8gQk1D
-IHN0b3JhZ2UuClNlcCAxNyAwOTo0Nzo0MSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGluZyBVcGRh
-dGVzIHRoZSB1LWJvb3QgdmFyaWFibGUgdG8gcG9pbnQgQk1DIHZlcnNpb24gdG8gMTFkYWE4MjMu
-Li4KU2VwIDE3IDA5OjQ3OjQxIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFNldCBVLUJvb3Qg
-ZW52aXJvbm1lbnQgdmFyaWFibGUuLi4KU2VwIDE3IDA5OjQ3OjQzIGxob3N0IHN5c3RlbWRbMV06
-IG9ibWMtZmxhc2gtYm1jLXNldGVudkAxMWRhYTgyM1x4M2QwLnNlcnZpY2U6IFN1Y2NlZWRlZC4K
-U2VwIDE3IDA5OjQ3OjQzIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0ZWQgU2V0IFUtQm9vdCBlbnZp
-cm9ubWVudCB2YXJpYWJsZS4KU2VwIDE3IDA5OjQ3OjQ1IGxob3N0IHN5c3RlbWRbMV06IG9ibWMt
-Zmxhc2gtYm1jLXVwZGF0ZXVib290dmFyc0AxMWRhYTgyMy5zZXJ2aWNlOiBTdWNjZWVkZWQuClNl
-cCAxNyAwOTo0Nzo0NSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGVkIFVwZGF0ZXMgdGhlIHUtYm9v
-dCB2YXJpYWJsZSB0byBwb2ludCBCTUMgdmVyc2lvbiB0byAxMWRhYTgyMy4KU2VwIDE3IDA5OjQ3
-OjQ1IGxob3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06IEJNQyBhY3RpdmF0aW9uIGhh
-cyBlbmRlZCAtIEJNQyByZWJvb3RzIGFyZSByZS1lbmFibGVkLgpTZXAgMTcgMDk6NDc6NDUgbGhv
-c3Qgc3lzdGVtZFsxXTogU3RhcnRpbmcgUmVtb3ZlcyB0aGUgZ3VhcmQgdGhhdCBibG9ja3MgQk1D
-IHJlYm9vdC4uLgpTZXAgMTcgMDk6NDc6NDUgbGhvc3Qgc3lzdGVtZFsxXTogcmVib290LWd1YXJk
-LWRpc2FibGUuc2VydmljZTogU3VjY2VlZGVkLgpTZXAgMTcgMDk6NDc6NDUgbGhvc3Qgc3lzdGVt
-ZFsxXTogU3RhcnRlZCBSZW1vdmVzIHRoZSBndWFyZCB0aGF0IGJsb2NrcyBCTUMgcmVib290LgpU
-aGFua3MsClJhag==
-
-
---b1_f00525e609d3d4e1603f8dcb06d7cf96
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5IaSBBbGwsPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSBhbSB0cnlpbmcgdG8g
-c2lnbiBteSBpbWFnZSB3aXRoIE9FTSBrZXlzIGluc3RlYWQgb2YgZGVmYXVsdCBPcGVuQk1DLnBy
-aXYgd2hpY2ggaXMgcGFydCBvZiB0aGUgcmVwby48YnI+PC9kaXY+PGRpdj5XaGVuIEkgdHJpZWQg
-dG8gdXBkYXRlIE9FTSBzaWduZWQgQk1DLCBwaG9zcGhvci1pbWFnZS11cGRhdGVyIGxvZ3MgbWVz
-c2FnZXMgcmVsYXRlZCB0byAiU2lnbmF0dXJlIHZhbGlkYXRpb24gZmFpbGVkIjxicj48L2Rpdj48
-ZGl2PkJ1dCB0aGUgZmxhc2hpbmcgY29udGludWVkIGFuZCBhY3RpdmF0aW9uIHdhcyBzdWNjZXNz
-ZnVsLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkkgZXhwZWN0ZWQgZmxhc2ggcHJvY2Vk
-dXJlIHRvIGZhaWwgc2luY2UsIGRlZmF1bHQgcHJpdmF0ZSBrZXkgKE9wZW5CTUMucHJpdixSU0Et
-MTAyNCxTSEEyNTYpIGlzIGRpZmZlcmVudCBmcm9tIE9FTSBwcml2YXRlIGtleSAoUlNBLTIwNDgs
-U0hBMjU2KTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkxvZzo8YnI+PC9kaXY+PGRpdj48
-YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDQ6NTAgbGhvc3QgcGhvc3Bob3ItdmVyc2lvbi1zb2Z0
-d2FyZS1tYW5hZ2VyWzEzNTBdOiBVbnRhcmluZzxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1
-MCBsaG9zdCBwaG9zcGhvci1tYXBwZXJbMTEzNV06IEZvdW5kIGludmFsaWQgYXNzb2NpYXRpb24g
-b24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8xMWRhYTgyMzxicj48L2Rpdj48
-ZGl2PlNlcCAxNyAwOTo0NDo1MCBsaG9zdCBwaG9zcGhvci1tYXBwZXJbMTEzNV06IEZvdW5kIGlu
-dmFsaWQgYXNzb2NpYXRpb24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8x
-MWRhYTgyMzxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1MSBsaG9zdCBwaG9zcGhvci1pbWFn
-ZS11cGRhdGVyWzEzMTZdOiBCTUMgaW1hZ2UgYWN0aXZhdGluZyAtIEJNQyByZWJvb3RzIGFyZSBk
-aXNhYmxlZC48YnI+PC9kaXY+PGRpdj48Yj5TZXAgMTcgMDk6NDQ6NTEgbGhvc3QgcGhvc3Bob3It
-aW1hZ2UtdXBkYXRlclsxMzE2XTogRVZQX0RpZ2VzdFZlcmlmeUZpbmFsOlNpZ25hdHVyZSB2YWxp
-ZGF0aW9uIGZhaWxlZDwvYj48Yj48YnI+PC9iPjwvZGl2PjxkaXY+PGI+U2VwIDE3IDA5OjQ0OjUx
-IGxob3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06IFN5c3RlbSBsZXZlbCBTaWduYXR1
-cmUgVmFsaWRhdGlvbiBmYWlsZWQ8L2I+PGI+PGJyPjwvYj48L2Rpdj48ZGl2PjxiPlNlcCAxNyAw
-OTo0NDo1MSBsaG9zdCBwaG9zcGhvci1pbWFnZS11cGRhdGVyWzEzMTZdOiBFcnJvciBvY2N1cnJl
-ZCBkdXJpbmcgaW1hZ2UgdmFsaWRhdGlvbjwvYj48Yj48YnI+PC9iPjwvZGl2PjxkaXY+PGI+U2Vw
-IDE3IDA5OjQ0OjUxIGxob3N0IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMTMxNl06IFRoZSBvcGVy
-YXRpb24gZmFpbGVkIGludGVybmFsbHkuPC9iPjxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1
-MSBsaG9zdCBwaG9zcGhvci1sb2ctbWFuYWdlclsxMTE0XTogRmFpbGVkIHRvIGZpbmQgbWV0YWRh
-dGE8YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDQ6NTEgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRp
-bmcgRW5hYmxlIGEgZ3VhcmQgdGhhdCBibG9ja3MgQk1DIHJlYm9vdC4uLjxicj48L2Rpdj48ZGl2
-PlNlcCAxNyAwOTo0NDo1MSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGluZyBVcGRhdGVzIHRoZSB1
-LWJvb3QgdmFyaWFibGUgdG8gcG9pbnQgQk1DIHZlcnNpb24gdG8gMjU5MDRhOTEuLi48YnI+PC9k
-aXY+PGRpdj5TZXAgMTcgMDk6NDQ6NTEgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRpbmcgU2V0IFUt
-Qm9vdCBlbnZpcm9ubWVudCB2YXJpYWJsZS4uLjxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1
-MSBsaG9zdCBzeXN0ZW1kWzFdOiBDcmVhdGVkIHNsaWNlIHN5c3RlbS1vYm1jXHgyZGZsYXNoXHgy
-ZGJtY1x4MmR1Ymlyb1x4MmRyZW1vdmUuc2xpY2UuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ0
-OjUyIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIERlbGV0ZXMgcmVhZC1vbmx5IGFuZCBrZXJu
-ZWwgdWJpIHZvbHVtZSBkNGEzOTI1Ny4uLjxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1MiBs
-aG9zdCBzeXN0ZW1kWzFdOiByZWJvb3QtZ3VhcmQtZW5hYmxlLnNlcnZpY2U6IFN1Y2NlZWRlZC48
-YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDQ6NTIgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRlZCBF
-bmFibGUgYSBndWFyZCB0aGF0IGJsb2NrcyBCTUMgcmVib290Ljxicj48L2Rpdj48ZGl2PlNlcCAx
-NyAwOTo0NDo1NCBsaG9zdCBrZXJuZWw6IGJsb2NrIHViaWJsb2NrMF8wOiByZWxlYXNlZDxicj48
-L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NDo1NCBsaG9zdCBzeXN0ZW1kWzFdOiBtZWRpYS1yb2ZzXHgy
-ZGQ0YTM5MjU3Lm1vdW50OiBTdWNjZWVkZWQuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ0OjU1
-IGxob3N0IHN5c3RlbWRbMV06IDxhIGhyZWY9Im1haWx0bzpvYm1jLWZsYXNoLWJtYy1zZXRlbnZA
-ZDRhMzkyNTcuc2VydmljZSI+b2JtYy1mbGFzaC1ibWMtc2V0ZW52QGQ0YTM5MjU3LnNlcnZpY2U8
-L2E+OiBTdWNjZWVkZWQuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ0OjU1IGxob3N0IHN5c3Rl
-bWRbMV06IFN0YXJ0ZWQgU2V0IFUtQm9vdCBlbnZpcm9ubWVudCB2YXJpYWJsZS48YnI+PC9kaXY+
-PGRpdj5TZXAgMTcgMDk6NDQ6NTUgbGhvc3Qgc3lzdGVtZFsxXTogQ3JlYXRlZCBzbGljZSBzeXN0
-ZW0tb2JtY1x4MmRmbGFzaFx4MmRibWNceDJkdWJpcm8uc2xpY2UuPGJyPjwvZGl2PjxkaXY+U2Vw
-IDE3IDA5OjQ0OjU1IGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFN0b3JlIHJlYWQtb25seSBp
-bWFnZXMgMTFkYWE4MjMgdG8gQk1DIHN0b3JhZ2UuLi48YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6
-NDQ6NTUgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRpbmcgQ3JlYXRlIEJNQyByZWFkLXdyaXRlIHVi
-aSB2b2x1bWUuLi48YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDQ6NTcgbGhvc3Qgc3lzdGVtZFsx
-XTogU3RhcnRpbmcgSG9zdG5hbWUgU2VydmljZS4uLjxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0
-NDo1OCBsaG9zdCBzeXN0ZW1kWzE2MTBdOiBzeXN0ZW1kLWhvc3RuYW1lZC5zZXJ2aWNlOiBQcml2
-YXRlTmV0d29yaz15ZXMgaXMgY29uZmlndXJlZCwgYnV0IHRoZSBrZXJuZWwgZG9lcyBub3Qgc3Vw
-cG9ydCBuZXR3b3JrIG5hbWVzcGFjZXMsIGlnbm9yaW5nLjxicj48L2Rpdj48ZGl2PlNlcCAxNyAw
-OTo0NDo1OCBsaG9zdCBzeXN0ZW1kWzFdOiBvYm1jLWZsYXNoLWJtYy11Ymlydy5zZXJ2aWNlOiBT
-dWNjZWVkZWQuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ0OjU4IGxob3N0IHN5c3RlbWRbMV06
-IFN0YXJ0ZWQgQ3JlYXRlIEJNQyByZWFkLXdyaXRlIHViaSB2b2x1bWUuPGJyPjwvZGl2PjxkaXY+
-U2VwIDE3IDA5OjQ0OjU5IGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0ZWQgSG9zdG5hbWUgU2Vydmlj
-ZS48YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDU6MDAgbGhvc3QgcGhvc3Bob3ItZHVtcC1tYW5h
-Z2VyWzExMzZdOiBUdWUgU2VwIDE3IDA5OjQ1OjAwIFVUQyAyMDE5IFJlcG9ydCBpcyBhdmFpbGFi
-bGUgaW4gL3Zhci9saWIvcGhvc3Bob3ItZGVidWctY29sbGVjdG9yL2R1bXBzLzM8YnI+PC9kaXY+
-PGRpdj5TZXAgMTcgMDk6NDU6MDEgbGhvc3Qgc3lzdGVtZFsxXTogPGEgaHJlZj0ibWFpbHRvOm9i
-bWMtZmxhc2gtYm1jLXViaXJvLXJlbW92ZUBkNGEzOTI1Ny5zZXJ2aWNlIj5vYm1jLWZsYXNoLWJt
-Yy11Ymlyby1yZW1vdmVAZDRhMzkyNTcuc2VydmljZTwvYT46IFN1Y2NlZWRlZC48YnI+PC9kaXY+
-PGRpdj5TZXAgMTcgMDk6NDU6MDEgbGhvc3Qgc3lzdGVtZFsxXTogU3RhcnRlZCBEZWxldGVzIHJl
-YWQtb25seSBhbmQga2VybmVsIHViaSB2b2x1bWUgZDRhMzkyNTcuPGJyPjwvZGl2PjxkaXY+U2Vw
-IDE3IDA5OjQ1OjAxIGxob3N0IHBob3NwaG9yLWR1bXAtbWFuYWdlclsxMTM2XTogVHVlIFNlcCAx
-NyAwOTo0NTowMSBVVEMgMjAxOSBTdWNjZXNzZnVsbHkgY29tcGxldGVkPGJyPjwvZGl2PjxkaXY+
-U2VwIDE3IDA5OjQ1OjE4IGxob3N0IHN5c3RlbWRbMV06IDxhIGhyZWY9Im1haWx0bzpvYm1jLWZs
-YXNoLWJtYy11cGRhdGV1Ym9vdHZhcnNAMjU5MDRhOTEuc2VydmljZSI+b2JtYy1mbGFzaC1ibWMt
-dXBkYXRldWJvb3R2YXJzQDI1OTA0YTkxLnNlcnZpY2U8L2E+OiBTdWNjZWVkZWQuPGJyPjwvZGl2
-PjxkaXY+U2VwIDE3IDA5OjQ1OjE4IGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0ZWQgVXBkYXRlcyB0
-aGUgdS1ib290IHZhcmlhYmxlIHRvIHBvaW50IEJNQyB2ZXJzaW9uIHRvIDI1OTA0YTkxLjxicj48
-L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NToyOSBsaG9zdCBzeXN0ZW1kWzFdOiBzeXN0ZW1kLWhvc3Ru
-YW1lZC5zZXJ2aWNlOiBTdWNjZWVkZWQuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ2OjI4IGxo
-b3N0IG9ibWMtZmxhc2gtYm1jWzE2NTldOiBWb2x1bWUgSUQgMCwgc2l6ZSAyODcgTEVCcyAoMTg3
-NzIwOTYgYnl0ZXMsIDE3LjkgTWlCKSwgTEVCIHNpemUgNjU0MDggYnl0ZXMgKDYzLjggS2lCKSwg
-c3RhdGljLCBuYW1lICJyb2ZzLTExZGFhODIzIiwgYWxpZ25tZW50IDE8YnI+PC9kaXY+PGRpdj5T
-ZXAgMTcgMDk6NDc6MTIgbGhvc3Qga2VybmVsOiBibG9jayB1YmlibG9jazBfMDogY3JlYXRlZCBm
-cm9tIHViaTA6MChyb2ZzLTExZGFhODIzKTxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0NzoyNCBs
-aG9zdCBvYm1jLWZsYXNoLWJtY1sxNzAyXTogVm9sdW1lIElEIDEsIHNpemUgMzcgTEVCcyAoMjQy
-MDA5NiBieXRlcywgMi4zIE1pQiksIExFQiBzaXplIDY1NDA4IGJ5dGVzICg2My44IEtpQiksIHN0
-YXRpYywgbmFtZSAia2VybmVsLTExZGFhODIzIiwgYWxpZ25tZW50IDE8YnI+PC9kaXY+PGRpdj5T
-ZXAgMTcgMDk6NDc6MzIgbGhvc3Qgb2JtYy1mbGFzaC1ibWNbMTcwMl06IFZvbHVtZSBJRCAyLCBz
-aXplIDM3IExFQnMgKDI0MjAwOTYgYnl0ZXMsIDIuMyBNaUIpLCBMRUIgc2l6ZSA2NTQwOCBieXRl
-cyAoNjMuOCBLaUIpLCBzdGF0aWMsIG5hbWUgImtlcm5lbC0xMWRhYTgyMyIsIGFsaWdubWVudCAx
-PGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3OjQwIGxob3N0IG9ibWMtZmxhc2gtYm1jWzE3Njld
-OiBbMTMwQiBibG9iIGRhdGFdPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3OjQxIGxob3N0IG9i
-bWMtZmxhc2gtYm1jWzE3NjldOiBbMS45SyBibG9iIGRhdGFdPGJyPjwvZGl2PjxkaXY+U2VwIDE3
-IDA5OjQ3OjQxIGxob3N0IG9ibWMtZmxhc2gtYm1jWzE3NjldOiBbMi4xSyBibG9iIGRhdGFdPGJy
-PjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3OjQxIGxob3N0IHN5c3RlbWRbMV06IDxhIGhyZWY9Im1h
-aWx0bzpvYm1jLWZsYXNoLWJtYy11Ymlyb0AxMWRhYTgyMy5zZXJ2aWNlIj5vYm1jLWZsYXNoLWJt
-Yy11Ymlyb0AxMWRhYTgyMy5zZXJ2aWNlPC9hPjogU3VjY2VlZGVkLjxicj48L2Rpdj48ZGl2PlNl
-cCAxNyAwOTo0Nzo0MSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGVkIFN0b3JlIHJlYWQtb25seSBp
-bWFnZXMgMTFkYWE4MjMgdG8gQk1DIHN0b3JhZ2UuPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3
-OjQxIGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFVwZGF0ZXMgdGhlIHUtYm9vdCB2YXJpYWJs
-ZSB0byBwb2ludCBCTUMgdmVyc2lvbiB0byAxMWRhYTgyMy4uLjxicj48L2Rpdj48ZGl2PlNlcCAx
-NyAwOTo0Nzo0MSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGluZyBTZXQgVS1Cb290IGVudmlyb25t
-ZW50IHZhcmlhYmxlLi4uPGJyPjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3OjQzIGxob3N0IHN5c3Rl
-bWRbMV06IG9ibWMtZmxhc2gtYm1jLXNldGVudkAxMWRhYTgyM1x4M2QwLnNlcnZpY2U6IFN1Y2Nl
-ZWRlZC48YnI+PC9kaXY+PGRpdj5TZXAgMTcgMDk6NDc6NDMgbGhvc3Qgc3lzdGVtZFsxXTogU3Rh
-cnRlZCBTZXQgVS1Cb290IGVudmlyb25tZW50IHZhcmlhYmxlLjxicj48L2Rpdj48ZGl2PlNlcCAx
-NyAwOTo0Nzo0NSBsaG9zdCBzeXN0ZW1kWzFdOiA8YSBocmVmPSJtYWlsdG86b2JtYy1mbGFzaC1i
-bWMtdXBkYXRldWJvb3R2YXJzQDExZGFhODIzLnNlcnZpY2UiPm9ibWMtZmxhc2gtYm1jLXVwZGF0
-ZXVib290dmFyc0AxMWRhYTgyMy5zZXJ2aWNlPC9hPjogU3VjY2VlZGVkLjxicj48L2Rpdj48ZGl2
-PlNlcCAxNyAwOTo0Nzo0NSBsaG9zdCBzeXN0ZW1kWzFdOiBTdGFydGVkIFVwZGF0ZXMgdGhlIHUt
-Ym9vdCB2YXJpYWJsZSB0byBwb2ludCBCTUMgdmVyc2lvbiB0byAxMWRhYTgyMy48YnI+PC9kaXY+
-PGRpdj5TZXAgMTcgMDk6NDc6NDUgbGhvc3QgcGhvc3Bob3ItaW1hZ2UtdXBkYXRlclsxMzE2XTog
-Qk1DIGFjdGl2YXRpb24gaGFzIGVuZGVkIC0gQk1DIHJlYm9vdHMgYXJlIHJlLWVuYWJsZWQuPGJy
-PjwvZGl2PjxkaXY+U2VwIDE3IDA5OjQ3OjQ1IGxob3N0IHN5c3RlbWRbMV06IFN0YXJ0aW5nIFJl
-bW92ZXMgdGhlIGd1YXJkIHRoYXQgYmxvY2tzIEJNQyByZWJvb3QuLi48YnI+PC9kaXY+PGRpdj5T
-ZXAgMTcgMDk6NDc6NDUgbGhvc3Qgc3lzdGVtZFsxXTogcmVib290LWd1YXJkLWRpc2FibGUuc2Vy
-dmljZTogU3VjY2VlZGVkLjxicj48L2Rpdj48ZGl2PlNlcCAxNyAwOTo0Nzo0NSBsaG9zdCBzeXN0
-ZW1kWzFdOiBTdGFydGVkIFJlbW92ZXMgdGhlIGd1YXJkIHRoYXQgYmxvY2tzIEJNQyByZWJvb3Qu
-PGJyPjwvZGl2PjxkaXY+VGhhbmtzLDxicj48L2Rpdj48ZGl2PlJhajxicj48L2Rpdj4=
-
-
-
---b1_f00525e609d3d4e1603f8dcb06d7cf96--
-
+On Wed, Oct 9, 2019 at 3:32 PM rgrs <rgrs@protonmail.com> wrote:
+>
+> Hi All,
+>
+> I am trying to sign my image with OEM keys instead of default OpenBMC.priv which is part of the repo.
+> When I tried to update OEM signed BMC, phosphor-image-updater logs messages related to "Signature validation failed"
+> But the flashing continued and activation was successful.
+>
+> I expected flash procedure to fail since, default private key (OpenBMC.priv,RSA-1024,SHA256) is different from OEM private key (RSA-2048,SHA256)
+>
+> Log:
+>
+> Sep 17 09:44:50 lhost phosphor-version-software-manager[1350]: Untaring
+> Sep 17 09:44:50 lhost phosphor-mapper[1135]: Found invalid association on path /xyz/openbmc_project/software/11daa823
+> Sep 17 09:44:50 lhost phosphor-mapper[1135]: Found invalid association on path /xyz/openbmc_project/software/11daa823
+> Sep 17 09:44:51 lhost phosphor-image-updater[1316]: BMC image activating - BMC reboots are disabled.
+> Sep 17 09:44:51 lhost phosphor-image-updater[1316]: EVP_DigestVerifyFinal:Signature validation failed
+> Sep 17 09:44:51 lhost phosphor-image-updater[1316]: System level Signature Validation failed
+> Sep 17 09:44:51 lhost phosphor-image-updater[1316]: Error occurred during image validation
+> Sep 17 09:44:51 lhost phosphor-image-updater[1316]: The operation failed internally.
+> Sep 17 09:44:51 lhost phosphor-log-manager[1114]: Failed to find metadata
+> Sep 17 09:44:51 lhost systemd[1]: Starting Enable a guard that blocks BMC reboot...
+> Sep 17 09:44:51 lhost systemd[1]: Starting Updates the u-boot variable to point BMC version to 25904a91...
+> Sep 17 09:44:51 lhost systemd[1]: Starting Set U-Boot environment variable...
+> Sep 17 09:44:51 lhost systemd[1]: Created slice system-obmc\x2dflash\x2dbmc\x2dubiro\x2dremove.slice.
+> Sep 17 09:44:52 lhost systemd[1]: Starting Deletes read-only and kernel ubi volume d4a39257...
+> Sep 17 09:44:52 lhost systemd[1]: reboot-guard-enable.service: Succeeded.
+> Sep 17 09:44:52 lhost systemd[1]: Started Enable a guard that blocks BMC reboot.
+> Sep 17 09:44:54 lhost kernel: block ubiblock0_0: released
+> Sep 17 09:44:54 lhost systemd[1]: media-rofs\x2dd4a39257.mount: Succeeded.
+> Sep 17 09:44:55 lhost systemd[1]: obmc-flash-bmc-setenv@d4a39257.service: Succeeded.
+> Sep 17 09:44:55 lhost systemd[1]: Started Set U-Boot environment variable.
+> Sep 17 09:44:55 lhost systemd[1]: Created slice system-obmc\x2dflash\x2dbmc\x2dubiro.slice.
+> Sep 17 09:44:55 lhost systemd[1]: Starting Store read-only images 11daa823 to BMC storage...
+> Sep 17 09:44:55 lhost systemd[1]: Starting Create BMC read-write ubi volume...
+> Sep 17 09:44:57 lhost systemd[1]: Starting Hostname Service...
+> Sep 17 09:44:58 lhost systemd[1610]: systemd-hostnamed.service: PrivateNetwork=yes is configured, but the kernel does not support network namespaces, ignoring.
+> Sep 17 09:44:58 lhost systemd[1]: obmc-flash-bmc-ubirw.service: Succeeded.
+> Sep 17 09:44:58 lhost systemd[1]: Started Create BMC read-write ubi volume.
+> Sep 17 09:44:59 lhost systemd[1]: Started Hostname Service.
+> Sep 17 09:45:00 lhost phosphor-dump-manager[1136]: Tue Sep 17 09:45:00 UTC 2019 Report is available in /var/lib/phosphor-debug-collector/dumps/3
+> Sep 17 09:45:01 lhost systemd[1]: obmc-flash-bmc-ubiro-remove@d4a39257.service: Succeeded.
+> Sep 17 09:45:01 lhost systemd[1]: Started Deletes read-only and kernel ubi volume d4a39257.
+> Sep 17 09:45:01 lhost phosphor-dump-manager[1136]: Tue Sep 17 09:45:01 UTC 2019 Successfully completed
+> Sep 17 09:45:18 lhost systemd[1]: obmc-flash-bmc-updateubootvars@25904a91.service: Succeeded.
+> Sep 17 09:45:18 lhost systemd[1]: Started Updates the u-boot variable to point BMC version to 25904a91.
+> Sep 17 09:45:29 lhost systemd[1]: systemd-hostnamed.service: Succeeded.
+> Sep 17 09:46:28 lhost obmc-flash-bmc[1659]: Volume ID 0, size 287 LEBs (18772096 bytes, 17.9 MiB), LEB size 65408 bytes (63.8 KiB), static, name "rofs-11daa823", alignment 1
+> Sep 17 09:47:12 lhost kernel: block ubiblock0_0: created from ubi0:0(rofs-11daa823)
+> Sep 17 09:47:24 lhost obmc-flash-bmc[1702]: Volume ID 1, size 37 LEBs (2420096 bytes, 2.3 MiB), LEB size 65408 bytes (63.8 KiB), static, name "kernel-11daa823", alignment 1
+> Sep 17 09:47:32 lhost obmc-flash-bmc[1702]: Volume ID 2, size 37 LEBs (2420096 bytes, 2.3 MiB), LEB size 65408 bytes (63.8 KiB), static, name "kernel-11daa823", alignment 1
+> Sep 17 09:47:40 lhost obmc-flash-bmc[1769]: [130B blob data]
+> Sep 17 09:47:41 lhost obmc-flash-bmc[1769]: [1.9K blob data]
+> Sep 17 09:47:41 lhost obmc-flash-bmc[1769]: [2.1K blob data]
+> Sep 17 09:47:41 lhost systemd[1]: obmc-flash-bmc-ubiro@11daa823.service: Succeeded.
+> Sep 17 09:47:41 lhost systemd[1]: Started Store read-only images 11daa823 to BMC storage.
+> Sep 17 09:47:41 lhost systemd[1]: Starting Updates the u-boot variable to point BMC version to 11daa823...
+> Sep 17 09:47:41 lhost systemd[1]: Starting Set U-Boot environment variable...
+> Sep 17 09:47:43 lhost systemd[1]: obmc-flash-bmc-setenv@11daa823\x3d0.service: Succeeded.
+> Sep 17 09:47:43 lhost systemd[1]: Started Set U-Boot environment variable.
+> Sep 17 09:47:45 lhost systemd[1]: obmc-flash-bmc-updateubootvars@11daa823.service: Succeeded.
+> Sep 17 09:47:45 lhost systemd[1]: Started Updates the u-boot variable to point BMC version to 11daa823.
+> Sep 17 09:47:45 lhost phosphor-image-updater[1316]: BMC activation has ended - BMC reboots are re-enabled.
+> Sep 17 09:47:45 lhost systemd[1]: Starting Removes the guard that blocks BMC reboot...
+> Sep 17 09:47:45 lhost systemd[1]: reboot-guard-disable.service: Succeeded.
+> Sep 17 09:47:45 lhost systemd[1]: Started Removes the guard that blocks BMC reboot.
+> Thanks,
+> Raj
