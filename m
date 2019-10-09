@@ -1,69 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15A18D177F
-	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 20:22:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B855BD1AA7
+	for <lists+openbmc@lfdr.de>; Wed,  9 Oct 2019 23:14:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46pMxv30FVzDqdR
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 05:22:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pRm34lVTzDqRp
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 08:13:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2a00:1450:4864:20::544; helo=mail-ed1-x544.google.com;
- envelope-from=osk@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=pawel.rapkiewicz@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="JCk2r4lL"; 
- dkim-atps=neutral
-Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com
- [IPv6:2a00:1450:4864:20::544])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46pMwx4HwnzDqbW
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 05:21:20 +1100 (AEDT)
-Received: by mail-ed1-x544.google.com with SMTP id r9so2922126edl.10
- for <openbmc@lists.ozlabs.org>; Wed, 09 Oct 2019 11:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yHkBccBcnNHpwY488jaSLlc6fd4IiAVQm1KLgC1eDwU=;
- b=JCk2r4lLdEAtEB4tPPfCe4gQXtDKOAj/uTZqZjswgMEGnPOS15TmojLgEWg9okNphe
- AeJnUULN6KjIa4KZEVZaBHInQ1eDypGuDBuuyCdSKoyR8ZJPKDBhIppH6HpDS4jkxN3n
- kcMVYBHYnDz8YP8O4Zob+eAVkuCmR6JaDum4JOPgVXcl9MnHTqhIHFafpcVv4abD2wWR
- XhjBxJiSQ7LAYLN62EhUspq0sCkoYw6oz4VleeqTj9068qJZxY9Q6sgL/WOP8KzdYWgv
- C6zpWOY2j/ctW270naKNeT19e7aMwPErIi8lSgRqOyd1wljb37pqea7d/hBhHPsXd0FJ
- Gusg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=yHkBccBcnNHpwY488jaSLlc6fd4IiAVQm1KLgC1eDwU=;
- b=Rn2OigRAd/UQWhhM+xpnZ4VJafMlwq9HhGxSwxqF5Z22Ce1P55nEgd5rl8+izk7eoq
- y0qCfb4RMRzRmJBETbq2alqHpqDUxVIZ+TwyAYOHRmzhb8ty/rbBidqV0aA0y1YvzGkO
- wBrCiFxK6qAUo7VAA5atkSzwBrNKKSNlPCQnO0xaSRP1xv5T2v15lHA6dByJDbMOc6uq
- 2pxRvlYtICAfg3J1a2fwPC6hGhfyYpkiOwyNYiVVOxR+G0VBAM9i8qAI2TX2PYAxsYSL
- n2v6y46EWvombhYFohUbMzD07p/hbSEYQ/9Cr89WexG0VyNsBtWoZe74a0bpHghdAJT0
- uxMQ==
-X-Gm-Message-State: APjAAAWjYniFrXux0Nfy7GIZAelt0Hfy5x6XwYbdp44gsfjNG7sQK3ZY
- A+IGhysP7g3+7zVR8zMVvXgPNt98tdQYNs0th3LRmLioniA=
-X-Google-Smtp-Source: APXvYqyzM1iml8cc0UJCa2V8V1tcCpmvzYZc9tBdwMkMDxZm3liqXHTP04Gsb9J6GSLo1BKLFmmGm3WCshLGV92hV3Y=
-X-Received: by 2002:aa7:d04c:: with SMTP id n12mr4125274edo.52.1570645276110; 
- Wed, 09 Oct 2019 11:21:16 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pRl638HtzDqRp
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:13:06 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 Oct 2019 14:11:42 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,277,1566889200"; 
+ d="scan'208,217";a="218807093"
+Received: from irsmsx105.ger.corp.intel.com ([163.33.3.28])
+ by fmsmga004.fm.intel.com with ESMTP; 09 Oct 2019 14:11:41 -0700
+Received: from irsmsx102.ger.corp.intel.com ([169.254.2.160]) by
+ irsmsx105.ger.corp.intel.com ([169.254.7.164]) with mapi id 14.03.0439.000;
+ Wed, 9 Oct 2019 22:11:41 +0100
+From: "Rapkiewicz, Pawel" <pawel.rapkiewicz@intel.com>
+To: "anoo@linux.ibm.com" <anoo@linux.ibm.com>
+Subject: Virtual Media
+Thread-Topic: Virtual Media
+Thread-Index: AdV+5LAlvJ1N5/oxRU68Nczyjlgxsw==
+Date: Wed, 9 Oct 2019 21:11:41 +0000
+Message-ID: <53D123781965AE42A2ABEE982B242E41A10E3D21@IRSMSX102.ger.corp.intel.com>
+Accept-Language: pl-PL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [163.33.239.180]
+Content-Type: multipart/alternative;
+ boundary="_000_53D123781965AE42A2ABEE982B242E41A10E3D21IRSMSX102gercor_"
 MIME-Version: 1.0
-References: <20190910213734.3112330-1-vijaykhemka@fb.com>
- <bd5eab2e-6ba6-9e27-54d4-d9534da9d5f7@gmail.com>
- <CACPK8XcS4iKfKigPbPg0BFbmjbT-kdyjiPDXjk1k5XaS5bCdAA@mail.gmail.com>
- <95e215664612c0487808c02232852ef2188c95a5.camel@kernel.crashing.org>
-In-Reply-To: <95e215664612c0487808c02232852ef2188c95a5.camel@kernel.crashing.org>
-From: Oskar Senft <osk@google.com>
-Date: Wed, 9 Oct 2019 14:20:59 -0400
-Message-ID: <CABoTLcQ=N4ugYeo5jxbGtBR0nbu_Ri-OV4pE0PP-yvwXX7W+uw@mail.gmail.com>
-Subject: Re: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,83 +62,176 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Kate Stewart <kstewart@linuxfoundation.org>, Andrew Lunn <andrew@lunn.ch>,
- Florian Fainelli <f.fainelli@gmail.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, netdev@vger.kernel.org,
- "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- YueHaibing <yuehaibing@huawei.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Vijay Khemka <vijaykhemka@fb.com>, Luis Chamberlain <mcgrof@kernel.org>,
- Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, "David S. Miller" <davem@davemloft.net>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Tanous,
+ Ed" <ed.tanous@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Does HW in the AST2500 actually perform the HW checksum calculation,
-or would that be the responsibility of the NIC that it's talking to
-via NC-SI?
+--_000_53D123781965AE42A2ABEE982B242E41A10E3D21IRSMSX102gercor_
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 
-(Sorry for the double posting! I had HTML mode enabled by default
-which causes the e-mail to be dropped in some places)
+Adriana,
 
+We're currently in the middle of Virtual Media implementation based on desi=
+gn: https://github.com/openbmc/docs/blob/master/designs/VirtualMedia.md
+There are few patches in review to bmcweb which enables feature as above.  =
+There are few minor differences which made it not 100% compatible with
+yours (i.e. different endpoints), on the other hand it has some benefits, l=
+ike support for Redfish Virtual Media.
 
-On Wed, Oct 9, 2019 at 12:38 AM Benjamin Herrenschmidt
-<benh@kernel.crashing.org> wrote:
->
-> On Wed, 2019-09-11 at 14:48 +0000, Joel Stanley wrote:
-> > Hi Ben,
-> >
-> > On Tue, 10 Sep 2019 at 22:05, Florian Fainelli <f.fainelli@gmail.com>
-> > wrote:
-> > >
-> > > On 9/10/19 2:37 PM, Vijay Khemka wrote:
-> > > > HW checksum generation is not working for AST2500, specially with
-> > > > IPV6
-> > > > over NCSI. All TCP packets with IPv6 get dropped. By disabling
-> > > > this
-> > > > it works perfectly fine with IPV6.
-> > > >
-> > > > Verified with IPV6 enabled and can do ssh.
-> > >
-> > > How about IPv4, do these packets have problem? If not, can you
-> > > continue
-> > > advertising NETIF_F_IP_CSUM but take out NETIF_F_IPV6_CSUM?
-> > >
-> > > >
-> > > > Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
-> > > > ---
-> > > >  drivers/net/ethernet/faraday/ftgmac100.c | 5 +++--
-> > > >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > b/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > index 030fed65393e..591c9725002b 100644
-> > > > --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > @@ -1839,8 +1839,9 @@ static int ftgmac100_probe(struct
-> > > > platform_device *pdev)
-> > > >       if (priv->use_ncsi)
-> > > >               netdev->hw_features |= NETIF_F_HW_VLAN_CTAG_FILTER;
-> > > >
-> > > > -     /* AST2400  doesn't have working HW checksum generation */
-> > > > -     if (np && (of_device_is_compatible(np, "aspeed,ast2400-
-> > > > mac")))
-> > > > +     /* AST2400  and AST2500 doesn't have working HW checksum
-> > > > generation */
-> > > > +     if (np && (of_device_is_compatible(np, "aspeed,ast2400-
-> > > > mac") ||
-> > > > +                of_device_is_compatible(np, "aspeed,ast2500-
-> > > > mac")))
-> >
-> > Do you recall under what circumstances we need to disable hardware
-> > checksumming?
->
-> Any news on this ? AST2400 has no HW checksum logic in HW, AST2500
-> should work for IPV4 fine, we should only selectively disable it for
-> IPV6.
->
-> Can you do an updated patch ?
->
-> Cheers,
-> Ben.
->
+As It's reasonable not to support two different implementations of same fun=
+ctionality, I'd like to ask you to review those patches,
+and see if we can agree to have one common implementation in bmcweb.
+
+I'm adding Przemyslaw to the thread since he'll take care of Virtual Media =
+implementation from Intel side.
+
+Thanks in advance,
+Regards,
+Pawel
+
+--------------------------------------------------------------------
+
+Intel Technology Poland sp. z o.o.
+ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII Wydz=
+ial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP 957-07-52-31=
+6 | Kapital zakladowy 200.000 PLN.
+
+Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego adresata=
+ i moze zawierac informacje poufne. W razie przypadkowego otrzymania tej wi=
+adomosci, prosimy o powiadomienie nadawcy oraz trwale jej usuniecie; jakiek=
+olwiek
+przegladanie lub rozpowszechnianie jest zabronione.
+This e-mail and any attachments may contain confidential material for the s=
+ole use of the intended recipient(s). If you are not the intended recipient=
+, please contact the sender and delete all copies; any review or distributi=
+on by
+others is strictly prohibited.
+
+--_000_53D123781965AE42A2ABEE982B242E41A10E3D21IRSMSX102gercor_
+Content-Type: text/html; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
+s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
+40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:70.85pt 70.85pt 70.85pt 70.85pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"PL">Adriana,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"PL"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal">We&#8217;re currently in the middle of Virtual Media=
+ implementation based on design:
+<a href=3D"https://github.com/openbmc/docs/blob/master/designs/VirtualMedia=
+.md">https://github.com/openbmc/docs/blob/master/designs/VirtualMedia.md</a=
+><o:p></o:p></p>
+<p class=3D"MsoNormal">There are few patches in review to bmcweb which enab=
+les feature as above. &nbsp;There are few minor differences which made it n=
+ot 100% compatible with
+<o:p></o:p></p>
+<p class=3D"MsoNormal">yours (i.e. different endpoints), on the other hand =
+it has some benefits, like support for Redfish Virtual Media.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">As It&#8217;s reasonable not to support two differen=
+t implementations of same functionality, I&#8217;d like to ask you to revie=
+w those patches,
+<o:p></o:p></p>
+<p class=3D"MsoNormal">and see if we can agree to have one common implement=
+ation in bmcweb.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I&#8217;m adding Przemyslaw to the thread since he&#=
+8217;ll take care of Virtual Media implementation from Intel side.<o:p></o:=
+p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks in advance,<o:p></o:p></p>
+<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Pawel<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<p>---------------------------------------------------------------------<br>
+<strong style=3D"line-height: 11.25pt;"><span  style=3D"font-size: 9pt; col=
+or:
+#595959;"><span style=3D"font-family: 'Arial Narrow', sans-serif;">Intel
+Technology Poland sp. z o.o.<br></span></span></strong><span style=3D"color:
+#595959; font-family: 'Arial Narrow', sans-serif; font-size: 9pt; line-heig=
+ht:
+11.25pt;">ul. S&#322owackiego 173 | 80-298 Gda&#324sk | S&#261d Rejonowy Gd=
+a&#324sk
+P&#243&#322noc
+| VII Wydzia&#322 Gospodarczy Krajowego Rejestru S&#261dowego - KRS 101882 =
+| NIP
+957-07-52-316 | Kapita&#322 zak&#322adowy 200.000 PLN.</span></p><p>
+
+<span style=3D"font-size:8.0pt;font-family:&quot;Arial
+Narrow&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New
+Roman&quot;;mso-bidi-font-family:Arial;
+color:#595959;mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-l=
+anguage:
+AR-SA">Ta wiadomo&#347&#263 wraz z za&#322&#261cznikami jest przeznaczona d=
+la okre&#347lonego
+adresata i mo&#380e zawiera&#263 informacje poufne. W razie przypadkowego o=
+trzymania
+tej wiadomo&#347ci, prosimy o powiadomienie nadawcy oraz trwa&#322e jej usu=
+ni&#281cie;
+jakiekolwiek przegl&#261danie lub rozpowszechnianie jest zabronione.<br>
+This e-mail and any attachments may contain confidential material for the s=
+ole
+use of the intended recipient(s). If you are not the intended recipient,
+please
+contact the sender and delete all copies; any review or distribution by oth=
+ers
+is strictly prohibited.</span></p><p class=3D"MsoNormal"><o:p></o:p></p>
+</body>
+</html>
+
+--_000_53D123781965AE42A2ABEE982B242E41A10E3D21IRSMSX102gercor_--
+
