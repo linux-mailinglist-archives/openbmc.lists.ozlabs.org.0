@@ -1,87 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8749D2289
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 10:21:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D80FD27E9
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 13:26:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46pkZV2jzJzDr0K
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 19:21:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ppgT6NZhzDr5R
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 22:26:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (mailfrom) smtp.mailfrom=kaod.org
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=the-dreams.de
+ (client-ip=88.99.104.3; helo=pokefinder.org; envelope-from=wsa@the-dreams.de;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46pkYb37fKzDqyH
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 19:20:47 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9A8JJo6127241
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 04:20:44 -0400
-Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vhynajgxp-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 04:20:44 -0400
-Received: from localhost
- by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <clg@kaod.org>;
- Thu, 10 Oct 2019 09:20:42 +0100
-Received: from b06avi18626390.portsmouth.uk.ibm.com (9.149.26.192)
- by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 10 Oct 2019 09:20:40 +0100
-Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
- [9.149.105.59])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id x9A8K9Ih30605628
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:09 GMT
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28D8CA4055
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 20194A4040
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
-Received: from smtp.tls.ibm.com (unknown [9.101.4.1])
- by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
-Received: from yukon.kaod.org (sig-9-145-2-100.uk.ibm.com [9.145.2.100])
- by smtp.tls.ibm.com (Postfix) with ESMTP id CB8BC22016A
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 10:20:38 +0200 (CEST)
-Subject: Re: [PATCH 0/5] i2c: aspeed: Add buffer and DMA modes support
-To: openbmc@lists.ozlabs.org
-References: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Date: Thu, 10 Oct 2019 10:20:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+ dmarc=none (p=none dis=none) header.from=the-dreams.de
+Received: from pokefinder.org (sauhun.de [88.99.104.3])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46ppfZ637tzDr4C;
+ Thu, 10 Oct 2019 22:25:25 +1100 (AEDT)
+Received: from localhost (p54B33257.dip0.t-ipconnect.de [84.179.50.87])
+ by pokefinder.org (Postfix) with ESMTPSA id E00F42C01E8;
+ Thu, 10 Oct 2019 08:37:35 +0200 (CEST)
+Date: Thu, 10 Oct 2019 08:37:35 +0200
+From: Wolfram Sang <wsa@the-dreams.de>
+To: Brendan Higgins <brendanhiggins@google.com>
+Subject: Re: [PATCH] i2c: aspeed: fix master pending state handling
+Message-ID: <20191010063735.GA893@kunai>
+References: <20191009212034.20325-1-jae.hyun.yoo@linux.intel.com>
+ <20191010003234.GA12710@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-x-cbid: 19101008-0008-0000-0000-00000320C6AF
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19101008-0009-0000-0000-00004A3FCE59
-Message-Id: <b91963ee-2536-43da-0801-e41dc9ad0877@kaod.org>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-10_04:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=898 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910100078
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
+Content-Disposition: inline
+In-Reply-To: <20191010003234.GA12710@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,74 +45,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+ Tao Ren <taoren@fb.com>, linux-arm-kernel@lists.infradead.org,
+ Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello, Jae
 
-On 08/10/2019 01:13, Jae Hyun Yoo wrote:
-> This patch series adds buffer mode and DMA mode transfer support for the
-> Aspeed I2C driver. With this change, default transfer mode will be set to
-> buffer mode for better performance, and DMA mode can be selectively used
-> depends on platform configuration.
-> 
-> * Buffer mode
->   AST2400:
->     It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
->     0x1e78a800 to 0x1e78afff that can be used for all busses with
->     buffer pool manipulation. To simplify implementation for supporting
->     both AST2400 and AST2500, it assigns each 128 Bytes per bus without
->     using buffer pool manipulation so total 1792 Bytes of I2C SRAM
->     buffer will be used.
-> 
->   AST2500:
->     It has 16 Bytes of individual I2C SRAM buffer per each bus and its
->     range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
->     page selection' bit field in the Function control register, and
->     neither 'base address pointer' bit field in the Pool buffer control
->     register it has. To simplify implementation for supporting both
->     AST2400 and AST2500, it writes zeros on those register bit fields
->     but it's okay because it does nothing in AST2500.
-> 
-> * DMA mode
->   Only AST2500 and later versions support DMA mode under some limitations:
->     I2C is sharing the DMA H/W with UHCI host controller and MCTP
->     controller. Since those controllers operate with DMA mode only, I2C
->     has to use buffer mode or byte mode instead if one of those
->     controllers is enabled. Also make sure that if SD/eMMC or Port80
->     snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
->     use DMA mode.
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
 
-I just pushed models adding support for the pool buffer mode and DMA mode
-to the I2C controller and did some tests on these QEMU Aspeed machines : 
+> Wolfram, since this is a bugfix, can we get this in 5.4?
 
-  palmetto (AST2400) : BYTE + BUFFER 
-  romulus  (AST2500) : BYTE + BUFFER + DMA (with a custom DT) 
-  tacoma   (AST2600) : BYTE
-
-Looks good on the QEMU side. 
-
-Thanks,
-
-C.  
+Of course! Just giving Tao Ren some time for the Tested-by.
 
 
-> Please review it.
-> 
-> -Jae
-> 
-> Jae Hyun Yoo (5):
->   dt-bindings: i2c: aspeed: add buffer and DMA mode transfer support
->   ARM: dts: aspeed: add I2C buffer mode support
->   i2c: aspeed: fix master pending state handling
->   i2c: aspeed: add buffer mode transfer support
->   i2c: aspeed: add DMA mode transfer support
-> 
->  .../devicetree/bindings/i2c/i2c-aspeed.txt    |  67 ++-
->  arch/arm/boot/dts/aspeed-g4.dtsi              |  47 +-
->  arch/arm/boot/dts/aspeed-g5.dtsi              |  47 +-
->  drivers/i2c/busses/i2c-aspeed.c               | 513 ++++++++++++++++--
->  4 files changed, 588 insertions(+), 86 deletions(-)
-> 
+--UugvWAfsgieZRqgk
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl2e0asACgkQFA3kzBSg
+KbZEfA//eG2wIit8ZvHICrI4HHDAD/xgrOjZcCQHKy+PB5uNFMnEVdGy0ifN2Oml
+NIZvvWUp0hjhw7ZkPI0uJQ/MLGO47R02T9s9IXx5s0OaxYjB3MINRr1r/8SHvY2h
+4CeHFuMbAOdGx6h0vCACwXVpAvjewebvO45bX80AOXq88b8bRtS4Dx9sWIWRS8Fy
+5wpSWP0fFbPCimwIkW8SZE6KZcKy4AenP95Jjxyv7YXGFXDRHgV9xAp5eXDw0ZZR
+lhfsSkIWsQkNqOCDzwXO6IKX+GMu2UMzX8ipsXi0S2u03/HUGnhlxMg04AwH28x5
+iQv7tO0Boj1/OMJ2jfz/QAk0A+C04lo20/z+heHJoBz6BbhFnbXX+tMUzdn070EB
+AHN1pcLMlpPufqEcCBPj0Ky0RP2WH48vFqY+uJnTwAWAFx5quO1/DOYBRyzc4kPW
+FnDv6cgFtQKIbO6UWyGs4dHOttBFs2KSpNWcFaRxUHqUDpR7BBw0Bt8V7f6irsql
+lVPjyAQj5kDm3eA621uZR3/hFP4Ud1hLF1HzF+j9LX/1lA2+PMB/L7E2Yt6Dv+Ba
+1vX55ITdwFTyQ1MKpVileOYL1IY62EcFvUdhi5ahyjQNQtHaslKwa/l4Q/WDpMNu
+7AjPGDDcjnmNTW2DAcdxbHMeN3so766ZPr08ujZezcXZX7BBT14=
+=ApV2
+-----END PGP SIGNATURE-----
+
+--UugvWAfsgieZRqgk--
