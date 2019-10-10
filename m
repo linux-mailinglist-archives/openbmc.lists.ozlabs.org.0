@@ -1,77 +1,133 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E973AD30E5
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 20:54:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03CF6D3139
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 21:17:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46q0cX2sDlzDqS1
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 05:54:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46q1723YQNzDqSh
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 06:17:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=51862215bb=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="VylCZZbF"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="E6LpWzn7"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46q0bv3pBhzDqHG
- for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 05:53:46 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9AIllHb026966
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 14:53:43 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vj8ugtxtf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 14:53:43 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9AIpfdH026422
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:42 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma03dal.us.ibm.com with ESMTP id 2vejt802uu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:42 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x9AIrfFW54657370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:41 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A3235AE05F
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:41 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 855FDAE05C
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:41 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:53:41 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-Subject: New docs - provision and administer the BMC
-Message-ID: <729b9544-a0e8-2f54-4f5f-b46554abee77@linux.ibm.com>
-Date: Thu, 10 Oct 2019 13:53:41 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46q1642LdvzDqLs;
+ Fri, 11 Oct 2019 06:16:25 +1100 (AEDT)
+Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x9AJEsJG023261; Thu, 10 Oct 2019 12:15:09 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=gpo7u+O5ny4yNfM7OI/xQcXqo0X/HpBcn98U3zR/wZE=;
+ b=VylCZZbFfz5U66fdm957PldU3xOiYKNh6CRrq6UrHiirXjpjg12p4f2xvmi8kx0QKPiW
+ bnhRMNpCGyFI5x+2JjQUKSwHTHx3C4jr4sK4g4imbL7Qb1DA1lFjZVyoFfCxakS5oSKg
+ I0F9LQz3ETIg/8Ay+EqrMLoXaMQisXgTxoo= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2vhy7hbj2v-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Thu, 10 Oct 2019 12:15:09 -0700
+Received: from prn-hub06.TheFacebook.com (2620:10d:c081:35::130) by
+ prn-hub05.TheFacebook.com (2620:10d:c081:35::129) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Thu, 10 Oct 2019 12:15:08 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.30) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Thu, 10 Oct 2019 12:15:07 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=J3gU/Z5Yt0aJCDO4jLjMfyBJM3iFj9b2yJO8QhoLYOk9XLWHGxoQJM6GVtAI5IPtvvlPVL4ldVwo1Tzb5ky3ejiGuWSK0f+jrH4y8yrhguN5CQ/KyAjoRBiStE/fVmJWnr0ZoW7C+M8gzMqXoyezVqYQzf4pBz0OPFnUcao8QnwJUa1hhjCL0U0dlVozwqhzvgTnwXAhIwqcO8PAAgG9KEZmmFdimPG8VRMx+XDw9RILe6/yovxt306eyB7Sdi6yp07dum2F81KPBa7HF/Sti+ZnI88CJU0gmqBS8TkR/lD7LB8JpIkJlwiFZJhLjiHJ/OefZes15dCkcqK8adB9nQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gpo7u+O5ny4yNfM7OI/xQcXqo0X/HpBcn98U3zR/wZE=;
+ b=aK4bKYRZDAUHHE4CmtIARSh32nx+iX+4z4HAbubuBKCpmP1nXqZmwHLgkWcSWQMKOSMVJcOe5CbdgLpSk81C+caeESA4mPj4BgSDu1KUPtckArkLuTMyQ5lOojfrgsuA4wzXH8vLEreB+Yxd1JNL9v3G24agDK7a+i9icvwWpCBavbVN+clpcO5w9l1mpBrLYxCCfozJ+09SIaZ7bsjG92eJ0iU3O/TLlXD9/IfSc9XQiP0qs0YO768oWxG1LpcCQn7M8NgqOsvl5kK4bDXqWonXkYoZFGJ86FbX6PlC7o9cNkeZKfw8RL9gj6gVqBbmA+ue0KNzrVdUlN1w3SaMqg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gpo7u+O5ny4yNfM7OI/xQcXqo0X/HpBcn98U3zR/wZE=;
+ b=E6LpWzn7kammUzHBWri+w9BlcjmyszXYOSyfQFR6zIj1pTAcN6nd0y5phoHRrhHA4F4091VQh6jiDyX4OufYBZXtestLYZ/m8Rdc+FFWWvZzj0x7NTzBeHKkkQXkQVl+btjy6NYRobqT8+Kn70Cc915cRgNHE+vSuqG+/MibRZY=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3714.namprd15.prod.outlook.com (52.133.252.138) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.16; Thu, 10 Oct 2019 19:15:06 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c%4]) with mapi id 15.20.2347.016; Thu, 10 Oct 2019
+ 19:15:06 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>, Joel Stanley
+ <joel@jms.id.au>, Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Topic: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Index: AQHVaCL3HHZ/0IxjZ0GB2KAMVKzdAqcld28AgAEYWwCAK1ZcgIACEkcA
+Date: Thu, 10 Oct 2019 19:15:06 +0000
+Message-ID: <AF7B985F-6E42-4CD4-B3D0-4B9EA42253C9@fb.com>
+References: <20190910213734.3112330-1-vijaykhemka@fb.com>
+ <bd5eab2e-6ba6-9e27-54d4-d9534da9d5f7@gmail.com>
+ <CACPK8XcS4iKfKigPbPg0BFbmjbT-kdyjiPDXjk1k5XaS5bCdAA@mail.gmail.com>
+ <95e215664612c0487808c02232852ef2188c95a5.camel@kernel.crashing.org>
+In-Reply-To: <95e215664612c0487808c02232852ef2188c95a5.camel@kernel.crashing.org>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-10_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910100160
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:7710]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 28bf5bdd-2a55-4b7f-d133-08d74db62950
+x-ms-traffictypediagnostic: BY5PR15MB3714:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR15MB3714959FA6127C83F4F7B240DD940@BY5PR15MB3714.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 018632C080
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(136003)(396003)(376002)(346002)(39860400002)(189003)(199004)(7416002)(36756003)(6486002)(4326008)(33656002)(5660300002)(6436002)(66446008)(2906002)(64756008)(66556008)(66476007)(8936002)(76116006)(6246003)(91956017)(6116002)(66946007)(6512007)(81156014)(305945005)(7736002)(86362001)(81166006)(8676002)(11346002)(186003)(476003)(256004)(76176011)(46003)(71190400001)(71200400001)(99286004)(229853002)(2616005)(14454004)(478600001)(6506007)(53546011)(102836004)(486006)(446003)(316002)(25786009)(110136005)(54906003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3714;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: HtRMDOXR41judw596OClkiPN6c5MDr/ivSz1sHNxLgnMGzIDL8UC6oFxz8i/QuJ1ghv46/6G4Xn3368c7gMzIEu4o14lziYpEoVuEbuDRlqmCNb1QYmoAgiPdh+bydCv30tfV8ph9cmZnM6eqipHANPDHxIgGnY/SGH0YULKcFXmcdr6JakTafO/EmEkTvZFavoc488NnliruKTrYrcoUGcYbyuVxjQoW5oqhhiVW4EIuEWI8aqb4tXXeIPvUvH/uO17fokG+lDh4KHn5VuReZZ80YYM+Iq4Aeyr9a/2XsLiZtg2aqz67Lb3XPEgdKjBgNO3DvmGnmOpBOAM+KS14cfKXowaLV7KkP97aiGl//KyzJ4/PZmbVYSjlJsPukUQ+498wl1+IyW4rVQ/BIyieRxVf2kc7cwS8f1GM3rbZUo=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <58A3C6651CCA94419BED4AD9D1693B4D@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 28bf5bdd-2a55-4b7f-d133-08d74db62950
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Oct 2019 19:15:06.6814 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wZEGjViaJHX1nrx4G4wZKro1lCxvyjdlDIIjaTZIDCp7L1DJlg/jpU9Tr7qudiTlQCPJq+hV5CSuvslEWsRkgw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3714
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-10-10_06:2019-10-10,2019-10-10 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ suspectscore=0
+ adultscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ malwarescore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1908290000 definitions=main-1910100161
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,52 +139,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Kate Stewart <kstewart@linuxfoundation.org>, Andrew Lunn <andrew@lunn.ch>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ YueHaibing <yuehaibing@huawei.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Luis Chamberlain <mcgrof@kernel.org>,
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>, Thomas
+ Gleixner <tglx@linutronix.de>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Team,
-
-Can we add a new section for provisioning and administrating 
-OpenBMC-based systems?  It would give newcomers a more inviting 
-out-of-box experience, give us a place to record administrative best 
-practices, and (most importantly) give me a place to talk about how set 
-the BMC's root password per the [expired password design][].
-
-The revised documentation flow would be:
-1. The existing project README [Setting up your OpenBMC project][] 
-details how to build an image.
-2. The new BMC provisioning section would talk about how to provision 
-and administrate the BMC.
-3. The existing [OpenBMC Usage][] section introduces some of the BMC 
-interfaces.
-
-The content for the new section would walk the admin through BMC 
-provisioning tasks such as:
-- Loading the initial firmware image into the BMC.
-- Accessing the BMC via ssh, Redfish, REST APIs, host interfaces, IPMI, 
-serial console, etc.
-- Setting the BMC's initial root password.
-- Adding admin and user accounts.
-- Configuring IP, disabling unneeded network services, etc.
-
-Some of this could be copied from the [expired password cheatsheet 
-review][] (which would be abandoned).
-
-What do you think?
-
-- Joseph
-
-References:
-
-[expired password design]: 
-https://github.com/openbmc/docs/blob/master/designs/expired-password.md
-
-[Setting up your OpenBMC project]: 
-https://github.com/openbmc/openbmc/blob/master/README.md#setting-up-your-openbmc-project
-
-[OpenBMC Usage]: 
-https://github.com/openbmc/docs/blob/master/README.md#openbmc-usage
-
-[expired password cheatsheet review]: 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/25706
-
+DQoNCu+7v09uIDEwLzgvMTksIDk6MzcgUE0sICJCZW5qYW1pbiBIZXJyZW5zY2htaWR0IiA8YmVu
+aEBrZXJuZWwuY3Jhc2hpbmcub3JnPiB3cm90ZToNCg0KICAgIE9uIFdlZCwgMjAxOS0wOS0xMSBh
+dCAxNDo0OCArMDAwMCwgSm9lbCBTdGFubGV5IHdyb3RlOg0KICAgID4gSGkgQmVuLA0KICAgID4g
+DQogICAgPiBPbiBUdWUsIDEwIFNlcCAyMDE5IGF0IDIyOjA1LCBGbG9yaWFuIEZhaW5lbGxpIDxm
+LmZhaW5lbGxpQGdtYWlsLmNvbT4NCiAgICA+IHdyb3RlOg0KICAgID4gPiANCiAgICA+ID4gT24g
+OS8xMC8xOSAyOjM3IFBNLCBWaWpheSBLaGVta2Egd3JvdGU6DQogICAgPiA+ID4gSFcgY2hlY2tz
+dW0gZ2VuZXJhdGlvbiBpcyBub3Qgd29ya2luZyBmb3IgQVNUMjUwMCwgc3BlY2lhbGx5IHdpdGgN
+CiAgICA+ID4gPiBJUFY2DQogICAgPiA+ID4gb3ZlciBOQ1NJLiBBbGwgVENQIHBhY2tldHMgd2l0
+aCBJUHY2IGdldCBkcm9wcGVkLiBCeSBkaXNhYmxpbmcNCiAgICA+ID4gPiB0aGlzDQogICAgPiA+
+ID4gaXQgd29ya3MgcGVyZmVjdGx5IGZpbmUgd2l0aCBJUFY2Lg0KICAgID4gPiA+IA0KICAgID4g
+PiA+IFZlcmlmaWVkIHdpdGggSVBWNiBlbmFibGVkIGFuZCBjYW4gZG8gc3NoLg0KICAgID4gPiAN
+CiAgICA+ID4gSG93IGFib3V0IElQdjQsIGRvIHRoZXNlIHBhY2tldHMgaGF2ZSBwcm9ibGVtPyBJ
+ZiBub3QsIGNhbiB5b3UNCiAgICA+ID4gY29udGludWUNCiAgICA+ID4gYWR2ZXJ0aXNpbmcgTkVU
+SUZfRl9JUF9DU1VNIGJ1dCB0YWtlIG91dCBORVRJRl9GX0lQVjZfQ1NVTT8NCiAgICA+ID4gDQog
+ICAgPiA+ID4gDQogICAgPiA+ID4gU2lnbmVkLW9mZi1ieTogVmlqYXkgS2hlbWthIDx2aWpheWto
+ZW1rYUBmYi5jb20+DQogICAgPiA+ID4gLS0tDQogICAgPiA+ID4gIGRyaXZlcnMvbmV0L2V0aGVy
+bmV0L2ZhcmFkYXkvZnRnbWFjMTAwLmMgfCA1ICsrKy0tDQogICAgPiA+ID4gIDEgZmlsZSBjaGFu
+Z2VkLCAzIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQogICAgPiA+ID4gDQogICAgPiA+
+ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZhcmFkYXkvZnRnbWFjMTAwLmMN
+CiAgICA+ID4gPiBiL2RyaXZlcnMvbmV0L2V0aGVybmV0L2ZhcmFkYXkvZnRnbWFjMTAwLmMNCiAg
+ICA+ID4gPiBpbmRleCAwMzBmZWQ2NTM5M2UuLjU5MWM5NzI1MDAyYiAxMDA2NDQNCiAgICA+ID4g
+PiAtLS0gYS9kcml2ZXJzL25ldC9ldGhlcm5ldC9mYXJhZGF5L2Z0Z21hYzEwMC5jDQogICAgPiA+
+ID4gKysrIGIvZHJpdmVycy9uZXQvZXRoZXJuZXQvZmFyYWRheS9mdGdtYWMxMDAuYw0KICAgID4g
+PiA+IEBAIC0xODM5LDggKzE4MzksOSBAQCBzdGF0aWMgaW50IGZ0Z21hYzEwMF9wcm9iZShzdHJ1
+Y3QNCiAgICA+ID4gPiBwbGF0Zm9ybV9kZXZpY2UgKnBkZXYpDQogICAgPiA+ID4gICAgICAgaWYg
+KHByaXYtPnVzZV9uY3NpKQ0KICAgID4gPiA+ICAgICAgICAgICAgICAgbmV0ZGV2LT5od19mZWF0
+dXJlcyB8PSBORVRJRl9GX0hXX1ZMQU5fQ1RBR19GSUxURVI7DQogICAgPiA+ID4gDQogICAgPiA+
+ID4gLSAgICAgLyogQVNUMjQwMCAgZG9lc24ndCBoYXZlIHdvcmtpbmcgSFcgY2hlY2tzdW0gZ2Vu
+ZXJhdGlvbiAqLw0KICAgID4gPiA+IC0gICAgIGlmIChucCAmJiAob2ZfZGV2aWNlX2lzX2NvbXBh
+dGlibGUobnAsICJhc3BlZWQsYXN0MjQwMC0NCiAgICA+ID4gPiBtYWMiKSkpDQogICAgPiA+ID4g
+KyAgICAgLyogQVNUMjQwMCAgYW5kIEFTVDI1MDAgZG9lc24ndCBoYXZlIHdvcmtpbmcgSFcgY2hl
+Y2tzdW0NCiAgICA+ID4gPiBnZW5lcmF0aW9uICovDQogICAgPiA+ID4gKyAgICAgaWYgKG5wICYm
+IChvZl9kZXZpY2VfaXNfY29tcGF0aWJsZShucCwgImFzcGVlZCxhc3QyNDAwLQ0KICAgID4gPiA+
+IG1hYyIpIHx8DQogICAgPiA+ID4gKyAgICAgICAgICAgICAgICBvZl9kZXZpY2VfaXNfY29tcGF0
+aWJsZShucCwgImFzcGVlZCxhc3QyNTAwLQ0KICAgID4gPiA+IG1hYyIpKSkNCiAgICA+IA0KICAg
+ID4gRG8geW91IHJlY2FsbCB1bmRlciB3aGF0IGNpcmN1bXN0YW5jZXMgd2UgbmVlZCB0byBkaXNh
+YmxlIGhhcmR3YXJlDQogICAgPiBjaGVja3N1bW1pbmc/DQogICAgDQogICAgQW55IG5ld3Mgb24g
+dGhpcyA/IEFTVDI0MDAgaGFzIG5vIEhXIGNoZWNrc3VtIGxvZ2ljIGluIEhXLCBBU1QyNTAwDQog
+ICAgc2hvdWxkIHdvcmsgZm9yIElQVjQgZmluZSwgd2Ugc2hvdWxkIG9ubHkgc2VsZWN0aXZlbHkg
+ZGlzYWJsZSBpdCBmb3INCiAgICBJUFY2Lg0KDQpCZW4sIEkgaGF2ZSBhbHJlYWR5IHNlbnQgdjIg
+Zm9yIHRoaXMgd2l0aCByZXF1ZXN0ZWQgY2hhbmdlIHdoaWNoIG9ubHkgZGlzYWJsZSANCmZvciBJ
+UFY2IGluIEFTVDI1MDAuIEkgY2FuIHNlbmQgaXQgYWdhaW4uDQogICAgDQogICAgQ2FuIHlvdSBk
+byBhbiB1cGRhdGVkIHBhdGNoID8NCiAgICANCiAgICBDaGVlcnMsDQogICAgQmVuLg0KICAgIA0K
+ICAgIA0KDQo=
