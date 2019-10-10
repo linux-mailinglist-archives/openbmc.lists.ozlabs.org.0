@@ -2,38 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D80FD27E9
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 13:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8299BD2E2B
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 17:52:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ppgT6NZhzDr5R
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 22:26:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pwZS4RQDzDqQy
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 02:52:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=the-dreams.de
- (client-ip=88.99.104.3; helo=pokefinder.org; envelope-from=wsa@the-dreams.de;
- receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
+ envelope-from=ryanarnellibm@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=the-dreams.de
-Received: from pokefinder.org (sauhun.de [88.99.104.3])
- by lists.ozlabs.org (Postfix) with ESMTP id 46ppfZ637tzDr4C;
- Thu, 10 Oct 2019 22:25:25 +1100 (AEDT)
-Received: from localhost (p54B33257.dip0.t-ipconnect.de [84.179.50.87])
- by pokefinder.org (Postfix) with ESMTPSA id E00F42C01E8;
- Thu, 10 Oct 2019 08:37:35 +0200 (CEST)
-Date: Thu, 10 Oct 2019 08:37:35 +0200
-From: Wolfram Sang <wsa@the-dreams.de>
-To: Brendan Higgins <brendanhiggins@google.com>
-Subject: Re: [PATCH] i2c: aspeed: fix master pending state handling
-Message-ID: <20191010063735.GA893@kunai>
-References: <20191009212034.20325-1-jae.hyun.yoo@linux.intel.com>
- <20191010003234.GA12710@google.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="lg8dK8tH"; 
+ dkim-atps=neutral
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
+ [IPv6:2a00:1450:4864:20::22a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pwYn4MSVzDqKf
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 02:51:36 +1100 (AEDT)
+Received: by mail-lj1-x22a.google.com with SMTP id m7so6760724lji.2
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:51:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=cXXfTtpvQhWnqy5InSLqxKcMWF4pgAblF/KdVhCy5sA=;
+ b=lg8dK8tHPdJJoEPGfCsfqAq340NQEbVdcVRK8EVpnJ73BAItzNPBD8M3CIhMf4BhCw
+ 6THa57ohCxYfioXCF7Dz48hxiA/ASJzh8pbyaMFQ7b6oQWcYjGjy8s023dNdeMi1qD/X
+ jvJj/1VBGIWXAKcgYIS7ZXSLwZr1tS55w8osRfF8dU7guuFjww/DGHzCsLgxh2i/0tve
+ ZHxcC4SESrQY/tHj5qvnjbA4LUVRp5EfgTmLbSNsJJI+1LBnLywJ6m3JOOd0Q2p80Fjr
+ RfEKleMsGJtnCQ+svZfkB1a568l+smrflYEvSpSy2PO4lxyuSYwmw/qqEKG9yTWWPvvL
+ CqfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=cXXfTtpvQhWnqy5InSLqxKcMWF4pgAblF/KdVhCy5sA=;
+ b=Ic3tEOdLP3DSzmnPPcCSkebIWDzU8xpfEmjsJqF7hdCiX7Qyk9YURNoBAVR72JAtMA
+ QC2/FRD+zGAdz+hdLnrYtyH24N87aB6lf7MdrZAqSqPNgefYUI86yKKOA96OF7iTm5ac
+ i/IhMsWrhgZFV50Hvv+LoRgY3NMAxRxTXYVBv6xG6WpraUSCLwBC66+x4G3cEgmFdtoP
+ UvuHJ6dWolt1BYRs2gzsxEO1GxoH5bHUs6cmOJs4zS1TduTLb1b6ZChVkspg61StOt+g
+ /SdHJADfqkPBWVm4EiBp62ozv0FDi5Jb+ssspeOHKYxYsaABHW2Y8g31sWTAK5Q53hf4
+ keZg==
+X-Gm-Message-State: APjAAAUZxSQEKY6dXMv3sRVmgaJ00qbJLNqezmz8sgAyujU9j68HeqFI
+ m7SWalAsDLAGf55kYCzEx3x5qikiREUnoun9DlfmUMZy
+X-Google-Smtp-Source: APXvYqwKlpUFARS614K1jMW8J4ZrOOhTPZG4KUL1IV+sb7f9ufr9M/kODLMxyRbAQoRFfq30vKVNpcLwpnbzkPoEmZ8=
+X-Received: by 2002:a2e:a166:: with SMTP id u6mr6781796ljl.209.1570722690713; 
+ Thu, 10 Oct 2019 08:51:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
-Content-Disposition: inline
-In-Reply-To: <20191010003234.GA12710@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From: Ryan Arnell <ryanarnellibm@gmail.com>
+Date: Thu, 10 Oct 2019 10:51:19 -0500
+Message-ID: <CAH3qHnbZVuwJSCixhhdftym0=U7keyfDz7MgV1JqS1-AkBsYOQ@mail.gmail.com>
+Subject: GUI: Manage Power Usage page update
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000054d1a059490603a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -45,44 +69,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- linux-i2c@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- Tao Ren <taoren@fb.com>, linux-arm-kernel@lists.infradead.org,
- Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000054d1a059490603a
+Content-Type: text/plain; charset="UTF-8"
 
---UugvWAfsgieZRqgk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hello everyone,
+We have a slightly new design for our *Manage Power Usage *page. Now it is
+a little more organized and we are displaying min max power operations.
+Please feel free to leave your comments in the prototype here -
+https://ibm.invisionapp.com/share/QKNZAGECYNF#/319278728_01-Min-Max
+
+Also you can leave your feedback here-
+https://github.com/openbmc/phosphor-webui/issues/95
+
+Thank you!
+
+*Ryan Arnell  *
+UX Engineer | IBM Design | IBM Studios Austin
+
+--000000000000054d1a059490603a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello everyone,<div>We have a slightly new design for our =
+<b>Manage Power Usage </b>page. Now it is a little more organized and we ar=
+e displaying min max power operations. Please feel free to leave your comme=
+nts in the prototype here - <br><a href=3D"https://ibm.invisionapp.com/shar=
+e/QKNZAGECYNF#/319278728_01-Min-Max">https://ibm.invisionapp.com/share/QKNZ=
+AGECYNF#/319278728_01-Min-Max</a><br><div><br></div><div>Also you can leave=
+ your feedback here-</div><div><a href=3D"https://github.com/openbmc/phosph=
+or-webui/issues/95">https://github.com/openbmc/phosphor-webui/issues/95</a>=
+<br></div></div><div><br></div><div>Thank you!</div><div><br></div><div>
 
 
-> Wolfram, since this is a bugfix, can we get this in 5.4?
-
-Of course! Just giving Tao Ren some time for the Tested-by.
 
 
---UugvWAfsgieZRqgk
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
+variant-east-asian:normal;font-stretch:normal;line-height:normal;font-famil=
+y:Verdana"><b style=3D"">Ryan Arnell=C2=A0=C2=A0</b>=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0<br>
+UX Engineer | IBM=C2=A0Design=C2=A0|=C2=A0IBM Studios Austin</p></div></div=
+>
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl2e0asACgkQFA3kzBSg
-KbZEfA//eG2wIit8ZvHICrI4HHDAD/xgrOjZcCQHKy+PB5uNFMnEVdGy0ifN2Oml
-NIZvvWUp0hjhw7ZkPI0uJQ/MLGO47R02T9s9IXx5s0OaxYjB3MINRr1r/8SHvY2h
-4CeHFuMbAOdGx6h0vCACwXVpAvjewebvO45bX80AOXq88b8bRtS4Dx9sWIWRS8Fy
-5wpSWP0fFbPCimwIkW8SZE6KZcKy4AenP95Jjxyv7YXGFXDRHgV9xAp5eXDw0ZZR
-lhfsSkIWsQkNqOCDzwXO6IKX+GMu2UMzX8ipsXi0S2u03/HUGnhlxMg04AwH28x5
-iQv7tO0Boj1/OMJ2jfz/QAk0A+C04lo20/z+heHJoBz6BbhFnbXX+tMUzdn070EB
-AHN1pcLMlpPufqEcCBPj0Ky0RP2WH48vFqY+uJnTwAWAFx5quO1/DOYBRyzc4kPW
-FnDv6cgFtQKIbO6UWyGs4dHOttBFs2KSpNWcFaRxUHqUDpR7BBw0Bt8V7f6irsql
-lVPjyAQj5kDm3eA621uZR3/hFP4Ud1hLF1HzF+j9LX/1lA2+PMB/L7E2Yt6Dv+Ba
-1vX55ITdwFTyQ1MKpVileOYL1IY62EcFvUdhi5ahyjQNQtHaslKwa/l4Q/WDpMNu
-7AjPGDDcjnmNTW2DAcdxbHMeN3so766ZPr08ujZezcXZX7BBT14=
-=ApV2
------END PGP SIGNATURE-----
-
---UugvWAfsgieZRqgk--
+--000000000000054d1a059490603a--
