@@ -2,86 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EBF0D2EE6
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 18:51:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51765D2F4E
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 19:10:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46pxv03kfRzDqRN
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 03:51:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pyKB3CKWzDqLr
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 04:10:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jinujoy@linux.vnet.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::e30; helo=mail-vs1-xe30.google.com;
+ envelope-from=yuenn@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="fqweQs0R"; 
+ dkim-atps=neutral
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com
+ [IPv6:2607:f8b0:4864:20::e30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46pxrX0Zw4zDqQx
- for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 03:49:31 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9AGh1Lc007239
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 12:49:28 -0400
-Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vj5awqs83-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 12:49:27 -0400
-Received: from localhost
- by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <jinujoy@linux.vnet.ibm.com>;
- Thu, 10 Oct 2019 17:49:25 +0100
-Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
- by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 10 Oct 2019 17:49:22 +0100
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id x9AGnL4C39059854
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 10 Oct 2019 16:49:21 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 35F1B11C04A;
- Thu, 10 Oct 2019 16:49:21 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 542C011C05B;
- Thu, 10 Oct 2019 16:49:20 +0000 (GMT)
-Received: from Jinus-MacBook-Pro.local (unknown [9.85.75.217])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Thu, 10 Oct 2019 16:49:20 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.3] ARM: dts: aspeed: rainier: Add i2c eeproms
-To: Eddie James <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>
-References: <77b1d8b9-08a6-9a75-15a1-1c54dc7ddd9f@linux.vnet.ibm.com>
- <CACPK8XdP1NcOeBODTFXUz7XSjfe5xkaR0tf49yPLscGk+WfW2Q@mail.gmail.com>
- <dc9a7d4a-b388-bc9c-14e4-5046d2d01095@linux.vnet.ibm.com>
- <c0bf6059-48c8-1e79-8907-c7d9bd1622d5@linux.ibm.com>
-From: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
-Date: Thu, 10 Oct 2019 22:19:19 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pyJ32WjdzDqLD
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 04:09:54 +1100 (AEDT)
+Received: by mail-vs1-xe30.google.com with SMTP id m22so4382370vsl.9
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 10:09:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=mgr0leTGKL5RnvHODLjtThE0/a2si2NNn8N2M6WKATM=;
+ b=fqweQs0RVt9iz/fA5D5M6cUjorG+PnV//9V/6OZL6YyDPRrB8ceJJcKMxSaBe4Vwnt
+ 1auqZzX+IBDZu5rwOg4aBnNTSEbkiAvec0dHuvFjhd7PfTpLqK6IMFTLSj572laZtNA1
+ foCS3cBX6gCLIKL7kWBHjYhsWa+5yPzt4lQOZ/HPttHslyUr1G1qotBIY4nHAG9CdD6e
+ IvOXZvUVvQSxlQ01ODHQw8YrbWHL/hz180p9JVZlRW1xc5BQywZT/Q+/zCSf4newRtFF
+ 1Ou12QOzkgt0ubDMwMkXBQXeOAxpT9S2pCdIusyS9Dn9oN66qSZd4ymn20DjGZykJc0l
+ bmSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=mgr0leTGKL5RnvHODLjtThE0/a2si2NNn8N2M6WKATM=;
+ b=CZCPcJOD+lTBsYKJd+KEa1sdr/dQIx23CDKMzdKxUwZaOHvHjVCSkzI6lSDXYt1h/V
+ 7RQBvhsXkK8vkZByX75rJ+knL76Owq3XYzZekilHp2UF8n+kMgG5n7MaNtNK0kJwqD/q
+ FyEiBuqgjERL2TboKZvw1gud6kMMW+Cb+LRNDP7k4jB7foDlCArrkk/Qrv7iRi3p85/f
+ l9PGre9p9d43obRPWIS9EXnNmVTJRKGlO2V/+BlbNAgAldvFKXiBNhNI1plwRGDp8RDh
+ DAJ5s4lWy8XfiIVbwqpXhZxWWfBlUa0OjyGgOy38WhDEWikHjMKkVls5W1axo2GYM993
+ cbzA==
+X-Gm-Message-State: APjAAAUx5SNBiN3nyQo+mCXoc4wnPPDG2grd+tXnnv/4moakPHEwuGVB
+ BMQ69LNtWVgPxy5GxrLVGr0Bv/FstEg3UAcaEB0Ypw==
+X-Google-Smtp-Source: APXvYqwVHUYX0nkkNZ0R4V29qTOqFeeOKm8rUyyBUWOLNtr7+vg2NmUxJgMTem7AiSV6HuYnTaJg5Su83xFpQucVCOY=
+X-Received: by 2002:a67:ea01:: with SMTP id g1mr6148705vso.106.1570727388644; 
+ Thu, 10 Oct 2019 10:09:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c0bf6059-48c8-1e79-8907-c7d9bd1622d5@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19101016-0012-0000-0000-00000356EDF9
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19101016-0013-0000-0000-00002191F7ED
-Message-Id: <4174d530-96d9-b719-d427-5c28848bec2b@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-10_06:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910100150
+References: <CADfYTpG_Sy4_jNGqZTJKx1Tyivsu+SpBpWy=vNSH7L=Z0PXAEQ@mail.gmail.com>
+ <2F98B4CC-2C61-4AF7-B41A-897C9BA4E32F@fuzziesquirrel.com>
+In-Reply-To: <2F98B4CC-2C61-4AF7-B41A-897C9BA4E32F@fuzziesquirrel.com>
+From: Nancy Yuen <yuenn@google.com>
+Date: Thu, 10 Oct 2019 10:09:12 -0700
+Message-ID: <CADfYTpEut49XPWs+Ahz5dsRgayLkHToRh-6btHeqbaSR3wnK2A@mail.gmail.com>
+Subject: Re: Redfish Aggregator
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: multipart/alternative; boundary="0000000000000ab9a90594917892"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,147 +73,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, dkodihal@in.ibm.com,
+ Richard Hanley <rhanley@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Eddie,
+--0000000000000ab9a90594917892
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-will look at the schematics again and change as needed \.
+Thanks Brad!  We are envisioning aggregating the separate Redfish stacks to
+present a single unified system view.  There is another slide deck of
+Redfish Aggregator requirement uploaded to DMTF a few days ago with a
+slightly different idea of aggregation (it sounds more like batching, the
+aggregator will send a reboot or a fw update, to a bunch of redfish stacks
+on multiple systems).
 
-- Jinu
+Our next step is to write up the requirements for a Redfish Aggregator for
+our use cases. We would love input from others in OpenBMC as well.  We can
+share this with the Redfish Forum.
 
-On 03/10/19 1:16 AM, Eddie James wrote:
->
-> On 10/2/19 11:53 AM, Jinu Thomas wrote:
->> Hi Joel,
->>
->>  This is from the schematics, also it has been tested on rainier 
->> simics model. do you still need someone else to review it ?
->>
->> Regards,
->>
->> Jinu Joy
->>
->>
->> On 02/10/19 5:39 PM, Joel Stanley wrote:
->>> Hello Jinu,
->>>
->>> On Tue, 1 Oct 2019 at 06:05, Jinu Thomas 
->>> <jinujoy@linux.vnet.ibm.com> wrote:
->>>>
->>>> Added eeproms for the below VPD devices
->>>> - BMC
->>>> - TPM
->>>> - System Planar
->>>> - DCM 0 VRM
->>>> - DCM 1 VRM
->>>> - Base Op panel
->>>> - Lcd Op panel
->>>>
->>>> Signed-off-by: Jinu Joy Thomas <jinu.joy.thomas@in.ibm.com>
->>> Your patch looks good. Can you please find someone who has access to
->>> the Rainier schematics to review your changes?
->>>
->>> Cheers,
->>>
->>> Joel
->>>
->>>> ---
->>>>    arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 35 
->>>> ++++++++++++++++++++
->>>>    1 file changed, 35 insertions(+)
->>>>
->>>> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->>>> b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->>>> index cdc65eb28d20..7d2f3257b419 100644
->>>> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->>>> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
->>>> @@ -53,6 +53,11 @@
->>>>
->>>>    &i2c0 {
->>>>        status = "okay";
->>>> +
->>>> +        eeprom@50 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x50>;
->>>> +        };
->>>>    };
->>>>
->>>>    &i2c1 {
->>>> @@ -262,6 +267,16 @@
->>>>            reg = <0x76>;
->>>>            #io-channel-cells = <0>;
->>>>        };
->>>> +
->>>> +        eeprom@50 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x50>;
->>>> +        };
->>>> +
->>>> +        eeprom@51 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x51>;
->>>> +        };
->
->
-> Hi Jinu,
->
-> These addresses appear to be lm25066 from the schematic. Also they're 
-> marked as hotplug? I'm not sure of the significance.
->
->
-> Thanks,
->
-> Eddie
->
->
->>>>    };
->>>>
->>>>    &i2c8 {
->>>> @@ -296,6 +311,16 @@
->>>>            compatible = "ti,tmp275";
->>>>            reg = <0x4a>;
->>>>        };
->>>> +
->>>> +        eeprom@50 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x50>;
->>>> +        };
->>>> +
->>>> +        eeprom@51 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x51>;
->>>> +        };
->>>>    };
->>>>
->>>>    &i2c9 {
->>>> @@ -340,6 +365,11 @@
->>>>            compatible = "infineon,ir35221";
->>>>            reg = <0x74>;
->>>>        };
->>>> +
->>>> +        eeprom@50 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x50>;
->>>> +        };
->>>>    };
->>>>
->>>>    &i2c10 {
->>>> @@ -384,6 +414,11 @@
->>>>            compatible = "infineon,ir35221";
->>>>            reg = <0x74>;
->>>>        };
->>>> +        eeprom@50 {
->>>> +                compatible = "atmel,24c64";
->>>> +                reg = <0x50>;
->>>> +        };
->>>> +
->>>>    };
->>>>
->>>>    &i2c11 {
->>>> -- 
->>>> 2.20.1 (Apple Git-117)
->>>>
->>
+----------
+Nancy
 
+
+On Tue, Oct 8, 2019 at 11:54 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
+wrote:
+
+> at 3:59 PM, Nancy Yuen <yuenn@google.com> wrote:
+>
+> > Has anyone looked at the Redfish Aggregator proposal that was voted on
+> in
+> > DMTF recently?
+> > We have a need for this functionality. Would anyone else find it
+> useful?
+> > Would anyone be interested in collaborating?
+>
+> Hi Nancy
+>
+> In the past IBM has made NUMA systems with multiple chassis that are
+> stitched together into a single SMP fabric.  In these systems each
+> chassis
+> has one or more BMCs.
+>
+> If a =E2=80=9CRedfish Aggregator=E2=80=9D would aggregate the Redfish sta=
+cks on each BMC
+> in
+> a system like this, then that sounds like an effort that IBM would
+> potentially find useful and want to contribute to.
+>
+> thx!  -brad
+>
+
+--0000000000000ab9a90594917892
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Thanks Brad!=C2=A0 We are envisioning aggregating the sepa=
+rate Redfish stacks to present a single unified system view.=C2=A0 There is=
+ another slide deck of Redfish Aggregator requirement uploaded to DMTF a fe=
+w days ago with a slightly different idea of aggregation (it sounds more li=
+ke batching, the aggregator will send a reboot or a fw update, to a bunch o=
+f redfish stacks on multiple systems).<div><br></div><div>Our next step is =
+to write up the requirements for a Redfish Aggregator for our use cases. We=
+ would love input from others in OpenBMC as well.=C2=A0 We can share this w=
+ith the Redfish Forum.</div><div><br clear=3D"all"><div><div dir=3D"ltr" da=
+ta-smartmail=3D"gmail_signature">----------<br>Nancy</div></div><br></div><=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Tue, Oct 8, 2019 at 11:54 AM Brad Bishop &lt;<a href=3D"mailto:bradleyb@f=
+uzziesquirrel.com" target=3D"_blank">bradleyb@fuzziesquirrel.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">at 3:59 PM,=
+ Nancy Yuen &lt;<a href=3D"mailto:yuenn@google.com" target=3D"_blank">yuenn=
+@google.com</a>&gt; wrote:<br>
+<br>
+&gt; Has anyone looked at the Redfish Aggregator proposal that was voted on=
+ in=C2=A0 <br>
+&gt; DMTF recently?<br>
+&gt; We have a need for this functionality. Would anyone else find it usefu=
+l?=C2=A0 <br>
+&gt; Would anyone be interested in collaborating?<br>
+<br>
+Hi Nancy<br>
+<br>
+In the past IBM has made NUMA systems with multiple chassis that are=C2=A0 =
+<br>
+stitched together into a single SMP fabric.=C2=A0 In these systems each cha=
+ssis=C2=A0 <br>
+has one or more BMCs.<br>
+<br>
+If a =E2=80=9CRedfish Aggregator=E2=80=9D would aggregate the Redfish stack=
+s on each BMC in=C2=A0 <br>
+a system like this, then that sounds like an effort that IBM would=C2=A0 <b=
+r>
+potentially find useful and want to contribute to.<br>
+<br>
+thx!=C2=A0 -brad<br>
+</blockquote></div>
+
+--0000000000000ab9a90594917892--
