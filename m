@@ -2,62 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD0F4D2101
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 08:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B8749D2289
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 10:21:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46phWt6LW9zDqvY
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 17:49:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pkZV2jzJzDr0K
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 19:21:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::743; helo=mail-qk1-x743.google.com;
- envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+ spf=softfail (mailfrom) smtp.mailfrom=kaod.org
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="CHzh5/CM"; 
- dkim-atps=neutral
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com
- [IPv6:2607:f8b0:4864:20::743])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=kaod.org
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46phW334h5zDqvR;
- Thu, 10 Oct 2019 17:48:31 +1100 (AEDT)
-Received: by mail-qk1-x743.google.com with SMTP id q203so4650118qke.1;
- Wed, 09 Oct 2019 23:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=HfYimyj7XnI5kt+t6lECNj+HcYUo8K48jVJvvrvxJwU=;
- b=CHzh5/CMtBcl4mAy48yu0PywrvQ0pK9mWsdimHH8jgdHSBLl9cNKhCrpdvO4L0Zaaj
- VwAXU+VhkNVrUCrU3RuyIejzaWyqSWwSxMKr7W1whgRO8OpDt4vjoJVGtbQeBkgKQDGh
- vCtjQzVdaFc0D6pK3nDqrBDXTRMmwVcc0T0PI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=HfYimyj7XnI5kt+t6lECNj+HcYUo8K48jVJvvrvxJwU=;
- b=M1eKrOrF+clWpGEvRQZJJCJhkmpecPBpLK9LcrCpPrI40ydrmpZuvFTdD/kmP0TD3A
- B5zKgFujNqGWtD6Q65odBQFPAarrFZxaxZYGacVkah5ramMSdv90NCHIc4E4qZtOOzly
- C4wzwX/pwbDUp490j8OeIMmdV4SaoVr+9K7Weto7RnomynK72EybdCu0u8Gy7jX7CAmT
- PkXTdZMMMhsquNa5nNuwHrSf1LXazrWGKpISJrAQFQ9Gbb7MgUK1dT+2NvghIhnuVCjt
- GlOmdOmqMxGNiIxg6IX8G+uMROAByNmRUHB7HGGo0iJRTOPQVKzu6vN8HgET3Sm3k7kw
- UU7A==
-X-Gm-Message-State: APjAAAX88Tq4T2ru0kW23lE6vdBdqp6u7QeJjCt8nfroBNXfYqSPOi7D
- RfOqbxR2tFien1NA0ZXMYRMFZD17Xke8CLDR4mQ=
-X-Google-Smtp-Source: APXvYqwoWtsEFPJ7Ma76eSNtW4TPaTGucXelYXNVmcWl2X/aPwSWHNNk6gYfy+Y0OlvgYSg2H1snmH4FDyZYbyorRFg=
-X-Received: by 2002:a37:4dca:: with SMTP id a193mr8086400qkb.292.1570690107291; 
- Wed, 09 Oct 2019 23:48:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pkYb37fKzDqyH
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 19:20:47 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9A8JJo6127241
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 04:20:44 -0400
+Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vhynajgxp-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 04:20:44 -0400
+Received: from localhost
+ by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <clg@kaod.org>;
+ Thu, 10 Oct 2019 09:20:42 +0100
+Received: from b06avi18626390.portsmouth.uk.ibm.com (9.149.26.192)
+ by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 10 Oct 2019 09:20:40 +0100
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id x9A8K9Ih30605628
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:09 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 28D8CA4055
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20194A4040
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
+Received: from smtp.tls.ibm.com (unknown [9.101.4.1])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:20:39 +0000 (GMT)
+Received: from yukon.kaod.org (sig-9-145-2-100.uk.ibm.com [9.145.2.100])
+ by smtp.tls.ibm.com (Postfix) with ESMTP id CB8BC22016A
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 10:20:38 +0200 (CEST)
+Subject: Re: [PATCH 0/5] i2c: aspeed: Add buffer and DMA modes support
+To: openbmc@lists.ozlabs.org
+References: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+Date: Thu, 10 Oct 2019 10:20:38 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.0
 MIME-Version: 1.0
-References: <20191009212034.20325-1-jae.hyun.yoo@linux.intel.com>
-In-Reply-To: <20191009212034.20325-1-jae.hyun.yoo@linux.intel.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 10 Oct 2019 06:48:15 +0000
-Message-ID: <CACPK8XfKCSNsQJa2J2jKZJ7LGZh3zXAOfBYnp5X0w=TH4JfSpQ@mail.gmail.com>
-Subject: Re: [PATCH] i2c: aspeed: fix master pending state handling
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191007231313.4700-1-jae.hyun.yoo@linux.intel.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+x-cbid: 19101008-0008-0000-0000-00000320C6AF
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19101008-0009-0000-0000-00004A3FCE59
+Message-Id: <b91963ee-2536-43da-0801-e41dc9ad0877@kaod.org>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-10-10_04:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=898 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910100078
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,32 +93,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>, Rob Herring <robh+dt@kernel.org>,
- Cedric Le Goater <clg@kaod.org>, Tao Ren <taoren@fb.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 9 Oct 2019 at 21:20, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->
-> In case of master pending state, it should not trigger a master
-> command, otherwise data could be corrupted because this H/W shares
-> the same data buffer for slave and master operations. It also means
-> that H/W command queue handling is unreliable because of the buffer
-> sharing issue. To fix this issue, it clears command queue if a
-> master command is queued in pending state to use S/W solution
-> instead of H/W command queue handling. Also, it refines restarting
-> mechanism of the pending master command.
->
-> Fixes: 2e57b7cebb98 ("i2c: aspeed: Add multi-master use case support")
-> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Hello, Jae
 
-Acked-by: Joel Stanley <joel@jms.id.au>
+On 08/10/2019 01:13, Jae Hyun Yoo wrote:
+> This patch series adds buffer mode and DMA mode transfer support for the
+> Aspeed I2C driver. With this change, default transfer mode will be set to
+> buffer mode for better performance, and DMA mode can be selectively used
+> depends on platform configuration.
+> 
+> * Buffer mode
+>   AST2400:
+>     It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
+>     0x1e78a800 to 0x1e78afff that can be used for all busses with
+>     buffer pool manipulation. To simplify implementation for supporting
+>     both AST2400 and AST2500, it assigns each 128 Bytes per bus without
+>     using buffer pool manipulation so total 1792 Bytes of I2C SRAM
+>     buffer will be used.
+> 
+>   AST2500:
+>     It has 16 Bytes of individual I2C SRAM buffer per each bus and its
+>     range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
+>     page selection' bit field in the Function control register, and
+>     neither 'base address pointer' bit field in the Pool buffer control
+>     register it has. To simplify implementation for supporting both
+>     AST2400 and AST2500, it writes zeros on those register bit fields
+>     but it's okay because it does nothing in AST2500.
+> 
+> * DMA mode
+>   Only AST2500 and later versions support DMA mode under some limitations:
+>     I2C is sharing the DMA H/W with UHCI host controller and MCTP
+>     controller. Since those controllers operate with DMA mode only, I2C
+>     has to use buffer mode or byte mode instead if one of those
+>     controllers is enabled. Also make sure that if SD/eMMC or Port80
+>     snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
+>     use DMA mode.
 
-While reviewing I was concerned about the locking in
-aspeed_i2c_master_xfer. It's a bit hairy, and I am not convinced it is
-without bugs.
+
+I just pushed models adding support for the pool buffer mode and DMA mode
+to the I2C controller and did some tests on these QEMU Aspeed machines : 
+
+  palmetto (AST2400) : BYTE + BUFFER 
+  romulus  (AST2500) : BYTE + BUFFER + DMA (with a custom DT) 
+  tacoma   (AST2600) : BYTE
+
+Looks good on the QEMU side. 
+
+Thanks,
+
+C.  
+
+
+> Please review it.
+> 
+> -Jae
+> 
+> Jae Hyun Yoo (5):
+>   dt-bindings: i2c: aspeed: add buffer and DMA mode transfer support
+>   ARM: dts: aspeed: add I2C buffer mode support
+>   i2c: aspeed: fix master pending state handling
+>   i2c: aspeed: add buffer mode transfer support
+>   i2c: aspeed: add DMA mode transfer support
+> 
+>  .../devicetree/bindings/i2c/i2c-aspeed.txt    |  67 ++-
+>  arch/arm/boot/dts/aspeed-g4.dtsi              |  47 +-
+>  arch/arm/boot/dts/aspeed-g5.dtsi              |  47 +-
+>  drivers/i2c/busses/i2c-aspeed.c               | 513 ++++++++++++++++--
+>  4 files changed, 588 insertions(+), 86 deletions(-)
+> 
+
