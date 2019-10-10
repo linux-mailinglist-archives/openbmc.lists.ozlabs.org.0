@@ -1,63 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8299BD2E2B
-	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 17:52:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EBF0D2EE6
+	for <lists+openbmc@lfdr.de>; Thu, 10 Oct 2019 18:51:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46pwZS4RQDzDqQy
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 02:52:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46pxv03kfRzDqRN
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 03:51:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com;
- envelope-from=ryanarnellibm@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="lg8dK8tH"; 
- dkim-atps=neutral
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com
- [IPv6:2a00:1450:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.vnet.ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=jinujoy@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46pwYn4MSVzDqKf
- for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 02:51:36 +1100 (AEDT)
-Received: by mail-lj1-x22a.google.com with SMTP id m7so6760724lji.2
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 08:51:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=cXXfTtpvQhWnqy5InSLqxKcMWF4pgAblF/KdVhCy5sA=;
- b=lg8dK8tHPdJJoEPGfCsfqAq340NQEbVdcVRK8EVpnJ73BAItzNPBD8M3CIhMf4BhCw
- 6THa57ohCxYfioXCF7Dz48hxiA/ASJzh8pbyaMFQ7b6oQWcYjGjy8s023dNdeMi1qD/X
- jvJj/1VBGIWXAKcgYIS7ZXSLwZr1tS55w8osRfF8dU7guuFjww/DGHzCsLgxh2i/0tve
- ZHxcC4SESrQY/tHj5qvnjbA4LUVRp5EfgTmLbSNsJJI+1LBnLywJ6m3JOOd0Q2p80Fjr
- RfEKleMsGJtnCQ+svZfkB1a568l+smrflYEvSpSy2PO4lxyuSYwmw/qqEKG9yTWWPvvL
- CqfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=cXXfTtpvQhWnqy5InSLqxKcMWF4pgAblF/KdVhCy5sA=;
- b=Ic3tEOdLP3DSzmnPPcCSkebIWDzU8xpfEmjsJqF7hdCiX7Qyk9YURNoBAVR72JAtMA
- QC2/FRD+zGAdz+hdLnrYtyH24N87aB6lf7MdrZAqSqPNgefYUI86yKKOA96OF7iTm5ac
- i/IhMsWrhgZFV50Hvv+LoRgY3NMAxRxTXYVBv6xG6WpraUSCLwBC66+x4G3cEgmFdtoP
- UvuHJ6dWolt1BYRs2gzsxEO1GxoH5bHUs6cmOJs4zS1TduTLb1b6ZChVkspg61StOt+g
- /SdHJADfqkPBWVm4EiBp62ozv0FDi5Jb+ssspeOHKYxYsaABHW2Y8g31sWTAK5Q53hf4
- keZg==
-X-Gm-Message-State: APjAAAUZxSQEKY6dXMv3sRVmgaJ00qbJLNqezmz8sgAyujU9j68HeqFI
- m7SWalAsDLAGf55kYCzEx3x5qikiREUnoun9DlfmUMZy
-X-Google-Smtp-Source: APXvYqwKlpUFARS614K1jMW8J4ZrOOhTPZG4KUL1IV+sb7f9ufr9M/kODLMxyRbAQoRFfq30vKVNpcLwpnbzkPoEmZ8=
-X-Received: by 2002:a2e:a166:: with SMTP id u6mr6781796ljl.209.1570722690713; 
- Thu, 10 Oct 2019 08:51:30 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46pxrX0Zw4zDqQx
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 03:49:31 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9AGh1Lc007239
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 12:49:28 -0400
+Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vj5awqs83-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 12:49:27 -0400
+Received: from localhost
+ by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <jinujoy@linux.vnet.ibm.com>;
+ Thu, 10 Oct 2019 17:49:25 +0100
+Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
+ by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 10 Oct 2019 17:49:22 +0100
+Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
+ [9.149.105.61])
+ by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id x9AGnL4C39059854
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 10 Oct 2019 16:49:21 GMT
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 35F1B11C04A;
+ Thu, 10 Oct 2019 16:49:21 +0000 (GMT)
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 542C011C05B;
+ Thu, 10 Oct 2019 16:49:20 +0000 (GMT)
+Received: from Jinus-MacBook-Pro.local (unknown [9.85.75.217])
+ by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu, 10 Oct 2019 16:49:20 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.3] ARM: dts: aspeed: rainier: Add i2c eeproms
+To: Eddie James <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>
+References: <77b1d8b9-08a6-9a75-15a1-1c54dc7ddd9f@linux.vnet.ibm.com>
+ <CACPK8XdP1NcOeBODTFXUz7XSjfe5xkaR0tf49yPLscGk+WfW2Q@mail.gmail.com>
+ <dc9a7d4a-b388-bc9c-14e4-5046d2d01095@linux.vnet.ibm.com>
+ <c0bf6059-48c8-1e79-8907-c7d9bd1622d5@linux.ibm.com>
+From: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
+Date: Thu, 10 Oct 2019 22:19:19 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-From: Ryan Arnell <ryanarnellibm@gmail.com>
-Date: Thu, 10 Oct 2019 10:51:19 -0500
-Message-ID: <CAH3qHnbZVuwJSCixhhdftym0=U7keyfDz7MgV1JqS1-AkBsYOQ@mail.gmail.com>
-Subject: GUI: Manage Power Usage page update
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000054d1a059490603a"
+In-Reply-To: <c0bf6059-48c8-1e79-8907-c7d9bd1622d5@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19101016-0012-0000-0000-00000356EDF9
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19101016-0013-0000-0000-00002191F7ED
+Message-Id: <4174d530-96d9-b719-d427-5c28848bec2b@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-10-10_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910100150
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,49 +93,147 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000054d1a059490603a
-Content-Type: text/plain; charset="UTF-8"
+Thanks Eddie,
 
-Hello everyone,
-We have a slightly new design for our *Manage Power Usage *page. Now it is
-a little more organized and we are displaying min max power operations.
-Please feel free to leave your comments in the prototype here -
-https://ibm.invisionapp.com/share/QKNZAGECYNF#/319278728_01-Min-Max
+will look at the schematics again and change as needed \.
 
-Also you can leave your feedback here-
-https://github.com/openbmc/phosphor-webui/issues/95
+- Jinu
 
-Thank you!
-
-*Ryan Arnell  *
-UX Engineer | IBM Design | IBM Studios Austin
-
---000000000000054d1a059490603a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello everyone,<div>We have a slightly new design for our =
-<b>Manage Power Usage </b>page. Now it is a little more organized and we ar=
-e displaying min max power operations. Please feel free to leave your comme=
-nts in the prototype here - <br><a href=3D"https://ibm.invisionapp.com/shar=
-e/QKNZAGECYNF#/319278728_01-Min-Max">https://ibm.invisionapp.com/share/QKNZ=
-AGECYNF#/319278728_01-Min-Max</a><br><div><br></div><div>Also you can leave=
- your feedback here-</div><div><a href=3D"https://github.com/openbmc/phosph=
-or-webui/issues/95">https://github.com/openbmc/phosphor-webui/issues/95</a>=
-<br></div></div><div><br></div><div>Thank you!</div><div><br></div><div>
-
-
-
-
-
-<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
-variant-east-asian:normal;font-stretch:normal;line-height:normal;font-famil=
-y:Verdana"><b style=3D"">Ryan Arnell=C2=A0=C2=A0</b>=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0<br>
-UX Engineer | IBM=C2=A0Design=C2=A0|=C2=A0IBM Studios Austin</p></div></div=
+On 03/10/19 1:16 AM, Eddie James wrote:
 >
+> On 10/2/19 11:53 AM, Jinu Thomas wrote:
+>> Hi Joel,
+>>
+>>  This is from the schematics, also it has been tested on rainier 
+>> simics model. do you still need someone else to review it ?
+>>
+>> Regards,
+>>
+>> Jinu Joy
+>>
+>>
+>> On 02/10/19 5:39 PM, Joel Stanley wrote:
+>>> Hello Jinu,
+>>>
+>>> On Tue, 1 Oct 2019 at 06:05, Jinu Thomas 
+>>> <jinujoy@linux.vnet.ibm.com> wrote:
+>>>>
+>>>> Added eeproms for the below VPD devices
+>>>> - BMC
+>>>> - TPM
+>>>> - System Planar
+>>>> - DCM 0 VRM
+>>>> - DCM 1 VRM
+>>>> - Base Op panel
+>>>> - Lcd Op panel
+>>>>
+>>>> Signed-off-by: Jinu Joy Thomas <jinu.joy.thomas@in.ibm.com>
+>>> Your patch looks good. Can you please find someone who has access to
+>>> the Rainier schematics to review your changes?
+>>>
+>>> Cheers,
+>>>
+>>> Joel
+>>>
+>>>> ---
+>>>>    arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 35 
+>>>> ++++++++++++++++++++
+>>>>    1 file changed, 35 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+>>>> b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+>>>> index cdc65eb28d20..7d2f3257b419 100644
+>>>> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+>>>> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+>>>> @@ -53,6 +53,11 @@
+>>>>
+>>>>    &i2c0 {
+>>>>        status = "okay";
+>>>> +
+>>>> +        eeprom@50 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x50>;
+>>>> +        };
+>>>>    };
+>>>>
+>>>>    &i2c1 {
+>>>> @@ -262,6 +267,16 @@
+>>>>            reg = <0x76>;
+>>>>            #io-channel-cells = <0>;
+>>>>        };
+>>>> +
+>>>> +        eeprom@50 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x50>;
+>>>> +        };
+>>>> +
+>>>> +        eeprom@51 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x51>;
+>>>> +        };
+>
+>
+> Hi Jinu,
+>
+> These addresses appear to be lm25066 from the schematic. Also they're 
+> marked as hotplug? I'm not sure of the significance.
+>
+>
+> Thanks,
+>
+> Eddie
+>
+>
+>>>>    };
+>>>>
+>>>>    &i2c8 {
+>>>> @@ -296,6 +311,16 @@
+>>>>            compatible = "ti,tmp275";
+>>>>            reg = <0x4a>;
+>>>>        };
+>>>> +
+>>>> +        eeprom@50 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x50>;
+>>>> +        };
+>>>> +
+>>>> +        eeprom@51 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x51>;
+>>>> +        };
+>>>>    };
+>>>>
+>>>>    &i2c9 {
+>>>> @@ -340,6 +365,11 @@
+>>>>            compatible = "infineon,ir35221";
+>>>>            reg = <0x74>;
+>>>>        };
+>>>> +
+>>>> +        eeprom@50 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x50>;
+>>>> +        };
+>>>>    };
+>>>>
+>>>>    &i2c10 {
+>>>> @@ -384,6 +414,11 @@
+>>>>            compatible = "infineon,ir35221";
+>>>>            reg = <0x74>;
+>>>>        };
+>>>> +        eeprom@50 {
+>>>> +                compatible = "atmel,24c64";
+>>>> +                reg = <0x50>;
+>>>> +        };
+>>>> +
+>>>>    };
+>>>>
+>>>>    &i2c11 {
+>>>> -- 
+>>>> 2.20.1 (Apple Git-117)
+>>>>
+>>
 
---000000000000054d1a059490603a--
