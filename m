@@ -2,69 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E9D5D3DAA
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 12:48:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B390ED448D
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 17:38:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46qPn94rXzzDqY1
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 21:48:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46qXDQ5wXHzDqcw
+	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2019 02:38:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com;
- envelope-from=artemsen@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="mBheWcv0"; 
- dkim-atps=neutral
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
- [IPv6:2a00:1450:4864:20::22d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46qPmQ4dNkzDqXK;
- Fri, 11 Oct 2019 21:47:31 +1100 (AEDT)
-Received: by mail-lj1-x22d.google.com with SMTP id m13so9306553ljj.11;
- Fri, 11 Oct 2019 03:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:subject:message-id:mime-version:content-disposition
- :user-agent; bh=31BcLeQEagEp5TVXh0iur1VAoNKfDNPjvckJPmg60Ao=;
- b=mBheWcv08QCLp0iBOPlr+zoLhSVVohgIZPjZH6E3E6EAfcfubX/FX2iZcl33CERAp+
- w/XYOPXWkPBR/LSjAfVPmz+mdPrs04DFsp4Za+ooDbjc3rvwQZK12bIt3TIIfNKMK9RS
- t4tV+8AdwhytKUZcOdwALyRH5aTlHOvPkA9+gpL7d4AA1+zBMs36cuBDz1zjajZ7MCMJ
- ubd7XD4uf5aG+JfQNUfIoMUsEZ6IWI3DV/iYloEum7iuHBSs2hBnCjNmCZsqWbIsfkVI
- 04VhJ6lEr347ZUZJykCvaDXG2/vcmZl7ICy+Ua53/UJLM7+qdFlWf1xp5uyIQp16ugQr
- 7RxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:subject:message-id:mime-version
- :content-disposition:user-agent;
- bh=31BcLeQEagEp5TVXh0iur1VAoNKfDNPjvckJPmg60Ao=;
- b=g2ib5G9mqCYP5rWtkcG6AU5llGFeaCYjVRD81GwujbENP/7C/1a/kesXJoMwDeuPlu
- LBfJVLxGZXYGSm4iXtz+Mg+qIglpR/NPBB6qcfjmY5C979xARL31hkpYXY3B5uLiWBKa
- lm0+i0TUHftsZGTP+V5e5uWoxKh4WiNLdeUzzDB4EbBQz+zOA/ddmmmxBti0FC8dIqDo
- 7AopgFKUonNxDaa0yvlV+B6O+pEUj6lhQvAoCh317itsO5P5JIHAKO31I7lHpL9cQ31f
- MitdjauZKEnPXPs8PvxG/Mq5idezmvs1ZkqTsrxwU9ydkaGZHnATbCigAmMdNg1MPuZ0
- TK/w==
-X-Gm-Message-State: APjAAAWN+opfK/wV4dCH08TO4a8wqZ1gnMx8biv/B+SECLl2Mcd0yBfX
- H+Jl2xlrSYL7pWzAjoTMjbg4ctydEz8=
-X-Google-Smtp-Source: APXvYqyYbV3pfhQKYd5vjXm0nJjCyoaB0b5G95G4hjelKFp11g+rU8K9XEZqdm6+1mMfZoulWOLqdg==
-X-Received: by 2002:a2e:9b12:: with SMTP id u18mr9296851lji.142.1570790843816; 
- Fri, 11 Oct 2019 03:47:23 -0700 (PDT)
-Received: from gmail.com ([89.207.88.249])
- by smtp.gmail.com with ESMTPSA id w77sm1929685lff.49.2019.10.11.03.47.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Oct 2019 03:47:23 -0700 (PDT)
-Date: Fri, 11 Oct 2019 13:47:22 +0300
-From: Artem Senichev <artemsen@gmail.com>
-To: openpower-firmware@lists.ozlabs.org, openbmc@lists.ozlabs.org
-Subject: OpenPOWER SEL/PEL/HBEL parser
-Message-ID: <20191011104722.5kqe4gl6cdk5wijx@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46qXCd361qzDqZb
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Oct 2019 02:38:04 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Oct 2019 08:38:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,284,1566889200"; d="scan'208";a="184797421"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga007.jf.intel.com with ESMTP; 11 Oct 2019 08:38:01 -0700
+Received: from [10.241.244.103] (unknown [10.241.244.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 5800E5802B0;
+ Fri, 11 Oct 2019 08:38:01 -0700 (PDT)
+Subject: Re: why sel-logger not add all info to journal?
+To: www <ouyangxuan10@163.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <6db4fd1b.3ba4.16db89fcc8b.Coremail.ouyangxuan10@163.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <7977c2a2-1432-3db2-e598-1f434dfd166e@linux.intel.com>
+Date: Fri, 11 Oct 2019 08:38:01 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20180716
+In-Reply-To: <6db4fd1b.3ba4.16db89fcc8b.Coremail.ouyangxuan10@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,21 +62,47 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+On 10/10/2019 7:22 PM, www wrote:
+> Dear all,
+> 
+> Add sel-logger to openbmc project, when threshold sensor generate log, 
+> sel-logger will add message to journal, but why the message is incomplete?
 
-We created a parser to decode error log entries generated by OpenPOWER firmware.
-It is something like `errl` utility that can be used in OpenBMC.
+By incomplete do you mean that you do not see the journal fields as 
+shown in the sd_journal_send() call (MESSAGE_ID, IPMI_SEL_RECORD_ID, etc.)?
 
-Source code:
-https://github.com/YADRO-KNS/openpower-esel-parser
+Journal entries are made up of various fields each of the form 
+"VARIABLE=value".  By default, journalctl only shows the contents of the 
+MESSAGE field which is what you show below.  If you want to see all of 
+the fields in the journal entry you can use 'journalctl -o json-pretty' 
+which will print the full journal entry as a JSON-style object.
 
-OpenBMC's recipe:
-https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-nicole/recipes-phosphor/logging/openpower-esel-parser_git.bb
-
-If you find this parser useful, we can transfer our repository to OpenBMC or
-OpenPOWER and continue to maintain it as part of one of these projects.
-
--- 
-Regards,
-Artem Senichev
-Software Engineer, YADRO.
+> 
+> |sd_journal_send("MESSAGE=%s", message.c_str(), "PRIORITY=%i", 
+> selPriority, "MESSAGE_ID=%s", selMessageId, "IPMI_SEL_RECORD_ID=%d", 
+> recordId, "IPMI_SEL_RECORD_TYPE=%x", selSystemType, 
+> "IPMI_SEL_GENERATOR_ID=%x", genId, "IPMI_SEL_SENSOR_PATH=%s", 
+> path.c_str(), "IPMI_SEL_EVENT_DIR=%x", assert, "IPMI_SEL_DATA=%s", 
+> selDataStr, NULL);|
+> 
+> |Sep 30 01:39:48 demoboard sel-logger[1187]: P12V sensor crossed a 
+> warning low threshold going low. Reading=0.089000 Threshold=11.400000. 
+> Sep 30 01:39:48 demoboard sel-logger[1187]: P12V sensor crossed a 
+> critical low threshold going low. Reading=0.089000 Threshold=10.220000. 
+> Sep 30 01:39:48 demoboard sel-logger[1187]: P5V sensor crossed a warning 
+> low threshold going low. Reading=0.231000 Threshold=4.750000. Sep 30 
+> 01:39:48 demoboard sel-logger[1187]: P5V sensor crossed a critical low 
+> threshold going low. Reading=0.231000 Threshold=4.500000. Sep 30 
+> 01:39:48 demoboard sel-logger[1187]: P3V3 sensor crossed a warning low 
+> threshold going low. Reading=0.002000 Threshold=3.100000. Sep 30 
+> 01:39:48 demoboard sel-logger[1187]: P3V3 sensor crossed a critical low 
+> threshold going low. Reading=0.002000 Threshold=3.070000. Sep 30 
+> 01:39:49 demoboard sel-logger[1187]: PVCCIN_CPU1 sensor crossed a 
+> warning low threshold going low. Reading=0.001000 Threshold=1.170000. 
+> Sep 30 01:39:49 demoboard sel-logger[1187]: PVCCIN_CPU1 sensor crossed a 
+> critical low threshold going low. Reading=0.001000 Threshold=1.070000.|||
+> 
+> |thanks,|
+> |Byron|
+> 
+> 
