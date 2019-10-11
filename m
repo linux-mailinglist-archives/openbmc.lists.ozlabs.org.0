@@ -1,47 +1,139 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B9BDD46A0
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 19:30:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19103D4A0E
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 23:46:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46qZjm17mbzDqcv
-	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2019 04:30:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46qhNc2yGczDqdR
+	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2019 08:46:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=ed.tanous@intel.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=518755d29b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="c4ubCPf3"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="iMiMZBn6"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46qZj21r0mzDqbY
- for <openbmc@lists.ozlabs.org>; Sat, 12 Oct 2019 04:30:07 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 11 Oct 2019 10:30:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,284,1566889200"; d="scan'208";a="207469770"
-Received: from hades.jf.intel.com (HELO [10.54.51.78]) ([10.54.51.78])
- by fmsmga001.fm.intel.com with ESMTP; 11 Oct 2019 10:30:03 -0700
-Subject: Re: Getting DIMM size in Redfish
-To: Lei YU <mine260309@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CAARXrtkkYGh5wGLYDEhHkG9B8QL-9ezW=n_a9R4-Wy-h4UWHig@mail.gmail.com>
-From: Ed Tanous <ed.tanous@intel.com>
-Message-ID: <c912e53f-bc5e-ca3a-f004-92784eea9d9d@intel.com>
-Date: Fri, 11 Oct 2019 10:30:03 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAARXrtkkYGh5wGLYDEhHkG9B8QL-9ezW=n_a9R4-Wy-h4UWHig@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46qhMk5yRFzDqZB;
+ Sat, 12 Oct 2019 08:45:30 +1100 (AEDT)
+Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x9BLXRsj006423; Fri, 11 Oct 2019 14:44:12 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=CuuDL2YZiDI/uSGl4NWytfpGCfSyeb96qmyqLjJYhIU=;
+ b=c4ubCPf3xCaDivBcBSgS94TH+pDKehszSFDz4ySkbiIxEjMm0WlTuAjgJlww0TUWq1Iu
+ gk2ssWT5OtNwrukTizNn2lsIwAPB/C+k77rkT8svBv4XG4N9EakPLT7mOTyGLKsjjp2x
+ y1g0q9va34LwKe/If5YSSgA2fX5cHGDa2xM= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2vjwwg98md-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Fri, 11 Oct 2019 14:44:11 -0700
+Received: from prn-mbx08.TheFacebook.com (2620:10d:c081:6::22) by
+ prn-hub02.TheFacebook.com (2620:10d:c081:35::126) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Fri, 11 Oct 2019 14:44:10 -0700
+Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
+ prn-mbx08.TheFacebook.com (2620:10d:c081:6::22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Fri, 11 Oct 2019 14:44:10 -0700
+Received: from NAM05-BY2-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Fri, 11 Oct 2019 14:44:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mejjs4pEs62pjzsW5FPK+pgR1h/9xfI2oLH4btRKkfycoDMsE7UyBvIf7/1MqNAS9QtCqq7caTcn2BcyZmidKEaNtzR56rD2AyUaHGIxN0lyY17r6kOs6XC3Vie5XiqYhod+VmHEguLVgJL+/VJMHfkZD0D5RAYUMoIZVZ2mPK6QDXiEsWQEba5xBRn0P8vaL49vzGGgpiXZ3wowrGzr0JbTnwsXElelnulfUOSBOOUoKPJIZIIYhIxBJxHY+1+L67go4o/y2L/J0InnPPk5kzu708Wta29UJW/7KQlIVIAp8jGwoLK9dfM4BRf4PLBcybq0HsxvHJhTrZ2QlR7vDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CuuDL2YZiDI/uSGl4NWytfpGCfSyeb96qmyqLjJYhIU=;
+ b=OrwzATCVaZF8+g209kJMKxFnKZ6OVSWcaj/DbYgtXvVH+TRX9aZwbia11zFBYCV1UKXP4H7ZNZRK4lqpyxySXt/SNUZz3cu054KMX05xjuq4f4tubJ3Znq9W4bPCxFO5q5RJbfXgJzaXTH9W/voZ2aJDS2eMKhDerFC3YcWJkIptPTdgMaRbtYzLRKqRTy7EXbeGERtCe4EmKpIv0FpE+VJ2VbmFEsGm3sD72IPmQP9k5IKLvtTSI5Y7IVVENvYLoXgfHyHbbZ0J7OJS+fH/8LWtjHw8gbxmFwvzmOnhROGVJhLArsyyTm3OuhLY0Qxlz1WSp9OK+QWvTt8GpEYd5Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CuuDL2YZiDI/uSGl4NWytfpGCfSyeb96qmyqLjJYhIU=;
+ b=iMiMZBn60Z6sXiXWtwqOD0rtIZvXhd6ZTkpZLcitAfqHmDAEInlwSFdQbyzsOkAea/cx1SKmd0rEqCy5j87WzcjwKXQUnSPQdy8nX+ISkh6fdHuh4gJ36i6yFmHvP00LQEHo9IMjEvfrzisTq/yCcFVx868Zv2LNIlLINgExBrI=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3652.namprd15.prod.outlook.com (52.133.253.19) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2327.25; Fri, 11 Oct 2019 21:28:36 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c%4]) with mapi id 15.20.2347.016; Fri, 11 Oct 2019
+ 21:28:36 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>, Joel Stanley
+ <joel@jms.id.au>, Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Topic: [PATCH] ftgmac100: Disable HW checksum generation on AST2500
+Thread-Index: AQHVaCL3HHZ/0IxjZ0GB2KAMVKzdAqcld28AgAEYWwCAK1ZcgIACEkcAgAD6PQCAAL1kgA==
+Date: Fri, 11 Oct 2019 21:28:36 +0000
+Message-ID: <AD92CCF8-91B2-4EA1-9915-812D701E9CFA@fb.com>
+References: <20190910213734.3112330-1-vijaykhemka@fb.com>
+ <bd5eab2e-6ba6-9e27-54d4-d9534da9d5f7@gmail.com>
+ <CACPK8XcS4iKfKigPbPg0BFbmjbT-kdyjiPDXjk1k5XaS5bCdAA@mail.gmail.com>
+ <95e215664612c0487808c02232852ef2188c95a5.camel@kernel.crashing.org>
+ <AF7B985F-6E42-4CD4-B3D0-4B9EA42253C9@fb.com>
+ <158fa0872643089750b3797fd2f78ba18eaf488c.camel@kernel.crashing.org>
+In-Reply-To: <158fa0872643089750b3797fd2f78ba18eaf488c.camel@kernel.crashing.org>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:f03f]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5f32f8c0-b6f0-4276-c8b8-08d74e91f9b8
+x-ms-traffictypediagnostic: BY5PR15MB3652:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BY5PR15MB3652F02075E889D93F6F05E9DD970@BY5PR15MB3652.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
+x-forefront-prvs: 0187F3EA14
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(346002)(39860400002)(366004)(396003)(136003)(199004)(189003)(446003)(6116002)(6486002)(7736002)(71190400001)(71200400001)(14454004)(186003)(305945005)(76176011)(8676002)(11346002)(8936002)(4744005)(6246003)(256004)(6512007)(4326008)(81166006)(81156014)(46003)(54906003)(110136005)(36756003)(2616005)(2906002)(476003)(99286004)(316002)(478600001)(6436002)(5660300002)(102836004)(7416002)(86362001)(229853002)(6506007)(486006)(66946007)(91956017)(66476007)(64756008)(25786009)(76116006)(66446008)(33656002)(4001150100001)(66556008);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3652;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: wanMVQkG+acHU9ols1i55DMntEK+83UXVXROUhT15zhb9gwJBXyDFEC6tSssaHTJQpznC255lmVS1PIiWUJXgoSKf59eotvRs/jcwry8BAz8rn8VspBo7Sx6cG1/8187MYV6H9AgxZw7uqQqowouej7fnSsVWz0tD5tWNbXKrcdYKQ9YgxBhbmckt2w+vIvhYImIhzmcUPO64MqWp6AtVnNUzdh6m+0fVtyq6ifAjl4QRya8wz9wsgoe/kAybFbZWZjLg+4fdUO4EWLJcEp7y+BNbw6sSG9w4e5ClIoTr7kx8Ofhm2tzIpLRrdLXbRgV9qoAmV7/EnjzJu5BY+3Wl4qt0gCokIdmxPNjzVRKnkPWLu+bRGIDp9J8KeIONePzFgwLHUV1BQJCoe5o8CLs0yRtTXl9gmaNljmwAHARVgI=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <8B7407B9191CBD498371EA3025D7F0A1@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f32f8c0-b6f0-4276-c8b8-08d74e91f9b8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Oct 2019 21:28:36.1606 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: NbBi2QFsQiDpLMite05JGu0PNJ3QB3vnow61o9dg4Ga7CPUwR19sBOS4MedahgFmc0OrqMaQOQ/Qx03xpDyeVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3652
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-10-11_11:2019-10-10,2019-10-11 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ mlxlogscore=965
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ adultscore=0 phishscore=0 spamscore=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1908290000 definitions=main-1910110174
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,67 +145,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Kate Stewart <kstewart@linuxfoundation.org>, Andrew Lunn <andrew@lunn.ch>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
+ YueHaibing <yuehaibing@huawei.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Luis Chamberlain <mcgrof@kernel.org>,
+ Mauro Carvalho Chehab <mchehab+samsung@kernel.org>, Thomas
+ Gleixner <tglx@linutronix.de>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/10/19 8:01 PM, Lei YU wrote:
-> This mail is to discuss how to get DIMM size in Redfish (bmcweb).
-> 
-> Currently, bmcweb does not report DIMM size because it's not
-> implemented, and we are trying to implement this.
-> 
-> The DIMM interface is defined in [phosphor-dbus-interface][1], which
-> does not provide any metadata.
-> 
-> For OpenPOWER systems, the size information is provided in `PrettyName`, e.g.
-> 
->     "PrettyName": "DDR4-2666 32GiB 64-bit ECC RDIMM"
-
-My issue with this is twofold.
-
-1. So far as I can tell, there's no formal definition for what this
-string should entail.  phosphor-dbus-interfaces lists it as "The human
-readable name of the item."  Parsing this as a machine readable
-parameter doesn't meet that intent.
-
-2. I don't think that interface covers the full range of DIMM parameters
-that can be set in Redfish.
-
-> 
-> It is guaranteed to be a string with 5 parts, and we could parse this
-> string to get the size.
-
-Where do you see this "guarantee"?  I'm not finding it anywhere.  Out of
-curiosity, if the 5 params are guaranteed, what does it state when the
-DIMM is non-ECC?
-
-> I do not know how other systems (e.g. x86 or ARM) get the DIMM size.
-> 
-> During the [review][2] , Ed suggested creating an appropriate
-> interface for the DIMM size.
-> 
-> It's a good suggestion, but it could be complicated to be implemented:
-
-Given that this is something that all systems of all types are likely to
-use, I think it's well worth taking the time to implement it in a
-sustainable way.
-
-> * The information is sent by host via inband IPMI as FRU;
-> * In ipmid, the code to handle FRU is generic and part of the code is
-> generated, so it could be hard to make a specific change for DIMM
-> size.
-> 
-> So the question to the community is, how other systems get the DIMM size?
-> Knowing this, we could try to design a generic method to handle the case.
-
-On x86 there's a similar mechanism called Managed Data Region, which is
-sent through one of 3(ish) transports and sends the SMBIOS table down to
-the BMC.  I think the key here is that there needs to be an interface
-for that daemon to publish.
-
-> 
-> Otherwise, we will have to write specific code, either in ipmid or in
-> bmcweb, to get such specific values.
-
-I think you've already found the interface proposal.  Lets work that
-through so it meets everyone's needs.
+DQoNCu+7v09uIDEwLzEwLzE5LCA4OjExIFBNLCAiQmVuamFtaW4gSGVycmVuc2NobWlkdCIgPGJl
+bmhAa2VybmVsLmNyYXNoaW5nLm9yZz4gd3JvdGU6DQoNCiAgICBPbiBUaHUsIDIwMTktMTAtMTAg
+YXQgMTk6MTUgKzAwMDAsIFZpamF5IEtoZW1rYSB3cm90ZToNCiAgICA+ICAgICBBbnkgbmV3cyBv
+biB0aGlzID8gQVNUMjQwMCBoYXMgbm8gSFcgY2hlY2tzdW0gbG9naWMgaW4gSFcsIEFTVDI1MDAN
+CiAgICA+ICAgICBzaG91bGQgd29yayBmb3IgSVBWNCBmaW5lLCB3ZSBzaG91bGQgb25seSBzZWxl
+Y3RpdmVseSBkaXNhYmxlIGl0IGZvcg0KICAgID4gICAgIElQVjYuDQogICAgPiANCiAgICA+IEJl
+biwgSSBoYXZlIGFscmVhZHkgc2VudCB2MiBmb3IgdGhpcyB3aXRoIHJlcXVlc3RlZCBjaGFuZ2Ug
+d2hpY2ggb25seSBkaXNhYmxlIA0KICAgID4gZm9yIElQVjYgaW4gQVNUMjUwMC4gSSBjYW4gc2Vu
+ZCBpdCBhZ2Fpbi4NCiAgICANCiAgICBJIGRpZG4ndCBzZWUgaXQsIGRpZCB5b3UgQ0MgbWUgPyBJ
+IG1haW50YWluIHRoYXQgZHJpdmVyLi4uDQoNCkxldCBtZSBzZW5kIGFnYWluIHZpYSBnaXQgc2Vu
+ZC1lbWFpbC4NCiAgICANCiAgICBDaGVlcnMsDQogICAgQmVuLg0KICAgIA0KICAgIA0KICAgIA0K
+DQo=
