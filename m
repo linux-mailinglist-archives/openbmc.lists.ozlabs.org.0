@@ -1,51 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23E60D377B
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 04:23:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FA0CD37AF
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 05:02:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46qBZP4F0zzDqXP
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 13:23:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46qCRc5TXmzDqXW
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 14:02:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=163.com
- (client-ip=220.181.13.16; helo=m13-16.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::d30; helo=mail-io1-xd30.google.com;
+ envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="NfXy4bUY"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="ozF2/VkD"; 
  dkim-atps=neutral
-Received: from m13-16.163.com (m13-16.163.com [220.181.13.16])
- by lists.ozlabs.org (Postfix) with ESMTP id 46qBYg5kw0zDqXB
- for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 13:22:26 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=hh+Em
- aZB+nwW6aDU4n8Atl1A3d78/AvV39lXn5pOwoI=; b=NfXy4bUY++PO2r2dvRTuf
- +aseFMZno6jb2cAGEGOunOqXGKXz3op7IIIRZ2Evkg42Vt3HCIwe6o/B1EtSbmjQ
- 4IAyAqXshMdHSqmIymXPWdJaWKct/+BweWC6XvQn6YALhkPMSJzsmnzWXvIzrhLw
- 18RCt8XXDoiRw/5UL2zlgE=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr16 (Coremail) ; Fri, 11 Oct 2019 10:22:23 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Fri, 11 Oct 2019 10:22:23 +0800 (CST)
-From: www <ouyangxuan10@163.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: why sel-logger not add all info to journal?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-X-CM-CTRLDATA: 3BjYLGZvb3Rlcl9odG09NDMwNjo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_58754_1388636687.1570760543370"
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
+ [IPv6:2607:f8b0:4864:20::d30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46qCQs2VvRzDqX9
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 14:01:38 +1100 (AEDT)
+Received: by mail-io1-xd30.google.com with SMTP id q1so18459739ion.1
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 20:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=7Sm8RZ7BJINFs7Kg+ieKl53vYtfPDOcEmyHqf5I4RuI=;
+ b=ozF2/VkDfNbX/l9npCXT3QmFnzwHIeTx3O16ioTJC758+kNuviwQ82cd7fe8iuL65x
+ OVrxG6HEh0Lg/RaSBACW+33KnqeTAlc9k2MmwrSR++d5HBkn6v2FLhbEa858YyBu4hM3
+ amHiZAVz5znkt2rUaU8eD7P0YRHGJ9ZVOAveWGK5q92jHmItmSiDpiWNA15IcKjE1Cxm
+ AqJnsaeaw6ZGYVNQlYk8vYjfbyGQ4Ib80jhysGU4CXNxwAXN2TYPnFZTpwBibJPm9+Ju
+ xhIc8au0RORKG1DLys26QWLZCDKfWXzJeEIsfnaQVm6KW/UnF2gp36oy8DoftPwwvRFb
+ +0yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=7Sm8RZ7BJINFs7Kg+ieKl53vYtfPDOcEmyHqf5I4RuI=;
+ b=hBrCN6dp4+WkqlWdinGlPJSMi8aCZPP1Tx2r6wSgdXiro9az1zgX1QODi+L4p6kQk4
+ NrR4vFe/R1raz2xGXrxdeNCM0oMqmw970Ew0ei+2LcOXJZqhy6rt8IiGD1OrrIAKBcYh
+ CxoD59plYeOVxlEZiYZ/eF+RhvaSf5RqCgkqmzBqoc37JrbbwpkUAuLyO/1wl5XneUBg
+ Tn3n9MGQ+ZHGpIhEPLInQen5efIT/f4ZjyWlKr5llqsN7tVmzBcUvGShNIsdkkbyvUm+
+ 0pPph5VHnLtQSUe8VpUKrDFqso0of2AZtb5Tsj6qZBsTUB4x76ZUF0t/k5FKeR1Jk1CX
+ DFPA==
+X-Gm-Message-State: APjAAAXCdubLSH1oWFOpI6aS1/AwYP5NeTWOdeajgVB1tkqJAnXf00GB
+ NpoB+SP3UA375T1uIasELzgW2ST3JR0meCPlfgtuNJdrQbK4YA==
+X-Google-Smtp-Source: APXvYqztUuuliY0nz+E8V3knIw8jyvn89a1M84FkzZ23sPzJ1cZ0IJSC32Y1EAQI/nvsTGUdgXFY167tIeIKShNJVfg=
+X-Received: by 2002:a5d:8b48:: with SMTP id c8mr14333685iot.64.1570762894134; 
+ Thu, 10 Oct 2019 20:01:34 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <6db4fd1b.3ba4.16db89fcc8b.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: EMGowAC3vzdf559duOsOAQ--.58100W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiJgVL2lv2YuKwOgACsX
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 11 Oct 2019 11:01:23 +0800
+Message-ID: <CAARXrtkkYGh5wGLYDEhHkG9B8QL-9ezW=n_a9R4-Wy-h4UWHig@mail.gmail.com>
+Subject: Getting DIMM size in Redfish
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Tanous,
+ Ed" <ed.tanous@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,123 +73,38 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_58754_1388636687.1570760543370
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+This mail is to discuss how to get DIMM size in Redfish (bmcweb).
 
-RGVhciBhbGwsCgoKQWRkIHNlbC1sb2dnZXIgdG8gb3BlbmJtYyBwcm9qZWN0LCB3aGVuIHRocmVz
-aG9sZCBzZW5zb3IgZ2VuZXJhdGUgbG9nLCBzZWwtbG9nZ2VyIHdpbGwgYWRkIG1lc3NhZ2UgdG8g
-am91cm5hbCwgYnV0IHdoeSB0aGUgbWVzc2FnZSBpcyBpbmNvbXBsZXRlPwoKCnNkX2pvdXJuYWxf
-c2VuZCgiTUVTU0FHRT0lcyIsIG1lc3NhZ2UuY19zdHIoKSwKICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICJQUklPUklUWT0laSIsIHNlbFByaW9yaXR5LAogICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIk1FU1NBR0VfSUQ9JXMiLCBzZWxNZXNzYWdlSWQsCiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAiSVBNSV9TRUxfUkVDT1JEX0lEPSVkIiwgcmVjb3JkSWQsCiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAiSVBNSV9TRUxfUkVDT1JEX1RZUEU9JXgiLCBzZWxTeXN0ZW1UeXBlLAog
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0dFTkVSQVRPUl9JRD0leCIsIGdl
-bklkLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX1NFTlNPUl9QQVRIPSVz
-IiwgcGF0aC5jX3N0cigpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0VW
-RU5UX0RJUj0leCIsIGFzc2VydCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJJUE1JX1NF
-TF9EQVRBPSVzIiwgc2VsRGF0YVN0ciwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5VTEwp
-OwpTZXAgMzAgMDE6Mzk6NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFAxMlYgc2Vuc29y
-IGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDg5
-MDAwIFRocmVzaG9sZD0xMS40MDAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxv
-Z2dlclsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIGNyaXRpY2FsIGxvdyB0aHJlc2hvbGQg
-Z29pbmcgbG93LiBSZWFkaW5nPTAuMDg5MDAwIFRocmVzaG9sZD0xMC4yMjAwMDAuClNlcCAzMCAw
-MTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUDVWIHNlbnNvciBjcm9zc2VkIGEg
-d2FybmluZyBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjIzMTAwMCBUaHJlc2hv
-bGQ9NC43NTAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTog
-UDVWIHNlbnNvciBjcm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJl
-YWRpbmc9MC4yMzEwMDAgVGhyZXNob2xkPTQuNTAwMDAwLgpTZXAgMzAgMDE6Mzk6NDggZGVtb2Jv
-YXJkIHNlbC1sb2dnZXJbMTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0
-aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDAyMDAwIFRocmVzaG9sZD0zLjEwMDAwMC4K
-U2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQM1YzIHNlbnNvciBj
-cm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wMDIw
-MDAgVGhyZXNob2xkPTMuMDcwMDAwLgpTZXAgMzAgMDE6Mzk6NDkgZGVtb2JvYXJkIHNlbC1sb2dn
-ZXJbMTE4N106IFBWQ0NJTl9DUFUxIHNlbnNvciBjcm9zc2VkIGEgd2FybmluZyBsb3cgdGhyZXNo
-b2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMTAwMCBUaHJlc2hvbGQ9MS4xNzAwMDAuClNlcCAz
-MCAwMTozOTo0OSBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZDQ0lOX0NQVTEgc2Vuc29y
-IGNyb3NzZWQgYSBjcml0aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAw
-MTAwMCBUaHJlc2hvbGQ9MS4wNzAwMDAuCnRoYW5rcywKQnlyb24=
-------=_Part_58754_1388636687.1570760543370
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Currently, bmcweb does not report DIMM size because it's not
+implemented, and we are trying to implement this.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj5BZGQgc2VsLWxvZ2dlciB0byBvcGVuYm1jIHByb2plY3QsIHdoZW4gdGhyZXNob2xkIHNlbnNv
-ciBnZW5lcmF0ZSBsb2csIHNlbC1sb2dnZXIgd2lsbCBhZGQgbWVzc2FnZSB0byBqb3VybmFsLCBi
-dXQmbmJzcDt3aHkgdGhlIG1lc3NhZ2UgaXMgaW5jb21wbGV0ZT88L2Rpdj48ZGl2Pjxicj48L2Rp
-dj48ZGl2PjxwcmUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZvbnQtZmFtaWx5OiBT
-Rk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9ubyZxdW90OywgTWVu
-bG8sIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMS45cHg7IG1hcmdpbi10b3A6IDBweDsgbWFyZ2lu
-LWJvdHRvbTogMTZweDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyBwYWRkaW5nOiAxNnB4OyBvdmVy
-ZmxvdzogYXV0bzsgbGluZS1oZWlnaHQ6IDEuNDU7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDYs
-IDI0OCwgMjUwKTsgYm9yZGVyLXJhZGl1czogM3B4OyBjb2xvcjogcmdiKDM2LCA0MSwgNDYpOyI+
-PGNvZGUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZvbnQtZmFtaWx5OiBTRk1vbm8t
-UmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9ubyZxdW90OywgTWVubG8sIG1v
-bm9zcGFjZTsgcGFkZGluZzogMHB4OyBtYXJnaW46IDBweDsgYmFja2dyb3VuZDogaW5pdGlhbDsg
-Ym9yZGVyLXJhZGl1czogM3B4OyB3b3JkLWJyZWFrOiBub3JtYWw7IHdoaXRlLXNwYWNlOiBwcmU7
-IGJvcmRlcjogMHB4OyBkaXNwbGF5OiBpbmxpbmU7IG92ZXJmbG93OiB2aXNpYmxlOyBsaW5lLWhl
-aWdodDogaW5oZXJpdDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyI+c2Rfam91cm5hbF9zZW5kKCJN
-RVNTQUdFPSVzIiwgbWVzc2FnZS5jX3N0cigpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IlBSSU9SSVRZPSVpIiwgc2VsUHJpb3JpdHksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAi
-TUVTU0FHRV9JRD0lcyIsIHNlbE1lc3NhZ2VJZCwKICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICJJUE1JX1NFTF9SRUNPUkRfSUQ9JWQiLCByZWNvcmRJZCwKICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICJJUE1JX1NFTF9SRUNPUkRfVFlQRT0leCIsIHNlbFN5c3RlbVR5cGUsCiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfR0VORVJBVE9SX0lEPSV4IiwgZ2VuSWQsCiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfU0VOU09SX1BBVEg9JXMiLCBwYXRo
-LmNfc3RyKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfRVZFTlRfRElS
-PSV4IiwgYXNzZXJ0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0RBVEE9
-JXMiLCBzZWxEYXRhU3RyLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgTlVMTCk7PC9jb2Rl
-PjwvcHJlPjxwcmUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IG1hcmdpbi10b3A6IDBw
-eDsgbWFyZ2luLWJvdHRvbTogMTZweDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyBwYWRkaW5nOiAx
-NnB4OyBvdmVyZmxvdzogYXV0bzsgbGluZS1oZWlnaHQ6IDEuNDU7IGJhY2tncm91bmQtY29sb3I6
-IHJnYigyNDYsIDI0OCwgMjUwKTsgYm9yZGVyLXJhZGl1czogM3B4OyI+PGNvZGUgc3R5bGU9ImJv
-eC1zaXppbmc6IGJvcmRlci1ib3g7IHBhZGRpbmc6IDBweDsgbWFyZ2luOiAwcHg7IGJhY2tncm91
-bmQ6IGluaXRpYWw7IGJvcmRlci1yYWRpdXM6IDNweDsgd29yZC1icmVhazogbm9ybWFsOyBib3Jk
-ZXI6IDBweDsgZGlzcGxheTogaW5saW5lOyBvdmVyZmxvdzogdmlzaWJsZTsgbGluZS1oZWlnaHQ6
-IGluaGVyaXQ7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC1zaXplOiAxMS45cHg7IHdoaXRl
-LXNwYWNlOiBwcmU7Ij48Zm9udCBjb2xvcj0iIzI0MjkyZSIgZmFjZT0iU0ZNb25vLVJlZ3VsYXIs
-IENvbnNvbGFzLCBMaWJlcmF0aW9uIE1vbm8sIE1lbmxvLCBtb25vc3BhY2UiPlNlcCAzMCAwMToz
-OTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIHdh
-cm5pbmcgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wODkwMDAgVGhyZXNob2xk
-PTExLjQwMDAwMC4KU2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQ
-MTJWIHNlbnNvciBjcm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJl
-YWRpbmc9MC4wODkwMDAgVGhyZXNob2xkPTEwLjIyMDAwMC4KU2VwIDMwIDAxOjM5OjQ4IGRlbW9i
-b2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0
-aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMjMxMDAwIFRocmVzaG9sZD00Ljc1MDAwMC4K
-U2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYgc2Vuc29yIGNy
-b3NzZWQgYSBjcml0aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjIzMTAw
-MCBUaHJlc2hvbGQ9NC41MDAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dl
-clsxMTg3XTogUDNWMyBzZW5zb3IgY3Jvc3NlZCBhIHdhcm5pbmcgbG93IHRocmVzaG9sZCBnb2lu
-ZyBsb3cuIFJlYWRpbmc9MC4wMDIwMDAgVGhyZXNob2xkPTMuMTAwMDAwLgpTZXAgMzAgMDE6Mzk6
-NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSBjcml0
-aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMjAwMCBUaHJlc2hvbGQ9
-My4wNzAwMDAuClNlcCAzMCAwMTozOTo0OSBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZD
-Q0lOX0NQVTEgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93
-LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9sZD0xLjE3MDAwMC4KU2VwIDMwIDAxOjM5OjQ5IGRl
-bW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQVkNDSU5fQ1BVMSBzZW5zb3IgY3Jvc3NlZCBhIGNy
-aXRpY2FsIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9s
-ZD0xLjA3MDAwMC48L2ZvbnQ+PC9jb2RlPjxjb2RlIHN0eWxlPSJjb2xvcjogcmdiKDM2LCA0MSwg
-NDYpOyBmb250LWZhbWlseTogU0ZNb25vLVJlZ3VsYXIsIENvbnNvbGFzLCAmcXVvdDtMaWJlcmF0
-aW9uIE1vbm8mcXVvdDssIE1lbmxvLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTEuOXB4OyBib3gt
-c2l6aW5nOiBib3JkZXItYm94OyBwYWRkaW5nOiAwcHg7IG1hcmdpbjogMHB4OyBiYWNrZ3JvdW5k
-OiBpbml0aWFsOyBib3JkZXItcmFkaXVzOiAzcHg7IHdvcmQtYnJlYWs6IG5vcm1hbDsgd2hpdGUt
-c3BhY2U6IHByZTsgYm9yZGVyOiAwcHg7IGRpc3BsYXk6IGlubGluZTsgb3ZlcmZsb3c6IHZpc2li
-bGU7IGxpbmUtaGVpZ2h0OiBpbmhlcml0OyBvdmVyZmxvdy13cmFwOiBub3JtYWw7Ij4KPC9jb2Rl
-PjwvcHJlPjwvZGl2PjxkaXY+PGNvZGUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZv
-bnQtZmFtaWx5OiBTRk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9u
-byZxdW90OywgTWVubG8sIG1vbm9zcGFjZTsgcGFkZGluZzogMHB4OyBtYXJnaW46IDBweDsgYmFj
-a2dyb3VuZDogaW5pdGlhbDsgYm9yZGVyLXJhZGl1czogM3B4OyB3b3JkLWJyZWFrOiBub3JtYWw7
-IHdoaXRlLXNwYWNlOiBwcmU7IGJvcmRlcjogMHB4OyBkaXNwbGF5OiBpbmxpbmU7IG92ZXJmbG93
-OiB2aXNpYmxlOyBsaW5lLWhlaWdodDogaW5oZXJpdDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyI+
-dGhhbmtzLDwvY29kZT48L2Rpdj48ZGl2Pjxjb2RlIHN0eWxlPSJib3gtc2l6aW5nOiBib3JkZXIt
-Ym94OyBmb250LWZhbWlseTogU0ZNb25vLVJlZ3VsYXIsIENvbnNvbGFzLCAmcXVvdDtMaWJlcmF0
-aW9uIE1vbm8mcXVvdDssIE1lbmxvLCBtb25vc3BhY2U7IHBhZGRpbmc6IDBweDsgbWFyZ2luOiAw
-cHg7IGJhY2tncm91bmQ6IGluaXRpYWw7IGJvcmRlci1yYWRpdXM6IDNweDsgd29yZC1icmVhazog
-bm9ybWFsOyB3aGl0ZS1zcGFjZTogcHJlOyBib3JkZXI6IDBweDsgZGlzcGxheTogaW5saW5lOyBv
-dmVyZmxvdzogdmlzaWJsZTsgbGluZS1oZWlnaHQ6IGluaGVyaXQ7IG92ZXJmbG93LXdyYXA6IG5v
-cm1hbDsiPkJ5cm9uPC9jb2RlPjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVh
-c2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_58754_1388636687.1570760543370--
+The DIMM interface is defined in [phosphor-dbus-interface][1], which
+does not provide any metadata.
 
+For OpenPOWER systems, the size information is provided in `PrettyName`, e.g.
+
+    "PrettyName": "DDR4-2666 32GiB 64-bit ECC RDIMM"
+
+It is guaranteed to be a string with 5 parts, and we could parse this
+string to get the size.
+I do not know how other systems (e.g. x86 or ARM) get the DIMM size.
+
+During the [review][2] , Ed suggested creating an appropriate
+interface for the DIMM size.
+
+It's a good suggestion, but it could be complicated to be implemented:
+* The information is sent by host via inband IPMI as FRU;
+* In ipmid, the code to handle FRU is generic and part of the code is
+generated, so it could be hard to make a specific change for DIMM
+size.
+
+So the question to the community is, how other systems get the DIMM size?
+Knowing this, we could try to design a generic method to handle the case.
+
+Otherwise, we will have to write specific code, either in ipmid or in
+bmcweb, to get such specific values.
+
+Thanks!
+
+[1]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml
+[2]: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/25754
