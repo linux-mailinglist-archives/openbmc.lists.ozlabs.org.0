@@ -2,75 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E896AD36CA
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 03:17:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E60D377B
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 04:23:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46q9752g0WzDqCZ
-	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 12:17:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46qBZP4F0zzDqXP
+	for <lists+openbmc@lfdr.de>; Fri, 11 Oct 2019 13:23:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (mailfrom) smtp.mailfrom=netronome.com
- (client-ip=2607:f8b0:4864:20::843; helo=mail-qt1-x843.google.com;
- envelope-from=jakub.kicinski@netronome.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=163.com
+ (client-ip=220.181.13.16; helo=m13-16.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=netronome.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=netronome-com.20150623.gappssmtp.com
- header.i=@netronome-com.20150623.gappssmtp.com header.b="P1TDOu+h"; 
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="NfXy4bUY"; 
  dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46q96J33G3zDqTD
- for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 12:17:12 +1100 (AEDT)
-Received: by mail-qt1-x843.google.com with SMTP id m61so11566530qte.7
- for <openbmc@lists.ozlabs.org>; Thu, 10 Oct 2019 18:17:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=netronome-com.20150623.gappssmtp.com; s=20150623;
- h=date:from:to:cc:subject:message-id:in-reply-to:references
- :organization:mime-version:content-transfer-encoding;
- bh=FRAhjU6zbOujsKrU9OXTc20iXWxJB1PbXELLM5EnWz4=;
- b=P1TDOu+hLEOcYZdp+RsC60/WrDZp/0xsV3XEPvMb+X1f2sb8KVh050ChS/DzqZuxu8
- LfIixQWkK/AwqxVuEVLOrPZjVGRc6zmnjWRM9aUwlWSTj5xkRz8xU7p99/Qvaynfepcf
- uvsihaoCaRpQWHf2MCAo0RG7xtTRnRD4nq3OsDCv6m3Xy6UY6F/0Q2e3xamg9fFlx88B
- dTEcIY4+AwFNN/rzgizAzI9XEoUwBaH7h3NhapVmfuzZWvdafnrP4nD9jdNIC6FczlsH
- zed2XaA9tN0P9Q3eDjBeau2NNwysV8CtKdbCM2i44OAO7zFoclfCovDLWkJ6fTixQURX
- 5EjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
- :references:organization:mime-version:content-transfer-encoding;
- bh=FRAhjU6zbOujsKrU9OXTc20iXWxJB1PbXELLM5EnWz4=;
- b=H8dSKxpQ3+SgMDJfMr2/CjBDIVsrzlJAzKEfhrXfZkkYsWSoBueZpJoVsDvaGwnyJH
- zlYSoQpR1qHDpHTGbIRQJZE/4Fof+Wk3g4Ogy+ZyFX1PjHuoQxVp4OcaHhrbscq6wksh
- GopGTTA3XkjTlE/5sTdR6RBiAC3nZsDTAWxOABptIvbTc1noEE5YK5bgpKc9Yxxt0coh
- pOnsCxNrCr8kg0sKj7rj4vNxTT59SpUg6tUgo0nlW2V331nywUWeIQqhIlAadUDvUOjo
- Orn7+7osPv/9Q3lLlsjCBFUbWM3Zs4qBHEaaZjRqh9biX0gQvb9soqOYdFOt725BSYjM
- Qoyg==
-X-Gm-Message-State: APjAAAU9hUELi9sVi9Or8gMMsV3/qjjJoy+pQ8S10lY+rCWakjOyBxGm
- c7qmssMztUsWZ81Nke/6H6wDTw==
-X-Google-Smtp-Source: APXvYqzOjSHMUU98eUi/w1xmBfaHzCT2guSL+N5oE5fPyX4+S+M5Qlk63IT5XbmdeS8oaoRfnXpgbA==
-X-Received: by 2002:ac8:7557:: with SMTP id b23mr14086447qtr.384.1570756628331; 
- Thu, 10 Oct 2019 18:17:08 -0700 (PDT)
-Received: from cakuba.netronome.com ([66.60.152.14])
- by smtp.gmail.com with ESMTPSA id a190sm3908987qkf.118.2019.10.10.18.17.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Oct 2019 18:17:08 -0700 (PDT)
-Date: Thu, 10 Oct 2019 18:16:51 -0700
-From: Jakub Kicinski <jakub.kicinski@netronome.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: [PATCH v2] ftgmac100: Disable HW checksum generation on AST2500
-Message-ID: <20191010181651.5abd4c21@cakuba.netronome.com>
-In-Reply-To: <4B7340B5-C35C-4B18-8D8C-B5B8D16BA551@fb.com>
-References: <20190911194453.2595021-1-vijaykhemka@fb.com>
- <4B7340B5-C35C-4B18-8D8C-B5B8D16BA551@fb.com>
-Organization: Netronome Systems, Ltd.
+Received: from m13-16.163.com (m13-16.163.com [220.181.13.16])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46qBYg5kw0zDqXB
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Oct 2019 13:22:26 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=hh+Em
+ aZB+nwW6aDU4n8Atl1A3d78/AvV39lXn5pOwoI=; b=NfXy4bUY++PO2r2dvRTuf
+ +aseFMZno6jb2cAGEGOunOqXGKXz3op7IIIRZ2Evkg42Vt3HCIwe6o/B1EtSbmjQ
+ 4IAyAqXshMdHSqmIymXPWdJaWKct/+BweWC6XvQn6YALhkPMSJzsmnzWXvIzrhLw
+ 18RCt8XXDoiRw/5UL2zlgE=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr16 (Coremail) ; Fri, 11 Oct 2019 10:22:23 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Fri, 11 Oct 2019 10:22:23 +0800 (CST)
+From: www <ouyangxuan10@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: why sel-logger not add all info to journal?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+X-CM-CTRLDATA: 3BjYLGZvb3Rlcl9odG09NDMwNjo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_58754_1388636687.1570760543370"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <6db4fd1b.3ba4.16db89fcc8b.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: EMGowAC3vzdf559duOsOAQ--.58100W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiJgVL2lv2YuKwOgACsX
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,34 +57,126 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Kate Stewart <kstewart@linuxfoundation.org>, Andrew Lunn <andrew@lunn.ch>,
- Florian Fainelli <f.fainelli@gmail.com>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>,
- YueHaibing <yuehaibing@huawei.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Luis Chamberlain <mcgrof@kernel.org>, Mauro
- Carvalho Chehab <mchehab+samsung@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 10 Oct 2019 19:20:47 +0000, Vijay Khemka wrote:
-> Resending this patch again.=20
+------=_Part_58754_1388636687.1570760543370
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Perhaps I'm missing context but what's the intention here?
+RGVhciBhbGwsCgoKQWRkIHNlbC1sb2dnZXIgdG8gb3BlbmJtYyBwcm9qZWN0LCB3aGVuIHRocmVz
+aG9sZCBzZW5zb3IgZ2VuZXJhdGUgbG9nLCBzZWwtbG9nZ2VyIHdpbGwgYWRkIG1lc3NhZ2UgdG8g
+am91cm5hbCwgYnV0IHdoeSB0aGUgbWVzc2FnZSBpcyBpbmNvbXBsZXRlPwoKCnNkX2pvdXJuYWxf
+c2VuZCgiTUVTU0FHRT0lcyIsIG1lc3NhZ2UuY19zdHIoKSwKICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICJQUklPUklUWT0laSIsIHNlbFByaW9yaXR5LAogICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIk1FU1NBR0VfSUQ9JXMiLCBzZWxNZXNzYWdlSWQsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAiSVBNSV9TRUxfUkVDT1JEX0lEPSVkIiwgcmVjb3JkSWQsCiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAiSVBNSV9TRUxfUkVDT1JEX1RZUEU9JXgiLCBzZWxTeXN0ZW1UeXBlLAog
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0dFTkVSQVRPUl9JRD0leCIsIGdl
+bklkLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX1NFTlNPUl9QQVRIPSVz
+IiwgcGF0aC5jX3N0cigpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0VW
+RU5UX0RJUj0leCIsIGFzc2VydCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICJJUE1JX1NF
+TF9EQVRBPSVzIiwgc2VsRGF0YVN0ciwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5VTEwp
+OwpTZXAgMzAgMDE6Mzk6NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFAxMlYgc2Vuc29y
+IGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDg5
+MDAwIFRocmVzaG9sZD0xMS40MDAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxv
+Z2dlclsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIGNyaXRpY2FsIGxvdyB0aHJlc2hvbGQg
+Z29pbmcgbG93LiBSZWFkaW5nPTAuMDg5MDAwIFRocmVzaG9sZD0xMC4yMjAwMDAuClNlcCAzMCAw
+MTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUDVWIHNlbnNvciBjcm9zc2VkIGEg
+d2FybmluZyBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjIzMTAwMCBUaHJlc2hv
+bGQ9NC43NTAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTog
+UDVWIHNlbnNvciBjcm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJl
+YWRpbmc9MC4yMzEwMDAgVGhyZXNob2xkPTQuNTAwMDAwLgpTZXAgMzAgMDE6Mzk6NDggZGVtb2Jv
+YXJkIHNlbC1sb2dnZXJbMTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0
+aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDAyMDAwIFRocmVzaG9sZD0zLjEwMDAwMC4K
+U2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQM1YzIHNlbnNvciBj
+cm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wMDIw
+MDAgVGhyZXNob2xkPTMuMDcwMDAwLgpTZXAgMzAgMDE6Mzk6NDkgZGVtb2JvYXJkIHNlbC1sb2dn
+ZXJbMTE4N106IFBWQ0NJTl9DUFUxIHNlbnNvciBjcm9zc2VkIGEgd2FybmluZyBsb3cgdGhyZXNo
+b2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMTAwMCBUaHJlc2hvbGQ9MS4xNzAwMDAuClNlcCAz
+MCAwMTozOTo0OSBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZDQ0lOX0NQVTEgc2Vuc29y
+IGNyb3NzZWQgYSBjcml0aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAw
+MTAwMCBUaHJlc2hvbGQ9MS4wNzAwMDAuCnRoYW5rcywKQnlyb24=
+------=_Part_58754_1388636687.1570760543370
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-In case this is resubmitting the patch for inclusion in the upstream
-kernel you need to send it out properly with git send-email or such..
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
+dj5BZGQgc2VsLWxvZ2dlciB0byBvcGVuYm1jIHByb2plY3QsIHdoZW4gdGhyZXNob2xkIHNlbnNv
+ciBnZW5lcmF0ZSBsb2csIHNlbC1sb2dnZXIgd2lsbCBhZGQgbWVzc2FnZSB0byBqb3VybmFsLCBi
+dXQmbmJzcDt3aHkgdGhlIG1lc3NhZ2UgaXMgaW5jb21wbGV0ZT88L2Rpdj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PjxwcmUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZvbnQtZmFtaWx5OiBT
+Rk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9ubyZxdW90OywgTWVu
+bG8sIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxMS45cHg7IG1hcmdpbi10b3A6IDBweDsgbWFyZ2lu
+LWJvdHRvbTogMTZweDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyBwYWRkaW5nOiAxNnB4OyBvdmVy
+ZmxvdzogYXV0bzsgbGluZS1oZWlnaHQ6IDEuNDU7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNDYs
+IDI0OCwgMjUwKTsgYm9yZGVyLXJhZGl1czogM3B4OyBjb2xvcjogcmdiKDM2LCA0MSwgNDYpOyI+
+PGNvZGUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZvbnQtZmFtaWx5OiBTRk1vbm8t
+UmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9ubyZxdW90OywgTWVubG8sIG1v
+bm9zcGFjZTsgcGFkZGluZzogMHB4OyBtYXJnaW46IDBweDsgYmFja2dyb3VuZDogaW5pdGlhbDsg
+Ym9yZGVyLXJhZGl1czogM3B4OyB3b3JkLWJyZWFrOiBub3JtYWw7IHdoaXRlLXNwYWNlOiBwcmU7
+IGJvcmRlcjogMHB4OyBkaXNwbGF5OiBpbmxpbmU7IG92ZXJmbG93OiB2aXNpYmxlOyBsaW5lLWhl
+aWdodDogaW5oZXJpdDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyI+c2Rfam91cm5hbF9zZW5kKCJN
+RVNTQUdFPSVzIiwgbWVzc2FnZS5jX3N0cigpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IlBSSU9SSVRZPSVpIiwgc2VsUHJpb3JpdHksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAi
+TUVTU0FHRV9JRD0lcyIsIHNlbE1lc3NhZ2VJZCwKICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICJJUE1JX1NFTF9SRUNPUkRfSUQ9JWQiLCByZWNvcmRJZCwKICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICJJUE1JX1NFTF9SRUNPUkRfVFlQRT0leCIsIHNlbFN5c3RlbVR5cGUsCiAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfR0VORVJBVE9SX0lEPSV4IiwgZ2VuSWQsCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfU0VOU09SX1BBVEg9JXMiLCBwYXRo
+LmNfc3RyKCksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSVBNSV9TRUxfRVZFTlRfRElS
+PSV4IiwgYXNzZXJ0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIklQTUlfU0VMX0RBVEE9
+JXMiLCBzZWxEYXRhU3RyLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgTlVMTCk7PC9jb2Rl
+PjwvcHJlPjxwcmUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IG1hcmdpbi10b3A6IDBw
+eDsgbWFyZ2luLWJvdHRvbTogMTZweDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyBwYWRkaW5nOiAx
+NnB4OyBvdmVyZmxvdzogYXV0bzsgbGluZS1oZWlnaHQ6IDEuNDU7IGJhY2tncm91bmQtY29sb3I6
+IHJnYigyNDYsIDI0OCwgMjUwKTsgYm9yZGVyLXJhZGl1czogM3B4OyI+PGNvZGUgc3R5bGU9ImJv
+eC1zaXppbmc6IGJvcmRlci1ib3g7IHBhZGRpbmc6IDBweDsgbWFyZ2luOiAwcHg7IGJhY2tncm91
+bmQ6IGluaXRpYWw7IGJvcmRlci1yYWRpdXM6IDNweDsgd29yZC1icmVhazogbm9ybWFsOyBib3Jk
+ZXI6IDBweDsgZGlzcGxheTogaW5saW5lOyBvdmVyZmxvdzogdmlzaWJsZTsgbGluZS1oZWlnaHQ6
+IGluaGVyaXQ7IG92ZXJmbG93LXdyYXA6IG5vcm1hbDsgZm9udC1zaXplOiAxMS45cHg7IHdoaXRl
+LXNwYWNlOiBwcmU7Ij48Zm9udCBjb2xvcj0iIzI0MjkyZSIgZmFjZT0iU0ZNb25vLVJlZ3VsYXIs
+IENvbnNvbGFzLCBMaWJlcmF0aW9uIE1vbm8sIE1lbmxvLCBtb25vc3BhY2UiPlNlcCAzMCAwMToz
+OTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIHdh
+cm5pbmcgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wODkwMDAgVGhyZXNob2xk
+PTExLjQwMDAwMC4KU2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQ
+MTJWIHNlbnNvciBjcm9zc2VkIGEgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJl
+YWRpbmc9MC4wODkwMDAgVGhyZXNob2xkPTEwLjIyMDAwMC4KU2VwIDMwIDAxOjM5OjQ4IGRlbW9i
+b2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0
+aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMjMxMDAwIFRocmVzaG9sZD00Ljc1MDAwMC4K
+U2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYgc2Vuc29yIGNy
+b3NzZWQgYSBjcml0aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjIzMTAw
+MCBUaHJlc2hvbGQ9NC41MDAwMDAuClNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dl
+clsxMTg3XTogUDNWMyBzZW5zb3IgY3Jvc3NlZCBhIHdhcm5pbmcgbG93IHRocmVzaG9sZCBnb2lu
+ZyBsb3cuIFJlYWRpbmc9MC4wMDIwMDAgVGhyZXNob2xkPTMuMTAwMDAwLgpTZXAgMzAgMDE6Mzk6
+NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSBjcml0
+aWNhbCBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMjAwMCBUaHJlc2hvbGQ9
+My4wNzAwMDAuClNlcCAzMCAwMTozOTo0OSBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZD
+Q0lOX0NQVTEgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93
+LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9sZD0xLjE3MDAwMC4KU2VwIDMwIDAxOjM5OjQ5IGRl
+bW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQVkNDSU5fQ1BVMSBzZW5zb3IgY3Jvc3NlZCBhIGNy
+aXRpY2FsIGxvdyB0aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9s
+ZD0xLjA3MDAwMC48L2ZvbnQ+PC9jb2RlPjxjb2RlIHN0eWxlPSJjb2xvcjogcmdiKDM2LCA0MSwg
+NDYpOyBmb250LWZhbWlseTogU0ZNb25vLVJlZ3VsYXIsIENvbnNvbGFzLCAmcXVvdDtMaWJlcmF0
+aW9uIE1vbm8mcXVvdDssIE1lbmxvLCBtb25vc3BhY2U7IGZvbnQtc2l6ZTogMTEuOXB4OyBib3gt
+c2l6aW5nOiBib3JkZXItYm94OyBwYWRkaW5nOiAwcHg7IG1hcmdpbjogMHB4OyBiYWNrZ3JvdW5k
+OiBpbml0aWFsOyBib3JkZXItcmFkaXVzOiAzcHg7IHdvcmQtYnJlYWs6IG5vcm1hbDsgd2hpdGUt
+c3BhY2U6IHByZTsgYm9yZGVyOiAwcHg7IGRpc3BsYXk6IGlubGluZTsgb3ZlcmZsb3c6IHZpc2li
+bGU7IGxpbmUtaGVpZ2h0OiBpbmhlcml0OyBvdmVyZmxvdy13cmFwOiBub3JtYWw7Ij4KPC9jb2Rl
+PjwvcHJlPjwvZGl2PjxkaXY+PGNvZGUgc3R5bGU9ImJveC1zaXppbmc6IGJvcmRlci1ib3g7IGZv
+bnQtZmFtaWx5OiBTRk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9u
+byZxdW90OywgTWVubG8sIG1vbm9zcGFjZTsgcGFkZGluZzogMHB4OyBtYXJnaW46IDBweDsgYmFj
+a2dyb3VuZDogaW5pdGlhbDsgYm9yZGVyLXJhZGl1czogM3B4OyB3b3JkLWJyZWFrOiBub3JtYWw7
+IHdoaXRlLXNwYWNlOiBwcmU7IGJvcmRlcjogMHB4OyBkaXNwbGF5OiBpbmxpbmU7IG92ZXJmbG93
+OiB2aXNpYmxlOyBsaW5lLWhlaWdodDogaW5oZXJpdDsgb3ZlcmZsb3ctd3JhcDogbm9ybWFsOyI+
+dGhhbmtzLDwvY29kZT48L2Rpdj48ZGl2Pjxjb2RlIHN0eWxlPSJib3gtc2l6aW5nOiBib3JkZXIt
+Ym94OyBmb250LWZhbWlseTogU0ZNb25vLVJlZ3VsYXIsIENvbnNvbGFzLCAmcXVvdDtMaWJlcmF0
+aW9uIE1vbm8mcXVvdDssIE1lbmxvLCBtb25vc3BhY2U7IHBhZGRpbmc6IDBweDsgbWFyZ2luOiAw
+cHg7IGJhY2tncm91bmQ6IGluaXRpYWw7IGJvcmRlci1yYWRpdXM6IDNweDsgd29yZC1icmVhazog
+bm9ybWFsOyB3aGl0ZS1zcGFjZTogcHJlOyBib3JkZXI6IDBweDsgZGlzcGxheTogaW5saW5lOyBv
+dmVyZmxvdzogdmlzaWJsZTsgbGluZS1oZWlnaHQ6IGluaGVyaXQ7IG92ZXJmbG93LXdyYXA6IG5v
+cm1hbDsiPkJ5cm9uPC9jb2RlPjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVh
+c2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
+------=_Part_58754_1388636687.1570760543370--
 
-> =EF=BB=BFOn 9/11/19, 1:05 PM, "Vijay Khemka" <vijaykhemka@fb.com> wrote:
->=20
->     HW checksum generation is not working for AST2500, specially with IPV6
->     over NCSI. All TCP packets with IPv6 get dropped. By disabling this
->     it works perfectly fine with IPV6. As it works for IPV4 so enabled
->     hw checksum back for IPV4.
->    =20
->     Verified with IPV6 enabled and can do ssh.
->    =20
->     Signed-off-by: Vijay Khemka <vijaykhemka@fb.com>
