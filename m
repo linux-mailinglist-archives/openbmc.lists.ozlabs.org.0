@@ -1,54 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 570BFD4BB6
-	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2019 03:13:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 306BDD591C
+	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 02:45:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46qmzr4l1mzDqb0
-	for <lists+openbmc@lfdr.de>; Sat, 12 Oct 2019 12:13:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46s0G73WtXzDqvN
+	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 11:45:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=163.com
- (client-ip=220.181.13.4; helo=m13-4.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2607:f8b0:4864:20::543; helo=mail-pg1-x543.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="HuIKObHO"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="lT14U6+W"; 
  dkim-atps=neutral
-Received: from m13-4.163.com (m13-4.163.com [220.181.13.4])
- by lists.ozlabs.org (Postfix) with ESMTP id 46qmz71gWpzDqTw
- for <openbmc@lists.ozlabs.org>; Sat, 12 Oct 2019 12:13:04 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=LQXeD
- 4Xb76PS1gDnDpI6IRagFjvRZImSBkGXi4CkwBY=; b=HuIKObHOyWJMjaNzhB3Q6
- MNYTHzVS+7L0Fjd2sl1+l+mvdEZuaeMyJlOVrRe+YfsAzPLrz6aAzvx5BH7mYrdu
- kgaB0g1rhsIME98l3nghOqihrsgPuGCpFmkM32Jg6j+gRW0sr7lgCo2t1t3iDIIO
- KH254+JfCPAxAAWZwqfgf4=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr4 (Coremail) ; Sat, 12 Oct 2019 09:12:56 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Sat, 12 Oct 2019 09:12:56 +0800 (CST)
-From: www  <ouyangxuan10@163.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: Re:Re: why sel-logger not add all info to journal?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-In-Reply-To: <7977c2a2-1432-3db2-e598-1f434dfd166e@linux.intel.com>
-References: <6db4fd1b.3ba4.16db89fcc8b.Coremail.ouyangxuan10@163.com>
- <7977c2a2-1432-3db2-e598-1f434dfd166e@linux.intel.com>
-X-CM-CTRLDATA: af8gwGZvb3Rlcl9odG09MzI1NDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_43449_102444212.1570842776681"
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46s0FV2lrszDqsb
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Oct 2019 11:44:45 +1100 (AEDT)
+Received: by mail-pg1-x543.google.com with SMTP id i76so9067614pgc.0
+ for <openbmc@lists.ozlabs.org>; Sun, 13 Oct 2019 17:44:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=82ynF9Okn2oVAqXhbsFEQR/mHbceO1shRp3zAbJBG54=;
+ b=lT14U6+WrjFWEWktcqrcYa8MmIaFx9i+UA2xsYkIii1XIazSci36vNLd6KZxUMkm3Q
+ NLZ/n6vhDsQWoBp0ZyaL4cF558CcnJvdt63UksHfOvNb59zo+Ake9ie8Bvp7aSZuIhjx
+ l/yoL3MKCLBMJP/13lWsp9ipHnCmkaWPmcMv5DgmXOcoGU4xM80Wi20lTqlvBSWGSVtz
+ GocAuXGGupXqo8eUpGt5VNHUrMZwC6VuHhiiZfKd113inuPiSwfuRcQ0KfRKwnXp63oK
+ 2Do8mHC7Rj9pw0TjRI9qlwtkGa1ijJQPSbfddc8dWAmkhbG7jbzoOlZHA+fsK13OrhoU
+ ZXTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=82ynF9Okn2oVAqXhbsFEQR/mHbceO1shRp3zAbJBG54=;
+ b=AM/MZN/vC/mipDYfiSuE5H6/GMLSHfHD8o9W/ZBNfKKd6iCPp4m/qNKrACT4piSjAc
+ woH+lCXI8sTAcTcqB6llvtO+Oq60cFaKWosPxKP6XqOlR7Bi1kWPapi7EzGZCbFeVWcR
+ JzYeZzaWjeRvvsXv1PFGVt9+AYB0tjBnnunmHALxHccNPoq9lLgSiHVVDg3ByJOtr3Fx
+ BgQXeeqjPhIG4JV8927Z+9hhni44ph8JoIwmAr8F1Co57ibFovxZvhwfpVq4JpyNojRh
+ r0tdz9n+G064y/6aXMaf04YMVubNa296ILVTAEUsBLe7BiuvWFhrPKUlaR7A1YepK3VZ
+ K21w==
+X-Gm-Message-State: APjAAAWJu0qdUid9AbA/LmVxCjSybvUDw14O8T6W66D2dM/QjC7bpknT
+ rRaYbqKWGlaLVxmDlx3kk4itnuiuZP4=
+X-Google-Smtp-Source: APXvYqwmQR5mW0hPqYkxHKahoUYbCCc0FccoGDm3q7Q6B+WmE14DTERC0VCkyHje0rGRyUE/qvsGVQ==
+X-Received: by 2002:a17:90a:e987:: with SMTP id
+ v7mr33371913pjy.86.1571013881548; 
+ Sun, 13 Oct 2019 17:44:41 -0700 (PDT)
+Received: from voyager.ibm.com ([36.255.48.244])
+ by smtp.gmail.com with ESMTPSA id v5sm17450262pfv.76.2019.10.13.17.44.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 13 Oct 2019 17:44:40 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.3] fsi: aspeed: Add debugfs entries
+Date: Mon, 14 Oct 2019 11:14:33 +1030
+Message-Id: <20191014004433.28180-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Message-ID: <6efa616b.2b50.16dbd869469.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: BMGowADH+LmYKKFdZU2fAA--.18866W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiMRJL2lUMQFpM8AACsP
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,120 +77,206 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_43449_102444212.1570842776681
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+From: Eddie James <eajames@linux.ibm.com>
 
-RGVhciBCaWxscywKCgpJIGNhbiBzZWUgdGhlIGRldGFpbHMgbWVzc2FnZS4KdGhhbmsgeW91IGZv
-ciB5b3VyIGhlbHAgLCBpdCBpcyBhbGwgdGhlIHdvcmxkIHRvIG1lLgoKCnRoYW5rcywKYnlyb24K
-CgoKCgoKCkF0IDIwMTktMTAtMTEgMjM6Mzg6MDEsICJCaWxscywgSmFzb24gTSIgPGphc29uLm0u
-YmlsbHNAbGludXguaW50ZWwuY29tPiB3cm90ZToKPk9uIDEwLzEwLzIwMTkgNzoyMiBQTSwgd3d3
-IHdyb3RlOgo+PiBEZWFyIGFsbCwKPj4gCj4+IEFkZCBzZWwtbG9nZ2VyIHRvIG9wZW5ibWMgcHJv
-amVjdCwgd2hlbiB0aHJlc2hvbGQgc2Vuc29yIGdlbmVyYXRlIGxvZywgCj4+IHNlbC1sb2dnZXIg
-d2lsbCBhZGQgbWVzc2FnZSB0byBqb3VybmFsLCBidXQgd2h5IHRoZSBtZXNzYWdlIGlzIGluY29t
-cGxldGU/Cj4KPkJ5IGluY29tcGxldGUgZG8geW91IG1lYW4gdGhhdCB5b3UgZG8gbm90IHNlZSB0
-aGUgam91cm5hbCBmaWVsZHMgYXMgCj5zaG93biBpbiB0aGUgc2Rfam91cm5hbF9zZW5kKCkgY2Fs
-bCAoTUVTU0FHRV9JRCwgSVBNSV9TRUxfUkVDT1JEX0lELCBldGMuKT8KPgo+Sm91cm5hbCBlbnRy
-aWVzIGFyZSBtYWRlIHVwIG9mIHZhcmlvdXMgZmllbGRzIGVhY2ggb2YgdGhlIGZvcm0gCj4iVkFS
-SUFCTEU9dmFsdWUiLiAgQnkgZGVmYXVsdCwgam91cm5hbGN0bCBvbmx5IHNob3dzIHRoZSBjb250
-ZW50cyBvZiB0aGUgCj5NRVNTQUdFIGZpZWxkIHdoaWNoIGlzIHdoYXQgeW91IHNob3cgYmVsb3cu
-ICBJZiB5b3Ugd2FudCB0byBzZWUgYWxsIG9mIAo+dGhlIGZpZWxkcyBpbiB0aGUgam91cm5hbCBl
-bnRyeSB5b3UgY2FuIHVzZSAnam91cm5hbGN0bCAtbyBqc29uLXByZXR0eScgCj53aGljaCB3aWxs
-IHByaW50IHRoZSBmdWxsIGpvdXJuYWwgZW50cnkgYXMgYSBKU09OLXN0eWxlIG9iamVjdC4KPgo+
-PiAKPj4gfHNkX2pvdXJuYWxfc2VuZCgiTUVTU0FHRT0lcyIsIG1lc3NhZ2UuY19zdHIoKSwgIlBS
-SU9SSVRZPSVpIiwgCj4+IHNlbFByaW9yaXR5LCAiTUVTU0FHRV9JRD0lcyIsIHNlbE1lc3NhZ2VJ
-ZCwgIklQTUlfU0VMX1JFQ09SRF9JRD0lZCIsIAo+PiByZWNvcmRJZCwgIklQTUlfU0VMX1JFQ09S
-RF9UWVBFPSV4Iiwgc2VsU3lzdGVtVHlwZSwgCj4+ICJJUE1JX1NFTF9HRU5FUkFUT1JfSUQ9JXgi
-LCBnZW5JZCwgIklQTUlfU0VMX1NFTlNPUl9QQVRIPSVzIiwgCj4+IHBhdGguY19zdHIoKSwgIklQ
-TUlfU0VMX0VWRU5UX0RJUj0leCIsIGFzc2VydCwgIklQTUlfU0VMX0RBVEE9JXMiLCAKPj4gc2Vs
-RGF0YVN0ciwgTlVMTCk7fAo+PiAKPj4gfFNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxv
-Z2dlclsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIAo+PiB3YXJuaW5nIGxvdyB0aHJlc2hv
-bGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDg5MDAwIFRocmVzaG9sZD0xMS40MDAwMDAuIAo+PiBT
-ZXAgMzAgMDE6Mzk6NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFAxMlYgc2Vuc29yIGNy
-b3NzZWQgYSAKPj4gY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4w
-ODkwMDAgVGhyZXNob2xkPTEwLjIyMDAwMC4gCj4+IFNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQg
-c2VsLWxvZ2dlclsxMTg3XTogUDVWIHNlbnNvciBjcm9zc2VkIGEgd2FybmluZyAKPj4gbG93IHRo
-cmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4yMzEwMDAgVGhyZXNob2xkPTQuNzUwMDAwLiBT
-ZXAgMzAgCj4+IDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYgc2Vuc29y
-IGNyb3NzZWQgYSBjcml0aWNhbCBsb3cgCj4+IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9
-MC4yMzEwMDAgVGhyZXNob2xkPTQuNTAwMDAwLiBTZXAgMzAgCj4+IDAxOjM5OjQ4IGRlbW9ib2Fy
-ZCBzZWwtbG9nZ2VyWzExODddOiBQM1YzIHNlbnNvciBjcm9zc2VkIGEgd2FybmluZyBsb3cgCj4+
-IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wMDIwMDAgVGhyZXNob2xkPTMuMTAwMDAw
-LiBTZXAgMzAgCj4+IDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQM1YzIHNl
-bnNvciBjcm9zc2VkIGEgY3JpdGljYWwgbG93IAo+PiB0aHJlc2hvbGQgZ29pbmcgbG93LiBSZWFk
-aW5nPTAuMDAyMDAwIFRocmVzaG9sZD0zLjA3MDAwMC4gU2VwIDMwIAo+PiAwMTozOTo0OSBkZW1v
-Ym9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZDQ0lOX0NQVTEgc2Vuc29yIGNyb3NzZWQgYSAKPj4g
-d2FybmluZyBsb3cgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMTAwMCBUaHJlc2hv
-bGQ9MS4xNzAwMDAuIAo+PiBTZXAgMzAgMDE6Mzk6NDkgZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4
-N106IFBWQ0NJTl9DUFUxIHNlbnNvciBjcm9zc2VkIGEgCj4+IGNyaXRpY2FsIGxvdyB0aHJlc2hv
-bGQgZ29pbmcgbG93LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9sZD0xLjA3MDAwMC58fHwKPj4g
-Cj4+IHx0aGFua3MsfAo+PiB8Qnlyb258Cj4+IAo+PiAK
-------=_Part_43449_102444212.1570842776681
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Add debugfs entries for the FSI master registers.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciZuYnNwOzxzcGFuIHN0eWxlPSJmb250LWZhbWls
-eTogYXJpYWw7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsiPkJpbGxzLDwvc3Bhbj48L2Rpdj48ZGl2
-PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogYXJpYWw7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsi
-Pjxicj48L3NwYW4+PC9kaXY+PGRpdj48Zm9udCBmYWNlPSJhcmlhbCI+PHNwYW4gc3R5bGU9Indo
-aXRlLXNwYWNlOiBwcmUtd3JhcDsiPkkgY2FuIHNlZSB0aGUgZGV0YWlscyBtZXNzYWdlLjwvc3Bh
-bj48L2ZvbnQ+PC9kaXY+PGRpdj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IGFyaWFsOyB3aGl0
-ZS1zcGFjZTogcHJlLXdyYXA7Ij50aGFuayB5b3UgZm9yIHlvdXIgaGVscCAsIGl0IGlzIGFsbCB0
-aGUgd29ybGQgdG8gbWUuPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+dGhhbmtzLDwv
-ZGl2PjxkaXY+Ynlyb248L2Rpdj48YnI+PGJyPjxicj48ZGl2IHN0eWxlPSJwb3NpdGlvbjpyZWxh
-dGl2ZTt6b29tOjEiPjwvZGl2PjxkaXYgaWQ9ImRpdk5ldGVhc2VNYWlsQ2FyZCI+PC9kaXY+PGJy
-PjxwcmU+PGJyPkF0IDIwMTktMTAtMTEgMjM6Mzg6MDEsICJCaWxscywgSmFzb24gTSIgJmx0O2ph
-c29uLm0uYmlsbHNAbGludXguaW50ZWwuY29tJmd0OyB3cm90ZToKJmd0O09uIDEwLzEwLzIwMTkg
-NzoyMiBQTSwgd3d3IHdyb3RlOgomZ3Q7Jmd0OyBEZWFyIGFsbCwKJmd0OyZndDsgCiZndDsmZ3Q7
-IEFkZCBzZWwtbG9nZ2VyIHRvIG9wZW5ibWMgcHJvamVjdCwgd2hlbiB0aHJlc2hvbGQgc2Vuc29y
-IGdlbmVyYXRlIGxvZywgCiZndDsmZ3Q7IHNlbC1sb2dnZXIgd2lsbCBhZGQgbWVzc2FnZSB0byBq
-b3VybmFsLCBidXQmbmJzcDt3aHkgdGhlIG1lc3NhZ2UgaXMgaW5jb21wbGV0ZT8KJmd0OwomZ3Q7
-QnkgaW5jb21wbGV0ZSBkbyB5b3UgbWVhbiB0aGF0IHlvdSBkbyBub3Qgc2VlIHRoZSBqb3VybmFs
-IGZpZWxkcyBhcyAKJmd0O3Nob3duIGluIHRoZSBzZF9qb3VybmFsX3NlbmQoKSBjYWxsIChNRVNT
-QUdFX0lELCBJUE1JX1NFTF9SRUNPUkRfSUQsIGV0Yy4pPwomZ3Q7CiZndDtKb3VybmFsIGVudHJp
-ZXMgYXJlIG1hZGUgdXAgb2YgdmFyaW91cyBmaWVsZHMgZWFjaCBvZiB0aGUgZm9ybSAKJmd0OyJW
-QVJJQUJMRT12YWx1ZSIuICBCeSBkZWZhdWx0LCBqb3VybmFsY3RsIG9ubHkgc2hvd3MgdGhlIGNv
-bnRlbnRzIG9mIHRoZSAKJmd0O01FU1NBR0UgZmllbGQgd2hpY2ggaXMgd2hhdCB5b3Ugc2hvdyBi
-ZWxvdy4gIElmIHlvdSB3YW50IHRvIHNlZSBhbGwgb2YgCiZndDt0aGUgZmllbGRzIGluIHRoZSBq
-b3VybmFsIGVudHJ5IHlvdSBjYW4gdXNlICdqb3VybmFsY3RsIC1vIGpzb24tcHJldHR5JyAKJmd0
-O3doaWNoIHdpbGwgcHJpbnQgdGhlIGZ1bGwgam91cm5hbCBlbnRyeSBhcyBhIEpTT04tc3R5bGUg
-b2JqZWN0LgomZ3Q7CiZndDsmZ3Q7IAomZ3Q7Jmd0OyB8c2Rfam91cm5hbF9zZW5kKCJNRVNTQUdF
-PSVzIiwgbWVzc2FnZS5jX3N0cigpLCAiUFJJT1JJVFk9JWkiLCAKJmd0OyZndDsgc2VsUHJpb3Jp
-dHksICJNRVNTQUdFX0lEPSVzIiwgc2VsTWVzc2FnZUlkLCAiSVBNSV9TRUxfUkVDT1JEX0lEPSVk
-IiwgCiZndDsmZ3Q7IHJlY29yZElkLCAiSVBNSV9TRUxfUkVDT1JEX1RZUEU9JXgiLCBzZWxTeXN0
-ZW1UeXBlLCAKJmd0OyZndDsgIklQTUlfU0VMX0dFTkVSQVRPUl9JRD0leCIsIGdlbklkLCAiSVBN
-SV9TRUxfU0VOU09SX1BBVEg9JXMiLCAKJmd0OyZndDsgcGF0aC5jX3N0cigpLCAiSVBNSV9TRUxf
-RVZFTlRfRElSPSV4IiwgYXNzZXJ0LCAiSVBNSV9TRUxfREFUQT0lcyIsIAomZ3Q7Jmd0OyBzZWxE
-YXRhU3RyLCBOVUxMKTt8CiZndDsmZ3Q7IAomZ3Q7Jmd0OyB8U2VwIDMwIDAxOjM5OjQ4IGRlbW9i
-b2FyZCBzZWwtbG9nZ2VyWzExODddOiBQMTJWIHNlbnNvciBjcm9zc2VkIGEgCiZndDsmZ3Q7IHdh
-cm5pbmcgbG93IHRocmVzaG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wODkwMDAgVGhyZXNob2xk
-PTExLjQwMDAwMC4gCiZndDsmZ3Q7IFNlcCAzMCAwMTozOTo0OCBkZW1vYm9hcmQgc2VsLWxvZ2dl
-clsxMTg3XTogUDEyViBzZW5zb3IgY3Jvc3NlZCBhIAomZ3Q7Jmd0OyBjcml0aWNhbCBsb3cgdGhy
-ZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjA4OTAwMCBUaHJlc2hvbGQ9MTAuMjIwMDAwLiAK
-Jmd0OyZndDsgU2VwIDMwIDAxOjM5OjQ4IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQNVYg
-c2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIAomZ3Q7Jmd0OyBsb3cgdGhyZXNob2xkIGdvaW5nIGxv
-dy4gUmVhZGluZz0wLjIzMTAwMCBUaHJlc2hvbGQ9NC43NTAwMDAuIFNlcCAzMCAKJmd0OyZndDsg
-MDE6Mzk6NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJbMTE4N106IFA1ViBzZW5zb3IgY3Jvc3NlZCBh
-IGNyaXRpY2FsIGxvdyAKJmd0OyZndDsgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjIz
-MTAwMCBUaHJlc2hvbGQ9NC41MDAwMDAuIFNlcCAzMCAKJmd0OyZndDsgMDE6Mzk6NDggZGVtb2Jv
-YXJkIHNlbC1sb2dnZXJbMTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSB3YXJuaW5nIGxvdyAK
-Jmd0OyZndDsgdGhyZXNob2xkIGdvaW5nIGxvdy4gUmVhZGluZz0wLjAwMjAwMCBUaHJlc2hvbGQ9
-My4xMDAwMDAuIFNlcCAzMCAKJmd0OyZndDsgMDE6Mzk6NDggZGVtb2JvYXJkIHNlbC1sb2dnZXJb
-MTE4N106IFAzVjMgc2Vuc29yIGNyb3NzZWQgYSBjcml0aWNhbCBsb3cgCiZndDsmZ3Q7IHRocmVz
-aG9sZCBnb2luZyBsb3cuIFJlYWRpbmc9MC4wMDIwMDAgVGhyZXNob2xkPTMuMDcwMDAwLiBTZXAg
-MzAgCiZndDsmZ3Q7IDAxOjM5OjQ5IGRlbW9ib2FyZCBzZWwtbG9nZ2VyWzExODddOiBQVkNDSU5f
-Q1BVMSBzZW5zb3IgY3Jvc3NlZCBhIAomZ3Q7Jmd0OyB3YXJuaW5nIGxvdyB0aHJlc2hvbGQgZ29p
-bmcgbG93LiBSZWFkaW5nPTAuMDAxMDAwIFRocmVzaG9sZD0xLjE3MDAwMC4gCiZndDsmZ3Q7IFNl
-cCAzMCAwMTozOTo0OSBkZW1vYm9hcmQgc2VsLWxvZ2dlclsxMTg3XTogUFZDQ0lOX0NQVTEgc2Vu
-c29yIGNyb3NzZWQgYSAKJmd0OyZndDsgY3JpdGljYWwgbG93IHRocmVzaG9sZCBnb2luZyBsb3cu
-IFJlYWRpbmc9MC4wMDEwMDAgVGhyZXNob2xkPTEuMDcwMDAwLnx8fAomZ3Q7Jmd0OyAKJmd0OyZn
-dDsgfHRoYW5rcyx8CiZndDsmZ3Q7IHxCeXJvbnwKJmd0OyZndDsgCiZndDsmZ3Q7IAo8L3ByZT48
-L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8L3A+PC9z
-cGFuPg==
-------=_Part_43449_102444212.1570842776681--
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/fsi/fsi-master-aspeed.c | 135 ++++++++++++++++++++++++++++++++
+ 1 file changed, 135 insertions(+)
+
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index dce61f08425e..6496d2972944 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -3,6 +3,7 @@
+ // FSI master driver for AST2600
+ 
+ #include <linux/clk.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/fsi.h>
+ #include <linux/io.h>
+@@ -28,6 +29,7 @@
+ #define FSI_MCENP0		0x20		/* C: Clear enable */
+ #define FSI_MAEB		0x70		/* R: Error address */
+ #define FSI_MVER		0x74		/* R: master version/type */
++#define FSI_MSTAP0		0xd0		/* R: Port status */
+ #define FSI_MRESP0		0xd0		/* W: Port reset */
+ #define FSI_MESRB0		0x1d0		/* R: Master error status */
+ #define FSI_MRESB0		0x1d0		/* W: Reset bridge */
+@@ -68,11 +70,23 @@
+ 
+ #define FSI_LINK_ENABLE_SETUP_TIME	10	/* in mS */
+ 
++#define FSI_NUM_DEBUGFS_ENTRIES		14
++
++struct fsi_master_aspeed;
++
++struct fsi_master_aspeed_debugfs_entry {
++	struct fsi_master_aspeed *aspeed;
++	uint32_t addr;
++};
++
+ struct fsi_master_aspeed {
+ 	struct fsi_master	master;
+ 	struct device		*dev;
+ 	void __iomem		*base;
+ 	struct clk		*clk;
++
++	struct dentry		*debugfs_dir;
++	struct fsi_master_aspeed_debugfs_entry debugfs[FSI_NUM_DEBUGFS_ENTRIES];
+ };
+ 
+ #define to_fsi_master_aspeed(m) \
+@@ -428,6 +442,35 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
+ 	return 0;
+ }
+ 
++static int fsi_master_aspeed_debugfs_get(void *data, u64 *val)
++{
++	int rc;
++	u32 out;
++	struct fsi_master_aspeed_debugfs_entry *entry = data;
++
++	rc = opb_read(entry->aspeed->base, ctrl_base + entry->addr, 4, &out);
++	if (rc)
++		return rc;
++
++	*val = (u64)be32_to_cpu(out);
++	return 0;
++}
++static int fsi_master_aspeed_debugfs_set(void *data, u64 val)
++{
++	u32 rc;
++	u32 in = cpu_to_be32((u32)(val & 0xFFFFFFFFULL));
++	struct fsi_master_aspeed_debugfs_entry *entry = data;
++
++	rc = opb_write(entry->aspeed->base, ctrl_base + entry->addr, in, 4);
++	if (rc)
++		return rc;
++
++	return 0;
++}
++DEFINE_DEBUGFS_ATTRIBUTE(fsi_master_aspeed_debugfs_ops,
++			 fsi_master_aspeed_debugfs_get,
++			 fsi_master_aspeed_debugfs_set, "0x%08llx\n");
++
+ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ {
+ 	struct fsi_master_aspeed *aspeed;
+@@ -499,6 +542,96 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 
+ 	aspeed_master_init(aspeed);
+ 
++	aspeed->debugfs_dir = debugfs_create_dir("fsi-master-aspeed", NULL);
++	if (aspeed->debugfs_dir) {
++		int idx = 0;
++		struct fsi_master_aspeed_debugfs_entry *etrs = aspeed->debugfs;
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MMODE;
++		debugfs_create_file("mmode", 0644, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MDLYR;
++		debugfs_create_file("mdlyr", 0644, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MCRSP;
++		debugfs_create_file("mcrsp0", 0644, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MENP0;
++		debugfs_create_file("menp0", 0644, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MLEVP0;
++		debugfs_create_file("mlevp0", 0444, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MSENP0;
++		debugfs_create_file("msenp0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MCENP0;
++		debugfs_create_file("mcenp0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MAEB;
++		debugfs_create_file("maeb", 0444, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MVER;
++		debugfs_create_file("mver", 0444, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MSTAP0;
++		debugfs_create_file("mstap0", 0444, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MRESP0;
++		debugfs_create_file("mresp0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MESRB0;
++		debugfs_create_file("mesrb0", 0444, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MRESB0;
++		debugfs_create_file("mresb0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MECTRL;
++		debugfs_create_file("mectrl", 0644, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++	}
++
+ 	rc = fsi_master_register(&aspeed->master);
+ 	if (rc)
+ 		goto err_release;
+@@ -522,6 +655,8 @@ static int fsi_master_aspeed_remove(struct platform_device *pdev)
+ {
+ 	struct fsi_master_aspeed *aspeed = platform_get_drvdata(pdev);
+ 
++	debugfs_remove_recursive(aspeed->debugfs_dir);
++
+ 	fsi_master_unregister(&aspeed->master);
+ 	clk_disable_unprepare(aspeed->clk);
+ 
+-- 
+2.23.0
 
