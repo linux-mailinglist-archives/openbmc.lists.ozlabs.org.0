@@ -2,40 +2,41 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63237D663F
-	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 17:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7ADBD66E9
+	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 18:11:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sN5J5RTVzDqlL
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 02:39:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sNpy1QfpzDqgq
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 03:11:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
  envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sN4T0Wf1zDqlD
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 02:38:14 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sNp54T8rzDqQZ
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 03:10:51 +1100 (AEDT)
 X-Amp-Result: UNKNOWN
 X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 14 Oct 2019 08:38:11 -0700
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 14 Oct 2019 09:10:48 -0700
 X-IronPort-AV: E=Sophos;i="5.67,296,1566889200"; 
- d="asc'?scan'208,217";a="370158925"
+ d="asc'?scan'208,217";a="370167956"
 Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
  by orsmga005-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
- 14 Oct 2019 08:38:11 -0700
+ 14 Oct 2019 09:10:48 -0700
 Subject: Re: host-ipmid bumps failing on tiogapass
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
 To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
  William Kennington <wak@google.com>
 References: <482C700C-A6AC-4B90-96CC-0E0BB2A7F4F3@fuzziesquirrel.com>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
+ <4cb17f48-d29d-4994-e516-315068dbabfd@intel.com>
 Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
  mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
  dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
@@ -59,15 +60,15 @@ Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
  k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
  Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
  28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
-Message-ID: <4cb17f48-d29d-4994-e516-315068dbabfd@intel.com>
-Date: Mon, 14 Oct 2019 08:38:01 -0700
+Message-ID: <563ccf95-dda2-37f5-33d7-0bc8aafb61c0@intel.com>
+Date: Mon, 14 Oct 2019 09:10:39 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.1.0
 MIME-Version: 1.0
-In-Reply-To: <482C700C-A6AC-4B90-96CC-0E0BB2A7F4F3@fuzziesquirrel.com>
+In-Reply-To: <4cb17f48-d29d-4994-e516-315068dbabfd@intel.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="MCKmqTYvvuRMxEv32fwnqT7uaEFEaVpBs"
+ boundary="GH8q9NGOKEw2L4M7rsFdfANPeQ7IGdn9J"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,32 +87,61 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---MCKmqTYvvuRMxEv32fwnqT7uaEFEaVpBs
-Content-Type: multipart/mixed; boundary="MTgeo0vBVUhvF4FzfhBtrVYQum4QXTSFG"
+--GH8q9NGOKEw2L4M7rsFdfANPeQ7IGdn9J
+Content-Type: multipart/mixed; boundary="oGeZjQCzGWQDlbPPq9OG7c3AtGCMyDzhl"
 
---MTgeo0vBVUhvF4FzfhBtrVYQum4QXTSFG
+--oGeZjQCzGWQDlbPPq9OG7c3AtGCMyDzhl
 Content-Type: multipart/alternative;
- boundary="------------945FD0B3F07442E20DBA75C1"
+ boundary="------------68B6A79CDD1E030403806BD0"
 Content-Language: en-US
 
 This is a multi-part message in MIME format.
---------------945FD0B3F07442E20DBA75C1
+--------------68B6A79CDD1E030403806BD0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Do you have logs to review for the build failure?
+Looking at the logs from the build, there are some "multiple definition"
+errors:
 
-On 10/14/19 8:01 AM, Brad Bishop wrote:
-> Hi William
+08:47:22
+/tmp/openbmc/work/arm1176jzs-openbmc-linux-gnueabi/fb-ipmi-oem/0.1+gitAUT=
+OINC+38183d6670-r0/git/src/oemcommands.cpp:77:16:
+error: conflicting declaration 'constexpr const auto ipmi::network::ROOT'=
+
+08:47:22=C2=A0=C2=A0=C2=A0 77 | constexpr auto ROOT =3D "/xyz/openbmc_pro=
+ject/network";
+08:47:22=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~
+
+This content was in the include/ipmid/utils.hpp file.=C2=A0 The commit mo=
+ved
+them to the transporthandler.cpp file, making the definitions private.
+
+
+On 10/14/19 8:38 AM, Johnathan Mantey wrote:
+> Do you have logs to review for the build failure?
 >
-> After: c514d874e4 (transporthandler: Rewrite + New Handler)
+> On 10/14/19 8:01 AM, Brad Bishop wrote:
+>> Hi William
+>>
+>> After: c514d874e4 (transporthandler: Rewrite + New Handler)
+>>
+>> fb-ipmi-oem no longer builds which is an issue because the tiogapass
+>> system uses it for the bitbake CI.=C2=A0 Is this a backwards compatibi=
+lity
+>> issue or a bug in fb-ipmi-oem or something else?
+>>
+>> thx - brad
 >
-> fb-ipmi-oem no longer builds which is an issue because the tiogapass
-> system uses it for the bitbake CI.=C2=A0 Is this a backwards compatibil=
-ity
-> issue or a bug in fb-ipmi-oem or something else?
+> --=20
+> Johnathan Mantey
+> Senior Software Engineer
+> *azad te**chnology partners*
+> Contributing to Technology Innovation since 1992
+> Phone: (503) 712-6764
+> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>=
+
 >
-> thx - brad
 
 --=20
 Johnathan Mantey
@@ -122,7 +152,7 @@ Phone: (503) 712-6764
 Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
 
 
---------------945FD0B3F07442E20DBA75C1
+--------------68B6A79CDD1E030403806BD0
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -132,28 +162,73 @@ Content-Transfer-Encoding: quoted-printable
 -8">
   </head>
   <body>
-    Do you have logs to review for the build failure?<br>
+    Looking at the logs from the build, there are some "multiple
+    definition" errors:<br>
     <br>
-    <div class=3D"moz-cite-prefix">On 10/14/19 8:01 AM, Brad Bishop wrote=
-:<br>
+    08:47:22
+/tmp/openbmc/work/arm1176jzs-openbmc-linux-gnueabi/fb-ipmi-oem/0.1+gitAUT=
+OINC+38183d6670-r0/git/src/oemcommands.cpp:77:16:
+    error: conflicting declaration 'constexpr const auto
+    ipmi::network::ROOT'<br>
+    08:47:22=C2=A0=C2=A0=C2=A0 77 | constexpr auto ROOT =3D
+    "/xyz/openbmc_project/network";<br>
+    08:47:22=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~<b=
+r>
+    <br>
+    This content was in the include/ipmid/utils.hpp file.=C2=A0 The commi=
+t
+    moved them to the transporthandler.cpp file, making the definitions
+    private.<br>
+    <br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 10/14/19 8:38 AM, Johnathan Mantey
+      wrote:<br>
     </div>
     <blockquote type=3D"cite"
-      cite=3D"mid:482C700C-A6AC-4B90-96CC-0E0BB2A7F4F3@fuzziesquirrel.com=
-">Hi
-      William
+      cite=3D"mid:4cb17f48-d29d-4994-e516-315068dbabfd@intel.com">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DU=
+TF-8">
+      Do you have logs to review for the build failure?<br>
       <br>
+      <div class=3D"moz-cite-prefix">On 10/14/19 8:01 AM, Brad Bishop
+        wrote:<br>
+      </div>
+      <blockquote type=3D"cite"
+        cite=3D"mid:482C700C-A6AC-4B90-96CC-0E0BB2A7F4F3@fuzziesquirrel.c=
+om">Hi
+        William <br>
+        <br>
+        After: c514d874e4 (transporthandler: Rewrite + New Handler) <br>
+        <br>
+        fb-ipmi-oem no longer builds which is an issue because the
+        tiogapass system uses it for the bitbake CI.=C2=A0 Is this a
+        backwards compatibility issue or a bug in fb-ipmi-oem or
+        something else? <br>
+        <br>
+        thx - brad <br>
+      </blockquote>
       <br>
-      After: c514d874e4 (transporthandler: Rewrite + New Handler)
-      <br>
-      <br>
-      fb-ipmi-oem no longer builds which is an issue because the
-      tiogapass system uses it for the bitbake CI.=C2=A0 Is this a backwa=
-rds
-      compatibility issue or a bug in fb-ipmi-oem or something else?
-      <br>
-      <br>
-      thx - brad
-      <br>
+      <div class=3D"moz-signature">-- <br>
+        <meta http-equiv=3D"content-type" content=3D"text/html;
+          charset=3DUTF-8">
+        <title></title>
+        <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan
+            Mantey<br>
+            <small>Senior Software Engineer</small><br>
+            <big><font color=3D"#555555"><small><b>azad te</b><b>chnology=
+
+                    partners</b></small><br>
+                <small><font color=3D"#1F497D"><small>Contributing to
+                      Technology Innovation since 1992</small></font><sma=
+ll><br>
+                    <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                      Email: <a
+                        href=3D"mailto:johnathanx.mantey@intel.com"
+                        moz-do-not-send=3D"true">johnathanx.mantey@intel.=
+com</a></font></small><br>
+                  <br>
+                </small></font></big></font></font> </div>
     </blockquote>
     <br>
     <div class=3D"moz-signature">-- <br>
@@ -176,25 +251,25 @@ tey<br>
   </body>
 </html>
 
---------------945FD0B3F07442E20DBA75C1--
+--------------68B6A79CDD1E030403806BD0--
 
---MTgeo0vBVUhvF4FzfhBtrVYQum4QXTSFG--
+--oGeZjQCzGWQDlbPPq9OG7c3AtGCMyDzhl--
 
---MCKmqTYvvuRMxEv32fwnqT7uaEFEaVpBs
+--GH8q9NGOKEw2L4M7rsFdfANPeQ7IGdn9J
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl2kll0ACgkQ0EfviT3f
-HwmdFQf/YQv7orqwdkpecV0kuR+wuRhN4UP4q+m5V9junG0W/73EP958l19MlX+1
-zs0uQHCr4TUBEHjg1ZKNgokJsJPVTcWtXlFom4sA9/kF3TIX7BMC8uu41lYvg13f
-FPYFxeQ/vy9/4x8ZS9V/etNQJzHBfnKBU9GqodvjtR/L77cM58HWvI/pV23OQJb2
-C2xG0GE2Vz5FgTywQhEssMqZJuEGZmuIuvyBTkYe6IVPBLHkEq2zNY4E4yyDSFLT
-pKRriuAUEquvTRh0ioczvfIhRjcsqJOrQ+z8PJvDHnUbECjQ+B/PvIVKm7ddqTlE
-nIrKw3QBGaKAyCX/NTeDBxnUcByWTA==
-=JSWj
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl2knf8ACgkQ0EfviT3f
+HwlTowgAtAaBZMMxLm6jO56zwfa76x/oCN5SIB1pP9CfRT+EnKqsM8OEuaGOtGok
+mA39iZp27vZy0n6a6e0JXIaERpgS1mGvWnZ+lx/DVq4RWGxuCKsFbhyB60hHuF75
+mSaaRXeR2gKw7DoTHkOZXX0QCWcastmyt1OSz+H+4tXjJUDIcWxjvL9qnws+XYLI
+YjRpQB4b9HfxD4nPpvmlI+ZF7uYrie/FWKrcAmLfahdWnMHTWIBw+FDHXRLhlvYh
+v4XSdaWnkHx3St9F0JaIYm3pC1njD10bNABLuhW7I2rAMilA3ovfRws/M8oIMfa4
+HTiFp+IXggK3LnNxaV25gqPEYzqCjw==
+=62w+
 -----END PGP SIGNATURE-----
 
---MCKmqTYvvuRMxEv32fwnqT7uaEFEaVpBs--
+--GH8q9NGOKEw2L4M7rsFdfANPeQ7IGdn9J--
