@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF56D6994
-	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 20:39:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E6ACD69A0
+	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 20:40:46 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sS5h1ZmxzDqj1
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 05:39:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sS6y6Q75zDqv2
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 05:40:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,50 +19,50 @@ Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sS4k3GsmzDqgC
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 05:38:45 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9EIcR6O076215; Mon, 14 Oct 2019 14:38:36 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vmu30ysnm-1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sS5405hXzDqvl
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 05:39:03 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9EIcv6W052804; Mon, 14 Oct 2019 14:38:57 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2vmupspdjs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2019 14:38:36 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9EIa6x9006322;
- Mon, 14 Oct 2019 18:38:35 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma05wdc.us.ibm.com with ESMTP id 2vk6f6vksm-1
+ Mon, 14 Oct 2019 14:38:56 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9EIa6Ho002038;
+ Mon, 14 Oct 2019 18:38:03 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma02dal.us.ibm.com with ESMTP id 2vk6f71qdv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 14 Oct 2019 18:38:35 +0000
+ Mon, 14 Oct 2019 18:38:03 +0000
 Received: from b03ledav006.gho.boulder.ibm.com
  (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x9EIcYb661014344
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9EIc2Xi25887226
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 14 Oct 2019 18:38:34 GMT
+ Mon, 14 Oct 2019 18:38:02 GMT
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD9D9C605A;
- Mon, 14 Oct 2019 18:38:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 738EBC6057;
+ Mon, 14 Oct 2019 18:38:02 +0000 (GMT)
 Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 820F9C6057;
- Mon, 14 Oct 2019 18:38:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1D211C605A;
+ Mon, 14 Oct 2019 18:38:02 +0000 (GMT)
 Received: from [9.41.179.222] (unknown [9.41.179.222])
  by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 14 Oct 2019 18:38:34 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.3 2/2] fsi: aspeed: Add trace when error occurs
+ Mon, 14 Oct 2019 18:38:01 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.3 1/2] fsi: aspeed: Remove base from trace
 To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
 References: <20191014132140.7618-1-joel@jms.id.au>
- <20191014132140.7618-3-joel@jms.id.au>
+ <20191014132140.7618-2-joel@jms.id.au>
 From: Eddie James <eajames@linux.vnet.ibm.com>
-Message-ID: <50fba3fd-c2e1-cfdc-cff7-89510374bfb6@linux.vnet.ibm.com>
-Date: Mon, 14 Oct 2019 13:38:34 -0500
+Message-ID: <d89d1cf1-cda4-6850-7e9b-5a0c97775a06@linux.vnet.ibm.com>
+Date: Mon, 14 Oct 2019 13:38:01 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20191014132140.7618-3-joel@jms.id.au>
+In-Reply-To: <20191014132140.7618-2-joel@jms.id.au>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -92,7 +92,8 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On 10/14/19 8:21 AM, Joel Stanley wrote:
-> This prints out three registers in the FSI master when an error occurs.
+> The base was showing the virtual address of the FSI master, which was
+> not useful for most users of the tracepoint.
 
 
 Reviewed-by: Eddie James <eajames@linux.ibm.com>
@@ -103,54 +104,94 @@ Tested-by: Eddie James <eajames@linux.ibm.com>
 >
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->   drivers/fsi/fsi-master-aspeed.c          |  7 +++++++
->   include/trace/events/fsi_master_aspeed.h | 18 ++++++++++++++++++
->   2 files changed, 25 insertions(+)
+>   drivers/fsi/fsi-master-aspeed.c          |  5 ++---
+>   include/trace/events/fsi_master_aspeed.h | 20 ++++++++------------
+>   2 files changed, 10 insertions(+), 15 deletions(-)
 >
 > diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-> index d796c4012875..66657b7848de 100644
+> index 2048e38e7200..d796c4012875 100644
 > --- a/drivers/fsi/fsi-master-aspeed.c
 > +++ b/drivers/fsi/fsi-master-aspeed.c
-> @@ -251,6 +251,13 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
->   static int check_errors(struct fsi_master_aspeed *aspeed, int err)
->   {
->   	int ret;
-> +	u32 mresp0, mstap0, mesrb0;
-> +
-> +	opb_read(aspeed->base, ctrl_base + FSI_MRESP0, 4, &mresp0);
-> +	opb_read(aspeed->base, ctrl_base + FSI_MSTAP0, 4, &mstap0);
-> +	opb_read(aspeed->base, ctrl_base + FSI_MESRB0, 4, &mesrb0);
-> +
-> +	trace_fsi_master_aspeed_opb_error(mresp0, mstap0, mesrb0);
+> @@ -194,8 +194,7 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
 >   
->   	if (err == -EIO) {
->   		/* Check MAEB (0x70) ? */
+>   	status = readl(base + OPB0_STATUS);
+>   
+> -	trace_fsi_master_aspeed_opb_write(base, addr, val, size,
+> -			status, reg);
+> +	trace_fsi_master_aspeed_opb_write(addr, val, size, status, reg);
+>   
+>   	/* Return error when poll timed out */
+>   	if (ret)
+> @@ -231,7 +230,7 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
+>   
+>   	result = readl(base + OPB0_FSI_DATA_R);
+>   
+> -	trace_fsi_master_aspeed_opb_read(base, addr, size, result,
+> +	trace_fsi_master_aspeed_opb_read(addr, size, result,
+>   			readl(base + OPB0_STATUS),
+>   			reg);
+>   
 > diff --git a/include/trace/events/fsi_master_aspeed.h b/include/trace/events/fsi_master_aspeed.h
-> index 63b9ce7f0de6..8e47637c5fb7 100644
+> index 06ff6a14bf11..63b9ce7f0de6 100644
 > --- a/include/trace/events/fsi_master_aspeed.h
 > +++ b/include/trace/events/fsi_master_aspeed.h
-> @@ -54,6 +54,24 @@ TRACE_EVENT(fsi_master_aspeed_opb_write,
+> @@ -9,10 +9,9 @@
+>   #include <linux/tracepoint.h>
+>   
+>   TRACE_EVENT(fsi_master_aspeed_opb_read,
+> -	TP_PROTO(void __iomem *base, uint32_t addr, size_t size, uint32_t result, uint32_t status, uint32_t irq_status),
+> -	TP_ARGS(base, addr, size, result, status, irq_status),
+> +	TP_PROTO(uint32_t addr, size_t size, uint32_t result, uint32_t status, uint32_t irq_status),
+> +	TP_ARGS(addr, size, result, status, irq_status),
+>   	TP_STRUCT__entry(
+> -		__field(void *,    base)
+>   		__field(uint32_t,  addr)
+>   		__field(size_t,    size)
+>   		__field(uint32_t,  result)
+> @@ -20,24 +19,22 @@ TRACE_EVENT(fsi_master_aspeed_opb_read,
+>   		__field(uint32_t,  irq_status)
+>   		),
+>   	TP_fast_assign(
+> -		__entry->base = base;
+>   		__entry->addr = addr;
+>   		__entry->size = size;
+>   		__entry->result = result;
+>   		__entry->status = status;
+>   		__entry->irq_status = irq_status;
+>   		),
+> -	TP_printk("fsi: opb read: base %p addr %08x size %zu: result %08x status: %08x irq_status: %08x",
+> -		__entry->base, __entry->addr, __entry->size, __entry->result,
+> +	TP_printk("fsi: opb read: addr %08x size %zu: result %08x status: %08x irq_status: %08x",
+> +		__entry->addr, __entry->size, __entry->result,
+>   		__entry->status, __entry->irq_status
+>   	   )
+>   );
+>   
+>   TRACE_EVENT(fsi_master_aspeed_opb_write,
+> -	TP_PROTO(void __iomem *base, uint32_t addr, uint32_t val, size_t size, uint32_t status, uint32_t irq_status),
+> -	TP_ARGS(base, addr, val, size, status, irq_status),
+> +	TP_PROTO(uint32_t addr, uint32_t val, size_t size, uint32_t status, uint32_t irq_status),
+> +	TP_ARGS(addr, val, size, status, irq_status),
+>   	TP_STRUCT__entry(
+> -		__field(void *,    base)
+>   		__field(uint32_t,    addr)
+>   		__field(uint32_t,    val)
+>   		__field(size_t,    size)
+> @@ -45,15 +42,14 @@ TRACE_EVENT(fsi_master_aspeed_opb_write,
+>   		__field(uint32_t,  irq_status)
+>   		),
+>   	TP_fast_assign(
+> -		__entry->base = base;
+>   		__entry->addr = addr;
+>   		__entry->val = val;
+>   		__entry->size = size;
+>   		__entry->status = status;
+>   		__entry->irq_status = irq_status;
+>   		),
+> -	TP_printk("fsi: opb write: base %p addr %08x val %08x size %zu status: %08x irq_status: %08x",
+> -		__entry->base, __entry->addr, __entry->val, __entry->size,
+> +	TP_printk("fsi: opb write: addr %08x val %08x size %zu status: %08x irq_status: %08x",
+> +		__entry->addr, __entry->val, __entry->size,
+>   		__entry->status, __entry->irq_status
 >   		)
 >   	);
->   
-> +TRACE_EVENT(fsi_master_aspeed_opb_error,
-> +	TP_PROTO(uint32_t mresp0, uint32_t mstap0, uint32_t mesrb0),
-> +	TP_ARGS(mresp0, mstap0, mesrb0),
-> +	TP_STRUCT__entry(
-> +		__field(uint32_t,  mresp0)
-> +		__field(uint32_t,  mstap0)
-> +		__field(uint32_t,  mesrb0)
-> +		),
-> +	TP_fast_assign(
-> +		__entry->mresp0 = mresp0;
-> +		__entry->mstap0 = mstap0;
-> +		__entry->mesrb0 = mesrb0;
-> +		),
-> +	TP_printk("mresp0 %08x mstap0 %08x mesrb0 %08x",
-> +		__entry->mresp0, __entry->mstap0, __entry->mesrb0
-> +		)
-> +	);
-> +
->   #endif
->   
->   #include <trace/define_trace.h>
