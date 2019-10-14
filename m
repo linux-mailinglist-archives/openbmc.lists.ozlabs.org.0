@@ -1,68 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53720D6A07
-	for <lists+openbmc@lfdr.de>; Mon, 14 Oct 2019 21:22:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49F17D6C08
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 01:29:52 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sT3174rfzDqc8
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 06:22:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sZXV3BLQzDqwL
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 10:29:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=google.com
- (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com;
- envelope-from=wak@google.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="ete/3/xy"; 
- dkim-atps=neutral
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
- [IPv6:2a00:1450:4864:20::133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VFGs3Bao"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="ADe3vhDk"; dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sT103mkKzDqwf
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 06:20:36 +1100 (AEDT)
-Received: by mail-lf1-x133.google.com with SMTP id u16so13559lfq.3
- for <openbmc@lists.ozlabs.org>; Mon, 14 Oct 2019 12:20:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=bf57M5viLpYi876k/TOFxXEeVD6VfsCUbO1dLQzdj7U=;
- b=ete/3/xy+K6aDCSNHo0HeipACrfZMEMS+P7pEyUSa5wjqOTjK4RUxUug1pZ7olAMHA
- 6G5Cb8OfEXLv81gnvzcyHE38id38G/EyvyUpFQwNnOxKN6FIYn0apuRCUyCSWiqavMiq
- t8Kg66gkdFpAml7EcRuOILZgc3xkUE6IO5WNLqk0iEMWvyimTZ4vkCPcXUhGbRbzh4/C
- 1PpGQqcIt+GrLv1/7I+XDwz1Q4/HMmU2RQNz2z9El7NCnUHV3dHAWHzljNWiWtpvDn77
- 1mUayGFHYn+PoZsfpIjW+X8DKKzHKydY0Bo4RynBMa3vbH2gSdjZGLHwXCDNa+LR1VA7
- aXCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=bf57M5viLpYi876k/TOFxXEeVD6VfsCUbO1dLQzdj7U=;
- b=OgC1KyWd6GHTYVSDic5948nXDp6SiNHUGcAh5G2SgB74U82ZRpP90wQ8XgWmDQWRHA
- kFXAXZ5L/vEmt+eoWQEFP/9ItTVPusaesN7wRDB8vosJDaCZS6bGXX8SaAnv1LYZYeit
- pnP1a75pnxf0tojCuduRBoi25rPgcVYoQqVi65z+uBuZUCTgNpuyxBMIPwt6qQzCY/Wu
- hs3toc60pCcP8tMMltRskdfa+bJ3nPZq5LdON+ChbC52AEfXDciBJ6ZZL+8kr/Irit2l
- pbzmtW3pg5H/8yaFcgb2NmA2PG3SEISlOt0cJsoGLLTlxRK3aI+Locfltzgde0UmOUhC
- 8rHw==
-X-Gm-Message-State: APjAAAXgAykykTpuJ7xAwuShztl5JLRNlgphgWhbsGAPF+HphuYhzg7U
- FYUTWNiHcOQs1seI4bC9hmoJrcBf/NyIHFhs2KoHkQ==
-X-Google-Smtp-Source: APXvYqwIklG4Bw5wkxsLN608tK5QGTmVy1ouWwTeRic+0kesOG7og7a6lJ2Z+Idfh39WkoAWAR11H4vlxC8UoY30QiY=
-X-Received: by 2002:ac2:5595:: with SMTP id v21mr6149643lfg.168.1571080831196; 
- Mon, 14 Oct 2019 12:20:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <482C700C-A6AC-4B90-96CC-0E0BB2A7F4F3@fuzziesquirrel.com>
- <4cb17f48-d29d-4994-e516-315068dbabfd@intel.com>
- <563ccf95-dda2-37f5-33d7-0bc8aafb61c0@intel.com>
-In-Reply-To: <563ccf95-dda2-37f5-33d7-0bc8aafb61c0@intel.com>
-From: William Kennington <wak@google.com>
-Date: Mon, 14 Oct 2019 12:20:19 -0700
-Message-ID: <CAPnigKn-ivY4zF1AuFiCyp4CBvnqrF0cxW7QN+Df-Tr544uEtA@mail.gmail.com>
-Subject: Re: host-ipmid bumps failing on tiogapass
-To: Johnathan Mantey <johnathanx.mantey@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sZWs2x7WzDqvW
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 10:29:12 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 973FE22138;
+ Mon, 14 Oct 2019 19:29:09 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Mon, 14 Oct 2019 19:29:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=MI954T6BYsXrFT8xtr157uEssMWMxmp
+ 9gCRiKCETW5c=; b=VFGs3BaoWFVPeKjr3c1Vm0zebPGokrXPTQPT4gxJws97XdM
+ brToAE101tv4xyf//QJRS9+6zeGHfDeBpGIGCqdOF8xVYgOo8hx7JAnOlJp3mR6F
+ Y78wwz6FgF2cwV+XWYOXnndAz5H4jSWPC0Y784Y2aZMm3PhHMIkEI6ZpPQaXCSn7
+ h2yVLQRWU0hVcFF0iheb29R+SJ4m/BiJdie/Pa31P1NlKNXLv0Qzegn0zPqB0a1P
+ qXZSOrdNWFVuINxM3WDbpjUimdErHKGvTjKwelEl0BhU6g/donAlgyfP4r7vyb+j
+ o7ief9UZWe/bcf2eumCZH1l88XEeN8XDSe7sLqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=MI954T
+ 6BYsXrFT8xtr157uEssMWMxmp9gCRiKCETW5c=; b=ADe3vhDkfwGOsevRd+RyrT
+ R+yAYNW+4ONI81TfLzq6br4RZhVtGoozEGKKsyhFJeeuDlYlA+Pczbot5c6Un7YH
+ Sg7l3wZRGIeZu96Gf8oaObFWcM49pth8jTRlsaKiIpT5n4tgSSNNpl19OfbF97YX
+ hsNQ5ZWtCnYLy7TqWtKmPQegbD4rKhIByOwt0CFl9G3e/aWUq5kWBWRd+ct9ssPw
+ KLaLRfvdwA6F5JXDkZOYnm1wDTuQzPO6o61xaXTvZ9o0SVbZh10s1ioR5bRitLvq
+ GHDgMb3zz/HOzuvXKJPmR0hBsiObliJN2njEX5Ir8ILgxWE/pgvl0TsPA0E+vFqw
+ ==
+X-ME-Sender: <xms:xASlXQESLh3U2U2y-GlMat8Q0uigro0XqcX2H8_GdVqbzPqgjrI2yg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgddvtdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:xASlXZtXFZKyZqxk--Z9FP6LQm4uxg9muKTI9wprBryHOZHhP8EO0w>
+ <xmx:xASlXSBVoIvm5S19xYQaaCzJMG_5Avig0i85yo4IsRXeLKXu0E-LIA>
+ <xmx:xASlXfzeK-6grEz_v5W_OodeAtPk9CU2RhoLGdIdX7tNrqXqUc593w>
+ <xmx:xQSlXfGibXhSE5P7r6KZz0f7AvylVEOe-7TNPTh_8gZOV8KSQ6Lupw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 7A46BE00A5; Mon, 14 Oct 2019 19:29:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
+Mime-Version: 1.0
+Message-Id: <c36233ce-9ed8-43a2-ab4b-5358eb1807f3@www.fastmail.com>
+In-Reply-To: <20191014132140.7618-2-joel@jms.id.au>
+References: <20191014132140.7618-1-joel@jms.id.au>
+ <20191014132140.7618-2-joel@jms.id.au>
+Date: Tue, 15 Oct 2019 10:00:03 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH linux dev-5.3 1/2] fsi: aspeed: Remove base from trace
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,57 +88,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Emily Shaffer <emilyshaffer@google.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, Vijay Khemka <vijaykhemka@fb.com>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This should be working with the latest code vijay added in
-https://github.com/openbmc/fb-ipmi-oem/commit/a7231893bd729508ef48b5863d8f77e7d7809fb4
 
-On Mon, Oct 14, 2019 at 9:10 AM Johnathan Mantey
-<johnathanx.mantey@intel.com> wrote:
->
-> Looking at the logs from the build, there are some "multiple definition" errors:
->
-> 08:47:22 /tmp/openbmc/work/arm1176jzs-openbmc-linux-gnueabi/fb-ipmi-oem/0.1+gitAUTOINC+38183d6670-r0/git/src/oemcommands.cpp:77:16: error: conflicting declaration 'constexpr const auto ipmi::network::ROOT'
-> 08:47:22    77 | constexpr auto ROOT = "/xyz/openbmc_project/network";
-> 08:47:22       |                ^~~~
->
-> This content was in the include/ipmid/utils.hpp file.  The commit moved them to the transporthandler.cpp file, making the definitions private.
->
->
-> On 10/14/19 8:38 AM, Johnathan Mantey wrote:
->
-> Do you have logs to review for the build failure?
->
-> On 10/14/19 8:01 AM, Brad Bishop wrote:
->
-> Hi William
->
-> After: c514d874e4 (transporthandler: Rewrite + New Handler)
->
-> fb-ipmi-oem no longer builds which is an issue because the tiogapass system uses it for the bitbake CI.  Is this a backwards compatibility issue or a bug in fb-ipmi-oem or something else?
->
-> thx - brad
->
->
-> --
-> Johnathan Mantey
-> Senior Software Engineer
-> azad technology partners
-> Contributing to Technology Innovation since 1992
-> Phone: (503) 712-6764
-> Email: johnathanx.mantey@intel.com
->
->
-> --
-> Johnathan Mantey
-> Senior Software Engineer
-> azad technology partners
-> Contributing to Technology Innovation since 1992
-> Phone: (503) 712-6764
-> Email: johnathanx.mantey@intel.com
->
+
+On Mon, 14 Oct 2019, at 23:51, Joel Stanley wrote:
+> The base was showing the virtual address of the FSI master, which was
+> not useful for most users of the tracepoint.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
