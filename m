@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49F17D6C08
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 01:29:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB6E3D6C25
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 01:42:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sZXV3BLQzDqwL
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 10:29:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sZpg5DQpzDqRR
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 10:42:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,66 +16,67 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VFGs3Bao"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="fZtvEivv"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ADe3vhDk"; dkim-atps=neutral
+ header.b="Zfr+O80U"; dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sZWs2x7WzDqvW
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 10:29:12 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sZp4347pzDqvp
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 10:41:32 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 973FE22138;
- Mon, 14 Oct 2019 19:29:09 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 7D3F520A34;
+ Mon, 14 Oct 2019 19:41:29 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 14 Oct 2019 19:29:09 -0400
+ by compute4.internal (MEProxy); Mon, 14 Oct 2019 19:41:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=MI954T6BYsXrFT8xtr157uEssMWMxmp
- 9gCRiKCETW5c=; b=VFGs3BaoWFVPeKjr3c1Vm0zebPGokrXPTQPT4gxJws97XdM
- brToAE101tv4xyf//QJRS9+6zeGHfDeBpGIGCqdOF8xVYgOo8hx7JAnOlJp3mR6F
- Y78wwz6FgF2cwV+XWYOXnndAz5H4jSWPC0Y784Y2aZMm3PhHMIkEI6ZpPQaXCSn7
- h2yVLQRWU0hVcFF0iheb29R+SJ4m/BiJdie/Pa31P1NlKNXLv0Qzegn0zPqB0a1P
- qXZSOrdNWFVuINxM3WDbpjUimdErHKGvTjKwelEl0BhU6g/donAlgyfP4r7vyb+j
- o7ief9UZWe/bcf2eumCZH1l88XEeN8XDSe7sLqw==
+ :subject:content-type; s=fm1; bh=/4WP/WnIhk17kusyYbsRlNkYhhrSgXB
+ kM2fISQscqtQ=; b=fZtvEivvf5KDBIhrujm58phd+83UdbosG8qXEO+6LBKFfIm
+ /Ewhx5+rrQgBZcCy34R1FQ1Op+E6NCc752z1GwHvQsS3udlbihqLSHQ4UrHzLUku
+ hU1msIfCnGdezcl4yf+LRbSmlNOGK3kk2ZfO+b303k3s2zmFAJz96YXptM0NTL2Y
+ +UxBFwjKYdZ40EvWBQ8/f7iO5/pWBLumFHKKKA3Owjty1PxF3iBrT3wit1HB3+HX
+ qlutiAr8om+HmKsjEm5wI+nScd2TTgT06SMmjU5HQ82pCxTwQYZqDvjeSBS7QWtR
+ 2vFcrT0Sz8Vbl7KTIyhVWmymRjZFIoKvEX2O06w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=MI954T
- 6BYsXrFT8xtr157uEssMWMxmp9gCRiKCETW5c=; b=ADe3vhDkfwGOsevRd+RyrT
- R+yAYNW+4ONI81TfLzq6br4RZhVtGoozEGKKsyhFJeeuDlYlA+Pczbot5c6Un7YH
- Sg7l3wZRGIeZu96Gf8oaObFWcM49pth8jTRlsaKiIpT5n4tgSSNNpl19OfbF97YX
- hsNQ5ZWtCnYLy7TqWtKmPQegbD4rKhIByOwt0CFl9G3e/aWUq5kWBWRd+ct9ssPw
- KLaLRfvdwA6F5JXDkZOYnm1wDTuQzPO6o61xaXTvZ9o0SVbZh10s1ioR5bRitLvq
- GHDgMb3zz/HOzuvXKJPmR0hBsiObliJN2njEX5Ir8ILgxWE/pgvl0TsPA0E+vFqw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=/4WP/W
+ nIhk17kusyYbsRlNkYhhrSgXBkM2fISQscqtQ=; b=Zfr+O80UYJuW6XxAefAFWh
+ yklvEDd/HjNzjYNpGb65RSDKBEdM1spTgdFDvGjREYjUEcG80iErN/eJHjTg0FjH
+ DrpiUPRC+/MglCvgQZlxPObWPInCSs1r537U8tIumISaMDxnsNTkT6SxCv6Za9LJ
+ IxBze8OzGA8sXsL4Edro+0rj1UxZ9QQPLtz2PQOGZPWZtSIvVox1qmFKsu18001f
+ YkduAmLmMki9Ru9YF5yInDply2gep5Isv5W2ojNBELV8Qxfk4+LmWY6E+lAWR/QE
+ Bnq74MMiDgHWXldDh/oGlYp/jwUclD5DxUNfItGsxxIwG56ECAPWg8Qpe81IVPcg
  ==
-X-ME-Sender: <xms:xASlXQESLh3U2U2y-GlMat8Q0uigro0XqcX2H8_GdVqbzPqgjrI2yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgddvtdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:qAelXfizU-LGXHNPYaNotSgdz2eBMBavDfN6MYjuCue3M6gJOfgynA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgddvfecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
  hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
  ufhiiigvpedt
-X-ME-Proxy: <xmx:xASlXZtXFZKyZqxk--Z9FP6LQm4uxg9muKTI9wprBryHOZHhP8EO0w>
- <xmx:xASlXSBVoIvm5S19xYQaaCzJMG_5Avig0i85yo4IsRXeLKXu0E-LIA>
- <xmx:xASlXfzeK-6grEz_v5W_OodeAtPk9CU2RhoLGdIdX7tNrqXqUc593w>
- <xmx:xQSlXfGibXhSE5P7r6KZz0f7AvylVEOe-7TNPTh_8gZOV8KSQ6Lupw>
+X-ME-Proxy: <xmx:qAelXQRmGSv2VqlGjgFCGlgAobAh0VOcS3ksaiZIZ_qTXZWWF84Vng>
+ <xmx:qAelXaH00nCrDKWAMoPByuswi51kJVWJOqvxWfvYUvtabP4Q3asmxQ>
+ <xmx:qAelXQnYBcOt3wYNxfqtNXQ-KcwkAQdk4APXcbKTuVE_A8SknUHKlw>
+ <xmx:qQelXXy5DnP0CKi4deOh_XfzDDnR1cuOFvZt2bTUkuMdOvEhyIVI7g>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 7A46BE00A5; Mon, 14 Oct 2019 19:29:08 -0400 (EDT)
+ id 1599BE00A5; Mon, 14 Oct 2019 19:41:28 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
 Mime-Version: 1.0
-Message-Id: <c36233ce-9ed8-43a2-ab4b-5358eb1807f3@www.fastmail.com>
-In-Reply-To: <20191014132140.7618-2-joel@jms.id.au>
+Message-Id: <e4c94ec6-8ef3-434c-8e25-6481bd4b0d50@www.fastmail.com>
+In-Reply-To: <20191014132140.7618-3-joel@jms.id.au>
 References: <20191014132140.7618-1-joel@jms.id.au>
- <20191014132140.7618-2-joel@jms.id.au>
-Date: Tue, 15 Oct 2019 10:00:03 +1030
+ <20191014132140.7618-3-joel@jms.id.au>
+Date: Tue, 15 Oct 2019 10:12:23 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH linux dev-5.3 1/2] fsi: aspeed: Remove base from trace
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_2/2]_fsi:_aspeed:_Add_trace_when_erro?=
+ =?UTF-8?Q?r_occurs?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -95,9 +96,37 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Mon, 14 Oct 2019, at 23:51, Joel Stanley wrote:
-> The base was showing the virtual address of the FSI master, which was
-> not useful for most users of the tracepoint.
+> This prints out three registers in the FSI master when an error occurs.
 > 
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  drivers/fsi/fsi-master-aspeed.c          |  7 +++++++
+>  include/trace/events/fsi_master_aspeed.h | 18 ++++++++++++++++++
+>  2 files changed, 25 insertions(+)
+> 
+> diff --git a/drivers/fsi/fsi-master-aspeed.c 
+> b/drivers/fsi/fsi-master-aspeed.c
+> index d796c4012875..66657b7848de 100644
+> --- a/drivers/fsi/fsi-master-aspeed.c
+> +++ b/drivers/fsi/fsi-master-aspeed.c
+> @@ -251,6 +251,13 @@ static int opb_read(void __iomem *base, uint32_t 
+> addr, size_t size, u32 *out)
+>  static int check_errors(struct fsi_master_aspeed *aspeed, int err)
+>  {
+>  	int ret;
+> +	u32 mresp0, mstap0, mesrb0;
+> +
+> +	opb_read(aspeed->base, ctrl_base + FSI_MRESP0, 4, &mresp0);
+> +	opb_read(aspeed->base, ctrl_base + FSI_MSTAP0, 4, &mstap0);
+> +	opb_read(aspeed->base, ctrl_base + FSI_MESRB0, 4, &mesrb0);
 
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
+check_errors() is done unconditionally in the read and write paths, and these
+reads are unconditionally done on calls to check_error(). Really we only need
+them if an error has occurred, so I think we should do:
+
+if (trace_fsi_master_aspeed_opb_error_enabled()) {
+    u32 mresp0, mstap0, mesrb0;
+    opb_read(aspeed->base, ctrl_base + FSI_MRESP0, 4, &mresp0);
+    ...
+    trace_fsi_master_aspeed_opb_error(mresp0, mstap0, mesrb0);
+}
