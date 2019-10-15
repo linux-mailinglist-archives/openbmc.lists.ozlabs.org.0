@@ -2,47 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 271A2D8458
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 01:17:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E927ED8452
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 01:16:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tBCQ2ZD5zDqtW
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 10:17:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tBBD1YxkzDr4L
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 10:16:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
- (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
- envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ spf=pass (mailfrom) smtp.mailfrom=aj.id.au
+ (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com;
+ envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="pOvZ0FZe"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="ZFBL3HUg"; dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tB9S0GdZzDqyx
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 10:15:22 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from brads-mbp.dyn.fuzziesquirrel.com
- (Brads-MBP.dyn.fuzziesquirrel.com [192.168.253.31])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 5977A5C08B;
- Tue, 15 Oct 2019 19:15:19 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: The type of sensor value in redfish should be double or int64?
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <5e8c2ba2-5e82-f1e3-6524-46278c631553@intel.com>
-Date: Tue, 15 Oct 2019 19:15:19 -0400
-Message-Id: <6E7F040B-0DCA-480F-89A1-5CA197C1FCC4@fuzziesquirrel.com>
-References: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
- <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
- <818E67A7-4D22-4E13-AD37-99E846E7E17B@fuzziesquirrel.com>
- <5e8c2ba2-5e82-f1e3-6524-46278c631553@intel.com>
-To: Ed Tanous <ed.tanous@intel.com>
-X-Mailer: Apple Mail (2.3445.104.11)
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tB9R5RG5zDqyl
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 10:15:23 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 8AF5E7BA
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 19:15:21 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Tue, 15 Oct 2019 19:15:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=rvfiWOXeJrdcxN8B7eii+1EgQMGvcV3
+ vBAxgJaEihbw=; b=pOvZ0FZe7SRZAMoPuveFl/12D124AjaIlHrqZpaLSHmhBxR
+ ddgPU4+XtQColcZMf/OIv6YSBh67h+PlCKZgS1TEx2T6yhF9T+ha6F46d19KeNIn
+ NgteyvldlxsXuu8Vdp59tWNqAPgPGz425q3XgsLNREDiFETYHKMO9qQnTDleg8AN
+ aT6u4D2og/X74yzcnCTa5RkwJuim6OqLD50YIUpllC4AT0ZQUrqAlBU8gQKaq18P
+ 6u399n34FuAv1rJmByhvMUutMiLffoKBy/GUyidsUTMBsAt4sC/DiReNCheTpBmZ
+ QMiKT573Y1hAMbbZ8EmSZ2hDC+qCWfGrJLBHTyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=rvfiWO
+ XeJrdcxN8B7eii+1EgQMGvcV3vBAxgJaEihbw=; b=ZFBL3HUgt9j0GmCHogXt0S
+ hIxpuT4E5ZP3Fsz3+WFoNfgtuOfkXm1so4YkM2NiNdwjrwfZ9ez7VZaCPTZl5yS4
+ VXLCwIIpAK20FtsFHxBAyDpuh0wA2bb1PkPNHrn+czkey99ige+MEsgpigO/F+V9
+ L1NsC4vKF+RDtvh9xzXbPD5nC4+/zqoKg6mYcrbII9Rsw2E6i/B6e7uAINZYAvmA
+ wFy9x3XwCdM9wIV1kEizrY2oPfVSAA/cybMTUSuERLMicOHgTonJSqLaXIoikm2S
+ LIlBqqK5VwQoXUt5USnFXUFdbBcxHkwhoKccHKPKa8LGkrwc9eswvZcZuFT31hKw
+ ==
+X-ME-Sender: <xms:CFOmXeGpFEPHJu7UNzsq2YtDCqVyQHoXaExWJvZS0WSpOa9s-ts_Vg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeggddulecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+ dtreerjeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgif
+ segrjhdrihgurdgruheqnecuffhomhgrihhnpehophgvnhgsmhgtrdhorhhgnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:CFOmXTlw_XqmzD5ialPK5Q6JptQKMVct3GGLy0x0DVA9aWZs-cgR7Q>
+ <xmx:CFOmXTLr8rShMSS2a6i0gOdbUlmnXLvIG6D2NgFjVDMciNAAKsqW0g>
+ <xmx:CFOmXcYZ1IdsyLJG7V3bz7kLF6fEcJNf-JhjP_pq4Ev1Ufh-DiZ4KQ>
+ <xmx:CVOmXaOg9DepJNnWH8HtygY4eMMG5XJ0rXAWGknumZ3b4gaY5kX29w>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 96050E00BB; Tue, 15 Oct 2019 19:15:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
+Mime-Version: 1.0
+Message-Id: <b5413723-b877-4b48-b607-e1551399ff74@www.fastmail.com>
+In-Reply-To: <33bfd87f4c3345d28be4e8c1d64f1437@SCL-EXCHMB-13.phoenix.com>
+References: <33bfd87f4c3345d28be4e8c1d64f1437@SCL-EXCHMB-13.phoenix.com>
+Date: Wed, 16 Oct 2019 09:46:00 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_Recommendations_for_development_platforms_for_the_ASPEED_A?=
+ =?UTF-8?Q?ST2500_&_AST2600=3F?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,72 +88,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, gmills@linux.vnet.ibm.com,
- James Feist <james.feist@linux.intel.com>, Carol Wang <karo33bug@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 6:19 PM, Ed Tanous <ed.tanous@intel.com> wrote:
+Hi Bruce
 
-> On 10/15/19 12:04 PM, Brad Bishop wrote:
->> Is it possible to get bmcweb supporting patch with double and int?  On
->> the surface this seems like the shortest path to enabling Carol.
->
-> Unless phosphor-hwmon is patched to support settable sensors, I don't
-> think there's a good reason to add support to bmcweb.
+On Wed, 16 Oct 2019, at 05:14, Bruce Mitchell wrote:
+>  
+> Hello,
+> 
+> 
+> I am Bruce Mitchell and I work for Phoenix Technologies Ltd. as a BMC 
+> firmware Engineer.
+> 
+> Phoenix Technologies Ltd. is developing an OpenBMC 
+> (https://www.openbmc.org/ , not the Facebook flavor) product.
 
-Ok.  A couple different questions then.
+FYI, the projects have united (and the result lives under the Linux Foundation).
+> 
+> Our intent is also to be a valuable contributing member to the OpenBMC project.
 
-What does it mean to be settable?  phosphor-hwmon implements Sensor.Value=
- =20
-and, (in violation of the interface documentation), doesn=E2=80=99t preve=
-nt an =20
-external application from writing to the properties in it.
+Great! Looking forward to your contributions.
 
-I assumed the assertion that phosphor-hwmon doesn=E2=80=99t provide setta=
-ble =20
-sensors is because the value set by an external application doesn=E2=80=99=
-t stick?  =20
-The phosphor-hwmon application logic will write over it the next time it =
-=20
-polls the hwmon device.
+> 
+> 
+> We will be initially developing for the ASPEED Technology Inc. AST2500 
+> followed by the AST2600 BMC SoC.
+> 
+> Do you have any suggestion of available hardware development platforms 
+> for the ASPEED AST2500 & AST2600?
 
-So what does dbus-sensors do for hardware sensors?  Does the application =
-=20
-ignore the hardware state after being patched via Redfish?
+Unfortunately there isn't anything that is both cheap and easy to acquire that
+I'm aware of. Hopefully others can chime in if they know things that I don't, but
+this is an issue that's cropped up in the past and hasn't been resolved.
 
-> With that said,
-> it's just software, it could certainly be done.  Someone would need to
-> sort out how to manage the scale factor, as a Redfish PATCH request
-> doesn't have a concept of scale, and operates on a float, so you'd have
-> to do some software handholding to convert the value to something
-> appropriate before it was scaled to the int64.
->
-> With that said, all of this seems like a lot of work.
+I think the cheapest anyone has found was a system (motherboard, cheap x86-64
+CPU and RAM) that was about $800AU, but I'd have to dig out the details on what
+that was exactly (and it may have been AST2400-based).
 
-I don=E2=80=99t know of any alternatives that are less work.  If there ar=
-e some, =20
-I=E2=80=99d love to hear about them.  There were several years of OpenBMC=
- =20
-development against the integer interface signature before double became =
-a =20
-problem - as Patrick mentioned - undoing all that will not be trivial.
+Sorry I don't have better answers.
 
->
-> Just to clarify in case anyone isn't clear, the /xyz/* and /org/* type
-> REST handlers do support SetProperty for int and double, and introspect=
-s
-> the daemon to determine which one should be used.  So far as I'm aware,
-> the only thing non-functional is a Redfish patch of a sensor, as it's a
-> bit more complex to do properly.
-
-I had a look at the Sensor schema in the latest Resource and Schema guide=
- =20
-and the sensor reading property is read only.  Why do we even allow it to=
- =20
-be patched?
-
->
-> -Ed
-
+Andrew
