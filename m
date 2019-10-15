@@ -2,135 +2,144 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26721D7D8C
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 19:24:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51592D7DA8
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 19:26:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46t2NG4QshzDr5N
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:24:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46t2R559G6zDr6q
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:26:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2a00:1450:4864:20::443; helo=mail-wr1-x443.google.com;
- envelope-from=f.fainelli@gmail.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=5191125d25=taoren@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="H6O9t6xZ"; 
- dkim-atps=neutral
-Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com
- [IPv6:2a00:1450:4864:20::443])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="R6epf84E"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="fcOlSbxh"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46t2M74615zDr2J
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 04:23:14 +1100 (AEDT)
-Received: by mail-wr1-x443.google.com with SMTP id b9so24875507wrs.0
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 10:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=ury63+WKrrOi6h3RK3Kyu2np+UQrvePvni+MOlj3pRs=;
- b=H6O9t6xZnCEwmDNI84gVT8Zs+W+th0et+Y0AjtSPbiAlSDcl2h0GypOtxhG+dAkc1m
- f+KqmtnBpv2Z56eI2dGpZHG6pFOFssS6vTUf/WRZl260lp/Jr4brMOjh/UKjXbVsQrnw
- xkkW6/Ptr5ovcvpE0sXCUt104hFpKKomJTok68I4Xry1CKW6CkjgTE9nthXDNcegQEG4
- IOePbzTSrkSnE5pcC7an7MP5+OYW/nUY2neCQ1Sq++HJPMhwx8A0mIteMyNJzV58AG2T
- 5286cpOLoKmOswH2CcgCxyJw5PAJKtARWAhsvRin1LeWexGHda5xQkMiY3mJ966k986S
- FGZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=ury63+WKrrOi6h3RK3Kyu2np+UQrvePvni+MOlj3pRs=;
- b=Q6LMStVQJn+15zjpAXy6s18kRY1P9bidi5fRah8YQJfkgntuTGZWtVXF9WIOoWaNSj
- 86kgDYGAPitJurd3GxXu7/xNmAbzTzUuswIiS4FKbC4yTczfbfsHUjkDAWEGp/8aH3If
- ABALK6BjOR2+6uvtxftxlQixzgZSJROceLpBYq5xOm6YjY+L+9xeCPwHRMIkPlKgdd1V
- dWVNgjV5JEjYMS1Nxe16yZLxG44/U5kawOGXDxTKxwSKdxwKVBeupsPNPHzqlhPCka5s
- KBz+sAWLLzO9dsBhaOK4K4FQRaEm557ClmIvHQEDcOom8DdfKJDXC/DruMg5TluRvB0b
- 0UPg==
-X-Gm-Message-State: APjAAAVgzeO87z33G4G8mqL+tm4LAl93NJB4pMIQYa/9IaKt9z6+sOX9
- 8c8oiK/xaAkh2/vQQJfh4ULObYAK
-X-Google-Smtp-Source: APXvYqxiFme12hFvn+6nncvEIw51/yRH7OokPTDW07/f3GV3Nf6DA5Fn4AxLAdh+tnY3BZZkQYhz3w==
-X-Received: by 2002:a5d:558b:: with SMTP id i11mr19873239wrv.166.1571160190170; 
- Tue, 15 Oct 2019 10:23:10 -0700 (PDT)
-Received: from [10.67.50.53] ([192.19.223.252])
- by smtp.googlemail.com with ESMTPSA id o22sm52329022wra.96.2019.10.15.10.23.07
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 15 Oct 2019 10:23:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46t2Q26mjRzDqwY
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 04:25:46 +1100 (AEDT)
+Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x9FHNp8s011838; Tue, 15 Oct 2019 10:25:41 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=LKG6iNPY+gQ0bzHcnuka56MjystcRZbrHfaLuqpZDPc=;
+ b=R6epf84EpJ1YV2RNqPsL6N+596olhSBQoom3o9VdkR6LmBYlNlHWp3ccJ1OkMd4XwDhv
+ c7PpAf7inHdLXBv+gbq+VJCt6KANknKTLl+w4Qlpv2yzkGFyX35ZfHYr9k4Dqq890YkO
+ AjnKncGlpFxAVijAw9Lv7LPqy1OY6jWXYy4= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2vky52k2ba-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Tue, 15 Oct 2019 10:25:41 -0700
+Received: from prn-mbx04.TheFacebook.com (2620:10d:c081:6::18) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 15 Oct 2019 10:25:41 -0700
+Received: from prn-hub04.TheFacebook.com (2620:10d:c081:35::128) by
+ prn-mbx04.TheFacebook.com (2620:10d:c081:6::18) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Tue, 15 Oct 2019 10:25:40 -0700
+Received: from NAM04-CO1-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Tue, 15 Oct 2019 10:25:40 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XgYzK2GL3EnbW86wyUSNXAk619WDaJBeKMEcsC1iMWZ/q+MAWpXTxipxMxx7BryrkInrio06/kWvcdj0678sqYBQMfUxcaMLAD4HDEaWLLqC0yjrSnncHLazC1lRYXfZnzdq3NatNrr2r+ftjTuq8NxanIAhlJWIoJJCE2tS7AS9q570y4kerETQd5CVSgsEO8s0i7H08EOMo368ft5y+MWLmaQZkISq/dFEDC1b8kfGDrbXIo/KesB2+FB1kW+FA2HIV8vZXwDSuSjhDtoumluqrSBt75iyqDsZDn7T2VKkX/8mdZ1ncvjQTznHAdYJI7jrwdsZeaFNPA/WB5sYoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LKG6iNPY+gQ0bzHcnuka56MjystcRZbrHfaLuqpZDPc=;
+ b=gZ9PeHVEGq5Pk7C5zQND/+4jQeoBxqVYVzhYOVNQhFDzQ3L3OQZk3xnrJNiGW4qNE8zWvttY76/d9eawffy3KQyYdzTmTu98v1bAbCcwAW7j6L6hjCWKcOJ4H/ij1AT4axnN4HwyCd0QKLILPcYe3b2/RKSTRh1igXBENjzRNqNVicnk7Vr/iy5g1QmQKd+q8DUW9NyJbkHbgbsQfmLbZLv2yhlxUOVsBNI4DrrK+jGCwqb259GjR7hqQVRSesJil2uyGCmbwmWAcmeY9kz9A7Fkdc1eKDPyo4nHZOWbECiuOwOi9VM4aVgkDg6Y0etTDFue9BV1ozE8DLkDe99+vg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LKG6iNPY+gQ0bzHcnuka56MjystcRZbrHfaLuqpZDPc=;
+ b=fcOlSbxhx6bhJ12ar9w6lvW5t/p6vtGWwI7QI1CPePUCZlbGk1BG6Mt6o8S9C7k8nIHeFtU2Aw9DJUl6pv39YE3yyKQOM+8kGDVSEr2yDtrJeqy4+5vgv6OYVw94oTxAmHzqxQdskyo1sz9BnRQh80gspBF50eZ7VdK4hQ2sLfA=
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com (10.175.2.17) by
+ MWHPR15MB1694.namprd15.prod.outlook.com (10.175.141.8) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.16; Tue, 15 Oct 2019 17:25:40 +0000
+Received: from MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::24c9:a1ce:eeeb:9246]) by MWHPR15MB1216.namprd15.prod.outlook.com
+ ([fe80::24c9:a1ce:eeeb:9246%10]) with mapi id 15.20.2347.023; Tue, 15 Oct
+ 2019 17:25:40 +0000
+From: Tao Ren <taoren@fb.com>
+To: Florian Fainelli <f.fainelli@gmail.com>, David Miller <davem@davemloft.net>
 Subject: Re: [PATCH net-next v8 2/3] net: phy: add support for clause 37
  auto-negotiation
-To: David Miller <davem@davemloft.net>, taoren@fb.com
+Thread-Topic: [PATCH net-next v8 2/3] net: phy: add support for clause 37
+ auto-negotiation
+Thread-Index: AQHVZ1Bi3JE3p3zeEkCydFApWQwsCKcrP8IAgDB0zoCAAHZqgIAAAMUAgAAAvoA=
+Date: Tue, 15 Oct 2019 17:25:40 +0000
+Message-ID: <b6cc685b-cb20-1b6f-21b9-ae0a330a28a1@fb.com>
 References: <20190909204906.2191290-1-taoren@fb.com>
  <20190914141752.GC27922@lunn.ch>
  <61e33434-c315-b80a-68bc-f0fe8f5029e7@fb.com>
  <20191015.132013.246221433893437093.davem@davemloft.net>
-From: Florian Fainelli <f.fainelli@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=f.fainelli@gmail.com; prefer-encrypt=mutual; keydata=
- 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
- M5kY0ACeNhCZJvZ5g4C2Lc9fcTHu8jxmEkI=
-Message-ID: <a940d709-65ec-32c7-7181-83da0872acd1@gmail.com>
-Date: Tue, 15 Oct 2019 10:22:58 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <20191015.132013.246221433893437093.davem@davemloft.net>
-Content-Type: text/plain; charset=utf-8
+ <a940d709-65ec-32c7-7181-83da0872acd1@gmail.com>
+In-Reply-To: <a940d709-65ec-32c7-7181-83da0872acd1@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: CO2PR04CA0166.namprd04.prod.outlook.com
+ (2603:10b6:104:4::20) To MWHPR15MB1216.namprd15.prod.outlook.com
+ (2603:10b6:320:22::17)
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [2620:10d:c090:200::2:5adb]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 87689452-40c1-4ed7-0a61-08d75194b32d
+x-ms-traffictypediagnostic: MWHPR15MB1694:
+x-microsoft-antispam-prvs: <MWHPR15MB169439F6C5F4CD08CC2D2FBBB2930@MWHPR15MB1694.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 01917B1794
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(396003)(136003)(376002)(346002)(39860400002)(189003)(199004)(65806001)(446003)(5660300002)(6486002)(65956001)(186003)(31696002)(2616005)(46003)(11346002)(486006)(76176011)(99286004)(229853002)(52116002)(102836004)(53546011)(6506007)(386003)(476003)(6116002)(478600001)(6246003)(86362001)(8936002)(14454004)(7416002)(4326008)(31686004)(2906002)(7736002)(305945005)(25786009)(6512007)(8676002)(54906003)(110136005)(58126008)(4744005)(6436002)(66556008)(316002)(71200400001)(36756003)(71190400001)(256004)(66946007)(81166006)(81156014)(64756008)(66476007)(66446008);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1694;
+ H:MWHPR15MB1216.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: zouiC3fXeHQXSQVMBgGyTff9/VFgssiaFAC5DHtgYJGnGhDT5HSx9G7qB29/oRioL2Qrwr53DI2pNshWpSUWQRsLZ2cODBCLI8GV6l5+bP+qgkr33bR5RLCgvAVabTSaa1Ay3prRvMc4KnXN4uk9DuIn4ylCVG9Yv0WAeAJw6n5uCbaagZqAx6ILt5Ub4U+FRmkKA9j26Nz1laIGaNoi4ZlVJUuoWTNCWxJ4OU3E8cKs9u9Ae66nLYLWAGrtsaKCFWmEvPolnNLN82w9wcitbPEw1c/CfUUZP7bBNiYH9nkBUfFDuAs+pZPNOinmEtJtxR4hHUR7MtabmyuStP1TmGVxFSIvwZ2ZFOF/6eCtDTBGyjFVxq5GKd/ewMq71J0hA2c3tqr9iBlkSEwzwklnl6ssptGF9JjbEe1ldRPyGi0=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <69BBC53629E78544986562A2266D69D9@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87689452-40c1-4ed7-0a61-08d75194b32d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Oct 2019 17:25:40.0906 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 46ZSihSKIkN1b6FCTCplO5IstII7o/gS/jrI3cQPWA6J70BTEec1B7tcTzMSCsSk
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1694
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-10-15_06:2019-10-15,2019-10-15 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 suspectscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1910150149
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,23 +151,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@lunn.ch, netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
- arun.parameswaran@broadcom.com, linux-kernel@vger.kernel.org,
- justinpopo6@gmail.com, olteanv@gmail.com, hkallweit1@gmail.com
+Cc: "andrew@lunn.ch" <andrew@lunn.ch>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "arun.parameswaran@broadcom.com" <arun.parameswaran@broadcom.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "justinpopo6@gmail.com" <justinpopo6@gmail.com>,
+ "olteanv@gmail.com" <olteanv@gmail.com>,
+ "hkallweit1@gmail.com" <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/15/19 10:20 AM, David Miller wrote:
-> From: Tao Ren <taoren@fb.com>
-> Date: Tue, 15 Oct 2019 17:16:26 +0000
-> 
->> Can you please apply the patch series to net-next tree when you have
->> bandwidth? All the 3 patches are reviewed.
-> 
-> If it is not active in patchwork you need to repost.
-> 
-
-Tao, can you pick up this series and provide a proper cover letter for
-it (git format-patch --cover-letter) that way it can be picked up by David?
--- 
-Florian
+T24gMTAvMTUvMTkgMTA6MjIgQU0sIEZsb3JpYW4gRmFpbmVsbGkgd3JvdGU6DQo+IE9uIDEwLzE1
+LzE5IDEwOjIwIEFNLCBEYXZpZCBNaWxsZXIgd3JvdGU6DQo+PiBGcm9tOiBUYW8gUmVuIDx0YW9y
+ZW5AZmIuY29tPg0KPj4gRGF0ZTogVHVlLCAxNSBPY3QgMjAxOSAxNzoxNjoyNiArMDAwMA0KPj4N
+Cj4+PiBDYW4geW91IHBsZWFzZSBhcHBseSB0aGUgcGF0Y2ggc2VyaWVzIHRvIG5ldC1uZXh0IHRy
+ZWUgd2hlbiB5b3UgaGF2ZQ0KPj4+IGJhbmR3aWR0aD8gQWxsIHRoZSAzIHBhdGNoZXMgYXJlIHJl
+dmlld2VkLg0KPj4NCj4+IElmIGl0IGlzIG5vdCBhY3RpdmUgaW4gcGF0Y2h3b3JrIHlvdSBuZWVk
+IHRvIHJlcG9zdC4NCj4+DQo+IA0KPiBUYW8sIGNhbiB5b3UgcGljayB1cCB0aGlzIHNlcmllcyBh
+bmQgcHJvdmlkZSBhIHByb3BlciBjb3ZlciBsZXR0ZXIgZm9yDQo+IGl0IChnaXQgZm9ybWF0LXBh
+dGNoIC0tY292ZXItbGV0dGVyKSB0aGF0IHdheSBpdCBjYW4gYmUgcGlja2VkIHVwIGJ5IERhdmlk
+Pw0KDQpTdXJlLiBUaGFuayB5b3UgZm9yIHRoZSBzdWdnZXN0aW9uLiBXaWxsIGRvIGl0Lg0KDQoN
+ClRoYW5rcywNCg0KVGFvDQo=
