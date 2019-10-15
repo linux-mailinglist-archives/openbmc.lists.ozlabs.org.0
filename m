@@ -1,62 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8F9CD7F81
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 21:01:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88B20D7F90
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 21:05:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46t4Xs25cfzDr6L
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:01:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46t4d34hsLzDr6Y
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:05:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=209.85.167.194; helo=mail-oi1-f194.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com
- [209.85.167.194])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46t4X23kCZzDr2s;
- Wed, 16 Oct 2019 06:01:06 +1100 (AEDT)
-Received: by mail-oi1-f194.google.com with SMTP id a15so17813274oic.0;
- Tue, 15 Oct 2019 12:01:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=wDHyOUpqrv7nCNXxMncnfKZuhS0DDSRvQf7daN1HJps=;
- b=ZGLTECSt2Rkc2d46rLghVVTJRYDNvhS0zG6mMuv8maF+QvTKlC8IG3Y7GLnPqxTaaf
- iGO4WCgiN6UBf07kqzGT2molQKy6eskoNYwsVp1L0LKB9kXOlWDT087z/NnumCfyOMvf
- GjlkZx6bbsF7qNzW9iFv336uWHUcMDytT9ZgmnRXgiUbTzAepgo2lbQ0gjYF3qkzItZx
- p1QS+PMDh+Qrj3v1InRkjGglbB42fs//GlZGdKFOA7yWkFsPZalI0+kWs0RWBHm1nAn1
- BX0ejVzpKhRqXN4Bo5gmlFRDdaKPxmxI6PvlZBjnTwVu079I2LAXYtMuR07EOV8NLfnP
- kxtg==
-X-Gm-Message-State: APjAAAW+PHs9n0j4i0kep1EhpSvLj7hy8aZ/a+nhBcQSqJB7MD61k+5l
- axQPKUESfWe0f7EkQKaplw==
-X-Google-Smtp-Source: APXvYqzWSK8f7AUbAV3hUyGym4wGyacoh1czYoWtoJaS6CqSc2Sr8mD/Lh+uTddneZJ19P8nSkiI4Q==
-X-Received: by 2002:aca:1c02:: with SMTP id c2mr41124oic.73.1571166063181;
- Tue, 15 Oct 2019 12:01:03 -0700 (PDT)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id 101sm7119645otd.18.2019.10.15.12.01.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2019 12:01:02 -0700 (PDT)
-Date: Tue, 15 Oct 2019 14:01:01 -0500
-From: Rob Herring <robh@kernel.org>
-To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH 2/2] dt-bindings: peci: aspeed: Add AST2600 compatible
-Message-ID: <20191015190101.GA29195@bogus>
-References: <20191002061200.29888-1-chiawei_wang@aspeedtech.com>
- <20191002061200.29888-3-chiawei_wang@aspeedtech.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191002061200.29888-3-chiawei_wang@aspeedtech.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46t4cC3PNnzDqss
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 06:04:42 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 4A6135C08B;
+ Tue, 15 Oct 2019 15:04:38 -0400 (EDT)
+Content-Type: text/plain;
+	charset=utf-8;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: The type of sensor value in redfish should be double or int64?
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
+Date: Tue, 15 Oct 2019 15:04:38 -0400
+Message-Id: <818E67A7-4D22-4E13-AD37-99E846E7E17B@fuzziesquirrel.com>
+References: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
+ <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
+To: Patrick Venture <venture@google.com>
+X-Mailer: Apple Mail (2.3445.104.11)
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,22 +51,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org,
- jae.hyun.yoo@linux.intel.com, ryan_chen@aspeedtech.com,
- linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org,
- jason.m.bills@linux.intel.com, chiawei_wang@aspeedtech.com,
- linux-arm-kernel@lists.infradead.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, gmills@linux.vnet.ibm.com,
+ "Tanous, Ed" <ed.tanous@intel.com>, James Feist <james.feist@linux.intel.com>,
+ Carol Wang <karo33bug@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2 Oct 2019 14:12:00 +0800, "Chia-Wei, Wang" wrote:
-> Document the AST2600 PECI controller compatible string.
-> 
-> Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> ---
->  Documentation/devicetree/bindings/peci/peci-aspeed.txt | 1 +
->  1 file changed, 1 insertion(+)
-> 
+at 11:17 AM, Patrick Venture <venture@google.com> wrote:
 
-Acked-by: Rob Herring <robh@kernel.org>
+> On Mon, Oct 14, 2019 at 7:57 PM Carol Wang <karo33bug@gmail.com> wrote:
+>> Hi,
+>>
+>> I tried to override sensor values with redfish Patch, referring to the=
+ =20
+>> Voltages example of =20
+>> https://github.com/openbmc/bmcweb/search?q=3D413961de&type=3DCommits, =
+but =20
+>> met an error "Invalid argument". Comparing the code =20
+>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensors=
+.hpp#L2192 =20
+>> and the doc =20
+>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/op=
+enbmc_project/Sensor/Value.interface.yaml#L21, =20
+>> the current code uses double type, but the doc says the value type =20
+>> should be int64. It seems a scale difference. Why the code uses double=
+ =20
+>> here?
+>
+> The short answer is, code generally authored by Intel uses doubles for
+> the sensor values, whereas the original OpenBMC sensor models used
+> int64.
+>
+> A while back there was a bit of a debate about this, and it looks like
+> we never truly resolved it.  Brad, perhaps this is a good time to?
+
+Is it possible to get bmcweb supporting patch with double and int?  On th=
+e =20
+surface this seems like the shortest path to enabling Carol.
+
+> The idea is, that with the int64 storage, we store the raw value and
+> we also store the scaling factor, so that one can scale the number if
+> they choose to.  Sort of keeping the values as they are -- instead of
+> operating on them before publishing them to dbus.  We do notably
+> however, modify values in phosphor-hwmon before publishing them as
+> often there are scaling factors and offsets, beyond the conversion
+> from mC to C.
+>
+> phosphor-host-ipmid's sensor YAML requires the type to be specified
+> for the sensor value interface already, and does validly support both
+> types: int64_t and double (I tested it when I briefly had a mixed
+> environment).
+> phosphor-hwmon reports values without applying the scaling factor, but
+> it is aware of the scaling factor, so it could.
+> phosphor-pid-control works with both types correctly.
+>
+> I'm not sure about the phosphor-fan stuff, but I imagine we'll find
+> some arithmetic we can drop where it ingests values.
+>
+> This change from int64 to double is big enough though that many
+> configuration files would need to be adjusted, which is non-trivial.
+> I argue however that having code that doesn't have a common interface
+> or interfaces for sensors is less than ideal.  Having multiple options
+> for talking to sensors is fine, but in my opinion this is only true if
+> they implement different interfaces, or the same interface.  In this
+> case, we have dbus-sensors and phosphor-hwmon which both implement the
+> same interface, but differently: int64 vs double.
+
+I agree.  This whole situation is=E2=80=A6unfortunate.  I wonder if there=
+ is a =20
+lesson to be learned here?
+
+> I think using doubles makes sense at the dbus level because generally
+> one wants that version of the value.  Therefore you end up with code
+> in each daemon that reads the sensor value and the scale so that it
+> can perform the same operation that another daemon is also going to
+> perform, etc.  Instead of just doing it once.
+>
+> I'll climb off my debate box now and climb onto my voting box and say,
+> I'd like to make phosphor-hwmon report the value as double
+
+Why?  Do you have a desire for this specifically or is it just to solve =20
+Carol=E2=80=99s issue?
+
+> and I'm
+> willing to review incoming patches that address other aspects of the
+> codebase to bring it all together -- since they'll need to be in a
+> locked step-forward.
+>
+>> Thanks!
+
