@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D080FD6C67
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 02:18:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A285D6C70
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 02:31:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sbcs2yKnzDqtr
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 11:18:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sbvN1J7szDqwD
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 11:31:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,72 +16,67 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VgIR6hip"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="GXTkYYMk"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ZLEcihnM"; dkim-atps=neutral
+ header.b="EQTVZWyG"; dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sbc84R2szDqtr
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 11:17:59 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sbny088LzDqwB
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 11:26:29 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 7B74F565;
- Mon, 14 Oct 2019 20:17:55 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 38863554;
+ Mon, 14 Oct 2019 20:26:27 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 14 Oct 2019 20:17:55 -0400
+ by compute4.internal (MEProxy); Mon, 14 Oct 2019 20:26:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm1; bh=mePN5
- Gf1LGlWcWLHqHvUfksWA/p6BZeXLDbh2dWxrws=; b=VgIR6hipbcNhFH0Noc7wt
- qlNrpYx7v9cfxUzgsoRKcu9jbynrBFzMlbW82Ut6hqgWJI8IdWkBWmwBlRaVIf/o
- NRblyVRPK+/YCyGBuz0o00/+aoMJVlecho24eEZh1Jyg/qYCIfjw8IH/6pB4Psto
- ABp6AB1TB2rrew2vMuO/wXV70meCAuq937x8xSbofQc8M3bFiCuY1v5Og9y1hGLk
- hQKxvXA6veTVyAES23y5A3yUNkwyooLBVNxLJvUeGLjOuRvKgbgr1EfS6EIf6OxL
- ci8uFGGdSJXSqo9/KW49KWn1ai91yQHRoXYupVDQ+wfbRYKzl2GwaYw3MUNxQDs+
- Q==
+ :subject:content-type; s=fm1; bh=v7RB/FpyfXrLtDItS2hV21GTv9IP6LW
+ PlD/xAhpgKxU=; b=GXTkYYMkvPxV1ieSuvJn67TxI5K4onPjqjY6XpdPcC0AShC
+ YLyPIzqrjaz5Uk8vJnLytzC/lLJDPFYnzyj8dd0dCBvLEHAHG/z0DC2+ezKFbMGm
+ rnFK0hFr0MJ7PtDyD7xlcGIYhhxuoMsgDCXJBXypCP24OdSEqAO8Kpmk2CINHspY
+ qDnpLQArBT2YBmjDZ/PFbrTWqUCUcfx2Pv1n4LqqbneEBl7VqkiM8WGR5JCSGD7B
+ pWMpu0Tj5TtZc1WI2wBJlbkpVZ9Af2rXZRk37QFMDPZxaKC6etQTdm3K3zlcRFfm
+ kNIRXQw9zp4HokcyTq7D2fvkBjs0GL7Zg1N0E1Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; bh=mePN5Gf1LGlWcWLHqHvUfksWA/p6BZeXLDbh2dWxr
- ws=; b=ZLEcihnMk3HHIs0tIJREzNzBtsqklmFpV5etBJV+CfQG3giU/WcrHkAM3
- JdXPTlU845ghUzxdRh8t5xdeiyLD0mLQlYl7q45FlujcVOxoCWNauOV5Es2KnGga
- FUiHQqH9CZ2cdGU/mFuSYnc12PJM5ZRXYDdBbAqY3bYQhNn1s9Gu2412cTM+fpNP
- Fsp/nDoDy2O4Zr9TY2/yFa9VOCegT8ujdlc2KSUBWM85oUSqyVY1Ui/WEXVTaUdo
- wIvPLoOm8ATpCmVll5NZq9BmAJPAeIUsrEuxd0D7Mls5DdaB2m4Bia50ayYLV3Qz
- mow+CaCtc4TXXZjZtTLu7ROvefWqQ==
-X-ME-Sender: <xms:MhClXVbgDS-9o55iV_Kq6zFMRiJ0ggZ0TqVKMrux_4qoUaQF4-06HA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgdefudcutefuodetggdotefrodftvf
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=v7RB/F
+ pyfXrLtDItS2hV21GTv9IP6LWPlD/xAhpgKxU=; b=EQTVZWyGKDHyfgkoBqF3t1
+ JCu/Q48Fm9QH6572CcCtYApvuj7/CzgWwnLIOnVaiI3GjwWjK3+25JxpcP2FSBBH
+ C1mQfGmS6ZaxEeJJu8N/YKbZiHTAU6uejdE9h0902UaOZaq9tMjB/sOeFgwZfIKC
+ b+TFtvgP6R7WDWm+MU+eCPmYvE+NQAnEp3AtMFOh+jU0oO8WQ71Y2oS/cOTW4DPb
+ sR/q2RpANmN8RHmh3YX3EJwT3Dgkpm3xD585JPEOQHbksGPsLnCZfsHju1dDxb62
+ 8bFhJSjKGfclJ9QJ1NtudmXx1RMzxWxVJk/KPo0ke1vmGJBGULXEuYX6loYPxZiA
+ ==
+X-ME-Sender: <xms:MRKlXUVFvXvWRPfJHrK-iI7jv00f5LoOyjv3S5MQW-uhF7HS6oXIjQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgdeffecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:MhClXVxa_gfl5j0eu6FoLto6GbCgm8ODky8HUxFtP7OS5G_cUT5F_w>
- <xmx:MhClXRGgbRCNadV3nlo-vKVtu5JWft2h7XaCK8Ue1CLKK1abKf6Sxg>
- <xmx:MhClXWqbBQVWU9s6BHV8f5GDucySIkhap30fICjUGgMkXXi5jaxlbg>
- <xmx:MxClXZOrcXpNe9kDRLwm8cJ_bAtv41M0ptGObhDcvdwF3fiuoO_46A>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedt
+X-ME-Proxy: <xmx:MRKlXXB5MUH2aaTANgAyDX9OimNAej9B-cSaTZCnwY0s9HyVyL27Vg>
+ <xmx:MRKlXbLfIGUaOu_oFtZqR79dSNa084fM6F_D2uWh_rAGwzTOElR8dQ>
+ <xmx:MRKlXYLwh4Ow4hUTmTNdfvvHF9a-7QG0sTq1_mR7xpu-q4DLqCZ7dg>
+ <xmx:MhKlXREO-5YS0_pOWIVNjaFEyrQnIASvvZUFejKLU4Pt3sy5rkymBg>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id EEF2AE00A5; Mon, 14 Oct 2019 20:17:53 -0400 (EDT)
+ id C0C4DE00A5; Mon, 14 Oct 2019 20:26:25 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
 Mime-Version: 1.0
-Message-Id: <96244da0-5a24-4327-9375-76a8ae9ccd3a@www.fastmail.com>
-In-Reply-To: <F0FC6F8E-DB1D-4EE6-9EFF-C553112FD55C@fuzziesquirrel.com>
-References: <20191014004433.28180-1-joel@jms.id.au>
- <de89b084-be95-4113-97c4-40c62d8572c9@www.fastmail.com>
- <CACPK8XeTmFK92XnTvW1Skjj3y8SnaKDsPoaLoC0utQQL6KHMUA@mail.gmail.com>
- <F0FC6F8E-DB1D-4EE6-9EFF-C553112FD55C@fuzziesquirrel.com>
-Date: Tue, 15 Oct 2019 10:48:50 +1030
+Message-Id: <0d04e87c-d6df-4eab-aaf9-f952bffc0ec7@www.fastmail.com>
+In-Reply-To: <20191014074618.15506-2-joel@jms.id.au>
+References: <20191014074618.15506-1-joel@jms.id.au>
+ <20191014074618.15506-2-joel@jms.id.au>
+Date: Tue, 15 Oct 2019 10:57:22 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
- "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH linux dev-5.3] fsi: aspeed: Add debugfs entries
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH linux dev-5.3 1/2] fsi: aspeed: Configure optional GPIOs
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,49 +88,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Mon, 14 Oct 2019, at 23:18, Brad Bishop wrote:
-> at 9:11 PM, Joel Stanley <joel@jms.id.au> wrote:
->=20
-> > On Mon, 14 Oct 2019 at 00:49, Andrew Jeffery <andrew@aj.id.au> wrote=
-:
-> >> On Mon, 14 Oct 2019, at 11:14, Joel Stanley wrote:
-> >>> From: Eddie James <eajames@linux.ibm.com>
-> >>>
-> >>> Add debugfs entries for the FSI master registers.
-> >>>
-> >>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> >>> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> >>
-> >> A bit ugly, but:
-> >>
-> >> Acked-by: Andrew Jeffery <andrew@aj.id.au>
-> >
-> > Yes. We will keep it around for in the 5.3 branch to aid with
-> > debugging, and drop it in 5.4.
->=20
-> I=E2=80=99m just curious.  Does the need for code like this go away af=
-ter FSI =20
-> bringup is done or when 5.4 rolls in?  Is this just a statement on how=
- it =20
-> was done or that it was done at all?
+On Mon, 14 Oct 2019, at 18:16, Joel Stanley wrote:
+> On Tacoma the enable and mux GPIOs allow the BMC to enable FSI and
+> control if the clock and data should come from the BMC, or from the
+> debug connector.
+> 
+> Configure these as optional GPIOs which will fail without error for
+> systems that do not have these GPIOs in their device tree.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  drivers/fsi/fsi-master-aspeed.c | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+> 
+> diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+> index 6496d2972944..2048e38e7200 100644
+> --- a/drivers/fsi/fsi-master-aspeed.c
+> +++ b/drivers/fsi/fsi-master-aspeed.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/regmap.h>
+>  #include <linux/slab.h>
+>  #include <linux/iopoll.h>
+> +#include <linux/gpio/consumer.h>
+>  
+>  #include "fsi-master.h"
+>  
+> @@ -85,6 +86,9 @@ struct fsi_master_aspeed {
+>  	void __iomem		*base;
+>  	struct clk		*clk;
+>  
+> +	struct gpio_desc	*gpio_enable;
+> +	struct gpio_desc	*gpio_mux;
+> +
+>  	struct dentry		*debugfs_dir;
+>  	struct fsi_master_aspeed_debugfs_entry debugfs[FSI_NUM_DEBUGFS_ENTRIES];
+>  };
+> @@ -471,6 +475,30 @@ DEFINE_DEBUGFS_ATTRIBUTE(fsi_master_aspeed_debugfs_ops,
+>  			 fsi_master_aspeed_debugfs_get,
+>  			 fsi_master_aspeed_debugfs_set, "0x%08llx\n");
+>  
+> +static int aspeed_master_gpio_init(struct fsi_master_aspeed *master)
+> +{
+> +	struct device *dev = master->dev;
+> +	struct gpio_desc *gpio;
+> +
+> +	gpio = devm_gpiod_get_optional(dev, "fsi-enable", 0);
+> +	if (IS_ERR(gpio)) {
 
-I think it's just a statement that there's no plan to carry it indefinit=
-ely.
+devm_gpiod_get_option() returns NULL if the GPIO isn't defined, and
+interfaces like gpiod_direction_output(...) return 0 if the descriptor is
+NULL. The design point of the _optional() interfaces is that it makes the
+error handling unnecessary because we know the GPIO might be absent.
 
-However I think it's fine to keep it, but a) it needs to evolve a little=
- to fix up
-bugs in the face of multiple masters as pointed out by Jeremy and b) we
-might be able to make it less tedious. And with that it could go upstrea=
-m.
-
-Hopefully we won't need it much after bringup is done.
-
-Andrew
-
+The pattern is also wrong in fsi-master-ast-cf and probably fsi-master-gpio.
