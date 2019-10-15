@@ -2,77 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41A64D7998
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 17:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D76CD7BA4
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 18:31:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46szdG0gNfzDr55
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 02:20:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46t1Cc5w95zDr42
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 03:31:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=linux.ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (mailfrom) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46szcP5GqszDr44
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 02:19:18 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9FFEkYq113810
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 11:19:12 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vng189kwf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 11:19:12 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9FFC0or009618
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:11 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma01dal.us.ibm.com with ESMTP id 2vk6f7bgsc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:11 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x9FFJ9Ds47317370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:09 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB3006A058
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:09 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A9C76A047
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:09 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 15:19:09 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday October 16
-Message-ID: <b4522a9f-7883-6e88-a615-1bbd61930129@linux.ibm.com>
-Date: Tue, 15 Oct 2019 10:19:08 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46t1Bl13RjzDr42
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 03:30:53 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 15 Oct 2019 09:30:51 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,300,1566889200"; d="scan'208";a="347127771"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga004.jf.intel.com with ESMTP; 15 Oct 2019 09:30:50 -0700
+Received: from [10.241.244.250] (unknown [10.241.244.250])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id B3F23580379;
+ Tue, 15 Oct 2019 09:30:50 -0700 (PDT)
+Subject: Re: [External] Re: IPMI SEL Event ID
+To: Ivan Li11 <rli11@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <1082e383cba94367945d14175a0d787b@lenovo.com>
+ <38fd5723-9e41-1415-c64b-738981c70f72@linux.intel.com>
+ <a65e103c1f874371987a7c9d503c9d2f@lenovo.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <2b122a71-7c8c-70ed-b63b-f0bb2fe35f78@linux.intel.com>
+Date: Tue, 15 Oct 2019 09:30:50 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
+In-Reply-To: <a65e103c1f874371987a7c9d503c9d2f@lenovo.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-15_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=818 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1910150135
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,18 +64,51 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday October 16 at 10:00am PDT.
 
-Current topics:
-- Development work:
-  + Image signing
-  + Min 2048 bit certificates
-  + Avahi service discovery
-  + Network security considerations (threat model) updates
-- more?
 
-Access, agenda, and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group
+On 10/15/2019 3:11 AM, Ivan Li11 wrote:
+> Hi Jason,
+> 
+> New SEL ID is still not from base number(1) after "sel clear" command with the fix you provided.
+> Is there any setting I need to notice that?
+> Please help to advise it.
 
-- Joseph
+Do you use rsyslog files or DBus entries for the SEL log?  The fix I 
+made works only for rsyslog files by checking if the files have been 
+deleted (after a SEL Clear) and resets to 1 if they have.
+
+If you are using DBus for SEL log entries, then the logic to initialize 
+and increment the SEL Record ID will need to be updated to also check DBus.
+
+Thanks,
+-Jason
+> 
+> Thanks,
+> Ivan
+>> -----Original Message-----
+>> From: openbmc <openbmc-bounces+rli11=lenovo.com@lists.ozlabs.org> On
+>> Behalf Of Bills, Jason M
+>> Sent: Tuesday, September 24, 2019 1:36 AM
+>> To: openbmc@lists.ozlabs.org
+>> Subject: [External] Re: IPMI SEL Event ID
+>>
+>>
+>>
+>> On 9/22/2019 5:19 AM, Yonghui YH21 Liu wrote:
+>>> HI All,
+>>>
+>>>            I find the new SEL event ID is not from base number(1) after
+>>> I run "ipmitool sel clear" command.
+>>>
+>>>            Is it the OpenBMC default design rule ? If not, any plan to
+>>> fix the issue?
+>>
+>> If you are using phosphor-sel-logger, it is a bug.  The fix for it is up for review
+>> here:
+>> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/24843
+>>
+>> Thanks!
+>> -Jason
+>>>
+>>> Thanks
+>>>
