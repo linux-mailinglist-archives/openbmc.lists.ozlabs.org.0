@@ -2,82 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D2F7D6C7A
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 02:33:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E37D7D6D62
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 04:58:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46sbxZ67nxzDqk8
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 11:33:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46sg8y3g9LzDqx5
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 13:58:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=gmail.com
+ (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com;
+ envelope-from=karo33bug@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="G2oQMv26"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ySEApinF"; dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="GbuoIBbt"; 
+ dkim-atps=neutral
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com
+ [IPv6:2a00:1450:4864:20::136])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46sbtQ2CLWzDqvr
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 11:30:22 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id BFC4257C;
- Mon, 14 Oct 2019 20:30:19 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 14 Oct 2019 20:30:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=5YGRY2dczK+1kvhx5+m5DoUQXqRFUU0
- IZRn/oU3NVq0=; b=G2oQMv26KJ2xR7Td7vna5SLF1uf35bDGpOv/pY4/r0ZGfMp
- N9epic1JpqEPTaThmwXo8mHaLDp8MM1RTtkMqg3fb2Mz+AHfj5odZTwXKnCGWCfp
- p1D2DUTRPB58FUNzLWypMvHvpLKh1Y/3nsqCYKB1bzm4QmuHxix7n5dmgWP3+L1F
- Bux7zwUSAHdcPTi1j45XRAK1pF9yZ3Sseh3AkDrgHMOYju7tcyuFdFlwblRYAWEZ
- yqFKgCRGJM79zsQYhkxC8nTkfVLw0wa92vCKSNrI1J/I6DsUvNeygyhz6emnoG/3
- X/QIppqeSxXpJ657AsAO8dwh5ykIh91JeeHmiZw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=5YGRY2
- dczK+1kvhx5+m5DoUQXqRFUU0IZRn/oU3NVq0=; b=ySEApinFEAPkMzj28df/27
- CCTkkPEQAIXr0bE6GQuFvS4gAb4HBuVHTNjl0/ov4aPfTt8Zb2BwfpsyczoFHGwo
- zH3FYn+KYPrNVhBB3C23syvgpP8/YRib7LYvSzooA9roGuS14t9JEKajlfPjxaTt
- 4Hru59FDMtLOdEGlryciR2As2jYCs1xL+8RptleaRNDcencnRTnOcfPP06jvV2qK
- xWTd/l2lbxLEQ0hhYYrhd+M2JysQy08w2vQ00xLkhpogO7NOrNWhJmU1oybUoHKS
- DW4gWeGiGgn4Axx+uqE2Oo3RPq29dW8uxVKoOZIKfcf56F89LWOFUg1IuSC1yMtQ
- ==
-X-ME-Sender: <xms:GxOlXSbo9vJ1Loy0PeUqF9i1MOQl8sw4fl6ytyi0FstKdpvKcoXjKg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjedvgdefgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:GxOlXWLLMKWMBDRKBTj9IdkYFjVENMKJmK4pIofHhCyKD7ZBEuPamw>
- <xmx:GxOlXZHDCDb6qLr3X5NsYtIUcOM6DQmHZHXMLCamOKHxX09zgP-mpA>
- <xmx:GxOlXVsBJPcr5Hf9FhpkLsRTsnUrGDgojZfSHSEZjOR-z-jrGvcRog>
- <xmx:GxOlXUBaSwU6ns2XPLjVd9t3MZbV9OT3A9vJ5RQ1n_OSxg5nkHuToQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 5196DE00A5; Mon, 14 Oct 2019 20:30:19 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
-Mime-Version: 1.0
-Message-Id: <31c4a704-692e-4d1e-8806-cf0d726fd7e9@www.fastmail.com>
-In-Reply-To: <0d04e87c-d6df-4eab-aaf9-f952bffc0ec7@www.fastmail.com>
-References: <20191014074618.15506-1-joel@jms.id.au>
- <20191014074618.15506-2-joel@jms.id.au>
- <0d04e87c-d6df-4eab-aaf9-f952bffc0ec7@www.fastmail.com>
-Date: Tue, 15 Oct 2019 11:01:16 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH linux dev-5.3 1/2] fsi: aspeed: Configure optional GPIOs
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46sg8C6yTNzDqbh
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 13:57:26 +1100 (AEDT)
+Received: by mail-lf1-x136.google.com with SMTP id w67so13242459lff.4
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Oct 2019 19:57:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=vfIsgSC3+lBMU1PHlynL3MQG590WAcbDHGtD/v3YmPU=;
+ b=GbuoIBbtUV3urJ2CuYxWWsApyagnJsKX0ceX2jceIYKAA0Up3dcb/ivVTICJ0xzEBL
+ aS1A4sv5Y2qOlyfwR6IbqvrjTcBr8vL3B3mdxPVwQduNP20yrFZbXMV56Gz4AZImyHQW
+ 0yx1EZ10O4CxMs4HYLpY1DtKhVMUFq0VG8FnbgHOwxsLje8Luq0MoSmQ812OUfiXIPwT
+ hPv/0m45yYHjsjH0n4WQWx1a2E+rsemWuqIts9bAL7ub4WocFFNA19n1Y9Bp2zla/UwE
+ czz+dpxfeVU4F3gnVdktAYz4zcNRDOKs6+KJwZ8ovL8ztB0+qYINEHVYo276ln9snPk5
+ OUJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=vfIsgSC3+lBMU1PHlynL3MQG590WAcbDHGtD/v3YmPU=;
+ b=MdWLcJG+bll2PMxruJajaivU81aCv2rqqX7JHm5M776CXjrOpKUo1QZb2xNosQi7Fl
+ jI1N+Alu45giVpP9tMe0eat59ANI3LR8lZsd45p0EYztAgRwfo0UMe2i0vyvlwUrrCKr
+ JPtZGSVEn/ezVjUfXAIFDLYVNezuu5J94Tc3BkVRHEbB5b2op7KKdu0j4eLUMYzaSeTH
+ hrxVCyg54dDKAMh0mHLra3JlBRWEH0Yuz6J8mpC2oGSgkkXXuAo+JNesyJw+BJAzahkr
+ LoqE9cG+qbwcHMjKl+shVEx5a4U/0OISQSdpJGIU0Tkn+vRgQ1zJIiYeP/ZbsxWiYMcB
+ p7sQ==
+X-Gm-Message-State: APjAAAWdcEnN5jiiAEJ/2MI1tZaGAXTEgGYYOh38tKtNJNOEY033EKsl
+ 1rttSKBv+7zJDOPOyxLUCnO9hc1+uZksN8Pv8690NzZKb8U=
+X-Google-Smtp-Source: APXvYqy8MHkW3EVASd8+eubdrDeawTGaNPLk0syRuCrvBMKsypiwCOqcTT/8HKEsvv6hyKaHcV4sM4Dwb6zqpA/W6xg=
+X-Received: by 2002:a05:6512:25b:: with SMTP id
+ b27mr12361232lfo.146.1571108240671; 
+ Mon, 14 Oct 2019 19:57:20 -0700 (PDT)
+MIME-Version: 1.0
+From: Carol Wang <karo33bug@gmail.com>
+Date: Tue, 15 Oct 2019 10:57:09 +0800
+Message-ID: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
+Subject: The type of sensor value in redfish should be double or int64?
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000096c9230594ea24b2"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,68 +70,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
+Cc: gmills@linux.vnet.ibm.com, ed.tanous@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000096c9230594ea24b2
+Content-Type: text/plain; charset="UTF-8"
 
+Hi,
 
-On Tue, 15 Oct 2019, at 10:57, Andrew Jeffery wrote:
-> 
-> 
-> On Mon, 14 Oct 2019, at 18:16, Joel Stanley wrote:
-> > On Tacoma the enable and mux GPIOs allow the BMC to enable FSI and
-> > control if the clock and data should come from the BMC, or from the
-> > debug connector.
-> > 
-> > Configure these as optional GPIOs which will fail without error for
-> > systems that do not have these GPIOs in their device tree.
-> > 
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > ---
-> >  drivers/fsi/fsi-master-aspeed.c | 30 ++++++++++++++++++++++++++++++
-> >  1 file changed, 30 insertions(+)
-> > 
-> > diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-> > index 6496d2972944..2048e38e7200 100644
-> > --- a/drivers/fsi/fsi-master-aspeed.c
-> > +++ b/drivers/fsi/fsi-master-aspeed.c
-> > @@ -14,6 +14,7 @@
-> >  #include <linux/regmap.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/iopoll.h>
-> > +#include <linux/gpio/consumer.h>
-> >  
-> >  #include "fsi-master.h"
-> >  
-> > @@ -85,6 +86,9 @@ struct fsi_master_aspeed {
-> >  	void __iomem		*base;
-> >  	struct clk		*clk;
-> >  
-> > +	struct gpio_desc	*gpio_enable;
-> > +	struct gpio_desc	*gpio_mux;
-> > +
-> >  	struct dentry		*debugfs_dir;
-> >  	struct fsi_master_aspeed_debugfs_entry debugfs[FSI_NUM_DEBUGFS_ENTRIES];
-> >  };
-> > @@ -471,6 +475,30 @@ DEFINE_DEBUGFS_ATTRIBUTE(fsi_master_aspeed_debugfs_ops,
-> >  			 fsi_master_aspeed_debugfs_get,
-> >  			 fsi_master_aspeed_debugfs_set, "0x%08llx\n");
-> >  
-> > +static int aspeed_master_gpio_init(struct fsi_master_aspeed *master)
-> > +{
-> > +	struct device *dev = master->dev;
-> > +	struct gpio_desc *gpio;
-> > +
-> > +	gpio = devm_gpiod_get_optional(dev, "fsi-enable", 0);
-> > +	if (IS_ERR(gpio)) {
-> 
-> devm_gpiod_get_option() returns NULL if the GPIO isn't defined, and
-> interfaces like gpiod_direction_output(...) return 0 if the descriptor is
-> NULL. The design point of the _optional() interfaces is that it makes the
-> error handling unnecessary because we know the GPIO might be absent.
-> 
-> The pattern is also wrong in fsi-master-ast-cf and probably fsi-master-gpio.
+I tried to override sensor values with redfish Patch, referring to the
+Voltages example of
+https://github.com/openbmc/bmcweb/search?q=413961de&type=Commits, but met
+an error "Invalid argument". Comparing the code
+https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensors.hpp#L2192
+and the doc
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.interface.yaml#L21,
+the current code uses double type, but the doc says the value type should
+be int64. It seems a scale difference. Why the code uses double here?
 
-Actually, disregard that, NULL is only returned for -ENOENT but there may
-be other errors. Sorry for the noise.
+Thanks!
+
+--00000000000096c9230594ea24b2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi,</div><div><br></div><div>I tried to override sens=
+or values with redfish Patch, referring to the Voltages example of <a href=
+=3D"https://github.com/openbmc/bmcweb/search?q=3D413961de&amp;type=3DCommit=
+s">https://github.com/openbmc/bmcweb/search?q=3D413961de&amp;type=3DCommits=
+</a>, but met an error &quot;Invalid argument&quot;. Comparing the code <a =
+href=3D"https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sens=
+ors.hpp#L2192">https://github.com/openbmc/bmcweb/blob/master/redfish-core/l=
+ib/sensors.hpp#L2192</a> and the doc <a href=3D"https://github.com/openbmc/=
+phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.inter=
+face.yaml#L21">https://github.com/openbmc/phosphor-dbus-interfaces/blob/mas=
+ter/xyz/openbmc_project/Sensor/Value.interface.yaml#L21</a>, the current co=
+de uses double type, but the doc says the value type should be int64. It se=
+ems a scale difference. Why the code uses double here?</div><div><br></div>=
+<div>Thanks!<br></div></div>
+
+--00000000000096c9230594ea24b2--
