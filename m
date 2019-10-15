@@ -2,85 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBD87D72E8
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 12:12:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90928D79A2
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 17:21:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46srp2291jzDqxX
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 21:12:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46szff6qStzDr4r
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 02:21:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=lenovo.com
- (client-ip=67.219.250.214; helo=mail1.bemta24.messagelabs.com;
- envelope-from=rli11@lenovo.com; receiver=<UNKNOWN>)
+ spf=pass (mailfrom) smtp.mailfrom=google.com
+ (client-ip=2607:f8b0:4864:20::641; helo=mail-pl1-x641.google.com;
+ envelope-from=venture@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
- [67.219.250.214])
- by lists.ozlabs.org (Postfix) with ESMTP id 46srnJ08NVzDqxQ
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 21:11:47 +1100 (AEDT)
-Received: from [67.219.250.198] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-2.bemta.az-b.us-west-2.aws.symcld.net id 5C/9B-29296-25B95AD5;
- Tue, 15 Oct 2019 10:11:30 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRWlGSWpSXmKPExsWS8eIhj27Q7KW
- xBr+f6Fh82NzBanGq5QWLA5PHvJOBHudnLGQMYIpizcxLyq9IYM24sqGBreAOe8XrF9uYGxhX
- sXUxcnEICTQwSdzbOJe5i5ETyHnNKPG2KQjC3scocXquD4jNJqAk0fJqBXsXIweHiECOxLLbO
- iBhYQE9iSmPOllAbBEBfYmjN/+xQdhGEk17GsHiLAKqEs+mb2MEsXkFLCVWLV7HAjG+UGLFy0
- VgcU4BZ4n93XvAehkFZCWeLHjGBGIzC4hLnLvYyg5iSwgISCzZc54ZwhaVePn4HyuErSDRvOc
- 1C0S9nsSNqVPYIGxtiWULXzND7BWUODnzCcsERpFZSMbOQtIyC0nLLCQtCxhZVjFaJBVlpmeU
- 5CZm5ugaGhjoGhoa6Roam+gamhjpJVbpJumVFuuWpxaX6AK55cV6xZW5yTkpenmpJZsYgXGUU
- tDWt4Px4qw3eocYJTmYlER5b7YvjRXiS8pPqcxILM6ILyrNSS0+xCjDwaEkwft2JlBOsCg1Pb
- UiLTMHGNMwaQkOHiUR3skgad7igsTc4sx0iNQpRleOCS/nLmLmeLt8HpA8eBREHmtaAiQbe/Y
- vZRZiycvPS5US550F0iwA0pxRmgc3GpaOLjHKSgnzMjIwMAjxFKQW5WaWoMq/YhTnYFQS5r0F
- MoUnM68E7oJXQMcxAR0XqL8Y5LiSRISUVAPTNZ2KqrAgialFVmHPc3rt5spE3Wv3evU2Ka59+
- p7vTKunHjdS/zRXa8fJdy7Xs+//f9Ee6fdpaw37cquyuXu3dJoIVLy/+silU9xcYn3hhT6zEx
- fLdbZZuHmUdBYxn3v1TnOH9faEK1yFTasTj3amLOl8dDbumFXXEikr/8z2q4FXLGTqFnz41Vv
- A6TFTTlJTZPPM3YbnrizhEl328fud2n1frpVHOvtMXD6Xd77siiNP9m3cszypQl9KYv2kl3/F
- hRf3P/stbJp6f+KPvOV80puO/3+6aP2EJ2FnbFUdCl8Fc2hpNFYdOWER9pTZ9tq/jVMFTU95u
- Plz/rrJbfQjMNyw0ETJ7+l9u+ITU5Q1lFiKMxINtZiLihMBXy8/hsIDAAA=
-X-Env-Sender: rli11@lenovo.com
-X-Msg-Ref: server-4.tower-346.messagelabs.com!1571134289!102417!1
-X-Originating-IP: [104.232.225.12]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.12; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 28708 invoked from network); 15 Oct 2019 10:11:30 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
- by server-4.tower-346.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 15 Oct 2019 10:11:30 -0000
-Received: from HKGWPEMAIL03.lenovo.com (unknown [10.128.3.71])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="h9vyVdSf"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
+ [IPv6:2607:f8b0:4864:20::641])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by Forcepoint Email with ESMTPS id CB57AF8268149537EBD4;
- Tue, 15 Oct 2019 06:11:28 -0400 (EDT)
-Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
- HKGWPEMAIL03.lenovo.com (10.128.3.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Tue, 15 Oct 2019 18:11:27 +0800
-Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
- HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
- 15.01.1591.008; Tue, 15 Oct 2019 18:11:27 +0800
-From: Ivan Li11 <rli11@lenovo.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: [External]  Re: IPMI SEL Event ID
-Thread-Topic: [External]  Re: IPMI SEL Event ID
-Thread-Index: AQHVcjV4lc6gwq9wWUmUbVLhWAk+rKdbmESg
-Date: Tue, 15 Oct 2019 10:11:27 +0000
-Message-ID: <a65e103c1f874371987a7c9d503c9d2f@lenovo.com>
-References: <1082e383cba94367945d14175a0d787b@lenovo.com>
- <38fd5723-9e41-1415-c64b-738981c70f72@linux.intel.com>
-In-Reply-To: <38fd5723-9e41-1415-c64b-738981c70f72@linux.intel.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46szcP461dzDr39
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 02:18:09 +1100 (AEDT)
+Received: by mail-pl1-x641.google.com with SMTP id c3so9756574plo.2
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 08:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=CrOh66nwOlObJukX3Bms/sq7CvEIoQRTHxaAPNgzbMo=;
+ b=h9vyVdSftuU2m2V92qt6tC4i/C2iRBuuHZ9uTj6i295aoJG82qmm7EjUcz0r/ZfENi
+ Z3vfCF4sZ0NYp6P8/KqxGpPiMyHScDO5pO3tHKdg7ND5yU1li0EoE7xgBhju4djPgR+7
+ qtuRJKneohqlCI9kpbVBHLhzgIL7u6mozelv3Tt8AoIjAwbwb9mz01ZEwsUsD1/FAfvg
+ 4gWZqETT5CpDU7OWmKgEQg3uWxx0RiYCAaZIIYp4I/vRbtlBJfZoJZY4gCxHKGInEt97
+ ay0OJFMmamm/qYByP989lkfk8ZT316y6tSPJgSaPf6NmT4xTYqTcbvIAMQkakbk0adv+
+ 1hEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=CrOh66nwOlObJukX3Bms/sq7CvEIoQRTHxaAPNgzbMo=;
+ b=YpgVQ2BRcjIyBgn2JIqLrUxzMaCjGiWzQMu86/fOUpFKAWYp7J1onW8MGXfCUd42C4
+ fn2GjDWPBDp63ey4Jkn+bqw0J1EjHYDyW4P9SEHp96pCDwefGm/muaTcLdXBsRxYca1T
+ AFmH2zAmeSPIBVOZsJGqHlhqGUyqqgj3WdF4BeFh1DjfeFMYIx2cL76w+rDEq7Vjr/J0
+ f4ZXgZSAE+g8WspX7xwvxyHPs5Q9dV8gj8/KitSiBvHmb2k63OlMP8x7mnFfuklXy2NU
+ xl/aotnuh/JCczvVNU9KrQwOO0escm5OrpA9yuwpnyvLMWtt9rzpev5fp+Fy7izCQo6t
+ jNnA==
+X-Gm-Message-State: APjAAAUnAlTrRA9Bus/Izz23FHQZQ43vsA14kZ/xuIFixFFHL8qXy1na
+ vefaysfwBrrGTJ+ME30e5XyoMpP6s8AIxKWA13FyCQ==
+X-Google-Smtp-Source: APXvYqyLJvZdgM53qXQPWdsNpUR+qmV21QlJuve26TF1+wiCsvx2xG0fGyuHTLektA9fYbcfZqrycPePwS4JsdKRjuY=
+X-Received: by 2002:a17:902:8d83:: with SMTP id
+ v3mr35766709plo.47.1571152685843; 
+ Tue, 15 Oct 2019 08:18:05 -0700 (PDT)
 MIME-Version: 1.0
+References: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
+In-Reply-To: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
+From: Patrick Venture <venture@google.com>
+Date: Tue, 15 Oct 2019 08:17:54 -0700
+Message-ID: <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
+Subject: Re: The type of sensor value in redfish should be double or int64?
+To: Carol Wang <karo33bug@gmail.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,45 +75,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, gmills@linux.vnet.ibm.com,
+ "Tanous, Ed" <ed.tanous@intel.com>, James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jason,
+On Mon, Oct 14, 2019 at 7:57 PM Carol Wang <karo33bug@gmail.com> wrote:
+>
+> Hi,
+>
+> I tried to override sensor values with redfish Patch, referring to the Vo=
+ltages example of https://github.com/openbmc/bmcweb/search?q=3D413961de&typ=
+e=3DCommits, but met an error "Invalid argument". Comparing the code https:=
+//github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensors.hpp#L2192 =
+and the doc https://github.com/openbmc/phosphor-dbus-interfaces/blob/master=
+/xyz/openbmc_project/Sensor/Value.interface.yaml#L21, the current code uses=
+ double type, but the doc says the value type should be int64. It seems a s=
+cale difference. Why the code uses double here?
 
-New SEL ID is still not from base number(1) after "sel clear" command with =
-the fix you provided.
-Is there any setting I need to notice that?
-Please help to advise it.
+The short answer is, code generally authored by Intel uses doubles for
+the sensor values, whereas the original OpenBMC sensor models used
+int64.
 
-Thanks,
-Ivan
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+rli11=3Dlenovo.com@lists.ozlabs.org> On
-> Behalf Of Bills, Jason M
-> Sent: Tuesday, September 24, 2019 1:36 AM
-> To: openbmc@lists.ozlabs.org
-> Subject: [External] Re: IPMI SEL Event ID
->=20
->=20
->=20
-> On 9/22/2019 5:19 AM, Yonghui YH21 Liu wrote:
-> > HI All,
-> >
-> >  =A0=A0=A0=A0=A0=A0=A0=A0 I find the new SEL event ID is not from base =
-number(1) after
-> > I run "ipmitool sel clear" command.
-> >
-> >  =A0=A0=A0=A0=A0=A0=A0=A0 Is it the OpenBMC default design rule ? If no=
-t, any plan to
-> > fix the issue?
->=20
-> If you are using phosphor-sel-logger, it is a bug.  The fix for it is up =
-for review
-> here:
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-sel-logger/+/24843
->=20
+A while back there was a bit of a debate about this, and it looks like
+we never truly resolved it.  Brad, perhaps this is a good time to?
+The idea is, that with the int64 storage, we store the raw value and
+we also store the scaling factor, so that one can scale the number if
+they choose to.  Sort of keeping the values as they are -- instead of
+operating on them before publishing them to dbus.  We do notably
+however, modify values in phosphor-hwmon before publishing them as
+often there are scaling factors and offsets, beyond the conversion
+from mC to C.
+
+phosphor-host-ipmid's sensor YAML requires the type to be specified
+for the sensor value interface already, and does validly support both
+types: int64_t and double (I tested it when I briefly had a mixed
+environment).
+phosphor-hwmon reports values without applying the scaling factor, but
+it is aware of the scaling factor, so it could.
+phosphor-pid-control works with both types correctly.
+
+I'm not sure about the phosphor-fan stuff, but I imagine we'll find
+some arithmetic we can drop where it ingests values.
+
+This change from int64 to double is big enough though that many
+configuration files would need to be adjusted, which is non-trivial.
+I argue however that having code that doesn't have a common interface
+or interfaces for sensors is less than ideal.  Having multiple options
+for talking to sensors is fine, but in my opinion this is only true if
+they implement different interfaces, or the same interface.  In this
+case, we have dbus-sensors and phosphor-hwmon which both implement the
+same interface, but differently: int64 vs double.
+
+I think using doubles makes sense at the dbus level because generally
+one wants that version of the value.  Therefore you end up with code
+in each daemon that reads the sensor value and the scale so that it
+can perform the same operation that another daemon is also going to
+perform, etc.  Instead of just doing it once.
+
+I'll climb off my debate box now and climb onto my voting box and say,
+I'd like to make phosphor-hwmon report the value as double and I'm
+willing to review incoming patches that address other aspects of the
+codebase to bring it all together -- since they'll need to be in a
+locked step-forward.
+
+>
 > Thanks!
-> -Jason
-> >
-> > Thanks
-> >
