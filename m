@@ -1,82 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03D7CD8017
-	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 21:21:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2AE1D802E
+	for <lists+openbmc@lfdr.de>; Tue, 15 Oct 2019 21:25:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46t5032ZNVzDqgq
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:21:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46t5425zyMzDr0X
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:25:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=5191125d25=taoren@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="bJgDfzAm"; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+ spf=pass (mailfrom) smtp.mailfrom=fuzziesquirrel.com
+ (client-ip=173.167.31.197; helo=bajor.fuzziesquirrel.com;
+ envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46t4vZ67g8zDr39
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 06:18:02 +1100 (AEDT)
-Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- x9FJEkYD029521
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 12:18:01 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=facebook;
- bh=Y9PkE5A3xP6+nv1nRdA+i2ZV9O4sLu0t/GSblzH75g0=;
- b=bJgDfzAmNjkQPNT1JyDyZnbQhs/9a+Vfn0o25zc/jRGBenJarNb0Pb6L+QTd3z5rdEiY
- mfTzo/AkGmQxPhlbacOXL2jWFTdQNIxBP6F2KOA2RBsFouidYFB5mj7NG3O/ppirynjK
- 1EWusKs+49UIbOlG3rwq0ubmQNIiiY906ts= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2vn1er4qng-7
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 12:18:00 -0700
-Received: from 2401:db00:2120:81ca:face:0:31:0 (2620:10d:c0a8:1b::d) by
- mail.thefacebook.com (2620:10d:c0a8:83::7) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Tue, 15 Oct 2019 12:17:52 -0700
-Received: by devvm1794.vll1.facebook.com (Postfix, from userid 150176)
- id 25FF35C979EB; Tue, 15 Oct 2019 12:12:48 -0700 (PDT)
-Smtp-Origin-Hostprefix: devvm
-From: Tao Ren <taoren@fb.com>
-Smtp-Origin-Hostname: devvm1794.vll1.facebook.com
-To: "David S . Miller" <davem@davemloft.net>, Andrew Lunn <andrew@lunn.ch>,
- Florian Fainelli <f.fainelli@gmail.com>, Heiner Kallweit
- <hkallweit1@gmail.com>, Vladimir Oltean <olteanv@gmail.com>, Arun
- Parameswaran <arun.parameswaran@broadcom.com>, Justin Chen
- <justinpopo6@gmail.com>,
- Russell King <linux@armlinux.org.uk>, <netdev@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <openbmc@lists.ozlabs.org>
-Smtp-Origin-Cluster: vll1c12
-Subject: [PATCH net-next v9 2/3] net: phy: add support for clause 37
- auto-negotiation
-Date: Tue, 15 Oct 2019 12:12:12 -0700
-Message-ID: <20191015191213.4028603-3-taoren@fb.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20191015191213.4028603-1-taoren@fb.com>
-References: <20191015191213.4028603-1-taoren@fb.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46t4zD2XFPzDr28
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 06:21:12 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id A5D3E5C08B;
+ Tue, 15 Oct 2019 15:21:08 -0400 (EDT)
+Content-Type: text/plain;
+	charset=utf-8;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: The type of sensor value in redfish should be double or int64?
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <de3911ab-f416-cc87-3d48-b70ce5e57612@intel.com>
+Date: Tue, 15 Oct 2019 15:21:08 -0400
+Message-Id: <E19C0FD2-2F95-4943-B3CC-D4447D2FABE8@fuzziesquirrel.com>
+References: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
+ <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
+ <de3911ab-f416-cc87-3d48-b70ce5e57612@intel.com>
+To: Ed Tanous <ed.tanous@intel.com>
+X-Mailer: Apple Mail (2.3445.104.11)
 Content-Transfer-Encoding: quoted-printable
-X-FB-Internal: Safe
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
- definitions=2019-10-15_06:2019-10-15,2019-10-15 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- suspectscore=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015
- priorityscore=1501 adultscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1908290000 definitions=main-1910150163
-X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,223 +52,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>
+Cc: Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, gmills@linux.vnet.ibm.com,
+ James Feist <james.feist@linux.intel.com>, Carol Wang <karo33bug@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+at 1:07 PM, Ed Tanous <ed.tanous@intel.com> wrote:
 
-This patch adds support for clause 37 1000Base-X auto-negotiation.
+> On 10/15/19 8:17 AM, Patrick Venture wrote:
+>> On Mon, Oct 14, 2019 at 7:57 PM Carol Wang <karo33bug@gmail.com> wrote=
+:
+>>> Hi,
+>>>
+>>> I tried to override sensor values with redfish Patch, referring to th=
+e =20
+>>> Voltages example of =20
+>>> https://github.com/openbmc/bmcweb/search?q=3D413961de&type=3DCommits,=
+ but =20
+>>> met an error "Invalid argument". Comparing the code =20
+>>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensor=
+s.hpp#L2192 =20
+>>> and the doc =20
+>>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/o=
+penbmc_project/Sensor/Value.interface.yaml#L21, =20
+>>> the current code uses double type, but the doc says the value type =20
+>>> should be int64. It seems a scale difference. Why the code uses doubl=
+e =20
+>>> here?
+>
+> To my understanding, the phosphor-hwmon sensor system doesn't support
+> overriding sensor values at runtime, regardless of whether or not you
+> resolved the type issues with the arguments.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Tao Ren <taoren@fb.com>
-Tested-by: Ren=C3=A9 van Dorst <opensource@vdorst.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
----
- No change in v9.
- Changes in v8:
-  - Rebased the patch on top of net-next HEAD.
- Changes in v7:
-  - Update "if (AUTONEG_ENABLE !=3D phydev->autoneg)" to
-    "if (phydev->autoneg !=3D AUTONEG_ENABLE)" so checkpatch.pl is happy.
- Changes in v6:
-  - add "Signed-off-by: Tao Ren <taoren@fb.com>"
- Changes in v1-v5:
-  - nothing changed. It's given v5 just to align with the version of
-    patch series.
+I=E2=80=99m just curious=E2=80=A6what is the use-case for writing a volta=
+ge sensor=E2=80=A6or any =20
+sensor for that matter?  What do you do with the user-supplied value when=
+ =20
+the sensor is a piece of hardware that does not comprehend setting a =20
+value?  This is probably my lack of Redfish-fu showing.
 
- drivers/net/phy/phy_device.c | 139 +++++++++++++++++++++++++++++++++++
- include/linux/phy.h          |   4 +
- 2 files changed, 143 insertions(+)
+FWIW when I originally defined the Sensor.Value interface, it was meant t=
+o =20
+be read only.  In fact the documentation says this, even if it is not =20
+enforced anywhere:
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 9c263caccab4..a4dcac55f4c1 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1607,6 +1607,40 @@ static int genphy_config_advert(struct phy_device =
-*phydev)
- 	return changed;
- }
-=20
-+/**
-+ * genphy_c37_config_advert - sanitize and advertise auto-negotiation pa=
-rameters
-+ * @phydev: target phy_device struct
-+ *
-+ * Description: Writes MII_ADVERTISE with the appropriate values,
-+ *   after sanitizing the values to make sure we only advertise
-+ *   what is supported.  Returns < 0 on error, 0 if the PHY's advertisem=
-ent
-+ *   hasn't changed, and > 0 if it has changed. This function is intende=
-d
-+ *   for Clause 37 1000Base-X mode.
-+ */
-+static int genphy_c37_config_advert(struct phy_device *phydev)
-+{
-+	u16 adv =3D 0;
-+
-+	/* Only allow advertising what this PHY supports */
-+	linkmode_and(phydev->advertising, phydev->advertising,
-+		     phydev->supported);
-+
-+	if (linkmode_test_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
-+			      phydev->advertising))
-+		adv |=3D ADVERTISE_1000XFULL;
-+	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Pause_BIT,
-+			      phydev->advertising))
-+		adv |=3D ADVERTISE_1000XPAUSE;
-+	if (linkmode_test_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
-+			      phydev->advertising))
-+		adv |=3D ADVERTISE_1000XPSE_ASYM;
-+
-+	return phy_modify_changed(phydev, MII_ADVERTISE,
-+				  ADVERTISE_1000XFULL | ADVERTISE_1000XPAUSE |
-+				  ADVERTISE_1000XHALF | ADVERTISE_1000XPSE_ASYM,
-+				  adv);
-+}
-+
- /**
-  * genphy_config_eee_advert - disable unwanted eee mode advertisement
-  * @phydev: target phy_device struct
-@@ -1715,6 +1749,54 @@ int __genphy_config_aneg(struct phy_device *phydev=
-, bool changed)
- }
- EXPORT_SYMBOL(__genphy_config_aneg);
-=20
-+/**
-+ * genphy_c37_config_aneg - restart auto-negotiation or write BMCR
-+ * @phydev: target phy_device struct
-+ *
-+ * Description: If auto-negotiation is enabled, we configure the
-+ *   advertising, and then restart auto-negotiation.  If it is not
-+ *   enabled, then we write the BMCR. This function is intended
-+ *   for use with Clause 37 1000Base-X mode.
-+ */
-+int genphy_c37_config_aneg(struct phy_device *phydev)
-+{
-+	int err, changed;
-+
-+	if (phydev->autoneg !=3D AUTONEG_ENABLE)
-+		return genphy_setup_forced(phydev);
-+
-+	err =3D phy_modify(phydev, MII_BMCR, BMCR_SPEED1000 | BMCR_SPEED100,
-+			 BMCR_SPEED1000);
-+	if (err)
-+		return err;
-+
-+	changed =3D genphy_c37_config_advert(phydev);
-+	if (changed < 0) /* error */
-+		return changed;
-+
-+	if (!changed) {
-+		/* Advertisement hasn't changed, but maybe aneg was never on to
-+		 * begin with?  Or maybe phy was isolated?
-+		 */
-+		int ctl =3D phy_read(phydev, MII_BMCR);
-+
-+		if (ctl < 0)
-+			return ctl;
-+
-+		if (!(ctl & BMCR_ANENABLE) || (ctl & BMCR_ISOLATE))
-+			changed =3D 1; /* do restart aneg */
-+	}
-+
-+	/* Only restart aneg if we are advertising something different
-+	 * than we were before.
-+	 */
-+	if (changed > 0)
-+		return genphy_restart_aneg(phydev);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL(genphy_c37_config_aneg);
-+
- /**
-  * genphy_aneg_done - return auto-negotiation status
-  * @phydev: target phy_device struct
-@@ -1877,6 +1959,63 @@ int genphy_read_status(struct phy_device *phydev)
- }
- EXPORT_SYMBOL(genphy_read_status);
-=20
-+/**
-+ * genphy_c37_read_status - check the link status and update current lin=
-k state
-+ * @phydev: target phy_device struct
-+ *
-+ * Description: Check the link, then figure out the current state
-+ *   by comparing what we advertise with what the link partner
-+ *   advertises. This function is for Clause 37 1000Base-X mode.
-+ */
-+int genphy_c37_read_status(struct phy_device *phydev)
-+{
-+	int lpa, err, old_link =3D phydev->link;
-+
-+	/* Update the link, but return if there was an error */
-+	err =3D genphy_update_link(phydev);
-+	if (err)
-+		return err;
-+
-+	/* why bother the PHY if nothing can have changed */
-+	if (phydev->autoneg =3D=3D AUTONEG_ENABLE && old_link && phydev->link)
-+		return 0;
-+
-+	phydev->duplex =3D DUPLEX_UNKNOWN;
-+	phydev->pause =3D 0;
-+	phydev->asym_pause =3D 0;
-+
-+	if (phydev->autoneg =3D=3D AUTONEG_ENABLE && phydev->autoneg_complete) =
-{
-+		lpa =3D phy_read(phydev, MII_LPA);
-+		if (lpa < 0)
-+			return lpa;
-+
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
-+				 phydev->lp_advertising, lpa & LPA_LPACK);
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
-+				 phydev->lp_advertising, lpa & LPA_1000XFULL);
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_Pause_BIT,
-+				 phydev->lp_advertising, lpa & LPA_1000XPAUSE);
-+		linkmode_mod_bit(ETHTOOL_LINK_MODE_Asym_Pause_BIT,
-+				 phydev->lp_advertising,
-+				 lpa & LPA_1000XPAUSE_ASYM);
-+
-+		phy_resolve_aneg_linkmode(phydev);
-+	} else if (phydev->autoneg =3D=3D AUTONEG_DISABLE) {
-+		int bmcr =3D phy_read(phydev, MII_BMCR);
-+
-+		if (bmcr < 0)
-+			return bmcr;
-+
-+		if (bmcr & BMCR_FULLDPLX)
-+			phydev->duplex =3D DUPLEX_FULL;
-+		else
-+			phydev->duplex =3D DUPLEX_HALF;
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL(genphy_c37_read_status);
-+
- /**
-  * genphy_soft_reset - software reset the PHY via BMCR_RESET bit
-  * @phydev: target phy_device struct
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 9a0e981df502..78436d58ce7c 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -1106,6 +1106,10 @@ int genphy_read_mmd_unsupported(struct phy_device =
-*phdev, int devad,
- int genphy_write_mmd_unsupported(struct phy_device *phdev, int devnum,
- 				 u16 regnum, u16 val);
-=20
-+/* Clause 37 */
-+int genphy_c37_config_aneg(struct phy_device *phydev);
-+int genphy_c37_read_status(struct phy_device *phydev);
-+
- /* Clause 45 PHY */
- int genphy_c45_restart_aneg(struct phy_device *phydev);
- int genphy_c45_check_and_restart_aneg(struct phy_device *phydev, bool re=
-start);
---=20
-2.17.1
+     All Sensor.Value properties are read-only.
+
+If a device provides some kind of control mechanism there are other =20
+interfaces for expressing/modeling those, typically/ideally in the contro=
+l =20
+namespace.
+
+> If your goal is just "get
+> it to work", I'd recommend switching to dbus-sensors (which I realize i=
+s
+> non-trivial for some systems).  With that said, it would be great to ge=
+t
+> this int64 to double conversion going again.
+>
+>
+>> The short answer is, code generally authored by Intel uses doubles for
+>> the sensor values, whereas the original OpenBMC sensor models used
+>> int64.
+>>
+>> A while back there was a bit of a debate about this, and it looks like
+>> we never truly resolved it.  Brad, perhaps this is a good time to?
+>> The idea is, that with the int64 storage, we store the raw value and
+>> we also store the scaling factor, so that one can scale the number if
+>> they choose to.  Sort of keeping the values as they are -- instead of
+>> operating on them before publishing them to dbus.  We do notably
+>> however, modify values in phosphor-hwmon before publishing them as
+>> often there are scaling factors and offsets, beyond the conversion
+>> from mC to C.
+>>
+>> phosphor-host-ipmid's sensor YAML requires the type to be specified
+>> for the sensor value interface already, and does validly support both
+>> types: int64_t and double (I tested it when I briefly had a mixed
+>> environment).
+>> phosphor-hwmon reports values without applying the scaling factor, but
+>> it is aware of the scaling factor, so it could.
+>> phosphor-pid-control works with both types correctly.
+>
+> bmcweb also works with both types for everything but the PATCH interfac=
+e.
+>
+>> I'm not sure about the phosphor-fan stuff, but I imagine we'll find
+>> some arithmetic we can drop where it ingests values.
+>>
+>> This change from int64 to double is big enough though that many
+>> configuration files would need to be adjusted, which is non-trivial.
+>> I argue however that having code that doesn't have a common interface
+>> or interfaces for sensors is less than ideal.  Having multiple options
+>> for talking to sensors is fine, but in my opinion this is only true if
+>> they implement different interfaces, or the same interface.  In this
+>> case, we have dbus-sensors and phosphor-hwmon which both implement the
+>> same interface, but differently: int64 vs double.
+>>
+>> I think using doubles makes sense at the dbus level because generally
+>> one wants that version of the value.  Therefore you end up with code
+>> in each daemon that reads the sensor value and the scale so that it
+>> can perform the same operation that another daemon is also going to
+>> perform, etc.  Instead of just doing it once.
+>>
+>> I'll climb off my debate box now and climb onto my voting box and say,
+>> I'd like to make phosphor-hwmon report the value as double and I'm
+>> willing to review incoming patches that address other aspects of the
+>> codebase to bring it all together -- since they'll need to be in a
+>> locked step-forward.
+>
+> Another vote for moving to double.  The systems I work on don't use
+> phosphor-hwmon, so there's not a lot of ways to test the other
+> components.  The pieces that I use (dbus-sensors, phosphor-pid-control,
+> bmcweb) all work correctly with double.
+>
+> The reviews to move to double are still open, unresolved, and James has
+> patches to several daemons that need to be converted.
+> https://gerrit.openbmc-project.xyz/q/topic:%22double-sensor%22+(status:=
+open%20OR%20status:merged)
 
