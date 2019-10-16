@@ -1,82 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B9B8D8772
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:31:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCF39D87BE
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 07:07:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tK9m66RHzDqcj
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 15:31:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tKzD3yJJzDqfc
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 16:07:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::444;
+ helo=mail-pf1-x444.google.com; envelope-from=santosh.puranik.ibm@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="LnscKXlY"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="lCdCtzl6"; dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="tDOQ74vi"; 
+ dkim-atps=neutral
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
+ [IPv6:2607:f8b0:4864:20::444])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tK981d1XzDqLj
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 15:30:36 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 6804B21C39;
- Wed, 16 Oct 2019 00:30:33 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 16 Oct 2019 00:30:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=4d7y+oiDZ6RZuFniA3eUl4Mz/LwxGZI
- IcR2SMb2NQxU=; b=LnscKXlY22y6WmSww8vnAdDrqqHshT+spvMxVUIZRFOQ2RJ
- iEcSRs9xWikDWfP2wFQraVot+gh4aIijnm5XoXQ6bACymXfsNE2LTj+Gso4eTUPW
- T1WvBcbinx8dQpKY08gguxSPuJDHjLWCzCL4R3MECWlqM0S1rrLe2FJPhYhzGFWO
- oHXLB20IldsgE6h5yyR7ZJY64dPo49Hgr/1R0HCQocViJziQvwpCOQ6VPLisXRid
- QSfEcgfisnmPI6f+9yD+Uzo0Hv/hMvrYvRES8Bng9i/9HVjDxDr65mtlIua2OvG6
- UVr9Kqn2zBElWUGdJ5nc44mVVpMQV9W9kAJ7GNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=4d7y+o
- iDZ6RZuFniA3eUl4Mz/LwxGZIIcR2SMb2NQxU=; b=lCdCtzl67yTVXdDmBi8/bk
- xLZB/D2AbqiAb7kFX0JoWHlftExyIf12PL7iUnmi7LPis9A6Dy84xO6k+ORUmSVP
- j0xazOYO/G7NNRywljo0G6pnC6+ALZvMQe/cwB71y1xqqNjJkceS/Q5wVg2w2Xyp
- nSA+ENsEG/LfCY6k/17r8BfW8G3EmEvw7kaSH3jxqFyoc78dijprjaRUutzGRaTZ
- v9nv+QoJg/3e6gYGrhO0bMvuZD/RNiy4MG2Y0mJGcI/aceeTt5VVxKVOkRZsb5Ud
- plGqHXIeCChC7hH1HwOgIklXH4XraBOjllG88Q0/VYAsr7foSIqZb+gw7tw01v5w
- ==
-X-ME-Sender: <xms:6JymXRm7L9S7vyZ0gN4URKTrF93aQ9ypZ8-5EsqdxMqvgJ2moAcSvg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeggdekgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:6JymXTIXD1XaO8_51X0XS7VEiWIKZnB5v3UUBd2xGDXOpkQ-PQEtbw>
- <xmx:6JymXVOHx41ygh3YZD0M-l4R5TikYlOik1loiO8XCXbCHn6POMBQsQ>
- <xmx:6JymXV5ZGbqpxfbqA1_dkuOlm-3rvBebRu4EG587tBF7s1gTUzKPLg>
- <xmx:6ZymXRLlDmQhnwPK5mr1OxoI2NNHSfQqDOxeNxjiWI_ssLLydqFOKg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 485ACE00A5; Wed, 16 Oct 2019 00:30:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
-Mime-Version: 1.0
-Message-Id: <5c9e4117-ead0-4c10-b6ae-4ac638e841d7@www.fastmail.com>
-In-Reply-To: <20191016040811.6999-1-joel@jms.id.au>
-References: <20191016040811.6999-1-joel@jms.id.au>
-Date: Wed, 16 Oct 2019 15:01:29 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3]_ARM:_dts:_aspeed:_ast2600evb:_Enable?=
- =?UTF-8?Q?_i2c_buses?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tKyL6FD7zDqVV
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 16:06:15 +1100 (AEDT)
+Received: by mail-pf1-x444.google.com with SMTP id q5so13888424pfg.13
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 22:06:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=CXXk2pWhWffTW0NK5vZxBA0H9J4p45hHzZv+rw2JERA=;
+ b=tDOQ74viCf/lnwuspOV4/jVh9JNqaDw1lMqeRIKf/2Oi/qDDZQmItSwRRMdp4gjF4H
+ n70TH1EhipRNcdaHFghSoIR7YPCY6TeqbF224xNK8yEWcFrH6El5Hk0TNa0Hk+XreImD
+ cr9kpUqltK4we6xpA1sfgSRPNOka83KH9en3S0ZwFLqoEkMphLrSuTD/22qns1mmuxdY
+ 8Q69MaRh67/glcO3FV2yh28iblKGD74nXNNthC0UNEU1hPts+meTLYE6sypSJnzwvMwb
+ c5tLndOmd/d12cDyHmKNYQqXXJqb2CEzJm1fxbI7SAIZZE3VzuE267Pkuvf4dW1r6QBk
+ JYXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=CXXk2pWhWffTW0NK5vZxBA0H9J4p45hHzZv+rw2JERA=;
+ b=E1F5rn6f/KqfZeMnrHtEICLIzLhLUh1gPh2aA8Th2umODbyZ6VT2m6q8OoYAGkfM8F
+ Urkfl2zTYE2bNUb9FBTYQpcNCBYLn4HZl4RAGZRPeW4RHRBWwNx6uUe9b13NBwVfqmT5
+ wevlwz4175+T8bPDYMIDZjW6gEcL8dthSTyb7xvWZ10UtzHn652IZVmVVUoVlagcq8E8
+ 4bmhKmywWdY0uNkhvb9WsxTvo9H96S0JTsyYp2wvBoVPQ7u36sCAFBixAWa0pkNcjujC
+ LqM+indXA74qxGEpsxidJXzF3Xn52SrIvVpuExdY4op6f2PZdmu/tSyd/XostlPB4i0W
+ D2Ww==
+X-Gm-Message-State: APjAAAW/KQfYcQth1ufh8LhHGwMCgaEGa2NfbIm6fW83KX/iXe4BjOth
+ tvAv0TTAFC+yeVIIejDucVk3EbZZ
+X-Google-Smtp-Source: APXvYqxNVe2lulSFAeysQGpZWjhFrYVBZZL2BjmiiXC1An5vSJU3wb3nZ70vIQMaWbDxTEiTDWkB8w==
+X-Received: by 2002:a65:464b:: with SMTP id k11mr24580886pgr.263.1571202371635; 
+ Tue, 15 Oct 2019 22:06:11 -0700 (PDT)
+Received: from [9.199.76.54] ([129.41.84.82])
+ by smtp.gmail.com with ESMTPSA id q29sm426978pgc.36.2019.10.15.22.06.09
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 15 Oct 2019 22:06:11 -0700 (PDT)
+Subject: Re: [PATCH linux dev-5.3] ARM: dts: aspeed: rainier: Add i2c eeproms
+To: Jinu Thomas <jinujoy@linux.vnet.ibm.com>, Joel Stanley <joel@jms.id.au>,
+ openbmc@lists.ozlabs.org
+References: <2fd6a175-e249-741a-7f20-67705b9800e6@linux.vnet.ibm.com>
+From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Message-ID: <0e2039fd-7257-5ab3-047c-95daa8eb9598@gmail.com>
+Date: Wed, 16 Oct 2019 10:36:08 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <2fd6a175-e249-741a-7f20-67705b9800e6@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,22 +87,18 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+On 16/10/19 9:51 AM, Jinu Thomas wrote:
+> Added eeproms for the below VPD devices
+> - BMC
+> - TPM
+> - System Planar
+> - DCM 0 VRM
+> - DCM 1 VRM
+> - Base Op panel
+> - Lcd Op panel
+> - DASD (All)
+> - PCIe Cards (All)
 
-On Wed, 16 Oct 2019, at 14:38, Joel Stanley wrote:
-> With the exception of i2c10 and i2c11 which conflict with the pins
-> for the third and forth MDIO controllers.
-> 
-> i2c0 comes has an ADT7490 fan controller/thermal monitor device
+The content matches the schematics. The indentation seems off, though.
 
-Drop "comes"?
-
-> connected. The bus that it appears on depends on jumper settings, so it
-> may not be present on all EVBs. It is included to assist testing of I2C.
-
-Initially I read this paragraph as a statement about the hardware rather than
-the devicetree and was slightly confused. Maybe say "The devicetree describes
-an adt7490 on i2c0, however ..."?
-
-Anyway, with the "comes" grammar fixed:
-
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Reviewed-by: Santosh Puranik <santosh.puranik.ibm@gmail.com>
