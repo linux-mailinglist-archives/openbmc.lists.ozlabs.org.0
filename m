@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 037C8DA21C
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 01:25:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CE69DA25A
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 01:35:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tpM36yM5zDqPn
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 10:25:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tpZH2tYjzDr76
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 10:35:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,68 +16,63 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="B4c6kNPW"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="M4MtRBjk"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="wz8m9KEn"; dkim-atps=neutral
+ header.b="LdoDHqPM"; dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tpLD1WjbzDqC0
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 10:25:08 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tpYS459VzDqcQ
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 10:34:52 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 5213D12F0;
- Wed, 16 Oct 2019 19:25:05 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 16 Oct 2019 19:25:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=LFBo2zo7ucpEAZ5mYd1NJStpAjTzuhZ
- prmnvtb7UvW4=; b=B4c6kNPW4hRWt/+usVBGEXxllUQ0Ex2OVUqErNu+HdlwZ81
- OGQddtpL+AF8i1oaGCH6RCbd1s/IqGEDRZLKQRP0gu6V9iU/Odr7QUhfp6z2J6ag
- c2k2V21sR/YLXbC/320Dbuer/X8v0HfUxfuMDE0wNvOHrIWH5BFtkaPMsf2ZGqRI
- 7BfuFGWk4E+PII0JNfQ4cuXwhvq4Y3aO6gjol4omVNzAtj5MdMXN1qlMj70kmB9M
- nVz2jkppGKsHhJ+ExWAFFVDkOCUwpeUP7x+KqSnCXNeHV7x5KHgkYknhSIjjdXLB
- 9RCnfy0rvJmw+my7s1ZphXtleQ1iUA4SUchqvow==
+ by mailout.west.internal (Postfix) with ESMTP id 49AA51491;
+ Wed, 16 Oct 2019 19:34:50 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Wed, 16 Oct 2019 19:34:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm1; bh=AW5GguMkU72K8HVoB/KzhRWJT3
+ kg2me91MrL2a4ydmc=; b=M4MtRBjkY6J6InPJuc/CFZsv8cYlIPtKL8sdNnem7a
+ KX+fPNUddM+OW2jDWN2waI+f1z2VLMiE4fi6rGJSJ/ukdlv3RMv30XuBeTOgJbxw
+ juEUFG/hVyzWcYtDxyDtuCvnKWbuV1bhy8JHN9BYTJq6Lg/p+2bO6C//WVvPwlMs
+ a6vQ7wYNfV8q295iGw89waS+5P8H+2+VB+V1H9rugNcHpA8IjEosQhNFBN2xf5H4
+ EIrwOReI91Ul3R8qbjTbEnqeDs1kF2iUYeJM60B4P3JE2+swvTl+ahtY36c4tqj8
+ IQK0gWfF4HScWVYZApphhUVawUCXVZo6xMq8uCOZusJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=LFBo2z
- o7ucpEAZ5mYd1NJStpAjTzuhZprmnvtb7UvW4=; b=wz8m9KEnZ0LTWNG+N5f9/7
- gh6vJdvwixRM2P+rirDueLZIqxjtL4RHpU0rr/XFR+RBMH6CilzaRhbnc5d6xf1s
- hxMkPD2JGKTdo29FYJbzavOr54g7VGNpVTIbmGYeMp3wykTAT+5EskjK2dogSNPl
- W6wPatHtZuyt5huEL7pnkIsz8D34bD4CZgy7fiYqB4uIjqM3+txb9VhkW2sgNluY
- QZHj8YxxCrNlYJ6HiwejrlZxUtqI25JagKEEtrL8mDVLY0psT8PJ7JCfjuymiGSp
- W1oDE41Ww+RtReK3fi9PDu8HP2w1IkztKnB16LUtBnXr5C8CvWtT9vjXxf/O/VFg
- ==
-X-ME-Sender: <xms:0KanXTP1J_q5G0Znrf6NECEMhEzW3_Hn8HH6e-Lyxck6E-On1wscOQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeigddulecutefuodetggdotefrodftvf
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=AW5GguMkU72K8HVoB
+ /KzhRWJT3kg2me91MrL2a4ydmc=; b=LdoDHqPME09VPHL4nDLWNP1tAXbt63z6d
+ 4tBQWIUnQdlOxYJfLvJQOHTjMq2+eJ9cCpGjJ+JHFL+hMeEWwdSzLXfgVgnfAUf7
+ 12ftfye7pkbLrkmU1g9+Ov+GBJNsOhy79h4vfWOMidjirVw5ebO2yUzUDH/OIjR1
+ 7u9Z6n7iDZZRf+qh4aXU44mf2dVsJqVOQr4ImVUL07CtNdx5AyDB4DsLjrZ7WiM+
+ 454EDQExv8wpy2ynMj8wf8P6s00wnlkG13dvGZspgz5p+gvblCOvUwkFE3INC+xb
+ VV+Ypp7wemhcJYdqymSG1cO+UuHGywZIBHFJNbgmptABojpHBGedQ==
+X-ME-Sender: <xms:GamnXc7t49h2bPe8sH4zs6VmGi6z1XZiAFV8LMQHJhjLJzp05fRXSg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeigddvudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
- hinhepphhorhhtfigvlhhlrdgtohhmpdhophgvnhgsmhgtrdhorhhgnecurfgrrhgrmhep
- mhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuih
- iivgeptd
-X-ME-Proxy: <xmx:0KanXes8GzFecS3AjZUBo66N9rDarMqIo5knne4i6VY_IC_aEPOhTw>
- <xmx:0KanXR4jaaa9Gbys1es7G_k0ggstqYQhZ48TWpWCUpHLA-d5I38Wvw>
- <xmx:0KanXQ5vZbOb3msS1bqACfPhPK4knxv6JU3KwIssV1Rb87q9cThOAw>
- <xmx:0KanXdNP3ntcrHxrork_uir0Ke-tdUdblSdIKidybu8g48CeSc3GcQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 829E2E00A5; Wed, 16 Oct 2019 19:25:04 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
-Mime-Version: 1.0
-Message-Id: <3bc00539-bfb9-4fd8-a7dc-a6a1d7dca3b8@www.fastmail.com>
-In-Reply-To: <b4ad804a513048e4bc8df7ff9cb8598b@SCL-EXCHMB-13.phoenix.com>
-References: <b4ad804a513048e4bc8df7ff9cb8598b@SCL-EXCHMB-13.phoenix.com>
-Date: Thu, 17 Oct 2019 09:55:48 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Bruce Mitchell" <Bruce_Mitchell@phoenix.com>
-Subject: =?UTF-8?Q?Re:_Recommendations_for_development_platforms_for_the_ASPEED_A?=
- =?UTF-8?Q?ST2500_&_AST2600=3F?=
-Content-Type: text/plain
+ uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
+ dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
+ ugdrrghuqeenucfkphepvddtvddrkedurddukedrfedtnecurfgrrhgrmhepmhgrihhlfh
+ hrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:GamnXUAxbpxu9nS2CbLLkJV_0v-rxeqSOE1YzYD8oDiDomWOTgnhgg>
+ <xmx:GamnXYMneGfdqOahpQ5stAW-Zo6u4IchhdDV9zRGRiotILOohpZz2A>
+ <xmx:GamnXXAq93fURRhZnndqZM9PbCUiJT40ZrSuKuzziNkaPk6gJ329Dw>
+ <xmx:GamnXYgv2z3CMNDXoxT0-HeriX1Ba2uxBrjyb2rFk6cHz-LXN7hqBQ>
+Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 00545D60066;
+ Wed, 16 Oct 2019 19:34:47 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: joel@jms.id.au
+Subject: [PATCH linux dev-5.3 v2] soc: aspeed: Fail probe of lpc-ctrl if
+ reserved memory is not aligned
+Date: Thu, 17 Oct 2019 10:05:58 +1030
+Message-Id: <20191016233558.9740-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,60 +84,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Alignment is a hardware constraint of the LPC2AHB bridge, and misaligned
+reserved memory will present as corrupted data.
 
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+v2: Cosmetic fixes pointed out by Milton
 
-On Thu, 17 Oct 2019, at 02:06, Bruce Mitchell wrote:
-> Hello Andrew,
-> 
-> > Hi Bruce
-> > 
-> > On Wed, 16 Oct 2019, at 05:14, Bruce Mitchell wrote:
-> > >  
-> > > Hello,
-> > > 
-> > > 
-> > > I am Bruce Mitchell and I work for Phoenix Technologies Ltd. as a BMC 
-> > > firmware Engineer.
-> > > 
-> > > Phoenix Technologies Ltd. is developing an OpenBMC 
-> > > (https://www.openbmc.org/ , not the Facebook flavor) product.
-> > 
-> > FYI, the projects have united (and the result lives under the Linux Foundation).
-> 
-> It seems the people at American Portwell Technology do not actually know that
-> When I enquired about their Neptune Alpha OpenBMC development kit
-> https://portwell.com/solutions/openBMC.php
-> 
-> > > 
-> > > Our intent is also to be a valuable contributing member to the OpenBMC project.
-> > 
-> > Great! Looking forward to your contributions.
-> > 
-> > > 
-> > > 
-> > > We will be initially developing for the ASPEED Technology Inc. AST2500 
-> > > followed by the AST2600 BMC SoC.
-> > > 
-> > > Do you have any suggestion of available hardware development platforms 
-> > > for the ASPEED AST2500 & AST2600?
-> > 
-> > Unfortunately there isn't anything that is both cheap and easy to acquire that I'm aware of. Hopefully others can chime in if they know things that I don't, but this is an issue that's cropped up in the past and hasn't been resolved.
-> > 
-> > I think the cheapest anyone has found was a system (motherboard, cheap x86-64 CPU and RAM) that was about $800AU, but I'd have to dig out the details on what that was exactly (and it may have been AST2400-based).
-> 
-> Easily affordable is desirable, but easy to acquire is of more 
-> importance presently.
->
+ arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts |  2 +-
+ drivers/soc/aspeed/aspeed-lpc-ctrl.c         | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-Okay. Maybe browse through the list of supported machines then? Unfortunately
-there's no canonical list, it's more a matter of looking through each OEM's meta
-layer at what machines are supported that suit your needs. Currently we support
-various x86-64, ARM and POWER hosts.
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts b/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
+index a2eef507ffbb..635744a76884 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
+@@ -28,7 +28,7 @@
+ 
+ 		flash_memory: region@98000000 {
+ 			no-map;
+-			reg = <0x98000000 0x04000000>; /* 64M */
++			reg = <0x99000000 0x04000000>; /* 64M */
+ 		};
+ 
+ 		coldfire_memory: codefire_memory@9ef00000 {
+diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
+index 12e4421dee37..f4ac14c40518 100644
+--- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
++++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <linux/clk.h>
++#include <linux/log2.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/miscdevice.h>
+ #include <linux/mm.h>
+@@ -241,6 +242,18 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
+ 
+ 		lpc_ctrl->mem_size = resource_size(&resm);
+ 		lpc_ctrl->mem_base = resm.start;
++
++		if (!is_power_of_2(lpc_ctrl->mem_size)) {
++			dev_err(dev, "Reserved memory size must be a power of 2, got %zu\n",
++			       lpc_ctrl->mem_size);
++			return -EINVAL;
++		}
++
++		if (!IS_ALIGNED(lpc_ctrl->mem_base, lpc_ctrl->mem_size)) {
++			dev_err(dev, "Reserved memory must be naturally aligned for size %zu\n",
++			       lpc_ctrl->mem_size);
++			return -EINVAL;
++		}
+ 	}
+ 
+ 	lpc_ctrl->regmap = syscon_node_to_regmap(
+-- 
+2.20.1
 
-Hopefully others have better suggestions though :)
-
-Andrew
