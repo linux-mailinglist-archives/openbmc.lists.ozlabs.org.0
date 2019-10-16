@@ -1,63 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25005D98F4
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 20:16:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7185BD99DE
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 21:19:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tgTS3wwXzDqN5
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 05:15:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46thtL52KFzDqgH
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 06:19:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12b;
- helo=mail-lf1-x12b.google.com; envelope-from=krellan@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="eD5JQNdH"; 
- dkim-atps=neutral
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com
- [IPv6:2a00:1450:4864:20::12b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tgQP42gTzDr4M
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 05:13:16 +1100 (AEDT)
-Received: by mail-lf1-x12b.google.com with SMTP id r2so18243118lfn.8
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 11:13:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=2roevbRBHw54cV32ZGk6LIrhEWvTopW7l5l/WXr3B2U=;
- b=eD5JQNdHoK6C14xO85AvTMmYA+JkJt25nkn06u3h01/tT6RWe5dFSaDMQ+J1NC1V82
- 17eA/zAiDxsgDfzJ5wGf1kQd7P84h+CKmkEARjfSyzfQpSQBq1fOvcqUoqIevXhDsQ1i
- RVZTGs07nDdbjQ+a/IJ2XVyMOhRcRzS1K8juBhCs1GLYBrLQPYzTTsE2eUYBhZ4ObKDy
- qf/amgif6s5Th4pUD4kIqzhk/CY7LCQ0ZfzgAg3Pg+CVrgXZJ/huGdE9Oka+P+O08wqH
- ZRlQmP0pNMpMg5ik9rsppyFDvT03i5il+TqTIxSb4sxDrpjoGv97i1sDSpQDpWs5kITb
- vcoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=2roevbRBHw54cV32ZGk6LIrhEWvTopW7l5l/WXr3B2U=;
- b=XYtXdJMJFu82tf3jpKFzwbBkGP6GjkRiovgrDoD1twoioiMcthJYRYvTXngk3+i3aE
- it1SsN803AVwp8p/cbMzrHcv1CtTkHqiDh/gSrdBk9PYucLdkbwZG6rV4Y+RPi/IN0UG
- TdFe0L2skz9FDkfx4L3QV/Ce1i6KVKxgCt3lzI2gtEyRR0T+2vNvJIDmdBpzg6hcFzyZ
- E+vYZQDE6ikJN/5+D3KK8+MkA8sCPrOdKkCLG71Imbcqki3Xk7rwbPCCcskjtri/07Eo
- yEyKAGQXrBWm4ptreGyZR4Dg4wjkmigLy7emutX4gqUESrsprhTjn4J1nCXDjRjZvWgT
- g3Ug==
-X-Gm-Message-State: APjAAAXyAjT614FqFQ0XlBHRw3+fW75HAheOFj1QTZcFbKzyreQ/ruuU
- /+U+MI5GL+2A0939vLO7OQeJY6ORW4mwL83/48ocUm8l/Ig=
-X-Google-Smtp-Source: APXvYqy47MfMnU2taokU3PTxsEtJjCIlwDJjiwkwD46p0GdGLqkFxMyT+JK4k1tMRHjugpiMSqJefnVk75z2L+VuSGg=
-X-Received: by 2002:a19:f013:: with SMTP id p19mr4075942lfc.98.1571249591918; 
- Wed, 16 Oct 2019 11:13:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46thsX6pdnzDqc3
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 06:18:23 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9GIq8Ol086886; Wed, 16 Oct 2019 15:10:12 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vp75wv7d7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2019 15:10:12 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9GJ0Z93026178;
+ Wed, 16 Oct 2019 19:10:11 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02dal.us.ibm.com with ESMTP id 2vk6f7rsc5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 16 Oct 2019 19:10:11 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9GJAAX745679002
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 16 Oct 2019 19:10:10 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61F4012405B;
+ Wed, 16 Oct 2019 19:10:10 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A011312405A;
+ Wed, 16 Oct 2019 19:10:09 +0000 (GMT)
+Received: from [9.211.157.93] (unknown [9.211.157.93])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 16 Oct 2019 19:10:09 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.3 2/3] ARM: dts: aspeed: tacoma: Use 64MB for
+ firmware memory
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
+References: <20191016121934.28481-1-joel@jms.id.au>
+ <20191016121934.28481-3-joel@jms.id.au>
+From: Eddie James <eajames@linux.ibm.com>
+Message-ID: <b38fe75e-c86d-d28b-2097-2917d9d36647@linux.ibm.com>
+Date: Wed, 16 Oct 2019 14:10:08 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-From: Josh Lehan <krellan@google.com>
-Date: Wed, 16 Oct 2019 11:13:01 -0700
-Message-ID: <CANPkJS9muk9j6whELvOzsqx6-fko8LgpZCmx=aCwqf7Y4g1xWQ@mail.gmail.com>
-Subject: Question about Gerrit push certificate indication
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000c808ad05950b0ded"
+In-Reply-To: <20191016121934.28481-3-joel@jms.id.au>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-10-16_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910160154
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,52 +86,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c808ad05950b0ded
-Content-Type: text/plain; charset="UTF-8"
 
-Hi there! I have a question about Gerrit for OpenBMC.
+On 10/16/19 7:19 AM, Joel Stanley wrote:
+> Mbox's file mode needs a window the same size as the image being loaded.
+>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>   arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+> index c073ad8d071f..f0d2f741800a 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+> @@ -27,7 +27,7 @@
+>   
+>   		flash_memory: region@ba000000 {
+>   			no-map;
+> -			reg = <0xba000000 0x2000000>; /* 32M */
+> +			reg = <0xba000000 0x4000000>; /* 64M */
 
-In Gerrit, when I look at a change that I'm the owner of, under the "Owner"
-line of the left sidebar, there's now an orange question mark circle. The
-mouseover text reads "This patch set was created without a push
-certificate".
 
-This started to happen over the last few days. Is this of any concern, or
-not? Nothing is wrong with any change I've seen so far, everything still
-seems to be working for me.
+Milton pointed out that this should be aligned to 64M, so 0xb8000000.
 
-Thanks!
-Josh
+Thanks,
 
-Josh Lehan | Software Engineer | krellan@google.com | +1 650-733-8941
+Eddie
 
---000000000000c808ad05950b0ded
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi there! I have a question about Gerrit for OpenBMC.<div>=
-<br></div><div><div><div>In Gerrit, when I look at a change that I&#39;m th=
-e owner of, under the &quot;Owner&quot; line of the left sidebar, there&#39=
-;s now an orange question mark circle. The mouseover text reads &quot;This =
-patch set was created without a push certificate&quot;.</div><div><br></div=
->This started to happen over the last few days. Is this of any concern, or =
-not? Nothing is wrong with any change I&#39;ve seen so far, everything stil=
-l seems to be working for me.</div><div><br></div><div>Thanks!</div><div>Jo=
-sh</div><div><br></div><div><div dir=3D"ltr" class=3D"gmail_signature" data=
--smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr"><div =
-style=3D"line-height:1.5em;padding-top:10px;margin-top:10px;color:rgb(85,85=
-,85);font-family:sans-serif"><span style=3D"border-width:2px 0px 0px;border=
--style:solid;border-color:rgb(213,15,37);padding-top:2px;margin-top:2px">Jo=
-sh Lehan=C2=A0|</span><span style=3D"border-width:2px 0px 0px;border-style:=
-solid;border-color:rgb(51,105,232);padding-top:2px;margin-top:2px">=C2=A0So=
-ftware Engineer=C2=A0|</span><span style=3D"border-width:2px 0px 0px;border=
--style:solid;border-color:rgb(0,153,57);padding-top:2px;margin-top:2px">=C2=
-=A0<a href=3D"mailto:krellan@google.com" target=3D"_blank">krellan@google.c=
-om</a>=C2=A0|</span><span style=3D"border-width:2px 0px 0px;border-style:so=
-lid;border-color:rgb(238,178,17);padding-top:2px;margin-top:2px">=C2=A0+1 6=
-50-733-8941</span></div><br></div></div></div></div></div></div></div>
-
---000000000000c808ad05950b0ded--
+>   		};
+>   	};
+>   
