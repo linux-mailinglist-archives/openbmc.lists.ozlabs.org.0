@@ -1,79 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BE08D94ED
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 17:06:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE742D95C8
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 17:37:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tbGJ62lfzDqDX
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 02:06:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tbyf59PBzDqkJ
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 02:37:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::333;
- helo=mail-ot1-x333.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="bh29DViq"; 
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.b="Ii7Wlr1o"; 
  dkim-atps=neutral
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
- [IPv6:2607:f8b0:4864:20::333])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tbFC6yHkzDqXY
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 02:05:03 +1100 (AEDT)
-Received: by mail-ot1-x333.google.com with SMTP id 89so20410400oth.13
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 08:05:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=ssrBqUt6N+x/1FuHdnl5HbTtUi2FBgvi3CVqeVsvHQI=;
- b=bh29DViq4cEH4dWZyEAMstyTt71aPo1tYhkH0qb52MMiae2Foo3YaV+6nun8pyI8d3
- QfUvc73rUGh6URMtUMYN4la1C9MGflC5LVsZPR22VtA3J81a/yQfvAju5sE3QcwX+FLl
- EpsVr1NOvyCDG52ZLBsdFfWHhf19UNWqtyVGEYuxLCfQ3Pz3Io6cB8kS5zsu81yI/ok1
- MlH2FHPrO+RDAjEte/PkUYmQrt6LWK7fvbc4mhmgovM3K+psjgM0n1DBkC8oXlDb4/Al
- ooL+rNqHufoy7NowNFS56G3rTdZpLu7bKP4vthg11ysaYvUxK1nebFUPKWohxYFCNVv9
- OblA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=ssrBqUt6N+x/1FuHdnl5HbTtUi2FBgvi3CVqeVsvHQI=;
- b=Yfc2MY+SredkPMNPxa+2fzaLP7NDlKnqnPZZ2dDYb4j3Lomn+84x1ys2paNr3WhXXc
- jDrzDCAwXxggQsSPeCsmZ0aJix3disWOVtZz9XDv1pWHDHLjz3TRvQUxL2KtNe4asEEA
- LKZsJqbMxqyklkM5jV3Y5MkBvffkZTsDFniM0/8O5YAtjxh717BfqJMUVhbjg5DxZd1O
- JxhuHNMMv1g6ziiiI0Ajphy+uH904TnixTLpr2v5u8I9QBwx442mfh9leRh6ZLk7nTGv
- U8brq9TevDdl4xW3dlGmgZeG2mUIrqLK1MY9P8BHIBNlJsiti695vantfOpUXsEGJxWT
- gVIQ==
-X-Gm-Message-State: APjAAAWxaoy98ibozQLOROFPmhCbWpd7knb8TtN+xuYHAtIWhUsHWhCk
- 4UvzcUaa64Y9To87O3yHrHwk51XR
-X-Google-Smtp-Source: APXvYqzqRHd0yG8xO/Gvm/Hw6yFUYIU3xFVkbs9iBA/rl/5mD2St2/nzQRt50N/+/Sygjf03dIESYA==
-X-Received: by 2002:a9d:2a8:: with SMTP id 37mr32913470otl.163.1571238299509; 
- Wed, 16 Oct 2019 08:04:59 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id k19sm6865113oiw.31.2019.10.16.08.04.58
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 16 Oct 2019 08:04:58 -0700 (PDT)
-Subject: Re: Recommendations for development platforms for the ASPEED AST2500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tbxg70nxzDqjb
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 02:36:36 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1571240193;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=J/NKN+dyCTUcKIQLwWUTgZRepRMKDCvKdvVYgEQGsD0=;
+ b=Ii7Wlr1oGl6D0O993IFnMU47ogHlXLzzwKPIuOxuWiOCYSiJURDF55ZYqwXpsBihc9t/hS
+ IXW3mw/tbHVMgpB77euEIIS99GrPwSxl7DCR9sZ5bOXA1JIRGbaMbTY7a1znMW9v29KALU
+ fPyldDGI89tGFIgi9DbQVf1uEMn53O0=
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-196-6ExEn7KeME6K_l-8Kx1uOQ-1; Wed, 16 Oct 2019 11:36:31 -0400
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Wed, 16 Oct 2019 08:36:29 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Wed, 16 Oct 2019 08:36:23 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: "andrew@aj.id.au" <andrew@aj.id.au>
+Subject: RE: Recommendations for development platforms for the ASPEED AST2500
  & AST2600?
-To: openbmc@lists.ozlabs.org
-References: <33bfd87f4c3345d28be4e8c1d64f1437@SCL-EXCHMB-13.phoenix.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <020c6396-e311-8db1-f497-cfc209386010@gmail.com>
-Date: Wed, 16 Oct 2019 10:04:57 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <33bfd87f4c3345d28be4e8c1d64f1437@SCL-EXCHMB-13.phoenix.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Thread-Topic: RE: Recommendations for development platforms for the ASPEED
+ AST2500 & AST2600?
+Thread-Index: AdWENzDUn0M5gBJVT3uoYEw0J2tLWg==
+Date: Wed, 16 Oct 2019 15:36:23 +0000
+Message-ID: <b4ad804a513048e4bc8df7ff9cb8598b@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.122.68.170]
+MIME-Version: 1.0
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-MC-Unique: 6ExEn7KeME6K_l-8Kx1uOQ-1
+X-Mimecast-Spam-Score: 1
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,54 +75,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/15/19 1:44 PM, Bruce Mitchell wrote:
-> Hello,
-> 
-> I am Bruce Mitchell and I work for Phoenix Technologies Ltd. as a BMC 
-> firmware Engineer.
-> 
-> Phoenix Technologies Ltd. is developing an OpenBMC 
-> (https://www.openbmc.org/ , not the Facebook flavor) product.
-> 
-> Our intent is also to be a valuable contributing member to the OpenBMC 
-> project.
+Hello Andrew,
 
-Welcome Bruce! Please make sure you get added to your company CCLA, and 
-shoot me a new version so I can keep it current.
+> Hi Bruce
+>=20
+> On Wed, 16 Oct 2019, at 05:14, Bruce Mitchell wrote:
+> > =20
+> > Hello,
+> >=20
+> >=20
+> > I am Bruce Mitchell and I work for Phoenix Technologies Ltd. as a BMC=
+=20
+> > firmware Engineer.
+> >=20
+> > Phoenix Technologies Ltd. is developing an OpenBMC=20
+> > (https://www.openbmc.org/ , not the Facebook flavor) product.
+>=20
+> FYI, the projects have united (and the result lives under the Linux Found=
+ation).
 
-Thanks!
+It seems the people at American Portwell Technology do not actually know th=
+at
+When I enquired about their Neptune Alpha OpenBMC development kit
+https://portwell.com/solutions/openBMC.php
 
-Kurt Taylor (krtaylor)
+> >=20
+> > Our intent is also to be a valuable contributing member to the OpenBMC =
+project.
+>=20
+> Great! Looking forward to your contributions.
+>=20
+> >=20
+> >=20
+> > We will be initially developing for the ASPEED Technology Inc. AST2500=
+=20
+> > followed by the AST2600 BMC SoC.
+> >=20
+> > Do you have any suggestion of available hardware development platforms=
+=20
+> > for the ASPEED AST2500 & AST2600?
+>=20
+> Unfortunately there isn't anything that is both cheap and easy to acquire=
+ that I'm aware of. Hopefully others can chime in if they know things that =
+I don't, but this is an issue that's cropped up in the past and hasn't been=
+ resolved.
+>=20
+> I think the cheapest anyone has found was a system (motherboard, cheap x8=
+6-64 CPU and RAM) that was about $800AU, but I'd have to dig out the detail=
+s on what that was exactly (and it may have been AST2400-based).
 
-> We will be initially developing for the ASPEED Technology Inc. AST2500 
-> followed by the AST2600 BMC SoC.
-> 
-> Do you have any suggestion of available hardware development platforms 
-> for the ASPEED AST2500 & AST2600?
-> 
-> Thank you very much for your time and support.
-> 
-> --
-> 
-> Bruce Mitchell
-> 
-> BMC Engineer
-> 
-> 503-567-3032 direct
-> 
-> bruce_mitchell@phoenix.com
-> 
-> Phoenix Technologies Ltd.
-> 
-> 15266 NW Greenbrier Pkwy
-> 
-> Beaverton, OR 97006 USA
-> 
-> 503-567-3000 main
-> 
-> www.phoenix.com
-> 
+Easily affordable is desirable, but easy to acquire is of more importance p=
+resently.
+
+>=20
+> Sorry I don't have better answers.
+>=20
+> Andrew
+
+Thank you.
+
+--
+Bruce
 
