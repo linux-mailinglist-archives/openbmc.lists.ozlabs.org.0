@@ -2,71 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04B63D85D1
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:17:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB28D8608
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:49:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tGCw2BkGzDqk5
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 13:17:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tGwk6Qp8zDqq5
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 13:49:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::d44; helo=mail-io1-xd44.google.com;
- envelope-from=mine260309@gmail.com; receiver=<UNKNOWN>)
+ (client-ip=2607:f8b0:4864:20::441; helo=mail-pf1-x441.google.com;
+ envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ohagbwYS"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="H4fxg7dX"; 
  dkim-atps=neutral
-Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com
- [IPv6:2607:f8b0:4864:20::d44])
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
+ [IPv6:2607:f8b0:4864:20::441])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tGCC60NlzDqSg
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 13:17:09 +1100 (AEDT)
-Received: by mail-io1-xd44.google.com with SMTP id q1so51727656ion.1
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 19:17:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tGw34BgPzDqj4
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 13:49:06 +1100 (AEDT)
+Received: by mail-pf1-x441.google.com with SMTP id v4so13723532pff.6
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 19:49:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=oo6qZMYf/l0Z8gsqpkMosyYoBGTMFMBcG7wRuSa4ic4=;
- b=ohagbwYSEV0/pk4Fb1Og4+T/SDXT1n3uvFJV028hMzh8+da71AZfQQ71RpCHS6yxzu
- okU7U2A+djo1TLOauypVaX0tXuyBaVJeFr8sTS2DuegT+87o04ZNPpnB9wU7CUQKPUrG
- BKphg3G3xV1ARcn9qN9vetHn9VF0OamV8Wn62aN2xX4qz7ZyMxwv+eEn/5/e9yh3JTBB
- d2/nnwUagilElUnxt46364IAMTM6uhu2vuKVOZxvvlH/1znE+sbic+5yQjtjnLapfy33
- lCUTd9WLEI5m9lZnR26E6TNrxLS52WuvwuzrUwAG3RKzZF9Y56147ltmo649T23K866k
- MbGA==
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=2mp6IUCpj4WZi9c1IjrpNX0bUPO+hffzjEfaGdWNQC0=;
+ b=H4fxg7dX2DT1GhUtlh3dbpzQfYVphwTIkXii/p/B4Dy8pezuBZoIG3deP2B8WwXG58
+ yQ1noETSAQko3a9jFx7+95zRe88KUXKcdqSaOXQ+g1xnLxamyMN8U3OTfCejmAsoh1w6
+ TtoeWMNlES6/BXr57W/wGvo4BSNlTamhtwiNvvMyq7Q1WQ+7I/5RGEybisg/XkkYe1fp
+ WgYLhIYHlTiyoArlBgjPzEkLSGPG5eb2qRCVjn0hMnDEJGFZPgz97QA3Xje0wD6onZti
+ Um+KOvKsw/oQv4iMCLMp4A9LCs3cN12dGjVf+m+lyC58Z/ee8rKqq5er1AeMSn9Sk+GN
+ qR7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=oo6qZMYf/l0Z8gsqpkMosyYoBGTMFMBcG7wRuSa4ic4=;
- b=TmAV9W/+K6xRWHIznhxOLkmEeGLZKgvIYIE3JdxzcoVLijEwzqE4U/+5IUz+4ECUl9
- ENSySesZ/gF8DY+d84UWIC7a5h1oEBYExgFEwJBIOCSmuTlHFyr4tJdvPnpWvXQqbMxG
- l1cpYpw4dwbWzgI5AbzyYNxQHAKQvfXONk6hl8RlKpr3a6Y/dhxdTLVKe1kiJsUz3KDl
- 9udRzYHGToTG8GXR1QPOWZR5vguizo9+jm8ptLrh04Fh/oRiiw0e7qf2C2DgiRmUkevM
- 96+Q7ExVaeuBz/XDzvSMAWLK4Zii5g/g3JD+7XZv2C5sNHjiRveHq6rM90zn1CbiasYu
- r2Lw==
-X-Gm-Message-State: APjAAAWNyfaI2mioQA0PiHXS98XvAXbamYKvuqN8M11G8jW+H86JAVX0
- XQF2n77sP8gAYlzhNhLSb02Zf5B3xa2uQYQCjiM=
-X-Google-Smtp-Source: APXvYqzgbMN20lt3Yem/9n9k8YpxElgwt2SBf7Lw1GAHCitUR4KMeN68d1tGQTS2A8Ho0aPUgvbvfayhv3ASSyKjSw0=
-X-Received: by 2002:a05:6638:60f:: with SMTP id
- g15mr11224819jar.21.1571192225949; 
- Tue, 15 Oct 2019 19:17:05 -0700 (PDT)
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=2mp6IUCpj4WZi9c1IjrpNX0bUPO+hffzjEfaGdWNQC0=;
+ b=HSk7Oi70tMP9vK5TgXbF3scIqbHALBmCjthq5VxMF94s4geGbUhZuhk/f8YG9dXJzW
+ 0+dhc+ttLJrvfScErZcFi8K+ijOGzpRVwG+9XWn1mce1EFrWBJfqOO+F3frcybNYBm4n
+ LkT7VB81ApV0Jm0KSMEcmDGCvGf+aatn6BQBPZ++G8Gz7MKSXZ4wXLGINykzc0ucuFGf
+ ayPBh1amOgbCPFoe7Gn3PQYtbWmaLepKyMA7/1p4b4kolSlOxn+9kaVYd5lIXwkan/1X
+ boQvpAhoH/GVbxk0k3w/Ko7sZYcwQm/hm26X3mERF+FKUyTCPw5wkm631MN2FlahXKAw
+ ZPCw==
+X-Gm-Message-State: APjAAAXosfSUCff76tPhhY6DUVYDRdNnyQ0rDpqKMnwObqLhVh6xu1YQ
+ 4hVXkBGavSzxdS3HfIkPLwgdICGy4t4=
+X-Google-Smtp-Source: APXvYqyBwZrIBMlO9jQLfd0Qsj/n4sl4Wk2BfRa2R7VRphn9y9gB12wG5OWcaPPhveT4ypoyOZPJ3Q==
+X-Received: by 2002:a62:6411:: with SMTP id y17mr42405184pfb.24.1571194142964; 
+ Tue, 15 Oct 2019 19:49:02 -0700 (PDT)
+Received: from voyager.ibm.com ([36.255.48.244])
+ by smtp.gmail.com with ESMTPSA id 30sm615563pjk.25.2019.10.15.19.49.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2019 19:49:02 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.3] ARM: dts: aspeed-g6: Fix i2c clock source
+Date: Wed, 16 Oct 2019 13:18:57 +1030
+Message-Id: <20191016024857.16251-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-References: <CALzeG+8HyS2xuBAoe4LN0XCC1+eW7D8uQnG9MKK=KGFN7jodZw@mail.gmail.com>
- <CAO=notynD0EtN77y+UDqETUCo1BGixKFhaJJ3KfnQjVsv2=wTA@mail.gmail.com>
- <818E67A7-4D22-4E13-AD37-99E846E7E17B@fuzziesquirrel.com>
- <CAO=notwwhSe-KKS5=ktJ11CP6ZkaF9fc-4KKpMac0ettqUpftw@mail.gmail.com>
-In-Reply-To: <CAO=notwwhSe-KKS5=ktJ11CP6ZkaF9fc-4KKpMac0ettqUpftw@mail.gmail.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Wed, 16 Oct 2019 10:16:54 +0800
-Message-ID: <CAARXrtmW8xs=tfwRC1utiFZdCaQjs2HmT62=vq1mpa+52L=png@mail.gmail.com>
-Subject: Re: The type of sensor value in redfish should be double or int64?
-To: Patrick Venture <venture@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,67 +76,172 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Tanous, Ed" <ed.tanous@intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Carol Wang <karo33bug@gmail.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>, gmills@linux.vnet.ibm.com
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 16, 2019 at 8:45 AM Patrick Venture <venture@google.com> wrote:
-> > >
-> > > This change from int64 to double is big enough though that many
-> > > configuration files would need to be adjusted, which is non-trivial.
-> > > I argue however that having code that doesn't have a common interface
-> > > or interfaces for sensors is less than ideal.  Having multiple option=
-s
-> > > for talking to sensors is fine, but in my opinion this is only true i=
-f
-> > > they implement different interfaces, or the same interface.  In this
-> > > case, we have dbus-sensors and phosphor-hwmon which both implement th=
-e
-> > > same interface, but differently: int64 vs double.
-> >
-> > I agree.  This whole situation is=E2=80=A6unfortunate.  I wonder if the=
-re is a
-> > lesson to be learned here?
->
-> There may very well be a lesson here.  In this case, The push to
-> double was pushed back, and then we ended up with software that
-> followed one version of the interface, and other bits that followed
-> another version.  Most of the software is compatible with both types
-> here, but having two types does feel like it's defeating the
-> well-defined dbus interfaces.
->
+The upstream clock for the I2C buses is APB2.
 
-The phosphor-dbus-interface xyz.openbmc_project.Sensor.Value interface
-specifically defines the `Value` property as int64, so it looks like
-dbus-sensors is not following this interface.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/aspeed-g6.dtsi | 34 ++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-> >
-> > > I think using doubles makes sense at the dbus level because generally
-> > > one wants that version of the value.  Therefore you end up with code
-> > > in each daemon that reads the sensor value and the scale so that it
-> > > can perform the same operation that another daemon is also going to
-> > > perform, etc.  Instead of just doing it once.
-> > >
-> > > I'll climb off my debate box now and climb onto my voting box and say=
-,
-> > > I'd like to make phosphor-hwmon report the value as double
-> >
-> > Why?  Do you have a desire for this specifically or is it just to solve
-> > Carol=E2=80=99s issue?
->
-> I argue that maintaining the sensor value in its final form saves some
-> operations and I'd like to normalize to that.
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 8ac435b3dbde..16dec4e08d8f 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -530,13 +530,13 @@
+ #include "aspeed-g6-pinctrl.dtsi"
+ 
+ &i2c {
+-	i2c0: i2c-bus@40 {
++	i2c0: i2c-bus@80 {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		#interrupt-cells = <1>;
+ 		reg = <0x80 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -551,7 +551,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x100 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -566,7 +566,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x180 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -581,7 +581,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x200 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -596,7 +596,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x280 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -611,7 +611,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x300 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -626,7 +626,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x380 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -641,7 +641,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x400 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -656,7 +656,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x480 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -671,7 +671,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x500 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -686,7 +686,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x580 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -701,7 +701,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x600 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -716,7 +716,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x680 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -731,7 +731,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x700 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -746,7 +746,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x780 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+@@ -761,7 +761,7 @@
+ 		#interrupt-cells = <1>;
+ 		reg = <0x800 0x80>;
+ 		compatible = "aspeed,ast2600-i2c-bus";
+-		clocks = <&syscon ASPEED_CLK_APB1>;
++		clocks = <&syscon ASPEED_CLK_APB2>;
+ 		resets = <&syscon ASPEED_RESET_I2C>;
+ 		interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
+ 		bus-frequency = <100000>;
+-- 
+2.23.0
 
-The interface defines the Unit and Scale as well, so the application
-code could provide a calculated value and unit to end-user, which is
-easier to understand.
-
-Going back to Carol's question, what she really needs to do is to
-PATCH PowerCap, instead of PATCH a sensor value.
-So we are OK that PATCH sensor does not work for phosphor-hwmon sensors.
-Carol should be able to write some specific code in bmcweb to
-introspect the PowerCap's DBus object  and handle both double and
-int_64 case.
