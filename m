@@ -1,83 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A2DDD8625
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:58:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DC64D86CC
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 05:35:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tH750Zn9zDqjH
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 13:58:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tHxf2L4TzDqgL
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 14:35:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (mailfrom) smtp.mailfrom=aj.id.au
- (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com;
- envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SC46MleG"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="sbO/VYYw"; dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tH6F1dzGzDqWW
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 13:57:56 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id DB3D821C47;
- Tue, 15 Oct 2019 22:57:52 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 15 Oct 2019 22:57:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=8Cufq9x5ok6+diW25TftF9G1dfSu1Ps
- 3bEsgoSmK9nk=; b=SC46MleG8VxddrQbYQpm2qalO2hb4iLwHVd0IRRhnAQHv6D
- N8g2CtPnaOE/P7X2xVM2e8QKb1ThL7boM1ySSb9YCVYeEXsR3OCnMC20/yYylirN
- t/AveUvBgJKYx0+c5vKeER8YXU89WJxIaCVBmH25OA8WBZuEI+Ivv7tKZnUsDq8+
- WOrkBBR1fYwnQkwO6mnZ3x8nRpYtwjEMY1Ks0exPjlXTPU/aMucVRdAj1FOfoN7N
- vO5igdT2XIzxECmZHxjberbvps0smXgjt9vU5OcWAwTVYqwmG9Vi3fNUd2eLMaTd
- fEyvs4q0gGSdBD/UZra6P2ObXfW0qdslGzeOefw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=8Cufq9
- x5ok6+diW25TftF9G1dfSu1Ps3bEsgoSmK9nk=; b=sbO/VYYw5EA6Exysp/VSiZ
- THAustNfY2X4Aw5BrexdbwzWQn/UroCQ/cs70QdqINfNywxpYyov1RqUaotwNwfw
- gPgKq/UGcGb6FbXRvDppOmRWzpBvPqI4CyytCoOnexmDTZzFsLL/oTMmnH9LbsSb
- kE24erjhcTp6R5A2Z7mCFYTlYF2tqY4ZCbimJTJPDQRcPXv6CjPkLDABludsnrzN
- 5Cphw6j8OoLvMW0xwLgZm1kxAR1et6DTikRHDWx2xpqHPIsC3tGZKHlT31+Sy0lS
- V6ABgd/MIZ5JTUYK3OOwRXSmhigcMH6T98x/WD9FqXeNGa6NUsGOI0ML8n9IwEfQ
- ==
-X-ME-Sender: <xms:L4emXe3y_ZMrJokkF_mGPIvYC323pf9FfTuRhY-nfF428BZGenIQhQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeggdeigecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:L4emXSf09wX2XvOs6DD_9JDod1tm16ZQeXOKeeA2wJcWVlm3aa8JQA>
- <xmx:L4emXQK-mNGIlfqvjeBbXgP6oHKljxxeJlJpnmCa7ACXihPYpkEaVg>
- <xmx:L4emXYFpjWJq05qQPcydRA_otfJOMhR2Irm_NaaXHI2R7q_tvw7qXg>
- <xmx:MIemXXwWJYk0f92t6_RSTy5n5dMNXF03F0NfxCR8QP3gf7mwdGkmsQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 92666E00A5; Tue, 15 Oct 2019 22:57:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
-Mime-Version: 1.0
-Message-Id: <55133d9f-7742-4802-8de5-287cd2f11d64@www.fastmail.com>
-In-Reply-To: <20191016025121.16564-3-joel@jms.id.au>
-References: <20191016025121.16564-1-joel@jms.id.au>
- <20191016025121.16564-3-joel@jms.id.au>
-Date: Wed, 16 Oct 2019 13:28:48 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_v2_2/2]_fsi:_aspeed:_Add_trace_when_e?=
- =?UTF-8?Q?rror_occurs?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tHwj24rqzDqW0
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 14:34:43 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 15 Oct 2019 20:34:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,302,1566889200"; d="scan'208";a="186028432"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.239.197.24])
+ by orsmga007.jf.intel.com with ESMTP; 15 Oct 2019 20:34:39 -0700
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: "'Vijay Khemka'" <vijaykhemka@fb.com>, "'Andrew Jeffery'" <andrew@aj.id.au>
+References: <81DE4370-D135-48EE-A8FC-B079C4CE3648@fb.com>
+ <06d793dc-a0f0-4917-a0c7-135767f6c19b@www.fastmail.com>
+ <11B7B23D-B689-4B0B-A177-E6E4891C923A@fb.com>
+In-Reply-To: <11B7B23D-B689-4B0B-A177-E6E4891C923A@fb.com>
+Subject: RE: speed-bmc-misc driver
+Date: Wed, 16 Oct 2019 11:34:38 +0800
+Message-ID: <000001d583d2$a4456600$ecd03200$@linux.intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHbLn/aQ8+vUJFQNzvkjLjSVrJqjQJ7qmruAdOhLeanLs0rQA==
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYTIzYmQyZTItZGQzZC00MTk0LWJjYjktZmU1ZTA0ZGE3MjI0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiXC9lSXVtR21vbXBzS3NkaWJOXC9ZUkdPZlNoQ3NEdk5ub1FcL2RsYWJwNnFPSzYzMEUzOWZLdWUyMjRuREpxVmw1XC8ifQ==
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: request-justification,no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,15 +62,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
+Cc: 'OpenBMC Maillist' <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Andrew,
+
+Regarding this bmc-misc driver, I noticed the exported sysfs entries are =
+read-write. Is it possible to export the register value as read-only? =
+Sometimes we only want to display the registers, but users cannot change =
+them.
+
+Thanks,
+Yong
+
+-----Original Message-----
+From: openbmc =
+<openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org> On Behalf =
+Of Vijay Khemka
+Sent: Thursday, October 10, 2019 9:17 AM
+To: Andrew Jeffery <andrew@aj.id.au>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Re: speed-bmc-misc driver
+
+Hi Andrew,
+Thanks for detailed explanation.
+
+Regards
+-Vijay
 
 
-On Wed, 16 Oct 2019, at 13:21, Joel Stanley wrote:
-> This prints out three registers in the FSI master when an error occurs.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+=EF=BB=BFOn 10/9/19, 3:46 PM, "Andrew Jeffery" <andrew@aj.id.au> wrote:
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+    Hi Vijay,
+   =20
+    On Thu, 10 Oct 2019, at 04:17, Vijay Khemka wrote:
+    > =20
+    > Hi Andrew,
+    >=20
+    > I saw this driver in LF aspeed Linux=20
+   =20
+    What do you mean by "LF aspeed Linux"? The only place this driver =
+lives is
+    in the OpenBMC kernel tree (openbmc/linux on github).
+   =20
+    > and was wondering how to use. Can=20
+    > you please suggest some usage example like device tree entry as =
+well as=20
+    > sysfs interface.
+   =20
+    Honestly, I wouldn't recommend using (yet). It can't be upstreamed =
+in its
+    current form (I've tried), and so using it as is comes with =
+userspace-breaking
+    changes in the future. I reserve the right to break your machines if =
+you do
+    make use of it when I get the time to rework the patches.
+   =20
+    Having said that, its purpose is to expose arbitrary fields in =
+arbitrary registers
+    on the BMC to userspace via sysfs. This is useful when the field's =
+value is
+    entirely determined by userspace policy and there's no need for =
+additional
+    kernel infrastructure around the configuration.
+   =20
+    Originally this was intended to expose to userspace the bits that =
+control the
+    state of the ASPEED hardware backdoors, but we changed tack on the
+    solution to CVE-2019-6260 before the bmc-misc idea got very far.
+   =20
+    However you can find some slightly abusive uses if you search the =
+dtsis:
+   =20
+    =
+https://github.com/openbmc/linux/blob/dev-5.3/arch/arm/boot/dts/aspeed-g5=
+.dtsi#L1682
+   =20
+    In that instance we're exposing the SuperIO scratch registers to =
+userspace
+    using this mechanism. The attributes can be found in sysfs =
+associated with
+    the devicetree node. I did have a hack to add a sysfs class for =
+them, but that
+    was even more controversial than the general concept of the "driver" =
+so
+    you're going to have to cope with changes to the devicetree =
+potentially
+    breaking userspace unless you're willing to rework the patches =
+yourself.
+   =20
+    Hope that helps.
+   =20
+    Andrew
+   =20
+
+
