@@ -1,56 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DC64D86CC
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 05:35:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1D06D8720
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 06:08:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tHxf2L4TzDqgL
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 14:35:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tJh05v16zDqrC
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 15:08:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::643;
+ helo=mail-pl1-x643.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="mcYzSVOP"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
+ [IPv6:2607:f8b0:4864:20::643])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tHwj24rqzDqW0
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 14:34:43 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 15 Oct 2019 20:34:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,302,1566889200"; d="scan'208";a="186028432"
-Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
- ([10.239.197.24])
- by orsmga007.jf.intel.com with ESMTP; 15 Oct 2019 20:34:39 -0700
-From: "Yong Li" <yong.b.li@linux.intel.com>
-To: "'Vijay Khemka'" <vijaykhemka@fb.com>, "'Andrew Jeffery'" <andrew@aj.id.au>
-References: <81DE4370-D135-48EE-A8FC-B079C4CE3648@fb.com>
- <06d793dc-a0f0-4917-a0c7-135767f6c19b@www.fastmail.com>
- <11B7B23D-B689-4B0B-A177-E6E4891C923A@fb.com>
-In-Reply-To: <11B7B23D-B689-4B0B-A177-E6E4891C923A@fb.com>
-Subject: RE: speed-bmc-misc driver
-Date: Wed, 16 Oct 2019 11:34:38 +0800
-Message-ID: <000001d583d2$a4456600$ecd03200$@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tJgT6FyWzDqjl
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 15:08:21 +1100 (AEDT)
+Received: by mail-pl1-x643.google.com with SMTP id s17so10605424plp.6
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 21:08:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=nm8vUzjLxaupH4oHli8aJSJzJ6vT+NZjkCeBBgv0Ieo=;
+ b=mcYzSVOPwobipJs9yZIU6i63TAFudr1FoS3fRbrck1KPns4L+3Uxd58Q3Ohq3whWrX
+ TNWe3duSg8WOWGr/AmQ4EpsPu+BzAF3TXNvZENJLllT6unBgWl9SENjN03GUMDfv3eoV
+ jNpJmSCK+iUfOJ+SD+bqoUX16zGAiKE22dQBCE7ehEPlwXML2e9PfqFoheyNUXe/FF/m
+ oR0YBiB4HBKR+5AVlHYDP/HwB/nBEeU7x6yiYRd1YGjuOa1sVHopYt3yMtc579RPNITc
+ eEqmMYovaQk1JnlNR0zor1+2n9rOYXhr4UqhSPWX+4Ikhd4IaLS34kEW2hf+lRgDApUk
+ DrKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=nm8vUzjLxaupH4oHli8aJSJzJ6vT+NZjkCeBBgv0Ieo=;
+ b=FKVfgMW6gwmWrd4XoVxPLpZ5Okh/gUfptUTVig8moPXSVHWb85RHy5dXzGFARhlOA8
+ bzfnWhY0s9OalqdPVedqFiq7M1YQOBUpbuihW4ikzkUtdXpJjqU5885Cje5HQd9JAfm7
+ BlJZx4sMTsbeIfMEaBHcd4xUJBS3H0hkeulSzRVNsh7NsWOoTdqQOl1xdgZMKqxuy7KE
+ 7xd2s/Jmb4/8OLyB1kYEdHJRzwy2erxiRVwYcZ+fIsTri41UXZFT9kEYQiI65XRzYd8U
+ wGS8gjm4jnDr+HQg83dnpuYxM6nKbhDZuakzmvRdjBpTKzyeRq4Keh8bhk6DajFqeny/
+ ZNdw==
+X-Gm-Message-State: APjAAAW7dHSBubGBCPmVQEYeZsgQpJz5P7zWQ0GOG2eNXM9Z4UihWe51
+ AURku32KDIfuC6zl8wKGHsyC0M7vazs=
+X-Google-Smtp-Source: APXvYqypBkHwtHM9MbVb48QBbA/SYGybECff7bPwArRxbaMcD6hJbqVG81JddkvWHAv2bnPtVWPw1A==
+X-Received: by 2002:a17:902:47:: with SMTP id 65mr38609221pla.81.1571198897849; 
+ Tue, 15 Oct 2019 21:08:17 -0700 (PDT)
+Received: from voyager.ibm.com ([36.255.48.244])
+ by smtp.gmail.com with ESMTPSA id q42sm818267pja.16.2019.10.15.21.08.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 15 Oct 2019 21:08:17 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.3] ARM: dts: aspeed: ast2600evb: Enable i2c buses
+Date: Wed, 16 Oct 2019 14:38:11 +1030
+Message-Id: <20191016040811.6999-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHbLn/aQ8+vUJFQNzvkjLjSVrJqjQJ7qmruAdOhLeanLs0rQA==
-Content-Language: en-us
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYTIzYmQyZTItZGQzZC00MTk0LWJjYjktZmU1ZTA0ZGE3MjI0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiXC9lSXVtR21vbXBzS3NkaWJOXC9ZUkdPZlNoQ3NEdk5ub1FcL2RsYWJwNnFPSzYzMEUzOWZLdWUyMjRuREpxVmw1XC8ifQ==
-dlp-product: dlpe-windows
-dlp-version: 11.0.600.7
-dlp-reaction: request-justification,no-action
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,99 +76,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: 'OpenBMC Maillist' <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+With the exception of i2c10 and i2c11 which conflict with the pins
+for the third and forth MDIO controllers.
 
-Regarding this bmc-misc driver, I noticed the exported sysfs entries are =
-read-write. Is it possible to export the register value as read-only? =
-Sometimes we only want to display the registers, but users cannot change =
-them.
+i2c0 comes has an ADT7490 fan controller/thermal monitor device
+connected. The bus that it appears on depends on jumper settings, so it
+may not be present on all EVBs. It is included to assist testing of I2C.
 
-Thanks,
-Yong
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/aspeed-ast2600-evb.dts | 61 ++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
 
------Original Message-----
-From: openbmc =
-<openbmc-bounces+yong.b.li=3Dlinux.intel.com@lists.ozlabs.org> On Behalf =
-Of Vijay Khemka
-Sent: Thursday, October 10, 2019 9:17 AM
-To: Andrew Jeffery <andrew@aj.id.au>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Re: speed-bmc-misc driver
-
-Hi Andrew,
-Thanks for detailed explanation.
-
-Regards
--Vijay
-
-
-=EF=BB=BFOn 10/9/19, 3:46 PM, "Andrew Jeffery" <andrew@aj.id.au> wrote:
-
-    Hi Vijay,
-   =20
-    On Thu, 10 Oct 2019, at 04:17, Vijay Khemka wrote:
-    > =20
-    > Hi Andrew,
-    >=20
-    > I saw this driver in LF aspeed Linux=20
-   =20
-    What do you mean by "LF aspeed Linux"? The only place this driver =
-lives is
-    in the OpenBMC kernel tree (openbmc/linux on github).
-   =20
-    > and was wondering how to use. Can=20
-    > you please suggest some usage example like device tree entry as =
-well as=20
-    > sysfs interface.
-   =20
-    Honestly, I wouldn't recommend using (yet). It can't be upstreamed =
-in its
-    current form (I've tried), and so using it as is comes with =
-userspace-breaking
-    changes in the future. I reserve the right to break your machines if =
-you do
-    make use of it when I get the time to rework the patches.
-   =20
-    Having said that, its purpose is to expose arbitrary fields in =
-arbitrary registers
-    on the BMC to userspace via sysfs. This is useful when the field's =
-value is
-    entirely determined by userspace policy and there's no need for =
-additional
-    kernel infrastructure around the configuration.
-   =20
-    Originally this was intended to expose to userspace the bits that =
-control the
-    state of the ASPEED hardware backdoors, but we changed tack on the
-    solution to CVE-2019-6260 before the bmc-misc idea got very far.
-   =20
-    However you can find some slightly abusive uses if you search the =
-dtsis:
-   =20
-    =
-https://github.com/openbmc/linux/blob/dev-5.3/arch/arm/boot/dts/aspeed-g5=
-.dtsi#L1682
-   =20
-    In that instance we're exposing the SuperIO scratch registers to =
-userspace
-    using this mechanism. The attributes can be found in sysfs =
-associated with
-    the devicetree node. I did have a hack to add a sysfs class for =
-them, but that
-    was even more controversial than the general concept of the "driver" =
-so
-    you're going to have to cope with changes to the devicetree =
-potentially
-    breaking userspace unless you're willing to rework the patches =
-yourself.
-   =20
-    Hope that helps.
-   =20
-    Andrew
-   =20
-
+diff --git a/arch/arm/boot/dts/aspeed-ast2600-evb.dts b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+index 0392e9162f11..8a511f846b6b 100644
+--- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
++++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+@@ -151,3 +151,64 @@
+ 		spi-max-frequency = <100000000>;
+ 	};
+ };
++
++&i2c0 {
++	status = "okay";
++
++	temp@2e {
++		compatible = "adi,adt7490";
++		reg = <0x2e>;
++	};
++};
++
++&i2c1 {
++	status = "okay";
++};
++
++&i2c2 {
++	status = "okay";
++};
++
++&i2c3 {
++	status = "okay";
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++};
++
++&i2c8 {
++	status = "okay";
++};
++
++&i2c9 {
++	status = "okay";
++};
++
++&i2c12 {
++	status = "okay";
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&i2c14 {
++	status = "okay";
++};
++
++&i2c15 {
++	status = "okay";
++};
+-- 
+2.23.0
 
