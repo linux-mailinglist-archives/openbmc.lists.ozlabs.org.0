@@ -2,76 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28210DA215
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 01:24:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 037C8DA21C
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 01:25:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tpJx18kYzDqC0
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 10:24:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tpM36yM5zDqPn
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 10:25:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="B4c6kNPW"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="wz8m9KEn"; dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tpJG1551zDr6P
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 10:23:25 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9GNCEXg009541
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 19:23:22 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.90])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vp9r7dbd5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 19:23:22 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Wed, 16 Oct 2019 23:23:21 -0000
-Received: from us1a3-smtp04.a3.dal06.isc4sb.com (10.106.154.237)
- by smtp.notes.na.collabserv.com (10.106.227.141) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 16 Oct 2019 23:23:15 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp04.a3.dal06.isc4sb.com
- with ESMTP id 2019101623231565-1105948 ;
- Wed, 16 Oct 2019 23:23:15 +0000 
-In-Reply-To: <20191016230610.29462-1-andrew@aj.id.au>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Date: Wed, 16 Oct 2019 23:23:14 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <20191016230610.29462-1-andrew@aj.id.au>
-X-Mailer: IBM iNotes ($HaikuForm 1054) | IBM Domino Build
- SCN1812108_20180501T0841_FP59 September 23, 2019 at 18:08
-X-LLNOutbound: False
-X-Disclaimed: 55355
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 19101623-3649-0000-0000-000000F7CD17
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.425523; ST=0; TS=0; UL=0; ISC=; MB=0.007258
-X-IBM-SpamModules-Versions: BY=3.00011955; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01276454; UDB=6.00676107; IPR=6.01058581; 
- MB=3.00029128; MTD=3.00000008; XFM=3.00000015; UTC=2019-10-16 23:23:19
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-10-16 21:10:52 - 6.00010534
-x-cbparentid: 19101623-3650-0000-0000-0000017D0DEF
-Message-Id: <OF89958F58.DD5DED38-ON00258495.00807651-00258495.0080789F@notes.na.collabserv.com>
-Subject: Re: [PATCH linux dev-5.3] soc: aspeed: Fail probe of lpc-ctrl if
- reserved memory is not aligned
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-16_08:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tpLD1WjbzDqC0
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 10:25:08 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 5213D12F0;
+ Wed, 16 Oct 2019 19:25:05 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 16 Oct 2019 19:25:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=LFBo2zo7ucpEAZ5mYd1NJStpAjTzuhZ
+ prmnvtb7UvW4=; b=B4c6kNPW4hRWt/+usVBGEXxllUQ0Ex2OVUqErNu+HdlwZ81
+ OGQddtpL+AF8i1oaGCH6RCbd1s/IqGEDRZLKQRP0gu6V9iU/Odr7QUhfp6z2J6ag
+ c2k2V21sR/YLXbC/320Dbuer/X8v0HfUxfuMDE0wNvOHrIWH5BFtkaPMsf2ZGqRI
+ 7BfuFGWk4E+PII0JNfQ4cuXwhvq4Y3aO6gjol4omVNzAtj5MdMXN1qlMj70kmB9M
+ nVz2jkppGKsHhJ+ExWAFFVDkOCUwpeUP7x+KqSnCXNeHV7x5KHgkYknhSIjjdXLB
+ 9RCnfy0rvJmw+my7s1ZphXtleQ1iUA4SUchqvow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=LFBo2z
+ o7ucpEAZ5mYd1NJStpAjTzuhZprmnvtb7UvW4=; b=wz8m9KEnZ0LTWNG+N5f9/7
+ gh6vJdvwixRM2P+rirDueLZIqxjtL4RHpU0rr/XFR+RBMH6CilzaRhbnc5d6xf1s
+ hxMkPD2JGKTdo29FYJbzavOr54g7VGNpVTIbmGYeMp3wykTAT+5EskjK2dogSNPl
+ W6wPatHtZuyt5huEL7pnkIsz8D34bD4CZgy7fiYqB4uIjqM3+txb9VhkW2sgNluY
+ QZHj8YxxCrNlYJ6HiwejrlZxUtqI25JagKEEtrL8mDVLY0psT8PJ7JCfjuymiGSp
+ W1oDE41Ww+RtReK3fi9PDu8HP2w1IkztKnB16LUtBnXr5C8CvWtT9vjXxf/O/VFg
+ ==
+X-ME-Sender: <xms:0KanXTP1J_q5G0Znrf6NECEMhEzW3_Hn8HH6e-Lyxck6E-On1wscOQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeigddulecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
+ hinhepphhorhhtfigvlhhlrdgtohhmpdhophgvnhgsmhgtrdhorhhgnecurfgrrhgrmhep
+ mhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuih
+ iivgeptd
+X-ME-Proxy: <xmx:0KanXes8GzFecS3AjZUBo66N9rDarMqIo5knne4i6VY_IC_aEPOhTw>
+ <xmx:0KanXR4jaaa9Gbys1es7G_k0ggstqYQhZ48TWpWCUpHLA-d5I38Wvw>
+ <xmx:0KanXQ5vZbOb3msS1bqACfPhPK4knxv6JU3KwIssV1Rb87q9cThOAw>
+ <xmx:0KanXdNP3ntcrHxrork_uir0Ke-tdUdblSdIKidybu8g48CeSc3GcQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 829E2E00A5; Wed, 16 Oct 2019 19:25:04 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
+Mime-Version: 1.0
+Message-Id: <3bc00539-bfb9-4fd8-a7dc-a6a1d7dca3b8@www.fastmail.com>
+In-Reply-To: <b4ad804a513048e4bc8df7ff9cb8598b@SCL-EXCHMB-13.phoenix.com>
+References: <b4ad804a513048e4bc8df7ff9cb8598b@SCL-EXCHMB-13.phoenix.com>
+Date: Thu, 17 Oct 2019 09:55:48 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Bruce Mitchell" <Bruce_Mitchell@phoenix.com>
+Subject: =?UTF-8?Q?Re:_Recommendations_for_development_platforms_for_the_ASPEED_A?=
+ =?UTF-8?Q?ST2500_&_AST2600=3F?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,51 +89,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/16/2019 about 06:06PM in some timezone, Andrew Jeffery wrote:
 
->Alignment is a hardware constraint of the LPC2AHB bridge, and>misaligned
->reserved memory will present as corrupted data.
+
+On Thu, 17 Oct 2019, at 02:06, Bruce Mitchell wrote:
+> Hello Andrew,
+> 
+> > Hi Bruce
+> > 
+> > On Wed, 16 Oct 2019, at 05:14, Bruce Mitchell wrote:
+> > >  
+> > > Hello,
+> > > 
+> > > 
+> > > I am Bruce Mitchell and I work for Phoenix Technologies Ltd. as a BMC 
+> > > firmware Engineer.
+> > > 
+> > > Phoenix Technologies Ltd. is developing an OpenBMC 
+> > > (https://www.openbmc.org/ , not the Facebook flavor) product.
+> > 
+> > FYI, the projects have united (and the result lives under the Linux Foundation).
+> 
+> It seems the people at American Portwell Technology do not actually know that
+> When I enquired about their Neptune Alpha OpenBMC development kit
+> https://portwell.com/solutions/openBMC.php
+> 
+> > > 
+> > > Our intent is also to be a valuable contributing member to the OpenBMC project.
+> > 
+> > Great! Looking forward to your contributions.
+> > 
+> > > 
+> > > 
+> > > We will be initially developing for the ASPEED Technology Inc. AST2500 
+> > > followed by the AST2600 BMC SoC.
+> > > 
+> > > Do you have any suggestion of available hardware development platforms 
+> > > for the ASPEED AST2500 & AST2600?
+> > 
+> > Unfortunately there isn't anything that is both cheap and easy to acquire that I'm aware of. Hopefully others can chime in if they know things that I don't, but this is an issue that's cropped up in the past and hasn't been resolved.
+> > 
+> > I think the cheapest anyone has found was a system (motherboard, cheap x86-64 CPU and RAM) that was about $800AU, but I'd have to dig out the details on what that was exactly (and it may have been AST2400-based).
+> 
+> Easily affordable is desirable, but easy to acquire is of more 
+> importance presently.
 >
->Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
->---
-> drivers/soc/aspeed/aspeed-lpc-ctrl.c | 12 ++++++++++++
-> 1 file changed, 12 insertions(+)
->
->diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
->b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
->index 12e4421dee37..5bad6a33ca43 100644
->--- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
->+++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
->@@ -241,6 +241,18 @@ static int aspeed=5Flpc=5Fctrl=5Fprobe(struct
->platform=5Fdevice *pdev)
->=20
-> 		lpc=5Fctrl->mem=5Fsize =3D resource=5Fsize(&resm);
-> 		lpc=5Fctrl->mem=5Fbase =3D resm.start;
->+
->+		if (hweight32(lpc=5Fctrl->mem=5Fsize) !=3D 1) {
 
-is=5Fpower=5Fof=5F2 from include/linux/log2.h
+Okay. Maybe browse through the list of supported machines then? Unfortunately
+there's no canonical list, it's more a matter of looking through each OEM's meta
+layer at what machines are supported that suit your needs. Currently we support
+various x86-64, ARM and POWER hosts.
 
->+			dev=5Ferr(dev, "Reserved memory size must be a power of 2, got>%zu\n",
->+			       lpc=5Fctrl->mem=5Fsize);
->+			return -EINVAL;
->+		}
->+
->+		if (lpc=5Fctrl->mem=5Fbase & (lpc=5Fctrl->mem=5Fsize - 1)) {
+Hopefully others have better suggestions though :)
 
-This could be IS=5FALIGNED() from kernel.h
-
->+			dev=5Ferr(dev, "Reserved memory must be naturally aligned for size>%zu=
-\n",
->+			       lpc=5Fctrl->mem=5Fsize);
->+			return -EINVAL;
->+		}
-> 	}
-
-Regards,
-milton
-
+Andrew
