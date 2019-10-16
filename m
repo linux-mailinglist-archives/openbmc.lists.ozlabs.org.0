@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B928D8613
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:53:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CEB2D8614
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 04:53:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tH0c3pKpzDq63
-	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 13:53:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tH1c32S6zDqTg
+	for <lists+openbmc@lfdr.de>; Wed, 16 Oct 2019 13:53:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (mailfrom) smtp.mailfrom=gmail.com
- (client-ip=2607:f8b0:4864:20::530; helo=mail-pg1-x530.google.com;
+ (client-ip=2607:f8b0:4864:20::543; helo=mail-pg1-x543.google.com;
  envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="rB62prn6"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="T0cFOM82"; 
  dkim-atps=neutral
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com
- [IPv6:2607:f8b0:4864:20::530])
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tGys3T7nzDqjH
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 13:51:33 +1100 (AEDT)
-Received: by mail-pg1-x530.google.com with SMTP id e10so9353194pgd.11
- for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 19:51:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tGyv49NLzDqnR
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 13:51:35 +1100 (AEDT)
+Received: by mail-pg1-x543.google.com with SMTP id i76so13357381pgc.0
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Oct 2019 19:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=IOiXujYPO3zVQjzz7lesqRMOBJsl5bWd19xRq5Y1huw=;
- b=rB62prn6A9qNtNTa4O8Qmij79kAFO0vLTEfzWpf8N3k2H5xVm45DOFK2oNgZXBx0J5
- eZXrHxaMu7YUSkBnMYrk5Vravcn4pIN1eMbrWGzYq+CFNixBVnuG46bYFIyro/1hV2Jo
- FWvJVLdiBnmavfgw/ju9KL/ON/CRhJR4p4U57dBiA7b8OoscSInzSrTCGHnzf+KvLIob
- /ZlZ+iSbb/Fsew0P+Z8XR9w+1TC7qt5DX+15rA2zJsllIFwLhjq7vs2ZZkb5DSSyG3sR
- rKGqSPpmZfKWH1G1ueem/HLM0u2LbiTTmiIaGKQbvTbxEOcmarzu3tZkA9i3h4d2rIls
- aecQ==
+ bh=WhdZpXeQcpcBgfhgEnNdngbfc4NZ6mvRaZNYyOjJ9n4=;
+ b=T0cFOM826CMb+iQtMHoI1dIYQkyKI6SCsjtnaO4kxD/2EyU1eLnVxB+kxJymA5zQmR
+ tPJ5bWnMV/mSg7AicVlENrFLDsQmrAae0Gjij946oapIjhGH2leh2iCbpNNxMuTuis86
+ ud/4Vo0W6/Zg3BZ/RmgeyHFCjQLIV+GoiEyLfCF3JH/Qt9q+5potswQYGSXmrxXzvnxm
+ On1UeI0AastQZId7qD+4Uy/WES8Oy0l6SCJEfhU6JjS2QIqp9/YXjc91uSN8zvWx7PNg
+ lhmyJkE5zPsdoizTJSBxtNddwUXAE9e33fPdoSvyFWDRiSMy6F9vLviioeD4Hes2AT29
+ velg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=IOiXujYPO3zVQjzz7lesqRMOBJsl5bWd19xRq5Y1huw=;
- b=bJFr/AfWwCaY7eriPweqWQEXrO6CCze84OlsGgxkVWqVjEqzeeg8mR0MhpKpZJ4P2K
- +giWKLF6ivyRNA2NFz4MD4sOymxfT5wo+afrqF+nDiz75R+AvNO9ynFXfJMdnNMjDNXS
- QdNsRI58UbnQUKVhKPP09EQnCvEfKYIRH+9SttFne3FZfQeLLgHlU5kaRBu8p/lbWAAF
- 7Qw+m22sniIKhRj0qVx1p28XY/Y/HRvlxsaze6SSkBLRyXZGSQ9PdK1W8YpYky2N0DLw
- fwU6B4AOv0dwrOO2w4OfNewEamDZcfuczEFgAMXvAWuaPjRlZa443Rf2dKX6c/48KkiE
- yJjA==
-X-Gm-Message-State: APjAAAXEPmErgw/TFdicMaOSukDDxdpEWmQIPxA97tBXPMG1z/Z86X/t
- C5uewk+w3Dsm02V5Sd38bjkeTLpfVfE=
-X-Google-Smtp-Source: APXvYqx0FpowxC73LyWhnmSAjU1zf7EOBZ1Fvpsvqc4bJmVb2wY0o91IftokV+KYOCfx1sYKt5rIxQ==
-X-Received: by 2002:a63:7c03:: with SMTP id x3mr42904391pgc.382.1571194290266; 
- Tue, 15 Oct 2019 19:51:30 -0700 (PDT)
+ bh=WhdZpXeQcpcBgfhgEnNdngbfc4NZ6mvRaZNYyOjJ9n4=;
+ b=dbQ4LVr8Zmnz8vkMYM3WrkTnoqf4IWerV3kyLtIevMa4R9FbiCZ77rnGPuU2A4KRUL
+ M2SJrouliWv7NckOlmy9NGPuV4vz0U0sFO6WJEzepnMKFBgIzL+HYV03cKTe9+PsDaAk
+ 4hE1ovEMzdIXwUflB7uWeSEC8a3j3poMCzbVocuCQYpRdna9aK/+FNmQYYbIQiBkRVNi
+ CyXDniI+Rb6rOG0F03cUFSAXjFdpdJ9ujSHBbLspmhx6Va86siEny0kFa8mFCcz4QmEo
+ JmaCUK2w/pHVm0sDo0n11Fz+FUunomqwpMAyHHG6Qk4cc6Q++R1EWM8fY1XOeEW24kzF
+ J2Qg==
+X-Gm-Message-State: APjAAAXJnOy5CGS9zeBSA4q2vHZ4MB16cZTSQu3EUtYFd6Biun+a/j5A
+ InPJLXqGG3kqvIK92iNMkLiakkN9NRU=
+X-Google-Smtp-Source: APXvYqybU7EnooO+2hYxyoG/zlaIgN7zPq2yT5ku002I+IL5rVlgbOGpjP9ENuwD53J01xA0b9beig==
+X-Received: by 2002:a62:b504:: with SMTP id y4mr42569151pfe.40.1571194292843; 
+ Tue, 15 Oct 2019 19:51:32 -0700 (PDT)
 Received: from voyager.ibm.com ([36.255.48.244])
- by smtp.gmail.com with ESMTPSA id f185sm30269191pfb.183.2019.10.15.19.51.28
+ by smtp.gmail.com with ESMTPSA id f185sm30269191pfb.183.2019.10.15.19.51.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 15 Oct 2019 19:51:29 -0700 (PDT)
+ Tue, 15 Oct 2019 19:51:32 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 v2 1/2] fsi: aspeed: Remove base from trace
-Date: Wed, 16 Oct 2019 13:21:20 +1030
-Message-Id: <20191016025121.16564-2-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 v2 2/2] fsi: aspeed: Add trace when error occurs
+Date: Wed, 16 Oct 2019 13:21:21 +1030
+Message-Id: <20191016025121.16564-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191016025121.16564-1-joel@jms.id.au>
 References: <20191016025121.16564-1-joel@jms.id.au>
@@ -82,105 +82,71 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The base was showing the virtual address of the FSI master, which was
-not useful for most users of the tracepoint.
+This prints out three registers in the FSI master when an error occurs.
 
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-Tested-by: Eddie James <eajames@linux.ibm.com>
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c          |  5 ++---
- include/trace/events/fsi_master_aspeed.h | 20 ++++++++------------
- 2 files changed, 10 insertions(+), 15 deletions(-)
+v2:
+ endian swap the values
+ only read them out when tracepoint is enabled
+---
+ drivers/fsi/fsi-master-aspeed.c          | 13 +++++++++++++
+ include/trace/events/fsi_master_aspeed.h | 18 ++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index 2048e38e7200..d796c4012875 100644
+index d796c4012875..6fa9712c70c4 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -194,8 +194,7 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
+@@ -252,6 +252,19 @@ static int check_errors(struct fsi_master_aspeed *aspeed, int err)
+ {
+ 	int ret;
  
- 	status = readl(base + OPB0_STATUS);
- 
--	trace_fsi_master_aspeed_opb_write(base, addr, val, size,
--			status, reg);
-+	trace_fsi_master_aspeed_opb_write(addr, val, size, status, reg);
- 
- 	/* Return error when poll timed out */
- 	if (ret)
-@@ -231,7 +230,7 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
- 
- 	result = readl(base + OPB0_FSI_DATA_R);
- 
--	trace_fsi_master_aspeed_opb_read(base, addr, size, result,
-+	trace_fsi_master_aspeed_opb_read(addr, size, result,
- 			readl(base + OPB0_STATUS),
- 			reg);
++	 if (trace_fsi_master_aspeed_opb_error_enabled()) {
++		 __be32 mresp0, mstap0, mesrb0;
++
++		 opb_read(aspeed->base, ctrl_base + FSI_MRESP0, 4, &mresp0);
++		 opb_read(aspeed->base, ctrl_base + FSI_MSTAP0, 4, &mstap0);
++		 opb_read(aspeed->base, ctrl_base + FSI_MESRB0, 4, &mesrb0);
++
++		 trace_fsi_master_aspeed_opb_error(
++				 be32_to_cpu(mresp0),
++				 be32_to_cpu(mstap0),
++				 be32_to_cpu(mesrb0));
++	 };
++
+ 	if (err == -EIO) {
+ 		/* Check MAEB (0x70) ? */
  
 diff --git a/include/trace/events/fsi_master_aspeed.h b/include/trace/events/fsi_master_aspeed.h
-index 06ff6a14bf11..63b9ce7f0de6 100644
+index 63b9ce7f0de6..8e47637c5fb7 100644
 --- a/include/trace/events/fsi_master_aspeed.h
 +++ b/include/trace/events/fsi_master_aspeed.h
-@@ -9,10 +9,9 @@
- #include <linux/tracepoint.h>
- 
- TRACE_EVENT(fsi_master_aspeed_opb_read,
--	TP_PROTO(void __iomem *base, uint32_t addr, size_t size, uint32_t result, uint32_t status, uint32_t irq_status),
--	TP_ARGS(base, addr, size, result, status, irq_status),
-+	TP_PROTO(uint32_t addr, size_t size, uint32_t result, uint32_t status, uint32_t irq_status),
-+	TP_ARGS(addr, size, result, status, irq_status),
- 	TP_STRUCT__entry(
--		__field(void *,    base)
- 		__field(uint32_t,  addr)
- 		__field(size_t,    size)
- 		__field(uint32_t,  result)
-@@ -20,24 +19,22 @@ TRACE_EVENT(fsi_master_aspeed_opb_read,
- 		__field(uint32_t,  irq_status)
- 		),
- 	TP_fast_assign(
--		__entry->base = base;
- 		__entry->addr = addr;
- 		__entry->size = size;
- 		__entry->result = result;
- 		__entry->status = status;
- 		__entry->irq_status = irq_status;
- 		),
--	TP_printk("fsi: opb read: base %p addr %08x size %zu: result %08x status: %08x irq_status: %08x",
--		__entry->base, __entry->addr, __entry->size, __entry->result,
-+	TP_printk("fsi: opb read: addr %08x size %zu: result %08x status: %08x irq_status: %08x",
-+		__entry->addr, __entry->size, __entry->result,
- 		__entry->status, __entry->irq_status
- 	   )
- );
- 
- TRACE_EVENT(fsi_master_aspeed_opb_write,
--	TP_PROTO(void __iomem *base, uint32_t addr, uint32_t val, size_t size, uint32_t status, uint32_t irq_status),
--	TP_ARGS(base, addr, val, size, status, irq_status),
-+	TP_PROTO(uint32_t addr, uint32_t val, size_t size, uint32_t status, uint32_t irq_status),
-+	TP_ARGS(addr, val, size, status, irq_status),
- 	TP_STRUCT__entry(
--		__field(void *,    base)
- 		__field(uint32_t,    addr)
- 		__field(uint32_t,    val)
- 		__field(size_t,    size)
-@@ -45,15 +42,14 @@ TRACE_EVENT(fsi_master_aspeed_opb_write,
- 		__field(uint32_t,  irq_status)
- 		),
- 	TP_fast_assign(
--		__entry->base = base;
- 		__entry->addr = addr;
- 		__entry->val = val;
- 		__entry->size = size;
- 		__entry->status = status;
- 		__entry->irq_status = irq_status;
- 		),
--	TP_printk("fsi: opb write: base %p addr %08x val %08x size %zu status: %08x irq_status: %08x",
--		__entry->base, __entry->addr, __entry->val, __entry->size,
-+	TP_printk("fsi: opb write: addr %08x val %08x size %zu status: %08x irq_status: %08x",
-+		__entry->addr, __entry->val, __entry->size,
- 		__entry->status, __entry->irq_status
+@@ -54,6 +54,24 @@ TRACE_EVENT(fsi_master_aspeed_opb_write,
  		)
  	);
+ 
++TRACE_EVENT(fsi_master_aspeed_opb_error,
++	TP_PROTO(uint32_t mresp0, uint32_t mstap0, uint32_t mesrb0),
++	TP_ARGS(mresp0, mstap0, mesrb0),
++	TP_STRUCT__entry(
++		__field(uint32_t,  mresp0)
++		__field(uint32_t,  mstap0)
++		__field(uint32_t,  mesrb0)
++		),
++	TP_fast_assign(
++		__entry->mresp0 = mresp0;
++		__entry->mstap0 = mstap0;
++		__entry->mesrb0 = mesrb0;
++		),
++	TP_printk("mresp0 %08x mstap0 %08x mesrb0 %08x",
++		__entry->mresp0, __entry->mstap0, __entry->mesrb0
++		)
++	);
++
+ #endif
+ 
+ #include <trace/define_trace.h>
 -- 
 2.23.0
 
