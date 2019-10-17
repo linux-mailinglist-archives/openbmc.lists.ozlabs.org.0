@@ -1,82 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7835DA471
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 05:58:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D4F4DA53B
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 07:58:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46twQ560vkzDr9B
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 14:58:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tz3l5ht9zDrBm
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 16:58:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::629;
+ helo=mail-pl1-x629.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="NoS2KLhu"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="jUOPZ1Ya"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.b="K6lBq1N4"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
+ [IPv6:2607:f8b0:4864:20::629])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46twPR4R6DzDqZk
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 14:58:18 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id BD93E21FDF;
- Wed, 16 Oct 2019 23:58:14 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 16 Oct 2019 23:58:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=MYhQVvn+oGqLE6FtplDhrdUFqTLd8At
- cMx3nUe/Gq68=; b=NoS2KLhuALx6n6JesbHF6C5IF5b5McJChSTPIi2CIYJXref
- 93aq6R2KpdGBbFRjr/IP1geZPsaexLp4zcENIHDRGRK81Ui+yT9bqrDJagLGQxx9
- S2An2iem83pEv8l3ln/QYt0ibJ3OplxpeDQZMhr8S6JvD/3QfEE/VTQeVuReCes/
- 4kF/ZDhPphUpAcEa829JOdu9ejgA5MGIm/hu2mxRCUOARgh1zlLk4pzBaGMogNH1
- s6dMCekkFZ7xKVAJjtLzzYJ4TTy4Dou1nUsteBJ/yjBY1L6dlYyCcBQNHslAJ+1P
- US0e0ROBng6DZI7s0ER7wwCkhi2Mx3spVCDDrUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=MYhQVv
- n+oGqLE6FtplDhrdUFqTLd8AtcMx3nUe/Gq68=; b=jUOPZ1YapzIhJLvVoGgOjI
- fidwaOug54mRge/JEUpAXPJhd8F8O03SnwTpRt3x8nhhH+i83kwj1nw+zYZP4suG
- Yf2swGwgpL9N3XeKMpWxapA/yCqUpTz1CEqQZx2/Xm86uxlikW1T3Sn9eqBKvFTh
- Tx6lssvS09WJzqhCc2Uctp5jHwAixO1LCM2GVwFkttnP7WyIaRfeJIfAIiRKHyYq
- QlimzENBniPejD1X1qIUDGbM3L4zLHQFEnH3LThZmm2xWt9hSkJZYEiNxQEo/frB
- RUIRUc+IIPw+CIKN6t8nnIzwIyIDKHGi+ztciwXG4tm8zR+ATwQ6p3O1OkG5EXCQ
- ==
-X-ME-Sender: <xms:1uanXTHRc0s9Q8GpYDTgDC6QyQVcumRaIXBHx3TnHNEzM03rXl-vyQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeigdejhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:1uanXcoEGUd9SzzXNXdEZhoQEMYEY1X40Tu09zOiaP0_zeu6YVgOPw>
- <xmx:1uanXX6PK2XLrVTCuY4TOrE3r-kaYru1FSm6iBm20wVuS0XqRFEDQw>
- <xmx:1uanXS7sMptTMheXe2CYXpMqzyUMqcCZLQA70hqbB2psRmVNbCtKNw>
- <xmx:1uanXf6mVM0jj8uaynfLuWHo1e0UC0WPgnw1f7d3dHuNKhap_miing>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 59AA8E00A5; Wed, 16 Oct 2019 23:58:14 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-360-g7dda896-fmstable-20191004v2
-Mime-Version: 1.0
-Message-Id: <b26d9e89-3027-4502-ae7e-74c11413eae7@www.fastmail.com>
-In-Reply-To: <20191017035630.18840-1-joel@jms.id.au>
-References: <20191017035630.18840-1-joel@jms.id.au>
-Date: Thu, 17 Oct 2019 14:29:11 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3]_ARM:_config:_aspeed-g5:_Add_DW_UART_?=
- =?UTF-8?Q?and_ADT7475?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tz314Z7tzDqc9
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 16:57:32 +1100 (AEDT)
+Received: by mail-pl1-x629.google.com with SMTP id e5so576728pls.9
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 22:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=4RmRvyjxhCVD6dFVMTT4ucw0sQv7VynFNd+3ILN3Hgg=;
+ b=K6lBq1N4o6/EQ0nL+sZ5bVU2zhEuwypX6X4NprgUr4AeeFBzQnS4adWwGPlgDCc6uI
+ w5ZHe6ZSgVuAYp2Uj4OauXUSmgi3JXO8MwIGp7Xjo5Nhj4oL/YRipPUCzss9xYZ6WJcm
+ fV9yDGrZGhNBQdAhwKIUB/hTsOxbTj2g0e+14JpXpAUAL4QNjeBHRQVV+ZSw+AF/tj0a
+ KWfzA5jz6GJD7NW1PxpzYYLxYADuby4iybCeqGyVQoDt+X/ofdFVY672+qRqtZvIF3yB
+ PwgSr2/4tKuJ2Un/BeC44tdO2we8IagxL4JF7KjuqnJEer7tjtYogrZeIJ3PN0nc/Jn6
+ VY1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=4RmRvyjxhCVD6dFVMTT4ucw0sQv7VynFNd+3ILN3Hgg=;
+ b=OV7sq7tQsGLfWB+zrDjkVHt6x7Wp/NeNhdy8Hr3mNgE3TLAeSAajR82s726eiRYm/L
+ 3gRgql4ABGCaaYWfFePiVkPIdd8F9qtLx0M6pJ1rXtbYLuzcBJGqlHOqpLwZB7K70oHd
+ Ah6CgrQhq/BPwJPXZiDuOC527aZgGGZ8R6IR1+R66nD+r4CDn6oGbrqXrHmJWbnxfAg6
+ NxZAuN4+RgitnS5bNwv5MUCE90b3G3eyTBKwfTPaeBVIHOaijEs1zo0uwv9i20bwVniG
+ Ewct3EMfhVZ+buavONYt32E6/R1kDRTXC9NoaCXsOKNYQgRVLMahT/fIDTCJ5GlTTQYG
+ GJmw==
+X-Gm-Message-State: APjAAAVfZs4UWk8moK3a8XXdg34JL8dxkRYBu2MCnsk5GCMDA4hbWDFs
+ CxwRjIJW7Rvo9xNiG6M5Ye0NKfVeta0zKUYKhXxBXQ==
+X-Google-Smtp-Source: APXvYqyqBo1o9IRAlX95eg7+8Fwn5Bw8XvOy866ZpVneDragh/K8jPjNwnE+AgsEuZgcFME/59mmjYs44qoYW8Gw+fg=
+X-Received: by 2002:a17:902:9b83:: with SMTP id
+ y3mr2108443plp.179.1571291848464; 
+ Wed, 16 Oct 2019 22:57:28 -0700 (PDT)
+MIME-Version: 1.0
+From: Patrick Venture <venture@google.com>
+Date: Wed, 16 Oct 2019 22:57:17 -0700
+Message-ID: <CAO=notzVe07GjrKj5ZLLVBA=mbx66aEWmYYfGhiTKpNoAmrEqw@mail.gmail.com>
+Subject: FRU device entityId and entityInstance
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,15 +70,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Because there's no association between an entity-manager board and the
+fru device entry, I added a new interface to the entity-manager
+hardware profile:
 
+"xyz.openbmc_project.Inventory.Decorator.FruDevice": {
+    "Bus": "$bus",
+    "Address": "$address"
+}
 
-On Thu, 17 Oct 2019, at 14:26, Joel Stanley wrote:
-> This adds the Synopsis DesignWare UART quirks, which is used by the
-> AST2600 A0 to workaround an issue.
+I'm making the properties uppercase like they are with the FruDevice
+interface so that they match  -- BUS == BUS, but they are different
+types.  I haven't dug into the code, but interestingly these are
+uint64_t while the FruDevice Interface's BUS is 32-bit.
 
-I tripped over this, so +1 from me.
+This lets me, in intel-ipmi-oem go from a FruDevice entry to an
+EntityManager board entry.  From there, I added another interface:
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+"xyz.openbmc_project.Inventory.Decorator.Ipmi": {
+    "EntityId": "0x07",
+    "EntityInstance": 1
+}
+
+If this interface is present, and those properties set, they are used
+in intel-ipmi-oem.  I have a patch for this that has been tested and
+works.  I haven't updated the schema yet, as I wanted to get a second
+opinion on it.
+
+The sensors also need the Ipmi Decorators, but I just added the
+EntityId property to the "Exposes" entries that need it, and then it's
+in the Configuration interface.  However, I haven't yet pushed that
+into a sensor.  I see there's an association interface on a Sensor and
+that points back to the parent board, but it isn't immediately clear
+to me how to then travel to the sensor from there -- by first thought
+was path swapping, but that won't work in cases like tmp441 where one
+sensor configuration feeds two sensors.  Anyways, I was thinking, what
+if the Sensor creation added another interface for decoration (if
+configured), so that intel-ipmi-oem can get the entityId and so on by
+just grabbing the sensor object -- it'd be yet another decoration
+interface?
+
+Patrick
