@@ -1,69 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2FB4DA454
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 05:25:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FDD9DA470
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 05:57:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tvgc2hBRzDrB2
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 14:25:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46twNC0j4tzDr84
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 14:57:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::641;
- helo=mail-pl1-x641.google.com; envelope-from=venture@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
+ helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="EBD9kB5U"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="WZDy05U+"; 
  dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
+ [IPv6:2607:f8b0:4864:20::544])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tvfm4WLJzDr45
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 14:24:48 +1100 (AEDT)
-Received: by mail-pl1-x641.google.com with SMTP id q24so399431plr.13
- for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 20:24:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=AjCJ4DerlmnVkiv2BjAXJNvMFrlTtmx9YGo+42h3rSs=;
- b=EBD9kB5UCNoxyBbsW8V0XGHZeTU0qNQQYDTCXEkZlNrWbwC09gtl3vYv0ttzma+Ipr
- kRSyWzpziWQlgk9Wy4S3HzjYi70ZWO6DY69Q4lY4s1ywGyzecceBzmDSWckWB6+QU6az
- 93dQqrcmHi7ILixfnLZ0WffOGFcfa+siO9J8rtTRNK6X9tEPPBrNk+nIO12xVMaZj14l
- TjKvc+rXb+4HyLWG0srU6DdrFeymixdi5vnkKVSZjeJ+4x0v/Ktt5dfOgTUehCr+8ic4
- fIUfPoeNm4lk9UT5OvEfkgXM5ucVnEAnAcfynwYnZ852s9S8x3f5OCVydHuvstQy2H78
- G+mQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46twMb3cfJzDqWq
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 14:56:43 +1100 (AEDT)
+Received: by mail-pg1-x544.google.com with SMTP id e15so481685pgu.13
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 20:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=0g/o3e/kUKWPYZw6CoTHvipyaQ/pSBnOSk+ADuLHrTY=;
+ b=WZDy05U+IDuWlO0EVWOXohyxZjzxZ/qd8ZYVCw20LT8C61LDfMfKgi00IC2Vb7v0SE
+ eFUdgSvwfuy0uR3ZwRls29XoHL/jYavfPEGsn640WS4zMTYoDoSpwPcrbN5N7BmkDmGg
+ fws5TsgB5R2B8LMhL38IgFzBhsXVsQ5gLAq45EgeODf/cZDy5UDMx0ekYpB3iF9d/mLj
+ lCYpud4XquQfKE0vT7LcnTWaD1wIiodA8vYAU0lNHKtM2nhByhxIzABPT9tUgKue2kZF
+ IAZf0RCJUVkldBdHqcGhwGqUvch9BjJKVBRQTRSLiixdPX+yH0mKv/UI/yxiT/uALAof
+ ae3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=AjCJ4DerlmnVkiv2BjAXJNvMFrlTtmx9YGo+42h3rSs=;
- b=ERQxk5k9M6khliqs52HosKhe7hHNBqHhIlnua2Ln058ESwm95iS+otdH5x8my6lXRF
- YcXMyjIZ/nuLtgOh627oax1mtBz+RmfipNWFOmIku6yg8jq9hSsv+HbLrakRhiaumBxI
- /U4hwmCWwEBQ2wONw7ba5p0KbQC44igz1ghSag6X5Oj77PeVgW9Bt1DG6GF8kBqN9M9O
- dW8QvKLck9Diws2cZngGSExSVKEumeQY8Dnq+A4n9Dw5vmxvT8v2HnczUucRQg8eVlCF
- nckX+uyhhZ+cBfGJREU/90nJdmO8nbW/mWvnX6k7Jfke6x0VomgHzHCUBBnjMC8XURkn
- rtEw==
-X-Gm-Message-State: APjAAAVK7/ye4MmMsb53QdkNSqpcD5I/LOSIPa+D6dIsiDFwIgQg8DX5
- di/Iyhij7EPOoLsG027Pz60R6OzCISqmBfvbyRoV8Y91Sek=
-X-Google-Smtp-Source: APXvYqwoTZM4Poz5oFP0EqhjpBQyq6xNjiQxP0QAUgZ/mWlJ2H1Jf39HApeY5hGQ/2ZM2E0S8R8FNGp+vYnBJoV56vE=
-X-Received: by 2002:a17:902:690c:: with SMTP id
- j12mr1583040plk.183.1571282685306; 
- Wed, 16 Oct 2019 20:24:45 -0700 (PDT)
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=0g/o3e/kUKWPYZw6CoTHvipyaQ/pSBnOSk+ADuLHrTY=;
+ b=PPkoN12hhon37GmmK1E7fV7cIwht5YcmX1WyGdAi/Lwfr/hnZk4ow7PyvEL17yuBKg
+ SK4ETE4L1IF6cy5KwgFVPshqkZ8ITnaSONb/Xfwjn0FRV059yWYKyYEOGoeaIh5J0V6P
+ IHYEC2Jmm2lj15RIDkm+ncdM+rE8wlSuwxh6mECEG9D3f5awAQ0n+hP3MfgH5yaXnqoZ
+ xkZ4ijtismoElN6l1ZuIeDAMGprXgSrG6jQbV4JoAct4cSlR1wjKbnfX08BM3Dvsqkpt
+ tfjW+o6H2BD6kjsmcndDXw1bXzktysRrahWYn8bcuJhne++F6u9EPJ9RCdcml+jQA/Yq
+ 92QQ==
+X-Gm-Message-State: APjAAAVFiTfaogLUrcUE/AiRopY0NxuG4fewevRoWyFiRENMBkHyowSq
+ 5hdZF+Ca3NJQQ97FhiAiZIbFc9Wdlds=
+X-Google-Smtp-Source: APXvYqwx+bw7Nth4M6XS+LCiqDUUDKYuCGyI+W2hK/kyiENGCVx30bVqvbR7ZoTdcnR8rb/dayBtHg==
+X-Received: by 2002:a62:38d5:: with SMTP id f204mr1342032pfa.100.1571284598258; 
+ Wed, 16 Oct 2019 20:56:38 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id v9sm615699pfe.1.2019.10.16.20.56.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 16 Oct 2019 20:56:37 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.3] ARM: config: aspeed-g5: Add DW UART and ADT7475
+Date: Thu, 17 Oct 2019 14:26:30 +1030
+Message-Id: <20191017035630.18840-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.23.0
 MIME-Version: 1.0
-References: <HK0PR02MB33485BCC0DF6AEFCC484A9C69F900@HK0PR02MB3348.apcprd02.prod.outlook.com>
-In-Reply-To: <HK0PR02MB33485BCC0DF6AEFCC484A9C69F900@HK0PR02MB3348.apcprd02.prod.outlook.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 16 Oct 2019 20:24:34 -0700
-Message-ID: <CAO=notwvRV-9thNgSN2eSeFh_krObDk5airkO95G34778_xm0A@mail.gmail.com>
-Subject: Re: How to build phosphor-ipmi-flash for Windows
-To: "Bright Cheng/WYHQ/Wiwynn" <Bright_Cheng@wiwynn.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,67 +76,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 14, 2019 at 1:11 AM Bright Cheng/WYHQ/Wiwynn
-<Bright_Cheng@wiwynn.com> wrote:
->
-> Hi,
->
->
->
-> I want to build phosphor-ipmi-flash host-tool (burn_my_bmc) for Windows, =
-does this host-tool can run in Windows?
->
-> If yes, I=E2=80=99d like to know how to build phosphor-ipmi-flash host-to=
-ol for Windows?
->
->
->
-> I tried to build it under Centos and used i686-w64-mingw32 4.9.0 and add =
-option =E2=80=9C--host=3D i686-w64-mingw32=E2=80=9D behind ./configure.
->
-> But i686-w64-mingw32 4.9.0 doesn=E2=80=99t support C++17.
->
-> And I tried to build it under Windows, but I cannot successfully build pc=
-iutil and ipmi-blob-tool.
+This adds the Synopsis DesignWare UART quirks, which is used by the
+AST2600 A0 to workaround an issue.
 
-I've never tried to build any of it for Windows and I honestly
-wouldn't know where to begin.  But I will definitely review any
-patches to enable multiple platform building.
+The ADT7475 is an I2C device present on the AST2600 EVB and is useful
+for testing that I2C works.
 
-Thanks
+OpenBMC userspace does not yet understand the "new" fsi device node
+layout, so disable it for now.
 
->
->
->
->
->
-> Thanks in advanced for any insight!
->
->
->
->
->
-> Sincerely
->
-> Bright
->
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
->
-> This email contains confidential or legally privileged information and is=
- for the sole use of its intended recipient.
->
-> Any unauthorized review, use, copying or distribution of this email or th=
-e content of this email is strictly prohibited.
->
-> If you are not the intended recipient, you may reply to the sender and sh=
-ould delete this e-mail immediately.
->
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/configs/aspeed_g5_defconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
+index 4d31e9edbc8a..0fbb9335679b 100644
+--- a/arch/arm/configs/aspeed_g5_defconfig
++++ b/arch/arm/configs/aspeed_g5_defconfig
+@@ -146,6 +146,7 @@ CONFIG_SERIAL_8250_RUNTIME_UARTS=6
+ CONFIG_SERIAL_8250_EXTENDED=y
+ CONFIG_SERIAL_8250_ASPEED_VUART=y
+ CONFIG_SERIAL_8250_SHARE_IRQ=y
++CONFIG_SERIAL_8250_DW=y
+ CONFIG_SERIAL_OF_PLATFORM=y
+ CONFIG_ASPEED_KCS_IPMI_BMC=y
+ CONFIG_ASPEED_BT_IPMI_BMC=y
+@@ -165,6 +166,7 @@ CONFIG_GPIO_PCA953X_IRQ=y
+ CONFIG_W1=y
+ CONFIG_W1_MASTER_GPIO=y
+ CONFIG_W1_SLAVE_THERM=y
++CONFIG_SENSORS_ADT7475=y
+ CONFIG_SENSORS_ASPEED=y
+ CONFIG_SENSORS_IIO_HWMON=y
+ CONFIG_SENSORS_LM75=y
+@@ -237,7 +239,6 @@ CONFIG_BMP280=y
+ CONFIG_DPS310=y
+ CONFIG_RAS=y
+ CONFIG_FSI=y
+-CONFIG_FSI_NEW_DEV_NODE=y
+ CONFIG_FSI_MASTER_GPIO=y
+ CONFIG_FSI_MASTER_HUB=y
+ CONFIG_FSI_MASTER_AST_CF=y
+-- 
+2.23.0
+
