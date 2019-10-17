@@ -2,69 +2,133 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A14AFDBA49
-	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 01:45:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A455DBA52
+	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 01:53:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46vQlH0wF9zDqn1
-	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 10:45:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46vQvt0lhFzDqn4
+	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 10:52:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22f;
- helo=mail-lj1-x22f.google.com; envelope-from=rhanley@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="NsbFyyC6"; 
- dkim-atps=neutral
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com
- [IPv6:2a00:1450:4864:20::22f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=51932c9067=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="VuCsIgYD"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="fvJxq9Wd"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46vQkX0Q84zDqll
- for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2019 10:44:51 +1100 (AEDT)
-Received: by mail-lj1-x22f.google.com with SMTP id y23so4294798lje.9
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 16:44:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=OFJz/hg1G5UOnoK4f5ybKFfeJ6PV250QKaZwPmMY3q4=;
- b=NsbFyyC6BakHdnQ/tIFRtdfHVnzKcrD47gP0WSTOg7yy0PKm+fPVvyfCYLnWsZ8ljI
- tA4FfpiTcFiGCCaxi+mYXWGyQohNeqZ/nVRPTKOZZUXKWsLdrHyw6HStA/tC9QRih7UA
- wYGLXi+tdf2tsLDJZFtgHkMrcSZXu/yJ8G2UddTakUe6FQ+7TacwLvmUC1juAMO0xU6M
- Wk/IzCLEGH8E0yt/6qj+yiDf01ZmsSki6af/N3/0sXldjrmZeW8cpU79kVYyoxcDMLiq
- ToUBIesh2IyDSrkvgimt3nudLIUYOjQFrBdZRpNxKNvrrzWIIlLWkkhsHR6FSLHxSx8w
- yWsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=OFJz/hg1G5UOnoK4f5ybKFfeJ6PV250QKaZwPmMY3q4=;
- b=EZ6R/8nnZIBb6iVg/Eov7sC10rpljprsNUbLPXdxNIX0YepjH9t2ROvfIdXsw40Jq4
- epDeQ00nGAsfTw3vC8xhFHtXNuKnCD5T659an5ctggfFdt0mW+tBHzg2nMWLGQAzc+zz
- 3EN5Ay/hMC/CXuIMu5YjSUiaZELzfJk0ECiXSuJt/V7RTZAinmKsyj4AUOy5op+ZrYKM
- dq9WpciufQuqnZ+r9YZPnmvzSvyJN+GiGE8NSTn3DfQyMVhQxh+w7UKtO5Pr4bhv9js9
- bPWTzm0JZUZlPblpvhoSG8ZTiU79z+y4r5m8YwcdUKyAhQZaxq+rf0h+xvkIWnmYiWr9
- 5nXQ==
-X-Gm-Message-State: APjAAAXWH7s4jGoRDElm5Bf2X6dSTQJK5mHHrI2xCyFquzfPOg+81/Mg
- 2YwW7DM+ydzEee8xqhgRnhkad93uFwFZIznN1hxtGg==
-X-Google-Smtp-Source: APXvYqxozQqfZHA0gOn4uW8WjeqLj52YOGcwDC0AfzA1ghklrLmLdSX/jtDwtgBXWE1ISlFfSTK85sppXIpjmOY5270=
-X-Received: by 2002:a2e:880e:: with SMTP id x14mr4054632ljh.42.1571355886273; 
- Thu, 17 Oct 2019 16:44:46 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46vQty0zbxzDqlw
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2019 10:52:08 +1100 (AEDT)
+Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ x9HNnF4q000853; Thu, 17 Oct 2019 16:52:04 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=Zpa7/BzG/5tyMj1zv09AT7XygrAXnJ2LjssJv5iUNW0=;
+ b=VuCsIgYDw5F6JrOjJvWyOers/3qJMU7nIXX51QLn7DmlWHCEV/uoRmiYF2Tlzui3fZbv
+ ThyYYlBA4gTZYw1pAJVSf9nW3p3bw+nmzWeTwkItqscQ4nxG39asLpbMRr50eAYxuWes
+ uGlUr99VBZkMnzKwaeH7bCutkpUwcS3mGPU= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2vp84aesrx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Thu, 17 Oct 2019 16:52:04 -0700
+Received: from prn-hub05.TheFacebook.com (2620:10d:c081:35::129) by
+ prn-hub03.TheFacebook.com (2620:10d:c081:35::127) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Thu, 17 Oct 2019 16:52:02 -0700
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.29) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Thu, 17 Oct 2019 16:52:02 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mHC2FjaF+52x3ja1O4yl7tD7p1fRZkTkrH2PVuMsvWIn5bqQ1jG91npSekl91mh4d5ALqesOu3b4K+4trNdzUvKLGU6/YrrPN6y+l3eN6+X6OGhjbZwu9PgJQJYIep/V7o5cknagZSzirtIYaYFlB5h3eQDyI4ug6oXK4xXOrALOlQEBpcHzh4mKk0Sfq7OtS7N31Op+NNcS1rzcyg1jCYvdAOaTU4TsngF/mMLR2p2+NzClo8EzWGPF2w/ar4+UnnhYDBFRVgn5ojKQHHPXpKkh2/qYscWlOIMb1HYulaT5q7riox8rCe+MCHQFxd/zlwqk+4uTtUs1RmkWUjYYuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Zpa7/BzG/5tyMj1zv09AT7XygrAXnJ2LjssJv5iUNW0=;
+ b=GT2IgobKx2EuiN0Q2H4w2TTPrOmN0O+I61D1AdyUgYzjwtS5DV9+Q/vakPiO6VbIUXuEgbMzEbTYcUyOqFc4tLrPJWsksp0979yyk689yHi3zjkrZg9nYLVzj93p1gcPS68rjQd3gzsmAOkdJ2TikR9qPiIWz+inqdsKaY6AVSu5v/Yt+AGXpZ7mI5DAKBWViuDmmWrYvwXXnrEvdKJpWen0ZR/TVDAkF5JvuISkvyyAuyzGwuxyBwfPwz7W1VqFt4DZ33qFeSxo11pRbsMUWqjM19A540x1J5huO6ovbycJCmMoi1f6mlj1UEjjPCvChxCJxeobMxpW8c/bb6e2Qg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Zpa7/BzG/5tyMj1zv09AT7XygrAXnJ2LjssJv5iUNW0=;
+ b=fvJxq9WdT4BEt2olhc+uHk5VQ4uKtTJw23zaIlOFnMJLOxyvKfMmVRFJGmOkeY3J4fcYD5BqBg4U75oo/qbioTsKSxYNTysMf4PKJvSWEBGg6cScwj40wLWb13Wtxy+FRGgw/G76lHKAuJQW4rpAOciIF7HKUXNdIoMbwNj+g4w=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3617.namprd15.prod.outlook.com (52.133.253.220) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.16; Thu, 17 Oct 2019 23:52:01 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c%4]) with mapi id 15.20.2347.024; Thu, 17 Oct 2019
+ 23:52:01 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: x86-power-control
+Thread-Topic: x86-power-control
+Thread-Index: AQHVhIgk7/7PtKOKbUeMJf/8spu+0qde/1mA///3sgCAAIQ8gP//kgqA
+Date: Thu, 17 Oct 2019 23:52:01 +0000
+Message-ID: <8F55F038-A6E7-46A4-8C27-93C738AFEBDC@fb.com>
+References: <EA590716-271A-4F5C-9B36-80260B7F35B6@fb.com>
+ <66afaaab-baee-fc02-371b-2ef4a9f0d1ee@linux.intel.com>
+ <37843B68-8D1C-48EB-B4B6-64CBC8F62F77@fb.com>
+ <79190494-f452-286b-e304-7a901a3db26c@linux.intel.com>
+In-Reply-To: <79190494-f452-286b-e304-7a901a3db26c@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:f653]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: f83c51e1-e5da-4f9c-2849-08d7535d0166
+x-ms-traffictypediagnostic: BY5PR15MB3617:
+x-ms-exchange-purlcount: 1
+x-microsoft-antispam-prvs: <BY5PR15MB361726D68217F38CB8401239DD6D0@BY5PR15MB3617.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-forefront-prvs: 01930B2BA8
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(979002)(376002)(366004)(39860400002)(136003)(346002)(396003)(189003)(199004)(6506007)(86362001)(478600001)(2501003)(46003)(6512007)(2906002)(7736002)(11346002)(2616005)(486006)(36756003)(229853002)(6436002)(6116002)(6486002)(110136005)(99286004)(446003)(476003)(305945005)(76176011)(102836004)(8936002)(53546011)(186003)(6306002)(8676002)(66946007)(6246003)(81166006)(33656002)(14444005)(256004)(76116006)(71200400001)(91956017)(71190400001)(66476007)(66446008)(64756008)(66556008)(966005)(14454004)(316002)(25786009)(5660300002)(81156014)(969003)(989001)(999001)(1009001)(1019001);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3617;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bMlFgUX8i5V8nhuXanmH72DdlOeU/1mNibboGD9fn4vj2NCW92Yk0j9uul5ymCOPVm5QK7ID4d6hc7GFe83RkjHbRDQ4KjZl7SveenfFTUH2h44npahY8iNxF3wHwczZv6goXlOxzSOTqUEVYV/vDg/VaWT/4D4maUO13pEOCuGmZVb1NME5JscreO8p8u4cM8I1b1ZqGOz6x8pakAjLprccbBHAioO2Cp/tJSoYgHedxNsEAKGGgM2ZecTEX6Vn6Lo3DNKtJj764mzSk4ygRSmqxzbHrFGCxqDFPBkebDRuuAocZx4ny7bFe6tK9MiLPN2lCUnZy2sKYX9Jqo6Tkj5Kv2cRTMOgs2qUdhhOZdEzipA+b/SYae9wiBa3FPyEo92P33bUQcOzBZy9sc7DavRD6V6jdozSfamBM3zduYHfA4q2udgZ56UyW1KGXrXvtMbrYE7PZT8h3vdDjsDUfg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <3D260BA044D0314895ED7B7C4BEDA3A8@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CADfYTpG_Sy4_jNGqZTJKx1Tyivsu+SpBpWy=vNSH7L=Z0PXAEQ@mail.gmail.com>
- <2F98B4CC-2C61-4AF7-B41A-897C9BA4E32F@fuzziesquirrel.com>
- <CADfYTpEut49XPWs+Ahz5dsRgayLkHToRh-6btHeqbaSR3wnK2A@mail.gmail.com>
- <0b5a46e8-748b-faa0-59fd-c548810c9b12@intel.com>
- <CAH1kD+Z5qJ=tDV76MtAE6bgF8yCq-RYSz8y9jgnOV_SSUTF79g@mail.gmail.com>
-In-Reply-To: <CAH1kD+Z5qJ=tDV76MtAE6bgF8yCq-RYSz8y9jgnOV_SSUTF79g@mail.gmail.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Thu, 17 Oct 2019 16:44:34 -0700
-Message-ID: <CAH1kD+bFPJdXggCuQ9oQZkf9809C3Qw28inLwW7gVzUWrsgLQQ@mail.gmail.com>
-Subject: Re: Redfish Aggregator
-To: Ed Tanous <ed.tanous@intel.com>, bradleyb@fuzziesquirrel.com
-Content-Type: multipart/alternative; boundary="0000000000006b1b38059523cdc1"
+X-MS-Exchange-CrossTenant-Network-Message-Id: f83c51e1-e5da-4f9c-2849-08d7535d0166
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Oct 2019 23:52:01.4961 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: pBf+sE/XREj/yYJKlzaCmk8YiZdRTkm+ZAqqJe4KInpSg6U2+9j6vJ12cJcKZnlFOcUVhvBgM2yl3kMg6f0llQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3617
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-10-17_07:2019-10-17,2019-10-17 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ lowpriorityscore=0
+ bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501 mlxscore=0
+ mlxlogscore=999 adultscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1910170212
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,163 +140,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006b1b38059523cdc1
-Content-Type: text/plain; charset="UTF-8"
-
-Hi Brad and Ed,
-
-I wanted to check in with you and the rest of the community about the
-design path and requirements we're considering for a Redfish Aggregator.
-
-When I think about an Aggregator in this context, I'm thinking about
-several Redfish services that are connected to each other using a
-star topology.  The central service would be the only service exposed to
-clients on the outside network.
-
-The central service would for all intents and purposes look like a single
-service to clients, and on the backend it would act as a proxy to the other
-hidden services.
-
-One of the big design questions to consider is how thick or thin the
-central services caching should be.  In my opinion, the central service
-should cache the URI for each of the top level collections (i.e.
-Chassis collections, System collection, and Manager collections).  This
-should be a decent compromise between performance when clients traverse the
-resource tree and overhead in synchronizing the cache in the central agent.
-
-I will be talking with DMTF soon about any extensions to the spec that
-might be needed.  In my opinion, this could be accomplished with the spec
-as it currently stands, but I'd like to get some input in the following
-areas:
-   1) DMTF may want to standardize the algorithm that merges separate
-resource collections into one collection with unique IDs
-   2) There are some questions internally about whether there should be
-some metadata letting consumers know that they are working with a proxied
-resource.  DMTF may have some concerns about treating a proxied resource
-exactly as a local resource.
-   3) DMTF was considering an aggregation service that would allow clients
-to manage some of the aggregation.  Personally, I'm not a huge fan of this
-approach, but we'd want to make sure that what we're doing doesn't get in
-the way of those plans.
-
-Anyways, hopefully this huge textblock helps clarify some of Google's
-thinking on this issue.  I'm still working on getting up to speed on both
-Redfish and open-bmc, so any feedback is greatly appreciated.  Hopefully in
-the next couple of weeks I can incorporate feedback from the community and
-DMTF, and start getting together a design document for review.
-
-Best Regards,
-Richard
-
-
-On Thu, Oct 10, 2019 at 11:32 AM Richard Hanley <rhanley@google.com> wrote:
-
-> Thank you Ed.  I will take a look a look at that fork.
->
-> On Thu, Oct 10, 2019 at 11:09 AM Ed Tanous <ed.tanous@intel.com> wrote:
->
->> On 10/10/19 10:09 AM, Nancy Yuen wrote:
->> > Thanks Brad!  We are envisioning aggregating the separate Redfish stacks
->> > to present a single unified system view.  There is another slide deck of
->> > Redfish Aggregator requirement uploaded to DMTF a few days ago with a
->> > slightly different idea of aggregation (it sounds more like batching,
->> > the aggregator will send a reboot or a fw update, to a bunch of redfish
->> > stacks on multiple systems).
->> >
->>
->> You might want to look at this bmcweb fork that Inspur built for exactly
->> this.
->> https://github.com/inspur-bmc/rmcweb
->>
->>
->> It wasn't built the way I would've recommend it be built, and a lot of
->> it is relying on fake data, but it's a reasonable example of wiping out
->> all the bmcweb Redfish endpoints and replacing them with aggregator
->> ones, without having to modify the core.
->>
->
-
---0000000000006b1b38059523cdc1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Brad and Ed,<div><br></div><div>I wanted to check in wi=
-th you and the rest of the community about the design path and requirements=
- we&#39;re considering for a Redfish Aggregator.<br><br>When I think about =
-an Aggregator in this context, I&#39;m thinking about several Redfish servi=
-ces that are connected to each other using a star=C2=A0topology.=C2=A0 The =
-central=C2=A0service would be the only service exposed to clients on the ou=
-tside network.=C2=A0<br></div><div><br></div><div>The central service would=
- for all intents and purposes look like a single service to clients, and on=
- the backend it would act as a proxy to the other hidden services.</div><di=
-v><br></div><div>One of the big design=C2=A0questions to consider is how th=
-ick or thin the central services caching should be.=C2=A0 In my opinion, th=
-e central service should cache the URI for each of the top level collection=
-s (i.e. Chassis=C2=A0collections, System collection, and Manager collection=
-s).=C2=A0 This should be a decent compromise between performance when clien=
-ts traverse the resource tree and overhead in synchronizing the cache in th=
-e central agent.</div><div><br></div><div>I will be talking with DMTF soon =
-about any extensions to the spec that might be needed.=C2=A0 In my opinion,=
- this could be accomplished with the spec as it currently stands, but I&#39=
-;d like to get some input in the following areas:</div><div>=C2=A0 =C2=A01)=
- DMTF may want to standardize the algorithm that merges separate resource c=
-ollections into one collection with unique IDs</div><div>=C2=A0 =C2=A02) Th=
-ere are some questions internally about whether there should be some metada=
-ta letting consumers know that they are working with a proxied resource.=C2=
-=A0 DMTF may have some concerns about treating a proxied resource exactly a=
-s a local resource.</div><div>=C2=A0 =C2=A03) DMTF was considering an aggre=
-gation service that would allow clients to manage some of the aggregation.=
-=C2=A0 Personally, I&#39;m not a huge fan of this approach, but we&#39;d wa=
-nt to make sure that what we&#39;re doing doesn&#39;t get in the way of tho=
-se plans.</div><div><br></div><div>Anyways, hopefully this huge textblock h=
-elps clarify some of Google&#39;s thinking on this issue.=C2=A0 I&#39;m sti=
-ll working on getting up to speed on both Redfish and open-bmc, so any feed=
-back is greatly appreciated.=C2=A0 Hopefully in the next couple of weeks I =
-can incorporate feedback from the community and DMTF, and start getting tog=
-ether a design document for review.</div><div><br></div><div>Best Regards,<=
-/div><div>Richard</div><div><br></div><div></div></div><br><div class=3D"gm=
-ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 10, 2019 at 11=
-:32 AM Richard Hanley &lt;<a href=3D"mailto:rhanley@google.com">rhanley@goo=
-gle.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex"><div dir=3D"ltr">Thank you Ed.=C2=A0 I will take a look a look at th=
-at fork.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmai=
-l_attr">On Thu, Oct 10, 2019 at 11:09 AM Ed Tanous &lt;<a href=3D"mailto:ed=
-.tanous@intel.com" target=3D"_blank">ed.tanous@intel.com</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">On 10/10/19 10:09 A=
-M, Nancy Yuen wrote:<br>
-&gt; Thanks Brad!=C2=A0 We are envisioning aggregating the separate Redfish=
- stacks<br>
-&gt; to present a single unified system view.=C2=A0 There is another slide =
-deck of<br>
-&gt; Redfish Aggregator requirement uploaded to DMTF a few days ago with a<=
-br>
-&gt; slightly different idea of aggregation (it sounds more like batching,<=
-br>
-&gt; the aggregator will send a reboot or a fw update, to a bunch of redfis=
-h<br>
-&gt; stacks on multiple systems).<br>
-&gt; <br>
-<br>
-You might want to look at this bmcweb fork that Inspur built for exactly<br=
->
-this.<br>
-<a href=3D"https://github.com/inspur-bmc/rmcweb" rel=3D"noreferrer" target=
-=3D"_blank">https://github.com/inspur-bmc/rmcweb</a><br>
-<br>
-<br>
-It wasn&#39;t built the way I would&#39;ve recommend it be built, and a lot=
- of<br>
-it is relying on fake data, but it&#39;s a reasonable example of wiping out=
-<br>
-all the bmcweb Redfish endpoints and replacing them with aggregator<br>
-ones, without having to modify the core.<br>
-</blockquote></div>
-</blockquote></div>
-
---0000000000006b1b38059523cdc1--
+DQoNCu+7v09uIDEwLzE3LzE5LCA0OjI3IFBNLCAib3BlbmJtYyBvbiBiZWhhbGYgb2YgQmlsbHMs
+IEphc29uIE0iIDxvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFi
+cy5vcmcgb24gYmVoYWxmIG9mIGphc29uLm0uYmlsbHNAbGludXguaW50ZWwuY29tPiB3cm90ZToN
+Cg0KICAgIA0KICAgIA0KICAgIE9uIDEwLzE3LzIwMTkgMzozMiBQTSwgVmlqYXkgS2hlbWthIHdy
+b3RlOg0KICAgID4gDQogICAgPiBPbiAxMC8xNy8xOSwgOTowMyBBTSwgIm9wZW5ibWMgb24gYmVo
+YWxmIG9mIEJpbGxzLCBKYXNvbiBNIiA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNv
+bUBsaXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBqYXNvbi5tLmJpbGxzQGxpbnV4LmludGVs
+LmNvbT4gd3JvdGU6DQogICAgPiANCiAgICA+ICAgICAgSGkgVmlqYXkNCiAgICA+ICAgICAgDQog
+ICAgPiAgICAgIE9uIDEwLzE2LzIwMTkgNjoxMyBQTSwgVmlqYXkgS2hlbWthIHdyb3RlOg0KICAg
+ID4gICAgICA+IE9uZSBtb3JlIHF1ZXN0aW9uIG9uIGNvZGUsIEkgc2VlIGZvbGxvd2luZyBjb2Rl
+IHJlcXVpcmVzIHBvd2VyQnV0dG9uTWFzaw0KICAgID4gICAgICA+IHRvIGJlIHNldCBiZWZvcmUg
+YXF1aXJpbmcgR1BJTyBsaW5lLiBQbGVhc2UgbGV0IG1lIGtub3cgd2hvIHNldHMgdGhpcw0KICAg
+ID4gICAgICA+IHBvd2VyQnV0dG9uTWFzayB0byB0cnVlLiBJIGtub3cgdGhpcyBpcyByZWxhdGVk
+IHRvIEdQSU8gcGFzc3Rocm91Z2ggYnV0DQogICAgPiAgICAgID4gc3RpbGwgY291bGRu4oCZdCB1
+bmRlcnN0YW5kIHdoZXJlIGluIGNvZGUgaXQgZ2V0cyBzZXQgdW50aWwgc29tZW9uZSBjYWxsDQog
+ICAgPiAgICAgID4gc2V0LXByb3BlcnR5IG9mIGRidXMuDQogICAgPiAgICAgIA0KICAgID4gICAg
+ICBwb3dlckJ1dHRvbk1hc2sgaXMgYSBncGlvZDo6bGluZSBvYmplY3QgdGhhdCByZXR1cm5zIHRy
+dWUgaWYgaXQNCiAgICA+ICAgICAgcmVmZXJlbmNlcyBhIEdQSU8gbGluZSBhbmQgZmFsc2Ugb3Ro
+ZXJ3aXNlLg0KICAgID4gDQogICAgPiBJIHVuZGVyc3Rvb2QgY29kZSBidXQgbXkgcG9pbnQgaGVy
+ZSBpcyB0aGVyZSB3aWxsIG5vdCBiZSBhbnkNCiAgICA+IGdwaW9kOjpsaW5lIG9iamVjdCBpZiBw
+b3dlckJ1dHRvbk1hc2sgaXMgZGVmaW5lZCBhcyBmYWxzZS4gQW5kDQogICAgPiBpbml0aWFsbHkg
+aXQgaXMgZGVmaW5lZCBhcyBmYWxzZSBtZWFucyB0ZWhyZSB3aWxsIG5vdCBiZSBhbnkgbGluZQ0K
+ICAgID4gb2JqZWN0IGNyZWF0ZWQgdW50aWwgc29tZW9uZSBzZXRzIGl0IHRvIHRydWUuIEFuZCBJ
+IGRvbid0IHNlZSBpdA0KICAgID4gYW55IHdheSB0byBzZXQgaXQgdHJ1ZSBvdGhlciB0aGFuIHNl
+dC1wcm9wZXJ0eSB0aHJvdWdoIGRidXMuDQogICAgDQogICAgVGhhdCdzIGNvcnJlY3QuICBNYXNr
+aW5nIHRoZSBwb3dlciBidXR0b24gaXMgc29tZXRoaW5nIHRoYXQgaXMgZG9uZSBieSANCiAgICBz
+b21lIGNvbXBvbmVudCBvdXRzaWRlIG9mIHBvd2VyLWNvbnRyb2wuDQogICAgDQogICAgRm9yIGV4
+YW1wbGUsIHdlIGN1cnJlbnRseSB1c2UgaXQgd2l0aCB0aGUgU2V0IEZyb250IFBhbmVsIEJ1dHRv
+biBFbmFibGVzIA0KICAgIElQTUkgY29tbWFuZCB0byBlbmFibGUvZGlzYWJsZSB0aGUgcG93ZXIg
+YnV0dG9uLiAgU28sIGl0IGlzIG9ubHkgbWFza2VkIA0KICAgIHdoZW4gcmVxdWVzdGVkLg0KU28g
+dG8gdXNlIHgtODYtcG93ZXItY29udHJvbCwgZWl0aGVyIHdlIG5lZWQgdG8gaGF2ZSBJUE1JIGNv
+bW1hbmQgdG8gZW5hYmxlDQp0aGlzIG9yIHNvbWUgb3RoZXIgZGFlbW9uIGhhcyB0byBzZXQgdGhp
+cyBwcm9wZXJ0eS4gQ2FuIHdlIGhhdmUgdGhpcyBmZWF0dXJlIA0Kb3B0aW9uYWwuIEkgZ3Vlc3Mg
+dGhpcyBpcyBhIHBydCBvZyBHUElPIHBhc3N0aHJvdWdoLg0KICAgIA0KICAgIFRoZSBhY3R1YWwg
+IlBPV0VSX09VVCIgbGluZSBmb3IgcG93ZXItY29udHJvbCBpcyBub3QgcGVybWFuZW50bHkgDQog
+ICAgY3JlYXRlZCwgYnV0IGlzIGFzc2VydGVkIHVzaW5nIHRlbXBvcmFyeSBjYWxscyBsaWtlIHRo
+aXMgb25lOg0KICAgIHNldEdQSU9PdXRwdXRGb3JNcygiUE9XRVJfT1VUIiwgMCwgcG93ZXJQdWxz
+ZVRpbWVNcyk7DQoNClRoaXMgZnVuY3Rpb24gd2lsbCBub3QgcnVuIHBvd2VyIG9uL29mZiBzZXF1
+ZW5jZSB1bnRpbCBidXR0b24gbWFzayBpcyBzZXQuIEl0DQpXaWxsIG9ubHkgc2V0IEdQSU8gdmFs
+dWUgd2hpY2ggaXMgbm90IGVub3VnaCBmb3IgcG93ZXJpbmcgb24vb2ZmLg0KICAgIA0KICAgIGh0
+dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3g4Ni1wb3dlci1jb250cm9sL2Jsb2IvbWFzdGVyL3Bv
+d2VyLWNvbnRyb2wteDg2L3NyYy9wb3dlcl9jb250cm9sLmNwcCNMOTQ2DQogICAgDQogICAgPiAg
+ICAgIA0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gcG93ZXJfY29udHJvbDo6cG93ZXJCdXR0
+b25JZmFjZS0+cmVnaXN0ZXJfcHJvcGVydHkoDQogICAgPiAgICAgID4NCiAgICA+ICAgICAgPiAi
+QnV0dG9uTWFza2VkIiwgZmFsc2UsIFtdKGNvbnN0Ym9vbHJlcXVlc3RlZCwgYm9vbCYgY3VycmVu
+dCkgew0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gaWYocmVxdWVzdGVkKQ0KICAgID4gICAg
+ICA+DQogICAgPiAgICAgID4gew0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gaWYocG93ZXJf
+Y29udHJvbDo6cG93ZXJCdXR0b25NYXNrKQ0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gew0K
+ICAgID4gICAgICBUaGlzIHdpbGwgcmV0dXJuIGlmIHBvd2VyQnV0dG9uTWFzayBhbHJlYWR5IHJl
+ZmVyZW5jZXMgYSBHUElPLg0KICAgID4gICAgICANCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+
+IHJldHVybjE7DQogICAgPiAgICAgID4NCiAgICA+ICAgICAgPiB9DQogICAgPiAgICAgID4NCiAg
+ICA+ICAgICAgPiBpZighcG93ZXJfY29udHJvbDo6c2V0R1BJT091dHB1dCgNCiAgICA+ICAgICAg
+Pg0KICAgID4gICAgICA+ICJQT1dFUl9PVVQiLCAxLCBwb3dlcl9jb250cm9sOjpwb3dlckJ1dHRv
+bk1hc2spKQ0KICAgID4gICAgICBPdGhlcndpc2UsIHRoaXMgd2lsbCByZXF1ZXN0IHRoZSAiUE9X
+RVJfT1VUIiBHUElPIGFuZCBhc3NpZ24gaXQgdG8NCiAgICA+ICAgICAgcG93ZXJCdXR0b25NYXNr
+ICh3aGljaCB3aWxsIG1ha2UgaXQgcmV0dXJuIHRydWUpLg0KICAgID4gICAgICANCiAgICA+ICAg
+ICAgPg0KICAgID4gICAgICA+IHsNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IHRocm93c3Rk
+OjpydW50aW1lX2Vycm9yKCJGYWlsZWQgdG8gcmVxdWVzdCBHUElPIik7DQogICAgPiAgICAgID4N
+CiAgICA+ICAgICAgPiByZXR1cm4wOw0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gfQ0KICAg
+ID4gICAgICA+DQogICAgPiAgICAgID4gc3RkOjpjZXJyIDw8ICJQb3dlciBCdXR0b24gTWFza2Vk
+LlxuIjsNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IH0NCiAgICA+ICAgICAgPg0KICAgID4g
+ICAgICA+IGVsc2UNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IHsNCiAgICA+ICAgICAgPg0K
+ICAgID4gICAgICA+IGlmKCFwb3dlcl9jb250cm9sOjpwb3dlckJ1dHRvbk1hc2spDQogICAgPiAg
+ICAgID4NCiAgICA+ICAgICAgPiB7DQogICAgPiAgICAgIFRoaXMgd2lsbCByZXR1cm4gaWYgcG93
+ZXJCdXR0b25NYXNrIGRvZXMgbm90IHJlZmVyZW5jZSBhIEdQSU8gbGluZS4NCiAgICA+ICAgICAg
+DQogICAgPiAgICAgID4NCiAgICA+ICAgICAgPiByZXR1cm4xOw0KICAgID4gICAgICA+DQogICAg
+PiAgICAgID4gfQ0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gc3RkOjpjZXJyIDw8ICJQb3dl
+ciBCdXR0b24gVW4tbWFza2VkXG4iOw0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gcG93ZXJf
+Y29udHJvbDo6cG93ZXJCdXR0b25NYXNrLnJlc2V0KCk7DQogICAgPiAgICAgIE90aGVyd2lzZSB0
+aGlzIHdpbGwgcmVzZXQgcG93ZXJCdXR0b25NYXNrIHRvIHJlbGVhc2UgdGhlICJQT1dFUl9PVVQi
+DQogICAgPiAgICAgIEdQSU8gKHdoaWNoIHdpbGwgbWFrZSBpdCByZXR1cm4gZmFsc2UpLg0KICAg
+ID4gICAgICANCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IH0NCiAgICA+ICAgICAgPg0KICAg
+ID4gICAgICA+IFJlZ2FyZHMNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+IC1WaWpheQ0KICAg
+ID4gICAgICA+DQogICAgPiAgICAgIA0KICAgID4gDQogICAgDQoNCg==
