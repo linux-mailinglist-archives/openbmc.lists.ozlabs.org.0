@@ -1,78 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 810A0DA262
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 01:39:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33645DA292
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 02:08:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46tpff3WwPzDr1N
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 10:39:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46tqJ11ZsjzDr7h
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 11:08:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
- helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::532;
+ helo=mail-ed1-x532.google.com; envelope-from=osk@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="b+z1m0jO"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="vhZNqFix"; dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.b="R6PY7C5r"; 
+ dkim-atps=neutral
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com
+ [IPv6:2a00:1450:4864:20::532])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46tpf446dTzDqQZ
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 10:38:52 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 524DE56F;
- Wed, 16 Oct 2019 19:38:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 16 Oct 2019 19:38:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm1; bh=X+T8wVqQwus44fQd32mad2+gob
- ewZko/C7I8WYR4BCc=; b=b+z1m0jOiH4KD4fVwLj7NpXmMBJ6M3BIyNntA6svUD
- ubTAWYpCBRVT3H2Q5KTdfeVpWYI+CQlVwuDQxce50Pz4GZn5o/7mil+W7NA+DhcO
- 9jc0APbULgjbCuAPIE7mx+TvEGFOuLjGkaumtXY+X8kgr0Y3OffOxSJQuUa4hE43
- dZu723Sk1UrZgRpBmUczjTyTS5FZsaNjDHNWAGYKiaLeii2z0wPNDkzClNEeMx6r
- FAtzuXz5v8rbWd8BgJRWzGkuHvpSuFi4Ny3/tFfjeYKqKyA7AzbZ/4sZLbW3vRnu
- rC39SWHNdRm7Mh3pnaD1wrHjfRN9iPktWSGuFJmQZyAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=X+T8wVqQwus44fQd3
- 2mad2+gobewZko/C7I8WYR4BCc=; b=vhZNqFixsJD//hbG02U9gqT72a2iAXWKL
- kg/G1JgWib3kIjIHykPSTH19jy8ud9Eu1Lwv23Lb948pQ98KBSwCAZbgiV9A8a0D
- 9ar2N6TLeLqqK9O0O8c4JwVqHoyWK0cnMHXVQqXL+VTpJ23TyfV8My4rIvGg/Ymf
- 6LKI2C3qA7yZ514WSQetgpaxORf/U7LZinMuHe7xqBzuwEr1I5UPs+ET7le3pMw5
- KYEechQWlDCn4BVEFnNUYYlr6GNSGnJIsXN1Se1xnv9TWVgAs1Mg+2DLIM9uj+el
- M8zSiLN1uUVZ7demZbXjr2ODTd+iINpim0XosK4XNOvzdlk2h8lFA==
-X-ME-Sender: <xms:CaqnXdMSWLD2eSKZL2xfJOwiCrytHxM0PERtFFXsos4u7WNy0WpuoQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrjeeigddvvdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
- dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
- ugdrrghuqeenucfkphepvddtvddrkedurddukedrfedtnecurfgrrhgrmhepmhgrihhlfh
- hrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:CaqnXUOLEixtuu4NhiApKm9hG3PN5q5ncbu23mer6H9GiOFUpQ3qjw>
- <xmx:CaqnXXRqcqregLemDcVN93p-tGkpkItgFyDuwlVIjmwDL8_Gu4jU7Q>
- <xmx:CaqnXeCUSiiyry-cPY6c4chEh92OmJB5AqDkVWPYz_-efAhEw2NI9A>
- <xmx:CaqnXQaYLxYv3BxaEaq4iuzhJfZXxLryEhRYDPq7vTiqOpilt7slIg>
-Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
- by mail.messagingengine.com (Postfix) with ESMTPA id 15E7CD60057;
- Wed, 16 Oct 2019 19:38:47 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 v3] soc: aspeed: Fail probe of lpc-ctrl if
- reserved memory is not aligned
-Date: Thu, 17 Oct 2019 10:09:50 +1030
-Message-Id: <20191016233950.10100-1-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46tqH96YTDzDqXs
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 11:07:31 +1100 (AEDT)
+Received: by mail-ed1-x532.google.com with SMTP id f20so206654edv.8
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Oct 2019 17:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=xDO2rF1IRiQCoquVEeY/Set8MyUtaDG7XPZ0wHz8eiA=;
+ b=R6PY7C5rS+KAg9KA677ZLmhvmUJoqd5MY9XHWXG10fV3Z8QKA9NFAnw/xysUUYHWev
+ awxp3bBU6c13M3ttz2v6c7PAb5sC3AJcc1NYRRVJYmkPTZv7fLbEMqRrFwodn8it+LDe
+ FfX8EW4SUg0WqBt/4+TTmqbqMIlLhMReVBFyfeEa+YubxJfZoJvBVLzmhwSCVipvNtiI
+ 9UFV8aONHewtrqvTbWBu4d9rezQFMmhasZ75ohOPAc8E37szyMFHOl+/bNsNwv6Nkzke
+ SZC8LSmlJLizN568Aoad5x47mQtTdGZqmb7kSUP0ucEXGC3vTZq6ZRZdqDOaqgL2+pg0
+ NkWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=xDO2rF1IRiQCoquVEeY/Set8MyUtaDG7XPZ0wHz8eiA=;
+ b=oLxX2bVuVndkBfKSGR0j8mpTp8+swUZc0QKuN42ZzUPV/fblsmNOXS5NeMMzp5radA
+ +SnTpCKzwlrlULSHyWgq8rGX2LWmgOPBW7ULBlXEwDkosPSh7etGYHigWIPAIOauge8L
+ Kvz5mNl/JUO8zGGRTjcJCqnC9jOh86VSfGJs9uf/HO/Y/296mQl76we7XEbFKOnkSfKK
+ EyK9IpZrs0M+v+X1kdAX99QwrtHT+nIE7CWcO5QnVCNItBMHVxeFBTcFXgmoqYhjmhTX
+ UkX5WnHtHlRsBP1NWdBtNzH9hox0G0/cUPsiZU3fipIKtHFT6ZuQnZUj3ZqAo7WtfzYj
+ ZHDA==
+X-Gm-Message-State: APjAAAV6BjQl2AXJ0tbYOj8GVlU+tALj/WxRQm5FJ/XteBoAHqLOwoqi
+ u5wkXhJHB88KQ7j+1ocfZz7aLRqAn7UNnC5BmiZsZl0xLn8=
+X-Google-Smtp-Source: APXvYqy9ohCmsW8Fr5M0dAmwSQM2ypdDBvcOaNZWCKw8tdJpBIB0133vwI1yYfg4lSdMbbLkhZIOXdsPA5CB+RIZtqs=
+X-Received: by 2002:a17:906:1942:: with SMTP id b2mr987117eje.36.1571270839795; 
+ Wed, 16 Oct 2019 17:07:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <33bfd87f4c3345d28be4e8c1d64f1437@SCL-EXCHMB-13.phoenix.com>
+ <CABoTLcSgz-_LJ3tZ70-WenCqWqv3Kknfsbe1qstKmoTiP2wqQA@mail.gmail.com>
+ <6ed83860-c187-4da8-9f2d-17deef391dae@www.fastmail.com>
+In-Reply-To: <6ed83860-c187-4da8-9f2d-17deef391dae@www.fastmail.com>
+From: Oskar Senft <osk@google.com>
+Date: Wed, 16 Oct 2019 20:07:03 -0400
+Message-ID: <CABoTLcQ3SbDbPwXkOqsDgy0F23fJ4yfK3t-eYE_DUw63mbEFaA@mail.gmail.com>
+Subject: Re: Recommendations for development platforms for the ASPEED AST2500
+ & AST2600?
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: multipart/alternative; boundary="00000000000041073d05951000f2"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,52 +75,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Alignment is a hardware constraint of the LPC2AHB bridge, and misaligned
-reserved memory will present as corrupted data.
+--00000000000041073d05951000f2
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
-v3: Remove stray dts change
-v2: Cosmetic fixes pointed out by Milton
+It's basically just the DTS. TYAN tried to upstream it and got a number of
+good review responses. However, I didn't have the time (yet) to go back and
+work on them.
 
- drivers/soc/aspeed/aspeed-lpc-ctrl.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+I'll see that I do that soon.
 
-diff --git a/drivers/soc/aspeed/aspeed-lpc-ctrl.c b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-index 12e4421dee37..f4ac14c40518 100644
---- a/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-+++ b/drivers/soc/aspeed/aspeed-lpc-ctrl.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include <linux/clk.h>
-+#include <linux/log2.h>
- #include <linux/mfd/syscon.h>
- #include <linux/miscdevice.h>
- #include <linux/mm.h>
-@@ -241,6 +242,18 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
- 
- 		lpc_ctrl->mem_size = resource_size(&resm);
- 		lpc_ctrl->mem_base = resm.start;
-+
-+		if (!is_power_of_2(lpc_ctrl->mem_size)) {
-+			dev_err(dev, "Reserved memory size must be a power of 2, got %zu\n",
-+			       lpc_ctrl->mem_size);
-+			return -EINVAL;
-+		}
-+
-+		if (!IS_ALIGNED(lpc_ctrl->mem_base, lpc_ctrl->mem_size)) {
-+			dev_err(dev, "Reserved memory must be naturally aligned for size %zu\n",
-+			       lpc_ctrl->mem_size);
-+			return -EINVAL;
-+		}
- 	}
- 
- 	lpc_ctrl->regmap = syscon_node_to_regmap(
--- 
-2.20.1
+Thanks for offering to help! I'll get back to you for feedback.
 
+Oskar.
+
+On Wed, Oct 16, 2019 at 7:19 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+
+>
+>
+> On Thu, 17 Oct 2019, at 02:14, Oskar Senft wrote:
+> > Hi Bruce
+> >
+> > I've had good experience with the TYAN S7106. We still need to upstream
+> > the DTS for the board, though (sorry, upstreaming is hard).
+>
+> How can we help with upstreaming your changes? Its better that they're
+> there
+> than out of tree / inaccessible to others.
+>
+> Andrew
+>
+
+--00000000000041073d05951000f2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">It&#39;s basically just the DTS. TYAN tri=
+ed to upstream it and got a number of good review responses. However, I did=
+n&#39;t have the time (yet) to go back and work on them.</div><div dir=3D"l=
+tr"><br></div><div dir=3D"ltr">I&#39;ll see that I do that soon.=C2=A0<br><=
+/div><div dir=3D"ltr"><br></div><div>Thanks for offering to help! I&#39;ll =
+get back to you for feedback.</div><div><br></div><div>Oskar.</div><br><div=
+ class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 16=
+, 2019 at 7:19 PM Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au">and=
+rew@aj.id.au</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex"><br>
+<br>
+On Thu, 17 Oct 2019, at 02:14, Oskar Senft wrote:<br>
+&gt; Hi Bruce<br>
+&gt; <br>
+&gt; I&#39;ve had good experience with the TYAN S7106. We still need to ups=
+tream <br>
+&gt; the DTS for the board, though (sorry, upstreaming is hard).<br>
+<br>
+How can we help with upstreaming your changes? Its better that they&#39;re =
+there<br>
+than out of tree / inaccessible to others.<br>
+<br>
+Andrew<br>
+</blockquote></div></div>
+
+--00000000000041073d05951000f2--
