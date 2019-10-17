@@ -1,64 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5A8EDB637
-	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 20:31:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2D23DB6B5
+	for <lists+openbmc@lfdr.de>; Thu, 17 Oct 2019 21:00:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46vHnG6N72zDqck
-	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 05:31:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46vJQj43RbzDqcv
+	for <lists+openbmc@lfdr.de>; Fri, 18 Oct 2019 06:00:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::634;
- helo=mail-pl1-x634.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="bBccaUuQ"; 
- dkim-atps=neutral
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
- [IPv6:2607:f8b0:4864:20::634])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46vHmL3vYmzDqZx
- for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2019 05:30:56 +1100 (AEDT)
-Received: by mail-pl1-x634.google.com with SMTP id d22so1529483pll.7
- for <openbmc@lists.ozlabs.org>; Thu, 17 Oct 2019 11:30:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=/n9yxBncjdm4QXWDvMuAzRh2FaFSLEV1Y+zcmGYTEo4=;
- b=bBccaUuQpubkhKiIh9cYTaMUO0U1EhbulrsnMVAFn/Yh66ny6BHgIByFohks4KJ0WX
- ciUDccEWYrvsb1Ob2xcKsvs+TIbiIYIucikN9K2/jovH5nIptPAq4eeah0jgYfE6ZMm/
- weQ+0EigjC+qpv/ELjzL2BiN3HIfIJh1XPxcS74ajv7PlqGWyuUWa90Wy5lgYrCd8W9G
- BZO4KdBfzWRt0UEhVdFBbutEd7NuXnrl0vrwops47prICUv/LN/plXa2UOjquEQfQ/VA
- J9aHjLhBfRTO9EkKYTi4uxQD6tizsucKjQkvTAKDYo/E4bDtfJCN/NfM5nZ6f/xlvFx7
- jGBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=/n9yxBncjdm4QXWDvMuAzRh2FaFSLEV1Y+zcmGYTEo4=;
- b=EfsZryZaxq1PoqXmAoGs3vW6wuLoTZF2W6D4QsnMgn5GRQHg7WxBc5kjj53BxnBtGZ
- 74+i5lrh3lY5ZhnqLCNPEz1Jbc9PNRCvOHUcvyMBCP7zhlcXkyU/evLlRYZUrSRXPVRg
- +74JZCUbTlYUDVfeMxqNxYscmP2GGW90PKiZvEuyY9TkSBe2ez51RmsLFkNaZfnw/fdK
- yGVSJCxaUtNCRWyb68awEHYifX+CZsVTc6fB5VcDw6+k28kczNAYri3pYgY9QJNpR4BD
- vf1zncDQCzE0JgXUOnSRsl2v8ah10dc5cAFKmJfDY8yqfQ+h/OmKjHKNYnZ/PIQG8aMF
- Dk2g==
-X-Gm-Message-State: APjAAAWsduwRIfJ6iV05YUtBmObYjSJvCZdUsvNACKBNZ/1EkVHlHDS4
- Q7yhZeS4M4Ip58nHz13fVxShAyA0Z6eu5kZJLD/VSQ==
-X-Google-Smtp-Source: APXvYqwQLdiD2suL3rknOBS86ZhEW54Iu/TperhxVw7z7OWNv09ASRCgVb8Qlo3DFFoewmIBL8u1R1W/3h+7fw2VWio=
-X-Received: by 2002:a17:902:9b83:: with SMTP id
- y3mr5352546plp.179.1571337053294; 
- Thu, 17 Oct 2019 11:30:53 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46vJPs4ldWzDqch
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Oct 2019 06:00:00 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 17 Oct 2019 11:59:57 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,308,1566889200"; d="scan'208";a="371229501"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga005.jf.intel.com with ESMTP; 17 Oct 2019 11:59:57 -0700
+Subject: Re: DbusVariant insufficient for complex tree entries
+To: Patrick Venture <venture@google.com>
+References: <CAO=notxEVLf-TLqh8EHwcuU5EViBy-o8pHFdO13TNQDn=heXpw@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <b1ab0298-760b-dd4e-aa5c-272b4584d5fa@linux.intel.com>
+Date: Thu, 17 Oct 2019 11:59:56 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Thu, 17 Oct 2019 11:30:41 -0700
-Message-ID: <CAO=notxEVLf-TLqh8EHwcuU5EViBy-o8pHFdO13TNQDn=heXpw@mail.gmail.com>
-Subject: DbusVariant insufficient for complex tree entries
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAO=notxEVLf-TLqh8EHwcuU5EViBy-o8pHFdO13TNQDn=heXpw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,28 +57,46 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-James;
+On 10/17/19 11:30 AM, Patrick Venture wrote:
+> James;
+> 
+> I wanted to validate the problem I'm hitting reading the Association
+> vector<tuple<s,s,s,>>:
+> 
+> using SensorMap = std::map<std::string, std::map<std::string, DbusVariant>>;
+> 
+> I'm using the SensorMap to read out the Association interface:
+>   sensorMap.find("xyz.openbmc_project.Association.Definitions");
+> 
+> This is fine, as it holds a map<string, DbusVariant> --> except, it
+> doesn't, because DbusVariant only holds the basic dbus types.  I was
+> curious if there was a way you recommended to deal with this?
+> 
+> I could individually request that interface against the path and
+> connection, introspect, and then use my own receiving structure - but
+> it seems a waste to double-grab it.
+> 
+> I could add the complex type array(tuple<s,s,s,>) to DbusVariant to
+> allow for this, but -- that seems a bit ugly.
 
-I wanted to validate the problem I'm hitting reading the Association
-vector<tuple<s,s,s,>>:
+This is all my opinion, but perfect world.. you would just always 
+request the types that you think are possible. I think the 
+implementation of DbusVariant has too many types as is, and is 
+overused.. but this is  a common practice and adding the association 
+type to DbusVariant is probably the best solution. Either that or 
+reworking SensorMap to be a map<string, 
+std::variant<types-that-we-care-about>>... but I wouldn't expect anyone 
+to do that. I think the DbusVariant came to live because of the old 
+namespace of the variant being so long, and people not wanting to have 
+to type so much when they just wanted a variant.
 
-using SensorMap = std::map<std::string, std::map<std::string, DbusVariant>>;
+fwiw phosphor-ipmi-host does the same thing with their Value type.
 
-I'm using the SensorMap to read out the Association interface:
- sensorMap.find("xyz.openbmc_project.Association.Definitions");
+-James
 
-This is fine, as it holds a map<string, DbusVariant> --> except, it
-doesn't, because DbusVariant only holds the basic dbus types.  I was
-curious if there was a way you recommended to deal with this?
-
-I could individually request that interface against the path and
-connection, introspect, and then use my own receiving structure - but
-it seems a waste to double-grab it.
-
-I could add the complex type array(tuple<s,s,s,>) to DbusVariant to
-allow for this, but -- that seems a bit ugly.
-
-Any suggestions?
-
-Thanks,
-Patrick
+> 
+> Any suggestions?
+> 
+> Thanks,
+> Patrick
+> 
