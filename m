@@ -2,67 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D621DF793
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 23:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DBE2FDF7CD
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 23:58:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46xqsF6cZMzDqKS
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 08:44:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46xrB216ZLzDqL4
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 08:58:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::834;
- helo=mail-qt1-x834.google.com; envelope-from=emilyshaffer@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="np296v50"; 
- dkim-atps=neutral
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com
- [IPv6:2607:f8b0:4864:20::834])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46xqrN0qm3zDqK9
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 08:43:15 +1100 (AEDT)
-Received: by mail-qt1-x834.google.com with SMTP id u22so23496971qtq.13
- for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2019 14:43:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iyVEhRYwCi5Zcb2if/+F5T/oipMzPbnus+WfO7AOHLM=;
- b=np296v500Lv4+jraOTCWDcY986ZrPT5EolUo6M5dfYmbCWm/qlnmCfx6sHudMkMmyt
- Z7o+05nJFkcPdlnNAhr7oIomHjNPPPb5fgg6gqhwTQ7PearCU4+bgoW5YTcC9M9nS03e
- XOLReQin+/Fb0LKEV+C6l4KwD6VNO+7b39nc52+mp2qNQX1Tj+9UeQYR3HhnjxpSRUYk
- oMg/XFfAwBIaENvuSQw8tXQski60KqTqFgr4vunflMyqmYySn1ogvXVlw+o1mdRh7eM7
- Pq+69rIWtrOHKJH58cmO7ShAt3EeKO8sypgNmQFycQNeQ0xU9x/RfNhkC5mu5QzvdKKB
- PUfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iyVEhRYwCi5Zcb2if/+F5T/oipMzPbnus+WfO7AOHLM=;
- b=szvzZ31AsmASnczTiip2uzyq5cQkysBvBzgsAy93O8a4LE//qoDOCUtBg3g9Sv4xW7
- OaOerNffIVHBJG2SPZZfILgE15zxRHBP+LRrrKpxtCTICnb+7rxp8Q1tB1EeEsC7TYbW
- cJuale+NrbaX24O9u8MzYyjEd4THLDX5i6WtOQoaOPzffXPQJ83yd90MDFhiQAYli15n
- ZWlYXxI/x/jl7Tme3HsDzqoKqBFKBGAU31/RY00RKhI0QfXHGH0hZtQi+m+Vgnw59NA4
- MqShvY8beMIlWZbKAXyxULuN+ydL0lmsDmroHjgiSsXTvmSACwGXD81xkXkiqnwXotQB
- ulnw==
-X-Gm-Message-State: APjAAAU3NbzOyXqhiIjwALNW4PfK8MG9Z1LAK3zx7oUW1+ESEIVDP+M/
- GR95ca0FZrIE8MHT6X0KPQBR0pLqXIDA2fLJr445pA==
-X-Google-Smtp-Source: APXvYqzKx0KZ2E6AIpCqO7SBLtzNAawjj3jymecytf43ReUfNA/CCg5Tbb0VSGAU7/Mqq3z0BZ3F5pf88YSV6uxeYps=
-X-Received: by 2002:a0c:d610:: with SMTP id c16mr25348586qvj.229.1571694191082; 
- Mon, 21 Oct 2019 14:43:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46xr974lkYzDqKs;
+ Tue, 22 Oct 2019 08:57:46 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2019 14:57:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="209472729"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
+ ([10.7.153.143])
+ by orsmga002.jf.intel.com with ESMTP; 21 Oct 2019 14:57:43 -0700
+Subject: Re: [PATCH i2c-next 1/2] dt-bindings: i2c: aspeed: add hardware
+ timeout support
+To: Peter Rosin <peda@axentia.se>, Brendan Higgins
+ <brendanhiggins@google.com>, Wolfram Sang <wsa@the-dreams.de>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
+References: <20191021202414.17484-1-jae.hyun.yoo@linux.intel.com>
+ <20191021202414.17484-2-jae.hyun.yoo@linux.intel.com>
+ <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <7abf933b-cb18-10af-9c1b-163ec65ffae5@linux.intel.com>
+Date: Mon, 21 Oct 2019 14:57:43 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <27c9e9df-6d1f-5fce-ed88-57d9cbfa71f9@intel.com>
- <CAO=notz3bML97-cS42Y9J2t-7eFdXpeMj0kBoCUeRBt8--wS1A@mail.gmail.com>
- <CADfYTpFti3aGjnWY4C7AYp64tWmMT_TSY3SGJgxJyhCjC-4KGw@mail.gmail.com>
-In-Reply-To: <CADfYTpFti3aGjnWY4C7AYp64tWmMT_TSY3SGJgxJyhCjC-4KGw@mail.gmail.com>
-From: Emily Shaffer <emilyshaffer@google.com>
-Date: Mon, 21 Oct 2019 14:42:58 -0700
-Message-ID: <CAJoAoZ=8C1aEmn=nXqs17Qy4itqSNVrS5zJzDLRn_o2_gjbhfw@mail.gmail.com>
-Subject: Re: It's been fun
-To: Nancy Yuen <yuenn@google.com>
-Content-Type: multipart/alternative; boundary="000000000000f50bde0595729168"
+In-Reply-To: <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,110 +62,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed.tanous@intel.com>
+Cc: "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000f50bde0595729168
-Content-Type: text/plain; charset="UTF-8"
+Hi Peter,
 
-Good luck on your next adventure Ed! It was great working with you.
-
-Emily
-
-On Mon, Oct 21, 2019, 1:50 PM Nancy Yuen <yuenn@google.com> wrote:
-
-> Good luck Ed!
-> ----------
-> Nancy
->
->
-> On Mon, Oct 21, 2019 at 1:41 PM Patrick Venture <venture@google.com>
-> wrote:
->
->> On Mon, Oct 21, 2019 at 1:34 PM Ed Tanous <ed.tanous@intel.com> wrote:
->> >
->> > All,
->> >
->> > This week will be my last week at Intel.  I'll be moving onto something
->> > else non-OpenBMC related for a bit;  While I may check in on the project
->> > from time to time, it's going to stop being my day job.
->> >
->> > You'll still be able to reach me at my other email, ed@tanous.net, and
->> > several key people across the project including the TSC have my cell
->> > number if there's some unknown OpenBMC "emergency", but I doubt that's
->> > going to be needed.  Functionally, I've made sure that every repo I
->> > maintain has backup maintainers, so as of the 25th, it will fall to
->> > those individuals to do new reviews for those individual repos.  I'll be
->> > pushing updates to the MAINTAINERS files shortly to that effect.
->> >
->> > Thanks you for all the patches, ideas, reviews, and merges that others
->> > have done for me over the last couple years.
+On 10/21/2019 2:05 PM, Peter Rosin wrote:
+> On 2019-10-21 22:24, Jae Hyun Yoo wrote:
+>> Append a binding to support hardware timeout feature.
 >>
->> It's been swell, good luck!
+>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> ---
+>>   Documentation/devicetree/bindings/i2c/i2c-aspeed.txt | 2 ++
+>>   1 file changed, 2 insertions(+)
 >>
->> >
->> > Until we meet again,
->> >
->> > -Ed
+>> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+>> index b47f6ccb196a..133bfedf4cdd 100644
+>> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+>> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+>> @@ -17,6 +17,8 @@ Optional Properties:
+>>   - bus-frequency	: frequency of the bus clock in Hz defaults to 100 kHz when not
+>>   		  specified
+>>   - multi-master	: states that there is another master active on this bus.
+>> +- aspeed,hw-timeout-ms	: Hardware timeout in milliseconds. If it's not
+>> +			  specified, the H/W timeout feature will be disabled.
+>>   
+>>   Example:
+>>   
 >>
->
+> 
+> Some SMBus clients support a smbus-timeout-disable binding for disabling
+> timeouts like this, for cases where the I2C adapter in question on occasion
+> is unable to keep the pace. Adding that property thus avoids undesired
+> timeouts when the client is SMBus conformant without it. Your new binding
+> is the reverse situation, where you want to add a timeout where one is
+> otherwise missing.
+> 
+> Anyway, since I2C does not have a specified lowest possible frequency, this
+> feels like something that is more in the SMBus arena. Should the property
+> perhaps be a generic property named smbus-timeout-ms, or something like
+> that?
 
---000000000000f50bde0595729168
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Well, I tried upstreaming of the generic timeout property a year ago but
+I agreed that the generic bus timeout property can be set by an ioctl
+command so it didn't need to be added into device tree at that time. Not
+sure if any need has come recently but I haven't heard that. This driver
+still uses the generic timeout property which is provided by i2c core
+for handling command timeouts, and it's out of scope from this patch
+series.
 
-<div dir=3D"auto">Good luck on your next adventure Ed! It was great working=
- with you.<div dir=3D"auto"><br></div><div dir=3D"auto">Emily</div></div><b=
-r><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, =
-Oct 21, 2019, 1:50 PM Nancy Yuen &lt;<a href=3D"mailto:yuenn@google.com">yu=
-enn@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div =
-dir=3D"ltr">Good luck Ed!<br clear=3D"all"><div><div dir=3D"ltr" data-smart=
-mail=3D"gmail_signature">----------<br>Nancy</div></div><br></div><br><div =
-class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Oct 21,=
- 2019 at 1:41 PM Patrick Venture &lt;<a href=3D"mailto:venture@google.com" =
-target=3D"_blank" rel=3D"noreferrer">venture@google.com</a>&gt; wrote:<br><=
-/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
-rder-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Oct 21, 2019=
- at 1:34 PM Ed Tanous &lt;<a href=3D"mailto:ed.tanous@intel.com" target=3D"=
-_blank" rel=3D"noreferrer">ed.tanous@intel.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; All,<br>
-&gt;<br>
-&gt; This week will be my last week at Intel.=C2=A0 I&#39;ll be moving onto=
- something<br>
-&gt; else non-OpenBMC related for a bit;=C2=A0 While I may check in on the =
-project<br>
-&gt; from time to time, it&#39;s going to stop being my day job.<br>
-&gt;<br>
-&gt; You&#39;ll still be able to reach me at my other email, <a href=3D"mai=
-lto:ed@tanous.net" target=3D"_blank" rel=3D"noreferrer">ed@tanous.net</a>, =
-and<br>
-&gt; several key people across the project including the TSC have my cell<b=
-r>
-&gt; number if there&#39;s some unknown OpenBMC &quot;emergency&quot;, but =
-I doubt that&#39;s<br>
-&gt; going to be needed.=C2=A0 Functionally, I&#39;ve made sure that every =
-repo I<br>
-&gt; maintain has backup maintainers, so as of the 25th, it will fall to<br=
->
-&gt; those individuals to do new reviews for those individual repos.=C2=A0 =
-I&#39;ll be<br>
-&gt; pushing updates to the MAINTAINERS files shortly to that effect.<br>
-&gt;<br>
-&gt; Thanks you for all the patches, ideas, reviews, and merges that others=
-<br>
-&gt; have done for me over the last couple years.<br>
-<br>
-It&#39;s been swell, good luck!<br>
-<br>
-&gt;<br>
-&gt; Until we meet again,<br>
-&gt;<br>
-&gt; -Ed<br>
-</blockquote></div>
-</blockquote></div>
+> If the above is not wanted or appropriate, then I would personally prefer
+> aspeed,bus-timeout-ms over aspeed,hw-timeout-ms. To me, hw-timeout-ms sounds
+> like a (more serious) timeout between the CPU and the I2C peripheral unit
+> or something like that. But I don't care deeply...
 
---000000000000f50bde0595729168--
+Changes I submitted in this patch set is for a different purpose which
+is very Aspeed H/W specific, and actually it's a more serious timeout
+setting indeed. If this H/W is used in multi-master environment, it
+could meet a H/W hang that freezes itself in slave mode and it can't
+escape from the state. To resolve the specific case, this H/W provides
+self-recovery feature which monitors abnormal state of SDA, SCL and its
+H/W state machine using the timeout setting to determine the escape
+condition.
+
+Generally, this H/W timeout value is smaller than the generic bus
+timeout value (I'm using 300ms for the H/W timeout while I'm using 1
+second for the generic bus timeout) so I think it should be
+distinguished from the generic bus timeout.
+
+Thanks,
+
+Jae
