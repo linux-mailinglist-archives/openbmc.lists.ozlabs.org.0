@@ -1,56 +1,131 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBE2FDF7CD
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 23:58:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA9E4DF803
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 00:31:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46xrB216ZLzDqL4
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 08:58:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46xrvz1NlZzDqLh
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 09:31:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=5197cf6ead=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="V6RAxMuo"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="bWOP8vgp"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46xr974lkYzDqKs;
- Tue, 22 Oct 2019 08:57:46 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 21 Oct 2019 14:57:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.67,325,1566889200"; d="scan'208";a="209472729"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
- ([10.7.153.143])
- by orsmga002.jf.intel.com with ESMTP; 21 Oct 2019 14:57:43 -0700
-Subject: Re: [PATCH i2c-next 1/2] dt-bindings: i2c: aspeed: add hardware
- timeout support
-To: Peter Rosin <peda@axentia.se>, Brendan Higgins
- <brendanhiggins@google.com>, Wolfram Sang <wsa@the-dreams.de>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
- Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
-References: <20191021202414.17484-1-jae.hyun.yoo@linux.intel.com>
- <20191021202414.17484-2-jae.hyun.yoo@linux.intel.com>
- <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <7abf933b-cb18-10af-9c1b-163ec65ffae5@linux.intel.com>
-Date: Mon, 21 Oct 2019 14:57:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-MIME-Version: 1.0
-In-Reply-To: <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46xrv545jzzDqHY
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 09:30:34 +1100 (AEDT)
+Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
+ by m0001303.ppops.net (8.16.0.42/8.16.0.42) with SMTP id x9LMRHOw005073;
+ Mon, 21 Oct 2019 15:30:30 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=cw7VcQ077hD4QmgqC6HIhzlOZZ5OEmNh3lQPujFs/rI=;
+ b=V6RAxMuoTywBL4rVjvwy2uVS7fmFEKi5URcC0drRw8Rh1JIKw1VoAuaNd3kv2SG4nlow
+ PEqH+XK/cyGoX7gXNQ+7Zw7qQwurDn/BDdgHoOIdAXVj/d0rKQ4kwKga1BEcVlWQF9I7
+ Pha543PM4J1B269RA1L+siybyy5hV6YEnvM= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by m0001303.ppops.net with ESMTP id 2vqx5ns9cs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Mon, 21 Oct 2019 15:30:29 -0700
+Received: from ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) by
+ ash-exhub102.TheFacebook.com (2620:10d:c0a8:82::f) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Mon, 21 Oct 2019 15:30:29 -0700
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.175) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Mon, 21 Oct 2019 15:30:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=G0exIItPNjTc+3AiS4OuQQDOXruwdjMG0e8AmHUhsL31C7/hjZDI9gtGskHuGb865ee8MakEU7tefcMnO13prSFQiV1FrCA376/QlVv6vRLUhhRexaL0pgwOFuzK3gQSrALjJmdHJXMBvwf9vMjSMjtO78oV1z5UrBSAxJZ3Ah/SnszPZpF6TRFP3s5yFCutngqLZAZO79P98jWN1I0VzC0IhCeQoVLxNfuStuBUSPKg68OBNdcTSYShg/Jx6eZqFjQB7zVmN3yCA0ejcbYmWSPS5zXgg9fimQNkaFPXWyEZchWm5E0BNKNPXDZNSXRtErYl+Bc5o+6pdb0H0G8etQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cw7VcQ077hD4QmgqC6HIhzlOZZ5OEmNh3lQPujFs/rI=;
+ b=c0Cf1tuU28pmbjH7RLSFoxkJThPTQnnYJFw8Y8R8BHTXzGIBLdTEWHL7+cXXpzV8YUx30Oee83c8NjEjBaENY3fJ3uk3QVSBzYc3+6H0xBNWyFXgewZ1OGNySkSDxfxY/3eTOVGB0Udw1VW6U+mj38O8BbBrCsGdFcGXxg9w/87l3LFR/JSEDFWiAaPCVbl+bVHuF7jVvV9vJmuL7YVmkEFosCBc6Kvdedizho284imj1Rdj0VfpDh63an2tDyylu4mUQHJvTwkbTTPiOTDdf19SYihM3E36ry6cXDefJQX4feylC2UD/gX+8liWS5oqH0+5wBarUZ/yLYm+5m2FkA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cw7VcQ077hD4QmgqC6HIhzlOZZ5OEmNh3lQPujFs/rI=;
+ b=bWOP8vgpsXhpSgj8CpS2C5BvY0zmq/uB8ISDTz4Xcnf6A3lRArs2tTMBHM+I4jnuSbriFKyR8n2CLhS9LOwrlxiGxuSY9N++j9cxmUcgM8jXSUqCoFQDbDiG3ZEeGocTzrEzts14IyG3UqnHxDFn3b0PbE9MuzxwWH2thBpChq4=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3571.namprd15.prod.outlook.com (52.133.252.96) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2347.18; Mon, 21 Oct 2019 22:30:28 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::7887:4f9c:70df:285c%4]) with mapi id 15.20.2347.029; Mon, 21 Oct 2019
+ 22:30:28 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Ed Tanous <ed.tanous@intel.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: It's been fun
+Thread-Topic: It's been fun
+Thread-Index: AQHViE8WTUag1CxA2ESi3hfOf4A2dqdlOE+A
+Date: Mon, 21 Oct 2019 22:30:27 +0000
+Message-ID: <B3180A82-CE73-451A-8C6B-B05D195739CE@fb.com>
+References: <27c9e9df-6d1f-5fce-ed88-57d9cbfa71f9@intel.com>
+In-Reply-To: <27c9e9df-6d1f-5fce-ed88-57d9cbfa71f9@intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:e2e8]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e987bcc5-462c-40b7-d02f-08d756764651
+x-ms-traffictypediagnostic: BY5PR15MB3571:
+x-microsoft-antispam-prvs: <BY5PR15MB357154E3A4E928DF0069484FDD690@BY5PR15MB3571.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 0197AFBD92
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(39860400002)(396003)(136003)(346002)(366004)(199004)(189003)(446003)(11346002)(99286004)(2501003)(102836004)(2616005)(76116006)(316002)(91956017)(66446008)(66476007)(66556008)(64756008)(476003)(186003)(36756003)(486006)(71200400001)(66946007)(3480700005)(46003)(71190400001)(8676002)(110136005)(8936002)(76176011)(5660300002)(6506007)(4744005)(81166006)(33656002)(81156014)(6116002)(25786009)(6512007)(86362001)(2906002)(305945005)(7736002)(6246003)(478600001)(229853002)(256004)(14454004)(6486002)(6436002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3571;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Rp4u42+9PgPGOGLWeHuCWxu0cedqngJAvKFjN81TuO/h9eQh6YE8VLi5w4wwYttbJZZNXKkeJZsCve30qe2E7Yx9d0Km8Y0VJi4ad04mbQwDFi1T/+HhdNjOYCLWPeDsTMgaQN8HYqhCHRL7UuJZHzBZsuE9B3GLe3Hw8B7Nft0fy0Ar2ceOV9AH+ZRKYKweZSatY9ZhzxyqyopI0Z1Fvbf+gmLcQQGpOvAVFfFKKe+kBHECcjcQk0RVZXv1ET1NYaNONxvkyS7IwB3zPBlM7U+An+NAYsoSODUs7Jbt7ich45wBEe1zoBdIS4pohd8RAFFgzMFrKqq9toNKx1R9KQPJtaN/aeyCrB7mqx+U1GC5Eo7RSirMmLuCbCoT16eOKSU4B/L/v5bDav0nnEgov3n+FS3Lcq/GPVtsbsy3jC3gKOV0qI0jEnbaaenD6k3n
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A45A75C734B12F41ABF9FFE043B156F6@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: e987bcc5-462c-40b7-d02f-08d756764651
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Oct 2019 22:30:27.9852 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sg6Lzk3LELykTO06YTHJcqt6wlzOe7T15IkEYatHu/tkX5CI4xioh11BIOiXPLqHwk+jP5WRGrnZFzuq4p5Kng==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3571
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-10-21_06:2019-10-21,2019-10-21 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ clxscore=1015
+ phishscore=0 mlxscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 adultscore=0 suspectscore=0 mlxlogscore=999
+ priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1908290000 definitions=main-1910210211
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,80 +137,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Peter,
-
-On 10/21/2019 2:05 PM, Peter Rosin wrote:
-> On 2019-10-21 22:24, Jae Hyun Yoo wrote:
->> Append a binding to support hardware timeout feature.
->>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> ---
->>   Documentation/devicetree/bindings/i2c/i2c-aspeed.txt | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->> index b47f6ccb196a..133bfedf4cdd 100644
->> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
->> @@ -17,6 +17,8 @@ Optional Properties:
->>   - bus-frequency	: frequency of the bus clock in Hz defaults to 100 kHz when not
->>   		  specified
->>   - multi-master	: states that there is another master active on this bus.
->> +- aspeed,hw-timeout-ms	: Hardware timeout in milliseconds. If it's not
->> +			  specified, the H/W timeout feature will be disabled.
->>   
->>   Example:
->>   
->>
-> 
-> Some SMBus clients support a smbus-timeout-disable binding for disabling
-> timeouts like this, for cases where the I2C adapter in question on occasion
-> is unable to keep the pace. Adding that property thus avoids undesired
-> timeouts when the client is SMBus conformant without it. Your new binding
-> is the reverse situation, where you want to add a timeout where one is
-> otherwise missing.
-> 
-> Anyway, since I2C does not have a specified lowest possible frequency, this
-> feels like something that is more in the SMBus arena. Should the property
-> perhaps be a generic property named smbus-timeout-ms, or something like
-> that?
-
-Well, I tried upstreaming of the generic timeout property a year ago but
-I agreed that the generic bus timeout property can be set by an ioctl
-command so it didn't need to be added into device tree at that time. Not
-sure if any need has come recently but I haven't heard that. This driver
-still uses the generic timeout property which is provided by i2c core
-for handling command timeouts, and it's out of scope from this patch
-series.
-
-> If the above is not wanted or appropriate, then I would personally prefer
-> aspeed,bus-timeout-ms over aspeed,hw-timeout-ms. To me, hw-timeout-ms sounds
-> like a (more serious) timeout between the CPU and the I2C peripheral unit
-> or something like that. But I don't care deeply...
-
-Changes I submitted in this patch set is for a different purpose which
-is very Aspeed H/W specific, and actually it's a more serious timeout
-setting indeed. If this H/W is used in multi-master environment, it
-could meet a H/W hang that freezes itself in slave mode and it can't
-escape from the state. To resolve the specific case, this H/W provides
-self-recovery feature which monitors abnormal state of SDA, SCL and its
-H/W state machine using the timeout setting to determine the escape
-condition.
-
-Generally, this H/W timeout value is smaller than the generic bus
-timeout value (I'm using 300ms for the H/W timeout while I'm using 1
-second for the generic bus timeout) so I think it should be
-distinguished from the generic bus timeout.
-
-Thanks,
-
-Jae
+R29vZCBsdWNrIEVkLCBJdCB3YXMgcmVhbGx5IGdyZWF0IHdvcmtpbmcgd2l0aCB5b3UuDQpJIGFt
+IHN1cmUgd2Ugd2lsbCBjcm9zcyBhZ2Fpbi4NCg0K77u/T24gMTAvMjEvMTksIDE6MzUgUE0sICJv
+cGVuYm1jIG9uIGJlaGFsZiBvZiBFZCBUYW5vdXMiIDxvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVt
+a2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcgb24gYmVoYWxmIG9mIGVkLnRhbm91c0BpbnRlbC5j
+b20+IHdyb3RlOg0KDQogICAgQWxsLA0KICAgIA0KICAgIFRoaXMgd2VlayB3aWxsIGJlIG15IGxh
+c3Qgd2VlayBhdCBJbnRlbC4gIEknbGwgYmUgbW92aW5nIG9udG8gc29tZXRoaW5nDQogICAgZWxz
+ZSBub24tT3BlbkJNQyByZWxhdGVkIGZvciBhIGJpdDsgIFdoaWxlIEkgbWF5IGNoZWNrIGluIG9u
+IHRoZSBwcm9qZWN0DQogICAgZnJvbSB0aW1lIHRvIHRpbWUsIGl0J3MgZ29pbmcgdG8gc3RvcCBi
+ZWluZyBteSBkYXkgam9iLg0KICAgIA0KICAgIFlvdSdsbCBzdGlsbCBiZSBhYmxlIHRvIHJlYWNo
+IG1lIGF0IG15IG90aGVyIGVtYWlsLCBlZEB0YW5vdXMubmV0LCBhbmQNCiAgICBzZXZlcmFsIGtl
+eSBwZW9wbGUgYWNyb3NzIHRoZSBwcm9qZWN0IGluY2x1ZGluZyB0aGUgVFNDIGhhdmUgbXkgY2Vs
+bA0KICAgIG51bWJlciBpZiB0aGVyZSdzIHNvbWUgdW5rbm93biBPcGVuQk1DICJlbWVyZ2VuY3ki
+LCBidXQgSSBkb3VidCB0aGF0J3MNCiAgICBnb2luZyB0byBiZSBuZWVkZWQuICBGdW5jdGlvbmFs
+bHksIEkndmUgbWFkZSBzdXJlIHRoYXQgZXZlcnkgcmVwbyBJDQogICAgbWFpbnRhaW4gaGFzIGJh
+Y2t1cCBtYWludGFpbmVycywgc28gYXMgb2YgdGhlIDI1dGgsIGl0IHdpbGwgZmFsbCB0bw0KICAg
+IHRob3NlIGluZGl2aWR1YWxzIHRvIGRvIG5ldyByZXZpZXdzIGZvciB0aG9zZSBpbmRpdmlkdWFs
+IHJlcG9zLiAgSSdsbCBiZQ0KICAgIHB1c2hpbmcgdXBkYXRlcyB0byB0aGUgTUFJTlRBSU5FUlMg
+ZmlsZXMgc2hvcnRseSB0byB0aGF0IGVmZmVjdC4NCiAgICANCiAgICBUaGFua3MgeW91IGZvciBh
+bGwgdGhlIHBhdGNoZXMsIGlkZWFzLCByZXZpZXdzLCBhbmQgbWVyZ2VzIHRoYXQgb3RoZXJzDQog
+ICAgaGF2ZSBkb25lIGZvciBtZSBvdmVyIHRoZSBsYXN0IGNvdXBsZSB5ZWFycy4NCiAgICANCiAg
+ICBVbnRpbCB3ZSBtZWV0IGFnYWluLA0KICAgIA0KICAgIC1FZA0KICAgIA0KDQo=
