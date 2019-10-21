@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8561DDF656
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 21:54:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 085AFDF64D
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 21:51:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46xnQP0HQ6zDqCk
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 06:54:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46xnMw1lq2zDqL5
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 06:51:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,34 +16,34 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=fb.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="giqPn43u"; 
+ unprotected) header.d=fb.com header.i=@fb.com header.b="AVb/ovoE"; 
  dkim-atps=neutral
 Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
  [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46xnKB0cXlzDqL8
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 06:49:33 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46xnKD11HpzDqJg
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 06:49:35 +1100 (AEDT)
 Received: from pps.filterd (m0089730.ppops.net [127.0.0.1])
- by m0089730.ppops.net (8.16.0.42/8.16.0.42) with SMTP id x9LJnMTt020288
- for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2019 12:49:32 -0700
+ by m0089730.ppops.net (8.16.0.42/8.16.0.42) with SMTP id x9LJnMFR020315
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2019 12:49:33 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
- content-type; s=facebook; bh=bZZBgfxZmiuMICrLj5dloSW3YcH6/5xKkjiVrQLsRvw=;
- b=giqPn43uzjIo2JcLIYm0TXYKEzsBuT6JQRHjm19+GqAcOCwiTrmEnZVvy0a1Sc4eE3Xf
- ZnV76uyRmz2EFcq0t2aEnPtVNXAoCVL5MUtwAX0068Mp3oyKtd1ukeOO57r9vsqZc4ga
- CV/WLRyb+cX/GNgAbMTUuMbg9nWTjDTdQzM= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by m0089730.ppops.net with ESMTP id 2vqwyygnhc-7
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2019 12:49:31 -0700
-Received: from 2401:db00:30:600c:face:0:1f:0 (2620:10d:c081:10::13) by
- mail.thefacebook.com (2620:10d:c081:35::126) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.1.1713.5;
- Mon, 21 Oct 2019 12:49:20 -0700
+ content-type; s=facebook; bh=NcbL8nY8z7Y/EYpmb1t/mRKcXOScOsowU76+bNY+y98=;
+ b=AVb/ovoEWgU+jtRDJhfcnOWSJy36alT2HxQkIbmLR2IBwlb6ISRUx2vPRdaUp6qm9VOw
+ 9+psoQqf4GFmNtCCXW9RkhyxdhgRvJEMi4k/b3YcK9I4+8W/01gTdw5/+xtWUB9tW6QX
+ yZ0a7tOtSt6Q9vY0Zlqt1JOvTekgbevmn4s= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by m0089730.ppops.net with ESMTP id 2vqwyygnh2-15
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Oct 2019 12:49:33 -0700
+Received: from 2401:db00:2120:81ca:face:0:31:0 (2620:10d:c0a8:1b::d) by
+ mail.thefacebook.com (2620:10d:c0a8:83::6) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Mon, 21 Oct 2019 12:49:20 -0700
 Received: by devvm1794.vll1.facebook.com (Postfix, from userid 150176)
- id 01AF564C3CB6; Mon, 21 Oct 2019 12:49:20 -0700 (PDT)
+ id 05D8364C3CB8; Mon, 21 Oct 2019 12:49:20 -0700 (PDT)
 Smtp-Origin-Hostprefix: devvm
 From: Tao Ren <taoren@fb.com>
 Smtp-Origin-Hostname: devvm1794.vll1.facebook.com
@@ -53,10 +53,10 @@ To: Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>
 Smtp-Origin-Cluster: vll1c12
-Subject: [PATCH 2/4] ARM: dts: aspeed: cmm: include dtsi for common network
- BMC devices
-Date: Mon, 21 Oct 2019 12:48:18 -0700
-Message-ID: <20191021194820.293556-3-taoren@fb.com>
+Subject: [PATCH 3/4] ARM: dts: aspeed: minipack: include dtsi for common
+ network BMC devices
+Date: Mon, 21 Oct 2019 12:48:19 -0700
+Message-ID: <20191021194820.293556-4-taoren@fb.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191021194820.293556-1-taoren@fb.com>
 References: <20191021194820.293556-1-taoren@fb.com>
@@ -87,22 +87,23 @@ Cc: Tao Ren <taoren@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The patch simplifies CMM device tree by including dtsi to define devices
-which are common to Facebook AST2500 Network BMC platforms.
+The patch simplifies Minipack device tree by including dtsi to define
+devices which are common to Facebook AST2500 Network BMC platforms.
 
 Below is the summary of changes comparing with previous dts version:
   - enabling the second firmware flash.
-  - enabling the emmc device in slot #0.
+  - updating firmware flashes' size from 32MB to 64MB.
+  - enabling the emmc device in slot #1.
 
 Signed-off-by: Tao Ren <taoren@fb.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts | 66 +++++--------------
- 1 file changed, 16 insertions(+), 50 deletions(-)
+ .../boot/dts/aspeed-bmc-facebook-minipack.dts | 59 ++++++-------------
+ 1 file changed, 19 insertions(+), 40 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts
-index d519d307aa2a..0a031132594a 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
+index c05478296446..ed1a77c76ce9 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-minipack.dts
 @@ -2,7 +2,7 @@
  // Copyright (c) 2018 Facebook Inc.
  /dts-v1/;
@@ -111,42 +112,40 @@ index d519d307aa2a..0a031132594a 100644
 +#include "facebook-netbmc-ast2500-common.dtsi"
  
  / {
- 	model = "Facebook Backpack CMM BMC";
-@@ -53,10 +53,6 @@
- 		bootargs = "console=ttyS1,9600n8 root=/dev/ram rw earlyprintk";
+ 	model = "Facebook Minipack 100 BMC";
+@@ -76,35 +76,36 @@
+ 		stdout-path = &uart1;
+ 		bootargs = "debug console=ttyS1,9600n8 root=/dev/ram rw";
  	};
- 
+-
 -	memory@80000000 {
 -		reg = <0x80000000 0x20000000>;
 -	};
--
- 	ast-adc-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-@@ -64,39 +60,7 @@
- 	};
  };
  
--&pinctrl {
--	aspeed,external-nodes = <&gfx &lhc>;
--};
--
--/*
-- * Update reset type to "system" (full chip) to fix warm reboot hang issue
-- * when reset type is set to default ("soc", gated by reset mask registers).
-- */
 -&wdt1 {
++&wdt2 {
+ 	status = "okay";
+ 	aspeed,reset-type = "system";
+ };
+ 
+-&wdt2 {
 -	status = "okay";
 -	aspeed,reset-type = "system";
--};
--
--/*
-- * wdt2 is not used by Backpack CMM.
-- */
--&wdt2 {
--	status = "disabled";
--};
--
++/*
++ * Both firmware flashes are 64MB on Minipack BMC.
++ */
++&fmc_flash0 {
++	partitions {
++		data0@1c00000 {
++			reg = <0x1c00000 0x2400000>;
++		};
++		flash0@0 {
++			reg = <0x0 0x4000000>;
++		};
++	};
+ };
+ 
 -&fmc {
 -	status = "okay";
 -	flash@0 {
@@ -154,25 +153,35 @@ index d519d307aa2a..0a031132594a 100644
 -		m25p,fast-read;
 -		label = "bmc";
 -#include "facebook-bmc-flash-layout.dtsi"
--	};
--};
--
++&fmc_flash1 {
++	partitions {
++		flash1@0 {
++			reg = <0x0 0x4000000>;
++		};
+ 	};
+ };
+ 
  &uart1 {
 -	status = "okay";
 -	pinctrl-names = "default";
  	pinctrl-0 = <&pinctrl_txd1_default
  		     &pinctrl_rxd1_default
  		     &pinctrl_ncts1_default
-@@ -107,8 +71,6 @@
+@@ -120,13 +121,6 @@
+ 		     &pinctrl_rxd2_default>;
  };
  
- &uart3 {
+-&uart3 {
 -	status = "okay";
 -	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_txd3_default
- 		     &pinctrl_rxd3_default
- 		     &pinctrl_ncts3_default
-@@ -123,17 +85,6 @@
+-	pinctrl-0 = <&pinctrl_txd3_default
+-		     &pinctrl_rxd3_default>;
+-};
+-
+ &uart4 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -134,17 +128,6 @@
  		     &pinctrl_rxd4_default>;
  };
  
@@ -187,28 +196,17 @@ index d519d307aa2a..0a031132594a 100644
 -	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
 -};
 -
- /*
-  * I2C bus reserved for communication with COM-E.
-  */
-@@ -380,3 +331,18 @@
- &ehci1 {
+ &i2c0 {
+ 	status = "okay";
+ 	bus-frequency = <400000>;
+@@ -423,7 +406,3 @@
+ &i2c13 {
  	status = "okay";
  };
-+
-+&vhub {
-+	status = "disabled";
-+};
-+
-+&sdhci0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_sd1_default>;
-+};
-+
-+&sdhci1 {
-+	status = "disabled";
-+};
+-
+-&vhub {
+-	status = "okay";
+-};
 -- 
 2.17.1
 
