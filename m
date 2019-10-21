@@ -2,43 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 669B3DF4F5
-	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 20:20:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 93597DF4FA
+	for <lists+openbmc@lfdr.de>; Mon, 21 Oct 2019 20:21:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46xlLT6zfLzDqJS
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 05:20:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46xlMn2KC4zDqKL
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 05:21:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46xlKb4PTfzDqJK
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 05:19:47 +1100 (AEDT)
-Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
- by tuna.sandelman.ca (Postfix) with ESMTP id 765B23897A;
- Mon, 21 Oct 2019 14:17:01 -0400 (EDT)
-Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id C189F612;
- Mon, 21 Oct 2019 14:19:32 -0400 (EDT)
-From: Michael Richardson <mcr@sandelman.ca>
-To: Deng Tyler <tyler.sabdon@gmail.com>
-Subject: Re: run ikvm in qemu
-In-Reply-To: <CAO9PYR+FgeBr1su+xWy22kjAzPY7sEYreA4f2xCcMrgzHm3avw@mail.gmail.com>
-References: <CAO9PYR+FgeBr1su+xWy22kjAzPY7sEYreA4f2xCcMrgzHm3avw@mail.gmail.com>
-X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 24.5.1
-X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
- <'$9xN5Ub#
- z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46xlKn5ZSzzDqJK
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 05:19:54 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 21 Oct 2019 11:19:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.67,324,1566889200"; d="scan'208";a="372259797"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga005.jf.intel.com with ESMTP; 21 Oct 2019 11:19:50 -0700
+Subject: Re: entity-manager frudevice interface
+To: Patrick Venture <venture@google.com>
+References: <CAO=notwQoW6zM_NnDbukXpvhG+OKXn2Nw0Lnzh_E87P4SF+kAw@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <8238ceee-ae3a-89b1-3742-0e920b19486b@linux.intel.com>
+Date: Mon, 21 Oct 2019 11:19:44 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
-Date: Mon, 21 Oct 2019 14:19:32 -0400
-Message-ID: <9390.1571681972@localhost>
+In-Reply-To: <CAO=notwQoW6zM_NnDbukXpvhG+OKXn2Nw0Lnzh_E87P4SF+kAw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,33 +57,29 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+On 10/18/19 5:02 PM, Patrick Venture wrote:
+> James;
+> 
+> As you know, I've started adding:
+> 
+> "xyz.openbmc_project.Inventory.Decorator.FruDevice": {
+> "Bus": "$bus",
+> "Address": "$address"
+> }
+> 
+> To my json files.  But I was wondering, this feature -- being able to
+> point back to a FruDevice by bus+addess may be sufficiently useful
+> that entity-manager always adds it when the probe result has a
+> bus+address.
+> 
 
+I would generally disagree with this, as the FruDevice was meant to only 
+be 1 type of probe, and I imagine in the future we'll have gpio, mctp, 
+etc types of probes, and I would like to keep it generic as possible, 
+and have EntityManager not care what it found on the other side of dbus. 
+If there was some way to make it more generic I'd be interested.
 
-Deng Tyler <tyler.sabdon@gmail.com> wrote:
-    > I know openbmc release KVM over IP but I did't have any bmc board yet.
-    > Is it possible run ikvm function in qemu which simulated ast2500?
-
-Are you asking if it is possible to have an ikvm to an (emulated) x86 machine
-via an emulated ast2500?
-
-It is my understanding that the emulator only does a single system at
-present.
-
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl2t9rQACgkQgItw+93Q
-3WUJfggAtYNnzwlD2O4ZBOim/O4QBst6zWnp8/odwbbsfUot4K58FeVYcQ9RZHwv
-R0eONvqr5qe3QLxvIdf2tYbGPOgWLWUJ6ChkIxFlQ6/B3FOfpbKugWDUk49IiBSx
-Jo6TdRYVSOjWwrYp3U9A/5/g6u9UJcTVSQTJ0xGasNacak/CFNJU07Ez92/bulMD
-f9Qr0I3t0ZWAViybwtcIzfIfFAncOePwz+x3Y50CbhO9UT9oh6rquaz2gJ/9IYug
-s2D9MVcXnkNNdHWM+Zx3twM4lCaOS6syjfhyxwB6Ml4WuYlAyWnaWl/bFZQCrZfX
-yptOWwVnqdpgJFCwXeGlxYVLTpsfLQ==
-=a7PY
------END PGP SIGNATURE-----
---=-=-=--
+> Thoughts?
+> 
+> Patrick
+> 
