@@ -2,52 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A56F1E0A1E
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 19:09:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 013A2E0A4B
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 19:15:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46yKkP5YRjzDqN8
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 04:09:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46yKs4004vzDqMW
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 04:15:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46yKjg1tDHzDqLx;
- Wed, 23 Oct 2019 04:09:09 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46yKr862vSzDqLx
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 04:14:48 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 22 Oct 2019 10:09:07 -0700
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 22 Oct 2019 10:14:45 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,217,1569308400"; d="scan'208";a="200854750"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
- ([10.7.153.143])
- by orsmga003.jf.intel.com with ESMTP; 22 Oct 2019 10:09:06 -0700
-Subject: Re: [PATCH i2c-next 1/2] dt-bindings: i2c: aspeed: add hardware
- timeout support
-To: Wolfram Sang <wsa@the-dreams.de>
-References: <20191021202414.17484-1-jae.hyun.yoo@linux.intel.com>
- <20191021202414.17484-2-jae.hyun.yoo@linux.intel.com>
- <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
- <7abf933b-cb18-10af-9c1b-163ec65ffae5@linux.intel.com>
- <20191022045655.GA975@kunai>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <5cd54c07-4e97-9ed9-1427-d46a7133ee53@linux.intel.com>
-Date: Tue, 22 Oct 2019 10:09:06 -0700
+X-IronPort-AV: E=Sophos;i="5.68,217,1569308400"; d="scan'208";a="399100456"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga006.fm.intel.com with ESMTP; 22 Oct 2019 10:14:45 -0700
+Received: from [10.241.244.225] (unknown [10.241.244.225])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 45A0458048F
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 10:14:45 -0700 (PDT)
+Subject: Re: x86-power-control
+To: openbmc@lists.ozlabs.org
+References: <EA590716-271A-4F5C-9B36-80260B7F35B6@fb.com>
+ <66afaaab-baee-fc02-371b-2ef4a9f0d1ee@linux.intel.com>
+ <37843B68-8D1C-48EB-B4B6-64CBC8F62F77@fb.com>
+ <79190494-f452-286b-e304-7a901a3db26c@linux.intel.com>
+ <8F55F038-A6E7-46A4-8C27-93C738AFEBDC@fb.com>
+ <5d43146c-b8b9-164e-ed54-33df4bae6dce@linux.intel.com>
+ <F590F665-9327-4C8D-8C23-C317DA71D7F0@fb.com>
+ <54c375be-e45e-fc2a-dd31-6c9d61158169@linux.intel.com>
+ <6DA89556-AD25-4BEE-AF40-9D7A129B7CB9@fb.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <548712d2-820b-7c20-f05e-fbd80ab38c62@linux.intel.com>
+Date: Tue, 22 Oct 2019 10:14:45 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <20191022045655.GA975@kunai>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+In-Reply-To: <6DA89556-AD25-4BEE-AF40-9D7A129B7CB9@fb.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,42 +66,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brendan Higgins <brendanhiggins@google.com>,
- "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Tao Ren <taoren@fb.com>,
- Peter Rosin <peda@axentia.se>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/21/2019 9:56 PM, Wolfram Sang wrote:
+
+
+On 10/21/2019 6:15 PM, Vijay Khemka wrote:
 > 
->> Changes I submitted in this patch set is for a different purpose which
->> is very Aspeed H/W specific, and actually it's a more serious timeout
->> setting indeed. If this H/W is used in multi-master environment, it
->> could meet a H/W hang that freezes itself in slave mode and it can't
->> escape from the state. To resolve the specific case, this H/W provides
->> self-recovery feature which monitors abnormal state of SDA, SCL and its
->> H/W state machine using the timeout setting to determine the escape
->> condition.
 > 
-> Thanks for the summary. I just wonder on what the timeout value depends.
-> Do we really need to put in DT or can we derive it e.g. from the
-> compatible value in the driver?
+> ﻿On 10/21/19, 4:04 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
+> 
+>      
+>      
+>      On 10/18/2019 4:04 PM, Vijay Khemka wrote:
+>      >
+>      >
+>      > On 10/18/19, 11:02 AM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
+>      >
+>      >
+>      >
+>      >      On 10/17/2019 4:52 PM, Vijay Khemka wrote:
+>      >      >
+>      >      >
+>      >      > On 10/17/19, 4:27 PM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
+>      >      >
+>      >      >
+>      >      >
+>      >      >      On 10/17/2019 3:32 PM, Vijay Khemka wrote:
+>      >      >      >
+>      >      >      > On 10/17/19, 9:03 AM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
+>      >      >      >
+>      >      >      >      Hi Vijay
+>      >      >      >
+>      >      >      >      On 10/16/2019 6:13 PM, Vijay Khemka wrote:
+>      >      >      >      > One more question on code, I see following code requires powerButtonMask
+>      >      >      >      > to be set before aquiring GPIO line. Please let me know who sets this
+>      >      >      >      > powerButtonMask to true. I know this is related to GPIO passthrough but
+>      >      >      >      > still couldn’t understand where in code it gets set until someone call
+>      >      >      >      > set-property of dbus.
+>      >      >      >
+>      >      >      >      powerButtonMask is a gpiod::line object that returns true if it
+>      >      >      >      references a GPIO line and false otherwise.
+>      >      >      >
+>      >      >      > I understood code but my point here is there will not be any
+>      >      >      > gpiod::line object if powerButtonMask is defined as false. And
+>      >      >      > initially it is defined as false means tehre will not be any line
+>      >      >      > object created until someone sets it to true. And I don't see it
+>      >      >      > any way to set it true other than set-property through dbus.
+>      >      >
+>      >      >      That's correct.  Masking the power button is something that is done by
+>      >      >      some component outside of power-control.
+>      >      >
+>      >      >      For example, we currently use it with the Set Front Panel Button Enables
+>      >      >      IPMI command to enable/disable the power button.  So, it is only masked
+>      >      >      when requested.
+>      >      > So to use x-86-power-control, either we need to have IPMI command to enable
+>      >      > this or some other daemon has to set this property. Can we have this feature
+>      >      > optional. I guess this is a prt og GPIO passthrough.
+>      >
+>      >      Yes, this is part of GPIO passthrough.  When the GPIO is requested,
+>      >      passthrough is disabled in the pinctrl driver.  So, to mask the power
+>      >      button (disable passthrough), power-control requests and holds the
+>      >      "POWER_OUT" GPIO line.
+>      >
+>      >      It should behave normally without this property ever getting set.
+>      >
+>      >      >
+>      >      >      The actual "POWER_OUT" line for power-control is not permanently
+>      >      >      created, but is asserted using temporary calls like this one:
+>      >      >      setGPIOOutputForMs("POWER_OUT", 0, powerPulseTimeMs);
+>      >      >
+>      >      > This function will not run power on/off sequence until button mask is set. It
+>      >      > Will only set GPIO value which is not enough for powering on/off.
+>      >
+>      >      Something else is going on, here.  The powerButtonMask is a separate
+>      >      feature from driving the "POWER_OUT" pin.  If powerButtonMask is not
+>      >      set, then the power on/off should function normally.  There is a special
+>      >      case in the setGPIOOutputForMs() code to handle when "POWER_OUT" is
+>      >      driven while powerButtonMask is true:
+>      >
+>      >           // If the requested GPIO is masked, use the mask line to set the output
+>      >           if (powerButtonMask && name == "POWER_OUT")
+>      >           {
+>      >               return setMaskedGPIOOutputForMs(powerButtonMask, name, value,
+>      >                                               durationMs);
+>      >           }
+>      >           ...
+>      >           // No mask set, so request and set the GPIO normally
+>      >
+>      >      So, "POWER_OUT" should work either way, but the default behavior is to
+>      >      function without powerButtonMask set.  Are you seeing failures on your
+>      >      platform when powerButtonMask is false?
+>      >
+>      > No, It is not working because it simplpy sets power_out to '0'. But to power on
+>      > it should got down as 0 and come back to 1 after a delay. Which happens only
+>      > in case of powerButtonMask set to true. I guess we may need to fix this.
+>      
+>      Ahh, okay.  I think I see the issue now.
+>      
+>      The issue is that because releasing the GPIO on a system with
+>      pass-through, sets the power button back to the hardware default
+>      automatically, the software setting doesn't matter, so it is left at 0.
+>      
+>      If you don't need to keep holding the GPIO line for POWER_OUT, I think
+>      you can just add the code to revert the POWER_OUT value when the timer
+>      expires.
+>      
+>      Take this line:
+>                   // Set the masked GPIO line back to the opposite value
+>                   maskedGPIOLine.set_value(!value);
+>       From here:
+>      https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp#L891
+>      
+>      And add it here:
+>      https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp#L932
+> 
+> I already did that as a work around, testing different scenario. Will send patch once I see it working.
+> 
+> I also want to make these timeout values as configurable, either I can add these as a property in dbus interface or
+> Entity-manager or have a separate config json file. What would you prefer.
+Another option that may be simpler is to move the values that you want 
+to configure out to a header file and then override the header in a 
+bbappend.  Then you don't need to read or parse any additional 
+configuration information at run time.
 
-It could be derived from the bus timeout value by computing 'divide by
-x' roughly but it couldn't cover all use cases because this H/W timeout
-value would depends on each environment. There are many factors that
-can affect it such as bus speed, peer-master's bus driving
-characteristic, average transaction period on the bus and so on thus
-it may need fine adjustments through a DT setting, I think.
-
-Thanks,
-
-Jae
+> 
+>      
+>      >
+>      >
+>      
+> 
