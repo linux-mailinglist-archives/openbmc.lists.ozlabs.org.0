@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A85AEDFCDB
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 06:50:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38550DFCD5
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 06:48:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46y1KX0X5pzDqL2
-	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 15:50:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46y1HG0GMNzDqKZ
+	for <lists+openbmc@lfdr.de>; Tue, 22 Oct 2019 15:48:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,62 +16,61 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Ep2lcBj8"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="WIHwWeW9"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="yP0DHf1I"; dkim-atps=neutral
+ header.b="mLBkEL8t"; dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46y1FG3zntzDqKb
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 15:46:58 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46y1FJ1yJ4zDqKf
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 15:47:00 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 217132129D;
- Tue, 22 Oct 2019 00:46:56 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 9F06A214DB;
+ Tue, 22 Oct 2019 00:46:57 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Tue, 22 Oct 2019 00:46:56 -0400
+ by compute4.internal (MEProxy); Tue, 22 Oct 2019 00:46:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm1; bh=Q3ZRWiSWiGd5x
- lMU37lgLgWXxCCauNJkSs71OkCYV8s=; b=Ep2lcBj8yAIm3MJzjYLF9iORK4xuI
- B7nOVoezgTimxHFhK8KDhJn05U2KTZyK7bPdQIF9ilfEkSFo6GjZ2SUM/mUyYvdX
- lSgufpkoLFgeSNYpDUc/jPVPkirxsMVoYSM3+m2CXl+XSEPD3jAah1QPbzVYdyBb
- nbQUfVmlsO4immAgaktU0Fsj55N82Ocr/av0DezUQ/AbW85t9enjwKl3S/3PmYP+
- qC+DMBMBRJuyOZPs0u41p3g5SOHUICsPfKuXRl88B4bwo+lfVe18H4Vpl/3Ril1w
- 9BrEGqdGgOwDe4CcGD/r4YXaGrm9552U22ssriS2PGTos6bGoHzYpR+mQ==
+ :mime-version:content-transfer-encoding; s=fm1; bh=qzsQfnMdhewZW
+ GX1d+QhaLheA7ai/xnWBuWwM4pOlMM=; b=WIHwWeW9T4OB3xbXUT2AhfIH7yy4d
+ U+yad433oaTG/vxtW8VbyhCDBtNjiDP2C1PrHUa6dkB25PVzi0Y5Gzjex/O35RRZ
+ MQRf2ykurH7lU/WgeS9zECIOR6He0l3nA2IleKYu5okkpsso/hhh9pglZXfqoeL5
+ +2iQFcuERT8e3hFbc1gLQKWTRa40GN/1tWwD88irbXg3FXF3jBnqKL7FZI/iDizY
+ wIuAA/WcMZcgr7GhEjIbsjdE11phwTpxEQALTTR4jhmP8dcpTNF8VDgCxq1FeO4r
+ mtKnFs8ZdDg3eMXHAmPxvEHltolMkJSJIgdMWjqswklO+/14xqNNjXahw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; bh=Q3ZRWiSWiGd5xlMU37lgLgWXxCCauNJkSs71OkCYV8s=; b=yP0DHf1I
- JN2lzsEuvxWKprT8AcvkfaXgLvG8BZOgRPwapbRihIKSDKHT/5zqlJdOPfOhZE9T
- q0+xJngA3/k3cVCiE9/YmvJgiiWHYND2HEh2xfdY943XXqxGobrvXtf7biwvMGkh
- inSl2oaqqV+iTwiBjSXcUApYIFfjsVOhGs5KgvRn5NxEH8HCj8u9bQuC9nrw7bTz
- RvvhhM4pGD3OJFG4i+UxWyEn3t83+2H59fzSMeYw14zpYfemn1V+dKqEewe9SNlW
- ZymCt07TXuz9JnxVCbS+wgRVan1zaHi3THqmY8KxHGFp/DRdLxMBxHYC8FKJUOnz
- /nJQb4thTIbhcA==
-X-ME-Sender: <xms:wImuXbJkBQJ_858sFlAUE8sMMn9Fr2Dx_3zuRCfhcZq_t62pNlL8ZQ>
+ fm1; bh=qzsQfnMdhewZWGX1d+QhaLheA7ai/xnWBuWwM4pOlMM=; b=mLBkEL8t
+ IpOgZ8B5lKRUbgnzrZ9FZY47rXzxzJRO8KzfD1uNn9Q7Vj/fXQ5kUvr2P4HNDHnw
+ /XUpafGIGahLzZSN1G3wymV1loEwO9oJHnsLY5tFoE41z9Gf+zRQvZVc8frJoucF
+ wgtPBEw2ovdMZIyI0ZX1yV2JHL29APmMKJr1eHev5tncyMpJwkgklTAUE4lOuT5B
+ cfG3wbL/YVsAJZUN2RrBkdYnE0E5XZWDRfKtyEn93qOSXIabGLusa+OcqwuDBsPg
+ fBfeS64wYFIBuTUOcGSy0eBWLAhsQu0dW2RsXFQ6tosiW+oCKmr9KZHEOFLtnBEI
+ OawAOUamvxmxHQ==
+X-ME-Sender: <xms:wYmuXRMkEnPSKQfOCL7lbRi5COl8-cj5lT2WMAx832AEL-RjtMs4jw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrkeeigdekjecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
  ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
  rdhiugdrrghuqeenucfkphepvddtvddrkedurddukedrvdeknecurfgrrhgrmhepmhgrih
  hlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgep
- td
-X-ME-Proxy: <xmx:wImuXZhQUtlN2Oftp3t3fmDMTDMT97eNiqlEnvZZMIJMctZ0rgp-3Q>
- <xmx:wImuXUccFt5GJioq0M6uqzPjrtwB-TaUDBBZbuXGpyeOODSWfcgXgA>
- <xmx:wImuXR7n3_q7A79e5V4y7hVIA-gMHQAiVlbTLCRIRRerrJUnxU5E7g>
- <xmx:wImuXaV1Zy5bVyd5qjmFJc0Loo4r0HGCpq12nzYfNYLKNCpu5f2CrA>
+ vd
+X-ME-Proxy: <xmx:wYmuXbAzSyaE1TI2C3v4CI5lSgnRlJz11NRss-bLpktm0Vil8XoE7w>
+ <xmx:wYmuXUjT67P6PtoMyn47sgwjV4QTSJJCSD1lrSjH-DY-j7JQQRz-bg>
+ <xmx:wYmuXQeCIEJnY7GtegrOj6J-iZgSa0l0oN469Lp7L3PDWnvo2Tt1Sw>
+ <xmx:wYmuXeNUgKzW-E2JTv6S6L8E3QXqGeWbHYDNyLpVz9O8puuFkGE5ng>
 Received: from mistburn.bha-au.ibmmobiledemo.com (unknown [202.81.18.28])
- by mail.messagingengine.com (Postfix) with ESMTPA id DAB1A80060;
- Tue, 22 Oct 2019 00:46:54 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 62BB380060;
+ Tue, 22 Oct 2019 00:46:56 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 2/4] pinctrl: aspeed-g6: Fix LPC/eSPI mux
- configuration
-Date: Tue, 22 Oct 2019 15:47:35 +1100
-Message-Id: <20191022044737.15103-3-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 3/4] ARM: dts: tacoma: Hog LPC pinmux
+Date: Tue, 22 Oct 2019 15:47:36 +1100
+Message-Id: <20191022044737.15103-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191022044737.15103-1-andrew@aj.id.au>
 References: <20191022044737.15103-1-andrew@aj.id.au>
@@ -92,108 +91,31 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Early revisions of the AST2600 datasheet are conflicted about the state
-of the LPC/eSPI strapping bit (SCU510[6]). Conversations with ASPEED
-determined that the reference pinmux configuration tables were in error
-and the SCU documentation contained the correct configuration. Update
-the driver to reflect the state described in the SCU documentation.
+Requesting pinmux configuration is done at driver probe time. The LPC IP
+is composed of many sub-devices, each with their own driver, and no
+driver exists for the entire IP block. Avoid having each sub-device
+request the LPC pinmux by just hogging it in the pinctrl node.
 
-Fixes: 2eda1cdec49f ("pinctrl: aspeed: Add AST2600 pinmux support")
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 56 ++++++++++------------
- 1 file changed, 24 insertions(+), 32 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index eb0c11a9fbf2..fb96e8d2e6c8 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -1098,61 +1098,53 @@ SSSF_PIN_DECL(AD15, GPIOV6, LPCPME, SIG_DESC_SET(SCU434, 14));
- SSSF_PIN_DECL(AF15, GPIOV7, LPCSMI, SIG_DESC_SET(SCU434, 15));
- 
- #define AB7 176
--SIG_EXPR_LIST_DECL_SESG(AB7, LAD0, LPC, SIG_DESC_SET(SCU434, 16),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AB7, ESPID0, ESPI, SIG_DESC_SET(SCU434, 16),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AB7, LAD0, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 16));
-+SIG_EXPR_LIST_DECL_SESG(AB7, ESPID0, ESPI, SIG_DESC_SET(SCU434, 16));
- PIN_DECL_2(AB7, GPIOW0, LAD0, ESPID0);
- 
- #define AB8 177
--SIG_EXPR_LIST_DECL_SESG(AB8, LAD1, LPC, SIG_DESC_SET(SCU434, 17),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AB8, ESPID1, ESPI, SIG_DESC_SET(SCU434, 17),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AB8, LAD1, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 17));
-+SIG_EXPR_LIST_DECL_SESG(AB8, ESPID1, ESPI, SIG_DESC_SET(SCU434, 17));
- PIN_DECL_2(AB8, GPIOW1, LAD1, ESPID1);
- 
- #define AC8 178
--SIG_EXPR_LIST_DECL_SESG(AC8, LAD2, LPC, SIG_DESC_SET(SCU434, 18),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AC8, ESPID2, ESPI, SIG_DESC_SET(SCU434, 18),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AC8, LAD2, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 18));
-+SIG_EXPR_LIST_DECL_SESG(AC8, ESPID2, ESPI, SIG_DESC_SET(SCU434, 18));
- PIN_DECL_2(AC8, GPIOW2, LAD2, ESPID2);
- 
- #define AC7 179
--SIG_EXPR_LIST_DECL_SESG(AC7, LAD3, LPC, SIG_DESC_SET(SCU434, 19),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AC7, ESPID3, ESPI, SIG_DESC_SET(SCU434, 19),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AC7, LAD3, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 19));
-+SIG_EXPR_LIST_DECL_SESG(AC7, ESPID3, ESPI, SIG_DESC_SET(SCU434, 19));
- PIN_DECL_2(AC7, GPIOW3, LAD3, ESPID3);
- 
- #define AE7 180
--SIG_EXPR_LIST_DECL_SESG(AE7, LCLK, LPC, SIG_DESC_SET(SCU434, 20),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AE7, ESPICK, ESPI, SIG_DESC_SET(SCU434, 20),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AE7, LCLK, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 20));
-+SIG_EXPR_LIST_DECL_SESG(AE7, ESPICK, ESPI, SIG_DESC_SET(SCU434, 20));
- PIN_DECL_2(AE7, GPIOW4, LCLK, ESPICK);
- 
- #define AF7 181
--SIG_EXPR_LIST_DECL_SESG(AF7, LFRAME, LPC, SIG_DESC_SET(SCU434, 21),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AF7, ESPICS, ESPI, SIG_DESC_SET(SCU434, 21),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AF7, LFRAME, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 21));
-+SIG_EXPR_LIST_DECL_SESG(AF7, ESPICS, ESPI, SIG_DESC_SET(SCU434, 21));
- PIN_DECL_2(AF7, GPIOW5, LFRAME, ESPICS);
- 
- #define AD7 182
--SIG_EXPR_LIST_DECL_SESG(AD7, LSIRQ, LSIRQ, SIG_DESC_SET(SCU434, 22),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AD7, ESPIALT, ESPIALT, SIG_DESC_SET(SCU434, 22),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AD7, LSIRQ, LSIRQ, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 22));
-+SIG_EXPR_LIST_DECL_SESG(AD7, ESPIALT, ESPIALT, SIG_DESC_SET(SCU434, 22));
- PIN_DECL_2(AD7, GPIOW6, LSIRQ, ESPIALT);
- FUNC_GROUP_DECL(LSIRQ, AD7);
- FUNC_GROUP_DECL(ESPIALT, AD7);
- 
- #define AD8 183
--SIG_EXPR_LIST_DECL_SESG(AD8, LPCRST, LPC, SIG_DESC_SET(SCU434, 23),
--			  SIG_DESC_CLEAR(SCU510, 6));
--SIG_EXPR_LIST_DECL_SESG(AD8, ESPIRST, ESPI, SIG_DESC_SET(SCU434, 23),
--			  SIG_DESC_SET(SCU510, 6));
-+SIG_EXPR_LIST_DECL_SESG(AD8, LPCRST, LPC, SIG_DESC_SET(SCU510, 6),
-+			SIG_DESC_SET(SCU434, 23));
-+SIG_EXPR_LIST_DECL_SESG(AD8, ESPIRST, ESPI, SIG_DESC_SET(SCU434, 23));
- PIN_DECL_2(AD8, GPIOW7, LPCRST, ESPIRST);
- 
- FUNC_GROUP_DECL(LPC, AB7, AB8, AC8, AC7, AE7, AF7, AD8);
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index bf363a735232..e51e8839bd56 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -792,3 +792,10 @@
+ &wdt2 {
+ 	status = "okay";
+ };
++
++&pinctrl {
++	/* Hog these as no driver is probed for the entire LPC block */
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_lpc_default>,
++		    <&pinctrl_lsirq_default>;
++};
 -- 
 2.20.1
 
