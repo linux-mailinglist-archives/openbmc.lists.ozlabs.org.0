@@ -2,66 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 638A2E1208
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 08:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E020E1209
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 08:23:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ygJk4dX4zDqGm
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:22:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ygKy20lDzDqNS
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:23:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
- helo=mail-pg1-x541.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
+ helo=mail-pf1-x443.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="NdLduAtc"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="PsZysKug"; 
  dkim-atps=neutral
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ygFG5nzTzDqN6
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 17:19:14 +1100 (AEDT)
-Received: by mail-pg1-x541.google.com with SMTP id f14so11482360pgi.9
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 23:19:14 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ygFK0Vj6zDqP2
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 17:19:16 +1100 (AEDT)
+Received: by mail-pf1-x443.google.com with SMTP id y5so12235583pfo.4
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 23:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=8xDCxW0VYYk+Kbtt+cUSnysiSu+a12fdC76WGW7qwSU=;
- b=NdLduAtc8nYBSuJB9Nmj4SfggPWS0FUDwGOBeyC7B3gyND+r1iP3M1pTzoqnGhdsI6
- hqjJCRQbzkHVvoNQ/3mXShAgykdfVhL3hxNxP2hjC0X3B+HtHOxDOeFtS3QjKQFy5jh6
- ZPakSRy1RBf0pS3ISlQBsWbbrrTRlr/T//EG2CS+ruaGeoOORCtHUMm10D81P+gIATMw
- LEKfBHz1v+Qlg05RWmn7hH+p5V31d5emOeMAis3Dn+k1xEQsqNSfvTQrVP1s9lcX15S4
- vL43tChVUNFAUNhlxYWrXzk/zf7Zq8dNgxHwKrbfGCE0oKdcaXEGPijbwhpOOUtT5o2G
- dYow==
+ bh=bJV/a6ecpyj/8HGd9ES6BmvcxseaHO4zbYaHBAHTTyI=;
+ b=PsZysKugwjNNW+cAt3jczYBFKsIbGTmXJJ88DGPKaYwFC86FHCxw9AkiFPSEbmBRq/
+ yse1R36O7MthakZ7YkjG3aDnkAKSaVXeR4p5v0BI5g0xrjOOqhhyeSytobxsnoDsnVCC
+ w1vQGkdmpHTQT/vYj0BkoCBKuvAt9INn23l+8Ky3SYbtzQMOF+sSv+xbgFdVdy9+BCXG
+ K4aBc7Dqenl5NxsCAwrUemJ96zTCdDWZJVts6/6Nd9/4wISyCoeG+Vl/T8+cQrLo5DVb
+ JTsM5b8N4e6TMGbZUbsSIlpFci+e8jnqOk4SWw4iA7zRz2dn2L//cgMDhEeboLTYZ3Jc
+ xtjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=8xDCxW0VYYk+Kbtt+cUSnysiSu+a12fdC76WGW7qwSU=;
- b=cyy1TOIB7ac+LEu2TsRlDVyBcxZpY4p1lAa8FI6Fq0+eEDMxLrnqOlyjXelMIetlHi
- PxcCNbSIhosmCbthYti0erWoj0OzizfGBoP92H1dnPs5R043Gs//I7vSramdKDUoDAKY
- OvNA4q79pOoWAk1bMY8DWFIVTHXppmTKOfZtAX0BbrtizogwJLeYM7Sf/VzzW0e2/s1b
- uJeyO2uL8ivoFy33b77ZHJu3fzaNq332dhF/sIGDl9tT7hjCHN7ahkNWHxX529SMbw2h
- dA0tYdMadDXYad9fSgyQEoNX/bVwk8uAKg6GF42aNjo3TePRlhUW/DWXiD3L9KegO46h
- GsTA==
-X-Gm-Message-State: APjAAAUR1/pJHir1zv17Spr4ypVxrx0O2SwnGpsDWnTarFKE4+0E6A+t
- 3+WKE1XKpni4eA1mB44AtmVufiZJehM=
-X-Google-Smtp-Source: APXvYqyvA3YWz+FHKAmJ0mx2ETrsmcZNRMCRyqdusqZ1GWNiQOULn31Aujrf8BHcIOjbRuJqzLjKrw==
-X-Received: by 2002:a63:ad0d:: with SMTP id g13mr7880345pgf.407.1571811551582; 
- Tue, 22 Oct 2019 23:19:11 -0700 (PDT)
+ bh=bJV/a6ecpyj/8HGd9ES6BmvcxseaHO4zbYaHBAHTTyI=;
+ b=VB695D8CUCS1M2bUMT/LFBKCx0SWjZ4JHn3ofYV7eHzOXZABi8IxEzIECyouzCAwad
+ xfo/s3o8dHWqgM+/XIf2+flvtW0RRouv5ouXVT4o+ZmmFc0tYaE43cR94Lt6HLDTR+uD
+ ss48W8iNFXy79JtAedAwOGgrViZtePUTN5DNbQJ1+tDUgvQh3a7aMcDTYXMXRYUXH62b
+ gcRTN73vHF7dx8dHywjATTU2biya8wGggyJvau8DH9lUoXR7vk9/X16JVkdVyyKj1fHS
+ +O4WfwqkDPxN39Sk30j3AtjjNAinKugJl4AMCLGbWlVZQBp3MHMNerMUbZmD7JEm/T2G
+ nR1Q==
+X-Gm-Message-State: APjAAAXTJwO7yMBZkm9UQhbCfG+/Id9MZ9l58tv1kcHIWrdnJ8uOH2Oe
+ IbOqwiCR97nbM1eW6nGFAuSZoaYBs+o=
+X-Google-Smtp-Source: APXvYqwPP+gQcHrNBYcfSrU1sk2PYMJUyVEGV+Pq6fgWzkW3JeAlDi/8ixOzBxg5iJe+f3zq6paDUg==
+X-Received: by 2002:a17:90a:a416:: with SMTP id
+ y22mr9583113pjp.74.1571811553886; 
+ Tue, 22 Oct 2019 23:19:13 -0700 (PDT)
 Received: from voyager.au.ibm.com (bh02i525f01.au.ibm.com. [202.81.18.30])
- by smtp.gmail.com with ESMTPSA id 4sm6364598pfz.185.2019.10.22.23.19.09
+ by smtp.gmail.com with ESMTPSA id 4sm6364598pfz.185.2019.10.22.23.19.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2019 23:19:11 -0700 (PDT)
+ Tue, 22 Oct 2019 23:19:13 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 2/4] fsi: aspeed: Give read longer before timeout
-Date: Wed, 23 Oct 2019 17:18:46 +1100
-Message-Id: <20191023061849.16926-3-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 3/4] fsi: aspeed: Add more registers to debug
+Date: Wed, 23 Oct 2019 17:18:47 +1100
+Message-Id: <20191023061849.16926-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191023061849.16926-1-joel@jms.id.au>
 References: <20191023061849.16926-1-joel@jms.id.au>
@@ -81,28 +82,59 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Accessing some devices under the cfam would timeout (-ETIMEOUT/110).
-This shouldn't happen in normal operation, so extend the timeout to be
-longer.
-
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/fsi/fsi-master-aspeed.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index 60d302871db3..18f6012f19a8 100644
+index 18f6012f19a8..8c5eb2bb1994 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -220,7 +220,7 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
+@@ -33,6 +33,9 @@
+ #define FSI_MRESP0		0xd0		/* W: Port reset */
+ #define FSI_MESRB0		0x1d0		/* R: Master error status */
+ #define FSI_MRESB0		0x1d0		/* W: Reset bridge */
++#define FSI_MSCSB0	 	0x1d4		/* R: Master sub command stack */
++#define FSI_MATRB0	 	0x1d8		/* R: Master address trace */
++#define FSI_MDTRB0	 	0x1dc		/* R: Master data trace */
+ #define FSI_MECTRL		0x2e0		/* W: Error control */
  
- 	ret = readl_poll_timeout(base + OPB_IRQ_STATUS, reg,
- 			   (reg & OPB0_XFER_ACK_EN) != 0,
--			   0, 100);
-+			   0, 10000);
+ /* MMODE: Mode control */
+@@ -70,7 +73,7 @@
  
- 	status = readl(base + OPB0_STATUS);
+ #define FSI_LINK_ENABLE_SETUP_TIME	10	/* in mS */
  
+-#define FSI_NUM_DEBUGFS_ENTRIES		14
++#define FSI_NUM_DEBUGFS_ENTRIES		17
+ 
+ struct fsi_master_aspeed;
+ 
+@@ -681,6 +684,24 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 				    &etrs[idx++],
+ 				    &fsi_master_aspeed_debugfs_ops);
+ 
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MSCSB0;
++		debugfs_create_file("mscsb0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MATRB0;
++		debugfs_create_file("matrb0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
++		etrs[idx].aspeed = aspeed;
++		etrs[idx].addr = FSI_MDTRB0;
++		debugfs_create_file("mdtrb0", 0200, aspeed->debugfs_dir,
++				    &etrs[idx++],
++				    &fsi_master_aspeed_debugfs_ops);
++
+ 		etrs[idx].aspeed = aspeed;
+ 		etrs[idx].addr = FSI_MECTRL;
+ 		debugfs_create_file("mectrl", 0644, aspeed->debugfs_dir,
 -- 
 2.23.0
 
