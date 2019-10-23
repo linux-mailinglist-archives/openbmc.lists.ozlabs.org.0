@@ -2,63 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED891E0FC5
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 03:45:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E504EE1084
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 05:24:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46yY9v1YpXzDqNk
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 12:45:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ybM91SqpzDqQs
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 14:24:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=1921e5584=tony.lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
+ helo=mail-qt1-x844.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 46yY981sw2zDqPR
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 12:45:11 +1100 (AEDT)
-IronPort-SDR: s2NpIPH1muVzN2EnD8+S8vvhlkH8He6zL6JtDFkqBsja5Ki3CFEhOf56PR/rivJlfbX+QFiOyu
- zG1AiJlYHArA==
-Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
- by mx01.quantatw.com with ESMTP; 23 Oct 2019 09:45:09 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx09.quanta.corp
- (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 23 Oct
- 2019 09:45:05 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Wed, 23 Oct 2019 09:45:05 +0800
-From: =?big5?B?VG9ueSBMZWUgKKf1pOW0SSk=?= <Tony.Lee@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Showing signed sensor value when the command "ipmitool sdr" is
- executed.
-Thread-Topic: Showing signed sensor value when the command "ipmitool sdr" is
- executed.
-Thread-Index: AdWJQxVOJ6ixmrlwSXKaTONZZXz7UQ==
-Date: Wed, 23 Oct 2019 01:45:05 +0000
-Message-ID: <19467ab292c64593ae4ae7f2882ce61a@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-24996.004
-x-tm-as-result: No-10--0.991500-5.000000
-x-tmase-matchedrid: u8usGLXufdib5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGoLZarzrrPmXW3
- XCenpuXrf1xSt/ApHHONXA6IRCXBU9f8LDBpR6a614YLSX/JYIqD6a56hLTj5Wjliw+xvItdnL/
- 3kgndLptCT4s3SPWw2mDjlAC3n4bD/8TykoC75C1R5q8plSdLkIvkwJz527bY4PdcWsl+C/O6MS
- e39Ehpt+FK6c8K4adwB3tbnpnfEsijxYyRBa/qJcW2Ak5XjlH+fJ5/bZ6npdjKayT/BQTiGsor7
- IhhKtYPnzPENTMJMO0+KLR0wgh79VTmX2x5WnMuy4mQ+98IPwUO+xjWg/ZTjHxIDTivsViBY1QH
- sYMTMmJBeNZ8pgIa/cYcOhvfe+/mcCmyZvDwQy2t5ahRvDIGLa2t1VXHehFey/QKSya4k79DDKa
- 3G4nrLQ==
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--0.991500-5.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-24996.004
-x-tm-snts-smtp: 0D1BC820AD95045A48F0C164B5BEE05C4C9E87628543C85F0DAEA48693D4D6832000:B
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="MqWqHWFI"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
+ [IPv6:2607:f8b0:4864:20::844])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ybLS3JSwzDqPn
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 14:23:28 +1100 (AEDT)
+Received: by mail-qt1-x844.google.com with SMTP id d17so15629882qto.3
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 20:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=0kZAHYZAwDc0k/h6qaOo5pQDaYGECvyRtSgAFDhA/oU=;
+ b=MqWqHWFIIjmkjKKXS7j9f8MoQ8kISJe2rAOC0bSrAZZHuSLcIugd1cICnPdv2lurv1
+ ev7k1S1JDgmTN5L8u24DR3+bkO+JJTfcBB5YHsBJM+sq0m9he2x3xXSlnSKha/J8uRxM
+ jFe5hQ+prRklmJ4kLrxbsrKK6zUneqkFi+WA8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=0kZAHYZAwDc0k/h6qaOo5pQDaYGECvyRtSgAFDhA/oU=;
+ b=bCdaoIehkK17sR4otMG8R0uy3r0azObZQIiE/T9HLSocDthkw3c+6609gdRGVycqja
+ 2X/vD51vudLwxqj7rQ4a5RjxbfEMJmALkYaDhP9bBq9qOIGXLypeCcaufMNDCbtWVKJU
+ /L51Bb7ksZSxKsORDabeV6ThNNOhO3SNG3JYdjKYtPGoTq1HevmEbfZlAkIMGiLcgAr4
+ I6iddsAz5EelY+siUQGy14r2LhhP2l3yFeoHzphzj9BK4QYRveCyiU/j2JElrZCHuX3r
+ gG2no/dJK1uPkMrY8m+NhgjgkpaT9LG1/AFmaUhlW8J/HGLK382jCyV0GYLTwfGWrxAi
+ EzFg==
+X-Gm-Message-State: APjAAAXGhKHhL8ApHI6i6v6UME7QGS3F1Lfa4smjHI7fKrIpSuZcIxaW
+ T62hQJgIcAXCFnRM5f4x0U3ISX12cs0Vxn08udPJLhVU
+X-Google-Smtp-Source: APXvYqyQBdug/Xdhvlm9ZsqCe992L5HugheReDLbp3xceT2bm6JBdl381KA4KmI/4ttpmrxxWELY5Fl82JIUbPQDDtQ=
+X-Received: by 2002:ac8:1207:: with SMTP id x7mr7029839qti.255.1571801004773; 
+ Tue, 22 Oct 2019 20:23:24 -0700 (PDT)
 MIME-Version: 1.0
+References: <20191022044737.15103-1-andrew@aj.id.au>
+In-Reply-To: <20191022044737.15103-1-andrew@aj.id.au>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 23 Oct 2019 03:23:12 +0000
+Message-ID: <CACPK8Xf0jT0qwh-g0Z_zJb1J+WWx8Ghb9FxDsX99qKoZPNaoaQ@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.3 0/4] Pinmux fixes for AST2600 LPC
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,26 +69,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?big5?B?QnVkZHkgSHVhbmcgKLbApNHCRSk=?= <Buddy.Huang@quantatw.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgdGVhbSwNCg0KVGhlIHRlbXBlcmF0dXJlIHNlbnNvciB2YWx1ZSBtYXkgYmUgbmVnYXRpdmUg
-d2hlbiB0aGUgY29tbWFuZCAiaXBtaXRvb2wgc2RyIiBpcyBleGVjdXRlZC4NClNlbnNvciB2YWx1
-ZSBjYW4gYmUgYSBzaWduZWQgdmFsdWUgYWNjb3JkaW5nIHRvIGlwbWkgU1BFQyAiVGFibGUgNDMt
-LCBGdWxsIFNlbnNvciBSZWNvcmQgLSBTRFIgVHlwZSAwMWgiIGJ5dGUgMjEsICJTZW5zb3IgVW5p
-dHMgMSIuDQoNCkhvd2V2ZXIsIHdlIGNhbiBmaW5kIHRoYXQgdGhlIHNlbnNvcl91bml0c18xIGlz
-IHNldCB0byB6ZXJvIGluDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0
-LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmhhbmRsZXIuY3BwI0w2ODguDQoNCkFuZCB0aGUgbWV0
-aG9kICJzZXRfYW5hbG9nX2RhdGFfZm9ybWF0IiwgYWx0aG91Z2h0IGl0IGhhcyBiZWVuIGRlY2xh
-cmVkIGJ1dCBpdCBoYXMgbmV2ZXIgYmVlbiB1c2VkIGluIA0KaHR0cHM6Ly9naXRodWIuY29tL29w
-ZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9ibG9iL21hc3Rlci9zZW5zb3JoYW5kbGVyLmhwcCNM
-NDk3Lg0KDQpJbiBhZGRpdGlvbiwgc2luY2UgcmF3RGF0YSBoYXMgYmVlbiBjb252ZXJ0ZWQgdG8g
-dWludDhfdCBieSBzdGF0aWNfY2FzdCA8dWludDhfdD4sIHRoZXJlIGlzIGFsd2F5cyBhIG5vbmUg
-bmVnYXRpdmUgdmFsdWUuIGluDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1o
-b3N0LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmRhdGFoYW5kbGVyLmhwcCNMMjI5DQoNCkJhc2Vk
-IG9uIHRoZSBhYm92ZSB0aHJlZSBwb2ludHMsIGl0IHNlZW1zIHRoYXQgdGhlIGZ1bmN0aW9uIG5l
-ZWRzIHRvIGJlIG1vZGlmaWVkDQogc28gdGhhdCB0aGUgc2Vuc29yIHZhbHVlIGNhbiBiZSBkaXNw
-bGF5ZWQgYXMgYSBuZWdhdGl2ZSB2YWx1ZSB3aGVuIHRoZSAiaXBtaXRvb2wgc2RyIiBjb21tYW5k
-IGlzIGV4ZWN1dGVkLg0KDQpBbSBJIHdyb25nLCBvciBJIG5lZWQgdG8gc2V0IGl0IHVwIHNvbWV3
-aGVyZT8NCg0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQoNCg==
+On Tue, 22 Oct 2019 at 04:46, Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+> Hello,
+>
+> This series fixes some issues with the AST2600 pinctrl driver.
+>
+> Patch 1/4 backports an existing upstream fix. Patch 4/4 simply improves the
+> readability of the debug output of the driver. Patches 2 and 3 fix issues with
+> muxing pins for LPC, particularly for the Tacoma board.
+
+They look good to me. I've applied them to dev-5.3
+
+Cheers,
+
+Joel
+
+>
+> Please review.
+>
+> Andrew
+>
+> Andrew Jeffery (4):
+>   pinctrl: aspeed-g6: Make SIG_DESC_CLEAR() behave intuitively
+>   pinctrl: aspeed-g6: Fix LPC/eSPI mux configuration
+>   ARM: dts: tacoma: Hog LPC pinmux
+>   pinctrl: aspeed: Improve debug output
+>
+>  arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts |  7 +++
+>  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c  | 56 +++++++++------------
+>  drivers/pinctrl/aspeed/pinctrl-aspeed.c     | 25 +++++++--
+>  drivers/pinctrl/aspeed/pinmux-aspeed.h      |  2 +-
+>  4 files changed, 54 insertions(+), 36 deletions(-)
+>
+> --
+> 2.20.1
+>
