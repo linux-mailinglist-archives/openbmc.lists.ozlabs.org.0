@@ -1,116 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68757E250E
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 23:18:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F6EFE2622
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 00:11:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46z3BW60xczDqSr
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 08:18:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46z4MQ03wPzDqLx
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 09:10:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=axentia.se (client-ip=40.107.4.123;
- helo=eur03-db5-obe.outbound.protection.outlook.com;
- envelope-from=peda@axentia.se; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
+ helo=mail-pg1-x544.google.com; envelope-from=rentao.bupt@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=axentia.se
-Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="key not found in DNS" (0-bit key;
- unprotected) header.d=axentia.se header.i=@axentia.se header.b="OjQltdX5"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="P9Qg29Ln"; 
  dkim-atps=neutral
-Received: from EUR03-DB5-obe.outbound.protection.outlook.com
- (mail-eopbgr40123.outbound.protection.outlook.com [40.107.4.123])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
+ [IPv6:2607:f8b0:4864:20::544])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46z39d54cDzDqPk;
- Thu, 24 Oct 2019 08:17:23 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DyhriQS6zOUnsUzUBVG83+wWJO4mp6g5PIEG/99ke0TRimjQ/UrXvSs7jN55AafDClK7IDNjtpdmIg4EsmmI9nWEIzccT59L70+AufSHPWRuoiuwBNI9jc5Dvh82kUNIbn2szqL7FN6lVlvToJ7rlxCGvToBWEvAXIyZ7c8+WKGJn7UWaQbVlk/8EIFd1YlpMjxfHLv6JEYFaY7ItcUy3JYU2HcnpSTWaMaZJd2uglNBhpwN6Gf+n6FyiL/p6H0eUXolTSETt3zgV6EGMfLu5/27Mrr3Mmz0ytu4iqoBWFa9rCB/Sd9l+0+koQawFwHo27O5pBjYXQht6L8iu4UrvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UERwcSG8wNnvtau2mk0R0dTTqBsoTfuBWL3z11zCDN4=;
- b=PPNFhL1tNrP+jtHdCcf8hsz6lDg+7HmaOT7tX3m7pT+gqXn9wrsI6q9Ktkyu14AEUTUO2Ky9gvGwV6AbdwQAyEJuWFMVj5AYQUBic1jK2+OTjSya2bIqeT9+BnhIFDNevH6g9jAI5NCXuJI6mYdVSicRXF4HLG3yNFCKWnhGVW/cFIUqkcsmisvA0wEFJcFEMi9VeDDXwUGhhqCjYTC7Djzmf89KyXBgvuEcyuK2L2fVBzgZ7T17lkAhPWMCyMbj0tkSu04aIAXV85aPNp+oozhFFCR/kJcWSMB/nN4Qo8dBT1zEqB5mDNcV6SBNGThjnsTyaVQ9/F7rHm8HzUuuqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axentia.se; dmarc=pass action=none header.from=axentia.se;
- dkim=pass header.d=axentia.se; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axentia.se;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UERwcSG8wNnvtau2mk0R0dTTqBsoTfuBWL3z11zCDN4=;
- b=OjQltdX5CVgCntGD3ChBnwaaCBWqlbmcmMk9/WUlxuPFNFr9cFG2mVZt2ttNbuht3S4Oj0TvN+8j0kKx75WvXJa2nu80Z7UTTzu8nzeA5E51bM7WAbSIGVpf5P40Wz/U2RmcApyvV++NoM5m8oaV70eJOzeoWLzm2yQaz0OwO74=
-Received: from DB3PR0202MB3434.eurprd02.prod.outlook.com (52.134.66.158) by
- DB3PR0202MB3563.eurprd02.prod.outlook.com (52.134.66.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2387.20; Wed, 23 Oct 2019 21:17:16 +0000
-Received: from DB3PR0202MB3434.eurprd02.prod.outlook.com
- ([fe80::c5b8:6014:87a4:1afe]) by DB3PR0202MB3434.eurprd02.prod.outlook.com
- ([fe80::c5b8:6014:87a4:1afe%7]) with mapi id 15.20.2347.029; Wed, 23 Oct 2019
- 21:17:16 +0000
-From: Peter Rosin <peda@axentia.se>
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Brendan Higgins
- <brendanhiggins@google.com>, Wolfram Sang <wsa@the-dreams.de>, Benjamin
- Herrenschmidt <benh@kernel.crashing.org>, Joel Stanley <joel@jms.id.au>, Rob
- Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Andrew
- Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>, Cedric Le Goater
- <clg@kaod.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46z4LP1yKnzDqRG;
+ Thu, 24 Oct 2019 09:10:04 +1100 (AEDT)
+Received: by mail-pg1-x544.google.com with SMTP id k20so12957674pgi.1;
+ Wed, 23 Oct 2019 15:10:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=ZIL9BSAVqgpz8OwYv2/+zZmIbanFJ38CI5+af9Juk60=;
+ b=P9Qg29LnTeDSeh0UuBCSyDb7Fumnm5L6mxI2XTdeT/LHEvAEKCKSu5s9S3AZymuYXM
+ a+I6XwBldVEOysWDcFAGAbhGK5cKnjQaVBubaXBZsCy1+5SqcLVzhBQUewPdDUvEJ3CB
+ XDWMEAZIHr+qc/h79rHlWBKJrEuv6qN6T6jwqgGPlacbp28l3UpWchv1uGMwA+e06yyq
+ LNw0NPz4Q77/szvV47P2o1lpRbScO2GLJNNeRvm7MnthTapEYKLi9TGy084i35tEe527
+ 7negZyUrWCAvlLjlNG7XXJNGn1npUrrMuGmLGfu8LTPDu0lP45RG07RBAOUMn3TDSWoC
+ 7qKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=ZIL9BSAVqgpz8OwYv2/+zZmIbanFJ38CI5+af9Juk60=;
+ b=cmK6p9qUMzoPrYDGaJLaNZRqVLk5RbV3e+msppJZL9KN6c9wFRRD0G5K39/uCjKSdN
+ v/mmKIpUziWGIYY8nx71niQfJ3sPjpAmbZM4yTzb+GnkRzB2Q5Ho8Difkgo3BetVSjOc
+ DeI/ohMnacNHv3JXmMH94VvW6cqRbypjSqBfZNOwHWiCE/giSbHc1x+H1spelU7mpTSu
+ 2efZmmsv5sRXeS1FjDj0n9nRMmsCFympUJIg+zoYxi2J+KmsnE+EdlCinCqa/Y+jS8a5
+ bQvvV9G+YohzKc8R6oXEesGm63tpcPYpsog3u0uY4mzxPoLCjxA71LY2rqw8fsuYTRvl
+ dEVg==
+X-Gm-Message-State: APjAAAW84KDZPUxnaiEEQrzonE7jk57W/4bONGyHZ3JtdBOo+5bUn3Od
+ 70yNonuyKXhSOVFI/tiNmQk=
+X-Google-Smtp-Source: APXvYqw83ax6Pg2vtSc567AWYZV0CNsDIri6TjQCKtyrSB37e8feykeLLqjP3M5G3ljLUJwNuHOlPw==
+X-Received: by 2002:a17:90a:f311:: with SMTP id
+ ca17mr2685914pjb.112.1571868600642; 
+ Wed, 23 Oct 2019 15:10:00 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::e65d])
+ by smtp.gmail.com with ESMTPSA id m22sm24394768pgj.29.2019.10.23.15.09.59
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Wed, 23 Oct 2019 15:09:59 -0700 (PDT)
+Date: Wed, 23 Oct 2019 15:09:50 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Peter Rosin <peda@axentia.se>
 Subject: Re: [PATCH i2c-next 1/2] dt-bindings: i2c: aspeed: add hardware
  timeout support
-Thread-Topic: [PATCH i2c-next 1/2] dt-bindings: i2c: aspeed: add hardware
- timeout support
-Thread-Index: AQHViE2KU5aZojIjkUqCdR4ab3gQm6dlt3EA///tFICAANZwgIAAdUSAgAHNpAA=
-Date: Wed, 23 Oct 2019 21:17:16 +0000
-Message-ID: <6eba3e62-9215-0c39-258b-7abfb394bc48@axentia.se>
+Message-ID: <20191023220949.GA11139@taoren-ubuntu-R90MNF91>
 References: <20191021202414.17484-1-jae.hyun.yoo@linux.intel.com>
  <20191021202414.17484-2-jae.hyun.yoo@linux.intel.com>
  <0a629f7b-b829-c332-27d8-dc825205ff72@axentia.se>
  <7abf933b-cb18-10af-9c1b-163ec65ffae5@linux.intel.com>
  <b98827fa-462a-060b-efc7-27fe5d7742ff@axentia.se>
  <7806ece8-1d7c-7aa8-20af-6f5f964bec64@linux.intel.com>
-In-Reply-To: <7806ece8-1d7c-7aa8-20af-6f5f964bec64@linux.intel.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
-x-originating-ip: [213.112.138.100]
-x-clientproxiedby: HE1P190CA0001.EURP190.PROD.OUTLOOK.COM (2603:10a6:3:bc::11)
- To DB3PR0202MB3434.eurprd02.prod.outlook.com
- (2603:10a6:8:5::30)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=peda@axentia.se; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 8fcbcdf4-cb7d-4f9b-f28b-08d757fe6122
-x-ms-traffictypediagnostic: DB3PR0202MB3563:
-x-microsoft-antispam-prvs: <DB3PR0202MB35630C74D714FD713F80B4FABC6B0@DB3PR0202MB3563.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 019919A9E4
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(136003)(39830400003)(366004)(346002)(376002)(396003)(52314003)(199004)(189003)(76176011)(71200400001)(11346002)(476003)(229853002)(52116002)(2616005)(8936002)(99286004)(4001150100001)(65806001)(66066001)(65956001)(6512007)(186003)(81156014)(2906002)(446003)(486006)(3846002)(7736002)(71190400001)(6116002)(58126008)(26005)(31686004)(5024004)(31696002)(256004)(6436002)(316002)(14444005)(25786009)(66476007)(66556008)(81166006)(386003)(66946007)(110136005)(86362001)(66446008)(64756008)(53546011)(6506007)(54906003)(6246003)(5660300002)(7416002)(14454004)(508600001)(8676002)(4326008)(36756003)(102836004)(6486002)(305945005)(921003)(1121003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:DB3PR0202MB3563;
- H:DB3PR0202MB3434.eurprd02.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: axentia.se does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: T/2sv/WbZQROfHYLsOzoMwKyaHN8Miu2nRJd2puxulsO0s+TYSD6tIyketk05Pdz0OuVZUN8neaQ/g+/5Ty+XMzg7zPkNgG94VCl2M/VkYrcopfdnfEPFGzDUZGf0zmBXzgNgCN0E6oku/VVFLQW90Tn8UVKacp9uDwWlV6p5glW4hudWqcY9MG6pUXlS140HDucsIEWDbssJMpKJh6opxDR7oyE+pp72W1kXchKyQzbjTbl4YvlCmWAaYuv+ATYPWINK582oGEPj18jeSeLNfH5Io0VzrfK+/p8Q+FRn9a2gudD0fLGMw07FRCQRvriC3APRDNwa44GZvcOsW+GdXMTDxcusxCCpxvNzEeUJ6fnU8QwyyO8FicddMQXsA02TgNgtaC+v1oZeJNrV+WcwLp0F8wjmn+KA8rd+v5XMXrVrTg0Gz2EKbFTztuUWQly
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <44CDB0B8FC357E42A488B1F579254AB4@eurprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ <6eba3e62-9215-0c39-258b-7abfb394bc48@axentia.se>
 MIME-Version: 1.0
-X-OriginatorOrg: axentia.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fcbcdf4-cb7d-4f9b-f28b-08d757fe6122
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Oct 2019 21:17:16.1123 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4ee68585-03e1-4785-942a-df9c1871a234
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ey3rpRYjGQfu1vWkkbZ/APNGoIpqYWv541ZVuETMMIGRqIfTt09UjSARnsZic1dO
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR0202MB3563
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6eba3e62-9215-0c39-258b-7abfb394bc48@axentia.se>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,170 +87,209 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
+Cc: Mark Rutland <mark.rutland@arm.com>,
  "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ Wolfram Sang <wsa@the-dreams.de>, Andrew Jeffery <andrew@aj.id.au>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
  "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>
+ Rob Herring <robh+dt@kernel.org>, Tao Ren <taoren@fb.com>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ Cedric Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gMjAxOS0xMC0yMiAxOTo0NCwgSmFlIEh5dW4gWW9vIHdyb3RlOg0KPiBPbiAxMC8yMi8yMDE5
-IDE6NDUgQU0sIFBldGVyIFJvc2luIHdyb3RlOg0KPj4gT24gMjAxOS0xMC0yMSAyMzo1NywgSmFl
-IEh5dW4gWW9vIHdyb3RlOg0KPj4+IEhpIFBldGVyLA0KPj4+DQo+Pj4gT24gMTAvMjEvMjAxOSAy
-OjA1IFBNLCBQZXRlciBSb3NpbiB3cm90ZToNCj4+Pj4gT24gMjAxOS0xMC0yMSAyMjoyNCwgSmFl
-IEh5dW4gWW9vIHdyb3RlOg0KPj4+Pj4gQXBwZW5kIGEgYmluZGluZyB0byBzdXBwb3J0IGhhcmR3
-YXJlIHRpbWVvdXQgZmVhdHVyZS4NCj4+Pj4+DQo+Pj4+PiBTaWduZWQtb2ZmLWJ5OiBKYWUgSHl1
-biBZb28gPGphZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+DQo+Pj4+PiAtLS0NCj4+Pj4+ICAg
-IERvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvaTJjLWFzcGVlZC50eHQgfCAy
-ICsrDQo+Pj4+PiAgICAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspDQo+Pj4+Pg0KPj4+
-Pj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvaTJj
-LWFzcGVlZC50eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvaTJjL2kyYy1h
-c3BlZWQudHh0DQo+Pj4+PiBpbmRleCBiNDdmNmNjYjE5NmEuLjEzM2JmZWRmNGNkZCAxMDA2NDQN
-Cj4+Pj4+IC0tLSBhL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvaTJjLWFz
-cGVlZC50eHQNCj4+Pj4+ICsrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9p
-MmMvaTJjLWFzcGVlZC50eHQNCj4+Pj4+IEBAIC0xNyw2ICsxNyw4IEBAIE9wdGlvbmFsIFByb3Bl
-cnRpZXM6DQo+Pj4+PiAgICAtIGJ1cy1mcmVxdWVuY3kJOiBmcmVxdWVuY3kgb2YgdGhlIGJ1cyBj
-bG9jayBpbiBIeiBkZWZhdWx0cyB0byAxMDAga0h6IHdoZW4gbm90DQo+Pj4+PiAgICAJCSAgc3Bl
-Y2lmaWVkDQo+Pj4+PiAgICAtIG11bHRpLW1hc3Rlcgk6IHN0YXRlcyB0aGF0IHRoZXJlIGlzIGFu
-b3RoZXIgbWFzdGVyIGFjdGl2ZSBvbiB0aGlzIGJ1cy4NCj4+Pj4+ICstIGFzcGVlZCxody10aW1l
-b3V0LW1zCTogSGFyZHdhcmUgdGltZW91dCBpbiBtaWxsaXNlY29uZHMuIElmIGl0J3Mgbm90DQo+
-Pj4+PiArCQkJICBzcGVjaWZpZWQsIHRoZSBIL1cgdGltZW91dCBmZWF0dXJlIHdpbGwgYmUgZGlz
-YWJsZWQuDQo+Pj4+PiAgICANCj4+Pj4+ICAgIEV4YW1wbGU6DQo+Pj4+PiAgICANCj4+Pj4+DQo+
-Pj4+DQo+Pj4+IFNvbWUgU01CdXMgY2xpZW50cyBzdXBwb3J0IGEgc21idXMtdGltZW91dC1kaXNh
-YmxlIGJpbmRpbmcgZm9yIGRpc2FibGluZw0KPj4+PiB0aW1lb3V0cyBsaWtlIHRoaXMsIGZvciBj
-YXNlcyB3aGVyZSB0aGUgSTJDIGFkYXB0ZXIgaW4gcXVlc3Rpb24gb24gb2NjYXNpb24NCj4+Pj4g
-aXMgdW5hYmxlIHRvIGtlZXAgdGhlIHBhY2UuIEFkZGluZyB0aGF0IHByb3BlcnR5IHRodXMgYXZv
-aWRzIHVuZGVzaXJlZA0KPj4+PiB0aW1lb3V0cyB3aGVuIHRoZSBjbGllbnQgaXMgU01CdXMgY29u
-Zm9ybWFudCB3aXRob3V0IGl0LiBZb3VyIG5ldyBiaW5kaW5nDQo+Pj4+IGlzIHRoZSByZXZlcnNl
-IHNpdHVhdGlvbiwgd2hlcmUgeW91IHdhbnQgdG8gYWRkIGEgdGltZW91dCB3aGVyZSBvbmUgaXMN
-Cj4+Pj4gb3RoZXJ3aXNlIG1pc3NpbmcuDQo+Pj4+DQo+Pj4+IEFueXdheSwgc2luY2UgSTJDIGRv
-ZXMgbm90IGhhdmUgYSBzcGVjaWZpZWQgbG93ZXN0IHBvc3NpYmxlIGZyZXF1ZW5jeSwgdGhpcw0K
-Pj4+PiBmZWVscyBsaWtlIHNvbWV0aGluZyB0aGF0IGlzIG1vcmUgaW4gdGhlIFNNQnVzIGFyZW5h
-LiBTaG91bGQgdGhlIHByb3BlcnR5DQo+Pj4+IHBlcmhhcHMgYmUgYSBnZW5lcmljIHByb3BlcnR5
-IG5hbWVkIHNtYnVzLXRpbWVvdXQtbXMsIG9yIHNvbWV0aGluZyBsaWtlDQo+Pj4+IHRoYXQ/DQo+
-Pj4NCj4+PiBXZWxsLCBJIHRyaWVkIHVwc3RyZWFtaW5nIG9mIHRoZSBnZW5lcmljIHRpbWVvdXQg
-cHJvcGVydHkgYSB5ZWFyIGFnbyBidXQNCj4+PiBJIGFncmVlZCB0aGF0IHRoZSBnZW5lcmljIGJ1
-cyB0aW1lb3V0IHByb3BlcnR5IGNhbiBiZSBzZXQgYnkgYW4gaW9jdGwNCj4+PiBjb21tYW5kIHNv
-IGl0IGRpZG4ndCBuZWVkIHRvIGJlIGFkZGVkIGludG8gZGV2aWNlIHRyZWUgYXQgdGhhdCB0aW1l
-LiBOb3QNCj4+PiBzdXJlIGlmIGFueSBuZWVkIGhhcyBjb21lIHJlY2VudGx5IGJ1dCBJIGhhdmVu
-J3QgaGVhcmQgdGhhdC4gVGhpcyBkcml2ZXINCj4+PiBzdGlsbCB1c2VzIHRoZSBnZW5lcmljIHRp
-bWVvdXQgcHJvcGVydHkgd2hpY2ggaXMgcHJvdmlkZWQgYnkgaTJjIGNvcmUNCj4+PiBmb3IgaGFu
-ZGxpbmcgY29tbWFuZCB0aW1lb3V0cywgYW5kIGl0J3Mgb3V0IG9mIHNjb3BlIGZyb20gdGhpcyBw
-YXRjaA0KPj4+IHNlcmllcy4NCj4+Pg0KPj4+PiBJZiB0aGUgYWJvdmUgaXMgbm90IHdhbnRlZCBv
-ciBhcHByb3ByaWF0ZSwgdGhlbiBJIHdvdWxkIHBlcnNvbmFsbHkgcHJlZmVyDQo+Pj4+IGFzcGVl
-ZCxidXMtdGltZW91dC1tcyBvdmVyIGFzcGVlZCxody10aW1lb3V0LW1zLiBUbyBtZSwgaHctdGlt
-ZW91dC1tcyBzb3VuZHMNCj4+Pj4gbGlrZSBhIChtb3JlIHNlcmlvdXMpIHRpbWVvdXQgYmV0d2Vl
-biB0aGUgQ1BVIGFuZCB0aGUgSTJDIHBlcmlwaGVyYWwgdW5pdA0KPj4+PiBvciBzb21ldGhpbmcg
-bGlrZSB0aGF0LiBCdXQgSSBkb24ndCBjYXJlIGRlZXBseS4uLg0KPj4+DQo+Pj4gQ2hhbmdlcyBJ
-IHN1Ym1pdHRlZCBpbiB0aGlzIHBhdGNoIHNldCBpcyBmb3IgYSBkaWZmZXJlbnQgcHVycG9zZSB3
-aGljaA0KPj4+IGlzIHZlcnkgQXNwZWVkIEgvVyBzcGVjaWZpYywgYW5kIGFjdHVhbGx5IGl0J3Mg
-YSBtb3JlIHNlcmlvdXMgdGltZW91dA0KPj4+IHNldHRpbmcgaW5kZWVkLiBJZiB0aGlzIEgvVyBp
-cyB1c2VkIGluIG11bHRpLW1hc3RlciBlbnZpcm9ubWVudCwgaXQNCj4+PiBjb3VsZCBtZWV0IGEg
-SC9XIGhhbmcgdGhhdCBmcmVlemVzIGl0c2VsZiBpbiBzbGF2ZSBtb2RlIGFuZCBpdCBjYW4ndA0K
-Pj4+IGVzY2FwZSBmcm9tIHRoZSBzdGF0ZS4gVG8gcmVzb2x2ZSB0aGUgc3BlY2lmaWMgY2FzZSwg
-dGhpcyBIL1cgcHJvdmlkZXMNCj4+PiBzZWxmLXJlY292ZXJ5IGZlYXR1cmUgd2hpY2ggbW9uaXRv
-cnMgYWJub3JtYWwgc3RhdGUgb2YgU0RBLCBTQ0wgYW5kIGl0cw0KPj4+IEgvVyBzdGF0ZSBtYWNo
-aW5lIHVzaW5nIHRoZSB0aW1lb3V0IHNldHRpbmcgdG8gZGV0ZXJtaW5lIHRoZSBlc2NhcGUNCj4+
-PiBjb25kaXRpb24uDQo+Pg0KPj4gQXJlIHlvdSBzYXlpbmcgdGhhdCB0aGUgYXNwZWVkIEhXIGlz
-IGJ1Z2d5IGFuZCB0aGF0IHRoaXMgYWJub3JtYWwgc3RhdGUNCj4+IGlzIHNlbGYgaW5mbGljdGVk
-IGJ5IHRoZSBhc3BlZWQgSFcgZXZlbiBpZiBvdGhlciBtYXN0ZXJzIG9uIHRoZSBidXMNCj4+IGJl
-aGF2ZSBzYW5lbHk/IEJlY2F1c2UgSSBkaWRuJ3QgcXVpdGUgcmVhZCBpdCB0aGF0IHdheSBhdCBh
-bGwuLi4NCj4gDQo+IEkgZG9uJ3QgdGhpbmsgaXQncyBhbiBBc3BlZWQgSFcgYnVnLiBBY3R1YWxs
-eSwgdGhpcyBIVyBjYW4gYmUgZXhwb3NlZCB0bw0KPiB2ZXJ5IHNldmVyZSBlbnZpcm9ubWVudHMg
-aWYgaXQgaXMgdXNlZCBhcyBhIEJhc2Vib2FyZCBNYW5hZ2VtZW50DQo+IENvbnRyb2xsZXIgd2hp
-Y2ggbmVlZHMgdHdvIG9yIG1vcmUgbXVsdGktbWFzdGVycyBvbiBhIGJ1cyBkZXBlbmRzIG9uDQo+
-IEhXIGRlc2lnbi4gQWxzbywgaXQgc2hvdWxkIGV4cGVjdCB1bmtub3duIG9yIGJ1Z2d5IGRldmlj
-ZSBhdHRhY2htZW50DQo+IG9uIGEgYnVzIHRocm91Z2ggYWRkLW9uIGNhcmQgc2xvdHMuIEFzcGVl
-ZCBIVyBwcm92aWRlcyBIVyB0aW1lb3V0DQo+IGZlYXR1cmUgdG8gc3VwcG9ydCBleGNlcHRpb25h
-bCBjYXNlcyBoYW5kbGluZyB3aGljaCBjb21lcyBmcm9tIHRoZQ0KPiBzZXZlcmUgdXNlIGNhc2Vz
-Lg0KPiANCj4+IFRvIG1lLCBpdCBzb3VuZGVkICpleGFjdGx5KiBsaWtlIHRoZSBzdGF0ZSBJMkMg
-Y2xpZW50cyBlbmQgdXAgaW4gd2hlbiBhbg0KPj4gSTJDIG1hc3RlciAiZGllcyIgYW5kIHN0b3Bz
-IGNvbW11bmljYXRpbmcgaW4gdGhlIG1pZGRsZSBvZiBhIHRyYW5zYWN0aW9uLg0KPj4gSS5lLiB0
-aGUgdGhpbmcgdGhhdCB0aGUgU01CdXMgdGltZW91dCBpcyBkZXNpZ25lZCB0byBwcmV2ZW50IChh
-bmQgdGhlDQo+PiBzdGF0ZSB0aGUgSTJDIG5pbmUtY2xrLXJlY292ZXJ5IHNlcXVlbmNlIGFkZHJl
-c3NlcykuIFRoZSBvbmx5IHR3aXN0ICh0aGF0DQo+PiBJIHNhdykgd2FzIHRoYXQgdGhlIGFzcGVl
-ZCBIVyBpcyBhbHNvIGEgbWFzdGVyIGFuZCB0aGF0IHRoZSBhc3BlZWQgbWFzdGVyDQo+PiBkcml2
-ZXIgaXMgY29tcGxldGVseSBsb2NrZWQgb3V0IGZyb20gdGhlIGJ1cyB3aGlsZSBzb21lIG9ibm94
-aW91cyBtYXN0ZXINCj4+IGZhaWxzIHRvIGNvbXBsZXRlIGl0cyB0cmFuc2FjdGlvbiAob3Igd2hh
-dGV2ZXIgaXQgd2FzIHVwIHRvKS4NCj4gDQo+IElmIHRoaXMgSFcgcnVucyBvbiBhIHNpbmdsZS1t
-YXN0ZXIgYnVzLCBhbnkgbWFzdGVyIGR5aW5nIGlzc3VlIHdpbGwgYmUNCj4gY3VyZWQgYnkgcmVj
-b3ZlcnkgbG9naWMgd2hpY2ggdGhpcyBkcml2ZXIgYWxyZWFkeSBoYXMgYW5kIHRoZSBsb2dpYyB1
-c2VzDQo+IHRoZSBidXMgdGltZW91dCBzZXR0aW5nIHlvdSBhcmUgc2F5aW5nLg0KPiANCj4gVGhp
-cyBwYXRjaCBzZXQgaXMgbWFpbmx5IGZvY3VzaW5nIG9uIGEgJ3NsYXZlIG1vZGUgaGFuZycgaXNz
-dWUgb24gYQ0KPiAnbXVsdGktbWFzdGVyJyBidXMgd2hpY2ggY2FuJ3QgYmUgY292ZXJlZCBieSB0
-aGUgcmVjb3ZlcnkgbG9naWMuDQo+IA0KPj4gSWYgdGhpcyBjYW4gb25seSBiZSB0cmlnZ2VyZWQg
-d2hlbiB0aGUgSFcgaXMgYWN0aW5nIGFzIGEgc2xhdmUsIGFuZCBieQ0KPj4gYWJvcnRlZCBvciBv
-dGhlcndpc2UgZnVua3kgbWFzdGVyIGFjdGl2aXR5IG9uIHRoZSBidXMsIHRoZW4gSSB3b3VsZG4n
-dA0KPj4gY2FsbCBpdCBhbiBIVyBpc3N1ZS4gVGhlbiBpdCB3b3VsZCBiZSBhIGJ1cyBpc3N1ZS4g
-SS5lLiBzb21ldGhpbmcgbmVlZGluZw0KPj4gYSBidXMtdGltZW91dCBpbnN0ZWFkIG9mIGEgaHct
-dGltZW91dC4NCj4gDQo+IEhlcmUgaXMgYW4gZXhhbXBsZS4gSW4gYSBtdWx0aS1ub2RlIEJNQyBz
-eXN0ZW0sIGEgcGVlciBtYXN0ZXIgY2FuIGJlDQo+IHNodXRkb3duIGluIHRoZSBtaWRkbGUgb2Yg
-dHJhbnNhY3Rpb24sIHRoZW4gdGhpcyBBc3BlZWQgSFcga2VlcHMgd2FpdGluZw0KPiBmb3IgYSBu
-ZXh0IGV2ZW50IGZyb20gdGhlIHBlZXIgbWFzdGVyIGJ1dCBpdCBjYW4ndCBoYXBwZW4gYmVjYXVz
-ZSB0aGUNCj4gcGVlciBtYXN0ZXIgd2FzIGFscmVhZHkgc2h1dGRvd24uIElmIHdlIGVuYWJsZSB0
-aGUgJ3NsYXZlIGluYWN0aXZlDQo+IHRpbWVvdXQgZmVhdHVyZScgdXNpbmcgdGhlIEhXIHRpbWVv
-dXQgc2V0dGluZywgdGhlIHRoaXMgSFcgY2FuIGVzY2FwZQ0KPiBmcm9tIHRoZSB3YWl0aW5nIHN0
-YXRlLiBJZiB3ZSBkb24ndCwgdGhpcyBIVyBoYW5ncyBmb3JldmVyIGluIHRoZQ0KPiB3YWl0aW5n
-IHN0YXRlIGFuZCBpdCdzIHRoZSByZWFzb24gd2h5IEkgaW1wbGVtZW50ZWQgdGhpcyBwYXRjaCBz
-ZXQuDQo+IA0KPiBUaGUgaHctdGltZW91dCBzZXR0aW5nIG5lZWRzIGZpbmUgdHVuaW5nIGRlcGVu
-ZHMgb24gSFcgZW52aXJvbm1lbnQgc28NCj4gaXQgc2hvdWxkIGJlIGRpZmZlcmVudCBmcm9tIHRo
-ZSBidXMtdGltZW91dC4NCg0KWWVhaCwgb2ssIHNvIHlvdSdyZSBiYXNpY2FsbHkgY29uZmlybWlu
-ZyBldmVyeXRoaW5nIEkgc2FpZC4gSSBkbw0Kc2Vuc2Ugc29tZSBjb25mdXNpb24gdGhvdWdoLCBh
-cyB5b3UgY29tZSBhY3Jvc3MgYXMgYSBiaXQNCmRlZmVuc2l2ZSBhbmQgc2VlbSB0byB0aGluayB0
-aGF0IEkgYW0gYWdhaW5zdCB0aGUgd2hvbGUgbm90aW9uIG9mDQp0aGUgcGF0Y2hlcy4gQW5kIHRo
-YXQncyBub3QgdGhlIGNhc2UgYXQgYWxsISBNeSBvbmx5IGlzc3VlIGlzDQp3aXRoIHRoZSBuYW1p
-bmcuIEFuZCBJIGhhcHBlbiB0byB0aGluayBody10aW1lb3V0LW1zIGlzIGEgcmVhbGx5DQpiYWQg
-bmFtZS4gSXQncyB3YXkgdG9vIGJyb2FkIGFuZCBjYW4gbWVhbiBqdXN0IGFib3V0IGFueXRoaW5n
-Lg0KV2hlbiBJIHJlYWQgdGhhdCwgSSB0aGluayBvZiBzb21lIHdvcmthcm91bmQgZm9yIGJyb2tl
-biBoYXJkd2FyZSwNCm5vdCBub3JtYWwgdGhpbmdzIGxpa2UgdGhlIG90aGVyIG1hc3RlcnMgb24g
-dGhlIGJ1cyBkb2luZw0KY29uZnVzaW5nIHRoaW5ncy4gRnVua3kgYnVzIGFjdGl2aXR5IGZyb20g
-cmVtb3RlIG1hc3RlcnMgaXMNCnNpbXBseSBub3QgYW4gSFcgaXNzdWUgaW4gbXkgYm9vaywgYXQg
-bGVhc3Qgbm90IGFuIEhXIGlzc3VlIG9uDQp0aGUgbG9jYWwgc2lkZSBvZiB0aGUgYnVzLiBJdCdz
-IGp1c3Qgc29tZXRoaW5nIHlvdSAqbXVzdCBleHBlY3QqLg0KDQpMZXQgbWUgbGlzdCBzb21lIHNj
-ZW5hcmlvcywgc28gdGhhdCBJIGNhbiBkZXNjcmliZSB3aHkgSSBjYW1lIHVwDQp3aXRoIG15IHN1
-Z2dlc3RlZCBhbHRlcm5hdGUgbmFtaW5nOg0KDQpTdXBwb3NlIHlvdSBoYXZlIGEgc2ltcGxlIHNl
-dHVwIHdpdGggYSBidXMgZmVhdHVyaW5nIGEgc2luZ2xlDQphc3BlZWQgbWFzdGVyIGFuZCBhIHNp
-bmdsZSBzbGF2ZS4gSWYgdGhlIHNsYXZlIGlzLCBzYXksIGEgamM0Mg0KdGVtcGVyYXR1cmUgc2Vu
-c29yLCB0aGVuIGl0IGJ5IGRlZmF1bHQgd2lsbCBmb2xsb3cgdGhlIFNNQnVzIHNwZWMNCmFuZCBp
-bXBsZW1lbnQgYSBidXMgdGltZW91dC4gTWVhbmluZyB0aGF0IGlmIHRoZSBtYXN0ZXIgaXMNCnN0
-YWxsaW5nIGZvciB0b28gbG9uZywgdGhlbiB0aGUgamM0MiBzbGF2ZSB3aWxsIHRpbWVvdXQgdGhl
-DQp0cmFuc2FjdGlvbiBhbmQgbWFrZSBpdHNlbGYgYXZhaWxhYmxlIHRvIGFueSBwb3RlbnRpYWwg
-b3RoZXINCm1hc3RlcnMgb24gdGhlIGJ1cy4gVGhlIGpjNDIgY2hpcCBkb2VzIG5vdCBrbm93IHRo
-YXQgaXQgaXMgb24gYQ0Kc2luZ2xlIG1hc3RlciBidXMuIEJ1dCB0aGlzIGlzIG9ubHkgdGhlIGRl
-ZmF1bHQsIHlvdSBjYW4gdGVsbCB0aGUNCmpjNDIgZHJpdmVyIHRvIGRpc2FibGUgdGhpcyB0aW1l
-b3V0LCB3aGljaCBpcyBzb21ldGltZXMgY3J1Y2lhbA0KZm9yIHJlbGlhYmxlIGJlaGF2aW9yLCBl
-LmcuIGlmIHRoZSBtYXN0ZXIgaXMgbm90IGFsd2F5cyBhYmxlIHRvDQprZWVwIHRoZSBkZWFkbGlu
-ZXMgZm9yIHdoYXRldmVyIHJlYXNvbi4NCg0KTmV4dCBzY2VuYXJpby4gU3VwcG9zZSB5b3UgaGF2
-ZSBhIHNpbXBsZSBzZXR1cCB3aXRoIGEgYnVzDQpmZWF0dXJpbmcgYSBzaW5nbGUgcmVtb3RlIG1h
-c3RlciBvZiBzb21lIHNvcnQgYW5kIHRoZSBhc3BlZWQNCmFjdGluZyBhcyBzbGF2ZSBvbmx5LiBT
-aW5jZSB0aGVyZSBpcyBvbmx5IGEgc2luZ2xlIG1hc3RlciwgYW5kDQp0aGVyZSBhcmUgbm8gb3Ro
-ZXIgc2xhdmVzIG9uIHRoZSBidXMsIHRoZXJlJ3Mgbm8gcG9pbnQgZm9yIHRoZQ0KYXNwZWVkIHRv
-IGFjdCBhcyBtYXN0ZXIuIFRoZSBhc3BlZWQgd2l0aG91dCB5b3VyIHBhdGNoZXMgYmVoYXZlDQph
-cyB0aGUgamM0MiBjaGlwIGFib3ZlLCB3aGVuIGl0IGhhcyBiZWVuIGluc3RydWN0ZWQgdG8gL3Jl
-bW92ZQ0KdGhlIHRpbWVvdXQvLiBBbmQgdGhhdCdzIGZpbmUgaW4gdGhpcyBzY2VuYXJpbyBzaW5j
-ZSB0aGVyZSBpcw0Kb25seSBvbmUgbWFzdGVyIGFuZCB0aGUgYXNwZWVkLCBhcyBzbGF2ZSwgY2Fu
-IGRlZmVyIHJlY292ZXJpbmcNCnRoZSBidXMgdG8gdGhhdCBtYXN0ZXIuIFNvLCB3aGVuIGFzcGVl
-ZCBpcyBvcGVyYXRpbmcgYXMNCnNsYXZlLW9ubHksIHRoZXNlIHBhdGNoZXMgZW5hYmxlIHRoZSBh
-ZGRpdGlvbiBvZiB0aGUgc2FtZSB0aW1lb3V0DQp0aGF0IHdhcyB0aGVyZSBieSBkZWZhdWx0IGlu
-IHRoZSBmaXJzdCBzY2VuYXJpby4NCg0KRmluYWwgc2NlbmFyaW8sIHNvbWUgYXMgbGFzdCBidXQg
-d2l0aCBzb21lIG90aGVyIHNsYXZlKHMpIG9uIHRoZQ0KYnVzLiBOb3csIGl0IGJlY29tZXMgaW50
-ZXJlc3RpbmcgZm9yIHRoZSBhc3BlZWQgdG8gYWN0IGFzIG1hc3RlciwNCmFuZCBpdCBiZWNvbWVz
-IGludGVyZXN0aW5nIGluZGVlZCB0byBoYXZlIGEgdGltZW91dCB0aGF0ICJicmVha3MNCm91dCIg
-d2hlbiBzb21lIHJlbW90ZSBtYXN0ZXIgaG9ncyB0aGUgYXNwZWVkIGluIHNsYXZlIG1vZGUuDQoN
-CkkgY2xhaW0gdGhhdCB0aGUgdGltZW91dHMgbWVudGlvbmVkIGluIGFsbCB0aGVzZSBzY2VuYXJp
-b3MgYXJlDQpyZWxhdGVkLiBJbiB0aGUgZmlyc3Qgc2NlbmFyaW8sIHlvdSBkaXNhYmxlIHRoZSB0
-aW1lb3V0IGJ5IGFkZGluZw0Kc21idXMtdGltZW91dC1kaXNhYmxlIHRvIHRoZSByZWxldmFudCBk
-ZXZpY2UgdHJlZSBub2RlLiBJIHdhcw0KbWVyZWx5IHN1Z2dlc3RpbmcgdGhhdCwgc2luY2UgdGhl
-IHRpbWVvdXRzIGFyZSBiYXNpY2FsbHkgZG9pbmcNCnRoZSBzYW1lIHRoaW5nIGluIGFsbCBzY2Vu
-YXJpb3MsIHRoZSBuYW1pbmcgc2hvdWxkIHBlcmhhcHMgYmUNCmNvbnNpc3RlbnQgYW5kIGJlIHNv
-bWV0aGluZyBtb3JlIHNwZWNpZmljIHRoYW4gaHctdGltZW91dC1tcy4gV2hhdA0KcG9wcGVkIHVw
-IHdhcyBidXMtdGltZW91dC1tcyBvciBzbWJ1cy10aW1lb3V0LW1zLiBJIHN1cHBvc2UNCnJlbW90
-ZS10aW1lb3V0LW1zLCBvciBzb21ldGhpbmcsIHdvdWxkIGFsc28gd29yay4uLg0KDQpOb3RlIHRo
-YXQgdGhlIHRpbWVvdXRzIEknbSB0YWxraW5nIGFib3V0IGhhcyBub3RoaW5nIHRvIGRvIHdpdGgN
-CnRoZSBhZGFwdGVyIHRpbWVvdXQgaW4gdGhlIGxpbnV4IEkyQyBjb3JlLiBUaGlzIGlzIGFsbCBh
-Ym91dA0KdGltZW91dHMgd2hlbiBhY3RpbmcgYXMgSTJDIHNsYXZlIGFuZCB0aGUgcmVtb3RlIG1h
-c3RlciBmYWlscyB0bw0KY29tcGxldGUgKG9yIG90aGVyd2lzZSBtZXNzZXMgdXApIHRyYW5zZmVy
-cy4NCg0KSSBob3BlIHRoYXQgY2xhcmlmaWVzIG15IHBvc2l0aW9uIQ0KDQpDaGVlcnMsDQpQZXRl
-cg0K
+On Wed, Oct 23, 2019 at 09:17:16PM +0000, Peter Rosin wrote:
+> On 2019-10-22 19:44, Jae Hyun Yoo wrote:
+> > On 10/22/2019 1:45 AM, Peter Rosin wrote:
+> >> On 2019-10-21 23:57, Jae Hyun Yoo wrote:
+> >>> Hi Peter,
+> >>>
+> >>> On 10/21/2019 2:05 PM, Peter Rosin wrote:
+> >>>> On 2019-10-21 22:24, Jae Hyun Yoo wrote:
+> >>>>> Append a binding to support hardware timeout feature.
+> >>>>>
+> >>>>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> >>>>> ---
+> >>>>>    Documentation/devicetree/bindings/i2c/i2c-aspeed.txt | 2 ++
+> >>>>>    1 file changed, 2 insertions(+)
+> >>>>>
+> >>>>> diff --git a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> index b47f6ccb196a..133bfedf4cdd 100644
+> >>>>> --- a/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> +++ b/Documentation/devicetree/bindings/i2c/i2c-aspeed.txt
+> >>>>> @@ -17,6 +17,8 @@ Optional Properties:
+> >>>>>    - bus-frequency	: frequency of the bus clock in Hz defaults to 100 kHz when not
+> >>>>>    		  specified
+> >>>>>    - multi-master	: states that there is another master active on this bus.
+> >>>>> +- aspeed,hw-timeout-ms	: Hardware timeout in milliseconds. If it's not
+> >>>>> +			  specified, the H/W timeout feature will be disabled.
+> >>>>>    
+> >>>>>    Example:
+> >>>>>    
+> >>>>>
+> >>>>
+> >>>> Some SMBus clients support a smbus-timeout-disable binding for disabling
+> >>>> timeouts like this, for cases where the I2C adapter in question on occasion
+> >>>> is unable to keep the pace. Adding that property thus avoids undesired
+> >>>> timeouts when the client is SMBus conformant without it. Your new binding
+> >>>> is the reverse situation, where you want to add a timeout where one is
+> >>>> otherwise missing.
+> >>>>
+> >>>> Anyway, since I2C does not have a specified lowest possible frequency, this
+> >>>> feels like something that is more in the SMBus arena. Should the property
+> >>>> perhaps be a generic property named smbus-timeout-ms, or something like
+> >>>> that?
+> >>>
+> >>> Well, I tried upstreaming of the generic timeout property a year ago but
+> >>> I agreed that the generic bus timeout property can be set by an ioctl
+> >>> command so it didn't need to be added into device tree at that time. Not
+> >>> sure if any need has come recently but I haven't heard that. This driver
+> >>> still uses the generic timeout property which is provided by i2c core
+> >>> for handling command timeouts, and it's out of scope from this patch
+> >>> series.
+> >>>
+> >>>> If the above is not wanted or appropriate, then I would personally prefer
+> >>>> aspeed,bus-timeout-ms over aspeed,hw-timeout-ms. To me, hw-timeout-ms sounds
+> >>>> like a (more serious) timeout between the CPU and the I2C peripheral unit
+> >>>> or something like that. But I don't care deeply...
+> >>>
+> >>> Changes I submitted in this patch set is for a different purpose which
+> >>> is very Aspeed H/W specific, and actually it's a more serious timeout
+> >>> setting indeed. If this H/W is used in multi-master environment, it
+> >>> could meet a H/W hang that freezes itself in slave mode and it can't
+> >>> escape from the state. To resolve the specific case, this H/W provides
+> >>> self-recovery feature which monitors abnormal state of SDA, SCL and its
+> >>> H/W state machine using the timeout setting to determine the escape
+> >>> condition.
+> >>
+> >> Are you saying that the aspeed HW is buggy and that this abnormal state
+> >> is self inflicted by the aspeed HW even if other masters on the bus
+> >> behave sanely? Because I didn't quite read it that way at all...
+> > 
+> > I don't think it's an Aspeed HW bug. Actually, this HW can be exposed to
+> > very severe environments if it is used as a Baseboard Management
+> > Controller which needs two or more multi-masters on a bus depends on
+> > HW design. Also, it should expect unknown or buggy device attachment
+> > on a bus through add-on card slots. Aspeed HW provides HW timeout
+> > feature to support exceptional cases handling which comes from the
+> > severe use cases.
+> > 
+> >> To me, it sounded *exactly* like the state I2C clients end up in when an
+> >> I2C master "dies" and stops communicating in the middle of a transaction.
+> >> I.e. the thing that the SMBus timeout is designed to prevent (and the
+> >> state the I2C nine-clk-recovery sequence addresses). The only twist (that
+> >> I saw) was that the aspeed HW is also a master and that the aspeed master
+> >> driver is completely locked out from the bus while some obnoxious master
+> >> fails to complete its transaction (or whatever it was up to).
+> > 
+> > If this HW runs on a single-master bus, any master dying issue will be
+> > cured by recovery logic which this driver already has and the logic uses
+> > the bus timeout setting you are saying.
+> > 
+> > This patch set is mainly focusing on a 'slave mode hang' issue on a
+> > 'multi-master' bus which can't be covered by the recovery logic.
+> > 
+> >> If this can only be triggered when the HW is acting as a slave, and by
+> >> aborted or otherwise funky master activity on the bus, then I wouldn't
+> >> call it an HW issue. Then it would be a bus issue. I.e. something needing
+> >> a bus-timeout instead of a hw-timeout.
+> > 
+> > Here is an example. In a multi-node BMC system, a peer master can be
+> > shutdown in the middle of transaction, then this Aspeed HW keeps waiting
+> > for a next event from the peer master but it can't happen because the
+> > peer master was already shutdown. If we enable the 'slave inactive
+> > timeout feature' using the HW timeout setting, the this HW can escape
+> > from the waiting state. If we don't, this HW hangs forever in the
+> > waiting state and it's the reason why I implemented this patch set.
+> > 
+> > The hw-timeout setting needs fine tuning depends on HW environment so
+> > it should be different from the bus-timeout.
+> 
+> Yeah, ok, so you're basically confirming everything I said. I do
+> sense some confusion though, as you come across as a bit
+> defensive and seem to think that I am against the whole notion of
+> the patches. And that's not the case at all! My only issue is
+> with the naming. And I happen to think hw-timeout-ms is a really
+> bad name. It's way too broad and can mean just about anything.
+> When I read that, I think of some workaround for broken hardware,
+> not normal things like the other masters on the bus doing
+> confusing things. Funky bus activity from remote masters is
+> simply not an HW issue in my book, at least not an HW issue on
+> the local side of the bus. It's just something you *must expect*.
+> 
+> Let me list some scenarios, so that I can describe why I came up
+> with my suggested alternate naming:
+> 
+> Suppose you have a simple setup with a bus featuring a single
+> aspeed master and a single slave. If the slave is, say, a jc42
+> temperature sensor, then it by default will follow the SMBus spec
+> and implement a bus timeout. Meaning that if the master is
+> stalling for too long, then the jc42 slave will timeout the
+> transaction and make itself available to any potential other
+> masters on the bus. The jc42 chip does not know that it is on a
+> single master bus. But this is only the default, you can tell the
+> jc42 driver to disable this timeout, which is sometimes crucial
+> for reliable behavior, e.g. if the master is not always able to
+> keep the deadlines for whatever reason.
+> 
+> Next scenario. Suppose you have a simple setup with a bus
+> featuring a single remote master of some sort and the aspeed
+> acting as slave only. Since there is only a single master, and
+> there are no other slaves on the bus, there's no point for the
+> aspeed to act as master. The aspeed without your patches behave
+> as the jc42 chip above, when it has been instructed to /remove
+> the timeout/. And that's fine in this scenario since there is
+> only one master and the aspeed, as slave, can defer recovering
+> the bus to that master. So, when aspeed is operating as
+> slave-only, these patches enable the addition of the same timeout
+> that was there by default in the first scenario.
+> 
+> Final scenario, some as last but with some other slave(s) on the
+> bus. Now, it becomes interesting for the aspeed to act as master,
+> and it becomes interesting indeed to have a timeout that "breaks
+> out" when some remote master hogs the aspeed in slave mode.
+> 
+> I claim that the timeouts mentioned in all these scenarios are
+> related. In the first scenario, you disable the timeout by adding
+> smbus-timeout-disable to the relevant device tree node. I was
+> merely suggesting that, since the timeouts are basically doing
+> the same thing in all scenarios, the naming should perhaps be
+> consistent and be something more specific than hw-timeout-ms. What
+> popped up was bus-timeout-ms or smbus-timeout-ms. I suppose
+> remote-timeout-ms, or something, would also work...
+> 
+> Note that the timeouts I'm talking about has nothing to do with
+> the adapter timeout in the linux I2C core. This is all about
+> timeouts when acting as I2C slave and the remote master fails to
+> complete (or otherwise messes up) transfers.
+> 
+> I hope that clarifies my position!
+> 
+> Cheers,
+> Peter
+
+Let me share my findings on Facebook Minipack BMC, and hopefully it
+helps with the topic.
+
+Both AST2500 and BIC (Bridged IC) can be bus master on Minipack i2c-0,
+and they send ipmi messages to each other. After several rounds of
+message sharing, BIC becomes the master and starts to send bytes to
+AST2500 BMC: BMC receives first a few bytes successfully but then BIC
+stops sending bytes, and STOP pattern is not detected on the bus,
+either.
+
+Because of this, BMC gets stuck in slave-rx-done state (expecting more
+bytes or STOP), and all the master transactions initiated from BMC side
+would also fail with timeout even though both SDA/SCL lines are high.
+So far I can find 2 ways to recover the apseed controller: a) reset the
+controller explicitly, or b) enabling the slave mode inactive timeout
+interrupt to bring aspped controller's state to idle automatically when
+the controller stays in slave mode for "too long" time.
+
+
+Cheers,
+
+Tao
