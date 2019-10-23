@@ -2,60 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E509EE1588
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 11:15:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BC94E193C
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 13:46:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46yl8W2C3RzDqRX
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 20:15:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ypW13xWgzDqR3
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 22:46:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=acceleronlabs.com (client-ip=2607:f8b0:4864:20::52b;
+ helo=mail-pg1-x52b.google.com; envelope-from=prince@acceleronlabs.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=acceleronlabs.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=acceleronlabs-com.20150623.gappssmtp.com
+ header.i=@acceleronlabs-com.20150623.gappssmtp.com header.b="Yk9SIVF6"; 
+ dkim-atps=neutral
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com
+ [IPv6:2607:f8b0:4864:20::52b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46yl7Y1PbczDqQn
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 20:14:32 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 23 Oct 2019 02:14:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,220,1569308400"; d="scan'208";a="197378164"
-Received: from irsmsx151.ger.corp.intel.com ([163.33.192.59])
- by fmsmga007.fm.intel.com with ESMTP; 23 Oct 2019 02:14:27 -0700
-Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
- IRSMSX151.ger.corp.intel.com ([169.254.4.59]) with mapi id 14.03.0439.000;
- Wed, 23 Oct 2019 10:14:27 +0100
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>, Justin Thaler
- <thalerj@linux.vnet.ibm.com>
-Subject: RE: Fw: RE: Telemetry Streaming from OpenBMC
-Thread-Topic: Fw: RE: Telemetry Streaming from OpenBMC
-Thread-Index: AQHViQkgDoNISjARSkuhEuG859vWr6dn226QgAAWpOA=
-Date: Wed, 23 Oct 2019 09:14:26 +0000
-Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A30F9022@IRSMSX101.ger.corp.intel.com>
-References: <OF14108F29.F96A2615-ON00258495.0040F63B-86258495.00411F29@notes.na.collabserv.com>
- <7f04cbd5-00ad-5b7e-9f90-5b15500d58ea@linux.vnet.ibm.com>
- <DBA24EEE99A3B3489FF472F5E94DE6D7A30F8FE5@IRSMSX101.ger.corp.intel.com>
-In-Reply-To: <DBA24EEE99A3B3489FF472F5E94DE6D7A30F8FE5@IRSMSX101.ger.corp.intel.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMjkxMThjZTYtZGYwMy00NTQyLWE0ZDAtNGE0ZWI2ZTBhY2YwIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMVNJVUVDNldWNkRFamt1TVZrbk1GU09YQnlpK21ENnBWQVpjZGRtbnowdHdcL3BEU29zazlRWldKT3QrS3dIR2MifQ==
-x-ctpclassification: CTP_NT
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [163.33.239.181]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ypV61g83zDqM0
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 22:45:44 +1100 (AEDT)
+Received: by mail-pg1-x52b.google.com with SMTP id p1so12012913pgi.4
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 04:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=acceleronlabs-com.20150623.gappssmtp.com; s=20150623;
+ h=to:from:subject:message-id:date:user-agent:mime-version
+ :content-transfer-encoding:content-language;
+ bh=mFQgX5BnaTXjOaGTwcUFe9hUyb0AGSbMBXiafnFO2c4=;
+ b=Yk9SIVF69+Vgp4dwgTKbuPLWnhn5EYjGbG3XsdJUhpJUMNBpaWOtq6QM0HeOyzFvVo
+ 29gbegz9BlIYV9QOAIL9WSxOG+2gTYLG5S0m/XpWcYAOHSNF1MLqW5xKuulPNu1nFHTz
+ dGzqEDl2g2ZyAnXM2VUzXPb+Im/7mG0lgHmeTRdn4OypDrDu5iCbQB+HIdPML1yYiiuz
+ rT2XQLNp6OdaYCNqYJskkxg0B41UrmqqRKrcoWZlbKuocY5lBCKTogNVMfn+0PRsJhjY
+ 65G7qj7tkBXGn5k7VkrYdQrv07nUW+bLvYOoz7FJQC41TVZitOYb5Bzhxucnnjm+5kZL
+ xAng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+ :mime-version:content-transfer-encoding:content-language;
+ bh=mFQgX5BnaTXjOaGTwcUFe9hUyb0AGSbMBXiafnFO2c4=;
+ b=c5d9hpuLPjHVEaSESKNnApodhCXmT/SJL3nAT56yKD6qifT1lRLSttYq1c+HdYwGmf
+ hFWvq9HOWDb5QK6Hmm3VPvsfnAV9odw9IlnSET9xgz+tHvoOQ/bUR+xgcNi3MkO3IaA0
+ +e0DeIDiqU0uHbRowGdj4WJInIoZ6pQ3bH6diBp1+i6MgEUFBg+qNznOQXdzmBjnFlCv
+ RSYytLvEV6Sht7oqz8DH6bgnvDMJXsWqEI726PhW/2auWKBwAO2iGWGfTT9KcsQ7mg1u
+ xNit3vTrcviZHI3me5+N2M60jHCa2hNjOzncK9kuyIDcOvOr0u0Y7xcKSSUluZwefDho
+ 8L6g==
+X-Gm-Message-State: APjAAAUDyT0o/l50DxR1Vd4Kot9HaczGfrJZUNBL9L9RF8w/9JNJJmMw
+ KvXAog2+o7zjThdeKoNTnvBARRH4SI0=
+X-Google-Smtp-Source: APXvYqyuOMNBOxTs0OIqZn73PjWSHFn6htqOI4NmwOXEfEHtkifcgyTE3TwUursXnvNxHJYy4gILvg==
+X-Received: by 2002:a62:c1c1:: with SMTP id i184mr2496877pfg.65.1571831138971; 
+ Wed, 23 Oct 2019 04:45:38 -0700 (PDT)
+Received: from [192.168.1.25] ([14.98.27.146])
+ by smtp.gmail.com with ESMTPSA id y15sm32722150pfp.111.2019.10.23.04.45.36
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 23 Oct 2019 04:45:37 -0700 (PDT)
+To: openbmc@lists.ozlabs.org
+From: Prince V S <prince@acceleronlabs.com>
+Subject: iKVM support for AST2400
+Message-ID: <d7171952-8999-d951-cec0-644f4de524a3@acceleronlabs.com>
+Date: Wed, 23 Oct 2019 17:15:34 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,131 +82,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "viswha@linux.vnet.ibm.com" <viswha@linux.vnet.ibm.com>,
- "neladk@microsoft.com" <neladk@microsoft.com>,
- "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
- "vijaykhemka@fb.com" <vijaykhemka@fb.com>,
- "rosedahl@us.ibm.com" <rosedahl@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T25lIG1vcmUgdGhpbmcgdGhhdCBJIG1pc3NlZCBlYXJsaWVyLiBJZiB5b3Ugc2V0IHVwIG1ldHJp
-YyByZXBvcnQgYW5kIFNTRSBzdWJzY3JpcHRpb24gYXMgaXQgaXMgZGVzY3JpYmVkIGJlbG93LCB5
-b3Ugd2lsbCByZWNlaXZlIHNlcnZlci1zZW50IGV2ZW50cyB3aXRoIG1ldHJpYyByZXBvcnQgdXBk
-YXRlcyBhdCBkZWZpbmVkIGludGVydmFsIChpbiB5b3VyIGV4YW1wbGUgaXQgd2lsbCBiZSBldmVy
-eSAxIHNlY29uZCkuDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBvcGVuYm1j
-IFttYWlsdG86b3BlbmJtYy1ib3VuY2VzK3Bpb3RyLm1hdHVzemN6YWs9aW50ZWwuY29tQGxpc3Rz
-Lm96bGFicy5vcmddIE9uIEJlaGFsZiBPZiBNYXR1c3pjemFrLCBQaW90cg0KU2VudDogV2VkbmVz
-ZGF5LCBPY3RvYmVyIDIzLCAyMDE5IDExOjAwIEFNDQpUbzogSnVzdGluIFRoYWxlciA8dGhhbGVy
-akBsaW51eC52bmV0LmlibS5jb20+DQpDYzogUGF1bC5WYW5jaWxAZGVsbC5jb207IG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZzsgdmlzd2hhQGxpbnV4LnZuZXQuaWJtLmNvbTsgbmVsYWRrQG1pY3Jv
-c29mdC5jb207IGdtaWxsc0BsaW51eC52bmV0LmlibS5jb207IHZpamF5a2hlbWthQGZiLmNvbTsg
-cm9zZWRhaGxAdXMuaWJtLmNvbQ0KU3ViamVjdDogUkU6IEZ3OiBSRTogVGVsZW1ldHJ5IFN0cmVh
-bWluZyBmcm9tIE9wZW5CTUMNCg0KPjEuIENyZWF0ZSBhIG1ldHJpYyByZXBvcnQuIFRoaXMgcmVw
-b3J0IHNob3VsZCBkZWZpbmVkIGFnYWluc3QgdGhlIGFwcHJvcHJpYXRlIHNlbnNvcnMsIHdpdGgg
-YSBzYW1wbGUgcmF0ZSBzZXQgdG8gMS9zLCBhbmQgYSBkdXJhdGlvbiBvZiAxcz8NCg0KRXhhY3Rs
-eS4gWW91IGp1c3Qgc2V0IHRoZSBNZXRyaWNSZXBvcnREZWZpbml0aW9uVHlwZSB0byBQZXJpb2Rp
-YyBpbiB0aGUgTWV0cmljIFJlcG9ydCBEZWZpbml0aW9uIGFuZCBwcm9wZXIgUmVjdXJyZW5jZUlu
-dGVydmFsLg0KDQo+Mi4gUHVzaCB0aGUgdGVsZW1ldHJ5IHJlcG9ydCB0byB0aGUgQk1DIHVzaW5n
-IFJlZEZpc2guDQoNCk1ldHJpYyBSZXBvcnQgd2lsbCBiZSBnZW5lcmF0ZWQgYnkgdGhlIE1vbml0
-b3JpbmcgU2VydmljZSBhdXRvbWF0aWNhbGx5LCBhZnRlciBpdHMgZGVmaW5pdGlvbiB0aHJvdWdo
-IHRoZSBSZWRmaXNoLiBJZiB5b3Ugd2FudCB0byBwdXNoIGl0IG91dCBhcyBhIFJlZGZpc2ggZXZl
-bnQgeW91IHNob3VsZCBzZXQgdGhlIFJlcG9ydEFjdGlvbnMgcHJvcGVydHkgaW4gdGhlIE1ldHJp
-YyBSZXBvcnQgRGVmaW5pdGlvbiB0byAiUmVkZmlzaEV2ZW50Ii4NCg0KPjMuIENyZWF0ZSBhIG5l
-dyBTU0Ugc3Vic2NyaXB0aW9uLg0KDQpZZXMsIGlmIHlvdSBoYXZlIG1ldHJpYyByZXBvcnQgZGVm
-aW5lZCBhcyBhYm92ZSwgeW91IHNob3VsZCBiZSBhYmxlIHRvIHJlY2VpdmUgUmVkZmlzaCBFdmVu
-dHMgd2l0aCBtZXRyaWMgcmVwb3J0cyBhcyBzb29uIGFzIHRoaXMgZmVhdHVyZSBpcyBpbXBsZW1l
-bnRlZCwgYmVjYXVzZSBhcyBmYXIgYXMgSSBrbm93LCBuZWl0aGVyIHRoZSBFdmVudCBTZXJ2aWNl
-IGFuZCBUZWxlbWV0cnkgU2VydmljZSBpcyBub3QgaW1wbGVtZW50ZWQgeWV0LiBCb3RoIGRlc2ln
-bnMgYXJlIGluIHJldmlldy4NCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEp1
-c3RpbiBUaGFsZXIgW21haWx0bzp0aGFsZXJqQGxpbnV4LnZuZXQuaWJtLmNvbV0NClNlbnQ6IFR1
-ZXNkYXksIE9jdG9iZXIgMjIsIDIwMTkgODo0NyBQTQ0KVG86IE1hdHVzemN6YWssIFBpb3RyIDxw
-aW90ci5tYXR1c3pjemFrQGludGVsLmNvbT4NCkNjOiBrdW55aUBnb29nbGUuY29tOyBvcGVuYm1j
-QGxpc3RzLm96bGFicy5vcmc7IFBhdWwuVmFuY2lsQGRlbGwuY29tOyBuZWxhZGtAbWljcm9zb2Z0
-LmNvbTsgZ21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbTsgdmlzd2hhQGxpbnV4LnZuZXQuaWJtLmNv
-bTsgcm9zZWRhaGxAdXMuaWJtLmNvbTsgdmlqYXlraGVta2FAZmIuY29tDQpTdWJqZWN0OiBSZTog
-Rnc6IFJFOiBUZWxlbWV0cnkgU3RyZWFtaW5nIGZyb20gT3BlbkJNQw0KDQoNCj4gRnJvbTogICAi
-TWF0dXN6Y3phaywgUGlvdHIiIDxwaW90ci5tYXR1c3pjemFrQGludGVsLmNvbT4NCj4gVG86ICAg
-ICAnSnVzdGluIFRoYWxlcicgPHRoYWxlcmpAdXMuaWJtLmNvbT4sICJrdW55aUBnb29nbGUuY29t
-Ig0KPiA8a3VueWlAZ29vZ2xlLmNvbT4sICJ2aWpheWtoZW1rYUBmYi5jb20iIDx2aWpheWtoZW1r
-YUBmYi5jb20+LA0KPiAiT3BlbkJNQyBNYWlsbGlzdCIgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9y
-Zz4sICJQYXVsLlZhbmNpbEBkZWxsLmNvbSINCj4gPFBhdWwuVmFuY2lsQGRlbGwuY29tPiwgIm5l
-bGFka0BtaWNyb3NvZnQuY29tIiA8bmVsYWRrQG1pY3Jvc29mdC5jb20+LA0KPiAiZ21pbGxzQGxp
-bnV4LnZuZXQuaWJtLmNvbSIgPGdtaWxsc0BsaW51eC52bmV0LmlibS5jb20+LCB2aXNod2ENCj4g
-PHZpc2h3YUBsaW51eC52bmV0LmlibS5jb20+DQo+IENjOiAgICAgVG9kZCBSb3NlZGFobCA8cm9z
-ZWRhaGxAdXMuaWJtLmNvbT4NCj4gRGF0ZTogICAxMC8wMS8yMDE5IDExOjEwIEFNDQo+IFN1Ympl
-Y3Q6ICAgICAgICBbRVhURVJOQUxdIFJFOiBUZWxlbWV0cnkgU3RyZWFtaW5nIGZyb20gT3BlbkJN
-Qw0KPg0KPg0KPg0KPiBIaSwNCj4NCj4gU29ycnkgZm9yIHRoZSBsYXRlIHJlc3BvbnNlLiBGb3Ig
-bm93IHN0cmVhbWluZyBzaGFsbCBiZSBzdXBwb3J0ZWQgYnkNCj4gdGhlIFJlZGZpc2ggdGVsZW1l
-dHJ5IHNlcnZpY2UuIEV2ZXJ5IG1ldHJpYyByZXBvcnQgY2FuIGJlIGNvbmZpZ3VyZWQNCj4gdG8g
-YmUgcHVzaGVkIG91dCBhcyB0aGUgcmVkZmlzaCBldmVudC4gQ3VycmVudGx5IHRoaXMgaXMgd29y
-ayBpbiBwcm9ncmVzcy4NCg0KVGhhbmtzIGZvciB0aGUgcmVzcG9uc2UhIEkgZ3Vlc3MgSSdtIHN0
-aWxsIGEgYml0IGNvbmZ1c2VkIGFib3V0IHRoZSB0ZWxlbWV0cnkgc2VydmljZSBpbiBnZW5lcmFs
-LiBJZiBJIHdhbnRlZCB0byBnZXQgYW4gdXBkYXRlIG9uIGFsbCBtZXRyaWMgc2Vuc29ycyBhdCBh
-IHJhdGUgb2YgMS9zIEkgdGhpbmsgSSBzaG91bGQgZG8gdGhlIGZvbGxvd2luZyBhdCBhIGhpZ2gg
-bGV2ZWwuDQoNCjEuIENyZWF0ZSBhIG1ldHJpYyByZXBvcnQuIFRoaXMgcmVwb3J0IHNob3VsZCBk
-ZWZpbmVkIGFnYWluc3QgdGhlIGFwcHJvcHJpYXRlIHNlbnNvcnMsIHdpdGggYSBzYW1wbGUgcmF0
-ZSBzZXQgdG8gMS9zLCBhbmQgYSBkdXJhdGlvbiBvZiAxcz8NCg0KMi4gUHVzaCB0aGUgdGVsZW1l
-dHJ5IHJlcG9ydCB0byB0aGUgQk1DIHVzaW5nIFJlZEZpc2guDQoNCjMuIENyZWF0ZSBhIG5ldyBT
-U0Ugc3Vic2NyaXB0aW9uLg0KDQpUaGlzIGlzIGF0IGxlYXN0IG15IHZlcnkgcnVkaW1lbnRhcnkg
-dW5kZXJzdGFuZGluZyBvbiB0aGUgc3ViamVjdC4gSSB3YXMgaG9waW5nIHNvbWVvbmUgY291bGQg
-YWRkIHNvbWUgY2xhcml0eSBoZXJlLCBtb3JlIHNwZWNpZmljYWxseSwgaG93IGRvIEkgZ2V0IGNv
-bnRpbnVhbCB1cGRhdGVzIGFmdGVyIHNldHRpbmcgdXAgdGhlIHN1YnNjcmlwdGlvbj8gSSBkbyBh
-cG9sb2dpemUgYXMgdGhpcyBpc24ndCB2ZXJ5IGNsZWFyIHRvIG1lLCBldmVuIGFmdGVyIHJlYWRp
-bmcgb3ZlciB0aGUgdGVsZW1ldHJ5IHJlcG9ydHMsIHRlbGVtZXRyeSBzZXJ2aWNlIGRvY3VtZW50
-YXRpb24gZnJvbSB0aGUgRE1URiwgYW5kIHRoZSBkaXJlY3Rpb24gb2YgdGhpcyB3b3JrZ3JvdXAu
-IEkgd291bGQgZ3JlYXRseSBhcHByZWNpYXRlIGFueSBoZWxwIEkgY2FuIGdldCBhcyB3ZWxsIQ0K
-DQpUaGFua3MsDQpKdXN0aW4gVGhhbGVyDQoNCj4gQlINCj4gUGlvdHIgTWF0dXN6Y3phaw0KPg0K
-Pg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBvcGVuYm1jDQo+IFttYWls
-dG86b3BlbmJtYy1ib3VuY2VzK3Bpb3RyLm1hdHVzemN6YWs9aW50ZWwuY29tQGxpc3RzLm96bGFi
-cy5vcmddDQo+IE9uIEJlaGFsZiBPZiBKdXN0aW4gVGhhbGVyDQo+IFNlbnQ6IFRodXJzZGF5LCBT
-ZXB0ZW1iZXIgMTksIDIwMTkgODoxOSBQTQ0KPiBUbzoga3VueWlAZ29vZ2xlLmNvbTsgdmlqYXlr
-aGVta2FAZmIuY29tOyBPcGVuQk1DIE1haWxsaXN0DQo+IDxvcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmc+OyBQYXVsLlZhbmNpbEBkZWxsLmNvbTsNCj4gbmVsYWRrQG1pY3Jvc29mdC5jb207IGdtaWxs
-c0BsaW51eC52bmV0LmlibS5jb207IHZpc2h3YQ0KPiA8dmlzaHdhQGxpbnV4LnZuZXQuaWJtLmNv
-bT4NCj4gQ2M6IFRvZGQgUm9zZWRhaGwgPHJvc2VkYWhsQHVzLmlibS5jb20+DQo+IFN1YmplY3Q6
-IFRlbGVtZXRyeSBTdHJlYW1pbmcgZnJvbSBPcGVuQk1DDQo+DQo+IEhpIEFsbCwNCj4NCj4gSeKA
-mW0gbm90IHN1cmUgaWYgdGhpcyBzaG91bGQgYmUgYSBzZXBhcmF0ZSBub3RlIG9yIG5vdC4gSSd2
-ZSBhbHNvIG5vdA0KPiBiZWVuIGFibGUgdG8gam9pbiB0aGlzIHdvcmtncm91cCwgaG93ZXZlciBh
-bGwgb2YgbXkgY29uY2VybnMgYXBwZWFyIHRvDQo+IGhhdmUgYmVlbiBkaXNjdXNzZWQuIC4gSeKA
-mXZlIHN0YXJ0ZWQgcmV2aWV3aW5nIHNvbWUgb2YgdGhlIHRlbGVtZXRyeQ0KPiBjb252ZXJzYXRp
-b24gZm9yIG9wZW5ibWMsIGFuZCBoYXZlIHRha2VuIHNvbWUgdGltZSByZXZpZXcgdGhlIHdpa2kg
-YW5kDQo+IGhhdmUgYWxzbyByZXZpZXdlZCB0aGUgZG9jdW1lbnQgcHJvcG9zYWwuIEJhc2VkIG9u
-IG15IGV4cGVyaWVuY2UsDQo+IHRoZXJl4oCZcyB0d28gY29yZSB1c2UgY2FzZXM6DQo+IHRlbGVt
-ZXRyeSBzdHJlYW1zLCBhbmQgdGVsZW1ldHJ5IHJlcG9ydHMuIFRoZSBSZXBvcnRzIGFyZSBhIGNv
-bGxlY3QNCj4gYW5kIGFuYWx5emUgbGF0ZXIgbWV0aG9kLCB0eXBpY2FsbHkgdXNlZCBmb3Igc3lz
-dGVtIHByb2ZpbGluZywgam9iDQo+IHByb2ZpbGluZywgYW5kIGFuYWx5dGljcyBvZiBkYXRhIGNl
-bnRlciB1c2FnZSBvdmVyIHRpbWUuDQo+IEZvciB0aGUgc3RyZWFtcywgdGhlc2UgYXJlIGJlaW5n
-IHVzZWQgdG8gYWxsb3cgdGhlIGRhdGEgY2VudGVyIHRvDQo+IHJlYWN0IHRvIGNoYW5nZXMgYWNy
-b3NzIHRoZSBtYW5hZ2VkIHN5c3RlbXMsIGxpa2UgaW5jcmVhc2luZyB3YXRlcg0KPiBmbG93LCBj
-b29saW5nIGNhcGFjaXR5LCBvciBwb3dlciB0aHJvdHRsaW5nIHN5c3RlbXMgdG8gcHJldmVudCBv
-dmVyDQo+IHN1YnNjcmlwdGlvbnMgb24gdGhlIGRhdGEgY2VudGVy4oCZcyBwb3dlciBncmlkLg0K
-Pg0KPiBJ4oCZZCBsaWtlIHRvIGFzayBhYm91dCB0aGUgc3RyZWFtcyBzaW5jZSB0aGUgcmVwb3J0
-IHBvcnRpb24gb2YgdGhpbmdzDQo+IHNlZW1zIGV4Y2VwdGlvbmFsbHkgd2VsbCBjb3ZlcmVkLiBX
-aXRoIHByZXZpb3VzIHZlcnNpb25zIG9mIG9wZW5CTUMgSQ0KPiB3YXMgYWJsZSB0byBsZXZlcmFn
-ZSB3ZWJzb2NrZXRzIHRvIGdldCB1cGRhdGVzIG9uIHNlbnNvciB2YWx1ZXMgb24NCj4gY2hhbmdl
-LiBUaGlzIHR1cm5lZCBvdXQgdG8gYmUgcHJldHR5IG5ldHdvcmsgZWZmaWNpZW50IGFuZCBpcyBh
-YmxlIHRvDQo+IGRyaXZlIDEvcyB1cGRhdGVzIG9uIGFsbCB0aGUgc2Vuc29ycyBpbiBhIHN5c3Rl
-bS4gSXQgZG9lc27igJl0IGhhdmUgYW4NCj4gaW1wYWN0IG9uIG90aGVyIG1vbml0b3Jpbmcgc2Vy
-dmljZXMgZWl0aGVyLiBUaGF0IGJlaW5nIHNhaWQsIEnigJl2ZSBiZWVuDQo+IHJlYWRpbmcgdGhy
-b3VnaCB0aGUgcmVkZmlzaCB0ZWxlbWV0cnkgYW5kIGV2ZW50aW5nIHNlcnZpY2VzIGFuZCB3YXMN
-Cj4gbG9va2luZyBmb3Igc29tZSBoZWxwIGFuZCBvciBndWlkYW5jZS4gRm9yIHJlZmVyZW5jZSBJ
-IHdhcyBsb29raW5nIGF0DQo+IHRoaXMgZG9jdW1lbnQNCj4gaHR0cHM6Ly93d3cuZG10Zi5vcmcv
-c2l0ZXMvZGVmYXVsdC9maWxlcy9zdGFuZGFyZHMvZG9jdW1lbnRzL0RTUDAyNjZfMQ0KPiAuNi4w
-LnANCj4NCj4gZGYNCj4gLg0KPg0KPiBJZiBJIGRvIHN1YnNjcmliZSB1c2luZyBTU0UgYW5kIHRl
-bGVtZXRyeSByZXBvcnRzLCBpdCBzZWVtcyB0byBiZQ0KPiBzZXR1cCB0byBnZXQgYSBmdWxsIHNl
-dCBvZiByZWFkaW5ncyBvdmVyIHRpbWUgYW5kIG9ubHkgc2VuZCB3aGVuIHRoZQ0KPiByZXBvcnQg
-aXMgY29tcGxldGUuIENhbiBJIHVzZSB0aGVzZSByZXBvcnRzIHRvIGdldCB1cGRhdGVzIGV2ZXJ5
-DQo+IHNlY29uZD8gSWYgSSBzdWJzY3JpYmUgdG8gYW4gZW5kcG9pbnQsIEkgYWxzbyBzZWVtIHRv
-IGdldCB0aGUgZW50aXJlDQo+IGVuZHBvaW50IGFuZCBJ4oCZbSBub3Qgc3VyZSBpZiB0aGlzIHdv
-dWxkIG1lZXQgYSBnb2FsIG9mIGdldHRpbmcgdGhlDQo+IGxhcmdlIGNsdXN0ZXIgKDMwMA0KPiBz
-eXN0ZW1zKSB3b3J0aCBvZiB1cGRhdGVzIGF0IGEgZGF0YSByYXRlIG9mIGxlc3MgdGhhbiAyMCBN
-Yi9zLiBJIHdvdWxkDQo+IGFwcHJlY2lhdGUgYW55IGFkdmljZSBvbiBsZXZlcmFnaW5nIHJlZGZp
-c2ggc3RhbmRhcmRzIHRvIHN0cmVhbSBzZW5zb3INCj4gcmVhZGluZ3MgZm9yIGFuIE9wZW5CTUMg
-c3lzdGVtLiBJZiBJJ20gbm90IGFibGUgdG8gdXNlIHJlZGZpc2gsIEknZCBiZQ0KPiBoYXBweSB0
-byBlbGFib3JhdGUgbW9yZSBvbiB0aGUgd2Vic29ja2V0IG1ldGhvZCBJIHVzZWQgd2l0aCB0aGUN
-Cj4gcGhvc3Bob3Igd2Vic2VydmVyIGFuZCBkaXNjdXNzIG9wdGlvbnMgZm9yIHRoZSBjdXJyZW50
-L2Z1dHVyZSBCTUMNCj4gdmVyc2lvbnMgbGV2ZXJhZ2luZyBibWN3ZWIuDQo+DQo+DQo+IFRoYW5r
-cywNCj4gSnVzdGluIFRoYWxlcg0KPiBTZW5pb3IgUkFTIEVuZ2luZWVyDQo+DQo+DQo+DQo+DQo=
+Hi,
+
+     I have a custom BMC board with AST2400. I am planning port OpenBmc 
+2.7(warrior) for the same. The warrior release not mentions that KVM 
+support is available. Is this KVM support available for AST2400 Chipset 
+also? Can i know which AST2400 platform has support for iKVM in warrior 
+release?
+
+Regards,
+
+Prince V S
+
