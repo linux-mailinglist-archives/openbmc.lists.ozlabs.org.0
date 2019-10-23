@@ -2,83 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39895E0F1D
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 02:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED891E0FC5
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 03:45:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46yWJK3NfpzDqQ1
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 11:21:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46yY9v1YpXzDqNk
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 12:45:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=1921e5584=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Pl+G1G0s"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="B37WkV9T"; dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46yWHd4cpyzDqN9
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 11:20:45 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id DD6922203C;
- Tue, 22 Oct 2019 20:20:42 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 22 Oct 2019 20:20:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=jzGv83Z9FesPbJMjw0o00esjvlXd1+1
- qeQg6Uk5KdP8=; b=Pl+G1G0sWNAf5ohtq0I8ZbrJOSRo/ZBBtceaXGfFEQUrCmw
- DeFE+Tpcxi+rveitr17CtDBotBvHm3AzoLsXlSNoqjXxSHdbWZWe7iaQSBrZjKcY
- DZ1EM7Z07xiF4Fil2HGdUW+ESpo1wwta1aJW4o+MIC9nImf7Jc6mIKfRNEDmEudg
- 411sy3nnXEKUu3G19TqsuggqTEnTyXNB3376//8hRIrFknxe6fLtWnOGX2GAcUSw
- xNREzT+a5fK4dmgV3F8ElKI2GY0J0IBs1HZNwQUQASL4/N7bLSBXnH8tnnYwYZQF
- nz1dCINeWEnL5wE5sm+2i5DGSLIldWjl+VdugeA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=jzGv83
- Z9FesPbJMjw0o00esjvlXd1+1qeQg6Uk5KdP8=; b=B37WkV9TYBVj+Ei8FJ4zTS
- Y61H6b1J9ClPUSMxc4afe4EvOFXdKzeuf2AxfRaLiCLkKWWGg5t24PsGTHHMzrZV
- ecebjDhnJJEYmK1ll02/F9QPAgKkoitCf971qjf5ZOZgTp1IT1VQbaU7GkcW68/N
- ErJfdviCfh2irFgWuGLpj+e2t2C+uuUYFfrIME48YHqlNQTSDFeYy1i4IPzWx4Qk
- Zxglu4JBIVj8ayJt0Qjy7xvEVDzm+ax6sOkk5oIvAO9IXyXEvdYB16KwuNH2pn2w
- MJ6o4sa3bA5d0lY2kjqnYOZgLDMQWKOP6Aer+KLEwf/HOjfIB6rftPtNS9eG3A4g
- ==
-X-ME-Sender: <xms:2pyvXepGLY1tu8R_SCzZYDMGetYNaEn4B49kIwhGrMTerZNGOHUK9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrkeekgdefudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:2pyvXSAZPgj-qkwWr_aPYxpNmkNEezDDblM5JcZjKkvPXjyG-nZj5w>
- <xmx:2pyvXW3t2K9FeBltBiSqiK4AwPLqvXGMZWu7D9d3JYl7J4H1VvxKjA>
- <xmx:2pyvXdx-CXTvVqRbc8raGjzXxgObIDbahqRnnzp8O691ektBBTvk4Q>
- <xmx:2pyvXVJWtnpnQtGQqXk7Iz-fDvDZGOY5L-X1NI9kNYxYarH2RxnC-g>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 30CC7E00A5; Tue, 22 Oct 2019 20:20:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-470-gedfae93-fmstable-20191021v4
-Mime-Version: 1.0
-Message-Id: <3a8ba7ea-1b2e-4f5b-b272-c819a20620b1@www.fastmail.com>
-In-Reply-To: <000001d583d2$a4456600$ecd03200$@linux.intel.com>
-References: <81DE4370-D135-48EE-A8FC-B079C4CE3648@fb.com>
- <06d793dc-a0f0-4917-a0c7-135767f6c19b@www.fastmail.com>
- <11B7B23D-B689-4B0B-A177-E6E4891C923A@fb.com>
- <000001d583d2$a4456600$ecd03200$@linux.intel.com>
-Date: Wed, 23 Oct 2019 11:21:43 +1100
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Yong Li" <yong.b.li@linux.intel.com>, "Vijay Khemka" <vijaykhemka@fb.com>
-Subject: Re: speed-bmc-misc driver
-Content-Type: text/plain
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 46yY981sw2zDqPR
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 12:45:11 +1100 (AEDT)
+IronPort-SDR: s2NpIPH1muVzN2EnD8+S8vvhlkH8He6zL6JtDFkqBsja5Ki3CFEhOf56PR/rivJlfbX+QFiOyu
+ zG1AiJlYHArA==
+Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
+ by mx01.quantatw.com with ESMTP; 23 Oct 2019 09:45:09 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx09.quanta.corp
+ (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 23 Oct
+ 2019 09:45:05 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Wed, 23 Oct 2019 09:45:05 +0800
+From: =?big5?B?VG9ueSBMZWUgKKf1pOW0SSk=?= <Tony.Lee@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Showing signed sensor value when the command "ipmitool sdr" is
+ executed.
+Thread-Topic: Showing signed sensor value when the command "ipmitool sdr" is
+ executed.
+Thread-Index: AdWJQxVOJ6ixmrlwSXKaTONZZXz7UQ==
+Date: Wed, 23 Oct 2019 01:45:05 +0000
+Message-ID: <19467ab292c64593ae4ae7f2882ce61a@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-24996.004
+x-tm-as-result: No-10--0.991500-5.000000
+x-tmase-matchedrid: u8usGLXufdib5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGoLZarzrrPmXW3
+ XCenpuXrf1xSt/ApHHONXA6IRCXBU9f8LDBpR6a614YLSX/JYIqD6a56hLTj5Wjliw+xvItdnL/
+ 3kgndLptCT4s3SPWw2mDjlAC3n4bD/8TykoC75C1R5q8plSdLkIvkwJz527bY4PdcWsl+C/O6MS
+ e39Ehpt+FK6c8K4adwB3tbnpnfEsijxYyRBa/qJcW2Ak5XjlH+fJ5/bZ6npdjKayT/BQTiGsor7
+ IhhKtYPnzPENTMJMO0+KLR0wgh79VTmX2x5WnMuy4mQ+98IPwUO+xjWg/ZTjHxIDTivsViBY1QH
+ sYMTMmJBeNZ8pgIa/cYcOhvfe+/mcCmyZvDwQy2t5ahRvDIGLa2t1VXHehFey/QKSya4k79DDKa
+ 3G4nrLQ==
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--0.991500-5.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-24996.004
+x-tm-snts-smtp: 0D1BC820AD95045A48F0C164B5BEE05C4C9E87628543C85F0DAEA48693D4D6832000:B
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,31 +70,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: 'OpenBMC Maillist' <openbmc@lists.ozlabs.org>
+Cc: =?big5?B?QnVkZHkgSHVhbmcgKLbApNHCRSk=?= <Buddy.Huang@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Wed, 16 Oct 2019, at 14:34, Yong Li wrote:
-> Hi Andrew,
-> 
-> Regarding this bmc-misc driver, I noticed the exported sysfs entries 
-> are read-write. Is it possible to export the register value as 
-> read-only? Sometimes we only want to display the registers, but users 
-> cannot change them.
-
-I strongly advise against using the driver for the reasons I outlined to Vijay.
-For OpenPOWER systems we're using it, but with the knowledge that I'll
-need to fix userspace when I fix the driver.
-
-I'd prefer not to go adding features to the existing code now for that
-reason, but I think controlling the read-write/read-only nature of attributes
-is a good idea.
-
-If you want to improve the "driver" so that it can be upstreamed I'm happy
-to help out with that. Basically it should be changed to a light API that
-enables creation of these types of attributes that can be called from
-drivers for the device in question.
-
-Andrew
+SGkgdGVhbSwNCg0KVGhlIHRlbXBlcmF0dXJlIHNlbnNvciB2YWx1ZSBtYXkgYmUgbmVnYXRpdmUg
+d2hlbiB0aGUgY29tbWFuZCAiaXBtaXRvb2wgc2RyIiBpcyBleGVjdXRlZC4NClNlbnNvciB2YWx1
+ZSBjYW4gYmUgYSBzaWduZWQgdmFsdWUgYWNjb3JkaW5nIHRvIGlwbWkgU1BFQyAiVGFibGUgNDMt
+LCBGdWxsIFNlbnNvciBSZWNvcmQgLSBTRFIgVHlwZSAwMWgiIGJ5dGUgMjEsICJTZW5zb3IgVW5p
+dHMgMSIuDQoNCkhvd2V2ZXIsIHdlIGNhbiBmaW5kIHRoYXQgdGhlIHNlbnNvcl91bml0c18xIGlz
+IHNldCB0byB6ZXJvIGluDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0
+LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmhhbmRsZXIuY3BwI0w2ODguDQoNCkFuZCB0aGUgbWV0
+aG9kICJzZXRfYW5hbG9nX2RhdGFfZm9ybWF0IiwgYWx0aG91Z2h0IGl0IGhhcyBiZWVuIGRlY2xh
+cmVkIGJ1dCBpdCBoYXMgbmV2ZXIgYmVlbiB1c2VkIGluIA0KaHR0cHM6Ly9naXRodWIuY29tL29w
+ZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9ibG9iL21hc3Rlci9zZW5zb3JoYW5kbGVyLmhwcCNM
+NDk3Lg0KDQpJbiBhZGRpdGlvbiwgc2luY2UgcmF3RGF0YSBoYXMgYmVlbiBjb252ZXJ0ZWQgdG8g
+dWludDhfdCBieSBzdGF0aWNfY2FzdCA8dWludDhfdD4sIHRoZXJlIGlzIGFsd2F5cyBhIG5vbmUg
+bmVnYXRpdmUgdmFsdWUuIGluDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1o
+b3N0LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmRhdGFoYW5kbGVyLmhwcCNMMjI5DQoNCkJhc2Vk
+IG9uIHRoZSBhYm92ZSB0aHJlZSBwb2ludHMsIGl0IHNlZW1zIHRoYXQgdGhlIGZ1bmN0aW9uIG5l
+ZWRzIHRvIGJlIG1vZGlmaWVkDQogc28gdGhhdCB0aGUgc2Vuc29yIHZhbHVlIGNhbiBiZSBkaXNw
+bGF5ZWQgYXMgYSBuZWdhdGl2ZSB2YWx1ZSB3aGVuIHRoZSAiaXBtaXRvb2wgc2RyIiBjb21tYW5k
+IGlzIGV4ZWN1dGVkLg0KDQpBbSBJIHdyb25nLCBvciBJIG5lZWQgdG8gc2V0IGl0IHVwIHNvbWV3
+aGVyZT8NCg0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQoNCg==
