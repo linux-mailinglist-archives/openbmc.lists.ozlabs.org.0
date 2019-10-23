@@ -2,67 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88D6AE1202
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 08:19:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 57FBFE1206
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 08:21:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ygG05vFQzDqQd
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:19:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ygHS1BBHzDqBN
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:21:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::532;
- helo=mail-pg1-x532.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
+ helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ovTQUBng"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="tY3uNL20"; 
  dkim-atps=neutral
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com
- [IPv6:2607:f8b0:4864:20::532])
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
+ [IPv6:2607:f8b0:4864:20::544])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ygFB4J69zDqN6
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 17:19:10 +1100 (AEDT)
-Received: by mail-pg1-x532.google.com with SMTP id f14so11482233pgi.9
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 23:19:09 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ygFD0qPfzDqN8
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 17:19:11 +1100 (AEDT)
+Received: by mail-pg1-x544.google.com with SMTP id p1so11506657pgi.4
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 23:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=weUcViAteriQHQBY06gVyZNoeX36hm7taPyYoJbopXU=;
- b=ovTQUBng+uUGXrPy1BxaAKcDq/Tyw6k/zzuCuaY0ZtZ1RxyLuhPv/WHFuRryJ4bOXu
- f0+7uhyNgJH09LV/T44kkPuDdIeFpJ7EH+tlfz9OvW+1ic/0Yn/yFlRFsr4wAWWs5osc
- D3AZTyPIKd+BScKPAY+wKlY2zkn9qwLycAS4Bi29AvPP9KF3+Z6awF7nGTK1EOLMakRN
- Plaov7/K7Xgl6lSk3i2nEiJxJKP6Ev8J2wgq0cRFo7VfLZQZN5PhRqwGtYxZKA2eXq6a
- kpsdwX3peIhXtcv4/6huy0nGsYqxj0CZ1FY4QZprefNyKsd3ELNH4qT0KaFDevtZwYKW
- vpZw==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=ONgX4FZLoLMsOHrEMVo4P1Wm/D+LhJo/26NHOQ0g6cg=;
+ b=tY3uNL20g+RZCjCehHvO7mRKsz4iwcCtUNr3n396ZrTNrp+CT/aspQsaoPRk1uYo5q
+ 4g8KxBYp05unTLDYxmFeCWOsu6FeZhk4tRcj8Qq+UeoxIGCEVwWESVq1JV9yVtAKAE8p
+ oRXpU+iXJnS4Hf5XfFIZiy2Fmglxjml4og9bkPLDyV4pA2hjt8aX62Buy+m/fDQigWy/
+ zPaD7tXRM8rvo3HrY5tpCuBu6LRB9JOzyutqAxulVR96NF+z9bchJpRA0FOZWvO7Nm/c
+ QSfxWd5Zp0vXK1ZgCjr+U1mEq/jND10JjFGKwNWgpgKpUDZ97nlrtqA8pG80K/lDtO7j
+ s8kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=weUcViAteriQHQBY06gVyZNoeX36hm7taPyYoJbopXU=;
- b=oFmfquVw93/LQmy+X14LWJZ7fD/q2eUZmYuyeZ1foRnfOZ5bg73A/zYDy+omg1nLhS
- MkrUNiLfvm+kCYnqdDPEU+9c9H4gKA+NBUOTsB5uyyfjYpX8Y11qGO2krG6TSW1S63Pv
- QZ3glkYdnIdF8cRSfrWxPs1HiqfW1IZ6tD9fTG1wG9fYJRvY7q/zdgGBW78na8yIstF6
- botxHqi/pouvhbb1v1P6uQ2GjVfNpaHse+fMaJuwmhoX9yRJ+cK0LBQWvmsRJj8tpeGc
- H1xB2IrPNLD2eWlEX/u/qpReXzVb8W1uPEh7o/PZErsvOhIop5eg2ptWfY0F/MMvvcri
- CoUA==
-X-Gm-Message-State: APjAAAWGTceqGzcE/eHNoj0VT5bolxRDyY/P4K+2YuwQ7WjAhSRIrmMm
- l+ups7YwQA1qy0yYaXBvMiMUOBLQ0FA=
-X-Google-Smtp-Source: APXvYqzqOr27FfuPZCovIz63S+JQ0+94lVa+5ZpkYYi3zzLFuFif27BlmQmm3FH41q1RtLHj1nJrZg==
-X-Received: by 2002:aa7:8b4d:: with SMTP id i13mr8851371pfd.29.1571811546657; 
- Tue, 22 Oct 2019 23:19:06 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=ONgX4FZLoLMsOHrEMVo4P1Wm/D+LhJo/26NHOQ0g6cg=;
+ b=brp8jy87CxC37SHrV4X1M2pmeFGk+aOg8MomMVqzujhpPEcPuOSTQIRLOM+K7R55Vc
+ gUcJQRdUBRSrY0nEM4gXzC4yKsmSrT+xM02GoC1zFpE3kXefhh1xN3XImocdDMZ+Jasb
+ Uz5GCYEcyVbWwhduhEROaoWCM8Uorr3vnv12E17udS+PGQhLVqA/K+ywbQNVE8hEJS8W
+ cfGdQeYmcZViATdZ8de9M284ysMyjQbKaZG51f0FrXXiJctFJ/zuMLcmGsN8SyZbh7wt
+ JeB3hu0a/5qTCBS1r93S2LEW13xar1g7hKfMfDF8deecpbSIv7oWSteXc6PuVc9PfVl6
+ V6MQ==
+X-Gm-Message-State: APjAAAVIVjjrc9EX2gLp8l5HNqmRHhU0zfkbFNPPELabIZ8ircJXwdUM
+ WC1La74Ajop2w89w3ghT09JLiP3Oh7w=
+X-Google-Smtp-Source: APXvYqx2/WXN+oK7EqirrtW6UUy+eySh/JqumHx4JDGEXJZEco8t6tC01NRFNtpEDiETQ4N+RMXhPQ==
+X-Received: by 2002:a63:1743:: with SMTP id 3mr8374115pgx.161.1571811549004;
+ Tue, 22 Oct 2019 23:19:09 -0700 (PDT)
 Received: from voyager.au.ibm.com (bh02i525f01.au.ibm.com. [202.81.18.30])
- by smtp.gmail.com with ESMTPSA id 4sm6364598pfz.185.2019.10.22.23.19.04
+ by smtp.gmail.com with ESMTPSA id 4sm6364598pfz.185.2019.10.22.23.19.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2019 23:19:06 -0700 (PDT)
+ Tue, 22 Oct 2019 23:19:08 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 0/4] FSI master improvements
-Date: Wed, 23 Oct 2019 17:18:44 +1100
-Message-Id: <20191023061849.16926-1-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 1/4] fsi: aspeed: Add clock debugfs file
+Date: Wed, 23 Oct 2019 17:18:45 +1100
+Message-Id: <20191023061849.16926-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191023061849.16926-1-joel@jms.id.au>
+References: <20191023061849.16926-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -79,17 +81,81 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Jeremy Kerr (1):
-  fsi: aspeed: Add clock debugfs file
+From: Jeremy Kerr <jk@ozlabs.org>
 
-Joel Stanley (3):
-  fsi: aspeed: Give read longer before timeout
-  fsi: aspeed: Add more registers to debug
-  fsi: aspeed: Implement byte and half world transfers
+This can be used to adjust the divisor for the FSI bus clock.
 
- drivers/fsi/fsi-master-aspeed.c | 109 ++++++++++++++++++++++++++++----
- 1 file changed, 96 insertions(+), 13 deletions(-)
+Signed-off-by: Jeremy Kerr <jk@ozlabs.org>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/fsi/fsi-master-aspeed.c | 47 +++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index 95b7f833e8bc..60d302871db3 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -483,6 +483,50 @@ DEFINE_DEBUGFS_ATTRIBUTE(fsi_master_aspeed_debugfs_ops,
+ 			 fsi_master_aspeed_debugfs_get,
+ 			 fsi_master_aspeed_debugfs_set, "0x%08llx\n");
+ 
++static int fsi_master_aspeed_clock_debugfs_get(void *data, u64 *val)
++{
++	struct fsi_master_aspeed *aspeed = data;
++	u32 out;
++	int rc;
++
++	rc = opb_read(aspeed->base, ctrl_base, 4, &out);
++	if (rc)
++		return rc;
++
++	*val = (u64)((be32_to_cpu(out) >> 18) & 0x3ff);
++
++	return 0;
++}
++
++static int fsi_master_aspeed_clock_debugfs_set(void *data, u64 val)
++{
++	struct fsi_master_aspeed *aspeed = data;
++	u32 reg, rc;
++	__be32 raw;
++
++	if (val > 0x3ff)
++		return -EINVAL;
++
++	rc = opb_read(aspeed->base, ctrl_base, 4, &raw);
++	if (rc)
++		return rc;
++
++	reg = be32_to_cpu(raw);
++
++	reg &= ~(0x3ff << 18);
++	reg |= (val & 0x3ff) << 18;
++
++	rc = opb_write(aspeed->base, ctrl_base, cpu_to_be32(reg), 4);
++	if (rc)
++		return rc;
++
++	return 0;
++}
++DEFINE_DEBUGFS_ATTRIBUTE(fsi_master_aspeed_clock_debugfs_ops,
++			 fsi_master_aspeed_clock_debugfs_get,
++			 fsi_master_aspeed_clock_debugfs_set, "0x%llx\n");
++
++
+ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ {
+ 	struct fsi_master_aspeed *aspeed;
+@@ -642,6 +686,9 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 		debugfs_create_file("mectrl", 0644, aspeed->debugfs_dir,
+ 				    &etrs[idx++],
+ 				    &fsi_master_aspeed_debugfs_ops);
++
++		debugfs_create_file("clock_div", 0644, aspeed->debugfs_dir,
++				aspeed, &fsi_master_aspeed_clock_debugfs_ops);
+ 	}
+ 
+ 	rc = fsi_master_register(&aspeed->master);
 -- 
 2.23.0
 
