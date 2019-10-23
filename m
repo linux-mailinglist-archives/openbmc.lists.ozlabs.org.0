@@ -2,75 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35CF0E1D82
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 15:59:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA6B9E1F26
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:23:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ysS32thyzDqS3
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 00:59:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46yvJf4m7dzDqS3
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 02:22:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ysQs2ytpzDqHL
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 00:58:12 +1100 (AEDT)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46yvHk1KgKzDqDZ;
+ Thu, 24 Oct 2019 02:22:08 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9NDw3Wq090015
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 09:58:09 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.91])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vtprgc195-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 09:58:05 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Wed, 23 Oct 2019 13:58:02 -0000
-Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
- by smtp.notes.na.collabserv.com (10.106.227.143) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 23 Oct 2019 13:57:57 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp06.a3.dal06.isc4sb.com
- with ESMTP id 2019102313575664-540805 ;
- Wed, 23 Oct 2019 13:57:56 +0000 
-In-Reply-To: 
-Subject: GUI  Design Work Group - Today
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Wed, 23 Oct 2019 13:57:57 +0000
-Sensitivity: 
-References: 
+ x9NFEWpW004935; Wed, 23 Oct 2019 11:22:04 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vtra4b6ee-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2019 11:22:04 -0400
+Received: from m0098393.ppops.net (m0098393.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x9NFFCwF008584;
+ Wed, 23 Oct 2019 11:22:03 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vtra4b6dn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2019 11:22:03 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9NFIcmn000554;
+ Wed, 23 Oct 2019 15:22:02 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma04dal.us.ibm.com with ESMTP id 2vqt47k4xx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 23 Oct 2019 15:22:02 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9NFM15o53871038
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 23 Oct 2019 15:22:01 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A7BA136051;
+ Wed, 23 Oct 2019 15:22:01 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EF1B0136053;
+ Wed, 23 Oct 2019 15:22:00 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 23 Oct 2019 15:22:00 +0000 (GMT)
 MIME-Version: 1.0
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1619 | IBM Domino Build
- SCN1812108_20180501T0841_FP59 September 23, 2019 at 18:08
-X-LLNOutbound: False
-X-Disclaimed: 45931
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 19102313-2475-0000-0000-000001197482
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40304; ST=0; TS=0; UL=0; ISC=; MB=0.003453
-X-IBM-SpamModules-Versions: BY=3.00011988; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01279595; UDB=6.00677985; IPR=6.01061727; 
- MB=3.00029211; MTD=3.00000008; XFM=3.00000015; UTC=2019-10-23 13:58:01
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-10-23 13:57:53 - 6.00010561
-x-cbparentid: 19102313-2476-0000-0000-00002D957FBF
-Message-Id: <OFAFE8B974.B523BF40-ON0025849C.004C629F-0025849C.004CB781@notes.na.collabserv.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Wed, 23 Oct 2019 10:22:44 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: krtaylor <kurt.r.taylor@gmail.com>
+Subject: Re: Improving the docs/ repo
+In-Reply-To: <3a4d96b9-8810-e57b-690d-5fd791bc57c0@gmail.com>
+References: <2c77cbfb-9df5-278c-8f76-06193e125514@linux.vnet.ibm.com>
+ <3a4d96b9-8810-e57b-690d-5fd791bc57c0@gmail.com>
+Message-ID: <ae161ca3003366f6e1f260b83d932cc1@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-10-23_03:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+ definitions=2019-10-23_04:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=662 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910230153
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,28 +93,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ openbmc@lists.ozlabs.org, Gunnar Mills <gmills@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida S=
-ans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" >T=
-he GUI Design Work&nbsp;Group will be meeting today at 10:00 AM Central. We=
- will be discussing the following items. Please see the wiki for more infor=
-mation.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><di=
-v dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div d=
-ir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=
-=3D"ltr" ><div><div>Wik:&nbsp;<a href=3D"https://github.com/openbmc/openbmc=
-/wiki/GUI-Design-work-group" >https://github.com/openbmc/openbmc/wiki/GUI-D=
-esign-work-group</a></div>
-<div><div>&nbsp;</div>
-<div>Agenda:</div>
-<div>- Dumps: Low fidelity prototyping</div>
-<div>- Firmware license agreement research</div>
-<div>- Date and Time research</div>
-<div>- Change expired password progress</div>
-<div>- Toast notifications and upcoming alert components</div></div></div><=
-/div></div></div></div></div></div></div></div></div></div></div></div></di=
-v></div><BR>
+On 2019-10-23 08:51, krtaylor wrote:
+> On 10/22/19 11:38 AM, Gunnar Mills wrote:
+>> Looking to improve the docs/ repository.
+>> Is anyone interested in getting involved in improving the document 
+>> repository? Looking for either ideas or contributions.
+>> 
+>> Some ideas:
+>> Better document the process for submitting documents which should 
+>> improve the quality of documentation being submitted.
+>> 
+>> Design template improvement, spell out any additional expectations 
+>> that come in review. E.g. All fields must be filled out, involve the 
+>> community before submitting a template, avoid internal acronyms, 
+>> expand on when the template is needed.
 
+How do people feel about having smaller commits for the docs, like we 
+encourage for source code? Would it make it easier to review? An example 
+for designs would be one commit with the problem statement, next commit 
+adds the requirements, next adds one solution proposal, etc.
