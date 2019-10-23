@@ -2,65 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4448E21EC
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 19:38:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0D7E21EE
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 19:40:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46yyKQ450vzDqRM
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 04:38:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46yyLj74WJzDqRp
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 04:39:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::634;
- helo=mail-pl1-x634.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="MUXxkiB7"; 
- dkim-atps=neutral
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
- [IPv6:2607:f8b0:4864:20::634])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46yyJh6q1hzDqPm
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 04:38:11 +1100 (AEDT)
-Received: by mail-pl1-x634.google.com with SMTP id k7so10441716pll.1
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 10:38:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=QKUXBfltbigpWLiAExpkrcXLXU7EF6bu99puJV1P8bA=;
- b=MUXxkiB7I/mqaVLWIgaIM+5FWKhnd0ISj4PiV3SGs783ee6rzJSr0ZL6nxjb61YR17
- j6wNA4eYpUw42fRLXiQjySOtLd/Q5d78qMh9tjiMWBy8DpS6b48iV7b48TMx0zewIfJj
- 9feus7Ko1iwbQTy6S19TVdhJPtI73xmKDHjKum4tdLBHgnzr12fDaKLUpATQJ8FGKIHN
- /HeA6jJIhd5jttP1E7wad703asq4FD51WDzkechCPR+ZURuze5V2dFDtdNxXalEE1D/n
- VN1MRCPcVZ1LU08eSDMQPN9rmqg/a8RamkjH3G6yVkSKDxBN9lL2sSUFo6zdFZxPe3Ha
- VeLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=QKUXBfltbigpWLiAExpkrcXLXU7EF6bu99puJV1P8bA=;
- b=XEEBa09eIq6iKfhy0wGumumrvgX7U5jgMByGrxAEAapC1wnIjzexU/6U55uhJa0kQC
- RirWIMmZEjUJUSPXHRqjijvEgYITGlRvPPlOAN50HO/omXE1fpBNzCfIX688GhlyfH6e
- hfFiAR4xctwWQpxrnbwxpCl+BnAMeezFhnM49XIj0sPQo6zcGP1zJclybsyvQjXwjgFL
- 1QK83G9BGqiOBNHHJeOLhHb5W/QvXCLy4oh+gh90DMv2SPvMF3QaPK3nIe+U1ngpFMWl
- ftrLMnf1BOBjt5BQIOsiDGbMp5hhY0bdL4XEn9yutmJUtioZd45O87CKUb4nwBn6B/du
- hCng==
-X-Gm-Message-State: APjAAAUI4nctdypKpJPMQHz4qyUvRxjFIweKC5Tt3r1Iy2fyFdXTjhlc
- BFrHQiX8fw2R7nTZsze0jPeDoqona+jVNdehPhijJg==
-X-Google-Smtp-Source: APXvYqyIA4S1udb8h6mwBgHj8I363uC7waNM/3XpZRJp3RtoI/0T30BtGY82rxhMv/ARi4H8VycMoxcjb+gpo6CXsvw=
-X-Received: by 2002:a17:902:8d83:: with SMTP id
- v3mr10948835plo.47.1571852287462; 
- Wed, 23 Oct 2019 10:38:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46yyL14yyKzDqS0
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 04:39:20 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2019 10:39:17 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,221,1569308400"; d="scan'208";a="372949093"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga005.jf.intel.com with ESMTP; 23 Oct 2019 10:39:16 -0700
+Subject: Re: multiple telemetry designs
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>, piotr.matuszczak@intel.com,
+ kunyi@google.com
+References: <D1177195-CDC9-4BB0-B9DE-6FC99B7ADE31@fuzziesquirrel.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <dd81fb28-4d01-8726-9b16-81a677eb3e16@linux.intel.com>
+Date: Wed, 23 Oct 2019 10:39:16 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-From: Patrick Venture <venture@google.com>
-Date: Wed, 23 Oct 2019 10:37:56 -0700
-Message-ID: <CAO=notw-fwpSrWUssLY_WE07bQCy+38-Dp__B4TrnhL7Yzdnxg@mail.gmail.com>
-Subject: PSU Sensors - Associations
-To: James Feist <james.feist@linux.intel.com>, 
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- Peter Lundgren <peterlundgren@google.com>, Josh Lehan <krellan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <D1177195-CDC9-4BB0-B9DE-6FC99B7ADE31@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,30 +53,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: thalerj@linux.vnet.ibm.com, openbmc@lists.ozlabs.org, james.mihm@intel.com,
+ neladk@microsoft.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-So, I flipped the association interface addition and the property
-initialization to match other sensors, and then it started working.  I
-was curious if you had any suggestions on how to find the matching
-sensor given the paths, for instance:
+On 10/23/19 9:38 AM, Brad Bishop wrote:
+> There are two telemetry / metric designs under review right now:
+> 
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22257
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24357
+> 
+> I would like to see one or both of them merged.  Neither seem to have any support….there is a single +1 on the latter review from Shawn McCarney.  If you support one of these designs, please go review it and indicate your support.
 
-busctl get-property xyz.openbmc_project.PSUSensor
-/xyz/openbmc_project/sensors/temperature/alt2_Temperature
-xyz.openbmc_project.Association.Definitions Associations
-a(sss) 1 "chassis" "all_sensors"
-"/xyz/openbmc_project/inventory/system/board/Altie"
+It looks like Kun has +1ed Piotr's design as well, not sure if that 
+means we can go with one design?
 
-busctl tree --no-pager xyz.openbmc_project.EntityManager|grep Altie
-          |-/xyz/openbmc_project/inventory/system/board/Altie
-          | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_0
-          | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_1
-          | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_2
-          | `-/xyz/openbmc_project/inventory/system/board/Altie/alt1
+> 
+> I also can’t figure out what the path forward for OpenBMC is.  Maybe to start with, we could all level set on where we are at with our thinking:
+> 
+> Kun: How far along are you in the implementation of your proposal?
+> Piotr: How far along are you in the implementation of your proposal?
+> James: OpenBMC can support one or both proposals.  If we support both, this means multiple implementations for the same thing in bmcweb.  One that gets data from dbus objects, and another that gets it from librrd.  As the maintainer of bmcweb are you open to accepting one or both of these options?
 
-No alt2 -- so how do I know this?  I can walk every subordinate object
-to find the name match, but I was curious if you had a faster idea?
+With 0 previous knowledge, I would suggest using a way that works with 
+previous OBMC practices, and that is using dbus. If there has to be 2 
+separate designs, then if both produce the same d-bus interfaces, it 
+shouldn't matter to bmcweb which one is being used. That being said, if 
+this doesn't work for some reason, we've used compile switches in the 
+past, although this would be the least preferable option. Truthfully I 
+haven't looked at these designs yet as I've only recently taken a larger 
+role in bmcweb reviews, so I'll try to look at them soon.
 
-Thanks,
-Patrick
+
+> 
+> Without any discussion and resolution, I’m afraid both of these proposals are just going to sit here, unmerged, indefinitely.
+> 
+> thx - brad
+> 
