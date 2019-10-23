@@ -1,74 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6FC8E120E
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 08:24:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB76FE14F8
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 11:01:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46ygMB0NVjzDqPW
-	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 17:24:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46ykqv3BRjzDqQG
+	for <lists+openbmc@lfdr.de>; Wed, 23 Oct 2019 20:00:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="p2+nW13w"; 
- dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46ygFL2lHdzDqPv
- for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 17:19:18 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id p1so11506845pgi.4
- for <openbmc@lists.ozlabs.org>; Tue, 22 Oct 2019 23:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=x0H0fEg0EF+8xKGTwGotZYm/YvtekV706ercyyGK6zs=;
- b=p2+nW13wOGe9v4JkQbNJdxjwb5ytwrjMFoCYcAuDXJEmmIO/RXVXUzyq8jepfZ9hLj
- wAFck2RCQqt1/K+LT+ibjHpLUvC0NrE4oUyeeRnA7HawfoA6bObxf/vNcRe6H3+ct5/U
- gI9jiBcNudWJOJwj6o5Vxqj+/+1MfKi52XdH/POO2p8fcCbKPcj2NdCAmze6jKfZflT3
- JMPuBxhl2bQC1t6Kcbquty1ioRqJFblTt5otFDshHCnGx3TqcgJb/CUUeD/fnjwVkUWj
- wpogmGhYAxjgQ89WDSsYfqi7uLakVpBqIGaGrbBCCTcW61SW7tUiPV7qIih61PmOqVUI
- GpGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=x0H0fEg0EF+8xKGTwGotZYm/YvtekV706ercyyGK6zs=;
- b=Qnm/rB9mCEW9QqCu3WVpXcDw2E5WmY3prg9VNsFu3v55gEQrJjQpNnjfhSd5uQvSXs
- Wy7lbDy+bQnrynersgvrVNoD8IcuQXTXdu97sEsAXTWU2yZlljyXevVVt+wsTC8n/l2L
- glpWmXo37bU1e5AeyGM8TVDNg/0qZ0LyjOyYSiSlsKPwItjV8qM/f6pQgeUtAhN7Mvrr
- jFZu1f2ET+f0D7Y/rmoV2eSCTVmShp15HDQw7ja6sJ51EhHusfxpVOOgjkbf1xJ78T3c
- //HZvb/jps8ZT6Ie4cf4uMEACdAqLh+fTJ9uRewjqkZy9YRth1NdF/oOv/MmnAmj4++e
- hnMg==
-X-Gm-Message-State: APjAAAXs9KqpWiv9dr3XVRoW41tiUsSfpwe1I5gNH0p+IVmFnmxFoDSm
- JJL8mYaAKD92HXAZLl3XDjpXVqtVVH0=
-X-Google-Smtp-Source: APXvYqzgPyZqbx5f9Gy09yWczNUmkPOBM3XFZnW9wh5qF5YppmcGQ+y5zLbzFrJO7ZpsXMG6pR67zQ==
-X-Received: by 2002:a17:90a:cf97:: with SMTP id
- i23mr9507652pju.77.1571811556118; 
- Tue, 22 Oct 2019 23:19:16 -0700 (PDT)
-Received: from voyager.au.ibm.com (bh02i525f01.au.ibm.com. [202.81.18.30])
- by smtp.gmail.com with ESMTPSA id 4sm6364598pfz.185.2019.10.22.23.19.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 22 Oct 2019 23:19:15 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.3 4/4] fsi: aspeed: Implement byte and half world
- transfers
-Date: Wed, 23 Oct 2019 17:18:48 +1100
-Message-Id: <20191023061849.16926-5-joel@jms.id.au>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191023061849.16926-1-joel@jms.id.au>
-References: <20191023061849.16926-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46ykpn4bVwzDqQG
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Oct 2019 19:59:54 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 23 Oct 2019 01:59:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,220,1569308400"; d="scan'208";a="191770110"
+Received: from irsmsx107.ger.corp.intel.com ([163.33.3.99])
+ by orsmga008.jf.intel.com with ESMTP; 23 Oct 2019 01:59:49 -0700
+Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
+ IRSMSX107.ger.corp.intel.com ([169.254.10.18]) with mapi id 14.03.0439.000;
+ Wed, 23 Oct 2019 09:59:48 +0100
+From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
+To: Justin Thaler <thalerj@linux.vnet.ibm.com>
+Subject: RE: Fw: RE: Telemetry Streaming from OpenBMC
+Thread-Topic: Fw: RE: Telemetry Streaming from OpenBMC
+Thread-Index: AQHViQkgDoNISjARSkuhEuG859vWr6dn226Q
+Date: Wed, 23 Oct 2019 08:59:48 +0000
+Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A30F8FE5@IRSMSX101.ger.corp.intel.com>
+References: <OF14108F29.F96A2615-ON00258495.0040F63B-86258495.00411F29@notes.na.collabserv.com>
+ <7f04cbd5-00ad-5b7e-9f90-5b15500d58ea@linux.vnet.ibm.com>
+In-Reply-To: <7f04cbd5-00ad-5b7e-9f90-5b15500d58ea@linux.vnet.ibm.com>
+Accept-Language: pl-PL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMjkxMThjZTYtZGYwMy00NTQyLWE0ZDAtNGE0ZWI2ZTBhY2YwIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMVNJVUVDNldWNkRFamt1TVZrbk1GU09YQnlpK21ENnBWQVpjZGRtbnowdHdcL3BEU29zazlRWldKT3QrS3dIR2MifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [163.33.239.181]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,96 +65,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "viswha@linux.vnet.ibm.com" <viswha@linux.vnet.ibm.com>,
+ "neladk@microsoft.com" <neladk@microsoft.com>,
+ "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
+ "vijaykhemka@fb.com" <vijaykhemka@fb.com>,
+ "rosedahl@us.ibm.com" <rosedahl@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The driver did not previously support non-word size transfers. The
-fsi-i2c driver attempts accesses of this size, so we require it now.
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- drivers/fsi/fsi-master-aspeed.c | 37 +++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index 8c5eb2bb1994..a99f9172ffa7 100644
---- a/drivers/fsi/fsi-master-aspeed.c
-+++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -164,24 +164,38 @@ static const u32 fsi_base = 0xa0000000;
- #define CMD_WRITE	0
- 
- /* OPBx_XFER_SIZE */
--#define XFER_WORD	(BIT(1) | BIT(0))
--#define XFER_NIBBLE	(BIT(0))
-+#define XFER_FULLWORD	(BIT(1) | BIT(0))
-+#define XFER_HALFWORD	(BIT(0))
- #define XFER_BYTE	(0)
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/fsi_master_aspeed.h>
- 
-+static u32 get_xfer_size(size_t size) {
-+	switch (size) {
-+	case 1:
-+		return XFER_BYTE;
-+	case 2:
-+		return XFER_HALFWORD;
-+	case 4:
-+		return XFER_FULLWORD;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
- 		     size_t size)
- {
--	u32 reg, ret, status;
-+	u32 reg, ret, status, xfer_size;
- 
--	/* TODO: implement other sizes, see 0x18 */
--	WARN_ON(size != 4);
-+	xfer_size = get_xfer_size(size);
-+	if (xfer_size < 0)
-+		return xfer_size;
- 
- 	writel(0x1, base + OPB0_SELECT);
- 	writel(CMD_WRITE, base + OPB0_RW);
--	writel(XFER_WORD, base + OPB0_XFER_SIZE);
-+	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
- 	writel(val, base + OPB0_FSI_DATA_W);
- 	writel(0x1, base + OPB_IRQ_CLEAR);
-@@ -208,15 +222,16 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
- 
- static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
- {
--	u32 result, reg;
-+	u32 result, reg, xfer_size;
- 	int status, ret;
- 
--	/* TODO: implement other sizes, see 0x18 */
--	WARN_ON(size != 4);
-+	xfer_size = get_xfer_size(size);
-+	if (xfer_size < 0)
-+		return xfer_size;
- 
- 	writel(0x1, base + OPB0_SELECT);
- 	writel(CMD_READ, base + OPB0_RW);
--	writel(XFER_WORD, base + OPB0_XFER_SIZE);
-+	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
- 	writel(0x1, base + OPB_IRQ_CLEAR);
- 	writel(0x1, base + OPB_TRIGGER);
-@@ -242,7 +257,7 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
- 		return -EIO;
- 
- 	if (out)
--		*out = result;
-+		memcpy(out, &result, size);
- 
- 	return 0;
- }
--- 
-2.23.0
-
+PjEuIENyZWF0ZSBhIG1ldHJpYyByZXBvcnQuIFRoaXMgcmVwb3J0IHNob3VsZCBkZWZpbmVkIGFn
+YWluc3QgdGhlIGFwcHJvcHJpYXRlIHNlbnNvcnMsIHdpdGggYSBzYW1wbGUgcmF0ZSBzZXQgdG8g
+MS9zLCBhbmQgYSBkdXJhdGlvbiBvZiAxcz8NCg0KRXhhY3RseS4gWW91IGp1c3Qgc2V0IHRoZSBN
+ZXRyaWNSZXBvcnREZWZpbml0aW9uVHlwZSB0byBQZXJpb2RpYyBpbiB0aGUgTWV0cmljIFJlcG9y
+dCBEZWZpbml0aW9uIGFuZCBwcm9wZXIgUmVjdXJyZW5jZUludGVydmFsLg0KDQo+Mi4gUHVzaCB0
+aGUgdGVsZW1ldHJ5IHJlcG9ydCB0byB0aGUgQk1DIHVzaW5nIFJlZEZpc2guDQoNCk1ldHJpYyBS
+ZXBvcnQgd2lsbCBiZSBnZW5lcmF0ZWQgYnkgdGhlIE1vbml0b3JpbmcgU2VydmljZSBhdXRvbWF0
+aWNhbGx5LCBhZnRlciBpdHMgZGVmaW5pdGlvbiB0aHJvdWdoIHRoZSBSZWRmaXNoLiBJZiB5b3Ug
+d2FudCB0byBwdXNoIGl0IG91dCBhcyBhIFJlZGZpc2ggZXZlbnQgeW91IHNob3VsZCBzZXQgdGhl
+IFJlcG9ydEFjdGlvbnMgcHJvcGVydHkgaW4gdGhlIE1ldHJpYyBSZXBvcnQgRGVmaW5pdGlvbiB0
+byAiUmVkZmlzaEV2ZW50Ii4gDQoNCj4zLiBDcmVhdGUgYSBuZXcgU1NFIHN1YnNjcmlwdGlvbi4N
+Cg0KWWVzLCBpZiB5b3UgaGF2ZSBtZXRyaWMgcmVwb3J0IGRlZmluZWQgYXMgYWJvdmUsIHlvdSBz
+aG91bGQgYmUgYWJsZSB0byByZWNlaXZlIFJlZGZpc2ggRXZlbnRzIHdpdGggbWV0cmljIHJlcG9y
+dHMgYXMgc29vbiBhcyB0aGlzIGZlYXR1cmUgaXMgaW1wbGVtZW50ZWQsIGJlY2F1c2UgYXMgZmFy
+IGFzIEkga25vdywgbmVpdGhlciB0aGUgRXZlbnQgU2VydmljZSBhbmQgVGVsZW1ldHJ5IFNlcnZp
+Y2UgaXMgbm90IGltcGxlbWVudGVkIHlldC4gQm90aCBkZXNpZ25zIGFyZSBpbiByZXZpZXcuIA0K
+DQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogSnVzdGluIFRoYWxlciBbbWFpbHRv
+OnRoYWxlcmpAbGludXgudm5ldC5pYm0uY29tXSANClNlbnQ6IFR1ZXNkYXksIE9jdG9iZXIgMjIs
+IDIwMTkgODo0NyBQTQ0KVG86IE1hdHVzemN6YWssIFBpb3RyIDxwaW90ci5tYXR1c3pjemFrQGlu
+dGVsLmNvbT4NCkNjOiBrdW55aUBnb29nbGUuY29tOyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7
+IFBhdWwuVmFuY2lsQGRlbGwuY29tOyBuZWxhZGtAbWljcm9zb2Z0LmNvbTsgZ21pbGxzQGxpbnV4
+LnZuZXQuaWJtLmNvbTsgdmlzd2hhQGxpbnV4LnZuZXQuaWJtLmNvbTsgcm9zZWRhaGxAdXMuaWJt
+LmNvbTsgdmlqYXlraGVta2FAZmIuY29tDQpTdWJqZWN0OiBSZTogRnc6IFJFOiBUZWxlbWV0cnkg
+U3RyZWFtaW5nIGZyb20gT3BlbkJNQw0KDQoNCj4gRnJvbTogICAiTWF0dXN6Y3phaywgUGlvdHIi
+IDxwaW90ci5tYXR1c3pjemFrQGludGVsLmNvbT4NCj4gVG86ICAgICAnSnVzdGluIFRoYWxlcicg
+PHRoYWxlcmpAdXMuaWJtLmNvbT4sICJrdW55aUBnb29nbGUuY29tIg0KPiA8a3VueWlAZ29vZ2xl
+LmNvbT4sICJ2aWpheWtoZW1rYUBmYi5jb20iIDx2aWpheWtoZW1rYUBmYi5jb20+LCANCj4gIk9w
+ZW5CTUMgTWFpbGxpc3QiIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+LCAiUGF1bC5WYW5jaWxA
+ZGVsbC5jb20iDQo+IDxQYXVsLlZhbmNpbEBkZWxsLmNvbT4sICJuZWxhZGtAbWljcm9zb2Z0LmNv
+bSIgPG5lbGFka0BtaWNyb3NvZnQuY29tPiwgDQo+ICJnbWlsbHNAbGludXgudm5ldC5pYm0uY29t
+IiA8Z21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbT4sIHZpc2h3YSANCj4gPHZpc2h3YUBsaW51eC52
+bmV0LmlibS5jb20+DQo+IENjOiAgICAgVG9kZCBSb3NlZGFobCA8cm9zZWRhaGxAdXMuaWJtLmNv
+bT4NCj4gRGF0ZTogICAxMC8wMS8yMDE5IDExOjEwIEFNDQo+IFN1YmplY3Q6ICAgICAgICBbRVhU
+RVJOQUxdIFJFOiBUZWxlbWV0cnkgU3RyZWFtaW5nIGZyb20gT3BlbkJNQw0KPiANCj4gDQo+IA0K
+PiBIaSwNCj4gDQo+IFNvcnJ5IGZvciB0aGUgbGF0ZSByZXNwb25zZS4gRm9yIG5vdyBzdHJlYW1p
+bmcgc2hhbGwgYmUgc3VwcG9ydGVkIGJ5IA0KPiB0aGUgUmVkZmlzaCB0ZWxlbWV0cnkgc2Vydmlj
+ZS4gRXZlcnkgbWV0cmljIHJlcG9ydCBjYW4gYmUgY29uZmlndXJlZCANCj4gdG8gYmUgcHVzaGVk
+IG91dCBhcyB0aGUgcmVkZmlzaCBldmVudC4gQ3VycmVudGx5IHRoaXMgaXMgd29yayBpbiBwcm9n
+cmVzcy4NCg0KVGhhbmtzIGZvciB0aGUgcmVzcG9uc2UhIEkgZ3Vlc3MgSSdtIHN0aWxsIGEgYml0
+IGNvbmZ1c2VkIGFib3V0IHRoZSB0ZWxlbWV0cnkgc2VydmljZSBpbiBnZW5lcmFsLiBJZiBJIHdh
+bnRlZCB0byBnZXQgYW4gdXBkYXRlIG9uIGFsbCBtZXRyaWMgc2Vuc29ycyBhdCBhIHJhdGUgb2Yg
+MS9zIEkgdGhpbmsgSSBzaG91bGQgZG8gdGhlIGZvbGxvd2luZyBhdCBhIGhpZ2ggbGV2ZWwuDQoN
+CjEuIENyZWF0ZSBhIG1ldHJpYyByZXBvcnQuIFRoaXMgcmVwb3J0IHNob3VsZCBkZWZpbmVkIGFn
+YWluc3QgdGhlIGFwcHJvcHJpYXRlIHNlbnNvcnMsIHdpdGggYSBzYW1wbGUgcmF0ZSBzZXQgdG8g
+MS9zLCBhbmQgYSBkdXJhdGlvbiBvZiAxcz8NCg0KMi4gUHVzaCB0aGUgdGVsZW1ldHJ5IHJlcG9y
+dCB0byB0aGUgQk1DIHVzaW5nIFJlZEZpc2guDQoNCjMuIENyZWF0ZSBhIG5ldyBTU0Ugc3Vic2Ny
+aXB0aW9uLg0KDQpUaGlzIGlzIGF0IGxlYXN0IG15IHZlcnkgcnVkaW1lbnRhcnkgdW5kZXJzdGFu
+ZGluZyBvbiB0aGUgc3ViamVjdC4gSSB3YXMgaG9waW5nIHNvbWVvbmUgY291bGQgYWRkIHNvbWUg
+Y2xhcml0eSBoZXJlLCBtb3JlIHNwZWNpZmljYWxseSwgaG93IGRvIEkgZ2V0IGNvbnRpbnVhbCB1
+cGRhdGVzIGFmdGVyIHNldHRpbmcgdXAgdGhlIHN1YnNjcmlwdGlvbj8gSSBkbyBhcG9sb2dpemUg
+YXMgdGhpcyBpc24ndCB2ZXJ5IGNsZWFyIHRvIG1lLCBldmVuIGFmdGVyIHJlYWRpbmcgb3ZlciB0
+aGUgdGVsZW1ldHJ5IHJlcG9ydHMsIHRlbGVtZXRyeSBzZXJ2aWNlIGRvY3VtZW50YXRpb24gZnJv
+bSB0aGUgRE1URiwgYW5kIHRoZSBkaXJlY3Rpb24gb2YgdGhpcyB3b3JrZ3JvdXAuIEkgd291bGQg
+Z3JlYXRseSBhcHByZWNpYXRlIGFueSBoZWxwIEkgY2FuIGdldCBhcyB3ZWxsIQ0KDQpUaGFua3Ms
+DQpKdXN0aW4gVGhhbGVyDQoNCj4gQlINCj4gUGlvdHIgTWF0dXN6Y3phaw0KPiANCj4gDQo+IC0t
+LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IG9wZW5ibWMNCj4gW21haWx0bzpvcGVu
+Ym1jLWJvdW5jZXMrcGlvdHIubWF0dXN6Y3phaz1pbnRlbC5jb21AbGlzdHMub3psYWJzLm9yZ10g
+DQo+IE9uIEJlaGFsZiBPZiBKdXN0aW4gVGhhbGVyDQo+IFNlbnQ6IFRodXJzZGF5LCBTZXB0ZW1i
+ZXIgMTksIDIwMTkgODoxOSBQTQ0KPiBUbzoga3VueWlAZ29vZ2xlLmNvbTsgdmlqYXlraGVta2FA
+ZmIuY29tOyBPcGVuQk1DIE1haWxsaXN0IA0KPiA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPjsg
+UGF1bC5WYW5jaWxAZGVsbC5jb207IA0KPiBuZWxhZGtAbWljcm9zb2Z0LmNvbTsgZ21pbGxzQGxp
+bnV4LnZuZXQuaWJtLmNvbTsgdmlzaHdhIA0KPiA8dmlzaHdhQGxpbnV4LnZuZXQuaWJtLmNvbT4N
+Cj4gQ2M6IFRvZGQgUm9zZWRhaGwgPHJvc2VkYWhsQHVzLmlibS5jb20+DQo+IFN1YmplY3Q6IFRl
+bGVtZXRyeSBTdHJlYW1pbmcgZnJvbSBPcGVuQk1DDQo+IA0KPiBIaSBBbGwsDQo+IA0KPiBJ4oCZ
+bSBub3Qgc3VyZSBpZiB0aGlzIHNob3VsZCBiZSBhIHNlcGFyYXRlIG5vdGUgb3Igbm90LiBJJ3Zl
+IGFsc28gbm90IA0KPiBiZWVuIGFibGUgdG8gam9pbiB0aGlzIHdvcmtncm91cCwgaG93ZXZlciBh
+bGwgb2YgbXkgY29uY2VybnMgYXBwZWFyIHRvIA0KPiBoYXZlIGJlZW4gZGlzY3Vzc2VkLiAuIEni
+gJl2ZSBzdGFydGVkIHJldmlld2luZyBzb21lIG9mIHRoZSB0ZWxlbWV0cnkgDQo+IGNvbnZlcnNh
+dGlvbiBmb3Igb3BlbmJtYywgYW5kIGhhdmUgdGFrZW4gc29tZSB0aW1lIHJldmlldyB0aGUgd2lr
+aSBhbmQgDQo+IGhhdmUgYWxzbyByZXZpZXdlZCB0aGUgZG9jdW1lbnQgcHJvcG9zYWwuIEJhc2Vk
+IG9uIG15IGV4cGVyaWVuY2UsIA0KPiB0aGVyZeKAmXMgdHdvIGNvcmUgdXNlIGNhc2VzOg0KPiB0
+ZWxlbWV0cnkgc3RyZWFtcywgYW5kIHRlbGVtZXRyeSByZXBvcnRzLiBUaGUgUmVwb3J0cyBhcmUg
+YSBjb2xsZWN0IA0KPiBhbmQgYW5hbHl6ZSBsYXRlciBtZXRob2QsIHR5cGljYWxseSB1c2VkIGZv
+ciBzeXN0ZW0gcHJvZmlsaW5nLCBqb2IgDQo+IHByb2ZpbGluZywgYW5kIGFuYWx5dGljcyBvZiBk
+YXRhIGNlbnRlciB1c2FnZSBvdmVyIHRpbWUuDQo+IEZvciB0aGUgc3RyZWFtcywgdGhlc2UgYXJl
+IGJlaW5nIHVzZWQgdG8gYWxsb3cgdGhlIGRhdGEgY2VudGVyIHRvIA0KPiByZWFjdCB0byBjaGFu
+Z2VzIGFjcm9zcyB0aGUgbWFuYWdlZCBzeXN0ZW1zLCBsaWtlIGluY3JlYXNpbmcgd2F0ZXIgDQo+
+IGZsb3csIGNvb2xpbmcgY2FwYWNpdHksIG9yIHBvd2VyIHRocm90dGxpbmcgc3lzdGVtcyB0byBw
+cmV2ZW50IG92ZXIgDQo+IHN1YnNjcmlwdGlvbnMgb24gdGhlIGRhdGEgY2VudGVy4oCZcyBwb3dl
+ciBncmlkLg0KPiANCj4gSeKAmWQgbGlrZSB0byBhc2sgYWJvdXQgdGhlIHN0cmVhbXMgc2luY2Ug
+dGhlIHJlcG9ydCBwb3J0aW9uIG9mIHRoaW5ncyANCj4gc2VlbXMgZXhjZXB0aW9uYWxseSB3ZWxs
+IGNvdmVyZWQuIFdpdGggcHJldmlvdXMgdmVyc2lvbnMgb2Ygb3BlbkJNQyBJIA0KPiB3YXMgYWJs
+ZSB0byBsZXZlcmFnZSB3ZWJzb2NrZXRzIHRvIGdldCB1cGRhdGVzIG9uIHNlbnNvciB2YWx1ZXMg
+b24gDQo+IGNoYW5nZS4gVGhpcyB0dXJuZWQgb3V0IHRvIGJlIHByZXR0eSBuZXR3b3JrIGVmZmlj
+aWVudCBhbmQgaXMgYWJsZSB0byANCj4gZHJpdmUgMS9zIHVwZGF0ZXMgb24gYWxsIHRoZSBzZW5z
+b3JzIGluIGEgc3lzdGVtLiBJdCBkb2VzbuKAmXQgaGF2ZSBhbiANCj4gaW1wYWN0IG9uIG90aGVy
+IG1vbml0b3Jpbmcgc2VydmljZXMgZWl0aGVyLiBUaGF0IGJlaW5nIHNhaWQsIEnigJl2ZSBiZWVu
+IA0KPiByZWFkaW5nIHRocm91Z2ggdGhlIHJlZGZpc2ggdGVsZW1ldHJ5IGFuZCBldmVudGluZyBz
+ZXJ2aWNlcyBhbmQgd2FzIA0KPiBsb29raW5nIGZvciBzb21lIGhlbHAgYW5kIG9yIGd1aWRhbmNl
+LiBGb3IgcmVmZXJlbmNlIEkgd2FzIGxvb2tpbmcgYXQgDQo+IHRoaXMgZG9jdW1lbnQgDQo+IGh0
+dHBzOi8vd3d3LmRtdGYub3JnL3NpdGVzL2RlZmF1bHQvZmlsZXMvc3RhbmRhcmRzL2RvY3VtZW50
+cy9EU1AwMjY2XzENCj4gLjYuMC5wDQo+IA0KPiBkZg0KPiAuDQo+IA0KPiBJZiBJIGRvIHN1YnNj
+cmliZSB1c2luZyBTU0UgYW5kIHRlbGVtZXRyeSByZXBvcnRzLCBpdCBzZWVtcyB0byBiZSANCj4g
+c2V0dXAgdG8gZ2V0IGEgZnVsbCBzZXQgb2YgcmVhZGluZ3Mgb3ZlciB0aW1lIGFuZCBvbmx5IHNl
+bmQgd2hlbiB0aGUgDQo+IHJlcG9ydCBpcyBjb21wbGV0ZS4gQ2FuIEkgdXNlIHRoZXNlIHJlcG9y
+dHMgdG8gZ2V0IHVwZGF0ZXMgZXZlcnkgDQo+IHNlY29uZD8gSWYgSSBzdWJzY3JpYmUgdG8gYW4g
+ZW5kcG9pbnQsIEkgYWxzbyBzZWVtIHRvIGdldCB0aGUgZW50aXJlIA0KPiBlbmRwb2ludCBhbmQg
+SeKAmW0gbm90IHN1cmUgaWYgdGhpcyB3b3VsZCBtZWV0IGEgZ29hbCBvZiBnZXR0aW5nIHRoZSAN
+Cj4gbGFyZ2UgY2x1c3RlciAoMzAwDQo+IHN5c3RlbXMpIHdvcnRoIG9mIHVwZGF0ZXMgYXQgYSBk
+YXRhIHJhdGUgb2YgbGVzcyB0aGFuIDIwIE1iL3MuIEkgd291bGQgDQo+IGFwcHJlY2lhdGUgYW55
+IGFkdmljZSBvbiBsZXZlcmFnaW5nIHJlZGZpc2ggc3RhbmRhcmRzIHRvIHN0cmVhbSBzZW5zb3Ig
+DQo+IHJlYWRpbmdzIGZvciBhbiBPcGVuQk1DIHN5c3RlbS4gSWYgSSdtIG5vdCBhYmxlIHRvIHVz
+ZSByZWRmaXNoLCBJJ2QgYmUgDQo+IGhhcHB5IHRvIGVsYWJvcmF0ZSBtb3JlIG9uIHRoZSB3ZWJz
+b2NrZXQgbWV0aG9kIEkgdXNlZCB3aXRoIHRoZSANCj4gcGhvc3Bob3Igd2Vic2VydmVyIGFuZCBk
+aXNjdXNzIG9wdGlvbnMgZm9yIHRoZSBjdXJyZW50L2Z1dHVyZSBCTUMgDQo+IHZlcnNpb25zIGxl
+dmVyYWdpbmcgYm1jd2ViLg0KPiANCj4gDQo+IFRoYW5rcywNCj4gSnVzdGluIFRoYWxlcg0KPiBT
+ZW5pb3IgUkFTIEVuZ2luZWVyDQo+IA0KPiANCj4gDQo+IA0K
