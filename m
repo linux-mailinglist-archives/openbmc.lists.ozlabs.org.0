@@ -2,78 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F898E3202
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 14:14:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8EC5E337B
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 15:09:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zR4H2S0NzDqV1
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 23:14:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zSHd0bhKzDqVv
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 00:09:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
- helo=mail-oi1-x234.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="tzJR91sN"; 
- dkim-atps=neutral
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
- [IPv6:2607:f8b0:4864:20::234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zR326jWKzDqTq;
- Thu, 24 Oct 2019 23:13:02 +1100 (AEDT)
-Received: by mail-oi1-x234.google.com with SMTP id 83so20407473oii.1;
- Thu, 24 Oct 2019 05:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=8kJqdDErP8hEzWYVNVgFWcc3n0F2o+Mg5cnBjVcqzH8=;
- b=tzJR91sNeC56/b38oWN5I6r61v9ABQztHtxiQEug2u77BUhmbS/0/wXDIoyae4ZpMp
- 2g/iazE00m8TrXwUgPi+zn5/0reZtMc4PDM3WlBgSa+JUv9jlUVDFAn5OVASTTLHBf0s
- Urt1bycaAH8DCRHElJmbDlbpKGCUle7Qvwj47bKVfgGoR4pHTH+qW5SipbRbgKWKjmxE
- +/i+eFDS1KkQyEyuH7MHLuD9L1rikyKf3HcG7ldj5YMazDm9nof9NGElkyeWt4rEwSx9
- BjVkMofJoLWM1A74zywNDl5B9hpBhazg4MxJCb2qFICOS3Z3PpSK6UK+lVaeXCOy+AZi
- i+TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=8kJqdDErP8hEzWYVNVgFWcc3n0F2o+Mg5cnBjVcqzH8=;
- b=LW/xG7jqCh5JQjfoBFrEf5W+sy9jW3mZQPxfVhYs6etLZhCu1hhNAFziKkmuMZNF6I
- to9F2/5YRxMw74Au7MySc8tqQpcHuXQlE0iIg7YOUTM7FwDA2i5DsD8rn3xP6VCqMgBD
- l6SocKgP/xvea+TtlXJKiSVnlgRvUvxXoho8pMApo182zU3BXShhxAJ0hYTN7t8Cu1Wg
- dY8z5y8ER+iwj7v+f6BI7DAVoVaeG+T+rWx9fRTceGkDv9NiIBr+iYdQVGIoKmHU6z/K
- YkrMQt2ksHFXuVgksafN0egoFjl08hE9SxSV9d5BrEv3JrocezB5l8mvt+OcHmbHIyly
- cCwQ==
-X-Gm-Message-State: APjAAAWP6Z+eBnLo+H9ZGTtAhudYRcXvKjLJThVnzE++v52FlptnbDBu
- 1j6bhgoB8To4KYqrvoqZ+cpWHYIB
-X-Google-Smtp-Source: APXvYqw8CnWxepRFE0YubiJDcIh5ax2RKkJeJ75wVaynyVTGwI5ogp6rtEMyhA9oBDgcGyyl/8q4IA==
-X-Received: by 2002:aca:d612:: with SMTP id n18mr4450486oig.120.1571919178841; 
- Thu, 24 Oct 2019 05:12:58 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id t18sm7128905otd.60.2019.10.24.05.12.57
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 24 Oct 2019 05:12:58 -0700 (PDT)
-Subject: Re: Improving the docs/ repo
-To: Adriana Kobylak <anoo@linux.ibm.com>
-References: <2c77cbfb-9df5-278c-8f76-06193e125514@linux.vnet.ibm.com>
- <3a4d96b9-8810-e57b-690d-5fd791bc57c0@gmail.com>
- <ae161ca3003366f6e1f260b83d932cc1@linux.vnet.ibm.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <1fba7f72-aaf8-2152-f983-66bf2f936ee3@gmail.com>
-Date: Thu, 24 Oct 2019 07:12:57 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zSGF3HwRzDqTM
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 00:07:48 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9OD5pdX001831; Thu, 24 Oct 2019 09:07:42 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2vucfdgg0r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Oct 2019 09:07:42 -0400
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x9OD6KL4004878;
+ Thu, 24 Oct 2019 09:07:40 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2vucfdgfhp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Oct 2019 09:07:40 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9OD50sT003821;
+ Thu, 24 Oct 2019 13:07:23 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma01dal.us.ibm.com with ESMTP id 2vqt47d60y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 24 Oct 2019 13:07:23 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9OD7L5S34144756
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 24 Oct 2019 13:07:22 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4FC978060;
+ Thu, 24 Oct 2019 13:07:21 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 819DE78068;
+ Thu, 24 Oct 2019 13:07:21 +0000 (GMT)
+Received: from [9.10.99.47] (unknown [9.10.99.47])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 24 Oct 2019 13:07:21 +0000 (GMT)
+Subject: Re: PSU Sensors - Associations
+To: Lei YU <mine260309@gmail.com>, Patrick Venture <venture@google.com>
+References: <CAO=notw-fwpSrWUssLY_WE07bQCy+38-Dp__B4TrnhL7Yzdnxg@mail.gmail.com>
+ <CAARXrtni+vWJT446z21_waRVC8cZY89x=eGent6aOYX6LCdY-g@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <3f106eff-91a5-de66-1d91-e73d0491d35a@linux.ibm.com>
+Date: Thu, 24 Oct 2019 08:07:21 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <ae161ca3003366f6e1f260b83d932cc1@linux.vnet.ibm.com>
+In-Reply-To: <CAARXrtni+vWJT446z21_waRVC8cZY89x=eGent6aOYX6LCdY-g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-10-24_08:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910240126
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,34 +93,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- openbmc@lists.ozlabs.org, Gunnar Mills <gmills@linux.vnet.ibm.com>
+Cc: Josh Lehan <krellan@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Peter Lundgren <peterlundgren@google.com>,
+ James Feist <james.feist@linux.intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/23/19 10:22 AM, Adriana Kobylak wrote:
-> On 2019-10-23 08:51, krtaylor wrote:
->> On 10/22/19 11:38 AM, Gunnar Mills wrote:
->>> Looking to improve the docs/ repository.
->>> Is anyone interested in getting involved in improving the document 
->>> repository? Looking for either ideas or contributions.
->>>
->>> Some ideas:
->>> Better document the process for submitting documents which should 
->>> improve the quality of documentation being submitted.
->>>
->>> Design template improvement, spell out any additional expectations 
->>> that come in review. E.g. All fields must be filled out, involve the 
->>> community before submitting a template, avoid internal acronyms, 
->>> expand on when the template is needed.
-> 
-> How do people feel about having smaller commits for the docs, like we 
-> encourage for source code? Would it make it easier to review? An example 
-> for designs would be one commit with the problem statement, next commit 
-> adds the requirements, next adds one solution proposal, etc.
 
-This is absolutely the way it *should* be. Commits and/or wip. For the 
-IRC averse and design documents, it lets the community know what you are 
-planning and gives them the ability to be involved early on.
 
-Kurt Taylor (krtaylor)
+On 10/23/2019 9:03 PM, Lei YU wrote:
+> On Thu, Oct 24, 2019 at 1:39 AM Patrick Venture <venture@google.com> wrote:
+>> So, I flipped the association interface addition and the property
+>> initialization to match other sensors, and then it started working.  I
+>> was curious if you had any suggestions on how to find the matching
+>> sensor given the paths, for instance:
+>>
+>> busctl get-property xyz.openbmc_project.PSUSensor
+>> /xyz/openbmc_project/sensors/temperature/alt2_Temperature
+>> xyz.openbmc_project.Association.Definitions Associations
+>> a(sss) 1 "chassis" "all_sensors"
+>> "/xyz/openbmc_project/inventory/system/board/Altie"
+>>
+>> busctl tree --no-pager xyz.openbmc_project.EntityManager|grep Altie
+>>            |-/xyz/openbmc_project/inventory/system/board/Altie
+>>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_0
+>>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_1
+>>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_2
+>>            | `-/xyz/openbmc_project/inventory/system/board/Altie/alt1
+>>
+>> No alt2 -- so how do I know this?  I can walk every subordinate object
+>> to find the name match, but I was curious if you had a faster idea?
+> It looks like buggy, I think mapper shall make sure the association
+> object is created only when the associated object exists.
+> @Matt Spinler could you confirm that?
+
+I'm not entirely following  what the problem is here, but I will still 
+take a moment
+to plug my association (and other mapper functionality) documentation at:
+https://github.com/openbmc/docs/blob/master/architecture/object-mapper.md#associations
+
