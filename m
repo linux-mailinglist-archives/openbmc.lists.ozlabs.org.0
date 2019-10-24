@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFD8EE384C
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 18:40:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59408E385E
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 18:41:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zXz41zrpzDqW3
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:40:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zY1D4C1LzDqSY
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:41:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
@@ -19,59 +19,51 @@ Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zXxs64D3zDqQH
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 03:38:56 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zXz4543HzDqQH
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 03:40:00 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- x9OGcYcw145057; Thu, 24 Oct 2019 12:38:50 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vue953h50-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2019 12:38:50 -0400
-Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x9OGclbJ146288;
- Thu, 24 Oct 2019 12:38:49 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2vue953h49-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2019 12:38:49 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9OGZnhD021053;
- Thu, 24 Oct 2019 16:38:48 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma01dal.us.ibm.com with ESMTP id 2vqt47f1a4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Oct 2019 16:38:48 +0000
+ x9OGb7IN090427
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 12:39:57 -0400
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vue41v1ja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 12:39:57 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9OGZqYL001533
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 16:40:00 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma01wdc.us.ibm.com with ESMTP id 2vqt47jdkx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 16:40:00 +0000
 Received: from b03ledav003.gho.boulder.ibm.com
  (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- x9OGckWo30933478
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9OGdtbq44499388
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Oct 2019 16:38:46 GMT
+ Thu, 24 Oct 2019 16:39:55 GMT
 Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC8B06A05D;
- Thu, 24 Oct 2019 16:38:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 81F846A04D;
+ Thu, 24 Oct 2019 16:39:55 +0000 (GMT)
 Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7958D6A047;
- Thu, 24 Oct 2019 16:38:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5779E6A04F;
+ Thu, 24 Oct 2019 16:39:55 +0000 (GMT)
 Received: from [9.10.99.168] (unknown [9.10.99.168])
  by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu, 24 Oct 2019 16:38:46 +0000 (GMT)
-Subject: Re: PSU Sensors - Associations
-To: Patrick Venture <venture@google.com>,
- James Feist <james.feist@linux.intel.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- Peter Lundgren <peterlundgren@google.com>, Josh Lehan <krellan@google.com>
-References: <CAO=notw-fwpSrWUssLY_WE07bQCy+38-Dp__B4TrnhL7Yzdnxg@mail.gmail.com>
+ Thu, 24 Oct 2019 16:39:55 +0000 (GMT)
+Subject: Re: Running arbitrary tests in CI
+To: Matt Spinler <mspinler@linux.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <3cf26eea-3dfb-23a5-a533-408d8ccc0027@linux.ibm.com>
 From: Shawn McCarney <shawnmm@linux.vnet.ibm.com>
-Message-ID: <e658ab59-3ee3-e86a-fddc-bc2db140ff6f@linux.vnet.ibm.com>
-Date: Thu, 24 Oct 2019 11:38:46 -0500
+Message-ID: <a377bef3-a4f0-1bdc-89cf-7961e41be244@linux.vnet.ibm.com>
+Date: Thu, 24 Oct 2019 11:39:55 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <CAO=notw-fwpSrWUssLY_WE07bQCy+38-Dp__B4TrnhL7Yzdnxg@mail.gmail.com>
+In-Reply-To: <3cf26eea-3dfb-23a5-a533-408d8ccc0027@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -81,7 +73,7 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
  malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1908290000 definitions=main-1910240155
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -95,35 +87,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+Sounds great to me.  I need something like this for what I'm working on.
 
-I didn't follow all of your terminology, so I might be off base here, 
-but in case it helps ...
-
-There are two associations to power supply sensors from a Redfish/bmcweb 
-perspective:
-
-* chassis <-> all sensors in chassis (including PSU sensors).  This is 
-needed because Redfish output is for a specific chassis.  We only want 
-sensors (including PSU sensors) from the specified chassis.
-
-* PSU inventory item <-> all sensors for the PSU.  This is used in 
-several ways.  First, it allows us to store multiple PSU sensor values 
-in a single associated Redfish PowerSupply object (PowerInputWatts, 
-PowerOutputWatts).  Second, it allows us to look at the status of the 
-PSU inventory item (e.g. is it functional? present?) when setting the 
-status of the Redfish PSU sensor. Lastly, it allows us to access the VPD 
-(PartNumber, SerialNumber) of the PSU inventory item associated with a 
-PSU sensor.
-
-This is documented here: 
-https://github.com/openbmc/docs/blob/master/architecture/sensor-architecture.md#redfish
-
-If not relevant, sorry please ignore ...
-
-Shawn
-
+On 10/24/2019 9:25 AM, Matt Spinler wrote:
+> Hi,
+>
+> Following up to the thread that talks about being able to run extra 
+> tests in CI:
+> https://lists.ozlabs.org/pipermail/openbmc/2019-September/018329.html
+>
+> I could definitely use something like this, so I am thinking of 
+> putting up the
+> commit to do the: run any run-ci.sh in the repo.
+>
+> Are there any additional ideas or other comments on a way to do this?
+>
+> Thanks
