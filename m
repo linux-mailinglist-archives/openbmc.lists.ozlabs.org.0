@@ -1,75 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE765E35A2
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 16:34:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A134AE35B6
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 16:40:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zV9q6R2lzDqRR
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 01:34:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zVJp29r3zDqC7
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 01:40:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::52f;
+ helo=mail-pg1-x52f.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="pzyaHKjI"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="kSG72/Yc"; 
  dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com
+ [IPv6:2607:f8b0:4864:20::52f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zV62327nzDqV1
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 01:30:49 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id s5so5392185oie.10
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 07:30:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=2RSWZxBBXYOMkJBarUkwoDz0BV2/UqqXlw8MWPxlzh0=;
- b=pzyaHKjILKlSXbU8ObYqjjNeI5PE4lqO/O8s4oPmK6DOpI4A5/q5zbMKBGl+hN2OG/
- kELnY9F2hzyt61XLpBrp4gxMM7fePbV0ERaCnNl3F3z1sLG+UQ9mxX5xwpPnEFH3I+Nd
- qCOnwnmOp9SswD2M5wSJBL+Ja2Sao3wq00FkDdcBq14vCfImQ6DywEsYH9Q7Ybf9pAq0
- tt+K6MqTDwJ7CbNuPosNBwaWsndyExSQfUgLP8uBG0yigK8uX1StjTN4wY8pdYRTiwiy
- xuwjl5ReY27AjYFhZQwwH+ObzVQGodZ2gVsMA4RCgpZxinnF2bIeg1fHS84M40Svw90G
- rUGQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zVJ23hNpzDqC4
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 01:39:28 +1100 (AEDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 15so9027228pgt.7
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 07:39:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=WwzIhe1H+zstjcgi6T5bwplNIhfEWZC1yMbZHvaEG4k=;
+ b=kSG72/YcFo36kQqxeH6ka4RfRKpsIxj/GyH+EaOJcJgDwy9YsLXv6XnpbJtVwxCoBJ
+ ekGIaj2VbOAUU83xqoF5StBV09M3W3OHlKSNQtOlGo1FIjrxc9laQ9LIL/knVk3UojMG
+ 6WY1YwFRUAR+FLWk5tnvwRPbr0N8Lqc749NGijnBVQcFlqseYdenwj/kIjZYo1YWowbB
+ uadS+QRpNBLDymnoi1Q/K0l9zgMla6CjrkdHJyvaUQgohQtdWCzhbshRKvvW7CvaMGu1
+ nive8q69+8WA1Jhov8GypXMCd424fH3/uBtzekgWUQNZu6EXztI8fU4c+WJL4rH0qt4o
+ sfQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=2RSWZxBBXYOMkJBarUkwoDz0BV2/UqqXlw8MWPxlzh0=;
- b=sy1P5XQkw7429AQLSXhModvVWVxMz0E3r4QGm9riRUfaM4KQYJ6tVazinwB66OsN9b
- UOZJ4XFBy3Vb3f7QbQw8226Sgr6hTQmzLYw18f2QIyzivck3YDMHgV0cU60R3BZlFswc
- kuOmR85fezUXUY+6oWaCbzW2qjkSKZB0stl7LR85A8h5YHzdm2yhvVb5DusMBzyeZWWS
- KakM9UVOYgyUomRfmuQdZdm5dTqJnSC+yaYIC+D13ZKP4ij52hq0uXzILC+JPbrrtIsy
- O765I88WkwKPxW10ED8vHDpeA8wUKMWtZv0cS8Y4EiAwW4hGNiaNZOfnK9taEdwpkz7T
- k8/A==
-X-Gm-Message-State: APjAAAUM3EguXYKBLHqi3L1StjkzphlZ1vs2Hbb4R65/co14PDFLRelw
- +9XbV36gncojQrKYtKbBHQ4QTdXG
-X-Google-Smtp-Source: APXvYqw2sDjKV0gAUM95CiVV3xjehAybiIG1gtDv4dcK6lJ0nq8h8OzxbLg90stOZq04Oxchmvg9ug==
-X-Received: by 2002:aca:5885:: with SMTP id m127mr5060895oib.110.1571927446820; 
- Thu, 24 Oct 2019 07:30:46 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:5d8f:8fae:d6bf:f512])
- by smtp.gmail.com with ESMTPSA id c15sm644231otk.12.2019.10.24.07.30.46
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 24 Oct 2019 07:30:46 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Subject: Re: Running arbitrary tests in CI
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <3cf26eea-3dfb-23a5-a533-408d8ccc0027@linux.ibm.com>
-Date: Thu, 24 Oct 2019 09:30:45 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <04B1459C-9B49-44BB-AA9F-FEDA5B4EBB3C@gmail.com>
-References: <3cf26eea-3dfb-23a5-a533-408d8ccc0027@linux.ibm.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=WwzIhe1H+zstjcgi6T5bwplNIhfEWZC1yMbZHvaEG4k=;
+ b=RFaq0t5eiTZbzO634A1rIrYnSp8SHJpBiPtxslwicpvnuk5p7p5mYhD1ebN2ZM7AhF
+ df6jDZQPM+jjop8LNuW4RUMyNQxkafV0tXDjHVK3wkcxVtf1BL8O12kGr4CmaF3/3PaR
+ CFadEVUdTrTtEOo2E7vVRVjDKtiL904gEO1MH8rHEIRkpzvDLpF/vjAAle4AL/90i401
+ 1HcZXx039LCRFYe4/ETuA7/4X9hlOwIHSMFhOxhODAqZngZPGFactz0MVInlaJKeFs8d
+ yYDuXk5xAy8wS63DcDbRsi5E5FQiWr+pvZqe9nKfy54e7EzxViXPDcxCv29kqxCZc8cP
+ sUKA==
+X-Gm-Message-State: APjAAAVhF8HFhz3BCdFTyh6NQrQU5C/Nqbg6ImDAULDb1u+516m3P3d0
+ YfNFIoAd90uCGbkBwwMO6NkMqCFX/85CoYuLRmVbUw==
+X-Google-Smtp-Source: APXvYqwcQsqartvnsd5NWTmnuSYk+wOM/FEZLLvMsTsPOv21UOOaxsmoy/z584o6eFARvFTiLBASLkzQfNlv1iECedw=
+X-Received: by 2002:a17:90a:bf09:: with SMTP id c9mr7749728pjs.9.1571927964514; 
+ Thu, 24 Oct 2019 07:39:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAO=notw-fwpSrWUssLY_WE07bQCy+38-Dp__B4TrnhL7Yzdnxg@mail.gmail.com>
+ <CAARXrtni+vWJT446z21_waRVC8cZY89x=eGent6aOYX6LCdY-g@mail.gmail.com>
+ <3f106eff-91a5-de66-1d91-e73d0491d35a@linux.ibm.com>
+In-Reply-To: <3f106eff-91a5-de66-1d91-e73d0491d35a@linux.ibm.com>
+From: Patrick Venture <venture@google.com>
+Date: Thu, 24 Oct 2019 07:39:09 -0700
+Message-ID: <CAO=notydRFN_z3BA2=BvAFdm-MBfh1AvL-GNrpX2aXnf=THeaA@mail.gmail.com>
+Subject: Re: PSU Sensors - Associations
 To: Matt Spinler <mspinler@linux.ibm.com>
-X-Mailer: Apple Mail (2.3445.104.11)
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,31 +74,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Josh Lehan <krellan@google.com>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Oct 24, 2019 at 6:07 AM Matt Spinler <mspinler@linux.ibm.com> wrote:
+>
+>
+>
+> On 10/23/2019 9:03 PM, Lei YU wrote:
+> > On Thu, Oct 24, 2019 at 1:39 AM Patrick Venture <venture@google.com> wrote:
+> >> So, I flipped the association interface addition and the property
+> >> initialization to match other sensors, and then it started working.  I
+> >> was curious if you had any suggestions on how to find the matching
+> >> sensor given the paths, for instance:
+> >>
+> >> busctl get-property xyz.openbmc_project.PSUSensor
+> >> /xyz/openbmc_project/sensors/temperature/alt2_Temperature
+> >> xyz.openbmc_project.Association.Definitions Associations
+> >> a(sss) 1 "chassis" "all_sensors"
+> >> "/xyz/openbmc_project/inventory/system/board/Altie"
+> >>
+> >> busctl tree --no-pager xyz.openbmc_project.EntityManager|grep Altie
+> >>            |-/xyz/openbmc_project/inventory/system/board/Altie
+> >>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_0
+> >>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_1
+> >>            | |-/xyz/openbmc_project/inventory/system/board/Altie/al_temp_2
+> >>            | `-/xyz/openbmc_project/inventory/system/board/Altie/alt1
+> >>
+> >> No alt2 -- so how do I know this?  I can walk every subordinate object
+> >> to find the name match, but I was curious if you had a faster idea?
+> > It looks like buggy, I think mapper shall make sure the association
+> > object is created only when the associated object exists.
+> > @Matt Spinler could you confirm that?
+>
+> I'm not entirely following  what the problem is here, but I will still
+> take a moment
+> to plug my association (and other mapper functionality) documentation at:
+> https://github.com/openbmc/docs/blob/master/architecture/object-mapper.md#associations
 
+Thanks, so given the documentation, we can create additional endpoints
+because there is more than one relationship with the object.
 
-> On Oct 24, 2019, at 9:25 AM, Matt Spinler <mspinler@linux.ibm.com> =
-wrote:
->=20
-> Hi,
->=20
-> Following up to the thread that talks about being able to run extra =
-tests in CI:
-> https://lists.ozlabs.org/pipermail/openbmc/2019-September/018329.html
->=20
-> I could definitely use something like this, so I am thinking of =
-putting up the
-> commit to do the: run any run-ci.sh in the repo.
->=20
-> Are there any additional ideas or other comments on a way to do this?
-
-Nothing from me. If you get the script in there, I=E2=80=99ll make the =
-CI jenkins job
-to call it.
-
->=20
-> Thanks
-
+>
