@@ -2,63 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91E4BE2C79
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 10:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F898E3202
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 14:14:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zLWt60B8zDqRv
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 19:49:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zR4H2S0NzDqV1
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 23:14:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="tzJR91sN"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zLVv4FrrzDqQH
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 19:48:17 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 24 Oct 2019 01:48:13 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,224,1569308400"; d="scan'208";a="197671145"
-Received: from irsmsx106.ger.corp.intel.com ([163.33.3.31])
- by fmsmga007.fm.intel.com with ESMTP; 24 Oct 2019 01:48:12 -0700
-Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
- IRSMSX106.ger.corp.intel.com ([169.254.8.185]) with mapi id 14.03.0439.000;
- Thu, 24 Oct 2019 09:48:11 +0100
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: Justin Thaler <thalerj@linux.vnet.ibm.com>, James Feist
- <james.feist@linux.intel.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
- "kunyi@google.com" <kunyi@google.com>, "apparao.puli@linux.intel.com"
- <apparao.puli@linux.intel.com>
-Subject: RE: multiple telemetry designs
-Thread-Topic: multiple telemetry designs
-Thread-Index: AQHVicBpLOT3TrTciEijW5fZBUhB6KdobVAAgAACRgCAAC2GAIAA2c2g
-Date: Thu, 24 Oct 2019 08:48:11 +0000
-Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A30F946F@IRSMSX101.ger.corp.intel.com>
-References: <D1177195-CDC9-4BB0-B9DE-6FC99B7ADE31@fuzziesquirrel.com>
- <dd81fb28-4d01-8726-9b16-81a677eb3e16@linux.intel.com>
- <8998b51b-4e67-738e-becd-63c26ea626be@linux.intel.com>
- <d69d24c7-d07f-35d4-1395-859a0df2a05a@linux.vnet.ibm.com>
-In-Reply-To: <d69d24c7-d07f-35d4-1395-859a0df2a05a@linux.vnet.ibm.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNmY0MjEwMDAtZWM1Ny00NmJlLTliYmQtNDA5Njk0MGY1NzVkIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMXFKWWp2T1VUSDdvb0dEeTl4Ylg0eFFWeHB4RThXN2YwWXgrbEdIanMrMFVFRTM4N3p6Qk9BK095UVZlV0pvciJ9
-x-ctpclassification: CTP_NT
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [163.33.239.181]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zR326jWKzDqTq;
+ Thu, 24 Oct 2019 23:13:02 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id 83so20407473oii.1;
+ Thu, 24 Oct 2019 05:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=8kJqdDErP8hEzWYVNVgFWcc3n0F2o+Mg5cnBjVcqzH8=;
+ b=tzJR91sNeC56/b38oWN5I6r61v9ABQztHtxiQEug2u77BUhmbS/0/wXDIoyae4ZpMp
+ 2g/iazE00m8TrXwUgPi+zn5/0reZtMc4PDM3WlBgSa+JUv9jlUVDFAn5OVASTTLHBf0s
+ Urt1bycaAH8DCRHElJmbDlbpKGCUle7Qvwj47bKVfgGoR4pHTH+qW5SipbRbgKWKjmxE
+ +/i+eFDS1KkQyEyuH7MHLuD9L1rikyKf3HcG7ldj5YMazDm9nof9NGElkyeWt4rEwSx9
+ BjVkMofJoLWM1A74zywNDl5B9hpBhazg4MxJCb2qFICOS3Z3PpSK6UK+lVaeXCOy+AZi
+ i+TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=8kJqdDErP8hEzWYVNVgFWcc3n0F2o+Mg5cnBjVcqzH8=;
+ b=LW/xG7jqCh5JQjfoBFrEf5W+sy9jW3mZQPxfVhYs6etLZhCu1hhNAFziKkmuMZNF6I
+ to9F2/5YRxMw74Au7MySc8tqQpcHuXQlE0iIg7YOUTM7FwDA2i5DsD8rn3xP6VCqMgBD
+ l6SocKgP/xvea+TtlXJKiSVnlgRvUvxXoho8pMApo182zU3BXShhxAJ0hYTN7t8Cu1Wg
+ dY8z5y8ER+iwj7v+f6BI7DAVoVaeG+T+rWx9fRTceGkDv9NiIBr+iYdQVGIoKmHU6z/K
+ YkrMQt2ksHFXuVgksafN0egoFjl08hE9SxSV9d5BrEv3JrocezB5l8mvt+OcHmbHIyly
+ cCwQ==
+X-Gm-Message-State: APjAAAWP6Z+eBnLo+H9ZGTtAhudYRcXvKjLJThVnzE++v52FlptnbDBu
+ 1j6bhgoB8To4KYqrvoqZ+cpWHYIB
+X-Google-Smtp-Source: APXvYqw8CnWxepRFE0YubiJDcIh5ax2RKkJeJ75wVaynyVTGwI5ogp6rtEMyhA9oBDgcGyyl/8q4IA==
+X-Received: by 2002:aca:d612:: with SMTP id n18mr4450486oig.120.1571919178841; 
+ Thu, 24 Oct 2019 05:12:58 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id t18sm7128905otd.60.2019.10.24.05.12.57
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 24 Oct 2019 05:12:58 -0700 (PDT)
+Subject: Re: Improving the docs/ repo
+To: Adriana Kobylak <anoo@linux.ibm.com>
+References: <2c77cbfb-9df5-278c-8f76-06193e125514@linux.vnet.ibm.com>
+ <3a4d96b9-8810-e57b-690d-5fd791bc57c0@gmail.com>
+ <ae161ca3003366f6e1f260b83d932cc1@linux.vnet.ibm.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <1fba7f72-aaf8-2152-f983-66bf2f936ee3@gmail.com>
+Date: Thu, 24 Oct 2019 07:12:57 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <ae161ca3003366f6e1f260b83d932cc1@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,82 +85,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Mihm, James" <james.mihm@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "neladk@microsoft.com" <neladk@microsoft.com>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ openbmc@lists.ozlabs.org, Gunnar Mills <gmills@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-QXMgZm9yIHRoZSB0d28gdGVsZW1ldHJ5IGRlc2lnbiBwcm9wb3NhbHM6DQpodHRwczovL2dlcnJp
-dC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9kb2NzLysvMjIyNTcNCmh0dHBzOi8vZ2Vy
-cml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL2RvY3MvKy8yNDM1Nw0KSSB0YWxrZWQg
-d2l0aCBLdW4gYW5kIHdlIGFncmVlZCB0aGF0IGEgY29tbW9uIGJtY3dlYiBpbnRlcmZhY2Ugd291
-bGQgYmUgZ3JlYXQgaW4gb3JkZXIgdG8gYmUgYWJsZSB0byBzdXBwb3J0IGVpdGhlciB0aGUgbW9u
-aXRvcmluZyBzZXJ2aWNlIG9yIHRoZSBjb2xsZWN0ZC4gSW4gb3JkZXIgdG8gdG8gZG8gdGhhdCBj
-b2xsZWN0ZCB3aWxsIGhhdmUgdG8gYmUgbW9kaWZpZWQgdG8gZXhwb3NlIEQtQnVzIGludGVyZmFj
-ZSBvciBibWN3ZWIgd2lsbCBoYXZlIHRvIHN1cHBvcnQgbGlicmFyaWVzIHRvIGhhbmRsZSBjb2xs
-ZWN0ZCBkaXJlY3RseS4gV2UgYXQgSW50ZWwgcHJlZmVyIEQtQnVzIGZvciB0aGUgT3BlbkJNQyBh
-cmNoaXRlY3R1cmUgY29uc2lzdGVuY3kuIA0KQXMgZm9yIHRoZSBpbXBsZW1lbnRhdGlvbiwgd2Ug
-aGF2ZSBtb25pdG9yaW5nIHNlcnZpY2UgYW5kIFJlZGZpc2ggdGVsZW1ldHJ5IHNlcnZpY2UgaW1w
-bGVtZW50ZWQgKGN1cnJlbnRseSB3aXRob3V0IHRyaWdnZXJzIHN1cHBvcnQpLCBob3dldmVyIGl0
-IHJlcXVpcmUgc29tZSByZWZhY3RvcmluZyB0byBiZSBwcm9kdWN0aW9uIGNvZGUgcXVhbGl0eS4g
-DQoNClRoZSBSZWRmaXNoIEV2ZW50IFNlcnZpY2UgKGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJv
-amVjdC54eXovYy9vcGVuYm1jL2RvY3MvKy8yNDc0OSkgaXMgc29tZXRoaW5nIGRpZmZlcmVudCB0
-aGFuIHRlbGVtZXRyeSBzZXJ2aWNlLCBzbyBJIHdvdWxkbid0IGNvbnNpZGVyIGl0IGFzIHRoaXJk
-IHRlbGVtZXRyeSBkZXNpZ24uIEl0IGlzIHJhdGhlciBwcmVwYXJlZCB0byBjb29wZXJhdGUgd2l0
-aCB0aGUgUmVkZmlzaCBUZWxlbWV0cnkgU2VydmljZSBhbmQgdGhlcmUgaXMgcmVmZXJlbmNlIHRv
-IHRlbGVtZXRyeSBkZXNpZ24gaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29w
-ZW5ibWMvZG9jcy8rLzI0MzU3IC4gDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9t
-OiBKdXN0aW4gVGhhbGVyIFttYWlsdG86dGhhbGVyakBsaW51eC52bmV0LmlibS5jb21dIA0KU2Vu
-dDogV2VkbmVzZGF5LCBPY3RvYmVyIDIzLCAyMDE5IDEwOjMwIFBNDQpUbzogSmFtZXMgRmVpc3Qg
-PGphbWVzLmZlaXN0QGxpbnV4LmludGVsLmNvbT47IEJyYWQgQmlzaG9wIDxicmFkbGV5YkBmdXp6
-aWVzcXVpcnJlbC5jb20+OyBNYXR1c3pjemFrLCBQaW90ciA8cGlvdHIubWF0dXN6Y3pha0BpbnRl
-bC5jb20+OyBrdW55aUBnb29nbGUuY29tOyBhcHBhcmFvLnB1bGlAbGludXguaW50ZWwuY29tDQpD
-YzogbmVsYWRrQG1pY3Jvc29mdC5jb207IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgTWlobSwg
-SmFtZXMgPGphbWVzLm1paG1AaW50ZWwuY29tPg0KU3ViamVjdDogUmU6IG11bHRpcGxlIHRlbGVt
-ZXRyeSBkZXNpZ25zDQoNCg0KDQpPbiAxMC8yMy8xOSAxMjo0NyBQTSwgSmFtZXMgRmVpc3Qgd3Jv
-dGU6DQo+IE9uIDEwLzIzLzE5IDEwOjM5IEFNLCBKYW1lcyBGZWlzdCB3cm90ZToNCj4+IE9uIDEw
-LzIzLzE5IDk6MzggQU0sIEJyYWQgQmlzaG9wIHdyb3RlOg0KPj4+IFRoZXJlIGFyZSB0d28gdGVs
-ZW1ldHJ5IC8gbWV0cmljIGRlc2lnbnMgdW5kZXIgcmV2aWV3IHJpZ2h0IG5vdzoNCg0KVGhlcmUn
-cyBhIGZvdXJ0aCBvcHRpb24gdGhhdCBjYW4gYWxzbyBiZSB1c2VkLCBidXQgbW9yZSB0aGFuIGp1
-c3Qgc2Vuc29yIHJlYWRpbmdzLiBUaGlzIGlzbid0IHJlZGZpc2ggY29tcGxpYW50IGFuZCByZWxp
-ZXMgb24gc2VjdXJlIHdlYnNvY2tldHMgaG93ZXZlci4NCg0KaHR0cHM6Ly9naXRodWIuY29tL29w
-ZW5ibWMvZG9jcy9ibG9iL21hc3Rlci9yZXN0LWFwaS5tZCNldmVudC1zdWJzY3JpcHRpb24tcHJv
-dG9jb2wNCg0KPiANCj4gSSd2ZSBiZWVuIGluZm9ybWVkIHRoZXJlIGFyZSBhY3R1YWxseSAzOg0K
-PiANCj4gaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvZG9jcy8r
-LzI0NzQ5DQo+IA0KPiBBZGRlZCBBcHB1IHRvIHRoaXMgY29udmVyc2F0aW9uIGFzIHdlbGwuDQo+
-IA0KPiANCj4+Pg0KPj4+IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVu
-Ym1jL2RvY3MvKy8yMjI1Nw0KPj4+IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXov
-Yy9vcGVuYm1jL2RvY3MvKy8yNDM1Nw0KPj4+DQo+Pj4gSSB3b3VsZCBsaWtlIHRvIHNlZSBvbmUg
-b3IgYm90aCBvZiB0aGVtIG1lcmdlZC7CoCBOZWl0aGVyIHNlZW0gdG8gDQo+Pj4gaGF2ZSBhbnkg
-c3VwcG9ydOKApi50aGVyZSBpcyBhIHNpbmdsZSArMSBvbiB0aGUgbGF0dGVyIHJldmlldyBmcm9t
-IA0KPj4+IFNoYXduIE1jQ2FybmV5LsKgIElmIHlvdSBzdXBwb3J0IG9uZSBvZiB0aGVzZSBkZXNp
-Z25zLCBwbGVhc2UgZ28gDQo+Pj4gcmV2aWV3IGl0IGFuZCBpbmRpY2F0ZSB5b3VyIHN1cHBvcnQu
-DQo+Pg0KPj4gSXQgbG9va3MgbGlrZSBLdW4gaGFzICsxZWQgUGlvdHIncyBkZXNpZ24gYXMgd2Vs
-bCwgbm90IHN1cmUgaWYgdGhhdCANCj4+IG1lYW5zIHdlIGNhbiBnbyB3aXRoIG9uZSBkZXNpZ24/
-DQo+Pg0KPj4+DQo+Pj4gSSBhbHNvIGNhbuKAmXQgZmlndXJlIG91dCB3aGF0IHRoZSBwYXRoIGZv
-cndhcmQgZm9yIE9wZW5CTUMgaXMuwqAgTWF5YmUgDQo+Pj4gdG8gc3RhcnQgd2l0aCwgd2UgY291
-bGQgYWxsIGxldmVsIHNldCBvbiB3aGVyZSB3ZSBhcmUgYXQgd2l0aCBvdXINCj4+PiB0aGlua2lu
-ZzoNCj4+Pg0KPj4+IEt1bjogSG93IGZhciBhbG9uZyBhcmUgeW91IGluIHRoZSBpbXBsZW1lbnRh
-dGlvbiBvZiB5b3VyIHByb3Bvc2FsPw0KPj4+IFBpb3RyOiBIb3cgZmFyIGFsb25nIGFyZSB5b3Ug
-aW4gdGhlIGltcGxlbWVudGF0aW9uIG9mIHlvdXIgcHJvcG9zYWw/DQo+Pj4gSmFtZXM6IE9wZW5C
-TUMgY2FuIHN1cHBvcnQgb25lIG9yIGJvdGggcHJvcG9zYWxzLsKgIElmIHdlIHN1cHBvcnQgDQo+
-Pj4gYm90aCwgdGhpcyBtZWFucyBtdWx0aXBsZSBpbXBsZW1lbnRhdGlvbnMgZm9yIHRoZSBzYW1l
-IHRoaW5nIGluIA0KPj4+IGJtY3dlYi7CoCBPbmUgdGhhdCBnZXRzIGRhdGEgZnJvbSBkYnVzIG9i
-amVjdHMsIGFuZCBhbm90aGVyIHRoYXQgZ2V0cyANCj4+PiBpdCBmcm9tIGxpYnJyZC7CoCBBcyB0
-aGUgbWFpbnRhaW5lciBvZiBibWN3ZWIgYXJlIHlvdSBvcGVuIHRvIA0KPj4+IGFjY2VwdGluZyBv
-bmUgb3IgYm90aCBvZiB0aGVzZSBvcHRpb25zPw0KPj4NCj4+IFdpdGggMCBwcmV2aW91cyBrbm93
-bGVkZ2UsIEkgd291bGQgc3VnZ2VzdCB1c2luZyBhIHdheSB0aGF0IHdvcmtzIA0KPj4gd2l0aCBw
-cmV2aW91cyBPQk1DIHByYWN0aWNlcywgYW5kIHRoYXQgaXMgdXNpbmcgZGJ1cy4gSWYgdGhlcmUg
-aGFzIHRvIA0KPj4gYmUgMiBzZXBhcmF0ZSBkZXNpZ25zLCB0aGVuIGlmIGJvdGggcHJvZHVjZSB0
-aGUgc2FtZSBkLWJ1cyANCj4+IGludGVyZmFjZXMsIGl0IHNob3VsZG4ndCBtYXR0ZXIgdG8gYm1j
-d2ViIHdoaWNoIG9uZSBpcyBiZWluZyB1c2VkLiANCj4+IFRoYXQgYmVpbmcgc2FpZCwgaWYgdGhp
-cyBkb2Vzbid0IHdvcmsgZm9yIHNvbWUgcmVhc29uLCB3ZSd2ZSB1c2VkIA0KPj4gY29tcGlsZSBz
-d2l0Y2hlcyBpbiB0aGUgcGFzdCwgYWx0aG91Z2ggdGhpcyB3b3VsZCBiZSB0aGUgbGVhc3QgcHJl
-ZmVyYWJsZSBvcHRpb24uDQo+PiBUcnV0aGZ1bGx5IEkgaGF2ZW4ndCBsb29rZWQgYXQgdGhlc2Ug
-ZGVzaWducyB5ZXQgYXMgSSd2ZSBvbmx5IA0KPj4gcmVjZW50bHkgdGFrZW4gYSBsYXJnZXIgcm9s
-ZSBpbiBibWN3ZWIgcmV2aWV3cywgc28gSSdsbCB0cnkgdG8gbG9vayBhdCB0aGVtIHNvb24uDQo+
-Pg0KPj4NCj4+Pg0KPj4+IFdpdGhvdXQgYW55IGRpc2N1c3Npb24gYW5kIHJlc29sdXRpb24sIEni
-gJltIGFmcmFpZCBib3RoIG9mIHRoZXNlIA0KPj4+IHByb3Bvc2FscyBhcmUganVzdCBnb2luZyB0
-byBzaXQgaGVyZSwgdW5tZXJnZWQsIGluZGVmaW5pdGVseS4NCj4+Pg0KPj4+IHRoeCAtIGJyYWQN
-Cj4+Pg0K
+On 10/23/19 10:22 AM, Adriana Kobylak wrote:
+> On 2019-10-23 08:51, krtaylor wrote:
+>> On 10/22/19 11:38 AM, Gunnar Mills wrote:
+>>> Looking to improve the docs/ repository.
+>>> Is anyone interested in getting involved in improving the document 
+>>> repository? Looking for either ideas or contributions.
+>>>
+>>> Some ideas:
+>>> Better document the process for submitting documents which should 
+>>> improve the quality of documentation being submitted.
+>>>
+>>> Design template improvement, spell out any additional expectations 
+>>> that come in review. E.g. All fields must be filled out, involve the 
+>>> community before submitting a template, avoid internal acronyms, 
+>>> expand on when the template is needed.
+> 
+> How do people feel about having smaller commits for the docs, like we 
+> encourage for source code? Would it make it easier to review? An example 
+> for designs would be one commit with the problem statement, next commit 
+> adds the requirements, next adds one solution proposal, etc.
+
+This is absolutely the way it *should* be. Commits and/or wip. For the 
+IRC averse and design documents, it lets the community know what you are 
+planning and gives them the ability to be involved early on.
+
+Kurt Taylor (krtaylor)
