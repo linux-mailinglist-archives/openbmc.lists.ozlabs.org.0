@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E90E2E3E86
-	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 23:52:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8BFBE3E85
+	for <lists+openbmc@lfdr.de>; Thu, 24 Oct 2019 23:51:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zgvD11CMzDqf5
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 08:52:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zgt54JWNzDqCF
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 08:51:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,21 +19,21 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zgpx3ZbTzDqdc
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 08:48:20 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zgpx3jBVzDqdd
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 08:48:22 +1100 (AEDT)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x9OLlmBC022491;
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x9OLlmOE022492;
  Fri, 25 Oct 2019 00:47:48 +0300
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 5839260275; Fri, 25 Oct 2019 00:47:48 +0300 (IDT)
+ id BB16E60327; Fri, 25 Oct 2019 00:47:48 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: p.zabel@pengutronix.de, robh+dt@kernel.org, mark.rutland@arm.com,
  yuenn@google.com, venture@google.com, benjaminfair@google.com,
  avifishman70@gmail.com, joel@jms.id.au
-Subject: [PATCH v1 1/3] dt-binding: reset: add NPCM reset controller
- documentation
-Date: Fri, 25 Oct 2019 00:47:44 +0300
-Message-Id: <20191024214746.88431-2-tmaimon77@gmail.com>
+Subject: [PATCH v1 2/3] dt-bindings: reset: Add binding constants for NPCM7xx
+ reset controller
+Date: Fri, 25 Oct 2019 00:47:45 +0300
+Message-Id: <20191024214746.88431-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20191024214746.88431-1-tmaimon77@gmail.com>
 References: <20191024214746.88431-1-tmaimon77@gmail.com>
@@ -55,56 +55,103 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Added device tree binding documentation for Nuvoton BMC
-NPCM reset controller.
+Add device tree binding constants for Nuvoton BMC NPCM7xx
+reset controller.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- .../bindings/reset/nuvoton,npcm-reset.txt     | 35 +++++++++++++++++++
- 1 file changed, 35 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+ .../dt-bindings/reset/nuvoton,npcm7xx-reset.h | 82 +++++++++++++++++++
+ 1 file changed, 82 insertions(+)
+ create mode 100644 include/dt-bindings/reset/nuvoton,npcm7xx-reset.h
 
-diff --git a/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt b/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+diff --git a/include/dt-bindings/reset/nuvoton,npcm7xx-reset.h b/include/dt-bindings/reset/nuvoton,npcm7xx-reset.h
 new file mode 100644
-index 000000000000..94793285a2ac
+index 000000000000..7b7e870eac35
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
-@@ -0,0 +1,35 @@
-+Nuvoton NPCM Reset controller
++++ b/include/dt-bindings/reset/nuvoton,npcm7xx-reset.h
+@@ -0,0 +1,82 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++// Copyright (c) 2019 Nuvoton Technology corporation.
 +
-+In the NPCM Reset controller boot the USB PHY, USB host
-+and USB device initialize.
++#ifndef _DT_BINDINGS_NPCM7XX_RESET_H
++#define _DT_BINDINGS_NPCM7XX_RESET_H
 +
-+Required properties:
-+- compatible : "nuvoton,npcm750-reset" for NPCM7XX BMC
-+- reg : specifies physical base address and size of the register.
-+- #reset-cells: must be set to 1
++#define NPCM7XX_RESET_FIU3		1
++#define NPCM7XX_RESET_UDC1		5
++#define NPCM7XX_RESET_EMC1		6
++#define NPCM7XX_RESET_UART_2_3		7
++#define NPCM7XX_RESET_UDC2		8
++#define NPCM7XX_RESET_PECI		9
++#define NPCM7XX_RESET_AES		10
++#define NPCM7XX_RESET_UART_0_1		11
++#define NPCM7XX_RESET_MC		12
++#define NPCM7XX_RESET_SMB2		13
++#define NPCM7XX_RESET_SMB3		14
++#define NPCM7XX_RESET_SMB4		15
++#define NPCM7XX_RESET_SMB5		16
++#define NPCM7XX_RESET_PWM_M0		18
++#define NPCM7XX_RESET_TIMER_0_4		19
++#define NPCM7XX_RESET_TIMER_5_9		20
++#define NPCM7XX_RESET_EMC2		21
++#define NPCM7XX_RESET_UDC4		22
++#define NPCM7XX_RESET_UDC5		23
++#define NPCM7XX_RESET_UDC6		24
++#define NPCM7XX_RESET_UDC3		25
++#define NPCM7XX_RESET_ADC		27
++#define NPCM7XX_RESET_SMB6		28
++#define NPCM7XX_RESET_SMB7		29
++#define NPCM7XX_RESET_SMB0		30
++#define NPCM7XX_RESET_SMB1		31
++#define NPCM7XX_RESET_MFT0		32
++#define NPCM7XX_RESET_MFT1		33
++#define NPCM7XX_RESET_MFT2		34
++#define NPCM7XX_RESET_MFT3		35
++#define NPCM7XX_RESET_MFT4		36
++#define NPCM7XX_RESET_MFT5		37
++#define NPCM7XX_RESET_MFT6		38
++#define NPCM7XX_RESET_MFT7		39
++#define NPCM7XX_RESET_MMC		40
++#define NPCM7XX_RESET_SDHC		41
++#define NPCM7XX_RESET_GFX_SYS		42
++#define NPCM7XX_RESET_AHB_PCIBRG	43
++#define NPCM7XX_RESET_VDMA		44
++#define NPCM7XX_RESET_ECE		45
++#define NPCM7XX_RESET_VCD		46
++#define NPCM7XX_RESET_OTP		48
++#define NPCM7XX_RESET_SIOX1		50
++#define NPCM7XX_RESET_SIOX2		51
++#define NPCM7XX_RESET_3DES		53
++#define NPCM7XX_RESET_PSPI1		54
++#define NPCM7XX_RESET_PSPI2		55
++#define NPCM7XX_RESET_GMAC2		57
++#define NPCM7XX_RESET_USB_HOST		58
++#define NPCM7XX_RESET_GMAC1		60
++#define NPCM7XX_RESET_CP		63
++#define NPCM7XX_RESET_PWM_M1		160
++#define NPCM7XX_RESET_SMB12		161
++#define NPCM7XX_RESET_SPIX		162
++#define NPCM7XX_RESET_SMB13		163
++#define NPCM7XX_RESET_UDC0		164
++#define NPCM7XX_RESET_UDC7		165
++#define NPCM7XX_RESET_UDC8		166
++#define NPCM7XX_RESET_UDC9		167
++#define NPCM7XX_RESET_PCI_MAILBOX	169
++#define NPCM7XX_RESET_SMB14		172
++#define NPCM7XX_RESET_SHA		173
++#define NPCM7XX_RESET_SEC_ECC		174
++#define NPCM7XX_RESET_PCIE_RC		175
++#define NPCM7XX_RESET_TIMER_10_14	176
++#define NPCM7XX_RESET_RNG		177
++#define NPCM7XX_RESET_SMB15		178
++#define NPCM7XX_RESET_SMB8		179
++#define NPCM7XX_RESET_SMB9		180
++#define NPCM7XX_RESET_SMB10		181
++#define NPCM7XX_RESET_SMB11		182
++#define NPCM7XX_RESET_ESPI		183
++#define NPCM7XX_RESET_USB_PHY_1		184
++#define NPCM7XX_RESET_USB_PHY_2		185
 +
-+Optional property:
-+- nuvoton,sw-reset-number - Contains the software reset number to restart the SoC.
-+  NPCM7xx contain four software reset that represent numbers 1 to 4.
-+
-+  If 'nuvoton,sw-reset-number' is not specfied software reset is disabled.
-+
-+Example:
-+	rstc: rstc@f0801000 {
-+		compatible = "nuvoton,npcm750-reset";
-+		reg = <0xf0801000 0x70>;
-+		#reset-cells = <1>;
-+		nuvoton,sw-reset-number = <2>;
-+	};
-+
-+Specifying reset lines connected to IP NPCM7XX modules
-+======================================================
-+example:
-+
-+        spi0: spi@..... {
-+                ...
-+                resets = <&rstc NPCM7XX_RESET_PSPI1>;
-+                ...
-+        };
-+
-+The index could be found in <dt-bindings/reset/nuvoton,npcm7xx-reset.h>.
++#endif
 -- 
 2.22.0
 
