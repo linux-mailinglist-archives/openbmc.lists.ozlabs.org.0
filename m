@@ -1,70 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CFEBE4151
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:58:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8201FE4152
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:59:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46znMg0XHWzDqc1
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:58:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46znNm2bS9zDqgF
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:59:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d34;
- helo=mail-io1-xd34.google.com; envelope-from=mine260309@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="fTn/Ligd"; 
- dkim-atps=neutral
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com
- [IPv6:2607:f8b0:4864:20::d34])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Xi5v5+ZD"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="jsVrdcWD"; dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46znLw4GB6zDqhR
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:58:00 +1100 (AEDT)
-Received: by mail-io1-xd34.google.com with SMTP id c11so553294iom.10
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=JPnDiDMae5+v9W/G8uE4lXWvs9LuHYXEF9Zpq2CnO8Q=;
- b=fTn/Ligd/08jWPOu85ANn2Ud1WHssr/VWzqGKTZ6mPxbMvesS8aX+3k13QaVbB5zTn
- fJk6M2Z7LnZ32Zwi/kp/D/JJRR/I+yzQxfsBehlbR2h1pWQH0+SAV2npfiEo68/x2DJc
- DfaPOEHtpZIk63fbBva4L5tDaFCtU6ymew/+/96xpFkdnjCQAbXSUwfd9HQS5Eac0t0F
- 7S8ofmw/R9IFTKxc4Iv5GRiFqzD25Vyv3yE04nyJP6OGdpsDKxYNMP1avDPZccfLUCxu
- KZo+ew58pLYnlrCKdf7kF0SMrClobEFIt2082ut5HS7z1iN9M4kteXhbd7Jz3sLc6mXq
- ogEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=JPnDiDMae5+v9W/G8uE4lXWvs9LuHYXEF9Zpq2CnO8Q=;
- b=nvnrHPe+UjmrYTU59qKol9NY2ncEKWsASt+U1gsqJAh/Fkdt+EoSSVmN77SUYhAMXz
- 9XDeq52JQ9E6KWhHIxxozVIAwsLk0Jed/axJGf9gcJFP+NY75EJ4tWPw586SesmJ38U7
- ZK4Eae2hM5u5OA0YIReADYbNcDFKIqfh+IoRz8ev6vpcGidKEoxzTb0BYct6o/jkFkDs
- ot/JFQH3GP6aso0/2Ma/w/+i7R5MldWq/6vkz5BPFnNrH+MsfVgwIzoqh2bR4Q7yEMe4
- ezQWY8nwcO+AEysHb/+K13Nm3tyzVp1DrDGZmq3ApLpmX+dcr7RTLl/KBpDpwRhMXDTJ
- p4ow==
-X-Gm-Message-State: APjAAAVkxGwDBgGJA1BPFnrWxhaDfZUBrB0ihBBwOASt78JUXTq9msL8
- ObzgXOoBpGE8S4DBuC93z1PalNsVztXXm7zBoMo=
-X-Google-Smtp-Source: APXvYqweMsteJUJbqgAS9++I06RsIqShE50Rk/gR8mi7zV/fWgOKw8QO1QEU+VSN0FeTsJMBuvcAHJzKpAUkVeNjK6I=
-X-Received: by 2002:a5e:9e07:: with SMTP id i7mr1337195ioq.42.1571968676913;
- Thu, 24 Oct 2019 18:57:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <1b633df0-8ce7-963c-cb6b-d79ee7d24a9c@intel.com>
- <907DC60D-00EE-403D-82D0-4EFADD245A9D@fuzziesquirrel.com>
- <31A30B99-1B20-4098-8137-7027147E0DE3@gmail.com>
-In-Reply-To: <31A30B99-1B20-4098-8137-7027147E0DE3@gmail.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Fri, 25 Oct 2019 09:57:45 +0800
-Message-ID: <CAARXrtmm4moX=dsC+u+2gD-iUs8k1m9GUQ9yycjbctQ9iJiQEw@mail.gmail.com>
-Subject: Re: Continuous Integration Build Failures
-To: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46znMD5mFVzDqXY
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:58:16 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id BCBE6497;
+ Thu, 24 Oct 2019 21:58:13 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 24 Oct 2019 21:58:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=loLSE212rkDAru8S6L8mzX2a1RSIXiS
+ KyAP/mycwfco=; b=Xi5v5+ZDlUSPWmv/2KNgUWhfevjjRxbUTYTptSZ5Sb7qcAD
+ XoeGqhp/V0Mk+Niay8gQDi6TBU9dOGG5KzDEXe8NHKvnMqcnrxsjNXKy6p0D3LZ0
+ aIOSXgNhcVnlUedZjFosw9+IBlkU91/Ns3qRlKe9tqbEQzknyaigZIFzxZMp2Jre
+ v3XtA38FzCecWyJExs0K6KlV9r9JqBpdEllFWlE+1ytRUv0mS8Jcx3hfyumGP5Da
+ xTAqctzD7Av7GhxH5NjBAnYpyZ8XOk9hJ+WQBqGSewKQ5yh7Eune3OeVip1mC4lq
+ M8h9VbPSd/FstNcUuplLGAfzLoJG38GHi4AqM0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=loLSE2
+ 12rkDAru8S6L8mzX2a1RSIXiSKyAP/mycwfco=; b=jsVrdcWDeS/sDUAcJCRdzl
+ LJIOUubrdNhkq+5e0thDfXbw5znioVrGxr2E5eGBjUEvmxFkmOl2ZdWyx5nCMlZ2
+ Nfls7F4RaD0HqnTNHBXVxKAzVtNIKN8wSOShaSn5+0bnYr/sVXJ0b7K0ZaOxkOzG
+ G3sMPc3Q4CwgG2yg6UqXjvc+L3IdPKa0PtvHSwzum5gwNHmkK6QKPSSWYzjaQZpu
+ 4t/4qlUH0WhCmUhBFNl3DsyfyILb/yTiDf9j796/DG2ihRpK0UYLG+hgut25HoOq
+ rsBMW3KkCx8c4sc98WNZ3EwMtgu3QF7CK1q4VpyyTc25TzjjbYDbO6PTDfdUVDVg
+ ==
+X-ME-Sender: <xms:tVayXTZv8vWfDx40nDkcxiSjvqaJCaGJiBguPVQ78WWL0aFElU74cg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrledvgdehudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
+ hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
+ ufhiiigvpedu
+X-ME-Proxy: <xmx:tVayXUf6zwOPLXTBHCS8f3HrOM3r8NYVnI2c85kecT5aLXhioe22Zg>
+ <xmx:tVayXWcPf5Adu3NlgjObtfF2oqiMQF7JErbRc2vGLrzU0iXRZPVBGw>
+ <xmx:tVayXebLEq0Uc_GY5ghW62IQjMShkNkt1SKKsH8dy7oEwX2Cv9nK_g>
+ <xmx:tVayXdC37iuutZiA3NIpLvXRePrNpjEz1lr0SenkG0oRHk6MfD_8Tw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 31E3BE00A3; Thu, 24 Oct 2019 21:58:13 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-470-gedfae93-fmstable-20191021v4
+Mime-Version: 1.0
+Message-Id: <58568046-a0f5-4522-89fc-4137bbb282d6@www.fastmail.com>
+In-Reply-To: <20191025010351.30298-5-joel@jms.id.au>
+References: <20191025010351.30298-1-joel@jms.id.au>
+ <20191025010351.30298-5-joel@jms.id.au>
+Date: Fri, 25 Oct 2019 12:59:14 +1100
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, "Jeremy Kerr" <jk@ozlabs.org>
+Subject: Re: [PATCH linux dev-5.3 4/7] fsi: aspeed: Only select OPB0 once
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,57 +88,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Johnathan Mantey <johnathanx.mantey@intel.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 25, 2019 at 4:21 AM Andrew Geissler <geissonator@gmail.com> wro=
-te:
->
->
->
-> > On Oct 24, 2019, at 10:40 AM, Brad Bishop <bradleyb@fuzziesquirrel.com>=
- wrote:
-> >
-> >
-> >
-> >> On Oct 24, 2019, at 11:16 AM, Johnathan Mantey <johnathanx.mantey@inte=
-l.com> wrote:
-> >>
-> >> I would like to propose a change to how the continuous integration sys=
-tem works.
-> >>
-> >> I understand there are many builds, and there is a lot of data associa=
-ted with the builds. Thus the current desire to remove the log file data in=
- a short amount of time is a requirement. This works alright when the build=
- succeeds. It's unhelpful when the build fails. Identifying where the build=
- fails is impossible after approximately an hour. As an ordinary contributo=
-r I don't know how to make the CI system rebuild the source code so that th=
-e log files are available again without pushing some new change that consis=
-ts of a useless piece of whitespace (or some other pointless change).  It s=
-houldn't be necessary for the contributor to make requests for a build rest=
-art to the CI maintainers, they have their own agenda.
-> >
-> > Are you referring to the bitbake CI jobs or the repository CI jobs?
-> >
-> >>
-> >> Are the maintainers of the CI system willing to make a change that aid=
-s in debug?
-> >>
-> >> Suggestions:
-> >>      =E2=80=A2 Don't delete the log on build fails.
->
-> Other then some old unsupported jenkins plugins, I=E2=80=99m not seeing a=
-ny obvious way
-> to this one.
 
-It's a valid point, I have seen people submitting changes to gerrit
-and got a build failure, but could not find the detailed log why it
-fails.
-Currently, there is only console logs on Jenkins, but the build/test
-logs are not accessible.
-Is there a way to post the build logs and test logs to a place, e.g.
-Dropbox/GoogleDrive/etc, so that it could be persistent for a longer
-time?
+
+On Fri, 25 Oct 2019, at 12:03, Joel Stanley wrote:
+> The driver can leve
+
+s/leve/leave/
+
+> OPB0 selected to save a AHB write per OPB operation.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
