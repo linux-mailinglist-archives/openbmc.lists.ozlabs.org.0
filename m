@@ -1,69 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DF12E40D3
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:04:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EC55E40D4
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:05:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zm9Q3j8zzDqmX
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:04:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zmBf5KrdzDqm6
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:05:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::434;
- helo=mail-pf1-x434.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
+ helo=mail-pf1-x443.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="dkPevOfg"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="vZdO+ber"; 
  dkim-atps=neutral
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com
- [IPv6:2607:f8b0:4864:20::434])
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8f1cRDzDqg9
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:01 +1100 (AEDT)
-Received: by mail-pf1-x434.google.com with SMTP id x28so375675pfi.12
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:01 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8h0ybKzDqg9
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:03 +1100 (AEDT)
+Received: by mail-pf1-x443.google.com with SMTP id v19so403341pfm.3
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=fy3Or77JIINBuGbnLlYQYDKujjhHfaAoXfZ1dth8eHs=;
- b=dkPevOfg52LCSOKPzuNoodSFhR4YrNGhLXUnrTY1XZUHPl580ei8dxVBLmd/JWt7TK
- nEFFMnAtZprB8HEwHyPbbBKPW2wYMG3UnrzckJkKD0NUNuinzoP/LnyqqnWrMRRzSyqO
- 6lODA1gtb33J9FBERY16VGqwnqKnpPhsCPHTDHe1NOa7CPTSnq/oZDCApOTqYKTyu02z
- clPJ1N1vgx9WwDaKIDtJxHQpkc1JJ5QwWyVB938MOGhw9tS7Rr7BlI1tSoYsChwvoX58
- NVZSWvG/iIDmFwk0Tpnxt52sKYb9KzXV+PA3Y4VxTww2G/w/vUEu1kAJSoFgJ1a2ddT7
- FpIw==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=F+gkZCMr02Gj6aQ8ieUEjo3h5iMWxRu21G6weOdR30Y=;
+ b=vZdO+berPnWzNYOfi0n0iZcP3rmiFpKPDg0Tx/7vGz/5KjEKG5L+osGGun8AVKpGnP
+ APbSmeeBoHeoJ8Vd/cLsrJymlEKQfNiifJg1uq9KBsf34Zc4a7/0N1l5xvRdSdhIi/2m
+ 6CeA09bEp3hbUabpLgo7ISE52GHErAiTcghZ8qrHymwt1KTgqxXhgJYCJ0CYf7BBMX+M
+ zHp0+wUuGsQocf4vT5q5pLx204e9kxqnBxdjWicafg3PunJdR8vArrRdgvOIFZf/wJl9
+ ymv5fJOUUai+FY7eW4xqcTuocGeaxbiIZpSH3ZO0ZWJfuJ+TTifUWbey/o+YIce51zYX
+ n3Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=fy3Or77JIINBuGbnLlYQYDKujjhHfaAoXfZ1dth8eHs=;
- b=Nk8NJpdTJYWdelebHLFZK6mpvTEBpdeIj/11+/nQ7NDQIDQoezny3ssTyTf5B3lr0n
- 9+sb0d8lYB6JVFT3Ih5iPKeluJd9WlqNyBlUE+A8TpIDeXZc9Silj+IGmWz7A1w1SwL+
- jwW6+eqnV2yew1qM/CRZqvLw3tjtScSCoyOpIVagcFvd75CAFw3w0aRTtgwe2rt+JfQu
- cf1Pp7hxCopfUtdINRswHftycV/oqEQPkrpg/H2ZlE9VxVQ2KdGJWm9JrbAI373fsBOx
- M2lew4qCKTohSOLPMytm27FjE285ZJex0WXa4KHm5ZRvWIgiTV+PLnSKpI3QuAqjMTHL
- rlJQ==
-X-Gm-Message-State: APjAAAU1bv1vE+UMrTklSdd1uOv9q6BHxYbhWJDBTQmbBCyKTjYfoNMH
- 06oW3Y9hCR66rBAMdfHdGNQ=
-X-Google-Smtp-Source: APXvYqyYz9nPi2px9dHP7sJOLXz4tDBD79Kj607K3V8ppxAZSpZGvnFL/wybmi5g5vMCIeAG1ipkwA==
-X-Received: by 2002:aa7:96ba:: with SMTP id g26mr990716pfk.45.1571965439371;
- Thu, 24 Oct 2019 18:03:59 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=F+gkZCMr02Gj6aQ8ieUEjo3h5iMWxRu21G6weOdR30Y=;
+ b=fiubnsrxJyIEf0gM3LT/0MtaqZNJgUnLuYxVMMYwjc1W3TbVhmd/l9lp+c+ZY74EFO
+ wTmxLoX91Meh/XvJ3GwlHzrdf7HUKepwz/ygk87hK7PyPaDXfeP3pk23tYsb9Ceo1TFz
+ h4EZUCaREx0cUHjswhewiLMSdrWaSJkG1K0Vf3IUz43A2aUy3B65c9ZdxwHCAjS5PPJ2
+ +88so7hONVW7ZWH6KitPmJMjsXVelmtWI+DIiiM+jCq2bSSpdpmHCWThuaHErDnSEGe7
+ NTbs7CHd8gUK+sH73z9TF82h2kofoTVeO/60meo+uwwDuzj189hL+ECqxNmDy0++N1rl
+ Bcwg==
+X-Gm-Message-State: APjAAAWzS8kBtGNgLDGBP7QLniWQUon0YsdxOwX9fdV0bt8frZfEJMf8
+ kay6LTQes3S1CcVKQ/okFCc=
+X-Google-Smtp-Source: APXvYqxziExWp6TyNmrcu+FPwGgXDAvV9/vsEmqLfUAoMCvrEFKQsVG8LC9o2mL4wpKaQ7KGx88Vjw==
+X-Received: by 2002:aa7:9289:: with SMTP id j9mr1030593pfa.70.1571965441865;
+ Thu, 24 Oct 2019 18:04:01 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.03.56
+ by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.03.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2019 18:03:58 -0700 (PDT)
+ Thu, 24 Oct 2019 18:04:01 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Jeremy Kerr <jk@ozlabs.org>,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.3 0/7] AST2600 FSI speed improvements
-Date: Fri, 25 Oct 2019 12:03:44 +1100
-Message-Id: <20191025010351.30298-1-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 1/7] fsi: aspeed: busy loop in the write case
+Date: Fri, 25 Oct 2019 12:03:45 +1100
+Message-Id: <20191025010351.30298-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191025010351.30298-1-joel@jms.id.au>
+References: <20191025010351.30298-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -81,23 +83,27 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Here are some lightly tested improvements to the FSI driver that should
-improve throughput.
+We busy loop in the read case, make the write case the same. Note that
+this may cause issues when doing a break, which takes a long time.
 
-They apply on top of the previous FSI series I sent.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/fsi/fsi-master-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Joel Stanley (7):
-  fsi: aspeed: busy loop in the write case
-  fsi: master: Change default divisor to 14
-  fsi: aspeed: Enable relative addressing
-  fsi: aspeed: Only select OPB0 once
-  fsi: aspeed: Avoid copying read data twice
-  fsi: aspeed: Pass fsi_master_aspeed insead of base
-  fsi: aspeed: Special case repeated full word reads
-
- drivers/fsi/fsi-master-aspeed.c | 131 +++++++++++++++++++++++---------
- 1 file changed, 94 insertions(+), 37 deletions(-)
-
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index 3524b3dfe549..59537cab4f68 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -204,7 +204,7 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
+ 
+ 	ret = readl_poll_timeout(base + OPB_IRQ_STATUS, reg,
+ 				(reg & OPB0_XFER_ACK_EN) != 0,
+-				1, 10000);
++				0, 10000);
+ 
+ 	status = readl(base + OPB0_STATUS);
+ 
 -- 
 2.23.0
 
