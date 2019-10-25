@@ -1,83 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31E92E4158
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 04:09:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05C11E41C3
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 04:48:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46znc06hcGzDqnB
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 13:09:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zpT62pqhzDql8
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 13:48:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="BNWFEJ4Z"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="N8bN1y4l"; dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=permerror (SPF Permanent Error: Unknown mechanism
+ found: ip:192.40.192.88/32) smtp.mailfrom=kernel.crashing.org
+ (client-ip=63.228.1.57; helo=gate.crashing.org;
+ envelope-from=benh@kernel.crashing.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=kernel.crashing.org
+Received: from gate.crashing.org (gate.crashing.org [63.228.1.57])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46znbD4XKxzDqjb
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 13:08:40 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id E00562F9;
- Thu, 24 Oct 2019 22:08:37 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 24 Oct 2019 22:08:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=b6FGYC5jd4jLs71PmN4JCPoSVwwFPmm
- dGg4bVTkRnq8=; b=BNWFEJ4ZIh+Amsn4OC0hyvVquK+C1mOJre724YsiK+lEQfN
- NX2cVU1k6c2YNrXrqkRkh1ZMhnRsU7Dak3ns4kus6DTpLg96qSJM7JD5y1ftZwGO
- xVZLJTHPTypOfxOqLF3I7MyuMTVJTMsmjZTY6aL4smP1Hw4PO/MIwG0wfMs5OCJF
- o8npqTImw5aauR3+1jhBbcQWG+HySdkkH3i/FxMSXPrFgg5WK9+FrXbYxmsAQZRw
- VrhldtrOefCQpSwLIV/Yj8AaL5NmKoMTavf5SJ2HBSMh1BXefDROCYIYhozXn8ZB
- rP3FhML9EjrkplfcUVBqNSGeCo3P40QUOiyUbPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=b6FGYC
- 5jd4jLs71PmN4JCPoSVwwFPmmdGg4bVTkRnq8=; b=N8bN1y4lPFMgdjUOZOW5Jp
- OSQWxHlPLpsCMAh392VImP0lS2KwcahTqZe7o8XseuNd2o2eJOnEIIyn5aXbOqVl
- S3gPEzE5ljARgUxhfNYZt/kgGtaiO85uzKDq4cF6Gg1Ae73+mpI99dF6w6ofxofB
- 6Du9sngTtl2Gf64X3JC009IvpX+7mNVppKLK+vuut7KfEYCLLW+i9BkgquTVd0vx
- E1Y/mWwPs2CFGhlTrzhPar7nl4IG2Nes49KCDQZRudy+dLHJJID4jJT4PNNXKrG+
- 21elpNXsYeoIbKtF+FaAwuwDfRa94WSTJHoov00/34nxnxLrSFWK6typvG0ggYfw
- ==
-X-ME-Sender: <xms:JFmyXbi6ZR5tT-SWYqMp4gpXKh4e-fgeNBk8wejamPr9mFAPvtqEwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrledvgdehgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:JFmyXTPEzJi7cN_KAW7nlwHs0NQa2_tUPycVgFP2nfINOcpAW1r3jQ>
- <xmx:JFmyXaO2jzRMbD4LMc99qPq86aloN90EjPskpNx7_JfJWTUa2TY7Sw>
- <xmx:JFmyXYjzIgU-M3i3TRJFHrGwmDnezJC0gfYqsTtWxJQG_HaGBoxEKg>
- <xmx:JVmyXe4rQiWkLXwFFLFNnt5XVLxQcN4XPSR_MR5rMGPVSYKGh-xklQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 87A4DE00A3; Thu, 24 Oct 2019 22:08:36 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-470-gedfae93-fmstable-20191021v4
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zpSD1Q3rzDqZj;
+ Fri, 25 Oct 2019 13:47:39 +1100 (AEDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+ by gate.crashing.org (8.14.1/8.14.1) with ESMTP id x9P2lPkV002163;
+ Thu, 24 Oct 2019 21:47:26 -0500
+Message-ID: <572a7d510ace5e5a5ba41c4774d330133291c82a.camel@kernel.crashing.org>
+Subject: [PATCH] net: ethernet: ftgmac100: Fix DMA coherency issue with SW
+ checksum
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+To: "David S. Miller" <davem@davemloft.net>
+Date: Fri, 25 Oct 2019 13:47:24 +1100
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
 Mime-Version: 1.0
-Message-Id: <cb0f1510-3c24-4d47-824c-135d9fa68e13@www.fastmail.com>
-In-Reply-To: <20191025010351.30298-6-joel@jms.id.au>
-References: <20191025010351.30298-1-joel@jms.id.au>
- <20191025010351.30298-6-joel@jms.id.au>
-Date: Fri, 25 Oct 2019 13:09:38 +1100
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, "Jeremy Kerr" <jk@ozlabs.org>
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_5/7]_fsi:_aspeed:_Avoid_copying_read_?=
- =?UTF-8?Q?data_twice?=
-Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,13 +45,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: linux-aspeed@lists.ozlabs.org, netdev@vger.kernel.org,
+ openbmc@lists.ozlabs.org,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+We are calling the checksum helper after the dma_map_single()
+call to map the packet. This is incorrect as the checksumming
+code will touch the packet from the CPU. This means the cache
+won't be properly flushes (or the bounce buffering will leave
+us with the unmodified packet to DMA).
+
+This moves the calculation of the checksum & vlan tags to
+before the DMA mapping.
+
+This also has the side effect of fixing another bug: If the
+checksum helper fails, we goto "drop" to drop the packet, which
+will not unmap the DMA mapping.
+
+Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Fixes: 05690d633f30 ftgmac100: Upgrade to NETIF_F_HW_CSUM
+CC: stable@vger.kernel.org [v4.12+]
+---
+ drivers/net/ethernet/faraday/ftgmac100.c | 25 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
+
+diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+index 9b7af94a40bb..96e9565f1e08 100644
+--- a/drivers/net/ethernet/faraday/ftgmac100.c
++++ b/drivers/net/ethernet/faraday/ftgmac100.c
+@@ -727,6 +727,18 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
+ 	 */
+ 	nfrags = skb_shinfo(skb)->nr_frags;
+ 
++	/* Setup HW checksumming */
++	csum_vlan = 0;
++	if (skb->ip_summed == CHECKSUM_PARTIAL &&
++	    !ftgmac100_prep_tx_csum(skb, &csum_vlan))
++		goto drop;
++
++	/* Add VLAN tag */
++	if (skb_vlan_tag_present(skb)) {
++		csum_vlan |= FTGMAC100_TXDES1_INS_VLANTAG;
++		csum_vlan |= skb_vlan_tag_get(skb) & 0xffff;
++	}
++
+ 	/* Get header len */
+ 	len = skb_headlen(skb);
+ 
+@@ -753,19 +765,6 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
+ 	if (nfrags == 0)
+ 		f_ctl_stat |= FTGMAC100_TXDES0_LTS;
+ 	txdes->txdes3 = cpu_to_le32(map);
+-
+-	/* Setup HW checksumming */
+-	csum_vlan = 0;
+-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
+-	    !ftgmac100_prep_tx_csum(skb, &csum_vlan))
+-		goto drop;
+-
+-	/* Add VLAN tag */
+-	if (skb_vlan_tag_present(skb)) {
+-		csum_vlan |= FTGMAC100_TXDES1_INS_VLANTAG;
+-		csum_vlan |= skb_vlan_tag_get(skb) & 0xffff;
+-	}
+-
+ 	txdes->txdes1 = cpu_to_le32(csum_vlan);
+ 
+ 	/* Next descriptor */
 
 
-On Fri, 25 Oct 2019, at 12:03, Joel Stanley wrote:
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
