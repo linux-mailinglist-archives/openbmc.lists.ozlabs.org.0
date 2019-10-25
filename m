@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 895B4E40D7
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7167E40D8
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:10:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zmGP33qTzDqY5
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:09:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zmHX2msXzDqdV
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:10:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,53 +16,53 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="uXWbg/EZ"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="KxYZv5Hv"; 
  dkim-atps=neutral
 Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
  [IPv6:2607:f8b0:4864:20::444])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8s3CmdzDqlW
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:13 +1100 (AEDT)
-Received: by mail-pf1-x444.google.com with SMTP id 21so382333pfj.9
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:13 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8t5qZfzDqmJ
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:14 +1100 (AEDT)
+Received: by mail-pf1-x444.google.com with SMTP id v19so403578pfm.3
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=XPF2DIyO14fi1JYvcaZsyqKvKScZ8tNNAk4x4OQ2S38=;
- b=uXWbg/EZ9oE2Qx6u9/K7XAFa5bE4Hcq5fwYEjYvIA3CIpzEEqp8DQXl4To8llgoXoK
- 2CSTKEpnhowEL5nnZPVo0jbSygEbCFM4L7MxoxA7HzIHg+H4VEnPL2fr46cbsJAoPg1m
- j8RaSfpklJ6nqbUwrtt1sxDC1VRsNEmUYI6B9hqTtDLo84w+pldQVpWK4eLkDuIUBf5C
- Pu14ckJPuA0+vxkDjtID7FNL3VG3m8PIEK9dT8QHJ8g2/uTQkU5JjnBPd0hSxDvU+a2y
- yWyZtZwcAzl1R/O/fcleIfcn0FiHXdvrv49G/c74vTBI4Y3DRiPxwvGOw746SZiJWMpO
- 0ERw==
+ bh=g9Qh9KVE1ppMbnYtXQGdN8eBPKJY5W1H02syqdWhLmw=;
+ b=KxYZv5HvLvIKSXrUN3rPYmwteaT22dB2fUqmPM8hj0TtwvpLg+yGq8sxH1RThD20Q3
+ G020wYcmy/SgrjXMemVa4jGHWBudhycpZKlRsUUxeeuEwGassW18oWJVy/OMs/U1/SHe
+ pB7Fz7f4nYC/SK8cvvy5RVK7EzOVD7BfrbtnyjCNOlTVfJgPg49REuaozS5HhUzvYm+w
+ Z3xSbE1baiKLwOgcU2vji3iJK8wELggLsaSC5mlp2hePRyysdch/sxZ+ZxF9kRUSgetD
+ koxSNALyI4pLem8gpas8y/mXIdN/IthoWtndKShOp9zfcrYrxUieUn3jlZUBstDENVMu
+ DOuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=XPF2DIyO14fi1JYvcaZsyqKvKScZ8tNNAk4x4OQ2S38=;
- b=EGXU2ZueHgPCYo662Cw7NlcPmlKwYuFjiaHNgAM/7VSxxhvkIVrOXK3XVxDJx7/yt7
- FL6whaOwBNvH3r1tHMaMbKTJU72Z1BDFj/E8ya1xFT/3afF6AlH5Juz92/JMJ0sG+GDw
- qQToiQFQbyhwSmeq3m6YtxN6MxWcjFBcpGYk5IaFcXb9YlTfuf9HHsXv821opZc7bLLb
- ghfGkMcRjSH4Sk9bXFks3kVMoN0X2cKKXm/YcClbz57ZRVD5IW8NgtJLrFOtlZBZax2p
- 1nggiIR3Ivbw10C6EXr0ygyWpvphC+U3jBDb1/edJAr4TeFIEXeg1x/AFAS6MidyPbQ4
- 98Qg==
-X-Gm-Message-State: APjAAAXWXu8ltqJC46VcqrO53pFIWtNgAyPk/aaXfUiUMO1zE3NB7mth
- g83UbuSSDBjQtK+p1JyPPHm1EZd5On4=
-X-Google-Smtp-Source: APXvYqzjyYsmiXNfpNxdkdtd4EhEiHOkdaFv/SU6LPLHx2pjKROZsw0hhBsc906NMxCNH1HQJOiNVw==
-X-Received: by 2002:a63:4f1d:: with SMTP id d29mr1066093pgb.115.1571965449843; 
- Thu, 24 Oct 2019 18:04:09 -0700 (PDT)
+ bh=g9Qh9KVE1ppMbnYtXQGdN8eBPKJY5W1H02syqdWhLmw=;
+ b=B8wyqUmAL7NJoLfyvtSA16f3JBZsNKJkyHByuRseXVhUkX/Nze+opGl4mXEFckcFc2
+ VqGjjdcgOVSg+/qKwk7DHlOqVK50JXBgzdc/V07SngB4YoT58g0aJHWzJV6uMPjLdsaK
+ sHbinfOeWUyMS27XEGnqm+Lb1nO/ts98Ovs326ZnC4rdAIklKe31WWDqyy+TU6PwAadH
+ 9u6KP7LQPK+5XnMcfcnxMq8HCzJUhXg0c9+/ITvDZAtzFQoXb8JiTQNO3q/ry4rrxn7i
+ 3HAnyYImOXiXVgOQGVnJnzFte4zy2gXKJoy3hFBKAh5g1oGsSFMHrJhKIjCkn5nG54rk
+ iM4A==
+X-Gm-Message-State: APjAAAV8EVNIHWGS2EAx6aZAZw+kkOd1+/F7gX4pfq3MzGAC0keecDrD
+ 0jEpgEtQU+Frk+QfzGQeGr0=
+X-Google-Smtp-Source: APXvYqxBnYOzXrM8Pt0VClUqb7tj9O9rHnD9hzHw0dfSvEYRbYA4FPCtcR6VvLgft0QuP49sucfxMA==
+X-Received: by 2002:a63:6586:: with SMTP id z128mr1110240pgb.260.1571965452874; 
+ Thu, 24 Oct 2019 18:04:12 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.04.07
+ by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.04.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2019 18:04:09 -0700 (PDT)
+ Thu, 24 Oct 2019 18:04:12 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Jeremy Kerr <jk@ozlabs.org>,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.3 4/7] fsi: aspeed: Only select OPB0 once
-Date: Fri, 25 Oct 2019 12:03:48 +1100
-Message-Id: <20191025010351.30298-5-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 5/7] fsi: aspeed: Avoid copying read data twice
+Date: Fri, 25 Oct 2019 12:03:49 +1100
+Message-Id: <20191025010351.30298-6-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191025010351.30298-1-joel@jms.id.au>
 References: <20191025010351.30298-1-joel@jms.id.au>
@@ -83,47 +83,37 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The driver can leve OPB0 selected to save a AHB write per OPB operation.
-
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/fsi/fsi-master-aspeed.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index d2c01956663f..58b090e2cf46 100644
+index 58b090e2cf46..c98b1bf179a8 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -197,7 +197,6 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
- 	if (xfer_size < 0)
- 		return xfer_size;
+@@ -303,20 +303,17 @@ static int aspeed_master_read(struct fsi_master *master, int link,
+ {
+ 	struct fsi_master_aspeed *aspeed = to_fsi_master_aspeed(master);
+ 	int ret;
+-	u32 data;
  
--	writel(0x1, base + OPB0_SELECT);
- 	writel(CMD_WRITE, base + OPB0_RW);
- 	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
-@@ -233,7 +232,6 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
- 	if (xfer_size < 0)
- 		return xfer_size;
+ 	if (id != 0)
+ 		return -EINVAL;
  
--	writel(0x1, base + OPB0_SELECT);
- 	writel(CMD_READ, base + OPB0_RW);
- 	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
-@@ -596,6 +594,13 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 	writel(0x0011bb1b, aspeed->base + OPB0_W_ENDIAN);
- 	writel(0xffaa5500, aspeed->base + 0x50);
+ 	addr += link * FSI_HUB_LINK_SIZE;
+-	ret = opb_read(aspeed->base, fsi_base + addr, size, &data);
++	ret = opb_read(aspeed->base, fsi_base + addr, size, val);
  
-+	/*
-+	 * Select OPB0 for all operations.
-+	 * Will need to be reworked when enabling DMA or anything that uses
-+	 * OPB1.
-+	 */
-+	writel(0x1, aspeed->base + OPB0_SELECT);
-+
- 	rc = opb_read(aspeed->base, ctrl_base + FSI_MVER, 4, &raw);
- 	if (rc) {
- 		dev_err(&pdev->dev, "failed to read hub version\n");
+ 	ret = check_errors(aspeed, ret);
+ 	if (ret)
+ 		return ret;
+ 
+-	memcpy(val, &data, size);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.23.0
 
