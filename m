@@ -1,68 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C12CE40D6
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:08:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 895B4E40D7
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 03:09:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 46zmFB1c1bzDqNG
-	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:07:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 46zmGP33qTzDqY5
+	for <lists+openbmc@lfdr.de>; Fri, 25 Oct 2019 12:09:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::444;
+ helo=mail-pf1-x444.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="tP0J3PH3"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="uXWbg/EZ"; 
  dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
+ [IPv6:2607:f8b0:4864:20::444])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8n6ccgzDqg9
- for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:08 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id f19so358527pgn.13
- for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 46zm8s3CmdzDqlW
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Oct 2019 12:04:13 +1100 (AEDT)
+Received: by mail-pf1-x444.google.com with SMTP id 21so382333pfj.9
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Oct 2019 18:04:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=SZyDETyQz9XATFcjY6UWXc/6c+7mCj6WxtyTA0bAYRM=;
- b=tP0J3PH3bng2rzq9d8iuyA+ZqX7EXiLcXEkZYgLp8ahLGxaFFUJwNQtaC381aF+oQs
- bKQByPFGr0o1AUJsEgRcBVbPBDyvIUHfazuGMbj79Whh6VC63F4I7P31PKrwvr6bjb3G
- t20j5tKeGBAcIwkoL1/ttLXAAlEyAbf8H3wIAy2BUqqClhE/v6l5yQT9UaKVpBOyj/Si
- K+8jQMH2hMmdSoJC+MtqcxCnAkD5XagmRixJ8UMeKI6Afko06WhXRqYcudzHuXrw1bIQ
- ZnmwLeKEcOKJvvps75O+NIi7yEMNKvVxh/kKK4lQi2FvaRmzIjQAIFSdQ7ibj9VrFtYG
- nkXA==
+ bh=XPF2DIyO14fi1JYvcaZsyqKvKScZ8tNNAk4x4OQ2S38=;
+ b=uXWbg/EZ9oE2Qx6u9/K7XAFa5bE4Hcq5fwYEjYvIA3CIpzEEqp8DQXl4To8llgoXoK
+ 2CSTKEpnhowEL5nnZPVo0jbSygEbCFM4L7MxoxA7HzIHg+H4VEnPL2fr46cbsJAoPg1m
+ j8RaSfpklJ6nqbUwrtt1sxDC1VRsNEmUYI6B9hqTtDLo84w+pldQVpWK4eLkDuIUBf5C
+ Pu14ckJPuA0+vxkDjtID7FNL3VG3m8PIEK9dT8QHJ8g2/uTQkU5JjnBPd0hSxDvU+a2y
+ yWyZtZwcAzl1R/O/fcleIfcn0FiHXdvrv49G/c74vTBI4Y3DRiPxwvGOw746SZiJWMpO
+ 0ERw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=SZyDETyQz9XATFcjY6UWXc/6c+7mCj6WxtyTA0bAYRM=;
- b=f0I+yxJNmKrTNTeqeHXJcu6feqDsgoXNcjpsb4QDfYIACUPlKvzDirZ/ZNw/fG9Tx2
- hvH/f/K7WYx0/s4kX4FjR+RkwNWueU3CefzzIBN1KlomFAPHNh/RwQ/aogdBkTdOhtGa
- 6gD1oVQTtYo6y3zyZE56zaxvj0kuFqmCITg+Z2orfn5C5wkZqjhyCfjGrStvdYQhY/z8
- ShZcYfl5jW78vtV8NfT+H85zoCkfSzV5qLki7xZZo+KZTijbaIe84SGn+sdj/SSbVT8X
- 5KFSy75/U8i7mCI7R1K2iidmaowQLwN5VvRDBsfF8aiKh55jjBLwKtxYhtVNeHO2wdyc
- GvSw==
-X-Gm-Message-State: APjAAAUTY6HtgL/tulByMaNdHsK1nYSkXxRNiOhh2/AZ1iQOH7PQP4m/
- FDiLb98trDi6ulr/buvY23wwIAlZ2Jo=
-X-Google-Smtp-Source: APXvYqw32FKSgmrIxO7p0E3xQvNIqQm+XXjUt6UJ8oZGn/6b/VDS13f8aYjTYUmUUSsCQ1jOu5uJew==
-X-Received: by 2002:a62:685:: with SMTP id 127mr966558pfg.227.1571965447051;
- Thu, 24 Oct 2019 18:04:07 -0700 (PDT)
+ bh=XPF2DIyO14fi1JYvcaZsyqKvKScZ8tNNAk4x4OQ2S38=;
+ b=EGXU2ZueHgPCYo662Cw7NlcPmlKwYuFjiaHNgAM/7VSxxhvkIVrOXK3XVxDJx7/yt7
+ FL6whaOwBNvH3r1tHMaMbKTJU72Z1BDFj/E8ya1xFT/3afF6AlH5Juz92/JMJ0sG+GDw
+ qQToiQFQbyhwSmeq3m6YtxN6MxWcjFBcpGYk5IaFcXb9YlTfuf9HHsXv821opZc7bLLb
+ ghfGkMcRjSH4Sk9bXFks3kVMoN0X2cKKXm/YcClbz57ZRVD5IW8NgtJLrFOtlZBZax2p
+ 1nggiIR3Ivbw10C6EXr0ygyWpvphC+U3jBDb1/edJAr4TeFIEXeg1x/AFAS6MidyPbQ4
+ 98Qg==
+X-Gm-Message-State: APjAAAXWXu8ltqJC46VcqrO53pFIWtNgAyPk/aaXfUiUMO1zE3NB7mth
+ g83UbuSSDBjQtK+p1JyPPHm1EZd5On4=
+X-Google-Smtp-Source: APXvYqzjyYsmiXNfpNxdkdtd4EhEiHOkdaFv/SU6LPLHx2pjKROZsw0hhBsc906NMxCNH1HQJOiNVw==
+X-Received: by 2002:a63:4f1d:: with SMTP id d29mr1066093pgb.115.1571965449843; 
+ Thu, 24 Oct 2019 18:04:09 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.04.04
+ by smtp.gmail.com with ESMTPSA id l22sm231786pgj.4.2019.10.24.18.04.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Oct 2019 18:04:06 -0700 (PDT)
+ Thu, 24 Oct 2019 18:04:09 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Jeremy Kerr <jk@ozlabs.org>,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.3 3/7] fsi: aspeed: Enable relative addressing
-Date: Fri, 25 Oct 2019 12:03:47 +1100
-Message-Id: <20191025010351.30298-4-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 4/7] fsi: aspeed: Only select OPB0 once
+Date: Fri, 25 Oct 2019 12:03:48 +1100
+Message-Id: <20191025010351.30298-5-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20191025010351.30298-1-joel@jms.id.au>
 References: <20191025010351.30298-1-joel@jms.id.au>
@@ -83,32 +83,47 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The driver can leve OPB0 selected to save a AHB write per OPB operation.
+
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/fsi/fsi-master-aspeed.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index bef7690a0ddf..d2c01956663f 100644
+index d2c01956663f..58b090e2cf46 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -42,6 +42,7 @@
- /* MMODE: Mode control */
- #define FSI_MMODE_EIP		0x80000000	/* Enable interrupt polling */
- #define FSI_MMODE_ECRC		0x40000000	/* Enable error recovery */
-+#define FSI_MMODE_RELA		0x20000000	/* Enable relative address commands */
- #define FSI_MMODE_EPC		0x10000000	/* Enable parity checking */
- #define FSI_MMODE_P8_TO_LSB	0x00000010	/* Timeout value LSB */
- 						/*   MSB=1, LSB=0 is 0.8 ms */
-@@ -442,7 +443,7 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
- 	reg = cpu_to_be32(FSI_MECTRL_EOAE | FSI_MECTRL_P8_AUTO_TERM);
- 	opb_write(aspeed->base, ctrl_base + FSI_MECTRL, reg, 4);
+@@ -197,7 +197,6 @@ static u32 opb_write(void __iomem *base, uint32_t addr, uint32_t val,
+ 	if (xfer_size < 0)
+ 		return xfer_size;
  
--	reg = cpu_to_be32(FSI_MMODE_ECRC | FSI_MMODE_EPC
-+	reg = cpu_to_be32(FSI_MMODE_ECRC | FSI_MMODE_EPC | FSI_MMODE_RELA
- 			| fsi_mmode_crs0(DEFAULT_DIVISOR)
- 			| fsi_mmode_crs1(DEFAULT_DIVISOR)
- 			| FSI_MMODE_P8_TO_LSB);
+-	writel(0x1, base + OPB0_SELECT);
+ 	writel(CMD_WRITE, base + OPB0_RW);
+ 	writel(xfer_size, base + OPB0_XFER_SIZE);
+ 	writel(addr, base + OPB0_FSI_ADDR);
+@@ -233,7 +232,6 @@ static int opb_read(void __iomem *base, uint32_t addr, size_t size, u32 *out)
+ 	if (xfer_size < 0)
+ 		return xfer_size;
+ 
+-	writel(0x1, base + OPB0_SELECT);
+ 	writel(CMD_READ, base + OPB0_RW);
+ 	writel(xfer_size, base + OPB0_XFER_SIZE);
+ 	writel(addr, base + OPB0_FSI_ADDR);
+@@ -596,6 +594,13 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 	writel(0x0011bb1b, aspeed->base + OPB0_W_ENDIAN);
+ 	writel(0xffaa5500, aspeed->base + 0x50);
+ 
++	/*
++	 * Select OPB0 for all operations.
++	 * Will need to be reworked when enabling DMA or anything that uses
++	 * OPB1.
++	 */
++	writel(0x1, aspeed->base + OPB0_SELECT);
++
+ 	rc = opb_read(aspeed->base, ctrl_base + FSI_MVER, 4, &raw);
+ 	if (rc) {
+ 		dev_err(&pdev->dev, "failed to read hub version\n");
 -- 
 2.23.0
 
