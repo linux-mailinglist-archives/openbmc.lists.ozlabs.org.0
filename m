@@ -1,67 +1,125 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8476E6C08
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 06:40:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDD33E6C0B
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 06:41:15 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 471k7g4MMTzDqdL
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 16:39:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 471k950lSPzDqdL
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 16:41:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d42;
- helo=mail-io1-xd42.google.com; envelope-from=navid.emamdoost@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=web.de
+ (client-ip=212.227.15.3; helo=mout.web.de; envelope-from=markus.elfring@web.de;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="gZRJSPMG"; 
+ dmarc=none (p=none dis=none) header.from=web.de
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=web.de header.i=@web.de header.b="q1PqP5WG"; 
  dkim-atps=neutral
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
- [IPv6:2607:f8b0:4864:20::d42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 339 seconds by postgrey-1.36 at bilbo;
+ Sun, 27 Oct 2019 18:01:53 AEDT
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 470SZt3P90zDqmJ;
- Sat, 26 Oct 2019 15:25:36 +1100 (AEDT)
-Received: by mail-io1-xd42.google.com with SMTP id u8so4726597iom.5;
- Fri, 25 Oct 2019 21:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=rHeRkxrHD5GX5EWDlQ98vXy+a783uwWXtM2tQKGXdug=;
- b=gZRJSPMGxM1UPw1FdEvVFtbG4SqDkm9JN/GP92+GDY/bQVm73xFX5T2lkdkRAXJ9uw
- 4K927+DEPOjX0v2NhbOsDZjCOyTgg/PgzXqgwivEM6QeBnGHV0CLxMfG1XeHJninS6Jn
- d3HUaWWFRPVWG+u/urTqRNtrGbQyLiZdTXq6MhvYlWjtoC7vQBAz3Rn6Mb3cxkdt1/Po
- nUZHC0Eiw1kMMsF1PkX5MSMnY53N8J0Q3vB8vM9pSuefryXU7vr8bduXoiI452R8NKud
- SwAzjj4yI/LFANHdC8I/m+7ITtp+iUIKP8EtGIgHjMBdZ+gFerdXZYr/VS+jNVHKs/wb
- 4H6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=rHeRkxrHD5GX5EWDlQ98vXy+a783uwWXtM2tQKGXdug=;
- b=C9YlHagJLvoJa+HJ63YdtPG3Yy6SppAJTVKbISVIcgzmx0eWIquLO7qmmx8sQl4nsT
- 1WQ90DB1La47ELuhrnWHMFie/cJjKD/+kCSg4PF5Qwcb4HjXazHxx1w1RDVEsc9dToju
- J6YZEQ9JZ0LMx/e/Q2dWMwvjAjKDVMtaZHDvutah4d56C9uNzH2PNcIodmkRw2X0O7Wu
- akonz9RX0RdGutvY5MuMqFwW0VrbR/eSi5KOqJELcX3taskQT2spDMJ+576jDeacX6NP
- aih+h58NQjaWzfOtkuEa1w7xVdXmQ1IyNb8osOIJ63ASoKCuUigYR7LwwnvnEPcKybsG
- w5Xg==
-X-Gm-Message-State: APjAAAWA5bx5erdKWZQijRr/Ua4Mr99uQScMuAqs6ykx+1bgZ9zXkVKQ
- JL+l7Nh8zuQ36qKgxPtptBc=
-X-Google-Smtp-Source: APXvYqwyjakLVT85RTryWMHfy6AKHouMUXRj6cegqSHqrg9AmKKAZBYTX2iEX2LdU+HgQdpe1I/m7g==
-X-Received: by 2002:a5d:980a:: with SMTP id a10mr7426699iol.225.1572063932870; 
- Fri, 25 Oct 2019 21:25:32 -0700 (PDT)
-Received: from cs-dulles.cs.umn.edu (cs-dulles.cs.umn.edu. [128.101.35.54])
- by smtp.googlemail.com with ESMTPSA id n123sm452068iod.62.2019.10.25.21.25.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Oct 2019 21:25:32 -0700 (PDT)
-From: Navid Emamdoost <navid.emamdoost@gmail.com>
-To: 
-Subject: [PATCH] media: aspeed-video: Fix memory leaks in aspeed_video_probe
-Date: Fri, 25 Oct 2019 23:25:18 -0500
-Message-Id: <20191026042519.29446-1-navid.emamdoost@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Mailman-Approved-At: Mon, 28 Oct 2019 16:36:40 +1100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47180d3tNkzDqgF;
+ Sun, 27 Oct 2019 18:01:52 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=dbaedf251592; t=1572159702;
+ bh=ARdfih51ut3Wc7cOVlkAxrqjxZ2ICiWrQ62g5bzsKEw=;
+ h=X-UI-Sender-Class:To:Cc:References:Subject:From:Date:In-Reply-To;
+ b=q1PqP5WGtCAdBon6ZLe+Hpj+gG4uuPCpda0k5wgvbuIZKlSQ1oHK/Aa21jpvK+6bD
+ wpb2GmCQN/LQWD5WIrN40fDCHGCxzDO+qZAYujdbzVhA0lsNlw3FVTGX7zhAEJPlhc
+ qPusz84VauMM9r0cF4cGSkQM5PmCiQtFma+hojbg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.2] ([93.132.56.174]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LfAfQ-1heV4N06Zc-00ooQ1; Sun, 27
+ Oct 2019 07:55:31 +0100
+To: Navid Emamdoost <navid.emamdoost@gmail.com>,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-media@vger.kernel.org, openbmc@lists.ozlabs.org
+References: <20191026042519.29446-1-navid.emamdoost@gmail.com>
+Subject: Re: [PATCH] media: aspeed-video: Fix memory leaks in
+ aspeed_video_probe
+From: Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Message-ID: <bec85427-66b8-e0fa-9ee2-07cc77cf4a7e@web.de>
+Date: Sun, 27 Oct 2019 07:55:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
+MIME-Version: 1.0
+In-Reply-To: <20191026042519.29446-1-navid.emamdoost@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:FmGICvn0LmSTTD7R93PU62N8WsZYZ6cdVmszCY8Q/JcMVVRUbYb
+ Vp0gqGawU/a6Qlz1JBoLAhB28rowaZFN8uoAfGXOHvvxbqZs8UpzUjC1qx/sPDrngPe0zPp
+ TDOb+KZZFwULLo+UwbuDjrmLxEYbLjOg7cujUQWSEr/+ZGhJ8VPHpmBAKRY5Eyuf9HunTNI
+ dGvxHMQ43a0KQ0Qu/oyjw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yJtLoEaTMRQ=:FVUd+Ra4EuZVLMgJvZF/9h
+ c8dcEJ3bPneK+cvViQemkqAo7WIMkFfm4Edi5a/muFQ8XqZv+vxgrmKqSmJ5LFnrJs6t/bzcm
+ PkcJAW0Gyj9bBor7r5q2AJC+q3x11ht6zL0b6W3PHtE8lCRF7VIyLBp0tcqmBmHx4EB5pN2Kd
+ P1zBAPexrxbCMxQq0PmeGyx7jDkqt1TITElcyY2ahSrN97862by+XHgP4TQI9BkLMm+pyDCj2
+ 4uUULgmzd1JSwHEFYsbzTUecOYExQuFALb0RuBuZS2AakAHO++GjSxs5AbP0AUl8vGfq7BSzs
+ w0h8WK1RYNTieuD4fyCi9z924CQmGxKn3g2vO79d/VI7YdW8fo30RnUPre/fIC+mvH5injwRE
+ 8BvuwVaJCztwgbC3IJeG4SalM750fvwKzfk3ooxfIH7mzdf7ylmMWxTZ07V4Fji0EZ+8E3eHf
+ aMpcL5rWyIWlOdQ5FlM4IdSLmMkk/8mxd8TVUeXKJVOyWw3qUt14GpW5NJ4NR67HcPZLVjlq4
+ YM3LTOHT3TxYZu5UVWA+iY25y2czZm83AylpRL05UCwtPgzsV1EeHVcz+sQdszk4joMjuhADT
+ lrBhoxjUz2mC2Bi7BVHMeqdqQoU9qpS+AYTXMR6LN5QQJmOr5ddlMAGXNSXpSNI33NG88tgeU
+ d2doThMx7+e8871fQk1tI9v4R+5aHuDPfLGcV9HsXMdYgt/xg/v0EG1tY4FfkKHA4P5UQFUMn
+ jGvveZ6m7RdU2JAFuwTPiwT09CePoY5xRiVnaUZOvC7lPWLFfiD32jJ0qgtydhjQ5b3Mxc/SY
+ gFblsBhdenEPVAUEUBMqaQYYUqq4bO/KfHD1Y5XO/ZqMqglNUUYpx72n5JKlA6z60nM5UqaAv
+ Pc1auZZxEyf1QTll2fWvawxMSqh389C+3FcPm/uOFaMVAntnsfR9w5w7K55dI3w4TZH4xk920
+ 2nyzkEHjN0wVsxAuntBTej7YO7tcQEsFeN2qQyWFaF4rCmybSWyO2T/nREZ4NvhstP6Wt6ihA
+ GKcIEODeosCDaBCTVzpwEZt9vVa9MEsEH45n5EcNCtgOVOzIUIFPhJX7+epjo6jSu0/oRFsO6
+ QHQgd30NOwC+I6AjqGI0stdY5aYVMQ76KJdvg9v7ztqWD7ECWrsnTQ4KoewyRypFGH7Z0u8gP
+ 7bZDwGK6VMWHdfzUxxwr5QZYb/GffBdfN+Y/ARiDeQwcZV+PiUg9Xs+tWYE7k8J+njUN53wUq
+ 8ZxTyc0UVe4iHzeOA0AnJhssCa7NgrgyCeuiGsmLyG1HNQAHT0+9LthshGRc=
+X-Mailman-Approved-At: Mon, 28 Oct 2019 16:36:50 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,59 +131,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- kjlu@umn.edu, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, emamd001@umn.edu,
- smccaman@umn.edu, Mauro Carvalho Chehab <mchehab@kernel.org>,
- linux-arm-kernel@lists.infradead.org,
- Navid Emamdoost <navid.emamdoost@gmail.com>
+Cc: kernel-janitors@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
+ Kangjie Lu <kjlu@umn.edu>, Eddie James <eajames@linux.ibm.com>,
+ LKML <linux-kernel@vger.kernel.org>, Navid Emamdoost <emamd001@umn.edu>,
+ Stephen McCamant <smccaman@umn.edu>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In the implementation of aspeed_video_probe() the allocated memory for
-video should be released in case of failure. Release video if either
-devm_ioremap_resource() or aspeed_video_init() or
-aspeed_video_setup_video() fails.
+=E2=80=A6
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -1663,18 +1663,24 @@ static int aspeed_video_probe(struct platform_de=
+vice *pdev)
+=E2=80=A6
+> +free_video:
+> +	kfree(video);
+=E2=80=A6
 
-Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
-Signed-off-by: Navid Emamdoost <navid.emamdoost@gmail.com>
----
- drivers/media/platform/aspeed-video.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+I am curious if there is a need for such a memory release at another place=
+.
+How do you think about to add this function call also to the implementatio=
+n
+of the function =E2=80=9Caspeed_video_remove=E2=80=9D?
 
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index eb12f3793062..8c473356132d 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -1663,18 +1663,24 @@ static int aspeed_video_probe(struct platform_device *pdev)
- 
- 	video->base = devm_ioremap_resource(video->dev, res);
- 
--	if (IS_ERR(video->base))
--		return PTR_ERR(video->base);
-+	if (IS_ERR(video->base)) {
-+		rc = PTR_ERR(video->base);
-+		goto free_video;
-+	}
- 
- 	rc = aspeed_video_init(video);
- 	if (rc)
--		return rc;
-+		goto free_video;
- 
- 	rc = aspeed_video_setup_video(video);
- 	if (rc)
--		return rc;
-+		goto free_video;
- 
- 	return 0;
-+
-+free_video:
-+	kfree(video);
-+	return rc;
- }
- 
- static int aspeed_video_remove(struct platform_device *pdev)
--- 
-2.17.1
-
+Regards,
+Markus
