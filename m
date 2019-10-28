@@ -2,42 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 567B5E77D1
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 18:48:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C76FE77EA
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 18:56:33 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4722Hl43g7zDrhn
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 04:48:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4722TV65WPzDr2c
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 04:56:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4722H51KGjzDrcK
- for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 04:47:28 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 9AD416E201;
- Mon, 28 Oct 2019 13:47:23 -0400 (EDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3594.4.19\))
-Subject: Re: Could someone help to review bmcweb code?
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <a7c7c24e-4711-4890-7c1f-ea57c3a3eebc@linux.intel.com>
-Date: Mon, 28 Oct 2019 13:47:23 -0400
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3600C284-3968-4278-84EC-C7DF39D5BC88@fuzziesquirrel.com>
-References: <CALzeG+989c4bQ-JQRjCV2g_zTKgDHpByJ_G-PsasZMqsg+__Lg@mail.gmail.com>
- <a7c7c24e-4711-4890-7c1f-ea57c3a3eebc@linux.intel.com>
-To: James Feist <james.feist@linux.intel.com>
-X-Mailer: Apple Mail (2.3594.4.19)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4722SK6nKPzDrdF;
+ Tue, 29 Oct 2019 04:55:28 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2019 10:55:23 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,240,1569308400"; d="scan'208";a="211502982"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
+ ([10.7.153.148])
+ by orsmga002.jf.intel.com with ESMTP; 28 Oct 2019 10:55:24 -0700
+Subject: Re: [PATCH v3] media: aspeed-video: Fix memory leaks in
+ aspeed_video_probe
+To: Navid Emamdoost <navid.emamdoost@gmail.com>
+References: <da959329-aa40-b6e7-dcc9-48183a8da716@linux.intel.com>
+ <20191028171838.28533-1-navid.emamdoost@gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <57550f1e-87b8-79c4-b1d6-7672b1ce11dc@linux.intel.com>
+Date: Mon, 28 Oct 2019 10:55:24 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
+MIME-Version: 1.0
+In-Reply-To: <20191028171838.28533-1-navid.emamdoost@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,39 +55,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, apparao.puli@linux.intel.com,
- Carol Wang <karo33bug@gmail.com>
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ kjlu@umn.edu, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ linux-kernel@vger.kernel.org, emamd001@umn.edu, smccaman@umn.edu,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 10/28/2019 10:18 AM, Navid Emamdoost wrote:
+> In the implementation of aspeed_video_probe() the allocated memory for
+> video should be released if either devm_ioremap_resource()
+> or aspeed_video_init() or aspeed_video_setup_video() fails. Replace
+> kzalloc() with devm_kzalloc to avoid explicit release for video.
+> 
+> Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+> Signed-off-by: Navid Emamdoost <navid.emamdoost@gmail.com>
+> ---
+> Changes in v3:
+> 	-- fix call to devm_kzalloc()
 
-> On Oct 28, 2019, at 1:08 PM, James Feist <james.feist@linux.intel.com> =
-wrote:
->=20
-> On 10/28/19 5:51 AM, Carol Wang wrote:
->> Hi,
->> I wanna know who can help to review bmcweb code? I'm not sure if the =
-list of maintainers I added
->> is changed or not. This is the link of my coding about setting =
-PowerCap. ---->
->> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/26223
->=20
-> It looks like this patch has been -1ed for over a week,
+Better keep all change history at here.
 
-Actually it got the -1 just last Wednesday.  Prior to that it had a +1 =
-without any -1s for 6 days.
+> ---
+>   drivers/media/platform/aspeed-video.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+> index eb12f3793062..70797b41447c 100644
+> --- a/drivers/media/platform/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -1646,7 +1646,8 @@ static int aspeed_video_probe(struct platform_device *pdev)
+>   {
+>   	int rc;
+>   	struct resource *res;
+> -	struct aspeed_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
+> +	struct aspeed_video *video =
+> +		devm_kzalloc(&pdev->dev, sizeof(*video), GFP_KERNEL);
 
-> generally the maintainers will not look at a patch that has been -1ed.
+For a case of assignment in definition section, let it go over the 80
+chars.
 
-I don=E2=80=99t agree with this and I=E2=80=99d suggest you don=E2=80=99t =
-make this your general policy.  If you do this, then you are going to =
-miss reviewers giving people bad advice, which the reviewers will then =
-implement at great waste of time.  I see kernel maintainers correcting =
-bad advice from reviewers all the time.
+With this fixed:
 
-> I would work with the community to come to resolution and get some =
-+1s.
+Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 
-Carol responded to the feedback (with questions, that remain unanswered) =
-the same day it was given, 5 days ago.  I=E2=80=99d say "working with =
-the community" is exactly what Carol is trying to do here.=
+>   	if (!video)
+>   		return -ENOMEM;
+> 
