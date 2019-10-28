@@ -1,49 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C76FE77EA
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 18:56:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5871E7839
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 19:17:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4722TV65WPzDr2c
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 04:56:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4722xS5SLHzDrcZ
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 05:17:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4722SK6nKPzDrdF;
- Tue, 29 Oct 2019 04:55:28 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4722sf3yszzDrdn
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 05:13:55 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 28 Oct 2019 10:55:23 -0700
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 28 Oct 2019 11:13:52 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,240,1569308400"; d="scan'208";a="211502982"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.148])
- ([10.7.153.148])
- by orsmga002.jf.intel.com with ESMTP; 28 Oct 2019 10:55:24 -0700
-Subject: Re: [PATCH v3] media: aspeed-video: Fix memory leaks in
- aspeed_video_probe
-To: Navid Emamdoost <navid.emamdoost@gmail.com>
-References: <da959329-aa40-b6e7-dcc9-48183a8da716@linux.intel.com>
- <20191028171838.28533-1-navid.emamdoost@gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <57550f1e-87b8-79c4-b1d6-7672b1ce11dc@linux.intel.com>
-Date: Mon, 28 Oct 2019 10:55:24 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+X-IronPort-AV: E=Sophos;i="5.68,240,1569308400"; d="scan'208";a="374302805"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga005.jf.intel.com with ESMTP; 28 Oct 2019 11:13:51 -0700
+Subject: Re: Could someone help to review bmcweb code?
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <CALzeG+989c4bQ-JQRjCV2g_zTKgDHpByJ_G-PsasZMqsg+__Lg@mail.gmail.com>
+ <a7c7c24e-4711-4890-7c1f-ea57c3a3eebc@linux.intel.com>
+ <3600C284-3968-4278-84EC-C7DF39D5BC88@fuzziesquirrel.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <e514cc74-ecf5-7137-cf60-3a44ce7ed298@linux.intel.com>
+Date: Mon, 28 Oct 2019 11:13:51 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <20191028171838.28533-1-navid.emamdoost@gmail.com>
+In-Reply-To: <3600C284-3968-4278-84EC-C7DF39D5BC88@fuzziesquirrel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,51 +55,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- kjlu@umn.edu, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
- linux-kernel@vger.kernel.org, emamd001@umn.edu, smccaman@umn.edu,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, apparao.puli@linux.intel.com,
+ Carol Wang <karo33bug@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/28/2019 10:18 AM, Navid Emamdoost wrote:
-> In the implementation of aspeed_video_probe() the allocated memory for
-> video should be released if either devm_ioremap_resource()
-> or aspeed_video_init() or aspeed_video_setup_video() fails. Replace
-> kzalloc() with devm_kzalloc to avoid explicit release for video.
+On 10/28/19 10:47 AM, Brad Bishop wrote:
 > 
-> Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
-> Signed-off-by: Navid Emamdoost <navid.emamdoost@gmail.com>
-> ---
-> Changes in v3:
-> 	-- fix call to devm_kzalloc()
-
-Better keep all change history at here.
-
-> ---
->   drivers/media/platform/aspeed-video.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>> On Oct 28, 2019, at 1:08 PM, James Feist <james.feist@linux.intel.com> wrote:
+>>
+>> On 10/28/19 5:51 AM, Carol Wang wrote:
+>>> Hi,
+>>> I wanna know who can help to review bmcweb code? I'm not sure if the list of maintainers I added
+>>> is changed or not. This is the link of my coding about setting PowerCap. ---->
+>>> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/26223
+>>
+>> It looks like this patch has been -1ed for over a week,
 > 
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index eb12f3793062..70797b41447c 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -1646,7 +1646,8 @@ static int aspeed_video_probe(struct platform_device *pdev)
->   {
->   	int rc;
->   	struct resource *res;
-> -	struct aspeed_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
-> +	struct aspeed_video *video =
-> +		devm_kzalloc(&pdev->dev, sizeof(*video), GFP_KERNEL);
+> Actually it got the -1 just last Wednesday.  Prior to that it had a +1 without any -1s for 6 days.
 
-For a case of assignment in definition section, let it go over the 80
-chars.
+It was WIP on the 17th, and +1ed on the 23rd? The same day it was -1ed. 
+But we're splitting hairs. Regardless it's been -1ed for quite a few 
+days, and it would make the process better if at least the things that 
+both Appu and Carol agreed with were fixed. However a direct email to 
+Appu would be good to get him to reply to comments.
 
-With this fixed:
-
-Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-
->   	if (!video)
->   		return -ENOMEM;
 > 
+>> generally the maintainers will not look at a patch that has been -1ed.
+> 
+> I don’t agree with this and I’d suggest you don’t make this your general policy.  If you do this, then you are going to miss reviewers giving people bad advice, which the reviewers will then implement at great waste of time.  I see kernel maintainers correcting bad advice from reviewers all the time.
+
+Sure, but anyone should be able to say that the advice is bad. And if 
+the back and forth isn't working, then I agree that it can be escalated. 
+I'm not saying it is a general rule, but most repos won't look at code 
+if it is -1ed, and some wont look unless it is +1ed. I know I've been 
+told many times that my code can't be merged unless someone on my team 
++1s it.
+
+
+> 
+>> I would work with the community to come to resolution and get some +1s.
+> 
+> Carol responded to the feedback (with questions, that remain unanswered) the same day it was given, 5 days ago.  I’d say "working with the community" is exactly what Carol is trying to do here.
+>
