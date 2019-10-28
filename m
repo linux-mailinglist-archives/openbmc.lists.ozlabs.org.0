@@ -1,125 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD33E6C0B
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 06:41:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C91FCE6C81
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 07:43:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 471k950lSPzDqdL
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 16:41:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 471lXQ2pxszDqdc
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 17:43:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=197a09fd4=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=web.de
- (client-ip=212.227.15.3; helo=mout.web.de; envelope-from=markus.elfring@web.de;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=web.de
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=web.de header.i=@web.de header.b="q1PqP5WG"; 
- dkim-atps=neutral
-X-Greylist: delayed 339 seconds by postgrey-1.36 at bilbo;
- Sun, 27 Oct 2019 18:01:53 AEDT
-Received: from mout.web.de (mout.web.de [212.227.15.3])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47180d3tNkzDqgF;
- Sun, 27 Oct 2019 18:01:52 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=dbaedf251592; t=1572159702;
- bh=ARdfih51ut3Wc7cOVlkAxrqjxZ2ICiWrQ62g5bzsKEw=;
- h=X-UI-Sender-Class:To:Cc:References:Subject:From:Date:In-Reply-To;
- b=q1PqP5WGtCAdBon6ZLe+Hpj+gG4uuPCpda0k5wgvbuIZKlSQ1oHK/Aa21jpvK+6bD
- wpb2GmCQN/LQWD5WIrN40fDCHGCxzDO+qZAYujdbzVhA0lsNlw3FVTGX7zhAEJPlhc
- qPusz84VauMM9r0cF4cGSkQM5PmCiQtFma+hojbg=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.2] ([93.132.56.174]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LfAfQ-1heV4N06Zc-00ooQ1; Sun, 27
- Oct 2019 07:55:31 +0100
-To: Navid Emamdoost <navid.emamdoost@gmail.com>,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-media@vger.kernel.org, openbmc@lists.ozlabs.org
-References: <20191026042519.29446-1-navid.emamdoost@gmail.com>
-Subject: Re: [PATCH] media: aspeed-video: Fix memory leaks in
- aspeed_video_probe
-From: Markus Elfring <Markus.Elfring@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
- +v43YoGpDNyhgA0w9CEhuwfZrE91GocMtjLO67TAc2i2nxMc/FJRDI0OemO4VJ9RwID6ltwt
- mpVJgXGKkNJ1ey+QOXouzlErVvE2fRh+KXXN1Q7fSmTJlAW9XJYHS3BDHb0uRpymRSX3O+E2
- lA87C7R8qAigPDZi6Z7UmwIA83ZMKXQ5stA0lhPyYgQcM7fh7V4ZYhnR0I5/qkUoxKpqaYLp
- YHBczVP+Zx/zHOM0KQphOMbU7X3c1pmMruoe6ti9uZzqZSLsF+NKXFEPBS665tQr66HJvZvY
- GMDlntZFAZ6xQvCC1r3MGoxEC1tuEa24vPCC9RZ9wk2sY5Csbva0WwYv3WKRZZBv8eIhGMxs
- rcpeGShRFyZ/0BYO53wZAPV1pEhGLLxd8eLN/nEWjJE0ejakPC1H/mt5F+yQBJAzz9JzbToU
- 5jKLu0SugNI18MspJut8AiA1M44CIWrNHXvWsQ+nnBKHDHHYZu7MoXlOmB32ndsfPthR3GSv
- jN7YD4Ad724H8fhRijmC1+RpuSce7w2JLj5cYj4MlccmNb8YUxsE8brY2WkXQYS8Ivse39MX
- BE66MQN0r5DQ6oqgoJ4gHIVBUv/ZwgcmUNS5gQkNCFA0dWXznQARAQABtCZNYXJrdXMgRWxm
- cmluZyA8TWFya3VzLkVsZnJpbmdAd2ViLmRlPokCVAQTAQgAPhYhBHDP0hzibeXjwQ/ITuU9
- Figxg9azBQJYNvsQAhsjBQkJZgGABQsJCAcCBhUICQoLAgQWAgMBAh4BAheAAAoJEOU9Figx
- g9azcyMP/iVihZkZ4VyH3/wlV3nRiXvSreqg+pGPI3c8J6DjP9zvz7QHN35zWM++1yNek7Ar
- OVXwuKBo18ASlYzZPTFJZwQQdkZSV+atwIzG3US50ZZ4p7VyUuDuQQVVqFlaf6qZOkwHSnk+
- CeGxlDz1POSHY17VbJG2CzPuqMfgBtqIU1dODFLpFq4oIAwEOG6fxRa59qbsTLXxyw+PzRaR
- LIjVOit28raM83Efk07JKow8URb4u1n7k9RGAcnsM5/WMLRbDYjWTx0lJ2WO9zYwPgRykhn2
- sOyJVXk9xVESGTwEPbTtfHM+4x0n0gC6GzfTMvwvZ9G6xoM0S4/+lgbaaa9t5tT/PrsvJiob
- kfqDrPbmSwr2G5mHnSM9M7B+w8odjmQFOwAjfcxoVIHxC4Cl/GAAKsX3KNKTspCHR0Yag78w
- i8duH/eEd4tB8twcqCi3aCgWoIrhjNS0myusmuA89kAWFFW5z26qNCOefovCx8drdMXQfMYv
- g5lRk821ZCNBosfRUvcMXoY6lTwHLIDrEfkJQtjxfdTlWQdwr0mM5ye7vd83AManSQwutgpI
- q+wE8CNY2VN9xAlE7OhcmWXlnAw3MJLW863SXdGlnkA3N+U4BoKQSIToGuXARQ14IMNvfeKX
- NphLPpUUnUNdfxAHu/S3tPTc/E/oePbHo794dnEm57LuuQINBFg2+xABEADZg/T+4o5qj4cw
- nd0G5pFy7ACxk28mSrLuva9tyzqPgRZ2bdPiwNXJUvBg1es2u81urekeUvGvnERB/TKekp25
- 4wU3I2lEhIXj5NVdLc6eU5czZQs4YEZbu1U5iqhhZmKhlLrhLlZv2whLOXRlLwi4jAzXIZAu
- 76mT813jbczl2dwxFxcT8XRzk9+dwzNTdOg75683uinMgskiiul+dzd6sumdOhRZR7YBT+xC
- wzfykOgBKnzfFscMwKR0iuHNB+VdEnZw80XGZi4N1ku81DHxmo2HG3icg7CwO1ih2jx8ik0r
- riIyMhJrTXgR1hF6kQnX7p2mXe6K0s8tQFK0ZZmYpZuGYYsV05OvU8yqrRVL/GYvy4Xgplm3
- DuMuC7/A9/BfmxZVEPAS1gW6QQ8vSO4zf60zREKoSNYeiv+tURM2KOEj8tCMZN3k3sNASfoG
- fMvTvOjT0yzMbJsI1jwLwy5uA2JVdSLoWzBD8awZ2X/eCU9YDZeGuWmxzIHvkuMj8FfX8cK/
- 2m437UA877eqmcgiEy/3B7XeHUipOL83gjfq4ETzVmxVswkVvZvR6j2blQVr+MhCZPq83Ota
- xNB7QptPxJuNRZ49gtT6uQkyGI+2daXqkj/Mot5tKxNKtM1Vbr/3b+AEMA7qLz7QjhgGJcie
- qp4b0gELjY1Oe9dBAXMiDwARAQABiQI8BBgBCAAmFiEEcM/SHOJt5ePBD8hO5T0WKDGD1rMF
- Alg2+xACGwwFCQlmAYAACgkQ5T0WKDGD1rOYSw/+P6fYSZjTJDAl9XNfXRjRRyJSfaw6N1pA
- Ahuu0MIa3djFRuFCrAHUaaFZf5V2iW5xhGnrhDwE1Ksf7tlstSne/G0a+Ef7vhUyeTn6U/0m
- +/BrsCsBUXhqeNuraGUtaleatQijXfuemUwgB+mE3B0SobE601XLo6MYIhPh8MG32MKO5kOY
- hB5jzyor7WoN3ETVNQoGgMzPVWIRElwpcXr+yGoTLAOpG7nkAUBBj9n9TPpSdt/npfok9ZfL
- /Q+ranrxb2Cy4tvOPxeVfR58XveX85ICrW9VHPVq9sJf/a24bMm6+qEg1V/G7u/AM3fM8U2m
- tdrTqOrfxklZ7beppGKzC1/WLrcr072vrdiN0icyOHQlfWmaPv0pUnW3AwtiMYngT96BevfA
- qlwaymjPTvH+cTXScnbydfOQW8220JQwykUe+sHRZfAF5TS2YCkQvsyf7vIpSqo/ttDk4+xc
- Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
- x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
- pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <bec85427-66b8-e0fa-9ee2-07cc77cf4a7e@web.de>
-Date: Sun, 27 Oct 2019 07:55:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
+ Mon, 28 Oct 2019 17:42:19 AEDT
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 471lWb6SKrzDqNx
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Oct 2019 17:42:18 +1100 (AEDT)
+IronPort-SDR: TrPllIz90lcf54QFHNFLztB6fM8xI+nb1qMFf9OEx3o2h4EVYdFpT0de5ildBeS0i5vv7dpZYY
+ 4UX6dv3Nr77w==
+Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
+ by mx02.quantatw.com with ESMTP; 28 Oct 2019 14:41:05 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx09.quanta.corp
+ (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 28 Oct
+ 2019 14:41:01 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Mon, 28 Oct 2019 14:41:01 +0800
+From: =?big5?B?VG9ueSBMZWUgKKf1pOW0SSk=?= <Tony.Lee@quantatw.com>
+To: "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
+Subject: Showing signed sensor value when the command "ipmitool sel elist" is
+ executed
+Thread-Topic: Showing signed sensor value when the command "ipmitool sel
+ elist" is executed
+Thread-Index: AdWNWFHRoJAe9/HYQ5KNxGajnOPsiQ==
+Date: Mon, 28 Oct 2019 06:41:01 +0000
+Message-ID: <b3c1129773c64c97b9655701cb506578@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25006.004
+x-tm-as-result: No-10--1.518400-5.000000
+x-tmase-matchedrid: dwNgap4H9hib5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGoLZarzrrPmaSL
+ KJxuiASSoHkXNuFv4rlC5fLOCj/VGAHmMMvi0m/ThQwmwdAU7bJm4iSocjSduwdY+faaPuhEp/g
+ 7QDIlgt1/XFK38Ckcc20kdSe698Bxdm10NLkSjkHiHyvyXeXh5uW+NFJT5LKZaOWLD7G8i10e7c
+ YFPRDDk/jjYZEN3hSFmyiLZetSf8mZMPCnTMzfOiq2rl3dzGQ19+9ZqEp9FTgDtxvTf1wl6offV
+ /Jl6swjltRZpKr9wW8aYHl8K4Ev8iI9xDyqrVT0FK3CXoJT3zZXm8KADGawI/0rmalwGIv4rdHI
+ mFVc+HCpwXEL6auHLVbBLfKusMEl3q5/wFAM7/sldSrg7jJgh56oP1a0mRIj
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--1.518400-5.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25006.004
+x-tm-snts-smtp: A699E13516D2E2551A817977A2095F34B0A261702F288CF25DCF6C70796D30A02000:B
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <20191026042519.29446-1-navid.emamdoost@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FmGICvn0LmSTTD7R93PU62N8WsZYZ6cdVmszCY8Q/JcMVVRUbYb
- Vp0gqGawU/a6Qlz1JBoLAhB28rowaZFN8uoAfGXOHvvxbqZs8UpzUjC1qx/sPDrngPe0zPp
- TDOb+KZZFwULLo+UwbuDjrmLxEYbLjOg7cujUQWSEr/+ZGhJ8VPHpmBAKRY5Eyuf9HunTNI
- dGvxHMQ43a0KQ0Qu/oyjw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yJtLoEaTMRQ=:FVUd+Ra4EuZVLMgJvZF/9h
- c8dcEJ3bPneK+cvViQemkqAo7WIMkFfm4Edi5a/muFQ8XqZv+vxgrmKqSmJ5LFnrJs6t/bzcm
- PkcJAW0Gyj9bBor7r5q2AJC+q3x11ht6zL0b6W3PHtE8lCRF7VIyLBp0tcqmBmHx4EB5pN2Kd
- P1zBAPexrxbCMxQq0PmeGyx7jDkqt1TITElcyY2ahSrN97862by+XHgP4TQI9BkLMm+pyDCj2
- 4uUULgmzd1JSwHEFYsbzTUecOYExQuFALb0RuBuZS2AakAHO++GjSxs5AbP0AUl8vGfq7BSzs
- w0h8WK1RYNTieuD4fyCi9z924CQmGxKn3g2vO79d/VI7YdW8fo30RnUPre/fIC+mvH5injwRE
- 8BvuwVaJCztwgbC3IJeG4SalM750fvwKzfk3ooxfIH7mzdf7ylmMWxTZ07V4Fji0EZ+8E3eHf
- aMpcL5rWyIWlOdQ5FlM4IdSLmMkk/8mxd8TVUeXKJVOyWw3qUt14GpW5NJ4NR67HcPZLVjlq4
- YM3LTOHT3TxYZu5UVWA+iY25y2czZm83AylpRL05UCwtPgzsV1EeHVcz+sQdszk4joMjuhADT
- lrBhoxjUz2mC2Bi7BVHMeqdqQoU9qpS+AYTXMR6LN5QQJmOr5ddlMAGXNSXpSNI33NG88tgeU
- d2doThMx7+e8871fQk1tI9v4R+5aHuDPfLGcV9HsXMdYgt/xg/v0EG1tY4FfkKHA4P5UQFUMn
- jGvveZ6m7RdU2JAFuwTPiwT09CePoY5xRiVnaUZOvC7lPWLFfiD32jJ0qgtydhjQ5b3Mxc/SY
- gFblsBhdenEPVAUEUBMqaQYYUqq4bO/KfHD1Y5XO/ZqMqglNUUYpx72n5JKlA6z60nM5UqaAv
- Pc1auZZxEyf1QTll2fWvawxMSqh389C+3FcPm/uOFaMVAntnsfR9w5w7K55dI3w4TZH4xk920
- 2nyzkEHjN0wVsxAuntBTej7YO7tcQEsFeN2qQyWFaF4rCmybSWyO2T/nREZ4NvhstP6Wt6ihA
- GKcIEODeosCDaBCTVzpwEZt9vVa9MEsEH45n5EcNCtgOVOzIUIFPhJX7+epjo6jSu0/oRFsO6
- QHQgd30NOwC+I6AjqGI0stdY5aYVMQ76KJdvg9v7ztqWD7ECWrsnTQ4KoewyRypFGH7Z0u8gP
- 7bZDwGK6VMWHdfzUxxwr5QZYb/GffBdfN+Y/ARiDeQwcZV+PiUg9Xs+tWYE7k8J+njUN53wUq
- 8ZxTyc0UVe4iHzeOA0AnJhssCa7NgrgyCeuiGsmLyG1HNQAHT0+9LthshGRc=
-X-Mailman-Approved-At: Mon, 28 Oct 2019 16:36:50 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -131,28 +71,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kernel-janitors@vger.kernel.org, Andrew Jeffery <andrew@aj.id.au>,
- Kangjie Lu <kjlu@umn.edu>, Eddie James <eajames@linux.ibm.com>,
- LKML <linux-kernel@vger.kernel.org>, Navid Emamdoost <emamd001@umn.edu>,
- Stephen McCamant <smccaman@umn.edu>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ =?big5?B?QnVkZHkgSHVhbmcgKLbApNHCRSk=?= <Buddy.Huang@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-=E2=80=A6
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -1663,18 +1663,24 @@ static int aspeed_video_probe(struct platform_de=
-vice *pdev)
-=E2=80=A6
-> +free_video:
-> +	kfree(video);
-=E2=80=A6
-
-I am curious if there is a need for such a memory release at another place=
-.
-How do you think about to add this function call also to the implementatio=
-n
-of the function =E2=80=9Caspeed_video_remove=E2=80=9D?
-
-Regards,
-Markus
+SGkgSmFzb24sDQoNCldlIGtub3cgdGhhdCB3aGVuIHdlIGV4ZWN1dGUgdGhlIGNvbW1hbmQgImlw
+bWl0b29sIHNlbCBlbGlzdCIsIGl0IHdpbGwgcmV0dXJuIHNvbWV0aGluZyBsaWtlIHRoZSBmb2xs
+b3dpbmcsDQoiMTggfCAxMC8xNi8xOSB8IDE4OjI4OjQxIFVUQyB8IFRlbXBlcmF0dXJlIG52bWUw
+IHwgVXBwZXIgTm9uLWNyaXRpY2FsIGdvaW5nIGhpZ2ggfCBBc3NlcnRlZCB8IFJlYWRpbmcgNzIg
+PiBUaHJlc2hvbGQgNzAgZGVncmVlcyBDIi4NCg0KSSBtZXQgYSBwcm9ibGVtIHRoYXQgd2hlbiB0
+aGUgc2Vuc29yIHZhbHVlIGluIHRoZSBkLWJ1cyBpcyBuZWdhdGl2ZSwgdGhlIGN1cnJlbnQgcmVh
+ZGluZyBpbiAiaXBtaXRvb2wgc2VsIGVsaXN0IiB3aWxsIGJlIDAuDQpJdCBzZWVtcyB0aGF0IGJl
+Y2F1c2UgdGhlIHR5cGUgb2Ygc2NhbGVkVmFsdWUgaXMgZGVmaW5lZCAidWludDMyX3QiLCB0aGVy
+ZSBpcyBhbHdheXMgYSBub25lIG5lZ2F0aXZlIHZhbHVlIGV2ZW4gY3VycmVudCB2YWx1ZSBpcyBh
+IG5lZ2F0aXZlIHZhbHVlIG9idGFpbmVkIGZyb20gdGhlIGQtYnVzLiBJbg0KaHR0cHM6Ly9naXRo
+dWIuY29tL29wZW5ibWMvcGhvc3Bob3Itc2VsLWxvZ2dlci9ibG9iL21hc3Rlci9pbmNsdWRlL3Nl
+bnNvcnV0aWxzLmhwcCNMMTU5DQoNCklzIHRoaXMgaXMgYW4gaXNzdWUgb3IgSSBuZWVkIHRvIHNl
+dCBpdCB1cCBzb21ld2hlcmU/DQoNClRoYW5rcw0KQmVzdCBSZWdhcmRzLA0KVG9ueQ0K
