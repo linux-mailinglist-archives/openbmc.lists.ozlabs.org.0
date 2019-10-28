@@ -2,67 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D52EFE6AA2
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 03:03:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12F8EE6B7A
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 04:32:48 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 471dKy4ZLnzDqf9
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 13:03:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 471gJr5d1KzDqdW
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 14:32:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::141;
- helo=mail-il1-x141.google.com; envelope-from=mine260309@gmail.com;
+ smtp.mailfrom=lenovo.com (client-ip=67.219.246.212;
+ helo=mail1.bemta23.messagelabs.com; envelope-from=liuyh21@lenovo.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ut0pt5VL"; 
- dkim-atps=neutral
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com
- [IPv6:2607:f8b0:4864:20::141])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.212])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 471dKJ3zt5zDqP2
- for <openbmc@lists.ozlabs.org>; Mon, 28 Oct 2019 13:03:00 +1100 (AEDT)
-Received: by mail-il1-x141.google.com with SMTP id y5so6807035ilb.5
- for <openbmc@lists.ozlabs.org>; Sun, 27 Oct 2019 19:03:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=OypAzi2Zo1xMrftkUnv7sviCQUzMHIlpCkUzq0Rt/to=;
- b=ut0pt5VLtgI5pWukmdF4Gc08eqpmf7GjB0Kisk36q9TGw86iL+c8TjgCzkWBx2/WCa
- JqLJrmrJKvCORqjXUkpaHwPfrfaPCL4kExCMVoGtolQI5QtXuRibaCIIVp+q4N1igAjm
- cFl7qPwWZzX65KwLoDRqlOfwbtG94YBBXYIp+DNCMk1YzfCC/OVEgJSJU6UbyLsj/XMJ
- chSg1SZODMQ1cFpx17Plum70yfWIMSi/lRAG6Wu58IIMUlVVRicAOSbvCy+tRRXL3mqJ
- GbXDVdjGO5TffGInGhwUVQ3mphDUcRYKPj3FsXBqu0e98YWhYOlPpcMHM8Sk3nFeSuOQ
- 4CtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=OypAzi2Zo1xMrftkUnv7sviCQUzMHIlpCkUzq0Rt/to=;
- b=JCvkbX1MTX5HPqyDgBH3a/Mw2ierasfvyz0jjXCze8/Fl65gJoeLZKKNRooGMcMX0e
- Od69R93RVuYDrnCcKQB4KtxsSG6T+XHvQas7epKI8q2/1mHEpiwoDm6nrq5F9PVFawnk
- C5yiN1XQROlAD4/G9rignniWkfPW4jP1UI+W1NmRhhrMEkWb8LvpS/L5obNSFUdWttpo
- vx+Hg7W1wU3GNUUOuh7kyVX9cIk/+SElypUcJy23zgGpDEkdiq2wUrQcEYyXpRxvRA3r
- OCqLUPH3PQzkIO8WoaMpnaGjgJZzTLZN1NqqxDIPq1krBiLjqe/8ih+lSxsYpE/VmzEt
- nhiA==
-X-Gm-Message-State: APjAAAXecnfu2caYknytkFo8EBmh9pHVvay7/drjy6n7iRFyJlFqjfnp
- tFl3qfQm8nu3QuzgS30mQdB5G7bNO6+7eR5gPH8=
-X-Google-Smtp-Source: APXvYqwm7Qtueibfa+9zy+hWYTirlqYgJB0l7FofsGGS0YPAc2wLuuwhsvgpAyS9538UNvTmKP/C3+sgpD+yr1uFdTQ=
-X-Received: by 2002:a92:5ac2:: with SMTP id b63mr18661685ilg.138.1572228177206; 
- Sun, 27 Oct 2019 19:02:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <8371D980-4DCC-42C3-9BFA-4DB7C9475D80@fuzziesquirrel.com>
-In-Reply-To: <8371D980-4DCC-42C3-9BFA-4DB7C9475D80@fuzziesquirrel.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Mon, 28 Oct 2019 10:02:46 +0800
-Message-ID: <CAARXrt=UOQiyKdzUHkuLXqh+3oB7c=wq6UtvWaLVmz8v8WAfzg@mail.gmail.com>
-Subject: Re: consolidation of *-dbus-interfaces
+ by lists.ozlabs.org (Postfix) with ESMTPS id 471gJ16JWczDqZm
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Oct 2019 14:32:00 +1100 (AEDT)
+Received: from [67.219.246.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-2.bemta.az-b.us-east-1.aws.symcld.net id AD/73-10730-D2166BD5;
+ Mon, 28 Oct 2019 03:31:57 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKKsWRWlGSWpSXmKPExsWS8eIhj65O4rZ
+ Yg1vdNhYz9j5gtlh68wqbxamWFywOzB63tzexeyzYVOpxfsZCxgDmKNbMvKT8igTWjO9n29kL
+ tnFW/F15lrmB8Q17FyMnh5DAf0aJ9y+Duxi5gOyXjBI7X09hhXD2MErs3b0GyOHgYBPQlpi+P
+ xWkQURAV+JacwsjSJhZIFli4oJKkLCwgIPE40eTmEDCIgKOEvv/8UNUW0mcWNvABmKzCKhKvJ
+ jdwQpi8wpYSmxqeMYCcUKJxKtls5hAbE4BN4mGDUvATmMUkJWY9ug+WJxZQFxi7rRZYL0SAgI
+ SS/acZ4awRSVePv4HFVeQmPF2C1S9jsSC3Z/YIGxtiWULXzND7BWUODnzCcsERtFZSMbOQtIy
+ C0nLLCQtCxhZVjGaJhVlpmeU5CZm5ugaGhjoGhoa6RrpGprrJVbpJumVFuumJhaX6BrqJZYX6
+ xVX5ibnpOjlpZZsYgTGWkoBk+AOxvYPb/UOMUpyMCmJ8j5M2RorxJeUn1KZkVicEV9UmpNafI
+ hRhoNDSYI3I3ZbrJBgUWp6akVaZg4w7mHSEhw8SiK8BfFAad7igsTc4sx0iNQpRkuOCS/nLmL
+ mOHh0HpA8uWrJImYhlrz8vFQpcd5/cUANAiANGaV5cONgqekSo6yUMC8jAwODEE9BalFuZgmq
+ /CtGcQ5GJWFeIZC1PJl5JXBbXwEdxAR0ED/LZpCDShIRUlINTIGrfun7JMgX/N+vdITR8fH3d
+ N9ZC1TvyDw1kHZzr5A75rjnZ+KEyjSv2ebneIU9Z/tmqCfN1pBqC+zTevy2SlF8icullWxXti
+ /+G3ewofbPgeaN05L0Dl/r+p3w6XLqx5s/X2YESci3bfhz59EKl4jj36+6uB35yZM263LgiZS
+ sNp4nO9595Q+Ti1pbK/l3VdRt/lP7lzNMzpT8WhMvy/z57NbpfV6x1yfqT2DfvCrHgVdlGi9H
+ HxvbCudpu/wC5R0yGf6JMzzTW8CV9lO2YpKk15S19lt3tWbG22wpk38Qfy7twmfJV/2C/5xfl
+ i/KZtnI/3V3hViE3c9ulf2hoZ0Gp2aEr4iwWSOzUeCylxJLcUaioRZzUXEiAEWUWKXIAwAA
+X-Env-Sender: liuyh21@lenovo.com
+X-Msg-Ref: server-15.tower-386.messagelabs.com!1572233516!129492!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 18846 invoked from network); 28 Oct 2019 03:31:56 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-15.tower-386.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 28 Oct 2019 03:31:56 -0000
+Received: from pekwpmail02.lenovo.com (unknown [10.96.93.80])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id BED9C94625D04D32FCB9;
+ Sun, 27 Oct 2019 23:31:55 -0400 (EDT)
+Received: from pekwpmail05.lenovo.com (10.96.93.83) by pekwpmail02.lenovo.com
+ (10.96.93.80) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1591.10; Mon, 28 Oct
+ 2019 11:31:47 +0800
+Received: from pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf]) by
+ pekwpmail05.lenovo.com ([fe80::c91f:415c:90bb:3ddf%7]) with mapi id
+ 15.01.1591.008; Mon, 28 Oct 2019 11:31:47 +0800
+From: Yonghui YH21 Liu <liuyh21@lenovo.com>
 To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: RE: [External]  Re: Lenvo IPMI OEM in openbmc Community
+Thread-Topic: [External]  Re: Lenvo IPMI OEM in openbmc Community
+Thread-Index: AdWEubyY9TnTQB25RuOFWcAeRb/jl///8IOA/+7j8TA=
+Date: Mon, 28 Oct 2019 03:31:47 +0000
+Message-ID: <8f534af6217744ee9c9fc00196156564@lenovo.com>
+References: <34e9db59f8064625a90b4021de1e54dd@lenovo.com>
+ <4FBBF668-7781-40EF-A469-ED3FD756ED36@fuzziesquirrel.com>
+In-Reply-To: <4FBBF668-7781-40EF-A469-ED3FD756ED36@fuzziesquirrel.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.96.12.251]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,52 +93,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@gmail.com>, Yong Li <yong.b.li@linux.intel.com>,
- "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- James Feist <james.feist@linux.intel.com>, William Kennington <wak@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Oct 26, 2019 at 3:18 AM Brad Bishop <bradleyb@fuzziesquirrel.com> w=
-rote:
->
-> Hi everyone
->
-> I=E2=80=99ve discussed with a couple people off list the idea of consolid=
-ating all the dbus interfaces into a single repository.  Today there exist =
-four:
->
-> phosphor-dbus-interfaces
-> openpower-dbus-interfaces
-> ibm-dbus-interfaces
-> intel-dbus-interfaces
->
-> The idea is that going forward all dbus interfaces would just go in phosp=
-hor-dbus-interfaces regardless of the namespace.  That should cut away a lo=
-t of complexity in the bitbake metadata and in other places as well.
->
 
-That's great and I would love to see this happen!
 
-> Is there any opposition to this idea?  If anyone is worried about maintai=
-ner-ship, I am working on deploying the owners file plugin on our Gerrit in=
-stall which enables kernel style ownership of different files depending on =
-path, regex matches, etc.
->
-> I would guess there would be a desire to configure (as in autoconf) in or=
- out different namespaces.  Am I correct in that thinking?  Any thoughts on=
- how exactly that should be done?
-
-I guess package config seems like a way to configure which parts to build.
-
->
-> On a somewhat related note I tried migrating phosphor-dbus-interfaces bui=
-ld to meson and failed miserably when I got to generated sdbus++ header fil=
-e placement.  If anyone has any ideas on how to do that I=E2=80=99d love to=
- hear about it.
-
-I am OK to keep the existing autoconf tools as it works well.
-For meson, I am not sure what kinds of issues you meet, but we
-probably need to write configs to generate all kinds of server.hpp/cpp
-files by `run_command()`
+> -----Original Message-----
+> From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+> Sent: Thursday, October 17, 2019 10:13 PM
+> To: Yonghui YH21 Liu <liuyh21@lenovo.com>
+> Cc: openbmc@lists.ozlabs.org; Benjamin Fair <benjaminfair@google.com>
+> Subject: [External] Re: Lenvo IPMI OEM in openbmc Community
+>=20
+> at 3:16 AM, Yonghui YH21 Liu <liuyh21@lenovo.com> wrote:
+>=20
+> > HI Brad,
+> >          Now we are implementing some lenovo OEM commands based on
+> below projects, could you help create lenovo-ipmi-oem repository for us?
+> >          https://github.com/openbmc/openbmc/tree/master/meta-lenovo
+> >
+> > Thanks
+>=20
+> Is Lenovo OK with Apache-2.0?  I only ask because Lenovo deviated with th=
+e
+> license for its bitbake metadata.  The OpenBMC charter says that code mus=
+t be
+> Apache-2.0, with room for granting exceptions but I think it would be sim=
+pler for
+> everyone if Lenovo simply use Apache-2.0.  For the fine print, please hav=
+e a
+> look at the charter:
+>=20
+> https://www.openbmc.org/wp-content/uploads/sites/62/2018/03/charter_op
+> enbmc_02142018.pdf
+>=20
+> specifically section 7.
+ After internal check, it is OK with Apache-2.0.
+ Thank your great support.
+>=20
+> thanks!
+>=20
+> -brad
