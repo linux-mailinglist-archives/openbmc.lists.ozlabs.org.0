@@ -2,68 +2,40 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69CEDE73B8
-	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 15:34:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 38C38E75A5
+	for <lists+openbmc@lfdr.de>; Mon, 28 Oct 2019 16:57:12 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 471y0t5BTKzDrJ7
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 01:34:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 471zqn4ZcNzDrTH
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 02:57:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::62e;
- helo=mail-pl1-x62e.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="ijpWwKK/"; 
- dkim-atps=neutral
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com
- [IPv6:2607:f8b0:4864:20::62e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 471xzn4gNZzDrGp
- for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 01:33:55 +1100 (AEDT)
-Received: by mail-pl1-x62e.google.com with SMTP id x6so1620836pln.2
- for <openbmc@lists.ozlabs.org>; Mon, 28 Oct 2019 07:33:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=N5S5H1sr4bfu4c5ehS3Lvgva5tnJxahLRW+2VTzbfB8=;
- b=ijpWwKK/xwfKqL/qgB3k0kfm8X7UIgVZ+bK6CYzQYuRYngHOsNOrk5xa/ZIVV9QjHn
- cy5UNMUR4wz9coLYMZP/yqNlzHzRy7QsBwVthfPA6XJ63OwGhIDJ2K+QbVZt3fUz+9L+
- fMQyGspPwcYbfTUrpMmE7BClUXwp8BsRJt+Sjz+awtkXbDCpllWDAvMVgQyYBTPw/wCf
- Hwv/vZz0EY+0linr2Unh/l5oYz+kCaHUlt1SXp+CsWaB2jFzSjC5WvTGXQyLWKDtZD94
- +obfKYjORxG/X5ae6dj5+LGElnde83Sg88CO8KJ21XmhfAp6feRxWScrS13DVtC/6cM6
- UySQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=N5S5H1sr4bfu4c5ehS3Lvgva5tnJxahLRW+2VTzbfB8=;
- b=lkWXvsjO+G2w7E10Xj3rLlIx8eW/JpK5/6jWSPBp6+PMjvOC0sXpAytne5xO1TGAMZ
- tVIWrl3uaSYqDFQSz64J9sIzpjUxV6z0vNntvYIZWaqKWrDjETfU2J0m2hFYgQLNxXHE
- 3ixs71K1EVHcNqUutOEju/Nb3woqrzIK+Z0bakRmrBUztIbJqqsqBBE2hDwpHFhG/Zww
- 3O7ALMCkEzW0KJn+ujEwRjcbbHdUPW4SboZRtrlNB3HwLzbGMnlAmWr6LAq2t96qEZlF
- nYJRi5NJw3BxQIXQmsK/uUjpIxAbL6TSaer754BCK39PzyaekOpiUfFwzFyqWHSSRi38
- DqXQ==
-X-Gm-Message-State: APjAAAWQbAHLE3XbemSTua8csjPedKFuflzc/OnbUpbMszN+SkYTAFtj
- xf3hsTAEXg/9LWJVrSe5P+HpMi+qQtUQWOAQE0Gmaw==
-X-Google-Smtp-Source: APXvYqx4nRCV4tKpRics5DP6Xeh+J9RO/nz/E3ZdNOVR6NKlrhP6jKopTCPpsceMEdWEZU4la6HFdtb0OcX6oe6SiBU=
-X-Received: by 2002:a17:902:9b83:: with SMTP id
- y3mr18969741plp.179.1572273231271; 
- Mon, 28 Oct 2019 07:33:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 471zn03qwRzDqcV
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 02:54:42 +1100 (AEDT)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id x9SFs4oj001372;
+ Mon, 28 Oct 2019 17:54:05 +0200
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+ id 704636026D; Mon, 28 Oct 2019 17:54:04 +0200 (IST)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: p.zabel@pengutronix.de, robh+dt@kernel.org, mark.rutland@arm.com,
+ yuenn@google.com, venture@google.com, benjaminfair@google.com,
+ avifishman70@gmail.com, joel@jms.id.au
+Subject: [PATCH v2 0/3] reset: npcm: add NPCM reset driver support
+Date: Mon, 28 Oct 2019 17:54:00 +0200
+Message-Id: <20191028155403.134126-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <HK0PR02MB3348A12C43559ED44AA67D149F660@HK0PR02MB3348.apcprd02.prod.outlook.com>
-In-Reply-To: <HK0PR02MB3348A12C43559ED44AA67D149F660@HK0PR02MB3348.apcprd02.prod.outlook.com>
-From: Patrick Venture <venture@google.com>
-Date: Mon, 28 Oct 2019 07:33:40 -0700
-Message-ID: <CAO=notxVxud5HxTuDnjH46Ew=JtXVydVK0d27w44MEigyL00ig@mail.gmail.com>
-Subject: Re: How to use phosphor-ipmi-flash
-To: "Bright Cheng/WYHQ/Wiwynn" <Bright_Cheng@wiwynn.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,74 +47,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 28, 2019 at 2:32 AM Bright Cheng/WYHQ/Wiwynn
-<Bright_Cheng@wiwynn.com> wrote:
->
-> Hi all,
->
->
->
-> I installed phosphor-ipmi-flash, phosphor-ipmi-blob and ipmi-blob-tool in=
- BMC and tried host-tool in Linux to update via ipmilpc.
->
->
->
-> Following are command and its response:
->
-> # ./burn_my_bmc --command update --interface ipmilpc --image /root/obmc-i=
-mage/image-bmc --sig /root/obmc-image/image-bmc.sig --type static --ignore-=
-update --address 0x1 --length 1024
->
-> /flash/static not found
->
->
->
-> Should I add =E2=80=9C/flash/static=E2=80=9D to <<config-static-bmc.json.=
-in>> for getting this =E2=80=9C/flash/static=E2=80=9D blob?
->
-> If yes, how to set <<config-static-bmc.json.in>> if I want to update BMC =
-via ipmilpc?
+This patch set adds reset controller support 
+for the Nuvoton NPCM Baseboard Management Controller (BMC).
 
-Both of these questions really point to the BMC's configuration --
-what is your recipe configuring?  For instance:
+Apart of controlling all NPCM BMC reset module lines the NPCM reset driver
+support NPCM BMC software reset to restarting the NPCM BMC.
 
-PACKAGECONFIG_append_fakesystem =3D " aspeed-p2a reboot-update static-bmc"
-IPMI_FLASH_BMC_ADDRESS_fakesystem =3D "0x47FF0000"
+Supporting NPCM USB-PHY reset as follow:
 
-Will enable the aspeed-p2a controller, reboot-update and enable the
-config-static-bmc.json file.
+NPCM BMC USB-PHY connected to two modules USB device (UDC) and USB host.
 
-You can find the list of currently supports options here:
+If we will restart the USB-PHY at the UDC probe and later the 
+USB host probe will restart USB-PHY again it will disable the UDC
+and vice versa.
 
-https://github.com/openbmc/meta-phosphor/blob/master/recipes-phosphor/ipmi/=
-phosphor-ipmi-flash_git.bb#L21
+The solution is to reset the USB-PHY at the reset probe stage before 
+the UDC and the USB host are initializing.
 
->
->
->
-> One more question, how to decide address and length for lpc?
->
->
->
-> Thanks in advanced for any insight!
->
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
->
-> This email contains confidential or legally privileged information and is=
- for the sole use of its intended recipient.
->
-> Any unauthorized review, use, copying or distribution of this email or th=
-e content of this email is strictly prohibited.
->
-> If you are not the intended recipient, you may reply to the sender and sh=
-ould delete this e-mail immediately.
->
-> -------------------------------------------------------------------------=
----------------------------------------------------------------------------=
------------
+NPCM reset driver tested on NPCM750 evaluation board.
+
+Addressed comments from:.
+ - kbuild test robot : https://lkml.org/lkml/2019/10/27/768 
+  
+Changes since version 1:
+ - Check if gcr_regmap parameter initialized before using it.
+
+Tomer Maimon (3):
+  dt-binding: reset: add NPCM reset controller documentation
+  dt-bindings: reset: Add binding constants for NPCM7xx reset controller
+  reset: npcm: add NPCM reset controller driver
+
+ .../bindings/reset/nuvoton,npcm-reset.txt     |  35 +++
+ drivers/reset/Kconfig                         |   7 +
+ drivers/reset/Makefile                        |   1 +
+ drivers/reset/reset-npcm.c                    | 275 ++++++++++++++++++
+ .../dt-bindings/reset/nuvoton,npcm7xx-reset.h |  82 ++++++
+ 5 files changed, 400 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+ create mode 100644 drivers/reset/reset-npcm.c
+ create mode 100644 include/dt-bindings/reset/nuvoton,npcm7xx-reset.h
+
+-- 
+2.22.0
+
