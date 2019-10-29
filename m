@@ -1,73 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1650AE855F
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 11:19:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBEECE888C
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 13:45:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 472SHM3pm9zF2X4
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 21:19:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 472WWh0FKKzF35Q
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 23:45:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f;
- helo=mail-lj1-x22f.google.com; envelope-from=karo33bug@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::444;
+ helo=mail-pf1-x444.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Cq0wHIkx"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="FdDJWSub"; 
  dkim-atps=neutral
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com
- [IPv6:2a00:1450:4864:20::22f])
+Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
+ [IPv6:2607:f8b0:4864:20::444])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 472Rk6388lzF1pX
- for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 20:53:49 +1100 (AEDT)
-Received: by mail-lj1-x22f.google.com with SMTP id t5so6702934ljk.0
- for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 02:53:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 472WTQ6xSCzF34C
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 23:42:59 +1100 (AEDT)
+Received: by mail-pf1-x444.google.com with SMTP id v19so9511880pfm.3
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 05:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9iUrdo3H+QFWoko6O2tcys4fHm2/cHGl6t3XyaoAET8=;
- b=Cq0wHIkxFXtSlKyQRjTCUuSznEdqqtCzGmaCDmWpfQrvmipex/VUqgAWtENQ2MLXy2
- YOeMWr2ylCV3T6Ise64fm250/fKnf0wrGNSn1VlNQ1b96DNOohwpK+iJqdC3xCZNttXe
- ht2w8MwknNXpHo5ulu45Fzf2mgWyFv6WIF2Icirn53F2v1D2JSpZPUwBeTe7YYdHtYkh
- AF/PWhJXvXgJAu62z0P6zCkJ8TeDg8WVh1UC9SSVsLV80rbdxSjKVqIkfLUpaWDRDSDP
- HXBR8Lqfg8Kxbnr53pLrpOBlysXdQLBhR47lGqnZb9EOuNA0OxIOWk4NlDUo9lcRBby9
- Hyng==
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=fOrbkU46JgKCpUazmCZLUeWttzqgH1e4jswzSy8IXQk=;
+ b=FdDJWSubMcfZ5eXxXY7SdUcs4KiO6gI9qejKGYJlBVUSNvOkMpqmJjwI8IS48SkPWb
+ XR4rWodABPRw8gkfkd0G34EXrmCaXmiH09jVLPnK22896Qj1PrY5d55cTCeIulINr3d1
+ vE6Ubx/AmZ7iHYvO6iIHNBGhRBFHZohdSsCxiLl+M3urCV15FT1pziONA7JH1I+frR3s
+ UfF2lp6Dp3vV0eo3HHVh7VQ+xPq5Uc5XoJx3tdub58VsWxBmVkre8+lq4CxTxFMmDRIi
+ Tqbq2FNdv7D6zRGDkdcl4FSW2j81kcuQF6MZFZH6OCA3KzgPkV8GkjF3GBqEAjME/wxZ
+ usOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=9iUrdo3H+QFWoko6O2tcys4fHm2/cHGl6t3XyaoAET8=;
- b=LpHBKmJiomJ3GjkB2oSrzjAqhHfm0nBhQOpkcGrYWmPeehBMoZKiuQ+QB5eOCJ1mDO
- MuJt0opyMwRY04fbkhJQNioPC79Qtqtg62URJcvIEbFSYbPGdq9YAS9NoehUSGG/Y+uJ
- /GzcwIQ9q9gSbcdjzSXpfbLBcv3A0bXjjJdrj6ZoUTZxjYxCiFdIDrlPgTlyQjoN7ylu
- ihTlX01wyQoAVyvX4DoHSkQ0Cgr33k0hKUwKcArmHXgX3sDqmOWM5fOLKIdNvJgqmsNW
- HUPLIwiA2Pb0UNU1kaACNXcJIABPaxr5595JOm98PlSP79I2sA8hUntCuQlxNVPuJPkx
- +haA==
-X-Gm-Message-State: APjAAAV/j1PpJoGGmnPtmECBl4RMg5011DCRLi1ROKDCjPyuL5SNHkqa
- nIrdQTyqoPJq798z5F5IoAKpG7tFPWuQjG+BW+/+qA==
-X-Google-Smtp-Source: APXvYqxdJZmP27+gP5H7Moyg559F0CCIMw4mIxp20sl2wp0JHaSmRzySIMxMCo8hfbxqMzUz1oqlpYKb6Qb6xDArliE=
-X-Received: by 2002:a2e:3919:: with SMTP id g25mr1920026lja.232.1572342825290; 
- Tue, 29 Oct 2019 02:53:45 -0700 (PDT)
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=fOrbkU46JgKCpUazmCZLUeWttzqgH1e4jswzSy8IXQk=;
+ b=MW+qeUoVLML2tQK10nqPeJIfjo6bMS/643TLLKR0A7dnvq4OnUq8INpbvSnOIua8Cr
+ 7ASBW2DIV8T1ep0MwD5aX/pjBxbUuI98S5UB7pDTpBMXbHS6enJ4lelOWBF+zA9m9Dsg
+ dZDto1JnQLC6QoxuU2zdX2RxchGcwOstKZsWPMsrQAbFw2I/XZHtHEcZPsC+d6ZaFkcT
+ zgabIv9TPEg+eaaumyj9AHNiHRlBsgQ/dh0Irh3RiV8xdDvaBD6MrHrA5/F28jy0oyro
+ QIsQ2GN35W4kjMktsg6wFVylLcAuOs2mttAX3aDX+BJBd0ZbXUvApRWKAhXr038JeuPD
+ NuBg==
+X-Gm-Message-State: APjAAAUyqNof8h8/ku5h+8pOcI8svYJXAAhtClMQoUDGFEmpxj6lEkQg
+ iZZegBdBOU5xtCSoxWyp+cs=
+X-Google-Smtp-Source: APXvYqxdKrpJbgiqxQmwUMlhqcA77zarOIKgxEysN+oYiECsIpHChZdRZkg3/AocXszl3438nmc+jw==
+X-Received: by 2002:aa7:83c2:: with SMTP id j2mr27670525pfn.225.1572352976762; 
+ Tue, 29 Oct 2019 05:42:56 -0700 (PDT)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id q13sm3879740pjq.0.2019.10.29.05.42.55
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Tue, 29 Oct 2019 05:42:56 -0700 (PDT)
+Date: Tue, 29 Oct 2019 05:42:55 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: rentao.bupt@gmail.com
+Subject: Re: [PATCH 1/3] hwmon: (pmbus) add BEL PFE1100 power supply driver
+Message-ID: <20191029124255.GA23349@roeck-us.net>
+References: <20191028234904.12441-1-rentao.bupt@gmail.com>
+ <20191028234904.12441-2-rentao.bupt@gmail.com>
 MIME-Version: 1.0
-References: <CALzeG+989c4bQ-JQRjCV2g_zTKgDHpByJ_G-PsasZMqsg+__Lg@mail.gmail.com>
- <a7c7c24e-4711-4890-7c1f-ea57c3a3eebc@linux.intel.com>
- <3600C284-3968-4278-84EC-C7DF39D5BC88@fuzziesquirrel.com>
- <e514cc74-ecf5-7137-cf60-3a44ce7ed298@linux.intel.com>
- <D2F9CCC1-AAB3-4365-9C5A-E4764D7D099A@fuzziesquirrel.com>
- <3879e352-3d6f-6742-b94c-678b6ba7e286@linux.intel.com>
- <38183aaf-4ef9-a8b0-8394-95f86dabcbbb@linux.intel.com>
- <7CB62B71-B5AC-4482-A67E-D2951638BC1A@fuzziesquirrel.com>
-In-Reply-To: <7CB62B71-B5AC-4482-A67E-D2951638BC1A@fuzziesquirrel.com>
-From: Carol Wang <karo33bug@gmail.com>
-Date: Tue, 29 Oct 2019 17:53:34 +0800
-Message-ID: <CALzeG+-UCzP9EgiTGprSmCx91thqwVH=Us=RirACx4AWRqRUVA@mail.gmail.com>
-Subject: Re: Could someone help to review bmcweb code?
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000911099059609978c"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191028234904.12441-2-rentao.bupt@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,50 +80,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Puli,
- Apparao" <apparao.puli@linux.intel.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ linux-doc@vger.kernel.org, taoren@fb.com, openbmc@lists.ozlabs.org,
+ Jonathan Corbet <corbet@lwn.net>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000911099059609978c
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Oct 28, 2019 at 04:49:02PM -0700, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> Add the driver to support BEL PFE1100 which is 1100 Wat AC to DC power
+> supply. The chip has only 1 page.
+> 
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 
-Thank you all for your quick response!
-I was thinking if this commit was missed. Now I'm sure I'll be more
-familiar with the reviewing process.
+Please combine with the next patch.
 
-On Tue, Oct 29, 2019 at 2:55 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
+> ---
+>  drivers/hwmon/pmbus/Kconfig   |  9 +++++
+>  drivers/hwmon/pmbus/Makefile  |  1 +
+>  drivers/hwmon/pmbus/bel-pfe.c | 68 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 78 insertions(+)
+>  create mode 100644 drivers/hwmon/pmbus/bel-pfe.c
+> 
+> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
+> index d62d69bb7e49..59859979571d 100644
+> --- a/drivers/hwmon/pmbus/Kconfig
+> +++ b/drivers/hwmon/pmbus/Kconfig
+> @@ -36,6 +36,15 @@ config SENSORS_ADM1275
+>  	  This driver can also be built as a module. If so, the module will
+>  	  be called adm1275.
+>  
+> +config SENSORS_BEL_PFE
+> +	tristate "Bel PFE Compatible Power Supplies"
+> +	help
+> +	  If you say yes here you get hardware monitoring support for BEL
+> +	  PFE1100 and PFE3000 Power Supplies.
+> +
+> +	  This driver can also be built as a module. If so, the module will
+> +	  be called bel-pfe.
+> +
+>  config SENSORS_IBM_CFFPS
+>  	tristate "IBM Common Form Factor Power Supply"
+>  	depends on LEDS_CLASS
+> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
+> index 03bacfcfd660..3f8c1014938b 100644
+> --- a/drivers/hwmon/pmbus/Makefile
+> +++ b/drivers/hwmon/pmbus/Makefile
+> @@ -6,6 +6,7 @@
+>  obj-$(CONFIG_PMBUS)		+= pmbus_core.o
+>  obj-$(CONFIG_SENSORS_PMBUS)	+= pmbus.o
+>  obj-$(CONFIG_SENSORS_ADM1275)	+= adm1275.o
+> +obj-$(CONFIG_SENSORS_BEL_PFE)	+= bel-pfe.o
+>  obj-$(CONFIG_SENSORS_IBM_CFFPS)	+= ibm-cffps.o
+>  obj-$(CONFIG_SENSORS_INSPUR_IPSPS) += inspur-ipsps.o
+>  obj-$(CONFIG_SENSORS_IR35221)	+= ir35221.o
+> diff --git a/drivers/hwmon/pmbus/bel-pfe.c b/drivers/hwmon/pmbus/bel-pfe.c
+> new file mode 100644
+> index 000000000000..117f9af21bf3
+> --- /dev/null
+> +++ b/drivers/hwmon/pmbus/bel-pfe.c
+> @@ -0,0 +1,68 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Hardware monitoring driver for BEL PFE family power supplies.
+> + *
+> + * Copyright (c) 2019 Facebook Inc.
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/init.h>
+> +#include <linux/err.h>
+> +#include <linux/i2c.h>
 
-> > On Oct 28, 2019, at 2:49 PM, Puli, Apparao <apparao.puli@linux.intel.com>
-> wrote:
-> >
-> > Yeah, on it.
->
-> thanks AppaRao!
->
-> -brad
+Alphabetic include file order, please.
 
---000000000000911099059609978c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Thank you all for your quick response! <br></div><div=
->I was thinking if this commit was missed. Now I&#39;m sure I&#39;ll be mor=
-e familiar with the reviewing process.</div></div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 29, 2019 at 2:55 AM=
- Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb@fu=
-zziesquirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">&gt; On Oct 28, 2019, at 2:49 PM, Puli, Apparao &lt;<a href=
-=3D"mailto:apparao.puli@linux.intel.com" target=3D"_blank">apparao.puli@lin=
-ux.intel.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; Yeah, on it.<br>
-<br>
-thanks AppaRao!<br>
-<br>
--brad</blockquote></div>
-
---000000000000911099059609978c--
+> +#include "pmbus.h"
+> +
+> +enum chips {pfe1100};
+> +
+> +static struct pmbus_driver_info pfe_driver_info[] = {
+> +	[pfe1100] = {
+> +		.pages = 1,
+> +		.format[PSC_VOLTAGE_IN] = linear,
+> +		.format[PSC_VOLTAGE_OUT] = linear,
+> +		.format[PSC_CURRENT_IN] = linear,
+> +		.format[PSC_CURRENT_OUT] = linear,
+> +		.format[PSC_POWER] = linear,
+> +		.format[PSC_TEMPERATURE] = linear,
+> +		.format[PSC_FAN] = linear,
+> +
+> +		.func[0] = PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
+> +			   PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT |
+> +			   PMBUS_HAVE_POUT |
+> +			   PMBUS_HAVE_VIN | PMBUS_HAVE_IIN |
+> +			   PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+> +			   PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 |
+> +			   PMBUS_HAVE_STATUS_TEMP |
+> +			   PMBUS_HAVE_FAN12,
+> +	},
+> +};
+> +
+> +static int pfe_pmbus_probe(struct i2c_client *client,
+> +			   const struct i2c_device_id *id)
+> +{
+> +	int model;
+> +
+> +	model = (int)id->driver_data;
+> +	return pmbus_do_probe(client, id, &pfe_driver_info[model]);
+> +}
+> +
+> +static const struct i2c_device_id pfe_device_id[] = {
+> +	{"pfe1100", pfe1100},
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(i2c, pfe_device_id);
+> +
+> +static struct i2c_driver pfe_pmbus_driver = {
+> +	.driver = {
+> +		   .name = "bel-pfe",
+> +	},
+> +	.probe = pfe_pmbus_probe,
+> +	.remove = pmbus_do_remove,
+> +	.id_table = pfe_device_id,
+> +};
+> +
+> +module_i2c_driver(pfe_pmbus_driver);
+> +
+> +MODULE_AUTHOR("Tao Ren <rentao.bupt@gmail.com>");
+> +MODULE_DESCRIPTION("PMBus driver for BEL PFE Family Power Supplies");
+> +MODULE_LICENSE("GPL");
