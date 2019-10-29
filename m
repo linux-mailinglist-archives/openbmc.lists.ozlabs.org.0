@@ -1,52 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B37CE8DCE
-	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 18:12:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 832EAE8E0B
+	for <lists+openbmc@lfdr.de>; Tue, 29 Oct 2019 18:26:02 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 472dSb0RQyzF34b
-	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 04:12:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 472dln4FB9zF3Cy
+	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 04:25:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 472dRT5dBJzF32v
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 04:11:48 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 29 Oct 2019 10:11:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,244,1569308400"; d="scan'208";a="399858439"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by fmsmga005.fm.intel.com with ESMTP; 29 Oct 2019 10:11:44 -0700
-Subject: Re: Showing signed sensor value when the command "ipmitool sel elist"
- is executed
-From: James Feist <james.feist@linux.intel.com>
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>,
- "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
-References: <b3c1129773c64c97b9655701cb506578@quantatw.com>
- <efe40787-6aae-c64d-128e-42dd0ed912f2@linux.intel.com>
- <f21b9266035247e7b52c722c698871c1@quantatw.com>
- <13f22bc9-c8db-afe1-64ab-ece4206c2f44@linux.intel.com>
-Message-ID: <8f235bd7-5157-9d13-6e3f-2c362ae76426@linux.intel.com>
-Date: Tue, 29 Oct 2019 10:11:44 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 472dkY5vFszF1vj;
+ Wed, 30 Oct 2019 04:24:53 +1100 (AEDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ x9THMWcT047124; Tue, 29 Oct 2019 13:24:50 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vxss402mj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Oct 2019 13:24:49 -0400
+Received: from m0098421.ppops.net (m0098421.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id x9THOMLi050711;
+ Tue, 29 Oct 2019 13:24:49 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2vxss402m5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Oct 2019 13:24:49 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id x9THKgI0024581;
+ Tue, 29 Oct 2019 17:24:48 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma01dal.us.ibm.com with ESMTP id 2vvds94nd4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Oct 2019 17:24:48 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ x9THOlTe38273284
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 29 Oct 2019 17:24:47 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3A7826A058;
+ Tue, 29 Oct 2019 17:24:47 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0381B6A04F;
+ Tue, 29 Oct 2019 17:24:46 +0000 (GMT)
+Received: from [9.10.99.47] (unknown [9.10.99.47])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue, 29 Oct 2019 17:24:46 +0000 (GMT)
+Subject: Re: OpenPOWER SEL/PEL/HBEL parser
+To: Artem Senichev <artemsen@gmail.com>, openpower-firmware@lists.ozlabs.org, 
+ openbmc@lists.ozlabs.org
+References: <20191011104722.5kqe4gl6cdk5wijx@gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <82a07ce4-c370-8758-411c-b24119c2403f@linux.ibm.com>
+Date: Tue, 29 Oct 2019 12:24:46 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <13f22bc9-c8db-afe1-64ab-ece4206c2f44@linux.intel.com>
-Content-Type: text/plain; charset=big5; format=flowed
-Content-Language: en-US
+In-Reply-To: <20191011104722.5kqe4gl6cdk5wijx@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-10-29_05:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1910290150
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,101 +93,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?QnVkZHkgSHVhbmcgKOm7g+Wkqem0uyk=?= <Buddy.Huang@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/29/19 9:18 AM, James Feist wrote:
-> On 10/28/19 11:40 PM, Tony Lee (李文富) wrote:
->>> On 10/27/19 11:41 PM, Tony Lee (李文富) wrote:
->>>> Hi Jason,
->>>>
->>>> We know that when we execute the command "ipmitool sel elist", it will
->>> return something like the following,
->>>> "18 | 10/16/19 | 18:28:41 UTC | Temperature nvme0 | Upper Non-critical
->>> going high | Asserted | Reading 72 > Threshold 70 degrees C".
->>>>
->>>> I met a problem that when the sensor value in the d-bus is negative, 
->>>> the
->>> current reading in "ipmitool sel elist" will be 0.
->>>> It seems that because the type of scaledValue is defined "uint32_t", 
->>>> there is
->>> always a none negative value even current value is a negative value 
->>> obtained
->>> from the d-bus. In
->>>>
->>> https://github.com/openbmc/phosphor-sel-logger/blob/master/include/sens
->>> orutils.hpp#L159
->>>>
->>>> Is this is an issue or I need to set it up somewhere?
->>>
->>> If min is < 0, then this should work:
->>>
->>> https://github.com/openbmc/phosphor-sel-logger/blob/6afe9560852c6431c4
->>> 3c8e79a28e2b7cb498e355/include/sensorutils.hpp#L61
->>>
->>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/12162be363f11
->>> b9dafa92b5379db671712b3523c/xyz/openbmc_project/Sensor/Value.interfac
->>> e.yaml#L28
->>>
->>> It uses MinValue < 0 to determine if the sensor is signed or not.
->>
->> Hi James,
->>
->> Yes, My MinValue and min are < 0.
->> I understand that If min is < 0 then bSigned = true finally it will 
->> return static_cast<int8_t>(scaledValue)
->> then this should work. But, after
->> https://github.com/openbmc/phosphor-sel-logger/blob/6afe9560852c6431c43c8e79a28e2b7cb498e355/include/sensorutils.hpp#L159 
->>
->> I got scaledValue = 0 and return 0 in the end.
->>
->> There are another question that why is "scaledValue" defined as uint32_t?
->> Shouldn't it return a byte(uint8_t) after calculation?
-> 
-> The return value is an uint8_t (about 5 lines below where you linked). 
-> The point of it being a uint32_t is so you can check for overflow. That 
-> being said looking at the unit tests I don't believe we check for 
-> negative, and that might need to be a int32_t.
-> 
-> The tests are here: 
-> https://github.com/openbmc/intel-ipmi-oem/blob/master/tests/test_sensorcommands.cpp 
-> 
-> 
-> I'll try to take a look in the next day or two and write a new test to 
-> see if that fixes it, but feel free to add a test yourself if you beat 
-> me to it.
+Hi,
 
-Give this a shot: 
-https://gerrit.openbmc-project.xyz/c/openbmc/intel-ipmi-oem/+/26664
+Sorry it took me so long to reply.
 
-It'll need to be ported to phosphor-sel-logger when review passes.
+I'd just like to mention that on our systems we have to move to creating 
+PELs for all BMC
+errors as well as accepting�� PELs via PLDM from our various host 
+subsystems.�� So we are
+currently working on a proper PEL repository on the BMC, and plan on 
+providing a parser
+that works with it.
 
-> 
-> -James
-> 
->>
->> Here is my settings and debug logs:
->> max = 127.000000
->> min = -128.000000
->> value = -1.000000
->> mValue = 1
->> rExp = 0
->> bValue = 0
->> bExp = 0
->> bSigned = true
->> scaledValue = 0
->>
->> Thanks,
->> -Tony
->>
->>> Thanks,
->>>
->>> -James
->>>
->>>>
->>>> Thanks
->>>> Best Regards,
->>>> Tony
->>>>
+I'm not sure if you heard back from the github.com/open-power project, 
+but that seems
+like an appropriate place to host the project as it also works on other 
+places besides a BMC.
+
+On 10/11/2019 5:47 AM, Artem Senichev wrote:
+> Hi all,
+>
+> We created a parser to decode error log entries generated by OpenPOWER firmware.
+> It is something like `errl` utility that can be used in OpenBMC.
+>
+> Source code:
+> https://github.com/YADRO-KNS/openpower-esel-parser
+>
+> OpenBMC's recipe:
+> https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-nicole/recipes-phosphor/logging/openpower-esel-parser_git.bb
+>
+> If you find this parser useful, we can transfer our repository to OpenBMC or
+> OpenPOWER and continue to maintain it as part of one of these projects.
+>
+
