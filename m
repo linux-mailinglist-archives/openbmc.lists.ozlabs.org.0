@@ -2,51 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CC7EEB9B1
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 23:27:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B290EB9B2
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 23:28:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4740L93y2DzF468
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 09:26:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4740MQ4ysCzF50j
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 09:28:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=pengutronix.de (client-ip=2001:67c:670:201:290:27ff:fe1d:cc33;
- helo=metis.ext.pengutronix.de; envelope-from=p.zabel@pengutronix.de;
+ smtp.mailfrom=lenovo.com (client-ip=67.219.246.210;
+ helo=mail1.bemta23.messagelabs.com; envelope-from=dlin23@lenovo.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=pengutronix.de
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de
- [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 472bHs1QrhzF36w
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 02:35:05 +1100 (AEDT)
-Received: from lupine.hi.pengutronix.de
- ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
- by metis.ext.pengutronix.de with esmtp (Exim 4.92)
- (envelope-from <p.zabel@pengutronix.de>)
- id 1iPTWL-0001qa-LN; Tue, 29 Oct 2019 16:34:57 +0100
-Message-ID: <f9ccc316d0974d162bee421baaa2c872632cdc5b.camel@pengutronix.de>
-Subject: Re: [PATCH v2 3/3] reset: npcm: add NPCM reset controller driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Tomer Maimon <tmaimon77@gmail.com>, robh+dt@kernel.org, 
- mark.rutland@arm.com, yuenn@google.com, venture@google.com, 
- benjaminfair@google.com, avifishman70@gmail.com, joel@jms.id.au
-Date: Tue, 29 Oct 2019 16:34:56 +0100
-In-Reply-To: <20191028155403.134126-4-tmaimon77@gmail.com>
-References: <20191028155403.134126-1-tmaimon77@gmail.com>
- <20191028155403.134126-4-tmaimon77@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.210])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4733py6w8WzF3w3
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 21:00:07 +1100 (AEDT)
+Received: from [67.219.247.54] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-3.bemta.az-d.us-east-1.aws.symcld.net id 68/98-14133-42F59BD5;
+ Wed, 30 Oct 2019 10:00:04 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRWlGSWpSXmKPExsWS8eIhr65y/M5
+ Yg1s/tSxOtbxgcWD0OD9jIWMAYxRrZl5SfkUCa8abI74F79UqZt7qZ25gfKDUxcjFISQwn0ni
+ 49S7rBDOa0aJ4xfmsEA4+xklHh9sY+xi5OBgE1CVuD+Nu4uRk0NEQF9i16TdbCC2sICkxNyj/
+ 9gh4nISx/b9Z4Sw9SSO/10NFmcBar3YeosJxOYVsJR4OaeTFcRmFJCVeLLgGVicWUBc4tzFVr
+ B6CQEBiSV7zjND2KISLx//Y4WwFSSa97xmgahPkLh6eS0bxExBiZMzn7BMYBSchWTULCRls5C
+ UQcR1JBbs/sQGYWtLLFv4mhnGPnPgMROy+AJG9lWMZklFmekZJbmJmTm6hgYGuoaGRroWQJah
+ XmKVbopeabFuamJxiS6QW16sV1yZm5yTopeXWrKJERgzKQUcqTsYez+81TvEKMnBpCTKu919R
+ 6wQX1J+SmVGYnFGfFFpTmrxIUYZDg4lCV6dmJ2xQoJFqempFWmZOcD4hUlLcPAoifBuBUnzFh
+ ck5hZnpkOkTjHac0x4OXcRM8fBo/OA5MdVS4DkdxApxJKXn5cqJc47ORqoTQCkLaM0D24oLN1
+ cYpSVEuZlZGBgEOIpSC3KzSxBlX/FKM7BqCTMuxlkOU9mXgnc7ldAZzEBnaXzcxvIWSWJCCmp
+ BqbJ5g0hyeF++08ErmDkm3zws9Qa1d70jdz/eyKE1C8LPVNJDtmU9dFVxq9DSYtHIefp9Id2r
+ PxW6fseiYtrbr9Zyr3oYGbVxUns8xo8ZZLOuZTvlmDdFrAv3FHsyWoxpjNKKqsOPdXJvpy8Mi
+ F5uhDPni1OW89c21dX+v1zjeN+wYdNAYsrF719/DDq+vmwlbvcg87e8z2hejtIfkX9xRtLdlV
+ 1XrBp3BXgzXLhUmNOhOWDD5dcKn8Icxa7FpS+LCjfskPctESEVSbBlnF9VsBKTbdmCeXfnCe3
+ RkfcTKhTb5tzoURQfnbUPpE11yoeLWsxn2X8tJ3jVMyDZkPVk9eDo9bK6W3ae+zctuBdh5VYi
+ jMSDbWYi4oTAROBHzeyAwAA
+X-Env-Sender: dlin23@lenovo.com
+X-Msg-Ref: server-34.tower-426.messagelabs.com!1572429603!114128!1
+X-Originating-IP: [104.232.225.13]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 3390 invoked from network); 30 Oct 2019 10:00:03 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.13)
+ by server-34.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 30 Oct 2019 10:00:03 -0000
+Received: from HKGWPEMAIL04.lenovo.com (unknown [10.128.3.72])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 933206A3C97551EF5BFC
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 06:00:02 -0400 (EDT)
+Received: from HKGWPEMAIL02.lenovo.com (10.128.3.70) by
+ HKGWPEMAIL04.lenovo.com (10.128.3.72) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Wed, 30 Oct 2019 17:59:59 +0800
+Received: from HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba]) by
+ HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba%12]) with mapi id
+ 15.01.1591.008; Wed, 30 Oct 2019 17:59:59 +0800
+From: Derek Lin23 <dlin23@lenovo.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: FanPwm interface
+Thread-Topic: FanPwm interface
+Thread-Index: AdWPBzXsXQVBY5D1TJ+9eIoikR+YRA==
+Date: Wed, 30 Oct 2019 09:59:59 +0000
+Message-ID: <fed4bf71fdbf452f955f527b20c36c08@lenovo.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: multipart/alternative;
+ boundary="_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
-X-Mailman-Approved-At: Fri, 01 Nov 2019 09:21:56 +1100
+X-Mailman-Approved-At: Fri, 01 Nov 2019 09:21:55 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,360 +91,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2019-10-28 at 17:54 +0200, Tomer Maimon wrote:
-> Add Nuvoton NPCM BMC reset controller driver.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  drivers/reset/Kconfig      |   7 +
->  drivers/reset/Makefile     |   1 +
->  drivers/reset/reset-npcm.c | 275 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 283 insertions(+)
->  create mode 100644 drivers/reset/reset-npcm.c
-> 
-> diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-> index 7b07281aa0ae..5dbfdf6d717a 100644
-> --- a/drivers/reset/Kconfig
-> +++ b/drivers/reset/Kconfig
-> @@ -89,6 +89,13 @@ config RESET_MESON_AUDIO_ARB
->  	  This enables the reset driver for Audio Memory Arbiter of
->  	  Amlogic's A113 based SoCs
->  
-> +config RESET_NPCM
-> +	bool "NPCM BMC Reset Driver"
-> +	depends on ARCH_NPCM || COMPILE_TEST
-> +	help
-> +	  This enables the reset controller driver for Nuvoton NPCM 
-> +	  BMC SoCs.
-> +
+--_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Is there any reason to ever disable this driver when building ARCH_NPCM?
+Hi team:
 
->  config RESET_OXNAS
->  	bool
->  
-> diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile
-> index cf60ce526064..00767c03f5f2 100644
-> --- a/drivers/reset/Makefile
-> +++ b/drivers/reset/Makefile
-> @@ -14,6 +14,7 @@ obj-$(CONFIG_RESET_LANTIQ) += reset-lantiq.o
->  obj-$(CONFIG_RESET_LPC18XX) += reset-lpc18xx.o
->  obj-$(CONFIG_RESET_MESON) += reset-meson.o
->  obj-$(CONFIG_RESET_MESON_AUDIO_ARB) += reset-meson-audio-arb.o
-> +obj-$(CONFIG_RESET_NPCM) += reset-npcm.o
->  obj-$(CONFIG_RESET_OXNAS) += reset-oxnas.o
->  obj-$(CONFIG_RESET_PISTACHIO) += reset-pistachio.o
->  obj-$(CONFIG_RESET_QCOM_AOSS) += reset-qcom-aoss.o
-> diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
-> new file mode 100644
-> index 000000000000..ebb3071767e1
-> --- /dev/null
-> +++ b/drivers/reset/reset-npcm.c
-> @@ -0,0 +1,275 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2019 Nuvoton Technology corporation.
-> +
-> +#include <linux/clk.h>
+          I have a question regarding of FanPwm interface on hwmon.
+          Does this interface get updated while PWM is changing in sysfs?
+          For example, if I setup a fan points to a PWM like below configur=
+ation, now, FanPwm interface does not get updated when I update PWM in sysf=
+s, only my fan inputs (rpms) do.
 
-Please remove unused header includes.
+          Example:
+          LABEL_fan1 =3D "FAN0_Speed"
+          ...
+          PWM_TARGET_fan1 =3D "1"
 
-> +#include <linux/delay.h>
-> +#include <linux/err.h>
-> +#include <linux/io.h>
-> +#include <linux/init.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/reboot.h>
-> +#include <linux/reset-controller.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/regmap.h>
-> +#include <linux/of_address.h>
-> +
-> +/* NPCM7xx GCR registers */
-> +#define NPCM_MDLR_OFFSET	0x7C
-> +#define NPCM_MDLR_USBD0		BIT(9)
-> +#define NPCM_MDLR_USBD1		BIT(8)
-> +#define NPCM_MDLR_USBD2_4	BIT(21)
-> +#define NPCM_MDLR_USBD5_9	BIT(22)
-> +
-> +#define NPCM_USB1PHYCTL_OFFSET	0x140
-> +#define NPCM_USB2PHYCTL_OFFSET	0x144
-> +#define NPCM_USBXPHYCTL_RS	BIT(28)
-> +
-> +/* NPCM7xx Reset registers */
-> +#define NPCM_SWRSTR		0x14
-> +#define NPCM_SWRST		BIT(2)
-> +
-> +#define NPCM_IPSRST1		0x20
-> +#define NPCM_IPSRST1_USBD1	BIT(5)
-> +#define NPCM_IPSRST1_USBD2	BIT(8)
-> +#define NPCM_IPSRST1_USBD3	BIT(25)
-> +#define NPCM_IPSRST1_USBD4	BIT(22)
-> +#define NPCM_IPSRST1_USBD5	BIT(23)
-> +#define NPCM_IPSRST1_USBD6	BIT(24)
-> +
-> +#define NPCM_IPSRST2		0x24
-> +#define NPCM_IPSRST2_USB_HOST	BIT(26)
-> +
-> +#define NPCM_IPSRST3		0x34
-> +#define NPCM_IPSRST3_USBD0	BIT(4)
-> +#define NPCM_IPSRST3_USBD7	BIT(5)
-> +#define NPCM_IPSRST3_USBD8	BIT(6)
-> +#define NPCM_IPSRST3_USBD9	BIT(7)
-> +#define NPCM_IPSRST3_USBPHY1	BIT(24)
-> +#define NPCM_IPSRST3_USBPHY2	BIT(25)
-> +
-> +#define NPCM_RC_RESETS_PER_REG	32
-> +
-> +struct npcm_rc_data {
-> +	struct reset_controller_dev rcdev;
-> +	struct notifier_block restart_nb;
-> +	u32 sw_reset_number;
-> +	void __iomem *base;
-> +	spinlock_t lock;
-> +};
-> +
-> +#define to_rc_data(p) container_of(p, struct npcm_rc_data, rcdev)
-> +
-> +static int npcm_rc_restart(struct notifier_block *nb, unsigned long mode,
-> +			   void *cmd)
-> +{
-> +	struct npcm_rc_data *rc = container_of(nb, struct npcm_rc_data,
-> +					       restart_nb);
-> +
-> +	writel(NPCM_SWRST << rc->sw_reset_number, rc->base + NPCM_SWRSTR);
-> +	mdelay(1000);
-> +
-> +	pr_emerg("%s: unable to restart system\n", __func__);
-> +
-> +	return NOTIFY_DONE;
-> +}
-> +
-> +static int npcm_rc_setclear_reset(struct reset_controller_dev *rcdev,
-> +				  unsigned long id, bool set)
-> +{
-> +	struct npcm_rc_data *rc = to_rc_data(rcdev);
-> +	u32 ctrl_offset = NPCM_IPSRST1;
-> +	unsigned long flags;
-> +	u32 stat, rst_bit;
-> +
-> +	ctrl_offset += (id / NPCM_RC_RESETS_PER_REG) * sizeof(u32);
-> +	rst_bit = 1 << (id % NPCM_RC_RESETS_PER_REG);
-> +
-> +	spin_lock_irqsave(&rc->lock, flags);
-> +	stat = readl(rc->base + ctrl_offset);
-> +	if (set)
-> +		writel(stat | rst_bit, rc->base + ctrl_offset);
-> +	else
-> +		writel(stat & ~rst_bit, rc->base + ctrl_offset);
-> +	spin_unlock_irqrestore(&rc->lock, flags);
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_rc_assert(struct reset_controller_dev *rcdev, unsigned long id)
-> +{
-> +	return npcm_rc_setclear_reset(rcdev, id, true);
-> +}
-> +
-> +static int npcm_rc_deassert(struct reset_controller_dev *rcdev,
-> +			    unsigned long id)
-> +{
-> +	return npcm_rc_setclear_reset(rcdev, id, false);
-> +}
-> +
-> +static int npcm_rc_status(struct reset_controller_dev *rcdev,
-> +			  unsigned long id)
-> +{
-> +	struct npcm_rc_data *rc = to_rc_data(rcdev);
-> +	u32 bit, ctrl_offset = NPCM_IPSRST1;
-> +
-> +	ctrl_offset += (id / NPCM_RC_RESETS_PER_REG) * sizeof(u32);
-> +	bit = 1 << (id % NPCM_RC_RESETS_PER_REG);
-> +
-> +	return (readl(rc->base + ctrl_offset) & bit);
-> +}
-> +
-> +/*
-> + *  The following procedure should be observed in USB PHY, USB device and
-> + *  USB host initialization at BMC boot
-> + */
-> +static int npcm_usb_reset(struct platform_device *pdev, struct npcm_rc_data *rc)
-> +{
-> +	struct device_node *np = pdev->dev.of_node;
-> +	u32 mdlr, iprst1, iprst2, iprst3;
-> +	struct regmap *gcr_regmap;
-> +	u32 ipsrst1_bits = 0;
-> +	u32 ipsrst2_bits = NPCM_IPSRST2_USB_HOST;
-> +	u32 ipsrst3_bits = 0;
-> +
-> +	if (of_device_is_compatible(np, "nuvoton,npcm750-reset")) {
-> +		gcr_regmap = syscon_regmap_lookup_by_compatible("nuvoton,npcm750-gcr");
-> +		if (IS_ERR(gcr_regmap)) {
-> +			dev_err(&pdev->dev, "Failed to find nuvoton,npcm750-gcr\n");
-> +			return PTR_ERR(gcr_regmap);
-> +		}
-> +	}
-> +	if (!gcr_regmap)
-> +		return -ENXIO;
-> +
-> +	/* checking which USB device is enabled */
-> +	regmap_read(gcr_regmap, NPCM_MDLR_OFFSET, &mdlr);
-> +	if (!(mdlr & NPCM_MDLR_USBD0))
-> +		ipsrst3_bits |= NPCM_IPSRST3_USBD0;
-> +	if (!(mdlr & NPCM_MDLR_USBD1))
-> +		ipsrst1_bits |= NPCM_IPSRST1_USBD1;
-> +	if (!(mdlr & NPCM_MDLR_USBD2_4))
-> +		ipsrst1_bits |= (NPCM_IPSRST1_USBD2 |
-> +				 NPCM_IPSRST1_USBD3 |
-> +				 NPCM_IPSRST1_USBD4);
-> +	if (!(mdlr & NPCM_MDLR_USBD0)) {
-> +		ipsrst1_bits |= (NPCM_IPSRST1_USBD5 |
-> +				 NPCM_IPSRST1_USBD6);
-> +		ipsrst3_bits |= (NPCM_IPSRST3_USBD7 |
-> +				 NPCM_IPSRST3_USBD8 |
-> +				 NPCM_IPSRST3_USBD9);
-> +	}
-> +
-> +	/* assert reset USB PHY and USB devices */
-> +	iprst1 = readl(rc->base + NPCM_IPSRST1);
-> +	iprst2 = readl(rc->base + NPCM_IPSRST2);
-> +	iprst3 = readl(rc->base + NPCM_IPSRST3);
-> +
-> +	iprst1 |= ipsrst1_bits;
-> +	iprst2 |= ipsrst2_bits;
-> +	iprst3 |= (ipsrst3_bits | NPCM_IPSRST3_USBPHY1 |
-> +		   NPCM_IPSRST3_USBPHY2);
-> +
-> +	writel(iprst1, rc->base + NPCM_IPSRST1);
-> +	writel(iprst2, rc->base + NPCM_IPSRST2);
-> +	writel(iprst3, rc->base + NPCM_IPSRST3);
-> +
-> +	/* clear USB PHY RS bit */
-> +	regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
-> +			   NPCM_USBXPHYCTL_RS, 0);
-> +	regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
-> +			   NPCM_USBXPHYCTL_RS, 0);
-> +
-> +	/* deassert reset USB PHY */
-> +	iprst3 &= ~(NPCM_IPSRST3_USBPHY1 | NPCM_IPSRST3_USBPHY2);
-> +	writel(iprst3, rc->base + NPCM_IPSRST3);
-> +
-> +	udelay(50);
-> +
-> +	/* set USB PHY RS bit */
-> +	regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
-> +			   NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
-> +	regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
-> +			   NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
-> +
-> +	/* deassert reset USB devices*/
-> +	iprst1 &= ~ipsrst1_bits;
-> +	iprst2 &= ~ipsrst2_bits;
-> +	iprst3 &= ~ipsrst3_bits;
-> +
-> +	writel(iprst1, rc->base + NPCM_IPSRST1);
-> +	writel(iprst2, rc->base + NPCM_IPSRST2);
-> +	writel(iprst3, rc->base + NPCM_IPSRST3);
-> +
-> +	return 0;
-> +}
+          Is there a configuration or label which I can use so FanPwm inter=
+face would get updated when I change PWM in sysfs?
 
-Is there no better place for this, such as USB glue code?
+Thanks,
 
-> +static const struct reset_control_ops npcm_rc_ops = {
-> +	.assert		= npcm_rc_assert,
-> +	.deassert	= npcm_rc_deassert,
-> +	.status		= npcm_rc_status,
-> +};
-> +
-> +static int npcm_rc_probe(struct platform_device *pdev)
-> +{
-> +	struct npcm_rc_data *rc;
-> +	struct resource res;
-> +	int ret;
-> +
-> +	rc = devm_kzalloc(&pdev->dev, sizeof(*rc), GFP_KERNEL);
-> +	if (!rc)
-> +		return -ENOMEM;
-> +
-> +	of_address_to_resource(pdev->dev.of_node, 0, &res);
-> +	rc->base = devm_ioremap_resource(&pdev->dev, &res);
+Derek
 
-Can't you just use
 
-	rc->base = devm_platform_ioremap_resource(pdev, 0);
 
-here?
+--_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-> +	if (IS_ERR(rc->base))
-> +		return PTR_ERR(rc->base);
-> +
-> +	spin_lock_init(&rc->lock);
-> +
-> +	rc->rcdev.owner = THIS_MODULE;
-> +	rc->rcdev.nr_resets = resource_size(&res) / 4 * BITS_PER_LONG;
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi team:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; I have a question regarding of FanPwm interface on =
+hwmon.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Does this interface get updated while PWM is changi=
+ng in sysfs?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; For example, if I setup a fan points to a PWM like =
+below configuration, now, FanPwm interface does not get updated when I upda=
+te PWM in sysfs, only my fan inputs (rpms) do.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Example:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; LABEL_fan1 =3D &quot;FAN0_Speed&quot;<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; &#8230;<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; PWM_TARGET_fan1 =3D &quot;1&quot;<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Is there a configuration or label which I can use s=
+o FanPwm interface would get updated when I change PWM in sysfs?<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Derek<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
 
-That doesn't seem right. With the ctrl_offset = NPCM_IPSRST1 in
-npcm_rc_setclear_reset that would allow access beyond the configured
-register range.
-
-> +	rc->rcdev.ops = &npcm_rc_ops;
-> +	rc->rcdev.of_node = pdev->dev.of_node;
-> +
-> +	platform_set_drvdata(pdev, rc);
-> +
-> +	ret = reset_controller_register(&rc->rcdev);
-
-	ret = devm_reset_controller_register(&pdev->dev, &rc->rcdev);
-
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "unable to register device\n");
-> +		return ret;
-> +	}
-> +
-> +	if (npcm_usb_reset(pdev, rc))
-> +		dev_warn(&pdev->dev, "NPCM USB reset failed, can cause issues with UDC and USB host\n");
-> +
-> +	if (!of_property_read_u32(pdev->dev.of_node, "nuvoton,sw-reset-number",
-> +				  &rc->sw_reset_number)) {
-> +		if (rc->sw_reset_number && rc->sw_reset_number < 5) {
-> +			rc->restart_nb.priority = 192,
-> +			rc->restart_nb.notifier_call = npcm_rc_restart,
-> +			ret = register_restart_handler(&rc->restart_nb);
-> +			if (ret)
-> +				dev_warn(&pdev->dev, "failed to register restart handler\n");
-> +		}
-> +	}
-> +
-> +	pr_info("NPCM RESET driver probed\n");
-
-It think this is a bit verbose.
-
-> +	return ret;
-> +}
-> +
-> +static const struct of_device_id npcm_rc_match[] = {
-> +	{ .compatible = "nuvoton,npcm750-reset" },
-> +	{ }
-> +};
-> +
-> +static struct platform_driver npcm_rc_driver = {
-> +	.probe	= npcm_rc_probe,
-> +	.driver	= {
-> +		.name			= "npcm-reset",
-> +		.of_match_table		= npcm_rc_match,
-> +		.suppress_bind_attrs	= true,
-> +	},
-> +};
-> +builtin_platform_driver(npcm_rc_driver);
-
-regards
-Philipp
-
+--_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_--
