@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA516E9C14
-	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 14:11:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EECA3E9C1B
+	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 14:13:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47384558bPzDqRL
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 00:11:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47385q3805zF46Y
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 00:13:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,42 +16,42 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="sA2uEydy"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="SAPpUIRU"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ChouHSs7"; dkim-atps=neutral
+ header.b="eZiwbCMQ"; dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4737Gj0x98zF4Hm
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 23:35:55 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4737Gj0xZKzF4Hn
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 23:35:56 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id CB63A2089D;
- Wed, 30 Oct 2019 08:35:51 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 8679121C48;
+ Wed, 30 Oct 2019 08:35:53 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 30 Oct 2019 08:35:51 -0400
+ by compute4.internal (MEProxy); Wed, 30 Oct 2019 08:35:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm1; bh=IvTn8Tpx+17AZ
- wcyPoI9nsUNch2fNgW0y55fiAf27f4=; b=sA2uEydyiWMvXkZv3vkoyXIF24WyA
- 14t02FYiJH3yH1bMRpJxvfoBM1l+byXzF97B92NqhRuSyWzF7P0zsLWRzA/mwvab
- Y8zPYwvLMyGw4dHhGkRvkyLwNTavif4th9Mp9BfrhRHVhADbFvX7E0Hw3xDFBYV9
- wTMPbFwGi/tAd0eJz8FRscr/h/f90ZW6jE46AnLr7/s67jHZojEjgDCG74vGUEho
- ZBkknSq/D7pCV+MviaL9NpCrToF0vxjrCM3R38rcDOXsy8fPsyCietJ5sxn3lvEu
- At5uqTP94tS3pCIAUUWKSr6mBAX1GaoDa0DNwuh9J05JgsID251FVCWlw==
+ :mime-version:content-transfer-encoding; s=fm1; bh=GnP/xy+PJN1vi
+ N5YXPUCzdz4B+9b9AL5rte+h1LMcrA=; b=SAPpUIRUDY51496vCJw+yMByeq7hE
+ c54oRYNgaPVhnCINM7WjdT/MqRHY0F99w8MLbnt7KKh8ywXq7RjO5tzHLsNTvF8U
+ DN1WizcehONBGYqa2J+b5WJgETuiWX9vLyR8u5ZCQrbS/yZoSJ8EPLzvkx46E+27
+ wPec0RCkW9i5kXIR4oXW/SAg8YW5Q9Lm9dsXqCB5fvh2B9ZPdS0YK7h72mg5NMKU
+ sNcHX2KTmYOhTgdeh+khQn9m8FSNSIq73Wc5DCDo6eDjsyVmxd6PdaWgMKPdDCEE
+ IglnFgZ3+SB2ginTN4VYtz+f4rmES/z/Kcig0O+tLoFkDhCGTzVa4HoHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; bh=IvTn8Tpx+17AZwcyPoI9nsUNch2fNgW0y55fiAf27f4=; b=ChouHSs7
- gzWfF0saLYz6IQiQBxAsxG9vUuhYr5JK3GJPOYDOwTdI1D483vtkwewOnrRX3Kgn
- IlkuE3YZb86R0tQrZZBrYFJzBF9t/dlb5oI2hMlXb23/4A7Kw1zrxn+Y9Z7gQRR0
- lK8FW1nihnHktJo/L2/2dqC1bI/KIWsqwlh3Fi91H+Kvxmpo1U+JWmDq2nlqxZZw
- Z+b5q7Po4GNvysG7stZtB7uChu4bu+AsMR/f+2ia968fXA/5Py3KBDG79/r7iHDd
- DmrL9CggvGyJ+wvUl/S6uSoFJO3WnkX+n04PngdGnfAfHtVdBMGSCK7+rqLH1Gbm
- fnmucYjK2b9x9A==
-X-ME-Sender: <xms:p4O5XYCIVhD-ZCksTXL8x3QA0m_l1Q_FvxoYvch1cSD1VWFxeJoAJQ>
+ fm1; bh=GnP/xy+PJN1viN5YXPUCzdz4B+9b9AL5rte+h1LMcrA=; b=eZiwbCMQ
+ jRq9hMmLJ0yrXELxffdNiyiPAzeA+RtUf+ywVyo1WGGMQ+bBKu+M+PwMYUt5XS+8
+ jgxI3/1DTuHfmkOIwNd+eAD5buZngfvNYQ7GkkJDishOyTu++N5/CeFJXsf9G7ZU
+ dcFuGsAUQAyan37mQ91ea7gg2q5qGH8t+ZU6l44IWApDzJUNYtM6NQMm2gf3B//g
+ hYF/SV1mHDaq47cYxKwP5VAPfcxFv4AGo4nP5Geg8vswnV3WM/8E53jIAnGFBAI+
+ 2iXw/gz0oSeTiX46bvWznr+2OzN+TksB5+JjdMXgI/ayTELaMV/DUjPs326DUDXy
+ Ovgfb9IuROTMWw==
+X-ME-Sender: <xms:qYO5XSgwgdFyLbBRE-D8mxtNM4nozZ1wPNvlXwUGKdDgxKUmjJdRTQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtfedggeefucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
@@ -59,20 +59,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtfedggeefucetufdoteggod
  jhdrihgurdgruheqnecukfhppeduudekrddvuddtrddugeejrdegheenucfrrghrrghmpe
  hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhi
  iigvpedt
-X-ME-Proxy: <xmx:p4O5XZQ8XRJ0ZBZhxDLkdrU4x8bybLcjcBe62Vqqi2EgttiX0XGtoA>
- <xmx:p4O5XbJL7cvmDrDQ_Wq9mw-20J9r2OawQQZd7LBBNKZaQcyw4NTCFw>
- <xmx:p4O5XZFsWsv20CMgYLtmYWItnlRHRyTPOsk3T-l-1JO3pdyx723b4g>
- <xmx:p4O5XdMhi9RMnmSW5Vf0h3vpA8KnLIbnJ5_nKz_DmLlDiPjDYtoMtQ>
+X-ME-Proxy: <xmx:qYO5XUgNBx3wF7CMXxCEMfnJFPjY5L9U8lH9XRcrcqlEgyA0TZ5K7Q>
+ <xmx:qYO5XXsw9YKn3KUjdIObgSXmBQtxBfTHpR1neQy02LLmZkzTpcFLcw>
+ <xmx:qYO5XSvZF3TO5qWMRdZkiq8jPz3zBAEYsUD5CCBSc0ytgw-629vlUA>
+ <xmx:qYO5XaObLDnxUckQ5Ie0Zvi0SK58FrvQ0XtILlSaTFTrNV6djJdHUg>
 Received: from localhost.localdomain
  (ppp118-210-147-45.adl-adc-lon-bras33.tpg.internode.on.net [118.210.147.45])
- by mail.messagingengine.com (Postfix) with ESMTPA id 6E0BA3060063;
- Wed, 30 Oct 2019 08:35:50 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 45DB1306005F;
+ Wed, 30 Oct 2019 08:35:51 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 1/3] fsi: aspeed: Implement byte and half world
- transfers
-Date: Wed, 30 Oct 2019 23:07:05 +1030
-Message-Id: <20191030123707.29110-2-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 2/3] fsi: aspeed: Fix buffer overrun for small
+ writes
+Date: Wed, 30 Oct 2019 23:07:06 +1030
+Message-Id: <20191030123707.29110-3-andrew@aj.id.au>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191030123707.29110-1-andrew@aj.id.au>
 References: <20191030123707.29110-1-andrew@aj.id.au>
@@ -93,94 +93,43 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Joel Stanley <joel@jms.id.au>
+One and two byte writes read data beyond the end of the provided
+buffer.
 
-The driver did not previously support non-word size transfers. The
-fsi-i2c driver attempts accesses of this size, so we require it now.
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-[AJ: rebase on dev-5.3, fix conflicts, fix warnings]
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c | 35 ++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+ drivers/fsi/fsi-master-aspeed.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index 97d2cac94291..cb8064cc59c0 100644
+index cb8064cc59c0..6767cd89de36 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -167,24 +167,39 @@ static const u32 fsi_base = 0xa0000000;
- #define CMD_WRITE	0
+@@ -331,7 +331,23 @@ static int aspeed_master_write(struct fsi_master *master, int link,
+ 		return -EINVAL;
  
- /* OPBx_XFER_SIZE */
--#define XFER_WORD	(BIT(1) | BIT(0))
--#define XFER_NIBBLE	(BIT(0))
-+#define XFER_FULLWORD	(BIT(1) | BIT(0))
-+#define XFER_HALFWORD	(BIT(0))
- #define XFER_BYTE	(0)
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/fsi_master_aspeed.h>
- 
-+static int get_xfer_size(size_t size) {
+ 	addr += link * FSI_HUB_LINK_SIZE;
+-	ret = opb_write(aspeed, fsi_base + addr, *(uint32_t *)val, size);
++
 +	switch (size) {
 +	case 1:
-+		return XFER_BYTE;
++		ret = opb_write(aspeed, fsi_base + addr, *(uint8_t *)val,
++				size);
++		break;
 +	case 2:
-+		return XFER_HALFWORD;
++		ret = opb_write(aspeed, fsi_base + addr, *(uint16_t *)val,
++				size);
++		break;
 +	case 4:
-+		return XFER_FULLWORD;
++		ret = opb_write(aspeed, fsi_base + addr, *(uint32_t *)val,
++				size);
++		break;
 +	default:
 +		return -EINVAL;
 +	}
-+}
-+
- static u32 opb_write(struct fsi_master_aspeed *aspeed, uint32_t addr,
- 		     uint32_t val, size_t size)
- {
- 	void __iomem *base = aspeed->base;
- 	u32 reg, ret, status;
-+	int xfer_size;
  
--	/* TODO: implement other sizes, see 0x18 */
--	WARN_ON(size != 4);
-+	xfer_size = get_xfer_size(size);
-+	if (xfer_size < 0)
-+		return xfer_size;
- 
- 	writel(CMD_WRITE, base + OPB0_RW);
--	writel(XFER_WORD, base + OPB0_XFER_SIZE);
-+	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
- 	writel(val, base + OPB0_FSI_DATA_W);
- 	writel(0x1, base + OPB_IRQ_CLEAR);
-@@ -215,12 +230,14 @@ static int opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
- 	void __iomem *base = aspeed->base;
- 	u32 result, reg;
- 	int status, ret;
-+	int xfer_size;
- 
--	/* TODO: implement other sizes, see 0x18 */
--	WARN_ON(size != 4);
-+	xfer_size = get_xfer_size(size);
-+	if (xfer_size < 0)
-+		return xfer_size;
- 
- 	writel(CMD_READ, base + OPB0_RW);
--	writel(XFER_WORD, base + OPB0_XFER_SIZE);
-+	writel(xfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
- 	writel(0x1, base + OPB_IRQ_CLEAR);
- 	writel(0x1, base + OPB_TRIGGER);
-@@ -246,7 +263,7 @@ static int opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
- 		return -EIO;
- 
- 	if (out)
--		*out = result;
-+		memcpy(out, &result, size);
- 
- 	return 0;
- }
+ 	ret = check_errors(aspeed, ret);
+ 	if (ret)
 -- 
 2.20.1
 
