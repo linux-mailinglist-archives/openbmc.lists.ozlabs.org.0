@@ -2,69 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FBE2E966B
-	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 07:34:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C496CE9668
+	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 07:33:16 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 472zFG2f5hzF3m2
-	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 17:34:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 472zD92xDYzF3l7
+	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 17:33:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::434;
+ helo=mail-pf1-x434.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="QFWydlvf"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="bdQ2ZHu6"; 
  dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com
+ [IPv6:2607:f8b0:4864:20::434])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 472zCW4mcxzF3VC
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 17:32:37 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id c23so92498pgn.9
- for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 23:32:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 472zCW4l3LzF3V9
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 17:32:38 +1100 (AEDT)
+Received: by mail-pf1-x434.google.com with SMTP id b25so829794pfi.13
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Oct 2019 23:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=NGTvq01oX8C0PqczS7KlP+0ZuJMSUMePY2X02OEuMSo=;
- b=QFWydlvfO0vEYNwm1qaob/nk6BT7TZMro11MmHS++KjBW4EbS8UW53j5ArSJby72sE
- XwRouIc6NYGhFd5wXGTcYShjXBCVNafyAbwD/0ZuGnDxL/8UCIJsspBZjIl5PTZAQVP8
- or66VGKSpUzyt5D5YeUP1vJRYd6YPyXn5rGN6wcSB1lmBDpRaggJLcrzwQrWCYgV8qh0
- Tlwf+LgE158uMWEi/1h9ta064vG83fi02jP5UY6igovrhRME42Mfclqt+P8iMgzl1gLz
- nPO3ZJEiYCDEp9kHMut+Z1/txKxa6yrEaSCAfkR4IOwfcyQw1eCwOhuqZ+mGwE0y2Loj
- fqmg==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=dLRxYrd8OZQn6msCJJYhGXbEGnyruPOi30WNbEHoPp0=;
+ b=bdQ2ZHu6mwC7dxbr+u3WsTCInhk9y3iZ/5+1rwrC1gtcfXD9zHZHey+kRCIdDtCzar
+ mX/q7NXWGKpm/O51hYFSmnugCVOL/tIeyrwiXzKwwUeOXKxAYZO6zDGNTuvB7qPN2UKE
+ 2pBw+uQJdMh9KWnzAbgByO+AJpxSVO8IqeNP/g1EHMObBjBRTGUhygfg8Oxk/m5RQbdY
+ QLlkhFw1bZVMaOj6Mg3dBHvlDEL79Ys9VeHmko41TSfEf9+kpJkZlDbVu3elF87GsH7L
+ e9Wu9tUJGNyWlBgxik4E3Yb5ID4MH6vOaq2jgICpSEwE2kwZA9gH4Uu4E7u3G3w6TYEa
+ UhUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=NGTvq01oX8C0PqczS7KlP+0ZuJMSUMePY2X02OEuMSo=;
- b=k3RrCfhT7dJHOKjTUM1fAMKHGCWzbQZ9nQ/LR+JBeyU3BZwmLBQwpktdEQuwzyYVGs
- Jdvd8VuysprIn6BimAMBYk6wWN4Gn40WRdH65lX6g4xEAsIqy4olinVuot1rDnwYcXka
- q+R64NvKjHgy34IXWeEJSXZPPCXjOtE8DouYtPnT8ZqnCRyqPNtgq8AAhV5fRFGdyx3y
- SjOzzkP3km9y+vUQHGncuzSJ2yfdoQb2TokYj9tSK1McDsfzC8lUTOHBeH5GODR8sBrQ
- 89yXcpuPk20KoVQrh09nI2pArJ2piHzf5makZ+hsqMi0MBWLKnYP639UVyMK+wp90W2K
- 8hBA==
-X-Gm-Message-State: APjAAAWT7m7ZleaslVWzyRFPoD0UyGXZ99A/VkBQWcEGC/FAT0mSZp4t
- uY0LJilnhTQXcRl/euHl1XM=
-X-Google-Smtp-Source: APXvYqz4kER3x1VctxNu2eb2601tYDillprA1SOgwX67oM7Hdv3ZkiCv4ZuWJFua7m/w7htHqSsx+Q==
-X-Received: by 2002:a17:90b:f15:: with SMTP id
- br21mr8039026pjb.107.1572417153520; 
- Tue, 29 Oct 2019 23:32:33 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=dLRxYrd8OZQn6msCJJYhGXbEGnyruPOi30WNbEHoPp0=;
+ b=Q6JNPDxHR7iF8TNmiOAsYx7iNUTjKfGsDNkVdcNqeWSbz5YSKFXGIP37Cu11EoX1zF
+ 6cZsNPOTo0M/eG8w/PRlwLrBMp8NtRSGoutqvDVY6gYk7BUaTX0iAz7wF51fi0LqDY6v
+ nsAJidlzmB1c7gBjoqHbU0XYILPECNMFckDgCJDDRHvuz91kFZ3j4wVI4pus2tnet/Ef
+ Rsbl7ZgfG2uD24BCyXYrC1UqBgfwqS1bizQS2nvMgQyMZtvYdMe0zCDwXS7LYhc7HbrZ
+ McC3VSoRmZ+vbsEhxCGns4TvRNGUYd3e8h2k0qxHD4sYxipaYfI0oFdJ5wMi1dXu6N5k
+ 4YYA==
+X-Gm-Message-State: APjAAAWnUlMTcUZ9jFZUj8s2LzeC9lmOZPMyvHEdhz8lvyDBBmf1qhuX
+ n6NW1uOgChRWrhA+kuz0sds=
+X-Google-Smtp-Source: APXvYqwT4iAwzvca94AOtDdmK8hOfekAi3D8tieLXmDMlfRsDTaZWTC754ihCy8vAj6Hj1ZAAu6xYA==
+X-Received: by 2002:a17:90a:7f06:: with SMTP id
+ k6mr11761099pjl.10.1572417156179; 
+ Tue, 29 Oct 2019 23:32:36 -0700 (PDT)
 Received: from voyager.ibm.com ([36.255.48.244])
- by smtp.gmail.com with ESMTPSA id i102sm1028018pje.17.2019.10.29.23.32.30
+ by smtp.gmail.com with ESMTPSA id i102sm1028018pje.17.2019.10.29.23.32.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Oct 2019 23:32:32 -0700 (PDT)
+ Tue, 29 Oct 2019 23:32:35 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Ryan Chen <ryan_chen@aspeedtech.com>, Jeremy Kerr <jk@ozlabs.org>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH u-boot aspeed-dev-v2019.04 0/7] FSI driver for u-boot
-Date: Wed, 30 Oct 2019 17:02:18 +1030
-Message-Id: <20191030063225.11319-1-joel@jms.id.au>
+Subject: [PATCH u-boot aspeed-dev-v2019.04 1/7] dt-bindings: Add FSI clock
+Date: Wed, 30 Oct 2019 17:02:19 +1030
+Message-Id: <20191030063225.11319-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20191030063225.11319-1-joel@jms.id.au>
+References: <20191030063225.11319-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -82,42 +84,59 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Ryan,
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ include/dt-bindings/clock/ast2600-clock.h | 39 ++++++++++++-----------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-Here is a FSI driver for u-boot. It can be used for basic control of the
-FSI master.
-
-The patches can be found in https://github.com/shenki/u-boot/tree/fsi-master
-too, if you would prefer to merge them from Github.
-
-Please consider merging these to allow FSI testing.
-
-Joel Stanley (7):
-  dt-bindings: Add FSI clock
-  dts: ast2600: Add FSI description
-  aspeed: pinctrl: Add FSI support
-  aspeed: clock: Add FSI clock
-  dts: ast2600-evb: Enable FSI masters
-  Add FSI driver
-  cmd: Add FSI command
-
- arch/arm/dts/ast2600-evb.dts              |   8 +
- arch/arm/dts/ast2600.dtsi                 |  31 ++
- cmd/Kconfig                               |   6 +
- cmd/Makefile                              |   1 +
- cmd/fsi.c                                 | 153 ++++++
- drivers/clk/aspeed/clk_ast2600.c          |  23 +
- drivers/misc/Kconfig                      |   6 +
- drivers/misc/Makefile                     |   1 +
- drivers/misc/aspeed-fsi.c                 | 556 ++++++++++++++++++++++
- drivers/pinctrl/aspeed/pinctrl_ast2600.c  |  10 +
- include/aspeed_fsi.h                      |  14 +
- include/dt-bindings/clock/ast2600-clock.h |  39 +-
- 12 files changed, 829 insertions(+), 19 deletions(-)
- create mode 100644 cmd/fsi.c
- create mode 100644 drivers/misc/aspeed-fsi.c
- create mode 100644 include/aspeed_fsi.h
-
+diff --git a/include/dt-bindings/clock/ast2600-clock.h b/include/dt-bindings/clock/ast2600-clock.h
+index 4956fa196d39..7e07cbda37c4 100644
+--- a/include/dt-bindings/clock/ast2600-clock.h
++++ b/include/dt-bindings/clock/ast2600-clock.h
+@@ -41,23 +41,24 @@
+ #define ASPEED_CLK_GATE_USBUHCICLK	33
+ #define ASPEED_CLK_GATE_USBPORT1CLK	34
+ #define ASPEED_CLK_GATE_USBPORT2CLK	35
++#define ASPEED_CLK_GATE_FSICLK		36
+ 
+-#define ASPEED_CLK_APLL			36
+-#define ASPEED_CLK_EPLL			37
+-#define ASPEED_CLK_DPLL			38
+-#define ASPEED_CLK_HPLL			39
+-#define ASPEED_CLK_AHB			40
+-#define ASPEED_CLK_APB1			41
+-#define ASPEED_CLK_APB2			42
+-#define ASPEED_CLK_UART			43
+-#define ASPEED_CLK_SDIO			44
+-#define ASPEED_CLK_ECLK			45
+-#define ASPEED_CLK_ECLK_MUX		46
+-#define ASPEED_CLK_LHCLK		47
+-#define ASPEED_CLK_MAC			48
+-#define ASPEED_CLK_BCLK			49
+-#define ASPEED_CLK_MPLL			50
+-#define ASPEED_CLK_24M			51
+-#define ASPEED_CLK_EMMC			52
+-#define ASPEED_CLK_UARTX		53
+-#define ASPEED_CLK_UARTUX		54
++#define ASPEED_CLK_APLL			37
++#define ASPEED_CLK_EPLL			38
++#define ASPEED_CLK_DPLL			39
++#define ASPEED_CLK_HPLL			40
++#define ASPEED_CLK_AHB			41
++#define ASPEED_CLK_APB1			42
++#define ASPEED_CLK_APB2			43
++#define ASPEED_CLK_UART			44
++#define ASPEED_CLK_SDIO			45
++#define ASPEED_CLK_ECLK			46
++#define ASPEED_CLK_ECLK_MUX		47
++#define ASPEED_CLK_LHCLK		48
++#define ASPEED_CLK_MAC			49
++#define ASPEED_CLK_BCLK			50
++#define ASPEED_CLK_MPLL			51
++#define ASPEED_CLK_24M			52
++#define ASPEED_CLK_EMMC			53
++#define ASPEED_CLK_UARTX		54
++#define ASPEED_CLK_UARTUX		55
 -- 
 2.23.0
 
