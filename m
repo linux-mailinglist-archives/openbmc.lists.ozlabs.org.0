@@ -1,66 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B37A3EA29A
-	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 18:31:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF769EA2B5
+	for <lists+openbmc@lfdr.de>; Wed, 30 Oct 2019 18:44:29 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 473FrD64zbzDrCW
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 04:31:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 473G6f6QgLzF4bv
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 04:44:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::432;
- helo=mail-pf1-x432.google.com; envelope-from=venture@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="nylpSUBw"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="MXzNb6jI"; 
  dkim-atps=neutral
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
- [IPv6:2607:f8b0:4864:20::432])
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 473FhK006DzF4bR
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 04:25:04 +1100 (AEDT)
-Received: by mail-pf1-x432.google.com with SMTP id 21so2033605pfj.9
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 10:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=8DXiuwUg068H9lce6wN0e1BGeKmkrEAiaaZic/brpSA=;
- b=nylpSUBw3KuLBui3l/Ot3MElmafG2A+ZnFiRH87HIDWg8UE4zRKrwqMrR9NYsOVaED
- 5/mhVBmQoE9QJTdcNtaCXd9YidvlbusIHZAjwxo2rZtVXirvSHhO2DsxfTQqpJtnXjXO
- 1/b33GHk10qlA2puflmOGs/PFLeCZLxsjknrhBVoqrYXVfvUgKZxjikeYTDBOQ1DH+py
- qvCHKIQ6gpdkjA2obj7y3JxPojle8M77OXNHnfIuLw8/9i0YJzvcVGoQ+R4lApXAIEet
- yqfi3crXZv1Zx22gvA2ySkHVhEvyC01Qz1k2lPnsr6IQ2Z7se5A69l9jx0YVXGpRpiGj
- i/aA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 473G5p74rCzF4c2
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 04:43:40 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id j7so2734903oib.3
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 10:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=CLzNtAemBPhtGh+6Wu2X5RQuXIKS9c5pLW09tFr8J90=;
+ b=MXzNb6jIwc3sf0JRBh0IIpxlao79uVHi/U86UBkZZgeJMVrkJWAmeLuh69NNczAd6A
+ N9DJzumbild3WIdFR43X/J7aK+5fJg1xU4BJUxOhVBQxgccEOljLCTQ5zbivzhVmFo6q
+ HrywaY9lNrZXeziriJrWCJ+pAyVQbJVQXeolorXIjD6ldb/Gm+0CRHx1hkoQPklNQOGc
+ 347qnplQbfEuQTpiDqh3fyafQQ0ietA5LdpKmRv6owXg6DDhP1G6XWXwcRA8Ft+v08Hb
+ mzd3ylGz+mMlkvpqWmN8iK9o1QrsBaefUNmLL4dfwRy9mJ8oqfuL6vhUnarSax9YHNVL
+ UY/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=8DXiuwUg068H9lce6wN0e1BGeKmkrEAiaaZic/brpSA=;
- b=qDJeHBDUXX0rUBb9Vxi9yrPCwGgK7ugKxjuv34P3GKk0gILwB2uxGolO2UNedthXO7
- 1X7d8Yz0S5zP9HEl2j/cg7xXrlOd2L4QIrg95JDHswX0gEsohBL6vkA7Tg9Ky4x1b1Pn
- SFm8y/tGgb7orEe5O9b2IV8G/I1Y6CknHT3dYYNF43l4b+cyV2je2yJTfTw68d5wMJwQ
- rFHfpFkPYnvpVafbkU0DhrCqShcIA10i70Dz6KCiV9PZ9avd4YGoKQSZcNXcCI8sns3C
- L6Byrs+hIK4gF2KIh6t8QO8a1Q9C9fs9XLjn+JMTb5LSom6rnoRjG3UbvoqFxCgbJjz6
- jXWQ==
-X-Gm-Message-State: APjAAAWW0z6mrw4oQmt/yL88rbHJZJMwXi4e8P9iPAiA+Pf0eVMHTwPz
- ePZ5HeT/n0nDADnEisfNUR8obW1HA2c0akw8VJLQNvYy/ww45Q==
-X-Google-Smtp-Source: APXvYqzXNi48nJWIo6CZJktVrx3jUxf1iReWdLiREHQX8uFBTFutEcursBgNzjwckP9Kmlixc5AL6NJr26PrpeYUHX0=
-X-Received: by 2002:a63:e255:: with SMTP id y21mr510576pgj.353.1572456300033; 
- Wed, 30 Oct 2019 10:25:00 -0700 (PDT)
+ :message-id:subject:to;
+ bh=CLzNtAemBPhtGh+6Wu2X5RQuXIKS9c5pLW09tFr8J90=;
+ b=XmEAgH9QX30/WwLMIgbpqsdcs/Sg8V60II1XN62hJdrlGRTUeokQ6K3ydZm4UhTBBz
+ nnKLrx1mwV6YINiYgU1kGjXDo1GAXqImGQLQLWoGPRvmqXGchFH8aznsV1pe8enI6yh8
+ V2mSbEFzeN8ZTGJER+YPLWgHK8fGYCkUpzoxFYnbNWZRBfBa3gCwyWkMLLB4JB+6FwFg
+ VAYzIwNDTK2BHA4R4FMt7SSDy8vnQig7X8Un7uH7s91RqcjWIhXIniySfwftRZ3/fOYE
+ yq782kI0FJz3CR7ZejheqB+AsyalA1jhNszFqdt/Q84+vr6OATMxQblL5rSpUmoQLaIC
+ 74Pg==
+X-Gm-Message-State: APjAAAUjsDC2Ip28hs7GxVWl4m0RiXJNYJXbfWsXYNCyhJ9ea1W4BHh4
+ Db4oFmF/XlHYuy5z1RCG2ETe93HtdZ0q6cIS8jg2latW
+X-Google-Smtp-Source: APXvYqybPwCGBM7J7529Grh+MVQOsZVKoTRSK23tZ1dziJVHl7NMvO0UQ1qiopZEQHGQSMpg1Xf2zUlrtC5abhvPpgI=
+X-Received: by 2002:aca:dc57:: with SMTP id t84mr279375oig.145.1572457417053; 
+ Wed, 30 Oct 2019 10:43:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notzWsPTty_3imuC2ChNWpEnkfGfpc0jZ_NMoL-sS3LnihQ@mail.gmail.com>
- <11a4d0a2-5306-3fc6-b383-f5a867ef704e@linux.intel.com>
-In-Reply-To: <11a4d0a2-5306-3fc6-b383-f5a867ef704e@linux.intel.com>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 30 Oct 2019 10:24:48 -0700
-Message-ID: <CAO=notx72UkAc3hD-JxR15zLuA23uVAG5CO8KZev31-Uo2TLhA@mail.gmail.com>
-Subject: Re: huntergate not included in intel-ipmi-oem
-To: James Feist <james.feist@linux.intel.com>
+References: <CALLMt=pwzWPjgWtfUjX30Cy=ddiO3wvpR3pd7y=dz0a5QQ5spw@mail.gmail.com>
+In-Reply-To: <CALLMt=pwzWPjgWtfUjX30Cy=ddiO3wvpR3pd7y=dz0a5QQ5spw@mail.gmail.com>
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Wed, 30 Oct 2019 12:43:21 -0500
+Message-ID: <CALLMt=ozAC6cUDk854enVOxbtdnXdHe27A=3NdHYUU4cQxoHOA@mail.gmail.com>
+Subject: Re: capability to stop all bmc recovery
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,41 +72,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 30, 2019 at 10:23 AM James Feist
-<james.feist@linux.intel.com> wrote:
+On Thu, Sep 5, 2019 at 4:15 PM Andrew Geissler <geissonator@gmail.com> wrote:
 >
-> On 10/30/19 10:16 AM, Patrick Venture wrote:
-> > James;
-> >
-> > It looks ilke huntergate has a cmake file in intel-ipmi-oem but it's
-> > not actually explicitly included.  Is this an oversight?  Or is it
-> > implicitly included?
-> >
-> > We ran into an issue with non-bitbake dependencies a while back
-> > (leading to: https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/24581)
-> > and I wondered if this was needed here or if huntergate was just
-> > present but not actually downloaded/built.
-> >
-> > Cmake is not all magic, but maybe this is magic.
+> Greetings,
 >
-> Looks like in some of the reformatting it was removed. Hunter was
-> originally used to download dependencies, entity-manager still builds
-> completely out of tree and uses it to install GTest (although an
-> alternative could probably be used as well, hunter was just easy at the
-> time). I know a while back Vernon got tired of maintaining all of the
-> dependencies, so intel-ipmi-oem no longer builds without the CI docker
-> or Yocto. That file can probably just be deleted now.
+> It's a common request among our lab team that brings up our OpenBMC managed
+> servers to be able to disable all recovery actions on the BMC. This is so they
+> can stop on errors and debug issues with the host without the BMC rebooting
+> the host or itself. Our manufacturing team also requires this at times to
+> ensure the system stops on failures.
+>
+> Story https://github.com/ibm-openbmc/dev/issues/990 tracks this work along
+> with some discussion on the requirements.
+>
+> Up to this point we've tended to give our users busctl commands but as we've
+> seen, those can change over time and new one's are going to be required going
+> forward. It seems best for our users to wrap these in a obmcutil command.
+>
+> If anyone is interested in collaborating or has input on the design direction
+> feel free to respond to this email or post to the github issue. I plan on
+> starting work on this over the next few weeks.
 
-Cool!  Sending patch upstream momentarily.
+Vishwa kindly took this story on and his first commit to start with is up:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-state-manager/+/26510
+
+Comments welcome. It will be adding new options to obmcutil.
 
 >
-> -James
->
-> >
-> > Patrick
-> >
+> Thanks,
+> Andrew
