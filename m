@@ -1,80 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69116EAA1E
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 06:15:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC3ECEAA65
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 06:38:36 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 473YSH3j5HzF5WB
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 16:15:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 473Yyd0lxZzF5ZR
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 16:38:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::642;
+ helo=mail-pl1-x642.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="axCbhokK"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="uIL89lV4"; dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="JiSLr8s1"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
+ [IPv6:2607:f8b0:4864:20::642])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 473YQ66PXXzF5W3
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 16:13:50 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 56C24223DD;
- Thu, 31 Oct 2019 01:13:48 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 31 Oct 2019 01:13:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm1; bh=/fZ744fUw0giI
- Dl/tK+mKy+7tzhrk+nyrO9m1DIKxJo=; b=axCbhokKArAKvhi11AVFHvqhgoDTB
- NLJxhGmqBYKy+M9/Q8ZxACVobOxZJEzx2Y6oOQ6vmqYWsZ78PHH9Fq5zQAt3IcqQ
- 6ia1fydrnHyMgidpLCg8uBFbXLYPPCI6YReIZKYssGAy5uGcxUApPiKAQ515PK1C
- fRmsoCA4VAHT7qsI+pdv/1rtNrZWdh8mgqv6nYS3XvskxT7BR+1Ds2cwKMwbFz2R
- cCoDF5dHGdh7f32TgN4CLj5R0VVaibdn8rCwy4KFZTouPdwbTwyqx1EPJwUXxHYn
- TApIYwDaXRbUM4ZfTSphygIpfRLimBVkpOFIQSHjF16n0Q+307R4nT0Tw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; bh=/fZ744fUw0giIDl/tK+mKy+7tzhrk+nyrO9m1DIKxJo=; b=uIL89lV4
- r9eye3vRbq98kISCISJI6sms/cIXXRrpj1XTPYMBJKuPONqOxvtpSQBMsUGQfcNE
- 3caZxdvzuAZ7NSR1KmuSqaw8WWGQhurBwgV68jg7YJ3MPBwy1aBsMk7KRfeE4sbL
- dy+MPH1DQHuO6jwOPAEOCcZnR1cUwSyRp4uBWyB8r+Gmut5gOz0fDYZivIEaVk9H
- jWleLgSOVJkOqs2ILH+wM6JVOsfqjeKMdVeWFR6B8+iqS1KlwX//kZ+co27tqeek
- GwkZlLGsdQAyc5Hr6DwSRRz2/GCJjH04yuAA7PF7DoTFEco+06vSkNUaX1l/+0E0
- 1BSy2F/GmAPG0w==
-X-ME-Sender: <xms:jG26XRIP4TT9OwbY8tMmxIPGYBoPr8cxxg68S1A8oJuOh6bazMGdRw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtgedgkedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgv
- ficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfkphepvddtvd
- drkedurddukedrfedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
- rdhiugdrrghunecuvehluhhsthgvrhfuihiivgepud
-X-ME-Proxy: <xmx:jG26XZDWsoBSQ2J5oYxwHQHzJArs-zHzqk2wcDcS_JQYPTKQPEMu4g>
- <xmx:jG26XSjMhpf90EgRYJGFV37ln7dybUG22AY5GDU9PSlU3CYhAUEKCQ>
- <xmx:jG26XbMveVMFKqP3_pd-CKB_V8S4rZ-moPyIeg1hOUB9SDy80FmoGg>
- <xmx:jG26XdVMua6D_FtoXEAWW4U9gOvYsrAX0dleNuYSRYP_QU0bv4qIDA>
-Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
- by mail.messagingengine.com (Postfix) with ESMTPA id D7955306005C;
- Thu, 31 Oct 2019 01:13:46 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 2/2] fsi: core: Fix small accesses and unaligned
- offsets via sysfs
-Date: Thu, 31 Oct 2019 15:44:38 +1030
-Message-Id: <20191031051438.28589-3-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191031051438.28589-1-andrew@aj.id.au>
-References: <20191031051438.28589-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 473YwV6W5RzF19q
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 16:36:42 +1100 (AEDT)
+Received: by mail-pl1-x642.google.com with SMTP id x6so2158401pln.2
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 22:36:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=FfnlzU9b6Vn9jcRfjBg4FygqoEgW+rHKo9bjoiWYTgU=;
+ b=JiSLr8s1845pyq1QQvmqssh6OOhzgefUPfruHXSdIS6SFVD9nbYp9tUHSCidN4pzgD
+ Hnga3UAhjhJRR3nMopEdigzHhVVNpW5WpFODFQGyBm4SPbLUv7I/5D8mLlbLn8/SNUaH
+ YGcBzRSGLRtzqbTf6WQD2riuo6u/3XPXM507OMUIkSS2uWlTrhDg3Inx8MzI1YJY1wRs
+ e4lYsUk3yNgkujWawvT2lm91b8wYoM7vT057gA0QgEkgxf6JukoPwEHDy0jaNUM4bo7i
+ xZYc80ysoueI9xkzCAUTR1Mbz8Pnw7Zc3PYgS/TDGJPy6eyICSFXwd46xwmjfaawIgSz
+ 6HMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=FfnlzU9b6Vn9jcRfjBg4FygqoEgW+rHKo9bjoiWYTgU=;
+ b=rp5Q/Dxbvo3j/+CTV8zXvUedRQ5IJdEvY7n0hche+DHIYotOT3y10k/X0+pkP0wsK+
+ vWBNB394KhqN6gjERnGygvTcJqfRvnvtEfe2y7FTgDiBmG1xXOfexjFrDdK7nHYYoi7T
+ 7nWYjYHiWekP0WoT23wrUA4jBf+KvMn5pGTTBmULaBeVoryVkDt/yYtKq5rikDnZj+6h
+ 7xQYYAh2oG+yJxS9SG8c0v/N0R4z8eyWA3BkFSa07iO4aUPmsZbU58w05TZsx9k0WrSe
+ /olLX3sRQ0BXSNBIqszKBf2M0VEb3KzLHa4MAAgBZN0zuu4JITLdM62DME2L8Hfz+fce
+ d+Ew==
+X-Gm-Message-State: APjAAAWVFghmciH1lSkamCNlVD7MDaVD3eGA4tOrLjAXJnAUZKDUNnVJ
+ KSP6X4bPAVqE7mqfDIik+TrlhYztwo8=
+X-Google-Smtp-Source: APXvYqxo4U7QaAnE+UNIP/6i6y/Xi+VySoWc+2PNeB8CqEHMj9ivlDEsBgMMcZ7EI4RE+ON2iYRXGw==
+X-Received: by 2002:a17:902:9f96:: with SMTP id
+ g22mr4211843plq.286.1572500198631; 
+ Wed, 30 Oct 2019 22:36:38 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id l72sm5337829pjb.18.2019.10.30.22.36.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Oct 2019 22:36:38 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Jeremy Kerr <jk@ozlabs.org>,
+	Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH linux dev-5.3 v2 0/8] fsi: aspeed: Access width fixes
+Date: Thu, 31 Oct 2019 16:06:17 +1030
+Message-Id: <20191031053625.422-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.24.0.rc1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -92,42 +82,30 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Subtracting the offset delta from four-byte alignment lead to wrapping
-of the requested length where `count` is less than `off`. Generalise the
-length handling to enable all valid offset and size combinations.
+Here's v2 of Andrew's series, rewitten with a different approach.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Acked-by: Jeremy Kerr <jk@ozlabs.org>
----
- drivers/fsi/fsi-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+There's also a collection of cleanups that I've been carrying around for
+a few days. Notably the driver is sparse clean now.
 
-diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
-index 1ea15621e588..889349beb284 100644
---- a/drivers/fsi/fsi-core.c
-+++ b/drivers/fsi/fsi-core.c
-@@ -559,8 +559,8 @@ static ssize_t fsi_slave_sysfs_raw_read(struct file *file,
- 		return -EINVAL;
- 
- 	for (total_len = 0; total_len < count; total_len += read_len) {
--		read_len = min_t(size_t, count, 4);
--		read_len -= off & 0x3;
-+		read_len = ((count | off) & 1) ?
-+				1 : min_t(size_t, count, 4 - (off & 3));
- 
- 		rc = fsi_slave_read(slave, off, buf + total_len, read_len);
- 		if (rc)
-@@ -587,8 +587,8 @@ static ssize_t fsi_slave_sysfs_raw_write(struct file *file,
- 		return -EINVAL;
- 
- 	for (total_len = 0; total_len < count; total_len += write_len) {
--		write_len = min_t(size_t, count, 4);
--		write_len -= off & 0x3;
-+		write_len = ((count | off) & 1) ?
-+				1 : min_t(size_t, count, 4 - (off & 3));
- 
- 		rc = fsi_slave_write(slave, off, buf + total_len, write_len);
- 		if (rc)
+Tested on Tacoma and Qemu.
+
+Andrew Jeffery (1):
+  fsi: aspeed: Fix endian register to enable single byte reads
+
+Joel Stanley (7):
+  fsi: aspeed: Implement byte and half word writes
+  fsi: aspeed: Implement byte and half word reads
+  fsi: move defines to common header
+  fsi: aspeed: Fix types in debugfs
+  fsi: aspeed: Fix link enable
+  fsi: aspeed: Fix whitespace in check_errors
+  fsi: aspeed: Use defines for port reset
+
+ drivers/fsi/fsi-master-aspeed.c | 247 +++++++++++++++++---------------
+ drivers/fsi/fsi-master-hub.c    |  46 ------
+ drivers/fsi/fsi-master.h        |  71 +++++++++
+ 3 files changed, 200 insertions(+), 164 deletions(-)
+
 -- 
-2.20.1
+2.24.0.rc1
 
