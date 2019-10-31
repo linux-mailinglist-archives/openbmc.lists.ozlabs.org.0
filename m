@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E65C2EAA69
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 06:40:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8921CEAA6A
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 06:41:47 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 473Z140x3gzF40t
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 16:40:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 473Z2J48Z1zF33L
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 16:41:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
+ helo=mail-pg1-x541.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Vf1odBPs"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="OALs80fl"; 
  dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 473Ywb3VJkzF42H
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 16:36:47 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id l3so3192606pgr.8
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 22:36:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 473Ywf6WfwzF3Ry
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 16:36:50 +1100 (AEDT)
+Received: by mail-pg1-x541.google.com with SMTP id u23so3218589pgo.0
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 22:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=WBs2Zdq/pdhigl8moMHVMmKScgDUSBnLW1FO42JaBS4=;
- b=Vf1odBPs/ierhNsVCqAYUKL9nu7Ioxwy4f/kF1+O0zC6ytBz6bBSTa395vn9TiY14x
- sEP5lMsGBF31Xtvh/sE+ifymjycZFHQl1Y7qXjVFC2QPA4Zj7tyeC8cb8+DvS205Tz/E
- OsX8E8OPFjsekQ2b+guS0v54zcBVw1WBiaB5LMYViW+EJFGeJPWu+uU4vUi8wFwAgYRv
- gxjRURAmkkwTzUCxkoVVgOcXCfgZzBLmcxPmma74HQ07vzJLww2mXeZUIQB3JKnTrCq/
- c6eg7hyVKGnvFUsvGBub8l+YXcN2fNNeM7TaBTqJmTnn/dOlPs2y0ozACY+JQDlJ/hRI
- Zi5w==
+ bh=qjjDzdSHuuOvh1BBN0aK2/G7j/U9tWO+ADKSsAOpE48=;
+ b=OALs80flabvhMM9T7NLVwjXr4IBpWuGbGrz8xCaqdjiqekFRS9wEOBH2XoxxlCgR/7
+ xb2zTg8emBbzEY2tJSz+fqoDFfxRQXyWbggLGAB21+Ft9lDQrFLSWLWPHzqUZ+MT6nru
+ 5zcqcR8kzJ2tv/RfBICbffBEbbPZrveLGaV3Ztwz+01p5UnLKo/0MUoeR4HMRgnr5l9e
+ E2frJEWgWXfWMO/JD+gIITqpGyeSGKoJoor4HY6cslQyx5bId5vV8bP4IYhM9xh5K8pw
+ Z3Mgc0wLCor4OsBkM034ZQbMt+RYOBlG8lxxvmeEcd7Kp7ZqO1G+rJSvLHaP0LSSWw/B
+ 5Xjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=WBs2Zdq/pdhigl8moMHVMmKScgDUSBnLW1FO42JaBS4=;
- b=tJJa9NKrM0UA48xwZKnRJGeh93Ug4w3DQPckBGHSoun6UUEDERqo+TLqbjnKTAnQ+c
- 84+9LG2bJWW7vqFdwKOtO7c11mEMkqnlAGOWq07dMT/wOT52L3KSfPn0i090IJgNB/w0
- owgW55Lxx7l3c3APQP3M3O9HzWQESIMSmiY4l7zxM4FRAX7e8Y84dKMkfWv7d6+H72ZI
- 6Qu1A70UlojCX/AtbbcXVIph+w4FaVVCaxiOd7eOXOemSIuNfPcc6szNtG7DdmFNeYhv
- RuCmeQa8Dqp6XJMF8bzzMD581IoymFtJ6mD7T8BDTc2BAiHMBc/c1fytXrAGeBOUnEl1
- ftfQ==
-X-Gm-Message-State: APjAAAW285iQ+wUSZFq09/Wn/FOa2OIMRQBtWP8xWkYwP5XGw3IwxH0P
- DYOI3k5Yk6G7m+jwf1Gjo3E=
-X-Google-Smtp-Source: APXvYqwBAh0uJZ0BWzQWSiO73jpZ3X4/+7kMD+JH3K9mHDhES/nlR3l7J6RkUBXAN+pBqBHrCGytGg==
-X-Received: by 2002:a17:90a:22a6:: with SMTP id
- s35mr4332495pjc.3.1572500204419; 
- Wed, 30 Oct 2019 22:36:44 -0700 (PDT)
+ bh=qjjDzdSHuuOvh1BBN0aK2/G7j/U9tWO+ADKSsAOpE48=;
+ b=mpFmk8f4VwFdkLaFAAhyTs0JmwbsDAP8pYE4stxBmPN8eY0vCEhBa1pPoLV3dbrwPX
+ daVR5vXQ2IlNfGsdxHfHCEYBMdjfLAND9FeN6QEugc6k0btgOPyZ7JGbuPdt1i7cqvgF
+ 3kKRurFk1RBA/rXFr/vayu0RaHdKP5zbvQhGmV5U0o/IiBZpiqf0pzXjGOkbqiFXw4ts
+ VCjMLisUMJu65zK97oe/E+7MkNtVGqEtHxZe0knbrib3TtF60wLJtj9L+wNSjxRINaIv
+ kw6NH6YmFTx4f70nbkFWjYpJ0zr+N18K/HOpwogu/IEWFNL9BH764wxQdTKFS78EmUrn
+ Xvuw==
+X-Gm-Message-State: APjAAAVgv+bbyrc10iLQ05nUi8kT414rXKP3uQhicFvFCGKE6d95PqJZ
+ 3qPTA4dEs0X4skgTMalwuMA=
+X-Google-Smtp-Source: APXvYqxPO1mi3mGhKUtKJBtEv+zsDknRktPh7WX4oBrAM+urgREeT4yqzqN9xre7jyrwAOLLLCsmqA==
+X-Received: by 2002:a17:90a:6584:: with SMTP id
+ k4mr4568248pjj.43.1572500207367; 
+ Wed, 30 Oct 2019 22:36:47 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id l72sm5337829pjb.18.2019.10.30.22.36.41
+ by smtp.gmail.com with ESMTPSA id l72sm5337829pjb.18.2019.10.30.22.36.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Oct 2019 22:36:43 -0700 (PDT)
+ Wed, 30 Oct 2019 22:36:46 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Jeremy Kerr <jk@ozlabs.org>,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.3 v2 2/8] fsi: aspeed: Implement byte and half
- word reads
-Date: Thu, 31 Oct 2019 16:06:19 +1030
-Message-Id: <20191031053625.422-3-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 v2 3/8] fsi: aspeed: Fix endian register to
+ enable single byte reads
+Date: Thu, 31 Oct 2019 16:06:20 +1030
+Message-Id: <20191031053625.422-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.24.0.rc1
 In-Reply-To: <20191031053625.422-1-joel@jms.id.au>
 References: <20191031053625.422-1-joel@jms.id.au>
@@ -85,190 +85,55 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A similar rationale to the writes, where we create helpers for each size
-to ensure the callee gets type checking and allows the lookup of the size
-to be done once, in aspeed_master_read.
+From: Andrew Jeffery <andrew@aj.id.au>
 
+The endian register controls where the incoming bytes end up in the data
+register. Currently reading single bytes is broken, and reading half
+words is causes the data to appear in both the upper and lower part of
+the register.
+
+The current value of the OPB0 read order selection register caused a
+data read register value of 0xffffffff to be read for single byte
+accesses over FSI. A value of 0x03 for the read order byte-access slot
+correctly "swaps" the BE MSB value to the LE LSB for extraction by the
+APB2OPB bridge:
+
+    # devmem 0x1e79b05c
+    0x00030B1B
+    # dd if=raw bs=1 count=1 | hexdump -C
+        fsi_master_read: fsi0:00:00 00000000[1]
+         opb read: addr a0000000 size 1: result ffffffc0 status: 00000000 irq_status: 00010000
+         opb read: addr 800000d0 size 4: result 00000000 status: 00000002 irq_status: 00010000
+         opb read: addr 800000d0 size 4: result 00000000 status: 00000002 irq_status: 00010000
+         opb read: addr 800001d0 size 4: result 00000000 status: 00000002 irq_status: 00010000
+         mresp0 00000000 mstap0 00000000 mesrb0 00000000
+        fsi_master_rw_result: fsi0:00:00 00000000[1] => {c0} ret 0
+    1+0 records in
+    1+0 records out
+    00000000  c0                                                |.|
+    00000001
+
+This fixes half-word access read order selection in the same manner.
+
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/fsi/fsi-master-aspeed.c | 80 ++++++++++++++++++++++++---------
- 1 file changed, 59 insertions(+), 21 deletions(-)
+ drivers/fsi/fsi-master-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index 8d6deb6994fb..b520f5df567c 100644
+index b520f5df567c..5b947c70c0f9 100644
 --- a/drivers/fsi/fsi-master-aspeed.c
 +++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -222,18 +222,15 @@ static int opb_writel(struct fsi_master_aspeed *aspeed, u32 addr, __be32 val)
- 	return __opb_write(aspeed, addr, (__force u32)val, XFER_WORD);
- }
+@@ -635,7 +635,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 	writel(fsi_base, aspeed->base + OPB_FSI_BASE);
  
--static int opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
--		    size_t size, u32 *out)
-+static int __opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
-+		      u32 transfer_size, void *out)
- {
- 	void __iomem *base = aspeed->base;
- 	u32 result, reg;
- 	int status, ret;
+ 	/* Set read data order */
+-	writel(0x0011bb1b, aspeed->base + OPB0_R_ENDIAN);
++	writel(0x00030b1b, aspeed->base + OPB0_R_ENDIAN);
  
--	/* TODO: implement other sizes, see 0x18 */
--	WARN_ON(size != 4);
--
- 	writel(CMD_READ, base + OPB0_RW);
--	writel(XFER_WORD, base + OPB0_XFER_SIZE);
-+	writel(transfer_size, base + OPB0_XFER_SIZE);
- 	writel(addr, base + OPB0_FSI_ADDR);
- 	writel(0x1, base + OPB_IRQ_CLEAR);
- 	writel(0x1, base + OPB_TRIGGER);
-@@ -246,7 +243,7 @@ static int opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
- 
- 	result = readl(base + OPB0_FSI_DATA_R);
- 
--	trace_fsi_master_aspeed_opb_read(addr, size, result,
-+	trace_fsi_master_aspeed_opb_read(addr, transfer_size, result,
- 			readl(base + OPB0_STATUS),
- 			reg);
- 
-@@ -258,12 +255,41 @@ static int opb_read(struct fsi_master_aspeed *aspeed, uint32_t addr,
- 	if (status & STATUS_ERR_ACK)
- 		return -EIO;
- 
--	if (out)
--		*out = result;
-+	if (out) {
-+		switch (transfer_size) {
-+		case XFER_BYTE:
-+			*(u8 *)out = result;
-+			break;
-+		case XFER_HALFWORD:
-+			*(u16 *)out = result;
-+			break;
-+		case XFER_WORD:
-+			*(u32 *)out = result;
-+			break;
-+		default:
-+			return -EINVAL;
-+		}
-+
-+	}
- 
- 	return 0;
- }
- 
-+static int opb_readl(struct fsi_master_aspeed *aspeed, uint32_t addr, __be32 *out)
-+{
-+	return __opb_read(aspeed, addr, XFER_WORD, out);
-+}
-+
-+static int opb_readw(struct fsi_master_aspeed *aspeed, uint32_t addr, __be16 *out)
-+{
-+	return __opb_read(aspeed, addr, XFER_HALFWORD, (void *)out);
-+}
-+
-+static int opb_readb(struct fsi_master_aspeed *aspeed, uint32_t addr, u8 *out)
-+{
-+	return __opb_read(aspeed, addr, XFER_BYTE, (void *)out);
-+}
-+
- static int check_errors(struct fsi_master_aspeed *aspeed, int err)
- {
- 	int ret;
-@@ -271,9 +297,9 @@ static int check_errors(struct fsi_master_aspeed *aspeed, int err)
- 	 if (trace_fsi_master_aspeed_opb_error_enabled()) {
- 		 __be32 mresp0, mstap0, mesrb0;
- 
--		 opb_read(aspeed, ctrl_base + FSI_MRESP0, 4, &mresp0);
--		 opb_read(aspeed, ctrl_base + FSI_MSTAP0, 4, &mstap0);
--		 opb_read(aspeed, ctrl_base + FSI_MESRB0, 4, &mesrb0);
-+		 opb_readl(aspeed, ctrl_base + FSI_MRESP0, &mresp0);
-+		 opb_readl(aspeed, ctrl_base + FSI_MSTAP0, &mstap0);
-+		 opb_readl(aspeed, ctrl_base + FSI_MESRB0, &mesrb0);
- 
- 		 trace_fsi_master_aspeed_opb_error(
- 				 be32_to_cpu(mresp0),
-@@ -308,7 +334,20 @@ static int aspeed_master_read(struct fsi_master *master, int link,
- 		return -EINVAL;
- 
- 	addr += link * FSI_HUB_LINK_SIZE;
--	ret = opb_read(aspeed, fsi_base + addr, size, val);
-+
-+	switch (size) {
-+	case 1:
-+		ret = opb_readb(aspeed, fsi_base + addr, val);
-+		break;
-+	case 2:
-+		ret = opb_readw(aspeed, fsi_base + addr, val);
-+		break;
-+	case 4:
-+		ret = opb_readl(aspeed, fsi_base + addr, val);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	ret = check_errors(aspeed, ret);
- 	if (ret)
-@@ -364,8 +403,7 @@ static int aspeed_master_link_enable(struct fsi_master *master, int link)
- 
- 	mdelay(FSI_LINK_ENABLE_SETUP_TIME);
- 
--	ret = opb_read(aspeed, ctrl_base + FSI_MENP0 + (4 * idx),
--			4, &result);
-+	ret = opb_readl(aspeed, ctrl_base + FSI_MENP0 + (4 * idx), &result);
- 	if (ret)
- 		return ret;
- 
-@@ -467,12 +505,12 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
- 
- 	opb_writel(aspeed, ctrl_base + FSI_MCENP0, reg);
- 
--	opb_read(aspeed, ctrl_base + FSI_MAEB, 4, NULL);
-+	opb_readl(aspeed, ctrl_base + FSI_MAEB, NULL);
- 
- 	reg = cpu_to_be32(FSI_MRESP_RST_ALL_MASTER | FSI_MRESP_RST_ALL_LINK);
- 	opb_writel(aspeed, ctrl_base + FSI_MRESP0, reg);
- 
--	opb_read(aspeed, ctrl_base + FSI_MLEVP0, 4, NULL);
-+	opb_readl(aspeed, ctrl_base + FSI_MLEVP0, NULL);
- 
- 	/* Reset the master bridge */
- 	reg = cpu_to_be32(FSI_MRESB_RST_GEN);
-@@ -490,7 +528,7 @@ static int fsi_master_aspeed_debugfs_get(void *data, u64 *val)
- 	u32 out;
- 	struct fsi_master_aspeed_debugfs_entry *entry = data;
- 
--	rc = opb_read(entry->aspeed, ctrl_base + entry->addr, 4, &out);
-+	rc = opb_readl(entry->aspeed, ctrl_base + entry->addr, &out);
- 	if (rc)
- 		return rc;
- 
-@@ -519,7 +557,7 @@ static int fsi_master_aspeed_clock_debugfs_get(void *data, u64 *val)
- 	u32 out;
- 	int rc;
- 
--	rc = opb_read(aspeed, ctrl_base, 4, &out);
-+	rc = opb_readl(aspeed, ctrl_base, &out);
- 	if (rc)
- 		return rc;
- 
-@@ -537,7 +575,7 @@ static int fsi_master_aspeed_clock_debugfs_set(void *data, u64 val)
- 	if (val > 0x3ff)
- 		return -EINVAL;
- 
--	rc = opb_read(aspeed, ctrl_base, 4, &raw);
-+	rc = opb_readl(aspeed, ctrl_base, &raw);
- 	if (rc)
- 		return rc;
- 
-@@ -610,7 +648,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 	 */
- 	writel(0x1, aspeed->base + OPB0_SELECT);
- 
--	rc = opb_read(aspeed, ctrl_base + FSI_MVER, 4, &raw);
-+	rc = opb_readl(aspeed, ctrl_base + FSI_MVER, &raw);
- 	if (rc) {
- 		dev_err(&pdev->dev, "failed to read hub version\n");
- 		return rc;
+ 	/* Set write data order */
+ 	writel(0x0011bb1b, aspeed->base + OPB0_W_ENDIAN);
 -- 
 2.24.0.rc1
 
