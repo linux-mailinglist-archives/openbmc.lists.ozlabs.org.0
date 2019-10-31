@@ -1,80 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBA61EB21D
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 15:06:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1008CEB23F
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 15:13:45 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 473nDy48RbzF3bS
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 01:06:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 473nP20HNHzF5ng
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 01:13:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stratus.com (client-ip=216.205.24.131;
- helo=us-smtp-delivery-131.mimecast.com;
- envelope-from=mohsen.dolaty@stratus.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::342;
+ helo=mail-ot1-x342.google.com; envelope-from=tmaimon77@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stratus.com
-X-Greylist: delayed 65231 seconds by postgrey-1.36 at bilbo;
- Fri, 01 Nov 2019 01:01:09 AEDT
-Received: from us-smtp-delivery-131.mimecast.com
- (us-smtp-delivery-131.mimecast.com [216.205.24.131])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="b0MJFixe"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
+ [IPv6:2607:f8b0:4864:20::342])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 473n6Y4JQQzF5mL
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 01:01:05 +1100 (AEDT)
-Received: from NAM01-SN1-obe.outbound.protection.outlook.com
- (mail-sn1nam01lp2057.outbound.protection.outlook.com [104.47.32.57]) (Using
- TLS) by relay.mimecast.com with ESMTP id
- us-mta-261-E79DsmrvOi-hZDpnEufR7w-1; Thu, 31 Oct 2019 10:00:55 -0400
-Received: from CY4PR08MB2981.namprd08.prod.outlook.com (10.173.61.146) by
- CY4PR08MB2472.namprd08.prod.outlook.com (10.168.169.10) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2408.17; Thu, 31 Oct 2019 14:00:54 +0000
-Received: from CY4PR08MB2981.namprd08.prod.outlook.com
- ([fe80::40b0:d709:3f2d:4559]) by CY4PR08MB2981.namprd08.prod.outlook.com
- ([fe80::40b0:d709:3f2d:4559%11]) with mapi id 15.20.2387.027; Thu, 31 Oct
- 2019 14:00:54 +0000
-From: "Dolaty, Mohsen" <Mohsen.Dolaty@stratus.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: AST2500 Evaluation Board build question
-Thread-Topic: AST2500 Evaluation Board build question
-Thread-Index: AdWP82PuveP5ZS5NTMa/rZxPq/TNzg==
-Date: Thu, 31 Oct 2019 14:00:54 +0000
-Message-ID: <CY4PR08MB2981B0B9732CDB1E0F15DC2BE4630@CY4PR08MB2981.namprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [198.97.42.5]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 745bcf10-34b5-420b-cce3-08d75e0abf24
-x-ms-traffictypediagnostic: CY4PR08MB2472:
-x-microsoft-antispam-prvs: <CY4PR08MB24726B7B5DFF450E96C616C6E4630@CY4PR08MB2472.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 02070414A1
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(376002)(366004)(396003)(39850400004)(136003)(346002)(199004)(189003)(40764003)(174874002)(7696005)(5660300002)(790700001)(71200400001)(8676002)(316002)(55016002)(33656002)(54896002)(14454004)(8936002)(486006)(9686003)(6306002)(2351001)(3846002)(1730700003)(81166006)(476003)(81156014)(6116002)(71190400001)(66476007)(86362001)(66556008)(66446008)(76116006)(2501003)(66946007)(256004)(478600001)(5640700003)(2906002)(74316002)(6916009)(52536014)(64756008)(6436002)(25786009)(6506007)(66066001)(99286004)(102836004)(26005)(186003)(7736002);
- DIR:OUT; SFP:1102; SCL:1; SRVR:CY4PR08MB2472;
- H:CY4PR08MB2981.namprd08.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: LLNqLiyoBphajKhjmSvEjpdQzEhBLS7Vcu0XWSw3D7EJ6jFwO0PfXBZi/8mjm2DWM1xd6bgjUsbzXE7soMqfYHVUnDrc7qGvPEzOrL6lTPe9S1snshKZU9H9bj2wNt7abuq0qi964m6x4rG/dwYxu0nMwCrtoPMoLSvrG4tJfMycgbhFt9DC44I11JmUnS5Dl7MLKRGHzmrhHCTlHdz+ZuAGrltdsZQ2TMxdSakq+jfvSxGis3sO600Am5/N12XRMZrfwT0seoS37aqt2NsCp86ar6+O9yts1xcR1OdY1vTfyRWNKOLOUrKce+F+whZZy8pvFbtckfBQbW5uUsbl27YcHr6H6HuCxpkD/QNSjaVKXaxS3BYZmpxw79M75ZD8fP0stSmG467iwCR8rrgPgzQFb/tDXWuqcPBhgBjShOTgrJatnBQDJoPck6i6DYD4
-x-ms-exchange-transport-forked: True
+ by lists.ozlabs.org (Postfix) with ESMTPS id 473nNG4lv0zF5R6
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 01:13:02 +1100 (AEDT)
+Received: by mail-ot1-x342.google.com with SMTP id t8so5495015otl.6
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 07:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=kwGz9eM3JXenSRdLtAAHnevUEPAIMbSgiGIQEyNukyM=;
+ b=b0MJFixeSI7C9rY6IEMPpsvzhae0fCZPSQtwR9LlknT0d+2EyZqIxOIHBsrLOweUOu
+ O5kYbn14tj+fhB1sQpHJKW8DMRlH3xERQ5w40nLvqjoYAiB/szv5Ff/L/3ZpNuJzaxty
+ MV1EcGpSJMmhh2eeJ3ZjM+ysH+5KXAXG2Hfp94M4hiGrJxDyfeWyBgnJ5+Z5Izmguhj/
+ 6Ul5UNq3jU2m3+deYbsJV58lUvwYThhbol8iCi7Y9chKccnyIYzWNxiNHkVL2GYRAyym
+ wD33i6ehybqm3tyeh79OvU+g7/MnpMjQGR6TnRxHQFX6jAhin7OWCC/p+lP6OTfNRVBh
+ EOCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=kwGz9eM3JXenSRdLtAAHnevUEPAIMbSgiGIQEyNukyM=;
+ b=nPoaaGlWLwYViHEvaZaXx03vfe9lbfe/Yx1NVAr+Ar+51u6I54wevS7I+jK0nElMbA
+ ltwnRVcVIDiuz/9Tt4UMavFRtQyXx97qsaoRJoog2t5ICcLyGMF18GYRhfprtYMXCjBH
+ RCcuuyx/ceh0CIyQdzjwC4SWyidTGAozlwQmH7Pt0Ri8G9gV9ZQ8oSzc+0KuCnrriL2D
+ IPs4IaW2F+5qaPvPayXRWWrUHdHB6leTLUPMqtKTvrdl+mpo+JbmoqpSmBq+iYTqlZ5j
+ hqhNJdM321MHu0Z9nVWWJCPx38E5cnk/r81i7LvG4bVsl2R/emtiUGkp8V/NlMsw987Y
+ WEwg==
+X-Gm-Message-State: APjAAAWUj75G6XF4T1cQaICKBe5vU9ESn8k2z31BzprdvmrcFKHeVELD
+ K/aehVBIw8S2uhPxq29GfNlSYjTtKAc/j2FPynaxCA==
+X-Google-Smtp-Source: APXvYqxTOD0LddqBpCVjb0+xvXlIwj9bpX8AlzbW9csPp6HciwLxtLUCOB2nM79B5GR2tPqCzMcKzR10krPrZ5PCEuQ=
+X-Received: by 2002:a9d:6141:: with SMTP id c1mr4819150otk.117.1572530675861; 
+ Thu, 31 Oct 2019 07:04:35 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: stratus.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 745bcf10-34b5-420b-cce3-08d75e0abf24
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Oct 2019 14:00:54.4029 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: de36b473-b8ad-46ff-837f-9da16b8d1b77
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: jSiRI1A0OZ/ztNtpEUmcMlQM8Selg86KMZxvnDX4m5e58+s5eUTW+vbrKkhm0AUoff0HMSBUafqwKnTIn76mkxD/6TVwJU242zTs+m2p75g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR08MB2472
-X-MC-Unique: E79DsmrvOi-hZDpnEufR7w-1
-X-Mimecast-Spam-Score: 0
-Content-Type: multipart/alternative;
- boundary="_000_CY4PR08MB2981B0B9732CDB1E0F15DC2BE4630CY4PR08MB2981namp_"
+References: <20191028155403.134126-1-tmaimon77@gmail.com>
+ <20191028155403.134126-4-tmaimon77@gmail.com>
+ <f9ccc316d0974d162bee421baaa2c872632cdc5b.camel@pengutronix.de>
+In-Reply-To: <f9ccc316d0974d162bee421baaa2c872632cdc5b.camel@pengutronix.de>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Thu, 31 Oct 2019 16:14:17 +0200
+Message-ID: <CAP6Zq1hR1zp9ZtPxcEvOG9O_DMYBY4xKuMUoz-4Ua4kXybG=dw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] reset: npcm: add NPCM reset controller driver
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Content-Type: multipart/alternative; boundary="000000000000554ea905963554b8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,175 +74,857 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_CY4PR08MB2981B0B9732CDB1E0F15DC2BE4630CY4PR08MB2981namp_
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+--000000000000554ea905963554b8
+Content-Type: text/plain; charset="UTF-8"
 
-We have started working with OpenBMC for AST2500.
-We have a AST2500 evaluation board.
-We are using recommended build environment and setting:
-               export TEMPLATECONF=3Dmeta-evb/meta-evb-aspeed/meta-evb-ast2=
-500/conf
-We are using bitbake to build phosphor image:
+Hi Philipp,
 
-. oe-init-build-env
-bitbake obmc-phosphor-image
+Thanks a lot for your comments.
 
-The final image is in:
-openbmc/build/tmp/deploy/images/evb-ast2500
+On Tue, 29 Oct 2019 at 17:34, Philipp Zabel <p.zabel@pengutronix.de> wrote:
 
-We put the following image (about 7.5 MB) in our TFTP server
-                fitImage-aspeed-image-initramfs-evb-ast2500--5.3.1+git0+3ad=
-520f93d-r0-evb-ast2500-20191030145446.bin -> evb.bin
-
-and then from uboot we can:
-                dhcp evb.bin
-bootm
-
-System boots and we can log in as:
-root
-0penBmc
-
-But we only get a minimal OS.
-There are no OpenBmc features (such as ssh, web server, ipmi stack, etc) in=
- this final image
-What are we doing wrong?
-
-We also get the following tar file:
-                obmc-phosphor-image-evb-ast2500-20191030145446.rootfs.tar.g=
-z
-
-When we open the tar file, all these services are in /usr/bin of the tar fi=
-le.
-But they are not in the /usr/bin file we loaded to AST2500 evaluation board=
-.
-
-Thanks for your help
-
--Mo
-
---_000_CY4PR08MB2981B0B9732CDB1E0F15DC2BE4630CY4PR08MB2981namp_
-Content-Type: text/html; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+> On Mon, 2019-10-28 at 17:54 +0200, Tomer Maimon wrote:
+> > Add Nuvoton NPCM BMC reset controller driver.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  drivers/reset/Kconfig      |   7 +
+> >  drivers/reset/Makefile     |   1 +
+> >  drivers/reset/reset-npcm.c | 275 +++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 283 insertions(+)
+> >  create mode 100644 drivers/reset/reset-npcm.c
+> >
+> > diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
+> > index 7b07281aa0ae..5dbfdf6d717a 100644
+> > --- a/drivers/reset/Kconfig
+> > +++ b/drivers/reset/Kconfig
+> > @@ -89,6 +89,13 @@ config RESET_MESON_AUDIO_ARB
+> >         This enables the reset driver for Audio Memory Arbiter of
+> >         Amlogic's A113 based SoCs
+> >
+> > +config RESET_NPCM
+> > +     bool "NPCM BMC Reset Driver"
+> > +     depends on ARCH_NPCM || COMPILE_TEST
+> > +     help
+> > +       This enables the reset controller driver for Nuvoton NPCM
+> > +       BMC SoCs.
+> > +
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-=09{font-family:"Cambria Math";
-=09panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-=09{font-family:Calibri;
-=09panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-=09{font-family:Consolas;
-=09panose-1:2 11 6 9 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-=09{margin:0in;
-=09margin-bottom:.0001pt;
-=09font-size:11.0pt;
-=09font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-=09{mso-style-priority:99;
-=09color:#0563C1;
-=09text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-=09{mso-style-priority:99;
-=09color:#954F72;
-=09text-decoration:underline;}
-span.EmailStyle17
-=09{mso-style-type:personal-compose;
-=09font-family:"Calibri",sans-serif;
-=09color:windowtext;}
-.MsoChpDefault
-=09{mso-style-type:export-only;
-=09font-family:"Calibri",sans-serif;}
-@page WordSection1
-=09{size:8.5in 11.0in;
-=09margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-=09{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">We have started working with OpenBMC for AST2500.<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">We have a AST2500 evaluation board.<o:p></o:p></p>
-<p class=3D"MsoNormal">We are using recommended build environment and setti=
-ng:<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; export TEMPLATECONF=3Dmeta-evb/meta-evb-as=
-peed/meta-evb-ast2500/conf<o:p></o:p></p>
-<p class=3D"MsoNormal">We are using bitbake to build phosphor image:<o:p></=
-o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in">. oe-init-build-env<o:p><=
-/o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in">bitbake obmc-phosphor-ima=
-ge<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The final image is in:<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><span style=3D"font-size:=
-10.0pt;font-family:Consolas;border:none windowtext 1.0pt;padding:0in">openb=
-mc/build/tmp/deploy/images/evb-ast2500<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><span style=3D"font-size:=
-10.0pt;font-family:Consolas;border:none windowtext 1.0pt;padding:0in"><o:p>=
-&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-;border:none windowtext 1.0pt;padding:0in">We put the following image (abou=
-t 7.5 MB) in our TFTP server<o:p></o:p></span></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fitImage-aspeed-image-initramfs-evb-=
-ast2500--5.3.1&#43;git0&#43;3ad520f93d-r0-evb-ast2500-20191030145446.bin -&=
-gt; evb.bin<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">and then from uboot we can:<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dhcp evb.bin<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in">bootm<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">System boots and we can log in as:<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in">root<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in">0penBmc<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">But we only get a minimal OS.<o:p></o:p></p>
-<p class=3D"MsoNormal">There are no OpenBmc features (such as ssh, web serv=
-er, ipmi stack, etc) in this final image<o:p></o:p></p>
-<p class=3D"MsoNormal">What are we doing wrong?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We also get the following tar file:<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; obmc-phosphor-image-evb-ast2500-2019=
-1030145446.rootfs.tar.gz<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">When we open the tar file, all these services are in=
- /usr/bin of the tar file.<o:p></o:p></p>
-<p class=3D"MsoNormal">But they are not in the /usr/bin file we loaded to A=
-ST2500 evaluation board.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks for your help<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">-Mo<o:p></o:p></p>
-</div>
-</body>
-</html>
+> Is there any reason to ever disable this driver when building ARCH_NPCM?
+>
+> >  config RESET_OXNAS
+> >       bool
+> >
+> > diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile
+> > index cf60ce526064..00767c03f5f2 100644
+> > --- a/drivers/reset/Makefile
+> > +++ b/drivers/reset/Makefile
+> > @@ -14,6 +14,7 @@ obj-$(CONFIG_RESET_LANTIQ) += reset-lantiq.o
+> >  obj-$(CONFIG_RESET_LPC18XX) += reset-lpc18xx.o
+> >  obj-$(CONFIG_RESET_MESON) += reset-meson.o
+> >  obj-$(CONFIG_RESET_MESON_AUDIO_ARB) += reset-meson-audio-arb.o
+> > +obj-$(CONFIG_RESET_NPCM) += reset-npcm.o
+> >  obj-$(CONFIG_RESET_OXNAS) += reset-oxnas.o
+> >  obj-$(CONFIG_RESET_PISTACHIO) += reset-pistachio.o
+> >  obj-$(CONFIG_RESET_QCOM_AOSS) += reset-qcom-aoss.o
+> > diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
+> > new file mode 100644
+> > index 000000000000..ebb3071767e1
+> > --- /dev/null
+> > +++ b/drivers/reset/reset-npcm.c
+> > @@ -0,0 +1,275 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2019 Nuvoton Technology corporation.
+> > +
+> > +#include <linux/clk.h>
+>
+> Please remove unused header includes.
+>
+> > +#include <linux/delay.h>
+> > +#include <linux/err.h>
+> > +#include <linux/io.h>
+> > +#include <linux/init.h>
+> > +#include <linux/of.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/reboot.h>
+> > +#include <linux/reset-controller.h>
+> > +#include <linux/spinlock.h>
+> > +#include <linux/mfd/syscon.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/of_address.h>
+> > +
+> > +/* NPCM7xx GCR registers */
+> > +#define NPCM_MDLR_OFFSET     0x7C
+> > +#define NPCM_MDLR_USBD0              BIT(9)
+> > +#define NPCM_MDLR_USBD1              BIT(8)
+> > +#define NPCM_MDLR_USBD2_4    BIT(21)
+> > +#define NPCM_MDLR_USBD5_9    BIT(22)
+> > +
+> > +#define NPCM_USB1PHYCTL_OFFSET       0x140
+> > +#define NPCM_USB2PHYCTL_OFFSET       0x144
+> > +#define NPCM_USBXPHYCTL_RS   BIT(28)
+> > +
+> > +/* NPCM7xx Reset registers */
+> > +#define NPCM_SWRSTR          0x14
+> > +#define NPCM_SWRST           BIT(2)
+> > +
+> > +#define NPCM_IPSRST1         0x20
+> > +#define NPCM_IPSRST1_USBD1   BIT(5)
+> > +#define NPCM_IPSRST1_USBD2   BIT(8)
+> > +#define NPCM_IPSRST1_USBD3   BIT(25)
+> > +#define NPCM_IPSRST1_USBD4   BIT(22)
+> > +#define NPCM_IPSRST1_USBD5   BIT(23)
+> > +#define NPCM_IPSRST1_USBD6   BIT(24)
+> > +
+> > +#define NPCM_IPSRST2         0x24
+> > +#define NPCM_IPSRST2_USB_HOST        BIT(26)
+> > +
+> > +#define NPCM_IPSRST3         0x34
+> > +#define NPCM_IPSRST3_USBD0   BIT(4)
+> > +#define NPCM_IPSRST3_USBD7   BIT(5)
+> > +#define NPCM_IPSRST3_USBD8   BIT(6)
+> > +#define NPCM_IPSRST3_USBD9   BIT(7)
+> > +#define NPCM_IPSRST3_USBPHY1 BIT(24)
+> > +#define NPCM_IPSRST3_USBPHY2 BIT(25)
+> > +
+> > +#define NPCM_RC_RESETS_PER_REG       32
+> > +
+> > +struct npcm_rc_data {
+> > +     struct reset_controller_dev rcdev;
+> > +     struct notifier_block restart_nb;
+> > +     u32 sw_reset_number;
+> > +     void __iomem *base;
+> > +     spinlock_t lock;
+> > +};
+> > +
+> > +#define to_rc_data(p) container_of(p, struct npcm_rc_data, rcdev)
+> > +
+> > +static int npcm_rc_restart(struct notifier_block *nb, unsigned long
+> mode,
+> > +                        void *cmd)
+> > +{
+> > +     struct npcm_rc_data *rc = container_of(nb, struct npcm_rc_data,
+> > +                                            restart_nb);
+> > +
+> > +     writel(NPCM_SWRST << rc->sw_reset_number, rc->base + NPCM_SWRSTR);
+> > +     mdelay(1000);
+> > +
+> > +     pr_emerg("%s: unable to restart system\n", __func__);
+> > +
+> > +     return NOTIFY_DONE;
+> > +}
+> > +
+> > +static int npcm_rc_setclear_reset(struct reset_controller_dev *rcdev,
+> > +                               unsigned long id, bool set)
+> > +{
+> > +     struct npcm_rc_data *rc = to_rc_data(rcdev);
+> > +     u32 ctrl_offset = NPCM_IPSRST1;
+> > +     unsigned long flags;
+> > +     u32 stat, rst_bit;
+> > +
+> > +     ctrl_offset += (id / NPCM_RC_RESETS_PER_REG) * sizeof(u32);
+> > +     rst_bit = 1 << (id % NPCM_RC_RESETS_PER_REG);
+> > +
+> > +     spin_lock_irqsave(&rc->lock, flags);
+> > +     stat = readl(rc->base + ctrl_offset);
+> > +     if (set)
+> > +             writel(stat | rst_bit, rc->base + ctrl_offset);
+> > +     else
+> > +             writel(stat & ~rst_bit, rc->base + ctrl_offset);
+> > +     spin_unlock_irqrestore(&rc->lock, flags);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int npcm_rc_assert(struct reset_controller_dev *rcdev, unsigned
+> long id)
+> > +{
+> > +     return npcm_rc_setclear_reset(rcdev, id, true);
+> > +}
+> > +
+> > +static int npcm_rc_deassert(struct reset_controller_dev *rcdev,
+> > +                         unsigned long id)
+> > +{
+> > +     return npcm_rc_setclear_reset(rcdev, id, false);
+> > +}
+> > +
+> > +static int npcm_rc_status(struct reset_controller_dev *rcdev,
+> > +                       unsigned long id)
+> > +{
+> > +     struct npcm_rc_data *rc = to_rc_data(rcdev);
+> > +     u32 bit, ctrl_offset = NPCM_IPSRST1;
+> > +
+> > +     ctrl_offset += (id / NPCM_RC_RESETS_PER_REG) * sizeof(u32);
+> > +     bit = 1 << (id % NPCM_RC_RESETS_PER_REG);
+> > +
+> > +     return (readl(rc->base + ctrl_offset) & bit);
+> > +}
+> > +
+> > +/*
+> > + *  The following procedure should be observed in USB PHY, USB device
+> and
+> > + *  USB host initialization at BMC boot
+> > + */
+> > +static int npcm_usb_reset(struct platform_device *pdev, struct
+> npcm_rc_data *rc)
+> > +{
+> > +     struct device_node *np = pdev->dev.of_node;
+> > +     u32 mdlr, iprst1, iprst2, iprst3;
+> > +     struct regmap *gcr_regmap;
+> > +     u32 ipsrst1_bits = 0;
+> > +     u32 ipsrst2_bits = NPCM_IPSRST2_USB_HOST;
+> > +     u32 ipsrst3_bits = 0;
+> > +
+> > +     if (of_device_is_compatible(np, "nuvoton,npcm750-reset")) {
+> > +             gcr_regmap =
+> syscon_regmap_lookup_by_compatible("nuvoton,npcm750-gcr");
+> > +             if (IS_ERR(gcr_regmap)) {
+> > +                     dev_err(&pdev->dev, "Failed to find
+> nuvoton,npcm750-gcr\n");
+> > +                     return PTR_ERR(gcr_regmap);
+> > +             }
+> > +     }
+> > +     if (!gcr_regmap)
+> > +             return -ENXIO;
+> > +
+> > +     /* checking which USB device is enabled */
+> > +     regmap_read(gcr_regmap, NPCM_MDLR_OFFSET, &mdlr);
+> > +     if (!(mdlr & NPCM_MDLR_USBD0))
+> > +             ipsrst3_bits |= NPCM_IPSRST3_USBD0;
+> > +     if (!(mdlr & NPCM_MDLR_USBD1))
+> > +             ipsrst1_bits |= NPCM_IPSRST1_USBD1;
+> > +     if (!(mdlr & NPCM_MDLR_USBD2_4))
+> > +             ipsrst1_bits |= (NPCM_IPSRST1_USBD2 |
+> > +                              NPCM_IPSRST1_USBD3 |
+> > +                              NPCM_IPSRST1_USBD4);
+> > +     if (!(mdlr & NPCM_MDLR_USBD0)) {
+> > +             ipsrst1_bits |= (NPCM_IPSRST1_USBD5 |
+> > +                              NPCM_IPSRST1_USBD6);
+> > +             ipsrst3_bits |= (NPCM_IPSRST3_USBD7 |
+> > +                              NPCM_IPSRST3_USBD8 |
+> > +                              NPCM_IPSRST3_USBD9);
+> > +     }
+> > +
+> > +     /* assert reset USB PHY and USB devices */
+> > +     iprst1 = readl(rc->base + NPCM_IPSRST1);
+> > +     iprst2 = readl(rc->base + NPCM_IPSRST2);
+> > +     iprst3 = readl(rc->base + NPCM_IPSRST3);
+> > +
+> > +     iprst1 |= ipsrst1_bits;
+> > +     iprst2 |= ipsrst2_bits;
+> > +     iprst3 |= (ipsrst3_bits | NPCM_IPSRST3_USBPHY1 |
+> > +                NPCM_IPSRST3_USBPHY2);
+> > +
+> > +     writel(iprst1, rc->base + NPCM_IPSRST1);
+> > +     writel(iprst2, rc->base + NPCM_IPSRST2);
+> > +     writel(iprst3, rc->base + NPCM_IPSRST3);
+> > +
+> > +     /* clear USB PHY RS bit */
+> > +     regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
+> > +                        NPCM_USBXPHYCTL_RS, 0);
+> > +     regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
+> > +                        NPCM_USBXPHYCTL_RS, 0);
+> > +
+> > +     /* deassert reset USB PHY */
+> > +     iprst3 &= ~(NPCM_IPSRST3_USBPHY1 | NPCM_IPSRST3_USBPHY2);
+> > +     writel(iprst3, rc->base + NPCM_IPSRST3);
+> > +
+> > +     udelay(50);
+> > +
+> > +     /* set USB PHY RS bit */
+> > +     regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
+> > +                        NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
+> > +     regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
+> > +                        NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
+> > +
+> > +     /* deassert reset USB devices*/
+> > +     iprst1 &= ~ipsrst1_bits;
+> > +     iprst2 &= ~ipsrst2_bits;
+> > +     iprst3 &= ~ipsrst3_bits;
+> > +
+> > +     writel(iprst1, rc->base + NPCM_IPSRST1);
+> > +     writel(iprst2, rc->base + NPCM_IPSRST2);
+> > +     writel(iprst3, rc->base + NPCM_IPSRST3);
+> > +
+> > +     return 0;
+> > +}
+>
+> Is there no better place for this, such as USB glue code?
 
---_000_CY4PR08MB2981B0B9732CDB1E0F15DC2BE4630CY4PR08MB2981namp_--
+Sorry, I didn't find a proper place to add it in the USB tree.
 
+
+>
+>
+> +static const struct reset_control_ops npcm_rc_ops = {
+> > +     .assert         = npcm_rc_assert,
+> > +     .deassert       = npcm_rc_deassert,
+> > +     .status         = npcm_rc_status,
+> > +};
+> > +
+> > +static int npcm_rc_probe(struct platform_device *pdev)
+> > +{
+> > +     struct npcm_rc_data *rc;
+> > +     struct resource res;
+> > +     int ret;
+> > +
+> > +     rc = devm_kzalloc(&pdev->dev, sizeof(*rc), GFP_KERNEL);
+> > +     if (!rc)
+> > +             return -ENOMEM;
+> > +
+> > +     of_address_to_resource(pdev->dev.of_node, 0, &res);
+> > +     rc->base = devm_ioremap_resource(&pdev->dev, &res);
+>
+> Can't you just use
+>
+>         rc->base = devm_platform_ioremap_resource(pdev, 0);
+>
+> here?
+>
+> > +     if (IS_ERR(rc->base))
+> > +             return PTR_ERR(rc->base);
+> > +
+> > +     spin_lock_init(&rc->lock);
+> > +
+> > +     rc->rcdev.owner = THIS_MODULE;
+> > +     rc->rcdev.nr_resets = resource_size(&res) / 4 * BITS_PER_LONG;
+>
+> That doesn't seem right. With the ctrl_offset = NPCM_IPSRST1 in
+> npcm_rc_setclear_reset that would allow access beyond the configured
+> register range.
+>
+> > +     rc->rcdev.ops = &npcm_rc_ops;
+> > +     rc->rcdev.of_node = pdev->dev.of_node;
+> > +
+> > +     platform_set_drvdata(pdev, rc);
+> > +
+> > +     ret = reset_controller_register(&rc->rcdev);
+>
+>         ret = devm_reset_controller_register(&pdev->dev, &rc->rcdev);
+>
+> > +     if (ret) {
+> > +             dev_err(&pdev->dev, "unable to register device\n");
+> > +             return ret;
+> > +     }
+> > +
+> > +     if (npcm_usb_reset(pdev, rc))
+> > +             dev_warn(&pdev->dev, "NPCM USB reset failed, can cause
+> issues with UDC and USB host\n");
+> > +
+> > +     if (!of_property_read_u32(pdev->dev.of_node,
+> "nuvoton,sw-reset-number",
+> > +                               &rc->sw_reset_number)) {
+> > +             if (rc->sw_reset_number && rc->sw_reset_number < 5) {
+> > +                     rc->restart_nb.priority = 192,
+> > +                     rc->restart_nb.notifier_call = npcm_rc_restart,
+> > +                     ret = register_restart_handler(&rc->restart_nb);
+> > +                     if (ret)
+> > +                             dev_warn(&pdev->dev, "failed to register
+> restart handler\n");
+> > +             }
+> > +     }
+> > +
+> > +     pr_info("NPCM RESET driver probed\n");
+>
+> It think this is a bit verbose.
+>
+> > +     return ret;
+> > +}
+> > +
+> > +static const struct of_device_id npcm_rc_match[] = {
+> > +     { .compatible = "nuvoton,npcm750-reset" },
+> > +     { }
+> > +};
+> > +
+> > +static struct platform_driver npcm_rc_driver = {
+> > +     .probe  = npcm_rc_probe,
+> > +     .driver = {
+> > +             .name                   = "npcm-reset",
+> > +             .of_match_table         = npcm_rc_match,
+> > +             .suppress_bind_attrs    = true,
+> > +     },
+> > +};
+> > +builtin_platform_driver(npcm_rc_driver);
+>
+> regards
+> Philipp
+>
+>
+Regards,
+
+Tomer
+
+--000000000000554ea905963554b8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Philipp,<div><br></div><div>Thanks a l=
+ot for your comments.</div><div><br></div><div>On Tue, 29 Oct 2019 at 17:34=
+, Philipp Zabel &lt;<a href=3D"mailto:p.zabel@pengutronix.de">p.zabel@pengu=
+tronix.de</a>&gt; wrote:<br></div></div><div class=3D"gmail_quote"><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">On Mon, 2019-10-28 at 17:54 +0200=
+, Tomer Maimon wrote:<br>
+&gt; Add Nuvoton NPCM BMC reset controller driver.<br>
+&gt; <br>
+&gt; Signed-off-by: Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@gmail.com"=
+ target=3D"_blank">tmaimon77@gmail.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 drivers/reset/Kconfig=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A07 +<br>
+&gt;=C2=A0 drivers/reset/Makefile=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 drivers/reset/reset-npcm.c | 275 +++++++++++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 3 files changed, 283 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 drivers/reset/reset-npcm.c<br>
+&gt; <br>
+&gt; diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig<br>
+&gt; index 7b07281aa0ae..5dbfdf6d717a 100644<br>
+&gt; --- a/drivers/reset/Kconfig<br>
+&gt; +++ b/drivers/reset/Kconfig<br>
+&gt; @@ -89,6 +89,13 @@ config RESET_MESON_AUDIO_ARB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0This enables the reset driver for Aud=
+io Memory Arbiter of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Amlogic&#39;s A113 based SoCs<br>
+&gt;=C2=A0 <br>
+&gt; +config RESET_NPCM<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0bool &quot;NPCM BMC Reset Driver&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0depends on ARCH_NPCM || COMPILE_TEST<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0help<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0This enables the reset controller driver f=
+or Nuvoton NPCM <br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0BMC SoCs.<br>
+&gt; +<br>
+<br>
+Is there any reason to ever disable this driver when building ARCH_NPCM?<br=
+>
+<br>
+&gt;=C2=A0 config RESET_OXNAS<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool<br>
+&gt;=C2=A0 <br>
+&gt; diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile<br>
+&gt; index cf60ce526064..00767c03f5f2 100644<br>
+&gt; --- a/drivers/reset/Makefile<br>
+&gt; +++ b/drivers/reset/Makefile<br>
+&gt; @@ -14,6 +14,7 @@ obj-$(CONFIG_RESET_LANTIQ) +=3D reset-lantiq.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_LPC18XX) +=3D reset-lpc18xx.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_MESON) +=3D reset-meson.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_MESON_AUDIO_ARB) +=3D reset-meson-audio-arb.o=
+<br>
+&gt; +obj-$(CONFIG_RESET_NPCM) +=3D reset-npcm.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_OXNAS) +=3D reset-oxnas.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_PISTACHIO) +=3D reset-pistachio.o<br>
+&gt;=C2=A0 obj-$(CONFIG_RESET_QCOM_AOSS) +=3D reset-qcom-aoss.o<br>
+&gt; diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c<b=
+r>
+&gt; new file mode 100644<br>
+&gt; index 000000000000..ebb3071767e1<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/drivers/reset/reset-npcm.c<br>
+&gt; @@ -0,0 +1,275 @@<br>
+&gt; +// SPDX-License-Identifier: GPL-2.0<br>
+&gt; +// Copyright (c) 2019 Nuvoton Technology corporation.<br>
+&gt; +<br>
+&gt; +#include &lt;linux/clk.h&gt;<br>
+<br>
+Please remove unused header includes.<br>
+<br>
+&gt; +#include &lt;linux/delay.h&gt;<br>
+&gt; +#include &lt;linux/err.h&gt;<br>
+&gt; +#include &lt;linux/io.h&gt;<br>
+&gt; +#include &lt;linux/init.h&gt;<br>
+&gt; +#include &lt;linux/of.h&gt;<br>
+&gt; +#include &lt;linux/platform_device.h&gt;<br>
+&gt; +#include &lt;linux/reboot.h&gt;<br>
+&gt; +#include &lt;linux/reset-controller.h&gt;<br>
+&gt; +#include &lt;linux/spinlock.h&gt;<br>
+&gt; +#include &lt;linux/mfd/syscon.h&gt;<br>
+&gt; +#include &lt;linux/regmap.h&gt;<br>
+&gt; +#include &lt;linux/of_address.h&gt;<br>
+&gt; +<br>
+&gt; +/* NPCM7xx GCR registers */<br>
+&gt; +#define NPCM_MDLR_OFFSET=C2=A0 =C2=A0 =C2=A00x7C<br>
+&gt; +#define NPCM_MDLR_USBD0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 BIT(9)<br>
+&gt; +#define NPCM_MDLR_USBD1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 BIT(8)<br>
+&gt; +#define NPCM_MDLR_USBD2_4=C2=A0 =C2=A0 BIT(21)<br>
+&gt; +#define NPCM_MDLR_USBD5_9=C2=A0 =C2=A0 BIT(22)<br>
+&gt; +<br>
+&gt; +#define NPCM_USB1PHYCTL_OFFSET=C2=A0 =C2=A0 =C2=A0 =C2=A00x140<br>
+&gt; +#define NPCM_USB2PHYCTL_OFFSET=C2=A0 =C2=A0 =C2=A0 =C2=A00x144<br>
+&gt; +#define NPCM_USBXPHYCTL_RS=C2=A0 =C2=A0BIT(28)<br>
+&gt; +<br>
+&gt; +/* NPCM7xx Reset registers */<br>
+&gt; +#define NPCM_SWRSTR=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0x14<br>
+&gt; +#define NPCM_SWRST=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BIT(2)<br>
+&gt; +<br>
+&gt; +#define NPCM_IPSRST1=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x20<br>
+&gt; +#define NPCM_IPSRST1_USBD1=C2=A0 =C2=A0BIT(5)<br>
+&gt; +#define NPCM_IPSRST1_USBD2=C2=A0 =C2=A0BIT(8)<br>
+&gt; +#define NPCM_IPSRST1_USBD3=C2=A0 =C2=A0BIT(25)<br>
+&gt; +#define NPCM_IPSRST1_USBD4=C2=A0 =C2=A0BIT(22)<br>
+&gt; +#define NPCM_IPSRST1_USBD5=C2=A0 =C2=A0BIT(23)<br>
+&gt; +#define NPCM_IPSRST1_USBD6=C2=A0 =C2=A0BIT(24)<br>
+&gt; +<br>
+&gt; +#define NPCM_IPSRST2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x24<br>
+&gt; +#define NPCM_IPSRST2_USB_HOST=C2=A0 =C2=A0 =C2=A0 =C2=A0 BIT(26)<br>
+&gt; +<br>
+&gt; +#define NPCM_IPSRST3=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x34<br>
+&gt; +#define NPCM_IPSRST3_USBD0=C2=A0 =C2=A0BIT(4)<br>
+&gt; +#define NPCM_IPSRST3_USBD7=C2=A0 =C2=A0BIT(5)<br>
+&gt; +#define NPCM_IPSRST3_USBD8=C2=A0 =C2=A0BIT(6)<br>
+&gt; +#define NPCM_IPSRST3_USBD9=C2=A0 =C2=A0BIT(7)<br>
+&gt; +#define NPCM_IPSRST3_USBPHY1 BIT(24)<br>
+&gt; +#define NPCM_IPSRST3_USBPHY2 BIT(25)<br>
+&gt; +<br>
+&gt; +#define NPCM_RC_RESETS_PER_REG=C2=A0 =C2=A0 =C2=A0 =C2=A032<br>
+&gt; +<br>
+&gt; +struct npcm_rc_data {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct reset_controller_dev rcdev;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct notifier_block restart_nb;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 sw_reset_number;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0void __iomem *base;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0spinlock_t lock;<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +#define to_rc_data(p) container_of(p, struct npcm_rc_data, rcdev)<br>
+&gt; +<br>
+&gt; +static int npcm_rc_restart(struct notifier_block *nb, unsigned long m=
+ode,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 void *cmd)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rc_data *rc =3D container_of(nb, stru=
+ct npcm_rc_data,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 restart_nb);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(NPCM_SWRST &lt;&lt; rc-&gt;sw_reset_number=
+, rc-&gt;base + NPCM_SWRSTR);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0mdelay(1000);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pr_emerg(&quot;%s: unable to restart system\n&quo=
+t;, __func__);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return NOTIFY_DONE;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rc_setclear_reset(struct reset_controller_dev *rcdev,=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned long id, bool set)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rc_data *rc =3D to_rc_data(rcdev);<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 ctrl_offset =3D NPCM_IPSRST1;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0unsigned long flags;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 stat, rst_bit;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ctrl_offset +=3D (id / NPCM_RC_RESETS_PER_REG) * =
+sizeof(u32);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rst_bit =3D 1 &lt;&lt; (id % NPCM_RC_RESETS_PER_R=
+EG);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0spin_lock_irqsave(&amp;rc-&gt;lock, flags);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0stat =3D readl(rc-&gt;base + ctrl_offset);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (set)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0writel(stat | rst_bit=
+, rc-&gt;base + ctrl_offset);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0else<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0writel(stat &amp; ~rs=
+t_bit, rc-&gt;base + ctrl_offset);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0spin_unlock_irqrestore(&amp;rc-&gt;lock, flags);<=
+br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rc_assert(struct reset_controller_dev *rcdev, unsigne=
+d long id)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return npcm_rc_setclear_reset(rcdev, id, true);<b=
+r>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rc_deassert(struct reset_controller_dev *rcdev,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0unsigned long id)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return npcm_rc_setclear_reset(rcdev, id, false);<=
+br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static int npcm_rc_status(struct reset_controller_dev *rcdev,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0unsigned long id)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rc_data *rc =3D to_rc_data(rcdev);<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 bit, ctrl_offset =3D NPCM_IPSRST1;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ctrl_offset +=3D (id / NPCM_RC_RESETS_PER_REG) * =
+sizeof(u32);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0bit =3D 1 &lt;&lt; (id % NPCM_RC_RESETS_PER_REG);=
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return (readl(rc-&gt;base + ctrl_offset) &amp; bi=
+t);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +/*<br>
+&gt; + *=C2=A0 The following procedure should be observed in USB PHY, USB d=
+evice and<br>
+&gt; + *=C2=A0 USB host initialization at BMC boot<br>
+&gt; + */<br>
+&gt; +static int npcm_usb_reset(struct platform_device *pdev, struct npcm_r=
+c_data *rc)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct device_node *np =3D pdev-&gt;dev.of_node;<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 mdlr, iprst1, iprst2, iprst3;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct regmap *gcr_regmap;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 ipsrst1_bits =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 ipsrst2_bits =3D NPCM_IPSRST2_USB_HOST;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0u32 ipsrst3_bits =3D 0;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (of_device_is_compatible(np, &quot;nuvoton,npc=
+m750-reset&quot;)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gcr_regmap =3D syscon=
+_regmap_lookup_by_compatible(&quot;nuvoton,npcm750-gcr&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (IS_ERR(gcr_regmap=
+)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0dev_err(&amp;pdev-&gt;dev, &quot;Failed to find nuvoton,npcm750-gcr\=
+n&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0return PTR_ERR(gcr_regmap);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!gcr_regmap)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENXIO;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* checking which USB device is enabled */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0regmap_read(gcr_regmap, NPCM_MDLR_OFFSET, &amp;md=
+lr);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!(mdlr &amp; NPCM_MDLR_USBD0))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ipsrst3_bits |=3D NPC=
+M_IPSRST3_USBD0;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!(mdlr &amp; NPCM_MDLR_USBD1))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ipsrst1_bits |=3D NPC=
+M_IPSRST1_USBD1;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!(mdlr &amp; NPCM_MDLR_USBD2_4))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ipsrst1_bits |=3D (NP=
+CM_IPSRST1_USBD2 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST1_USBD3 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST1_USBD4);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!(mdlr &amp; NPCM_MDLR_USBD0)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ipsrst1_bits |=3D (NP=
+CM_IPSRST1_USBD5 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST1_USBD6);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ipsrst3_bits |=3D (NP=
+CM_IPSRST3_USBD7 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST3_USBD8 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST3_USBD9);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* assert reset USB PHY and USB devices */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst1 =3D readl(rc-&gt;base + NPCM_IPSRST1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst2 =3D readl(rc-&gt;base + NPCM_IPSRST2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst3 =3D readl(rc-&gt;base + NPCM_IPSRST3);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst1 |=3D ipsrst1_bits;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst2 |=3D ipsrst2_bits;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst3 |=3D (ipsrst3_bits | NPCM_IPSRST3_USBPHY1 =
+|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NPCM_IPSRST3_=
+USBPHY2);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst1, rc-&gt;base + NPCM_IPSRST1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst2, rc-&gt;base + NPCM_IPSRST2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst3, rc-&gt;base + NPCM_IPSRST3);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* clear USB PHY RS bit */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OF=
+FSET,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 NPCM_USBXPHYCTL_RS, 0);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OF=
+FSET,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 NPCM_USBXPHYCTL_RS, 0);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* deassert reset USB PHY */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst3 &amp;=3D ~(NPCM_IPSRST3_USBPHY1 | NPCM_IPS=
+RST3_USBPHY2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst3, rc-&gt;base + NPCM_IPSRST3);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0udelay(50);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* set USB PHY RS bit */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OF=
+FSET,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OF=
+FSET,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0/* deassert reset USB devices*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst1 &amp;=3D ~ipsrst1_bits;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst2 &amp;=3D ~ipsrst2_bits;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0iprst3 &amp;=3D ~ipsrst3_bits;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst1, rc-&gt;base + NPCM_IPSRST1);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst2, rc-&gt;base + NPCM_IPSRST2);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0writel(iprst3, rc-&gt;base + NPCM_IPSRST3);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt; +}<br>
+<br>
+Is there no better place for this, such as USB glue code?</blockquote><div>=
+Sorry, I didn&#39;t find a proper place to add it in the USB tree.</div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=C2=A0<br><=
+/blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +static const struct reset_control_ops npcm_rc_ops =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.assert=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D npcm=
+_rc_assert,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.deassert=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D npcm_rc_d=
+eassert,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.status=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D npcm=
+_rc_status,<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +static int npcm_rc_probe(struct platform_device *pdev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct npcm_rc_data *rc;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0struct resource res;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int ret;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc =3D devm_kzalloc(&amp;pdev-&gt;dev, sizeof(*rc=
+), GFP_KERNEL);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!rc)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -ENOMEM;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0of_address_to_resource(pdev-&gt;dev.of_node, 0, &=
+amp;res);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc-&gt;base =3D devm_ioremap_resource(&amp;pdev-&=
+gt;dev, &amp;res);<br>
+<br>
+Can&#39;t you just use<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 rc-&gt;base =3D devm_platform_ioremap_resource(=
+pdev, 0);<br>
+<br>
+here?<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (IS_ERR(rc-&gt;base))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return PTR_ERR(rc-&gt=
+;base);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0spin_lock_init(&amp;rc-&gt;lock);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc-&gt;rcdev.owner =3D THIS_MODULE;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc-&gt;rcdev.nr_resets =3D resource_size(&amp;res=
+) / 4 * BITS_PER_LONG;<br>
+<br>
+That doesn&#39;t seem right. With the ctrl_offset =3D NPCM_IPSRST1 in<br>
+npcm_rc_setclear_reset that would allow access beyond the configured<br>
+register range.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc-&gt;rcdev.ops =3D &amp;npcm_rc_ops;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0rc-&gt;rcdev.of_node =3D pdev-&gt;dev.of_node;<br=
+>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0platform_set_drvdata(pdev, rc);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ret =3D reset_controller_register(&amp;rc-&gt;rcd=
+ev);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D devm_reset_controller_register(&amp;pde=
+v-&gt;dev, &amp;rc-&gt;rcdev);<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (ret) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_err(&amp;pdev-&gt=
+;dev, &quot;unable to register device\n&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (npcm_usb_reset(pdev, rc))<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_warn(&amp;pdev-&g=
+t;dev, &quot;NPCM USB reset failed, can cause issues with UDC and USB host\=
+n&quot;);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (!of_property_read_u32(pdev-&gt;dev.of_node, &=
+quot;nuvoton,sw-reset-number&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;rc-&gt;sw_reset_number)) {<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (rc-&gt;sw_reset_n=
+umber &amp;&amp; rc-&gt;sw_reset_number &lt; 5) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0rc-&gt;restart_nb.priority =3D 192,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0rc-&gt;restart_nb.notifier_call =3D npcm_rc_restart,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0ret =3D register_restart_handler(&amp;rc-&gt;restart_nb);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0if (ret)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_warn(&amp;pdev-&gt;dev, &quot;failed=
+ to register restart handler\n&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0pr_info(&quot;NPCM RESET driver probed\n&quot;);<=
+br>
+<br>
+It think this is a bit verbose.<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0return ret;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +static const struct of_device_id npcm_rc_match[] =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0{ .compatible =3D &quot;nuvoton,npcm750-reset&quo=
+t; },<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0{ }<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +static struct platform_driver npcm_rc_driver =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.probe=C2=A0 =3D npcm_rc_probe,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0.driver =3D {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.name=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;npcm-reset=
+&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.of_match_table=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D npcm_rc_match,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0.suppress_bind_attrs=
+=C2=A0 =C2=A0 =3D true,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0},<br>
+&gt; +};<br>
+&gt; +builtin_platform_driver(npcm_rc_driver);<br>
+<br>
+regards<br>
+Philipp<br>
+<br></blockquote><div><br></div><div>Regards,</div><div><br></div><div>Tome=
+r=C2=A0</div></div></div>
+
+--000000000000554ea905963554b8--
