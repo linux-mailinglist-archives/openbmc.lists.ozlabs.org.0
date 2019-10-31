@@ -1,78 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B250EA9E2
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 05:21:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2BB1EAA1F
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 06:16:53 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 473XFb0mnkzF1KS
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 15:21:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 473YTZ5xPmzF48H
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 16:16:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::444;
- helo=mail-pf1-x444.google.com; envelope-from=santosh.puranik.ibm@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="XCFJqgag"; 
- dkim-atps=neutral
-Received: from mail-pf1-x444.google.com (mail-pf1-x444.google.com
- [IPv6:2607:f8b0:4864:20::444])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="HE15oaGh"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="oCeIDN4e"; dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 473XDq1GDkzF5WM
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 15:20:40 +1100 (AEDT)
-Received: by mail-pf1-x444.google.com with SMTP id 21so3313886pfj.9
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 21:20:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-transfer-encoding:content-language;
- bh=4mJDqthaf5yJh2/2hGCfBJUkBVI3oqeTQ1CG8t6mYmY=;
- b=XCFJqgagxvC9h0JYjZJdHqc/LuzJ7ExbkRsqpyhUR6M1AGnRF53RIL6ZPbAO9yR5WF
- L7/qi05geHVUAzcU8WWEWZZ5LZxk/uY9qtHKLAwKWLOmP092xYmxY6bONLRiDTJrThO8
- avYrfdfQlkuKshiV0NrF2nw5kw2xFBPzFbDs4E86I0yT6/vHwR4MNi1+dWNHXO3xtls/
- flBP9rNNl+pvS6qDmxbfe4rBQnP+VMYn4alOu+6aWLtEd/r8bghBDmpqN3SD3LwjUT/6
- e6ui8kNHs/bKGrf991+NiQvgCHti1BB5Wb9G2VpbVHcVZiMW2I+jM7FDrGEGx5WHQfK8
- 5IwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=4mJDqthaf5yJh2/2hGCfBJUkBVI3oqeTQ1CG8t6mYmY=;
- b=GSkp1S63PXkzuhFVBt9qs8zhnY8v7FEMKPKQLp2qQ7AbklV+gEHKwDlmpTeo6tKtwq
- XDwGaKgP+f7cIsEYglnaeTzL1V/oWFdB7R9mkM+lf67Lct7Ro9rA/7T2gXAaTEysnrrL
- cNXatVk6t+ebyaTW/h0h/bwcibel4FiOEHmLi+ROYa3Rkc8C5d6pZufSNYRkdDxs1O6C
- ZDAGVmA6JF0Wh1duGWlGHQ/+9uZqX2DpaVoThAQVCFW7q5qPCe3hcGY1WdOJS9TjhFW3
- ZMjNfIae8fyLCE1pa9IGLi6dZ328GIXa2D8dskr1JeQa+r3MnTGt2w7djMS0oZzBFiqo
- En1Q==
-X-Gm-Message-State: APjAAAVtD4XyXef5XMOFIyvVOQYSoQkxKnM3AdMhRTXJH6hhjIDjkJ8B
- ZHOgCgThI4HwrCexN4J5EoczxqF6
-X-Google-Smtp-Source: APXvYqw7ikx5S0HAz+XIOO/e23ol5KdEwkSk9cuIIcaZI4+sjSr2/JwmDEZVqF/O4mlC/0pIqtkGgA==
-X-Received: by 2002:a65:434b:: with SMTP id k11mr3788569pgq.386.1572495636507; 
- Wed, 30 Oct 2019 21:20:36 -0700 (PDT)
-Received: from [9.199.76.54] ([129.41.84.80])
- by smtp.gmail.com with ESMTPSA id z11sm1646770pfg.117.2019.10.30.21.20.34
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 30 Oct 2019 21:20:35 -0700 (PDT)
-Subject: Re: [PATCH linux dev-5.3] ARM: dts: aspeed: rainier: Fix i2c eeprom
- size
-To: Jinu Thomas <jinujoy@linux.vnet.ibm.com>, Joel Stanley <joel@jms.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <e17c8218-4a2c-1eee-f104-b572415c53e8@linux.vnet.ibm.com>
-From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
-Message-ID: <48393e3f-f839-ac2d-a94e-abb545b81aaf@gmail.com>
-Date: Thu, 31 Oct 2019 09:50:33 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 473YQ66N0VzF5W1
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 16:13:50 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id DAD3B223DA;
+ Thu, 31 Oct 2019 01:13:45 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Thu, 31 Oct 2019 01:13:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm1; bh=z8ngavjpr9ZdpaCDTKopJJZw0J
+ m8e6ibsBlpnhn98uE=; b=HE15oaGhz3uwSjffE7WEeYSG+ydtdUUMMgJuod+g4c
+ FSQkWSGjf2QYq8goCvFGHi/zv1215RSn4ZuvRekJwRFe+Z6guF+YjFco29hMvSR/
+ c/Zyr+U2cfl2rI16pV3a/2Zd9IP/8p2N0eBpZdI3Y+SeHvMcBOE8UDlEBe0yMIye
+ jqgjOr0/YWWGxbNsQ9IY7viZru+T6aG9Qc7hVt0ptvck5xv0f89XLtZxi7l6Cb12
+ NAQsdrSO+tTkbWKeFzKLUEs5tzwhXHynsgBTCqBlLBKU9lCT55FoDU6BtNqsesnL
+ 6aTYQHELT+uhNOUYsJn/OJ1ydO/xgH5CkysqFoU9mHqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=z8ngavjpr9ZdpaCDT
+ KopJJZw0Jm8e6ibsBlpnhn98uE=; b=oCeIDN4eo/O8B1KNpWVMWwt4Zbt0QA4UC
+ TyHdIERcHYm0zpVyCqWKvHxF3xEVIgGDxAVq8O4EI9owyVdcZOctqP1I1PnL103a
+ I3Xe3BT4CxdqX7txAHf2mfy6V3p6tTe1pRUTDykxfT/bsWM4tTy79cKzQqa8yQAE
+ M8LBS6vX2lO4DHowUXMw9IpQ9kZHpKroFJ8OvVRSFFSyGfW/hJZYdYwPJaswpyrc
+ 64ilvRIFT+GRuNlX6mlwzg259FmPnvpysWf/gCoh5lWU8FBv42/4TY3UhGDFQFep
+ /v+Vn7ODhKS4dV2Ney7uCsf6BnPqj7GW426rQUvRHwI0TIzWVkBAg==
+X-ME-Sender: <xms:iG26XaWDdA52vBgR9N_HJYnYU0lotG1D_t-XKfcH4NybXBZ6Yks2tw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtgedgkedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecukfhppedvtddvrdekuddrudekrdeftdenucfrrghrrghmpehmrghilh
+ hfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:iG26XUEu7MHizGXpIwDGriLYFCo4UGy_NbnWbOTv5mAZV0GHTC6y4w>
+ <xmx:iG26XRAL0GLvsBwr-3j931lAYS5PsNU0t5qht3gH9NG2zAPfWrtsGA>
+ <xmx:iG26XWxjvNb0phqbmnkmE7daDiUn9Vq_GX_HAYXR-jwSNdU0XvlZgA>
+ <xmx:iW26XcuDLzMm7-DeHcDrucnlfv1c7GPBcIEyB5oWws7hZjhtpxFJSw>
+Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
+ by mail.messagingengine.com (Postfix) with ESMTPA id D4B8B3060062;
+ Thu, 31 Oct 2019 01:13:43 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: joel@jms.id.au
+Subject: [PATCH linux dev-5.3 0/2] fsi: aspeed: Fix unaligned raw accesses
+Date: Thu, 31 Oct 2019 15:44:36 +1030
+Message-Id: <20191031051438.28589-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-In-Reply-To: <e17c8218-4a2c-1eee-f104-b572415c53e8@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,45 +83,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 30/10/19 3:31 PM, Jinu Thomas wrote:
-> Fix the size of the Proc VRM card's eeprom used for vpd storage
-> The size is changed from 64Kbit to 128Kbit
->
-> Signed-off-by: Jinu Joy Thomas <jinu.joy.thomas@in.ibm.com>
-> ---
->   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index efb1e99b5124..d959947dd8d6 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -412,7 +412,7 @@
->   	};
->   
->   	eeprom@50 {
-> -		compatible = "atmel,24c64";
-> +		compatible = "atmel,24c128";
->   		reg = <0x50>;
->   	};
->   };
-> @@ -461,7 +461,7 @@
->   	};
->   
->   	eeprom@50 {
-> -		compatible = "atmel,24c64";
-> +		compatible = "atmel,24c128";
->   		reg = <0x50>;
->   	};
->   };
-Reviewed-by: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Hello,
 
+Two patches, a tracing cleanup to fix signed/unsigned print format error and a
+minor rework of the sysfs `raw` attribute read/write procedures to handle
+arbitrary offsets and sizes.
 
-We do not have schematics available for the VRM cards, but
-I did confirm with the system designers that the EEPROMs are
-indeed 128Kbit in size.
---
-Santosh
+Please review!
+
+Andrew
+
+Andrew Jeffery (2):
+  trace: fsi: Print transfer size unsigned
+  fsi: core: Fix small accesses and unaligned offsets via sysfs
+
+ drivers/fsi/fsi-core.c     | 8 ++++----
+ include/trace/events/fsi.h | 6 +++---
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+-- 
+2.20.1
+
