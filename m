@@ -1,85 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B290EB9B2
-	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 23:28:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DD63EB9B8
+	for <lists+openbmc@lfdr.de>; Thu, 31 Oct 2019 23:32:33 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4740MQ4ysCzF50j
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 09:28:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4740SZ4rkvzF4Wp
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 09:32:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=lenovo.com (client-ip=67.219.246.210;
- helo=mail1.bemta23.messagelabs.com; envelope-from=dlin23@lenovo.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::62c;
+ helo=mail-pl1-x62c.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.210])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="aJ78opXi"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com
+ [IPv6:2607:f8b0:4864:20::62c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4733py6w8WzF3w3
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 21:00:07 +1100 (AEDT)
-Received: from [67.219.247.54] (using TLSv1.2 with cipher
- DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-3.bemta.az-d.us-east-1.aws.symcld.net id 68/98-14133-42F59BD5;
- Wed, 30 Oct 2019 10:00:04 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprPKsWRWlGSWpSXmKPExsWS8eIhr65y/M5
- Yg1s/tSxOtbxgcWD0OD9jIWMAYxRrZl5SfkUCa8abI74F79UqZt7qZ25gfKDUxcjFISQwn0ni
- 49S7rBDOa0aJ4xfmsEA4+xklHh9sY+xi5OBgE1CVuD+Nu4uRk0NEQF9i16TdbCC2sICkxNyj/
- 9gh4nISx/b9Z4Sw9SSO/10NFmcBar3YeosJxOYVsJR4OaeTFcRmFJCVeLLgGVicWUBc4tzFVr
- B6CQEBiSV7zjND2KISLx//Y4WwFSSa97xmgahPkLh6eS0bxExBiZMzn7BMYBSchWTULCRls5C
- UQcR1JBbs/sQGYWtLLFv4mhnGPnPgMROy+AJG9lWMZklFmekZJbmJmTm6hgYGuoaGRroWQJah
- XmKVbopeabFuamJxiS6QW16sV1yZm5yTopeXWrKJERgzKQUcqTsYez+81TvEKMnBpCTKu919R
- 6wQX1J+SmVGYnFGfFFpTmrxIUYZDg4lCV6dmJ2xQoJFqempFWmZOcD4hUlLcPAoifBuBUnzFh
- ck5hZnpkOkTjHac0x4OXcRM8fBo/OA5MdVS4DkdxApxJKXn5cqJc47ORqoTQCkLaM0D24oLN1
- cYpSVEuZlZGBgEOIpSC3KzSxBlX/FKM7BqCTMuxlkOU9mXgnc7ldAZzEBnaXzcxvIWSWJCCmp
- BqbJ5g0hyeF++08ErmDkm3zws9Qa1d70jdz/eyKE1C8LPVNJDtmU9dFVxq9DSYtHIefp9Id2r
- PxW6fseiYtrbr9Zyr3oYGbVxUns8xo8ZZLOuZTvlmDdFrAv3FHsyWoxpjNKKqsOPdXJvpy8Mi
- F5uhDPni1OW89c21dX+v1zjeN+wYdNAYsrF719/DDq+vmwlbvcg87e8z2hejtIfkX9xRtLdlV
- 1XrBp3BXgzXLhUmNOhOWDD5dcKn8Icxa7FpS+LCjfskPctESEVSbBlnF9VsBKTbdmCeXfnCe3
- RkfcTKhTb5tzoURQfnbUPpE11yoeLWsxn2X8tJ3jVMyDZkPVk9eDo9bK6W3ae+zctuBdh5VYi
- jMSDbWYi4oTAROBHzeyAwAA
-X-Env-Sender: dlin23@lenovo.com
-X-Msg-Ref: server-34.tower-426.messagelabs.com!1572429603!114128!1
-X-Originating-IP: [104.232.225.13]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.43.12; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 3390 invoked from network); 30 Oct 2019 10:00:03 -0000
-Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.13)
- by server-34.tower-426.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 30 Oct 2019 10:00:03 -0000
-Received: from HKGWPEMAIL04.lenovo.com (unknown [10.128.3.72])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by Forcepoint Email with ESMTPS id 933206A3C97551EF5BFC
- for <openbmc@lists.ozlabs.org>; Wed, 30 Oct 2019 06:00:02 -0400 (EDT)
-Received: from HKGWPEMAIL02.lenovo.com (10.128.3.70) by
- HKGWPEMAIL04.lenovo.com (10.128.3.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.1591.10; Wed, 30 Oct 2019 17:59:59 +0800
-Received: from HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba]) by
- HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba%12]) with mapi id
- 15.01.1591.008; Wed, 30 Oct 2019 17:59:59 +0800
-From: Derek Lin23 <dlin23@lenovo.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: FanPwm interface
-Thread-Topic: FanPwm interface
-Thread-Index: AdWPBzXsXQVBY5D1TJ+9eIoikR+YRA==
-Date: Wed, 30 Oct 2019 09:59:59 +0000
-Message-ID: <fed4bf71fdbf452f955f527b20c36c08@lenovo.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.128.115.1]
-Content-Type: multipart/alternative;
- boundary="_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4740Rl4T9pzF45f
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 09:31:46 +1100 (AEDT)
+Received: by mail-pl1-x62c.google.com with SMTP id a18so2237461plm.10
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 15:31:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=VUUVATxYg1KsbL4Om6UWY1izCqq70pMY2ITb0Vu4KU0=;
+ b=aJ78opXiaHDpiwhForeCrHUQMd+o6kYL2ULtJaxsaBp9bXLuOBAYZuc2FD1nUmW6Rs
+ XHmMqXfEOaPmp6jjt+gkvv2zdoC5PmqRHdF5Xws8v9biRkIgdK+psNVUwPRUOi8hE95T
+ NaxI6GQjKvOjRrqfXNL9BEq/l99vLtH5kW0ER8OdzS7g1IX+soJZSWBNLvOOBIxaGSJL
+ EgTNyW/PLE/5CL+BX53X3/MlIbheMHk5SEN2k1tbIru6m/WxVreajDM9D7rU6KMHv2zN
+ A8BxnoRC+HLk0zWC11F4CVO/oXlQDekOfcgof28rrtugnV4OaWQjlt22732bZllmJrPy
+ xBJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=VUUVATxYg1KsbL4Om6UWY1izCqq70pMY2ITb0Vu4KU0=;
+ b=Lh3CAlni8WKWSLX+93SO5e8QToszOqbeaK/1HysBQDP/aywYi1B95F3kSXXsB3qEN9
+ l7Za6mCrgOQ7/ysQSmpE3K5nE4ALs/qeInSFXNUAo98SjVPqsLdqnYbjQDlBIkpP5SlE
+ WjQiHK7IDnjxl7oo4rhST7rg3yEynftSN4+QXaBylRHmrWmbYkJQxZmSLMlkF/38T/G2
+ Y0HuD04SXv0I+vcDsxR8XC/5b6EdjMHX2FoLRHfFNwweCAAVRCodEotI3Jv8dRTFMd4P
+ k0MGiu0wEsWgMY3PAeuZFpaQYwM6BGxFvrcUtTR7QABA5ZD0xYgE30B3myMTVybr0noh
+ DhSQ==
+X-Gm-Message-State: APjAAAUE137vEv2PIr34SDB8Z/56XGJVCLUJJJ5DvWuPSl7RuO/X2YBg
+ AH9hdfPos0pGPVUvFm1CYaaxF21HpfDpL/y1WAVEtw==
+X-Google-Smtp-Source: APXvYqxuy8N/lSG+HHVtJ7EDmON5IrXz5nO/SHJlw9njqA1US/f5ZykbJuLrq5Etco/AeAP3ra64piF3nQl1rsEoQl8=
+X-Received: by 2002:a17:902:9b83:: with SMTP id
+ y3mr8810893plp.179.1572561102913; 
+ Thu, 31 Oct 2019 15:31:42 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailman-Approved-At: Fri, 01 Nov 2019 09:21:55 +1100
+References: <fed4bf71fdbf452f955f527b20c36c08@lenovo.com>
+In-Reply-To: <fed4bf71fdbf452f955f527b20c36c08@lenovo.com>
+From: Patrick Venture <venture@google.com>
+Date: Thu, 31 Oct 2019 15:31:31 -0700
+Message-ID: <CAO=notyoynBRNHg9fgPX1QgJ_kghX_=uKbeJ+CCmsv5mPubNKg@mail.gmail.com>
+Subject: Re: FanPwm interface
+To: Derek Lin23 <dlin23@lenovo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,136 +75,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hi team:
-
-          I have a question regarding of FanPwm interface on hwmon.
-          Does this interface get updated while PWM is changing in sysfs?
-          For example, if I setup a fan points to a PWM like below configur=
-ation, now, FanPwm interface does not get updated when I update PWM in sysf=
-s, only my fan inputs (rpms) do.
-
-          Example:
-          LABEL_fan1 =3D "FAN0_Speed"
-          ...
-          PWM_TARGET_fan1 =3D "1"
-
-          Is there a configuration or label which I can use so FanPwm inter=
-face would get updated when I change PWM in sysfs?
-
-Thanks,
-
-Derek
-
-
-
---_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Thu, Oct 31, 2019 at 3:27 PM Derek Lin23 <dlin23@lenovo.com> wrote:
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi team:<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; I have a question regarding of FanPwm interface on =
-hwmon.
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; Does this interface get updated while PWM is changi=
-ng in sysfs?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; For example, if I setup a fan points to a PWM like =
-below configuration, now, FanPwm interface does not get updated when I upda=
-te PWM in sysfs, only my fan inputs (rpms) do.
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; Example:<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; LABEL_fan1 =3D &quot;FAN0_Speed&quot;<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; &#8230;<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; PWM_TARGET_fan1 =3D &quot;1&quot;<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp; Is there a configuration or label which I can use s=
-o FanPwm interface would get updated when I change PWM in sysfs?<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Derek<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+> Hi team:
+>
+>
+>
+>           I have a question regarding of FanPwm interface on hwmon.
+>
+>           Does this interface get updated while PWM is changing in sysfs?
+>
+>           For example, if I setup a fan points to a PWM like below config=
+uration, now, FanPwm interface does not get updated when I update PWM in sy=
+sfs, only my fan inputs (rpms) do.
+>
+>
+>
+>           Example:
+>
+>           LABEL_fan1 =3D "FAN0_Speed"
+>
+>           =E2=80=A6
+>
+>           PWM_TARGET_fan1 =3D "1"
+>
+>
+>
+>           Is there a configuration or label which I can use so FanPwm int=
+erface would get updated when I change PWM in sysfs?
 
---_000_fed4bf71fdbf452f955f527b20c36c08lenovocom_--
+Unless I'm mistaken, it's currently treated only as a Target -- so
+it's updated only via dbus calls to set it.
+
+>
+>
+>
+> Thanks,
+>
+>
+>
+> Derek
+>
+>
+>
+>
