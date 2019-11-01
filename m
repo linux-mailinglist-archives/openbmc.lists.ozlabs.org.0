@@ -1,63 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E21DDEC02F
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 10:00:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E902BEC076
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 10:24:23 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 474GPS0kyQzF6gF
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 20:00:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 474Gwh74zrzF6gD
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 20:24:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2c;
- helo=mail-io1-xd2c.google.com; envelope-from=mine260309@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=201f8f3f1=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Miawg8ft"; 
- dkim-atps=neutral
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
- [IPv6:2607:f8b0:4864:20::d2c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 474GNQ2ncjzF6g8
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 19:59:49 +1100 (AEDT)
-Received: by mail-io1-xd2c.google.com with SMTP id h9so10199093ioh.2
- for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2019 01:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=lTQorLI3XYmCEqUX36G94GB+HuU2Wqf4f3NCGGhx5m4=;
- b=Miawg8fto0WL+8X1ncKQ9VwH9i+VF6RGI3EPB2nL1rfDwFcAI/yRga3hepxUpZUeTP
- v46CKlgNK4OQuHeNIws6ns/zxKDJucnbwG2l039dGZp+kgPWsimzpP5oGGa3JlkX1SGW
- uj6u4+Xuvzwesy1fTBZQUbHHx6mHmWBSTcfpg3h+d8wz0AoyqUqrWbuY/PCcbjVFB4+3
- IviBBoM6T/mRCmWviDEtZC7DOkeqalAG+oZNWu/zmBIh6ZeeSkcN6gBxURMHAUq/0Yyq
- LEScGOrxzNSm2WlvUFPt26seSi4vVmCyjvf5faEdiwWBfBU9eBFgaI25MXrQJM6p+ILV
- NwGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=lTQorLI3XYmCEqUX36G94GB+HuU2Wqf4f3NCGGhx5m4=;
- b=d+IC3EoyienJG5y7h03Q5LEhU5VwcLOrRWZMZDsbohyyVQBUv8v2QSVN09os2VwON5
- PExakzAc9wxMoi4Dq+pRgjTAOvZt3bD1Yz2euyTN60f4aaHGDvrm/XJkynPElw9aPSmc
- Uctug8yqzbV0Jhi257e9rPRHk1vjBFxL0lTxr2tAhJdotjK+/WGXlNtST+nW1PsopLVp
- acS/SUfS0saV8fL/vUA2laZELO1HyoUt5UsRlsgwC8SA78444DBBEM0BhFhypUnp6Eyf
- jnPXa/FutzIxA0XJlHVjyYkiuv3QLD8eGexuU4Sl7eh5+JlINlRPLg2RnF+xu+jmUsgw
- x1Kg==
-X-Gm-Message-State: APjAAAWZEtXXC2Tqro4Bwqi3C/ZV6b9CdOkKQqeMJ+sIy85JVdwTdW/l
- OTWAhu7xj5eDtx/SbECqAAqcscnE/7pLb+vVhtdvSva9Uao=
-X-Google-Smtp-Source: APXvYqxgcnJhGouYWJIcaq7w4yecp1tU7ym4HdLtT2MI59UInoHPLf6zIpLOlwfAFmhe/OSO7i2vtvkljfoVaBVDODg=
-X-Received: by 2002:a02:c4cd:: with SMTP id h13mr46031jaj.33.1572598785226;
- Fri, 01 Nov 2019 01:59:45 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 474Gvw0HFRzF6V5
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 20:23:35 +1100 (AEDT)
+IronPort-SDR: 04MqLJohD7Rj8SJfi7tugvBP4ga3+nx3D+AF49d2hREy6dxbmsA13ntIPuLxx6Mkn/HORkVXo6
+ H6hF6f4Q9jcw==
+Received: from unknown (HELO mailbx05.quanta.corp) ([10.243.91.100])
+ by mx01.quantatw.com with ESMTP; 01 Nov 2019 17:23:30 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx05.quanta.corp
+ (10.243.91.100) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Fri, 1 Nov 2019
+ 17:23:27 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Fri, 1 Nov 2019 17:23:27 +0800
+From: =?big5?B?VG9ueSBMZWUgKKf1pOW0SSk=?= <Tony.Lee@quantatw.com>
+To: "mutyalax.jayaprakash@intel.com" <mutyalax.jayaprakash@intel.com>
+Subject: RE: Showing signed sensor value when the command "ipmitool sdr" is
+ executed.
+Thread-Topic: Showing signed sensor value when the command "ipmitool sdr" is
+ executed.
+Thread-Index: AdWJQxVOJ6ixmrlwSXKaTONZZXz7UQHUK33A
+Date: Fri, 1 Nov 2019 09:23:27 +0000
+Message-ID: <bc2c7a6d88654d2fa33ad03084160bbc@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25014.006
+x-tm-as-result: No-10--6.764600-5.000000
+x-tmase-matchedrid: a3sLnpBpvfTUL3YCMmnG4hvgzEPRJaDEWw/S0HB7eoMTiSW9r3PknEfj
+ d+aXilyPcz51x1l2sWqWRrFafMg9IqPn/MZq9jbtZj7E6vHnuNYGchEhVwJY32KuDy0kKGx0/pE
+ 4pKve7n/3yiqO1llPS3Nyq0Gwang33FeDc6zNiLEBnSWdyp4eoaizFDHVmY+j31mPd8OfRg71Yg
+ vxvp++iXmXGiy04R+tmvgss00VvY2i1w0PYZvqFLU+IyHhkXf1W1eClGWYNyhvbqBDKETkeoXvt
+ eZ/aS6ReX/L2MY3Fxr/xE9lptDOpaLdtSd6djXdvoQkZKo949P4qCLIu0mtILeMU2j6emqfLg4a
+ EfqmR9fglM4gIqfe3RP+4hrT4NGjxjOi8n/dz9t2GcWKGZufBRiDIOPlOJG1K67xqaKqOgr0xDH
+ gmWScfu2Ww5iUF/vPmyiLZetSf8my5/tFZu9S3N7f/25JKIC+qaa2PjMPevXEQdG7H66TyND1NE
+ 3SaFLXsIGGWDbANqckWCl/ZWNPULrHZ9K7wyn73lGEYg54uw7AhiGL9yyEZmrqvyZBrtdYTIux9
+ /YvXVXpPckQarJKcPhPtGMvBKPo39InOc4KUjGgIAoCghvZZgz+8rPHUa6xHcvjWJiii5nxeUDt
+ pfRpDQ==
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--6.764600-5.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25014.006
+x-tm-snts-smtp: D00A4D4BADA9A4285E0699DA9BC08CB9E2E71D0FA0640CC4897141E17402DC4F2000:B
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-From: Lei YU <mine260309@gmail.com>
-Date: Fri, 1 Nov 2019 16:59:34 +0800
-Message-ID: <CAARXrtkwC6CoVFDYwwtD38U5whRTbuodxWUF3A0DM+XvQoPJfA@mail.gmail.com>
-Subject: How to run tests in bmcweb
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,22 +73,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ =?big5?B?QnVkZHkgSHVhbmcgKLbApNHCRSk=?= <Buddy.Huang@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I am trying to add a unit test case in bmcweb and run it.
-With local CI, the tests are not run:
-
- WORKSPACE=$(pwd) UNIT_TEST_PKG=bmcweb
-./openbmc-build-scripts/run-unit-test-docker.sh
- ...
- [100%] Built target bmcweb
- /home/leiyu/work/bmcweb > ctest .
- Test project /home/leiyu/work/bmcweb
- No tests were found!!!
- ...
-
-So the question is, how do I run tests in bmcweb? Should
-openbmc-build-scripts be updated to support that?
-
-Thanks!
+SGkgamF5YXByYWthc2gsDQoNCkkgZm91bmQgdGhlIGZvbGxvd2luZyBwcm9ibGVtOg0KSWYgdGhl
+IHNlbnNvciBpcyBkaXNjcmV0ZSBhbmQgdGhlIHNlbnNvclJlYWRpbmdUeXBlIGlzIDB4NkYsDQp0
+aGUgc2Vuc29yIHdpbGwgYmVjb21lICJkaXNhYmxlZCIgd2hlbiB0aGUgY29tbWFuZCAiaXBtaXRv
+b2wgc2RyIGVsaXN0IiBpcyBleGVjdXRlZC4NCkJlY2F1c2Ugbm8gbWF0dGVyIHdoYXQgc2Vuc29y
+IHR5cGUgaXQgaXMsIHRoZSBwcmV2aW91cyBjb2RlIHdpbGwgZXZlbnR1YWxseSBlbmFibGUgc2Nh
+bm5pbmcuDQpCdXQgbm93IGl0IHNlZW1zIHRvIGZvcmdldCB0byBlbmFibGUgc2Nhbm5pbmcgd2hl
+biB0aGUgc2Vuc29yIGlzIGRpc2NyZXRlIChhc3NlcnRpb24pLg0KDQpBbHNvLCB3aGVuIHRoZSBz
+ZW5zb3IgdmFsdWUgaXMgbmVnYXRpdmUgaW4gZC1idXMsIHRoZSBzZW5zb3IgcmVhZGluZyB3aWxs
+IGJlIDAuDQpGaXggaXQgYnkgdXNpbmcgYSBpbnQzMl90IGFuZCBhZGQgYW4gb3ZlcmZsb3cgY2hl
+Y2suDQogDQoic2Vuc29yX3VuaXRzXzEiLCBkZWZpbmVkIGJ5IGlwbWkgU1BFQyAiVGFibGUgNDMt
+LCBGdWxsIFNlbnNvciBSZWNvcmQgLSBTRFIgVHlwZSAwMWgiIGJ5dGUgMjEsICJTZW5zb3IgVW5p
+dHMgMSIuIA0KQ3VycmVudGx5LCAic2Vuc29yX3VuaXRzXzEiIGlzIGFsd2F5cyBzZXQgdG8gMCwg
+c28gdGhlIHNpZ25lZCBzZW5zb3IgdmFsdWUgY2Fubm90IGJlIGRpc3BsYXllZCANCndoZW4gdGhl
+IGNvbW1hbmQgImlwbWl0b29sIHNkciIgaXMgZXhlY3V0ZWQuIFRvIHN1cHBvcnQgdGhhdCwgd2Ug
+YWRkIHRoZSBhdHRyaWJ1dGUgInNlbnNvclVuaXRzMSIgdG8gdGhlDQpzZW5zb3IgbWFwcGluZyB5
+YW1sIHRoYXQgaXQgY2FuIGJlIHVzZWQgdG8gZGV0ZXJtaW5lIGlmIHRoZSBzZW5zb3IgaXMgYSBz
+aWduZWQgdmFsdWUuDQoNCkluIGNvbmNsdXNpb24sIEkndmUgbW9kaWZpZWQgaXQgaW4gDQpodHRw
+czovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9waG9zcGhvci1ob3N0LWlw
+bWlkLysvMjY3NTQNCg0KSWYgeW91IGNhbiBnaXZlIG1lIHNvbWUgY29tbWVudHMgdGhhdCB3b3Vs
+ZCBiZSBncmVhdC4NCg0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQoNCj4gSGkgdGVhbSwN
+Cj4gDQo+IFRoZSB0ZW1wZXJhdHVyZSBzZW5zb3IgdmFsdWUgbWF5IGJlIG5lZ2F0aXZlIHdoZW4g
+dGhlIGNvbW1hbmQgImlwbWl0b29sDQo+IHNkciIgaXMgZXhlY3V0ZWQuDQo+IFNlbnNvciB2YWx1
+ZSBjYW4gYmUgYSBzaWduZWQgdmFsdWUgYWNjb3JkaW5nIHRvIGlwbWkgU1BFQyAiVGFibGUgNDMt
+LCBGdWxsDQo+IFNlbnNvciBSZWNvcmQgLSBTRFIgVHlwZSAwMWgiIGJ5dGUgMjEsICJTZW5zb3Ig
+VW5pdHMgMSIuDQo+IA0KPiBIb3dldmVyLCB3ZSBjYW4gZmluZCB0aGF0IHRoZSBzZW5zb3JfdW5p
+dHNfMSBpcyBzZXQgdG8gemVybyBpbg0KPiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9z
+cGhvci1ob3N0LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmhhbmRsZXIuY3BwI0w3MTINCg0KPiBB
+bmQgdGhlIG1ldGhvZCAic2V0X2FuYWxvZ19kYXRhX2Zvcm1hdCIsIGFsdGhvdWdodCBpdCBoYXMg
+YmVlbiBkZWNsYXJlZA0KPiBidXQgaXQgaGFzIG5ldmVyIGJlZW4gdXNlZCBpbg0KPiBodHRwczov
+L2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNv
+cmhhbmRsDQo+IGVyLmhwcCNMNDk3Lg0KPiANCj4gSW4gYWRkaXRpb24sIHNpbmNlIHJhd0RhdGEg
+aGFzIGJlZW4gY29udmVydGVkIHRvIHVpbnQ4X3QgYnkgc3RhdGljX2Nhc3QNCj4gPHVpbnQ4X3Q+
+LCB0aGVyZSBpcyBhbHdheXMgYSBub25lIG5lZ2F0aXZlIHZhbHVlLiBpbg0KPiBodHRwczovL2dp
+dGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1ob3N0LWlwbWlkL2Jsb2IvbWFzdGVyL3NlbnNvcmRh
+dGFoYW5kbGVyLmhwcCNMMjI3DQo+IA0KPiBCYXNlZCBvbiB0aGUgYWJvdmUgdGhyZWUgcG9pbnRz
+LCBpdCBzZWVtcyB0aGF0IHRoZSBmdW5jdGlvbiBuZWVkcyB0byBiZQ0KPiBtb2RpZmllZCAgc28g
+dGhhdCB0aGUgc2Vuc29yIHZhbHVlIGNhbiBiZSBkaXNwbGF5ZWQgYXMgYSBuZWdhdGl2ZSB2YWx1
+ZSB3aGVuDQo+IHRoZSAiaXBtaXRvb2wgc2RyIiBjb21tYW5kIGlzIGV4ZWN1dGVkLg0KPiANCj4g
+QW0gSSB3cm9uZywgb3IgSSBuZWVkIHRvIHNldCBpdCB1cCBzb21ld2hlcmU/DQoNCg==
