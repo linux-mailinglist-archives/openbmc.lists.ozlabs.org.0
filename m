@@ -1,63 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 954EFEBBBE
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 02:37:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01B1FEBC23
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 03:59:57 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4744ZB3pX4zF5Kp
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 12:37:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4746P62zwvzF6V8
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 13:59:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::834;
- helo=mail-qt1-x834.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d42;
+ helo=mail-io1-xd42.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="k7wYyUwQ"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="FvqjESvx"; 
  dkim-atps=neutral
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com
- [IPv6:2607:f8b0:4864:20::834])
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
+ [IPv6:2607:f8b0:4864:20::d42])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4744YM5DcLzF4Sl
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 12:36:54 +1100 (AEDT)
-Received: by mail-qt1-x834.google.com with SMTP id t26so11119259qtr.5
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 18:36:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4746Ls2pzJzF6SV
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 13:57:56 +1100 (AEDT)
+Received: by mail-io1-xd42.google.com with SMTP id s17so9346521iol.12
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 19:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=chHFW8I08lQlBzuMgtb41nTerNopVs6jkOaZ4A4wumo=;
- b=k7wYyUwQt7JKvElyZQ4dWqzlm4C2zIvjtRTdVhGreRYe4UeB7QGWGtTkaq+mSia/dq
- tW6BDEBm6EyZlgj8iptGIRJt94TyJrVCRbX2Hel4AbzpWYfr4u0Jw8Mk2M6s3UcwUMeI
- u1U5z1/TF/grwBiN1bi1S8ucPkZDMtCVyQ2qw=
+ :cc:content-transfer-encoding;
+ bh=vl9DYZVbURheTw9kyAQnOgnawHOqGrg1G6Bfw1S1Wk0=;
+ b=FvqjESvxa4yJwWNE2zOZWIytsVlGM01TgJe6zyz9nXFEec3oR2B8Z16bta9xECILdy
+ GePU8DSbQcJ/WnLFDqwp0JJBuQNB7RjI5kyVKX0+p3ILFbYYFC1xeS0e9pgu4nKXA4L3
+ lNF82WaVeGjz4e7aR2mQ2be7/nCFtgs8gsiq0Da5JDQx6HaXyzCA4YVLKTzjdQSeyNPV
+ rEXMDRWbQeC9pLxtInhl9WF7sXrvuM9qAoBO/k0kW3RndeZdAgFBQ2PuPXtNsOaJ2tsx
+ WIm2q3nSvDDDZq/aH5bsrBNOIusv2fWUVDZ0SJqOvV+zNjeSl7iURy6Qa82o3wKmDgTZ
+ vDUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=chHFW8I08lQlBzuMgtb41nTerNopVs6jkOaZ4A4wumo=;
- b=ftdscmBMwLrHB022NCI1pwuJtyh74LIjCFcrukh/fH9NsXbrAxJMGmgbW/Jru9HzRa
- J7UsGNTjwZbHV6S3bonOJ7atVZixF3DrYGUX0XDndnRCzlz1mLATvj+2dYUUL1/JN2Vj
- Yagf3hhuZ3S359hfBU/M4+28RP3QeySm2NLL9obQuF6J0DMiYCbd933XmkiO59GsmuMp
- yn3pF/5vLcgAE4mZs8j9bzn1PBoaWIHKUQtZBL0cgWDZSQ3riwfXkAkjT9gjrBlVVqZW
- 5zvKfyvbsZJM5Bte07M6ZrMHLp4Ulycgb3IuZ0e8MIce+duSPXDAye25cP5jOlm+JOwd
- YPpg==
-X-Gm-Message-State: APjAAAWMsk5WPLGUrVm1u8oFudtyFPlEzv8Ibgv0Svtvt2eq/7fnPLgR
- 9945OIJHiugwcpejRWIqYwsmlnLOdnIzK4+wBsg=
-X-Google-Smtp-Source: APXvYqwgwLjUiaI8lvtv5XigJUnfE0opxafAYwVVaoUq0qE+XoZIpcFJ49CebbvhK+qn660PDmmFwx5buEV+WZj48dM=
-X-Received: by 2002:ac8:6bcd:: with SMTP id b13mr8777036qtt.234.1572572211029; 
- Thu, 31 Oct 2019 18:36:51 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=vl9DYZVbURheTw9kyAQnOgnawHOqGrg1G6Bfw1S1Wk0=;
+ b=gyf9xY8+3Ei0fWdqjBjPeJhN5sB6FrJjR9i2pRq3JRt5w5vUSh+v0upE2V7TAXnl5Z
+ nOjtQ09EuOmMphicXVaXDdyo3purfDNv8fZ08plAibxuaEqyXiK0UqBg9CsgpoDPO8ed
+ 4HEwaPR12ZJttMn/LNJi7rzaOAjgtknKQE8M7kpBbowxz0HOzz0KSuFfrLJnNgLYF3B7
+ rk3QxmL4JVb0wWABMdJnVU04P55ljYsD3GuiYkFYHS7s9tKUol5QsmXh8tCLVRQskbZb
+ 54o9wLa7YZxrQYNMpqbvPFO3R2R3lZlUHRFHSOh3kHoST4dGpQ6LlsxuVG6sW6xu6wh0
+ WnYg==
+X-Gm-Message-State: APjAAAVIw1801ijN74CpFzCFDBy4j8V6HPJod4kIU3pJ6OskKUUZod/S
+ ffmIgA2R6U+RBseDxT/wJuhVUMSuzpxGYfCTEHE=
+X-Google-Smtp-Source: APXvYqyMiTHMUBkV5wvSWaAJlj6fR9ACkF29Va66VdoPcnda+iGA0B92lq5HmLrMhVN61OKkbu3q82WHqri+GnGg8sQ=
+X-Received: by 2002:a5e:9e07:: with SMTP id i7mr6720052ioq.42.1572577073017;
+ Thu, 31 Oct 2019 19:57:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <06422EF3-4D9D-4880-99EA-513C41215F37@fb.com>
-In-Reply-To: <06422EF3-4D9D-4880-99EA-513C41215F37@fb.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 1 Nov 2019 01:36:39 +0000
-Message-ID: <CACPK8Xf50ud_K-OMNGDQp9NBxNF4GtG9cRRKhDPA6N1z6XBvpg@mail.gmail.com>
-Subject: Re: kernel patch pull for IPV6
-To: Vijay Khemka <vijaykhemka@fb.com>
+References: <fed4bf71fdbf452f955f527b20c36c08@lenovo.com>
+ <CAO=notyoynBRNHg9fgPX1QgJ_kghX_=uKbeJ+CCmsv5mPubNKg@mail.gmail.com>
+In-Reply-To: <CAO=notyoynBRNHg9fgPX1QgJ_kghX_=uKbeJ+CCmsv5mPubNKg@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 1 Nov 2019 10:57:42 +0800
+Message-ID: <CAARXrtkEPRj+CwPr032-D5nmh_q=c_sRz6kUNu5To=LjZzS9zA@mail.gmail.com>
+Subject: Re: FanPwm interface
+To: Patrick Venture <venture@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,41 +75,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Derek Lin23 <dlin23@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vijay,
-
-Please turn off HTML email when posting to the list. Thanks!
-
-On Fri, 1 Nov 2019 at 01:05, Vijay Khemka <vijaykhemka@fb.com> wrote:
+On Fri, Nov 1, 2019 at 6:32 AM Patrick Venture <venture@google.com> wrote:
 >
-> Hi Joel,
+> On Thu, Oct 31, 2019 at 3:27 PM Derek Lin23 <dlin23@lenovo.com> wrote:
+> >
+> > Hi team:
+> >
+> >
+> >
+> >           I have a question regarding of FanPwm interface on hwmon.
+> >
+> >           Does this interface get updated while PWM is changing in sysf=
+s?
+> >
+> >           For example, if I setup a fan points to a PWM like below conf=
+iguration, now, FanPwm interface does not get updated when I update PWM in =
+sysfs, only my fan inputs (rpms) do.
+> >
+> >
+> >
+> >           Example:
+> >
+> >           LABEL_fan1 =3D "FAN0_Speed"
+> >
+> >           =E2=80=A6
+> >
+> >           PWM_TARGET_fan1 =3D "1"
+> >
+> >
+> >
+> >           Is there a configuration or label which I can use so FanPwm i=
+nterface would get updated when I change PWM in sysfs?
 >
-> Can you please pull following patch to our openbmc kernel from linux-next repository.
->
-> commit cf0eba334268563152e4a8bc9ab865d0037a7948
-> Author: Vijay Khemka <vijaykhemka@fb.com>
-> Date:   Thu Sep 12 12:04:50 2019 -0700
->
->     net/ncsi: Disable global multicast filter
+> Unless I'm mistaken, it's currently treated only as a Target -- so
+> it's updated only via dbus calls to set it.
 
-Do we still need this now that Ben has fixed checksumming?
+Exactly, it will not update if you change it directly in sysfs.
+This is OK in field because a regular user should access the BMC via
+Redfish/REST API/ipmi.
 
-Did you try testing with the checksumming patch applied and the
-multicast one reverted?
-
->
->
-> commit 88824e3bf29a2fcacfd9ebbfe03063649f0f3254
-> Author: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-> Date:   Fri Oct 25 13:47:24 2019 +1100
->
->     net: ethernet: ftgmac100: Fix DMA coherency issue with SW checksum
-
-I've applied this one.
-
-Cheers,
-
-Joel
+But for debugging purpose it does have some trouble that updating pwm
+in sysfs does not reflact on D-Bus.
+So patches are welcome :)
