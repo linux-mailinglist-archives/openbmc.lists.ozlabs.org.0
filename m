@@ -2,75 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD84EEC818
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 18:43:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B80CBEC81C
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 18:46:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 474V113CZ3zF6Ld
-	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 04:43:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 474V3s5N6wzDqc3
+	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 04:46:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
- helo=mail-pf1-x443.google.com; envelope-from=rentao.bupt@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=thalerj@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="j/dyk5yK"; 
- dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 474V074Q6RzF5Wg;
- Sat,  2 Nov 2019 04:43:03 +1100 (AEDT)
-Received: by mail-pf1-x443.google.com with SMTP id v19so7541195pfm.3;
- Fri, 01 Nov 2019 10:43:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=QJl/9GvOTo1mXoprS9Z1FVuoJT7cvJ0SfTXW2ZwsvWU=;
- b=j/dyk5yKG+/Zb+2zjd8u2xn3vzhnpgHTuI0xH+uDSZ798ljUjQgKbUMa+y4AKD4szr
- CgKNJadkohLyHsfXr3XjvG8wEdsnapCo57hAincCLWN/bZgW/2PXLq1xqcg1W/6EWxlX
- 8Q0zZtGSnPhMRXK92TNutM7SdHm2GaTJT1EiOdvEbX/utf+AMfyGYxWbnAGkN6djE494
- eHNyGrgpjH6Ar7SWoytBdfhd8Zbi6eiZPw1uRRTV4mx36oZ3kVA0j7mDDTgmfRf0Yty4
- K1Zbd3kSgqOy/yxgWwlbo/e8LYg/9UoTPCZ6G7uHuYn0I8fmFokfdibxNpc94c4tcFJK
- DLVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=QJl/9GvOTo1mXoprS9Z1FVuoJT7cvJ0SfTXW2ZwsvWU=;
- b=REcv0rccSvGkkUaV9mMGz6jJXMvl+GY54u7jzP8V3PQ/uorAia+YZBtlRKP97Xc0vM
- HUszwHGfcaIlt/CG2pAQApSytqV6zBkRHRYfsNE4dM/lv/v+PbwhfK0lIydVKCGoZYIu
- ggCCggM59q4Pltq/PtGOdsYhFnWUICRzowsjSEny2GUIeyp/aj+cedEx5/97TpOaUdnw
- RCSKoVeZNuBBQz1lSGjg8gnv68Doqojitw8OWkg1SZXeUjBMfmOvzLQvhbEhDcKLY20/
- wx2Da2OOqg/joNzR6WLUlagETCfPZA0sJFSKjDgaL8gzy3ocy4jki/1Bpku07pg0BHEx
- /ktw==
-X-Gm-Message-State: APjAAAXgwW67IOGyxqeT9xDbqdQTk0NOTe5NxZ7PXUhfyVBl22YE16CL
- vT95E9cbPqKDX39sExk8KPk=
-X-Google-Smtp-Source: APXvYqzRiEfVYYVOG6O+ih3xK5Ax5k+9SP+dNi0+K0ffGqjJhG2LgDZzVmOsjy+yKL16LdvxRSyadg==
-X-Received: by 2002:a65:4c41:: with SMTP id l1mr14902663pgr.163.1572630180944; 
- Fri, 01 Nov 2019 10:43:00 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::1:e697])
- by smtp.gmail.com with ESMTPSA id a6sm9045892pja.30.2019.11.01.10.43.00
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 01 Nov 2019 10:43:00 -0700 (PDT)
-Date: Fri, 1 Nov 2019 10:42:57 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH 1/4] ARM: dts: aspeed: add dtsi for Facebook AST2500
- Network BMCs
-Message-ID: <20191101174257.GB13557@taoren-ubuntu-R90MNF91>
-References: <20191021194820.293556-1-taoren@fb.com>
- <20191021194820.293556-2-taoren@fb.com>
- <CACPK8XfebA9PcpyWkofCJ5fAZ9ddUjQ4ZeCf73KXb51+k_+N1Q@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 474V336hgjzF6yq
+ for <openbmc@lists.ozlabs.org>; Sat,  2 Nov 2019 04:45:35 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ xA1GquEj018629
+ for <openbmc@lists.ozlabs.org>; Fri, 1 Nov 2019 13:45:32 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2w0pf46srn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2019 13:45:32 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xA1HjScl027309
+ for <openbmc@lists.ozlabs.org>; Fri, 1 Nov 2019 17:45:30 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma02dal.us.ibm.com with ESMTP id 2vxwh70ub5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2019 17:45:30 +0000
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xA1HjTjC61931968
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Fri, 1 Nov 2019 17:45:29 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A4D56E04C
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 17:45:29 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DCB666E050
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 17:45:28 +0000 (GMT)
+Received: from oc2358436115.ibm.com (unknown [9.41.74.115])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 17:45:28 +0000 (GMT)
+Subject: Re: Resend : Enable/disable access to BMC through interfaces for
+ security
+To: openbmc@lists.ozlabs.org
+References: <CAMTupoQThp=WRfdH+QHwmqP1ZqbgCKq81rS8Cp+0sYKQfNe4Sg@mail.gmail.com>
+ <CAMTupoSxchLJuFUjpmVu=7jS=M1H0OTTnWkUP3SNkvs8=R3uTA@mail.gmail.com>
+ <c4ba9973-6a6c-8ce9-f66d-553404b00340@linux.ibm.com>
+From: Justin Thaler <thalerj@linux.vnet.ibm.com>
+Message-ID: <4f21c5af-2697-07ab-b17b-084bcf131a2f@linux.vnet.ibm.com>
+Date: Fri, 1 Nov 2019 12:45:28 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8XfebA9PcpyWkofCJ5fAZ9ddUjQ4ZeCf73KXb51+k_+N1Q@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <c4ba9973-6a6c-8ce9-f66d-553404b00340@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-11-01_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-1911010158
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,50 +89,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Tao Ren <taoren@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Nov 01, 2019 at 10:12:10AM +0000, Joel Stanley wrote:
-> On Mon, 21 Oct 2019 at 19:49, Tao Ren <taoren@fb.com> wrote:
-> >
-> > Introduce "facebook-netbmc-ast2500-common.dtsi" which is included by all
-> > Facebook AST2500 Network BMC platforms. The major purpose is to minimize
-> > duplicated device entries cross Facebook Network BMC dts files.
-> >
-> 
-> > +
-> > +&mac1 {
-> > +       status = "okay";
-> > +       no-hw-checksum;
-> 
-> Was this included to work around the IPv6 issue that Benh recently fixed?
-> 
-> If you can test your platform with
-> 88824e3bf29a2fcacfd9ebbfe03063649f0f3254 applied and the
-> no-hw-checksum property removed, please send a follow up to remove
-> this property.
-> 
-> It's not doing any harm, but by cleaning it up there's less chance
-> others blindly copy the same thing.
-> 
-> Thanks,
-> 
-> Joel
+Hi Jandra, I'm interested in the subject blow. Joseph, I've added a few 
+more options to your list as well.
 
-Yes. I'm planning to try the patch. Will send out a followup patch to
-remove the line if everything goes fine.
-
-Cheers,
-
-Tao
-
-> > +       pinctrl-names = "default";
-> > +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-> > +};
+ > On 11/1/19 11:55 AM, Joseph Reynolds wrote:
+> On 11/1/19 9:40 AM, Jandra A wrote:
+>> I am resending this message to who has thoughts on which BMC
+>> interfaces need to be disabled for security purposes and what the best
+>> way to do that would be. I would love to collaborate with all parties
+>> interested.
+> 
+> Thanks Jandra.  I've added this to the OpenBMC Security Working Group 
+> agenda.
+> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI 
+> 
+> 
+>> ------- begin message:
+>>
+>> Hello all,
+>>
+>> As part of the GUI design team, I am starting to look at requirements
+>> for enabling and disabling network interfaces for which the BMC can be
+>> accessed. For example, IPMI, SSH, Redfish, HTTP, and USB, to name a
+>> few.
+>>
+>> I know there has been some conversation on the topic before (see email
+>> linked below) and want to reach out to see who is interested in this
+>> topic. And I would love to get your thoughts on the following topics.
+>>
+>> Some questions we want to tackle are:
+>> 1. Which interfaces need to be enabled/disabled and what is their
+>> priority? (See full list in the redfish documentation)
+>> 2. What should be the default for the selected above (enabled/disabled)?
+>> 3. Do we need a staged plan for it?
+>> 4. When can we expect backend availability?
+> 
+> I am interested in the list of the BMC's external interfaces from a 
+> security perspective.  The [network security considerations][] talks 
+> about many of the network interfaces.  We should encourage users to 
+> disable interfaces they don't need and are not using.  Having such 
+> interfaces active opens up the BMC's attack surface and represents 
+> security risks.  For example, newly discovered security vulnerabilities 
+> might place BMCs at risk, and shutting off the interface will likely 
+> make the BMC safe.
+> 
+> The BMC also has physical interfaces which users may wish to disable 
+> (for the same reasons as above).  The BMC's network interface and and 
+> USB ports are examples.  Some users may wish to disable the BMC's access 
+> to the network and control it solely via its host. However, I am not an 
+> exert in this area, so I need help here.  TODO: Get one of the kernel 
+> hackers to go over this list.  I understand because OpenBMC is used on 
+> different hardware models (such as AST2500's hosted in the AC922 
+> "Witherspoon"), it will have different interfaces present.  I think the 
+> folks who wirj with the machines, and who bind device drivers can help 
+> us if we know what questions to ask them (better questions than: what 
+> interfaces does the BMC have)?  <-- Once again, I am no expert here, so 
+> we need to work together to understand this.
+> 
+> Here's my starter kit of BMC's external interfaces:
+> network:
+>   - SSH to the BMC shell (port 22)
+>   - HTTP (for either [BMCWEB_INSECURE_DISABLE_SSL][] users or the 
+> nascent [HTTP redirect design][])
+>   - HTTPS
+     - Secure Websockets
+>   - (network, aka out of band) IPMI
+     - Extend REST APIs
+     - Redfish
+>   - KVMIP
+>   - Virtual media
+>   - SoL (SSH via port 2200) to the host console
+>   - mDNS discovery
+>   - Avahi discovery service
+>   - virtual USB (USB-over-IP)
+> physical:
+>   - network
+     - USB External
+     - USB to Host
+>   - more? Help needed: would anyone want to give the BMC admin control 
+> to shut down pathways between the BMC and host?
+> 
+> There will be more interfaces as the project goes forward.  For example, 
+> the OpenPOWER work is proposing a communication channel between a 
+> Hardware Management Console (HMC) and the host's hypervisor (PHYP) which 
+> would use the BMC to set up the channel. Users who don't need this a 
+> capability might want to have a way to disable it (I don't know) so they 
+> can avoid giving unnecessary network access to their hypervisor.  The 
+> point is, I think tending this list will be ongoing work.
+> 
+> The short list of interfaces I personally care about includes:
+>    SSH, IPMI, Avahi, and USB (physical and USB-over-IP)
+> 
+> I hope this partially addresses item 1 above.  :)
+> 
+> - Joseph
+> 
+> References:
+> [network security considerations]: 
+> https://github.com/openbmc/docs/blob/master/security/network-security-considerations.md 
+> 
+> [BMCWEB_INSECURE_DISABLE_SSL]: 
+> https://github.com/openbmc/bmcweb/blob/master/CMakeLists.txt
+> [HTTP redirect design]: 
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24173
+> 
+>>
+>> Redfish documentation:
+>> https://redfish.dmtf.org/schemas/ManagerNetworkProtocol.v1_4_0.json
+>>
+>> Related email discussion (on staged plans to address IPMI access):
+>> https://lists.ozlabs.org/pipermail/openbmc/2019-September/018373.html
+>>
+>>
+>>
+>> Regards,
+>> Jandra Aranguren
+> 
