@@ -2,81 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 988A7EBD6E
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 07:06:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E21DDEC02F
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 10:00:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 474BWp571jzF6WL
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 17:05:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 474GPS0kyQzF6gF
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 20:00:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
- helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2c;
+ helo=mail-io1-xd2c.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="hHl74Sbv"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ImbX2e0G"; dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Miawg8ft"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
+ [IPv6:2607:f8b0:4864:20::d2c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 474BVv6pHQzF6W5
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 17:05:11 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id BABF3432;
- Fri,  1 Nov 2019 02:05:09 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Fri, 01 Nov 2019 02:05:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm1; bh=wi9/jdSHNH8Df
- 3UKCkT4WnlkD7LiEYHHkDG1adEcUbg=; b=hHl74Sbv/f7BJV9W6I5CoLUz58/ZF
- px68KJOaCXDIrKl0nh6ZVdnHnH5xl8G5ZCE1GjmvLaaOEtSmiv//ox2Xx4ZhP3O0
- /5jdJZIHaHfjg/COB7AdNCZb3ynEHQ+UC8FMPduXA5/YTHOlS1vAe+YNezwQHP2d
- kAxeoWXj1PTTfFQGcpGiJEPxSsj55KqctoIqmab9It3OavOTheNPjMV5A5Ym8bFZ
- 4rNJ7RUlJN6Ij1+H5exXn35IuOZf1eSTchBKHLwOkfjoRH/IJ8H6dj3R9xo1TmGr
- lg8uNMuOV4nkKR+7oAB7UY/8NpiKBaiukDtE2bDQPE+hjAwUl1Z+/7dYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; bh=wi9/jdSHNH8Df3UKCkT4WnlkD7LiEYHHkDG1adEcUbg=; b=ImbX2e0G
- /KvAeDJkvu7ZXhbQZMWI0Tl0iQIFeIPyRcOBC/Z+bLJhC2JFm66VymcGYaqkVva3
- +HDBKtQ4dEXeM4yB7qTrbJO2QDeoa9VOVg0egfHuZzWwYrso+fswHfQdRFgRrktA
- yiGbN4znJC9p3E1RF3jSKM9jDH9XXVhjlJT0AsCMGb15zs+uOMbCUmWTXfZwPov+
- XHPqKMBynPMSvEwj7m9f03oTXjceW8MdMGtA11wec4GJrcIligi95M6BDKJqEQbA
- 3dMKyCa0BHwMZu/dKAiNkAt76pWwCW/kcLQ5ruipKSYbIdAeruV6bT7aS0qb33dr
- ja4VRbMt49wzvg==
-X-ME-Sender: <xms:Fcu7XS66hJOT_st32nCfNVPM70ViwHezYz-R1RJ7sBGXvXgC_wD4qQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtiedgledtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
- dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
- jhdrihgurdgruheqnecukfhppedvtddvrdekuddrudekrdeftdenucfrrghrrghmpehmrg
- hilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigv
- pedt
-X-ME-Proxy: <xmx:Fcu7XaWW82iY49zUPSsk1-xZB6gZ6bUESpOD6hqwBFaypXlv_LjtAg>
- <xmx:Fcu7XUPt4JsgTU6613DFu_jxBbs5nbXSZPXf6ZzQc0qf7IhKNTcKQg>
- <xmx:Fcu7XT_9KZ8PkrCtsFmQD7LRi3gRHcW26fcdBOoVxCHona-0pZ3d7Q>
- <xmx:Fcu7XY5Rm-Dj8rbUzLXQXQWNH6cZw4MX-t10kADv55mw5Hc-01MdHA>
-Received: from mistburn.au.ibm.com (bh02i525f01.au.ibm.com [202.81.18.30])
- by mail.messagingengine.com (Postfix) with ESMTPA id 2C5DC3060067;
- Fri,  1 Nov 2019 02:05:07 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH linux dev-5.3 v2 3/3] fsi: core: Fix small accesses and
- unaligned offsets via sysfs
-Date: Fri,  1 Nov 2019 16:36:01 +1030
-Message-Id: <20191101060601.24896-4-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191101060601.24896-1-andrew@aj.id.au>
-References: <20191101060601.24896-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 474GNQ2ncjzF6g8
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 19:59:49 +1100 (AEDT)
+Received: by mail-io1-xd2c.google.com with SMTP id h9so10199093ioh.2
+ for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2019 01:59:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=lTQorLI3XYmCEqUX36G94GB+HuU2Wqf4f3NCGGhx5m4=;
+ b=Miawg8fto0WL+8X1ncKQ9VwH9i+VF6RGI3EPB2nL1rfDwFcAI/yRga3hepxUpZUeTP
+ v46CKlgNK4OQuHeNIws6ns/zxKDJucnbwG2l039dGZp+kgPWsimzpP5oGGa3JlkX1SGW
+ uj6u4+Xuvzwesy1fTBZQUbHHx6mHmWBSTcfpg3h+d8wz0AoyqUqrWbuY/PCcbjVFB4+3
+ IviBBoM6T/mRCmWviDEtZC7DOkeqalAG+oZNWu/zmBIh6ZeeSkcN6gBxURMHAUq/0Yyq
+ LEScGOrxzNSm2WlvUFPt26seSi4vVmCyjvf5faEdiwWBfBU9eBFgaI25MXrQJM6p+ILV
+ NwGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=lTQorLI3XYmCEqUX36G94GB+HuU2Wqf4f3NCGGhx5m4=;
+ b=d+IC3EoyienJG5y7h03Q5LEhU5VwcLOrRWZMZDsbohyyVQBUv8v2QSVN09os2VwON5
+ PExakzAc9wxMoi4Dq+pRgjTAOvZt3bD1Yz2euyTN60f4aaHGDvrm/XJkynPElw9aPSmc
+ Uctug8yqzbV0Jhi257e9rPRHk1vjBFxL0lTxr2tAhJdotjK+/WGXlNtST+nW1PsopLVp
+ acS/SUfS0saV8fL/vUA2laZELO1HyoUt5UsRlsgwC8SA78444DBBEM0BhFhypUnp6Eyf
+ jnPXa/FutzIxA0XJlHVjyYkiuv3QLD8eGexuU4Sl7eh5+JlINlRPLg2RnF+xu+jmUsgw
+ x1Kg==
+X-Gm-Message-State: APjAAAWZEtXXC2Tqro4Bwqi3C/ZV6b9CdOkKQqeMJ+sIy85JVdwTdW/l
+ OTWAhu7xj5eDtx/SbECqAAqcscnE/7pLb+vVhtdvSva9Uao=
+X-Google-Smtp-Source: APXvYqxgcnJhGouYWJIcaq7w4yecp1tU7ym4HdLtT2MI59UInoHPLf6zIpLOlwfAFmhe/OSO7i2vtvkljfoVaBVDODg=
+X-Received: by 2002:a02:c4cd:: with SMTP id h13mr46031jaj.33.1572598785226;
+ Fri, 01 Nov 2019 01:59:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 1 Nov 2019 16:59:34 +0800
+Message-ID: <CAARXrtkwC6CoVFDYwwtD38U5whRTbuodxWUF3A0DM+XvQoPJfA@mail.gmail.com>
+Subject: How to run tests in bmcweb
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,104 +69,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Subtracting the offset delta from four-byte alignment lead to wrapping
-of the requested length where `count` is less than `off`. Generalise the
-length handling to enable and optimise aligned access sizes for all
-offset and size combinations. The new formula produces the following
-results for given offset and count values:
+I am trying to add a unit test case in bmcweb and run it.
+With local CI, the tests are not run:
 
-    offset  count | length
-    --------------+-------
-    0       1     | 1
-    0       2     | 2
-    0       3     | 2
-    0       4     | 4
-    0       5     | 4
-    1       1     | 1
-    1       2     | 1
-    1       3     | 1
-    1       4     | 1
-    1       5     | 1
-    2       1     | 1
-    2       2     | 2
-    2       3     | 2
-    2       4     | 2
-    2       5     | 2
-    3       1     | 1
-    3       2     | 1
-    3       3     | 1
-    3       4     | 1
-    3       5     | 1
+ WORKSPACE=$(pwd) UNIT_TEST_PKG=bmcweb
+./openbmc-build-scripts/run-unit-test-docker.sh
+ ...
+ [100%] Built target bmcweb
+ /home/leiyu/work/bmcweb > ctest .
+ Test project /home/leiyu/work/bmcweb
+ No tests were found!!!
+ ...
 
-We might need something like this for the cfam chardevs as well, for
-example we don't currently implement any alignment restrictions /
-handling in the hardware master driver.
+So the question is, how do I run tests in bmcweb? Should
+openbmc-build-scripts be updated to support that?
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- drivers/fsi/fsi-core.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
-index 1ea15621e588..f3cca350c28c 100644
---- a/drivers/fsi/fsi-core.c
-+++ b/drivers/fsi/fsi-core.c
-@@ -544,6 +544,31 @@ static int fsi_slave_scan(struct fsi_slave *slave)
- 	return 0;
- }
- 
-+static unsigned long aligned_access_size(size_t offset, size_t count)
-+{
-+	unsigned long offset_unit, count_unit;
-+
-+	/* Criteria:
-+	 *
-+	 * 1. Access size must be less than or equal to the maximum access
-+	 *    width or the highest power-of-two factor of offset
-+	 * 2. Access size must be less than or equal to the amount specified by
-+	 *    count
-+	 *
-+	 * The access width is optimal if we can calculate 1 to be strictly
-+	 * equal while still satisfying 2.
-+	 */
-+
-+	/* Find 1 by the bottom bit of offset (with a 4 byte access cap) */
-+	offset_unit = BIT(__builtin_ctzl(offset | 4));
-+
-+	/* Find 2 by the top bit of count */
-+	count_unit = BIT(8 * sizeof(unsigned long) - 1 - __builtin_clzl(count));
-+
-+	/* Constrain the maximum access width to the minimum of both criteria */
-+	return BIT(__builtin_ctzl(offset_unit | count_unit));
-+}
-+
- static ssize_t fsi_slave_sysfs_raw_read(struct file *file,
- 		struct kobject *kobj, struct bin_attribute *attr, char *buf,
- 		loff_t off, size_t count)
-@@ -559,8 +584,7 @@ static ssize_t fsi_slave_sysfs_raw_read(struct file *file,
- 		return -EINVAL;
- 
- 	for (total_len = 0; total_len < count; total_len += read_len) {
--		read_len = min_t(size_t, count, 4);
--		read_len -= off & 0x3;
-+		read_len = aligned_access_size(off, count - total_len);
- 
- 		rc = fsi_slave_read(slave, off, buf + total_len, read_len);
- 		if (rc)
-@@ -587,8 +611,7 @@ static ssize_t fsi_slave_sysfs_raw_write(struct file *file,
- 		return -EINVAL;
- 
- 	for (total_len = 0; total_len < count; total_len += write_len) {
--		write_len = min_t(size_t, count, 4);
--		write_len -= off & 0x3;
-+		write_len = aligned_access_size(off, count - total_len);
- 
- 		rc = fsi_slave_write(slave, off, buf + total_len, write_len);
- 		if (rc)
--- 
-2.20.1
-
+Thanks!
