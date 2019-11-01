@@ -1,83 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74795EBB9B
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 02:14:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 954EFEBBBE
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 02:37:41 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4744376hfyzF6Tk
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 12:14:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4744ZB3pX4zF5Kp
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 12:37:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::834;
+ helo=mail-qt1-x834.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="m8IApwsm"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="fUUXaP0c"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="k7wYyUwQ"; 
+ dkim-atps=neutral
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com
+ [IPv6:2607:f8b0:4864:20::834])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47442N6f5CzF6Tk
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 12:13:32 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 73BDF21C47;
- Thu, 31 Oct 2019 21:13:29 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 31 Oct 2019 21:13:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=WfEljS9AxNkwJEqRExqU9CEi+mCnXr8
- X9OcWCC056wA=; b=m8IApwsmukHIS0n4798k1JhDLjaCNRAFpgPD5MCTE8zmVSF
- jERtrs3ueX/ySyZHBsSNO8XSMsUgJEXmw541gxFTvfA7dvs061QGcQVDhLB5zvKi
- oc0/cGv8a99wJa8jPxiO16/iCryz670c15HUq6Y1HxUnpaSQhY4QwRYL4BjpQWvB
- m3EdUAQhtCyewlT4/I5tXlTE8C21i8ZqINCgdFl5vGCpjF5KJrTxfxJtTusIi/A6
- gB3J170rO9VlUezfEWNmduCZ24cZCSGXoh1T6E4duWAM5KCkM6wdgeJqREj6Jxgf
- qIvhu2NKJCAYqi6oh9rIHR7i0/VYREiEBZ3aN5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=WfEljS
- 9AxNkwJEqRExqU9CEi+mCnXr8X9OcWCC056wA=; b=fUUXaP0cyhm/N1nkJnvrBa
- 35ee/jdRObsWCIVvRySRi1wHp4bOFUIw5poqQGzX6uVl1JVkIT+U4Mz+/2Ldy9sR
- 3mdxyrFZSuARTl8aVRDgP74A0UL3aq+0r9EclmCATKjtjolaxx3U4Q3W4lMpnDXp
- tI851HsjBXvDFaTUJD6d+wiykJW9ZdvFDwcjjWzpmnaKjAXR/+l7STiAv/ManSNC
- IaYxJskfN0ya9Gf4TqHMbILNqxcrzSaJlMsAKvcVxx8i3PlRyBfpdE8tjsQ0F4Qt
- Bso0/D6BH9QokFIzySL5qJvzQAgRVV0qZ45wIVFtrmyqc6VSqvCVcZH/D1husJVQ
- ==
-X-ME-Sender: <xms:uIa7XemZ8z2YZnamlfTOuJyO0Lw1fkaAlO4grtjqZ-v-KJUrHnyHww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtiedgfedtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:uIa7XfMpMv8Ztbys39893sGvjaN4VgVpgNV4dZ16PXkYP0a8K_vBAw>
- <xmx:uIa7XVJsD_BeCJNCvXLtgvCzsKvZF5LuEU5t8wiZslQ7AszNBvXF9g>
- <xmx:uIa7XSFJs0UxQDS6atU3xl1uxghrLESzY8vcX3QqTFHyQ4AiNNr-ig>
- <xmx:uYa7XYZFqgACNmF3oFgw9k0-KesnVHCnCvtCbJhWRTsOHQQtwUf9dg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 708E5E00A3; Thu, 31 Oct 2019 21:13:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-509-ge3ec61c-fmstable-20191030v1
-Mime-Version: 1.0
-Message-Id: <ac3001e5-3513-458c-a3d5-d80d7731e188@www.fastmail.com>
-In-Reply-To: <20191031051438.28589-3-andrew@aj.id.au>
-References: <20191031051438.28589-1-andrew@aj.id.au>
- <20191031051438.28589-3-andrew@aj.id.au>
-Date: Fri, 01 Nov 2019 11:44:34 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_2/2]_fsi:_core:_Fix_small_accesses_an?=
- =?UTF-8?Q?d_unaligned_offsets_via_sysfs?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4744YM5DcLzF4Sl
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 12:36:54 +1100 (AEDT)
+Received: by mail-qt1-x834.google.com with SMTP id t26so11119259qtr.5
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 18:36:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=chHFW8I08lQlBzuMgtb41nTerNopVs6jkOaZ4A4wumo=;
+ b=k7wYyUwQt7JKvElyZQ4dWqzlm4C2zIvjtRTdVhGreRYe4UeB7QGWGtTkaq+mSia/dq
+ tW6BDEBm6EyZlgj8iptGIRJt94TyJrVCRbX2Hel4AbzpWYfr4u0Jw8Mk2M6s3UcwUMeI
+ u1U5z1/TF/grwBiN1bi1S8ucPkZDMtCVyQ2qw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=chHFW8I08lQlBzuMgtb41nTerNopVs6jkOaZ4A4wumo=;
+ b=ftdscmBMwLrHB022NCI1pwuJtyh74LIjCFcrukh/fH9NsXbrAxJMGmgbW/Jru9HzRa
+ J7UsGNTjwZbHV6S3bonOJ7atVZixF3DrYGUX0XDndnRCzlz1mLATvj+2dYUUL1/JN2Vj
+ Yagf3hhuZ3S359hfBU/M4+28RP3QeySm2NLL9obQuF6J0DMiYCbd933XmkiO59GsmuMp
+ yn3pF/5vLcgAE4mZs8j9bzn1PBoaWIHKUQtZBL0cgWDZSQ3riwfXkAkjT9gjrBlVVqZW
+ 5zvKfyvbsZJM5Bte07M6ZrMHLp4Ulycgb3IuZ0e8MIce+duSPXDAye25cP5jOlm+JOwd
+ YPpg==
+X-Gm-Message-State: APjAAAWMsk5WPLGUrVm1u8oFudtyFPlEzv8Ibgv0Svtvt2eq/7fnPLgR
+ 9945OIJHiugwcpejRWIqYwsmlnLOdnIzK4+wBsg=
+X-Google-Smtp-Source: APXvYqwgwLjUiaI8lvtv5XigJUnfE0opxafAYwVVaoUq0qE+XoZIpcFJ49CebbvhK+qn660PDmmFwx5buEV+WZj48dM=
+X-Received: by 2002:ac8:6bcd:: with SMTP id b13mr8777036qtt.234.1572572211029; 
+ Thu, 31 Oct 2019 18:36:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <06422EF3-4D9D-4880-99EA-513C41215F37@fb.com>
+In-Reply-To: <06422EF3-4D9D-4880-99EA-513C41215F37@fb.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 1 Nov 2019 01:36:39 +0000
+Message-ID: <CACPK8Xf50ud_K-OMNGDQp9NBxNF4GtG9cRRKhDPA6N1z6XBvpg@mail.gmail.com>
+Subject: Re: kernel patch pull for IPV6
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,75 +69,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Vijay,
 
+Please turn off HTML email when posting to the list. Thanks!
 
-On Thu, 31 Oct 2019, at 15:44, Andrew Jeffery wrote:
-> Subtracting the offset delta from four-byte alignment lead to wrapping
-> of the requested length where `count` is less than `off`. Generalise the
-> length handling to enable all valid offset and size combinations.
-> 
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> Acked-by: Jeremy Kerr <jk@ozlabs.org>
-> ---
->  drivers/fsi/fsi-core.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
-> index 1ea15621e588..889349beb284 100644
-> --- a/drivers/fsi/fsi-core.c
-> +++ b/drivers/fsi/fsi-core.c
-> @@ -559,8 +559,8 @@ static ssize_t fsi_slave_sysfs_raw_read(struct file *file,
->  		return -EINVAL;
->  
->  	for (total_len = 0; total_len < count; total_len += read_len) {
-> -		read_len = min_t(size_t, count, 4);
-> -		read_len -= off & 0x3;
-> +		read_len = ((count | off) & 1) ?
-> +				1 : min_t(size_t, count, 4 - (off & 3));
-> 
+On Fri, 1 Nov 2019 at 01:05, Vijay Khemka <vijaykhemka@fb.com> wrote:
+>
+> Hi Joel,
+>
+> Can you please pull following patch to our openbmc kernel from linux-next repository.
+>
+> commit cf0eba334268563152e4a8bc9ab865d0037a7948
+> Author: Vijay Khemka <vijaykhemka@fb.com>
+> Date:   Thu Sep 12 12:04:50 2019 -0700
+>
+>     net/ncsi: Disable global multicast filter
 
-Actually, I've cooked up something that's optimal and still fairly compact.
-Assuming some macros like:
+Do we still need this now that Ben has fixed checksumming?
 
-#define BIT(x) (1 << (x))
-#define clz(x) __builtin_clz(x)
-#define ctz(x) __builtin_ctz(x)
+Did you try testing with the checksumming patch applied and the
+multicast one reverted?
 
-we can do:
+>
+>
+> commit 88824e3bf29a2fcacfd9ebbfe03063649f0f3254
+> Author: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+> Date:   Fri Oct 25 13:47:24 2019 +1100
+>
+>     net: ethernet: ftgmac100: Fix DMA coherency issue with SW checksum
 
--		read_len = min_t(size_t, count, 4);
--		read_len -= off & 0x3;
-+		read_len =  BIT(ctz(BIT(ctz(off | 4)) | BIT(31 - clz(count))));
+I've applied this one.
 
-This gives the following lengths for input offset and sizes:
+Cheers,
 
-offset  request length
-0       1       1
-0       2       2
-0       3       2
-0       4       4
-0       5       4
-1       1       1
-1       2       1
-1       3       1
-1       4       1
-1       5       1
-2       1       1
-2       2       2
-2       3       2
-2       4       2
-2       5       2
-3       1       1
-3       2       1
-3       3       1
-3       4       1
-3       5       1
-
-The implementation in the current patch generates some sub-optimal
-lengths for certain offset/size pairs (i.e. a wider access could be performed).
-
-Andrew
+Joel
