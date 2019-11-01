@@ -2,73 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2A4BEC80F
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 18:41:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD84EEC818
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 18:43:52 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 474Tyr4CrszF4P7
-	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 04:41:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 474V113CZ3zF6Ld
+	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 04:43:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
+ helo=mail-pf1-x443.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ge/UTzPg"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="j/dyk5yK"; 
  dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 474Txp5FGZzF7F6;
- Sat,  2 Nov 2019 04:40:59 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id j22so6917861pgh.3;
- Fri, 01 Nov 2019 10:40:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 474V074Q6RzF5Wg;
+ Sat,  2 Nov 2019 04:43:03 +1100 (AEDT)
+Received: by mail-pf1-x443.google.com with SMTP id v19so7541195pfm.3;
+ Fri, 01 Nov 2019 10:43:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=date:from:to:cc:subject:message-id:references:mime-version
  :content-disposition:in-reply-to:user-agent;
- bh=nFNT0LPVheWA4KBpnwRedDxe323lH3c78BcmwLbJ700=;
- b=ge/UTzPgmx562dBN7M+gJnaLpgdt7tTLMJj965/UtlsjHMookPjfZEeSyuW6yaBJ/t
- aziJDTH8+9YwXmzr0Xx5hpG5e9caR15dZKiaMPAf4PyasAzBv0vx87Vf02OLwoM8qUbQ
- 6lPYg2bQvvDGYW2hQQo3KXH6Ha7iuEaqv3kZymF1Pya4y1sjKq/0iDVomDCBsrW3lD8g
- ojwug482SwJTWzYJ62hWzrQPU1DwHsebPq4qsbWjVIH8HEXoJSGpXC7EiUAYFoakcosh
- BvXhyG9EnJgXnPi+dYOf2m1VxgGQ8+bZg54SqXSHvHom7gowiYfuCyJdZaeqoOS04AsO
- TbAA==
+ bh=QJl/9GvOTo1mXoprS9Z1FVuoJT7cvJ0SfTXW2ZwsvWU=;
+ b=j/dyk5yKG+/Zb+2zjd8u2xn3vzhnpgHTuI0xH+uDSZ798ljUjQgKbUMa+y4AKD4szr
+ CgKNJadkohLyHsfXr3XjvG8wEdsnapCo57hAincCLWN/bZgW/2PXLq1xqcg1W/6EWxlX
+ 8Q0zZtGSnPhMRXK92TNutM7SdHm2GaTJT1EiOdvEbX/utf+AMfyGYxWbnAGkN6djE494
+ eHNyGrgpjH6Ar7SWoytBdfhd8Zbi6eiZPw1uRRTV4mx36oZ3kVA0j7mDDTgmfRf0Yty4
+ K1Zbd3kSgqOy/yxgWwlbo/e8LYg/9UoTPCZ6G7uHuYn0I8fmFokfdibxNpc94c4tcFJK
+ DLVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:date:from:to:cc:subject:message-id:references
  :mime-version:content-disposition:in-reply-to:user-agent;
- bh=nFNT0LPVheWA4KBpnwRedDxe323lH3c78BcmwLbJ700=;
- b=HFOZAPOBqHdL1G9TQo2JAEzyMN1z9jho2M8c+ocola2dU7N1N3lqN/3Uw8IZWkRQUJ
- mcUicX3hTSiPl9pzVcvrvEsAoKs/gDutApJZe3lmtlCmWI1jDtHh83t/now79YC+OBuB
- k65Lz4jah3US0fv06NqIn0GZ6DiuxUBpvnWvrAS9CZxPwnhsV77si8yFWSriuvOS3wqp
- qoKPiOdTkKwQCQIBiPRukLd2LMqPoE7w/+wxGYeyOFJC909soYNFtu6jE5j0ofwAiAhA
- QzyXGLC7fCHoF2/z7psGyH4on2ITB8J/yGwKfO/deMTY+JR+srFeSGwKHCfzlMzW1Pl5
- ON+A==
-X-Gm-Message-State: APjAAAWP4fccRUdRobjnkPh42ElrVoHUJDGWd2IHMdizxWwyNWVwe8nC
- AIr/oejJt6Xf91EDxKEKl/o=
-X-Google-Smtp-Source: APXvYqxEMn19nRiQYdcMHXDUyl1sN5kC5K5u0Di4ZM95TyefIw5grebLlrUdxgtbp3mv1L0GC8D08g==
-X-Received: by 2002:a65:5388:: with SMTP id x8mr8040065pgq.398.1572630055931; 
- Fri, 01 Nov 2019 10:40:55 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::3:155b])
- by smtp.gmail.com with ESMTPSA id b18sm7009793pfi.157.2019.11.01.10.40.54
+ bh=QJl/9GvOTo1mXoprS9Z1FVuoJT7cvJ0SfTXW2ZwsvWU=;
+ b=REcv0rccSvGkkUaV9mMGz6jJXMvl+GY54u7jzP8V3PQ/uorAia+YZBtlRKP97Xc0vM
+ HUszwHGfcaIlt/CG2pAQApSytqV6zBkRHRYfsNE4dM/lv/v+PbwhfK0lIydVKCGoZYIu
+ ggCCggM59q4Pltq/PtGOdsYhFnWUICRzowsjSEny2GUIeyp/aj+cedEx5/97TpOaUdnw
+ RCSKoVeZNuBBQz1lSGjg8gnv68Doqojitw8OWkg1SZXeUjBMfmOvzLQvhbEhDcKLY20/
+ wx2Da2OOqg/joNzR6WLUlagETCfPZA0sJFSKjDgaL8gzy3ocy4jki/1Bpku07pg0BHEx
+ /ktw==
+X-Gm-Message-State: APjAAAXgwW67IOGyxqeT9xDbqdQTk0NOTe5NxZ7PXUhfyVBl22YE16CL
+ vT95E9cbPqKDX39sExk8KPk=
+X-Google-Smtp-Source: APXvYqzRiEfVYYVOG6O+ih3xK5Ax5k+9SP+dNi0+K0ffGqjJhG2LgDZzVmOsjy+yKL16LdvxRSyadg==
+X-Received: by 2002:a65:4c41:: with SMTP id l1mr14902663pgr.163.1572630180944; 
+ Fri, 01 Nov 2019 10:43:00 -0700 (PDT)
+Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::1:e697])
+ by smtp.gmail.com with ESMTPSA id a6sm9045892pja.30.2019.11.01.10.43.00
  (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 01 Nov 2019 10:40:55 -0700 (PDT)
-Date: Fri, 1 Nov 2019 10:40:45 -0700
+ Fri, 01 Nov 2019 10:43:00 -0700 (PDT)
+Date: Fri, 1 Nov 2019 10:42:57 -0700
 From: Tao Ren <rentao.bupt@gmail.com>
 To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH 0/4] ARM: dts: aspeed: add dtsi for Facebook AST2500
+Subject: Re: [PATCH 1/4] ARM: dts: aspeed: add dtsi for Facebook AST2500
  Network BMCs
-Message-ID: <20191101174044.GA13557@taoren-ubuntu-R90MNF91>
+Message-ID: <20191101174257.GB13557@taoren-ubuntu-R90MNF91>
 References: <20191021194820.293556-1-taoren@fb.com>
- <CACPK8XcNxs5T=ZC_mRnvkOF_kqS1AvP=9PvMB6w9Fgn_XbtZQw@mail.gmail.com>
+ <20191021194820.293556-2-taoren@fb.com>
+ <CACPK8XfebA9PcpyWkofCJ5fAZ9ddUjQ4ZeCf73KXb51+k_+N1Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACPK8XcNxs5T=ZC_mRnvkOF_kqS1AvP=9PvMB6w9Fgn_XbtZQw@mail.gmail.com>
+In-Reply-To: <CACPK8XfebA9PcpyWkofCJ5fAZ9ddUjQ4ZeCf73KXb51+k_+N1Q@mail.gmail.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -91,53 +92,40 @@ Cc: Mark Rutland <mark.rutland@arm.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Nov 01, 2019 at 10:08:35AM +0000, Joel Stanley wrote:
-> Hi Tao,
-> 
+On Fri, Nov 01, 2019 at 10:12:10AM +0000, Joel Stanley wrote:
 > On Mon, 21 Oct 2019 at 19:49, Tao Ren <taoren@fb.com> wrote:
 > >
-> > The patch series adds "facebook-netbmc-ast2500-common.dtsi" which defines
-> > devices that are common cross all Facebook AST2500 Network BMC platforms.
-> > The major purpose is to minimize duplicated device entries among Facebook
-> > Network BMC dts files.
+> > Introduce "facebook-netbmc-ast2500-common.dtsi" which is included by all
+> > Facebook AST2500 Network BMC platforms. The major purpose is to minimize
+> > duplicated device entries cross Facebook Network BMC dts files.
 > >
-> > Patch #1 (of 4) adds "facebook-netbmc-ast2500-common.dtsi" file, and the
-> > remaining 3 patches update CMM, Minipack and Yamp device tree to consume
-> > the new dtsi file.
 > 
-> The patches look okay to me. I modified the file name to match the
-> convention used by other device trees in the arm directory, where it
-> includes the SOC name first.
+> > +
+> > +&mac1 {
+> > +       status = "okay";
+> > +       no-hw-checksum;
 > 
-> I also reworded the commit messages a little.
+> Was this included to work around the IPv6 issue that Benh recently fixed?
 > 
-> They have been merged into the aspeed tree for submission to 5.5.
+> If you can test your platform with
+> 88824e3bf29a2fcacfd9ebbfe03063649f0f3254 applied and the
+> no-hw-checksum property removed, please send a follow up to remove
+> this property.
 > 
-> Thanks!
+> It's not doing any harm, but by cleaning it up there's less chance
+> others blindly copy the same thing.
+> 
+> Thanks,
 > 
 > Joel
 
-Got it. Thanks a lot for doing this, Joel.
+Yes. I'm planning to try the patch. Will send out a followup patch to
+remove the line if everything goes fine.
 
 Cheers,
 
 Tao
 
-> >
-> > Tao Ren (4):
-> >   ARM: dts: aspeed: add dtsi for Facebook AST2500 Network BMCs
-> >   ARM: dts: aspeed: cmm: include dtsi for common network BMC devices
-> >   ARM: dts: aspeed: minipack: include dtsi for common network BMC
-> >     devices
-> >   ARM: dts: aspeed: yamp: include dtsi for common network BMC devices
-> >
-> >  arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts | 66 ++++---------
-> >  .../boot/dts/aspeed-bmc-facebook-minipack.dts | 59 ++++--------
-> >  .../arm/boot/dts/aspeed-bmc-facebook-yamp.dts | 62 +-----------
-> >  .../dts/facebook-netbmc-ast2500-common.dtsi   | 96 +++++++++++++++++++
-> >  4 files changed, 136 insertions(+), 147 deletions(-)
-> >  create mode 100644 arch/arm/boot/dts/facebook-netbmc-ast2500-common.dtsi
-> >
-> > --
-> > 2.17.1
-> >
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
+> > +};
