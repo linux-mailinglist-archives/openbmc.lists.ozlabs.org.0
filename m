@@ -1,66 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 673DDEC535
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 15:59:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35F7EC6A0
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 17:23:59 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 474QLn4LMszF6rR
-	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 01:58:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 474SDs03sCzF7F0
+	for <lists+openbmc@lfdr.de>; Sat,  2 Nov 2019 03:23:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c43;
- helo=mail-yw1-xc43.google.com; envelope-from=jandraara@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="r/RWr8b9"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc43.google.com (mail-yw1-xc43.google.com
- [IPv6:2607:f8b0:4864:20::c43])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 474Py21gsbzF75F
- for <openbmc@lists.ozlabs.org>; Sat,  2 Nov 2019 01:40:57 +1100 (AEDT)
-Received: by mail-yw1-xc43.google.com with SMTP id z144so1934746ywd.1
- for <openbmc@lists.ozlabs.org>; Fri, 01 Nov 2019 07:40:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=G/q2mebfEmcjg4M6KVJaCHVHnhawj200jaImtsdTy24=;
- b=r/RWr8b9vS0gnG92bjG4xe0i0QhtfyjjxnzCGpT4FeMEyEvsBwimoGgsuewbCkbV5m
- rbW2ioLZfWv6asQuuIglBd1e7g+dE95H+shnWCUws38FH/+yXYKl/rPmEFS8F8JM1RRA
- xZybwAaiuyNvzj04GSOOnFc/wZOrIG7iBbjI496eOPtpEr0iddNqYo0hYtTVyx1g1Crk
- HTjZF64t1/Yf4Sr2j7cdZFjVyDFhfp032jsFckEEQKWCjsSoCbwq9uJpaTc8BSpyQOrB
- xD7QWSIeum7/82UuFz0Jy6riZonqnS7x4btKB35D6FF37FnF+oaSkUwAiOhIloPHCs1E
- Y3+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=G/q2mebfEmcjg4M6KVJaCHVHnhawj200jaImtsdTy24=;
- b=AV8nKwwGp18jTSef0sNxJnwTWbr+5Xo8FftGvl59KoImAiUarNr7gaw1mT3Zmj+4QA
- gPsK08MDqrSweZTdMoA8weLZSRVTw8NhFSu1M6r4dipHAfC9hPJ6VS5omXzfVtegKgO+
- 6dfVG6vfO/zXuRtGpzpdhig7J5hItMDMbvhoylA4ojK4OTXpan/Pr5g6E5qLcS/VS2TX
- Fpc+6cJ8NQHSHjgHqgVk8yiBNGGX6qQ9Ct+vfQyIjOhQnJlWYcYOR/TEsXRJsBDoJvb4
- JZa3pdZMJQdnLm9WPAcEIRgwDc08jE6Z/7DeA4XQvgRIjQa9wJIhTPH5y3NeHAGIoAaR
- rV2g==
-X-Gm-Message-State: APjAAAWXTXxpGPKjyo2Ekso0dkhnCtiLfP9EBvEsNLmJ61boglWrVnlC
- OX5BLUGPet3bgY0SWxVic8cvfjJsVp+mH1xKvf7wQQq0
-X-Google-Smtp-Source: APXvYqxF5jv/vmX9Sl7MVNg9EhQlqI84zdx68F9N1+arwzySctyb0P3g9u8fF44Ncm7nTzEkt8boBaXHlowpNqBSJoY=
-X-Received: by 2002:a81:1b03:: with SMTP id b3mr8563698ywb.39.1572619254523;
- Fri, 01 Nov 2019 07:40:54 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 474S9b0KnfzF7Dm
+ for <openbmc@lists.ozlabs.org>; Sat,  2 Nov 2019 03:21:05 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 01 Nov 2019 09:21:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,256,1569308400"; d="scan'208";a="400897869"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by fmsmga005.fm.intel.com with ESMTP; 01 Nov 2019 09:21:02 -0700
+Subject: Re: How to run tests in bmcweb
+To: Lei YU <mine260309@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAARXrtkwC6CoVFDYwwtD38U5whRTbuodxWUF3A0DM+XvQoPJfA@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <c6719aad-1d87-318b-a680-df8844bf6a7c@linux.intel.com>
+Date: Fri, 1 Nov 2019 09:21:01 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-References: <CAMTupoQThp=WRfdH+QHwmqP1ZqbgCKq81rS8Cp+0sYKQfNe4Sg@mail.gmail.com>
-In-Reply-To: <CAMTupoQThp=WRfdH+QHwmqP1ZqbgCKq81rS8Cp+0sYKQfNe4Sg@mail.gmail.com>
-From: Jandra A <jandraara@gmail.com>
-Date: Fri, 1 Nov 2019 09:40:43 -0500
-Message-ID: <CAMTupoSxchLJuFUjpmVu=7jS=M1H0OTTnWkUP3SNkvs8=R3uTA@mail.gmail.com>
-Subject: Resend : Enable/disable access to BMC through interfaces for security
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAARXrtkwC6CoVFDYwwtD38U5whRTbuodxWUF3A0DM+XvQoPJfA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,39 +56,43 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I am resending this message to who has thoughts on which BMC
-interfaces need to be disabled for security purposes and what the best
-way to do that would be. I would love to collaborate with all parties
-interested.
+On 11/1/19 1:59 AM, Lei YU wrote:
+> I am trying to add a unit test case in bmcweb and run it.
+> With local CI, the tests are not run:
+> 
+>   WORKSPACE=$(pwd) UNIT_TEST_PKG=bmcweb
+> ./openbmc-build-scripts/run-unit-test-docker.sh
+>   ...
+>   [100%] Built target bmcweb
+>   /home/leiyu/work/bmcweb > ctest .
+>   Test project /home/leiyu/work/bmcweb
+>   No tests were found!!!
+>   ...
+> 
+> So the question is, how do I run tests in bmcweb? Should
+> openbmc-build-scripts be updated to support that?
 
-------- begin message:
+I believe the tests in bmcweb have degraded and stopped working, so they 
+were disabled. I haven't run them myself, so I'm not sure how bad they 
+degraded. If you want to try to run them locally you need to pass
+-DBMCWEB_BUILD_UT=1 when you run the cmake command.
 
-Hello all,
-
-As part of the GUI design team, I am starting to look at requirements
-for enabling and disabling network interfaces for which the BMC can be
-accessed. For example, IPMI, SSH, Redfish, HTTP, and USB, to name a
-few.
-
-I know there has been some conversation on the topic before (see email
-linked below) and want to reach out to see who is interested in this
-topic. And I would love to get your thoughts on the following topics.
-
-Some questions we want to tackle are:
-1. Which interfaces need to be enabled/disabled and what is their
-priority? (See full list in the redfish documentation)
-2. What should be the default for the selected above (enabled/disabled)?
-3. Do we need a staged plan for it?
-4. When can we expect backend availability?
+https://github.com/openbmc/bmcweb/blob/c78d791eb1fa9d12e987e7b1ad885ada92d0757a/CMakeLists.txt#L292
 
 
-Redfish documentation:
-https://redfish.dmtf.org/schemas/ManagerNetworkProtocol.v1_4_0.json
+openbmc-build-scripts is fine the way it is, if the unit tests are fixed 
+then we can simply change if (BMCWEB_BUILD_UT) into if (NOT 
+YOCTO_DEPENDENCIES) and the build scripts know how to take over.
 
-Related email discussion (on staged plans to address IPMI access):
-https://lists.ozlabs.org/pipermail/openbmc/2019-September/018373.html
+https://github.com/openbmc/bmcweb/blob/c78d791eb1fa9d12e987e7b1ad885ada92d0757a/CMakeLists.txt#L206
+
+FWIW Entity-manager has an example of running tests in CMake that works 
+with openbmc-build-scripts 
+https://github.com/openbmc/entity-manager/blob/f2ad76b32cea5170a5a9a631f49935ae3dd4626d/CMakeLists.txt#L113
 
 
+-James
 
-Regards,
-Jandra Aranguren
+> 
+> Thanks!
+> 
