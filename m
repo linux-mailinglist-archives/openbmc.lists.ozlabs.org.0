@@ -2,63 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63ED1EBC55
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 04:24:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2C3AEBC5C
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 04:27:47 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4746x06SNxzF6Nm
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 14:24:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47471F2vc0zF5gm
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 14:27:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
- helo=mail-qt1-x844.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2a;
+ helo=mail-io1-xd2a.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="ML6KAt/+"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="o+c0rSnB"; 
  dkim-atps=neutral
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
- [IPv6:2607:f8b0:4864:20::844])
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
+ [IPv6:2607:f8b0:4864:20::d2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4746wD5WsXzF6NX
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 14:23:22 +1100 (AEDT)
-Received: by mail-qt1-x844.google.com with SMTP id r22so1304289qtt.2
- for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 20:23:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47470T1cTyzF4s3
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 14:27:04 +1100 (AEDT)
+Received: by mail-io1-xd2a.google.com with SMTP id w12so9419707iol.11
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Oct 2019 20:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=THbK9+H6Nb7rdbC1I7fKiazd92Zgz1Qungvt66SqJVM=;
- b=ML6KAt/+He/SnjqbG2l4U6Xw8dtOGMjlBko/7UENugtt30LiAs7rhX9h5Gq11pkfzO
- DOoV21mqFl3HWxx+ke3Fmc9MZSvpp3Pog9qG5vKEGOsrJ6JshCdtmMRVAc9UgVbf5F1h
- HzlU1/QbqPJsCDb/H/DBkwxuucXFnu4iZP6mY=
+ :cc; bh=EKarv+0RC/JWJi5/ZgwjStZtVStVfW4j/secMfJ6SlI=;
+ b=o+c0rSnBw4r+3XZiNrowtRM8M5kIbVYqaBY+Z0BfQkBcKtUS5P7uTC/OBHIMwW+iAv
+ 0Wl7Z0su/K6SshzkjAJpdbYFLjrRLdAi/qVTMV9vVIAHIq2XvTmEeGEIPJ9z4reZe3WJ
+ a2N1peTdt9zvuaoR0gGA3zLVURhuaBKCnSCcHt/Tpbp2F4si9RSo6+d4fQyn7rNDcQao
+ UAFFaJihkO9D1cZDdOc4rs8j04mRp7GhK7rXpVhuw46wMiwXfZoS1zYJc8rFISCM2AvX
+ ZhlmLCo55RmUOjJ7N8bUSbiRRdPxTNQ+buNOz4ZzkJXF6fVSrkNriezCS7xk+6maaZfr
+ vA0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=THbK9+H6Nb7rdbC1I7fKiazd92Zgz1Qungvt66SqJVM=;
- b=NtRTmEBgPLlXGfk1Xj662jsIf5VbWYyw9IwrM/GjwX3yJEh6f3726o2LBoa+prnXSw
- iq9s+WSY8JXc8vtTsNRzu25nerae6OQPZjdyzFY5v+fHUyPlkuKGqtakcPXfUM5UD77L
- kYgNYtjQ4vv18ldglWzD6T560BZZveSwu8kYSdc7XgRQPpjPqk4kh38WGf4t0QWT5G9Z
- yOFwQ2FyY10QJuY96DrRFsSETEDXH2Pe7B+0Ca/4Dj3b/NdObA/iHMC4ysElvUjOvLYx
- 94160WKUnXnl/EkIrdOjj8pyOrhaLnIMLf/HtzHtnI/P66rzV8pSkAMhSWPLV7TGmePr
- Q1tQ==
-X-Gm-Message-State: APjAAAVTdIF36Z6va/2P1FPh1dht4vPChxlTMKGYc/pqPG8Ud7xtjXLJ
- AlHHi/G5OeNg1lNorvvrP3w5Y3rO8Go02pWEz4Y=
-X-Google-Smtp-Source: APXvYqwQszyWKDQ4/mAsoHIeWDYlxJCvWal0mqq7tgJx8E/U4gFizNNg3TcSDPn+n/ttqFRs+nfxUGx3hgxbMtgx2CA=
-X-Received: by 2002:ac8:8f3:: with SMTP id y48mr8979612qth.269.1572578598768; 
- Thu, 31 Oct 2019 20:23:18 -0700 (PDT)
+ bh=EKarv+0RC/JWJi5/ZgwjStZtVStVfW4j/secMfJ6SlI=;
+ b=Ss8brUOQ/3aUSgRiQJ1b1y+tmfyxfg7HF/wiQIDcGoZO3k5lCZXMsRcRpmFewX7xmd
+ FNsmUsNAn3VaH0+z+vqhfPS9KnfWKIL/Koirb57RzmKQAkGH1pyAcpCI4dTRKku9dvaH
+ anbvJCFUT/JmUK3fCAqIFs8oBiEEY44jtw57ngDsm+ANHCOvklxt6KC3NIdDG/bTVCUd
+ quYj65JKfois7SltWhj7J8kaFACteCwmBlmBL+RTOyBCor6LlmdqfOhbbOKyVUvQF92O
+ j4igu2Z6ue/k8rJgXSHxPQjBpSmc/He8n6xFWNqoEKUINGEWDevja4N9YE7sS9TGpi1x
+ zHOQ==
+X-Gm-Message-State: APjAAAXJyJnZ2KFh48JxPkIg74rdhcJSn9GAdvH068MfbD+7/A7kD8Mp
+ Vvuu960dhEOckoJ2QBYY04dxLC1IYvQUDBelVS1KKuPRat4=
+X-Google-Smtp-Source: APXvYqw3aMnNqyKmpLe9azTo/QD8K1Gg6N8exQESf/BxEwdv6gsn+FFzvP/30iN4d2hIY9ceM36JjxO5U7x9dpUcR8s=
+X-Received: by 2002:a02:c4cd:: with SMTP id h13mr3403345jaj.33.1572578821193; 
+ Thu, 31 Oct 2019 20:27:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20191031053625.422-1-joel@jms.id.au>
- <20191031053625.422-5-joel@jms.id.au>
- <93f40f731bedbf24fbcfe38964c0769de5dbf9ea.camel@ozlabs.org>
-In-Reply-To: <93f40f731bedbf24fbcfe38964c0769de5dbf9ea.camel@ozlabs.org>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 1 Nov 2019 03:23:07 +0000
-Message-ID: <CACPK8XdAYwc6B74uqN59BfCZEx+0FVGMRvB2oYV2c5nyp5xyZA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.3 v2 4/8] fsi: move defines to common header
-To: Jeremy Kerr <jk@ozlabs.org>
+References: <CANFuQ7A8xB_xaqMB0fj394Ov9E3RvhOvj7OVVXgqDfA51YDsSg@mail.gmail.com>
+In-Reply-To: <CANFuQ7A8xB_xaqMB0fj394Ov9E3RvhOvj7OVVXgqDfA51YDsSg@mail.gmail.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 1 Nov 2019 11:26:50 +0800
+Message-ID: <CAARXrtnEOUuVdZpobxnQiJ-n0ve57fiP0nu8Yw-t5jMHWShXtA@mail.gmail.com>
+Subject: Re: HTTP redirect to HTTPS for web UI
+To: George Liu <liuxiwei1013@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,35 +72,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 1 Nov 2019 at 03:17, Jeremy Kerr <jk@ozlabs.org> wrote:
+On Thu, Oct 31, 2019 at 9:48 PM George Liu <liuxiwei1013@gmail.com> wrote:
 >
-> Hi Joel,
+> Hi All:
+> I'm working on http redirect to https task(https://github.com/ibm-openbmc/dev/issues/895).
+> I took a cursory look at the design(https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24173) and did some testing.
 >
-> > The FSI master registers are common to the hub and AST2600 master (and
-> > the FSP2, if someone was to upstream a driver for that).
-> >
-> > Add defines to the fsi-master.h header, and introduce headings to
-> > delineate the existing low level details.
+> In bmcweb, I find it the current communication logic can only listen to one communication protocol (http or https). If you listen to both protocols at the same time, you need to change a lot of code and communication logic.
+> If we are going to implement this feature in bmcweb, it costs extra effort and it's likely the implementation is no better than Nginx. so I prefer to use Nginx.
 >
-> I'm in two minds about this - it's a specific hardware master
-> implementation, while fsi-master.h is for the generic core API.
 
-It's a bit messy already, as a bunch of the defines in there are for
-the soft FSI drivers. I could create two new headers, one for the soft
-masters, and one for the hardware ones.
+From Ed's [mail in June][1], one approach is to use boost asio async_detect_ssl.
 
-> That said, it's probably neater than introducing a new header here, so:
->
-> Acked-by: Jeremy Kerr <jk@ozlabs.org>
->
-> Maybe a potential future change: a unified driver that handles this
-> common hardware, just with different register interface implementations?
+But I agree with George here that it costs extra and unnecessary
+effort, because with nginx it is so easy to config the http->https
+redirection, and it is easy to get all the https related configs
+right, including HSTS.
+In other words, we got such features for free (except for a few binary
+size), why bother re-write it?
 
-That would be cool. It would also make it less work to do a FSP driver.
+Considering the binary size, maybe it's worth the effort to check how
+many bytes are increased compared between:
+1. Current implement that bmcweb handles https only
+2. Enable BMCWEB_INSECURE, opt-out all https related code in bmcweb,
+adding a basic nginx and a configure file that does the https
+redirect.
 
-Thanks for the review.
+We could check the binary size to see if it's acceptable. Be noted
+that implementing this feature in bmcweb increases the binary size as
+well.
+
+
+[1]: https://lists.ozlabs.org/pipermail/openbmc/2019-June/016557.html
