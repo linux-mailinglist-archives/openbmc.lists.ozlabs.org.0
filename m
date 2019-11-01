@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06C53EBC3D
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 04:07:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EF3FEBC3E
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 04:08:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4746ZH1RdHzF5JM
-	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 14:07:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4746bT6BSwzF6V5
+	for <lists+openbmc@lfdr.de>; Fri,  1 Nov 2019 14:08:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,66 +16,67 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="rf7LfZT7"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="KJD3cAZ2"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="GuZw5y4b"; dkim-atps=neutral
+ header.b="gntuqqe6"; dkim-atps=neutral
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
  [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4746YZ70mxzF4gG
- for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 14:07:14 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4746Zj3lY2zF5Xj
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Nov 2019 14:08:13 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 1586F20E94;
- Thu, 31 Oct 2019 23:07:12 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 1A73020F2E;
+ Thu, 31 Oct 2019 23:08:11 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 31 Oct 2019 23:07:12 -0400
+ by compute4.internal (MEProxy); Thu, 31 Oct 2019 23:08:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=JNODO02r/yDofJEoGhu5D4RQF+y7J/V
- zDpXDdeazVjM=; b=rf7LfZT7ZLh5YebuZuXxYVaMpvxM5c5JPDPMGv7QzfQpAEE
- XjLk9E7MyvL6GCxEh6WjmhIRIEyBVQ66aATH3gvEu0SJFQJUvLsZJCaScNHgvpPp
- ouu0gRTipAmosdev9T6n3r1l6hbqhq4PyLIyf+gJd2cKpyIjxGgAHMxe/0DjDivC
- siyuJEz1pCIz/FTwABhRGmAR2PHrFNBhYRYx6o/1KWeM5w+ySaffhDm74xMFB+9o
- VR8QqQSX17HIlP4VDDu1z+mF/NC1jBLGdEAK2DNIrJIeboa0xHAtFdybLlRXoStF
- 5BgeU6NFdgnJdK/4Ts2vFI5JEUnpQ/RHw4fuYAQ==
+ :subject:content-type; s=fm1; bh=fDn9JLK251LwA9QlH1+nKiB0KWC0XBe
+ ZDM4HPEHHtVs=; b=KJD3cAZ2LEROUH/+/PG800BkqIKnNB/ee5wWAc8NONXAimD
+ LHR58O1/OnstkauoXEN3KelG/EeFDXSD6QVomOg3EF6W6fsHO3N4BOEczyVrOd/C
+ gX4suV5O3sN6vvVlZrgyW7106wc5yca/OeVlJP/AGkHVHJaTLF6y+aO1UYw/l5g3
+ hRWzaGlxuoWHZ6/PoUDPbARxp4ObRZ9+ciBccNet2iD6xUR4MXj/7Fj1ZoL7PzY/
+ xpxgdW5jBOocH0IGUT1Iac2Tx+v3+c7boMGkd+5F3f0AKVSJREOPHIfaIEx8jpg0
+ sMK99kpHZykzVURMpfgcKebkkhWg0yv6AnMcuCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=JNODO0
- 2r/yDofJEoGhu5D4RQF+y7J/VzDpXDdeazVjM=; b=GuZw5y4b+wzqnBgJIAgoQa
- JqfRrkoD4YNjgRXGPuon/v39huBUySQYQ9j7jDFy7B1wBrXf6P66Lx04FkbQqqeC
- hExXeqDEX3YvB/5/o/D3elxhcrYQ4ei009vS1OJX/l14byhoCZ3wQtw8MHqXwrZD
- Zo4IWqPCy9Q+zBX6p6f+MEivsx9BzynwWnT7FDuatlkmkDttrD5+V1/VutSavP4Q
- raTJxOl0TgABa47Jc8jMj0ZEF9TK5DMWI80XzR8e83eVConvoYXT23I1FegeSMAd
- 8FPYIrn8Dcbsjlf703HRIZwv1q1Jb0Dl1sygvrVrCb9qq6PtY7ULM4C1GpaAxJ3w
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=fDn9JL
+ K251LwA9QlH1+nKiB0KWC0XBeZDM4HPEHHtVs=; b=gntuqqe6fxfxCHeW48/5yq
+ 23wiZc+UaMXR/c45q7jKN10LLWCEEM5eOdlIbZ6YSkClFlb0iCmnTKSQN9LNVvXi
+ +BAU0/w3Q4JLh+bkAAOLgFJKZrQlRDsC84dcur0ao+HXPTbO9+sJVhxGaVDHLvVH
+ KpN2UaVdireiehD4iYiBX/Xtm3EmdqMdQLmeWT9tcYINRzQp9IuJLqIlqyH/ImKc
+ fDEHisvTF800VMSgqTV2y2OsjnkYfrmDU9s82B6YTu58/lC/P1AqPZagJ6IafSQ3
+ R/hpThWfGyYkl1/qlWbwN6Jp1kuESuYk8iocT51catmmV1JT30XBBFGFBwMHQvCw
  ==
-X-ME-Sender: <xms:XqG7XZFCjDHUuqDtW9canOKN9PIOQX7ER3SKRrDMZyFM6OOFWfjEIQ>
+X-ME-Sender: <xms:mqG7Xa8hI4mEzqFWl1kxR1wVBk0IdzZn4i06-Idwn8jGE8s9kdQPfg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddtiedgheehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
  rhfuihiivgeptd
-X-ME-Proxy: <xmx:XqG7XUrh8AzWJuf7Jke06SMFyEnUeBPHdySIH0jbH0F9IxGnk0rmZA>
- <xmx:XqG7XX2_aN8EMgMHmOGSRjfp4q4Lruz5Qf77MCXr9QIdVpkdFjb0WA>
- <xmx:XqG7XdtOlyAMQXRb-StjpoL0WIOgfrS3YKIjah4WHgI51YS5p1deLA>
- <xmx:YKG7XZAFsKSIiwVFX5wz2RvnoCmTyP6jp2FfjnWChkRNVE-DtfQVGA>
+X-ME-Proxy: <xmx:m6G7Xd2TsJZ6P3CqCNjhyAysduYQoh7mupqNzXPpUXirakfItJYOwg>
+ <xmx:m6G7XdcUBOgRhrjCyuBqIFuFn2HftMWfH0bS-lZh_rvFytmpAKDyew>
+ <xmx:m6G7XXCIzCsdqyVWLGoYuk3L-_ympQlSLQKVAykZS4NCGV8RsYIwVw>
+ <xmx:m6G7XfnVRZWisYPkLqS3gFiFYj1vBkdSS4T2pUDvRF2npFDXST6TyA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A5D17E00A3; Thu, 31 Oct 2019 23:07:10 -0400 (EDT)
+ id E567AE00A3; Thu, 31 Oct 2019 23:08:10 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-509-ge3ec61c-fmstable-20191030v1
 Mime-Version: 1.0
-Message-Id: <e9bd5891-8a4d-4501-a5b1-9d6651f109a1@www.fastmail.com>
-In-Reply-To: <20191031053625.422-7-joel@jms.id.au>
+Message-Id: <272e9593-901a-4053-878a-63131b11fa66@www.fastmail.com>
+In-Reply-To: <20191031053625.422-8-joel@jms.id.au>
 References: <20191031053625.422-1-joel@jms.id.au>
- <20191031053625.422-7-joel@jms.id.au>
-Date: Fri, 01 Nov 2019 13:38:16 +1030
+ <20191031053625.422-8-joel@jms.id.au>
+Date: Fri, 01 Nov 2019 13:39:16 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Joel Stanley" <joel@jms.id.au>, "Jeremy Kerr" <jk@ozlabs.org>
-Subject: Re: [PATCH linux dev-5.3 v2 6/8] fsi: aspeed: Fix link enable
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3_v2_7/8]_fsi:_aspeed:_Fix_whitespace_i?=
+ =?UTF-8?Q?n_check=5Ferrors?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -95,31 +96,6 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Thu, 31 Oct 2019, at 16:06, Joel Stanley wrote:
-> Link enable was saving the value of the write to result, which was
-> not checked. It should either have been ignoring the result of the
-> write, or erroring out if it failed. This chose to error out.
-> 
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-Lolled-by^W
-
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-
-> ---
->  drivers/fsi/fsi-master-aspeed.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/fsi/fsi-master-aspeed.c 
-> b/drivers/fsi/fsi-master-aspeed.c
-> index 8f757eaa6a55..ee760e84c576 100644
-> --- a/drivers/fsi/fsi-master-aspeed.c
-> +++ b/drivers/fsi/fsi-master-aspeed.c
-> @@ -344,7 +344,9 @@ static int aspeed_master_link_enable(struct 
-> fsi_master *master, int link)
->  
->  	reg = cpu_to_be32(0x80000000 >> bit);
->  
-> -	result = opb_writel(aspeed, ctrl_base + FSI_MSENP0 + (4 * idx), reg);
-> +	ret = opb_writel(aspeed, ctrl_base + FSI_MSENP0 + (4 * idx), reg);
-> +	if (ret)
-> +		return ret;
