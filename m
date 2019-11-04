@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C603BEF13B
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 00:38:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 45DE6EF13E
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 00:39:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 476Tkc1WBtzF3tS
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 10:38:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 476Tlf5TdlzF3fC
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 10:39:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,19 +17,19 @@ Authentication-Results: lists.ozlabs.org;
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 476Tjy0VhXzF3Zg
- for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 10:37:40 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 476TkJ3pDKzF3wd
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 10:38:00 +1100 (AEDT)
 X-Amp-Result: UNKNOWN
 X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
  by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2019 15:37:38 -0800
+ 04 Nov 2019 15:37:58 -0800
 X-IronPort-AV: E=Sophos;i="5.68,268,1569308400"; 
- d="asc'?scan'208,217";a="195628746"
+ d="asc'?scan'208,217";a="195628837"
 Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
  by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
- 04 Nov 2019 15:37:37 -0800
+ 04 Nov 2019 15:37:58 -0800
 Subject: Re: OpenBMC logo vector version
 To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
@@ -58,15 +58,15 @@ Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
  k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
  Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
  28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
-Message-ID: <1e7a1086-6454-89cb-2b6a-c289c2974dca@intel.com>
-Date: Mon, 4 Nov 2019 15:37:32 -0800
+Message-ID: <5791f21a-0189-3dd7-6c7c-a6815d811a69@intel.com>
+Date: Mon, 4 Nov 2019 15:37:58 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.1.1
 MIME-Version: 1.0
 In-Reply-To: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR"
+ boundary="QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,21 +82,22 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR
-Content-Type: multipart/mixed; boundary="GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB"
+--QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj
+Content-Type: multipart/mixed; boundary="rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV"
 
---GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB
+--rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV
 Content-Type: multipart/alternative;
- boundary="------------5C1ACDA89D7268D33056B7D5"
+ boundary="------------8C95A328EFF874FFF5EAC7C7"
 Content-Language: en-US
 
 This is a multi-part message in MIME format.
---------------5C1ACDA89D7268D33056B7D5
+--------------8C95A328EFF874FFF5EAC7C7
 Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-There appears to be an SVG in openbmc-openbmc/docs git repo
+Ugh...
 
+git clone git@github.com:openbmc/docs.git
 
 On 11/4/19 3:32 PM, Pine, Kathryn ElaineX wrote:
 >
@@ -129,7 +130,7 @@ Phone: (503) 712-6764
 Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
 
 
---------------5C1ACDA89D7268D33056B7D5
+--------------8C95A328EFF874FFF5EAC7C7
 Content-Type: text/html; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
@@ -139,8 +140,10 @@ Content-Transfer-Encoding: quoted-printable
       charset=3Dwindows-1252">
   </head>
   <body>
-    There appears to be an SVG in openbmc-openbmc/docs git repo<br>
+    Ugh...<br>
     <br>
+    git clone <a class=3D"moz-txt-link-abbreviated" href=3D"mailto:git@gi=
+thub.com:openbmc/docs.git">git@github.com:openbmc/docs.git</a><br>
     <br>
     <div class=3D"moz-cite-prefix">On 11/4/19 3:32 PM, Pine, Kathryn
       ElaineX wrote:<br>
@@ -231,25 +234,25 @@ tey<br>
   </body>
 </html>
 
---------------5C1ACDA89D7268D33056B7D5--
+--------------8C95A328EFF874FFF5EAC7C7--
 
---GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB--
+--rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV--
 
---zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR
+--QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl3AtjwACgkQ0EfviT3f
-HwkEzAf/cetFHhcrVSr8cxuNotZKMK0iLaWgkisUu5zyRnKpzxk3/+DLnfWixu/5
-mEeRjxbXLIhJYsWx9PMXBjjxYif6VXYbohmM4T0aT7pe5t8kQ/9eZJwrQhHoGwNc
-STX8JFa2soWEls9zoKAAMX9/dA6gkv1mJb+cd3pFacj4X73zMKoJYPaG3RJHdYZx
-JARJheS3aCEUXDXyWY4X5pypMOP8+28QCrtoJJsU0g3acJGY7etGET5yPq8C7hFL
-wK67xBe0FmSyofVEkdyJG2bFLaB/MPvk0uhhZI1oRoX8izzemXPgLk9Vbjr8pQnz
-YPfe04VKlR8Cqb+VZTlxGVUjdzZtUw==
-=s9YO
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl3AtlYACgkQ0EfviT3f
+Hwkt6gf/e+/Kn68BsPQgbnG72l0RUfmOFlyTUROGe1EAhHxDfeTM8quVCWjsLGOR
+s3mz9UjXhupPfXn0h5ELTkTVKSf/BdW+lh2Ztdp+KL2DKVm3QoNwMliI1jJB3onl
+d9cHajxpRRZJ8SatHf7pIyw2J9azEjIL1BukLoyELzj7valhrQZMVH6zj1JiCeY2
+GxFkzDl6WtlIpTwhMzCyHLLsVOWf2ROFJFRteCnBwzE/JrOZ+D/82B1DbcL4K174
+dV38dDl5OTwfuZcjMuzxzonOnHtIRUxRLLi83t1mnbioxGDWaJdhqvTauNDxhGdj
+kVAjtSBSfjLC1UmO4vMR2i/regVuVw==
+=1bLS
 -----END PGP SIGNATURE-----
 
---zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR--
+--QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj--
