@@ -1,58 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD109EF134
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 00:33:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C603BEF13B
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 00:38:18 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 476TcX5bRJzF3lb
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 10:33:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 476Tkc1WBtzF3tS
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 10:38:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=kathryn.elainex.pine@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 476Tbw0tw8zF33Q
- for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 10:32:13 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 476Tjy0VhXzF3Zg
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 10:37:40 +1100 (AEDT)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
 X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2019 15:32:10 -0800
-X-ExtLoop1: 1
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 04 Nov 2019 15:37:38 -0800
 X-IronPort-AV: E=Sophos;i="5.68,268,1569308400"; 
- d="scan'208,217";a="403147728"
-Received: from orsmsx102.amr.corp.intel.com ([10.22.225.129])
- by fmsmga006.fm.intel.com with ESMTP; 04 Nov 2019 15:32:10 -0800
-Received: from orsmsx114.amr.corp.intel.com (10.22.240.10) by
- ORSMSX102.amr.corp.intel.com (10.22.225.129) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 4 Nov 2019 15:32:09 -0800
-Received: from orsmsx113.amr.corp.intel.com ([169.254.9.28]) by
- ORSMSX114.amr.corp.intel.com ([169.254.8.19]) with mapi id 14.03.0439.000;
- Mon, 4 Nov 2019 15:32:09 -0800
-From: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: OpenBMC logo vector version
-Thread-Topic: OpenBMC logo vector version
-Thread-Index: AdWTZ1PSZOGwpcHiRfOHGxkFH02HjQ==
-Date: Mon, 4 Nov 2019 23:32:09 +0000
-Message-ID: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.138]
-Content-Type: multipart/alternative;
- boundary="_000_FD0BD680739BFC41807C96BD23118BB130C7A4ORSMSX113amrcorpi_"
+ d="asc'?scan'208,217";a="195628746"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
+ 04 Nov 2019 15:37:37 -0800
+Subject: Re: OpenBMC logo vector version
+To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <1e7a1086-6454-89cb-2b6a-c289c2974dca@intel.com>
+Date: Mon, 4 Nov 2019 15:37:32 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
+In-Reply-To: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,34 +81,78 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_FD0BD680739BFC41807C96BD23118BB130C7A4ORSMSX113amrcorpi_
-Content-Type: text/plain; charset="us-ascii"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR
+Content-Type: multipart/mixed; boundary="GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB"
+
+--GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB
+Content-Type: multipart/alternative;
+ boundary="------------5C1ACDA89D7268D33056B7D5"
+Content-Language: en-US
+
+This is a multi-part message in MIME format.
+--------------5C1ACDA89D7268D33056B7D5
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+There appears to be an SVG in openbmc-openbmc/docs git repo
 
-Does anyone have a vector-based version of the OpenBMC logo? All the versio=
-ns I can find are bitmaps and don't have vector data.
 
-I'm working on re-creating a vector version now but if it's already out the=
-re, would be great to know.
-
-Thanks!
-Kathy
-
---_000_FD0BD680739BFC41807C96BD23118BB130C7A4ORSMSX113amrcorpi_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 11/4/19 3:32 PM, Pine, Kathryn ElaineX wrote:
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
+> Hi,
+>
+> =A0
+>
+> Does anyone have a vector-based version of the OpenBMC logo? All the
+> versions I can find are bitmaps and don=92t have vector data.
+>
+> =A0
+>
+> I=92m working on re-creating a vector version now but if it=92s already=
+
+> out there, would be great to know.
+>
+> =A0
+>
+> Thanks!
+>
+> Kathy
+>
+
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
+
+
+--------------5C1ACDA89D7268D33056B7D5
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html;
+      charset=3Dwindows-1252">
+  </head>
+  <body>
+    There appears to be an SVG in openbmc-openbmc/docs git repo<br>
+    <br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 11/4/19 3:32 PM, Pine, Kathryn
+      ElaineX wrote:<br>
+    </div>
+    <blockquote type=3D"cite"
+cite=3D"mid:FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.int=
+el.com">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html;
+        charset=3Dwindows-1252">
+      <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
 /* Font Definitions */
 @font-face
 	{font-family:"Cambria Math";
@@ -120,7 +178,7 @@ span.EmailStyle17
 	{mso-style-type:personal-compose;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
-.MsoChpDefault
+=2EMsoChpDefault
 	{mso-style-type:export-only;
 	font-family:"Calibri",sans-serif;}
 @page WordSection1
@@ -134,24 +192,64 @@ div.WordSection1
 <o:shapelayout v:ext=3D"edit">
 <o:idmap v:ext=3D"edit" data=3D"1" />
 </o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi, <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Does anyone have a vector-based version of the OpenB=
-MC logo? All the versions I can find are bitmaps and don&#8217;t have vecto=
-r data.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;m working on re-creating a vector version no=
-w but if it&#8217;s already out there, would be great to know.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks!<o:p></o:p></p>
-<p class=3D"MsoNormal">Kathy<o:p></o:p></p>
-</div>
-</body>
+      <div class=3D"WordSection1">
+        <p class=3D"MsoNormal">Hi, <o:p></o:p></p>
+        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
+        <p class=3D"MsoNormal">Does anyone have a vector-based version of=
+
+          the OpenBMC logo? All the versions I can find are bitmaps and
+          don=92t have vector data.
+          <o:p></o:p></p>
+        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
+        <p class=3D"MsoNormal">I=92m working on re-creating a vector vers=
+ion
+          now but if it=92s already out there, would be great to know.
+          <o:p></o:p></p>
+        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
+        <p class=3D"MsoNormal">Thanks!<o:p></o:p></p>
+        <p class=3D"MsoNormal">Kathy<o:p></o:p></p>
+      </div>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html;
+        charset=3Dwindows-1252">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
 </html>
 
---_000_FD0BD680739BFC41807C96BD23118BB130C7A4ORSMSX113amrcorpi_--
+--------------5C1ACDA89D7268D33056B7D5--
+
+--GRIanCWLvhJ8qWNDsPhMQRatTJjj4rjEB--
+
+--zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl3AtjwACgkQ0EfviT3f
+HwkEzAf/cetFHhcrVSr8cxuNotZKMK0iLaWgkisUu5zyRnKpzxk3/+DLnfWixu/5
+mEeRjxbXLIhJYsWx9PMXBjjxYif6VXYbohmM4T0aT7pe5t8kQ/9eZJwrQhHoGwNc
+STX8JFa2soWEls9zoKAAMX9/dA6gkv1mJb+cd3pFacj4X73zMKoJYPaG3RJHdYZx
+JARJheS3aCEUXDXyWY4X5pypMOP8+28QCrtoJJsU0g3acJGY7etGET5yPq8C7hFL
+wK67xBe0FmSyofVEkdyJG2bFLaB/MPvk0uhhZI1oRoX8izzemXPgLk9Vbjr8pQnz
+YPfe04VKlR8Cqb+VZTlxGVUjdzZtUw==
+=s9YO
+-----END PGP SIGNATURE-----
+
+--zUzlC3lZFOj3Z4QkLJQblX5tfkHPSdAPR--
