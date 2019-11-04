@@ -2,83 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9B2AED847
-	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2019 05:37:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3BBFED8A6
+	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2019 06:40:39 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4760Qj16X4zF3YP
-	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2019 15:37:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4761q76TrZzF5Cp
+	for <lists+openbmc@lfdr.de>; Mon,  4 Nov 2019 16:40:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::134;
+ helo=mail-il1-x134.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="eAGdf5jL"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="Kb1Hon/L"; dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="DSKX8oup"; 
+ dkim-atps=neutral
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com
+ [IPv6:2607:f8b0:4864:20::134])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47600d68fdzF3vR
- for <openbmc@lists.ozlabs.org>; Mon,  4 Nov 2019 15:18:41 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 4CB434A3;
- Sun,  3 Nov 2019 23:18:38 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 03 Nov 2019 23:18:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=yxXAnWn4xOnJIbDKZWY0+iUNzNyG+Mw
- 52nuFhTdIHjU=; b=eAGdf5jLxvNZm0hkXtnoA4QuZMdD3jfIxQQR/ZBlhGIRfJx
- xXJdjzWdaq4mMQCUWl52PefQubgxhV/aU6RK+Decd6VpCdHYsoM0+CW0JVRVoczh
- IE6rhyxIEPLsf95zTIGAEhIwJKodWno29fA6f9icbBN4f7BXLyOikffj0oQc28D0
- 5XwdG7cSEiAq3r8MaG/i1wa7Z9nMArFmS1tD5WQ4z2hgCSKWs9QcfI1tNhYfT0gG
- CgwOspaURZ3Ktj0AWXq8GTV8SRlgPnVfrQxkOf1J14ts4aQtWMD7ChxQ2tyoC/D4
- NX0JjHBqthMlKw8MUwYKI5MQ0pzOIOBgh2pFpuQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=yxXAnW
- n4xOnJIbDKZWY0+iUNzNyG+Mw52nuFhTdIHjU=; b=Kb1Hon/LZ2WC75ghRofA2K
- JRyNHb0yJQtWLHNB34j8NsXrLsZKgKrOfa3vZ6lmvuuM4+Q0QZFAPOYbtoR8Uf3s
- 5vh4dsCDbpZCKydNgd9BrbBkezyQm3yupw5CXmhyRQ9C34g6K+4XNIoXS1ZSYtzP
- 2WKYUDiTJbRU7klEPSNrNn1S2XGufcuOREdrMwI63pizeDwHtTeqmaAP5X7f2NOU
- lUX1aKF6K1TpISyl04uWhsmX7fMep7MC7ZaNFBOZT4hNUyQoxGuT12WuIzcq3+if
- lgNoMx7GxoNcaRROkjyvK0sbYhjbX/x/cylmCObupz9rodYcGwbN6hkS+asfZ4hw
- ==
-X-ME-Sender: <xms:nKa_XTUFkMdPnL9NxB7CZkLnUI86jpVEVZfMwIDlKNy3tbpw6C-hIQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudduvddgieejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:nKa_XQfJLCIGAvRq0uUo8zF-fjLIg7OSRwEU_Pokw1duAt6UOCWoIw>
- <xmx:nKa_Xc_yTYbJUj3mGBC13ETj10PsWdzm1xa-gWE-uHlpDevh2qefxQ>
- <xmx:nKa_XQYszZxCXLwshoYo-eR8gmdiPeDKa50oXRXJsijFRDlny0pRlA>
- <xmx:naa_XRo7n7Q0jwWiIkl0OjAP0ZZEFBYE_EHsB0rpMRtj6MkjmKlVHA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D3BEFE00A3; Sun,  3 Nov 2019 23:18:36 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-509-ge3ec61c-fmstable-20191030v1
-Mime-Version: 1.0
-Message-Id: <1d264972-83fd-4b5d-883d-5591bcb5bc2a@www.fastmail.com>
-In-Reply-To: <CACPK8Xdu6eEqAa7kRgBEkfEMeTBD3_yAr+YzVxGEA53sdYmEgg@mail.gmail.com>
-References: <20191104040226.24376-1-joel@jms.id.au>
- <734758c8-66a9-494c-9dff-e7d4c57fb1ec@www.fastmail.com>
- <CACPK8Xdu6eEqAa7kRgBEkfEMeTBD3_yAr+YzVxGEA53sdYmEgg@mail.gmail.com>
-Date: Mon, 04 Nov 2019 14:48:14 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.3]_fsi:_aspeed:_Clean_up_defines_and_do?=
- =?UTF-8?Q?cumentation?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4761pN2yKczF5Cc
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Nov 2019 16:39:55 +1100 (AEDT)
+Received: by mail-il1-x134.google.com with SMTP id o18so1512557ils.12
+ for <openbmc@lists.ozlabs.org>; Sun, 03 Nov 2019 21:39:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=0Xen8St83OtVPuxFJ/LJW5vSr0yvRFTOzR8+HwgLTUQ=;
+ b=DSKX8oup9D1QRpwi9GMLy3m2Wgg86m27ej16GoTOJoV5nhtRRvHEufBtNdfN6b0C3Y
+ dM55oTnOWGzxB/oGz/YdydWrKY1GFhL7zxbWT2u4tGK+QVhocKfBE2uEM+9q2Oo+4p1D
+ OIJrKQiTy2rw4uCACtKF8TuLFSe55xAhz6ApdigTWmWSFIK3j0+AGCrGX/h0ERWnrnyJ
+ QpNHTNtOZRHm0+9YNqFpB63Dmxf++lbXLJzpnSnJ+PlihO13zPUvWvqCathPXhc98hr0
+ l/Ubs2FDpQVBMCCyxo0/TBWu3LqQlqwjX6nLJZOFPrpHgl0+jMZ38q+2htmwTJQKrVsX
+ xkDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=0Xen8St83OtVPuxFJ/LJW5vSr0yvRFTOzR8+HwgLTUQ=;
+ b=hmgDsEUC++HeCygnAQ4gb5p0VJNf0lh92iWt6yp4YRqxWZjhTmOgZSaYzKJPc+P05D
+ LgCDxxs05Y0FNC0/EZ5ph3wZLGJH+rvnpTocsFve5XyO3lfBHX49XmLDbyIm6boSEaDQ
+ Oa1Vcgf3qLspoE2hP9mbi+oRVhTiuU3FrP49kkcbfxSMxQyL/fGH9HFmyL5Nu9YoztYs
+ MVOFFPtiUVjPGRB6wj21ExqDygkfscP9BfIsSc4WsYGLmVLo7BfKbtuuc/7aautYIbzx
+ /NsdxenmfiHcvuv7YLNUp4glXrOUMVgHZwN0GN99hqQTHs2xrQy+UPaFLqzPrRVFWOGS
+ zFvw==
+X-Gm-Message-State: APjAAAUC2uDwMB4SeBedM9gg99GZHNTw3yR8dLIrPNMhVCpHsR9EdCO5
+ c53EmctfI1fQD2rIVlH9nrgyiarBXLeVcUzEr35IJrI1wDo=
+X-Google-Smtp-Source: APXvYqycgLzVk6W46Wdc49M9IT5PevI5BC6IhaXSPyp+bj/blmEBjxFkiJIRMJ0xU6099PXu9gh5mp+Ul+bfCz5sCZI=
+X-Received: by 2002:a92:af19:: with SMTP id n25mr28194084ili.138.1572845991884; 
+ Sun, 03 Nov 2019 21:39:51 -0800 (PST)
+MIME-Version: 1.0
+From: Lei YU <mine260309@gmail.com>
+Date: Mon, 4 Nov 2019 13:39:41 +0800
+Message-ID: <CAARXrtnas2R+cbdRmUOwDtibt17h=WTBNxvfPue5NVYuAD31Zg@mail.gmail.com>
+Subject: Issue found during installing systemd unit from repo
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, 
+ George Liu <liuxiwei1013@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,33 +71,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This email is to introduce an issue found by George Liu that the
+systemd unit variables are not correctly replaced by the value when
+installing from the repo.
 
+For details please refer to https://github.com/openbmc/openbmc/issues/3627
 
-On Mon, 4 Nov 2019, at 14:41, Joel Stanley wrote:
-> On Mon, 4 Nov 2019 at 04:10, Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> >
-> >
-> > On Mon, 4 Nov 2019, at 14:32, Joel Stanley wrote:
-> > > Some of the registers lacked documetation but now can be properly named.
-> > >
-> > > Rename FW to FULLWORD so no one thinks it means 'firmware'.
-> > >
-> > > The "enable DMA" comment was setting the FSI access direction for DMA.
-> > > As the driver does not yet use DMA it can be removed without effect.
-> > >
-> > > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> >
-> > This appears to go on top of my FSI series which goes on top of your other FSI that is a rework of my other FSI series. We should probably start merging these patches :D
-> 
-> They are all merged, 
+The question here is, should we fix the systemd units themselves in
+the repo, or should we try to figure out how to install the services
+*correctly* in bitbake?
 
-Ah, I checked the tree just now and they weren't there.
+Be noted that the issue impacts the below service for
+meta-witherspoon, but it's not clear if there are other services
+impacted for other machines.
+* phosphor-gpio-monitor@.service
+* phosphor-gpio-presence@.service
+* power-supply-monitor@.service
 
-> with the exception of your alignment one.
+@Brad Bishop your inputs are appreciated.
 
-What?! How could you not merge that masterpiece?
+Thanks!
