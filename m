@@ -2,71 +2,130 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45DE6EF13E
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 00:39:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A01DCEF205
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 01:34:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 476Tlf5TdlzF3fC
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 10:39:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 476Vz66x5LzF3F9
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 11:34:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=62128af700=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="VWnV2cCs"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="MoN/3oco"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 476TkJ3pDKzF3wd
- for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 10:38:00 +1100 (AEDT)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Nov 2019 15:37:58 -0800
-X-IronPort-AV: E=Sophos;i="5.68,268,1569308400"; 
- d="asc'?scan'208,217";a="195628837"
-Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
- 04 Nov 2019 15:37:58 -0800
-Subject: Re: OpenBMC logo vector version
-To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>,
+ by lists.ozlabs.org (Postfix) with ESMTPS id 476VyP1lpWzDsMP
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Nov 2019 11:33:27 +1100 (AEDT)
+Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xA50TVI1028038; Mon, 4 Nov 2019 16:33:21 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=roc2v0PSxHVvqUHIN6Bl0RLtdhmNSaMzIzSRubLf/cg=;
+ b=VWnV2cCsVvgYeR69I2TwFl7aWmBeYYPHCYQbKQhmQGC9jYIu7Wb/R2tGkIzG+1Z4d0ET
+ UoI7YM0E2jp3P82B0NfPf5csJcS+EucCa7v55E9pafMavt3t4FC3YtKuh9XxSBalDAfN
+ qKA8nTQrZqoatIknWyjPqyG3An3Rgx11qFA= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2w17hq38g1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Mon, 04 Nov 2019 16:33:20 -0800
+Received: from prn-hub06.TheFacebook.com (2620:10d:c081:35::130) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Mon, 4 Nov 2019 16:33:19 -0800
+Received: from NAM04-SN1-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.30) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Mon, 4 Nov 2019 16:33:19 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cBvjUeumQQkHzcyp8RDTMu31XTNmCQIga5vt3lr54S9MDIb2sQYD5a3IH4xDJOWJuM6AQH/XzVVnAHLNvmbDWmwhmkbiTTMSgYzLnzw5tZtkt4kWVVrD8Q6SLLSpTYipy2S3kMUzPK9haGWNRNTC5hkVopD8Wltng7TPffNhzfUZLY1d5pY2bXUKEARZmsX86J4qIlz6HwPf38tJn85KBxOhXL8FxIyCUXdI7DA+2Nk98CQPC/rYrVSzxuq0+033HaBUbAVsccpvL1hrXQMs6Nzs/H0FbiDktqVY4V5EWDzdpDUr/sQHH5F5FtAKkafgnshb3567RJRJC2GNjkwgwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=roc2v0PSxHVvqUHIN6Bl0RLtdhmNSaMzIzSRubLf/cg=;
+ b=JokXaCvfbgcFzDvXGd74xmWby/XfL7gN6oktgP50nXTDP567NXsgGBIziwRYx7VwEiP2l9qGOGSKIUG2cL91HjMnXEjnUBDkdGnZYZT4yuG3iwbyWX0RfWAFCWqvRoKF/9yDONfZmUC0/2Tct7q2HRjwoWpNEQF7UcKkpoEWpNLMd1zY84oujRhP0ZyV+Ucda4St8ZAf4BaWchBsq2Xp7b3+1/Ozjg1Qj/2xH95SMU17v9R6VpSr1uYpG4RgWVfFO9YisVzAQ1bVWMfnf0UMOhkiWMSo/vkUNSMgMtCwAnoAhPxBB9TU1Fl6TrV5005MiGlV0bB/Aa/gPGBryPmsJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=roc2v0PSxHVvqUHIN6Bl0RLtdhmNSaMzIzSRubLf/cg=;
+ b=MoN/3ocoa0s3AEr+W+QTfLZ1DsmfwzN4u6xA7+8PuD6B/W5sccHuRVvwg4FsLu3ty3XyaMgHdP772e0T6JIoMNUbNYhCi5yXOPG7/2CoTK5dRRBLFMSGrDf6ftFLiRvPeGiqtDV5mGWksyxSlNXH66/mFRAoWYjrwzgGxjAmySY=
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com (52.133.252.91) by
+ BY5PR15MB3620.namprd15.prod.outlook.com (52.133.252.221) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2408.24; Tue, 5 Nov 2019 00:33:18 +0000
+Received: from BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::71db:9d2a:500c:d92b]) by BY5PR15MB3636.namprd15.prod.outlook.com
+ ([fe80::71db:9d2a:500c:d92b%4]) with mapi id 15.20.2408.024; Tue, 5 Nov 2019
+ 00:33:16 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
- mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
- dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
- ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
- pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
- 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
- AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
- a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
- nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
- VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
- V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
- 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
- 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
- LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
- wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
- /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
- 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
- BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
- ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
- JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
- k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
- Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
- 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
-Message-ID: <5791f21a-0189-3dd7-6c7c-a6815d811a69@intel.com>
-Date: Mon, 4 Nov 2019 15:37:58 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+Subject: Re: x86-power-control
+Thread-Topic: x86-power-control
+Thread-Index: AQHVkRUpEDaqjstP4kSB8KQL9Y7+Lqd7cIyA///IZoA=
+Date: Tue, 5 Nov 2019 00:33:16 +0000
+Message-ID: <0DC0CA35-B218-4A6B-8133-0249FA929BB2@fb.com>
+References: <D2637F4F-E67C-424E-86FF-D20E0415CB43@fb.com>
+ <c663ed26-8d49-b35d-ea8e-d80c04427e00@linux.intel.com>
+In-Reply-To: <c663ed26-8d49-b35d-ea8e-d80c04427e00@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:1bc5]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: ee5d0cec-a32f-4449-108c-08d76187bfe6
+x-ms-traffictypediagnostic: BY5PR15MB3620:
+x-microsoft-antispam-prvs: <BY5PR15MB362002BE0F07E17257017514DD7E0@BY5PR15MB3620.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 0212BDE3BE
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(396003)(366004)(346002)(376002)(39860400002)(136003)(199004)(189003)(81166006)(14454004)(81156014)(476003)(8676002)(8936002)(446003)(11346002)(33656002)(99286004)(486006)(25786009)(6486002)(186003)(6116002)(76176011)(316002)(305945005)(6506007)(53546011)(102836004)(2616005)(229853002)(7736002)(5660300002)(46003)(71200400001)(71190400001)(86362001)(110136005)(66476007)(66446008)(66556008)(256004)(6436002)(36756003)(478600001)(2906002)(2501003)(64756008)(6246003)(6512007)(66946007)(91956017)(76116006);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:BY5PR15MB3620;
+ H:BY5PR15MB3636.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: MyUsJHBUSvBvda+QouvrSZTqMxp40u9t0dTWmcUnwgXrdwY63UhZUFVQ4JTc1ndsb52Zf8nbrKdHFMfSY+5w+zPl4SfViDbFL8qzFLq4lBhT4pD3aOumqUaXANbljnT9eOTKZhDMxXf0c3/N+tHQ3x/lkBYclPetsOWnKtfV7V71PAp3dAwf4zOjQcYZekL50wsgKO9TUPzmCoz11D6XBW6c65/ur9AXB+wuA1qKm5pjN9aRhYhLfM8EO7mL5HAfoCIm/RPuATz08Tr7UEa+xl4l0pDUYzseo/s0TgVl0L6Pd3in8W3pJzPy4hwj6JsuT+Bek8nHzWFiuREaMUzN99YaLHMmXqNDwK92voC6YT6APYkE0cDWIcPgXGPZvjeN+tIKvXqXAW9Aw4xcIek2Q5XvQI6CE4O0W3+4Q8Vbps38mU89qYPQD9TpeM75r5w/
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B6A252977F2D164AA527FBB40656CA4D@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj"
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee5d0cec-a32f-4449-108c-08d76187bfe6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Nov 2019 00:33:16.2760 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 2qqrdHBCi1cRbSleQeI5Vyy5xBZIzBy6xWH52fGlRPcg4DXtMMjaoLQytW3am+LMigWe6lLJwh49cry3wXvbyw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3620
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,1.0.8
+ definitions=2019-11-04_12:2019-11-04,2019-11-04 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ adultscore=0
+ impostorscore=0 mlxscore=0 phishscore=0 clxscore=1015 mlxlogscore=910
+ spamscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1908290000 definitions=main-1911050001
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,178 +140,30 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj
-Content-Type: multipart/mixed; boundary="rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV"
-
---rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV
-Content-Type: multipart/alternative;
- boundary="------------8C95A328EFF874FFF5EAC7C7"
-Content-Language: en-US
-
-This is a multi-part message in MIME format.
---------------8C95A328EFF874FFF5EAC7C7
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-
-Ugh...
-
-git clone git@github.com:openbmc/docs.git
-
-On 11/4/19 3:32 PM, Pine, Kathryn ElaineX wrote:
->
-> Hi,
->
-> =A0
->
-> Does anyone have a vector-based version of the OpenBMC logo? All the
-> versions I can find are bitmaps and don=92t have vector data.
->
-> =A0
->
-> I=92m working on re-creating a vector version now but if it=92s already=
-
-> out there, would be great to know.
->
-> =A0
->
-> Thanks!
->
-> Kathy
->
-
---=20
-Johnathan Mantey
-Senior Software Engineer
-*azad te**chnology partners*
-Contributing to Technology Innovation since 1992
-Phone: (503) 712-6764
-Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
-
-
---------------8C95A328EFF874FFF5EAC7C7
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-  <head>
-    <meta http-equiv=3D"Content-Type" content=3D"text/html;
-      charset=3Dwindows-1252">
-  </head>
-  <body>
-    Ugh...<br>
-    <br>
-    git clone <a class=3D"moz-txt-link-abbreviated" href=3D"mailto:git@gi=
-thub.com:openbmc/docs.git">git@github.com:openbmc/docs.git</a><br>
-    <br>
-    <div class=3D"moz-cite-prefix">On 11/4/19 3:32 PM, Pine, Kathryn
-      ElaineX wrote:<br>
-    </div>
-    <blockquote type=3D"cite"
-cite=3D"mid:FD0BD680739BFC41807C96BD23118BB130C7A4@ORSMSX113.amr.corp.int=
-el.com">
-      <meta http-equiv=3D"Content-Type" content=3D"text/html;
-        charset=3Dwindows-1252">
-      <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-=2EMsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-      <div class=3D"WordSection1">
-        <p class=3D"MsoNormal">Hi, <o:p></o:p></p>
-        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
-        <p class=3D"MsoNormal">Does anyone have a vector-based version of=
-
-          the OpenBMC logo? All the versions I can find are bitmaps and
-          don=92t have vector data.
-          <o:p></o:p></p>
-        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
-        <p class=3D"MsoNormal">I=92m working on re-creating a vector vers=
-ion
-          now but if it=92s already out there, would be great to know.
-          <o:p></o:p></p>
-        <p class=3D"MsoNormal"><o:p>=A0</o:p></p>
-        <p class=3D"MsoNormal">Thanks!<o:p></o:p></p>
-        <p class=3D"MsoNormal">Kathy<o:p></o:p></p>
-      </div>
-    </blockquote>
-    <br>
-    <div class=3D"moz-signature">-- <br>
-      <meta http-equiv=3D"content-type" content=3D"text/html;
-        charset=3Dwindows-1252">
-      <title></title>
-      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
-tey<br>
-          <small>Senior Software Engineer</small><br>
-          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
-                  partners</b></small><br>
-              <small><font color=3D"#1F497D"><small>Contributing to
-                    Technology Innovation since 1992</small></font><small=
-><br>
-                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
-                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
->johnathanx.mantey@intel.com</a></font></small><br>
-                <br>
-              </small></font></big></font></font> </div>
-  </body>
-</html>
-
---------------8C95A328EFF874FFF5EAC7C7--
-
---rcrDPQZdkKa14BdVZtdXDNGdcHyNxOaJV--
-
---QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl3AtlYACgkQ0EfviT3f
-Hwkt6gf/e+/Kn68BsPQgbnG72l0RUfmOFlyTUROGe1EAhHxDfeTM8quVCWjsLGOR
-s3mz9UjXhupPfXn0h5ELTkTVKSf/BdW+lh2Ztdp+KL2DKVm3QoNwMliI1jJB3onl
-d9cHajxpRRZJ8SatHf7pIyw2J9azEjIL1BukLoyELzj7valhrQZMVH6zj1JiCeY2
-GxFkzDl6WtlIpTwhMzCyHLLsVOWf2ROFJFRteCnBwzE/JrOZ+D/82B1DbcL4K174
-dV38dDl5OTwfuZcjMuzxzonOnHtIRUxRLLi83t1mnbioxGDWaJdhqvTauNDxhGdj
-kVAjtSBSfjLC1UmO4vMR2i/regVuVw==
-=1bLS
------END PGP SIGNATURE-----
-
---QmiN8FuAEEYs5Xe4A88mjkeaPy5MPUMZj--
+DQoNCu+7v09uIDExLzQvMTksIDExOjUzIEFNLCAib3BlbmJtYyBvbiBiZWhhbGYgb2YgQmlsbHMs
+IEphc29uIE0iIDxvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFi
+cy5vcmcgb24gYmVoYWxmIG9mIGphc29uLm0uYmlsbHNAbGludXguaW50ZWwuY29tPiB3cm90ZToN
+Cg0KICAgIEhpIFZpamF5LA0KICAgIA0KICAgIE9uIDExLzEvMjAxOSA1OjMzIFBNLCBWaWpheSBL
+aGVta2Egd3JvdGU6DQogICAgPiBIaSBKYXNvbi9KYW1lcywNCiAgICA+IEkgc2VlIHNvbWUgbGlt
+aXRhdGlvbiBpbiBjdXJyZW50IHg4Ni1wb3dlci1jb250cm9sIGFzIHdlIGRvbuKAmXQgaGF2ZSBO
+TUlfT1VULCBOTUlfQlVUVE9OIGFuZCBJRF9CVVRUT04gdXNhZ2UuIEFuZCBJIGFtIG5vdCBzdXJl
+IHdoeSB0aGVzZSBhcmUgYmVpbmcgdXNlZC4gU28gaWYgSSBkb27igJl0IGRlZmluZSB0aGVzZSBp
+biBEVFMgdGhlbiB0aGlzIHByb2dyYW0gZmFpbHMuIFNvIFBsZWFzZSBob3cgdG8gZGlzYWJsZSB0
+aGVzZS4gVGhlc2Ugc2hvdWxkIGJlIG9wdGlvbmFsLiBJIGhhdmUgZm9sbG93aW5nIG9wdGlvbnMg
+dG8gZGlzYWJsZSB0aGVzZS4NCiAgICA+IA0KICAgID4gMS4gTm8gcmV0dXJuaW5nIC0xIGlmIHdl
+IGRvbid0IGZpbmQgbGluZSBuYW1lLCBzaW1wbHkgbW92ZSBvbi4gSSBoYXZlIHRvIHNlZSBpbXBh
+Y3Qgb24gcmVzdCBvZiBjb2RlLg0KICAgID4gMi4gTWFrZSBpdCBjb21waWxlIHRpbWUgZmxhZyBh
+bmQgc2hvdWxkIGJlIGluY2x1ZGVkIHRocm91Z2ggYmJhcHBlbmQgbGlrZSAtRE5NSV9PVVQgZXRj
+Lg0KICAgIEkgY2hhdHRlZCB3aXRoIEphbWVzIGFuZCBJIHRoaW5rIHdlIGxpa2UgdGhpcyBvcHRp
+b24gdGhlIGJlc3QuICBJZiB5b3UgDQogICAgc2V0IGEgYnVpbGQgZmxhZyB0aGF0IGlzIGVuYWJs
+ZWQgYnkgZGVmYXVsdCwgaXQgd2lsbCBsZXQgeW91IGRpc2FibGUgdGhlIA0KICAgIGZlYXR1cmVz
+IHlvdSBkb24ndCBuZWVkIGluIGEgLmJiYXBwZW5kLiAgVGhpcyB3aWxsIGxldCB5b3UgcmVtb3Zl
+IHRoZSANCiAgICBwaW5zIHlvdSBkb24ndCB1c2UgYW5kIHN0aWxsIGFsbG93IGZvciBlYXNpZXIg
+ZGV0ZWN0aW9uIHdoZW4gYW4gZXhwZWN0ZWQgDQogICAgcGluIGlzbid0IHdvcmtpbmcuDQoNClRo
+YW5rcyBKYXNvbiwgSSB3aWxsIHdvcmsgb24gcGF0Y2ggYW5kIHNlbmQgaXQgZm9yIHJldmlldy4N
+CiAgICANCiAgICBUaGFua3MsDQogICAgLUphc29uDQogICAgDQogICAgPiAzLiBIYXZlIGNvbmZp
+ZyBKYXNvbiBmaWxlIGFuZCBlbmFibGUgb3IgZGlzYWJsZSBncGlvIGxpbmUgdG8gYmUgdXNlZC4N
+CiAgICA+IA0KICAgID4gDQogICAgPiBQbGVhc2UgbGV0IHVzIGtub3cgeW91ciB0aG91Z2h0IGFu
+ZCBob3cgc2hvdWxkIHdlIGFwcHJvYWNoLiBJIGFtIGZpbmUgd2l0aCBjaGFuZ2luZyB0aGlzIGNv
+ZGUgYW5kIHN1Ym1pdCBwYXRjaC4NCiAgICA+IA0KICAgID4gUmVnYXJkcw0KICAgID4gLVZpamF5
+DQogICAgPiANCiAgICANCg0K
