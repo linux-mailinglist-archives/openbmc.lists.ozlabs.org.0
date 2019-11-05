@@ -1,76 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5745AF04DD
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 19:16:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BB53F067F
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 20:58:45 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 476yYL28s7zF4qf
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 05:16:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4770pp5zwWzF3Hs
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 06:58:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.66; helo=mail-ot1-f66.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-ot1-f66.google.com (mail-ot1-f66.google.com
+ [209.85.210.66])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 476yVk6HxCzF4Vr
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 05:14:38 +1100 (AEDT)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- xA5IDwh1085730
- for <openbmc@lists.ozlabs.org>; Tue, 5 Nov 2019 13:14:34 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.74])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w3b2epcu0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 05 Nov 2019 13:14:33 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Tue, 5 Nov 2019 18:14:26 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.92) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 5 Nov 2019 18:13:48 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2019110518134727-833843 ;
- Tue, 5 Nov 2019 18:13:47 +0000 
-In-Reply-To: <OFA932D091.0C04712F-ON002584A9.004F48DF-002584A9.0057C7C2@notes.na.collabserv.com>
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: "Derick Montague" <Derick.Montague@ibm.com>
-Date: Tue, 5 Nov 2019 18:13:47 +0000
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4770p609x1zDsMs
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 06:58:04 +1100 (AEDT)
+Received: by mail-ot1-f66.google.com with SMTP id r24so2445472otk.12
+ for <openbmc@lists.ozlabs.org>; Tue, 05 Nov 2019 11:58:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=x/Pqzh0wjtCm8/DGrbF/d0ukivugFZC6wp2pNvyyKqU=;
+ b=uPQLl8KrNeUeqcdNZrME/0kTYiVdhXUcwXapASqPcoZRXyzGHGHo2Ak9+K16JYckO5
+ S4Tv58D1p9/a1bi3D654KcUCJTXCXWqWz2bdK+eMOzA7XpacNXgvxM+1Yh8Oq94izyVm
+ t1OHveyZ6kP5Avgqmzuqmgttu9eoah8k5c2YRjD1eqNAklXxX3L1pTHoETYGHKojKveg
+ ZMCVEZ7bISrS4nP2E0KDhcxBlxobUhGZoYyL88nNaH+9d5s2a9ZG9dCNNyBmMYrXi49u
+ ZnFn60wXOPiNP+wc1Fk0gMtJVSO+QtVKtGN42vP4xNuTZpAIZITEPxRz8fNOiuzNrJyo
+ bL6w==
+X-Gm-Message-State: APjAAAXg20U5ai1vh402JRa8SLDi1txAE0+DB7n0obMi07deIT/Zewdh
+ 4gJtE4jKToCBVxXJqxXv7w==
+X-Google-Smtp-Source: APXvYqzVTpLLqzm+L3XsD+1vas5TRGDVn3vLjnHeqDn40MYgszVtjMGB2hevWDiXQ0kvMy5d6Dbxrg==
+X-Received: by 2002:a9d:5617:: with SMTP id e23mr3940969oti.208.1572983881547; 
+ Tue, 05 Nov 2019 11:58:01 -0800 (PST)
+Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id c20sm1533138otm.80.2019.11.05.11.58.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Nov 2019 11:58:00 -0800 (PST)
+Date: Tue, 5 Nov 2019 13:58:00 -0600
+From: Rob Herring <robh@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-binding: reset: add NPCM reset controller
+ documentation
+Message-ID: <20191105195800.GA16739@bogus>
+References: <20191031135617.249303-1-tmaimon77@gmail.com>
+ <20191031135617.249303-2-tmaimon77@gmail.com>
 MIME-Version: 1.0
-References: <OFA932D091.0C04712F-ON002584A9.004F48DF-002584A9.0057C7C2@notes.na.collabserv.com>
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1660 | IBM Domino Build
- SCN1812108_20180501T0841_FP61 October 18, 2019 at 15:11
-X-LLNOutbound: False
-X-Disclaimed: 5127
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 19110518-3165-0000-0000-0000019B28D1
-X-IBM-SpamModules-Scores: BY=0.000023; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.417846; ST=0; TS=0; UL=0; ISC=; MB=0.042366
-X-IBM-SpamModules-Versions: BY=3.00012057; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01285844; UDB=6.00681730; IPR=6.01068011; 
- MB=3.00029390; MTD=3.00000008; XFM=3.00000015; UTC=2019-11-05 18:14:26
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-11-05 11:30:35 - 6.00010613
-x-cbparentid: 19110518-3166-0000-0000-00005AEE53C3
-Message-Id: <OFF0C4A532.87EE8B30-ON002584A9.0064065B-002584A9.006423B9@notes.na.collabserv.com>
-Subject: Re:  GUI Design Working Group
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-11-05_07:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191031135617.249303-2-tmaimon77@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,20 +68,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, benjaminfair@google.com,
+ avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, p.zabel@pengutronix.de
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida S=
-ans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" >&=
-nbsp;</div>
-<div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><di=
-v dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div d=
-ir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=3D"ltr" ><div dir=
-=3D"ltr" ><div dir=3D"ltr" ><div>&gt; The next GUI Design workgroup is tomo=
-rrow, Wednesday, November 5th at 10:00 AM CST.</div>
-<div>&nbsp;</div>
-<div>Small typo, tomorrow, Wednesday, November 6th...</div></div></div></di=
-v></div></div></div></div></div></div></div></div></div></div></div></div><=
-BR>
+On Thu, Oct 31, 2019 at 03:56:15PM +0200, Tomer Maimon wrote:
+> Added device tree binding documentation for Nuvoton BMC
+> NPCM reset controller.
+
+'dt-bindings' for the subject.
+
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  .../bindings/reset/nuvoton,npcm-reset.txt     | 32 +++++++++++++++++++
+>  1 file changed, 32 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt b/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+> new file mode 100644
+> index 000000000000..6e802703af60
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/reset/nuvoton,npcm-reset.txt
+> @@ -0,0 +1,32 @@
+> +Nuvoton NPCM Reset controller
+> +
+> +Required properties:
+> +- compatible : "nuvoton,npcm750-reset" for NPCM7XX BMC
+> +- reg : specifies physical base address and size of the register.
+> +- #reset-cells: must be set to 2
+> +
+> +Optional property:
+> +- nuvoton,sw-reset-number - Contains the software reset number to restart the SoC.
+> +  NPCM7xx contain four software reset that represent numbers 1 to 4.
+> +
+> +  If 'nuvoton,sw-reset-number' is not specfied software reset is disabled.
+> +
+> +Example:
+> +       rstc: rstc@f0801000 {
+> +               compatible = "nuvoton,npcm750-reset";
+> +               reg = <0xf0801000 0x70>;
+> +               #reset-cells = <2>;
+> +               nuvoton,sw-reset-number = <2>;
+> +       };
+> +
+> +Specifying reset lines connected to IP NPCM7XX modules
+> +======================================================
+> +example:
+> +
+> +        spi0: spi@..... {
+> +                ...
+> +                resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI1>;
+> +                ...
+> +        };
+> +
+> +The index could be found in <dt-bindings/reset/nuvoton,npcm7xx-reset.h>.
+> --
+> 2.22.0
+> 
+> 
+> 
+> ===========================================================================================
+> The privileged confidential information contained in this email is intended for use only by the addressees as indicated by the original sender of this email. If you are not the addressee indicated in this email or are not responsible for delivery of the email to such a person, please kindly reply to the sender indicating this fact and delete all copies of it from your computer and network server immediately. Your cooperation is highly appreciated. It is advised that any unauthorized use of confidential information of Nuvoton is strictly prohibited; and any information in this email irrelevant to the official business of Nuvoton shall be deemed as neither given nor endorsed by Nuvoton.
+
+
+We can't accept patches with this footer.
+
+Rob
 
