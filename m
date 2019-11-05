@@ -2,57 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94810F01F4
-	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 16:55:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86EB0F0205
+	for <lists+openbmc@lfdr.de>; Tue,  5 Nov 2019 16:59:38 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 476vPg5n05zF50g
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 02:55:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 476vVv5Xf0zF3pX
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 02:59:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=kathryn.elainex.pine@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 476vNl66mbzF3Sp
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 02:54:13 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 05 Nov 2019 07:54:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.68,271,1569308400"; 
- d="scan'208,217";a="205018093"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
- by orsmga003.jf.intel.com with ESMTP; 05 Nov 2019 07:54:10 -0800
-Received: from orsmsx160.amr.corp.intel.com (10.22.226.43) by
- ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 5 Nov 2019 07:54:10 -0800
-Received: from orsmsx113.amr.corp.intel.com ([169.254.9.28]) by
- ORSMSX160.amr.corp.intel.com ([169.254.13.29]) with mapi id 14.03.0439.000;
- Tue, 5 Nov 2019 07:54:10 -0800
-From: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: GUI: New navigation and design
-Thread-Topic: GUI: New navigation and design
-Thread-Index: AdWT8UIzMlbFrrzRQvuqWdkFdm6FQg==
-Date: Tue, 5 Nov 2019 15:54:09 +0000
-Message-ID: <FD0BD680739BFC41807C96BD23118BB130CB87@ORSMSX113.amr.corp.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.138]
-Content-Type: multipart/alternative;
- boundary="_000_FD0BD680739BFC41807C96BD23118BB130CB87ORSMSX113amrcorpi_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 476vV80HVTzF3Hc
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 02:58:55 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ xA5FsYM3114682
+ for <openbmc@lists.ozlabs.org>; Tue, 5 Nov 2019 10:58:52 -0500
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.119])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2w39vcfk6u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 05 Nov 2019 10:58:52 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 5 Nov 2019 15:58:51 -0000
+Received: from us1b3-smtp02.a3dr.sjc01.isc4sb.com (10.122.7.175)
+ by smtp.notes.na.collabserv.com (10.122.182.123) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 5 Nov 2019 15:58:48 -0000
+Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
+ by us1b3-smtp02.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2019110515584803-641650 ;
+ Tue, 5 Nov 2019 15:58:48 +0000 
+In-Reply-To: 
+Subject: GUI Design Working Group
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Tue, 5 Nov 2019 15:58:47 +0000
+Sensitivity: 
+References: 
 MIME-Version: 1.0
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1660 | IBM Domino Build
+ SCN1812108_20180501T0841_FP61 October 18, 2019 at 15:11
+X-KeepSent: A932D091:0C04712F-002584A9:004F48DF;
+ type=4; name=$KeepSent
+X-LLNOutbound: False
+X-Disclaimed: 52395
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19110515-3975-0000-0000-000000C28B4D
+X-IBM-SpamModules-Scores: BY=0.000692; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.428813; ST=0; TS=0; UL=0; ISC=; MB=0.000274
+X-IBM-SpamModules-Versions: BY=3.00012057; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01285799; UDB=6.00681702; IPR=6.01067965; 
+ MB=3.00029388; MTD=3.00000008; XFM=3.00000015; UTC=2019-11-05 15:58:49
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-11-05 11:48:55 - 6.00010613
+x-cbparentid: 19110515-3976-0000-0000-00001D4A9B4F
+Message-Id: <OFA932D091.0C04712F-ON002584A9.004F48DF-002584A9.0057C7C2@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-11-05_05:, , signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,250 +87,26 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_FD0BD680739BFC41807C96BD23118BB130CB87ORSMSX113amrcorpi_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida S=
+ans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" st=
+yle=3D"font-family:Lucida Sans Unicode, Lucida Grande, sans-serif;font-size=
+:10pt" ><div dir=3D"ltr" >Hello,</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >The next GUI Design workgroup is tomorrow, Wednesday, Nov=
+ember 5th at 10:00 AM CST. Tomorrow's&nbsp;&nbsp;agenda,&nbsp;previous meet=
+ing notes, and information on how to attend can be found on the OpenBMC Wik=
+i -&nbsp;<a href=3D"https://github.com/openbmc/openbmc/wiki/GUI-Design-work=
+-group" target=3D"=5Fblank" >https://github.com/openbmc/openbmc/wiki/GUI-De=
+sign-work-group</a>.</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >The agenda for tomorrow includes:</div>
+<div dir=3D"ltr" >&nbsp;</div>
+<div dir=3D"ltr" >1. Discuss Intel goals for OpenBMC GUI</div>
+<div dir=3D"ltr" >2. Review Intel's proposed&nbsp;OpenBMC GUI design change=
+s -&nbsp;<a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-w=
+ebui/+/26539" rel=3D"nofollow" target=3D"=5Fblank" >https://gerrit.openbmc-=
+project.xyz/c/openbmc/phosphor-webui/+/26539</a></div>
+<div dir=3D"ltr" >3. Discuss best ways to collaborate on GUI design and imp=
+lementation</div>
+<div dir=3D"ltr" >&nbsp;</div></div></div><BR>
 
-Hi all,
-
-I'm relatively new to the OpenBmc Mailing list - thank you all for welcomin=
-g me to the community.
-
-I've been working on a new UI for phosphor-webui and would like to share th=
-e designs.
-
-Below are links to screenshots:
-https://i.postimg.cc/qMvCh6Xr/Login.jpg
-https://i.postimg.cc/tTTgMdHy/EventLog.jpg
-https://i.postimg.cc/XqBYVVJz/Hardware-Status-Page.jpg
-https://i.postimg.cc/B6Vv98qF/Sensors-Page.jpg
-
-This new UI introduces:
-
--          Accordion-style navigation
-
--          Collapsible navigation
-
--          Slim header to reduce vertical space
-
--          Updated styling to table and form elements & page layout to impr=
-ove user experience
-
-This proposed UI is also available to view here:
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-webui/+/26539
-
-I welcome your feedback and/or suggestions.
-
-We'll be discussing these at the GUI Design work group this week as well.
-
-Thanks,
-Kathy
-
---_000_FD0BD680739BFC41807C96BD23118BB130CB87ORSMSX113amrcorpi_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:793597922;
-	mso-list-type:hybrid;
-	mso-list-template-ids:1618108364 -358577620 67698691 67698693 67698689 676=
-98691 67698693 67698689 67698691 67698693;}
-@list l0:level1
-	{mso-level-start-at:3;
-	mso-level-number-format:bullet;
-	mso-level-text:-;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-font-family:Calibri;}
-@list l0:level2
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level3
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level4
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level5
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level6
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level7
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level8
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level9
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi all,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;m relatively new to the OpenBmc Mailing list=
- &#8211; thank you all for welcoming me to the community.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;ve been working on a new UI for phosphor-web=
-ui and would like to share the designs.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Below are links to screenshots: <o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://i.postimg.cc/qMvCh6Xr/Login.jpg">=
-https://i.postimg.cc/qMvCh6Xr/Login.jpg</a>
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://i.postimg.cc/tTTgMdHy/EventLog.jp=
-g">https://i.postimg.cc/tTTgMdHy/EventLog.jpg</a>
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://i.postimg.cc/XqBYVVJz/Hardware-St=
-atus-Page.jpg">https://i.postimg.cc/XqBYVVJz/Hardware-Status-Page.jpg</a>
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://i.postimg.cc/B6Vv98qF/Sensors-Pag=
-e.jpg">https://i.postimg.cc/B6Vv98qF/Sensors-Page.jpg</a><o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">This new UI introduces:<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">-<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>Accordion-style navigation<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">-<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>Collapsible navigation<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">-<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>Slim header to reduce vertical space<o:p></o:p></p>
-<p class=3D"MsoListParagraph" style=3D"text-indent:-.25in;mso-list:l0 level=
-1 lfo1"><![if !supportLists]><span style=3D"mso-list:Ignore">-<span style=
-=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>Updated styling to table and form elements &amp; pa=
-ge layout to improve user experience<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">This proposed UI is also available to view here:<o:p=
-></o:p></p>
-<p class=3D"MsoNormal"><a href=3D"https://gerrit.openbmc-project.xyz/c/open=
-bmc/phosphor-webui/&#43;/26539">https://gerrit.openbmc-project.xyz/c/openbm=
-c/phosphor-webui/&#43;/26539</a><o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I welcome your feedback and/or suggestions. <o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We&#8217;ll be discussing these at the GUI Design wo=
-rk group this week as well.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<br>
-Kathy<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_FD0BD680739BFC41807C96BD23118BB130CB87ORSMSX113amrcorpi_--
