@@ -1,62 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 843ACF1601
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 13:25:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B4E3F176F
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 14:40:55 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477Qht71R5zF614
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 23:25:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477SNL5kRfzF52w
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 00:40:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=20695f9c9=george.hung@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::336;
+ helo=mail-ot1-x336.google.com; envelope-from=akashgj91@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 477QWW29G4zF67J
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 23:16:49 +1100 (AEDT)
-IronPort-SDR: l8LfNIugB1HQJi+3NxF48Yqbh+MGlijFjAkdBBplJMQk8trYNsV75eppHNgWXH4TMvTPWUl14a
- zg0AsXA+s2jA==
-Received: from unknown (HELO mailbx05.quanta.corp) ([10.243.91.100])
- by mx02.quantatw.com with ESMTP; 06 Nov 2019 20:16:44 +0800
-Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx05.quanta.corp
- (10.243.91.100) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 6 Nov 2019
- 20:16:42 +0800
-Received: from mailbx09.quanta.corp ([192.168.57.9]) by mailbx09.quanta.corp
- ([192.168.57.9]) with mapi id 15.01.1713.009; Wed, 6 Nov 2019 20:16:42 +0800
-From: =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
-To: "kunyi@google.com" <kunyi@google.com>
-Subject: [phosphor-ipmi-blobs-binarystore] Platform configuration and the
- host-tool questions
-Thread-Topic: [phosphor-ipmi-blobs-binarystore] Platform configuration and the
- host-tool questions
-Thread-Index: AdWUm6BObRcJA08TT5K9IUYz4nw1mg==
-Date: Wed, 6 Nov 2019 12:16:42 +0000
-Message-ID: <dbc2cc41e76c497cb551d81f8298ef0a@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25024.006
-x-tm-as-result: No-10--10.457900-5.000000
-x-tmase-matchedrid: LVkZzMT5mEqb5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGNTQc/3yVzaAr2
- Te2qiFCjBur/0lbL6QzXyVtFrAtOqiSKeTIQJ1bz0DLmSnNTPI9Iq1BEJ6pINHv3ioAd9KrSsaz
- EWgN8IaAdcm2OGsPiPkU6jxiUzE2y0kZSdXm5RCTiHyvyXeXh5nnUZqRb3abmEOidyVT9wHnYdc
- WNicpUK45TZO4r6MeQyWJXJFoAf/3cAUnQBuvU5JN65fjGjYMQfYlavNIcDCpCYjM6zs5Y/0FCh
- e0zQXY5fS0Ip2eEHnzWRN8STJpl3PoLR4+zsDTtgUicvJ4MChkeQ4s5nEafLMTowLmFIj7rMedL
- 6kI9Liz9kjN/cIap2q8e8eBqaP6r
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--10.457900-5.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25024.006
-x-tm-snts-smtp: 262553E62C8B117C253C890F4B343ADB826713363E28D3392B848B4FADE4075D2000:B
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="YfoSLEQK"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
+ [IPv6:2607:f8b0:4864:20::336])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477SLQ2FChzF3sM
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 00:39:06 +1100 (AEDT)
+Received: by mail-ot1-x336.google.com with SMTP id r24so4545864otk.12
+ for <openbmc@lists.ozlabs.org>; Wed, 06 Nov 2019 05:39:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Wp/vTAq2Y2Tscn4dj/aaerJokvG4y5J+vjxllnYQswQ=;
+ b=YfoSLEQK2HIEP2T9ptowoyieCNpGNe8P+TQ4jUOYBPdURH6XeztvmAVkGPa9a8Hokq
+ 21aQVfOWx47WtbPDAWXHGbkvu4fHRfq2lXnwZie/qbLYlhIbFmVgkQPPos7jYrKqU7O5
+ 0oRJ+mB2jrT7onKwJU5E1dDitDl/HoosjX506mJ4BWb2ktFvFuC1r2z1xBbwO5K7daKN
+ tP/U1rylgSW+XJsScx+a54fnvHWVhZVk+7xHvGyH8YJnIv+xNpQB0Z91MKg1C5lpWrWj
+ 6JdE51d0OZVjaJo4WHeSrswh4ygiT2CCwUbZc0M34cYnL0SYFXwKcZ4eyDWoHms+kfRH
+ 2ftw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Wp/vTAq2Y2Tscn4dj/aaerJokvG4y5J+vjxllnYQswQ=;
+ b=tZSXuNdWeAAFanNmX4AtHWUtppJ8CdOfRk2hiLeJJpaK3pi7a5U03NGNzSK5syKh0l
+ AOhRea65IikSCbvIgzbn4vZSL3Hi2EbMFKsyWFHvq+QT2t/+QDdUNg4o/w2a/jwRKLop
+ oRZMFPuOJvjSXUxQWi4xgePvqn9i/EpIbeO5pTepZz0smXwSIHYWMYej8XWbvkrLIOx7
+ Dmxtr73q8zpyJxzZ469CeekdkcHPfN1ZRtYwd+8hvE/XZpEu4bJXP/gdx88Hby//8hbg
+ vlUtiEae1gVTWhVDTGuzSKshHycoVUoKlvIMb82ezbKjxtcRgVDaJC1yqGqfzJHhCc4N
+ NijQ==
+X-Gm-Message-State: APjAAAUoIn9vVxipAIQkGkKWfRWNOd6GB2VRbUY/udQhCb2188YjNk03
+ VeKQ8BBEqrEoj0HlfPqsvKbvSv9Sjiiwt5WVj30dirwh
+X-Google-Smtp-Source: APXvYqyMKiw/PG9CL9Yau+l15BOwlBCQVqiwU9E5UZaGY7DjrOENfDAQCazs6FgPq1M7Eb3g5M+ku8fCIeEH3TTn+Eg=
+X-Received: by 2002:a05:6830:12c7:: with SMTP id
+ a7mr1958760otq.308.1573047541238; 
+ Wed, 06 Nov 2019 05:39:01 -0800 (PST)
 MIME-Version: 1.0
+From: AKASH G J <akashgj91@gmail.com>
+Date: Wed, 6 Nov 2019 19:09:26 +0530
+Message-ID: <CAE33tLFmxAxOGze5+rf20w-nBBBqOFzkLu5dbsXsKCWTeV5i0Q@mail.gmail.com>
+Subject: No login prompt on obmc-console
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000e90f7a0596adabf6"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,19 +70,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgS3VuLA0KDQpJJ2QgbGlrZSB0byBhZGQgYSBwbGF0Zm9ybSBjb25maWd1cmF0aW9uIGZpbGUg
-Zm9yIGJsb2IgYmFzZCBpZCBhbmQgc3lzZmlsZSBwYXRoLCBidXQgSSBhbHdheXMgZ2V0IHRoZSBy
-ZXR1cm4gZXJyb3IsICJFbmNvdW50ZXJlZCBlcnJvciB3aGVuIHBhcnNpbmcgY29uZmlnIGZpbGUi
-Lg0KSXMgbXkgY29uZmlnIGZpbGUgZm9ybWF0IHdyb25nIG9yIHNvbWV0aGluZyBJIG1pc3NlZCA/
-DQoNCk15IGV4YW1wbGUgY29uZmlnLmpzb246DQp7DQogICJibG9iQmFzZUlkIjogIi9za20vaHNz
-LyIsDQogICJzeXNGaWxlUGF0aCI6ICIvc3lzL2NsYXNzL2kyYy1kZXYvaTJjLTgvZGV2aWNlLzgt
-MDA1OC9lZXByb20iLA0KICAib2Zmc2V0Qnl0ZXMiOiAyNTYsDQogICJtYXhTaXplQnl0ZXMiOiAx
-MDI0DQp9DQoNCkJUVywgaXMgdGhlcmUgdGhlIHV0aWxpdHkgc3VjaCBhcyB0aGUgaG9zdC10b29s
-IG9mIHBob3NwaG9yLWlwbWktZmxhc2ggdG8gdGVzdCA/DQoNCg0KVGhhbmtzLg0KDQpCZXN0IFJl
-Z2FyZHMgDQpHZW9yZ2UgSHVuZw0KUmVzZWFyY2ggRGl2aXNpb24gLSBTb2Z0d2FyZSBFbmdpbmVl
-cg0KUXVhbnRhIENvbXB1dGVyIEluYy4NCkV4dDogMTY4MzANCkUtTWFpbCA6IEdlb3JnZS5IdW5n
-QFF1YW50YVRXLmNvbQ0KDQo=
+--000000000000e90f7a0596adabf6
+Content-Type: text/plain; charset="UTF-8"
+
+Hi all,
+
+We are using BMC Aspeed AST-2500 in our motherboard with OpenBMC firmware.
+'obmc-console' is used to get host messages over BMC. obmc-console.conf
+looks like
+
+
+
+
+*lpc-address = 0x3f8sirq = 4local-tty = ttyS4local-tty-baud = 115200*
+
+BIOS serial redirection is enabled over COM port 0 (0x3f8, sirq=4,
+baudrate=115200) for super-IO.
+
+We are getting BIOS debug messages, grub entries on BMC. But Linux booting
+is very slow, it is not printing systemd status messages(OK/FAILED) on
+serial console. Also is not giving login prompt on the serial console over
+BMC.
+
+Please someone help to resolve the problem.
+
+
+Thanks and Regards,
+
+Akash
+
+--000000000000e90f7a0596adabf6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi all,<br><br>We are using BMC Aspeed AST-2500 in our mot=
+herboard with OpenBMC firmware. &#39;obmc-console&#39; is used to get host =
+messages over BMC. obmc-console.conf looks like <br><br><i>lpc-address =3D =
+0x3f8<br>sirq =3D 4<br>local-tty =3D ttyS4<br>local-tty-baud =3D 115200</i>=
+<br><br>BIOS serial redirection is enabled over COM port 0 (0x3f8, sirq=3D4=
+, baudrate=3D115200) for super-IO.<br><br>We are getting BIOS debug message=
+s, grub entries on BMC. But Linux booting is very slow, it is not printing =
+systemd status messages(OK/FAILED) on serial console. Also is not giving lo=
+gin prompt on the serial console over BMC.<br><br><div>Please someone help =
+to resolve the problem.</div><div><br></div><div><br></div><div>Thanks and =
+Regards,</div><div><br></div><div>Akash<br></div></div>
+
+--000000000000e90f7a0596adabf6--
