@@ -2,69 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 336FEF11F8
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 10:18:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C1E5F11FC
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 10:19:57 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477LYS3Hp9zF1bR
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 20:18:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477LbG2M0gzF3dF
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 20:19:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::641;
- helo=mail-pl1-x641.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
+ helo=mail-pg1-x542.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="V+33Q3Q0"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="cQpY/s5r"; 
  dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477LXK5S9lzDqJq
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 20:17:20 +1100 (AEDT)
-Received: by mail-pl1-x641.google.com with SMTP id d29so4773041plj.8
- for <openbmc@lists.ozlabs.org>; Wed, 06 Nov 2019 01:17:20 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477LXM0nkRzDqJq
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 20:17:22 +1100 (AEDT)
+Received: by mail-pg1-x542.google.com with SMTP id l24so16711091pgh.10
+ for <openbmc@lists.ozlabs.org>; Wed, 06 Nov 2019 01:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=Ov4FZGyBbfp3pIHr2moP5LQpsVbOHLq7p3fw6xs7MHw=;
- b=V+33Q3Q0zPFriCl6qijl2ac/+ekDS4EZEIiaXFHivS4SZIBVYhNtB9OSLeOTd608Dt
- wGs6IgR+p8AvttAFWclLpBG9jhhAPeEEjBxYu/NY+SV/8lfYQIzPznRRlmWkKAmPHJp9
- qbrDhU5hKGCtgxli/mz1BZ1p6COtINmj4YLtxD80hpsxHuEp9klPGaEfGOluD5NEfHHq
- 2Mt7/l0AWzA+/qIiUBhQQRSX+Jh3gz/Dhp0zHuArsCKvkpBMp8FIyHoB9McM+RVazc6Y
- OT4PXinxJSUKCY49qOFMVp+8CATkxtOdUl7okA3mkFMWRnBGwZi3R6JdmVTSHchaeqIg
- lziQ==
+ h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=xBPKhGichj8OQ9DTklgejmVVV3qOA6fTF81ryDQr0jU=;
+ b=cQpY/s5rMfi5EqwDPHF2QERpntSS/o10idS9nSjEAF3Ds5lqsx03Hw2z1szhqWVCHx
+ C9KX3WweaWKanmMGUCkU/V9h5+mHBVpGGFBMkxtywIfv3KgprWttODhCkjAHqItm/vfV
+ cg9mQtPsZT3MO4TPKw3UDZ4MZ2x8MagVNeoVkQdKvNz586xo8j79jDj7iTTHlox6Wcdo
+ 5/lf9x8OeGTRbdFDGDtGQe6VyeZTlkmJt9jDjSd/c7Y1XuCPy8FasONYd/pogpDuQJCi
+ M/I1N8JdNfchu6vn9uGFOKNBk/iSAeSVImzQ2fOySzONxE3tz40lAPqT3ybD1Fwafaqe
+ nLSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=Ov4FZGyBbfp3pIHr2moP5LQpsVbOHLq7p3fw6xs7MHw=;
- b=ZSIhIQTMO9QOlIM9SxSJ4OhP+vGVBwyykLfgygSUt4aEwUGcXvYfqFj9XUYsCurhTM
- xL+LQinMToXf+d1k8dzw5sX1xzN2dHdpJZI99l9t1mdFkTOmMmInYvQh3yBKE2iGiQGi
- qBxRTnZJqmqKs679CT8dF8+lZGLaRPZPM/SaCzMVHT8ZaBgxWQJcxoVBJJYmrdcSVZNl
- 0nAlfxtQYOYROd0u6k2T8dPBiX1aRmgyQEipc57IO918YoADYj5S74P40Y/yG5FtTGSn
- QPI5usuVnsiGtwwKik2pEGossikuTrJ1GAJGbBDZjgJDXIs57XWF8Yr7mZpCJqSuQRSn
- D0pA==
-X-Gm-Message-State: APjAAAVGjLkVFh9XVMsKLtfp/A6ZMmR56AUfx60S8NiIz7r15pxkTGwn
- E2Hf9TR5TttIXBxrvuS6n7uCg8krEdA=
-X-Google-Smtp-Source: APXvYqyB3DmSUWumRUIJl8uUAphVR438Z9vLU4t5a5OLc3UQ69Hs0VoyFODTB6bKVjO+q0tV/EDOIA==
-X-Received: by 2002:a17:902:6b8a:: with SMTP id
- p10mr1567435plk.192.1573031836804; 
- Wed, 06 Nov 2019 01:17:16 -0800 (PST)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=xBPKhGichj8OQ9DTklgejmVVV3qOA6fTF81ryDQr0jU=;
+ b=uQUZkQG+WJCR5Y2prlcenc7ylpcmrQQ77JZvO1hOsYGKPXEGnP5uTFxNaZH/JDASju
+ L59MxYTcfWZI4QlKe7225WrEbX/+qqWpUyRWeRgIqS3iaGqa775ytF4yCUwejyDFwiRx
+ lgrx22W6x21hHqPCVWSiIRgPD815PKSLEOJM84efhQ77O0ua22lTk1mPKf/GHYiOwGR5
+ vWxkgu0s017pEn2LNeZBfQLK04r5FtIP3eBkFgWZzySnmTdZY091Q7u4GjxaHPze6miq
+ YzuY3Z0WpUV4l2cSRWp48cqkb7IyN3cDM9VbrkaBdYCJrlrNALw0TvtGojsdGm8FmHrI
+ zPpA==
+X-Gm-Message-State: APjAAAUThyfMr0HjaJCyU+pXfwXtRJynLDu1ccgPygHtXhZKYcC7UVtq
+ SFXE/U9YJx9RqTyfS+dRR0DgaG+FiA0=
+X-Google-Smtp-Source: APXvYqyom/R6D61dhgVqsnGRLdTbimrO7RkzoaYUob51jM+aXUk0/NTmwHQAKTC46v8UuVx/wtkzOw==
+X-Received: by 2002:a63:e60e:: with SMTP id g14mr1237809pgh.80.1573031839947; 
+ Wed, 06 Nov 2019 01:17:19 -0800 (PST)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id j25sm21144182pfi.113.2019.11.06.01.17.13
+ by smtp.gmail.com with ESMTPSA id j25sm21144182pfi.113.2019.11.06.01.17.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2019 01:17:16 -0800 (PST)
+ Wed, 06 Nov 2019 01:17:19 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH linux dev-5.3 0/4] ast2600 timer support
-Date: Wed,  6 Nov 2019 19:47:01 +1030
-Message-Id: <20191106091705.7416-1-joel@jms.id.au>
+Subject: [PATCH linux dev-5.3 1/4] ARM: dts: aspeed-g6: Add timer description
+Date: Wed,  6 Nov 2019 19:47:02 +1030
+Message-Id: <20191106091705.7416-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.24.0.rc1
+In-Reply-To: <20191106091705.7416-1-joel@jms.id.au>
+References: <20191106091705.7416-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -82,29 +83,39 @@ Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In order to use high resolution timers, an ARMv7 system needs an
-additional clocksource that is not the arch timer.
+The AST2600 has 8 32-bit timers on the APB bus.
 
-The other option is to set the always-on property in the arch timer.
-This has been discouraged in the past[1].
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/aspeed-g6.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-I propose we enable the aspeed timer in the openbmc tree, and work out
-how to proceed longer term upstream. I've submitted the timer changes
-upstream as we can have driver support regardless as to weather we use
-it.
-
-[1] https://lore.kernel.org/linux-arm-kernel/341949c8-7864-5d65-2797-988022724a4c@st.com/
-
-Joel Stanley (4):
-  ARM: dts: aspeed-g6: Add timer description
-  clocksource: fttmr010: Parametrise shutdown
-  clocksource: fttmr010: Set interrupt and shutdown
-  clocksource: fttmr010: Add support for ast2600
-
- arch/arm/boot/dts/aspeed-g6.dtsi     | 15 ++++++
- drivers/clocksource/timer-fttmr010.c | 68 ++++++++++++++++++++++------
- 2 files changed, 68 insertions(+), 15 deletions(-)
-
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 6db29ee769d5..e574254f298d 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -310,6 +310,21 @@
+ 				status = "disabled";
+ 			};
+ 
++			timer: timer@1e782000 {
++				compatible = "aspeed,ast2600-timer";
++				reg = <0x1e782000 0x90>;
++				interrupts-extended = <&gic  GIC_SPI 16 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 20 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>,
++						<&gic  GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&syscon ASPEED_CLK_APB1>;
++				clock-names = "PCLK";
++                        };
++
+ 			uart1: serial@1e783000 {
+ 				compatible = "ns16550a";
+ 				reg = <0x1e783000 0x20>;
 -- 
 2.24.0.rc1
 
