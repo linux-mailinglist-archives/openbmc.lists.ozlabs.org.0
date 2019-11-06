@@ -2,67 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57F5DF1004
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 08:12:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D498FF102E
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 08:26:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477HmL2MLCzF5WL
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 18:12:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477J4g6mxHzF5bP
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 18:26:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::136;
- helo=mail-il1-x136.google.com; envelope-from=rahulmaheshwari01@gmail.com;
+ smtp.mailfrom=lenovo.com (client-ip=67.219.246.117;
+ helo=mail1.bemta23.messagelabs.com; envelope-from=rli11@lenovo.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="WThCIvUf"; 
- dkim-atps=neutral
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com
- [IPv6:2607:f8b0:4864:20::136])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.117])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477Hlg4kwNzF5Tj
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 18:11:59 +1100 (AEDT)
-Received: by mail-il1-x136.google.com with SMTP id r9so4161297ilq.10
- for <openbmc@lists.ozlabs.org>; Tue, 05 Nov 2019 23:11:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qc83hs7Sc9qQ6ctpz4T94uQo/uYIp7lPz5JWZYxuxcE=;
- b=WThCIvUfsMt0neueZnIC2rHyC6uOFI8k9R+5xneyJjT/qoFn/ViniBgGdp06LAvzDZ
- OTloS5PL922jKF/I/sQeYtVkmuKrDtZneQEH4GBbG8EhGnqgShVdS0S1U8w1Cffgq3qf
- 3119fqbrYKR9Zjp23N9UDCzoFLU5wYkO68VVoZyEW6E+iNodK0ffAZXLLDww+YkHs6/V
- ksuUlaEVtzFVshfWI79P/YXzi4nIxu7i8QlNtJOn/H9VzuqbhDIgvHJmqhMXExXncRgC
- Vv+OBVY8QjdT3ei3abWl9R9WS6dshQ6xY89f0+oaWCL3NNIzI/8dzzwyFcWY7hNmseEK
- PfKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qc83hs7Sc9qQ6ctpz4T94uQo/uYIp7lPz5JWZYxuxcE=;
- b=L61S+rbJm/C9TNYLNWS2+Z9ve2GG84fFQBhl4+Nc5IP8x6X8bIBgTGs+I1cOr2e/SJ
- nfelUcQay86S16oeqE89s3jlAWKCyfw1C9Pt9z2jkqQx6YUdKvNTgDdPk1dPv7ShGAIB
- Fo59jWLuj68Shw9xq63hV9kTYyUlvgil2Or/KnGlfP+6HeMEwP4j5c/kGdBKhqKmpF7k
- mUqVmqOS7mb1Fi/rrFLvhsUDmaYe75DgYeo/zkofQ4odCFx4YLXe6XUn0QBabqhb3Gi5
- XWouP0vkpCQHDzMfrsPh4GYrORr3ksD/S54r9oSktJ18QDIgDR7K4biOK6opnEMvKXNl
- JnmA==
-X-Gm-Message-State: APjAAAXU43XM0pZnpAfRPXk9YAP+pCF2LO3UyMDAh2H0mFXgBLGipCgf
- TP9AjvH6k7whyjVOqnLdiLKev4plgQYUBj8vxgQv1A==
-X-Google-Smtp-Source: APXvYqw6NPWTW6g4T2/qiO3YU1RCfRbjy/JirVlCqDH+cHJnYYfgdzJD1nENqBOb6tJTxcmQkspW5FqGe0bbLeBjj5s=
-X-Received: by 2002:a92:8897:: with SMTP id m23mr1119592ilh.36.1573024315565; 
- Tue, 05 Nov 2019 23:11:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477J3y73fjzF5b1
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 18:26:05 +1100 (AEDT)
+Received: from [67.219.246.198] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-6.bemta.az-c.us-east-1.aws.symcld.net id 7A/C3-20095-A8572CD5;
+ Wed, 06 Nov 2019 07:26:02 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrGKsWRWlGSWpSXmKPExsWSLveKXber9FC
+ swcMVnBYvpixitDg8tYHJ4lTLCxYHZo8Jiw4wesw7GehxfsZCxgDmKNbMvKT8igTWjFV/0gs+
+ Cld8PPiNrYFxlUAXIxeHkEADk8Tle50sEM4rRonXl46ydzFyAjl7GSXmzgkGsdkElCRaXq1gB
+ ykSEehllDjaM5Oxi5GDQ1jAReLLEkGQGhEBV4lJpw8zQ9hWEpe7/zGC2CwCKhKrVs1gBinnFb
+ CUmP69EGLXNUaJN1tfs4DUcAo4S7Qs3g5WzyggK/FkwTMmEJtZQFzi3MVWsHskBAQkluw5zwx
+ hi0q8fPyPFcJWkGjeAzGHWUBP4sbUKWwQtrbEsoWvwep5BQQlTs58wjKBUWQWkrGzkLTMQtIy
+ C0nLAkaWVYxmSUWZ6RkluYmZObqGBga6hoZGumZA0lAvsUo3Wa+0WDc1sbhEF8gtL9YrrsxNz
+ knRy0st2cQIjKyUArb8HYwNX9/qHWKU5GBSEuX1yjwYK8SXlJ9SmZFYnBFfVJqTWnyIUYaDQ0
+ mC917xoVghwaLU9NSKtMwcYJTDpCU4eJREeJ+XAKV5iwsSc4sz0yFSpxiNOSa8nLuImePg0Xm
+ LmIVY8vLzUqXEeb1BSgVASjNK8+AGwZLPJUZZKWFeRgYGBiGegtSi3MwSVPlXjOIcjErCvFog
+ U3gy80rg9gGTCNAXIrw+j/eBnFKSiJCSamAyCyk57HhgQ5PgXFmttz3Tzlmv91hRt/CKmMvE0
+ gPvti96t7ry5DOHujJtfi7hiUJnhXlzNaYXGdfLf5/OcvGOpWyOwsFDv9+V+zOvuM1/yGTG97
+ sbD2wOlOSe5WSoU5ry9oTXA7MfZtF/+exWmN9P5L/28MjCO8zO3Xp33gdO9mWaGWIp8u+diPR
+ nFpv68/Pdnx3YNH+1+F5TRwWOytVeAVf5l+6uPOB28KWVgoj/axXRrsPP1WbOLdzkWZGdKHT4
+ Ma/+s7UfM813XLNRZJmidaG1Yd/dM1+k3mxe3DbPb+/ajHuXGPrMXLk35HJLBvPNeHangGX7X
+ DGZJ5JzO6129afttIuZJzv14H+Gbq2PSizFGYmGWsxFxYkAsRkuirkDAAA=
+X-Env-Sender: rli11@lenovo.com
+X-Msg-Ref: server-14.tower-406.messagelabs.com!1573025159!65847!1
+X-Originating-IP: [103.30.234.7]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.43.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 19692 invoked from network); 6 Nov 2019 07:26:01 -0000
+Received: from unknown (HELO apsmtp.lenovo.com) (103.30.234.7)
+ by server-14.tower-406.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 6 Nov 2019 07:26:01 -0000
+Received: from HKGWPEMAIL02.lenovo.com (unknown [10.128.3.70])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id 56CA1678323118FB1085;
+ Wed,  6 Nov 2019 15:25:59 +0800 (CST)
+Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
+ HKGWPEMAIL02.lenovo.com (10.128.3.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Wed, 6 Nov 2019 15:25:59 +0800
+Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
+ HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
+ 15.01.1591.008; Wed, 6 Nov 2019 15:25:36 +0800
+From: Ivan Li11 <rli11@lenovo.com>
+To: James Feist <james.feist@linux.intel.com>, Matt Spinler
+ <mspinler@linux.ibm.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: [External] Power-on monitor for phosphor-hwmon question
+Thread-Topic: [External] Power-on monitor for phosphor-hwmon question
+Thread-Index: AQHViNvz9OdLXZ460kajgXlfSVMf8KdmSTSAgBeGTaA=
+Date: Wed, 6 Nov 2019 07:25:36 +0000
+Message-ID: <25d62ba90109494e97119222fd015d84@lenovo.com>
+References: <c353f372a5ce45fdbe1172678d8c029d@lenovo.com>
+ <82798e33e5a34f81ac30553c099ad964@lenovo.com>
+ <24228a0e-1e29-d661-3cc1-585e9a0501a4@linux.ibm.com>
+ <97ba4063-0066-4ba5-bd98-03f1b6aa63dd@linux.intel.com>
+In-Reply-To: <97ba4063-0066-4ba5-bd98-03f1b6aa63dd@linux.intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <937d3cf0ee5b42559e145fbf87c5c9b3@quantatw.com>
- <CAAMkS12QPgcdawwV0OdvB_xFB5C78o7AqvTmKcZWYqeTgjCioQ@mail.gmail.com>
- <37a55521de3843c6a407e7faeb68f693@quantatw.com>
-In-Reply-To: <37a55521de3843c6a407e7faeb68f693@quantatw.com>
-From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Date: Wed, 6 Nov 2019 12:42:32 +0530
-Message-ID: <CAAMkS10zqHVNv-x8pLBtyDJVm2xTjTROHSqsA6SeELZ953wz-w@mail.gmail.com>
-Subject: Re: Questions about openbmc-test-automation
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-Content-Type: multipart/alternative; boundary="0000000000008d6b9e0596a8439a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,158 +97,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008d6b9e0596a8439a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> -----Original Message-----
+> From: James Feist <james.feist@linux.intel.com>
+> Sent: Tuesday, October 22, 2019 11:51 PM
+> To: Matt Spinler <mspinler@linux.ibm.com>; Ivan Li11 <rli11@lenovo.com>;
+> openbmc@lists.ozlabs.org
+> Subject: Re: [External] Power-on monitor for phosphor-hwmon question
+>=20
+> On 10/22/19 6:23 AM, Matt Spinler wrote:
+> >
+> >
+> > On 10/21/2019 6:02 AM, Ivan Li11 wrote:
+> >>
+> >> Hi Team,
+> >>
+> >> Does anyone have suggestion for this ?
+> >>
+> > Hi, you're right, it doesn't support that yet.=A0 We've had a few
+> > internal discussions about how to handle that gracefully, though our
+> > platforms don't use sel-logger, but nothing solid came out of them and
+> > we don't have anything scheduled yet.
+> >
+> > It would be easy enough to have a watch on the PGOOD property, and
+> > then do you what you want, like maybe turning off the thresholds.
+> >
+> > I heard that the d-bus sensors repository has some sort of support for
+> > this, but since we don't use it I'm not sure what all that entails. I
+> > think it may also force you to replace phosphor-inventor-manager with
+> > entity-manager.
+>=20
+> It should force you to switch 100%, but you would at least have to run bo=
+th.
+>=20
+> Here's what dbus-sensors does:
+>=20
+> https://github.com/openbmc/dbus-sensors/blob/432d1edf7ac86f69558273307
+> a59e4b1cf86b8a6/src/Utils.cpp#L141
+>=20
+> Basically just a dbus-match that sets a "powerStatusOn" bool that can be
+> queried. Depending on the sensor type thresholds don't get crossed if tha=
+t bool
+> is set. We also have a similar bool for bios post, as some sensors come u=
+p later
+> after power on.
+>=20
 
-Yes, that is correct way.
+I try to use dbus-sensors and set "powerStatusOn" bool, but still have inco=
+rrect threshold logs during power on(S0) to power off(S5) state.=20
+Could you help to comment on it ?
 
-On Wed, Nov 6, 2019 at 11:22 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Ton=
-y.Lee@quantatw.com>
-wrote:
-
-> Hi Rahul,
->
-> For example, case "Retrieve IP Address Via IPMI And Verify Using Redfish"
-> in /ipmi/test_ipmi_network.robot.
-> The new way is as follows:
->
-> IPMI network channel logically starts from 1. For example, once it figure
-> out the channel count is 3,
-> we can retrieve IP addresses through channels 1, 2, and 3, and verify the=
-m
-> correspond to eth0, eth1, and eth2, respectively by redfish.
-> Is it right?
->
-> Thanks
-> Best Regards,
-> Tony
->
-> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-> Sent: Tuesday, November 5, 2019 6:51 PM
-> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Questions about openbmc-test-automation
->
-> Thanks for pointing that out. Passing interface/channel number is an
-> easier option but we should be avoiding passing environment variable unle=
-ss
-> there is no other way. I would say better way to overcome this is to figu=
-re
-> out the channel count using "ip addr" command from BMC cli.
-> Let us know if that sounds good to you.
-> Also let us know if you would like to drop code change for the same?
->
-> Thanks
-> Rahul
->
->
->
->
->
->
-> On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <ma=
-ilto:
-> Tony.Lee@quantatw.com> wrote:
-> Hi Rahul,
->
-> I'm wondering that why "REDFISH_NW_ETH0" is hardcode as
-> "Managers/bmc/EthernetInterfaces/eth0/" in /data/variables.py
->
-> https://github.com/openbmc/openbmc-test-automation/blob/master/data/varia=
-bles.py#L155
-> Furthermore, the command "lan print" didn't specify the channel number in
-> /ipmi/test_ipmi_network.robot.
-> Therefore, the default will print information on the first found LAN
-> channel.
->
-> Isn't it more reasonable to set the interface and the channel number as
-> environment variables and give them default values?
->
-> Thanks
-> Best Regards,
-> Tony
->
->
-
---0000000000008d6b9e0596a8439a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Yes, that is correct way.<br></div><br><div class=3D"gmail=
-_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 6, 2019 at 11:22 =
-AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@qu=
-antatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">Hi Rahul,<br>
-<br>
-For example, case &quot;Retrieve IP Address Via IPMI And Verify Using Redfi=
-sh&quot; in /ipmi/test_ipmi_network.robot.<br>
-The new way is as follows:<br>
-<br>
-IPMI network channel logically starts from 1. For example, once it figure o=
-ut the channel count is 3,<br>
-we can retrieve IP addresses through channels 1, 2, and 3, and verify them =
-correspond to eth0, eth1, and eth2, respectively by redfish.<br>
-Is it right?<br>
-<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-<br>
-From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
-arget=3D"_blank">rahulmaheshwari01@gmail.com</a>&gt; <br>
-Sent: Tuesday, November 5, 2019 6:51 PM<br>
-To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
-uantatw.com" target=3D"_blank">Tony.Lee@quantatw.com</a>&gt;<br>
-Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
-ists.ozlabs.org</a><br>
-Subject: Re: Questions about openbmc-test-automation<br>
-<br>
-Thanks for pointing that out. Passing interface/channel number is an easier=
- option but we should be avoiding passing environment=C2=A0variable unless =
-there is no other way. I would say better way to overcome this is to figure=
- out the channel count using &quot;ip addr&quot; command from BMC cli.=C2=
-=A0<br>
-Let us know if that sounds good=C2=A0to you.<br>
-Also let us know if you would like to drop code change for the same?=C2=A0<=
-br>
-<br>
-Thanks<br>
-Rahul<br>
-<br>
-<br>
-<br>
-<br>
-=C2=A0<br>
-<br>
-On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;m=
-ailto:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank">Tony.Lee@q=
-uantatw.com</a>&gt; wrote:<br>
-Hi Rahul,<br>
-=C2=A0<br>
-I&#39;m wondering that why &quot;REDFISH_NW_ETH0&quot; is hardcode as &quot=
-;Managers/bmc/EthernetInterfaces/eth0/&quot; in /data/variables.py<br>
-<a href=3D"https://github.com/openbmc/openbmc-test-automation/blob/master/d=
-ata/variables.py#L155" rel=3D"noreferrer" target=3D"_blank">https://github.=
-com/openbmc/openbmc-test-automation/blob/master/data/variables.py#L155</a><=
-br>
-Furthermore, the command &quot;lan print&quot; didn&#39;t specify the chann=
-el number in /ipmi/test_ipmi_network.robot.<br>
-Therefore, the default will print information on the first found LAN channe=
-l. <br>
-=C2=A0<br>
-Isn&#39;t it more reasonable to set the interface and the channel number as=
- environment variables and give them default values?<br>
-=C2=A0<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-=C2=A0<br>
-</blockquote></div>
-
---0000000000008d6b9e0596a8439a--
+> >
+> >> Thanks your great support in advance.
+> >>
+> >> *From:*openbmc <openbmc-bounces+rli11=3Dlenovo.com@lists.ozlabs.org>
+> *On
+> >> Behalf Of *Ivan Li11
+> >> *Sent:* Friday, October 18, 2019 5:59 PM
+> >> *To:* openbmc@lists.ozlabs.org
+> >> *Subject:* [External] Power-on monitor for phosphor-hwmon question
+> >>
+> >> Hi Team,
+> >>
+> >> We found that there's no power-on monitor mechanism in
+> phosphor-hwmon.
+> >>
+> >> https://github.com/openbmc/phosphor-hwmon
+> >>
+> >> And it will cause incorrect threshold logs to be added to journal log
+> >> by 'sel-logger' when system is in power off(S5) state.
+> >>
+> >> Is there any plan to implement it? Or other repository we can refer to=
+ ?
+> >>
+> >> Thanks,
+> >>
+> >> Ivan
+> >>
+> >
