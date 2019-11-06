@@ -2,63 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B4E3F176F
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 14:40:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E7EBFF1938
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 15:57:32 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477SNL5kRfzF52w
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 00:40:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477V4p14lyzF5Tl
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 01:57:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::336;
- helo=mail-ot1-x336.google.com; envelope-from=akashgj91@gmail.com;
+ smtp.mailfrom=kaod.org (client-ip=46.105.74.148;
+ helo=10.mo173.mail-out.ovh.net; envelope-from=clg@kaod.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="YfoSLEQK"; 
- dkim-atps=neutral
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [IPv6:2607:f8b0:4864:20::336])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=kaod.org
+X-Greylist: delayed 674 seconds by postgrey-1.36 at bilbo;
+ Thu, 07 Nov 2019 01:50:52 AEDT
+Received: from 10.mo173.mail-out.ovh.net (10.mo173.mail-out.ovh.net
+ [46.105.74.148])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477SLQ2FChzF3sM
- for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 00:39:06 +1100 (AEDT)
-Received: by mail-ot1-x336.google.com with SMTP id r24so4545864otk.12
- for <openbmc@lists.ozlabs.org>; Wed, 06 Nov 2019 05:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Wp/vTAq2Y2Tscn4dj/aaerJokvG4y5J+vjxllnYQswQ=;
- b=YfoSLEQK2HIEP2T9ptowoyieCNpGNe8P+TQ4jUOYBPdURH6XeztvmAVkGPa9a8Hokq
- 21aQVfOWx47WtbPDAWXHGbkvu4fHRfq2lXnwZie/qbLYlhIbFmVgkQPPos7jYrKqU7O5
- 0oRJ+mB2jrT7onKwJU5E1dDitDl/HoosjX506mJ4BWb2ktFvFuC1r2z1xBbwO5K7daKN
- tP/U1rylgSW+XJsScx+a54fnvHWVhZVk+7xHvGyH8YJnIv+xNpQB0Z91MKg1C5lpWrWj
- 6JdE51d0OZVjaJo4WHeSrswh4ygiT2CCwUbZc0M34cYnL0SYFXwKcZ4eyDWoHms+kfRH
- 2ftw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Wp/vTAq2Y2Tscn4dj/aaerJokvG4y5J+vjxllnYQswQ=;
- b=tZSXuNdWeAAFanNmX4AtHWUtppJ8CdOfRk2hiLeJJpaK3pi7a5U03NGNzSK5syKh0l
- AOhRea65IikSCbvIgzbn4vZSL3Hi2EbMFKsyWFHvq+QT2t/+QDdUNg4o/w2a/jwRKLop
- oRZMFPuOJvjSXUxQWi4xgePvqn9i/EpIbeO5pTepZz0smXwSIHYWMYej8XWbvkrLIOx7
- Dmxtr73q8zpyJxzZ469CeekdkcHPfN1ZRtYwd+8hvE/XZpEu4bJXP/gdx88Hby//8hbg
- vlUtiEae1gVTWhVDTGuzSKshHycoVUoKlvIMb82ezbKjxtcRgVDaJC1yqGqfzJHhCc4N
- NijQ==
-X-Gm-Message-State: APjAAAUoIn9vVxipAIQkGkKWfRWNOd6GB2VRbUY/udQhCb2188YjNk03
- VeKQ8BBEqrEoj0HlfPqsvKbvSv9Sjiiwt5WVj30dirwh
-X-Google-Smtp-Source: APXvYqyMKiw/PG9CL9Yau+l15BOwlBCQVqiwU9E5UZaGY7DjrOENfDAQCazs6FgPq1M7Eb3g5M+ku8fCIeEH3TTn+Eg=
-X-Received: by 2002:a05:6830:12c7:: with SMTP id
- a7mr1958760otq.308.1573047541238; 
- Wed, 06 Nov 2019 05:39:01 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477Tx85N03zF5YR
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 01:50:50 +1100 (AEDT)
+Received: from player760.ha.ovh.net (unknown [10.109.159.69])
+ by mo173.mail-out.ovh.net (Postfix) with ESMTP id E02C31212B5
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 15:32:20 +0100 (CET)
+Received: from kaod.org (deibp9eh1--blueice1n4.emea.ibm.com [195.212.29.166])
+ (Authenticated sender: clg@kaod.org)
+ by player760.ha.ovh.net (Postfix) with ESMTPSA id 1C357BD562D9;
+ Wed,  6 Nov 2019 14:32:17 +0000 (UTC)
+Subject: Re: [PATCH linux dev-5.3 2/4] clocksource: fttmr010: Parametrise
+ shutdown
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
+References: <20191106091705.7416-1-joel@jms.id.au>
+ <20191106091705.7416-3-joel@jms.id.au>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+Message-ID: <f32deb2b-8c9c-f76a-7741-a70b57a815f5@kaod.org>
+Date: Wed, 6 Nov 2019 15:32:16 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.1.1
 MIME-Version: 1.0
-From: AKASH G J <akashgj91@gmail.com>
-Date: Wed, 6 Nov 2019 19:09:26 +0530
-Message-ID: <CAE33tLFmxAxOGze5+rf20w-nBBBqOFzkLu5dbsXsKCWTeV5i0Q@mail.gmail.com>
-Subject: No login prompt on obmc-console
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000e90f7a0596adabf6"
+In-Reply-To: <20191106091705.7416-3-joel@jms.id.au>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 15669149005465095083
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedruddujedgieejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdqfffguegfifdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepuffvfhfhkffffgggjggtgfesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucfkpheptddrtddrtddrtddpudelhedrvdduvddrvdelrdduieeinecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehplhgrhigvrhejiedtrdhhrgdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,52 +60,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e90f7a0596adabf6
-Content-Type: text/plain; charset="UTF-8"
-
-Hi all,
-
-We are using BMC Aspeed AST-2500 in our motherboard with OpenBMC firmware.
-'obmc-console' is used to get host messages over BMC. obmc-console.conf
-looks like
+On 06/11/2019 10:17, Joel Stanley wrote:
+> In preparation for supporting the ast2600 which uses a different method
+> to clear bits in the control register, use a callback for performing the
+> shutdown sequence.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
 
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
+> ---
+>  drivers/clocksource/timer-fttmr010.c | 19 ++++++++-----------
+>  1 file changed, 8 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/clocksource/timer-fttmr010.c b/drivers/clocksource/timer-fttmr010.c
+> index fadff7915dd9..c2d30eb9dc72 100644
+> --- a/drivers/clocksource/timer-fttmr010.c
+> +++ b/drivers/clocksource/timer-fttmr010.c
+> @@ -97,6 +97,7 @@ struct fttmr010 {
+>  	bool is_aspeed;
+>  	u32 t1_enable_val;
+>  	struct clock_event_device clkevt;
+> +	int (*timer_shutdown)(struct clock_event_device *evt);
+>  #ifdef CONFIG_ARM
+>  	struct delay_timer delay_timer;
+>  #endif
+> @@ -140,9 +141,7 @@ static int fttmr010_timer_set_next_event(unsigned long cycles,
+>  	u32 cr;
+>  
+>  	/* Stop */
+> -	cr = readl(fttmr010->base + TIMER_CR);
+> -	cr &= ~fttmr010->t1_enable_val;
+> -	writel(cr, fttmr010->base + TIMER_CR);
+> +	fttmr010->timer_shutdown(evt);
+>  
+>  	if (fttmr010->is_aspeed) {
+>  		/*
+> @@ -183,9 +182,7 @@ static int fttmr010_timer_set_oneshot(struct clock_event_device *evt)
+>  	u32 cr;
+>  
+>  	/* Stop */
+> -	cr = readl(fttmr010->base + TIMER_CR);
+> -	cr &= ~fttmr010->t1_enable_val;
+> -	writel(cr, fttmr010->base + TIMER_CR);
+> +	fttmr010->timer_shutdown(evt);
+>  
+>  	/* Setup counter start from 0 or ~0 */
+>  	writel(0, fttmr010->base + TIMER1_COUNT);
+> @@ -211,9 +208,7 @@ static int fttmr010_timer_set_periodic(struct clock_event_device *evt)
+>  	u32 cr;
+>  
+>  	/* Stop */
+> -	cr = readl(fttmr010->base + TIMER_CR);
+> -	cr &= ~fttmr010->t1_enable_val;
+> -	writel(cr, fttmr010->base + TIMER_CR);
+> +	fttmr010->timer_shutdown(evt);
+>  
+>  	/* Setup timer to fire at 1/HZ intervals. */
+>  	if (fttmr010->is_aspeed) {
+> @@ -350,6 +345,8 @@ static int __init fttmr010_common_init(struct device_node *np, bool is_aspeed)
+>  				     fttmr010->tick_rate);
+>  	}
+>  
+> +	fttmr010->timer_shutdown = fttmr010_timer_shutdown;
+> +
+>  	/*
+>  	 * Setup clockevent timer (interrupt-driven) on timer 1.
+>  	 */
+> @@ -370,10 +367,10 @@ static int __init fttmr010_common_init(struct device_node *np, bool is_aspeed)
+>  	fttmr010->clkevt.features = CLOCK_EVT_FEAT_PERIODIC |
+>  		CLOCK_EVT_FEAT_ONESHOT;
+>  	fttmr010->clkevt.set_next_event = fttmr010_timer_set_next_event;
+> -	fttmr010->clkevt.set_state_shutdown = fttmr010_timer_shutdown;
+> +	fttmr010->clkevt.set_state_shutdown = fttmr010->timer_shutdown;
+>  	fttmr010->clkevt.set_state_periodic = fttmr010_timer_set_periodic;
+>  	fttmr010->clkevt.set_state_oneshot = fttmr010_timer_set_oneshot;
+> -	fttmr010->clkevt.tick_resume = fttmr010_timer_shutdown;
+> +	fttmr010->clkevt.tick_resume = fttmr010->timer_shutdown;
+>  	fttmr010->clkevt.cpumask = cpumask_of(0);
+>  	fttmr010->clkevt.irq = irq;
+>  	clockevents_config_and_register(&fttmr010->clkevt,
+> 
 
-*lpc-address = 0x3f8sirq = 4local-tty = ttyS4local-tty-baud = 115200*
-
-BIOS serial redirection is enabled over COM port 0 (0x3f8, sirq=4,
-baudrate=115200) for super-IO.
-
-We are getting BIOS debug messages, grub entries on BMC. But Linux booting
-is very slow, it is not printing systemd status messages(OK/FAILED) on
-serial console. Also is not giving login prompt on the serial console over
-BMC.
-
-Please someone help to resolve the problem.
-
-
-Thanks and Regards,
-
-Akash
-
---000000000000e90f7a0596adabf6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi all,<br><br>We are using BMC Aspeed AST-2500 in our mot=
-herboard with OpenBMC firmware. &#39;obmc-console&#39; is used to get host =
-messages over BMC. obmc-console.conf looks like <br><br><i>lpc-address =3D =
-0x3f8<br>sirq =3D 4<br>local-tty =3D ttyS4<br>local-tty-baud =3D 115200</i>=
-<br><br>BIOS serial redirection is enabled over COM port 0 (0x3f8, sirq=3D4=
-, baudrate=3D115200) for super-IO.<br><br>We are getting BIOS debug message=
-s, grub entries on BMC. But Linux booting is very slow, it is not printing =
-systemd status messages(OK/FAILED) on serial console. Also is not giving lo=
-gin prompt on the serial console over BMC.<br><br><div>Please someone help =
-to resolve the problem.</div><div><br></div><div><br></div><div>Thanks and =
-Regards,</div><div><br></div><div>Akash<br></div></div>
-
---000000000000e90f7a0596adabf6--
