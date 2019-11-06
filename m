@@ -1,42 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE4C4F1946
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 16:00:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D741CF1C59
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 18:22:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477V8X0d9WzF3mM
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 02:00:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477YHf0MVGzF5ct
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 04:22:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477V0w2WxWzF3BM
- for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 01:54:05 +1100 (AEDT)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id xA6ErY4K026784;
- Wed, 6 Nov 2019 16:53:34 +0200
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 790466032E; Wed,  6 Nov 2019 16:53:34 +0200 (IST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: p.zabel@pengutronix.de, robh+dt@kernel.org, mark.rutland@arm.com,
- yuenn@google.com, venture@google.com, benjaminfair@google.com,
- avifishman70@gmail.com, joel@jms.id.au
-Subject: [PATCH v5 3/3] reset: npcm: add NPCM reset controller driver
-Date: Wed,  6 Nov 2019 16:53:31 +0200
-Message-Id: <20191106145331.25740-4-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191106145331.25740-1-tmaimon77@gmail.com>
-References: <20191106145331.25740-1-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477YGy4pGhzF5Zn
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 04:21:28 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 Nov 2019 09:21:25 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,275,1569308400"; d="scan'208";a="402431017"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by fmsmga005.fm.intel.com with ESMTP; 06 Nov 2019 09:21:25 -0800
+Subject: Re: HTTP redirect to HTTPS for web UI
+To: George Liu <liuxiwei1013@gmail.com>, Lei YU <mine260309@gmail.com>
+References: <CANFuQ7A8xB_xaqMB0fj394Ov9E3RvhOvj7OVVXgqDfA51YDsSg@mail.gmail.com>
+ <CAARXrtnEOUuVdZpobxnQiJ-n0ve57fiP0nu8Yw-t5jMHWShXtA@mail.gmail.com>
+ <E7046336-11A9-4D82-9DDC-6DB7DF94C8C5@fuzziesquirrel.com>
+ <953ff1d9-294a-025e-7c10-91ec80b81e9e@linux.intel.com>
+ <CAARXrtmYykUAGr015qhRc5VAZB20_cc7pqRXmDGYag_7vZiSvA@mail.gmail.com>
+ <CANFuQ7D07LrT4SZNWKwuQwj2rQGv+Qzn_cKWWHaqoHKdTyuG5g@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <817bf150-3cab-bf90-0f72-7a2d71352764@linux.intel.com>
+Date: Wed, 6 Nov 2019 09:21:25 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
+In-Reply-To: <CANFuQ7D07LrT4SZNWKwuQwj2rQGv+Qzn_cKWWHaqoHKdTyuG5g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -49,348 +58,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC reset controller driver.
+On 11/5/19 7:23 PM, George Liu wrote:
+> 
+> 
+> Lei YU <mine260309@gmail.com <mailto:mine260309@gmail.com>> 于2019年11月 
+> 6日周三 上午10:02写道：
+> 
+>     On Wed, Nov 6, 2019 at 1:20 AM James Feist
+>     <james.feist@linux.intel.com <mailto:james.feist@linux.intel.com>>
+>     wrote:
+>      >
+>      > On 11/4/19 4:36 PM, Brad Bishop wrote:
+>      > >
+>      > >
+>      > >> On Oct 31, 2019, at 11:26 PM, Lei YU <mine260309@gmail.com
+>     <mailto:mine260309@gmail.com>> wrote:
+>      > >>
+>      > >> On Thu, Oct 31, 2019 at 9:48 PM George Liu
+>     <liuxiwei1013@gmail.com <mailto:liuxiwei1013@gmail.com>> wrote:
+>      > >>>
+>      > >>> Hi All:
+>      > >>> I'm working on http redirect to https
+>     task(https://github.com/ibm-openbmc/dev/issues/895).
+>      > >>> I took a cursory look at the
+>     design(https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24173)
+>     and did some testing.
+>      > >>>
+>      > >>> In bmcweb, I find it the current communication logic can only
+>     listen to one communication protocol (http or https). If you listen
+>     to both protocols at the same time, you need to change a lot of code
+>     and communication logic.
+>      > >>> If we are going to implement this feature in bmcweb, it costs
+>     extra effort and it's likely the implementation is no better than
+>     Nginx. so I prefer to use Nginx.
+>      > >>>
+>      > >>
+>      > >>>  From Ed's [mail in June][1], one approach is to use boost
+>     asio async_detect_ssl.
+>      > >>
+>      > >> But I agree with George here that it costs extra and unnecessary
+>      > >> effort, because with nginx it is so easy to config the http->https
+>      > >> redirection, and it is easy to get all the https related configs
+>      > >> right, including HSTS.
+>      > >> In other words, we got such features for free (except for a
+>     few binary
+>      > >> size), why bother re-write it?
+>      > >>
+>      > >> Considering the binary size, maybe it's worth the effort to
+>     check how
+>      > >> many bytes are increased compared between:
+>      > >> 1. Current implement that bmcweb handles https only
+>      > >> 2. Enable BMCWEB_INSECURE, opt-out all https related code in
+>     bmcweb,
+>      > >> adding a basic nginx and a configure file that does the https
+>      > >> redirect.
+>      > >>
+>      > >> We could check the binary size to see if it's acceptable. Be noted
+>      > >> that implementing this feature in bmcweb increases the binary
+>     size as
+>      > >> well.
+>      > >>
+>      > >>
+>      > >> [1]:
+>     https://lists.ozlabs.org/pipermail/openbmc/2019-June/016557.html
+>      > >
+>      > > FWIW I generally support solutions that re-use existing
+>     software and have large communities behind them already but I do
+>     remember Ed having some concerns about using bmcweb behind a proxy.
+>      > >
+>      > > James any chance you recall what those concerns were?  I don’t
+>     think I was ever able to wrap my head around them.  Do you share
+>     Ed’s concerns?
+>      >
+>      > I think these were the main concerns:
+>      > https://security.stackexchange.com/a/107106
+>      >
+>      > Basically that since you're using HTTP, you leave yourself open for a
+>      > man-in-the-middle attack. bmcweb does do the header trick
+>     mentioned in
+>      > this post, so once you navigate to your bmc once, the browser
+>     remembers
+>      > to always use https. I think that, along with potential binary size
+>      > increases, were the biggest concerns. We also try to keep open the
+>      > minimum number of ports in general as a best practice.
+>      >
+> 
+>     As the answer indicates "A way to mitigate this is to use an HSTS
+>     HTTP header"
+>     It's easy to configure nginx to use HSTS header, so it's no big deal.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/reset/Kconfig      |   7 +
- drivers/reset/Makefile     |   1 +
- drivers/reset/reset-npcm.c | 291 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 299 insertions(+)
- create mode 100644 drivers/reset/reset-npcm.c
+bmcweb already does this 
+https://github.com/openbmc/bmcweb/blob/07a602993f1007b0b0b764bdb3f14f302a8d2e26/http/websocket.h#L92
 
-diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-index 7b07281aa0ae..9e3eac30e7db 100644
---- a/drivers/reset/Kconfig
-+++ b/drivers/reset/Kconfig
-@@ -89,6 +89,13 @@ config RESET_MESON_AUDIO_ARB
- 	  This enables the reset driver for Audio Memory Arbiter of
- 	  Amlogic's A113 based SoCs
- 
-+config RESET_NPCM
-+	bool "NPCM BMC Reset Driver" if COMPILE_TEST
-+	default ARCH_NPCM
-+	help
-+	  This enables the reset controller driver for Nuvoton NPCM
-+	  BMC SoCs.
-+
- config RESET_OXNAS
- 	bool
- 
-diff --git a/drivers/reset/Makefile b/drivers/reset/Makefile
-index cf60ce526064..00767c03f5f2 100644
---- a/drivers/reset/Makefile
-+++ b/drivers/reset/Makefile
-@@ -14,6 +14,7 @@ obj-$(CONFIG_RESET_LANTIQ) += reset-lantiq.o
- obj-$(CONFIG_RESET_LPC18XX) += reset-lpc18xx.o
- obj-$(CONFIG_RESET_MESON) += reset-meson.o
- obj-$(CONFIG_RESET_MESON_AUDIO_ARB) += reset-meson-audio-arb.o
-+obj-$(CONFIG_RESET_NPCM) += reset-npcm.o
- obj-$(CONFIG_RESET_OXNAS) += reset-oxnas.o
- obj-$(CONFIG_RESET_PISTACHIO) += reset-pistachio.o
- obj-$(CONFIG_RESET_QCOM_AOSS) += reset-qcom-aoss.o
-diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
-new file mode 100644
-index 000000000000..2ea4d3136e15
---- /dev/null
-+++ b/drivers/reset/reset-npcm.c
-@@ -0,0 +1,291 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2019 Nuvoton Technology corporation.
-+
-+#include <linux/delay.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/init.h>
-+#include <linux/of.h>
-+#include <linux/of_device.h>
-+#include <linux/platform_device.h>
-+#include <linux/reboot.h>
-+#include <linux/reset-controller.h>
-+#include <linux/spinlock.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/regmap.h>
-+#include <linux/of_address.h>
-+
-+/* NPCM7xx GCR registers */
-+#define NPCM_MDLR_OFFSET	0x7C
-+#define NPCM_MDLR_USBD0		BIT(9)
-+#define NPCM_MDLR_USBD1		BIT(8)
-+#define NPCM_MDLR_USBD2_4	BIT(21)
-+#define NPCM_MDLR_USBD5_9	BIT(22)
-+
-+#define NPCM_USB1PHYCTL_OFFSET	0x140
-+#define NPCM_USB2PHYCTL_OFFSET	0x144
-+#define NPCM_USBXPHYCTL_RS	BIT(28)
-+
-+/* NPCM7xx Reset registers */
-+#define NPCM_SWRSTR		0x14
-+#define NPCM_SWRST		BIT(2)
-+
-+#define NPCM_IPSRST1		0x20
-+#define NPCM_IPSRST1_USBD1	BIT(5)
-+#define NPCM_IPSRST1_USBD2	BIT(8)
-+#define NPCM_IPSRST1_USBD3	BIT(25)
-+#define NPCM_IPSRST1_USBD4	BIT(22)
-+#define NPCM_IPSRST1_USBD5	BIT(23)
-+#define NPCM_IPSRST1_USBD6	BIT(24)
-+
-+#define NPCM_IPSRST2		0x24
-+#define NPCM_IPSRST2_USB_HOST	BIT(26)
-+
-+#define NPCM_IPSRST3		0x34
-+#define NPCM_IPSRST3_USBD0	BIT(4)
-+#define NPCM_IPSRST3_USBD7	BIT(5)
-+#define NPCM_IPSRST3_USBD8	BIT(6)
-+#define NPCM_IPSRST3_USBD9	BIT(7)
-+#define NPCM_IPSRST3_USBPHY1	BIT(24)
-+#define NPCM_IPSRST3_USBPHY2	BIT(25)
-+
-+#define NPCM_RC_RESETS_PER_REG	32
-+#define NPCM_MASK_RESETS	GENMASK(4, 0)
-+
-+struct npcm_rc_data {
-+	struct reset_controller_dev rcdev;
-+	struct notifier_block restart_nb;
-+	u32 sw_reset_number;
-+	void __iomem *base;
-+	spinlock_t lock;
-+};
-+
-+#define to_rc_data(p) container_of(p, struct npcm_rc_data, rcdev)
-+
-+static int npcm_rc_restart(struct notifier_block *nb, unsigned long mode,
-+			   void *cmd)
-+{
-+	struct npcm_rc_data *rc = container_of(nb, struct npcm_rc_data,
-+					       restart_nb);
-+
-+	writel(NPCM_SWRST << rc->sw_reset_number, rc->base + NPCM_SWRSTR);
-+	mdelay(1000);
-+
-+	pr_emerg("%s: unable to restart system\n", __func__);
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int npcm_rc_setclear_reset(struct reset_controller_dev *rcdev,
-+				  unsigned long id, bool set)
-+{
-+	struct npcm_rc_data *rc = to_rc_data(rcdev);
-+	unsigned int rst_bit = BIT(id & NPCM_MASK_RESETS);
-+	unsigned int ctrl_offset = id >> 8;
-+	unsigned long flags;
-+	u32 stat;
-+
-+	spin_lock_irqsave(&rc->lock, flags);
-+	stat = readl(rc->base + ctrl_offset);
-+	if (set)
-+		writel(stat | rst_bit, rc->base + ctrl_offset);
-+	else
-+		writel(stat & ~rst_bit, rc->base + ctrl_offset);
-+	spin_unlock_irqrestore(&rc->lock, flags);
-+
-+	return 0;
-+}
-+
-+static int npcm_rc_assert(struct reset_controller_dev *rcdev, unsigned long id)
-+{
-+	return npcm_rc_setclear_reset(rcdev, id, true);
-+}
-+
-+static int npcm_rc_deassert(struct reset_controller_dev *rcdev,
-+			    unsigned long id)
-+{
-+	return npcm_rc_setclear_reset(rcdev, id, false);
-+}
-+
-+static int npcm_rc_status(struct reset_controller_dev *rcdev,
-+			  unsigned long id)
-+{
-+	struct npcm_rc_data *rc = to_rc_data(rcdev);
-+	unsigned int rst_bit = BIT(id & NPCM_MASK_RESETS);
-+	unsigned int ctrl_offset = id >> 8;
-+
-+	return (readl(rc->base + ctrl_offset) & rst_bit);
-+}
-+
-+static int npcm_reset_xlate(struct reset_controller_dev *rcdev,
-+			    const struct of_phandle_args *reset_spec)
-+{
-+	unsigned int offset, bit;
-+
-+	offset = reset_spec->args[0];
-+	if (offset != NPCM_IPSRST1 && offset != NPCM_IPSRST2 &&
-+	    offset != NPCM_IPSRST3) {
-+		dev_err(rcdev->dev, "Error reset register (0x%x)\n", offset);
-+		return -EINVAL;
-+	}
-+	bit = reset_spec->args[1];
-+	if (bit >= NPCM_RC_RESETS_PER_REG) {
-+		dev_err(rcdev->dev, "Error reset number (%d)\n", bit);
-+		return -EINVAL;
-+	}
-+
-+	return (offset << 8) | bit;
-+}
-+
-+static const struct of_device_id npcm_rc_match[] = {
-+	{ .compatible = "nuvoton,npcm750-reset",
-+		.data = (void *)"nuvoton,npcm750-gcr" },
-+	{ }
-+};
-+
-+/*
-+ *  The following procedure should be observed in USB PHY, USB device and
-+ *  USB host initialization at BMC boot
-+ */
-+static int npcm_usb_reset(struct platform_device *pdev, struct npcm_rc_data *rc)
-+{
-+	u32 mdlr, iprst1, iprst2, iprst3;
-+	struct device *dev = &pdev->dev;
-+	struct regmap *gcr_regmap;
-+	u32 ipsrst1_bits = 0;
-+	u32 ipsrst2_bits = NPCM_IPSRST2_USB_HOST;
-+	u32 ipsrst3_bits = 0;
-+	const char *gcr_dt;
-+
-+	gcr_dt = (const char *)
-+	of_match_device(dev->driver->of_match_table, dev)->data;
-+
-+	gcr_regmap = syscon_regmap_lookup_by_compatible(gcr_dt);
-+	if (IS_ERR(gcr_regmap)) {
-+		dev_err(&pdev->dev, "Failed to find %s\n", gcr_dt);
-+		return PTR_ERR(gcr_regmap);
-+	}
-+
-+	/* checking which USB device is enabled */
-+	regmap_read(gcr_regmap, NPCM_MDLR_OFFSET, &mdlr);
-+	if (!(mdlr & NPCM_MDLR_USBD0))
-+		ipsrst3_bits |= NPCM_IPSRST3_USBD0;
-+	if (!(mdlr & NPCM_MDLR_USBD1))
-+		ipsrst1_bits |= NPCM_IPSRST1_USBD1;
-+	if (!(mdlr & NPCM_MDLR_USBD2_4))
-+		ipsrst1_bits |= (NPCM_IPSRST1_USBD2 |
-+				 NPCM_IPSRST1_USBD3 |
-+				 NPCM_IPSRST1_USBD4);
-+	if (!(mdlr & NPCM_MDLR_USBD0)) {
-+		ipsrst1_bits |= (NPCM_IPSRST1_USBD5 |
-+				 NPCM_IPSRST1_USBD6);
-+		ipsrst3_bits |= (NPCM_IPSRST3_USBD7 |
-+				 NPCM_IPSRST3_USBD8 |
-+				 NPCM_IPSRST3_USBD9);
-+	}
-+
-+	/* assert reset USB PHY and USB devices */
-+	iprst1 = readl(rc->base + NPCM_IPSRST1);
-+	iprst2 = readl(rc->base + NPCM_IPSRST2);
-+	iprst3 = readl(rc->base + NPCM_IPSRST3);
-+
-+	iprst1 |= ipsrst1_bits;
-+	iprst2 |= ipsrst2_bits;
-+	iprst3 |= (ipsrst3_bits | NPCM_IPSRST3_USBPHY1 |
-+		   NPCM_IPSRST3_USBPHY2);
-+
-+	writel(iprst1, rc->base + NPCM_IPSRST1);
-+	writel(iprst2, rc->base + NPCM_IPSRST2);
-+	writel(iprst3, rc->base + NPCM_IPSRST3);
-+
-+	/* clear USB PHY RS bit */
-+	regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
-+			   NPCM_USBXPHYCTL_RS, 0);
-+	regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
-+			   NPCM_USBXPHYCTL_RS, 0);
-+
-+	/* deassert reset USB PHY */
-+	iprst3 &= ~(NPCM_IPSRST3_USBPHY1 | NPCM_IPSRST3_USBPHY2);
-+	writel(iprst3, rc->base + NPCM_IPSRST3);
-+
-+	udelay(50);
-+
-+	/* set USB PHY RS bit */
-+	regmap_update_bits(gcr_regmap, NPCM_USB1PHYCTL_OFFSET,
-+			   NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
-+	regmap_update_bits(gcr_regmap, NPCM_USB2PHYCTL_OFFSET,
-+			   NPCM_USBXPHYCTL_RS, NPCM_USBXPHYCTL_RS);
-+
-+	/* deassert reset USB devices*/
-+	iprst1 &= ~ipsrst1_bits;
-+	iprst2 &= ~ipsrst2_bits;
-+	iprst3 &= ~ipsrst3_bits;
-+
-+	writel(iprst1, rc->base + NPCM_IPSRST1);
-+	writel(iprst2, rc->base + NPCM_IPSRST2);
-+	writel(iprst3, rc->base + NPCM_IPSRST3);
-+
-+	return 0;
-+}
-+
-+static const struct reset_control_ops npcm_rc_ops = {
-+	.assert		= npcm_rc_assert,
-+	.deassert	= npcm_rc_deassert,
-+	.status		= npcm_rc_status,
-+};
-+
-+static int npcm_rc_probe(struct platform_device *pdev)
-+{
-+	struct npcm_rc_data *rc;
-+	int ret;
-+
-+	rc = devm_kzalloc(&pdev->dev, sizeof(*rc), GFP_KERNEL);
-+	if (!rc)
-+		return -ENOMEM;
-+
-+	rc->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(rc->base))
-+		return PTR_ERR(rc->base);
-+
-+	spin_lock_init(&rc->lock);
-+
-+	rc->rcdev.owner = THIS_MODULE;
-+	rc->rcdev.ops = &npcm_rc_ops;
-+	rc->rcdev.of_node = pdev->dev.of_node;
-+	rc->rcdev.of_reset_n_cells = 2;
-+	rc->rcdev.of_xlate = npcm_reset_xlate;
-+
-+	platform_set_drvdata(pdev, rc);
-+
-+	ret = devm_reset_controller_register(&pdev->dev, &rc->rcdev);
-+	if (ret) {
-+		dev_err(&pdev->dev, "unable to register device\n");
-+		return ret;
-+	}
-+
-+	if (npcm_usb_reset(pdev, rc))
-+		dev_warn(&pdev->dev, "NPCM USB reset failed, can cause issues with UDC and USB host\n");
-+
-+	if (!of_property_read_u32(pdev->dev.of_node, "nuvoton,sw-reset-number",
-+				  &rc->sw_reset_number)) {
-+		if (rc->sw_reset_number && rc->sw_reset_number < 5) {
-+			rc->restart_nb.priority = 192,
-+			rc->restart_nb.notifier_call = npcm_rc_restart,
-+			ret = register_restart_handler(&rc->restart_nb);
-+			if (ret)
-+				dev_warn(&pdev->dev, "failed to register restart handler\n");
-+		}
-+	}
-+
-+	return ret;
-+}
-+
-+static struct platform_driver npcm_rc_driver = {
-+	.probe	= npcm_rc_probe,
-+	.driver	= {
-+		.name			= "npcm-reset",
-+		.of_match_table		= npcm_rc_match,
-+		.suppress_bind_attrs	= true,
-+	},
-+};
-+builtin_platform_driver(npcm_rc_driver);
--- 
-2.22.0
+https://github.com/openbmc/bmcweb/blob/07a602993f1007b0b0b764bdb3f14f302a8d2e26/include/security_headers_middleware.hpp#L32
 
+
+> 
+>     The potential binary size increase is a valid concern, it's worthing
+>     comparing the binary size with and without nginx.
+> 
+> 
+> Just now, I did a test.
+> 
+> I completely copied the Nginx configuration of meta-ibm and compared the 
+> rofs binary size after compilation.
+> with Nginx: 18509824
+> without Nginx: 18022400
+> 
+> refer to: 
+> https://github.com/openbmc/openbmc/tree/837851ae37a67b84f0f8c0fd310d33b5a731cc80/meta-ibm/recipes-httpd
+> 
+> 
+>      > >
+>      > > thx - brad
+>      > >
+> 
