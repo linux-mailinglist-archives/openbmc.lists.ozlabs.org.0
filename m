@@ -1,51 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73AFFF150B
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 12:26:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 843ACF1601
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 13:25:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477PPk0CRczF5t9
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 22:26:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477Qht71R5zF614
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 23:25:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=pengutronix.de (client-ip=2001:67c:670:201:290:27ff:fe1d:cc33;
- helo=metis.ext.pengutronix.de; envelope-from=p.zabel@pengutronix.de;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=pengutronix.de
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de
- [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477PNf1SqlzF5sm
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 22:25:52 +1100 (AEDT)
-Received: from lupine.hi.pengutronix.de
- ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
- by metis.ext.pengutronix.de with esmtp (Exim 4.92)
- (envelope-from <p.zabel@pengutronix.de>)
- id 1iSJRW-0001jd-TJ; Wed, 06 Nov 2019 12:25:42 +0100
-Message-ID: <aaada00902c84b9f375555ee98946631b7de3280.camel@pengutronix.de>
-Subject: Re: [PATCH v4 3/3] reset: npcm: add NPCM reset controller driver
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 06 Nov 2019 12:25:42 +0100
-In-Reply-To: <CAP6Zq1iYKKkcEKt-WW3sDRJ1ktWgQug9SQc2AF473fWnooUxeQ@mail.gmail.com>
-References: <20191106095832.236766-1-tmaimon77@gmail.com>
- <20191106095832.236766-4-tmaimon77@gmail.com>
- <89250d485d05d4d671203ae615ebcf514b4d6705.camel@pengutronix.de>
- <CAP6Zq1iYKKkcEKt-WW3sDRJ1ktWgQug9SQc2AF473fWnooUxeQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.30.5-1.1 
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=20695f9c9=george.hung@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 477QWW29G4zF67J
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 23:16:49 +1100 (AEDT)
+IronPort-SDR: l8LfNIugB1HQJi+3NxF48Yqbh+MGlijFjAkdBBplJMQk8trYNsV75eppHNgWXH4TMvTPWUl14a
+ zg0AsXA+s2jA==
+Received: from unknown (HELO mailbx05.quanta.corp) ([10.243.91.100])
+ by mx02.quantatw.com with ESMTP; 06 Nov 2019 20:16:44 +0800
+Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx05.quanta.corp
+ (10.243.91.100) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 6 Nov 2019
+ 20:16:42 +0800
+Received: from mailbx09.quanta.corp ([192.168.57.9]) by mailbx09.quanta.corp
+ ([192.168.57.9]) with mapi id 15.01.1713.009; Wed, 6 Nov 2019 20:16:42 +0800
+From: =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
+To: "kunyi@google.com" <kunyi@google.com>
+Subject: [phosphor-ipmi-blobs-binarystore] Platform configuration and the
+ host-tool questions
+Thread-Topic: [phosphor-ipmi-blobs-binarystore] Platform configuration and the
+ host-tool questions
+Thread-Index: AdWUm6BObRcJA08TT5K9IUYz4nw1mg==
+Date: Wed, 6 Nov 2019 12:16:42 +0000
+Message-ID: <dbc2cc41e76c497cb551d81f8298ef0a@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25024.006
+x-tm-as-result: No-10--10.457900-5.000000
+x-tmase-matchedrid: LVkZzMT5mEqb5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGNTQc/3yVzaAr2
+ Te2qiFCjBur/0lbL6QzXyVtFrAtOqiSKeTIQJ1bz0DLmSnNTPI9Iq1BEJ6pINHv3ioAd9KrSsaz
+ EWgN8IaAdcm2OGsPiPkU6jxiUzE2y0kZSdXm5RCTiHyvyXeXh5nnUZqRb3abmEOidyVT9wHnYdc
+ WNicpUK45TZO4r6MeQyWJXJFoAf/3cAUnQBuvU5JN65fjGjYMQfYlavNIcDCpCYjM6zs5Y/0FCh
+ e0zQXY5fS0Ip2eEHnzWRN8STJpl3PoLR4+zsDTtgUicvJ4MChkeQ4s5nEafLMTowLmFIj7rMedL
+ 6kI9Liz9kjN/cIap2q8e8eBqaP6r
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--10.457900-5.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25024.006
+x-tm-snts-smtp: 262553E62C8B117C253C890F4B343ADB826713363E28D3392B848B4FADE4075D2000:B
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2001:67c:670:100:3ad5:47ff:feaf:1a17
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de);
- SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,63 +68,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>,
- Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tomer,
-
-On Wed, 2019-11-06 at 13:14 +0200, Tomer Maimon wrote:
-[...]
-> On Wed, 6 Nov 2019 at 12:39, Philipp Zabel <p.zabel@pengutronix.de> wrote:
-[...]
-> > Is this npcm750 specific? If so, you could call it npcm750_usb_reset and
-> > only call it if the compatible matches.
-> 
-> No, we will need it also in future BMC's
-
-Ok, thank you for clarifying.
-
-> > 
-> > +{
-> > > +     struct device_node *np = pdev->dev.of_node;
-> > > +     u32 mdlr, iprst1, iprst2, iprst3;
-> > > +     struct regmap *gcr_regmap = NULL;
-> > > +     u32 ipsrst1_bits = 0;
-> > > +     u32 ipsrst2_bits = NPCM_IPSRST2_USB_HOST;
-> > > +     u32 ipsrst3_bits = 0;
-> > > +
-> > > +     if (of_device_is_compatible(np, "nuvoton,npcm750-reset")) {
-> > 
-> > Better use of_match_device(). Also see above, I think this check could
-> > be done in probe() already?
-> > 
-> I will use  of_match_device. because the nuvoton,npcm750-reset used only at
-> npcm_usb_reset and in the next BMC version we will need to get other
-> reset device I prefer to leave it the  npcm_usb_reset function, is it O.K?
-
-Yes, that is fine. I would store the GCR lookup compatible string in a
-per-device const struct that is accessible through of_device_id->data.
-
-> > > +             gcr_regmap =
-> > syscon_regmap_lookup_by_compatible("nuvoton,npcm750-gcr");
-> > > +             if (IS_ERR(gcr_regmap)) {
-> > > +                     dev_err(&pdev->dev, "Failed to find
-> > nuvoton,npcm750-gcr\n");
-> > > +                     return PTR_ERR(gcr_regmap);
-> > > +             }
-> > > +     }
-> > > +     if (!gcr_regmap)
-> > > +             return -ENXIO;
-
-^ This code could then be the same for all platforms.
-
-regards
-Philipp
-
+SGkgS3VuLA0KDQpJJ2QgbGlrZSB0byBhZGQgYSBwbGF0Zm9ybSBjb25maWd1cmF0aW9uIGZpbGUg
+Zm9yIGJsb2IgYmFzZCBpZCBhbmQgc3lzZmlsZSBwYXRoLCBidXQgSSBhbHdheXMgZ2V0IHRoZSBy
+ZXR1cm4gZXJyb3IsICJFbmNvdW50ZXJlZCBlcnJvciB3aGVuIHBhcnNpbmcgY29uZmlnIGZpbGUi
+Lg0KSXMgbXkgY29uZmlnIGZpbGUgZm9ybWF0IHdyb25nIG9yIHNvbWV0aGluZyBJIG1pc3NlZCA/
+DQoNCk15IGV4YW1wbGUgY29uZmlnLmpzb246DQp7DQogICJibG9iQmFzZUlkIjogIi9za20vaHNz
+LyIsDQogICJzeXNGaWxlUGF0aCI6ICIvc3lzL2NsYXNzL2kyYy1kZXYvaTJjLTgvZGV2aWNlLzgt
+MDA1OC9lZXByb20iLA0KICAib2Zmc2V0Qnl0ZXMiOiAyNTYsDQogICJtYXhTaXplQnl0ZXMiOiAx
+MDI0DQp9DQoNCkJUVywgaXMgdGhlcmUgdGhlIHV0aWxpdHkgc3VjaCBhcyB0aGUgaG9zdC10b29s
+IG9mIHBob3NwaG9yLWlwbWktZmxhc2ggdG8gdGVzdCA/DQoNCg0KVGhhbmtzLg0KDQpCZXN0IFJl
+Z2FyZHMgDQpHZW9yZ2UgSHVuZw0KUmVzZWFyY2ggRGl2aXNpb24gLSBTb2Z0d2FyZSBFbmdpbmVl
+cg0KUXVhbnRhIENvbXB1dGVyIEluYy4NCkV4dDogMTY4MzANCkUtTWFpbCA6IEdlb3JnZS5IdW5n
+QFF1YW50YVRXLmNvbQ0KDQo=
