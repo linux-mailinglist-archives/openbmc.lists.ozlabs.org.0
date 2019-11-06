@@ -1,65 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A82BF0E86
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 06:53:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57F5DF1004
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 08:12:37 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477G130H4nzDqPg
-	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 16:53:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477HmL2MLCzF5WL
+	for <lists+openbmc@lfdr.de>; Wed,  6 Nov 2019 18:12:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=206d7b4a4=tony.lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::136;
+ helo=mail-il1-x136.google.com; envelope-from=rahulmaheshwari01@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 477G0J229BzF5X1
- for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 16:52:42 +1100 (AEDT)
-IronPort-SDR: uCxOObl+5gm9z5iquV/Qoz3c6KHjK+KedscMUhpLMODoCkBDSVkgQpnSqhN2S9C87ulzpyIejg
- 9lXvWPs4Dydg==
-Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
- by mx02.quantatw.com with ESMTP; 06 Nov 2019 13:52:39 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx08.quanta.corp
- (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 6 Nov 2019
- 13:52:37 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Wed, 6 Nov 2019 13:52:37 +0800
-From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Subject: RE: Questions about openbmc-test-automation
-Thread-Topic: Questions about openbmc-test-automation
-Thread-Index: AdWTti27hCt8Gg0PRByoyfDQiVK6a///m0GA//49oFA=
-Date: Wed, 6 Nov 2019 05:52:37 +0000
-Message-ID: <37a55521de3843c6a407e7faeb68f693@quantatw.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="WThCIvUf"; 
+ dkim-atps=neutral
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com
+ [IPv6:2607:f8b0:4864:20::136])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 477Hlg4kwNzF5Tj
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Nov 2019 18:11:59 +1100 (AEDT)
+Received: by mail-il1-x136.google.com with SMTP id r9so4161297ilq.10
+ for <openbmc@lists.ozlabs.org>; Tue, 05 Nov 2019 23:11:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qc83hs7Sc9qQ6ctpz4T94uQo/uYIp7lPz5JWZYxuxcE=;
+ b=WThCIvUfsMt0neueZnIC2rHyC6uOFI8k9R+5xneyJjT/qoFn/ViniBgGdp06LAvzDZ
+ OTloS5PL922jKF/I/sQeYtVkmuKrDtZneQEH4GBbG8EhGnqgShVdS0S1U8w1Cffgq3qf
+ 3119fqbrYKR9Zjp23N9UDCzoFLU5wYkO68VVoZyEW6E+iNodK0ffAZXLLDww+YkHs6/V
+ ksuUlaEVtzFVshfWI79P/YXzi4nIxu7i8QlNtJOn/H9VzuqbhDIgvHJmqhMXExXncRgC
+ Vv+OBVY8QjdT3ei3abWl9R9WS6dshQ6xY89f0+oaWCL3NNIzI/8dzzwyFcWY7hNmseEK
+ PfKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qc83hs7Sc9qQ6ctpz4T94uQo/uYIp7lPz5JWZYxuxcE=;
+ b=L61S+rbJm/C9TNYLNWS2+Z9ve2GG84fFQBhl4+Nc5IP8x6X8bIBgTGs+I1cOr2e/SJ
+ nfelUcQay86S16oeqE89s3jlAWKCyfw1C9Pt9z2jkqQx6YUdKvNTgDdPk1dPv7ShGAIB
+ Fo59jWLuj68Shw9xq63hV9kTYyUlvgil2Or/KnGlfP+6HeMEwP4j5c/kGdBKhqKmpF7k
+ mUqVmqOS7mb1Fi/rrFLvhsUDmaYe75DgYeo/zkofQ4odCFx4YLXe6XUn0QBabqhb3Gi5
+ XWouP0vkpCQHDzMfrsPh4GYrORr3ksD/S54r9oSktJ18QDIgDR7K4biOK6opnEMvKXNl
+ JnmA==
+X-Gm-Message-State: APjAAAXU43XM0pZnpAfRPXk9YAP+pCF2LO3UyMDAh2H0mFXgBLGipCgf
+ TP9AjvH6k7whyjVOqnLdiLKev4plgQYUBj8vxgQv1A==
+X-Google-Smtp-Source: APXvYqw6NPWTW6g4T2/qiO3YU1RCfRbjy/JirVlCqDH+cHJnYYfgdzJD1nENqBOb6tJTxcmQkspW5FqGe0bbLeBjj5s=
+X-Received: by 2002:a92:8897:: with SMTP id m23mr1119592ilh.36.1573024315565; 
+ Tue, 05 Nov 2019 23:11:55 -0800 (PST)
+MIME-Version: 1.0
 References: <937d3cf0ee5b42559e145fbf87c5c9b3@quantatw.com>
  <CAAMkS12QPgcdawwV0OdvB_xFB5C78o7AqvTmKcZWYqeTgjCioQ@mail.gmail.com>
-In-Reply-To: <CAAMkS12QPgcdawwV0OdvB_xFB5C78o7AqvTmKcZWYqeTgjCioQ@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25024.004
-x-tm-as-result: No-10--5.282000-5.000000
-x-tmase-matchedrid: vEvJ7Rh1lGjuo96mfIBuopzEHTUOuMX33dCmvEa6IiGoLZarzrrPmaLm
- lxP63kmZopwLVp6yT62/a7VA1xg9U/WF5puj6f41ryZo29uPUV4KogTtqoQiBkE3/qvOjgFLUIt
- SuNQYAOLRH78Ygif3X7tCCJ8Cv8fx2cr27ZsPYuFirYvHHJjfEwPQogCre6qltXl9IxEPXOrxBZ
- 9GZhVcJ8EdglAiCXqg7RXmDQXnRKJn7D3GC4BpdOIfK/Jd5eHmVFeUPAjsd8Zs98Z8fG/6kQYj+
- P9XfeSQ5FG8mnmnbWOU445mRfcQTr9jX++auvv+bRZGrsoeW/hDfut2Lc1Yh7xgMf9QE2ebc3wu
- qc+4Wow8MwCgiSCug3lySYZqUQo4IqRxG3EBiTfnzlXMYw4XMD3Al4zalJpFwrbXMGDYqV+FR9H
- au8GO7u7bzaWrH1CRV+YCnewsI0ZhaCXwJEixx8WkVY187wsRfPt2JiIJMmg=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--5.282000-5.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25024.004
-x-tm-snts-smtp: 197907759C3B4A87FCC5CB7929ACC9CE1DFE1EE455489A1DA3D31A7F6579D19C2000:B
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+ <37a55521de3843c6a407e7faeb68f693@quantatw.com>
+In-Reply-To: <37a55521de3843c6a407e7faeb68f693@quantatw.com>
+From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Date: Wed, 6 Nov 2019 12:42:32 +0530
+Message-ID: <CAAMkS10zqHVNv-x8pLBtyDJVm2xTjTROHSqsA6SeELZ953wz-w@mail.gmail.com>
+Subject: Re: Questions about openbmc-test-automation
+To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+Content-Type: multipart/alternative; boundary="0000000000008d6b9e0596a8439a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,34 +78,154 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgUmFodWwsDQoNCkZvciBleGFtcGxlLCBjYXNlICJSZXRyaWV2ZSBJUCBBZGRyZXNzIFZpYSBJ
-UE1JIEFuZCBWZXJpZnkgVXNpbmcgUmVkZmlzaCIgaW4gL2lwbWkvdGVzdF9pcG1pX25ldHdvcmsu
-cm9ib3QuDQpUaGUgbmV3IHdheSBpcyBhcyBmb2xsb3dzOg0KDQpJUE1JIG5ldHdvcmsgY2hhbm5l
-bCBsb2dpY2FsbHkgc3RhcnRzIGZyb20gMS4gRm9yIGV4YW1wbGUsIG9uY2UgaXQgZmlndXJlIG91
-dCB0aGUgY2hhbm5lbCBjb3VudCBpcyAzLA0Kd2UgY2FuIHJldHJpZXZlIElQIGFkZHJlc3NlcyB0
-aHJvdWdoIGNoYW5uZWxzIDEsIDIsIGFuZCAzLCBhbmQgdmVyaWZ5IHRoZW0gY29ycmVzcG9uZCB0
-byBldGgwLCBldGgxLCBhbmQgZXRoMiwgcmVzcGVjdGl2ZWx5IGJ5IHJlZGZpc2guDQpJcyBpdCBy
-aWdodD8NCg0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQoNCkZyb206IFJhaHVsIE1haGVz
-aHdhcmkgPHJhaHVsbWFoZXNod2FyaTAxQGdtYWlsLmNvbT4gDQpTZW50OiBUdWVzZGF5LCBOb3Zl
-bWJlciA1LCAyMDE5IDY6NTEgUE0NClRvOiBUb255IExlZSAo5p2O5paH5a+MKSA8VG9ueS5MZWVA
-cXVhbnRhdHcuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3ViamVjdDogUmU6
-IFF1ZXN0aW9ucyBhYm91dCBvcGVuYm1jLXRlc3QtYXV0b21hdGlvbg0KDQpUaGFua3MgZm9yIHBv
-aW50aW5nIHRoYXQgb3V0LiBQYXNzaW5nIGludGVyZmFjZS9jaGFubmVsIG51bWJlciBpcyBhbiBl
-YXNpZXIgb3B0aW9uIGJ1dCB3ZSBzaG91bGQgYmUgYXZvaWRpbmcgcGFzc2luZyBlbnZpcm9ubWVu
-dMKgdmFyaWFibGUgdW5sZXNzIHRoZXJlIGlzIG5vIG90aGVyIHdheS4gSSB3b3VsZCBzYXkgYmV0
-dGVyIHdheSB0byBvdmVyY29tZSB0aGlzIGlzIHRvIGZpZ3VyZSBvdXQgdGhlIGNoYW5uZWwgY291
-bnQgdXNpbmcgImlwIGFkZHIiIGNvbW1hbmQgZnJvbSBCTUMgY2xpLsKgDQpMZXQgdXMga25vdyBp
-ZiB0aGF0IHNvdW5kcyBnb29kwqB0byB5b3UuDQpBbHNvIGxldCB1cyBrbm93IGlmIHlvdSB3b3Vs
-ZCBsaWtlIHRvIGRyb3AgY29kZSBjaGFuZ2UgZm9yIHRoZSBzYW1lP8KgDQoNClRoYW5rcw0KUmFo
-dWwNCg0KDQoNCg0KwqANCg0KT24gVHVlLCBOb3YgNSwgMjAxOSBhdCAyOjI4IFBNIFRvbnkgTGVl
-ICjmnY7mloflr4wpIDxtYWlsdG86VG9ueS5MZWVAcXVhbnRhdHcuY29tPiB3cm90ZToNCkhpIFJh
-aHVsLA0KwqANCkknbSB3b25kZXJpbmcgdGhhdCB3aHkgIlJFREZJU0hfTldfRVRIMCIgaXMgaGFy
-ZGNvZGUgYXMgIk1hbmFnZXJzL2JtYy9FdGhlcm5ldEludGVyZmFjZXMvZXRoMC8iIGluIC9kYXRh
-L3ZhcmlhYmxlcy5weQ0KaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy10ZXN0LWF1
-dG9tYXRpb24vYmxvYi9tYXN0ZXIvZGF0YS92YXJpYWJsZXMucHkjTDE1NQ0KRnVydGhlcm1vcmUs
-IHRoZSBjb21tYW5kICJsYW4gcHJpbnQiIGRpZG4ndCBzcGVjaWZ5IHRoZSBjaGFubmVsIG51bWJl
-ciBpbiAvaXBtaS90ZXN0X2lwbWlfbmV0d29yay5yb2JvdC4NClRoZXJlZm9yZSwgdGhlIGRlZmF1
-bHQgd2lsbCBwcmludCBpbmZvcm1hdGlvbiBvbiB0aGUgZmlyc3QgZm91bmQgTEFOIGNoYW5uZWwu
-IA0KwqANCklzbid0IGl0IG1vcmUgcmVhc29uYWJsZSB0byBzZXQgdGhlIGludGVyZmFjZSBhbmQg
-dGhlIGNoYW5uZWwgbnVtYmVyIGFzIGVudmlyb25tZW50IHZhcmlhYmxlcyBhbmQgZ2l2ZSB0aGVt
-IGRlZmF1bHQgdmFsdWVzPw0KwqANClRoYW5rcw0KQmVzdCBSZWdhcmRzLA0KVG9ueQ0KwqANCg==
+--0000000000008d6b9e0596a8439a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Yes, that is correct way.
+
+On Wed, Nov 6, 2019 at 11:22 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Ton=
+y.Lee@quantatw.com>
+wrote:
+
+> Hi Rahul,
+>
+> For example, case "Retrieve IP Address Via IPMI And Verify Using Redfish"
+> in /ipmi/test_ipmi_network.robot.
+> The new way is as follows:
+>
+> IPMI network channel logically starts from 1. For example, once it figure
+> out the channel count is 3,
+> we can retrieve IP addresses through channels 1, 2, and 3, and verify the=
+m
+> correspond to eth0, eth1, and eth2, respectively by redfish.
+> Is it right?
+>
+> Thanks
+> Best Regards,
+> Tony
+>
+> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+> Sent: Tuesday, November 5, 2019 6:51 PM
+> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: Questions about openbmc-test-automation
+>
+> Thanks for pointing that out. Passing interface/channel number is an
+> easier option but we should be avoiding passing environment variable unle=
+ss
+> there is no other way. I would say better way to overcome this is to figu=
+re
+> out the channel count using "ip addr" command from BMC cli.
+> Let us know if that sounds good to you.
+> Also let us know if you would like to drop code change for the same?
+>
+> Thanks
+> Rahul
+>
+>
+>
+>
+>
+>
+> On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <ma=
+ilto:
+> Tony.Lee@quantatw.com> wrote:
+> Hi Rahul,
+>
+> I'm wondering that why "REDFISH_NW_ETH0" is hardcode as
+> "Managers/bmc/EthernetInterfaces/eth0/" in /data/variables.py
+>
+> https://github.com/openbmc/openbmc-test-automation/blob/master/data/varia=
+bles.py#L155
+> Furthermore, the command "lan print" didn't specify the channel number in
+> /ipmi/test_ipmi_network.robot.
+> Therefore, the default will print information on the first found LAN
+> channel.
+>
+> Isn't it more reasonable to set the interface and the channel number as
+> environment variables and give them default values?
+>
+> Thanks
+> Best Regards,
+> Tony
+>
+>
+
+--0000000000008d6b9e0596a8439a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Yes, that is correct way.<br></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 6, 2019 at 11:22 =
+AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@qu=
+antatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">Hi Rahul,<br>
+<br>
+For example, case &quot;Retrieve IP Address Via IPMI And Verify Using Redfi=
+sh&quot; in /ipmi/test_ipmi_network.robot.<br>
+The new way is as follows:<br>
+<br>
+IPMI network channel logically starts from 1. For example, once it figure o=
+ut the channel count is 3,<br>
+we can retrieve IP addresses through channels 1, 2, and 3, and verify them =
+correspond to eth0, eth1, and eth2, respectively by redfish.<br>
+Is it right?<br>
+<br>
+Thanks<br>
+Best Regards,<br>
+Tony<br>
+<br>
+From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
+arget=3D"_blank">rahulmaheshwari01@gmail.com</a>&gt; <br>
+Sent: Tuesday, November 5, 2019 6:51 PM<br>
+To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
+uantatw.com" target=3D"_blank">Tony.Lee@quantatw.com</a>&gt;<br>
+Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
+ists.ozlabs.org</a><br>
+Subject: Re: Questions about openbmc-test-automation<br>
+<br>
+Thanks for pointing that out. Passing interface/channel number is an easier=
+ option but we should be avoiding passing environment=C2=A0variable unless =
+there is no other way. I would say better way to overcome this is to figure=
+ out the channel count using &quot;ip addr&quot; command from BMC cli.=C2=
+=A0<br>
+Let us know if that sounds good=C2=A0to you.<br>
+Also let us know if you would like to drop code change for the same?=C2=A0<=
+br>
+<br>
+Thanks<br>
+Rahul<br>
+<br>
+<br>
+<br>
+<br>
+=C2=A0<br>
+<br>
+On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;m=
+ailto:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank">Tony.Lee@q=
+uantatw.com</a>&gt; wrote:<br>
+Hi Rahul,<br>
+=C2=A0<br>
+I&#39;m wondering that why &quot;REDFISH_NW_ETH0&quot; is hardcode as &quot=
+;Managers/bmc/EthernetInterfaces/eth0/&quot; in /data/variables.py<br>
+<a href=3D"https://github.com/openbmc/openbmc-test-automation/blob/master/d=
+ata/variables.py#L155" rel=3D"noreferrer" target=3D"_blank">https://github.=
+com/openbmc/openbmc-test-automation/blob/master/data/variables.py#L155</a><=
+br>
+Furthermore, the command &quot;lan print&quot; didn&#39;t specify the chann=
+el number in /ipmi/test_ipmi_network.robot.<br>
+Therefore, the default will print information on the first found LAN channe=
+l. <br>
+=C2=A0<br>
+Isn&#39;t it more reasonable to set the interface and the channel number as=
+ environment variables and give them default values?<br>
+=C2=A0<br>
+Thanks<br>
+Best Regards,<br>
+Tony<br>
+=C2=A0<br>
+</blockquote></div>
+
+--0000000000008d6b9e0596a8439a--
