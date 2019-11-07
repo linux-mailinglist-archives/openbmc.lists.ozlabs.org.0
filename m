@@ -1,68 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4508F2E48
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 13:42:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA687F2E9B
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 13:56:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47832C3yzMzF6Fv
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 23:42:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4783LJ4b1MzF4YJ
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 23:56:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
- helo=mail-qt1-x841.google.com; envelope-from=liuxiwei1013@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="vOvkFR+D"; 
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.132; helo=m13-132.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="HdiTc3GP"; 
  dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47830V2BCWzF6Fc
- for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 23:40:39 +1100 (AEDT)
-Received: by mail-qt1-x841.google.com with SMTP id r22so2224110qtt.2
- for <openbmc@lists.ozlabs.org>; Thu, 07 Nov 2019 04:40:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0s/jO7G9stDk33uDT1cXAjqyQwJUXSRSXEFSAfbf+lQ=;
- b=vOvkFR+DTzwQQroL/7FfAE41EIPFN+7WjSuuAckRJyybzYtk8lDjs61GQBuO88lGEx
- r5vsQCCI1kRJAwL9yX1jlE7MtFj/GUbWGQSO1PkEW0E2O4ugd3QLg4gcU/CRAE+nqpu0
- yZGfTAdi41jHRonkVCQCD1gv5W/dgcDqxFlmGFGqSPM1LBC9rOtYrOQOKAfSfwznHzW4
- 4CAU+0ppkf2pFVbAYso1Awb7mhlVi7DYILlSJIe5Qnyga23MNriL5sbJnIOF7N+0BFX6
- aOFoSL+kdniAHOGfm85wd8vWCkFxuB/erGLJnhbyQGk5ydzKsBGL+IA9LE618K93sy2y
- WpAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0s/jO7G9stDk33uDT1cXAjqyQwJUXSRSXEFSAfbf+lQ=;
- b=WlXR7p/dDOL0vx69RhD1csJNaY7WcJK6ofOpzCXXV1hWimemsWsEg73fTikQW0Q77r
- ksrrae7/BMd0/+4iKyGZGLugOLsyjm+ON5GgSbp8D2Xd3E9xoW97ErTSdW6cL55BpLDO
- 0Oy4mpEyisSD9d6qGmSoyLV8Pjnzctoo9XUJX8VLvwlmppHyXA9fSfroTpzaCYC0Csxj
- oL4bdxyLJK16FHtLTIdo9uYAHnRwe0Cyw+2tp8/azZUJ6b+DDktxyraJcTrxduE56bgF
- fubtj+Suc89pe0VU38RB4jQlU8sn4rIOl7FigjAOAb3sznqzNd0WByPazgkk3GEaEOE1
- s0Cg==
-X-Gm-Message-State: APjAAAUEL+bwCaLaLafr03jZyssY0TUrnxZmXzdcoBl7eX6xlH/lJPpI
- Lmr3n+MURdlYhKsy2qMd3dEF49X68qjU6ctuA1E=
-X-Google-Smtp-Source: APXvYqx+jDMGNB4Y79bCAArCKDaELmMvk8HrMzWLAYpJAs0L0A2MA6pxypIbZtI4FxAdhvAvNAVyHC3BFfnnG6tXsn0=
-X-Received: by 2002:ac8:ccf:: with SMTP id o15mr3605515qti.380.1573130436433; 
- Thu, 07 Nov 2019 04:40:36 -0800 (PST)
-MIME-Version: 1.0
+Received: from m13-132.163.com (m13-132.163.com [220.181.13.132])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4783Hz4qy9zF4Nw
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 23:53:59 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=fdWIP
+ +Phzh8l5xwlNEW+vmM7aWWapNiYZnK3r2Fejy8=; b=HdiTc3GPc7yUDEpxYRFto
+ +3sMhW9ELNRiohb2P8+oNAz7+3EKzRzf8D/p+Yt/xqQxqX9uHf0N6f27KCUNDfct
+ Ltsug81HC7COuHdrTsR+8PMcOpAdN/cTDHF14AJjdZDCfTHkfTXOlB3820ACBV9i
+ NC21/zTJUcz0d5A0k0/d74=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr132 (Coremail) ; Thu, 7 Nov 2019 20:53:41 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Thu, 7 Nov 2019 20:53:41 +0800 (CST)
+From: www  <ouyangxuan10@163.com>
+To: "George Liu" <liuxiwei1013@gmail.com>
+Subject: Re:Re: Re: why the object cannot list in rest api?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <CANFuQ7Dga46G2nXgEq4cZKNFacKXHM8UsOPjfqngLcj-z=ARtg@mail.gmail.com>
 References: <139bf9c3.6e26.16e44e2c237.Coremail.ouyangxuan10@163.com>
  <OF65345083.058B21A2-ON002584AB.003CA681-002584AB.003CA687@notes.na.collabserv.com>
  <4b98545f.940d.16e45a4ed2f.Coremail.ouyangxuan10@163.com>
-In-Reply-To: <4b98545f.940d.16e45a4ed2f.Coremail.ouyangxuan10@163.com>
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Thu, 7 Nov 2019 20:40:25 +0800
-Message-ID: <CANFuQ7Dga46G2nXgEq4cZKNFacKXHM8UsOPjfqngLcj-z=ARtg@mail.gmail.com>
-Subject: Re: Re: why the object cannot list in rest api?
-To: www <ouyangxuan10@163.com>
-Content-Type: multipart/alternative; boundary="000000000000d95c5c0596c0f8df"
+ <CANFuQ7Dga46G2nXgEq4cZKNFacKXHM8UsOPjfqngLcj-z=ARtg@mail.gmail.com>
+X-CM-CTRLDATA: JWA4FWZvb3Rlcl9odG09NTc2Njo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_150973_1726930112.1573131221214"
+MIME-Version: 1.0
+Message-ID: <68c3864d.9be1.16e45ed78de.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: hMGowACnyJHVE8RdjMyTAQ--.41332W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiMRRm2lUMQrpBQQACs6
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,196 +67,160 @@ Cc: Devender Rao <devenrao@in.ibm.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d95c5c0596c0f8df
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_Part_150973_1726930112.1573131221214
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-www <ouyangxuan10@163.com> =E4=BA=8E2019=E5=B9=B411=E6=9C=887=E6=97=A5=E5=
-=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=887:35=E5=86=99=E9=81=93=EF=BC=9A
+TXkgcHJvZmlsZSBpcyB0aGUgc2FtZSBhcyB5b3Vycy4gd2hlbiB0aGUgZW50cnkgaXMgbmV3IGNy
+ZWF0ZSwgaXQgd2lsbCBub3QgZGlzcGxheSBpbiByZXN0LWFwaS4gaWYgeW91IHJlYm9vdCBibWMg
+b3IgcmVzdGFydCBtYXBwZXJ4LCBpdCB3aWxsIGFwcGVhci4gSSBndWVzcyBXaGVuIGNyZWF0ZSB0
+aGUgZW50cnksIGl0IG5vdCBub3RpZnkgdG8gbWFwcGVyeCwgb3IgbWFwcGVyeCBub3QgY2F0Y2gg
+aXQ/CgoKTUFQUEVSX1NFUlZJQ0VTPSJvcmcub3BlbmJtYyAgeHl6Lm9wZW5ibWNfcHJvamVjdCIK
+TUFQUEVSX0lOVEVSRkFDRVM9Im9yZy5vcGVuYm1jIG9yZy5mcmVlZGVza3RvcC5EQnVzLk9iamVj
+dE1hbmFnZXIgIHh5ei5vcGVuYm1jX3Byb2plY3QiCk1BUFBFUl9TRVJWSUNFQkxBQ0tMSVNUUz0i
+IgoKCnRoYW5rcywKQnlyb24KCgoKCkF0IDIwMTktMTEtMDcgMjA6NDA6MjUsICJHZW9yZ2UgTGl1
+IiA8bGl1eGl3ZWkxMDEzQGdtYWlsLmNvbT4gd3JvdGU6CgoKCgoKd3d3IDxvdXlhbmd4dWFuMTBA
+MTYzLmNvbT4g09oyMDE5xOoxMdTCN8jV1tzLxCDPws7nNzozNdC0tcCjugoKCgpUaGUgcHJvYmxl
+bSBpcyBub3QgdGhlIGNvbW1hbmQuIElmIHlvdSByZXN0YXJ0IG1hcHBlcngsIGl0IHdpbGwgYXBw
+ZWFyLiBJdCBzaG91bGQgYmUgdGhlIHByb2JsZW0gb2YgbWFwcGVyeD8KCgp7CiAgICAiZGF0YSI6
+IFsKICAgICAgICAiL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9lbnRyeSIsICAgICAgICByZXN0
+YXJ0IG1hcHBlcngsIHRoZSBvYmplY3QgY2FuIGJlICBkaXNwbGF5IGluIHJlc3QtYXBpCk1heWJl
+IHlvdXIgYG1hcHBlcmAgaXMgYSBiaXQgcHJvYmxlbSwgaGVyZSBpcyBteSBjb25maWd1cmF0aW9u
+LCBzZWU6CgovZXRjL2RlZmF1bHQvb2JtYwpNQVBQRVJfU0VSVklDRVM9Im9yZy5vcGVuX3Bvd2Vy
+IHh5ei5vcGVuYm1jX3Byb2plY3Qgb3JnLm9wZW5ibWMiCk1BUFBFUl9JTlRFUkZBQ0VTPSJvcmcu
+ZnJlZWRlc2t0b3AuREJ1cy5PYmplY3RNYW5hZ2VyIG9yZy5vcGVuX3Bvd2VyIHh5ei5vcGVuYm1j
+X3Byb2plY3Qgb3JnLm9wZW5ibWMiCgpNQVBQRVJfU0VSVklDRUJMQUNLTElTVFM9IiIgCgogICAg
+ICAgICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2VudHJ5LzEiLAogICAgICAgICIveHl6L29w
+ZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsIiwKICAgICAgICAiL3h5ei9vcGVuYm1jX3Byb2pl
+Y3QvZHVtcC9pbnRlcm5hbC9tYW5hZ2VyIgogICAgXSwKICAgICJtZXNzYWdlIjogIjIwMCBPSyIs
+CiAgICAic3RhdHVzIjogIm9rIgp9CgoKdGhhbmtzLApCeXJvbgoKCgoKQXQgMjAxOS0xMS0wNyAx
+OTowMjoyNywgIkRldmVuZGVyIFJhbyIgPGRldmVucmFvQGluLmlibS5jb20+IHdyb3RlOgoKRG8g
+Y2hlY2sgb3V0IHRoaXMgcmVhZG1lIGRvY3VtZW50IGZvciB0aGUgY29tbWFuZHMKaHR0cHM6Ly9n
+ZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvcGhvc3Bob3ItZGVidWctY29sbGVj
+dG9yLysvMjUzNTcKIAotLS0tLSBPcmlnaW5hbCBtZXNzYWdlIC0tLS0tCkZyb206IHd3dyA8b3V5
+YW5neHVhbjEwQDE2My5jb20+ClNlbnQgYnk6ICJvcGVuYm1jIiA8b3BlbmJtYy1ib3VuY2VzK2Rl
+dmVucmFvPWluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZz4KVG86ICJvcGVuYm1jQGxpc3RzLm96
+bGFicy5vcmciIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+CkNjOgpTdWJqZWN0OiBbRVhURVJO
+QUxdIHdoeSB0aGUgb2JqZWN0IGNhbm5vdCBsaXN0IGluIHJlc3QgYXBpPwpEYXRlOiBUaHUsIE5v
+diA3LCAyMDE5IDE6NTYgUE0KIApEZWFyIGFsbCwKIApUaGVyZSBhcmUgc29tZSBvYmplY3RzIG9u
+IERCVVMgdGhhdCBjYW4gYmUgZGlzcGxheWVkIHdpdGggYnVzY3RsIGNvbW1hbmQsIGJ1dCBjYW4n
+dCBiZSBkaXNwbGF5ZWQgd2l0aCByZXN0IEFQSS4gSXMgdGhlcmUgYW55IHJlYXNvbiBmb3IgdGhp
+cz8KqbippC94eXoKICCpuKmkL3h5ei9vcGVuYm1jX3Byb2plY3QKICAgIKm4qaQveHl6L29wZW5i
+bWNfcHJvamVjdC9kdW1wCiAgICAgIKnAqaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2VudHJ5
+CiAgICAgIKmmIKm4qaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2VudHJ5LzEKICAgICAgqbip
+pC94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwKICAgICAgICCpuKmkL3h5ei9vcGVu
+Ym1jX3Byb2plY3QvZHVtcC9pbnRlcm5hbC9tYW5hZ2VyCiAKY3VybCAtayAtSCAiWC1BdXRoLVRv
+a2VuOiAkdG9rZW4iIGh0dHBzOi8vJHtibWN9L3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9saXN0
+CnsKICAiZGF0YSI6IFsKICAgICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsIiwK
+ICAgICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIiCiAgXSwKICAi
+bWVzc2FnZSI6ICIyMDAgT0siLAogICJzdGF0dXMiOiAib2siCn0KIAp0aGFua3OjrApCeXJvbgog
+CiAKCiAKCiAKCgoKCgoKIA==
+------=_Part_150973_1726930112.1573131221214
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
->
-> The problem is not the command. If you restart mapperx, it will appear. I=
-t
-> should be the problem of mapperx?
->
-> {
->     "data": [
->         "/xyz/openbmc_project/dump/entry",        restart mapperx, the ob=
-ject can be  display in rest-api
->
-> Maybe your `mapper` is a bit problem, here is my configuration, see:
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+TXkgcHJvZmlsZSBpcyB0aGUgc2FtZSBhcyB5b3Vycy4g
+d2hlbiB0aGUgZW50cnkgaXMgbmV3IGNyZWF0ZSwgaXQgd2lsbCBub3QgZGlzcGxheSBpbiByZXN0
+LWFwaS4gaWYgeW91IHJlYm9vdCBibWMgb3IgcmVzdGFydCBtYXBwZXJ4LCBpdCB3aWxsIGFwcGVh
+ci4gSSBndWVzcyBXaGVuIGNyZWF0ZSB0aGUgZW50cnksIGl0IG5vdCBub3RpZnkgdG8gbWFwcGVy
+eCwgb3IgbWFwcGVyeCBub3QgY2F0Y2ggaXQ/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5NQVBQ
+RVJfU0VSVklDRVM9Im9yZy5vcGVuYm1jJm5ic3A7IHh5ei5vcGVuYm1jX3Byb2plY3QiPC9kaXY+
+PGRpdj5NQVBQRVJfSU5URVJGQUNFUz0ib3JnLm9wZW5ibWMgb3JnLmZyZWVkZXNrdG9wLkRCdXMu
+T2JqZWN0TWFuYWdlciZuYnNwOyB4eXoub3BlbmJtY19wcm9qZWN0IjwvZGl2PjxkaXY+TUFQUEVS
+X1NFUlZJQ0VCTEFDS0xJU1RTPSIiPC9kaXY+PGJyPjxkaXY+dGhhbmtzLDwvZGl2PjxkaXY+Qnly
+b248L2Rpdj48YnI+PGJyPjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9k
+aXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rpdj48YnI+QXQgMjAxOS0xMS0wNyAy
+MDo0MDoyNSwgIkdlb3JnZSBMaXUiICZsdDtsaXV4aXdlaTEwMTNAZ21haWwuY29tJmd0OyB3cm90
+ZTo8YnI+IDxibG9ja3F1b3RlIGlkPSJpc1JlcGx5Q29udGVudCIgc3R5bGU9IlBBRERJTkctTEVG
+VDogMWV4OyBNQVJHSU46IDBweCAwcHggMHB4IDAuOGV4OyBCT1JERVItTEVGVDogI2NjYyAxcHgg
+c29saWQiPjxkaXYgZGlyPSJsdHIiPjxkaXYgZGlyPSJsdHIiPjxkaXYgY2xhc3M9ImdtYWlsX2Rl
+ZmF1bHQiIHN0eWxlPSJmb250LWZhbWlseTpzaW1oZWksc2Fucy1zZXJpZiI+PGJyPjwvZGl2Pjwv
+ZGl2Pjxicj48ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSI+PGRpdiBkaXI9Imx0ciIgY2xhc3M9Imdt
+YWlsX2F0dHIiPnd3dyAmbHQ7PGEgaHJlZj0ibWFpbHRvOm91eWFuZ3h1YW4xMEAxNjMuY29tIj5v
+dXlhbmd4dWFuMTBAMTYzLmNvbTwvYT4mZ3Q7INPaMjAxOcTqMTHUwjfI1dbcy8Qgz8LO5zc6MzXQ
+tLXAo7o8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFy
+Z2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwy
+MDQpO3BhZGRpbmctbGVmdDoxZXgiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNztjb2xvcjpy
+Z2IoMCwwLDApO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PlRoZSBwcm9ibGVtIGlzIG5vdCB0aGUgY29tbWFuZC4gSWYgeW91IHJlc3RhcnQgbWFw
+cGVyeCwgaXQgd2lsbCBhcHBlYXIuIEl0IHNob3VsZCBiZSB0aGUgcHJvYmxlbSBvZiA8c3BhbiBz
+dHlsZT0iYmFja2dyb3VuZC1jb2xvcjpyZ2IoMjU1LDIwNCwwKSI+bWFwcGVyeDwvc3Bhbj4/PC9k
+aXY+PGRpdj48YnI+PC9kaXY+PGRpdj48cHJlPnsKICAgICJkYXRhIjogWwogICAgICAgIDxzcGFu
+IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOnJnYigyNTUsMjA0LDApIj4iL3h5ei9vcGVuYm1jX3By
+b2plY3QvZHVtcC9lbnRyeSIsICAgICAgICByZXN0YXJ0IG1hcHBlcngsIHRoZSBvYmplY3QgY2Fu
+IGJlICBkaXNwbGF5IGluIHJlc3QtYXBpPC9zcGFuPjwvcHJlPjwvZGl2PjwvZGl2PjwvYmxvY2tx
+dW90ZT48ZGl2PjxzcGFuIGNsYXNzPSJnbWFpbF9kZWZhdWx0IiBzdHlsZT0iZm9udC1mYW1pbHk6
+c2ltaGVpLHNhbnMtc2VyaWYiPjwvc3Bhbj5NYXliZSB5b3VyIGBtYXBwZXJgIGlzIGEgYml0IHBy
+b2JsZW0sIGhlcmUgaXMgbXkgY29uZmlndXJhdGlvbiwgc2VlOjwvZGl2Pjxicj4vZXRjL2RlZmF1
+bHQvb2JtYzxicj5NQVBQRVJfU0VSVklDRVM9Im9yZy5vcGVuX3Bvd2VyIHh5ei5vcGVuYm1jX3By
+b2plY3Qgb3JnLm9wZW5ibWMiPGJyPk1BUFBFUl9JTlRFUkZBQ0VTPSJvcmcuZnJlZWRlc2t0b3Au
+REJ1cy5PYmplY3RNYW5hZ2VyIG9yZy5vcGVuX3Bvd2VyIHh5ei5vcGVuYm1jX3Byb2plY3Qgb3Jn
+Lm9wZW5ibWMiPGJyPjxkaXY+PHNwYW4gY2xhc3M9ImdtYWlsX2RlZmF1bHQiIHN0eWxlPSJmb250
+LWZhbWlseTpzaW1oZWksc2Fucy1zZXJpZiI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OkFyaWFs
+LEhlbHZldGljYSxzYW5zLXNlcmlmIj5NQVBQRVJfU0VSVklDRUJMQUNLTElTVFM9IiI8L3NwYW4+
+PC9zcGFuPiZuYnNwOzwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9
+Im1hcmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwy
+MDQsMjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDoxLjc7Y29s
+b3I6cmdiKDAsMCwwKTtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdj48cHJl
+PjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOnJnYigyNTUsMjA0LDApIj4KICAgICAgICAi
+L3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9lbnRyeS8xIiw8L3NwYW4+CiAgICAgICAgIi94eXov
+b3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwiLAogICAgICAgICIveHl6L29wZW5ibWNfcHJv
+amVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIiCiAgICBdLAogICAgIm1lc3NhZ2UiOiAiMjAwIE9L
+IiwKICAgICJzdGF0dXMiOiAib2siCn08L3ByZT48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PnRo
+YW5rcyw8L2Rpdj48ZGl2PkJ5cm9uPC9kaXY+PGJyPjxicj48ZGl2IHN0eWxlPSJ6b29tOjEiPjwv
+ZGl2PjxkaXYgaWQ9ImdtYWlsLW1fODc1NDQwOTcyODI1MzUxNjM4MGRpdk5ldGVhc2VNYWlsQ2Fy
+ZCI+PC9kaXY+PGJyPkF0IDIwMTktMTEtMDcgMTk6MDI6MjcsICJEZXZlbmRlciBSYW8iICZsdDs8
+YSBocmVmPSJtYWlsdG86ZGV2ZW5yYW9AaW4uaWJtLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPmRldmVu
+cmFvQGluLmlibS5jb208L2E+Jmd0OyB3cm90ZTo8YnI+IDxibG9ja3F1b3RlIGlkPSJnbWFpbC1t
+Xzg3NTQ0MDk3MjgyNTM1MTYzODBpc1JlcGx5Q29udGVudCIgc3R5bGU9InBhZGRpbmctbGVmdDox
+ZXg7bWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0
+LDIwNCwyMDQpIj48ZGl2IGRpcj0ibHRyIiBzdHlsZT0iZm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0
+aWNhLHNhbnMtc2VyaWY7Zm9udC1zaXplOjEwcHQiPjxkaXYgZGlyPSJsdHIiPkRvIGNoZWNrIG91
+dCB0aGlzIHJlYWRtZSBkb2N1bWVudCBmb3IgdGhlIGNvbW1hbmRzPGJyPjxhIGhyZWY9Imh0dHBz
+Oi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLWRlYnVnLWNv
+bGxlY3Rvci8rLzI1MzU3IiB0YXJnZXQ9Il9ibGFuayI+aHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1w
+cm9qZWN0Lnh5ei9jL29wZW5ibWMvcGhvc3Bob3ItZGVidWctY29sbGVjdG9yLysvMjUzNTc8L2E+
+PC9kaXY+CjxkaXYgZGlyPSJsdHIiPiZuYnNwOzwvZGl2Pgo8YmxvY2txdW90ZSBkaXI9Imx0ciIg
+c3R5bGU9ImJvcmRlci1sZWZ0OjJweCBzb2xpZCByZ2IoMTcwLDE3MCwxNzApO21hcmdpbi1sZWZ0
+OjVweDtwYWRkaW5nLWxlZnQ6NXB4O2RpcmVjdGlvbjpsdHI7bWFyZ2luLXJpZ2h0OjBweCI+LS0t
+LS0gT3JpZ2luYWwgbWVzc2FnZSAtLS0tLTxicj5Gcm9tOiB3d3cgJmx0OzxhIGhyZWY9Im1haWx0
+bzpvdXlhbmd4dWFuMTBAMTYzLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPm91eWFuZ3h1YW4xMEAxNjMu
+Y29tPC9hPiZndDs8YnI+U2VudCBieTogIm9wZW5ibWMiICZsdDtvcGVuYm1jLWJvdW5jZXMrZGV2
+ZW5yYW89PGEgaHJlZj0ibWFpbHRvOmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZyIgdGFyZ2V0
+PSJfYmxhbmsiPmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZzwvYT4mZ3Q7PGJyPlRvOiAiPGEg
+aHJlZj0ibWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPm9w
+ZW5ibWNAbGlzdHMub3psYWJzLm9yZzwvYT4iICZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnIiB0YXJnZXQ9Il9ibGFuayI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+PC9hPiZndDs8YnI+Q2M6PGJyPlN1YmplY3Q6IFtFWFRFUk5BTF0gd2h5IHRoZSBvYmplY3QgY2Fu
+bm90IGxpc3QgaW4gcmVzdCBhcGk/PGJyPkRhdGU6IFRodSwgTm92IDcsIDIwMTkgMTo1NiBQTTxi
+cj4mbmJzcDsKPGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOnJnYigwLDAsMCk7Zm9u
+dC1zaXplOjE0cHg7Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+CjxkaXY+
+Jm5ic3A7PC9kaXY+CjxkaXY+VGhlcmUgYXJlIHNvbWUgb2JqZWN0cyBvbiBEQlVTIHRoYXQgY2Fu
+IGJlIGRpc3BsYXllZCB3aXRoIGJ1c2N0bCBjb21tYW5kLCBidXQgY2FuJ3QgYmUgZGlzcGxheWVk
+IHdpdGggcmVzdCBBUEkuIElzIHRoZXJlIGFueSByZWFzb24gZm9yIHRoaXM/PC9kaXY+CjxkaXY+
+PGRpdj6puKmkL3h5ejwvZGl2Pgo8ZGl2PiZuYnNwOyCpuKmkL3h5ei9vcGVuYm1jX3Byb2plY3Q8
+L2Rpdj4KPGRpdj4mbmJzcDsgJm5ic3A7IKm4qaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wPC9k
+aXY+CjxkaXY+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6cmdiKDI1NSwyMDQsMCkiPiZu
+YnNwOyAmbmJzcDsgJm5ic3A7IKnAqaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2VudHJ5PC9z
+cGFuPjwvZGl2Pgo8ZGl2PjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOnJnYigyNTUsMjA0
+LDApIj4mbmJzcDsgJm5ic3A7ICZuYnNwOyCppiCpuKmkL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVt
+cC9lbnRyeS8xPC9zcGFuPjwvZGl2Pgo8ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7IKm4qaQveHl6
+L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsPC9kaXY+CjxkaXY+Jm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7IKm4qaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFn
+ZXI8L2Rpdj48L2Rpdj4KPGRpdj4mbmJzcDs8L2Rpdj4KPGRpdj48ZGl2PmN1cmwgLWsgLUggIlgt
+QXV0aC1Ub2tlbjogJHRva2VuIiBodHRwczovLyR7Ym1jfS94eXovb3BlbmJtY19wcm9qZWN0L2R1
+bXAvbGlzdDwvZGl2Pgo8ZGl2Pns8L2Rpdj4KPGRpdj4mbmJzcDsgImRhdGEiOiBbPC9kaXY+Cjxk
+aXY+Jm5ic3A7ICZuYnNwOyAiL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9pbnRlcm5hbCIsPC9k
+aXY+CjxkaXY+Jm5ic3A7ICZuYnNwOyAiL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9pbnRlcm5h
+bC9tYW5hZ2VyIjwvZGl2Pgo8ZGl2PiZuYnNwOyBdLDwvZGl2Pgo8ZGl2PiZuYnNwOyAibWVzc2Fn
+ZSI6ICIyMDAgT0siLDwvZGl2Pgo8ZGl2PiZuYnNwOyAic3RhdHVzIjogIm9rIjwvZGl2Pgo8ZGl2
+Pn08L2Rpdj48L2Rpdj4KPGRpdj4mbmJzcDs8L2Rpdj4KPGRpdj50aGFua3OjrDwvZGl2Pgo8ZGl2
+PkJ5cm9uPC9kaXY+CjxkaXY+Jm5ic3A7PC9kaXY+PC9kaXY+Jm5ic3A7Cgo8cD48c3BhbiB0aXRs
+ZT0ibmV0ZWFzZWZvb3RlciI+Jm5ic3A7PC9zcGFuPjwvcD48L2Jsb2NrcXVvdGU+CjxkaXYgZGly
+PSJsdHIiPiZuYnNwOzwvZGl2PjwvZGl2Pjxicj4KPC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+
+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+PC9ibG9ja3F1
+b3RlPjwvZGl2PjwvZGl2Pgo8L2Jsb2NrcXVvdGU+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0i
+bmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
+------=_Part_150973_1726930112.1573131221214--
 
-/etc/default/obmc
-MAPPER_SERVICES=3D"org.open_power xyz.openbmc_project org.openbmc"
-MAPPER_INTERFACES=3D"org.freedesktop.DBus.ObjectManager org.open_power
-xyz.openbmc_project org.openbmc"
-MAPPER_SERVICEBLACKLISTS=3D""
-
->
->         "/xyz/openbmc_project/dump/entry/1",
->         "/xyz/openbmc_project/dump/internal",
->         "/xyz/openbmc_project/dump/internal/manager"
->     ],
->     "message": "200 OK",
->     "status": "ok"
-> }
->
->
-> thanks,
-> Byron
->
->
->
-> At 2019-11-07 19:02:27, "Devender Rao" <devenrao@in.ibm.com> wrote:
->
-> Do check out this readme document for the commands
->
-> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-debug-collector/+/2=
-5357
->
->
-> ----- Original message -----
-> From: www <ouyangxuan10@163.com>
-> Sent by: "openbmc" <openbmc-bounces+devenrao=3Din.ibm.com@lists.ozlabs.or=
-g>
-> To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-> Cc:
-> Subject: [EXTERNAL] why the object cannot list in rest api?
-> Date: Thu, Nov 7, 2019 1:56 PM
->
-> Dear all,
->
-> There are some objects on DBUS that can be displayed with busctl command,
-> but can't be displayed with rest API. Is there any reason for this?
-> =E2=94=94=E2=94=80/xyz
->   =E2=94=94=E2=94=80/xyz/openbmc_project
->     =E2=94=94=E2=94=80/xyz/openbmc_project/dump
->       =E2=94=9C=E2=94=80/xyz/openbmc_project/dump/entry
->       =E2=94=82 =E2=94=94=E2=94=80/xyz/openbmc_project/dump/entry/1
->       =E2=94=94=E2=94=80/xyz/openbmc_project/dump/internal
->         =E2=94=94=E2=94=80/xyz/openbmc_project/dump/internal/manager
->
-> curl -k -H "X-Auth-Token: $token" https://
-> ${bmc}/xyz/openbmc_project/dump/list
-> {
->   "data": [
->     "/xyz/openbmc_project/dump/internal",
->     "/xyz/openbmc_project/dump/internal/manager"
->   ],
->   "message": "200 OK",
->   "status": "ok"
-> }
->
-> thanks=EF=BC=8C
-> Byron
->
->
->
->
->
->
->
->
->
->
->
-
---000000000000d95c5c0596c0f8df
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:simhei,sans-serif"><br></div></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">www &lt;<a href=3D"mailto:ouyangxuan1=
-0@163.com">ouyangxuan10@163.com</a>&gt; =E4=BA=8E2019=E5=B9=B411=E6=9C=887=
-=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8B=E5=8D=887:35=E5=86=99=E9=81=93=EF=BC=
-=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div style=
-=3D"line-height:1.7;color:rgb(0,0,0);font-size:14px;font-family:Arial"><div=
-><br></div><div>The problem is not the command. If you restart mapperx, it =
-will appear. It should be the problem of <span style=3D"background-color:rg=
-b(255,204,0)">mapperx</span>?</div><div><br></div><div><pre>{
-    &quot;data&quot;: [
-        <span style=3D"background-color:rgb(255,204,0)">&quot;/xyz/openbmc_=
-project/dump/entry&quot;,        restart mapperx, the object can be  displa=
-y in rest-api</span></pre></div></div></blockquote><div><span class=3D"gmai=
-l_default" style=3D"font-family:simhei,sans-serif"></span>Maybe your `mappe=
-r` is a bit problem, here is my configuration, see:</div><br>/etc/default/o=
-bmc<br>MAPPER_SERVICES=3D&quot;org.open_power xyz.openbmc_project org.openb=
-mc&quot;<br>MAPPER_INTERFACES=3D&quot;org.freedesktop.DBus.ObjectManager or=
-g.open_power xyz.openbmc_project org.openbmc&quot;<br><div><span class=3D"g=
-mail_default" style=3D"font-family:simhei,sans-serif"><span style=3D"font-f=
-amily:Arial,Helvetica,sans-serif">MAPPER_SERVICEBLACKLISTS=3D&quot;&quot;</=
-span></span>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0=
-px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><=
-div style=3D"line-height:1.7;color:rgb(0,0,0);font-size:14px;font-family:Ar=
-ial"><div><pre><span style=3D"background-color:rgb(255,204,0)">
-        &quot;/xyz/openbmc_project/dump/entry/1&quot;,</span>
-        &quot;/xyz/openbmc_project/dump/internal&quot;,
-        &quot;/xyz/openbmc_project/dump/internal/manager&quot;
-    ],
-    &quot;message&quot;: &quot;200 OK&quot;,
-    &quot;status&quot;: &quot;ok&quot;
-}</pre></div><div><br></div><div>thanks,</div><div>Byron</div><br><br><div =
-style=3D"zoom:1"></div><div id=3D"gmail-m_8754409728253516380divNeteaseMail=
-Card"></div><br>At 2019-11-07 19:02:27, &quot;Devender Rao&quot; &lt;<a hre=
-f=3D"mailto:devenrao@in.ibm.com" target=3D"_blank">devenrao@in.ibm.com</a>&=
-gt; wrote:<br> <blockquote id=3D"gmail-m_8754409728253516380isReplyContent"=
- style=3D"padding-left:1ex;margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204)"><div dir=3D"ltr" style=3D"font-family:Arial,Helvetica,sans=
--serif;font-size:10pt"><div dir=3D"ltr">Do check out this readme document f=
-or the commands<br><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/=
-phosphor-debug-collector/+/25357" target=3D"_blank">https://gerrit.openbmc-=
-project.xyz/c/openbmc/phosphor-debug-collector/+/25357</a></div>
-<div dir=3D"ltr">=C2=A0</div>
-<blockquote dir=3D"ltr" style=3D"border-left:2px solid rgb(170,170,170);mar=
-gin-left:5px;padding-left:5px;direction:ltr;margin-right:0px">----- Origina=
-l message -----<br>From: www &lt;<a href=3D"mailto:ouyangxuan10@163.com" ta=
-rget=3D"_blank">ouyangxuan10@163.com</a>&gt;<br>Sent by: &quot;openbmc&quot=
-; &lt;openbmc-bounces+devenrao=3D<a href=3D"mailto:in.ibm.com@lists.ozlabs.=
-org" target=3D"_blank">in.ibm.com@lists.ozlabs.org</a>&gt;<br>To: &quot;<a =
-href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.oz=
-labs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=
-=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>Cc:<br>Subject: [EXTERNAL] =
-why the object cannot list in rest api?<br>Date: Thu, Nov 7, 2019 1:56 PM<b=
-r>=C2=A0
-<div style=3D"line-height:1.7;color:rgb(0,0,0);font-size:14px;font-family:A=
-rial"><div>Dear all,</div>
-<div>=C2=A0</div>
-<div>There are some objects on DBUS that can be displayed with busctl comma=
-nd, but can&#39;t be displayed with rest API. Is there any reason for this?=
-</div>
-<div><div>=E2=94=94=E2=94=80/xyz</div>
-<div>=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project</div>
-<div>=C2=A0 =C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/dump</div>
-<div><span style=3D"background-color:rgb(255,204,0)">=C2=A0 =C2=A0 =C2=A0 =
-=E2=94=9C=E2=94=80/xyz/openbmc_project/dump/entry</span></div>
-<div><span style=3D"background-color:rgb(255,204,0)">=C2=A0 =C2=A0 =C2=A0 =
-=E2=94=82 =E2=94=94=E2=94=80/xyz/openbmc_project/dump/entry/1</span></div>
-<div>=C2=A0 =C2=A0 =C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/dump/inter=
-nal</div>
-<div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/dum=
-p/internal/manager</div></div>
-<div>=C2=A0</div>
-<div><div>curl -k -H &quot;X-Auth-Token: $token&quot; https://${bmc}/xyz/op=
-enbmc_project/dump/list</div>
-<div>{</div>
-<div>=C2=A0 &quot;data&quot;: [</div>
-<div>=C2=A0 =C2=A0 &quot;/xyz/openbmc_project/dump/internal&quot;,</div>
-<div>=C2=A0 =C2=A0 &quot;/xyz/openbmc_project/dump/internal/manager&quot;</=
-div>
-<div>=C2=A0 ],</div>
-<div>=C2=A0 &quot;message&quot;: &quot;200 OK&quot;,</div>
-<div>=C2=A0 &quot;status&quot;: &quot;ok&quot;</div>
-<div>}</div></div>
-<div>=C2=A0</div>
-<div>thanks=EF=BC=8C</div>
-<div>Byron</div>
-<div>=C2=A0</div></div>=C2=A0
-
-<p><span title=3D"neteasefooter">=C2=A0</span></p></blockquote>
-<div dir=3D"ltr">=C2=A0</div></div><br>
-</blockquote></div><br><br><span title=3D"neteasefooter"><p>=C2=A0</p></spa=
-n></blockquote></div></div>
-
---000000000000d95c5c0596c0f8df--
