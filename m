@@ -1,70 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EA4AF2D76
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 12:31:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E8B9F2D82
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 12:35:38 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4781Sm0VQhzF6KJ
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 22:31:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4781YK3M94zF3YV
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 22:35:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d36;
- helo=mail-io1-xd36.google.com; envelope-from=rahulmaheshwari01@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="WyAariNw"; 
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.132; helo=m13-132.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="C7hSc/2+"; 
  dkim-atps=neutral
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
- [IPv6:2607:f8b0:4864:20::d36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4781Pq64TszF33J
- for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 22:29:03 +1100 (AEDT)
-Received: by mail-io1-xd36.google.com with SMTP id q83so1914482iod.1
- for <openbmc@lists.ozlabs.org>; Thu, 07 Nov 2019 03:29:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=pEobS/Osd6ynY4uyNwA2LL+W/Sy5fHULIrqUUoVO28k=;
- b=WyAariNwdpFW7+7yZ0UYoWJrGlCqEoqpUUBRWdW8nLciKQ88BR+ztvmGLP4KLHQwJY
- IfUNVE4TOtVvvkD8P2yMEsiP0s5NTHKPc+JZjH1i3csa+I6hwm4ULG1chmZDh52xTBxG
- /k8je+5Qb5j5n/XWw438hecXIqvbzYBL36xnOwTpuDzel+xtQNJph54eS1p5bZ6COupI
- Dd+O/UccJfR3A7boK7pcOXcEB+4ny1zQSJZu29q75OJi4tdOkkhRN9SVTtpzQy2KuV4Q
- ccTj6CbZuXAZXca0vG0aW6UW50PHChk1OZDYWydv54wghwt4ZZaTCyBrYyy1ByWwgG0j
- 0TtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=pEobS/Osd6ynY4uyNwA2LL+W/Sy5fHULIrqUUoVO28k=;
- b=VH9aR4QdgkrN4wwn1cqbKnmdqf59mu0S3ehhKZ8t2dEwdJBLOarfOCPe/fkcX9e2qE
- uGBEKvJ9WsonjSVwMkcVd1/p37S6t7l3FAJX4GH2GxP5tjProYPWfLXee8C+7bkZ600j
- AV7z8Qh6kF3GCHVel3yFf2P1sCZtuHmTYBCurUw/Nky73UsKKj1FL2ub/x/h/FnEa5qe
- 6rFuHvLwjaLGF6z4Om2Lu13GDgskSwohtuKchzlAlKufXILhUpBPoAOHZnxOuFrA1XZW
- usZMSiGbr+mq6mLhdzJxWdR+OAlargzaMoT19Si5EKuQ8ZfHXjvz4bV4D5liCyc1zb5W
- qOAQ==
-X-Gm-Message-State: APjAAAXLeCsVt7RPD0dVaswT7x430aUNFYfLngOV2siMJkaCK2nhOp2i
- f2a0AjctOD7m00gXKRKpIyNBGkT5J/rEscT1LR3rEA==
-X-Google-Smtp-Source: APXvYqzfdPWLXHGA79ov9AfqipYQaK0aunlkKEwSrwS20Vkp+e/RHv8eZMbC2ixY/ZNaya+SspErwKvXPuJiZTqtIuw=
-X-Received: by 2002:a5e:a51a:: with SMTP id 26mr3014639iog.31.1573126139948;
- Thu, 07 Nov 2019 03:28:59 -0800 (PST)
+Received: from m13-132.163.com (m13-132.163.com [220.181.13.132])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4781XS1dWTzF3RG
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 22:34:42 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=g9BEL
+ 0o90VXoxKnbIbTYw7FkzgRHzILetebaKSLB15o=; b=C7hSc/2+1JNqI955et7rS
+ OZAAE6Ko17F8o/3iJ15q74XBXziw0guWad2qxxSvv5ttFeR7E4RHnZ/Txlb8yM/8
+ prY9D3C6VGt+esKyzpV37mr4LgLx1u5+FUE4uktarZdk8MXU7C2ujoQNvc36B2df
+ e/XoNWXPhBomzud8lRU6sI=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr132 (Coremail) ; Thu, 7 Nov 2019 19:34:26 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Thu, 7 Nov 2019 19:34:26 +0800 (CST)
+From: www  <ouyangxuan10@163.com>
+To: "Devender Rao" <devenrao@in.ibm.com>
+Subject: Re:Re:  why the object cannot list in rest api?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <OF65345083.058B21A2-ON002584AB.003CA681-002584AB.003CA687@notes.na.collabserv.com>
+References: <139bf9c3.6e26.16e44e2c237.Coremail.ouyangxuan10@163.com>
+ <OF65345083.058B21A2-ON002584AB.003CA681-002584AB.003CA687@notes.na.collabserv.com>
+X-CM-CTRLDATA: X+XVJ2Zvb3Rlcl9odG09MzI4NDo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_143319_497536379.1573126466862"
 MIME-Version: 1.0
-References: <937d3cf0ee5b42559e145fbf87c5c9b3@quantatw.com>
- <CAAMkS12QPgcdawwV0OdvB_xFB5C78o7AqvTmKcZWYqeTgjCioQ@mail.gmail.com>
- <37a55521de3843c6a407e7faeb68f693@quantatw.com>
- <CAAMkS10zqHVNv-x8pLBtyDJVm2xTjTROHSqsA6SeELZ953wz-w@mail.gmail.com>
- <dea6fe3ac2b44de881f105adc9a0f8ba@quantatw.com>
-In-Reply-To: <dea6fe3ac2b44de881f105adc9a0f8ba@quantatw.com>
-From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Date: Thu, 7 Nov 2019 16:58:47 +0530
-Message-ID: <CAAMkS10g8kNCgGo5hbE=GKr+-LgSTP1W=dRv6ubDpXtwcFkpvA@mail.gmail.com>
-Subject: Re: Questions about openbmc-test-automation
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-Content-Type: multipart/alternative; boundary="000000000000c233350596bff8a6"
+Message-ID: <4b98545f.940d.16e45a4ed2f.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: hMGowAD3_wtCAcRddcCTAQ--.34632W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/xtbBywVm2lPAKA03JQABsX
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,191 +64,101 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c233350596bff8a6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_Part_143319_497536379.1573126466862
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Sure. Thanks for taking up the initiative.
+CgpUaGUgcHJvYmxlbSBpcyBub3QgdGhlIGNvbW1hbmQuIElmIHlvdSByZXN0YXJ0IG1hcHBlcngs
+IGl0IHdpbGwgYXBwZWFyLiBJdCBzaG91bGQgYmUgdGhlIHByb2JsZW0gb2YgbWFwcGVyeD8KCgp7
+CiAgICAiZGF0YSI6IFsKICAgICAgICAiL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9lbnRyeSIs
+ICAgICAgICByZXN0YXJ0IG1hcHBlcngsIHRoZSBvYmplY3QgY2FuIGJlICBkaXNwbGF5IGluIHJl
+c3QtYXBpCiAgICAgICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvZW50cnkvMSIsCiAgICAg
+ICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwiLAogICAgICAgICIveHl6L29w
+ZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIiCiAgICBdLAogICAgIm1lc3NhZ2Ui
+OiAiMjAwIE9LIiwKICAgICJzdGF0dXMiOiAib2siCn0KCgp0aGFua3MsCkJ5cm9uCgoKCgpBdCAy
+MDE5LTExLTA3IDE5OjAyOjI3LCAiRGV2ZW5kZXIgUmFvIiA8ZGV2ZW5yYW9AaW4uaWJtLmNvbT4g
+d3JvdGU6CgpEbyBjaGVjayBvdXQgdGhpcyByZWFkbWUgZG9jdW1lbnQgZm9yIHRoZSBjb21tYW5k
+cwpodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9waG9zcGhvci1k
+ZWJ1Zy1jb2xsZWN0b3IvKy8yNTM1NwogCi0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0tLS0KRnJv
+bTogd3d3IDxvdXlhbmd4dWFuMTBAMTYzLmNvbT4KU2VudCBieTogIm9wZW5ibWMiIDxvcGVuYm1j
+LWJvdW5jZXMrZGV2ZW5yYW89aW4uaWJtLmNvbUBsaXN0cy5vemxhYnMub3JnPgpUbzogIm9wZW5i
+bWNAbGlzdHMub3psYWJzLm9yZyIgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4KQ2M6ClN1Ympl
+Y3Q6IFtFWFRFUk5BTF0gd2h5IHRoZSBvYmplY3QgY2Fubm90IGxpc3QgaW4gcmVzdCBhcGk/CkRh
+dGU6IFRodSwgTm92IDcsIDIwMTkgMTo1NiBQTQogCkRlYXIgYWxsLAogClRoZXJlIGFyZSBzb21l
+IG9iamVjdHMgb24gREJVUyB0aGF0IGNhbiBiZSBkaXNwbGF5ZWQgd2l0aCBidXNjdGwgY29tbWFu
+ZCwgYnV0IGNhbid0IGJlIGRpc3BsYXllZCB3aXRoIHJlc3QgQVBJLiBJcyB0aGVyZSBhbnkgcmVh
+c29uIGZvciB0aGlzPwqpuKmkL3h5egogIKm4qaQveHl6L29wZW5ibWNfcHJvamVjdAogICAgqbip
+pC94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAKICAgICAgqcCppC94eXovb3BlbmJtY19wcm9qZWN0
+L2R1bXAvZW50cnkKICAgICAgqaYgqbippC94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvZW50cnkv
+MQogICAgICCpuKmkL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9pbnRlcm5hbAogICAgICAgIKm4
+qaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIKIApjdXJsIC1rIC1I
+ICJYLUF1dGgtVG9rZW46ICR0b2tlbiIgaHR0cHM6Ly8ke2JtY30veHl6L29wZW5ibWNfcHJvamVj
+dC9kdW1wL2xpc3QKewogICJkYXRhIjogWwogICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAv
+aW50ZXJuYWwiLAogICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwvbWFuYWdl
+ciIKICBdLAogICJtZXNzYWdlIjogIjIwMCBPSyIsCiAgInN0YXR1cyI6ICJvayIKfQogCnRoYW5r
+c6OsCkJ5cm9uCiAKIAoKIAoKIAoK
+------=_Part_143319_497536379.1573126466862
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-On Thu, 7 Nov 2019, 07:07 Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C), <Tony.Lee=
-@quantatw.com> wrote:
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhlIHByb2JsZW0gaXMgbm90
+IHRoZSBjb21tYW5kLiBJZiB5b3UgcmVzdGFydCBtYXBwZXJ4LCBpdCB3aWxsIGFwcGVhci4gSXQg
+c2hvdWxkIGJlIHRoZSBwcm9ibGVtIG9mIDxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiBy
+Z2IoMjU1LCAyMDQsIDApOyI+bWFwcGVyeDwvc3Bhbj4/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
+dj48cHJlPnsKICAgICJkYXRhIjogWwogICAgICAgIDxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNv
+bG9yOiByZ2IoMjU1LCAyMDQsIDApOyI+Ii94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvZW50cnki
+LCAgICAgICAgcmVzdGFydCBtYXBwZXJ4LCB0aGUgb2JqZWN0IGNhbiBiZSAgZGlzcGxheSBpbiBy
+ZXN0LWFwaQogICAgICAgICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2VudHJ5LzEiLDwvc3Bh
+bj4KICAgICAgICAiL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9pbnRlcm5hbCIsCiAgICAgICAg
+Ii94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwvbWFuYWdlciIKICAgIF0sCiAgICAi
+bWVzc2FnZSI6ICIyMDAgT0siLAogICAgInN0YXR1cyI6ICJvayIKfTwvcHJlPjwvZGl2PjxkaXY+
+PGJyPjwvZGl2PjxkaXY+dGhhbmtzLDwvZGl2PjxkaXY+Qnlyb248L2Rpdj48YnI+PGJyPjxkaXYg
+c3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFz
+ZU1haWxDYXJkIj48L2Rpdj48YnI+QXQgMjAxOS0xMS0wNyAxOTowMjoyNywgIkRldmVuZGVyIFJh
+byIgJmx0O2RldmVucmFvQGluLmlibS5jb20mZ3Q7IHdyb3RlOjxicj4gPGJsb2NrcXVvdGUgaWQ9
+ImlzUmVwbHlDb250ZW50IiBzdHlsZT0iUEFERElORy1MRUZUOiAxZXg7IE1BUkdJTjogMHB4IDBw
+eCAwcHggMC44ZXg7IEJPUkRFUi1MRUZUOiAjY2NjIDFweCBzb2xpZCI+PGRpdiBjbGFzcz0ic29j
+bWFpbGRlZmF1bHRmb250IiBkaXI9Imx0ciIgc3R5bGU9ImZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2
+ZXRpY2EsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEwcHQiPjxkaXYgZGlyPSJsdHIiPkRvIGNoZWNr
+IG91dCB0aGlzIHJlYWRtZSBkb2N1bWVudCBmb3IgdGhlIGNvbW1hbmRzPGJyPjxhIGhyZWY9Imh0
+dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLWRlYnVn
+LWNvbGxlY3Rvci8rLzI1MzU3Ij5odHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mv
+b3BlbmJtYy9waG9zcGhvci1kZWJ1Zy1jb2xsZWN0b3IvKy8yNTM1NzwvYT48L2Rpdj4KPGRpdiBk
+aXI9Imx0ciI+Jm5ic3A7PC9kaXY+CjxibG9ja3F1b3RlIGRhdGEtaGlzdG9yeS1jb250ZW50LW1v
+ZGlmaWVkPSIxIiBkaXI9Imx0ciIgc3R5bGU9ImJvcmRlci1sZWZ0OnNvbGlkICNhYWFhYWEgMnB4
+OyBtYXJnaW4tbGVmdDo1cHg7IHBhZGRpbmctbGVmdDo1cHg7IGRpcmVjdGlvbjpsdHI7IG1hcmdp
+bi1yaWdodDowcHgiPi0tLS0tIE9yaWdpbmFsIG1lc3NhZ2UgLS0tLS08YnI+RnJvbTogd3d3ICZs
+dDtvdXlhbmd4dWFuMTBAMTYzLmNvbSZndDs8YnI+U2VudCBieTogIm9wZW5ibWMiICZsdDtvcGVu
+Ym1jLWJvdW5jZXMrZGV2ZW5yYW89aW4uaWJtLmNvbUBsaXN0cy5vemxhYnMub3JnJmd0Ozxicj5U
+bzogIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyIgJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9y
+ZyZndDs8YnI+Q2M6PGJyPlN1YmplY3Q6IFtFWFRFUk5BTF0gd2h5IHRoZSBvYmplY3QgY2Fubm90
+IGxpc3QgaW4gcmVzdCBhcGk/PGJyPkRhdGU6IFRodSwgTm92IDcsIDIwMTkgMTo1NiBQTTxicj4m
+bmJzcDsKPGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXpl
+OjE0cHg7Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+CjxkaXY+Jm5ic3A7
+PC9kaXY+CjxkaXY+VGhlcmUgYXJlIHNvbWUgb2JqZWN0cyBvbiBEQlVTIHRoYXQgY2FuIGJlIGRp
+c3BsYXllZCB3aXRoIGJ1c2N0bCBjb21tYW5kLCBidXQgY2FuJ3QgYmUgZGlzcGxheWVkIHdpdGgg
+cmVzdCBBUEkuIElzIHRoZXJlIGFueSByZWFzb24gZm9yIHRoaXM/PC9kaXY+CjxkaXY+PGRpdj6p
+uKmkL3h5ejwvZGl2Pgo8ZGl2PiZuYnNwOyCpuKmkL3h5ei9vcGVuYm1jX3Byb2plY3Q8L2Rpdj4K
+PGRpdj4mbmJzcDsgJm5ic3A7IKm4qaQveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wPC9kaXY+Cjxk
+aXY+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDIwNCwgMCk7Ij4mbmJz
+cDsgJm5ic3A7ICZuYnNwOyCpwKmkL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9lbnRyeTwvc3Bh
+bj48L2Rpdj4KPGRpdj48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjA0
+LCAwKTsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IKmmIKm4qaQveHl6L29wZW5ibWNfcHJvamVjdC9k
+dW1wL2VudHJ5LzE8L3NwYW4+PC9kaXY+CjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgqbippC94
+eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWw8L2Rpdj4KPGRpdj4mbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgqbippC94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwvbWFu
+YWdlcjwvZGl2PjwvZGl2Pgo8ZGl2PiZuYnNwOzwvZGl2Pgo8ZGl2PjxkaXY+Y3VybCAtayAtSCAi
+WC1BdXRoLVRva2VuOiAkdG9rZW4iIGh0dHBzOi8vJHtibWN9L3h5ei9vcGVuYm1jX3Byb2plY3Qv
+ZHVtcC9saXN0PC9kaXY+CjxkaXY+ezwvZGl2Pgo8ZGl2PiZuYnNwOyAiZGF0YSI6IFs8L2Rpdj4K
+PGRpdj4mbmJzcDsgJm5ic3A7ICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsIiw8
+L2Rpdj4KPGRpdj4mbmJzcDsgJm5ic3A7ICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVy
+bmFsL21hbmFnZXIiPC9kaXY+CjxkaXY+Jm5ic3A7IF0sPC9kaXY+CjxkaXY+Jm5ic3A7ICJtZXNz
+YWdlIjogIjIwMCBPSyIsPC9kaXY+CjxkaXY+Jm5ic3A7ICJzdGF0dXMiOiAib2siPC9kaXY+Cjxk
+aXY+fTwvZGl2PjwvZGl2Pgo8ZGl2PiZuYnNwOzwvZGl2Pgo8ZGl2PnRoYW5rc6OsPC9kaXY+Cjxk
+aXY+Qnlyb248L2Rpdj4KPGRpdj4mbmJzcDs8L2Rpdj48L2Rpdj4mbmJzcDsKCjxwPjxzcGFuIHRp
+dGxlPSJuZXRlYXNlZm9vdGVyIj4mbmJzcDs8L3NwYW4+PC9wPjwvYmxvY2txdW90ZT4KPGRpdiBk
+aXI9Imx0ciI+Jm5ic3A7PC9kaXY+PC9kaXY+PGJyPgo8L2Jsb2NrcXVvdGU+PC9kaXY+PGJyPjxi
+cj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
+------=_Part_143319_497536379.1573126466862--
 
-> Hi Rahul,
->
-> It sounds good to me and I would like to drop code change.
->
-> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-> Sent: Wednesday, November 6, 2019 3:13 PM
-> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Questions about openbmc-test-automation
->
-> Yes, that is correct way.
->
-> On Wed, Nov 6, 2019 at 11:22 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <m=
-ailto:
-> Tony.Lee@quantatw.com> wrote:
-> Hi Rahul,
->
-> For example, case "Retrieve IP Address Via IPMI And Verify Using Redfish"
-> in /ipmi/test_ipmi_network.robot.
-> The new way is as follows:
->
-> IPMI network channel logically starts from 1. For example, once it figure
-> out the channel count is 3,
-> we can retrieve IP addresses through channels 1, 2, and 3, and verify the=
-m
-> correspond to eth0, eth1, and eth2, respectively by redfish.
-> Is it right?
->
-> Thanks
-> Best Regards,
-> Tony
->
-> From: Rahul Maheshwari <mailto:rahulmaheshwari01@gmail.com>
-> Sent: Tuesday, November 5, 2019 6:51 PM
-> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <mailto:Tony.Lee@quantatw.com>
-> Cc: mailto:openbmc@lists.ozlabs.org
-> Subject: Re: Questions about openbmc-test-automation
->
-> Thanks for pointing that out. Passing interface/channel number is an
-> easier option but we should be avoiding passing environment variable unle=
-ss
-> there is no other way. I would say better way to overcome this is to figu=
-re
-> out the channel count using "ip addr" command from BMC cli.
-> Let us know if that sounds good to you.
-> Also let us know if you would like to drop code change for the same?
->
-> Thanks
-> Rahul
->
->
->
->
->
->
-> On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <ma=
-ilto:mailto:
-> Tony.Lee@quantatw.com> wrote:
-> Hi Rahul,
->
-> I'm wondering that why "REDFISH_NW_ETH0" is hardcode as
-> "Managers/bmc/EthernetInterfaces/eth0/" in /data/variables.py
->
-> https://github.com/openbmc/openbmc-test-automation/blob/master/data/varia=
-bles.py#L155
-> Furthermore, the command "lan print" didn't specify the channel number in
-> /ipmi/test_ipmi_network.robot.
-> Therefore, the default will print information on the first found LAN
-> channel.
->
-> Isn't it more reasonable to set the interface and the channel number as
-> environment variables and give them default values?
->
-> Thanks
-> Best Regards,
-> Tony
->
->
-
---000000000000c233350596bff8a6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Sure. Thanks for taking up the initiative.</div><br><div =
-class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 7 Nov 2=
-019, 07:07 Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C), &lt;<a href=3D"mailto:To=
-ny.Lee@quantatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc s=
-olid;padding-left:1ex">Hi Rahul,<br>
-<br>
-It sounds good to me and I would like to drop code change.<br>
-<br>
-From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
-arget=3D"_blank" rel=3D"noreferrer">rahulmaheshwari01@gmail.com</a>&gt; <br=
->
-Sent: Wednesday, November 6, 2019 3:13 PM<br>
-To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
-uantatw.com" target=3D"_blank" rel=3D"noreferrer">Tony.Lee@quantatw.com</a>=
-&gt;<br>
-Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank" rel=3D"no=
-referrer">openbmc@lists.ozlabs.org</a><br>
-Subject: Re: Questions about openbmc-test-automation<br>
-<br>
-Yes, that is correct way.<br>
-<br>
-On Wed, Nov 6, 2019 at 11:22 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;=
-mailto:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank" rel=3D"no=
-referrer">Tony.Lee@quantatw.com</a>&gt; wrote:<br>
-Hi Rahul,<br>
-<br>
-For example, case &quot;Retrieve IP Address Via IPMI And Verify Using Redfi=
-sh&quot; in /ipmi/test_ipmi_network.robot.<br>
-The new way is as follows:<br>
-<br>
-IPMI network channel logically starts from 1. For example, once it figure o=
-ut the channel count is 3,<br>
-we can retrieve IP addresses through channels 1, 2, and 3, and verify them =
-correspond to eth0, eth1, and eth2, respectively by redfish.<br>
-Is it right?<br>
-<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-<br>
-From: Rahul Maheshwari &lt;mailto:<a href=3D"mailto:rahulmaheshwari01@gmail=
-.com" target=3D"_blank" rel=3D"noreferrer">rahulmaheshwari01@gmail.com</a>&=
-gt; <br>
-Sent: Tuesday, November 5, 2019 6:51 PM<br>
-To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;mailto:<a href=3D"mailto:Ton=
-y.Lee@quantatw.com" target=3D"_blank" rel=3D"noreferrer">Tony.Lee@quantatw.=
-com</a>&gt;<br>
-Cc: mailto:<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank" re=
-l=3D"noreferrer">openbmc@lists.ozlabs.org</a><br>
-Subject: Re: Questions about openbmc-test-automation<br>
-<br>
-Thanks for pointing that out. Passing interface/channel number is an easier=
- option but we should be avoiding passing environment=C2=A0variable unless =
-there is no other way. I would say better way to overcome this is to figure=
- out the channel count using &quot;ip addr&quot; command from BMC cli.=C2=
-=A0<br>
-Let us know if that sounds good=C2=A0to you.<br>
-Also let us know if you would like to drop code change for the same?=C2=A0<=
-br>
-<br>
-Thanks<br>
-Rahul<br>
-<br>
-<br>
-<br>
-<br>
-=C2=A0<br>
-<br>
-On Tue, Nov 5, 2019 at 2:28 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;m=
-ailto:<a href=3D"mailto:mailto" target=3D"_blank" rel=3D"noreferrer">mailto=
-</a>:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank" rel=3D"nore=
-ferrer">Tony.Lee@quantatw.com</a>&gt; wrote:<br>
-Hi Rahul,<br>
-=C2=A0<br>
-I&#39;m wondering that why &quot;REDFISH_NW_ETH0&quot; is hardcode as &quot=
-;Managers/bmc/EthernetInterfaces/eth0/&quot; in /data/variables.py<br>
-<a href=3D"https://github.com/openbmc/openbmc-test-automation/blob/master/d=
-ata/variables.py#L155" rel=3D"noreferrer noreferrer" target=3D"_blank">http=
-s://github.com/openbmc/openbmc-test-automation/blob/master/data/variables.p=
-y#L155</a><br>
-Furthermore, the command &quot;lan print&quot; didn&#39;t specify the chann=
-el number in /ipmi/test_ipmi_network.robot.<br>
-Therefore, the default will print information on the first found LAN channe=
-l. <br>
-=C2=A0<br>
-Isn&#39;t it more reasonable to set the interface and the channel number as=
- environment variables and give them default values?<br>
-=C2=A0<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-=C2=A0<br>
-</blockquote></div>
-
---000000000000c233350596bff8a6--
