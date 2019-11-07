@@ -1,64 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FA48F2412
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 02:12:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CBA1F245D
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 02:38:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 477lkW6ZkNzF5sD
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 12:12:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 477mHx3cKpzDrQW
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 12:38:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.193;
- helo=mail-oi1-f193.google.com; envelope-from=robherring2@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=207dc2916=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-oi1-f193.google.com (mail-oi1-f193.google.com
- [209.85.167.193])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 477lj22KNlzF5qw
- for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 12:11:18 +1100 (AEDT)
-Received: by mail-oi1-f193.google.com with SMTP id v138so481935oif.6
- for <openbmc@lists.ozlabs.org>; Wed, 06 Nov 2019 17:11:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=icw6S2OVXRtdcU89hq1ruG6UsmLeUp//TCbYMm2btBk=;
- b=CNKMwdQVM9ZWa5P7emWhFvsUxl5kd4+kT8vVPCAYNPPFifp9Vrk2iOcfKOIqvWQYwj
- TL4NgEn8qxpmxxmbqK8OVNqqxa40KezcnymrBpvoI5z1TU+ud4oW9mWFAYyV/W5DGFPF
- r96j/B1IbHiYw4R8fwGpl0NeWMKjCT2lKwX9+Ut+G/kkHE7cMfasXtH3XgPDmAiVmZud
- x/R/vqQYKQW80X+3hTAv9ZVpoBl8xyL0oS21x/xXYfy0ZOqCkqaY717pLb0s/VFZ17mQ
- nNN524lUZ65bUoEMewt11gKA2qPJBaqE0l1vVVgLBchbHRv9UhJ2ONgVQlbkW7YB1YTK
- t5Lg==
-X-Gm-Message-State: APjAAAX/jkAHB+2x8ROaXVfnqn6vIDuJhTYRLl5XiAeuK7HoQtmbDem0
- LhJ6t0p0dlWcgJ0oRvO+WA==
-X-Google-Smtp-Source: APXvYqxWuabs3rv1PDOsLYIr4ybg0LIvCamfpGN0rR9RPj39X3hmAT+aHnyaQu14PBYsExoD+RRE3Q==
-X-Received: by 2002:a05:6808:2d8:: with SMTP id
- a24mr824426oid.127.1573089075340; 
- Wed, 06 Nov 2019 17:11:15 -0800 (PST)
-Received: from localhost (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id m25sm233558otj.62.2019.11.06.17.11.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Nov 2019 17:11:14 -0800 (PST)
-Date: Wed, 6 Nov 2019 19:11:14 -0600
-From: Rob Herring <robh@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v5 2/3] dt-bindings: reset: Add binding constants for
- NPCM7xx reset controller
-Message-ID: <20191107011114.GA19324@bogus>
-References: <20191106145331.25740-1-tmaimon77@gmail.com>
- <20191106145331.25740-3-tmaimon77@gmail.com>
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 477mHG6NrPzF3tP
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Nov 2019 12:37:25 +1100 (AEDT)
+IronPort-SDR: 86Mnr1GkIvSo+WbBljTZ+07slJPrBvfY/tp3yyrng0js5Xx16ZPY7dyCVPASGxsy5YJPShOBi/
+ EHQPImzVCUQg==
+Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
+ by mx02.quantatw.com with ESMTP; 07 Nov 2019 09:37:23 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx08.quanta.corp
+ (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 7 Nov 2019
+ 09:37:19 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Thu, 7 Nov 2019 09:37:19 +0800
+From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Subject: RE: Questions about openbmc-test-automation
+Thread-Topic: Questions about openbmc-test-automation
+Thread-Index: AdWTti27hCt8Gg0PRByoyfDQiVK6a///m0GA//49oFCAAxfEAP/+R8Lw
+Date: Thu, 7 Nov 2019 01:37:19 +0000
+Message-ID: <dea6fe3ac2b44de881f105adc9a0f8ba@quantatw.com>
+References: <937d3cf0ee5b42559e145fbf87c5c9b3@quantatw.com>
+ <CAAMkS12QPgcdawwV0OdvB_xFB5C78o7AqvTmKcZWYqeTgjCioQ@mail.gmail.com>
+ <37a55521de3843c6a407e7faeb68f693@quantatw.com>
+ <CAAMkS10zqHVNv-x8pLBtyDJVm2xTjTROHSqsA6SeELZ953wz-w@mail.gmail.com>
+In-Reply-To: <CAAMkS10zqHVNv-x8pLBtyDJVm2xTjTROHSqsA6SeELZ953wz-w@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25026.004
+x-tm-as-result: No-10--5.282000-5.000000
+x-tmase-matchedrid: vEvJ7Rh1lGjuo96mfIBuopzEHTUOuMX33dCmvEa6IiGoLZarzrrPmdou
+ H2hORci0i8nLlIazgBj4t7nX2oD1r9wGyLnS1FSdANnNowADAjtYO2sJv8HaEE9CJC/MWIZ4oua
+ XE/reSZmea2VosLlQqxTPLzDwJ6seJNdcnIl+MB8WqJ/PBjhtWqcaC4L+0t7ARZrOmBLNtw90Ev
+ cZ8PCAVxW7SA7Yt0qBn45TzlTUSPmD66TlvUkVYNbgzPjrV+wc9VTWHezETrwREWgPwB+LAZAaN
+ p2uvngx2K0n174XRBaU445mRfcQTr9jX++auvv+bRZGrsoeW/hDfut2Lc1Yh7xgMf9QE2ebc3wu
+ qc+4Wow8MwCgiSCug3lySYZqUQo4IqRxG3EBiTfnzlXMYw4XMD3Al4zalJpFwrbXMGDYqV+FR9H
+ au8GO7hXaZD8cTk9u6ORqTko5XSVHU/up884/9JMCArjrcNouPQqW0p4jTjs=
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--5.282000-5.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25026.004
+x-tm-snts-smtp: 235862DAC1FCECC7DABC903C8C18F96757D8294E6C9869FB02E7185356F135922000:B
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191106145331.25740-3-tmaimon77@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,22 +73,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, benjaminfair@google.com,
- avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org, p.zabel@pengutronix.de,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed,  6 Nov 2019 16:53:30 +0200, Tomer Maimon wrote:
-> Add device tree binding constants for Nuvoton BMC NPCM7xx
-> reset controller.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../dt-bindings/reset/nuvoton,npcm7xx-reset.h | 91 +++++++++++++++++++
->  1 file changed, 91 insertions(+)
->  create mode 100644 include/dt-bindings/reset/nuvoton,npcm7xx-reset.h
-> 
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+SGkgUmFodWwsDQoNCkl0IHNvdW5kcyBnb29kIHRvIG1lIGFuZCBJIHdvdWxkIGxpa2UgdG8gZHJv
+cCBjb2RlIGNoYW5nZS4NCg0KRnJvbTogUmFodWwgTWFoZXNod2FyaSA8cmFodWxtYWhlc2h3YXJp
+MDFAZ21haWwuY29tPiANClNlbnQ6IFdlZG5lc2RheSwgTm92ZW1iZXIgNiwgMjAxOSAzOjEzIFBN
+DQpUbzogVG9ueSBMZWUgKOadjuaWh+WvjCkgPFRvbnkuTGVlQHF1YW50YXR3LmNvbT4NCkNjOiBv
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBRdWVzdGlvbnMgYWJvdXQgb3Bl
+bmJtYy10ZXN0LWF1dG9tYXRpb24NCg0KWWVzLCB0aGF0IGlzIGNvcnJlY3Qgd2F5Lg0KDQpPbiBX
+ZWQsIE5vdiA2LCAyMDE5IGF0IDExOjIyIEFNIFRvbnkgTGVlICjmnY7mloflr4wpIDxtYWlsdG86
+VG9ueS5MZWVAcXVhbnRhdHcuY29tPiB3cm90ZToNCkhpIFJhaHVsLA0KDQpGb3IgZXhhbXBsZSwg
+Y2FzZSAiUmV0cmlldmUgSVAgQWRkcmVzcyBWaWEgSVBNSSBBbmQgVmVyaWZ5IFVzaW5nIFJlZGZp
+c2giIGluIC9pcG1pL3Rlc3RfaXBtaV9uZXR3b3JrLnJvYm90Lg0KVGhlIG5ldyB3YXkgaXMgYXMg
+Zm9sbG93czoNCg0KSVBNSSBuZXR3b3JrIGNoYW5uZWwgbG9naWNhbGx5IHN0YXJ0cyBmcm9tIDEu
+IEZvciBleGFtcGxlLCBvbmNlIGl0IGZpZ3VyZSBvdXQgdGhlIGNoYW5uZWwgY291bnQgaXMgMywN
+CndlIGNhbiByZXRyaWV2ZSBJUCBhZGRyZXNzZXMgdGhyb3VnaCBjaGFubmVscyAxLCAyLCBhbmQg
+MywgYW5kIHZlcmlmeSB0aGVtIGNvcnJlc3BvbmQgdG8gZXRoMCwgZXRoMSwgYW5kIGV0aDIsIHJl
+c3BlY3RpdmVseSBieSByZWRmaXNoLg0KSXMgaXQgcmlnaHQ/DQoNClRoYW5rcw0KQmVzdCBSZWdh
+cmRzLA0KVG9ueQ0KDQpGcm9tOiBSYWh1bCBNYWhlc2h3YXJpIDxtYWlsdG86cmFodWxtYWhlc2h3
+YXJpMDFAZ21haWwuY29tPiANClNlbnQ6IFR1ZXNkYXksIE5vdmVtYmVyIDUsIDIwMTkgNjo1MSBQ
+TQ0KVG86IFRvbnkgTGVlICjmnY7mloflr4wpIDxtYWlsdG86VG9ueS5MZWVAcXVhbnRhdHcuY29t
+Pg0KQ2M6IG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBRdWVz
+dGlvbnMgYWJvdXQgb3BlbmJtYy10ZXN0LWF1dG9tYXRpb24NCg0KVGhhbmtzIGZvciBwb2ludGlu
+ZyB0aGF0IG91dC4gUGFzc2luZyBpbnRlcmZhY2UvY2hhbm5lbCBudW1iZXIgaXMgYW4gZWFzaWVy
+IG9wdGlvbiBidXQgd2Ugc2hvdWxkIGJlIGF2b2lkaW5nIHBhc3NpbmcgZW52aXJvbm1lbnTCoHZh
+cmlhYmxlIHVubGVzcyB0aGVyZSBpcyBubyBvdGhlciB3YXkuIEkgd291bGQgc2F5IGJldHRlciB3
+YXkgdG8gb3ZlcmNvbWUgdGhpcyBpcyB0byBmaWd1cmUgb3V0IHRoZSBjaGFubmVsIGNvdW50IHVz
+aW5nICJpcCBhZGRyIiBjb21tYW5kIGZyb20gQk1DIGNsaS7CoA0KTGV0IHVzIGtub3cgaWYgdGhh
+dCBzb3VuZHMgZ29vZMKgdG8geW91Lg0KQWxzbyBsZXQgdXMga25vdyBpZiB5b3Ugd291bGQgbGlr
+ZSB0byBkcm9wIGNvZGUgY2hhbmdlIGZvciB0aGUgc2FtZT/CoA0KDQpUaGFua3MNClJhaHVsDQoN
+Cg0KDQoNCsKgDQoNCk9uIFR1ZSwgTm92IDUsIDIwMTkgYXQgMjoyOCBQTSBUb255IExlZSAo5p2O
+5paH5a+MKSA8bWFpbHRvOm1haWx0bzpUb255LkxlZUBxdWFudGF0dy5jb20+IHdyb3RlOg0KSGkg
+UmFodWwsDQrCoA0KSSdtIHdvbmRlcmluZyB0aGF0IHdoeSAiUkVERklTSF9OV19FVEgwIiBpcyBo
+YXJkY29kZSBhcyAiTWFuYWdlcnMvYm1jL0V0aGVybmV0SW50ZXJmYWNlcy9ldGgwLyIgaW4gL2Rh
+dGEvdmFyaWFibGVzLnB5DQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jLXRlc3Qt
+YXV0b21hdGlvbi9ibG9iL21hc3Rlci9kYXRhL3ZhcmlhYmxlcy5weSNMMTU1DQpGdXJ0aGVybW9y
+ZSwgdGhlIGNvbW1hbmQgImxhbiBwcmludCIgZGlkbid0IHNwZWNpZnkgdGhlIGNoYW5uZWwgbnVt
+YmVyIGluIC9pcG1pL3Rlc3RfaXBtaV9uZXR3b3JrLnJvYm90Lg0KVGhlcmVmb3JlLCB0aGUgZGVm
+YXVsdCB3aWxsIHByaW50IGluZm9ybWF0aW9uIG9uIHRoZSBmaXJzdCBmb3VuZCBMQU4gY2hhbm5l
+bC4gDQrCoA0KSXNuJ3QgaXQgbW9yZSByZWFzb25hYmxlIHRvIHNldCB0aGUgaW50ZXJmYWNlIGFu
+ZCB0aGUgY2hhbm5lbCBudW1iZXIgYXMgZW52aXJvbm1lbnQgdmFyaWFibGVzIGFuZCBnaXZlIHRo
+ZW0gZGVmYXVsdCB2YWx1ZXM/DQrCoA0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQrCoA0K
