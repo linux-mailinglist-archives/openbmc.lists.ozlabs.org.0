@@ -1,69 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89315F3732
-	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 19:27:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C82FF3757
+	for <lists+openbmc@lfdr.de>; Thu,  7 Nov 2019 19:36:14 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 478Bht5vDMzF6d9
-	for <lists+openbmc@lfdr.de>; Fri,  8 Nov 2019 05:27:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 478Btg384kzF6cx
+	for <lists+openbmc@lfdr.de>; Fri,  8 Nov 2019 05:36:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::344;
+ helo=mail-ot1-x344.google.com; envelope-from=tmaimon77@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="TZKaiPO9"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x344.google.com (mail-ot1-x344.google.com
+ [IPv6:2607:f8b0:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 478Bh30ykkzF6cP
- for <openbmc@lists.ozlabs.org>; Fri,  8 Nov 2019 05:26:57 +1100 (AEDT)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga107.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 07 Nov 2019 10:26:52 -0800
-X-IronPort-AV: E=Sophos;i="5.68,278,1569308400"; 
- d="asc'?scan'208,217";a="196642940"
-Received: from jmanteyx-desk.jf.intel.com ([10.54.51.79])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
- 07 Nov 2019 10:26:51 -0800
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: cve-check and FC30
-Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
- mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
- dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
- ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
- pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
- 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
- AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
- a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
- nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
- VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
- V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
- 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
- 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
- LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
- wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
- /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
- 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
- BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
- ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
- JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
- k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
- Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
- 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
-Message-ID: <ac0e717a-f1ea-06f4-e05a-870cb4521a3a@intel.com>
-Date: Thu, 7 Nov 2019 10:26:48 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 478Bsq48mXzF6cv
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Nov 2019 05:35:27 +1100 (AEDT)
+Received: by mail-ot1-x344.google.com with SMTP id m15so2882670otq.7
+ for <openbmc@lists.ozlabs.org>; Thu, 07 Nov 2019 10:35:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=OvfAfqBV95/Vs4Ku6YBB5QW8fmzhsVNuh6obvWotnSY=;
+ b=TZKaiPO97p4eWsZtXyzl+4706hV34zqLPr+8oC6Mm+VLgJNY+g9zDydf0l5gW9bPyk
+ z28vOurA2wf2onh47cBRgEDiTRAYke8ittYk1iVrW6fl2i5ocMit09YKmNCDIu69jmVk
+ NnjztGCkaoml0g7mJhgX1sBbnZIPwkMWVvvmABvJhDR9LawSmEZ283NT1PdmF5uL1VIr
+ j7Y+H0nHrB6xOh4y47lIvnm6UeWNj1pVNMih+kBP/SzbyaC1HVIcSKgbajdSRkZXKsSj
+ QWrpYZLyBZBvuuWlUEPNhnZb4EeAo8jBlvOWEpSRFnD5EXhESB+VREfuVKIFMkdCRZOB
+ g0oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=OvfAfqBV95/Vs4Ku6YBB5QW8fmzhsVNuh6obvWotnSY=;
+ b=H02h5tvJvqqjfbTHxLZwZ6qf5ZbylWiAY2EMkjATmuN6WEZXj9irrPHliSK45ZGF7f
+ Z9SSSEEZLMlRA1zZUiW3jO8mQQwiyrz8ymEwpNum8oFWjYJ+4RMozO4t+AOEYjGeMbJZ
+ WevNIalGsZq9g9hQr8MYqHrvYB0SMrZh+sEJlu/hKwi1QfpdJ+EAUZ7QixF7/HvkqdrU
+ LOaVwE3LAPZFbutpwY0mTCk4y47jQV6Pa6pqUVcv/Wji+jEditwdoyEocaFcnMtr+y9X
+ /XqTnjrP071xD+HuXOYOZspr91q3haTuRHGh/bDvSh7a1tLAsEQoGD4YYHuDZ0TWyzhi
+ ADIQ==
+X-Gm-Message-State: APjAAAWkPCp5T1HzyiAm3tS8zuUTRn8srIvY0A7LIJbkR+51kOm0UreR
+ V4ZHbZxlzPbW1zh9sFNuAAY6XqjXbj6DVHwxJY8=
+X-Google-Smtp-Source: APXvYqzmyQSn2cqx2TGS1BrhINu51FCsawMN7Q7T9QvpOIZ2zoksJYaOAvaF1pfA1yP/l11YKPMx4dhQ3Z9S3hC8hzQ=
+X-Received: by 2002:a9d:4c13:: with SMTP id l19mr4031490otf.269.1573151723920; 
+ Thu, 07 Nov 2019 10:35:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="OmAB1FJLXAKeTR3h7Lds70qyKQmOATgxW"
+References: <20191106145331.25740-1-tmaimon77@gmail.com>
+ <1bacac547977493e50bb1fadfaf4b9ad5b4fdf0c.camel@pengutronix.de>
+In-Reply-To: <1bacac547977493e50bb1fadfaf4b9ad5b4fdf0c.camel@pengutronix.de>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Thu, 7 Nov 2019 20:45:03 +0200
+Message-ID: <CAP6Zq1j5mpmU+eNP7sE_=hcXqKx90+msHin9seM_+e=+D+y2_g@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] reset: npcm: add NPCM reset driver support
+To: Philipp Zabel <p.zabel@pengutronix.de>
+Content-Type: multipart/alternative; boundary="000000000000aea1b70596c5ed64"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,128 +73,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---OmAB1FJLXAKeTR3h7Lds70qyKQmOATgxW
-Content-Type: multipart/mixed; boundary="aRL0rPkiFfvB5p7hROZDbUR4fMPbWuUSk"
+--000000000000aea1b70596c5ed64
+Content-Type: text/plain; charset="UTF-8"
 
---aRL0rPkiFfvB5p7hROZDbUR4fMPbWuUSk
-Content-Type: multipart/alternative;
- boundary="------------DBB91EC5B5E528276F397CEF"
-Content-Language: en-US
+Hi Philipp and Rob,
 
-This is a multi-part message in MIME format.
---------------DBB91EC5B5E528276F397CEF
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Thanks a lot for your support!
 
-SSdtIHVuYWJsZSB0byBidWlsZCB3aXRoIHRoZSBsYXRlc3QgdXBzdHJlYW0gY2hhbmdlcy7C
-oCBJJ3ZlIGlzb2xhdGVkIHRoZQpwcm9ibGVtIHRvIHRoaXMgY29tbWl0OgoKM2UzNmFiOGRh
-ZGFiMzZiYjI4NmRjNmQ3NTBhYzZjNDkzNGY1MGQwNCBjdmUtY2hlY2s6IGVuc3VyZSBhbGwg
-a25vd24KQ1ZFcyBhcmUgaW4gdGhlIHJlcG9ydAoKVGhlIGVycm9yIGlzOgrCoMKgwqDCoCAw
-MjcyOsKgwqDCoCBwbGFjZWhvbGRlciA9ICIsIi5qb2luKCI/IiAqIGxlbihjdmVzKSkKwqDC
-oMKgwqAgMDI3MzrCoMKgwqAgcXVlcnkgPSAiU0VMRUNUICogRlJPTSBOVkQgV0hFUkUgaWQg
-SU4gKCVzKSIgJSBwbGFjZWhvbGRlcgrCoMKgwqDCoCAwMjc0OsKgwqDCoCBjb25uID0gc3Fs
-aXRlMy5jb25uZWN0KGRiX2ZpbGUpCsKgwqDCoMKgIDAyNzU6wqDCoMKgIGN1ciA9IGNvbm4u
-Y3Vyc29yKCkKwqAqKiogMDI3NjrCoMKgwqAgZm9yIHJvdyBpbiBjdXIuZXhlY3V0ZShxdWVy
-eSwgdHVwbGUoY3ZlcykpOgrCoMKgwqDCoCAwMjc3OsKgwqDCoMKgwqDCoMKgIGN2ZV9kYXRh
-W3Jvd1swXV0gPSB7fQrCoMKgwqDCoCAwMjc4OsKgwqDCoMKgwqDCoMKgIGN2ZV9kYXRhW3Jv
-d1swXV1bInN1bW1hcnkiXSA9IHJvd1sxXQrCoMKgwqDCoCAwMjc5OsKgwqDCoMKgwqDCoMKg
-IGN2ZV9kYXRhW3Jvd1swXV1bInNjb3JldjIiXSA9IHJvd1syXQrCoMKgwqDCoCAwMjgwOsKg
-wqDCoMKgwqDCoMKgIGN2ZV9kYXRhW3Jvd1swXV1bInNjb3JldjMiXSA9IHJvd1szXQpFeGNl
-cHRpb246IHNxbGl0ZTMuT3BlcmF0aW9uYWxFcnJvcjogdG9vIG1hbnkgU1FMIHZhcmlhYmxl
-cwoKV2hlbiBJIHJldmVydCB0aGlzIGNoYW5nZSBJIGFtIGFibGUgdG8gYnVpbGQuCgpIYXMg
-YW55b25lIGVsc2Ugc2VlbiB0aGlzLCBhbmQsIGlmIHNvLCBjcmVhdGVkIGEgc29sdXRpb24/
-CgotLSAKSm9obmF0aGFuIE1hbnRleQpTZW5pb3IgU29mdHdhcmUgRW5naW5lZXIKKmF6YWQg
-dGUqKmNobm9sb2d5IHBhcnRuZXJzKgpDb250cmlidXRpbmcgdG8gVGVjaG5vbG9neSBJbm5v
-dmF0aW9uIHNpbmNlIDE5OTIKUGhvbmU6ICg1MDMpIDcxMi02NzY0CkVtYWlsOiBqb2huYXRo
-YW54Lm1hbnRleUBpbnRlbC5jb20gPG1haWx0bzpqb2huYXRoYW54Lm1hbnRleUBpbnRlbC5j
-b20+Cgo=
---------------DBB91EC5B5E528276F397CEF
-Content-Type: text/html; charset=utf-8
+Tomer
+
+On Thu, 7 Nov 2019 at 14:59, Philipp Zabel <p.zabel@pengutronix.de> wrote:
+
+> Hi Tomer,
+>
+> On Wed, 2019-11-06 at 16:53 +0200, Tomer Maimon wrote:
+> > This patch set adds reset controller support
+> > for the Nuvoton NPCM Baseboard Management Controller (BMC).
+> >
+> > Apart of controlling all NPCM BMC reset module lines the NPCM reset
+> driver
+> > support NPCM BMC software reset to restarting the NPCM BMC.
+> >
+> > Supporting NPCM USB-PHY reset as follow:
+> >
+> > NPCM BMC USB-PHY connected to two modules USB device (UDC) and USB host.
+> >
+> > If we will restart the USB-PHY at the UDC probe and later the
+> > USB host probe will restart USB-PHY again it will disable the UDC
+> > and vice versa.
+> >
+> > The solution is to reset the USB-PHY at the reset probe stage before
+> > the UDC and the USB host are initializing.
+> >
+> > NPCM reset driver tested on NPCM750 evaluation board.
+> >
+> > Addressed comments from:.
+> >  - Philipp Zabel
+> >
+> > Changes since version 4:
+> >  - Check for stored GCR string in the of_device_id->data to gain
+> >    GCR regmap access.
+> >  - Adding check if the user used undefined reset pins
+> >    in the of_xlate function.
+> >  - Remove nr_resets initialization since it of_xlate replaced
+> >    with the custom version.
+>
+> Thanks, all three applied to reset/next with Rob's R-b.
+>
+> regards
+> Philipp
+>
+>
+
+--000000000000aea1b70596c5ed64
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html>
-  <head>
+<div dir=3D"ltr">Hi Philipp and Rob,<div><br></div><div>Thanks a lot for yo=
+ur support!</div><div><br></div><div>Tomer</div></div><br><div class=3D"gma=
+il_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 7 Nov 2019 at 14:59=
+, Philipp Zabel &lt;<a href=3D"mailto:p.zabel@pengutronix.de">p.zabel@pengu=
+tronix.de</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Hi Tomer,<br>
+<br>
+On Wed, 2019-11-06 at 16:53 +0200, Tomer Maimon wrote:<br>
+&gt; This patch set adds reset controller support <br>
+&gt; for the Nuvoton NPCM Baseboard Management Controller (BMC).<br>
+&gt; <br>
+&gt; Apart of controlling all NPCM BMC reset module lines the NPCM reset dr=
+iver<br>
+&gt; support NPCM BMC software reset to restarting the NPCM BMC.<br>
+&gt; <br>
+&gt; Supporting NPCM USB-PHY reset as follow:<br>
+&gt; <br>
+&gt; NPCM BMC USB-PHY connected to two modules USB device (UDC) and USB hos=
+t.<br>
+&gt; <br>
+&gt; If we will restart the USB-PHY at the UDC probe and later the <br>
+&gt; USB host probe will restart USB-PHY again it will disable the UDC<br>
+&gt; and vice versa.<br>
+&gt; <br>
+&gt; The solution is to reset the USB-PHY at the reset probe stage before <=
+br>
+&gt; the UDC and the USB host are initializing.<br>
+&gt; <br>
+&gt; NPCM reset driver tested on NPCM750 evaluation board.<br>
+&gt; <br>
+&gt; Addressed comments from:.<br>
+&gt;=C2=A0 - Philipp Zabel<br>
+&gt; <br>
+&gt; Changes since version 4:<br>
+&gt;=C2=A0 - Check for stored GCR string in the of_device_id-&gt;data to ga=
+in<br>
+&gt;=C2=A0 =C2=A0 GCR regmap access. <br>
+&gt;=C2=A0 - Adding check if the user used undefined reset pins<br>
+&gt;=C2=A0 =C2=A0 in the of_xlate function.<br>
+&gt;=C2=A0 - Remove nr_resets initialization since it of_xlate replaced <br=
+>
+&gt;=C2=A0 =C2=A0 with the custom version.<br>
+<br>
+Thanks, all three applied to reset/next with Rob&#39;s R-b.<br>
+<br>
+regards<br>
+Philipp<br>
+<br>
+</blockquote></div>
 
-    <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DUTF=
--8">
-  </head>
-  <body>
-    I'm unable to build with the latest upstream changes.=C2=A0 I've isol=
-ated
-    the problem to this commit:<br>
-    <br>
-    3e36ab8dadab36bb286dc6d750ac6c4934f50d04 cve-check: ensure all known
-    CVEs are in the report<br>
-    <br>
-    The error is:<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0272:=C2=A0=C2=A0=C2=A0 placeholder =3D ",".=
-join("?" * len(cves))<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0273:=C2=A0=C2=A0=C2=A0 query =3D "SELECT * =
-FROM NVD WHERE id IN (%s)" %
-    placeholder<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0274:=C2=A0=C2=A0=C2=A0 conn =3D sqlite3.con=
-nect(db_file)<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0275:=C2=A0=C2=A0=C2=A0 cur =3D conn.cursor(=
-)<br>
-    =C2=A0*** 0276:=C2=A0=C2=A0=C2=A0 for row in cur.execute(query, tuple=
-(cves)):<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0277:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 cve_data[row[0]] =3D {}<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0278:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 cve_data[row[0]]["summary"] =3D row[1]<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0279:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 cve_data[row[0]]["scorev2"] =3D row[2]<br>
-    =C2=A0=C2=A0=C2=A0=C2=A0 0280:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 cve_data[row[0]]["scorev3"] =3D row[3]<br>
-    Exception: sqlite3.OperationalError: too many SQL variables<br>
-    <br>
-    When I revert this change I am able to build.<br>
-    <br>
-    Has anyone else seen this, and, if so, created a solution?<br>
-    <br>
-    <div class=3D"moz-signature">-- <br>
-      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
-TF-8">
-      <title></title>
-      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
-tey<br>
-          <small>Senior Software Engineer</small><br>
-          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
-                  partners</b></small><br>
-              <small><font color=3D"#1F497D"><small>Contributing to
-                    Technology Innovation since 1992</small></font><small=
-><br>
-                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
-                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
->johnathanx.mantey@intel.com</a></font></small><br>
-                <br>
-              </small></font></big></font></font> </div>
-  </body>
-</html>
-
---------------DBB91EC5B5E528276F397CEF--
-
---aRL0rPkiFfvB5p7hROZDbUR4fMPbWuUSk--
-
---OmAB1FJLXAKeTR3h7Lds70qyKQmOATgxW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl3EYegACgkQ0EfviT3f
-HwmmEAf/d/X0pwvg6BY3YQj2paPmbx+mUT6fXCOk0MpELC3KuMAh7x2mD+Lq5q95
-RuBrmzDRfHIc8LBPqB/rzY0f8Dp3BOSUR5OZnqxM6Q5BmxQugblkoG2Yuhgwo5EL
-QcQtqVecl5o3ePD425+27OwI0EozvCHyhtC8cxelM37E63cLmSjdlgxbRGrYQyHv
-S0QHXrgmWPcRxCbFYoIFtXU2cOqBe/OWwcKLHYqvjnuv7pde8Pkig7CY8DcGgrnk
-ai8OZ0KWTMZ/ILXSvxKGfemYRwAvVhh1O5qgpRq093P7LadD+RRQqNE1sRK39qd3
-WdUaG3LKyjCEChkpk9VMsOlGpO9Yqg==
-=CzdT
------END PGP SIGNATURE-----
-
---OmAB1FJLXAKeTR3h7Lds70qyKQmOATgxW--
+--000000000000aea1b70596c5ed64--
