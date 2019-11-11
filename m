@@ -1,66 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8122AF7AA4
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 19:20:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADA9AF7C33
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 19:44:57 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47BfLF45C0zF3RX
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 05:20:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Bftr6T82zF3Zv
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 05:44:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::534;
- helo=mail-ed1-x534.google.com; envelope-from=osk@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22d;
+ helo=mail-lj1-x22d.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Lk/VtMgB"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="uqMl/Gbm"; 
  dkim-atps=neutral
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com
- [IPv6:2a00:1450:4864:20::534])
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [IPv6:2a00:1450:4864:20::22d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Bf5m6zTqzDrSL
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 05:09:15 +1100 (AEDT)
-Received: by mail-ed1-x534.google.com with SMTP id k14so12660693eds.4
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 10:09:15 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47BfsY61gdzF3NZ
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 05:43:44 +1100 (AEDT)
+Received: by mail-lj1-x22d.google.com with SMTP id r7so14944979ljg.2
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 10:43:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GLaufu3C52QVwHTFB99/K4c8sZZVEcPUnXo1hFJ5w9w=;
- b=Lk/VtMgBnEiBF8C2ZYI3Haf+vALaR94eccTdTrEyzzjX2srNgYNnpApSsofdcI6DRx
- 4+EFIXeRi9R5yhkPL6Et2VfZ/fRmLqDzRYzCq4ZCj5qQf0iZwr/sl5Ey1CVZhCet2ZYK
- nQ4n/VOeKhUogKDmRM++akzk7TlSCptSbTj3GvWQ3HTuOMoEOT02Q+UjYEj4Iv09y6sF
- 0Jfe1jFqmCjoKwhGQyh3X5Pn5ZD1+0nnvrUTaaOajHzO5G8SsXpMwuk2OdlCJXP3SaZW
- krWkhriSnZsTYGeq1GMQvm+sZwC6MyPSCx5eYqDEtKhRYhn2TOWDspxsDnj8Ru9UM6Yi
- RZtw==
+ :cc; bh=NXV0dyx2kb6lKI+o0Yhzq0yQOccCGDcaeMkjsjEEg7k=;
+ b=uqMl/GbmKKHT2ovRH+Hkedz1pTxN74psJ9aB13mgG8UQE+9URImlX8hXyYENi1B5e0
+ eu0+SwC2kY70mNHgbEMXVTOlX71YAgvhxLim30GxmfaemhjBW98IDma+wuCdJg5xEIbD
+ 9u7xJnPJfxNncBtbncUUytC9umj0bPfgg7z2imGf3VJQn7s1Vf+NeZfLSXTA6IYi4cWU
+ nYgr7ZSUR8kW/Rp53lE7NmME+V7SgxU47QqTy+JfBBfJ3KjPIj7xsZNtbx9vKKrYoMDR
+ Lh/HXAZgcnEQd1kFSXQx9jAGbDhe/pHYrLHeeIplNrkzuA2SeCNdPjTpJMeSDedkOuqF
+ DEsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=GLaufu3C52QVwHTFB99/K4c8sZZVEcPUnXo1hFJ5w9w=;
- b=YMtIRxkzF+zKHnuTSZOJdY+ZsvLFU/kRxkNG9bB+4+X57FVD6HJIeQIkCWCAvLlUMo
- txeuiLTan5uFNr/1uodh6Z0US0X0R1wlqXpdywFa4VJEClKpSJ3u7y5/kNs2gVnxUAyt
- kCAyYWdkE1EhhuGMeY2IbplAFhW1PCEPsDD1vplt3e9FDjn4Z28k8mV+wRadp5vUzgEt
- zvtKa6N6XZmYMMXzAPFlaQP2p+tKifZbpR5z27Umjw9yvGmu/sReG8VClTmN5C14IoPp
- 0kK1dgbP89L1TfU+ft+fWeCAmdefNIPwmHeY+OEjiFUNQNAlkotr8tmt69o5kRlDdt3/
- DzqA==
-X-Gm-Message-State: APjAAAWhQhtJRPYY5c9ah25oS93Qre+mfOqEmRMWG3xx6VbcXqEZGINp
- zvotNPCX5FL3vJgP5C51iOs3RQzhgwWm5x1McMixwQ==
-X-Google-Smtp-Source: APXvYqympxjHP5t2nnzhsX3LlRYt76jOrJWaZDlCUbe7zJF9RUN4WRhKi/PrjbQIG+XnVuiLQFnnac2WTWGJRGLPibw=
-X-Received: by 2002:a50:f783:: with SMTP id h3mr27683812edn.168.1573495749804; 
- Mon, 11 Nov 2019 10:09:09 -0800 (PST)
+ bh=NXV0dyx2kb6lKI+o0Yhzq0yQOccCGDcaeMkjsjEEg7k=;
+ b=imUmNWm/QO8diwV5nHBRoNsG+baBB8vFZJ/a1ACXMP06vdO70F1ztG5fxtmjrQW8RY
+ IQLyjcjGOWnv8nslhRXSmPPlUGU1kXx5SCz0shz0AeVYUvTN+/luVs+NtczJC0ZhgurF
+ PFSocRlhJlauG5l2yXKN2f5lClbEkrO7u0A/6OqyJkWO/vcJPzzVaV4XNVHAwqWQtB5h
+ jRLKrUZke9SMfSogTG7rNw/as1x9S8Kyod8tJCU+J3cY+ZHsnRA5WDR0gHWttnH7dBya
+ YSsChVoangP+L9YZekxX02LTffbnJUYVhEzsVZwrmKQCxVyz+GdZRBovcbjxy7/p5KPi
+ OxUg==
+X-Gm-Message-State: APjAAAUo8G9JfCy5f60aQDxxWX9aPkxveaOG3locyt1Qy7zKVQhJs1/q
+ t2crXqGhgbRUYMU+dpfRwDO+MqfRH6zwigfEzOoFCA==
+X-Google-Smtp-Source: APXvYqwXoblxzuQJ9u1a0x8hhQuKhgP8SIjQbjUNCpzo80IcPEmRXrnLUeRfrgJzKGdkaX9x9i0UnDoFfHW9t0JDqaA=
+X-Received: by 2002:a2e:9449:: with SMTP id o9mr5669022ljh.75.1573497820085;
+ Mon, 11 Nov 2019 10:43:40 -0800 (PST)
 MIME-Version: 1.0
 References: <18608ACD-34D8-4408-B0C1-B5185A92CE2B@fuzziesquirrel.com>
-In-Reply-To: <18608ACD-34D8-4408-B0C1-B5185A92CE2B@fuzziesquirrel.com>
-From: Oskar Senft <osk@google.com>
-Date: Mon, 11 Nov 2019 13:08:53 -0500
-Message-ID: <CABoTLcQUrCjzbA1qELhug370fKFK6+Gii9ZsF=FX59oYwNRMVg@mail.gmail.com>
+ <CABoTLcQUrCjzbA1qELhug370fKFK6+Gii9ZsF=FX59oYwNRMVg@mail.gmail.com>
+In-Reply-To: <CABoTLcQUrCjzbA1qELhug370fKFK6+Gii9ZsF=FX59oYwNRMVg@mail.gmail.com>
+From: Richard Hanley <rhanley@google.com>
+Date: Mon, 11 Nov 2019 10:43:28 -0800
+Message-ID: <CAH1kD+Zb5wVqupNjRLsOAoiZ_CS_EP1PN890Zi6PqjQcv47B+Q@mail.gmail.com>
 Subject: Re: in-band hardware management after IPMI
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000399566059716070f"
+To: Oskar Senft <osk@google.com>
+Content-Type: multipart/alternative; boundary="0000000000009f7dcc0597168228"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,56 +74,85 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
  "OCP-HWmgt@ocp-all.groups.io" <OCP-HWmgt@ocp-all.groups.io>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000399566059716070f
+--0000000000009f7dcc0597168228
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Brad
+Hi Brad,
 
-At least in my group, we're currently looking into using Redfish over the
-USB virtual NIC between host and BMC. The host would be running Linux
-(un-virtualized).
+To Oskar's point, we have plans in the works to use Redfish on both a linux
+host and BMCs.
 
-Oskar.
+I've just started investigating PLDM.  I think there are a handful of use
+cases where RDE over PLDM could be useful, but we're still unsure about how
+much effort it will take to integrate PLDM.
 
-On Mon, Nov 11, 2019 at 11:56 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
+If we did move to PLDM, it would definitely be mixed in with Redfish.
 
-> Hi everyone
->
-> This is my first post to the hardware management list.  I'm Brad, I work
-> for IBM and I'm the TSC chair of the OpenBMC project.  I've cross posted to
-> both the OCP HW management mailing list and the OpenBMC project mailing
-> list because I expect both audiences are interested in the discussion.
->
-> My question is mostly simple - The answers will likely not be.  I would
-> like to know whatever anyone is willing to share about in-band hardware
-> management plans in a post-IPMI world.  By in-band I mean applications (or
-> firmware) running on host processors in the same server as a BMC.
->
-> Will you use Redfish?  PLDM?  A mix?  From host firmware?  From Windows?
-> From Linux?  From virtualized OSes?  From un-virtualized OSes?
->
-> Thanks!
->
-> -brad
+- Richard
 
---000000000000399566059716070f
+On Mon, Nov 11, 2019 at 10:20 AM Oskar Senft <osk@google.com> wrote:
+
+> Hi Brad
+>
+> At least in my group, we're currently looking into using Redfish over the
+> USB virtual NIC between host and BMC. The host would be running Linux
+> (un-virtualized).
+>
+> Oskar.
+>
+> On Mon, Nov 11, 2019 at 11:56 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
+> wrote:
+>
+>> Hi everyone
+>>
+>> This is my first post to the hardware management list.  I'm Brad, I work
+>> for IBM and I'm the TSC chair of the OpenBMC project.  I've cross posted to
+>> both the OCP HW management mailing list and the OpenBMC project mailing
+>> list because I expect both audiences are interested in the discussion.
+>>
+>> My question is mostly simple - The answers will likely not be.  I would
+>> like to know whatever anyone is willing to share about in-band hardware
+>> management plans in a post-IPMI world.  By in-band I mean applications (or
+>> firmware) running on host processors in the same server as a BMC.
+>>
+>> Will you use Redfish?  PLDM?  A mix?  From host firmware?  From Windows?
+>> From Linux?  From virtualized OSes?  From un-virtualized OSes?
+>>
+>> Thanks!
+>>
+>> -brad
+>
+>
+
+--0000000000009f7dcc0597168228
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Brad<div><br></div><div>At least in my group, we&#39;re=
- currently looking into using Redfish over the USB virtual NIC between host=
- and BMC. The host would be running Linux (un-virtualized).</div><div><br><=
-/div><div>Oskar.</div><div></div></div><br><div class=3D"gmail_quote"><div =
-dir=3D"ltr" class=3D"gmail_attr">On Mon, Nov 11, 2019 at 11:56 AM Brad Bish=
-op &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquirr=
-el.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">Hi everyone<br>
+<div dir=3D"ltr">Hi Brad,<div><br></div><div>To Oskar&#39;s point, we have =
+plans in the works to use Redfish on both a linux host and BMCs.</div><div>=
+<br></div><div>I&#39;ve just started investigating PLDM.=C2=A0 I think ther=
+e are a handful of use cases where RDE over PLDM could be useful, but we&#3=
+9;re still unsure about how much effort it will take to integrate PLDM.</di=
+v><div><br></div><div>If we did move to PLDM, it would definitely be mixed =
+in with Redfish.</div><div><br></div><div>- Richard</div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Nov 11, 20=
+19 at 10:20 AM Oskar Senft &lt;<a href=3D"mailto:osk@google.com">osk@google=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex"><div dir=3D"ltr">Hi Brad<div><br></div><div>At least in my group, we&#3=
+9;re currently looking into using Redfish over the USB virtual NIC between =
+host and BMC. The host would be running Linux (un-virtualized).</div><div><=
+br></div><div>Oskar.</div><div></div></div><br><div class=3D"gmail_quote"><=
+div dir=3D"ltr" class=3D"gmail_attr">On Mon, Nov 11, 2019 at 11:56 AM Brad =
+Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com" target=3D"_blank"=
+>bradleyb@fuzziesquirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">Hi everyone<br>
 <br>
 This is my first post to the hardware management list.=C2=A0 I&#39;m Brad, =
 I work for IBM and I&#39;m the TSC chair of the OpenBMC project.=C2=A0 I&#3=
@@ -142,5 +172,6 @@ Will you use Redfish?=C2=A0 PLDM?=C2=A0 A mix?=C2=A0 From host firmware?=C2=
 Thanks!<br>
 <br>
 -brad</blockquote></div>
+</blockquote></div>
 
---000000000000399566059716070f--
+--0000000000009f7dcc0597168228--
