@@ -1,51 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9923CF6004
-	for <lists+openbmc@lfdr.de>; Sat,  9 Nov 2019 16:25:19 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9F32F6D44
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 04:22:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 479LYS3gc3zF6Lc
-	for <lists+openbmc@lfdr.de>; Sun, 10 Nov 2019 02:25:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47BGQX0mMczF4W3
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 14:22:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=126.com
- (client-ip=220.181.15.1; helo=m15-1.126.com; envelope-from=guilin1985@126.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=wangzhiqiang8906@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=126.com header.i=@126.com header.b="e9iRBrO/"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="FgGrorUX"; 
  dkim-atps=neutral
-Received: from m15-1.126.com (m15-1.126.com [220.181.15.1])
- by lists.ozlabs.org (Postfix) with ESMTP id 479LXM70wrzF69D
- for <openbmc@lists.ozlabs.org>; Sun, 10 Nov 2019 02:24:12 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=8Qz1Z
- yzRe4uZ75LhV8Ux3enX6soU0q0HdUJ8xwwVw+M=; b=e9iRBrO/woV3PZto7UW7P
- 49EguNLSWuooAbZ7+KNVHctZljvbWjZMF5hGWuRgoSGWEFPt2kQlhxg7EvWm6IuK
- zC68UDJNd9+G3yxuOYq9ntvEIZQhyeJXKZkszyIkzVlSrgCpXu5eSTTysEjPOEOT
- 7q+ZeGhbtruithE4dS1j6A=
-Received: from guilin1985$126.com ( [222.212.90.226] ) by
- ajax-webmail-wmsvr1 (Coremail) ; Sat, 9 Nov 2019 23:24:00 +0800 (CST)
-X-Originating-IP: [222.212.90.226]
-Date: Sat, 9 Nov 2019 23:24:00 +0800 (CST)
-From: =?GBK?B?sKK58A==?= <guilin1985@126.com>
-To: openbmc@lists.ozlabs.org
-Subject: BMC jtag programming CPLD
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 126com
-X-CM-CTRLDATA: b7EpeGZvb3Rlcl9odG09MTYxNDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_20226_1661686227.1573313040979"
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47BGKf1XjjzF37K
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 14:18:07 +1100 (AEDT)
+Received: by mail-ot1-x32e.google.com with SMTP id m15so10086004otq.7
+ for <openbmc@lists.ozlabs.org>; Sun, 10 Nov 2019 19:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=orvwqNzFta51oEmt2z6vEQvUSzUOJSumAs8LmQb0gMo=;
+ b=FgGrorUXQ3gUL9DVg/uwBIfyYf3Cv12/G767CauKmg+DEsV2qkOKdljbWJJp5D59P6
+ yBZYHQ12UsLjbAwZo3KkuPYL+57u7lKfLEGgmO4xfV8accI9WmXhaPQRLF47tiyE2VAk
+ /A/V8+P4z7Ywy0K8ha7KDnZDYpimuc9TRX+BvJ45T1ECpKO0gX1fZDICNaQ1MjCw5fRy
+ 8W2M1TOdEgxMwnTAlTzdZKoCf7Vn6WSQciY/Wrxa6L2gV3ZoqvvxYvS43C7wGYbp0NEy
+ bxwHqg5PlcxyB3H+oRkZsTJqUAh1N1WWi4msM1o14/71EmvY75QJ1m1JmgZ+fKMpuffQ
+ jQNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=orvwqNzFta51oEmt2z6vEQvUSzUOJSumAs8LmQb0gMo=;
+ b=eJyH4eBDGbRF3tssPsywzjCwK/Lc2sISXqwnUd9lh39rwxhwyCYSgOLP9+FxTpA7H/
+ WQs51wm2U+udLVqudoVFPaDxM+VN09nzhgpWniraQEkRPPX1locmYBq1jP+NYWKgUqKC
+ BS9wYBcUB74pxm10Ha1w6dwrPScN2sYeYFmNdNi4Wdd8JCK/QqmJiPdQwJlGE6tNfgnT
+ RxFbHyyR03/cjAOITCpTz+xq9b9gzqpPNRQQklsHjv74alvsdWEtTim6ePCKdWiN087g
+ 8/j0wp/DPIMJfbeAFA0rSYM8bsYc9NIMt4q6MB0ohgaZHqB/Ht8PJO8ntDUCsFOBQ2hQ
+ wCoA==
+X-Gm-Message-State: APjAAAXdze2RrY7O43hzuafglIjLOiLReA4D1zpeVQy+xjF/WgEVdMe+
+ yeYWdwiMGyth7Ewq/0brCPnka2i9SvE44EYr5n/Oy1O6
+X-Google-Smtp-Source: APXvYqzSIalxDjRt0J685UnKyGuw2yMIXMeUpCIprkO6nQ4qUwyb3JEB4wyzQNy+kHjhunXXseAXR3Gr+F9P4cX8ljo=
+X-Received: by 2002:a9d:6f8c:: with SMTP id h12mr18912119otq.257.1573442284176; 
+ Sun, 10 Nov 2019 19:18:04 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <40f2364e.1589.16e50c3d254.Coremail.guilin1985@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: AcqowAB3LDQS2sZd0S9MAA--.30209W
-X-CM-SenderInfo: xjxlzxrqrzmka6rslhhfrp/1tbi9BBoh1pD9ER2PAABsp
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: John Wang <wangzhiqiang8906@gmail.com>
+Date: Mon, 11 Nov 2019 11:17:52 +0800
+Message-ID: <CAHkHK08UNBHTbqHAC71f-hVBuLJNNFiGoX0eGmV27YaoP1+mgw@mail.gmail.com>
+Subject: How to configure i2c to high speed mode
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,47 +72,38 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_20226_1661686227.1573313040979
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+Hi,all
 
-SGkgYWxsOgpNeSBCTUMgaXMgYXNwZWVkIDI0MDAgU29jIGFuZCBteSBDUExEIGlzIEFsdGVyYSBN
-QVggMTBNMDQuIE5vdyBJIGRvbid0IGtub3cgaG93IHRvIHVzZSBCTUMganRhZyBmb3IgcHJvZ3Jh
-bW1pbmcgbXkgQ1BMRC4KIEhhcyBhbnlvbmUgZWxzZSB1c2VkIGJtYyBqdGFnIGNvbnRyb2xlciBm
-b3IgcHJvZ3JhbW1pbmcgY3BsZCA/ClRoYW5rcyBhIGxvdC4KCg==
-------=_Part_20226_1661686227.1573313040979
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+I did a test and found that if the firmware image is transmitted via i2c,
+it's too slow.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNjgsIDc3LCA4
-Nik7IGZvbnQtZmFtaWx5OiBTRk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRp
-b24gTW9ubyZxdW90OywgTWVubG8sIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxM3B4OyB3aGl0ZS1z
-cGFjZTogcHJlLXdyYXA7Ij4gICAgIEhpIGFsbDogPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5
-bGU9ImNvbG9yOiByZ2IoNjgsIDc3LCA4Nik7IGZvbnQtZmFtaWx5OiBTRk1vbm8tUmVndWxhciwg
-Q29uc29sYXMsICZxdW90O0xpYmVyYXRpb24gTW9ubyZxdW90OywgTWVubG8sIG1vbm9zcGFjZTsg
-Zm9udC1zaXplOiAxM3B4OyB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7Ij4gICAgICAgICAgICBNeSBC
-TUMgaXMgYXNwZWVkIDI0MDAgU29jIGFuZCBteSBDUExEIGlzIEFsdGVyYSBNQVggMTBNMDQuIE5v
-dyBJIDwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYig2OCwgNzcsIDg2KTsgZm9udC1mYW1p
-bHk6IFNGTW9uby1SZWd1bGFyLCBDb25zb2xhcywgJnF1b3Q7TGliZXJhdGlvbiBNb25vJnF1b3Q7
-LCBNZW5sbywgbW9ub3NwYWNlOyBmb250LXNpemU6IDEzcHg7IHdoaXRlLXNwYWNlOiBwcmUtd3Jh
-cDsiPmRvbid0IGtub3cgaG93IHRvIHVzZSBCTUMganRhZyBmb3IgcHJvZ3JhbW1pbmcgbXkgQ1BM
-RDwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYig2OCwgNzcsIDg2KTsgZm9udC1mYW1pbHk6
-IFNGTW9uby1SZWd1bGFyLCBDb25zb2xhcywgJnF1b3Q7TGliZXJhdGlvbiBNb25vJnF1b3Q7LCBN
-ZW5sbywgbW9ub3NwYWNlOyBmb250LXNpemU6IDEzcHg7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsi
-Pi4gPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoNjgsIDc3LCA4Nik7
-IGZvbnQtZmFtaWx5OiBTRk1vbm8tUmVndWxhciwgQ29uc29sYXMsICZxdW90O0xpYmVyYXRpb24g
-TW9ubyZxdW90OywgTWVubG8sIG1vbm9zcGFjZTsgZm9udC1zaXplOiAxM3B4OyB3aGl0ZS1zcGFj
-ZTogcHJlLXdyYXA7IiBjbGFzcz0iIj4mbmJzcDtIYXMgYW55b25lIGVsc2UgdXNlZCBibWMganRh
-ZyBjb250cm9sZXImbmJzcDtmb3ImbmJzcDtwcm9ncmFtbWluZyBjcGxkID88L3NwYW4+PC9kaXY+
-PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYig2OCwgNzcsIDg2KTsgZm9udC1mYW1pbHk6IFNG
-TW9uby1SZWd1bGFyLCBDb25zb2xhcywgJnF1b3Q7TGliZXJhdGlvbiBNb25vJnF1b3Q7LCBNZW5s
-bywgbW9ub3NwYWNlOyBmb250LXNpemU6IDEzcHg7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsiIGNs
-YXNzPSIiPiAgICAgICAgICAgIFRoYW5rcyBhIGxvdC48L3NwYW4+PC9kaXY+PGRpdj48c3BhbiBz
-dHlsZT0iY29sb3I6IHJnYig2OCwgNzcsIDg2KTsgZm9udC1mYW1pbHk6IFNGTW9uby1SZWd1bGFy
-LCBDb25zb2xhcywgJnF1b3Q7TGliZXJhdGlvbiBNb25vJnF1b3Q7LCBNZW5sbywgbW9ub3NwYWNl
-OyBmb250LXNpemU6IDEzcHg7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsiIGNsYXNzPSIiPjxicj48
-L3NwYW4+PC9kaXY+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+
-Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_20226_1661686227.1573313040979--
+The test I did:
 
+*slave side:
+
+use i2c-slave-mqueue[1] to receive and queue messages from the remote
+i2c master device.  the driveri's message size is 120 bytes,queue size
+is 32.
+
+*master side:
+
+test.sh:
+#!/bin/sh
+
+for i in {1..30}
+do
+i2ctransfer -y 3 w100@0x10 0xff-        # send 100 bytes
+done
+
+$time test.sh
+real 0m0.789s
+user 0m0.076s
+sys 0m0.328s
+
+Then 30*100/0.789 = 3.8k bytes/s, it will take 2.4 hours to send a 32M image
+
+Could we config the i2c to high speed mode? if so, how to configure it?
+
+Thanks.
+
+[1] https://patchwork.ozlabs.org/patch/894425/
