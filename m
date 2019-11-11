@@ -1,47 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D862DF822E
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 22:26:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F891F8297
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 22:51:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47BkSm0dzyzF4Lg
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 08:26:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Bl1m1fTgzF4Mq
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 08:51:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47BkRx31G1zF4Kj
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 08:25:17 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Received: from [192.168.253.30] (unknown [192.168.253.30])
- by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 3CF63166D4A;
- Mon, 11 Nov 2019 16:25:14 -0500 (EST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: entity-manager: adding additional fru formats to fru-device
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <21bd66d8-f419-9171-da45-4c773e6a7d98@linux.intel.com>
-Date: Mon, 11 Nov 2019 16:25:14 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <403DFFF6-7E49-4CC2-9F89-751CF0370ABB@fuzziesquirrel.com>
-References: <80AD98E1-20D5-4ADD-ADD2-6901A3B77A43@fuzziesquirrel.com>
- <120a78a0-1801-facf-040b-346471c37b70@linux.intel.com>
- <D4FB1F4C-C279-47B5-A55B-108D7186A1C3@fuzziesquirrel.com>
- <1327cf09-6bb2-7901-598f-3411ad724efb@linux.intel.com>
- <E1DC15AE-6CA8-46CD-AA27-DD31B21A5BE6@fuzziesquirrel.com>
- <21bd66d8-f419-9171-da45-4c773e6a7d98@linux.intel.com>
-To: James Feist <james.feist@linux.intel.com>
-X-Mailer: Apple Mail (2.3601.0.10)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Bl110fHwzF4Lv
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 08:50:28 +1100 (AEDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ xABLReOD122414
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 16:50:25 -0500
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2w7dvgbn6a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 16:50:25 -0500
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xABLVBSJ005275
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:24 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma05wdc.us.ibm.com with ESMTP id 2w5n36118c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:24 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xABLoNAf52101506
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:23 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A89C52805A
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:23 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 89C5228064
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:23 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 21:50:23 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday November 13
+Message-ID: <e09ab4b0-3f7f-4615-da0f-ebbc2ca07592@linux.ibm.com>
+Date: Mon, 11 Nov 2019 15:50:23 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-11-11_07:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=822 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1910280000 definitions=main-1911110187
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,45 +83,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday November 13 at 10:00am PDT.
 
+* * NOTE - the USA went off daylight savings time since the previous 
+meeting  * *
+This means the meeting may be an hour later for you.  Please check your 
+caneldar.
 
-> On Nov 11, 2019, at 4:21 PM, James Feist <james.feist@linux.intel.com> =
-wrote:
->=20
-> On 11/11/19 12:47 PM, Brad Bishop wrote:
->>> On Nov 11, 2019, at 3:06 PM, James Feist =
-<james.feist@linux.intel.com> wrote:
->>>=20
->>> Oh I assumed it was long living, I guess I misunderstood. Either =
-should be fine. Is there any reason to make the parsing logic a shared =
-library?
->> None other than continuing to support the existing application.
->> Now that I think about it, I could probably re-work the existing =
-application that uses the parsing logic to instead just call the =
-fru-device DBus API (removing the need to expose the parsing logic via =
-shared library).  Does that seem better?
->=20
-> I think that sounds good.
->=20
->>> The parsing logic could probably just be a build switch otherwise, I =
-imagine some sort of binary-to-dict function that we could just create =
-multiple of and compile time choose what format we want.
->> Any issue with support for multiple formats at the same time?
->=20
-> Only if they conflict somehow. I don't know enough about VPD to =
-determine that. IPMI FRU format requires a specific header that we check =
-to determine if it's an IPMI FRU. If VPD matches this header, then we =
-won't be able to tell which parsing algorithm to use, unless you know of =
-some other way to tell. I guess we could run the full parse on both as =
-well, but the header check was mostly there to avoid scanning something =
-too much that isn't a fru. If they can co-exist, that'd be preferable. =
-If they collide we can do a build switch was my thought.
+As usual, we'll discuss current development items, and anything else 
+that comes up.  There are currently three topics:
+  1. Allow BMC Admin to enable and disable BMC interfaces.
+  2. BMC secure boot design.
+  3. Disable SSL Renegotiation.
 
-Great!  I=E2=80=99m pretty sure the headers are not compatible and thus =
-the code should be able to figure it out at a glance.
+NOTE:  * * There is some level of excitement to discuss the BMC's 
+interfaces, and some new folks may be joining the call.
 
-thanks James!=
+Access, agenda, and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group
+
+- Joseph
