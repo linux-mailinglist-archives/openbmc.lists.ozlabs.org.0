@@ -1,77 +1,40 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E553F7FE4
-	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 20:28:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47CE5F8060
+	for <lists+openbmc@lfdr.de>; Mon, 11 Nov 2019 20:44:14 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47BgrY030KzDqcq
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 06:27:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47BhCH1fQ9zF3QW
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 06:44:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Bgq93SDFzF2D1
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 06:26:44 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- xABJMtpQ135791
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 14:26:41 -0500
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w7cujt78q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 14:26:41 -0500
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xABJP2DX022628
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:40 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 2w5n3663bu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:40 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xABJQdOA34996690
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:39 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4AF62B2065
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:39 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 148D4B205F
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:39 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 19:26:38 +0000 (GMT)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Mon, 11 Nov 2019 13:28:11 -0600
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: Packaging and deploying multiple firmware image types in one
-Message-ID: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-11-11_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=982 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1910280000 definitions=main-1911110173
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47BhBY2pGwzF35y
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 06:43:33 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 083C0166D31;
+ Mon, 11 Nov 2019 14:43:30 -0500 (EST)
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
+Subject: entity-manager: adding additional fru formats to fru-device
+Message-Id: <80AD98E1-20D5-4ADD-ADD2-6901A3B77A43@fuzziesquirrel.com>
+Date: Mon, 11 Nov 2019 14:43:29 -0500
+To: James Feist <james.feist@linux.intel.com>
+X-Mailer: Apple Mail (2.3601.0.10)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,34 +46,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There was some discussion in the "PSU firmware update" proposal[1] about 
-bundling firmware images together such as the BMC and PSU firmware. The 
-Software interface defines these bundles as a "System" version[2].
+Hi James
 
-At IBM, we're starting to create a "System" bundle of BMC + host 
-firmware by adding a recipe that would add the host's firmware files to 
-the BMC's squashfs[3].
+At the OSFC we chatted a little bit about adding support for other fru =
+data formats to fru-device.  I=E2=80=99d like to get started on that.
 
-One of the pending items is determining how to showcase the version of 
-these System images in Redfish. We can assume that the version of a 
-System image corresponds to the BMC's "FirmwareVersion", but it's 
-unknown what else the bundle contains (host fw, PSU fw, PCIe fw,..), in 
-order to populate the other version fields such as "BiosVersion". 
-There's a D-Bus "Extended Version" property[4] that could be leveraged 
-to add the additional image information.
+For background and reference at IBM we call this sort of data =E2=80=9Cvit=
+al product data=E2=80=9D or VPD.  Just so we are all on the same page =
+this is the same stuff as IPMI FRU format data, just a different data =
+structure.
 
-Feel free to share if you have any thoughts on this item or any aspect 
-of these "System" images.
+When I look at fru-device in the context of adding support for =
+additional data formats, the necessary interface seems to just be a set =
+of key value pairs.  We already have an application that produces =
+exactly that here: https://github.com/openbmc/openpower-vpd-parser
 
+Do you have any thoughts on how you=E2=80=99d like that code brought =
+into EM to the end of supporting the IBM FRU format?  My initial stab =
+without any direction from you would be to:
 
----
-[1] https://lists.ozlabs.org/pipermail/openbmc/2019-June/016573.html
-[2] 
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Version.interface.yaml
-[3] 
-https://github.com/openbmc/meta-openpower/blob/master/recipes-phosphor/flash/host-fw_git.bb
-[4] 
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/ExtendedVersion.interface.yaml
+1 - factor (shared) library logic out from application logic in =
+openpower-vpd-parser
+2a - update fru-device to try multiple formats instead of just IPMI when =
+scanning eeproms
+2b - add the option to remove support for ipmi or open power fru format =
+parsers
+3a - when power format parsing is enabled, link to new =
+openpower-vpd-parser shared library
+3b - when ipmi format parsing is enabled, link to existing code (static, =
+not shared)
+
+thx!
+
+-brad=
