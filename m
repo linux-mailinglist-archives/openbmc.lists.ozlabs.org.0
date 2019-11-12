@@ -1,69 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4942BF9918
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 19:50:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EA1EF9927
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 19:55:07 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47CGys32J6zF53M
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 05:50:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47CH483Bz5zF5J7
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 05:55:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2d;
- helo=mail-io1-xd2d.google.com; envelope-from=kunyi@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="e8G3h7RK"; 
- dkim-atps=neutral
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
- [IPv6:2607:f8b0:4864:20::d2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47CG9S2C2fzF3cj
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 05:14:35 +1100 (AEDT)
-Received: by mail-io1-xd2d.google.com with SMTP id j13so19822221ioe.0
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 10:14:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=U+JIRvPsGEmIOYp4z5p7tSnf9H+CVT8P6zkE/Rwq4Bk=;
- b=e8G3h7RKDkHY8cgqS5c5B6u5PogbALAx/SH1Ch+uN/DLdYya+tIKr+0+MThHFggnyo
- gQ6jRx5DjfFTO8nVVtLvvwlUJqC1huQ/qDu5nLdBko5RA2ozZIzNSAgduSIzi7x0todT
- 9LxkfNJpjLz6JDYeqXsjZSi6LWQc/mAKTTxkHOcdhDCF2uPcmuy2If4fZkB4MXC24vyK
- Cim09pwUsefuQzpnJyIUyeQyfKkj+imcJuM5cA1J90rK8EbOeygzPCVNsfEIYMsXXJRD
- d+j5Jcpwls5I3nqpHUotupYgCmqTCrY3nxndW+GnzLMug0UQlpBetFoa75fc5Y8j7Tcc
- XrNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=U+JIRvPsGEmIOYp4z5p7tSnf9H+CVT8P6zkE/Rwq4Bk=;
- b=XRYOW7IrSG6VERxaFkhiqwdEnNj6E47Nk8883/FHTzM20dRIB7FN/mdVji4+hZoKjk
- mJTKns8yjsOj0LDCMQV+nxCG7CzmpOrc77PPmrdqbEGSU4MUrHPVGqtWg9tTDBizsaOK
- 8RHXBEK5PJt5YHG3cCGMMdoHx6dJtDMCb4hIT4w4EvHBBp3tlLZ5jifV0MwuCppVV0AX
- fQhK94r2keRAYoK+iguQa+iAYJyuEERe6CW/if6HPRTgD0JY26I9wQP3voinhqi6R9nH
- 9ARmTOcs5Jmyc2PmMiMlT3DgvMNnKwkQyj35Vkk/iqjGBJFKqw++0p33yhi6DJ6RFyTu
- MGcQ==
-X-Gm-Message-State: APjAAAV3cNzz3y395jn2WQkcEvZ7SsPGntfpahOkp3G6MZ2bYisyICSd
- 4o6rIV91Zcni0WGD5P3ogb2xi3E4jkdO8l4yWJDqIA==
-X-Google-Smtp-Source: APXvYqzL8UDsJDHmALp+rpDQfm53dssq+ayOX9bQhto/z2KaE0ILPeYWU934mzAxGOXS90UMAqsGZC7nLo7nnhovms0=
-X-Received: by 2002:a6b:18c1:: with SMTP id 184mr7339907ioy.40.1573582471216; 
- Tue, 12 Nov 2019 10:14:31 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47CGJh3VL4zF4jx
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 05:20:52 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
+ xACIKSTb005881
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 13:20:49 -0500
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2w7yx3v9tw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 13:20:49 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xACIEsKe010846
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:48 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 2w5n36h8v1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:48 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xACIKlh939387392
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:47 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE07BAE060
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:47 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 73572AE05F
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:47 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:20:47 +0000 (GMT)
 MIME-Version: 1.0
-References: <CAGMNF6U81+d9wz4h_TiPBA0EoxC6bhiUZ67mozWWwwT4GTVMCg@mail.gmail.com>
- <9AC7EF7E-3FFF-4855-B9DE-80F3B68236E0@fuzziesquirrel.com>
- <CAGMNF6W8bWD_2Zpynz9vcVdGA9d8B+QfbA=oau2zQj+xpf9NEw@mail.gmail.com>
- <CEB2088C-C91F-46ED-9FC1-2480893767E0@fuzziesquirrel.com>
-In-Reply-To: <CEB2088C-C91F-46ED-9FC1-2480893767E0@fuzziesquirrel.com>
-From: Kun Yi <kunyi@google.com>
-Date: Tue, 12 Nov 2019 10:14:05 -0800
-Message-ID: <CAGMNF6WLawVcR0hH+Mg=2=zSXJ9120GkMzYkhHrOQXL--xjfrw@mail.gmail.com>
-Subject: Re: Yocto/bitbake recipe 'diff test'?
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000394c9205972a389a"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Tue, 12 Nov 2019 12:22:22 -0600
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: Flash monitoring
+Message-ID: <35c32678a8329f5ac02493f8c4c48993@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
+ definitions=2019-11-12_06:, , signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 suspectscore=1 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=774 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1910280000 definitions=main-1911120157
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,173 +83,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: yocto@yoctoproject.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000394c9205972a389a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+There are some things I'd like to do in the flash monitoring area, such 
+as detecting when the read-write filesystem is running out of space, 
+detecting when a volume failed to be mounted during boot, and perhaps 
+having automatic recovery such as allocating more space to the volume or 
+extending into a new one, attempting to recover a corrupted one, etc.
 
-On Tue, Nov 12, 2019 at 10:05 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
-
->
->
-> > On Nov 12, 2019, at 1:55 AM, Kun Yi <kunyi@google.com> wrote:
-> >
-> > Sure, it's partially due to how we set up the build downstream. Our
-> downstream would put all the needed layers in one bblayers file, so we
-> would have something like:
-> >
-> >   ##OEROOT##/meta \
-> >   ##OEROOT##/meta-poky \
-> >   ##OEROOT##/meta-openembedded/meta-oe \
-> >   ##OEROOT##/meta-openembedded/meta-networking \
-> >   ##OEROOT##/meta-openembedded/meta-python \
-> >   ##OEROOT##/meta-phosphor \
-> >   ##OEROOT##/meta-google \
-> >   ##OEROOT##/meta-google-gbmc \
-> >   ##OEROOT##/meta-aspeed \
-> >   ##OEROOT##/meta-nuvoton \
-> >   ##OEROOT##/meta-openpower \
-> >   ##OEROOT##/meta-ingrasys \
-> >   ##OEROOT##/meta-ingrasys/meta-zaius \
-> >   ##OEROOT##/meta-quanta \
-> >   ##OEROOT##/meta-quanta/meta-gsj \
-> > ...
-> >
-> > The distinct advantage of this approach is that we would be able to
-> build images for different machine types using the same layer conf, so th=
-e
-> build doesn't need to be reconfigured if you were to test on another
-> platform.
-> >
-> > The challenge, as you can imagine, is that each meta layer now cannot
-> 'leak' any variable. e.g. if some recipe in meta-quanta sets a variable f=
-or
-> quanta systems only, then it must specify "_quanta" or a similar suffix t=
-o
-> prevent the variable expansion to apply to other systems. I think this ru=
-le
-> is generally preferred upstream, but not sure whether it is an official
-> guideline.
-> >
-> > With my proposal, it would be much easier for a multi-system layer setu=
-p
-> like ours to work. Not only that, it would benefit the most common use
-> cases: moving variable definitions in bitbake recipes, or even just addin=
-g
-> a variable for a particular machine feature. Having a visible diff would
-> make reviewing the changes so much easier.
->
-> Thanks for the background Kun.
->
-> I know yocto has a concept of Q&A checks that can be run - would it make
-> sense to try something like this via that mechanism?  Emit warnings (whic=
-h
-> we can elevate to build failures in CI) if variables aren=E2=80=99t prope=
-rly
-> overriden?  That is nice because it doesn=E2=80=99t require any changes t=
-o our CI
-> system.
->
-> That's an approach I haven't thought of. Thanks Brad! I'm a little worrie=
-d
-that it would incur more bitbake changes, but let's see if the Yocto folks
-have ideas.
-
-
-> I=E2=80=99ve cross posted to the yocto mailing list in case there is any =
-interest
-> or ideas there.  Here is a link to the entire thread as I remove a little
-> too much context I think=E2=80=A6
->
-> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019409.html
->
-> -brad
-
-
-
---=20
-Regards,
-Kun
-
---000000000000394c9205972a389a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
- dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 12, 2019 at 10:05 AM Brad Bis=
-hop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquir=
-rel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex"><br>
-<br>
-&gt; On Nov 12, 2019, at 1:55 AM, Kun Yi &lt;<a href=3D"mailto:kunyi@google=
-.com" target=3D"_blank">kunyi@google.com</a>&gt; wrote:<br>
-&gt;=C2=A0 <br>
-&gt; Sure, it&#39;s partially due to how we set up the build downstream. Ou=
-r downstream would put all the needed layers in one bblayers file, so we wo=
-uld have something like:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-poky \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-openembedded/meta-oe \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-openembedded/meta-networking \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-openembedded/meta-python \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-phosphor \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-google \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-google-gbmc \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-aspeed \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-nuvoton \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-openpower \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-ingrasys \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-ingrasys/meta-zaius \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-quanta \<br>
-&gt;=C2=A0 =C2=A0##OEROOT##/meta-quanta/meta-gsj \<br>
-&gt; ...<br>
-&gt; <br>
-&gt; The distinct advantage of this approach is that we would be able to bu=
-ild images for different machine types using the same layer conf, so the bu=
-ild doesn&#39;t need to be reconfigured if you were to test on another plat=
-form.<br>
-&gt; <br>
-&gt; The challenge, as you can imagine, is that each meta layer now cannot =
-&#39;leak&#39; any variable. e.g. if some recipe in meta-quanta sets a vari=
-able for quanta systems only, then it must specify &quot;_quanta&quot; or a=
- similar suffix to prevent the variable expansion to apply to other systems=
-. I think this rule is generally preferred upstream, but not sure whether i=
-t is an official guideline.<br>
-&gt; <br>
-&gt; With my proposal, it would be much easier for a multi-system layer set=
-up like ours to work. Not only that, it would benefit the most common use c=
-ases: moving variable definitions in bitbake recipes, or even just adding a=
- variable for a particular machine feature. Having a visible diff would mak=
-e reviewing the changes so much easier.<br>
-<br>
-Thanks for the background Kun.<br>
-<br>
-I know yocto has a concept of Q&amp;A checks that can be run - would it mak=
-e sense to try something like this via that mechanism?=C2=A0 Emit warnings =
-(which we can elevate to build failures in CI) if variables aren=E2=80=99t =
-properly overriden?=C2=A0 That is nice because it doesn=E2=80=99t require a=
-ny changes to our CI system.<br>
-<br></blockquote><div>That&#39;s an approach I haven&#39;t thought of. Than=
-ks Brad! I&#39;m a little worried that it would incur more bitbake changes,=
- but let&#39;s see if the Yocto folks have ideas.<br></div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
-I=E2=80=99ve cross posted to the yocto mailing list in case there is any in=
-terest or ideas there.=C2=A0 Here is a link to the entire thread as I remov=
-e a little too much context I think=E2=80=A6<br>
-<br>
-<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2019-November/019409.=
-html" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/piperma=
-il/openbmc/2019-November/019409.html</a><br>
-<br>
--brad</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D=
-"ltr" class=3D"gmail_signature"><div dir=3D"ltr">Regards,<div>Kun</div></di=
-v></div></div>
-
---000000000000394c9205972a389a--
+Do people think it'd be useful? Should they be opt-in options? Available 
+separately, like 'out of space package', 'flash recovery package'?
+And would it make more sense to have a new repo with these options or 
+have them be part of the bmc code update one (phosphor-bmc-code-mgmt)?
