@@ -1,82 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AF70F9F55
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 01:34:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47CQcH0LqxzF5Zs
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 11:34:55 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 919A3F9F5A
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 01:36:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47CQdp4zsNzF5s2
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 11:36:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f;
- helo=mail-ed1-x52f.google.com; envelope-from=pwvancil@gmail.com;
+ smtp.mailfrom=betafive.co.uk (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=paul@betafive.co.uk;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=betafive.co.uk
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="lNomfbED"; 
- dkim-atps=neutral
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [IPv6:2a00:1450:4864:20::52f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=betafive.co.uk header.i=@betafive.co.uk
+ header.b="UoR+igBE"; dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="ON2Dh0ec"; dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47C9Pc3bdRzF3rP
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 01:39:41 +1100 (AEDT)
-Received: by mail-ed1-x52f.google.com with SMTP id r16so15127647edq.2
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 06:39:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=1vgVCjKjIuJatYmiZfUa7WOh3edibHpsfWihftRVIVU=;
- b=lNomfbEDnzuea23rHzNLki2PVs+MNRsM7BxiiAAzx3e4gKYcMmjxvL2bsSibHU/VcS
- /b49dLniTSeOYmPo7YXac83sH35CTbR6priuuxLyB47S1JYX4TlZ31kwPhqDsLUh5gBj
- As64DGqkfK5Qog/mSqNOxTqU2t1qV6+5FoMkh39WxPxQBdd3nbMELsBpW8GPwu/Ptkc+
- GZ2l6OHOlVkqUc/oCBjO8TWQD0RGH3+Ejg0UiFUBWOZMAFr2+fLutb8Kgezp7ckvP5KB
- MlCbUJedcM63W9i8wZ+/7VuaMZMzgurHnNrSTHZHAt2Ov4SWLJXEUwPM7qah9T2IjKs2
- iuxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=1vgVCjKjIuJatYmiZfUa7WOh3edibHpsfWihftRVIVU=;
- b=d68tcFyLht+9XGlayfq87G21CEom8aC+xFmwhN46SatqB7eF9n5+uqMWc8zhGX/ICt
- U3asJOS2a7bff90L7ELl6f0D7E9dvCawTjA+ex6Y0WFpek6TFIAk5VOJqRb2hgpOcxIN
- jyyy2brQs5bCz57k0wlm5yN1AK/i786A/lTxa0QexpxfrrhMn8QYT9kQqHFNW8DjUrXt
- BcG6pGQU3tZrdHp1FExgEdQ7hD/tTIepFh4beFnOyzCclwGKe33xPojl9shiFSi15P7j
- WTVbzRgfJGHme+Niq45SSQ5wyCKJ1pRtBe8yaLquH2UZEdMBp0Tx/C5Ldd4r9OSfQKMB
- GF/A==
-X-Gm-Message-State: APjAAAVVR3WeGW0Fg0VsLcwgpr2ifBH4f4NVGIwZqf/Os9wMkE/ot763
- +m5X2/Lx26GyXMd4Q1pqhnSWULHh+vyCXvNHUlc=
-X-Google-Smtp-Source: APXvYqwTjAerohVnCO/tnmZEeSBOBo+xcsMyE4yz90vvgcYq0l1K4tXi0q0oOqJEkG0Q5NB7N1TqLchQ8NLzQfsbr7I=
-X-Received: by 2002:a17:907:1114:: with SMTP id
- qu20mr29455642ejb.42.1573569577404; 
- Tue, 12 Nov 2019 06:39:37 -0800 (PST)
-MIME-Version: 1.0
-References: <D1177195-CDC9-4BB0-B9DE-6FC99B7ADE31@fuzziesquirrel.com>
- <dd81fb28-4d01-8726-9b16-81a677eb3e16@linux.intel.com>
- <8998b51b-4e67-738e-becd-63c26ea626be@linux.intel.com>
- <d69d24c7-d07f-35d4-1395-859a0df2a05a@linux.vnet.ibm.com>
- <DBA24EEE99A3B3489FF472F5E94DE6D7A30F946F@IRSMSX101.ger.corp.intel.com>
- <c3dd56aa-b9e2-1efd-1da6-70b0e056446f@linux.intel.com>
- <053009AE-890C-4650-9096-D4E8ABF707AA@fuzziesquirrel.com>
- <DBA24EEE99A3B3489FF472F5E94DE6D7A30F9DFD@IRSMSX101.ger.corp.intel.com>
- <9ECD367E-6573-4DA8-815E-E117AD8DF56C@fuzziesquirrel.com>
- <DBA24EEE99A3B3489FF472F5E94DE6D7A30FA694@IRSMSX101.ger.corp.intel.com>
- <C6A744EB-AB05-481F-AC96-09D4DE6ABE57@fuzziesquirrel.com>
- <76cf53a7-9b1f-f724-356a-28ac97c918cc@linux.vnet.ibm.com>
- <DBA24EEE99A3B3489FF472F5E94DE6D7A31034F7@IRSMSX101.ger.corp.intel.com>
- <1db5a5bd-6be6-cb93-5865-99416cc31646@linux.vnet.ibm.com>
- <6474a709-fa41-2dd5-538e-e04fb6e25431@linux.vnet.ibm.com>
-In-Reply-To: <6474a709-fa41-2dd5-538e-e04fb6e25431@linux.vnet.ibm.com>
-From: Paul Vancil <pwvancil@gmail.com>
-Date: Tue, 12 Nov 2019 09:39:26 -0500
-Message-ID: <CALaYK6E5eGc5S1B5utVpCgw5xzy6=3ONpZeckTKtkQ0ARHuogw@mail.gmail.com>
-Subject: Re: multiple telemetry designs
-To: Justin Thaler <thalerj@linux.vnet.ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000b0d09705972737b0"
-X-Mailman-Approved-At: Wed, 13 Nov 2019 11:33:01 +1100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47CGn020QTzF5cx
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 05:41:48 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.west.internal (Postfix) with ESMTP id 73B8D30F;
+ Tue, 12 Nov 2019 13:41:44 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute1.internal (MEProxy); Tue, 12 Nov 2019 13:41:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=betafive.co.uk;
+ h=mime-version:message-id:in-reply-to:references:date:from:to
+ :cc:subject:content-type:content-transfer-encoding; s=fm3; bh=Pz
+ +Z8/HdAv9ndKLymjUJ4A8FpATSzFEVqbWtOYhToSk=; b=UoR+igBExtN3N7jMxb
+ cVVJwUji7Mj+yQEVaC5IwT85bgQOHwWAYCoD3Bcz9mKml1vKCnTMPSpgwFUkVd5A
+ LMoHNFnx2QYcg7W5TN/HL4WKmR5tc/X0ahCmNknvk6Wbp8cHls3Wtw7ioJLFq2hX
+ 34cp9kvbt4iSuxrTIpAVp0ga7Gf3PvwYFB4T7h3IKuRr4IE5bwqQajEHot8f01Bn
+ lfQaS2xuW/2/8ZJblU8KMaBxcKnG2ZFVmxyjIFE7VTsNU4AEsnvWsWp7zZazaQP+
+ 1Esku/r21T79G6gnWQcx3eIvo5uAWvYD9e7l2sLqS6TslW3dnrX6l+YPnUKYBhpL
+ 33zQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=Pz+Z8/HdAv9ndKLymjUJ4A8FpATSzFEVqbWtOYhTo
+ Sk=; b=ON2Dh0ec4bKid3ueDVP+AMYirYaiXqNEhi7QL/YVz0psqlR7b9jfLFykW
+ O5gocZOmJWvIvZZ3FiIQ5mGYPhSd4i67CbySo4pGhYXZHqa+nGELW2OgKdTRFy6Q
+ I/pmrckhbomiLoZ5/7Jl6DIOvO/2sg8irld7wKRAcph7HjuwbU8c4NH39GmxDIls
+ CmW8t4f/yoGT1d+uWJRtwuxsvj59z4u9DkLHeSrUYx4uDqGdJwZCXv8KHIgLp/NB
+ cQOhfpVn+I2lWESwu/7s3BBgzTwCaT5AorlJP3IxidBbwisQLlR6BEXVuEAiXguY
+ FuQfnamfaOqCe6m0ElYV3HzK+YaAg==
+X-ME-Sender: <xms:5_zKXTbTxftnygWrz-eVIkKqZh5aUm1GX2MQRCYDGHevDl_Wuit9_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedruddvledgudduiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdfr
+ rghulhcuuegrrhhkvghrfdcuoehprghulhessggvthgrfhhivhgvrdgtohdruhhkqeenuc
+ ffohhmrghinhephihotghtohhprhhojhgvtghtrdhorhhgpdhoiihlrggsshdrohhrghen
+ ucfrrghrrghmpehmrghilhhfrhhomhepphgruhhlsegsvghtrghfihhvvgdrtghordhukh
+ enucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:5_zKXRKQpwHkPcr2URy7vnMJzATTLlOkltV1AqhpMKP3Q89PTm4A8w>
+ <xmx:5_zKXVgMvrGkH36RvTMTYrSZcnP6KqdT_5ngn0zO_d50WwA4eOz3sw>
+ <xmx:5_zKXT-XWb9Ie77ExRI1BUh8AzJewK1CLM0Ks4Lmejb6dZQZDMT97g>
+ <xmx:5_zKXRYyRgRvsmSUUMIgAEqNmF59cpFcXKB-lAtihjVzC-SDR1RPHg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 1337CE00A3; Tue, 12 Nov 2019 13:41:43 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-509-ge3ec61c-fmstable-20191030v1
+Mime-Version: 1.0
+Message-Id: <8fe3f80a-5b5c-4474-bb18-98c19fad29cd@www.fastmail.com>
+In-Reply-To: <CEB2088C-C91F-46ED-9FC1-2480893767E0@fuzziesquirrel.com>
+References: <CAGMNF6U81+d9wz4h_TiPBA0EoxC6bhiUZ67mozWWwwT4GTVMCg@mail.gmail.com>
+ <9AC7EF7E-3FFF-4855-B9DE-80F3B68236E0@fuzziesquirrel.com>
+ <CAGMNF6W8bWD_2Zpynz9vcVdGA9d8B+QfbA=oau2zQj+xpf9NEw@mail.gmail.com>
+ <CEB2088C-C91F-46ED-9FC1-2480893767E0@fuzziesquirrel.com>
+Date: Tue, 12 Nov 2019 18:41:22 +0000
+From: "Paul Barker" <paul@betafive.co.uk>
+To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>, "Kun Yi" <kunyi@google.com>
+Subject: Re: [yocto] Yocto/bitbake recipe 'diff test'?
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Wed, 13 Nov 2019 11:33:02 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,208 +94,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Mihm, James" <james.mihm@intel.com>,
- "neladk@microsoft.com" <neladk@microsoft.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Matuszczak,
- Piotr" <piotr.matuszczak@intel.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>,
- "apparao.puli@linux.intel.com" <apparao.puli@linux.intel.com>
+Cc: Yocto discussion list <yocto@yoctoproject.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b0d09705972737b0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, 12 Nov 2019, at 18:05, Brad Bishop wrote:
+>=20
+>=20
+> > On Nov 12, 2019, at 1:55 AM, Kun Yi <kunyi@google.com> wrote:
+> > =20
+> > Sure, it's partially due to how we set up the build downstream. Our =
+downstream would put all the needed layers in one bblayers file, so we w=
+ould have something like:
+> >=20
+> >   ##OEROOT##/meta \
+> >   ##OEROOT##/meta-poky \
+> >   ##OEROOT##/meta-openembedded/meta-oe \
+> >   ##OEROOT##/meta-openembedded/meta-networking \
+> >   ##OEROOT##/meta-openembedded/meta-python \
+> >   ##OEROOT##/meta-phosphor \
+> >   ##OEROOT##/meta-google \
+> >   ##OEROOT##/meta-google-gbmc \
+> >   ##OEROOT##/meta-aspeed \
+> >   ##OEROOT##/meta-nuvoton \
+> >   ##OEROOT##/meta-openpower \
+> >   ##OEROOT##/meta-ingrasys \
+> >   ##OEROOT##/meta-ingrasys/meta-zaius \
+> >   ##OEROOT##/meta-quanta \
+> >   ##OEROOT##/meta-quanta/meta-gsj \
+> > ...
+> >=20
+> > The distinct advantage of this approach is that we would be able to =
+build images for different machine types using the same layer conf, so t=
+he build doesn't need to be reconfigured if you were to test on another =
+platform.
+> >=20
+> > The challenge, as you can imagine, is that each meta layer now canno=
+t 'leak' any variable. e.g. if some recipe in meta-quanta sets a variabl=
+e for quanta systems only, then it must specify "_quanta" or a similar s=
+uffix to prevent the variable expansion to apply to other systems. I thi=
+nk this rule is generally preferred upstream, but not sure whether it is=
+ an official guideline.
+> >=20
+> > With my proposal, it would be much easier for a multi-system layer s=
+etup like ours to work. Not only that, it would benefit the most common =
+use cases: moving variable definitions in bitbake recipes, or even just =
+adding a variable for a particular machine feature. Having a visible dif=
+f would make reviewing the changes so much easier.
+>=20
+> Thanks for the background Kun.
+>=20
+> I know yocto has a concept of Q&A checks that can be run - would it=20=
 
-Paul here.
-I also commented and approved the intel design.
-It looks good to me.
+> make sense to try something like this via that mechanism?  Emit=20
+> warnings (which we can elevate to build failures in CI) if variables=20=
 
+> aren=E2=80=99t properly overriden?  That is nice because it doesn=E2=80=
+=99t require any=20
+> changes to our CI system.
+>=20
+> I=E2=80=99ve cross posted to the yocto mailing list in case there is a=
+ny=20
+> interest or ideas there.  Here is a link to the entire thread as I=20
+> remove a little too much context I think=E2=80=A6
+>=20
+> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019409.html
 
-On Tue, Nov 12, 2019 at 9:36 AM Justin Thaler <thalerj@linux.vnet.ibm.com>
-wrote:
+This is something I covered in the Yocto Project Summit in Lyon at the e=
+nd of October. I'm hoping to get the project documentation updated to re=
+flect what was discussed but that will take a little time.
 
->
->
-> On 11/5/19 10:58 AM, vishwa wrote:
-> > Thanks.
-> >
-> > So, looks like we are getting zeroed in on Intel's proposal ?. I see Ku=
-n
-> > approving Intel version.
-> >
-> > Paul: Did you have anything ?
-> >
-> > !! Vishwa !!
-> >
-> > On 11/5/19 2:26 PM, Matuszczak, Piotr wrote:
-> >> Hi,
-> >>
-> >> I looked at this design briefly and it seems to be focusing on Redfish
-> >> Telemetry Service implementation, which our design
-> >> (https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24357) also
-> >> covers. Dell's design assumes using collecd for gathering sensor
-> >> readings.
-> >
-> >> -----Original Message-----
-> >> From: vishwa [mailto:vishwa@linux.vnet.ibm.com]
-> >> Sent: Tuesday, November 5, 2019 8:31 AM
-> >> To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-> >> Cc: Mihm, James <james.mihm@intel.com>; Justin Thaler
-> >> <thalerj@linux.vnet.ibm.com>; openbmc@lists.ozlabs.org;
-> >> neladk@microsoft.com; James Feist <james.feist@linux.intel.com>;
-> >> apparao.puli@linux.intel.com; Matuszczak, Piotr
-> >> <piotr.matuszczak@intel.com>
-> >> Subject: Re: multiple telemetry designs
-> >>
-> >> There is also this version from Dell:
-> >> https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/23758/. Was this
-> >> considered in this discussion ?.
-> >>
-> >> Also, from IBM's standpoint, Justin Thaler was mentioning that we
-> >> wanted a "true subscription" model, in that, clients can pick and
-> >> chose the specific sensors.
-> >>
-> >> Justin: Could you add here please ?
-> Sorry for the slow response. Piotr was kind enough to walk me through
-> how the proposal works and it does allow for a true subscription model.
-> I still have a to do to determine how much data we will be using with
-> this model so I can understand how well it scales. This is a concern for
-> us as we are shifting from receiving sensor updates in an "on-change"
-> model to updates every second, regardless of change. There's also
-> changes in the data format that's sent, which will likely make this less
-> of a concern.
->
-> Thanks,
-> Justin
->
-> >>
-> >> !! Vishwa !!
-> >>
-> >> On 10/28/19 10:12 PM, Brad Bishop wrote:
-> >>>> On Oct 28, 2019, at 12:35 PM, Matuszczak, Piotr
-> >>>> <piotr.matuszczak@intel.com> wrote:
-> >>>>
-> >>>> I would like to make the code opened from the very beginning.
-> >>> Glad to hear it - that sounds like the best way to me :-)
-> >>>
-> >>> FWIW, whenever you are ready to share it, I=E2=80=99d still like to s=
-ee
-> >>> whatever code Intel has for the monitoring service.  It will help me
-> >>> understand your design better.  It is fine if it has bugs or it isn=
-=E2=80=99t
-> >>> polished.  Thanks Piotr.
-> >>>
-> >>> -brad
->
+In the mean time, the `yocto-check-layer` script is what you want here -=
+ it calculates the signatures for all recipes before adding the layer in=
+ question and then again after adding the layer. If the signatures diffe=
+r that means one or more variables or tasks has been changed uncondition=
+ally. This check can't be an ordinary QA test as it relies on the layer =
+being added during the test and on multiple bitbake invocations.
 
---000000000000b0d09705972737b0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+There are many ways to make modifications dependent on the selected MACH=
+INE, DISTRO, DISTRO_FEATURES, MACHINE_FEATURES, IMAGE_FEATURES, etc - mo=
+re than just using simple overrides everywhere. Until the video is up or=
+ the documentation is updated, have a look at my slides at the start of =
+the Day 1 slide deck at https://wiki.yoctoproject.org/wiki/YP_Summit_Lyo=
+n_2019.
 
-<div><div dir=3D"auto">Paul here.=C2=A0</div></div><div dir=3D"auto">I also=
- commented and approved the intel design.=C2=A0</div><div dir=3D"auto">It l=
-ooks good to me.=C2=A0</div><div dir=3D"auto"><br></div><div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 12, 2019=
- at 9:36 AM Justin Thaler &lt;<a href=3D"mailto:thalerj@linux.vnet.ibm.com"=
->thalerj@linux.vnet.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-le=
-ft:1ex"><br>
-<br>
-On 11/5/19 10:58 AM, vishwa wrote:<br>
-&gt; Thanks.<br>
-&gt; <br>
-&gt; So, looks like we are getting zeroed in on Intel&#39;s proposal ?. I s=
-ee Kun <br>
-&gt; approving Intel version.<br>
-&gt; <br>
-&gt; Paul: Did you have anything ?<br>
-&gt; <br>
-&gt; !! Vishwa !!<br>
-&gt; <br>
-&gt; On 11/5/19 2:26 PM, Matuszczak, Piotr wrote:<br>
-&gt;&gt; Hi,<br>
-&gt;&gt;<br>
-&gt;&gt; I looked at this design briefly and it seems to be focusing on Red=
-fish <br>
-&gt;&gt; Telemetry Service implementation, which our design <br>
-&gt;&gt; (<a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24=
-357" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-project.xy=
-z/c/openbmc/docs/+/24357</a>) also <br>
-&gt;&gt; covers. Dell&#39;s design assumes using collecd for gathering sens=
-or <br>
-&gt;&gt; readings.<br>
-&gt; <br>
-&gt;&gt; -----Original Message-----<br>
-&gt;&gt; From: vishwa [mailto:<a href=3D"mailto:vishwa@linux.vnet.ibm.com" =
-target=3D"_blank">vishwa@linux.vnet.ibm.com</a>]<br>
-&gt;&gt; Sent: Tuesday, November 5, 2019 8:31 AM<br>
-&gt;&gt; To: Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com"=
- target=3D"_blank">bradleyb@fuzziesquirrel.com</a>&gt;<br>
-&gt;&gt; Cc: Mihm, James &lt;<a href=3D"mailto:james.mihm@intel.com" target=
-=3D"_blank">james.mihm@intel.com</a>&gt;; Justin Thaler <br>
-&gt;&gt; &lt;<a href=3D"mailto:thalerj@linux.vnet.ibm.com" target=3D"_blank=
-">thalerj@linux.vnet.ibm.com</a>&gt;; <a href=3D"mailto:openbmc@lists.ozlab=
-s.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>; <br>
-&gt;&gt; <a href=3D"mailto:neladk@microsoft.com" target=3D"_blank">neladk@m=
-icrosoft.com</a>; James Feist &lt;<a href=3D"mailto:james.feist@linux.intel=
-.com" target=3D"_blank">james.feist@linux.intel.com</a>&gt;; <br>
-&gt;&gt; <a href=3D"mailto:apparao.puli@linux.intel.com" target=3D"_blank">=
-apparao.puli@linux.intel.com</a>; Matuszczak, Piotr <br>
-&gt;&gt; &lt;<a href=3D"mailto:piotr.matuszczak@intel.com" target=3D"_blank=
-">piotr.matuszczak@intel.com</a>&gt;<br>
-&gt;&gt; Subject: Re: multiple telemetry designs<br>
-&gt;&gt;<br>
-&gt;&gt; There is also this version from Dell:<br>
-&gt;&gt; <a href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/2=
-3758/" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-project.=
-xyz/#/c/openbmc/docs/+/23758/</a>. Was this <br>
-&gt;&gt; considered in this discussion ?.<br>
-&gt;&gt;<br>
-&gt;&gt; Also, from IBM&#39;s standpoint, Justin Thaler was mentioning that=
- we <br>
-&gt;&gt; wanted a &quot;true subscription&quot; model, in that, clients can=
- pick and <br>
-&gt;&gt; chose the specific sensors.<br>
-&gt;&gt;<br>
-&gt;&gt; Justin: Could you add here please ?<br>
-Sorry for the slow response. Piotr was kind enough to walk me through <br>
-how the proposal works and it does allow for a true subscription model. <br=
->
-I still have a to do to determine how much data we will be using with <br>
-this model so I can understand how well it scales. This is a concern for <b=
-r>
-us as we are shifting from receiving sensor updates in an &quot;on-change&q=
-uot; <br>
-model to updates every second, regardless of change. There&#39;s also <br>
-changes in the data format that&#39;s sent, which will likely make this les=
-s <br>
-of a concern.<br>
-<br>
-Thanks,<br>
-Justin<br>
-<br>
-&gt;&gt;<br>
-&gt;&gt; !! Vishwa !!<br>
-&gt;&gt;<br>
-&gt;&gt; On 10/28/19 10:12 PM, Brad Bishop wrote:<br>
-&gt;&gt;&gt;&gt; On Oct 28, 2019, at 12:35 PM, Matuszczak, Piotr <br>
-&gt;&gt;&gt;&gt; &lt;<a href=3D"mailto:piotr.matuszczak@intel.com" target=
-=3D"_blank">piotr.matuszczak@intel.com</a>&gt; wrote:<br>
-&gt;&gt;&gt;&gt;<br>
-&gt;&gt;&gt;&gt; I would like to make the code opened from the very beginni=
-ng.<br>
-&gt;&gt;&gt; Glad to hear it - that sounds like the best way to me :-)<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; FWIW, whenever you are ready to share it, I=E2=80=99d still li=
-ke to see <br>
-&gt;&gt;&gt; whatever code Intel has for the monitoring service.=C2=A0 It w=
-ill help me <br>
-&gt;&gt;&gt; understand your design better.=C2=A0 It is fine if it has bugs=
- or it isn=E2=80=99t <br>
-&gt;&gt;&gt; polished.=C2=A0 Thanks Piotr.<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; -brad<br>
-</blockquote></div></div>
+Thanks,
 
---000000000000b0d09705972737b0--
+--=20
+Paul Barker
