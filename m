@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5148F893A
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 07:58:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 963EFF89EB
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 08:50:17 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Bz9156Q5zDrQf
-	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 17:58:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47C0K23HPGzF4mW
+	for <lists+openbmc@lfdr.de>; Tue, 12 Nov 2019 18:50:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::133;
- helo=mail-il1-x133.google.com; envelope-from=kunyi@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="Ul7Pwm0J"; 
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="cZ40Evxi"; 
  dkim-atps=neutral
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com
- [IPv6:2607:f8b0:4864:20::133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Bz632mBpzF54b
- for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 17:55:38 +1100 (AEDT)
-Received: by mail-il1-x133.google.com with SMTP id d83so14561057ilk.7
- for <openbmc@lists.ozlabs.org>; Mon, 11 Nov 2019 22:55:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GGQElTC8InAr0liURXzjv8BZzMUbliBJThPP9PKElEw=;
- b=Ul7Pwm0JNYfoR+KzhzjRIPCy7orwpmtjvyIyq0PfPfAx10I/7bcK45oUUY/5FUGk3z
- Lf2spW+v8BwfYmqn+JxPi/8zXIL2l2y9l8CByK7JK9/ysRuuS5GLTB3n2sTiD941HZ7B
- xIrgNc8vS5/1wV3p1/0ixnHAOR+S1XGJ6fjLp/8s1JSLnYvuKq5d0Gkb5PWFo5LR/SMK
- HMv85XQUqIPtbkccqrcHZmGELFy2RjfXZnRK/Fy3DhBzPfdg912BfpIZLOcplnreYGqR
- MFWO3ed7YDKL8RoSdbKJYvWRfTaeXJhFc4BLtRDL+amnftrKuYL5wNy01kmPdCO30YXV
- +7lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GGQElTC8InAr0liURXzjv8BZzMUbliBJThPP9PKElEw=;
- b=QVfGrOaDS+vBBS9B7Z/agiNgmQVK9kCMsZhOsVmSg9rOLj7tdbzsU4bYRsaIxJkDRS
- ptVLBftT4TPFnCqgf6r/zeZDqoBE9Kg2Sy1BIQij8tksmx9vYJkxwz2e/txfyAGUbtoV
- RA6fX4IOLUA7+gKid569VURCrPwfE9M/j+lz/RJtelwt5kMzVKeX2eVYvBLpQ9hgZIzM
- dQlv5679k3VjKggoyMmQSQQJnaD7QdvOwsnU/H/LkHUlBgEXpg1X0JDSMlIwu/If5e8Q
- Ml9+AVn7FavtzrQEwLYuFVm7jSo/kwhIRIf8NaJ3ra+7VfRoO7Xhxi7ViA0fwRPdJA2z
- 2vCw==
-X-Gm-Message-State: APjAAAUrrGN8Js9LXTY6y2zSREPog3zsNRmpHeHJ2AXMwoTdUlP418zR
- 5QAlZeRSpmbGmlLPswGc9OaZPclsYWl1S57gExZNHQ==
-X-Google-Smtp-Source: APXvYqyBazj9SsgrbROqwD12WAMOhxywowjvva664c8yb6/HJEDG3XepJ8JJYlqTTgIru4r6PTxYhvKxWG016EgIC3E=
-X-Received: by 2002:a92:d484:: with SMTP id p4mr34885409ilg.52.1573541731589; 
- Mon, 11 Nov 2019 22:55:31 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47C0J927mlzF4C7
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 18:49:28 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 3C81142F12
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 07:49:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1573544961; x=1575359362; bh=oXlYU8ZNBXrmPP+dADrDmQEoXHsXdX6w0ai
+ RMNLp5ds=; b=cZ40Evxibe6cvwHbNzgQr0+9oiYx7c7LF6saozxeU6DPV/hTOh4
+ hpxLrMJAjGtWHEHkzAfuQrfahnzClz3yGdRwzI170/RVswdwdoQ0DujCFhLayUDe
+ GgaUOXyhG4PIGwwA4NHr9upD8XcxhW/8SAPGM8mnsq2mJn+ol+0awYyA=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id mGkvmJl0iDWV for <openbmc@lists.ozlabs.org>;
+ Tue, 12 Nov 2019 10:49:21 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id D610E41207
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Nov 2019 10:49:21 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 12
+ Nov 2019 10:49:21 +0300
+Date: Tue, 12 Nov 2019 10:49:21 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Packaging and deploying multiple firmware image types in one
+Message-ID: <20191112074921.GA4938@bbwork.lan>
+References: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
 MIME-Version: 1.0
-References: <CAGMNF6U81+d9wz4h_TiPBA0EoxC6bhiUZ67mozWWwwT4GTVMCg@mail.gmail.com>
- <9AC7EF7E-3FFF-4855-B9DE-80F3B68236E0@fuzziesquirrel.com>
-In-Reply-To: <9AC7EF7E-3FFF-4855-B9DE-80F3B68236E0@fuzziesquirrel.com>
-From: Kun Yi <kunyi@google.com>
-Date: Mon, 11 Nov 2019 22:55:03 -0800
-Message-ID: <CAGMNF6W8bWD_2Zpynz9vcVdGA9d8B+QfbA=oau2zQj+xpf9NEw@mail.gmail.com>
-Subject: Re: Yocto/bitbake recipe 'diff test'?
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000f3ed44059720bbf2"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,125 +73,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000f3ed44059720bbf2
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Nov 11, 2019 at 01:28:11PM -0600, Adriana Kobylak wrote:
+> There was some discussion in the "PSU firmware update" proposal[1] about
+> bundling firmware images together such as the BMC and PSU firmware. The
+> Software interface defines these bundles as a "System" version[2].
+> 
+> At IBM, we're starting to create a "System" bundle of BMC + host firmware by
+> adding a recipe that would add the host's firmware files to the BMC's
+> squashfs[3].
+> 
+> One of the pending items is determining how to showcase the version of these
+> System images in Redfish. We can assume that the version of a System image
+> corresponds to the BMC's "FirmwareVersion", but it's unknown what else the
+> bundle contains (host fw, PSU fw, PCIe fw,..), in order to populate the
+> other version fields such as "BiosVersion". There's a D-Bus "Extended
+> Version" property[4] that could be leveraged to add the additional image
+> information.
+> 
+> Feel free to share if you have any thoughts on this item or any aspect of
+> these "System" images.
+> 
 
-On Mon, Nov 11, 2019 at 11:01 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
+We use the system bundle of BMC + Host firmware on our VESNIN hardware.
+There are some things which cause discomfort a little bit:
+- The uploaded system bundle isn't shown in the WebUI.
+- The system bundle has only one version field which is common for BMC and Host
+  firmwares.
+- After rebooting BMC, which is required to complete update the BMC firmware
+  the system bundle turns to two separated instances in D-Bus which has its own
+  real versions.
 
-> Hi Kun
->
-> > On Nov 11, 2019, at 1:45 PM, Kun Yi <kunyi@google.com> wrote:
-> >
-> > Hello there,
-> >
-> > After being hit by several regressions due to overrides in Yocto recipes,
->
-> I have not heard of any regressions.  Can you elaborate?
->
+Thus, I thought about putting the separate manifests for each part of the
+bundle.
 
-Sure, it's partially due to how we set up the build downstream. Our
-downstream would put all the needed layers in one bblayers file, so we
-would have something like:
-
-  ##OEROOT##/meta \
-  ##OEROOT##/meta-poky \
-  ##OEROOT##/meta-openembedded/meta-oe \
-  ##OEROOT##/meta-openembedded/meta-networking \
-  ##OEROOT##/meta-openembedded/meta-python \
-  ##OEROOT##/meta-phosphor \
-  ##OEROOT##/meta-google \
-  ##OEROOT##/meta-google-gbmc \
-  ##OEROOT##/meta-aspeed \
-  ##OEROOT##/meta-nuvoton \
-  ##OEROOT##/meta-openpower \
-  ##OEROOT##/meta-ingrasys \
-  ##OEROOT##/meta-ingrasys/meta-zaius \
-  ##OEROOT##/meta-quanta \
-  ##OEROOT##/meta-quanta/meta-gsj \
-...
-
-The distinct advantage of this approach is that we would be able to build
-images for different machine types using the same layer conf, so the build
-doesn't need to be reconfigured if you were to test on another platform.
-
-The challenge, as you can imagine, is that each meta layer now cannot
-'leak' any variable. e.g. if some recipe in meta-quanta sets a variable for
-quanta systems only, then it must specify "_quanta" or a similar suffix to
-prevent the variable expansion to apply to other systems. I think this rule
-is generally preferred upstream, but not sure whether it is an official
-guideline.
-
-With my proposal, it would be much easier for a multi-system layer setup
-like ours to work. Not only that, it would benefit the most common use
-cases: moving variable definitions in bitbake recipes, or even just adding
-a variable for a particular machine feature. Having a visible diff would
-make reviewing the changes so much easier.
-
-
-> -brad
->
-
-
--- 
-Regards,
-Kun
-
---000000000000f3ed44059720bbf2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Nov 11, 2019 at 11:01 AM Brad=
- Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb@fuzzies=
-quirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">Hi Kun<br>
-<br>
-&gt; On Nov 11, 2019, at 1:45 PM, Kun Yi &lt;<a href=3D"mailto:kunyi@google=
-.com" target=3D"_blank">kunyi@google.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; Hello there,<br>
-&gt; <br>
-&gt; After being hit by several regressions due to overrides in Yocto recip=
-es,<br>
-<br>
-I have not heard of any regressions.=C2=A0 Can you elaborate?<br></blockquo=
-te><div>=C2=A0</div><div>Sure, it&#39;s partially due to how we set up the =
-build downstream. Our downstream would put all the needed layers in one bbl=
-ayers file, so we would have something like:</div><div><br></div><div>=C2=
-=A0 ##OEROOT##/meta \<br>=C2=A0 ##OEROOT##/meta-poky \<br>=C2=A0 ##OEROOT##=
-/meta-openembedded/meta-oe \<br>=C2=A0 ##OEROOT##/meta-openembedded/meta-ne=
-tworking \<br>=C2=A0 ##OEROOT##/meta-openembedded/meta-python \<br>=C2=A0 #=
-#OEROOT##/meta-phosphor \<br>=C2=A0 ##OEROOT##/meta-google \<br>=C2=A0 ##OE=
-ROOT##/meta-google-gbmc \<br>=C2=A0 ##OEROOT##/meta-aspeed \<br>=C2=A0 ##OE=
-ROOT##/meta-nuvoton \<br>=C2=A0 ##OEROOT##/meta-openpower \<br>=C2=A0 ##OER=
-OOT##/meta-ingrasys \<br>=C2=A0 ##OEROOT##/meta-ingrasys/meta-zaius \<br>=
-=C2=A0 ##OEROOT##/meta-quanta \<br>=C2=A0 ##OEROOT##/meta-quanta/meta-gsj \=
-<br></div><div>...</div><div><br></div><div>The distinct advantage of this =
-approach is that we would be able to build images for different machine typ=
-es using the same layer conf, so the build doesn&#39;t need to be reconfigu=
-red if you were to test on another platform.</div><div><br></div><div>The c=
-hallenge, as you can imagine, is that each meta layer now cannot &#39;leak&=
-#39; any variable. e.g. if some recipe in meta-quanta sets a variable for q=
-uanta systems only, then it must specify &quot;_quanta&quot; or a similar s=
-uffix to prevent the variable expansion to apply to other systems. I think =
-this rule is generally preferred upstream, but not sure whether it is an of=
-ficial guideline.</div><div><br></div><div>With my proposal, it would be mu=
-ch easier for a multi-system layer setup like ours to work. Not only that, =
-it would benefit the most common use cases: moving variable definitions in =
-bitbake recipes, or even just adding a variable for a particular machine fe=
-ature. Having a visible diff would make reviewing the changes so much easie=
-r.</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
--brad<br>
-</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
- class=3D"gmail_signature"><div dir=3D"ltr">Regards,<div>Kun</div></div></d=
-iv></div>
-
---000000000000f3ed44059720bbf2--
+> 
+> ---
+> [1] https://lists.ozlabs.org/pipermail/openbmc/2019-June/016573.html
+> [2] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Version.interface.yaml
+> [3] https://github.com/openbmc/meta-openpower/blob/master/recipes-phosphor/flash/host-fw_git.bb
+> [4] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/ExtendedVersion.interface.yaml
