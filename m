@@ -2,86 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87267F9F9C
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 01:53:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F03DFAA82
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 07:57:51 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47CR1t2SlkzF33c
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 11:53:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Cb644kbpzF7N6
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 17:57:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47CR0s0MZtzF5ZM;
- Wed, 13 Nov 2019 11:52:44 +1100 (AEDT)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- xAD0lBYw026057; Tue, 12 Nov 2019 19:52:41 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w85h4ub37-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Nov 2019 19:52:41 -0500
-Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.27/8.16.0.27) with SMTP id xAD0nfoE030314;
- Tue, 12 Nov 2019 19:52:40 -0500
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w85h4ub2s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Nov 2019 19:52:40 -0500
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAD0juNs014884;
- Wed, 13 Nov 2019 00:52:39 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma05wdc.us.ibm.com with ESMTP id 2w5n36bkqc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Nov 2019 00:52:39 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAD0qccs47841692
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 13 Nov 2019 00:52:38 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2EB6AAE05C;
- Wed, 13 Nov 2019 00:52:38 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A1C9AAE060;
- Wed, 13 Nov 2019 00:52:37 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 13 Nov 2019 00:52:37 +0000 (GMT)
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.45; helo=m13-45.163.com;
+ envelope-from=xiaoqian1641@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="htEiAmqY"; 
+ dkim-atps=neutral
+X-Greylist: delayed 925 seconds by postgrey-1.36 at bilbo;
+ Wed, 13 Nov 2019 17:57:04 AEDT
+Received: from m13-45.163.com (m13-45.163.com [220.181.13.45])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47Cb5D58bnzF7Mw
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 17:56:58 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=QOJid
+ O3Hx0sw0nkjpM4Jof6h1Qz4SyQ1TnwRRPRMmLI=; b=htEiAmqYtyeXPySqxC9oE
+ m6ILmw/9IgstokWMds3YFNatWyblIv4ybyeXuITaktR9+6jioKn7oaeilSFKiBMC
+ hi1tEXid6NbvUlMsVSNG1QrmImNI9V13QcmDQUqOEXtEqPFjwBBt5HLU4dWPdcLj
+ +wvvP4kSV4msG7oZdoFWyk=
+Received: from xiaoqian1641$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr45 (Coremail) ; Wed, 13 Nov 2019 14:41:29 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Wed, 13 Nov 2019 14:41:29 +0800 (CST)
+From: =?GBK?B?s6PP/sP3?= <xiaoqian1641@163.com>
+To: "OpenBMC Development" <openbmc@lists.ozlabs.org>
+Subject: How to trigger BMC dumps
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <491fd747.c3f7.16d49308f66.Coremail.xiaoqian1641@163.com>
+References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
+ <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
+ <491fd747.c3f7.16d49308f66.Coremail.xiaoqian1641@163.com>
+X-CM-CTRLDATA: dNKyIGZvb3Rlcl9odG09MTk1MTo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_108478_206861278.1573627289676"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Tue, 12 Nov 2019 18:54:13 -0600
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Subject: Re: Packaging and deploying multiple firmware image types in one
-In-Reply-To: <cf5656dc-0beb-e198-24cc-2109b9ca42d9@linux.vnet.ibm.com>
-References: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
- <20191112074921.GA4938@bbwork.lan>
- <cf5656dc-0beb-e198-24cc-2109b9ca42d9@linux.vnet.ibm.com>
-Message-ID: <6cd66e8841aedf1b7a0508cd19ef8e4e@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-11-12_09:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1910280000 definitions=main-1911130000
+Message-ID: <2599bd03.7067.16e637ee04c.Coremail.xiaoqian1641@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: LcGowADnbaGZpctdGCWAAQ--.26883W
+X-CM-SenderInfo: 50ld01pldqiliur6il2tof0z/1tbiRRlsfFl9uiimWQAAsF
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,31 +63,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- openbmc@lists.ozlabs.org, jandraara@gmail.com,
- "Alexander A. Filippov" <a.filippov@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-11-12 15:38, Gunnar Mills wrote:
-> On 11/12/2019 1:49 AM, Alexander A. Filippov wrote:
->> On Mon, Nov 11, 2019 at 01:28:11PM -0600, Adriana Kobylak wrote:
->> 
->> We use the system bundle of BMC + Host firmware on our VESNIN 
->> hardware.
->> There are some things which cause discomfort a little bit:
->> - The uploaded system bundle isn't shown in the WebUI.
-> 
-> IBM is planning on supporting a bundled "System" firmware form the 
-> WebUI.
-> The design is here:
-> https://ibm.invisionapp.com/share/4XNZ0JAMJ7B#/screens/319215228
-> 
+------=_Part_108478_206861278.1573627289676
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Maybe in the mean time we can have the WebUI display the "System" 
-versions alongside the "BMC" ones. I'll check if it's as simple as "if 
-purpose is BMC or System" do what it currently does.
+SGksIEFsbCwKCgpJIGFtIHRyaW5nIHRvIHRyaWdnZXIgQk1DIGR1bXBzLCBmb2xsb3cgaHR0cHM6
+Ly9naXRodWIuY29tL3hjYXQyL3hjYXQtY29yZS9pc3N1ZXMvNDIzNQoxLiBMb2dpbiBCTUMKICAg
+ICAgICAgICBjdXJsIC1jIGNqYXIgLWIgY2phciAtayAtSCAiQ29udGVudC1UeXBlOiBhcHBsaWNh
+dGlvbi9qc29uIiAtWCBQT1NUIGh0dHBzOi8vMTI3LjAuMC4xOjI0NDMvbG9naW4gLWQgIntcImRh
+dGFcIjogWyBcInJvb3RcIiwgXCIwcGVuQm1jXCIgXSB9IgoyLiBMaXN0IGF2YWlsYWJsZSBkdW1w
+cwogICAgICAgICBjdXJsIC1jIGNqYXIgLWIgY2phciAtayBodHRwczovLzEyNy4wLjAuMToyNDQz
+L3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9saXN0CjMuIFdoZW4gTWFudWFsbHkgdHJpZ2dlciBh
+IGdlbmVyYXRpb24gb2YgYSBkdW1wCiAgICAgICAgY3VybCAtYyBjamFyIC1iIGNqYXIgLWsgLUgg
+IkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbiIgLWQgIntcImRhdGFcIjogW119IiAtWCBQ
+T1NUICBodHRwczovLzEyNy4wLjAuMToyNDQzL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9hY3Rp
+b24vQ3JlYXRlRHVtcAogICAgVGhlIGNvc29sZSBkaXNwbGF5IDogIFVuYXV0aG9yaXplZApEb2Vz
+IGFueW9uZSBrbm93IHdoYXQgaGFwcGVuZWQ/CgoKVGhhbmtzCgoKSm9obnkKCg==
+------=_Part_108478_206861278.1573627289676
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
->>> [3] 
->>> https://github.com/openbmc/meta-openpower/blob/master/recipes-phosphor/flash/host-fw_git.bb
->>> 
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+SGksIEFsbCw8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
+PkkgYW0gdHJpbmcgdG8gdHJpZ2dlciBCTUMgZHVtcHMsIGZvbGxvdyZuYnNwOzxhIGhyZWY9Imh0
+dHBzOi8vZ2l0aHViLmNvbS94Y2F0Mi94Y2F0LWNvcmUvaXNzdWVzLzQyMzUiPmh0dHBzOi8vZ2l0
+aHViLmNvbS94Y2F0Mi94Y2F0LWNvcmUvaXNzdWVzLzQyMzU8L2E+PC9kaXY+PGRpdj4xLiBMb2dp
+biBCTUM8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+Y3VybCAtYyBjamFyIC1iIGNqYXIgLWsgLUggIkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNv
+biIgLVggUE9TVCBodHRwczovLzEyNy4wLjAuMToyNDQzL2xvZ2luIC1kICJ7XCJkYXRhXCI6IFsg
+XCJyb290XCIsIFwiMHBlbkJtY1wiIF0gfSI8L2Rpdj48ZGl2PjIuJm5ic3A7TGlzdCBhdmFpbGFi
+bGUgZHVtcHM8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtjdXJs
+IC1jIGNqYXIgLWIgY2phciAtayA8YSBocmVmPSJodHRwczovLzEyNy4wLjAuMToyNDQzL3h5ei9v
+cGVuYm1jX3Byb2plY3QvZHVtcC9saXN0IiBfc3JjPSJodHRwczovLzEyNy4wLjAuMToyNDQzL3h5
+ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9saXN0Ij5odHRwczovLzEyNy4wLjAuMToyNDQzL3h5ei9v
+cGVuYm1jX3Byb2plY3QvZHVtcC9saXN0PC9hPiA8L2Rpdj48ZGl2PjMuIFdoZW4mbmJzcDs8c3Bh
+biBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0
+ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwg
+QXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtT
+ZWdvZSBVSSBFbW9qaSZxdW90OzsiPk1hbnVhbGx5IHRyaWdnZXIgYSBnZW5lcmF0aW9uIG9mIGEg
+ZHVtcDwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDM2LCA0MSwgNDYp
+OyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVvdDtT
+ZWdvZSBVSSZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgJnF1b3Q7QXBwbGUg
+Q29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1b3Q7OyI+Jm5ic3A7ICZu
+YnNwOyAmbmJzcDsgJm5ic3A7Jm5ic3A7PC9zcGFuPjxmb250IGNvbG9yPSIjMjQyOTJlIiBmYWNl
+PSItYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIFNlZ29lIFVJLCBIZWx2ZXRpY2Es
+IEFyaWFsLCBzYW5zLXNlcmlmLCBBcHBsZSBDb2xvciBFbW9qaSwgU2Vnb2UgVUkgRW1vamkiPmN1
+cmwgLWMgY2phciAtYiBjamFyIC1rIC1IICJDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24i
+IC1kICJ7XCJkYXRhXCI6IFtdfSIgLVggUE9TVCZuYnNwOyA8YSBocmVmPSJodHRwczovLzEyNy4w
+LjAuMToyNDQzL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9hY3Rpb24vQ3JlYXRlRHVtcCIgX3Ny
+Yz0iaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0My94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvYWN0aW9u
+L0NyZWF0ZUR1bXAiPmh0dHBzOi8vMTI3LjAuMC4xOjI0NDMveHl6L29wZW5ibWNfcHJvamVjdC9k
+dW1wL2FjdGlvbi9DcmVhdGVEdW1wPC9hPiA8L2ZvbnQ+PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7
+IFRoZSBjb3NvbGUgZGlzcGxheSA6Jm5ic3A7Jm5ic3A7PGI+VW5hdXRob3JpemVkPC9iPjwvZGl2
+PjxkaXY+RG9lcyBhbnlvbmUga25vdyB3aGF0IGhhcHBlbmVkPzwvZGl2PjxkaXY+PGJyPjwvZGl2
+PjxkaXY+VGhhbmtzPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Kb2hueTwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNw
+OzwvcD48L3NwYW4+
+------=_Part_108478_206861278.1573627289676--
+
