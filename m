@@ -2,51 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B736FAB2E
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 08:46:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98F32FB3BD
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 16:30:02 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Cc9x2KRRzF7TF
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 18:46:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47CpT320mkzF5Tq
+	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2019 02:29:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.138; helo=m13-138.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="jV5Q0gv+"; 
- dkim-atps=neutral
-Received: from m13-138.163.com (m13-138.163.com [220.181.13.138])
- by lists.ozlabs.org (Postfix) with ESMTP id 47Cc0w3cbPzF1SP
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 18:38:22 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=G+R6K
- aBwP3UDgh35P2VhHv3lM1pECIBpZMVJtLpk2J8=; b=jV5Q0gv+iiQ5m7XYflzYu
- uEt39XaLpk6/gu4OuGHAaWNxfAZ1qI5eWm8MCXBxvABetDHsVu93YCIsaJhWingV
- v6raFJXogZa309sEdPi5xRbCuIOrvjlBhehvKx99pGF29WLB6Ji7zVNG2SYAcnIw
- Jh7Mg+/sPXN5ndS9nA9rx4=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr138 (Coremail) ; Wed, 13 Nov 2019 15:38:17 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Wed, 13 Nov 2019 15:38:17 +0800 (CST)
-From: www <ouyangxuan10@163.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: how to solve the error that basehash value changed from 'xxx' to
- 'aaaa' ?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-X-CM-CTRLDATA: RnngAmZvb3Rlcl9odG09MjQ4NDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_95815_811748287.1573630697935"
-MIME-Version: 1.0
-Message-ID: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: isGowACnNXDpsstdwNmaAQ--.54966W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/xtbByw5s2lPAKIXDtQABs6
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47CpS30XBYzF4db
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Nov 2019 02:29:05 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id A80AE6E23C;
+ Wed, 13 Nov 2019 10:29:00 -0500 (EST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
+Subject: Re: [yocto] Yocto/bitbake recipe 'diff test'?
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <8fe3f80a-5b5c-4474-bb18-98c19fad29cd@www.fastmail.com>
+Date: Wed, 13 Nov 2019 10:29:00 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <AF52C0E6-80F6-4E31-AB9D-57061ED7104F@fuzziesquirrel.com>
+References: <CAGMNF6U81+d9wz4h_TiPBA0EoxC6bhiUZ67mozWWwwT4GTVMCg@mail.gmail.com>
+ <9AC7EF7E-3FFF-4855-B9DE-80F3B68236E0@fuzziesquirrel.com>
+ <CAGMNF6W8bWD_2Zpynz9vcVdGA9d8B+QfbA=oau2zQj+xpf9NEw@mail.gmail.com>
+ <CEB2088C-C91F-46ED-9FC1-2480893767E0@fuzziesquirrel.com>
+ <8fe3f80a-5b5c-4474-bb18-98c19fad29cd@www.fastmail.com>
+To: Paul Barker <paul@betafive.co.uk>
+X-Mailer: Apple Mail (2.3601.0.10)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,93 +52,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Yocto discussion list <yocto@yoctoproject.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_95815_811748287.1573630697935
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
 
-RGVhciBhbGwsCgoKV2hlbiBJIG1vZGlmeSB0aGUgb3MtcmVsZWFzZSBmaWxlIGluIG15IHlvY3Rv
-IHByb2plY3QsIGl0IGFwcGVhciBzb21lIGVycm9yLCBhbmQgaG93IGNhbiBJIHNvbHZlIGl0ID8g
-V2hvIGNhbiBnaXZlIG1lIHNvbWUgaGVscCBvciBhZHZpY2U/IFRoYW5rIHlvdaOhCkkgZXhlY3V0
-ZSB0aGUgcmVjb21tZW5kZWQgY29tbWFuZCBvbiB0aGUgY29uc29sZSBhbmQgaXQgZGlkbid0IHdv
-cmsuCgoKRVJST1I6IG9zLXJlbGVhc2UtMS4wLXIwIGRvX2NvbXBpbGU6IFRhc2toYXNoIG1pc21h
-dGNoIGNlMTMzZjA0NTg2MDhlMDNhYTU1MjI0ZGYyODE1NmU1MjNlNTQ5MDMxMTVlZmJiY2Q2Mjk0
-NmY4NGE4NjcyMDEgdmVyc3VzIDcyNjk4ODFmMGViMTc1OWVkNDIwYTJkYjRjMDRmYjQ3N2NkOGMx
-Mjg4YmM1ZjgyZGY1YzgxNjFiYjkyNmVhMWYgZm9yICAvaG9tZS90ZW1wL3h4eC93c3Avb2JtYy1z
-b3VyY2UvZW50aXR5X3h4eC9tZXRhL3JlY2lwZXMtY29yZS9vcy1yZWxlYXNlL29zLXJlbGVhc2Uu
-YmIuZG9fY29tcGlsZQpFUlJPUjogVGFza2hhc2ggbWlzbWF0Y2ggY2UxMzNmMDQ1ODYwOGUwM2Fh
-NTUyMjRkZjI4MTU2ZTUyM2U1NDkwMzExNWVmYmJjZDYyOTQ2Zjg0YTg2NzIwMSB2ZXJzdXMgNzI2
-OTg4MWYwZWIxNzU5ZWQ0MjBhMmRiNGMwNGZiNDc3Y2Q4YzEyODhiYzVmODJkZjVjODE2MWJiOTI2
-ZWExZiBmb3IgL2hvbWUvdGVtcC94eHgvd3NwL29ibWMtc291cmNlL2VudGl0eV94eHgvbWV0YS9y
-ZWNpcGVzLWNvcmUvb3MtcmVsZWFzZS9vcy1yZWxlYXNlLmJiLmRvX2NvbXBpbGUKRVJST1I6IFdo
-ZW4gcmVwYXJzaW5nIC9ob21lL3RlbXAveHh4L3dzcC9vYm1jLXNvdXJjZS9lbnRpdHlfeHh4L21l
-dGEvcmVjaXBlcy1jb3JlL29zLXJlbGVhc2Uvb3MtcmVsZWFzZS5iYi5kb19jb21waWxlLCB0aGUg
-YmFzZWhhc2ggdmFsdWUgY2hhbmdlZCBmcm9tIDk5YTQyYTFhM2IxYTE1MWRlNjA0MjY3YjE1OTU1
-OGVjYWYxMDMxYTNiZWM4OTE3ZGYxMzJjODEzMDJlNzI5YTUgdG8gNGYzMjg4YTg3NjNlMmUxYWY3
-OGU0YjNjZGQ5YzBjMGNjYjNiMGQ1Yzc4YTMwNzNjMTg4YjIyMjAwZGYyYTliMC4gVGhlIG1ldGFk
-YXRhIGlzIG5vdCBkZXRlcm1pbmlzdGljIGFuZCB0aGlzIG5lZWRzIHRvIGJlIGZpeGVkLgpFUlJP
-UjogVGhlIGZvbGxvd2luZyBjb21tYW5kcyBtYXkgaGVscDoKRVJST1I6ICQgYml0YmFrZSBvcy1y
-ZWxlYXNlIC1jZG9fY29tcGlsZSAtU25vbmUKRVJST1I6IFRoZW46CkVSUk9SOiAkIGJpdGJha2Ug
-b3MtcmVsZWFzZSAtY2RvX2NvbXBpbGUgLVNwcmludGRpZmYKCgpFUlJPUjogV2hlbiByZXBhcnNp
-bmcgL2hvbWUvdGVtcC94eHgvd3NwL29ibWMtc291cmNlL2VudGl0eV94eHgvbWV0YS9yZWNpcGVz
-LWNvcmUvb3MtcmVsZWFzZS9vcy1yZWxlYXNlLmJiLmRvX2NvbXBpbGUsIHRoZSBiYXNlaGFzaCB2
-YWx1ZSBjaGFuZ2VkIGZyb20gOTlhNDJhMWEzYjFhMTUxZGU2MDQyNjdiMTU5NTU4ZWNhZjEwMzFh
-M2JlYzg5MTdkZjEzMmM4MTMwMmU3MjlhNSB0byA0N2MzMDAxMmRhYTZhYTc3YmUwOWE5M2ZlMjFl
-NjY5OTUzNjFlZjI2YjQ0ODcxMTEwMDU2MTdkYjhjYjRkZTU5LiBUaGUgbWV0YWRhdGEgaXMgbm90
-IGRldGVybWluaXN0aWMgYW5kIHRoaXMgbmVlZHMgdG8gYmUgZml4ZWQuCkVSUk9SOiBUaGUgZm9s
-bG93aW5nIGNvbW1hbmRzIG1heSBoZWxwOgpFUlJPUjogJCBiaXRiYWtlIG9zLXJlbGVhc2UgLWNk
-b19jb21waWxlIC1Tbm9uZQpFUlJPUjogVGhlbjoKRVJST1I6ICQgYml0YmFrZSBvcy1yZWxlYXNl
-IC1jZG9fY29tcGlsZSAtU3ByaW50ZGlmZgoKCnRoYW5rcywKQnlyb24=
-------=_Part_95815_811748287.1573630697935
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+> On Nov 12, 2019, at 1:41 PM, Paul Barker <paul@betafive.co.uk> wrote:
+>=20
+> have a look at my slides at the start of the Day 1 slide deck at =
+https://wiki.yoctoproject.org/wiki/YP_Summit_Lyon_2019.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBhbGwsPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj5XaGVuIEkgbW9kaWZ5IHRoZSBvcy1yZWxlYXNlIGZpbGUgaW4gbXkgeW9jdG8gcHJvamVjdCwg
-aXQgYXBwZWFyIHNvbWUgZXJyb3IsIGFuZCBob3cgY2FuIEkgc29sdmUgaXQgPyZuYnNwO1dobyBj
-YW4gZ2l2ZSBtZSBzb21lIGhlbHAgb3IgYWR2aWNlPyBUaGFuayB5b3WjoTwvZGl2PjxkaXY+SSBl
-eGVjdXRlIHRoZSByZWNvbW1lbmRlZCBjb21tYW5kIG9uIHRoZSBjb25zb2xlIGFuZCBpdCBkaWRu
-J3Qgd29yay48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxkaXY+PGk+RVJST1I6IG9zLXJlbGVh
-c2UtMS4wLXIwIGRvX2NvbXBpbGU6IFRhc2toYXNoIG1pc21hdGNoIGNlMTMzZjA0NTg2MDhlMDNh
-YTU1MjI0ZGYyODE1NmU1MjNlNTQ5MDMxMTVlZmJiY2Q2Mjk0NmY4NGE4NjcyMDEgdmVyc3VzIDcy
-Njk4ODFmMGViMTc1OWVkNDIwYTJkYjRjMDRmYjQ3N2NkOGMxMjg4YmM1ZjgyZGY1YzgxNjFiYjky
-NmVhMWYgZm9yJm5ic3A7PC9pPjxpPiZuYnNwOy9ob21lL3RlbXAveHh4L3dzcC9vYm1jLXNvdXJj
-ZS9lbnRpdHlfeHh4PC9pPjxpPi9tZXRhL3JlY2lwZXMtY29yZS9vcy1yZWxlYXNlL29zLXJlbGVh
-c2UuYmIuZG9fY29tcGlsZTwvaT48L2Rpdj48ZGl2PjxpPkVSUk9SOiBUYXNraGFzaCBtaXNtYXRj
-aCBjZTEzM2YwNDU4NjA4ZTAzYWE1NTIyNGRmMjgxNTZlNTIzZTU0OTAzMTE1ZWZiYmNkNjI5NDZm
-ODRhODY3MjAxIHZlcnN1cyA3MjY5ODgxZjBlYjE3NTllZDQyMGEyZGI0YzA0ZmI0NzdjZDhjMTI4
-OGJjNWY4MmRmNWM4MTYxYmI5MjZlYTFmIGZvciZuYnNwOzwvaT48aT4vaG9tZS90ZW1wL3h4eC93
-c3Avb2JtYy1zb3VyY2UvZW50aXR5X3h4eDwvaT48aT4vbWV0YS9yZWNpcGVzLWNvcmUvb3MtcmVs
-ZWFzZS9vcy1yZWxlYXNlLmJiLmRvX2NvbXBpbGU8L2k+PC9kaXY+PGRpdj48aT5FUlJPUjogV2hl
-biByZXBhcnNpbmcgL2hvbWUvdGVtcC94eHgvd3NwL29ibWMtc291cmNlL2VudGl0eV94eHgvbWV0
-YS9yZWNpcGVzLWNvcmUvb3MtcmVsZWFzZS9vcy1yZWxlYXNlLmJiLmRvX2NvbXBpbGUsPC9pPjxz
-cGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyMDQsIDApOyI+PGk+Jm5ic3A7
-PC9pPjxpPnRoZSBiYXNlaGFzaCB2YWx1ZSBjaGFuZ2VkIGZyb20gOTlhNDJhMWEzYjFhMTUxZGU2
-MDQyNjdiMTU5NTU4ZWNhZjEwMzFhM2JlYzg5MTdkZjEzMmM4MTMwMmU3MjlhNSB0byA0ZjMyODhh
-ODc2M2UyZTFhZjc4ZTRiM2NkZDljMGMwY2NiM2IwZDVjNzhhMzA3M2MxODhiMjIyMDBkZjJhOWIw
-LjwvaT48L3NwYW4+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjU1LCAyMDQsIDApOyI+PGk+Jm5i
-c3A7PC9pPjwvc3Bhbj48aT5UaGUgbWV0YWRhdGEgaXMgbm90IGRldGVybWluaXN0aWMgYW5kIHRo
-aXMgbmVlZHMgdG8gYmUgZml4ZWQuPC9pPjwvZGl2PjxkaXY+PGk+RVJST1I6IFRoZSBmb2xsb3dp
-bmcgY29tbWFuZHMgbWF5IGhlbHA6PC9pPjwvZGl2PjxkaXY+PGk+RVJST1I6ICQgYml0YmFrZSBv
-cy1yZWxlYXNlIC1jZG9fY29tcGlsZSAtU25vbmU8L2k+PC9kaXY+PGRpdj48aT5FUlJPUjogVGhl
-bjo8L2k+PC9kaXY+PGRpdj48aT5FUlJPUjogJCBiaXRiYWtlIG9zLXJlbGVhc2UgLWNkb19jb21w
-aWxlIC1TcHJpbnRkaWZmPC9pPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGk+RVJST1I6IFdo
-ZW4gcmVwYXJzaW5nJm5ic3A7PC9pPjxpPi9ob21lL3RlbXAveHh4L3dzcC9vYm1jLXNvdXJjZS9l
-bnRpdHlfeHh4LzwvaT48aT5tZXRhL3JlY2lwZXMtY29yZS9vcy1yZWxlYXNlL29zLXJlbGVhc2Uu
-YmIuZG9fY29tcGlsZSwmbmJzcDs8L2k+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJn
-YigyNTUsIDIwNCwgMCk7Ij48aT50aGUgYmFzZWhhc2ggdmFsdWUgY2hhbmdlZCBmcm9tIDk5YTQy
-YTFhM2IxYTE1MWRlNjA0MjY3YjE1OTU1OGVjYWYxMDMxYTNiZWM4OTE3ZGYxMzJjODEzMDJlNzI5
-YTUgdG8gNDdjMzAwMTJkYWE2YWE3N2JlMDlhOTNmZTIxZTY2OTk1MzYxZWYyNmI0NDg3MTExMDA1
-NjE3ZGI4Y2I0ZGU1OS4gVGhlIG1ldGFkYXRhIGlzIG5vdCBkZXRlcm1pbmlzdGljIGFuZCB0aGlz
-IG5lZWRzIHRvIGJlIGZpeGVkLjwvaT48L3NwYW4+PC9kaXY+PGRpdj48aT5FUlJPUjogVGhlIGZv
-bGxvd2luZyBjb21tYW5kcyBtYXkgaGVscDo8L2k+PC9kaXY+PGRpdj48aT5FUlJPUjogJCBiaXRi
-YWtlIG9zLXJlbGVhc2UgLWNkb19jb21waWxlIC1Tbm9uZTwvaT48L2Rpdj48ZGl2PjxpPkVSUk9S
-OiBUaGVuOjwvaT48L2Rpdj48ZGl2PjxpPkVSUk9SOiAkIGJpdGJha2Ugb3MtcmVsZWFzZSAtY2Rv
-X2NvbXBpbGUgLVNwcmludGRpZmY8L2k+PC9kaXY+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj50
-aGFua3MsPC9kaXY+PGRpdj5CeXJvbjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5l
-dGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_95815_811748287.1573630697935--
+This is a great resource for layer best practices.  Thanks Paul!
 
+-brad=
