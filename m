@@ -1,77 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87E2DFAABD
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 08:17:38 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47CbXv57nrzF7Pb
-	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 18:17:35 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id A1266FAAE5
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 08:25:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Cbjg3kPnzF6VX
+	for <lists+openbmc@lfdr.de>; Wed, 13 Nov 2019 18:25:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gkeishin@in.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="ZzXlodA6"; 
+ dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47CbWF26XvzF7Nf
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 18:16:02 +1100 (AEDT)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- xAD7Bvbg166302
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 02:15:59 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.66])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w7qdb4a77-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 13 Nov 2019 02:15:59 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <gkeishin@in.ibm.com>;
- Wed, 13 Nov 2019 07:15:58 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.127) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 13 Nov 2019 07:15:55 -0000
-Received: from us1a3-mail113.a3.dal06.isc4sb.com ([10.146.6.4])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2019111307155443-88007 ;
- Wed, 13 Nov 2019 07:15:54 +0000 
-In-Reply-To: <2599bd03.7067.16e637ee04c.Coremail.xiaoqian1641@163.com>
-To: "=?GB2312?B?s6PP/sP3?=" <xiaoqian1641@163.com>
-From: "George Keishing" <gkeishin@in.ibm.com>
-Date: Wed, 13 Nov 2019 12:45:50 +0530
-References: <2d7b6a6d.52d2.16d2372efd5.Coremail.xiaoqian1641@163.com>
- <CAPnigK=RCCa41ya98pgdmB+A1SK16o4XwbLBWa_g41vzgkm47g@mail.gmail.com>
- <491fd747.c3f7.16d49308f66.Coremail.xiaoqian1641@163.com>
- <2599bd03.7067.16e637ee04c.Coremail.xiaoqian1641@163.com>
-X-KeepSent: 777DEB45:C29F7FB3-002584B1:00274963;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 10.0.1 November 29, 2018
-X-LLNOutbound: False
-X-Disclaimed: 38023
-X-TNEFEvaluated: 1
-Content-type: multipart/related; 
- Boundary="0__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3"
-x-cbid: 19111307-4409-0000-0000-0000012253A9
-X-IBM-SpamModules-Scores: BY=0.233173; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.383299; ST=0; TS=0; UL=0; ISC=; MB=0.021658
-X-IBM-SpamModules-Versions: BY=3.00012101; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01289420; UDB=6.00683881; IPR=6.01071618; 
- MB=3.00029509; MTD=3.00000008; XFM=3.00000015; UTC=2019-11-13 07:15:57
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-11-13 03:11:01 - 6.00010641
-x-cbparentid: 19111307-4410-0000-0000-000029365746
-Message-Id: <OF777DEB45.C29F7FB3-ON002584B1.00274963-652584B1.0027E730@notes.na.collabserv.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Cbhj5bjwzF4v1;
+ Wed, 13 Nov 2019 18:24:21 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6820E42F12;
+ Wed, 13 Nov 2019 07:24:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ user-agent:in-reply-to:content-disposition:content-type
+ :content-type:mime-version:references:message-id:subject:subject
+ :from:from:date:date:received:received:received; s=mta-01; t=
+ 1573629854; x=1575444255; bh=M7vfThuM8XZjGxEXM+aRzHqVxGNGetVF0WO
+ XQbTjMiM=; b=ZzXlodA6/Q6r9rF0DjgXzcHYh2yp9lAuT7Vc2EkIEb8mRtgyHGr
+ lCO5gSLpsLqw10+6afGbjApUiw1HSSg3QFnIw4vcgXwJeTzRv3rqpawSdUuYtWyv
+ Tln7xstHH8BQI0F88AF8FeqdLDk4raOAVNQxLNpNNJwpnJ7n3uAAh2e0=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id v13tcghmurlP; Wed, 13 Nov 2019 10:24:14 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 01EFF42F15;
+ Wed, 13 Nov 2019 10:24:13 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 13
+ Nov 2019 10:24:13 +0300
+Date: Wed, 13 Nov 2019 10:24:13 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: Adriana Kobylak <anoo@linux.ibm.com>
+Subject: Re: Packaging and deploying multiple firmware image types in one
+Message-ID: <20191113072413.GA30087@bbwork.lan>
+References: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
+ <20191112074921.GA4938@bbwork.lan>
+ <9ddc3deca00904404c72a49c4f89c8a4@linux.vnet.ibm.com>
 MIME-Version: 1.0
-Subject: Re:  How to trigger BMC dumps
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-11-13_01:, , signatures=0
-X-Proofpoint-Spam-Reason: safe
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <9ddc3deca00904404c72a49c4f89c8a4@linux.vnet.ibm.com>
+User-Agent: Mutt/1.12.1 (2019-06-15)
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,174 +74,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ openbmc@lists.ozlabs.org, "Alexander A. Filippov" <a.filippov@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3
-Content-type: multipart/alternative; 
-	Boundary="1__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3"
+On Tue, Nov 12, 2019 at 04:54:22PM -0600, Adriana Kobylak wrote:
+> On 2019-11-12 01:49, Alexander A. Filippov wrote:
+> > On Mon, Nov 11, 2019 at 01:28:11PM -0600, Adriana Kobylak wrote:
+> > 
+> > We use the system bundle of BMC + Host firmware on our VESNIN hardware.
+> 
+> How are you currently building the bundled image, do you include the Host
+> firmware in the BMC rootfs, or do you have separate image files (bmc fw
+> file, host fw file) in a single tarball?
 
+We put separate image files in a single tarball.
 
---1__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3
-Content-Transfer-Encoding: base64
-Content-type: text/plain; charset=GB2312
+> 
+> > There are some things which cause discomfort a little bit:
+> > - The uploaded system bundle isn't shown in the WebUI.
+> > - The system bundle has only one version field which is common for BMC
+> > and Host
+> >   firmwares.
+> 
+> Do you think the ExtendedVersion d-bus property could help in this case? For
+> example adding to the manifest "extended_version=host-v1.2."
 
-JCBleHBvcnQgQk1DX0lQPXh4Lnh4Lnh4Lnh4DQoNCiQgY3VybCAtayAtSCAiQ29udGVudC1UeXBl
-OiBhcHBsaWNhdGlvbi9qc29uIiAtWCBQT1NUIGh0dHBzOi8vJA0Ke0JNQ19JUH0vbG9naW4gLWQg
-J3sidXNlcm5hbWUiIDogICJyb290IiwgInBhc3N3b3JkIiA6ICAiMHBlbkJtYyJ9Jw0Kew0KICAi
-dG9rZW4iOiAiaGdhdGZsa2VQTjFybGE1cnBtaDIiDQp9DQoNCiQgZXhwb3J0IGJtY190b2tlbj1o
-Z2F0ZmxrZVBOMXJsYTVycG1oMg0KDQokICBjdXJsIC1rIC1IICJYLUF1dGgtVG9rZW46ICRibWNf
-dG9rZW4iIC1kICJ7XCJkYXRhXCI6IFtdfSIgLVggUE9TVA0KaHR0cHM6Ly8kQk1DX0lQL3h5ei9v
-cGVuYm1jX3Byb2plY3QvZHVtcC9hY3Rpb24vQ3JlYXRlRHVtcA0Kew0KICAiZGF0YSI6IDEsDQog
-ICJtZXNzYWdlIjogIjIwMCBPSyIsDQogICJzdGF0dXMiOiAib2siDQp9DQoNCiQgY3VybCAtayAt
-SCAiWC1BdXRoLVRva2VuOiAkYm1jX3Rva2VuIiAtWCBHRVQNCmh0dHBzOi8vJEJNQ19JUC94eXov
-b3BlbmJtY19wcm9qZWN0L2R1bXAvbGlzdA0Kew0KICAiZGF0YSI6IFsNCiAgICAiL3h5ei9vcGVu
-Ym1jX3Byb2plY3QvZHVtcC9lbnRyeSIsDQogICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAv
-ZW50cnkvMSIsDQogICAgIi94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvaW50ZXJuYWwiLA0KICAg
-ICIveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIiDQogIF0sDQogICJt
-ZXNzYWdlIjogIjIwMCBPSyIsDQogICJzdGF0dXMiOiAib2siDQp9DQoNCiQgY3VybCAtayAtSCAi
-WC1BdXRoLVRva2VuOiAkYm1jX3Rva2VuIiAtWCBHRVQNCmh0dHBzOi8vJEJNQ19JUC94eXovb3Bl
-bmJtY19wcm9qZWN0L2R1bXAvZW50cnkvMQ0Kew0KICAiZGF0YSI6IHsNCiAgICAiRWxhcHNlZCI6
-IDE1NzM2MjkxNzcsDQogICAgIlNpemUiOiAxNzgzNjQNCiAgfSwNCiAgIm1lc3NhZ2UiOiAiMjAw
-IE9LIiwNCiAgInN0YXR1cyI6ICJvayINCn0NCg0KVGhhbmtzIGFuZCBSZWdhcmRzLA0KICAgR2Vv
-cmdlIEtlaXNoaW5nDQoNCg0KDQoNCg0KRnJvbToJIrOjz/7D9yIgPHhpYW9xaWFuMTY0MUAxNjMu
-Y29tPg0KVG86CSJPcGVuQk1DIERldmVsb3BtZW50IiA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-Pg0KRGF0ZToJMTMtMTEtMjAxOSAxMjoyOA0KU3ViamVjdDoJW0VYVEVSTkFMXSBIb3cgdG8gdHJp
-Z2dlciBCTUMgZHVtcHMNClNlbnQgYnk6CSJvcGVuYm1jIiA8b3BlbmJtYy1ib3VuY2VzDQogICAg
-ICAgICAgICArZ2tlaXNoaW49aW4uaWJtLmNvbUBsaXN0cy5vemxhYnMub3JnPg0KDQoNCg0KSGks
-IEFsbCwNCg0KSSBhbSB0cmluZyB0byB0cmlnZ2VyIEJNQyBkdW1wcywgZm9sbG93DQpodHRwczov
-L2dpdGh1Yi5jb20veGNhdDIveGNhdC1jb3JlL2lzc3Vlcy80MjM1DQoxLiBMb2dpbiBCTUMNCiAg
-ICAgICAgICAgY3VybCAtYyBjamFyIC1iIGNqYXIgLWsgLUggIkNvbnRlbnQtVHlwZTogYXBwbGlj
-YXRpb24vanNvbiIgLVgNClBPU1QgaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0My9sb2dpbiAtZCAie1wi
-ZGF0YVwiOiBbIFwicm9vdFwiLCBcIjBwZW5CbWMNClwiIF0gfSINCjIuIExpc3QgYXZhaWxhYmxl
-IGR1bXBzDQogICAgICAgICBjdXJsIC1jIGNqYXIgLWIgY2phciAtaw0KaHR0cHM6Ly8xMjcuMC4w
-LjE6MjQ0My94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvbGlzdA0KMy4gV2hlbiBNYW51YWxseSB0
-cmlnZ2VyIGEgZ2VuZXJhdGlvbiBvZiBhIGR1bXANCiAgICAgICAgY3VybCAtYyBjamFyIC1iIGNq
-YXIgLWsgLUggIkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbiIgLWQNCiJ7XCJkYXRhXCI6
-IFtdfSIgLVggUE9TVA0KaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0My94eXovb3BlbmJtY19wcm9qZWN0
-L2R1bXAvYWN0aW9uL0NyZWF0ZUR1bXANCiAgICBUaGUgY29zb2xlIGRpc3BsYXkgOiAgVW5hdXRo
-b3JpemVkDQpEb2VzIGFueW9uZSBrbm93IHdoYXQgaGFwcGVuZWQ/DQoNClRoYW5rcw0KDQpKb2hu
-eQ0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCg==
+I think, it is right only if the system bundle will be processed by its own
+service, which creates corresponding objects for each part of the bundle with
+their own hash, version's data and purpose.
 
---1__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3
-Content-type: text/html; charset=GB2312
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
-X-Proofpoint-UnRewURL: 4 URL's were un-rewritten
+E.g.: as you've proposed below with separate tarballs in one common tarball.
 
-PGh0bWw+PGJvZHk+PHA+PGI+PGZvbnQgc2l6ZT0iMiI+JCBleHBvcnQgQk1DX0lQPXh4Lnh4Lnh4
-Lnh4PC9mb250PjwvYj48YnI+PGJyPjxiPjxmb250IHNpemU9IjIiPiQgY3VybCAtayAtSCAmcXVv
-dDtDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL2pzb24mcXVvdDsgLVggUE9TVCA8L2ZvbnQ+PC9i
-PjxhIGhyZWY9Imh0dHBzOi8vJC8iPjxiPjxmb250IHNpemU9IjIiPmh0dHBzOi8vJDwvZm9udD48
-L2I+PC9hPjxiPjxmb250IHNpemU9IjIiPntCTUNfSVB9L2xvZ2luIC1kICd7JnF1b3Q7dXNlcm5h
-bWUmcXVvdDsgOiAgJnF1b3Q7cm9vdCZxdW90OywgJnF1b3Q7cGFzc3dvcmQmcXVvdDsgOiAgJnF1
-b3Q7MHBlbkJtYyZxdW90O30nPC9mb250PjwvYj48YnI+PGZvbnQgc2l6ZT0iMiI+ezwvZm9udD48
-YnI+PGZvbnQgc2l6ZT0iMiI+ICAmcXVvdDt0b2tlbiZxdW90OzogJnF1b3Q7aGdhdGZsa2VQTjFy
-bGE1cnBtaDImcXVvdDs8L2ZvbnQ+PGJyPjxmb250IHNpemU9IjIiPn08L2ZvbnQ+PGJyPjxicj48
-Yj48Zm9udCBzaXplPSIyIj4kIGV4cG9ydCBibWNfdG9rZW49aGdhdGZsa2VQTjFybGE1cnBtaDI8
-L2ZvbnQ+PC9iPjxicj48YnI+PGI+PGZvbnQgc2l6ZT0iMiI+JCAgY3VybCAtayAtSCAmcXVvdDtY
-LUF1dGgtVG9rZW46ICRibWNfdG9rZW4mcXVvdDsgLWQgJnF1b3Q7e1wmcXVvdDtkYXRhXCZxdW90
-OzogW119JnF1b3Q7IC1YIFBPU1QgIDwvZm9udD48L2I+PGEgaHJlZj0iaHR0cHM6Ly8kYm1jX2lw
-L3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9hY3Rpb24vQ3JlYXRlRHVtcCI+PGI+PGZvbnQgc2l6
-ZT0iMiI+aHR0cHM6Ly8kQk1DX0lQL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9hY3Rpb24vQ3Jl
-YXRlRHVtcDwvZm9udD48L2I+PC9hPjxicj48Zm9udCBzaXplPSIyIj57PC9mb250Pjxicj48Zm9u
-dCBzaXplPSIyIj4gICZxdW90O2RhdGEmcXVvdDs6IDEsPC9mb250Pjxicj48Zm9udCBzaXplPSIy
-Ij4gICZxdW90O21lc3NhZ2UmcXVvdDs6ICZxdW90OzIwMCBPSyZxdW90Oyw8L2ZvbnQ+PGJyPjxm
-b250IHNpemU9IjIiPiAgJnF1b3Q7c3RhdHVzJnF1b3Q7OiAmcXVvdDtvayZxdW90OzwvZm9udD48
-YnI+PGZvbnQgc2l6ZT0iMiI+fTwvZm9udD48YnI+PGJyPjxiPjxmb250IHNpemU9IjIiPiQgY3Vy
-bCAtayAtSCAmcXVvdDtYLUF1dGgtVG9rZW46ICRibWNfdG9rZW4mcXVvdDsgLVggR0VUIDwvZm9u
-dD48L2I+PGEgaHJlZj0iaHR0cHM6Ly8kYm1jX2lwL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9s
-aXN0Ij48Yj48Zm9udCBzaXplPSIyIj5odHRwczovLyRCTUNfSVAveHl6L29wZW5ibWNfcHJvamVj
-dC9kdW1wL2xpc3Q8L2ZvbnQ+PC9iPjwvYT48YnI+PGZvbnQgc2l6ZT0iMiI+ezwvZm9udD48YnI+
-PGZvbnQgc2l6ZT0iMiI+ICAmcXVvdDtkYXRhJnF1b3Q7OiBbPC9mb250Pjxicj48Zm9udCBzaXpl
-PSIyIj4gICAgJnF1b3Q7L3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9lbnRyeSZxdW90Oyw8L2Zv
-bnQ+PGJyPjxmb250IHNpemU9IjIiPiAgICAmcXVvdDsveHl6L29wZW5ibWNfcHJvamVjdC9kdW1w
-L2VudHJ5LzEmcXVvdDssPC9mb250Pjxicj48Zm9udCBzaXplPSIyIj4gICAgJnF1b3Q7L3h5ei9v
-cGVuYm1jX3Byb2plY3QvZHVtcC9pbnRlcm5hbCZxdW90Oyw8L2ZvbnQ+PGJyPjxmb250IHNpemU9
-IjIiPiAgICAmcXVvdDsveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2ludGVybmFsL21hbmFnZXIm
-cXVvdDs8L2ZvbnQ+PGJyPjxmb250IHNpemU9IjIiPiAgXSw8L2ZvbnQ+PGJyPjxmb250IHNpemU9
-IjIiPiAgJnF1b3Q7bWVzc2FnZSZxdW90OzogJnF1b3Q7MjAwIE9LJnF1b3Q7LDwvZm9udD48YnI+
-PGZvbnQgc2l6ZT0iMiI+ICAmcXVvdDtzdGF0dXMmcXVvdDs6ICZxdW90O29rJnF1b3Q7PC9mb250
-Pjxicj48Zm9udCBzaXplPSIyIj59PC9mb250Pjxicj48YnI+PGI+PGZvbnQgc2l6ZT0iMiI+JCBj
-dXJsIC1rIC1IICZxdW90O1gtQXV0aC1Ub2tlbjogJGJtY190b2tlbiZxdW90OyAtWCBHRVQgPC9m
-b250PjwvYj48YSBocmVmPSJodHRwczovLyRibWNfaXAveHl6L29wZW5ibWNfcHJvamVjdC9kdW1w
-L2VudHJ5LzEiPjxiPjxmb250IHNpemU9IjIiPmh0dHBzOi8vJEJNQ19JUC94eXovb3BlbmJtY19w
-cm9qZWN0L2R1bXAvZW50cnkvMTwvZm9udD48L2I+PC9hPjxicj48Zm9udCBzaXplPSIyIj57PC9m
-b250Pjxicj48Zm9udCBzaXplPSIyIj4gICZxdW90O2RhdGEmcXVvdDs6IHs8L2ZvbnQ+PGJyPjxm
-b250IHNpemU9IjIiPiAgICAmcXVvdDtFbGFwc2VkJnF1b3Q7OiAxNTczNjI5MTc3LDwvZm9udD48
-YnI+PGZvbnQgc2l6ZT0iMiI+ICAgICZxdW90O1NpemUmcXVvdDs6IDE3ODM2NDwvZm9udD48YnI+
-PGZvbnQgc2l6ZT0iMiI+ICB9LDwvZm9udD48YnI+PGZvbnQgc2l6ZT0iMiI+ICAmcXVvdDttZXNz
-YWdlJnF1b3Q7OiAmcXVvdDsyMDAgT0smcXVvdDssPC9mb250Pjxicj48Zm9udCBzaXplPSIyIj4g
-ICZxdW90O3N0YXR1cyZxdW90OzogJnF1b3Q7b2smcXVvdDs8L2ZvbnQ+PGJyPjxmb250IHNpemU9
-IjIiPn08L2ZvbnQ+PGJyPjxicj48Yj48Zm9udCBzaXplPSIyIiBjb2xvcj0iIzAwMDBGRiI+VGhh
-bmtzIGFuZCBSZWdhcmRzLDwvZm9udD48L2I+PGJyPjxmb250IHNpemU9IjIiIGNvbG9yPSIjMDAw
-MEZGIj4gICBHZW9yZ2UgS2Vpc2hpbmc8L2ZvbnQ+PGJyPjxicj48YnI+PGJyPjxpbWcgd2lkdGg9
-IjE2IiBoZWlnaHQ9IjE2IiBzcmM9ImNpZDoxX189OEZCQjBFMjJERkI0Q0ZGMzhmOWU4YTkzZGY5
-Mzg2OTA5MThjOEZCQCIgYm9yZGVyPSIwIiBhbHQ9IkluYWN0aXZlIGhpZGUgZGV0YWlscyBmb3Ig
-JnF1b3Q7s6PP/sP3JnF1b3Q7IC0tLTEzLTExLTIwMTkgMTI6Mjg6MjYtLS1IaSwgQWxsLCBJIGFt
-IHRyaW5nIHRvIHRyaWdnZXIgQk1DIGR1bXBzLCBmb2xsb3cgaHR0cHM6Ly91cmxkZWZlIj48Zm9u
-dCBzaXplPSIyIiBjb2xvcj0iIzQyNDI4MiI+JnF1b3Q7s6PP/sP3JnF1b3Q7IC0tLTEzLTExLTIw
-MTkgMTI6Mjg6MjYtLS1IaSwgQWxsLCBJIGFtIHRyaW5nIHRvIHRyaWdnZXIgQk1DIGR1bXBzLCBm
-b2xsb3cgPGEgaHJlZj0iSU5WQUxJRCBVUkkgUkVNT1ZFRCI+SU5WQUxJRCBVUkkgUkVNT1ZFRDwv
-YT48L2ZvbnQ+PGJyPjxicj48Zm9udCBzaXplPSIyIiBjb2xvcj0iIzVGNUY1RiI+RnJvbTogICAg
-ICAgIDwvZm9udD48Zm9udCBzaXplPSIyIj4mcXVvdDuzo8/+w/cmcXVvdDsgJmx0O3hpYW9xaWFu
-MTY0MUAxNjMuY29tJmd0OzwvZm9udD48YnI+PGZvbnQgc2l6ZT0iMiIgY29sb3I9IiM1RjVGNUYi
-PlRvOiAgICAgICAgPC9mb250Pjxmb250IHNpemU9IjIiPiZxdW90O09wZW5CTUMgRGV2ZWxvcG1l
-bnQmcXVvdDsgJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8L2ZvbnQ+PGJyPjxmb250
-IHNpemU9IjIiIGNvbG9yPSIjNUY1RjVGIj5EYXRlOiAgICAgICAgPC9mb250Pjxmb250IHNpemU9
-IjIiPjEzLTExLTIwMTkgMTI6Mjg8L2ZvbnQ+PGJyPjxmb250IHNpemU9IjIiIGNvbG9yPSIjNUY1
-RjVGIj5TdWJqZWN0OiAgICAgICAgPC9mb250Pjxmb250IHNpemU9IjIiPltFWFRFUk5BTF0gSG93
-IHRvIHRyaWdnZXIgQk1DIGR1bXBzPC9mb250Pjxicj48Zm9udCBzaXplPSIyIiBjb2xvcj0iIzVG
-NUY1RiI+U2VudCBieTogICAgICAgIDwvZm9udD48Zm9udCBzaXplPSIyIj4mcXVvdDtvcGVuYm1j
-JnF1b3Q7ICZsdDtvcGVuYm1jLWJvdW5jZXMrZ2tlaXNoaW49aW4uaWJtLmNvbUBsaXN0cy5vemxh
-YnMub3JnJmd0OzwvZm9udD48YnI+PGhyIHdpZHRoPSIxMDAlIiBzaXplPSIyIiBhbGlnbj0ibGVm
-dCIgbm9zaGFkZSBzdHlsZT0iY29sb3I6IzgwOTFBNTsgIj48YnI+PGJyPjxicj48Zm9udCBmYWNl
-PSJBcmlhbCI+SGksIEFsbCw8L2ZvbnQ+PGJyPjxicj48Zm9udCBmYWNlPSJBcmlhbCI+SSBhbSB0
-cmluZyB0byB0cmlnZ2VyIEJNQyBkdW1wcywgZm9sbG93IDwvZm9udD48YSBocmVmPSJodHRwczov
-L2dpdGh1Yi5jb20veGNhdDIveGNhdC1jb3JlL2lzc3Vlcy80MjM1Ij48dT48Zm9udCBjb2xvcj0i
-IzAwMDBGRiIgZmFjZT0iQXJpYWwiPmh0dHBzOi8vZ2l0aHViLmNvbS94Y2F0Mi94Y2F0LWNvcmUv
-aXNzdWVzLzQyMzU8L2ZvbnQ+PC91PjwvYT48YnI+PGZvbnQgZmFjZT0iQXJpYWwiPjEuIExvZ2lu
-IEJNQzwvZm9udD48YnI+PGZvbnQgZmFjZT0iQXJpYWwiPiAgICAgICAgICAgY3VybCAtYyBjamFy
-IC1iIGNqYXIgLWsgLUggJnF1b3Q7Q29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9qc29uJnF1b3Q7
-IC1YIFBPU1QgPC9mb250Pjxmb250IGZhY2U9IkFyaWFsIj48YSBocmVmPSJodHRwczovLzEyNy4w
-LjAuMToyNDQzL2xvZ2luIj5odHRwczovLzEyNy4wLjAuMToyNDQzL2xvZ2luPC9hPjwvZm9udD48
-Zm9udCBmYWNlPSJBcmlhbCI+IC1kICZxdW90O3tcJnF1b3Q7ZGF0YVwmcXVvdDs6IFsgXCZxdW90
-O3Jvb3RcJnF1b3Q7LCBcJnF1b3Q7MHBlbkJtY1wmcXVvdDsgXSB9JnF1b3Q7PC9mb250Pjxicj48
-Zm9udCBmYWNlPSJBcmlhbCI+Mi4gTGlzdCBhdmFpbGFibGUgZHVtcHM8L2ZvbnQ+PGJyPjxmb250
-IGZhY2U9IkFyaWFsIj4gICAgICAgICBjdXJsIC1jIGNqYXIgLWIgY2phciAtayA8L2ZvbnQ+PGEg
-aHJlZj0iaHR0cHM6Ly8xMjcuMC4wLjE6MjQ0My94eXovb3BlbmJtY19wcm9qZWN0L2R1bXAvbGlz
-dCI+PHU+PGZvbnQgY29sb3I9IiMwMDAwRkYiIGZhY2U9IkFyaWFsIj5odHRwczovLzEyNy4wLjAu
-MToyNDQzL3h5ei9vcGVuYm1jX3Byb2plY3QvZHVtcC9saXN0PC9mb250PjwvdT48L2E+PGZvbnQg
-ZmFjZT0iQXJpYWwiPiA8L2ZvbnQ+PGJyPjxmb250IGZhY2U9IkFyaWFsIj4zLiBXaGVuIDwvZm9u
-dD48Zm9udCBjb2xvcj0iIzI0MjkyRSIgZmFjZT0iU2Vnb2UgVUkiPk1hbnVhbGx5IHRyaWdnZXIg
-YSBnZW5lcmF0aW9uIG9mIGEgZHVtcDwvZm9udD48YnI+PGZvbnQgY29sb3I9IiMyNDI5MkUiIGZh
-Y2U9IlNlZ29lIFVJIj4gICAgICAgIGN1cmwgLWMgY2phciAtYiBjamFyIC1rIC1IICZxdW90O0Nv
-bnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbiZxdW90OyAtZCAmcXVvdDt7XCZxdW90O2RhdGFc
-JnF1b3Q7OiBbXX0mcXVvdDsgLVggUE9TVCAgPC9mb250PjxhIGhyZWY9Imh0dHBzOi8vMTI3LjAu
-MC4xOjI0NDMveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2FjdGlvbi9DcmVhdGVEdW1wIj48dT48
-Zm9udCBjb2xvcj0iIzAwMDBGRiIgZmFjZT0iU2Vnb2UgVUkiPmh0dHBzOi8vMTI3LjAuMC4xOjI0
-NDMveHl6L29wZW5ibWNfcHJvamVjdC9kdW1wL2FjdGlvbi9DcmVhdGVEdW1wPC9mb250PjwvdT48
-L2E+PGZvbnQgY29sb3I9IiMyNDI5MkUiIGZhY2U9IlNlZ29lIFVJIj4gPC9mb250Pjxicj48Zm9u
-dCBmYWNlPSJBcmlhbCI+ICAgIFRoZSBjb3NvbGUgZGlzcGxheSA6ICA8L2ZvbnQ+PGI+PGZvbnQg
-ZmFjZT0iQXJpYWwiPlVuYXV0aG9yaXplZDwvZm9udD48L2I+PGJyPjxmb250IGZhY2U9IkFyaWFs
-Ij5Eb2VzIGFueW9uZSBrbm93IHdoYXQgaGFwcGVuZWQ/PC9mb250Pjxicj48YnI+PGZvbnQgZmFj
-ZT0iQXJpYWwiPlRoYW5rczwvZm9udD48YnI+PGJyPjxmb250IGZhY2U9IkFyaWFsIj5Kb2hueTwv
-Zm9udD48YnI+PGJyPjxicj4NCjxwPiANCjxwPjxwPjxCUj4NCjwvYm9keT48L2h0bWw+DQo=
+> 
+> > - After rebooting BMC, which is required to complete update the BMC
+> > firmware
+> >   the system bundle turns to two separated instances in D-Bus which has
+> > its own
+> >   real versions.
+> 
+> Yeah, the purpose is not currently preserved across reboots. I have a change
+> here for that:
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-bmc-code-mgmt/+/27045
+> 
 
---1__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3--
+We use static filesystem layout on our VESNIN hardware. 
+So, the version of active BMC is read from /etc/os-release and always has the
+BMC purpose. 
+The same way with the host firmware: it is read directly from the flash, which
+has a special partition with version's data and always has the Host purpose.
 
+> > 
+> > Thus, I thought about putting the separate manifests for each part of
+> > the
+> > bundle.
+> 
+> If you go the route of adding a second manifest, would you have them in a
+> separate tarball (bmc image + manifest) and (host image + manifest) then put
+> those tarballs inside a tarball? since the manifest file name would be the
+> same.
+>
 
---0__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3
-Content-type: image/gif; 
-	name="graycol.gif"
-Content-Disposition: inline; filename="graycol.gif"
-Content-ID: <1__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FB@>
-Content-Transfer-Encoding: base64
+Yeah, it's possible.
+But when I researched that, I had found that the phosphor-image-updater and the
+openpower-update-manager both already have support for the system bundle. I
+decided, we shouldn't create any other implementation, but follow the upstream's
+way. So, it has led to the state I described earlier.
 
-R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
-ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
-
-
---0__=8FBB0E22DFB4CFF38f9e8a93df938690918c8FBB0E22DFB4CFF3--
-
+> > 
+> > > 
+> > > ---
+> > > [1] https://lists.ozlabs.org/pipermail/openbmc/2019-June/016573.html
+> > > [2] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Version.interface.yaml
+> > > [3] https://github.com/openbmc/meta-openpower/blob/master/recipes-phosphor/flash/host-fw_git.bb
+> > > [4] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/ExtendedVersion.interface.yaml
