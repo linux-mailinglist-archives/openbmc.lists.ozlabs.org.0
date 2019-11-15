@@ -1,71 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B4E7FE223
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 16:59:26 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 836D4FE1C0
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 16:47:51 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47F2mh4ytTzF4C3
-	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 02:47:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47F3230R1czF7XT
+	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 02:59:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::232;
- helo=mail-oi1-x232.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ie4GRZJF"; 
- dkim-atps=neutral
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com
- [IPv6:2607:f8b0:4864:20::232])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47F2ls1ymnzF3vP;
- Sat, 16 Nov 2019 02:47:05 +1100 (AEDT)
-Received: by mail-oi1-x232.google.com with SMTP id v138so8978759oif.6;
- Fri, 15 Nov 2019 07:47:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=IeQWFeO8Bz9NCxG3NpPBOa4AayBSb0ihnYt89pwTKoM=;
- b=ie4GRZJF2vmFjn0PvA7ySnjxHeX/qh8qVaIcpXfVq5kvluN9RWhRU95bMTlhMbjDYV
- gM6shypa4J00aTeI0EZkdjEVa5J8pd8dAAWRC7RCJREVFv3b5mGCzYCPEQvxB57XrYQE
- gayYr1pUYrQsLcqkkxV7l9sLAGfe2GS6UeLJp9YpYS571VBg8BIRLnTQcOv7kszwJZKx
- HuaZzpUyLxLT8GGlEg7k/d8aS7RCLPP+/4eNa0/MjP7ZBxHjiBZlVhUA78CkZnkHXAs/
- Qfow02rGuUgTPB+7Gjld3XDb1RIKQuJUR6Di4dTDbmCFl1ywubfMp6gnI7xakT/8sI+r
- 8UTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=IeQWFeO8Bz9NCxG3NpPBOa4AayBSb0ihnYt89pwTKoM=;
- b=p9cJAeNhsL4+Vl28loaflhF7rt+4ljfLalDoXzRIEL+ZE9NANom9t9nvXUvpKcTfiR
- yGh9JYtRuz94DZVKNxXzqKhfnFj2yCGO9MMDst4OMEKoPjpd8Z+uMA3k3meS0y4AFd/u
- 2TdDkFWbkHVrlVwyX98rBlOaWKvVH1ODdBqIkpNwrRd/cfKJNs6fCfUOHRacqZUPYy12
- Nx3ippqT6EpGCAt5Xff3fL9yCIHJMis/dY7CweRxYOGs7bzCJ0F4P4KDKVw4ahjuYbP4
- JsKrU0su3OS8LVZ6LhiuNEH9f/0RPaRMRuCU57WzUw/YLGWOUQstkZeL8DUSlSJ/JIIc
- 5akw==
-X-Gm-Message-State: APjAAAWb95H7mrVYbPhdNGUoabLm9SPhLMEg2BgtgYFzx1LsH0QZtJpy
- ZvfHRpKdSZonQN/kzKkyuA6GbAy/3LAaQT3rzX4=
-X-Google-Smtp-Source: APXvYqyTw6s57M9TbYi9rh/TKLDiVgjtKwy58dSL5dXAg6mfThDC5/UaeMpOb1y0U4pOQLZyKp3bo76AoHv3u9UPvpQ=
-X-Received: by 2002:aca:c64c:: with SMTP id w73mr8551894oif.161.1573832821736; 
- Fri, 15 Nov 2019 07:47:01 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47F31F1vpNzF7V3;
+ Sat, 16 Nov 2019 02:58:40 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xAFFvjZA047855; Fri, 15 Nov 2019 10:58:37 -0500
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2w9nsjwevr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Nov 2019 10:58:37 -0500
+Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xAFFwaLL050913;
+ Fri, 15 Nov 2019 10:58:36 -0500
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2w9nsjweuv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Nov 2019 10:58:36 -0500
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAFFfBve005681;
+ Fri, 15 Nov 2019 15:58:35 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma04wdc.us.ibm.com with ESMTP id 2w9gy3wv36-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Nov 2019 15:58:35 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xAFFwYqu46727586
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Nov 2019 15:58:34 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 15C47AC05E;
+ Fri, 15 Nov 2019 15:58:34 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06A50AC05B;
+ Fri, 15 Nov 2019 15:58:33 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Fri, 15 Nov 2019 15:58:32 +0000 (GMT)
 MIME-Version: 1.0
-References: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
- <20191112074921.GA4938@bbwork.lan>
- <9ddc3deca00904404c72a49c4f89c8a4@linux.vnet.ibm.com>
- <20191114075131.GA6696@bbwork.lan>
- <8755e79fb8f5b06113a953039daa2348@linux.vnet.ibm.com>
- <7e88ab9cf8e9698afdae885a5477da91@linux.vnet.ibm.com>
-In-Reply-To: <7e88ab9cf8e9698afdae885a5477da91@linux.vnet.ibm.com>
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Fri, 15 Nov 2019 09:46:45 -0600
-Message-ID: <CALLMt=oEYGDam4km_70bJMOsxDAX9TYheXYYsua8PWcP3EuABQ@mail.gmail.com>
-Subject: Re: Packaging and deploying multiple firmware image types in one
-To: Adriana Kobylak <anoo@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date: Fri, 15 Nov 2019 10:00:14 -0600
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Lei YU <mine260309@gmail.com>, Bright Cheng/WYHQ/Wiwynn
+ <Bright_Cheng@wiwynn.com>
+Subject: Re: phosphor-bmc-code-memt: Support redfish remote firmware update
+ with static layout image
+In-Reply-To: <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com>
+References: <HK0PR02MB33487C8E6D56DD2143034D0C9F700@HK0PR02MB3348.apcprd02.prod.outlook.com>
+ <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com>
+Message-ID: <0f356ff58ad9ec48b19e86f9da5eb7cc@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-11-15_04:2019-11-15,2019-11-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 mlxscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1011 adultscore=0 impostorscore=0
+ mlxlogscore=999 phishscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1911150143
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,64 +94,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, gmills@linux.vnet.ibm.com,
- "Alexander A. Filippov" <a.filippov@yadro.com>
+Cc: openbmc@lists.ozlabs.org, Adriana Kobylak <anoo@us.ibm.com>,
+ Neeraj Ladkani <neladk@microsoft.com>,
+ Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
+ Jayanth Othayoth <ojayanth@in.ibm.com>,
+ openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Nov 15, 2019 at 8:50 AM Adriana Kobylak <anoo@linux.ibm.com> wrote:
+>> phosphor-bmc-code-memt doesn’t support static-layout remote update 
+>> since static layout fw package could only has “image-bmc” in the 
+>> package.
+> 
+> For now, it does support static layout, you just need to upload the
+> tarball contains separated images, instead of the whole "image-bmc"
+> tarball.
+> 
 
->
-> For the bmcweb change to support the System purpose
-> (https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/27144), Andrew
-> had the comment about if we could have the software manager determine
-> the .BMC, .Host, .PSU details out of a System image and populate the
-> individual version interfaces, which further confirms that the current
-> Version D-Bus interface is insufficient to detail the individual
-> components of a "System" firmware image, and that workarounds like
-> adding individual Manifest files that Alexander proposed are needed.
->
-> Therefore, wanted to see what people thought about expanding the
-> software D-Bus interface to add a 2nd version id to the path of a System
-> version, which would contain the version information for each
-> sub-element, but would not contain an Activation object:
->
-> --
-> Current, leave as is for individual firmware images:
->
-> /xyz/openbmc_project/software/<bmc-version-id>/
->    - Activation: Ready
->    - Purpose: .BMC
->    - Version: 2.8.0
->
-> /xyz/openbmc_project/software/<host-version-id>/
->    - Activation: Ready
->    - Purpose: .Host
->    - Version: 1.2.3
->
-> --
-> New expanded option for bundled images:
->
-> /xyz/openbmc_project/software/<system-version-id>/
->    - Activation: Ready
->    - Purpose: .System
->    - Version: CompanyZ-v1.0
->    /xyz/openbmc_project/software/<sysrem-version-id>/<bmc-version-id>/
->      - Purpose: .BMC
->      - Version: 2.8.0
->    /xyz/openbmc_project/software/<sysrem-version-id>/<host-version-id>/
->      - Purpose: .Host
->      - Version: 1.2.3
+Checking the build files, the *.static.mtd.all.tar contains the 
+image-bmc, manifest and signature files so yeah we can just upload that 
+file without any build changes, we just need to add the support in the 
+bmc-code-mgmt repo.
 
-Makes sense to me. The phosphor-webui code could look for a system object
-and if found, only allow the user to update/switch images based on system
-level. They could still easily show the BMC, host, PSU levels though.
-Or maybe this will just be a config option for the GUI? Either way I
-think the GUI would want to show both the system and individual levels
-of firmware.
+>> 
+>> 
+>> Following are the modifications
+>> 
+>> 1. Add a name list for static layout only has image-bmc in the fw 
+>> package and modify related image file checking.
+>> 
+>> 2. Add checking ApplyTime property for static layout to decide whether 
+>> reboot to apply update process or not.
+>> 
+>> 
+>> 
+>> Please find the patch for these modifications in the attachment.
 
-Redfish code in bmcweb can continue to work as-is for bmc, host, psu
-firmware inventory. I think we should see if we can get the DMTF to
-add a FirmwareVersion property to the ComputerSystem object where
-we could store this new system version.
+Looks good, if you could just break the patch into two separate patches, 
+one for the supporting image-bmc and one for adding the ApplyTime 
+property, and submit via gerrit as Lei YU pointed. Let us know if you 
+have any questions with the process. Thanks!
+
+> 
+> It may be useful to support the whole image as well, so please submit
+> the code to gerrit, and we could review the code.
+> Please follow
+> https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-changes-via-gerrit-server-to-openbmc
+> for how to submit changes to gerrit.
+> Thanks!
