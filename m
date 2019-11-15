@@ -2,68 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 686C0FD30F
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 03:52:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A99FD82F
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 09:58:01 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47DjYz3tV2zF5yy
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 13:52:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Dsgn6NJ5zF61d
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 19:57:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::131;
- helo=mail-il1-x131.google.com; envelope-from=mine260309@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="r03HKPbm"; 
- dkim-atps=neutral
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com
- [IPv6:2607:f8b0:4864:20::131])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47DjYD1cKJzF4k8
- for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2019 13:51:41 +1100 (AEDT)
-Received: by mail-il1-x131.google.com with SMTP id z12so7826082ilp.2
- for <openbmc@lists.ozlabs.org>; Thu, 14 Nov 2019 18:51:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=D9UsAgRUOQkcLQXDPzCyaJtbk/9yI9j6xrghfVkV0Rc=;
- b=r03HKPbmiRCZ6qOCfRNSGmJJLcCwyc43dvt0pwl9SvCVf9d/n6vufbucXJArnnhQwA
- H8CrKBZFzVV6XGIlWSnODNb6P40WroVXJ5gE6rVmCElj/U/Uo2VhGlvdmUvvASOWOGDq
- kUwE/Hycx96xbaFDD/inGQ0jzdH4HBuORsV/+cSD81N6dO6AiaxV2Lx4/YVO6lzRQuNA
- SJlnCiiDFXZcLXhh+B9RAO+80l42Xgvpb/KCwhyPk7KnpoV4tgLhRo8KrIEj+KEfS8a1
- VsM8suuSr7oXNszEU37R+ya7kYDLQeSRUvK8SlyrerXbv115vko2HSJ1bkEX84L15nvb
- iCUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=D9UsAgRUOQkcLQXDPzCyaJtbk/9yI9j6xrghfVkV0Rc=;
- b=iFwW4DlZvIZDSY/3eo5SIusKDXbXZo+bIY/6+T44qlA228DFMWs0FBCmeFPnkyoKWk
- u+nt/che2ahOd5LTMbVSdsvKgh9RPFS03hC3D+Dr4QVy66jmbGAw8F+3Y5vvcTPcLyt6
- sOvH/IMtN0GUPKoKqxy05SXXDsQM+fdlBg8LCXXORB5KQTs92gdNPNdbX1LwBPV9mcvq
- iplQXcHGDBv7a3UZxRL3gkTPaiP+lKmLuQbnQiSjejgkL0ZaeYY2McBs9QEfxSiDt2jB
- zI8v7L0M+kbZqTXMWdAOxvs8LW4iKKf6QdDCNJ7o8J4vKHse42Bvk8j8nmiWKmWOgDCd
- AOWw==
-X-Gm-Message-State: APjAAAXztV1+JuY6KNtl0wemCESehFIby07g6ThIiE1SVOE0JH1EMfV/
- 02uv3IDQknEzW0VYQGnrZCiv+lFGD12ediSwbMc=
-X-Google-Smtp-Source: APXvYqx8ax70u40ND6AqE8WU+V93WhD+S0D1s+2rY4I3PJAFvXlMKr49gT8YHbFat3xmgN2A/vuLwdARf2twpuvshoo=
-X-Received: by 2002:a92:af19:: with SMTP id n25mr14471723ili.138.1573786298804; 
- Thu, 14 Nov 2019 18:51:38 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Dsg14YjpzF4xZ
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2019 19:57:15 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 15 Nov 2019 00:57:12 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.68,307,1569308400"; 
+ d="scan'208,217";a="379872233"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.239.196.102])
+ by orsmga005.jf.intel.com with ESMTP; 15 Nov 2019 00:57:11 -0800
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: <tomjose@linux.vnet.ibm.com>
+Subject: netipmid exception with bad_executor
+Date: Fri, 15 Nov 2019 16:57:10 +0800
+Message-ID: <000001d59b92$ab988e50$02c9aaf0$@linux.intel.com>
 MIME-Version: 1.0
-References: <HK0PR02MB33487C8E6D56DD2143034D0C9F700@HK0PR02MB3348.apcprd02.prod.outlook.com>
-In-Reply-To: <HK0PR02MB33487C8E6D56DD2143034D0C9F700@HK0PR02MB3348.apcprd02.prod.outlook.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Fri, 15 Nov 2019 10:51:29 +0800
-Message-ID: <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com>
-Subject: Re: phosphor-bmc-code-memt: Support redfish remote firmware update
- with static layout image
-To: "Bright Cheng/WYHQ/Wiwynn" <Bright_Cheng@wiwynn.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_000_0001_01D59BD5.B9BBCE50"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdWbkjZnjoNDXVGNT5S9lp8ZUOZ7Fw==
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZGVjYTlkMGEtOTNkMS00OTZmLTgzNGQtMTAwYWY1YjIyMDU2IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUEdoSUxsc3I1YlIzempLc3B6SkFPdnN1VUlCYTlzRjdoOHRpeHZyb0plc3pEOWxKZGpLd1J4RGczUUlXdittXC8ifQ==
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,56 +58,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Adriana Kobylak <anoo@us.ibm.com>, Neeraj Ladkani <neladk@microsoft.com>,
- Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
- Jayanth Othayoth <ojayanth@in.ibm.com>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Nov 15, 2019 at 10:24 AM Bright Cheng/WYHQ/Wiwynn
-<Bright_Cheng@wiwynn.com> wrote:
->
-> Hi Adriana,
->
->
->
-> We add some modifications for phosphor-bmc-code-mgmt can support remote B=
-MC update for static layout.
->
->
->
-> Do you agree these modifications?
->
->
->
-> phosphor-bmc-code-memt doesn=E2=80=99t support static-layout remote updat=
-e since static layout fw package could only has =E2=80=9Cimage-bmc=E2=80=9D=
- in the package.
+This is a multipart message in MIME format.
 
-For now, it does support static layout, you just need to upload the
-tarball contains separated images, instead of the whole "image-bmc"
-tarball.
+------=_NextPart_000_0001_01D59BD5.B9BBCE50
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
->
->
-> Following are the modifications
->
-> 1. Add a name list for static layout only has image-bmc in the fw package=
- and modify related image file checking.
->
-> 2. Add checking ApplyTime property for static layout to decide whether re=
-boot to apply update process or not.
->
->
->
-> Please find the patch for these modifications in the attachment.
+Hi Tom,
 
-It may be useful to support the whole image as well, so please submit
-the code to gerrit, and we could review the code.
-Please follow https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#s=
-ubmitting-changes-via-gerrit-server-to-openbmc
-for how to submit changes to gerrit.
-Thanks!
+ 
+
+When I executed several ipmi commands through network(At the same time, to
+test multi sessions),  sometimes I received the below error messages, and
+the netipmid service restarts:
+
+terminate called after throwing an instance of
+'boost::wrapexcept<boost::asio::bad_executor>'
+
+  what():  bad executor
+
+ 
+
+It seems that it is related to the async_wait in sd_event_loop.cpp, any
+suggestions/comments to narrow down this issue?
+
+ 
+
+Thanks, 
+
+Yong 
+
+
+------=_NextPart_000_0001_01D59BD5.B9BBCE50
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Hi Tom,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>When I =
+executed several ipmi commands through network(At the same time, to test =
+multi sessions),&nbsp; sometimes I received the below error messages, =
+and the netipmid service restarts:<o:p></o:p></p><p =
+class=3DMsoNormal>terminate called after throwing an instance of =
+'boost::wrapexcept&lt;boost::asio::bad_executor&gt;'<o:p></o:p></p><p =
+class=3DMsoNormal>&nbsp; what():&nbsp; bad executor<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>It seems =
+that it is related to the async_wait in sd_event_loop.cpp, any =
+suggestions/comments to narrow down this issue?<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Thanks, =
+<o:p></o:p></p><p class=3DMsoNormal>Yong =
+<o:p></o:p></p></div></body></html>
+------=_NextPart_000_0001_01D59BD5.B9BBCE50--
+
