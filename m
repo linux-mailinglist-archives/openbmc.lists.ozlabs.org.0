@@ -2,79 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 557C5FD0BC
-	for <lists+openbmc@lfdr.de>; Thu, 14 Nov 2019 23:09:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19BE4FD2BA
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 03:07:55 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47DbHM4BgjzF7md
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 09:09:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47DhZS3570zF8Dc
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 13:07:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::132;
+ helo=mail-il1-x132.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="mNCEH39N"; 
+ dkim-atps=neutral
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com
+ [IPv6:2607:f8b0:4864:20::132])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47DbGZ6NcMzF7hl;
- Fri, 15 Nov 2019 09:08:38 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id
- xAELxWl5030779; Thu, 14 Nov 2019 17:08:34 -0500
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w9fb009h8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 14 Nov 2019 17:08:34 -0500
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAEM0DnI006811;
- Thu, 14 Nov 2019 22:08:33 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma02wdc.us.ibm.com with ESMTP id 2w9f8q837a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 14 Nov 2019 22:08:33 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAEM8VlY13238610
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Nov 2019 22:08:31 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 98D45ACA29;
- Thu, 14 Nov 2019 22:08:31 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 47060ACA28;
- Thu, 14 Nov 2019 22:08:31 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu, 14 Nov 2019 22:08:31 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47DhYG49JjzF8B5
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2019 13:06:39 +1100 (AEDT)
+Received: by mail-il1-x132.google.com with SMTP id a7so7699251ild.6
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Nov 2019 18:06:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zeu+KIKhxYDDFaj3GDyiRjzOZ+0wlwVMJKPvbg6wHjE=;
+ b=mNCEH39NK6eUQxUVYJHBzvxGekSdOjJ/OHOJVEhMf+NPAwiutDR2ZH7TYpxTX6SZ+t
+ Bp4Ah/fI92ZzUL5eaOxDDZnXkdJBLAZlp9Sg9td68n8YoKk1P+DNpkAoWWywY2/T+89i
+ FVqqTKamgB2A6V7+v/CG6nwdG18rDgxIDZ3ZqrorHBbjoRnC1DH/AQadPOmzreftCg6h
+ GjP5VLeIgv/cldu/m7s2whbsHywx7/PCYVo+TJOmXbwX531Ekr2iW0ZxuEPidPcEM1Si
+ ZXKY7J9V17DIc6vREXdtZCcqHXMjSbuSJV4JLrV5Sc+yuCbFnA0bQhpcwLf2U4KAsFp5
+ 0YKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zeu+KIKhxYDDFaj3GDyiRjzOZ+0wlwVMJKPvbg6wHjE=;
+ b=YmU0NEuICYLBHdPVL5w+3OUXeCSPmRTL9Ocy25hVsdS6SQbdGIeNVrrLpuBNQICAb7
+ 2jJx95MoaszHiB0aK6YK9tsXgIiGlOLxGfYsI1A8IjuPy54Hsi0+usLFyl2UJDOzy+UX
+ d+cR9OHEfh/l0e6RlbZTRFeCTQEGwHco88BVEq/RQjUoX/2DWZKZzTx85cCRADbdy/jK
+ lRd6+NcaCOLLGA6HhHvbXKtVvehUjXwFxDgg9PAf7mYjtzMyXrencWSAhkZLGRGd7+X1
+ 0TYbXCmTk1S7rkteU+IcAnP0rW6f9TXftjRkoHaK0D3dqWdLn2F/S2Ee32CUMmEVRdFD
+ iIZA==
+X-Gm-Message-State: APjAAAXd/74jToRSsiFoT8KG7EtbRjndpOjgiHgAsGeT5dXte1jSiamu
+ qktph5tpxtGvwCnBf8lM8dLAvau0XZwiRemCttpJwbWh+ss=
+X-Google-Smtp-Source: APXvYqxyK7rdj8K0izzcnKDbvHc+CTWMmB2hVPHroXJDCbI6HaMe+SHXUYvVqXgpYAZMmzFFZxdIC5Ng1JkF9gqORbs=
+X-Received: by 2002:a5d:9c02:: with SMTP id 2mr815181ioe.52.1573783592101;
+ Thu, 14 Nov 2019 18:06:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Thu, 14 Nov 2019 16:10:11 -0600
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: "Alexander A. Filippov" <a.filippov@yadro.com>
-Subject: Re: Packaging and deploying multiple firmware image types in one
-In-Reply-To: <20191114075131.GA6696@bbwork.lan>
-References: <d9a820f4778cc2964d6f0a9b8a78d722@linux.vnet.ibm.com>
- <20191112074921.GA4938@bbwork.lan>
- <9ddc3deca00904404c72a49c4f89c8a4@linux.vnet.ibm.com>
- <20191114075131.GA6696@bbwork.lan>
-Message-ID: <8755e79fb8f5b06113a953039daa2348@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:, ,
- definitions=2019-11-14_05:, , signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=825
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1911140000 definitions=main-1911140178
+References: <90BAE90B-F2BF-46A0-BCC0-88223079D196@fuzziesquirrel.com>
+In-Reply-To: <90BAE90B-F2BF-46A0-BCC0-88223079D196@fuzziesquirrel.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 15 Nov 2019 10:06:23 +0800
+Message-ID: <CAARXrtm_JjCZqRBsnFU+LuH-Xn=4Uj9Eikp7+XKcuvZ8NWGKsQ@mail.gmail.com>
+Subject: Re: meta-ibm restructuring
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,46 +72,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2019-11-14 01:51, Alexander A. Filippov wrote:
-> On Tue, Nov 12, 2019 at 04:54:22PM -0600, Adriana Kobylak wrote:
->> 
->> Yeah, the purpose is not currently preserved across reboots. I have a 
->> change
->> here for that:
->> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-bmc-code-mgmt/+/27045
->> 
-> 
-> On Thu, Nov 14, 2019 at 03:14:41AM +0000, Adriana Kobylak (Code Review) 
-> wrote:
->> ...
->> but let's continue on the mailing list about your thoughts on how you 
->> think
->> the tarball of tarballs should be handled.
->> 
-> 
-> Ok, here are my thoughts:
-> The phosphor-version-software-manager might put all internal tarballs 
-> in the
-> /tmp/images folder during processing the top level tarball. That will 
-> lead to
-> creation of corresponding D-Bus objects. Each of them will have their 
-> own
-> purpose, version, object path and so on.
+On Fri, Nov 15, 2019 at 1:51 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>
+> the meta-witherspoon layer in meta-ibm supports a number of machine targets beyond witherspoon.  the meta-ibm layer itself is nearly empty.
 
-Yeah agree. We may still need some way to let the 
-phosphor-version-software-manager
-know that it needs to untar the internal tarballs, maybe a very simple 
-MANIFEST
-with a new field, then each individual tarball would have their own 
-MANIFEST that
-creates the D-Bus versions like you mentioned.
+Before the change, meta-ibm layer has below:
 
-> 
-> The root D-Bus object and their folder might be removed after that  to 
-> reduce a
-> used file system space.
+  bmcweb
+  dbus
+  dump
+  interfaces
+  logging
+  packagegroups
+
+I do not think it's confusing because it defines the necessary recipes
+for ibm machines.
+
+> This is confusing to say the least, so I am doing some restructuring in the meta-ibm layer such that everything will simply be in meta-ibm:
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/meta-ibm/+/27263
+>
+> Please let me know if you have any concerns.
+
+The commit moves everything from meta-witherspoon to meta-ibm, which
+makes a machine that inherits meta-ibm inherits everything from
+meta-witherspoon.
+Is that intended?
+Ideally, the recipes (bbappends) in meta-witherspoon has
+append_MACHINE so it will not impact other machines. But can we make
+sure every single recipe has correct append_MACHINE?
