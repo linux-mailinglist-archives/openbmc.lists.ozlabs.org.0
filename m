@@ -1,88 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B4E7FE223
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 16:59:26 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47F3230R1czF7XT
-	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 02:59:23 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08F72FE67D
+	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 21:41:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47F9HZ0TlPzF3Wd
+	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 07:41:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::230;
+ helo=mail-oi1-x230.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="OoinSEuj"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
+ [IPv6:2607:f8b0:4864:20::230])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47F31F1vpNzF7V3;
- Sat, 16 Nov 2019 02:58:40 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xAFFvjZA047855; Fri, 15 Nov 2019 10:58:37 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w9nsjwevr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2019 10:58:37 -0500
-Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xAFFwaLL050913;
- Fri, 15 Nov 2019 10:58:36 -0500
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w9nsjweuv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2019 10:58:36 -0500
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAFFfBve005681;
- Fri, 15 Nov 2019 15:58:35 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma04wdc.us.ibm.com with ESMTP id 2w9gy3wv36-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2019 15:58:35 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAFFwYqu46727586
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Nov 2019 15:58:34 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 15C47AC05E;
- Fri, 15 Nov 2019 15:58:34 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 06A50AC05B;
- Fri, 15 Nov 2019 15:58:33 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 15 Nov 2019 15:58:32 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47F9Gj66lYzF7bp
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 07:40:43 +1100 (AEDT)
+Received: by mail-oi1-x230.google.com with SMTP id d22so2829868oic.7
+ for <openbmc@lists.ozlabs.org>; Fri, 15 Nov 2019 12:40:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=0Gbtw/ZBsy8+VXzmQ7ibMikB+6hCmAj7mkYpwlIutY8=;
+ b=OoinSEujrjo0HJa2nqK23f8z9QzExd7z0hnQ959OaiyTeaCf7lTZiXKLEGMwVOdnQy
+ 0l6lyWQQI68FmQoQqTgpgEH+hTcqGSZhferacNYafFZhecX4w92dqeNwY1PDTmJGiLyl
+ oW1ZSIm8h9mMOlQi1LYJcxFv8NYIBvtMVlqcS30co7JlHaMwmBhcKYVFJLq1s7Uti3VU
+ Jq8w+kivBsge/fGXt+MkKQ/fzkSeozgisfETvbnyk30ac51yZ0yc4qvTJVMdEBjjyHfC
+ hXSmxCzGW2Xnd7FUV4vw4Bhdrs/IGP/cuaRNWPfWlaxD1sYB/rO4255hwL6gPLZ7X/Vr
+ uMsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=0Gbtw/ZBsy8+VXzmQ7ibMikB+6hCmAj7mkYpwlIutY8=;
+ b=Piy6cs1Fuk6tgSGKNhmy1xyPFD+WQSYcDfZZxoGazyysezGrTywH5lQMxfKJHUcOiO
+ lyYG7t3MD39U5bM3LCb9yLK5OsagMmlBqxUAhWCPFXzEBTCWyfTZR2hPReAd5aszW2Sc
+ eEnb59uFVNP2E4cAaQWlmZJ0iqcQaW+WuugfoeFocj9TcUocbK6o2rHaNdZoGsPwHIUN
+ EXASGb6x4feBbFFLsGjndXh54IwwTeB+EpTxT8kKx6q+GQ77LB14F9o760j6kZGo8z5/
+ P1Y8C5LGsh6c0QM5GiysXo3OgHWh6lEafdvPVJbZkSG9UZuf3pkqff0K2RJE3kgHA2cV
+ WTqQ==
+X-Gm-Message-State: APjAAAWW2jxlvXSxKTCGGV8Clcn2E5o3m1ZREZChwd+PkwA50M8F22PE
+ UIJrV25ZD5DXQ/l45cN0hvRoxeuOI4W6EWfjTGE=
+X-Google-Smtp-Source: APXvYqxTV85LZKkVv01YCBIcgoYNRWZq06iOwEgdAX1Mdg20RMzmsNO70whOkkVb9w9izHFN/OxqfeWlwhni6e6La6M=
+X-Received: by 2002:aca:c7c1:: with SMTP id x184mr9701332oif.158.1573850440046; 
+ Fri, 15 Nov 2019 12:40:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Fri, 15 Nov 2019 10:00:14 -0600
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: Lei YU <mine260309@gmail.com>, Bright Cheng/WYHQ/Wiwynn
- <Bright_Cheng@wiwynn.com>
-Subject: Re: phosphor-bmc-code-memt: Support redfish remote firmware update
- with static layout image
-In-Reply-To: <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com>
-References: <HK0PR02MB33487C8E6D56DD2143034D0C9F700@HK0PR02MB3348.apcprd02.prod.outlook.com>
- <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com>
-Message-ID: <0f356ff58ad9ec48b19e86f9da5eb7cc@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-15_04:2019-11-15,2019-11-15 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 mlxscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1011 adultscore=0 impostorscore=0
- mlxlogscore=999 phishscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1911150143
+From: Andrew Geissler <geissonator@gmail.com>
+Date: Fri, 15 Nov 2019 14:40:24 -0600
+Message-ID: <CALLMt=qGFEdZ3xFntm7cOrLXxcUJE2T3XkrOT12L6wiCjcoe3Q@mail.gmail.com>
+Subject: phosphor-state-manager enhancements
+To: apparao.puli@linux.intel.com, jason.m.bills@linux.intel.com, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,53 +70,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Adriana Kobylak <anoo@us.ibm.com>,
- Neeraj Ladkani <neladk@microsoft.com>,
- Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
- Jayanth Othayoth <ojayanth@in.ibm.com>,
- openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
->> phosphor-bmc-code-memt doesn’t support static-layout remote update 
->> since static layout fw package could only has “image-bmc” in the 
->> package.
-> 
-> For now, it does support static layout, you just need to upload the
-> tarball contains separated images, instead of the whole "image-bmc"
-> tarball.
-> 
+Since the creation of phosphor-state-manager and its representation of the
+different bmc/chassis/host states, there has been a steady influx of requests
+to provide more state and actions to these objects.
 
-Checking the build files, the *.static.mtd.all.tar contains the 
-image-bmc, manifest and signature files so yeah we can just upload that 
-file without any build changes, we just need to add the support in the 
-bmc-code-mgmt repo.
+I'm starting to look into how best do this. There have been a few different
+code and doc commits in this area, but they all seem to get stuck because
+they break with the original design points of phosphor-state-manager. I'd
+like to fix that. See [1] below for different requests I know of.
 
->> 
->> 
->> Following are the modifications
->> 
->> 1. Add a name list for static layout only has image-bmc in the fw 
->> package and modify related image file checking.
->> 
->> 2. Add checking ApplyTime property for static layout to decide whether 
->> reboot to apply update process or not.
->> 
->> 
->> 
->> Please find the patch for these modifications in the attachment.
+My concern is that if we don't address these additional state needs within
+phosphor-state-manager, we'll just do it elsewhere, which causes redundancy
+and makes it more challenging to share code.
 
-Looks good, if you could just break the patch into two separate patches, 
-one for the supporting image-bmc and one for adding the ApplyTime 
-property, and submit via gerrit as Lei YU pointed. Let us know if you 
-have any questions with the process. Thanks!
+The original design of phosphor-state-manager was to keep it super simple
+and basically make it a wrapper around systemd targets. There was a large
+focus on keeping the different objects (BMC, Chassis, Host) separate to ensure
+some day when multiple BMC's, Chassis's, or Hosts are added to a system, it
+all would just work.
 
-> 
-> It may be useful to support the whole image as well, so please submit
-> the code to gerrit, and we could review the code.
-> Please follow
-> https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#submitting-changes-via-gerrit-server-to-openbmc
-> for how to submit changes to gerrit.
-> Thanks!
+There are definitely some merits to this design:
+- It ensures anyone can insert their services into the appropriate systemd
+  targets without any phosphor-state-manager code changes required
+- A direct mapping of phosphor-state-manager state to systemd target keeps the
+  code very simple
+
+Some drawbacks to this design though:
+- Our systemd target design is complicated [2]. There are lots of targets that
+  need to be understood to get services in the right spots.
+- It provides very limited state information. BMC is ready or not ready, chassis
+  is on or off, host is running or off.
+- It provides limited control. Reboot the BMC, turn chassis on or off, start,
+  stop, or reboot the host.
+
+The design was that external entities could do the more advanced logic. Want
+your system to hard power off, use the chassis object. Want to power cycle
+your chassis, turn it off, wait, then turn it on. Want to know if it's
+powering on, look at the requested state and current state and do the logic
+yourself.
+
+So what am I thinking? I'm thinking that we should at least represent a subset
+of Redfish states. Here's the full list:
+
+"Absent": "This function or Resource is either not present or detected.",
+"Deferring": "The element does not process any commands but queues new
+ requests.",
+"Disabled": "This function or Resource is disabled.",
+"Enabled": "This function or Resource is enabled.",
+"InTest": "This function or Resource is undergoing testing.",
+"Quiesced": "The element is enabled but only processes a restricted set of
+ commands.",
+"StandbyOffline": "This function or Resource is enabled but awaits an external
+ action to activate it.",
+"StandbySpare": "This function or Resource is part of a redundancy set and
+ awaits a failover or other external action to activate it.",
+"Starting": "This function or Resource is starting.",
+"UnavailableOffline": "This function or Resource is present but cannot be
+ used.",
+"Updating": "The element is updating and may be unavailable or degraded."
+
+Starting -> Could apply to Chassis and Host when they are powering on / starting
+InTest -> Could apply to when a host is taking an NMI and collecting debug
+Updating -> Could apply to BMC and Host when a firmware update is in progress
+
+There is actually a PowerState associated with the ComputerSystem we could
+enhance the chassis with as well (PoweringOn, PoweringOff)
+
+And also, some Redfish ComputerSystem.Reset operations we don't currently
+support:
+- ForceOff, ForceRestart, PowerCycle
+Note we do "support" these but only via multiple operations.
+
+Should we try to capture more of the host states? Right now we capture those
+in the BootProgress and OperatingSystemState sensors.
+
+So anyways, before I went to far I figured I'd get a note out to see if others
+have thoughts. How ingrained are the current states? Will adding new one's
+have a large impact on other software?
+
+Thanks,
+Andrew
+
+[1]
+# add firmware update state to BMC
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/26867
+
+# Add PowerCycle and Reset to Chassis
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/22270
+
+# Additional host states (Started)
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/22461
+
+[2]
+https://github.com/openbmc/phosphor-state-manager/blob/master/README.md
+https://github.com/openbmc/docs/blob/master/architecture/openbmc-systemd.md
