@@ -1,84 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00884FE83E
-	for <lists+openbmc@lfdr.de>; Fri, 15 Nov 2019 23:46:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47FD3b2KRMzF1Hv
-	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 09:46:19 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BCD1FF5D7
+	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 22:51:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Fpns373BzF3tF
+	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2019 08:51:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47FD2g176kzF5k8
- for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 09:45:30 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xAFMb09a082360; Fri, 15 Nov 2019 17:45:26 -0500
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2w9nse1wqe-1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Fpn3009DzF4JP
+ for <openbmc@lists.ozlabs.org>; Sun, 17 Nov 2019 08:50:45 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xAGLl4Z1042018
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:42 -0500
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wac4s9xtg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:41 -0500
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xAGLofhb048631
+ for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:41 -0500
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wac4s9xta-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2019 17:45:26 -0500
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAFMefrQ007321;
- Fri, 15 Nov 2019 22:45:25 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma01dal.us.ibm.com with ESMTP id 2w9gy4338w-1
+ Sat, 16 Nov 2019 16:50:41 -0500
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAGLjO1F012361;
+ Sat, 16 Nov 2019 21:50:41 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma03wdc.us.ibm.com with ESMTP id 2wa8r5nt19-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Nov 2019 22:45:25 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAFMjOtl49938740
+ Sat, 16 Nov 2019 21:50:41 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xAGLoeXU48038154
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Nov 2019 22:45:24 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 42DF3AE071;
- Fri, 15 Nov 2019 22:45:24 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0A13BAE05C;
- Fri, 15 Nov 2019 22:45:24 +0000 (GMT)
-Received: from demeter.local (unknown [9.85.156.21])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
- Fri, 15 Nov 2019 22:45:23 +0000 (GMT)
-Subject: Re: OpenBMC and https Vulnerable issue.
-To: James Feist <james.feist@linux.intel.com>,
- Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <44ddb5d76e734cb8bcc7354e1c0e0081@SCL-EXCHMB-13.phoenix.com>
- <cd9008e5-2501-29d4-57e8-7831eb558160@linux.intel.com>
- <8e3e3633bd1946adbac73657816e049a@SCL-EXCHMB-13.phoenix.com>
- <c4cb53595ede41398aa7ca7086da55ec@SCL-EXCHMB-13.phoenix.com>
- <50bba79d-db07-5ced-23e0-dfe3552b9687@linux.intel.com>
+ Sat, 16 Nov 2019 21:50:40 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 382187805E;
+ Sat, 16 Nov 2019 21:50:40 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D6B9C7805C;
+ Sat, 16 Nov 2019 21:50:39 +0000 (GMT)
+Received: from demeter.local (unknown [9.80.205.29])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Sat, 16 Nov 2019 21:50:39 +0000 (GMT)
+Subject: Re: how to solve the error that basehash value changed from 'xxx' to
+ 'aaaa' ?
+To: www <ouyangxuan10@163.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
 From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <2814674f-6cf8-5687-64ff-7b88a39d7d60@linux.ibm.com>
-Date: Fri, 15 Nov 2019 16:45:23 -0600
+Message-ID: <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
+Date: Sat, 16 Nov 2019 15:50:38 -0600
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
  Gecko/20100101 Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <50bba79d-db07-5ced-23e0-dfe3552b9687@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-15_07:2019-11-15,2019-11-15 signatures=0
+ definitions=2019-11-16_07:2019-11-15,2019-11-16 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- phishscore=0 suspectscore=0 priorityscore=1501 clxscore=1011 spamscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 mlxlogscore=999
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1911150199
+ priorityscore=1501
+ impostorscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
+ malwarescore=0 clxscore=1015 spamscore=0 adultscore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1911160203
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,106 +98,73 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/6/19 4:43 PM, James Feist wrote:
-> On 11/6/19 2:38 PM, Bruce Mitchell wrote:
->>
->>
->>> -----Original Message-----
->>> From: openbmc [mailto:openbmc-
->>> bounces+bruce_mitchell=phoenix.com@lists.ozlabs.org] On Behalf Of Bruce
->>> Mitchell
->>> Sent: Wednesday, November 6, 2019 14:19
->>> To: James Feist; OpenBMC Maillist
->>> Subject: RE: OpenBMC and https Vulnerable issue.
->>>
->>>
->>>
->>>> -----Original Message-----
->>>> From: openbmc [mailto:openbmc-
->>>> bounces+bruce_mitchell=phoenix.com@lists.ozlabs.org] On Behalf Of
->>>> James Feist
->>>> Sent: Wednesday, November 6, 2019 13:52
->>>> To: Bruce Mitchell; OpenBMC Maillist
->>>> Subject: Re: OpenBMC and https Vulnerable issue.
->>>>
->>>> On 11/6/19 11:31 AM, Bruce Mitchell wrote:
->>>>>   From my investigations on TLS there seems to be 2 issues that 
->>>>> could be
->>>> corrected with OpenBMC's https:
->>>>>     1  Secure Client-Initiated Renegotiation     VULNERABLE (NOT 
->>>>> ok), DoS
->>>> threat
->>>>
->>>> This CVE is disputed https://www.cvedetails.com/cve/CVE-2011-1473/ due
->>>> to CPU consumption issues that might make it easier to cause a DOS
->>>> (which is arguably already not that difficult on a BMC). That being 
->>>> said
->>>> the fix is a 1 liner, so I implemented it and it seems to work, but I
->>>> need to see if there are any consequences.
->>>>
->>>> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/26992
+Byron,
 
-Thanks for looking at this.  Sorry about my delayed response.  The fix 
-looks good to me, and it has merged already anyway.
-I don't see any negative consequences.
+What modification did you put into the os-release recipe?  It would help 
+us help you if you put that in your email.
 
-FWIW, to address the ongoing issue of what ciphers to support, an 
-OpenBMC network security considerations document was created to discuss 
-relevant standards and the OpenBMC implementation.  Feel free to improve 
-it with additional information.  It is here:
-https://github.com/openbmc/docs/blob/master/security/network-security-considerations.md
+
+Are you adding the build date to the generated os-release file?  If so, 
+be aware that might cause the issues with the shared state cache you are 
+experiencing.  Also be aware this practice wrecks reproducible builds.
+
+A better way to get the same effect might be to create a git tag with 
+the information you want to appear in the generated os-release file.  
+When you buld with this tag is then picked up by the OpenBMC 
+meta-phosphor os-release.bbappend (via `git describe`) and included in 
+the genersted os-release file as the BUILD_ID.  See:
+https://github.com/ibm-openbmc/openbmc/blob/d1c59b7a36c10c18838c07af10b18080174cd61d/meta-phosphor/recipes-core/os-release/os-release.bbappend
+(But I have not tried that.)
+
+A way to work around the hash change is to add a line to your recipe 
+like: PR[vardepsxeclude]="DATETIME"
+As suggested by: 
+https://forums.openpli.org/topic/41447-how-to-get-rid-of-taskhash-mismatch/
+
+
+My apologies for top posting -- my email reader was not quoting the 
+message properly, so I cut/pasted it below.
 
 - Joseph
 
->>>>
->>>>
->>>>
->>>>>     2  LUCKY13 (CVE-2013-0169), experimental     potentially 
->>>>> VULNERABLE,
->>>> uses cipher block chaining (CBC) ciphers with TLS
->>>>>        and xc023 ECDHE-ECDSA-AES128-SHA256         ECDH 521   AES 128
->>>> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
->>>>
->>>> Based on this https://wiki.crashtest-security.com/prevent-ssl-lucky13,
->>>> we are using the recommended ciphers,
->>>>
->>> https://github.com/openbmc/bmcweb/blob/1f8c7b5d6a679a38b8226106031
->>>> 0b876079d0f8b/include/ssl_key_handler.hpp#L330.
->>>> And based on this comment from the maintainer of test ssl, no tool can
->>>> determine this externally, and it's just a warning:
->>>> https://github.com/drwetter/testssl.sh/issues/1011#issuecomment-
->>>> 372953654.
->>>> Do you have any suggestions on if there is anything to change for 
->>>> this one?
->>>>
->>>> Thanks
->>>>
->>>> -James
->>>>
->>>
->>> Thanks James, I accept your assessment.
->>>
->>> -Bruce
->>>
->>
->> There are Mozilla Recommended configurations as well.
->> https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations 
->>
->>
->
-> I believe that's what was originally copied based on the variable name 
-> in ssl_key_handler.hpp.
->
->> - Bruce
->>
->>>>
->>>>>
->>>>> Present standard of practice seems to be to not allow Secure Client-
->>>> Initiated Renegotiation and to not allow CBC ciphers.
->>>>>
->>>>> Is this your understanding as well?
->>>>>
->>>>> Thank you!
->>>>>
->>
+
+On 11/13/19 1:38 AM, www wrote:
+
+When I modify the os-release file in my yocto project, it appear some 
+error, and how can I solve it ? Who can give me some help or advice? 
+Thank you！
+I execute the recommended command on the console and it didn't work.
+
+ERROR: os-release-1.0-r0 do_compile: Taskhash mismatch 
+ce133f0458608e03aa55224df28156e523e54903115efbbcd62946f84a867201 versus 
+7269881f0eb1759ed420a2db4c04fb477cd8c1288bc5f82df5c8161bb926ea1f 
+for  /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile
+ERROR: Taskhash mismatch 
+ce133f0458608e03aa55224df28156e523e54903115efbbcd62946f84a867201 versus 
+7269881f0eb1759ed420a2db4c04fb477cd8c1288bc5f82df5c8161bb926ea1f 
+for /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile
+ERROR: When reparsing 
+/home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile, the 
+basehash value changed from 
+99a42a1a3b1a151de604267b159558ecaf1031a3bec8917df132c81302e729a5 to 
+4f3288a8763e2e1af78e4b3cdd9c0c0ccb3b0d5c78a3073c188b22200df2a9b0. The 
+metadata is not deterministic and this needs to be fixed.
+ERROR: The following commands may help:
+ERROR: $ bitbake os-release -cdo_compile -Snone
+ERROR: Then:
+ERROR: $ bitbake os-release -cdo_compile -Sprintdiff
+
+ERROR: When 
+reparsing /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile, the 
+basehash value changed from 
+99a42a1a3b1a151de604267b159558ecaf1031a3bec8917df132c81302e729a5 to 
+47c30012daa6aa77be09a93fe21e66995361ef26b4487111005617db8cb4de59. The 
+metadata is not deterministic and this needs to be fixed.
+ERROR: The following commands may help:
+ERROR: $ bitbake os-release -cdo_compile -Snone
+ERROR: Then:
+ERROR: $ bitbake os-release -cdo_compile -Sprintdiff
+
+thanks,
+Byron
 
