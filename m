@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10F661002EB
-	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 11:50:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62E741002E1
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 11:48:18 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Gm2F2q57zDqMw
-	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 21:50:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Glzg5KzwzDqW1
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 21:48:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -15,43 +15,44 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="DgErWwwn"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="C3DkYe4M"; 
  dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47GlyM5kvkzDqM2;
- Mon, 18 Nov 2019 21:47:07 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47GlyM2SqhzDqLZ;
+ Mon, 18 Nov 2019 21:47:06 +1100 (AEDT)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id A56C2437FA;
+ by mta-01.yadro.com (Postfix) with ESMTP id A539C437F8;
  Mon, 18 Nov 2019 10:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
  content-type:content-type:content-transfer-encoding:mime-version
  :references:in-reply-to:x-mailer:message-id:date:date:subject
  :subject:from:from:received:received:received; s=mta-01; t=
- 1574074022; x=1575888423; bh=GLiHq3+6zZ2/iuahpZbFing2AcId/JGBvnZ
- w1df2dRQ=; b=DgErWwwnPvKdMchv4w9kZGj1VUAKnbZRCHtwDcXmMDAIJoz10wd
- 5f0l2IJMCnQiGuPXdULAE4YuI7VTmbrphYfr/B0XNjyzwYmJGI7HBXPBGBezlak6
- SYRLPcZSc5FAvr3TM5pU85babdhxvrMO2w1+ZpRtcqrzeY1PavpQrw08=
+ 1574074022; x=1575888423; bh=fs0BzR7nUsaAsL0RV7OZLmMpxdUbWq7Et+T
+ dmbyPNpw=; b=C3DkYe4MqrTmwIQsYCycjcTa/BTWvQ40nMD/GjuBEUocSYQ3+Gi
+ MyKT+O0g2bTXxbqp20sM3EBefnnuuZW+lKAyIUwKLtqCmWM0pixUd9Pw/w+lKNsN
+ MB/AkF7/OHDI8Rc6Cfu9cU0DdMMeI3ffD/clIV9+IVBq7paSb6M9Oonw=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id h_tS_nHrGAbK; Mon, 18 Nov 2019 13:47:02 +0300 (MSK)
+ with ESMTP id fTqduwyMajJI; Mon, 18 Nov 2019 13:47:02 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
  [172.17.10.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 5AE2E42F13;
- Mon, 18 Nov 2019 13:47:01 +0300 (MSK)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 827E842009;
+ Mon, 18 Nov 2019 13:47:02 +0300 (MSK)
 Received: from localhost.dev.yadro.com (172.17.15.69) by
  T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Mon, 18 Nov 2019 13:46:59 +0300
+ 15.1.669.32; Mon, 18 Nov 2019 13:47:00 +0300
 From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 To: 
-Subject: [PATCH v3 1/3] aspeed: dts: add sd card for vesnin
-Date: Mon, 18 Nov 2019 13:46:44 +0300
-Message-ID: <20191118104646.3838-2-i.mikhaylov@yadro.com>
+Subject: [PATCH v3 2/3] mmc: sdhci-of-aspeed: enable
+ CONFIG_MMC_SDHCI_IO_ACCESSORS
+Date: Mon, 18 Nov 2019 13:46:45 +0300
+Message-ID: <20191118104646.3838-3-i.mikhaylov@yadro.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20191118104646.3838-1-i.mikhaylov@yadro.com>
 References: <20191118104646.3838-1-i.mikhaylov@yadro.com>
@@ -81,33 +82,23 @@ Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Presence signal is inverted for vesnin boards, 'cd-inverted' added
-for invertion signal enablement. Vesnin BMC uses microSD, there is
-no WP switch, 'disable-wp' is used for this purpose.
+Enable CONFIG_MMC_SDHCI_IO_ACCESSORS on the aspeed board. The read_l
+callback is used for inverted card detection.
 
 Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts b/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
-index a27c88d23056..7ae3436e0d99 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-vesnin.dts
-@@ -232,3 +232,16 @@
- &wdt2 {
- 	aspeed,alt-boot;
- };
-+
-+&sdmmc {
-+	status = "okay";
-+};
-+
-+&sdhci1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_sd2_default>;
-+	cd-inverted;
-+	disable-wp;
-+};
+diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+index 49ea02c467bf..c9c1bb722368 100644
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -159,6 +159,7 @@ config MMC_SDHCI_OF_ASPEED
+ 	tristate "SDHCI OF support for the ASPEED SDHCI controller"
+ 	depends on MMC_SDHCI_PLTFM
+ 	depends on OF && OF_ADDRESS
++	select MMC_SDHCI_IO_ACCESSORS
+ 	help
+ 	  This selects the ASPEED Secure Digital Host Controller Interface.
+ 
 -- 
 2.20.1
 
