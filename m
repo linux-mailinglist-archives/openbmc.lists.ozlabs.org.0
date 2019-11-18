@@ -1,78 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0678100AD9
-	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 18:52:09 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47GxNl3D83zDqYV
-	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2019 04:52:07 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1678E100F64
+	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2019 00:22:42 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47H4k70W5xzDqbD
+	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2019 10:22:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32f;
- helo=mail-ot1-x32f.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::133;
+ helo=mail-lf1-x133.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="J0JIzLbK"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="EZn266LC"; 
  dkim-atps=neutral
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [IPv6:2607:f8b0:4864:20::32f])
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
+ [IPv6:2a00:1450:4864:20::133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47GxMg3fTNzDqV8
- for <openbmc@lists.ozlabs.org>; Tue, 19 Nov 2019 04:51:11 +1100 (AEDT)
-Received: by mail-ot1-x32f.google.com with SMTP id m15so15287461otq.7
- for <openbmc@lists.ozlabs.org>; Mon, 18 Nov 2019 09:51:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=e+YpOPzto3TKgNPvmFKa7cJPQRgxUe4/Tu+lOyXlO8Y=;
- b=J0JIzLbK1BqEKCtbrl1MxIlCLcMgDYJpUm0w4m5vqfq6NYFxe4qMhNwZYyU6cOvXfG
- ZPhWU0uIZGbEGh9/KyL99DpabVi3Is041YwMNmpBWzpAfcd1q3FFizOnHlOutuL3Bw0Z
- TsbJzno4Zh3TINFLGeLxLubgLApUKOC5w8XG+oAxD+Aw0DiHV0HI2dCvbX+PxZ8gX8Aj
- qKQmA6WI6b/1O+07NhQjNGkuIa9VgP5VXvhZ3nTAuSfZQFWuPIE/H17SSYL8dIEcqS7L
- 3hg5w6/12SHoGu/n+VVTPPvngaceYEweFdKbzk1/3eR1Z3iJOpPWMUri2O0I0CCzdIIG
- UoOg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47H4jM3yDSzDqZ2
+ for <openbmc@lists.ozlabs.org>; Tue, 19 Nov 2019 10:21:56 +1100 (AEDT)
+Received: by mail-lf1-x133.google.com with SMTP id f18so2963602lfj.6
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Nov 2019 15:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=2p5lideLSaaH0duIipCJvJUFhjwCwp/2WfHsn7G6Sgs=;
+ b=EZn266LCxsgRn8ZAoESfXC7hsftsLY2jNe94UZ4iHptk7aZ5eU4sFqmCm7SIB7e3KL
+ KwcAeapFyL/wQGSpGQ3jvHLvTvR3th7E3IMXKu1aHmC07k663vOLd5TlcSJ+dowDQhQM
+ ihXKA1D6Vhz5ZDWErSSC23xKApQJ9b7zJviqCFmW38mRi1KrjT+g70u4XrtFaC+/w9iT
+ SjKlg2LeO8M5bCCfSh8kZPaLwYyq5LnxhhTrNYYqvTesvcyHvMuRu7RvZ94CeTW30027
+ 92jt7b//Et9oHx1UqpyUrhWVvqKSqbNN/lQazFabMnmkFBxI+aQP/uPzAz5EyA4VRkCO
+ CIog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=e+YpOPzto3TKgNPvmFKa7cJPQRgxUe4/Tu+lOyXlO8Y=;
- b=t2ai/dodUTh64DD40h8StFvj+KYtry9D0mZvgeCQ1aYwdFdHNPN/3crfEoQ5Ztu7pv
- 5tirWLvggJmikJtS1GgaD6uT+lYr7h6435hdRsIs0WG1caU3CkMhFOiaK/kJZ+FM8RFH
- B3mS57EvFyzQATaTWKc1xeULtjd0lH5+RFDNhlHiPfeCuUOd3ODhsdddgy8VR7kmUuEI
- TMYmHd8MyJub0h6QPXcE1+EZjn/cUcORWiea8rSSyNn60TczcMO9tx6vMdAJT1qGGg8L
- VQsos3+ncMawC4/o3GB+L4FJ2ptTNrJaH8Z7CwMO1pmM/mqneelxT5/RNlaMeO8uGadZ
- td9A==
-X-Gm-Message-State: APjAAAU6+UizUyELNyQ4fNw46o99anYouOXIj+SSyjIF+LvTNHzi1cgn
- 75sVSOPOMwMiuh0WGPsAnpjvDFmz
-X-Google-Smtp-Source: APXvYqzWMhzy6WE5HR3ks9wTAtZIYhdO7FZbJaLP93cKZZ1TeRWgCpEKd+T4TW6TSM5F+jc0cWEisw==
-X-Received: by 2002:a9d:b83:: with SMTP id 3mr385810oth.56.1574099467781;
- Mon, 18 Nov 2019 09:51:07 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id i12sm6445004ota.10.2019.11.18.09.51.07
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 18 Nov 2019 09:51:07 -0800 (PST)
-Subject: Re: Inspur CCLA Schedule A update 2019-11-18
-To: John Wang <wangzqbj@inspur.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CAHkHK082i57zrv41kkxnXpLw_bWNqtc1Y4OCu6r30=MSifUpEw@mail.gmail.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <b188cc9d-f961-5292-6545-5c543bc4b10c@gmail.com>
-Date: Mon, 18 Nov 2019 11:51:06 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=2p5lideLSaaH0duIipCJvJUFhjwCwp/2WfHsn7G6Sgs=;
+ b=QoKfzu0pdz9kAcJSCKmG2GH+GWwA0Os+tgvkbsNvu7O0IIqsy7BGgTQBgy7sPI+2gF
+ NsmQAB6kp+BJ/cX/g2IBKExlR6JeijPid0tcgy0Rvzzc2sTKbRONMwZxXksmAgge6dAX
+ uAF5fpksil34JIdhKBCY4diUnfYzaBp5xS+hVucG3xrmtAoq+WkIUabdGMGs8LZ5rdWx
+ uF6H49RN8LihLUzBRjNT7ufoHLymP/4Pxnn1zi3iI0w6BR18+2pUvnA7gBcukAHMgxX8
+ Whfs/EFkt4msGHq9/luySUDYuSWPXQowSXFUeje7nviqiWK6v6tXok1fPV+PWKhtKzpN
+ bRXg==
+X-Gm-Message-State: APjAAAW2jQ/Xh1E7+yB29cvRy5Sm+P7CqiitsLeiFUf3sL2KpN+v6yt/
+ i0lsYp49FlqooNjuqfk1kw8bMUnuXHkjo2jQIkWFw2iv
+X-Google-Smtp-Source: APXvYqy9IcPNAo4oJi2E4DAILLU+PuQK5Ch8s+RLajXtT2IBGrTKz7p0+kIz7PIFLRFGQFOKFCuY6MXAGboOTcXAYrQ=
+X-Received: by 2002:ac2:5395:: with SMTP id g21mr1336210lfh.50.1574119311250; 
+ Mon, 18 Nov 2019 15:21:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAHkHK082i57zrv41kkxnXpLw_bWNqtc1Y4OCu6r30=MSifUpEw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From: Richard Hanley <rhanley@google.com>
+Date: Mon, 18 Nov 2019 15:21:40 -0800
+Message-ID: <CAH1kD+YoUr47P-rvCBd8YxKsd-WXtHuqR0pDHFAUSWT+rihmyg@mail.gmail.com>
+Subject: Redfish Aggregator vs. RDE over PLDM
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000061f1550597a7364c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,37 +72,97 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/18/19 12:34 AM, John Wang wrote:
-> Hi,
-> 
-> inspur CCLA Schedule A is updated as below:
-> 
-> Initial list of designated employees. NB: authorization is not tied to
-> particular Contributions. Please indicate "CLA Manager" next to the name
-> of any employees listed below that are authorized to add or remove designated
-> employees from this list in the future.
-> 
-> Adair Li
-> Albert Zhang
-> Alex Ning
-> Carter Su
-> Chicago Duan
-> George Liu
-> John Wang
-> Kiuyi Chen
-> Lewis Sun - CLA Manager
-> Xiaochao Ma
-> 
-> Attached is the PDF file
-> Please help review.
+--00000000000061f1550597a7364c
+Content-Type: text/plain; charset="UTF-8"
 
-Done, looks good, thanks for keeping this information updated!
+Hi,
 
-Kurt Taylor (krtaylor)
+A few weeks ago I wrote a posting about creating a Redfish aggregator.
+Here is a brief summary of the use case I am looking to design around:
 
-> 
-> Thanks
-> 
-> John Wang
-> 
+*In the medium term future, we will need to support hardware that has
+multiple management controllers on the same "machine."   This simplest
+version of this is a system with a management shared between a BMC and a
+Host.  More complex versions will have multiple expansion/accelerator cards
+attached to the motherboard.  Each of these expansion cards may have an
+instance of open-bmc on them, along with a bmc on the motherboard.  Our end
+goal is to have a centralized Redfish service on the motherboard bmc that
+acts as the main communication to the outside world.  This motherboard
+service would have to take external requests and forward them to the other
+on-board management controllers.*
 
+After doing some research I think there are two main paths to accomplishing
+this.
+
+*Redfish Aggregator*
+In this approach all of the management agents are running a Redfish
+service.  The core motherboard service would act as a web based
+proxy/translator for all requests.
+
+*Redfish Device Enablement*
+When talking to Jeff Autor about a way to implement this, he pointed me to
+the recently completed RDE spec.  RDE is a specification that allows
+devices to implement portions of a Redfish service over PLDM.  It allows
+devices to support Redfish even if they don't have an HTTP stack.
+
+*Thoughts and Questions*
+Is RDE on the open-bmc roadmap at the moment?  Are there any other
+companies looking into adding support for RDE?  Does anyone have any strong
+feelings on this issue?
+
+I think that in the long term a solid implementation of RDE offers a lot
+more flexibility than a http aggregator.  However, I'd also expect it's
+significantly more effort to get up and running.  Hence why I am asking how
+the community feels about this subject.
+
+I'm also interested in hearing what people's experience working with MCTP
+or PLDM have been.  Has anyone here used them in production? Are there any
+particular highlights or lowlights with the protocols?
+
+Any feedback you have is really appreciated.
+
+Thanks,
+Richard
+
+--00000000000061f1550597a7364c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<div><br></div><div>A few weeks ago I wrote a posting a=
+bout creating a Redfish aggregator.=C2=A0 Here is a brief summary of the us=
+e case I am looking to design around:</div><div><br></div><div><i>In the me=
+dium term future, we will need to support hardware that has multiple=C2=A0m=
+anagement controllers on the same &quot;machine.&quot;=C2=A0 =C2=A0This sim=
+plest version of this is a system with a management shared between a BMC an=
+d a Host.=C2=A0 More complex versions will have multiple expansion/accelera=
+tor cards attached to the motherboard.=C2=A0 Each of these expansion=C2=A0c=
+ards may have an instance of open-bmc on them, along with a bmc on the moth=
+erboard.=C2=A0 Our end goal is to have a centralized Redfish service on the=
+ motherboard bmc that acts as the main communication to the outside world.=
+=C2=A0 This motherboard service would have to take external requests and fo=
+rward them to the other on-board management controllers.</i></div><div><i><=
+br></i></div><div>After doing some research I think there are two main path=
+s to accomplishing this.=C2=A0=C2=A0</div><div><br></div><div><b>Redfish Ag=
+gregator</b></div><div>In this approach all of the management=C2=A0agents a=
+re running a Redfish service.=C2=A0 The core motherboard service would act =
+as a web based proxy/translator for all requests.=C2=A0=C2=A0</div><div><br=
+></div><div><b>Redfish Device Enablement</b></div><div>When talking to Jeff=
+ Autor about a way to implement this, he pointed me to the recently complet=
+ed RDE spec.=C2=A0 RDE is a specification that allows devices to implement =
+portions of a Redfish service over PLDM.=C2=A0 It allows devices to support=
+ Redfish even if they don&#39;t have an HTTP stack.</div><div><br></div><di=
+v><b>Thoughts and Questions</b></div><div>Is RDE on the open-bmc roadmap at=
+ the moment?=C2=A0 Are there any other companies looking into adding suppor=
+t for RDE?=C2=A0 Does anyone have any strong feelings on this issue?</div><=
+div><br></div><div>I think that in the long term a solid implementation of =
+RDE offers a lot more flexibility than a http aggregator.=C2=A0 However, I&=
+#39;d also expect it&#39;s significantly more effort to get up and running.=
+=C2=A0 Hence why I am asking how the community=C2=A0feels about this subjec=
+t.=C2=A0</div><div><i><br></i></div><div>I&#39;m also interested in hearing=
+ what people&#39;s experience working with MCTP or PLDM have been.=C2=A0 Ha=
+s anyone here used them in production? Are there any particular highlights =
+or lowlights with the protocols?</div><div><br></div><div>Any feedback you =
+have is really appreciated.</div><div><br></div><div>Thanks,</div><div>Rich=
+ard</div></div>
+
+--00000000000061f1550597a7364c--
