@@ -1,89 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6B11FFCF6
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 02:53:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BCD1FF5D7
-	for <lists+openbmc@lfdr.de>; Sat, 16 Nov 2019 22:51:32 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Fpns373BzF3tF
-	for <lists+openbmc@lfdr.de>; Sun, 17 Nov 2019 08:51:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47GX6d53vHzDqZl
+	for <lists+openbmc@lfdr.de>; Mon, 18 Nov 2019 12:53:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Fpn3009DzF4JP
- for <openbmc@lists.ozlabs.org>; Sun, 17 Nov 2019 08:50:45 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xAGLl4Z1042018
- for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:42 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wac4s9xtg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:41 -0500
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xAGLofhb048631
- for <openbmc@lists.ozlabs.org>; Sat, 16 Nov 2019 16:50:41 -0500
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wac4s9xta-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 16 Nov 2019 16:50:41 -0500
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAGLjO1F012361;
- Sat, 16 Nov 2019 21:50:41 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma03wdc.us.ibm.com with ESMTP id 2wa8r5nt19-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 16 Nov 2019 21:50:41 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAGLoeXU48038154
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 16 Nov 2019 21:50:40 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 382187805E;
- Sat, 16 Nov 2019 21:50:40 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D6B9C7805C;
- Sat, 16 Nov 2019 21:50:39 +0000 (GMT)
-Received: from demeter.local (unknown [9.80.205.29])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Sat, 16 Nov 2019 21:50:39 +0000 (GMT)
-Subject: Re: how to solve the error that basehash value changed from 'xxx' to
- 'aaaa' ?
-To: www <ouyangxuan10@163.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.117; helo=m13-117.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="dR6lqECO"; 
+ dkim-atps=neutral
+Received: from m13-117.163.com (m13-117.163.com [220.181.13.117])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47GX5k1lfXzDqZ9
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Nov 2019 12:52:34 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=YCrxe
+ u02DZH+w8JPnEMK1Ijm2v2M8XtLS7ESQjsqWNw=; b=dR6lqECOjlHBsZtRkST1j
+ UKkTvWZKadnH0P9PIKFPwEmn53AI26Cst33oD9058qkH55Wmqfd66UIhW2Km6q9P
+ qWGlu12CT7KJjMvyXSP7YApGFaLqu2bL0y7trh3VvDxNl6QT1OqNHwGk4Tw307J2
+ deDaj8juatQ8TOs2RB7Lgc=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr117 (Coremail) ; Mon, 18 Nov 2019 09:52:26 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Mon, 18 Nov 2019 09:52:26 +0800 (CST)
+From: www  <ouyangxuan10@163.com>
+To: "Joseph Reynolds" <jrey@linux.ibm.com>
+Subject: Re:Re: how to solve the error that basehash value changed from
+ 'xxx' to 'aaaa' ?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
 References: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
-Date: Sat, 16 Nov 2019 15:50:38 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
+ <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
+X-CM-CTRLDATA: +3MdlGZvb3Rlcl9odG09NDQwMjo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_38023_174924247.1574041946135"
 MIME-Version: 1.0
-In-Reply-To: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-16_07:2019-11-15,2019-11-16 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0 lowpriorityscore=0
- malwarescore=0 clxscore=1015 spamscore=0 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1911160203
+Message-ID: <136be35a.269c.16e7c360818.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: dcGowACHVrha+dFd44IzAQ--.40790W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiOQtx2lXlqBn7iQACso
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,76 +61,158 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Byron,
+------=_Part_38023_174924247.1574041946135
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-What modification did you put into the os-release recipe?  It would help 
-us help you if you put that in your email.
+RGVhciBKb3NlcGijrAoKClRoYW5rIHlvdSBmb3IgeW91ciByZWZlcmVuY2UgYW5kIHN1Z2dlc3Rp
+b25zLiAiREFURVRJTUUiIGlzIG5vdCBsb2NhbCB0aW1lo6xzbyBJIG5lZWQgYWRkIGEgbmV3IG9u
+ZS4gCkkgYWRkZWQgYSBuZXcgdmFyaWFibGUgdG8gZ2V0IGxvY2FsIHRpbWUgd2l0aG91dCByZXBv
+cnRpbmcgYW4gZXJyb3IuClRoZSBjdXJyZW50IHByb2JsZW0gaXMsIGhvdyBjYW4gSSBtYWtlIHRo
+aXMgdGFzayBjb21waWxlIGV2ZXJ5IHRpbWUgZXZlbiB3aXRob3V0IG1vZGlmaWNhdGlvbiwgYW5k
+IHN0b3JlIHRoZSBsYXRlc3QgdGltZT8KRG8geW91IGhhdmUgYW55IHN1Z2dlc3Rpb25zPwoKCnRo
+YW5rc6OsCkJ5cm9uCgoKCgoKCgoKCgoKQXQgMjAxOS0xMS0xNyAwNTo1MDozOCwgIkpvc2VwaCBS
+ZXlub2xkcyIgPGpyZXlAbGludXguaWJtLmNvbT4gd3JvdGU6Cj5CeXJvbiwKPgo+V2hhdCBtb2Rp
+ZmljYXRpb24gZGlkIHlvdSBwdXQgaW50byB0aGUgb3MtcmVsZWFzZSByZWNpcGU/ICBJdCB3b3Vs
+ZCBoZWxwIAo+dXMgaGVscCB5b3UgaWYgeW91IHB1dCB0aGF0IGluIHlvdXIgZW1haWwuCj4KPgo+
+QXJlIHlvdSBhZGRpbmcgdGhlIGJ1aWxkIGRhdGUgdG8gdGhlIGdlbmVyYXRlZCBvcy1yZWxlYXNl
+IGZpbGU/ICBJZiBzbywgCj5iZSBhd2FyZSB0aGF0IG1pZ2h0IGNhdXNlIHRoZSBpc3N1ZXMgd2l0
+aCB0aGUgc2hhcmVkIHN0YXRlIGNhY2hlIHlvdSBhcmUgCj5leHBlcmllbmNpbmcuICBBbHNvIGJl
+IGF3YXJlIHRoaXMgcHJhY3RpY2Ugd3JlY2tzIHJlcHJvZHVjaWJsZSBidWlsZHMuCj4KPkEgYmV0
+dGVyIHdheSB0byBnZXQgdGhlIHNhbWUgZWZmZWN0IG1pZ2h0IGJlIHRvIGNyZWF0ZSBhIGdpdCB0
+YWcgd2l0aCAKPnRoZSBpbmZvcm1hdGlvbiB5b3Ugd2FudCB0byBhcHBlYXIgaW4gdGhlIGdlbmVy
+YXRlZCBvcy1yZWxlYXNlIGZpbGUuICAKPldoZW4geW91IGJ1bGQgd2l0aCB0aGlzIHRhZyBpcyB0
+aGVuIHBpY2tlZCB1cCBieSB0aGUgT3BlbkJNQyAKPm1ldGEtcGhvc3Bob3Igb3MtcmVsZWFzZS5i
+YmFwcGVuZCAodmlhIGBnaXQgZGVzY3JpYmVgKSBhbmQgaW5jbHVkZWQgaW4gCj50aGUgZ2VuZXJz
+dGVkIG9zLXJlbGVhc2UgZmlsZSBhcyB0aGUgQlVJTERfSUQuICBTZWU6Cj5odHRwczovL2dpdGh1
+Yi5jb20vaWJtLW9wZW5ibWMvb3BlbmJtYy9ibG9iL2QxYzU5YjdhMzZjMTBjMTg4MzhjMDdhZjEw
+YjE4MDgwMTc0Y2Q2MWQvbWV0YS1waG9zcGhvci9yZWNpcGVzLWNvcmUvb3MtcmVsZWFzZS9vcy1y
+ZWxlYXNlLmJiYXBwZW5kCj4oQnV0IEkgaGF2ZSBub3QgdHJpZWQgdGhhdC4pCj4KPkEgd2F5IHRv
+IHdvcmsgYXJvdW5kIHRoZSBoYXNoIGNoYW5nZSBpcyB0byBhZGQgYSBsaW5lIHRvIHlvdXIgcmVj
+aXBlIAo+bGlrZTogUFJbdmFyZGVwc3hlY2x1ZGVdPSJEQVRFVElNRSIKPkFzIHN1Z2dlc3RlZCBi
+eTogCj5odHRwczovL2ZvcnVtcy5vcGVucGxpLm9yZy90b3BpYy80MTQ0Ny1ob3ctdG8tZ2V0LXJp
+ZC1vZi10YXNraGFzaC1taXNtYXRjaC8KPgo+Cj5NeSBhcG9sb2dpZXMgZm9yIHRvcCBwb3N0aW5n
+IC0tIG15IGVtYWlsIHJlYWRlciB3YXMgbm90IHF1b3RpbmcgdGhlIAo+bWVzc2FnZSBwcm9wZXJs
+eSwgc28gSSBjdXQvcGFzdGVkIGl0IGJlbG93Lgo+Cj4tIEpvc2VwaAo+Cj4KPk9uIDExLzEzLzE5
+IDE6MzggQU0sIHd3dyB3cm90ZToKPgo+V2hlbiBJIG1vZGlmeSB0aGUgb3MtcmVsZWFzZSBmaWxl
+IGluIG15IHlvY3RvIHByb2plY3QsIGl0IGFwcGVhciBzb21lIAo+ZXJyb3IsIGFuZCBob3cgY2Fu
+IEkgc29sdmUgaXQgPyBXaG8gY2FuIGdpdmUgbWUgc29tZSBoZWxwIG9yIGFkdmljZT8gCj5UaGFu
+ayB5b3WjoQo+SSBleGVjdXRlIHRoZSByZWNvbW1lbmRlZCBjb21tYW5kIG9uIHRoZSBjb25zb2xl
+IGFuZCBpdCBkaWRuJ3Qgd29yay4KPgo+RVJST1I6IG9zLXJlbGVhc2UtMS4wLXIwIGRvX2NvbXBp
+bGU6IFRhc2toYXNoIG1pc21hdGNoIAo+Y2UxMzNmMDQ1ODYwOGUwM2FhNTUyMjRkZjI4MTU2ZTUy
+M2U1NDkwMzExNWVmYmJjZDYyOTQ2Zjg0YTg2NzIwMSB2ZXJzdXMgCj43MjY5ODgxZjBlYjE3NTll
+ZDQyMGEyZGI0YzA0ZmI0NzdjZDhjMTI4OGJjNWY4MmRmNWM4MTYxYmI5MjZlYTFmIAo+Zm9yICAv
+aG9tZS90ZW1wL3h4eC93c3Avb2JtYy1zb3VyY2UvZW50aXR5X3h4eC9tZXRhL3JlY2lwZXMtY29y
+ZS9vcy1yZWxlYXNlL29zLXJlbGVhc2UuYmIuZG9fY29tcGlsZQo+RVJST1I6IFRhc2toYXNoIG1p
+c21hdGNoIAo+Y2UxMzNmMDQ1ODYwOGUwM2FhNTUyMjRkZjI4MTU2ZTUyM2U1NDkwMzExNWVmYmJj
+ZDYyOTQ2Zjg0YTg2NzIwMSB2ZXJzdXMgCj43MjY5ODgxZjBlYjE3NTllZDQyMGEyZGI0YzA0ZmI0
+NzdjZDhjMTI4OGJjNWY4MmRmNWM4MTYxYmI5MjZlYTFmIAo+Zm9yIC9ob21lL3RlbXAveHh4L3dz
+cC9vYm1jLXNvdXJjZS9lbnRpdHlfeHh4L21ldGEvcmVjaXBlcy1jb3JlL29zLXJlbGVhc2Uvb3Mt
+cmVsZWFzZS5iYi5kb19jb21waWxlCj5FUlJPUjogV2hlbiByZXBhcnNpbmcgCj4vaG9tZS90ZW1w
+L3h4eC93c3Avb2JtYy1zb3VyY2UvZW50aXR5X3h4eC9tZXRhL3JlY2lwZXMtY29yZS9vcy1yZWxl
+YXNlL29zLXJlbGVhc2UuYmIuZG9fY29tcGlsZSwgdGhlIAo+YmFzZWhhc2ggdmFsdWUgY2hhbmdl
+ZCBmcm9tIAo+OTlhNDJhMWEzYjFhMTUxZGU2MDQyNjdiMTU5NTU4ZWNhZjEwMzFhM2JlYzg5MTdk
+ZjEzMmM4MTMwMmU3MjlhNSB0byAKPjRmMzI4OGE4NzYzZTJlMWFmNzhlNGIzY2RkOWMwYzBjY2Iz
+YjBkNWM3OGEzMDczYzE4OGIyMjIwMGRmMmE5YjAuIFRoZSAKPm1ldGFkYXRhIGlzIG5vdCBkZXRl
+cm1pbmlzdGljIGFuZCB0aGlzIG5lZWRzIHRvIGJlIGZpeGVkLgo+RVJST1I6IFRoZSBmb2xsb3dp
+bmcgY29tbWFuZHMgbWF5IGhlbHA6Cj5FUlJPUjogJCBiaXRiYWtlIG9zLXJlbGVhc2UgLWNkb19j
+b21waWxlIC1Tbm9uZQo+RVJST1I6IFRoZW46Cj5FUlJPUjogJCBiaXRiYWtlIG9zLXJlbGVhc2Ug
+LWNkb19jb21waWxlIC1TcHJpbnRkaWZmCj4KPkVSUk9SOiBXaGVuIAo+cmVwYXJzaW5nIC9ob21l
+L3RlbXAveHh4L3dzcC9vYm1jLXNvdXJjZS9lbnRpdHlfeHh4L21ldGEvcmVjaXBlcy1jb3JlL29z
+LXJlbGVhc2Uvb3MtcmVsZWFzZS5iYi5kb19jb21waWxlLCB0aGUgCj5iYXNlaGFzaCB2YWx1ZSBj
+aGFuZ2VkIGZyb20gCj45OWE0MmExYTNiMWExNTFkZTYwNDI2N2IxNTk1NThlY2FmMTAzMWEzYmVj
+ODkxN2RmMTMyYzgxMzAyZTcyOWE1IHRvIAo+NDdjMzAwMTJkYWE2YWE3N2JlMDlhOTNmZTIxZTY2
+OTk1MzYxZWYyNmI0NDg3MTExMDA1NjE3ZGI4Y2I0ZGU1OS4gVGhlIAo+bWV0YWRhdGEgaXMgbm90
+IGRldGVybWluaXN0aWMgYW5kIHRoaXMgbmVlZHMgdG8gYmUgZml4ZWQuCj5FUlJPUjogVGhlIGZv
+bGxvd2luZyBjb21tYW5kcyBtYXkgaGVscDoKPkVSUk9SOiAkIGJpdGJha2Ugb3MtcmVsZWFzZSAt
+Y2RvX2NvbXBpbGUgLVNub25lCj5FUlJPUjogVGhlbjoKPkVSUk9SOiAkIGJpdGJha2Ugb3MtcmVs
+ZWFzZSAtY2RvX2NvbXBpbGUgLVNwcmludGRpZmYKPgo+dGhhbmtzLAo+Qnlyb24K
+------=_Part_38023_174924247.1574041946135
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-
-Are you adding the build date to the generated os-release file?  If so, 
-be aware that might cause the issues with the shared state cache you are 
-experiencing.  Also be aware this practice wrecks reproducible builds.
-
-A better way to get the same effect might be to create a git tag with 
-the information you want to appear in the generated os-release file.  
-When you buld with this tag is then picked up by the OpenBMC 
-meta-phosphor os-release.bbappend (via `git describe`) and included in 
-the genersted os-release file as the BUILD_ID.  See:
-https://github.com/ibm-openbmc/openbmc/blob/d1c59b7a36c10c18838c07af10b18080174cd61d/meta-phosphor/recipes-core/os-release/os-release.bbappend
-(But I have not tried that.)
-
-A way to work around the hash change is to add a line to your recipe 
-like: PR[vardepsxeclude]="DATETIME"
-As suggested by: 
-https://forums.openpli.org/topic/41447-how-to-get-rid-of-taskhash-mismatch/
-
-
-My apologies for top posting -- my email reader was not quoting the 
-message properly, so I cut/pasted it below.
-
-- Joseph
-
-
-On 11/13/19 1:38 AM, www wrote:
-
-When I modify the os-release file in my yocto project, it appear some 
-error, and how can I solve it ? Who can give me some help or advice? 
-Thank you！
-I execute the recommended command on the console and it didn't work.
-
-ERROR: os-release-1.0-r0 do_compile: Taskhash mismatch 
-ce133f0458608e03aa55224df28156e523e54903115efbbcd62946f84a867201 versus 
-7269881f0eb1759ed420a2db4c04fb477cd8c1288bc5f82df5c8161bb926ea1f 
-for  /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile
-ERROR: Taskhash mismatch 
-ce133f0458608e03aa55224df28156e523e54903115efbbcd62946f84a867201 versus 
-7269881f0eb1759ed420a2db4c04fb477cd8c1288bc5f82df5c8161bb926ea1f 
-for /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile
-ERROR: When reparsing 
-/home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile, the 
-basehash value changed from 
-99a42a1a3b1a151de604267b159558ecaf1031a3bec8917df132c81302e729a5 to 
-4f3288a8763e2e1af78e4b3cdd9c0c0ccb3b0d5c78a3073c188b22200df2a9b0. The 
-metadata is not deterministic and this needs to be fixed.
-ERROR: The following commands may help:
-ERROR: $ bitbake os-release -cdo_compile -Snone
-ERROR: Then:
-ERROR: $ bitbake os-release -cdo_compile -Sprintdiff
-
-ERROR: When 
-reparsing /home/temp/xxx/wsp/obmc-source/entity_xxx/meta/recipes-core/os-release/os-release.bb.do_compile, the 
-basehash value changed from 
-99a42a1a3b1a151de604267b159558ecaf1031a3bec8917df132c81302e729a5 to 
-47c30012daa6aa77be09a93fe21e66995361ef26b4487111005617db8cb4de59. The 
-metadata is not deterministic and this needs to be fixed.
-ERROR: The following commands may help:
-ERROR: $ bitbake os-release -cdo_compile -Snone
-ERROR: Then:
-ERROR: $ bitbake os-release -cdo_compile -Sprintdiff
-
-thanks,
-Byron
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9IndpZHRoOiAxMDU5LjI1cHg7Ij5EZWFyIEpv
+c2VwaKOsPC9kaXY+PGRpdiBzdHlsZT0id2lkdGg6IDEwNTkuMjVweDsiPjxicj48L2Rpdj48ZGl2
+IHN0eWxlPSJ3aWR0aDogMTA1OS4yNXB4OyI+VGhhbmsgeW91IGZvciB5b3VyIHJlZmVyZW5jZSBh
+bmQgc3VnZ2VzdGlvbnMuJm5ic3A7IkRBVEVUSU1FIiBpcyBub3QgbG9jYWwgdGltZaOsc28gSSBu
+ZWVkIGFkZCBhIG5ldyBvbmUuJm5ic3A7PC9kaXY+PGRpdiBzdHlsZT0id2lkdGg6IDEwNTkuMjVw
+eDsiPkkgYWRkZWQgYSBuZXcgdmFyaWFibGUgdG8gZ2V0IGxvY2FsIHRpbWUgd2l0aG91dCByZXBv
+cnRpbmcgYW4gZXJyb3IuPC9kaXY+PGRpdiBzdHlsZT0id2lkdGg6IDEwNTkuMjVweDsiPlRoZSBj
+dXJyZW50IHByb2JsZW0gaXMsIGhvdyBjYW4gSSBtYWtlIHRoaXMgdGFzayBjb21waWxlIGV2ZXJ5
+IHRpbWUgZXZlbiB3aXRob3V0IG1vZGlmaWNhdGlvbiwgYW5kIHN0b3JlIHRoZSBsYXRlc3QgdGlt
+ZT88L2Rpdj48ZGl2IHN0eWxlPSJ3aWR0aDogMTA1OS4yNXB4OyI+RG8geW91IGhhdmUgYW55IHN1
+Z2dlc3Rpb25zPzwvZGl2PjxkaXYgc3R5bGU9IndpZHRoOiAxMDU5LjI1cHg7Ij48YnI+PC9kaXY+
+PGRpdiBzdHlsZT0id2lkdGg6IDEwNTkuMjVweDsiPnRoYW5rc6OsPC9kaXY+PGRpdiBzdHlsZT0i
+d2lkdGg6IDEwNTkuMjVweDsiPkJ5cm9uPC9kaXY+PGRpdiBzdHlsZT0id2lkdGg6IDEwNTkuMjVw
+eDsiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJ3aWR0aDogMTA1OS4yNXB4OyI+PGJyPjwvZGl2Pjxi
+cj48YnI+PGJyPjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9kaXY+PGRp
+diBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rpdj48YnI+PHByZT48YnI+QXQgMjAxOS0xMS0x
+NyAwNTo1MDozOCwgIkpvc2VwaCBSZXlub2xkcyIgJmx0O2pyZXlAbGludXguaWJtLmNvbSZndDsg
+d3JvdGU6CiZndDtCeXJvbiwKJmd0OwomZ3Q7V2hhdCBtb2RpZmljYXRpb24gZGlkIHlvdSBwdXQg
+aW50byB0aGUgb3MtcmVsZWFzZSByZWNpcGU/Jm5ic3A7IEl0IHdvdWxkIGhlbHAgCiZndDt1cyBo
+ZWxwIHlvdSBpZiB5b3UgcHV0IHRoYXQgaW4geW91ciBlbWFpbC4KJmd0OwomZ3Q7CiZndDtBcmUg
+eW91IGFkZGluZyB0aGUgYnVpbGQgZGF0ZSB0byB0aGUgZ2VuZXJhdGVkIG9zLXJlbGVhc2UgZmls
+ZT8mbmJzcDsgSWYgc28sIAomZ3Q7YmUgYXdhcmUgdGhhdCBtaWdodCBjYXVzZSB0aGUgaXNzdWVz
+IHdpdGggdGhlIHNoYXJlZCBzdGF0ZSBjYWNoZSB5b3UgYXJlIAomZ3Q7ZXhwZXJpZW5jaW5nLiZu
+YnNwOyBBbHNvIGJlIGF3YXJlIHRoaXMgcHJhY3RpY2Ugd3JlY2tzIHJlcHJvZHVjaWJsZSBidWls
+ZHMuCiZndDsKJmd0O0EgYmV0dGVyIHdheSB0byBnZXQgdGhlIHNhbWUgZWZmZWN0IG1pZ2h0IGJl
+IHRvIGNyZWF0ZSBhIGdpdCB0YWcgd2l0aCAKJmd0O3RoZSBpbmZvcm1hdGlvbiB5b3Ugd2FudCB0
+byBhcHBlYXIgaW4gdGhlIGdlbmVyYXRlZCBvcy1yZWxlYXNlIGZpbGUuJm5ic3A7IAomZ3Q7V2hl
+biB5b3UgYnVsZCB3aXRoIHRoaXMgdGFnIGlzIHRoZW4gcGlja2VkIHVwIGJ5IHRoZSBPcGVuQk1D
+IAomZ3Q7bWV0YS1waG9zcGhvciBvcy1yZWxlYXNlLmJiYXBwZW5kICh2aWEgYGdpdCBkZXNjcmli
+ZWApIGFuZCBpbmNsdWRlZCBpbiAKJmd0O3RoZSBnZW5lcnN0ZWQgb3MtcmVsZWFzZSBmaWxlIGFz
+IHRoZSBCVUlMRF9JRC4mbmJzcDsgU2VlOgomZ3Q7aHR0cHM6Ly9naXRodWIuY29tL2libS1vcGVu
+Ym1jL29wZW5ibWMvYmxvYi9kMWM1OWI3YTM2YzEwYzE4ODM4YzA3YWYxMGIxODA4MDE3NGNkNjFk
+L21ldGEtcGhvc3Bob3IvcmVjaXBlcy1jb3JlL29zLXJlbGVhc2Uvb3MtcmVsZWFzZS5iYmFwcGVu
+ZAomZ3Q7KEJ1dCBJIGhhdmUgbm90IHRyaWVkIHRoYXQuKQomZ3Q7CiZndDtBIHdheSB0byB3b3Jr
+IGFyb3VuZCB0aGUgaGFzaCBjaGFuZ2UgaXMgdG8gYWRkIGEgbGluZSB0byB5b3VyIHJlY2lwZSAK
+Jmd0O2xpa2U6IFBSW3ZhcmRlcHN4ZWNsdWRlXT0iREFURVRJTUUiCiZndDtBcyBzdWdnZXN0ZWQg
+Ynk6IAomZ3Q7aHR0cHM6Ly9mb3J1bXMub3BlbnBsaS5vcmcvdG9waWMvNDE0NDctaG93LXRvLWdl
+dC1yaWQtb2YtdGFza2hhc2gtbWlzbWF0Y2gvCiZndDsKJmd0OwomZ3Q7TXkgYXBvbG9naWVzIGZv
+ciB0b3AgcG9zdGluZyAtLSBteSBlbWFpbCByZWFkZXIgd2FzIG5vdCBxdW90aW5nIHRoZSAKJmd0
+O21lc3NhZ2UgcHJvcGVybHksIHNvIEkgY3V0L3Bhc3RlZCBpdCBiZWxvdy4KJmd0OwomZ3Q7LSBK
+b3NlcGgKJmd0OwomZ3Q7CiZndDtPbiAxMS8xMy8xOSAxOjM4IEFNLCB3d3cgd3JvdGU6CiZndDsK
+Jmd0O1doZW4gSSBtb2RpZnkgdGhlIG9zLXJlbGVhc2UgZmlsZSBpbiBteSB5b2N0byBwcm9qZWN0
+LCBpdCBhcHBlYXIgc29tZSAKJmd0O2Vycm9yLCBhbmQgaG93IGNhbiBJIHNvbHZlIGl0ID8mbmJz
+cDtXaG8gY2FuIGdpdmUgbWUgc29tZSBoZWxwIG9yIGFkdmljZT8gCiZndDtUaGFuayB5b3WjoQom
+Z3Q7SSBleGVjdXRlIHRoZSByZWNvbW1lbmRlZCBjb21tYW5kIG9uIHRoZSBjb25zb2xlIGFuZCBp
+dCBkaWRuJ3Qgd29yay4KJmd0OwomZ3Q7RVJST1I6IG9zLXJlbGVhc2UtMS4wLXIwIGRvX2NvbXBp
+bGU6IFRhc2toYXNoIG1pc21hdGNoIAomZ3Q7Y2UxMzNmMDQ1ODYwOGUwM2FhNTUyMjRkZjI4MTU2
+ZTUyM2U1NDkwMzExNWVmYmJjZDYyOTQ2Zjg0YTg2NzIwMSB2ZXJzdXMgCiZndDs3MjY5ODgxZjBl
+YjE3NTllZDQyMGEyZGI0YzA0ZmI0NzdjZDhjMTI4OGJjNWY4MmRmNWM4MTYxYmI5MjZlYTFmIAom
+Z3Q7Zm9yJm5ic3A7Jm5ic3A7L2hvbWUvdGVtcC94eHgvd3NwL29ibWMtc291cmNlL2VudGl0eV94
+eHgvbWV0YS9yZWNpcGVzLWNvcmUvb3MtcmVsZWFzZS9vcy1yZWxlYXNlLmJiLmRvX2NvbXBpbGUK
+Jmd0O0VSUk9SOiBUYXNraGFzaCBtaXNtYXRjaCAKJmd0O2NlMTMzZjA0NTg2MDhlMDNhYTU1MjI0
+ZGYyODE1NmU1MjNlNTQ5MDMxMTVlZmJiY2Q2Mjk0NmY4NGE4NjcyMDEgdmVyc3VzIAomZ3Q7NzI2
+OTg4MWYwZWIxNzU5ZWQ0MjBhMmRiNGMwNGZiNDc3Y2Q4YzEyODhiYzVmODJkZjVjODE2MWJiOTI2
+ZWExZiAKJmd0O2ZvciZuYnNwOy9ob21lL3RlbXAveHh4L3dzcC9vYm1jLXNvdXJjZS9lbnRpdHlf
+eHh4L21ldGEvcmVjaXBlcy1jb3JlL29zLXJlbGVhc2Uvb3MtcmVsZWFzZS5iYi5kb19jb21waWxl
+CiZndDtFUlJPUjogV2hlbiByZXBhcnNpbmcgCiZndDsvaG9tZS90ZW1wL3h4eC93c3Avb2JtYy1z
+b3VyY2UvZW50aXR5X3h4eC9tZXRhL3JlY2lwZXMtY29yZS9vcy1yZWxlYXNlL29zLXJlbGVhc2Uu
+YmIuZG9fY29tcGlsZSwmbmJzcDt0aGUgCiZndDtiYXNlaGFzaCB2YWx1ZSBjaGFuZ2VkIGZyb20g
+CiZndDs5OWE0MmExYTNiMWExNTFkZTYwNDI2N2IxNTk1NThlY2FmMTAzMWEzYmVjODkxN2RmMTMy
+YzgxMzAyZTcyOWE1IHRvIAomZ3Q7NGYzMjg4YTg3NjNlMmUxYWY3OGU0YjNjZGQ5YzBjMGNjYjNi
+MGQ1Yzc4YTMwNzNjMTg4YjIyMjAwZGYyYTliMC4mbmJzcDtUaGUgCiZndDttZXRhZGF0YSBpcyBu
+b3QgZGV0ZXJtaW5pc3RpYyBhbmQgdGhpcyBuZWVkcyB0byBiZSBmaXhlZC4KJmd0O0VSUk9SOiBU
+aGUgZm9sbG93aW5nIGNvbW1hbmRzIG1heSBoZWxwOgomZ3Q7RVJST1I6ICQgYml0YmFrZSBvcy1y
+ZWxlYXNlIC1jZG9fY29tcGlsZSAtU25vbmUKJmd0O0VSUk9SOiBUaGVuOgomZ3Q7RVJST1I6ICQg
+Yml0YmFrZSBvcy1yZWxlYXNlIC1jZG9fY29tcGlsZSAtU3ByaW50ZGlmZgomZ3Q7CiZndDtFUlJP
+UjogV2hlbiAKJmd0O3JlcGFyc2luZyZuYnNwOy9ob21lL3RlbXAveHh4L3dzcC9vYm1jLXNvdXJj
+ZS9lbnRpdHlfeHh4L21ldGEvcmVjaXBlcy1jb3JlL29zLXJlbGVhc2Uvb3MtcmVsZWFzZS5iYi5k
+b19jb21waWxlLCZuYnNwO3RoZSAKJmd0O2Jhc2VoYXNoIHZhbHVlIGNoYW5nZWQgZnJvbSAKJmd0
+Ozk5YTQyYTFhM2IxYTE1MWRlNjA0MjY3YjE1OTU1OGVjYWYxMDMxYTNiZWM4OTE3ZGYxMzJjODEz
+MDJlNzI5YTUgdG8gCiZndDs0N2MzMDAxMmRhYTZhYTc3YmUwOWE5M2ZlMjFlNjY5OTUzNjFlZjI2
+YjQ0ODcxMTEwMDU2MTdkYjhjYjRkZTU5LiBUaGUgCiZndDttZXRhZGF0YSBpcyBub3QgZGV0ZXJt
+aW5pc3RpYyBhbmQgdGhpcyBuZWVkcyB0byBiZSBmaXhlZC4KJmd0O0VSUk9SOiBUaGUgZm9sbG93
+aW5nIGNvbW1hbmRzIG1heSBoZWxwOgomZ3Q7RVJST1I6ICQgYml0YmFrZSBvcy1yZWxlYXNlIC1j
+ZG9fY29tcGlsZSAtU25vbmUKJmd0O0VSUk9SOiBUaGVuOgomZ3Q7RVJST1I6ICQgYml0YmFrZSBv
+cy1yZWxlYXNlIC1jZG9fY29tcGlsZSAtU3ByaW50ZGlmZgomZ3Q7CiZndDt0aGFua3MsCiZndDtC
+eXJvbgo8L3ByZT48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4m
+bmJzcDs8L3A+PC9zcGFuPg==
+------=_Part_38023_174924247.1574041946135--
 
