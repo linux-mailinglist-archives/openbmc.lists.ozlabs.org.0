@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FD8A1029BE
-	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2019 17:49:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B21BA1029DF
+	for <lists+openbmc@lfdr.de>; Tue, 19 Nov 2019 17:55:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47HWyR2d8YzDqW9
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 03:49:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47HX4y2CHZzDqXN
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 03:55:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -16,49 +16,50 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=stwcx.xyz header.i=patrick@stwcx.xyz header.b="YVpdY6j2";
+ unprotected) header.d=stwcx.xyz header.i=patrick@stwcx.xyz header.b="f9TM4Zjt";
  dkim-atps=neutral
 Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com
  [136.143.188.54])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47HWx96NBQzDqdl
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 03:48:45 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1574182122; cv=none; 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47HX4C0k4NzDqXD
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 03:54:50 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1574182483; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=PRTJSV5wEbatXUfdXmOsgxOBVdnYTElKyc35bZVq3OUgl8nV1b62r8vUcOWwGXCXXK2bbQG6UEhoj/C8Bx6rqaNuHuWKBgSQv7YsQ2Xsq/1di7f3Ngsxrvz8g3nqGSFujeBRAhXpR7zh6s63YbhmeyTZmp+IEYOPcfDlrOnYLBI=
+ b=FQZx2BGluVwT/x6JProkal+pjIu4xKlixMEtQLZoPBxcMc51B/ZXhaE3wWxAmMwN2SmVpp3wFXZLT7pVtd8sa6guZQYDyNX/Kz7FxXvCuFt3bZlV0jxPXcY8NumLx8hVS7X+7pV3mPwB0+woXXLB77nuOapBjMSAMYl7GwXVGlM=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1574182122;
+ s=zohoarc; t=1574182483;
  h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To;
- bh=Nfv4pruA47IlPw7hs6tripwWEc7T3+D8J0/dULnl3QI=; 
- b=ODdufJc6hLPZ9g2MfGAdx6UdCDp+KcaVJj/6nUxS1aphzucsyYoYAQvjDn+0C7OgPvRLbujM5TNtL2SQeVjgLk9PFCW3btmGwRMteVWlvVQOyroPaWrFSEPbospotPhFOfpA548HOsLUxe5H1jZGe/84wBIkPNJeBZF0qbqWbmM=
+ bh=JIzcytZ49gxWcVgwxHETpCISLx7Z5xj7sP6CfQRukdA=; 
+ b=YIKpA+9H2Gjz5Jz0X6zS6IZXC1on7Jx6rsuIIUq+r/CUMQzxTcrruXZSnsXlGmFHBzUTHb0fuka7a3UjzBwLlMn9A1ybnIFG860UqLBVGK9oBbpiRrU41Eqpro6pOLnWKzb9bnrsWzAp3q8k6ZFzD02azmJ7aNMRqlbhd+IrZGU=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=stwcx.xyz;
  spf=pass  smtp.mailfrom=patrick@stwcx.xyz;
  dmarc=pass header.from=<patrick@stwcx.xyz> header.from=<patrick@stwcx.xyz>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1574182122; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1574182483; 
  s=zoho; d=stwcx.xyz; i=patrick@stwcx.xyz;
  h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
- l=1660; bh=Nfv4pruA47IlPw7hs6tripwWEc7T3+D8J0/dULnl3QI=;
- b=YVpdY6j20mBueSjqlfCzKNg6lpwSCXTQ6CAvlyzffIoT/+FV1ZTlxFUofY97S6pI
- xxP1E+XY7NsuLY7wzB68JAW76dAiqb3Y7hvu6/lZtyf4f1cXXY4xo7ULrAGrGTVg59d
- KsSQQgKoqLFQp2HDxtZa9/y9agv5FhQ1l19rotns=
+ l=2730; bh=JIzcytZ49gxWcVgwxHETpCISLx7Z5xj7sP6CfQRukdA=;
+ b=f9TM4Zjt8t+eUcfLyxxBfM/azcLqsKxdFahx75TlVTPT4c0zSRgzqYf/1RXTmD4y
+ n02Dp1Uhbe4KsmxpPOUIjJTv4/zyDpOuIaJIox6JtKZqKLg3cRPkGaJp2/TfAhLJsSm
+ WZ63dNFkMwxJ+F+/tZ1TtIPWMZ5NH3KYgb0smv8A=
 Received: from localhost (163.114.130.128 [163.114.130.128]) by mx.zohomail.com
- with SMTPS id 157418212030526.70229870335936;
- Tue, 19 Nov 2019 08:48:40 -0800 (PST)
-Date: Tue, 19 Nov 2019 10:48:37 -0600
+ with SMTPS id 1574182482328267.1497376940413;
+ Tue, 19 Nov 2019 08:54:42 -0800 (PST)
+Date: Tue, 19 Nov 2019 10:54:40 -0600
 From: Patrick Williams <patrick@stwcx.xyz>
 To: Andrew Geissler <geissonator@gmail.com>
-Subject: Re: Re-joining the project
-Message-ID: <20191119164837.GA93344@patrickw3-mbp>
-References: <20170925113628.GA4313@heinlein.lan>
- <20191119001526.GB98839@patrickw3-mbp.lan>
- <ED91B0D1-9C81-43CB-9234-4679F6C6A70D@gmail.com>
+Subject: Re: 2 patch dependency
+Message-ID: <20191119165440.GB93344@patrickw3-mbp>
+References: <EACBC95B-0761-4667-A622-E1C0EA6EF1ED@fb.com>
+ <E782C583-DBB7-4589-BFE6-EC69E2343424@fuzziesquirrel.com>
+ <20191119003509.GA80304@patrickw3-mbp.dhcp.thefacebook.com>
+ <2231F8C7-719B-468B-BABB-92AF197F92C8@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+ protocol="application/pgp-signature"; boundary="bCsyhTFzCvuiizWE"
 Content-Disposition: inline
-In-Reply-To: <ED91B0D1-9C81-43CB-9234-4679F6C6A70D@gmail.com>
+In-Reply-To: <2231F8C7-719B-468B-BABB-92AF197F92C8@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 X-Zoho-Virus-Status: 1
 X-ZohoMailClient: External
@@ -73,54 +74,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---liOOAslEiF7prFVr
-Content-Type: text/plain; charset=us-ascii
+--bCsyhTFzCvuiizWE
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 19, 2019 at 09:37:55AM -0600, Andrew Geissler wrote:
-> > On Nov 18, 2019, at 6:15 PM, Patrick Williams <patrick@stwcx.xyz> wrote:
-> > On Mon, Sep 25, 2017 at 06:36:29AM -0500, Patrick Williams wrote:
-
-> Welcome back! Any big features or functions on Facebooks
-> list for OpenBMC?
-
-Nothing I can competently talk about yet.  I know there is already
-on-going work to get TiogaPass, which is an OCP system, running
-OpenBMC.
-
-https://github.com/openbmc/meta-facebook/tree/master/meta-tiogapass
-
+On Tue, Nov 19, 2019 at 09:45:34AM -0600, Andrew Geissler wrote:
 >=20
-> Andrew
+> I know in general we really try to encourage people to not cause
+> co-req issues across repositories. Making this easier for people
+> may cause more of it to happen.
+
+I understand and agree.  I don't know how often this kind of breaking
+behavior has happened, like these IPMI related changes, it was just
+coincidentally at the top of my email queue as I've started digging
+through.
+
+> Also, I believe we=E2=80=99re going back to just having everything in
+> openbmc/openbmc so that should alleviate a lot of our meta-*
+> co-req issues since they can all go in together again. Brad was
+> working on getting the gerrit plugin running that allows people
+> to maintain sub-directories in a repository. This will allow multiple
+> maintainers of openbmc/openbmc for their specific areas.
+
+Ooh.  Was this talked about on the mailing list somewhere?  I've gone
+back through at least August and haven't come across it.  Was there
+an exploration of moving to `repo` instead?
+
+> So to answer your question, I=E2=80=99m not sure. I think it could still
+> be useful to have between code repos and openbmc/openbmc
+> at times but I=E2=80=99d rather people just do the extra work to avoid
+> dependencies all together.
+
+Another "first step" might be to get a Jenkins job for code repositories
+that builds the full openbmc/openbmc stack with the code change, so that
+we can identify breaking changes like this before they are merged.
+AFAIK, the code repo Jenkins jobs are still independent from the Yocto
+recipes, correct?
 
 --=20
 Patrick Williams
 
---liOOAslEiF7prFVr
+--bCsyhTFzCvuiizWE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl3UHOMACgkQqwNHzC0A
-wRn+aA/8Csj8USJiJxHHnDsXgQu+eUp8RyBpwTO6w31S/6NDQ7SjwKkphpMXY7P6
-SwIJfBw78rqAGs7jcsBaJOSW99oMDuiNTGihPrTRytMTJiKy6JfQekShB/voHS8c
-gdsQEr37udjTOw542+Ex9KC00twt5f7LF8CaTHuPoY8bcphvKnUsEVwADTRtLqnh
-1nN/0ZroltXTtdwX2uDdUD9WxvTqxuGTKTFyB8J1sv8NhTNiAk++R7bBSIwtvjYf
-7lyE1bGIrR43uWhV1g8e3+wKv8lHsh4Zdjot8F89jfdJ32k8wUsSMH39rsL8f0mw
-x7iCOPwvn2CSvK3zyz83vwadcHW0gws/m+P3iGWlTh06Lr6VLxg4x9j4GJYFTenG
-128QJ/x6fH87BRdH8ZtqcTbZaui9p5f+I98E2pR1QLF1S9LO+8PcGyM+sHR7iiVK
-y/WZcWosZ/P6KVgFiPrzlVv+drP2hNa17Q+C5JYdCOItUxooqRSgN3KpUZoDbP3k
-oF5K8SHO+87XMB+d4WUiIBttDAkSMwXYWlH214CkZYIwOUBp9dhc8RHzLQykdxlG
-BgBdbQOMpSEHdUXNsMhotmXZDix2BAiIkF/AJj+p6fkZ9+88hlV5NNO+3YVWewUK
-Q6N7v62MlnHyHd0iq3AH5PU3uPoNh6+srexEfQwJQltUbMxG9WY=
-=vJQC
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl3UHlAACgkQqwNHzC0A
+wRkggw/+No+10k3jFkoFv/U/0XVR06d7X/TOoz+JGjG9J87jPJIIzxckMncv5gSK
+wnFQvRv+vAvQfTVmy/RcU1CBymmyJVa0UaHbVQeqMQ+CkIemWyEeFVpM6vmq1CxB
+Yq9xSvlGTciEyWDZvVmgPVW/OkCx0dYIbX4ZdiyHdiA7EyZX7UbdLOFhRQsIZq1E
+VFJrD/IDvKBYLdoBJZC3xnl8UM7X27rje6IBX8eRY+pmi+Uc5shr7SCWITfoGYr8
+FEO5HerIzzLAmMdmf/cK1jY+yi0E4NiRy6YxUrqteWO3rfTWuZt543Bpw9UBAiNa
+XpRy69ehf9w93E3fb0SyuhXXguutx5yDhphNKpvXVBvNiBajwG4mtK2n67jgu+6s
+TIiOd5I53iz7xEed1F8g4uY5AC1s6pFbzt5LLwG/m0EItaSPRF4A+MS+UATD2EpY
+udGGPBLSUK9qvcpqIhaCUk4TPd3VqC3Rj8lea4tHaoqblLAVW22r7m1gUYi9MIEl
+kWBh50JA535PIi02i1ZrjPcRwqAxyibEnwxbU3oJWcxtxaoMtFzNGABv/fKOuO9d
+a1sWT7dy18uSxhGfZONWJzoVBYf1efOLrFXamZSWr8mUzfx0tNisoJ2MZRpokidq
+z1dmxQqWqY3ZKbgBk2Sz7n0EuPj0YtW4vBMcDxg47vtpnjbPqSQ=
+=klUB
 -----END PGP SIGNATURE-----
 
---liOOAslEiF7prFVr--
+--bCsyhTFzCvuiizWE--
 
