@@ -2,63 +2,40 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79C421034C1
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 08:00:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF4A110354B
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 08:39:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47HtrD1SFKzDqp5
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 18:00:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Hvj018NHzDqpq
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 18:39:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47HtqL0bRQzDqX0
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 17:59:56 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2019 22:59:53 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,220,1571727600"; 
- d="scan'208,217";a="231828649"
-Received: from fmsmsx103.amr.corp.intel.com ([10.18.124.201])
- by fmsmga004.fm.intel.com with ESMTP; 19 Nov 2019 22:59:52 -0800
-Received: from fmsmsx116.amr.corp.intel.com (10.18.116.20) by
- FMSMSX103.amr.corp.intel.com (10.18.124.201) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 19 Nov 2019 22:59:52 -0800
-Received: from fmsmsx118.amr.corp.intel.com ([169.254.1.68]) by
- fmsmsx116.amr.corp.intel.com ([169.254.2.87]) with mapi id 14.03.0439.000;
- Tue, 19 Nov 2019 22:59:52 -0800
-From: "Khetan, Sharad" <sharad.khetan@intel.com>
-To: Vijay Khemka <vijaykhemka@fb.com>, rgrs <rgrs@protonmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: MCTP over PCI on AST2500
-Thread-Topic: MCTP over PCI on AST2500
-Thread-Index: AQHVn2VSe/daZ1HR/0SJwnpAq7UT7qeUJeQA//96gqA=
-Date: Wed, 20 Nov 2019 06:59:51 +0000
-Message-ID: <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
-References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
- <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
-In-Reply-To: <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiN2JhZTRiNTItOWUwMy00NjRlLWEzNjYtNjcyMGRiZmRkZTdhIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoieW5OYVwvRkFWRWd1TGxMaVQ0TEpJRU5tcWlWTit1RmIyVjZUSTEzWVpUbER2Vmc0UDU4MnhQMGltd3JxNU1pbEgifQ==
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [10.1.200.108]
-Content-Type: multipart/alternative;
- boundary="_000_865C376D1B77624AAA570EFEF73CE52F9E08757Bfmsmsx118amrcor_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Hvfh5Hr0zDql6
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 18:37:29 +1100 (AEDT)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id xAK7apQb024885;
+ Wed, 20 Nov 2019 09:36:51 +0200
+Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
+ id 58EE060329; Wed, 20 Nov 2019 09:36:51 +0200 (IST)
+From: Tali Perry <tali.perry1@gmail.com>
+To: robh+dt@kernel.org, mark.rutland@arm.com, yuenn@google.com,
+ venture@google.com, benjaminfair@google.com, avifishman70@gmail.com,
+ joel@jms.id.au, tmaimon77@gmail.com, wsa@the-dreams.de, syniurge@gmail.com
+Subject: [PATCH v6 0/2] i2c: npcm: add NPCM i2c controller driver
+Date: Wed, 20 Nov 2019 09:36:20 +0200
+Message-Id: <20191120073622.37938-1-tali.perry1@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,116 +47,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_865C376D1B77624AAA570EFEF73CE52F9E08757Bfmsmsx118amrcor_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+This patch set adds i2c controller support 
+for the Nuvoton NPCM Baseboard Management Controller (BMC).
 
-SW50ZWwgaXMgd29ya2luZyBvbiBNQ1RQIG92ZXIgUENJIChWRE0gZGF0YSB0cmFuc2ZlcnMpLiBX
-ZSB3aWxsIHNoYXJlIGRldGFpbHMgc2hvcnRseS4NCg0KVGhhbmtzLA0KLVNoYXJhZA0KDQpGcm9t
-OiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrc2hhcmFkLmtoZXRhbj1pbnRlbC5jb21AbGlzdHMu
-b3psYWJzLm9yZz4gT24gQmVoYWxmIE9mIFZpamF5IEtoZW1rYQ0KU2VudDogVHVlc2RheSwgTm92
-ZW1iZXIgMTksIDIwMTkgMTA6NTQgUE0NClRvOiByZ3JzIDxyZ3JzQHByb3Rvbm1haWwuY29tPjsg
-b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBSZTogTUNUUCBvdmVyIFBDSSBvbiBB
-U1QyNTAwDQoNCkkgZG9u4oCZdCBzZWUgYW55IGxpbnV4IGtlcm5lbCBkcml2ZXIgc3VwcG9ydGlu
-ZyBtY3RwIGluIHVwc3RyZWFtLiBJIHdvdWxkIGxvdmUgdG8gc2VlIHRoZXNlIGFuZCB3b3VsZCBs
-aWtlIHRvIGNvbnRyaWJ1dGUgYXMgd2VsbC4NCg0KRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1ib3Vu
-Y2VzK3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPG1haWx0bzpvcGVuYm1jLWJv
-dW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmc+PiBvbiBiZWhhbGYgb2Yg
-cmdycyA8cmdyc0Bwcm90b25tYWlsLmNvbTxtYWlsdG86cmdyc0Bwcm90b25tYWlsLmNvbT4+DQpS
-ZXBseS1UbzogcmdycyA8cmdyc0Bwcm90b25tYWlsLmNvbTxtYWlsdG86cmdyc0Bwcm90b25tYWls
-LmNvbT4+DQpEYXRlOiBUdWVzZGF5LCBOb3ZlbWJlciAxOSwgMjAxOSBhdCA5OjQyIFBNDQpUbzog
-Im9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-PiIgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnPj4NClN1YmplY3Q6IE1DVFAgb3ZlciBQQ0kgb24gQVNUMjUwMA0KDQpIaSwNCg0KRG9lcyBP
-cGVuQk1DIHN1cHBvcnQgTUNUUCBvdmVyIFBDST8NCkFzIGluLCBkcml2ZXJzIHRoYXQgdXNlIFBD
-SWUgVkRNIGRhdGEgdHJhbnNmZXJzIHVzaW5nIE1DVFAgY29udHJvbGxlciBpbiBBU1QyNTAwLg0K
-DQpUaGFua3MsDQpyZw0KDQo=
+NPCM7xx includes 16 I2C controllers. This driver operates the controller.
+This module also includes a slave mode.
 
---_000_865C376D1B77624AAA570EFEF73CE52F9E08757Bfmsmsx118amrcor_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+---
+v6 -> v5:
+	- Update documentation
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
-Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
-OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
-cjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFu
-Lk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjoj
-OTU0RjcyOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5tc29ub3JtYWwwLCBsaS5t
-c29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJ
-bXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2lu
-LWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjExLjBwdDsN
-Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOA0K
-CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1z
-ZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCnNwYW4uRW1haWxTdHlsZTIwDQoJe21zby1zdHls
-ZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlm
-Ow0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6
-ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7
-c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30NCmRp
-di5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lm
-IGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9
-IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxv
-OnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIx
-IiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkg
-bGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9
-IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JbnRlbCBpcyB3b3JraW5nIG9u
-IE1DVFAgb3ZlciBQQ0kgKFZETSBkYXRhIHRyYW5zZmVycykuIFdlIHdpbGwgc2hhcmUgZGV0YWls
-cyBzaG9ydGx5LjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJz
-cDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5UaGFua3MsPG86cD48L286cD48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4tU2hhcmFkPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2IHN0eWxlPSJib3Jk
-ZXI6bm9uZTtib3JkZXItdG9wOnNvbGlkICNFMUUxRTEgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4g
-MGluIDBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBuYW1lPSJfX19fX3JlcGx5c2VwYXJh
-dG9yIj48L2E+PGI+RnJvbTo8L2I+IG9wZW5ibWMgJmx0O29wZW5ibWMtYm91bmNlcyYjNDM7c2hh
-cmFkLmtoZXRhbj1pbnRlbC5jb21AbGlzdHMub3psYWJzLm9yZyZndDsNCjxiPk9uIEJlaGFsZiBP
-ZiA8L2I+VmlqYXkgS2hlbWthPGJyPg0KPGI+U2VudDo8L2I+IFR1ZXNkYXksIE5vdmVtYmVyIDE5
-LCAyMDE5IDEwOjU0IFBNPGJyPg0KPGI+VG86PC9iPiByZ3JzICZsdDtyZ3JzQHByb3Rvbm1haWwu
-Y29tJmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+U3ViamVjdDo8L2I+IFJl
-OiBNQ1RQIG92ZXIgUENJIG9uIEFTVDI1MDA8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPkkgZG9u4oCZdCBzZWUgYW55IGxpbnV4IGtlcm5lbCBkcml2ZXIgc3VwcG9ydGlu
-ZyBtY3RwIGluIHVwc3RyZWFtLiBJIHdvdWxkIGxvdmUgdG8gc2VlIHRoZXNlIGFuZCB3b3VsZCBs
-aWtlIHRvIGNvbnRyaWJ1dGUgYXMgd2VsbC48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9y
-ZGVyLXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAwaW4iPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29s
-b3I6YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7
-Y29sb3I6YmxhY2siPm9wZW5ibWMgJmx0OzxhIGhyZWY9Im1haWx0bzpvcGVuYm1jLWJvdW5jZXMm
-IzQzO3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jLWJvdW5jZXMm
-IzQzO3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPC9hPiZndDsNCiBvbiBiZWhh
-bGYgb2YgcmdycyAmbHQ7PGEgaHJlZj0ibWFpbHRvOnJncnNAcHJvdG9ubWFpbC5jb20iPnJncnNA
-cHJvdG9ubWFpbC5jb208L2E+Jmd0Ozxicj4NCjxiPlJlcGx5LVRvOiA8L2I+cmdycyAmbHQ7PGEg
-aHJlZj0ibWFpbHRvOnJncnNAcHJvdG9ubWFpbC5jb20iPnJncnNAcHJvdG9ubWFpbC5jb208L2E+
-Jmd0Ozxicj4NCjxiPkRhdGU6IDwvYj5UdWVzZGF5LCBOb3ZlbWJlciAxOSwgMjAxOSBhdCA5OjQy
-IFBNPGJyPg0KPGI+VG86IDwvYj4mcXVvdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+JnF1b3Q7ICZsdDs8YSBocmVm
-PSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmc8L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5NQ1RQIG92ZXIgUENJIG9uIEFTVDI1MDA8
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPkhpLDxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj5Eb2VzIE9wZW5CTUMgc3VwcG9ydCBNQ1RQIG92ZXIgUENJPzxvOnA+PC9vOnA+PC9wPg0K
-PC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+QXMgaW4sIGRyaXZlcnMgdGhhdCB1
-c2UgUENJZSBWRE0gZGF0YSB0cmFuc2ZlcnMgdXNpbmcgTUNUUCBjb250cm9sbGVyIGluIEFTVDI1
-MDAuDQo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPlRoYW5rcyw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPnJnPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPGRpdj4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4N
-CjwvYm9keT4NCjwvaHRtbD4NCg==
+v5 -> v4:
+	- support recovery
+	- master-slave switch support needed for IPMB
 
---_000_865C376D1B77624AAA570EFEF73CE52F9E08757Bfmsmsx118amrcor_--
+v4 -> v3:
+	- typo on cover letter.
+
+v3 -> v2:
+	- fix dt binding: compatible name: omit "bus"
+
+v2 -> v1:
+	- run check patch in strict mode.
+	- use linux crc.
+	- define regs in constant offset without base.
+	- remove debug prints.
+	- no declarations for local functions.
+	
+v1: initial version
+
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+
+---
+Tali Perry (2):
+  Added device tree binding documentation for Nuvoton BMC NPCM I2C
+    controller.
+  Add Nuvoton NPCM BMC I2C controller driver.
+
+ .../devicetree/bindings/i2c/i2c-npcm7xx.txt   |   29 +
+ drivers/i2c/busses/Kconfig                    |   11 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-npcm7xx.c              | 2486 +++++++++++++++++
+ 4 files changed, 2527 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/i2c-npcm7xx.txt
+ create mode 100644 drivers/i2c/busses/i2c-npcm7xx.c
+
+-- 
+2.22.0
+
