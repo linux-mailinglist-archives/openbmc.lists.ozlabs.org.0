@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90034103A9F
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 14:02:55 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E092103AAD
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 14:05:36 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47J2x73hq0zDqPw
-	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 00:05:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47J2t22FwhzDqsW
+	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 00:02:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::941;
- helo=mail-ua1-x941.google.com; envelope-from=ulf.hansson@linaro.org;
+ smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::a44;
+ helo=mail-vk1-xa44.google.com; envelope-from=ulf.hansson@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.b="dYP/0q1U"; 
+ unprotected) header.d=linaro.org header.i=@linaro.org header.b="DZZd0nos"; 
  dkim-atps=neutral
-Received: from mail-ua1-x941.google.com (mail-ua1-x941.google.com
- [IPv6:2607:f8b0:4864:20::941])
+Received: from mail-vk1-xa44.google.com (mail-vk1-xa44.google.com
+ [IPv6:2607:f8b0:4864:20::a44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47J2pQ3T1KzDqrq
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 23:59:34 +1100 (AEDT)
-Received: by mail-ua1-x941.google.com with SMTP id l38so7727195uad.4
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 04:59:34 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47J2pR4p0DzDqrs
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 23:59:42 +1100 (AEDT)
+Received: by mail-vk1-xa44.google.com with SMTP id e205so6001537vke.2
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 04:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=nuqJ0vbClL23gGoYcppi0FrFy7e9Hz/yNcjMSMNBxqE=;
- b=dYP/0q1UJs+hkupL0Ks33xZa/oPu9OOQ/1POhchabco+MYLW/OVqUGMujUfpI5uX/Z
- guc95gIHgm0ENwks6ezoHMtNBDv5NpD4kZOt3rckVtc2TNrFfHdbtpCHIzg2WdJrYaXH
- /xSfomvFi7E/T0tCpoUNe3K5d8eLKhwMpXTlLq8hD5ihVf1MmjEnX8Zrc+Q4dl9OF8vp
- voHqwV0OwDc47bzLAoCx81iHGZpBIJjGrkq9aPtBI615OOd+WVm9zHE2PC2D1k+vGxR4
- 4PUF1/lLiew7UxLBcxzFkhUWuY57TX2Ka8I2YZ+NgeOlXACnlaJC6D7tFhA87pTU3x45
- HmRw==
+ :cc; bh=mv3ivjIPtynZHdywCSMliDx/clqr1q5FAXmvUn8sv20=;
+ b=DZZd0nosT6fMGQa1LrZVBdRXKbdVyqsPindUQS1a1nqo5KvOOvDL6TYkJpiTiwvqJm
+ kj/g0mCy/d36pCSmPRACtWRYhBo+puCWySIvVjJkhBdjQlOJX/vdsIwvOFJXKTqWEIkJ
+ qilWi7YApsYcUIF/Ghp5HFDBliyzAw2KPYzEBMtEnuPBotdX72kg7XjjLYcdPlzZ6eTE
+ mJzOOAhDrtjtwPvojZ3vCHKnUlRdvUb5r2UjPybqDbDV7PKTti/mA0zC4GArhWLwD1pu
+ 09jXs0Rs4TfHjCztF/mr43pLNjcug2oAeU+TFTbYX8J1siDHLBfAw3ku2nwrQVzY2d3/
+ 8HkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=nuqJ0vbClL23gGoYcppi0FrFy7e9Hz/yNcjMSMNBxqE=;
- b=rk2qLqSu4hUS+99oP1Yhx7J+2u9in5L4DZ1IlzZCkriUZEFAbST2GExpDZWH3t2tYH
- DDENDwhjt0+Sx+/gN3mA6ELPzB+XtqME2FY6n2esx8W6aCNWIMbSzMqpwh5h0kwfB9wG
- XP179jJr/p8qYO7H2ePqTTaX5Ro7tjn24JHuDqHmYLBrMl8qN1Jn99axgSNxcXJJacVQ
- qBRb/AU9S9YclMrFr7UIxevKOo+SsOS506bjXeqbx9ejLi/mpw9JpM+a6PfgXfWTIjrm
- /FMpFfUG2hkm2ffuAX4LSj22dVwjDaXPM2n/CrzgfleD3gxW2DuzNqHrCa7Zrs36x+gZ
- Hhew==
-X-Gm-Message-State: APjAAAW4X2BKf9T0wVm09WgGAtCU74rl5yowJtib1syvPxyH/MMRZmcs
- hsgDLZXuTJnm0z2dOVL7joWEapVdnLNXiVDSL1uZFw==
-X-Google-Smtp-Source: APXvYqzczwcqmzJh3GjUqnWFQGP/+Gp7RUJwV58YrFcSe+bfPCganPSc0GYA3NZbmUkPuarP338JjoXHT98NVoW0E1U=
-X-Received: by 2002:ab0:2042:: with SMTP id g2mr1511287ual.19.1574254771069;
- Wed, 20 Nov 2019 04:59:31 -0800 (PST)
+ bh=mv3ivjIPtynZHdywCSMliDx/clqr1q5FAXmvUn8sv20=;
+ b=RR9OTJpVmB5Y/r5LhxzRPCmFCvXHy6/KXORtR1GT82Bllkjl1U0hrKmI/05VG5CIb/
+ v01lsAAXgc4tg5zEJ/LYhNQMocS1Kt79gkVfsRYuUoin/tfncZS1R6k1EVqSK6D5Jh/K
+ 56Xqb6WkhwKmQg2aav9MMMEOyH5440Ann3cfETwcEsbvqKQTjbRQHb6wcoaz7/696Jfi
+ K79fNAdIAX7MUgE3mOmnas4l4HO6GqSHKe8c0aDa+3yBazWDOQrwL0N+RqFtACb4qrPa
+ kJxbMllCugs8QOC0VpxIPtMsUPobOlRbI1O6zF1LAZvD9JRF/ZiF3jaDDInHmqHS4V2F
+ SXfA==
+X-Gm-Message-State: APjAAAWsHCyhdFSNSIq2h5k3/Qe+UJ5I+S1NmxIXTifGa5MJDkHwlSJ9
+ 0nmFZeGUq+hCYTCdmAI0gssSKomvg9/ld8iq13lSXw==
+X-Google-Smtp-Source: APXvYqxQDALgcQNWwHLSVFVl8w6QJkMBvvg1vKNEOr6M8d/if/KbiPE09YO/XzOrupoT94zbpYTuK0JTffdMAGJDNgk=
+X-Received: by 2002:a05:6122:1181:: with SMTP id
+ x1mr1311701vkn.25.1574254780111; 
+ Wed, 20 Nov 2019 04:59:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20191118104646.3838-1-i.mikhaylov@yadro.com>
- <20191118104646.3838-3-i.mikhaylov@yadro.com>
-In-Reply-To: <20191118104646.3838-3-i.mikhaylov@yadro.com>
+ <20191118104646.3838-4-i.mikhaylov@yadro.com>
+In-Reply-To: <20191118104646.3838-4-i.mikhaylov@yadro.com>
 From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 20 Nov 2019 13:58:55 +0100
-Message-ID: <CAPDyKFoz3ipYBGR-6ubfqhtQVG9h16axoHNdSoo+OyNgKRs2Tw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] mmc: sdhci-of-aspeed: enable
- CONFIG_MMC_SDHCI_IO_ACCESSORS
+Date: Wed, 20 Nov 2019 13:59:04 +0100
+Message-ID: <CAPDyKFrshWd1P9dZGTSuU=5P0L6LSPz=v2nn+0SWi3ZZazKrRw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] mmc: sdhci-of-aspeed: add inversion signal presence
 To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -87,30 +87,45 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Mon, 18 Nov 2019 at 11:47, Ivan Mikhaylov <i.mikhaylov@yadro.com> wrote:
 >
-> Enable CONFIG_MMC_SDHCI_IO_ACCESSORS on the aspeed board. The read_l
-> callback is used for inverted card detection.
+> Add read_l callback in sdhci_ops with flipping of SDHCI_CARD_PRESENT
+> bit in case of inverted card detection signal.
 >
 > Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
-Applied for next, updating the changelog according to Andrew's comments, thanks!
+Applied for next, thanks!
+
+For clarity, I am leaving patch 1 for arm-soc.
 
 Kind regards
 Uffe
 
 
+
 >
-> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> index 49ea02c467bf..c9c1bb722368 100644
-> --- a/drivers/mmc/host/Kconfig
-> +++ b/drivers/mmc/host/Kconfig
-> @@ -159,6 +159,7 @@ config MMC_SDHCI_OF_ASPEED
->         tristate "SDHCI OF support for the ASPEED SDHCI controller"
->         depends on MMC_SDHCI_PLTFM
->         depends on OF && OF_ADDRESS
-> +       select MMC_SDHCI_IO_ACCESSORS
->         help
->           This selects the ASPEED Secure Digital Host Controller Interface.
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
+> index 8962f6664381..56912e30c47e 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -111,7 +111,19 @@ static void aspeed_sdhci_set_bus_width(struct sdhci_host *host, int width)
+>         sdhci_writeb(host, ctrl, SDHCI_HOST_CONTROL);
+>  }
 >
+> +static u32 aspeed_sdhci_readl(struct sdhci_host *host, int reg)
+> +{
+> +       u32 val = readl(host->ioaddr + reg);
+> +
+> +       if (unlikely(reg == SDHCI_PRESENT_STATE) &&
+> +           (host->mmc->caps2 & MMC_CAP2_CD_ACTIVE_HIGH))
+> +               val ^= SDHCI_CARD_PRESENT;
+> +
+> +       return val;
+> +}
+> +
+>  static const struct sdhci_ops aspeed_sdhci_ops = {
+> +       .read_l = aspeed_sdhci_readl,
+>         .set_clock = aspeed_sdhci_set_clock,
+>         .get_max_clock = aspeed_sdhci_get_max_clock,
+>         .set_bus_width = aspeed_sdhci_set_bus_width,
 > --
 > 2.20.1
 >
