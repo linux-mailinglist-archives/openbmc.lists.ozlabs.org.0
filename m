@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD59A103421
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 07:07:53 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47HsgB5PzQzDqT2
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 17:07:50 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id BA292103427
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 07:09:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47HshW6wb1zDqv8
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 17:08:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,69 +16,66 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="edouY/yf"; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Fd0L4n9g"; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="ariIa8DS"; dkim-atps=neutral
-X-Greylist: delayed 94 seconds by postgrey-1.36 at bilbo;
- Wed, 20 Nov 2019 17:07:11 AEDT
+ header.b="wSfHHMIq"; dkim-atps=neutral
 Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
  [66.111.4.230])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47HsfR2dwRzDqFJ;
- Wed, 20 Nov 2019 17:07:11 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47HsgR0Fh7zDqwT;
+ Wed, 20 Nov 2019 17:08:02 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 867435870;
- Wed, 20 Nov 2019 01:07:08 -0500 (EST)
+ by mailnew.nyi.internal (Postfix) with ESMTP id 8120168AD;
+ Wed, 20 Nov 2019 01:08:00 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 20 Nov 2019 01:07:08 -0500
+ by compute4.internal (MEProxy); Wed, 20 Nov 2019 01:08:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=TGFoOR8k4c4tdXLrnHIT+DIILptA4jZ
- EVoNDESk6+yw=; b=edouY/yf5Ltb2h4tveU+VBLDqigm6a+1o88WqNYbDlnHSuY
- NBdl3gWfrhkds2iRT7jM3shb6CLSHf0fy6Oob5Vv/fm8cHXsf+Lauk1vF2SFesqI
- DNinzU6/eCcVHcmCORlwu2A3KBQF61/VdvU3QlrI8kcCUlr1TokQgz55E8JkiZs2
- WKyQyLY2kdh7CPFL6RhyuXX87PhdPh+uKfsFioJBxWLmUkWI0SrkS4FL2TMPncRZ
- Qv7kaNH0kB9ELX31uGZDL/mXVhS66ynXtF0nl7mDo3MQCM5AYuMmDTBGUMYskln8
- NeYoZgIHkcNwqrZS3f68eOaVDkGtBTc8eiFBkOg==
+ :subject:content-type; s=fm1; bh=DsuQsdMCwuKKG1c6E9zMMunZDORO9yG
+ MRO643pGAkco=; b=Fd0L4n9gK6ybYYBcSg1jQ+1Anq3REZ7jgGzCovtPqAE/Qf7
+ nibUPdKv3eDWgqvMYN2XxG0LYtAm7iqdLElZ2SU2EcuQDU97upof3y5/rKu7J0qj
+ 4wd+UsSZoz5ns+jTk6oFghvBCuGKVESjgCqmLYDqvvMIi8+7PGqQ97iXDXslWWB/
+ hNys4hZmVfu9EB1q9yAK+U3HRuFeXrqidnlTdgVLOoMhdzR+kWFII8B2uTCkRJ/i
+ H3DuC4ThZzInqSom3lkAxl6YHjictrV9Ubn3izRoEoA3rng2VGb8fEoG5XienYtR
+ FIIk6KuzAAevM6ygdCWFFcjQDifODP/tQjoe5Bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=TGFoOR
- 8k4c4tdXLrnHIT+DIILptA4jZEVoNDESk6+yw=; b=ariIa8DSRjxdXYdh8Z5Lro
- DB+BCB4mf3iRxK7QxOA0RgQ8uVPrJ/4XOrFwysxaZYZvtVC0XGqBi0a9KM08R1VZ
- xm+vvuxDR2X5LFe4PohbZ1Dew5/jXxQWhuX3CtmzEGJFsUzf112wv4wiZ4tuXXu8
- 187pdMVL/LB9txSCIbpJ+9HuE0sOYvv2RZgmP959W5su918V2mLCmVsBY+0qb9md
- 5war8QCBhkRlbCB4tetpXLAXn44wDQzJerFHdk6HrZt1pV2h5a4i/tf+h+ZDvyy1
- PnJxolhBvXl1nnDjet9V/d2kL+B4BgtS/HbgGW+m7niln0yYiTZ423UPretPb5Uw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=DsuQsd
+ MCwuKKG1c6E9zMMunZDORO9yGMRO643pGAkco=; b=wSfHHMIqeIxz7uUn2d14w+
+ RVJjFGK++vJnIvk+WVWo+2LhVPANmImCx1DFfogwrz0w4+XWbNfJ5f6BIeoQeW+q
+ yV+f3UxVN3dKbrGFNSp5QtlhwEgHbMsXh5PgNmZ1pfC7bxvF9YAWORWMzKNGpCtK
+ uYBODeLR5kopolY3BPcOKPzqLljOVF5GUaZ0PAW/nvvKFjlYXqihy0iUl14pKLlS
+ 99bgQBQ82BSvwtROesF3tUuZu085Htvrm59DQiGUOyMOGmIDZWK5MpS4x3GHFP3g
+ IfM6Frwfacx1N8JxtCfmqswSgX0v2QgQUqvzplK5741QIJTyzljQcbEJKTc3SXvQ
  ==
-X-ME-Sender: <xms:DNjUXRYMKacsLTHV0VrBYTs7OAVFK5z3O6F0DRECwlISpOLCvx-QPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudegledgleduucetufdoteggodetrfdotf
+X-ME-Sender: <xms:QNjUXWJ2ujlBAKIfuc9xx6W73U9KNM57P4vef5G9WMlmfLGd-1iX0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudegledgledvucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
  rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
  grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgepud
-X-ME-Proxy: <xmx:DNjUXUOJZPIWiblwnQxzM3JsDfovVhv1VV0EMZfwN2Fyi_21oNEegw>
- <xmx:DNjUXabHS0fhLPD9p1WVOx8WakeGSKcVzb2e5OpjGdro-hw6ChiH8A>
- <xmx:DNjUXcUq1gW5LvqJNwgeoskUiwgzvWqExEzZleeaRe4cAwEqRQ8MQg>
- <xmx:DNjUXaKBqLPDutNNhrlKe1gwGe_K4mBpHPBswL1Ow9qg9zF-IKU7Tg>
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:QNjUXV626hPjxjiHuOLWBVDS-F3NZe_zGbxRynf3AD9D_lPoK1etCw>
+ <xmx:QNjUXbuJg1QQvHvrn9xtjvmCsDQSdZkBc2ntB7i2C9AJEZqIqAGP8w>
+ <xmx:QNjUXTZh-E3-mu7lCLDC6Av9Czb4yjJMXjLnR-9fqX_lO6ChGEgxVw>
+ <xmx:QNjUXTZvhspj1tktg1bwvQlCwqHwSasFZ_W2ijcrQRSSGu_GuGIyrQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 14E75E00A3; Wed, 20 Nov 2019 01:07:08 -0500 (EST)
+ id 49FE6E00A3; Wed, 20 Nov 2019 01:08:00 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
 Mime-Version: 1.0
-Message-Id: <794a7661-b4c1-46eb-bc78-79e7358ff999@www.fastmail.com>
-In-Reply-To: <20191118104646.3838-3-i.mikhaylov@yadro.com>
+Message-Id: <ebe4c175-a1a0-47d3-9c01-1dfeeffc97e5@www.fastmail.com>
+In-Reply-To: <20191118104646.3838-2-i.mikhaylov@yadro.com>
 References: <20191118104646.3838-1-i.mikhaylov@yadro.com>
- <20191118104646.3838-3-i.mikhaylov@yadro.com>
-Date: Wed, 20 Nov 2019 16:38:32 +1030
+ <20191118104646.3838-2-i.mikhaylov@yadro.com>
+Date: Wed, 20 Nov 2019 16:39:25 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
 To: "Ivan Mikhaylov" <i.mikhaylov@yadro.com>
-Subject: =?UTF-8?Q?Re:_[PATCH_v3_2/3]_mmc:_sdhci-of-aspeed:_enable_CONFIG=5FMMC=5F?=
- =?UTF-8?Q?SDHCI=5FIO=5FACCESSORS?=
+Subject: Re: [PATCH v3 1/3] aspeed: dts: add sd card for vesnin
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -102,10 +99,10 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 On Mon, 18 Nov 2019, at 21:16, Ivan Mikhaylov wrote:
-> Enable CONFIG_MMC_SDHCI_IO_ACCESSORS on the aspeed board. 
+> Presence signal is inverted for vesnin boards, 'cd-inverted' added
+> for invertion signal enablement. Vesnin BMC uses microSD, there is
+> no WP switch, 'disable-wp' is used for this purpose.
+> 
+> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
-s/on the aspeed board/for the ASPEED MMC driver/
-
-but otherwise:
-
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Acked-by: Andrew Jeffery <andrew@aj.id.au>
