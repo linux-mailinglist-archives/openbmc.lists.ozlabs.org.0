@@ -1,66 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D84C0104604
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 22:47:52 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11A1A104398
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 19:44:34 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47JBSH0BSbzDqsN
-	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 05:44:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47JGWp39bvzDqvV
+	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 08:47:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2d;
- helo=mail-yw1-xc2d.google.com; envelope-from=jandraara@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="eSXF06WI"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc2d.google.com (mail-yw1-xc2d.google.com
- [IPv6:2607:f8b0:4864:20::c2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47JBRP2BN2zDqs1
- for <openbmc@lists.ozlabs.org>; Thu, 21 Nov 2019 05:43:42 +1100 (AEDT)
-Received: by mail-yw1-xc2d.google.com with SMTP id v84so338499ywc.4
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 10:43:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=79ittukzTW75qQ275yFBqA84KOvah/VZddkuB+f95u4=;
- b=eSXF06WIZNmjYRo8EBdLW+NrZidMMiSiP2+Sjh4jTkZ4g0+L7+eAZWMkGSJqwET97y
- nYDTKQ1S+0XJQTyfU2SdLgL0eZprTpXLZa6K+4BvDqgU6Zuyz2NGgBM2r3lvC9V7aaih
- zp2IM7TO6mmBpjunQeonIY6G5cyXzZHHaLf19yueGIUo7fCMhgDEDqgeRZs6PLcpRcRl
- JzXp9y7GK3N/aNNrL+QFvt8A8G9thFvrCm5I23VvjU0gKA40gl2jDDFseaDaugUWSoea
- 3XMFCwcTpc5GQgkDxTn6+lHzmjHr4U4+vI5Aid5VrM/GMc9ck6gGrN86AJZIpK6vqK1W
- dzvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=79ittukzTW75qQ275yFBqA84KOvah/VZddkuB+f95u4=;
- b=OirWZtxdghp9BW92v2nuUInDLJbCE4PlwEJ+BkDVWr1gz/BNeu6beae8CbLlUuDq1L
- jTxHVsSGjwZn6eYQWYaiFNzH24CD0l8VeCOMcOE8CnZTmn8AD/kqXKNczAZp9qHOLmH6
- 8s7nprOuiAjeBrfeKv5bMtyIRWbXnim+jjVWSxb2mLXw8dYmeAKKNmVg6ihgMhkohThu
- iPi7EUzM2NyvKbFpIIfRgD5tvSurSVMSNnaosINIyWeAFg24YeK/Ni8wyfF6eHz4FYTh
- ljjoYA5eO0JRsqoBacLs3ZcN9nozVTgQfzf9pt79rKyONYhjDn7b8dU3NqCsUxUQ11OA
- tcqA==
-X-Gm-Message-State: APjAAAUsGM0RrzOJgwr3B4haJUQPJbPEtbXpvt7ceVyaJqVrt/H/nH8w
- r89VoOPYCVOyTc34PmM5Ah82BHha/sbTeVY2VDg=
-X-Google-Smtp-Source: APXvYqymieB/iSm8DGm+Hfh5Cn463+WFh/fj6cJVtM4hOgUl1DOed4q5tEb49y9hCEoEp9V9uw+zNDFxvNCAH6nZtG4=
-X-Received: by 2002:a0d:e607:: with SMTP id p7mr2740399ywe.103.1574275419239; 
- Wed, 20 Nov 2019 10:43:39 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47JGW26mLjzDqkc
+ for <openbmc@lists.ozlabs.org>; Thu, 21 Nov 2019 08:47:09 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xAKLh1VW070478
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 16:47:06 -0500
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.66])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wcf57ya7q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 16:47:06 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Wed, 20 Nov 2019 21:47:05 -0000
+Received: from us1a3-smtp07.a3.dal06.isc4sb.com (10.146.103.14)
+ by smtp.notes.na.collabserv.com (10.106.227.127) with
+ smtp.notes.na.collabserv.com ESMTP; Wed, 20 Nov 2019 21:47:02 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp07.a3.dal06.isc4sb.com
+ with ESMTP id 2019112021470208-911975 ;
+ Wed, 20 Nov 2019 21:47:02 +0000 
+In-Reply-To: 
+Subject: GUI Component Library
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Wed, 20 Nov 2019 21:47:02 +0000
+Sensitivity: 
+References: 
 MIME-Version: 1.0
-References: <OFACB662CD.2442A2C1-ON002584B8.004AA114-002584B8.004ACB90@notes.na.collabserv.com>
-In-Reply-To: <OFACB662CD.2442A2C1-ON002584B8.004AA114-002584B8.004ACB90@notes.na.collabserv.com>
-From: Jandra A <jandraara@gmail.com>
-Date: Wed, 20 Nov 2019 12:43:28 -0600
-Message-ID: <CAMTupoSvRSMPTGWXwzpN-Xs3S2H5_y8Va8BO6GzwiX8+qCWyfQ@mail.gmail.com>
-Subject: Notes - Re: GUI Design Workgroup - Today - Wednesday 11/20
-To: Derick Montague <Derick.Montague@ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000002479030597cb8ffd"
+Importance: Normal
+X-Priority: 3 (Normal)
+X-Mailer: IBM Verse Build 17652-1661 | IBM Domino Build
+ SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
+X-LLNOutbound: False
+X-Disclaimed: 9039
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=UTF-8
+x-cbid: 19112021-4409-0000-0000-00000135539D
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40304; ST=0; TS=0; UL=0; ISC=; MB=0.187966
+X-IBM-SpamModules-Versions: BY=3.00012141; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01293002; UDB=6.00686032; IPR=6.01075225; 
+ MB=3.00029634; MTD=3.00000008; XFM=3.00000015; UTC=2019-11-20 21:47:03
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2019-11-20 19:54:16 - 6.00010671
+x-cbparentid: 19112021-4410-0000-0000-00003D187DA1
+Message-Id: <OFB18B5F53.53F0FFF0-ON002584B8.0061F151-002584B8.0077A99B@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-11-20_07:2019-11-20,2019-11-20 signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,142 +82,132 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002479030597cb8ffd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida S=
+ans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div class=3D"socma=
+ildefaultfont" dir=3D"ltr" style=3D"font-family:Lucida Sans Unicode, Lucida=
+ Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family:=
+Lucida Sans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D=
+"ltr" style=3D"font-family:Lucida Sans Unicode, Lucida Grande, sans-serif;f=
+ont-size:10pt" ><div dir=3D"ltr" style=3D"font-family:Lucida Sans Unicode, =
+Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-f=
+amily:Lucida Sans Unicode, Lucida Grande, sans-serif;font-size:10pt" ><div =
+dir=3D"ltr" style=3D"font-family:Lucida Sans Unicode, Lucida Grande, sans-s=
+erif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family:Lucida Sans Uni=
+code, Lucida Grande, sans-serif;font-size:10pt" ><div dir=3D"ltr" ><meta ch=
+arset=3D"utf-8" ><p style=3D"color: rgb(28, 30, 41); background: transparen=
+t; margin-top:0pt; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true=
+" style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt;=
+ margin-bottom:0pt;;" >We are working to compromise on a component library =
+as we move towards a change to the GUI front-end framework. As discussed in=
+ previous emails to the list, we are planning on updating the BMC UI to use=
+ Vue. It is currently written using AngularJS, which will reach the end of =
+its lifecycle on June 30, 2021.&nbsp;</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >With this update, we are looking to select a component library that a=
+llows the GUI design/development team and any contributors to focus more on=
+ feature work and less on base-level components. IBM has proposed using the=
+ Carbon Design System. Carbon is an open-source library backed by IBM. We a=
+re advocating for this library for the following reasons.</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >1. Has an open-source community of Designers and Developers supportin=
+g the library</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >2. It is built with a user-centered approach that utilizes Design Thi=
+nking processes that include user testing and heuristic evaluation</span></=
+p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >3. It is compliant with the World Wide Web Consortium's (W3C) Web Con=
+tent Accessibility Guidelines (WCAG).</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >4. The framework can be themed to meet the branding needs of other co=
+mmunity members.</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >5. We agreed to and are using Carbon Design System icons</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >6. We are creating custom components using Carbon Design System patte=
+rns, e.g. LocaL User Management table. Using the Carbon Design System would=
+ allow us to bring in elements without the need to re-design or develop a n=
+ew custom component in Vue.</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >We are looking to discuss the use of other libraries and should choos=
+e one library. Using more than one library will add complexity with keeping=
+ all the utilized libraries up to date, create additional work to customize=
+ the library components to have the same look and feel, and could create co=
+nfusion determining with components are being used</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >from which library resulting in a lack of consistency within the appl=
+ication. None of the 3rd party libraries will likely meet all of our needs =
+so when we are evaluating component libraries some of the criteria that nee=
+d to be met includes:</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >1. Ability to create and use different themes</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >2. Components have been tested and meet the W3C Web Content Accessibi=
+lity Guidelines principles</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >of Perceivable, Operable, Understandable, and Robust</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><a class=3D"=5Fe75a791d-denali-editor-page-rtfLink" =
+href=3D"https://www.w3.org/WAI/fundamentals/accessibility-principles/" styl=
+e=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt; margi=
+n-bottom:0pt;; color: #4a6ee0;" target=3D"=5Fblank" ><span data-preserver-s=
+paces=3D"true" style=3D"color: rgb(28, 30, 41); background: transparent; ma=
+rgin-top:0pt; margin-bottom:0pt;; color: #4a6ee0;" >https://www.w3.org/WAI/=
+fundamentals/accessibility-principles/</span></a></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" ><span data-preserver-spaces=3D"true" style=3D"color:=
+ rgb(28, 30, 41); background: transparent; margin-top:0pt; margin-bottom:0p=
+t;;" >3. Open-source with an active community</span></p>
+<p style=3D"color: rgb(28, 30, 41); background: transparent; margin-top:0pt=
+; margin-bottom:0pt;" >&nbsp;</p></div></div></div></div></div></div></div>=
+</div></div><BR>
 
-Hello,
-
-Notes from today's GUI workgroup below:
-
-
-> - Discuss use of Carbon Design System for icons and components
->
-- Intel suggests React Bootstrap; likes Carbon system alerts better. IBM
-would propose looking at Vue Bootstrap since we are trying to move the
-framework to that. Prefers not to use Carbon because it does not match with
-the same modern aesthetic that Intel is looking for. Carbon has very small
-text and believes bigger is more modern. Also, Carbon uses square vs
-rounded corners and believes, round is more friendly
-- Discussed which elements of Carbon could be resolved through styling so
-that all contributors can achieve their definition of modernity. Colors and
-sizes can be themed.
-- Examples of modernity provided by Intel: Salesforce, Salesfusion, Google
-Analytics
-- Another design system Intel looked at is Salesforce lightning design
-system
-- Agreed achieving consensus on a style library is the immediate next step
-and the discussion will be continued on the mailing list with each party
-providing alternatives they would be willing to accept.
-
-
-
-> - Discuss framework update from AngularJS to Vue
->
-The community has not responded to emails regarding the change. IBM has
-started building out a prototype using Carbon components. We need to decide
-on a style guide before going down this path too far.
-
-
-
-> - Discuss primary navigation changes and collaborative work between Intel
-> and IBM
->
-
-- Intel pushed a commit yesterday with an updated navigation. This keeps
-the existing background color until we can create theming and resolve color
-downstream.
-- Discussed active, hover, and focused states. Determined focus and hover
-states should be the same. The active state needs a color update to meet
-accessibility and so that it stands out more at a glance.
-- Agreed the commit does not need to add carets to the navigation pattern
-since it is an existing problem with the UI. However, it should be
-addressed in the future to give users an affordance of hidden text.
-- Intel to make changes and send a screenshot to the email list:
-1. Add vertical space above =E2=80=98Overview=E2=80=99.
-2. Determine a color for the active state.
-
-
-
-Next steps (after agreeing on a Design Library)
-- Want to discuss header next. Brief discussion occurred in the meeting
-regarding the styling of 'Health' and 'Power'. For IBM, these elements
-don't look clickable, which reflects a greater need for a consistent
-button/link styling that would be applied in this instance. Intel believes
-it is not vital that 'Health' and 'Power' are obviously clickable because
-it is a shortcut and expects users to use the main navigation to access
-these pages.
-- Decided on breaking down the commits into 3. First commit the navigation,
-then full height, then the header.
-
-
-https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
-
---0000000000002479030597cb8ffd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_quote"><div>Hello,=C2=A0</div><div><br=
-></div><div>Notes from today&#39;s GUI workgroup below:=C2=A0</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"=
- style=3D"font-family:&quot;Lucida Sans Unicode&quot;,&quot;Lucida Grande&q=
-uot;,sans-serif;font-size:10pt"><div dir=3D"ltr"><div>- Discuss use of Carb=
-on Design System for icons and components</div></div></div></blockquote><di=
-v>- Intel suggests React Bootstrap; likes Carbon system alerts better. IBM =
-would propose looking at Vue Bootstrap since we are trying to move the fram=
-ework to that. Prefers not to use Carbon because it does not match with the=
- same modern aesthetic that Intel is looking for. Carbon has very small tex=
-t and believes bigger is more modern. Also, Carbon uses square vs rounded c=
-orners and believes, round is more friendly<br>- Discussed which elements o=
-f Carbon could be resolved through styling so that all contributors can ach=
-ieve their definition of modernity. Colors and sizes can be themed.<br>- Ex=
-amples of modernity provided by Intel: Salesforce, Salesfusion, Google Anal=
-ytics<br>- Another design system Intel looked at is Salesforce lightning de=
-sign system<br>- Agreed achieving consensus on a style library is the immed=
-iate next step and the discussion will be continued on the mailing list wit=
-h each party providing alternatives they would be willing to accept.<br></d=
-iv><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex"><div dir=3D"ltr" style=3D"font-family:&quot;Lucida Sans Unicode&=
-quot;,&quot;Lucida Grande&quot;,sans-serif;font-size:10pt"><div dir=3D"ltr"=
->
-<div>- Discuss framework update from AngularJS to Vue</div></div></div></bl=
-ockquote><div>The community has not responded to emails regarding the chang=
-e. IBM has started building out a prototype using Carbon components. We nee=
-d to decide on a style guide before going down this path too far.<br></div>=
-<div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex"><div dir=3D"ltr" style=3D"font-family:&quot;Lucida Sans Unicode&quot=
-;,&quot;Lucida Grande&quot;,sans-serif;font-size:10pt"><div dir=3D"ltr">
-<div>- Discuss primary navigation changes and collaborative=C2=A0work betwe=
-en Intel and IBM</div></div></div></blockquote><div><br></div><div>- Intel =
-pushed a commit yesterday with an updated navigation. This keeps the existi=
-ng background color until we can create theming and resolve color downstrea=
-m.<br>- Discussed active, hover, and focused states. Determined focus and h=
-over states should be the same. The active state needs a color update to me=
-et accessibility and so that it stands out more at a glance.<br>- Agreed th=
-e commit does not need to add carets to the navigation pattern since it is =
-an existing problem with the UI. However, it should be addressed in the fut=
-ure to give users an affordance of hidden text.<br>- Intel to make changes =
-and send a screenshot to the email list:<br>1. Add vertical space above =E2=
-=80=98Overview=E2=80=99.<br>2. Determine a color for the active state.<br><=
-/div><div><br></div><div><br></div><div><br>Next steps (after agreeing on a=
- Design Library)=C2=A0<br>- Want to discuss header next. Brief discussion o=
-ccurred in the meeting regarding the styling of &#39;Health&#39; and &#39;P=
-ower&#39;. For IBM, these elements don&#39;t look clickable, which reflects=
- a greater need for a consistent button/link styling that would be applied =
-in this instance. Intel believes it is not vital that &#39;Health&#39; and =
-&#39;Power&#39; are obviously clickable because it is a shortcut and expect=
-s users to use the main navigation to access these pages.<br>- Decided on b=
-reaking down the commits into 3. First commit the navigation, then full hei=
-ght, then the header.<br></div><div><br></div><div><br></div><div><a href=
-=3D"https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group">https://=
-github.com/openbmc/openbmc/wiki/GUI-Design-work-group</a><br></div><div><br=
-></div><div><br></div><div>=C2=A0</div></div></div>
-
---0000000000002479030597cb8ffd--
