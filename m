@@ -1,69 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A75021046D7
-	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 00:08:13 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47JJJV4pCqzDqwJ
-	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 10:08:10 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FD8F1046DA
+	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 00:13:23 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47JJQQ6gM5zDqmq
+	for <lists+openbmc@lfdr.de>; Thu, 21 Nov 2019 10:13:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.b="mZncGF77"; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47JJHr4dC5zDqKS
- for <openbmc@lists.ozlabs.org>; Thu, 21 Nov 2019 10:07:34 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1574291250;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wyyl/QDIsASHlXwMtytXyNyu/iPYehr487W6b8p2EK4=;
- b=mZncGF77bImG/bW9jDnpzHrE/PD3QBghWK+uoKwgxcMF2hFiNM5YHpksdLyJt2wboz5ktO
- E9HzKdDTT9K/5n9TajytFEzjC9KFOCON78DLsKYY07Fdb+cw0ni8alXt1sL7UvC4Jjma4z
- nLPvLjdZ7IxiuTIo0HBDt80gmZgBsIk=
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-90-B4MxBmMGO0KFm-IqIg2R4Q-1; Wed, 20 Nov 2019 18:07:27 -0500
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Wed, 20 Nov 2019 15:07:14 -0800
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Wed, 20 Nov 2019 15:07:14 -0800
-From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being kept
- up-to-date?
-Thread-Topic: Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47JJPq3b42zDqk7
+ for <openbmc@lists.ozlabs.org>; Thu, 21 Nov 2019 10:12:46 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 20 Nov 2019 15:12:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,223,1571727600"; d="scan'208";a="209907317"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga006.jf.intel.com with ESMTP; 20 Nov 2019 15:12:43 -0800
+Received: from [10.241.245.76] (unknown [10.241.245.76])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 15DE55800FE
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 15:12:43 -0800 (PST)
+Subject: Re: Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being
  kept up-to-date?
-Thread-Index: AdWf9z6RqRYRNKz8QQyDIwxVpkVDRg==
-Date: Wed, 20 Nov 2019 23:07:13 +0000
-Message-ID: <d410e08e4d1b48a5831f1af784f76a99@SCL-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.122.68.174]
+To: openbmc@lists.ozlabs.org
+References: <d410e08e4d1b48a5831f1af784f76a99@SCL-EXCHMB-13.phoenix.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <54b60348-ca89-9801-7101-0926e56fd5ad@linux.intel.com>
+Date: Wed, 20 Nov 2019 15:12:42 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-X-MC-Unique: B4MxBmMGO0KFm-IqIg2R4Q-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <d410e08e4d1b48a5831f1af784f76a99@SCL-EXCHMB-13.phoenix.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,13 +62,18 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being kept up-to-=
-date?
-It seems openbmc/openbmc https://github.com/openbmc/openbmc gets merges tha=
-t are not being merged into Intel-BMC/openbmc.
 
-Thanks!
 
---=20
-Bruce
+On 11/20/2019 3:07 PM, Bruce Mitchell wrote:
+> Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being kept up-to-date?
+> It seems openbmc/openbmc https://github.com/openbmc/openbmc gets merges that are not being merged into Intel-BMC/openbmc.
+Yes, I am responsible for keeping Intel-BMC in sync.  Unfortunately, I 
+am a few weeks behind due to some internal issues and priorities.  I am 
+working to get back to a normal sync schedule as soon as possible.
 
+Thanks,
+-Jason
+
+> 
+> Thanks!
+> 
