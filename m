@@ -1,51 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DC5E103433
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 07:11:57 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 682D51033FD
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 06:42:07 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Hs5S4zgLzDqBt
-	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 16:42:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Hsls1XzrzDqnp
+	for <lists+openbmc@lfdr.de>; Wed, 20 Nov 2019 17:11:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.130;
- helo=mail-40130.protonmail.ch; envelope-from=rgrs@protonmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.230;
+ helo=new4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="ccfuSvYr"; 
- dkim-atps=neutral
-X-Greylist: delayed 574 seconds by postgrey-1.36 at bilbo;
- Wed, 20 Nov 2019 16:35:56 AEDT
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch
- [185.70.40.130])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="i7XKy7y1"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="LJ4yst4A"; dkim-atps=neutral
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com
+ [66.111.4.230])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47HryP1Vc4zDqvw
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 16:35:55 +1100 (AEDT)
-Date: Wed, 20 Nov 2019 05:26:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1574227572;
- bh=em6hbABj/bYbPnkNKn+tcqjsUiYfUMRsMTjdiCLnhkA=;
- h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
- b=ccfuSvYrcjLuv3n/8cdoExZY8DLpIjFc4Z+A4pk3HsIZD5lzbbNxkA8vMTFBdKBIL
- slPokWKhOGQGg8vTG3y9rwvc7fEdOiO4JttJpeMxWKSie/8MlFMPbuHQszcbBG2tnT
- ukIUSMLzXic2JUkoHUUQnO8Ow1aNtrPdep+wtlPw=
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: rgrs <rgrs@protonmail.com>
-Subject: MCTP over PCI on AST2500
-Message-ID: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_84fa0642c3dad597992ddf5b3a678cc4"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47HslG3WwyzDqnc
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 17:11:20 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 33C6266D1;
+ Wed, 20 Nov 2019 01:05:34 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 20 Nov 2019 01:05:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=MqACBpEH9i8p185f/jCjhS3Buz1frYL
+ b77NTyx979Vk=; b=i7XKy7y1PAPvEgYOMCazKDu7BXD8GlpoYO0b/DBDIBevIRN
+ oSsmkXzqiXQhG2Jq+Qd5XDA42EyYTg48eht/Xln+pFFphAE4Wr5BupTMdKWlM3Fw
+ jn2JmooRWq+DeV9QmpImEqvvRg/G9PATHSu8qX6Id4TeTDXir6MfOqFb5mm03mbX
+ XnyTSMzM4Wwzcb1sKe7CAgaRzKPRWUCpYZTRQTTvIt4EYuTxBHfXgO0RA+JrOkZZ
+ zO1+/ONdWl3BYsmF5yWiE3nJdQFQwlQKPBIxT2cz9AtL+FCRZZBKwCREIPzoP8V4
+ myUat4Xt/IJGWXwFQ0iYbWY6hKjn4TuIMPP8ILw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=MqACBp
+ EH9i8p185f/jCjhS3Buz1frYLb77NTyx979Vk=; b=LJ4yst4Apz2MLuo0lKehfh
+ zMqxHdvAShQNWZwqQaXHzMmELTPswvADN1bS/OhbNjs6PJv3KkqqVHb85IVuIOqI
+ KerhvkyjTNmn688uJvc5szdzWrKmoG06NYfXFhTPE3yPvp/mJlA2aUCdro0fT1C8
+ LFnFIIIo9rvQPLtwVUHRxgvKhq/411RQz5zEQzYDgrxnaBTlliA227Vf1O4Z64MX
+ nunTveBc+fvoGSEbpprjVbKiMrLV6eAGKXJqT4Zh6iqYONYU+Byof6x0VjqjsSws
+ YIg9bUJeUjmDz3lC281U3WRxW+PDAEMTrFScfZ+NHCJdXLmJtsK0OyAnsgZ9rpyw
+ ==
+X-ME-Sender: <xms:q9fUXalOHeplB8yX1vzlWHBcSscnF4HNXZBSR9sI3r-PvqyKms2BJg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudegledgleduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:q9fUXVQwd6XqjXTUXw50wQGrHC2F8Cs31GSA51fL3LNn58J3g-mz4w>
+ <xmx:q9fUXVYlNjqiogexue1MOxuvWRhS75Wbdx0YSdrb4eH9sDbiYxYrMg>
+ <xmx:q9fUXR8XH-IwBjQObAQ_n6vciRRjHt9VPTLSKP0mMGCrZkUTZRPGJg>
+ <xmx:rtfUXf--SERIAc9OW-KEysE8HrVyG9VEO-RmAfdYmXiXxkt6cTDpbQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 9A0D9E00AA; Wed, 20 Nov 2019 01:05:31 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
+Mime-Version: 1.0
+Message-Id: <b525ea84-aaa0-45b3-95fd-a1b3518511b3@www.fastmail.com>
+In-Reply-To: <20191118104646.3838-4-i.mikhaylov@yadro.com>
+References: <20191118104646.3838-1-i.mikhaylov@yadro.com>
+ <20191118104646.3838-4-i.mikhaylov@yadro.com>
+Date: Wed, 20 Nov 2019 16:36:55 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Ivan Mikhaylov" <i.mikhaylov@yadro.com>
+Subject: =?UTF-8?Q?Re:_[PATCH_v3_3/3]_mmc:_sdhci-of-aspeed:_add_inversion_signal_?=
+ =?UTF-8?Q?presence?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,36 +89,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>, devicetree@vger.kernel.org,
+ Ulf Hansson <ulf.hansson@linaro.org>, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, linux-mmc <linux-mmc@vger.kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On Mon, 18 Nov 2019, at 21:16, Ivan Mikhaylov wrote:
+> Add read_l callback in sdhci_ops with flipping of SDHCI_CARD_PRESENT
+> bit in case of inverted card detection signal.
+> 
+> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
---b1_84fa0642c3dad597992ddf5b3a678cc4
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-SGksCgpEb2VzIE9wZW5CTUMgc3VwcG9ydCBNQ1RQIG92ZXIgUENJPwpBcyBpbiwgZHJpdmVycyB0
-aGF0IHVzZSBQQ0llIFZETSBkYXRhIHRyYW5zZmVycyB1c2luZyBNQ1RQIGNvbnRyb2xsZXIgaW4g
-QVNUMjUwMC4KClRoYW5rcywKcmc=
-
-
---b1_84fa0642c3dad597992ddf5b3a678cc4
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-PGRpdj5IaSw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5Eb2VzIE9wZW5CTUMgc3VwcG9y
-dCBNQ1RQIG92ZXIgUENJPzxicj48L2Rpdj48ZGl2PkFzIGluLCBkcml2ZXJzIHRoYXQgdXNlIFBD
-SWUgVkRNIGRhdGEgdHJhbnNmZXJzIHVzaW5nIE1DVFAgY29udHJvbGxlciBpbiBBU1QyNTAwLiA8
-YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVf
-YmxvY2siPjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXVzZXIgcHJvdG9u
-bWFpbF9zaWduYXR1cmVfYmxvY2stZW1wdHkiPjxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25t
-YWlsX3NpZ25hdHVyZV9ibG9jay1wcm90b24iPlRoYW5rcyw8YnI+PC9kaXY+PGRpdiBjbGFzcz0i
-cHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stcHJvdG9uIj5yZzxicj48L2Rpdj48L2Rpdj48ZGl2
-Pjxicj48L2Rpdj4=
-
-
-
---b1_84fa0642c3dad597992ddf5b3a678cc4--
-
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
