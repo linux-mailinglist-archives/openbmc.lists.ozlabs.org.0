@@ -2,58 +2,110 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C03C10689A
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:07:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 10B3E1068A3
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:09:00 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47K9YK5ZLpzDrCG
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 20:07:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47K9bD5LzLzDrKj
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 20:08:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.135;
- helo=mail-40135.protonmail.ch; envelope-from=rgrs@protonmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="OXEvcoxr"; 
- dkim-atps=neutral
-Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
- [185.70.40.135])
+ smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=zbigniew.kurzynski@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="signature verification failed" (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.b="TkN/Fx1u"; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47K9XF0T5ZzDqTV
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 20:06:17 +1100 (AEDT)
-Date: Fri, 22 Nov 2019 09:06:04 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1574413571;
- bh=TRIi2tPfLiJXyHTKnvkieH3V0fm09JQBsecleSOcUig=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=OXEvcoxro0U/ALj2vPpTFZgWpyxtq0cUm6XtKqX8M6nUSCPSrjMWBASZJzKN5VY8x
- NzSkureBFPoDtjHYXwuocUFPdR1rhdv6h28vN4RWyy3gg4jkbwdVmlWCh2lsIk6qq3
- RCBpTnAJuJwjJfEGWmHtR17IYYJDVxl+oRYof93c=
-To: www <ouyangxuan10@163.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re:Re: Add build date to image
-Message-ID: <PHi-_R-RqNeB7xEM-EzDWDdMb902pQczftTW9OZO7Ufo8CoHq8i02Gi4wUSqY2-DU9Ox9aqyxYBuYdLqT4PJLdUW9EtOpy9GtLsFSurdi4g=@protonmail.com>
-In-Reply-To: <af0b748.18f5.16e8b7b35a8.Coremail.ouyangxuan10@163.com>
-References: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
- <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
- <136be35a.269c.16e7c360818.Coremail.ouyangxuan10@163.com>
- <17d14e7a-1dc8-3375-a8a6-ea61c60e3bb7@linux.ibm.com>
- <67ca8d1c.28cc.16e8141d457.Coremail.ouyangxuan10@163.com>
- <0592b224-ccbc-30ad-d2aa-5c39f6481989@linux.ibm.com>
- <C7E32DAD-2454-4AF6-89C4-630DBC6898D9@fb.com>
- <af0b748.18f5.16e8b7b35a8.Coremail.ouyangxuan10@163.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47K9ZF6lCMzDrCJ
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 20:08:00 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 22 Nov 2019 01:07:56 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,229,1571727600"; d="scan'208";a="407516209"
+Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
+ by fmsmga005.fm.intel.com with ESMTP; 22 Nov 2019 01:07:56 -0800
+Received: from ORSEDG001.ED.cps.intel.com (10.7.248.4) by
+ ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Fri, 22 Nov 2019 01:07:56 -0800
+Received: from NAM05-DM3-obe.outbound.protection.outlook.com (104.47.49.51) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (TLS) id 14.3.439.0; Fri, 22 Nov 2019 01:07:56 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ijiH1WHh+kwyBJTrZaTgRxjXmPbRuc3i4RLZRIe2mdaIYVGCyIg9uRwAh4y/+OSasU3ULG/oRHTZFn0ZCq43Ew6LETviKlEqThYjRjHA6MK/QjRH/wYuCpRREBgBMoTeTjk1zWviwlR+pPJlxokvtDuGd0+LL1OzBkBzq+V/FZB9cRywczYdoLozDF1mqO5XKvUM68ul0sqvzHm0qKnusfh30y8mK/yXvgfeG57iqNHkghQnduYOfkNTBibL5botzaorkFcHUtm0rxRHn1NaXIGu37JgJjFHlR0xwEd8xL1TKfF5q3xOtCJNtAQimht0e0pUn0dBDkHyTcFc9NTlRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ntDJhOl9JAi9QLqz8CMX3VPt0kakREJA9S8BkxnBB5I=;
+ b=GhMQ0K7Cxo7rSAR0nFGMR41sadyHDKBB9Udp3KuNvNDfz9nvVHJdPhFqFd0a6nqykpUrMa1DPyabKsTCIfA11+oWHHvvpMKLOOfSN5pz+L/rzxsIk2fUjFXNZ3u2IG/mG6xH/WP8/Au6S9VEbkFFbZ9yobOBApsGp2KDu+dNw73YnFF+Js3q/HFA2LlfLumcE7Vao6HWE1XhSFiJ0n+KBmga2w2SFTDI05lI4IiPdSOFXfdn5w7PLRAmuglevCz/lrHn6HKNaiaDAETfvyseH2jkPdPfa4rCHrnHbxbZEyTdD/e8nX/GHO4ftQ8v0Dz+S3wos9t5QyqxhWGFA1pqSw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ntDJhOl9JAi9QLqz8CMX3VPt0kakREJA9S8BkxnBB5I=;
+ b=TkN/Fx1uH7xAKih5Qm3Z7lvNX0k8qojfzQcGjVe70Vt5/n3+a54bWVM9l8c9yo35rOT90a4igeUdrocuE1TLT1yFr9/YM/MIEm2KAuUZOIZAtax1JEEwT3ttf+5Pruj7UoTPd5LBDxRxL+K1TgBRrL+cnyLlAFxr7zlanbBPTP8=
+Received: from SN6PR11MB2749.namprd11.prod.outlook.com (52.135.92.28) by
+ SN6PR11MB3231.namprd11.prod.outlook.com (52.135.112.158) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2474.21; Fri, 22 Nov 2019 09:07:55 +0000
+Received: from SN6PR11MB2749.namprd11.prod.outlook.com
+ ([fe80::5ccc:3522:bd20:b4ac]) by SN6PR11MB2749.namprd11.prod.outlook.com
+ ([fe80::5ccc:3522:bd20:b4ac%3]) with mapi id 15.20.2474.019; Fri, 22 Nov 2019
+ 09:07:54 +0000
+From: "Kurzynski, Zbigniew" <zbigniew.kurzynski@intel.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: phosphor-certificate-manager refactoring.
+Thread-Topic: phosphor-certificate-manager refactoring.
+Thread-Index: AdWhEjMmYpc3/EViSxmZcopSijcz3g==
+Date: Fri, 22 Nov 2019 09:07:54 +0000
+Message-ID: <SN6PR11MB2749157C9FFBF80F4C8FA9B492490@SN6PR11MB2749.namprd11.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNjE4ZmJiNGQtNWFmYy00YzM5LWI4YmMtMWFkYTE3OWUzZGUxIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUVVLMTBcLzdRXC9Md28ydldSQTNFSG45c1NDKzArNHNtbGJ0VWFqSllEb2x0VTgzWUJGblRpck9ncjBRRFZ0bkh3In0=
+dlp-reaction: no-action
+dlp-version: 11.2.0.6
+dlp-product: dlpe-windows
+x-ctpclassification: CTP_NT
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=zbigniew.kurzynski@intel.com; 
+x-originating-ip: [192.55.79.126]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 41efea52-e1e7-4f77-b55a-08d76f2b75e8
+x-ms-traffictypediagnostic: SN6PR11MB3231:
+x-microsoft-antispam-prvs: <SN6PR11MB32314218013B543F88D1504C92490@SN6PR11MB3231.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 02296943FF
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(346002)(39860400002)(376002)(396003)(136003)(366004)(53754006)(189003)(199004)(33656002)(66066001)(86362001)(6506007)(7696005)(3846002)(102836004)(26005)(186003)(6116002)(2906002)(6436002)(5640700003)(55016002)(9686003)(25786009)(2501003)(305945005)(66476007)(66446008)(64756008)(66556008)(316002)(71200400001)(76116006)(66946007)(14444005)(7736002)(256004)(3480700005)(2351001)(71190400001)(6916009)(8936002)(1730700003)(478600001)(81166006)(8676002)(81156014)(5660300002)(14454004)(74316002)(52536014)(99286004);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:SN6PR11MB3231;
+ H:SN6PR11MB2749.namprd11.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: VUwePDYRF4trezw1i69emqesbu8QVsOCrwhf5c9IJvFjhUiMmCAaM9MTCRC0e6RA4ygFp/C0OKIWYN8ssqsUzd+kMJkQoxQFGvCntr5myA5XWXGnSrXgW0j/rBQeDcWaSQeiC6SD2b/NzX6/SdbzTA+KfPBjR+PadLQ5KXbBb2QmTpUx068/G7wA9figJKkvD5Gw9igyTtFIjCK4PjFSpNhUVd/cI+19CrG02z14ZWLSSUy8XiJGxUR0WrPIugFNkY4YgIm8f2Cjg+FSOt3JQHDPnlRwbC8wDIRfIwjhe/Y89DRPVhfXdOg47BkTKnf10xKCUbvYR8MNQs7bxXhd/nZRlank6UwHfllePvktN86GOjdDomF329fYpeyjN/VIIka/b+2XMzcF1wyNOwf9BPBKC0OqITQO/E33rSGr2Qxur3FuTb8xYB/EEgWdxBQZ
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_eb1073973223bcac285d5c33e1604f5c"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41efea52-e1e7-4f77-b55a-08d76f2b75e8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Nov 2019 09:07:54.6647 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qF9Q5ReKdNx00NrRXuZsUzAaaevW7cMoRGMJUckrDkmpV7LeolTNjCH+2BuZ4P9BZz67Pz5niCMeAMhDQ2fHXclY5Coc2vAKjYUCfELy6og=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3231
+X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,131 +117,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+Hi everyone,  =
 
---b1_eb1073973223bcac285d5c33e1604f5c
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+I think it is good time to do some code refactoring in phosphor-certificate=
+-manager.
+The certificate manager supports few certificate types, each is managed by =
+a separate service instance.
+	phosphor-certificate-manager@authority.service, phosphor-certificate-manag=
+er@bmcweb.service, phosphor-certificate-manager@nslcd.service
+Initially the certificate manager was designed to support single certificat=
+e file. But now one of its instances supports multiple files and the code f=
+or that case differs quite much from the rest.
+I would like to propose a small refactoring of this code in following steps:
 
-SGkgQnlyb24sCgpXZSBoYWQgYSBzaW1pbGlhciBuZWVkLCBhbmQgd2UgdXNlIElQTUkgYXV4IHZl
-cnNpb24gZm9yIHRoaXMgcHVycG9zZS4KClRvIGdldCB0aGUgYmVoYXZpb3IgeW91IGRlc2NyaWJl
-LCB5b3UgY2FuIGNoYW5nZSBbeW91ciBwbGF0Zm9ybSdzIHBob3NwaG9yLWlwbWktY29uZmlnLmJi
-YXBwZW5kXShodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2Jsb2IvbWFzdGVyL21l
-dGEtaWJtL21ldGEtd2l0aGVyc3Bvb24vcmVjaXBlcy1waG9zcGhvci9pcG1pL3Bob3NwaG9yLWlw
-bWktY29uZmlnLmJiYXBwZW5kKQoKV2l0aGVyc3Bvb24gZm9yIGV4YW1wbGUsIGNhbGN1bGF0ZXMg
-QXV4IHJldiBpbmZvIGZyb20gVkVSU0lPTl9JRCAoZ2l0IHRhZywgSSBndWVzcykuCkluIG91ciBw
-bGF0Zm9ybXMsIHdlIGluc3RlYWQgd3JpdGUgRERNTVlZWVkgaW50byBJUE1JIEdldCBEZXYgSUQn
-cyBhdXggcmV2IGluZm8gKDRieXRlcywgQkNEKQoKImlwbWl0b29sIG1jIGluZm8iIHdvdWxkIGxv
-b2tzIHNvbWV0aGluZyBsaWtlIGJlbG93OgpBdXggRmlybXdhcmUgUmV2IEluZm8gICAgIDoKICAg
-IDB4MjIKICAgIDB4MTEKICAgIDB4MTkKICAgIDB4MjAKClRoYW5rcywKClJhagoK4oCQ4oCQ4oCQ
-4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQCk9uIFRo
-dXJzZGF5LCBOb3ZlbWJlciAyMSwgMjAxOSA2OjMyIEFNLCB3d3cgPG91eWFuZ3h1YW4xMEAxNjMu
-Y29tPiB3cm90ZToKCj4gRGVhciBKb3NlcGggJiBWaWpheSBLaGVta2EsCj4KPiBObyBtYXR0ZXIg
-d2hhdCB5b3VyIHZlcnNpb24gaXMsIGJ1aWxkIGRhdGUgb25seSByZXByZXNlbnRzIHRoZSB0aW1l
-IHdoZW4gdGhlIGltYWdlIHdhcyBjcmVhdGVkLgo+Cj4gdGhhbmtzLAo+IEJ5cm9uCj4KPiBBdCAy
-MDE5LTExLTIxIDAyOjA4OjQwLCAiVmlqYXkgS2hlbWthIiA8dmlqYXlraGVta2FAZmIuY29tPiB3
-cm90ZToKPj4KPj4KPj7vu79PbiAxMS8yMC8xOSwgODo0MCBBTSwgIm9wZW5ibWMgb24gYmVoYWxm
-IG9mIEpvc2VwaCBSZXlub2xkcyIgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21A
-bGlzdHMub3psYWJzLm9yZyBvbiBiZWhhbGYgb2YganJleUBsaW51eC5pYm0uY29tPiB3cm90ZToK
-Pj4KPj4KPj4gICAgT24gMTEvMTgvMTkgNzoyMyBQTSwgd3d3IHdyb3RlOgo+PiAgICA+IERlYXIg
-Sm9zZXBo77yMCj4+ICAgID4KPj4gICAgPiBUaGFuayB5b3UgdmVyeSBtdWNoIGZvciB5b3VyIGhl
-bHAuIEkganVzdCB3YW50IHRvIHNob3cgdGhlIGNvbXBpbGUKPj4gICAgPiB0aW1lIG9mIGZpcm13
-YXJlIHRvIHRoZSB1c2VyLiBJZiAgb25seSBzaG93IHRoZSB2ZXJzaW9uLCBpdCBjYW4ndAo+PiAg
-ICA+IGNvcnJlc3BvbmQgdG8gdGhlIHRpbWUuIFdoZW4gYm90aCBhcmUgZGlzcGxheWVkIGF0IHRo
-ZSBzYW1lIHRpbWUsIHRoZQo+PiAgICA+IGluZm9ybWF0aW9uIHdpbGwgYmUgY2xlYXJlci4gdGhh
-bmtzIGFnYWluLgo+PiAgICA+Cj4+Cj4+ICAgIEJ5cm9uLCB0aGFua3MgZm9yIHRoYXQuICBJIHRo
-aW5rIEkgdW5kZXJzdGFuZCB5b3VyIHVzZSBjYXNlLiBIb3dldmVyLAo+PiAgICBkb2VzIHRoaXMg
-cHJhY3RpY2UgYXNzdW1lIHRoZSBidWlsZCBkYXRlIGlzIGNsb3NlIHRvIHRoZSBkYXRlIHdoZW4g
-dGhlCj4+ICAgIHNvZnR3YXJlIHZlcnNpb24gd2FzIGNyZWF0ZWQ/Cj4+ICAgIC0gRm9yIGV4YW1w
-bGUsIEkgYXNzdW1lIHlvdSdsbCBtZXJnZSBhIGdpdCBjb21taXQgdG8gY3JlYXRlIGEgbmV3Cj4+
-ICAgIHNvZnR3YXJlIHZlcnNpb24sIGFuZCB0aGVuIGJ1aWxkIGFuIGltYWdlIGJhc2VkIG9uIHRo
-YXQgY29tbWl0LiAgSW4gdGhpcwo+PiAgICB3YXksIHRoZSBidWlsZCBkYXRlIGNvcnJlbGF0ZXMg
-Y2xvc2VseSB3aXRoIHRoZSB2ZXJzaW9uLgo+PiAgICAtIEhvd2V2ZXIsIGlmIHlvdSBidWlsZCBh
-biBpbWFnZSBmcm9tIGFuIG9sZGVyIGNvbW1pdCwgb3Igd2FpdCBhIGxvbmcKPj4gICAgdGltZSBi
-ZWZvcmUgYnVpbGRpbmcgYW4gaW1hZ2UsIHRoZSBidWlsZCBkYXRlIHdpbGwgbm90IGNvcnJlbGF0
-ZSBjbG9zZWx5Cj4+ICAgIHdpdGggdGhlIHZlcnNpb24uICBUaGlzIGNhbiBiZSBtaXNsZWFkaW5n
-IGFuZCBsZWFkIHRvIGVycm9ycyBpbiBoYW5kbGluZwo+PiAgICBpbWFnZXMuCj4+Cj4+SSBndWVz
-cyBidWlsZCBkYXRlIHNob3VsZCBiZSB0aGUgZGF0ZSB2ZXJzaW9uIHdhcyByZWxlYXNlZCBvciBj
-cmVhdGVkLgo+Pgo+PiAgICBJcyB0aGF0IGEgY29uY2VybiBmb3IgeW91Pwo+Pgo+PiAgICAtIEpv
-c2VwaAo+Pgo+PiAgICA+IHRoYW5rcywKPj4gICAgPiBCeXJvbgo+PiAgICA+Cj4+ICAgIC4uLnNu
-aXAuLi4KPj4KPj4KPj4=
+Step 1.
+Create a new subclass of Certificate. The base class will remain as is, foc=
+using on single certificate approach, while its derived child will extend i=
+t with support for multiple certificates.
+The Manager class seems quite generic and I would leave it as is. Two insta=
+nces will operate on the base Certificate class, while the third will use c=
+lass derived from the Certificate.
 
+Step 2.
+Moving files:
+	1. meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-cert-config/e=
+nv
+	2. meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-authority-cer=
+t-config/env
+	3. meta-phosphor/recipes-phosphor/certificate/phosphor-bmcweb-cert-config/=
+env
+to repository phosphor-certificate-manager under a new directory 'service'
 
---b1_eb1073973223bcac285d5c33e1604f5c
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+Getting rid of below recipes and moving their functionality to phosphor-cer=
+tificate-manager_git.bb if possible.
+	phosphor-bmcweb-cert-config.bb, phosphor-nslcd-cert-config.bb, phosphor-ns=
+lcd-authority-cert-config.bb
 
-PGRpdj5IaSBCeXJvbiw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XZSBoYWQgYSBzaW1p
-bGlhciBuZWVkLCBhbmQgd2UgdXNlIElQTUkgYXV4IHZlcnNpb24gZm9yIHRoaXMgcHVycG9zZS48
-YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5UbyBnZXQgdGhlIGJlaGF2aW9yIHlvdSBkZXNj
-cmliZSwgeW91IGNhbiBjaGFuZ2UgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
-b3BlbmJtYy9ibG9iL21hc3Rlci9tZXRhLWlibS9tZXRhLXdpdGhlcnNwb29uL3JlY2lwZXMtcGhv
-c3Bob3IvaXBtaS9waG9zcGhvci1pcG1pLWNvbmZpZy5iYmFwcGVuZCI+eW91ciBwbGF0Zm9ybSdz
-IHBob3NwaG9yLWlwbWktY29uZmlnLmJiYXBwZW5kPC9hPjxicj48L2Rpdj48ZGl2Pjxicj48L2Rp
-dj48ZGl2PldpdGhlcnNwb29uIGZvciBleGFtcGxlLCBjYWxjdWxhdGVzIEF1eCByZXYgaW5mbyBm
-cm9tIFZFUlNJT05fSUQgKGdpdCB0YWcsIEkgZ3Vlc3MpLjxicj48L2Rpdj48ZGl2PkluIG91ciBw
-bGF0Zm9ybXMsIHdlIGluc3RlYWQgd3JpdGUgRERNTVlZWVkgaW50byBJUE1JIEdldCBEZXYgSUQn
-cyBhdXggcmV2IGluZm8gKDRieXRlcywgQkNEKTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2
-PiJpcG1pdG9vbCBtYyBpbmZvIiB3b3VsZCBsb29rcyBzb21ldGhpbmcgbGlrZSBiZWxvdzo8YnI+
-PC9kaXY+PGRpdj5BdXggRmlybXdhcmUgUmV2IEluZm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
-Ojxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyAweDIyPGJyPjwvZGl2PjxkaXY+Jm5i
-c3A7Jm5ic3A7Jm5ic3A7IDB4MTE8YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsgMHgx
-OTxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyAweDIwPGJyPjwvZGl2PjxkaXY+PGJy
-PjwvZGl2PjxkaXY+VGhhbmtzLDxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25h
-dHVyZV9ibG9jayI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBw
-cm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InBy
-b3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiI+UmFqPGJyPjwvZGl2PjwvZGl2PjxkaXY+
-PGJyPjwvZGl2PjxkaXY+4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ
-4oCQ4oCQ4oCQ4oCQ4oCQ4oCQPGJyPjwvZGl2PjxkaXY+IE9uIFRodXJzZGF5LCBOb3ZlbWJlciAy
-MSwgMjAxOSA2OjMyIEFNLCB3d3cgJmx0O291eWFuZ3h1YW4xMEAxNjMuY29tJmd0OyB3cm90ZTo8
-YnI+PC9kaXY+PGRpdj4gPGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1
-b3RlIiB0eXBlPSJjaXRlIj48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDoxLjc7Y29sb3I6IzAwMDAw
-MDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdj5EZWFyIEpvc2VwaCAmYW1w
-OyBWaWpheSBLaGVta2EsPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+Tm8gbWF0dGVyIHdo
-YXQgeW91ciB2ZXJzaW9uIGlzLCBidWlsZCBkYXRlIG9ubHkgcmVwcmVzZW50cyB0aGUgdGltZSB3
-aGVuIHRoZSBpbWFnZSB3YXMgY3JlYXRlZC48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj50
-aGFua3MsPGJyPjwvZGl2PjxkaXY+Qnlyb248YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48
-YnI+PC9kaXY+PGRpdiBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48YnI+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PHByZT48ZGl2Pjxicj48L2Rpdj48ZGl2PkF0
-IDIwMTktMTEtMjEgMDI6MDg6NDAsICJWaWpheSBLaGVta2EiICZsdDt2aWpheWtoZW1rYUBmYi5j
-b20mZ3Q7IHdyb3RlOg0KJmd0Ow0KJmd0Ow0KJmd0O++7v09uIDExLzIwLzE5LCA4OjQwIEFNLCAi
-b3BlbmJtYyBvbiBiZWhhbGYgb2YgSm9zZXBoIFJleW5vbGRzIiAmbHQ7b3BlbmJtYy1ib3VuY2Vz
-K3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBqcmV5QGxp
-bnV4LmlibS5jb20mZ3Q7IHdyb3RlOg0KJmd0Ow0KJmd0Ow0KJmd0OyAgICBPbiAxMS8xOC8xOSA3
-OjIzIFBNLCB3d3cgd3JvdGU6DQomZ3Q7ICAgICZndDsgRGVhciBKb3NlcGjvvIwNCiZndDsgICAg
-Jmd0Ow0KJmd0OyAgICAmZ3Q7IFRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgaGVscC4gSSBq
-dXN0IHdhbnQgdG8gc2hvdyB0aGUgY29tcGlsZQ0KJmd0OyAgICAmZ3Q7IHRpbWUgb2YgZmlybXdh
-cmUgdG8gdGhlIHVzZXIuIElmICBvbmx5IHNob3cgdGhlIHZlcnNpb24sIGl0IGNhbid0DQomZ3Q7
-ICAgICZndDsgY29ycmVzcG9uZCB0byB0aGUgdGltZS4gV2hlbiBib3RoIGFyZSBkaXNwbGF5ZWQg
-YXQgdGhlIHNhbWUgdGltZSwgdGhlDQomZ3Q7ICAgICZndDsgaW5mb3JtYXRpb24gd2lsbCBiZSBj
-bGVhcmVyLiB0aGFua3MgYWdhaW4uDQomZ3Q7ICAgICZndDsNCiZndDsNCiZndDsgICAgQnlyb24s
-IHRoYW5rcyBmb3IgdGhhdC4gIEkgdGhpbmsgSSB1bmRlcnN0YW5kIHlvdXIgdXNlIGNhc2UuIEhv
-d2V2ZXIsDQomZ3Q7ICAgIGRvZXMgdGhpcyBwcmFjdGljZSBhc3N1bWUgdGhlIGJ1aWxkIGRhdGUg
-aXMgY2xvc2UgdG8gdGhlIGRhdGUgd2hlbiB0aGUNCiZndDsgICAgc29mdHdhcmUgdmVyc2lvbiB3
-YXMgY3JlYXRlZD8NCiZndDsgICAgLSBGb3IgZXhhbXBsZSwgSSBhc3N1bWUgeW91J2xsIG1lcmdl
-IGEgZ2l0IGNvbW1pdCB0byBjcmVhdGUgYSBuZXcNCiZndDsgICAgc29mdHdhcmUgdmVyc2lvbiwg
-YW5kIHRoZW4gYnVpbGQgYW4gaW1hZ2UgYmFzZWQgb24gdGhhdCBjb21taXQuICBJbiB0aGlzDQom
-Z3Q7ICAgIHdheSwgdGhlIGJ1aWxkIGRhdGUgY29ycmVsYXRlcyBjbG9zZWx5IHdpdGggdGhlIHZl
-cnNpb24uDQomZ3Q7ICAgIC0gSG93ZXZlciwgaWYgeW91IGJ1aWxkIGFuIGltYWdlIGZyb20gYW4g
-b2xkZXIgY29tbWl0LCBvciB3YWl0IGEgbG9uZw0KJmd0OyAgICB0aW1lIGJlZm9yZSBidWlsZGlu
-ZyBhbiBpbWFnZSwgdGhlIGJ1aWxkIGRhdGUgd2lsbCBub3QgY29ycmVsYXRlIGNsb3NlbHkNCiZn
-dDsgICAgd2l0aCB0aGUgdmVyc2lvbi4gIFRoaXMgY2FuIGJlIG1pc2xlYWRpbmcgYW5kIGxlYWQg
-dG8gZXJyb3JzIGluIGhhbmRsaW5nDQomZ3Q7ICAgIGltYWdlcy4NCiZndDsNCiZndDtJIGd1ZXNz
-IGJ1aWxkIGRhdGUgc2hvdWxkIGJlIHRoZSBkYXRlIHZlcnNpb24gd2FzIHJlbGVhc2VkIG9yIGNy
-ZWF0ZWQuDQomZ3Q7DQomZ3Q7ICAgIElzIHRoYXQgYSBjb25jZXJuIGZvciB5b3U/DQomZ3Q7DQom
-Z3Q7ICAgIC0gSm9zZXBoDQomZ3Q7DQomZ3Q7ICAgICZndDsgdGhhbmtzLA0KJmd0OyAgICAmZ3Q7
-IEJ5cm9uDQomZ3Q7ICAgICZndDsNCiZndDsgICAgLi4uc25pcC4uLg0KJmd0Ow0KJmd0Ow0KJmd0
-Ow0KPGJyPjwvZGl2PjwvcHJlPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxz
-cGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8YnI+PC9wPjwvc3Bhbj48L2Jsb2Nr
-cXVvdGU+PGRpdj48YnI+PC9kaXY+
+Step 3.
+Changing the way of managing and storing TrustStore certificates.
 
+Now all certificates are stored and managed directly in a /etc/ssl/certs/au=
+thority/ , but files in that directory are subject to many restrictions lik=
+e: =
 
+	the files must be named using the subject name's hash and an extension of =
+'.0',
+	If there are two files with the same hash they should have different exten=
+sion number,
+	Extension numbers cannot have gaps, which is a problem when we delete some=
+ certificates.
 
---b1_eb1073973223bcac285d5c33e1604f5c--
+I propose to store certificate files in a separate location, where file nam=
+es do not have such restrictions.
+And put in this folder /etc/ssl/certs/authority/ only soft links to origina=
+l files.
+Each time when any of certificate will be changed/deleted/added the manager=
+ should simply delete all links from /etc/ssl/certs/authority and the recre=
+ate them by iterating all certs files.
+
+Please let me know if you have any concerns.
+
+-Zbigniew
+--------------------------------------------------------------------
+
+Intel Technology Poland sp. z o.o.
+ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII Wydz=
+ial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP 957-07-52-31=
+6 | Kapital zakladowy 200.000 PLN.
+
+Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego adresata=
+ i moze zawierac informacje poufne. W razie przypadkowego otrzymania tej wi=
+adomosci, prosimy o powiadomienie nadawcy oraz trwale jej usuniecie; jakiek=
+olwiek
+przegladanie lub rozpowszechnianie jest zabronione.
+This e-mail and any attachments may contain confidential material for the s=
+ole use of the intended recipient(s). If you are not the intended recipient=
+, please contact the sender and delete all copies; any review or distributi=
+on by
+others is strictly prohibited.
 
