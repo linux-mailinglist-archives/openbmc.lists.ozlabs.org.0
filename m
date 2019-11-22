@@ -1,77 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8D791074F8
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 16:35:14 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47KL8w1jtjzDrJs
-	for <lists+openbmc@lfdr.de>; Sat, 23 Nov 2019 02:35:12 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 06EDB107522
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 16:45:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47KLNH233bzDrL9
+	for <lists+openbmc@lfdr.de>; Sat, 23 Nov 2019 02:45:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47KL8C34s8zDrHy
- for <openbmc@lists.ozlabs.org>; Sat, 23 Nov 2019 02:34:34 +1100 (AEDT)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xAMFSOpU023741
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 10:34:32 -0500
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wefjwene7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 10:34:32 -0500
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAMFUKpY002549
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:31 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma03dal.us.ibm.com with ESMTP id 2wa8r7pq1k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:31 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xAMFYU9T54198772
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:30 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94C94AE066
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:30 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 786BBAE062
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:30 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 15:34:30 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Redfish specs to disable host serial
-Message-ID: <51543476-8dd0-26c0-2e03-bef495dd457d@linux.ibm.com>
-Date: Fri, 22 Nov 2019 09:34:30 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-22_03:2019-11-21,2019-11-22 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- priorityscore=1501 mlxlogscore=454 adultscore=0 suspectscore=0 mlxscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1911220135
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47KLMV4W8yzDrHy
+ for <openbmc@lists.ozlabs.org>; Sat, 23 Nov 2019 02:44:21 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Received: from [192.168.253.30] (unknown [192.168.253.30])
+ by bajor.fuzziesquirrel.com (Postfix) with ESMTPSA id 72938114C3A;
+ Fri, 22 Nov 2019 10:44:16 -0500 (EST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
+Subject: Re: 2 patch dependency
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <6E519880-9A69-411B-8DD4-BF86AB7E543C@gmail.com>
+Date: Fri, 22 Nov 2019 10:44:16 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <29544933-52D7-4133-8AA2-B78F3A8441C5@fuzziesquirrel.com>
+References: <EACBC95B-0761-4667-A622-E1C0EA6EF1ED@fb.com>
+ <E782C583-DBB7-4589-BFE6-EC69E2343424@fuzziesquirrel.com>
+ <20191119003509.GA80304@patrickw3-mbp.dhcp.thefacebook.com>
+ <2231F8C7-719B-468B-BABB-92AF197F92C8@gmail.com>
+ <20191119165440.GB93344@patrickw3-mbp>
+ <6E519880-9A69-411B-8DD4-BF86AB7E543C@gmail.com>
+To: Andrew Geissler <geissonator@gmail.com>
+X-Mailer: Apple Mail (2.3601.0.10)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,17 +53,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Team,
+Sorry - been a bit behind on email lately.
 
-For your awareness: the Redfish forum is discussing the host serial 
-(SOL) interface.  The idea is to give the BMC admin the capability to 
-enable and disable this function.  I contributed the parts I know.  
-Please contribute your understanding and help shape the spec.
+>> Ooh.  Was this talked about on the mailing list somewhere?  I've gone
+>> back through at least August and haven't come across it.  Was there
+>> an exploration of moving to `repo` instead?
+>=20
+> May have only been IRC, I=E2=80=99ll let Brad handle this one. I just =
+know
+> that my vote is to get away from subtree. It made the dev process
+> more difficult/complex and it doubled the required capacity of our CI
+> infrastructure.
 
-https://redfishforum.com/thread/248/solssh-ssh-serialconsole-disabling-provision
+Right=E2=80=A6I didn=E2=80=99t think this had left my head.  Apparently =
+I told Andrew about it :-)
 
-- Joseph
+A brief history lesson for any that aren=E2=80=99t aware - the original =
+workflow was patches were submitted to openbmc/openbmc for subtrees =
+where we are as far upstream as you can get.  We moved from that to the =
+workflow we have today because of a desire of mine and others for =
+de-centralized ownership of metadata.
 
+To enable that I proposed the same process that the Yocto project uses =
+to aggregate the various sub-projects into the poky distribution.  This =
+is how we wound up with the workflow we have today.  In hindsight this =
+was a mistake.
+
+The proposed change would simply be that we revert back to the old =
+workflow, which was much simpler, and use the Gerrit plugin to implement =
+the de-centralized ownership requirement.  There have been and will be a =
+couple enhancements since we last used that workflow though:
+
+1 - I track poky/meta-openembedded head. Last time we tracked the latest =
+released version.  This has worked fine; I am not aware of a single =
+instance of upstream breaking us or causing any instability.
+
+2 - I would automate the subtree pushes. Last time this was done =
+manually (and thus the subtrees were often stale).
+
+As far as repo goes - in my mind that is something completely separate.  =
+If anyone wants to maintain a repo manifest somewhere I don=E2=80=99t =
+have a problem with that.  It doesn=E2=80=99t have to have anything to =
+do with the patch submission workflow.
+
+thx - brad=
