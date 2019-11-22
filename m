@@ -1,125 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA60E105D61
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 00:46:16 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Jx5x5pMhzDql8
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:46:13 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AF71105DB0
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 01:30:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Jy4w2FsCzDr8s
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 11:30:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=axentia.se (client-ip=40.107.6.121;
- helo=eur04-db3-obe.outbound.protection.outlook.com;
- envelope-from=peda@axentia.se; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=axentia.se
-Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="key not found in DNS" (0-bit key;
- unprotected) header.d=axentia.se header.i=@axentia.se header.b="iPrivwnJ"; 
- dkim-atps=neutral
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com
- (mail-eopbgr60121.outbound.protection.outlook.com [40.107.6.121])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="G+w8NYa8"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="pQuaQv1M"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47HgWS6bNhzDqg7
- for <openbmc@lists.ozlabs.org>; Wed, 20 Nov 2019 09:30:27 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TWWYCsfNUQwuHvR+h4Uka/PISvaJdo6HXT5eGy6GPoh/gIwUMRKV/09xWuYn37MvmYIUICmLP5KjYisYsoaOT/DvQEhyPmDOgCOybKJe2/ZgexElN/1qaA4JPRaRqiaM7PtVqD71/2EzLbYumhVMxE4SZ/MhlEmf0Ur+u0YK3tbsGVTOJUcqQMDP9komWjI4GoB9XJI+xZ6YuXCXLGheCNo7BNpwA47gSwSr2MFw6mM380l+AzDPm7nlmtyWSDkLH0W/DuIv3Ob8EQ6oZijxEqUL8WzUPZLEoMhKBGBxWihFIK0Q3xbvcb8smtwF0WBDwktuIEhPo0PpOL/XDhxvqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k/VSrS/n5InuP5tEJCL71Pa5tjEe6M0q8kgMJqdj/Mw=;
- b=YrZHnQabuNEIdE5oaY2/KcZFHlP/mPhqcigUKb7cMaJLzVNh5Cq+VBE5Yx0Us2Meyz4xmETU36of9lVHK26pLBC7nyjYuk/al3dkJ4goMvw5F/1LRPHYKSeyAeFJOq7t8MigQiE5QnrqcMOb98rgyoDlOWpwZXfn9r9dxzJKGvF1wI9AyhSLfMjrqt9QaSeQVEWevTxlRcgiUL8tN83ibHJZw+Xn5nRVIMcipBth6ODbMTbNSMLRmReJXcjAlGXFRez2RnrPkW8xqMh0ieiiAkFY30cIdpmyj1R7xmXM1Sv0nS/S8/9/fD1zgO11Ed/wgshih+1gntvtDcodxnIlpA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axentia.se; dmarc=pass action=none header.from=axentia.se;
- dkim=pass header.d=axentia.se; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axentia.se;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k/VSrS/n5InuP5tEJCL71Pa5tjEe6M0q8kgMJqdj/Mw=;
- b=iPrivwnJZzG86aYb0QPrKnz9ITNzCE1fi9mtLYaDWPxcZLL+SWkdInNnjFBq7TtDFLoVqIag5sIprQaIhKHqi8BsVbWgNCtLw0sAJYq9RYQrueEX81J+1sLyUhD3B7YUjvAEyDgzBOdsZwTuElbhHPzKVr2gY+jpGjPVh//kC1k=
-Received: from DB3PR0202MB3434.eurprd02.prod.outlook.com (52.134.66.158) by
- DB3PR0202MB3513.eurprd02.prod.outlook.com (52.134.68.10) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2451.30; Tue, 19 Nov 2019 22:30:21 +0000
-Received: from DB3PR0202MB3434.eurprd02.prod.outlook.com
- ([fe80::477:9510:3e3:f8ca]) by DB3PR0202MB3434.eurprd02.prod.outlook.com
- ([fe80::477:9510:3e3:f8ca%7]) with mapi id 15.20.2474.015; Tue, 19 Nov 2019
- 22:30:19 +0000
-From: Peter Rosin <peda@axentia.se>
-To: Tali Perry <tali.perry1@gmail.com>, "avifishman70@gmail.com"
- <avifishman70@gmail.com>, "tmaimon77@gmail.com" <tmaimon77@gmail.com>,
- "venture@google.com" <venture@google.com>, "yuenn@google.com"
- <yuenn@google.com>, "benjaminfair@google.com" <benjaminfair@google.com>,
- "robh+dt@kernel.org" <robh+dt@kernel.org>, "mark.rutland@arm.com"
- <mark.rutland@arm.com>, "robh@kernel.org" <robh@kernel.org>,
- "wsa@the-dreams.de" <wsa@the-dreams.de>, "jdelvare@suse.de"
- <jdelvare@suse.de>, "jarkko.nikula@linux.intel.com"
- <jarkko.nikula@linux.intel.com>, "geert@linux-m68k.org"
- <geert@linux-m68k.org>, "arnd@arndb.de" <arnd@arndb.de>, "max@enpas.org"
- <max@enpas.org>, "krzysztof.adamski@nokia.com" <krzysztof.adamski@nokia.com>, 
- "syniurge@gmail.com" <syniurge@gmail.com>, "puwen@hygon.cn" <puwen@hygon.cn>, 
- "jfi@ssv-embedded.de" <jfi@ssv-embedded.de>, "sr@denx.de" <sr@denx.de>,
- "mchehab+samsung@kernel.org" <mchehab+samsung@kernel.org>,
- "kdasu.kdev@gmail.com" <kdasu.kdev@gmail.com>, "enric.balletbo@collabora.com"
- <enric.balletbo@collabora.com>, "baolin.wang@linaro.org"
- <baolin.wang@linaro.org>, "ludovic.desroches@microchip.com"
- <ludovic.desroches@microchip.com>
-Subject: Re: [PATCH v5 1/2] dt-bindings: i2c: npcm7xx: * add binding for i2c
- controller
-Thread-Topic: [PATCH v5 1/2] dt-bindings: i2c: npcm7xx: * add binding for i2c
- controller
-Thread-Index: AQHVnu54E09/kMD0Sk6PJN8U0wqzjqeTE/aA
-Date: Tue, 19 Nov 2019 22:30:19 +0000
-Message-ID: <a599e9e7-6b00-2bbc-407a-8f48b17b43c5@axentia.se>
-References: <20191119144930.227241-1-tali.perry1@gmail.com>
- <20191119144930.227241-2-tali.perry1@gmail.com>
-In-Reply-To: <20191119144930.227241-2-tali.perry1@gmail.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-x-originating-ip: [213.112.138.100]
-x-clientproxiedby: AM0PR05CA0049.eurprd05.prod.outlook.com
- (2603:10a6:208:be::26) To DB3PR0202MB3434.eurprd02.prod.outlook.com
- (2603:10a6:8:5::30)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=peda@axentia.se; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 6dbfa4d7-2ba0-475b-b7b3-08d76d400f2d
-x-ms-traffictypediagnostic: DB3PR0202MB3513:
-x-microsoft-antispam-prvs: <DB3PR0202MB351311F23EA34548BF0A7AE6BC4C0@DB3PR0202MB3513.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 022649CC2C
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(376002)(396003)(39830400003)(366004)(136003)(346002)(199004)(189003)(53546011)(14444005)(52116002)(256004)(14454004)(36756003)(58126008)(11346002)(5660300002)(4001150100001)(7416002)(86362001)(508600001)(2201001)(54906003)(110136005)(7406005)(316002)(2501003)(76176011)(71200400001)(386003)(6116002)(31686004)(71190400001)(7736002)(66066001)(65806001)(25786009)(81166006)(4326008)(26005)(229853002)(99286004)(65956001)(6246003)(81156014)(6506007)(66446008)(64756008)(66476007)(486006)(6486002)(66556008)(446003)(2906002)(186003)(8676002)(31696002)(66946007)(2616005)(305945005)(6436002)(476003)(3846002)(8936002)(102836004)(6512007)(921003)(1121003);
- DIR:OUT; SFP:1102; SCL:1; SRVR:DB3PR0202MB3513;
- H:DB3PR0202MB3434.eurprd02.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: axentia.se does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: gWbsGoklobIuGWcp2TnxqrMMP9RUPwCtcXAP+puQe306aIzqKHQgRRlokWzzbKICUAR8ME+jc1HYJaNq+5shbR00LEbSPoPDpAxyyl6ksGdaSouCPss6tdXaezbCxAsQli3eNPQ0Hknf84yeM/qUFwHENBFnNWiFOShwGzKx6RgbaQzKCzYRICInZL5QPHq8N/WXaupifg47x8jIRAAclSE6XV/fPgBFaKLYtugVHcwiyrOBl+UVzSogmR3uGLXmYzXe+21JYyD6yKdX1q2O8GPUhkopHnRWca4YFSKbEd6E+RHAnklETIklKxaMdqqpAojF+O2PDCyuVk9fDnPAXccwZxBP1ufRTaljSzzM64j5zQ12Goa99K/xEuecmckDY457HLPkbVQg2m3WioYxMEYPlI/EeWU6KrFbAIavJpITDwYB9heqLtRZ5z37ukfe
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C6B6B04574D64B46A7E1AA33AC408CDD@eurprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: axentia.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6dbfa4d7-2ba0-475b-b7b3-08d76d400f2d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Nov 2019 22:30:19.8102 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4ee68585-03e1-4785-942a-df9c1871a234
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: SHrF/mfdGwrMxHzdfdxrMjN7frT3F/D8YfkpNQshMAoHoek2tVEtcJ0saBNDFDHU
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR0202MB3513
-X-Mailman-Approved-At: Fri, 22 Nov 2019 10:41:01 +1100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Jy4B0WZYzDr3S
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 11:29:45 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 491CA22E5F;
+ Thu, 21 Nov 2019 19:29:41 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Thu, 21 Nov 2019 19:29:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm1; bh=MIe2V
+ 9/sKmY5xCsX5LSFGh8atblq55K6jifJ6ZgYdOM=; b=G+w8NYa84FbgtriDtsA1q
+ YI6vCEZY14OLIJITwyenOAg8IM8e0Gv/z/u5d9QnPtg7qe83EwMowvE6TWFRFsJD
+ 0H8+CvuoUrTD5n0a1TnEjstbqVKk/xnOtC2IPjx8A3ecEb9yz0jp1kKgVXqdAne5
+ mvySpDDBQWoHcdQ9SIF/TqTKXAMWp6utFWDCq2dZF9yiD2jPRIh/4s3exNU6fPOC
+ O6jZpXgajk1Gijcue2FdKTUHxSQH9ih8eP3kEwmqwUOPUAm/+kBrxpOzjB83N9OO
+ zqHxPdrhhz9W+D9xdbf9bTVB8MkqhYFaEGxGTbQSF4HADeRJX6XtgtCAu1nq8yEv
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=MIe2V9/sKmY5xCsX5LSFGh8atblq55K6jifJ6ZgYd
+ OM=; b=pQuaQv1MYIep1t0YZJa+Pw0U5B35Vzspre4wQrOvpOElY1MJpddWyunnV
+ tdOL7CHYgcpZnsdlUsGxo5sh+F88ec637q+raGYs9Vf29J+zQMmtE47c3XPa/X2J
+ Z7lf+WS5BUF9komhe5pmwextjOwFpYQtDtiOQjFXAgi2mNJxc9S1UzjyOnfdq8qv
+ ODNuTmjBW5voBJZl5XqJ+QQQVKvp/iAN/f00uussj47G6nMp1yJuDGuRia9CV1GO
+ e6g3hiRIspTffEBYtlz8pGT+aoKAqr87Tss7/kHOyV5qXcS1sQLP7i6+STs7EP1s
+ hmP0fcDLA3nCRe2CMZlRskPDMF7Kg==
+X-ME-Sender: <xms:9CvXXYoVGdyHzhec_dd2QrinXz_IzSANiIi-4AOEQrI2LKtaJBi6uQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudehfedgvdduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrg
+ hrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushht
+ vghrufhiiigvpedt
+X-ME-Proxy: <xmx:9CvXXaJxD_xRml9kph060UaX_i_jywFrb6nhrPD58O7yDBRaT7n6kQ>
+ <xmx:9CvXXUMx178a-IhztDr2US7u3zYc49qCPpzfc1whwFd6noO-mUVbhw>
+ <xmx:9CvXXY0xewH_Uz0y9pGU4hU4uFdiu2UETc_r85xLHgNq5f2aM1zu_Q>
+ <xmx:9SvXXRN6JsBMBxO_LEPyg8bLxpg5Ka0IbsH1V-cyof-wWirrZFWJ2A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 4F2F8E00A3; Thu, 21 Nov 2019 19:29:40 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
+Mime-Version: 1.0
+Message-Id: <e4d8ad9b-49cf-4942-a64c-0c47a94efa17@www.fastmail.com>
+In-Reply-To: <42def251.79a4.16e87d7a3a7.Coremail.ouyangxuan10@163.com>
+References: <1b4dacbd.8278.16e6e6c2234.Coremail.ouyangxuan10@163.com>
+ <a06a7845-cf16-4e37-8674-acd0950d6245@www.fastmail.com>
+ <42def251.79a4.16e87d7a3a7.Coremail.ouyangxuan10@163.com>
+Date: Fri, 22 Nov 2019 11:01:05 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: www <ouyangxuan10@163.com>
+Subject: =?UTF-8?Q?Re:_[openbmc-kernel]:_How_to_make_pinctrl_not_affect_pass-thro?=
+ =?UTF-8?Q?ugh_function=3F?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -131,49 +92,166 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: openbmc@lists.ozlabs.org, Ryan Chen <ryan_chen@aspeedtech.com>,
+ "Jason M. Bills" <jason.m.bills@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gMjAxOS0xMS0xOSAxNTo0OSwgVGFsaSBQZXJyeSB3cm90ZToNCj4gIGR0LWJpbmRpbmdzOiBp
-MmM6IG5wY203eHg6ICogYWRkIGJpbmRpbmcgZm9yIGkyYyBjb250cm9sbGVyDQoNCkkgbWlzc2lu
-ZyBhbiBlbXB0eSBsaW5lIGJlZm9yZSB0aGUgYmxvY2sgb2YgdGFncywgYnV0IHRoZSBiaWdnZXIg
-cHJvYmxlbQ0KaXMgdGhlIHJlcGVhdGVkIHN1YmplY3QgbGluZS4gQWxzbywgdGhlICcqJyBpbiB0
-aGUgc3ViamVjdCBtYWtlcyBubw0Kc2Vuc2UgdG8gbWUuDQoNCj4gU2lnbmVkLW9mZi1ieTogVGFs
-aSBQZXJyeSA8dGFsaS5wZXJyeTFAZ21haWwuY29tPg0KPiBSZXZpZXdlZC1ieTogUm9iIEhlcnJp
-bmcgPHJvYmhAa2VybmVsLm9yZz4NCj4gLS0tDQo+ICAuLi4vZGV2aWNldHJlZS9iaW5kaW5ncy9p
-MmMvaTJjLW5wY203eHgudHh0ICAgfCAyOSArKysrKysrKysrKysrKysrKysrDQo+ICAxIGZpbGUg
-Y2hhbmdlZCwgMjkgaW5zZXJ0aW9ucygrKQ0KPiAgY3JlYXRlIG1vZGUgMTAwNjQ0IERvY3VtZW50
-YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy9pMmMvaTJjLW5wY203eHgudHh0DQo+IA0KPiBkaWZm
-IC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL2kyYy9pMmMtbnBjbTd4
-eC50eHQgYi9Eb2N1bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvaTJjL2kyYy1ucGNtN3h4
-LnR4dA0KPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiBpbmRleCAwMDAwMDAwMDAwMDAuLjBlY2Fl
-OTUwNzQ4Yg0KPiAtLS0gL2Rldi9udWxsDQo+ICsrKyBiL0RvY3VtZW50YXRpb24vZGV2aWNldHJl
-ZS9iaW5kaW5ncy9pMmMvaTJjLW5wY203eHgudHh0DQo+IEBAIC0wLDAgKzEsMjkgQEANCj4gK051
-dm90b24gTlBDTTdYWCBJMkMgYnVzDQo+ICsNCj4gK1RoZSBOUENNNzUweCBpbmNsdWRlcyBzaXh0
-ZWVuIEkyQyBidXMgY29udHJvbGxlcnMuIEFsbCBDb250cm9sbGVycyBzdXBwb3J0DQo+ICtib3Ro
-IG1hc3RlciBhbmQgc2xhdmUgbW9kZS4gRWFjaCBjb250cm9sbGVyIGhhcyB0d28gMTYgYnl0ZSBI
-VyBGSUZPIGZvciBUWCBhbmQNCj4gK1JYLg0KPiArDQo+ICtSZXF1aXJlZCBwcm9wZXJ0aWVzOg0K
-PiArLSBjb21wYXRpYmxlICAgICAgOiBtdXN0IGJlICJudXZvdG9uLG5wY203NTAtaTJjIg0KPiAr
-LSByZWcgICAgICAgICAgICAgOiBPZmZzZXQgYW5kIGxlbmd0aCBvZiB0aGUgcmVnaXN0ZXIgc2V0
-IGZvciB0aGUgZGV2aWNlLg0KPiArLSBpbnRlcnJ1cHRzICAgICAgOiBDb250YWluIHRoZSBJMkMg
-aW50ZXJydXB0IHdpdGggZmxhZ3MgZm9yIGZhbGxpbmcgZWRnZS4NCj4gKy0gY2xvY2tzICAgICAg
-ICAgIDogcGhhbmRsZSBvZiBJMkMgcmVmZXJlbmNlIGNsb2NrLg0KPiArDQo+ICtPcHRpb25hbDoN
-Cj4gKy0gYnVzLWZyZXF1ZW5jeSAgIDogQ29udGFpbiB0aGUgSTJDIGJ1cyBmcmVxdWVuY3ksDQo+
-ICsJCQl0aGUgZGVmYXVsdCBJMkMgYnVzIGZyZXF1ZW5jeSBpcyAxMDAwMDAuDQo+ICstIHBpbmN0
-cmwtMCAgICAgICA6IG11c3QgYmUgPCZzbWJYX3BpbnM+LCBYIGlzIG1vZHVsZSBudW1iZXINCj4g
-KwkJCShvbiBOUENNN1hYIGl0J3MgMCB0byAxNSkNCg0KSXNuJ3QgdGhpcyBhIHN0cmFuZ2UgcmVx
-dWlyZW1lbnQ/IEFtIEksIGFzIGEgZGV2aWNlIHRyZWUgYXV0aG9yLCBub3QgZnJlZSB0bw0KdXNl
-IGFueSBsYWJlbCBuYW1lcyBJIHdhbnQ/IFN1cmVseSwgd2hhdCBpcyBpbXBvcnRhbnQgaXMgd2hh
-dCB0aGUgbGFiZWwgcmVmZXJzDQp0byBhbmQgbm90IGl0cyBuYW1lPw0KDQpDaGVlcnMsDQpQZXRl
-cg0KDQo+ICstIHBpbmN0cmwtbmFtZXMgICA6IHNob3VsZCBiZSBzZXQgdG8gImRlZmF1bHQiDQo+
-ICtFeGFtcGxlOg0KPiArDQo+ICsJaTJjMDogaTJjQDgwMDAwIHsNCj4gKwkJY29tcGF0aWJsZSA9
-ICJudXZvdG9uLG5wY203NTAtaTJjIjsNCj4gKwkJcmVnID0gPDB4ODAwMDAgMHgxMDAwPjsNCj4g
-KwkJY2xvY2tzID0gPCZjbGsgTlBDTTdYWF9DTEtfQVBCMj47DQo+ICsJCWJ1cy1mcmVxdWVuY3kg
-PSA8MTAwMDAwPjsNCj4gKwkJaW50ZXJydXB0cyA9IDxHSUNfU1BJIDY0IElSUV9UWVBFX0xFVkVM
-X0hJR0g+Ow0KPiArCQlwaW5jdHJsLW5hbWVzID0gImRlZmF1bHQiOw0KPiArCQlwaW5jdHJsLTAg
-PSA8JnNtYjBfcGlucz47DQo+ICsJfTsNCj4gDQoNCg==
+Hi Byron,
+
+I'm Cc'ing openbmc@ on this based on my earlier request (history is at
+the bottom)
+
+On Wed, 20 Nov 2019, at 18:34, www wrote:
+> Dear Andrew Jeffery=EF=BC=8C
+>=20
+> Thank you for your reply. I've come up with a plan. Can I trouble you=20=
+
+> to see if it's ok? The brief introduction is as follows:
+> 1. write a pass-through driver; (can switch the pass through function=20=
+
+> or get the status in user space)
+> 2. modify pinctrl driver=EF=BC=9B=EF=BC=88Eliminating the influence of=
+ pinctrl on pass=20
+> through register=EF=BC=8CAt present, the operation of GPIOD/E will aff=
+ect the=20
+> pass through function=EF=BC=89
+> 3. First turn off the pass through function, then turn on or off the=20=
+
+> host, and then enable the pass through function.
+>=20
+> In this way, there is no need to detect whether GPIO has input or=20
+> not=EF=BC=8Cand this is the real hardware pass through.
+> Do you think this is feasible?
+
+Your proposal sounds like more work than just hooking the two GPIOs
+together in userspace, so I need to understand why you're avoiding that
+approach. I have some questions:
+
+1. What mode of pass-through are you using? It comes in two flavours:
+hardware strapping that affects an entire GPIO bank or paired pass-
+through which must be explicitly muxed at runtime.
+
+2. What is the requirement for hardware passthrough here (as
+opposed to doing it in userspace when the BMC comes up)? Please
+provide as much detail as you can in response so I'm clear on the
+motivation.
+
+Another significant issue with your proposal is that removing the
+knowledge of pass-through from pinmux means that it's possible to
+achieve an inconsistent state between the intent of a pin request and
+its resulting behaviour. That's a bug that is currently not possible, so=
+
+you will need to do a lot of work to convince me it's the right approach=
+.
+
+Getting back to your problem rather than solutions, it's possible to vie=
+w
+this as a deficiency in the GPIO subsystem and Aspeed GPIO driver: If we=
+
+could describe that we want the pin muxed for pass-through as part of
+the GPIO request then your problem would be partly resolved, save for=20=
+
+the fact that the exported GPIO would still be read-only. However, that
+issue is fully resolved by multiple sequential GPIO requests: export the=
+
+GPIO in pass-through mode initially, and then when it comes to changing
+the host state, re-export the GPIO in non-pass-through mode so that it i=
+s
+writable, and then again re-export the GPIO back in pass-through mode
+after the host state change has been applied. This is the sequence of
+your original solution above, just without the need for additional drive=
+rs
+with ad-hoc userspace interfaces or introducing bugs into the pinctrl
+driver.
+
+What are your thoughts on this?
+
+A couple of final notes:
+
+a. Aspeed confirmed that GPIOs configured as passthrough are
+constrained to read-only behaviour in the GPIO controller. I haven't
+tested this to verify, but if it's possible to drive the pin then you'd
+want to be mindful of multiple current sources in push-pull or
+open/source configurations.
+
+b. Looking at the ast2500 driver the groups for the strapping-based
+passthrough aren't described which means some of the mutual-
+exclusion behaviour won't quite work as desired. I should fix that.
+
+Cheers,
+
+Andrew
+
+>=20
+> thanks,
+> Byron
+>=20
+>=20
+>=20
+>=20
+> At 2019-11-20 14:52:17, "Andrew Jeffery" <andrew@aj.id.au> wrote:
+> >Hi Byron,
+> >
+> >Sorry about the delayed reply, I have been on leave.
+> >
+> >Please ask me questions on the list in future, as others may have the=
+ same
+> >question as you but they can't learn if our exchanges are private :)
+> >
+> >On Fri, 15 Nov 2019, at 20:06, www wrote:
+> >> Dear Andrew Jeffery=EF=BC=8C
+> >>=20
+> >> I saw that the speed pinctrl driver in the openbmc kernel was uploa=
+ded=20
+> >> by you.=20
+> >
+> >Yep, I maintain the pinctrl drivers for the Aspeed SoCs.
+> >
+> >> As a result of the test, I found that this driver will affect=20
+> >> the pass-through function. When operating with GPIO, the pass throu=
+gh=20
+> >> function will be automatically turned off (this is not the working =
+mode=20
+> >> of the aspeed chip. On the chip, the two functions can coexist).
+> >
+> >Only to a point. If the GPIOs are configured for passthrough then acc=
+essing
+> >the pin via the GPIO controller is read-only according to Aspeed. I'm=
+ trying
+> >to find where I found this information.
+> >
+> >> How=20
+> >> can I modify it to eliminate this effect? I want it to turn on or o=
+ff=20
+> >> the system without affecting the passthrough function. Can you give=
+ me=20
+> >> some advice or tell me how to modify it?
+> >
+> >I understand what you're after. Let me think about it a bit, as it mi=
+ght be
+> >possible to cook up a solution. It's complicated by the mutual-exclus=
+ion
+> >behaviour of the pinctrl subsystem - I want to retain this as it remo=
+ves an
+> >entire class of hard-to-track-down bugs (last-function-probed-wins-th=
+e-pin).
+> >
+> >I assume your system is strapped so that the GPIOs are passthrough? I=
+f so, a
+> >possible software implementation is to export both of the relevant GP=
+IOs to
+> >userspace, and provide a daemon that polls() on the input GPIO and so=
+me
+> >other external (dbus?) event, and writes the output GPIO when an even=
+t
+> >occurs. This gives the effect of hardware passthrough with the additi=
+on of the
+> >arbitrary control over the output GPIO.
+> >
+> >Hope that helps,
+> >
+> >Andrew
+>=20
+>=20
+>
