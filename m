@@ -2,60 +2,116 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15C231068BC
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:20:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4E2107091
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 12:23:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47K9rX0TmdzDrMD
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 20:20:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47KDZS378XzDrHg
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 22:23:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.108; helo=m13-108.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
+ dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="YEHSbMF4"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="f/aAnJKl"; 
  dkim-atps=neutral
-Received: from m13-108.163.com (m13-108.163.com [220.181.13.108])
- by lists.ozlabs.org (Postfix) with ESMTP id 47K9qn4xskzDrLX
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 20:19:44 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=+Wr12
- wTmn4QqvuLf+WZ8EuI4hRj+Q6RWtzgxKtrFzME=; b=YEHSbMF4eEQcZHXp1fpfa
- iAINh9810e3P4osutRR7NkSVx3P5oFyFoOLWeucbRFP13NiuBtVjSCKZG6Yx+S4l
- OqhdlIsx1Yqg+ZvVZhnnG3XRwWX9c96KSgJWylZglsKV43ct/eKA7VW3EVENDf85
- wUkGZ0aDNkAbJY8HDk9O2k=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr108 (Coremail) ; Fri, 22 Nov 2019 17:17:33 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Fri, 22 Nov 2019 17:17:33 +0800 (CST)
-From: www  <ouyangxuan10@163.com>
-To: rgrs <rgrs@protonmail.com>
-Subject: Re:Re:Re: Add build date to image
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-In-Reply-To: <PHi-_R-RqNeB7xEM-EzDWDdMb902pQczftTW9OZO7Ufo8CoHq8i02Gi4wUSqY2-DU9Ox9aqyxYBuYdLqT4PJLdUW9EtOpy9GtLsFSurdi4g=@protonmail.com>
-References: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
- <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
- <136be35a.269c.16e7c360818.Coremail.ouyangxuan10@163.com>
- <17d14e7a-1dc8-3375-a8a6-ea61c60e3bb7@linux.ibm.com>
- <67ca8d1c.28cc.16e8141d457.Coremail.ouyangxuan10@163.com>
- <0592b224-ccbc-30ad-d2aa-5c39f6481989@linux.ibm.com>
- <C7E32DAD-2454-4AF6-89C4-630DBC6898D9@fb.com>
- <af0b748.18f5.16e8b7b35a8.Coremail.ouyangxuan10@163.com>
- <PHi-_R-RqNeB7xEM-EzDWDdMb902pQczftTW9OZO7Ufo8CoHq8i02Gi4wUSqY2-DU9Ox9aqyxYBuYdLqT4PJLdUW9EtOpy9GtLsFSurdi4g=@protonmail.com>
-X-CM-CTRLDATA: ep65cGZvb3Rlcl9odG09NDExMjo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_117046_789357224.1574414253471"
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47KDWc5WV3zDqDB
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 22:20:59 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id AB8C3438D1;
+ Fri, 22 Nov 2019 11:20:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-type:content-type:in-reply-to:mime-version:user-agent
+ :date:date:message-id:organization:from:from:references:subject
+ :subject:received:received:received; s=mta-01; t=1574421653; x=
+ 1576236054; bh=3gUt5ZOArgE7fEwaMIpu8mdy7ZpWpd91I82ErwTBaVw=; b=f
+ /aAnJKlouYQVCc2jMv5FTCKxeGf3IZvDA17BWJXJ3hC5Yz0ZwKXovSeCzv6bPWLt
+ kN14verthSqPOVUReVdk6mC7Z9RvJYup6lcaadf7JnPvAGZ8HKxdNlIfRjJTww7d
+ NCM99416f2+uxeJ2uoTckChBCnti0YyJP+Fug9Qr/g=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id hCSj9EerwBC7; Fri, 22 Nov 2019 14:20:53 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 1ACFF43130;
+ Fri, 22 Nov 2019 14:20:53 +0300 (MSK)
+Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 22
+ Nov 2019 14:20:52 +0300
+Subject: Re: How to build for s2600wf ? Does it work at all?
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ <openbmc@lists.ozlabs.org>
+References: <29e500ed-2f4c-5e44-02fc-80b44e1c6623@yadro.com>
+ <4844180beece41d08af0206779f6286d@SCL-EXCHMB-13.phoenix.com>
+ <22d986a3-8525-b30c-2db3-5c63e55a1abe@yadro.com>
+ <bc283b6a-fb40-2980-faed-aed0bb717458@linux.intel.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
+ 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
+ dTYsE5wSxM06T2l/MILupCNZ7A==
+Organization: YADRO
+Message-ID: <01237467-fde3-1b5c-f2e9-ecd935e6ffde@yadro.com>
+Date: Fri, 22 Nov 2019 14:20:52 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Message-ID: <60a8a1d0.79a3.16e9266fd9f.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: bMGowABnVZ6tp9ddGM84AQ--.22668W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiIAh12l0S-n9oEwACsw
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+In-Reply-To: <bc283b6a-fb40-2980-faed-aed0bb717458@linux.intel.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="3Mjucd3QOu22gnAfd5XyEsxNd7SGfbZfo"
+X-Originating-IP: [172.17.14.197]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,136 +123,198 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_117046_789357224.1574414253471
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+--3Mjucd3QOu22gnAfd5XyEsxNd7SGfbZfo
+Content-Type: multipart/mixed; boundary="bjmgIcCUeeSMkNkHm9zuZiHoU0AWBegFv";
+ protected-headers="v1"
+From: Alexander Amelkin <a.amelkin@yadro.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
+Message-ID: <01237467-fde3-1b5c-f2e9-ecd935e6ffde@yadro.com>
+Subject: Re: How to build for s2600wf ? Does it work at all?
+References: <29e500ed-2f4c-5e44-02fc-80b44e1c6623@yadro.com>
+ <4844180beece41d08af0206779f6286d@SCL-EXCHMB-13.phoenix.com>
+ <22d986a3-8525-b30c-2db3-5c63e55a1abe@yadro.com>
+ <bc283b6a-fb40-2980-faed-aed0bb717458@linux.intel.com>
+In-Reply-To: <bc283b6a-fb40-2980-faed-aed0bb717458@linux.intel.com>
 
-aGkgLAoKCnRoYW5rIHlvdSBmb3IgeW91ciBoZWxwLiBJIGRpZG4ndCB0ZXN0IHRoaXMsIGJ1dCBJ
-IHdhbnQgYXNrIGEgcXVlc3Rpb24sIGlmIHRoaXMgcGFja2FnZSBoYXNuJ3QgYmVlbiB1cGRhdGVk
-LCB0aGUgdGltZSB3aWxsIGJlIHVwZGF0ZWQgYXV0b21hdGljYWxseSBvciBub3Q/CgoKVGhhbmtz
-LApCeXJvbgoKCgoKCgpBdCAyMDE5LTExLTIyIDE3OjA2OjA0LCAicmdycyIgPHJncnNAcHJvdG9u
-bWFpbC5jb20+IHdyb3RlOgoKSGkgQnlyb24sCgoKCldlIGhhZCBhIHNpbWlsaWFyIG5lZWQsIGFu
-ZCB3ZSB1c2UgSVBNSSBhdXggdmVyc2lvbiBmb3IgdGhpcyBwdXJwb3NlLgoKCgpUbyBnZXQgdGhl
-IGJlaGF2aW9yIHlvdSBkZXNjcmliZSwgeW91IGNhbiBjaGFuZ2UgeW91ciBwbGF0Zm9ybSdzIHBo
-b3NwaG9yLWlwbWktY29uZmlnLmJiYXBwZW5kCgoKCldpdGhlcnNwb29uIGZvciBleGFtcGxlLCBj
-YWxjdWxhdGVzIEF1eCByZXYgaW5mbyBmcm9tIFZFUlNJT05fSUQgKGdpdCB0YWcsIEkgZ3Vlc3Mp
-LgoKSW4gb3VyIHBsYXRmb3Jtcywgd2UgaW5zdGVhZCB3cml0ZSBERE1NWVlZWSBpbnRvIElQTUkg
-R2V0IERldiBJRCdzIGF1eCByZXYgaW5mbyAoNGJ5dGVzLCBCQ0QpCgoKCiJpcG1pdG9vbCBtYyBp
-bmZvIiB3b3VsZCBsb29rcyBzb21ldGhpbmcgbGlrZSBiZWxvdzoKCkF1eCBGaXJtd2FyZSBSZXYg
-SW5mbyAgICAgOgoKICAgIDB4MjIKCiAgICAweDExCgogICAgMHgxOQoKICAgIDB4MjAKCgoKVGhh
-bmtzLAoKCgpSYWoKCgoK4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ
-4oCQ4oCQ4oCQ4oCQ4oCQ4oCQCgpPbiBUaHVyc2RheSwgTm92ZW1iZXIgMjEsIDIwMTkgNjozMiBB
-TSwgd3d3IDxvdXlhbmd4dWFuMTBAMTYzLmNvbT4gd3JvdGU6CgoKCkRlYXIgSm9zZXBoICYgVmlq
-YXkgS2hlbWthLAoKCgpObyBtYXR0ZXIgd2hhdCB5b3VyIHZlcnNpb24gaXMsIGJ1aWxkIGRhdGUg
-b25seSByZXByZXNlbnRzIHRoZSB0aW1lIHdoZW4gdGhlIGltYWdlIHdhcyBjcmVhdGVkLgoKCgp0
-aGFua3MsCgpCeXJvbgoKCgoKCgoKCgoKCgoKQXQgMjAxOS0xMS0yMSAwMjowODo0MCwgIlZpamF5
-IEtoZW1rYSIgPHZpamF5a2hlbWthQGZiLmNvbT4gd3JvdGU6Cj4KPgo+77u/T24gMTEvMjAvMTks
-IDg6NDAgQU0sICJvcGVuYm1jIG9uIGJlaGFsZiBvZiBKb3NlcGggUmV5bm9sZHMiIDxvcGVuYm1j
-LWJvdW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcgb24gYmVoYWxmIG9m
-IGpyZXlAbGludXguaWJtLmNvbT4gd3JvdGU6Cj4KPgo+ICAgIE9uIDExLzE4LzE5IDc6MjMgUE0s
-IHd3dyB3cm90ZToKPiAgICA+IERlYXIgSm9zZXBo77yMCj4gICAgPgo+ICAgID4gVGhhbmsgeW91
-IHZlcnkgbXVjaCBmb3IgeW91ciBoZWxwLiBJIGp1c3Qgd2FudCB0byBzaG93IHRoZSBjb21waWxl
-Cj4gICAgPiB0aW1lIG9mIGZpcm13YXJlIHRvIHRoZSB1c2VyLiBJZiAgb25seSBzaG93IHRoZSB2
-ZXJzaW9uLCBpdCBjYW4ndAo+ICAgID4gY29ycmVzcG9uZCB0byB0aGUgdGltZS4gV2hlbiBib3Ro
-IGFyZSBkaXNwbGF5ZWQgYXQgdGhlIHNhbWUgdGltZSwgdGhlCj4gICAgPiBpbmZvcm1hdGlvbiB3
-aWxsIGJlIGNsZWFyZXIuIHRoYW5rcyBhZ2Fpbi4KPiAgICA+Cj4KPiAgICBCeXJvbiwgdGhhbmtz
-IGZvciB0aGF0LiAgSSB0aGluayBJIHVuZGVyc3RhbmQgeW91ciB1c2UgY2FzZS4gSG93ZXZlciwK
-PiAgICBkb2VzIHRoaXMgcHJhY3RpY2UgYXNzdW1lIHRoZSBidWlsZCBkYXRlIGlzIGNsb3NlIHRv
-IHRoZSBkYXRlIHdoZW4gdGhlCj4gICAgc29mdHdhcmUgdmVyc2lvbiB3YXMgY3JlYXRlZD8KPiAg
-ICAtIEZvciBleGFtcGxlLCBJIGFzc3VtZSB5b3UnbGwgbWVyZ2UgYSBnaXQgY29tbWl0IHRvIGNy
-ZWF0ZSBhIG5ldwo+ICAgIHNvZnR3YXJlIHZlcnNpb24sIGFuZCB0aGVuIGJ1aWxkIGFuIGltYWdl
-IGJhc2VkIG9uIHRoYXQgY29tbWl0LiAgSW4gdGhpcwo+ICAgIHdheSwgdGhlIGJ1aWxkIGRhdGUg
-Y29ycmVsYXRlcyBjbG9zZWx5IHdpdGggdGhlIHZlcnNpb24uCj4gICAgLSBIb3dldmVyLCBpZiB5
-b3UgYnVpbGQgYW4gaW1hZ2UgZnJvbSBhbiBvbGRlciBjb21taXQsIG9yIHdhaXQgYSBsb25nCj4g
-ICAgdGltZSBiZWZvcmUgYnVpbGRpbmcgYW4gaW1hZ2UsIHRoZSBidWlsZCBkYXRlIHdpbGwgbm90
-IGNvcnJlbGF0ZSBjbG9zZWx5Cj4gICAgd2l0aCB0aGUgdmVyc2lvbi4gIFRoaXMgY2FuIGJlIG1p
-c2xlYWRpbmcgYW5kIGxlYWQgdG8gZXJyb3JzIGluIGhhbmRsaW5nCj4gICAgaW1hZ2VzLgo+Cj5J
-IGd1ZXNzIGJ1aWxkIGRhdGUgc2hvdWxkIGJlIHRoZSBkYXRlIHZlcnNpb24gd2FzIHJlbGVhc2Vk
-IG9yIGNyZWF0ZWQuCj4KPiAgICBJcyB0aGF0IGEgY29uY2VybiBmb3IgeW91Pwo+Cj4gICAgLSBK
-b3NlcGgKPgo+ICAgID4gdGhhbmtzLAo+ICAgID4gQnlyb24KPiAgICA+Cj4gICAgLi4uc25pcC4u
-Lgo+Cj4KPgoKCgoKCgoKIAoKCgo=
-------=_Part_117046_789357224.1574414253471
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+--bjmgIcCUeeSMkNkHm9zuZiHoU0AWBegFv
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+aGkgLDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+dGhh
-bmsgeW91IGZvciB5b3VyIGhlbHAuJm5ic3A7SSBkaWRuJ3QgdGVzdCB0aGlzLCBidXQgSSB3YW50
-IGFzayBhIHF1ZXN0aW9uLCBpZiB0aGlzIHBhY2thZ2UgaGFzbid0IGJlZW4gdXBkYXRlZCwgdGhl
-IHRpbWUgd2lsbCBiZSB1cGRhdGVkIGF1dG9tYXRpY2FsbHkgb3Igbm90PzwvZGl2PjxkaXY+PGJy
-PjwvZGl2PjxkaXY+VGhhbmtzLDwvZGl2PjxkaXY+Qnlyb248L2Rpdj48YnI+PGJyPjxicj48YnI+
-PGRpdiBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48L2Rpdj48ZGl2IGlkPSJkaXZO
-ZXRlYXNlTWFpbENhcmQiPjwvZGl2Pjxicj5BdCAyMDE5LTExLTIyIDE3OjA2OjA0LCAicmdycyIg
-Jmx0O3JncnNAcHJvdG9ubWFpbC5jb20mZ3Q7IHdyb3RlOjxicj4gPGJsb2NrcXVvdGUgaWQ9Imlz
-UmVwbHlDb250ZW50IiBzdHlsZT0iUEFERElORy1MRUZUOiAxZXg7IE1BUkdJTjogMHB4IDBweCAw
-cHggMC44ZXg7IEJPUkRFUi1MRUZUOiAjY2NjIDFweCBzb2xpZCI+PGRpdj5IaSBCeXJvbiw8YnI+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XZSBoYWQgYSBzaW1pbGlhciBuZWVkLCBhbmQgd2Ug
-dXNlIElQTUkgYXV4IHZlcnNpb24gZm9yIHRoaXMgcHVycG9zZS48YnI+PC9kaXY+PGRpdj48YnI+
-PC9kaXY+PGRpdj5UbyBnZXQgdGhlIGJlaGF2aW9yIHlvdSBkZXNjcmliZSwgeW91IGNhbiBjaGFu
-Z2UgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy9ibG9iL21hc3Rl
-ci9tZXRhLWlibS9tZXRhLXdpdGhlcnNwb29uL3JlY2lwZXMtcGhvc3Bob3IvaXBtaS9waG9zcGhv
-ci1pcG1pLWNvbmZpZy5iYmFwcGVuZCI+eW91ciBwbGF0Zm9ybSdzIHBob3NwaG9yLWlwbWktY29u
-ZmlnLmJiYXBwZW5kPC9hPjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PldpdGhlcnNwb29u
-IGZvciBleGFtcGxlLCBjYWxjdWxhdGVzIEF1eCByZXYgaW5mbyBmcm9tIFZFUlNJT05fSUQgKGdp
-dCB0YWcsIEkgZ3Vlc3MpLjxicj48L2Rpdj48ZGl2PkluIG91ciBwbGF0Zm9ybXMsIHdlIGluc3Rl
-YWQgd3JpdGUgRERNTVlZWVkgaW50byBJUE1JIEdldCBEZXYgSUQncyBhdXggcmV2IGluZm8gKDRi
-eXRlcywgQkNEKTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiJpcG1pdG9vbCBtYyBpbmZv
-IiB3b3VsZCBsb29rcyBzb21ldGhpbmcgbGlrZSBiZWxvdzo8YnI+PC9kaXY+PGRpdj5BdXggRmly
-bXdhcmUgUmV2IEluZm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgOjxicj48L2Rpdj48ZGl2PiZu
-YnNwOyZuYnNwOyZuYnNwOyAweDIyPGJyPjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7IDB4
-MTE8YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsgMHgxOTxicj48L2Rpdj48ZGl2PiZu
-YnNwOyZuYnNwOyZuYnNwOyAweDIwPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhhbmtz
-LDxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdiBj
-bGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBwcm90b25tYWlsX3NpZ25hdHVy
-ZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJl
-X2Jsb2NrLXByb3RvbiI+UmFqPGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+4oCQ
-4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ
-PGJyPjwvZGl2PjxkaXY+IE9uIFRodXJzZGF5LCBOb3ZlbWJlciAyMSwgMjAxOSA2OjMyIEFNLCB3
-d3cgJmx0O291eWFuZ3h1YW4xMEAxNjMuY29tJmd0OyB3cm90ZTo8YnI+PC9kaXY+PGRpdj4gPGJy
-PjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIiB0eXBlPSJjaXRlIj48
-ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDoxLjc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtm
-b250LWZhbWlseTpBcmlhbCI+PGRpdj5EZWFyIEpvc2VwaCAmYW1wOyBWaWpheSBLaGVta2EsPGJy
-PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+Tm8gbWF0dGVyIHdoYXQgeW91ciB2ZXJzaW9uIGlz
-LCBidWlsZCBkYXRlIG9ubHkgcmVwcmVzZW50cyB0aGUgdGltZSB3aGVuIHRoZSBpbWFnZSB3YXMg
-Y3JlYXRlZC48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj50aGFua3MsPGJyPjwvZGl2Pjxk
-aXY+Qnlyb248YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBzdHls
-ZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PHByZT48ZGl2Pjxicj48L2Rpdj48ZGl2PkF0IDIwMTktMTEtMjEgMDI6MDg6
-NDAsICJWaWpheSBLaGVta2EiICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7IHdyb3RlOgomZ3Q7
-CiZndDsKJmd0O++7v09uIDExLzIwLzE5LCA4OjQwIEFNLCAib3BlbmJtYyBvbiBiZWhhbGYgb2Yg
-Sm9zZXBoIFJleW5vbGRzIiAmbHQ7b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBs
-aXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBqcmV5QGxpbnV4LmlibS5jb20mZ3Q7IHdyb3Rl
-OgomZ3Q7CiZndDsKJmd0OyAgICBPbiAxMS8xOC8xOSA3OjIzIFBNLCB3d3cgd3JvdGU6CiZndDsg
-ICAgJmd0OyBEZWFyIEpvc2VwaO+8jAomZ3Q7ICAgICZndDsKJmd0OyAgICAmZ3Q7IFRoYW5rIHlv
-dSB2ZXJ5IG11Y2ggZm9yIHlvdXIgaGVscC4gSSBqdXN0IHdhbnQgdG8gc2hvdyB0aGUgY29tcGls
-ZQomZ3Q7ICAgICZndDsgdGltZSBvZiBmaXJtd2FyZSB0byB0aGUgdXNlci4gSWYgIG9ubHkgc2hv
-dyB0aGUgdmVyc2lvbiwgaXQgY2FuJ3QKJmd0OyAgICAmZ3Q7IGNvcnJlc3BvbmQgdG8gdGhlIHRp
-bWUuIFdoZW4gYm90aCBhcmUgZGlzcGxheWVkIGF0IHRoZSBzYW1lIHRpbWUsIHRoZQomZ3Q7ICAg
-ICZndDsgaW5mb3JtYXRpb24gd2lsbCBiZSBjbGVhcmVyLiB0aGFua3MgYWdhaW4uCiZndDsgICAg
-Jmd0OwomZ3Q7CiZndDsgICAgQnlyb24sIHRoYW5rcyBmb3IgdGhhdC4gIEkgdGhpbmsgSSB1bmRl
-cnN0YW5kIHlvdXIgdXNlIGNhc2UuIEhvd2V2ZXIsCiZndDsgICAgZG9lcyB0aGlzIHByYWN0aWNl
-IGFzc3VtZSB0aGUgYnVpbGQgZGF0ZSBpcyBjbG9zZSB0byB0aGUgZGF0ZSB3aGVuIHRoZQomZ3Q7
-ICAgIHNvZnR3YXJlIHZlcnNpb24gd2FzIGNyZWF0ZWQ/CiZndDsgICAgLSBGb3IgZXhhbXBsZSwg
-SSBhc3N1bWUgeW91J2xsIG1lcmdlIGEgZ2l0IGNvbW1pdCB0byBjcmVhdGUgYSBuZXcKJmd0OyAg
-ICBzb2Z0d2FyZSB2ZXJzaW9uLCBhbmQgdGhlbiBidWlsZCBhbiBpbWFnZSBiYXNlZCBvbiB0aGF0
-IGNvbW1pdC4gIEluIHRoaXMKJmd0OyAgICB3YXksIHRoZSBidWlsZCBkYXRlIGNvcnJlbGF0ZXMg
-Y2xvc2VseSB3aXRoIHRoZSB2ZXJzaW9uLgomZ3Q7ICAgIC0gSG93ZXZlciwgaWYgeW91IGJ1aWxk
-IGFuIGltYWdlIGZyb20gYW4gb2xkZXIgY29tbWl0LCBvciB3YWl0IGEgbG9uZwomZ3Q7ICAgIHRp
-bWUgYmVmb3JlIGJ1aWxkaW5nIGFuIGltYWdlLCB0aGUgYnVpbGQgZGF0ZSB3aWxsIG5vdCBjb3Jy
-ZWxhdGUgY2xvc2VseQomZ3Q7ICAgIHdpdGggdGhlIHZlcnNpb24uICBUaGlzIGNhbiBiZSBtaXNs
-ZWFkaW5nIGFuZCBsZWFkIHRvIGVycm9ycyBpbiBoYW5kbGluZwomZ3Q7ICAgIGltYWdlcy4KJmd0
-OwomZ3Q7SSBndWVzcyBidWlsZCBkYXRlIHNob3VsZCBiZSB0aGUgZGF0ZSB2ZXJzaW9uIHdhcyBy
-ZWxlYXNlZCBvciBjcmVhdGVkLgomZ3Q7CiZndDsgICAgSXMgdGhhdCBhIGNvbmNlcm4gZm9yIHlv
-dT8KJmd0OwomZ3Q7ICAgIC0gSm9zZXBoCiZndDsKJmd0OyAgICAmZ3Q7IHRoYW5rcywKJmd0OyAg
-ICAmZ3Q7IEJ5cm9uCiZndDsgICAgJmd0OwomZ3Q7ICAgIC4uLnNuaXAuLi4KJmd0OwomZ3Q7CiZn
-dDsKPGJyPjwvZGl2PjwvcHJlPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxz
-cGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8YnI+PC9wPjwvc3Bhbj48L2Jsb2Nr
-cXVvdGU+PGRpdj48YnI+PC9kaXY+PC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0
-bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_117046_789357224.1574414253471--
+21.11.2019 20:32, Bills, Jason M wrote:
+>
+>
+> Hi Alexander,
+>
+> On 11/21/2019 1:58 AM, Alexander Amelkin wrote:
+>> Thank you Bruce!
+>>
+>> Unfortunately, this procedure results in as non-functional an image as=
+ the
+>> default openbmc build procedure does.
+>>
+>> The boot log is cleaner, but the final result is the same: no way to c=
+ontrol
+>> power, and a crashing network driver:
+>>
+>> --------------------------------------------------
+>>
+>> Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 0.1.0 wol=
+fpass
+>> ttyS4
+>>
+>> wolfpass login: [=C2=A0 107.121476] ------------[ cut here ]----------=
+--
+>> [=C2=A0 107.126171] WARNING: CPU: 0 PID: 1635 at net/sched/sch_generic=
+=2Ec:461
+>> dev_watchdog+0x230/0x24c
+>> [=C2=A0 107.134834] NETDEV WATCHDOG: eth1 (ftgmac100): transmit queue =
+0 timed out
+>> [=C2=A0 107.141718] CPU: 0 PID: 1635 Comm: swampd Not tainted
+>> 4.19.29-9bd1e03005e74ecfe16f58143714f25793ae1c5d #1
+>> [=C2=A0 107.151284] Hardware name: Generic DT based system
+>> [=C2=A0 107.156157] Backtrace:
+>> [=C2=A0 107.158675] [<80107ddc>] (dump_backtrace) from [<80108010>]
+>> (show_stack+0x20/0x24)
+>> [=C2=A0 107.166341]=C2=A0 r7:80594a00 r6:00000009 r5:00000000 r4:9e1c3=
+e1c
+>> [=C2=A0 107.172124] [<80107ff0>] (show_stack) from [<80682b2c>]
+>> (dump_stack+0x20/0x28)
+>> [=C2=A0 107.179376] [<80682b0c>] (dump_stack) from [<801163f0>]
+>> (__warn.part.3+0xb4/0xdc)
+>> [=C2=A0 107.186972] [<8011633c>] (__warn.part.3) from [<80116484>]
+>> (warn_slowpath_fmt+0x6c/0x90)
+>> [=C2=A0 107.195160]=C2=A0 r6:000001cd r5:80843dac r4:80a03008
+>> [=C2=A0 107.199818] [<8011641c>] (warn_slowpath_fmt) from [<80594a00>]=
 
+>> (dev_watchdog+0x230/0x24c)
+>> [=C2=A0 107.208081]=C2=A0 r3:9e63a800 r2:80843d70
+>> [=C2=A0 107.211741]=C2=A0 r7:80a12b60 r6:9e63a800 r5:00000000 r4:9e63a=
+a2c
+>> [=C2=A0 107.217493] [<805947d0>] (dev_watchdog) from [<801572b8>]
+>> (call_timer_fn+0x3c/0x120)
+>> [=C2=A0 107.225357]=C2=A0 r7:805947d0 r6:00000100 r5:9e63aa2c r4:9e63a=
+a2c
+>> [=C2=A0 107.231047] [<8015727c>] (call_timer_fn) from [<80157448>]
+>> (expire_timers+0xac/0xb8)
+>> [=C2=A0 107.238886]=C2=A0 r7:00000000 r6:9e1c3ecc r5:9e1c3ecc r4:9e63a=
+a2c
+>> [=C2=A0 107.244652] [<8015739c>] (expire_timers) from [<801574f0>]
+>> (run_timer_softirq+0x9c/0x190)
+>> [=C2=A0 107.252914]=C2=A0 r9:80a03008 r8:80a12b60 r7:80a13860 r6:80a13=
+860 r5:9e1c3ecc
+>> r4:9e1c3ecc
+>> [=C2=A0 107.260678] [<80157454>] (run_timer_softirq) from [<8010224c>]=
+
+>> (__do_softirq+0xdc/0x2f8)
+>> [=C2=A0 107.268856]=C2=A0 r9:00000100 r8:9d047a00 r7:ffffe000 r6:80a67=
+4b0 r5:00000002
+>> r4:00000001
+>> [=C2=A0 107.276708] [<80102170>] (__do_softirq) from [<8011a490>]
+>> (irq_exit+0xfc/0x110)
+>> [=C2=A0 107.284118]=C2=A0 r10:76f0d2b0 r9:7e80fbf4 r8:9d047a00 r7:0000=
+0000 r6:00000001
+>> r5:80a46ed4
+>> [=C2=A0 107.292017]=C2=A0 r4:00000000
+>> [=C2=A0 107.294599] [<8011a394>] (irq_exit) from [<8014b20c>]
+>> (__handle_domain_irq+0x60/0xb8)
+>> [=C2=A0 107.302535] [<8014b1ac>] (__handle_domain_irq) from [<80102164=
+>]
+>> (avic_handle_irq+0x68/0x70)
+>> [=C2=A0 107.310990]=C2=A0 r9:7e80fbf4 r8:00c5387d r7:00c5387d r6:fffff=
+fff r5:9e1c3fb0
+>> r4:9d002620
+>> [=C2=A0 107.318834] [<801020fc>] (avic_handle_irq) from [<80101db4>]
+>> (__irq_usr+0x54/0x80)
+>> [=C2=A0 107.326493] Exception stack(0x9e1c3fb0 to 0x9e1c3ff8)
+>> [=C2=A0 107.331627] 3fa0:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 00000062 76f0d2b0
+>> 7e80fbf4 415f4e60
+>> [=C2=A0 107.339865] 3fc0: 6c3f6059 00000000 000001e0 41704b28 415f4e59=
+ 7e80fbf4
+>> 76f0d2b0 76f0d2b0
+>> [=C2=A0 107.348141] 3fe0: 415de108 7e80fb00 410fc214 410fa370 20000010=
+ ffffffff
+>> [=C2=A0 107.354863]=C2=A0 r5:20000010 r4:410fa370
+>> [=C2=A0 107.358459] ---[ end trace 6fd5e4a9b4660326 ]---
+>>
+> This is an issue we were seeing for a while, but I think we have it res=
+olved.=C2=A0
+> I'm working on another update that will hopefully resolve this one.
+
+Thanks! We'll be waiting for it!
+
+
+>
+>> Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 0.1.0 wol=
+fpass
+>> ttyS4
+>>
+>> wolfpass login: root
+>> Password:
+>> root@wolfpass:~#
+>> root@wolfpass:~# power-control
+>> terminate called after throwing an instance of
+>> 'sdbusplus::exception::SdBusError'
+>> =C2=A0=C2=A0 what():=C2=A0 sd_bus_request_name: org.freedesktop.DBus.E=
+rror.FileExists: File
+>> exists
+>> Aborted
+> Power control should already be running as a systemd service, so this e=
+rror is
+> expected when trying to start the service again.
+>
+> To use power control, you can use ipmitool power commands from the BMC =
+command
+> line:
+> ipmitool power status
+> ipmitool power on
+> ipmitool power off
+> etc.
+
+Thank you so much!
+
+Funny, I didn't even think about using ipmitool internally from openbmc. =
+Got
+used to obmutil.
+
+It really does work.
+
+Thanks again!
+
+Alexander Amelkin,
+https://yadro.com
+
+
+
+--bjmgIcCUeeSMkNkHm9zuZiHoU0AWBegFv--
+
+--3Mjucd3QOu22gnAfd5XyEsxNd7SGfbZfo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQIcBAEBCAAGBQJd18SUAAoJEOiTWHtbdBeNif8P/3kTawPYVxgBI+vSID9rOYFS
+wkypl7ZVGku7QxJZTJAkt7aaX6MU5HEMrI4LWNOGi8pkmFJWxmAQNbO6+94SuE06
+4xPE1Y4uQAo9IyBVXLoiyFA8mHzM4ctbtThgSvyGiNRyShaKTUEzyOHAN39sosrb
+lNsJYatlLhCoGUNW5p65Gh8vx8sv8EbhghDlPye1V9At5IvmQA4FOeIdWq9BQ3WB
+xfyKzDY7VhEBYSLFQr7m6fZNShlldruZduNYt8PQBXtg6Q/B5VUPnfX0D6LtuwFl
+Js9SmfW2Nk7aKwdGa0YHuuL2o6k0ea8mAugvqEOhRST4cq5DNH4LRQT/rniRMTYG
+5NaiY6iEnVY3dJWZIBsciWeLaiVJ6erlIcPu2+TY89Ia24WrAruaWLMCH0T7robw
+uZdyGQBxIaNT3abUPrRxKPZn7e6C9p25DbVCQXc5g1TWBU5ErBEGT5NOBStiTGla
+V3hmGptEPzoJxMbT5T0OAOJPe06WuxP0DriNk65CUnIs+ufpf+2HJM6GAVjW1KDO
+fMxXYfQlIZgOWglwCBQb2lIWf/aot8oubzGDwa4txsYNNh9cES1KUNXCs12xPPCL
+lHMwnLVbJRqaJKGxrEOo1e30HipLPAr9WC4hHODQmtR7SjDPwfNA0RmX73Njj28o
+ogUvBeP30d7LZ4hdrhbb
+=JUxV
+-----END PGP SIGNATURE-----
+
+--3Mjucd3QOu22gnAfd5XyEsxNd7SGfbZfo--
