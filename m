@@ -2,85 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD900106746
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 08:48:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4CBC106753
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 08:52:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47K7pc5zWJzDrH6
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 18:48:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47K7v51Ps2zDrHl
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 18:52:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="gVLvWTFz"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="FMNujLB0"; dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47K65p40Q3zDrBv
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 17:31:41 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id B0A84FCC;
- Fri, 22 Nov 2019 01:31:37 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Fri, 22 Nov 2019 01:31:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=PCfR068oxaJDBnTafaOW/sKblqJ2E6L
- Im6iybfaPt74=; b=gVLvWTFza3N/u1THzY3XvQPprf4qBWlaNF11pSrlgKyiNHg
- ftSEVSN3ZFIuZL/lq7lrcTZsYTDZeswvS3OyfmMRyt0VrCa5r4iqZ5M9WB9JHeDK
- qAugODnHfTWtOgaHX/HeDIUZoQbHOMbMwSDppgPidNWpgYxAs6n2NBxW8IsbdQ4f
- q7Kw/Yt7H+48eUNhDAa3WrRd/HIJhfVVSvK6f94BhcmoaeyMDTVB1shx97NMqO70
- +55cMwGyy8wwcNLoSgulxY5Rrm4kxOy43rqxt1kSPYFfmDVdzUOc5XCmhjaVFTuh
- jZ8vj+Y4pl3/6p5bWTkFJP4tES2mS8x9NCCuFkA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=PCfR06
- 8oxaJDBnTafaOW/sKblqJ2E6LIm6iybfaPt74=; b=FMNujLB0HIW8siiHeoGPIw
- 6YuGLBmhcKYL9m7O9zEu85ZNxj/D/zTeLY0cutJccLi666EUSxTpl7LZ+5MMmuq0
- hmZyQRzOqxE73/B5epAkidXpJYBXFNIPdnQ8lGwkZer+kXtegKpu5iI5/ivSMiaV
- uZrVgBumirkMSZzlt1JonDTEnWKX2SKsvesi22JytpkqW0dTn0uUvETrmC28E4jX
- 8YnheJMvvGLQuQ2EqcHXto9bp3lDY1JUdyPe21hNZ27vaNqb4U5XZSe4oqEe6oFL
- i0Oe4nHAbma8wrm+eqTFKbaVyK4p5PoWLzD5TZW7DIZO7puGt1yXDkAnhnyFBYuQ
- ==
-X-ME-Sender: <xms:voDXXewqO_3Df-hXe0cj-AHFp96zxDnYYEj2IBzRsasBUTUE9RVtLw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudehfedgleegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:voDXXUtc6v1MPTVlU8WIKc6D_1sm6GH341QJ33h-bHu0GqK3mGl3Vg>
- <xmx:voDXXX0sQx3_rUXgXTqSb4ZwSOT6R-DbzePxLYv2Xl2y1OExik5jMQ>
- <xmx:voDXXcBgvrWj7ynkQUikDo7_wG4eWX9_O1GGL_Gu5xuf3JrAVAj20Q>
- <xmx:yYDXXXvZcjYBzembnB4aK9quNeif4-qtSdKNvCUHc7PGJEjnhxuY7w>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id CD691E00A3; Fri, 22 Nov 2019 01:31:26 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
-Mime-Version: 1.0
-Message-Id: <839a25fc-1244-4c96-b3ed-6a2c04445736@www.fastmail.com>
-In-Reply-To: <348aed94.42d2.16e915b4531.Coremail.ouyangxuan10@163.com>
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.108; helo=m13-108.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="mYpv1XHW"; 
+ dkim-atps=neutral
+Received: from m13-108.163.com (m13-108.163.com [220.181.13.108])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47K6Zq3S9tzDqSp
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 17:53:21 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=GLXXa
+ ILcJWMOFpGndQMfD4wOeFMTi33vOFZoQgNk9IM=; b=mYpv1XHWwdXXQ3gTGv9hE
+ 9QqrxMC/j5CxERae0huX+5ui5CM15zwh4bLSUhZ//MsDKk1LQzGr4xcr/wVfQwSs
+ qezMjJXfEMFGuxAhNJq5CeN0nnMAaMAmiY1YPX7ohoMwHf8SJyR0/1+UAmxWHnyR
+ gBUhajSikcn+hNZCl0zBik=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr108 (Coremail) ; Fri, 22 Nov 2019 14:50:24 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Fri, 22 Nov 2019 14:50:24 +0800 (CST)
+From: www  <ouyangxuan10@163.com>
+To: "Andrew Jeffery" <andrew@aj.id.au>
+Subject: Re:Re: [openbmc-kernel]: How to make pinctrl not affect
+ pass-through function?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <839a25fc-1244-4c96-b3ed-6a2c04445736@www.fastmail.com>
 References: <1b4dacbd.8278.16e6e6c2234.Coremail.ouyangxuan10@163.com>
  <a06a7845-cf16-4e37-8674-acd0950d6245@www.fastmail.com>
  <42def251.79a4.16e87d7a3a7.Coremail.ouyangxuan10@163.com>
  <e4d8ad9b-49cf-4942-a64c-0c47a94efa17@www.fastmail.com>
  <348aed94.42d2.16e915b4531.Coremail.ouyangxuan10@163.com>
-Date: Fri, 22 Nov 2019 17:02:51 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: www <ouyangxuan10@163.com>
-Subject: =?UTF-8?Q?Re:_[openbmc-kernel]:_How_to_make_pinctrl_not_affect_pass-thro?=
- =?UTF-8?Q?ugh_function=3F?=
-Content-Type: text/plain
+ <839a25fc-1244-4c96-b3ed-6a2c04445736@www.fastmail.com>
+X-CM-CTRLDATA: 9AGSgWZvb3Rlcl9odG09MjkxMTo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_85535_1657485972.1574405424055"
+MIME-Version: 1.0
+Message-ID: <5d3da051.585b.16e91e043b7.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: bMGowAC3nZ4whdddSp44AQ--.33182W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiJht12lv2Zo5RSwABsM
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,33 +70,99 @@ Cc: openbmc@lists.ozlabs.org, Ryan Chen <ryan_chen@aspeedtech.com>, "Bills,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 22 Nov 2019, at 14:55, www wrote:
-> At 2019-11-22 08:31:05, "Andrew Jeffery" <andrew@aj.id.au> wrote:
+------=_Part_85535_1657485972.1574405424055
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-*snip* 
+RGVhciBBbmRyZXcsCgoKVGhhbmsgeW91LiBJIGdvdCBpdC4KUGFzcy10aHJvdWdoIGZ1bmN0aW9u
+IGlzIG9ubHkgYSBzbWFsbCBhbmQgc3BlY2lhbCBwYXJ0IG9mIEdQSU8gZnVuY3Rpb24uCklmIHRo
+ZSBlbnRpcmUgcGluY3RybCBhbmQgL3N5cy9jbGFzcy9ncGlvICBhcmUgY2hhbmdlZCBkdWUgdG8g
+dGhpcyBmdW5jdGlvbiwgSSBhbSBub3Qgc3VyZSB3aGV0aGVyIGl0IGlzIGFwcHJvcHJpYXRlLgoK
+CnRoYW5rcywKQnlyb24KCgoKQXQgMjAxOS0xMS0yMiAxNDozMjo1MSwgIkFuZHJldyBKZWZmZXJ5
+IiA8YW5kcmV3QGFqLmlkLmF1PiB3cm90ZToKPk9uIEZyaSwgMjIgTm92IDIwMTksIGF0IDE0OjU1
+LCB3d3cgd3JvdGU6Cj4+IEF0IDIwMTktMTEtMjIgMDg6MzE6MDUsICJBbmRyZXcgSmVmZmVyeSIg
+PGFuZHJld0Bhai5pZC5hdT4gd3JvdGU6Cj4KPipzbmlwKiAKPgo+PiA+R2V0dGluZyBiYWNrIHRv
+IHlvdXIgcHJvYmxlbSByYXRoZXIgdGhhbiBzb2x1dGlvbnMsIGl0J3MgcG9zc2libGUgdG8gdmll
+dwo+PiA+dGhpcyBhcyBhIGRlZmljaWVuY3kgaW4gdGhlIEdQSU8gc3Vic3lzdGVtIGFuZCBBc3Bl
+ZWQgR1BJTyBkcml2ZXI6IElmIHdlCj4+ID5jb3VsZCBkZXNjcmliZSB0aGF0IHdlIHdhbnQgdGhl
+IHBpbiBtdXhlZCBmb3IgcGFzcy10aHJvdWdoIGFzIHBhcnQgb2YKPj4gPnRoZSBHUElPIHJlcXVl
+c3QgdGhlbiB5b3VyIHByb2JsZW0gd291bGQgYmUgcGFydGx5IHJlc29sdmVkLCBzYXZlIGZvciAK
+Pj4gPnRoZSBmYWN0IHRoYXQgdGhlIGV4cG9ydGVkIEdQSU8gd291bGQgc3RpbGwgYmUgcmVhZC1v
+bmx5LiBIb3dldmVyLCB0aGF0Cj4+ID5pc3N1ZSBpcyBmdWxseSByZXNvbHZlZCBieSBtdWx0aXBs
+ZSBzZXF1ZW50aWFsIEdQSU8gcmVxdWVzdHM6IGV4cG9ydCB0aGUKPj4gPkdQSU8gaW4gcGFzcy10
+aHJvdWdoIG1vZGUgaW5pdGlhbGx5LCBhbmQgdGhlbiB3aGVuIGl0IGNvbWVzIHRvIGNoYW5naW5n
+Cj4+ID50aGUgaG9zdCBzdGF0ZSwgcmUtZXhwb3J0IHRoZSBHUElPIGluIG5vbi1wYXNzLXRocm91
+Z2ggbW9kZSBzbyB0aGF0IGl0IGlzCj4+ID53cml0YWJsZSwgYW5kIHRoZW4gYWdhaW4gcmUtZXhw
+b3J0IHRoZSBHUElPIGJhY2sgaW4gcGFzcy10aHJvdWdoIG1vZGUKPj4gPmFmdGVyIHRoZSBob3N0
+IHN0YXRlIGNoYW5nZSBoYXMgYmVlbiBhcHBsaWVkLiBUaGlzIGlzIHRoZSBzZXF1ZW5jZSBvZgo+
+PiA+eW91ciBvcmlnaW5hbCBzb2x1dGlvbiBhYm92ZSwganVzdCB3aXRob3V0IHRoZSBuZWVkIGZv
+ciBhZGRpdGlvbmFsIGRyaXZlcnMKPj4gPndpdGggYWQtaG9jIHVzZXJzcGFjZSBpbnRlcmZhY2Vz
+IG9yIGludHJvZHVjaW5nIGJ1Z3MgaW50byB0aGUgcGluY3RybAo+PiA+ZHJpdmVyLgo+PiA+V2hh
+dCBhcmUgeW91ciB0aG91Z2h0cyBvbiB0aGlzPwo+PiA+Cj4+IAo+PiBJIGhhdmVuJ3QgaGVhcmQg
+b2YgdGhpcyB3YXkuIFdvdWxkIHlvdSBwbGVhc2UgZXhwbGFpbiBpdCBpbiBkZXRhaWw/IFRoYW5r
+IHlvdQo+Cj5XaGF0IGRldGFpbHMgYXJlIHlvdSBhZnRlcj8gV2hhdCBJIHN1Z2dlc3RlZCBhYm92
+ZSBpcyBub3QgeWV0IHBvc3NpYmxlIC0KPndlJ2QgbmVlZCB0byBkZXZlbG9wIHNvbWUga2VybmVs
+IHBhdGNoZXMgdG8gbWFrZSBpdCB3b3JrLCBidXQgdGhleSB3b3VsZAo+YmUgc29tZXRoaW5nIHdl
+IGNvdWxkIHVwc3RyZWFtLiBwaW5jdHJsIG5lZWRzIHRvIHJlbWFpbiBhd2FyZSBvZiB3aGV0aGVy
+Cj5hIHBpbiBpcyBpbiBHUElPIHBhc3MtdGhyb3VnaCBtb2RlIG9yIG5vdCwgYXMgaXQgbm90IG9u
+bHkgYWZmZWN0cyBob3cgdGhhdCBwaW4KPndpbGwgYmVoYXZlIGJ1dCBob3cgKm90aGVyKiAidW5y
+ZWxhdGVkIiBwaW5zIG1pZ2h0IGJlaGF2ZSBhcyB3ZWxsLgo+Cj5BbmRyZXcK
+------=_Part_85535_1657485972.1574405424055
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-> >Getting back to your problem rather than solutions, it's possible to view
-> >this as a deficiency in the GPIO subsystem and Aspeed GPIO driver: If we
-> >could describe that we want the pin muxed for pass-through as part of
-> >the GPIO request then your problem would be partly resolved, save for 
-> >the fact that the exported GPIO would still be read-only. However, that
-> >issue is fully resolved by multiple sequential GPIO requests: export the
-> >GPIO in pass-through mode initially, and then when it comes to changing
-> >the host state, re-export the GPIO in non-pass-through mode so that it is
-> >writable, and then again re-export the GPIO back in pass-through mode
-> >after the host state change has been applied. This is the sequence of
-> >your original solution above, just without the need for additional drivers
-> >with ad-hoc userspace interfaces or introducing bugs into the pinctrl
-> >driver.
-> >What are your thoughts on this?
-> >
-> 
-> I haven't heard of this way. Would you please explain it in detail? Thank you
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciZuYnNwOzxzcGFuIHN0eWxlPSJmb250LWZhbWls
+eTogYXJpYWw7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsiPkFuZHJldyw8L3NwYW4+PC9kaXY+PGRp
+dj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IGFyaWFsOyB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7
+Ij48YnI+PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBhcmlhbDsg
+d2hpdGUtc3BhY2U6IHByZS13cmFwOyI+VGhhbmsgeW91LiBJIGdvdCBpdC48L3NwYW4+PC9kaXY+
+PGRpdj48Zm9udCBmYWNlPSJhcmlhbCI+PHNwYW4gc3R5bGU9IndoaXRlLXNwYWNlOiBwcmUtd3Jh
+cDsiPlBhc3MtdGhyb3VnaCBmdW5jdGlvbiBpcyBvbmx5IGEgc21hbGwgYW5kIHNwZWNpYWwgcGFy
+dCBvZiBHUElPIGZ1bmN0aW9uLiA8L3NwYW4+PC9mb250PjwvZGl2PjxkaXY+PGZvbnQgZmFjZT0i
+YXJpYWwiPjxzcGFuIHN0eWxlPSJ3aGl0ZS1zcGFjZTogcHJlLXdyYXA7Ij5JZiB0aGUgZW50aXJl
+IHBpbmN0cmwgYW5kIDwvc3Bhbj48L2ZvbnQ+PGVtIGlkPSJfX21jZURlbCIgc3R5bGU9ImZvbnQt
+ZmFtaWx5OiBWZXJkYW5hLCBHZW5ldmEsIEFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZv
+bnQtc2l6ZTogMTMuMzMzM3B4OyI+PGVtIGlkPSJfX21jZURlbCI+PGVtIGlkPSJfX21jZURlbCI+
+PGVtIGlkPSJfX21jZURlbCI+L3N5cy9jbGFzcy9ncGlvJm5ic3A7PC9lbT48L2VtPjwvZW0+PC9l
+bT48c3BhbiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZS13cmFwOyBmb250LWZhbWlseTogYXJpYWw7
+Ij4gYXJlIGNoYW5nZWQgZHVlIHRvIHRoaXMgZnVuY3Rpb24sIEkgYW0gbm90IHN1cmUgd2hldGhl
+ciBpdCBpcyBhcHByb3ByaWF0ZS48L3NwYW4+PC9kaXY+PGJyPjxkaXY+dGhhbmtzLDwvZGl2Pjxk
+aXY+Qnlyb248L2Rpdj48ZGl2IHN0eWxlPSJwb3NpdGlvbjpyZWxhdGl2ZTt6b29tOjEiPjwvZGl2
+PjxkaXYgaWQ9ImRpdk5ldGVhc2VNYWlsQ2FyZCI+PC9kaXY+PGJyPjxwcmU+PGJyPkF0IDIwMTkt
+MTEtMjIgMTQ6MzI6NTEsICJBbmRyZXcgSmVmZmVyeSIgJmx0O2FuZHJld0Bhai5pZC5hdSZndDsg
+d3JvdGU6CiZndDtPbiBGcmksIDIyIE5vdiAyMDE5LCBhdCAxNDo1NSwgd3d3IHdyb3RlOgomZ3Q7
+Jmd0OyBBdCAyMDE5LTExLTIyIDA4OjMxOjA1LCAiQW5kcmV3IEplZmZlcnkiICZsdDthbmRyZXdA
+YWouaWQuYXUmZ3Q7IHdyb3RlOgomZ3Q7CiZndDsqc25pcCogCiZndDsKJmd0OyZndDsgJmd0O0dl
+dHRpbmcgYmFjayB0byB5b3VyIHByb2JsZW0gcmF0aGVyIHRoYW4gc29sdXRpb25zLCBpdCdzIHBv
+c3NpYmxlIHRvIHZpZXcKJmd0OyZndDsgJmd0O3RoaXMgYXMgYSBkZWZpY2llbmN5IGluIHRoZSBH
+UElPIHN1YnN5c3RlbSBhbmQgQXNwZWVkIEdQSU8gZHJpdmVyOiBJZiB3ZQomZ3Q7Jmd0OyAmZ3Q7
+Y291bGQgZGVzY3JpYmUgdGhhdCB3ZSB3YW50IHRoZSBwaW4gbXV4ZWQgZm9yIHBhc3MtdGhyb3Vn
+aCBhcyBwYXJ0IG9mCiZndDsmZ3Q7ICZndDt0aGUgR1BJTyByZXF1ZXN0IHRoZW4geW91ciBwcm9i
+bGVtIHdvdWxkIGJlIHBhcnRseSByZXNvbHZlZCwgc2F2ZSBmb3IgCiZndDsmZ3Q7ICZndDt0aGUg
+ZmFjdCB0aGF0IHRoZSBleHBvcnRlZCBHUElPIHdvdWxkIHN0aWxsIGJlIHJlYWQtb25seS4gSG93
+ZXZlciwgdGhhdAomZ3Q7Jmd0OyAmZ3Q7aXNzdWUgaXMgZnVsbHkgcmVzb2x2ZWQgYnkgbXVsdGlw
+bGUgc2VxdWVudGlhbCBHUElPIHJlcXVlc3RzOiBleHBvcnQgdGhlCiZndDsmZ3Q7ICZndDtHUElP
+IGluIHBhc3MtdGhyb3VnaCBtb2RlIGluaXRpYWxseSwgYW5kIHRoZW4gd2hlbiBpdCBjb21lcyB0
+byBjaGFuZ2luZwomZ3Q7Jmd0OyAmZ3Q7dGhlIGhvc3Qgc3RhdGUsIHJlLWV4cG9ydCB0aGUgR1BJ
+TyBpbiBub24tcGFzcy10aHJvdWdoIG1vZGUgc28gdGhhdCBpdCBpcwomZ3Q7Jmd0OyAmZ3Q7d3Jp
+dGFibGUsIGFuZCB0aGVuIGFnYWluIHJlLWV4cG9ydCB0aGUgR1BJTyBiYWNrIGluIHBhc3MtdGhy
+b3VnaCBtb2RlCiZndDsmZ3Q7ICZndDthZnRlciB0aGUgaG9zdCBzdGF0ZSBjaGFuZ2UgaGFzIGJl
+ZW4gYXBwbGllZC4gVGhpcyBpcyB0aGUgc2VxdWVuY2Ugb2YKJmd0OyZndDsgJmd0O3lvdXIgb3Jp
+Z2luYWwgc29sdXRpb24gYWJvdmUsIGp1c3Qgd2l0aG91dCB0aGUgbmVlZCBmb3IgYWRkaXRpb25h
+bCBkcml2ZXJzCiZndDsmZ3Q7ICZndDt3aXRoIGFkLWhvYyB1c2Vyc3BhY2UgaW50ZXJmYWNlcyBv
+ciBpbnRyb2R1Y2luZyBidWdzIGludG8gdGhlIHBpbmN0cmwKJmd0OyZndDsgJmd0O2RyaXZlci4K
+Jmd0OyZndDsgJmd0O1doYXQgYXJlIHlvdXIgdGhvdWdodHMgb24gdGhpcz8KJmd0OyZndDsgJmd0
+OwomZ3Q7Jmd0OyAKJmd0OyZndDsgSSBoYXZlbid0IGhlYXJkIG9mIHRoaXMgd2F5LiBXb3VsZCB5
+b3UgcGxlYXNlIGV4cGxhaW4gaXQgaW4gZGV0YWlsPyBUaGFuayB5b3UKJmd0OwomZ3Q7V2hhdCBk
+ZXRhaWxzIGFyZSB5b3UgYWZ0ZXI/IFdoYXQgSSBzdWdnZXN0ZWQgYWJvdmUgaXMgbm90IHlldCBw
+b3NzaWJsZSAtCiZndDt3ZSdkIG5lZWQgdG8gZGV2ZWxvcCBzb21lIGtlcm5lbCBwYXRjaGVzIHRv
+IG1ha2UgaXQgd29yaywgYnV0IHRoZXkgd291bGQKJmd0O2JlIHNvbWV0aGluZyB3ZSBjb3VsZCB1
+cHN0cmVhbS4gcGluY3RybCBuZWVkcyB0byByZW1haW4gYXdhcmUgb2Ygd2hldGhlcgomZ3Q7YSBw
+aW4gaXMgaW4gR1BJTyBwYXNzLXRocm91Z2ggbW9kZSBvciBub3QsIGFzIGl0IG5vdCBvbmx5IGFm
+ZmVjdHMgaG93IHRoYXQgcGluCiZndDt3aWxsIGJlaGF2ZSBidXQgaG93ICpvdGhlciogInVucmVs
+YXRlZCIgcGlucyBtaWdodCBiZWhhdmUgYXMgd2VsbC4KJmd0OwomZ3Q7QW5kcmV3CjwvcHJlPjwv
+ZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3Nw
+YW4+
+------=_Part_85535_1657485972.1574405424055--
 
-What details are you after? What I suggested above is not yet possible -
-we'd need to develop some kernel patches to make it work, but they would
-be something we could upstream. pinctrl needs to remain aware of whether
-a pin is in GPIO pass-through mode or not, as it not only affects how that pin
-will behave but how *other* "unrelated" pins might behave as well.
-
-Andrew
