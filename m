@@ -2,110 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10B3E1068A3
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:09:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C231068BC
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 10:20:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47K9bD5LzLzDrKj
-	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 20:08:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47K9rX0TmdzDrMD
+	for <lists+openbmc@lfdr.de>; Fri, 22 Nov 2019 20:20:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=zbigniew.kurzynski@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.108; helo=m13-108.163.com;
+ envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="signature verification failed" (1024-bit key;
- unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
- header.b="TkN/Fx1u"; dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47K9ZF6lCMzDrCJ
- for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 20:08:00 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 22 Nov 2019 01:07:56 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,229,1571727600"; d="scan'208";a="407516209"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
- by fmsmga005.fm.intel.com with ESMTP; 22 Nov 2019 01:07:56 -0800
-Received: from ORSEDG001.ED.cps.intel.com (10.7.248.4) by
- ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Fri, 22 Nov 2019 01:07:56 -0800
-Received: from NAM05-DM3-obe.outbound.protection.outlook.com (104.47.49.51) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (TLS) id 14.3.439.0; Fri, 22 Nov 2019 01:07:56 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ijiH1WHh+kwyBJTrZaTgRxjXmPbRuc3i4RLZRIe2mdaIYVGCyIg9uRwAh4y/+OSasU3ULG/oRHTZFn0ZCq43Ew6LETviKlEqThYjRjHA6MK/QjRH/wYuCpRREBgBMoTeTjk1zWviwlR+pPJlxokvtDuGd0+LL1OzBkBzq+V/FZB9cRywczYdoLozDF1mqO5XKvUM68ul0sqvzHm0qKnusfh30y8mK/yXvgfeG57iqNHkghQnduYOfkNTBibL5botzaorkFcHUtm0rxRHn1NaXIGu37JgJjFHlR0xwEd8xL1TKfF5q3xOtCJNtAQimht0e0pUn0dBDkHyTcFc9NTlRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ntDJhOl9JAi9QLqz8CMX3VPt0kakREJA9S8BkxnBB5I=;
- b=GhMQ0K7Cxo7rSAR0nFGMR41sadyHDKBB9Udp3KuNvNDfz9nvVHJdPhFqFd0a6nqykpUrMa1DPyabKsTCIfA11+oWHHvvpMKLOOfSN5pz+L/rzxsIk2fUjFXNZ3u2IG/mG6xH/WP8/Au6S9VEbkFFbZ9yobOBApsGp2KDu+dNw73YnFF+Js3q/HFA2LlfLumcE7Vao6HWE1XhSFiJ0n+KBmga2w2SFTDI05lI4IiPdSOFXfdn5w7PLRAmuglevCz/lrHn6HKNaiaDAETfvyseH2jkPdPfa4rCHrnHbxbZEyTdD/e8nX/GHO4ftQ8v0Dz+S3wos9t5QyqxhWGFA1pqSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
- s=selector2-intel-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ntDJhOl9JAi9QLqz8CMX3VPt0kakREJA9S8BkxnBB5I=;
- b=TkN/Fx1uH7xAKih5Qm3Z7lvNX0k8qojfzQcGjVe70Vt5/n3+a54bWVM9l8c9yo35rOT90a4igeUdrocuE1TLT1yFr9/YM/MIEm2KAuUZOIZAtax1JEEwT3ttf+5Pruj7UoTPd5LBDxRxL+K1TgBRrL+cnyLlAFxr7zlanbBPTP8=
-Received: from SN6PR11MB2749.namprd11.prod.outlook.com (52.135.92.28) by
- SN6PR11MB3231.namprd11.prod.outlook.com (52.135.112.158) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2474.21; Fri, 22 Nov 2019 09:07:55 +0000
-Received: from SN6PR11MB2749.namprd11.prod.outlook.com
- ([fe80::5ccc:3522:bd20:b4ac]) by SN6PR11MB2749.namprd11.prod.outlook.com
- ([fe80::5ccc:3522:bd20:b4ac%3]) with mapi id 15.20.2474.019; Fri, 22 Nov 2019
- 09:07:54 +0000
-From: "Kurzynski, Zbigniew" <zbigniew.kurzynski@intel.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: phosphor-certificate-manager refactoring.
-Thread-Topic: phosphor-certificate-manager refactoring.
-Thread-Index: AdWhEjMmYpc3/EViSxmZcopSijcz3g==
-Date: Fri, 22 Nov 2019 09:07:54 +0000
-Message-ID: <SN6PR11MB2749157C9FFBF80F4C8FA9B492490@SN6PR11MB2749.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNjE4ZmJiNGQtNWFmYy00YzM5LWI4YmMtMWFkYTE3OWUzZGUxIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUVVLMTBcLzdRXC9Md28ydldSQTNFSG45c1NDKzArNHNtbGJ0VWFqSllEb2x0VTgzWUJGblRpck9ncjBRRFZ0bkh3In0=
-dlp-reaction: no-action
-dlp-version: 11.2.0.6
-dlp-product: dlpe-windows
-x-ctpclassification: CTP_NT
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=zbigniew.kurzynski@intel.com; 
-x-originating-ip: [192.55.79.126]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 41efea52-e1e7-4f77-b55a-08d76f2b75e8
-x-ms-traffictypediagnostic: SN6PR11MB3231:
-x-microsoft-antispam-prvs: <SN6PR11MB32314218013B543F88D1504C92490@SN6PR11MB3231.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-forefront-prvs: 02296943FF
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(346002)(39860400002)(376002)(396003)(136003)(366004)(53754006)(189003)(199004)(33656002)(66066001)(86362001)(6506007)(7696005)(3846002)(102836004)(26005)(186003)(6116002)(2906002)(6436002)(5640700003)(55016002)(9686003)(25786009)(2501003)(305945005)(66476007)(66446008)(64756008)(66556008)(316002)(71200400001)(76116006)(66946007)(14444005)(7736002)(256004)(3480700005)(2351001)(71190400001)(6916009)(8936002)(1730700003)(478600001)(81166006)(8676002)(81156014)(5660300002)(14454004)(74316002)(52536014)(99286004);
- DIR:OUT; SFP:1102; SCL:1; SRVR:SN6PR11MB3231;
- H:SN6PR11MB2749.namprd11.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: VUwePDYRF4trezw1i69emqesbu8QVsOCrwhf5c9IJvFjhUiMmCAaM9MTCRC0e6RA4ygFp/C0OKIWYN8ssqsUzd+kMJkQoxQFGvCntr5myA5XWXGnSrXgW0j/rBQeDcWaSQeiC6SD2b/NzX6/SdbzTA+KfPBjR+PadLQ5KXbBb2QmTpUx068/G7wA9figJKkvD5Gw9igyTtFIjCK4PjFSpNhUVd/cI+19CrG02z14ZWLSSUy8XiJGxUR0WrPIugFNkY4YgIm8f2Cjg+FSOt3JQHDPnlRwbC8wDIRfIwjhe/Y89DRPVhfXdOg47BkTKnf10xKCUbvYR8MNQs7bxXhd/nZRlank6UwHfllePvktN86GOjdDomF329fYpeyjN/VIIka/b+2XMzcF1wyNOwf9BPBKC0OqITQO/E33rSGr2Qxur3FuTb8xYB/EEgWdxBQZ
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="YEHSbMF4"; 
+ dkim-atps=neutral
+Received: from m13-108.163.com (m13-108.163.com [220.181.13.108])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47K9qn4xskzDrLX
+ for <openbmc@lists.ozlabs.org>; Fri, 22 Nov 2019 20:19:44 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=+Wr12
+ wTmn4QqvuLf+WZ8EuI4hRj+Q6RWtzgxKtrFzME=; b=YEHSbMF4eEQcZHXp1fpfa
+ iAINh9810e3P4osutRR7NkSVx3P5oFyFoOLWeucbRFP13NiuBtVjSCKZG6Yx+S4l
+ OqhdlIsx1Yqg+ZvVZhnnG3XRwWX9c96KSgJWylZglsKV43ct/eKA7VW3EVENDf85
+ wUkGZ0aDNkAbJY8HDk9O2k=
+Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
+ ajax-webmail-wmsvr108 (Coremail) ; Fri, 22 Nov 2019 17:17:33 +0800 (CST)
+X-Originating-IP: [106.120.127.15]
+Date: Fri, 22 Nov 2019 17:17:33 +0800 (CST)
+From: www  <ouyangxuan10@163.com>
+To: rgrs <rgrs@protonmail.com>
+Subject: Re:Re:Re: Add build date to image
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2019 www.mailtech.cn 163com
+In-Reply-To: <PHi-_R-RqNeB7xEM-EzDWDdMb902pQczftTW9OZO7Ufo8CoHq8i02Gi4wUSqY2-DU9Ox9aqyxYBuYdLqT4PJLdUW9EtOpy9GtLsFSurdi4g=@protonmail.com>
+References: <275367c1.6307.16e63b2e1cf.Coremail.ouyangxuan10@163.com>
+ <adf92df5-06d4-ea38-ad9f-55dde92148b2@linux.ibm.com>
+ <136be35a.269c.16e7c360818.Coremail.ouyangxuan10@163.com>
+ <17d14e7a-1dc8-3375-a8a6-ea61c60e3bb7@linux.ibm.com>
+ <67ca8d1c.28cc.16e8141d457.Coremail.ouyangxuan10@163.com>
+ <0592b224-ccbc-30ad-d2aa-5c39f6481989@linux.ibm.com>
+ <C7E32DAD-2454-4AF6-89C4-630DBC6898D9@fb.com>
+ <af0b748.18f5.16e8b7b35a8.Coremail.ouyangxuan10@163.com>
+ <PHi-_R-RqNeB7xEM-EzDWDdMb902pQczftTW9OZO7Ufo8CoHq8i02Gi4wUSqY2-DU9Ox9aqyxYBuYdLqT4PJLdUW9EtOpy9GtLsFSurdi4g=@protonmail.com>
+X-CM-CTRLDATA: ep65cGZvb3Rlcl9odG09NDExMjo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_117046_789357224.1574414253471"
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 41efea52-e1e7-4f77-b55a-08d76f2b75e8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Nov 2019 09:07:54.6647 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qF9Q5ReKdNx00NrRXuZsUzAaaevW7cMoRGMJUckrDkmpV7LeolTNjCH+2BuZ4P9BZz67Pz5niCMeAMhDQ2fHXclY5Coc2vAKjYUCfELy6og=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3231
-X-OriginatorOrg: intel.com
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <60a8a1d0.79a3.16e9266fd9f.Coremail.ouyangxuan10@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: bMGowABnVZ6tp9ddGM84AQ--.22668W
+X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiIAh12l0S-n9oEwACsw
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,85 +67,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi everyone,  =
+------=_Part_117046_789357224.1574414253471
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I think it is good time to do some code refactoring in phosphor-certificate=
--manager.
-The certificate manager supports few certificate types, each is managed by =
-a separate service instance.
-	phosphor-certificate-manager@authority.service, phosphor-certificate-manag=
-er@bmcweb.service, phosphor-certificate-manager@nslcd.service
-Initially the certificate manager was designed to support single certificat=
-e file. But now one of its instances supports multiple files and the code f=
-or that case differs quite much from the rest.
-I would like to propose a small refactoring of this code in following steps:
+aGkgLAoKCnRoYW5rIHlvdSBmb3IgeW91ciBoZWxwLiBJIGRpZG4ndCB0ZXN0IHRoaXMsIGJ1dCBJ
+IHdhbnQgYXNrIGEgcXVlc3Rpb24sIGlmIHRoaXMgcGFja2FnZSBoYXNuJ3QgYmVlbiB1cGRhdGVk
+LCB0aGUgdGltZSB3aWxsIGJlIHVwZGF0ZWQgYXV0b21hdGljYWxseSBvciBub3Q/CgoKVGhhbmtz
+LApCeXJvbgoKCgoKCgpBdCAyMDE5LTExLTIyIDE3OjA2OjA0LCAicmdycyIgPHJncnNAcHJvdG9u
+bWFpbC5jb20+IHdyb3RlOgoKSGkgQnlyb24sCgoKCldlIGhhZCBhIHNpbWlsaWFyIG5lZWQsIGFu
+ZCB3ZSB1c2UgSVBNSSBhdXggdmVyc2lvbiBmb3IgdGhpcyBwdXJwb3NlLgoKCgpUbyBnZXQgdGhl
+IGJlaGF2aW9yIHlvdSBkZXNjcmliZSwgeW91IGNhbiBjaGFuZ2UgeW91ciBwbGF0Zm9ybSdzIHBo
+b3NwaG9yLWlwbWktY29uZmlnLmJiYXBwZW5kCgoKCldpdGhlcnNwb29uIGZvciBleGFtcGxlLCBj
+YWxjdWxhdGVzIEF1eCByZXYgaW5mbyBmcm9tIFZFUlNJT05fSUQgKGdpdCB0YWcsIEkgZ3Vlc3Mp
+LgoKSW4gb3VyIHBsYXRmb3Jtcywgd2UgaW5zdGVhZCB3cml0ZSBERE1NWVlZWSBpbnRvIElQTUkg
+R2V0IERldiBJRCdzIGF1eCByZXYgaW5mbyAoNGJ5dGVzLCBCQ0QpCgoKCiJpcG1pdG9vbCBtYyBp
+bmZvIiB3b3VsZCBsb29rcyBzb21ldGhpbmcgbGlrZSBiZWxvdzoKCkF1eCBGaXJtd2FyZSBSZXYg
+SW5mbyAgICAgOgoKICAgIDB4MjIKCiAgICAweDExCgogICAgMHgxOQoKICAgIDB4MjAKCgoKVGhh
+bmtzLAoKCgpSYWoKCgoK4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ
+4oCQ4oCQ4oCQ4oCQ4oCQ4oCQCgpPbiBUaHVyc2RheSwgTm92ZW1iZXIgMjEsIDIwMTkgNjozMiBB
+TSwgd3d3IDxvdXlhbmd4dWFuMTBAMTYzLmNvbT4gd3JvdGU6CgoKCkRlYXIgSm9zZXBoICYgVmlq
+YXkgS2hlbWthLAoKCgpObyBtYXR0ZXIgd2hhdCB5b3VyIHZlcnNpb24gaXMsIGJ1aWxkIGRhdGUg
+b25seSByZXByZXNlbnRzIHRoZSB0aW1lIHdoZW4gdGhlIGltYWdlIHdhcyBjcmVhdGVkLgoKCgp0
+aGFua3MsCgpCeXJvbgoKCgoKCgoKCgoKCgoKQXQgMjAxOS0xMS0yMSAwMjowODo0MCwgIlZpamF5
+IEtoZW1rYSIgPHZpamF5a2hlbWthQGZiLmNvbT4gd3JvdGU6Cj4KPgo+77u/T24gMTEvMjAvMTks
+IDg6NDAgQU0sICJvcGVuYm1jIG9uIGJlaGFsZiBvZiBKb3NlcGggUmV5bm9sZHMiIDxvcGVuYm1j
+LWJvdW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcgb24gYmVoYWxmIG9m
+IGpyZXlAbGludXguaWJtLmNvbT4gd3JvdGU6Cj4KPgo+ICAgIE9uIDExLzE4LzE5IDc6MjMgUE0s
+IHd3dyB3cm90ZToKPiAgICA+IERlYXIgSm9zZXBo77yMCj4gICAgPgo+ICAgID4gVGhhbmsgeW91
+IHZlcnkgbXVjaCBmb3IgeW91ciBoZWxwLiBJIGp1c3Qgd2FudCB0byBzaG93IHRoZSBjb21waWxl
+Cj4gICAgPiB0aW1lIG9mIGZpcm13YXJlIHRvIHRoZSB1c2VyLiBJZiAgb25seSBzaG93IHRoZSB2
+ZXJzaW9uLCBpdCBjYW4ndAo+ICAgID4gY29ycmVzcG9uZCB0byB0aGUgdGltZS4gV2hlbiBib3Ro
+IGFyZSBkaXNwbGF5ZWQgYXQgdGhlIHNhbWUgdGltZSwgdGhlCj4gICAgPiBpbmZvcm1hdGlvbiB3
+aWxsIGJlIGNsZWFyZXIuIHRoYW5rcyBhZ2Fpbi4KPiAgICA+Cj4KPiAgICBCeXJvbiwgdGhhbmtz
+IGZvciB0aGF0LiAgSSB0aGluayBJIHVuZGVyc3RhbmQgeW91ciB1c2UgY2FzZS4gSG93ZXZlciwK
+PiAgICBkb2VzIHRoaXMgcHJhY3RpY2UgYXNzdW1lIHRoZSBidWlsZCBkYXRlIGlzIGNsb3NlIHRv
+IHRoZSBkYXRlIHdoZW4gdGhlCj4gICAgc29mdHdhcmUgdmVyc2lvbiB3YXMgY3JlYXRlZD8KPiAg
+ICAtIEZvciBleGFtcGxlLCBJIGFzc3VtZSB5b3UnbGwgbWVyZ2UgYSBnaXQgY29tbWl0IHRvIGNy
+ZWF0ZSBhIG5ldwo+ICAgIHNvZnR3YXJlIHZlcnNpb24sIGFuZCB0aGVuIGJ1aWxkIGFuIGltYWdl
+IGJhc2VkIG9uIHRoYXQgY29tbWl0LiAgSW4gdGhpcwo+ICAgIHdheSwgdGhlIGJ1aWxkIGRhdGUg
+Y29ycmVsYXRlcyBjbG9zZWx5IHdpdGggdGhlIHZlcnNpb24uCj4gICAgLSBIb3dldmVyLCBpZiB5
+b3UgYnVpbGQgYW4gaW1hZ2UgZnJvbSBhbiBvbGRlciBjb21taXQsIG9yIHdhaXQgYSBsb25nCj4g
+ICAgdGltZSBiZWZvcmUgYnVpbGRpbmcgYW4gaW1hZ2UsIHRoZSBidWlsZCBkYXRlIHdpbGwgbm90
+IGNvcnJlbGF0ZSBjbG9zZWx5Cj4gICAgd2l0aCB0aGUgdmVyc2lvbi4gIFRoaXMgY2FuIGJlIG1p
+c2xlYWRpbmcgYW5kIGxlYWQgdG8gZXJyb3JzIGluIGhhbmRsaW5nCj4gICAgaW1hZ2VzLgo+Cj5J
+IGd1ZXNzIGJ1aWxkIGRhdGUgc2hvdWxkIGJlIHRoZSBkYXRlIHZlcnNpb24gd2FzIHJlbGVhc2Vk
+IG9yIGNyZWF0ZWQuCj4KPiAgICBJcyB0aGF0IGEgY29uY2VybiBmb3IgeW91Pwo+Cj4gICAgLSBK
+b3NlcGgKPgo+ICAgID4gdGhhbmtzLAo+ICAgID4gQnlyb24KPiAgICA+Cj4gICAgLi4uc25pcC4u
+Lgo+Cj4KPgoKCgoKCgoKIAoKCgo=
+------=_Part_117046_789357224.1574414253471
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Step 1.
-Create a new subclass of Certificate. The base class will remain as is, foc=
-using on single certificate approach, while its derived child will extend i=
-t with support for multiple certificates.
-The Manager class seems quite generic and I would leave it as is. Two insta=
-nces will operate on the base Certificate class, while the third will use c=
-lass derived from the Certificate.
-
-Step 2.
-Moving files:
-	1. meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-cert-config/e=
-nv
-	2. meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-authority-cer=
-t-config/env
-	3. meta-phosphor/recipes-phosphor/certificate/phosphor-bmcweb-cert-config/=
-env
-to repository phosphor-certificate-manager under a new directory 'service'
-
-Getting rid of below recipes and moving their functionality to phosphor-cer=
-tificate-manager_git.bb if possible.
-	phosphor-bmcweb-cert-config.bb, phosphor-nslcd-cert-config.bb, phosphor-ns=
-lcd-authority-cert-config.bb
-
-Step 3.
-Changing the way of managing and storing TrustStore certificates.
-
-Now all certificates are stored and managed directly in a /etc/ssl/certs/au=
-thority/ , but files in that directory are subject to many restrictions lik=
-e: =
-
-	the files must be named using the subject name's hash and an extension of =
-'.0',
-	If there are two files with the same hash they should have different exten=
-sion number,
-	Extension numbers cannot have gaps, which is a problem when we delete some=
- certificates.
-
-I propose to store certificate files in a separate location, where file nam=
-es do not have such restrictions.
-And put in this folder /etc/ssl/certs/authority/ only soft links to origina=
-l files.
-Each time when any of certificate will be changed/deleted/added the manager=
- should simply delete all links from /etc/ssl/certs/authority and the recre=
-ate them by iterating all certs files.
-
-Please let me know if you have any concerns.
-
--Zbigniew
---------------------------------------------------------------------
-
-Intel Technology Poland sp. z o.o.
-ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII Wydz=
-ial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP 957-07-52-31=
-6 | Kapital zakladowy 200.000 PLN.
-
-Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego adresata=
- i moze zawierac informacje poufne. W razie przypadkowego otrzymania tej wi=
-adomosci, prosimy o powiadomienie nadawcy oraz trwale jej usuniecie; jakiek=
-olwiek
-przegladanie lub rozpowszechnianie jest zabronione.
-This e-mail and any attachments may contain confidential material for the s=
-ole use of the intended recipient(s). If you are not the intended recipient=
-, please contact the sender and delete all copies; any review or distributi=
-on by
-others is strictly prohibited.
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+aGkgLDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+dGhh
+bmsgeW91IGZvciB5b3VyIGhlbHAuJm5ic3A7SSBkaWRuJ3QgdGVzdCB0aGlzLCBidXQgSSB3YW50
+IGFzayBhIHF1ZXN0aW9uLCBpZiB0aGlzIHBhY2thZ2UgaGFzbid0IGJlZW4gdXBkYXRlZCwgdGhl
+IHRpbWUgd2lsbCBiZSB1cGRhdGVkIGF1dG9tYXRpY2FsbHkgb3Igbm90PzwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXY+VGhhbmtzLDwvZGl2PjxkaXY+Qnlyb248L2Rpdj48YnI+PGJyPjxicj48YnI+
+PGRpdiBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48L2Rpdj48ZGl2IGlkPSJkaXZO
+ZXRlYXNlTWFpbENhcmQiPjwvZGl2Pjxicj5BdCAyMDE5LTExLTIyIDE3OjA2OjA0LCAicmdycyIg
+Jmx0O3JncnNAcHJvdG9ubWFpbC5jb20mZ3Q7IHdyb3RlOjxicj4gPGJsb2NrcXVvdGUgaWQ9Imlz
+UmVwbHlDb250ZW50IiBzdHlsZT0iUEFERElORy1MRUZUOiAxZXg7IE1BUkdJTjogMHB4IDBweCAw
+cHggMC44ZXg7IEJPUkRFUi1MRUZUOiAjY2NjIDFweCBzb2xpZCI+PGRpdj5IaSBCeXJvbiw8YnI+
+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XZSBoYWQgYSBzaW1pbGlhciBuZWVkLCBhbmQgd2Ug
+dXNlIElQTUkgYXV4IHZlcnNpb24gZm9yIHRoaXMgcHVycG9zZS48YnI+PC9kaXY+PGRpdj48YnI+
+PC9kaXY+PGRpdj5UbyBnZXQgdGhlIGJlaGF2aW9yIHlvdSBkZXNjcmliZSwgeW91IGNhbiBjaGFu
+Z2UgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy9ibG9iL21hc3Rl
+ci9tZXRhLWlibS9tZXRhLXdpdGhlcnNwb29uL3JlY2lwZXMtcGhvc3Bob3IvaXBtaS9waG9zcGhv
+ci1pcG1pLWNvbmZpZy5iYmFwcGVuZCI+eW91ciBwbGF0Zm9ybSdzIHBob3NwaG9yLWlwbWktY29u
+ZmlnLmJiYXBwZW5kPC9hPjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PldpdGhlcnNwb29u
+IGZvciBleGFtcGxlLCBjYWxjdWxhdGVzIEF1eCByZXYgaW5mbyBmcm9tIFZFUlNJT05fSUQgKGdp
+dCB0YWcsIEkgZ3Vlc3MpLjxicj48L2Rpdj48ZGl2PkluIG91ciBwbGF0Zm9ybXMsIHdlIGluc3Rl
+YWQgd3JpdGUgRERNTVlZWVkgaW50byBJUE1JIEdldCBEZXYgSUQncyBhdXggcmV2IGluZm8gKDRi
+eXRlcywgQkNEKTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiJpcG1pdG9vbCBtYyBpbmZv
+IiB3b3VsZCBsb29rcyBzb21ldGhpbmcgbGlrZSBiZWxvdzo8YnI+PC9kaXY+PGRpdj5BdXggRmly
+bXdhcmUgUmV2IEluZm8mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgOjxicj48L2Rpdj48ZGl2PiZu
+YnNwOyZuYnNwOyZuYnNwOyAweDIyPGJyPjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7IDB4
+MTE8YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsgMHgxOTxicj48L2Rpdj48ZGl2PiZu
+YnNwOyZuYnNwOyZuYnNwOyAweDIwPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhhbmtz
+LDxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdiBj
+bGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBwcm90b25tYWlsX3NpZ25hdHVy
+ZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJl
+X2Jsb2NrLXByb3RvbiI+UmFqPGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+4oCQ
+4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ
+PGJyPjwvZGl2PjxkaXY+IE9uIFRodXJzZGF5LCBOb3ZlbWJlciAyMSwgMjAxOSA2OjMyIEFNLCB3
+d3cgJmx0O291eWFuZ3h1YW4xMEAxNjMuY29tJmd0OyB3cm90ZTo8YnI+PC9kaXY+PGRpdj4gPGJy
+PjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJwcm90b25tYWlsX3F1b3RlIiB0eXBlPSJjaXRlIj48
+ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDoxLjc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtm
+b250LWZhbWlseTpBcmlhbCI+PGRpdj5EZWFyIEpvc2VwaCAmYW1wOyBWaWpheSBLaGVta2EsPGJy
+PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+Tm8gbWF0dGVyIHdoYXQgeW91ciB2ZXJzaW9uIGlz
+LCBidWlsZCBkYXRlIG9ubHkgcmVwcmVzZW50cyB0aGUgdGltZSB3aGVuIHRoZSBpbWFnZSB3YXMg
+Y3JlYXRlZC48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj50aGFua3MsPGJyPjwvZGl2Pjxk
+aXY+Qnlyb248YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBzdHls
+ZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
+dj48YnI+PC9kaXY+PHByZT48ZGl2Pjxicj48L2Rpdj48ZGl2PkF0IDIwMTktMTEtMjEgMDI6MDg6
+NDAsICJWaWpheSBLaGVta2EiICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7IHdyb3RlOgomZ3Q7
+CiZndDsKJmd0O++7v09uIDExLzIwLzE5LCA4OjQwIEFNLCAib3BlbmJtYyBvbiBiZWhhbGYgb2Yg
+Sm9zZXBoIFJleW5vbGRzIiAmbHQ7b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBs
+aXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBqcmV5QGxpbnV4LmlibS5jb20mZ3Q7IHdyb3Rl
+OgomZ3Q7CiZndDsKJmd0OyAgICBPbiAxMS8xOC8xOSA3OjIzIFBNLCB3d3cgd3JvdGU6CiZndDsg
+ICAgJmd0OyBEZWFyIEpvc2VwaO+8jAomZ3Q7ICAgICZndDsKJmd0OyAgICAmZ3Q7IFRoYW5rIHlv
+dSB2ZXJ5IG11Y2ggZm9yIHlvdXIgaGVscC4gSSBqdXN0IHdhbnQgdG8gc2hvdyB0aGUgY29tcGls
+ZQomZ3Q7ICAgICZndDsgdGltZSBvZiBmaXJtd2FyZSB0byB0aGUgdXNlci4gSWYgIG9ubHkgc2hv
+dyB0aGUgdmVyc2lvbiwgaXQgY2FuJ3QKJmd0OyAgICAmZ3Q7IGNvcnJlc3BvbmQgdG8gdGhlIHRp
+bWUuIFdoZW4gYm90aCBhcmUgZGlzcGxheWVkIGF0IHRoZSBzYW1lIHRpbWUsIHRoZQomZ3Q7ICAg
+ICZndDsgaW5mb3JtYXRpb24gd2lsbCBiZSBjbGVhcmVyLiB0aGFua3MgYWdhaW4uCiZndDsgICAg
+Jmd0OwomZ3Q7CiZndDsgICAgQnlyb24sIHRoYW5rcyBmb3IgdGhhdC4gIEkgdGhpbmsgSSB1bmRl
+cnN0YW5kIHlvdXIgdXNlIGNhc2UuIEhvd2V2ZXIsCiZndDsgICAgZG9lcyB0aGlzIHByYWN0aWNl
+IGFzc3VtZSB0aGUgYnVpbGQgZGF0ZSBpcyBjbG9zZSB0byB0aGUgZGF0ZSB3aGVuIHRoZQomZ3Q7
+ICAgIHNvZnR3YXJlIHZlcnNpb24gd2FzIGNyZWF0ZWQ/CiZndDsgICAgLSBGb3IgZXhhbXBsZSwg
+SSBhc3N1bWUgeW91J2xsIG1lcmdlIGEgZ2l0IGNvbW1pdCB0byBjcmVhdGUgYSBuZXcKJmd0OyAg
+ICBzb2Z0d2FyZSB2ZXJzaW9uLCBhbmQgdGhlbiBidWlsZCBhbiBpbWFnZSBiYXNlZCBvbiB0aGF0
+IGNvbW1pdC4gIEluIHRoaXMKJmd0OyAgICB3YXksIHRoZSBidWlsZCBkYXRlIGNvcnJlbGF0ZXMg
+Y2xvc2VseSB3aXRoIHRoZSB2ZXJzaW9uLgomZ3Q7ICAgIC0gSG93ZXZlciwgaWYgeW91IGJ1aWxk
+IGFuIGltYWdlIGZyb20gYW4gb2xkZXIgY29tbWl0LCBvciB3YWl0IGEgbG9uZwomZ3Q7ICAgIHRp
+bWUgYmVmb3JlIGJ1aWxkaW5nIGFuIGltYWdlLCB0aGUgYnVpbGQgZGF0ZSB3aWxsIG5vdCBjb3Jy
+ZWxhdGUgY2xvc2VseQomZ3Q7ICAgIHdpdGggdGhlIHZlcnNpb24uICBUaGlzIGNhbiBiZSBtaXNs
+ZWFkaW5nIGFuZCBsZWFkIHRvIGVycm9ycyBpbiBoYW5kbGluZwomZ3Q7ICAgIGltYWdlcy4KJmd0
+OwomZ3Q7SSBndWVzcyBidWlsZCBkYXRlIHNob3VsZCBiZSB0aGUgZGF0ZSB2ZXJzaW9uIHdhcyBy
+ZWxlYXNlZCBvciBjcmVhdGVkLgomZ3Q7CiZndDsgICAgSXMgdGhhdCBhIGNvbmNlcm4gZm9yIHlv
+dT8KJmd0OwomZ3Q7ICAgIC0gSm9zZXBoCiZndDsKJmd0OyAgICAmZ3Q7IHRoYW5rcywKJmd0OyAg
+ICAmZ3Q7IEJ5cm9uCiZndDsgICAgJmd0OwomZ3Q7ICAgIC4uLnNuaXAuLi4KJmd0OwomZ3Q7CiZn
+dDsKPGJyPjwvZGl2PjwvcHJlPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxz
+cGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8YnI+PC9wPjwvc3Bhbj48L2Jsb2Nr
+cXVvdGU+PGRpdj48YnI+PC9kaXY+PC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0
+bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
+------=_Part_117046_789357224.1574414253471--
 
