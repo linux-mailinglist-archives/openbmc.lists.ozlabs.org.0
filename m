@@ -1,90 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 651A5108240
+	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 06:47:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 630D6107EF6
-	for <lists+openbmc@lfdr.de>; Sat, 23 Nov 2019 16:02:58 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47KxP90qb0zDr0p
-	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 02:02:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47LK1r3WhnzDqrM
+	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 16:47:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=hotmail.com (client-ip=40.92.4.90;
- helo=nam02-cy1-obe.outbound.protection.outlook.com;
- envelope-from=fishbaoz@hotmail.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
+ helo=mail-ot1-x32b.google.com; envelope-from=gorojohn17@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hotmail.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hotmail.com header.i=@hotmail.com header.b="N/V/2Aa7"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="ql1CYlXP"; 
  dkim-atps=neutral
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com
- (mail-oln040092004090.outbound.protection.outlook.com [40.92.4.90])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
+ [IPv6:2607:f8b0:4864:20::32b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47KxN60y9vzDqvj
- for <openbmc@lists.ozlabs.org>; Sun, 24 Nov 2019 02:01:57 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dwdq5wM8tB94L2aNoPQjdC7AMpNPB2cSRV2q4LthDg7JYudCnA7MWGTzDovoKX+vutKnq1rqM+G52Yeu9PFAIEr1j3/NyW8x6S4173Tcmdg2YZWxtcOFG1nYtM9sxcGz8e74bng55yfXTeQE9JrNQYAAu4o7zLpGIEGPHo2WNkx4V4hQLLBRy18Q98B+7Emv/7V7UxEnasinBS/yfWwzKd6IVAj27QxQybbpTfS8iL+GNydyye302lodv0ANi7WhSF4elxYf6qgD3asPqkVtNpnDaowdfInCcrxkW3fBtrDYrY3YAKNN8k1OZ45IWjWG2IjD/7321IM3Qu3g7YhS2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NU4Bw/DGtZgFd+e751u2sc4kP7i2GIeg2H4pcBmCSZk=;
- b=K+kA+3J1+WTj6P4ZsEnFBostaQr1pNJCarfUgC4zwEhB4E2NeMe3j6RAvNL4/xFbfiJryw8pUtqgzlkLTe79COwgtagtqnxgi3n7+e7VxIRTBzzApLOaouKme+UcgsPh+aDkBeBcebiXLBogSacxdUv+tZijFspeKc7xmQCPcZZnhlCNH3IsndWrKKG/sz3yPhUPsIpjmKAVerIrKJ2ksdlbkiZ8bPyzhhyq3IXXVkBVFG8I7+DwdsUamu4YCqPHE9GVNezlR6BlUjVCIOyB+xy5mWhZ75YUtj+MXdlbI6+BfVUWiNmhHtTN8qynK/U4E0L2wP/Q0EwGG4kD4nreiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NU4Bw/DGtZgFd+e751u2sc4kP7i2GIeg2H4pcBmCSZk=;
- b=N/V/2Aa7Rtsx5ZLOr5wJT11uNn3qhQCFQNlvtX49Q6D9CyN7ilM/u6ZJDKus9q+0Ho6ZojKXbzPZ/EMyXdtNhuyBqrj7a/EcIyb/wLK8ut3IxMflB7lb32DWdoGJJTVuYQTFgX8n+Gvi0s0UFYRZO6poeBbZ1ZnnoS1un+oTBd0vxsk4HLKjpKVC/KYoYym3IG0bR3swI9QN1CANtQP/6b4m9WpTZJ10d+8HF9W3xiNDT0xWHlXIUHv2yb29cfRU96k8UEq8mTYfPJYrtrbnRaZAv6SXtU4s8iUK2WzzuQo2TEQTEJDFXQgw+SiN2RkR6oZwXrNYRFdUKTrtQqfRmA==
-Received: from BL2NAM02FT027.eop-nam02.prod.protection.outlook.com
- (10.152.76.60) by BL2NAM02HT176.eop-nam02.prod.protection.outlook.com
- (10.152.77.84) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2474.17; Sat, 23 Nov
- 2019 15:01:52 +0000
-Received: from MN2PR04MB6669.namprd04.prod.outlook.com (10.152.76.51) by
- BL2NAM02FT027.mail.protection.outlook.com (10.152.77.160) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2474.17 via Frontend Transport; Sat, 23 Nov 2019 15:01:52 +0000
-Received: from MN2PR04MB6669.namprd04.prod.outlook.com
- ([fe80::64f4:9bd0:ebf9:844e]) by MN2PR04MB6669.namprd04.prod.outlook.com
- ([fe80::64f4:9bd0:ebf9:844e%2]) with mapi id 15.20.2474.022; Sat, 23 Nov 2019
- 15:01:52 +0000
-From: Zheng Bao <fishbaoz@hotmail.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Command systemctl start xyz.openbmc_project.State.Host hangs
-Thread-Topic: Command systemctl start xyz.openbmc_project.State.Host hangs
-Thread-Index: AQHVog54i75b7IGJSEuXmBpPBKVn/A==
-Date: Sat, 23 Nov 2019 15:01:52 +0000
-Message-ID: <MN2PR04MB66690B44AF8D2827F0E0E209CD480@MN2PR04MB6669.namprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:CF444702022915EE19AE917724444653B182E0F6B35E12BA42DC61D9AF962AA3;
- UpperCasedChecksum:19242FBB5AD054BFAE2E336A64785A2456A08A022C353AE8629C4378998B8965;
- SizeAsReceived:6708; Count:42
-x-tmn: [F1fuV5d7h90KVpw/iUkcTxzSarHzuXV3]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 9a7bc396-24f3-4ca0-43de-08d7702612e0
-x-ms-traffictypediagnostic: BL2NAM02HT176:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: IOOB9aebsnr/SHdAryKVDGjwb30OToaJSFVTq4gccXHWB0mt4eEEKWB6KgPu2vBEq50CJVPtlwHTdvU1saToGSRm3wFbTHS07efrZ1nGyx55FzSOw7djNTkB6ouQXpda5BlbpkSEDo3Yw+2wpi7MRdS0hw3oFBYpQGgEyyr8Z36hn39H1R+gPkha7uzXzpK7
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_MN2PR04MB66690B44AF8D2827F0E0E209CD480MN2PR04MB6669namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47LK174Ft7zDqY1
+ for <openbmc@lists.ozlabs.org>; Sun, 24 Nov 2019 16:46:45 +1100 (AEDT)
+Received: by mail-ot1-x32b.google.com with SMTP id f10so9813136oto.3
+ for <openbmc@lists.ozlabs.org>; Sat, 23 Nov 2019 21:46:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=7eX5dvBFBNWNgLj4id1+q3LR7jQV6o+i69eUZbUSwsQ=;
+ b=ql1CYlXPtgyOHy2sej5ABkIsyHcE+tcoY/P1pFHXi1JKtXLIunUebltocKG7+gvXbL
+ dVLGKe8sEdx4v6vn1erb02vRfixAEyIygALSQII0vjwibETfxfjZnMMNpl36UnftoTNe
+ plxYUVL5jpNvD3p6quSq7h8TMz4p4+nzoIsP0STS71uUtRibnY/gkndiL4f84qr5oX1K
+ woTkmknrKk/z7upB73Y2HaZGAkOsMmTn2GeOqhCeEgj8fJZek+E3jhuLYWRLWH3/c7ma
+ XcSWFXdqmYkolxFVXDjEdR00IdPxRVE5sb8jkU+NAcZvvTNIPvlNKypkFSSXDiyOoMQx
+ tm1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=7eX5dvBFBNWNgLj4id1+q3LR7jQV6o+i69eUZbUSwsQ=;
+ b=oDQ79mbn0S4EbB7cJTpOOUrTOkS5CQf01h3k4Lzx8QSg3g+hcdvpAh8kJF+2e+se9l
+ XMH5ob5nC0hu8qWJlNxRkQVEuKcuo8ja+JddtKhS79+Dk2WVpZRybdyhH1mSc5/E8GcV
+ ugtVfm31nntOt06lcNadg0SSrUQ3ktpanzQW8o3W/hjg0m3bM+2YXk2CHPibaTJCrLba
+ cKSoXD2E9RfUwxsO2eoNSnoQEaAqMbZZy6NU+my9cQzhmFVSPM6CipKP6BDX5AnfaZEN
+ k+xRRj6KHEmPJY6bQG2/8p6M4Sgw0Fpm78zfw3XlNwLaMgN/hXUf11aad+5sRmFpZBEJ
+ LMcQ==
+X-Gm-Message-State: APjAAAVRryEdm67NXoOq9hUfY61JhvT9fmQaNWNV8zrZ0WSi9V5m1rZd
+ gL80S86Cfgd25IPTiq3NSEUd7bGfKMFk6zh02mKWvA==
+X-Google-Smtp-Source: APXvYqx9zHG8GvyQRPeCgMVVYwaH4oIJxGlhr5CqAZzHPbJxqSiH4RUSs/1oUstDTcI7QL/06U02Zs9nESmFwtOoXNg=
+X-Received: by 2002:a9d:846:: with SMTP id 64mr16017293oty.289.1574574402039; 
+ Sat, 23 Nov 2019 21:46:42 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: hotmail.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9a7bc396-24f3-4ca0-43de-08d7702612e0
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Nov 2019 15:01:52.3292 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2NAM02HT176
+References: <CA+a15-X2MontTyVxihDNWXCen1P5dKC1T3=oQPTdMDkQmNCeZA@mail.gmail.com>
+ <ce28a40a-e783-fae6-4526-dd5d8759794e@linux.intel.com>
+In-Reply-To: <ce28a40a-e783-fae6-4526-dd5d8759794e@linux.intel.com>
+From: John Chung <gorojohn17@gmail.com>
+Date: Sun, 24 Nov 2019 05:46:29 +0800
+Message-ID: <CA+a15-Xf-ShdqjjN9+uqTE0U2JMc7jCgAvccWRvRURkck7AU2w@mail.gmail.com>
+Subject: Fwd: One questions about bmcweb Redfish logging
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000e7f2e40598112b19"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,82 +76,116 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_MN2PR04MB66690B44AF8D2827F0E0E209CD480MN2PR04MB6669namp_
-Content-Type: text/plain; charset="iso-8859-1"
+--000000000000e7f2e40598112b19
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
-I am trying to debug the state-manager.
+Hi All,
 
-I started the host state manager by running the following comand.
-$ systemctl start xyz.openbmc_project.State.Host
+I am forwarding this email for others might have the same question about
+Redfish logging.
 
-But it hangs. I add the debug code in host_state_manager_main.cpp and host_=
-state_manager.cpp and it turns out the problem is not here.
+Thanks,
+John
 
-Does anyone can give me a hint which file I can look into next?
+---------- Forwarded message ---------
+=E5=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A Bills, Jason M <jason.m.bills@linux.in=
+tel.com>
+Date: 2019=E5=B9=B411=E6=9C=887=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=
+=881:20
+Subject: Re: One questions about bmcweb Redfish logging
+To: John Chung <gorojohn17@gmail.com>
 
-Zheng
 
+Hi John,
 
---_000_MN2PR04MB66690B44AF8D2827F0E0E209CD480MN2PR04MB6669namp_
-Content-Type: text/html; charset="iso-8859-1"
+For future reference, you can send these mails to the OpenBMC mailing
+list as others may have similar questions.
+
+On 11/6/2019 4:39 AM, John Chung wrote:
+> Hi Jason,
+>
+> This is John, a software engineer studying in OpenBMC.
+>
+> May I consult you about bmcweb Redfish logging?
+>
+> Digging into bmcweb, I noticed that system log will refer from
+> /var/log/redfish* files and generated redfish event log.
+> However, I didn't find out which application generate the files in
+> /var/log/. Not sure it comes from rsyslog or not.
+It does come from rsyslog, but I haven't been able to fully port it to
+upstream openbmc, yet.
+
+>
+> Would you kindly give me a hint about how to generate the files in
+> /var/log ?
+The rsyslog configuration we use can be found here:
+https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-comm=
+on/recipes-extended/rsyslog
+.
+
+Thanks,
+-Jason
+
+>
+> Thanks a lot for your help and time.
+>
+> Best regards,
+> John
+
+--000000000000e7f2e40598112b19
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-Hi,</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-I am trying to debug the state-manager. <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
+<div dir=3D"ltr">Hi All,<div><br></div><div>I am forwarding this email for =
+others might have the same question about Redfish logging.</div><div><br></=
+div><div>Thanks,</div><div>John<br><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">---------- Forwarded message ---------<br>=E5=
+=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A <strong class=3D"gmail_sendername" dir=3D=
+"auto">Bills, Jason M</strong> <span dir=3D"auto">&lt;<a href=3D"mailto:jas=
+on.m.bills@linux.intel.com">jason.m.bills@linux.intel.com</a>&gt;</span><br=
+>Date: 2019=E5=B9=B411=E6=9C=887=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=
+=8D=881:20<br>Subject: Re: One questions about bmcweb Redfish logging<br>To=
+: John Chung &lt;<a href=3D"mailto:gorojohn17@gmail.com">gorojohn17@gmail.c=
+om</a>&gt;<br></div><br><br>Hi John,<br>
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-I started the host state manager by running the following comand.<br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-$ systemctl start xyz.openbmc_project.State.Host</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
+For future reference, you can send these mails to the OpenBMC mailing <br>
+list as others may have similar questions.<br>
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-But it hangs. I add the debug code in host_state_manager_main.cpp and host_=
-state_manager.cpp and it turns out the problem is not here.</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
+On 11/6/2019 4:39 AM, John Chung wrote:<br>
+&gt; Hi Jason,<br>
+&gt; <br>
+&gt; This is John, a software engineer studying in OpenBMC.<br>
+&gt; <br>
+&gt; May I consult you about bmcweb Redfish logging?<br>
+&gt; <br>
+&gt; Digging into bmcweb, I noticed that system log will refer from <br>
+&gt; /var/log/redfish* files and generated redfish event log.<br>
+&gt; However, I didn&#39;t find out which application generate the files in=
+ <br>
+&gt; /var/log/. Not sure it comes from rsyslog or not.<br>
+It does come from rsyslog, but I haven&#39;t been able to fully port it to =
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-Does anyone can give me a hint which file I can look into next?</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
+upstream openbmc, yet.<br>
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
-Zheng<br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);">
+&gt; <br>
+&gt; Would you kindly give me a hint about how to generate the files in <br=
+>
+&gt; /var/log ?<br>
+The rsyslog configuration we use can be found here: <br>
+<a href=3D"https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mod=
+s/meta-common/recipes-extended/rsyslog" rel=3D"noreferrer" target=3D"_blank=
+">https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-co=
+mmon/recipes-extended/rsyslog</a>.<br>
 <br>
-</div>
-</body>
-</html>
+Thanks,<br>
+-Jason<br>
+<br>
+&gt; <br>
+&gt; Thanks a lot for=C2=A0your help and time.<br>
+&gt; <br>
+&gt; Best regards,<br>
+&gt; John<br>
+</div></div></div>
 
---_000_MN2PR04MB66690B44AF8D2827F0E0E209CD480MN2PR04MB6669namp_--
+--000000000000e7f2e40598112b19--
