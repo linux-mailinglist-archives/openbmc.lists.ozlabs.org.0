@@ -1,67 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 651A5108240
-	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 06:47:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47LK1r3WhnzDqrM
-	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 16:47:28 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E01E108532
+	for <lists+openbmc@lfdr.de>; Sun, 24 Nov 2019 23:00:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Lkc553fTzDqY0
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 09:00:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
- helo=mail-ot1-x32b.google.com; envelope-from=gorojohn17@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ql1CYlXP"; 
- dkim-atps=neutral
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
- [IPv6:2607:f8b0:4864:20::32b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="Dwrl1wzP"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="pt/klV/O"; dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47LK174Ft7zDqY1
- for <openbmc@lists.ozlabs.org>; Sun, 24 Nov 2019 16:46:45 +1100 (AEDT)
-Received: by mail-ot1-x32b.google.com with SMTP id f10so9813136oto.3
- for <openbmc@lists.ozlabs.org>; Sat, 23 Nov 2019 21:46:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=7eX5dvBFBNWNgLj4id1+q3LR7jQV6o+i69eUZbUSwsQ=;
- b=ql1CYlXPtgyOHy2sej5ABkIsyHcE+tcoY/P1pFHXi1JKtXLIunUebltocKG7+gvXbL
- dVLGKe8sEdx4v6vn1erb02vRfixAEyIygALSQII0vjwibETfxfjZnMMNpl36UnftoTNe
- plxYUVL5jpNvD3p6quSq7h8TMz4p4+nzoIsP0STS71uUtRibnY/gkndiL4f84qr5oX1K
- woTkmknrKk/z7upB73Y2HaZGAkOsMmTn2GeOqhCeEgj8fJZek+E3jhuLYWRLWH3/c7ma
- XcSWFXdqmYkolxFVXDjEdR00IdPxRVE5sb8jkU+NAcZvvTNIPvlNKypkFSSXDiyOoMQx
- tm1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=7eX5dvBFBNWNgLj4id1+q3LR7jQV6o+i69eUZbUSwsQ=;
- b=oDQ79mbn0S4EbB7cJTpOOUrTOkS5CQf01h3k4Lzx8QSg3g+hcdvpAh8kJF+2e+se9l
- XMH5ob5nC0hu8qWJlNxRkQVEuKcuo8ja+JddtKhS79+Dk2WVpZRybdyhH1mSc5/E8GcV
- ugtVfm31nntOt06lcNadg0SSrUQ3ktpanzQW8o3W/hjg0m3bM+2YXk2CHPibaTJCrLba
- cKSoXD2E9RfUwxsO2eoNSnoQEaAqMbZZy6NU+my9cQzhmFVSPM6CipKP6BDX5AnfaZEN
- k+xRRj6KHEmPJY6bQG2/8p6M4Sgw0Fpm78zfw3XlNwLaMgN/hXUf11aad+5sRmFpZBEJ
- LMcQ==
-X-Gm-Message-State: APjAAAVRryEdm67NXoOq9hUfY61JhvT9fmQaNWNV8zrZ0WSi9V5m1rZd
- gL80S86Cfgd25IPTiq3NSEUd7bGfKMFk6zh02mKWvA==
-X-Google-Smtp-Source: APXvYqx9zHG8GvyQRPeCgMVVYwaH4oIJxGlhr5CqAZzHPbJxqSiH4RUSs/1oUstDTcI7QL/06U02Zs9nESmFwtOoXNg=
-X-Received: by 2002:a9d:846:: with SMTP id 64mr16017293oty.289.1574574402039; 
- Sat, 23 Nov 2019 21:46:42 -0800 (PST)
-MIME-Version: 1.0
-References: <CA+a15-X2MontTyVxihDNWXCen1P5dKC1T3=oQPTdMDkQmNCeZA@mail.gmail.com>
- <ce28a40a-e783-fae6-4526-dd5d8759794e@linux.intel.com>
-In-Reply-To: <ce28a40a-e783-fae6-4526-dd5d8759794e@linux.intel.com>
-From: John Chung <gorojohn17@gmail.com>
-Date: Sun, 24 Nov 2019 05:46:29 +0800
-Message-ID: <CA+a15-Xf-ShdqjjN9+uqTE0U2JMc7jCgAvccWRvRURkck7AU2w@mail.gmail.com>
-Subject: Fwd: One questions about bmcweb Redfish logging
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000e7f2e40598112b19"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47LkbF4GDtzDqXG
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 08:59:20 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id A434922775;
+ Sun, 24 Nov 2019 16:59:16 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 24 Nov 2019 16:59:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm1; bh=P5+vM
+ TVjJlgR1xXGsW6rvvg0Kh8BHK8uGGXLWJEsZfQ=; b=Dwrl1wzP4hwnktiPNpG3a
+ ySDKOkpFS22lJFmjKkQv/qw+SRo9MhfRPNeRaLMW27wvQkQwlBnwgdYRpVqjwpoZ
+ H2CJx+TY8t4oRo1S9J1ZVl0IQV5h9Re4ORxA2U2+5PF8/N8635tWtsIzveWhEjrn
+ NYM/4RC2+5RDbuUhtVL6QTCHYmnBFlBpQXL3eHI3yMcz5FLK1wKwbgRbybnkLiQs
+ 5K8VONLkpTBOKZJJL+v+qP4uzEtN8SaZUnqEuUSPWTu0jlAlJw4w3kxNAvLNXvFx
+ AwN8tnhZegqpe0Dg/4s698J/cEvAbV50np9A5TkDpaXlYgQsvemdLCUSVHHtE9zb
+ w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=P5+vMTVjJlgR1xXGsW6rvvg0Kh8BHK8uGGXLWJEsZ
+ fQ=; b=pt/klV/Odg23nFeXL2LfbPAnD02Dl1+trlxEY2jGfAv3h4+yLCWXoj4iQ
+ YhYLUOfScdUxHU9CJf+BLVJB+VtFhvMB+AVKpaYpo+VMk0T3Z9QBe9bKYgNjSDUi
+ SMrU0uWWyhsOGpnJ0twAwaONcYfTwm+GRcwNX4mf8fnX6z9oorWEqtPVQ5ULMDZD
+ Yfp9To1N+8saUMtUPS5QBXqCFLY/ykD17Jk9clKkUHnbMz+eDcAIvjhOKBFta9vR
+ 2CBoJKgLmYxDPWp7LHHSj7RJMGoo5Fw8HIoEvqZ8hbnEG8a9jhOykBv4XIPhEb5y
+ 6LZ+MwShRh1tBd/DUeeceMbvmJUmQ==
+X-ME-Sender: <xms:NP3aXYyzVLnn08YYUqnV8LV7NL1FauTsYpQ6WqIT5qIVre2Dffkcmw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudehkedgudehkecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgse
+ htqhertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgu
+ rhgvfiesrghjrdhiugdrrghuqeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvg
+ ifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:NP3aXSm7Uee6TXhIVn9d66uT1rQfC-4wQHP4qkyFCz8tb14r-D4a4g>
+ <xmx:NP3aXbGbYR9VOjACDmeaI5rYDG2zoazx5QDkqGkkG3UcdPpO64Nj6g>
+ <xmx:NP3aXfVRgLGPyLeMASPnz19YWOPBG3-R5QEm-st4bdYnZehUJXwfRw>
+ <xmx:NP3aXSL5rOo0cGNnWWsOV2F4NPqZEP4bXLeVwJjHrHfydn_y1fwYvw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 56C26E00A3; Sun, 24 Nov 2019 16:59:16 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
+Mime-Version: 1.0
+Message-Id: <4e9b1994-b303-4d74-8176-aebb89a0f0e2@www.fastmail.com>
+In-Reply-To: <154200de-8eea-2204-e572-45d2f2fe6075@mail.ru>
+References: <2edbb697-aa07-2610-3bf2-cbd7707c6259@mail.ru>
+ <2fa9a025-abf9-45f9-88bc-eddcc2726c89@www.fastmail.com>
+ <9f3eaecd-6fec-8af8-21f6-8292c422593c@mail.ru>
+ <e5994432-fcec-4994-a8bc-2ec46c103600@www.fastmail.com>
+ <154200de-8eea-2204-e572-45d2f2fe6075@mail.ru>
+Date: Mon, 25 Nov 2019 08:30:45 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?=D0=95=D0=B2=D0=B3=D0=B5=D0=BD=D0=B8=D0=B9?= <9165394577@mail.ru>
+Subject: Re: NCSI eth0 (ftgmac100): transmit queue 0 timed out error
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,119 +92,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e7f2e40598112b19
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi All,
-
-I am forwarding this email for others might have the same question about
-Redfish logging.
-
-Thanks,
-John
-
----------- Forwarded message ---------
-=E5=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A Bills, Jason M <jason.m.bills@linux.in=
-tel.com>
-Date: 2019=E5=B9=B411=E6=9C=887=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=
-=881:20
-Subject: Re: One questions about bmcweb Redfish logging
-To: John Chung <gorojohn17@gmail.com>
 
 
-Hi John,
+On Sat, 23 Nov 2019, at 18:50, =D0=95=D0=B2=D0=B3=D0=B5=D0=BD=D0=B8=D0=B9=
+ wrote:
+> Hello Andrew,
+>=20
+> It turned out that the i210 firmware was not loaded by the manufacture=
+r.=20
+> Maybe this is normal, but how then did they test the board?
 
-For future reference, you can send these mails to the OpenBMC mailing
-list as others may have similar questions.
+No idea. Glad you solved it. The pinmux issue is a bit disconcerting sti=
+ll.
 
-On 11/6/2019 4:39 AM, John Chung wrote:
-> Hi Jason,
->
-> This is John, a software engineer studying in OpenBMC.
->
-> May I consult you about bmcweb Redfish logging?
->
-> Digging into bmcweb, I noticed that system log will refer from
-> /var/log/redfish* files and generated redfish event log.
-> However, I didn't find out which application generate the files in
-> /var/log/. Not sure it comes from rsyslog or not.
-It does come from rsyslog, but I haven't been able to fully port it to
-upstream openbmc, yet.
-
->
-> Would you kindly give me a hint about how to generate the files in
-> /var/log ?
-The rsyslog configuration we use can be found here:
-https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-comm=
-on/recipes-extended/rsyslog
-.
-
-Thanks,
--Jason
-
->
-> Thanks a lot for your help and time.
->
-> Best regards,
-> John
-
---000000000000e7f2e40598112b19
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div><br></div><div>I am forwarding this email for =
-others might have the same question about Redfish logging.</div><div><br></=
-div><div>Thanks,</div><div>John<br><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">---------- Forwarded message ---------<br>=E5=
-=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A <strong class=3D"gmail_sendername" dir=3D=
-"auto">Bills, Jason M</strong> <span dir=3D"auto">&lt;<a href=3D"mailto:jas=
-on.m.bills@linux.intel.com">jason.m.bills@linux.intel.com</a>&gt;</span><br=
->Date: 2019=E5=B9=B411=E6=9C=887=E6=97=A5 =E9=80=B1=E5=9B=9B =E4=B8=8A=E5=
-=8D=881:20<br>Subject: Re: One questions about bmcweb Redfish logging<br>To=
-: John Chung &lt;<a href=3D"mailto:gorojohn17@gmail.com">gorojohn17@gmail.c=
-om</a>&gt;<br></div><br><br>Hi John,<br>
-<br>
-For future reference, you can send these mails to the OpenBMC mailing <br>
-list as others may have similar questions.<br>
-<br>
-On 11/6/2019 4:39 AM, John Chung wrote:<br>
-&gt; Hi Jason,<br>
-&gt; <br>
-&gt; This is John, a software engineer studying in OpenBMC.<br>
-&gt; <br>
-&gt; May I consult you about bmcweb Redfish logging?<br>
-&gt; <br>
-&gt; Digging into bmcweb, I noticed that system log will refer from <br>
-&gt; /var/log/redfish* files and generated redfish event log.<br>
-&gt; However, I didn&#39;t find out which application generate the files in=
- <br>
-&gt; /var/log/. Not sure it comes from rsyslog or not.<br>
-It does come from rsyslog, but I haven&#39;t been able to fully port it to =
-<br>
-upstream openbmc, yet.<br>
-<br>
-&gt; <br>
-&gt; Would you kindly give me a hint about how to generate the files in <br=
->
-&gt; /var/log ?<br>
-The rsyslog configuration we use can be found here: <br>
-<a href=3D"https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mod=
-s/meta-common/recipes-extended/rsyslog" rel=3D"noreferrer" target=3D"_blank=
-">https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods/meta-co=
-mmon/recipes-extended/rsyslog</a>.<br>
-<br>
-Thanks,<br>
--Jason<br>
-<br>
-&gt; <br>
-&gt; Thanks a lot for=C2=A0your help and time.<br>
-&gt; <br>
-&gt; Best regards,<br>
-&gt; John<br>
-</div></div></div>
-
---000000000000e7f2e40598112b19--
+Andrew
