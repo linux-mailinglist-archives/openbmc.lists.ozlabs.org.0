@@ -2,60 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2C69108E7F
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 14:09:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71BAD108FBE
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 15:21:04 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47M6nc0Xh9zDqVW
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 00:09:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47M8Mx4Gh5zDqc8
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 01:21:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=2252f2e9b=will.liang@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 47M6kb0ksgzDqTT
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 00:06:54 +1100 (AEDT)
-IronPort-SDR: ofGXRZzuMEzStnDnujcWUkdE4doDD/FuyCV7NJdpSCLICILHB01UvaJ87L8nplUVmQY2+nOuAC
- i/IphtYL/8yQ==
-Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
- by mx01.quantatw.com with ESMTP; 25 Nov 2019 21:06:49 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
- (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 25 Nov
- 2019 21:06:46 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Mon, 25 Nov 2019 21:06:46 +0800
-From: =?big5?B?V2lsbCBMaWFuZyAoseelw7liKQ==?= <Will.Liang@quantatw.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: phosphor-sel-logger package
-Thread-Topic: phosphor-sel-logger package
-Thread-Index: AdWjidUs4+61ydjpQbO3ulOUSrb2pg==
-Date: Mon, 25 Nov 2019 13:06:46 +0000
-Message-ID: <40989749b52f46a585c025f6e87c2c06@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25064.007
-x-tm-as-result: No-10--4.709000-8.000000
-x-tmase-matchedrid: w2TFuZOvAteb5g0gI2gnR5zEHTUOuMX33dCmvEa6IiGoLZarzrrPmcqm
- rem+KXPdX5okd8k19iZDo8hSKUhJ6WFqPXSLpNdAUeavKZUnS5DVao4X08bWR8nJhTYnTng9jzr
- oMRry5yL2xaaBn3jEofq/furHWjNmIqRxG3EBiTfnzlXMYw4XMIGsNX5eg/aOC24oEZ6SpSk6XE
- E7Yhw4FiNHvc2bQV8QxyhkZDyNlsQw6qaFxxbxJpCXXKB7hHfRK2MkAcUt2L0kkloQkUSsItqrS
- TKx6rzLkb8b494U9+B2cVtXQaDI6yis9jscQpKczRtC/fI/GzL62iqv7ym1n2PqXSKGf39K1Zv3
- zS/4qbM=
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--4.709000-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25064.007
-x-tm-snts-smtp: 73DC266AB31C514116727DB6F5B13073460A1F952D1F21F7FE82EA1090603F132000:B
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47M8Ls5MrPzDqZN
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 01:20:04 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xAPEIn1x070043; Mon, 25 Nov 2019 09:19:55 -0500
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wfjyev4je-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Nov 2019 09:19:54 -0500
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xAPEJHHK073908;
+ Mon, 25 Nov 2019 09:19:54 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wfjyev4hp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Nov 2019 09:19:54 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xAPEFqMT012348;
+ Mon, 25 Nov 2019 14:19:58 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma01wdc.us.ibm.com with ESMTP id 2wevd5tnde-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Nov 2019 14:19:58 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xAPEJqRN56230322
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 25 Nov 2019 14:19:52 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7A627136055;
+ Mon, 25 Nov 2019 14:19:52 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 15645136053;
+ Mon, 25 Nov 2019 14:19:51 +0000 (GMT)
+Received: from [9.10.99.47] (unknown [9.10.99.47])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon, 25 Nov 2019 14:19:51 +0000 (GMT)
+Subject: Re: consolidation of *-dbus-interfaces
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <8371D980-4DCC-42C3-9BFA-4DB7C9475D80@fuzziesquirrel.com>
+ <CAARXrt=UOQiyKdzUHkuLXqh+3oB7c=wq6UtvWaLVmz8v8WAfzg@mail.gmail.com>
+ <9bffebe0-601c-1b4e-d40b-4f55fd68ac76@linux.ibm.com>
+ <F7A6B208-1675-4529-AD61-5E85CEF61405@fuzziesquirrel.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <b1be64f9-c006-8e7f-16e3-a3dad6f3ad3b@linux.ibm.com>
+Date: Mon, 25 Nov 2019 08:20:00 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
+In-Reply-To: <F7A6B208-1675-4529-AD61-5E85CEF61405@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-11-25_03:2019-11-21,2019-11-25 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0
+ mlxscore=0 priorityscore=1501 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 mlxlogscore=999 phishscore=0 adultscore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1911250129
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,24 +95,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Yong Li <yong.b.li@linux.intel.com>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ James Feist <james.feist@linux.intel.com>, William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SEkgSmFzb24sDQoNCldoZW4gSSB1c2UgdGhlIGxhdGVzdCBjb21taXQoN2Q1MDU0YWMpLCBpdCBj
-YW4gb25seSByZWNvcmQgb25lIHNlbCBsb2codGhlIGxhdGVzdCBzZWwpLg0KQWZ0ZXIgdHJhY2lu
-ZyBjb2RlIEkgZm91bmQgdGhhdCB0aGUgcmVjb3JkSWQgWzFdIGFsd2F5cyBiZSAxLg0KWzFdIGh0
-dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXNlbC1sb2dnZXIvYmxvYi83ZDUwNTRh
-YzE1YmVlOTk0NWFjMDBjNDcwYzM2Yzk0YjU2NWFjOGZhL3NyYy9zZWxfbG9nZ2VyLmNwcCNMMTEy
-DQoNCkkgaGF2ZSBxdWVzdGlvbnMgYWJvdXQgdGhlIGFib3ZlIHNpdHVhdGlvbi4NCg0KMS4gd2hl
-cmUgdGhlICJzZWxMb2dGaWxlbmFtZSJbMl0gZmlsZSBiZSBjcmVhdGVkPyANCiAgQ29kZSBbM10g
-Y2hlY2tzIHRoZSBmaWxlIGJ1dCBjYW4ndCBmaW5kIHdoZXJlIHRvIGNyZWF0ZSBpdCBpbiB0aGlz
-IHBhY2thZ2UuDQogIFsyXSBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1zZWwt
-bG9nZ2VyL2Jsb2IvN2Q1MDU0YWMxNWJlZTk5NDVhYzAwYzQ3MGMzNmM5NGI1NjVhYzhmYS9pbmNs
-dWRlL3NlbF9sb2dnZXIuaHBwI0wzNw0KICBbM10gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
-cGhvc3Bob3Itc2VsLWxvZ2dlci9ibG9iLzdkNTA1NGFjMTViZWU5OTQ1YWMwMGM0NzBjMzZjOTRi
-NTY1YWM4ZmEvc3JjL3NlbF9sb2dnZXIuY3BwI0w1NQ0KDQoyLiBBZnRlciBtYW51YWxseSBjcmVh
-dGluZyBhIGZpbGUgb24gL3Zhci9sb2cvLCB0aGUgc2VsIGxvZyBiZWhhdmlvciBpcyBub3JtYWwu
-IEl0IGNhbiBsb2cgc2V2ZXJhbCBsb2dzLg0KICBidXQgYWZ0ZXIgSSBjbGVhciB0aGUgc2VsIGxv
-ZywgdGhlIHJlY29yZCBpZCBkb2VzIG5vdCByZXN0YXJ0IGF0IDEuIA0KICBDb21taXQgaWQgOiA2
-YWZlOTU2MDg1MmM2NDMxYzQzYzhlNzlhMjhlMmI3Y2I0OThlMzU1DQoNCkJScywNCndpbGwNCg==
+
+
+On 11/22/2019 8:42 AM, Brad Bishop wrote:
+>
+>> On Nov 19, 2019, at 10:33 AM, Matt Spinler <mspinler@linux.ibm.com> wrote:
+>>
+>> I took a crack at this with https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/27380.
+>> Please take a look.
+> This looks great to me Matt, thanks for doing this.  Now if someone could just figure out how to move this over to meson...
+>
+>> Next I will try to build an image that uses meta-openpower using it instead of openpower-dbus-interfaces.
+> One concern I have is the dual maint of the interfaces while the transition is in progress.  Should we hold off on merging your first change (the one you linked to above) until you are closer to getting a full image build working with the consolidated repo?
+>
+> thx - brad
+
+I built an image; the only way I've figured out how to stage it is:
+1) Put up a commit to remove all the YAML from openpower-dbus-interfaces.
+2) Put up a commit in meta-openpower to add the phospor-dbus-interfaces 
+bbappend and bump
+the openpower-dbus-interfaces revision.
+3) after 2) is merged - remove all the openpower-dbus-dependencies from 
+the repos
+4) Remove openpower-dbus-interfaces from the image
+
+Though, 1) will never pass CI of course because the other repos won't 
+find their server.hpp
+header files until 2) is merged.
+
+Ideas on how to proceed?
+
