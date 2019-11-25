@@ -2,135 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA7A1109730
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 01:06:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B4C8109733
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 01:07:46 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47MPMf0Hq7zDqHx
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 11:06:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MPNv2y67zDqRL
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 11:07:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.221;
+ helo=new1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=623285b47d=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="MKVLq8kh"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="I6BMsY25"; dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="NkipfqBk"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="gAkEqD43"; dkim-atps=neutral
+Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
+ [66.111.4.221])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47MNjl5Y9lzDqP3
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 10:37:14 +1100 (AEDT)
-Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xAPNa4x1015296; Mon, 25 Nov 2019 15:37:08 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=NCm987YdgH1D/z5FcYZGB1NOfx3jmcQWjGEc6MafsxU=;
- b=MKVLq8khTiPwECoFoGEs7Xz1QxSmZmLfdwfZtFj//doiViYDIb9W0342pSroo/nN32oA
- 3bsUB17tKgg44nSvBsGVAJLALkkKuUzPhOThBvEaBhw00Nc6TLX+NJ0s9QSNKo4oD1dH
- EipWzPz/P5lMIquVtyxLecquAy6VUXJyr/Q= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2wfnakgv4h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Mon, 25 Nov 2019 15:37:08 -0800
-Received: from ash-exhub104.TheFacebook.com (2620:10d:c0a8:82::d) by
- ash-exhub203.TheFacebook.com (2620:10d:c0a8:83::5) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Mon, 25 Nov 2019 15:37:07 -0800
-Received: from NAM01-BN3-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.175) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
- via Frontend Transport; Mon, 25 Nov 2019 15:37:07 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=H87zvND0Qf8cYGwBqcM6GddXFvoGk6M2tkzvLxIjEVdpJQ0h8UdJRIuOTknumPBDrLTcuf0cZCHQ1HDCg0hmDWFAVh0kLOyGBvhJxnbG89Tu5rBJrCw9YaBJHbOkHm1AJ1LhyOp6eB2IS4RvwI5gyGQidLSTAFCg+o38l1X7Bf0ap5q9JCQwBhbQCkwA7LImBZDzBIEVLTKjZb6mG4TqiTSzt1N1AzRvtJzg8/qKveZoMcjjEdrv2X8lyiPr5+iauyVssiZTzG7AF6iPcQZiYZHnUSQG1Xrw0L97cYR3oG4BJ9cnI1r12I8DGaGGHZmIM3x7amjjgsvu48xzPrdKbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NCm987YdgH1D/z5FcYZGB1NOfx3jmcQWjGEc6MafsxU=;
- b=HbWe1gkNu1d0gkspHJBNx6SrInxLdK6dPvopHJnhmKVCExQvJZlxQqNFJnyVOxS6RRL5jFE930oqcMreg8+0BaF0n1sS89c8seFGrg+BAzTGOF3mM/kffFwZVR0tqknqYi5iyk24zqvqOo4Ybt3sUc00V/d3LIFz/Js5jbY9cI49U4nePSCliJJRVU+O0ht7dSXzXRmX2DjqXOkuFna9bySBFJ7WpKM5SUlEHHGx1F6Npa8y5b9WU3b6zGa3XlRyLoK2sb3NqiDGod2sjb03EVyiaqm6V4KLeV/DvmhA7ZeggWRBeQ+6PoOtenebhB0VqboBj//tgCov0W4qTBLNFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NCm987YdgH1D/z5FcYZGB1NOfx3jmcQWjGEc6MafsxU=;
- b=I6BMsY25nZ2BuUkSG+pcJ+bBagocdn7G5j1fAyOyol4YI8Z/AABnBFrADreXTu/CkfLVXDactZiLMOxHyZriTtETcGDeGLGMr/qOFETNektflnIuCv3GpnSTnkQ2Vd2CvFBTJG4rNrGqrfQtL3ygyKxEAAj1+XMi8GIb4bS9R8M=
-Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
- MWHPR15MB1582.namprd15.prod.outlook.com (10.173.234.22) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2474.21; Mon, 25 Nov 2019 23:37:06 +0000
-Received: from MWHPR15MB1597.namprd15.prod.outlook.com
- ([fe80::2c43:c44b:2c95:e376]) by MWHPR15MB1597.namprd15.prod.outlook.com
- ([fe80::2c43:c44b:2c95:e376%11]) with mapi id 15.20.2474.023; Mon, 25 Nov
- 2019 23:37:06 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, James Feist
- <james.feist@linux.intel.com>, "jason.m.bills@linux.intel.com"
- <jason.m.bills@linux.intel.com>
-Subject: Re: i2c error for ME port
-Thread-Topic: i2c error for ME port
-Thread-Index: AQHVo8gV2NOlHgDr9k+GwqBCoAIdRaecSPkAgAALJ4D//6bxAIAAi1yA//9+Y4A=
-Date: Mon, 25 Nov 2019 23:37:05 +0000
-Message-ID: <78D819B8-5A29-444C-9048-2D2A0238BF11@fb.com>
-References: <45A2E82C-17C3-470A-9756-DBC2CDFE0356@fb.com>
- <fcbbbc1b-d85c-d3d5-c2b6-9798828385ae@linux.intel.com>
- <69833bb8-89b6-2b06-818a-c8d16ce19ca5@linux.intel.com>
- <C4ECF587-E301-4FB7-AF5A-BB20F90F9083@fb.com>
- <960f28cb-3e53-14af-a2e7-63abeb0f9310@linux.intel.com>
-In-Reply-To: <960f28cb-3e53-14af-a2e7-63abeb0f9310@linux.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::2:182d]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 0191ba6a-d6b7-4888-1193-08d7720061c2
-x-ms-traffictypediagnostic: MWHPR15MB1582:
-x-microsoft-antispam-prvs: <MWHPR15MB1582FD9365F32205AA91985DDD4A0@MWHPR15MB1582.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2089;
-x-forefront-prvs: 0232B30BBC
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(396003)(136003)(376002)(39860400002)(346002)(199004)(189003)(478600001)(256004)(4326008)(2501003)(66946007)(6436002)(71200400001)(71190400001)(186003)(11346002)(66556008)(36756003)(6506007)(316002)(66446008)(5660300002)(110136005)(46003)(14454004)(446003)(76176011)(102836004)(2616005)(64756008)(8676002)(33656002)(6116002)(2906002)(76116006)(66476007)(86362001)(99286004)(8936002)(81156014)(81166006)(229853002)(6246003)(6486002)(4744005)(25786009)(6512007)(305945005)(7736002);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1582;
- H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: XBcIXW89QMNCE6TRf00QydAHdkXmPm3C3qgruIvZOHbyur2VWbLLNzO3P4+vJ6QES7/i5t8NUj2Z2Fc1QJ1WJ0cduyaN3waBQ5WGD8FdhvjqHUXjlgLkXD4mCvMysWYJovXAJvOrFedDXIbpHJbQD8x7vRIzRgma8vNZVb8VNZvBGiX1HIEZjcDwEc0exPQ+DFckzx5ytrb9D/dQFXBPRODi0UxO68/Tc2tuygOmXfyF6KGcbJqpYpAopbVTpFZ+3Pq+jojD5x4qroNnStcfwcMqn6Pvz64T9PyC7CxCCRNcqfTQo+unrb9Ki68eT89dZSLkPcR3prwsDjlyoMFUV0sRUJVmdHAbfY7BrukHiZKI6rNDF08ulGUeSRq9tO/okDXrTVnq1Amzp4KtZeUaDg7lPs/OmsmXRYmszOid1dRJ6MNQBJ6X4sQDYAliJUib
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6C761E8D716FD24DB852D30BD462DEC9@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0191ba6a-d6b7-4888-1193-08d7720061c2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2019 23:37:05.9800 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GD+GePFST3NWF2m4FyYQJCRXJDZAIZOGCDnI6IOQr8SAqIl3ntPZAZkFfsfiepxvok9CogmH9Ugbs25Vwa0YcA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1582
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-25_06:2019-11-21,2019-11-25 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- suspectscore=0
- spamscore=0 mlxlogscore=999 priorityscore=1501 mlxscore=0 adultscore=0
- impostorscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-1910280000 definitions=main-1911250185
-X-FB-Internal: deliver
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47MNjr3cD9zDq8D;
+ Tue, 26 Nov 2019 10:37:19 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 5C4D7527B;
+ Mon, 25 Nov 2019 18:37:13 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Mon, 25 Nov 2019 18:37:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=ncriW7ZaZvfQAqjJ9CabdLFVncnOVKJ
+ 862KZb8NOlOE=; b=NkipfqBkuZ4AXdbRmxhoqgisaN1XxSTi3kyxhLIhwBZzEIH
+ mVGmsguYxWurjyCvNjfl5pJqWM5sK7K6GVIRiz0I0ejsxjbk0nWPJd6j0IDU1AU5
+ bBYLz9WDOfye2fPk0BK5/TP1AHUrf22h1ffYlCUEiTyzmJFp1ldWPljsp2msxNlg
+ PnZjnskEApqjBTJYWG3Cghay0vevbXVvgo9gUhZDstrwEj01DiyjVnvppOL4qUDo
+ 0IVuLR226XHY2HuYrzBvnwXiu04JK8OanmQh1Fc3G9S3LJbF5PdyjAArg/Oz2i2C
+ bNjK9td4JGPNtfQIUepZK/HiaIHfMNSbcS9BF5Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ncriW7
+ ZaZvfQAqjJ9CabdLFVncnOVKJ862KZb8NOlOE=; b=gAkEqD43/G23hkF6xMx0wh
+ QLIH3eaTcj7jvo6+5Wjlza+5tWZUpxNCDUJBXCNUsls+hNS4ctlPkd5311yMzPCo
+ Z/DKE6PZHXbuc+PBaAjMJU9aUhmSN1Bp6fTXefk93MYvFdtS+j+QsO8asw4o7MsH
+ QEvU7hbcwkYRYtaFBKYe7WOiwNHP89rewuO10bEHiXHE3Bx2zEuqngXBX+Ithbo8
+ CAPS+QJqrSoNqKnYO/UaslT5+5/Y4d4hWhSKFqJoP3SN6H7Rx513erEl1RAOYt3T
+ Bhe6HwTF+e6BqEIlilfgdUy5W/imBTAsSayNEstbbx91sFBe3x2AehRis3HZlrag
+ ==
+X-ME-Sender: <xms:qGXcXYFcJTtMu5t3od6KQcIzz4LUe-ruDuXTPVBXBTJX4_QDUSI9bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudeivddgudduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehkvghrnhgvlhdrohhrghenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
+ vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
+X-ME-Proxy: <xmx:qGXcXdKzIaIVyktBSBXW2v6jRStgJAdgsg1HSKNxAF0k3LE7fW1oeA>
+ <xmx:qGXcXdh10fl-eZoHzznF8WLXSlJj7ivGkIcV8dHgEQLgxvyXKifZGA>
+ <xmx:qGXcXTl63bMfZP57wWNP3qYCn8V3-bc5kqfVgjFcdmLbX-LSxPHWVA>
+ <xmx:qWXcXfN55iZ9JNu8mzdN_wZLSf4iOKYa7-mYj7mN31ezNk55BLLSjg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 6BA06E00A3; Mon, 25 Nov 2019 18:37:12 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
+Mime-Version: 1.0
+Message-Id: <ff44cecd-7e05-4e5d-b88f-2d6af6fd8b8b@www.fastmail.com>
+In-Reply-To: <20191125202937.23133-1-roy.van.doormaal@prodrive-technologies.com>
+References: <20191125202937.23133-1-roy.van.doormaal@prodrive-technologies.com>
+Date: Tue, 26 Nov 2019 10:08:36 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Roy van Doormaal" <roy.van.doormaal@prodrive-technologies.com>,
+ "Brendan Higgins" <brendanhiggins@google.com>,
+ "Benjamin Herrenschmidt" <benh@kernel.crashing.org>,
+ "Joel Stanley" <joel@jms.id.au>, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Jason Cooper" <jason@lakedaemon.net>, "Marc Zyngier" <maz@kernel.org>,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org
+Subject: Re: [PATCH] irqchip/aspeed-i2c-ic: Fix irq domain name memory leak
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,23 +94,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCu+7v09uIDExLzI1LzE5LCAzOjIxIFBNLCAiSmFlIEh5dW4gWW9vIiA8amFlLmh5dW4ueW9v
-QGxpbnV4LmludGVsLmNvbT4gd3JvdGU6DQoNCiAgICA+ICZpMmM0IHsNCiAgICA+ICAgIHN0YXR1
-cyA9ICJva2F5IjsNCiAgICA+ICAgIC8vIEJNQyBEZWJ1ZyBIZWFkZXINCiAgICA+ICAgIGlwbWIw
-QDEwIHsNCiAgICA+ICAgICAgY29tcGF0aWJsZSA9ICJpcG1iLWRldiI7DQogICAgPiAgICAgIHJl
-ZyA9IDwweDEwPjsNCiAgICA+ICAgICAgaTJjLXByb3RvY29sOw0KICAgID4gICAgfTsNCiAgICA+
-IH07DQogICAgDQogICAgSWYgaXQncyBmb3IgQk1DLU1FIGNoYW5uZWwsIHlvdSBzaG91bGQgYWRk
-ICdtdWx0aS1tYXN0ZXI7JyB0byBlbmFibGUgSC9XDQogICAgYXJiaXRyYXRpb24uIEFsc28sIHlv
-dSBzaG91bGQgc2V0IHRoZSBzbGF2ZSBhZGRyZXNzIGxpa2UgYmVsb3cgYWZ0ZXINCiAgICBpbmNs
-dWRpbmcgJyNpbmNsdWRlIDxkdC1iaW5kaW5ncy9pMmMvaTJjLmg+JyBpbiBkdHMgZmlsZS4NCiAg
-ICANCiAgICByZWcgPSA8KDB4MTAgfCBJMkNfT1dOX1NMQVZFX0FERFJFU1MpPjsNCiAgICANCkkg
-Y2hhbmdlZCB0byB0aGlzDQomaTJjNCB7DQogIHN0YXR1cyA9ICJva2F5IjsNCiAgbXVsdGktbWFz
-dGVyOw0KICAvLyBCTUMgRGVidWcgSGVhZGVyDQogIGlwbWIwQDEwIHsNCiAgICBjb21wYXRpYmxl
-ID0gImlwbWItZGV2IjsNCiAgICByZWcgPSA8MHg0MDAwMDAxMD47DQogICAgaTJjLXByb3RvY29s
-Ow0KICB9Ow0KfTsNCkJ1dCBubyBpbXByb3ZlbWVudC4gSW4gZmFjdCBzb21ldGltZXMgSSBhbSB1
-bmFibGUgdG8gY29tbXVuaWNhdGUgd2l0aCBNRSB2aWEgaTJjLg0KICAgIENoZWVycywNCiAgICAN
-CiAgICBKYWUNCiAgICANCg0K
+
+
+On Tue, 26 Nov 2019, at 06:59, Roy van Doormaal wrote:
+> The aspeed irqchip driver overwrites the default irq domain name,
+> but doesn't free the existing domain name.
+> This patch frees the irq domain name before overwriting it.
+> 
+> kmemleak trace:
+> 
+> unreferenced object 0xb8004c40 (size 64):
+> comm "swapper", pid 0, jiffies 4294937303 (age 747.660s)
+> hex dump (first 32 bytes):
+> 3a 61 68 62 3a 61 70 62 3a 62 75 73 40 31 65 37 :ahb:apb:bus@1e7
+> 38 61 30 30 30 3a 69 6e 74 65 72 72 75 70 74 2d 8a000:interrupt-
+> backtrace:
+> [<086b59b8>] kmemleak_alloc+0xa8/0xc0
+> [<b5a3490c>] __kmalloc_track_caller+0x118/0x1a0
+> [<f59c7ced>] kvasprintf+0x5c/0xc0
+> [<49275eec>] kasprintf+0x30/0x50
+> [<5713064b>] __irq_domain_add+0x184/0x25c
+> [<53c594d0>] aspeed_i2c_ic_of_init+0x9c/0x128
+> [<d8d7017e>] of_irq_init+0x1ec/0x314
+> [<f8405bf1>] irqchip_init+0x1c/0x24
+> [<7ef974b3>] init_IRQ+0x30/0x90
+> [<87a1438f>] start_kernel+0x28c/0x458
+> [< (null)>] (null)
+> [<f0763fdf>] 0xffffffff
+> 
+> Signed-off-by: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+> ---
+>  drivers/irqchip/irq-aspeed-i2c-ic.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c 
+> b/drivers/irqchip/irq-aspeed-i2c-ic.c
+> index 8d591c179f81..8081b8483a79 100644
+> --- a/drivers/irqchip/irq-aspeed-i2c-ic.c
+> +++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
+> @@ -92,6 +92,8 @@ static int __init aspeed_i2c_ic_of_init(struct 
+> device_node *node,
+>  		goto err_iounmap;
+>  	}
+>  
+> +	if (i2c_ic->irq_domain->flags & IRQ_DOMAIN_NAME_ALLOCATED)
+> +		kfree(i2c_ic->irq_domain->name);
+>  	i2c_ic->irq_domain->name = "aspeed-i2c-domain";
+
+Given that the name is no-longer allocated I think you need to clear the
+IRQ_DOMAIN_NAME_ALLOCATED bit from flags to avoid attempting to
+free the const string in irq_domain_remove():
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/kernel/irq/irqdomain.c?h=v5.4#n263
+
+Or do a kstrdup().
+
+Andrew
