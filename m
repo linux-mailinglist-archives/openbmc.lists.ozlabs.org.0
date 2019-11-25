@@ -1,74 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C611E10981C
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 04:32:00 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47MTwY63NKzDqgX
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 14:31:57 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AFCB10990B
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 07:01:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MYFJ3h6lzDqkf
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 17:01:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029;
- helo=mail-pj1-x1029.google.com; envelope-from=z1908144712@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="det5r8Qt"; 
- dkim-atps=neutral
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
- [IPv6:2607:f8b0:4864:20::1029])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=prodrive-technologies.com (client-ip=212.61.153.67;
+ helo=mail.prodrive-technologies.com;
+ envelope-from=roy.van.doormaal@prodrive-technologies.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=prodrive-technologies.com
+X-Greylist: delayed 239 seconds by postgrey-1.36 at bilbo;
+ Tue, 26 Nov 2019 07:34:18 AEDT
+Received: from mail.prodrive-technologies.com (mail.prodrive-technologies.com
+ [212.61.153.67])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47MTvr1bXqzDqft
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 14:31:16 +1100 (AEDT)
-Received: by mail-pj1-x1029.google.com with SMTP id v93so4325589pjb.6
- for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 19:31:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:message-id:subject:disposition-notification-to
- :mime-version:content-transfer-encoding;
- bh=iZ5UsiG6OcKLD29d2MT+50/fnOmiJy8I1lF+Z5QqjXk=;
- b=det5r8QtMTf1eZww3cdYUGrOjq5jqk5K1dMEoehGYpqEw0cj+lr2AtMtB9iZIp3Xr+
- 3z9IIvoHu2vJyclqeRF/PMgGuY3EwJglYwBZWL8eohpxh7PAYS/uUMxvTOZ7g0zZj+il
- QxqpMqyFt7rbL2RgzIai+vGDIN4kQgC4mvP9IjpYuqh2SXryrxSwwqfno4SGFZHqYqRy
- cq2+yXvxqkReEBj/cAabwM3Jig6u7Wnt4ehbU+vQGz9R6osM51ShOdraeV89e2yRhapa
- BAoq9GomkTkJrmFstBGzuzDzY805uL5a1RH7JpHHluj9n6CpcrEel6y8vCb+24ehsThM
- 6Kgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:message-id:subject
- :disposition-notification-to:mime-version:content-transfer-encoding;
- bh=iZ5UsiG6OcKLD29d2MT+50/fnOmiJy8I1lF+Z5QqjXk=;
- b=N2zKCKh1woKubIgv1SHtHqnp/B3tDkpP5EqwSNg/33eK2bZdpLw+bKfkioVdB9vHbP
- vreu4Apa/t3D8IwLQBdIXVRVxCEDFNYfrJjD+0UgBLchLsUn4GCgL5PPyD12Di5zpdOE
- ZsKM5+uZaH+OnJtq92mVQnAnO0bRd2MPikq/YfJoezUUhRg3apT10JRjX4gX3FpMml9F
- V7B46MvwfNlk2uLqAmN5L/hN+WbqM3yTr3tqO9a4FOZsXP/jVxRd1YOGkkDcIC5i1mm7
- 26nEgaAKIuWRFU9JRVdDfPwj8HL9i24jXjrxxQppZsSuDXYQg28ctdpx2cEoSUrF7SAI
- pQNw==
-X-Gm-Message-State: APjAAAULkxhAOVRqWbUMYGDmXkQyMboXugh5Ab5bIfE01GOhG5z+HqV4
- ZQ/PrRT6sSVdZepwEkEpHqaYPhfI
-X-Google-Smtp-Source: APXvYqxFNqAtP4iNpb0AgmVeRobUtUejvA5+iP1JmtzE0Wf0Mog273tN6eu23XnmyaPnEbCJoApgWQ==
-X-Received: by 2002:a17:902:a70b:: with SMTP id
- w11mr32472220plq.27.1574739072565; 
- Mon, 25 Nov 2019 19:31:12 -0800 (PST)
-Received: from DESKTOP-Q4CNDFP ([103.129.252.49])
- by smtp.gmail.com with ESMTPSA id a34sm10193954pgl.56.2019.11.25.19.31.11
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 25 Nov 2019 19:31:12 -0800 (PST)
-Date: Tue, 26 Nov 2019 11:31:09 +0800
-From: z1908144712 <z1908144712@gmail.com>
-To: =?utf-8?Q?openbmc=40lists.ozlabs.org?= <openbmc@lists.ozlabs.org>
-Message-ID: <CC8CA82F-E2BE-483E-B2FE-7B1C56277A54@gmail.com>
-Subject: How to fill the SPD information of DDR3 into DBUS ?
-X-Mailer: MailMasterPC/4.13.1.1012 (Windows 10 RS5)
-X-CUSTOM-MAIL-MASTER-SENT-ID: 39070754-0AFD-4DE5-A3A3-3C080E9B2F23
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47MJff6jpzzDqZQ;
+ Tue, 26 Nov 2019 07:34:16 +1100 (AEDT)
+Received: from mail.prodrive-technologies.com (localhost.localdomain
+ [127.0.0.1])
+ by localhost (Email Security Appliance) with SMTP id 3808632EC5_DDC39D3B;
+ Mon, 25 Nov 2019 20:30:11 +0000 (GMT)
+Received: from mail.prodrive-technologies.com (exc03.bk.prodrive.nl
+ [10.1.1.212])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (Client CN "mail.prodrive-technologies.com",
+ Issuer "Prodrive Technologies B.V. OV SSL Issuing CA" (verified OK))
+ by mail.prodrive-technologies.com (Sophos Email Appliance) with ESMTPS id
+ 2B2E730563_DDC39D2F; Mon, 25 Nov 2019 20:30:10 +0000 (GMT)
+Received: from lnxclnt2222.Prodrive.nl (10.13.62.32) by EXC03.bk.prodrive.nl
+ (10.1.1.212) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.1779.2; Mon, 25
+ Nov 2019 21:30:09 +0100
+From: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+To: Brendan Higgins <brendanhiggins@google.com>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>, Joel Stanley <joel@jms.id.au>, Thomas Gleixner
+ <tglx@linutronix.de>, Jason Cooper <jason@lakedaemon.net>, Marc Zyngier
+ <maz@kernel.org>, Andrew Jeffery <andrew@aj.id.au>,
+ <linux-i2c@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>
+Subject: [PATCH] irqchip/aspeed-i2c-ic: Fix irq domain name memory leak
+Date: Mon, 25 Nov 2019 21:29:37 +0100
+Message-ID: <20191125202937.23133-1-roy.van.doormaal@prodrive-technologies.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: EXC03.bk.prodrive.nl (10.1.1.212) To EXC03.bk.prodrive.nl
+ (10.1.1.212)
+X-SASI-RCODE: 200
+X-Mailman-Approved-At: Tue, 26 Nov 2019 16:40:45 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,95 +68,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGh0bWw+DQo8aGVhZD4NCiAgICA8bWV0YSBodHRwLWVxdWl2PSdDb250ZW50LVR5cGUnIGNvbnRl
-bnQ9J3RleHQvaHRtbDsgY2hhcnNldD1VVEYtOCc+DQo8L2hlYWQ+DQo8Ym9keT4NCjxzdHlsZT4N
-CiAgICBmb250ew0KICAgICAgICBsaW5lLWhlaWdodDogMS42Ow0KICAgIH0NCiAgICB1bCxvbHsN
-CiAgICAgICAgcGFkZGluZy1sZWZ0OiAyMHB4Ow0KICAgICAgICBsaXN0LXN0eWxlLXBvc2l0aW9u
-OiBpbnNpZGU7DQogICAgfQ0KPC9zdHlsZT4NCjxkaXYgc3R5bGUgPSAnZm9udC1mYW1pbHk65b6u
-6L2v6ZuF6buRLFZlcmRhbmEsJnF1b3Q7TWljcm9zb2Z0IFlhaGVpJnF1b3Q7LFNpbVN1bixzYW5z
-LXNlcmlmO2ZvbnQtc2l6ZToxNHB4OyBsaW5lLWhlaWdodDoxLjY7Jz4NCiAgICA8ZGl2ID48L2Rp
-dj48ZGl2PgogICAgPGRpdj4KICAgICAgICA8c3Bhbj4KICAgICAgICAgICAgPGJyPgogICAgICAg
-IDwvc3Bhbj4KICAgIDwvZGl2PgogICAgPGRpdj4KICAgICAgICA8c3Bhbj4KICAgICAgICAgICAg
-SW4gbXkgbWFjaGluZSwgdGhlcmUgYXJlIGVpZ2h0IG1lbW9yeSBtb2R1bGVzIGluIHRvdGFsLiBU
-aGUgU1BEIGluZm9ybWF0aW9uIG9mIG1lbW9yeSBtb2R1bGVzIGNhbiBiZSByZWFkIGZyb20gSTJD
-IGJ1cy4gSSB3YW50IHRvIGZpbGwgdGhlIHNwZWNpZmljYXRpb24gaW5mb3JtYXRpb24gb2YgbWVt
-b3J5IG1vZHVsZSBpbnRvIERCVVMgaW50ZXJmYWNlLiBXaGF0IHNob3VsZCBJIGRvPyBDYW4gc29t
-ZW9uZSBnaXZlIG1lIHNvbWUgYWR2aWNlPzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPjxicj48L3Nw
-YW4+PC9kaXY+PGRpdj48ZGl2PmhleGR1bXAgLUMgZWVwcm9tJm5ic3A7PC9kaXY+PGRpdj4wMDAw
-MDAwMCAmbmJzcDs5MiAxMyAwYiAwMiAwNCAyMSAwMiAwMSAmbmJzcDswYiAxMSAwMSAwOCAwYSAw
-MCBmYyAwMCAmbmJzcDt8Li4uLi4hLi4uLi4uLi4uLnw8L2Rpdj48ZGl2PjAwMDAwMDEwICZuYnNw
-OzY5IDc4IDY5IDMwIDY5IDExIDE4IDgxICZuYnNwOzIwIDA4IDNjIDNjIDAwIGYwIDgzIDAxICZu
-YnNwO3xpeGkwaS4uLiAuJmx0OyZsdDsuLi4ufDwvZGl2PjxkaXY+MDAwMDAwMjAgJm5ic3A7ODAg
-MDAgMDAgMDAgMDAgMDAgMDAgMDAgJm5ic3A7MDAgODggMDAgMDAgMDAgMDAgMDAgMDAgJm5ic3A7
-fC4uLi4uLi4uLi4uLi4uLi58PC9kaXY+PGRpdj4wMDAwMDAzMCAmbmJzcDswMCAwMCAwMCAwMCAw
-MCAwMCAwMCAwMCAmbmJzcDswMCAwMCAwMCAwMCAwNCAwMSAwOCAwMCAmbmJzcDt8Li4uLi4uLi4u
-Li4uLi4uLnw8L2Rpdj48ZGl2PjAwMDAwMDQwICZuYnNwOzAwIDAwIDAwIDAwIDAwIDAwIDAwIDAw
-ICZuYnNwOzAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwICZuYnNwO3wuLi4uLi4uLi4uLi4uLi4ufDwv
-ZGl2PjxkaXY+KjwvZGl2PjxkaXY+MDAwMDAwNzAgJm5ic3A7MDAgMDAgMDAgMDAgMDAgODYgZjEg
-MDIgJm5ic3A7MTggNDIgMDAgMDEgMDIgZDIgY2MgYmUgJm5ic3A7fC4uLi4uLi4uLkIuLi4uLi58
-PC9kaXY+PGRpdj4wMDAwMDA4MCAmbmJzcDs0ZCAzMyA0MyA1NCAyZCAzNCA0NyA1MyAmbmJzcDs1
-MyAzNCA0YyA1MCA0MyAyZCA0NSAyMCAmbmJzcDt8TTNDVC00R1NTNExQQy1FIHw8L2Rpdj48ZGl2
-PjAwMDAwMDkwICZuYnNwOzIwIDIwIDAwIDAwIDgwIGNlIDRlIDQzICZuYnNwOzQxIDMxIDJkIDMx
-IDM4IDMwIDM5IDMyICZuYnNwO3wgJm5ic3A7Li4uLk5DQTEtMTgwOTJ8PC9kaXY+PGRpdj4wMDAw
-MDBhMCAmbmJzcDszNiAzMCAzMCAzMiAwMCAwMCAwMCAwMCAmbmJzcDswMCAwMCAwMCAwMCAwMCAw
-MCAwMCAwMCAmbmJzcDt8NjAwMi4uLi4uLi4uLi4uLnw8L2Rpdj48ZGl2PjAwMDAwMGIwICZuYnNw
-OzAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwICZuYnNwOzAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwICZu
-YnNwO3wuLi4uLi4uLi4uLi4uLi4ufDwvZGl2PjxkaXY+KjwvZGl2PjxkaXY+MDAwMDAwZTAgJm5i
-c3A7NjAgMGQgMDAgMDAgMDAgMDAgMDAgMDAgJm5ic3A7NjAgZmYgZmYgMDAgMDAgMDAgMDAgMDAg
-Jm5ic3A7fGAuLi4uLi4uYC4uLi4uLi58PC9kaXY+PGRpdj4wMDAwMDBmMCAmbmJzcDswMCAwMCAw
-MCAwMCAwMCAwMCAwMCAwMCAmbmJzcDswMCAwMCAwMCAwMCAwMCAwMCAwMCAwMCAmbmJzcDt8Li4u
-Li4uLi4uLi4uLi4uLnw8L2Rpdj48L2Rpdj4KICAgIDxkaXYgaWQ9Im50ZXMtcGNtYWMtc2lnbmF0
-dXJlIiBzdHlsZT0iZm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSciPgogICAgIAogICAgPGRpdiBz
-dHlsZT0iZm9udC1zaXplOjE0cHg7IHBhZGRpbmc6IDA7ICBtYXJnaW46MDtsaW5lLWhlaWdodDox
-NHB4OyI+CiAgICAgICAgPGRpdiBzdHlsZT0icGFkZGluZy1ib3R0b206NnB4O21hcmdpbi1ib3R0
-b206MTBweDtib3JkZXItYm90dG9tOjFweCBzb2xpZCAjZTZlNmU2O2Rpc3BsYXk6aW5saW5lLWJs
-b2NrOyI+CiAgICAgICAgICAgICAgICAgICAgPGEgaHJlZj0iaHR0cHM6Ly9tYWFzLm1haWwuMTYz
-LmNvbS9kYXNoaS13ZWItZXh0ZW5kL2h0bWwvcHJvU2lnbmF0dXJlLmh0bWw/ZnRsSWQ9MSZhbXA7
-bmFtZT16MTkwODE0NDcxMiZhbXA7dWlkPXoxOTA4MTQ0NzEyJTQwZ21haWwuY29tJmFtcDtpY29u
-VXJsPWh0dHBzJTNBJTJGJTJGbWFpbC1vbmxpbmUubm9zZG4uMTI3Lm5ldCUyRnFpeWVsb2dvJTJG
-ZGVmYXVsdEF2YXRhci5wbmcmYW1wO2l0ZW1zPSU1QiUyMnoxOTA4MTQ0NzEyJTQwZ21haWwuY29t
-JTIyJTVEIiBzdHlsZT0iZGlzcGxheTpibG9jaztiYWNrZ3JvdW5kOiNmZmY7IG1heC13aWR0aDog
-NDAwcHg7IF93aWR0aDogNDAwcHg7cGFkZGluZzoxNXB4IDAgMTBweCAwO3RleHQtZGVjb3JhdGlv
-bjogbm9uZTsgb3V0bGluZTpub25lOy13ZWJraXQtdGFwLWhpZ2hsaWdodC1jb2xvcjp0cmFuc3Bh
-cmVudDstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50O3RleHQtc2l6ZS1h
-ZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAgIDx0YWJsZSBjZWxscGFkZGluZz0i
-MCIgc3R5bGU9IndpZHRoOiAxMDAlOyBtYXgtd2lkdGg6IDEwMCU7IHRhYmxlLWxheW91dDogZml4
-ZWQ7IGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7Y29sb3I6ICM5YjllYTE7Zm9udC1zaXplOiAx
-NHB4O2xpbmUtaGVpZ2h0OjEuMzstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0
-YW50O3RleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAgICAgICA8
-dGJvZHkgc3R5bGU9ImZvbnQtZmFtaWx5OiAnUGluZ0ZhbmcgU0MnLCAnSGlyYWdpbm8gU2FucyBH
-QicsJ1dlblF1YW5ZaSBNaWNybyBIZWknLCAnTWljcm9zb2Z0IFlhaGVpJywgJ+W+rui9r+mbhem7
-kScsIHZlcmRhbmEgIWltcG9ydGFudDsgd29yZC13cmFwOmJyZWFrLXdvcmQ7IHdvcmQtYnJlYWs6
-YnJlYWstYWxsOy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7dGV4dC1z
-aXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7Ij4KICAgICAgICAgICAgICAgICAgICA8dHIgY2xh
-c3M9ImZpcnN0Um93Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCB3aWR0aD0iMzgi
-IHN0eWxlPSJwYWRkaW5nOjA7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IHdpZHRoOiAzOHB4OyI+
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGltZyB3aWR0aD0iMzgiIGhlaWdodD0i
-MzgiIHN0eWxlPSJ2ZXJ0aWNhbC1hbGlnbjptaWRkbGU7IHdpZHRoOiAzOHB4OyBoZWlnaHQ6IDM4
-cHg7IGJvcmRlci1yYWRpdXM6NTAlOyIgc3JjPSJodHRwczovL21haWwtb25saW5lLm5vc2RuLjEy
-Ny5uZXQvcWl5ZWxvZ28vZGVmYXVsdEF2YXRhci5wbmciPgogICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBzdHlsZT0icGFkZGlu
-ZzogMCAwIDAgMTBweDsgY29sb3I6ICMzMTM1M2I7Ij4KICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICA8ZGl2IHN0eWxlPSJmb250LXNpemU6IDE2cHg7Zm9udC13ZWlnaHQ6Ym9sZDsgd2lk
-dGg6MTAwJTsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgb3ZlcmZsb3c6aGlkZGVuO3RleHQtb3ZlcmZs
-b3c6IGVsbGlwc2lzOyI+ejE5MDgxNDQ3MTI8L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgPC90cj4KICAgICAgICAgICAgICAgICAgICAg
-ICAgPHRyIHdpZHRoPSIxMDAlIiBzdHlsZT0iZm9udC1zaXplOiAxNHB4ICFpbXBvcnRhbnQ7IHdp
-ZHRoOiAxMDAlOyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQgY29sc3Bhbj0iMiIg
-c3R5bGU9InBhZGRpbmc6MTBweCAwIDAgMDsgZm9udC1zaXplOjE0cHggIWltcG9ydGFudDsgd2lk
-dGg6IDEwMCU7Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBzdHls
-ZT0id2lkdGg6IDEwMCU7Zm9udC1zaXplOiAxNHB4ICFpbXBvcnRhbnQ7d29yZC13cmFwOmJyZWFr
-LXdvcmQ7d29yZC1icmVhazpicmVhay1hbGw7Ij56MTkwODE0NDcxMkBnbWFpbC5jb208L2Rpdj4K
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAg
-IDwvdHI+CiAgICAgICAgICAgICAgICA8L3Rib2R5PgogICAgICAgICAgICA8L3RhYmxlPgogICAg
-ICAgIDwvYT4KICAgICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICAgPGRpdiBzdHlsZT0iZm9udC1z
-aXplOjEycHg7Y29sb3I6I2I1YjliZDtsaW5lLWhlaWdodDoxOHB4OyI+CiAgICAgICAgPHNwYW4+
-562+5ZCN55SxPC9zcGFuPgogICAgICAgIDxhIHN0eWxlPSJ0ZXh0LWRlY29yYXRpb246IG5vbmU7
-Y29sb3I6IzQxOTZmZjtwYWRkaW5nOjAgNXB4OyIgaHJlZj0iaHR0cHM6Ly9tYWlsLjE2My5jb20v
-ZGFzaGkvZGxwcm8uaHRtbD9mcm9tPW1haWw4MSI+572R5piT6YKu566x5aSn5biIPC9hPgogICAg
-ICAgIDxzcGFuPuWumuWItjwvc3Bhbj4KICAgIDwvZGl2PgogPC9kaXY+CjwvZGl2PjwhLS3wn5iA
-LS0+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4=
+The aspeed irqchip driver overwrites the default irq domain name,
+but doesn't free the existing domain name.
+This patch frees the irq domain name before overwriting it.
+
+kmemleak trace:
+
+unreferenced object 0xb8004c40 (size 64):
+comm "swapper", pid 0, jiffies 4294937303 (age 747.660s)
+hex dump (first 32 bytes):
+3a 61 68 62 3a 61 70 62 3a 62 75 73 40 31 65 37 :ahb:apb:bus@1e7
+38 61 30 30 30 3a 69 6e 74 65 72 72 75 70 74 2d 8a000:interrupt-
+backtrace:
+[<086b59b8>] kmemleak_alloc+0xa8/0xc0
+[<b5a3490c>] __kmalloc_track_caller+0x118/0x1a0
+[<f59c7ced>] kvasprintf+0x5c/0xc0
+[<49275eec>] kasprintf+0x30/0x50
+[<5713064b>] __irq_domain_add+0x184/0x25c
+[<53c594d0>] aspeed_i2c_ic_of_init+0x9c/0x128
+[<d8d7017e>] of_irq_init+0x1ec/0x314
+[<f8405bf1>] irqchip_init+0x1c/0x24
+[<7ef974b3>] init_IRQ+0x30/0x90
+[<87a1438f>] start_kernel+0x28c/0x458
+[< (null)>] (null)
+[<f0763fdf>] 0xffffffff
+
+Signed-off-by: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+---
+ drivers/irqchip/irq-aspeed-i2c-ic.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c b/drivers/irqchip/irq-aspeed-i2c-ic.c
+index 8d591c179f81..8081b8483a79 100644
+--- a/drivers/irqchip/irq-aspeed-i2c-ic.c
++++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
+@@ -92,6 +92,8 @@ static int __init aspeed_i2c_ic_of_init(struct device_node *node,
+ 		goto err_iounmap;
+ 	}
+ 
++	if (i2c_ic->irq_domain->flags & IRQ_DOMAIN_NAME_ALLOCATED)
++		kfree(i2c_ic->irq_domain->name);
+ 	i2c_ic->irq_domain->name = "aspeed-i2c-domain";
+ 
+ 	irq_set_chained_handler_and_data(i2c_ic->parent_irq,
+-- 
+2.20.1
 
