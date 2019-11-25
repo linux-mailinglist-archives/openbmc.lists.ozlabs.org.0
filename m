@@ -1,69 +1,133 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71EC01095EC
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 00:04:14 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 540E9109539
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 22:44:32 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47MLCd1tMJzDqcg
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 08:44:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MMzb6pKzzDqcV
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 10:04:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::831;
- helo=mail-qt1-x831.google.com; envelope-from=emilyshaffer@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="dM2hj+/9"; 
- dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
- [IPv6:2607:f8b0:4864:20::831])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=623285b47d=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="cJq4RHqM"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="i97opKcs"; dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47MLBm4NnszDqTY
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 08:43:44 +1100 (AEDT)
-Received: by mail-qt1-x831.google.com with SMTP id y39so19007906qty.0
- for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 13:43:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=N022hgbiuzNvfKeR1X8awh1n4gk7sYEtP5VYpbT5J/A=;
- b=dM2hj+/9+fFrWahBO2pQnLlCIhS7EAG4gSTd1BKo7JlwpvW2Rhg0igOKD1KQphs66q
- a/OKKrP4924sUnWbhg3MLHB5hNlziVbuVhW1GdBMgZzdQbvr2X9L4kUatGTWUeIkVf1A
- JFjOqu5EyxH426O6/lQWwOL5vNxkdy/2DNHlX8R4mWGNpC7x7xDZaqx6qu7KCgB46D3p
- d0jjMz1i11peUqJluUD9AzEaLttudEquAXnLOb3oEzwF8TMaHhV8BLe0rEy68skssUAj
- vogAlA8vHLmEmmsoMdqwYV4gFqS57l/Tf76WszbcaFx4vAooltEwPgt1tYc7rt8sH+E1
- ayZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=N022hgbiuzNvfKeR1X8awh1n4gk7sYEtP5VYpbT5J/A=;
- b=s6YnQ6ff63COCmOTEPGml2P2ujWPckBusGmY9n6dhTbvv0dUwycr5iufu0vhVjrUFt
- S1+0bIX4Is1kqg3ZVcH/JT4KmQiLn6p43s86INE8HoaJwsCjDqV8z6K7csQ3x+Qeh4JS
- /1WdxcV7kTvgwQxUPl5fFbqrrd9biG7sW9lovAJ6UsML3DF741YMjsJrvj3Gl5jeYZG2
- iZ6YwLdLnRLxCGemYwG+B+XXHqyzi+Q2xMYtuzJ4VWOVR+JZXy2xlR8eZXt6LtptQxMl
- Visyv+GeA7MMpz10ZJNj49TlfLGSgLRI5CFdqijFqlV3ClhlhXrXPkF3kA4SnxnWPFXy
- lwMg==
-X-Gm-Message-State: APjAAAXc7hHtPhsZnk9G6DMttlDR/R39MfrPA8HILiqi5PUgCbN2OzkG
- WnoHXIepXhI6NsxNzLnrzg8wKRf8XEi0iKpBZunQpQ==
-X-Google-Smtp-Source: APXvYqxIW8cXzi6Hp7rWSJ4JqDmyJIkdyh+i0wb+MsOwTnIeAYJPG17nuFJpDCmYCk9fNN3lELh+0ploKpcmxTHewQI=
-X-Received: by 2002:ac8:60da:: with SMTP id i26mr20468485qtm.43.1574718220087; 
- Mon, 25 Nov 2019 13:43:40 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47MMyk1S2CzDqZQ
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 10:03:23 +1100 (AEDT)
+Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
+ by m0001303.ppops.net (8.16.0.42/8.16.0.42) with SMTP id xAPMvO5e032538;
+ Mon, 25 Nov 2019 15:02:16 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=BBYd9GVCN6J0CyMH4jhDVSTOW5BG7zQkBmsG012fVrQ=;
+ b=cJq4RHqMSRyWpjrVUEGWkhxh7JZZXNTOYyAgZaNb7B/xLw4iztqRlmTB2Zgqjv7ktV4M
+ Se+wLILXKZsDmYG/sC6ohbWTzXiVRsT4e4tRKgQL8LTDQJwtPqoGy+pr8SAqC2eZBC3i
+ fHhBGZc9ngohIpt0i3zmL6dsyJ8T4bu1S6M= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by m0001303.ppops.net with ESMTP id 2wf1ap48w8-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Mon, 25 Nov 2019 15:02:16 -0800
+Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
+ prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Mon, 25 Nov 2019 15:02:16 -0800
+Received: from NAM05-DM3-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Mon, 25 Nov 2019 15:02:15 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CV8Lv5UdudNvfr3SSM46POIJrjlFPJCp9lMgCIof8e9iwIJJbJJxOY6OYPL6+hqQDgigUyQpuCWdgoybN5ZSgLzojCrxcMFlfMjY4krG2J63fROiRZxBpXcUhR2UONO/WekOD3ZGMnmfBuhSzEzfXp8vawelBfBjbzieEaCTZEH2UTyl9KWAxIqtzVhjx3bIiCVafWe5/cUZ/TkUxiTN7oTgEzZboAYM2ESvWUT8mM5SRPU0f272U9lKQivyYLKTWSDBD6W43+PV75+kfAVzMP2q0WBntGcsYg/4AhmBm8aiSQsAE6OK9xbbV+rJuzSkp0dFmLgl7+cP0MgGoJGOrA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BBYd9GVCN6J0CyMH4jhDVSTOW5BG7zQkBmsG012fVrQ=;
+ b=oHG7F2Ud2YlNHK6l/fSStdeP3EGWtAQDbrRu+qVOJj+ZqDQrjt0+ldnDFVumEfxYNoZZucj1gthUuMlIVpCHPRYVDg+n5PoPpXf4kcaTfomUWBwAAcw0KBAksSzG40pGTVFvEJY3k+LzPbXoDFc9S5012wvrU+uYB8DIdiLSLr0oB8JmYg6VAC+1PrPBER6dNHlbMVDFgDRiz5Kw4d93ysvVn0RaQmjVu2h5VK1/xSuqBqXFkwQJ5+QUN7ZFxEIMW6q7Hguc87pPskKFZnY4g9Oy8EqYXcCUk32ghqMVeuXKLyr1nuzURMUWCLtraiCFUqrlpf6hiCSvnj5HFYvpmA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BBYd9GVCN6J0CyMH4jhDVSTOW5BG7zQkBmsG012fVrQ=;
+ b=i97opKcsUWIJuJxfZ1Ya5j0X8b6ch2HpqicnSQTPsvDX9OQNvgt0OpwiyIr3/ZkjYPhksPMa3S1YgMDqfr+XDRLs9ju0y9ltXXi5HIJyg2D3Jod6eaW99E66u6BfQmulSPfAXtdvQT0E0lz/BX/Bd80d6V3y2VXBP0foRXPlxfE=
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
+ MWHPR15MB1119.namprd15.prod.outlook.com (10.175.8.20) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2474.18; Mon, 25 Nov 2019 23:02:14 +0000
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::2c43:c44b:2c95:e376]) by MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::2c43:c44b:2c95:e376%11]) with mapi id 15.20.2474.023; Mon, 25 Nov
+ 2019 23:02:14 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, James Feist
+ <james.feist@linux.intel.com>, "jason.m.bills@linux.intel.com"
+ <jason.m.bills@linux.intel.com>
+Subject: Re: i2c error for ME port
+Thread-Topic: i2c error for ME port
+Thread-Index: AQHVo8gV2NOlHgDr9k+GwqBCoAIdRaecSPkAgAALJ4D//6bxAA==
+Date: Mon, 25 Nov 2019 23:02:14 +0000
+Message-ID: <C4ECF587-E301-4FB7-AF5A-BB20F90F9083@fb.com>
+References: <45A2E82C-17C3-470A-9756-DBC2CDFE0356@fb.com>
+ <fcbbbc1b-d85c-d3d5-c2b6-9798828385ae@linux.intel.com>
+ <69833bb8-89b6-2b06-818a-c8d16ce19ca5@linux.intel.com>
+In-Reply-To: <69833bb8-89b6-2b06-818a-c8d16ce19ca5@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:182d]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 70b984e0-5eea-49f8-d78c-08d771fb82d0
+x-ms-traffictypediagnostic: MWHPR15MB1119:
+x-microsoft-antispam-prvs: <MWHPR15MB11195D16B407AB61C11B44B1DD4A0@MWHPR15MB1119.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4941;
+x-forefront-prvs: 0232B30BBC
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(189003)(199004)(25786009)(7736002)(186003)(71200400001)(4326008)(33656002)(81156014)(71190400001)(53546011)(102836004)(76176011)(6436002)(6506007)(6246003)(229853002)(8936002)(76116006)(66946007)(66476007)(110136005)(64756008)(66446008)(5660300002)(66556008)(81166006)(99286004)(256004)(46003)(2501003)(6512007)(446003)(8676002)(2616005)(11346002)(14454004)(6486002)(6116002)(498600001)(36756003)(2906002)(305945005)(86362001);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1119;
+ H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Qykc/EAnDZa02/+S2qeX/hCirKATN9kkDaonoWymt/MHQ1d9xWvrpzb6aAkpMggAA227M7XdYrtgSQPHfhM5JNqRspmr9HlNSEFtlrg8hUbnz5bMIJMQDUAi/IrpdprMgUDMLAHnD9jg+XTk0Qlk04hX2b0GMYWOzMAmjGPjbKc2CTe6WdQQyuwuOJ/9878VECieVihFz2gcxlz/hhlwRmonw7JhWgvl+5+9/r3v7bX14W3ZPGCwUGjCGCU/Ndjmd61wBPylswhNyfWJcKEsXpM8Y/9FOjI/ESL1ljvXFXNvbSwqAH+zuTEq8Gp8aTeQfgK73aAoC9NgUa4wH/jv7yZPlshrX00qlb9XBApgZ9/4yeAWCKHfzzUr9qxWgZGeQdg090dOuAFnx38rn1YJtcSqd9kaO4HdZuKlXI0oqhvsX81bJXQrz1mUMmqr8/ZJ
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <45244C92DA88DF468807854D83328AFA@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAN34fowOEdscU-f43KDygEmAzmJyYAC1bifzDPn+8MwKkPrfug@mail.gmail.com>
- <CAJoAoZ=hC9NT81sW4WPFP5hp7ds2k0RPf0f6wREPDHvv7qzknw@mail.gmail.com>
-In-Reply-To: <CAJoAoZ=hC9NT81sW4WPFP5hp7ds2k0RPf0f6wREPDHvv7qzknw@mail.gmail.com>
-From: Emily Shaffer <emilyshaffer@google.com>
-Date: Mon, 25 Nov 2019 13:43:28 -0800
-Message-ID: <CAJoAoZ=HusYNxj5x=fNwmDoBdy9p26WbWRSEr0ohmuvLPsn06g@mail.gmail.com>
-Subject: Re: Ongoing Questions about OpenBMC
-To: Stephen Beckwith <embeddedsteve@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-Network-Message-Id: 70b984e0-5eea-49f8-d78c-08d771fb82d0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2019 23:02:14.0709 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: SOllYHM4FkZlCTUY2u/U/UMVv/LbWrxdqCUuimtEmcAbHj5LlcOOZ2rq+zffeD1GxOMJ43MfkWFod67VEO2zMA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1119
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-11-25_06:2019-11-21,2019-11-25 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ mlxscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ mlxlogscore=999 bulkscore=0 spamscore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1911250181
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,128 +143,32 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Nov 25, 2019 at 1:41 PM Emily Shaffer <emilyshaffer@google.com> wro=
-te:
->
-> On Mon, Nov 25, 2019 at 1:28 PM Stephen Beckwith
-> <embeddedsteve@gmail.com> wrote:
-> >
-> > Greetings,
-> >      I have some additional/newbie type questions here that are blockin=
-g my progress with this Proof-of-Concept.
->
-> Hi and welcome. I can't answer every question you have but I'll reply
-> where I can and hope for the community to fill in more blanks. :)
->
-> > We currently have an OpenBMC image booting in QEMU (version 4.1.0) and =
-have been investigating certain aspects of this image, namely IPMI command =
-support and sensors, as these are 2 areas we will need to modify prior to p=
-orting this onto our target platform. (AST2500 based).
-> >
-> > Sensors:
-> > We=E2=80=99ve read through the documentation and pieced together the fo=
-llowing:
-> >  -  Sensors get defined in the DTS file, which is =E2=80=9Cconsumed=E2=
-=80=9D by the Linux kernel.  This defines the physical device=E2=80=99s asp=
-ects (i.e. on which I2C bus at what address).
-> >  -  These sensors are inputs to the Linux Kernel=E2=80=99s hwmon sub-sy=
-stem.  Access is exported via sysfs entries for access by ???
-> >  -  There are some .conf and .yaml files that contain the limits/ranges=
-/properties for these devices. This information is =E2=80=9Cinitialized=E2=
-=80=9D (?) into dbus objects, where the name of the sensor=E2=80=99s config=
-uration file is the exported sysfs name, correct?
-> >  -  systemd is used to start up the various services associated with th=
-ese objects, as defined in dbus.
-> >  -  It was stated on the documentation that the sensors become =E2=80=
-=9Cobjects=E2=80=9D that will broadcast their state change on the dbus for =
-others to know about this change.  What is it that =E2=80=9Cdetects=E2=80=
-=9D this change?  An interrupt from the Sensors? (which seems odd to me, in=
- my 30+ years, I=E2=80=99ve not seen too many temp sensors that are interru=
-pt driven).  Are these objects polled?  By whom?  Our best guess so far see=
-ms to indicate that the phosphor-hwmon service is what polls these.
->
-> phosphor-hwmon is responsible for most of these, yeah.
->
-> >  -  Is there a sensor cache where polled readings are stored? It seemed=
- to be hinted at but never stated explicitly.
-> >
-> >
-> > The reason for these questions are:
-> >  -  In poking around the image loaded in QEMU, we don=E2=80=99t seem to=
- be seeing any Sensor updates occurring.  We would like to be able to =E2=
-=80=9Cstub=E2=80=9D these for simulation purposes, as we need to add in all=
- of the platform sensors we need to monitor (~ 100).
-> >  -  There is an lm75 defined.  It shows up in the sysfs.  However, it d=
-oes not show up in the IPMI listing of the sensors or on the dbus.
-
-Ah, I skimmed in my first pass and neglected this. It's likely that
-this sensor isn't in your sensor list yaml, which IPMI draws on. See
-https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/sensor-e=
-xample.yaml.
-
-> >  -  It seems that maybe the sensor monitoring is not running?  Could it=
- be that some service is not being started, due to this being QEMU?  Any in=
-sights on this?
-> >  -  If this is simply a limitation of Qemu, is there a recommended meth=
-od/scheme to handle the =E2=80=9Cstubbing=E2=80=9D of sensors?  (i.e. runni=
-ng a background script that writes to the sysfs entries to periodically cha=
-nge the readings?)
-> >
-> >
-> > IPMI Commands:
-> >  -  We=E2=80=99ve tracked through the code and believe we=E2=80=99ve fo=
-und the code responsible for some of the commands.
-> >  -  As an experiment, we=E2=80=99d like to modify this source code acco=
-rdingly to verify this is the code executing the command.  This then brough=
-t up the question:  How is this done?
-> >  -  We=E2=80=99ve identified the following:
-> > the =E2=80=9Copenbmc=E2=80=9D meta directory is just that:  meta-data -=
- no code here.
-> > =E2=80=9CALL=E2=80=9D code is fetched from the various GitHub repos for=
- this project.
-> > So if we wanted to modify, say phosphor-ipmi-host, we would:
-> > a) clone this repo and populate it with the code
-> > b) make the modifications necessary.
-> > c) How then to tell the build system to use this modified code for the =
-build?  Modify the bitbake recipe in the meta- directory to point the SRC_U=
-RI here?
->
-> During hacking, you can use 'devtool' which is used to help configure
-> the bitbake run. I think 'devtool modify' is what you're looking for
-> to ask for your local copy instead of the SRC_URI destination.
->
-> >  -  Which then brought up the following question(s):
-> > How does one go about adding in new code in this setup?  (assuming that=
- we=E2=80=99re NOT just trying to append to existing functionality, but add=
-ing entirely new proprietary functionality to the system both inside our la=
-yer and in other repos).
->
-> As I understand it, when you write the recipe for your internal
-> platform (which you will need to do anyway - for example a Zaius
-> builds differently than a Tioga Pass) you will point the SRC_URI to
-> the internal branch or fork of, say, phosphor-host-ipmi. That branch
-> carries your patches - proprietary features that can't be upstreamed,
-> or hotfixes you couldn't wait for upstream to merge. Then, your
-> internal branch of each project should be rebased regularly against
-> what is happening upstream.  I'll try not to get into upstreaming best
-> practices, but you should keep in mind when you're checking things in
-> downstream that should really be sent upstream - i.e., bug fixes that
-> affect everyone - that your downstream branch needs to be able to cope
-> once those patches make it into the upstream you're rebasing against.
->
-> > Would we need to do this for each and every Repo we are adding and/or m=
-odifying as part of our system?
->
-> If there are changes from upstream, those changes have to go
-> somewhere, and your recipe needs to reference them. If there's no
-> changes from upstream but you want to include different 100%-upstream
-> packages, you'd change that in your recipe, AIUI.
->
-> > Is there a =E2=80=9Cglobal=E2=80=9D way to handle this? (Yocto document=
-ation talks about the EXTERNALSRC capability and the .bbclass to include)
->
-> Take it with a grain of salt from me; it's been some time since I did
-> much with bitbake recipes. These days I'm just a humble IPMI hospice
-> carer :)
->
->  - Emily
+DQoNCu+7v09uIDExLzI1LzE5LCAxMjoyMSBQTSwgIkphZSBIeXVuIFlvbyIgPGphZS5oeXVuLnlv
+b0BsaW51eC5pbnRlbC5jb20+IHdyb3RlOg0KDQogICAgSGkgVmlqYXksDQogICAgDQogICAgT24g
+MTEvMjUvMjAxOSAxMTo0MSBBTSwgSmFtZXMgRmVpc3Qgd3JvdGU6DQogICAgPiBPbiAxMS8yNS8x
+OSAxMTozOSBBTSwgVmlqYXkgS2hlbWthIHdyb3RlOg0KICAgID4+IEhpIEphbWVzL0phc29uLA0K
+ICAgID4gDQogICAgPiArIEphZSwgYW55IGlkZWFzPw0KICAgID4gDQogICAgPiANCiAgICA+Pg0K
+ICAgID4+IEkgYW0gc2VlaW5nIGZvbGxvd2luZyBpMmMgZXJyb3Igb24gaTJjIGJ1cyBjb25uZWN0
+ZWQgdG8gTUUuIEl0IGlzIG9uZSANCiAgICA+PiB0aW1lIG91dHB1dCB3aGVuZXZlciBzZXJ2ZXIg
+aXMgcG93ZXJlZCBvbiBvciByZWJvb3QuIFBsZWFzZSBzdWdnZXN0IA0KICAgID4+IHlvdSBjYW4g
+dGhpbmsgb2YgYW55dGhpbmcgaGVyZS4NCiAgICA+Pg0KICAgID4+IFJlZ2FyZHMNCiAgICA+Pg0K
+ICAgID4+IC1WaWpheQ0KICAgID4+DQogICAgPj4gWyA3MzU4LjQ1MDc2OF0gYXNwZWVkLWkyYy1i
+dXMgMWU3OGExNDAuaTJjLWJ1czogRXhwZWN0ZWQgQUNLIGFmdGVyIA0KICAgID4+IHByb2Nlc3Nl
+ZCByZWFkLg0KICAgID4+DQogICAgPj4gWyA3MzU4LjQ2NTU2NV0gYXNwZWVkLWkyYy1idXMgMWU3
+OGExNDAuaTJjLWJ1czogRXhwZWN0ZWQgQUNLIGFmdGVyIA0KICAgID4+IHByb2Nlc3NlZCByZWFk
+Lg0KICAgID4+DQogICAgPj4gWyA3MzU4LjQ4MDM1OF0gYXNwZWVkLWkyYy1idXMgMWU3OGExNDAu
+aTJjLWJ1czogRXhwZWN0ZWQgQUNLIGFmdGVyIA0KICAgID4+IHByb2Nlc3NlZCByZWFkLg0KICAg
+ID4+DQogICAgPj4gWyA3MzU4LjQ5OTY2M10gYXNwZWVkLWkyYy1idXMgMWU3OGExNDAuaTJjLWJ1
+czogRXhwZWN0ZWQgQUNLIGFmdGVyIA0KICAgID4+IHByb2Nlc3NlZCByZWFkLg0KICAgID4+DQog
+ICAgPj4gWyA3MzU4LjUxNDg3M10gYXNwZWVkLWkyYy1idXMgMWU3OGExNDAuaTJjLWJ1czogRXhw
+ZWN0ZWQgQUNLIGFmdGVyIA0KICAgID4+IHByb2Nlc3NlZCByZWFkLg0KICAgID4+DQogICAgPj4g
+WyA3MzU4LjU5MTc5MF0gYXNwZWVkLWkyYy1idXMgMWU3OGExNDAuaTJjLWJ1czogaXJxIGhhbmRs
+ZWQgIT0gaXJxLiANCiAgICA+PiBleHBlY3RlZCAweDgwMDAwMDg0LCBidXQgd2FzIDB4MDAwMDAw
+ODQNCiAgICANCiAgICBMb29rcyBsaWtlIHlvdSBzZXQgdGhlIHNlY29uZCBzbGF2ZSBhZGRyZXNz
+IGZvciBpMmM0IGJ1cy4gSXQgaW5kaWNhdGVzDQogICAgJ2FkZHJlc3MgMicgbWF0Y2ggZXZlbnQg
+YnV0IGN1cnJlbnQgZHJpdmVyIGRvZXNuJ3QgaGFuZGxlIHRoaXMgZXZlbnQuDQogICAgDQogICAg
+Q2FuIHlvdSBzaGFyZSB5b3VyIGkyYzQgYnVzIG5vZGUgc2V0dGluZyBpbiBkZXZpY2UgdHJlZT8N
+Cg0KJmkyYzQgew0KICBzdGF0dXMgPSAib2theSI7DQogIC8vIEJNQyBEZWJ1ZyBIZWFkZXINCiAg
+aXBtYjBAMTAgew0KICAgIGNvbXBhdGlibGUgPSAiaXBtYi1kZXYiOw0KICAgIHJlZyA9IDwweDEw
+PjsNCiAgICBpMmMtcHJvdG9jb2w7DQogIH07DQp9Ow0KICAgIA0KICAgIENoZWVycywNCiAgICAN
+CiAgICBKYWUNCiAgICANCg0K
