@@ -2,99 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33AFB108683
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 03:35:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C65A1088F8
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 08:06:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Lrk23g8FzDqWy
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 13:35:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47LykV2qhCzDqN3
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 18:06:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=apc01-sg2-obe.outbound.protection.outlook.com
- (client-ip=40.107.131.84; helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=chli30@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=nuvoton.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=nuvoton.onmicrosoft.com
- header.i=@nuvoton.onmicrosoft.com header.b="quUbyi3M"; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310084.outbound.protection.outlook.com [40.107.131.84])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47LrjN0FmNzDqBK
- for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 13:35:02 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OHzWjHdfOEaFBytB4BGoASaXzqlkzoNtKoBlwj4uRcLYgisrUYFf3qJ1HtlWsITvx5LnJfkMZpHX3s+2296o9SdnBVsZOop9biIO6GJIdEchyMycn6QbbKfuxRRLW6i90mty8MazfTzYL1Rx5H+WKtK/MDg7DKyu/BcmJd/n0GDhzOfr4ReVpNZgJJ1MMS8VX9s2MnY7ffe6IVKrruknm3k1a4cnT2BYeB/3Rmnhx/PSelRBepBWSVVU5M/TFu5P5WE+39F2cqCdkMHAd41CxOSUzvidPMZrRtMOyEE82D9JU66K86kw+Lzsp+rd69BRSDnc++wIqy2OMBQVjIdpbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gmFpzwnmXz5Z3hFI6bGVUx8cydUahK+xR1hpm5FY2XM=;
- b=gus31wRQdYA0kAfS9tFsmQAlQSpvrXq2G3d1aBmjmfBAkRgFCGVDnHmBmijpDjqGHhPXtP5Z2M1A6l4gikOuRRbZuEf5aWTdDEQfhJ3b1gYZjchfXmaw/CMiG+l06QM3iAG3m+j7fB99iqNVxXxl9z06dDisM/xzlovAIm2VhetYXsrDgjq9ftJSpCwXMtJ4AyYyxOxlJ5sXlxcz41O19ORI+b0PkXktuLzoNwbfE8O9uKUkhkJIc85QWL6AizwIj7X471G8+X9BAtbcg9mrB1RpNTCe86e4x1FFPhz8r4wP77AvJ0UnN6z9UWkOcZrrQSds+56LRZLLTD5BXi7RvA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
- dkim=pass header.d=nuvoton.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gmFpzwnmXz5Z3hFI6bGVUx8cydUahK+xR1hpm5FY2XM=;
- b=quUbyi3MQ/gr0QngfJZI4v76ieG+qQw4hzV/KEDqJdkDexrcv5y8XE2pGQo1/4IEsRJEASYQ7IOUvQbRUr2GKip5W60WSq9JcR0Fj42BJz5u7QaZtfaYRkBIABSY6ju/SKYBWMnwBRxWt8JdVeY2ky+B6o55txReTloij/Acwo8=
-Received: from HK0PR03MB4660.apcprd03.prod.outlook.com (52.132.237.207) by
- HK0PR03MB3988.apcprd03.prod.outlook.com (20.177.148.73) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2495.13; Mon, 25 Nov 2019 02:34:56 +0000
-Received: from HK0PR03MB4660.apcprd03.prod.outlook.com
- ([fe80::f425:1885:48f1:91da]) by HK0PR03MB4660.apcprd03.prod.outlook.com
- ([fe80::f425:1885:48f1:91da%6]) with mapi id 15.20.2495.014; Mon, 25 Nov 2019
- 02:34:56 +0000
-From: CS20 CHLi30 <CHLI30@nuvoton.com>
-To: Andrew Geissler <geissonator@gmail.com>, "apparao.puli@linux.intel.com"
- <apparao.puli@linux.intel.com>, "jason.m.bills@linux.intel.com"
- <jason.m.bills@linux.intel.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, 
- CS20 CHLi30 <CHLI30@nuvoton.com>
-Subject: RE: phosphor-state-manager enhancements
-Thread-Topic: phosphor-state-manager enhancements
-Thread-Index: AQHVm/Uoihfc9EIPl0mJVfSUt6i7qqebLIuQ
-Date: Mon, 25 Nov 2019 02:34:55 +0000
-Message-ID: <HK0PR03MB4660D9AD2E7FB42F4D172BA4CF4A0@HK0PR03MB4660.apcprd03.prod.outlook.com>
-References: <CALLMt=qGFEdZ3xFntm7cOrLXxcUJE2T3XkrOT12L6wiCjcoe3Q@mail.gmail.com>
-In-Reply-To: <CALLMt=qGFEdZ3xFntm7cOrLXxcUJE2T3XkrOT12L6wiCjcoe3Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=CHLI30@nuvoton.com; 
-x-originating-ip: [60.250.194.160]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: a9596a8f-dc6a-496b-6bb4-08d771500f25
-x-ms-traffictypediagnostic: HK0PR03MB3988:|HK0PR03MB3988:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR03MB3988EB284288222904D6E872CF4A0@HK0PR03MB3988.apcprd03.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5516;
-x-forefront-prvs: 0232B30BBC
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10009020)(396003)(136003)(346002)(39840400004)(366004)(376002)(13464003)(189003)(199004)(11346002)(446003)(26005)(229853002)(71190400001)(71200400001)(6506007)(53546011)(6306002)(9686003)(14454004)(66066001)(3480700005)(74316002)(81156014)(52536014)(66556008)(66946007)(2906002)(76116006)(966005)(6436002)(102836004)(64756008)(66446008)(86362001)(66476007)(6116002)(7736002)(99286004)(3846002)(2501003)(6246003)(186003)(2201001)(5660300002)(256004)(14444005)(110136005)(76176011)(478600001)(25786009)(7696005)(81166006)(316002)(305945005)(8936002)(55016002)(33656002)(8676002);
- DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB3988;
- H:HK0PR03MB4660.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: nuvoton.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: zgWXPk1LhqtMeaOriDFcOSBhVRFBgMtYnOPUY3sAMAQrHrqNjuwknaEZsvO56gpqVs2xViP82m1CnHlvsygzyAXYVZSanr9z34c3XISJqweb8MUyDNM1WBF08NPRf3NxtVD7j49RnLZ3CZEqh75rfuJfIcyYuhM7G8t4OWoLHKErfMWTbhVoDTMr6ygzOt+50GMr04ozOROojMwN+0v6T+Jcr09hntLsmuU0qAHvMx+xkMbS23dQJxbrROP2PfS1NooVe/EYiGkl5H5mZrDVeXakrM3WoE2GcKdsbepJv165CARj6ThJ13rtYMNVMlcc+J0W8PUeIAUgypsqH2Dby+yJuYgBouKkh3Yt9PB3Qr2WxgAgS/xVpLWhdR7u23x/SOIlg+ltcXKtNuFHB37ZF+x2OcAB2Zq09C38MN4pdQ7lVPCg9fsRQUwfjbcmUZJvvLTriOYJkYoc7Fxq5Je0UW2vbcWcEWTc3HXVv1ZuJZE=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Lyhf1J2jzDqVk
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 18:04:49 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xAP6vRYS013957
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 02:04:45 -0500
+Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wfk44pfep-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 02:04:45 -0500
+Received: from localhost
+ by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <dkodihal@linux.vnet.ibm.com>;
+ Mon, 25 Nov 2019 07:04:43 -0000
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 25 Nov 2019 07:04:40 -0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xAP74dXF59244738
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 25 Nov 2019 07:04:39 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9747952050;
+ Mon, 25 Nov 2019 07:04:39 +0000 (GMT)
+Received: from deepaks-mbp.in.ibm.com (unknown [9.193.94.51])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id F10D052051;
+ Mon, 25 Nov 2019 07:04:38 +0000 (GMT)
+Subject: Re: Redfish Aggregator vs. RDE over PLDM
+To: Richard Hanley <rhanley@google.com>
+References: <CAH1kD+YoUr47P-rvCBd8YxKsd-WXtHuqR0pDHFAUSWT+rihmyg@mail.gmail.com>
+ <2e9d22b4-714a-6b16-665a-53faa5692e8f@linux.vnet.ibm.com>
+ <CAH1kD+b_HfiZZ+YdVAhAT0FtsHQhGxzp0MGGNHP9v=gDoEvJtA@mail.gmail.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Date: Mon, 25 Nov 2019 12:34:38 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-X-OriginatorOrg: nuvoton.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a9596a8f-dc6a-496b-6bb4-08d771500f25
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2019 02:34:55.8049 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tw0gw7Wyq6xVJhpVJ/nYv8DvD2APZbeU99af+En/2/F/TD/L5EpP5lZz2aAOwZNf+0dz1Zc9Nl7y9YEUvo7hyA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB3988
+In-Reply-To: <CAH1kD+b_HfiZZ+YdVAhAT0FtsHQhGxzp0MGGNHP9v=gDoEvJtA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+x-cbid: 19112507-0008-0000-0000-00000337318A
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19112507-0009-0000-0000-00004A566512
+Message-Id: <a7fe7170-5539-9482-befa-5c129689060e@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-11-25_01:2019-11-21,2019-11-25 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 mlxscore=0 bulkscore=0 phishscore=0 clxscore=1015 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1911250063
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,155 +89,103 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQW5kcmV3LA0KDQpSZWdhcmRpbmcgb2YgSG9zdCBzdGF0ZSBhYm91dCBCb290UHJvZ3Jlc3Mg
-YW5kIE9wZXJhdGluZ1N5c3RlbVN0YXRlLCBJIGRpZG4ndCBmaW5kIGFueSBjb2RlIG9uIE9wZW5C
-TUMgZ2l0aHViIHRvIHVwZGF0ZSB0aGVzZSBzdGF0ZXMgYWNjb3JkaW5nIGJvb3QgcHJvZ3Jlc3Mg
-b3IgT1Mgc3RhdGUuDQpIb3dldmVyLCBJIG9ubHkgY2FuIGZpbmQgdGhlIGluaXRpYWxpemUgc3Rh
-dGUgYWJvdXQgdGhlc2Ugc3RhdGVzIHdoZW4gSG9zdCBzdGF0ZSBpcyBPRkYgaW4gcGhvc3Bob3It
-c3RhdGUtbWFuYWdlciBhcyBiZWxvdzoNCg0Kdm9pZCBIb3N0OjpzeXNTdGF0ZUNoYW5nZShzZGJ1
-c3BsdXM6Om1lc3NhZ2U6Om1lc3NhZ2UmIG1zZykNCnsNCi4uLi4uLi4uDQogICAgbG9nPGxldmVs
-OjpJTkZPPigiUmVjZWl2ZWQgc2lnbmFsIHRoYXQgaG9zdCBpcyBvZmYiKTsNCiAgICB0aGlzLT5j
-dXJyZW50SG9zdFN0YXRlKHNlcnZlcjo6SG9zdDo6SG9zdFN0YXRlOjpPZmYpOw0KICAgIHRoaXMt
-PmJvb3RQcm9ncmVzcyhib290cHJvZ3Jlc3M6OlByb2dyZXNzOjpQcm9ncmVzc1N0YWdlczo6VW5z
-cGVjaWZpZWQpOw0KICAgIHRoaXMtPm9wZXJhdGluZ1N5c3RlbVN0YXRlKG9zc3RhdHVzOjpTdGF0
-dXM6Ok9TU3RhdHVzOjpJbmFjdGl2ZSk7DQp9DQoNClRodXMsIHdlIHRyeSB0byB1cGRhdGUgdGhv
-c2Ugc3RhdGVzIGFjY29yZGluZyBCSU9TIFBPU1QgQ09ERSBpbiBwaG9zcGhvci1ob3N0LXBvc3Rk
-Lg0KQW5kIHdlIGFsc28gZGVzaWduIGEgSlNPTiBmaWxlIGZvciBjdXN0b21lciB0byBzcGVjaWZp
-YyB0aGVpciBCSU9TIFBPU1QgQ09ERSBhY2NvcmRpbmcgdGhlaXIgSG9zdCBtb3RoZXJib2FyZC4N
-ClRoZW4gY3VzdG9tZXIgY2FuIGtub3cgdGhlIGJvb3QgcHJvZ3Jlc3Mgc3RhdGUgd2hlbiBIb3N0
-IHBvd2VyIE9OIGZvciBzdXJlLg0KQnV0LCBPU1N0YXR1cyBzdGF0ZSBJIGp1c3QgY2FuIHNwZWNp
-ZmljIFN0YW5kYnkgYW5kIEluYWN0aXZlLCBkdWUgdG8gSSBkaWRuJ3Qga25vdyBob3cgdG8gc3Bl
-Y2lmaWMgZGV0YWlsIE9TIHN0YXRlIGFjY29yZGluZyB3aGF0J3MgY29uZGl0aW9uLg0KDQpJIGRv
-bid0IGtub3cgd2hldGhlciBpcyByaWdodCBwbGFjZSB0byB1cGRhdGUgdGhlc2Ugc3RhdGVzIGlu
-IHBob3NwaG9yLWhvc3QtcG9zdGQsIEkgYWxzbyB0aGluayB0byBpbXBsZW1lbnQgdGhpcyBpbiBw
-aG9zcGhvci1zdGF0ZS1tYW5hZ2VyIGJlZm9yZSwgYnV0IG1pZ2h0IGJlIGNoYW5nZSBvcmlnaW5h
-bCBkZXNpZ24uDQpDb3VsZCB5b3UgaGVscCBtZSB0byBjaGVjayB3aGV0aGVyIHRob3NlIHN0YXRl
-cyBjYW4gYmUgdXBkYXRlZCBhY2NvcmRpbmcgY3VzdG9tZXIncyBIb3N0IE1CIGluIHBob3NwaG9y
-LXN0YXRlLW1hbmdlcj8gT3IganVzdCBpbXBsZW1lbnQgaW4gcGhvc3Bob3ItaG9zdC1wb3N0ZCBh
-cyB3ZSBwcm92aWRlZD8NCldlIGp1c3QgZmluaXNoIHJvdWdoIHZlcnNpb24gbm93IGFuZCB3ZSB3
-aWxsIHNoYXJlIHRoZSBjb2RlIGluIG91ciBnaXRodWIgKGh0dHBzOi8vZ2l0aHViLmNvbS9OdXZv
-dG9uLUlzcmFlbC9vcGVuYm1jKSBmb3IgeW91IHJlZmVyIGl0IGxhdGVyLg0KSWYgeW91IGhhdmUg
-YW55IHN1Z2dlc3Rpb24sIHBsZWFzZSBkb24ndCBoZXNpdGF0ZSB0byB0ZWxsIG1lLiBUaGFuayB5
-b3UuDQoNClNpbmNlcmVseSwNClRpbSBMZWUNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0N
-CkZyb206IG9wZW5ibWMgW21haWx0bzpvcGVuYm1jLWJvdW5jZXMrY2hsaTMwPW51dm90b24uY29t
-QGxpc3RzLm96bGFicy5vcmddIE9uIEJlaGFsZiBPZiBBbmRyZXcgR2Vpc3NsZXINClNlbnQ6IFNh
-dHVyZGF5LCBOb3ZlbWJlciAxNiwgMjAxOSA0OjQwIEFNDQpUbzogYXBwYXJhby5wdWxpQGxpbnV4
-LmludGVsLmNvbTsgamFzb24ubS5iaWxsc0BsaW51eC5pbnRlbC5jb207IE9wZW5CTUMgTWFpbGxp
-c3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NClN1YmplY3Q6IHBob3NwaG9yLXN0YXRlLW1h
-bmFnZXIgZW5oYW5jZW1lbnRzDQoNClNpbmNlIHRoZSBjcmVhdGlvbiBvZiBwaG9zcGhvci1zdGF0
-ZS1tYW5hZ2VyIGFuZCBpdHMgcmVwcmVzZW50YXRpb24gb2YgdGhlIGRpZmZlcmVudCBibWMvY2hh
-c3Npcy9ob3N0IHN0YXRlcywgdGhlcmUgaGFzIGJlZW4gYSBzdGVhZHkgaW5mbHV4IG9mIHJlcXVl
-c3RzIHRvIHByb3ZpZGUgbW9yZSBzdGF0ZSBhbmQgYWN0aW9ucyB0byB0aGVzZSBvYmplY3RzLg0K
-DQpJJ20gc3RhcnRpbmcgdG8gbG9vayBpbnRvIGhvdyBiZXN0IGRvIHRoaXMuIFRoZXJlIGhhdmUg
-YmVlbiBhIGZldyBkaWZmZXJlbnQgY29kZSBhbmQgZG9jIGNvbW1pdHMgaW4gdGhpcyBhcmVhLCBi
-dXQgdGhleSBhbGwgc2VlbSB0byBnZXQgc3R1Y2sgYmVjYXVzZSB0aGV5IGJyZWFrIHdpdGggdGhl
-IG9yaWdpbmFsIGRlc2lnbiBwb2ludHMgb2YgcGhvc3Bob3Itc3RhdGUtbWFuYWdlci4gSSdkIGxp
-a2UgdG8gZml4IHRoYXQuIFNlZSBbMV0gYmVsb3cgZm9yIGRpZmZlcmVudCByZXF1ZXN0cyBJIGtu
-b3cgb2YuDQoNCk15IGNvbmNlcm4gaXMgdGhhdCBpZiB3ZSBkb24ndCBhZGRyZXNzIHRoZXNlIGFk
-ZGl0aW9uYWwgc3RhdGUgbmVlZHMgd2l0aGluIHBob3NwaG9yLXN0YXRlLW1hbmFnZXIsIHdlJ2xs
-IGp1c3QgZG8gaXQgZWxzZXdoZXJlLCB3aGljaCBjYXVzZXMgcmVkdW5kYW5jeSBhbmQgbWFrZXMg
-aXQgbW9yZSBjaGFsbGVuZ2luZyB0byBzaGFyZSBjb2RlLg0KDQpUaGUgb3JpZ2luYWwgZGVzaWdu
-IG9mIHBob3NwaG9yLXN0YXRlLW1hbmFnZXIgd2FzIHRvIGtlZXAgaXQgc3VwZXIgc2ltcGxlIGFu
-ZCBiYXNpY2FsbHkgbWFrZSBpdCBhIHdyYXBwZXIgYXJvdW5kIHN5c3RlbWQgdGFyZ2V0cy4gVGhl
-cmUgd2FzIGEgbGFyZ2UgZm9jdXMgb24ga2VlcGluZyB0aGUgZGlmZmVyZW50IG9iamVjdHMgKEJN
-QywgQ2hhc3NpcywgSG9zdCkgc2VwYXJhdGUgdG8gZW5zdXJlIHNvbWUgZGF5IHdoZW4gbXVsdGlw
-bGUgQk1DJ3MsIENoYXNzaXMncywgb3IgSG9zdHMgYXJlIGFkZGVkIHRvIGEgc3lzdGVtLCBpdCBh
-bGwgd291bGQganVzdCB3b3JrLg0KDQpUaGVyZSBhcmUgZGVmaW5pdGVseSBzb21lIG1lcml0cyB0
-byB0aGlzIGRlc2lnbjoNCi0gSXQgZW5zdXJlcyBhbnlvbmUgY2FuIGluc2VydCB0aGVpciBzZXJ2
-aWNlcyBpbnRvIHRoZSBhcHByb3ByaWF0ZSBzeXN0ZW1kDQogIHRhcmdldHMgd2l0aG91dCBhbnkg
-cGhvc3Bob3Itc3RhdGUtbWFuYWdlciBjb2RlIGNoYW5nZXMgcmVxdWlyZWQNCi0gQSBkaXJlY3Qg
-bWFwcGluZyBvZiBwaG9zcGhvci1zdGF0ZS1tYW5hZ2VyIHN0YXRlIHRvIHN5c3RlbWQgdGFyZ2V0
-IGtlZXBzIHRoZQ0KICBjb2RlIHZlcnkgc2ltcGxlDQoNClNvbWUgZHJhd2JhY2tzIHRvIHRoaXMg
-ZGVzaWduIHRob3VnaDoNCi0gT3VyIHN5c3RlbWQgdGFyZ2V0IGRlc2lnbiBpcyBjb21wbGljYXRl
-ZCBbMl0uIFRoZXJlIGFyZSBsb3RzIG9mIHRhcmdldHMgdGhhdA0KICBuZWVkIHRvIGJlIHVuZGVy
-c3Rvb2QgdG8gZ2V0IHNlcnZpY2VzIGluIHRoZSByaWdodCBzcG90cy4NCi0gSXQgcHJvdmlkZXMg
-dmVyeSBsaW1pdGVkIHN0YXRlIGluZm9ybWF0aW9uLiBCTUMgaXMgcmVhZHkgb3Igbm90IHJlYWR5
-LCBjaGFzc2lzDQogIGlzIG9uIG9yIG9mZiwgaG9zdCBpcyBydW5uaW5nIG9yIG9mZi4NCi0gSXQg
-cHJvdmlkZXMgbGltaXRlZCBjb250cm9sLiBSZWJvb3QgdGhlIEJNQywgdHVybiBjaGFzc2lzIG9u
-IG9yIG9mZiwgc3RhcnQsDQogIHN0b3AsIG9yIHJlYm9vdCB0aGUgaG9zdC4NCg0KVGhlIGRlc2ln
-biB3YXMgdGhhdCBleHRlcm5hbCBlbnRpdGllcyBjb3VsZCBkbyB0aGUgbW9yZSBhZHZhbmNlZCBs
-b2dpYy4gV2FudCB5b3VyIHN5c3RlbSB0byBoYXJkIHBvd2VyIG9mZiwgdXNlIHRoZSBjaGFzc2lz
-IG9iamVjdC4gV2FudCB0byBwb3dlciBjeWNsZSB5b3VyIGNoYXNzaXMsIHR1cm4gaXQgb2ZmLCB3
-YWl0LCB0aGVuIHR1cm4gaXQgb24uIFdhbnQgdG8ga25vdyBpZiBpdCdzIHBvd2VyaW5nIG9uLCBs
-b29rIGF0IHRoZSByZXF1ZXN0ZWQgc3RhdGUgYW5kIGN1cnJlbnQgc3RhdGUgYW5kIGRvIHRoZSBs
-b2dpYyB5b3Vyc2VsZi4NCg0KU28gd2hhdCBhbSBJIHRoaW5raW5nPyBJJ20gdGhpbmtpbmcgdGhh
-dCB3ZSBzaG91bGQgYXQgbGVhc3QgcmVwcmVzZW50IGEgc3Vic2V0IG9mIFJlZGZpc2ggc3RhdGVz
-LiBIZXJlJ3MgdGhlIGZ1bGwgbGlzdDoNCg0KIkFic2VudCI6ICJUaGlzIGZ1bmN0aW9uIG9yIFJl
-c291cmNlIGlzIGVpdGhlciBub3QgcHJlc2VudCBvciBkZXRlY3RlZC4iLA0KIkRlZmVycmluZyI6
-ICJUaGUgZWxlbWVudCBkb2VzIG5vdCBwcm9jZXNzIGFueSBjb21tYW5kcyBidXQgcXVldWVzIG5l
-dyAgcmVxdWVzdHMuIiwNCiJEaXNhYmxlZCI6ICJUaGlzIGZ1bmN0aW9uIG9yIFJlc291cmNlIGlz
-IGRpc2FibGVkLiIsDQoiRW5hYmxlZCI6ICJUaGlzIGZ1bmN0aW9uIG9yIFJlc291cmNlIGlzIGVu
-YWJsZWQuIiwNCiJJblRlc3QiOiAiVGhpcyBmdW5jdGlvbiBvciBSZXNvdXJjZSBpcyB1bmRlcmdv
-aW5nIHRlc3RpbmcuIiwNCiJRdWllc2NlZCI6ICJUaGUgZWxlbWVudCBpcyBlbmFibGVkIGJ1dCBv
-bmx5IHByb2Nlc3NlcyBhIHJlc3RyaWN0ZWQgc2V0IG9mICBjb21tYW5kcy4iLA0KIlN0YW5kYnlP
-ZmZsaW5lIjogIlRoaXMgZnVuY3Rpb24gb3IgUmVzb3VyY2UgaXMgZW5hYmxlZCBidXQgYXdhaXRz
-IGFuIGV4dGVybmFsICBhY3Rpb24gdG8gYWN0aXZhdGUgaXQuIiwNCiJTdGFuZGJ5U3BhcmUiOiAi
-VGhpcyBmdW5jdGlvbiBvciBSZXNvdXJjZSBpcyBwYXJ0IG9mIGEgcmVkdW5kYW5jeSBzZXQgYW5k
-ICBhd2FpdHMgYSBmYWlsb3ZlciBvciBvdGhlciBleHRlcm5hbCBhY3Rpb24gdG8gYWN0aXZhdGUg
-aXQuIiwNCiJTdGFydGluZyI6ICJUaGlzIGZ1bmN0aW9uIG9yIFJlc291cmNlIGlzIHN0YXJ0aW5n
-LiIsDQoiVW5hdmFpbGFibGVPZmZsaW5lIjogIlRoaXMgZnVuY3Rpb24gb3IgUmVzb3VyY2UgaXMg
-cHJlc2VudCBidXQgY2Fubm90IGJlICB1c2VkLiIsDQoiVXBkYXRpbmciOiAiVGhlIGVsZW1lbnQg
-aXMgdXBkYXRpbmcgYW5kIG1heSBiZSB1bmF2YWlsYWJsZSBvciBkZWdyYWRlZC4iDQoNClN0YXJ0
-aW5nIC0+IENvdWxkIGFwcGx5IHRvIENoYXNzaXMgYW5kIEhvc3Qgd2hlbiB0aGV5IGFyZSBwb3dl
-cmluZyBvbiAvIHN0YXJ0aW5nIEluVGVzdCAtPiBDb3VsZCBhcHBseSB0byB3aGVuIGEgaG9zdCBp
-cyB0YWtpbmcgYW4gTk1JIGFuZCBjb2xsZWN0aW5nIGRlYnVnIFVwZGF0aW5nIC0+IENvdWxkIGFw
-cGx5IHRvIEJNQyBhbmQgSG9zdCB3aGVuIGEgZmlybXdhcmUgdXBkYXRlIGlzIGluIHByb2dyZXNz
-DQoNClRoZXJlIGlzIGFjdHVhbGx5IGEgUG93ZXJTdGF0ZSBhc3NvY2lhdGVkIHdpdGggdGhlIENv
-bXB1dGVyU3lzdGVtIHdlIGNvdWxkIGVuaGFuY2UgdGhlIGNoYXNzaXMgd2l0aCBhcyB3ZWxsIChQ
-b3dlcmluZ09uLCBQb3dlcmluZ09mZikNCg0KQW5kIGFsc28sIHNvbWUgUmVkZmlzaCBDb21wdXRl
-clN5c3RlbS5SZXNldCBvcGVyYXRpb25zIHdlIGRvbid0IGN1cnJlbnRseQ0Kc3VwcG9ydDoNCi0g
-Rm9yY2VPZmYsIEZvcmNlUmVzdGFydCwgUG93ZXJDeWNsZQ0KTm90ZSB3ZSBkbyAic3VwcG9ydCIg
-dGhlc2UgYnV0IG9ubHkgdmlhIG11bHRpcGxlIG9wZXJhdGlvbnMuDQoNClNob3VsZCB3ZSB0cnkg
-dG8gY2FwdHVyZSBtb3JlIG9mIHRoZSBob3N0IHN0YXRlcz8gUmlnaHQgbm93IHdlIGNhcHR1cmUg
-dGhvc2UgaW4gdGhlIEJvb3RQcm9ncmVzcyBhbmQgT3BlcmF0aW5nU3lzdGVtU3RhdGUgc2Vuc29y
-cy4NCg0KU28gYW55d2F5cywgYmVmb3JlIEkgd2VudCB0byBmYXIgSSBmaWd1cmVkIEknZCBnZXQg
-YSBub3RlIG91dCB0byBzZWUgaWYgb3RoZXJzIGhhdmUgdGhvdWdodHMuIEhvdyBpbmdyYWluZWQg
-YXJlIHRoZSBjdXJyZW50IHN0YXRlcz8gV2lsbCBhZGRpbmcgbmV3IG9uZSdzIGhhdmUgYSBsYXJn
-ZSBpbXBhY3Qgb24gb3RoZXIgc29mdHdhcmU/DQoNClRoYW5rcywNCkFuZHJldw0KDQpbMV0NCiMg
-YWRkIGZpcm13YXJlIHVwZGF0ZSBzdGF0ZSB0byBCTUMNCmh0dHBzOi8vdXJsZGVmZW5zZS5wcm9v
-ZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9wZW5ibWMtMkRwcm9qZWN0Lnh5
-el9jX29wZW5ibWNfcGhvc3Bob3ItMkRkYnVzLTJEaW50ZXJmYWNlc18tMkJfMjY4NjcmZD1Ed0lC
-YVEmYz11ZThtTzh6Z0M0Vlo0cV9hTlZLdDhHOU1DMDFVRkRtaXN2TVIxay1Fb0RNJnI9X3Z2UzF0
-SDlVXzE1eXAxLS1fbWRjV3hWYW1WNzRMWTRYejVaeTQtN1VJbyZtPVlYYjlQQklHZ1oxNjZlTXpt
-bm9PZldtZlNuZXZZMzdlUENmaG5xc25adDQmcz13N0txcVJiVUd4OU8tUlJOUXE4OHRsSXFMSzh6
-VGVXRGhkMGJkSEVORmZNJmU9DQoNCiMgQWRkIFBvd2VyQ3ljbGUgYW5kIFJlc2V0IHRvIENoYXNz
-aXMNCmh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9f
-Z2Vycml0Lm9wZW5ibWMtMkRwcm9qZWN0Lnh5el9jX29wZW5ibWNfcGhvc3Bob3ItMkRkYnVzLTJE
-aW50ZXJmYWNlc18tMkJfMjIyNzAmZD1Ed0lCYVEmYz11ZThtTzh6Z0M0Vlo0cV9hTlZLdDhHOU1D
-MDFVRkRtaXN2TVIxay1Fb0RNJnI9X3Z2UzF0SDlVXzE1eXAxLS1fbWRjV3hWYW1WNzRMWTRYejVa
-eTQtN1VJbyZtPVlYYjlQQklHZ1oxNjZlTXptbm9PZldtZlNuZXZZMzdlUENmaG5xc25adDQmcz1t
-Yk1iN0Vfc1NVV2MwMTFvTXM4cVNEZzRIYzhFUEFUdjZ3eGliMk4zX3ZBJmU9DQoNCiMgQWRkaXRp
-b25hbCBob3N0IHN0YXRlcyAoU3RhcnRlZCkNCmh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50
-LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9wZW5ibWMtMkRwcm9qZWN0Lnh5el9jX29w
-ZW5ibWNfZG9jc18tMkJfMjI0NjEmZD1Ed0lCYVEmYz11ZThtTzh6Z0M0Vlo0cV9hTlZLdDhHOU1D
-MDFVRkRtaXN2TVIxay1Fb0RNJnI9X3Z2UzF0SDlVXzE1eXAxLS1fbWRjV3hWYW1WNzRMWTRYejVa
-eTQtN1VJbyZtPVlYYjlQQklHZ1oxNjZlTXptbm9PZldtZlNuZXZZMzdlUENmaG5xc25adDQmcz00
-TUgwUGNZSy1Yd1NuVDlHUDVuR2NmaUJHU0k1T3NralZvYWJJNFlVMnFZJmU9DQoNClsyXQ0KaHR0
-cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBzLTNBX19naXRodWIu
-Y29tX29wZW5ibWNfcGhvc3Bob3ItMkRzdGF0ZS0yRG1hbmFnZXJfYmxvYl9tYXN0ZXJfUkVBRE1F
-Lm1kJmQ9RHdJQmFRJmM9dWU4bU84emdDNFZaNHFfYU5WS3Q4RzlNQzAxVUZEbWlzdk1SMWstRW9E
-TSZyPV92dlMxdEg5VV8xNXlwMS0tX21kY1d4VmFtVjc0TFk0WHo1Wnk0LTdVSW8mbT1ZWGI5UEJJ
-R2daMTY2ZU16bW5vT2ZXbWZTbmV2WTM3ZVBDZmhucXNuWnQ0JnM9TENLdmZiVk1uc1pYZjlRWG0z
-U2pfandJeVo0c0EtaU1SNVY2aDVjZ3gxWSZlPQ0KaHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9p
-bnQuY29tL3YyL3VybD91PWh0dHBzLTNBX19naXRodWIuY29tX29wZW5ibWNfZG9jc19ibG9iX21h
-c3Rlcl9hcmNoaXRlY3R1cmVfb3BlbmJtYy0yRHN5c3RlbWQubWQmZD1Ed0lCYVEmYz11ZThtTzh6
-Z0M0Vlo0cV9hTlZLdDhHOU1DMDFVRkRtaXN2TVIxay1Fb0RNJnI9X3Z2UzF0SDlVXzE1eXAxLS1f
-bWRjV3hWYW1WNzRMWTRYejVaeTQtN1VJbyZtPVlYYjlQQklHZ1oxNjZlTXptbm9PZldtZlNuZXZZ
-MzdlUENmaG5xc25adDQmcz1oZUJZbGVNNXpFb1h2ZUdJbUY0SG9zQld1OWRlc0dtbU44RC1KSjlj
-eng0JmU9DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KX19fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX18NCiBUaGUgcHJpdmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRp
-b24gY29udGFpbmVkIGluIHRoaXMgZW1haWwgaXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRo
-ZSBhZGRyZXNzZWVzIGFzIGluZGljYXRlZCBieSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMg
-ZW1haWwuIElmIHlvdSBhcmUgbm90IHRoZSBhZGRyZXNzZWUgaW5kaWNhdGVkIGluIHRoaXMgZW1h
-aWwgb3IgYXJlIG5vdCByZXNwb25zaWJsZSBmb3IgZGVsaXZlcnkgb2YgdGhlIGVtYWlsIHRvIHN1
-Y2ggYSBwZXJzb24sIHBsZWFzZSBraW5kbHkgcmVwbHkgdG8gdGhlIHNlbmRlciBpbmRpY2F0aW5n
-IHRoaXMgZmFjdCBhbmQgZGVsZXRlIGFsbCBjb3BpZXMgb2YgaXQgZnJvbSB5b3VyIGNvbXB1dGVy
-IGFuZCBuZXR3b3JrIHNlcnZlciBpbW1lZGlhdGVseS4gWW91ciBjb29wZXJhdGlvbiBpcyBoaWdo
-bHkgYXBwcmVjaWF0ZWQuIEl0IGlzIGFkdmlzZWQgdGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBv
-ZiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gb2YgTnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJp
-dGVkOyBhbmQgYW55IGluZm9ybWF0aW9uIGluIHRoaXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUg
-b2ZmaWNpYWwgYnVzaW5lc3Mgb2YgTnV2b3RvbiBzaGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBn
-aXZlbiBub3IgZW5kb3JzZWQgYnkgTnV2b3Rvbi4NCg==
+On 22/11/19 3:54 AM, Richard Hanley wrote:
+> Hi Deepak,
+> 
+> Thank you very much for this feedback.  You've been very helpful while 
+> I've been working to brainstorm on this subject.
+> 
+> There were a couple of thoughts that led me down this path.
+> 
+> One of the difficulties I see in creating an aggregator comes in how you 
+> slice up a system and make it discoverable.  This might be a google 
+> specific idiosyncrasy, but imagine a case where a Redfish service is 
+> managing a chassis, expect for two sensors which are on a different 
+> service.  How would an aggregator know that these two chassis should be 
+> merged together.  When I read about Platform Descriptor Records (PDR) in 
+> PLDM it seemed to me that it was trying to solve a similar problem.
+> 
+> In my reading of the RDE spec, there are two main issues that it is was 
+> addressing:
+>    (1) How to fit the Redfish data model into a binary protocol.
+>    (2) How does a device implement only a portion of a Redfish service.
+> Most of the spec is dealing with issue (1), but issue (2) is the same 
+> issue that the aggregator is trying to solve.
+> 
+> Another thing that I'm expecting is that at some point we will have some 
+> legacy hardware that will have trouble running an HTTP stack.
+> 
+> This all kind of leads me to a larger point.  Which is that if this 
+> Redfish aggregator is designed in a certain way, it may make RDE 
+> integration easier in the future.
+
+
+This makes sense - a redfish aggregator may want to include devices 
+implementing RDE into the aggregate model as well.
+
+I just wanted to get an idea of
+> whether that design goal is worth considering.
+
+> Thanks,
+> Richard
+> 
+> On Wed, Nov 20, 2019 at 7:29 AM Deepak Kodihalli 
+> <dkodihal@linux.vnet.ibm.com <mailto:dkodihal@linux.vnet.ibm.com>> wrote:
+> 
+>     On 19/11/19 4:51 AM, Richard Hanley wrote:
+>      > *Thoughts and Questions*
+>      > Is RDE on the open-bmc roadmap at the moment?  Are there any other
+>      > companies looking into adding support for RDE?  Does anyone have any
+>      > strong feelings on this issue?
+>      >
+>      > I think that in the long term a solid implementation of RDE
+>     offers a lot
+>      > more flexibility than a http aggregator.  However, I'd also
+>     expect it's
+>      > significantly more effort to get up and running.  Hence why I am
+>     asking
+>      > how the community feels about this subject.
+>      >
+>      >
+>      > I'm also interested in hearing what people's experience working with
+>      > MCTP or PLDM have been.  Has anyone here used them in production?
+>     Are
+>      > there any particular highlights or lowlights with the protocols?
+> 
+>     IBM will use PLDM over MCTP (over an LPC binding) for Host - BMC
+>     communications (system management being shared between the Host and the
+>     BMC) on upcoming systems. The main motivation to switch to PLDM was
+>     because it fit the bill of an industry standard communications protocol
+>     with improvements compared to in-band IPMI. RDE was also motivation for
+>     us to work on implementing a PLDM stack, although RDE isn't on the
+>     immediate roadmap. If you're interested in looking at the existing
+>     PLDM/MCTP code/design docs on OpenBMC, I have some links below.
+> 
+>     We're able to map our requirements for the in-band Host BMC
+>     communications path to standard PLDM mostly. We did define a set of OEM
+>     commands to model a file as a PLDM object (and have that transferred).
+>     We still need to run this by PMCI to see if it's of interest to anyone
+>     for standardization purposes.
+> 
+>     I'm curious why we'd use RDE for a case where the multiple management
+>     controllers all do have a network stack and can parse JSON. Wouldn't
+>     they just implement Redfish (instead of RDE) and hence this makes a
+>     case
+>     for the Redfish Aggregator? Based on my reading of the RDE spec, it
+>     seemed to target IO adapters, for eg storage controllers, that would
+>     want to participate in Redfish based management, but the firmware
+>     running on those wouldn't implement an HTTP stack.
+> 
+>     https://github.com/openbmc/pldm
+>     https://github.com/openbmc/libmctp
+>     https://github.com/openbmc/docs/blob/master/designs/pldm-stack.md
+>     https://github.com/openbmc/docs/blob/master/designs/mctp.md
+> 
+>     Thanks,
+>     Deepak
+> 
+
