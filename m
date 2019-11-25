@@ -2,37 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 501A71090E5
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 16:17:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6675C10913F
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 16:48:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47M9ck4kD4zDqQN
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 02:17:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MBJr1Wz1zDqX2
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 02:48:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=the-dreams.de (client-ip=88.99.104.3; helo=pokefinder.org;
- envelope-from=wsa@the-dreams.de; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
+ helo=mail-oi1-x229.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=the-dreams.de
-Received: from pokefinder.org (sauhun.de [88.99.104.3])
- by lists.ozlabs.org (Postfix) with ESMTP id 47M9bw3YdbzDq60
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 02:16:23 +1100 (AEDT)
-Received: from localhost (x4e37056e.dyn.telefonica.de [78.55.5.110])
- by pokefinder.org (Postfix) with ESMTPSA id 596772C0456;
- Mon, 25 Nov 2019 16:16:19 +0100 (CET)
-Date: Mon, 25 Nov 2019 16:16:18 +0100
-From: Wolfram Sang <wsa@the-dreams.de>
-To: Tali Perry <tali.perry1@gmail.com>
-Subject: Re: [PATCH v7 2/2] i2c: npcm: Add Nuvoton NPCM I2C controller driver
-Message-ID: <20191125151618.GE2412@kunai>
-References: <20191121095350.158689-1-tali.perry1@gmail.com>
- <20191121095350.158689-3-tali.perry1@gmail.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Pwf/D/xo"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
+ [IPv6:2607:f8b0:4864:20::229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47MBHx5LPnzDqWj
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 02:47:39 +1100 (AEDT)
+Received: by mail-oi1-x229.google.com with SMTP id l202so13546634oig.1
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 07:47:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=Y879/MMoCAcSjtl/wGo3Y7g8ivwzI7fkst6a5zvLhHI=;
+ b=Pwf/D/xoHQgf7DKntI4UId2nUvCtTzVNjqsh7oZc30dXQBaphKFNhHoK81WkUTpesX
+ /34KXfeqUzKq4JgqD2LZ0KFpSLAZYZYPQfeV9qznwbU+nxj7FwvkaBy+ntqIVdoCDcM+
+ dzvyMpew9aWp46L+XIxM1mV1y9OLK1PN9UGzEgvMy6amFgo4tWKih3gpWp0FKslbooqX
+ kJg1k2TB7mnkU2Stmp/5zL4Ivk6FXoJZkP9GwfUGtrtEdMGUgjYfjLRzwnYAUvW+iPPJ
+ Z6Jsy1FJmrxTHOwTnBQkuzycbF73NEWCaSGKl1TOtX49t/7b4WGmQWWds8pW0nnNo3Js
+ Wh3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=Y879/MMoCAcSjtl/wGo3Y7g8ivwzI7fkst6a5zvLhHI=;
+ b=B0GO/S8B1FmKE5weelRub8dgO/H4h6zSdMvilscBbg892s1NbZad5Hqax6iYAdtcIZ
+ QdM7G9QfQCxzyw/w6HiRghHffnR1pExMJY16K0VXrNA1p4AsIOR3LvGrHoBUMt1SXJQO
+ ldyAAleV5qbymw/iGZIs2nIgL9efrErZvUX4pSgqayAnSSTgYgGJ6bg8OQT1ORBzqEcf
+ tEiBprU9oj+DXVNHy0nBwCGmLDDwqlUf14S0qz1XAycq+uIaw6XnTzw+fSypoJv8qzOu
+ OWK1sPVrOFG+uE+T0XZtnzQk1beZ5QVPC7CORt0NFO/x1uzDTKnbcUiTRDk/aBgWvltA
+ H0RQ==
+X-Gm-Message-State: APjAAAUl6I432U5fm7RdGoxR7JJpo27HoeyL32WvE8vffkF7iXzZe1Xr
+ y1rg8QwjLCKzxeauvjDF4sdAB8Si
+X-Google-Smtp-Source: APXvYqzyGo3Zf4ScFJuzwhEPbjAeO9pH0XTSarKHyKj0iEHjU3ogdXQTvKyMSiE9KksDChWwjXXZcQ==
+X-Received: by 2002:a05:6808:681:: with SMTP id
+ k1mr24049291oig.117.1574696856015; 
+ Mon, 25 Nov 2019 07:47:36 -0800 (PST)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id a17sm2508865otq.58.2019.11.25.07.47.35
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 25 Nov 2019 07:47:35 -0800 (PST)
+Subject: Re: Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being
+ kept up-to-date?
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
+References: <d410e08e4d1b48a5831f1af784f76a99@SCL-EXCHMB-13.phoenix.com>
+ <54b60348-ca89-9801-7101-0926e56fd5ad@linux.intel.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <d189febe-b9c4-e2a1-ab9d-aba272851d99@gmail.com>
+Date: Mon, 25 Nov 2019 09:47:34 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Lb0e7rgc7IsuDeGj"
-Content-Disposition: inline
-In-Reply-To: <20191121095350.158689-3-tali.perry1@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <54b60348-ca89-9801-7101-0926e56fd5ad@linux.intel.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -44,65 +86,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, benjaminfair@google.com,
- avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, robh+dt@kernel.org,
- syniurge@gmail.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 11/20/19 5:12 PM, Bills, Jason M wrote:
+> 
+> 
+> On 11/20/2019 3:07 PM, Bruce Mitchell wrote:
+>> Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being kept 
+>> up-to-date?
+>> It seems openbmc/openbmc https://github.com/openbmc/openbmc gets 
+>> merges that are not being merged into Intel-BMC/openbmc.
+> Yes, I am responsible for keeping Intel-BMC in sync.  Unfortunately, I 
+> am a few weeks behind due to some internal issues and priorities.  I am 
+> working to get back to a normal sync schedule as soon as possible.
 
---Lb0e7rgc7IsuDeGj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It would be easier to not have to keep them in sync.
 
-On Thu, Nov 21, 2019 at 11:53:50AM +0200, Tali Perry wrote:
-> Add Nuvoton NPCM BMC i2c controller driver.
->=20
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Why not just put that effort into getting Intel's changes upstream into 
+OpenBMC in the first place?
 
-Looking at all this SMB_* naming of the registers and also the quirks,
-this looks more like an SMBUS controller to me?
+Just a thought.  :)
 
-> +	// currently I2C slave IF only supports single byte operations.
-> +	// in order to utilyze the npcm HW FIFO, the driver will ask for 16bytes
-> +	// at a time, pack them in buffer, and then transmit them all together
-> +	// to the FIFO and onward to the bus .
-> +	// NACK on read will be once reached to bus->adap->quirks->max_read_len
-> +	// sending a NACK whever the backend requests for it is not supported.
+Kurt Taylor (krtaylor)
 
-This for example...
+> 
+> Thanks,
+> -Jason
+> 
+>>
+>> Thanks!
+>>
 
-> +static const struct i2c_adapter_quirks npcm_i2c_quirks =3D {
-> +	.max_read_len =3D 32768,
-> +	.max_write_len =3D 32768,
-> +	.max_num_msgs =3D 2,
-> +	.flags =3D I2C_AQ_COMB_WRITE_THEN_READ
-> +};
-
-=2E.. and this. Like SMBus with the only exception of being able to send
-32K in a row. Or?
-
-
---Lb0e7rgc7IsuDeGj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl3b8EIACgkQFA3kzBSg
-Kbabdg//Vlk6yGrJ9uPwF66dwUUKyE2M66t+W5miyttrphuZsLZXK7MGI2sQlF0D
-0ZTP0+fskh6L8uFpIK2eplGzHCyNHxz9yiGlluRMCohfL0HYVZw0TtLz08cKbg9p
-35Mqs8JhklbBQ6EaO+FCd3WBAUA244fmekZa4ltRs66A7EZ+40kB8JEGJ9UF4yZl
-AUop8BPaVGEJ9lw4x3n6DvsiNrGSuxbMJmmm2FU8HY2I31A2cUAv1B26xkjJ4NBW
-We7ts4jy4tJv6Uo0KxvBbvCgaxle/zwPkl7s2dPvajxLbMEXfq/yOrCWEAX7mg/u
-3ENhA7SETaZFcn4Yj3J0uVlbv/DIzPUcsGP499PW0DIsRY6i7dFl0JypETEceu8W
-/QQJO62nl3vh13bLcv1Nl6HtQjOX5EtVmUBwakasELQ+HMWp3zt7dHu7FgKtPaIJ
-eAL9AjrgCymz1v0kAzlXRx7KTi+285oWNUUVBtRedc76A60ONDmim7nsSkx+lmem
-djPX2bSGT0v1gp16CAMe07ZOmCB7Wu8S6pIK9Yo639bi9MnhblsXYRlF7unpO4RX
-8+xUos0Y2tLw28tU7g/pELYyBoKWoEDNCQrWy/3FHh41PFKGPRfOme0ZudIFgcPM
-Vu12YjeAhb1fqMqRyEMs8uwjx+4PBqJS7dzJvobQSgZyc9tjW+k=
-=Yu4F
------END PGP SIGNATURE-----
-
---Lb0e7rgc7IsuDeGj--
