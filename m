@@ -1,80 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30CA1109141
+	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 16:49:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6675C10913F
-	for <lists+openbmc@lfdr.de>; Mon, 25 Nov 2019 16:48:31 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47MBJr1Wz1zDqX2
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 02:48:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MBL15GvjzDqcy
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 02:49:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
- helo=mail-oi1-x229.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::335;
+ helo=mail-ot1-x335.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Pwf/D/xo"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="AMVlFkq8"; 
  dkim-atps=neutral
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [IPv6:2607:f8b0:4864:20::229])
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
+ [IPv6:2607:f8b0:4864:20::335])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47MBHx5LPnzDqWj
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 02:47:39 +1100 (AEDT)
-Received: by mail-oi1-x229.google.com with SMTP id l202so13546634oig.1
- for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 07:47:39 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47MBK96mmtzDqXP
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 02:48:45 +1100 (AEDT)
+Received: by mail-ot1-x335.google.com with SMTP id l14so12955275oti.10
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Nov 2019 07:48:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=subject:to:references:from:message-id:date:user-agent:mime-version
  :in-reply-to:content-language:content-transfer-encoding;
- bh=Y879/MMoCAcSjtl/wGo3Y7g8ivwzI7fkst6a5zvLhHI=;
- b=Pwf/D/xoHQgf7DKntI4UId2nUvCtTzVNjqsh7oZc30dXQBaphKFNhHoK81WkUTpesX
- /34KXfeqUzKq4JgqD2LZ0KFpSLAZYZYPQfeV9qznwbU+nxj7FwvkaBy+ntqIVdoCDcM+
- dzvyMpew9aWp46L+XIxM1mV1y9OLK1PN9UGzEgvMy6amFgo4tWKih3gpWp0FKslbooqX
- kJg1k2TB7mnkU2Stmp/5zL4Ivk6FXoJZkP9GwfUGtrtEdMGUgjYfjLRzwnYAUvW+iPPJ
- Z6Jsy1FJmrxTHOwTnBQkuzycbF73NEWCaSGKl1TOtX49t/7b4WGmQWWds8pW0nnNo3Js
- Wh3w==
+ bh=WlcGVrtvhU+P7PvxoDuGUpfPFA+6kIraoqxqaW2sPzY=;
+ b=AMVlFkq8PQsHEeafXeHeohxDrsDLaPQ+ZI1NzBPSUQQCofETJRVb/NSkzy7B/JPR06
+ AoAjkeTFh8+hjwYqboIj42kydvBAlFxPBfoq55yeKmHzGQUBfC8rFCQcnj4Rb4h4wf3s
+ 5n4k2y7SRcqRlYSnl/yB2cbkSwb4X6xmNr1ugzmfgkKSj7PD0z2S3WrjuUPmagW5nRfX
+ nX13tlA0QZ94T1ob1mPXfup1ISFKKjNPRQJXaBwOfNrGQMS9xkSW03h0gmzFlSWxnURS
+ cvFHZ/QneD/Ct9wQBzD4eo7K55jgcmRNem4p0TM8b/j/q2ieBSk3hc+3QibSzDT0kF78
+ l57Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:to:references:from:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=Y879/MMoCAcSjtl/wGo3Y7g8ivwzI7fkst6a5zvLhHI=;
- b=B0GO/S8B1FmKE5weelRub8dgO/H4h6zSdMvilscBbg892s1NbZad5Hqax6iYAdtcIZ
- QdM7G9QfQCxzyw/w6HiRghHffnR1pExMJY16K0VXrNA1p4AsIOR3LvGrHoBUMt1SXJQO
- ldyAAleV5qbymw/iGZIs2nIgL9efrErZvUX4pSgqayAnSSTgYgGJ6bg8OQT1ORBzqEcf
- tEiBprU9oj+DXVNHy0nBwCGmLDDwqlUf14S0qz1XAycq+uIaw6XnTzw+fSypoJv8qzOu
- OWK1sPVrOFG+uE+T0XZtnzQk1beZ5QVPC7CORt0NFO/x1uzDTKnbcUiTRDk/aBgWvltA
- H0RQ==
-X-Gm-Message-State: APjAAAUl6I432U5fm7RdGoxR7JJpo27HoeyL32WvE8vffkF7iXzZe1Xr
- y1rg8QwjLCKzxeauvjDF4sdAB8Si
-X-Google-Smtp-Source: APXvYqzyGo3Zf4ScFJuzwhEPbjAeO9pH0XTSarKHyKj0iEHjU3ogdXQTvKyMSiE9KksDChWwjXXZcQ==
-X-Received: by 2002:a05:6808:681:: with SMTP id
- k1mr24049291oig.117.1574696856015; 
- Mon, 25 Nov 2019 07:47:36 -0800 (PST)
+ bh=WlcGVrtvhU+P7PvxoDuGUpfPFA+6kIraoqxqaW2sPzY=;
+ b=pdt/Ud+dyg/Cyv/1ZHWQoOiT4MPsdOCpVKuQciMq/uBjWOR+yBQy9ZJeTfj2xM5DMz
+ hGi0gGZVrl5jCvrP3VNpM6VRm0ooasu4f3k3om1M22EP8uYcezU38DO2mwUma3WNh4VT
+ uzowP0vnrWsCrmh0zBoIDntWsukm9ZjJf2KkZdK3gHhyFX+eE6e1fvhnxSS1RHtTWJfM
+ 7Ym0gJpXaYd/YPbVQb/UOS4WJhOZtVuaYSQFhCmFKAZLPI5SkrNvZS/UowrWinNJXrqx
+ rCvrniteJpqKZCDzOAKSUfRkoGTPvrbFdYDe4/OvCUyh5pIDpqbg2/jFOb2rYxLoMlAg
+ p14Q==
+X-Gm-Message-State: APjAAAXLaO/tPu5csl+s9H19xWQrj4GCj/HiEghH744b79sEw/VoTcaa
+ 7IXf3SfQtQUztqyE3ICWKDKfYphT
+X-Google-Smtp-Source: APXvYqyFppO0P3w1rmVMIFT/reKI5vU04sGjD50WJ2h+amzB94uklbsVnCqBOPwUKEUEFXOZEHbjAg==
+X-Received: by 2002:a9d:18b:: with SMTP id e11mr19524990ote.305.1574696922354; 
+ Mon, 25 Nov 2019 07:48:42 -0800 (PST)
 Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
  [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id a17sm2508865otq.58.2019.11.25.07.47.35
+ by smtp.gmail.com with ESMTPSA id 68sm2519083otw.56.2019.11.25.07.48.41
  (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 25 Nov 2019 07:47:35 -0800 (PST)
-Subject: Re: Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being
- kept up-to-date?
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
-References: <d410e08e4d1b48a5831f1af784f76a99@SCL-EXCHMB-13.phoenix.com>
- <54b60348-ca89-9801-7101-0926e56fd5ad@linux.intel.com>
+ Mon, 25 Nov 2019 07:48:41 -0800 (PST)
+Subject: Re: Re-joining the project
+To: Patrick Williams <patrick@stwcx.xyz>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20170925113628.GA4313@heinlein.lan>
+ <20191119001526.GB98839@patrickw3-mbp.lan>
 From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <d189febe-b9c4-e2a1-ab9d-aba272851d99@gmail.com>
-Date: Mon, 25 Nov 2019 09:47:34 -0600
+Message-ID: <74f7e36e-2894-05f0-636a-26f997c5e71f@gmail.com>
+Date: Mon, 25 Nov 2019 09:48:41 -0600
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
  Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <54b60348-ca89-9801-7101-0926e56fd5ad@linux.intel.com>
+In-Reply-To: <20191119001526.GB98839@patrickw3-mbp.lan>
 Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,32 +88,23 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/20/19 5:12 PM, Bills, Jason M wrote:
+On 11/18/19 6:15 PM, Patrick Williams wrote:
+> On Mon, Sep 25, 2017 at 06:36:29AM -0500, Patrick Williams wrote:
+>> (deleted a bunch of text)
+>> -- 
+>> Patrick Williams
 > 
-> 
-> On 11/20/2019 3:07 PM, Bruce Mitchell wrote:
->> Is Intel-BMC/openbmc https://github.com/Intel-BMC/openbmc being kept 
->> up-to-date?
->> It seems openbmc/openbmc https://github.com/openbmc/openbmc gets 
->> merges that are not being merged into Intel-BMC/openbmc.
-> Yes, I am responsible for keeping Intel-BMC in sync.  Unfortunately, I 
-> am a few weeks behind due to some internal issues and priorities.  I am 
-> working to get back to a normal sync schedule as soon as possible.
+> Hello!  Observant individuals might have noticed that Sai added a
+> familiar name to the FB CLA.  I started at Facebook a few weeks
+> ago and will be a developer on the OpenBMC team here.  Lots of
 
-It would be easier to not have to keep them in sync.
-
-Why not just put that effort into getting Intel's changes upstream into 
-OpenBMC in the first place?
-
-Just a thought.  :)
+Welcome back Patrick! I look forward to working with you.
 
 Kurt Taylor (krtaylor)
 
+> aspects of the project have changed and I have two years worth of
+> mailing list emails to catch up on, so it'll be a while before I'm
+> ramped up much here, but I will be starting to participate more
+> regularly now.  Looking forward to catching up!
 > 
-> Thanks,
-> -Jason
-> 
->>
->> Thanks!
->>
 
