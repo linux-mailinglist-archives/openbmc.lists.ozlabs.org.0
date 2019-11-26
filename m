@@ -1,70 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E39C9109B30
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 10:23:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Mdk85JTbzDqXv
-	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 20:23:28 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AD51109D0D
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 12:33:50 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47MhcW1KKPzDqY6
+	for <lists+openbmc@lfdr.de>; Tue, 26 Nov 2019 22:33:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::141;
- helo=mail-lf1-x141.google.com; envelope-from=tali.perry1@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=kernel.org (client-ip=213.251.177.50;
+ helo=inca-roads.misterjones.org; envelope-from=maz@kernel.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ovYMWZh7"; 
- dkim-atps=neutral
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com
- [IPv6:2a00:1450:4864:20::141])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from inca-roads.misterjones.org (inca-roads.misterjones.org
+ [213.251.177.50])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47MdjQ0HDdzDq6l
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 20:22:46 +1100 (AEDT)
-Received: by mail-lf1-x141.google.com with SMTP id d6so13487957lfc.0
- for <openbmc@lists.ozlabs.org>; Tue, 26 Nov 2019 01:22:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=nP42ri7Gfuyq7+jTSAaeHSR6UUUTuVIMdi0iTbY+h84=;
- b=ovYMWZh7rJIAiQIsOphqx1xCiq5HXT19ucp08A6Hyajw4ROMLr8llSUbHC6t4TQbbK
- ACgpjDob4IqxBrXWeNyQ5DWuHtKzhfrodRgDe4HZf/I2BlO9dhb3KFOYPGGzQqpr4Tzr
- Kl7nncerWp7c7U/GWoDkqcdJA+K99QdIKjNxi/eA7+Yv9A/t6aCYgQZ1FltbxaTzzoTE
- 4AsFg2bM2KX0RP0FCJD/O/IG2nDPuPaGlcdLAqqPOOCj4YZLwBtna/a3teKAk5JeJkwa
- k4Y0SxxyKhf06vtLD9Dqg7qh8UPyothUXTyyVUQ2V+T4JeSm4OLreRurbik48BVaGIKV
- G4Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=nP42ri7Gfuyq7+jTSAaeHSR6UUUTuVIMdi0iTbY+h84=;
- b=Q4H21VBlmoJxzTZBDxZp8wNVBgikp3shNzhBPOAuM075Ex7BfjqAA9vg9ogERdcWSD
- h1RurQSnaDCAJrT7GyrYOG0oJpyHqkUj0smIFn1Al5HLOggq5OiZjeetVEX6n5bzMdAi
- xeh45fnOxDxgjWynZiLOmCjwtkw02NJei3Fx8lUXsCh7aJI/OdOQ3sxQNg7zoBD3YvsK
- bDmghYpP4udSyGsPnFyakZFav6MPmKwmLvqsBK38UXjC0Wsc4HmvKSesMiK5ZvU2tJ7T
- gTRE5cx8MyiWW+4RungeReTuZqjOpzgfwdkcmugMdWeg2d7+aEXd/evSrJkP+otcpfi/
- hlEw==
-X-Gm-Message-State: APjAAAWA7aTnzkVTMGP0CYopetLIJ+1aW7S++kDVvOQbrxYiJwopqris
- IRNsv8daCD5PHxuc+T5EXMFAWlA3qsj2pnyNu9c=
-X-Google-Smtp-Source: APXvYqxwEoS4JdUZHseRdgXnA2T0ZSH6rIjpNKMLHoZ81qrtdpjff/6z2EOp2yzjzjEVqX1615n2wklv8ouZ3FFfeSM=
-X-Received: by 2002:ac2:5283:: with SMTP id q3mr23177580lfm.21.1574760162745; 
- Tue, 26 Nov 2019 01:22:42 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Mhb33sjGzDqCG;
+ Tue, 26 Nov 2019 22:32:30 +1100 (AEDT)
+Received: from www-data by cheepnis.misterjones.org with local (Exim 4.80)
+ (envelope-from <maz@kernel.org>)
+ id 1iZZ4o-0007tn-89; Tue, 26 Nov 2019 12:32:14 +0100
+To: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+Subject: Re: [PATCH v2] irqchip/aspeed-i2c-ic: Fix irq domain name memory leak
+X-PHP-Originating-Script: 0:main.inc
 MIME-Version: 1.0
-References: <20191121095350.158689-1-tali.perry1@gmail.com>
- <20191121095350.158689-3-tali.perry1@gmail.com> <20191125151618.GE2412@kunai>
- <CAHb3i=tGTcu2q15E5CL_od1rDgRDyx=ygoGSCu88AfBrnFn71w@mail.gmail.com>
-In-Reply-To: <CAHb3i=tGTcu2q15E5CL_od1rDgRDyx=ygoGSCu88AfBrnFn71w@mail.gmail.com>
-From: Tali Perry <tali.perry1@gmail.com>
-Date: Tue, 26 Nov 2019 11:27:54 +0200
-Message-ID: <CAHb3i=s+u1gHXwi7j7V_N-c8f8n7c1XB3QhkY8EAJuv6PA5GNw@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] i2c: npcm: Add Nuvoton NPCM I2C controller driver
-To: Wolfram Sang <wsa@the-dreams.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Tue, 26 Nov 2019 11:32:14 +0000
+From: Marc Zyngier <maz@kernel.org>
+In-Reply-To: <20191126074025.5112-1-roy.van.doormaal@prodrive-technologies.com>
+References: <20191125202937.23133-1-roy.van.doormaal@prodrive-technologies.com>
+ <20191126074025.5112-1-roy.van.doormaal@prodrive-technologies.com>
+Message-ID: <a980578b688ab760697b44dab267ad2c@www.loen.fr>
+X-Sender: maz@kernel.org
+User-Agent: Roundcube Webmail/0.7.2
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Rcpt-To: roy.van.doormaal@prodrive-technologies.com,
+ brendanhiggins@google.com, benh@kernel.crashing.org, joel@jms.id.au,
+ tglx@linutronix.de, jason@lakedaemon.net, andrew@aj.id.au,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on cheepnis.misterjones.org);
+ SAEximRunCond expanded to false
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,101 +61,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>,
- Benjamin Fair <benjaminfair@google.com>, avifishman70@gmail.com,
- Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- linux-i2c@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- syniurge@gmail.com, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Jason Cooper <jason@lakedaemon.net>, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org,
+ Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wolfram,
+On 2019-11-26 07:40, Roy van Doormaal wrote:
+> The aspeed irqchip driver overwrites the default irq domain name,
+> but doesn't free the existing domain name.
+> This patch frees the irq domain name before overwriting it.
+>
+> kmemleak trace:
+>
+> unreferenced object 0xb8004c40 (size 64):
+> comm "swapper", pid 0, jiffies 4294937303 (age 747.660s)
+> hex dump (first 32 bytes):
+> 3a 61 68 62 3a 61 70 62 3a 62 75 73 40 31 65 37 :ahb:apb:bus@1e7
+> 38 61 30 30 30 3a 69 6e 74 65 72 72 75 70 74 2d 8a000:interrupt-
+> backtrace:
+> [<086b59b8>] kmemleak_alloc+0xa8/0xc0
+> [<b5a3490c>] __kmalloc_track_caller+0x118/0x1a0
+> [<f59c7ced>] kvasprintf+0x5c/0xc0
+> [<49275eec>] kasprintf+0x30/0x50
+> [<5713064b>] __irq_domain_add+0x184/0x25c
+> [<53c594d0>] aspeed_i2c_ic_of_init+0x9c/0x128
+> [<d8d7017e>] of_irq_init+0x1ec/0x314
+> [<f8405bf1>] irqchip_init+0x1c/0x24
+> [<7ef974b3>] init_IRQ+0x30/0x90
+> [<87a1438f>] start_kernel+0x28c/0x458
+> [< (null)>] (null)
+> [<f0763fdf>] 0xffffffff
+>
+> Signed-off-by: Roy van Doormaal 
+> <roy.van.doormaal@prodrive-technologies.com>
+> ---
+> Changes in v2:
+> - drop irq domain name assignment by the aspeed irqchip driver
 
-Thanks for your comments.
+Which is good, except that the commit message doesn't quite reflect
+what this patch does anymore.
 
-The NPCM7XX BMC I2C\SMB controller HW module supports both SMB and I2C.
-It's main features are:
-1. Supports Fast-Mode (400 KHz clock) I2C and Fast-Mode-plus (1 MHz clock) =
-I2C
-2. Supports the =E2=80=98fairness=E2=80=99 arbitration protocol defined by =
-the MCTP
-SMBus/I2C Transport Binding Specification v1.0.0
-3. 32KB packets : this is an I2C spec limitation. The HW has no limit
-on packets size. It has a 16 bytes FIFO which can be reloaded over and
-over.
-4. w\o size byte (for SMB block protocol).
-5. Both master and slave. It can also replace modes in run time
-(requirement for IPMB and MCTP).
-6. Bus timing is selected to support both specs.
-
-Originally the HW spec stated SMB everywhere .
-
-Should I rename the SMB to I2C all over the driver?
+I'll fix it when picking it for -rc1.
 
 Thanks,
-Tali Perry
 
+         M.
 
-On Tue, Nov 26, 2019 at 8:47 AM Tali Perry <tali.perry1@gmail.com> wrote:
+> ---
+>  drivers/irqchip/irq-aspeed-i2c-ic.c | 2 --
+>  1 file changed, 2 deletions(-)
 >
-> Hi Wolfram,
+> diff --git a/drivers/irqchip/irq-aspeed-i2c-ic.c
+> b/drivers/irqchip/irq-aspeed-i2c-ic.c
+> index 8d591c179f81..0bd46f63a3c3 100644
+> --- a/drivers/irqchip/irq-aspeed-i2c-ic.c
+> +++ b/drivers/irqchip/irq-aspeed-i2c-ic.c
+> @@ -92,8 +92,6 @@ static int __init aspeed_i2c_ic_of_init(struct
+> device_node *node,
+>  		goto err_iounmap;
+>  	}
 >
-> Thanks for your comments.
->
-> The NPCM7XX BMC I2C\SMB controller HW module supports both SMB and I2C.
-> It's main features are:
-> 1. Supports Fast-Mode (400 KHz clock) I2C and Fast-Mode-plus (1 MHz clock=
-) I2C
-> 2. Supports the =E2=80=98fairness=E2=80=99 arbitration protocol defined b=
-y the MCTP SMBus/I2C Transport Binding Specification v1.0.0
-> 3. 32KB packets : this is an I2C spec limitation. The HW has no limit on =
-packets size. It has a 16 bytes FIFO which can be reloaded over and over.
-> 4. w\o size byte (for SMB block protocol).
-> 5. Both master and slave. It can also replace modes in run time (requirem=
-ent for IPMB and MCTP).
-> 6. Bus timing is selected to support both specs.
->
-> Originally the HW spec stated SMB everywhere .
->
-> Should I rename the SMB to I2C all over the driver?
->
-> Thanks,
-> Tali Perry
->
->
-> On Mon, Nov 25, 2019 at 5:16 PM Wolfram Sang <wsa@the-dreams.de> wrote:
->>
->> On Thu, Nov 21, 2019 at 11:53:50AM +0200, Tali Perry wrote:
->> > Add Nuvoton NPCM BMC i2c controller driver.
->> >
->> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
->>
->> Looking at all this SMB_* naming of the registers and also the quirks,
->> this looks more like an SMBUS controller to me?
->>
->> > +     // currently I2C slave IF only supports single byte operations.
->> > +     // in order to utilyze the npcm HW FIFO, the driver will ask for=
- 16bytes
->> > +     // at a time, pack them in buffer, and then transmit them all to=
-gether
->> > +     // to the FIFO and onward to the bus .
->> > +     // NACK on read will be once reached to bus->adap->quirks->max_r=
-ead_len
->> > +     // sending a NACK whever the backend requests for it is not supp=
-orted.
->>
->> This for example...
->>
->> > +static const struct i2c_adapter_quirks npcm_i2c_quirks =3D {
->> > +     .max_read_len =3D 32768,
->> > +     .max_write_len =3D 32768,
->> > +     .max_num_msgs =3D 2,
->> > +     .flags =3D I2C_AQ_COMB_WRITE_THEN_READ
->> > +};
->>
->> ... and this. Like SMBus with the only exception of being able to send
->> 32K in a row. Or?
->>
+> -	i2c_ic->irq_domain->name = "aspeed-i2c-domain";
+> -
+>  	irq_set_chained_handler_and_data(i2c_ic->parent_irq,
+>  					 aspeed_i2c_ic_irq_handler, i2c_ic);
+
+-- 
+Jazz is not dead. It just smells funny...
