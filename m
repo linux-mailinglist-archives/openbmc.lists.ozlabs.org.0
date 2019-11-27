@@ -2,63 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 832ED10AAF7
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 08:12:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F8C510AC66
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 10:09:56 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47NBmt0HQyzDqlc
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 18:12:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47NFN13F3YzDqlV
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 20:09:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=227322a56=p.k.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 47NBjc6WGYzDqjX
- for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 18:09:55 +1100 (AEDT)
-IronPort-SDR: SB/dHkq8nKylD4/TXvVn7qufALYuUp1xCtgpRZMK5rkj+4azevrmRuw0uv+LYxNJ5mb9WRXIWK
- 1iWk1l7j7C/A==
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx02.quantatw.com with ESMTP; 27 Nov 2019 15:09:52 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 27 Nov
- 2019 15:09:50 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.1713.009;
- Wed, 27 Nov 2019 15:09:50 +0800
-From: =?utf-8?B?UC4gSy4gTGVlICjmnY7mn4/lr6wp?= <P.K.Lee@quantatw.com>
-To: "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
-Subject: Re: Trigger conditions for beeps in x86-power-control
-Thread-Topic: Trigger conditions for beeps in x86-power-control
-Thread-Index: AQHVpNU2k+MROeFktEqbLYp0O34qSaeeE4mA
-Date: Wed, 27 Nov 2019 07:09:50 +0000
-Message-ID: <6697A849-BDBD-4E9A-8697-9D5D9D0645AB@quantatw.com>
-References: <8B379F39-4E90-4C49-8A95-0A365A4DA277@quantatw.com>
-In-Reply-To: <8B379F39-4E90-4C49-8A95-0A365A4DA277@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25068.005
-x-tm-as-result: No-10--8.995600-8.000000
-x-tmase-matchedrid: c/HXCguHooHUL3YCMmnG4hvgzEPRJaDEWw/S0HB7eoMTiSW9r3PknBkX
- +si55c+xVuw94JEv8tNXd3FV+S33VZ4l4oqN5cKRPja3w1ExF8SkpLxVvVhtnWmycYYiBYyZkBo
- 2na6+eDGoJT6zGWPFGd7pjJo6gLgo1mST6qAbuwzVsW2YGqoUtAvxMaV6x4s8XKZrN6TIU9EADV
- ryRoxCDlYxmEhyom0jyCgHGmP6Zdm9Ih7W6ONFmm6HurDH4PpPghehpAfYfg+xK/qamqYywYKfE
- phMWSElr9eP9htW2V8He1uemd8SyKPFjJEFr+olSXhbxZVQ5H/3FLeZXNZS4KBkcgGnJ4WmBOW3
- IIKUPUY8sceIvUztpP+RGMtITacQAO/VPwnxlA5+3BndfXUhXQ==
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--8.995600-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25068.005
-x-tm-snts-smtp: 9CD4F7A22B56D422DA9EA154B73CFAC8D20272C1DB42C7C86F75AE80A61C622A2000:B
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E4804BA097299842B54A809FC4FC4332@quantatw.com>
-Content-Transfer-Encoding: base64
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47NFM34hvrzDqT2
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 20:09:01 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 27 Nov 2019 01:08:58 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,248,1571727600"; d="scan'208";a="260950892"
+Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.177])
+ ([172.22.245.177])
+ by FMSMGA003.fm.intel.com with ESMTP; 27 Nov 2019 01:08:58 -0800
+Subject: Re: BMCWeb auth primer
+To: openbmc@lists.ozlabs.org
+References: <98ab5fc7-60e7-3e90-1e9e-bf7e220a2a50@linux.ibm.com>
+ <CAK_vbW3xT8WL5qnBVV_m-HVY84DWYNCpH=ntYyLNzgyFJMzw0A@mail.gmail.com>
+ <e4e32524-d71f-3f17-645a-39861755215a@linux.ibm.com>
+From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
+Message-ID: <90f5f8a9-de1a-3216-21ac-4bad81d77764@linux.intel.com>
+Date: Wed, 27 Nov 2019 10:08:57 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
+In-Reply-To: <e4e32524-d71f-3f17-645a-39861755215a@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,26 +56,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQmlsbHMsDQoNClNvcnJ5IEkgZm91bmQgdGhhdCBJIHNhaWQgdGhlIHdyb25nIGV2ZW50LCBu
-b3QgdGhlIHBvd2VyQnV0dG9uUHJlc3NlZCBldmVudCwgYnV0IHRoZSBzb2Z0IHNodXRkb3duLg0K
-DQpJbiB0aGUgYWJzZW5jZSBvZiBTSU9fUzUgbW9uaXRvcmluZywgd2hlbiB0aGVyZSB3YXMgbm8g
-Y2FzZSBvZiBwb3N0Q29tcGxldGVEZUFzc2VydCBpbiB0aGUgc3RhdGUgb2YgcG93ZXJTdGF0ZU9u
-LCB0aGUgYmVlcCBmdW5jdGlvbiB3aWxsIGJlIGNhbGxlZCBiZWNhdXNlIHRoZSBzb2Z0IHNodXRk
-b3duIGluIHRoZSBPUyBhbmQgaXQgd2FzIHN3aXRjaGVkIHRvIHBzUG93ZXJPS0RlQXNzZXJ0Lg0K
-DQpOb3cgdGhlIHNvZnQgc2h1dGRvd24gaW4gdGhlIE9TIHdpbGwgc3dpdGNoIHRvIHBvc3RDb21w
-bGV0ZURlQXNzZXJ0IGJ1dCBpdCB3aWxsIHRyaWdnZXIgYSBzb2Z0IHJlc2V0LCBhbmQgZmluYWxs
-eSB0aGUgaG9zdCBzaHV0ZG93biBhbmQgdGhlIHBvd2VyIHN0YXRlIGlzIG9uLg0KDQpSZWdhcmRz
-LA0KUC5LLg0KDQo+IE9uIE5vdiAyNywgMjAxOSwgYXQgMTE6NDYsIFAuIEsuIExlZSAo5p2O5p+P
-5a+sKSA8UC5LLkxlZUBxdWFudGF0dy5jb20+IHdyb3RlOg0KPiANCj4gSGkgQmlsbHMsDQo+IA0K
-PiBJIG9ic2VydmVkIHRoYXQgdGhlIGJlZXAgc291bmQgd2FzIHRyaWdnZXJlZCBieSByZWNlaXZp
-bmcgdGhlIHBzUHBvd2VyT0tEZUFzc2VydCBldmVudCBpbiB0aGUgc3RhdGUgb2YgcG93ZXJTdGF0
-ZU9uLCANCj4gYnV0IG15IG1hY2hpbmUgZG9lcyBub3QgaGF2ZSB0aGUgU0lPX1M1IEdQSU8gZXZl
-bnRzLCBzbyBJIG5lZWQgdG8gYWRkIGEganVkZ21lbnQgd2hlbiBhIGJlZXAgc291bmQgaXMgbmVl
-ZGVkLg0KPiANCj4gVGhlIHF1ZXN0aW9uIGlzLCBpcyB0aGUgZm9yY2VkIHNodXRkb3duIChwcmVz
-c2luZyB0aGUgcG93ZXIgYnV0dG9uIGZvciBtb3JlIHRoYW4gNCBzZWNvbmRzKSBpbmNsdWRlZCBp
-biAiREMgcG93ZXIgaXMgdW5leHBlY3RlZGx5IGxvc3QiIG1lbnRpb25lZCBpbiB0aGUgY29tbWVu
-dD8NCj4gDQo+IFRoYW5rcywNCj4gUC5LLg0KPiANCg0K
+> On 11/25/19 3:37 PM, Brandon Wyman wrote:
+>> On Mon, Nov 11, 2019 at 7:41 PM Joseph Reynolds <jrey@linux.ibm.com> 
+>> wrote:
+>>> Dear OpenBMC community and BMCWeb maintainers,
+>>>
+>>> I worked on BMCWeb, learned how it works, and put together this little
+>>> primer on its authentication and authorization flows.
+>> Would this have worked better as a gerrit commit, or a public gist
+>> that you could point to?
+
+I'd second the "gerrit commit" suggestion - maybe something for the docs 
+repo? I think this could be a useful document, if it's updated in line 
+with code changes or if it is high-level enough to still be useful, but 
+withstand minor code changes/refactoring.
+
+I have at least one comment for the mTLS part right away and would be 
+glad to review the rest, but IMHO that'd be much more convenient via 
+Gerrit (easier to track comments for specific lines, etc).
+
+regards,
+Alexander
+
