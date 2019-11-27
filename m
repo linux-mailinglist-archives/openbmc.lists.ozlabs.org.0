@@ -2,75 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5C5010B5E0
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 19:40:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB36910C089
+	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 00:16:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47NV2M1L91zDqx5
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 05:40:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Nc8v1y7GzDqfK
+	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 10:16:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="rWOpX8dv"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="WXMh9Sl5"; dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47NV1b1rGzzDqwp
- for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 05:39:45 +1100 (AEDT)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xARIMVgj050794
- for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 13:39:42 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.82])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2whcxfjktm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 13:39:42 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Wed, 27 Nov 2019 18:39:42 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.105) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 27 Nov 2019 18:39:38 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2019112718393812-783987 ;
- Wed, 27 Nov 2019 18:39:38 +0000 
-In-Reply-To: <022dfcb8-7401-7ddb-8bba-2a7e0f7c0592@linux.intel.com>
-Subject: GUI Component Library
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: james.feist@linux.intel.com
-Date: Wed, 27 Nov 2019 18:39:38 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <022dfcb8-7401-7ddb-8bba-2a7e0f7c0592@linux.intel.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 37235
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 19112718-9463-0000-0000-000001959163
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.000341
-X-IBM-SpamModules-Versions: BY=3.00012174; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01296266; UDB=6.00687988; IPR=6.01078515; 
- MB=3.00029741; MTD=3.00000008; XFM=3.00000015; UTC=2019-11-27 18:39:40
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-11-27 15:36:07 - 6.00010700
-x-cbparentid: 19112718-9464-0000-0000-00004955230B
-Message-Id: <OF48FC4AAC.FA3A9A6B-ON002584BF.00663893-002584BF.00668197@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-11-27_04:2019-11-27,2019-11-27 signatures=0
-X-Proofpoint-Spam-Reason: safe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Nc861VJJzDq7j
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 10:15:50 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id D4C3E226AE;
+ Wed, 27 Nov 2019 18:15:47 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 27 Nov 2019 18:15:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=s2WeLIYP4Gt1ABeOi3tSQhzWsm/Lnga
+ cGliEc/Hw1QE=; b=rWOpX8dvcjptBqMuzUPQqE4T0NgM+vC0dj1bq26X7Ej4rfU
+ oI7Pv8TrWP3T/howYshtltzDZyncOd+keWe0X0rf5RKNW0XisRPYWD311fzek7Rt
+ TiomlTjhtRsbhxTyDOx11kStQZ0KA/ZjnFKUAK4FGM9CbuY+njr5jAFF6/rTaMKY
+ Ys07cH6qTwewWh76YplAd22l22vB3lNaFgZUuRv4zLn+WugeSa0CX9r71kxLJ8w3
+ JpOQbJq3h/aLHMmzEYhQRHxSo+qZIigjokuP+gcF9BxnISJFhNGfP7b0NEyx4dZq
+ wA70UZJv9cEgGstuhxWvyzaXfjOIZ4+knyQ99tA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=s2WeLI
+ YP4Gt1ABeOi3tSQhzWsm/LngacGliEc/Hw1QE=; b=WXMh9Sl5QWQLtKkZvwmTeG
+ AGNPDcQvM9EF7cW1X9JENAoevt+/YigGyI6bBdvayALa/6jg5wwhLo1f5mYGSagq
+ eTVO7ybyRSVNIiGdmE3sfAc1UHQ60gGyC9pJiU3UJecou/vhB7er701eI0KDsJ13
+ URscFDbokqNP4H+SH8A0Xykt5XZ3jQ4BO4La9uRfDTh31eGRSmw+oY5nOt/QRykc
+ Uxll84+1w/GUEuZpsljvs902G2frCeQ2kEYxBGASJZoAYhmsUOO2XFZ4vdgTcLei
+ NaAdq3uIW/NbKUw9lXeLqa7X8qus8SRXhQFkJwenJ7AMotS0j04Chm8/G+SYOnzQ
+ ==
+X-ME-Sender: <xms:owPfXbEOlTOLVcOL1hwBa8yINprkua0bkX9KA_FD4mvSt3Zpzwf89Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudeiiedgtdejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:owPfXdif3lG_vKpuYO17pKGJwxxW75MfLAk2Mbz0qCA2Six6VbFBWg>
+ <xmx:owPfXdv10iUpGqDDmJTTr8zFe4rQmCfjHQM16HX-37TtFIkTeAReqQ>
+ <xmx:owPfXT9oCwDQOGWxjQG3bFD6RZVkd6rxRGmnfZPdQ6e3sdOleyrhxw>
+ <xmx:owPfXXzT93b48iuZYM3ECyWjTu399tUfxB1imG5RFBta160t8nNDLg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id DD897E00A3; Wed, 27 Nov 2019 18:15:46 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
+Mime-Version: 1.0
+Message-Id: <b047f771-0e24-4660-9ef6-abd3af63bc86@www.fastmail.com>
+In-Reply-To: <1aa6a722.1f0b.16ea53900bf.Coremail.ouyangxuan10@163.com>
+References: <1b4dacbd.8278.16e6e6c2234.Coremail.ouyangxuan10@163.com>
+ <a06a7845-cf16-4e37-8674-acd0950d6245@www.fastmail.com>
+ <42def251.79a4.16e87d7a3a7.Coremail.ouyangxuan10@163.com>
+ <e4d8ad9b-49cf-4942-a64c-0c47a94efa17@www.fastmail.com>
+ <348aed94.42d2.16e915b4531.Coremail.ouyangxuan10@163.com>
+ <839a25fc-1244-4c96-b3ed-6a2c04445736@www.fastmail.com>
+ <5d3da051.585b.16e91e043b7.Coremail.ouyangxuan10@163.com>
+ <eed376e8-445f-4a2f-8184-de2c3800f953@www.fastmail.com>
+ <1aa6a722.1f0b.16ea53900bf.Coremail.ouyangxuan10@163.com>
+Date: Thu, 28 Nov 2019 09:47:17 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: www <ouyangxuan10@163.com>
+Subject: =?UTF-8?Q?Re:_[openbmc-kernel]:_How_to_make_pinctrl_not_affect_pass-thro?=
+ =?UTF-8?Q?ugh_function=3F?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,14 +96,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, kathryn.elainex.pine@intel.com
+Cc: openbmc@lists.ozlabs.org, Ryan Chen <ryan_chen@aspeedtech.com>, "Bills,
+ Jason M" <jason.m.bills@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Bootstrap did just release an icon library yesterday fwiw, although it
-is only in Alpha
-=20
-Thank you! Would like to use the same framework for everything and can cons=
-ider this once it GA's. The rewrite to Vue will make it easy to update the =
-icon library.
 
+
+On Tue, 26 Nov 2019, at 11:30, www wrote:
+> hi Andrew,
+> 
+> This suggestion is my personal imperfect idea. It's also the easiest 
+> way to do it. It may not match the requirements of the kernel 
+> organization, and it may be necessary to find a more perfect method.
+> 
+
+Right, if you're going to do it as an out-of-tree hack then there's nothing
+I can do to prevent you :)
+
+I'd prefer to stick to discussing solutions we can upstream.
+
+Cheers,
+
+Andrew
