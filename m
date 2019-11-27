@@ -1,50 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F8C510AC66
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 10:09:56 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47NFN13F3YzDqlV
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 20:09:53 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54CA710ACAE
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 10:39:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47NG2R2j0rzDqk5
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 20:39:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=227322a56=p.k.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47NFM34hvrzDqT2
- for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 20:09:01 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 27 Nov 2019 01:08:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,248,1571727600"; d="scan'208";a="260950892"
-Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.177])
- ([172.22.245.177])
- by FMSMGA003.fm.intel.com with ESMTP; 27 Nov 2019 01:08:58 -0800
-Subject: Re: BMCWeb auth primer
-To: openbmc@lists.ozlabs.org
-References: <98ab5fc7-60e7-3e90-1e9e-bf7e220a2a50@linux.ibm.com>
- <CAK_vbW3xT8WL5qnBVV_m-HVY84DWYNCpH=ntYyLNzgyFJMzw0A@mail.gmail.com>
- <e4e32524-d71f-3f17-645a-39861755215a@linux.ibm.com>
-From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
-Message-ID: <90f5f8a9-de1a-3216-21ac-4bad81d77764@linux.intel.com>
-Date: Wed, 27 Nov 2019 10:08:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47NG1k0mDYzDqfp
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 20:39:04 +1100 (AEDT)
+IronPort-SDR: nnI7UxciYKOOKJYkfwKWbwQqnn7BnRiaA9DNKLObYyHsKdwPd8Cp0/gygTixjYwILSIPVGoYa/
+ vvVLe5liVzVg==
+Received: from unknown (HELO mailbx11.quanta.corp) ([10.243.91.108])
+ by mx02.quantatw.com with ESMTP; 27 Nov 2019 17:39:00 +0800
+Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx11.quanta.corp
+ (10.243.91.108) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 27 Nov
+ 2019 17:38:58 +0800
+Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
+ ([192.168.57.11]) with mapi id 15.01.1713.009;
+ Wed, 27 Nov 2019 17:38:58 +0800
+From: =?utf-8?B?UC4gSy4gTGVlICjmnY7mn4/lr6wp?= <P.K.Lee@quantatw.com>
+To: "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
+Subject: Re: Trigger conditions for beeps in x86-power-control
+Thread-Topic: Trigger conditions for beeps in x86-power-control
+Thread-Index: AQHVpNU2k+MROeFktEqbLYp0O34qSaeeE4mAgAApq4A=
+Date: Wed, 27 Nov 2019 09:38:58 +0000
+Message-ID: <2F4A886E-BD05-4DFF-AE8F-BE0D1DED194D@quantatw.com>
+References: <8B379F39-4E90-4C49-8A95-0A365A4DA277@quantatw.com>
+ <6697A849-BDBD-4E9A-8697-9D5D9D0645AB@quantatw.com>
+In-Reply-To: <6697A849-BDBD-4E9A-8697-9D5D9D0645AB@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25068.005
+x-tm-as-result: No-10--7.343900-8.000000
+x-tmase-matchedrid: /nPNxfnsEhPUL3YCMmnG4mg4D2QV/2zL6r3HCixfuKelKgvZpbdt91HX
+ xCnNdK1Ow5aO4WdGxHAHKh9bTKmc7JeNLvT8ibyEFAVmNNn6k/3QevMKEpazy8O/l0Ny5PZ55z2
+ 5NZlW0T3UkcHUlP7WFWa9vFrxhmyfPfR4tPAu5TgDrkDdIWp3hl/Pp0rGTp40UnF0DMXqXvtjLO
+ Ro1y6rxu40ODOhOZVdmDGOE9mGomfVXdoAcwB7zaHggtOWAEvR+D+zbdY8EikHaxPUDGR6pBAFI
+ K5TH5/7iiNYQ7MnVygH+Jb8g3GcvMsNHVE+9ElRqjZ865FPtpoHgh3sKJBzP+D3XFrJfgvzB62L
+ whkqRsX7s3nRcJSvYD+etFGa6kdc4LB6OQTksmMCLpUaTmjptn10QHPrN0RXkaEC8FJraL93e23
+ Ivy1bjQDkvoLUuEKF49R73kdIJSuUwv7broiTGgcbMHjYNxGhx1V7Fc1hQKloBIpb3fOwnpnFI0
+ oydaAyfS0Ip2eEHnwa2S8rkvtFcRTCjzrGddNPzTP5Udhleg/Nac042Gb2f+MXHHTM2aedY0/mZ
+ sa6nfnQRd1kxbgX2szvwKoxWiKF
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--7.343900-8.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25068.005
+x-tm-snts-smtp: 180AC52C153622EF931FDEF9DCB5AC17B81A5532B2BB2B2297FE7EBBE601D1EB2000:B
+Content-Type: multipart/alternative;
+ boundary="_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_"
 MIME-Version: 1.0
-In-Reply-To: <e4e32524-d71f-3f17-645a-39861755215a@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,28 +73,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> On 11/25/19 3:37 PM, Brandon Wyman wrote:
->> On Mon, Nov 11, 2019 at 7:41 PM Joseph Reynolds <jrey@linux.ibm.com> 
->> wrote:
->>> Dear OpenBMC community and BMCWeb maintainers,
->>>
->>> I worked on BMCWeb, learned how it works, and put together this little
->>> primer on its authentication and authorization flows.
->> Would this have worked better as a gerrit commit, or a public gist
->> that you could point to?
+--_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I'd second the "gerrit commit" suggestion - maybe something for the docs 
-repo? I think this could be a useful document, if it's updated in line 
-with code changes or if it is high-level enough to still be useful, but 
-withstand minor code changes/refactoring.
+SGkgQmlsbHMsDQoNCkkgaGF2ZSBhZGRlZCB0aGUgY2FzZSBwc1Bvd2VyT0tEZUFzc2VydCB0byBw
+b3dlclN0YXRlQ2hlY2tGb3JXYXJtUmVzZXQsIGluIGFkZGl0aW9uIHRvIGF2b2lkaW5nIHRoZSBs
+b3NzIG9mIERDIHBvd2VyLCBpdCBjYW4gYWxzbyBwcmV2ZW50IHRoZSBpbmNvbnNpc3RlbmN5IGJl
+dHdlZW4gdGhlIHBvd2VyIHN0YXRlIGluIHRoZSBsb2cgYW5kIHRoZSBhY3R1YWwgcG93ZXIgc3Rh
+dGUgYWZ0ZXIgYSBzb2Z0IHNodXRkb3duIHdpdGhvdXQgdGhlIFNJT19TNSBHUElPIG1vbml0b3Jp
+bmcuDQoNCkN1cnJlbnRseSBpbiByZXZpZXcgaGVyZToNCmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMt
+cHJvamVjdC54eXovYy9vcGVuYm1jL3g4Ni1wb3dlci1jb250cm9sLysvMjc2MDcNCg0KUmVnYXJk
+cywNClAuSy4NCg0KT24gTm92IDI3LCAyMDE5LCBhdCAxNTowOSwgUC4gSy4gTGVlICjmnY7mn4/l
+r6wpIDxQLksuTGVlQHF1YW50YXR3LmNvbTxtYWlsdG86UC5LLkxlZUBxdWFudGF0dy5jb20+PiB3
+cm90ZToNCg0KSGkgQmlsbHMsDQoNClNvcnJ5IEkgZm91bmQgdGhhdCBJIHNhaWQgdGhlIHdyb25n
+IGV2ZW50LCBub3QgdGhlIHBvd2VyQnV0dG9uUHJlc3NlZCBldmVudCwgYnV0IHRoZSBzb2Z0IHNo
+dXRkb3duLg0KDQpJbiB0aGUgYWJzZW5jZSBvZiBTSU9fUzUgbW9uaXRvcmluZywgd2hlbiB0aGVy
+ZSB3YXMgbm8gY2FzZSBvZiBwb3N0Q29tcGxldGVEZUFzc2VydCBpbiB0aGUgc3RhdGUgb2YgcG93
+ZXJTdGF0ZU9uLCB0aGUgYmVlcCBmdW5jdGlvbiB3aWxsIGJlIGNhbGxlZCBiZWNhdXNlIHRoZSBz
+b2Z0IHNodXRkb3duIGluIHRoZSBPUyBhbmQgaXQgd2FzIHN3aXRjaGVkIHRvIHBzUG93ZXJPS0Rl
+QXNzZXJ0Lg0KDQpOb3cgdGhlIHNvZnQgc2h1dGRvd24gaW4gdGhlIE9TIHdpbGwgc3dpdGNoIHRv
+IHBvc3RDb21wbGV0ZURlQXNzZXJ0IGJ1dCBpdCB3aWxsIHRyaWdnZXIgYSBzb2Z0IHJlc2V0LCBh
+bmQgZmluYWxseSB0aGUgaG9zdCBzaHV0ZG93biBhbmQgdGhlIHBvd2VyIHN0YXRlIGlzIG9uLg0K
+DQpSZWdhcmRzLA0KUC5LLg0KDQpPbiBOb3YgMjcsIDIwMTksIGF0IDExOjQ2LCBQLiBLLiBMZWUg
+KOadjuafj+WvrCkgPFAuSy5MZWVAcXVhbnRhdHcuY29tPG1haWx0bzpQLksuTGVlQHF1YW50YXR3
+LmNvbT4+IHdyb3RlOg0KDQpIaSBCaWxscywNCg0KSSBvYnNlcnZlZCB0aGF0IHRoZSBiZWVwIHNv
+dW5kIHdhcyB0cmlnZ2VyZWQgYnkgcmVjZWl2aW5nIHRoZSBwc1Bwb3dlck9LRGVBc3NlcnQgZXZl
+bnQgaW4gdGhlIHN0YXRlIG9mIHBvd2VyU3RhdGVPbiwNCmJ1dCBteSBtYWNoaW5lIGRvZXMgbm90
+IGhhdmUgdGhlIFNJT19TNSBHUElPIGV2ZW50cywgc28gSSBuZWVkIHRvIGFkZCBhIGp1ZGdtZW50
+IHdoZW4gYSBiZWVwIHNvdW5kIGlzIG5lZWRlZC4NCg0KVGhlIHF1ZXN0aW9uIGlzLCBpcyB0aGUg
+Zm9yY2VkIHNodXRkb3duIChwcmVzc2luZyB0aGUgcG93ZXIgYnV0dG9uIGZvciBtb3JlIHRoYW4g
+NCBzZWNvbmRzKSBpbmNsdWRlZCBpbiAiREMgcG93ZXIgaXMgdW5leHBlY3RlZGx5IGxvc3QiIG1l
+bnRpb25lZCBpbiB0aGUgY29tbWVudD8NCg0KVGhhbmtzLA0KUC5LLg0KDQoNCg0K
 
-I have at least one comment for the mTLS part right away and would be 
-glad to review the rest, but IMHO that'd be much more convenient via 
-Gerrit (easier to track comments for specific lines, etc).
+--_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <669D906E4148874B9E83040FEAFEFF83@quantatw.com>
+Content-Transfer-Encoding: base64
 
-regards,
-Alexander
+PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
+dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5IHN0eWxlPSJ3b3JkLXdy
+YXA6IGJyZWFrLXdvcmQ7IC13ZWJraXQtbmJzcC1tb2RlOiBzcGFjZTsgbGluZS1icmVhazogYWZ0
+ZXItd2hpdGUtc3BhY2U7IiBjbGFzcz0iIj4NCkhpIEJpbGxzLA0KPGRpdiBjbGFzcz0iIj48YnIg
+Y2xhc3M9IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+DQo8ZGl2IGNsYXNzPSIiPkkgaGF2ZSBh
+ZGRlZCB0aGUgY2FzZSBwc1Bvd2VyT0tEZUFzc2VydCB0byBwb3dlclN0YXRlQ2hlY2tGb3JXYXJt
+UmVzZXQsIGluIGFkZGl0aW9uIHRvIGF2b2lkaW5nIHRoZSBsb3NzIG9mIERDIHBvd2VyLCBpdCBj
+YW4gYWxzbyBwcmV2ZW50IHRoZSBpbmNvbnNpc3RlbmN5IGJldHdlZW4gdGhlIHBvd2VyIHN0YXRl
+IGluIHRoZSBsb2cgYW5kIHRoZSBhY3R1YWwgcG93ZXIgc3RhdGUgYWZ0ZXIgYSBzb2Z0IHNodXRk
+b3duIHdpdGhvdXQNCiB0aGUgU0lPX1M1IEdQSU8gbW9uaXRvcmluZy48L2Rpdj4NCjxkaXYgY2xh
+c3M9IiI+PGJyIGNsYXNzPSIiPg0KPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPkN1cnJlbnRseSBpbiBy
+ZXZpZXcgaGVyZTo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+PGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQu
+b3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMveDg2LXBvd2VyLWNvbnRyb2wvJiM0MzsvMjc2
+MDciIGNsYXNzPSIiPmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1j
+L3g4Ni1wb3dlci1jb250cm9sLyYjNDM7LzI3NjA3PC9hPjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48
+YnIgY2xhc3M9IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+UmVnYXJkcyw8L2Rpdj4NCjxkaXYg
+Y2xhc3M9IiI+UC5LLjwvZGl2Pg0KPGRpdj48YnIgY2xhc3M9IiI+DQo8YmxvY2txdW90ZSB0eXBl
+PSJjaXRlIiBjbGFzcz0iIj4NCjxkaXYgY2xhc3M9IiI+T24gTm92IDI3LCAyMDE5LCBhdCAxNTow
+OSwgUC4gSy4gTGVlICjmnY7mn4/lr6wpICZsdDs8YSBocmVmPSJtYWlsdG86UC5LLkxlZUBxdWFu
+dGF0dy5jb20iIGNsYXNzPSIiPlAuSy5MZWVAcXVhbnRhdHcuY29tPC9hPiZndDsgd3JvdGU6PC9k
+aXY+DQo8YnIgY2xhc3M9IkFwcGxlLWludGVyY2hhbmdlLW5ld2xpbmUiPg0KPGRpdiBjbGFzcz0i
+Ij4NCjxkaXYgY2xhc3M9IiI+SGkgQmlsbHMsPGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0K
+U29ycnkgSSBmb3VuZCB0aGF0IEkgc2FpZCB0aGUgd3JvbmcgZXZlbnQsIG5vdCB0aGUgcG93ZXJC
+dXR0b25QcmVzc2VkIGV2ZW50LCBidXQgdGhlIHNvZnQgc2h1dGRvd24uPGJyIGNsYXNzPSIiPg0K
+PGJyIGNsYXNzPSIiPg0KSW4gdGhlIGFic2VuY2Ugb2YgU0lPX1M1IG1vbml0b3JpbmcsIHdoZW4g
+dGhlcmUgd2FzIG5vIGNhc2Ugb2YgcG9zdENvbXBsZXRlRGVBc3NlcnQgaW4gdGhlIHN0YXRlIG9m
+IHBvd2VyU3RhdGVPbiwgdGhlIGJlZXAgZnVuY3Rpb24gd2lsbCBiZSBjYWxsZWQgYmVjYXVzZSB0
+aGUgc29mdCBzaHV0ZG93biBpbiB0aGUgT1MgYW5kIGl0IHdhcyBzd2l0Y2hlZCB0byBwc1Bvd2Vy
+T0tEZUFzc2VydC48YnIgY2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQpOb3cgdGhlIHNvZnQgc2h1
+dGRvd24gaW4gdGhlIE9TIHdpbGwgc3dpdGNoIHRvIHBvc3RDb21wbGV0ZURlQXNzZXJ0IGJ1dCBp
+dCB3aWxsIHRyaWdnZXIgYSBzb2Z0IHJlc2V0LCBhbmQgZmluYWxseSB0aGUgaG9zdCBzaHV0ZG93
+biBhbmQgdGhlIHBvd2VyIHN0YXRlIGlzIG9uLjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4N
+ClJlZ2FyZHMsPGJyIGNsYXNzPSIiPg0KUC5LLjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4N
+CjxibG9ja3F1b3RlIHR5cGU9ImNpdGUiIGNsYXNzPSIiPk9uIE5vdiAyNywgMjAxOSwgYXQgMTE6
+NDYsIFAuIEsuIExlZSAo5p2O5p+P5a+sKSAmbHQ7PGEgaHJlZj0ibWFpbHRvOlAuSy5MZWVAcXVh
+bnRhdHcuY29tIiBjbGFzcz0iIj5QLksuTGVlQHF1YW50YXR3LmNvbTwvYT4mZ3Q7IHdyb3RlOjxi
+ciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4NCkhpIEJpbGxzLDxiciBjbGFzcz0iIj4NCjxiciBj
+bGFzcz0iIj4NCkkgb2JzZXJ2ZWQgdGhhdCB0aGUgYmVlcCBzb3VuZCB3YXMgdHJpZ2dlcmVkIGJ5
+IHJlY2VpdmluZyB0aGUgcHNQcG93ZXJPS0RlQXNzZXJ0IGV2ZW50IGluIHRoZSBzdGF0ZSBvZiBw
+b3dlclN0YXRlT24sDQo8YnIgY2xhc3M9IiI+DQpidXQgbXkgbWFjaGluZSBkb2VzIG5vdCBoYXZl
+IHRoZSBTSU9fUzUgR1BJTyBldmVudHMsIHNvIEkgbmVlZCB0byBhZGQgYSBqdWRnbWVudCB3aGVu
+IGEgYmVlcCBzb3VuZCBpcyBuZWVkZWQuPGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0KVGhl
+IHF1ZXN0aW9uIGlzLCBpcyB0aGUgZm9yY2VkIHNodXRkb3duIChwcmVzc2luZyB0aGUgcG93ZXIg
+YnV0dG9uIGZvciBtb3JlIHRoYW4gNCBzZWNvbmRzKSBpbmNsdWRlZCBpbiAmcXVvdDtEQyBwb3dl
+ciBpcyB1bmV4cGVjdGVkbHkgbG9zdCZxdW90OyBtZW50aW9uZWQgaW4gdGhlIGNvbW1lbnQ/PGJy
+IGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0KVGhhbmtzLDxiciBjbGFzcz0iIj4NClAuSy48YnIg
+Y2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQo8L2Jsb2NrcXVvdGU+DQo8YnIgY2xhc3M9IiI+DQo8
+L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8YnIgY2xhc3M9IiI+DQo8L2Rp
+dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
 
+--_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_--
