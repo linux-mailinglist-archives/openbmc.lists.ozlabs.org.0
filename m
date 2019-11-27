@@ -2,66 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54CA710ACAE
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 10:39:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AB9410AD87
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 11:27:40 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47NG2R2j0rzDqk5
-	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 20:39:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47NH5j16lqzDqT4
+	for <lists+openbmc@lfdr.de>; Wed, 27 Nov 2019 21:27:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=227322a56=p.k.lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
+ helo=mail-ot1-x32b.google.com; envelope-from=ojayanth@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 47NG1k0mDYzDqfp
- for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 20:39:04 +1100 (AEDT)
-IronPort-SDR: nnI7UxciYKOOKJYkfwKWbwQqnn7BnRiaA9DNKLObYyHsKdwPd8Cp0/gygTixjYwILSIPVGoYa/
- vvVLe5liVzVg==
-Received: from unknown (HELO mailbx11.quanta.corp) ([10.243.91.108])
- by mx02.quantatw.com with ESMTP; 27 Nov 2019 17:39:00 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx11.quanta.corp
- (10.243.91.108) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 27 Nov
- 2019 17:38:58 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.1713.009;
- Wed, 27 Nov 2019 17:38:58 +0800
-From: =?utf-8?B?UC4gSy4gTGVlICjmnY7mn4/lr6wp?= <P.K.Lee@quantatw.com>
-To: "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
-Subject: Re: Trigger conditions for beeps in x86-power-control
-Thread-Topic: Trigger conditions for beeps in x86-power-control
-Thread-Index: AQHVpNU2k+MROeFktEqbLYp0O34qSaeeE4mAgAApq4A=
-Date: Wed, 27 Nov 2019 09:38:58 +0000
-Message-ID: <2F4A886E-BD05-4DFF-AE8F-BE0D1DED194D@quantatw.com>
-References: <8B379F39-4E90-4C49-8A95-0A365A4DA277@quantatw.com>
- <6697A849-BDBD-4E9A-8697-9D5D9D0645AB@quantatw.com>
-In-Reply-To: <6697A849-BDBD-4E9A-8697-9D5D9D0645AB@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25068.005
-x-tm-as-result: No-10--7.343900-8.000000
-x-tmase-matchedrid: /nPNxfnsEhPUL3YCMmnG4mg4D2QV/2zL6r3HCixfuKelKgvZpbdt91HX
- xCnNdK1Ow5aO4WdGxHAHKh9bTKmc7JeNLvT8ibyEFAVmNNn6k/3QevMKEpazy8O/l0Ny5PZ55z2
- 5NZlW0T3UkcHUlP7WFWa9vFrxhmyfPfR4tPAu5TgDrkDdIWp3hl/Pp0rGTp40UnF0DMXqXvtjLO
- Ro1y6rxu40ODOhOZVdmDGOE9mGomfVXdoAcwB7zaHggtOWAEvR+D+zbdY8EikHaxPUDGR6pBAFI
- K5TH5/7iiNYQ7MnVygH+Jb8g3GcvMsNHVE+9ElRqjZ865FPtpoHgh3sKJBzP+D3XFrJfgvzB62L
- whkqRsX7s3nRcJSvYD+etFGa6kdc4LB6OQTksmMCLpUaTmjptn10QHPrN0RXkaEC8FJraL93e23
- Ivy1bjQDkvoLUuEKF49R73kdIJSuUwv7broiTGgcbMHjYNxGhx1V7Fc1hQKloBIpb3fOwnpnFI0
- oydaAyfS0Ip2eEHnwa2S8rkvtFcRTCjzrGddNPzTP5Udhleg/Nac042Gb2f+MXHHTM2aedY0/mZ
- sa6nfnQRd1kxbgX2szvwKoxWiKF
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--7.343900-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25068.005
-x-tm-snts-smtp: 180AC52C153622EF931FDEF9DCB5AC17B81A5532B2BB2B2297FE7EBBE601D1EB2000:B
-Content-Type: multipart/alternative;
- boundary="_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_"
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="ilFzFA9l"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
+ [IPv6:2607:f8b0:4864:20::32b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47NH4x4CqxzDqSH
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 21:26:50 +1100 (AEDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 23so16921876otf.2
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Nov 2019 02:26:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=dC2Jk8PYNBC2/MzgblORY7ryq3Qa0W2tqnIutp34KEQ=;
+ b=ilFzFA9lvqdjetNq2pPb/3h2cbyOeEG2DbHDRIiP6iQloLySqGA54pAUX0ZUqm5N2L
+ jzq8rrBFyYC6xU+5uZNuNez6/ZmDYBbkfOPpIyEIUQyI3lxKNbqxebaDT9GA15zgTiDw
+ dWBcob/DSHQXuF5aqznTvUAo3BplMeMtnoh5/nDe5wj9qmcDTAXln8DZJi0AOhSqk1au
+ 94+FkZYBYa0sB4X0T93HF5YxbnetSBHorrLbO8vB2KSfBZdNhPlnpXBpIJZn1sa3GVgu
+ anJNWgm3YzcJpwW56GoZ5GdDZobinnoWSN9ijaDKtOWF4Wj+ACNYJs9Q9D4vq+lHjaa4
+ xNGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=dC2Jk8PYNBC2/MzgblORY7ryq3Qa0W2tqnIutp34KEQ=;
+ b=STyN1o4tTIUbiRKaGUFCfZaw1IvfsdRpQar+jf3siV7Zquu9ZAOqyR6hFITqGWNRb0
+ wSueEo5oKNUwtR5N4mrRYGBB9Ghp7DO0qzVLzTixpHPS1XF4t4ZA+q8RTOgwZPbEDL8I
+ KBiWmSmMy8tjJmg+vztlYHAOqf4fKCYXer5uCx4JuZkGFbmDtc/EmhP+IbI/JceljMDK
+ a0Ho/pTdUJfPqCuk2YuxefQsMLc9B6w/QaxLTMGG2J4I25pfBbtAUxPfCm2Y7Bgylf6t
+ 8UMYLhobjheaWTcAXIk+j0QO12sw8V3cnkk8658V5i29QNEyxKaZAMKkYkrbfSXr0MuJ
+ nKhg==
+X-Gm-Message-State: APjAAAUx9SAeLnpMWOYH9d4Rl0FjetgfuGx7Gq8v9k9tIc2KODZwuqA0
+ C9zjo4La/vC0RPWLTQAB67Bp0S1uMk5Xl7iTW6A=
+X-Google-Smtp-Source: APXvYqxWa8k5s94hLu0OTHRvyIy0Rip44ch20hgg30q1FwDHtKds/5tz7+KVDpoPdVOaxoxPq2cSdYmOlSSOwUuNYtE=
+X-Received: by 2002:a9d:7642:: with SMTP id o2mr2729517otl.177.1574850406368; 
+ Wed, 27 Nov 2019 02:26:46 -0800 (PST)
 MIME-Version: 1.0
+References: <SN6PR11MB2749157C9FFBF80F4C8FA9B492490@SN6PR11MB2749.namprd11.prod.outlook.com>
+In-Reply-To: <SN6PR11MB2749157C9FFBF80F4C8FA9B492490@SN6PR11MB2749.namprd11.prod.outlook.com>
+From: Jayanth Othayoth <ojayanth@gmail.com>
+Date: Wed, 27 Nov 2019 15:56:35 +0530
+Message-ID: <CACkAXSoC5N7VQ2v5zTMbRMJM0Ez_zv4mKH4vrRQEJ-Y+3oYfQw@mail.gmail.com>
+Subject: Re: phosphor-certificate-manager refactoring.
+To: "Kurzynski, Zbigniew" <zbigniew.kurzynski@intel.com>
+Content-Type: multipart/alternative; boundary="0000000000000bc8c20598516f3d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,92 +76,192 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--0000000000000bc8c20598516f3d
+Content-Type: text/plain; charset="UTF-8"
 
-SGkgQmlsbHMsDQoNCkkgaGF2ZSBhZGRlZCB0aGUgY2FzZSBwc1Bvd2VyT0tEZUFzc2VydCB0byBw
-b3dlclN0YXRlQ2hlY2tGb3JXYXJtUmVzZXQsIGluIGFkZGl0aW9uIHRvIGF2b2lkaW5nIHRoZSBs
-b3NzIG9mIERDIHBvd2VyLCBpdCBjYW4gYWxzbyBwcmV2ZW50IHRoZSBpbmNvbnNpc3RlbmN5IGJl
-dHdlZW4gdGhlIHBvd2VyIHN0YXRlIGluIHRoZSBsb2cgYW5kIHRoZSBhY3R1YWwgcG93ZXIgc3Rh
-dGUgYWZ0ZXIgYSBzb2Z0IHNodXRkb3duIHdpdGhvdXQgdGhlIFNJT19TNSBHUElPIG1vbml0b3Jp
-bmcuDQoNCkN1cnJlbnRseSBpbiByZXZpZXcgaGVyZToNCmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMt
-cHJvamVjdC54eXovYy9vcGVuYm1jL3g4Ni1wb3dlci1jb250cm9sLysvMjc2MDcNCg0KUmVnYXJk
-cywNClAuSy4NCg0KT24gTm92IDI3LCAyMDE5LCBhdCAxNTowOSwgUC4gSy4gTGVlICjmnY7mn4/l
-r6wpIDxQLksuTGVlQHF1YW50YXR3LmNvbTxtYWlsdG86UC5LLkxlZUBxdWFudGF0dy5jb20+PiB3
-cm90ZToNCg0KSGkgQmlsbHMsDQoNClNvcnJ5IEkgZm91bmQgdGhhdCBJIHNhaWQgdGhlIHdyb25n
-IGV2ZW50LCBub3QgdGhlIHBvd2VyQnV0dG9uUHJlc3NlZCBldmVudCwgYnV0IHRoZSBzb2Z0IHNo
-dXRkb3duLg0KDQpJbiB0aGUgYWJzZW5jZSBvZiBTSU9fUzUgbW9uaXRvcmluZywgd2hlbiB0aGVy
-ZSB3YXMgbm8gY2FzZSBvZiBwb3N0Q29tcGxldGVEZUFzc2VydCBpbiB0aGUgc3RhdGUgb2YgcG93
-ZXJTdGF0ZU9uLCB0aGUgYmVlcCBmdW5jdGlvbiB3aWxsIGJlIGNhbGxlZCBiZWNhdXNlIHRoZSBz
-b2Z0IHNodXRkb3duIGluIHRoZSBPUyBhbmQgaXQgd2FzIHN3aXRjaGVkIHRvIHBzUG93ZXJPS0Rl
-QXNzZXJ0Lg0KDQpOb3cgdGhlIHNvZnQgc2h1dGRvd24gaW4gdGhlIE9TIHdpbGwgc3dpdGNoIHRv
-IHBvc3RDb21wbGV0ZURlQXNzZXJ0IGJ1dCBpdCB3aWxsIHRyaWdnZXIgYSBzb2Z0IHJlc2V0LCBh
-bmQgZmluYWxseSB0aGUgaG9zdCBzaHV0ZG93biBhbmQgdGhlIHBvd2VyIHN0YXRlIGlzIG9uLg0K
-DQpSZWdhcmRzLA0KUC5LLg0KDQpPbiBOb3YgMjcsIDIwMTksIGF0IDExOjQ2LCBQLiBLLiBMZWUg
-KOadjuafj+WvrCkgPFAuSy5MZWVAcXVhbnRhdHcuY29tPG1haWx0bzpQLksuTGVlQHF1YW50YXR3
-LmNvbT4+IHdyb3RlOg0KDQpIaSBCaWxscywNCg0KSSBvYnNlcnZlZCB0aGF0IHRoZSBiZWVwIHNv
-dW5kIHdhcyB0cmlnZ2VyZWQgYnkgcmVjZWl2aW5nIHRoZSBwc1Bwb3dlck9LRGVBc3NlcnQgZXZl
-bnQgaW4gdGhlIHN0YXRlIG9mIHBvd2VyU3RhdGVPbiwNCmJ1dCBteSBtYWNoaW5lIGRvZXMgbm90
-IGhhdmUgdGhlIFNJT19TNSBHUElPIGV2ZW50cywgc28gSSBuZWVkIHRvIGFkZCBhIGp1ZGdtZW50
-IHdoZW4gYSBiZWVwIHNvdW5kIGlzIG5lZWRlZC4NCg0KVGhlIHF1ZXN0aW9uIGlzLCBpcyB0aGUg
-Zm9yY2VkIHNodXRkb3duIChwcmVzc2luZyB0aGUgcG93ZXIgYnV0dG9uIGZvciBtb3JlIHRoYW4g
-NCBzZWNvbmRzKSBpbmNsdWRlZCBpbiAiREMgcG93ZXIgaXMgdW5leHBlY3RlZGx5IGxvc3QiIG1l
-bnRpb25lZCBpbiB0aGUgY29tbWVudD8NCg0KVGhhbmtzLA0KUC5LLg0KDQoNCg0K
+Proposal looks good,
 
---_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <669D906E4148874B9E83040FEAFEFF83@quantatw.com>
-Content-Transfer-Encoding: base64
+Looking for patch sets related to this.
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjwvaGVhZD4NCjxib2R5IHN0eWxlPSJ3b3JkLXdy
-YXA6IGJyZWFrLXdvcmQ7IC13ZWJraXQtbmJzcC1tb2RlOiBzcGFjZTsgbGluZS1icmVhazogYWZ0
-ZXItd2hpdGUtc3BhY2U7IiBjbGFzcz0iIj4NCkhpIEJpbGxzLA0KPGRpdiBjbGFzcz0iIj48YnIg
-Y2xhc3M9IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+DQo8ZGl2IGNsYXNzPSIiPkkgaGF2ZSBh
-ZGRlZCB0aGUgY2FzZSBwc1Bvd2VyT0tEZUFzc2VydCB0byBwb3dlclN0YXRlQ2hlY2tGb3JXYXJt
-UmVzZXQsIGluIGFkZGl0aW9uIHRvIGF2b2lkaW5nIHRoZSBsb3NzIG9mIERDIHBvd2VyLCBpdCBj
-YW4gYWxzbyBwcmV2ZW50IHRoZSBpbmNvbnNpc3RlbmN5IGJldHdlZW4gdGhlIHBvd2VyIHN0YXRl
-IGluIHRoZSBsb2cgYW5kIHRoZSBhY3R1YWwgcG93ZXIgc3RhdGUgYWZ0ZXIgYSBzb2Z0IHNodXRk
-b3duIHdpdGhvdXQNCiB0aGUgU0lPX1M1IEdQSU8gbW9uaXRvcmluZy48L2Rpdj4NCjxkaXYgY2xh
-c3M9IiI+PGJyIGNsYXNzPSIiPg0KPC9kaXY+DQo8ZGl2IGNsYXNzPSIiPkN1cnJlbnRseSBpbiBy
-ZXZpZXcgaGVyZTo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+PGEgaHJlZj0iaHR0cHM6Ly9nZXJyaXQu
-b3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMveDg2LXBvd2VyLWNvbnRyb2wvJiM0MzsvMjc2
-MDciIGNsYXNzPSIiPmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1j
-L3g4Ni1wb3dlci1jb250cm9sLyYjNDM7LzI3NjA3PC9hPjwvZGl2Pg0KPGRpdiBjbGFzcz0iIj48
-YnIgY2xhc3M9IiI+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IiI+UmVnYXJkcyw8L2Rpdj4NCjxkaXYg
-Y2xhc3M9IiI+UC5LLjwvZGl2Pg0KPGRpdj48YnIgY2xhc3M9IiI+DQo8YmxvY2txdW90ZSB0eXBl
-PSJjaXRlIiBjbGFzcz0iIj4NCjxkaXYgY2xhc3M9IiI+T24gTm92IDI3LCAyMDE5LCBhdCAxNTow
-OSwgUC4gSy4gTGVlICjmnY7mn4/lr6wpICZsdDs8YSBocmVmPSJtYWlsdG86UC5LLkxlZUBxdWFu
-dGF0dy5jb20iIGNsYXNzPSIiPlAuSy5MZWVAcXVhbnRhdHcuY29tPC9hPiZndDsgd3JvdGU6PC9k
-aXY+DQo8YnIgY2xhc3M9IkFwcGxlLWludGVyY2hhbmdlLW5ld2xpbmUiPg0KPGRpdiBjbGFzcz0i
-Ij4NCjxkaXYgY2xhc3M9IiI+SGkgQmlsbHMsPGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0K
-U29ycnkgSSBmb3VuZCB0aGF0IEkgc2FpZCB0aGUgd3JvbmcgZXZlbnQsIG5vdCB0aGUgcG93ZXJC
-dXR0b25QcmVzc2VkIGV2ZW50LCBidXQgdGhlIHNvZnQgc2h1dGRvd24uPGJyIGNsYXNzPSIiPg0K
-PGJyIGNsYXNzPSIiPg0KSW4gdGhlIGFic2VuY2Ugb2YgU0lPX1M1IG1vbml0b3JpbmcsIHdoZW4g
-dGhlcmUgd2FzIG5vIGNhc2Ugb2YgcG9zdENvbXBsZXRlRGVBc3NlcnQgaW4gdGhlIHN0YXRlIG9m
-IHBvd2VyU3RhdGVPbiwgdGhlIGJlZXAgZnVuY3Rpb24gd2lsbCBiZSBjYWxsZWQgYmVjYXVzZSB0
-aGUgc29mdCBzaHV0ZG93biBpbiB0aGUgT1MgYW5kIGl0IHdhcyBzd2l0Y2hlZCB0byBwc1Bvd2Vy
-T0tEZUFzc2VydC48YnIgY2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQpOb3cgdGhlIHNvZnQgc2h1
-dGRvd24gaW4gdGhlIE9TIHdpbGwgc3dpdGNoIHRvIHBvc3RDb21wbGV0ZURlQXNzZXJ0IGJ1dCBp
-dCB3aWxsIHRyaWdnZXIgYSBzb2Z0IHJlc2V0LCBhbmQgZmluYWxseSB0aGUgaG9zdCBzaHV0ZG93
-biBhbmQgdGhlIHBvd2VyIHN0YXRlIGlzIG9uLjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4N
-ClJlZ2FyZHMsPGJyIGNsYXNzPSIiPg0KUC5LLjxiciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4N
-CjxibG9ja3F1b3RlIHR5cGU9ImNpdGUiIGNsYXNzPSIiPk9uIE5vdiAyNywgMjAxOSwgYXQgMTE6
-NDYsIFAuIEsuIExlZSAo5p2O5p+P5a+sKSAmbHQ7PGEgaHJlZj0ibWFpbHRvOlAuSy5MZWVAcXVh
-bnRhdHcuY29tIiBjbGFzcz0iIj5QLksuTGVlQHF1YW50YXR3LmNvbTwvYT4mZ3Q7IHdyb3RlOjxi
-ciBjbGFzcz0iIj4NCjxiciBjbGFzcz0iIj4NCkhpIEJpbGxzLDxiciBjbGFzcz0iIj4NCjxiciBj
-bGFzcz0iIj4NCkkgb2JzZXJ2ZWQgdGhhdCB0aGUgYmVlcCBzb3VuZCB3YXMgdHJpZ2dlcmVkIGJ5
-IHJlY2VpdmluZyB0aGUgcHNQcG93ZXJPS0RlQXNzZXJ0IGV2ZW50IGluIHRoZSBzdGF0ZSBvZiBw
-b3dlclN0YXRlT24sDQo8YnIgY2xhc3M9IiI+DQpidXQgbXkgbWFjaGluZSBkb2VzIG5vdCBoYXZl
-IHRoZSBTSU9fUzUgR1BJTyBldmVudHMsIHNvIEkgbmVlZCB0byBhZGQgYSBqdWRnbWVudCB3aGVu
-IGEgYmVlcCBzb3VuZCBpcyBuZWVkZWQuPGJyIGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0KVGhl
-IHF1ZXN0aW9uIGlzLCBpcyB0aGUgZm9yY2VkIHNodXRkb3duIChwcmVzc2luZyB0aGUgcG93ZXIg
-YnV0dG9uIGZvciBtb3JlIHRoYW4gNCBzZWNvbmRzKSBpbmNsdWRlZCBpbiAmcXVvdDtEQyBwb3dl
-ciBpcyB1bmV4cGVjdGVkbHkgbG9zdCZxdW90OyBtZW50aW9uZWQgaW4gdGhlIGNvbW1lbnQ/PGJy
-IGNsYXNzPSIiPg0KPGJyIGNsYXNzPSIiPg0KVGhhbmtzLDxiciBjbGFzcz0iIj4NClAuSy48YnIg
-Y2xhc3M9IiI+DQo8YnIgY2xhc3M9IiI+DQo8L2Jsb2NrcXVvdGU+DQo8YnIgY2xhc3M9IiI+DQo8
-L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8YnIgY2xhc3M9IiI+DQo8L2Rp
-dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+On Fri, Nov 22, 2019 at 2:39 PM Kurzynski, Zbigniew <
+zbigniew.kurzynski@intel.com> wrote:
 
---_000_2F4A886EBD054DFFAE8FBE0D1DED194Dquantatwcom_--
+> Hi everyone,
+> I think it is good time to do some code refactoring in
+> phosphor-certificate-manager.
+> The certificate manager supports few certificate types, each is managed by
+> a separate service instance.
+>         phosphor-certificate-manager@authority.service,
+> phosphor-certificate-manager@bmcweb.service,
+> phosphor-certificate-manager@nslcd.service
+> Initially the certificate manager was designed to support single
+> certificate file. But now one of its instances supports multiple files and
+> the code for that case differs quite much from the rest.
+> I would like to propose a small refactoring of this code in following
+> steps:
+>
+> Step 1.
+> Create a new subclass of Certificate. The base class will remain as is,
+> focusing on single certificate approach, while its derived child will
+> extend it with support for multiple certificates.
+> The Manager class seems quite generic and I would leave it as is. Two
+> instances will operate on the base Certificate class, while the third will
+> use class derived from the Certificate.
+>
+> Step 2.
+> Moving files:
+>         1.
+> meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-cert-config/env
+>         2.
+> meta-phosphor/recipes-phosphor/certificate/phosphor-nslcd-authority-cert-config/env
+>         3.
+> meta-phosphor/recipes-phosphor/certificate/phosphor-bmcweb-cert-config/env
+> to repository phosphor-certificate-manager under a new directory 'service'
+>
+> Getting rid of below recipes and moving their functionality to
+> phosphor-certificate-manager_git.bb if possible.
+>         phosphor-bmcweb-cert-config.bb, phosphor-nslcd-cert-config.bb,
+> phosphor-nslcd-authority-cert-config.bb
+>
+> Step 3.
+> Changing the way of managing and storing TrustStore certificates.
+>
+> Now all certificates are stored and managed directly in a
+> /etc/ssl/certs/authority/ , but files in that directory are subject to many
+> restrictions like:
+>         the files must be named using the subject name's hash and an
+> extension of '.0',
+>         If there are two files with the same hash they should have
+> different extension number,
+>         Extension numbers cannot have gaps, which is a problem when we
+> delete some certificates.
+>
+> I propose to store certificate files in a separate location, where file
+> names do not have such restrictions.
+> And put in this folder /etc/ssl/certs/authority/ only soft links to
+> original files.
+> Each time when any of certificate will be changed/deleted/added the
+> manager should simply delete all links from /etc/ssl/certs/authority and
+> the recreate them by iterating all certs files.
+>
+> Please let me know if you have any concerns.
+>
+> -Zbigniew
+> --------------------------------------------------------------------
+>
+> Intel Technology Poland sp. z o.o.
+> ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII
+> Wydzial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP
+> 957-07-52-316 | Kapital zakladowy 200.000 PLN.
+>
+> Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego
+> adresata i moze zawierac informacje poufne. W razie przypadkowego
+> otrzymania tej wiadomosci, prosimy o powiadomienie nadawcy oraz trwale jej
+> usuniecie; jakiekolwiek
+> przegladanie lub rozpowszechnianie jest zabronione.
+> This e-mail and any attachments may contain confidential material for the
+> sole use of the intended recipient(s). If you are not the intended
+> recipient, please contact the sender and delete all copies; any review or
+> distribution by
+> others is strictly prohibited.
+>
+>
+
+--0000000000000bc8c20598516f3d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Proposal looks good, <br></div><div><br></div><div>Lo=
+oking for patch sets related to this.</div></div><br><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Nov 22, 2019 at 2:39 PM =
+Kurzynski, Zbigniew &lt;<a href=3D"mailto:zbigniew.kurzynski@intel.com">zbi=
+gniew.kurzynski@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">Hi everyone,=C2=A0 <br>
+I think it is good time to do some code refactoring in phosphor-certificate=
+-manager.<br>
+The certificate manager supports few certificate types, each is managed by =
+a separate service instance.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 phosphor-certificate-manager@authority.service,=
+ phosphor-certificate-manager@bmcweb.service, phosphor-certificate-manager@=
+nslcd.service<br>
+Initially the certificate manager was designed to support single certificat=
+e file. But now one of its instances supports multiple files and the code f=
+or that case differs quite much from the rest.<br>
+I would like to propose a small refactoring of this code in following steps=
+:<br>
+<br>
+Step 1.<br>
+Create a new subclass of Certificate. The base class will remain as is, foc=
+using on single certificate approach, while its derived child will extend i=
+t with support for multiple certificates.<br>
+The Manager class seems quite generic and I would leave it as is. Two insta=
+nces will operate on the base Certificate class, while the third will use c=
+lass derived from the Certificate.<br>
+<br>
+Step 2.<br>
+Moving files:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 1. meta-phosphor/recipes-phosphor/certificate/p=
+hosphor-nslcd-cert-config/env<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 2. meta-phosphor/recipes-phosphor/certificate/p=
+hosphor-nslcd-authority-cert-config/env<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 3. meta-phosphor/recipes-phosphor/certificate/p=
+hosphor-bmcweb-cert-config/env<br>
+to repository phosphor-certificate-manager under a new directory &#39;servi=
+ce&#39;<br>
+<br>
+Getting rid of below recipes and moving their functionality to <a href=3D"h=
+ttp://phosphor-certificate-manager_git.bb" rel=3D"noreferrer" target=3D"_bl=
+ank">phosphor-certificate-manager_git.bb</a> if possible.<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"http://phosphor-bmcweb-cert-config.b=
+b" rel=3D"noreferrer" target=3D"_blank">phosphor-bmcweb-cert-config.bb</a>,=
+ <a href=3D"http://phosphor-nslcd-cert-config.bb" rel=3D"noreferrer" target=
+=3D"_blank">phosphor-nslcd-cert-config.bb</a>, <a href=3D"http://phosphor-n=
+slcd-authority-cert-config.bb" rel=3D"noreferrer" target=3D"_blank">phospho=
+r-nslcd-authority-cert-config.bb</a><br>
+<br>
+Step 3.<br>
+Changing the way of managing and storing TrustStore certificates.<br>
+<br>
+Now all certificates are stored and managed directly in a /etc/ssl/certs/au=
+thority/ , but files in that directory are subject to many restrictions lik=
+e: <br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 the files must be named using the subject name&=
+#39;s hash and an extension of &#39;.0&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 If there are two files with the same hash they =
+should have different extension number,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 Extension numbers cannot have gaps, which is a =
+problem when we delete some certificates.<br>
+<br>
+I propose to store certificate files in a separate location, where file nam=
+es do not have such restrictions.<br>
+And put in this folder /etc/ssl/certs/authority/ only soft links to origina=
+l files.<br>
+Each time when any of certificate will be changed/deleted/added the manager=
+ should simply delete all links from /etc/ssl/certs/authority and the recre=
+ate them by iterating all certs files.<br>
+<br>
+Please let me know if you have any concerns.<br>
+<br>
+-Zbigniew<br>
+--------------------------------------------------------------------<br>
+<br>
+Intel Technology Poland sp. z o.o.<br>
+ul. Slowackiego 173 | 80-298 Gdansk | Sad Rejonowy Gdansk Polnoc | VII Wydz=
+ial Gospodarczy Krajowego Rejestru Sadowego - KRS 101882 | NIP 957-07-52-31=
+6 | Kapital zakladowy 200.000 PLN.<br>
+<br>
+Ta wiadomosc wraz z zalacznikami jest przeznaczona dla okreslonego adresata=
+ i moze zawierac informacje poufne. W razie przypadkowego otrzymania tej wi=
+adomosci, prosimy o powiadomienie nadawcy oraz trwale jej usuniecie; jakiek=
+olwiek<br>
+przegladanie lub rozpowszechnianie jest zabronione.<br>
+This e-mail and any attachments may contain confidential material for the s=
+ole use of the intended recipient(s). If you are not the intended recipient=
+, please contact the sender and delete all copies; any review or distributi=
+on by<br>
+others is strictly prohibited.<br>
+<br>
+</blockquote></div>
+
+--0000000000000bc8c20598516f3d--
