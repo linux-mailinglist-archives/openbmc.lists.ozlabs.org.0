@@ -2,89 +2,115 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB36910C089
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 00:16:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDAA910C2C9
+	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 04:16:37 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Nc8v1y7GzDqfK
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 10:16:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47NjTs3KxQzDqJ3
+	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 14:16:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=wiwynn.com (client-ip=103.200.3.19; helo=segapp01.wistron.com;
+ envelope-from=bright_cheng@wiwynn.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="rWOpX8dv"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="WXMh9Sl5"; dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Nc861VJJzDq7j
- for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 10:15:50 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id D4C3E226AE;
- Wed, 27 Nov 2019 18:15:47 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 27 Nov 2019 18:15:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=s2WeLIYP4Gt1ABeOi3tSQhzWsm/Lnga
- cGliEc/Hw1QE=; b=rWOpX8dvcjptBqMuzUPQqE4T0NgM+vC0dj1bq26X7Ej4rfU
- oI7Pv8TrWP3T/howYshtltzDZyncOd+keWe0X0rf5RKNW0XisRPYWD311fzek7Rt
- TiomlTjhtRsbhxTyDOx11kStQZ0KA/ZjnFKUAK4FGM9CbuY+njr5jAFF6/rTaMKY
- Ys07cH6qTwewWh76YplAd22l22vB3lNaFgZUuRv4zLn+WugeSa0CX9r71kxLJ8w3
- JpOQbJq3h/aLHMmzEYhQRHxSo+qZIigjokuP+gcF9BxnISJFhNGfP7b0NEyx4dZq
- wA70UZJv9cEgGstuhxWvyzaXfjOIZ4+knyQ99tA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=s2WeLI
- YP4Gt1ABeOi3tSQhzWsm/LngacGliEc/Hw1QE=; b=WXMh9Sl5QWQLtKkZvwmTeG
- AGNPDcQvM9EF7cW1X9JENAoevt+/YigGyI6bBdvayALa/6jg5wwhLo1f5mYGSagq
- eTVO7ybyRSVNIiGdmE3sfAc1UHQ60gGyC9pJiU3UJecou/vhB7er701eI0KDsJ13
- URscFDbokqNP4H+SH8A0Xykt5XZ3jQ4BO4La9uRfDTh31eGRSmw+oY5nOt/QRykc
- Uxll84+1w/GUEuZpsljvs902G2frCeQ2kEYxBGASJZoAYhmsUOO2XFZ4vdgTcLei
- NaAdq3uIW/NbKUw9lXeLqa7X8qus8SRXhQFkJwenJ7AMotS0j04Chm8/G+SYOnzQ
- ==
-X-ME-Sender: <xms:owPfXbEOlTOLVcOL1hwBa8yINprkua0bkX9KA_FD4mvSt3Zpzwf89Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudeiiedgtdejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:owPfXdif3lG_vKpuYO17pKGJwxxW75MfLAk2Mbz0qCA2Six6VbFBWg>
- <xmx:owPfXdv10iUpGqDDmJTTr8zFe4rQmCfjHQM16HX-37TtFIkTeAReqQ>
- <xmx:owPfXT9oCwDQOGWxjQG3bFD6RZVkd6rxRGmnfZPdQ6e3sdOleyrhxw>
- <xmx:owPfXXzT93b48iuZYM3ECyWjTu399tUfxB1imG5RFBta160t8nNDLg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id DD897E00A3; Wed, 27 Nov 2019 18:15:46 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-578-g826f590-fmstable-20191119v1
-Mime-Version: 1.0
-Message-Id: <b047f771-0e24-4660-9ef6-abd3af63bc86@www.fastmail.com>
-In-Reply-To: <1aa6a722.1f0b.16ea53900bf.Coremail.ouyangxuan10@163.com>
-References: <1b4dacbd.8278.16e6e6c2234.Coremail.ouyangxuan10@163.com>
- <a06a7845-cf16-4e37-8674-acd0950d6245@www.fastmail.com>
- <42def251.79a4.16e87d7a3a7.Coremail.ouyangxuan10@163.com>
- <e4d8ad9b-49cf-4942-a64c-0c47a94efa17@www.fastmail.com>
- <348aed94.42d2.16e915b4531.Coremail.ouyangxuan10@163.com>
- <839a25fc-1244-4c96-b3ed-6a2c04445736@www.fastmail.com>
- <5d3da051.585b.16e91e043b7.Coremail.ouyangxuan10@163.com>
- <eed376e8-445f-4a2f-8184-de2c3800f953@www.fastmail.com>
- <1aa6a722.1f0b.16ea53900bf.Coremail.ouyangxuan10@163.com>
-Date: Thu, 28 Nov 2019 09:47:17 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: www <ouyangxuan10@163.com>
-Subject: =?UTF-8?Q?Re:_[openbmc-kernel]:_How_to_make_pinctrl_not_affect_pass-thro?=
- =?UTF-8?Q?ugh_function=3F?=
-Content-Type: text/plain
+ dmarc=none (p=none dis=none) header.from=wiwynn.com
+Authentication-Results: lists.ozlabs.org;
+ dkim=fail reason="signature verification failed" (1024-bit key;
+ unprotected) header.d=Wistron.onmicrosoft.com
+ header.i=@Wistron.onmicrosoft.com header.b="a0gEyZfT"; 
+ dkim-atps=neutral
+Received: from segapp01.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47NjSx0J2rzDqxh
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 14:15:43 +1100 (AEDT)
+Received: from EXCHAPP04.whq.wistron (unverified [10.37.38.27]) by 
+ TWNHUMSW5.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
+ <Tdbbe220f8dc0a8167311d0@TWNHUMSW5.wistron.com>; Thu, 28 Nov 2019 
+ 11:15:41 +0800
+Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP04.whq.wistron 
+ (10.37.38.27) with Microsoft SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
+ 15.1.1713.5; Thu, 28 Nov 2019 11:15:37 +0800
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (10.37.38.70) by 
+ mail.wistron.com (10.37.38.26) with Microsoft SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
+ 15.1.1713.5 via Frontend Transport; Thu, 28 Nov 2019 11:15:37 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none; 
+ b=Bh9029JrUj46eM3iZq05FpGp7so0Cv20md1KQ5+u75EAdkhTdQXpFAJrzT8vSRaWv28GKd/zS6fRbDdrYdNtFt/DXA3ddn9xP9PLOiWqSG2TDSG6TKrVP/qJ1B+kDSh4nbD5Ghcp/sL08QAnIoxaltS9umNf/ZRnqXsGvgWvR+rMJQnQVSc8nndW61FrXfF5P41w3qnLahILaMAYGq/hdw70WlVlJc51Sf4PysajMh+xdmSn1LG2W4RuSQESCiMWnLWFeOkLoseAxGjr1vFW913rnE3uDomDLt/guLm/dn9VgziT8s7ZZgGdmY5wfgt3333lcoBu7WVPN0UIBWDkNw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h2v1bh2V44FK9Q/K4bOGsg/IwIsejfoYUwbj/hV6rp4=; 
+ b=I/1F8cwbxV9QyLkQemEXTrIQXVyO2mSpQzfAgiLTeVUCJa+NRIGoy7KU9fg2qmDTV+QZUmpDycrtFLs3aJJ6wjrejdXJXiG7NU3BAXGu72ituDBjrrHybNMby+jsJaObZJhYjXfgWUy6ZJkUEqGNXaJL78i1LA8hRATaLtOyJHShwMZidkvAQAe8fbGaYZ8Cy+XbBZJtJ2WQVjzF0hicdM5JowHhWOC6Mm1HWcl+J69y8CcBiE4b7iZN9gDJZd7D8scBUjOzmQAy1BC+6k55TTkqF9zLfxERrcL6lbpg3Z/LYXfSiBjRJm9/8vy3TshDpujGN6/ld4g/qu1w3YOGOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass 
+ smtp.mailfrom=wiwynn.com; dmarc=pass action=none 
+ header.from=wiwynn.com; dkim=pass header.d=wiwynn.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; 
+ d=Wistron.onmicrosoft.com; s=selector2-Wistron-onmicrosoft-com; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h2v1bh2V44FK9Q/K4bOGsg/IwIsejfoYUwbj/hV6rp4=; 
+ b=a0gEyZfT5cpOpOUsZOrtu10Qi92BYfKS5szUdTJs9o1dZMvYNPZCS25ApvEU6h0Bi4qvPRfRpEtNEMqiQH3uGWBrHi+QiOu6+iqkqBZ3yspclI0ieXKvKBUg+O0qewdYxHx26uQmjtF44xKkRhpVT4Bwej1pVMu1OmZaIDZAXWA=
+Received: from HK0PR02MB3348.apcprd02.prod.outlook.com (20.177.68.82) by 
+ HK0PR02MB3426.apcprd02.prod.outlook.com (20.177.31.10) with Microsoft 
+ SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 
+ 15.20.2474.22; Thu, 28 Nov 2019 03:15:35 +0000
+Received: from HK0PR02MB3348.apcprd02.prod.outlook.com 
+ ([fe80::9193:1f5:b919:4de3]) by 
+ HK0PR02MB3348.apcprd02.prod.outlook.com 
+ ([fe80::9193:1f5:b919:4de3%5]) with mapi id 15.20.2474.023; Thu, 28 
+ Nov 2019 03:15:35 +0000
+From: Bright Cheng/WYHQ/Wiwynn <Bright_Cheng@wiwynn.com>
+To: Adriana Kobylak <anoo@linux.ibm.com>
+Subject: RE: phosphor-bmc-code-memt: Support redfish remote firmware update
+ with static layout image
+Thread-Topic: phosphor-bmc-code-memt: Support redfish remote firmware update 
+ with static layout image
+Thread-Index: AdWbW9KkyR3t7kg+SUGh/ZISxSBNlgAA8GuAABuL+gABIZI1UAAgTVcAATCBS2A=
+Date: Thu, 28 Nov 2019 03:15:34 +0000
+Message-ID: <HK0PR02MB33484B8CB1B26EA8D7EBD29E9F470@HK0PR02MB3348.apcprd02.prod.outlook.com>
+References: <HK0PR02MB33487C8E6D56DD2143034D0C9F700@HK0PR02MB3348.apcprd02.prod.outlook.com>
+ <CAARXrtnjxJw4S25CoBACzY8A8hQtV+8excmoM2iNR5sLqhxcXg@mail.gmail.com> 
+ <0f356ff58ad9ec48b19e86f9da5eb7cc@linux.vnet.ibm.com> 
+ <HK0PR02MB33485DDBFBED11F8ED70C4D99F4E0@HK0PR02MB3348.apcprd02.prod.outlook.com>
+ <e265ea9fecc389df33c0e7dce0861e05@linux.vnet.ibm.com>
+In-Reply-To: <e265ea9fecc389df33c0e7dce0861e05@linux.vnet.ibm.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is ) 
+ smtp.mailfrom=Bright_Cheng@wiwynn.com; 
+x-originating-ip: [125.227.140.245]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: fb275da8-b7cc-481f-894c-08d773b13c2f
+x-ms-traffictypediagnostic: HK0PR02MB3426:|HK0PR02MB3426:
+x-ms-exchange-purlcount: 3
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK0PR02MB3426F1F6F34430953CDC29949F470@HK0PR02MB3426.apcprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 0235CBE7D0
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(4636009)(136003)(346002)(396003)(376002)(366004)(39860400002)(13464003)(189003)(199004)(478600001)(76176011)(8676002)(4326008)(2906002)(3846002)(8936002)(6116002)(80792005)(14454004)(71190400001)(33656002)(66476007)(66556008)(66946007)(76116006)(446003)(71200400001)(81166006)(81156014)(64756008)(15650500001)(99286004)(9686003)(11346002)(45080400002)(66446008)(6306002)(7696005)(53546011)(6436002)(86362001)(256004)(6506007)(66066001)(966005)(25786009)(575854001)(14444005)(55016002)(316002)(54906003)(229853002)(186003)(74316002)(52536014)(5660300002)(6916009)(7736002)(305945005)(6246003)(102836004)(26005);
+ DIR:OUT;SFP:1102;SCL:1;SRVR:HK0PR02MB3426;
+ H:HK0PR02MB3348.apcprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;
+ PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None 
+ (protection.outlook.com: wiwynn.com does not designate permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: RL1GMTrJl79kruE8oee6NbYgY2+jZSGdXBeVPbLhjeVs3/KNEHZN02rFeiV2KYewqZnI9PzIEpkOoBTtRkidQAPMPBnmNlY4fIrRavZcjf+7CvDwCTwOS783psW/EvjBCqG9UgZRwZFBlRe55KEIq4xUwlmDWKWlK+bJo12IPWklvi2/Qw5vXlwP/QvkWgg1TOKjmjNVt9ihGqzs8TvFtb5GD5pCZYahwll9tjv+3qZhgEqFb6cSoWJjyN6WzZSb7Vd6VVgU+hTMOfZoA0TksVqHEDWs6Nf4Azph0zimSu44wwFKtGH/hW03T+puCHE1XITta1d14RLoBH+eNZClNyhiCG6rYArkT3FXKTAb6oOZBgaL8D7iTr1xvDeWJXusZgP24ogtLTF3VmRFR+Utxqk8LfFhD6LICxAoSEU2W7M9EVmece16QrYTtvUmS7ihW2UCg7H/51YhcHRy21CrcANuZUs65HX71BAvJGbzHOU=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: fb275da8-b7cc-481f-894c-08d773b13c2f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Nov 2019 03:15:35.0509 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: de0795e0-d7c0-4eeb-b9bb-bc94d8980d3b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: eYS85nlCFW+zIxhpDUwswcMTk8ECYAyA8g1leDoaDTTk7x0U9WvIKF6JF+zW66+4pF+f3gAlREXZ99EjwgpYCg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR02MB3426
+X-OriginatorOrg: wiwynn.com
+X-TM-SNTS-SMTP: EEDA77D9E8A942176689417C752A00650CBDD1DDFF94771DF34C17E53452E7202000:8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,26 +122,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Ryan Chen <ryan_chen@aspeedtech.com>, "Bills,
- Jason M" <jason.m.bills@linux.intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, Neeraj Ladkani <neladk@microsoft.com>,
+ Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
+ Jayanth Othayoth <ojayanth@in.ibm.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Adriana,
 
+Thanks for your friendly reminder, I actually missed the steps to link gith=
+ub account to gerrit.
 
-On Tue, 26 Nov 2019, at 11:30, www wrote:
-> hi Andrew,
-> 
-> This suggestion is my personal imperfect idea. It's also the easiest 
-> way to do it. It may not match the requirements of the kernel 
-> organization, and it may be necessary to find a more perfect method.
-> 
+We separate our the code into two commits and submit to gerrit:
+1. Support static layout image-bmc
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-bmc-code-mgmt/+/27620
+2. Add ApplyTime checking
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-bmc-code-mgmt/+/27621
 
-Right, if you're going to do it as an out-of-tree hack then there's nothing
-I can do to prevent you :)
+Please let us know if you have any questions with our submit.
+Thank you for your attention !
 
-I'd prefer to stick to discussing solutions we can upstream.
+-----Original Message-----
+From: Adriana Kobylak [mailto:anoo@linux.ibm.com]=20
+Sent: Friday, November 22, 2019 9:36 AM
+To: Bright Cheng/WYHQ/Wiwynn <Bright_Cheng@wiwynn.com>
+Cc: Lei YU <mine260309@gmail.com>; openbmc@lists.ozlabs.org; Adriana Kobyla=
+k <anoo@us.ibm.com>; Neeraj Ladkani <neladk@microsoft.com>; Delphine Chiu/W=
+YHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>; Jayanth Othayoth <ojayanth@in.ibm.co=
+m>; Gunnar Mills <gmills@linux.vnet.ibm.com>; Ratan Gupta <ratagupt@linux.v=
+net.ibm.com>
+Subject: RE: phosphor-bmc-code-memt: Support redfish remote firmware update=
+ with static layout image
 
-Cheers,
+Hi, you may be missing some setup steps to link your github account to gerr=
+it, here are the instructions:
+https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithub.=
+com%2Fopenbmc%2Fdocs%2Fblob%2Fmaster%2Fdevelopment%2Fgerrit-setup.md&amp;da=
+ta=3D02%7C01%7CBright_Cheng%40wiwynn.com%7C566894981bb44427584108d76eec7485=
+%7Cde0795e0d7c04eebb9bbbc94d8980d3b%7C1%7C0%7C637099834173075475&amp;sdata=
+=3DCy64J0xWrJTNgLbD4Sj8st172VsvAik64QJ1zUKdNec%3D&amp;reserved=3D0
 
-Andrew
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------
+This email contains confidential or legally privileged information and is f=
+or the sole use of its intended recipient.=20
+Any unauthorized review, use, copying or distribution of this email or the =
+content of this email is strictly prohibited.
+If you are not the intended recipient, you may reply to the sender and shou=
+ld delete this e-mail immediately.
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------
