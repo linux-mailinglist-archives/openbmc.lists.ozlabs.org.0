@@ -1,56 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5359110D02A
+	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 01:20:40 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9B4F10C808
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 12:35:06 +0100 (CET)
-Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47NwY21p9BzDr0X
-	for <lists+openbmc@lfdr.de>; Thu, 28 Nov 2019 22:35:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47PFXP5dsszDr9S
+	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 11:20:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1044;
+ helo=mail-pj1-x1044.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Bv85t85R"; 
+ dkim-atps=neutral
+Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com
+ [IPv6:2607:f8b0:4864:20::1044])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47NwW105lDzDqyg
- for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 22:33:09 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 28 Nov 2019 03:33:05 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,253,1571727600"; d="scan'208";a="199499994"
-Received: from irsmsx152.ger.corp.intel.com ([163.33.192.66])
- by orsmga007.jf.intel.com with ESMTP; 28 Nov 2019 03:33:04 -0800
-Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
- IRSMSX152.ger.corp.intel.com ([169.254.6.76]) with mapi id 14.03.0439.000;
- Thu, 28 Nov 2019 11:33:04 +0000
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: "neladk@microsoft.com" <neladk@microsoft.com>
-Subject: Adding new metric definition use case
-Thread-Topic: Adding new metric definition use case
-Thread-Index: AdWl3aOwRZz1PlNdQ6G816tHTiv0cw==
-Date: Thu, 28 Nov 2019 11:33:03 +0000
-Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYWFlODk0NDMtM2EyZi00OWUwLWFjNmUtZjliMWYxOTdhMmFkIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoianR6azhBTEJ0cVB1eHBzb1dLcWQ1V1FlUXdvVTJacG9rdXhxXC9uQlBMR1JrZWhwNmpGSWYyNHhhK3VCb3ZBdGMifQ==
-x-ctpclassification: CTP_NT
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [163.33.239.182]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47PFWb0VkYzDr8g
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2019 11:19:53 +1100 (AEDT)
+Received: by mail-pj1-x1044.google.com with SMTP id y21so12493747pjn.9
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 16:19:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=h53cQjZSibuH3tAJSYGep55eMe8Vd0lhXfafS/71YMc=;
+ b=Bv85t85R3UvENEoNM1z9LUb+cWEgsm9+BUi6Z6TY45q7P4tPHrTkzmbq19ZyKt3gaY
+ 4Y7b1GC07f6G3J9lhtrt1nyCJUz91Vr1W2Zz7WfhKYP89Y1e+CepLYa/Fd3ILNkgJBYm
+ HXkFZ33yEKBBype4wxBkYrsItVCCwAL4ez8pa2iagti25qmNm1/7arPwnqs0LjBvPk/a
+ HcOWyYq2ZMG0wlTN87SrVWqCrlFKwRYxUDQ1pE9TplPwkhzvnEg5teYfGGf3zSega9/A
+ 2n83v1OcpOZr1pKNmtVs5LQQ3sLA7oD9FUEar9wbLLo7EXJLaDtOv+EpKnCuO6o92m7i
+ Udsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=h53cQjZSibuH3tAJSYGep55eMe8Vd0lhXfafS/71YMc=;
+ b=ozJmIji3FaDOdpRuYtg7jJgCGY0A+Udr/gIR3N9m6Er6/RCp6BSqxxogMCTb4NzObP
+ BhdFwgX28OrYC1LkAthmsXGR4AOn+NOcMm5dwX2n/Ibk1gK2ZpEC6QMqEtHUCLp6g+t1
+ Tz/CbKJe4MwSealz0IFLzkOrgAWIwYtej02QjoJWQBg+QuGRNhbVWXiPup0aB07kPMvn
+ R0IkYZs+l6/fNmKkteG/T+SFXCUx+uIKeUiqjh4S5iQPxYHpUOKHk3HroxmsSNivDYgg
+ jb4DOeQMi2tTGeicgh8vRL6rokpnjmBUm5bqR5HtFB1GT+GnRe8cyrVp2v1GgKnsZ4oe
+ F/nA==
+X-Gm-Message-State: APjAAAUAmVtrRCk1WTsgFr1FJ3gHPvPoB840pBdkIxDFrOIYCoKAslHT
+ t1GKt2rgmwIIxQkvbHPJITA=
+X-Google-Smtp-Source: APXvYqydSlcywgyu28ko3Or1LMj946GqVhi84pXtfb+mGorPFT5tefwcV+ieBvVCZA+weqO0Y7JsjQ==
+X-Received: by 2002:a17:902:a408:: with SMTP id
+ p8mr12227465plq.266.1574986791930; 
+ Thu, 28 Nov 2019 16:19:51 -0800 (PST)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id c2sm21717929pfn.55.2019.11.28.16.19.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Nov 2019 16:19:50 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: David Woodhouse <dwmw2@infradead.org>, Richard Weinberger <richard@nod.at>,
+ Jia-Ju Bai <baijiaju1990@gmail.com>, Al Viro <viro@zeniv.linux.org.uk>,
+ openbmc@lists.ozlabs.org, linux-mtd@lists.infradead.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH] Revert "jffs2: Fix possible null-pointer dereferences in
+ jffs2_add_frag_to_fragtree()"
+Date: Fri, 29 Nov 2019 10:49:30 +1030
+Message-Id: <20191129001930.651128-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,29 +81,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
- Adrian" <adrian.ambrozewicz@intel.com>
+Cc: stable@vger.kernel.org, Hou Tao <houtao1@huawei.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Neeraj,
+This reverts commit f2538f999345405f7d2e1194c0c8efa4e11f7b3a. The patch
+stopped JFFS2 from being able to mount an existing filesystem with the
+following errors:
 
-	As we talked recently during the Telemetry WG meeting, you were asking abo=
-ut adding new metric definitions. Please, let me better understand your use=
- case, you have HW sensor present on the board (for example, let it be CPU0=
- VR temperature), you have already HWmon reading it and exposing it as the =
-sensor on D-Bus. You want to be able to add the new Metric Definition for p=
-roper interpretation of sensor's reading and new metric definition shall al=
-so modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it c=
-orrectly?=20
-	Monitoring Service does not have to interpret the metric from the sensors,=
- because it is used only for report management.=20
-	=20
+ jffs2: error: (77) jffs2_build_inode_fragtree: Add node to tree failed -22
+ jffs2: error: (77) jffs2_do_read_inode_internal: Failed to build final fragtree for inode #5377: error -22
 
-Piotr Matuszczak
----------------------------------------------------------------------
-Intel Technology Poland sp. z o.o.=20
-ul. Slowackiego 173, 80-298 Gdansk
-KRS 101882
-NIP 957-07-52-316
+Fixes: f2538f999345 ("jffs2: Fix possible null-pointer dereferences...")
+Cc: stable@vger.kernel.org
+Suggested-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+5.4 cannot mount (some?) jffs2 filesystems without this fix. Hou pointed
+this out[1] a while back but the fix didn't make it in. It's still
+broken in -next.
+
+[1] https://lore.kernel.org/lkml/2758feea-8d6e-c690-5cac-d42213f2024b@huawei.com/
+
+ fs/jffs2/nodelist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/jffs2/nodelist.c b/fs/jffs2/nodelist.c
+index 021a4a2190ee..b86c78d178c6 100644
+--- a/fs/jffs2/nodelist.c
++++ b/fs/jffs2/nodelist.c
+@@ -226,7 +226,7 @@ static int jffs2_add_frag_to_fragtree(struct jffs2_sb_info *c, struct rb_root *r
+ 		lastend = this->ofs + this->size;
+ 	} else {
+ 		dbg_fragtree2("lookup gave no frag\n");
+-		return -EINVAL;
++		lastend = 0;
+ 	}
+ 
+ 	/* See if we ran off the end of the fragtree */
+-- 
+2.24.0
 
