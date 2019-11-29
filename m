@@ -2,74 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5359110D02A
-	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 01:20:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E59E10D1A7
+	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 07:57:41 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47PFXP5dsszDr9S
-	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 11:20:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47PQLT0V8qzDr7h
+	for <lists+openbmc@lfdr.de>; Fri, 29 Nov 2019 17:57:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1044;
- helo=mail-pj1-x1044.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Bv85t85R"; 
- dkim-atps=neutral
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com
- [IPv6:2607:f8b0:4864:20::1044])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47PFWb0VkYzDr8g
- for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2019 11:19:53 +1100 (AEDT)
-Received: by mail-pj1-x1044.google.com with SMTP id y21so12493747pjn.9
- for <openbmc@lists.ozlabs.org>; Thu, 28 Nov 2019 16:19:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=h53cQjZSibuH3tAJSYGep55eMe8Vd0lhXfafS/71YMc=;
- b=Bv85t85R3UvENEoNM1z9LUb+cWEgsm9+BUi6Z6TY45q7P4tPHrTkzmbq19ZyKt3gaY
- 4Y7b1GC07f6G3J9lhtrt1nyCJUz91Vr1W2Zz7WfhKYP89Y1e+CepLYa/Fd3ILNkgJBYm
- HXkFZ33yEKBBype4wxBkYrsItVCCwAL4ez8pa2iagti25qmNm1/7arPwnqs0LjBvPk/a
- HcOWyYq2ZMG0wlTN87SrVWqCrlFKwRYxUDQ1pE9TplPwkhzvnEg5teYfGGf3zSega9/A
- 2n83v1OcpOZr1pKNmtVs5LQQ3sLA7oD9FUEar9wbLLo7EXJLaDtOv+EpKnCuO6o92m7i
- Udsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=h53cQjZSibuH3tAJSYGep55eMe8Vd0lhXfafS/71YMc=;
- b=ozJmIji3FaDOdpRuYtg7jJgCGY0A+Udr/gIR3N9m6Er6/RCp6BSqxxogMCTb4NzObP
- BhdFwgX28OrYC1LkAthmsXGR4AOn+NOcMm5dwX2n/Ibk1gK2ZpEC6QMqEtHUCLp6g+t1
- Tz/CbKJe4MwSealz0IFLzkOrgAWIwYtej02QjoJWQBg+QuGRNhbVWXiPup0aB07kPMvn
- R0IkYZs+l6/fNmKkteG/T+SFXCUx+uIKeUiqjh4S5iQPxYHpUOKHk3HroxmsSNivDYgg
- jb4DOeQMi2tTGeicgh8vRL6rokpnjmBUm5bqR5HtFB1GT+GnRe8cyrVp2v1GgKnsZ4oe
- F/nA==
-X-Gm-Message-State: APjAAAUAmVtrRCk1WTsgFr1FJ3gHPvPoB840pBdkIxDFrOIYCoKAslHT
- t1GKt2rgmwIIxQkvbHPJITA=
-X-Google-Smtp-Source: APXvYqydSlcywgyu28ko3Or1LMj946GqVhi84pXtfb+mGorPFT5tefwcV+ieBvVCZA+weqO0Y7JsjQ==
-X-Received: by 2002:a17:902:a408:: with SMTP id
- p8mr12227465plq.266.1574986791930; 
- Thu, 28 Nov 2019 16:19:51 -0800 (PST)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id c2sm21717929pfn.55.2019.11.28.16.19.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Nov 2019 16:19:50 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: David Woodhouse <dwmw2@infradead.org>, Richard Weinberger <richard@nod.at>,
- Jia-Ju Bai <baijiaju1990@gmail.com>, Al Viro <viro@zeniv.linux.org.uk>,
- openbmc@lists.ozlabs.org, linux-mtd@lists.infradead.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH] Revert "jffs2: Fix possible null-pointer dereferences in
- jffs2_add_frag_to_fragtree()"
-Date: Fri, 29 Nov 2019 10:49:30 +1030
-Message-Id: <20191129001930.651128-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.24.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47PQKf11zLzDr58
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Nov 2019 17:56:52 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 28 Nov 2019 22:56:48 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,256,1571727600"; 
+ d="scan'208,217";a="359987157"
+Received: from yongli3-mobl.ccr.corp.intel.com (HELO yongli3MOBL)
+ ([10.239.196.63])
+ by orsmga004.jf.intel.com with ESMTP; 28 Nov 2019 22:56:47 -0800
+From: "Yong Li" <yong.b.li@linux.intel.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: license conflicts with OpenSSL
+Date: Fri, 29 Nov 2019 14:56:46 +0800
+Message-ID: <000001d5a682$2b3fabd0$81bf0370$@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_000_0001_01D5A6C5.3963FD40"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdWmga5ssB2f9xIzTCqkh8Kxq6hw8g==
+Content-Language: en-us
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiZGVjYTlkMGEtOTNkMS00OTZmLTgzNGQtMTAwYWY1YjIyMDU2IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiUEdoSUxsc3I1YlIzempLc3B6SkFPdnN1VUlCYTlzRjdoOHRpeHZyb0plc3pEOWxKZGpLd1J4RGczUUlXdittXC8ifQ==
+dlp-product: dlpe-windows
+dlp-version: 11.0.600.7
+dlp-reaction: no-action
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,44 +58,179 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: stable@vger.kernel.org, Hou Tao <houtao1@huawei.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This reverts commit f2538f999345405f7d2e1194c0c8efa4e11f7b3a. The patch
-stopped JFFS2 from being able to mount an existing filesystem with the
-following errors:
+This is a multipart message in MIME format.
 
- jffs2: error: (77) jffs2_build_inode_fragtree: Add node to tree failed -22
- jffs2: error: (77) jffs2_do_read_inode_internal: Failed to build final fragtree for inode #5377: error -22
+------=_NextPart_000_0001_01D5A6C5.3963FD40
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-Fixes: f2538f999345 ("jffs2: Fix possible null-pointer dereferences...")
-Cc: stable@vger.kernel.org
-Suggested-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-5.4 cannot mount (some?) jffs2 filesystems without this fix. Hou pointed
-this out[1] a while back but the fix didn't make it in. It's still
-broken in -next.
+Hi All,
 
-[1] https://lore.kernel.org/lkml/2758feea-8d6e-c690-5cac-d42213f2024b@huawei.com/
-
- fs/jffs2/nodelist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/fs/jffs2/nodelist.c b/fs/jffs2/nodelist.c
-index 021a4a2190ee..b86c78d178c6 100644
---- a/fs/jffs2/nodelist.c
-+++ b/fs/jffs2/nodelist.c
-@@ -226,7 +226,7 @@ static int jffs2_add_frag_to_fragtree(struct jffs2_sb_info *c, struct rb_root *r
- 		lastend = this->ofs + this->size;
- 	} else {
- 		dbg_fragtree2("lookup gave no frag\n");
--		return -EINVAL;
-+		lastend = 0;
- 	}
  
- 	/* See if we ran off the end of the fragtree */
--- 
-2.24.0
+
+Just found that some packages included in openbmc have license conflict
+issues between OpenSSL and GPL
+
+ 
+
+Ipmitool package and krb5 package are both linked to openssl and other GPL
+libs. 
+
+ 
+
+Based on the discussion in
+https://lists.debian.org/debian-legal/2004/05/msg00595.html, I think they
+are conflict licenses.
+
+ 
+
+Just want to know if we need to do something? Such as add an additional
+license file?
+
+ 
+
+ 
+
+More information:
+
+meta-openembedded/meta-oe/recipes-kernel/ipmitool/ipmitool_1.8.18.bb
+
+LICENSE = "BSD-3-Clause"
+
+DEPENDS = "openssl readline ncurses"
+
+ 
+
+Readline is GPLv3
+
+ 
+
+meta-openembedded/meta-oe/recipes-connectivity/krb5/krb5_1.17.bb:
+
+LICENSE = "MIT"
+
+DEPENDS = "bison-native ncurses util-linux e2fsprogs e2fsprogs-native
+openssl"
+
+ 
+
+Util-linux is GPLv2
+
+ 
+
+ 
+
+Thanks,
+
+Yong
+
+
+------=_NextPart_000_0001_01D5A6C5.3963FD40
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle18
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DEN-US =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Hi All,<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Just found =
+that some packages included in openbmc have license conflict issues =
+between OpenSSL and GPL<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Ipmitool =
+package and krb5 package are both linked to openssl and other GPL libs. =
+<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Based on the discussion in <a =
+href=3D"https://lists.debian.org/debian-legal/2004/05/msg00595.html">http=
+s://lists.debian.org/debian-legal/2004/05/msg00595.html</a>, I think =
+they are conflict licenses.<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Just want to =
+know if we need to do something? Such as add an additional license =
+file?<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>More =
+information:<o:p></o:p></p><p =
+class=3DMsoNormal>meta-openembedded/meta-oe/recipes-kernel/ipmitool/ipmit=
+ool_1.8.18.bb<o:p></o:p></p><p class=3DMsoNormal>LICENSE =3D =
+&quot;BSD-3-Clause&quot;<o:p></o:p></p><p class=3DMsoNormal>DEPENDS =3D =
+&quot;openssl readline ncurses&quot;<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>Readline is =
+GPLv3<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>meta-openembedded/meta-oe/recipes-connectivity/krb5/krb=
+5_1.17.bb:<o:p></o:p></p><p class=3DMsoNormal>LICENSE =3D =
+&quot;MIT&quot;<o:p></o:p></p><p class=3DMsoNormal>DEPENDS =3D =
+&quot;bison-native ncurses util-linux e2fsprogs e2fsprogs-native =
+openssl&quot;<o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Util-linux is GPLv2<o:p></o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
+class=3DMsoNormal>Thanks,<o:p></o:p></p><p =
+class=3DMsoNormal>Yong<o:p></o:p></p></div></body></html>
+------=_NextPart_000_0001_01D5A6C5.3963FD40--
 
