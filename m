@@ -2,114 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1724310EC1D
-	for <lists+openbmc@lfdr.de>; Mon,  2 Dec 2019 16:14:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD55710EC25
+	for <lists+openbmc@lfdr.de>; Mon,  2 Dec 2019 16:16:23 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47RTCm56bKzDqNs
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 02:13:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47RTGX71XhzDq9H
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 02:16:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=lenovo.com (client-ip=67.219.246.6;
+ helo=mail1.bemta23.messagelabs.com; envelope-from=rli11@lenovo.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="bYAlIU69"; 
- dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.6])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47RTBy3sYZzDqNF
- for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 02:12:56 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 17C30411FD;
- Mon,  2 Dec 2019 15:12:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:in-reply-to:mime-version:user-agent
- :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1575299565; x=
- 1577113966; bh=IeXAh5Vj75f84tDdVXm2D3ffA4xLBK6PQa2oD2KWkXY=; b=b
- YAlIU6912Axh9sAU12yh66ri5wbpNxrdELnaoQP7birRHtDeBZ3UOJQPQTGaI4je
- 9D463H9gwj4NbjsxQXi3pTFuDdrdCa1bbWdWcDeL2fEwWIe0EJrtlgtqHZ/dP0C5
- wPZ0AcmvbpgL53KpnhQmi5dXFAPeed93+9MJGIaceY=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Wb0vBr2_DaJv; Mon,  2 Dec 2019 18:12:45 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47RTFs3zGbzDqNH
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 02:15:44 +1100 (AEDT)
+Received: from [67.219.246.102] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-6.bemta.az-b.us-east-1.aws.symcld.net id BA/54-22122-D9A25ED5;
+ Mon, 02 Dec 2019 15:15:41 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRWlGSWpSXmKPExsWS8eIhj+4crae
+ xBvtWWlscntrAZHGq5QWLA5PHhEUHGD3Oz1jIGMAUxZqZl5RfkcCa0XFpJnvBA+GK1nsbGBsY
+ uwW6GLk4hAQamCT6Pk1ihnBeMUq0L/3PAuHsZZRYcmIjWxcjJwebgJJEy6sV7CC2iECixOP/j
+ YxdjBwcwgIuEl+WCEKEXSUmnT7MDBIWEbCSeNxpBGKyCKhI/H8gBlLBK2ApsfXNY1aI6fMZJS
+ Y+eMsIkmAUkJV4suAZE4jNLCAuce5iK9gmCQEBiSV7zjND2KISLx//Y4WwFSSa97xmgajXk7g
+ xdQobhK0tsWzha2aIZYISJ2c+YZnAKDwLydhZSFpmIWmZhaRlASPLKkazpKLM9IyS3MTMHF1D
+ AwNdQ0MjXUNdQxNjvcQq3SS90mLd1MTiEl1DvcTyYr3iytzknBS9vNSSTYzAeEkpYOzfwfjt6
+ 1u9Q4ySHExKorx/Pz+JFeJLyk+pzEgszogvKs1JLT7EKMPBoSTB+1b1aayQYFFqempFWmYOMH
+ Zh0hIcPEoivKs0gdK8xQWJucWZ6RCpU4zGHBNezl3EzHHw6LxFzEIsefl5qVLivCwgpQIgpRm
+ leXCDYCnlEqOslDAvIwMDgxBPQWpRbmYJqvwrRnEORiVhXiGQKTyZeSVw+4CpAugLEV7zlkcg
+ p5QkIqSkGpgcs134Z+9ILtu93+T7Nz2vWPevfyqPnVpoojN3uevPuw1nMiaUMkRNL5ia2r7rR
+ oz8un9hUZsbt3OJMhavNGZaErdp1fWHDtwLV+z1Xx+5de5r4ezwl8zzN17c+bjZ5FnZ181fyi
+ +lpjZGlobz/W3L/rvKWXVjBp+Q8K1V7Tv7+go59b28p159W+R8LMjWzjbVUeGSzk2NfC1d/z1
+ WdbeFJu5l/78yha3pZV981C3p7oWzzJd0bj2oEDv3mPP5y8cjHhQ0FZyzNaotn29tteFZ2R5P
+ dbkrd3/VJHmZ9UT4FQXdeXRmmWTPrHeXj64O2B7I1tZZ/my1hI70Ge1L10Pv8e0WObljfd+pa
+ x/rhQWUWIozEg21mIuKEwGtrlm5pAMAAA==
+X-Env-Sender: rli11@lenovo.com
+X-Msg-Ref: server-30.tower-386.messagelabs.com!1575299740!342594!1
+X-Originating-IP: [104.232.225.12]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.44.22; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 13570 invoked from network); 2 Dec 2019 15:15:40 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.12)
+ by server-30.tower-386.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 2 Dec 2019 15:15:40 -0000
+Received: from HKGWPEMAIL01.lenovo.com (unknown [10.128.3.69])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id CF767411F8;
- Mon,  2 Dec 2019 18:12:45 +0300 (MSK)
-Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 2 Dec
- 2019 18:12:45 +0300
-Subject: Re: license conflicts with OpenSSL
-To: Yong Li <yong.b.li@linux.intel.com>, <openbmc@lists.ozlabs.org>
-References: <000001d5a682$2b3fabd0$81bf0370$@linux.intel.com>
- <b0b878b8-ff90-9e22-2831-44b086c0d8a2@yadro.com>
- <002701d5a8ac$fe40d280$fac27780$@linux.intel.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
- 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
- dTYsE5wSxM06T2l/MILupCNZ7A==
-Organization: YADRO
-Message-ID: <e90e0947-6024-7967-f62f-43f899ed0764@yadro.com>
-Date: Mon, 2 Dec 2019 18:12:44 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by Forcepoint Email with ESMTPS id 264EB8C557D83AA08E70;
+ Mon,  2 Dec 2019 10:15:39 -0500 (EST)
+Received: from HKGWPEMAIL04.lenovo.com (10.128.3.72) by
+ HKGWPEMAIL01.lenovo.com (10.128.3.69) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Mon, 2 Dec 2019 12:15:35 -0300
+Received: from HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613]) by
+ HKGWPEMAIL04.lenovo.com ([fe80::f1ef:1ffe:9927:6613%5]) with mapi id
+ 15.01.1591.008; Mon, 2 Dec 2019 23:15:21 +0800
+From: Ivan Li11 <rli11@lenovo.com>
+To: Matt Spinler <mspinler@linux.ibm.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: [External] Power-on monitor for phosphor-hwmon question
+Thread-Topic: [External] Power-on monitor for phosphor-hwmon question
+Thread-Index: AQHViNvz9OdLXZ460kajgXlfSVMf8KefRJjwgAfloOA=
+Date: Mon, 2 Dec 2019 15:15:21 +0000
+Message-ID: <e1d67f474f6b4be2b28a583a9c848741@lenovo.com>
+References: <c353f372a5ce45fdbe1172678d8c029d@lenovo.com>
+ <82798e33e5a34f81ac30553c099ad964@lenovo.com>
+ <24228a0e-1e29-d661-3cc1-585e9a0501a4@linux.ibm.com> 
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-In-Reply-To: <002701d5a8ac$fe40d280$fac27780$@linux.intel.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="WFHj3y78mAc8GAdFiFclZolkxQtlwocjG"
-X-Originating-IP: [172.17.14.197]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,77 +97,79 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---WFHj3y78mAc8GAdFiFclZolkxQtlwocjG
-Content-Type: multipart/mixed; boundary="2NYUaJiuKXeATY16O2ce3n6Mw5NNIjEAs";
- protected-headers="v1"
-From: Alexander Amelkin <a.amelkin@yadro.com>
-To: Yong Li <yong.b.li@linux.intel.com>, openbmc@lists.ozlabs.org
-Message-ID: <e90e0947-6024-7967-f62f-43f899ed0764@yadro.com>
-Subject: Re: license conflicts with OpenSSL
-References: <000001d5a682$2b3fabd0$81bf0370$@linux.intel.com>
- <b0b878b8-ff90-9e22-2831-44b086c0d8a2@yadro.com>
- <002701d5a8ac$fe40d280$fac27780$@linux.intel.com>
-In-Reply-To: <002701d5a8ac$fe40d280$fac27780$@linux.intel.com>
+> -----Original Message-----
+> From: Ivan Li11
+> Sent: Wednesday, November 27, 2019 10:26 PM
+> To: 'Matt Spinler' <mspinler@linux.ibm.com>; openbmc@lists.ozlabs.org
+> Subject: RE: [External] Power-on monitor for phosphor-hwmon question
+>=20
+> > -----Original Message-----
+> > From: Matt Spinler <mspinler@linux.ibm.com>
+> > Sent: Tuesday, October 22, 2019 9:24 PM
+> > To: Ivan Li11 <rli11@lenovo.com>; openbmc@lists.ozlabs.org
+> > Subject: Re: [External] Power-on monitor for phosphor-hwmon question
+> >
+> >
+> >
+> > On 10/21/2019 6:02 AM, Ivan Li11 wrote:
+> > >
+> > > Hi Team,
+> > >
+> > > Does anyone have suggestion for this ?
+> > >
+> > Hi, you're right, it doesn't support that yet.=A0 We've had a few
+> > internal discussions about how to handle that gracefully, though our
+> > platforms don't use sel-logger, but nothing solid came out of them and
+> > we don't have anything scheduled yet.
+> >
+> > It would be easy enough to have a watch on the PGOOD property, and
+> > then do you what you want, like maybe turning off the thresholds.
+> >
+> > I heard that the d-bus sensors repository has some sort of support for
+> > this, but since we don't use it I'm not sure what all that entails. I
+> > think it may also force you to replace phosphor-inventor-manager with
+> entity-manager.
+> >
+>=20
+> Hi Matt,
+> We can use dbus-match mechanism in phosphor-hwmon to turn on/off the
+> thresholds just like what dbus-sensors repository does in the following l=
+ink:
+> https://github.com/openbmc/dbus-sensors/blob/432d1edf7ac86f69558273307
+> a59e4b1cf86b8a6/src/Utils.cpp#L141
+>=20
+> If it's ok for you, I'll work on it and send patch for you review.
+> Please help to comment on it.
+>=20
 
---2NYUaJiuKXeATY16O2ce3n6Mw5NNIjEAs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+Hi Matt,
+Could you help to comment on this proposal. =20
+Thanks your great support in advance.
 
-02.12.2019 4:08, Yong Li wrote:
-> Thanks Alexander for your quick response!
->
-> My understanding is that you will perform some changes in the upstream
-> https://github.com/ipmitool/ipmitool, to remove these unused/obsolete
-> dependencies.
+> > > Thanks your great support in advance.
+> > >
+> > > *From:*openbmc <openbmc-bounces+rli11=3Dlenovo.com@lists.ozlabs.org>
+> > *On
+> > > Behalf Of *Ivan Li11
+> > > *Sent:* Friday, October 18, 2019 5:59 PM
+> > > *To:* openbmc@lists.ozlabs.org
+> > > *Subject:* [External] Power-on monitor for phosphor-hwmon question
+> > >
+> > > Hi Team,
+> > >
+> > > We found that there's no power-on monitor mechanism in
+> > phosphor-hwmon.
+> > >
+> > > https://github.com/openbmc/phosphor-hwmon
+> > >
+> > > And it will cause incorrect threshold logs to be added to journal
+> > > log by 'sel-logger' when system is in power off(S5) state.
+> > >
+> > > Is there any plan to implement it? Or other repository we can refer t=
+o ?
+> > >
+> > > Thanks,
+> > >
+> > > Ivan
+> > >
 
-You're correct. I've already posted a PR to remove the ncurses dependency=
-:
-https://github.com/ipmitool/ipmitool/pull/175
-
-I'd like at least Vernon to approve it before I merge it into master.
-
-> But I notice the ipmitool_1.8.18.bb file in openembedded is using these=
-
-> .tar.bz2 files from sourceforge.net. Just want to know do you upload th=
-e new
-> versions to sourceforge.net?
-
-No, the sourceforge.net is abandoned and will not be updated.
-
-New releases will be available at https://github.com/ipmitool/ipmitool/re=
-leases
-
-I don't yet have any schedule for the next release though.
-
-WBR, Alexander.
-
-
-
-
---2NYUaJiuKXeATY16O2ce3n6Mw5NNIjEAs--
-
---WFHj3y78mAc8GAdFiFclZolkxQtlwocjG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJd5SnsAAoJEOiTWHtbdBeNr40P/iyxA5mHoQ4GJ7u7Tt5GLI/z
-csomDWiorFCW+LZuaCq5lGtU8rO125y0SncGA8p/XiDpK/4z4fFNnOBKE1R2fUEV
-e98QJWB8K1tCDXXlblsEI1XlxfVafaC0zCuPkKJksrjyEwgvEjhutJgLBmSd6VUo
-aVIbdjEPht/stDfTtzf3dAkIGloJtaxZY6DRxGrNDdvWpT391LVUlLnUId0HhBym
-KbhBFtF4amdhuGe2ii/L05oWZif8emxxflC3AHdbcvrujPwGm4T25yzyNnkTpDTb
-enOvEfTwJ/DpYQBLkwA4M5Q3pP5+vteNNJa1NJ4SFNuaUJi43S0onvaL/z+vQaA4
-cZnjxdg2sHsTx+dxfvfy4HRhD0NGC+bWlNqtjWazQyP/xt1VYPMHSAD5AocBb8QN
-w88Fgmg+WH9hl6Cd3x4rx54BUh5y9Xm6xYpxH0d/ujjaalgczXgQJ6ozu9VbaqgR
-o9goiUvnbFFjEop0YC36DnMUOgxfPaUMgdQ0Y4jbYYcNQDcAAu5+L90B6vEltmqp
-IMSXajO4dWwvNXWVwySIIoA+eNaW6ZHbjB6OU+MhVG/gEEkYTSgDzg+EPB5IaaRL
-n1JNvrjx8y2AsoFMJqxeA1z4rMe6+rbfmg2jBm2rTLynG3fIRjCUaRiRDOp3ieRV
-8D3/sPx4UQwpRvohaD2h
-=LvH+
------END PGP SIGNATURE-----
-
---WFHj3y78mAc8GAdFiFclZolkxQtlwocjG--
