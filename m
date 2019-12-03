@@ -2,65 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90D8610F52B
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 03:48:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 168FE10F8C5
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 08:33:54 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47RmdR3yc8zDqPW
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 13:48:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47RtyP41cCzDqVV
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 18:33:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
- helo=mail-qt1-x841.google.com; envelope-from=joel.stan@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="QmE3Ciqg"; 
- dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Rmcf0ph5zDqNs
- for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 13:48:01 +1100 (AEDT)
-Received: by mail-qt1-x841.google.com with SMTP id 14so2198852qtf.5
- for <openbmc@lists.ozlabs.org>; Mon, 02 Dec 2019 18:48:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Qg1/5nklWXzXN51QkowyeT60TVZUbZHL5L2I2tqxDP0=;
- b=QmE3Ciqg7xDrpKHm0xVKAFxEijQOIyoEiVTmWIJDP2wkjsoPtL3UdEdG6SmDk72vQY
- xzh9bQMifZ8LU834bG6n8ZEEfp/m26j08Itn67aVRGGnAiwYgWWsigl9q/UZI5nMVzbS
- LSUpeQPjwNTvkuhxgWfd4+0x1waQlg/qkpOl8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Qg1/5nklWXzXN51QkowyeT60TVZUbZHL5L2I2tqxDP0=;
- b=SDjROOUCCTAGf+Rtg1me/0HAKeqgyDXscdi6TfDl7D2gkeKx8OqnZboqv7QR0XjPRz
- 3NoM9xbw8ghHFtlTAV+EoHqBqdxBPgA9jhAy1GJEyAQZADLpVdVyxumsVQXcruwcjSjh
- 512NxAHHzFn1sETwuCjJFbYdqDFBOOD98f6k0ZWgiMfvLld1k1IK0T9i0rsBNEbenZYH
- 5jAKgvgrWU/9wQeeV16e0GLxFq70j2c1xopjdb+hDmAhLFFstJlnsxIR532FaBB0c2ny
- zVjWkkb+/kJqK2pUUM18vk2qyeoA1oRUCBjedzTW0sSVdJ1uSjRWATMLaI0UZBpbosMd
- qPeg==
-X-Gm-Message-State: APjAAAUs3ZvcZh9tRLFSwV383NRee3+su1dtrQTJ7SBsMciq56w4ZgI5
- cGjDoFCtlGH577pkwOKv/Vghhzf+Xi64O6s/W/shnlts
-X-Google-Smtp-Source: APXvYqyWp06aM17ltHiWZB6xvssKkKVFLdQbbPF7A9GW4Hkd2Cs3E7TADutPErz4JrqOGb1DUWCjfMDKWJTOPa2l+mk=
-X-Received: by 2002:ac8:27a3:: with SMTP id w32mr3229359qtw.234.1575341275746; 
- Mon, 02 Dec 2019 18:47:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Rtxf27TmzDqVN
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 18:33:08 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xB37RQIs040776
+ for <openbmc@lists.ozlabs.org>; Tue, 3 Dec 2019 02:33:03 -0500
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wm6cyfqb7-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Dec 2019 02:33:02 -0500
+Received: from localhost
+ by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Tue, 3 Dec 2019 07:33:00 -0000
+Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
+ by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Tue, 3 Dec 2019 07:32:59 -0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
+ [9.149.105.62])
+ by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xB37WwfD66388062
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Dec 2019 07:32:58 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21ED4AE05D;
+ Tue,  3 Dec 2019 07:32:58 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 66348AE04D;
+ Tue,  3 Dec 2019 07:32:57 +0000 (GMT)
+Received: from [9.122.210.30] (unknown [9.122.210.30])
+ by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Dec 2019 07:32:57 +0000 (GMT)
+Subject: Re: Adding new metric definition use case
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
+ "neladk@microsoft.com" <neladk@microsoft.com>
+References: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
+From: vishwa <vishwa@linux.vnet.ibm.com>
+Date: Tue, 3 Dec 2019 13:02:56 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-References: <CACPK8XffZqTq3YqEEcA7mm4d1k0V30o1TLE79nBOGrVcEBCjog@mail.gmail.com>
- <be709e4f-1215-3d88-9974-1989b9867e60@linux.intel.com>
- <CACPK8XcvBTj=AxaREQuLpi6=YZdU03ajW1nXKhnvud_jP8Ez_g@mail.gmail.com>
- <cb401668-703b-9745-c022-44b8bdb2c07f@linux.intel.com>
-In-Reply-To: <cb401668-703b-9745-c022-44b8bdb2c07f@linux.intel.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 3 Dec 2019 02:47:43 +0000
-Message-ID: <CACPK8XdcoYMMYGJdxnafBiHkRpQt17w4maXUwOvfMf+NqF7Njg@mail.gmail.com>
-Subject: Re: Dropping PECI patches
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------D2FE3E64E396BFD19364BAF5"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19120307-0016-0000-0000-000002D03020
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19120307-0017-0000-0000-0000333227BB
+Message-Id: <992e9072-b5d6-ad06-4dc3-430b5ec1659c@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-03_01:2019-11-29,2019-12-03 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912030061
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,47 +91,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
+ Adrian" <adrian.ambrozewicz@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 3 Dec 2019 at 01:25, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+This is a multi-part message in MIME format.
+--------------D2FE3E64E396BFD19364BAF5
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+hello,
+
+I am just curious if the minutes are captured somewhere. The last I see 
+is: "*Minutes of meeting : 08/06/19 @ 10:00 PM IST"*
+
+Wiki: 
+https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Work-Group
+
+!! Vishwa !!
+
+On 11/28/19 5:03 PM, Matuszczak, Piotr wrote:
+> Hi Neeraj,
 >
-> On 12/2/2019 1:54 PM, Joel Stanley wrote:
-> > On Mon, 2 Dec 2019 at 18:09, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
-> >>
-> >> Hi Joel,
-> >>
-> >> Thanks for letting me know this. Also, thanks a lot for carrying the
-> >> out-of-tree PECI patches in OpenBMC kernel tree so far.
-> >>
-> >> Can I submit updated PECI patches to OpenBMC upstream if I'm gonna add
-> >> it back? Linux upstreaming isn't ready yet because configfs support
-> >> should be implemented to address subsystem maintainer's comments but it
-> >> needs at this moment in OpenBMC kernel tree to keep developing
-> >> dbus-sensors support.
-> >
-> > This was the status back in January. I think it's time to find someone
-> > to complete the work on PECI so it can be merged upstream.
-> >
-> > Once those patches have been posted, we can merge them into the
-> > openbmc tree while we wait for them to be merged into mainline.
+> 	As we talked recently during the Telemetry WG meeting, you were asking about adding new metric definitions. Please, let me better understand your use case, you have HW sensor present on the board (for example, let it be CPU0 VR temperature), you have already HWmon reading it and exposing it as the sensor on D-Bus. You want to be able to add the new Metric Definition for proper interpretation of sensor's reading and new metric definition shall also modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it correctly?
+> 	Monitoring Service does not have to interpret the metric from the sensors, because it is used only for report management.
+> 	
 >
-> I've made lots of update in Intel downstream PECI to address
-> maintainers' comments except the configfs thing so I agree that PECI
-> codes in OpenBMC kernel tree need to be updated. Can you give me a week
-> for submission of new patch set into linux upstream? In the meantime,
-> I'd like to keep the out-of-tree PECI patches if possible to avoid build
-> breaks in dbus-sensors repo.
+> Piotr Matuszczak
+> ---------------------------------------------------------------------
+> Intel Technology Poland sp. z o.o.
+> ul. Slowackiego 173, 80-298 Gdansk
+> KRS 101882
+> NIP 957-07-52-316
+>
 
-The build break of dbus-sensors has already held up moving to 5.4 for
-a week. I think this situation is a clear demonstration of how
-carrying out of tree patches for a long time slows down the
-development of the entire project.
+--------------D2FE3E64E396BFD19364BAF5
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-I will hold off moving to 5.4 for another week. Please keep us up to
-date with your progress.
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>hello,</p>
+    <p>I am just curious if the minutes are captured somewhere. The last
+      I see is: "<strong>Minutes of meeting : 08/06/19 @ 10:00 PM IST"</strong></p>
+    <div class="moz-cite-prefix">Wiki:
+<a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Work-Group">https://github.com/openbmc/openbmc/wiki/Platform-telemetry-and-health-monitoring-Work-Group</a></div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">!! Vishwa !!</div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">On 11/28/19 5:03 PM, Matuszczak, Piotr
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com">
+      <pre class="moz-quote-pre" wrap="">Hi Neeraj,
 
-Cheers,
+	As we talked recently during the Telemetry WG meeting, you were asking about adding new metric definitions. Please, let me better understand your use case, you have HW sensor present on the board (for example, let it be CPU0 VR temperature), you have already HWmon reading it and exposing it as the sensor on D-Bus. You want to be able to add the new Metric Definition for proper interpretation of sensor's reading and new metric definition shall also modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it correctly? 
+	Monitoring Service does not have to interpret the metric from the sensors, because it is used only for report management. 
+	 
 
-Joel
+Piotr Matuszczak
+---------------------------------------------------------------------
+Intel Technology Poland sp. z o.o. 
+ul. Slowackiego 173, 80-298 Gdansk
+KRS 101882
+NIP 957-07-52-316
+
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------D2FE3E64E396BFD19364BAF5--
+
