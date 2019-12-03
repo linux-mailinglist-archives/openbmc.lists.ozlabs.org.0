@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0469010FF48
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 14:52:48 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47S3Mc4sgvzDqXB
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 00:52:44 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D7710FF4A
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 14:54:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47S3PK4RLNzDqXW
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 00:54:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -15,42 +15,41 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="J+3Aavm1"; 
+ unprotected) header.d=yadro.com header.i=@yadro.com header.b="Wsi8SqLd"; 
  dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47S37b5M4jzDqV7
- for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 00:42:19 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47S3FL1dK1zDqTv
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 00:47:17 +1100 (AEDT)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 5216943E0C
- for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 13:42:14 +0000 (UTC)
+ by mta-01.yadro.com (Postfix) with ESMTP id 1CABB43D79;
+ Tue,  3 Dec 2019 13:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
  content-type:content-type:in-reply-to:mime-version:user-agent
  :date:date:message-id:organization:from:from:references:subject
- :subject:received:received:received; s=mta-01; t=1575380532; x=
- 1577194933; bh=cMjWiIMIZoPeKiL4W23pQDCVoSnfqhVkGUvpt6JRdwo=; b=J
- +3Aavm1d7wb+i5qHLGQEbUU7RilgvroaxwIUYbnHg+ng12AN1ozjVg3i90DnuU5g
- eDZDvzccky/IekNRWFA727TQRlgc9kSP8mi3D0goDEbHVUamxiv+ahBqafkGVyj5
- zPye9p6HIr8taS4Wt37AfeZhBm04tdnP/xelp9yGEE=
+ :subject:received:received:received; s=mta-01; t=1575380833; x=
+ 1577195234; bh=5FS45RMmC28cHZYhE0uA5aU3Xs79sNCdYDR0IpGFcbE=; b=W
+ si8SqLdqzQO7vhkXYT9W4kljss10oT6Yu1/s7JuyrJnkxHR69exxnKPndwJeC7Cc
+ W24CA1M5MxGeWq/JHGEXOs+NqDmEVQ7DvxT8XmG3meUxOoTzPR8sdqWRVTLzpqxP
+ LJmke8wW7AqUg669aAc4NIXRfKWGih1wGJ81k+o7rM=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id iPjayneofrA2 for <openbmc@lists.ozlabs.org>;
- Tue,  3 Dec 2019 16:42:12 +0300 (MSK)
+ with ESMTP id SXPB4EmLy9tW; Tue,  3 Dec 2019 16:47:13 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
  [172.17.10.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id CF3C943B4E
- for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 16:42:12 +0300 (MSK)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 28389438D1;
+ Tue,  3 Dec 2019 16:47:13 +0300 (MSK)
 Received: from [172.17.14.197] (172.17.14.197) by T-EXCH-02.corp.yadro.com
  (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 3 Dec
- 2019 16:42:12 +0300
-Subject: Re: IPMI Show DIMM SPD Feature
-To: <openbmc@lists.ozlabs.org>
-References: <75aac0e9cbd54214971ae9bed0e817ca@lenovo.com>
+ 2019 16:47:12 +0300
+Subject: Re: Add sensors to S2600WF
+To: AKASH G J <akashgj91@gmail.com>, <openbmc@lists.ozlabs.org>
+References: <CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmail.com>
 From: Alexander Amelkin <a.amelkin@yadro.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
@@ -97,15 +96,15 @@ Autocrypt: addr=a.amelkin@yadro.com; prefer-encrypt=mutual; keydata=
  KijxDkPtWeXDLbMgH1kA46gTPJWxsm0c45w7c3aXhXl4hOgXp+iWDTOT83tJU0zoD9hYlpZf
  dTYsE5wSxM06T2l/MILupCNZ7A==
 Organization: YADRO
-Message-ID: <4b86f9d2-3b22-5cde-8efe-14c6a4380f2a@yadro.com>
-Date: Tue, 3 Dec 2019 16:42:11 +0300
+Message-ID: <8d01e563-586a-11f0-e7b9-6bd4436e371b@yadro.com>
+Date: Tue, 3 Dec 2019 16:47:12 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <75aac0e9cbd54214971ae9bed0e817ca@lenovo.com>
+In-Reply-To: <CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="TxN49b6JAdlZtXrwjgE62322tojUPPzxI"
+ boundary="KmWR6xdXL6nDcGv87gcs7IuhTe6qCiXXw"
 X-Originating-IP: [172.17.14.197]
 X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
  T-EXCH-02.corp.yadro.com (172.17.10.102)
@@ -123,185 +122,114 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---TxN49b6JAdlZtXrwjgE62322tojUPPzxI
-Content-Type: multipart/mixed; boundary="9eQm8rmUVJyOES0Mc1Mi5PrhlDTzFyWlk";
+--KmWR6xdXL6nDcGv87gcs7IuhTe6qCiXXw
+Content-Type: multipart/mixed; boundary="MhBrpjDYbB4WbZfxzwWh5Y6F3ICctOWhp";
  protected-headers="v1"
 From: Alexander Amelkin <a.amelkin@yadro.com>
-To: openbmc@lists.ozlabs.org
-Message-ID: <4b86f9d2-3b22-5cde-8efe-14c6a4380f2a@yadro.com>
-Subject: Re: IPMI Show DIMM SPD Feature
-References: <75aac0e9cbd54214971ae9bed0e817ca@lenovo.com>
-In-Reply-To: <75aac0e9cbd54214971ae9bed0e817ca@lenovo.com>
+To: AKASH G J <akashgj91@gmail.com>, openbmc@lists.ozlabs.org
+Message-ID: <8d01e563-586a-11f0-e7b9-6bd4436e371b@yadro.com>
+Subject: Re: Add sensors to S2600WF
+References: <CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmail.com>
+In-Reply-To: <CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmail.com>
 
---9eQm8rmUVJyOES0Mc1Mi5PrhlDTzFyWlk
+--MhBrpjDYbB4WbZfxzwWh5Y6F3ICctOWhp
 Content-Type: multipart/alternative;
- boundary="------------CB001C00B753A8788D1871C3"
+ boundary="------------AB96FA405D5D92B8C358B6CA"
 Content-Language: en-US
 
 This is a multi-part message in MIME format.
---------------CB001C00B753A8788D1871C3
-Content-Type: text/plain; charset=windows-1252
+--------------AB96FA405D5D92B8C358B6CA
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-02.12.2019 14:49, Yonghui YH21 Liu wrote:
->
+03.12.2019 13:39, AKASH G J wrote:
 > Hi all,
 >
-> =A0=A0=A0=A0=A0=A0 Could you help double confirm whether BMC can show D=
-IMM SPD information
-> by IPMI interface in current openBMC design?
+> I am using S2600WF configuration for BMC firmware.=C2=A0 We are having =
+temperature
+> sensors and ADC voltage monitors connected on board. All sensor reading=
+s are
+> shown on hwmon sysfs interface.
 >
-> =A0=A0=A0=A0=A0=A0 If yes, could you help provide some guidance on impl=
-ementing the feature.
+> But it is not coming when issuing IPMI commands.
 >
-If you're referring to product info like part number, vendor, etc., then =
-yes,
-OpenBMC can show it.
+> $ ipmitool -I dbus sdr type temperature
+> $ ipmitool -I dbus sdr type voltage
+>
+> Is there anything to be done to make sure sensor values are reported ov=
+er DBus.
 
-Your host system must be sending SPD info into BMC as IPMI FRU. OpenPOWER=
+For s2600wf it's best to use the version of OpenBMC from the
+Intel-BMC repository (git@github.com:Intel-BMC/openbmc.git).
+I'm using their clean_builds branch.
 
-Firmware does that. Can't say for other types of hosts.
+Use 'wolfpass' machine there instead of `s2600wf` and build
+'intel-platforms' instead of 'phosphor-obmc-image'.
 
-You must have a proper configuration for phosphor-ipmi-fru. Take a look a=
-t how
-this is done for YADRO VESNIN:
-
-https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin/rec=
-ipes-phosphor/ipmi/phosphor-ipmi-fru_%25.bbappend
-
-https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin/rec=
-ipes-phosphor/configuration/vesnin-yaml-config.bb
-
-https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin/rec=
-ipes-phosphor/configuration/vesnin-yaml-config/vesnin-ipmi-fru.yaml
-
-The first number there is the FRU ID used by the host in IPMI Write FRU D=
-ata
-command:
-
->=A0 22:
-> =A0 =A0 =A0 =A0=A0 /system/chassis/motherboard/dimm8:
+Sensors work for me that way via IPMI.
 
 With best regards,
 Alexander Amelkin
 
 
-
---------------CB001C00B753A8788D1871C3
-Content-Type: text/html; charset=windows-1252
+--------------AB96FA405D5D92B8C358B6CA
+Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 <html>
   <head>
-    <meta http-equiv=3D"Content-Type" content=3D"text/html;
-      charset=3Dwindows-1252">
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
   </head>
   <body text=3D"#000000" bgcolor=3D"#FFFFFF">
-    02.12.2019 14:49, Yonghui YH21 Liu wrote:<br>
+    03.12.2019 13:39, AKASH G J wrote:<br>
     <blockquote type=3D"cite"
-      cite=3D"mid:75aac0e9cbd54214971ae9bed0e817ca@lenovo.com">
-      <meta http-equiv=3D"Content-Type" content=3D"text/html;
-        charset=3Dwindows-1252">
-      <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:\7B49\7EBF;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"\@\7B49\7EBF";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	font-size:10.5pt;
-	font-family:\7B49\7EBF;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:\7B49\7EBF;
-	color:windowtext;}
-=2EMsoChpDefault
-	{mso-style-type:export-only;
-	font-family:\7B49\7EBF;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-      <div class=3D"WordSection1">
-        <p class=3D"MsoNormal"><span lang=3D"EN-US">Hi all,<o:p></o:p></s=
-pan></p>
-        <p class=3D"MsoNormal"><span lang=3D"EN-US">=A0=A0=A0=A0=A0=A0 Co=
-uld you help
-            double confirm whether BMC can show DIMM SPD information by
-            IPMI interface in current openBMC design?
-            <o:p></o:p></span></p>
-        <p class=3D"MsoNormal"><span lang=3D"EN-US">=A0=A0=A0=A0=A0=A0 If=
- yes, could you
-            help provide some guidance on implementing the feature.</span=
-></p>
+cite=3D"mid:CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmai=
+l.com">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DU=
+TF-8">
+      <div dir=3D"ltr">
+        <div>Hi all,</div>
+        <div><br>
+        </div>
+        <div>I am using S2600WF configuration for BMC firmware.=C2=A0 We =
+are
+          having temperature sensors and ADC voltage monitors connected
+          on board. All sensor readings are shown on hwmon sysfs
+          interface.</div>
+        <div><br>
+        </div>
+        <div>But it is not coming when issuing IPMI commands.</div>
+        <div><br>
+        </div>
+        <div>$ ipmitool -I dbus sdr type temperature</div>
+        <div>$ ipmitool -I dbus sdr type voltage</div>
+        <div><br>
+        </div>
+        <div>Is there anything to be done to make sure <span
+            class=3D"gmail-il">sensor</span> values are reported over
+          DBus.</div>
       </div>
     </blockquote>
-    <p>If you're referring to product info like part number, vendor,
-      etc., then yes, OpenBMC can show it.</p>
-    <p>Your host system must be sending SPD info into BMC as IPMI FRU.
-      OpenPOWER Firmware does that. Can't say for other types of hosts.</=
-p>
-    <p>You must have a proper configuration for phosphor-ipmi-fru. Take
-      a look at how this is done for YADRO VESNIN:</p>
-    <p><a
-href=3D"https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-ve=
-snin/recipes-phosphor/ipmi/phosphor-ipmi-fru_%25.bbappend">https://github=
-=2Ecom/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin/recipes-phospho=
-r/ipmi/phosphor-ipmi-fru_%25.bbappend</a></p>
-    <p><a
-href=3D"https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-ve=
-snin/recipes-phosphor/configuration/vesnin-yaml-config.bb">https://github=
-=2Ecom/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin/recipes-phospho=
-r/configuration/vesnin-yaml-config.bb</a></p>
-    <p><a
-href=3D"https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-ve=
-snin/recipes-phosphor/configuration/vesnin-yaml-config/vesnin-ipmi-fru.ya=
-ml">https://github.com/openbmc/openbmc/blob/master/meta-yadro/meta-vesnin=
-/recipes-phosphor/configuration/vesnin-yaml-config/vesnin-ipmi-fru.yaml</=
-a></p>
-    <p>The first number there is the FRU ID used by the host in IPMI
-      Write FRU Data command:</p>
-    <p>&gt;=A0 22:<br>
-      &gt; =A0 =A0 =A0 =A0=A0 /system/chassis/motherboard/dimm8:</p>
-    <p>With best regards,<br>
-      Alexander Amelkin</p>
-    <br>
+    <p>For s2600wf it's best to use the version of OpenBMC from the<br>
+      Intel-BMC repository (<a class=3D"moz-txt-link-abbreviated" href=3D=
+"mailto:git@github.com:Intel-BMC/openbmc.git">git@github.com:Intel-BMC/op=
+enbmc.git</a>).<br>
+      I'm using their clean_builds branch.</p>
+    <p>Use 'wolfpass' machine there instead of `s2600wf` and build<br>
+      'intel-platforms' instead of 'phosphor-obmc-image'.</p>
+    <p>Sensors work for me that way via IPMI.<br>
+    </p>
+    <pre class=3D"moz-signature" cols=3D"80">With best regards,
+Alexander Amelkin</pre>
   </body>
 </html>
 
---------------CB001C00B753A8788D1871C3--
+--------------AB96FA405D5D92B8C358B6CA--
 
---9eQm8rmUVJyOES0Mc1Mi5PrhlDTzFyWlk--
+--MhBrpjDYbB4WbZfxzwWh5Y6F3ICctOWhp--
 
---TxN49b6JAdlZtXrwjgE62322tojUPPzxI
+--KmWR6xdXL6nDcGv87gcs7IuhTe6qCiXXw
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -309,19 +237,19 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2
 
-iQIcBAEBCAAGBQJd5mY0AAoJEOiTWHtbdBeNhvkQAJoQqS5+frovAHkMX3maS0GX
-HbDkSc6fbCYQzY2y1vKjaiyOq8snoXodHZPBA2hVLVJdtiQSiZN5VBTD7zTZYunb
-IjKvaItrNfIH2NnTywt7X0Zl5FHaXSLkciiWAlRs+RBb7ILTSvDpg3ddubvNWV1O
-papMZqS2RikN22ZJpJlS6pnVNmtn5jmZ5xjiGzTpEPuRkRr4uyDkcfE6V05ZdYVT
-Ou86e6qSr4CjKU9n6GCGAyz5esObya4bpCJQVTsMDLDTxhEvKGS7G76M9rj5H9Lc
-Y3KOTbA8KVPKvAutRH0JjQLukRhTNBKa7KgIVx03U2MXzN83XGgD50RE+uTtquUK
-/ASbaC9js4CtYNllthp/C1bTO7IcCrhzBF5RnouNex8TJqMOSVgLCWoUQA8luX8Q
-Mn7kLF0r5mXVKK9Y36urxe8gkYJZLKUzIzvEiY1Zt7jB9/WWdiknVjcf97KDd2p6
-ipAzNFnKm31fz2Bu6vUiLPUmQlJKdvGUWIKqXAFFLEDBHrst8WBe60DJVKivi4H8
-hFTjM33f8kRsejBYt7EVWayc4dq0ze93ZF9fp26yP5SxVjsTply7TXxcOtV/6nQo
-QeGuEJynmzYjkruOA7kVPnzPA/oqGAoNLy/u7pCJn2f+NH/iMTSzoAwp+qBMAu69
-vuEJaWz0xZjtnW1kwjmv
-=2eU/
+iQIcBAEBCAAGBQJd5mdgAAoJEOiTWHtbdBeNK6sQAIiv0IHnAKfi0FP/n3cy5b2i
+eJ2m35fGP9SxPulAK2i+utQanyJ3HOBjD6qo/mUadWdxQ08YCkMbPICDCGSzg0gl
+y+iTeUXl0vBCUGkpJ6DDHnKUDlSt/e6EaYXUwRCa1m/PKdd+KE4JdIkxB249To1c
+hxXtNCRps+SyNdUPbZvN+zVKwKBL39FkHeMS5qHU29Hko41bgy/eOpir2Nf2nep9
+KlNFyV+jge320u5mo/8VPCgoMtNZJ967asI8Tkz7Lcfxc812DlsoOlYATwhBbDFY
+9f7HE28o0URkuLoYU4t+ZcHAQpyyVFXM8DJaCr3q0VHvz5m3i/ccnCn9SVfdoSu/
+ERfJaZvsKDEtqd4MKWWaQL/9Ama8qL8fwvWdRRdcLqSix2pO6dMy71uMx9rCEVvE
+HKQ01OoupKf1U7z7tbhjOb2IPSAbCC9OqeS/VZZqZvsUsWx1eA6nJmFzhsNhHZMs
+ts3kgvSvOjV9c/EnvNDh9vnwuLgFF73SMHcfTGolpJ1EHzm1EhHxTcxcxvnVHLiL
+34lveDoWNc85/ewigNZMlzdllJrkJ4nkm2bxnzzYKzIJ1k76k5I9/SZ9+RrTq2xk
+Rtm7ph3auTq/+pPpiQl5nGVDHV8PWqMYT4ohZ3MdUTW2deI/k7Ay8A510ISIhK/m
+rYO54FvVNBRGM5kFyoKY
+=VpeS
 -----END PGP SIGNATURE-----
 
---TxN49b6JAdlZtXrwjgE62322tojUPPzxI--
+--KmWR6xdXL6nDcGv87gcs7IuhTe6qCiXXw--
