@@ -2,61 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F5F311063E
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 22:02:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5E13112025
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 00:20:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47SDvz3zv9zDqDT
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 08:02:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47SHz25dV9zDq8B
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 10:20:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=kathryn.elainex.pine@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::642;
+ helo=mail-pl1-x642.google.com; envelope-from=brendanhiggins@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.b="P2ym4D4f"; 
+ dkim-atps=neutral
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
+ [IPv6:2607:f8b0:4864:20::642])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47SDs96hLCzDqHw
- for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 08:00:28 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 03 Dec 2019 13:00:25 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,274,1571727600"; d="scan'208";a="213546553"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
- by orsmga006.jf.intel.com with ESMTP; 03 Dec 2019 13:00:24 -0800
-Received: from orsmsx123.amr.corp.intel.com (10.22.240.116) by
- ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Tue, 3 Dec 2019 13:00:24 -0800
-Received: from orsmsx113.amr.corp.intel.com ([169.254.9.200]) by
- ORSMSX123.amr.corp.intel.com ([169.254.1.236]) with mapi id 14.03.0439.000;
- Tue, 3 Dec 2019 13:00:23 -0800
-From: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
-To: Derick Montague <Derick.Montague@ibm.com>
-Subject: RE: GUI Component Library
-Thread-Topic: GUI Component Library
-Thread-Index: AQHVn+wtkNH9VJJADUGr57A1KY1RoaeXUJtwgAWdKQCAAOeqEIAB81AAgAeB7+CAAi2ugP//frBQ
-Date: Tue, 3 Dec 2019 21:00:23 +0000
-Message-ID: <FD0BD680739BFC41807C96BD23118BB131A94A@ORSMSX113.amr.corp.intel.com>
-References: <FD0BD680739BFC41807C96BD23118BB131A69B@ORSMSX113.amr.corp.intel.com>
- <OF39184269.99B81F04-ON002584C5.0011B6CF-002584C5.0071031B@notes.na.collabserv.com>
-In-Reply-To: <OF39184269.99B81F04-ON002584C5.0011B6CF-002584C5.0071031B@notes.na.collabserv.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ctpclassification: CTP_NT
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiNzIwYzc4MzItN2Y2OC00NjYzLWI5NmYtODI4OWRlY2IyNWM1IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiR3dGK2R4bXVVQk9VbjZNMkpOdTZlZWJxTEE0Tnk3TGkrNms2OTZOdk45MWxiUlJzdTM4bmJSekl6cXA2ZVdWUCJ9
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [10.22.254.140]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47SHxG5rMpzDq69
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 10:19:07 +1100 (AEDT)
+Received: by mail-pl1-x642.google.com with SMTP id o8so2308942pls.5
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Dec 2019 15:19:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9aXu3KlzmsFJZ6e1TagDw+H66vR2neNxwDhx8plTDXE=;
+ b=P2ym4D4fL1+2jZqsid93tZ5apni+LjMsWc92QordN593FLqJA+W4QsDirE/huNl5P1
+ knTb5ViKDuyT37oe2VN6u4X65E0qoBXrLkTPFAuJUi/5puCIe1qhO5AoFzYvaAhJhDJ/
+ ZGHsuAM2+IsfbemFqexEjQZ4n4aB/Wh5ZwyttSwHl/fUGPvWV8l/4obp0kKZH4Bn7wN8
+ NCNmGeMIhEC8bdCNINKJ3DfitAYpZweN1bWtt3twrfio7lymvab4N1QAZRZDbCoA8ly6
+ E8ZrLQ9Zp/SCypjcbsQgMv1HiPrzTDj5AEqazdjiq8h5eXDuVNBII9xFODUIIb0IxZ2V
+ PfHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9aXu3KlzmsFJZ6e1TagDw+H66vR2neNxwDhx8plTDXE=;
+ b=ajEbxXMo02oVFJ4cwmYtkHlYYI3IBFE1huUTlLzWEAL3IfMtUZsAVjzIi1c1o1Hr4+
+ tGlSXudF9683Dsrn+ey9/J4m8ojkJ3nenBBMG+Bni7KbnZi1RQIDDvIgBCHFXo5gst/V
+ qHaprqfnGa7XKTGpmgvR+wjp5/x0a5bnPEU6O5IcZ+UfMTsRYHAwaQUD3fwLKU4q7ZW2
+ PteS+pKFMZ8chVpxDryBw1lJ24Db2LUmQ2Wyc/4PFBaLgNu4pyGe4vBQTADoxAwzdLmW
+ FX9/LEp/ZbEIHclrFS1LQeg5d8PDgusrSJIWK5jJattmjSF1Y0yriq00Czt0ly3K2Tn6
+ c+CA==
+X-Gm-Message-State: APjAAAW8zsawfurnINdQDvaTuLeZFi0Na7I0jvhj3lCWbiQxri3cSiMt
+ mx7lpo17peJDgTo04Y6NrGfLtYueFXhtJtdGlf+IGA==
+X-Google-Smtp-Source: APXvYqwaPUhrCsgUEC6zT/MsYaJdSktVjMyOaLL/ZwQxaZzTYw2kYgyCxNVMDYa3yDWpwXTVusT3MTlJbF4W8DELTSA=
+X-Received: by 2002:a17:902:7c84:: with SMTP id
+ y4mr417290pll.297.1575415143951; 
+ Tue, 03 Dec 2019 15:19:03 -0800 (PST)
 MIME-Version: 1.0
+References: <20191125202937.23133-1-roy.van.doormaal@prodrive-technologies.com>
+ <20191126074025.5112-1-roy.van.doormaal@prodrive-technologies.com>
+In-Reply-To: <20191126074025.5112-1-roy.van.doormaal@prodrive-technologies.com>
+From: Brendan Higgins <brendanhiggins@google.com>
+Date: Tue, 3 Dec 2019 15:18:52 -0800
+Message-ID: <CAFd5g450nWm47mFi10W+J=oiaO_sV0fXh3SwH0zxX6ZF1qZ-Xw@mail.gmail.com>
+Subject: Re: [PATCH v2] irqchip/aspeed-i2c-ic: Fix irq domain name memory leak
+To: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,43 +74,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Jason Cooper <jason@lakedaemon.net>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSdtIHN1cmUgd2UgY2FuIGZpZ3VyZSBvdXQgaG93IHRvIGFwcHJvYWNoIHRoaXMgZGVzaWduIGNo
-YWxsZW5nZS4gSSBhcHByZWNpYXRlIHlvdSBiZWluZyB3aWxsaW5nIHRvIHdvcmsgd2l0aCBCb290
-c3RyYXAgYW5kIGFtIG9wZW4gdG8gZGlzY3Vzc2luZyB0aGUgYXBwcm9hY2ggeW91IHN1Z2dlc3Qu
-IEZyb20gbXkgcG9pbnQgb2YgdmlldywgSSBkbyBzZWUgYSB3YXkgZm9yd2FyZCB0byB1bmlmeSBv
-dXIgZGVzaWduIHN0eWxlcyBhbmQgcmVhbGx5IGZlZWwgbGlrZSBwdXR0aW5nIHRvZ2V0aGVyIGEg
-bW9ja3VwIGlzIGEgcHJvY2VzcyB0aGF0IHdpbGwgaGVscCBtZSBzZWUgYW5kIHNoYXJlIHRoYXQg
-dmlzaW9uLCBzbyBwZXJoYXBzIEknbGwganVzdCB3b3JrIG9uIHRoYXQgYW5kIHNoYXJlIGl0IHdo
-ZW4gaXQncyByZWFkeS4uLiBhbmQgbWVhbndoaWxlIHdlIGNhbiBkaXNjdXNzIHlvdXIgcHJvcG9z
-ZWQgYXBwcm9hY2ggaW4gdGhlIEdVSSBEZXNpZ24gd29ya2dyb3VwIG1lZXRpbmcgdG9tb3Jyb3cu
-DQoNClRoYW5rcywNCkthdGh5IA0KDQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTog
-RGVyaWNrIE1vbnRhZ3VlIDxEZXJpY2suTW9udGFndWVAaWJtLmNvbT4gDQoNCj4gTXkgcHJvcG9z
-YWwgaXMgdGhhdCB3ZSB3b3JrIHRvd2FyZHMgYSB2aXNpb24gd2l0aCBjb25jZXB0cyBmb3IgdGhl
-IG92ZXJhbGwgc2l0ZSBwcmlvciB0byBnZXR0aW5nIGludG8gdGhlIGRldGFpbHMsIGFzIGEgbWV0
-aG9kIGZvciBjb25zZW5zdXMgYnVpbGRpbmcuIA0KDQpEZXNpZ25pbmcgYSBzaXRlIHdpdGhvdXQg
-dW5kZXJzdGFuZGluZyB0aGUgYmFzZS1sZXZlbCBidWlsZGluZyBibG9ja3Mgd2lsbCBub3Qgd29y
-ay4gV2UgbmVlZCB0byBhZ3JlZSBvbiB0aGUgZm91bmRhdGlvbiBiZWZvcmUgd2Ugc3RhcnQgdHJ5
-aW5nIHRvIGJ1aWxkIGNvbmNlcHRzLiBCdWlsZGluZyBjb25jZXB0cyB3aXRob3V0IGFuIGFncmVl
-bWVudCBvbiB0aGUgZm91bmRhdGlvbiB3aWxsIG5vdCBiZSBlZmZpY2llbnQuDQoNCg0KPiBJIHRo
-aW5rIHdlIGhhdmUgdGhlIG9wcG9ydHVuaXR5IOKAkyBsZWFuaW5nIG9uIHRoZSBjb2xsYWJvcmF0
-aXZlIHN0cmVuZ3RocyB0aGF0IHdlIGNhbiBhbGwgYnJpbmcg4oCTIHRvIGNvbWJpbmUgd2hhdCB3
-ZSBoYXZlIGVhY2ggYmVlbiB3b3JraW5nIG9uIHRvIG1ha2Ugc29tZXRoaW5nIGV2ZW4gYmV0dGVy
-LiBCdXQgaXQgd2lsbCBtZWFuIGJlaW5nIHdpbGxpbmcgdG8gY29tcHJvbWlzZSBzb21lIG9mIG91
-ciBzdHlsZSBwcmVmZXJlbmNlcyB0byBhZ3JlZSBvbiBhIHNoYXJlZCB2aXNpb24uIElzIHRoZXJl
-IGludGVyZXN0IG9uIHdvcmtpbmcgdG93YXJkcyB0aGlzIHZpc2lvbiB0b2dldGhlcj8NCg0KVGhh
-dCBpcyB0aGUgb2JqZWN0aXZlIG9mIHRoaXMgdGhyZWFkLiBTaW5jZSB5b3UgYXJlIG9wcG9zZWQg
-dG8gdXNpbmcgQ2FyYm9uLCB3ZSBhZ3JlZWQgdG8gdXNlIEJvb3RzdHJhcC4gV2UgYXJlIHdvcmtp
-bmcgdG93YXJkcyB0aGlzIHZpc2lvbiB0b2dldGhlci4NCiANCg0KPiBJZiB3ZSBjYW4gYWdyZWUg
-b24gdGhlIGJpZyBwaWN0dXJlLCBjcmVhdGluZyBhIHN0eWxlIGd1aWRlIG9yIGNob29zaW5nIGEg
-ZGVzaWduIGxpYnJhcnkgd2lsbCBiZSBtdWNoIGVhc2llciBhcyB3ZeKAmWxsIGhhdmUgY29uc2Vu
-c3VzIHJlZmxlY3RpbmcgdGhhdCBzaGFyZWQgdmlzaW9uLg0KDQpJIHRob3VnaHQgd2UgYWxyZWFk
-eSBkZWNpZGVkIHRvIHVzZSBCb290c3RyYXAtVnVlIGFzIHRoZSBjb21wb25lbnQgbGlicmFyeS4g
-RGlkIHNvbWV0aGluZyBjaGFuZ2U/IA0KDQoNCj4gSG93IGFib3V0IHdlIGRpc2N1c3MgaW4gdGhp
-cyB3ZWVrJ3MgR1VJIERlc2lnbiB3b3JrZ3JvdXAgbWVldGluZz8NCg0KVGhlIHRvcGljcyB5b3Ug
-c3VnZ2VzdGVkIHdvcmsuIFdlIHdpbGwgbmVlZCB0byBkaXNjdXNzIHRoZSBmcmFtZXdvcmsgbWln
-cmF0aW9uIHdpdGggYSBmb2N1cyBvbiBob3cgdG8gYWxpZ24gb24gdGhlbWUgY3VzdG9taXphdGlv
-bi4NCg0K
+On Mon, Nov 25, 2019 at 11:41 PM Roy van Doormaal
+<roy.van.doormaal@prodrive-technologies.com> wrote:
+>
+> The aspeed irqchip driver overwrites the default irq domain name,
+> but doesn't free the existing domain name.
+> This patch frees the irq domain name before overwriting it.
+>
+> kmemleak trace:
+>
+> unreferenced object 0xb8004c40 (size 64):
+> comm "swapper", pid 0, jiffies 4294937303 (age 747.660s)
+> hex dump (first 32 bytes):
+> 3a 61 68 62 3a 61 70 62 3a 62 75 73 40 31 65 37 :ahb:apb:bus@1e7
+> 38 61 30 30 30 3a 69 6e 74 65 72 72 75 70 74 2d 8a000:interrupt-
+> backtrace:
+> [<086b59b8>] kmemleak_alloc+0xa8/0xc0
+> [<b5a3490c>] __kmalloc_track_caller+0x118/0x1a0
+> [<f59c7ced>] kvasprintf+0x5c/0xc0
+> [<49275eec>] kasprintf+0x30/0x50
+> [<5713064b>] __irq_domain_add+0x184/0x25c
+> [<53c594d0>] aspeed_i2c_ic_of_init+0x9c/0x128
+> [<d8d7017e>] of_irq_init+0x1ec/0x314
+> [<f8405bf1>] irqchip_init+0x1c/0x24
+> [<7ef974b3>] init_IRQ+0x30/0x90
+> [<87a1438f>] start_kernel+0x28c/0x458
+> [< (null)>] (null)
+> [<f0763fdf>] 0xffffffff
+>
+> Signed-off-by: Roy van Doormaal <roy.van.doormaal@prodrive-technologies.com>
+
+Acked-by: Brendan Higgins <brendanhiggins@google.com>
+
+Sorry for the delayed response.
