@@ -2,63 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89D7110FBE4
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 11:41:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 650D610FD2C
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 13:05:09 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Rz6j3zmpzDqWd
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 21:41:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47S0zP25cMzDqVk
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 23:05:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f;
- helo=mail-oi1-x22f.google.com; envelope-from=akashgj91@gmail.com;
+ smtp.mailfrom=protonmail.com (client-ip=185.70.40.135;
+ helo=mail-40135.protonmail.ch; envelope-from=rgrs@protonmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="bGkfc3NT"; 
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="lSV0bqU+"; 
  dkim-atps=neutral
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
- [IPv6:2607:f8b0:4864:20::22f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch
+ [185.70.40.135])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Rz5g3G2WzDqTn
- for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 21:40:18 +1100 (AEDT)
-Received: by mail-oi1-x22f.google.com with SMTP id k196so2841899oib.2
- for <openbmc@lists.ozlabs.org>; Tue, 03 Dec 2019 02:40:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=yj1K/0hr0Gy1unDPV4bJJbY9tQVVrs6tQHFQZCSA0Bw=;
- b=bGkfc3NTj+ENBqO2j+sZh28N0MTL7e2xxhE1OExdg8Kb9roUZRaJDRNnoTvJphcJMO
- TpWhUMm8t3b5aKjAJC7jYw/ghOoqN3n/5tGcsLmNAJztf6eZzO8QbKAvLV8EmPa2WOgX
- FXGd0lp1o2jBuGhkrcFNZyJFI54S2W32XSe7mHcWRYq5f+OpiIYASdBSQ80VIk8y5N2A
- d3Mz7CWOTjd+YpOoQ7/xypwkix5TQBmQ+M+9nnXfwMss9tHOERdFa/7AOKStqfW7etck
- pcTK2YT8fYYrt1fwSQZRN4ZEtNlriwbnZLhRZxXfINlulsb9ZyAH3xbv1fd0TG4l54Ov
- 7mEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=yj1K/0hr0Gy1unDPV4bJJbY9tQVVrs6tQHFQZCSA0Bw=;
- b=ZWLGNn9ULnCcBMeHdt67XzFBDgA8Y/bDh9XHVT/8e4RKUSWfo6r7UFymxFUR718yxI
- HEMthO3RS+AGH9EQeCbXYNsrLQHPdgoJUqKKdGWelWzUMDrCGjKd+bM69foRmTzBSjlE
- yOVIQOdZi7LWPfXVBwjM7g0dkXHjAgdyUm2LHAeZlRc2rZX9S9bvLs6Vut2MD9TWjqU0
- 2Rek7EvwPIsgVnC6N+rvsXgDzEi0GMzFUCcq61nPc9MjweMhMKf1gk2P9wF9jLo8SQFV
- 5SoGbQ44dN40uhP6XSXpSp/YnI7jqhm2ODsMnX8boO7E4NcRKITbme0tHL3fAjcy803B
- WflA==
-X-Gm-Message-State: APjAAAVD+LP0YlnHtrETzvpd7qUxVFJ29xxIwXfDdSL6xI4S/SgNWgbi
- ljf7HB3UCUt1SJkcN2bpeIEB9ePWR1X7C0tnMTeHRIjg10k=
-X-Google-Smtp-Source: APXvYqz60sA2NSKHXFYH5gFj1QsMrCViCJfRgSO4miHPCHVBjS49qsRQJXXJs8ItPm14j6qqo7ZS56LDzPqZYOo8LpM=
-X-Received: by 2002:a05:6808:906:: with SMTP id
- w6mr2783048oih.122.1575369614289; 
- Tue, 03 Dec 2019 02:40:14 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47S0wm2J4VzDqVc
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Dec 2019 23:02:44 +1100 (AEDT)
+Date: Tue, 03 Dec 2019 12:02:32 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1575374559;
+ bh=jL+QFclVBVln10SSlh4LRf5u1O0qd9xK/phBxUIUjHQ=;
+ h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+ b=lSV0bqU+qJhTs1OBUm8wfYH9LegZ5ESujM+NOsh42OlPnTtRorgDSHniGjNm1pmo4
+ qj0mKyHxq+T/8zvVlVffc0LhEE+wzGk8vQZKJctWnuVlSJpD9NET/wfklM8uTzQysJ
+ zavbciB8pgUa06Pqf4A26G9um0xVAsaSS5ky1TvI=
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: rgrs <rgrs@protonmail.com>
+Subject: BMC update via TFTP
+Message-ID: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-From: AKASH G J <akashgj91@gmail.com>
-Date: Tue, 3 Dec 2019 16:09:03 +0530
-Message-ID: <CAE33tLFdozJw-8aPv_GHpoUz+6E5xfVVx+Qk9_YTCbJ0e1J3sQ@mail.gmail.com>
-Subject: Add sensors to S2600WF
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000003fee360598ca5252"
+Content-Type: multipart/alternative;
+ boundary="b1_b169be4adf4d6887b1ff82e634b43930"
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,40 +55,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: rgrs <rgrs@protonmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003fee360598ca5252
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
 
-Hi all,
+--b1_b169be4adf4d6887b1ff82e634b43930
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I am using S2600WF configuration for BMC firmware.  We are having
-temperature sensors and ADC voltage monitors connected on board. All sensor
-readings are shown on hwmon sysfs interface.
+SGksCgpJbiBCTUMgV2ViVUkgdW5kZXIgIkRvd25sb2FkIGltYWdlIGZpbGUgZnJvbSBURlRQIHNl
+cnZlciIgc2VjdGlvbiwKd2UgaGF2ZSB0ZXh0IGZpZWxkcyAiVEZUUCBTZXJ2ZXIgSVAgYWRkcmVz
+cyIgYW5kICJGaWxlIG5hbWUiLgoiRmlsZSBuYW1lIiBkb2Vzbid0IHRha2UgZm9sZGVycyBpbiBw
+YXRoLiBJcyB0aGlzIGEgYnVnIG9yIGV4cGVjdGVkIGJlaGF2aW9yPwoKVEZUUCBkb3dubG9hZHMg
+d29yayBvbmx5IGlmIGZpbGUgaXMga2VwdCBpbiByb290IG9mIHRmdHAgc2hhcmUuCgpUaGFua3Ms
+ClJhag==
 
-But it is not coming when issuing IPMI commands.
 
-$ ipmitool -I dbus sdr type temperature
-$ ipmitool -I dbus sdr type voltage
+--b1_b169be4adf4d6887b1ff82e634b43930
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Is there anything to be done to make sure sensor values are reported over
-DBus.
+PGRpdj5IaSw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JbiBCTUMgIFdlYlVJIHVuZGVy
+ICJEb3dubG9hZCBpbWFnZSBmaWxlIGZyb20gVEZUUCBzZXJ2ZXIiIHNlY3Rpb24sPGJyPjwvZGl2
+PjxkaXY+d2UgaGF2ZSB0ZXh0IGZpZWxkcyAiVEZUUCBTZXJ2ZXIgSVAgYWRkcmVzcyIgYW5kICJG
+aWxlIG5hbWUiLjxicj48L2Rpdj48ZGl2PiJGaWxlIG5hbWUiIGRvZXNuJ3QgdGFrZSBmb2xkZXJz
+IGluIHBhdGguIElzIHRoaXMgYSBidWcgb3IgZXhwZWN0ZWQgYmVoYXZpb3I/PGJyPjwvZGl2Pjxk
+aXY+PGJyPjwvZGl2PjxkaXY+VEZUUCBkb3dubG9hZHMgd29yayBvbmx5IGlmIGZpbGUgaXMga2Vw
+dCBpbiByb290IG9mIHRmdHAgc2hhcmUuPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhh
+bmtzLDxicj48L2Rpdj48ZGl2PlJhajxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IGNsYXNz
+PSJwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jayI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWdu
+YXR1cmVfYmxvY2stdXNlciBwcm90b25tYWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwv
+ZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiI+PGJyPjwv
+ZGl2PjwvZGl2PjxkaXY+PGJyPjwvZGl2Pg==
 
-Thanks in advance.
 
---0000000000003fee360598ca5252
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hi all,</div><div><br></div><div>I am using S2600WF c=
-onfiguration for BMC firmware.=C2=A0 We are having temperature sensors and =
-ADC voltage monitors connected on board. All sensor readings are shown on h=
-wmon sysfs interface.</div><div><br></div><div>But it is not coming when is=
-suing IPMI commands.</div><div><br></div><div>$ ipmitool -I dbus sdr type t=
-emperature</div><div>$ ipmitool -I dbus sdr type voltage</div><div><br></di=
-v><div>Is there anything to be done to make sure <span class=3D"gmail-il">s=
-ensor</span> values are reported over DBus.</div><div><br></div><div>Thanks=
- in advance.<br></div></div>
+--b1_b169be4adf4d6887b1ff82e634b43930--
 
---0000000000003fee360598ca5252--
