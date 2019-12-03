@@ -2,58 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01A0111016D
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 16:42:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 120AB1101E8
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 17:13:25 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47S5pg72KRzDqVc
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 02:42:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47S6Ts6vY8zDqVb
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 03:13:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47S5nh6plfzDqJt
- for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 02:41:58 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 03 Dec 2019 07:41:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,273,1571727600"; d="scan'208";a="205012554"
-Received: from irsmsx103.ger.corp.intel.com ([163.33.3.157])
- by orsmga008.jf.intel.com with ESMTP; 03 Dec 2019 07:41:54 -0800
-Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
- IRSMSX103.ger.corp.intel.com ([169.254.3.139]) with mapi id 14.03.0439.000;
- Tue, 3 Dec 2019 15:41:53 +0000
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: Neeraj Ladkani <neladk@microsoft.com>
-Subject: RE: Adding new metric definition use case
-Thread-Topic: Adding new metric definition use case
-Thread-Index: AdWl3aOwRZz1PlNdQ6G816tHTiv0cwDzn2jQAA9eSMA=
-Date: Tue, 3 Dec 2019 15:41:53 +0000
-Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A3109D0D@IRSMSX101.ger.corp.intel.com>
-References: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
- <BY5PR21MB1377E4996FF4D8AB139BA5D2C8420@BY5PR21MB1377.namprd21.prod.outlook.com>
-In-Reply-To: <BY5PR21MB1377E4996FF4D8AB139BA5D2C8420@BY5PR21MB1377.namprd21.prod.outlook.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMDFkYTNlNzgtZTJjYS00N2UzLWIxMzUtYzNhNGRlOGZiNjM4IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiZnFCbmRqWWR3Y2dtZFdnbm40bE5uTVBoRDM4SlBnZ0NjWXd1N3ErK2R3TTBzSkhJR3gzWmRGbHFcL3p3Mm1nWHgifQ==
-x-ctpclassification: CTP_NT
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [163.33.239.181]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47S6TF0xzzzDqJW
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 03:12:47 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xB3G8THi058709
+ for <openbmc@lists.ozlabs.org>; Tue, 3 Dec 2019 11:12:45 -0500
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wnje9syst-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Dec 2019 11:12:45 -0500
+Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xB3G9a6u105606
+ for <openbmc@lists.ozlabs.org>; Tue, 3 Dec 2019 11:12:45 -0500
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wnje9syra-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Dec 2019 11:12:45 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xB3G9wcv012607;
+ Tue, 3 Dec 2019 16:12:43 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma04dal.us.ibm.com with ESMTP id 2wkg26vrya-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Dec 2019 16:12:43 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xB3GCgcL49873302
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Dec 2019 16:12:42 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8B1057805C;
+ Tue,  3 Dec 2019 16:12:42 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5EFA77805E;
+ Tue,  3 Dec 2019 16:12:42 +0000 (GMT)
+Received: from [9.10.100.31] (unknown [9.10.100.31])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Dec 2019 16:12:42 +0000 (GMT)
+Subject: Re: BMC update via TFTP
+To: rgrs <rgrs@protonmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
+Date: Tue, 3 Dec 2019 10:12:42 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
+In-Reply-To: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-03_04:2019-12-02,2019-12-03 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 spamscore=0 mlxlogscore=870 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912030122
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,113 +94,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
- Adrian" <adrian.ambrozewicz@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Neeraj,=20
 
-There are two cases:
-1. Sensor is already monitored and you want to define new Metric Definition=
-. It is done on the Redfish level. Also in the case when you want to create=
- calculated metric ("Implementation" property equals "Calculated"). In this=
- case min/max/average can be calculated (as defined by the "CalculationAlgo=
-rithm" property).
-2. You want to create Metric Definition for Synthesized sensor ("Implementa=
-tion" property equals "Synthesized"). This is the example you shown below. =
-In such case, there is no way to provide BMC the algorithm how the metric s=
-hall be synthesized from source metrics. In this case, the calculation algo=
-rithm has to be implemented as virtual sensor in the BMC prior to defining =
-the Metric Definition. If you want to be able to create synthesized sensors=
- in runtime, additional design will have to be provided.=20
-
-Regards
-Piotr
-
------Original Message-----
-From: Neeraj Ladkani <neladk@microsoft.com>=20
-Sent: Tuesday, December 3, 2019 8:40 AM
-To: Matuszczak, Piotr <piotr.matuszczak@intel.com>
-Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel=
-.com>
-Subject: RE: Adding new metric definition use case
-
-Hi Piotr,=20
-
-The use case is simple that if we want to add new metric definition which i=
-s already monitored on DBUS and exposed on redfish , we should be able to c=
-onfigure it without changing BMC code. =20
-
-For example:
-{
-    "@odata.type": "#MetricDefinition.v1_0_3.MetricDefinition",
-    "Id": "OutletAirflowTemp",
-    "Name": "Definition of Outlet Airflow Temperature",
-    "MetricType": "Numeric",
-    "Implementation": "Synthesized",
-    "PhysicalContext": "Exhaust",
-    "Units": "Cel",
-    "Wildcards": [
-        {
-            "Name": "ChassisID",
-            "Values": [
-                "1"
-            ]
-        }
-    ],
-    "CalculationParameters": [
-        {
-            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Tempe=
-ratures/2/ReadingCelsius"
-        },
-        {
-            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/=
-0/Reading"
-        },
-        {
-            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/=
-1/Reading"
-        },
-        {
-            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerCo=
-ntrol/0/PowerConsumedWatts",
-            "ResultMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerCo=
-ntrol/0/PowerMetrics/AverageConsumedWatts"
-        }
-    ],
-    "@odata.id": "/redfish/v1/TelemetryService/MetricDefinitions/OutletAirf=
-lowTemp",
-    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copy=
-right policy, see http://www.dmtf.org/about/policies/copyright."
-}
-
------Original Message-----
-From: Matuszczak, Piotr <piotr.matuszczak@intel.com>=20
-Sent: Thursday, November 28, 2019 3:33 AM
-To: Neeraj Ladkani <neladk@microsoft.com>
-Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel=
-.com>
-Subject: [EXTERNAL] Adding new metric definition use case
-
-Hi Neeraj,
-
-	As we talked recently during the Telemetry WG meeting, you were asking abo=
-ut adding new metric definitions. Please, let me better understand your use=
- case, you have HW sensor present on the board (for example, let it be CPU0=
- VR temperature), you have already HWmon reading it and exposing it as the =
-sensor on D-Bus. You want to be able to add the new Metric Definition for p=
-roper interpretation of sensor's reading and new metric definition shall al=
-so modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it c=
-orrectly?=20
-	Monitoring Service does not have to interpret the metric from the sensors,=
- because it is used only for report management.=20
-	=20
-
-Piotr Matuszczak
----------------------------------------------------------------------
-Intel Technology Poland sp. z o.o.=20
-ul. Slowackiego 173, 80-298 Gdansk
-KRS 101882
-NIP 957-07-52-316
-
+> In BMC WebUI under "Download image file from TFTP server" section,
+> we have text fields "TFTP Server IP address" and "File name".
+> "File name" doesn't take folders in path. Is this a bug or expected 
+> behavior?
+>
+> TFTP downloads work only if file is kept in root of tftp share.
+>
+This is expected.
+https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf80487d71c3cdb7165d065079377/download_manager.cpp#L33
