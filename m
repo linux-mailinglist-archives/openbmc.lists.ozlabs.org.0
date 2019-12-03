@@ -2,87 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A7BB110326
-	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 18:09:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EFA3110382
+	for <lists+openbmc@lfdr.de>; Tue,  3 Dec 2019 18:32:15 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47S7kl5jRpzDqRp
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 04:09:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47S8Dr43tWzDqRg
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 04:32:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2a;
+ helo=mail-yb1-xb2a.google.com; envelope-from=jandraara@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="f31E1XoZ"; 
+ dkim-atps=neutral
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com
+ [IPv6:2607:f8b0:4864:20::b2a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47S7jz0d2zzDqPf
- for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 04:08:54 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xB3H81Q8017936; Tue, 3 Dec 2019 12:08:51 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wnp8rt151-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Dec 2019 12:08:50 -0500
-Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xB3H8AQZ019128;
- Tue, 3 Dec 2019 12:08:50 -0500
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wnp8rt14g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Dec 2019 12:08:50 -0500
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xB3H7o7n016443;
- Tue, 3 Dec 2019 17:08:49 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma02dal.us.ibm.com with ESMTP id 2wkg26n8p3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Dec 2019 17:08:49 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xB3H8miJ49873242
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Dec 2019 17:08:49 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A4A87806A;
- Tue,  3 Dec 2019 17:08:48 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E183B7805E;
- Tue,  3 Dec 2019 17:08:47 +0000 (GMT)
-Received: from [9.10.100.31] (unknown [9.10.100.31])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Tue,  3 Dec 2019 17:08:47 +0000 (GMT)
-Subject: Re: BMC update via TFTP
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-To: rgrs <rgrs@protonmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
- <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
-Message-ID: <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
-Date: Tue, 3 Dec 2019 11:08:48 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47S8D735n2zDqJT
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 04:31:35 +1100 (AEDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id a11so1835037ybc.9
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Dec 2019 09:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=L6WNgIPl7VHvT6DFPd6ofFZ/duXssMWpsV9XaGLngso=;
+ b=f31E1XoZ3/mP+Z2i5/mu2qA2ESENZLhnuXVl20K71zBD3245q0LhkgfZOr7r3c/aZe
+ W7rjGzahx61i05OgHThoSWD1SheQa64LpNUVpOLMtC6Tqrnc619ZEYCF2h8Na6/1ezsh
+ 3SKSeGYEMEKfnQG59ar5zwlM4YOp7KgNHqKdHvmYGmz9eNCOA9E0VEP1j+ASGgo7Up5U
+ Gyh7S2Fp7f67rUc3kYV1iH+rHyntts1Fj6NDJ19BNBb/mYN4ZKYAIRkRbSIZW9tAbWeu
+ P+QxwjzGhd0a3kpt+4PVMobk5Vwh0oRBZgdDWjT+K1pQcTBsJbHZTRNEN8ye6zDt4HIU
+ ZoEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=L6WNgIPl7VHvT6DFPd6ofFZ/duXssMWpsV9XaGLngso=;
+ b=P2ItpzqT46VHwXZR+9KjyLnPgQAKxUKIYqF495OKLWjGroVIvauMOoszCq4/r+vLtD
+ 02c8inADBXixSCtpR/pBgN9VqPDrSw70l4W1FkbzXi9oHIvKQAFzqynygfogBBdukJ1F
+ PnlVQNxwyjxHjJ3F/hyoM1m8J4ZRj0GD/ch0um12eWJPe6W7MQPrJj/R77L+YB0RMMS5
+ l5slntfti64zpQrr2yK6ArsPKSHHRUwzmAvXimAqLtZLegHhUrHCONwcDUGRRwj2AtW4
+ Varui0MgMlyLNAEZPzw4q7gPxaPy4yMWSg+cpmrPdQJl0QGGW58BRgxbwyC6Q0D1OPb9
+ 1+wQ==
+X-Gm-Message-State: APjAAAVl9va3igf1HmdcEmeRKrum3mjxnETwer3zBSVKwsXSARTw3TwX
+ 4xrmYuqT7eMa79/R1Z//fclcQAHSqIBP50PGWrk=
+X-Google-Smtp-Source: APXvYqzUaf4CkBWC5tHHLEuzxgpzSLw45TZ/FixGbhc+QOXrAOuHyVSLLpSTJdYoxnOvxFmvCrBJ1ynmC1wfcPPykdY=
+X-Received: by 2002:a25:aa10:: with SMTP id s16mr2597040ybi.6.1575394291155;
+ Tue, 03 Dec 2019 09:31:31 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
-Content-Type: multipart/alternative;
- boundary="------------99A49EB69F2D93269EED3277"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-03_05:2019-12-02,2019-12-03 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999
- suspectscore=0 clxscore=1011 impostorscore=0 bulkscore=0 adultscore=0
- spamscore=0 phishscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1912030128
+References: <FD0BD680739BFC41807C96BD23118BB131A1BE@ORSMSX113.amr.corp.intel.com>
+ <OF518FB33F.0A608011-ON002584BF.0046C766-002584BF.005B81EB@notes.na.collabserv.com>
+ <FD0BD680739BFC41807C96BD23118BB131A69B@ORSMSX113.amr.corp.intel.com>
+In-Reply-To: <FD0BD680739BFC41807C96BD23118BB131A69B@ORSMSX113.amr.corp.intel.com>
+From: Jandra A <jandraara@gmail.com>
+Date: Tue, 3 Dec 2019 11:31:19 -0600
+Message-ID: <CAMTupoTyA=OH2eAC_oARxXAdmKOMEL0C6x2XrDKFzXoSPGaXAA@mail.gmail.com>
+Subject: Re: GUI Component Library
+To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
+Content-Type: multipart/alternative; boundary="0000000000001b05d00598d01198"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,84 +74,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: anoo@us.ibm.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------99A49EB69F2D93269EED3277
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+--0000000000001b05d00598d01198
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On 12/3/2019 10:12 AM, Gunnar Mills wrote:
 >
->> In BMC WebUI under "Download image file from TFTP server" section,
->> we have text fields "TFTP Server IP address" and "File name".
->> "File name" doesn't take folders in path. Is this a bug or expected 
->> behavior?
->>
->> TFTP downloads work only if file is kept in root of tftp share.
->>
-> This is expected.
-> https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf80487d71c3cdb7165d065079377/download_manager.cpp#L33 
+> My proposal is that we work towards a vision with concepts for the overal=
+l
+> site prior to getting into the details, as a method for consensus buildin=
+g.
+> Our work will be the best if we agree on a look that encompasses a shared
+> vision for the entire UI, not just individual elements.
+>
+> If we can agree on the big picture, creating a style guide or choosing a
+> design library will be much easier as we=E2=80=99ll have consensus reflec=
+ting that
+> shared vision.
 >
 
-As long as we continue to sanitize the local filename, I don't see why 
-we need to limit the source file name.
-Patrick, Adriana, Any objection? Remember why we wrote it this way? I 
-assume for simplicity..?
+Can you specify the big picture items we want to agree on? I think at a
+high level, we all want a modern and polished UI. The realities of how that
+is implemented and brought to life is were the conversation breaks into
+subjective opinions and where we've had difficulties before.
 
-Thanks,
-Gunnar
+Like Derick, I suggest taking the existing style guide as a starting point,
+since that is what is currently implemented and what has tested positively
+with numerous customers. After reviewing it, we can start by discussing
+overarching design principles that are implemented (such as color,
+typography, icons, and corner type) and apply those to all components. This
+way, we ensure that the UI is updated across the board to maintain
+cohesiveness and reflects a single design language. If needed, individual
+components can be revisited once we have agreed on the big principles.
 
 
---------------99A49EB69F2D93269EED3277
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Regards,
+Jandra Aranguren
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 12/3/2019 10:12 AM, Gunnar Mills
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com">
-      <br>
-      <blockquote type="cite">In BMC WebUI under "Download image file
-        from TFTP server" section,
-        <br>
-        we have text fields "TFTP Server IP address" and "File name".
-        <br>
-        "File name" doesn't take folders in path. Is this a bug or
-        expected behavior?
-        <br>
-        <br>
-        TFTP downloads work only if file is kept in root of tftp share.
-        <br>
-        <br>
-      </blockquote>
-      This is expected.
-      <br>
-<a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf80487d71c3cdb7165d065079377/download_manager.cpp#L33">https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf80487d71c3cdb7165d065079377/download_manager.cpp#L33</a>
-      <br>
-    </blockquote>
-    <p>As long as we continue to sanitize the local filename, I don't
-      see why we need to limit the source file name.<br>
-      Patrick, Adriana, Any objection? Remember why we wrote it this
-      way? I assume for simplicity..?<br>
-      <br>
-      Thanks, <br>
-      Gunnar<br>
-      <span class="c-message_attachment__text"
-        data-qa="message_attachment_text"><span dir="auto"></span></span></p>
-  </body>
-</html>
+--0000000000001b05d00598d01198
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---------------99A49EB69F2D93269EED3277--
+<div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex"><div lang=3D"EN-US"><div class=3D"gmail-m_-8112396240008=
+348344WordSection1"><p class=3D"gmail-m_-8112396240008348344MsoPlainText">M=
+y proposal is that we work towards a vision with concepts for the overall s=
+ite prior to getting into the details, as a method for consensus building. =
+Our work will be the best if we agree on a look that encompasses a shared v=
+ision for
+ the entire UI, not just individual elements.</p>
+<p class=3D"gmail-m_-8112396240008348344MsoPlainText">If we can agree on th=
+e big picture, creating a style guide or choosing a design library will be =
+much easier as we=E2=80=99ll have consensus reflecting that shared vision.<=
+/p></div></div></blockquote><div><br></div><div>Can you specify the big pic=
+ture items we want to agree on? I think at a high level, we all want a mode=
+rn and polished UI. The realities of how that is implemented and brought to=
+ life is were the conversation breaks into subjective opinions and where we=
+&#39;ve had difficulties before.</div><div><br></div><div>Like Derick, I su=
+ggest taking the existing style guide as a starting point, since that is wh=
+at is currently implemented and what has tested positively with numerous cu=
+stomers. After reviewing it, we can start by discussing overarching design =
+principles that are implemented (such as color, typography, icons, and corn=
+er type) and apply those to all components. This way, we ensure that the UI=
+ is updated across the board to maintain cohesiveness and reflects a single=
+ design language. If needed, individual components can be revisited once we=
+ have agreed on the big principles.=C2=A0</div><div><br></div><div><br></di=
+v><div>Regards,</div><div>Jandra Aranguren</div></div></div>
 
+--0000000000001b05d00598d01198--
