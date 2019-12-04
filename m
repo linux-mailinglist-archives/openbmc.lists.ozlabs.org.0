@@ -2,49 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD456113081
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 18:11:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D6A8F1131AC
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 19:01:41 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Slks5T16zDqXQ
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 04:11:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47SmrL48NKzDqV3
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 05:01:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
  (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
 Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Sljv5l1LzDq9d
- for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 04:10:58 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47SmpZ6wG3zDqG0
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 05:00:05 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
  by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Dec 2019 09:10:53 -0800
+ 04 Dec 2019 10:00:01 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,278,1571727600"; d="scan'208";a="242915629"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by fmsmga002.fm.intel.com with ESMTP; 04 Dec 2019 09:10:53 -0800
-Subject: Re: Faking Sensor Readings
-To: rgrs <rgrs@protonmail.com>
-References: <QVdDJHlLW9JS_3uowBPTzSCb1dwpqJjml0ORFR_aQGpuKCve1l8Qwy4GF4X0_dgJmExy8sjJQD_VjnI-o4xwoYhivHJlSPBt42fc1cuDKjw=@protonmail.com>
- <0a4bb951-4f85-728a-8426-af629c870908@yadro.com>
- <234c1d26-7b59-0926-d6c2-6c49f75aab3f@linux.intel.com>
- <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <2de3b2e2-9b02-a1c2-d310-f6e546e72c1e@linux.intel.com>
-Date: Wed, 4 Dec 2019 09:10:52 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+X-IronPort-AV: E=Sophos;i="5.69,278,1571727600"; d="scan'208";a="361646395"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
+ ([10.7.153.143])
+ by orsmga004.jf.intel.com with ESMTP; 04 Dec 2019 10:00:01 -0800
+Subject: Re: Dropping PECI patches
+To: Joel Stanley <joel@jms.id.au>
+References: <CACPK8XffZqTq3YqEEcA7mm4d1k0V30o1TLE79nBOGrVcEBCjog@mail.gmail.com>
+ <be709e4f-1215-3d88-9974-1989b9867e60@linux.intel.com>
+ <CACPK8XcvBTj=AxaREQuLpi6=YZdU03ajW1nXKhnvud_jP8Ez_g@mail.gmail.com>
+ <cb401668-703b-9745-c022-44b8bdb2c07f@linux.intel.com>
+ <CACPK8XdcoYMMYGJdxnafBiHkRpQt17w4maXUwOvfMf+NqF7Njg@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <fe2c84dc-4a35-ed7e-d017-18c91fb94d5e@linux.intel.com>
+Date: Wed, 4 Dec 2019 10:00:01 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
+In-Reply-To: <CACPK8XdcoYMMYGJdxnafBiHkRpQt17w4maXUwOvfMf+NqF7Njg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,62 +58,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Alexander Amelkin <a.amelkin@yadro.com>, "Thomaiyar,
- Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/4/19 1:39 AM, rgrs wrote:
-> Hi James,
+On 12/2/2019 6:47 PM, Joel Stanley wrote:
+> On Tue, 3 Dec 2019 at 01:25, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>
+>> On 12/2/2019 1:54 PM, Joel Stanley wrote:
+>>> On Mon, 2 Dec 2019 at 18:09, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>>>
+>>>> Hi Joel,
+>>>>
+>>>> Thanks for letting me know this. Also, thanks a lot for carrying the
+>>>> out-of-tree PECI patches in OpenBMC kernel tree so far.
+>>>>
+>>>> Can I submit updated PECI patches to OpenBMC upstream if I'm gonna add
+>>>> it back? Linux upstreaming isn't ready yet because configfs support
+>>>> should be implemented to address subsystem maintainer's comments but it
+>>>> needs at this moment in OpenBMC kernel tree to keep developing
+>>>> dbus-sensors support.
+>>>
+>>> This was the status back in January. I think it's time to find someone
+>>> to complete the work on PECI so it can be merged upstream.
+>>>
+>>> Once those patches have been posted, we can merge them into the
+>>> openbmc tree while we wait for them to be merged into mainline.
+>>
+>> I've made lots of update in Intel downstream PECI to address
+>> maintainers' comments except the configfs thing so I agree that PECI
+>> codes in OpenBMC kernel tree need to be updated. Can you give me a week
+>> for submission of new patch set into linux upstream? In the meantime,
+>> I'd like to keep the out-of-tree PECI patches if possible to avoid build
+>> breaks in dbus-sensors repo.
 > 
-> I tried busctl set-property,  but the values didn't change.
-> Are the steps below correct?
-> (test with both 'field mode' enabled and disabled)
+> The build break of dbus-sensors has already held up moving to 5.4 for
+> a week. I think this situation is a clear demonstration of how
+> carrying out of tree patches for a long time slows down the
+> development of the entire project.
 > 
-> root@obmc:~# busctl introspect xyz.openbmc_project.Hwmon-2439434288.Hwmon1  /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openbmc_project.Sensor.Value --no-pager
-> NAME                             TYPE      SIGNATURE RESULT/VALUE                             FLAGS
-> .MaxValue                        property  x         0                                        emits-change writable
-> .MinValue                        property  x         0                                        emits-change writable
-> .Scale                           property  x         -3                                       emits-change writable
-> .Unit                            property  s         "xyz.openbmc_project.Sensor.Value.Unit.… emits-change writable
+> I will hold off moving to 5.4 for another week. Please keep us up to
+> date with your progress.
 
-This looks like phosphor-hwmon, not dbus-sensors 
-https://github.com/openbmc/dbus-sensors.
+Thanks for your understanding and for your effort on carrying the
+out-of-tree patch so far. I'll submit updated patch set into upstream
+within a week.
 
+Thanks,
 
-> .Value                           property  x         18500                                    emits-change writable
-> 
-> root@obmc:~# busctl --no-pager set-property xyz.openbmc_project.Hwmon-2439434288.Hwmon1  /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openbmc_project.Sensor.Value  Value x 50000
-> 
-> root@saber:~# busctl --no-pager get-property xyz.openbmc_project.Hwmon-2439434288.Hwmon1  /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openbmc_project.Sensor.Value  Value
-> x 18500
-> 
-> root@obmc:~#
-> 
-> Thanks,
-> Raj
-> 
-> ‐‐‐‐‐‐‐ Original Message ‐‐‐‐‐‐‐
-> On Wednesday, December 4, 2019 1:34 AM, James Feist <james.feist@linux.intel.com> wrote:
-> 
-> &gt; On 12/3/19 5:49 AM, Alexander Amelkin wrote:
-> &gt;
-> &gt; &gt; 03.12.2019 15:06, rgrs wrote:
-> &gt; &gt;
-> &gt; &gt; &gt; Hi,
-> &gt; &gt; &gt; How do I fake sensor readings in OpenBMC?
-> &gt; &gt; &gt; We're trying to fake temperature sensors and make sure fans ramp up/down
-> &gt; &gt; &gt; accordingly.
-> &gt; &gt;
-> &gt; &gt; We ended up patching the kernel driver to fake the readings by request.
-> &gt; &gt; I'm not aware of any ready interface in OpenBMC for that.
-> &gt;
-> &gt; If you're using d-bus sensors, the sensor property is writable. It is
-> &gt; also supported by patching the sensor value in redfish.
-> &gt;
-> &gt; &gt; With best regards,
-> &gt; &gt; Alexander Amelkin
-> 
-> </james.feist@linux.intel.com>
-> 
+Jae
