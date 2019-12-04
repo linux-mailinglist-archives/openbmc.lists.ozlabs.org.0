@@ -2,51 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17D02113722
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 22:37:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3FA21137AC
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 23:36:36 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47SsdT1B8JzDqT5
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 08:37:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47StxZ0LMNzDqNL
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 09:36:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="S/37aIuS"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="IOo6wr1H"; dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Sscn5nNvzDqMC
- for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 08:36:55 +1100 (AEDT)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Dec 2019 13:36:51 -0800
-X-IronPort-AV: E=Sophos;i="5.69,278,1571727600"; d="scan'208";a="213919389"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by orsmga006-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 04 Dec 2019 13:36:51 -0800
-Date: Wed, 4 Dec 2019 13:36:50 -0800
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: BMC update via TFTP
-Message-ID: <20191204213650.GB9613@mauery.jf.intel.com>
-References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
- <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
- <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
- <9e0303e5beb34b9bb50b050cd56e35d8@linux.vnet.ibm.com>
- <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Sts95XL9zDqDl
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 09:32:45 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id AC6A522682;
+ Wed,  4 Dec 2019 17:32:41 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 04 Dec 2019 17:32:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=o+tJzAsZQVDgs/RBAR5T0ZMhdu5MIom
+ 4KAloGrmatzk=; b=S/37aIuSYB5dWqgCmtGyuWBOz2GwNSv0HGCwwYZPRJM8f3q
+ SSJfujFP2ZAwfLKHit7+tWCEQBd2dCLdcIccEP7hl+UZoan/GXvNqLXkYoboSD7p
+ jJGvbKkAJKZpMqcxap9uhY+8sd/igC+adcaICkJvfKXu/9MvBrEM/Xm0/mu/d+pb
+ UFcFplaqUuzEL5vLA6uAOfOTMKSdo2uZs7zAQu1/lyLgBh+1rfe9KYGsXqHz3zq2
+ i6GaE8+ayFXczESarkwA515TwImyRYnVuEUPS3bR6GTtXUI+aOOwCElYoyrWueSI
+ DIiB44ylMy6H7X0G9h2E+gRtxtTnDrlTsmKXs9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=o+tJzA
+ sZQVDgs/RBAR5T0ZMhdu5MIom4KAloGrmatzk=; b=IOo6wr1H/O+qPbbBW9xMg6
+ 7MF8d0lxTZezDHxAj/dV8r2+0maNBFCt++Zkh2WWb4zZzG8nwi8uHRtwLdkxh6kQ
+ eq7KBp9DYpQ/Pw+DUxpTPzGK/q2IZyx5P3YZ4HVeXY9+ekxl0OBbBZeeh6VYvVDh
+ zQPHQ0mAlnHpIM7SbmSLOIXTFnrbdvgAkyBFOWtxOrqUTa72BGXtA5tJjM/OqYXb
+ tLoE7e+vl/xzdo60OIVPMlsOY4YnL8YC7i4Wxj5U8eQgxfkTtp+kA3ocZCmIxODE
+ bt2DrZYvs+hXYNgyGbaUFP0EQTnpkia033lZrXZhaVJWrJL9h0QbbzNk3WAYDSCQ
+ ==
+X-ME-Sender: <xms:CTToXTwYWlD7fUejoU-94BV2qgaVY_bkSA2XrXu6rrKcC_OSHxDgUw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudejledgudeitdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffoh
+ hmrghinhepghhithhhuhgsrdgtohhmnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgu
+ rhgvfiesrghjrdhiugdrrghunecuvehluhhsthgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:CTToXUu9Xo6BP9DULk0rJcAAz0vEQkuvLviFczdIc9MIUc851ZHbeA>
+ <xmx:CTToXeJVbhcY-5hWH88tt9oV__cX-Al6kSCXkAtzQ3ZS16Is5a1aUQ>
+ <xmx:CTToXY3y5p9Bl7hBQHomlpH7F03hYkk0rVu935dExfi8t0xnacuv5A>
+ <xmx:CTToXbzBI1m6_mQ46XLAfDgQzrOmhJg_pov8GF0oQgdQnT4VxmBFvw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 5A4E7E00A2; Wed,  4 Dec 2019 17:32:41 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-612-g13027cc-fmstable-20191203v1
+Mime-Version: 1.0
+Message-Id: <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
+In-Reply-To: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
+References: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
+Date: Thu, 05 Dec 2019 09:03:36 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Kurt Taylor" <kurt.r.taylor@gmail.com>,
+ "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
+Subject: Re: OpenBMC Project metrics
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,102 +88,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: rgrs <rgrs@protonmail.com>, openbmc@lists.ozlabs.org,
- Gunnar Mills <gmills@linux.vnet.ibm.com>, anoo@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04-Dec-2019 09:47 AM, Joseph Reynolds wrote:
->On 12/3/19 1:55 PM, Adriana Kobylak wrote:
->>On 2019-12-03 11:08, Gunnar Mills wrote:
->>>On 12/3/2019 10:12 AM, Gunnar Mills wrote:
->>>
->>>>>In BMC WebUI under "Download image file from TFTP server" section,
->>>>>
->>>>>we have text fields "TFTP Server IP address" and "File name".
->>>>>"File name" doesn't take folders in path. Is this a bug or
->>>>>expected behavior?
->>>>>
->>>>>TFTP downloads work only if file is kept in root of tftp share.
->>>>This is expected.
->>>>
->>>https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf8048=
-7d71c3cdb7165d065079377/download_manager.cpp#L33
->>>
->>>>[1]
->>>
->>>As long as we continue to sanitize the local filename, I don't see why
->>>we need to limit the source file name.
->>>=A0Patrick, Adriana, Any objection? Remember why we wrote it this way? I
->>>assume for simplicity..?
->>
->>It was done for security to prevent users from specifying a file=20
->>outside the tftp directory, such as /mydir/../root/system-file.
->>But seems the current file name handling breaks the ability to get=20
->>files from a subdir like Raj pointed out, we should be able to fix=20
->>that out, tftp supports having a file in subdirs such as=20
->>/tftpboot/subdirectory/file, and passing /subdirectory/file to it as=20
->>the path.
 
-While we are on the topic of security, should we do something about=20
-unsecured protocols for image transfers? Adding an HMAC and key along=20
-with the IP/path would then make sure the file that was fetched contains=20
-the contents that were expected.
 
-Even if the BMC only accepts signed images, we want to make sure that=20
-the signed image the BMC fetches is the one that the administrator=20
-*wants* to be fetched. With tftp or http (or any insecure transport),=20
-one possible MiTM attack would be to substitute an alternate valid=20
-image. Let's say the admin wants to go from 1.18 to 1.20, bu the=20
-attacker wants to go to 1.16, which has a known vulnerability. The=20
-image would be authenticated by the signature, and will be accepted.
+On Thu, 5 Dec 2019, at 05:14, Kurt Taylor wrote:
+> All, I just posted the project merge metrics for September and
+> October. I will be updating the company/developer lists for November
+> and posting those shortly. Enjoy.
+> 
+> https://github.com/openbmc/openbmc/wiki/Project-Metrics
+> 
+> NOTE: these metrics should be used *very carefully*. They do not
+> represent the total contributions to the project. We value
+> contributions many that do not show up in these charts, including
+> reviews, mail list involvement, IRC involvement, etc.
 
-With an added HMAC, the MiTM attack would be thwarted. The HMAC and key=20
-would be transmitted to the BMC over a secure channel (https) so the=20
-attacker would not be able create a suitable replacement for the image=20
-in the insecure channel.
+Given all the caveats and the lopsided view the graphs display, what
+are we trying to achieve by graphing the metric of commits per company?
 
---Vernon
+It's also not clear to me what the inputs to these graphs are, for instance
+whether changes to Linux, u-boot, qemu or other major projects that we
+consume and contribute to are included or whether it's just repositories
+under the openbmc org on github. If we're excluding upstream projects,
+why?
 
->It seems to me that the burden must be on the TFTP server to protect=20
->itself.=A0 See the "Security Considerations" section of RFC 1350 -=20
->https://tools.ietf.org/html/rfc1350
->Specifically, OpenBMC only needs read access (it does not need to=20
->write files to the TFTP server) and only needs to be able to access=20
->files the TFTP server intends to provide (typically: all the files=20
->under a specific directory).
->
->To be more clear:
->- OpenBMC does not provide a TFTP server, so this is guidance for=20
->someone setting a TFTP server for use with an OpenBMC system
->- The TFTP server only needs to offer READ access.
->- The TFTP server ought to prevent clients from using=20
->cleverly-constructed pathnames (for example, any file which begins=20
->with "/" or contains an ".." element) to access files outside of its=20
->sandbox.
->- That said, I am not a TFTP expert, and whichever TFTP server is=20
->used, its security guidance should be followed.
->
->What all of the above, I think it would be okay for OpenBMC to=20
->validate the pathname it sends to the TFTP server, but don't think it=20
->is necessary.
->
->Finally, I hope we can move away from TFTP and more toward a secure=20
->image distribution approach.
->Note that TFTP is disabled in OpenBMC by default.=A0 See=20
->https://github.com/openbmc/bmcweb/blob/master/CMakeLists.txt
->
->- Joseph
->
->>>
->>>=A0Thanks,
->>>=A0Gunnar
->>>
->>>
->>>Links:
->>>------
->>>[1]
->>>https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/b0ce996ac60cf8048=
-7d71c3cdb7165d065079377/download_manager.cpp#L33
->>>
->
+Where are the scripts to reproduce the graphs? Can you contribute them
+to openbmc-tools?
+
+Andrew
