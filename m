@@ -1,63 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87888113656
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 21:19:42 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42521113524
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 19:46:23 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Snqw2LB6zDqWd
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 05:46:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Sqvb3crpzDqLW
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 07:19:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2d;
- helo=mail-vk1-xa2d.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="e44LGiKv"; 
- dkim-atps=neutral
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com
- [IPv6:2607:f8b0:4864:20::a2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47SnpT6ZrpzDqWF
- for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 05:45:03 +1100 (AEDT)
-Received: by mail-vk1-xa2d.google.com with SMTP id i4so278503vkc.3
- for <openbmc@lists.ozlabs.org>; Wed, 04 Dec 2019 10:45:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=ob3PIwDaqwwkq3ZqiQsOXUmDGTQDwBLJKYBDrY0Q5N0=;
- b=e44LGiKvu0KIG6jGNh04tq5rbqNm/i3Dyjp4VnuhPkwPfn9HRwqXzRHFZVcai58Bg6
- Jilg4alXw29YwPSJ4bgqwGW9VyyXIUxkU6pBh17eIkEKBlRKshhbc+PoFdm6x4e+mzUF
- j4K7gcXb13ka+0U08gWj4r+6qynYnZPxsxZ7Yp7Bt4v2OLYD7NzeGfFzUGEdcFv1VdJn
- BH0NIA9HlBy7AQheO4pXmptLDrPaHCTA6p39Ke/U97LADKbdJY+TSWPSlKmqUJs4ZIIN
- w3XVP8BvLDybclQR4H8SDXsNxSw0iiIbTUrGX8K1+E8qo7oC6aawzIF849Yngj+yZnjP
- OxGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=ob3PIwDaqwwkq3ZqiQsOXUmDGTQDwBLJKYBDrY0Q5N0=;
- b=ONUASGsRDVuy+wb9WJDDUWRhljkXvnsukm1nyCMBrAmKi9jlLSDqRg3kK6BQUTrcl1
- Dk79oE+ec+5N/7ucT2/bkplx56lAF1n4eXvkzxfwt1yIweguaJ34c2gN3Yq+BCxkF9bk
- x4lUwARsm3P6y+g/y2chwlj8MJ8X7qTjDy39XsiG0A/VykSs+ngkLENHsApdonBFHlaS
- EDHQyx/XBY5Usu59YgVhTXcCAcAvy8Sfz0MkQVL+2jow5/FkSQ5CPMTvCohBC1dYt18J
- HBCgpPTwsKUYv12DWV6SMS85SLiuEfSCkWU3ESD5R/hCJRTKEvwGlz9Lp03zhGexg4uL
- xaWw==
-X-Gm-Message-State: APjAAAXBzcM/1aAeCfJwgkqls50CjMjNyiw+Z0Ct7g6sIW+y0C8DbqE6
- /RohupXkOpPVAUqV6Hgd3iAOX6tWTNaHEfK/FseMRpCt
-X-Google-Smtp-Source: APXvYqxKXXSihrwh2/3MUXMrQcpvi5uwHEgJLgvOQdAHrHqkYQrSe175jp8MIBgmqG93l++1WtOx/s29YnZwR2zyN0E=
-X-Received: by 2002:a1f:1e13:: with SMTP id e19mr3340611vke.88.1575485099379; 
- Wed, 04 Dec 2019 10:44:59 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Sqtb5HYPzDqRR
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 07:18:45 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 04 Dec 2019 12:18:41 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,278,1571727600"; d="scan'208";a="242977729"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by fmsmga002.fm.intel.com with ESMTP; 04 Dec 2019 12:18:41 -0800
+Subject: Re: Inserting a Redfish Aggregator
+To: Richard Hanley <rhanley@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAH1kD+anPrvv4=BEt9MTvqpLNpLEDfa1ERMNQvtXAWrDmv1c2g@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <49909d49-5218-e492-aa4b-8602a8baa041@linux.intel.com>
+Date: Wed, 4 Dec 2019 12:18:40 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-From: Kurt Taylor <kurt.r.taylor@gmail.com>
-Date: Wed, 4 Dec 2019 12:44:48 -0600
-Message-ID: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
-Subject: OpenBMC Project metrics
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAH1kD+anPrvv4=BEt9MTvqpLNpLEDfa1ERMNQvtXAWrDmv1c2g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,15 +57,70 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-All, I just posted the project merge metrics for September and
-October. I will be updating the company/developer lists for November
-and posting those shortly. Enjoy.
+On 12/3/19 7:14 PM, Richard Hanley wrote:
+> Hi everyone,
+> 
+> 
+> I’ve been thinking a bit about how to separate Redfish logic from DBus 
+> in bmcweb.
+> 
+> 
+> As a motivating example, imagine a Redfish aggregator that has some 
+> chassis that is located outside of its local instance.Once the 
+> aggregator finds the external chassis, it needs to add it to the chassis 
+> collection.
+> 
+> 
+> However, looking at the current implementation of the 
+> ChassisCollection.(located here: 
+> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/chassis.hpp#L246) 
+> It isn’t clear to me how to add this in.
+> 
+> 
+> The current implementation does some setup on the response payload, and 
+> then makes a DBus call to look through the entity manager.The collection 
 
-https://github.com/openbmc/openbmc/wiki/Project-Metrics
+It's not entity-manager per-say, it's whatever daemon produces the 
+correct interface on d-bus. Entity-manager is just one option.
 
-NOTE: these metrics should be used *very carefully*. They do not
-represent the total contributions to the project. We value
-contributions many that do not show up in these charts, including
-reviews, mail list involvement, IRC involvement, etc.
+> it sends as a response is entirely defined by the result from the entity 
+> manager. I basically see three ways that this could be solved.
+> 
+> 
+>  1. Move the aggregator logic down to the entity manager
+>  2. Refactor the Chassis Collection to have its own data model separate
+>     from the entity manager.
+>  3. Create some service that works on top of the bmcweb implementation
+>     of Redfish.
+> 
+> 
+> I think this comes up to a fundamental design decision, how 
+> modular/flexible should the Redfish implementation be?Right now bmcweb 
+> provides a very sane default implementation, and is tied very closely to 
+> the current hardware it is running on.Whereas I am envisioning a Redfish 
+> implementation that is a bit more abstracted from any particular hardware.
+> 
 
-Kurt Taylor (krtaylor)
+Can you describe a bit more where the data would come from? Are you 
+thinking of multiple bmcs that are physically attached? Non-physically 
+attached bmcs? BMCs not running OpenBmc? One idea I had in the past was 
+remoting dbus from other systems in some way and creating a clone daemon 
+that would show the interfaces from the other systems, although I never 
+looked into it much.
+
+> 
+> It’s taken me awhile to get up to speed with Redfish, Open BMC, and 
+> Google’s infrastructure; but I’m starting to get a more concrete design 
+> for an aggregator.However, I’m unsure about whether this should be 
+> framed as a new layer on top of the existing implementation, or as a 
+> refactor of that implementation?
+> 
+> 
+> I can see some pros and cons between the two, but I’m interested in how 
+> everyone feels about this.
+> 
+> 
+> Regards,
+> 
+> Richard
+> 
