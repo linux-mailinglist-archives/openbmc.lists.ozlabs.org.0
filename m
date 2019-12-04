@@ -1,54 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D1D81127F0
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 10:42:18 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47SYm75np9zDqJh
-	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 20:42:15 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D935112CA4
+	for <lists+openbmc@lfdr.de>; Wed,  4 Dec 2019 14:31:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47SfrV0SBHzDq7h
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 00:31:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.130;
- helo=mail-40130.protonmail.ch; envelope-from=rgrs@protonmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=thalerj@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="Tr97Ajy9"; 
- dkim-atps=neutral
-Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch
- [185.70.40.130])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47SYjW0j0vzDqWt
- for <openbmc@lists.ozlabs.org>; Wed,  4 Dec 2019 20:39:55 +1100 (AEDT)
-Date: Wed, 04 Dec 2019 09:39:42 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1575452389;
- bh=AFIBJPc9IP/llXp27rblmW59Nm6eFADpAvd3uQ+A+Ys=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=Tr97Ajy95k9Gdsn3Tg212ADyhotMwoCRel7nlOy7nUvji7m5SOZ1VXoBpJGxQ0GWn
- 9DH03r3wTclOQ9d/kTQ74sZHTW1CQv/RXRUOb+oDmyIIs9IF/aDtEBF1x4hWdnRzDX
- jCoARIRHagE3X1rDQ5jUmKNaxSp+eWDT1aPtj69A=
-To: James Feist <james.feist@linux.intel.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Faking Sensor Readings
-Message-ID: <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
-In-Reply-To: <234c1d26-7b59-0926-d6c2-6c49f75aab3f@linux.intel.com>
-References: <QVdDJHlLW9JS_3uowBPTzSCb1dwpqJjml0ORFR_aQGpuKCve1l8Qwy4GF4X0_dgJmExy8sjJQD_VjnI-o4xwoYhivHJlSPBt42fc1cuDKjw=@protonmail.com>
- <0a4bb951-4f85-728a-8426-af629c870908@yadro.com>
- <234c1d26-7b59-0926-d6c2-6c49f75aab3f@linux.intel.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Sfmg169FzDqWy
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 00:28:02 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xB4DRiOG017067; Wed, 4 Dec 2019 08:27:58 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wnqn5kdu6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Dec 2019 08:27:57 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xB4DKNJI025234;
+ Wed, 4 Dec 2019 13:28:01 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma01wdc.us.ibm.com with ESMTP id 2wkg26dg6w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Dec 2019 13:28:01 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xB4DRtJc46268860
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Dec 2019 13:27:55 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33B11AE05F;
+ Wed,  4 Dec 2019 13:27:55 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C028AAE05C;
+ Wed,  4 Dec 2019 13:27:54 +0000 (GMT)
+Received: from oc2358436115.ibm.com (unknown [9.41.74.115])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Dec 2019 13:27:54 +0000 (GMT)
+Subject: Re: [EXTERNAL] Telemetry Reports dynamic update
+To: Neeraj Ladkani <neladk@microsoft.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
+ vishwa <vishwa@linux.vnet.ibm.com>
+References: <da4d443c-e7e1-6980-af49-15d05360feff@linux.vnet.ibm.com>
+ <DM6PR21MB1388E6CEF6424B616C7C7B1DC85D0@DM6PR21MB1388.namprd21.prod.outlook.com>
+From: Justin Thaler <thalerj@linux.vnet.ibm.com>
+Message-ID: <df5cf925-4999-18ab-8b6f-dfe7a9c38fff@linux.vnet.ibm.com>
+Date: Wed, 4 Dec 2019 07:27:54 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM autolearn=ham
- autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+In-Reply-To: <DM6PR21MB1388E6CEF6424B616C7C7B1DC85D0@DM6PR21MB1388.namprd21.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-04_03:2019-12-04,2019-12-04 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015
+ impostorscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999
+ priorityscore=1501 suspectscore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912040110
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,72 +88,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Alexander Amelkin <a.amelkin@yadro.com>, "Thomaiyar,
- Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi James,
 
-I tried busctl set-property,  but the values didn't change.
-Are the steps below correct?
-(test with both 'field mode' enabled and disabled)
 
-root@obmc:~# busctl introspect xyz.openbmc_project.Hwmon-2439434288.Hwmon1 =
- /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openbmc_project.Se=
-nsor.Value --no-pager
-NAME                             TYPE      SIGNATURE RESULT/VALUE          =
-                   FLAGS
-.MaxValue                        property  x         0                     =
-                   emits-change writable
-.MinValue                        property  x         0                     =
-                   emits-change writable
-.Scale                           property  x         -3                    =
-                   emits-change writable
-.Unit                            property  s         "xyz.openbmc_project.S=
-ensor.Value.Unit.=E2=80=A6 emits-change writable
-.Value                           property  x         18500                 =
-                   emits-change writable
+On 12/4/19 12:43 AM, Neeraj Ladkani wrote:
+> We don’t have telemetryservice in BMC currently so are you currently doing it using webui? Or you have written a app using redfish APIs?  I asked similar question in last week work group meeting. I think it will be useful to have ability to add new report definitions.
+I have an app that uses the current websocket implementation on openBMC 
+and have been reviewing the needs for transitioning the app to redfish 
+when the time comes. One limitation of those is not being able to update 
+the active subscription without tearing it down and starting it again, 
+resulting in a few seconds of missed readings.
 
-root@obmc:~# busctl --no-pager set-property xyz.openbmc_project.Hwmon-24394=
-34288.Hwmon1  /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openb=
-mc_project.Sensor.Value  Value x 50000
-
-root@saber:~# busctl --no-pager get-property xyz.openbmc_project.Hwmon-2439=
-434288.Hwmon1  /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.open=
-bmc_project.Sensor.Value  Value
-x 18500
-
-root@obmc:~#
-
-Thanks,
-Raj
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Wednesday, December 4, 2019 1:34 AM, James Feist <james.feist@linux.inte=
-l.com> wrote:
-
-&gt; On 12/3/19 5:49 AM, Alexander Amelkin wrote:
-&gt;
-&gt; &gt; 03.12.2019 15:06, rgrs wrote:
-&gt; &gt;
-&gt; &gt; &gt; Hi,
-&gt; &gt; &gt; How do I fake sensor readings in OpenBMC?
-&gt; &gt; &gt; We're trying to fake temperature sensors and make sure fans =
-ramp up/down
-&gt; &gt; &gt; accordingly.
-&gt; &gt;
-&gt; &gt; We ended up patching the kernel driver to fake the readings by re=
-quest.
-&gt; &gt; I'm not aware of any ready interface in OpenBMC for that.
-&gt;
-&gt; If you're using d-bus sensors, the sensor property is writable. It is
-&gt; also supported by patching the sensor value in redfish.
-&gt;
-&gt; &gt; With best regards,
-&gt; &gt; Alexander Amelkin
-
-</james.feist@linux.intel.com>
+Being able to update the content of the subscription on the fly would be 
+a huge value add I think.
+> 
+> -----Original Message-----
+> From: Justin Thaler <thalerj@linux.vnet.ibm.com>
+> Sent: Tuesday, December 3, 2019 3:57 PM
+> To: openbmc@lists.ozlabs.org; Matuszczak, Piotr <piotr.matuszczak@intel.com>; vishwa <vishwa@linux.vnet.ibm.com>; Neeraj Ladkani <neladk@microsoft.com>
+> Subject: [EXTERNAL] Telemetry Reports dynamic update
+> 
+> Hi All,
+> 	I've been sort of silently reviewing the designs to telemetry reports design along with subscriptions. As I was reviewing it, I've had a couple of different design points come up and an interesting use case I've wanted to ask about. So here's my scenario:
+> 
+> I've set up a telemetry report to the system dynamically by querying the sensors and request the values are updated every second. The system was in a state where it was powered off, so not many sensors were available.
+> After the system is powered on, more sensors are added as different devices are powered up. At this point I'd want to add the additional sensors to my report. I query the system again for all the available sensors and see thermal and power readings for the CPUs. I want updates on these every second just like my initial report.
+> 
+> This leads me to the following question:
+> Can I push a new report definition to the TelemetryService and have the event service start providing that new definition without tearing down the subscription first, which would leave a gap in the data?
+> 
+> Thanks,
+> Justin Thaler
+> 
