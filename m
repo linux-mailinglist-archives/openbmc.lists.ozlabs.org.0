@@ -2,67 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63BBA1140D7
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 13:32:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 484A411433D
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 16:05:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47TFVG6M3dzDqbD
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 23:32:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47TJtb3tfzzDqZN
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 02:05:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=235f777a0=tony.lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d35;
+ helo=mail-io1-xd35.google.com; envelope-from=rahulmaheshwari01@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 47TFT13jkdzDqYn
- for <openbmc@lists.ozlabs.org>; Thu,  5 Dec 2019 23:31:31 +1100 (AEDT)
-IronPort-SDR: rpDrm4GuSEVDWMnvinMn1TUgFsHt9SVaixVZ6npzHEDi4LGPdb5yzWdfFWbccC2Ht8pGKDd2qx
- z1SJUb6/MjKg==
-Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
- by mx02.quantatw.com with ESMTP; 05 Dec 2019 20:31:29 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx08.quanta.corp
- (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 5 Dec 2019
- 20:31:26 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Thu, 5 Dec 2019 20:31:26 +0800
-From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Subject: RE: Test Case "Verify IPMI Root User Password Change" in
- openbmc-test-automation
-Thread-Topic: Test Case "Verify IPMI Root User Password Change" in
- openbmc-test-automation
-Thread-Index: AdWrFEY2F63AP+A9TAS205f6FzSyRv//8yaA//9MWrA=
-Date: Thu, 5 Dec 2019 12:31:26 +0000
-Message-ID: <293a022b44784f86bee3a83fbdafd03b@quantatw.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Uawx3P0f"; 
+ dkim-atps=neutral
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
+ [IPv6:2607:f8b0:4864:20::d35])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47TJsj2n1HzDqQf
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2019 02:04:41 +1100 (AEDT)
+Received: by mail-io1-xd35.google.com with SMTP id c16so3917358ioh.6
+ for <openbmc@lists.ozlabs.org>; Thu, 05 Dec 2019 07:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=oGaADGEU5ItdyGL+No+xcbKzRmPNHhiKe7OScfw6QOQ=;
+ b=Uawx3P0f/heRLSCKmNJCrpf5H4E6/dl+nKM5kVJb6BNmN7Huf5TtaWRKK51UOU+WT8
+ Ow917UQm2M2Esxx/QBu4MKxZG2Oq/C+46+RE1R6yCgLYcJdgfD62oWP0+ri40Q9JcjPE
+ 03tQ/4nNoeMULydVsee0p46+JiVauHSztoLfaIdjp/piV+nyegfkHGRoxDv3mjZjRjzN
+ 2RQPXAzdZ6zPR4QnpFIDtHCSCjWahag8QBNJmPBzW9hDhV/Zs8VMQdKuibqTPW/bv4sw
+ z2DT2N72mU/kW2wQNUn+9BMZaS88XFWhtyj/z9fDyKNi924Xm0+INIQUH9zQ3Hkso1TT
+ 1jfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=oGaADGEU5ItdyGL+No+xcbKzRmPNHhiKe7OScfw6QOQ=;
+ b=RqMT8PmBLKBCQabmZggqG6y0Bb+im6HgCRMzKSVce2y8+7gTbQmyabu6N1n9NL+5cA
+ SBJQVtdPTmfYEzlMFvLDzxfTB7epJPLhZWiaBVoGUgR1Zo+AvnRDY6pjhDMKWcPtXY2l
+ yxCCfy1HT1AMEnyhnYPFF0CaeaoZHmyg8syNWVT3lN8ymhuF5mHqBk+XPiS1iCgGeSTZ
+ p3erW3uXgJ30GxPF4F6nmTI7Akz7nmpPNAZoQ8vWx8bzpo9v9b0V86ha+8NmuI8Q94HO
+ iZd1Sztrg0mJlpnMJtYC+RE7pCDzZJ6ZvCHWzCvvhsTsoj1GwRI8/i/81KRvKqydBkLg
+ gKzQ==
+X-Gm-Message-State: APjAAAWB4HLHXXoMrz4pNWhMyrAF2DjKdGxefBEUUCJaPIExDtJfww+T
+ LxHPZcEEdp5u+n9zgM6AAMdO0zzo9gOUAVso/WSVRP2e
+X-Google-Smtp-Source: APXvYqw1iWI7ZKU9uJoAHMmOwlvIyr4iRHqd+ZcgIbyshSCx/MjX3VYswkN/hv8UpFGBOH6dlpwT7bv36uDalNipuq8=
+X-Received: by 2002:a6b:7618:: with SMTP id g24mr6787044iom.31.1575558277140; 
+ Thu, 05 Dec 2019 07:04:37 -0800 (PST)
+MIME-Version: 1.0
 References: <d668c41428ad4e6db20a5221f4a2306b@quantatw.com>
  <CAAMkS11DHQvaX+XHBGXDv-3j9__ZS66B1UPhpieUsnfWu+vVgQ@mail.gmail.com>
-In-Reply-To: <CAAMkS11DHQvaX+XHBGXDv-3j9__ZS66B1UPhpieUsnfWu+vVgQ@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25084.007
-x-tm-as-result: No-10--15.624300-8.000000
-x-tmase-matchedrid: 0dFPYP4mu5TwXJbBoN29PhvgzEPRJaDEWw/S0HB7eoMTiSW9r3PknBkX
- +si55c+xUnh1omhhVaTj2iOyGc7mHhA2kxuARasNNVRz+HwqL4J99ekRHlOQkWyR761ySQGijzr
- oMRry5yIjZVYfvy3cQqwvTQpsPBALXywERWyRD+5cod85S7fEgBA5wxKjT3bqvGAx/1ATZ5ulmv
- EmZi6ZZsV+WCC7CP0HcZGRi+WZCaUde4OwI1O5iL+Kd/geEyt7Z5nL01I3HiqRoQLwUmtov9SE+
- ooSMqbW7Xch1djoz3hG/fMs72PmHDQdOVb9/jgPlVHM/F6YkvRVre9WjqqQw2z3xnx8b/qR8QWf
- RmYVXCcNnUFJfK51wpYlxuk1ogQA0VtwrmuY87XQeUylZ/mLlzCNjbQPaq5iWkvncDztoltpIb9
- sYgtps5jly8/sisJyMvCSeJk7w5+jxYyRBa/qJUl4W8WVUOR/9xS3mVzWUuA152LecOHHI1VoEX
- K0hBS3
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--15.624300-8.000000
-x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25084.007
-x-tm-snts-smtp: CB75480375F2792DD5397882F9DBB98094CB5CBA65381C4ABD45D865DCFA03342000:B
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+ <293a022b44784f86bee3a83fbdafd03b@quantatw.com>
+In-Reply-To: <293a022b44784f86bee3a83fbdafd03b@quantatw.com>
+From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Date: Thu, 5 Dec 2019 20:35:14 +0530
+Message-ID: <CAAMkS11tjgp2AH+u_s98cdXHxEkQgLxqokFc91kUNqL-SRVA0Q@mail.gmail.com>
+Subject: Re: Test Case "Verify IPMI Root User Password Change" in
+ openbmc-test-automation
+To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+Content-Type: multipart/alternative; boundary="0000000000006e97830598f63fa3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,43 +79,177 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgUmFodWwsDQoNCkdvdCBpdCwgaXQgc2VlbXMgSSBjYW4gb25seSBza2lwIGl0IGZpcnN0Lg0K
-VGhlcmUgaXMgYW5vdGhlciBxdWVzdGlvbiBhYm91dCB0ZXN0X2lwbWlfdXNlci5yb2JvdC4NCkNh
-c2VzIHdoaWNoIGNyZWF0aW5nIGEgbmV3IHVzZXIgc3VjY2VzcywgYW5kIHRoZW4gZXhlY3V0ZSBh
-IGV4dGVybmFsIGlwbWkgY29tbWFuZCB3aXRoDQp0aGlzIG5ldyB1c2VyIGFjY291bnQgd2lsbCBm
-YWlsIG9uIG91ciBzeXN0ZW0uIEZvciBleGFtcGxlLCB0ZXN0IGNhc2UgIlZlcmlmeSBTZXR0aW5n
-IFZhbGlkIFBhc3N3b3JkIEZvciBJUE1JIFVzZXIiLg0KVGhlIGtleSBpcyB0aGF0IHRoZSBkZWZh
-dWx0IGNoYW5uZWwgaW4gdGhlIEtleXdvcmQgIlNldCBDaGFubmVsIEFjY2VzcyIgaXMgMS4NCiJl
-dGgwIiBjb3JyZXNwb25kaW5nIHRvIGNoYW5uZWwgMSBpcyB1c2VkIGZvciBkZWJ1ZyBwdXJwb3Nl
-cywgYW5kDQoiZXRoMSIgY29ycmVzcG9uZGluZyB0byBjaGFubmVsIDIgaXMgdXNlZCBmb3IgaXBt
-aSByZW1vdGUgYWNjZXNzIGluIG91ciBzeXN0ZW0uDQpTbyBvbmNlIEkgc2V0IHRoZSBkZWZhdWx0
-IGNoYW5uZWwgdG8gMiBpbiB0aGUgS2V5d29yZCAiU2V0IENoYW5uZWwgQWNjZXNzIiwgdGhvc2Ug
-Y2FzZXMgc3VjY2VlZC4NCg0KSSBoYXZlIGEgc29sdXRpb246IGFkZCB2YXJpYWJsZSAke0NIQU5O
-RUx9IGRlZmF1bHQgaXMgMSBpbiBsaWIvcmVzb3VyY2Uucm9ib3QuDQpUaGVuLCBsZXQgJHtjaGFu
-bmVsfT0ke0NIQU5ORUx9IGluIEtleXdvcmQgIlNldCBDaGFubmVsIEFjY2VzcyIuDQpMZXQgdXNl
-ciB0byBzcGVjaWZ5IGNoYW5uZWwgd2hpbGUgcnVubmluZywgaWYgbm90LCB0aGUgZGVmYXVsdCBp
-cyAxLg0KDQpFeGFtcGxlOiByb2JvdCAtdiBPUEVOQk1DX0hPU1Q6eC54LngueCAtdiBDSEFOTkVM
-OjIgaXBtaS90ZXN0X2lwbWlfdXNlci5yb2JvdA0KDQpJcyB0aGlzIGFwcHJvYWNoIHNvdW5kcyBm
-aW5lIHRvIHlvdSBvciB0aGVyZSBhcmUgb3RoZXIgc3VnZ2VzdGlvbnM/DQoNClRoYW5rcw0KVG9u
-eQ0KDQpGcm9tOiBSYWh1bCBNYWhlc2h3YXJpIDxyYWh1bG1haGVzaHdhcmkwMUBnbWFpbC5jb20+
-IA0KU2VudDogVGh1cnNkYXksIERlY2VtYmVyIDUsIDIwMTkgNTo0NyBQTQ0KVG86IFRvbnkgTGVl
-ICjmnY7mloflr4wpIDxUb255LkxlZUBxdWFudGF0dy5jb20+DQpDYzogb3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnDQpTdWJqZWN0OiBSZTogVGVzdCBDYXNlICJWZXJpZnkgSVBNSSBSb290IFVzZXIg
-UGFzc3dvcmQgQ2hhbmdlIiBpbiBvcGVuYm1jLXRlc3QtYXV0b21hdGlvbg0KDQpIaSBUb255LA0K
-V2UgaGF2ZSBhbHNvIGZhY2VkIHRoZSBzYW1lIHByb2JsZW0uIFNvIHRvIGF2b2lkIHN1Y2ggcHJv
-YmxlbXMsIHdlIGRlY2lkZWQgdG8gc2V0IEJNQyBwYXNzd29yZCB0byA4IGNoYXJhY3RlcnMgbGVu
-Z3RoIGJlZm9yZSBydW5uaW5nIG91ciBidWNrZXQuIEFzIGZhciBhcyBza2lwcGluZyBzdWNoIHRl
-c3QgY2FzZSwgd2UgY2FuIGRvIHRoYXQgYnkgdXNpbmcgYC1lwqBWZXJpZnlfSVBNSV9Sb290X1Vz
-ZXJfUGFzc3dvcmRfQ2hhbmdlYCB3aGlsZSBydW5uaW5nLg0KDQpFeGFtcGxlOg0Kcm9ib3QgLXYg
-T1BFTkJNQ19IT1NUOngueC54LnggLWXCoFZlcmlmeV9JUE1JX1Jvb3RfVXNlcl9QYXNzd29yZF9D
-aGFuZ2UgaXBtaS90ZXN0X2lwbWlfdXNlci5yb2JvdA0KDQpUaGFua3MNClJhaHVsDQoNCk9uIFRo
-dSwgRGVjIDUsIDIwMTkgYXQgODowNSBBTSBUb255IExlZSAo5p2O5paH5a+MKSA8bWFpbHRvOlRv
-bnkuTGVlQHF1YW50YXR3LmNvbT4gd3JvdGU6DQpIaSBSYWh1bCwNCg0KUmVmZXJlbmNlIHRvIGh0
-dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMtdGVzdC1hdXRvbWF0aW9uL2lzc3Vlcy8x
-OTIwLg0KDQpDYXNlICJWZXJpZnkgSVBNSSBSb290IFVzZXIgUGFzc3dvcmQgQ2hhbmdlIiB3aWxs
-IGNoYW5nZSByb290IHVzZXIgcGFzc3dvcmQgYW5kDQp1bmFibGUgdG8gcmVzZXQgZGVmYXVsdCBw
-YXNzd29yZCBkdWUgdG8gdGhlIGxlbmd0aCBpcyBsaW1pdGVkIHRvIDguDQpBcyBhIHJlc3VsdCwg
-Y2FzZXMgd2lsbCBhbHNvIGZhaWwgYWZ0ZXIgdGhpcyBiZWNhdXNlIHRoZSBwYXNzd29yZCBoYXMg
-YmVlbiBjaGFuZ2VkIHRvIDBwZW5CbWMxLg0KU2hvdWxkIHdlIHJlbW92ZSB0aGlzIHRlc3QgY2Fz
-ZT8gVGhlcmUgc2VlbXMgdG8gYmUgbm8gb3RoZXIgd2F5IHRvIGZpeCBpdC4NCg0KVGhhbmtzDQpC
-ZXN0IFJlZ2FyZHMsDQpUb255DQoNCg==
+--0000000000006e97830598f63fa3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Your solution sound good to me. You can push the code for the same.
+
+Thanks
+Rahul
+
+On Thu, Dec 5, 2019 at 6:01 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony=
+.Lee@quantatw.com> wrote:
+
+> Hi Rahul,
+>
+> Got it, it seems I can only skip it first.
+> There is another question about test_ipmi_user.robot.
+> Cases which creating a new user success, and then execute a external ipmi
+> command with
+> this new user account will fail on our system. For example, test case
+> "Verify Setting Valid Password For IPMI User".
+> The key is that the default channel in the Keyword "Set Channel Access" i=
+s
+> 1.
+> "eth0" corresponding to channel 1 is used for debug purposes, and
+> "eth1" corresponding to channel 2 is used for ipmi remote access in our
+> system.
+> So once I set the default channel to 2 in the Keyword "Set Channel
+> Access", those cases succeed.
+>
+> I have a solution: add variable ${CHANNEL} default is 1 in
+> lib/resource.robot.
+> Then, let ${channel}=3D${CHANNEL} in Keyword "Set Channel Access".
+> Let user to specify channel while running, if not, the default is 1.
+>
+> Example: robot -v OPENBMC_HOST:x.x.x.x -v CHANNEL:2
+> ipmi/test_ipmi_user.robot
+>
+> Is this approach sounds fine to you or there are other suggestions?
+>
+> Thanks
+> Tony
+>
+> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+> Sent: Thursday, December 5, 2019 5:47 PM
+> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: Test Case "Verify IPMI Root User Password Change" in
+> openbmc-test-automation
+>
+> Hi Tony,
+> We have also faced the same problem. So to avoid such problems, we decide=
+d
+> to set BMC password to 8 characters length before running our bucket. As
+> far as skipping such test case, we can do that by using
+> `-e Verify_IPMI_Root_User_Password_Change` while running.
+>
+> Example:
+> robot -v OPENBMC_HOST:x.x.x.x -e Verify_IPMI_Root_User_Password_Change
+> ipmi/test_ipmi_user.robot
+>
+> Thanks
+> Rahul
+>
+> On Thu, Dec 5, 2019 at 8:05 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <ma=
+ilto:
+> Tony.Lee@quantatw.com> wrote:
+> Hi Rahul,
+>
+> Reference to
+> https://github.com/openbmc/openbmc-test-automation/issues/1920.
+>
+> Case "Verify IPMI Root User Password Change" will change root user
+> password and
+> unable to reset default password due to the length is limited to 8.
+> As a result, cases will also fail after this because the password has bee=
+n
+> changed to 0penBmc1.
+> Should we remove this test case? There seems to be no other way to fix it=
+.
+>
+> Thanks
+> Best Regards,
+> Tony
+>
+>
+
+--0000000000006e97830598f63fa3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Your solution sound good to me. You can push the code for =
+the same.<div><br></div><div>Thanks</div><div>Rahul</div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 5, 201=
+9 at 6:01 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:T=
+ony.Lee@quantatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">Hi Rahul,<br>
+<br>
+Got it, it seems I can only skip it first.<br>
+There is another question about test_ipmi_user.robot.<br>
+Cases which creating a new user success, and then execute a external ipmi c=
+ommand with<br>
+this new user account will fail on our system. For example, test case &quot=
+;Verify Setting Valid Password For IPMI User&quot;.<br>
+The key is that the default channel in the Keyword &quot;Set Channel Access=
+&quot; is 1.<br>
+&quot;eth0&quot; corresponding to channel 1 is used for debug purposes, and=
+<br>
+&quot;eth1&quot; corresponding to channel 2 is used for ipmi remote access =
+in our system.<br>
+So once I set the default channel to 2 in the Keyword &quot;Set Channel Acc=
+ess&quot;, those cases succeed.<br>
+<br>
+I have a solution: add variable ${CHANNEL} default is 1 in lib/resource.rob=
+ot.<br>
+Then, let ${channel}=3D${CHANNEL} in Keyword &quot;Set Channel Access&quot;=
+.<br>
+Let user to specify channel while running, if not, the default is 1.<br>
+<br>
+Example: robot -v OPENBMC_HOST:x.x.x.x -v CHANNEL:2 ipmi/test_ipmi_user.rob=
+ot<br>
+<br>
+Is this approach sounds fine to you or there are other suggestions?<br>
+<br>
+Thanks<br>
+Tony<br>
+<br>
+From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
+arget=3D"_blank">rahulmaheshwari01@gmail.com</a>&gt; <br>
+Sent: Thursday, December 5, 2019 5:47 PM<br>
+To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
+uantatw.com" target=3D"_blank">Tony.Lee@quantatw.com</a>&gt;<br>
+Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
+ists.ozlabs.org</a><br>
+Subject: Re: Test Case &quot;Verify IPMI Root User Password Change&quot; in=
+ openbmc-test-automation<br>
+<br>
+Hi Tony,<br>
+We have also faced the same problem. So to avoid such problems, we decided =
+to set BMC password to 8 characters length before running our bucket. As fa=
+r as skipping such test case, we can do that by using `-e=C2=A0Verify_IPMI_=
+Root_User_Password_Change` while running.<br>
+<br>
+Example:<br>
+robot -v OPENBMC_HOST:x.x.x.x -e=C2=A0Verify_IPMI_Root_User_Password_Change=
+ ipmi/test_ipmi_user.robot<br>
+<br>
+Thanks<br>
+Rahul<br>
+<br>
+On Thu, Dec 5, 2019 at 8:05 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;m=
+ailto:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank">Tony.Lee@q=
+uantatw.com</a>&gt; wrote:<br>
+Hi Rahul,<br>
+<br>
+Reference to <a href=3D"https://github.com/openbmc/openbmc-test-automation/=
+issues/1920" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbm=
+c/openbmc-test-automation/issues/1920</a>.<br>
+<br>
+Case &quot;Verify IPMI Root User Password Change&quot; will change root use=
+r password and<br>
+unable to reset default password due to the length is limited to 8.<br>
+As a result, cases will also fail after this because the password has been =
+changed to 0penBmc1.<br>
+Should we remove this test case? There seems to be no other way to fix it.<=
+br>
+<br>
+Thanks<br>
+Best Regards,<br>
+Tony<br>
+<br>
+</blockquote></div>
+
+--0000000000006e97830598f63fa3--
