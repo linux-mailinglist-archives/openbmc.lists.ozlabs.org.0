@@ -2,68 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 484A411433D
-	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 16:05:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96519114347
+	for <lists+openbmc@lfdr.de>; Thu,  5 Dec 2019 16:10:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47TJtb3tfzzDqZN
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 02:05:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47TK0Q2yyLzDqTn
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 02:10:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d35;
- helo=mail-io1-xd35.google.com; envelope-from=rahulmaheshwari01@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Uawx3P0f"; 
- dkim-atps=neutral
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
- [IPv6:2607:f8b0:4864:20::d35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47TJsj2n1HzDqQf
- for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2019 02:04:41 +1100 (AEDT)
-Received: by mail-io1-xd35.google.com with SMTP id c16so3917358ioh.6
- for <openbmc@lists.ozlabs.org>; Thu, 05 Dec 2019 07:04:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=oGaADGEU5ItdyGL+No+xcbKzRmPNHhiKe7OScfw6QOQ=;
- b=Uawx3P0f/heRLSCKmNJCrpf5H4E6/dl+nKM5kVJb6BNmN7Huf5TtaWRKK51UOU+WT8
- Ow917UQm2M2Esxx/QBu4MKxZG2Oq/C+46+RE1R6yCgLYcJdgfD62oWP0+ri40Q9JcjPE
- 03tQ/4nNoeMULydVsee0p46+JiVauHSztoLfaIdjp/piV+nyegfkHGRoxDv3mjZjRjzN
- 2RQPXAzdZ6zPR4QnpFIDtHCSCjWahag8QBNJmPBzW9hDhV/Zs8VMQdKuibqTPW/bv4sw
- z2DT2N72mU/kW2wQNUn+9BMZaS88XFWhtyj/z9fDyKNi924Xm0+INIQUH9zQ3Hkso1TT
- 1jfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=oGaADGEU5ItdyGL+No+xcbKzRmPNHhiKe7OScfw6QOQ=;
- b=RqMT8PmBLKBCQabmZggqG6y0Bb+im6HgCRMzKSVce2y8+7gTbQmyabu6N1n9NL+5cA
- SBJQVtdPTmfYEzlMFvLDzxfTB7epJPLhZWiaBVoGUgR1Zo+AvnRDY6pjhDMKWcPtXY2l
- yxCCfy1HT1AMEnyhnYPFF0CaeaoZHmyg8syNWVT3lN8ymhuF5mHqBk+XPiS1iCgGeSTZ
- p3erW3uXgJ30GxPF4F6nmTI7Akz7nmpPNAZoQ8vWx8bzpo9v9b0V86ha+8NmuI8Q94HO
- iZd1Sztrg0mJlpnMJtYC+RE7pCDzZJ6ZvCHWzCvvhsTsoj1GwRI8/i/81KRvKqydBkLg
- gKzQ==
-X-Gm-Message-State: APjAAAWB4HLHXXoMrz4pNWhMyrAF2DjKdGxefBEUUCJaPIExDtJfww+T
- LxHPZcEEdp5u+n9zgM6AAMdO0zzo9gOUAVso/WSVRP2e
-X-Google-Smtp-Source: APXvYqw1iWI7ZKU9uJoAHMmOwlvIyr4iRHqd+ZcgIbyshSCx/MjX3VYswkN/hv8UpFGBOH6dlpwT7bv36uDalNipuq8=
-X-Received: by 2002:a6b:7618:: with SMTP id g24mr6787044iom.31.1575558277140; 
- Thu, 05 Dec 2019 07:04:37 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47TJzN0yPzzDq8B
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2019 02:09:34 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2019 07:09:32 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,281,1571727600"; d="scan'208";a="214205167"
+Received: from irsmsx107.ger.corp.intel.com ([163.33.3.99])
+ by orsmga003.jf.intel.com with ESMTP; 05 Dec 2019 07:09:30 -0800
+Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
+ IRSMSX107.ger.corp.intel.com ([169.254.10.18]) with mapi id 14.03.0439.000;
+ Thu, 5 Dec 2019 15:09:29 +0000
+From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>, Neeraj Ladkani
+ <neladk@microsoft.com>
+Subject: RE: Adding new metric definition use case
+Thread-Topic: Adding new metric definition use case
+Thread-Index: AdWl3aOwRZz1PlNdQ6G816tHTiv0cwDzn2jQAA9eSMAAYJcIgA==
+Date: Thu, 5 Dec 2019 15:09:29 +0000
+Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A310A5EB@IRSMSX101.ger.corp.intel.com>
+References: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
+ <BY5PR21MB1377E4996FF4D8AB139BA5D2C8420@BY5PR21MB1377.namprd21.prod.outlook.com>
+ <DBA24EEE99A3B3489FF472F5E94DE6D7A3109D0D@IRSMSX101.ger.corp.intel.com>
+In-Reply-To: <DBA24EEE99A3B3489FF472F5E94DE6D7A3109D0D@IRSMSX101.ger.corp.intel.com>
+Accept-Language: pl-PL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMDFkYTNlNzgtZTJjYS00N2UzLWIxMzUtYzNhNGRlOGZiNjM4IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiZnFCbmRqWWR3Y2dtZFdnbm40bE5uTVBoRDM4SlBnZ0NjWXd1N3ErK2R3TTBzSkhJR3gzWmRGbHFcL3p3Mm1nWHgifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [163.33.239.181]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <d668c41428ad4e6db20a5221f4a2306b@quantatw.com>
- <CAAMkS11DHQvaX+XHBGXDv-3j9__ZS66B1UPhpieUsnfWu+vVgQ@mail.gmail.com>
- <293a022b44784f86bee3a83fbdafd03b@quantatw.com>
-In-Reply-To: <293a022b44784f86bee3a83fbdafd03b@quantatw.com>
-From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Date: Thu, 5 Dec 2019 20:35:14 +0530
-Message-ID: <CAAMkS11tjgp2AH+u_s98cdXHxEkQgLxqokFc91kUNqL-SRVA0Q@mail.gmail.com>
-Subject: Re: Test Case "Verify IPMI Root User Password Change" in
- openbmc-test-automation
-To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-Content-Type: multipart/alternative; boundary="0000000000006e97830598f63fa3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,181 +67,132 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
+ Adrian" <adrian.ambrozewicz@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006e97830598f63fa3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Neeraj,=20
 
-Your solution sound good to me. You can push the code for the same.
+I've analyzed your use case with Adrian. It looks like you want to define n=
+ew, synthesized metric from existing D-Bus sensors. We would like to propos=
+e a design to implement user-defined metrics, which are synthesized from ot=
+her metrics using mathematical formulas defined by the user. Such formula m=
+ay be provided by the user in runtime, not requiring recompilation of OpenB=
+MC. We can discuss  it during the next Telemetry WG meeting.=20
 
-Thanks
-Rahul
 
-On Thu, Dec 5, 2019 at 6:01 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony=
-.Lee@quantatw.com> wrote:
+-----Original Message-----
+From: openbmc <openbmc-bounces+piotr.matuszczak=3Dintel.com@lists.ozlabs.or=
+g> On Behalf Of Matuszczak, Piotr
+Sent: Tuesday, December 3, 2019 4:42 PM
+To: Neeraj Ladkani <neladk@microsoft.com>
+Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel=
+.com>
+Subject: RE: Adding new metric definition use case
 
-> Hi Rahul,
->
-> Got it, it seems I can only skip it first.
-> There is another question about test_ipmi_user.robot.
-> Cases which creating a new user success, and then execute a external ipmi
-> command with
-> this new user account will fail on our system. For example, test case
-> "Verify Setting Valid Password For IPMI User".
-> The key is that the default channel in the Keyword "Set Channel Access" i=
-s
-> 1.
-> "eth0" corresponding to channel 1 is used for debug purposes, and
-> "eth1" corresponding to channel 2 is used for ipmi remote access in our
-> system.
-> So once I set the default channel to 2 in the Keyword "Set Channel
-> Access", those cases succeed.
->
-> I have a solution: add variable ${CHANNEL} default is 1 in
-> lib/resource.robot.
-> Then, let ${channel}=3D${CHANNEL} in Keyword "Set Channel Access".
-> Let user to specify channel while running, if not, the default is 1.
->
-> Example: robot -v OPENBMC_HOST:x.x.x.x -v CHANNEL:2
-> ipmi/test_ipmi_user.robot
->
-> Is this approach sounds fine to you or there are other suggestions?
->
-> Thanks
-> Tony
->
-> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-> Sent: Thursday, December 5, 2019 5:47 PM
-> To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Test Case "Verify IPMI Root User Password Change" in
-> openbmc-test-automation
->
-> Hi Tony,
-> We have also faced the same problem. So to avoid such problems, we decide=
-d
-> to set BMC password to 8 characters length before running our bucket. As
-> far as skipping such test case, we can do that by using
-> `-e Verify_IPMI_Root_User_Password_Change` while running.
->
-> Example:
-> robot -v OPENBMC_HOST:x.x.x.x -e Verify_IPMI_Root_User_Password_Change
-> ipmi/test_ipmi_user.robot
->
-> Thanks
-> Rahul
->
-> On Thu, Dec 5, 2019 at 8:05 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <ma=
-ilto:
-> Tony.Lee@quantatw.com> wrote:
-> Hi Rahul,
->
-> Reference to
-> https://github.com/openbmc/openbmc-test-automation/issues/1920.
->
-> Case "Verify IPMI Root User Password Change" will change root user
-> password and
-> unable to reset default password due to the length is limited to 8.
-> As a result, cases will also fail after this because the password has bee=
-n
-> changed to 0penBmc1.
-> Should we remove this test case? There seems to be no other way to fix it=
-.
->
-> Thanks
-> Best Regards,
-> Tony
->
->
+Hi Neeraj,=20
 
---0000000000006e97830598f63fa3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+There are two cases:
+1. Sensor is already monitored and you want to define new Metric Definition=
+. It is done on the Redfish level. Also in the case when you want to create=
+ calculated metric ("Implementation" property equals "Calculated"). In this=
+ case min/max/average can be calculated (as defined by the "CalculationAlgo=
+rithm" property).
+2. You want to create Metric Definition for Synthesized sensor ("Implementa=
+tion" property equals "Synthesized"). This is the example you shown below. =
+In such case, there is no way to provide BMC the algorithm how the metric s=
+hall be synthesized from source metrics. In this case, the calculation algo=
+rithm has to be implemented as virtual sensor in the BMC prior to defining =
+the Metric Definition. If you want to be able to create synthesized sensors=
+ in runtime, additional design will have to be provided.=20
 
-<div dir=3D"ltr">Your solution sound good to me. You can push the code for =
-the same.<div><br></div><div>Thanks</div><div>Rahul</div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 5, 201=
-9 at 6:01 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:T=
-ony.Lee@quantatw.com">Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">Hi Rahul,<br>
-<br>
-Got it, it seems I can only skip it first.<br>
-There is another question about test_ipmi_user.robot.<br>
-Cases which creating a new user success, and then execute a external ipmi c=
-ommand with<br>
-this new user account will fail on our system. For example, test case &quot=
-;Verify Setting Valid Password For IPMI User&quot;.<br>
-The key is that the default channel in the Keyword &quot;Set Channel Access=
-&quot; is 1.<br>
-&quot;eth0&quot; corresponding to channel 1 is used for debug purposes, and=
-<br>
-&quot;eth1&quot; corresponding to channel 2 is used for ipmi remote access =
-in our system.<br>
-So once I set the default channel to 2 in the Keyword &quot;Set Channel Acc=
-ess&quot;, those cases succeed.<br>
-<br>
-I have a solution: add variable ${CHANNEL} default is 1 in lib/resource.rob=
-ot.<br>
-Then, let ${channel}=3D${CHANNEL} in Keyword &quot;Set Channel Access&quot;=
-.<br>
-Let user to specify channel while running, if not, the default is 1.<br>
-<br>
-Example: robot -v OPENBMC_HOST:x.x.x.x -v CHANNEL:2 ipmi/test_ipmi_user.rob=
-ot<br>
-<br>
-Is this approach sounds fine to you or there are other suggestions?<br>
-<br>
-Thanks<br>
-Tony<br>
-<br>
-From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
-arget=3D"_blank">rahulmaheshwari01@gmail.com</a>&gt; <br>
-Sent: Thursday, December 5, 2019 5:47 PM<br>
-To: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
-uantatw.com" target=3D"_blank">Tony.Lee@quantatw.com</a>&gt;<br>
-Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
-ists.ozlabs.org</a><br>
-Subject: Re: Test Case &quot;Verify IPMI Root User Password Change&quot; in=
- openbmc-test-automation<br>
-<br>
-Hi Tony,<br>
-We have also faced the same problem. So to avoid such problems, we decided =
-to set BMC password to 8 characters length before running our bucket. As fa=
-r as skipping such test case, we can do that by using `-e=C2=A0Verify_IPMI_=
-Root_User_Password_Change` while running.<br>
-<br>
-Example:<br>
-robot -v OPENBMC_HOST:x.x.x.x -e=C2=A0Verify_IPMI_Root_User_Password_Change=
- ipmi/test_ipmi_user.robot<br>
-<br>
-Thanks<br>
-Rahul<br>
-<br>
-On Thu, Dec 5, 2019 at 8:05 AM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;m=
-ailto:<a href=3D"mailto:Tony.Lee@quantatw.com" target=3D"_blank">Tony.Lee@q=
-uantatw.com</a>&gt; wrote:<br>
-Hi Rahul,<br>
-<br>
-Reference to <a href=3D"https://github.com/openbmc/openbmc-test-automation/=
-issues/1920" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbm=
-c/openbmc-test-automation/issues/1920</a>.<br>
-<br>
-Case &quot;Verify IPMI Root User Password Change&quot; will change root use=
-r password and<br>
-unable to reset default password due to the length is limited to 8.<br>
-As a result, cases will also fail after this because the password has been =
-changed to 0penBmc1.<br>
-Should we remove this test case? There seems to be no other way to fix it.<=
-br>
-<br>
-Thanks<br>
-Best Regards,<br>
-Tony<br>
-<br>
-</blockquote></div>
+Regards
+Piotr
 
---0000000000006e97830598f63fa3--
+-----Original Message-----
+From: Neeraj Ladkani <neladk@microsoft.com>=20
+Sent: Tuesday, December 3, 2019 8:40 AM
+To: Matuszczak, Piotr <piotr.matuszczak@intel.com>
+Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel=
+.com>
+Subject: RE: Adding new metric definition use case
+
+Hi Piotr,=20
+
+The use case is simple that if we want to add new metric definition which i=
+s already monitored on DBUS and exposed on redfish , we should be able to c=
+onfigure it without changing BMC code. =20
+
+For example:
+{
+    "@odata.type": "#MetricDefinition.v1_0_3.MetricDefinition",
+    "Id": "OutletAirflowTemp",
+    "Name": "Definition of Outlet Airflow Temperature",
+    "MetricType": "Numeric",
+    "Implementation": "Synthesized",
+    "PhysicalContext": "Exhaust",
+    "Units": "Cel",
+    "Wildcards": [
+        {
+            "Name": "ChassisID",
+            "Values": [
+                "1"
+            ]
+        }
+    ],
+    "CalculationParameters": [
+        {
+            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Tempe=
+ratures/2/ReadingCelsius"
+        },
+        {
+            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/=
+0/Reading"
+        },
+        {
+            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/=
+1/Reading"
+        },
+        {
+            "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerCo=
+ntrol/0/PowerConsumedWatts",
+            "ResultMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerCo=
+ntrol/0/PowerMetrics/AverageConsumedWatts"
+        }
+    ],
+    "@odata.id": "/redfish/v1/TelemetryService/MetricDefinitions/OutletAirf=
+lowTemp",
+    "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copy=
+right policy, see http://www.dmtf.org/about/policies/copyright."
+}
+
+-----Original Message-----
+From: Matuszczak, Piotr <piotr.matuszczak@intel.com>=20
+Sent: Thursday, November 28, 2019 3:33 AM
+To: Neeraj Ladkani <neladk@microsoft.com>
+Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel=
+.com>
+Subject: [EXTERNAL] Adding new metric definition use case
+
+Hi Neeraj,
+
+	As we talked recently during the Telemetry WG meeting, you were asking abo=
+ut adding new metric definitions. Please, let me better understand your use=
+ case, you have HW sensor present on the board (for example, let it be CPU0=
+ VR temperature), you have already HWmon reading it and exposing it as the =
+sensor on D-Bus. You want to be able to add the new Metric Definition for p=
+roper interpretation of sensor's reading and new metric definition shall al=
+so modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it c=
+orrectly?=20
+	Monitoring Service does not have to interpret the metric from the sensors,=
+ because it is used only for report management.=20
+	=20
+
+Piotr Matuszczak
+---------------------------------------------------------------------
+Intel Technology Poland sp. z o.o.=20
+ul. Slowackiego 173, 80-298 Gdansk
+KRS 101882
+NIP 957-07-52-316
+
