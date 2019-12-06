@@ -2,78 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF03111510A
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 14:34:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35F8F1151DA
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 15:04:45 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47TtqP1FhPzDqfB
-	for <lists+openbmc@lfdr.de>; Sat,  7 Dec 2019 00:34:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47TvV227MpzDqd3
+	for <lists+openbmc@lfdr.de>; Sat,  7 Dec 2019 01:04:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::342;
- helo=mail-ot1-x342.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Ym8iLZCN"; 
- dkim-atps=neutral
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
- [IPv6:2607:f8b0:4864:20::342])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Ttp43yHmzDqWt
- for <openbmc@lists.ozlabs.org>; Sat,  7 Dec 2019 00:33:31 +1100 (AEDT)
-Received: by mail-ot1-x342.google.com with SMTP id o9so5803995ote.2
- for <openbmc@lists.ozlabs.org>; Fri, 06 Dec 2019 05:33:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=IPgGzei+gBfhw2d2JLMEo8x3oC/Ekif34XGpzPDNxjk=;
- b=Ym8iLZCNURER+Z6cr0wsfkKjNBf84Rle0QcsIO07mNOiBRoORZHQQf//icmKH8NmaT
- 1DawabUgiiWlICl5xD4kKkAB2POCNBTSP3VKHKUEDFUQXVSzy7Pko8X1wE5op1+UclPj
- CDFNRR3ItyxOT7SUzZpu5gPvNWwlNcWRtgpbp/MXxFZtA7Sw1WFkuvXxeTTW56CmWzv2
- evZhwylajovL/bMfiPpdEjfzojWZg4jDsaR5AOCk264LBFVjvSXIRMXSTjNXFX5tRFTL
- 68vanL14o6txDUXWyxrCBFdiWH5qiQxRaTjir1BPOHeITGQ1iSc9pmQMoOPG/U7NnhAp
- JNfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=IPgGzei+gBfhw2d2JLMEo8x3oC/Ekif34XGpzPDNxjk=;
- b=SrKIGUDhHPKyf6IfxnJh2TIbH21Mw2AdYpBNVJHuqRs+3vaCO/B3/E3IqDpJV8d5jY
- Aa9SnRBoCOdWsSjJQ1RU2k2JKKn6+4x9dZiaO6RrP4lDxjWgN5u/OcY5Pn2kL5mXZvm8
- KjuOdO1jITDgBNa9S6027hiMYuuNEOJ9ivTZqJ6gDCEz5ThbRfEo0Mj49vRxmjsHjzMd
- PFnAYD1bbr+0wgJgb6lTn5Po8MvVSWIsBka9LA8V1b90QoYvuoT83rEH919L36PVayuM
- rxZEIgeAFSVMMTkQS4ZJHTrRWi1Ua/T68KT0ya4lLNBpe2aUiso9u8Piu8eaeA2aTcsj
- 7+1w==
-X-Gm-Message-State: APjAAAWocotECaImM5PmiWV6tX3llQHCdB6f951z49++IDiZVNnzggSY
- +o+uch3bazIzBcDJz9f6ibXM7hUc
-X-Google-Smtp-Source: APXvYqxeEmxTCh4SBvir6j3gAk44/uaGL8rcx/uCQeXlmql/ht6JXyjWMPSpIFJx3fY7CWT2wDBAKQ==
-X-Received: by 2002:a9d:6c8:: with SMTP id 66mr10733985otx.271.1575639209142; 
- Fri, 06 Dec 2019 05:33:29 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id l7sm470010oie.36.2019.12.06.05.33.27
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 06 Dec 2019 05:33:28 -0800 (PST)
-Subject: Re: OpenBMC Project metrics
-To: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
- <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <477d3fbb-5aa8-d4e8-958c-62fb94e2acc7@gmail.com>
-Date: Fri, 6 Dec 2019 07:33:26 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47TvSq0VDNzDqcX
+ for <openbmc@lists.ozlabs.org>; Sat,  7 Dec 2019 01:03:37 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 Dec 2019 06:03:32 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,284,1571727600"; d="scan'208";a="214441217"
+Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.179])
+ ([172.22.245.179])
+ by orsmga006.jf.intel.com with ESMTP; 06 Dec 2019 06:03:31 -0800
+Subject: Re: BMC update via TFTP
+To: openbmc@lists.ozlabs.org
+References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
+ <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
+ <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
+ <9e0303e5beb34b9bb50b050cd56e35d8@linux.vnet.ibm.com>
+ <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
+ <20191204213650.GB9613@mauery.jf.intel.com>
+ <94b297b5-81d1-1e07-498f-155a9160cb1d@linux.intel.com>
+ <20191205223708.GC9613@mauery.jf.intel.com>
+From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
+Message-ID: <1c75671d-904e-8a06-07f5-c93fcf0e5e50@linux.intel.com>
+Date: Fri, 6 Dec 2019 15:03:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
+In-Reply-To: <20191205223708.GC9613@mauery.jf.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,60 +64,87 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/4/19 4:33 PM, Andrew Jeffery wrote:
-> 
-> 
-> On Thu, 5 Dec 2019, at 05:14, Kurt Taylor wrote:
->> All, I just posted the project merge metrics for September and
->> October. I will be updating the company/developer lists for November
->> and posting those shortly. Enjoy.
+On 05-Dec-19 23:37, Vernon Mauery wrote:
+> On 05-Dec-2019 12:05 PM, Alexander Tereschenko wrote:
+>> On 04-Dec-19 22:36, Vernon Mauery wrote:
+>>> Even if the BMC only accepts signed images, we want to make sure 
+>>> that the signed image the BMC fetches is the one that the 
+>>> administrator *wants* to be fetched. With tftp or http (or any 
+>>> insecure transport), one possible MiTM attack would be to substitute 
+>>> an alternate valid image. Let's say the admin wants to go from 1.18 
+>>> to 1.20, bu the attacker wants to go to 1.16, which has a known 
+>>> vulnerability. The image would be authenticated by the signature, 
+>>> and will be accepted.
 >>
->> https://github.com/openbmc/openbmc/wiki/Project-Metrics
+>> Thanks Vernon for raising this one - I think this is indeed a valid 
+>> concern.
 >>
->> NOTE: these metrics should be used *very carefully*. They do not
->> represent the total contributions to the project. We value
->> contributions many that do not show up in these charts, including
->> reviews, mail list involvement, IRC involvement, etc.
-> 
-> Given all the caveats and the lopsided view the graphs display, what
-> are we trying to achieve by graphing the metric of commits per company?
+>> So there are essentially two things that we are talking about here, 
+>> if we peel it a little bit:
+>>
+>> 1) an additional authorization by the BMC admin of specific images 
+>> they want to run
+>> 2) plain integrity protection of the file being sent over insecure 
+>> channel
+>>
+>> The first one is a bit different from the second one (and frequently 
+>> solved by co-signing these days), but in thise specific use case I'd 
+>> say these two indeed overlap.
+>>
+>> In this case, I'd rather suggest us to look into asymmetric crypto, 
+>> so that no secret sharing/storage (with accompanying additional risk 
+>> of compromise) is necessary. An admin would sign the image being sent 
+>> + some context information (like time, to provide replay protection - 
+>> also applicable to MAC case, otherwise the attacker can trivially 
+>> replay the file/MAC) and the BMC would check the admin's signature 
+>> using pre-provisioned public key (send over HTTPS, same as MAC key in 
+>> your proposal - but only for integrity protection, con 
+>> confidentiality is necessary) + verify that the context is "fresh" 
+>> and then use the file.
+>
+> I am not convinced that it needs to be this elaborate. I don't see 
+> what it adds over the simple case of sending the key/hmac/uri 
+> encrypted with TLS to the BMC. There will be no replay attacks because 
+> TLS prevents it.
+> Maybe I am missing something?
 
-"What gets measured, gets managed" I am a firm believer of this simple 
-quote. Measuring a project always improves it. That, and I have been 
-asked to start gathering metrics from several of our contributing 
-companies. They appreciate it.
+We may be talking about slightly different contexts indeed. I meant to 
+suggest something that doesn't require
 
-> It's also not clear to me what the inputs to these graphs are, for instance
-> whether changes to Linux, u-boot, qemu or other major projects that we
-> consume and contribute to are included or whether it's just repositories
-> under the openbmc org on github. If we're excluding upstream projects,
-> why?
+1) any "out-of-band" channel for each file being sent (signature can be 
+appended to the file itself, one-time/infrequent public key updates at 
+the BMC side are discounted as arguably negligible). I use the 
+"out-of-band" here as "channel different than the one where the file 
+itself is being sent";
+2) any symmetric secret generation/storage/distribution upon sending 
+files (which is an additional burden and risk);
 
-It is only for contributions under openbmc. Other projects have been 
-excluded simply because they have their own project metrics. For example:
+plus
 
-Linux: 
-https://www.linuxfoundation.org/blog/2016/08/the-top-10-developers-and-companies-contributing-to-the-linux-kernel-in-2015-2016/
+1) provides replay protection;
+2) doesn't require major infrastructure modifications (here I'm assuming 
+that signing and checking the signature in this flow is less change than 
+generating key, MAC and sending them over "out-of-band" channel);
 
-uboot: 
-https://osfc.io/uploads/talk/paper/31/2019_State_U-Boot_development_report.pdf
+I read your proposal as that the key will be a longer-term one + that 
+the MAC will be sent along with the file (as it's not a secret and 
+typically it's sent together with the data in such schemes). If you 
+meant that both the key and MAC are generated on the fly, are one-time 
+and are sent via that "out-of-band" TLS-protected channel, then I'd say 
+you don't even need a keyed MAC at all and a plain cryptographic hash 
+would suffice. You're sending the key along with the MAC and file 
+channel itself is unprotected - so if the adversary can break the TLS, 
+they can compute the MAC as easily as a plain hash and if they can't, 
+they anyway can't substitute the hash value, so IMHO keyed MAC is 
+surplus here.
 
-*Really nice* interactive openstack stats gui: https://www.stackalytics.com/
+Maybe outlining a flow (maybe as a sequence/flow diagram) in more detail 
+and defining which specific adversaries (and their capabilities) we're 
+talking about here would help? I agree we surely don't need a more 
+complex scheme if a simpler one suffices, it's just that we may be 
+talking about slightly different flows and adversaries right now :)
 
-> Where are the scripts to reproduce the graphs? Can you contribute them
-> to openbmc-tools?
+regards,
+Alexander
 
-Eventually yes, if my employer will let me do more upstream. :) But, the 
-data is publicly available, you can get it yourself from gerrit. Simply 
-go to our gerrit dashboard and search something like: " status:merged 
-AND after:<date> AND before:<date> AND NOT topic:autobump AND 
-owner:<gerrit id> "
-
-I appreciate your feedback, I will make the specifics of what is 
-measured and how it is done more clear on the project metrics wiki page.
-
-Kurt Taylor (krtaylor)
-
-> Andrew
-> 
 
