@@ -1,88 +1,112 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5805A114CAC
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 08:37:42 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 239B6114C4E
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 07:16:13 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Tj5N3fQQzDqby
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 17:16:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47TkvR1LDvzDqcq
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 18:37:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.236.134;
+ helo=nam11-bn8-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.b="FGnDNZ96"; dkim-atps=neutral
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11on2134.outbound.protection.outlook.com [40.107.236.134])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Tj4Q19nJzDqbq
- for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2019 17:15:16 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xB66CnBl108774
- for <openbmc@lists.ozlabs.org>; Fri, 6 Dec 2019 01:15:13 -0500
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2wq2xcrts5-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 06 Dec 2019 01:15:13 -0500
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
- Fri, 6 Dec 2019 06:15:11 -0000
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Fri, 6 Dec 2019 06:15:08 -0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xB66F7OV45154450
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2019 06:15:07 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3CB754C078;
- Fri,  6 Dec 2019 06:15:07 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 760044C044;
- Fri,  6 Dec 2019 06:15:06 +0000 (GMT)
-Received: from [9.122.210.145] (unknown [9.122.210.145])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2019 06:15:06 +0000 (GMT)
-Subject: Re: Adding new metric definition use case
-To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
- Neeraj Ladkani <neladk@microsoft.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47TktY6JSjzDqHq
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Dec 2019 18:36:51 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CV49JVYfp52NO5EFW1PjHVzitt3+z3HCMdZOmmrNdCd9glH/9x2ck4BgK8+yZ+JrYdEejE9gX2TrWl/VYL5RXWS2bGnzsw6AgsrmR6cYemzUCG3n7wLdmzRpgNRjRl6G2RRiE8GOXt34n8EuRIlPsmGuije9JCnR9zFWN7JWwT45ucbcQka2QdPJJKv0IdjGATswNoOaXPkBVhKctKHlVDL1gUMkQM5Wv3yECb/Ymn2wqapBzZrViKqCAYCwZZu7bffVOAUTx6jC8X2ARdWnr6WDDzDwC1sqImdyy52KBnS0azrn4nbLQKOmOnBzJZeRyvF241l2TfsoRj3BA8KBKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+Om/ND+wd/HShkC2ZlO8TvHP6jdyRnOxtNwXXeVO12Q=;
+ b=KaCJOuxtvcR2NTxZoBuofE9iZ1h+Vtp1UrqlFIFVVmQL7j9oSFMDv7kyKdPBCG040eR44Pxb7Uh5+8ExVi8scncLv5YuILAryWEBsfAeY5AUg7uiANNVsEko6peNyweXubLmizIc/PmOGoTqsylp9kga5hmieYSBFUGaNQbrPG6fwHJZwFTtggaewxRUi7NTpnFxMhcvK64o8zxY8zaZDX0MYSNQ1hDLUIFqA3xQwnEKgwahcUowW8YFHPlwbNIylw8r9R7M3Se6suhzNBY/xY8Q9C3JrNMPmsCylmAD+sXQVcUMH1PN6ihDZPv3qpIqfcrDWfMX87R7B1wtC/GKpg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+Om/ND+wd/HShkC2ZlO8TvHP6jdyRnOxtNwXXeVO12Q=;
+ b=FGnDNZ96YSLyz4/8MZr0jaKwJufMxGkQao+1V+HwlEcZTFtcZy2Df1X7CEOtscXs12kFmrmYNIQmqvHv9Rv4Zev+bt5prcg0UHrNRLT4p7+dtUBbt4cnh2x2O1Qt4fQON37sYa5JfkuD0Ft18ut+OF7yDYb0VPsT52KfaXSMRXA=
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com (20.180.21.213) by
+ DM6PR21MB1211.namprd21.prod.outlook.com (20.179.49.152) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2538.1; Fri, 6 Dec 2019 07:36:45 +0000
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::a4df:ed8e:9432:60d]) by DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::a4df:ed8e:9432:60d%3]) with mapi id 15.20.2538.005; Fri, 6 Dec 2019
+ 07:36:45 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: vishwa <vishwa@linux.vnet.ibm.com>, "Matuszczak, Piotr"
+ <piotr.matuszczak@intel.com>, "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>
+Subject: RE: [EXTERNAL] Re: Adding new metric definition use case
+Thread-Topic: [EXTERNAL] Re: Adding new metric definition use case
+Thread-Index: AdWl3aOwRZz1PlNdQ6G816tHTiv0cwDzn2jQAA9eSMAAYJcIgAAkIm+AAAJTU5A=
+Date: Fri, 6 Dec 2019 07:36:45 +0000
+Message-ID: <DM6PR21MB138863BEEE903FC3D46FF1F6C85F0@DM6PR21MB1388.namprd21.prod.outlook.com>
 References: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
  <BY5PR21MB1377E4996FF4D8AB139BA5D2C8420@BY5PR21MB1377.namprd21.prod.outlook.com>
  <DBA24EEE99A3B3489FF472F5E94DE6D7A3109D0D@IRSMSX101.ger.corp.intel.com>
  <DBA24EEE99A3B3489FF472F5E94DE6D7A310A5EB@IRSMSX101.ger.corp.intel.com>
-From: vishwa <vishwa@linux.vnet.ibm.com>
-Date: Fri, 6 Dec 2019 11:45:05 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
-MIME-Version: 1.0
-In-Reply-To: <DBA24EEE99A3B3489FF472F5E94DE6D7A310A5EB@IRSMSX101.ger.corp.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <197d6f2d-bcae-a8f0-201e-f7302dd5df9b@linux.vnet.ibm.com>
+In-Reply-To: <197d6f2d-bcae-a8f0-201e-f7302dd5df9b@linux.vnet.ibm.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19120606-0016-0000-0000-000002D1FCB4
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19120606-0017-0000-0000-000033340500
-Message-Id: <197d6f2d-bcae-a8f0-201e-f7302dd5df9b@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-06_01:2019-12-04,2019-12-06 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- priorityscore=1501 mlxlogscore=999 bulkscore=0 mlxscore=0 adultscore=0
- clxscore=1015 spamscore=0 suspectscore=0 malwarescore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-1912060054
+X-Mentions: Paul.Vancil@dell.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-12-06T07:36:43.4024379Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=fe984751-ac6f-468d-8266-2c78a2b0ef95;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=neladk@microsoft.com; 
+x-originating-ip: [50.35.81.9]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: f39adad7-a954-4a28-f42b-08d77a1f0b7b
+x-ms-traffictypediagnostic: DM6PR21MB1211:
+x-microsoft-antispam-prvs: <DM6PR21MB121189E1E67DE2D81FFB34CCC85F0@DM6PR21MB1211.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 0243E5FD68
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(199004)(13464003)(189003)(2906002)(11346002)(186003)(76116006)(9686003)(498600001)(10290500003)(76176011)(7696005)(55016002)(4326008)(53546011)(10090500001)(8990500004)(5660300002)(66446008)(26005)(102836004)(6506007)(64756008)(66556008)(66476007)(52536014)(33656002)(71200400001)(305945005)(25786009)(229853002)(71190400001)(81156014)(74316002)(8676002)(81166006)(86362001)(99286004)(8936002)(14454004)(966005)(66946007)(110136005)(54906003)(22452003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:DM6PR21MB1211;
+ H:DM6PR21MB1388.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: k4BKufNa96CoqElDM5tJLz7yDSJ/eBoE+yB8kW6jSfuWJ2WTASbbA4PnilJigs4OoCcpga8MPQDiWerm9s3yU+JQ1br3KFdCj7AhO5wwh/ofyOx7T65EsGzEM6czgCC50fYnIlYiFYp+ksDEjsT7Ku4jZqoUmN40HtzFxH+d1Wf/5j00KcaHSIwQ1rzKldk0LTjnLeUYFgFUmeqtLRDQkP5iatYwnR5/dMyZp7fjolWVY+Tt60Ns7sLN1xor7tWRXdpWe/kpG0k1ioGLl1ahU6DAf5KGpmws9GqATSqIrvt3hjijfbWh2hCVucOcgCQ3XU0kZbGiGff3iA4Kl0+RXnhZk0ms8DYAFGeBJgXIzyBe74nSyUkiU6tcVlYT8jSJzeWuGKlKC0v3Umm0ugDVeZZyHxqnNtaknljgWlL1PDD7i+sOBkmJs+NwEcYqg8gcb97MhOJ9xFjN2riMCewtLrYkwEc+DjYMaTFMuOwLXzMjds4VoSDVJoCicaBqUN1ilIbfnnAsRsQCEEahfG9d8a5t5dDyZYaLBBhkyGepkXA=
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f39adad7-a954-4a28-f42b-08d77a1f0b7b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Dec 2019 07:36:45.1044 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4EM3uBZe99OBL+yzv9h4Q1aER/YAa0l5aaTz6yXhwwR4P2afWpBVYIFzJAUnUAFT12s2zb6enVd81LrqueXyzw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1211
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,99 +123,106 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-hello Piotr,
-
-Could we use the mailing list for those discussions ?
-
-!! Vishwa !!
-
-On 12/5/19 8:39 PM, Matuszczak, Piotr wrote:
-> Hi Neeraj,
->
-> I've analyzed your use case with Adrian. It looks like you want to define new, synthesized metric from existing D-Bus sensors. We would like to propose a design to implement user-defined metrics, which are synthesized from other metrics using mathematical formulas defined by the user. Such formula may be provided by the user in runtime, not requiring recompilation of OpenBMC. We can discuss  it during the next Telemetry WG meeting.
->
->
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+piotr.matuszczak=intel.com@lists.ozlabs.org> On Behalf Of Matuszczak, Piotr
-> Sent: Tuesday, December 3, 2019 4:42 PM
-> To: Neeraj Ladkani <neladk@microsoft.com>
-> Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel.com>
-> Subject: RE: Adding new metric definition use case
->
-> Hi Neeraj,
->
-> There are two cases:
-> 1. Sensor is already monitored and you want to define new Metric Definition. It is done on the Redfish level. Also in the case when you want to create calculated metric ("Implementation" property equals "Calculated"). In this case min/max/average can be calculated (as defined by the "CalculationAlgorithm" property).
-> 2. You want to create Metric Definition for Synthesized sensor ("Implementation" property equals "Synthesized"). This is the example you shown below. In such case, there is no way to provide BMC the algorithm how the metric shall be synthesized from source metrics. In this case, the calculation algorithm has to be implemented as virtual sensor in the BMC prior to defining the Metric Definition. If you want to be able to create synthesized sensors in runtime, additional design will have to be provided.
->
-> Regards
-> Piotr
->
-> -----Original Message-----
-> From: Neeraj Ladkani <neladk@microsoft.com>
-> Sent: Tuesday, December 3, 2019 8:40 AM
-> To: Matuszczak, Piotr <piotr.matuszczak@intel.com>
-> Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel.com>
-> Subject: RE: Adding new metric definition use case
->
-> Hi Piotr,
->
-> The use case is simple that if we want to add new metric definition which is already monitored on DBUS and exposed on redfish , we should be able to configure it without changing BMC code.
->
-> For example:
-> {
->      "@odata.type": "#MetricDefinition.v1_0_3.MetricDefinition",
->      "Id": "OutletAirflowTemp",
->      "Name": "Definition of Outlet Airflow Temperature",
->      "MetricType": "Numeric",
->      "Implementation": "Synthesized",
->      "PhysicalContext": "Exhaust",
->      "Units": "Cel",
->      "Wildcards": [
->          {
->              "Name": "ChassisID",
->              "Values": [
->                  "1"
->              ]
->          }
->      ],
->      "CalculationParameters": [
->          {
->              "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Temperatures/2/ReadingCelsius"
->          },
->          {
->              "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/0/Reading"
->          },
->          {
->              "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Thermal#/Fans/1/Reading"
->          },
->          {
->              "SourceMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerControl/0/PowerConsumedWatts",
->              "ResultMetric": "/redfish/v1/Chassis/{ChassisID}/Power#/PowerControl/0/PowerMetrics/AverageConsumedWatts"
->          }
->      ],
->      "@odata.id": "/redfish/v1/TelemetryService/MetricDefinitions/OutletAirflowTemp",
->      "@Redfish.Copyright": "Copyright 2014-2019 DMTF. For the full DMTF copyright policy, see http://www.dmtf.org/about/policies/copyright."
-> }
->
-> -----Original Message-----
-> From: Matuszczak, Piotr <piotr.matuszczak@intel.com>
-> Sent: Thursday, November 28, 2019 3:33 AM
-> To: Neeraj Ladkani <neladk@microsoft.com>
-> Cc: openbmc@lists.ozlabs.org; Ambrozewicz, Adrian <adrian.ambrozewicz@intel.com>
-> Subject: [EXTERNAL] Adding new metric definition use case
->
-> Hi Neeraj,
->
-> 	As we talked recently during the Telemetry WG meeting, you were asking about adding new metric definitions. Please, let me better understand your use case, you have HW sensor present on the board (for example, let it be CPU0 VR temperature), you have already HWmon reading it and exposing it as the sensor on D-Bus. You want to be able to add the new Metric Definition for proper interpretation of sensor's reading and new metric definition shall also modify sensor's D-Bus parameters (Scale and Unit) ? Do I understand it correctly?
-> 	Monitoring Service does not have to interpret the metric from the sensors, because it is used only for report management.
-> 	
->
-> Piotr Matuszczak
-> ---------------------------------------------------------------------
-> Intel Technology Poland sp. z o.o.
-> ul. Slowackiego 173, 80-298 Gdansk
-> KRS 101882
-> NIP 957-07-52-316
->
-
+WWVzIFBpb3RyLCANCg0KVGhhdCB3b3VsZCBiZSBncmVhdC4gQ2FuIHlvdSBwdWJsaXNoIHlvdXIg
+ZGVzaWduID8gIEBQYXVsLCBJIHNlZSAxLjEuMiBpcyBsYXRlc3Qgc2NoZW1hIGZvciB0ZWxlbWV0
+cnkgc2VydmljZS4gQXJlIHRoZXJlIGFueSBhZGRpdGlvbnMgdGhhdCBhcmUgYmVpbmcgcGxhbm5l
+ZCBmb3IgbmV4dCB2ZXJzaW9uPyANCg0KTmVlcmFqDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
+LS0tDQpGcm9tOiB2aXNod2EgPHZpc2h3YUBsaW51eC52bmV0LmlibS5jb20+IA0KU2VudDogVGh1
+cnNkYXksIERlY2VtYmVyIDUsIDIwMTkgMTA6MTUgUE0NClRvOiBNYXR1c3pjemFrLCBQaW90ciA8
+cGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb20+OyBOZWVyYWogTGFka2FuaSA8bmVsYWRrQG1pY3Jv
+c29mdC5jb20+DQpDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBBbWJyb3pld2ljeiwgQWRy
+aWFuIDxhZHJpYW4uYW1icm96ZXdpY3pAaW50ZWwuY29tPg0KU3ViamVjdDogW0VYVEVSTkFMXSBS
+ZTogQWRkaW5nIG5ldyBtZXRyaWMgZGVmaW5pdGlvbiB1c2UgY2FzZQ0KDQpoZWxsbyBQaW90ciwN
+Cg0KQ291bGQgd2UgdXNlIHRoZSBtYWlsaW5nIGxpc3QgZm9yIHRob3NlIGRpc2N1c3Npb25zID8N
+Cg0KISEgVmlzaHdhICEhDQoNCk9uIDEyLzUvMTkgODozOSBQTSwgTWF0dXN6Y3phaywgUGlvdHIg
+d3JvdGU6DQo+IEhpIE5lZXJhaiwNCj4NCj4gSSd2ZSBhbmFseXplZCB5b3VyIHVzZSBjYXNlIHdp
+dGggQWRyaWFuLiBJdCBsb29rcyBsaWtlIHlvdSB3YW50IHRvIGRlZmluZSBuZXcsIHN5bnRoZXNp
+emVkIG1ldHJpYyBmcm9tIGV4aXN0aW5nIEQtQnVzIHNlbnNvcnMuIFdlIHdvdWxkIGxpa2UgdG8g
+cHJvcG9zZSBhIGRlc2lnbiB0byBpbXBsZW1lbnQgdXNlci1kZWZpbmVkIG1ldHJpY3MsIHdoaWNo
+IGFyZSBzeW50aGVzaXplZCBmcm9tIG90aGVyIG1ldHJpY3MgdXNpbmcgbWF0aGVtYXRpY2FsIGZv
+cm11bGFzIGRlZmluZWQgYnkgdGhlIHVzZXIuIFN1Y2ggZm9ybXVsYSBtYXkgYmUgcHJvdmlkZWQg
+YnkgdGhlIHVzZXIgaW4gcnVudGltZSwgbm90IHJlcXVpcmluZyByZWNvbXBpbGF0aW9uIG9mIE9w
+ZW5CTUMuIFdlIGNhbiBkaXNjdXNzICBpdCBkdXJpbmcgdGhlIG5leHQgVGVsZW1ldHJ5IFdHIG1l
+ZXRpbmcuDQo+DQo+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IG9wZW5i
+bWMgPG9wZW5ibWMtYm91bmNlcytwaW90ci5tYXR1c3pjemFrPWludGVsLmNvbUBsaXN0cy5vemxh
+YnMub3JnPiBPbiBCZWhhbGYgT2YgTWF0dXN6Y3phaywgUGlvdHINCj4gU2VudDogVHVlc2RheSwg
+RGVjZW1iZXIgMywgMjAxOSA0OjQyIFBNDQo+IFRvOiBOZWVyYWogTGFka2FuaSA8bmVsYWRrQG1p
+Y3Jvc29mdC5jb20+DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IEFtYnJvemV3aWN6
+LCBBZHJpYW4gPGFkcmlhbi5hbWJyb3pld2ljekBpbnRlbC5jb20+DQo+IFN1YmplY3Q6IFJFOiBB
+ZGRpbmcgbmV3IG1ldHJpYyBkZWZpbml0aW9uIHVzZSBjYXNlDQo+DQo+IEhpIE5lZXJhaiwNCj4N
+Cj4gVGhlcmUgYXJlIHR3byBjYXNlczoNCj4gMS4gU2Vuc29yIGlzIGFscmVhZHkgbW9uaXRvcmVk
+IGFuZCB5b3Ugd2FudCB0byBkZWZpbmUgbmV3IE1ldHJpYyBEZWZpbml0aW9uLiBJdCBpcyBkb25l
+IG9uIHRoZSBSZWRmaXNoIGxldmVsLiBBbHNvIGluIHRoZSBjYXNlIHdoZW4geW91IHdhbnQgdG8g
+Y3JlYXRlIGNhbGN1bGF0ZWQgbWV0cmljICgiSW1wbGVtZW50YXRpb24iIHByb3BlcnR5IGVxdWFs
+cyAiQ2FsY3VsYXRlZCIpLiBJbiB0aGlzIGNhc2UgbWluL21heC9hdmVyYWdlIGNhbiBiZSBjYWxj
+dWxhdGVkIChhcyBkZWZpbmVkIGJ5IHRoZSAiQ2FsY3VsYXRpb25BbGdvcml0aG0iIHByb3BlcnR5
+KS4NCj4gMi4gWW91IHdhbnQgdG8gY3JlYXRlIE1ldHJpYyBEZWZpbml0aW9uIGZvciBTeW50aGVz
+aXplZCBzZW5zb3IgKCJJbXBsZW1lbnRhdGlvbiIgcHJvcGVydHkgZXF1YWxzICJTeW50aGVzaXpl
+ZCIpLiBUaGlzIGlzIHRoZSBleGFtcGxlIHlvdSBzaG93biBiZWxvdy4gSW4gc3VjaCBjYXNlLCB0
+aGVyZSBpcyBubyB3YXkgdG8gcHJvdmlkZSBCTUMgdGhlIGFsZ29yaXRobSBob3cgdGhlIG1ldHJp
+YyBzaGFsbCBiZSBzeW50aGVzaXplZCBmcm9tIHNvdXJjZSBtZXRyaWNzLiBJbiB0aGlzIGNhc2Us
+IHRoZSBjYWxjdWxhdGlvbiBhbGdvcml0aG0gaGFzIHRvIGJlIGltcGxlbWVudGVkIGFzIHZpcnR1
+YWwgc2Vuc29yIGluIHRoZSBCTUMgcHJpb3IgdG8gZGVmaW5pbmcgdGhlIE1ldHJpYyBEZWZpbml0
+aW9uLiBJZiB5b3Ugd2FudCB0byBiZSBhYmxlIHRvIGNyZWF0ZSBzeW50aGVzaXplZCBzZW5zb3Jz
+IGluIHJ1bnRpbWUsIGFkZGl0aW9uYWwgZGVzaWduIHdpbGwgaGF2ZSB0byBiZSBwcm92aWRlZC4N
+Cj4NCj4gUmVnYXJkcw0KPiBQaW90cg0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
+PiBGcm9tOiBOZWVyYWogTGFka2FuaSA8bmVsYWRrQG1pY3Jvc29mdC5jb20+DQo+IFNlbnQ6IFR1
+ZXNkYXksIERlY2VtYmVyIDMsIDIwMTkgODo0MCBBTQ0KPiBUbzogTWF0dXN6Y3phaywgUGlvdHIg
+PHBpb3RyLm1hdHVzemN6YWtAaW50ZWwuY29tPg0KPiBDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMu
+b3JnOyBBbWJyb3pld2ljeiwgQWRyaWFuIDxhZHJpYW4uYW1icm96ZXdpY3pAaW50ZWwuY29tPg0K
+PiBTdWJqZWN0OiBSRTogQWRkaW5nIG5ldyBtZXRyaWMgZGVmaW5pdGlvbiB1c2UgY2FzZQ0KPg0K
+PiBIaSBQaW90ciwNCj4NCj4gVGhlIHVzZSBjYXNlIGlzIHNpbXBsZSB0aGF0IGlmIHdlIHdhbnQg
+dG8gYWRkIG5ldyBtZXRyaWMgZGVmaW5pdGlvbiB3aGljaCBpcyBhbHJlYWR5IG1vbml0b3JlZCBv
+biBEQlVTIGFuZCBleHBvc2VkIG9uIHJlZGZpc2ggLCB3ZSBzaG91bGQgYmUgYWJsZSB0byBjb25m
+aWd1cmUgaXQgd2l0aG91dCBjaGFuZ2luZyBCTUMgY29kZS4NCj4NCj4gRm9yIGV4YW1wbGU6DQo+
+IHsNCj4gICAgICAiQG9kYXRhLnR5cGUiOiAiI01ldHJpY0RlZmluaXRpb24udjFfMF8zLk1ldHJp
+Y0RlZmluaXRpb24iLA0KPiAgICAgICJJZCI6ICJPdXRsZXRBaXJmbG93VGVtcCIsDQo+ICAgICAg
+Ik5hbWUiOiAiRGVmaW5pdGlvbiBvZiBPdXRsZXQgQWlyZmxvdyBUZW1wZXJhdHVyZSIsDQo+ICAg
+ICAgIk1ldHJpY1R5cGUiOiAiTnVtZXJpYyIsDQo+ICAgICAgIkltcGxlbWVudGF0aW9uIjogIlN5
+bnRoZXNpemVkIiwNCj4gICAgICAiUGh5c2ljYWxDb250ZXh0IjogIkV4aGF1c3QiLA0KPiAgICAg
+ICJVbml0cyI6ICJDZWwiLA0KPiAgICAgICJXaWxkY2FyZHMiOiBbDQo+ICAgICAgICAgIHsNCj4g
+ICAgICAgICAgICAgICJOYW1lIjogIkNoYXNzaXNJRCIsDQo+ICAgICAgICAgICAgICAiVmFsdWVz
+IjogWw0KPiAgICAgICAgICAgICAgICAgICIxIg0KPiAgICAgICAgICAgICAgXQ0KPiAgICAgICAg
+ICB9DQo+ICAgICAgXSwNCj4gICAgICAiQ2FsY3VsYXRpb25QYXJhbWV0ZXJzIjogWw0KPiAgICAg
+ICAgICB7DQo+ICAgICAgICAgICAgICAiU291cmNlTWV0cmljIjogIi9yZWRmaXNoL3YxL0NoYXNz
+aXMve0NoYXNzaXNJRH0vVGhlcm1hbCMvVGVtcGVyYXR1cmVzLzIvUmVhZGluZ0NlbHNpdXMiDQo+
+ICAgICAgICAgIH0sDQo+ICAgICAgICAgIHsNCj4gICAgICAgICAgICAgICJTb3VyY2VNZXRyaWMi
+OiAiL3JlZGZpc2gvdjEvQ2hhc3Npcy97Q2hhc3Npc0lEfS9UaGVybWFsIy9GYW5zLzAvUmVhZGlu
+ZyINCj4gICAgICAgICAgfSwNCj4gICAgICAgICAgew0KPiAgICAgICAgICAgICAgIlNvdXJjZU1l
+dHJpYyI6ICIvcmVkZmlzaC92MS9DaGFzc2lzL3tDaGFzc2lzSUR9L1RoZXJtYWwjL0ZhbnMvMS9S
+ZWFkaW5nIg0KPiAgICAgICAgICB9LA0KPiAgICAgICAgICB7DQo+ICAgICAgICAgICAgICAiU291
+cmNlTWV0cmljIjogIi9yZWRmaXNoL3YxL0NoYXNzaXMve0NoYXNzaXNJRH0vUG93ZXIjL1Bvd2Vy
+Q29udHJvbC8wL1Bvd2VyQ29uc3VtZWRXYXR0cyIsDQo+ICAgICAgICAgICAgICAiUmVzdWx0TWV0
+cmljIjogIi9yZWRmaXNoL3YxL0NoYXNzaXMve0NoYXNzaXNJRH0vUG93ZXIjL1Bvd2VyQ29udHJv
+bC8wL1Bvd2VyTWV0cmljcy9BdmVyYWdlQ29uc3VtZWRXYXR0cyINCj4gICAgICAgICAgfQ0KPiAg
+ICAgIF0sDQo+ICAgICAgIkBvZGF0YS5pZCI6ICIvcmVkZmlzaC92MS9UZWxlbWV0cnlTZXJ2aWNl
+L01ldHJpY0RlZmluaXRpb25zL091dGxldEFpcmZsb3dUZW1wIiwNCj4gICAgICAiQFJlZGZpc2gu
+Q29weXJpZ2h0IjogIkNvcHlyaWdodCAyMDE0LTIwMTkgRE1URi4gRm9yIHRoZSBmdWxsIERNVEYg
+Y29weXJpZ2h0IHBvbGljeSwgc2VlIGh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3RlY3Rpb24u
+b3V0bG9vay5jb20vP3VybD1odHRwJTNBJTJGJTJGd3d3LmRtdGYub3JnJTJGYWJvdXQlMkZwb2xp
+Y2llcyUyRmNvcHlyaWdodCZhbXA7ZGF0YT0wMiU3QzAxJTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNv
+bSU3QzhmYTJlZjdjMjNjMDRjZDUwMTUyMDhkNzdhMTNhOGIzJTdDNzJmOTg4YmY4NmYxNDFhZjkx
+YWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNzExMjA5NzYwODY3MTk5MCZhbXA7c2RhdGE9JTJC
+aUJla0xscUxEQ3BsaEdjbExTOFFzTWp6N0xKQ21hUHVoQ2Vyd2M1UXJVJTNEJmFtcDtyZXNlcnZl
+ZD0wLiINCj4gfQ0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBNYXR1
+c3pjemFrLCBQaW90ciA8cGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb20+DQo+IFNlbnQ6IFRodXJz
+ZGF5LCBOb3ZlbWJlciAyOCwgMjAxOSAzOjMzIEFNDQo+IFRvOiBOZWVyYWogTGFka2FuaSA8bmVs
+YWRrQG1pY3Jvc29mdC5jb20+DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IEFtYnJv
+emV3aWN6LCBBZHJpYW4gPGFkcmlhbi5hbWJyb3pld2ljekBpbnRlbC5jb20+DQo+IFN1YmplY3Q6
+IFtFWFRFUk5BTF0gQWRkaW5nIG5ldyBtZXRyaWMgZGVmaW5pdGlvbiB1c2UgY2FzZQ0KPg0KPiBI
+aSBOZWVyYWosDQo+DQo+IAlBcyB3ZSB0YWxrZWQgcmVjZW50bHkgZHVyaW5nIHRoZSBUZWxlbWV0
+cnkgV0cgbWVldGluZywgeW91IHdlcmUgYXNraW5nIGFib3V0IGFkZGluZyBuZXcgbWV0cmljIGRl
+ZmluaXRpb25zLiBQbGVhc2UsIGxldCBtZSBiZXR0ZXIgdW5kZXJzdGFuZCB5b3VyIHVzZSBjYXNl
+LCB5b3UgaGF2ZSBIVyBzZW5zb3IgcHJlc2VudCBvbiB0aGUgYm9hcmQgKGZvciBleGFtcGxlLCBs
+ZXQgaXQgYmUgQ1BVMCBWUiB0ZW1wZXJhdHVyZSksIHlvdSBoYXZlIGFscmVhZHkgSFdtb24gcmVh
+ZGluZyBpdCBhbmQgZXhwb3NpbmcgaXQgYXMgdGhlIHNlbnNvciBvbiBELUJ1cy4gWW91IHdhbnQg
+dG8gYmUgYWJsZSB0byBhZGQgdGhlIG5ldyBNZXRyaWMgRGVmaW5pdGlvbiBmb3IgcHJvcGVyIGlu
+dGVycHJldGF0aW9uIG9mIHNlbnNvcidzIHJlYWRpbmcgYW5kIG5ldyBtZXRyaWMgZGVmaW5pdGlv
+biBzaGFsbCBhbHNvIG1vZGlmeSBzZW5zb3IncyBELUJ1cyBwYXJhbWV0ZXJzIChTY2FsZSBhbmQg
+VW5pdCkgPyBEbyBJIHVuZGVyc3RhbmQgaXQgY29ycmVjdGx5Pw0KPiAJTW9uaXRvcmluZyBTZXJ2
+aWNlIGRvZXMgbm90IGhhdmUgdG8gaW50ZXJwcmV0IHRoZSBtZXRyaWMgZnJvbSB0aGUgc2Vuc29y
+cywgYmVjYXVzZSBpdCBpcyB1c2VkIG9ubHkgZm9yIHJlcG9ydCBtYW5hZ2VtZW50Lg0KPiAJDQo+
+DQo+IFBpb3RyIE1hdHVzemN6YWsNCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+IEludGVsIFRlY2hub2xvZ3kg
+UG9sYW5kIHNwLiB6IG8uby4NCj4gdWwuIFNsb3dhY2tpZWdvIDE3MywgODAtMjk4IEdkYW5zaw0K
+PiBLUlMgMTAxODgyDQo+IE5JUCA5NTctMDctNTItMzE2DQo+DQoNCg==
