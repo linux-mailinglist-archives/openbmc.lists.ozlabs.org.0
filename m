@@ -1,55 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C013115483
+	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 16:45:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35F8F1151DA
-	for <lists+openbmc@lfdr.de>; Fri,  6 Dec 2019 15:04:45 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47TvV227MpzDqd3
-	for <lists+openbmc@lfdr.de>; Sat,  7 Dec 2019 01:04:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47TxkM0RqQzDqg9
+	for <lists+openbmc@lfdr.de>; Sat,  7 Dec 2019 02:45:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47TvSq0VDNzDqcX
- for <openbmc@lists.ozlabs.org>; Sat,  7 Dec 2019 01:03:37 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47TxjN4wNNzDqg8
+ for <openbmc@lists.ozlabs.org>; Sat,  7 Dec 2019 02:44:33 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga101.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 06 Dec 2019 06:03:32 -0800
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 Dec 2019 07:44:30 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,284,1571727600"; d="scan'208";a="214441217"
-Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.179])
- ([172.22.245.179])
- by orsmga006.jf.intel.com with ESMTP; 06 Dec 2019 06:03:31 -0800
-Subject: Re: BMC update via TFTP
-To: openbmc@lists.ozlabs.org
-References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
- <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
- <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
- <9e0303e5beb34b9bb50b050cd56e35d8@linux.vnet.ibm.com>
- <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
- <20191204213650.GB9613@mauery.jf.intel.com>
- <94b297b5-81d1-1e07-498f-155a9160cb1d@linux.intel.com>
- <20191205223708.GC9613@mauery.jf.intel.com>
-From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
-Message-ID: <1c75671d-904e-8a06-07f5-c93fcf0e5e50@linux.intel.com>
-Date: Fri, 6 Dec 2019 15:03:31 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <20191205223708.GC9613@mauery.jf.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-IronPort-AV: E=Sophos;i="5.69,285,1571727600"; d="scan'208";a="386535823"
+Received: from irsmsx152.ger.corp.intel.com ([163.33.192.66])
+ by orsmga005.jf.intel.com with ESMTP; 06 Dec 2019 07:44:29 -0800
+Received: from irsmsx101.ger.corp.intel.com ([169.254.1.76]) by
+ IRSMSX152.ger.corp.intel.com ([169.254.6.76]) with mapi id 14.03.0439.000;
+ Fri, 6 Dec 2019 15:44:28 +0000
+From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
+To: Neeraj Ladkani <neladk@microsoft.com>, vishwa <vishwa@linux.vnet.ibm.com>, 
+ "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>
+Subject: RE: [EXTERNAL] Re: Adding new metric definition use case
+Thread-Topic: [EXTERNAL] Re: Adding new metric definition use case
+Thread-Index: AdWl3aOwRZz1PlNdQ6G816tHTiv0cwDzn2jQAA9eSMAAYJcIgAAkIm+AAAJTU5AACWRqIA==
+Date: Fri, 6 Dec 2019 15:44:28 +0000
+Message-ID: <DBA24EEE99A3B3489FF472F5E94DE6D7A310AA3E@IRSMSX101.ger.corp.intel.com>
+References: <DBA24EEE99A3B3489FF472F5E94DE6D7A3108ED1@IRSMSX101.ger.corp.intel.com>
+ <BY5PR21MB1377E4996FF4D8AB139BA5D2C8420@BY5PR21MB1377.namprd21.prod.outlook.com>
+ <DBA24EEE99A3B3489FF472F5E94DE6D7A3109D0D@IRSMSX101.ger.corp.intel.com>
+ <DBA24EEE99A3B3489FF472F5E94DE6D7A310A5EB@IRSMSX101.ger.corp.intel.com>
+ <197d6f2d-bcae-a8f0-201e-f7302dd5df9b@linux.vnet.ibm.com>
+ <DM6PR21MB138863BEEE903FC3D46FF1F6C85F0@DM6PR21MB1388.namprd21.prod.outlook.com>
+In-Reply-To: <DM6PR21MB138863BEEE903FC3D46FF1F6C85F0@DM6PR21MB1388.namprd21.prod.outlook.com>
+Accept-Language: pl-PL, en-US
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMDU4OWRkNjktMWM1Ny00NWFiLTkyYmQtM2U1NDkyYWQ4NzRiIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiSk0rWEt6bndcL2cxbXd4Wk9jNUFIMDNCdk5lUjR0U2lveE5vRlFET25MRnZqZ3FPbEpGMTdEZU5sMFdrakNwVHIifQ==
+x-ctpclassification: CTP_NT
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [163.33.239.182]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,90 +70,145 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Ambrozewicz,
+ Adrian" <adrian.ambrozewicz@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 05-Dec-19 23:37, Vernon Mauery wrote:
-> On 05-Dec-2019 12:05 PM, Alexander Tereschenko wrote:
->> On 04-Dec-19 22:36, Vernon Mauery wrote:
->>> Even if the BMC only accepts signed images, we want to make sure 
->>> that the signed image the BMC fetches is the one that the 
->>> administrator *wants* to be fetched. With tftp or http (or any 
->>> insecure transport), one possible MiTM attack would be to substitute 
->>> an alternate valid image. Let's say the admin wants to go from 1.18 
->>> to 1.20, bu the attacker wants to go to 1.16, which has a known 
->>> vulnerability. The image would be authenticated by the signature, 
->>> and will be accepted.
->>
->> Thanks Vernon for raising this one - I think this is indeed a valid 
->> concern.
->>
->> So there are essentially two things that we are talking about here, 
->> if we peel it a little bit:
->>
->> 1) an additional authorization by the BMC admin of specific images 
->> they want to run
->> 2) plain integrity protection of the file being sent over insecure 
->> channel
->>
->> The first one is a bit different from the second one (and frequently 
->> solved by co-signing these days), but in thise specific use case I'd 
->> say these two indeed overlap.
->>
->> In this case, I'd rather suggest us to look into asymmetric crypto, 
->> so that no secret sharing/storage (with accompanying additional risk 
->> of compromise) is necessary. An admin would sign the image being sent 
->> + some context information (like time, to provide replay protection - 
->> also applicable to MAC case, otherwise the attacker can trivially 
->> replay the file/MAC) and the BMC would check the admin's signature 
->> using pre-provisioned public key (send over HTTPS, same as MAC key in 
->> your proposal - but only for integrity protection, con 
->> confidentiality is necessary) + verify that the context is "fresh" 
->> and then use the file.
->
-> I am not convinced that it needs to be this elaborate. I don't see 
-> what it adds over the simple case of sending the key/hmac/uri 
-> encrypted with TLS to the BMC. There will be no replay attacks because 
-> TLS prevents it.
-> Maybe I am missing something?
-
-We may be talking about slightly different contexts indeed. I meant to 
-suggest something that doesn't require
-
-1) any "out-of-band" channel for each file being sent (signature can be 
-appended to the file itself, one-time/infrequent public key updates at 
-the BMC side are discounted as arguably negligible). I use the 
-"out-of-band" here as "channel different than the one where the file 
-itself is being sent";
-2) any symmetric secret generation/storage/distribution upon sending 
-files (which is an additional burden and risk);
-
-plus
-
-1) provides replay protection;
-2) doesn't require major infrastructure modifications (here I'm assuming 
-that signing and checking the signature in this flow is less change than 
-generating key, MAC and sending them over "out-of-band" channel);
-
-I read your proposal as that the key will be a longer-term one + that 
-the MAC will be sent along with the file (as it's not a secret and 
-typically it's sent together with the data in such schemes). If you 
-meant that both the key and MAC are generated on the fly, are one-time 
-and are sent via that "out-of-band" TLS-protected channel, then I'd say 
-you don't even need a keyed MAC at all and a plain cryptographic hash 
-would suffice. You're sending the key along with the MAC and file 
-channel itself is unprotected - so if the adversary can break the TLS, 
-they can compute the MAC as easily as a plain hash and if they can't, 
-they anyway can't substitute the hash value, so IMHO keyed MAC is 
-surplus here.
-
-Maybe outlining a flow (maybe as a sequence/flow diagram) in more detail 
-and defining which specific adversaries (and their capabilities) we're 
-talking about here would help? I agree we surely don't need a more 
-complex scheme if a simpler one suffices, it's just that we may be 
-talking about slightly different flows and adversaries right now :)
-
-regards,
-Alexander
-
-
+SGkgYWxsLA0KDQpWaXNod2EsIGl0J3MgYmV0dGVyIGlkZWEgdG8gZGlzY3VzcyB0aGUgZGVzaWdu
+IHByb3Bvc2FsIGhlcmUuIFdlIGNvdWxkIGdldCBpbW1lZGlhdGUgZmVlZGJhY2suDQoNCk5lZXJh
+aiwgdGhlIGRlc2lnbiB3aWxsIGJlIHB1Ymxpc2hlZCwgYnV0IGl0IGlzIG5vdCB3cml0dGVuIGRv
+d24geWV0LiBJIHdvdWxkIGxpa2UgdG8gZGlzY3VzcyBvdXIgcHJvcG9zYWxzIGhlcmUuIEFzIGZv
+ciB0aGUgc2NoZW1hLCB0byBzdXBwb3J0IHRoZSB1c2VyLWRlZmluZWQgbWV0cmljcyBpdCB3aWxs
+IHJlcXVpcmUgdG8gYmUgZXh0ZW5kZWQuIEluIG9yZGVyIHRvIGRvIHRoYXQgSSB3aWxsIGhhdmUg
+dG8gZGlzY3VzcyB0aGlzIHdpdGggdGhlIERNVEYuIEl0IHdvdWxkIGJlIGdvb2QgdG8gbWFrZSBu
+ZXcgcHJvcGVydGllcyBwYXJ0IG9mIHRoZSBzdGFuZGFyZC4gV2Ugd291bGQgbGlrZSB0byBhZGQg
+cHJvcGVydHkgZm9yIHVzZXIgZm9ybXVsYSBhbmQgcHJvcGVydHkgZm9yIGFsaWFzIG9mIHNvdXJj
+ZSBtZXRyaWMgaW4gb3JkZXIgdG8gZGVmaW5lIGZvcm11bGEgaW4gdGhlIG1vc3QgY2xlYXIgYW5k
+IGVhc3kgd2F5Lg0KQXMgZm9yIHRoZSBmZWF0dXJlIGRlc2lnbiBwcm9wb3NhbCwgb3VyIGlkZWEg
+aXMgdG8gcHJvdmlkZSB0aGUgZm9sbG93aW5nOg0KLSA4IHVzZXItZGVmaW5lZCBzZW5zb3JzIHdp
+bGwgYmUgZGVmaW5lZCBpbiB0aGUgUmVkZmlzaCB0cmVlLiBXaGVuIG5vdCBkZWZpbmVkLCB0aGUg
+c2Vuc29ycyB3b24ndCBwcm92aWRlIGFueSByZWFkaW5ncy4NCi0gSW4gb3JkZXIgZm9yIHN1Y2gg
+c2Vuc29yIHRvIHByb3ZpZGUgYW55IHJlYWRpbmdzLCB1c2VyIHNoYWxsIHByb3ZpZGUgcHJvcGVy
+IE1ldHJpY0RlZmluaXRpb24gd2l0aCBzb3VyY2Ugc2Vuc29ycyBVUklzLCB1c2VyLWRlZmluZWQg
+Zm9ybXVsYSBmb3IgY2FsY3VsYXRpbmcgcmVzdWx0IHJlYWRpbmcgZnJvbSBzb3VyY2Ugc2Vuc29y
+cyBhbmQgTWV0cmljRGVmaW5pdGlvbi5NZXRyaWNQcm9wZXJ0aWVzIHNjaGVtYSBmaWVsZCBzaGFs
+bCBjb250YWluIFVSSSB0byBvbmUgb2YgdXNlci1kZWZpbmVkIHNlbnNvcnMuIFVzZXIgc2hhbGwg
+ZGVmaW5lIHNvdXJjZSBzZW5zb3JzLCB0aGUgZm9ybXVsYSwgdW5pdCwgYWNjdXJhY3kgZXRjLg0K
+LSB0aGUgdXNlci1kZWZpbmVkIHNlbnNvcnMgc2hhbGwgYmUgYXZhaWxhYmxlIGZvciB0aGUgUmVk
+ZmlzaCBUZWxlbWV0cnkgU2VydmljZSB1bmRlciBwcmUtZGVmaW5lZCBVUklzIChmb3IgZXhhbXBs
+ZTogL3JlZGZpc2gvdjEvQ2hhc3Npcy97Q2hhc3Npc0lEfS9TZW5zb3JzL1VzZXJEZWZpbmVkU2Vu
+c29yMCAtIC9yZWRmaXNoL3YxL0NoYXNzaXMve0NoYXNzaXNJRH0vU2Vuc29ycy9Vc2VyRGVmaW5l
+ZFNlbnNvcjcpLCB0aHVzIHVzZXIgd2lsbCBiZSBhYmxlIHRvIHVzZSB0aGlzIG1ldHJpY3MgaW4g
+TWV0cmljUmVwb3J0cyBhbmQgc2hhbGwgYmUgYWJsZSB0byBkZWZpbmUgVHJpZ2dlcnMgZm9yIHRo
+ZXNlIHNlbm9ycw0KDQpQbGVhc2UgdGVsbCB1cyB3aGF0IGRvIHlvdSB0aGluayBhYm91dCBvdXIg
+aWRlYS4NCg0KUmVnYXJkcw0KUGlvdHINCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZy
+b206IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtAbWljcm9zb2Z0LmNvbT4NClNlbnQ6IEZyaWRheSwg
+RGVjZW1iZXIgNiwgMjAxOSA4OjM3IEFNDQpUbzogdmlzaHdhIDx2aXNod2FAbGludXgudm5ldC5p
+Ym0uY29tPjsgTWF0dXN6Y3phaywgUGlvdHIgPHBpb3RyLm1hdHVzemN6YWtAaW50ZWwuY29tPjsg
+UGF1bC5WYW5jaWxAZGVsbC5jb20NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IEFtYnJv
+emV3aWN6LCBBZHJpYW4gPGFkcmlhbi5hbWJyb3pld2ljekBpbnRlbC5jb20+DQpTdWJqZWN0OiBS
+RTogW0VYVEVSTkFMXSBSZTogQWRkaW5nIG5ldyBtZXRyaWMgZGVmaW5pdGlvbiB1c2UgY2FzZQ0K
+DQpZZXMgUGlvdHIsDQoNClRoYXQgd291bGQgYmUgZ3JlYXQuIENhbiB5b3UgcHVibGlzaCB5b3Vy
+IGRlc2lnbiA/ICBAUGF1bCwgSSBzZWUgMS4xLjIgaXMgbGF0ZXN0IHNjaGVtYSBmb3IgdGVsZW1l
+dHJ5IHNlcnZpY2UuIEFyZSB0aGVyZSBhbnkgYWRkaXRpb25zIHRoYXQgYXJlIGJlaW5nIHBsYW5u
+ZWQgZm9yIG5leHQgdmVyc2lvbj8NCg0KTmVlcmFqDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
+LS0tDQpGcm9tOiB2aXNod2EgPHZpc2h3YUBsaW51eC52bmV0LmlibS5jb20+DQpTZW50OiBUaHVy
+c2RheSwgRGVjZW1iZXIgNSwgMjAxOSAxMDoxNSBQTQ0KVG86IE1hdHVzemN6YWssIFBpb3RyIDxw
+aW90ci5tYXR1c3pjemFrQGludGVsLmNvbT47IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtAbWljcm9z
+b2Z0LmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IEFtYnJvemV3aWN6LCBBZHJp
+YW4gPGFkcmlhbi5hbWJyb3pld2ljekBpbnRlbC5jb20+DQpTdWJqZWN0OiBbRVhURVJOQUxdIFJl
+OiBBZGRpbmcgbmV3IG1ldHJpYyBkZWZpbml0aW9uIHVzZSBjYXNlDQoNCmhlbGxvIFBpb3RyLA0K
+DQpDb3VsZCB3ZSB1c2UgdGhlIG1haWxpbmcgbGlzdCBmb3IgdGhvc2UgZGlzY3Vzc2lvbnMgPw0K
+DQohISBWaXNod2EgISENCg0KT24gMTIvNS8xOSA4OjM5IFBNLCBNYXR1c3pjemFrLCBQaW90ciB3
+cm90ZToNCj4gSGkgTmVlcmFqLA0KPg0KPiBJJ3ZlIGFuYWx5emVkIHlvdXIgdXNlIGNhc2Ugd2l0
+aCBBZHJpYW4uIEl0IGxvb2tzIGxpa2UgeW91IHdhbnQgdG8gZGVmaW5lIG5ldywgc3ludGhlc2l6
+ZWQgbWV0cmljIGZyb20gZXhpc3RpbmcgRC1CdXMgc2Vuc29ycy4gV2Ugd291bGQgbGlrZSB0byBw
+cm9wb3NlIGEgZGVzaWduIHRvIGltcGxlbWVudCB1c2VyLWRlZmluZWQgbWV0cmljcywgd2hpY2gg
+YXJlIHN5bnRoZXNpemVkIGZyb20gb3RoZXIgbWV0cmljcyB1c2luZyBtYXRoZW1hdGljYWwgZm9y
+bXVsYXMgZGVmaW5lZCBieSB0aGUgdXNlci4gU3VjaCBmb3JtdWxhIG1heSBiZSBwcm92aWRlZCBi
+eSB0aGUgdXNlciBpbiBydW50aW1lLCBub3QgcmVxdWlyaW5nIHJlY29tcGlsYXRpb24gb2YgT3Bl
+bkJNQy4gV2UgY2FuIGRpc2N1c3MgIGl0IGR1cmluZyB0aGUgbmV4dCBUZWxlbWV0cnkgV0cgbWVl
+dGluZy4NCj4NCj4NCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogb3BlbmJt
+YyA8b3BlbmJtYy1ib3VuY2VzK3Bpb3RyLm1hdHVzemN6YWs9aW50ZWwuY29tQGxpc3RzLm96bGFi
+cy5vcmc+IE9uIEJlaGFsZiBPZiBNYXR1c3pjemFrLCBQaW90cg0KPiBTZW50OiBUdWVzZGF5LCBE
+ZWNlbWJlciAzLCAyMDE5IDQ6NDIgUE0NCj4gVG86IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtAbWlj
+cm9zb2Z0LmNvbT4NCj4gQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgQW1icm96ZXdpY3os
+IEFkcmlhbiA8YWRyaWFuLmFtYnJvemV3aWN6QGludGVsLmNvbT4NCj4gU3ViamVjdDogUkU6IEFk
+ZGluZyBuZXcgbWV0cmljIGRlZmluaXRpb24gdXNlIGNhc2UNCj4NCj4gSGkgTmVlcmFqLA0KPg0K
+PiBUaGVyZSBhcmUgdHdvIGNhc2VzOg0KPiAxLiBTZW5zb3IgaXMgYWxyZWFkeSBtb25pdG9yZWQg
+YW5kIHlvdSB3YW50IHRvIGRlZmluZSBuZXcgTWV0cmljIERlZmluaXRpb24uIEl0IGlzIGRvbmUg
+b24gdGhlIFJlZGZpc2ggbGV2ZWwuIEFsc28gaW4gdGhlIGNhc2Ugd2hlbiB5b3Ugd2FudCB0byBj
+cmVhdGUgY2FsY3VsYXRlZCBtZXRyaWMgKCJJbXBsZW1lbnRhdGlvbiIgcHJvcGVydHkgZXF1YWxz
+ICJDYWxjdWxhdGVkIikuIEluIHRoaXMgY2FzZSBtaW4vbWF4L2F2ZXJhZ2UgY2FuIGJlIGNhbGN1
+bGF0ZWQgKGFzIGRlZmluZWQgYnkgdGhlICJDYWxjdWxhdGlvbkFsZ29yaXRobSIgcHJvcGVydHkp
+Lg0KPiAyLiBZb3Ugd2FudCB0byBjcmVhdGUgTWV0cmljIERlZmluaXRpb24gZm9yIFN5bnRoZXNp
+emVkIHNlbnNvciAoIkltcGxlbWVudGF0aW9uIiBwcm9wZXJ0eSBlcXVhbHMgIlN5bnRoZXNpemVk
+IikuIFRoaXMgaXMgdGhlIGV4YW1wbGUgeW91IHNob3duIGJlbG93LiBJbiBzdWNoIGNhc2UsIHRo
+ZXJlIGlzIG5vIHdheSB0byBwcm92aWRlIEJNQyB0aGUgYWxnb3JpdGhtIGhvdyB0aGUgbWV0cmlj
+IHNoYWxsIGJlIHN5bnRoZXNpemVkIGZyb20gc291cmNlIG1ldHJpY3MuIEluIHRoaXMgY2FzZSwg
+dGhlIGNhbGN1bGF0aW9uIGFsZ29yaXRobSBoYXMgdG8gYmUgaW1wbGVtZW50ZWQgYXMgdmlydHVh
+bCBzZW5zb3IgaW4gdGhlIEJNQyBwcmlvciB0byBkZWZpbmluZyB0aGUgTWV0cmljIERlZmluaXRp
+b24uIElmIHlvdSB3YW50IHRvIGJlIGFibGUgdG8gY3JlYXRlIHN5bnRoZXNpemVkIHNlbnNvcnMg
+aW4gcnVudGltZSwgYWRkaXRpb25hbCBkZXNpZ24gd2lsbCBoYXZlIHRvIGJlIHByb3ZpZGVkLg0K
+Pg0KPiBSZWdhcmRzDQo+IFBpb3RyDQo+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+
+IEZyb206IE5lZXJhaiBMYWRrYW5pIDxuZWxhZGtAbWljcm9zb2Z0LmNvbT4NCj4gU2VudDogVHVl
+c2RheSwgRGVjZW1iZXIgMywgMjAxOSA4OjQwIEFNDQo+IFRvOiBNYXR1c3pjemFrLCBQaW90ciA8
+cGlvdHIubWF0dXN6Y3pha0BpbnRlbC5jb20+DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmc7IEFtYnJvemV3aWN6LCBBZHJpYW4gPGFkcmlhbi5hbWJyb3pld2ljekBpbnRlbC5jb20+DQo+
+IFN1YmplY3Q6IFJFOiBBZGRpbmcgbmV3IG1ldHJpYyBkZWZpbml0aW9uIHVzZSBjYXNlDQo+DQo+
+IEhpIFBpb3RyLA0KPg0KPiBUaGUgdXNlIGNhc2UgaXMgc2ltcGxlIHRoYXQgaWYgd2Ugd2FudCB0
+byBhZGQgbmV3IG1ldHJpYyBkZWZpbml0aW9uIHdoaWNoIGlzIGFscmVhZHkgbW9uaXRvcmVkIG9u
+IERCVVMgYW5kIGV4cG9zZWQgb24gcmVkZmlzaCAsIHdlIHNob3VsZCBiZSBhYmxlIHRvIGNvbmZp
+Z3VyZSBpdCB3aXRob3V0IGNoYW5naW5nIEJNQyBjb2RlLg0KPg0KPiBGb3IgZXhhbXBsZToNCj4g
+ew0KPiAgICAgICJAb2RhdGEudHlwZSI6ICIjTWV0cmljRGVmaW5pdGlvbi52MV8wXzMuTWV0cmlj
+RGVmaW5pdGlvbiIsDQo+ICAgICAgIklkIjogIk91dGxldEFpcmZsb3dUZW1wIiwNCj4gICAgICAi
+TmFtZSI6ICJEZWZpbml0aW9uIG9mIE91dGxldCBBaXJmbG93IFRlbXBlcmF0dXJlIiwNCj4gICAg
+ICAiTWV0cmljVHlwZSI6ICJOdW1lcmljIiwNCj4gICAgICAiSW1wbGVtZW50YXRpb24iOiAiU3lu
+dGhlc2l6ZWQiLA0KPiAgICAgICJQaHlzaWNhbENvbnRleHQiOiAiRXhoYXVzdCIsDQo+ICAgICAg
+IlVuaXRzIjogIkNlbCIsDQo+ICAgICAgIldpbGRjYXJkcyI6IFsNCj4gICAgICAgICAgew0KPiAg
+ICAgICAgICAgICAgIk5hbWUiOiAiQ2hhc3Npc0lEIiwNCj4gICAgICAgICAgICAgICJWYWx1ZXMi
+OiBbDQo+ICAgICAgICAgICAgICAgICAgIjEiDQo+ICAgICAgICAgICAgICBdDQo+ICAgICAgICAg
+IH0NCj4gICAgICBdLA0KPiAgICAgICJDYWxjdWxhdGlvblBhcmFtZXRlcnMiOiBbDQo+ICAgICAg
+ICAgIHsNCj4gICAgICAgICAgICAgICJTb3VyY2VNZXRyaWMiOiAiL3JlZGZpc2gvdjEvQ2hhc3Np
+cy97Q2hhc3Npc0lEfS9UaGVybWFsIy9UZW1wZXJhdHVyZXMvMi9SZWFkaW5nQ2Vsc2l1cyINCj4g
+ICAgICAgICAgfSwNCj4gICAgICAgICAgew0KPiAgICAgICAgICAgICAgIlNvdXJjZU1ldHJpYyI6
+ICIvcmVkZmlzaC92MS9DaGFzc2lzL3tDaGFzc2lzSUR9L1RoZXJtYWwjL0ZhbnMvMC9SZWFkaW5n
+Ig0KPiAgICAgICAgICB9LA0KPiAgICAgICAgICB7DQo+ICAgICAgICAgICAgICAiU291cmNlTWV0
+cmljIjogIi9yZWRmaXNoL3YxL0NoYXNzaXMve0NoYXNzaXNJRH0vVGhlcm1hbCMvRmFucy8xL1Jl
+YWRpbmciDQo+ICAgICAgICAgIH0sDQo+ICAgICAgICAgIHsNCj4gICAgICAgICAgICAgICJTb3Vy
+Y2VNZXRyaWMiOiAiL3JlZGZpc2gvdjEvQ2hhc3Npcy97Q2hhc3Npc0lEfS9Qb3dlciMvUG93ZXJD
+b250cm9sLzAvUG93ZXJDb25zdW1lZFdhdHRzIiwNCj4gICAgICAgICAgICAgICJSZXN1bHRNZXRy
+aWMiOiAiL3JlZGZpc2gvdjEvQ2hhc3Npcy97Q2hhc3Npc0lEfS9Qb3dlciMvUG93ZXJDb250cm9s
+LzAvUG93ZXJNZXRyaWNzL0F2ZXJhZ2VDb25zdW1lZFdhdHRzIg0KPiAgICAgICAgICB9DQo+ICAg
+ICAgXSwNCj4gICAgICAiQG9kYXRhLmlkIjogIi9yZWRmaXNoL3YxL1RlbGVtZXRyeVNlcnZpY2Uv
+TWV0cmljRGVmaW5pdGlvbnMvT3V0bGV0QWlyZmxvd1RlbXAiLA0KPiAgICAgICJAUmVkZmlzaC5D
+b3B5cmlnaHQiOiAiQ29weXJpZ2h0IDIwMTQtMjAxOSBETVRGLiBGb3IgdGhlIGZ1bGwgRE1URiBj
+b3B5cmlnaHQgcG9saWN5LCBzZWUgaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5v
+dXRsb29rLmNvbS8/dXJsPWh0dHAlM0ElMkYlMkZ3d3cuZG10Zi5vcmclMkZhYm91dCUyRnBvbGlj
+aWVzJTJGY29weXJpZ2h0JmFtcDtkYXRhPTAyJTdDMDElN0NuZWxhZGslNDBtaWNyb3NvZnQuY29t
+JTdDOGZhMmVmN2MyM2MwNGNkNTAxNTIwOGQ3N2ExM2E4YjMlN0M3MmY5ODhiZjg2ZjE0MWFmOTFh
+YjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM3MTEyMDk3NjA4NjcxOTkwJmFtcDtzZGF0YT0lMkJp
+QmVrTGxxTERDcGxoR2NsTFM4UXNNano3TEpDbWFQdWhDZXJ3YzVRclUlM0QmYW1wO3Jlc2VydmVk
+PTAuIg0KPiB9DQo+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IE1hdHVz
+emN6YWssIFBpb3RyIDxwaW90ci5tYXR1c3pjemFrQGludGVsLmNvbT4NCj4gU2VudDogVGh1cnNk
+YXksIE5vdmVtYmVyIDI4LCAyMDE5IDM6MzMgQU0NCj4gVG86IE5lZXJhaiBMYWRrYW5pIDxuZWxh
+ZGtAbWljcm9zb2Z0LmNvbT4NCj4gQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgQW1icm96
+ZXdpY3osIEFkcmlhbiA8YWRyaWFuLmFtYnJvemV3aWN6QGludGVsLmNvbT4NCj4gU3ViamVjdDog
+W0VYVEVSTkFMXSBBZGRpbmcgbmV3IG1ldHJpYyBkZWZpbml0aW9uIHVzZSBjYXNlDQo+DQo+IEhp
+IE5lZXJhaiwNCj4NCj4gICAgICAgQXMgd2UgdGFsa2VkIHJlY2VudGx5IGR1cmluZyB0aGUgVGVs
+ZW1ldHJ5IFdHIG1lZXRpbmcsIHlvdSB3ZXJlIGFza2luZyBhYm91dCBhZGRpbmcgbmV3IG1ldHJp
+YyBkZWZpbml0aW9ucy4gUGxlYXNlLCBsZXQgbWUgYmV0dGVyIHVuZGVyc3RhbmQgeW91ciB1c2Ug
+Y2FzZSwgeW91IGhhdmUgSFcgc2Vuc29yIHByZXNlbnQgb24gdGhlIGJvYXJkIChmb3IgZXhhbXBs
+ZSwgbGV0IGl0IGJlIENQVTAgVlIgdGVtcGVyYXR1cmUpLCB5b3UgaGF2ZSBhbHJlYWR5IEhXbW9u
+IHJlYWRpbmcgaXQgYW5kIGV4cG9zaW5nIGl0IGFzIHRoZSBzZW5zb3Igb24gRC1CdXMuIFlvdSB3
+YW50IHRvIGJlIGFibGUgdG8gYWRkIHRoZSBuZXcgTWV0cmljIERlZmluaXRpb24gZm9yIHByb3Bl
+ciBpbnRlcnByZXRhdGlvbiBvZiBzZW5zb3IncyByZWFkaW5nIGFuZCBuZXcgbWV0cmljIGRlZmlu
+aXRpb24gc2hhbGwgYWxzbyBtb2RpZnkgc2Vuc29yJ3MgRC1CdXMgcGFyYW1ldGVycyAoU2NhbGUg
+YW5kIFVuaXQpID8gRG8gSSB1bmRlcnN0YW5kIGl0IGNvcnJlY3RseT8NCj4gICAgICAgTW9uaXRv
+cmluZyBTZXJ2aWNlIGRvZXMgbm90IGhhdmUgdG8gaW50ZXJwcmV0IHRoZSBtZXRyaWMgZnJvbSB0
+aGUgc2Vuc29ycywgYmVjYXVzZSBpdCBpcyB1c2VkIG9ubHkgZm9yIHJlcG9ydCBtYW5hZ2VtZW50
+Lg0KPg0KPg0KPiBQaW90ciBNYXR1c3pjemFrDQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiBJbnRlbCBUZWNo
+bm9sb2d5IFBvbGFuZCBzcC4geiBvLm8uDQo+IHVsLiBTbG93YWNraWVnbyAxNzMsIDgwLTI5OCBH
+ZGFuc2sNCj4gS1JTIDEwMTg4Mg0KPiBOSVAgOTU3LTA3LTUyLTMxNg0KPg0KDQo=
