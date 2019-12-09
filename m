@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D66116D0C
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 13:23:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4181E116D5D
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 13:55:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Wj643YZzzDqFt
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 23:23:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Wjpk4jBDzDqKT
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 23:55:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,20 +19,22 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Wj4Q2GpnzDqLX
- for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 23:22:12 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47WjnB6W9KzDqDN
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 23:54:05 +1100 (AEDT)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 Content-Type: text/plain;
-	charset=utf-8
+	charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: To add a new interface for timed power on feature
+Subject: Re: BMC Operating Mode [Manual / Normal]
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <CAARXrtmNP3upYusBU6quTcfkU_Po3QvcM-SD=D7v0JKJGWzUXA@mail.gmail.com>
-Date: Mon, 9 Dec 2019 07:22:07 -0500
+In-Reply-To: <1505e06c-65c8-c953-9cd1-f47989a64255@linux.vnet.ibm.com>
+Date: Mon, 9 Dec 2019 07:54:02 -0500
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <14F75671-F93C-41EB-A879-4E44C6F24F71@fuzziesquirrel.com>
-References: <CAARXrtmNP3upYusBU6quTcfkU_Po3QvcM-SD=D7v0JKJGWzUXA@mail.gmail.com>
-To: Lei YU <mine260309@gmail.com>
+Message-Id: <9DCFD6EC-430D-426E-9227-508B3D25AF52@fuzziesquirrel.com>
+References: <fa89fca6-8b4a-030d-7268-8a97958909f4@linux.vnet.ibm.com>
+ <de8d57a1-dbd1-2d29-741a-e265e4fc6f7b@intel.com>
+ <1505e06c-65c8-c953-9cd1-f47989a64255@linux.vnet.ibm.com>
+To: vishwa <vishwa@linux.vnet.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,29 +52,61 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-> On Dec 9, 2019, at 4:49 AM, Lei YU <mine260309@gmail.com> wrote:
+> On Dec 9, 2019, at 6:08 AM, vishwa <vishwa@linux.vnet.ibm.com> wrote:
 >=20
-> This email is to introduce a new interface to be added to
-> phosphor-dbus-interfaces, and ask for feedback where it should be
-> placed into.
+> Sorry, resuming the discussion only now. Had to keep the discussion on =
+back burner due to other things.
 >=20
-> There is a feature Timed-Power-On (TPO), that host could schedule a
-> timer to BMC to power on the host.
-> For BMC there will be a service to handle the above case, and the plan
-> is to add a new interface to represent the timer (actually a date) for
-> TPO.
+> Ed, I am not sure if you are still watching this space..
 >=20
-> It could look like:
-> /org/open_power/TimedPowerOn/Epoch.interface.yaml
-> Where it defines the epoch time when the host is going to be powered =
-on.
+> On 8/14/19 2:33 AM, Ed Tanous wrote:
+>> On 8/9/19 12:13 AM, vishwa wrote:
+>>> Hi All,
+>>>=20
+>>> IBM systems have a need to run BMC either in Manual or Normal Mode. =
+What
+>>> it means is this:
+>>>=20
+>>> Manual: It's mostly a lab / debug mode, where in the system would be
+>>> booted with recovery disabled.
+>>> For example: If we enter Quiesce state as part of power-on, then BMC
+>>> remains in Quiesce state and would *not* attempt to re power-on and
+>>> reboot the system.
+>>>=20
+>>> Normal: This is the default customer mode with recovery enabled in =
+BMC.
+>>> For example: If we enter Quiesce state as part of power-on, then an
+>>> attempt will automatically be done to re power-on and boot the =
+system.
+>> We have a very similar mechanism in our non-OpenBMC stack.  We would
+>> likely be interested in a generic interface for it, although the =
+details
+>> are different, as the BMC doesn't really monitor Quiesce, but the =
+state
+>> of the boot through ACPI and power rails.
+>>=20
+> How about having a policy defined in "xyz/openbmc_project/setting/" ?.
 >=20
-> The question is, is this feature common for other systems?
-> If yes, I would like to put it in `/xyz/openbmc_project`, instead of
-> `/org/open_power`
+>>> There are other use-cases, where BMC does a Automatic power-on after
+>>> coming back from an AC loss. Manual / Normal would influence this.
+>> This is classically a separate setting called "power restore policy". =
+ I
+>> suspect you likely want to keep these separate as well, as the power
+>> policy is something that a user is likely to set independent of
+>> lab/debug/manual mode.
+>>=20
+> Yes.. 2 different things. However, if the user has set "power restore =
+--> yes" and then set the mode to "Manual", then "power restore" will =
+behave as if nothing was set.
+>=20
+> So, this proposed mode [Normal/Maintenance] is sort of a gate-keeper =
+for any of these recovery actions.
 
-It is just an interface, and one that doesn=E2=80=99t have anything to =
-do with POWER hardware, so I don=E2=80=99t see a problem with putting it =
-in the xyz namespace.  Do you already have an implementation plan?
+This sounds like settings controlling other settings.  Do you have a =
+list of all the settings that get ignored when this setting is active?
+
+Rather than make all the code look at another setting, one idea for =
+implementing this would be to turn on/off all the associated settings.  =
+Would that work?
 
 thx - brad=
