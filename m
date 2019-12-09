@@ -1,63 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6855A116A20
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 10:50:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47WdjK46hQzDqQD
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 20:50:29 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77F26116BEC
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 12:09:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47WgSv2KL7zDqQj
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 22:09:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d33;
- helo=mail-io1-xd33.google.com; envelope-from=mine260309@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="c+kZDppN"; 
- dkim-atps=neutral
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
- [IPv6:2607:f8b0:4864:20::d33])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Wdhc5hcfzDqQ4
- for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 20:49:52 +1100 (AEDT)
-Received: by mail-io1-xd33.google.com with SMTP id l17so14088784ioj.3
- for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 01:49:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=9LlrqtKSLoFImyyTWUD4Igz+evxGMcdxhhor8MM+R7U=;
- b=c+kZDppN9ExRT1bOLryvaJkgr2y1kgC8YAlN4CQbcjR2nEFaU4CXVoSL+opq51RcEn
- AWEqFcOcefAkRMcYvK9WnnDIxoiWRDAnw3a+EZmLL5RJ5TTF1+5vQ7RfvCA4KuGgI3oV
- N4qV25LE2stLDIA8Ml3oV5p+3gtQ8YU436hTbg6ST/zCmwTPrg+q5ZrHc6i1joXEPoio
- gc552qFTFeulrDaycsW4AQbEXWtmhvhjkLHrqqHmMt38QkpFjgazxFhuuscr1Xt9F4xu
- 6bgunym5d9uaf397I5Ee9kjUQxou0JHpvd9mrMB7tT7cSY3hrpvSAD/IDl3OH/X6qA5A
- kJHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=9LlrqtKSLoFImyyTWUD4Igz+evxGMcdxhhor8MM+R7U=;
- b=PRyHQzX5g4sefQMTGoFrI+5Xb4/CDm5qO1yc6+6/HWYx19Fzn0BYdrjMUXRuOGe6Y6
- M+Up+hqrRTaewLX7jgSapfAu7Rjn1Blebyju2+l3YFblQmf2jtSpJdHPZi0dnB2wC7X6
- 3Q3KzlQTdCATG44ppVnbM6z/G3/ak591xI8O2xItI/EQj8GrIjarsXmanGcFSoknjdsp
- 0DYzVOJL6V9tW5niuwq7w/CMpeNJcUPyygWwerwGBXWRexSHbB4bZup2Rs6onu1Kc0eI
- MbdPuNxbJte7o9i2X1vxTGsCef9KA6MQiS7/TOBzRY092Ltp/Rutp2sSDD6mIFrW31VE
- nXCg==
-X-Gm-Message-State: APjAAAUgDw/cc0dZdzRO4aV9ZYOTL9ivOfEk3/5Hn35HMIDfvLZ3EANE
- TzYZSUQAMOQewI7O5rUNCWB1XBJo5F40NNTfK2zumJunYPs0xA==
-X-Google-Smtp-Source: APXvYqxMUXOHnooNyfNBifEQsqfLH8eV9fLS4hK1n/6e+lavBWEPtGOoiKzVXClUBgTiNS8vG+9YyS39/qteM7nQIGQ=
-X-Received: by 2002:a5d:8c89:: with SMTP id g9mr19824500ion.221.1575884986898; 
- Mon, 09 Dec 2019 01:49:46 -0800 (PST)
-MIME-Version: 1.0
-From: Lei YU <mine260309@gmail.com>
-Date: Mon, 9 Dec 2019 17:49:35 +0800
-Message-ID: <CAARXrtmNP3upYusBU6quTcfkU_Po3QvcM-SD=D7v0JKJGWzUXA@mail.gmail.com>
-Subject: To add a new interface for timed power on feature
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47WgRD3VMbzDqPQ
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 22:08:23 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xB9B860e039591
+ for <openbmc@lists.ozlabs.org>; Mon, 9 Dec 2019 06:08:21 -0500
+Received: from e06smtp02.uk.ibm.com (e06smtp02.uk.ibm.com [195.75.94.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wskn9b097-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 06:08:21 -0500
+Received: from localhost
+ by e06smtp02.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Mon, 9 Dec 2019 11:08:19 -0000
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp02.uk.ibm.com (192.168.101.132) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 9 Dec 2019 11:08:16 -0000
+Received: from d06av24.portsmouth.uk.ibm.com (d06av24.portsmouth.uk.ibm.com
+ [9.149.105.60])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xB9B8F0v41877750
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 9 Dec 2019 11:08:15 GMT
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4DCD42041
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 11:08:15 +0000 (GMT)
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62DCB4203F
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 11:08:15 +0000 (GMT)
+Received: from [9.122.210.117] (unknown [9.122.210.117])
+ by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 11:08:15 +0000 (GMT)
+Subject: Re: BMC Operating Mode [Manual / Normal]
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+References: <fa89fca6-8b4a-030d-7268-8a97958909f4@linux.vnet.ibm.com>
+ <de8d57a1-dbd1-2d29-741a-e265e4fc6f7b@intel.com>
+From: vishwa <vishwa@linux.vnet.ibm.com>
+Date: Mon, 9 Dec 2019 16:38:14 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <de8d57a1-dbd1-2d29-741a-e265e4fc6f7b@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 19120911-0008-0000-0000-0000033F1385
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19120911-0009-0000-0000-00004A5E3FCC
+Message-Id: <1505e06c-65c8-c953-9cd1-f47989a64255@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-09_02:2019-12-09,2019-12-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0
+ mlxscore=0 phishscore=0 impostorscore=0 mlxlogscore=999 spamscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912090096
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,22 +94,48 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This email is to introduce a new interface to be added to
-phosphor-dbus-interfaces, and ask for feedback where it should be
-placed into.
+Sorry, resuming the discussion only now. Had to keep the discussion on 
+back burner due to other things.
 
-There is a feature Timed-Power-On (TPO), that host could schedule a
-timer to BMC to power on the host.
-For BMC there will be a service to handle the above case, and the plan
-is to add a new interface to represent the timer (actually a date) for
-TPO.
+Ed, I am not sure if you are still watching this space..
 
-It could look like:
- /org/open_power/TimedPowerOn/Epoch.interface.yaml
-Where it defines the epoch time when the host is going to be powered on.
+On 8/14/19 2:33 AM, Ed Tanous wrote:
+> On 8/9/19 12:13 AM, vishwa wrote:
+>> Hi All,
+>>
+>> IBM systems have a need to run BMC either in Manual or Normal Mode. What
+>> it means is this:
+>>
+>> Manual: It's mostly a lab / debug mode, where in the system would be
+>> booted with recovery disabled.
+>> For example: If we enter Quiesce state as part of power-on, then BMC
+>> remains in Quiesce state and would *not* attempt to re power-on and
+>> reboot the system.
+>>
+>> Normal: This is the default customer mode with recovery enabled in BMC.
+>> For example: If we enter Quiesce state as part of power-on, then an
+>> attempt will automatically be done to re power-on and boot the system.
+> We have a very similar mechanism in our non-OpenBMC stack.  We would
+> likely be interested in a generic interface for it, although the details
+> are different, as the BMC doesn't really monitor Quiesce, but the state
+> of the boot through ACPI and power rails.
+>
+How about having a policy defined in "xyz/openbmc_project/setting/" ?.
 
-The question is, is this feature common for other systems?
-If yes, I would like to put it in `/xyz/openbmc_project`, instead of
-`/org/open_power`
+>> There are other use-cases, where BMC does a Automatic power-on after
+>> coming back from an AC loss. Manual / Normal would influence this.
+> This is classically a separate setting called "power restore policy".  I
+> suspect you likely want to keep these separate as well, as the power
+> policy is something that a user is likely to set independent of
+> lab/debug/manual mode.
+>
+Yes.. 2 different things. However, if the user has set "power restore 
+--> yes" and then set the mode to "Manual", then "power restore" will 
+behave as if nothing was set.
 
-Thanks!
+So, this proposed mode [Normal/Maintenance] is sort of a gate-keeper for 
+any of these recovery actions.
+
+>> My current thought is to make this a settings in phosphor-settings.
+>> Looking to see if others have any use-case like this.
+
