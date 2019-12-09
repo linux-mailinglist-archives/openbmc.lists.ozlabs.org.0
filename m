@@ -2,63 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A210116CE6
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 13:16:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39D66116D0C
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 13:23:44 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Why32ZXszDqQv
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 23:16:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Wj643YZzzDqFt
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 23:23:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031;
- helo=mail-pj1-x1031.google.com; envelope-from=tyler.sabdon@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="XOhleWdA"; 
- dkim-atps=neutral
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
- [IPv6:2607:f8b0:4864:20::1031])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Whx42SRzzDqPN
- for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 23:15:48 +1100 (AEDT)
-Received: by mail-pj1-x1031.google.com with SMTP id s35so5819816pjb.7
- for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 04:15:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=YVhS5+2aDPtHHjAtXbJqp5zeG+1m2PDTn3G1MPZdqQ4=;
- b=XOhleWdAoeKgRgtI6Twt0f6HArLsrGV/ydSygKQIbBAFomEQv7UCMM4YR1V/+Hg+9i
- KaUZBAzOXcuxaBrQlogkQAZmZF8s6Sr5omKoYtNngnIkvZ/yzTXIQnHIT9oJWXSp/ROB
- nKx2e/8gMQ0iOve9wljiXMOWo50xQ3IaCu2kkDT9nsOdrczVjK/jSGeUMB5PXM24u377
- IxVvaDRQECLJrHaA1hh5lQtBn+0Os1K7DY7ZnmsZU9xHsOC78xw7LF3qgyY+aCn9zbjI
- kDCYr3Iq83LjjTT2ozI8VaqLf/KJ/oX8nzfGlqksx2m77TyLcexKJuZvxZURYGfw2mie
- j+Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=YVhS5+2aDPtHHjAtXbJqp5zeG+1m2PDTn3G1MPZdqQ4=;
- b=md8HXYTYSs+27BUkHlib0E7XDtAU15I0t6VJGwFMVE9hHuSJGY1NPyZCxCkSfBMll0
- MnoMebu9ChI/EplKCaKm/fFyPxXT6xCfun6LDZOktQFCAmtPi28q1Wx8j3Z3RTpOXNyd
- ajpTyz3QjHZf/0HyvbF7SvVTqyTGX5gzGMxL4lsxKwcH570XZMISl0lTkOV8FoRIExFL
- VaVAhhrx5fMpYnOjB65bsG47vCQQ3PpCOmJtNYcaE56QWb4RFtJLy5W6x5MDUa417bo1
- yVRZWhIm4SZITisq9/gEu/EpQymbwq6C8+Fvo9hwgeEb89JI2IHMq3hgdoZot392htX0
- xNjg==
-X-Gm-Message-State: APjAAAWzi2D7I8mV7PPthzJ8phrKCMMJ5HG95Jfd7+S5khlmhdNqyD+i
- dz5wLUs0C0p+8EwlE5FIynxpj3Dyxkku/W1gGFZ1HA==
-X-Google-Smtp-Source: APXvYqxqU3kSFQJzmyjpCxsV6aA0baAarCXQfrh+Ze6kAQDyzZrE6uBEeSxOyPWzjioOFFQjA7q3pGtEK2egsCf7Vrk=
-X-Received: by 2002:a17:902:7b85:: with SMTP id
- w5mr28370307pll.115.1575893745011; 
- Mon, 09 Dec 2019 04:15:45 -0800 (PST)
-MIME-Version: 1.0
-From: Deng Tyler <tyler.sabdon@gmail.com>
-Date: Mon, 9 Dec 2019 20:15:21 +0800
-Message-ID: <CAO9PYRLd5KJHiuvDxzGcw7E5CVapk3Fonm_mPDaov1zaVHZm2g@mail.gmail.com>
-Subject: pinctrl in phosphor-hwmon
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000e0100f0599445a42"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Wj4Q2GpnzDqLX
+ for <openbmc@lists.ozlabs.org>; Mon,  9 Dec 2019 23:22:12 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
+Subject: Re: To add a new interface for timed power on feature
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <CAARXrtmNP3upYusBU6quTcfkU_Po3QvcM-SD=D7v0JKJGWzUXA@mail.gmail.com>
+Date: Mon, 9 Dec 2019 07:22:07 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <14F75671-F93C-41EB-A879-4E44C6F24F71@fuzziesquirrel.com>
+References: <CAARXrtmNP3upYusBU6quTcfkU_Po3QvcM-SD=D7v0JKJGWzUXA@mail.gmail.com>
+To: Lei YU <mine260309@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,29 +44,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e0100f0599445a42
-Content-Type: text/plain; charset="UTF-8"
 
-Hi all:
-    Does phosphor-hwmon support changing gpio pin before read
-/sys/class/hwmon/hwmon0/fan*_input while monitoring fan sensor? In my
-platform, fans gpio are connect to pin-mux and I need control gpio before
-get fan tach rpm.
 
-Regards,
-Tyler
+> On Dec 9, 2019, at 4:49 AM, Lei YU <mine260309@gmail.com> wrote:
+>=20
+> This email is to introduce a new interface to be added to
+> phosphor-dbus-interfaces, and ask for feedback where it should be
+> placed into.
+>=20
+> There is a feature Timed-Power-On (TPO), that host could schedule a
+> timer to BMC to power on the host.
+> For BMC there will be a service to handle the above case, and the plan
+> is to add a new interface to represent the timer (actually a date) for
+> TPO.
+>=20
+> It could look like:
+> /org/open_power/TimedPowerOn/Epoch.interface.yaml
+> Where it defines the epoch time when the host is going to be powered =
+on.
+>=20
+> The question is, is this feature common for other systems?
+> If yes, I would like to put it in `/xyz/openbmc_project`, instead of
+> `/org/open_power`
 
---000000000000e0100f0599445a42
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+It is just an interface, and one that doesn=E2=80=99t have anything to =
+do with POWER hardware, so I don=E2=80=99t see a problem with putting it =
+in the xyz namespace.  Do you already have an implementation plan?
 
-<div dir=3D"ltr">Hi all:<div>=C2=A0 =C2=A0 Does phosphor-hwmon support=C2=
-=A0changing gpio pin before read /sys/class/hwmon/hwmon0/fan*_input while=
-=C2=A0monitoring=C2=A0fan sensor? In my platform, fans gpio are connect to =
-pin-mux and I need control gpio before get fan tach rpm.</div><div><br></di=
-v><div>Regards,</div><div>Tyler</div></div>
-
---000000000000e0100f0599445a42--
+thx - brad=
