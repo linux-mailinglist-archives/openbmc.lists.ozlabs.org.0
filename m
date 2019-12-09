@@ -2,65 +2,103 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6F5B117814
-	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 22:11:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58144117877
+	for <lists+openbmc@lfdr.de>; Mon,  9 Dec 2019 22:27:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Wwpl1HwgzDqSr
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 08:11:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Wx9X5RG1zDqS1
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 08:27:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2e;
- helo=mail-io1-xd2e.google.com; envelope-from=kunyi@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="rXrQO4pc"; 
- dkim-atps=neutral
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com
- [IPv6:2607:f8b0:4864:20::d2e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.94.91;
+ helo=nam10-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.b="T6KOly2K"; dkim-atps=neutral
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10on2091.outbound.protection.outlook.com [40.107.94.91])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Wwnk4kpDzDqQg
- for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 08:10:16 +1100 (AEDT)
-Received: by mail-io1-xd2e.google.com with SMTP id i11so16340822ioi.12
- for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 13:10:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=spZ8fM3HaKQ7pTWlOStME5G5p1n7XEHqtL28l8WYzF4=;
- b=rXrQO4pcGRJ0p129lElCR8w5rSQBacZEx1k4/qpMwmOxzX9RJyL6SH73t4l3FXBNOH
- Oe2dYFSjIvwgkUXZrs3wmINKcwiV2yNrp9razmPacaJiD2prQMo01SIQbBWcixFjRc92
- huMmpopzsOg8fKS856wzBRzyUPURR4O6EpCL/baEdnTXEKicM2ywvHsJa12Zp1JtxQQ6
- Dwdu6Ux7fRE64kNiBuYyXiuJjb/WaJCcGQSD1Yz7dMnPr+TGGF83qLTNYSv0uZrjXdiQ
- ValQHI0jIBfHAOilQFYyLE4+c3+YWw0CuycXQatbES5Wuut881Duuynl9UHNuvCKvD/g
- JEmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=spZ8fM3HaKQ7pTWlOStME5G5p1n7XEHqtL28l8WYzF4=;
- b=dspMugbUd7VbmJIRy8g2g3MKjFxZMXxwasWrcaLTcF3buL0HUryh94SVBHV67h2sfP
- glVtEDABSURDECzGrnteHKhgF6WQTRfhTBt/0CTbFMIiezZa6KNY6TCXKWEtQOHTaZLg
- nKi637hRFfQPVR+5J/8p6zzPNXUGvSvnJP/9eoMrrgI1fky8/p3oJZNv+7I3qDUs7K9+
- MZ1XvralwWWCGizWJTTgu1QWeHXdkSiNcXxbmpTc3c8ZEgQz9T8gE+R6/YxlL0iuJzit
- yTS/EY3SuZ63/wl1tjRB8ds3hChJdDgdxSlXtNu9FGLSiLxjKxJmFs3wyYDrPfwecan8
- 6K0Q==
-X-Gm-Message-State: APjAAAX6xfXhNee5LIuoozyINn6FZs5TlorW26jVSgvUCwAzOCnYXHem
- cO30pPbq2vXzG7tAHreDjHVj7K09Hz6UaglcNfM4jA==
-X-Google-Smtp-Source: APXvYqyvPZEh31I3UZSVPF0HzrS62QxXPLK+huEN6uotrN1oDtV10Nx16Fsn821iSWviIuoU1HTU0GWpePazgB+pZTk=
-X-Received: by 2002:a6b:fb19:: with SMTP id h25mr22835930iog.40.1575925812613; 
- Mon, 09 Dec 2019 13:10:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Wx8C6zgwzDqQh
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 08:26:19 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=kVNS3GWPRDNmWdxSQt4tDUocjVvGPsZf2+BoWJrKYKy3xq+hZ6pNVhI4ACWHUNw8Kb71VuYntJG4eT3KwdpRPOM5z2lIeoBeDqDyO1A2hW+TX1i5wAYxiu+hZKLxbe+1N04mUueApUY22OkeMQCkyGm5fyx0DvYoy91/LS7Az4uRRqMhv2loNWk6DK37JwSkggOga9efcZnOZA5+lY8HMXSqP8lLd9JVkr1Mwtkp1xC6g3wl0riVlSHrPvnZNK1nEFspfpXbJJaQ/F4PA3Zahivn1zy1Rt561X6Neo07ir+eacM9xDgqMLDfIgZdp2LUOdM2UYP+6oOj+RaTYYe9XA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WzjvvAGs2WxZNwZxJpvVsiCjWS4QC1RUPgV+I3owf7A=;
+ b=jHlTgO4pFV1yVsfIw4Rbyl22BPLrYSIxCERPcZPWzPiq1QR3pC4J938kvE9SpfoNdZ0OFgVoCxP8n/27P0/gVFCk5IUzsgKEG9UnnqSiNYnq2MJM6QY8uVYucwR5ucBfNyeVkkDMqexssKzhzKWqGujGgeIfevcS8r2Fc131U5o62AcxCWxuzu342LthrpPtcNMsOTx0JsUpte87HtJ5W3FDUsXKYKz/DesBCxrHpmdgU0nJub345YKNRXimz8WBNjgl4xnIGdZVhBLgjQTTcQNokPBwcxe4uNwzQ2wgp5YuOOK46Oqbi1duP37/1aAuRVYnftR5MZ2Pr/EKtikK+w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WzjvvAGs2WxZNwZxJpvVsiCjWS4QC1RUPgV+I3owf7A=;
+ b=T6KOly2KIp7BpxEwzs7F4Qaf9WgC4aRm35CBd9nNzPWHCQd/CcrngD8p4flr+L+eYMgX/mGIpGX7jvZcIxyxWpsjWcgn5lZ9wtRALsl88nPJk5GdBj6m8M8DBb7Lz5YfF/OhJGNxPs+VY+2O31NGSXLXnzV7RCzjkjrxcNe/V2A=
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com (20.180.21.213) by
+ DM6PR21MB1386.namprd21.prod.outlook.com (20.180.20.213) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2538.3; Mon, 9 Dec 2019 21:26:14 +0000
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::a4df:ed8e:9432:60d]) by DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::a4df:ed8e:9432:60d%3]) with mapi id 15.20.2538.012; Mon, 9 Dec 2019
+ 21:26:14 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Managing heterogeneous systems
+Thread-Topic: Managing heterogeneous systems
+Thread-Index: AdWu1yhmGvdHkOccSv+RAjUNtxHNjw==
+Date: Mon, 9 Dec 2019 21:26:14 +0000
+Message-ID: <DM6PR21MB13889A7DE46B9DEF6D97959BC8580@DM6PR21MB1388.namprd21.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-12-09T21:26:12.8905423Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=68d6c29c-bc7d-4880-8928-ea67db74e985;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=neladk@microsoft.com; 
+x-originating-ip: [2001:4898:80e8:1:199a:3531:c00f:e252]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 9e7846be-a86c-40ac-429f-08d77cee6b7c
+x-ms-traffictypediagnostic: DM6PR21MB1386:
+x-microsoft-antispam-prvs: <DM6PR21MB13869EE901726CF40F30FEEBC8580@DM6PR21MB1386.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:2803;
+x-forefront-prvs: 02462830BE
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(136003)(376002)(366004)(396003)(39860400002)(346002)(189003)(199004)(6916009)(86362001)(71190400001)(7116003)(66556008)(71200400001)(478600001)(8990500004)(66476007)(3480700005)(66946007)(7696005)(66446008)(76116006)(52536014)(5660300002)(64756008)(316002)(10090500001)(33656002)(9686003)(10290500003)(558084003)(186003)(1730700003)(8936002)(8676002)(5640700003)(81166006)(81156014)(2906002)(790700001)(6506007)(55016002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:DM6PR21MB1386;
+ H:DM6PR21MB1388.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: t1N3LoM4qtVs0SRPPg188+OVl6fG+5qgCId0yOcshlFaZVIrnqeCaIojDqJ+G9TliBdhxt2HOk3+MZxgsLs1fEn5CxPz9FdAtKr4QENvqSnaXIKB1epbN1D/SSuwFdHEB0Wco8HFucNIJbdA7AUQRL1akalsF2VWEsfpU92ce5iIovtDSWExzcu9KgvFVS94jfEz04Dvdq76FAkpX43vo4U/xVrWog+tLm+OZGcZD6xtCJbmSqtswdTStB3wFoIsKuSGu1LeRHfD2jces/BQ/Z9dYYF5RYNSIw51K2o2zGSchYrMmt7iFlxi9WduK37eFnBT6Bh2ICStVwXCra9Q899W3lFA9p0EFOWRAd7862KnDCxUgRKHHT+vHQ8Ji/NcLxlyja8kafV95C8TWsbenybKE9hfnEZyNq8a6640DPHrzmMVM1LROsYXLWbqSzSM
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_DM6PR21MB13889A7DE46B9DEF6D97959BC8580DM6PR21MB1388namp_"
 MIME-Version: 1.0
-References: <CAARXrtmNsry0bq-5eTD5qo0LDq_zWag9s8kGqMq4yGxzpxXCeA@mail.gmail.com>
-In-Reply-To: <CAARXrtmNsry0bq-5eTD5qo0LDq_zWag9s8kGqMq4yGxzpxXCeA@mail.gmail.com>
-From: Kun Yi <kunyi@google.com>
-Date: Mon, 9 Dec 2019 13:09:46 -0800
-Message-ID: <CAGMNF6Wc_1pxReDXYQvOQO1Oy5K+Ejn+G+j9F-ei4Vpg4nQ5XQ@mail.gmail.com>
-Subject: Re: Updates and future changes on phosphor-power
-To: Lei YU <mine260309@gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000041ac5305994bd246"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e7846be-a86c-40ac-429f-08d77cee6b7c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Dec 2019 21:26:14.2425 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Nzf49GgCFhiCEJ1EmiPTkh0JALaHybtxr4rO+gL9udFEwWjf387AEW6ey5CkfrqRQRno1TJNoe8fG2ZkyBHODw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1386
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,127 +110,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000041ac5305994bd246
-Content-Type: text/plain; charset="UTF-8"
-
-Hello Lei,
-
-We have some interest to help contribute to the phosphor-power utils. Just
-have some simple questions. Sorry if they have already been asked!
-
-On Tue, Oct 22, 2019 at 2:49 AM Lei YU <mine260309@gmail.com> wrote:
-
-> This email is to introduce the current status and future changes of
-> phosphor-power.
->
-> ## Background
-> Previously, [witherspoon-pfault-analysis][1] exists for Witherspoon to
-> provide functions like PSU monitor.
-> Later it's found that the code could be shared for other PSUs as long
-> as a property json config is provided.
-> So the repo is renamed to [phosphor-power][2]
->
-> ## Status
-> Now the repo is renamed and I am adding the bitbake recipes into
-> meta-phosphor, see
-> https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/26356
->
-> However, the repo still contains something that is not generic:
-> * There is repo specific error defined in org/open_power/Witherspoon/
-> * It has a dependency to openpower-dbus-interfaces to use interfaces
-> in org/open_power/Sensor/Aggregation/History
->
-> That is not ideal.
->
-> ## TODO
-> The repo specific error and the interfaces in
-> org/open_power/Sensor/Aggregation/History are actual generic, so they
-> could be moved into phosphor-dbus-interfaces to become generic
-> interfaces.
->
-> So I am planning to "copy" the above interfaces into
-> phosphor-dbus-interfaces, and when it's done, update this repo to use
-> the interfaces in phosphor-dbus-interfaces.
->
-> Do you have any comments or suggestions?
-> Thanks!
->
-> [1]: https://github.com/openbmc/witherspoon-pfault-analysis
-> [2]: https://github.com/openbmc/phosphor-power
->
-
-Will phosphor-power provide PMBus fault status bits monitoring? How is it
-co-operating with phosphor-hwmon or dbus-sensors when reading sensor data
-from the same PSU device over the same i2c bus?
-
--- 
-Regards,
-Kun
-
---00000000000041ac5305994bd246
-Content-Type: text/html; charset="UTF-8"
+--_000_DM6PR21MB13889A7DE46B9DEF6D97959BC8580DM6PR21MB1388namp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hello Lei,</div><div dir=3D"ltr"><br></di=
-v><div dir=3D"ltr">We have some interest to help contribute to the phosphor=
--power utils. Just have some simple questions. Sorry if they have already b=
-een asked!<br><div><br></div></div><div class=3D"gmail_quote"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Tue, Oct 22, 2019 at 2:49 AM Lei YU &lt;<a href=
-=3D"mailto:mine260309@gmail.com">mine260309@gmail.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">This email is to intro=
-duce the current status and future changes of<br>
-phosphor-power.<br>
-<br>
-## Background<br>
-Previously, [witherspoon-pfault-analysis][1] exists for Witherspoon to<br>
-provide functions like PSU monitor.<br>
-Later it&#39;s found that the code could be shared for other PSUs as long<b=
-r>
-as a property json config is provided.<br>
-So the repo is renamed to [phosphor-power][2]<br>
-<br>
-## Status<br>
-Now the repo is renamed and I am adding the bitbake recipes into<br>
-meta-phosphor, see<br>
-<a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/263=
-56" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-project.xyz=
-/c/openbmc/meta-phosphor/+/26356</a><br>
-<br>
-However, the repo still contains something that is not generic:<br>
-* There is repo specific error defined in org/open_power/Witherspoon/<br>
-* It has a dependency to openpower-dbus-interfaces to use interfaces<br>
-in org/open_power/Sensor/Aggregation/History<br>
-<br>
-That is not ideal.<br>
-<br>
-## TODO<br>
-The repo specific error and the interfaces in<br>
-org/open_power/Sensor/Aggregation/History are actual generic, so they<br>
-could be moved into phosphor-dbus-interfaces to become generic<br>
-interfaces.<br>
-<br>
-So I am planning to &quot;copy&quot; the above interfaces into<br>
-phosphor-dbus-interfaces, and when it&#39;s done, update this repo to use<b=
-r>
-the interfaces in phosphor-dbus-interfaces.<br>
-<br>
-Do you have any comments or suggestions?<br>
-Thanks!<br>
-<br>
-[1]: <a href=3D"https://github.com/openbmc/witherspoon-pfault-analysis" rel=
-=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/witherspoon-pf=
-ault-analysis</a><br>
-[2]: <a href=3D"https://github.com/openbmc/phosphor-power" rel=3D"noreferre=
-r" target=3D"_blank">https://github.com/openbmc/phosphor-power</a><br>
-</blockquote></div><div><br></div>Will phosphor-power provide PMBus fault s=
-tatus bits monitoring? How is it co-operating with phosphor-hwmon or dbus-s=
-ensors when reading sensor data from the same PSU device over the same i2c =
-bus?<br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmail=
-_signature"><div dir=3D"ltr">Regards,<div>Kun</div></div></div></div>
+Are there any standards in managing heterogeneous systems? For example in a=
+ rack if there is a compute node( with its own BMC) and storage node( with =
+its own BMC) connected using a PCIe switch.  How these two BMC represented =
+as one system ?  are there any standards for BMC - BMC communication?
 
---00000000000041ac5305994bd246--
+
+Neeraj
+
+
+--_000_DM6PR21MB13889A7DE46B9DEF6D97959BC8580DM6PR21MB1388namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Are there any standards in managing heterogeneous sy=
+stems? For example in a rack if there is a compute node( with its own BMC) =
+and storage node( with its own BMC) connected using a PCIe switch.&nbsp; Ho=
+w these two BMC represented as one system
+ ? &nbsp;are there any standards for BMC &#8211; BMC communication? <o:p></=
+o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Neeraj<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_DM6PR21MB13889A7DE46B9DEF6D97959BC8580DM6PR21MB1388namp_--
