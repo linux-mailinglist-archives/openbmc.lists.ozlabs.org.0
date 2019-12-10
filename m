@@ -1,64 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA5A0119002
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 19:49:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95339118F6F
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 19:01:55 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47XSYr4CjtzDqZQ
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 05:01:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47XTcc18qpzDqZV
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 05:49:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::52a;
- helo=mail-ed1-x52a.google.com; envelope-from=osk@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=kathryn.elainex.pine@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="aXGNBTSb"; 
- dkim-atps=neutral
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com
- [IPv6:2a00:1450:4864:20::52a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47XSY775gVzDqZR
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 05:01:14 +1100 (AEDT)
-Received: by mail-ed1-x52a.google.com with SMTP id cm12so16745211edb.11
- for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 10:01:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=lVTgV7lQEVYRlmJxvwmTcyxmqEARdIyp/zwlinBLbTc=;
- b=aXGNBTSbnSra52maJRiuySDtLoLkt2V+6QmPyV379CGTzUFBeiDtOpTHHljaWaOw/p
- 9hxD1P8vi+bMlh0h8TYAQYNX1rSsuS+bHto3gvioKxxFW7J6KxAPcRXw8+o/Wrs/jtPV
- Jd+O9jeGLAzHiWOUrcityBqkUPX1KCQKvPDsTbKy7c5WuCvZRBW7bLZUVMah9hOzLd++
- 0f3gDXC60bNBbEdNQxhiz4XkTF8154hA+luBbwCAzi4jZypdXKDEEovGS4E5yfNWjEHu
- mBN4e/zkI130aHcyBpf9oz5nZQdeTqgXlyacFfaQQ8BDqb8npDrrBhcrFxgxlDKIdic4
- 60iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=lVTgV7lQEVYRlmJxvwmTcyxmqEARdIyp/zwlinBLbTc=;
- b=kZMoSpxTKUpOT4M6nfrrQu9ic42BUAO3TjK+e3D4LP4s7pZDJdtPRwYzCtbyEtbdcU
- P4os6YkMZfTiiW2XIMjOziAzdeZC6X03emLS5Wg3sKSCKepL8vAqwOxTt3H5K+B8VigP
- mNJRl3lnVrogyTx5AdOLkl3soOR+wW0Z+Cq67OS41HVqTCJ00oBhugTJiz3+7lnEBm1i
- NSvUMuMwfFSFf/9f1eN7oxWo7hUZygsQBgzPZX/2fCDgPliT3xfUa0yjMEO8cJwenxFS
- Py/rlUT3d/H9iBpX7Z23yaeJwoGLyXYaoFgn4MPce/e27xNYlm1mkEN3E+HkJ4xpdrNC
- GpSg==
-X-Gm-Message-State: APjAAAWgILMMLdwGcijE//MPcQLlh3Jd52RDClCBIfklN5qAc8nMqHDO
- ixGx+yqkKLkt1nBf497xEZ9HpME5P1uY6LSvhyP+i/nC89U=
-X-Google-Smtp-Source: APXvYqzUzKE4Wny2vN/vuZon5T86UR9sT6d84Qz0wAr0XXSQ9PlXbkPKdoom77Bxnxd4wDOibDV7B6iz56eqDAkZvo4=
-X-Received: by 2002:a17:906:2e47:: with SMTP id
- r7mr5098590eji.215.1576000866057; 
- Tue, 10 Dec 2019 10:01:06 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47XTbk2m7BzDqZD
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 05:48:25 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 10 Dec 2019 10:47:39 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,300,1571727600"; 
+ d="scan'208,217";a="387679882"
+Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
+ by orsmga005.jf.intel.com with ESMTP; 10 Dec 2019 10:47:39 -0800
+Received: from orsmsx156.amr.corp.intel.com (10.22.240.22) by
+ ORSMSX104.amr.corp.intel.com (10.22.225.131) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Tue, 10 Dec 2019 10:47:39 -0800
+Received: from orsmsx113.amr.corp.intel.com ([169.254.9.100]) by
+ ORSMSX156.amr.corp.intel.com ([169.254.8.240]) with mapi id 14.03.0439.000;
+ Tue, 10 Dec 2019 10:47:38 -0800
+From: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
+To: vishwa <vishwa@linux.vnet.ibm.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Subject: RE: *Request For Feedback*: TimeOwner in phosphor-timemanager
+Thread-Topic: *Request For Feedback*: TimeOwner in phosphor-timemanager
+Thread-Index: AQHVrnN8XYH5sv0CE0uRJiGUOAxsIqezshqA
+Date: Tue, 10 Dec 2019 18:47:38 +0000
+Message-ID: <FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com>
+References: <18332622-cec4-37ae-b617-b897622d0ea2@linux.vnet.ibm.com>
+In-Reply-To: <18332622-cec4-37ae-b617-b897622d0ea2@linux.vnet.ibm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ctpclassification: CTP_NT
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOTg2OGYxYmYtNThjOC00OWIyLTg5ZjItNjU1NzQ1YzQyNGQ4IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiZ0pab3BBR1dHR25OTVdCbGdCdGt3K0pzYk9IVGJla25sN3Q3bXFlT0EyZndrVExDcTRJOGI0eGFSclRVa0pxOCJ9
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.139]
+Content-Type: multipart/alternative;
+ boundary="_000_FD0BD680739BFC41807C96BD23118BB1321C1DORSMSX113amrcorpi_"
 MIME-Version: 1.0
-From: Oskar Senft <osk@google.com>
-Date: Tue, 10 Dec 2019 13:00:50 -0500
-Message-ID: <CABoTLcTua1oHhO62-QZPZdcgFYZWjBg4QAjixiNB5z4zajuzKQ@mail.gmail.com>
-Subject: phosphor-networkd clobbering usb0 network config
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000ca092805995d4b85"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,85 +72,96 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ca092805995d4b85
-Content-Type: text/plain; charset="UTF-8"
+--_000_FD0BD680739BFC41807C96BD23118BB1321C1DORSMSX113amrcorpi_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi everyone
+PiBEbyB3ZSBuZWVkIHRoaXMgZ29pbmcgZm9yd2FyZCA/OiBJIGFtIGJlaW5nIGFza2VkIGJ5IFVY
+IHRlYW0gYWJvdXQgdGhlIG5lZWQgb2YgdGhpcyBhbmQgSSBtZW50aW9uZWQgSSB3b3VsZCBnZXQg
+dGhlIGNvbW11bml0eSBmZWVkYmFjayBvbiB0aGlzLiBBbHRob3VnaCwgSSBmZWVsIHRoaXMgbGV2
+ZWwgb2YgZ3JhbnVsYXJpdHkgZ2l2ZXMgY29udHJvbCBvdmVyIGhvdyB3ZSBjYW4gbWFuYWdlIHRp
+bWUsIGl0IHdvdWxkIG5vdCBqdXN0aWZ5IHRoZSBjb21wbGV4aXR5IGlmIHRoZSBjdXN0b21lcnMg
+ZG9uJ3QgYXBwcmVjaWF0ZSBpdC4gUmVtb3ZpbmcgdGhlIFRpbWVPd25lciB3b3VsZCBtYWtlIHRo
+ZSBjb2RlIGEgbG90IHNpbXBsZXIuDQpIaSwNCg0KSSBhbSBjb21pbmcgZnJvbSB0aGUgVVggc2lk
+ZSBvZiBob3cgd2Ugc2V0IHRoZSBkYXRlIHRpbWUgc2V0dGluZ3MgcGFnZSB1cCBmb3IgcGhvc3Bo
+b3Itd2VidWkgZG93bnN0cmVhbSByZWNlbnRseS4gV2Ugc3dpdGNoZWQgb3VyIHBhZ2UgdG8gdXNl
+IFJlZGZpc2gsIGhlcmXigJlzIGhvdyBvdXJzIGlzIHNldCB1cCBub3c6DQoNClRoZXJlIGlzIG5v
+IGxvbmdlciBhIOKAnHRpbWUgb3duZXLigJ0gYW5kIHRoZSBzZXR0aW5nIGlzIGVpdGhlcjoNCk5U
+UEVuYWJsZWQ6IHRydWUgb3IgZmFsc2UNCklmIGZhbHNlLCB3ZSBhcmUgbm90IGFsbG93aW5nIHRo
+ZSB1c2VyIHRvIHNldCB0aGUgdGltZSwgYmVjYXVzZSB0aGUgQk1DIGlzIHN5bmNoaW5nIGZyb20g
+dGhlIGhvc3QgdGltZSBhbmQgdGhlcmVmb3JlIGFueSBzZXR0aW5ncyB3ZSBtYWRlIHRvIHRoZSB0
+aW1lIG9uIHRoZSBCTUMgd291bGQgYmUgb3ZlcndyaXR0ZW4uDQpJZiB0cnVlLCB3ZSB1c2UgdGhl
+IE5UUCBzZXJ2ZXIocykgdGhlIHVzZXIgcHJvdmlkZXMuDQoNCldlIGFyZSB0ZXN0aW5nIHRoaXMg
+Y3VycmVudGx5Lg0K
 
-I couldn't find any other mention of this and hope this hasn't been asked /
-answered / solved before.
+--_000_FD0BD680739BFC41807C96BD23118BB1321C1DORSMSX113amrcorpi_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-We're using both an NC-SI based NIC and the USB virtual NIC on a AST2500
-BMC (on the TYAN S7106 mainboard). I found that phosphor-networkd clobbers
-the networking configuration (IP address) for the USB virtual NIC (usb0) in
-the following scenario:
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
+IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
+Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCglj
+b2xvcjpibGFjazt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlv
+cml0eTo5OTsNCgljb2xvcjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0K
+YTp2aXNpdGVkLCBzcGFuLk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0
+eTo5OTsNCgljb2xvcjojOTU0RjcyOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5t
+c29ub3JtYWwwLCBsaS5tc29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFt
+ZTptc29ub3JtYWw7DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBp
+bjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9u
+dC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xv
+cjpibGFjazt9DQpzcGFuLkVtYWlsU3R5bGUxOQ0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1y
+ZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0
+ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZv
+bnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGlu
+Ow0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJ
+e3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+
+DQo8bzpzaGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+
+PCFbZW5kaWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4
+dD0iZWRpdCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxh
+eW91dD48L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGJnY29sb3I9IndoaXRlIiBs
+YW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0i
+V29yZFNlY3Rpb24xIj4NCjxwPjxzcGFuIHN0eWxlPSJjb2xvcjp3aW5kb3d0ZXh0Ij4mZ3Q7PC9z
+cGFuPjxiPiBEbyB3ZSBuZWVkIHRoaXMgZ29pbmcgZm9yd2FyZCA/PC9iPjogSSBhbSBiZWluZyBh
+c2tlZCBieSBVWCB0ZWFtIGFib3V0IHRoZSBuZWVkIG9mIHRoaXMgYW5kIEkgbWVudGlvbmVkIEkg
+d291bGQgZ2V0IHRoZSBjb21tdW5pdHkgZmVlZGJhY2sgb24gdGhpcy4gQWx0aG91Z2gsIEkgZmVl
+bCB0aGlzIGxldmVsIG9mIGdyYW51bGFyaXR5IGdpdmVzIGNvbnRyb2wgb3ZlciBob3cNCiB3ZSBj
+YW4gbWFuYWdlIHRpbWUsIGl0IHdvdWxkIG5vdCBqdXN0aWZ5IHRoZSBjb21wbGV4aXR5IGlmIHRo
+ZSBjdXN0b21lcnMgZG9uJ3QgYXBwcmVjaWF0ZSBpdC4gUmVtb3ZpbmcgdGhlIFRpbWVPd25lciB3
+b3VsZCBtYWtlIHRoZSBjb2RlIGEgbG90IHNpbXBsZXIuPG86cD48L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6d2luZG93dGV4dCI+SGksPG86cD48L286
+cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOndp
+bmRvd3RleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIHN0eWxlPSJjb2xvcjp3aW5kb3d0ZXh0Ij5JIGFtIGNvbWluZyBmcm9tIHRoZSBV
+WCBzaWRlIG9mIGhvdyB3ZSBzZXQgdGhlIGRhdGUgdGltZSBzZXR0aW5ncyBwYWdlIHVwIGZvciBw
+aG9zcGhvci13ZWJ1aSBkb3duc3RyZWFtIHJlY2VudGx5LiBXZSBzd2l0Y2hlZCBvdXIgcGFnZSB0
+byB1c2UgUmVkZmlzaCwgaGVyZeKAmXMgaG93IG91cnMgaXMgc2V0IHVwIG5vdzo8bzpwPjwvbzpw
+Pjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6d2lu
+ZG93dGV4dCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+PHNwYW4gc3R5bGU9ImNvbG9yOndpbmRvd3RleHQiPlRoZXJlIGlzIG5vIGxvbmdlciBhIOKA
+nHRpbWUgb3duZXLigJ0gYW5kIHRoZSBzZXR0aW5nIGlzIGVpdGhlcjo8bzpwPjwvbzpwPjwvc3Bh
+bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6d2luZG93dGV4
+dCI+TlRQRW5hYmxlZDogdHJ1ZSBvciBmYWxzZTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
+YXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjp3aW5kb3d0ZXh0Ij5JZiBmYWxzZSwg
+d2UgYXJlIG5vdCBhbGxvd2luZyB0aGUgdXNlciB0byBzZXQgdGhlIHRpbWUsIGJlY2F1c2UgdGhl
+IEJNQyBpcyBzeW5jaGluZyBmcm9tIHRoZSBob3N0IHRpbWUgYW5kIHRoZXJlZm9yZSBhbnkgc2V0
+dGluZ3Mgd2UgbWFkZSB0byB0aGUgdGltZSBvbiB0aGUgQk1DIHdvdWxkIGJlIG92ZXJ3cml0dGVu
+Lg0KPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5
+bGU9ImNvbG9yOndpbmRvd3RleHQiPklmIHRydWUsIHdlIHVzZSB0aGUgTlRQIHNlcnZlcihzKSB0
+aGUgdXNlciBwcm92aWRlcy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBzdHlsZT0iY29sb3I6d2luZG93dGV4dCI+PG86cD4mbmJzcDs8L286cD48L3Nw
+YW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOndpbmRvd3Rl
+eHQiPldlIGFyZSB0ZXN0aW5nIHRoaXMgY3VycmVudGx5LjxhIG5hbWU9Il9fX19fcmVwbHlzZXBh
+cmF0b3IiPjwvYT48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRt
+bD4NCg==
 
-   1. The USB virtual NIC (usb0) has it default IP address hard coded in
-   /etc/systemd/network/00-bmc-usb0.network.
-   2. The host has not yet loaded the USB NIC driver (cdc_ether). In this
-   case the USB NIC on the BMC does not have an IP address assigned (I haven't
-   investigated why that is, but it seems ok).
-   3. A process actively assigns / changes the IP address for the BMC's
-   other NIC (i.e. eth0) via phosphor-networkd, e.g. via IPMI from the host.
-
-At step #3 phosphor-networkd overwrites all files in /etc/systemd/network
-(EthernetInterface::writeConfigurationFile() called from
-Manager::writeToConfigurationFile()). Specifically, it rewrites all files
-with information captured from the running system. Since the USB NIC (usb0)
-doesn't have an IP address at that time, the rewritten file is missing the
-IP address, too.
-
-I can think of various ways to fix this:
-
-   - Make the host explicitly configure usb0 via IPMI before trying to talk
-   with the BMC via the USB NIC. This won't work since we'd like to stop using
-   IPMI from the host completely.
-   - Enhance phosphor-networkd to always explicitly exclude "usb0" as a
-   managed device. I wonder if this could be done by adding a new key/value
-   pair to /etc/systemd/network/00-bmc-usb0.network, e.g. "[PhosphorNetworkD]
-   managed=false". This seems pretty straightforward.
-   - Come up with some "automatic" way to not clobber the configuration
-   file if the running configuration does not match. It feels that this goes
-   against the fundamental design of phosphor-networkd.
-
-Thoughts? Ideas? Opinions?
-
-Thanks
-Oskar.
-
---000000000000ca092805995d4b85
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi everyone<div><br></div><div>I couldn&#39;t find any oth=
-er mention of this and hope this hasn&#39;t been asked / answered / solved =
-before.</div><div><br></div><div>We&#39;re using both an NC-SI based NIC an=
-d the USB virtual=C2=A0NIC on a AST2500 BMC (on the TYAN S7106 mainboard). =
-I found that phosphor-networkd clobbers the networking configuration (IP ad=
-dress) for the USB virtual NIC (usb0) in the following scenario:</div><div>=
-<ol><li>The USB virtual NIC (usb0) has it default IP address hard coded in =
-/etc/systemd/network/00-bmc-usb0.network.</li><li>The host has not yet load=
-ed the USB NIC driver (cdc_ether). In this case the USB NIC on the BMC does=
- not have an IP address assigned (I haven&#39;t investigated why that is,=
-=C2=A0but it seems ok).</li><li>A process actively assigns / changes the IP=
- address for the BMC&#39;s other NIC (i.e. eth0) via phosphor-networkd, e.g=
-. via IPMI from the host.</li></ol><div>At step #3 phosphor-networkd overwr=
-ites all files in /etc/systemd/network (EthernetInterface::writeConfigurati=
-onFile() called from Manager::writeToConfigurationFile()). Specifically, it=
- rewrites all files with information captured from the running system. Sinc=
-e the USB NIC (usb0) doesn&#39;t have an IP address at that time, the rewri=
-tten file is missing the IP address, too.<br></div></div><div><br></div><di=
-v></div><div>I can think of various ways to fix this:<br></div><div><ul><li=
->Make the host explicitly configure usb0 via IPMI before trying to talk wit=
-h the BMC via the USB NIC. This won&#39;t work since we&#39;d like to stop =
-using IPMI from the host completely.</li><li>Enhance phosphor-networkd to a=
-lways explicitly exclude &quot;usb0&quot; as a managed device. I wonder if =
-this could be done by adding a new key/value pair to=C2=A0/etc/systemd/netw=
-ork/00-bmc-usb0.network, e.g. &quot;[PhosphorNetworkD] managed=3Dfalse&quot=
-;. This seems pretty straightforward.<br></li><li>Come up with some &quot;a=
-utomatic&quot; way to not clobber the configuration file if the running con=
-figuration does not match. It feels that this goes against the fundamental =
-design of phosphor-networkd.</li></ul><div>Thoughts? Ideas? Opinions?</div>=
-</div><div><br></div><div>Thanks</div><div>Oskar.</div></div>
-
---000000000000ca092805995d4b85--
+--_000_FD0BD680739BFC41807C96BD23118BB1321C1DORSMSX113amrcorpi_--
