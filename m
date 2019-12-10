@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 411191191C8
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 21:22:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DB331191CF
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 21:23:37 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47XWgv5TzYzDqc5
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 07:22:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47XWjL31cdzDqb9
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 07:23:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,45 +17,45 @@ Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
  header.from=microsoft.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=microsoft.com header.i=@microsoft.com
- header.b="AjzDQCNL"; dkim-atps=neutral
+ header.b="elYU9/og"; dkim-atps=neutral
 Received: from NAM02-BL2-obe.outbound.protection.outlook.com
  (mail-eopbgr750109.outbound.protection.outlook.com [40.107.75.109])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47XWf1257SzDqZF
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 07:20:41 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47XWf20HwwzDqZF
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 07:20:42 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UiUkvRcG9NPNBNfet9bFNK4YTTFU0SiOzVlFAz9LvGVf+N8dPqBVCqOdcw5JdlTndxPHNR33sYZTWPkrjhE1+aJRTr4u5NBEo5S1KUUgtWh9QPDkgjC4UkmhBiMq7lYegIT+Ds9Lq5p1E9N2xmSLY5wirGOqi0+jCDmszYJ6X/CmZyML6wMdKvshg9glUtpc3Hx/LvOA8VGsN9lU6+pnj8UOnNqGjaFiezopFNXfmyzVe8H0X8BZ4DqecJJpZoShKigTnNwia6F+wJtYMmlxEIxbQqUW3qlAiM0BAblzkY7yACU2Hh4DjS6pXfGrcJCe3MWqBozTkMQancLCTi2asQ==
+ b=H1U5aeXc5xiJ+TvSNMQbKnUkG9LtWbmB5eQx4oGq/TRM72Pqb2c2B0AKGRuBBNxqpMENUz1OOrDGzPhrOkmAVzNdJ0Xaf8pqvS49XwHiRj4aw0UzYydAZip2UUHM5lEHVsfHw4mHiOjCMohqiJiQA7m62nPrp318DabLLY5b4OwnACeOAfSiL4oYwhe8zisNMeD7hJSMvGK6DT3E8WLSD3C2yDFMlJ5d6OXcHmS61WkMx0U5en1IdnOXiDeUQAjg7eNjHtOD5pBLmMEyIjnZkm+hmScabm3Q2qrwzj5APY3xQpADAU/vAImA/jt7DOoSVBxJvG8LtKa0i4Q0NYKUdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TdRztUpAn61VdXP8GtYhdVXACCeBdmqwUFEMGQ5J9pI=;
- b=LrWraRzWB8PRTjJ3QrgDe72iX8K4TBzMZyD94I02GuvoDu9cjfuXPKeP1GwSsBLCVruLHsK6gWE+MQlQk343tP0lhnp5MQOl8mkeWRygiLo8AaI9LVUYmROXStLvdL7suZtSdaXYqOvkpbgYr78Wo7xB3aLZbOG3qfaSjqAok66SIrApmMLn/FYxqNJTbIKTDSWWab4/z4jbW8cZ/O7ecMfXrWQE4PzR6bqygEg1orj+1MTDDpUU71xb2GDEokEH71g9gePd4XdNALn4DImRz/z+9M6z6eCbGU1gg0peUjqWV6BPMFKc7zIn9KG7Z6a03dN4LBkUyuBQ5PZrQbpxAw==
+ bh=OKhXsaKlpqVAEjYdfznv8tlfUtCBlkMZvcO6RuUUqxM=;
+ b=KPVl7cC1gwMkTprktSIHwGNIFGV+cCCLxkz9hVkdGqkQezQLQBLIGTEPGJPJZwkgBW0rrRiuHas6CO/S48JJhriFXzqFdXmswiIAU0fTU/0BBQgEVt/Ijdh8K/GU/9sJXyHVpP7/vrnAsQi1V6lnIUtHnlTDs809OiDOKEqrP1Nn7x4ow3Jb0YVBBaVf0XG5kIrWKL+qAqsAOQ8JmLPki5UHebkgfPds1lztw+9JAZkqOCw972zkOSq5KKpBysG4RsZiHH+vPWZWjLSu7uPyKfrRCYug5QU4BH245hZt24KMDcROfG6BBTxpAc/jH1q0sjcPz8m0YkO0LpiaEQRuIw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=microsoft.com; dmarc=pass action=none
  header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TdRztUpAn61VdXP8GtYhdVXACCeBdmqwUFEMGQ5J9pI=;
- b=AjzDQCNLIgluOT0g/E0ZV3vzwaUxG3Zf8g0YXk73LNhsfGRCzb0REc0kP5Cal6T0VqguGKEI6maM6n5ebQKOLpuRdPhXxhB47ssuCqPp80W4fMsx1MJqCWdUi5Eyx2VctmHm4q+4odx0nDxp+dzPsyflck2BzbvztHWsQBW3SME=
+ bh=OKhXsaKlpqVAEjYdfznv8tlfUtCBlkMZvcO6RuUUqxM=;
+ b=elYU9/oghlPt4jd3gaa5acXl0vrIOJLEfbFYgtlEZ3nHjyQdk85vkFzlVB0+FY7VVWLi4tQxE+mSzkIzNG7/3ABn23ah9Kt2SkuFHELMt9EYPcP9py2QSuA93vg6jXA8d7WWt0uNKQvgWx37dWlW6eo1nOI8SPXh6Kovjs/XWOU=
 Received: from DM6PR21MB1388.namprd21.prod.outlook.com (20.180.21.213) by
  DM6PR21MB1228.namprd21.prod.outlook.com (20.179.50.21) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2559.3; Tue, 10 Dec 2019 20:20:32 +0000
+ 15.20.2559.3; Tue, 10 Dec 2019 20:20:33 +0000
 Received: from DM6PR21MB1388.namprd21.prod.outlook.com
  ([fe80::a4df:ed8e:9432:60d]) by DM6PR21MB1388.namprd21.prod.outlook.com
  ([fe80::a4df:ed8e:9432:60d%3]) with mapi id 15.20.2538.012; Tue, 10 Dec 2019
- 20:20:32 +0000
+ 20:20:33 +0000
 From: Neeraj Ladkani <neladk@microsoft.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Subject: Canceled: Platform Telemetry workgroup- bi-weekly sync 
 Thread-Topic: Platform Telemetry workgroup- bi-weekly sync 
-Thread-Index: AdVyi2uS47ovS1jOTeK/p2xl45QzrA9C9h3A
+Thread-Index: AdVyi2uS47ovS1jOTeK/p2xl45QzrA9C9igg
 Importance: high
 X-Priority: 1
-Date: Tue, 10 Dec 2019 20:20:32 +0000
-Message-ID: <DM6PR21MB1388BA89B832B0FB6353C29DC85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
+Date: Tue, 10 Dec 2019 20:20:33 +0000
+Message-ID: <DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -63,12 +63,12 @@ X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=neladk@microsoft.com; 
-x-ms-exchange-calendar-series-instance-id: BAAAAIIA4AB0xbcQGoLgCAfkAQcwQKuQUHLVAQAAAAAAAAAAEAAAAG9ABZX2S+ZPmzvlyGFC47c=
+x-ms-exchange-calendar-series-instance-id: BAAAAIIA4AB0xbcQGoLgCAfjDBgwQKuQUHLVAQAAAAAAAAAAEAAAAG9ABZX2S+ZPmzvlyGFC47c=
 x-originating-ip: [2001:4898:80e8:0:9985:2b7:2117:ac6f]
 x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 4fde4275-37ab-4cb7-1ab9-08d77dae68a5
+x-ms-office365-filtering-correlation-id: 4c90ab7e-46ac-464f-7c0d-08d77dae68fa
 x-ms-traffictypediagnostic: DM6PR21MB1228:MeetingMessage
-x-microsoft-antispam-prvs: <DM6PR21MB122818135B4669685515FDF8C85B0@DM6PR21MB1228.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <DM6PR21MB1228BEB6FDFC7CCD5CDD5DA9C85B0@DM6PR21MB1228.namprd21.prod.outlook.com>
 x-ms-oob-tlc-oobclassifiers: OLM:3513;
 x-forefront-prvs: 02475B2A01
 x-forefront-antispam-report: SFV:NSPM;
@@ -80,18 +80,18 @@ received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: z7E1zO5JHDoNyx2LOaBxgbQReSDtRIY5/kHKt4ZtdDMOh4FxY9eKDjS/0NbqXNrLxoPoTN6pvuSjmzga4N1kXirYbNMJnjcoA0YUWFOlWun8lX2I0zIOrXVllfuhx0I4x/dvZ/xeT/5N1dUve1BOJkXpAVPE9QSiwJD4u/jxcVG5CeZu4o7D3dTSJSQxHTp7PGAojwRBx6opf3nagjBnSgmfPvOdxWaxE3y5pEjq5+qp3Lc8MJfXop6BGB6yJ2xTSJJ18ojTd6rafK4Cn0SpKpRQpkL98fy0MFjrZV7GMFW9EivDYxEY0qy6/qcybO0lFqmIuyk6G0IZgc/wVrOo+zA8eAGKEuSK5vgc5hleHGqK2KGHC67pwByYDqCCpYkfo59GPGZHCdzXqS1Wn3CVP6MjHSTkCpxMCnt/egxOH4s1BW4QbjE3PcIRB31eNg6s3I40EwXlo0F68+SPPfuQL0UXSt9Asnm8wJ2L0pFLh07lNHszJNv3blP5Ei7FBcwgC6SN0N/sUizXTTAzLuoz5MxgQgCv/J9/Jyql+h37T0Y=
+x-microsoft-antispam-message-info: a+ZQMdNLzCNVSC5LtxG99TNQXTz7YJ1PZ29oWQNIYCbxQI4t/zjittlr34ahIn68J+ZqTDGLD1WnqBHLlzZHAPFPUDfqSsr6DjIGtJqBzuJmenHHgsEhuCqo296JysdhfzlpxdwCrirvEKmhoZOfDCN8/d7otoUa2yHqC8JiCMD2FkY/7dnxaEFBdwlw/EevJs2tffHYwVi1hpcp7BNmAw9A3brc6BFFnZClIRG46vMx7iYiEA09gN+1T6DUPenlkZa+WS3Xj5WbLL8pTpiWhdW6gyvnPDLAhhjxEbhMSQkIxymUmjAno4q5fAZYv9FOS3aojnHxByte7DA0XcO+bL0g8F5BBJ3P+Ua7dKFtSyaj4GoXpt63Aj16HLGGLtlShepuPCYaLDuULxL8V0yHQAHed3Bghab1pcYM886Ouk8mMvU8e5QxHHfPJ2rjniwkynHiU9cIjNYQvburFzCZ5+OPLMszi8KNBbmXfRcQgj5stwCbyjFeOokXmWzG+WMQTQ4GPSyiFI2rauradcBJUpS0Aw8PkCIcngGdXSpsANQ=
 x-ms-exchange-transport-forked: True
 Content-Type: multipart/alternative;
- boundary="_000_DM6PR21MB1388BA89B832B0FB6353C29DC85B0DM6PR21MB1388namp_"
+ boundary="_000_DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0DM6PR21MB1388namp_"
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4fde4275-37ab-4cb7-1ab9-08d77dae68a5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2019 20:20:32.8790 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c90ab7e-46ac-464f-7c0d-08d77dae68fa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2019 20:20:33.4027 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CEPyLqQzEuU5bAMhzi+oS1f/fWgQfbnOHq3L/t0P1BUCQ9IQ9H/Vfh7Ako5FhEzC5nT9mr4qTp7o088Q70F9vw==
+X-MS-Exchange-CrossTenant-userprincipalname: nyXcwFgxWzV//gOUEtoa9uHOZsEGJ2Gtt23jio1IAb+bNdoT/IBRoRjRGM1c+//fcd+f1NIkGw/o5fff2uu5KA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1228
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -118,7 +118,7 @@ Cc: =?ks_c_5601-1987?B?V2lsbCBMaWFuZyAo1dnntfroKQ==?=
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM6PR21MB1388BA89B832B0FB6353C29DC85B0DM6PR21MB1388namp_
+--_000_DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0DM6PR21MB1388namp_
 Content-Type: text/plain; charset="ks_c_5601-1987"
 Content-Transfer-Encoding: base64
 
@@ -150,7 +150,7 @@ LnZjL3RlYW1zLz9rZXk9ODEzODc4ODk2JmNvbmY9MDE3OTg4NTkxPg0KX19fX19fX19fX19fX19f
 X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
 X19fX19fX18NCg0K
 
---_000_DM6PR21MB1388BA89B832B0FB6353C29DC85B0DM6PR21MB1388namp_
+--_000_DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0DM6PR21MB1388namp_
 Content-Type: text/html; charset="ks_c_5601-1987"
 Content-Transfer-Encoding: quoted-printable
 
@@ -319,7 +319,7 @@ _______________________________________________________</span>
 </body>
 </html>
 
---_000_DM6PR21MB1388BA89B832B0FB6353C29DC85B0DM6PR21MB1388namp_
+--_000_DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0DM6PR21MB1388namp_
 Content-Type: text/calendar; charset="utf-8"; method=CANCEL
 Content-Transfer-Encoding: base64
 
@@ -403,14 +403,14 @@ OTYmY29uZj0wMTc5ODg1OTE+XG5fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
 X18NCiBfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX1xuXG4NClVJRDow
 NDAwMDAwMDgyMDBFMDAwNzRDNUI3MTAxQTgyRTAwODAwMDAwMDAwMzA0MEFCOTA1MDcyRDUwMTAw
 MDAwMDAwMDAwMDAwMA0KIDAxMDAwMDAwMDZGNDAwNTk1RjY0QkU2NEY5QjNCRTVDODYxNDJFM0I3
-DQpSRUNVUlJFTkNFLUlEO1RaSUQ9UGFjaWZpYyBTdGFuZGFyZCBUaW1lOjIwMjAwMTA3VDA5MzAw
+DQpSRUNVUlJFTkNFLUlEO1RaSUQ9UGFjaWZpYyBTdGFuZGFyZCBUaW1lOjIwMTkxMjI0VDA5MzAw
 MA0KU1VNTUFSWTtMQU5HVUFHRT1lbi1VUzpDYW5jZWxlZDogUGxhdGZvcm0gVGVsZW1ldHJ5IHdv
 cmtncm91cC0gYmktd2Vla2x5IHN5DQogbmMgDQpEVFNUQVJUO1RaSUQ9UGFjaWZpYyBTdGFuZGFy
-ZCBUaW1lOjIwMjAwMTA3VDA5MzAwMA0KRFRFTkQ7VFpJRD1QYWNpZmljIFN0YW5kYXJkIFRpbWU6
-MjAyMDAxMDdUMTAzMDAwDQpDTEFTUzpQVUJMSUMNClBSSU9SSVRZOjENCkRUU1RBTVA6MjAxOTEy
+ZCBUaW1lOjIwMTkxMjI0VDA5MzAwMA0KRFRFTkQ7VFpJRD1QYWNpZmljIFN0YW5kYXJkIFRpbWU6
+MjAxOTEyMjRUMTAzMDAwDQpDTEFTUzpQVUJMSUMNClBSSU9SSVRZOjENCkRUU1RBTVA6MjAxOTEy
 MTBUMjAyMDMwWg0KVFJBTlNQOlRSQU5TUEFSRU5UDQpTVEFUVVM6Q0FOQ0VMTEVEDQpTRVFVRU5D
-RToyDQpMT0NBVElPTjtMQU5HVUFHRT1lbi1VUzpNaWNyb3NvZnQgVGVhbXMgTWVldGluZw0KWC1N
-SUNST1NPRlQtQ0RPLUFQUFQtU0VRVUVOQ0U6Mg0KWC1NSUNST1NPRlQtQ0RPLU9XTkVSQVBQVElE
+RTozDQpMT0NBVElPTjtMQU5HVUFHRT1lbi1VUzpNaWNyb3NvZnQgVGVhbXMgTWVldGluZw0KWC1N
+SUNST1NPRlQtQ0RPLUFQUFQtU0VRVUVOQ0U6Mw0KWC1NSUNST1NPRlQtQ0RPLU9XTkVSQVBQVElE
 Oi0xMTMwOTE1ODY5DQpYLU1JQ1JPU09GVC1DRE8tQlVTWVNUQVRVUzpGUkVFDQpYLU1JQ1JPU09G
 VC1DRE8tSU5URU5ERURTVEFUVVM6RlJFRQ0KWC1NSUNST1NPRlQtQ0RPLUFMTERBWUVWRU5UOkZB
 TFNFDQpYLU1JQ1JPU09GVC1DRE8tSU1QT1JUQU5DRToyDQpYLU1JQ1JPU09GVC1DRE8tSU5TVFRZ
@@ -436,4 +436,4 @@ T046eyJPbmxpbmVNZWV0aW5nUHJvdmlkZXIiOjN9DQpYLU1JQ1JPU09GVC1ET05PVEZPUldBUkRN
 RUVUSU5HOkZBTFNFDQpYLU1JQ1JPU09GVC1ESVNBTExPVy1DT1VOVEVSOkZBTFNFDQpFTkQ6VkVW
 RU5UDQpFTkQ6VkNBTEVOREFSDQo=
 
---_000_DM6PR21MB1388BA89B832B0FB6353C29DC85B0DM6PR21MB1388namp_--
+--_000_DM6PR21MB13889CBCE71B0DB4C098DE9FC85B0DM6PR21MB1388namp_--
