@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5504B117E24
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 04:25:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5DA7117F6D
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 06:09:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47X56h33pnzDqVH
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 14:25:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47X7Qb6KVgzDqWc
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 16:09:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d33;
- helo=mail-io1-xd33.google.com; envelope-from=mine260309@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::536;
+ helo=mail-pg1-x536.google.com; envelope-from=tyler.sabdon@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="bWLlU5ey"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="jEV0LSWq"; 
  dkim-atps=neutral
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
- [IPv6:2607:f8b0:4864:20::d33])
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com
+ [IPv6:2607:f8b0:4864:20::536])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47X55x6smyzDqS2
- for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 14:24:51 +1100 (AEDT)
-Received: by mail-io1-xd33.google.com with SMTP id v3so199383ioj.5
- for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 19:24:51 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47X7Pq0ZZbzDqTp
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 16:08:46 +1100 (AEDT)
+Received: by mail-pg1-x536.google.com with SMTP id b1so8268650pgq.10
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Dec 2019 21:08:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BnMgg+cJ1+7ORP2pOV40Tgp0nssRCCnAZ9y/RY+JVhY=;
- b=bWLlU5ey+3YaBKvPaJo33FTWhQ8SMPn6Yce5FjG0APVwJYHksg2auOaQc4s8XhkXNe
- MFFlXZl1MsKHzjQ0J8bSUfsHJ4hGVwEcm95KHQPaL/j2G2w0QH97vIJmUVyZDkBiuNmM
- JYSZnnAhwRHBBk+fXZeGUXRcoPU2XsHK53wHw4YT02wuzEOLUfekXwjRXBNtXRBBVLxO
- Xrxa/vCn+e8QkRjjeiQ9k8WE0XbSJWfC87vcQVaanw0W+MCg6xHiPQ3E5dd+zMPz2GhE
- hQY6qoKGJCJVXXH56tc2oXHUFnYkkxDhSBEXORBQevze1MyoIg+bMdipmxLnJJLvjbgK
- Gkvg==
+ :cc; bh=ZuoLnogIvyY+usYrkPSlyZftTqhkx11bK+m8tW05rB4=;
+ b=jEV0LSWqvWYghiiexy7AkGGPRpNVWOi4yYT/7PPPsT+b7ZDV/aG1rtYc9+p33hfexH
+ EplwRS0B3+zOCDCZIzhqqdrnRtQVixsP9o2dcBOKCJW2g9zUly1NtI73uBWG3qMphf5V
+ VzuQLkO1zkb4m5wihnIR/gMQMWBvPPDa6CjlW09rJtyQNV2yh5cCYStFEc9QTi5krUIO
+ x5iqereBbYDoXjorppUzA1Upl300uW1uxocq8Z+7WEsHxM/BIZRCS8R4OBIas0ITwFaE
+ +E0CUdnBrmFXTwLQCe3TwKhvCPJUukPYwPm2nGM74adV6LnGUnrTkGo+nclJIyfS8sn8
+ Aoag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=BnMgg+cJ1+7ORP2pOV40Tgp0nssRCCnAZ9y/RY+JVhY=;
- b=pQ7f9oJ+IXO5PhHJ7tQN25Kgu7FBJGIUsBwc0WYX4zR1U2T8eWT7CgWVdgK2xxY1P4
- mROppTyCY3iZGrB5/vZibbxbg9tkNGh8KKo6m74cCTdfmqTXDgasLawhvjoAC9hpuRmu
- ye60Yk6clKIJbadh/hCa2GtjeLpT0M6EnjaoRd2Xv5mDpdoAJUrwZtNwFYrlEWrCVegj
- Grq03qOGf3GNO0EW2pN8y7kwl3y3IQSzWgv1SdF4nJfcqpnxuYkVnowIaP0sF5UNa8Tw
- tiwofmnEqWcXIqFYr6ofSQS1Ubx4BEi8Yf9L3YbSgujXJZTTsHX+CtPe0dILsEWq5P2/
- B+SQ==
-X-Gm-Message-State: APjAAAWliRYzicvvlelnkr/ny/bQQnpBK2lSz34ZrHbyl2jQQYkC6Fa6
- Q29V3NS0VywX2FefX/+AkQiGdAy/33lmNzUruQY=
-X-Google-Smtp-Source: APXvYqzCf5og3yIN2Prva3XLif1H4Rmd9s90bU9c2efpYq1rnNsHXiTukI+pK6GD8gm6hcbbgzXEr7Z8rSSRpP/0Pjk=
-X-Received: by 2002:a5d:8c89:: with SMTP id g9mr23043309ion.221.1575948288205; 
- Mon, 09 Dec 2019 19:24:48 -0800 (PST)
+ bh=ZuoLnogIvyY+usYrkPSlyZftTqhkx11bK+m8tW05rB4=;
+ b=UkRF3BXpxeCJjHOBMnA0Q5SgjDNIHQXFvks8Cn2ACRs2IqkEI4YBLrnFnXWML18mPi
+ BMACL9QvR15cBveSSaUCsvAmLM5BJoE7cY6loBsJIhsEvynsNI1WXl6ZM/2JqZlZH/9t
+ 8fxyTdGkqWpKXCC1dKo9Gks6kcaMi6+91PDKmoivapkXPl4yfbeKGfmQOOaSUWT1iaAx
+ 8Z/8oLMmwtG5FE8OT45ks4eowuuE174GpWGBOKU1Eqrxz2p4EW6M/EHzoc632vClyA4b
+ mt/oN/xdmSoIZ031zkPX+YLz/6cL0H+ukL3E/4rxxVtfrq6zZRtUVA+j4kH5uyFaLlju
+ qQRw==
+X-Gm-Message-State: APjAAAUHbVICu1xqH61tH3Cgyt9qi9fYNLltXjUgKXlRMCFHW/bLd6aw
+ uzdhJAFUeR38rWcROsa3uA0TtQyDpTW9znPcyE8TuA==
+X-Google-Smtp-Source: APXvYqxojZyOYKUTQMlqmuUTk+CtpXT39GDP/liEU28WacgL4dOrsQoOPbLBDPYN4LJKBrZWl2ft7oFoRKJ5fZbbiSw=
+X-Received: by 2002:a62:750e:: with SMTP id q14mr33302298pfc.155.1575954523266; 
+ Mon, 09 Dec 2019 21:08:43 -0800 (PST)
 MIME-Version: 1.0
-References: <CAARXrtmNsry0bq-5eTD5qo0LDq_zWag9s8kGqMq4yGxzpxXCeA@mail.gmail.com>
- <CAGMNF6Wc_1pxReDXYQvOQO1Oy5K+Ejn+G+j9F-ei4Vpg4nQ5XQ@mail.gmail.com>
-In-Reply-To: <CAGMNF6Wc_1pxReDXYQvOQO1Oy5K+Ejn+G+j9F-ei4Vpg4nQ5XQ@mail.gmail.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Tue, 10 Dec 2019 11:24:38 +0800
-Message-ID: <CAARXrtmYBVQCb320kNxKyo3Sp1i7sZ5-kMi1efHVDOD2cXvuGw@mail.gmail.com>
-Subject: Re: Updates and future changes on phosphor-power
-To: Kun Yi <kunyi@google.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAO9PYRLd5KJHiuvDxzGcw7E5CVapk3Fonm_mPDaov1zaVHZm2g@mail.gmail.com>
+ <4ffc887c-9160-a5a6-2bf9-0a86c872cd60@linux.ibm.com>
+In-Reply-To: <4ffc887c-9160-a5a6-2bf9-0a86c872cd60@linux.ibm.com>
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Tue, 10 Dec 2019 13:08:19 +0800
+Message-ID: <CAO9PYRL=OHexpzjazShywXxg1w5FeUA4=dkupNXCY-85+CckJQ@mail.gmail.com>
+Subject: Re: pinctrl in phosphor-hwmon
+To: Matt Spinler <mspinler@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="0000000000008aa5810599528195"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,43 +73,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 10, 2019 at 5:10 AM Kun Yi <kunyi@google.com> wrote:
+--0000000000008aa5810599528195
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Matt:
+    Thank for your response that's really helpful. I check the link and it
+seems allow a gpio set to high before/after reading a correspond sensor. Is
+it possible change 2 gpio to high/low for reading a correspond sensor?
+
+Regards,
+Tyler
+
+Matt Spinler <mspinler@linux.ibm.com> =E6=96=BC 2019=E5=B9=B412=E6=9C=889=
+=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=8810:58=E5=AF=AB=E9=81=93=EF=
+=BC=9A
+
 >
-> Hello Lei,
 >
-> We have some interest to help contribute to the phosphor-power utils.
+> On 12/9/2019 6:15 AM, Deng Tyler wrote:
+> > Hi all:
+> >     Does phosphor-hwmon support changing gpio pin before read
+> > /sys/class/hwmon/hwmon0/fan*_input while monitoring fan sensor? In my
+> > platform, fans gpio are connect to pin-mux and I need control gpio
+> > before get fan tach rpm.
+>
+> It does have the ability to modify a GPIO before/after a reading:
+> https://github.com/openbmc/phosphor-hwmon/blob/master/mainloop.cpp#L447
+>
+> configured by some lines in the conf file, like:
+>
+> https://github.com/openbmc/meta-ibm/blob/master/meta-romulus/recipes-phos=
+phor/sensors/phosphor-hwmon/obmc/hwmon/iio-hwmon-battery.conf#L4
+>
+> >
+> > Regards,
+> > Tyler
+>
 >
 
-Great!
+--0000000000008aa5810599528195
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Hi Matt:<div>=C2=A0 =C2=A0 Thank for your response that&#3=
+9;s really helpful. I check the link and it seems allow a gpio set to high =
+before/after reading a correspond=C2=A0sensor. Is it possible change 2 gpio=
+ to high/low for reading a correspond sensor?</div><div><br></div><div>Rega=
+rds,</div><div>Tyler</div></div><br><div class=3D"gmail_quote"><div dir=3D"=
+ltr" class=3D"gmail_attr">Matt Spinler &lt;<a href=3D"mailto:mspinler@linux=
+.ibm.com">mspinler@linux.ibm.com</a>&gt; =E6=96=BC 2019=E5=B9=B412=E6=9C=88=
+9=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=8810:58=E5=AF=AB=E9=81=93=EF=
+=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+<br>
+On 12/9/2019 6:15 AM, Deng Tyler wrote:<br>
+&gt; Hi all:<br>
+&gt; =C2=A0 =C2=A0 Does phosphor-hwmon support=C2=A0changing gpio pin befor=
+e read <br>
+&gt; /sys/class/hwmon/hwmon0/fan*_input while=C2=A0monitoring=C2=A0fan sens=
+or? In my <br>
+&gt; platform, fans gpio are connect to pin-mux and I need control gpio <br=
 >
-> Will phosphor-power provide PMBus fault status bits monitoring?
+&gt; before get fan tach rpm.<br>
+<br>
+It does have the ability to modify a GPIO before/after a reading:<br>
+<a href=3D"https://github.com/openbmc/phosphor-hwmon/blob/master/mainloop.c=
+pp#L447" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/ph=
+osphor-hwmon/blob/master/mainloop.cpp#L447</a><br>
+<br>
+configured by some lines in the conf file, like:<br>
+<a href=3D"https://github.com/openbmc/meta-ibm/blob/master/meta-romulus/rec=
+ipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/iio-hwmon-battery.conf#L4" =
+rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/meta-ibm/bl=
+ob/master/meta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/i=
+io-hwmon-battery.conf#L4</a><br>
+<br>
+&gt;<br>
+&gt; Regards,<br>
+&gt; Tyler<br>
+<br>
+</blockquote></div>
 
-Yes, it already does monitor PMBus fault, see [power_supply.cpp#L134][1]
-
-
-> How is it co-operating with phosphor-hwmon or dbus-sensors when reading sensor data from the same PSU device over the same i2c bus?
-
-As far as I know, it does not co-operates with phosphor-hwmon (and I
-am not familiar with dbus-sensors). @Matt Spinler correct me if I am
-wrong.
-Instead, it sends the error log to logging service with the inventory
-path when the error is found. See [power_supply.cpp#L309][2]
-And when the error is gone, it resolves the error by setting the
-`Resolved` property of the log. See [power_supply.cpp#L282]
-
-There is a [fault-monitor][4] in phosphor-led-manager that monitors
-the error logs in logging service, and assert/deassert the related
-fault LED group.
-So the fault LED will be turned on when an error occurs, and turned
-off when the error is resolved or cleared.
-
-[1]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L134
-[2]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L309
-[3]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L282
-[4]: https://github.com/openbmc/phosphor-led-manager/tree/master/fault-monitor
+--0000000000008aa5810599528195--
