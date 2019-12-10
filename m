@@ -2,99 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6268E1193DB
-	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 22:15:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EF80119C55
+	for <lists+openbmc@lfdr.de>; Tue, 10 Dec 2019 23:28:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47XXrs52wfzDqc2
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 08:15:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47XZTp5mSBzDqRD
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 09:28:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Dn0QhYwj"; 
+ dkim-atps=neutral
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47XXm54S0zzDqZV
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 08:11:00 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xBAL93lS118106; Tue, 10 Dec 2019 16:10:56 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2wtfbwgj2q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2019 16:10:56 -0500
-Received: from m0098396.ppops.net (m0098396.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xBAL9aFg122238;
- Tue, 10 Dec 2019 16:10:56 -0500
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2wtfbwgj21-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2019 16:10:55 -0500
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xBALAXBf018067;
- Tue, 10 Dec 2019 21:10:54 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma05wdc.us.ibm.com with ESMTP id 2wtdq72c19-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2019 21:10:54 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xBALAsQl33096038
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2019 21:10:54 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4991FB2064;
- Tue, 10 Dec 2019 21:10:54 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 13BA8B2068;
- Tue, 10 Dec 2019 21:10:54 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.219])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Tue, 10 Dec 2019 21:10:53 +0000 (GMT)
-Subject: Re: [EXTERNAL] Re: BMC update via TFTP
-To: Neeraj Ladkani <neladk@microsoft.com>,
- Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Patrick Venture <venture@google.com>
-References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
- <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
- <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
- <9e0303e5beb34b9bb50b050cd56e35d8@linux.vnet.ibm.com>
- <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
- <20191204213650.GB9613@mauery.jf.intel.com>
- <94b297b5-81d1-1e07-498f-155a9160cb1d@linux.intel.com>
- <20191205223708.GC9613@mauery.jf.intel.com>
- <1c75671d-904e-8a06-07f5-c93fcf0e5e50@linux.intel.com>
- <d6b4685e-5834-7bfb-609e-c53159a54176@linux.ibm.com>
- <f6254181-64e8-e923-8d60-9f7632a899e5@linux.intel.com>
- <3231c302-27a9-3437-849a-767850d12fd0@linux.ibm.com>
- <DM6PR21MB1388F87CA03203F0C5F9F331C85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <b13a3d03-333b-e5b7-b6b1-28159f233a2d@linux.ibm.com>
-Date: Tue, 10 Dec 2019 15:10:53 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47XZR02k80zDqZy
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 09:26:17 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id j22so11388461oij.9
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 14:26:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=+FW2VaGuZcvE9W4agqxw9ZCFpKuFFwUbuM2SKBhyLuc=;
+ b=Dn0QhYwjDulCJ3KX7gu/taSw25qLLnYt8wzy42Fn2ckRk8OptBm/RJ4JAk+HvKF4x4
+ PS3Var9OChd588VJDl+o4egPFCv4I0dcp1IQCY5ZcAEaZ4XVYGmWvtg02dAQ2WmztfzU
+ mJEhW5G2toUtaB/d5B5Xx7IFJ8rEhwv9M2z6tZzw7J1JTMD+XzsnHDo6Q8lhd4YdC+jH
+ U8r2af8mqjd1+OLLGP8ulhSeZGguTNMw/wiyhqsUYdeF2jgui3Z+I9LIaRvXclOPEn8c
+ qhKt8rl3onPxdqKC8pqhQA8K6kzuTT9wpbzlIuvVHrolZe53tYru5UKovgGk503QKxxD
+ 8X2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=+FW2VaGuZcvE9W4agqxw9ZCFpKuFFwUbuM2SKBhyLuc=;
+ b=lDmCsOwUsZ33hAz4iBB1CFqYpIllk1/r77y9fo5tsrOdFmO1oP4ph+fEQGDH7ZDO3m
+ LSMrx0QiZT9kpJO9wox0ZzmiIk5pzGuiipdVk6a9jq4b/Jo043JfjOym+fi2rfoSRgO0
+ tlPDBWF/7nFh17+ttgUf2vq/2KGTIX4fn95MwNDJ9ZRbu874ubdJ80ruHkGnsmGpHxXy
+ 5G/wT5trfmRD/INhIPp9GQJrr5+vQ00Qybw0b/u9Gu2IWsK3oofMbGh1fgJb5NWePptv
+ mKApDho/6DE8gSE2kpcmOcp2WBGdatAnD0oBJHOSfQbxVadBjgwu7toFWp0O+KIwtwkH
+ QBKw==
+X-Gm-Message-State: APjAAAVe2cy+el829qW38PAMmRiRjvcPDv3gJIoa85r9xyXMw9OOkkKX
+ 9VSDByPktTlvkA8Wwx8ABHV61iH0Gc/BKRew/bc=
+X-Google-Smtp-Source: APXvYqw0WJStxofyqql5Vv4d4S4vm1R+E7KW09g5NQeYKZyy7EzT3SdzfNyoLXbWBHsR5Swe8EPyCPwT2wIW3uQAoVA=
+X-Received: by 2002:aca:ec45:: with SMTP id k66mr259650oih.179.1576016774062; 
+ Tue, 10 Dec 2019 14:26:14 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <DM6PR21MB1388F87CA03203F0C5F9F331C85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-10_06:2019-12-10,2019-12-10 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0
- mlxlogscore=999 malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1011 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1910280000
- definitions=main-1912100175
+References: <CAARXrtmNsry0bq-5eTD5qo0LDq_zWag9s8kGqMq4yGxzpxXCeA@mail.gmail.com>
+ <CAGMNF6Wc_1pxReDXYQvOQO1Oy5K+Ejn+G+j9F-ei4Vpg4nQ5XQ@mail.gmail.com>
+ <CAARXrtmYBVQCb320kNxKyo3Sp1i7sZ5-kMi1efHVDOD2cXvuGw@mail.gmail.com>
+In-Reply-To: <CAARXrtmYBVQCb320kNxKyo3Sp1i7sZ5-kMi1efHVDOD2cXvuGw@mail.gmail.com>
+From: Brandon Wyman <bjwyman@gmail.com>
+Date: Tue, 10 Dec 2019 16:25:39 -0600
+Message-ID: <CAK_vbW3N=HFKLxXN0KcMLVJdaZvw9w_w0awG7CEYq-Xoyouk+Q@mail.gmail.com>
+Subject: Re: Updates and future changes on phosphor-power
+To: Lei YU <mine260309@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,60 +76,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/10/19 12:58 PM, Neeraj Ladkani wrote:
-> Are there any thoughts to get rid of BMC reset to trigger FW update? I understand FW reset is required after the update.
+On Mon, Dec 9, 2019 at 9:25 PM Lei YU <mine260309@gmail.com> wrote:
+>
+> On Tue, Dec 10, 2019 at 5:10 AM Kun Yi <kunyi@google.com> wrote:
+> >
+> > Hello Lei,
+> >
+> > We have some interest to help contribute to the phosphor-power utils.
+> >
+>
+> Great!
+>
+> >
+> > Will phosphor-power provide PMBus fault status bits monitoring?
+>
+> Yes, it already does monitor PMBus fault, see [power_supply.cpp#L134][1]
+>
+Yes, the current power supply monitoring application does provide for
+status bit monitoring. The generic ones are at the top level of the
+tree:
+STATUS_WORD fault bits:
+ https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bc=
+cc8ee92ddbc89/pmbus.hpp#L45
+STATUS_VOUT fault bits:
+ https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bc=
+cc8ee92ddbc89/pmbus.hpp#L84
+STATUS_TEMPERATURE fault bits:
+ https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6b1c2bc=
+cc8ee92ddbc89/pmbus.hpp#L94
 
-I'm not sure I understand the question.  I think the answer depends on 
-the [Software.VersionPurpose][1].
-For VersionPurpose=BMC or System, the BMC must be reset.
-For VersionPurpose=Host, PSU, or Other, I don't know why the BMC would 
-need to be reset.
+There are some potential conflicts though with whether one really
+wants to be monitoring certain faults, such as the fan or temperature
+faults. There is also no universal definition for STATUS_MFR:
+STATUS_MFR: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000=
+372e6b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L351
+If one looks at "PMBus Power System Mgt Protocol Specification =E2=80=93 Pa=
+rt
+II", the details to STATUS_MFR_SPECIFIC list every bit as
+"Manufacturer Defined", so any attempt to further analyze the fault
+based on those bits would be specific to the power supply being used.
 
-Do you want to be able to update non-BMC firmware without having to 
-reset the BMC?
+Some of that, along with the input history collection it is currently
+doing, should probably be configurable. That along with some other
+things lead to a proposal for creating a new application that would be
+driven via a JSON file, etc.:
+https://github.com/openbmc/docs/blob/master/designs/psu-monitoring.md
 
-- Joseph
-
-[1]: 
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Software/Version.interface.yaml
+I have some code in progress towards implementing the new power supply
+monitoring application, trying to drive towards a more configurable
+approach.
 
 >
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+neladk=microsoft.com@lists.ozlabs.org> On Behalf Of Joseph Reynolds
-> Sent: Monday, December 9, 2019 5:25 PM
-> To: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>; openbmc@lists.ozlabs.org
-> Subject: [EXTERNAL] Re: BMC update via TFTP
+> > How is it co-operating with phosphor-hwmon or dbus-sensors when reading=
+ sensor data from the same PSU device over the same i2c bus?
 >
-> On 12/9/19 10:06 AM, Alexander Tereschenko wrote:
->> On 06-Dec-19 23:52, Joseph Reynolds wrote:
->>> I was thinking along the lines of adding [SFTP][] (or SCP) support
->>> and then migrating existing TFTP users to the new secure solution.
+> As far as I know, it does not co-operates with phosphor-hwmon (and I
+> am not familiar with dbus-sensors). @Matt Spinler correct me if I am
+> wrong.
+> Instead, it sends the error log to logging service with the inventory
+> path when the error is found. See [power_supply.cpp#L309][2]
+> And when the error is gone, it resolves the error by setting the
+> `Resolved` property of the log. See [power_supply.cpp#L282]
+>
+I am not aware of any direct interaction that the power supply monitor
+has with phosphor-hwmon or dbus-sensors. There is however some
+telemetry data that potentially gets collected via the phosphor-hwmon
+application. That is pushing up data such as the input voltage, input
+power, etc. I am not very familiar with dbus-sensors, but I am
+assuming it serves a similar telemetry purpose.
 
-[...snip...]
+> There is a [fault-monitor][4] in phosphor-led-manager that monitors
+> the error logs in logging service, and assert/deassert the related
+> fault LED group.
+> So the fault LED will be turned on when an error occurs, and turned
+> off when the error is resolved or cleared.
+>
+That fault LED interaction is somehow tied to associations.
+Example associations.json:
+https://github.com/openbmc/openbmc/blob/master/meta-ibm/meta-witherspoon/re=
+cipes-phosphor/inventory/phosphor-inventory-manager/associations.json
 
->> Yes, that could be a solution for the problem we discuss, providing
->> both integrity and confidentiality, without any major OpenBMC
->> development necessary - but it would mean more operational burden for
->> BMC admins. The problem with SCP/SFTP in this context is that for this
->> to work in the same manner as TFTP, the BMC must be an SSH client -
->> i.e. have some sort of identity/credentials for the SCP/SFTP server
->> provisioned first. That might not be the easiest solution to setup,
->> but it's of course possible and can be automated if OpenBMC provides
->> respective config knobs.
->>
->> Existing ways we have in code-update.md either don't require
->> credentials (TFTP), so being a client is easy, or are not making a
->> "client" from BMC, it's the admin who uploads stuff (SCP/REST).
-> Yes, that's what I was thinking.  (And no, I am not going to recommend setting up a SCP or SFTP server that allows anonymous access.)
->
-> This highlight the need for OpenBMC to put together a guide to provisioning your BMC.    Such as guide would give us a place to talk about uploading to the BMC SSH client certificates needed to access and download the firmware images.
->
-> - Joseph
->
->> regards,
->> Alexander
->>
+> [1]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6=
+b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L134
+> [2]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6=
+b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L309
+> [3]: https://github.com/openbmc/phosphor-power/blob/1d103428e50ec000372e6=
+b1c2bccc8ee92ddbc89/power-supply/power_supply.cpp#L282
+> [4]: https://github.com/openbmc/phosphor-led-manager/tree/master/fault-mo=
+nitor
 
+These references, along with the ones I included inline are hopefully helpf=
+ul.
