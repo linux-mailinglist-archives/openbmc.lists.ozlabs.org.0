@@ -1,70 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C601B11A4D5
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 08:08:12 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11AAB11A49D
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 07:41:06 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47XnPp2kSWzDqlQ
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 17:41:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Xp156lQ5zDqkW
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 18:08:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::643;
- helo=mail-pl1-x643.google.com; envelope-from=tyler.sabdon@gmail.com;
+ smtp.mailfrom=lenovo.com (client-ip=67.219.246.1;
+ helo=mail1.bemta23.messagelabs.com; envelope-from=dlin23@lenovo.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="rhzeH/en"; 
- dkim-atps=neutral
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
- [IPv6:2607:f8b0:4864:20::643])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=lenovo.com
+Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
+ [67.219.246.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47XnP819rXzDqkG
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 17:40:27 +1100 (AEDT)
-Received: by mail-pl1-x643.google.com with SMTP id a17so636048pls.5
- for <openbmc@lists.ozlabs.org>; Tue, 10 Dec 2019 22:40:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Zox39QrrMfIMw+PZLFYGb1INdJe0tpPuY+wRndwuQlI=;
- b=rhzeH/enHoiq1zVzSbZKtM9fTETEqSV/1/jOajoJI7VQNQWf0LaSgqSTgkUnGSvVms
- pgMU/mX6+bRsambgKdPPRclAdfENvkIq/fv2wj51FtCJN3RRDAwnKat7ocWv6PyvdaVH
- wahU/fARtjysEps9iJQQQo7wEq8u8wtGetfEcrnrdXKw1nK6QNj80twbUCPL670tzca1
- X6rD2YiFCUyWfrLYJFC8hWFBtXm1eFqbPC0NEvoWXDhmiOCVqIqvU/0G/s1ZQ3pohJ5v
- CMjd1R+4Kt5VlGjGtrao412nUcj+rnL7ZzAQHxKBzVGkVehK0C453z343SxPEMIXydcK
- 2Jgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Zox39QrrMfIMw+PZLFYGb1INdJe0tpPuY+wRndwuQlI=;
- b=nKgkLRyhvwzUD6tqXFwcnf4EjF+KvKN12O2i+pyi0TX/gIKLBb/PlcxFbYGhpgP8By
- NWZnIg7IoR/ROEgiOe2mLWIcpAYT03zl5cJsudRUjn0Vr7QkfIHAYk2q3HH7S6pV9f2E
- 4pj77QQ/jz410PZtiQyVPiAO7X6VRR9cNTzPnRZvxB2PVA7Q8SWktu2UD+VAZaQVUvu9
- nej/OGPwyQu8qFeg7SGXEmYrw2VlEL5ZrmfDxspvLQZ8bjJj0GZUvpWx0oi2xFSwnCqN
- u2erz6UIR2LOykGiovWJD8X+mhtHDy4g1rkYe7/v8PVNyif3ud7h3Jl2U1CZt6by/xPP
- IwRA==
-X-Gm-Message-State: APjAAAUur+pAVPByRyaovznBRXx99ULDUhqa1Ft7MBD90e3jIFMyLulO
- 1ES8H+nNvpgGLEclaYj+UOIwegWkjWDBnOornrAPIA==
-X-Google-Smtp-Source: APXvYqzdKs3y47LAVOhw+D7dIvjmwxh02qArVClZrK0AO6idV84qkk7TA+PC/cd46JKZy8uWIY4H3v/3HSBU2Wd7itg=
-X-Received: by 2002:a17:902:6802:: with SMTP id
- h2mr1530653plk.135.1576046423836; 
- Tue, 10 Dec 2019 22:40:23 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Xp0F1yrfzDqkK
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 18:07:18 +1100 (AEDT)
+Received: from [67.219.246.111] (using TLSv1.2 with cipher
+ DHE-RSA-AES256-GCM-SHA384 (256 bits))
+ by server-1.bemta.az-b.us-east-1.aws.symcld.net id D6/D5-12313-3A590FD5;
+ Wed, 11 Dec 2019 07:07:15 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRWlGSWpSXmKPExsWS8eIhr+7iqR9
+ iDe4dFLU41fKCxYHR4/yMhYwBjFGsmXlJ+RUJrBkrD31iK9irUfH/y3/WBsZelS5GLg4hgflM
+ EqeWP2OBcF4zSkydfo0RwtnPKHHx0FPmLkYODjYBVYn707i7GDk5RAQsJZY8aGcDCQsD2Y+WG
+ EGE7STmPLjJAmHrSez+uYgNxGYB6pw4cRdYnBek9chedhCbUUBW4smCZ0wgNrOAuMS5i61gcQ
+ kBAYkle84zQ9iiEi8f/2OFsBUkmve8ZoGoT5C4v+gqG8RMQYmTM5+wTGAUnIVk1CwkZbOQlEH
+ EdSQW7P7EBmFrSyxb+JoZxj5z4DETsvgCRvZVjCZJRZnpGSW5iZk5uoYGBrqGhka6RrpmeolV
+ ukl6pcW6qYnFJbqGeonlxXrFlbnJOSl6eaklmxiB8ZJSwMS2g/HPx7d6hxglOZiURHlnv3kfK
+ 8SXlJ9SmZFYnBFfVJqTWnyIUYaDQ0mC98KkD7FCgkWp6akVaZk5wNiFSUtw8CiJ8M6ZApTmLS
+ 5IzC3OTIdInWK055jwcu4iZo6DR+cByY+rlgDJ7yBSiCUvPy9VSpz3MkibAEhbRmke3FBYqrn
+ EKCslzMvIwMAgxFOQWpSbWYIq/4pRnINRSZg3GWQKT2ZeCdzuV0BnMQGd1ZnyDuSskkSElFQD
+ k5ue06Lehrr2F+5TM2WEdzTOvX/sdNGCbSuO1M/QOXvYIuDZLR0HawbGxU9X2+eeWC+RPa/2e
+ ZTIJ81yfp59z2esyrsoY1O0mvd77D/mIxnzZZxavhRcUpzjqfhI3eeqklQej7at4qLvn1uWuT
+ FeyE/TPMHoPCM+LXLL96UZp88osF8P8DIplqqN7lRwVy5cfFZsofmS9zk+NgcnhX5ik57PlJJ
+ 87Aa/nnGk7ouGOtHZW5xbD6n9cLpmf41HL1KI42bzK7GJpsKSyvOu1NRNqDWq/bfgvM8Zjf+X
+ 9F9VNfoe77F/odA5aVPEqaedZXd7chTfX167ee7kHX5mif3TZR9vY/p32k/PqvLzciZPJZbij
+ ERDLeai4kQAXH7O+7ADAAA=
+X-Env-Sender: dlin23@lenovo.com
+X-Msg-Ref: server-11.tower-395.messagelabs.com!1576048035!114207!1
+X-Originating-IP: [104.232.225.13]
+X-SYMC-ESS-Client-Auth: outbound-route-from=pass
+X-StarScan-Received: 
+X-StarScan-Version: 9.44.22; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 14670 invoked from network); 11 Dec 2019 07:07:15 -0000
+Received: from unknown (HELO aesmtp.lenovo.com) (104.232.225.13)
+ by server-11.tower-395.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 11 Dec 2019 07:07:15 -0000
+Received: from HKGWPEMAIL02.lenovo.com (unknown [10.128.3.70])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by Forcepoint Email with ESMTPS id B69B8C994C96108E01F5
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 02:07:14 -0500 (EST)
+Received: from HKGWPEMAIL02.lenovo.com (10.128.3.70) by
+ HKGWPEMAIL02.lenovo.com (10.128.3.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1591.10; Wed, 11 Dec 2019 15:07:00 +0800
+Received: from HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba]) by
+ HKGWPEMAIL02.lenovo.com ([fe80::7020:5ebb:e3eb:29ba%12]) with mapi id
+ 15.01.1591.008; Wed, 11 Dec 2019 15:07:00 +0800
+From: Derek Lin23 <dlin23@lenovo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: DBUS-sensor temperature threshold for CPU & DIMM
+Thread-Topic: DBUS-sensor temperature threshold for CPU & DIMM
+Thread-Index: AdWv7ccUz5ikb/xuSbCQnzUC3WptVg==
+Date: Wed, 11 Dec 2019 07:07:00 +0000
+Message-ID: <a0ab2f7f4d0a417f8b723b4285ee9d7d@lenovo.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.128.115.1]
+Content-Type: multipart/alternative;
+ boundary="_000_a0ab2f7f4d0a417f8b723b4285ee9d7dlenovocom_"
 MIME-Version: 1.0
-References: <CAO9PYRLd5KJHiuvDxzGcw7E5CVapk3Fonm_mPDaov1zaVHZm2g@mail.gmail.com>
- <4ffc887c-9160-a5a6-2bf9-0a86c872cd60@linux.ibm.com>
- <CAO9PYRL=OHexpzjazShywXxg1w5FeUA4=dkupNXCY-85+CckJQ@mail.gmail.com>
- <1a21e764-151b-a3b5-ad4b-0d79f336d48d@linux.ibm.com>
-In-Reply-To: <1a21e764-151b-a3b5-ad4b-0d79f336d48d@linux.ibm.com>
-From: Deng Tyler <tyler.sabdon@gmail.com>
-Date: Wed, 11 Dec 2019 14:40:00 +0800
-Message-ID: <CAO9PYRJGne+VxENsY6r_mGzdAxf-sUgzLu71tnRQipO9hPLV=Q@mail.gmail.com>
-Subject: Re: pinctrl in phosphor-hwmon
-To: Matt Spinler <mspinler@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000003e0bee059967e785"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,146 +90,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003e0bee059967e785
-Content-Type: text/plain; charset="UTF-8"
+--_000_a0ab2f7f4d0a417f8b723b4285ee9d7dlenovocom_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-I added gpio control in my fan driver but I still met some problem. While
-phosphor-hwmon reading fan0_input, the fan tach driver change 2 gpio pin
-and sleep 2 seconds to return rpm value for stable. There are 12 fan
-sensors in my platform so the phosphor-hwmon need wait 24 senconds at least
-to get rpm. The waiting time cause dbus hang while issuing ipmi sensor
-command. Do you have any suggestions?
+Hi team:
 
-Tyler
+          I have questions regarding CPU & DIMM temperature thresholds on D=
+BUS-sensor. Please help to provide some ideas.
+          Currently, we use DBUS-sensor to monitor CPU & DIMM temperature.
+          We've discovered that "CriticalAlarmHigh" property in Critical in=
+terface would never be triggered. The property is determined by TjMax of CP=
+U. It seems like CPU temperature reported from PECI channel would not excee=
+d TjMax.
+          Do we have a chance to have a configuration file that modify "Cri=
+ticalHigh" value to be "TjMax - a configurable value"? So, "CriticalAlarmHi=
+gh" event can be triggered.
 
-Matt Spinler <mspinler@linux.ibm.com> =E6=96=BC 2019=E5=B9=B412=E6=9C=8811=
-=E6=97=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=8812:29=E5=AF=AB=E9=81=93=EF=
-=BC=9A
+          As for DIMM temperature thresholds, both "WarningHigh" and "Criti=
+calHigh" values are set with hwmon attributes, now.
+          Could we still use Entity-Manager to set DIMM thresholds values?
 
->
->
-> On 12/9/2019 11:08 PM, Deng Tyler wrote:
-> > Hi Matt:
-> >     Thank for your response that's really helpful. I check the link
-> > and it seems allow a gpio set to high before/after reading a
-> > correspond sensor. Is it possible change 2 gpio to high/low for
-> > reading a correspond sensor?
->
-> That isn't possible in the current code, but I don't see why someone
-> couldn't add that feature.
->
-> >
-> > Regards,
-> > Tyler
-> >
-> > Matt Spinler <mspinler@linux.ibm.com <mailto:mspinler@linux.ibm.com>>
-> > =E6=96=BC 2019=E5=B9=B412=E6=9C=889=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=
-=8B=E5=8D=8810:58=E5=AF=AB=E9=81=93=EF=BC=9A
-> >
-> >
-> >
-> >     On 12/9/2019 6:15 AM, Deng Tyler wrote:
-> >     > Hi all:
-> >     >     Does phosphor-hwmon support changing gpio pin before read
-> >     > /sys/class/hwmon/hwmon0/fan*_input while monitoring fan sensor?
-> >     In my
-> >     > platform, fans gpio are connect to pin-mux and I need control gpi=
-o
-> >     > before get fan tach rpm.
-> >
-> >     It does have the ability to modify a GPIO before/after a reading:
-> >
-> https://github.com/openbmc/phosphor-hwmon/blob/master/mainloop.cpp#L447
-> >
-> >     configured by some lines in the conf file, like:
-> >
-> https://github.com/openbmc/meta-ibm/blob/master/meta-romulus/recipes-phos=
-phor/sensors/phosphor-hwmon/obmc/hwmon/iio-hwmon-battery.conf#L4
-> >
-> >     >
-> >     > Regards,
-> >     > Tyler
-> >
->
->
+Thank you,
 
---0000000000003e0bee059967e785
-Content-Type: text/html; charset="UTF-8"
+Derek
+
+--_000_a0ab2f7f4d0a417f8b723b4285ee9d7dlenovocom_
+Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">I added gpio control in my fan driver but I still met some=
- problem. While phosphor-hwmon reading fan0_input, the fan tach driver chan=
-ge 2 gpio pin and sleep 2 seconds=C2=A0to return rpm value for stable. Ther=
-e are 12 fan sensors in my platform so the phosphor-hwmon need wait 24 senc=
-onds at least to get rpm. The waiting time cause dbus hang while issuing ip=
-mi sensor command. Do you have any suggestions?<div><br></div><div>Tyler</d=
-iv></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_att=
-r">Matt Spinler &lt;<a href=3D"mailto:mspinler@linux.ibm.com">mspinler@linu=
-x.ibm.com</a>&gt; =E6=96=BC 2019=E5=B9=B412=E6=9C=8811=E6=97=A5 =E9=80=B1=
-=E4=B8=89 =E4=B8=8A=E5=8D=8812:29=E5=AF=AB=E9=81=93=EF=BC=9A<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-On 12/9/2019 11:08 PM, Deng Tyler wrote:<br>
-&gt; Hi Matt:<br>
-&gt; =C2=A0 =C2=A0 Thank for your response that&#39;s really helpful. I che=
-ck the link <br>
-&gt; and it seems allow a gpio set to high before/after reading a <br>
-&gt; correspond=C2=A0sensor. Is it possible change 2 gpio to high/low for <=
-br>
-&gt; reading a correspond sensor?<br>
-<br>
-That isn&#39;t possible in the current code, but I don&#39;t see why someon=
-e <br>
-couldn&#39;t add that feature.<br>
-<br>
-&gt;<br>
-&gt; Regards,<br>
-&gt; Tyler<br>
-&gt;<br>
-&gt; Matt Spinler &lt;<a href=3D"mailto:mspinler@linux.ibm.com" target=3D"_=
-blank">mspinler@linux.ibm.com</a> &lt;mailto:<a href=3D"mailto:mspinler@lin=
-ux.ibm.com" target=3D"_blank">mspinler@linux.ibm.com</a>&gt;&gt; <br>
-&gt; =E6=96=BC 2019=E5=B9=B412=E6=9C=889=E6=97=A5 =E9=80=B1=E4=B8=80 =E4=B8=
-=8B=E5=8D=8810:58=E5=AF=AB=E9=81=93=EF=BC=9A<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 12/9/2019 6:15 AM, Deng Tyler wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Hi all:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; =C2=A0 =C2=A0 Does phosphor-hwmon support=C2=
-=A0changing gpio pin before read<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; /sys/class/hwmon/hwmon0/fan*_input while=C2=A0=
-monitoring=C2=A0fan sensor?<br>
-&gt;=C2=A0 =C2=A0 =C2=A0In my<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; platform, fans gpio are connect to pin-mux and=
- I need control gpio<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; before get fan tach rpm.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0It does have the ability to modify a GPIO before/af=
-ter a reading:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/phosphor-hwmo=
-n/blob/master/mainloop.cpp#L447" rel=3D"noreferrer" target=3D"_blank">https=
-://github.com/openbmc/phosphor-hwmon/blob/master/mainloop.cpp#L447</a><br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0configured by some lines in the conf file, like:<br=
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/meta-ibm/blob=
-/master/meta-romulus/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/iio=
--hwmon-battery.conf#L4" rel=3D"noreferrer" target=3D"_blank">https://github=
-.com/openbmc/meta-ibm/blob/master/meta-romulus/recipes-phosphor/sensors/pho=
-sphor-hwmon/obmc/hwmon/iio-hwmon-battery.conf#L4</a><br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Regards,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Tyler<br>
-&gt;<br>
-<br>
-</blockquote></div>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi team:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; I have questions regarding CPU &amp; DIMM temperatu=
+re thresholds on DBUS-sensor. Please help to provide some ideas.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Currently, we use DBUS-sensor to monitor CPU &amp; =
+DIMM temperature.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; We&#8217;ve discovered that &#8220;CriticalAlarmHig=
+h&#8221; property in Critical interface would never be triggered. The prope=
+rty is determined by TjMax of CPU. It seems like CPU temperature reported f=
+rom PECI channel would not
+ exceed TjMax. <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Do we have a chance to have a configuration file th=
+at modify &#8220;CriticalHigh&#8221; value to be &#8220;TjMax &#8211; a con=
+figurable value&#8221;? So, &#8220;CriticalAlarmHigh&#8221; event can be tr=
+iggered.
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; As for DIMM temperature thresholds, both &#8220;War=
+ningHigh&#8221; and &#8220;CriticalHigh&#8221; values are set with hwmon at=
+tributes, now.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; Could we still use Entity-Manager to set DIMM thres=
+holds values?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thank you,<o:p></o:p></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Derek<o:p></o:p></span></p>
+</div>
+</body>
+</html>
 
---0000000000003e0bee059967e785--
+--_000_a0ab2f7f4d0a417f8b723b4285ee9d7dlenovocom_--
