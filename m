@@ -1,86 +1,125 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB5F119F22
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 00:14:15 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47XbVD22JJzDqd3
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 10:14:12 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 242C911A39B
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 05:57:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Xl6l09wRzDqH5
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 15:57:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=wiwynn.com (client-ip=103.200.3.19; helo=segapp01.wistron.com;
+ envelope-from=bonnie_lo@wiwynn.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="b8iWcOwb"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="WLwKsUb7"; dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47XbTP435YzDqZX
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 10:13:28 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 50B6DE87;
- Tue, 10 Dec 2019 18:13:25 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Tue, 10 Dec 2019 18:13:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=rdmSnVUC5YBs87meErYRdhFx5Qx5CsE
- Q2+Ssj35rvJw=; b=b8iWcOwbJnsNKx2IJtUsyc+S6rWEx/0iAwzba7GYnuqoP+F
- Na1BxYznPLYJp73j5HUduSnb5gsYoMOVkOFlDYUH3dOI4KflAKyBBuHVj6QerhhI
- H15vFehxDlURtZYOUOUPT6n1qk8I9Hlx8H6aC2jivoAXmv+5K8U4IRGB+qVcSkm7
- iW8+AQRYGC/yBwNrz2zwOWD9kjOZXSH8b2ie0le7ZkdVdlBVqP+W5Znfa3DN3MeB
- LfUr3hxYLEnt22u/hVIDc6i6n0WLQ/U4sk2ymIW0fnBAM+elifQoBdynOuWRpO2b
- tavGqivSEaPTl4+lVfVEb94ejTR4mW2E+asmLfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=rdmSnV
- UC5YBs87meErYRdhFx5Qx5CsEQ2+Ssj35rvJw=; b=WLwKsUb7GovHgM5kKAVJIr
- D1j8Y4sozyR+gYUKUEuJIs3n7tolDyfbIMhFabTORENawLdV1d6g3FLAkByJpdDX
- zx55ScqTtTkwRJXVirRqu/fWzwLTP91AYfDg2NUT/bVFGC50Q7KEK1FCNMQg18MF
- XnPaaYRU2BoBdTs+HphrASm8fqMhLi9PK+h5sLYhdis2o9vvIWOfW3MPelbxlWf+
- oeJaVFjLth/iFRXKR/8ZB0mnJUK3P7TAikEMNtMwNZLAZWWGdbRItLwcdFRT9Rqt
- V/ctGP899RFRQmmvUVCrZDLg2r6DCvG3kYFsrJOKHvZpRKSYSOmcE+wpYpPvUwkg
- ==
-X-ME-Sender: <xms:lCbwXeg51_aVIWtm4SYjR2qUOSrWSb8ZmGF42NjUR35iU084l06GXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrudelgedgtdduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
- grihhnpehgihhthhhusgdrtghomhenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
- vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:lCbwXbUENctGO2HZwYmqUdsY6bgqy5x90P46QMqivigkkg-eVJiuyw>
- <xmx:lCbwXY2oqIMmknPTF2J1Btnb6RMZcEmPKC1zuTAT4Km_GdZX1gmjGQ>
- <xmx:lCbwXZERzhb_m8AVL8t_PDs-quk-mUN4heIuIxdUqKVbM4THTzhxfQ>
- <xmx:lCbwXZXPoW6aT8gJ_uOfrZGLi7zmsO7_sPmjT8dT5hRkt6WxKSBS8g>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A2B70E00A2; Tue, 10 Dec 2019 18:13:24 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-679-g1f7ccac-fmstable-20191210v1
-Mime-Version: 1.0
-Message-Id: <8d4e9e9c-2568-4ab0-960c-7383a981fbbe@www.fastmail.com>
-In-Reply-To: <391eaabe-6ade-e23d-97ef-a0c1d6630f8c@gmail.com>
-References: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
- <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
- <477d3fbb-5aa8-d4e8-958c-62fb94e2acc7@gmail.com>
- <b9ef7897-f4a7-445d-a79b-289b399528ee@www.fastmail.com>
- <391eaabe-6ade-e23d-97ef-a0c1d6630f8c@gmail.com>
-Date: Wed, 11 Dec 2019 09:45:03 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Kurt Taylor" <kurt.r.taylor@gmail.com>,
- "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
-Subject: Re: OpenBMC Project metrics
-Content-Type: text/plain
+ dmarc=none (p=none dis=none) header.from=wiwynn.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=Wistron.onmicrosoft.com
+ header.i=@Wistron.onmicrosoft.com header.b="XVjxIv3m"; 
+ dkim-atps=neutral
+Received: from segapp01.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47Xl5q4Qw7zDqjc
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:56:53 +1100 (AEDT)
+Received: from EXCHAPP02.whq.wistron (unverified [10.37.38.25]) by
+ TWNHUMSW2.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id
+ <Tdc01714ebfc0a816701c6c@TWNHUMSW2.wistron.com>; 
+ Wed, 11 Dec 2019 12:56:48 +0800
+Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP02.whq.wistron
+ (10.37.38.25) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 11 Dec
+ 2019 12:56:45 +0800
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (10.37.38.71) by
+ mail.wistron.com (10.37.38.26) with Microsoft SMTP Server
+ (version=TLS1_2, 
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Frontend
+ Transport; Wed, 11 Dec 2019 12:56:45 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ni9SdGmm/JWr0RbHCKUS2f96ipoAIdYl9Xi7ILD8CuyFf1kB6Jk41PHeD8+j5qaswQbksdKASeUZnLl833FDGv4n71MQijugi/bwO0IGwGESpNxtFgv972pB6dXWXy8FjpA8D4Z0GFe1S2UHle4Wiu6eUWU5z1XcDOKJ8lfMtf1QWanOmZhwrf5WvPEsUySArMc/sOpm0vTGoDWQWWraBq18Fz14rkmRG01P2cFwrKq65ueXnrnuCP2WurOaXDPWVP6yKY9NJRMwTaZLCfHNz+xAfXVnxssP4e7n90tguT7WQ4kel9t+VdmlhOZ+zEvd4S+WqKyUVc/rjROtwty6kw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ciP4PkHuvKcnBt8/kRRwvJxj+g43n5lbPnjwA/xQOYM=;
+ b=dLTdSwMz1C3pq7CLlZAwQ9JamI6nauGY4ZaYz9DjXfWYkOpjOWy9rNCfpIejo8PUbjoEbrRF0J9cNU0gRjRlwhjiRLUZPLrJ9XZ3dOujmWb6rpbJlNur1dl+wlOtMvCUaDQMsWyBZ00tGE96gpMTAXt4rZ3XDViPO1Mk/ZueAp21LOgHJ5qTkxHc2TIP5jlvecEJ3TJxGT/QkEkTdfNgN1ZTU+bsnvmbsW3EBYo26KOKD7WASOWXC/1+kQgdRZYGk60ceuSteLsDNDwkPQVCKtDT/JNcuG6c3oLWqjcCqSdyKUKezPRxzdN3Im14Is9zx2A4mZ13ohnZS2wRyWnwQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wiwynn.com; dmarc=pass action=none header.from=wiwynn.com;
+ dkim=pass header.d=wiwynn.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=Wistron.onmicrosoft.com; s=selector2-Wistron-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ciP4PkHuvKcnBt8/kRRwvJxj+g43n5lbPnjwA/xQOYM=;
+ b=XVjxIv3mBhzJilq/v8wgv6lo2iz542nBfqkAlY5Ff5EryQbbomZCWS7Moezc1SfDC0fcmcxl0PAqiRwxc9CB271dNXtiFPivP2qjg5y7AW+FR7PPsHnokLvptTUB3JqFIuSR1Ce1NSapuC5ESnIanbB1nZZacYCs6dASHSe7RSw=
+Received: from HK0PR02MB2787.apcprd02.prod.outlook.com (20.177.27.143) by
+ HK0PR02MB2739.apcprd02.prod.outlook.com (20.177.27.210) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2516.14; Wed, 11 Dec 2019 04:56:41 +0000
+Received: from HK0PR02MB2787.apcprd02.prod.outlook.com
+ ([fe80::c060:69c:e444:f64a]) by HK0PR02MB2787.apcprd02.prod.outlook.com
+ ([fe80::c060:69c:e444:f64a%3]) with mapi id 15.20.2516.018; Wed, 11 Dec 2019
+ 04:56:41 +0000
+From: Bonnie Lo/WYHQ/Wiwynn <Bonnie_Lo@wiwynn.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>, Neeraj Ladkani
+ <neladk@microsoft.com>, Alexander Tereschenko
+ <aleksandr.v.tereschenko@linux.intel.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>, Patrick Venture <venture@google.com>
+Subject: RE: [EXTERNAL] Re: BMC update via TFTP
+Thread-Topic: [EXTERNAL] Re: BMC update via TFTP
+Thread-Index: AQHVqdIbgwscok6sWE2rTV4j0s5t+6eolVYAgAAPrQCAAC5/gIABTQcAgABhsgCAAOHdAIAAwVEAgAEC1ICAAJPWgIAE4gaEgAElygCAACUVgIAAJJsQ
+Importance: high
+X-Priority: 1
+Date: Wed, 11 Dec 2019 04:56:41 +0000
+Message-ID: <HK0PR02MB27870548BFF1A91BC86ADC19F85A0@HK0PR02MB2787.apcprd02.prod.outlook.com>
+References: <q7_GhCRdlxUNHfFX0Y4tW7FPq5Md7qwdFWbwd39V_S5zxrSBYtoXtvlNpQdZchvPB27edbJ3-QKFyZ97kzXoeH3Bby8IIHSWhxle9jzteKA=@protonmail.com>
+ <5747d991-27b7-4bb1-8a25-f46d1de832e1@linux.vnet.ibm.com>
+ <f778ce0c-f395-7528-ed05-cec194707a14@linux.vnet.ibm.com>
+ <9e0303e5beb34b9bb50b050cd56e35d8@linux.vnet.ibm.com>
+ <ed917fd0-61e1-3ff8-05f9-863d3e451c93@linux.ibm.com>
+ <20191204213650.GB9613@mauery.jf.intel.com>
+ <94b297b5-81d1-1e07-498f-155a9160cb1d@linux.intel.com>
+ <20191205223708.GC9613@mauery.jf.intel.com>
+ <1c75671d-904e-8a06-07f5-c93fcf0e5e50@linux.intel.com>
+ <d6b4685e-5834-7bfb-609e-c53159a54176@linux.ibm.com>
+ <f6254181-64e8-e923-8d60-9f7632a899e5@linux.intel.com>
+ <3231c302-27a9-3437-849a-767850d12fd0@linux.ibm.com>
+ <DM6PR21MB1388F87CA03203F0C5F9F331C85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <b13a3d03-333b-e5b7-b6b1-28159f233a2d@linux.ibm.com>
+In-Reply-To: <b13a3d03-333b-e5b7-b6b1-28159f233a2d@linux.ibm.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Bonnie_Lo@wiwynn.com; 
+x-originating-ip: [50.225.11.67]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: b6726157-f2db-4437-d5c9-08d77df68368
+x-ms-traffictypediagnostic: HK0PR02MB2739:|HK0PR02MB2739:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <HK0PR02MB2739A43C344D8A99478C1A60F85A0@HK0PR02MB2739.apcprd02.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 024847EE92
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(4636009)(376002)(346002)(396003)(366004)(39840400004)(136003)(189003)(199004)(13464003)(7696005)(45080400002)(86362001)(53546011)(478600001)(66476007)(2906002)(66446008)(966005)(64756008)(66946007)(110136005)(66556008)(54906003)(316002)(15650500001)(186003)(8936002)(5660300002)(4326008)(107886003)(6506007)(81156014)(81166006)(8676002)(55016002)(52536014)(33656002)(76116006)(26005)(9686003)(71200400001);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:HK0PR02MB2739;
+ H:HK0PR02MB2787.apcprd02.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: wiwynn.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ETfK6XwI3ri+5gyfsnzEfTabgmIgXlLM+igbYnpNEwH2F3WMF6H9BrTmlK23o1lQdVbQjE8fDrEYkJIPacKBn7QIuaBaWx9Vss8mo3nbWPkQNTMt364Z2RygBf+FbNLp0HZDViY3Tp7JmBfWOSR+3lpqna6YnhwxICccDew/7znwhrtTY7GUZh0z3gt4bsFzl2LexAIQgpDjGIQUdLh53X/Dj8EcokP5ZPMsk9SYyXST3QsSku/j1mYjTLD5c3Ce+ZXx6IPO+mmN/wKLF1Cs/G7vzmdQoloODOXDmdaH9pegOc6+gpYbm/pnjho+u+rKb9Ei6ybfB1bpkkj4nYhs/gzo5Td+1rkufwoYVAliP2YZMV3gzbrFhbrbbHji5NlGSzvxR+HM5fOzSKTuP5/muHa2i9fwbkabVEXJ9g8jsMPSOJXj95Osfl/DA9gQPeiM0zoBdtvfvT2zLwIPkV4Bp9sw/JNLEX2JLpnZt7N4UDwLKq8cfWm3e5PmSSZ2JC8B35K9wgGZJrJjRqnwp5sDxwHuS5+CsUTkHSTubpiBnxI=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: b6726157-f2db-4437-d5c9-08d77df68368
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2019 04:56:41.4987 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: de0795e0-d7c0-4eeb-b9bb-bc94d8980d3b
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RDSpZsc+j5cvD/+tOEK/ogmcTX3xSN55xNPM2FvQZKHRFiOIcU2KW/Hwk8SYLHyli142kzgCHGECM9coPCCeCw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR02MB2739
+X-OriginatorOrg: wiwynn.com
+X-TM-SNTS-SMTP: 64CDC9A5AE08B85BCE4AD00921DE470E2EEDC993908F4305E1F4D3CCAE7DB1F62000:8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,122 +131,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Aldofo Lin/WYHQ/Wiwynn <ALDOFO_LIN@wiwynn.com>,
+ Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 10 Dec 2019, at 04:54, krtaylor wrote:
-> On 12/8/19 6:06 PM, Andrew Jeffery wrote:
-> > On Sat, 7 Dec 2019, at 00:03, krtaylor wrote:
-> >> Measuring a project always improves it. That, and I have been
-> >> asked to start gathering metrics from several of our contributing
-> >> companies.
-> > 
-> > Where did this discussion occur? Can you provide a link?
-> 
-> The conversations have happen many times over the last 2 years.
-> 
-> At TSC and community meetings (not recorded in the meeting minutes that 
-> I could find, but it was discussed)
-> 
-> At release planning meetings (see minutes):
-> https://github.com/openbmc/openbmc/wiki/Release-Planning
-
-Ah, okay, but it just briefly talks about metrics directly and not about the
-questions we're trying to answer with the metrics?
-
-> 
-> I would rather not disclose email (without consent) that I have received 
-> privately from several companies supporting this work.
-
-That's okay, but I'm still trying to understand motivations here.
-
-> 
-> No one has ever had any objection to gathering this information (until 
-> now). Remember, anyone can go see this information any time they want.
-
-I'm not objecting to gathering it at all, I'm objecting to the lack of context in
-presentation of the data. Why are we gathering it? What questions are we
-answering? "Who commits the most" is the first order question, but why are
-we asking it? Are we trying to establish the breadth of contributing companies?
-Are we trying to identify first time contributions from companies and work with
-them to drive further participation?
-
-> > 
-> > I'm concerned that we're trying to create a stick to beat contributing companies with
-> > rather than working to find ways increase contributions for mutual benefit. Competition
-> > works as a motivator when community members feel safe to take it on but I'm not sure
-> > the community is mature enough for that to be true. Adding the context for your
-> > statistics might help remove my concerns.
-> 
-> Honestly I'm surprised at this reaction to a *potential* situation I 
-> have never witnessed
-
-This is the problem with the lack of context. We can both have different
-ideas about the motivations because they aren't written down anywhere.
-It was just a concern of mine, I'm not claiming that it _is_ the motivation,
-and I certainly hope that it's not. My concern could be eliminated if we
-wrote down why we're gathering the metrics.
-
-> but, I am willing to add any wording that you feel 
-> is necessary to create a safe development environment.
-
-I don't think it's about adding words here to create a safe environment, just
-I don't expect everyone engaging with the project has 20+ years of experience
-in open source software development. Open source work can be intimidating
-with scrutiny that can be applied through code review and other interactions,
-and not everyone is comfortable with that out of the gate. Certainly we've
-done a lot of work internal to IBM to help people become comfortable with
-working in open source. What I'd hate to see is people being discouraged from
-interacting in the upstream community through metrics that don't have clear
-goals.
-
-OpenBMC is flipping the switch on what was a very propriety ecosystem, and
-we will have contributors that don't have strong backgrounds in open source.
-If the metrics have been discussed in meetings that's fine, but I'd hope the
-context would make its way out as well and be attached to the data that we've
-collected.
-
-> 
-> I value your feedback. When do you feel we as a community are mature 
-> enough to start monitoring reviews, commits, and other project data? 
-
-As above I don't think that we can pick a point on a timeline, and I don't
-think that's even the point. I think that there should be engagement through
-the general project channels (mailing list, IRC, not targeted meetings with
-limited audiences) to determine what we're trying to measure, gather the
-data, and then _present the data in the context of the question we're trying
-to answer_. My consistent complaint is the lack of context.
-
-> Should we hide this "early" data until some future time when it 
-> represents everyone equally? 
-
-No, I think you have a misunderstanding of my point here. We just need
-to make the question that we're answering is provided with the view of
-the data. Context is important.
-
-> Personally, I don't feel like we will ever 
-> get to that place. There will always be people that contribute more in 
-> one particular area than others and they just can't be upset that they 
-> may have done less. Open Source requires thick skin.
-
-It shouldn't necessarily, and we need to work at making sure we're
-approachable as a community. Providing context with metrics will give
-people the information they need to know how the metrics are being
-used by the project.
-
-> 
-> Eventually, I'd like to break this data down by project and individual, 
-> not just company.
-
-But why? I keep asking this. It's not because there's not a valid answer
-and I'm trying to trap you, I just want to understand what the motivations
-are.
-
-Anyway, Github provides some of this information for us already. For
-example:
-
-https://github.com/openbmc/openbmc/graphs/contributors
-
-Cheers,
-
-Andrew
+RGVhciBKb3NlcGgsDQoNCkluIG15IHVuZGVyc3RhbmRpbmcsIHRoZSBCTUMgZmlybXdhcmUgdXBk
+YXRlIGZsb3cgaXMgYXMgYmVsb3c6DQoxLiBUcmlnZ2VyIHJlYm9vdCANCjIuIFN5c3RlbWQgc3Rv
+cCBhbGwgc2VydmljZQ0KMy4gVW5tb3VudCBmaWxlIHN5c3RlbQ0KNC4gaW1hZ2UgaXMgaW4gL3J1
+bi9pbml0cmFtZnMgDQo1LiBEbyB0aGUgZmxhc2hjcCBjb21tYW5kIHRvIHVwZGF0ZSB0aGUgZmxh
+c2ggDQoNCklmIHRoZXJlIGlzIGFueSBtaXN1bmRlcnN0YW5kaW5nLCBwbGVhc2UgY29ycmVjdCBt
+ZS4NCg0KQmFzZWQgb24gdGhlIGRpc2N1c3Npb24gd2l0aCBOZWVyYWouDQpXZSB3YW50IHRvIGJl
+IGFibGUgdG8gdXBkYXRlIEJNQyBmaXJtd2FyZSB3aXRob3V0IGhhdmluZyB0byB0cmlnZ2VyIHRo
+ZSBCTUMgcmVib290IGNvbW1hbmQgYmVmb3JlIHRoZSBzeXN0ZW0gZG8gZmxhc2hjcCBjb21tYW5k
+Lg0KSXQgbWVhbnMgdGhhdCB3ZSBjYW4gZG8gdGhlIGZsYXNoY3AgZmlyc3QuIElmIHRoZSBmbGFz
+aGNwIGNvbW1hbmQgY29tcGxldGUgYW5kIHN1Y2Nlc3MsIHRoZW4gd2UgZG8gdGhlIHJlc2V0IG1h
+bnVhbGx5Lg0KSXMgaXQgd29ya2FibGUgb24gY3VycmVudCB1cHN0cmVhbSBjb2RlPw0KSWYgbm90
+LCB3aHk/IEkgbWVhbnMgaXMgdGhlcmUgYW55IGFkdmFudGFnZSB0byB0cmlnZ2VyIHRoZSByZWJv
+b3QgYmVmb3JlIHdlIGRvIHRoZSBmbGFzaGNwLg0KDQpUaGFua3MsDQpCb25uaWUNCg0KLS0tLS1P
+cmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcytib25u
+aWVfbG89d2l3eW5uLmNvbUBsaXN0cy5vemxhYnMub3JnPiBPbiBCZWhhbGYgT2YgSm9zZXBoIFJl
+eW5vbGRzDQpTZW50OiBXZWRuZXNkYXksIERlY2VtYmVyIDExLCAyMDE5IDU6MTEgQU0NClRvOiBO
+ZWVyYWogTGFka2FuaSA8bmVsYWRrQG1pY3Jvc29mdC5jb20+OyBBbGV4YW5kZXIgVGVyZXNjaGVu
+a28gPGFsZWtzYW5kci52LnRlcmVzY2hlbmtvQGxpbnV4LmludGVsLmNvbT47IG9wZW5ibWNAbGlz
+dHMub3psYWJzLm9yZzsgUGF0cmljayBWZW50dXJlIDx2ZW50dXJlQGdvb2dsZS5jb20+DQpTdWJq
+ZWN0OiBSZTogW0VYVEVSTkFMXSBSZTogQk1DIHVwZGF0ZSB2aWEgVEZUUA0KDQpPbiAxMi8xMC8x
+OSAxMjo1OCBQTSwgTmVlcmFqIExhZGthbmkgd3JvdGU6DQo+IEFyZSB0aGVyZSBhbnkgdGhvdWdo
+dHMgdG8gZ2V0IHJpZCBvZiBCTUMgcmVzZXQgdG8gdHJpZ2dlciBGVyB1cGRhdGU/IEkgdW5kZXJz
+dGFuZCBGVyByZXNldCBpcyByZXF1aXJlZCBhZnRlciB0aGUgdXBkYXRlLg0KDQpJJ20gbm90IHN1
+cmUgSSB1bmRlcnN0YW5kIHRoZSBxdWVzdGlvbi7CoCBJIHRoaW5rIHRoZSBhbnN3ZXIgZGVwZW5k
+cyBvbiB0aGUgW1NvZnR3YXJlLlZlcnNpb25QdXJwb3NlXVsxXS4NCkZvciBWZXJzaW9uUHVycG9z
+ZT1CTUMgb3IgU3lzdGVtLCB0aGUgQk1DIG11c3QgYmUgcmVzZXQuDQpGb3IgVmVyc2lvblB1cnBv
+c2U9SG9zdCwgUFNVLCBvciBPdGhlciwgSSBkb24ndCBrbm93IHdoeSB0aGUgQk1DIHdvdWxkIG5l
+ZWQgdG8gYmUgcmVzZXQuDQoNCkRvIHlvdSB3YW50IHRvIGJlIGFibGUgdG8gdXBkYXRlIG5vbi1C
+TUMgZmlybXdhcmUgd2l0aG91dCBoYXZpbmcgdG8gcmVzZXQgdGhlIEJNQz8NCg0KLSBKb3NlcGgN
+Cg0KWzFdOiANCmh0dHBzOi8vYXBjMDEuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20v
+P3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZvcGVuYm1jJTJGcGhvc3Bob3ItZGJ1cy1p
+bnRlcmZhY2VzJTJGYmxvYiUyRm1hc3RlciUyRnh5eiUyRm9wZW5ibWNfcHJvamVjdCUyRlNvZnR3
+YXJlJTJGVmVyc2lvbi5pbnRlcmZhY2UueWFtbCZhbXA7ZGF0YT0wMiU3QzAxJTdDQm9ubmllX0xv
+JTQwd2l3eW5uLmNvbSU3QzlkNTZkNzAyY2VhNTRlNTJlMjk4MDhkNzdkYjYzMGExJTdDZGUwNzk1
+ZTBkN2MwNGVlYmI5YmJiYzk0ZDg5ODBkM2IlN0MxJTdDMCU3QzYzNzExNjA5Mzc2ODk0Nzc5MyZh
+bXA7c2RhdGE9dkFoM2tEejJvbnE4YjAlMkZseDFBeVBOeUZuZ3lQTGFnN2dvJTJGcnV3OW5FdFUl
+M0QmYW1wO3Jlc2VydmVkPTANCg0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBG
+cm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5jZXMrbmVsYWRrPW1pY3Jvc29mdC5jb21AbGlzdHMu
+b3psYWJzLm9yZz4gDQo+IE9uIEJlaGFsZiBPZiBKb3NlcGggUmV5bm9sZHMNCj4gU2VudDogTW9u
+ZGF5LCBEZWNlbWJlciA5LCAyMDE5IDU6MjUgUE0NCj4gVG86IEFsZXhhbmRlciBUZXJlc2NoZW5r
+byA8YWxla3NhbmRyLnYudGVyZXNjaGVua29AbGludXguaW50ZWwuY29tPjsgDQo+IG9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZw0KPiBTdWJqZWN0OiBbRVhURVJOQUxdIFJlOiBCTUMgdXBkYXRlIHZp
+YSBURlRQDQo+DQo+IE9uIDEyLzkvMTkgMTA6MDYgQU0sIEFsZXhhbmRlciBUZXJlc2NoZW5rbyB3
+cm90ZToNCj4+IE9uIDA2LURlYy0xOSAyMzo1MiwgSm9zZXBoIFJleW5vbGRzIHdyb3RlOg0KPj4+
+IEkgd2FzIHRoaW5raW5nIGFsb25nIHRoZSBsaW5lcyBvZiBhZGRpbmcgW1NGVFBdW10gKG9yIFND
+UCkgc3VwcG9ydCANCj4+PiBhbmQgdGhlbiBtaWdyYXRpbmcgZXhpc3RpbmcgVEZUUCB1c2VycyB0
+byB0aGUgbmV3IHNlY3VyZSBzb2x1dGlvbi4NCg0KWy4uLnNuaXAuLi5dDQoNCj4+IFllcywgdGhh
+dCBjb3VsZCBiZSBhIHNvbHV0aW9uIGZvciB0aGUgcHJvYmxlbSB3ZSBkaXNjdXNzLCBwcm92aWRp
+bmcgDQo+PiBib3RoIGludGVncml0eSBhbmQgY29uZmlkZW50aWFsaXR5LCB3aXRob3V0IGFueSBt
+YWpvciBPcGVuQk1DIA0KPj4gZGV2ZWxvcG1lbnQgbmVjZXNzYXJ5IC0gYnV0IGl0IHdvdWxkIG1l
+YW4gbW9yZSBvcGVyYXRpb25hbCBidXJkZW4gZm9yIA0KPj4gQk1DIGFkbWlucy4gVGhlIHByb2Js
+ZW0gd2l0aCBTQ1AvU0ZUUCBpbiB0aGlzIGNvbnRleHQgaXMgdGhhdCBmb3IgDQo+PiB0aGlzIHRv
+IHdvcmsgaW4gdGhlIHNhbWUgbWFubmVyIGFzIFRGVFAsIHRoZSBCTUMgbXVzdCBiZSBhbiBTU0gg
+DQo+PiBjbGllbnQgLSBpLmUuIGhhdmUgc29tZSBzb3J0IG9mIGlkZW50aXR5L2NyZWRlbnRpYWxz
+IGZvciB0aGUgU0NQL1NGVFAgDQo+PiBzZXJ2ZXIgcHJvdmlzaW9uZWQgZmlyc3QuIFRoYXQgbWln
+aHQgbm90IGJlIHRoZSBlYXNpZXN0IHNvbHV0aW9uIHRvIA0KPj4gc2V0dXAsIGJ1dCBpdCdzIG9m
+IGNvdXJzZSBwb3NzaWJsZSBhbmQgY2FuIGJlIGF1dG9tYXRlZCBpZiBPcGVuQk1DIA0KPj4gcHJv
+dmlkZXMgcmVzcGVjdGl2ZSBjb25maWcga25vYnMuDQo+Pg0KPj4gRXhpc3Rpbmcgd2F5cyB3ZSBo
+YXZlIGluIGNvZGUtdXBkYXRlLm1kIGVpdGhlciBkb24ndCByZXF1aXJlIA0KPj4gY3JlZGVudGlh
+bHMgKFRGVFApLCBzbyBiZWluZyBhIGNsaWVudCBpcyBlYXN5LCBvciBhcmUgbm90IG1ha2luZyBh
+IA0KPj4gImNsaWVudCIgZnJvbSBCTUMsIGl0J3MgdGhlIGFkbWluIHdobyB1cGxvYWRzIHN0dWZm
+IChTQ1AvUkVTVCkuDQo+IFllcywgdGhhdCdzIHdoYXQgSSB3YXMgdGhpbmtpbmcuwqAgKEFuZCBu
+bywgSSBhbSBub3QgZ29pbmcgdG8gcmVjb21tZW5kIA0KPiBzZXR0aW5nIHVwIGEgU0NQIG9yIFNG
+VFAgc2VydmVyIHRoYXQgYWxsb3dzIGFub255bW91cyBhY2Nlc3MuKQ0KPg0KPiBUaGlzIGhpZ2hs
+aWdodCB0aGUgbmVlZCBmb3IgT3BlbkJNQyB0byBwdXQgdG9nZXRoZXIgYSBndWlkZSB0byBwcm92
+aXNpb25pbmcgeW91ciBCTUMuwqDCoMKgIFN1Y2ggYXMgZ3VpZGUgd291bGQgZ2l2ZSB1cyBhIHBs
+YWNlIHRvIHRhbGsgYWJvdXQgdXBsb2FkaW5nIHRvIHRoZSBCTUMgU1NIIGNsaWVudCBjZXJ0aWZp
+Y2F0ZXMgbmVlZGVkIHRvIGFjY2VzcyBhbmQgZG93bmxvYWQgdGhlIGZpcm13YXJlIGltYWdlcy4N
+Cj4NCj4gLSBKb3NlcGgNCj4NCj4+IHJlZ2FyZHMsDQo+PiBBbGV4YW5kZXINCj4+DQoNCg==
