@@ -2,65 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6ABBB11BEBF
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 22:01:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE2BB11BEBD
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 22:00:42 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Y8W20HBwzDqlp
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 08:01:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Y8Th2VB4zDqyv
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 08:00:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c31;
- helo=mail-yw1-xc31.google.com; envelope-from=jandraara@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="a2SnlTnA"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc31.google.com (mail-yw1-xc31.google.com
- [IPv6:2607:f8b0:4864:20::c31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Y8Rb2Cq6zDqn4
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Y8Rb2FJpzDqsN
  for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 07:58:50 +1100 (AEDT)
-Received: by mail-yw1-xc31.google.com with SMTP id i126so9502002ywe.7
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 12:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=rgdF3/+RxuFnrs9k3BqyHvwPvlYauqMi5IB0ETtj0II=;
- b=a2SnlTnAfbO/gzSIMPIUj7ReiyzSwbBS24augF7FeO+MSo64z7HWwYMB9CKWbwOtqF
- 7GdhHocpTjJ/I9ptchjBAU03vedh+qN6b0MuaKucXdVW76SbeycXVPsN7AZNmufu+QdF
- VwDXS6G36B1iTfPuToJAkN5t2hi2rWzOFLzra/AOz49lfHa8kkpXW61BJT/EQml7SRg4
- 34QMUKZA3o2Kfo7B9fm/OGq0Zx2Kl4o19ryhgmNw0WgSRpHSKzkB3TFIXEha3+SQ6Xl5
- XQYIGboGParVTRhw1QT27prE3F3lWNxuvzQerjn6ArnCFir/LxyY9uDUjBnu38HW/2hv
- eWlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=rgdF3/+RxuFnrs9k3BqyHvwPvlYauqMi5IB0ETtj0II=;
- b=kwOrVGbjy9TjWsARgLfS0ZPT08y9zSOHSjID/EHf3hqKVxiiPV1Z6pStaEOix/bZT6
- LyCortM5DUWZeRPPYEUaJ+bKKaiRCC30/sg5wmOl+OX39jWRfowWy+AFmF8RF72wvkDy
- O8pA7LQnrB2kBVuQIeV9NuzIft/um9r/6Zf1hB0beZBYhXLJqcfcziihEkcE3e5fii8E
- D5TaQbevO44cLRf30TQuJO8lPRRjmmdUNkYMfsposAkLNt9f5XDYzsFnW4FtMZFnq7Cj
- o84xahJ6jEFT9kAcY8fNoxeSdGOm8QyjCTJCbs844JjZwDFRFymt41+4ZgNYqdup6dyo
- hGFA==
-X-Gm-Message-State: APjAAAUd+3Jw9yScYBOGWIEHt3CdUr8JoJXMgMzUyFQ6bQKI2YjKWEWt
- xOfTbNaXd2/L4pURLa6LZ7tQKyLH+ne+PCxBmzo=
-X-Google-Smtp-Source: APXvYqwPHp7UIWLNn/W1D2wfma4Ls+eUU+UGxAnYsbW9xwfsQNQX9+cYAl251bbn9mbQnLl2KYDn5ibltoCdMDwW91k=
-X-Received: by 2002:a81:3e1b:: with SMTP id l27mr1381854ywa.503.1576097922994; 
- Wed, 11 Dec 2019 12:58:42 -0800 (PST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xBBKvrK2040404
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:58:46 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wu4t6dud1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:58:45 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xBBKtUFI003893
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:50 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma01wdc.us.ibm.com with ESMTP id 2wr3q6rbcx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:50 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xBBKwjpw50201084
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:45 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DFE7EB2066
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:44 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B5250B205F
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:44 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.85.184.171])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:58:44 +0000 (GMT)
+Subject: Re: Security Working Group meeting Wednesday December 11
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <d402bdde-8614-04d3-426d-a704efde5ca8@linux.ibm.com>
+Message-ID: <d50ae1c5-9b6e-e09a-2b2f-2c90b04b2ac7@linux.ibm.com>
+Date: Wed, 11 Dec 2019 14:58:43 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-References: <OFD864BB65.24B0BA6C-ON002584C7.007F35B7-002584C7.007F8F78@notes.na.collabserv.com>
-In-Reply-To: <OFD864BB65.24B0BA6C-ON002584C7.007F35B7-002584C7.007F8F78@notes.na.collabserv.com>
-From: Jandra A <jandraara@gmail.com>
-Date: Wed, 11 Dec 2019 14:58:32 -0600
-Message-ID: <CAMTupoSUX641CPqrmekdEj4V1bE4GT-EGkxrf229jBi8O_QTbw@mail.gmail.com>
-Subject: GUI Mockups - IBM proposal
-To: Derick Montague <Derick.Montague@ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000d4d56a059973e47a"
+In-Reply-To: <d402bdde-8614-04d3-426d-a704efde5ca8@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-11_06:2019-12-11,2019-12-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ mlxscore=0 mlxlogscore=973 malwarescore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912110171
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,68 +85,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d4d56a059973e47a
-Content-Type: text/plain; charset="UTF-8"
+On 12/9/19 7:29 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday December 11 at 10:00am PDT.
+The scheduled meeting in two weeks (2019-12-25) is cancelled due to US 
+holidays.
+The next meeting is on for 2020-01-08.
+
+See my notes from the meeting in the google doc.
+
+The main discussion was about secure firmware provisioning and update 
+scenarios.
+
+- Joseph
 
 >
-> - Jandra and Kathy are creating mockups of the Server LED page that will
-> be used to find consensus on the differences in design of the global header
-> and primary navigation components.
+> Access, agenda, and notes are in the wiki:
 >
+> https://github.com/openbmc/openbmc/wiki/Security-working-group
+>
+> - Joseph
 
-
-Hey Kathy,
-
-In InVision are mockups for what IBM would like the UI to look like in an
-ideal world. We mocked up Server Overview as well to make sure the text
-hierarchy would work on pages with more content.
-
-Server LED:
-https://ibm.invisionapp.com/share/QANZHJKP74E#/319357713_ServerLED
-<https://ibm.invisionapp.com/share/QANZHJKP74E#/319357713_ServerLED>
-Server Overview:
-https://ibm.invisionapp.com/share/QANZHJKP74E#/319357712_Overview
-<https://ibm.invisionapp.com/share/QANZHJKP74E#/319357712_Overview>
-
-During the workgroup last week, we discussed the out of box Bootstrap
-components would need to be styled so that the UI meets industry standards,
-even in the upstream branch.
-
-We realize this is an IBM centric design, and are looking forward to seeing
-what components of this we can agree on to be merged upstream, and which
-will have to be left for downstream theming.
-
-Regards,
-Jandra A
-
---000000000000d4d56a059973e47a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">- Jandra and Kathy are creating mockups of the Server LE=
-D page that will be used to find consensus on the differences in design of =
-the global header and primary navigation components.<br></blockquote><div><=
-br></div><div>=C2=A0</div><div>Hey Kathy,=C2=A0</div><div><br></div><div>In=
- InVision are mockups for what IBM would like the UI=C2=A0to look like in a=
-n ideal world. We mocked up Server Overview as well to make sure the text h=
-ierarchy would work on pages with more content.=C2=A0</div><div><br></div><=
-div>Server LED: <a href=3D"https://ibm.invisionapp.com/share/QANZHJKP74E#/3=
-19357713_ServerLED">https://ibm.invisionapp.com/share/QANZHJKP74E#/31935771=
-3_ServerLED=C2=A0</a><br></div><div>Server Overview:=C2=A0<a href=3D"https:=
-//ibm.invisionapp.com/share/QANZHJKP74E#/319357712_Overview">https://ibm.in=
-visionapp.com/share/QANZHJKP74E#/319357712_Overview=C2=A0</a></div><div><br=
-></div><div>During the workgroup last week, we discussed the out of box Boo=
-tstrap components would need to be styled so that the UI meets industry sta=
-ndards, even in the upstream branch.</div><div><br></div><div>We realize th=
-is is an IBM centric design, and are looking forward to seeing what compone=
-nts of this we can agree on to be merged upstream, and which will have to b=
-e left for downstream theming.=C2=A0</div><div><br></div><div>Regards,</div=
-><div>Jandra A</div><div><br></div></div></div>
-
---000000000000d4d56a059973e47a--
