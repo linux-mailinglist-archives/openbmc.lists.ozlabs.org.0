@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B9C611C0B3
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 00:43:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D9C3711C0B4
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 00:44:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47YD5Z4JFfzDqwD
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 10:43:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47YD6l1DM1zDqgN
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 10:44:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,18 +18,18 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Y6rG4VW5zDqfj
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 06:46:38 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Y6rH753NzDqfj
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 06:46:39 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2019 11:46:38 -0800
+ 11 Dec 2019 11:46:39 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="216033844"
+X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="216033852"
 Received: from yoojae-mobl1.amr.corp.intel.com (HELO ubuntu.jf.intel.com)
  ([10.7.153.143])
- by orsmga003.jf.intel.com with ESMTP; 11 Dec 2019 11:46:38 -0800
+ by orsmga003.jf.intel.com with ESMTP; 11 Dec 2019 11:46:39 -0800
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Rob Herring <robh+dt@kernel.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -57,9 +57,9 @@ To: Rob Herring <robh+dt@kernel.org>,
  Thomas Gleixner <tglx@linutronix.de>, Juergen Gross <jgross@suse.com>,
  Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>,
  Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v11 07/14] dt-bindings: peci: add NPCM PECI documentation
-Date: Wed, 11 Dec 2019 11:46:17 -0800
-Message-Id: <20191211194624.2872-8-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH v11 08/14] ARM: dts: npcm7xx: Add PECI node
+Date: Wed, 11 Dec 2019 11:46:18 -0800
+Message-Id: <20191211194624.2872-9-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
 References: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
@@ -83,8 +83,7 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tomer Maimon <tmaimon77@gmail.com>
 
-Added device tree binding documentation for Nuvoton BMC
-NPCM Platform Environment Control Interface(PECI).
+This commit adds PECI node for npcm7xx.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
@@ -92,118 +91,43 @@ Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Changes since v10:
 - Newly added in v11.
 
- .../devicetree/bindings/peci/peci-npcm.yaml   | 102 ++++++++++++++++++
- 1 file changed, 102 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/peci/peci-npcm.yaml
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/peci/peci-npcm.yaml b/Documentation/devicetree/bindings/peci/peci-npcm.yaml
-new file mode 100644
-index 000000000000..bcd5626e68e7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/peci/peci-npcm.yaml
-@@ -0,0 +1,102 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/peci/peci-npcm.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+index d2d0761295a4..526c56770388 100644
+--- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
++++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+@@ -116,6 +116,13 @@
+ 			interrupt-parent = <&gic>;
+ 			ranges = <0x0 0xf0000000 0x00300000>;
+ 
++			peci: bus@100000 {
++				compatible = "simple-bus";
++				#address-cells = <1>;
++				#size-cells = <1>;
++				ranges = <0x0 0x100000 0x200>;
++			};
 +
-+title: Nuvoton NPCM PECI Bus Device Tree Bindings
+ 			timer0: timer@8000 {
+ 				compatible = "nuvoton,npcm750-timer";
+ 				interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+@@ -185,3 +192,15 @@
+ 		};
+ 	};
+ };
 +
-+maintainers:
-+  - Tomer Maimon <tmaimon77@gmail.com>
-+
-+properties:
-+  compatible:
-+    const: nuvoton,npcm750-peci # for the NPCM7XX BMC.
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    # Required to define a client address.
-+    const: 1
-+
-+  "#size-cells":
-+    # Required to define a client address.
-+    const: 0
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    # PECI reference clock.
-+    maxItems: 1
-+
-+  cmd-timeout-ms:
-+    # Command timeout in units of ms.
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+      - minimum: 1
-+        maximum: 60000
-+        default: 1000
-+
-+  pull-down:
-+    description: |
-+      Defines the PECI I/O internal pull down operation.
-+        0: pull down always enable
-+        1: pull down only during transactions.
-+        2: pull down always disable.
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+      - minimum: 0
-+        maximum: 2
-+        default: 0
-+
-+  host-neg-bit-rate:
-+    description: |
-+      Define host negotiation bit rate divider.
-+      the host negotiation bit rate calculate with formula:
-+      clock frequency[Hz] / [4 x {host-neg-bit-rate + 1}]
-+    allOf:
-+      - $ref: /schemas/types.yaml#/definitions/uint32
-+      - minimum: 7
-+        maximum: 31
-+        default: 15
-+
-+  high-volt-range:
-+    description: |
-+      Adapts PECI I/O interface to voltage range.
-+        0: PECI I/O interface voltage range of 0.8-1.06V (default)
-+        1: PECI I/O interface voltage range of 0.95-1.26V
-+    type: boolean
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - interrupts
-+  - clocks
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-+    peci: bus@100000 {
-+        compatible = "simple-bus";
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges = <0x0 0x100000 0x200>;
-+
-+        peci0: peci-bus@0 {
-+            compatible = "nuvoton,npcm750-peci";
-+            reg = <0x0 0x200>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            interrupts = <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&clk NPCM7XX_CLK_APB3>;
-+            cmd-timeout-ms = <1000>;
-+            pull-down = <0>;
-+            host-neg-bit-rate = <15>;
-+        };
-+    };
-+...
++&peci {
++	peci0: peci-bus@0 {
++		compatible = "nuvoton,npcm750-peci";
++		reg = <0x0 0x200>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		interrupts = <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
++		clocks = <&clk NPCM7XX_CLK_APB3>;
++		status = "disabled";
++	};
++};
 -- 
 2.17.1
 
