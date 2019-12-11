@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8820A11C09D
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 00:34:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 36D0D11C0A1
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 00:35:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47YCtx69GzzDqvP
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 10:34:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47YCwG59xRzDqhK
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 10:35:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,18 +18,18 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Y6rC40D7zDqfj
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Y6rC5F4KzDqrW
  for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 06:46:35 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga003.jf.intel.com ([10.7.209.27])
  by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2019 11:46:29 -0800
+ 11 Dec 2019 11:46:31 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="216033795"
+X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="216033805"
 Received: from yoojae-mobl1.amr.corp.intel.com (HELO ubuntu.jf.intel.com)
  ([10.7.153.143])
- by orsmga003.jf.intel.com with ESMTP; 11 Dec 2019 11:46:29 -0800
+ by orsmga003.jf.intel.com with ESMTP; 11 Dec 2019 11:46:30 -0800
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Rob Herring <robh+dt@kernel.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -57,9 +57,10 @@ To: Rob Herring <robh+dt@kernel.org>,
  Thomas Gleixner <tglx@linutronix.de>, Juergen Gross <jgross@suse.com>,
  Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>,
  Tomer Maimon <tmaimon77@gmail.com>
-Subject: [PATCH v11 01/14] dt-bindings: Add PECI subsystem document
-Date: Wed, 11 Dec 2019 11:46:11 -0800
-Message-Id: <20191211194624.2872-2-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH v11 02/14] Documentation: ioctl: Add ioctl numbers for PECI
+ subsystem
+Date: Wed, 11 Dec 2019 11:46:12 -0800
+Message-Id: <20191211194624.2872-3-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
 References: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
@@ -77,223 +78,51 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
  Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-doc@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+ Vernon Mauery <vernon.mauery@linux.intel.com>, openbmc@lists.ozlabs.org,
+ James Feist <james.feist@linux.intel.com>,
+ Jason M Biils <jason.m.bills@linux.intel.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds PECI subsystem document.
+This commit updates ioctl-number.rst to reflect ioctl numbers used
+by the PECI subsystem.
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Jeffery <andrew@aj.id.au>
-Cc: Joel Stanley <joel@jms.id.au>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kishon Vijay Abraham I <kishon@ti.com>
+Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Cc: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+Cc: Darrick J. Wong <darrick.wong@oracle.com>
+Cc: Tomohiro Kusumi <kusumi.tomohiro@gmail.com>
+Cc: Eric Sandeen <sandeen@redhat.com>
+Cc: Frederic Barrat <fbarrat@linux.vnet.ibm.com>
+Cc: Bryant G. Ly <bryantly@linux.vnet.ibm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: James Feist <james.feist@linux.intel.com>
+Cc: Jason M Biils <jason.m.bills@linux.intel.com>
+Cc: Vernon Mauery <vernon.mauery@linux.intel.com>
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 ---
 Changes since v10:
-- Changed documents format to DT schema format so I dropped all review tags.
-  Please review it again.
+- Moved the change from 'Documentation/ioctl/ioctl-number.txt.
 
- .../devicetree/bindings/peci/peci-bus.yaml    | 129 ++++++++++++++++++
- .../devicetree/bindings/peci/peci-client.yaml |  54 ++++++++
- 2 files changed, 183 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/peci/peci-bus.yaml
- create mode 100644 Documentation/devicetree/bindings/peci/peci-client.yaml
+ Documentation/userspace-api/ioctl/ioctl-number.rst | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/peci/peci-bus.yaml b/Documentation/devicetree/bindings/peci/peci-bus.yaml
-new file mode 100644
-index 000000000000..b085e67089cf
---- /dev/null
-+++ b/Documentation/devicetree/bindings/peci/peci-bus.yaml
-@@ -0,0 +1,129 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/peci/peci-bus.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Generic Device Tree Bindings for PECI bus
-+
-+maintainers:
-+  - Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-+
-+description: |
-+  PECI (Platform Environment Control Interface) is a one-wire bus interface that
-+  provides a communication channel from Intel processors and chipset components
-+  to external monitoring or control devices. PECI is designed to support the
-+  following sideband functions:
-+
-+  * Processor and DRAM thermal management
-+    - Processor fan speed control is managed by comparing Digital Thermal
-+      Sensor (DTS) thermal readings acquired via PECI against the
-+      processor-specific fan speed control reference point, or TCONTROL. Both
-+      TCONTROL and DTS thermal readings are accessible via the processor PECI
-+      client. These variables are referenced to a common temperature, the TCC
-+      activation point, and are both defined as negative offsets from that
-+      reference.
-+    - PECI based access to the processor package configuration space provides
-+      a means for Baseboard Management Controllers (BMC) or other platform
-+      management devices to actively manage the processor and memory power
-+      and thermal features.
-+
-+  * Platform Manageability
-+    - Platform manageability functions including thermal, power, and error
-+      monitoring. Note that platform 'power' management includes monitoring
-+      and control for both the processor and DRAM subsystem to assist with
-+      data center power limiting.
-+    - PECI allows read access to certain error registers in the processor MSR
-+      space and status monitoring registers in the PCI configuration space
-+      within the processor and downstream devices.
-+    - PECI permits writes to certain registers in the processor PCI
-+      configuration space.
-+
-+  * Processor Interface Tuning and Diagnostics
-+    - Processor interface tuning and diagnostics capabilities
-+      (Intel Interconnect BIST). The processors Intel Interconnect Built In
-+      Self Test (Intel IBIST) allows for infield diagnostic capabilities in
-+      the Intel UPI and memory controller interfaces. PECI provides a port to
-+      execute these diagnostics via its PCI Configuration read and write
-+      capabilities.
-+
-+  * Failure Analysis
-+    - Output the state of the processor after a failure for analysis via
-+      Crashdump.
-+
-+  PECI uses a single wire for self-clocking and data transfer. The bus
-+  requires no additional control lines. The physical layer is a self-clocked
-+  one-wire bus that begins each bit with a driven, rising edge from an idle
-+  level near zero volts. The duration of the signal driven high depends on
-+  whether the bit value is a logic '0' or logic '1'. PECI also includes
-+  variable data transfer rate established with every message. In this way, it
-+  is highly flexible even though underlying logic is simple.
-+
-+  The interface design was optimized for interfacing between an Intel
-+  processor and chipset components in both single processor and multiple
-+  processor environments. The single wire interface provides low board
-+  routing overhead for the multiple load connections in the congested routing
-+  area near the processor and chipset components. Bus speed, error checking,
-+  and low protocol overhead provides adequate link bandwidth and reliability
-+  to transfer critical device operating conditions and configuration
-+  information.
-+
-+  PECI subsystem provides single or multiple bus nodes support so each bus can
-+  have one adapter node and multiple device specific client nodes that can be
-+  attached to the PECI bus so each processor client's features can be supported
-+  by the client node through an adapter connection in the bus.
-+
-+properties:
-+  compatible:
-+    const: simple-bus
-+
-+  "#address-cells":
-+    # Required to define bus device control resource address.
-+    const: 1
-+
-+  "#size-cells":
-+    # Required to define bus device control resource address.
-+    const: 1
-+
-+  ranges: true
-+
-+required:
-+  - compatible
-+  - "#address-cells"
-+  - "#size-cells"
-+  - ranges
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/ast2600-clock.h>
-+    peci: bus@1e78b000 {
-+        compatible = "simple-bus";
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges = <0x0 0x1e78b000 0x200>;
-+
-+        peci0: peci-bus@0 {
-+            compatible = "aspeed,ast2600-peci";
-+            reg = <0x0 0x100>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            interrupts = <GIC_SPI 38 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&syscon ASPEED_CLK_GATE_REF0CLK>;
-+            resets = <&syscon ASPEED_RESET_PECI>;
-+            clock-frequency = <24000000>;
-+        };
-+
-+        // Just an example. ast2600 doesn't have a second PECI module actually.
-+        peci1: peci-bus@100 {
-+            compatible = "aspeed,ast2600-peci";
-+            reg = <0x100 0x100>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            interrupts = <GIC_SPI 39 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&syscon ASPEED_CLK_GATE_REF0CLK>;
-+            resets = <&syscon ASPEED_RESET_PECI>;
-+            clock-frequency = <24000000>;
-+        };
-+    };
-+...
-diff --git a/Documentation/devicetree/bindings/peci/peci-client.yaml b/Documentation/devicetree/bindings/peci/peci-client.yaml
-new file mode 100644
-index 000000000000..fc7c4110e929
---- /dev/null
-+++ b/Documentation/devicetree/bindings/peci/peci-client.yaml
-@@ -0,0 +1,54 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/peci/peci-client.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Generic Device Tree Bindings for PECI clients
-+
-+maintainers:
-+  - Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - intel,peci-client
-+
-+  reg:
-+    description: |
-+      Address of a client CPU. According to the PECI specification, client
-+      addresses start from 0x30.
-+    maxItems: 1
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/ast2600-clock.h>
-+    peci: bus@1e78b000 {
-+        compatible = "simple-bus";
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges = <0x0 0x1e78b000 0x60>;
-+
-+        peci0: peci-bus@0 {
-+            compatible = "aspeed,ast2600-peci";
-+            reg = <0x0 0x100>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            interrupts = <GIC_SPI 38 IRQ_TYPE_LEVEL_HIGH>;
-+            clocks = <&syscon ASPEED_CLK_GATE_REF0CLK>;
-+            resets = <&syscon ASPEED_RESET_PECI>;
-+            clock-frequency = <24000000>;
-+
-+            peci-client@30 {
-+                compatible = "intel,peci-client";
-+                reg = <0x30>;
-+            };
-+
-+            peci-client@31 {
-+                compatible = "intel,peci-client";
-+                reg = <0x31>;
-+            };
-+        };
-+    };
-+...
+diff --git a/Documentation/userspace-api/ioctl/ioctl-number.rst b/Documentation/userspace-api/ioctl/ioctl-number.rst
+index 4ef86433bd67..ce99968032f7 100644
+--- a/Documentation/userspace-api/ioctl/ioctl-number.rst
++++ b/Documentation/userspace-api/ioctl/ioctl-number.rst
+@@ -338,6 +338,8 @@ Code  Seq#    Include File                                           Comments
+ 0xB4  00-0F  linux/gpio.h                                            <mailto:linux-gpio@vger.kernel.org>
+ 0xB5  00-0F  uapi/linux/rpmsg.h                                      <mailto:linux-remoteproc@vger.kernel.org>
+ 0xB6  all    linux/fpga-dfl.h
++0xB7  all    uapi/linux/peci-ioctl.h                                 PECI subsystem
++                                                                     <mailto:jae.hyun.yoo@linux.intel.com>
+ 0xC0  00-0F  linux/usb/iowarrior.h
+ 0xCA  00-0F  uapi/misc/cxl.h
+ 0xCA  10-2F  uapi/misc/ocxl.h
 -- 
 2.17.1
 
