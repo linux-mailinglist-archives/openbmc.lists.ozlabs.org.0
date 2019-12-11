@@ -2,104 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F6CD11BCAC
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 20:14:16 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Y66s5W0dzDqv6
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 06:14:13 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 988E811BDB2
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 21:15:09 +0100 (CET)
+Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Y7T56340zDqv8
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 07:15:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=microsoft.com (client-ip=40.107.70.121;
- helo=nam04-sn1-obe.outbound.protection.outlook.com;
- envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
- header.from=microsoft.com
-Received: from NAM04-SN1-obe.outbound.protection.outlook.com
- (mail-eopbgr700121.outbound.protection.outlook.com [40.107.70.121])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Y65n4SCrzDqsR
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 06:13:13 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=l8d9aKNPiEgrAlaRnjvqVNyZcXDuR7nlskC8sBWUMvCZfuDIMIB0bRku16hoTZ3X/OvSnVV9q6tVke5Q7eCLQNxR88iMOEUPFKHuaQlkXGu1/OgJUmA+O+PONj6ZEjL5O6VMfFMCGmetgaMhgtQ9WxQgjNuuagMlQVDEyPCXnOAMlw44rUZqUORQQfYOJGUaVEHQDNA6h92fX7xEiTQpiVBHdFnYrR9dzeHnb9RCIC/bOWe3SKRrGZ0we0BeCaR4+mn1xbKtdEKJIqCbM71rUbz2fUnMiaVRibMcj/WMmk5EFOZ4kT6MOzpX62zSue20PL5xb9kRgJ8cj4y++Ilvtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kz/y2RIFo/8AndWXHDbB9mlZKolcNScvpxH4srI1HPY=;
- b=YgCn6/I9gpIyd+vzKMX8r8nSAqbykLdya2qutJtEW27+tKxl4tu0sADqw3k63SQwXcrLerLGgdhHcxHXANDjnKG3YFJ9v4KSe4H6HrDgTam1chmO7mBkIed+kro1L60z024XThffG73Qy1WtJU00XHBXHPFsE8PLOgbf3UpW7qhxkwpLHiWLbP6QcE+0M473ux9jaDte16rDIjFK0GmHaLg9in8xcARqk5ZfKXSzf8wmVBoTqDp1NPOkCeW3h2mSuIzENtA3s9cFZEO8w7Yv+IT9L84J43xzWpXKemeZWuQ0GVshwcKIB2Ad6drotRJJTZiXfR8pERaw70OOh/zKHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kz/y2RIFo/8AndWXHDbB9mlZKolcNScvpxH4srI1HPY=;
- b=OHYRL4o2XdotIy09mmzhkawOT/6AmIA6rx678Ft4Tzbx/SpGfV4SulMZCMIRJ6RNQhWSgWwdYfJ9mQ6Og1RTOeeu+mBCZn9qjfpKcHlmB0PyqFQENeT8HBO7OSMV77YZRoNqbMfVTjsvKsVPUX4vsv2GsRSJ4O/QQ4glOSOQxx8=
-Received: from DM6PR21MB1388.namprd21.prod.outlook.com (20.180.21.213) by
- DM6PR21MB1402.namprd21.prod.outlook.com (20.180.21.144) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2559.0; Wed, 11 Dec 2019 19:13:03 +0000
-Received: from DM6PR21MB1388.namprd21.prod.outlook.com
- ([fe80::a4df:ed8e:9432:60d]) by DM6PR21MB1388.namprd21.prod.outlook.com
- ([fe80::a4df:ed8e:9432:60d%3]) with mapi id 15.20.2538.016; Wed, 11 Dec 2019
- 19:13:03 +0000
-From: Neeraj Ladkani <neladk@microsoft.com>
-To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: [EXTERNAL] Fwd: Redfish Dump Service Proposal
-Thread-Topic: [EXTERNAL] Fwd: Redfish Dump Service Proposal
-Thread-Index: AQHVsBoPd69fpezV3EisJj37EvumTqe1TYXQ
-Date: Wed, 11 Dec 2019 19:13:03 +0000
-Message-ID: <DM6PR21MB1388A8A92991C334843FC2F6C85A0@DM6PR21MB1388.namprd21.prod.outlook.com>
-References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
- <1790482b-27ad-7042-83ef-f9819966b4a4@linux.vnet.ibm.com>
-In-Reply-To: <1790482b-27ad-7042-83ef-f9819966b4a4@linux.vnet.ibm.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2019-12-11T19:13:02.2181032Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=a28ea00a-4d7c-495d-b162-45e4637f481b;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=neladk@microsoft.com; 
-x-originating-ip: [2001:4898:80e8:0:c9c:727f:681c:4f6c]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 2287965b-ade3-4a6a-5ab4-08d77e6e2553
-x-ms-traffictypediagnostic: DM6PR21MB1402:
-x-microsoft-antispam-prvs: <DM6PR21MB140286AB460FFBB5B97AC82DC85A0@DM6PR21MB1402.namprd21.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2512;
-x-forefront-prvs: 024847EE92
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(39860400002)(396003)(376002)(346002)(366004)(136003)(53754006)(189003)(199004)(86362001)(478600001)(7696005)(71200400001)(66946007)(8990500004)(66476007)(66556008)(66446008)(55016002)(64756008)(76116006)(9686003)(316002)(110136005)(52536014)(966005)(81166006)(10290500003)(6506007)(186003)(5660300002)(81156014)(8936002)(16799955002)(33656002)(2906002)(53546011)(8676002);
- DIR:OUT; SFP:1102; SCL:1; SRVR:DM6PR21MB1402;
- H:DM6PR21MB1388.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: k7OXuQbfBruBzUsuWHllxMQnji5JLbiSU1dC1K9lVkjTOf+Yj9r3eMcmA9cWNKI2ZyrXDo9qkgR2SJ+hzVTiCbYmtGIWb88Lfv29wGroKO45nY8qePcU3m9WpRwaBs8aT0VJSJjJtvmgT0LeX7nJDlfc7FEFBVbF48EM1MTCIWT2VMMe0eYTx4X4zJkcnGBB2WFZ50Q5uuhKEd3+XCWxbep2FG2apPkKV/7Xg461mLxtlSL3e4HgIMBBTCrPeq6JO9UPsN0cPbYycpDxKuTshgLziH0YbxHxHl42V2T8hVa1Yv6o+9X2MCN/5RUsrlxyQoUL9HM6JSlXFKqNsiL62H/7Ve3nt+N6dyvAwLCHXudiolB4mfH3c1soiFvJZg/B4acGkv1QrkGbJ6lJwzVfgMXZvNmzw0av1LDBMZWTbgl2OoiZ9b4+OlXbmOOfHL71Hn9tqiBRvNdsow+1KK+VF6XEeTXZbJdBmufdJ7bAYzysEpF+9PR/nvuFGHs0lbs2aajH3bQf8xwSbwShzgxBYf/RXWcYekhxa73DP7oDGjY=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Y7SB3NTszDqrV
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 07:14:15 +1100 (AEDT)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xBBK4ICB117735
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:14:07 -0500
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wu4t6crqf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:14:07 -0500
+Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id xBBK4VTT119237
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 15:14:07 -0500
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2wu4t6crq7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Dec 2019 15:14:07 -0500
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id xBBKCEL1023956;
+ Wed, 11 Dec 2019 20:14:06 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma05wdc.us.ibm.com with ESMTP id 2wtdq7b5f2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Dec 2019 20:14:06 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xBBKE6sp43385216
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Dec 2019 20:14:06 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 40490B2064;
+ Wed, 11 Dec 2019 20:14:06 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 057CBB205F;
+ Wed, 11 Dec 2019 20:14:05 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.85.184.171])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Wed, 11 Dec 2019 20:14:05 +0000 (GMT)
+Subject: Re: SLPD multicast support
+To: Deng Tyler <tyler.sabdon@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAO9PYRL-M2ZjPr6R+V+isDiFttkpbp2hWNHQVsPxFOV6G+mtOA@mail.gmail.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <bdb246cb-d27d-8a0a-8924-46b8838df46e@linux.ibm.com>
+Date: Wed, 11 Dec 2019 14:14:05 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2287965b-ade3-4a6a-5ab4-08d77e6e2553
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2019 19:13:03.2592 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: q3Ss6LWzyayGoplBxwFFWU4gERtn4zux4X+A6pTFWakewOshxWIyQjIoRn56gpQdypbkLbPaG6PGtMgEKKSsNQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1402
+In-Reply-To: <CAO9PYRL-M2ZjPr6R+V+isDiFttkpbp2hWNHQVsPxFOV6G+mtOA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-11_06:2019-12-11,2019-12-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ mlxscore=0 mlxlogscore=999 malwarescore=0 adultscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-1912110166
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,27 +96,24 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Q2FuIHlvdSBzZW5kIGV4dGVybmFsIGxpbmsgZm9yIGZvbGtzIHdobyBhcmUgbm90IG1lbWJlciBv
-ZiBETVRGIGZvcnVtLiANCg0KTmVlcmFqDQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNl
-cytuZWxhZGs9bWljcm9zb2Z0LmNvbUBsaXN0cy5vemxhYnMub3JnPiBPbiBCZWhhbGYgT2YgUmF0
-YW4gR3VwdGENClNlbnQ6IFdlZG5lc2RheSwgRGVjZW1iZXIgMTEsIDIwMTkgMzo1NiBBTQ0KVG86
-IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3ViamVjdDogW0VYVEVSTkFMXSBGd2Q6IFJlZGZp
-c2ggRHVtcCBTZXJ2aWNlIFByb3Bvc2FsDQoNCkhpIEFsbCwNCg0KTGFzdCBlbWFpbCBJIHNlbnQg
-b24gdGhlIHByb3Bvc2FsIGZvciBSZWRmaXNoIER1bXAgc2VydmljZSBkaWQgbm90IGdldCBkZWxp
-dmVyZWQgZHVlIHRvIHRoZSBhdHRhY2htZW50IHNpemUgcmVzdHJpY3Rpb24uIA0KDQpJIGhhdmUg
-dXBsb2FkIHRoZSBzYW1lIG9udG8gRE1URi4gUGxlYXNlIHRha2UgYSBsb29rIGludG8gaXQgYW5k
-IHByb3ZpZGUgeW91ciBjb21tZW50cyBoZXJlIG9yIG9uIHRoZSBkbXRmIGZvcnVtLg0KDQpMaW5r
-OiBodHRwczovL25hbTA2LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0
-cHMlM0ElMkYlMkZtZW1iZXJzLmRtdGYub3JnJTJGYXBwcyUyRm9yZyUyRndvcmtncm91cCUyRnJl
-ZGZpc2glMkZkb3dubG9hZC5waHAlMkY5MTg3NyZkYXRhPTAyJTdDMDElN0NuZWxhZGslNDBtaWNy
-b3NvZnQuY29tJTdDZGU3NzRiNGYxNWRkNDc1ZTRjZGIwOGQ3N2UzMTMxMjQlN0M3MmY5ODhiZjg2
-ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM3MTE2NjIyMDU2MDQyNTA3JnNkYXRh
-PUFlWHhxbU5YNUUzVWFYQXBTUGglMkI5WHVYQ0VMT0hYdTdnSU5INjYlMkZxJTJCNjQlM0QmcmVz
-ZXJ2ZWQ9MA0KDQpSYXRhbg0KDQotLS0tLS0tLSBGb3J3YXJkZWQgTWVzc2FnZSAtLS0tLS0tLSAN
-ClN1YmplY3Q6IA0KUmVkZmlzaCBEdW1wIFNlcnZpY2UgUHJvcG9zYWwNCkRhdGU6IA0KVHVlLCAx
-MCBEZWMgMjAxOSAxNjo1MToxMiArMDUzMA0KRnJvbTogDQpSYXRhbiBHdXB0YSBtYWlsdG86cmF0
-YWd1cHRAbGludXgudm5ldC5pYm0uY29tDQpUbzogDQptYWlsdG86b3BlbmJtY0BsaXN0cy5vemxh
-YnMub3JnIG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCg0KDQpIaSBBbGwsDQoNClBs
-ZWFzZSBmaW5kIHRoZSByZWRmaXNoIGR1bXAgc2VydmljZSBwcm9wb3NhbCBmb3IgdGhlIERNVEYg
-YXR0YWNoZWQuDQoNCktpbmRseSByZXZpZXcgYW5kIHByb3ZpZGUgeW91ciBpbnB1dHMuDQoNClJh
-dGFuDQoNCg0KDQo=
+On 12/11/19 6:31 AM, Deng Tyler wrote:
+> Hi All:
+>     I have a management tool to discovery service in a subnet by slp 
+> multicast. But I can't find any openbmc server. I check 
+> https://github.com/openbmc/slpd-lite and find that slpd-lite didn't 
+> support multicast but unicast. I am confused that how to leverage 
+> unicast slp in openbmc? What is the service name in openbmc? Could 
+> someone example a slp usage scenario in openbmc? thanks.
+
+I understand OpenBMC implements Avahi Zeroconf DNS service discovery. 
+There is a doc review for it here:
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23484
+
+The review points to the implementation which is already merged into the 
+project.
+
+- Joseph
+
+>
+> Tyler
+
