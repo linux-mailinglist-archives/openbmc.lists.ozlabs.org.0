@@ -2,57 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0B2211A694
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 10:15:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DFDB11A84B
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 10:55:13 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Xrqy0by6zDqcS
-	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 20:15:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Xsjn6DW9zDqlf
+	for <lists+openbmc@lfdr.de>; Wed, 11 Dec 2019 20:55:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.138;
- helo=mail-40138.protonmail.ch; envelope-from=rgrs@protonmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="xNvcHdIb"; 
- dkim-atps=neutral
-Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch
- [185.70.40.138])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Xrpr13zHzDqcS
- for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:14:24 +1100 (AEDT)
-Date: Wed, 11 Dec 2019 09:14:17 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1576055658;
- bh=rqY8RAcmsyg6VXR/VbTZOoES0Fy2iEZmewZ8hhLCS1M=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=xNvcHdIbd/sVCQyBp2pmZrkO+f206I48pxQ9Gu+1T6tHzDcrqHxHLmTsBn+N/HpoO
- wg+1yX8p1Wa2hDm/Ry2glWmPImgKcRxpZvzCYF1Hbf0++Gev1fbh1A/9/5vuUq6NmX
- OJHEF9zuxaHfsdMIXmoKT9zl+f0FrRFG74VM+5tM=
-To: James Feist <james.feist@linux.intel.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Faking Sensor Readings
-Message-ID: <iSeeVedIu2fcqVt4W4TlDAQNHMjfTxE0NUAs68nlqossQmqy5OdbHgn9YHO1kh88ZpFMHO6bpGL7ki2hS9mQgw2d7Dk2WQFH-o6jOH6e1g4=@protonmail.com>
-In-Reply-To: <e59e36d1-74fc-5f44-a472-26fdfb127af2@linux.intel.com>
-References: <QVdDJHlLW9JS_3uowBPTzSCb1dwpqJjml0ORFR_aQGpuKCve1l8Qwy4GF4X0_dgJmExy8sjJQD_VjnI-o4xwoYhivHJlSPBt42fc1cuDKjw=@protonmail.com>
- <0a4bb951-4f85-728a-8426-af629c870908@yadro.com>
- <234c1d26-7b59-0926-d6c2-6c49f75aab3f@linux.intel.com>
- <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
- <2de3b2e2-9b02-a1c2-d310-f6e546e72c1e@linux.intel.com>
- <JIIzLFDdd2_yAem6ToyksGqeJ7ulaTOylaocMLH19rYqyv3fSzcEL2H9VDJW66iYQY8L8FwjgpZqPFj8rRD0JP52xsAHQ6kD4_ygDAjj0LE=@protonmail.com>
- <e59e36d1-74fc-5f44-a472-26fdfb127af2@linux.intel.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Xsj92JQszDqQc
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 20:54:36 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ xBB9qUXN092969
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 04:54:32 -0500
+Received: from e06smtp05.uk.ibm.com (e06smtp05.uk.ibm.com [195.75.94.101])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2wtfbx5yxv-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 04:54:32 -0500
+Received: from localhost
+ by e06smtp05.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Wed, 11 Dec 2019 09:54:30 -0000
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp05.uk.ibm.com (192.168.101.135) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 11 Dec 2019 09:54:28 -0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ xBB9sRJm52166840
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Dec 2019 09:54:27 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2CF5D5204E;
+ Wed, 11 Dec 2019 09:54:27 +0000 (GMT)
+Received: from [9.122.210.113] (unknown [9.122.210.113])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id B1D2C52054;
+ Wed, 11 Dec 2019 09:54:26 +0000 (GMT)
+From: vishwa <vishwa@linux.vnet.ibm.com>
+To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
+Subject: Re: *Request For Feedback*: TimeOwner in phosphor-timemanager
+References: <18332622-cec4-37ae-b617-b897622d0ea2@linux.vnet.ibm.com>
+ <FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com>
+Date: Wed, 11 Dec 2019 15:24:26 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+In-Reply-To: <FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------8C6F5B8880CDEDF6D545B3BD"
+X-TM-AS-GCONF: 00
+x-cbid: 19121109-0020-0000-0000-00000397172E
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 19121109-0021-0000-0000-000021EE1A49
+Message-Id: <8b717e60-5733-c3ef-13ad-7016e89f932a@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
+ definitions=2019-12-11_02:2019-12-11,2019-12-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 mlxscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1910280000
+ definitions=main-1912110086
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,143 +87,183 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Alexander Amelkin <a.amelkin@yadro.com>, "Thomaiyar,
- Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi James,
+This is a multi-part message in MIME format.
+--------------8C6F5B8880CDEDF6D545B3BD
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I don't see any results for the grep command.
-
-Our platform was built referencing Witherspoon IIRC.
-
-Below links were used during porting,
-
-https://github.com/openbmc/docs/blob/master/development/add-new-system.md
-
-https://developer.ibm.com/linuxonpower/2019/01/07/how-to-port-openbmc/
-
-I don't see "entity manager" being used in above links. Is it something spe=
-cific to Intel servers?
-
-If I were to port a new board today, which is the reference platform or gui=
-de to refer?
-
-Thx,
-Raj
-
-
-
-
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Monday, December 9, 2019 11:58 PM, James Feist <james.feist@linux.intel.=
-com> wrote:
-
-> On 12/6/19 3:32 AM, rgrs wrote:
+On 12/11/19 12:17 AM, Pine, Kathryn ElaineX wrote:
 >
-> > Hi,
-> > I dont see any new service even after adding dbus-sensors.
-> > Please can you point to any platform in upstream that I can refer to?
+> >*Do we need this going forward ?*: I am being asked by UX team about 
+> the need of this and I mentioned I would get the community feedback on 
+> this. Although, I feel this level of granularity gives control over 
+> how we can manage time, it would not justify the complexity if the 
+> customers don't appreciate it. Removing the TimeOwner would make the 
+> code a lot simpler.
 >
-> https://github.com/openbmc/meta-intel/blob/daa333d956ad9391abcbb85468d9bc=
-9f26ee1190/meta-common/recipes-intel/packagegroups/packagegroup-intel-apps.=
-bb#L43
+> Hi,
 >
-> https://github.com/openbmc/meta-facebook/blob/master/meta-tiogapass/recip=
-es-fbtp/packagegroups/packagegroup-fb-apps.bb
+> I am coming from the UX side of how we set the date time settings page 
+> up for phosphor-webui downstream recently. We switched our page to use 
+> Redfish, here’s how ours is set up now:
 >
-> If you do a ps do you see any of the sensor daemons running?
+> There is no longer a “time owner” and the setting is either:
 >
-> root@intel-obmc:~# ps | grep -i sensor
-> 332 root 6008 S /usr/bin/adcsensor
-> 333 root 6356 S /usr/bin/cpusensor
-> 334 root 5784 S /usr/bin/exitairtempsensor
-> 335 root 5696 S /usr/bin/fansensor
-> 336 root 5608 S /usr/bin/hwmontempsensor
-> 337 root 5660 S intrusionsensor
-> 339 root 5716 S /usr/bin/ipmbsensor
-> 340 root 5512 S /usr/bin/mcutempsensor
-> 341 root 5868 S /usr/bin/psusensor
-> 588 root 2776 S grep -i sensor
-> root@intel-obmc:~#
+> NTPEnabled: true or false
 >
-> If so then you'll need to add entity-manager configurations like these:
+> If false, we are not allowing the user to set the time, because the 
+> BMC is synching from the host time and therefore any settings we made 
+> to the time on the BMC would be overwritten.
 >
-> https://github.com/openbmc/entity-manager/blob/7d807754cc9153b04b59980446=
-4edd9654d7a81e/configurations/WFT Baseboard.json#L2023
+> If true, we use the NTP server(s) the user provides.
 >
-> Thanks
+> We are testing this currently.
 >
-> James
->
-> > Thanks,
-> > Raj
-> > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Origina=
-l Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=
-=90
-> > On Wednesday, December 4, 2019 10:40 PM, James Feist james.feist@linux.=
-intel.com wrote:
-> >
-> > > On 12/4/19 1:39 AM, rgrs wrote:
-> > >
-> > > > Hi James,
-> > > > I tried busctl set-property, but the values didn't change.
-> > > > Are the steps below correct?
-> > > > (test with both 'field mode' enabled and disabled)
-> > > > root@obmc:~# busctl introspect xyz.openbmc_project.Hwmon-2439434288=
-.Hwmon1 /xyz/openbmc_project/sensors/temperature/INLET_TEMP xyz.openbmc_pro=
-ject.Sensor.Value --no-pager
-> > > > NAME TYPE SIGNATURE RESULT/VALUE FLAGS
-> > > > .MaxValue property x 0 emits-change writable
-> > > > .MinValue property x 0 emits-change writable
-> > > > .Scale property x -3 emits-change writable
-> > > > .Unit property s "xyz.openbmc_project.Sensor.Value.Unit.=E2=80=
-=A6 emits-change writable
-> > >
-> > > This looks like phosphor-hwmon, not dbus-sensors
-> > > https://github.com/openbmc/dbus-sensors.
-> > >
-> > > > .Value property x 18500 emits-change writable
-> > > > root@obmc:~# busctl --no-pager set-property xyz.openbmc_project.Hwm=
-on-2439434288.Hwmon1 /xyz/openbmc_project/sensors/temperature/INLET_TEMP xy=
-z.openbmc_project.Sensor.Value Value x 50000
-> > > > root@saber:~# busctl --no-pager get-property xyz.openbmc_project.Hw=
-mon-2439434288.Hwmon1 /xyz/openbmc_project/sensors/temperature/INLET_TEMP x=
-yz.openbmc_project.Sensor.Value Value
-> > > > x 18500
-> > > > root@obmc:~#
-> > > > Thanks,
-> > > > Raj
-> > > > =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Ori=
-ginal Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=
-=E2=80=90
-> > > > On Wednesday, December 4, 2019 1:34 AM, James Feist james.feist@lin=
-ux.intel.com wrote:
-> > > >
-> > > > > On 12/3/19 5:49 AM, Alexander Amelkin wrote:
-> > > > >
-> > > > > > 03.12.2019 15:06, rgrs wrote:
-> > > > > >
-> > > > > > > Hi,
-> > > > > > > How do I fake sensor readings in OpenBMC?
-> > > > > > > We're trying to fake temperature sensors and make sure fans r=
-amp up/down
-> > > > > > > accordingly.
-> > > > > >
-> > > > > > We ended up patching the kernel driver to fake the readings by =
-request.
-> > > > > > I'm not aware of any ready interface in OpenBMC for that.
-> > > > >
-> > > > > If you're using d-bus sensors, the sensor property is writable. I=
-t is
-> > > > > also supported by patching the sensor value in redfish.
-> > > > >
-> > > > > > With best regards,
-> > > > > > Alexander Amelkin
-> > > > > > /james.feist@linux.intel.com
 
+Hi, Thank you for the response. From what I interpreted:
+
+- TimeOwner is not settable via GUI
+- Irrespective of NTP setting, the user is not allowed to set the time 
+on BMC
+- BMC is syncing the time from Host.
+    - This means, the current TimeOwner is "Host" and NTP is off. Is 
+that being set as default ?
+
+I am requesting for feedback from the community on the need of TimeOwner 
+feature that we have in Settings and timemanager code.
+
+!! Vishwa !!
+>
+
+--------------8C6F5B8880CDEDF6D545B3BD
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 12/11/19 12:17 AM, Pine, Kathryn
+      ElaineX wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	color:black;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	color:black;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p><span style="color:windowtext">&gt;</span><b> Do we need this
+            going forward ?</b>: I am being asked by UX team about the
+          need of this and I mentioned I would get the community
+          feedback on this. Although, I feel this level of granularity
+          gives control over how we can manage time, it would not
+          justify the complexity if the customers don't appreciate it.
+          Removing the TimeOwner would make the code a lot simpler.<o:p></o:p></p>
+        <p class="MsoNormal"><span style="color:windowtext">Hi,<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">I am coming
+            from the UX side of how we set the date time settings page
+            up for phosphor-webui downstream recently. We switched our
+            page to use Redfish, here’s how ours is set up now:<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">There is no
+            longer a “time owner” and the setting is either:<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">NTPEnabled:
+            true or false<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">If false, we
+            are not allowing the user to set the time, because the BMC
+            is synching from the host time and therefore any settings we
+            made to the time on the BMC would be overwritten.
+            <o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">If true, we
+            use the NTP server(s) the user provides.<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span style="color:windowtext">We are
+            testing this currently.</span></p>
+      </div>
+    </blockquote>
+    <div><br>
+      Hi, Thank you for the response. From what I interpreted:<br>
+      <br>
+    </div>
+    <div>- TimeOwner is not settable via GUI<br>
+      - Irrespective of NTP setting, the user is not allowed to set the
+      time on BMC<br>
+      - BMC is syncing the time from Host.<br>
+         - This means, the current TimeOwner is "Host" and NTP is off.
+      Is that being set as default ?<br>
+    </div>
+    <div><br>
+      I am requesting for feedback from the community on the need of
+      TimeOwner feature that we have in Settings and timemanager code.<br>
+    </div>
+    <div><br>
+      !! Vishwa !!<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com">
+      <div class="WordSection1">
+        <p class="MsoNormal"><span style="color:windowtext"><a
+              name="_____replyseparator" moz-do-not-send="true"></a><o:p></o:p></span></p>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------8C6F5B8880CDEDF6D545B3BD--
 
