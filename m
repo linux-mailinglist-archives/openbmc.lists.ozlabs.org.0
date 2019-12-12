@@ -2,85 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3B4811D102
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 16:29:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2521E11D1A2
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 16:58:40 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Yd4S1Td8zDqnZ
-	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 02:28:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Ydkj0s9SzDqfB
+	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 02:58:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.from=linux.intel.com
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47YctJ5BfqzDr31
- for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 02:20:07 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xBCFIqSL138004
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 10:20:02 -0500
-Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2wu1fnmx32-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 10:20:02 -0500
-Received: from localhost
- by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Thu, 12 Dec 2019 15:20:00 -0000
-Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
- by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 12 Dec 2019 15:19:58 -0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- xBCFJuuO21561518
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Dec 2019 15:19:57 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF9974C05A;
- Thu, 12 Dec 2019 15:19:56 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5241D4C06E;
- Thu, 12 Dec 2019 15:19:55 +0000 (GMT)
-Received: from [9.102.55.212] (unknown [9.102.55.212])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Thu, 12 Dec 2019 15:19:54 +0000 (GMT)
-Subject: Re: SLPD multicast support
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- tyler.sabdon@gmail.com
-References: <CAO9PYRL-M2ZjPr6R+V+isDiFttkpbp2hWNHQVsPxFOV6G+mtOA@mail.gmail.com>
- <bdb246cb-d27d-8a0a-8924-46b8838df46e@linux.ibm.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Thu, 12 Dec 2019 20:49:49 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47YdjL2cbtzDqyJ
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 02:57:23 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2019 07:57:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,306,1571727600"; d="scan'208";a="245776732"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by fmsmga002.fm.intel.com with ESMTP; 12 Dec 2019 07:57:18 -0800
+Subject: Re: Faking Sensor Readings
+To: rgrs <rgrs@protonmail.com>
+References: <QVdDJHlLW9JS_3uowBPTzSCb1dwpqJjml0ORFR_aQGpuKCve1l8Qwy4GF4X0_dgJmExy8sjJQD_VjnI-o4xwoYhivHJlSPBt42fc1cuDKjw=@protonmail.com>
+ <0a4bb951-4f85-728a-8426-af629c870908@yadro.com>
+ <234c1d26-7b59-0926-d6c2-6c49f75aab3f@linux.intel.com>
+ <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
+ <2de3b2e2-9b02-a1c2-d310-f6e546e72c1e@linux.intel.com>
+ <JIIzLFDdd2_yAem6ToyksGqeJ7ulaTOylaocMLH19rYqyv3fSzcEL2H9VDJW66iYQY8L8FwjgpZqPFj8rRD0JP52xsAHQ6kD4_ygDAjj0LE=@protonmail.com>
+ <e59e36d1-74fc-5f44-a472-26fdfb127af2@linux.intel.com>
+ <iSeeVedIu2fcqVt4W4TlDAQNHMjfTxE0NUAs68nlqossQmqy5OdbHgn9YHO1kh88ZpFMHO6bpGL7ki2hS9mQgw2d7Dk2WQFH-o6jOH6e1g4=@protonmail.com>
+ <8eb66be0-c5a4-ac3d-2421-8648c2fc4a4f@linux.intel.com>
+ <EPYcrss0WRTceNCXy6GM0cmf5GE-4TzTQLyLuYd581ufdbKteABRuQArHVWcPPAHaCBK8_0nIRJ2DP5hSh5jS2AgDPjr_snA5bh91FU-OOI=@protonmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <8cef3ef8-a275-2f36-dfeb-7b4da97c6f88@linux.intel.com>
+Date: Thu, 12 Dec 2019 07:57:17 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-In-Reply-To: <bdb246cb-d27d-8a0a-8924-46b8838df46e@linux.ibm.com>
-Content-Type: multipart/alternative;
- boundary="------------86E93111EDBAEC1DB14FE09F"
+In-Reply-To: <EPYcrss0WRTceNCXy6GM0cmf5GE-4TzTQLyLuYd581ufdbKteABRuQArHVWcPPAHaCBK8_0nIRJ2DP5hSh5jS2AgDPjr_snA5bh91FU-OOI=@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 19121215-0012-0000-0000-000003742BD6
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 19121215-0013-0000-0000-000021B00860
-Message-Id: <5155704f-99e8-2099-5f74-210b85f4ce19@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-12_03:2019-12-12,2019-12-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- priorityscore=1501 bulkscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 mlxlogscore=998 impostorscore=0 phishscore=0
- adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-1910280000 definitions=main-1912120118
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,106 +62,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------86E93111EDBAEC1DB14FE09F
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 12/11/19 9:28 PM, rgrs wrote:
+> Hi James,
+> 
+> Thanks for the help.
+> 
+> One more clarification please,
+> 
+> How is entity-manager different from phoshor-hwmon conf files?
+> 
 
-Hi Deng,
+Entity-manager does runtime detection based on available d-bus 
+properties. In most cases it's based on Fru Detection, but anything on 
+d-bus can be used to configure. So you can write Probe statements (at 
+the bottom of the configuration files in most cases) that say when this 
+key/value pair exists on d-bus, install this configuration. This is most 
+useful for add-in-cards or other removable devices, so that when it 
+exists, the configuration gets loaded. For example this retimer card 
+https://github.com/openbmc/entity-manager/blob/master/configurations/PCIE%20SSD%20Retimer.json 
+says when a Fru Exists with BOARD_PRODUCT_NAME set to a specific value, 
+then load these sensors. It can then export sensors to sysfs as well if 
+needed. Entity-manager is also not limited to sensors, it also 
+configures things like phosphor-pid-control 
+https://github.com/openbmc/entity-manager/blob/7d807754cc9153b04b599804464edd9654d7a81e/configurations/WFT%20Baseboard.json#L1678. 
+We use it specifically so we can use 1 binary for multiple baseboards 
+assuming similar i2c topology. At a high-level view, it takes JSON and 
+when appropriate fields are available on d-bus, puts a system 
+configuration on d-bus, along with being able to export some i2c devices.
 
-Yes, Currently openbmc support SLP unicast not multicast.
-eg: SLP command for unicast.
-slptool -u ${ip} findsrvtypes or findsrvs
-If you are really looking for the service discovery, OpenBMC supports Avahi.
-eg: avahi-browse -rt _obmc_rest._tcp
+Hope this helps
 
-Ratan
-
-On 12/12/2019 1:44 AM, Joseph Reynolds wrote:
-> On 12/11/19 6:31 AM, Deng Tyler wrote:
->> Hi All:
->>     I have a management tool to discovery service in a subnet by slp 
->> multicast. But I can't find any openbmc server. I check 
->> https://github.com/openbmc/slpd-lite and find that slpd-lite didn't 
->> support multicast but unicast. I am confused that how to leverage 
->> unicast slp in openbmc? What is the service name in openbmc? Could 
->> someone example a slp usage scenario in openbmc? thanks.
->
-> I understand OpenBMC implements Avahi Zeroconf DNS service discovery. 
-> There is a doc review for it here:
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23484
->
-> The review points to the implementation which is already merged into 
-> the project.
->
-> - Joseph
->
->>
->> Tyler
->
-
---------------86E93111EDBAEC1DB14FE09F
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi Deng,</p>
-    Yes, Currently openbmc support SLP unicast not multicast.<br>
-    eg: SLP command for unicast.<br>
-    <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">slptool -u ${ip} findsrvtypes or findsrvs
-</span><br>
-    If you are really looking for the service discovery, OpenBMC
-    supports Avahi.<br>
-    eg: avahi-browse -rt _obmc_rest._tcp
-    <p>Ratan</p>
-    <div class="moz-cite-prefix">On 12/12/2019 1:44 AM, Joseph Reynolds
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:bdb246cb-d27d-8a0a-8924-46b8838df46e@linux.ibm.com">On
-      12/11/19 6:31 AM, Deng Tyler wrote:
-      <br>
-      <blockquote type="cite">Hi All:
-        <br>
-            I have a management tool to discovery service in a subnet by
-        slp multicast. But I can't find any openbmc server. I check
-        <a class="moz-txt-link-freetext" href="https://github.com/openbmc/slpd-lite">https://github.com/openbmc/slpd-lite</a> and find that slpd-lite
-        didn't support multicast but unicast. I am confused that how to
-        leverage unicast slp in openbmc? What is the service name in
-        openbmc? Could someone example a slp usage scenario in openbmc?
-        thanks.
-        <br>
-      </blockquote>
-      <br>
-      I understand OpenBMC implements Avahi Zeroconf DNS service
-      discovery. There is a doc review for it here:
-      <br>
-      <a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23484">https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23484</a>
-      <br>
-      <br>
-      The review points to the implementation which is already merged
-      into the project.
-      <br>
-      <br>
-      - Joseph
-      <br>
-      <br>
-      <blockquote type="cite">
-        <br>
-        Tyler
-        <br>
-      </blockquote>
-      <br>
-    </blockquote>
-  </body>
-</html>
-
---------------86E93111EDBAEC1DB14FE09F--
+-James
 
