@@ -2,75 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70BF811C62D
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 08:08:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B4A911C683
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 08:37:27 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47YPyQ59vTzDqfk
-	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 18:07:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47YQcN3sqgzDqws
+	for <lists+openbmc@lfdr.de>; Thu, 12 Dec 2019 18:37:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=devenrao@in.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::132;
+ helo=mail-lf1-x132.google.com; envelope-from=karo33bug@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Wjg59JrO"; 
+ dkim-atps=neutral
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com
+ [IPv6:2a00:1450:4864:20::132])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47YPxp1F73zDqw3
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 18:07:24 +1100 (AEDT)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- xBC72k1c103161
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 02:07:21 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.74])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2wt2kv8e06-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 02:07:21 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <devenrao@in.ibm.com>;
- Thu, 12 Dec 2019 07:07:20 -0000
-Received: from us1a3-smtp08.a3.dal06.isc4sb.com (10.146.103.57)
- by smtp.notes.na.collabserv.com (10.106.227.92) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 12 Dec 2019 07:07:16 -0000
-Received: from us1a3-mail121.a3.dal06.isc4sb.com ([10.146.45.16])
- by us1a3-smtp08.a3.dal06.isc4sb.com
- with ESMTP id 2019121207071524-94805 ;
- Thu, 12 Dec 2019 07:07:15 +0000 
-In-Reply-To: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
-From: "Devender Rao" <devenrao@in.ibm.com>
-To: ratagupt@linux.vnet.ibm.com
-Date: Thu, 12 Dec 2019 07:07:15 +0000
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47YQbc1LRczDqxg
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 18:36:43 +1100 (AEDT)
+Received: by mail-lf1-x132.google.com with SMTP id y19so890170lfl.9
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Dec 2019 23:36:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=5cs/+JOq7lnQVG/XN/kukGB1jzN8YN7T4lWKEJUhzU4=;
+ b=Wjg59JrOJVb1S+Fo3AJ6el1tT/HoYsSw8Z455f+NPqiJ/BsgUml7Mm2nmAkgZ/gjVc
+ 1tgr0o8Z2JkszvIXp/tZqQ0un0UIBZBHJpDG/LxB5GVV5iVol5Mnpqdb07vgFN75LkVV
+ QW1IE2hLr1R6PrlIwQxqu4coAMBJXKSUOCGxj78OmoMGGETlN1VGn4/Nu4OayZMYQ0lJ
+ DvV9T7QWLVaLSNHD3VFh4nHch7mqTFvAnhAowmyBtam+Im4XtUsp/jOy2ukacnI1t6ls
+ g8LsqEjWIdJcBGyx4ckUPnDDovtWm7+p5Mpvmaj/15t3pKqkGeAJxDVawHeUgxwkbvoe
+ mBkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=5cs/+JOq7lnQVG/XN/kukGB1jzN8YN7T4lWKEJUhzU4=;
+ b=O0RpcFjwWPKp9NopOJ/zjhyfsvnAl7ZLubzlpAD9NZraex934DTaYsyK59pvVBW5jW
+ L+U4eK8GVRXM6XYKXBoNZaR6T8VSCFog493MWCO/Qb+HSQ/UwY7kL9iaHV1ax76HR/d1
+ Ur3zEw7XWja5KGlJF8nocEDlBrGZp5Uhm/9JH2WYkwQ3A0b2V5ymRMXfJRpM5xT/KG/1
+ vdnD0UEOse6cdmyK/tjgL+b1/b/cZ3UHrug0flKDTY8dFnP1JTilX1zb/E/bP33TT2S1
+ aIVucnmtmgQyRX/HAoeeugS0KguWER/CK2UZKCNH2iMDnAHSTaPmeIHpg7PsU2SyFCMc
+ Ag4g==
+X-Gm-Message-State: APjAAAWEJwQE3WIdMkk9gub6ZKMiAj8frj9JKzuY6LDwhdRJSaK6HpHo
+ 8zYPIbx/SyDlV+jinhwsUtkBrn20tdkCBXjUUjiuUkytI6k=
+X-Google-Smtp-Source: APXvYqwcy89AVS31q+YgB8Se5bhJw61vaWBKOi7R7h3kEWmLX+AC/b6vzI/QfFyqkp7asECmn8tK2ZXdvyFV3RE2yOc=
+X-Received: by 2002:ac2:4834:: with SMTP id 20mr4301046lft.166.1576135823341; 
+ Wed, 11 Dec 2019 23:30:23 -0800 (PST)
 MIME-Version: 1.0
-References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1661 | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 49987
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 19121207-3165-0000-0000-0000020CB47F
-X-IBM-SpamModules-Scores: BY=0.174425; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.417846; ST=0; TS=0; UL=0; ISC=; MB=0.194195
-X-IBM-SpamModules-Versions: BY=3.00012229; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01303152; UDB=6.00692111; IPR=6.01085436; 
- MB=3.00029931; MTD=3.00000008; XFM=3.00000015; UTC=2019-12-12 07:07:18
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2019-12-12 07:00:30 - 6.00010755
-x-cbparentid: 19121207-3166-0000-0000-00008765BCD2
-Message-Id: <OF3E82A637.78F050C7-ON002584CE.0025B2F4-002584CE.00271DE9@notes.na.collabserv.com>
-Subject: Re:  Redfish Dump Service Proposal
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2019-12-12_01:2019-12-12,2019-12-12 signatures=0
-X-Proofpoint-Spam-Reason: safe
+From: Carol Wang <karo33bug@gmail.com>
+Date: Thu, 12 Dec 2019 15:30:12 +0800
+Message-ID: <CALzeG+-bxR0oqA_h8Gaf-RQLJygL1QYXy3y2DU=GKdLC9nhWhw@mail.gmail.com>
+Subject: Redfish: Disable/enable out of band IPMI
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000de3d7c05997cb7c1"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,40 +69,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "Puli, Apparao" <apparao.puli@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Over all the schema=
- looks good. Few observations for clarity, also how about we have multiple =
-collection say HostDumpCollection, BMCDumpCollection &nbsp;and also a new s=
-ervice DumpLocations similar to "CertificateLocations"</div>
-<div dir=3D"ltr" ><br>Page 17: Dump Creation flow</div>
-<div dir=3D"ltr" >1. The time line diagram should show that "Request to cre=
-ate dump" return immediatley. The redfish client will be notififed asynchro=
-nously when the dump is collected through DumpCollected event. Request for =
-dump with resource id should be in the same time line when it gets notified=
- of Dump collection completed.<br>&nbsp;</div>
-<div dir=3D"ltr" >Page 19: For clarity</div>
-<div dir=3D"ltr" >"List Dumps" should be shown as part of DumpColletion rat=
-her than under "Operations on dump"<br>"Get Dump details" should be shown u=
-nder dump service</div>
-<div dir=3D"ltr" >"Delete Dumps" should be shown under DumpService<br>&nbsp=
-;</div>
-<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
--left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
-margin-right:0px" >----- Original message -----<br>From: Ratan Gupta &lt;ra=
-tagupt@linux.vnet.ibm.com&gt;<br>Sent by: "openbmc" &lt;openbmc-bounces+dev=
-enrao=3Din.ibm.com@lists.ozlabs.org&gt;<br>To: "openbmc@lists.ozlabs.org" &=
-lt;openbmc@lists.ozlabs.org&gt;<br>Cc:<br>Subject: [EXTERNAL] Redfish Dump =
-Service Proposal<br>Date: Thu, Dec 12, 2019 5:09 AM<br>&nbsp;
-<div><font face=3D"Default Monospace,Courier New,Courier,monospace" size=3D=
-"2" >Hi All,<br><br>Please find the redfish dump service proposal for the D=
-MTF attached.<br><br>Kindly review and provide your inputs.<br><br>Ratan</f=
-ont><br><br><br>&nbsp;</div>
-<div id=3D"MIMEAttachInfoDiv" style=3D"display:none" title=3D"vnd.openxmlfo=
-rmats-officedocument.presentationml.presentation|DumpOffload=5FDMTF=5FPropo=
-sal.pptx" >&nbsp;</div></blockquote>
-<div dir=3D"ltr" >&nbsp;</div></div><BR>
+--000000000000de3d7c05997cb7c1
+Content-Type: text/plain; charset="UTF-8"
 
+Hi,
+
+Looking to implement IPMI Enable / Disable as part of Redfish's Manager
+Network
+Protocol.
+https://redfish.dmtf.org/schemas/ManagerNetworkProtocol.v1_5_0.json
+
+Two ways to get/set the current status of net IPMI:
+1. Add an interface in phosphor-dbus-interface to indicate the status of
+net IPMI.
+Have a daemon to monitor the status, if the status is changed, then enable
+or
+disable the net IPMI service and socket.
+2. Check the net IPMI socket state by getData()[1] in bmcweb. If the state
+is
+"running" or "listening", the net IPMI status is true, otherwise, the
+status is
+false. Then bmcweb can enable or disable the service and socket.
+
+Wondering if anyone has any thoughts on this feature, which way is better.
+If add interface, in which daemon this interface should be implemented?
+
+[1]
+https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/network_protocol.hpp#L190
+
+Thanks,
+
+--000000000000de3d7c05997cb7c1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<br><br>Looking to implement IPMI Enable / Disable as p=
+art of Redfish&#39;s Manager Network<br>Protocol.<br><a href=3D"https://red=
+fish.dmtf.org/schemas/ManagerNetworkProtocol.v1_5_0.json">https://redfish.d=
+mtf.org/schemas/ManagerNetworkProtocol.v1_5_0.json</a><br><br>Two ways to g=
+et/set the current status of net IPMI:<br>1. Add an interface in phosphor-d=
+bus-interface to indicate the status of net IPMI.<br>Have a daemon to monit=
+or the status, if the status is changed, then enable or<br>disable the net =
+IPMI service and socket.<br>2. Check the net IPMI socket state by getData()=
+[1] in bmcweb. If the state is<br>&quot;running&quot; or &quot;listening&qu=
+ot;, the net IPMI status is true, otherwise, the status is<br>false. Then b=
+mcweb can enable or disable the service and socket.<br><br>Wondering if any=
+one has any thoughts on this feature, which way is better.<br>If add interf=
+ace, in which daemon this interface should be implemented?<br><br>[1] <a hr=
+ef=3D"https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/networ=
+k_protocol.hpp#L190">https://github.com/openbmc/bmcweb/blob/master/redfish-=
+core/lib/network_protocol.hpp#L190</a><br><br>Thanks,</div>
+
+--000000000000de3d7c05997cb7c1--
