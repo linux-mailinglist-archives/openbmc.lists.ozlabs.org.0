@@ -2,46 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E8411FDC1
-	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 06:00:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F09E11FDC3
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 06:02:28 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47bpx73dQBzDq5n
-	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 16:00:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47bpzk1Nm6zDqV6
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 16:02:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
  envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47YFVp6rF5zDqsh
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 11:46:56 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47YFZS3F2BzDqv8
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 11:50:07 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2019 16:46:46 -0800
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2019 16:50:04 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="388123285"
+X-IronPort-AV: E=Sophos;i="5.69,303,1571727600"; d="scan'208";a="388124032"
 Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
  ([10.7.153.143])
- by orsmga005.jf.intel.com with ESMTP; 11 Dec 2019 16:46:45 -0800
-Subject: Re: [PATCH v11 03/14] peci: Add support for PECI bus driver core
+ by orsmga005.jf.intel.com with ESMTP; 11 Dec 2019 16:50:04 -0800
+Subject: Re: [PATCH v11 06/14] peci: Add Aspeed PECI adapter driver
 To: Andy Shevchenko <andriy.shevchenko@intel.com>
 References: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
- <20191211194624.2872-4-jae.hyun.yoo@linux.intel.com>
- <20191211201817.GC32742@smile.fi.intel.com>
+ <20191211194624.2872-7-jae.hyun.yoo@linux.intel.com>
+ <20191211202818.GD32742@smile.fi.intel.com>
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <3bb146a4-c676-29b9-b2ac-5f1f6ac43bee@linux.intel.com>
-Date: Wed, 11 Dec 2019 16:46:45 -0800
+Message-ID: <e05cdec0-1120-7e2d-bac0-e4a1ba1ceb3d@linux.intel.com>
+Date: Wed, 11 Dec 2019 16:50:04 -0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <20191211201817.GC32742@smile.fi.intel.com>
+In-Reply-To: <20191211202818.GD32742@smile.fi.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -57,15 +57,11 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Andrew Lunn <andrew@lunn.ch>,
- Randy Dunlap <rdunlap@infradead.org>, Tomer Maimon <tmaimon77@gmail.com>,
- devicetree@vger.kernel.org, Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: Mark Rutland <mark.rutland@arm.com>, Randy Dunlap <rdunlap@infradead.org>,
+ Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org,
  Frederic Barrat <fbarrat@linux.vnet.ibm.com>,
- Julia Cartwright <juliac@eso.teric.us>,
  Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- Lee Jones <lee.jones@linaro.org>,
- Jason M Biils <jason.m.bills@linux.intel.com>,
- Eric Sandeen <sandeen@redhat.com>, Yunge Zhu <yunge.zhu@linux.intel.com>,
+ Lee Jones <lee.jones@linaro.org>, Eric Sandeen <sandeen@redhat.com>,
  Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
  Jonathan Corbet <corbet@lwn.net>, openbmc@lists.ozlabs.org,
  linux-doc@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>,
@@ -73,92 +69,113 @@ Cc: Mark Rutland <mark.rutland@arm.com>, Andrew Lunn <andrew@lunn.ch>,
  Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
  David Kershner <david.kershner@unisys.com>, Guenter Roeck <linux@roeck-us.net>,
  Wu Hao <hao.wu@intel.com>, linux-hwmon@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, Gavin Schenk <g.schenk@eckelmann.de>,
- Arnd Bergmann <arnd@arndb.de>, Philippe Ombredanne <pombredanne@nexb.com>,
- Johan Hovold <johan@kernel.org>, Tomohiro Kusumi <kusumi.tomohiro@gmail.com>,
- Rob Herring <robh+dt@kernel.org>,
- Cyrille Pitchen <cyrille.pitchen@free-electrons.com>,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Philippe Ombredanne <pombredanne@nexb.com>, Johan Hovold <johan@kernel.org>,
+ Tomohiro Kusumi <kusumi.tomohiro@gmail.com>, Rob Herring <robh+dt@kernel.org>,
  Thomas Gleixner <tglx@linutronix.de>, Sagar Dharia <sdharia@codeaurora.org>,
- linux-arm-kernel@lists.infradead.org, Alan Cox <alan@linux.intel.com>,
- Juergen Gross <jgross@suse.com>, Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>,
- Andrew Jeffery <andrew@aj.id.au>,
+ linux-arm-kernel@lists.infradead.org, Juergen Gross <jgross@suse.com>,
+ Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>,
+ Ryan Chen <ryan_chen@aspeedtech.com>, Andrew Jeffery <andrew@aj.id.au>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  "Darrick J . Wong" <darrick.wong@oracle.com>,
  Stephen Boyd <sboyd@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
  Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Fengguang Wu <fengguang.wu@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Robin Murphy <robin.murphy@arm.com>,
  "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Andy,
 
-On 12/11/2019 12:18 PM, Andy Shevchenko wrote:
+On 12/11/2019 12:28 PM, Andy Shevchenko wrote:
+> On Wed, Dec 11, 2019 at 11:46:16AM -0800, Jae Hyun Yoo wrote:
+>> This commit adds Aspeed PECI adapter driver for Aspeed
+>> AST24xx/25xx/26xx SoCs.
 > 
-> Nice, we have some drivers under drivers/hwmon. Are they using PECI? How they
-> will be integrated to this? Can this be part of drivers/hwmon?
-
-This is designed for SoCs have one-wire PECI hardware which can handle
-raw PECI protocol. Some drivers under 'drivers/hwmon' that use
-PECI-to-I2C translation hardware are out of scope from this patch.
-In case if an SoC supports both PECI-to-I2C translation mode and raw
-PECI mode, only raw PECI mode can be integrated to this. NPCM7xx is
-the case and peci-npcm driver in this patch set is an example of
-the raw PECI driver.
-
-This patch includes peci-cputemp and peci-dimmtemp as raw PECI hwmon
-drivers.
-
->> Changes since v10:
+> ...
 > 
-> It's funny I don't remember previous version(s), but anyway I'll comment on
-> this later on -- it has at least several style issues / inconveniences.
-
-I CC'ed you in every submissions but you probably forgot that because I
-submitted v10 in January this year. Thanks for your review.
-
->> - Split out peci-dev module from peci-core module.
->> - Added PECI 4.0 command set support.
->> - Refined 32-bit boundary alignment for all PECI ioctl command structs.
->> - Added DMA safe command buffer handling in peci-core.
->> - Refined kconfig dependencies in PECI subsystem.
->> - Fixed minor bugs and style issues.
->> - configfs support isn't added in this patch set. Will add that using a
->>    seperate patch set.
+>> +#define   ASPEED_PECI_CMD_IDLE_MASK		(ASPEED_PECI_CMD_STS_MASK | \
+>> +						 ASPEED_PECI_CMD_PIN_MON)
 > 
->> +config PECI
->> +	tristate "PECI support"
->> +	select CRC8
-> 
->> +	default n
-> 
-> As for beginning, this one is redundant.
-> If you have more, drop them.
+> Better looking when the value completely occupies second line without touching
+> the first.
 
-I see. I'll drop the default setting.
+Yes. Will change it.
 
->> +#include <linux/bitfield.h>
->> +#include <linux/crc8.h>
->> +#include <linux/delay.h>
->> +#include <linux/mm.h>
->> +#include <linux/module.h>
+> ...
 > 
->> +#include <linux/of_device.h>
+>> +static int aspeed_peci_check_idle(struct aspeed_peci *priv)
+>> +{
+>> +	ulong timeout = jiffies + usecs_to_jiffies(ASPEED_PECI_IDLE_CHECK_TIMEOUT_USEC);
+>> +	u32 cmd_sts;
 > 
-> What about ACPI? Can you use fwnode API?
+> Like in the previous patch this one has hard to read timeout loops with inefficient code.
+> 
+>> +	for (;;) {
+>> +		cmd_sts = readl(priv->base + ASPEED_PECI_CMD);
+>> +		if (!(cmd_sts & ASPEED_PECI_CMD_IDLE_MASK))
+>> +			break;
+> 
+>> +		if (time_after(jiffies, timeout)) {
+> 
+> This is actually main exit condition (vs. infinite loop).
+> 
+>> +			cmd_sts = readl(priv->base + ASPEED_PECI_CMD);
+> 
+> This make no sense. If you would like to have one more iteration, just spell it
+> explicitly.
+> 
+>> +			break;
+>> +		}
+> 
+>> +		usleep_range((ASPEED_PECI_IDLE_CHECK_INTERVAL_USEC >> 2) + 1,
+>> +			     ASPEED_PECI_IDLE_CHECK_INTERVAL_USEC);
+>> +	}
+>> +
+> 
+>> +	return !(cmd_sts & ASPEED_PECI_CMD_IDLE_MASK) ? 0 : -ETIMEDOUT;
+> 
+> Ditto.
+> 
+>> +}
+> 
+> Now look at the other variant:
+> 
+> 	do {
+> 		...do something...
+> 		if (success)
+> 			return 0;
+> 		usleep(...);
+> 	} while (time_before(...));
+> 
+> 	return -ETIMEDOUT;
+> 
+> * Easy
+> * less LOCs
+> * guaranteed always to be at least one iteration
+> * has explicitly spelled exit condition
+> 
+> BUT!
+> 
+> In this very case you may do even better if you read iopoll.h, i.e
+> readl_poll_timeout() has this functionality embedded in the macro.
+> 
 
-Currently, it's targeting BMC (Baseboard Management Controller) SoCs
-that are running on ARM kernel. If any needs of ACPI support comes in
-the future, the ACPI support will be added.
+I see. I'll simplify this function like below:
+
+#include <linux/iopoll.h>
+
+static inline int aspeed_peci_check_idle(struct aspeed_peci *priv)
+{
+	u32 cmd_sts;
+
+	return readl_poll_timeout(priv->base + ASPEED_PECI_CMD,
+				  cmd_sts,
+				  !(cmd_sts & ASPEED_PECI_CMD_IDLE_MASK),
+				  ASPEED_PECI_IDLE_CHECK_INTERVAL_USEC,
+				  ASPEED_PECI_IDLE_CHECK_TIMEOUT_USEC);
+}
 
 Thanks a lot for your review!
 
 -Jae
-
->> +#include <linux/peci.h>
->> +#include <linux/pm_domain.h>
->> +#include <linux/pm_runtime.h>
->> +#include <linux/sched/task_stack.h>
->> +#include <linux/slab.h>
-> 
