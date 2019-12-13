@@ -2,66 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B28211ED66
-	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 23:04:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D5FB711EE5D
+	for <lists+openbmc@lfdr.de>; Sat, 14 Dec 2019 00:18:54 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47ZPpv0lvrzDrLX
-	for <lists+openbmc@lfdr.de>; Sat, 14 Dec 2019 09:04:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47ZRSD1lgxzDrLX
+	for <lists+openbmc@lfdr.de>; Sat, 14 Dec 2019 10:18:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::52e;
- helo=mail-ed1-x52e.google.com; envelope-from=osk@google.com;
+ smtp.mailfrom=flex--wak.bounces.google.com (client-ip=2607:f8b0:4864:20::649;
+ helo=mail-pl1-x649.google.com;
+ envelope-from=3lxz0xqmkby4gkuqyyqvo.mywyzoxlwmvscdc.yjvklc.ybq@flex--wak.bounces.google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="ucK80tDX"; 
+ unprotected) header.d=google.com header.i=@google.com header.b="VkSqcdPL"; 
  dkim-atps=neutral
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com
- [IPv6:2a00:1450:4864:20::52e])
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com
+ [IPv6:2607:f8b0:4864:20::649])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47ZPlr0ZxyzDrK5
- for <openbmc@lists.ozlabs.org>; Sat, 14 Dec 2019 09:02:15 +1100 (AEDT)
-Received: by mail-ed1-x52e.google.com with SMTP id j17so360497edp.3
- for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 14:02:15 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47ZRRX4m9zzDr63
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Dec 2019 10:18:11 +1100 (AEDT)
+Received: by mail-pl1-x649.google.com with SMTP id d24so2064359pll.14
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 15:18:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=7/5hPFnFSqyJbtj1wjEvFoT4iRWu2Wy2/vJt+0WbDqA=;
- b=ucK80tDX/5mJxPRnt27nb0wsX8XxT3P5LRabmSwYoOQx8jYXYVELzAIfiDn6Ee5f4L
- RyK7y00qrDCa9QiKe2R+dLSg97h2RtGe3Y3J+MghCrrasE6kcBW6m8NTvCB5w78hWiGS
- Xfv/A6MfklK+Y0p/x08PZZ83mAHh+9omh9ys5o54s+pFkxHjEdb/et+LPymLG/ZAb/Ow
- 6D8ev0XSq0wm8ns8/7h3DttVZLPc151gjpdBy/KbFygr+zyQjWH1mI8goHLjroP9a9pY
- Pk1oSle0AYKyREPkPCh21gaJ42xOwfbLy94r0d17Qc5sWltDfs1lJto01YehSuezzjLq
- tCPQ==
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=ai8y2TdcFWgI5YbR86/8iFPk7YBipMR6zf4KTCcX3oE=;
+ b=VkSqcdPLo3B8d3hnc/3rYYFzl8lxVfcKT9eRMH4AeMYeRJ/TSS/QEPAtGUsFNSzVnw
+ VovZnpk1V38WPyAzbSx2AgaQ+KHgKfkxp8wmpDUXQ9cSMae81aov8Uqk6r9sEHmNreKd
+ GOpQSJMQ0Zn11+lRkb9rMh+itAC7bjGR6JQJ0xGZrrwKMci6E9qwNwlUU6V9QU/H44gk
+ oQkZBLMM3LKmklGzhfJrQo583I+THaHwepGpbIMeiAs2Kwim/SJO0iv8v6XHQ7uX9tmU
+ n7UDychkxnRVvulIIQUN3J5IH7mSewTDSEDc7HBFJFcPMXE0AfFNril3hTnWuo/edodI
+ NZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=7/5hPFnFSqyJbtj1wjEvFoT4iRWu2Wy2/vJt+0WbDqA=;
- b=MZmDS6WZCZ1+cMUZBlKnr5+96P3zP2rYGGzzMAMmUB4G7sR21hIilYxOSbt6C8LTfo
- 4ry1QH+uOEuvtAzfxSVVjgB0TGkBA0lIpO21hJH7aAl3rJjUI0agDUUGOsbVSUxGm9u/
- qRptYswAdik89+BwwfIVGVKOtuTO7oLxhsNhk+CjjjsEUfh653H6THnP/PjkK1RJFfXI
- FbSGYc1kHYzSht0KLsEe+t5cUwYIFWcSA5L4bf6/l5Mheaj0C7w3JA0TQd6QvefL9woL
- 6mgMS1uFSPu/xMK5RhcUCnfIo3i5Jmj1aTvbnxoW9c7XVNGSOdIQmMPfDDeC2wSUFy82
- na4g==
-X-Gm-Message-State: APjAAAX86TI41Sjr0v7PI0wu2itHnvt9ziaPIslUvfdC6X8in0KqHIbx
- dX0JCnwbY8bgYphFNGNMRvJvWaMgxTIXjB2zvA60MpMGrGJ/gg==
-X-Google-Smtp-Source: APXvYqwzC6ieZN6HeUSNm8jbpHaTyRDMwm0d3w+d+tO6UHan5xoAWf28pYZpoaHN1Evos3UGQCmqQAGuFXV8k6haXX0=
-X-Received: by 2002:a05:6402:1802:: with SMTP id
- g2mr18140721edy.253.1576274531687; 
- Fri, 13 Dec 2019 14:02:11 -0800 (PST)
-MIME-Version: 1.0
-References: <CABoTLcTua1oHhO62-QZPZdcgFYZWjBg4QAjixiNB5z4zajuzKQ@mail.gmail.com>
-In-Reply-To: <CABoTLcTua1oHhO62-QZPZdcgFYZWjBg4QAjixiNB5z4zajuzKQ@mail.gmail.com>
-From: Oskar Senft <osk@google.com>
-Date: Fri, 13 Dec 2019 17:01:55 -0500
-Message-ID: <CABoTLcQ91dxfMO9Zp9cPKbkMjiASfbD9Hpt7HeVMtN52_i1KtA@mail.gmail.com>
-Subject: Re: phosphor-networkd clobbering usb0 network config
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="00000000000088444e05999d03a8"
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=ai8y2TdcFWgI5YbR86/8iFPk7YBipMR6zf4KTCcX3oE=;
+ b=HZ99eJcd5OO+ido2onl7jNaUTDaM1orQh4z2RwKna9NshbMF/G69exk/h4X12Nqe52
+ v2xlZq4t7W77UBWtFtKX9Yz9EBbELa+W1Ok2Oy/jnQlKjThDnpDK/YcIxHGVZB5G4xA1
+ CBcsCjNBH/O/qlRRPhqXBf0i+N1/N8HHFKpZRmA2KepXJjzeYdaxE+h2PKrtCcQCf7Cv
+ JFPKtjaLRHHm9cKQequrks6XZ+VNiw95oGaXO4mUCvkaOQFYa+n6Og4CdDwruo5IdP0r
+ gq6NkuEcYiEAkTOGRqUaqMKX5NDgfALm8qyXWVa0cwfvnneYebugKk7PTTiiPDi9XXKF
+ lQbg==
+X-Gm-Message-State: APjAAAUbygb4SwfBqELKCD5Pz5r0T42EP+rFHnClixtsZGcyiYqtXu/l
+ rbTb3ijlknUUQTxXx539C1FW9VYJerq2vpduvzAoHSgKDYDKSxBp8kIxQPSFws+G8soZ1y7HhdK
+ YTbZsUYgUad0XOuV3MJG2FminG+MYHyev+Qfzb85rgl4BXS+bj4zAziov
+X-Google-Smtp-Source: APXvYqy3i+dFEumI/46mBHyV5mRsp7YEVKkgtzXMdeI/l57QCNeIxbO5yKjf86hAD1poEmD+rw+EBEM=
+X-Received: by 2002:a63:7985:: with SMTP id u127mr2235571pgc.169.1576279087844; 
+ Fri, 13 Dec 2019 15:18:07 -0800 (PST)
+Date: Fri, 13 Dec 2019 15:18:03 -0800
+Message-Id: <20191213231803.20766-1-wak@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.24.1
+Subject: [PATCH] npcm7xx-lpc-bpc: Rework driver
+From: "William A. Kennington III" <wak@google.com>
+To: openbmc@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,171 +72,624 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "William A. Kennington III" <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000088444e05999d03a8
-Content-Type: text/plain; charset="UTF-8"
+This provides a number of fixes:
+ - Multiple file handles are now supported, previously using multiple
+   readers would cause a race in the kfifo and spew garbage to the
+   readers.
+ - iowrite{8,16,32} are now supported correctly. Previously, the
+   dwcapture code would get confused by values added to the fifo for 16
+   bit writes
+ - Reads from the device now only return a single post code. Previously
+   the read call would emit all of the post code data in a single
+   syscall. This was broken because it wouldn't account for partial post
+   code writes into the fifo, meaning the reader could get partial
+   4-byte codes for dwcap.
 
-Ok, I think I found a way forward that's not too hacky and is only a few
-lines of code change.
+Tested:
+    Ran as a module with multiple readers and saw the correct values
+    reaching all of the readers. Also tested adding and removing readers
+    at runtime and reloading the kernel module and validating the
+    register state.
 
-Part 1 is to tell systemd-networkd to always configure the IP address on
-the interface even if it doesn't have link. Is there a reason we're not
-already doing this? Right now, from what I can tell we lose an IP address
-on any interface if its link is not up and the IP address for another
-interface gets set or changed and then persisted by phosphor-networkd.
+Change-Id: Ic979f523ccc7cda76a2328c5f8c869aa25d7204d
+Signed-off-by: William A. Kennington III <wak@google.com>
+---
+ drivers/misc/npcm7xx-lpc-bpc.c | 388 ++++++++++++++++++++-------------
+ 1 file changed, 235 insertions(+), 153 deletions(-)
 
-systemd-networkd can be reconfigured by adding the following to the
-"[Network]" section of the USB virtual NIC on the BMC:
-ConfigureWithoutCarrier=true
-IgnoreCarrierLoss=true
+diff --git a/drivers/misc/npcm7xx-lpc-bpc.c b/drivers/misc/npcm7xx-lpc-bpc.c
+index e014e07cd4a46..b04323c4f932d 100644
+--- a/drivers/misc/npcm7xx-lpc-bpc.c
++++ b/drivers/misc/npcm7xx-lpc-bpc.c
+@@ -10,6 +10,7 @@
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
++#include <linux/slab.h>
+ #include <linux/miscdevice.h>
+ #include <linux/poll.h>
+ 
+@@ -28,270 +29,348 @@
+ #define NPCM7XX_BPCFA1L_REG	0x10 //BIOS POST Code FIFO Address 1 LSB
+ #define NPCM7XX_BPCFA1M_REG	0x12 //BIOS POST Code FIFO Address 1 MSB
+ 
+-/*BIOS regiser data*/
++/* BIOS regiser data */
+ #define FIFO_IOADDR1_ENABLE	0x80
+ #define FIFO_IOADDR2_ENABLE	0x40
+ 
+ /* BPC interface package and structure definition */
+-#define BPC_KFIFO_SIZE		0x400
++#define BPC_KFIFO_SIZE		0x100
+ 
+-/*BPC regiser data*/
++/* BPC regiser data */
+ #define FIFO_DATA_VALID		0x80
+ #define FIFO_OVERFLOW		0x20
+ #define FIFO_READY_INT_ENABLE	0x8
+ #define FIFO_DWCAPTURE		0x4
+ #define FIFO_ADDR_DECODE	0x1
+ 
+-/*Host Reset*/
++/* Host Reset */
+ #define HOST_RESET_INT_ENABLE	0x10
+ #define HOST_RESET_CHANGED	0x40
+ 
++struct npcm7xx_code {
++	u32 data;
++	u8 len;
++};
++
++struct npcm7xx_bpc_file_data {
++	struct list_head		list;
++	struct npcm7xx_bpc_channel	*ch;
++	DECLARE_KFIFO(codes, struct npcm7xx_code, BPC_KFIFO_SIZE);
++	bool				host_reset;
++};
++
+ struct npcm7xx_bpc_channel {
+-	struct npcm7xx_bpc	*data;
+-	struct kfifo		fifo;
++	struct npcm7xx_bpc	*drv;
+ 	wait_queue_head_t	wq;
+-	bool			host_reset;
++	struct list_head	files;
+ 	struct miscdevice	miscdev;
+ };
+ 
+ struct npcm7xx_bpc {
+ 	void __iomem			*base;
++	struct npcm7xx_bpc_channel	chs[NUM_BPC_CHANNELS];
+ 	int				irq;
+ 	bool				en_dwcap;
+-	struct npcm7xx_bpc_channel	ch[NUM_BPC_CHANNELS];
+ };
+ 
+-static struct npcm7xx_bpc_channel *npcm7xx_file_to_ch(struct file *file)
++static int npcm7xx_bpc_open(struct inode *inode, struct file *file)
+ {
+-	return container_of(file->private_data, struct npcm7xx_bpc_channel,
+-			    miscdev);
++	struct npcm7xx_bpc_file_data *data;
++
++	data = kmalloc(sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	INIT_KFIFO(data->codes);
++	data->ch = container_of(file->private_data,
++				struct npcm7xx_bpc_channel, miscdev);
++	data->host_reset = false;
++
++	file->private_data = data;
++	list_add_rcu(&data->list, &data->ch->files);
++	return 0;
++}
++
++static int npcm7xx_bpc_release(struct inode *inode, struct file *file)
++{
++	struct npcm7xx_bpc_file_data *data = file->private_data;
++
++	if (!data)
++		return -EIO;
++
++	list_del_rcu(&data->list);
++	synchronize_rcu();
++
++	file->private_data = NULL;
++	kfree(data);
++	return 0;
+ }
+ 
+ static ssize_t npcm7xx_bpc_read(struct file *file, char __user *buffer,
+ 				size_t count, loff_t *ppos)
+ {
+-	struct npcm7xx_bpc_channel *chan = npcm7xx_file_to_ch(file);
+-	struct npcm7xx_bpc *lpc_bpc = chan->data;
+-	unsigned int copied;
++	struct npcm7xx_bpc_file_data *data = file->private_data;
++	struct npcm7xx_code code;
+ 	int ret = 0;
+-	int cond_size = 1;
+-
+-	if (lpc_bpc->en_dwcap)
+-		cond_size = 3;
+ 
+-	if (kfifo_len(&chan->fifo) < cond_size) {
++	while (!kfifo_get(&data->codes, &code)) {
+ 		if (file->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
+ 
+ 		ret = wait_event_interruptible
+-			(chan->wq, kfifo_len(&chan->fifo) > cond_size);
++			(data->ch->wq, kfifo_len(&data->codes) > 0);
+ 		if (ret == -ERESTARTSYS)
+ 			return -EINTR;
+ 	}
+ 
+-	ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
++	if (code.len < count)
++		count = code.len;
+ 
+-	return ret ? ret : copied;
++	ret = copy_to_user(buffer, &code.data, count);
++	if (ret != 0)
++		return -EFAULT;
++
++	return count;
+ }
+ 
+ static __poll_t npcm7xx_bpc_poll(struct file *file,
+ 				 struct poll_table_struct *pt)
+ {
+-	struct npcm7xx_bpc_channel *chan = npcm7xx_file_to_ch(file);
++	struct npcm7xx_bpc_file_data *data = file->private_data;
+ 	__poll_t mask = 0;
+ 
+-	poll_wait(file, &chan->wq, pt);
+-	if (!kfifo_is_empty(&chan->fifo))
++	poll_wait(file, &data->ch->wq, pt);
++	if (!kfifo_is_empty(&data->codes))
+ 		mask |= POLLIN;
+ 
+-	if (chan->host_reset) {
++	if (data->host_reset) {
+ 		mask |= POLLHUP;
+-		chan->host_reset = false;
++		data->host_reset = false;
+ 	}
+ 
+ 	return mask;
+ }
+ 
+-static const struct file_operations npcm7xx_bpc_fops = {
++static const struct file_operations npcm7xx_bpc_channel_fops = {
+ 	.owner		= THIS_MODULE,
++	.open		= npcm7xx_bpc_open,
++	.release	= npcm7xx_bpc_release,
+ 	.read		= npcm7xx_bpc_read,
+ 	.poll		= npcm7xx_bpc_poll,
+ 	.llseek		= noop_llseek,
+ };
+ 
+-static irqreturn_t npcm7xx_bpc_irq(int irq, void *arg)
++static void npcm7xx_bpc_channel_update(struct npcm7xx_bpc_channel *ch,
++				       const struct npcm7xx_code *code)
+ {
+-	struct npcm7xx_bpc *lpc_bpc = arg;
+-	u8 fifo_st;
+-	u8 host_st;
+-	u8 addr_index = 0;
+-	u8 Data;
+-	u8 padzero[3] = {0};
+-	u8 last_addr_bit = 0;
+-	bool isr_flag = false;
+-
+-	fifo_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFSTAT_REG);
+-	while (FIFO_DATA_VALID & fifo_st) {
+-		 /* If dwcapture enabled only channel 0 (FIFO 0) used */
+-		if (!lpc_bpc->en_dwcap)
+-			addr_index = fifo_st & FIFO_ADDR_DECODE;
+-		else
+-			last_addr_bit = fifo_st & FIFO_ADDR_DECODE;
+-
+-		/*Read data from FIFO to clear interrupt*/
+-		Data = ioread8(lpc_bpc->base + NPCM7XX_BPCFDATA_REG);
+-		if (kfifo_is_full(&lpc_bpc->ch[addr_index].fifo))
+-			kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
+-		kfifo_put(&lpc_bpc->ch[addr_index].fifo, Data);
+-		if (fifo_st & FIFO_OVERFLOW)
+-			pr_info("BIOS Post Codes FIFO Overflow!!!\n");
++	struct npcm7xx_bpc_file_data *data;
+ 
+-		fifo_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFSTAT_REG);
+-		if (lpc_bpc->en_dwcap && last_addr_bit) {
+-			if ((fifo_st & FIFO_ADDR_DECODE) ||
+-			    ((FIFO_DATA_VALID & fifo_st) == 0)) {
+-				while (kfifo_avail(&lpc_bpc->ch[addr_index].fifo) < DW_PAD_SIZE)
+-					kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
+-				kfifo_in(&lpc_bpc->ch[addr_index].fifo,
+-					 padzero, DW_PAD_SIZE);
+-			}
++	if (!ch->drv) {
++		pr_warn("BIOS Post Code Update for unconfigured channel\n");
++		return;
++	}
++
++	list_for_each_entry_rcu(data, &ch->files, list) {
++		if (kfifo_is_full(&data->codes))
++			kfifo_skip(&data->codes);
++		kfifo_put(&data->codes, *code);
++	}
++}
++
++static void npcm7xx_bpc_channel_wake(struct npcm7xx_bpc_channel *ch)
++{
++	if (!ch->drv)
++		return;
++
++	wake_up_interruptible(&ch->wq);
++}
++
++static void npcm7xx_bpc_host_reset(struct npcm7xx_bpc *bpc)
++{
++	struct npcm7xx_bpc_file_data *data;
++	u8 i;
++
++	for (i = 0; i < NUM_BPC_CHANNELS; ++i) {
++		if (!bpc->chs[i].drv)
++			continue;
++		list_for_each_entry_rcu(data, &bpc->chs[i].files, list) {
++			data->host_reset = true;
+ 		}
+-		isr_flag = true;
+ 	}
++}
++
++static irqreturn_t npcm7xx_bpc_irq(int irq, void *arg)
++{
++	struct npcm7xx_bpc *bpc = arg;
++	struct npcm7xx_code code = {
++		.len = 0,
++		.data = 0,
++	};
++	bool ch_wake[NUM_BPC_CHANNELS] = {};
++	u8 read_byte;
++	u8 status;
++	u8 ch_i;
++	bool reg_valid;
++	irqreturn_t ret = IRQ_NONE;
++
++	rcu_read_lock();
++
++	while (true) {
++		status = ioread8(bpc->base + NPCM7XX_BPCFSTAT_REG);
++		reg_valid = status & FIFO_DATA_VALID;
++		if (code.len > 0 && (!reg_valid || !bpc->en_dwcap ||
++				     status & FIFO_ADDR_DECODE)) {
++			npcm7xx_bpc_channel_update(&bpc->chs[ch_i], &code);
++			ch_wake[ch_i] = true;
++			code.len = 0;
++			code.data = 0;
++		}
++		if (!reg_valid)
++			break;
+ 
+-	host_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFMSTAT_REG);
+-	if (host_st & HOST_RESET_CHANGED) {
+-		iowrite8(HOST_RESET_CHANGED,
+-			 lpc_bpc->base + NPCM7XX_BPCFMSTAT_REG);
+-		lpc_bpc->ch[addr_index].host_reset = true;
+-		isr_flag = true;
++		if (status & FIFO_OVERFLOW)
++			pr_info("BIOS Post Codes FIFO Overflow!!!\n");
++
++		ch_i = bpc->en_dwcap ? 0 : status & FIFO_ADDR_DECODE;
++		read_byte = ioread8(bpc->base + NPCM7XX_BPCFDATA_REG);
++		code.data |= read_byte << (code.len++ << 3);
+ 	}
+ 
+-	if (isr_flag) {
+-		wake_up_interruptible(&lpc_bpc->ch[addr_index].wq);
+-		return IRQ_HANDLED;
++	status = ioread8(bpc->base + NPCM7XX_BPCFMSTAT_REG);
++	if (status & HOST_RESET_CHANGED) {
++		iowrite8(HOST_RESET_CHANGED, bpc->base + NPCM7XX_BPCFMSTAT_REG);
++		npcm7xx_bpc_host_reset(bpc);
++		for (ch_i = 0; ch_i < NUM_BPC_CHANNELS; ++ch_i)
++			ch_wake[ch_i] = true;
+ 	}
+ 
+-	return IRQ_NONE;
++	rcu_read_unlock();
++
++	for (ch_i = 0; ch_i < NUM_BPC_CHANNELS; ++ch_i)
++		if (ch_wake[ch_i]) {
++			npcm7xx_bpc_channel_wake(&bpc->chs[ch_i]);
++			ret = IRQ_HANDLED;
++		}
++
++	return ret;
+ }
+ 
+-static int npcm7xx_bpc_config_irq(struct npcm7xx_bpc *lpc_bpc,
++static int npcm7xx_bpc_config_irq(struct npcm7xx_bpc *bpc,
+ 				  struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	int rc;
+ 
+-	lpc_bpc->irq = platform_get_irq(pdev, 0);
+-	if (lpc_bpc->irq < 0) {
++	bpc->irq = platform_get_irq(pdev, 0);
++	if (bpc->irq < 0) {
+ 		dev_err(dev, "get IRQ failed\n");
+-		return lpc_bpc->irq;
++		return bpc->irq;
+ 	}
+ 
+-	rc = devm_request_irq(dev, lpc_bpc->irq,
++	rc = devm_request_irq(dev, bpc->irq,
+ 			      npcm7xx_bpc_irq, IRQF_SHARED,
+-			      DEVICE_NAME, lpc_bpc);
++			      DEVICE_NAME, bpc);
+ 	if (rc < 0) {
+-		dev_warn(dev, "Unable to request IRQ %d\n", lpc_bpc->irq);
++		dev_err(dev, "Unable to request IRQ %d\n", bpc->irq);
+ 		return rc;
+ 	}
+ 
+ 	return 0;
+ }
+ 
+-static int npcm7xx_enable_bpc(struct npcm7xx_bpc *lpc_bpc, struct device *dev,
+-			      int channel, u16 lpc_port)
++static int npcm7xx_bpc_channel_enable(struct npcm7xx_bpc *bpc, struct device *dev,
++				      int channel, u16 lpc_port)
+ {
++	struct npcm7xx_bpc_channel *ch = &bpc->chs[channel];
+ 	int rc;
+ 	u8 addr_en, reg_en;
+ 
+-	init_waitqueue_head(&lpc_bpc->ch[channel].wq);
+-
+-	rc = kfifo_alloc(&lpc_bpc->ch[channel].fifo,
+-			 BPC_KFIFO_SIZE, GFP_KERNEL);
+-	if (rc)
+-		return rc;
++	init_waitqueue_head(&ch->wq);
++	INIT_LIST_HEAD(&ch->files);
+ 
+-	lpc_bpc->ch[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
+-	lpc_bpc->ch[channel].miscdev.name =
++	ch->miscdev.minor = MISC_DYNAMIC_MINOR;
++	ch->miscdev.name =
+ 		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
+-	lpc_bpc->ch[channel].miscdev.fops = &npcm7xx_bpc_fops;
+-	lpc_bpc->ch[channel].miscdev.parent = dev;
+-	rc = misc_register(&lpc_bpc->ch[channel].miscdev);
++	ch->miscdev.fops = &npcm7xx_bpc_channel_fops;
++	ch->miscdev.parent = dev;
++	rc = misc_register(&ch->miscdev);
+ 	if (rc)
+ 		return rc;
+ 
+-	lpc_bpc->ch[channel].data = lpc_bpc;
+-	lpc_bpc->ch[channel].host_reset = false;
+-
+-	/* Enable LPC snoop channel at requested port */
+ 	switch (channel) {
+ 	case 0:
+ 		addr_en = FIFO_IOADDR1_ENABLE;
+ 		iowrite8((u8)lpc_port & 0xFF,
+-			 lpc_bpc->base + NPCM7XX_BPCFA1L_REG);
++			 bpc->base + NPCM7XX_BPCFA1L_REG);
+ 		iowrite8((u8)(lpc_port >> 8),
+-			 lpc_bpc->base + NPCM7XX_BPCFA1M_REG);
++			 bpc->base + NPCM7XX_BPCFA1M_REG);
+ 		break;
+ 	case 1:
+ 		addr_en = FIFO_IOADDR2_ENABLE;
+ 		iowrite8((u8)lpc_port & 0xFF,
+-			 lpc_bpc->base + NPCM7XX_BPCFA2L_REG);
++			 bpc->base + NPCM7XX_BPCFA2L_REG);
+ 		iowrite8((u8)(lpc_port >> 8),
+-			 lpc_bpc->base + NPCM7XX_BPCFA2M_REG);
++			 bpc->base + NPCM7XX_BPCFA2M_REG);
+ 		break;
+ 	default:
++		misc_deregister(&ch->miscdev);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (lpc_bpc->en_dwcap)
++	if (bpc->en_dwcap)
+ 		addr_en = FIFO_DWCAPTURE;
+ 
+-	/*
+-	 * Enable FIFO Ready Interrupt, FIFO Capture of I/O addr,
+-	 * and Host Reset
+-	 */
+-	reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+-	iowrite8(reg_en | addr_en | FIFO_READY_INT_ENABLE |
+-		 HOST_RESET_INT_ENABLE, lpc_bpc->base + NPCM7XX_BPCFEN_REG);
++	reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
++	iowrite8(reg_en | addr_en, bpc->base + NPCM7XX_BPCFEN_REG);
+ 
++	smp_mb();
++	ch->drv = bpc;
+ 	return 0;
+ }
+ 
+-static void npcm7xx_disable_bpc(struct npcm7xx_bpc *lpc_bpc, int channel)
++static void npcm7xx_bpc_channel_disable(struct npcm7xx_bpc *bpc, int channel)
+ {
+-	u8 reg_en;
++	struct npcm7xx_bpc_channel *ch = &bpc->chs[channel];
++	u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
++
++	if (!ch->drv)
++		return;
++	ch->drv = NULL;
+ 
+ 	switch (channel) {
+ 	case 0:
+-		reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+-		if (lpc_bpc->en_dwcap)
+-			iowrite8(reg_en & ~FIFO_DWCAPTURE,
+-				 lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+-		else
+-			iowrite8(reg_en & ~FIFO_IOADDR1_ENABLE,
+-				 lpc_bpc->base + NPCM7XX_BPCFEN_REG);
++		iowrite8(reg_en & ~(FIFO_DWCAPTURE | FIFO_IOADDR1_ENABLE),
++			 bpc->base + NPCM7XX_BPCFEN_REG);
+ 		break;
+ 	case 1:
+-		reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+ 		iowrite8(reg_en & ~FIFO_IOADDR2_ENABLE,
+-			 lpc_bpc->base + NPCM7XX_BPCFEN_REG);
++			 bpc->base + NPCM7XX_BPCFEN_REG);
+ 		break;
+ 	default:
+ 		return;
+ 	}
+ 
+-	if (!(reg_en & (FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE)))
+-		iowrite8(reg_en &
+-			 ~(FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE),
+-			 lpc_bpc->base + NPCM7XX_BPCFEN_REG);
++	misc_deregister(&ch->miscdev);
++}
+ 
+-	kfifo_free(&lpc_bpc->ch[channel].fifo);
+-	misc_deregister(&lpc_bpc->ch[channel].miscdev);
++static void npcm7xx_bpc_reset(struct npcm7xx_bpc *bpc)
++{
++	u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
++	reg_en &= ~(FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE | FIFO_DWCAPTURE |
++			FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE);
++	iowrite8(reg_en, bpc->base + NPCM7XX_BPCFEN_REG);
++}
++
++static void npcm7xx_bpc_enable_irq(struct npcm7xx_bpc *bpc)
++{
++	u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
++	reg_en |= FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE;
++	iowrite8(reg_en, bpc->base + NPCM7XX_BPCFEN_REG);
+ }
+ 
+ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+ {
+-	struct npcm7xx_bpc *lpc_bpc;
++	struct npcm7xx_bpc *bpc;
+ 	struct resource *res;
+ 	struct device *dev;
+ 	u32 port;
+@@ -299,8 +378,8 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+ 
+ 	dev = &pdev->dev;
+ 
+-	lpc_bpc = devm_kzalloc(dev, sizeof(*lpc_bpc), GFP_KERNEL);
+-	if (!lpc_bpc)
++	bpc = devm_kzalloc(dev, sizeof(*bpc), GFP_KERNEL);
++	if (!bpc)
+ 		return -ENOMEM;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -310,11 +389,11 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	dev_dbg(dev, "BIOS post code base resource is %pR\n", res);
+-	lpc_bpc->base = devm_ioremap_resource(dev, res);
+-	if (IS_ERR(lpc_bpc->base))
+-		return PTR_ERR(lpc_bpc->base);
++	bpc->base = devm_ioremap_resource(dev, res);
++	if (IS_ERR(bpc->base))
++		return PTR_ERR(bpc->base);
+ 
+-	dev_set_drvdata(&pdev->dev, lpc_bpc);
++	dev_set_drvdata(&pdev->dev, bpc);
+ 
+ 	rc = of_property_read_u32_index(dev->of_node, "monitor-ports", 0,
+ 					&port);
+@@ -323,14 +402,16 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 
+-	lpc_bpc->en_dwcap =
++	bpc->en_dwcap =
+ 		of_property_read_bool(dev->of_node, "bpc-en-dwcapture");
+ 
+-	rc = npcm7xx_bpc_config_irq(lpc_bpc, pdev);
++	npcm7xx_bpc_reset(bpc);
++	rc = npcm7xx_bpc_config_irq(bpc, pdev);
+ 	if (rc)
+ 		return rc;
++	npcm7xx_bpc_enable_irq(bpc);
+ 
+-	rc = npcm7xx_enable_bpc(lpc_bpc, dev, 0, port);
++	rc = npcm7xx_bpc_channel_enable(bpc, dev, 0, port);
+ 	if (rc) {
+ 		dev_err(dev, "Enable BIOS post code I/O port 0 failed\n");
+ 		return rc;
+@@ -340,35 +421,36 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+ 	 * Configuration of second BPC channel port is optional
+ 	 * Double-Word Capture ignoring address 2
+ 	 */
+-	if (!lpc_bpc->en_dwcap) {
+-		if (of_property_read_u32_index(dev->of_node, "monitor-ports",
+-					       1, &port) == 0) {
+-			rc = npcm7xx_enable_bpc(lpc_bpc, dev, 1, port);
++	rc = of_property_read_u32_index(dev->of_node, "monitor-ports", 1,
++					&port);
++	if (rc == 0) {
++		if (!bpc->en_dwcap) {
++			rc = npcm7xx_bpc_channel_enable(bpc, dev, 1, port);
+ 			if (rc) {
+-				dev_err(dev, "Enable BIOS post code I/O port 1 failed, disable I/O port 0\n");
+-				npcm7xx_disable_bpc(lpc_bpc, 0);
++				dev_err(dev, "Enable BIOS post code I/O port 1 failed\n");
++				npcm7xx_bpc_channel_disable(bpc, 0);
++				npcm7xx_bpc_reset(bpc);
+ 				return rc;
+ 			}
++		} else {
++			dev_warn(dev, "Ignoring monitor port 1 with DWCAP\n");
+ 		}
+ 	}
+ 
+-	pr_info("npcm7xx BIOS post code probe\n");
+-
+-	return rc;
++	return 0;
+ }
+ 
+ static int npcm7xx_bpc_remove(struct platform_device *pdev)
+ {
+-	struct npcm7xx_bpc *lpc_bpc = dev_get_drvdata(&pdev->dev);
+-	u8 reg_en;
+-
+-	reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
++	struct npcm7xx_bpc *bpc = dev_get_drvdata(&pdev->dev);
++	u8 i;
+ 
+-	if (reg_en & FIFO_IOADDR1_ENABLE)
+-		npcm7xx_disable_bpc(lpc_bpc, 0);
+-	if (reg_en & FIFO_IOADDR2_ENABLE)
+-		npcm7xx_disable_bpc(lpc_bpc, 1);
++	if (!bpc)
++		return 0;
+ 
++	for (i = 0; i < NUM_BPC_CHANNELS; ++i)
++		npcm7xx_bpc_channel_disable(bpc, i);
++	npcm7xx_bpc_reset(bpc);
+ 	return 0;
+ }
+ 
+-- 
+2.24.1
 
-This looks as following then:
-root@bmc:~# cat /etc/systemd/network/00-bmc-usb0.network
-[Match]
-Name=usb0
-[Link]
-MACAddress=bc:46:a:4a:8a:d8
-[Network]
-LinkLocalAddressing=no
-IPv6AcceptRA=false
-DHCP=false
-Address=169.254.254.254/24
-
-
-*ConfigureWithoutCarrier=trueIgnoreCarrierLoss=true*[DHCP]
-ClientIdentifier=mac
-UseDNS=true
-UseNTP=true
-UseHostname=true
-SendHostname=true
-
-
-However, this alone is not sufficient, since phosphor-networkd still
-clobbers the configuration file but without these parameters.
-
-Part 2 is to tell phosphor-networkd to include
-"ConfigureWithoutCarrier=true" and "IgnoreCarrierLoss=true" in the
-generated configuration files. I'm proposing to make this behavior change
-via a configure parameter, similar to what we've done with
---disable-link-local-autoconfiguration.
-
-I'll make the necessary changes and will send a commit for review.
-
-Oskar.
-
-On Tue, Dec 10, 2019 at 1:00 PM Oskar Senft <osk@google.com> wrote:
-
-> Hi everyone
->
-> I couldn't find any other mention of this and hope this hasn't been asked
-> / answered / solved before.
->
-> We're using both an NC-SI based NIC and the USB virtual NIC on a AST2500
-> BMC (on the TYAN S7106 mainboard). I found that phosphor-networkd clobbers
-> the networking configuration (IP address) for the USB virtual NIC (usb0) in
-> the following scenario:
->
->    1. The USB virtual NIC (usb0) has it default IP address hard coded in
->    /etc/systemd/network/00-bmc-usb0.network.
->    2. The host has not yet loaded the USB NIC driver (cdc_ether). In this
->    case the USB NIC on the BMC does not have an IP address assigned (I haven't
->    investigated why that is, but it seems ok).
->    3. A process actively assigns / changes the IP address for the BMC's
->    other NIC (i.e. eth0) via phosphor-networkd, e.g. via IPMI from the host.
->
-> At step #3 phosphor-networkd overwrites all files in /etc/systemd/network
-> (EthernetInterface::writeConfigurationFile() called from
-> Manager::writeToConfigurationFile()). Specifically, it rewrites all files
-> with information captured from the running system. Since the USB NIC (usb0)
-> doesn't have an IP address at that time, the rewritten file is missing the
-> IP address, too.
->
-> I can think of various ways to fix this:
->
->    - Make the host explicitly configure usb0 via IPMI before trying to
->    talk with the BMC via the USB NIC. This won't work since we'd like to stop
->    using IPMI from the host completely.
->    - Enhance phosphor-networkd to always explicitly exclude "usb0" as a
->    managed device. I wonder if this could be done by adding a new key/value
->    pair to /etc/systemd/network/00-bmc-usb0.network, e.g. "[PhosphorNetworkD]
->    managed=false". This seems pretty straightforward.
->    - Come up with some "automatic" way to not clobber the configuration
->    file if the running configuration does not match. It feels that this goes
->    against the fundamental design of phosphor-networkd.
->
-> Thoughts? Ideas? Opinions?
->
-> Thanks
-> Oskar.
->
-
---00000000000088444e05999d03a8
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Ok, I think I found a way forward that&#39;s not too =
-hacky and is only=C2=A0a few lines of code change.</div><div><br></div><div=
->Part 1 is to tell systemd-networkd to always configure the IP address on t=
-he interface even if it doesn&#39;t have link. Is there a reason we&#39;re =
-not already doing this? Right now, from what I can tell we lose an IP addre=
-ss on any interface if its link is not up and the IP address for another in=
-terface gets set or changed and then persisted by phosphor-networkd.</div><=
-div><br></div><div></div><div>systemd-networkd can be reconfigured by addin=
-g the following to the &quot;[Network]&quot; section of the USB virtual NIC=
- on the BMC:</div>ConfigureWithoutCarrier=3Dtrue<br>IgnoreCarrierLoss=3Dtru=
-e<div><br></div><div>This looks as following then:</div><div><font face=3D"=
-monospace">root@bmc:~# cat /etc/systemd/network/00-bmc-usb0.network<br>[Mat=
-ch]<br>Name=3Dusb0<br>[Link]<br>MACAddress=3Dbc:46:a:4a:8a:d8<br>[Network]<=
-br>LinkLocalAddressing=3Dno<br>IPv6AcceptRA=3Dfalse<br>DHCP=3Dfalse<br>Addr=
-ess=3D<a href=3D"http://169.254.254.254/24">169.254.254.254/24</a><br><b>Co=
-nfigureWithoutCarrier=3Dtrue<br>IgnoreCarrierLoss=3Dtrue<br></b>[DHCP]<br>C=
-lientIdentifier=3Dmac<br>UseDNS=3Dtrue<br>UseNTP=3Dtrue<br>UseHostname=3Dtr=
-ue<br>SendHostname=3Dtrue<br></font><div><br></div></div><div><br></div><di=
-v>However, this alone is not sufficient, since phosphor-networkd still clob=
-bers the configuration file but without these parameters.</div><div><br></d=
-iv><div>Part 2 is to tell phosphor-networkd to include &quot;ConfigureWitho=
-utCarrier=3Dtrue&quot; and &quot;IgnoreCarrierLoss=3Dtrue&quot; in the gene=
-rated configuration files. I&#39;m proposing to make this behavior change v=
-ia a configure parameter, similar to what we&#39;ve done with --disable-lin=
-k-local-autoconfiguration.</div><div><br></div><div>I&#39;ll make the neces=
-sary changes and will send a commit for review.</div><div><br></div><div>Os=
-kar.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
-ail_attr">On Tue, Dec 10, 2019 at 1:00 PM Oskar Senft &lt;<a href=3D"mailto=
-:osk@google.com">osk@google.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi everyone<div><br></div=
-><div>I couldn&#39;t find any other mention of this and hope this hasn&#39;=
-t been asked / answered / solved before.</div><div><br></div><div>We&#39;re=
- using both an NC-SI based NIC and the USB virtual=C2=A0NIC on a AST2500 BM=
-C (on the TYAN S7106 mainboard). I found that phosphor-networkd clobbers th=
-e networking configuration (IP address) for the USB virtual NIC (usb0) in t=
-he following scenario:</div><div><ol><li>The USB virtual NIC (usb0) has it =
-default IP address hard coded in /etc/systemd/network/00-bmc-usb0.network.<=
-/li><li>The host has not yet loaded the USB NIC driver (cdc_ether). In this=
- case the USB NIC on the BMC does not have an IP address assigned (I haven&=
-#39;t investigated why that is,=C2=A0but it seems ok).</li><li>A process ac=
-tively assigns / changes the IP address for the BMC&#39;s other NIC (i.e. e=
-th0) via phosphor-networkd, e.g. via IPMI from the host.</li></ol><div>At s=
-tep #3 phosphor-networkd overwrites all files in /etc/systemd/network (Ethe=
-rnetInterface::writeConfigurationFile() called from Manager::writeToConfigu=
-rationFile()). Specifically, it rewrites all files with information capture=
-d from the running system. Since the USB NIC (usb0) doesn&#39;t have an IP =
-address at that time, the rewritten file is missing the IP address, too.<br=
-></div></div><div><br></div><div></div><div>I can think of various ways to =
-fix this:<br></div><div><ul><li>Make the host explicitly configure usb0 via=
- IPMI before trying to talk with the BMC via the USB NIC. This won&#39;t wo=
-rk since we&#39;d like to stop using IPMI from the host completely.</li><li=
->Enhance phosphor-networkd to always explicitly exclude &quot;usb0&quot; as=
- a managed device. I wonder if this could be done by adding a new key/value=
- pair to=C2=A0/etc/systemd/network/00-bmc-usb0.network, e.g. &quot;[Phospho=
-rNetworkD] managed=3Dfalse&quot;. This seems pretty straightforward.<br></l=
-i><li>Come up with some &quot;automatic&quot; way to not clobber the config=
-uration file if the running configuration does not match. It feels that thi=
-s goes against the fundamental design of phosphor-networkd.</li></ul><div>T=
-houghts? Ideas? Opinions?</div></div><div><br></div><div>Thanks</div><div>O=
-skar.</div></div>
-</blockquote></div>
-
---00000000000088444e05999d03a8--
