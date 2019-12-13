@@ -2,67 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44B0D11DDE8
-	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 06:46:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 121F811DE1C
+	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 07:07:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47Z06M2zWczDrDY
-	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 16:46:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47Z0Z46mbbzDrFY
+	for <lists+openbmc@lfdr.de>; Fri, 13 Dec 2019 17:07:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::334;
- helo=mail-ot1-x334.google.com; envelope-from=ojayanth@gmail.com;
+ smtp.mailfrom=protonmail.com (client-ip=185.70.40.132;
+ helo=mail-40132.protonmail.ch; envelope-from=rgrs@protonmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="dvC51zPU"; 
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="YIW2oS8i"; 
  dkim-atps=neutral
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
- [IPv6:2607:f8b0:4864:20::334])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
+ [185.70.40.132])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47Z05g1gw6zDr9w
- for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 16:46:14 +1100 (AEDT)
-Received: by mail-ot1-x334.google.com with SMTP id 66so4904737otd.9
- for <openbmc@lists.ozlabs.org>; Thu, 12 Dec 2019 21:46:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2Js3DwTpFlIPCtidti2BEdOyeySIqqlLNAxLDnzzUjc=;
- b=dvC51zPUByDr8j0KcjIXwdSUUiHAa8wE7lRq89+RspLa6TNTc46HzObmHqO9WXqmlk
- xwvowiAv86cuF5QR+mzqpQTIew0Hz7u+xJC7GI4pyo/D+QNwRczJ7RkkOlmPokjZ4AuA
- TYYJe/bvdYDG1K+FS1/Sc3YGpt2Seiv5susrRxj8xnDt2ik1Cgqnjs7aLx1FL1WKl6/D
- 2Gjui4DISk5WusAIt5dxTj9R2z0qAUVf1yNeFbFMKCI0r7Ev2zhumHWx+Ijao8nNdjfy
- /eATE+XiYSOAYC+jrpuJblZl0MartyGXiYMLIKgqT31cNSsl3cvndrSQwnXNBQqIpj/k
- OtCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=2Js3DwTpFlIPCtidti2BEdOyeySIqqlLNAxLDnzzUjc=;
- b=A6lqRFmED6hFTWtaMXBQlKwXpAjxOQepYL8WmVu4oYZnf/Q71Bj8pBvfDwOYGxORe0
- 6IlYK3+ME1rz7VyDPqv8jZIGp0jwttvwQ4kqBORjPrxngvZgRXpdkf3aD0WXreybmnMR
- bZMS6Kpua0K/CyF8Lteuhwi2IUfKts8WuiFvC6BFcoplfQYThUtpjldUgk4aaSZpem9K
- Gccp0PJaEhsGdsfw0yTZBii1gYoZ9SkRcjzztnF7uJrLgRp/etCVr5hH9Wf1r9CsRFEj
- /Pbp3FpDIUeGaIPrqArfvJ3bX4BUkCiYxOA3HDn3jRxDW4u9XSiVHOs9CWk67ESfIzNe
- ou7g==
-X-Gm-Message-State: APjAAAW8UI3piUrFph51vlJlKhDzpnZVtR23AvUDybK6qBlFQToWL/0R
- U/JCTDtTtNLgKUkrslVHjhHW0HI/pkXxIDeI/v8=
-X-Google-Smtp-Source: APXvYqxNZJKUPkxOWPQus48Dz/WjizOKvTt7hv/uqFQcYeuFiGm59IIwyFPSKgHOOi4MfCqiDk8Xnwy55Qq99nLoQgo=
-X-Received: by 2002:a9d:32e5:: with SMTP id u92mr12997607otb.85.1576215972543; 
- Thu, 12 Dec 2019 21:46:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47Z0YK64mhzDr9w
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Dec 2019 17:06:42 +1100 (AEDT)
+Date: Fri, 13 Dec 2019 06:06:35 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1576217197;
+ bh=zZ2FuLGOyrVVhyGN/tKdMRzRTHi9M942/UXrQi0pnhA=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=YIW2oS8iRAVlX9rYfWbqewsaip4l7hq3x1l1fVL17CJf5AOx6EhHQsvvHFSX8dUyz
+ MLXj0t+LcuMAPiC/f37D4Evndazc9qRgDJW+/GkOMfEoy1cpUpM6UKCTrGYjHXd1Rd
+ mNvSS75DeeOuXLm5ahVp1mxcLTZ0YTmhXRpJYfO0=
+To: James Feist <james.feist@linux.intel.com>
+From: rgrs <rgrs@protonmail.com>
+Subject: Re: Faking Sensor Readings
+Message-ID: <QXQrQqpVwEnE9XtHvfYLfXFJnlxGAiI2xl1EKmm7Ze2OvCYJxS0d7f4i-1LYhTmPkyMER4ADLxBR6m5bbHriQxR8-dwO35uaB1CTnD8z5qQ=@protonmail.com>
+In-Reply-To: <8cef3ef8-a275-2f36-dfeb-7b4da97c6f88@linux.intel.com>
+References: <QVdDJHlLW9JS_3uowBPTzSCb1dwpqJjml0ORFR_aQGpuKCve1l8Qwy4GF4X0_dgJmExy8sjJQD_VjnI-o4xwoYhivHJlSPBt42fc1cuDKjw=@protonmail.com>
+ <x5Z3U1jaa8Tf-HK1htUFoCqgAFdtIXGaDyEU7SKkgNkehJEtqaps9BvN2j_D5lsgjEgoTL81fZ8nJLitwFaqW2zRkFK8vXhbCrld3Ziy43o=@protonmail.com>
+ <2de3b2e2-9b02-a1c2-d310-f6e546e72c1e@linux.intel.com>
+ <JIIzLFDdd2_yAem6ToyksGqeJ7ulaTOylaocMLH19rYqyv3fSzcEL2H9VDJW66iYQY8L8FwjgpZqPFj8rRD0JP52xsAHQ6kD4_ygDAjj0LE=@protonmail.com>
+ <e59e36d1-74fc-5f44-a472-26fdfb127af2@linux.intel.com>
+ <iSeeVedIu2fcqVt4W4TlDAQNHMjfTxE0NUAs68nlqossQmqy5OdbHgn9YHO1kh88ZpFMHO6bpGL7ki2hS9mQgw2d7Dk2WQFH-o6jOH6e1g4=@protonmail.com>
+ <8eb66be0-c5a4-ac3d-2421-8648c2fc4a4f@linux.intel.com>
+ <EPYcrss0WRTceNCXy6GM0cmf5GE-4TzTQLyLuYd581ufdbKteABRuQArHVWcPPAHaCBK8_0nIRJ2DP5hSh5jS2AgDPjr_snA5bh91FU-OOI=@protonmail.com>
+ <8cef3ef8-a275-2f36-dfeb-7b4da97c6f88@linux.intel.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
- <OF3E82A637.78F050C7-ON002584CE.0025B2F4-002584CE.00271DE9@notes.na.collabserv.com>
- <CAH1kD+YfetwAmGQfjF4ytCQYhhaEorgdiA5svwjm7X91-yG1Tg@mail.gmail.com>
-In-Reply-To: <CAH1kD+YfetwAmGQfjF4ytCQYhhaEorgdiA5svwjm7X91-yG1Tg@mail.gmail.com>
-From: Jayanth Othayoth <ojayanth@gmail.com>
-Date: Fri, 13 Dec 2019 11:16:01 +0530
-Message-ID: <CACkAXSpCwhUwzh1uZMMkFvtkO7Tdi4xoHaq1KtaAndR8pR2gbA@mail.gmail.com>
-Subject: Re: Redfish Dump Service Proposal
-To: Richard Hanley <rhanley@google.com>
-Content-Type: multipart/alternative; boundary="00000000000022077705998f61f5"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,186 +66,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Devender Rao <devenrao@in.ibm.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Reply-To: rgrs <rgrs@protonmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000022077705998f61f5
-Content-Type: text/plain; charset="UTF-8"
+Understood now. Thanks for the detailed reply.
 
-Dump is an additional debug data associated  to an error event.
-From the phosphor-debug-collector  perspective,  BMC Dump collects
-additional debug information, which canot be contained in the error log.
-Please find my comments inline.
+~raj
 
-On Fri, Dec 13, 2019 at 6:27 AM Richard Hanley <rhanley@google.com> wrote:
 
-> Hi Ratan,
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Thursday, December 12, 2019 9:27 PM, James Feist <james.feist@linux.inte=
+l.com> wrote:
+
+> On 12/11/19 9:28 PM, rgrs wrote:
 >
-> I think this service is a really good idea.  A couple of thoughts:
+> > Hi James,
+> > Thanks for the help.
+> > One more clarification please,
+> > How is entity-manager different from phoshor-hwmon conf files?
 >
-> 1) I don't think the semantics around the Download action are consistent.
-> Generally actions are reserved for stateful changes, and only have post
-> methods.  I think this could be simplified by putting an @odata.id in the
-> Dump resource that points to the raw dump file.  Then clients can do a
-> normal HTTP get on that URL.
+> Entity-manager does runtime detection based on available d-bus
+> properties. In most cases it's based on Fru Detection, but anything on
+> d-bus can be used to configure. So you can write Probe statements (at
+> the bottom of the configuration files in most cases) that say when this
+> key/value pair exists on d-bus, install this configuration. This is most
+> useful for add-in-cards or other removable devices, so that when it
+> exists, the configuration gets loaded. For example this retimer card
+> https://github.com/openbmc/entity-manager/blob/master/configurations/PCIE=
+ SSD Retimer.json
+> says when a Fru Exists with BOARD_PRODUCT_NAME set to a specific value,
+> then load these sensors. It can then export sensors to sysfs as well if
+> needed. Entity-manager is also not limited to sensors, it also
+> configures things like phosphor-pid-control
+> https://github.com/openbmc/entity-manager/blob/7d807754cc9153b04b59980446=
+4edd9654d7a81e/configurations/WFT Baseboard.json#L1678.
+> We use it specifically so we can use 1 binary for multiple baseboards
+> assuming similar i2c topology. At a high-level view, it takes JSON and
+> when appropriate fields are available on d-bus, puts a system
+> configuration on d-bus, along with being able to export some i2c devices.
 >
-> 2) I'm wondering what is the best way to communicate what MIME type the
-> raw dump supports.  In theory that could be a part of the RawDump
-> resource.  However, a case could be made that it should be put into the
-> Dump resource.
+> Hope this helps
 >
-> 3) Perhaps the dump service should be embedded into other resources,
-> instead of being a top level service.  I'm imagining something like how the
-> LogService is setup.  That way there are a lot fewer dumpTypes for any
-> particular instance of the service.
->    a) This could be taken to the extreme, and the DumpService could be
-> integrated with the existing LogServices.  This would mean adding in a new
-> log type, and having a new action.
->
+> -James
 
 
-> +Agree with this suggestion to embedding dump under log service as new
-> EventType.  Also need an association  for each system generated dump with
-> an error event.
->
-
-> 4) It might be a good idea to have some event support in the cases where a
-> dump is created because of a machine crash.
->
-> Regards,
-> Richard
->
-> On Wed, Dec 11, 2019 at 11:08 PM Devender Rao <devenrao@in.ibm.com> wrote:
->
->> Over all the schema looks good. Few observations for clarity, also how
->> about we have multiple collection say HostDumpCollection, BMCDumpCollection
->>  and also a new service DumpLocations similar to "CertificateLocations"
->>
->> Page 17: Dump Creation flow
->> 1. The time line diagram should show that "Request to create dump" return
->> immediatley. The redfish client will be notififed asynchronously when the
->> dump is collected through DumpCollected event. Request for dump with
->> resource id should be in the same time line when it gets notified of Dump
->> collection completed.
->>
->> Page 19: For clarity
->> "List Dumps" should be shown as part of DumpColletion rather than under
->> "Operations on dump"
->> "Get Dump details" should be shown under dump service
->> "Delete Dumps" should be shown under DumpService
->>
->>
->> ----- Original message -----
->> From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
->> Sent by: "openbmc" <openbmc-bounces+devenrao=in.ibm.com@lists.ozlabs.org>
->> To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
->> Cc:
->> Subject: [EXTERNAL] Redfish Dump Service Proposal
->> Date: Thu, Dec 12, 2019 5:09 AM
->>
->> Hi All,
->>
->> Please find the redfish dump service proposal for the DMTF attached.
->>
->> Kindly review and provide your inputs.
->>
->> Ratan
->>
->>
->>
->>
->>
->>
->>
->>
-
---00000000000022077705998f61f5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div>Dump is an additional debu=
-g data associated=C2=A0 to an error event.=C2=A0 <br></div><div>From the ph=
-osphor-debug-collector=C2=A0 perspective,=C2=A0 BMC Dump collects additiona=
-l debug information, which canot be contained in the error log. Please find=
- my comments inline. <br></div><br><div class=3D"gmail_quote"><div dir=3D"l=
-tr" class=3D"gmail_attr">On Fri, Dec 13, 2019 at 6:27 AM Richard Hanley &lt=
-;<a href=3D"mailto:rhanley@google.com">rhanley@google.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">H=
-i Ratan,<div><br></div><div>I think this service is a really good idea.=C2=
-=A0 A couple of thoughts:</div><div><br></div><div>1) I don&#39;t think the=
- semantics around the Download action are consistent.=C2=A0 Generally actio=
-ns are reserved for stateful changes, and only have post methods.=C2=A0 I t=
-hink this could be simplified by putting an=C2=A0@<a href=3D"http://odata.i=
-d" target=3D"_blank">odata.id</a> in the Dump resource that points to the r=
-aw dump file.=C2=A0 Then clients can do a normal HTTP get on that URL.</div=
-><div><br></div><div>2) I&#39;m wondering what is the best way to communica=
-te what MIME type the raw dump supports.=C2=A0 In theory that could be a pa=
-rt of the RawDump resource.=C2=A0 However, a case could be made that it sho=
-uld be put into the Dump resource.=C2=A0</div><div><br></div><div>3) Perhap=
-s the dump service should be embedded into other resources, instead of bein=
-g a top level service.=C2=A0 I&#39;m imagining something like how the LogSe=
-rvice is setup.=C2=A0 That way there are a lot fewer dumpTypes for any part=
-icular instance of the service.=C2=A0=C2=A0</div><div>=C2=A0 =C2=A0a) This =
-could be taken to the extreme, and the DumpService could be integrated with=
- the existing LogServices.=C2=A0 This would mean adding in a new log type, =
-and having a new action.</div><div></div></div></blockquote><div>=C2=A0</di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>+=
-Agree with this suggestion to embedding dump under log service as new Event=
-Type.=C2=A0 Also need an association=C2=A0 for each system generated dump w=
-ith an error event. =C2=A0 <br></div></div></blockquote><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div> <br></div><div>4) I=
-t might be a good idea to have some event support in the cases where a dump=
- is created because of a machine crash.</div><div><br></div><div>Regards,</=
-div><div>Richard</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
- class=3D"gmail_attr">On Wed, Dec 11, 2019 at 11:08 PM Devender Rao &lt;<a =
-href=3D"mailto:devenrao@in.ibm.com" target=3D"_blank">devenrao@in.ibm.com</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><d=
-iv dir=3D"ltr" style=3D"font-family:Arial,Helvetica,sans-serif;font-size:10=
-pt"><div dir=3D"ltr">Over all the schema looks good. Few observations for c=
-larity, also how about we have multiple collection say HostDumpCollection, =
-BMCDumpCollection =C2=A0and also a new service DumpLocations similar to &qu=
-ot;CertificateLocations&quot;</div>
-<div dir=3D"ltr"><br>Page 17: Dump Creation flow</div>
-<div dir=3D"ltr">1. The time line diagram should show that &quot;Request to=
- create dump&quot; return immediatley. The redfish client will be notififed=
- asynchronously when the dump is collected through DumpCollected event. Req=
-uest for dump with resource id should be in the same time line when it gets=
- notified of Dump collection completed.<br>=C2=A0</div>
-<div dir=3D"ltr">Page 19: For clarity</div>
-<div dir=3D"ltr">&quot;List Dumps&quot; should be shown as part of DumpColl=
-etion rather than under &quot;Operations on dump&quot;<br>&quot;Get Dump de=
-tails&quot; should be shown under dump service</div>
-<div dir=3D"ltr">&quot;Delete Dumps&quot; should be shown under DumpService=
-<br>=C2=A0</div>
-<blockquote dir=3D"ltr" style=3D"border-left:2px solid rgb(170,170,170);mar=
-gin-left:5px;padding-left:5px;direction:ltr;margin-right:0px">----- Origina=
-l message -----<br>From: Ratan Gupta &lt;<a href=3D"mailto:ratagupt@linux.v=
-net.ibm.com" target=3D"_blank">ratagupt@linux.vnet.ibm.com</a>&gt;<br>Sent =
-by: &quot;openbmc&quot; &lt;openbmc-bounces+devenrao=3D<a href=3D"mailto:in=
-.ibm.com@lists.ozlabs.org" target=3D"_blank">in.ibm.com@lists.ozlabs.org</a=
->&gt;<br>To: &quot;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_b=
-lank">openbmc@lists.ozlabs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@list=
-s.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>Cc:<br>=
-Subject: [EXTERNAL] Redfish Dump Service Proposal<br>Date: Thu, Dec 12, 201=
-9 5:09 AM<br>=C2=A0
-<div><font size=3D"2" face=3D"Default Monospace,Courier New,Courier,monospa=
-ce">Hi All,<br><br>Please find the redfish dump service proposal for the DM=
-TF attached.<br><br>Kindly review and provide your inputs.<br><br>Ratan</fo=
-nt><br><br><br>=C2=A0</div>
-<div id=3D"gmail-m_8578528305044193743gmail-m_-4222119677397271989MIMEAttac=
-hInfoDiv" style=3D"display:none" title=3D"vnd.openxmlformats-officedocument=
-.presentationml.presentation|DumpOffload_DMTF_Proposal.pptx">=C2=A0</div></=
-blockquote>
-<div dir=3D"ltr">=C2=A0</div></div><br>
-
-</blockquote></div>
-</blockquote></div></div>
-
---00000000000022077705998f61f5--
