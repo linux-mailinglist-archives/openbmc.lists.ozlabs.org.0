@@ -2,63 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C1E711F14D
-	for <lists+openbmc@lfdr.de>; Sat, 14 Dec 2019 11:03:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 31DDD11FBE3
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 00:34:13 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47ZjmC4bPXzDr31
-	for <lists+openbmc@lfdr.de>; Sat, 14 Dec 2019 21:03:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47bghy28sJzDqZp
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 10:34:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=203.205.250.109; helo=smtpbg515.qq.com;
- envelope-from=1181052146@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="iKYLwxuW"; 
- dkim-atps=neutral
-X-Greylist: delayed 188 seconds by postgrey-1.36 at bilbo;
- Sat, 14 Dec 2019 21:03:02 AEDT
-Received: from smtpbg515.qq.com (smtpbg511.qq.com [203.205.250.109])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VTbj5pMF"; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.b="gMw2MLwR"; dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47ZjlV2Q2czDqxW
- for <openbmc@lists.ozlabs.org>; Sat, 14 Dec 2019 21:03:01 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1576317775; bh=JmwdcwIiFwdPRt4v8bzjb3+KdKxosMLWQSXXuGy8vjY=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=iKYLwxuW0FU4lKtMHnzdNyxBEIh0XkG0fKxXSGG8v1H+IclkyvFDlWsP4vndbfTRy
- nbX5yXHuhwkLvJqU4YvyRFOiBVypLmPWu4GBpLc69nFyQ9KppASZzVGAkE0Z+h3mTp
- z0vOSlAl7YMuZQngb/HD/nrkBs22NCttjnQriZPs=
-X-QQ-FEAT: Jeh5vWjRdzLx6MfiOO/dNaUEVoEIVAhthmU4Ncp9zPHTZ2xbE48IDyYKEfWOc
- HfGD6d1NuKUkknrwnKPwniQBB91KL4QqEc9NQpWqqJHiXhjEp9Rp3uQ1danD5B3mqM+6NAb
- UqMXDrPGe5pGUDv/QLdxlx+RfQBVcSyAWqvuCxsP39W44G31Ho6XaE1Zcdu/jSzHPwIpyuA
- TSd2e+RoFn5tKIuJsWGEQCRrdbVkPohRooptWDPczz6loE7imghi0ynrxXlCsau+cyYmTxf
- xTGGufNnNkyMfjYVxSz8SGeAA=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 211.75.14.191
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1576317453t8993498
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: How can I add a user for openbmc and remove the default root user?
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47bgh34ZGszDqWS;
+ Mon, 16 Dec 2019 10:33:22 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id E2EF822348;
+ Sun, 15 Dec 2019 18:33:19 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Sun, 15 Dec 2019 18:33:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=lzvbMSFkVBR+nAocAB/eyxxphB8B1S4
+ O1CMOCvIRkYg=; b=VTbj5pMFSVZMVT7DLLhNqZee/qfUdpnNDdx36+SC/dzZoul
+ i6gJqNcdAXdAD7yXYiMZxGQ90NOYdWI+2m1rqljGkGtNtXAvtxTlgw5wIbG9f9sq
+ XbS47Q53S0MIvRphJfNoVpVBG6iaR5/MA1C5JPyK1+6Di/BBMxSBg7ObycblOvH7
+ /cwaSIp0lw33SYMBhyU1gDM+xnBaSA/0+PM8uimxpV0uVnPPfBPDX3eTAwcTd7ig
+ E8jRLPAVr/aEp+g/nUsfbkrc9ktVmU5I+gM2oarsRqus72w1YfZJ80xz8xWA5YiI
+ EDoLx1IKzrCzEAWrQUFkM0pgrVQcTyT1w9ZfLog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=lzvbMS
+ FkVBR+nAocAB/eyxxphB8B1S4O1CMOCvIRkYg=; b=gMw2MLwRV8HiPZPynrJvdp
+ QFfd/wzjfxOiBSkUWVsAOcI739DKAuCe3x3dqIgCHRIgc8Q9ZM/7UxOzsykIN6uB
+ utST9rch5vnvj9BApLN7Ysy1AfSTh32mb25RBNeYwZFcm1lqZz6rLbzuJ48kHTnX
+ 18zw5NNymXzMLFJJQxtydvu5wdd4qL6gGEI8mAaaP9+Jh23qSHcrBWe49Nz80kdP
+ 5LHVdqwqr42uVnJquUplkZIzjIh95y43kvvoeRAGaiSqRitmSN5Ftf1/l1D/GGa1
+ n4BSk91Kk8d1JPdkkzwJffc2WMBqTa1U3rlZswIwshnYB8ZcXToByiIGhEPPISvQ
+ ==
+X-ME-Sender: <xms:vsL2XeKfNhmf3dE2gzpbzSs86ap6GIT2CTE7EPK6YQnAElmTyqdjZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddtgedgudduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
+ rhfuihiivgeptd
+X-ME-Proxy: <xmx:vsL2XQFldtGw-XBJ4xn4Sr5zMs6iCzbRlpQm8X6rp4tuqn3GhBl4VA>
+ <xmx:vsL2XQnx8qCojcex_yzhvksBdgoI8_Oc_QIClvjdvJZucVCPsybWXw>
+ <xmx:vsL2Xe01UqS1qt5wLIomDWeSscJlJ1dcSYXP7sFVH6wmLv1McK_Svg>
+ <xmx:v8L2XS1LxoMGXcASWDNuCFtSobL8cOMOIezDEfUBHtK3xKa7FlhVfA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id AE86EE00A2; Sun, 15 Dec 2019 18:33:18 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-680-g58d4e90-fmstable-20191213v1
 Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5DF4B20D_0F9E84C0_0CF6E6A5"
-Content-Transfer-Encoding: 8Bit
-Date: Sat, 14 Dec 2019 17:57:33 +0800
-X-Priority: 3
-Message-ID: <tencent_BBCBA6D64E821CDC3E0AD497B3C0FD77E509@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Sat, 14 Dec 2019 17:57:34 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgweb:bgweb2
+Message-Id: <8017a61e-e579-41ea-816a-4a76a6dc41e9@www.fastmail.com>
+In-Reply-To: <20191213135131.GA1822@cnn>
+References: <20191213135131.GA1822@cnn>
+Date: Mon, 16 Dec 2019 10:05:02 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: manikandan-e <manikandan.hcl.ers.epl@gmail.com>,
+ "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH v5] ARM: dts: aspeed: Adding Facebook Yosemite V2 BMC
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,37 +88,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, manikandan.e@hcl.com,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On Sat, 14 Dec 2019, at 00:21, Manikandan Elumalai wrote:
+> The Yosemite V2 is a facebook multi-node server
+> platform that host four OCP server. The BMC
+> in the Yosemite V2 platform based on AST2500 SoC.
+> 
+> This patch adds linux device tree entry related to
+> Yosemite V2 specific devices connected to BMC SoC.
+> 
+> Signed-off-by : Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+> Acked-by        : Andrew Jeffery <andrew@aj.id.au>
+> Reviewed-by  : Vijay Khemka <vkhemka@fb.com>
 
-------=_NextPart_5DF4B20D_0F9E84C0_0CF6E6A5
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+In the future, don't worry about aligning parts of the tag text. Single space is
+the custom (and is less effort!)
 
-R3JlZXRpbmdzIQ0KJm5ic3A7ICZuYnNwOyBJIGFtIHVzaW5nIG9wZW5ibWMsIGFuZCBJIHdh
-bnQgdG8gcmVtb3ZlIHRoZSBkZWZhdWx0IHJvb3QgdXNlciBhbmQgYWRkIGEgbmV3IHVzZXIu
-DQombmJzcDsgJm5ic3A7IEkgdXNlIHVzZXJhZGQgYWRkIGEgdXNlciwgSSBjYW4gdXNlIGN1
-cmwgd2l0aCB0aGlzIHVzZXJuYW1lIGFuZCBwYXNzd2QgdG8gY29ubmVjdCB0byBvcGVuYm1j
-LCBCdXQgd2hlbiBJIHVzZSBpcG1pdG9vbCwgaXQgZmFpbHMNCiZuYnNwOyAmbmJzcDsgQ2Fu
-IGFueSBvbmUgdGVsbCBtZSB3aGF0IGNhbiBJJm5ic3A7IGRvPw0KDQoNCkJlc3QgUmVnYXJk
-cyENCkxpdSBIb25nd2Vp
-
-------=_NextPart_5DF4B20D_0F9E84C0_0CF6E6A5
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-PGRpdj5HcmVldGluZ3MhPC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7IEkgYW0gdXNpbmcgb3Bl
-bmJtYywgYW5kIEkgd2FudCB0byByZW1vdmUgdGhlIGRlZmF1bHQgcm9vdCB1c2VyIGFuZCBh
-ZGQgYSBuZXcgdXNlci48L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgSSB1c2UgdXNlcmFkZCBh
-ZGQgYSB1c2VyLCBJIGNhbiB1c2UgY3VybCB3aXRoIHRoaXMgdXNlcm5hbWUgYW5kIHBhc3N3
-ZCB0byBjb25uZWN0IHRvIG9wZW5ibWMsIEJ1dCB3aGVuIEkgdXNlIGlwbWl0b29sLCBpdCBm
-YWlsczwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwOyBDYW4gYW55IG9uZSB0ZWxsIG1lIHdoYXQg
-Y2FuIEkmbmJzcDsgZG8/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5CZXN0IFJlZ2FyZHMh
-PC9kaXY+PGRpdj5MaXUgSG9uZ3dlaTwvZGl2Pg==
-
-------=_NextPart_5DF4B20D_0F9E84C0_0CF6E6A5--
-
+Andrew
