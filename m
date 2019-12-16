@@ -1,82 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0624211FE61
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 07:09:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31DDD11FBE3
-	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 00:34:13 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47bghy28sJzDqZp
-	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 10:34:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47brT32W0tzDqTY
+	for <lists+openbmc@lfdr.de>; Mon, 16 Dec 2019 17:09:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235;
+ helo=mail-lj1-x235.google.com; envelope-from=karo33bug@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="VTbj5pMF"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="gMw2MLwR"; dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="H6e4zozq"; 
+ dkim-atps=neutral
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
+ [IPv6:2a00:1450:4864:20::235])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47bgh34ZGszDqWS;
- Mon, 16 Dec 2019 10:33:22 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id E2EF822348;
- Sun, 15 Dec 2019 18:33:19 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 15 Dec 2019 18:33:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=lzvbMSFkVBR+nAocAB/eyxxphB8B1S4
- O1CMOCvIRkYg=; b=VTbj5pMFSVZMVT7DLLhNqZee/qfUdpnNDdx36+SC/dzZoul
- i6gJqNcdAXdAD7yXYiMZxGQ90NOYdWI+2m1rqljGkGtNtXAvtxTlgw5wIbG9f9sq
- XbS47Q53S0MIvRphJfNoVpVBG6iaR5/MA1C5JPyK1+6Di/BBMxSBg7ObycblOvH7
- /cwaSIp0lw33SYMBhyU1gDM+xnBaSA/0+PM8uimxpV0uVnPPfBPDX3eTAwcTd7ig
- E8jRLPAVr/aEp+g/nUsfbkrc9ktVmU5I+gM2oarsRqus72w1YfZJ80xz8xWA5YiI
- EDoLx1IKzrCzEAWrQUFkM0pgrVQcTyT1w9ZfLog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=lzvbMS
- FkVBR+nAocAB/eyxxphB8B1S4O1CMOCvIRkYg=; b=gMw2MLwRV8HiPZPynrJvdp
- QFfd/wzjfxOiBSkUWVsAOcI739DKAuCe3x3dqIgCHRIgc8Q9ZM/7UxOzsykIN6uB
- utST9rch5vnvj9BApLN7Ysy1AfSTh32mb25RBNeYwZFcm1lqZz6rLbzuJ48kHTnX
- 18zw5NNymXzMLFJJQxtydvu5wdd4qL6gGEI8mAaaP9+Jh23qSHcrBWe49Nz80kdP
- 5LHVdqwqr42uVnJquUplkZIzjIh95y43kvvoeRAGaiSqRitmSN5Ftf1/l1D/GGa1
- n4BSk91Kk8d1JPdkkzwJffc2WMBqTa1U3rlZswIwshnYB8ZcXToByiIGhEPPISvQ
- ==
-X-ME-Sender: <xms:vsL2XeKfNhmf3dE2gzpbzSs86ap6GIT2CTE7EPK6YQnAElmTyqdjZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddtgedgudduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:vsL2XQFldtGw-XBJ4xn4Sr5zMs6iCzbRlpQm8X6rp4tuqn3GhBl4VA>
- <xmx:vsL2XQnx8qCojcex_yzhvksBdgoI8_Oc_QIClvjdvJZucVCPsybWXw>
- <xmx:vsL2Xe01UqS1qt5wLIomDWeSscJlJ1dcSYXP7sFVH6wmLv1McK_Svg>
- <xmx:v8L2XS1LxoMGXcASWDNuCFtSobL8cOMOIezDEfUBHtK3xKa7FlhVfA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id AE86EE00A2; Sun, 15 Dec 2019 18:33:18 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-680-g58d4e90-fmstable-20191213v1
-Mime-Version: 1.0
-Message-Id: <8017a61e-e579-41ea-816a-4a76a6dc41e9@www.fastmail.com>
-In-Reply-To: <20191213135131.GA1822@cnn>
-References: <20191213135131.GA1822@cnn>
-Date: Mon, 16 Dec 2019 10:05:02 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: manikandan-e <manikandan.hcl.ers.epl@gmail.com>,
- "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH v5] ARM: dts: aspeed: Adding Facebook Yosemite V2 BMC
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47brSD17P6zDqTJ
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Dec 2019 17:08:42 +1100 (AEDT)
+Received: by mail-lj1-x235.google.com with SMTP id m6so5437352ljc.1
+ for <openbmc@lists.ozlabs.org>; Sun, 15 Dec 2019 22:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=aEg+T0h2hf8px2wfYjqZFjcv4P119YJ534mj5f3kL+4=;
+ b=H6e4zozqQmLfLD42V+i7En/87KdMQ2LZzPXf24NBYj2t70LjKzeIbDCb58Xwm5QSmK
+ T/+mYBrRFDelbx/wcJv4FxUXXE3mg6NT+ODVLzTzI1Cvi4ofCi5lCtWlWBP1kFMikhat
+ lJ+D7Mn4i+BmSfHphLmbNCJOdvKP6wBLkO69DOycbuCfbHrawPahjJTqAw5gCe+7DsPO
+ WQuco1gDxkWP2CA57Wv0QBIF47GbhFhA/iR9QGkr6AWDXN6mefrIYLc+g/PQXeBLPNeg
+ CZ9FBN/aBL1+FRcEgLu5duCnGV33GlHLo9rtDT1CrW+dv1nwo384PClDqRSirvnbDqpk
+ nE3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=aEg+T0h2hf8px2wfYjqZFjcv4P119YJ534mj5f3kL+4=;
+ b=Y76DKKhwGtBMEE1BtX5WMv1TyR+QglK2bzQDciLLAJ4UNK50hf+2VyIkgXZK4swL3t
+ 2sxYW0om3H+JuUKnGlyuPOuBjeuYS+QhOo2iZU3JaPzUHoNmnW5/nbYsznOO2+sFKhGf
+ FzH4RSPQft8MTQcz2ukCUerAGOQKYTHLFxblZdf+OH2oYYKxrDT40gnzhbcwM1E9Y/mw
+ l/cngKoAuv5YSSFl+LtvnHvtM+P8D4Gl+h2TZdnEmmVUG54Efrm13ZjlCLrbmou9KLE8
+ ZlW45ycG20L6vKLqyvj3Vew9iolBIxm2Aj9DgHO2dOXoy7FAOzK3Qnfoeq8RVULmLROq
+ +ApA==
+X-Gm-Message-State: APjAAAUej6h4aDPMpWX4v8fpjT49ByTCS5nW1OfVVlF8sdQJpvxFnqIS
+ mxc5/V5i0YEvZVdd7VdrzkZZckax1zN5KyFxQCk=
+X-Google-Smtp-Source: APXvYqyhCE+F0y0IgRotLuVaBxlvgNxhE1r+IEJHYlJLG2T2JJRUVY2gG21bR8f6kKAlLNUJ7wqYxiS4q8kyOPCl3pA=
+X-Received: by 2002:a2e:99cd:: with SMTP id l13mr18216973ljj.243.1576476516336; 
+ Sun, 15 Dec 2019 22:08:36 -0800 (PST)
+MIME-Version: 1.0
+References: <CALzeG+-bxR0oqA_h8Gaf-RQLJygL1QYXy3y2DU=GKdLC9nhWhw@mail.gmail.com>
+ <aa329f9e-9e66-d5e7-ecac-e54c23e16a48@linux.ibm.com>
+ <d6b94dbe-a6c5-1b19-63e7-1695c3794e78@linux.ibm.com>
+In-Reply-To: <d6b94dbe-a6c5-1b19-63e7-1695c3794e78@linux.ibm.com>
+From: Carol Wang <karo33bug@gmail.com>
+Date: Mon, 16 Dec 2019 14:08:25 +0800
+Message-ID: <CALzeG+-dbvwLseu9agpKp5L8vVkNMabM76UOmuDo2sh0uS_qFA@mail.gmail.com>
+Subject: Re: Redfish: Disable/enable out of band IPMI
+To: Joseph Reynolds <jrey@linux.ibm.com>, "Puli,
+ Apparao" <apparao.puli@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,25 +75,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, manikandan.e@hcl.com,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Vijay Khemka <vijaykhemka@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, 14 Dec 2019, at 00:21, Manikandan Elumalai wrote:
-> The Yosemite V2 is a facebook multi-node server
-> platform that host four OCP server. The BMC
-> in the Yosemite V2 platform based on AST2500 SoC.
-> 
-> This patch adds linux device tree entry related to
-> Yosemite V2 specific devices connected to BMC SoC.
-> 
-> Signed-off-by : Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-> Acked-by        : Andrew Jeffery <andrew@aj.id.au>
-> Reviewed-by  : Vijay Khemka <vkhemka@fb.com>
+I didn't find the code implement about
+/xyz/openbmc_project/Control/Service/<object>.
+@Puli, Apparao
+Has it been implemented already? Where is it?
 
-In the future, don't worry about aligning parts of the tag text. Single space is
-the custom (and is less effort!)
 
-Andrew
+On Sat, Dec 14, 2019 at 4:07 AM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+>
+> On 12/13/19 2:02 PM, Joseph Reynolds wrote:
+> > On 12/12/19 1:30 AM, Carol Wang wrote:
+> >> Hi,
+> >>
+> >> Looking to implement IPMI Enable / Disable as part of Redfish's
+> >> Manager Network
+> >> Protocol.
+> >> https://redfish.dmtf.org/schemas/ManagerNetworkProtocol.v1_5_0.json
+> >
+> > Carol, that is good.  We are also looking to implement this protocol,
+> > plus the ability to control other services such as Avahi service
+> > discovery, and SSH access to the BMC shell.  I hope we can work together.
+> >
+> > Note that we have discussed this work in the following places:
+> > - https://github.com/openbmc/openbmc/wiki/Security-working-group
+> > - https://lists.ozlabs.org/pipermail/openbmc/2019-September/018379.html
+> > - https://github.com/ibm-openbmc/dev/issues/612
+> >
+> > With that said, I don't have an answer to your question.  Can someone
+> > who knows systemd help us determine the best way to disable/stop and
+> > re-enable/start the [phosphor-ipmi-net][2] service?  I think a D-Bus
+> > interface to represent the status of the service and be able to
+> > control it is expected.
+>
+> Maybe the D-Bus part is already done?  See [Service Management][3].
+> [3]:
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/Service/README.md
+>
+> > I can help with the bmcweb implementation, if needed.
+> >
+> > [2]:
+> > https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-net_git.bb
+> >
+> > - Joseph
+> >> Two ways to get/set the current status of net IPMI:
+> >> 1. Add an interface in phosphor-dbus-interface to indicate the status
+> >> of net IPMI.
+> >> Have a daemon to monitor the status, if the status is changed, then
+> >> enable or
+> >> disable the net IPMI service and socket.
+> >> 2. Check the net IPMI socket state by getData()[1] in bmcweb. If the
+> >> state is
+> >> "running" or "listening", the net IPMI status is true, otherwise, the
+> >> status is
+> >> false. Then bmcweb can enable or disable the service and socket.
+> >>
+> >> Wondering if anyone has any thoughts on this feature, which way is
+> >> better.
+> >> If add interface, in which daemon this interface should be implemented?
+> >>
+> >> [1]
+> >> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/network_protocol.hpp#L190
+> >>
+> >> Thanks,
+> >
+>
