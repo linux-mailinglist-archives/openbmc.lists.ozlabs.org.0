@@ -1,79 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDDFE123B79
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 01:22:46 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE72C123B77
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 01:21:45 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47cwft5CXdzDqZ1
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 11:21:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47cwh41JsMzDqSL
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 11:22:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::441;
- helo=mail-pf1-x441.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Leh+onp1"; 
- dkim-atps=neutral
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
- [IPv6:2607:f8b0:4864:20::441])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47cDjL63kGzDqRL
- for <openbmc@lists.ozlabs.org>; Tue, 17 Dec 2019 08:21:26 +1100 (AEDT)
-Received: by mail-pf1-x441.google.com with SMTP id x184so6322342pfb.3
- for <openbmc@lists.ozlabs.org>; Mon, 16 Dec 2019 13:21:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to
- :user-agent; bh=NIsiOPIXGNdPj2KeSYFK0YZfg6aOCR5rYXMYdDTxxjg=;
- b=Leh+onp1c6334yt/mm+fFaM9lLR5NyudDQon1Vm+d+zouiogxkNO9Udu6U0ilXLZAK
- oAEBpEhg7LfX7GSrYmjwQeNY5eQwcUngig+Lhl0UUzbWbzOOemFmxuDrug+XIUnvXu1e
- xhJVAjywS/FrI2507lqJNncqe9hBQghN74/i0aKa2/BHrQR7I6fFqy+J7V7+URNwG3wd
- R/TdzXt1WE/pk43Wn+8pcyReJYwAn8Ty/IC0sohoCX+VIvzwSjg6jHuj34Pg8ujZWe1y
- +BA1Bs8DG53nkgN/WZCTuaCrYFTa/tD0tGOSw4Mv/TYybb7Gty50NmOPk1HGUBcyxPz/
- gAaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition
- :content-transfer-encoding:in-reply-to:user-agent;
- bh=NIsiOPIXGNdPj2KeSYFK0YZfg6aOCR5rYXMYdDTxxjg=;
- b=GJLihuaHjxAJO9NceVXdbW0fcURhfN/Xk/9clUoJ23oIaLwne0+PBYYqsBsEFtey7E
- Xt+4MdO7uq14Mx1yPoiRCyBLxBcA+eFwOxkMr0IdCoEzh/2Vm7TRUgQ7iHC5doxsYv5p
- A8oJiaqZ36AWkcDkAZHhjGyoAYLzs25QVjHp/24jK9LWfTdqmlxdvvKYIScGoxx7N1aZ
- m1eRCyZVF6csPj8oHwmGmknv3Q1Fyl9YwMNtqTjwWk9GOeEf8T4h6ZZdjeYmCQN3xAMS
- PSpP4pPu8Lbt97yqWY9khA9i1EgY5OiXZzNbO1USZj6uXb6J/MlFEI2Kt6fVHKxcj3CT
- BOeA==
-X-Gm-Message-State: APjAAAV2k/tQ/ruH6miPVCDX59M1t+dAfwLLEK89IKpOuFN086zvm/gj
- uY2H6BwMMDIHHuT4wFjxKsc=
-X-Google-Smtp-Source: APXvYqwMJME3LORIz+L/PbewupGbLPbnaMhEHCZv3ap7ixap1Q0Z1HQjfP2Tmx6HbqS5s8g/QX7bZA==
-X-Received: by 2002:a63:904c:: with SMTP id a73mr21103525pge.335.1576531282840; 
- Mon, 16 Dec 2019 13:21:22 -0800 (PST)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id w11sm23510386pfn.4.2019.12.16.13.21.21
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Mon, 16 Dec 2019 13:21:21 -0800 (PST)
-Date: Mon, 16 Dec 2019 13:21:20 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Subject: Re: [PATCH v11 14/14] hwmon: Add PECI dimmtemp driver
-Message-ID: <20191216212120.GA12089@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47cFVr1HpWzDqQd
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Dec 2019 08:57:22 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2019 13:57:18 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,323,1571727600"; d="scan'208";a="205256585"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.147])
+ ([10.7.153.147])
+ by orsmga007.jf.intel.com with ESMTP; 16 Dec 2019 13:57:18 -0800
+Subject: Re: [PATCH v11 11/14] mfd: intel-peci-client: Add Intel PECI client
+ driver
+To: Lee Jones <lee.jones@linaro.org>
 References: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
- <20191211194624.2872-15-jae.hyun.yoo@linux.intel.com>
- <d75aaad9-ae07-feeb-966a-899ecfe9d4b3@roeck-us.net>
- <5ed9f292-e024-ffda-a1a8-870ba0f05c58@linux.intel.com>
+ <20191211194624.2872-12-jae.hyun.yoo@linux.intel.com>
+ <20191216160145.GL2369@dell>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <b92c3154-0ee4-3f1a-d913-15653a9469ea@linux.intel.com>
+Date: Mon, 16 Dec 2019 13:57:17 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5ed9f292-e024-ffda-a1a8-870ba0f05c58@linux.intel.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Mailman-Approved-At: Wed, 18 Dec 2019 11:17:37 +1100
+In-Reply-To: <20191216160145.GL2369@dell>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Wed, 18 Dec 2019 11:17:36 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,11 +58,11 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Andrew Lunn <andrew@lunn.ch>,
- Randy Dunlap <rdunlap@infradead.org>, Tomer Maimon <tmaimon77@gmail.com>,
- devicetree@vger.kernel.org, Frederic Barrat <fbarrat@linux.vnet.ibm.com>,
+Cc: Mark Rutland <mark.rutland@arm.com>, Randy Dunlap <rdunlap@infradead.org>,
+ Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
+ Frederic Barrat <fbarrat@linux.vnet.ibm.com>,
  Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- Lee Jones <lee.jones@linaro.org>,
  Jason M Biils <jason.m.bills@linux.intel.com>,
  Eric Sandeen <sandeen@redhat.com>,
  Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
@@ -97,510 +70,418 @@ Cc: Mark Rutland <mark.rutland@arm.com>, Andrew Lunn <andrew@lunn.ch>,
  linux-doc@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>,
  "Bryant G . Ly" <bryantly@linux.vnet.ibm.com>,
  Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
- David Kershner <david.kershner@unisys.com>, Wu Hao <hao.wu@intel.com>,
- linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Arnd Bergmann <arnd@arndb.de>, Philippe Ombredanne <pombredanne@nexb.com>,
- Johan Hovold <johan@kernel.org>, Tomohiro Kusumi <kusumi.tomohiro@gmail.com>,
- Rob Herring <robh+dt@kernel.org>,
- Stef van Os <stef.van.os@prodrive-technologies.com>,
- Thomas Gleixner <tglx@linutronix.de>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Sagar Dharia <sdharia@codeaurora.org>, linux-arm-kernel@lists.infradead.org,
- Alan Cox <alan@linux.intel.com>, Juergen Gross <jgross@suse.com>,
+ David Kershner <david.kershner@unisys.com>, Guenter Roeck <linux@roeck-us.net>,
+ Wu Hao <hao.wu@intel.com>, linux-hwmon@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
+ Philippe Ombredanne <pombredanne@nexb.com>, Johan Hovold <johan@kernel.org>,
+ Tomohiro Kusumi <kusumi.tomohiro@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Sagar Dharia <sdharia@codeaurora.org>,
+ linux-arm-kernel@lists.infradead.org, Juergen Gross <jgross@suse.com>,
  Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>, Andrew Jeffery <andrew@aj.id.au>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  "Darrick J . Wong" <darrick.wong@oracle.com>,
- Stephen Boyd <sboyd@codeaurora.org>,
- Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>, Vinod Koul <vkoul@kernel.org>,
+ Stephen Boyd <sboyd@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
+ James Feist <james.feist@linux.intel.com>,
  Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
  Andrew Morton <akpm@linux-foundation.org>,
  "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Dec 16, 2019 at 01:04:31PM -0800, Jae Hyun Yoo wrote:
-> Hi Guenter,
-> 
-> On 12/12/2019 10:32 PM, Guenter Roeck wrote:
-> > On 12/11/19 11:46 AM, Jae Hyun Yoo wrote:
-> > > This commit adds PECI dimmtemp hwmon driver.
-> > > 
-> > > Cc: Guenter Roeck <linux@roeck-us.net>
-> > > Cc: Jean Delvare <jdelvare@suse.com>
-> > > Cc: Alan Cox <alan@linux.intel.com>
-> > > Cc: Andrew Jeffery <andrew@aj.id.au>
-> > > Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> > > Cc: Arnd Bergmann <arnd@arndb.de>
-> > > Cc: Jason M Biils <jason.m.bills@linux.intel.com>
-> > > Cc: Joel Stanley <joel@jms.id.au>
-> > > Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-> > > Cc: Andrew Lunn <andrew@lunn.ch>
-> > > Cc: Stef van Os <stef.van.os@prodrive-technologies.com>
-> > > Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> > > Reviewed-by: Haiyue Wang <haiyue.wang@linux.intel.com>
-> > > Reviewed-by: James Feist <james.feist@linux.intel.com>
-> > > Reviewed-by: Vernon Mauery <vernon.mauery@linux.intel.com>
-> > > Acked-by: Guenter Roeck <linux@roeck-us.net>
-> > > ---
-> > > Changes since v10:
-> > > - Added Skylake Xeon D support.
-> > > - Added max and crit properties for temperature threshold checking.
-> > > - Fixed minor bugs and style issues.
-> > > 
-> > >   drivers/hwmon/Kconfig         |  14 ++
-> > >   drivers/hwmon/Makefile        |   1 +
-> > >   drivers/hwmon/peci-dimmtemp.c | 393 ++++++++++++++++++++++++++++++++++
-> > >   3 files changed, 408 insertions(+)
-> > >   create mode 100644 drivers/hwmon/peci-dimmtemp.c
-> > > 
-> > > diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> > > index b6604759579c..d3370fbab40c 100644
-> > > --- a/drivers/hwmon/Kconfig
-> > > +++ b/drivers/hwmon/Kconfig
-> > > @@ -1363,6 +1363,20 @@ config SENSORS_PECI_CPUTEMP
-> > >         This driver can also be built as a module. If so, the module
-> > >         will be called peci-cputemp.
-> > > +config SENSORS_PECI_DIMMTEMP
-> > > +    tristate "PECI DIMM temperature monitoring client"
-> > > +    depends on PECI
-> > > +    select MFD_INTEL_PECI_CLIENT
-> > > +    help
-> > > +      If you say yes here you get support for the generic Intel
-> > > PECI hwmon
-> > > +      driver which provides Digital Thermal Sensor (DTS) thermal
-> > > readings of
-> > > +      DIMM components that are accessible using the PECI Client Command
-> > > +      Suite via the processor PECI client.
-> > > +      Check <file:Documentation/hwmon/peci-dimmtemp.rst> for details.
-> > > +
-> > > +      This driver can also be built as a module. If so, the module
-> > > +      will be called peci-dimmtemp.
-> > > +
-> > >   source "drivers/hwmon/pmbus/Kconfig"
-> > >   config SENSORS_PWM_FAN
-> > > diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-> > > index d6fea48697af..4015c4b60bf4 100644
-> > > --- a/drivers/hwmon/Makefile
-> > > +++ b/drivers/hwmon/Makefile
-> > > @@ -145,6 +145,7 @@ obj-$(CONFIG_SENSORS_PC87360)    += pc87360.o
-> > >   obj-$(CONFIG_SENSORS_PC87427)    += pc87427.o
-> > >   obj-$(CONFIG_SENSORS_PCF8591)    += pcf8591.o
-> > >   obj-$(CONFIG_SENSORS_PECI_CPUTEMP)    += peci-cputemp.o
-> > > +obj-$(CONFIG_SENSORS_PECI_DIMMTEMP)    += peci-dimmtemp.o
-> > >   obj-$(CONFIG_SENSORS_POWR1220)  += powr1220.o
-> > >   obj-$(CONFIG_SENSORS_PWM_FAN)    += pwm-fan.o
-> > >   obj-$(CONFIG_SENSORS_RASPBERRYPI_HWMON)    += raspberrypi-hwmon.o
-> > > diff --git a/drivers/hwmon/peci-dimmtemp.c
-> > > b/drivers/hwmon/peci-dimmtemp.c
-> > > new file mode 100644
-> > > index 000000000000..974f453f9366
-> > > --- /dev/null
-> > > +++ b/drivers/hwmon/peci-dimmtemp.c
-> > > @@ -0,0 +1,393 @@
-> > > +// SPDX-License-Identifier: GPL-2.0
-> > > +// Copyright (c) 2018-2019 Intel Corporation
-> > > +
-> > > +#include <linux/hwmon.h>
-> > > +#include <linux/jiffies.h>
-> > > +#include <linux/mfd/intel-peci-client.h>
-> > > +#include <linux/module.h>
-> > > +#include <linux/of_device.h>
-> > > +#include <linux/platform_device.h>
-> > > +#include <linux/workqueue.h>
-> > > +#include "peci-hwmon.h"
-> > > +
-> > > +#define DIMM_MASK_CHECK_DELAY_JIFFIES  msecs_to_jiffies(5000)
-> > > +#define DIMM_MASK_CHECK_RETRY_MAX      60 /* 60 x 5 secs = 5 minutes */
-> > > +
-> > > +struct peci_dimmtemp {
-> > > +    struct peci_client_manager *mgr;
-> > > +    struct device *dev;
-> > > +    char name[PECI_NAME_SIZE];
-> > > +    const struct cpu_gen_info *gen_info;
-> > > +    struct workqueue_struct *work_queue;
-> > > +    struct delayed_work work_handler;
-> > > +    struct peci_sensor_data temp[DIMM_NUMS_MAX];
-> > > +    long temp_max[DIMM_NUMS_MAX];
-> > > +    long temp_crit[DIMM_NUMS_MAX];
-> > > +    u32 dimm_mask;
-> > > +    int retry_count;
-> > > +    u32 temp_config[DIMM_NUMS_MAX + 1];
-> > > +    struct hwmon_channel_info temp_info;
-> > > +    const struct hwmon_channel_info *info[2];
-> > > +    struct hwmon_chip_info chip;
-> > > +};
-> > > +
-> > > +static const char *dimmtemp_label[CHAN_RANK_MAX][DIMM_IDX_MAX] = {
-> > > +    { "DIMM A1", "DIMM A2", "DIMM A3" },
-> > > +    { "DIMM B1", "DIMM B2", "DIMM B3" },
-> > > +    { "DIMM C1", "DIMM C2", "DIMM C3" },
-> > > +    { "DIMM D1", "DIMM D2", "DIMM D3" },
-> > > +    { "DIMM E1", "DIMM E2", "DIMM E3" },
-> > > +    { "DIMM F1", "DIMM F2", "DIMM F3" },
-> > > +    { "DIMM G1", "DIMM G2", "DIMM G3" },
-> > > +    { "DIMM H1", "DIMM H2", "DIMM H3" },
-> > > +};
-> > > +
-> > > +static inline int read_ddr_dimm_temp_config(struct peci_dimmtemp *priv,
-> > > +                        int chan_rank,
-> > > +                        u8 *cfg_data)
-> > > +{
-> > > +    return peci_client_read_package_config(priv->mgr,
-> > > +                           PECI_MBX_INDEX_DDR_DIMM_TEMP,
-> > > +                           chan_rank, cfg_data);
-> > > +}
-> > > +
-> > > +static int get_dimm_temp(struct peci_dimmtemp *priv, int dimm_no)
-> > > +{
-> > > +    int dimm_order = dimm_no % priv->gen_info->dimm_idx_max;
-> > > +    int chan_rank = dimm_no / priv->gen_info->dimm_idx_max;
-> > > +    struct peci_rd_pci_cfg_local_msg rp_msg;
-> > > +    u8  cfg_data[4];
-> > > +    int ret;
-> > > +
-> > > +    if (!peci_sensor_need_update(&priv->temp[dimm_no]))
-> > > +        return 0;
-> > > +
-> > > +    ret = read_ddr_dimm_temp_config(priv, chan_rank, cfg_data);
-> > > +    if (ret)
-> > > +        return ret;
-> > > +
-> > > +    priv->temp[dimm_no].value = cfg_data[dimm_order] * 1000;
-> > > +
-> > > +    switch (priv->gen_info->model) {
-> > > +    case INTEL_FAM6_SKYLAKE_X:
-> > > +        rp_msg.addr = priv->mgr->client->addr;
-> > > +        rp_msg.bus = 2;
-> > > +        /*
-> > > +         * Device 10, Function 2: IMC 0 channel 0 -> rank 0
-> > > +         * Device 10, Function 6: IMC 0 channel 1 -> rank 1
-> > > +         * Device 11, Function 2: IMC 0 channel 2 -> rank 2
-> > > +         * Device 12, Function 2: IMC 1 channel 0 -> rank 3
-> > > +         * Device 12, Function 6: IMC 1 channel 1 -> rank 4
-> > > +         * Device 13, Function 2: IMC 1 channel 2 -> rank 5
-> > > +         */
-> > > +        rp_msg.device = 10 + chan_rank / 3 * 2 +
-> > > +                 (chan_rank % 3 == 2 ? 1 : 0);
-> > > +        rp_msg.function = chan_rank % 3 == 1 ? 6 : 2;
-> > > +        rp_msg.reg = 0x120 + dimm_order * 4;
-> > > +        rp_msg.rx_len = 4;
-> > > +
-> > > +        ret = peci_command(priv->mgr->client->adapter,
-> > > +                   PECI_CMD_RD_PCI_CFG_LOCAL, &rp_msg);
-> > > +        if (rp_msg.cc != PECI_DEV_CC_SUCCESS)
-> > > +            ret = -EAGAIN;
-> > > +        if (ret)
-> > > +            return ret;
-> > > +
-> > > +        priv->temp_max[dimm_no] = rp_msg.pci_config[1] * 1000;
-> > > +        priv->temp_crit[dimm_no] = rp_msg.pci_config[2] * 1000;
-> > > +        break;
-> > > +    case INTEL_FAM6_SKYLAKE_XD:
-> > > +        rp_msg.addr = priv->mgr->client->addr;
-> > > +        rp_msg.bus = 2;
-> > > +        /*
-> > > +         * Device 10, Function 2: IMC 0 channel 0 -> rank 0
-> > > +         * Device 10, Function 6: IMC 0 channel 1 -> rank 1
-> > > +         * Device 12, Function 2: IMC 1 channel 0 -> rank 2
-> > > +         * Device 12, Function 6: IMC 1 channel 1 -> rank 3
-> > > +         */
-> > > +        rp_msg.device = 10 + chan_rank / 2 * 2;
-> > > +        rp_msg.function = (chan_rank % 2) ? 6 : 2;
-> > > +        rp_msg.reg = 0x120 + dimm_order * 4;
-> > > +        rp_msg.rx_len = 4;
-> > > +
-> > > +        ret = peci_command(priv->mgr->client->adapter,
-> > > +                   PECI_CMD_RD_PCI_CFG_LOCAL, &rp_msg);
-> > > +        if (rp_msg.cc != PECI_DEV_CC_SUCCESS)
-> > > +            ret = -EAGAIN;
-> > > +        if (ret)
-> > > +            return ret;
-> > > +
-> > > +        priv->temp_max[dimm_no] = rp_msg.pci_config[1] * 1000;
-> > > +        priv->temp_crit[dimm_no] = rp_msg.pci_config[2] * 1000;
-> > > +        break;
-> > > +    case INTEL_FAM6_HASWELL_X:
-> > > +    case INTEL_FAM6_BROADWELL_X:
-> > > +        rp_msg.addr = priv->mgr->client->addr;
-> > > +        rp_msg.bus = 1;
-> > > +        /*
-> > > +         * Device 20, Function 0: IMC 0 channel 0 -> rank 0
-> > > +         * Device 20, Function 1: IMC 0 channel 1 -> rank 1
-> > > +         * Device 21, Function 0: IMC 0 channel 2 -> rank 2
-> > > +         * Device 21, Function 1: IMC 0 channel 3 -> rank 3
-> > > +         * Device 23, Function 0: IMC 1 channel 0 -> rank 4
-> > > +         * Device 23, Function 1: IMC 1 channel 1 -> rank 5
-> > > +         * Device 24, Function 0: IMC 1 channel 2 -> rank 6
-> > > +         * Device 24, Function 1: IMC 1 channel 3 -> rank 7
-> > > +         */
-> > > +        rp_msg.device = 20 + chan_rank / 2 + chan_rank / 4;
-> > > +        rp_msg.function = chan_rank % 2;
-> > > +        rp_msg.reg = 0x120 + dimm_order * 4;
-> > > +        rp_msg.rx_len = 4;
-> > > +
-> > > +        ret = peci_command(priv->mgr->client->adapter,
-> > > +                   PECI_CMD_RD_PCI_CFG_LOCAL, &rp_msg);
-> > > +        if (rp_msg.cc != PECI_DEV_CC_SUCCESS)
-> > > +            ret = -EAGAIN;
-> > > +        if (ret)
-> > > +            return ret;
-> > > +
-> > > +        priv->temp_max[dimm_no] = rp_msg.pci_config[1] * 1000;
-> > > +        priv->temp_crit[dimm_no] = rp_msg.pci_config[2] * 1000;
-> > > +        break;
-> > > +    default:
-> > > +        return -EOPNOTSUPP;
-> > 
-> > It looks like the sensors are created even on unsupported platforms,
-> > which would generate error messages whenever someone tries to read
-> > the attributes.
-> > 
-> > There should be some code early on checking this, and the driver
-> > should not even instantiate if the CPU model is not supported.
-> 
-> Actually, this 'default' case will not be happened because this driver
-> will be registered only when the CPU model is supported. The CPU model
-> checking code is in 'intel-peci-client.c' which is [11/14] of this
-> patch set.
-> 
+Hi Lee,
 
-That again assumes that both drivers will be modified in sync in the future.
-We can not make that assumption.
+On 12/16/2019 8:01 AM, Lee Jones wrote:
+> On Wed, 11 Dec 2019, Jae Hyun Yoo wrote:
+> 
+>> This commit adds Intel PECI client driver.
+>>
+>> Cc: Lee Jones <lee.jones@linaro.org>
+>> Cc: Randy Dunlap <rdunlap@infradead.org>
+>> Cc: Rob Herring <robh+dt@kernel.org>
+>> Cc: Andrew Jeffery <andrew@aj.id.au>
+>> Cc: James Feist <james.feist@linux.intel.com>
+>> Cc: Jason M Biils <jason.m.bills@linux.intel.com>
+>> Cc: Joel Stanley <joel@jms.id.au>
+>> Cc: Vernon Mauery <vernon.mauery@linux.intel.com>
+>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> ---
+>> Changes since v10:
+>> - Fixed minor style issues.
+>>
+>>   drivers/mfd/Kconfig                   |  17 +++
+>>   drivers/mfd/Makefile                  |   1 +
+>>   drivers/mfd/intel-peci-client.c       | 149 ++++++++++++++++++++++++++
+>>   include/linux/mfd/intel-peci-client.h | 117 ++++++++++++++++++++
+>>   4 files changed, 284 insertions(+)
+>>   create mode 100644 drivers/mfd/intel-peci-client.c
+>>   create mode 100644 include/linux/mfd/intel-peci-client.h
+>>
+>> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+>> index 420900852166..7022e54a4703 100644
+>> --- a/drivers/mfd/Kconfig
+>> +++ b/drivers/mfd/Kconfig
+>> @@ -632,6 +632,23 @@ config MFD_INTEL_MSIC
+>>   	  Passage) chip. This chip embeds audio, battery, GPIO, etc.
+>>   	  devices used in Intel Medfield platforms.
+>>   
+>> +config MFD_INTEL_PECI_CLIENT
+>> +	tristate "Intel PECI client"
+>> +	depends on (PECI || COMPILE_TEST)
+>> +	select MFD_CORE
+>> +	help
+>> +	  If you say yes to this option, support will be included for the
+>> +	  Intel PECI (Platform Environment Control Interface) client. PECI is a
+>> +	  one-wire bus interface that provides a communication channel from PECI
+>> +	  clients in Intel processors and chipset components to external
+>> +	  monitoring or control devices.
+>> +
+>> +	  Additional drivers must be enabled in order to use the functionality
+>> +	  of the device.
+>> +
+>> +	  This driver can also be built as a module. If so, the module
+>> +	  will be called intel-peci-client.
+>> +
+>>   config MFD_IPAQ_MICRO
+>>   	bool "Atmel Micro ASIC (iPAQ h3100/h3600/h3700) Support"
+>>   	depends on SA1100_H3100 || SA1100_H3600
+>> diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+>> index aed99f08739f..91c6fda5cec6 100644
+>> --- a/drivers/mfd/Makefile
+>> +++ b/drivers/mfd/Makefile
+>> @@ -211,6 +211,7 @@ obj-$(CONFIG_MFD_INTEL_LPSS)	+= intel-lpss.o
+>>   obj-$(CONFIG_MFD_INTEL_LPSS_PCI)	+= intel-lpss-pci.o
+>>   obj-$(CONFIG_MFD_INTEL_LPSS_ACPI)	+= intel-lpss-acpi.o
+>>   obj-$(CONFIG_MFD_INTEL_MSIC)	+= intel_msic.o
+>> +obj-$(CONFIG_MFD_INTEL_PECI_CLIENT)	+= intel-peci-client.o
+>>   obj-$(CONFIG_MFD_PALMAS)	+= palmas.o
+>>   obj-$(CONFIG_MFD_VIPERBOARD)    += viperboard.o
+>>   obj-$(CONFIG_MFD_RC5T583)	+= rc5t583.o rc5t583-irq.o
+>> diff --git a/drivers/mfd/intel-peci-client.c b/drivers/mfd/intel-peci-client.c
+>> new file mode 100644
+>> index 000000000000..18bf0af0e09e
+>> --- /dev/null
+>> +++ b/drivers/mfd/intel-peci-client.c
+>> @@ -0,0 +1,149 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +// Copyright (c) 2018-2019 Intel Corporation
+>> +
+>> +#include <linux/bitfield.h>
+>> +#include <linux/mfd/core.h>
+>> +#include <linux/mfd/intel-peci-client.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/peci.h>
+>> +
+>> +#define CPU_ID_MODEL_MASK      GENMASK(7, 4)
+>> +#define CPU_ID_FAMILY_MASK     GENMASK(11, 8)
+>> +#define CPU_ID_EXT_MODEL_MASK  GENMASK(19, 16)
+>> +#define CPU_ID_EXT_FAMILY_MASK GENMASK(27, 20)
+>> +
+>> +#define LOWER_NIBBLE_MASK      GENMASK(3, 0)
+>> +#define UPPER_NIBBLE_MASK      GENMASK(7, 4)
+>> +#define LOWER_BYTE_MASK        GENMASK(7, 0)
+>> +#define UPPER_BYTE_MASK        GENMASK(16, 8)
+>> +
+>> +static struct mfd_cell peci_functions[] = {
+>> +	{ .name = "peci-cputemp", },
+>> +	{ .name = "peci-dimmtemp", },
+>> +	/* TODO: Add additional PECI sideband functions into here */
+> 
+> No need for this comment.  It's implied.
 
-> > > +    }
-> > > +
-> > > +    peci_sensor_mark_updated(&priv->temp[dimm_no]);
-> > > +
-> > > +    return 0;
-> > > +}
-> > > +
-> > > +static int dimmtemp_read_string(struct device *dev,
-> > > +                enum hwmon_sensor_types type,
-> > > +                u32 attr, int channel, const char **str)
-> > > +{
-> > > +    struct peci_dimmtemp *priv = dev_get_drvdata(dev);
-> > > +    u32 dimm_idx_max = priv->gen_info->dimm_idx_max;
-> > > +    int chan_rank, dimm_idx;
-> > > +
-> > > +    if (attr != hwmon_temp_label)
-> > > +        return -EOPNOTSUPP;
-> > > +
-> > > +    chan_rank = channel / dimm_idx_max;
-> > > +    dimm_idx = channel % dimm_idx_max;
-> > > +    *str = dimmtemp_label[chan_rank][dimm_idx];
-> > 
-> > Similar to the other patch, I am concerned that this can end up setting
-> > *str
-> > to NULL at some point in the future.
-> 
-> Okay. I'll make dynamic label string table generation code for it as
-> well.
-> 
-> > > +
-> > > +    return 0;
-> > > +}
-> > > +
-> > > +static int dimmtemp_read(struct device *dev, enum
-> > > hwmon_sensor_types type,
-> > > +             u32 attr, int channel, long *val)
-> > > +{
-> > > +    struct peci_dimmtemp *priv = dev_get_drvdata(dev);
-> > > +    int ret;
-> > > +
-> > > +    ret = get_dimm_temp(priv, channel);
-> > > +    if (ret)
-> > > +        return ret;
-> > > +
-> > > +    switch (attr) {
-> > > +    case hwmon_temp_input:
-> > > +        *val = priv->temp[channel].value;
-> > > +        break;
-> > > +    case hwmon_temp_max:
-> > > +        *val = priv->temp_max[channel];
-> > > +        break;
-> > > +    case hwmon_temp_crit:
-> > > +        *val = priv->temp_crit[channel];
-> > > +        break;
-> > > +    default:
-> > > +        ret = -EOPNOTSUPP;
-> > > +        break;
-> > > +    }
-> > > +
-> > > +    return ret;
-> > > +}
-> > > +
-> > > +static umode_t dimmtemp_is_visible(const void *data,
-> > > +                   enum hwmon_sensor_types type,
-> > > +                   u32 attr, int channel)
-> > > +{
-> > > +    const struct peci_dimmtemp *priv = data;
-> > > +
-> > > +    if (priv->temp_config[channel] & BIT(attr) &&
-> > > +        priv->dimm_mask & BIT(channel))
-> > > +        return 0444;
-> > > +
-> > > +    return 0;
-> > > +}
-> > > +
-> > > +static const struct hwmon_ops dimmtemp_ops = {
-> > > +    .is_visible = dimmtemp_is_visible,
-> > > +    .read_string = dimmtemp_read_string,
-> > > +    .read = dimmtemp_read,
-> > > +};
-> > > +
-> > > +static int check_populated_dimms(struct peci_dimmtemp *priv)
-> > > +{
-> > > +    u32 chan_rank_max = priv->gen_info->chan_rank_max;
-> > > +    u32 dimm_idx_max = priv->gen_info->dimm_idx_max;
-> > > +    int chan_rank, dimm_idx;
-> > > +    u8  cfg_data[4];
-> > > +
-> > > +    for (chan_rank = 0; chan_rank < chan_rank_max; chan_rank++) {
-> > > +        int ret;
-> > > +
-> > > +        ret = read_ddr_dimm_temp_config(priv, chan_rank, cfg_data);
-> > > +        if (ret) {
-> > > +            priv->dimm_mask = 0;
-> > > +            return ret;
-> > > +        }
-> > > +
-> > > +        for (dimm_idx = 0; dimm_idx < dimm_idx_max; dimm_idx++)
-> > > +            if (cfg_data[dimm_idx])
-> > > +                priv->dimm_mask |= BIT(chan_rank *
-> > > +                               dimm_idx_max +
-> > > +                               dimm_idx);
-> > > +    }
-> > > +
-> > > +    if (!priv->dimm_mask)
-> > > +        return -EAGAIN;
-> > > +
-> > > +    dev_dbg(priv->dev, "Scanned populated DIMMs: 0x%x\n",
-> > > priv->dimm_mask);
-> > > +
-> > > +    return 0;
-> > > +}
-> > > +
-> > > +static int create_dimm_temp_info(struct peci_dimmtemp *priv)
-> > > +{
-> > > +    int ret, i, config_idx, channels;
-> > > +    struct device *hwmon_dev;
-> > > +
-> > > +    ret = check_populated_dimms(priv);
-> > > +    if (ret) {
-> > > +        if (ret == -EAGAIN) {
-> > > +            if (priv->retry_count < DIMM_MASK_CHECK_RETRY_MAX) {
-> > > +                queue_delayed_work(priv->work_queue,
-> > > +                           &priv->work_handler,
-> > > +                         DIMM_MASK_CHECK_DELAY_JIFFIES);
-> > > +                priv->retry_count++;
-> > > +                dev_dbg(priv->dev,
-> > > +                    "Deferred DIMM temp info creation\n");
-> > > +            } else {
-> > > +                dev_err(priv->dev,
-> > > +                    "Timeout DIMM temp info creation\n");
-> > > +                ret = -ETIMEDOUT;
-> > > +            }
-> > > +        }
-> > > +
-> > > +        return ret;
-> > > +    }
-> > > +
-> > > +    channels = priv->gen_info->chan_rank_max *
-> > > +           priv->gen_info->dimm_idx_max;
-> > > +    for (i = 0, config_idx = 0; i < channels; i++)
-> > > +        if (priv->dimm_mask & BIT(i))
-> > > +            while (i >= config_idx)
-> > > +                priv->temp_config[config_idx++] =
-> > > +                    HWMON_T_LABEL | HWMON_T_INPUT |
-> > > +                    HWMON_T_MAX | HWMON_T_CRIT;
-> > > +
-> > > +    priv->chip.ops = &dimmtemp_ops;
-> > > +    priv->chip.info = priv->info;
-> > > +
-> > > +    priv->info[0] = &priv->temp_info;
-> > > +
-> > > +    priv->temp_info.type = hwmon_temp;
-> > > +    priv->temp_info.config = priv->temp_config;
-> > > +
-> > > +    hwmon_dev = devm_hwmon_device_register_with_info(priv->dev,
-> > > +                             priv->name,
-> > > +                             priv,
-> > > +                             &priv->chip,
-> > > +                             NULL);
-> > > +    ret = PTR_ERR_OR_ZERO(hwmon_dev);
-> > > +    if (!ret)
-> > > +        dev_dbg(priv->dev, "%s: sensor '%s'\n",
-> > > +            dev_name(hwmon_dev), priv->name);
-> > > +
-> > 
-> > Any chance to make this consistent with the other driver ?
-> 
-> Will change this to:
-> 
-> if (IS_ERR(hwmon_dev)) {
-> 	dev_err(&priv->dev, "Failed to register hwmon device\n");
-> 	return PTR_ERR(hwmon_dev);
-> }
-> 
-> > > +    return ret;
-> > > +}
-> > > +
-> > > +static void create_dimm_temp_info_delayed(struct work_struct *work)
-> > > +{
-> > > +    struct delayed_work *dwork = to_delayed_work(work);
-> > > +    struct peci_dimmtemp *priv = container_of(dwork, struct
-> > > peci_dimmtemp,
-> > > +                          work_handler);
-> > > +    int ret;
-> > > +
-> > > +    ret = create_dimm_temp_info(priv);
-> > > +    if (ret && ret != -EAGAIN)
-> > > +        dev_dbg(priv->dev, "Failed to create DIMM temp info\n");
-> > > +}
-> > > +
-> > > +static int peci_dimmtemp_probe(struct platform_device *pdev)
-> > > +{
-> > > +    struct peci_client_manager *mgr = dev_get_drvdata(pdev->dev.parent);
-> > > +    struct device *dev = &pdev->dev;
-> > > +    struct peci_dimmtemp *priv;
-> > > +    int ret;
-> > > +
-> > > +    if ((mgr->client->adapter->cmd_mask &
-> > > +        (BIT(PECI_CMD_GET_TEMP) | BIT(PECI_CMD_RD_PKG_CFG))) !=
-> > > +        (BIT(PECI_CMD_GET_TEMP) | BIT(PECI_CMD_RD_PKG_CFG)))
-> > > +        return -ENODEV;
-> > > +
-> > > +    priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> > > +    if (!priv)
-> > > +        return -ENOMEM;
-> > > +
-> > > +    dev_set_drvdata(dev, priv);
-> > > +    priv->mgr = mgr;
-> > > +    priv->dev = dev;
-> > > +    priv->gen_info = mgr->gen_info;
-> > > +
-> > > +    snprintf(priv->name, PECI_NAME_SIZE, "peci_dimmtemp.cpu%d",
-> > > +         priv->mgr->client->addr - PECI_BASE_ADDR);
-> > > +
-> > > +    priv->work_queue = alloc_ordered_workqueue(priv->name, 0);
-> > > +    if (!priv->work_queue)
-> > > +        return -ENOMEM;
-> > > +
-> > > +    INIT_DELAYED_WORK(&priv->work_handler,
-> > > create_dimm_temp_info_delayed);
-> > > +
-> > > +    ret = create_dimm_temp_info(priv);
-> > > +    if (ret && ret != -EAGAIN) {
-> > > +        dev_err(dev, "Failed to create DIMM temp info\n");
-> > 
-> > Does this generate error messages if there are no DIMMS ?
-> 
-> Yes, this error message will be printed out once if it meets a timeout
-> in DIMM scanning when there is no DIMM.
-> 
+I see. I'll remove this comment.
 
-Is that indeed an error, or are there situations where no DIMMs are
-detected and that is a perfectly valid situation ? An error message
-is only acceptable if this is indeed an error in all situations.
+>> +};
+>> +
+>> +static const struct cpu_gen_info cpu_gen_info_table[] = {
+>> +	{ /* Haswell Xeon */
+>> +		.family        = 6, /* Family code */
+> 
+> Nit: Why don't you just define the number, instead of feeling the need
+> to further clarify by providing a comment?
 
-Guenter
+Makes sense. Will define the number.
+
+>> +		.model         = INTEL_FAM6_HASWELL_X,
+>> +		.core_max      = CORE_MAX_ON_HSX,
+>> +		.chan_rank_max = CHAN_RANK_MAX_ON_HSX,
+>> +		.dimm_idx_max  = DIMM_IDX_MAX_ON_HSX },
+>> +	{ /* Broadwell Xeon */
+>> +		.family        = 6, /* Family code */
+>> +		.model         = INTEL_FAM6_BROADWELL_X,
+>> +		.core_max      = CORE_MAX_ON_BDX,
+>> +		.chan_rank_max = CHAN_RANK_MAX_ON_BDX,
+>> +		.dimm_idx_max  = DIMM_IDX_MAX_ON_BDX },
+>> +	{ /* Skylake Xeon */
+>> +		.family        = 6, /* Family code */
+>> +		.model         = INTEL_FAM6_SKYLAKE_X,
+>> +		.core_max      = CORE_MAX_ON_SKX,
+>> +		.chan_rank_max = CHAN_RANK_MAX_ON_SKX,
+>> +		.dimm_idx_max  = DIMM_IDX_MAX_ON_SKX },
+>> +	{ /* Skylake Xeon D */
+>> +		.family        = 6, /* Family code */
+>> +		.model         = INTEL_FAM6_SKYLAKE_XD,
+>> +		.core_max      = CORE_MAX_ON_SKXD,
+>> +		.chan_rank_max = CHAN_RANK_MAX_ON_SKXD,
+>> +		.dimm_idx_max  = DIMM_IDX_MAX_ON_SKXD },
+>> +};
+>> +
+>> +static int peci_client_get_cpu_gen_info(struct peci_client_manager *priv)
+>> +{
+>> +	struct device *dev = &priv->client->dev;
+>> +	u32 cpu_id;
+>> +	u16 family;
+>> +	u8 model;
+>> +	int ret;
+>> +	int i;
+>> +
+>> +	ret = peci_get_cpu_id(priv->client->adapter, priv->client->addr,
+>> +			      &cpu_id);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	family = FIELD_PREP(LOWER_BYTE_MASK,
+>> +			    FIELD_GET(CPU_ID_FAMILY_MASK, cpu_id)) |
+>> +		 FIELD_PREP(UPPER_BYTE_MASK,
+>> +			    FIELD_GET(CPU_ID_EXT_FAMILY_MASK, cpu_id));
+>> +	model = FIELD_PREP(LOWER_NIBBLE_MASK,
+>> +			   FIELD_GET(CPU_ID_MODEL_MASK, cpu_id)) |
+>> +		FIELD_PREP(UPPER_NIBBLE_MASK,
+>> +			   FIELD_GET(CPU_ID_EXT_MODEL_MASK, cpu_id));
+>> +
+>> +	for (i = 0; i < ARRAY_SIZE(cpu_gen_info_table); i++) {
+>> +		const struct cpu_gen_info *cpu_info = &cpu_gen_info_table[i];
+>> +
+>> +		if (family == cpu_info->family && model == cpu_info->model) {
+>> +			priv->gen_info = cpu_info;
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	if (!priv->gen_info) {
+>> +		dev_err(dev, "Can't support this CPU: 0x%x\n", cpu_id);
+>> +		ret = -ENODEV;
+>> +	}
+>> +
+>> +	return ret;
+>> +}
+>> +
+>> +static int peci_client_probe(struct peci_client *client)
+>> +{
+>> +	struct device *dev = &client->dev;
+>> +	struct peci_client_manager *priv;
+>> +	uint cpu_no;
+>> +	int ret;
+>> +
+>> +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+>> +	if (!priv)
+>> +		return -ENOMEM;
+>> +
+>> +	dev_set_drvdata(dev, priv);
+>> +	priv->client = client;
+>> +	cpu_no = client->addr - PECI_BASE_ADDR;
+>> +
+>> +	ret = peci_client_get_cpu_gen_info(priv);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	ret = devm_mfd_add_devices(dev, cpu_no, peci_functions,
+>> +				   ARRAY_SIZE(peci_functions), NULL, 0, NULL);
+>> +	if (ret < 0) {
+>> +		dev_err(dev, "Failed to register child devices: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +#if IS_ENABLED(CONFIG_OF)
+> 
+> #ifdef CONFIG_OF
+
+Will fix it.
+
+>> +static const struct of_device_id peci_client_of_table[] = {
+>> +	{ .compatible = "intel,peci-client" },
+>> +	{ }
+>> +};
+>> +MODULE_DEVICE_TABLE(of, peci_client_of_table);
+>> +#endif /* CONFIG_OF */
+> 
+> Please remove this comment.  It doesn't provide anything here.
+
+I see. I'll remove this comment.
+
+>> +static const struct peci_device_id peci_client_ids[] = {
+>> +	{ .name = "peci-client" },
+>> +	{ }
+>> +};
+>> +MODULE_DEVICE_TABLE(peci, peci_client_ids);
+> 
+> Is this a requirement?  If so, why?
+> 
+> We're trying to get rid of unnecessary tables.
+> 
+> Please grep for "probe_new".
+
+This is needed because peci-core.c provides sub tree searching while
+registering a peci bus using of_match_device, also it provides
+runtime registration through sysfs interface using ID match just like
+I2C subsystem does. The probe member in 'struct peci_driver' is defined
+as the new style like this:
+
+struct peci_driver {
+	int (*probe)(struct peci_client *client);
+	[....]
+}
+
+>> +static struct peci_driver peci_client_driver = {
+>> +	.probe    = peci_client_probe,
+>> +	.id_table = peci_client_ids,
+>> +	.driver   = {
+>> +		.name           = KBUILD_MODNAME,
+>> +		.of_match_table = of_match_ptr(peci_client_of_table),
+>> +	},
+>> +};
+>> +module_peci_driver(peci_client_driver);
+>> +
+>> +MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
+>> +MODULE_DESCRIPTION("PECI client driver");
+>> +MODULE_LICENSE("GPL v2");
+>> diff --git a/include/linux/mfd/intel-peci-client.h b/include/linux/mfd/intel-peci-client.h
+>> new file mode 100644
+>> index 000000000000..9854303bbc26
+>> --- /dev/null
+>> +++ b/include/linux/mfd/intel-peci-client.h
+>> @@ -0,0 +1,117 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/* Copyright (c) 2018-2019 Intel Corporation */
+>> +
+>> +#ifndef __LINUX_MFD_INTEL_PECI_CLIENT_H
+>> +#define __LINUX_MFD_INTEL_PECI_CLIENT_H
+>> +
+>> +#include <linux/peci.h>
+>> +
+>> +#if IS_ENABLED(CONFIG_X86)
+>> +#include <asm/intel-family.h>
+>> +#else
+>> +/*
+>> + * Architectures other than x86 cannot include the header file so define these
+>> + * at here. These are needed for detecting type of client x86 CPUs behind a PECI
+>> + * connection.
+>> + */
+>> +#define INTEL_FAM6_HASWELL_X		0x3F
+>> +#define INTEL_FAM6_BROADWELL_X		0x4F
+>> +#define INTEL_FAM6_SKYLAKE_X		0x55
+>> +#define INTEL_FAM6_SKYLAKE_XD		0x56
+>> +#endif
+>> +
+>> +#define CORE_MAX_ON_HSX        18 /* Max number of cores on Haswell */
+>> +#define CHAN_RANK_MAX_ON_HSX   8  /* Max number of channel ranks on Haswell */
+>> +#define DIMM_IDX_MAX_ON_HSX    3  /* Max DIMM index per channel on Haswell */
+>> +
+>> +#define CORE_MAX_ON_BDX        24 /* Max number of cores on Broadwell */
+>> +#define CHAN_RANK_MAX_ON_BDX   4  /* Max number of channel ranks on Broadwell */
+>> +#define DIMM_IDX_MAX_ON_BDX    3  /* Max DIMM index per channel on Broadwell */
+>> +
+>> +#define CORE_MAX_ON_SKX        28 /* Max number of cores on Skylake */
+>> +#define CHAN_RANK_MAX_ON_SKX   6  /* Max number of channel ranks on Skylake */
+>> +#define DIMM_IDX_MAX_ON_SKX    2  /* Max DIMM index per channel on Skylake */
+>> +
+>> +#define CORE_MAX_ON_SKXD       16 /* Max number of cores on Skylake D */
+>> +#define CHAN_RANK_MAX_ON_SKXD  2  /* Max number of channel ranks on Skylake D */
+>> +#define DIMM_IDX_MAX_ON_SKXD   2  /* Max DIMM index per channel on Skylake D */
+>> +
+>> +#define CORE_NUMS_MAX          CORE_MAX_ON_SKX
+>> +#define CHAN_RANK_MAX          CHAN_RANK_MAX_ON_HSX
+>> +#define DIMM_IDX_MAX           DIMM_IDX_MAX_ON_HSX
+>> +#define DIMM_NUMS_MAX          (CHAN_RANK_MAX * DIMM_IDX_MAX)
+>> +
+>> +/**
+>> + * struct cpu_gen_info - CPU generation specific information
+>> + * @family: CPU family ID
+>> + * @model: CPU model
+>> + * @core_max: max number of cores
+>> + * @chan_rank_max: max number of channel ranks
+>> + * @dimm_idx_max: max number of DIMM indices
+>> + *
+>> + * CPU generation specific information to identify maximum number of cores and
+>> + * DIMM slots.
+>> + */
+>> +struct cpu_gen_info {
+>> +	u16  family;
+>> +	u8   model;
+>> +	uint core_max;
+>> +	uint chan_rank_max;
+>> +	uint dimm_idx_max;
+>> +};
+>> +
+>> +/**
+>> + * struct peci_client_manager - PECI client manager information
+>> + * @client; pointer to the PECI client
+>> + * @name: PECI client manager name
+>> + * @gen_info: CPU generation info of the detected CPU
+>> + *
+>> + * PECI client manager information for managing PECI sideband functions on a CPU
+>> + * client.
+>> + */
+>> +struct peci_client_manager {
+>> +	struct peci_client *client;
+>> +	char name[PECI_NAME_SIZE];
+>> +	const struct cpu_gen_info *gen_info;
+>> +};
+>> +
+>> +/**
+>> + * peci_client_read_package_config - read from the Package Configuration Space
+>> + * @priv: driver private data structure
+>> + * @index: encoding index for the requested service
+>> + * @param: parameter to specify the exact data being requested
+>> + * @data: data buffer to store the result
+>> + * Context: can sleep
+>> + *
+>> + * A generic PECI command that provides read access to the
+>> + * "Package Configuration Space" that is maintained by the PCU, including
+>> + * various power and thermal management functions. Typical PCS read services
+>> + * supported by the processor may include access to temperature data, energy
+>> + * status, run time information, DIMM temperatures and so on.
+>> + *
+>> + * Return: zero on success, else a negative error code.
+>> + */
+>> +static inline int
+>> +peci_client_read_package_config(struct peci_client_manager *priv,
+>> +				u8 index, u16 param, u8 *data)
+>> +{
+>> +	struct peci_rd_pkg_cfg_msg msg;
+>> +	int ret;
+>> +
+>> +	msg.addr = priv->client->addr;
+>> +	msg.index = index;
+>> +	msg.param = param;
+>> +	msg.rx_len = 4;
+>> +
+>> +	ret = peci_command(priv->client->adapter, PECI_CMD_RD_PKG_CFG, &msg);
+>> +	if (msg.cc != PECI_DEV_CC_SUCCESS)
+>> +		ret = -EAGAIN;
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	memcpy(data, msg.pkg_config, 4);
+>> +
+>> +	return 0;
+>> +}
+> 
+> Where is this function used?
+
+This function is used in MFD cell drivers that are included in this
+patch set, peci-cputemp and peci-dimmtemp drivers. I moved it from
+intel-peci-client.c to this header file as you commented in the previous
+review spin. I also thought about moving it into peci-hwmon.h but
+this command macro is a generic thing for Intel CPUs so I moved into
+here.
+
+Thanks a lot for your review!
+
+-Jae
+
+>> +#endif /* __LINUX_MFD_INTEL_PECI_CLIENT_H */
+> 
