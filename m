@@ -1,51 +1,41 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 788961246F4
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 13:36:56 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 168BA124238
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 09:51:44 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47d7zK2VHLzDqCF
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 19:51:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47dDz93YT9zDqjT
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 23:36:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.27; helo=mail4.protonmail.ch;
- envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.b="CV0j8QTv"; 
- dkim-atps=neutral
-Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47d7Q84Qc2zDqPm
- for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 19:26:20 +1100 (AEDT)
-Date: Wed, 18 Dec 2019 08:26:11 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=default; t=1576657574;
- bh=uOfaSAHV6fK7G7VSHuoiJSCOYL9T1I19iT55ks3C3QI=;
- h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
- Feedback-ID:From;
- b=CV0j8QTvb04ZOuK3DwITiPmTjRUlgDUchIqOSaJ6E6ZxvRIqfgahDvO31zmXrnxbO
- lHTXgKi0a14AlMGWVs9JdeSqwhZ3Od2Vq/sQ56UnC0VRnhQqLQPpRL6QibWbN3RBXm
- y2Oe5ROr+hG1eUrffTBbLmt6jwJQ9wPncI0GDglY=
-To: Adriana Kobylak <anoo@linux.ibm.com>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Firmware update error: Cannot UBI create volume
-Message-ID: <mMrfhlAVEkCejeMkGNA-WogqkXEi79G-n2D_z-ccL9wK43k7KwvFyFPloY5wnZhNitUspTMdELj9Zl1st1W_BMXuaKVmgHy83sm1eKxHi_E=@protonmail.com>
-In-Reply-To: <0bedefae291dc69d048fd5806d17d385@linux.vnet.ibm.com>
-References: <1i6T-_CIXkSAHAqGbzb3IZW6jbo0mDc2nF7amahFYZ_d-4bMaTTMJeG2rb-1wE6J0OPb7NZRJ0Zx80eTDA5ukPs9CknlPBlw6IGMfHTwedI=@protonmail.com>
- <0bedefae291dc69d048fd5806d17d385@linux.vnet.ibm.com>
-Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47dDx74hcVzDqfB
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 23:34:59 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
+Subject: Re: [EXTERNAL] how to get pci config space
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <DM6PR21MB138892F44E5B77CCE63F83D4C8530@DM6PR21MB1388.namprd21.prod.outlook.com>
+Date: Wed, 18 Dec 2019 07:34:53 -0500
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
- autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
+Message-Id: <D37CC7FB-0199-47A5-930A-B9BBFF02F0D8@fuzziesquirrel.com>
+References: <584F7181-73DB-4090-93D7-87E0E7408F20@fuzziesquirrel.com>
+ <DM6PR21MB1388CB8A990972BA09EB5163C8500@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <3718EF06-C5DE-4D3D-B2B1-548FEF5A1919@fuzziesquirrel.com>
+ <DM6PR21MB138892F44E5B77CCE63F83D4C8530@DM6PR21MB1388.namprd21.prod.outlook.com>
+To: Neeraj Ladkani <neladk@microsoft.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,50 +47,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks :)
-I am able to flash new images now.
+Thanks Neeraj
 
-~Raj
+> On Dec 18, 2019, at 2:18 AM, Neeraj Ladkani <neladk@microsoft.com> =
+wrote:
+>=20
+> IMO, we only need DeviceID and VendorID fields from PCIe Config space
 
+This would probably meet my need to dynamically tune fan control =
+parameters.  Is it possible to populate instances of the pciedevice =
+schema based on devid and vendorid alone?
 
-=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
-ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
-On Tuesday, December 17, 2019 10:30 PM, Adriana Kobylak <anoo@linux.ibm.com=
-> wrote:
+> and we can let system firmware send this information during boot
 
-> On 2019-12-17 03:52, rgrs wrote:
->
-> > Hi All,
-> > I have a strange behavior where only one image is visible in webUI.
-> > I get UBI "no space left" errors when I try to update/flash new image.
-> > I dont have steps to reproduce and dont know how my BMC ended up in
-> > this state.
-> > How do I recover from this error? /proc/mtd shows all
-> > partitions/volumes properly.
-> > Is there any way to recover alternate partition without erasing SPI
-> > from uboot?
->
-> Seems there's an 'orphan' volume which you can manually delete to make
-> space. A while back there was an issue at some point where not all the
-> volumes were deleted during a firmware update.
->
-> > root@obmc:~# ubinfo -d 4 -n 1
-> > Volume ID: 1 (on ubi4)
-> > Type: static
-> > Alignment: 1
-> > Size: 43 LEBs (2812544 bytes, 2.6 MiB)
-> > Data bytes: 2767008 bytes (2.6 MiB)
-> > State: OK
-> > Name: kernel-7e7e1530
->
-> This seems to be the 'orphan' since there's not a corresponding
-> 'rofs-7e7e1530' volume, you can manually delete it with "ubirmvol
-> /dev/ubi4 -n 1". You can also list all the volumes of a device with
-> "ubinfo -a -d 0" for example.
+This is how it works on Power systems before OpenBMC, but we have a =
+custom protocol with a proprietary implementation.  The purpose of my =
+note was to find out if there are typical implementations or even =
+standards out there for doing this.
 
+> or preprogram the information to BMC using EntityManager.=20
 
+Can you elaborate on how this would work?  Given the number of pcie =
+devices out there this seems like it would be hard to do it this way =
+without a huge database of some kind on the bmc?
+
+> Regarding BMC-CPU(via PECI), BMC needs to send PECI command to CPU. =
+CPU should support RdPCICfg as supported PECI command and thus respond =
+with data.
+
+Ok - that sounds like its all in hardware.  But above it sounded like =
+you suggest we skip RdPCICfg and instead let system firmware push this =
+information down to the BMC - do I have it right?  If so why do you =
+prefer that mechanism?
+
+thx!
+
+-brad
