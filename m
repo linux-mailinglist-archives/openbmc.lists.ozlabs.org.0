@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03FF8123C95
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 02:43:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47cySq5Td8zDqYt
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 12:43:07 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D78B123CA0
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 02:44:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47cyV34LL0zDqY6
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 12:44:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,25 +18,24 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47cy7n6H52zDqSh
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47cy7n6HV5zDqSj
  for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 12:28:21 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga005.jf.intel.com ([10.7.209.41])
  by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2019 17:28:20 -0800
+ 17 Dec 2019 17:28:21 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,327,1571727600"; d="scan'208";a="390019048"
+X-IronPort-AV: E=Sophos;i="5.69,327,1571727600"; d="scan'208";a="390019053"
 Received: from yoojae-mobl1.amr.corp.intel.com (HELO ubuntu.jf.intel.com)
  ([10.7.153.147])
- by orsmga005.jf.intel.com with ESMTP; 17 Dec 2019 17:28:20 -0800
+ by orsmga005.jf.intel.com with ESMTP; 17 Dec 2019 17:28:21 -0800
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  openbmc@lists.ozlabs.org
-Subject: [PATCH dev-5.4 12/14] Documentation: hwmon: Add documents for PECI
- hwmon drivers
-Date: Tue, 17 Dec 2019 17:28:06 -0800
-Message-Id: <20191218012808.6482-13-jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH dev-5.4 13/14] hwmon: Add PECI cputemp driver
+Date: Tue, 17 Dec 2019 17:28:07 -0800
+Message-Id: <20191218012808.6482-14-jae.hyun.yoo@linux.intel.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20191218012808.6482-1-jae.hyun.yoo@linux.intel.com>
 References: <20191218012808.6482-1-jae.hyun.yoo@linux.intel.com>
@@ -55,7 +54,7 @@ Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds hwmon documents for PECI cputemp and dimmtemp drivers.
+This commit adds PECI cputemp hwmon driver.
 
 Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Reviewed-by: Haiyue Wang <haiyue.wang@linux.intel.com>
@@ -63,199 +62,593 @@ Reviewed-by: James Feist <james.feist@linux.intel.com>
 Reviewed-by: Vernon Mauery <vernon.mauery@linux.intel.com>
 ---
 Changes since v11:
-- None
+- Added LE16 conversion for reading DTS.
+- Replaced core temperature label table with dynamic table.
+- Fixed style issues.
 
 Changes since v10:
-- Changed documents format to rst.
+- Added Skylake Xeon D support.
+- Added DTS temperature which is more thermal control friendlier than Die
+  temperature.
+- Fixed minor bugs and style issues.
 
- Documentation/hwmon/index.rst         |  2 +
- Documentation/hwmon/peci-cputemp.rst  | 95 +++++++++++++++++++++++++++
- Documentation/hwmon/peci-dimmtemp.rst | 60 +++++++++++++++++
- 3 files changed, 157 insertions(+)
- create mode 100644 Documentation/hwmon/peci-cputemp.rst
- create mode 100644 Documentation/hwmon/peci-dimmtemp.rst
+ drivers/hwmon/Kconfig        |  14 ++
+ drivers/hwmon/Makefile       |   1 +
+ drivers/hwmon/peci-cputemp.c | 472 +++++++++++++++++++++++++++++++++++
+ drivers/hwmon/peci-hwmon.h   |  48 ++++
+ 4 files changed, 535 insertions(+)
+ create mode 100644 drivers/hwmon/peci-cputemp.c
+ create mode 100644 drivers/hwmon/peci-hwmon.h
 
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index 230ad59b462b..7d894c9e07ed 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -128,6 +128,8 @@ Hardware Monitoring Kernel Drivers
-    pc87360
-    pc87427
-    pcf8591
-+   peci-cputemp
-+   peci-dimmtemp
-    pmbus
-    powr1220
-    pxe1610
-diff --git a/Documentation/hwmon/peci-cputemp.rst b/Documentation/hwmon/peci-cputemp.rst
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 13a6b4afb4b3..d1422d9b8055 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1322,6 +1322,20 @@ config SENSORS_PCF8591
+ 	  These devices are hard to detect and rarely found on mainstream
+ 	  hardware. If unsure, say N.
+ 
++config SENSORS_PECI_CPUTEMP
++	tristate "PECI CPU temperature monitoring client"
++	depends on PECI
++	select MFD_INTEL_PECI_CLIENT
++	help
++	  If you say yes here you get support for the generic Intel PECI
++	  cputemp driver which provides Digital Thermal Sensor (DTS) thermal
++	  readings of the CPU package and CPU cores that are accessible using
++	  the PECI Client Command Suite via the processor PECI client.
++	  Check <file:Documentation/hwmon/peci-cputemp.rst> for details.
++
++	  This driver can also be built as a module. If so, the module
++	  will be called peci-cputemp.
++
+ source "drivers/hwmon/pmbus/Kconfig"
+ 
+ config SENSORS_PWM_FAN
+diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+index 40c036ea45e6..bab572e5bac0 100644
+--- a/drivers/hwmon/Makefile
++++ b/drivers/hwmon/Makefile
+@@ -141,6 +141,7 @@ obj-$(CONFIG_SENSORS_NTC_THERMISTOR)	+= ntc_thermistor.o
+ obj-$(CONFIG_SENSORS_PC87360)	+= pc87360.o
+ obj-$(CONFIG_SENSORS_PC87427)	+= pc87427.o
+ obj-$(CONFIG_SENSORS_PCF8591)	+= pcf8591.o
++obj-$(CONFIG_SENSORS_PECI_CPUTEMP)	+= peci-cputemp.o
+ obj-$(CONFIG_SENSORS_POWR1220)  += powr1220.o
+ obj-$(CONFIG_SENSORS_PWM_FAN)	+= pwm-fan.o
+ obj-$(CONFIG_SENSORS_RASPBERRYPI_HWMON)	+= raspberrypi-hwmon.o
+diff --git a/drivers/hwmon/peci-cputemp.c b/drivers/hwmon/peci-cputemp.c
 new file mode 100644
-index 000000000000..bf08e16dd989
+index 000000000000..78e442f433a7
 --- /dev/null
-+++ b/Documentation/hwmon/peci-cputemp.rst
-@@ -0,0 +1,95 @@
-+.. SPDX-License-Identifier: GPL-2.0
++++ b/drivers/hwmon/peci-cputemp.c
+@@ -0,0 +1,472 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2018-2019 Intel Corporation
 +
-+Kernel driver peci-cputemp
-+==========================
++#include <linux/hwmon.h>
++#include <linux/jiffies.h>
++#include <linux/mfd/intel-peci-client.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/platform_device.h>
++#include "peci-hwmon.h"
 +
-+:Copyright: |copy| 2018-2019 Intel Corporation
++#define DEFAULT_CHANNEL_NUMS	5
++#define CORETEMP_CHANNEL_NUMS	CORE_NUMS_MAX
++#define CPUTEMP_CHANNEL_NUMS	(DEFAULT_CHANNEL_NUMS + CORETEMP_CHANNEL_NUMS)
 +
-+Supported chips:
-+	One of Intel server CPUs listed below which is connected to a PECI bus.
-+		* Intel Xeon E5/E7 v3 server processors
-+			Intel Xeon E5-14xx v3 family
-+			Intel Xeon E5-24xx v3 family
-+			Intel Xeon E5-16xx v3 family
-+			Intel Xeon E5-26xx v3 family
-+			Intel Xeon E5-46xx v3 family
-+			Intel Xeon E7-48xx v3 family
-+			Intel Xeon E7-88xx v3 family
-+		* Intel Xeon E5/E7 v4 server processors
-+			Intel Xeon E5-16xx v4 family
-+			Intel Xeon E5-26xx v4 family
-+			Intel Xeon E5-46xx v4 family
-+			Intel Xeon E7-48xx v4 family
-+			Intel Xeon E7-88xx v4 family
-+		* Intel Xeon Scalable server processors
-+			Intel Xeon D family
-+			Intel Xeon Bronze family
-+			Intel Xeon Silver family
-+			Intel Xeon Gold family
-+			Intel Xeon Platinum family
++struct temp_group {
++	struct peci_sensor_data		die;
++	struct peci_sensor_data		dts;
++	struct peci_sensor_data		tcontrol;
++	struct peci_sensor_data		tthrottle;
++	struct peci_sensor_data		tjmax;
++	struct peci_sensor_data		core[CORETEMP_CHANNEL_NUMS];
++};
 +
-+	Addresses scanned: PECI client address 0x30 - 0x37
-+	Datasheet: Available from http://www.intel.com/design/literature.htm
++struct peci_cputemp {
++	struct peci_client_manager	*mgr;
++	struct device			*dev;
++	char				name[PECI_NAME_SIZE];
++	const struct cpu_gen_info	*gen_info;
++	struct temp_group		temp;
++	u64				core_mask;
++	u32				temp_config[CPUTEMP_CHANNEL_NUMS + 1];
++	uint				config_idx;
++	struct hwmon_channel_info	temp_info;
++	const struct hwmon_channel_info	*info[2];
++	struct hwmon_chip_info		chip;
++	char				**coretemp_label;
++};
 +
-+Author:
-+	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
++enum cputemp_channels {
++	channel_die,
++	channel_dts,
++	channel_tcontrol,
++	channel_tthrottle,
++	channel_tjmax,
++	channel_core,
++};
 +
-+Description
-+-----------
++static const u32 config_table[DEFAULT_CHANNEL_NUMS + 1] = {
++	/* Die temperature */
++	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT |
++	HWMON_T_CRIT_HYST,
 +
-+This driver implements a generic PECI hwmon feature which provides Digital
-+Thermal Sensor (DTS) thermal readings of the CPU package and CPU cores that are
-+accessible using the PECI Client Command Suite via the processor PECI client.
++	/* DTS margin */
++	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT |
++	HWMON_T_CRIT_HYST,
 +
-+All temperature values are given in millidegree Celsius and will be measurable
-+only when the target CPU is powered on.
++	/* Tcontrol temperature */
++	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_CRIT,
 +
-+``sysfs`` interface
-+-------------------
-+======================= =======================================================
-+temp1_label		"Die"
-+temp1_input		Provides current die temperature of the CPU package.
-+temp1_max		Provides thermal control temperature of the CPU package
-+			which is also known as Tcontrol.
-+temp1_crit		Provides shutdown temperature of the CPU package which
-+			is also known as the maximum processor junction
-+			temperature, Tjmax or Tprochot.
-+temp1_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
-+			the CPU package.
++	/* Tthrottle temperature */
++	HWMON_T_LABEL | HWMON_T_INPUT,
 +
-+temp2_label		"DTS"
-+temp2_input		Provides current DTS temperature of the CPU package.
-+temp2_max		Provides thermal control temperature of the CPU package
-+			which is also known as Tcontrol.
-+temp2_crit		Provides shutdown temperature of the CPU package which
-+			is also known as the maximum processor junction
-+			temperature, Tjmax or Tprochot.
-+temp2_crit_hyst		Provides the hysteresis value from Tcontrol to Tjmax of
-+			the CPU package.
++	/* Tjmax temperature */
++	HWMON_T_LABEL | HWMON_T_INPUT,
 +
-+temp3_label		"Tcontrol"
-+temp3_input		Provides current Tcontrol temperature of the CPU
-+			package which is also known as Fan Temperature target.
-+			Indicates the relative value from thermal monitor trip
-+			temperature at which fans should be engaged.
-+temp3_crit		Provides Tcontrol critical value of the CPU package
-+			which is same to Tjmax.
++	/* Core temperature - for all core channels */
++	HWMON_T_LABEL | HWMON_T_INPUT | HWMON_T_MAX | HWMON_T_CRIT |
++	HWMON_T_CRIT_HYST,
++};
 +
-+temp4_label		"Tthrottle"
-+temp4_input		Provides current Tthrottle temperature of the CPU
-+			package. Used for throttling temperature. If this value
-+			is allowed and lower than Tjmax - the throttle will
-+			occur and reported at lower than Tjmax.
++static const char *cputemp_label[DEFAULT_CHANNEL_NUMS] = {
++	"Die",
++	"DTS",
++	"Tcontrol",
++	"Tthrottle",
++	"Tjmax"
++};
 +
-+temp5_label		"Tjmax"
-+temp5_input		Provides the maximum junction temperature, Tjmax of the
-+			CPU package.
++static s32 ten_dot_six_to_millidegree(s32 val)
++{
++	return ((val ^ 0x8000) - 0x8000) * 1000 / 64;
++}
 +
-+temp[6-N]_label		Provides string "Core X", where X is resolved core
-+			number.
-+temp[6-N]_input		Provides current temperature of each core.
-+temp[6-N]_max		Provides thermal control temperature of the core.
-+temp[6-N]_crit		Provides shutdown temperature of the core.
-+temp[6-N]_crit_hyst	Provides the hysteresis value from Tcontrol to Tjmax of
-+			the core.
-+======================= =======================================================
-\ No newline at end of file
-diff --git a/Documentation/hwmon/peci-dimmtemp.rst b/Documentation/hwmon/peci-dimmtemp.rst
++static int get_temp_targets(struct peci_cputemp *priv)
++{
++	s32 tthrottle_offset;
++	s32 tcontrol_margin;
++	u8  pkg_cfg[4];
++	int ret;
++
++	/*
++	 * Just use only the tcontrol marker to determine if target values need
++	 * update.
++	 */
++	if (!peci_sensor_need_update(&priv->temp.tcontrol))
++		return 0;
++
++	ret = peci_client_read_package_config(priv->mgr,
++					      PECI_MBX_INDEX_TEMP_TARGET, 0,
++					      pkg_cfg);
++	if (ret)
++		return ret;
++
++	priv->temp.tjmax.value = pkg_cfg[2] * 1000;
++
++	tcontrol_margin = pkg_cfg[1];
++	tcontrol_margin = ((tcontrol_margin ^ 0x80) - 0x80) * 1000;
++	priv->temp.tcontrol.value = priv->temp.tjmax.value - tcontrol_margin;
++
++	tthrottle_offset = (pkg_cfg[3] & 0x2f) * 1000;
++	priv->temp.tthrottle.value = priv->temp.tjmax.value - tthrottle_offset;
++
++	peci_sensor_mark_updated(&priv->temp.tcontrol);
++
++	return 0;
++}
++
++static int get_die_temp(struct peci_cputemp *priv)
++{
++	struct peci_get_temp_msg msg;
++	int ret;
++
++	if (!peci_sensor_need_update(&priv->temp.die))
++		return 0;
++
++	msg.addr = priv->mgr->client->addr;
++
++	ret = peci_command(priv->mgr->client->adapter, PECI_CMD_GET_TEMP, &msg);
++	if (ret)
++		return ret;
++
++	/* Note that the tjmax should be available before calling it */
++	priv->temp.die.value = priv->temp.tjmax.value +
++			       (msg.temp_raw * 1000 / 64);
++
++	peci_sensor_mark_updated(&priv->temp.die);
++
++	return 0;
++}
++
++static int get_dts(struct peci_cputemp *priv)
++{
++	s32 dts_margin;
++	u8  pkg_cfg[4];
++	int ret;
++
++	if (!peci_sensor_need_update(&priv->temp.dts))
++		return 0;
++
++	ret = peci_client_read_package_config(priv->mgr,
++					      PECI_MBX_INDEX_DTS_MARGIN, 0,
++					      pkg_cfg);
++
++	if (ret)
++		return ret;
++
++	dts_margin = le16_to_cpup((__le16 *)pkg_cfg);
++
++	/**
++	 * Processors return a value of DTS reading in 10.6 format
++	 * (10 bits signed decimal, 6 bits fractional).
++	 * Error codes:
++	 *   0x8000: General sensor error
++	 *   0x8001: Reserved
++	 *   0x8002: Underflow on reading value
++	 *   0x8003-0x81ff: Reserved
++	 */
++	if (dts_margin >= 0x8000 && dts_margin <= 0x81ff)
++		return -EIO;
++
++	dts_margin = ten_dot_six_to_millidegree(dts_margin);
++
++	/* Note that the tcontrol should be available before calling it */
++	priv->temp.dts.value = priv->temp.tcontrol.value - dts_margin;
++
++	peci_sensor_mark_updated(&priv->temp.dts);
++
++	return 0;
++}
++
++static int get_core_temp(struct peci_cputemp *priv, int core_index)
++{
++	s32 core_dts_margin;
++	u8  pkg_cfg[4];
++	int ret;
++
++	if (!peci_sensor_need_update(&priv->temp.core[core_index]))
++		return 0;
++
++	ret = peci_client_read_package_config(priv->mgr,
++					      PECI_MBX_INDEX_PER_CORE_DTS_TEMP,
++					      core_index, pkg_cfg);
++	if (ret)
++		return ret;
++
++	core_dts_margin = le16_to_cpup((__le16 *)pkg_cfg);
++
++	/*
++	 * Processors return a value of the core DTS reading in 10.6 format
++	 * (10 bits signed decimal, 6 bits fractional).
++	 * Error codes:
++	 *   0x8000: General sensor error
++	 *   0x8001: Reserved
++	 *   0x8002: Underflow on reading value
++	 *   0x8003-0x81ff: Reserved
++	 */
++	if (core_dts_margin >= 0x8000 && core_dts_margin <= 0x81ff)
++		return -EIO;
++
++	core_dts_margin = ten_dot_six_to_millidegree(core_dts_margin);
++
++	/* Note that the tjmax should be available before calling it */
++	priv->temp.core[core_index].value = priv->temp.tjmax.value +
++					    core_dts_margin;
++
++	peci_sensor_mark_updated(&priv->temp.core[core_index]);
++
++	return 0;
++}
++
++static int cputemp_read_string(struct device *dev,
++			       enum hwmon_sensor_types type,
++			       u32 attr, int channel, const char **str)
++{
++	struct peci_cputemp *priv = dev_get_drvdata(dev);
++
++	if (attr != hwmon_temp_label)
++		return -EOPNOTSUPP;
++
++	*str = (channel < DEFAULT_CHANNEL_NUMS) ?
++	       cputemp_label[channel] :
++	       (const char *)priv->coretemp_label[channel -
++						  DEFAULT_CHANNEL_NUMS];
++
++	return 0;
++}
++
++static int cputemp_read(struct device *dev,
++			enum hwmon_sensor_types type,
++			u32 attr, int channel, long *val)
++{
++	struct peci_cputemp *priv = dev_get_drvdata(dev);
++	int ret, core_index;
++
++	if (channel >= CPUTEMP_CHANNEL_NUMS ||
++	    !(priv->temp_config[channel] & BIT(attr)))
++		return -EOPNOTSUPP;
++
++	ret = get_temp_targets(priv);
++	if (ret)
++		return ret;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		switch (channel) {
++		case channel_die:
++			ret = get_die_temp(priv);
++			if (ret)
++				break;
++
++			*val = priv->temp.die.value;
++			break;
++		case channel_dts:
++			ret = get_dts(priv);
++			if (ret)
++				break;
++
++			*val = priv->temp.dts.value;
++			break;
++		case channel_tcontrol:
++			*val = priv->temp.tcontrol.value;
++			break;
++		case channel_tthrottle:
++			*val = priv->temp.tthrottle.value;
++			break;
++		case channel_tjmax:
++			*val = priv->temp.tjmax.value;
++			break;
++		default:
++			core_index = channel - DEFAULT_CHANNEL_NUMS;
++			ret = get_core_temp(priv, core_index);
++			if (ret)
++				break;
++
++			*val = priv->temp.core[core_index].value;
++			break;
++		}
++		break;
++	case hwmon_temp_max:
++		*val = priv->temp.tcontrol.value;
++		break;
++	case hwmon_temp_crit:
++		*val = priv->temp.tjmax.value;
++		break;
++	case hwmon_temp_crit_hyst:
++		*val = priv->temp.tjmax.value - priv->temp.tcontrol.value;
++		break;
++	default:
++		ret = -EOPNOTSUPP;
++		break;
++	}
++
++	return ret;
++}
++
++static umode_t cputemp_is_visible(const void *data,
++				  enum hwmon_sensor_types type,
++				  u32 attr, int channel)
++{
++	const struct peci_cputemp *priv = data;
++
++	if (channel < ARRAY_SIZE(priv->temp_config) &&
++	    (priv->temp_config[channel] & BIT(attr)) &&
++	    (channel < DEFAULT_CHANNEL_NUMS ||
++	     (channel >= DEFAULT_CHANNEL_NUMS &&
++	      (priv->core_mask & BIT(channel - DEFAULT_CHANNEL_NUMS)))))
++		return 0444;
++
++	return 0;
++}
++
++static const struct hwmon_ops cputemp_ops = {
++	.is_visible = cputemp_is_visible,
++	.read_string = cputemp_read_string,
++	.read = cputemp_read,
++};
++
++static int check_resolved_cores(struct peci_cputemp *priv)
++{
++	struct peci_rd_pci_cfg_local_msg msg;
++	int ret;
++
++	/* Get the RESOLVED_CORES register value */
++	msg.addr = priv->mgr->client->addr;
++	msg.device = 30;
++	msg.function = 3;
++	msg.rx_len = 4;
++	msg.bus = 1;
++	msg.reg = 0xb4;
++
++	ret = peci_command(priv->mgr->client->adapter,
++			   PECI_CMD_RD_PCI_CFG_LOCAL, &msg);
++	if (msg.cc != PECI_DEV_CC_SUCCESS)
++		ret = -EAGAIN;
++	if (ret)
++		return ret;
++
++	priv->core_mask = le32_to_cpup((__le32 *)msg.pci_config);
++	if (!priv->core_mask)
++		return -EAGAIN;
++
++	dev_dbg(priv->dev, "Scanned resolved cores: 0x%llx\n", priv->core_mask);
++
++	return 0;
++}
++
++static int create_core_temp_label(struct peci_cputemp *priv, int idx)
++{
++	priv->coretemp_label[idx] = devm_kzalloc(priv->dev,
++						 PECI_HWMON_LABEL_STR_LEN,
++						 GFP_KERNEL);
++	if (!priv->coretemp_label[idx])
++		return -ENOMEM;
++
++	sprintf(priv->coretemp_label[idx], "Core %d", idx);
++
++	return 0;
++}
++
++static int create_core_temp_info(struct peci_cputemp *priv)
++{
++	int ret, i;
++
++	ret = check_resolved_cores(priv);
++	if (ret)
++		return ret;
++
++	priv->coretemp_label = devm_kzalloc(priv->dev,
++					    priv->gen_info->core_max *
++					    sizeof(char *),
++					    GFP_KERNEL);
++	if (!priv->coretemp_label)
++		return -ENOMEM;
++
++	for (i = 0; i < priv->gen_info->core_max; i++)
++		if (priv->core_mask & BIT(i)) {
++			while (priv->config_idx <= i + DEFAULT_CHANNEL_NUMS)
++				priv->temp_config[priv->config_idx++] =
++					config_table[channel_core];
++
++			ret = create_core_temp_label(priv, i);
++			if (ret)
++				return ret;
++		}
++
++	return 0;
++}
++
++static int peci_cputemp_probe(struct platform_device *pdev)
++{
++	struct peci_client_manager *mgr = dev_get_drvdata(pdev->dev.parent);
++	struct device *dev = &pdev->dev;
++	struct peci_cputemp *priv;
++	struct device *hwmon_dev;
++	int ret;
++
++	if ((mgr->client->adapter->cmd_mask &
++	    (BIT(PECI_CMD_GET_TEMP) | BIT(PECI_CMD_RD_PKG_CFG))) !=
++	    (BIT(PECI_CMD_GET_TEMP) | BIT(PECI_CMD_RD_PKG_CFG)))
++		return -ENODEV;
++
++	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
++	if (!priv)
++		return -ENOMEM;
++
++	dev_set_drvdata(dev, priv);
++	priv->mgr = mgr;
++	priv->dev = dev;
++	priv->gen_info = mgr->gen_info;
++
++	snprintf(priv->name, PECI_NAME_SIZE, "peci_cputemp.cpu%d",
++		 mgr->client->addr - PECI_BASE_ADDR);
++
++	priv->temp_config[priv->config_idx++] = config_table[channel_die];
++	priv->temp_config[priv->config_idx++] = config_table[channel_dts];
++	priv->temp_config[priv->config_idx++] = config_table[channel_tcontrol];
++	priv->temp_config[priv->config_idx++] = config_table[channel_tthrottle];
++	priv->temp_config[priv->config_idx++] = config_table[channel_tjmax];
++
++	ret = create_core_temp_info(priv);
++	if (ret)
++		dev_dbg(dev, "Skipped creating core temp info\n");
++
++	priv->chip.ops = &cputemp_ops;
++	priv->chip.info = priv->info;
++
++	priv->info[0] = &priv->temp_info;
++
++	priv->temp_info.type = hwmon_temp;
++	priv->temp_info.config = priv->temp_config;
++
++	hwmon_dev = devm_hwmon_device_register_with_info(priv->dev,
++							 priv->name,
++							 priv,
++							 &priv->chip,
++							 NULL);
++
++	if (IS_ERR(hwmon_dev))
++		return PTR_ERR(hwmon_dev);
++
++	dev_dbg(dev, "%s: sensor '%s'\n", dev_name(hwmon_dev), priv->name);
++
++	return 0;
++}
++
++static const struct platform_device_id peci_cputemp_ids[] = {
++	{ .name = "peci-cputemp", .driver_data = 0 },
++	{ }
++};
++MODULE_DEVICE_TABLE(platform, peci_cputemp_ids);
++
++static struct platform_driver peci_cputemp_driver = {
++	.probe		= peci_cputemp_probe,
++	.id_table	= peci_cputemp_ids,
++	.driver		= { .name = KBUILD_MODNAME, },
++};
++module_platform_driver(peci_cputemp_driver);
++
++MODULE_AUTHOR("Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>");
++MODULE_DESCRIPTION("PECI cputemp driver");
++MODULE_LICENSE("GPL v2");
+diff --git a/drivers/hwmon/peci-hwmon.h b/drivers/hwmon/peci-hwmon.h
 new file mode 100644
-index 000000000000..e3581811de2d
+index 000000000000..4d78c528c4c8
 --- /dev/null
-+++ b/Documentation/hwmon/peci-dimmtemp.rst
-@@ -0,0 +1,60 @@
-+.. SPDX-License-Identifier: GPL-2.0
++++ b/drivers/hwmon/peci-hwmon.h
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/* Copyright (c) 2018-2019 Intel Corporation */
 +
-+Kernel driver peci-dimmtemp
-+===========================
++#ifndef __PECI_HWMON_H
++#define __PECI_HWMON_H
 +
-+:Copyright: |copy| 2018-2019 Intel Corporation
++#include <linux/peci.h>
 +
-+Supported chips:
-+	One of Intel server CPUs listed below which is connected to a PECI bus.
-+		* Intel Xeon E5/E7 v3 server processors
-+			Intel Xeon E5-14xx v3 family
-+			Intel Xeon E5-24xx v3 family
-+			Intel Xeon E5-16xx v3 family
-+			Intel Xeon E5-26xx v3 family
-+			Intel Xeon E5-46xx v3 family
-+			Intel Xeon E7-48xx v3 family
-+			Intel Xeon E7-88xx v3 family
-+		* Intel Xeon E5/E7 v4 server processors
-+			Intel Xeon E5-16xx v4 family
-+			Intel Xeon E5-26xx v4 family
-+			Intel Xeon E5-46xx v4 family
-+			Intel Xeon E7-48xx v4 family
-+			Intel Xeon E7-88xx v4 family
-+		* Intel Xeon Scalable server processors
-+			Intel Xeon D family
-+			Intel Xeon Bronze family
-+			Intel Xeon Silver family
-+			Intel Xeon Gold family
-+			Intel Xeon Platinum family
++#define TEMP_TYPE_PECI			6 /* Sensor type 6: Intel PECI */
++#define UPDATE_INTERVAL			HZ
 +
-+	Addresses scanned: PECI client address 0x30 - 0x37
-+	Datasheet: Available from http://www.intel.com/design/literature.htm
++#define PECI_HWMON_LABEL_STR_LEN	10
 +
-+Author:
-+	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
++/**
++ * struct peci_sensor_data - PECI sensor information
++ * @valid: flag to indicate the sensor value is valid
++ * @value: sensor value in millidegree Celsius
++ * @last_updated: time of the last update in jiffies
++ */
++struct peci_sensor_data {
++	uint  valid;
++	s32   value;
++	ulong last_updated;
++};
 +
-+Description
-+-----------
++/**
++ * peci_sensor_need_update - check whether sensor update is needed or not
++ * @sensor: pointer to sensor data struct
++ *
++ * Return: true if update is needed, false if not.
++ */
++static inline bool peci_sensor_need_update(struct peci_sensor_data *sensor)
++{
++	return !sensor->valid ||
++	       time_after(jiffies, sensor->last_updated + UPDATE_INTERVAL);
++}
 +
-+This driver implements a generic PECI hwmon feature which provides Digital
-+Thermal Sensor (DTS) thermal readings of DIMM components that are accessible
-+using the PECI Client Command Suite via the processor PECI client.
++/**
++ * peci_sensor_mark_updated - mark the sensor is updated
++ * @sensor: pointer to sensor data struct
++ */
++static inline void peci_sensor_mark_updated(struct peci_sensor_data *sensor)
++{
++	sensor->valid = 1;
++	sensor->last_updated = jiffies;
++}
 +
-+All temperature values are given in millidegree Celsius and will be measurable
-+only when the target CPU is powered on.
-+
-+``sysfs`` interface
-+-------------------
-+======================= =======================================================
-+
-+temp[N]_label		Provides string "DIMM CI", where C is DIMM channel and
-+			I is DIMM index of the populated DIMM.
-+temp[N]_input		Provides current temperature of the populated DIMM.
-+temp[N]_max		Provides thermal control temperature of the DIMM.
-+temp[N]_crit		Provides shutdown temperature of the DIMM.
-+======================= =======================================================
-+
-+Note:
-+	DIMM temperature attributes will appear when the client CPU's BIOS
-+	completes memory training and testing.
++#endif /* __PECI_HWMON_H */
 -- 
 2.17.1
 
