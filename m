@@ -2,98 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69409123BA5
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 01:34:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 225CB123BAE
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 01:37:36 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47cwxG1d5rzDqMV
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 11:34:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47cx192GRtzDqD3
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 11:37:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=apc01-pu1-obe.outbound.protection.outlook.com
- (client-ip=40.107.132.54; helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=ctcchien@nuvoton.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f42;
+ helo=mail-qv1-xf42.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=nuvoton.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=nuvoton.onmicrosoft.com
- header.i=@nuvoton.onmicrosoft.com header.b="HvrrRBIH"; 
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="U3HSoNHg"; 
  dkim-atps=neutral
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320054.outbound.protection.outlook.com [40.107.132.54])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com
+ [IPv6:2607:f8b0:4864:20::f42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47cwwb3P82zDqBK
- for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 11:33:34 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HdQUZJfvKaLXrHqlDzU3DWJjf7nrRmORUg1JkDLV17Q5m2GashTlGiVHzFR9bxks7eRP4CwIv1Egogk1zna2afSiV03BdraA268rbeab0jvrtFkmM79MeuysL7BYRHoeLKlqCnV2GwWelggCsKnDQEHnANzDJ1jKXisKSeXTl5rKhFY0NxQ1ZaAhzElKsCSGi7LWyIdoQZ0dUeBToOpQK2DL8Md5lzHz1Bsp4M14hZWF0ycDWUDdZRuEGDGYWplozvs8bjBDwjKLBynlKTBNyJyWBu1KZJodOFjEoOur00mz72hEnrTptLlVwuHtoUWzPbLUuj6so5vWbcffW/tTyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=T5G3vaGp9114N1mbeZne4uH3GE6oZ96pJZnPMV20Iko=;
- b=CNScCQdM5Bep/4UiQQQ4iYBSK0ce/OAQ04IcwtRxqAR4trVeIwmQhtOE2cTDTqY/MRtIDhNTlCax8x2L3QQT0+XAQRQuMrWbBhBsf1KEyfRYwK/2uJdQdaQ/TWBhsdLaNGsxvJpuCXRRUNX6jPGTS1kyU0mHWa6t9YCYX2TU5ctoMRcHh6zqanDpJIKjc/Uh6I/N58FRm1bHjLouNQO/iCWm6cMFS7mT70rB0LwsL2xk5ehnX0OFxBzn7DMG+aW4HhCx9HH3TJ9F+UFs/nPJE/iU0RMOIhmlYevWUFf1OZCaSrOLJ+kIlbnCItQaUlwt7nud0d5hqeGFo4HZXO3xHA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
- dkim=pass header.d=nuvoton.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=T5G3vaGp9114N1mbeZne4uH3GE6oZ96pJZnPMV20Iko=;
- b=HvrrRBIHgwS/sH7Try5dFXML2jYyUyfRh5/8HT3+FWwq6W255BNvg4DYt83KzgQQ2h16cOM5qgWsYk7k9TJp3iJdmdaxXB5oWhLAYdDI5fKAl8+wrDGYZqg0NZbpmn+jWsROvfllrmk6iI8CSi1CAhq/C/Y12v/M/snncO2vp8o=
-Received: from HK0PR03MB5123.apcprd03.prod.outlook.com (52.132.237.76) by
- HK0PR03MB2963.apcprd03.prod.outlook.com (52.133.211.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2559.9; Wed, 18 Dec 2019 00:33:30 +0000
-Received: from HK0PR03MB5123.apcprd03.prod.outlook.com
- ([fe80::f502:3234:4bd0:3f70]) by HK0PR03MB5123.apcprd03.prod.outlook.com
- ([fe80::f502:3234:4bd0:3f70%3]) with mapi id 15.20.2559.012; Wed, 18 Dec 2019
- 00:33:30 +0000
-From: CS20 CTCchien <CTCCHIEN@nuvoton.com>
-To: Oskar Senft <osk@google.com>
-Subject: RE: Bios upgrade
-Thread-Topic: Bios upgrade
-Thread-Index: AQHVtHV2LnTorDuY6Eup0ttpk3cnnqe9yZjAgAEGrICAADuSQA==
-Date: Wed, 18 Dec 2019 00:33:30 +0000
-Message-ID: <HK0PR03MB5123C395B1C50986732C555ADF530@HK0PR03MB5123.apcprd03.prod.outlook.com>
-References: <95F85EE0-7D7A-41CD-A9B3-69ACC271087C@fb.com>
- <HK0PR03MB51235FC8F1103D763D9A3F2EDF500@HK0PR03MB5123.apcprd03.prod.outlook.com>
- <CABoTLcR0GDjvb36-QPdxuShtnn81zUDA=CddiweXD4q_PoBjvg@mail.gmail.com>
-In-Reply-To: <CABoTLcR0GDjvb36-QPdxuShtnn81zUDA=CddiweXD4q_PoBjvg@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=CTCCHIEN@nuvoton.com; 
-x-originating-ip: [60.250.194.161]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 47c1c240-63f6-4e05-3aad-08d78351e7fb
-x-ms-traffictypediagnostic: HK0PR03MB2963:|HK0PR03MB2963:
-x-microsoft-antispam-prvs: <HK0PR03MB2963985D2C1E598C2D2439C1DF530@HK0PR03MB2963.apcprd03.prod.outlook.com>
-x-ms-exchange-transport-forked: True
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 0255DF69B9
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10009020)(39850400004)(396003)(136003)(366004)(376002)(346002)(199004)(189003)(3480700005)(66476007)(66556008)(64756008)(66946007)(76116006)(316002)(66446008)(52536014)(5660300002)(2906002)(186003)(478600001)(9686003)(33656002)(4326008)(8676002)(8936002)(966005)(53546011)(6506007)(7116003)(6916009)(55016002)(81156014)(54906003)(71200400001)(26005)(86362001)(7696005)(81166006);
- DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB2963;
- H:HK0PR03MB5123.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: nuvoton.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 54ulSqk4Zo1rnlEVrk1HQGvqwpVVvu3fYu8+s2gZzupdDMuQ4CzFfkrmG48EGGvdapqoynG/dh5iERX0eMqLrmUqTA7CMhzMufcEw+wyJsxzxwTsG7Pp/9O6nGZTronqoUUekSQnQ0JCvzVgjG+EHuIq8iNhCEOZE3sV0L/rn12ufqsPk6NtOUw+ozcUtG0kE1+92FV5B9Gi/1ENbVIBfXACPXW6bZJKNcWKA8zk2/8zTjkjxaq7SwjYkoG9H5ms6kQ41qsR15tmm3964DH+4pyU2MB3e3s0UFCi8yCl6UbzIYFXXEwPyEODImhzlHOeH3bzXl46wpbFaeL/xRMTXYKM0Ixvcyf1G0T/dVq5OuG9ZyafTYA5MGBHHNbcfr1JAT0odZOq4IqPVo9bTSbcA9svGmm04yszS4EPBwilnUkvoApl17nx82ECI3jMJmB+dvPwmoGpcKAjHIUFN65FMreTkj1UkQqUlVhzHp/OenA=
-Content-Type: multipart/alternative;
- boundary="_000_HK0PR03MB5123C395B1C50986732C555ADF530HK0PR03MB5123apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47cx0T6QtPzDqBK
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 11:36:57 +1100 (AEDT)
+Received: by mail-qv1-xf42.google.com with SMTP id l14so47906qvu.12
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Dec 2019 16:36:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=5yCcW/kYB6yXx82+ZrNkaMHcYfrF0Gi2/9bUCIUE8gw=;
+ b=U3HSoNHgjuP2s3huQAd9gIuuHvyRWlJBEILZ1eC+6+roYuwECWRzHhHQYOs5Omtv0i
+ +5gnNfcecqxhIpeG/wzIzw+gtRnGehZRdMOmne5IK2AXN+G0LYohksSWhCLwm+JhNHnU
+ NgBpIDNnkuReCFmkNiYp12QIuzZ3fcoFuXlhY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=5yCcW/kYB6yXx82+ZrNkaMHcYfrF0Gi2/9bUCIUE8gw=;
+ b=Ay0ak6wsC7uVKfv/EldiaWsTuT/f0IdBToYhwLPp/b0GgiB4AbWvKxctEBdf8seRhK
+ cQ6Kn/dotAhSIxONp6i0WevYSVejgTtEMmXSQ1g2ctwpr74EMfXrDWnNPH4LTq4DumrX
+ Ik4+xdAyMYnOvHW3nlrrqIaxQ5Hqg5XFlO9/GHsB163Ddg9Y//4gcP7D75gqAk4grrVA
+ dMEkht/HiKdL8S+Hl2tQMwr9cPhTFnXkBHqhj69cMRz3LM8wLlpbWVVEDFHurOp0NLhq
+ cTl/LahP9k6VyDsBoF369f5FxFRgO3E872HYuXYxeNj6MTLGoLiYPKJtJneBS1dxBO8v
+ JRdw==
+X-Gm-Message-State: APjAAAXjG/gN3WU69cGgXtITQzB9VSkaHu1jX0M0vIIyQkXyykpkcTkn
+ Lni59/Ph1FIvplcSBV5FY0UE+dFtBKTsKxsfSDg=
+X-Google-Smtp-Source: APXvYqzrh/Fx8/AZ65x8UtOWXMHUBbAs7vJuFzGItsS26tKmUv0JFYAoW7L+zH6BC15nkb9ec1PIKSaKZqJgGyW/SYQ=
+X-Received: by 2002:a0c:ead1:: with SMTP id y17mr504324qvp.210.1576629413158; 
+ Tue, 17 Dec 2019 16:36:53 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: nuvoton.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47c1c240-63f6-4e05-3aad-08d78351e7fb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Dec 2019 00:33:30.2436 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 9j6+jziv0HT6K9QxSIWsOVg++/Hfal+56MP4VgFLHuCVsOmGqED9loRpNjnLd2PPsQ1M52qMu4TsOKMbEgQLzg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB2963
+References: <20191213231803.20766-1-wak@google.com>
+In-Reply-To: <20191213231803.20766-1-wak@google.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 18 Dec 2019 00:36:41 +0000
+Message-ID: <CACPK8XfOxeDd2XnD=Gy2b4O3rAbLpx6a=6-1sgHDObEF_Uo5Sg@mail.gmail.com>
+Subject: Re: [PATCH] npcm7xx-lpc-bpc: Rework driver
+To: "William A. Kennington III" <wak@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,332 +69,646 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR03MB5123C395B1C50986732C555ADF530HK0PR03MB5123apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi William,
 
-SGksDQoNCldlIGhhdmUgYSBncGlvIHdoaWNoIGNvdWxkIGNvbnRyb2wgdGhlIE1VWA0KV2hlbiBJ
-IHdhbnQgdG8gZG8gQklPUyB1cGdyYWRlLCBJIHdpbGwgc2h1dCBkb3duIHRoZSBob3N0IGFuZCBv
-cGVyYXRlIHRoZSBncGlvLCBhbmQgcmVzY2FuLCB0aGVuIEJJT1MgZmxhc2ggd2lsbCBiZSBhY2Nl
-c3NpYmxlIGZyb20gQk1DIG5vdy4NCg0KQi5SLg0KTWVkYWQNCg0KRnJvbTogT3NrYXIgU2VuZnQg
-PG9za0Bnb29nbGUuY29tPg0KU2VudDogV2VkbmVzZGF5LCBEZWNlbWJlciAxOCwgMjAxOSA0OjU3
-IEFNDQpUbzogQ1MyMCBDVENjaGllbiA8Q1RDQ0hJRU5AbnV2b3Rvbi5jb20+DQpDYzogVmlqYXkg
-S2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+OyBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxp
-c3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSZTogQmlvcyB1cGdyYWRlDQoNCkhpDQoNCkhvdyBk
-aWQgeW91IGNvbmZpZ3VyZSB0aGUgQklPUyBmbGFzaCBkZXZpY2U/IEkgYXNzdW1lIHZpYSB0aGUg
-ZGV2aWNlIHRyZWU/IEkgaGF2ZW4ndCB0ZXN0ZWQgdGhpcyBpbiBhIHdoaWxlLCBidXQgSSBzZWVt
-IHRvIHJlbWVtYmVyIHRoYXQgaWYgdGhlIEJJT1MgU1BJIGZsYXNoIGlzIG5vdCBhY2Nlc3NpYmxl
-IExpbnV4IGRvZXNuJ3QgImRldGVjdCIgdGhlIGRldmljZSBhbmQgZG9lc24ndCBjcmVhdGUgdGhl
-IE1URCwgaS5lLiBpdCdzIG5vdCBhY2Nlc3NpYmxlIGZyb20gdGhlIEJNQy4gVGhpcyBjYW4gYmUg
-dGhlIGNhc2UgaWYgdGhlIG11eCBiZXR3ZWVuIEJNQywgUENIIGFuZCBCSU9TIFNQSSBmbGFzaCkg
-aXMgY29uZmlndXJlZCB0byBjb25uZWN0IHRoZSBTUEkgZmxhc2ggdG8gdGhlIEJNQyBhdCB0aGUg
-dGltZSB0aGUgQk1DIGJvb3RzLiBPciBpcyB0aGVyZSBhIHdheSB0byBtYWtlIEJNQydzIExpbnV4
-ICJyZXNjYW4iIGZvciBTUEkgZmxhc2ggY2hpcHMgYXQgcnVudGltZT8NCg0KVGhhbmtzDQpPc2th
-ci4NCg0KT24gVHVlLCBEZWMgMTcsIDIwMTkgYXQgMTI6MzggQU0gQ1MyMCBDVENjaGllbiA8Q1RD
-Q0hJRU5AbnV2b3Rvbi5jb208bWFpbHRvOkNUQ0NISUVOQG51dm90b24uY29tPj4gd3JvdGU6DQpI
-aSBWaWpheSwNCg0KWW91IGNvdWxkIGJ1aWxkIGEgaG9zdCBkYWVtb24gYW5kIGEgaXBtaSBsaWJy
-YXJ5IG9uIEJNQyBmcm9tIHBob3NwaG9yLWlwbWktZmxhc2gNCkhlcmUgaXMgdGhlIGxpbmsgSSBp
-bXBsZW1lbnQgQklPUyB1cGdyYWRlIG9uIG15IHN5c3RlbQ0KaHR0cHM6Ly9naXRodWIuY29tL051
-dm90b24tSXNyYWVsL29wZW5ibWMvdHJlZS9ydW5ibWMvbWV0YS1waG9zcGhvci9udXZvdG9uLWxh
-eWVyL3JlY2lwZXMtcGhvc3Bob3IvaXBtaTxodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5j
-b20vdjIvdXJsP3U9aHR0cHMtM0FfX2dpdGh1Yi5jb21fTnV2b3Rvbi0yRElzcmFlbF9vcGVuYm1j
-X3RyZWVfcnVuYm1jX21ldGEtMkRwaG9zcGhvcl9udXZvdG9uLTJEbGF5ZXJfcmVjaXBlcy0yRHBo
-b3NwaG9yX2lwbWkmZD1Ed01GYVEmYz11ZThtTzh6Z0M0Vlo0cV9hTlZLdDhHOU1DMDFVRkRtaXN2
-TVIxay1Fb0RNJnI9SHFUNFNjYlNZMllOVDRzRkJtREVyek5nTURlS2ZRbVRpUjA4eDJxdG9iZyZt
-PTdteENZcjJSbjcxcUVvbWR2TFhXRzNHa2J3Um1mamlZdC04UEVzNlZyNE0mcz1WUXBSWGFLSGZF
-eWt6VXNrR09vYnppTnBYWFNGZHNENUtCbVpMWUd5cy1VJmU9Pi4NCg0KWW91IG5lZWQgdG8gcHJl
-cGFyZSBhIEJJT1MgaW1hZ2UgYW5kIGEgc2lnbmF0dXJlIGZpbGUgZm9yIHRoaXMgQklPUw0KQWZ0
-ZXIgeW91IGV4ZWN1dGUgdGhlIGNvbW1hbmQgb24gaG9zdCwgaXBtaWQgaW4gQk1DIHdpbGwgbGF1
-bmNoIGEgc2NyaXB0IHRvIHVwZ3JhZGUgQklPUy4NCg0KRm9yIGV4YW1wbGUsDQpzdWRvICAuL2J1
-cm5fbXlfYm1jIC0tY29tbWFuZCB1cGRhdGUgLS1pbnRlcmZhY2UgaXBtaXBjaSAtLWltYWdlIEJJ
-T1MuaW1nIC0tc2lnIEJJT1MuaW1nLnNpZyAtLXR5cGUgc3RhdGljDQoNCg0KQi5SLg0KTWVkYWQN
-CkZyb206IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29tPG1haWx0bzp2aWpheWtoZW1r
-YUBmYi5jb20+Pg0KU2VudDogVHVlc2RheSwgRGVjZW1iZXIgMTcsIDIwMTkgODoxNiBBTQ0KVG86
-IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnPj4NClN1YmplY3Q6IEJpb3MgdXBncmFkZQ0KDQpIaSwNCkkgYW0g
-bG9va2luZyBmb3IgYmlvcyB1cGdyYWRlIGZyb20gQk1DLiBJIGxvb2tlZCBhdCBwaG9zcGhvci1p
-cG1pLWZsYXNoIGJ1dA0KY291bGRu4oCZdCBmaWd1cmUgb3V0IGhvdyB0byB1c2UgdGhpcyBmb3Ig
-YmlvcyB1cGdyYWRlLiBJIGNoZWNrZWQgZmV3IG9sZCBtYWlscw0Kd2hlcmUgb3NrYXIgd2FzIGFz
-a2luZyBhYm91dCB1c2luZyB1c2VyIHNwYWNlIGFwcGxpY2F0aW9uIGluc3RlYWQgb2Yga2VybmVs
-Lg0KQ2FuIGFueW9uZSBwbGVhc2UgZ2l2ZSBzdGVwcyB0byB1c2UgYW55IGV4aXN0aW5nIGtlcm5l
-bCBkcml2ZXIgb3IgdXNlciBzcGFjZQ0KQXBwbGljYXRpb24gZm9yIHVwZ3JhZGluZyBob3N0IGZp
-cm13YXJlLg0KDQpSZWdhcmRzDQotVmlqYXkNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fDQpUaGUgcHJpdmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGlu
-IHRoaXMgZW1haWwgaXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFz
-IGluZGljYXRlZCBieSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBh
-cmUgbm90IHRoZSBhZGRyZXNzZWUgaW5kaWNhdGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCBy
-ZXNwb25zaWJsZSBmb3IgZGVsaXZlcnkgb2YgdGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBs
-ZWFzZSBraW5kbHkgcmVwbHkgdG8gdGhlIHNlbmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQg
-ZGVsZXRlIGFsbCBjb3BpZXMgb2YgaXQgZnJvbSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNl
-cnZlciBpbW1lZGlhdGVseS4gWW91ciBjb29wZXJhdGlvbiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQu
-IEl0IGlzIGFkdmlzZWQgdGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwg
-aW5mb3JtYXRpb24gb2YgTnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGlu
-Zm9ybWF0aW9uIGluIHRoaXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5l
-c3Mgb2YgTnV2b3RvbiBzaGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3Jz
-ZWQgYnkgTnV2b3Rvbi4NCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQpUaGUgcHJp
-dmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgZW1haWwg
-aXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFzIGluZGljYXRlZCBi
-eSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBhcmUgbm90IHRoZSBh
-ZGRyZXNzZWUgaW5kaWNhdGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCByZXNwb25zaWJsZSBm
-b3IgZGVsaXZlcnkgb2YgdGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBsZWFzZSBraW5kbHkg
-cmVwbHkgdG8gdGhlIHNlbmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQgZGVsZXRlIGFsbCBj
-b3BpZXMgb2YgaXQgZnJvbSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNlcnZlciBpbW1lZGlh
-dGVseS4gWW91ciBjb29wZXJhdGlvbiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQuIEl0IGlzIGFkdmlz
-ZWQgdGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24g
-b2YgTnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGluZm9ybWF0aW9uIGlu
-IHRoaXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5lc3Mgb2YgTnV2b3Rv
-biBzaGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3JzZWQgYnkgTnV2b3Rv
-bi4NCg==
+On Fri, 13 Dec 2019 at 23:18, William A. Kennington III <wak@google.com> wrote:
+>
+> This provides a number of fixes:
+>  - Multiple file handles are now supported, previously using multiple
+>    readers would cause a race in the kfifo and spew garbage to the
+>    readers.
+>  - iowrite{8,16,32} are now supported correctly. Previously, the
+>    dwcapture code would get confused by values added to the fifo for 16
+>    bit writes
+>  - Reads from the device now only return a single post code. Previously
+>    the read call would emit all of the post code data in a single
+>    syscall. This was broken because it wouldn't account for partial post
+>    code writes into the fifo, meaning the reader could get partial
+>    4-byte codes for dwcap.
 
---_000_HK0PR03MB5123C395B1C50986732C555ADF530HK0PR03MB5123apcp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Nice. This driver isn't upstream, so between yourself and Tomer I
+suggest you decide a direction forward. Perhaps you could take on the
+submission of the driver, with your patch included?
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
-ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
-YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
-I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
-W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
-DQoJe2ZvbnQtZmFtaWx5OuaWsOe0sOaYjumrlDsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAg
-MCAwO30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJyaWEgTWF0aCI7DQoJcGFub3Nl
-LTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGli
-cmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250
-LWZhbWlseToiXEDmlrDntLDmmI7pq5QiOw0KCXBhbm9zZS0xOjIgMSA2IDEgMCAxIDEgMSAxIDE7
-fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWwsIGRp
-di5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBjbTsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9u
-dC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToi5paw57Sw5piO6auUIixzZXJpZjt9DQphOmxp
-bmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpi
-bHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1zb0h5
-cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjpwdXJwbGU7
-DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLm1zb25vcm1hbDAsIGxpLm1zb25vcm1h
-bDAsIGRpdi5tc29ub3JtYWwwDQoJe21zby1zdHlsZS1uYW1lOm1zb25vcm1hbDsNCgltc28tbWFy
-Z2luLXRvcC1hbHQ6YXV0bzsNCgltYXJnaW4tcmlnaHQ6MGNtOw0KCW1zby1tYXJnaW4tYm90dG9t
-LWFsdDphdXRvOw0KCW1hcmdpbi1sZWZ0OjBjbTsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQt
-ZmFtaWx5OiLmlrDntLDmmI7pq5QiLHNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTE4DQoJe21zby1z
-dHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNl
-cmlmOw0KCWNvbG9yOiMxRjQ5N0Q7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6
-ZXhwb3J0LW9ubHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2Ug
-V29yZFNlY3Rpb24xDQoJe3NpemU6NjEyLjBwdCA3OTIuMHB0Ow0KCW1hcmdpbjo3Mi4wcHQgOTAu
-MHB0IDcyLjBwdCA5MC4wcHQ7fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9u
-MTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0
-cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1b
-aWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRt
-YXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5k
-aWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJaSC1UVyIgbGluaz0iYmx1ZSIgdmxpbms9InB1
-cnBsZSI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7
-LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+SGksPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTom
-cXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8
-L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMi
-IHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6
-IzFGNDk3RCI+V2UgaGF2ZSBhIGdwaW8gd2hpY2ggY291bGQgY29udHJvbCB0aGUgTVVYPG86cD48
-L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMi
-IHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6
-IzFGNDk3RCI+V2hlbiBJIHdhbnQgdG8gZG8gQklPUyB1cGdyYWRlLCBJIHdpbGwgc2h1dCBkb3du
-IHRoZSBob3N0IGFuZCBvcGVyYXRlIHRoZSBncGlvLCBhbmQgcmVzY2FuLCB0aGVuIEJJT1MgZmxh
-c2ggd2lsbCBiZSBhY2Nlc3NpYmxlIGZyb20gQk1DIG5vdy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFt
-aWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpwPiZu
-YnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJF
-Ti1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtj
-b2xvcjojMUY0OTdEIj5CLlIuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDYWxpYnJp
-JnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+TWVkYWQ8bzpwPjwvbzpwPjwvc3Bhbj48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
-ZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpw
-PiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBs
-YW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2Fs
-aWJyaSZxdW90OyxzYW5zLXNlcmlmIj5Gcm9tOjwvc3Bhbj48L2I+PHNwYW4gbGFuZz0iRU4tVVMi
-IHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDss
-c2Fucy1zZXJpZiI+IE9za2FyIFNlbmZ0ICZsdDtvc2tAZ29vZ2xlLmNvbSZndDsNCjxicj4NCjxi
-PlNlbnQ6PC9iPiBXZWRuZXNkYXksIERlY2VtYmVyIDE4LCAyMDE5IDQ6NTcgQU08YnI+DQo8Yj5U
-bzo8L2I+IENTMjAgQ1RDY2hpZW4gJmx0O0NUQ0NISUVOQG51dm90b24uY29tJmd0Ozxicj4NCjxi
-PkNjOjwvYj4gVmlqYXkgS2hlbWthICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7OyBPcGVuQk1D
-IE1haWxsaXN0ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7PGJyPg0KPGI+U3ViamVj
-dDo8L2I+IFJlOiBCaW9zIHVwZ3JhZGU8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
-Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5IaTxvOnA+
-PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
-PSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPkhvdyBkaWQgeW91IGNvbmZpZ3Vy
-ZSB0aGUgQklPUyBmbGFzaCBkZXZpY2U/IEkgYXNzdW1lIHZpYSB0aGUgZGV2aWNlIHRyZWU/IEkg
-aGF2ZW4ndCB0ZXN0ZWQgdGhpcyBpbiBhIHdoaWxlLCBidXQgSSBzZWVtIHRvIHJlbWVtYmVyIHRo
-YXQgaWYgdGhlIEJJT1MgU1BJIGZsYXNoIGlzIG5vdCBhY2Nlc3NpYmxlIExpbnV4IGRvZXNuJ3Qg
-JnF1b3Q7ZGV0ZWN0JnF1b3Q7IHRoZSBkZXZpY2UgYW5kIGRvZXNuJ3QNCiBjcmVhdGUgdGhlIE1U
-RCwgaS5lLiBpdCdzIG5vdCBhY2Nlc3NpYmxlIGZyb20gdGhlIEJNQy4gVGhpcyBjYW4gYmUgdGhl
-IGNhc2UgaWYgdGhlIG11eCBiZXR3ZWVuIEJNQywgUENIIGFuZCBCSU9TIFNQSSBmbGFzaCkgaXMg
-Y29uZmlndXJlZCB0byBjb25uZWN0IHRoZSBTUEkgZmxhc2ggdG8gdGhlIEJNQyBhdCB0aGUgdGlt
-ZSB0aGUgQk1DIGJvb3RzLiBPciBpcyB0aGVyZSBhIHdheSB0byBtYWtlIEJNQydzIExpbnV4ICZx
-dW90O3Jlc2NhbiZxdW90OyBmb3IgU1BJDQogZmxhc2ggY2hpcHMgYXQgcnVudGltZT88bzpwPjwv
-bzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
-biBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8ZGl2
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPlRoYW5rczxvOnA+PC9v
-OnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IGxhbmc9IkVOLVVTIj5Pc2thci48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9zcGFuPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
-bGFuZz0iRU4tVVMiPk9uIFR1ZSwgRGVjIDE3LCAyMDE5IGF0IDEyOjM4IEFNIENTMjAgQ1RDY2hp
-ZW4gJmx0OzxhIGhyZWY9Im1haWx0bzpDVENDSElFTkBudXZvdG9uLmNvbSI+Q1RDQ0hJRU5AbnV2
-b3Rvbi5jb208L2E+Jmd0OyB3cm90ZTo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxi
-bG9ja3F1b3RlIHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItbGVmdDpzb2xpZCAjQ0NDQ0NDIDEu
-MHB0O3BhZGRpbmc6MGNtIDBjbSAwY20gNi4wcHQ7bWFyZ2luLWxlZnQ6NC44cHQ7bWFyZ2luLXJp
-Z2h0OjBjbSI+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28t
-bWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4gbGFu
-Zz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5IaSBWaWpheSw8L3NwYW4+PHNwYW4gbGFu
-Zz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0
-eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+
-PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj4mbmJzcDs8L3NwYW4+PHNw
-YW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6
-YXV0byI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5Zb3UgY291bGQg
-YnVpbGQgYSBob3N0IGRhZW1vbiBhbmQgYSBpcG1pIGxpYnJhcnkgb24gQk1DIGZyb20gcGhvc3Bo
-b3ItaXBtaS1mbGFzaDwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRv
-O21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNv
-bG9yOiMxRjQ5N0QiPkhlcmUgaXMgdGhlIGxpbmsgSSBpbXBsZW1lbnQgQklPUyB1cGdyYWRlIG9u
-IG15IHN5c3RlbTwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21z
-by1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
-c2l6ZToxMS4wcHQ7Y29sb3I6IzAwMjA2MCI+PGEgaHJlZj0iaHR0cHM6Ly91cmxkZWZlbnNlLnBy
-b29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBzLTNBX19naXRodWIuY29tX051dm90b24tMkRJc3Jh
-ZWxfb3BlbmJtY190cmVlX3J1bmJtY19tZXRhLTJEcGhvc3Bob3JfbnV2b3Rvbi0yRGxheWVyX3Jl
-Y2lwZXMtMkRwaG9zcGhvcl9pcG1pJmFtcDtkPUR3TUZhUSZhbXA7Yz11ZThtTzh6Z0M0Vlo0cV9h
-TlZLdDhHOU1DMDFVRkRtaXN2TVIxay1Fb0RNJmFtcDtyPUhxVDRTY2JTWTJZTlQ0c0ZCbURFcnpO
-Z01EZUtmUW1UaVIwOHgycXRvYmcmYW1wO209N214Q1lyMlJuNzFxRW9tZHZMWFdHM0drYndSbWZq
-aVl0LThQRXM2VnI0TSZhbXA7cz1WUXBSWGFLSGZFeWt6VXNrR09vYnppTnBYWFNGZHNENUtCbVpM
-WUd5cy1VJmFtcDtlPSIgdGFyZ2V0PSJfYmxhbmsiPjxzcGFuIHN0eWxlPSJjb2xvcjojMDAyMDYw
-Ij5odHRwczovL2dpdGh1Yi5jb20vTnV2b3Rvbi1Jc3JhZWwvb3BlbmJtYy90cmVlL3J1bmJtYy9t
-ZXRhLXBob3NwaG9yL251dm90b24tbGF5ZXIvcmVjaXBlcy1waG9zcGhvci9pcG1pPC9zcGFuPjwv
-YT4uPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdp
-bi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3
-RCI+Jm5ic3A7PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNv
-LW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6
-IzFGNDk3RCI+WW91IG5lZWQgdG8gcHJlcGFyZSBhIEJJT1MgaW1hZ2UgYW5kIGEgc2lnbmF0dXJl
-IGZpbGUgZm9yIHRoaXMgQklPUzwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48
-L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFs
-dDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5
-bGU9ImNvbG9yOiMxRjQ5N0QiPkFmdGVyIHlvdSBleGVjdXRlIHRoZSBjb21tYW5kIG9uIGhvc3Qs
-IGlwbWlkIGluIEJNQyB3aWxsIGxhdW5jaCBhIHNjcmlwdCB0byB1cGdyYWRlIEJJT1MuPC9zcGFu
-PjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20t
-YWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+Jm5ic3A7
-PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1i
-b3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+
-Rm9yIGV4YW1wbGUsPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87
-bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29s
-b3I6IzFGNDk3RCI+c3VkbyZuYnNwOyAuL2J1cm5fbXlfYm1jIC0tY29tbWFuZCB1cGRhdGUgLS1p
-bnRlcmZhY2UgaXBtaXBjaSAtLWltYWdlIEJJT1MuaW1nIC0tc2lnIEJJT1MuaW1nLnNpZyAtLXR5
-cGUgc3RhdGljPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNv
-LW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6
-IzFGNDk3RCI+Jm5ic3A7PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwvc3Bh
-bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
-dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0i
-Y29sb3I6IzFGNDk3RCI+Jm5ic3A7PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpw
-Pjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3At
-YWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBz
-dHlsZT0iY29sb3I6IzFGNDk3RCI+Qi5SLjwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48
-L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4t
-dG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJFTi1V
-UyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPk1lZGFkPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9y
-ZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4wcHQgMGNtIDBjbSAwY20iPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1t
-YXJnaW4tYm90dG9tLWFsdDphdXRvIj48Yj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
-c2l6ZToxMS4wcHQiPkZyb206PC9zcGFuPjwvYj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZv
-bnQtc2l6ZToxMS4wcHQiPiBWaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWpheWto
-ZW1rYUBmYi5jb20iIHRhcmdldD0iX2JsYW5rIj52aWpheWtoZW1rYUBmYi5jb208L2E+Jmd0Ow0K
-PGJyPg0KPGI+U2VudDo8L2I+IFR1ZXNkYXksIERlY2VtYmVyIDE3LCAyMDE5IDg6MTYgQU08YnI+
-DQo8Yj5Ubzo8L2I+IE9wZW5CTUMgTWFpbGxpc3QgJmx0OzxhIGhyZWY9Im1haWx0bzpvcGVuYm1j
-QGxpc3RzLm96bGFicy5vcmciIHRhcmdldD0iX2JsYW5rIj5vcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmc8L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBCaW9zIHVwZ3JhZGU8L3NwYW4+PHNwYW4g
-bGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdp
-bi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDs8bzpwPjwvbzpwPjwv
-c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0
-OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
-ZT0iZm9udC1zaXplOjExLjBwdCI+SGksPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwv
-bzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
-b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVT
-IiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SSBhbSBsb29raW5nIGZvciBiaW9zIHVwZ3JhZGUg
-ZnJvbSBCTUMuIEkgbG9va2VkIGF0IHBob3NwaG9yLWlwbWktZmxhc2ggYnV0DQo8L3NwYW4+PHNw
-YW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6
-YXV0byI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5jb3VsZG48
-L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPuKAmTxzcGFuIGxhbmc9IkVOLVVT
-Ij50IGZpZ3VyZSBvdXQgaG93IHRvIHVzZSB0aGlzIGZvciBiaW9zIHVwZ3JhZGUuIEkgY2hlY2tl
-ZCBmZXcgb2xkIG1haWxzDQo8L3NwYW4+PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwv
-bzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
-b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVT
-IiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+d2hlcmUgb3NrYXIgd2FzIGFza2luZyBhYm91dCB1
-c2luZyB1c2VyIHNwYWNlIGFwcGxpY2F0aW9uIGluc3RlYWQgb2Yga2VybmVsLjwvc3Bhbj48c3Bh
-biBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDph
-dXRvIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPkNhbiBhbnlv
-bmUgcGxlYXNlIGdpdmUgc3RlcHMgdG8gdXNlIGFueSBleGlzdGluZyBrZXJuZWwgZHJpdmVyIG9y
-IHVzZXIgc3BhY2UNCjwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRv
-O21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZv
-bnQtc2l6ZToxMS4wcHQiPkFwcGxpY2F0aW9uIGZvciB1cGdyYWRpbmcgaG9zdCBmaXJtd2FyZS48
-L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJv
-dHRvbS1hbHQ6YXV0byI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
-Ij4mbmJzcDs8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28t
-bWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNp
-emU6MTEuMHB0Ij5SZWdhcmRzPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwvbzpwPjwv
-c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0
-OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
-ZT0iZm9udC1zaXplOjExLjBwdCI+LVZpamF5PC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249
-ImNlbnRlciIgc3R5bGU9InRleHQtYWxpZ246Y2VudGVyIj48c3BhbiBsYW5nPSJFTi1VUyI+DQo8
-aHIgc2l6ZT0iMiIgd2lkdGg9IjEwMCUiIGFsaWduPSJjZW50ZXIiPg0KPC9zcGFuPjwvZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWls
-eTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmdyYXkiPlRoZSBwcml2aWxlZ2Vk
-IGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBjb250YWluZWQgaW4gdGhpcyBlbWFpbCBpcyBpbnRl
-bmRlZCBmb3IgdXNlIG9ubHkgYnkgdGhlIGFkZHJlc3NlZXMgYXMgaW5kaWNhdGVkIGJ5IHRoZSBv
-cmlnaW5hbCBzZW5kZXIgb2YgdGhpcyBlbWFpbC4gSWYgeW91IGFyZQ0KIG5vdCB0aGUgYWRkcmVz
-c2VlIGluZGljYXRlZCBpbiB0aGlzIGVtYWlsIG9yIGFyZSBub3QgcmVzcG9uc2libGUgZm9yIGRl
-bGl2ZXJ5IG9mIHRoZSBlbWFpbCB0byBzdWNoIGEgcGVyc29uLCBwbGVhc2Uga2luZGx5IHJlcGx5
-IHRvIHRoZSBzZW5kZXIgaW5kaWNhdGluZyB0aGlzIGZhY3QgYW5kIGRlbGV0ZSBhbGwgY29waWVz
-IG9mIGl0IGZyb20geW91ciBjb21wdXRlciBhbmQgbmV0d29yayBzZXJ2ZXIgaW1tZWRpYXRlbHku
-IFlvdXIgY29vcGVyYXRpb24NCiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQuIEl0IGlzIGFkdmlzZWQg
-dGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gb2Yg
-TnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGluZm9ybWF0aW9uIGluIHRo
-aXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5lc3Mgb2YgTnV2b3RvbiBz
-aGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3JzZWQgYnkNCiBOdXZvdG9u
-LiA8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2
-Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8L2Rpdj4NCjxociBhbGlnbj0iY2VudGVyIiB3aWR0
-aD0iMTAwJSI+DQo8c3BhbiBzdHlsZT0iZm9udC1zaXplOjEycHQ7bGluZS1oZWlnaHQ6MC43O2Zv
-bnQtZmFtaWx5OiAnQXJpYWwnOyBjb2xvcjojODA4MDgwIj5UaGUgcHJpdmlsZWdlZCBjb25maWRl
-bnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgZW1haWwgaXMgaW50ZW5kZWQgZm9y
-IHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFzIGluZGljYXRlZCBieSB0aGUgb3JpZ2luYWwg
-c2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBhcmUgbm90IHRoZQ0KIGFkZHJlc3NlZSBpbmRp
-Y2F0ZWQgaW4gdGhpcyBlbWFpbCBvciBhcmUgbm90IHJlc3BvbnNpYmxlIGZvciBkZWxpdmVyeSBv
-ZiB0aGUgZW1haWwgdG8gc3VjaCBhIHBlcnNvbiwgcGxlYXNlIGtpbmRseSByZXBseSB0byB0aGUg
-c2VuZGVyIGluZGljYXRpbmcgdGhpcyBmYWN0IGFuZCBkZWxldGUgYWxsIGNvcGllcyBvZiBpdCBm
-cm9tIHlvdXIgY29tcHV0ZXIgYW5kIG5ldHdvcmsgc2VydmVyIGltbWVkaWF0ZWx5LiBZb3VyIGNv
-b3BlcmF0aW9uIGlzIGhpZ2hseQ0KIGFwcHJlY2lhdGVkLiBJdCBpcyBhZHZpc2VkIHRoYXQgYW55
-IHVuYXV0aG9yaXplZCB1c2Ugb2YgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIG9mIE51dm90b24g
-aXMgc3RyaWN0bHkgcHJvaGliaXRlZDsgYW5kIGFueSBpbmZvcm1hdGlvbiBpbiB0aGlzIGVtYWls
-IGlycmVsZXZhbnQgdG8gdGhlIG9mZmljaWFsIGJ1c2luZXNzIG9mIE51dm90b24gc2hhbGwgYmUg
-ZGVlbWVkIGFzIG5laXRoZXIgZ2l2ZW4gbm9yIGVuZG9yc2VkIGJ5IE51dm90b24uDQo8L3NwYW4+
-DQo8L2JvZHk+DQo8L2h0bWw+DQo=
+We wanted to consolidate the small BMC drivers for LPC and similar
+functions into a drivers/soc/bmc directory. From there opportunties to
+share userspace interfaces between BMCs (Aspeed, Nuvoton, and
+potentially others) would arise.
 
---_000_HK0PR03MB5123C395B1C50986732C555ADF530HK0PR03MB5123apcp_--
+The NPCM BPC and the Aspeed snoop drivers provide similar
+functionality, do you think they could share a single userspace
+interface?
+
+Cheers,
+
+Joel
+
+>
+> Tested:
+>     Ran as a module with multiple readers and saw the correct values
+>     reaching all of the readers. Also tested adding and removing readers
+>     at runtime and reloading the kernel module and validating the
+>     register state.
+>
+> Change-Id: Ic979f523ccc7cda76a2328c5f8c869aa25d7204d
+> Signed-off-by: William A. Kennington III <wak@google.com>
+> ---
+>  drivers/misc/npcm7xx-lpc-bpc.c | 388 ++++++++++++++++++++-------------
+>  1 file changed, 235 insertions(+), 153 deletions(-)
+>
+> diff --git a/drivers/misc/npcm7xx-lpc-bpc.c b/drivers/misc/npcm7xx-lpc-bpc.c
+> index e014e07cd4a46..b04323c4f932d 100644
+> --- a/drivers/misc/npcm7xx-lpc-bpc.c
+> +++ b/drivers/misc/npcm7xx-lpc-bpc.c
+> @@ -10,6 +10,7 @@
+>  #include <linux/of.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+> +#include <linux/slab.h>
+>  #include <linux/miscdevice.h>
+>  #include <linux/poll.h>
+>
+> @@ -28,270 +29,348 @@
+>  #define NPCM7XX_BPCFA1L_REG    0x10 //BIOS POST Code FIFO Address 1 LSB
+>  #define NPCM7XX_BPCFA1M_REG    0x12 //BIOS POST Code FIFO Address 1 MSB
+>
+> -/*BIOS regiser data*/
+> +/* BIOS regiser data */
+>  #define FIFO_IOADDR1_ENABLE    0x80
+>  #define FIFO_IOADDR2_ENABLE    0x40
+>
+>  /* BPC interface package and structure definition */
+> -#define BPC_KFIFO_SIZE         0x400
+> +#define BPC_KFIFO_SIZE         0x100
+>
+> -/*BPC regiser data*/
+> +/* BPC regiser data */
+>  #define FIFO_DATA_VALID                0x80
+>  #define FIFO_OVERFLOW          0x20
+>  #define FIFO_READY_INT_ENABLE  0x8
+>  #define FIFO_DWCAPTURE         0x4
+>  #define FIFO_ADDR_DECODE       0x1
+>
+> -/*Host Reset*/
+> +/* Host Reset */
+>  #define HOST_RESET_INT_ENABLE  0x10
+>  #define HOST_RESET_CHANGED     0x40
+>
+> +struct npcm7xx_code {
+> +       u32 data;
+> +       u8 len;
+> +};
+> +
+> +struct npcm7xx_bpc_file_data {
+> +       struct list_head                list;
+> +       struct npcm7xx_bpc_channel      *ch;
+> +       DECLARE_KFIFO(codes, struct npcm7xx_code, BPC_KFIFO_SIZE);
+> +       bool                            host_reset;
+> +};
+> +
+>  struct npcm7xx_bpc_channel {
+> -       struct npcm7xx_bpc      *data;
+> -       struct kfifo            fifo;
+> +       struct npcm7xx_bpc      *drv;
+>         wait_queue_head_t       wq;
+> -       bool                    host_reset;
+> +       struct list_head        files;
+>         struct miscdevice       miscdev;
+>  };
+>
+>  struct npcm7xx_bpc {
+>         void __iomem                    *base;
+> +       struct npcm7xx_bpc_channel      chs[NUM_BPC_CHANNELS];
+>         int                             irq;
+>         bool                            en_dwcap;
+> -       struct npcm7xx_bpc_channel      ch[NUM_BPC_CHANNELS];
+>  };
+>
+> -static struct npcm7xx_bpc_channel *npcm7xx_file_to_ch(struct file *file)
+> +static int npcm7xx_bpc_open(struct inode *inode, struct file *file)
+>  {
+> -       return container_of(file->private_data, struct npcm7xx_bpc_channel,
+> -                           miscdev);
+> +       struct npcm7xx_bpc_file_data *data;
+> +
+> +       data = kmalloc(sizeof(*data), GFP_KERNEL);
+> +       if (!data)
+> +               return -ENOMEM;
+> +
+> +       INIT_KFIFO(data->codes);
+> +       data->ch = container_of(file->private_data,
+> +                               struct npcm7xx_bpc_channel, miscdev);
+> +       data->host_reset = false;
+> +
+> +       file->private_data = data;
+> +       list_add_rcu(&data->list, &data->ch->files);
+> +       return 0;
+> +}
+> +
+> +static int npcm7xx_bpc_release(struct inode *inode, struct file *file)
+> +{
+> +       struct npcm7xx_bpc_file_data *data = file->private_data;
+> +
+> +       if (!data)
+> +               return -EIO;
+> +
+> +       list_del_rcu(&data->list);
+> +       synchronize_rcu();
+> +
+> +       file->private_data = NULL;
+> +       kfree(data);
+> +       return 0;
+>  }
+>
+>  static ssize_t npcm7xx_bpc_read(struct file *file, char __user *buffer,
+>                                 size_t count, loff_t *ppos)
+>  {
+> -       struct npcm7xx_bpc_channel *chan = npcm7xx_file_to_ch(file);
+> -       struct npcm7xx_bpc *lpc_bpc = chan->data;
+> -       unsigned int copied;
+> +       struct npcm7xx_bpc_file_data *data = file->private_data;
+> +       struct npcm7xx_code code;
+>         int ret = 0;
+> -       int cond_size = 1;
+> -
+> -       if (lpc_bpc->en_dwcap)
+> -               cond_size = 3;
+>
+> -       if (kfifo_len(&chan->fifo) < cond_size) {
+> +       while (!kfifo_get(&data->codes, &code)) {
+>                 if (file->f_flags & O_NONBLOCK)
+>                         return -EAGAIN;
+>
+>                 ret = wait_event_interruptible
+> -                       (chan->wq, kfifo_len(&chan->fifo) > cond_size);
+> +                       (data->ch->wq, kfifo_len(&data->codes) > 0);
+>                 if (ret == -ERESTARTSYS)
+>                         return -EINTR;
+>         }
+>
+> -       ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
+> +       if (code.len < count)
+> +               count = code.len;
+>
+> -       return ret ? ret : copied;
+> +       ret = copy_to_user(buffer, &code.data, count);
+> +       if (ret != 0)
+> +               return -EFAULT;
+> +
+> +       return count;
+>  }
+>
+>  static __poll_t npcm7xx_bpc_poll(struct file *file,
+>                                  struct poll_table_struct *pt)
+>  {
+> -       struct npcm7xx_bpc_channel *chan = npcm7xx_file_to_ch(file);
+> +       struct npcm7xx_bpc_file_data *data = file->private_data;
+>         __poll_t mask = 0;
+>
+> -       poll_wait(file, &chan->wq, pt);
+> -       if (!kfifo_is_empty(&chan->fifo))
+> +       poll_wait(file, &data->ch->wq, pt);
+> +       if (!kfifo_is_empty(&data->codes))
+>                 mask |= POLLIN;
+>
+> -       if (chan->host_reset) {
+> +       if (data->host_reset) {
+>                 mask |= POLLHUP;
+> -               chan->host_reset = false;
+> +               data->host_reset = false;
+>         }
+>
+>         return mask;
+>  }
+>
+> -static const struct file_operations npcm7xx_bpc_fops = {
+> +static const struct file_operations npcm7xx_bpc_channel_fops = {
+>         .owner          = THIS_MODULE,
+> +       .open           = npcm7xx_bpc_open,
+> +       .release        = npcm7xx_bpc_release,
+>         .read           = npcm7xx_bpc_read,
+>         .poll           = npcm7xx_bpc_poll,
+>         .llseek         = noop_llseek,
+>  };
+>
+> -static irqreturn_t npcm7xx_bpc_irq(int irq, void *arg)
+> +static void npcm7xx_bpc_channel_update(struct npcm7xx_bpc_channel *ch,
+> +                                      const struct npcm7xx_code *code)
+>  {
+> -       struct npcm7xx_bpc *lpc_bpc = arg;
+> -       u8 fifo_st;
+> -       u8 host_st;
+> -       u8 addr_index = 0;
+> -       u8 Data;
+> -       u8 padzero[3] = {0};
+> -       u8 last_addr_bit = 0;
+> -       bool isr_flag = false;
+> -
+> -       fifo_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFSTAT_REG);
+> -       while (FIFO_DATA_VALID & fifo_st) {
+> -                /* If dwcapture enabled only channel 0 (FIFO 0) used */
+> -               if (!lpc_bpc->en_dwcap)
+> -                       addr_index = fifo_st & FIFO_ADDR_DECODE;
+> -               else
+> -                       last_addr_bit = fifo_st & FIFO_ADDR_DECODE;
+> -
+> -               /*Read data from FIFO to clear interrupt*/
+> -               Data = ioread8(lpc_bpc->base + NPCM7XX_BPCFDATA_REG);
+> -               if (kfifo_is_full(&lpc_bpc->ch[addr_index].fifo))
+> -                       kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
+> -               kfifo_put(&lpc_bpc->ch[addr_index].fifo, Data);
+> -               if (fifo_st & FIFO_OVERFLOW)
+> -                       pr_info("BIOS Post Codes FIFO Overflow!!!\n");
+> +       struct npcm7xx_bpc_file_data *data;
+>
+> -               fifo_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFSTAT_REG);
+> -               if (lpc_bpc->en_dwcap && last_addr_bit) {
+> -                       if ((fifo_st & FIFO_ADDR_DECODE) ||
+> -                           ((FIFO_DATA_VALID & fifo_st) == 0)) {
+> -                               while (kfifo_avail(&lpc_bpc->ch[addr_index].fifo) < DW_PAD_SIZE)
+> -                                       kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
+> -                               kfifo_in(&lpc_bpc->ch[addr_index].fifo,
+> -                                        padzero, DW_PAD_SIZE);
+> -                       }
+> +       if (!ch->drv) {
+> +               pr_warn("BIOS Post Code Update for unconfigured channel\n");
+> +               return;
+> +       }
+> +
+> +       list_for_each_entry_rcu(data, &ch->files, list) {
+> +               if (kfifo_is_full(&data->codes))
+> +                       kfifo_skip(&data->codes);
+> +               kfifo_put(&data->codes, *code);
+> +       }
+> +}
+> +
+> +static void npcm7xx_bpc_channel_wake(struct npcm7xx_bpc_channel *ch)
+> +{
+> +       if (!ch->drv)
+> +               return;
+> +
+> +       wake_up_interruptible(&ch->wq);
+> +}
+> +
+> +static void npcm7xx_bpc_host_reset(struct npcm7xx_bpc *bpc)
+> +{
+> +       struct npcm7xx_bpc_file_data *data;
+> +       u8 i;
+> +
+> +       for (i = 0; i < NUM_BPC_CHANNELS; ++i) {
+> +               if (!bpc->chs[i].drv)
+> +                       continue;
+> +               list_for_each_entry_rcu(data, &bpc->chs[i].files, list) {
+> +                       data->host_reset = true;
+>                 }
+> -               isr_flag = true;
+>         }
+> +}
+> +
+> +static irqreturn_t npcm7xx_bpc_irq(int irq, void *arg)
+> +{
+> +       struct npcm7xx_bpc *bpc = arg;
+> +       struct npcm7xx_code code = {
+> +               .len = 0,
+> +               .data = 0,
+> +       };
+> +       bool ch_wake[NUM_BPC_CHANNELS] = {};
+> +       u8 read_byte;
+> +       u8 status;
+> +       u8 ch_i;
+> +       bool reg_valid;
+> +       irqreturn_t ret = IRQ_NONE;
+> +
+> +       rcu_read_lock();
+> +
+> +       while (true) {
+> +               status = ioread8(bpc->base + NPCM7XX_BPCFSTAT_REG);
+> +               reg_valid = status & FIFO_DATA_VALID;
+> +               if (code.len > 0 && (!reg_valid || !bpc->en_dwcap ||
+> +                                    status & FIFO_ADDR_DECODE)) {
+> +                       npcm7xx_bpc_channel_update(&bpc->chs[ch_i], &code);
+> +                       ch_wake[ch_i] = true;
+> +                       code.len = 0;
+> +                       code.data = 0;
+> +               }
+> +               if (!reg_valid)
+> +                       break;
+>
+> -       host_st = ioread8(lpc_bpc->base + NPCM7XX_BPCFMSTAT_REG);
+> -       if (host_st & HOST_RESET_CHANGED) {
+> -               iowrite8(HOST_RESET_CHANGED,
+> -                        lpc_bpc->base + NPCM7XX_BPCFMSTAT_REG);
+> -               lpc_bpc->ch[addr_index].host_reset = true;
+> -               isr_flag = true;
+> +               if (status & FIFO_OVERFLOW)
+> +                       pr_info("BIOS Post Codes FIFO Overflow!!!\n");
+> +
+> +               ch_i = bpc->en_dwcap ? 0 : status & FIFO_ADDR_DECODE;
+> +               read_byte = ioread8(bpc->base + NPCM7XX_BPCFDATA_REG);
+> +               code.data |= read_byte << (code.len++ << 3);
+>         }
+>
+> -       if (isr_flag) {
+> -               wake_up_interruptible(&lpc_bpc->ch[addr_index].wq);
+> -               return IRQ_HANDLED;
+> +       status = ioread8(bpc->base + NPCM7XX_BPCFMSTAT_REG);
+> +       if (status & HOST_RESET_CHANGED) {
+> +               iowrite8(HOST_RESET_CHANGED, bpc->base + NPCM7XX_BPCFMSTAT_REG);
+> +               npcm7xx_bpc_host_reset(bpc);
+> +               for (ch_i = 0; ch_i < NUM_BPC_CHANNELS; ++ch_i)
+> +                       ch_wake[ch_i] = true;
+>         }
+>
+> -       return IRQ_NONE;
+> +       rcu_read_unlock();
+> +
+> +       for (ch_i = 0; ch_i < NUM_BPC_CHANNELS; ++ch_i)
+> +               if (ch_wake[ch_i]) {
+> +                       npcm7xx_bpc_channel_wake(&bpc->chs[ch_i]);
+> +                       ret = IRQ_HANDLED;
+> +               }
+> +
+> +       return ret;
+>  }
+>
+> -static int npcm7xx_bpc_config_irq(struct npcm7xx_bpc *lpc_bpc,
+> +static int npcm7xx_bpc_config_irq(struct npcm7xx_bpc *bpc,
+>                                   struct platform_device *pdev)
+>  {
+>         struct device *dev = &pdev->dev;
+>         int rc;
+>
+> -       lpc_bpc->irq = platform_get_irq(pdev, 0);
+> -       if (lpc_bpc->irq < 0) {
+> +       bpc->irq = platform_get_irq(pdev, 0);
+> +       if (bpc->irq < 0) {
+>                 dev_err(dev, "get IRQ failed\n");
+> -               return lpc_bpc->irq;
+> +               return bpc->irq;
+>         }
+>
+> -       rc = devm_request_irq(dev, lpc_bpc->irq,
+> +       rc = devm_request_irq(dev, bpc->irq,
+>                               npcm7xx_bpc_irq, IRQF_SHARED,
+> -                             DEVICE_NAME, lpc_bpc);
+> +                             DEVICE_NAME, bpc);
+>         if (rc < 0) {
+> -               dev_warn(dev, "Unable to request IRQ %d\n", lpc_bpc->irq);
+> +               dev_err(dev, "Unable to request IRQ %d\n", bpc->irq);
+>                 return rc;
+>         }
+>
+>         return 0;
+>  }
+>
+> -static int npcm7xx_enable_bpc(struct npcm7xx_bpc *lpc_bpc, struct device *dev,
+> -                             int channel, u16 lpc_port)
+> +static int npcm7xx_bpc_channel_enable(struct npcm7xx_bpc *bpc, struct device *dev,
+> +                                     int channel, u16 lpc_port)
+>  {
+> +       struct npcm7xx_bpc_channel *ch = &bpc->chs[channel];
+>         int rc;
+>         u8 addr_en, reg_en;
+>
+> -       init_waitqueue_head(&lpc_bpc->ch[channel].wq);
+> -
+> -       rc = kfifo_alloc(&lpc_bpc->ch[channel].fifo,
+> -                        BPC_KFIFO_SIZE, GFP_KERNEL);
+> -       if (rc)
+> -               return rc;
+> +       init_waitqueue_head(&ch->wq);
+> +       INIT_LIST_HEAD(&ch->files);
+>
+> -       lpc_bpc->ch[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
+> -       lpc_bpc->ch[channel].miscdev.name =
+> +       ch->miscdev.minor = MISC_DYNAMIC_MINOR;
+> +       ch->miscdev.name =
+>                 devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
+> -       lpc_bpc->ch[channel].miscdev.fops = &npcm7xx_bpc_fops;
+> -       lpc_bpc->ch[channel].miscdev.parent = dev;
+> -       rc = misc_register(&lpc_bpc->ch[channel].miscdev);
+> +       ch->miscdev.fops = &npcm7xx_bpc_channel_fops;
+> +       ch->miscdev.parent = dev;
+> +       rc = misc_register(&ch->miscdev);
+>         if (rc)
+>                 return rc;
+>
+> -       lpc_bpc->ch[channel].data = lpc_bpc;
+> -       lpc_bpc->ch[channel].host_reset = false;
+> -
+> -       /* Enable LPC snoop channel at requested port */
+>         switch (channel) {
+>         case 0:
+>                 addr_en = FIFO_IOADDR1_ENABLE;
+>                 iowrite8((u8)lpc_port & 0xFF,
+> -                        lpc_bpc->base + NPCM7XX_BPCFA1L_REG);
+> +                        bpc->base + NPCM7XX_BPCFA1L_REG);
+>                 iowrite8((u8)(lpc_port >> 8),
+> -                        lpc_bpc->base + NPCM7XX_BPCFA1M_REG);
+> +                        bpc->base + NPCM7XX_BPCFA1M_REG);
+>                 break;
+>         case 1:
+>                 addr_en = FIFO_IOADDR2_ENABLE;
+>                 iowrite8((u8)lpc_port & 0xFF,
+> -                        lpc_bpc->base + NPCM7XX_BPCFA2L_REG);
+> +                        bpc->base + NPCM7XX_BPCFA2L_REG);
+>                 iowrite8((u8)(lpc_port >> 8),
+> -                        lpc_bpc->base + NPCM7XX_BPCFA2M_REG);
+> +                        bpc->base + NPCM7XX_BPCFA2M_REG);
+>                 break;
+>         default:
+> +               misc_deregister(&ch->miscdev);
+>                 return -EINVAL;
+>         }
+>
+> -       if (lpc_bpc->en_dwcap)
+> +       if (bpc->en_dwcap)
+>                 addr_en = FIFO_DWCAPTURE;
+>
+> -       /*
+> -        * Enable FIFO Ready Interrupt, FIFO Capture of I/O addr,
+> -        * and Host Reset
+> -        */
+> -       reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> -       iowrite8(reg_en | addr_en | FIFO_READY_INT_ENABLE |
+> -                HOST_RESET_INT_ENABLE, lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> +       reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
+> +       iowrite8(reg_en | addr_en, bpc->base + NPCM7XX_BPCFEN_REG);
+>
+> +       smp_mb();
+> +       ch->drv = bpc;
+>         return 0;
+>  }
+>
+> -static void npcm7xx_disable_bpc(struct npcm7xx_bpc *lpc_bpc, int channel)
+> +static void npcm7xx_bpc_channel_disable(struct npcm7xx_bpc *bpc, int channel)
+>  {
+> -       u8 reg_en;
+> +       struct npcm7xx_bpc_channel *ch = &bpc->chs[channel];
+> +       u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
+> +
+> +       if (!ch->drv)
+> +               return;
+> +       ch->drv = NULL;
+>
+>         switch (channel) {
+>         case 0:
+> -               reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> -               if (lpc_bpc->en_dwcap)
+> -                       iowrite8(reg_en & ~FIFO_DWCAPTURE,
+> -                                lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> -               else
+> -                       iowrite8(reg_en & ~FIFO_IOADDR1_ENABLE,
+> -                                lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> +               iowrite8(reg_en & ~(FIFO_DWCAPTURE | FIFO_IOADDR1_ENABLE),
+> +                        bpc->base + NPCM7XX_BPCFEN_REG);
+>                 break;
+>         case 1:
+> -               reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+>                 iowrite8(reg_en & ~FIFO_IOADDR2_ENABLE,
+> -                        lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> +                        bpc->base + NPCM7XX_BPCFEN_REG);
+>                 break;
+>         default:
+>                 return;
+>         }
+>
+> -       if (!(reg_en & (FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE)))
+> -               iowrite8(reg_en &
+> -                        ~(FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE),
+> -                        lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> +       misc_deregister(&ch->miscdev);
+> +}
+>
+> -       kfifo_free(&lpc_bpc->ch[channel].fifo);
+> -       misc_deregister(&lpc_bpc->ch[channel].miscdev);
+> +static void npcm7xx_bpc_reset(struct npcm7xx_bpc *bpc)
+> +{
+> +       u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
+> +       reg_en &= ~(FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE | FIFO_DWCAPTURE |
+> +                       FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE);
+> +       iowrite8(reg_en, bpc->base + NPCM7XX_BPCFEN_REG);
+> +}
+> +
+> +static void npcm7xx_bpc_enable_irq(struct npcm7xx_bpc *bpc)
+> +{
+> +       u8 reg_en = ioread8(bpc->base + NPCM7XX_BPCFEN_REG);
+> +       reg_en |= FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE;
+> +       iowrite8(reg_en, bpc->base + NPCM7XX_BPCFEN_REG);
+>  }
+>
+>  static int npcm7xx_bpc_probe(struct platform_device *pdev)
+>  {
+> -       struct npcm7xx_bpc *lpc_bpc;
+> +       struct npcm7xx_bpc *bpc;
+>         struct resource *res;
+>         struct device *dev;
+>         u32 port;
+> @@ -299,8 +378,8 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+>
+>         dev = &pdev->dev;
+>
+> -       lpc_bpc = devm_kzalloc(dev, sizeof(*lpc_bpc), GFP_KERNEL);
+> -       if (!lpc_bpc)
+> +       bpc = devm_kzalloc(dev, sizeof(*bpc), GFP_KERNEL);
+> +       if (!bpc)
+>                 return -ENOMEM;
+>
+>         res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> @@ -310,11 +389,11 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+>         }
+>
+>         dev_dbg(dev, "BIOS post code base resource is %pR\n", res);
+> -       lpc_bpc->base = devm_ioremap_resource(dev, res);
+> -       if (IS_ERR(lpc_bpc->base))
+> -               return PTR_ERR(lpc_bpc->base);
+> +       bpc->base = devm_ioremap_resource(dev, res);
+> +       if (IS_ERR(bpc->base))
+> +               return PTR_ERR(bpc->base);
+>
+> -       dev_set_drvdata(&pdev->dev, lpc_bpc);
+> +       dev_set_drvdata(&pdev->dev, bpc);
+>
+>         rc = of_property_read_u32_index(dev->of_node, "monitor-ports", 0,
+>                                         &port);
+> @@ -323,14 +402,16 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+>                 return -ENODEV;
+>         }
+>
+> -       lpc_bpc->en_dwcap =
+> +       bpc->en_dwcap =
+>                 of_property_read_bool(dev->of_node, "bpc-en-dwcapture");
+>
+> -       rc = npcm7xx_bpc_config_irq(lpc_bpc, pdev);
+> +       npcm7xx_bpc_reset(bpc);
+> +       rc = npcm7xx_bpc_config_irq(bpc, pdev);
+>         if (rc)
+>                 return rc;
+> +       npcm7xx_bpc_enable_irq(bpc);
+>
+> -       rc = npcm7xx_enable_bpc(lpc_bpc, dev, 0, port);
+> +       rc = npcm7xx_bpc_channel_enable(bpc, dev, 0, port);
+>         if (rc) {
+>                 dev_err(dev, "Enable BIOS post code I/O port 0 failed\n");
+>                 return rc;
+> @@ -340,35 +421,36 @@ static int npcm7xx_bpc_probe(struct platform_device *pdev)
+>          * Configuration of second BPC channel port is optional
+>          * Double-Word Capture ignoring address 2
+>          */
+> -       if (!lpc_bpc->en_dwcap) {
+> -               if (of_property_read_u32_index(dev->of_node, "monitor-ports",
+> -                                              1, &port) == 0) {
+> -                       rc = npcm7xx_enable_bpc(lpc_bpc, dev, 1, port);
+> +       rc = of_property_read_u32_index(dev->of_node, "monitor-ports", 1,
+> +                                       &port);
+> +       if (rc == 0) {
+> +               if (!bpc->en_dwcap) {
+> +                       rc = npcm7xx_bpc_channel_enable(bpc, dev, 1, port);
+>                         if (rc) {
+> -                               dev_err(dev, "Enable BIOS post code I/O port 1 failed, disable I/O port 0\n");
+> -                               npcm7xx_disable_bpc(lpc_bpc, 0);
+> +                               dev_err(dev, "Enable BIOS post code I/O port 1 failed\n");
+> +                               npcm7xx_bpc_channel_disable(bpc, 0);
+> +                               npcm7xx_bpc_reset(bpc);
+>                                 return rc;
+>                         }
+> +               } else {
+> +                       dev_warn(dev, "Ignoring monitor port 1 with DWCAP\n");
+>                 }
+>         }
+>
+> -       pr_info("npcm7xx BIOS post code probe\n");
+> -
+> -       return rc;
+> +       return 0;
+>  }
+>
+>  static int npcm7xx_bpc_remove(struct platform_device *pdev)
+>  {
+> -       struct npcm7xx_bpc *lpc_bpc = dev_get_drvdata(&pdev->dev);
+> -       u8 reg_en;
+> -
+> -       reg_en = ioread8(lpc_bpc->base + NPCM7XX_BPCFEN_REG);
+> +       struct npcm7xx_bpc *bpc = dev_get_drvdata(&pdev->dev);
+> +       u8 i;
+>
+> -       if (reg_en & FIFO_IOADDR1_ENABLE)
+> -               npcm7xx_disable_bpc(lpc_bpc, 0);
+> -       if (reg_en & FIFO_IOADDR2_ENABLE)
+> -               npcm7xx_disable_bpc(lpc_bpc, 1);
+> +       if (!bpc)
+> +               return 0;
+>
+> +       for (i = 0; i < NUM_BPC_CHANNELS; ++i)
+> +               npcm7xx_bpc_channel_disable(bpc, i);
+> +       npcm7xx_bpc_reset(bpc);
+>         return 0;
+>  }
+>
+> --
+> 2.24.1
+>
