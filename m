@@ -1,67 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2B3E123E59
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 05:18:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47d1w91RzrzDqX1
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 15:18:33 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA989123E7A
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 05:23:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47d22C12xqzDqVF
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 15:23:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::741;
- helo=mail-qk1-x741.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1043;
+ helo=mail-pj1-x1043.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="DM18G2KW"; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Zi7r2yzb"; 
  dkim-atps=neutral
-Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
- [IPv6:2607:f8b0:4864:20::741])
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com
+ [IPv6:2607:f8b0:4864:20::1043])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47d1vY32LdzDq7F
- for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 15:18:01 +1100 (AEDT)
-Received: by mail-qk1-x741.google.com with SMTP id z14so465027qkg.9
- for <openbmc@lists.ozlabs.org>; Tue, 17 Dec 2019 20:18:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=Jv1tZy9HTvFv29WsPoDGC/6ZRTjY1TnpLzSfOgG9wZA=;
- b=DM18G2KW2K0W1hesp48ssW6AeCGuIORqDeJf7jSajPehqPemA4X63EbyvgXVJyjCXe
- p/hMTxS4IjWM0wJRn2IzpV1v+TNNlCKk928mO79trzcg59E1GH5T9SnSLcwATl4kx1Ef
- WUf7kSfiwB/w9hET87K5U3h/LHgagUNqqGiU0=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47d21R4C0wzDqQQ
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 15:23:05 +1100 (AEDT)
+Received: by mail-pj1-x1043.google.com with SMTP id j11so262721pjs.1
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Dec 2019 20:23:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=/Lce3sorYi1Qxb4wvaP/A1wpcmzH2DP+oFLJvH2RzyE=;
+ b=Zi7r2yzbQ+0cJWvvM5QJgIF/LDTvQCxItiarblKNtn8glxvFPaBnnQdxGEn7k8iZ2S
+ bHpHlyt/ms+alK+3HbvaZLSSCje2/japNSShltTmH9Yuvc6+Vx+QYTZPuPfh1HwxdBGN
+ D+E5ZImOWCiY9VlqlZ+CtzCKnkgmjQbudcaPjEqJfXypuKaE2FddUcadeCuoxBlbYrmB
+ Tz/gz3FBQah4H7t35Nl+DRUq0VrQ/OLQ56CFzLEiclfFKWISxX/HJmT9p6+8rLad0+Zs
+ 5xQXEy78AAl7wz2ppXIifEnY3uFtQvYvblA4CR9LQBOzDZJtmpKv9LbEmIH12W+8l3M5
+ JIVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=Jv1tZy9HTvFv29WsPoDGC/6ZRTjY1TnpLzSfOgG9wZA=;
- b=REzNpQo/FzEK5TyfoBdn79poSibUE/RXqD9KpkvxPQSB1N5/b/wrVWvIHgnKQMr3i2
- pS03q3qrPJBzq5TRfVxxvfuOFUs9cxDuCi6eElU6Lqv5Y7tWAvXeyVqfHxtI2qmvlrX3
- djDw3QwvTMqTpsW1BCgWGrgTR5kfqgy/qzgf7OaTiVS6xDOSJ5nGk9jQEnaNwosxizX3
- hBvMAqKGtZrIFt5S3ck4rR1e2PMCKQE43ftCfgP7iilsVWIk4qcX4LFJkSYUjnIWr15H
- xh9EhX2jEPzUH4lwpanw85eBNAroOy4/KFOnrzKT4sYtofkgOlZpup06eB6Ram3ipzLC
- 0AJA==
-X-Gm-Message-State: APjAAAUI6TQ7XqTKYajm1C1FP1dE94WC33sVp9SGXJzVkvRx/X75KKQU
- BIU4bAd33kQYU4pl50SOOBid6GDSeMLfsPQoSSXnxuSY
-X-Google-Smtp-Source: APXvYqwqmMKiJDb3F0hVg8MEn8IBzrJISuDhvYK+zQhk5Rl7spgRifQ49HLfWkHnjNr0L1cQQtqV0iW11FttG+++Ojs=
-X-Received: by 2002:a05:620a:849:: with SMTP id
- u9mr515009qku.414.1576642675525; 
- Tue, 17 Dec 2019 20:17:55 -0800 (PST)
-MIME-Version: 1.0
-References: <20191218012808.6482-1-jae.hyun.yoo@linux.intel.com>
- <CACPK8Xd1fEh-o_5XR=QFppfR=HiQVbz60KjUFvjX7Lh7b9Le2g@mail.gmail.com>
-In-Reply-To: <CACPK8Xd1fEh-o_5XR=QFppfR=HiQVbz60KjUFvjX7Lh7b9Le2g@mail.gmail.com>
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=/Lce3sorYi1Qxb4wvaP/A1wpcmzH2DP+oFLJvH2RzyE=;
+ b=ThjN52AsuLxpMIDaOm71POESDXLnotAT0KsBNnrB8zUYV/B/QlT86M4P6xf5Df3AAd
+ Z1XN5lzQRfVYmbVk8/NIbx5FvrhUD3Woj3WAFOIeZsg3Q2CyhZriKdk/2Sr6mXVf/vXl
+ 216TSKrl7mUV52Ul9AFkxVmkDCkKubaB6srID4bfQ4jrlPsKLI6TMGPqm0X8UddKKrAj
+ Gjm30T9mwwpZZkcDgw+bYIuwy3gBzG72l2SBt6hPHPir5K/olsSSZebybBAuHB2fJBVY
+ Uj5nmBa4rrE7FQ1VaxrdO53bvwqD9/6jBbRGD9w8qrHq/bwkzJHr7eghXrCDjXjV7YyB
+ +PoA==
+X-Gm-Message-State: APjAAAXQ6xwB9N3zjmOpE0lSDB5VhlwT/ZhHPWjkY8Cgx87npCrp8eiR
+ pDxlo7/RoK8P016zpUUuMbY=
+X-Google-Smtp-Source: APXvYqyhnjvUWR43lIgsTtE16tAnwoQgUL68n+ZMs62pMMI3HwxAcYJzdG1Y888UxzOe8Vs5kMxb8g==
+X-Received: by 2002:a17:90a:e291:: with SMTP id
+ d17mr318906pjz.116.1576642981791; 
+ Tue, 17 Dec 2019 20:23:01 -0800 (PST)
+Received: from voyager.ozlabs.ibm.com ([122.99.82.10])
+ by smtp.gmail.com with ESMTPSA id t63sm776722pfb.70.2019.12.17.20.22.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Dec 2019 20:23:01 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 18 Dec 2019 04:17:43 +0000
-Message-ID: <CACPK8XezVTqvKRvJfxua=76H2aSdgEQrSaryZ0sqpM_ejV=6zQ@mail.gmail.com>
-Subject: Re: [PATCH dev-5.4 00/14] PECI device driver introduction
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Subject: [PATCH linux dev-5.4] ARM: dts: nuvoton: Update EVB for new PECI
+ layout
+Date: Wed, 18 Dec 2019 15:22:50 +1100
+Message-Id: <20191218042250.456677-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,84 +79,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 18 Dec 2019 at 03:08, Joel Stanley <joel@jms.id.au> wrote:
->
-> On Wed, 18 Dec 2019 at 01:28, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>=
- wrote:
-> >
-> > I'm still trying to upstream it but it would take more time so I'm send=
-ing
-> > it to OpenBMC list to get cherry picked in the meantime.
-> >
-> > I rebased it on dev-5.4 branch and it includes fixes for addressing
-> > upstream review comments I've got so far.
-> >
-> > Below change should be removed from the OpenBMC linux tree before apply=
-ing
-> > it to avoid conflicts:
-> >
-> > c31349b9039281107b948bf94ed5e53c235c8081 (ARM: dts: aspeed: peci: Add P=
-ECI node)
-> >
->
-> Thanks. I have applied this to dev-5.4. Please test.
+The PECI device tree layout changed, breaking the EVB.
 
-When CONFIG_OF_DYNAMIC=3Dy we get this build failure:
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 25 ++++++++++++-----------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-../drivers/peci/peci-core.c:1717:52: error: passing argument 4 of
-=E2=80=98bus_find_device=E2=80=99 from incompatible pointer type
-[-Werror=3Dincompatible-pointer-types]
- 1717 |  dev =3D bus_find_device(&peci_bus_type, NULL, node, peci_of_match_=
-node);
-      |                                                    ^~~~~~~~~~~~~~~~=
-~~
-      |                                                    |
-      |                                                    int
-(*)(struct device *, void *)
-In file included from ../include/linux/node.h:18,
-                 from ../include/linux/cpu.h:17,
-                 from ../include/linux/of_device.h:5,
-                 from ../drivers/peci/peci-core.c:8:
-../include/linux/device.h:176:16: note: expected =E2=80=98int (*)(struct
-device *, const void *)=E2=80=99 but argument is of type =E2=80=98int (*)(s=
-truct
-device *, void *)=E2=80=99
-  176 | struct device *bus_find_device(struct bus_type *bus, struct
-device *start,
-      |                ^~~~~~~~~~~~~~~
-../drivers/peci/peci-core.c: In function =E2=80=98peci_of_find_adapter=E2=
-=80=99:
-../drivers/peci/peci-core.c:1734:52: error: passing argument 4 of
-=E2=80=98bus_find_device=E2=80=99 from incompatible pointer type
-[-Werror=3Dincompatible-pointer-types]
- 1734 |  dev =3D bus_find_device(&peci_bus_type, NULL, node, peci_of_match_=
-node);
-      |                                                    ^~~~~~~~~~~~~~~~=
-~~
-      |                                                    |
-      |                                                    int
-(*)(struct device *, void *)
-In file included from ../include/linux/node.h:18,
-                 from ../include/linux/cpu.h:17,
-                 from ../include/linux/of_device.h:5,
-                 from ../drivers/peci/peci-core.c:8:
-../include/linux/device.h:176:16: note: expected =E2=80=98int (*)(struct
-device *, const void *)=E2=80=99 but argument is of type =E2=80=98int (*)(s=
-truct
-device *, void *)=E2=80=99
-  176 | struct device *bus_find_device(struct bus_type *bus, struct
-device *start,
-      |                ^~~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index de9c668c6e9a..e02c04910ef0 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -492,18 +492,6 @@
+ 				};
+ 			};
+ 
+-			peci: peci-bus@100000 {
+-				cmd-timeout-ms = <1000>;
+-				pull-down = <0>;
+-				host-neg-bit-rate = <15>;
+-				status = "okay";
+-				intel-peci-dimmtemp@30 {
+-					compatible = "intel,peci-client";
+-					reg = <0x30>;
+-					status = "okay";
+-				};
+-			};
+-
+ 			spi0: spi@200000 {
+ 				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
+ 				status = "okay";
+@@ -610,3 +598,16 @@
+ 		idle-states = <2>; /* Serial port mode 3 (takeover) */
+ 	};
+ };
++
++&peci0 {
++	cmd-timeout-ms = <1000>;
++	pull-down = <0>;
++	host-neg-bit-rate = <15>;
++	status = "okay";
++
++	intel-peci-dimmtemp@30 {
++		compatible = "intel,peci-client";
++		reg = <0x30>;
++		status = "okay";
++	};
++};
+-- 
+2.24.0
 
-Additioanlly, the nuvoton device trees in dev-5.4 did not compile. I
-will send a patch for that.
-
-Cheers,
-
-Joel
