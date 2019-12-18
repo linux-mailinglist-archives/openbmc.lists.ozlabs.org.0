@@ -2,49 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAC4E12421F
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 09:45:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 168BA124238
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 09:51:44 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47d7qg67dwzDqfr
-	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 19:45:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47d7zK2VHLzDqCF
+	for <lists+openbmc@lfdr.de>; Wed, 18 Dec 2019 19:51:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=protonmail.com (client-ip=185.70.40.27; helo=mail4.protonmail.ch;
+ envelope-from=rgrs@protonmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="CV0j8QTv"; 
+ dkim-atps=neutral
+Received: from mail4.protonmail.ch (mail4.protonmail.ch [185.70.40.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47d77W42WjzDqcl
- for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 19:13:42 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2019 00:13:32 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,328,1571727600"; d="scan'208";a="390109416"
-Received: from qiantong-mobl.amr.corp.intel.com (HELO [10.251.0.98])
- ([10.251.0.98])
- by orsmga005.jf.intel.com with ESMTP; 18 Dec 2019 00:13:31 -0800
-Subject: Re: [PATCH linux dev-5.4] ARM: dts: nuvoton: Update EVB for new PECI
- layout
-To: Joel Stanley <joel@jms.id.au>, Avi Fishman <avifishman70@gmail.com>,
- Tomer Maimon <tmaimon77@gmail.com>
-References: <20191218042250.456677-1-joel@jms.id.au>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <b78983e8-1160-0eec-9efd-236909c45141@linux.intel.com>
-Date: Wed, 18 Dec 2019 00:13:31 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47d7Q84Qc2zDqPm
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Dec 2019 19:26:20 +1100 (AEDT)
+Date: Wed, 18 Dec 2019 08:26:11 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1576657574;
+ bh=uOfaSAHV6fK7G7VSHuoiJSCOYL9T1I19iT55ks3C3QI=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=CV0j8QTvb04ZOuK3DwITiPmTjRUlgDUchIqOSaJ6E6ZxvRIqfgahDvO31zmXrnxbO
+ lHTXgKi0a14AlMGWVs9JdeSqwhZ3Od2Vq/sQ56UnC0VRnhQqLQPpRL6QibWbN3RBXm
+ y2Oe5ROr+hG1eUrffTBbLmt6jwJQ9wPncI0GDglY=
+To: Adriana Kobylak <anoo@linux.ibm.com>
+From: rgrs <rgrs@protonmail.com>
+Subject: Re: Firmware update error: Cannot UBI create volume
+Message-ID: <mMrfhlAVEkCejeMkGNA-WogqkXEi79G-n2D_z-ccL9wK43k7KwvFyFPloY5wnZhNitUspTMdELj9Zl1st1W_BMXuaKVmgHy83sm1eKxHi_E=@protonmail.com>
+In-Reply-To: <0bedefae291dc69d048fd5806d17d385@linux.vnet.ibm.com>
+References: <1i6T-_CIXkSAHAqGbzb3IZW6jbo0mDc2nF7amahFYZ_d-4bMaTTMJeG2rb-1wE6J0OPb7NZRJ0Zx80eTDA5ukPs9CknlPBlw6IGMfHTwedI=@protonmail.com>
+ <0bedefae291dc69d048fd5806d17d385@linux.vnet.ibm.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-In-Reply-To: <20191218042250.456677-1-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,71 +57,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Reply-To: rgrs <rgrs@protonmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/17/2019 8:22 PM, Joel Stanley wrote:
-> The PECI device tree layout changed, breaking the EVB.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 25 ++++++++++++-----------
->   1 file changed, 13 insertions(+), 12 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> index de9c668c6e9a..e02c04910ef0 100644
-> --- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> +++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-> @@ -492,18 +492,6 @@
->   				};
->   			};
->   
-> -			peci: peci-bus@100000 {
-> -				cmd-timeout-ms = <1000>;
-> -				pull-down = <0>;
-> -				host-neg-bit-rate = <15>;
-> -				status = "okay";
-> -				intel-peci-dimmtemp@30 {
-> -					compatible = "intel,peci-client";
-> -					reg = <0x30>;
-> -					status = "okay";
-> -				};
-> -			};
-> -
->   			spi0: spi@200000 {
->   				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
->   				status = "okay";
-> @@ -610,3 +598,16 @@
->   		idle-states = <2>; /* Serial port mode 3 (takeover) */
->   	};
->   };
-> +
-> +&peci0 {
-> +	cmd-timeout-ms = <1000>;
-> +	pull-down = <0>;
-> +	host-neg-bit-rate = <15>;
-> +	status = "okay";
-> +
-> +	intel-peci-dimmtemp@30 {
-> +		compatible = "intel,peci-client";
-> +		reg = <0x30>;
-> +		status = "okay";
-> +	};
-> +};
-> 
+Thanks :)
+I am able to flash new images now.
 
-Yes, I fixed peci nodes in 'nuvoton-common-npcm7xx.dtsi' using the new
-PECI patch set because previous node setting was incorrect. PECI node
-shape should be like:
+~Raj
 
-bus: {
-     controller: {
-         client: {
-         };
-     };
-};
 
-so this fix is needed for nuvoton EVB.
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Tuesday, December 17, 2019 10:30 PM, Adriana Kobylak <anoo@linux.ibm.com=
+> wrote:
 
-Acked-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> On 2019-12-17 03:52, rgrs wrote:
+>
+> > Hi All,
+> > I have a strange behavior where only one image is visible in webUI.
+> > I get UBI "no space left" errors when I try to update/flash new image.
+> > I dont have steps to reproduce and dont know how my BMC ended up in
+> > this state.
+> > How do I recover from this error? /proc/mtd shows all
+> > partitions/volumes properly.
+> > Is there any way to recover alternate partition without erasing SPI
+> > from uboot?
+>
+> Seems there's an 'orphan' volume which you can manually delete to make
+> space. A while back there was an issue at some point where not all the
+> volumes were deleted during a firmware update.
+>
+> > root@obmc:~# ubinfo -d 4 -n 1
+> > Volume ID: 1 (on ubi4)
+> > Type: static
+> > Alignment: 1
+> > Size: 43 LEBs (2812544 bytes, 2.6 MiB)
+> > Data bytes: 2767008 bytes (2.6 MiB)
+> > State: OK
+> > Name: kernel-7e7e1530
+>
+> This seems to be the 'orphan' since there's not a corresponding
+> 'rofs-7e7e1530' volume, you can manually delete it with "ubirmvol
+> /dev/ubi4 -n 1". You can also list all the volumes of a device with
+> "ubinfo -a -d 0" for example.
+
+
