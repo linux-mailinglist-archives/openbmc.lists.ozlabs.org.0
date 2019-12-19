@@ -2,49 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 839A312E158
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jan 2020 01:38:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D08D912E15B
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jan 2020 01:39:12 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47p8Jq6V9KzDqCc
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jan 2020 11:38:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47p8L62n7RzDqCl
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jan 2020 11:39:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47dWSs6ZfRzDqlF
- for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 10:30:04 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2019 15:30:01 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,330,1571727600"; d="scan'208";a="365890260"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
- ([10.7.153.143])
- by orsmga004.jf.intel.com with ESMTP; 18 Dec 2019 15:30:01 -0800
-Subject: Re: [PATCH v11 07/14] dt-bindings: peci: add NPCM PECI documentation
-To: Rob Herring <robh@kernel.org>
-References: <20191211194624.2872-1-jae.hyun.yoo@linux.intel.com>
- <20191211194624.2872-8-jae.hyun.yoo@linux.intel.com>
- <20191218144206.GA26118@bogus>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <a86e253a-5ef6-f448-0c0b-15be0467a9ef@linux.intel.com>
-Date: Wed, 18 Dec 2019 15:30:00 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.59; helo=m13-59.163.com;
+ envelope-from=z1908144712@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.b="Jn440LlI"; 
+ dkim-atps=neutral
+X-Greylist: delayed 916 seconds by postgrey-1.36 at bilbo;
+ Thu, 19 Dec 2019 23:01:54 AEDT
+Received: from m13-59.163.com (m13-59.163.com [220.181.13.59])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47dr8L1xdlzDqmf
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 23:01:48 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=Xz1Tl
+ cr13zyUTBUvzB2V7dFL1deHBulrGYzNlkeGJH4=; b=Jn440LlIxhig/QZipCKmP
+ X/R/e3wY9jgaAc7Ka5WwR7FwGnzJ5bQBA9WANIAQhdLy14djWflc2gldPfUwUr3h
+ +qCXYkAoRRXVGPYNKsIUd+bwJ28Q17TOQoghsYvMPeEdkOuHnpMqhEuWOwKKxjDm
+ ZvObtgIjsIzaAe4BJFh29k=
+Received: from z1908144712$163.com ( [114.255.122.4] ) by
+ ajax-webmail-wmsvr59 (Coremail) ; Thu, 19 Dec 2019 19:46:28 +0800
+ (GMT+08:00)
+X-Originating-IP: [114.255.122.4]
+Date: Thu, 19 Dec 2019 19:46:28 +0800 (GMT+08:00)
+From: =?UTF-8?B?6LW15Lic5rWp?= <z1908144712@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Failed to export GPIO from sysfs
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20180820(5a019900) Copyright (c) 2002-2019 www.mailtech.cn 163com
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_73139_382853391.1576755988786"
 MIME-Version: 1.0
-In-Reply-To: <20191218144206.GA26118@bogus>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Message-ID: <4f3b1168.6078.16f1dfb0932.Coremail.z1908144712@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: O8GowACnjsIVY_tdU2y3AA--.40882W
+X-CM-SenderInfo: b2rzimyruuliqs6rljoofrz/1tbiDxuQs1UMQ5cn1AABsI
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-Mailman-Approved-At: Thu, 02 Jan 2020 11:32:09 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -57,179 +60,168 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Randy Dunlap <rdunlap@infradead.org>,
- Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org,
- Frederic Barrat <fbarrat@linux.vnet.ibm.com>,
- Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- Lee Jones <lee.jones@linaro.org>, Eric Sandeen <sandeen@redhat.com>,
- Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
- Jonathan Corbet <corbet@lwn.net>, openbmc@lists.ozlabs.org,
- linux-doc@vger.kernel.org, Kishon Vijay Abraham I <kishon@ti.com>,
- "Bryant G . Ly" <bryantly@linux.vnet.ibm.com>,
- Uwe Kleine-Konig <u.kleine-koenig@pengutronix.de>,
- David Kershner <david.kershner@unisys.com>, Guenter Roeck <linux@roeck-us.net>,
- Wu Hao <hao.wu@intel.com>, linux-hwmon@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>,
- Philippe Ombredanne <pombredanne@nexb.com>, Johan Hovold <johan@kernel.org>,
- Tomohiro Kusumi <kusumi.tomohiro@gmail.com>,
- Thomas Gleixner <tglx@linutronix.de>, Sagar Dharia <sdharia@codeaurora.org>,
- linux-arm-kernel@lists.infradead.org, Juergen Gross <jgross@suse.com>,
- Cyrille Pitchen <cyrille.pitchen@wedev4u.fr>, Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Darrick J . Wong" <darrick.wong@oracle.com>,
- Stephen Boyd <sboyd@codeaurora.org>, Vinod Koul <vkoul@kernel.org>,
- Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Rob,
+------=_Part_73139_382853391.1576755988786
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On 12/18/2019 6:42 AM, Rob Herring wrote:
-> On Wed, Dec 11, 2019 at 11:46:17AM -0800, Jae Hyun Yoo wrote:
->> From: Tomer Maimon <tmaimon77@gmail.com>
->>
->> Added device tree binding documentation for Nuvoton BMC
->> NPCM Platform Environment Control Interface(PECI).
->>
->> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> ---
->> Changes since v10:
->> - Newly added in v11.
->>
->>   .../devicetree/bindings/peci/peci-npcm.yaml   | 102 ++++++++++++++++++
->>   1 file changed, 102 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/peci/peci-npcm.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/peci/peci-npcm.yaml b/Documentation/devicetree/bindings/peci/peci-npcm.yaml
->> new file mode 100644
->> index 000000000000..bcd5626e68e7
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/peci/peci-npcm.yaml
->> @@ -0,0 +1,102 @@
->> +# SPDX-License-Identifier: GPL-2.0
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/peci/peci-npcm.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Nuvoton NPCM PECI Bus Device Tree Bindings
->> +
->> +maintainers:
->> +  - Tomer Maimon <tmaimon77@gmail.com>
->> +
->> +properties:
->> +  compatible:
->> +    const: nuvoton,npcm750-peci # for the NPCM7XX BMC.
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  "#address-cells":
->> +    # Required to define a client address.
->> +    const: 1
->> +
->> +  "#size-cells":
->> +    # Required to define a client address.
->> +    const: 0
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  clocks:
->> +    # PECI reference clock.
->> +    maxItems: 1
->> +
->> +  cmd-timeout-ms:
->> +    # Command timeout in units of ms.
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
-> 
-> You can drop this as standard units already have a type.
+SSB3YW50IHRvIGNvbnRyb2wgR1BJTyBGMSwgRjIgYW5kIEYzLCBidXQgSSBjYW4ndCBleHBvcnQg
+ZnJvbSBzeXNmcy4gV2hlbiBJIGV4ZWN1dGUgZWNobyAzMzMgPiBleHBvcnQsIHRoZSBmb2xsb3dp
+bmcgZXJyb3IgaXMgcmVwb3J0ZWQ6CnJvb3RAeHh4eDovc3lzL2NsYXNzL2dwaW8jIGVjaG8gMzMz
+ID4gZXhwb3J0IApbICAxMjAuMDYwMDE4XSBhc3BlZWQtZzQtcGluY3RybCAxZTZlMjAwMC5zeXNj
+b246cGluY3RybDogcmVxdWVzdCgpIGZhaWxlZCBmb3IgcGluIDQxClsgIDEyMC4wNjc2NDJdIGFz
+cGVlZC1nNC1waW5jdHJsIDFlNmUyMDAwLnN5c2NvbjpwaW5jdHJsOiBwaW4tNDEgKDFlNzgwMDAw
+LmdwaW86MzMzKSBzdGF0dXMgLTEKLXNoOiBlY2hvOiB3cml0ZSBlcnJvcjogT3BlcmF0aW9uIG5v
+dCBwZXJtaXR0ZWQKcm9vdEB4eHh4Oi9zeXMvY2xhc3MvZ3BpbyMgZWNobyAzMzQgPiBleHBvcnQg
+ClsgIDEzNi42ODk4MDFdIGFzcGVlZC1nNC1waW5jdHJsIDFlNmUyMDAwLnN5c2NvbjpwaW5jdHJs
+OiByZXF1ZXN0KCkgZmFpbGVkIGZvciBwaW4gNDIKWyAgMTM2LjY5NzQyM10gYXNwZWVkLWc0LXBp
+bmN0cmwgMWU2ZTIwMDAuc3lzY29uOnBpbmN0cmw6IHBpbi00MiAoMWU3ODAwMDAuZ3BpbzozMzQp
+IHN0YXR1cyAtMQotc2g6IGVjaG86IHdyaXRlIGVycm9yOiBPcGVyYXRpb24gbm90IHBlcm1pdHRl
+ZApyb290QHh4eHg6L3N5cy9jbGFzcy9ncGlvIyBlY2hvIDMzNSA+IGV4cG9ydCAKWyAgMTQwLjI4
+OTk3NV0gYXNwZWVkLWc0LXBpbmN0cmwgMWU2ZTIwMDAuc3lzY29uOnBpbmN0cmw6IHJlcXVlc3Qo
+KSBmYWlsZWQgZm9yIHBpbiA0MwpbICAxNDAuMjk3NjAxXSBhc3BlZWQtZzQtcGluY3RybCAxZTZl
+MjAwMC5zeXNjb246cGluY3RybDogcGluLTQzICgxZTc4MDAwMC5ncGlvOjMzNSkgc3RhdHVzIC0x
+Ci1zaDogZWNobzogd3JpdGUgZXJyb3I6IE9wZXJhdGlvbiBub3QgcGVybWl0dGVkClNpbmNlIHRo
+ZXNlIGdwaW9zIGFyZSB1c2VkIHRvIGNvbnRyb2wgcmVtb3RlIHN3aXRjaCBtYWNoaW5lcywgbm8g
+b3RoZXIgZGV2aWNlcyBvY2N1cHkgdGhlc2UgZ3Bpb3MuIEkgd29uZGVyIGlmIHRoZXJlIGFyZSBh
+bnkgcGxhY2VzIHdoZXJlIGdwaW9zIG5lZWQgdG8gYmUgc2V0Pwp8IHwKSGFvCnwKfAp6MTkwODE0
+NDcxMkAxNjMuY29tCnwK562+5ZCN55Sx572R5piT6YKu566x5aSn5biI5a6a5Yi2
+------=_Part_73139_382853391.1576755988786
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-I'm assuming you pointed the timeout-ms as one of standard
-units, right? I'll drop this ref.
+PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
+PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
+b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
+YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
+ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
+YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj4KPHN0eWxlPgogICAgZm9u
+dHsKICAgICAgICBsaW5lLWhlaWdodDogMS42OwogICAgfQogICAgdWwsb2x7CiAgICAgICAgcGFk
+ZGluZy1sZWZ0OiAyMHB4OwogICAgICAgIGxpc3Qtc3R5bGUtcG9zaXRpb246IGluc2lkZTsKICAg
+IH0KPC9zdHlsZT4KPGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAwIDAgNDBweDsgYm9yZGVy
+OiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PjxkaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6
+IOW+rui9r+mbhem7kSwgVmVyZGFuYSwgJ01pY3Jvc29mdCBZYWhlaScsIFNpbVN1biwgc2Fucy1z
+ZXJpZjsgZm9udC1zaXplOiAxNHB4OyBsaW5lLWhlaWdodDogMS42OyI+PHNwYW4gc3R5bGU9Imxp
+bmUtaGVpZ2h0OiAxLjY7Ij5JIHdhbnQgdG8gY29udHJvbCBHUElPIEYxLCBGMiBhbmQgRjMsIGJ1
+dCBJIGNhbid0IGV4cG9ydCBmcm9tIHN5c2ZzLiBXaGVuIEkgZXhlY3V0ZSA8c3BhbiBzdHlsZT0i
+YmFja2dyb3VuZC1jb2xvcjogcmdiKDIxNCwgMjE0LCAyMTQpOyI+ZWNobyAzMzMgJmd0OyBleHBv
+cnQ8L3NwYW4+LCB0aGUgZm9sbG93aW5nIGVycm9yIGlzIHJlcG9ydGVkOjwvc3Bhbj48L2Rpdj48
+L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+PGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAwIDAg
+NDBweDsgYm9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PjxkaXY+PGRpdj48Zm9udCBm
+YWNlPSLlvq7ova/pm4Xpu5EsIFZlcmRhbmEsIE1pY3Jvc29mdCBZYWhlaSwgU2ltU3VuLCBzYW5z
+LXNlcmlmIj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjE0LCAyMTQsIDIxNCk7
+Ij5yb290QHh4eHg6L3N5cy9jbGFzcy9ncGlvIyBlY2hvIDMzMyAmZ3Q7IGV4cG9ydCZuYnNwOzwv
+ZGl2PjwvZm9udD48L2Rpdj48L2Rpdj48L2Rpdj48ZGl2PjxkaXY+PGRpdj48Zm9udCBmYWNlPSLl
+vq7ova/pm4Xpu5EsIFZlcmRhbmEsIE1pY3Jvc29mdCBZYWhlaSwgU2ltU3VuLCBzYW5zLXNlcmlm
+Ij48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjE0LCAyMTQsIDIxNCk7Ij5bICZu
+YnNwOzEyMC4wNjAwMThdIGFzcGVlZC1nNC1waW5jdHJsIDFlNmUyMDAwLnN5c2NvbjpwaW5jdHJs
+OiByZXF1ZXN0KCkgZmFpbGVkIGZvciBwaW4gNDE8L2Rpdj48L2ZvbnQ+PC9kaXY+PC9kaXY+PC9k
+aXY+PGRpdj48ZGl2PjxkaXY+PGZvbnQgZmFjZT0i5b6u6L2v6ZuF6buRLCBWZXJkYW5hLCBNaWNy
+b3NvZnQgWWFoZWksIFNpbVN1biwgc2Fucy1zZXJpZiI+PGRpdiBzdHlsZT0iYmFja2dyb3VuZC1j
+b2xvcjogcmdiKDIxNCwgMjE0LCAyMTQpOyI+WyAmbmJzcDsxMjAuMDY3NjQyXSBhc3BlZWQtZzQt
+cGluY3RybCAxZTZlMjAwMC5zeXNjb246cGluY3RybDogcGluLTQxICgxZTc4MDAwMC5ncGlvOjMz
+Mykgc3RhdHVzIC0xPC9kaXY+PC9mb250PjwvZGl2PjwvZGl2PjwvZGl2PjxkaXY+PGRpdj48ZGl2
+Pjxmb250IGZhY2U9IuW+rui9r+mbhem7kSwgVmVyZGFuYSwgTWljcm9zb2Z0IFlhaGVpLCBTaW1T
+dW4sIHNhbnMtc2VyaWYiPjxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyMTQsIDIx
+NCwgMjE0KTsiPi1zaDogZWNobzogd3JpdGUgZXJyb3I6IE9wZXJhdGlvbiBub3QgcGVybWl0dGVk
+PC9kaXY+PC9mb250PjwvZGl2PjwvZGl2PjwvZGl2PjxkaXY+PGRpdj48ZGl2Pjxmb250IGZhY2U9
+IuW+rui9r+mbhem7kSwgVmVyZGFuYSwgTWljcm9zb2Z0IFlhaGVpLCBTaW1TdW4sIHNhbnMtc2Vy
+aWYiPjxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyMTQsIDIxNCwgMjE0KTsiPnJv
+b3RAeHh4eDovc3lzL2NsYXNzL2dwaW8jIGVjaG8gMzM0ICZndDsgZXhwb3J0Jm5ic3A7PC9kaXY+
+PC9mb250PjwvZGl2PjwvZGl2PjwvZGl2PjxkaXY+PGRpdj48ZGl2Pjxmb250IGZhY2U9IuW+rui9
+r+mbhem7kSwgVmVyZGFuYSwgTWljcm9zb2Z0IFlhaGVpLCBTaW1TdW4sIHNhbnMtc2VyaWYiPjxk
+aXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJnYigyMTQsIDIxNCwgMjE0KTsiPlsgJm5ic3A7
+MTM2LjY4OTgwMV0gYXNwZWVkLWc0LXBpbmN0cmwgMWU2ZTIwMDAuc3lzY29uOnBpbmN0cmw6IHJl
+cXVlc3QoKSBmYWlsZWQgZm9yIHBpbiA0MjwvZGl2PjwvZm9udD48L2Rpdj48L2Rpdj48L2Rpdj48
+ZGl2PjxkaXY+PGRpdj48Zm9udCBmYWNlPSLlvq7ova/pm4Xpu5EsIFZlcmRhbmEsIE1pY3Jvc29m
+dCBZYWhlaSwgU2ltU3VuLCBzYW5zLXNlcmlmIj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9y
+OiByZ2IoMjE0LCAyMTQsIDIxNCk7Ij5bICZuYnNwOzEzNi42OTc0MjNdIGFzcGVlZC1nNC1waW5j
+dHJsIDFlNmUyMDAwLnN5c2NvbjpwaW5jdHJsOiBwaW4tNDIgKDFlNzgwMDAwLmdwaW86MzM0KSBz
+dGF0dXMgLTE8L2Rpdj48L2ZvbnQ+PC9kaXY+PC9kaXY+PC9kaXY+PGRpdj48ZGl2PjxkaXY+PGZv
+bnQgZmFjZT0i5b6u6L2v6ZuF6buRLCBWZXJkYW5hLCBNaWNyb3NvZnQgWWFoZWksIFNpbVN1biwg
+c2Fucy1zZXJpZiI+PGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDIxNCwgMjE0LCAy
+MTQpOyI+LXNoOiBlY2hvOiB3cml0ZSBlcnJvcjogT3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQ8L2Rp
+dj48L2ZvbnQ+PC9kaXY+PC9kaXY+PC9kaXY+PGRpdj48ZGl2PjxkaXY+PGZvbnQgZmFjZT0i5b6u
+6L2v6ZuF6buRLCBWZXJkYW5hLCBNaWNyb3NvZnQgWWFoZWksIFNpbVN1biwgc2Fucy1zZXJpZiI+
+PGRpdiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDIxNCwgMjE0LCAyMTQpOyI+cm9vdEB4
+eHh4Oi9zeXMvY2xhc3MvZ3BpbyMgZWNobyAzMzUgJmd0OyBleHBvcnQmbmJzcDs8L2Rpdj48L2Zv
+bnQ+PC9kaXY+PC9kaXY+PC9kaXY+PGRpdj48ZGl2PjxkaXY+PGZvbnQgZmFjZT0i5b6u6L2v6ZuF
+6buRLCBWZXJkYW5hLCBNaWNyb3NvZnQgWWFoZWksIFNpbVN1biwgc2Fucy1zZXJpZiI+PGRpdiBz
+dHlsZT0iYmFja2dyb3VuZC1jb2xvcjogcmdiKDIxNCwgMjE0LCAyMTQpOyI+WyAmbmJzcDsxNDAu
+Mjg5OTc1XSBhc3BlZWQtZzQtcGluY3RybCAxZTZlMjAwMC5zeXNjb246cGluY3RybDogcmVxdWVz
+dCgpIGZhaWxlZCBmb3IgcGluIDQzPC9kaXY+PC9mb250PjwvZGl2PjwvZGl2PjwvZGl2PjxkaXY+
+PGRpdj48ZGl2Pjxmb250IGZhY2U9IuW+rui9r+mbhem7kSwgVmVyZGFuYSwgTWljcm9zb2Z0IFlh
+aGVpLCBTaW1TdW4sIHNhbnMtc2VyaWYiPjxkaXYgc3R5bGU9ImJhY2tncm91bmQtY29sb3I6IHJn
+YigyMTQsIDIxNCwgMjE0KTsiPlsgJm5ic3A7MTQwLjI5NzYwMV0gYXNwZWVkLWc0LXBpbmN0cmwg
+MWU2ZTIwMDAuc3lzY29uOnBpbmN0cmw6IHBpbi00MyAoMWU3ODAwMDAuZ3BpbzozMzUpIHN0YXR1
+cyAtMTwvZGl2PjwvZm9udD48L2Rpdj48L2Rpdj48L2Rpdj48ZGl2PjxkaXY+PGRpdj48Zm9udCBm
+YWNlPSLlvq7ova/pm4Xpu5EsIFZlcmRhbmEsIE1pY3Jvc29mdCBZYWhlaSwgU2ltU3VuLCBzYW5z
+LXNlcmlmIj48ZGl2IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjE0LCAyMTQsIDIxNCk7
+Ij4tc2g6IGVjaG86IHdyaXRlIGVycm9yOiBPcGVyYXRpb24gbm90IHBlcm1pdHRlZDwvZGl2Pjwv
+Zm9udD48L2Rpdj48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+PGJsb2NrcXVvdGUgc3R5bGU9Im1h
+cmdpbjogMCAwIDAgNDBweDsgYm9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PjxkaXY+
+PGRpdj48Zm9udCBmYWNlPSLlvq7ova/pm4Xpu5EsIFZlcmRhbmEsIE1pY3Jvc29mdCBZYWhlaSwg
+U2ltU3VuLCBzYW5zLXNlcmlmIj48ZGl2PlNpbmNlIHRoZXNlIGdwaW9zIGFyZSB1c2VkIHRvIGNv
+bnRyb2wgcmVtb3RlIHN3aXRjaCBtYWNoaW5lcywgbm8gb3RoZXIgZGV2aWNlcyBvY2N1cHkgdGhl
+c2UgZ3Bpb3MuIEkgd29uZGVyIGlmIHRoZXJlIGFyZSBhbnkgcGxhY2VzIHdoZXJlIGdwaW9zIG5l
+ZWQgdG8gYmUgc2V0PzwvZGl2PjwvZm9udD48L2Rpdj48L2Rpdj48L2Rpdj48L2Jsb2NrcXVvdGU+
+PGRpdj4KICAgIDxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiDlvq7ova/pm4Xpu5EsIFZlcmRhbmEs
+ICdNaWNyb3NvZnQgWWFoZWknLCBTaW1TdW4sIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTRweDsg
+bGluZS1oZWlnaHQ6IDEuNjsiPjwvZGl2PjxkaXY+CiAgICAKICAgIDxkaXYgaWQ9Im50ZXMtcGNt
+YWMtc2lnbmF0dXJlIiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNjsgZm9udC1zaXplOiAxNHB4OyBm
+b250LWZhbWlseTog5b6u6L2v6ZuF6buROyI+CiAgICAgCiAgICA8ZGl2IHN0eWxlPSJmb250LXNp
+emU6MTRweDsgcGFkZGluZzogMDsgIG1hcmdpbjowO2xpbmUtaGVpZ2h0OjE0cHg7Ij4KICAgICAg
+ICA8ZGl2IHN0eWxlPSJwYWRkaW5nLWJvdHRvbTo2cHg7bWFyZ2luLWJvdHRvbToxMHB4O2JvcmRl
+ci1ib3R0b206MXB4IHNvbGlkICNlNmU2ZTY7ZGlzcGxheTppbmxpbmUtYmxvY2s7Ij4KICAgICAg
+ICAgICAgICAgICAgICA8YSBocmVmPSJodHRwczovL21hYXMubWFpbC4xNjMuY29tL2Rhc2hpLXdl
+Yi1leHRlbmQvaHRtbC9wcm9TaWduYXR1cmUuaHRtbD9mdGxJZD0xJmFtcDtuYW1lPSVFOCVCNSVC
+NSVFNCVCOCU5QyVFNiVCNSVBOSZhbXA7dWlkPXoxOTA4MTQ0NzEyJTQwMTYzLmNvbSZhbXA7aWNv
+blVybD1odHRwcyUzQSUyRiUyRm1haWwtb25saW5lLm5vc2RuLjEyNy5uZXQlMkZxaXllbG9nbyUy
+RmRlZmF1bHRBdmF0YXIucG5nJmFtcDtpdGVtcz0lNUIlMjJ6MTkwODE0NDcxMiU0MDE2My5jb20l
+MjIlNUQiIHN0eWxlPSJkaXNwbGF5OmJsb2NrO2JhY2tncm91bmQ6I2ZmZjsgbWF4LXdpZHRoOiA0
+MDBweDsgX3dpZHRoOiA0MDBweDtwYWRkaW5nOjE1cHggMCAxMHB4IDA7dGV4dC1kZWNvcmF0aW9u
+OiBub25lOyBvdXRsaW5lOm5vbmU7LXdlYmtpdC10YXAtaGlnaGxpZ2h0LWNvbG9yOnRyYW5zcGFy
+ZW50Oy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7dGV4dC1zaXplLWFk
+anVzdDpub25lICFpbXBvcnRhbnQ7Ij4KICAgICAgICAgICAgPHRhYmxlIGNlbGxwYWRkaW5nPSIw
+IiBzdHlsZT0id2lkdGg6IDEwMCU7IG1heC13aWR0aDogMTAwJTsgdGFibGUtbGF5b3V0OiBmaXhl
+ZDsgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtjb2xvcjogIzliOWVhMTtmb250LXNpemU6IDE0
+cHg7bGluZS1oZWlnaHQ6MS4zOy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRh
+bnQ7dGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7Ij4KICAgICAgICAgICAgICAgIDx0
+Ym9keSBzdHlsZT0iZm9udC1mYW1pbHk6ICdQaW5nRmFuZyBTQycsICdIaXJhZ2lubyBTYW5zIEdC
+JywnV2VuUXVhbllpIE1pY3JvIEhlaScsICdNaWNyb3NvZnQgWWFoZWknLCAn5b6u6L2v6ZuF6buR
+JywgdmVyZGFuYSAhaW1wb3J0YW50OyB3b3JkLXdyYXA6YnJlYWstd29yZDsgd29yZC1icmVhazpi
+cmVhay1hbGw7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0ZXh0LXNp
+emUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDsiPgogICAgICAgICAgICAgICAgICAgIDx0ciBjbGFz
+cz0iZmlyc3RSb3ciPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRkIHdpZHRoPSIzOCIg
+c3R5bGU9InBhZGRpbmc6MDsgYm94LXNpemluZzogYm9yZGVyLWJveDsgd2lkdGg6IDM4cHg7Ij4K
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8aW1nIHdpZHRoPSIzOCIgaGVpZ2h0PSIz
+OCIgc3R5bGU9InZlcnRpY2FsLWFsaWduOm1pZGRsZTsgd2lkdGg6IDM4cHg7IGhlaWdodDogMzhw
+eDsgYm9yZGVyLXJhZGl1czo1MCU7IiBzcmM9Imh0dHBzOi8vbWFpbC1vbmxpbmUubm9zZG4uMTI3
+Lm5ldC9xaXllbG9nby9kZWZhdWx0QXZhdGFyLnBuZyI+CiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRkIHN0eWxlPSJwYWRkaW5n
+OiAwcHggMHB4IDBweCAxMHB4OyBjb2xvcjogcmdiKDQ5LCA1MywgNTkpOyB3b3JkLWJyZWFrOiBi
+cmVhay1hbGw7Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJm
+b250LXNpemU6IDE2cHg7Zm9udC13ZWlnaHQ6Ym9sZDsgd2lkdGg6MTAwJTsgd2hpdGUtc3BhY2U6
+IG5vd3JhcDsgb3ZlcmZsb3c6aGlkZGVuO3RleHQtb3ZlcmZsb3c6IGVsbGlwc2lzOyI+SGFvPC9k
+aXY+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAg
+IDwvdHI+CiAgICAgICAgICAgICAgICAgICAgICAgIDx0ciB3aWR0aD0iMTAwJSIgc3R5bGU9ImZv
+bnQtc2l6ZTogMTRweCAhaW1wb3J0YW50OyB3aWR0aDogMTAwJTsiPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgPHRkIGNvbHNwYW49IjIiIHN0eWxlPSJwYWRkaW5nOjEwcHggMCAwIDA7IGZv
+bnQtc2l6ZToxNHB4ICFpbXBvcnRhbnQ7IHdpZHRoOiAxMDAlOyI+CiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIDxkaXYgc3R5bGU9IndpZHRoOiAxMDAlO2ZvbnQtc2l6ZTogMTRw
+eCAhaW1wb3J0YW50O3dvcmQtd3JhcDpicmVhay13b3JkO3dvcmQtYnJlYWs6YnJlYWstYWxsOyI+
+ejE5MDgxNDQ3MTJAMTYzLmNvbTwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPC90
+ZD4KICAgICAgICAgICAgICAgICAgICAgICAgPC90cj4KICAgICAgICAgICAgICAgIDwvdGJvZHk+
+CiAgICAgICAgICAgIDwvdGFibGU+CiAgICAgICAgPC9hPgogICAgICAgIDwvZGl2PgogICAgPC9k
+aXY+CiAgICA8ZGl2IHN0eWxlPSJmb250LXNpemU6MTJweDtjb2xvcjojYjViOWJkO2xpbmUtaGVp
+Z2h0OjE4cHg7Ij4KICAgICAgICA8c3Bhbj7nrb7lkI3nlLE8L3NwYW4+CiAgICAgICAgPGEgc3R5
+bGU9InRleHQtZGVjb3JhdGlvbjogbm9uZTtjb2xvcjojNDE5NmZmO3BhZGRpbmc6MCA1cHg7IiBo
+cmVmPSJodHRwczovL21haWwuMTYzLmNvbS9kYXNoaS9kbHByby5odG1sP2Zyb209bWFpbDgxIj7n
+vZHmmJPpgq7nrrHlpKfluIg8L2E+CiAgICAgICAgPHNwYW4+5a6a5Yi2PC9zcGFuPgogICAgPC9k
+aXY+CiA8L2Rpdj4KPC9kaXY+PCEtLfCfmIAtLT4KPC9kaXY+PCEtLfCfmIAtLT4KPC9kaXY+Cjwv
+Ym9keT4KPC9odG1sPg==
+------=_Part_73139_382853391.1576755988786--
 
->> +      - minimum: 1
->> +        maximum: 60000
->> +        default: 1000
->> +
->> +  pull-down:
->> +    description: |
->> +      Defines the PECI I/O internal pull down operation.
->> +        0: pull down always enable
->> +        1: pull down only during transactions.
->> +        2: pull down always disable.
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
->> +      - minimum: 0
->> +        maximum: 2
->> +        default: 0
->> +
->> +  host-neg-bit-rate:
->> +    description: |
->> +      Define host negotiation bit rate divider.
->> +      the host negotiation bit rate calculate with formula:
->> +      clock frequency[Hz] / [4 x {host-neg-bit-rate + 1}]
->> +    allOf:
->> +      - $ref: /schemas/types.yaml#/definitions/uint32
->> +      - minimum: 7
->> +        maximum: 31
->> +        default: 15
->> +
->> +  high-volt-range:
->> +    description: |
->> +      Adapts PECI I/O interface to voltage range.
->> +        0: PECI I/O interface voltage range of 0.8-1.06V (default)
->> +        1: PECI I/O interface voltage range of 0.95-1.26V
->> +    type: boolean
-> 
-> These last 4 properties are vendor specific or PECI common. For the
-> former, needs a vendor prefix. For the latter, needs to be moved to
-> common location.
-
-These are Nuvoton vendor specifics. I'll add prefix for them and will
-check Aspeed bindings too.
-
-Thanks a lot for your review!
-
--Jae
-
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - "#address-cells"
->> +  - "#size-cells"
->> +  - interrupts
->> +  - clocks
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +    #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
->> +    peci: bus@100000 {
->> +        compatible = "simple-bus";
->> +        #address-cells = <1>;
->> +        #size-cells = <1>;
->> +        ranges = <0x0 0x100000 0x200>;
->> +
->> +        peci0: peci-bus@0 {
->> +            compatible = "nuvoton,npcm750-peci";
->> +            reg = <0x0 0x200>;
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +            interrupts = <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
->> +            clocks = <&clk NPCM7XX_CLK_APB3>;
->> +            cmd-timeout-ms = <1000>;
->> +            pull-down = <0>;
->> +            host-neg-bit-rate = <15>;
->> +        };
->> +    };
->> +...
->> -- 
->> 2.17.1
->>
-> 
