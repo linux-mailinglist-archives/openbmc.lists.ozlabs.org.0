@@ -1,69 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D751125D4E
+	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 10:10:28 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBB7D125D41
-	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 10:07:27 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47dmH1094JzDqq8
-	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 20:07:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47dmLT4cjWzDqq8
+	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 20:10:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.b="JdvQvWbd"; 
- dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47dmGM1bNSzDqlS
- for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 20:06:50 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 2A33D438D1
- for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 09:06:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- in-reply-to:content-transfer-encoding:content-disposition
- :content-type:content-type:mime-version:references:message-id
- :subject:subject:from:from:date:date:received:received:received;
- s=mta-01; t=1576746405; x=1578560806; bh=32Xv7G1K0fxY3omWHaaMuV
- qef74TF/hDX1chJTsC0Cw=; b=JdvQvWbdLnBVvAjnXJU7fqKimmpRznnbkM7m4D
- GTlyZ2HzJikCS1/qVWQNje63v6Ru2LoPKLd4tuZwbazWzXdquQXaBwGI9EQ6pe9I
- TZpf1VCNPOkFIkFasASiDNNFq+Q1ncJITsSO8diqJhPf0zLAQmOXjbFg1zYMFkwo
- gc5QA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 0icUmOvt0ckm for <openbmc@lists.ozlabs.org>;
- Thu, 19 Dec 2019 12:06:45 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 38E8542F14
- for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 12:06:45 +0300 (MSK)
-Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 19
- Dec 2019 12:06:44 +0300
-Date: Thu, 19 Dec 2019 12:06:44 +0300
-From: "Alexander A. Filippov" <a.filippov@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: Re: ipmid-new.cpp log<level::ERR> entry cannot output
-Message-ID: <20191219090644.GA16866@bbwork.lan>
-References: <630491b9.b0a5.16eb1614767.Coremail.xiaoqian1641@163.com>
- <1f0e7d00.afd5.16f1d623df2.Coremail.xiaoqian1641@163.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47dmKl3X4RzDqnv
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 20:09:46 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 19 Dec 2019 01:09:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,331,1571727600"; d="scan'208";a="213198450"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.66.97.224])
+ ([10.66.97.224])
+ by fmsmga008.fm.intel.com with ESMTP; 19 Dec 2019 01:09:42 -0800
+Subject: =?UTF-8?Q?Re=3a_Re=ef=bc=9a_How_can_I_add_a_user_for_openbmc_and_re?=
+ =?UTF-8?Q?move_the_default_root_user=3f?=
+To: Joseph Reynolds <jrey@linux.ibm.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>, =?UTF-8?B?5Y2X6YeO44Og44Or44K3?=
+ =?UTF-8?B?44Ko44Op44K0?= <1181052146@qq.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+References: <tencent_BBCBA6D64E821CDC3E0AD497B3C0FD77E509@qq.com>
+ <4b32b6d0-da99-62c1-52f2-c2a7d4221dec@linux.intel.com>
+ <tencent_74FD2ECBC3FF44DE65AAF884C881E0C34D05@qq.com>
+ <a0e57fe5-e616-a0c2-a07a-a58407bebdfd@linux.intel.com>
+ <7ff949ae-3292-09cf-071b-99385232e637@linux.vnet.ibm.com>
+ <57829175-6ea3-8ed0-7e63-a36aa919f035@linux.intel.com>
+ <0899a69e-ee7f-2fed-557b-5d2f1eca5066@linux.ibm.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <0461171c-51c1-8528-89e9-8a2ced195e9c@linux.intel.com>
+Date: Thu, 19 Dec 2019 14:39:40 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+In-Reply-To: <0899a69e-ee7f-2fed-557b-5d2f1eca5066@linux.ibm.com>
+Content-Type: text/plain; charset=gb18030; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1f0e7d00.afd5.16f1d623df2.Coremail.xiaoqian1641@163.com>
-X-Originating-IP: [172.17.14.115]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,18 +67,118 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Dec 19, 2019 at 04:59:35PM +0800, å¸¸æ™“æ˜Ž wrote:
-> Hi, Team,
-> 
-> 
-> phosphor-ipmi-host/ipmid-new.cpp has lot log<level:ERR>("Something messages",  entry("CHANNEL=%u", channel))
-> But journalctl just saves "Something messages" , cannot save the message of entry("CHANNEL=%u", channel).
-> 
-> 
-> Does anybody know this?
 
-Try `journalctl --output verbose`
+On 12/19/2019 12:06 PM, Joseph Reynolds wrote:
+> On 12/18/19 6:42 AM, Thomaiyar, Richard Marian wrote:
+>> Hi Gunnar,
+>>
+>> Yes root user can't be deleted (basically uid 0), can't be deleted. 
+>> The method works for other users only, like in case Liu, he wants to 
+>> delete the newly created user.
+>
+> FWIW, I am interested in moving the OpenBMC project away from having 
+> root login access enabled by default, and specifically disabling SSH 
+> access in general, and root access to the BMC's shell.0„2 I also want to 
+> have a secure way to re-enable this when needed.0„2 See 
+> https://github.com/ibm-openbmc/dev/issues/1528 Please let me know if 
+> you have any ideas on this topic.
+>
+Currently you will be. Remove debug-tweaks & allow-root-login from 
+IMAGE_FEATURES, then the build will make sure that root user looses 
+group permissions, and OpenBMC is with no user accounts. Any new user 
+accounts must be created from Host interface through IPMI interface 
+(that's the logic we currently have).
 
-> 
-> 
-> Johny
+Note:
+
+1. This will not remove the root user (uid 0, which is needed as you 
+mentioned below), but will not have any password (In order to remove the 
+password in the OpenBMC it needs one line change to remove usermod in 
+phosphor-defaults.inc & the /etc/ipmi_pass file, currently we have a 
+patch in the down-stream for the same, as community still needs root 
+user account, but OpenBMC has been updated to remove root user from 
+Admin & other group privileges, when debug-tweaks / allow-root-logins 
+are not defined.
+
+>
+> I had understood the original question in this email thread as a 
+> request to "disable root access" so "root cannot login".0„2 (Note that 
+> one consequence of disabling root login is that once you remove root 
+> access, it is hard to get back.0„2 You'll have to use the sudo comand or 
+> su command from another user account, and I don't think sudo is 
+> present on OpenBMC systems.)
+>
+> I understand that deleting the root user is not advisable because the 
+> system will break.0„2 Instead the alternative is to disable access to 
+> the root account, for example, by doing one of:
+> - Change root's login shell to /sbin/nologin
+> - Change the root password to empty or lock the root password
+> - Change Linux-PAM to deny root account access
+> - Expire the root account (chage -E0 root)
+>
+> Any idea which approach works best for OpenBMC?
+
+If you have removed the password, then it can't be used. But if you need 
+to enable it for debug or on special use case, then it requires a method 
+to set a password. We enable setting the root
+
+password using Set special user password OEM Command 
+(https://github.com/openbmc/intel-ipmi-oem/blob/master/src/oemcommands.cpp#L1130).
+
+Let me know your thoughts, As i see a decision can be made, i think we 
+can write a document (with community feedback), and move to a common 
+solution.
+
+>
+> - Joseph
+>
+>>
+>> Regards,
+>>
+>> Richard
+>>
+>>
+>> On 12/18/2019 2:38 AM, Gunnar Mills wrote:
+>>>
+>>> On 12/16/2019 7:44 AM, Thomaiyar, Richard Marian wrote:
+>>>>
+>>>> Delete interface is exposed as part of the user object itself. 
+>>>> Sample busctl command to do the delete of an user under 
+>>>> phosphor-user-manager
+>>>>
+>>>> busctl call xyz.openbmc_project.User.Manager 
+>>>> /xyz/openbmc_project/user/<username> 
+>>>> xyz.openbmc_project.Object.Delete Delete
+>>>>
+>>>>
+>>>
+>>> I am missing something here.. This does not work for me. I didn't 
+>>> think we allowed removing the root user, which is why it is disabled 
+>>> on the WebUI? If we do allow deleting the root user, should this be 
+>>> allowed from the WebUI?
+>>>
+>>> When sshed as root:
+>>> busctl call xyz.openbmc_project.User.Manager 
+>>> /xyz/openbmc_project/user/root xyz.openbmc_project.Object.Delete Delete
+>>> Call failed: The operation failed internally.
+>>>
+>>> In the journal I see
+>>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: userdel: user root 
+>>> is currently used by process 1
+>>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: The operation failed 
+>>> internally.
+>>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: User delete failed
+>>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: The operation failed 
+>>> internally.
+>>>
+>>>
+>>> When sshed as an "Administrator" role account,0„2 with the same call:
+>>> Call failed: Access denied
+>>>
+>>> NOTE: As an "Administrator" role I can't delete a user using "busctl 
+>>> call" only from the Redfish/WebUI, am I able to.
+>>>
+>>> Thanks!
+>>> Gunnar
+> Regards,
+Richard
