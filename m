@@ -2,57 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D751125D4E
-	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 10:10:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D28F2125D5F
+	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 10:13:59 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47dmLT4cjWzDqq8
-	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 20:10:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47dmQY24pVzDqpd
+	for <lists+openbmc@lfdr.de>; Thu, 19 Dec 2019 20:13:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a;
+ helo=mail-ot1-x32a.google.com; envelope-from=akashgj91@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="B2IQRawj"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47dmKl3X4RzDqnv
- for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 20:09:46 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
- by orsmga102.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 19 Dec 2019 01:09:43 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,331,1571727600"; d="scan'208";a="213198450"
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.66.97.224])
- ([10.66.97.224])
- by fmsmga008.fm.intel.com with ESMTP; 19 Dec 2019 01:09:42 -0800
-Subject: =?UTF-8?Q?Re=3a_Re=ef=bc=9a_How_can_I_add_a_user_for_openbmc_and_re?=
- =?UTF-8?Q?move_the_default_root_user=3f?=
-To: Joseph Reynolds <jrey@linux.ibm.com>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>, =?UTF-8?B?5Y2X6YeO44Og44Or44K3?=
- =?UTF-8?B?44Ko44Op44K0?= <1181052146@qq.com>,
- openbmc <openbmc@lists.ozlabs.org>
-References: <tencent_BBCBA6D64E821CDC3E0AD497B3C0FD77E509@qq.com>
- <4b32b6d0-da99-62c1-52f2-c2a7d4221dec@linux.intel.com>
- <tencent_74FD2ECBC3FF44DE65AAF884C881E0C34D05@qq.com>
- <a0e57fe5-e616-a0c2-a07a-a58407bebdfd@linux.intel.com>
- <7ff949ae-3292-09cf-071b-99385232e637@linux.vnet.ibm.com>
- <57829175-6ea3-8ed0-7e63-a36aa919f035@linux.intel.com>
- <0899a69e-ee7f-2fed-557b-5d2f1eca5066@linux.ibm.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <0461171c-51c1-8528-89e9-8a2ced195e9c@linux.intel.com>
-Date: Thu, 19 Dec 2019 14:39:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47dmPx3DqwzDqFZ
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 20:13:25 +1100 (AEDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 59so6365900otp.12
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 01:13:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=7cLZis7/GrobjwNIfv8XIoXbwMDIdLR6+N/irMSHd5I=;
+ b=B2IQRawjnciDKUC1/kYSySCB5Ysr8cvKb3w56juFMF1eQO0hnknsXRjvi4+r+h6BBg
+ 1+AqD7mshXCUzG1rgBPT6iqFl3gIJXt8GftEO5neq2FzuLETj+mPrE7Vh/uFbZ1Tl8yO
+ 971FeHgz/l8dL3q0yR8x1dOCIKtdVMl6ndEfYjCMfdr2abuIDhnXa6UU2eX1Vq7U3ZFB
+ Chr20aVeLYyzy1U3ssijRrPQWfzFz3oGg0HfLuZqy2BL37iiYZumTTOT1uOwM/3Bk3cT
+ TEpbewBvdmZuKy8eX5TNbJ5XZByoLvD6fKT27DN26EcSXAk03cS46v+i1UMWSCtB56rw
+ SlwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=7cLZis7/GrobjwNIfv8XIoXbwMDIdLR6+N/irMSHd5I=;
+ b=JUvu3tEXamq9wE7fQafMiQHwTi/+Y0y2k3rdDm3BpN0ap2qmq8LoJDtUHsY7djYs12
+ EoIhHW1edp1m2FrbdSJFjcxvE3gDORhcHqNCMhyQaDI2JT6lJV3vmfrZcda5htjK2D6R
+ UuODyRCP2RbQOcUbh9aPsoz48jqax1BpbnzaE0Yawc3rqJQqFhJBuMsMrbGZk57Qt/ZR
+ TZA5OVrhqIkY9GMNNFq+j4XHV5iwxlPg6eUnUldJNSqM71cVmOQTmaxDNg2zd0cOvglO
+ DvEJp9TouAHnuOSrytQmrn+/BSbF+gcFniLZDuIl7xNmvFZxlYyVk86ScaG/5BuIaqeq
+ 8Tcg==
+X-Gm-Message-State: APjAAAV5Ek11n160TFquHbflfEycYoJmYSy+gZfIf/pzuowhLVc3El8E
+ fiEhg8v2kLMwEyn6M565OFgys7q9ee7Kp5x/vueeQ9uW4xw=
+X-Google-Smtp-Source: APXvYqxjT3An6FZ9bNdwcfOAs6BbxSsy0w22eouN3RBWBwxad6SQYIJOxop7GD6oczMCnuTm23DhwupHwcr+/XzIeg0=
+X-Received: by 2002:a05:6830:1c8a:: with SMTP id
+ v10mr7438921otf.115.1576746801819; 
+ Thu, 19 Dec 2019 01:13:21 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <0899a69e-ee7f-2fed-557b-5d2f1eca5066@linux.ibm.com>
-Content-Type: text/plain; charset=gb18030; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+From: AKASH G J <akashgj91@gmail.com>
+Date: Thu, 19 Dec 2019 14:42:06 +0530
+Message-ID: <CAE33tLFu8BVN0s0sf3AT9e9dkBEqhZ2xqMSotpCMwbO0Jia-iA@mail.gmail.com>
+Subject: Exposing sensors to IPMI over dbus
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000005f56d059a0af95d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,118 +73,129 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000005f56d059a0af95d
+Content-Type: text/plain; charset="UTF-8"
 
-On 12/19/2019 12:06 PM, Joseph Reynolds wrote:
-> On 12/18/19 6:42 AM, Thomaiyar, Richard Marian wrote:
->> Hi Gunnar,
->>
->> Yes root user can't be deleted (basically uid 0), can't be deleted. 
->> The method works for other users only, like in case Liu, he wants to 
->> delete the newly created user.
->
-> FWIW, I am interested in moving the OpenBMC project away from having 
-> root login access enabled by default, and specifically disabling SSH 
-> access in general, and root access to the BMC's shell.  I also want to 
-> have a secure way to re-enable this when needed.  See 
-> https://github.com/ibm-openbmc/dev/issues/1528 Please let me know if 
-> you have any ideas on this topic.
->
-Currently you will be. Remove debug-tweaks & allow-root-login from 
-IMAGE_FEATURES, then the build will make sure that root user looses 
-group permissions, and OpenBMC is with no user accounts. Any new user 
-accounts must be created from Host interface through IPMI interface 
-(that's the logic we currently have).
+Hi all,
+I am using OpenBMC firmware for server board having Aspeed AST-2500.
 
-Note:
+Followed
+https://github.com/openbmc/entity-manager/blob/master/docs/my_first_sensors.md
+for populating sensor value to dbus. Entity manager configuration file is
+given below.
+{
+    "Exposes": [
+        {
+            "Address": "0x4f",
+            "Bus": 5,
+            "Name": "cpu0_vrd_temp",
+            "Thresholds": [
+                {
+                    "Direction": "greater than",
+                    "Name": "upper critical",
+                    "Severity": 1,
+                    "Value": 80
+                }
+            ],
+            "Type": "TMP75"
+        }
+    ],
+    "Name": "Rudra Baseboard",
+    "Probe": "xyz.openbmc_project.FruDevice({'PRODUCT_PRODUCT_NAME':
+'RUDRA'})",
+    "Type": "Board",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+        "Manufacturer": "$BOARD_MANUFACTURER",
+        "Model": "$BOARD_PRODUCT_NAME",
+        "PartNumber": "$BOARD_PART_NUMBER",
+        "SerialNumber": "$BOARD_SERIAL_NUMBER"
+    }
+}
 
-1. This will not remove the root user (uid 0, which is needed as you 
-mentioned below), but will not have any password (In order to remove the 
-password in the OpenBMC it needs one line change to remove usermod in 
-phosphor-defaults.inc & the /etc/ipmi_pass file, currently we have a 
-patch in the down-stream for the same, as community still needs root 
-user account, but OpenBMC has been updated to remove root user from 
-Admin & other group privileges, when debug-tweaks / allow-root-logins 
-are not defined.
+Wrote sample FRU information on eeprom with the following content. Used dd
+command for writing to eeprom.
 
->
-> I had understood the original question in this email thread as a 
-> request to "disable root access" so "root cannot login".  (Note that 
-> one consequence of disabling root login is that once you remove root 
-> access, it is hard to get back.  You'll have to use the sudo comand or 
-> su command from another user account, and I don't think sudo is 
-> present on OpenBMC systems.)
->
-> I understand that deleting the root user is not advisable because the 
-> system will break.  Instead the alternative is to disable access to 
-> the root account, for example, by doing one of:
-> - Change root's login shell to /sbin/nologin
-> - Change the root password to empty or lock the root password
-> - Change Linux-PAM to deny root account access
-> - Expire the root account (chage -E0 root)
->
-> Any idea which approach works best for OpenBMC?
+root@s2600wf:/sys/bus/i2c/devices/3-0056# cat eeprom
+Product:
+  MANUFACTURER  "ABC"
+  PART_NUMBER   "12345"
+  PRODUCT_NAME  "SAMPLENAME"
+  SERIAL_NUMBER "12312490840"
 
-If you have removed the password, then it can't be used. But if you need 
-to enable it for debug or on special use case, then it requires a method 
-to set a password. We enable setting the root
+The dbus tree not showing /xyz/openbmc_project/FruDevice/SAMPLENAME
 
-password using Set special user password OEM Command 
-(https://github.com/openbmc/intel-ipmi-oem/blob/master/src/oemcommands.cpp#L1130).
+root@s2600wf:~# busctl tree --no-pager xyz.openbmc_project.FruDevice
+`-/xyz
+  `-/xyz/openbmc_project
+    `-/xyz/openbmc_project/FruDevice
 
-Let me know your thoughts, As i see a decision can be made, i think we 
-can write a document (with community feedback), and move to a common 
-solution.
+In journalctl log the following messages are printed.
 
->
-> - Joseph
->
->>
->> Regards,
->>
->> Richard
->>
->>
->> On 12/18/2019 2:38 AM, Gunnar Mills wrote:
->>>
->>> On 12/16/2019 7:44 AM, Thomaiyar, Richard Marian wrote:
->>>>
->>>> Delete interface is exposed as part of the user object itself. 
->>>> Sample busctl command to do the delete of an user under 
->>>> phosphor-user-manager
->>>>
->>>> busctl call xyz.openbmc_project.User.Manager 
->>>> /xyz/openbmc_project/user/<username> 
->>>> xyz.openbmc_project.Object.Delete Delete
->>>>
->>>>
->>>
->>> I am missing something here.. This does not work for me. I didn't 
->>> think we allowed removing the root user, which is why it is disabled 
->>> on the WebUI? If we do allow deleting the root user, should this be 
->>> allowed from the WebUI?
->>>
->>> When sshed as root:
->>> busctl call xyz.openbmc_project.User.Manager 
->>> /xyz/openbmc_project/user/root xyz.openbmc_project.Object.Delete Delete
->>> Call failed: The operation failed internally.
->>>
->>> In the journal I see
->>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: userdel: user root 
->>> is currently used by process 1
->>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: The operation failed 
->>> internally.
->>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: User delete failed
->>> Dec 17 20:57:56 w37 phosphor-user-manager[220]: The operation failed 
->>> internally.
->>>
->>>
->>> When sshed as an "Administrator" role account,  with the same call:
->>> Call failed: Access denied
->>>
->>> NOTE: As an "Administrator" role I can't delete a user using "busctl 
->>> call" only from the Redfish/WebUI, am I able to.
->>>
->>> Thanks!
->>> Gunnar
-> Regards,
-Richard
+systemd[1]: Started Hwmon Temp Sensor.
+hwmontempsensor[120]: Error communicating to entity manager
+hwmontempsensor[120]: error communicating to entity manager
+
+Look like FruDevice daemon is not parsing the contents of eeprom and
+publish them to dbus.
+
+Is there any thing missing in configuration? Please help to resolve the
+problem.
+
+
+
+Thanks,
+
+Akash
+
+--00000000000005f56d059a0af95d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi all,</div><div>I am using OpenBMC firmware for ser=
+ver board having Aspeed AST-2500.</div><div><br></div><div>Followed <a href=
+=3D"https://github.com/openbmc/entity-manager/blob/master/docs/my_first_sen=
+sors.md">https://github.com/openbmc/entity-manager/blob/master/docs/my_firs=
+t_sensors.md</a> for populating sensor value to dbus. Entity manager config=
+uration file is given below. <br>{<br>=C2=A0 =C2=A0 &quot;Exposes&quot;: [<=
+br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;Address&quot;: &quot;0x4f&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 &quot;Bus&quot;: 5,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;Name&quot;: &quot;cpu0_vrd_temp&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 &quot;Thresholds&quot;: [<br>=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Direction&quot;: &quot;greater than&q=
+uot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;Name&quot;: &quot;upper critical&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Severity&quot;: 1,<b=
+r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &qu=
+ot;Value&quot;: 80<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 }<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ],<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Type&quot;: &quot;TMP75&quot;<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 ],<br>=C2=A0 =C2=A0 &quot;Name&quot;: =
+&quot;Rudra Baseboard&quot;,<br>=C2=A0 =C2=A0 &quot;Probe&quot;: &quot;xyz.=
+openbmc_project.FruDevice({&#39;PRODUCT_PRODUCT_NAME&#39;: &#39;RUDRA&#39;}=
+)&quot;,<br>=C2=A0 =C2=A0 &quot;Type&quot;: &quot;Board&quot;,<br>=C2=A0 =
+=C2=A0 &quot;xyz.openbmc_project.Inventory.Decorator.Asset&quot;: {<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Manufacturer&quot;: &quot;$BOARD_MANUFACTURE=
+R&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Model&quot;: &quot;$BOARD_PRO=
+DUCT_NAME&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;PartNumber&quot;: &qu=
+ot;$BOARD_PART_NUMBER&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SerialNum=
+ber&quot;: &quot;$BOARD_SERIAL_NUMBER&quot;<br>=C2=A0 =C2=A0 }<br>}<br><br>=
+Wrote sample FRU information on eeprom with the following content. Used dd =
+command for writing to eeprom.<br><br>root@s2600wf:/sys/bus/i2c/devices/3-0=
+056# cat eeprom <br>Product:<br>=C2=A0 MANUFACTURER =C2=A0&quot;ABC&quot;<b=
+r>=C2=A0 PART_NUMBER =C2=A0 &quot;12345&quot;<br>=C2=A0 PRODUCT_NAME =C2=A0=
+&quot;SAMPLENAME&quot;<br>=C2=A0 SERIAL_NUMBER &quot;12312490840&quot;<br><=
+br>The dbus tree not showing /xyz/openbmc_project/FruDevice/SAMPLENAME<br><=
+br>root@s2600wf:~# busctl tree --no-pager xyz.openbmc_project.FruDevice<br>=
+`-/xyz<br>=C2=A0 `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_pro=
+ject/FruDevice<br><br>In journalctl log the following messages are printed.=
+<br><br>systemd[1]: Started Hwmon Temp Sensor.<br>hwmontempsensor[120]: Err=
+or communicating to entity manager<br>hwmontempsensor[120]: error communica=
+ting to entity manager<br><br>Look like FruDevice daemon is not parsing the=
+ contents of eeprom and publish them to dbus.<br><br>Is there any thing mis=
+sing in configuration? Please help to resolve the problem.</div><div><br></=
+div><div><br></div><div><br></div><div>Thanks,</div><div><br></div><div>Aka=
+sh<br></div><div><br></div></div>
+
+--00000000000005f56d059a0af95d--
