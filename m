@@ -1,72 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A98C51273C3
+	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 04:16:06 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE71E1273BB
-	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 04:11:53 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47fDLH02PNzDqv5
-	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 14:11:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47fDR81n6SzDqv5
+	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 14:16:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d33;
+ helo=mail-io1-xd33.google.com; envelope-from=mine260309@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=203.205.250.33; helo=smtpbg510.qq.com;
- envelope-from=1181052146@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.b="njqizYuu"; 
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="WWdB9K0l"; 
  dkim-atps=neutral
-Received: from smtpbg510.qq.com (smtpbg506.qq.com [203.205.250.33])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
+ [IPv6:2607:f8b0:4864:20::d33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47fDKT4QsfzDqrn
- for <openbmc@lists.ozlabs.org>; Fri, 20 Dec 2019 14:11:03 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1576811455; bh=IOOGUw5IZ/8xn0Gi+9kVQi//KGDACCGcy7QBj9xXAuY=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=njqizYuuGgGFv2JTGRQBVBbSxpTBdCcj+jKMkSM+HvY8R2VOcyYAu7SXriAE1eTeu
- eS1Das77Oxn11VpLl+kAILRKwsnW56VncQayL/yNbS832y/zuN+1vIRN0ACh/q6ylC
- dJnjDp9MHePYb6NaPKHvELBeMWgXKdPA2DFQ1sOA=
-X-QQ-FEAT: hoArX50alxE1UkUVwbw/UlVKX961/AQGSOLDGSvpFHP/xypWNCJ1te3AXjaWz
- bO+lq5HkTtGac/XTrH+4yliiaNkyfX1b5JFllr8S+tbLjhZ86ssAejUumFQhr0O3PDZ6m09
- 99fk1V5CLv/LmGtN1Pc8JwV6k0SblMI01RWMpqOIXIfae20cgnfiV8noiu97wl4r2iDAIwp
- KvkIUqED5vgiU/PtKF+ibYyZ3mAyT4aywm00al1XKnrbWjtkQVJehabITLhbhk5hub3ruoZ
- BfIwDt6x9w22rQSVBxXiL1PPd+qLFDCmMQSZE8YTjdnX6LfxAZsizdAR0=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 45.79.132.183
-In-Reply-To: <28f173c2-3053-4ee9-aef9-2e52a9928a69@www.fastmail.com>
-References: <tencent_0139807C40A9C767A1F947C84B4CD99FE80A@qq.com>
- <CAN34foyoxNYP=wzB5mbVKkjk+m5RujdaF7UoMuBxDUZ2uTkDPw@mail.gmail.com>
- <28f173c2-3053-4ee9-aef9-2e52a9928a69@www.fastmail.com>
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1576811032t5538972
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?QW5kcmV3IEplZmZlcnk=?=" <andrew@aj.id.au>,
- "=?gb18030?B?U3RlcGhlbiBCZWNrd2l0aA==?=" <embeddedsteve@gmail.com>,
- "=?gb18030?B?Q6imZHJpYyBMZSBHb2F0ZXI=?=" <clg@kaod.org>
-Subject: =?gb18030?B?u9i4tKO6IGhvdyB0aGUgb3BlbmJtYyBydW5uaW5n?=
- =?gb18030?B?IGluIHFlbXUgY29tbXVuaWNhdGUgd2l0aCB0aGUg?=
- =?gb18030?B?b3BlcmF0aW5nIHN5c3RlbSBydW5uaW5nIGluIGFu?=
- =?gb18030?B?b3RoZXIgcWVtdSB2aWEgS0NTL0JUPw==?=
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5DFC3A18_10E12020_56F92E01"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 20 Dec 2019 11:03:52 +0800
-X-Priority: 3
-Message-ID: <tencent_74D53BB34AFCAFE54DA7D44E161CE83FDC09@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 1758712632
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 20 Dec 2019 11:03:53 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgweb:bgweb1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47fDQQ2s6GzDqrn
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Dec 2019 14:15:25 +1100 (AEDT)
+Received: by mail-io1-xd33.google.com with SMTP id n21so6403450ioo.10
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Dec 2019 19:15:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=S54TEo0pYF/9tAJTkJxzZvFyMxRD8fdDymNg3coX5aA=;
+ b=WWdB9K0lQCK0qcaCLpLATdGMJyJmwCcHC/WloocLFJ6Ky+GPu7/0s3NrOxJuRKzeIr
+ 1qSOzheyS3QWk/p8TZwudOZjgrRatAgsG2hHLQEIscF8NwIhbDMV9EKgWQQOyVgUbdC7
+ mU83ifSibfH1Dt2zuQavHqtpmsGczQtj5xteFhyoVkJfDv6spbeUcVRup9lH9cRWzeTH
+ ctx+mE6YmI1a9SwvTMA1uLIl5MQ1KDME0rZT5njN82qIBRjjOg+Jol864aJLHnLVjrqq
+ jsWwlhUZ6qTGK+cmQjeMfVxv8z0I6nqG2+Fg+8nq+v81iNnRrCZoLicaeHhV8rXjb0FT
+ NsqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=S54TEo0pYF/9tAJTkJxzZvFyMxRD8fdDymNg3coX5aA=;
+ b=hFeeGBFpjZDM2ezHsGxPwgXlhy+Y+VJmhmb9R3GzP3l/WKGzuVtH4w8zbiONqF/Zj7
+ TTpcxwnFagLZtwf0lyVBUfgqBuIN5DEjO+vTaLkj/2Tfh+TL2ViBnFVRqCvcian5GGio
+ pYOiEmJ30uuLlPFWLSEt8P1xLd93cidtGfMpJtli+tO3YIycrYRp5zhkejWqlU/Ivj+2
+ xksZ/R0q5FOw5yFOatjZ4aTMM6fTz5Icvhc6GBOpit53ddCH+V0zoYPamNS0EI1C+f/t
+ LDBE1YeeqwtU/dBZ6XebUAz6jrjnADVbXYv6qwbcNvL017g/D1zmPKemj/Q6KCjXhI6F
+ AmTA==
+X-Gm-Message-State: APjAAAWVcPJh8TvjFG4gbCfQU6EP/hvleBn6lRN8zd9d1S4AqAG4mThp
+ kP3ZXzUBnuS4z8sANpFf5SGI2TpjB/JqL9xMxY3yjk02a8uKEw==
+X-Google-Smtp-Source: APXvYqwXiV3PWPVgXVeEX/N1kGMaAHME7Re1WUy1joyXfOW52T/TN4n2W+KsdvywA8kr1+Kn9h5RBHnURyZWjhsCQNo=
+X-Received: by 2002:a02:9988:: with SMTP id a8mr10640853jal.33.1576811722574; 
+ Thu, 19 Dec 2019 19:15:22 -0800 (PST)
+MIME-Version: 1.0
+References: <2153c03a-fd09-fb67-7051-5e889e5d2f8b@linux.intel.com>
+ <CAARXrt=wL7ZT=tGzP-DQTgEwiSZOfdQ4n1kvE5oa6HhyPV3UfQ@mail.gmail.com>
+ <33a034df-8e29-681e-f83d-aa496f558d4f@linux.intel.com>
+In-Reply-To: <33a034df-8e29-681e-f83d-aa496f558d4f@linux.intel.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Fri, 20 Dec 2019 11:15:12 +0800
+Message-ID: <CAARXrtnL8-zpiL73E5E=q9=WcX_BDa31ZbcThBTNyMr1UF1HpQ@mail.gmail.com>
+Subject: Re: Power Supply Cold Redundancy
+To: "Yang, Cheng C" <cheng.c.yang@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,123 +74,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?gb18030?B?b3BlbmJtYw==?= <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On Fri, Dec 20, 2019 at 10:31 AM Yang, Cheng C
+<cheng.c.yang@linux.intel.com> wrote:
+>
+> Originally, I also thought I may push my code to phosphor-power, but
+> when I was trying to devtool modify phosphor-power, I found a error happen
+>
+> ERROR: Nothing PROVIDES 'openpower-dbus-interfaces' (but
+> /home/cyang29/openbmc-openbmc/meta-phosphor/recipes-phosphor/power/phosphor-power_git.bb
+> DEPENDS on or otherwise requires it).
+>
+> We do not use openpower-dbus-interfaces.
 
-------=_NextPart_5DFC3A18_10E12020_56F92E01
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-SGksIFN0ZXBoZW4NCg0KDQpUaGFua3MgZm9yIHlvdXIgaGVscCwgSSBoYXZlIGhhbmRsZWQg
-aG93IHRoZSBjbGllbnQgbGlrZSBpcG1pdG9vbCB0byBjb21tdW5pY2F0ZSB3aXRoIG9wZW5i
-bWMgdmlhIG5ldC4gQXMgQW5kcmV3IHNhaWQgbXkgcHJvYmxlbSBpcyBob3cgb3BlbmJtYyBj
-b21tdW5pY2F0ZSB3aXRoIGhvc3QgaW4gcWVtdSBlbnZpcm9ubWVudC4NCmlwbWl0b29sPC0t
-LS0tLXN0YWdlIDEgT0stLS0tLS0tJmd0O29wZW5ibWM8LS0tLS0tc3RhZ2UgMiBOT1QgT0st
-LS0tLS0mZ3Q7aG9zdA0KDQoNCkJlc3QgUmVnYXJkcyENCkxpdSBIb25nd2VpDQoNCg0KLS0t
-LS0tLS0tLS0tLS0tLS0tJm5ic3A71K3KvNPKvP4mbmJzcDstLS0tLS0tLS0tLS0tLS0tLS0N
-CreivP7IyzombmJzcDsiQW5kcmV3IEplZmZlcnkiPGFuZHJld0Bhai5pZC5hdSZndDs7DQq3
-osvNyrG85DombmJzcDsyMDE5xOoxMtTCMjDI1SjQx8bazuUpIMHos781OjUwDQrK1bz+yMs6
-Jm5ic3A7IlN0ZXBoZW4gQmVja3dpdGgiPGVtYmVkZGVkc3RldmVAZ21haWwuY29tJmd0Ozsi
-xM/SsKXgpeult6WopemltCI8MTE4MTA1MjE0NkBxcS5jb20mZ3Q7OyJDqKZkcmljIExlIEdv
-YXRlciI8Y2xnQGthb2Qub3JnJmd0OzsNCrOty806Jm5ic3A7Im9wZW5ibWMiPG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZyZndDs7DQrW98ziOiZuYnNwO1JlOiBob3cgdGhlIG9wZW5ibWMg
-cnVubmluZyBpbiBxZW11IGNvbW11bmljYXRlIHdpdGggdGhlIG9wZXJhdGluZyBzeXN0ZW0g
-cnVubmluZyBpbiBhbm90aGVyIHFlbXUgdmlhIEtDUy9CVD8NCg0KDQoNCg0KDQpPbiBGcmks
-IDIwIERlYyAyMDE5LCBhdCAwMDowNywgU3RlcGhlbiBCZWNrd2l0aCB3cm90ZToNCiZndDsg
-THVpIEhvbmd3ZWk7DQomZ3Q7Jm5ic3A7IEhlcmUgaXMgaG93IHdlIGhhbmRsZWQgb3VyIGlu
-aXRpYWwgc2V0dXAgZm9yIE9wZW5CTUM6DQomZ3Q7IDEpIGFsbCBvZiB0aGlzIHJ1bnMgaW4g
-YSBzaW5nbGUgVmlydHVhbE1hY2hpbmUgb24gYSBIb3N0IFN5c3RlbSAoYW4gDQomZ3Q7IEFw
-cGxlIE1hY2Jvb2sgaW4gbXkgY2FzZSkgLSB0aGUgVk0gaXMgcnVubmluZyBhbiB1YnVudHUg
-MTguMDQgTFRTIE9TLg0KJmd0OyAyKSBXaXRoaW4gdGhpcyBWTToNCiZndDsgYSkgQnVpbGQg
-dGhlIE9wZW5CTUMgaW1hZ2UgZm9yIEFTVDI1MDANCiZndDsgYikgWW91IHdpbGwgbmVlZCB0
-byByZWJ1aWxkIGZyb20gZG93bmxvYWRlZCBzb3VyY2UgdGhlIFFFTVUgdmVyc2lvbiANCiZn
-dDsgNC4xLjAgdG8gcnVuIHRoZSBBU1QyNTAwLiBUaGUgInN0b2NrIiB2ZXJzaW9uIHRoYXQg
-aXMgZGVsaXZlcmVkIHdpdGggDQomZ3Q7IFVidW50dSAxOC4wMyBpcyAyLjExLCBhbmQgZG9l
-cyBub3Qgd29yay4gUmVidWlsZCB0aGlzIGFuZCBrZWVwIGEgY29weSANCiZndDsgdG8gcmUt
-aW5zdGFsbCBhcyBuZWNlc3NhcnkuDQomZ3Q7IGMpIHlvdSB3aWxsIGFsc28gbmVlZCB0byBp
-bnN0YWxsIGlwbWl0b29sIG9uIHRoaXMgc3lzdGVtLg0KJmd0OyAzKSBJbiBUZXJtaW5hbCBX
-aW5kb3cgMTogVXNlIHRoaXMgY29tbWFuZCB0byBydW4gdGhlIGltYWdlOg0KJmd0OyBxZW11
-LXN5c3RlbS1hcm0gXA0KJmd0OyAtbWFjaGluZSBhc3QyNTAwLWV2YiBcDQomZ3Q7IC1tIDI1
-NiBcDQomZ3Q7IC1ub2dyYXBoaWMgXA0KJmd0OyAtZHJpdmUgDQomZ3Q7IGZpbGU9b2JtYy1w
-aG9zcGhvci1pbWFnZS1ldmItYXN0MjUwMC5zdGF0aWMubXRkLGZvcm1hdD1yYXcsaWY9bXRk
-IFwNCiZndDsgLW5ldCBuaWMgXA0KJmd0OyAtbmV0IA0KJmd0OyB1c2VyLGhvc3Rmd2Q9OjEy
-Ny4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6MjQ0My06NDQzLGhvc3Rmd2Q9
-dWRwOjEyNy4wLjAuMToyNjIzLTo2MjMsaG9zdG5hbWU9cWVtdSANCiZndDsgMykgSW4gVGVy
-bWluYWwgV2luZG93IDI6IFlvdSBjYW4gcnVuIHRoZSBpcG1pdG9vbCB0byB0YWxrIHRvIHRo
-ZSANCiZndDsgQVNUMjUwMCBCTUMgaW1hZ2U6DQomZ3Q7IGlwbWl0b29sIC1IIDEyNy4wLjAu
-MSAtSSBsYW5wbHVzIC1wIDI2MjMgLVUgcm9vdCAtUCAwcGVuQm1jIGNoYXNzaXMgDQomZ3Q7
-IHBvd2VyIHN0YXR1cw0KJmd0OyBDaGFzc2lzIFBvd2VyIGlzIG9mZg0KJmd0OyANCiZndDsg
-SVBNSSAicmF3IiBjb21tYW5kcyBhbHNvIHdvcms6DQomZ3Q7IGlwbWl0b29sIC1IIDEyNy4w
-LjAuMSAtSSBsYW5wbHVzIC1wIDI2MjMgLVUgcm9vdCAtUCAwcGVuQm1jIHJhdyAweDAwIDB4
-MGYNCiZndDsmbmJzcDsgM2MgMDAgMDAgMDAgMDANCiZndDsgDQoNCkkgdGhpbmsgd2hhdCBM
-aXUgd2FzIGFza2luZyBhYm91dCB3YXMgc2V0dGluZyB1cCBpbi1iYW5kIElQTUkgYmV0d2Vl
-biB0d28gZ3Vlc3RzDQooZS5nLiBvbmUgQk1DIGd1ZXN0IGFuZCBvbmUgaG9zdCBndWVzdCku
-IFlvdXIgZGVzY3JpcHRpb24gY292ZXJzIG5ldHdvcmsgSVBNSQ0KYmV0d2VlbiBhIG1hbmFn
-ZW1lbnQgY2xpZW50IGFuZCB0aGUgQk1DIGd1ZXN0Lg0KDQpBbmRyZXc=
-
-------=_NextPart_5DFC3A18_10E12020_56F92E01
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-PGRpdj5IaSwgU3RlcGhlbjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+VGhhbmtzIGZvciB5
-b3VyIGhlbHAsIEkgaGF2ZSBoYW5kbGVkIGhvdyB0aGUgY2xpZW50IGxpa2UgaXBtaXRvb2wg
-dG8gY29tbXVuaWNhdGUgd2l0aCBvcGVuYm1jIHZpYSBuZXQuIEFzIEFuZHJldyBzYWlkIG15
-IHByb2JsZW0gaXMgaG93IG9wZW5ibWMgY29tbXVuaWNhdGUgd2l0aCBob3N0IGluIHFlbXUg
-ZW52aXJvbm1lbnQuPC9kaXY+PGRpdj5pcG1pdG9vbCZsdDstLS0tLS1zdGFnZSAxIE9LLS0t
-LS0tLSZndDtvcGVuYm1jJmx0Oy0tLS0tLXN0YWdlIDIgTk9UIE9LLS0tLS0tJmd0O2hvc3Q8
-L2Rpdj48ZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+QmVzdCBSZWdhcmRzITwvZGl2PjxkaXY+
-TGl1IEhvbmd3ZWk8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6
-IDEycHg7Zm9udC1mYW1pbHk6IEFyaWFsIE5hcnJvdztwYWRkaW5nOjJweCAwIDJweCAwOyI+
-LS0tLS0tLS0tLS0tLS0tLS0tJm5ic3A71K3KvNPKvP4mbmJzcDstLS0tLS0tLS0tLS0tLS0t
-LS08L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6IDEycHg7YmFja2dyb3VuZDojZWZlZmVm
-O3BhZGRpbmc6OHB4OyI+PGRpdj48Yj63orz+yMs6PC9iPiZuYnNwOyJBbmRyZXcgSmVmZmVy
-eSImbHQ7YW5kcmV3QGFqLmlkLmF1Jmd0Ozs8L2Rpdj48ZGl2PjxiPreiy83KsbzkOjwvYj4m
-bmJzcDsyMDE5xOoxMtTCMjDI1SjQx8bazuUpIMHos781OjUwPC9kaXY+PGRpdj48Yj7K1bz+
-yMs6PC9iPiZuYnNwOyJTdGVwaGVuIEJlY2t3aXRoIiZsdDtlbWJlZGRlZHN0ZXZlQGdtYWls
-LmNvbSZndDs7IsTP0rCl4KXrpbelqKXppbQiJmx0OzExODEwNTIxNDZAcXEuY29tJmd0Ozsi
-Q6imZHJpYyBMZSBHb2F0ZXIiJmx0O2NsZ0BrYW9kLm9yZyZndDs7PHdicj48L2Rpdj48ZGl2
-PjxiPrOty806PC9iPiZuYnNwOyJvcGVuYm1jIiZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmcmZ3Q7Ozx3YnI+PC9kaXY+PGRpdj48Yj7W98ziOjwvYj4mbmJzcDtSZTogaG93IHRoZSBv
-cGVuYm1jIHJ1bm5pbmcgaW4gcWVtdSBjb21tdW5pY2F0ZSB3aXRoIHRoZSBvcGVyYXRpbmcg
-c3lzdGVtIHJ1bm5pbmcgaW4gYW5vdGhlciBxZW11IHZpYSBLQ1MvQlQ/PC9kaXY+PC9kaXY+
-PGRpdj48YnI+PC9kaXY+PGJyPjxicj5PbiBGcmksIDIwIERlYyAyMDE5LCBhdCAwMDowNywg
-U3RlcGhlbiBCZWNrd2l0aCB3cm90ZTo8YnI+Jmd0OyBMdWkgSG9uZ3dlaTs8YnI+Jmd0OyZu
-YnNwOyBIZXJlIGlzIGhvdyB3ZSBoYW5kbGVkIG91ciBpbml0aWFsIHNldHVwIGZvciBPcGVu
-Qk1DOjxicj4mZ3Q7IDEpIGFsbCBvZiB0aGlzIHJ1bnMgaW4gYSBzaW5nbGUgVmlydHVhbE1h
-Y2hpbmUgb24gYSBIb3N0IFN5c3RlbSAoYW4gPGJyPiZndDsgQXBwbGUgTWFjYm9vayBpbiBt
-eSBjYXNlKSAtIHRoZSBWTSBpcyBydW5uaW5nIGFuIHVidW50dSAxOC4wNCBMVFMgT1MuPGJy
-PiZndDsgMikgV2l0aGluIHRoaXMgVk06PGJyPiZndDsgYSkgQnVpbGQgdGhlIE9wZW5CTUMg
-aW1hZ2UgZm9yIEFTVDI1MDA8YnI+Jmd0OyBiKSBZb3Ugd2lsbCBuZWVkIHRvIHJlYnVpbGQg
-ZnJvbSBkb3dubG9hZGVkIHNvdXJjZSB0aGUgUUVNVSB2ZXJzaW9uIDxicj4mZ3Q7IDQuMS4w
-IHRvIHJ1biB0aGUgQVNUMjUwMC4gVGhlICJzdG9jayIgdmVyc2lvbiB0aGF0IGlzIGRlbGl2
-ZXJlZCB3aXRoIDxicj4mZ3Q7IFVidW50dSAxOC4wMyBpcyAyLjExLCBhbmQgZG9lcyBub3Qg
-d29yay4gUmVidWlsZCB0aGlzIGFuZCBrZWVwIGEgY29weSA8YnI+Jmd0OyB0byByZS1pbnN0
-YWxsIGFzIG5lY2Vzc2FyeS48YnI+Jmd0OyBjKSB5b3Ugd2lsbCBhbHNvIG5lZWQgdG8gaW5z
-dGFsbCBpcG1pdG9vbCBvbiB0aGlzIHN5c3RlbS48YnI+Jmd0OyAzKSBJbiBUZXJtaW5hbCBX
-aW5kb3cgMTogVXNlIHRoaXMgY29tbWFuZCB0byBydW4gdGhlIGltYWdlOjxicj4mZ3Q7IHFl
-bXUtc3lzdGVtLWFybSBcPGJyPiZndDsgLW1hY2hpbmUgYXN0MjUwMC1ldmIgXDxicj4mZ3Q7
-IC1tIDI1NiBcPGJyPiZndDsgLW5vZ3JhcGhpYyBcPGJyPiZndDsgLWRyaXZlIDxicj4mZ3Q7
-IGZpbGU9b2JtYy1waG9zcGhvci1pbWFnZS1ldmItYXN0MjUwMC5zdGF0aWMubXRkLGZvcm1h
-dD1yYXcsaWY9bXRkIFw8YnI+Jmd0OyAtbmV0IG5pYyBcPGJyPiZndDsgLW5ldCA8YnI+Jmd0
-OyB1c2VyLGhvc3Rmd2Q9OjEyNy4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6
-MjQ0My06NDQzLGhvc3Rmd2Q9dWRwOjEyNy4wLjAuMToyNjIzLTo2MjMsaG9zdG5hbWU9cWVt
-dSA8YnI+Jmd0OyAzKSBJbiBUZXJtaW5hbCBXaW5kb3cgMjogWW91IGNhbiBydW4gdGhlIGlw
-bWl0b29sIHRvIHRhbGsgdG8gdGhlIDxicj4mZ3Q7IEFTVDI1MDAgQk1DIGltYWdlOjxicj4m
-Z3Q7IGlwbWl0b29sIC1IIDEyNy4wLjAuMSAtSSBsYW5wbHVzIC1wIDI2MjMgLVUgcm9vdCAt
-UCAwcGVuQm1jIGNoYXNzaXMgPGJyPiZndDsgcG93ZXIgc3RhdHVzPGJyPiZndDsgQ2hhc3Np
-cyBQb3dlciBpcyBvZmY8YnI+Jmd0OyA8YnI+Jmd0OyBJUE1JICJyYXciIGNvbW1hbmRzIGFs
-c28gd29yazo8YnI+Jmd0OyBpcG1pdG9vbCAtSCAxMjcuMC4wLjEgLUkgbGFucGx1cyAtcCAy
-NjIzIC1VIHJvb3QgLVAgMHBlbkJtYyByYXcgMHgwMCAweDBmPGJyPiZndDsmbmJzcDsgM2Mg
-MDAgMDAgMDAgMDA8YnI+Jmd0OyA8YnI+PGJyPkkgdGhpbmsgd2hhdCBMaXUgd2FzIGFza2lu
-ZyBhYm91dCB3YXMgc2V0dGluZyB1cCBpbi1iYW5kIElQTUkgYmV0d2VlbiB0d28gZ3Vlc3Rz
-PGJyPihlLmcuIG9uZSBCTUMgZ3Vlc3QgYW5kIG9uZSBob3N0IGd1ZXN0KS4gWW91ciBkZXNj
-cmlwdGlvbiBjb3ZlcnMgbmV0d29yayBJUE1JPGJyPmJldHdlZW4gYSBtYW5hZ2VtZW50IGNs
-aWVudCBhbmQgdGhlIEJNQyBndWVzdC48YnI+PGJyPkFuZHJldzxicj48L2Rpdj4=
-
-------=_NextPart_5DFC3A18_10E12020_56F92E01--
-
+Right, that is a problem, and the good news is that Matt is already moving
+openpower-dbus-interfaces into phosphor-dbus-interfaces
+(https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/27380),
+so it will be no problem in future :)
