@@ -2,52 +2,43 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A187B1282E0
-	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 20:47:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 579961282DD
+	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 20:44:16 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47ffQp0fx3zDqvY
-	for <lists+openbmc@lfdr.de>; Sat, 21 Dec 2019 06:47:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47ffMK1KD1zDqv4
+	for <lists+openbmc@lfdr.de>; Sat, 21 Dec 2019 06:44:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=46.105.49.208; helo=20.mo7.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-X-Greylist: delayed 6596 seconds by postgrey-1.36 at bilbo;
- Sat, 21 Dec 2019 06:46:25 AEDT
-Received: from 20.mo7.mail-out.ovh.net (20.mo7.mail-out.ovh.net
- [46.105.49.208])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47ffPs3HbqzDqpq
- for <openbmc@lists.ozlabs.org>; Sat, 21 Dec 2019 06:46:22 +1100 (AEDT)
-Received: from player772.ha.ovh.net (unknown [10.108.16.63])
- by mo7.mail-out.ovh.net (Postfix) with ESMTP id D9E89142A35
- for <openbmc@lists.ozlabs.org>; Fri, 20 Dec 2019 18:16:57 +0100 (CET)
-Received: from kaod.org (lfbn-tou-1-1227-223.w90-76.abo.wanadoo.fr
- [90.76.50.223]) (Authenticated sender: clg@kaod.org)
- by player772.ha.ovh.net (Postfix) with ESMTPSA id 7C6C3D860810;
- Fri, 20 Dec 2019 17:16:53 +0000 (UTC)
-Subject: Re: [PATCH] hw/ssi: aspeed: Deselect chip to reset state in command
- mode
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
-References: <20191220153440.8118-1-andrew@aj.id.au>
- <2615a2f5-9397-a902-0f21-22e9fa35dc11@kaod.org>
-Message-ID: <bc1e2c51-fdfc-18c9-2d61-620be4298e9d@kaod.org>
-Date: Fri, 20 Dec 2019 18:16:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47ffLW10w8zDqnK
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Dec 2019 06:43:28 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 20 Dec 2019 11:43:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,336,1571727600"; d="scan'208";a="210912225"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga008.jf.intel.com with ESMTP; 20 Dec 2019 11:43:24 -0800
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH linux dev-5.4] peci: fix a build warning
+Date: Fri, 20 Dec 2019 11:43:29 -0800
+Message-Id: <20191220194329.19897-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <2615a2f5-9397-a902-0f21-22e9fa35dc11@kaod.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Ovh-Tracer-Id: 146648465002629989
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrvddufedgleejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepuffhvfhfkffffgggjggtgfesthejredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucfkpheptddrtddrtddrtddpledtrdejiedrhedtrddvvdefnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehplhgrhigvrhejjedvrdhhrgdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,32 +50,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This commit fixes below build warning when CONFIG_OF_DYNAMIC is
+enabled:
 
->> --- a/hw/ssi/aspeed_smc.c
->> +++ b/hw/ssi/aspeed_smc.c
->> @@ -739,6 +739,7 @@ static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
->>          break;
->>      case CTRL_READMODE:
->>      case CTRL_FREADMODE:
->> +        aspeed_smc_flash_unselect(fl);
+expected ‘int (*)(struct device *, const void *)’ but argument is of
+type ‘int (*)(struct device *, void *)’
 
-Also,
+Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+---
+ drivers/peci/peci-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is flushing the "dirty" flash pages in the underlying block device.
-
-Which is a good hint.
-
-Thanks,
-
-
-C.
-
->>          aspeed_smc_flash_select(fl);
->>          aspeed_smc_flash_setup(fl, addr);
->>  
->>
-> 
+diff --git a/drivers/peci/peci-core.c b/drivers/peci/peci-core.c
+index 61a2a59a9fe4..9aedb74710e6 100644
+--- a/drivers/peci/peci-core.c
++++ b/drivers/peci/peci-core.c
+@@ -1703,7 +1703,7 @@ static void peci_of_register_devices(struct peci_adapter *adapter) { }
+ #endif /* CONFIG_OF */
+ 
+ #if IS_ENABLED(CONFIG_OF_DYNAMIC)
+-static int peci_of_match_node(struct device *dev, void *data)
++static int peci_of_match_node(struct device *dev, const void *data)
+ {
+ 	return dev->of_node == data;
+ }
+-- 
+2.17.1
 
