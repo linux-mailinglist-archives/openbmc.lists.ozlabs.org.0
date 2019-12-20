@@ -2,77 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25D46127F66
-	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 16:34:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FFFA128248
+	for <lists+openbmc@lfdr.de>; Fri, 20 Dec 2019 19:40:55 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47fXpt5G99zDqv8
-	for <lists+openbmc@lfdr.de>; Sat, 21 Dec 2019 02:34:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47fcyD6S65zDqsQ
+	for <lists+openbmc@lfdr.de>; Sat, 21 Dec 2019 05:40:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::334;
+ helo=mail-ot1-x334.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.b="cXIGX72C"; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.b="UKpr+DQt"; dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="bYXw20sS"; 
+ dkim-atps=neutral
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
+ [IPv6:2607:f8b0:4864:20::334])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47fXnr01QKzDqsy
- for <openbmc@lists.ozlabs.org>; Sat, 21 Dec 2019 02:33:18 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 93164676;
- Fri, 20 Dec 2019 10:33:14 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 20 Dec 2019 10:33:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm1; bh=6r7TOnnEf7b3CRYAqPjpq/LFNJ
- bURBZsV5zBRxHVG7Q=; b=cXIGX72CPDGcsC/AXF5zHPMJHAN4pOz9ZsKgz8B5U/
- uNvLQvh5evAaEVGSOCJJV+hi7ar6MV+hGMCQPRBpkd01yo9PCkPfQWHkHA99x6d7
- 0UZ2WLLanS9hlMN+tYLmEY2LTrlj/krxuTy9U3XqpWLUqdbUYXreyADjA0cAeNYe
- 6aQ0sPvfiUK/XtxSt1K5mT2wXgYwL5MV2PEKVfqN4V8yICCRls45VPwAHmedhgfs
- byKBIBIJ3QPZOALJt/dUtyyUNywh47T6WO5bv/HAl6pfX4mwP3vOX5W7Z8QVpqmk
- nxFWVi+0kvLR87xcMA+M6v0JB34wbyERtQPCioVzEpfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=6r7TOnnEf7b3CRYAq
- Pjpq/LFNJbURBZsV5zBRxHVG7Q=; b=UKpr+DQta1gNvGGdJFYON8XD97kacshhY
- E9mVWPkVzTWs/AUW5B3Vw57HKU54YTKGV2aZIhlCFgoWarq23gCkABIBf8lDQeeA
- MCAOmCigxAEPnqmTF4PXp3+kruKbJG/rnp8ME3LQMqixffAknfeDUn3IX0Aoq5LQ
- Jgeo93qpxRfh++0xJQgS+f8OW8sUFQ7Dg0F3F2cyUc5PamY88U6eItoRUmiLoAEn
- eTVvg1yKay6UyYgcamWlLwcaGRdkXKrjj095lDAKoxGD3sS7H5muhyKcXwWGDM3y
- pSEvax1iR8ASTZ3sO2WNSI+A5VPUecMGfwZd57NtWC9n9G/VP24iw==
-X-ME-Sender: <xms:uen8XYJb6dz7LF2bCPFmrkG9PipcdP3oAVFfZixpvGwCKyWhIfgepA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvddufedgjeeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeetnhgurhgvficu
- lfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfkphepuddukedrvd
- duuddrledvrddufeenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdr
- ihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:uen8XZcbs2vYrk7dNSjdqUhPeafOwEovW4Oa5Oh1MM7O3KCFuzMZMw>
- <xmx:uen8XbKwavXN9W4PgtMWjoyzgGQadV1kUFE13rizAydZjP9371mz4A>
- <xmx:uen8XbBnAuLI2xTVrcLPSuVNOQKhxkT8LluD_QryvTf7cgjJAu0big>
- <xmx:uun8Xbw9lok2IRvKv8vQtpdthDf6XhLU5pighZsB47McfO4Rh2oLGA>
-Received: from mistburn.lan (unknown [118.211.92.13])
- by mail.messagingengine.com (Postfix) with ESMTPA id 75DC08005B;
- Fri, 20 Dec 2019 10:33:11 -0500 (EST)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH] hw/ssi: aspeed: Deselect chip to reset state in command mode
-Date: Sat, 21 Dec 2019 02:04:40 +1030
-Message-Id: <20191220153440.8118-1-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47fcxN6xCxzDqsR
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Dec 2019 05:40:08 +1100 (AEDT)
+Received: by mail-ot1-x334.google.com with SMTP id 19so448430otz.3
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Dec 2019 10:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=DMk00vjm2845qbnjwUCk1GsmiKJpJ8glZOC1Z0C2mpc=;
+ b=bYXw20sSS5CG6AUuq9yBwiN9BtatA1z8q+SWN17b8SiZnhxMYa+HhpT4Ihgpe4XY2S
+ 26CieLCF6bvj/pazexP3olwAbQfkfzaRR+7GpgkDKPmDUR2jf26ZAgM5cba/gPZ5+b1V
+ QAOumO64TlKucJ7CNziWAA9Y8HPTw29mAwQvvxTXBj4fr2jOgSk72NzrE/Qt3SMKL6qs
+ S0IHS5eYOt5WeuBTHvou8FTJHVCY9k1GgwzGNSZws0HaxQVv+sLVFCjzy7Xiqkyx6Jik
+ skqwAQx9YjJUMUTENy5yg6jIwBmh4oOTRAgDqkK17jZgR+b0JlgHTnBrkHWZFz6F4E8L
+ f6NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=DMk00vjm2845qbnjwUCk1GsmiKJpJ8glZOC1Z0C2mpc=;
+ b=qkOypjdBvnyyFpR0OKUSgorw3/lu4n50rs1sVHMT9Z5LgeD8na0qWmHzdpew2yfOMt
+ y8rFpoVPb/kct8lvm9NME73M3lp4ThABeVCuyrvNemKu/LqNRQz7qglUPJT9gj1FeVlu
+ +aZU/PtQVzdu3hgEW++EMR7HgAT7pTuzWoJhZi47a7OcglWH1mXtneXxWBfmRhBwcG/+
+ lGvVhZzvbgF/PfPvX6DKPiUDBgYv3A2nY4kaJWun0xp7ae5wmTzkscwtKu9sFTpmYQA3
+ TdS2zKUDvTedvSrf7M0Ph0YZDuz49hKDmJUTbcy92C01tyBCj/PImvj4/nfGeJVARByN
+ vWGA==
+X-Gm-Message-State: APjAAAXBad5HnzGhSl7H8y+ENUPDLWo+Mz9JLhclG5n5Ty4wEtrD+4WH
+ EpIe355jh/SQESppb9EFd+oylAuskHOJJilvAv8=
+X-Google-Smtp-Source: APXvYqx4nO3n3p7k/z8iQqUT5TPcdr42nLWUbij1MbsvqH4Afjm0ruWbCyY97zbAOkyZnI19FGPAILXh1pkXmZXcH/E=
+X-Received: by 2002:a05:6830:3048:: with SMTP id
+ p8mr930314otr.312.1576867205240; 
+ Fri, 20 Dec 2019 10:40:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <2153c03a-fd09-fb67-7051-5e889e5d2f8b@linux.intel.com>
+ <CAARXrt=wL7ZT=tGzP-DQTgEwiSZOfdQ4n1kvE5oa6HhyPV3UfQ@mail.gmail.com>
+ <33a034df-8e29-681e-f83d-aa496f558d4f@linux.intel.com>
+ <CAARXrtnL8-zpiL73E5E=q9=WcX_BDa31ZbcThBTNyMr1UF1HpQ@mail.gmail.com>
+ <B8C11063-6338-4AC3-892C-701EF7ED077E@fuzziesquirrel.com>
+In-Reply-To: <B8C11063-6338-4AC3-892C-701EF7ED077E@fuzziesquirrel.com>
+From: Brandon Wyman <bjwyman@gmail.com>
+Date: Fri, 20 Dec 2019 12:39:29 -0600
+Message-ID: <CAK_vbW1rTmUOLFJARd=OtWX8JVHGOJXA3rEHZ3wj8CpHOHZybQ@mail.gmail.com>
+Subject: Re: Power Supply Cold Redundancy
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,50 +79,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: clg@kaod.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>, "Yang,
+ Cheng C" <cheng.c.yang@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is probably a bug elsewhere, maybe in the kernel driver. However,
-this workaround/fix appears to resolve the squashfs/UBI corruption we've
-been seeing for quite some time in QEMU with e.g. witherspoon-bmc and
-associated images.
+On Fri, Dec 20, 2019 at 7:13 AM Brad Bishop <bradleyb@fuzziesquirrel.com> w=
+rote:
+>
+>
+>
+> > On Dec 19, 2019, at 10:15 PM, Lei YU <mine260309@gmail.com> wrote:
+> >
+> > On Fri, Dec 20, 2019 at 10:31 AM Yang, Cheng C
+> > <cheng.c.yang@linux.intel.com> wrote:
+> >>
+> >> Originally, I also thought I may push my code to phosphor-power, but
+> >> when I was trying to devtool modify phosphor-power, I found a error ha=
+ppen
+> >>
+> >> ERROR: Nothing PROVIDES 'openpower-dbus-interfaces' (but
+> >> /home/cyang29/openbmc-openbmc/meta-phosphor/recipes-phosphor/power/pho=
+sphor-power_git.bb
+> >> DEPENDS on or otherwise requires it).
+> >>
+> >> We do not use openpower-dbus-interfaces.
+> >
+> > Right, that is a problem, and the good news is that Matt is already mov=
+ing
+> > openpower-dbus-interfaces into phosphor-dbus-interfaces
+> > (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/=
++/27380),
+> > so it will be no problem in future :)
+>
+> This ^ does help but I don=E2=80=99t think its the whole story.  It sound=
+s like phosphor-power needs a meson option to turn off its dependency on or=
+g.openpower dbus interfaces=E2=80=A6regardless of what repository is provid=
+ing those.
+>
+> Going a step further - what are the org.openpower interfaces that phospho=
+r-power depends on anyway?  Can they just be moved to xyz.openbmc_project?
+>
+> -brad
 
-The problem is the chip is left in e.g. read mode and the deselect is
-necessary to reset it back to idle for the current command to issue
-correctly. Failure to deselect leads to command-mode access of data at
-unexpected addresses (the state mismatch means the command/address are
-potentially ignored) and the result presents as data corruption.
-
-Something I don't yet understand is the symptom (squashfs corruption)
-wasn't overly deterministic. I would have expected more widespread
-symptoms given the change. Having said that, UBI hammers the flash with
-its wear-leveling (somewhat ironically). Its approach appears to be
-somewhat complex, so maybe it's not surprising that the results are so
-variable.
-
-Cc: Andrew Geissler <geissonator@gmail.com>
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-
----
-
-An early Christmas present for Andrew G.
----
- hw/ssi/aspeed_smc.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 7755eca34976..c8713f3e3347 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -739,6 +739,7 @@ static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     case CTRL_READMODE:
-     case CTRL_FREADMODE:
-+        aspeed_smc_flash_unselect(fl);
-         aspeed_smc_flash_select(fl);
-         aspeed_smc_flash_setup(fl, addr);
- 
--- 
-2.20.1
-
+I am not looking to chase anyone away from phosphor-power, but I do
+recall seeing some power supply related commits in x86-power-control,
+which seems to be some intel related repository.
+https://github.com/openbmc/x86-power-control/commits/master
