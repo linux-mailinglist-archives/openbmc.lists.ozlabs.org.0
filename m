@@ -2,53 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 716D91290C0
-	for <lists+openbmc@lfdr.de>; Mon, 23 Dec 2019 02:48:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A599C1290D8
+	for <lists+openbmc@lfdr.de>; Mon, 23 Dec 2019 03:14:54 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47h2M84CqbzDqQL
-	for <lists+openbmc@lfdr.de>; Mon, 23 Dec 2019 12:48:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47h2x72qB9zDqG1
+	for <lists+openbmc@lfdr.de>; Mon, 23 Dec 2019 13:14:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=253d693be=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=cheng.c.yang@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47h2LP1HxSzDqGT
- for <openbmc@lists.ozlabs.org>; Mon, 23 Dec 2019 12:48:11 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 22 Dec 2019 17:48:06 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,346,1571727600"; d="scan'208";a="219364600"
-Received: from cyang29-mobl1.ccr.corp.intel.com (HELO [10.239.192.99])
- ([10.239.192.99])
- by orsmga003.jf.intel.com with ESMTP; 22 Dec 2019 17:48:05 -0800
-Subject: Re: Power Supply Cold Redundancy
-To: Brandon Wyman <bjwyman@gmail.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
-References: <2153c03a-fd09-fb67-7051-5e889e5d2f8b@linux.intel.com>
- <CAARXrt=wL7ZT=tGzP-DQTgEwiSZOfdQ4n1kvE5oa6HhyPV3UfQ@mail.gmail.com>
- <33a034df-8e29-681e-f83d-aa496f558d4f@linux.intel.com>
- <CAARXrtnL8-zpiL73E5E=q9=WcX_BDa31ZbcThBTNyMr1UF1HpQ@mail.gmail.com>
- <B8C11063-6338-4AC3-892C-701EF7ED077E@fuzziesquirrel.com>
- <CAK_vbW1rTmUOLFJARd=OtWX8JVHGOJXA3rEHZ3wj8CpHOHZybQ@mail.gmail.com>
-From: "Yang, Cheng C" <cheng.c.yang@linux.intel.com>
-Message-ID: <1f61578d-368d-e89e-f5c2-108d0b4b0891@linux.intel.com>
-Date: Mon, 23 Dec 2019 09:48:04 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47h2wL0KrVzDqFm
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Dec 2019 13:14:04 +1100 (AEDT)
+IronPort-SDR: av+2ODemKVhQpQa3Mj3Uwddh7EcNkyjEoG3Kr72k321VKBsbcnglhs9IgaBAujt0XLUElj6RwX
+ B78fc3eMhTWg==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx01.quantatw.com with ESMTP; 23 Dec 2019 10:14:01 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 23 Dec
+ 2019 10:13:50 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Mon, 23 Dec 2019 10:13:50 +0800
+From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+To: Michael Walsh <micwalsh@us.ibm.com>
+Subject: RE:  JSON file boot_table in openbmc-test-automation
+Thread-Topic: JSON file boot_table in openbmc-test-automation
+Thread-Index: AdW25PDauD9IZkN7TnyNdIL4fSiWJAARQCeAAIMdThA=
+Date: Mon, 23 Dec 2019 02:13:50 +0000
+Message-ID: <2686e933220b4311bb38f215454e5269@quantatw.com>
+References: <891637d68b4d48459658e139921a5b25@quantatw.com>
+ <OF1495226C.AC844C2F-ON002584D6.006B4FB7-862584D6.006BD520@notes.na.collabserv.com>
+In-Reply-To: <OF1495226C.AC844C2F-ON002584D6.006B4FB7-862584D6.006BD520@notes.na.collabserv.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-as-product-ver: SMEX-14.0.0.1158-8.5.1020-25120.003
+x-tm-as-result: No-10--7.379800-8.000000
+x-tmase-matchedrid: 1GZI+iG+Mtfuo96mfIBuopzEHTUOuMX33dCmvEa6IiGoLZarzrrPma2S
+ wIjG5UkRx91bb4/YjfEWmYBpOni9XxQ3/xoDO/Ilx64UvlSkg3HhwsEcDDUFFmkdgYWZtIXpjQb
+ 0ZijHcXBQz2YdWcOdHlbH93kcGmO/OO37vtaAjDWejeo11iW0NyQ+SLVh+H0im2kQ5yB7R6j2Tq
+ 4vVkH7QaPxKyivBIjaJ11hrXOV47DCFdW8OB9PN2fd6M+N3X1xV447DNvw38ZEBwXMKINh6BgM2
+ jZHFKlFeZcaLLThH63jUdNV82Vjn/R3YoE94O3mMDYSOHyMogJ6Ab+GNk7xs5cFdomgH0lngxsf
+ zkNRlfLdB/CxWTRRu4Gh9SYKzkjuhG2qikEpQGVgbjdflrPI5ty+J4jMbUSMX7rcOgIz9Q7owKN
+ HDJ6o6kd3fIgm/YMZ
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--7.379800-8.000000
+x-tmase-version: SMEX-14.0.0.1158-8.5.1020-25120.003
+x-tm-snts-smtp: 53A2E20909172AE5D4C45072C6AAF6F298F10AF0E99BB24E6BB47D9DFB67B6722000:B
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <CAK_vbW1rTmUOLFJARd=OtWX8JVHGOJXA3rEHZ3wj8CpHOHZybQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,45 +71,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ George Keishing <gkeishin@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wyman,
-
-     X86-power-control only contains some power on/off related features, 
-we do not have any plan to put any PSU related feature to it.
-
-
-Thank you very much!
-
-On 12/21/2019 2:39 AM, Brandon Wyman wrote:
-> On Fri, Dec 20, 2019 at 7:13 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
->>
->>
->>> On Dec 19, 2019, at 10:15 PM, Lei YU <mine260309@gmail.com> wrote:
->>>
->>> On Fri, Dec 20, 2019 at 10:31 AM Yang, Cheng C
->>> <cheng.c.yang@linux.intel.com> wrote:
->>>> Originally, I also thought I may push my code to phosphor-power, but
->>>> when I was trying to devtool modify phosphor-power, I found a error happen
->>>>
->>>> ERROR: Nothing PROVIDES 'openpower-dbus-interfaces' (but
->>>> /home/cyang29/openbmc-openbmc/meta-phosphor/recipes-phosphor/power/phosphor-power_git.bb
->>>> DEPENDS on or otherwise requires it).
->>>>
->>>> We do not use openpower-dbus-interfaces.
->>> Right, that is a problem, and the good news is that Matt is already moving
->>> openpower-dbus-interfaces into phosphor-dbus-interfaces
->>> (https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/27380),
->>> so it will be no problem in future :)
->> This ^ does help but I don’t think its the whole story.  It sounds like phosphor-power needs a meson option to turn off its dependency on org.openpower dbus interfaces…regardless of what repository is providing those.
->>
->> Going a step further - what are the org.openpower interfaces that phosphor-power depends on anyway?  Can they just be moved to xyz.openbmc_project?
->>
->> -brad
-> I am not looking to chase anyone away from phosphor-power, but I do
-> recall seeing some power supply related commits in x86-power-control,
-> which seems to be some intel related repository.
-> https://github.com/openbmc/x86-power-control/commits/master
+SSBzZWUuIFRoYW5rcyBmb3IgeW91ciByZXBseS4NCg0KRnJvbTogTWljaGFlbCBXYWxzaCA8bWlj
+d2Fsc2hAdXMuaWJtLmNvbT4gDQpTZW50OiBTYXR1cmRheSwgRGVjZW1iZXIgMjEsIDIwMTkgMzoz
+OCBBTQ0KVG86IFRvbnkgTGVlICjmnY7mloflr4wpIDxUb255LkxlZUBxdWFudGF0dy5jb20+DQpD
+Yzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBHZW9yZ2UgS2Vpc2hpbmcgPGdrZWlzaGluQGlu
+LmlibS5jb20+DQpTdWJqZWN0OiBSZTogSlNPTiBmaWxlIGJvb3RfdGFibGUgaW4gb3BlbmJtYy10
+ZXN0LWF1dG9tYXRpb24NCg0KVGhlcmUgYXJlIHNldmVyYWwgJ1Bvd2VyIG9uJyBib290IHR5cGVz
+IHJlcHJlc2VudGVkIGluIGRhdGEvYm9vdF90YWJsZS5qc29uLiDCoExldCdzIHRha2UgdGhlICdS
+RVNUIFBvd2VyIE9uJyBhcyBhbiBleGFtcGxlOg0KDQrCoCDCoCAiUkVTVCBQb3dlciBPbiI6IHsN
+CsKgIMKgIMKgIMKgICJzdGFydCI6IHsNCsKgIMKgIMKgIMKgIMKgIMKgICJyZXN0IjogIl4xJCIs
+DQrCoCDCoCDCoCDCoCDCoCDCoCAiY2hhc3NpcyI6ICJeT2ZmJCIsDQrCoCDCoCDCoCDCoCDCoCDC
+oCAiYm9vdF9wcm9ncmVzcyI6ICJeT2ZmfFVuc3BlY2lmaWVkJCIsDQrCoCDCoCDCoCDCoCDCoCDC
+oCAib3BlcmF0aW5nX3N5c3RlbSI6ICJeSW5hY3RpdmUkIiwNCsKgIMKgIMKgIMKgIMKgIMKgICJo
+b3N0IjogIl5PZmYkIg0KwqAgwqAgwqAgwqAgfSwNCsKgIMKgIMKgIMKgICJlbmQiOiB7DQrCoCDC
+oCDCoCDCoCDCoCDCoCAicmVzdCI6ICJeMSQiLA0KwqAgwqAgwqAgwqAgwqAgwqAgImNoYXNzaXMi
+OiAiXk9uJCIsDQrCoCDCoCDCoCDCoCDCoCDCoCAiYm9vdF9wcm9ncmVzcyI6ICJeRlcgUHJvZ3Jl
+c3MsIFN0YXJ0aW5nIE9TfE9TU3RhcnQkIiwNCsKgIMKgIMKgIMKgIMKgIMKgICJvcGVyYXRpbmdf
+c3lzdGVtIjogIl5Cb290Q29tcGxldGUkIiwNCsKgIMKgIMKgIMKgIMKgIMKgICJob3N0IjogIl5S
+dW5uaW5nJCIsDQrCoCDCoCDCoCDCoCDCoCDCoCAib3NfcGluZyI6ICJeMSQiLA0KwqAgwqAgwqAg
+wqAgwqAgwqAgIm9zX2xvZ2luIjogIl4xJCIsDQrCoCDCoCDCoCDCoCDCoCDCoCAib3NfcnVuX2Nt
+ZCI6ICJeMSQiDQrCoCDCoCDCoCDCoCB9LA0KwqAgwqAgwqAgwqAgImJtY19yZWJvb3QiOiAwLA0K
+wqAgwqAgwqAgwqAgIm1ldGhvZF90eXBlIjogImtleXdvcmQiLA0KwqAgwqAgwqAgwqAgIm1ldGhv
+ZCI6ICJJbml0aWF0ZSBIb3N0IEJvb3QgwqB3YWl0PSR7MH0iLA0KwqAgwqAgwqAgwqAgImxpYl9m
+aWxlX3BhdGgiOiAic3RhdGVfbWFuYWdlci5yb2JvdCINCsKgIMKgIH0sDQoNClRoZSBlbmQgcmVx
+dWlyZW1lbnRzIGluZGljYXRlIHRoYXQgdGhlIG9wZXJhdGluZ19zeXN0ZW0gdmFsdWUgbXVzdCBi
+ZSBCb290Q29tcGxldGUuIMKgSSd2ZSBuZXZlciBzZWVuIHRoaXMgZmFpbCBiZWNhdXNlIHRoZSBv
+cGVyYXRpbmdfc3lzdGVtIHN0YXRlIHdhcyAiU3RhbmRieSIuIMKgVW5sZXNzIHlvdSBmb3Jlc2Vl
+IGEgY2hhbmdlIGNvbWluZyB0aGF0IG5lY2Vzc2l0YXRlIHRoaXMsIEknZCBiZSBpbmNsaW5lZCB0
+byBsZWF2ZSBpdCBhcyBpcy4gwqBBcyB0aGUgc2F5aW5nIGdvZXMgIklmIGl0IGFpbid0IGJyb2tl
+LCBkb24ndCBmaXggaXQiLg0KDQoNCk1pY2hhZWwgV2Fsc2gNCklCTSBEZXB0IDNBTA0KUm9jaGVz
+dGVyLCBNTg0KbWFpbHRvOm1pY3dhbHNoQHVzLmlibS5jb20NCg0KDQoNCg0KRnJvbTogwqAgwqAg
+wqAgwqAiVG9ueSBMZWUgKOadjuaWh+WvjCkiIDxtYWlsdG86VG9ueS5MZWVAcXVhbnRhdHcuY29t
+Pg0KVG86IMKgIMKgIMKgIMKgIm1haWx0bzptaWN3YWxzaEB1cy5pYm0uY29tIiA8bWFpbHRvOm1p
+Y3dhbHNoQHVzLmlibS5jb20+DQpDYzogwqAgwqAgwqAgwqAibWFpbHRvOm9wZW5ibWNAbGlzdHMu
+b3psYWJzLm9yZyIgPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpEYXRlOiDCoCDC
+oCDCoCDCoDEyLzE5LzIwMTkgMDk6MjQgUE0NClN1YmplY3Q6IMKgIMKgIMKgIMKgW0VYVEVSTkFM
+XSBKU09OIGZpbGUgYm9vdF90YWJsZSBpbiBvcGVuYm1jLXRlc3QtYXV0b21hdGlvbg0KX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQoNCg0KSGkgTWljaGFlbCwNCg0K
+UmVmZXIgdG8gdGhlIG1ldGhvZCByZWFkSG9zdFN0YXRlKCkgaW4gcmVwbyBwaG9zcGhvci1sb2dn
+aW5nLiBUaGUgZGVzY3JpcHRpb24gDQoiRm9yIGhvc3Qgb24sIGxvb2tzIGZvciB0aGUgdmFsdWVz
+IG9mICdCb290Q29tcGxldGUnIG9yICdTdGFuZGJ5Jw0KaW4gdGhlIE9wZXJhdGluZ1N5c3RlbVN0
+YXRlIHByb3BlcnR5IC4uLiINClNvLCBJJ20gd29uZGVyIHRoYXQgaWYgdGhlIHZhbHVlIG9mIHRo
+ZSBrZXkgIm9wZXJhdGluZ19zeXN0ZW0iIGNhbiBiZQ0KIl5Cb290Q29tcGxldGV8U3RhbmRieSQi
+IGZvciBhY3Rpb24gIlBvd2VyIE9uIiBpbiB0aGUgYm9vdF90YWJsZS5qc29uPw0KDQpUaGFua3MN
+CkJlc3QgUmVnYXJkcywNClRvbnkNCg0KDQoNCg==
