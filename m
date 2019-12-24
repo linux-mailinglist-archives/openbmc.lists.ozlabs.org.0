@@ -1,74 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 958D01296AF
-	for <lists+openbmc@lfdr.de>; Mon, 23 Dec 2019 14:53:25 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47hLR66dDkzDqJS
-	for <lists+openbmc@lfdr.de>; Tue, 24 Dec 2019 00:53:22 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 604F5129E1F
+	for <lists+openbmc@lfdr.de>; Tue, 24 Dec 2019 07:37:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47hmjz2tgSzDqMl
+	for <lists+openbmc@lfdr.de>; Tue, 24 Dec 2019 17:37:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1043;
- helo=mail-pj1-x1043.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=protonmail.com (client-ip=185.70.40.130;
+ helo=mail-40130.protonmail.ch; envelope-from=rgrs@protonmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="iKybZvSV"; 
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="Afmx/BLX"; 
  dkim-atps=neutral
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com
- [IPv6:2607:f8b0:4864:20::1043])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch
+ [185.70.40.130])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47hLJs54VhzDqLY
- for <openbmc@lists.ozlabs.org>; Tue, 24 Dec 2019 00:47:57 +1100 (AEDT)
-Received: by mail-pj1-x1043.google.com with SMTP id m13so7532987pjb.2
- for <openbmc@lists.ozlabs.org>; Mon, 23 Dec 2019 05:47:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=57Oijn45epfHx8UrEcC/E9dVif2WfR8DVnG0LDbrF+s=;
- b=iKybZvSVXB9CPCxFdTSdnOF/lSw5GP/DWZcUkoBtIt15EeYGBnrNwnbmuDyng1UxLQ
- VJE6wttOZRN7I4s15GswhXiUOLp/zt5vlxCIiRUF7oYOzjosgIdlfk5gvwvA6g12W2X8
- NlDMKipdNVjKmKaWpqAm5QIi9jYs0wR+dfv5tSZ2+tD0VQ6cI5NwJmMmM1lK7GpXn4Xv
- 74/ZzoNOiBVfvBcw0KoVqa5lM8lePR8/5LRhvMWDVL5DQpC8SC6Ufpvp4LJK5rfT/HhF
- CWndAlhlxgM+2eHZp3CyriNMP3NCBS8sn9O2nfn/7nePDWakQ+ZZA/haoTKQZtwpCF8I
- XIWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=57Oijn45epfHx8UrEcC/E9dVif2WfR8DVnG0LDbrF+s=;
- b=bGa2Nf4xy51+xERQ0V09PapOhVbfvujilTqwG5x89rruCLvIvW0kWEKao7L3IPtDb2
- dkJXH29wFBL6W7fHaoahvHsxCkcJbKFBliir8k8WbN/3zdnWDulYg8T2Hftb9oGuai1d
- YkcxuactjsX1BlL+G+QBAUM1UpKlOdiASZVZHtCncqGg9cLg8S9a2fhwEJyRfi0UoZ00
- CA0fqthriNovU6YS0v6sZFO4s973MsLEGMSYDYsdgEV5OZ7TlBxwC4xb886mxhBXlybi
- Tq9RiEBShdm7sauH04GNfzPqEIdaQwvvHcchN9RcgarfgQekG5Rqk0w6bl4CQKH04KWZ
- xbng==
-X-Gm-Message-State: APjAAAUKIIayqnIKtHrUEcJslCnXd6w+e/sePqj4jKRIxF3mXy4JOUwi
- mS706x6hnpKpCbdsMDMumUi3pMjg
-X-Google-Smtp-Source: APXvYqzHaDVCi00OKYgVX3Rzmk7AmKK7T8LKS2l4uQSrRzeWVqpIa71+hY7+lENFAUqp5lTqBMq2uA==
-X-Received: by 2002:a17:90a:8912:: with SMTP id
- u18mr33696231pjn.21.1577108875120; 
- Mon, 23 Dec 2019 05:47:55 -0800 (PST)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id b65sm22988588pgc.18.2019.12.23.05.47.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 23 Dec 2019 05:47:54 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.4 4/4] ARM: dts: aspeed-g6: Fix FSI master location
-Date: Tue, 24 Dec 2019 00:47:35 +1100
-Message-Id: <20191223134735.559200-5-joel@jms.id.au>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20191223134735.559200-1-joel@jms.id.au>
-References: <20191223134735.559200-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47hmjC374kzDqLS
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Dec 2019 17:36:59 +1100 (AEDT)
+Date: Tue, 24 Dec 2019 06:36:53 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1577169414;
+ bh=1HRL2a2iSlCbASLpjnGTdEVTgYiGcNc/tXCXV0sPzlI=;
+ h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+ b=Afmx/BLXrLETreIevaNwPvp5RV0LpJXKz6xkcThL8a+Iyg+IPiaGCBUM8LH/yUce7
+ ZJcxx5VcaIgD2NFRb5XiBZtcg+FpDoHBGy/6C7XeLCajhJzo3Ce9MzaKSeaabUb9aZ
+ NTF978voNzhlxIIPqXSl7j1N+vEu+0wd+76rb2Dc=
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: rgrs <rgrs@protonmail.com>
+Subject: BMC UUID property/object not found
+Message-ID: <yepdfnStu5NH94jUzVoKLGdX2kVPErynD7ERZlcm_Ig8_K1zkvmSLoC1SYhdm0b3ASb_B8D0r_PTN5Ct_kGk_3aoyi31V6GaM0q3T_DxunU=@protonmail.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+ boundary="b1_1d9d8aa61937ae94f0c29c39e8cb3682"
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
+ shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,73 +55,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: rgrs <rgrs@protonmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-They were placed incorrectly when rebasing the patches on top of 5.4.
+This is a multi-part message in MIME format.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-g6.dtsi | 39 ++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+--b1_1d9d8aa61937ae94f0c29c39e8cb3682
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index 2af9efa1faa1..99cc7d7ced4d 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -163,26 +163,6 @@
- 				spi-max-frequency = <50000000>;
- 				status = "disabled";
- 			};
--
--			fsim0: fsi@1e79b000 {
--				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
--				reg = <0x1e79b000 0x94>;
--				interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
--				pinctrl-names = "default";
--				pinctrl-0 = <&pinctrl_fsi1_default>;
--				clocks = <&syscon ASPEED_CLK_GATE_FSICLK>;
--				status = "disabled";
--			};
--
--			fsim1: fsi@1e79b100 {
--				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
--				reg = <0x1e79b100 0x94>;
--				interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
--				pinctrl-names = "default";
--				pinctrl-0 = <&pinctrl_fsi2_default>;
--				clocks = <&syscon ASPEED_CLK_GATE_FSICLK>;
--				status = "disabled";
--			};
- 		};
- 
- 		mdio0: mdio@1e650000 {
-@@ -606,6 +586,25 @@
- 				ranges = <0 0x1e78a000 0x1000>;
- 			};
- 
-+			fsim0: fsi@1e79b000 {
-+				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
-+				reg = <0x1e79b000 0x94>;
-+				interrupts = <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&pinctrl_fsi1_default>;
-+				clocks = <&syscon ASPEED_CLK_GATE_FSICLK>;
-+				status = "disabled";
-+			};
-+
-+			fsim1: fsi@1e79b100 {
-+				compatible = "aspeed,ast2600-fsi-master", "fsi-master";
-+				reg = <0x1e79b100 0x94>;
-+				interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&pinctrl_fsi2_default>;
-+				clocks = <&syscon ASPEED_CLK_GATE_FSICLK>;
-+				status = "disabled";
-+			};
- 		};
- 	};
- };
--- 
-2.24.0
+SGksCgpJIGdldCBiZWxvdyBlcnJvciBtZXNzYWdlIG9uICJpcG1pdG9vbCBtYyBndWlkIiBjb21t
+YW5kLAoKRGVjIDI0IDA1OjA5OjMzIG9ibWMgaXBtaWRbMTQ1N106IEZhaWxlZCBpbiByZWFkaW5n
+IEJNQyBVVUlEIHByb3BlcnR5CkRlYyAyNCAwNTowOTo0MiBvYm1jIGlwbWlkWzE0NTddOiBObyBP
+YmplY3QgaGFzIGltcGxlbWVudGVkIHRoZSBpbnRlcmZhY2UKRGVjIDI0IDA1OjA5OjQyIG9ibWMg
+aXBtaWRbMTQ1N106IFRoZSBvcGVyYXRpb24gZmFpbGVkIGludGVybmFsbHkuCgpJcyB0aGlzIHNh
+bWUgYXMKaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy9pc3N1ZXMvMzUzMgoKV2hp
+Y2ggYXBwL3NlcnZpY2UgaW1wbGVtZW50cyB0aGlzIGludGVyZmFjZT8KClRoYW5rcwoKUmFq
+
+
+--b1_1d9d8aa61937ae94f0c29c39e8cb3682
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+PGRpdj5IaSw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIGdldCBiZWxvdyBlcnJvciBt
+ZXNzYWdlIG9uICJpcG1pdG9vbCBtYyBndWlkIiBjb21tYW5kLDxicj48L2Rpdj48ZGl2Pjxicj48
+L2Rpdj48ZGl2PkRlYyAyNCAwNTowOTozMyBvYm1jIGlwbWlkWzE0NTddOiBGYWlsZWQgaW4gcmVh
+ZGluZyBCTUMgVVVJRCBwcm9wZXJ0eTxicj48L2Rpdj48ZGl2PkRlYyAyNCAwNTowOTo0MiBvYm1j
+IGlwbWlkWzE0NTddOiBObyBPYmplY3QgaGFzIGltcGxlbWVudGVkIHRoZSBpbnRlcmZhY2U8YnI+
+PC9kaXY+PGRpdj5EZWMgMjQgMDU6MDk6NDIgb2JtYyBpcG1pZFsxNDU3XTogVGhlIG9wZXJhdGlv
+biBmYWlsZWQgaW50ZXJuYWxseS48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JcyB0aGlz
+IHNhbWUgYXMgPGJyPjwvZGl2PjxkaXY+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5i
+bWMvb3BlbmJtYy9pc3N1ZXMvMzUzMiI+aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJt
+Yy9pc3N1ZXMvMzUzMjwvYT48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5XaGljaCBhcHAv
+c2VydmljZSBpbXBsZW1lbnRzIHRoaXMgaW50ZXJmYWNlPzxicj48L2Rpdj48ZGl2Pjxicj48L2Rp
+dj48ZGl2PlRoYW5rczxicj48L2Rpdj48ZGl2IGNsYXNzPSJwcm90b25tYWlsX3NpZ25hdHVyZV9i
+bG9jayI+PGRpdiBjbGFzcz0icHJvdG9ubWFpbF9zaWduYXR1cmVfYmxvY2stdXNlciBwcm90b25t
+YWlsX3NpZ25hdHVyZV9ibG9jay1lbXB0eSI+PGJyPjwvZGl2PjxkaXYgY2xhc3M9InByb3Rvbm1h
+aWxfc2lnbmF0dXJlX2Jsb2NrLXByb3RvbiI+UmFqPGJyPjwvZGl2PjwvZGl2PjxkaXY+PGJyPjwv
+ZGl2Pg==
+
+
+
+--b1_1d9d8aa61937ae94f0c29c39e8cb3682--
 
