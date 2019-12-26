@@ -1,58 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22DB412AB0B
+	for <lists+openbmc@lfdr.de>; Thu, 26 Dec 2019 09:45:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4F5B12AB04
-	for <lists+openbmc@lfdr.de>; Thu, 26 Dec 2019 09:39:16 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47k3KG0NLyzDqMg
-	for <lists+openbmc@lfdr.de>; Thu, 26 Dec 2019 19:39:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47k3SR0Fq7zDqJq
+	for <lists+openbmc@lfdr.de>; Thu, 26 Dec 2019 19:45:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.146; helo=m13-146.163.com;
- envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=protonmail.com (client-ip=185.70.40.132;
+ helo=mail-40132.protonmail.ch; envelope-from=rgrs@protonmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=protonmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.b="dU5eSSEW"; 
+ secure) header.d=protonmail.com header.i=@protonmail.com header.b="riv7Em7S"; 
  dkim-atps=neutral
-Received: from m13-146.163.com (m13-146.163.com [220.181.13.146])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-40132.protonmail.ch (mail-40132.protonmail.ch
+ [185.70.40.132])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47k3JR25DSzDqJM
- for <openbmc@lists.ozlabs.org>; Thu, 26 Dec 2019 19:38:27 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=P9Z8X
- PYGvlf1PDTjzx5cLBlJjeOQRXioSqDd4JWxK7s=; b=dU5eSSEWv8GFCkG5831qY
- iMgt2HxpqAWrkhv5prS9IVRnE54oDbcc0rC96dN5A7KsSU8FTI2CMBkNGDlvvbJ+
- fbggvXq7sfJfu6ClVByFiAMB9usTpBk3lTve+QDbSnV7NrFHs7OidELwsZS1tEzT
- ZALgDeXaqteJS7uvhGZ+TU=
-Received: from zhang_cy1989$163.com ( [106.121.66.194] ) by
- ajax-webmail-wmsvr146 (Coremail) ; Thu, 26 Dec 2019 16:38:21 +0800 (CST)
-X-Originating-IP: [106.121.66.194]
-Date: Thu, 26 Dec 2019 16:38:21 +0800 (CST)
-From: zhang_cy1989  <zhang_cy1989@163.com>
-To: "CS20 CHLi30" <CHLI30@nuvoton.com>
-Subject: Re:RE: How to change the soft link in target.requires or
- target.wants directory
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2019 www.mailtech.cn 163com
-In-Reply-To: <HK0PR03MB4660E4622E092E8199B5AFB7CF2B0@HK0PR03MB4660.apcprd03.prod.outlook.com>
-References: <13ed3524.9c60.16f4110e044.Coremail.zhang_cy1989@163.com>
- <CAARXrtkGz7oDdPHFY5R0kGTpn_c948Q1jXmwSN_hNkbJMnAKyw@mail.gmail.com>
- <HK0PR03MB4660E4622E092E8199B5AFB7CF2B0@HK0PR03MB4660.apcprd03.prod.outlook.com>
-X-CM-CTRLDATA: OBPrr2Zvb3Rlcl9odG09NTMyMjo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_182884_5879571.1577349501546"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47k3Rf12CBzDqDl
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Dec 2019 19:44:44 +1100 (AEDT)
+Date: Thu, 26 Dec 2019 08:44:35 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=default; t=1577349879;
+ bh=2CqJrp5/gHBUxUi5JNR2QC8hgcXijGiCuws9RpW9tMs=;
+ h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
+ Feedback-ID:From;
+ b=riv7Em7SlZ7V0RuGrd6NBqcYVazhnC89a2Mw1KKytu5dVo8cFiCpKbsKPlOOcFL5g
+ 1gfsbIMmuEiQXKCj5GULVtl7MWP+qUwdYmYsjvBprQH18YqdxLIITZ9Va0SXJYwD7z
+ bh+oPEUq2f8tWyza5Q+6OlPuwfH2BSs+9otKyh1Q=
+To: CS20 CHMa0 <CHMA0@nuvoton.com>
+From: rgrs <rgrs@protonmail.com>
+Subject: RE: BMC UUID property/object not found
+Message-ID: <3hGVcOXMjB0PgVCPe13XDTCwPwE0OfL-klckK5sNIFYkCBuMKoLF4eA__uIuF763gBB5_c1Zqzo6YpvX7gdidGenrbpbovXYVoXQbuEudlw=@protonmail.com>
+In-Reply-To: <HK0PR03MB40821DBC9F67A5404C16AE6EF5280@HK0PR03MB4082.apcprd03.prod.outlook.com>
+References: <yepdfnStu5NH94jUzVoKLGdX2kVPErynD7ERZlcm_Ig8_K1zkvmSLoC1SYhdm0b3ASb_B8D0r_PTN5Ct_kGk_3aoyi31V6GaM0q3T_DxunU=@protonmail.com>
+ <HK0PR03MB406851FE695528554F3911ABAE290@HK0PR03MB4068.apcprd03.prod.outlook.com>
+ <HK0PR03MB40827561EECBF2D0EC561769F5290@HK0PR03MB4082.apcprd03.prod.outlook.com>
+ <ehAiYrBbR44jLPINP8G9C8UcNQ3L5f4_WeKYRWs8sy4MLU_kIKn-fb1fBMabK6K081TGtXfpbPLVEXm50w0zTkiBRpUpzX1pPON9GMYCegk=@protonmail.com>
+ <HK0PR03MB40821DBC9F67A5404C16AE6EF5280@HK0PR03MB4082.apcprd03.prod.outlook.com>
+Feedback-ID: N7x9TweAIUMPpfpzQuNzrCOD67M7xMEA9S-zwPBDoWaGjAvK1DkvyqGEcVQ17b2imFZOeXQ1Gawv906j51YTTw==:Ext:ProtonMail
 MIME-Version: 1.0
-Message-ID: <3e9ab7cf.bba3.16f415b526a.Coremail.zhang_cy1989@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: ksGowACnrY1+cQRe3_O+Ag--.50470W
-X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiVxSXT1etfekwewABs-
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+ DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+ autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.protonmail.ch
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,184 +62,134 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: rgrs <rgrs@protonmail.com>
 Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_182884_5879571.1577349501546
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+Hi Brian,
 
-RGVhciBUaW0KICAgSXQncyBleGFjdGx5IHdoYXQgSSB3YW50ZWQuCiAgIFlvdSBhcmUgd29uZGVy
-ZnVsLgogCiAgIEkgcmVtZW1iZXIgeW91LgoKICAgWW91IHRhdWdodCBtZSBhIGxvdC4KCgogICBG
-b2xsb3dpbmcgeW91ciBzZWdnZXN0aW9ucywgSSBjYW4gcG93ZXIgb24gdGhlIGNoYXNzaXMgYnkg
-aXBtaXRvb2wuCiAgIEJ1dCB0aGVyZSBpcyBzdGlsbCBhIGJpdCBwcm9sZW1zOgogICAgICAgICAg
-ICAgV2hlbiBJIGRvIHRoZSBhY3Rpb246IGlwbWl0b29sIC1JIGxhbnBsdXMgLUggMTkyLjE2OC4w
-LjEgLVUgcm9vdCAtUCAwcGVuQm1jIHBvd2VyIG9uLgogICAgICAgICAgICAgUmlnaHQgYWZ0ZXIs
-IHRoZSBjaGFzc2lzICBpcyBwb3dlciB1cC4KICAgICAgICAgICAgIFdhaXRpbmcgZm9yIGFib3V0
-IDQgc2Vjb25kcyx0aGUgY2hhc3NpcyBpcyBwb3dlciBvZmYgYWdhaW4uCiAgICAgICAgICAgCgog
-IEkgZ3Vlc3MgdGhpcyBpcyBiZWNhdXNlIHRoZSBwb3dlciB1cCBwaW4ga2VlcHMgYWN0aXZlIGZv
-ciBhIGxvbmcgdGltZS4KICB3aGVuIHBvd2VyIHVwIHBpbiBrZWVwaW5nIGFjdGl2ZSBmb3IgNCBz
-ZWNvbmRzLHRoZSBjaGFzc2lzIHBvd2VyIHdpbGwgbG9zdCBhZ2Fpbi4KCiAgICAgICAgICAgIAoK
-ICBJIHdpbGwgZGVidWcgdGhpcyBwcm9ibGVtLiBJZiB5b3UgaGF2ZSBtb3JlIHN1Z2dlc3Rpb25z
-LCB3ZWxjb21lIHRvIHRlYWNoIG1lLgogCgogIEFuZCxDb3VsZCB5b3Ugc2hvdyBtZSB0aGUgZGVw
-ZW5kZW5jaWVzIG9mICJvYm1jLWhvc3Qtc2h1dGRvd25AMC50YXJnZXQiPwogIChwb3dlciBvZmYs
-IHN0aWxsIG9uIHg4NiBtb3RoZXJib2FyZCBhbmQgdXNlIHJvbXVsdXMgcmVjZWlwZXMpLgoKCiBM
-b29raW5nIGZvcndhcmQgZm9yIHlvdXIgcmVwbHkuCgoKQmVzdCBSZWdhcmRzCkZlbGl4CgogCgoK
-CkF0IDIwMTktMTItMjYgMTU6NDY6MTMsICJDUzIwIENITGkzMCIgPENITEkzMEBudXZvdG9uLmNv
-bT4gd3JvdGU6Cj5IaSBGZWxpeCwKPgo+SWYgeW91IG5lZWQgdG8gYWRkIHlvdXIgLnNlcnZpY2Ug
-dW5pdCBmaWxlIGludG8gLndhbnQgb3IgLnJlcXVpcmVzIGZvbGRlciwgeW91IGNhbiB1c2Ugc3lz
-dGVtZCB0byBkbyB0aGF0IGluIC5iYiBmaWxlLgo+Cj5Zb3UgY2FuIHJlZmVyIG9ibWMtb3AtY29u
-dHJvbC1wb3dlcl9naXQuYmIgdGhpcyBmaWxlIGZvciBleGFtcGxlOgo+Cj5JbnN0YWxsIHRvIC5y
-ZXF1aXJlcyBmb2xkZXI6Cj5SRVNFVF9PTl9UTVBMID0gIm9wLXJlc2V0LWNoYXNzaXMtcnVubmlu
-Z0Auc2VydmljZSIKPlJFU0VUX09OX0lOU1RGTVQgPSAib3AtcmVzZXQtY2hhc3Npcy1ydW5uaW5n
-QHswfS5zZXJ2aWNlIgo+UkVTRVRfT05fRk1UID0gIi4uLyR7UkVTRVRfT05fVE1QTH06JHtSRVNF
-VF9UR1RGTVR9LnJlcXVpcmVzLyR7UkVTRVRfT05fSU5TVEZNVH0iCj4KPkluc3RhbGwgdG8gLndh
-bnQgZm9sZGVyOgo+IyBGb3JjZSB0aGUgc3RhbmRieSB0YXJnZXQgdG8gcnVuIHRoZSBjaGFzc2lz
-IHJlc2V0IGNoZWNrIHRhcmdldAo+UkVTRVRfVE1QTF9DVFJMID0gIm9ibWMtY2hhc3Npcy1wb3dl
-cnJlc2V0QC50YXJnZXQiCj5TWVNEX1RHVCA9ICJtdWx0aS11c2VyLnRhcmdldCIKPlJFU0VUX0lO
-U1RGTVRfQ1RSTCA9ICJvYm1jLWNoYXNzaXMtcG93ZXJyZXNldEB7MH0udGFyZ2V0Igo+UkVTRVRf
-Rk1UX0NUUkwgPSAiLi4vJHtSRVNFVF9UTVBMX0NUUkx9OiR7U1lTRF9UR1R9LndhbnRzLyR7UkVT
-RVRfSU5TVEZNVF9DVFJMfSIKPlNZU1RFTURfTElOS18ke1BOfSArPSAiJHtAY29tcG9zZV9saXN0
-X3ppcChkLCAnUkVTRVRfRk1UX0NUUkwnLCAnT0JNQ19DSEFTU0lTX0lOU1RBTkNFUycpfSIKPgo+
-U2luY2VyZWx5LAo+VGltCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQo+RnJvbTogb3BlbmJt
-YyBbbWFpbHRvOm9wZW5ibWMtYm91bmNlcytjaGxpMzA9bnV2b3Rvbi5jb21AbGlzdHMub3psYWJz
-Lm9yZ10gT24gQmVoYWxmIE9mIExlaSBZVQo+U2VudDogVGh1cnNkYXksIERlY2VtYmVyIDI2LCAy
-MDE5IDM6MzcgUE0KPlRvOiB6aGFuZ19jeTE5ODkgPHpoYW5nX2N5MTk4OUAxNjMuY29tPgo+Q2M6
-IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZwo+U3ViamVjdDogUmU6IEhvdyB0byBjaGFuZ2UgdGhl
-IHNvZnQgbGluayBpbiB0YXJnZXQucmVxdWlyZXMgb3IgdGFyZ2V0LndhbnRzIGRpcmVjdG9yeQo+
-Cj5PbiBUaHUsIERlYyAyNiwgMjAxOSBhdCAzOjE4IFBNIHpoYW5nX2N5MTk4OSA8emhhbmdfY3kx
-OTg5QDE2My5jb20+IHdyb3RlOgo+Pgo+PiBEZWFyIEFsbAo+PiAgICBUaGUgdGFyZ2V0LnJlcXVp
-cmVzIG9yIHRhcmdldC53YW50cyBjb250YWlucyBzb21lIHNvZnQgbGluay4KPj4gICAgRXg6Cj4+
-ICAgICAgICAgL2xpYi9zeXN0ZW1kL3N5c3RlbS9vYm1jLWhvc3Qtc3RhcnRtaW5AMC50YXJnZXQu
-cmVxdWlyZXMKPj4gICAgICAgICAgICAgICAgICAgIGxyd3hyd3hyd3ggICAgMSByb290ICAgICBy
-b290ICAgICAgICAgICAgMzEgTm92IDI5ICAyMDE5IG9ibWMtY2hhc3Npcy1wb3dlcm9uQDAudGFy
-Z2V0IC0+IC4uL29ibWMtY2hhc3Npcy1wb3dlcm9uQC50YXJnZXQKPj4gICAgICAgICAgICAgICAg
-ICAgIGxyd3hyd3hyd3ggICAgMSByb290ICAgICByb290ICAgICAgICAgICAgMjUgTm92IDI4IDA5
-OjUxIG9wLW9jYy1lbmFibGVAMC5zZXJ2aWNlIC0+IC4uL29wLW9jYy1lbmFibGVALnNlcnZpY2UK
-Pj4gICAgICAgICAgICAgICAgICAgIGxyd3hyd3hyd3ggICAgMSByb290ICAgICByb290ICAgICAg
-ICAgICAgMjIgTm92IDI4IDA5OjU3IHN0YXJ0X2hvc3RAMC5zZXJ2aWNlIC0+IC4uL3N0YXJ0X2hv
-c3RALnNlcnZpY2UKPj4KPj4gICAgIE5vdywgSSB3YW50IHRvIGFkZCBvciBkZWxldGUgc29mdCBs
-aW5rOm9wLW9jYy1lbmFibGVAMC5zZXJ2aWNlCj4+ICAgICBJIGNhbiB1c2UgInJtIC1yZiAuL29w
-LW9jYy1lbmFibGVAMC5zZXJ2aWNlIiB0byBhY2hpZXZlIHRoZSBnb2FsLgo+PiAgICAgQnV0LEkn
-bSBub3QgZXhhY3RseSBzdXJlIHRoaXMgaXMgZm9ybWFsIG9wZXJhdGlvbi4gQW5kIEknbSBhZnJh
-aWQgdGhpcyB3aWxsIGJlIHNpZGUgZWZmZWN0Lgo+Pgo+PiAgICAgQXJlIHRoZXJlIG90aGVyIHRv
-b2xzIG9yIGZvcm1hbCBtZXRob2RzIHRvIGRvIHRoaXM/Cj4KPlRoZXNlIGxpbmtzIGFyZSBleHBl
-Y3RlZCB0byBiZSBtYW5hZ2VkIGJ5IHN5c3RlbWQuCj5Zb3UgY291bGQgZGlzYWJsZSBvciBtYXNr
-IHRoZSBzZXJ2aWNlcyBieSBgc3lzdGVtY3RsIFtkaXNhYmxlfG1hc2tdIDxzZXJ2aWNlPmAuIElm
-IHlvdSBuZWVkIHRoZW0gbGF0ZXIsIGp1c3QgZW5hYmxlIG9yIHVubWFzayB0aGVtLgo+X19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX18KPl9fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fCj4gVGhlIHByaXZpbGVnZWQgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBp
-biB0aGlzIGVtYWlsIGlzIGludGVuZGVkIGZvciB1c2Ugb25seSBieSB0aGUgYWRkcmVzc2VlcyBh
-cyBpbmRpY2F0ZWQgYnkgdGhlIG9yaWdpbmFsIHNlbmRlciBvZiB0aGlzIGVtYWlsLiBJZiB5b3Ug
-YXJlIG5vdCB0aGUgYWRkcmVzc2VlIGluZGljYXRlZCBpbiB0aGlzIGVtYWlsIG9yIGFyZSBub3Qg
-cmVzcG9uc2libGUgZm9yIGRlbGl2ZXJ5IG9mIHRoZSBlbWFpbCB0byBzdWNoIGEgcGVyc29uLCBw
-bGVhc2Uga2luZGx5IHJlcGx5IHRvIHRoZSBzZW5kZXIgaW5kaWNhdGluZyB0aGlzIGZhY3QgYW5k
-IGRlbGV0ZSBhbGwgY29waWVzIG9mIGl0IGZyb20geW91ciBjb21wdXRlciBhbmQgbmV0d29yayBz
-ZXJ2ZXIgaW1tZWRpYXRlbHkuIFlvdXIgY29vcGVyYXRpb24gaXMgaGlnaGx5IGFwcHJlY2lhdGVk
-LiBJdCBpcyBhZHZpc2VkIHRoYXQgYW55IHVuYXV0aG9yaXplZCB1c2Ugb2YgY29uZmlkZW50aWFs
-IGluZm9ybWF0aW9uIG9mIE51dm90b24gaXMgc3RyaWN0bHkgcHJvaGliaXRlZDsgYW5kIGFueSBp
-bmZvcm1hdGlvbiBpbiB0aGlzIGVtYWlsIGlycmVsZXZhbnQgdG8gdGhlIG9mZmljaWFsIGJ1c2lu
-ZXNzIG9mIE51dm90b24gc2hhbGwgYmUgZGVlbWVkIGFzIG5laXRoZXIgZ2l2ZW4gbm9yIGVuZG9y
-c2VkIGJ5IE51dm90b24uCg==
-------=_Part_182884_5879571.1577349501546
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+You're right. Our FRU doesn't have that field.
+I was under the assumption, /etc/machine-id was used instead.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBUaW08L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyBJ
-dCdzIGV4YWN0bHkgd2hhdCBJIHdhbnRlZC48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyBZb3UgYXJl
-IHdvbmRlcmZ1bC48L2Rpdj48ZGl2PiZuYnNwOzwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7IEkgcmVt
-ZW1iZXIgeW91LiA8YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsgWW91IHRhdWdodCBtZSBhIGxv
-dC48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyBGb2xsb3dpbmcgeW91ciBz
-ZWdnZXN0aW9ucywgSSBjYW4gcG93ZXIgb24gdGhlIGNoYXNzaXMgYnkgaXBtaXRvb2wuPC9kaXY+
-PGRpdj4mbmJzcDsmbmJzcDsgQnV0IHRoZXJlIGlzIHN0aWxsIGEgYml0IHByb2xlbXM6PC9kaXY+
-PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsgV2hlbiBJIGRvIHRoZSBhY3Rpb246IGlwbWl0b29sIC1JIGxh
-bnBsdXMgLUggMTkyLjE2OC4wLjEgLVUgcm9vdCAtUCAwcGVuQm1jIHBvd2VyIG9uLjwvZGl2Pjxk
-aXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IFJpZ2h0IGFmdGVyLCB0aGUgY2hhc3NpcyZuYnNwOyBpcyBwb3dl
-ciB1cC48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBXYWl0aW5nIGZvciBhYm91dCA0IHNlY29u
-ZHMsdGhlIGNoYXNzaXMgaXMgcG93ZXIgb2ZmIGFnYWluLjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxi
-cj48L2Rpdj48ZGl2PiZuYnNwOyBJIGd1ZXNzIHRoaXMgaXMgYmVjYXVzZSB0aGUgcG93ZXIgdXAg
-cGluIGtlZXBzIGFjdGl2ZSBmb3IgYSBsb25nIHRpbWUuPC9kaXY+PGRpdj4mbmJzcDsgd2hlbiBw
-b3dlciB1cCBwaW4ga2VlcGluZyBhY3RpdmUgZm9yIDQgc2Vjb25kcyx0aGUgY2hhc3NpcyBwb3dl
-ciB3aWxsIGxvc3QgYWdhaW4uIDxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyA8YnI+PC9k
-aXY+PGRpdj4mbmJzcDsgPHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMjIxLCA2NCwgNTApOyI+PGI+
-SSB3aWxsIGRlYnVnIHRoaXMgcHJvYmxlbS4gSWYgeW91IGhhdmUgbW9yZSBzdWdnZXN0aW9ucywg
-d2VsY29tZSB0byB0ZWFjaCBtZS48L2I+PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4gc3R5bGU9ImNv
-bG9yOiByZ2IoMjIxLCA2NCwgNTApOyI+PGI+Jm5ic3A7PGJyPjwvYj48L3NwYW4+PC9kaXY+PGRp
-dj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYigyMjEsIDY0LCA1MCk7Ij48Yj4mbmJzcDsgQW5kLENv
-dWxkIHlvdSBzaG93IG1lIHRoZSBkZXBlbmRlbmNpZXMgb2YgIm9ibWMtaG9zdC1zaHV0ZG93bjxz
-cGFuIG50ZXNfbW1fZW1haWw9IkAiPkAwLnRhcmdldDwvc3Bhbj4iPzwvYj48L3NwYW4+PC9kaXY+
-PGRpdj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYigyMjEsIDY0LCA1MCk7Ij48Yj4mbmJzcDsgKHBv
-d2VyIG9mZiwgc3RpbGwgb24geDg2IG1vdGhlcmJvYXJkIGFuZCB1c2Ugcm9tdWx1cyByZWNlaXBl
-cykuPC9iPjwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNwO0xvb2tpbmcgZm9y
-d2FyZCBmb3IgeW91ciByZXBseS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkJlc3QgUmVnYXJk
-czwvZGl2PjxkaXY+RmVsaXg8YnI+PC9kaXY+PGRpdj4mbmJzcDs8YnI+PC9kaXY+PGJyPjxwcmU+
-QXQgMjAxOS0xMi0yNiAxNTo0NjoxMywgIkNTMjAgQ0hMaTMwIiAmbHQ7Q0hMSTMwQG51dm90b24u
-Y29tJmd0OyB3cm90ZToKJmd0O0hpIEZlbGl4LAomZ3Q7CiZndDtJZiB5b3UgbmVlZCB0byBhZGQg
-eW91ciAuc2VydmljZSB1bml0IGZpbGUgaW50byAud2FudCBvciAucmVxdWlyZXMgZm9sZGVyLCB5
-b3UgY2FuIHVzZSBzeXN0ZW1kIHRvIGRvIHRoYXQgaW4gLmJiIGZpbGUuCiZndDsKJmd0O1lvdSBj
-YW4gcmVmZXIgb2JtYy1vcC1jb250cm9sLXBvd2VyX2dpdC5iYiB0aGlzIGZpbGUgZm9yIGV4YW1w
-bGU6CiZndDsKJmd0O0luc3RhbGwgdG8gLnJlcXVpcmVzIGZvbGRlcjoKJmd0O1JFU0VUX09OX1RN
-UEwgPSAib3AtcmVzZXQtY2hhc3Npcy1ydW5uaW5nQC5zZXJ2aWNlIgomZ3Q7UkVTRVRfT05fSU5T
-VEZNVCA9ICJvcC1yZXNldC1jaGFzc2lzLXJ1bm5pbmdAezB9LnNlcnZpY2UiCiZndDtSRVNFVF9P
-Tl9GTVQgPSAiLi4vJHtSRVNFVF9PTl9UTVBMfToke1JFU0VUX1RHVEZNVH0ucmVxdWlyZXMvJHtS
-RVNFVF9PTl9JTlNURk1UfSIKJmd0OwomZ3Q7SW5zdGFsbCB0byAud2FudCBmb2xkZXI6CiZndDsj
-IEZvcmNlIHRoZSBzdGFuZGJ5IHRhcmdldCB0byBydW4gdGhlIGNoYXNzaXMgcmVzZXQgY2hlY2sg
-dGFyZ2V0CiZndDtSRVNFVF9UTVBMX0NUUkwgPSAib2JtYy1jaGFzc2lzLXBvd2VycmVzZXRALnRh
-cmdldCIKJmd0O1NZU0RfVEdUID0gIm11bHRpLXVzZXIudGFyZ2V0IgomZ3Q7UkVTRVRfSU5TVEZN
-VF9DVFJMID0gIm9ibWMtY2hhc3Npcy1wb3dlcnJlc2V0QHswfS50YXJnZXQiCiZndDtSRVNFVF9G
-TVRfQ1RSTCA9ICIuLi8ke1JFU0VUX1RNUExfQ1RSTH06JHtTWVNEX1RHVH0ud2FudHMvJHtSRVNF
-VF9JTlNURk1UX0NUUkx9IgomZ3Q7U1lTVEVNRF9MSU5LXyR7UE59ICs9ICIke0Bjb21wb3NlX2xp
-c3RfemlwKGQsICdSRVNFVF9GTVRfQ1RSTCcsICdPQk1DX0NIQVNTSVNfSU5TVEFOQ0VTJyl9Igom
-Z3Q7CiZndDtTaW5jZXJlbHksCiZndDtUaW0KJmd0Oy0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
-CiZndDtGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJtYy1ib3VuY2VzK2NobGkzMD1udXZvdG9u
-LmNvbUBsaXN0cy5vemxhYnMub3JnXSBPbiBCZWhhbGYgT2YgTGVpIFlVCiZndDtTZW50OiBUaHVy
-c2RheSwgRGVjZW1iZXIgMjYsIDIwMTkgMzozNyBQTQomZ3Q7VG86IHpoYW5nX2N5MTk4OSAmbHQ7
-emhhbmdfY3kxOTg5QDE2My5jb20mZ3Q7CiZndDtDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-CiZndDtTdWJqZWN0OiBSZTogSG93IHRvIGNoYW5nZSB0aGUgc29mdCBsaW5rIGluIHRhcmdldC5y
-ZXF1aXJlcyBvciB0YXJnZXQud2FudHMgZGlyZWN0b3J5CiZndDsKJmd0O09uIFRodSwgRGVjIDI2
-LCAyMDE5IGF0IDM6MTggUE0gemhhbmdfY3kxOTg5ICZsdDt6aGFuZ19jeTE5ODlAMTYzLmNvbSZn
-dDsgd3JvdGU6CiZndDsmZ3Q7CiZndDsmZ3Q7IERlYXIgQWxsCiZndDsmZ3Q7ICAgIFRoZSB0YXJn
-ZXQucmVxdWlyZXMgb3IgdGFyZ2V0LndhbnRzIGNvbnRhaW5zIHNvbWUgc29mdCBsaW5rLgomZ3Q7
-Jmd0OyAgICBFeDoKJmd0OyZndDsgICAgICAgICAvbGliL3N5c3RlbWQvc3lzdGVtL29ibWMtaG9z
-dC1zdGFydG1pbkAwLnRhcmdldC5yZXF1aXJlcwomZ3Q7Jmd0OyAgICAgICAgICAgICAgICAgICAg
-bHJ3eHJ3eHJ3eCAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgICAgICAzMSBOb3YgMjkgIDIwMTkg
-b2JtYy1jaGFzc2lzLXBvd2Vyb25AMC50YXJnZXQgLSZndDsgLi4vb2JtYy1jaGFzc2lzLXBvd2Vy
-b25ALnRhcmdldAomZ3Q7Jmd0OyAgICAgICAgICAgICAgICAgICAgbHJ3eHJ3eHJ3eCAgICAxIHJv
-b3QgICAgIHJvb3QgICAgICAgICAgICAyNSBOb3YgMjggMDk6NTEgb3Atb2NjLWVuYWJsZUAwLnNl
-cnZpY2UgLSZndDsgLi4vb3Atb2NjLWVuYWJsZUAuc2VydmljZQomZ3Q7Jmd0OyAgICAgICAgICAg
-ICAgICAgICAgbHJ3eHJ3eHJ3eCAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgICAgICAyMiBOb3Yg
-MjggMDk6NTcgc3RhcnRfaG9zdEAwLnNlcnZpY2UgLSZndDsgLi4vc3RhcnRfaG9zdEAuc2Vydmlj
-ZQomZ3Q7Jmd0OwomZ3Q7Jmd0OyAgICAgTm93LCBJIHdhbnQgdG8gYWRkIG9yIGRlbGV0ZSBzb2Z0
-IGxpbms6b3Atb2NjLWVuYWJsZUAwLnNlcnZpY2UKJmd0OyZndDsgICAgIEkgY2FuIHVzZSAicm0g
-LXJmIC4vb3Atb2NjLWVuYWJsZUAwLnNlcnZpY2UiIHRvIGFjaGlldmUgdGhlIGdvYWwuCiZndDsm
-Z3Q7ICAgICBCdXQsSSdtIG5vdCBleGFjdGx5IHN1cmUgdGhpcyBpcyBmb3JtYWwgb3BlcmF0aW9u
-LiBBbmQgSSdtIGFmcmFpZCB0aGlzIHdpbGwgYmUgc2lkZSBlZmZlY3QuCiZndDsmZ3Q7CiZndDsm
-Z3Q7ICAgICBBcmUgdGhlcmUgb3RoZXIgdG9vbHMgb3IgZm9ybWFsIG1ldGhvZHMgdG8gZG8gdGhp
-cz8KJmd0OwomZ3Q7VGhlc2UgbGlua3MgYXJlIGV4cGVjdGVkIHRvIGJlIG1hbmFnZWQgYnkgc3lz
-dGVtZC4KJmd0O1lvdSBjb3VsZCBkaXNhYmxlIG9yIG1hc2sgdGhlIHNlcnZpY2VzIGJ5IGBzeXN0
-ZW1jdGwgW2Rpc2FibGV8bWFza10gJmx0O3NlcnZpY2UmZ3Q7YC4gSWYgeW91IG5lZWQgdGhlbSBs
-YXRlciwganVzdCBlbmFibGUgb3IgdW5tYXNrIHRoZW0uCiZndDtfX19fX19fX19fX19fX19fX19f
-X19fX19fX19fX19fXwomZ3Q7X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18KJmd0OyBU
-aGUgcHJpdmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMg
-ZW1haWwgaXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFzIGluZGlj
-YXRlZCBieSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBhcmUgbm90
-IHRoZSBhZGRyZXNzZWUgaW5kaWNhdGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCByZXNwb25z
-aWJsZSBmb3IgZGVsaXZlcnkgb2YgdGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBsZWFzZSBr
-aW5kbHkgcmVwbHkgdG8gdGhlIHNlbmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQgZGVsZXRl
-IGFsbCBjb3BpZXMgb2YgaXQgZnJvbSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNlcnZlciBp
-bW1lZGlhdGVseS4gWW91ciBjb29wZXJhdGlvbiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQuIEl0IGlz
-IGFkdmlzZWQgdGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwgaW5mb3Jt
-YXRpb24gb2YgTnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGluZm9ybWF0
-aW9uIGluIHRoaXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5lc3Mgb2Yg
-TnV2b3RvbiBzaGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3JzZWQgYnkg
-TnV2b3Rvbi4KPC9wcmU+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+
-PHA+Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_182884_5879571.1577349501546--
+I guess i need to edit my FRU.
+Are all those fields in your yaml example necessary?
+
+Thanks,
+Raj
+
+
+
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Wednesday, December 25, 2019 8:56 AM, CS20 CHMa0 <CHMA0@nuvoton.com> wro=
+te:
+
+> Hi Raj,
+> You can check the inventory service.
+> Ipmid return BMC UUID by get D-Bus property from inventory service.
+> And inventory service will read some configuration file while startup lik=
+e
+> https://github.com/Nuvoton-Israel/openbmc/blob/runbmc/meta-quanta/meta-ol=
+ympus-nuvoton/recipes-phosphor/configuration/olympus-nuvoton-yaml-config/ol=
+ympus-nuvoton-ipmi-fru-bmc.yaml
+> If the FRU has no BMC UUID data or not configure BMC UUID in inventory se=
+rvice, the property would not exist.
+>
+> Thanks,
+> Brian
+>
+> =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original =
+Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+> From: rgrs rgrs@protonmail.com
+> Sent: Tuesday, December 24, 2019 5:34 PM
+> To: CS20 CHMa0 CHMA0@nuvoton.com
+> Cc: openbmc@lists.ozlabs.org
+> Subject: RE: BMC UUID property/object not found
+>
+> Hi Brian,
+>
+> They are enabled, Is there anything else i should look at?
+>
+> $ grep -rin "CONFIG_CRYPTO_" defconfig
+> 216:CONFIG_CRYPTO_HMAC=3Dy
+> 217:CONFIG_CRYPTO_SHA256=3Dy
+> 218:CONFIG_CRYPTO_USER_API_HASH=3Dy
+> 234:# CONFIG_CRYPTO_ECHAINIV is not set
+> 235:# CONFIG_CRYPTO_HW is not set
+>
+> Thanks,
+> Raj
+>
+> =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original =
+Message =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+> On Tuesday, December 24, 2019 12:59 PM, CS20 CHMa0 mailto:CHMA0@nuvoton.c=
+om wrote:
+>
+> Hi Raj,
+> The systemd get UUID function need Kernel API support.
+> Maybe you can check Kernel configuration first.
+>
+> https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__github.com_systemd=
+_systemd_blob_master_README-23L51&d=3DDwMGaQ&c=3Due8mO8zgC4VZ4q_aNVKt8G9MC0=
+1UFDmisvMR1k-EoDM&r=3DdoNNnS6paLL-xRR9VW1GYEtYU82vPGTMv_hE5neCcWI&m=3DGAn1k=
+NLLvqBHRbEEYz8ClI7HQAxEgJwul4M1kCwilUY&s=3DiGSR2gMqcd4YzYU6wmuEirB4J8DvlqRs=
+dInmsOQYFSA&e=3D
+> Kernel crypto/hash API
+> CONFIG_CRYPTO_HMAC
+> CONFIG_CRYPTO_SHA256
+> CONFIG_CRYPTO_USER_API_HASH
+>
+> Thanks,
+> Brian
+>
+> From: openbmc mailto:openbmc-bounces+kwliu=3Dnuvoton.com@lists.ozlabs.org=
+ On Behalf Of rgrs
+> Sent: Tuesday, December 24, 2019 2:37 PM
+> To: mailto:openbmc@lists.ozlabs.org
+> Subject: BMC UUID property/object not found
+>
+> Hi,
+>
+> I get below error message on "ipmitool mc guid" command,
+>
+> Dec 24 05:09:33 obmc ipmid[1457]: Failed in reading BMC UUID property
+> Dec 24 05:09:42 obmc ipmid[1457]: No Object has implemented the interface
+> Dec 24 05:09:42 obmc ipmid[1457]: The operation failed internally.
+>
+> Is this same as
+> https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__github.com_openbmc=
+_openbmc_issues_3532&d=3DDwMGaQ&c=3Due8mO8zgC4VZ4q_aNVKt8G9MC01UFDmisvMR1k-=
+EoDM&r=3D7g2D1XDc1ET3CnY1ySnaWQXPxPxfpLww1MiDbLW4v8Q&m=3DvHWR3IU3HAh0uFyTmx=
+nEwOdlONHhW3FY4FTzZ01mjRU&s=3Dtbhwa-ghqEmw4cfgUzsf61Iq4BcoU7fM0Biw94O50xQ&e=
+=3D
+>
+> Which app/service implements this interface?
+>
+> Thanks
+>
+> Raj
+>
+> The privileged confidential information contained in this email is intend=
+ed for use only by the addressees as indicated by the original sender of th=
+is email. If you are not the addressee indicated in this email or are not r=
+esponsible for delivery of the email to such a person, please kindly reply =
+to the sender indicating this fact and delete all copies of it from your co=
+mputer and network server immediately. Your cooperation is highly appreciat=
+ed. It is advised that any unauthorized use of confidential information of =
+Nuvoton is strictly prohibited; and any information in this email irrelevan=
+t to the official business of Nuvoton shall be deemed as neither given nor =
+endorsed by Nuvoton.
+>
+> The privileged confidential information contained in this email is intend=
+ed for use only by the addressees as indicated by the original sender of th=
+is email. If you are not the addressee indicated in this email or are not r=
+esponsible for delivery of the email to such a person, please kindly reply =
+to the sender indicating this fact and delete all copies of it from your co=
+mputer and network server immediately. Your cooperation is highly appreciat=
+ed. It is advised that any unauthorized use of confidential information of =
+Nuvoton is strictly prohibited; and any information in this email irrelevan=
+t to the official business of Nuvoton shall be deemed as neither given nor =
+endorsed by Nuvoton.
+
 
