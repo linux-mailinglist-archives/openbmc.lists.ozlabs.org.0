@@ -2,79 +2,101 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0043112AD9E
-	for <lists+openbmc@lfdr.de>; Thu, 26 Dec 2019 18:13:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 761BE12B050
+	for <lists+openbmc@lfdr.de>; Fri, 27 Dec 2019 02:39:48 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47kGkX622PzDqH2
-	for <lists+openbmc@lfdr.de>; Fri, 27 Dec 2019 04:13:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47kTyk1pJPzDqBy
+	for <lists+openbmc@lfdr.de>; Fri, 27 Dec 2019 12:39:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::543;
- helo=mail-pg1-x543.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.helo=apc01-sg2-obe.outbound.protection.outlook.com
+ (client-ip=40.107.131.40; helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=chma0@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="FJoxlqsf"; 
+ dmarc=none (p=none dis=none) header.from=nuvoton.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.b="t6Y5doYI"; 
  dkim-atps=neutral
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
- [IPv6:2607:f8b0:4864:20::543])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310040.outbound.protection.outlook.com [40.107.131.40])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47kGjt1QYDzDqFh
- for <openbmc@lists.ozlabs.org>; Fri, 27 Dec 2019 04:12:49 +1100 (AEDT)
-Received: by mail-pg1-x543.google.com with SMTP id a33so13110853pgm.5
- for <openbmc@lists.ozlabs.org>; Thu, 26 Dec 2019 09:12:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=tcRXV91TDUxeHso2iZtQ7wegl6tGcSz0+CrYKB9XO/c=;
- b=FJoxlqsfl2daiqfKeqo2C08BK5JnznTcmjxBvB5dDghjGhC5ZYzcUUPX+d0ywwyBcD
- 0mVY1kNdukXJLElsdhoq9n+6G2Uyrfzfx9pBKVc8Iogz2tChPyJmQhbPs0CvlnlYnRWA
- J7/pCz8U2thm4fmJ+xaxkZYsRaWdMHQP7wy74qpC/wreoq1hn2WakesMHws8W9fIc9l2
- VjLuwJ5JWCYyJmpP23n3gEzKesrHkFJeGRuqLwJvyVk5LmjMy6BAbSnPE/OXf5PIzn1g
- ChttTTFNLRj9F5Cu0L7IZQBkOTLQSYAgzVXEVPnhiWkOQ+GGIzQLR2KVe8dqUY93foFP
- smMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
- :date:user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=tcRXV91TDUxeHso2iZtQ7wegl6tGcSz0+CrYKB9XO/c=;
- b=mHByiow5KuAC5y99xeioZxoqpQ9O2fQO9jYqdnjVstzWns077snDBBAppLlVRGu084
- 08xcN5AS1gkYNooQx6alXST20ByrpaL5IOvsjLb8nriEckc6x7dMNWGFAqn5/k9+Xy3Y
- AppwFMT8fxJcnaYRA5h4s4RykiJztJbGq3/F+HFnSjEh9aOrWaOZf23HNdT78kd2NE+B
- w6Ty0jC53igCpXJLYA8YWc6lJ+hWrO6JnhyIcS8MVyTCT/jqmx7TIqXEtYkAkll8mDSd
- n6SZ6D+S91zByPTJ/dCwSJdTn+s/ELyRASFQ8kaYxemTL6TpDCtG5HqPhVLhklQ8RnBA
- bopw==
-X-Gm-Message-State: APjAAAVy0uxCthtyplhzqE9Sp7h+Ck6AcMc8+D9ofb0fS+JHM/1hK7E0
- 4KahdtU3mDoljbEgBIYUWQI=
-X-Google-Smtp-Source: APXvYqycKA1GjeNUwDsI6j96wkUF7Qw96QL6mzqR4EC4PwF+Y1lFK80xeZdaUy/rEuaY/G8wcm9Epw==
-X-Received: by 2002:a63:220b:: with SMTP id i11mr48980496pgi.50.1577380366441; 
- Thu, 26 Dec 2019 09:12:46 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- a18sm2446693pjq.30.2019.12.26.09.12.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Dec 2019 09:12:46 -0800 (PST)
-Subject: Re: [PATCH linux dev-5.4 v1 0/1] hwmon: (pmbus) Add Infineon IR38164, 
- Renesas RAA228006, and TI SN1701022 driver
-To: Andrew Peng <pengms1@lenovo.com>, jdelvare@suse.com,
- linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org,
- benjaminfair@google.com
-References: <1577350647-128938-1-git-send-email-pengms1@lenovo.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Message-ID: <4452cf36-25ac-6064-b124-fda71b282fb7@roeck-us.net>
-Date: Thu, 26 Dec 2019 09:12:44 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
-MIME-Version: 1.0
-In-Reply-To: <1577350647-128938-1-git-send-email-pengms1@lenovo.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47kTy64jWHzDqBL
+ for <openbmc@lists.ozlabs.org>; Fri, 27 Dec 2019 12:39:09 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mh4nUp0B0e2K2YjthcPlkEe0QH+NylR6mg7xuLNPVeK7v4tE7QnifCF64ONXMRLZ4UowN5/2ZZVoH6cetg6SxQU2DdJ3nAMf2TvvY7P7+XWjZsl8VdIDqINaXKgCOiP5yAn2WBtuP1HNlc2S1R9HlT7redkS49lswWb6M5Li4MJqzinPctmSaQHMR+zr5Mev+/+lIm+sQyWJykOJdxuu63vvDId8ls6Cy/iTzKuKEKBdlIXkEJvHvrIoOu6lW2Ma4KFh7NRi9zXKdKn1Kk9U8EgM3AHjkE4/CfKdKvWbAXfWmEb3cGS/A2Mou2tJy/H+Ya1zYhor2W8mL8v5ZrK01A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vPcrZtBDtGKUnd2RInfe+zhdPUmTtw9bsNJszr9egNY=;
+ b=D4JIazLj6rNIQg68I+VkwIOaoeY8DBkx+Xy+Rh3jXR/H/N8GC/bv0DrCp0/NMd8hULV/VGxtcq8n9l5xPYP+xs+C+AJelN+akfU20v7zGSGLTDj6mEZnA86RQKiAZVsTdcL0FaPb6YvCgHv8a8cdlnB/Ef1kDBtmYOOuu0kqvOyh/UFp2IqbCOW2tX2BVYIoMpTCwDa5pucP9/PlY3mORZpnm8X+d5J5gOZc2oFgfOPrq0nupZfzirzi2dA1955qUMNEyNppWqn9X0Xrc6tzVsL5mOdYGoTw9Ygv3/SRsnSigC0reSOFRFf0mFRQP0/km8uwvYjtuWzY06GullGAUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vPcrZtBDtGKUnd2RInfe+zhdPUmTtw9bsNJszr9egNY=;
+ b=t6Y5doYITUjJUN7fyFIjyiVF1x9HxySDVn1OgTTkDPC+2RsmKURdslpV8GLcljHcwgkZSptG0WEhFzzwwNQE0lvSYLkbj68P5wajFqPlrnhra9xpsMAF+i5qt9hoHlwzbURY3RPUxGvHkkyYjon6ML7tbyOkxTt4fUNQUlWTzsk=
+Received: from HK0PR03MB4082.apcprd03.prod.outlook.com (20.177.165.140) by
+ HK0PR03MB4852.apcprd03.prod.outlook.com (52.132.238.141) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2602.8; Fri, 27 Dec 2019 01:38:58 +0000
+Received: from HK0PR03MB4082.apcprd03.prod.outlook.com
+ ([fe80::8aa:8cde:2f85:9734]) by HK0PR03MB4082.apcprd03.prod.outlook.com
+ ([fe80::8aa:8cde:2f85:9734%7]) with mapi id 15.20.2581.007; Fri, 27 Dec 2019
+ 01:38:58 +0000
+From: CS20 CHMa0 <CHMA0@nuvoton.com>
+To: rgrs <rgrs@protonmail.com>
+Subject: RE: BMC UUID property/object not found
+Thread-Topic: BMC UUID property/object not found
+Thread-Index: AQHVuiSciOgdyLBTTEirlOOIYBb4N6fI2knggAAGg0CAACWQAIABKBdggAHuqYCAARZRcA==
+Date: Fri, 27 Dec 2019 01:38:58 +0000
+Message-ID: <HK0PR03MB4082023F624C93D0F6A53225F52A0@HK0PR03MB4082.apcprd03.prod.outlook.com>
+References: <yepdfnStu5NH94jUzVoKLGdX2kVPErynD7ERZlcm_Ig8_K1zkvmSLoC1SYhdm0b3ASb_B8D0r_PTN5Ct_kGk_3aoyi31V6GaM0q3T_DxunU=@protonmail.com>
+ <HK0PR03MB406851FE695528554F3911ABAE290@HK0PR03MB4068.apcprd03.prod.outlook.com>
+ <HK0PR03MB40827561EECBF2D0EC561769F5290@HK0PR03MB4082.apcprd03.prod.outlook.com>
+ <ehAiYrBbR44jLPINP8G9C8UcNQ3L5f4_WeKYRWs8sy4MLU_kIKn-fb1fBMabK6K081TGtXfpbPLVEXm50w0zTkiBRpUpzX1pPON9GMYCegk=@protonmail.com>
+ <HK0PR03MB40821DBC9F67A5404C16AE6EF5280@HK0PR03MB4082.apcprd03.prod.outlook.com>
+ <3hGVcOXMjB0PgVCPe13XDTCwPwE0OfL-klckK5sNIFYkCBuMKoLF4eA__uIuF763gBB5_c1Zqzo6YpvX7gdidGenrbpbovXYVoXQbuEudlw=@protonmail.com>
+In-Reply-To: <3hGVcOXMjB0PgVCPe13XDTCwPwE0OfL-klckK5sNIFYkCBuMKoLF4eA__uIuF763gBB5_c1Zqzo6YpvX7gdidGenrbpbovXYVoXQbuEudlw=@protonmail.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=CHMA0@nuvoton.com; 
+x-originating-ip: [42.74.184.162]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: fdbca144-a24d-445c-2063-08d78a6d8b40
+x-ms-traffictypediagnostic: HK0PR03MB4852:|HK0PR03MB4852:
+x-microsoft-antispam-prvs: <HK0PR03MB48525100B1D7A55D08EB83ABF52A0@HK0PR03MB4852.apcprd03.prod.outlook.com>
+x-ms-exchange-transport-forked: True
+x-ms-oob-tlc-oobclassifiers: OLM:972;
+x-forefront-prvs: 0264FEA5C3
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10009020)(396003)(136003)(39850400004)(376002)(366004)(346002)(189003)(199004)(13464003)(8936002)(81156014)(8676002)(478600001)(19627235002)(33656002)(71200400001)(7696005)(2906002)(966005)(316002)(6916009)(81166006)(55016002)(5660300002)(66556008)(86362001)(4326008)(66476007)(53546011)(26005)(6506007)(76116006)(52536014)(64756008)(186003)(66446008)(66946007)(9686003)(115813001);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:HK0PR03MB4852;
+ H:HK0PR03MB4082.apcprd03.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: nuvoton.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: +8N+A6LUakiCR2EYQKGuZdDXXCkEwcOItDWED3itD1NzbP71llQK3TtgybaaO3FqwV8h3jiIevmQNxaOMc8szEQyYGwORP9hZ+IdJ2SvlAokTqs55LkjdAsFgEQ9VKrCy4/Pm+dHlHfslaOu/gFwc76zqpeegq8ilcYUlzvtk9SJVWybjNVGAWgnOVRJR6aiB4tT8qLGtwRQXqN/6R/38jM35RgN9WKA3P3GFHupH5ohpfU0dOb5W3lC5dwUzsYJkcBs+EbUgdmvlybEwwyH7d8xTXHZ+LJsSCErNvT9aPhdZW5oRnkajj2fVegGMqMoke4kndn9yd3am+WRXkB/a4TBtEGRCWMFjZX098DaY8/sZjMmrFeET+iI2r746ka3yrs+c4zezpdXS36ElZbXuDaZAmBa0eSSSF1YQFwfOw3rzQhnUVPVenCpwsbwJQB27yRW4tiIYttAVWWz3EfG3evA/KSC7efL8O6os5xvnIY1tmkcSwqmtWUGWaagtzn+w3D8VpI5eC+xcOXxIyVutYXjHoWoNJB+UjJgO7/b16hMjFRQD5CuyXHV7QcfEucj
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fdbca144-a24d-445c-2063-08d78a6d8b40
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Dec 2019 01:38:58.7748 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LSjtjQZAeB8xJQtGWb7Si+lvXh9mQ/fYgsRWLYO7YJL0eR/e2e7eQzNzbhwvXQXr2GgGS0lZ6C22/aaJkwXGlw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB4852
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,394 +108,147 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Yonghui Liu <liuyh21@lenovo.com>,
- Derek Lin <dlin23@lenovo.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/26/19 12:57 AM, Andrew Peng wrote:
-> Add the pmbus driver for Infineon IR38164 Voltage Regulator driver.
-> Add the pmbus driver for Renesas RAA228006 Digital PWM Controller.
-> Add the pmbus driver for TI SN1701022 driver.
-> 
-> Signed-off-by: Andrew Peng <pengms1@lenovo.com>
-> Signed-off-by: Derek Lin <dlin23@lenovo.com>
-> Signed-off-by: Yonghui Liu <liuyh21@lenovo.com>
-> ---
-
-This is annoying, and each time it happens it is more annoying.
-Can you folks please stop sending me patches for non-upstream kernel branches ?
-
-Thanks,
-Guenter
-
-> v1: initial version
-> 
->   drivers/hwmon/pmbus/Kconfig     |  25 ++++++++
->   drivers/hwmon/pmbus/Makefile    |   3 +
->   drivers/hwmon/pmbus/ir38164.c   |  72 +++++++++++++++++++++++
->   drivers/hwmon/pmbus/raa228006.c | 127 ++++++++++++++++++++++++++++++++++++++++
->   drivers/hwmon/pmbus/sn1701022.c |  80 +++++++++++++++++++++++++
->   5 files changed, 307 insertions(+)
->   create mode 100644 drivers/hwmon/pmbus/ir38164.c
->   create mode 100644 drivers/hwmon/pmbus/raa228006.c
->   create mode 100644 drivers/hwmon/pmbus/sn1701022.c
-> 
-> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-> index 6106263..2312b58 100644
-> --- a/drivers/hwmon/pmbus/Kconfig
-> +++ b/drivers/hwmon/pmbus/Kconfig
-> @@ -73,6 +73,15 @@ config SENSORS_IR38064
->   	  This driver can also be built as a module. If so, the module will
->   	  be called ir38064.
->   
-> +config SENSORS_IR38164
-> +	tristate "Infineon IR38164"
-> +	help
-> +	  If you say yes here you get hardware monitoring support for Infineon
-> +	  IR38164.
-> +
-> +	  This driver can also be built as a module. If so, the module will
-> +	  be called ir38164.
-> +
->   config SENSORS_IRPS5401
->   	tristate "Infineon IRPS5401"
->   	help
-> @@ -230,4 +239,20 @@ config SENSORS_ZL6100
->   	  This driver can also be built as a module. If so, the module will
->   	  be called zl6100.
->   
-> +config SENSORS_RAA228006
-> +	tristate "RAA228006 and compatibles"
-> +	help
-> +	  If you say yes here you get hardware monitoring support for RAA228006.
-> +
-> +	  This driver can also be built as a module. If so, the module will
-> +	  be called RAA228006.
-> +
-> +config SENSORS_SN1701022
-> +	tristate "SN1701022"
-> +	help
-> +	  If you say yes here you get hardware monitoring support for SN1701022.
-> +
-> +	  This driver can also be built as a module. If so, the module will
-> +	  be called sn1701022.
-> +
->   endif # PMBUS
-> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-> index 03bacfc..ba3aed5 100644
-> --- a/drivers/hwmon/pmbus/Makefile
-> +++ b/drivers/hwmon/pmbus/Makefile
-> @@ -10,6 +10,7 @@ obj-$(CONFIG_SENSORS_IBM_CFFPS)	+= ibm-cffps.o
->   obj-$(CONFIG_SENSORS_INSPUR_IPSPS) += inspur-ipsps.o
->   obj-$(CONFIG_SENSORS_IR35221)	+= ir35221.o
->   obj-$(CONFIG_SENSORS_IR38064)	+= ir38064.o
-> +obj-$(CONFIG_SENSORS_IR38164)	+= ir38164.o
->   obj-$(CONFIG_SENSORS_IRPS5401)	+= irps5401.o
->   obj-$(CONFIG_SENSORS_ISL68137)	+= isl68137.o
->   obj-$(CONFIG_SENSORS_LM25066)	+= lm25066.o
-> @@ -26,3 +27,5 @@ obj-$(CONFIG_SENSORS_TPS53679)	+= tps53679.o
->   obj-$(CONFIG_SENSORS_UCD9000)	+= ucd9000.o
->   obj-$(CONFIG_SENSORS_UCD9200)	+= ucd9200.o
->   obj-$(CONFIG_SENSORS_ZL6100)	+= zl6100.o
-> +obj-$(CONFIG_SENSORS_RAA228006)	+= raa228006.o
-> +obj-$(CONFIG_SENSORS_SN1701022)	+= sn1701022.o
-> diff --git a/drivers/hwmon/pmbus/ir38164.c b/drivers/hwmon/pmbus/ir38164.c
-> new file mode 100644
-> index 0000000..db89473
-> --- /dev/null
-> +++ b/drivers/hwmon/pmbus/ir38164.c
-> @@ -0,0 +1,72 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Hardware monitoring driver for Infineon ir38164
-> + *
-> + * Copyright (C) 2019-present Lenovo
-> + *
-> + * This program is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU General Public License
-> + * as published by the Free Software Foundation; either version 2
-> + * of the License, or (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU General Public License
-> + * along with this program; if not, write to the Free Software
-> + * Foundation, Inc., 51 Franklin Street, Fifth Floor,
-> + * Boston, MA  02110-1301, USA.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/i2c.h>
-> +#include <linux/init.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include "pmbus.h"
-> +
-> +static struct pmbus_driver_info ir38164_info = {
-> +	.pages = 1,
-> +	.format[PSC_VOLTAGE_IN] = linear,
-> +	.format[PSC_VOLTAGE_OUT] = linear,
-> +	.format[PSC_CURRENT_OUT] = linear,
-> +	.format[PSC_POWER] = linear,
-> +	.format[PSC_TEMPERATURE] = linear,
-> +
-> +	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_STATUS_INPUT
-> +	    | PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP
-> +	    | PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT
-> +	    | PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT
-> +	    | PMBUS_HAVE_POUT,
-> +};
-> +
-> +static int ir38164_probe(struct i2c_client *client,
-> +			 const struct i2c_device_id *id)
-> +{
-> +	return pmbus_do_probe(client, id, &ir38164_info);
-> +}
-> +
-> +static const struct i2c_device_id ir38164_id[] = {
-> +	{"ir38164", 0},
-> +	{}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(i2c, ir38164_id);
-> +
-> +/* This is the driver that will be inserted */
-> +static struct i2c_driver ir38164_driver = {
-> +	.driver = {
-> +		   .name = "ir38164",
-> +		   },
-> +	.probe = ir38164_probe,
-> +	.remove = pmbus_do_remove,
-> +	.id_table = ir38164_id,
-> +};
-> +
-> +module_i2c_driver(ir38164_driver);
-> +
-> +MODULE_AUTHOR("Yonghui Liu <liuyh21@lenovo.com>");
-> +MODULE_DESCRIPTION("PMBus driver for Infineon ir38164");
-> +MODULE_LICENSE("GPL");
-> diff --git a/drivers/hwmon/pmbus/raa228006.c b/drivers/hwmon/pmbus/raa228006.c
-> new file mode 100644
-> index 0000000..9aed481
-> --- /dev/null
-> +++ b/drivers/hwmon/pmbus/raa228006.c
-> @@ -0,0 +1,127 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Hardware monitoring driver for raa228006
-> + *
-> + * Copyright (C) 2019-present Lenovo
-> + *
-> + * This program is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU General Public License
-> + * as published by the Free Software Foundation; either version 2
-> + * of the License, or (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU General Public License
-> + * along with this program; if not, write to the Free Software
-> + * Foundation, Inc., 51 Franklin Street, Fifth Floor,
-> + * Boston, MA  02110-1301, USA.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/i2c.h>
-> +#include <linux/init.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include "pmbus.h"
-> +
-> +static int raa228006_probe(struct i2c_client *client,
-> +			 const struct i2c_device_id *id)
-> +{
-> +	struct pmbus_driver_info *info;
-> +	u8 buf[I2C_SMBUS_BLOCK_MAX];
-> +	int ret;
-> +
-> +	if (!i2c_check_functionality(client->adapter,
-> +				     I2C_FUNC_SMBUS_READ_BYTE_DATA
-> +				| I2C_FUNC_SMBUS_READ_WORD_DATA
-> +				| I2C_FUNC_SMBUS_READ_BLOCK_DATA))
-> +		return -ENODEV;
-> +
-> +	/* By default this device doesn't boot to page 0, so set page 0
-> +	 * to access all pmbus registers.
-> +	 */
-> +
-> +	i2c_smbus_write_byte_data(client, 0, 0);
-> +
-> +	/* Read Manufacturer id */
-> +	ret = i2c_smbus_read_block_data(client, PMBUS_MFR_ID, buf);
-> +	if (ret < 0) {
-> +		dev_err(&client->dev, "Failed to read PMBUS_MFR_ID\n");
-> +		return ret;
-> +	}
-> +
-> +	info = devm_kzalloc(&client->dev, sizeof(struct pmbus_driver_info),
-> +			    GFP_KERNEL);
-> +	if (!info)
-> +		return -ENOMEM;
-> +
-> +	info->format[PSC_VOLTAGE_IN] = direct;
-> +	info->format[PSC_VOLTAGE_OUT] = direct;
-> +	info->format[PSC_CURRENT_IN] = direct;
-> +	info->format[PSC_CURRENT_OUT] = direct;
-> +	info->format[PSC_POWER] = direct;
-> +	info->format[PSC_TEMPERATURE] = direct;
-> +	info->vrm_version = vr13;
-> +
-> +	info->m[PSC_VOLTAGE_IN] = 1,
-> +	info->b[PSC_VOLTAGE_IN] = 0,
-> +	info->R[PSC_VOLTAGE_IN] = 3,
-> +
-> +	info->m[PSC_VOLTAGE_OUT] = 1,
-> +	info->b[PSC_VOLTAGE_OUT] = 0,
-> +	info->R[PSC_VOLTAGE_OUT] = 0,
-> +
-> +	info->m[PSC_CURRENT_IN] = 1,
-> +	info->b[PSC_CURRENT_IN] = 0,
-> +	info->R[PSC_CURRENT_IN] = 1,
-> +
-> +	info->m[PSC_CURRENT_OUT] = 1,
-> +	info->b[PSC_CURRENT_OUT] = 0,
-> +	info->R[PSC_CURRENT_OUT] = 2,
-> +
-> +	info->m[PSC_POWER] = 1,
-> +	info->b[PSC_POWER] = 0,
-> +	info->R[PSC_POWER] = 3,
-> +
-> +	info->m[PSC_TEMPERATURE] = 1,
-> +	info->b[PSC_TEMPERATURE] = 0,
-> +	info->R[PSC_TEMPERATURE] = 3,
-> +
-> +	info->func[0] = PMBUS_HAVE_VIN
-> +		| PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN
-> +		| PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN
-> +		| PMBUS_HAVE_POUT | PMBUS_HAVE_TEMP
-> +		| PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3
-> +		| PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT
-> +		| PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP;
-> +
-> +	info->pages = id->driver_data;
-> +
-> +	return pmbus_do_probe(client, id, info);
-> +}
-> +
-> +static const struct i2c_device_id raa228006_id[] = {
-> +	{"raa228006", 1},
-> +	{}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(i2c, raa228006_id);
-> +
-> +/* This is the driver that will be inserted */
-> +static struct i2c_driver raa228006_driver = {
-> +	.driver = {
-> +		   .name = "raa228006",
-> +		   },
-> +	.probe = raa228006_probe,
-> +	.remove = pmbus_do_remove,
-> +	.id_table = raa228006_id,
-> +};
-> +
-> +module_i2c_driver(raa228006_driver);
-> +
-> +MODULE_AUTHOR("Yonghui Liu <liuyh21@lenovo.com>");
-> +MODULE_DESCRIPTION("PMBus driver for raa228006");
-> +MODULE_LICENSE("GPL");
-> diff --git a/drivers/hwmon/pmbus/sn1701022.c b/drivers/hwmon/pmbus/sn1701022.c
-> new file mode 100644
-> index 0000000..0ba45ac
-> --- /dev/null
-> +++ b/drivers/hwmon/pmbus/sn1701022.c
-> @@ -0,0 +1,80 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * Hardware monitoring driver for sn1701022
-> + *
-> + * Copyright (C) 2019-present Lenovo
-> + *
-> + * This program is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU General Public License
-> + * as published by the Free Software Foundation; either version 2
-> + * of the License, or (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU General Public License
-> + * along with this program; if not, write to the Free Software
-> + * Foundation, Inc., 51 Franklin Street, Fifth Floor,
-> + * Boston, MA  02110-1301, USA.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/i2c.h>
-> +#include <linux/init.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include "pmbus.h"
-> +
-> +static struct pmbus_driver_info sn1701022_info = {
-> +	.pages = 2,
-> +	.format[PSC_VOLTAGE_IN] = linear,
-> +	.format[PSC_VOLTAGE_OUT] = vid,
-> +	.vrm_version = vr12,
-> +	.format[PSC_CURRENT_OUT] = linear,
-> +	.format[PSC_CURRENT_IN] = linear,
-> +	.format[PSC_POWER] = linear,
-> +	.format[PSC_TEMPERATURE] = linear,
-> +
-> +	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_STATUS_INPUT
-> +	    | PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP
-> +	    | PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT
-> +	    | PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT
-> +	    | PMBUS_HAVE_POUT,
-> +
-> +	.func[1] = PMBUS_HAVE_VIN | PMBUS_HAVE_STATUS_INPUT
-> +	    | PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP
-> +	    | PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT
-> +	    | PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT
-> +	    | PMBUS_HAVE_POUT,
-> +};
-> +
-> +static int sn1701022_probe(struct i2c_client *client,
-> +			 const struct i2c_device_id *id)
-> +{
-> +	return pmbus_do_probe(client, id, &sn1701022_info);
-> +}
-> +
-> +static const struct i2c_device_id sn1701022_id[] = {
-> +	{"sn1701022", 0},
-> +	{}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(i2c, sn1701022_id);
-> +
-> +/* This is the driver that will be inserted */
-> +static struct i2c_driver sn1701022_driver = {
-> +	.driver = {
-> +		   .name = "sn1701022",
-> +		   },
-> +	.probe = sn1701022_probe,
-> +	.remove = pmbus_do_remove,
-> +	.id_table = sn1701022_id,
-> +};
-> +
-> +module_i2c_driver(sn1701022_driver);
-> +
-> +MODULE_AUTHOR("Yonghui Liu <liuyh21@lenovo.com>");
-> +MODULE_DESCRIPTION("PMBus driver for  sn1701022");
-> +MODULE_LICENSE("GPL");
-> 
-
+SGkgUmFqLA0KDQpCYXNpY2FsbHksIGlmIHlvdSBvbmx5IG5lZWQgaXBtaXRvb2wgbWMgZ3VpZCBj
+b21tYW5kIHdvcmssIHlvdSBjYW4ganVzdCBzZXQgdXAgaW50ZXJmYWNlIHh5ei5vcGVuYm1jX3By
+b2plY3QuQ29tbW9uLlVVSUQuDQpBbmQgYWxzbyB5b3Ugc2hvdWxkIGNoZWNrIHlvdSBhbHJlYWR5
+IGRlZmluZSB0aGUgaW52ZW50b3J5IHBhdGggaW4gYXNzb2NpYXRpb24uanNvbi4NCllvdSBjYW4g
+cmVmZXI6IGh0dHBzOi8vZ2l0aHViLmNvbS9OdXZvdG9uLUlzcmFlbC9vcGVuYm1jL2Jsb2IvcnVu
+Ym1jL21ldGEtcXVhbnRhL21ldGEtb2x5bXB1cy1udXZvdG9uL3JlY2lwZXMtcGhvc3Bob3IvaW52
+ZW50b3J5L3Bob3NwaG9yLWludmVudG9yeS1tYW5hZ2VyL2Fzc29jaWF0aW9ucy5qc29uI0w3MQ0K
+QWZ0ZXIgeW91IGRlZmluZSB0aGUgQk1DIGludmVudG9yeSBwYXRoIGluIGFzc29jaWF0aW9uLmpz
+b24gYW5kIGNvbmZpZ3VyYXRpb24ueWFtbCwgdGhlIHlvdSBzaG91bGQgc2VlIHRoZSBELUJ1cyBw
+cm9wZXJ0eS4NCkhlcmUgaXMgYSBjb21tYW5kIGZvciBjaGVja2luZyB0aGUgRC1CdXMgcGF0aCB0
+aGF0IElQTUlkIHdvdWxkIGFjY2Vzcy4NCg0KZGJ1cy1zZW5kIC0tc3lzdGVtIC0tcHJpbnQtcmVw
+bHkgLS1kZXN0PXh5ei5vcGVuYm1jX3Byb2plY3QuT2JqZWN0TWFwcGVyIC94eXovb3BlbmJtY19w
+cm9qZWN0L29iamVjdF9tYXBwZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5PYmplY3RNYXBwZXIuR2V0
+U3ViVHJlZSBzdHJpbmc6IiIgaW50MzI6MCBhcnJheTpzdHJpbmc6Inh5ei5vcGVuYm1jX3Byb2pl
+Y3QuSW52ZW50b3J5Lkl0ZW0uQm1jIg0KDQp0aGUgcmV0dXJuIG1lc3NhZ2Ugd291bGQgYmUgbGlr
+ZToNCiAgIGFycmF5IFsNCiAgICAgIGRpY3QgZW50cnkoDQogICAgICAgICBzdHJpbmcgIi94eXov
+b3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9tYW5h
+Z2VtZW50X2NhcmQvYm1jIg0KICAgICAgICAgYXJyYXkgWw0KICAgICAgICAgICAgZGljdCBlbnRy
+eSgNCiAgICAgICAgICAgICAgIHN0cmluZyAieHl6Lm9wZW5ibWNfcHJvamVjdC5JbnZlbnRvcnku
+TWFuYWdlciINCiAgICAgICAgICAgICAgIGFycmF5IFsNCiAgICAgICAgICAgICAgICAgIHN0cmlu
+ZyAib3JnLmZyZWVkZXNrdG9wLkRCdXMuSW50cm9zcGVjdGFibGUiDQogICAgICAgICAgICAgICAg
+ICBzdHJpbmcgIm9yZy5mcmVlZGVza3RvcC5EQnVzLlBlZXIiDQogICAgICAgICAgICAgICAgICBz
+dHJpbmcgIm9yZy5mcmVlZGVza3RvcC5EQnVzLlByb3BlcnRpZXMiDQogICAgICAgICAgICAgICAg
+ICBzdHJpbmcgInh5ei5vcGVuYm1jX3Byb2plY3QuQXNzb2NpYXRpb24uRGVmaW5pdGlvbnMiDQog
+ICAgICAgICAgICAgICAgICBzdHJpbmcgInh5ei5vcGVuYm1jX3Byb2plY3QuQ29tbW9uLlVVSUQi
+DQogICAgICAgICAgICAgICAgICBzdHJpbmcgInh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5
+LkRlY29yYXRvci5Bc3NldCINCiAgICAgICAgICAgICAgICAgIHN0cmluZyAieHl6Lm9wZW5ibWNf
+cHJvamVjdC5JbnZlbnRvcnkuRGVjb3JhdG9yLkNhY2hlYWJsZSINCiAgICAgICAgICAgICAgICAg
+IHN0cmluZyAieHl6Lm9wZW5ibWNfcHJvamVjdC5JbnZlbnRvcnkuRGVjb3JhdG9yLlJlcGxhY2Vh
+YmxlIg0KICAgICAgICAgICAgICAgICAgc3RyaW5nICJ4eXoub3BlbmJtY19wcm9qZWN0LkludmVu
+dG9yeS5EZWNvcmF0b3IuUmV2aXNpb24iDQogICAgICAgICAgICAgICAgICBzdHJpbmcgInh5ei5v
+cGVuYm1jX3Byb2plY3QuSW52ZW50b3J5Lkl0ZW0iDQogICAgICAgICAgICAgICAgICBzdHJpbmcg
+Inh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5Lkl0ZW0uQm1jIg0KICAgICAgICAgICAgICAg
+ICAgc3RyaW5nICJ4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5JdGVtLkJvYXJkIg0KICAg
+ICAgICAgICAgICAgICAgc3RyaW5nICJ4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5JdGVt
+LkV0aGVybmV0Ig0KICAgICAgICAgICAgICAgICAgc3RyaW5nICJ4eXoub3BlbmJtY19wcm9qZWN0
+LkludmVudG9yeS5JdGVtLk5ldHdvcmtJbnRlcmZhY2UiDQogICAgICAgICAgICAgICBdDQogICAg
+ICAgICAgICApDQogICAgICAgICBdDQogICAgICApDQogICBdDQoNClRoYW5rcywNCkJyaWFuDQoN
+Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiByZ3JzIDxyZ3JzQHByb3Rvbm1haWwu
+Y29tPg0KU2VudDogVGh1cnNkYXksIERlY2VtYmVyIDI2LCAyMDE5IDQ6NDUgUE0NClRvOiBDUzIw
+IENITWEwIDxDSE1BMEBudXZvdG9uLmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcN
+ClN1YmplY3Q6IFJFOiBCTUMgVVVJRCBwcm9wZXJ0eS9vYmplY3Qgbm90IGZvdW5kDQoNCkhpIEJy
+aWFuLA0KDQpZb3UncmUgcmlnaHQuIE91ciBGUlUgZG9lc24ndCBoYXZlIHRoYXQgZmllbGQuDQpJ
+IHdhcyB1bmRlciB0aGUgYXNzdW1wdGlvbiwgL2V0Yy9tYWNoaW5lLWlkIHdhcyB1c2VkIGluc3Rl
+YWQuDQoNCkkgZ3Vlc3MgaSBuZWVkIHRvIGVkaXQgbXkgRlJVLg0KQXJlIGFsbCB0aG9zZSBmaWVs
+ZHMgaW4geW91ciB5YW1sIGV4YW1wbGUgbmVjZXNzYXJ5Pw0KDQpUaGFua3MsDQpSYWoNCg0KDQoN
+CuKAkOKAkOKAkOKAkOKAkOKAkOKAkCBPcmlnaW5hbCBNZXNzYWdlIOKAkOKAkOKAkOKAkOKAkOKA
+kOKAkA0KT24gV2VkbmVzZGF5LCBEZWNlbWJlciAyNSwgMjAxOSA4OjU2IEFNLCBDUzIwIENITWEw
+IDxDSE1BMEBudXZvdG9uLmNvbT4gd3JvdGU6DQoNCj4gSGkgUmFqLA0KPiBZb3UgY2FuIGNoZWNr
+IHRoZSBpbnZlbnRvcnkgc2VydmljZS4NCj4gSXBtaWQgcmV0dXJuIEJNQyBVVUlEIGJ5IGdldCBE
+LUJ1cyBwcm9wZXJ0eSBmcm9tIGludmVudG9yeSBzZXJ2aWNlLg0KPiBBbmQgaW52ZW50b3J5IHNl
+cnZpY2Ugd2lsbCByZWFkIHNvbWUgY29uZmlndXJhdGlvbiBmaWxlIHdoaWxlIHN0YXJ0dXANCj4g
+bGlrZQ0KPiBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMt
+M0FfX2dpdGh1Yi5jb21fTnV2b3RvDQo+IG4tMkRJc3JhZWxfb3BlbmJtY19ibG9iX3J1bmJtY19t
+ZXRhLTJEcXVhbnRhX21ldGEtMkRvbHltcHVzLTJEbnV2b3Rvbl8NCj4gcmVjaXBlcy0yRHBob3Nw
+aG9yX2NvbmZpZ3VyYXRpb25fb2x5bXB1cy0yRG51dm90b24tMkR5YW1sLTJEY29uZmlnX29seQ0K
+PiBtcHVzLTJEbnV2b3Rvbi0yRGlwbWktMkRmcnUtMkRibWMueWFtbCZkPUR3SUZhUSZjPXVlOG1P
+OHpnQzRWWjRxX2FOVkt0DQo+IDhHOU1DMDFVRkRtaXN2TVIxay1Fb0RNJnI9ZG9OTm5TNnBhTEwt
+eFJSOVZXMUdZRXRZVTgydlBHVE12X2hFNW5lQ2NXSSYNCj4gbT1RZkpvZEFWRmk1QTF5bHlnYl9P
+cG5PYlo1RFRrTHNUdWhLVFF6QkJZeHVrJnM9R3p6VzduWWNvNjRkZHd0WjhzZ3lHaA0KPiBmWjAz
+VkM0S0xPSmNHNjJ5QVdfXzgmZT0gSWYgdGhlIEZSVSBoYXMgbm8gQk1DIFVVSUQgZGF0YSBvciBu
+b3QNCj4gY29uZmlndXJlIEJNQyBVVUlEIGluIGludmVudG9yeSBzZXJ2aWNlLCB0aGUgcHJvcGVy
+dHkgd291bGQgbm90IGV4aXN0Lg0KPg0KPiBUaGFua3MsDQo+IEJyaWFuDQo+DQo+IOKAkOKAkOKA
+kOKAkOKAkOKAkOKAkCBPcmlnaW5hbCBNZXNzYWdlIOKAkOKAkOKAkOKAkOKAkOKAkOKAkA0KPiBG
+cm9tOiByZ3JzIHJncnNAcHJvdG9ubWFpbC5jb20NCj4gU2VudDogVHVlc2RheSwgRGVjZW1iZXIg
+MjQsIDIwMTkgNTozNCBQTQ0KPiBUbzogQ1MyMCBDSE1hMCBDSE1BMEBudXZvdG9uLmNvbQ0KPiBD
+Yzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJFOiBCTUMgVVVJRCBwcm9w
+ZXJ0eS9vYmplY3Qgbm90IGZvdW5kDQo+DQo+IEhpIEJyaWFuLA0KPg0KPiBUaGV5IGFyZSBlbmFi
+bGVkLCBJcyB0aGVyZSBhbnl0aGluZyBlbHNlIGkgc2hvdWxkIGxvb2sgYXQ/DQo+DQo+ICQgZ3Jl
+cCAtcmluICJDT05GSUdfQ1JZUFRPXyIgZGVmY29uZmlnIDIxNjpDT05GSUdfQ1JZUFRPX0hNQUM9
+eQ0KPiAyMTc6Q09ORklHX0NSWVBUT19TSEEyNTY9eSAyMTg6Q09ORklHX0NSWVBUT19VU0VSX0FQ
+SV9IQVNIPXkgMjM0OiMNCj4gQ09ORklHX0NSWVBUT19FQ0hBSU5JViBpcyBub3Qgc2V0IDIzNToj
+IENPTkZJR19DUllQVE9fSFcgaXMgbm90IHNldA0KPg0KPiBUaGFua3MsDQo+IFJhag0KPg0KPiDi
+gJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDigJDigJDigJDigJDigJDigJDi
+gJANCj4gT24gVHVlc2RheSwgRGVjZW1iZXIgMjQsIDIwMTkgMTI6NTkgUE0sIENTMjAgQ0hNYTAg
+bWFpbHRvOkNITUEwQG51dm90b24uY29tIHdyb3RlOg0KPg0KPiBIaSBSYWosDQo+IFRoZSBzeXN0
+ZW1kIGdldCBVVUlEIGZ1bmN0aW9uIG5lZWQgS2VybmVsIEFQSSBzdXBwb3J0Lg0KPiBNYXliZSB5
+b3UgY2FuIGNoZWNrIEtlcm5lbCBjb25maWd1cmF0aW9uIGZpcnN0Lg0KPg0KPiBodHRwczovL3Vy
+bGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX2dpdGh1Yi5jb21fc3lz
+dGVtDQo+IGRfc3lzdGVtZF9ibG9iX21hc3Rlcl9SRUFETUUtMjNMNTEmZD1Ed01HYVEmYz11ZTht
+Tzh6Z0M0Vlo0cV9hTlZLdDhHOU0NCj4gQzAxVUZEbWlzdk1SMWstRW9ETSZyPWRvTk5uUzZwYUxM
+LXhSUjlWVzFHWUV0WVU4MnZQR1RNdl9oRTVuZUNjV0kmbT1HQQ0KPiBuMWtOTEx2cUJIUmJFRVl6
+OENsSTdIUUF4RWdKd3VsNE0xa0N3aWxVWSZzPWlHU1IyZ01xY2Q0WXpZVTZ3bXVFaXJCNEo4DQo+
+IER2bHFSc2RJbm1zT1FZRlNBJmU9DQo+IEtlcm5lbCBjcnlwdG8vaGFzaCBBUEkNCj4gQ09ORklH
+X0NSWVBUT19ITUFDDQo+IENPTkZJR19DUllQVE9fU0hBMjU2DQo+IENPTkZJR19DUllQVE9fVVNF
+Ul9BUElfSEFTSA0KPg0KPiBUaGFua3MsDQo+IEJyaWFuDQo+DQo+IEZyb206IG9wZW5ibWMNCj4g
+bWFpbHRvOm9wZW5ibWMtYm91bmNlcytrd2xpdT1udXZvdG9uLmNvbUBsaXN0cy5vemxhYnMub3Jn
+IE9uIEJlaGFsZiBPZg0KPiByZ3JzDQo+IFNlbnQ6IFR1ZXNkYXksIERlY2VtYmVyIDI0LCAyMDE5
+IDI6MzcgUE0NCj4gVG86IG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4gU3ViamVj
+dDogQk1DIFVVSUQgcHJvcGVydHkvb2JqZWN0IG5vdCBmb3VuZA0KPg0KPiBIaSwNCj4NCj4gSSBn
+ZXQgYmVsb3cgZXJyb3IgbWVzc2FnZSBvbiAiaXBtaXRvb2wgbWMgZ3VpZCIgY29tbWFuZCwNCj4N
+Cj4gRGVjIDI0IDA1OjA5OjMzIG9ibWMgaXBtaWRbMTQ1N106IEZhaWxlZCBpbiByZWFkaW5nIEJN
+QyBVVUlEIHByb3BlcnR5DQo+IERlYyAyNCAwNTowOTo0MiBvYm1jIGlwbWlkWzE0NTddOiBObyBP
+YmplY3QgaGFzIGltcGxlbWVudGVkIHRoZQ0KPiBpbnRlcmZhY2UgRGVjIDI0IDA1OjA5OjQyIG9i
+bWMgaXBtaWRbMTQ1N106IFRoZSBvcGVyYXRpb24gZmFpbGVkIGludGVybmFsbHkuDQo+DQo+IElz
+IHRoaXMgc2FtZSBhcw0KPiBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5jb20vdjIvdXJs
+P3U9aHR0cHMtM0FfX2dpdGh1Yi5jb21fb3BlbmJtDQo+IGNfb3BlbmJtY19pc3N1ZXNfMzUzMiZk
+PUR3TUdhUSZjPXVlOG1POHpnQzRWWjRxX2FOVkt0OEc5TUMwMVVGRG1pc3ZNUjENCj4gay1Fb0RN
+JnI9N2cyRDFYRGMxRVQzQ25ZMXlTbmFXUVhQeFB4ZnBMd3cxTWlEYkxXNHY4USZtPXZIV1IzSVUz
+SEFoMHVGeQ0KPiBUbXhuRXdPZGxPTkhoVzNGWTRGVHpaMDFtalJVJnM9dGJod2EtZ2hxRW13NGNm
+Z1V6c2Y2MUlxNEJjb1U3Zk0wQml3OTRPDQo+IDUweFEmZT0NCj4NCj4gV2hpY2ggYXBwL3NlcnZp
+Y2UgaW1wbGVtZW50cyB0aGlzIGludGVyZmFjZT8NCj4NCj4gVGhhbmtzDQo+DQo+IFJhag0KPg0K
+PiBUaGUgcHJpdmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRo
+aXMgZW1haWwgaXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFzIGlu
+ZGljYXRlZCBieSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBhcmUg
+bm90IHRoZSBhZGRyZXNzZWUgaW5kaWNhdGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCByZXNw
+b25zaWJsZSBmb3IgZGVsaXZlcnkgb2YgdGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBsZWFz
+ZSBraW5kbHkgcmVwbHkgdG8gdGhlIHNlbmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQgZGVs
+ZXRlIGFsbCBjb3BpZXMgb2YgaXQgZnJvbSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNlcnZl
+ciBpbW1lZGlhdGVseS4gWW91ciBjb29wZXJhdGlvbiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQuIEl0
+IGlzIGFkdmlzZWQgdGhhdCBhbnkgdW5hdXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwgaW5m
+b3JtYXRpb24gb2YgTnV2b3RvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGluZm9y
+bWF0aW9uIGluIHRoaXMgZW1haWwgaXJyZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5lc3Mg
+b2YgTnV2b3RvbiBzaGFsbCBiZSBkZWVtZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3JzZWQg
+YnkgTnV2b3Rvbi4NCj4NCj4gVGhlIHByaXZpbGVnZWQgY29uZmlkZW50aWFsIGluZm9ybWF0aW9u
+IGNvbnRhaW5lZCBpbiB0aGlzIGVtYWlsIGlzIGludGVuZGVkIGZvciB1c2Ugb25seSBieSB0aGUg
+YWRkcmVzc2VlcyBhcyBpbmRpY2F0ZWQgYnkgdGhlIG9yaWdpbmFsIHNlbmRlciBvZiB0aGlzIGVt
+YWlsLiBJZiB5b3UgYXJlIG5vdCB0aGUgYWRkcmVzc2VlIGluZGljYXRlZCBpbiB0aGlzIGVtYWls
+IG9yIGFyZSBub3QgcmVzcG9uc2libGUgZm9yIGRlbGl2ZXJ5IG9mIHRoZSBlbWFpbCB0byBzdWNo
+IGEgcGVyc29uLCBwbGVhc2Uga2luZGx5IHJlcGx5IHRvIHRoZSBzZW5kZXIgaW5kaWNhdGluZyB0
+aGlzIGZhY3QgYW5kIGRlbGV0ZSBhbGwgY29waWVzIG9mIGl0IGZyb20geW91ciBjb21wdXRlciBh
+bmQgbmV0d29yayBzZXJ2ZXIgaW1tZWRpYXRlbHkuIFlvdXIgY29vcGVyYXRpb24gaXMgaGlnaGx5
+IGFwcHJlY2lhdGVkLiBJdCBpcyBhZHZpc2VkIHRoYXQgYW55IHVuYXV0aG9yaXplZCB1c2Ugb2Yg
+Y29uZmlkZW50aWFsIGluZm9ybWF0aW9uIG9mIE51dm90b24gaXMgc3RyaWN0bHkgcHJvaGliaXRl
+ZDsgYW5kIGFueSBpbmZvcm1hdGlvbiBpbiB0aGlzIGVtYWlsIGlycmVsZXZhbnQgdG8gdGhlIG9m
+ZmljaWFsIGJ1c2luZXNzIG9mIE51dm90b24gc2hhbGwgYmUgZGVlbWVkIGFzIG5laXRoZXIgZ2l2
+ZW4gbm9yIGVuZG9yc2VkIGJ5IE51dm90b24uDQoNCg0KX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX18NCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQogVGhlIHByaXZpbGVn
+ZWQgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIGVtYWlsIGlzIGlu
+dGVuZGVkIGZvciB1c2Ugb25seSBieSB0aGUgYWRkcmVzc2VlcyBhcyBpbmRpY2F0ZWQgYnkgdGhl
+IG9yaWdpbmFsIHNlbmRlciBvZiB0aGlzIGVtYWlsLiBJZiB5b3UgYXJlIG5vdCB0aGUgYWRkcmVz
+c2VlIGluZGljYXRlZCBpbiB0aGlzIGVtYWlsIG9yIGFyZSBub3QgcmVzcG9uc2libGUgZm9yIGRl
+bGl2ZXJ5IG9mIHRoZSBlbWFpbCB0byBzdWNoIGEgcGVyc29uLCBwbGVhc2Uga2luZGx5IHJlcGx5
+IHRvIHRoZSBzZW5kZXIgaW5kaWNhdGluZyB0aGlzIGZhY3QgYW5kIGRlbGV0ZSBhbGwgY29waWVz
+IG9mIGl0IGZyb20geW91ciBjb21wdXRlciBhbmQgbmV0d29yayBzZXJ2ZXIgaW1tZWRpYXRlbHku
+IFlvdXIgY29vcGVyYXRpb24gaXMgaGlnaGx5IGFwcHJlY2lhdGVkLiBJdCBpcyBhZHZpc2VkIHRo
+YXQgYW55IHVuYXV0aG9yaXplZCB1c2Ugb2YgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIG9mIE51
+dm90b24gaXMgc3RyaWN0bHkgcHJvaGliaXRlZDsgYW5kIGFueSBpbmZvcm1hdGlvbiBpbiB0aGlz
+IGVtYWlsIGlycmVsZXZhbnQgdG8gdGhlIG9mZmljaWFsIGJ1c2luZXNzIG9mIE51dm90b24gc2hh
+bGwgYmUgZGVlbWVkIGFzIG5laXRoZXIgZ2l2ZW4gbm9yIGVuZG9yc2VkIGJ5IE51dm90b24uDQo=
