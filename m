@@ -2,75 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D08AD12EB94
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jan 2020 22:57:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D5C412F1E8
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 00:45:48 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47phjT4d3szDqC7
-	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 08:57:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47pl605nQczDqCB
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 10:45:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
- helo=mail-oi1-x22e.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
+ helo=mail-pj1-x1042.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="ElEA9SkE"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Y2b5uzG6"; 
  dkim-atps=neutral
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
- [IPv6:2607:f8b0:4864:20::22e])
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
+ [IPv6:2607:f8b0:4864:20::1042])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47phhm1ysXzDq5y
- for <openbmc@lists.ozlabs.org>; Fri,  3 Jan 2020 08:57:11 +1100 (AEDT)
-Received: by mail-oi1-x22e.google.com with SMTP id k4so13632820oik.2
- for <openbmc@lists.ozlabs.org>; Thu, 02 Jan 2020 13:57:11 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47pl5G5F2PzDqC4
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Jan 2020 10:45:04 +1100 (AEDT)
+Received: by mail-pj1-x1042.google.com with SMTP id a6so3891593pjh.2
+ for <openbmc@lists.ozlabs.org>; Thu, 02 Jan 2020 15:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=aivZxdvHkGLNXJTbV7Da5qJHvL/cuIziyb9jZWu+PUo=;
- b=ElEA9SkE9stuFrSJJeWzsGTXWwbCBEbDsCAlKz2G/AZeQT89FSxovobGH8nVPKSMna
- SENxjz8F4IIBDuGzjoBoTlGWZLLGt2uGMyTVfpliTYCzHNXOyXUoZw9u+jG3S3V9iiXR
- TMKKY86V7bMTEO5WTR4JWvaW2RhrMMN7NQAv3U/V47H/0060ZxiOQK9qDq7A8+f/bSzA
- gB7dPDNY6klx8/XvRMCXUgUA2aez3ewHm+WP8M6XxDYGTzHVMg25oiO6ucJC/FJgMqOj
- BFKRZ3nIumOIuJaH6agiAlCFldeTWZByeHpQpW7sRlTdUaCplvBupdtf0XaGhXIJ6Huy
- gJIQ==
+ h=sender:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=8jJoif8+uhUGnG/yxKt+aQSnehq3+M9a17ZJrGpL2Bw=;
+ b=Y2b5uzG6oS2QEPllB0qQdaxqHnR6kp9i+LTVXBANFYhr/5kaonhmFmQ5Xf4AkoYK8V
+ 4GhXAtjtGEBc4K50RkQd+vlCS2QC92mlRKbJZIUopPsCPUnln46xFLRWBHv8jIFGfd9i
+ oEgkqc0djlNbFFJo6oVA76W1qu0ouZJxovJvQMN0FrNQvrP+JNPH8nObXjzxBe0HkY3Q
+ 3LtZEpTklqyxWT1iMf/uI/Nt11S35TcGm/InB4MIqg6f9HBWcBLTvm8fRIH3EUJwRpNk
+ auZw3N+KPruqwZtjWD9dWuGkcZqNUdKWsBRYBKFhIUS4yCwUEbTnDg2FI607ir3IAx6d
+ aBOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=aivZxdvHkGLNXJTbV7Da5qJHvL/cuIziyb9jZWu+PUo=;
- b=PsOqKefF3sJEZEOAPZmWxA7G701A5K57MSrBG6ISuBVTvOIBGSc9D+ArYWjicIQtWn
- JiGqcON7FTg/6ojCjmyiB1bxM/puF6+5ayNBnXlOnl5+up/FhiBiofvPxu4qhrK+rCQ4
- Fv6VhhX7glKVOB0hlKTdSMKfXC52DqJpA+BzEWfa4HsLTzwdgbIoS0Lvz4jYN0hJM5MU
- Kh6XuKvTrjvNW1T/Lvm1NN2VpD3PrTVAWrdhv9yeUF6GoSY6okof2dclrLs/aDUTCM03
- +Gt/BIz7rF4tFQwkn6S9K9Qqn44XRLCjYDhYKv1VuRsXyoh4PJl7yM7LykH5OkimyVP7
- 1Yrg==
-X-Gm-Message-State: APjAAAVv2Y52A60G0Olbzm3aZrPxnzYcndlc6klBOG2uQQaZr16vgZD4
- rezXZ0L6yYGeCytogpgEI9Y=
-X-Google-Smtp-Source: APXvYqwi4xKomZeuJQ3d1xalI3P8xGNsabM3iB8LCvwv8kK4meZCkWWwceP0eMA1GE1S665DYd3SpQ==
-X-Received: by 2002:aca:60c3:: with SMTP id u186mr3157205oib.163.1578002227726; 
- Thu, 02 Jan 2020 13:57:07 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:a8ef:2ce5:9cf:3dec])
- by smtp.gmail.com with ESMTPSA id t11sm6069485otk.50.2020.01.02.13.57.05
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 02 Jan 2020 13:57:06 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: bitbake of individual repositories
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <20191218180242.GA61593@patrickw3-mbp.dhcp.thefacebook.com>
-Date: Thu, 2 Jan 2020 15:57:05 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <35EA2D06-705F-4709-92C2-2980A6E9D524@gmail.com>
-References: <CALLMt=oyMtrZ4iU5BukqrNF4-7wXWPaSOxg20Hr3Y4Lo182Ejw@mail.gmail.com>
- <20191218180242.GA61593@patrickw3-mbp.dhcp.thefacebook.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-X-Mailer: Apple Mail (2.3601.0.10)
+ h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=8jJoif8+uhUGnG/yxKt+aQSnehq3+M9a17ZJrGpL2Bw=;
+ b=cWqL8Dnuo2cnjimTSnfBfDct8usXK8b8DQnpIAM/MmREBcxvfmsQrFokLHcGSSm3yH
+ jz7t9j2aSlt2xhQV4Q04acRtjIyU+TP1Q+fTW4wc0Q9S/m4INGTAhzalhGmsDat3eIPp
+ bPzDMvutxwlD1Qw6qGrKQy8YN+7MkyGYfdo72v3o/iMoRcWgR7wF6pEw0vpjonsnUp/Y
+ 8P0LjsfTCQgIxZx5NpT73KdqWZrxGKAOn5OlI202ka6kuhegBCH0BaJRBObSr1Ye9NPZ
+ fVSlZsxikK5xVYGyIsi+JjMjf/KbmKDFi4dV/IJY0GUZI4wZQZ/VJWYUp5CUq1zWPQJN
+ KIuw==
+X-Gm-Message-State: APjAAAUVY/IPr++Pr4O8cXdrKpYwtWz9vaAbDNudtTRSrrj6FutGHnEk
+ 6+pk197D+npg5z+0/I6mKhiyAHnQ
+X-Google-Smtp-Source: APXvYqxJFosvQWs/J/9cdeo3kqhzuBN4SZWc4CmtZa+ewleKQyIxdQ2ZXyemM7VfkmUKnxu/iNiVTA==
+X-Received: by 2002:a17:90a:2223:: with SMTP id
+ c32mr23838916pje.15.1578008700034; 
+ Thu, 02 Jan 2020 15:45:00 -0800 (PST)
+Received: from voyager.lan ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id gc1sm12053441pjb.20.2020.01.02.15.44.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 02 Jan 2020 15:44:59 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.4] ARM: dts: aspeed: rainier: Remove duplicate i2c
+ busses
+Date: Fri,  3 Jan 2020 10:44:51 +1100
+Message-Id: <20200102234451.301828-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.24.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,68 +78,394 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Derek Howard <derekh@us.ibm.com>, Jim L Wright <jlwright@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a revert of "ARM: dts: aspeed: rainier: Add i2c devices", which
+was already applied to the tree.
 
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 365 -------------------
+ 1 file changed, 365 deletions(-)
 
-> On Dec 18, 2019, at 12:02 PM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> On Tue, Dec 17, 2019 at 04:02:12PM -0600, Andrew Geissler wrote:
->> Other ideas out there?
->=20
-> I've mentioned repo before as it can assist with this.  Bitbake has a
-> feature where you can set "SRCREV=3D${AUTOREV}" and it will =
-automatically
-> pick up what is in the git repo.  What I've done on another project is
-> this:
-
-Does this mean all recipes will need to change to do this? I think =
-we=E2=80=99ve
-discussed this in the past and stated we like to have more control over
-when code is picked up in the meta-* layers.
-
->=20
->   1. Use `repo` to pull down all the source repositories in a =
-consistent
->      tree (and ensure it is in the Docker build image, such as in
->      /workdir).
-
-I=E2=80=99m not familiar with repo. Will this require any changes to our =
-upstream
-repositories or is this just a tool we can use from within our CI =
-scripts?
-
->   2. Run a small script to fetch the GERRIT_REFSPEC and/or =
-GERRIT_TOPIC
->      on top of the checked out `repo` location.
->=20
->   3. Add a small .bbclass that replaces "SRCREV=3D${AUTOREV}" when an
->      environment variable is set and update the recipes to inherit
->      this class.
->=20
->   4. Set the environment variable prior to running `bitbake` and add a
->      source mirror to point at the /workdir location instead of Gerrit
->      directly (eg. 1 line in local.conf).
-
-Your option seems even more complicated then the one=E2=80=99s I had =
-above :)
-It does come with the added feature of the TOPIC support but our general
-statement has been to just avoid requisites.
-
-As with anything though, if you=E2=80=99re willing to put the work in to =
-help make
-this happen, and assuming it requires minimal changes to existing
-repository layouts and recipes, I=E2=80=99d be interested.
-
->=20
-> Now when bitbake runs you're getting the full bitbake to run against =
-the
-> commit (or commits in the case of a GERRIT_TOPIC) that you've =
-extracted.
->=20
-> --=20
-> Patrick Williams
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index e1d931a0907b..1edeb8a415b5 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -591,371 +591,6 @@
+ 	status = "okay";
+ };
+ 
+-&i2c13 {
+-	status = "okay";
+-};
+-
+-&i2c14 {
+-	status = "okay";
+-};
+-
+-&i2c15 {
+-	status = "okay";
+-};
+-
+-&i2c0 {
+-	status = "okay";
+-};
+-
+-&i2c1 {
+-	status = "okay";
+-};
+-
+-&i2c2 {
+-	status = "okay";
+-};
+-
+-&i2c3 {
+-	status = "okay";
+-
+-	power-supply@68 {
+-		compatible = "ibm,cffps2";
+-		reg = <0x68>;
+-	};
+-
+-	power-supply@69 {
+-		compatible = "ibm,cffps2";
+-		reg = <0x69>;
+-	};
+-
+-	power-supply@6a {
+-		compatible = "ibm,cffps2";
+-		reg = <0x6a>;
+-	};
+-
+-	power-supply@6b {
+-		compatible = "ibm,cffps2";
+-		reg = <0x6b>;
+-	};
+-};
+-
+-&i2c4 {
+-	status = "okay";
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	tmp275@49 {
+-		compatible = "ti,tmp275";
+-		reg = <0x49>;
+-	};
+-
+-	tmp275@4a {
+-		compatible = "ti,tmp275";
+-		reg = <0x4a>;
+-	};
+-};
+-
+-&i2c5 {
+-	status = "okay";
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	tmp275@49 {
+-		compatible = "ti,tmp275";
+-		reg = <0x49>;
+-	};
+-};
+-
+-&i2c6 {
+-	status = "okay";
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	tmp275@4a {
+-		compatible = "ti,tmp275";
+-		reg = <0x4a>;
+-	};
+-
+-	tmp275@4b {
+-		compatible = "ti,tmp275";
+-		reg = <0x4b>;
+-	};
+-};
+-
+-&i2c7 {
+-	status = "okay";
+-
+-	si7021-a20@20 {
+-		compatible = "silabs,si7020";
+-		reg = <0x20>;
+-	};
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	max31785@52 {
+-		compatible = "maxim,max31785a";
+-		reg = <0x52>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		fan@0 {
+-			compatible = "pmbus-fan";
+-			reg = <0>;
+-			tach-pulses = <2>;
+-		};
+-
+-		fan@1 {
+-			compatible = "pmbus-fan";
+-			reg = <1>;
+-			tach-pulses = <2>;
+-		};
+-
+-		fan@2 {
+-			compatible = "pmbus-fan";
+-			reg = <2>;
+-			tach-pulses = <2>;
+-		};
+-
+-		fan@3 {
+-			compatible = "pmbus-fan";
+-			reg = <3>;
+-			tach-pulses = <2>;
+-		};
+-	};
+-
+-	pca0: pca9552@60 {
+-		compatible = "nxp,pca9552";
+-		reg = <0x60>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-
+-		gpio@0 {
+-			reg = <0>;
+-		};
+-
+-		gpio@1 {
+-			reg = <1>;
+-		};
+-
+-		gpio@2 {
+-			reg = <2>;
+-		};
+-
+-		gpio@3 {
+-			reg = <3>;
+-		};
+-
+-		gpio@4 {
+-			reg = <4>;
+-		};
+-
+-		gpio@5 {
+-			reg = <5>;
+-		};
+-
+-		gpio@6 {
+-			reg = <6>;
+-		};
+-
+-		gpio@7 {
+-			reg = <7>;
+-		};
+-
+-		gpio@8 {
+-			reg = <8>;
+-		};
+-
+-		gpio@9 {
+-			reg = <9>;
+-		};
+-
+-		gpio@10 {
+-			reg = <10>;
+-		};
+-
+-		gpio@11 {
+-			reg = <11>;
+-		};
+-
+-		gpio@12 {
+-			reg = <12>;
+-		};
+-
+-		gpio@13 {
+-			reg = <13>;
+-		};
+-
+-		gpio@14 {
+-			reg = <14>;
+-		};
+-
+-		gpio@15 {
+-			reg = <15>;
+-		};
+-	};
+-
+-	dps: dps310@76 {
+-		compatible = "infineon,dps310";
+-		reg = <0x76>;
+-		#io-channel-cells = <0>;
+-	};
+-};
+-
+-&i2c8 {
+-	status = "okay";
+-
+-	ucd90320@b {
+-		compatible = "ti,ucd90160";
+-		reg = <0x0b>;
+-	};
+-
+-	ucd90320@c {
+-		compatible = "ti,ucd90160";
+-		reg = <0x0c>;
+-	};
+-
+-	ucd90320@11 {
+-		compatible = "ti,ucd90160";
+-		reg = <0x11>;
+-	};
+-
+-	rtc@32 {
+-		compatible = "epson,rx8900";
+-		reg = <0x32>;
+-	};
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	tmp275@4a {
+-		compatible = "ti,tmp275";
+-		reg = <0x4a>;
+-	};
+-};
+-
+-&i2c9 {
+-	status = "okay";
+-
+-	ir35221@42 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x42>;
+-	};
+-
+-	ir35221@43 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x43>;
+-	};
+-
+-	ir35221@44 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x44>;
+-	};
+-
+-	tmp423a@4c {
+-		compatible = "ti,tmp423";
+-		reg = <0x4c>;
+-	};
+-
+-	tmp423b@4d {
+-		compatible = "ti,tmp423";
+-		reg = <0x4d>;
+-	};
+-
+-	ir35221@72 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x72>;
+-	};
+-
+-	ir35221@73 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x73>;
+-	};
+-
+-	ir35221@74 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x74>;
+-	};
+-};
+-
+-&i2c10 {
+-	status = "okay";
+-
+-	ir35221@42 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x42>;
+-	};
+-
+-	ir35221@43 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x43>;
+-	};
+-
+-	ir35221@44 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x44>;
+-	};
+-
+-	tmp423a@4c {
+-		compatible = "ti,tmp423";
+-		reg = <0x4c>;
+-	};
+-
+-	tmp423b@4d {
+-		compatible = "ti,tmp423";
+-		reg = <0x4d>;
+-	};
+-
+-	ir35221@72 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x72>;
+-	};
+-
+-	ir35221@73 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x73>;
+-	};
+-
+-	ir35221@74 {
+-		compatible = "infineon,ir35221";
+-		reg = <0x74>;
+-	};
+-};
+-
+-&i2c11 {
+-	status = "okay";
+-
+-	tmp275@48 {
+-		compatible = "ti,tmp275";
+-		reg = <0x48>;
+-	};
+-
+-	tmp275@49 {
+-		compatible = "ti,tmp275";
+-		reg = <0x49>;
+-	};
+-};
+-
+-&i2c12 {
+-	status = "okay";
+-};
+-
+ &i2c13 {
+ 	status = "okay";
+ 
+-- 
+2.24.1
 
