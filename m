@@ -2,71 +2,103 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D5C412F1E8
-	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 00:45:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E572A12F22A
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 01:28:44 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47pl605nQczDqCB
-	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 10:45:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47pm3Y42KHzDqCk
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 11:28:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
- helo=mail-pj1-x1042.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Y2b5uzG6"; 
- dkim-atps=neutral
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
- [IPv6:2607:f8b0:4864:20::1042])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.236.115;
+ helo=nam11-bn8-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.b="IVw3sg8K"; dkim-atps=neutral
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11on2115.outbound.protection.outlook.com [40.107.236.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47pl5G5F2PzDqC4
- for <openbmc@lists.ozlabs.org>; Fri,  3 Jan 2020 10:45:04 +1100 (AEDT)
-Received: by mail-pj1-x1042.google.com with SMTP id a6so3891593pjh.2
- for <openbmc@lists.ozlabs.org>; Thu, 02 Jan 2020 15:45:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=8jJoif8+uhUGnG/yxKt+aQSnehq3+M9a17ZJrGpL2Bw=;
- b=Y2b5uzG6oS2QEPllB0qQdaxqHnR6kp9i+LTVXBANFYhr/5kaonhmFmQ5Xf4AkoYK8V
- 4GhXAtjtGEBc4K50RkQd+vlCS2QC92mlRKbJZIUopPsCPUnln46xFLRWBHv8jIFGfd9i
- oEgkqc0djlNbFFJo6oVA76W1qu0ouZJxovJvQMN0FrNQvrP+JNPH8nObXjzxBe0HkY3Q
- 3LtZEpTklqyxWT1iMf/uI/Nt11S35TcGm/InB4MIqg6f9HBWcBLTvm8fRIH3EUJwRpNk
- auZw3N+KPruqwZtjWD9dWuGkcZqNUdKWsBRYBKFhIUS4yCwUEbTnDg2FI607ir3IAx6d
- aBOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=8jJoif8+uhUGnG/yxKt+aQSnehq3+M9a17ZJrGpL2Bw=;
- b=cWqL8Dnuo2cnjimTSnfBfDct8usXK8b8DQnpIAM/MmREBcxvfmsQrFokLHcGSSm3yH
- jz7t9j2aSlt2xhQV4Q04acRtjIyU+TP1Q+fTW4wc0Q9S/m4INGTAhzalhGmsDat3eIPp
- bPzDMvutxwlD1Qw6qGrKQy8YN+7MkyGYfdo72v3o/iMoRcWgR7wF6pEw0vpjonsnUp/Y
- 8P0LjsfTCQgIxZx5NpT73KdqWZrxGKAOn5OlI202ka6kuhegBCH0BaJRBObSr1Ye9NPZ
- fVSlZsxikK5xVYGyIsi+JjMjf/KbmKDFi4dV/IJY0GUZI4wZQZ/VJWYUp5CUq1zWPQJN
- KIuw==
-X-Gm-Message-State: APjAAAUVY/IPr++Pr4O8cXdrKpYwtWz9vaAbDNudtTRSrrj6FutGHnEk
- 6+pk197D+npg5z+0/I6mKhiyAHnQ
-X-Google-Smtp-Source: APXvYqxJFosvQWs/J/9cdeo3kqhzuBN4SZWc4CmtZa+ewleKQyIxdQ2ZXyemM7VfkmUKnxu/iNiVTA==
-X-Received: by 2002:a17:90a:2223:: with SMTP id
- c32mr23838916pje.15.1578008700034; 
- Thu, 02 Jan 2020 15:45:00 -0800 (PST)
-Received: from voyager.lan ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id gc1sm12053441pjb.20.2020.01.02.15.44.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 02 Jan 2020 15:44:59 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4] ARM: dts: aspeed: rainier: Remove duplicate i2c
- busses
-Date: Fri,  3 Jan 2020 10:44:51 +1100
-Message-Id: <20200102234451.301828-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.24.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47pm2h2nmMzDqC4
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Jan 2020 11:27:54 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=OIkpwoYXHFGGMC6d+tOpfDKmdfRy2QbKFzJPXTJKsOLV5Txcz017Zw/g5WrJYqYVLxdRW12qsbj25mgfCzDzTm1coQOXr6wmxk54RxxbgY04ljMYlDKmIdskeWZplUmtdQt7KmJvNSml8HdBQKUdJDR1sVN0jzpv8dNRIJkV7oyRFk02R1ePkEimGqxuvt8fFxKXQSxED83GEpcVgy8u+8Sq+54PO4UpYAaM5IUh/Onhiwu7Db09aIRJLBJ/kgNx9HW2cRV4h2qtkR4UoRQQ566o4Abo/hiRpCvNsJKooEcegwfKK1R+Ze+gjD/vsdsocAagD6pguqAf5MoA6AQcvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0dNXHmwVtJklgkVUqcPLvG9fc4e1Np7D6b00c4t62gw=;
+ b=Z0FYjYtrICqI0FrdBPlvrIb136eAiPx9RA39RG508Q/wuUY0R6RvZBU3oUfxK9sF0N2n3sZPYwD10+ye9FsFZzTrZPEigIN9JfWfwJA8ydYMDHk9RYfRyt1IFHS8dzMbWNKEuOh0gFchshFbo1Ko5QyVdPSDj3clpQ+yMHdoN6ljXK2uQL5GYPYKWI3wg7iabg22TbnRndv/4apcY7x3fuo8/aDD2z3W9p4vn+gFfJjVERgnnSO/B/QxJmuDD9P47a7tPJwILblyXeGboDqJcQQmBFAxoLRdA4uxSWbBGvmEO1APbH1fRMF/PpwQ7L59lqqKq9/BKcP2qWBJ8wJ9tQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0dNXHmwVtJklgkVUqcPLvG9fc4e1Np7D6b00c4t62gw=;
+ b=IVw3sg8KuyNzIJUFpleVT0/mINugsQvWWYY/nSK6FG5EgWMIwlt3ZmVwhFj/JhINZk67+fMv5GzFywpgQQ5kZCB4M+sIRoQ8IaS6YyZVhqWm17+fpWtk3NRELgxNkKalWxdW2DercfdHweCagnVCv0iUf5FmMJS4/xWcMZNqWdc=
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com (20.180.21.213) by
+ DM6PR21MB1450.namprd21.prod.outlook.com (10.255.109.212) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2623.1; Fri, 3 Jan 2020 00:27:49 +0000
+Received: from DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::f968:9946:b0e4:4e8f]) by DM6PR21MB1388.namprd21.prod.outlook.com
+ ([fe80::f968:9946:b0e4:4e8f%6]) with mapi id 15.20.2623.002; Fri, 3 Jan 2020
+ 00:27:49 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Sensor Data Record ( SDR) support 
+Thread-Topic: Sensor Data Record ( SDR) support 
+Thread-Index: AdXBzGahOaYwwe6XQmOw6snkUWNU9A==
+Date: Fri, 3 Jan 2020 00:27:49 +0000
+Message-ID: <DM6PR21MB138828CB98B178632C9E07F8C8230@DM6PR21MB1388.namprd21.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-01-03T00:27:48.0361045Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=ca7a4a3f-6361-492d-adbb-375c91be2aa1;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=neladk@microsoft.com; 
+x-originating-ip: [50.35.81.9]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 64ace829-abec-4449-ca26-08d78fe3c381
+x-ms-traffictypediagnostic: DM6PR21MB1450:
+x-microsoft-antispam-prvs: <DM6PR21MB1450E1F34D15F3FB07470919C8230@DM6PR21MB1450.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:4502;
+x-forefront-prvs: 0271483E06
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(366004)(39860400002)(136003)(376002)(346002)(396003)(189003)(199004)(5660300002)(8676002)(2906002)(6506007)(558084003)(64756008)(76116006)(66476007)(66946007)(66446008)(66556008)(52536014)(7696005)(9686003)(8990500004)(86362001)(33656002)(186003)(316002)(10290500003)(55016002)(26005)(4743002)(8936002)(71200400001)(478600001)(81166006)(81156014)(6916009);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:DM6PR21MB1450;
+ H:DM6PR21MB1388.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: eEJaQTWuDw5545dEf4rCBlcY9/+7mEfoxKsGntBlMHmjfbI1MkS5UnqMdhqRuaVstpmIXRMZ1Twe50f9M1jTfecg8OAz4Ig8jQsKISN/DsTRiRrKbUNRtMOvrnh0HsMIaFwrWYVz6bnvLDcxv2zBfwnhW0QcBjC4pJiqTHEld5lMmzbd/v3KqmMQWnEiFGYH8yKLHAyl+aAQpOxW837LysBF0x7Ik69It8KJAzv3CcMGsx6HxtXJgQlx0pwY54gbXgknJpB06ecGyPKyqL+h5XYFHmFz4kZo+bqQWfiHb4OF0OIZjvWgAyrj8mHe1BchZcKp7x2n7EWLXOLedlqkEyavj4KSShLenU6PN6p7nRrKpX4VyWoeJB9lBh5CVDFsO7XNDfnGUAta3tM8r+9w1vwC1BHF6wZItu/7DFqKif49S6l0AFoPNf2BZjHQkXJl
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 64ace829-abec-4449-ca26-08d78fe3c381
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jan 2020 00:27:49.5659 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 7bGPVAm75q+NRSYqJbC8bPnBWvS42QUfov6Kv4VMdh78/6AZT+l5pczgRZj5Cv4BKU0gg6BGLGYggygRKAdI9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR21MB1450
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,394 +110,11 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Derek Howard <derekh@us.ibm.com>, Jim L Wright <jlwright@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a revert of "ARM: dts: aspeed: rainier: Add i2c devices", which
-was already applied to the tree.
+Is there any plan to add support for IPMI SDR ? i.e to support adding new S=
+DRs using Add SDR command.=20
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 365 -------------------
- 1 file changed, 365 deletions(-)
-
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index e1d931a0907b..1edeb8a415b5 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -591,371 +591,6 @@
- 	status = "okay";
- };
- 
--&i2c13 {
--	status = "okay";
--};
--
--&i2c14 {
--	status = "okay";
--};
--
--&i2c15 {
--	status = "okay";
--};
--
--&i2c0 {
--	status = "okay";
--};
--
--&i2c1 {
--	status = "okay";
--};
--
--&i2c2 {
--	status = "okay";
--};
--
--&i2c3 {
--	status = "okay";
--
--	power-supply@68 {
--		compatible = "ibm,cffps2";
--		reg = <0x68>;
--	};
--
--	power-supply@69 {
--		compatible = "ibm,cffps2";
--		reg = <0x69>;
--	};
--
--	power-supply@6a {
--		compatible = "ibm,cffps2";
--		reg = <0x6a>;
--	};
--
--	power-supply@6b {
--		compatible = "ibm,cffps2";
--		reg = <0x6b>;
--	};
--};
--
--&i2c4 {
--	status = "okay";
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	tmp275@49 {
--		compatible = "ti,tmp275";
--		reg = <0x49>;
--	};
--
--	tmp275@4a {
--		compatible = "ti,tmp275";
--		reg = <0x4a>;
--	};
--};
--
--&i2c5 {
--	status = "okay";
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	tmp275@49 {
--		compatible = "ti,tmp275";
--		reg = <0x49>;
--	};
--};
--
--&i2c6 {
--	status = "okay";
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	tmp275@4a {
--		compatible = "ti,tmp275";
--		reg = <0x4a>;
--	};
--
--	tmp275@4b {
--		compatible = "ti,tmp275";
--		reg = <0x4b>;
--	};
--};
--
--&i2c7 {
--	status = "okay";
--
--	si7021-a20@20 {
--		compatible = "silabs,si7020";
--		reg = <0x20>;
--	};
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	max31785@52 {
--		compatible = "maxim,max31785a";
--		reg = <0x52>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		fan@0 {
--			compatible = "pmbus-fan";
--			reg = <0>;
--			tach-pulses = <2>;
--		};
--
--		fan@1 {
--			compatible = "pmbus-fan";
--			reg = <1>;
--			tach-pulses = <2>;
--		};
--
--		fan@2 {
--			compatible = "pmbus-fan";
--			reg = <2>;
--			tach-pulses = <2>;
--		};
--
--		fan@3 {
--			compatible = "pmbus-fan";
--			reg = <3>;
--			tach-pulses = <2>;
--		};
--	};
--
--	pca0: pca9552@60 {
--		compatible = "nxp,pca9552";
--		reg = <0x60>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		gpio-controller;
--		#gpio-cells = <2>;
--
--		gpio@0 {
--			reg = <0>;
--		};
--
--		gpio@1 {
--			reg = <1>;
--		};
--
--		gpio@2 {
--			reg = <2>;
--		};
--
--		gpio@3 {
--			reg = <3>;
--		};
--
--		gpio@4 {
--			reg = <4>;
--		};
--
--		gpio@5 {
--			reg = <5>;
--		};
--
--		gpio@6 {
--			reg = <6>;
--		};
--
--		gpio@7 {
--			reg = <7>;
--		};
--
--		gpio@8 {
--			reg = <8>;
--		};
--
--		gpio@9 {
--			reg = <9>;
--		};
--
--		gpio@10 {
--			reg = <10>;
--		};
--
--		gpio@11 {
--			reg = <11>;
--		};
--
--		gpio@12 {
--			reg = <12>;
--		};
--
--		gpio@13 {
--			reg = <13>;
--		};
--
--		gpio@14 {
--			reg = <14>;
--		};
--
--		gpio@15 {
--			reg = <15>;
--		};
--	};
--
--	dps: dps310@76 {
--		compatible = "infineon,dps310";
--		reg = <0x76>;
--		#io-channel-cells = <0>;
--	};
--};
--
--&i2c8 {
--	status = "okay";
--
--	ucd90320@b {
--		compatible = "ti,ucd90160";
--		reg = <0x0b>;
--	};
--
--	ucd90320@c {
--		compatible = "ti,ucd90160";
--		reg = <0x0c>;
--	};
--
--	ucd90320@11 {
--		compatible = "ti,ucd90160";
--		reg = <0x11>;
--	};
--
--	rtc@32 {
--		compatible = "epson,rx8900";
--		reg = <0x32>;
--	};
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	tmp275@4a {
--		compatible = "ti,tmp275";
--		reg = <0x4a>;
--	};
--};
--
--&i2c9 {
--	status = "okay";
--
--	ir35221@42 {
--		compatible = "infineon,ir35221";
--		reg = <0x42>;
--	};
--
--	ir35221@43 {
--		compatible = "infineon,ir35221";
--		reg = <0x43>;
--	};
--
--	ir35221@44 {
--		compatible = "infineon,ir35221";
--		reg = <0x44>;
--	};
--
--	tmp423a@4c {
--		compatible = "ti,tmp423";
--		reg = <0x4c>;
--	};
--
--	tmp423b@4d {
--		compatible = "ti,tmp423";
--		reg = <0x4d>;
--	};
--
--	ir35221@72 {
--		compatible = "infineon,ir35221";
--		reg = <0x72>;
--	};
--
--	ir35221@73 {
--		compatible = "infineon,ir35221";
--		reg = <0x73>;
--	};
--
--	ir35221@74 {
--		compatible = "infineon,ir35221";
--		reg = <0x74>;
--	};
--};
--
--&i2c10 {
--	status = "okay";
--
--	ir35221@42 {
--		compatible = "infineon,ir35221";
--		reg = <0x42>;
--	};
--
--	ir35221@43 {
--		compatible = "infineon,ir35221";
--		reg = <0x43>;
--	};
--
--	ir35221@44 {
--		compatible = "infineon,ir35221";
--		reg = <0x44>;
--	};
--
--	tmp423a@4c {
--		compatible = "ti,tmp423";
--		reg = <0x4c>;
--	};
--
--	tmp423b@4d {
--		compatible = "ti,tmp423";
--		reg = <0x4d>;
--	};
--
--	ir35221@72 {
--		compatible = "infineon,ir35221";
--		reg = <0x72>;
--	};
--
--	ir35221@73 {
--		compatible = "infineon,ir35221";
--		reg = <0x73>;
--	};
--
--	ir35221@74 {
--		compatible = "infineon,ir35221";
--		reg = <0x74>;
--	};
--};
--
--&i2c11 {
--	status = "okay";
--
--	tmp275@48 {
--		compatible = "ti,tmp275";
--		reg = <0x48>;
--	};
--
--	tmp275@49 {
--		compatible = "ti,tmp275";
--		reg = <0x49>;
--	};
--};
--
--&i2c12 {
--	status = "okay";
--};
--
- &i2c13 {
- 	status = "okay";
- 
--- 
-2.24.1
+Neeraj
 
