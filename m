@@ -2,79 +2,121 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD1B212FCC4
-	for <lists+openbmc@lfdr.de>; Fri,  3 Jan 2020 19:57:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE04312FFFF
+	for <lists+openbmc@lfdr.de>; Sat,  4 Jan 2020 02:39:23 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47qDfg1MM5zDqDN
-	for <lists+openbmc@lfdr.de>; Sat,  4 Jan 2020 05:57:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47qPZb6LZxzDqDX
+	for <lists+openbmc@lfdr.de>; Sat,  4 Jan 2020 12:39:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=wrightj@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=82723f98ae=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.b="mgCCIIAt"; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.b="PguelZ5K"; dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47qDdm50XyzDqCs
- for <openbmc@lists.ozlabs.org>; Sat,  4 Jan 2020 05:56:27 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 003IqcaI139792; Fri, 3 Jan 2020 13:55:23 -0500
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2x9dr6fwqm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jan 2020 13:55:23 -0500
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 003Ir2Le006908;
- Fri, 3 Jan 2020 18:55:22 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma04wdc.us.ibm.com with ESMTP id 2x5xp72xwk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 03 Jan 2020 18:55:22 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 003ItKSN63373720
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 3 Jan 2020 18:55:20 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D770BE056;
- Fri,  3 Jan 2020 18:55:20 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22964BE04F;
- Fri,  3 Jan 2020 18:55:20 +0000 (GMT)
-Received: from [9.10.101.151] (unknown [9.10.101.151])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri,  3 Jan 2020 18:55:19 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.4] ARM: dts: aspeed: rainier: Remove duplicate
- i2c busses
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
-References: <20200102234451.301828-1-joel@jms.id.au>
-From: Jim Wright <wrightj@linux.vnet.ibm.com>
-Message-ID: <a263f8db-0ffc-3884-1f9e-e9f7e7dda682@linux.vnet.ibm.com>
-Date: Fri, 3 Jan 2020 12:55:18 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <20200102234451.301828-1-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47qPYs5NDNzDqC6
+ for <openbmc@lists.ozlabs.org>; Sat,  4 Jan 2020 12:38:36 +1100 (AEDT)
+Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0041XnQh018072
+ for <openbmc@lists.ozlabs.org>; Fri, 3 Jan 2020 17:38:33 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : content-type : mime-version; s=facebook;
+ bh=ip2y0O7LQVglpSzdjBIbgvgpLkFPtBEvlU0JyyhBz38=;
+ b=mgCCIIAtBaUTV6i0tarac4zwi3OrF8EzgD2osDvgtDAmtdXLE+0Kp8w8Icv7w5ebb6Y5
+ i16iuIBQByN+MAXo/RpxLzpGbHxxHjPligGF8ofqqJ8wDG8va0YveTP3P2Q7dfo19o1J
+ PslKItRUn+R0FZa5vVYYZVaO7F/4LU+cm8Y= 
+Received: from mail.thefacebook.com ([163.114.132.120])
+ by mx0a-00082601.pphosted.com with ESMTP id 2xachs90qa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 03 Jan 2020 17:38:32 -0800
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.98.9) by
+ o365-in.thefacebook.com (100.104.94.229) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1779.2; Fri, 3 Jan 2020 17:38:31 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Yp62Wy8UhJR3b8VDKX3F7wnOiZsDeQAtQ+qBUZkiYdqFIEPNk/RUQZ3OLYDQB63lfNfJmL7EOHnnWSLMvav7CXxa3Q1Vc1dqyjGrglWZ6KO9cU+mtbdGbFUBAdv2/PI0MQbtbAtkzQPrAF+bX+wj4nQjJK2ojRFt6+XXVYokhJYJge720Th0OG9GoJbleyrXjyMNMAx9pPnZat3dGPpCvuh/vK7SpQa/d9SBzL8mAvjgnTusWFHDUZRSBB0IbvTOfo6ss+t9GKCJAI8o19AERhFM452hJHkgs1X2hyEj+T3T9/4WYEy/ezuwg7Qh8DFC5BDsodPOUbUmhivMu/fi6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ip2y0O7LQVglpSzdjBIbgvgpLkFPtBEvlU0JyyhBz38=;
+ b=mnQH9zTMQlG5a9axwlrmpQMZiWv3UkybaboKJKYivBptJ9BXWQNYuLAFuCvhODXTFScDOHYZKs7laju0YXR06bTXiTy/kVaM6mtiT4zZrlLio31VjAfLlaLuR7ABrmIP+OYU4XmJw8oMUM5bDbvqMyWb8uHaj4BAQcczMnDi436ukrnq5N5rgLzT5FfNLXQHNbgQUeU0D8ePzra6GU/l/mnfMAByGWVawGVcW4r8Dw/3DW6QwO5m0jzz9PxNsda1apvjH4UC2DrEOnnCvKXzDJa7YWq0MSipQMGsfVp5BxnVWnt9Am/8/pNxfBt5qa3Lx2oU33H4B52sODRRfQfViQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ip2y0O7LQVglpSzdjBIbgvgpLkFPtBEvlU0JyyhBz38=;
+ b=PguelZ5KHTtZS6rPA+6MOs87/ChMmrnmLV94Re+pixhz6MjF9+Rf0K6DveYvzMdSwsccGdUF0/Dbi9iGTJ4aHaC4Bn98hp2vseYoDI0vdPCtEvWbP/hv9N7h07vYFCal548rDtf1vTplyOHWEzhDD0RwsfrfQ0PTl2SUM8id94g=
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
+ MWHPR15MB1583.namprd15.prod.outlook.com (10.173.235.15) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2602.12; Sat, 4 Jan 2020 01:38:16 +0000
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2]) by MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2%8]) with mapi id 15.20.2602.015; Sat, 4 Jan 2020
+ 01:38:16 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: webui not working for me
+Thread-Topic: webui not working for me
+Thread-Index: AQHVwp+iARalw1g7X0WpTmm06cK1kg==
+Date: Sat, 4 Jan 2020 01:38:16 +0000
+Message-ID: <41D87A5C-8EBF-4DA2-9E1E-A37D51A4CA72@fb.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:b41f]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 68e48f29-bf4d-4d1f-a845-08d790b6c58e
+x-ms-traffictypediagnostic: MWHPR15MB1583:
+x-microsoft-antispam-prvs: <MWHPR15MB158331EA2AB5E2D56B0B8AA9DD220@MWHPR15MB1583.namprd15.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1388;
+x-forefront-prvs: 02723F29C4
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(136003)(39860400002)(366004)(396003)(376002)(346002)(189003)(199004)(6512007)(5660300002)(86362001)(66476007)(2616005)(6486002)(186003)(76116006)(6506007)(8936002)(2906002)(316002)(64756008)(66946007)(66556008)(6916009)(966005)(66446008)(9326002)(478600001)(8676002)(81156014)(36756003)(81166006)(33656002)(66574012)(71200400001)(554374003);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1583;
+ H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Xu1NPVRCeP1UVJgOb6PcjG8ypmhYnFO0YQK6O8PurLxRZ9oHszh08yQ8DWceAHTDXQ0exrqdd3t0PAV9kzd2yKD8XZMu96zwz6JLiQeWTnpfpsafHXM7QRjFJ/bqAr8JZfaB4BEKHKh7GGpoasp5zf4w8T3bUSmiXU1tyl957nEk4JSp+9gk6ZdhI0FSTxkn12FlGJ1TvfvujK0RrqXjZ1NbxY7WaL8a3hS5mmPPHnoM0fpMhZEORB2xrSvpTywqQ7d0slSDeFt9GDjqFWTpM0o5vUGbcQ4q3Gj7hBDfCIpTZTIoXegTH+tBA8XNs6Or8pnA769+xc22A8aqpATNFfr35t+MftmbJJkiaOF75pKErRiKV21CIdVro5NleFSUouaMoB29NWvKum+otnFgTt5fhUo6X6PakP17F1dUHB0hiJ+2/j5URDSF3OM83AQXe1x4Vb0b9Ny0YDBaFGpx9iMnZTCRzMwC6o8BJECMjdsd/nXtqaewZaXkuIePXpXP
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_41D87A5C8EBF4DA29E1EA37D51A4CA72fbcom_"
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68e48f29-bf4d-4d1f-a845-08d790b6c58e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Jan 2020 01:38:16.7643 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hGmGd/ruMrjUoq8HvRI2ZYCSKVdbIENBUYqZL1eaIqKFFSadCvJZaRovuXhYqf/SWMkbf/5glxprZgB2SR4+xg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1583
+X-OriginatorOrg: fb.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
- definitions=2020-01-03_05:2020-01-02,2020-01-03 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ definitions=2020-01-03_06:2020-01-02,2020-01-03 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
  lowpriorityscore=0
- mlxlogscore=999 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- spamscore=0 bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-2001030171
+ adultscore=0 impostorscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ mlxlogscore=772 clxscore=1015 suspectscore=0 phishscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-2001040013
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,403 +128,173 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Derek Howard <derekh@us.ibm.com>, Jim L Wright <jlwright@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_41D87A5C8EBF4DA29E1EA37D51A4CA72fbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-On 1/2/2020 5:44 PM, Joel Stanley wrote:
-> This is a revert of "ARM: dts: aspeed: rainier: Add i2c devices", which
-> was already applied to the tree.
->
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-Hi Joel,
+SGksDQpJIGFtIHRyeWluZyB0byB1c2Ugd2VidWkgYnV0IG5vdCBnZXR0aW5nIGFueXRoaW5nIHdv
+cmtpbmcuIEkgbWlnaHQgYmUgbWlzc2luZyBzb21lIHN0ZXBzLg0KSSBkaWQgZm9sbG93aW5nLg0K
+DQogIDEuICBucG0gaW5zdGFsbCBpbiByZXBvIGRpcmVjdG9yeS4NCiAgMi4gIFJlY29tcGlsZWQg
+Ym1jd2ViIHdpdGggQk1DV0VCX0lOU0VDVVJFX0RJU0FCTEVfWFNTX1BSRVZFTlRJT04gb24gYW5k
+IHRyYW5zZmVycmVkIGJtY3dlYiB0byB0YXJnZXQuDQogIDMuICBSdW4gY2hyb21lIGJyb3dzZXIg
+d2l0aCBodHRwOi8vYm1jLWlwDQogIDQuICBJIHNlZSBibGFuayBwYWdlLiBUaGVuIHRyaWVkIHdp
+dGggaHR0cHMgYW5kIGFjY2VwdGVkIGNlcnRpZmljYXRlcy4NCiAgNS4gIEJ1dCBzdGlsbCBJIHNl
+ZSBwYWdlIHdpdGgg4oCccmVmdXNlZCB0byBjb25uZWN04oCdDQoNClBsZWFzZSBoZWxwIG1lIHdo
+YXQgZWxzZSBJIG5lZWQgdG8gZG8uIEkgZ290IDIgd2FybmluZyB3aGlsZSBpbnN0YWxsaW5nIE5Q
+TS4NCg0KDQpucG0gV0FSTiBib290c3RyYXBANC40LjEgcmVxdWlyZXMgYSBwZWVyIG9mIGpxdWVy
+eUAxLjkuMSAtIDMgYnV0IG5vbmUgaXMgaW5zdGFsbGVkLiBZb3UgbXVzdCBpbnN0YWxsIHBlZXIg
+ZGVwZW5kZW5jaWVzIHlvdXJzZWxmLg0KDQpucG0gV0FSTiBib290c3RyYXBANC40LjEgcmVxdWly
+ZXMgYSBwZWVyIG9mIHBvcHBlci5qc0BeMS4xNi4wIGJ1dCBub25lIGlzIGluc3RhbGxlZC4gWW91
+IG11c3QgaW5zdGFsbCBwZWVyIGRlcGVuZGVuY2llcyB5b3Vyc2VsZi4NCg0KDQoNCmF1ZGl0ZWQg
+MTIxMTYgcGFja2FnZXMgaW4gNC44N3MNCg0KDQoNCjYgcGFja2FnZXMgYXJlIGxvb2tpbmcgZm9y
+IGZ1bmRpbmcNCg0KICBydW4gYG5wbSBmdW5kYCBmb3IgZGV0YWlscw0KDQoNCg0KZm91bmQgMiBt
+b2RlcmF0ZSBzZXZlcml0eSB2dWxuZXJhYmlsaXRpZXMNCg0KICBydW4gYG5wbSBhdWRpdCBmaXhg
+IHRvIGZpeCB0aGVtLCBvciBgbnBtIGF1ZGl0YCBmb3IgZGV0YWlscw0KDQpJIHRyaWVkIGZpeGlu
+ZyB0aGlzIGJ5IHVzaW5nIOKAnGF1ZGl0IGZpeOKAnSAgYnV0IG5vIHN1Y2Nlc3MuDQoNClJlZ2Fy
+ZHMNCi1WaWpheQ0K
 
-Looks good to me.
+--_000_41D87A5C8EBF4DA29E1EA37D51A4CA72fbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <C282E7DC304F7346BC08A18B51D90010@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
-Reviewed-by: Jim Wright <wrightj@linux.vnet.ibm.com>
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDb25zb2xhczsNCglwYW5vc2UtMToyIDEx
+IDYgOSAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5Ok1lbmxvOw0KCXBh
+bm9zZS0xOjIgMTEgNiA5IDMgOCA0IDIgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpw
+Lk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47DQoJ
+bWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6
+IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28t
+c3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246dW5k
+ZXJsaW5lO30NCmE6dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28tc3R5
+bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6Izk1NEY3MjsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJs
+aW5lO30NCnAuTXNvTGlzdFBhcmFncmFwaCwgbGkuTXNvTGlzdFBhcmFncmFwaCwgZGl2Lk1zb0xp
+c3RQYXJhZ3JhcGgNCgl7bXNvLXN0eWxlLXByaW9yaXR5OjM0Ow0KCW1hcmdpbi10b3A6MGluOw0K
+CW1hcmdpbi1yaWdodDowaW47DQoJbWFyZ2luLWJvdHRvbTowaW47DQoJbWFyZ2luLWxlZnQ6LjVp
+bjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZh
+bWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxNw0KCXttc28tc3R5
+bGUtdHlwZTpwZXJzb25hbC1jb21wb3NlOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNl
+cmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KcC5wMSwgbGkucDEsIGRpdi5wMQ0KCXttc28tc3R5
+bGUtbmFtZTpwMTsNCgltYXJnaW46MGluOw0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250
+LXNpemU6OC41cHQ7DQoJZm9udC1mYW1pbHk6TWVubG87DQoJY29sb3I6YmxhY2s7fQ0KcC5wMiwg
+bGkucDIsIGRpdi5wMg0KCXttc28tc3R5bGUtbmFtZTpwMjsNCgltYXJnaW46MGluOw0KCW1hcmdp
+bi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6OC41cHQ7DQoJZm9udC1mYW1pbHk6TWVubG87
+DQoJY29sb3I6YmxhY2s7fQ0Kc3Bhbi5zMQ0KCXttc28tc3R5bGUtbmFtZTpzMTsNCgljb2xvcjoj
+QjJCMkIyOw0KCWJhY2tncm91bmQ6YmxhY2s7fQ0Kc3Bhbi5zMw0KCXttc28tc3R5bGUtbmFtZTpz
+MzsNCgliYWNrZ3JvdW5kOiM4NzhBMDQ7fQ0Kc3Bhbi5zNA0KCXttc28tc3R5bGUtbmFtZTpzNDsN
+Cgljb2xvcjojRUJFRjE4O30NCnNwYW4uczINCgl7bXNvLXN0eWxlLW5hbWU6czI7fQ0Kc3Bhbi5h
+cHBsZS1jb252ZXJ0ZWQtc3BhY2UNCgl7bXNvLXN0eWxlLW5hbWU6YXBwbGUtY29udmVydGVkLXNw
+YWNlO30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZv
+bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtz
+aXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2
+LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQovKiBMaXN0IERlZmluaXRpb25z
+ICovDQpAbGlzdCBsMA0KCXttc28tbGlzdC1pZDo3ODQ0MjYxNzg7DQoJbXNvLWxpc3QtdHlwZTpo
+eWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi0xNTQzMTkwMDc0IDY3Njk4NzAzIDY3Njk4
+NzEzIDY3Njk4NzE1IDY3Njk4NzAzIDY3Njk4NzEzIDY3Njk4NzE1IDY3Njk4NzAzIDY3Njk4NzEz
+IDY3Njk4NzE1O30NCkBsaXN0IGwwOmxldmVsMQ0KCXttc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsN
+Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30N
+CkBsaXN0IGwwOmxldmVsMg0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDphbHBoYS1sb3dlcjsN
+Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxl
+ZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30NCkBsaXN0IGwwOmxldmVsMw0KCXttc28tbGV2ZWwt
+bnVtYmVyLWZvcm1hdDpyb21hbi1sb3dlcjsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCglt
+c28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOnJpZ2h0Ow0KCXRleHQtaW5kZW50Oi05LjBwdDt9DQpA
+bGlzdCBsMDpsZXZlbDQNCgl7bXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51
+bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjt9DQpAbGlzdCBsMDpsZXZl
+bDUNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEtbG93ZXI7DQoJbXNvLWxldmVsLXRh
+Yi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5k
+ZW50Oi0uMjVpbjt9DQpAbGlzdCBsMDpsZXZlbDYNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6
+cm9tYW4tbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJl
+ci1wb3NpdGlvbjpyaWdodDsNCgl0ZXh0LWluZGVudDotOS4wcHQ7fQ0KQGxpc3QgbDA6bGV2ZWw3
+DQoJe21zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246
+bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0KQGxpc3QgbDA6bGV2ZWw4DQoJe21zby1sZXZl
+bC1udW1iZXItZm9ybWF0OmFscGhhLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0K
+CW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0K
+QGxpc3QgbDA6bGV2ZWw5DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0K
+CW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmln
+aHQ7DQoJdGV4dC1pbmRlbnQ6LTkuMHB0O30NCm9sDQoJe21hcmdpbi1ib3R0b206MGluO30NCnVs
+DQoJe21hcmdpbi1ib3R0b206MGluO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4
+bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94
+bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2
+OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFw
+ZWxheW91dD48L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBs
+aW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1NEY3MiI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEi
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPkhp
+LDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxl
+PSJmb250LXNpemU6MTEuMHB0Ij5JIGFtIHRyeWluZyB0byB1c2Ugd2VidWkgYnV0IG5vdCBnZXR0
+aW5nIGFueXRoaW5nIHdvcmtpbmcuIEkgbWlnaHQgYmUgbWlzc2luZyBzb21lIHN0ZXBzLjxvOnA+
+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6MTEuMHB0Ij5JIGRpZCBmb2xsb3dpbmcuPG86cD48L286cD48L3NwYW4+PC9wPg0KPG9s
+IHN0eWxlPSJtYXJnaW4tdG9wOjBpbiIgc3RhcnQ9IjEiIHR5cGU9IjEiPg0KPGxpIGNsYXNzPSJN
+c29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MGluO21zby1saXN0OmwwIGxldmVs
+MSBsZm8xIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+bnBtIGluc3RhbGwgaW4gcmVw
+byBkaXJlY3RvcnkuPG86cD48L286cD48L3NwYW4+PC9saT48bGkgY2xhc3M9Ik1zb0xpc3RQYXJh
+Z3JhcGgiIHN0eWxlPSJtYXJnaW4tbGVmdDowaW47bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPjxz
+cGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5SZWNvbXBpbGVkIGJtY3dlYiB3aXRoDQo8L3Nw
+YW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6Q29uc29sYXM7Y29s
+b3I6IzI0MjkyRSI+Qk1DV0VCX0lOU0VDVVJFX0RJU0FCTEVfWFNTX1BSRVZFTlRJT04gb24gYW5k
+IHRyYW5zZmVycmVkIGJtY3dlYiB0byB0YXJnZXQuPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNp
+emU6MTEuMHB0Ij48bzpwPjwvbzpwPjwvc3Bhbj48L2xpPjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFn
+cmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBpbjttc28tbGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNw
+YW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6Q29uc29sYXM7Y29sb3I6IzI0
+MjkyRSI+UnVuIGNocm9tZSBicm93c2VyIHdpdGgNCjxhIGhyZWY9Imh0dHA6Ly9ibWMtaXAiPmh0
+dHA6Ly9ibWMtaXA8L2E+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpw
+PjwvbzpwPjwvc3Bhbj48L2xpPjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1h
+cmdpbi1sZWZ0OjBpbjttc28tbGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNwYW4gc3R5bGU9ImZvbnQt
+c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6Q29uc29sYXM7Y29sb3I6IzI0MjkyRSI+SSBzZWUgYmxh
+bmsgcGFnZS4gVGhlbiB0cmllZCB3aXRoIGh0dHBzIGFuZCBhY2NlcHRlZCBjZXJ0aWZpY2F0ZXMu
+PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPjwvbzpwPjwvc3Bhbj48
+L2xpPjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBpbjtt
+c28tbGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9u
+dC1mYW1pbHk6Q29uc29sYXM7Y29sb3I6IzI0MjkyRSI+QnV0IHN0aWxsIEkgc2VlIHBhZ2Ugd2l0
+aCDigJxyZWZ1c2VkIHRvIGNvbm5lY3TigJ08L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+MS4wcHQiPjxvOnA+PC9vOnA+PC9zcGFuPjwvbGk+PC9vbD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+
+UGxlYXNlIGhlbHAgbWUgd2hhdCBlbHNlIEkgbmVlZCB0byBkby4gSSBnb3QgMiB3YXJuaW5nIHdo
+aWxlIGluc3RhbGxpbmcgTlBNLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwv
+c3Bhbj48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJzMSI+bnBtPC9zcGFuPjxzcGFu
+IGNsYXNzPSJzMiI+IDwvc3Bhbj48c3BhbiBjbGFzcz0iczMiPldBUk48L3NwYW4+PHNwYW4gY2xh
+c3M9InMyIj4gYm9vdHN0cmFwQDQuNC4xIHJlcXVpcmVzIGEgcGVlciBvZiBqcXVlcnlAMS45LjEg
+LSAzIGJ1dCBub25lIGlzIGluc3RhbGxlZC4gWW91IG11c3QgaW5zdGFsbCBwZWVyIGRlcGVuZGVu
+Y2llcyB5b3Vyc2VsZi48L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFu
+IGNsYXNzPSJzMSI+bnBtPC9zcGFuPjxzcGFuIGNsYXNzPSJzMiI+IDwvc3Bhbj48c3BhbiBjbGFz
+cz0iczMiPldBUk48L3NwYW4+PHNwYW4gY2xhc3M9InMyIj4gYm9vdHN0cmFwQDQuNC4xIHJlcXVp
+cmVzIGEgcGVlciBvZiBwb3BwZXIuanNAXjEuMTYuMCBidXQgbm9uZSBpcyBpbnN0YWxsZWQuIFlv
+dSBtdXN0IGluc3RhbGwgcGVlciBkZXBlbmRlbmNpZXMgeW91cnNlbGYuPC9zcGFuPjxvOnA+PC9v
+OnA+PC9wPg0KPHAgY2xhc3M9InAyIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJw
+MSI+PHNwYW4gY2xhc3M9InMyIj5hdWRpdGVkIDEyMTE2IHBhY2thZ2VzIGluIDQuODdzPC9zcGFu
+PjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAyIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxw
+IGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9InMyIj42IHBhY2thZ2VzIGFyZSBsb29raW5nIGZvciBm
+dW5kaW5nPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0i
+YXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMiI+cnVu
+IGBucG0gZnVuZGAgZm9yIGRldGFpbHM8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+cDIiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iczIi
+PmZvdW5kIDIgPC9zcGFuPjxzcGFuIGNsYXNzPSJzNCI+bW9kZXJhdGU8L3NwYW4+PHNwYW4gY2xh
+c3M9InMyIj4gc2V2ZXJpdHkgdnVsbmVyYWJpbGl0aWVzPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0K
+PHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsg
+PC9zcGFuPjxzcGFuIGNsYXNzPSJzMiI+cnVuIGBucG0gYXVkaXQgZml4YCB0byBmaXggdGhlbSwg
+b3IgYG5wbSBhdWRpdGAgZm9yIGRldGFpbHM8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8
+L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
+c2l6ZToxMS4wcHQiPkkgdHJpZWQgZml4aW5nIHRoaXMgYnkgdXNpbmcg4oCcYXVkaXQgZml44oCd
+ICZuYnNwO2J1dCBubyBzdWNjZXNzLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpw
+Pjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXpl
+OjExLjBwdCI+UmVnYXJkczxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij4tVmlqYXk8bzpwPjwvbzpwPjwvc3Bh
+bj48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
 
-I built this patch into an image and ran it in the simulator. Verified 
-that the UCD device driver worked as expected.
-
-Tested-by: Jim Wright <wrightj@linux.vnet.ibm.com>
-> ---
->   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 365 -------------------
->   1 file changed, 365 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index e1d931a0907b..1edeb8a415b5 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -591,371 +591,6 @@
->   	status = "okay";
->   };
->
-> -&i2c13 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c14 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c15 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c0 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c1 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c2 {
-> -	status = "okay";
-> -};
-> -
-> -&i2c3 {
-> -	status = "okay";
-> -
-> -	power-supply@68 {
-> -		compatible = "ibm,cffps2";
-> -		reg = <0x68>;
-> -	};
-> -
-> -	power-supply@69 {
-> -		compatible = "ibm,cffps2";
-> -		reg = <0x69>;
-> -	};
-> -
-> -	power-supply@6a {
-> -		compatible = "ibm,cffps2";
-> -		reg = <0x6a>;
-> -	};
-> -
-> -	power-supply@6b {
-> -		compatible = "ibm,cffps2";
-> -		reg = <0x6b>;
-> -	};
-> -};
-> -
-> -&i2c4 {
-> -	status = "okay";
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	tmp275@49 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x49>;
-> -	};
-> -
-> -	tmp275@4a {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x4a>;
-> -	};
-> -};
-> -
-> -&i2c5 {
-> -	status = "okay";
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	tmp275@49 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x49>;
-> -	};
-> -};
-> -
-> -&i2c6 {
-> -	status = "okay";
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	tmp275@4a {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x4a>;
-> -	};
-> -
-> -	tmp275@4b {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x4b>;
-> -	};
-> -};
-> -
-> -&i2c7 {
-> -	status = "okay";
-> -
-> -	si7021-a20@20 {
-> -		compatible = "silabs,si7020";
-> -		reg = <0x20>;
-> -	};
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	max31785@52 {
-> -		compatible = "maxim,max31785a";
-> -		reg = <0x52>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		fan@0 {
-> -			compatible = "pmbus-fan";
-> -			reg = <0>;
-> -			tach-pulses = <2>;
-> -		};
-> -
-> -		fan@1 {
-> -			compatible = "pmbus-fan";
-> -			reg = <1>;
-> -			tach-pulses = <2>;
-> -		};
-> -
-> -		fan@2 {
-> -			compatible = "pmbus-fan";
-> -			reg = <2>;
-> -			tach-pulses = <2>;
-> -		};
-> -
-> -		fan@3 {
-> -			compatible = "pmbus-fan";
-> -			reg = <3>;
-> -			tach-pulses = <2>;
-> -		};
-> -	};
-> -
-> -	pca0: pca9552@60 {
-> -		compatible = "nxp,pca9552";
-> -		reg = <0x60>;
-> -		#address-cells = <1>;
-> -		#size-cells = <0>;
-> -
-> -		gpio-controller;
-> -		#gpio-cells = <2>;
-> -
-> -		gpio@0 {
-> -			reg = <0>;
-> -		};
-> -
-> -		gpio@1 {
-> -			reg = <1>;
-> -		};
-> -
-> -		gpio@2 {
-> -			reg = <2>;
-> -		};
-> -
-> -		gpio@3 {
-> -			reg = <3>;
-> -		};
-> -
-> -		gpio@4 {
-> -			reg = <4>;
-> -		};
-> -
-> -		gpio@5 {
-> -			reg = <5>;
-> -		};
-> -
-> -		gpio@6 {
-> -			reg = <6>;
-> -		};
-> -
-> -		gpio@7 {
-> -			reg = <7>;
-> -		};
-> -
-> -		gpio@8 {
-> -			reg = <8>;
-> -		};
-> -
-> -		gpio@9 {
-> -			reg = <9>;
-> -		};
-> -
-> -		gpio@10 {
-> -			reg = <10>;
-> -		};
-> -
-> -		gpio@11 {
-> -			reg = <11>;
-> -		};
-> -
-> -		gpio@12 {
-> -			reg = <12>;
-> -		};
-> -
-> -		gpio@13 {
-> -			reg = <13>;
-> -		};
-> -
-> -		gpio@14 {
-> -			reg = <14>;
-> -		};
-> -
-> -		gpio@15 {
-> -			reg = <15>;
-> -		};
-> -	};
-> -
-> -	dps: dps310@76 {
-> -		compatible = "infineon,dps310";
-> -		reg = <0x76>;
-> -		#io-channel-cells = <0>;
-> -	};
-> -};
-> -
-> -&i2c8 {
-> -	status = "okay";
-> -
-> -	ucd90320@b {
-> -		compatible = "ti,ucd90160";
-> -		reg = <0x0b>;
-> -	};
-> -
-> -	ucd90320@c {
-> -		compatible = "ti,ucd90160";
-> -		reg = <0x0c>;
-> -	};
-> -
-> -	ucd90320@11 {
-> -		compatible = "ti,ucd90160";
-> -		reg = <0x11>;
-> -	};
-> -
-> -	rtc@32 {
-> -		compatible = "epson,rx8900";
-> -		reg = <0x32>;
-> -	};
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	tmp275@4a {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x4a>;
-> -	};
-> -};
-> -
-> -&i2c9 {
-> -	status = "okay";
-> -
-> -	ir35221@42 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x42>;
-> -	};
-> -
-> -	ir35221@43 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x43>;
-> -	};
-> -
-> -	ir35221@44 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x44>;
-> -	};
-> -
-> -	tmp423a@4c {
-> -		compatible = "ti,tmp423";
-> -		reg = <0x4c>;
-> -	};
-> -
-> -	tmp423b@4d {
-> -		compatible = "ti,tmp423";
-> -		reg = <0x4d>;
-> -	};
-> -
-> -	ir35221@72 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x72>;
-> -	};
-> -
-> -	ir35221@73 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x73>;
-> -	};
-> -
-> -	ir35221@74 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x74>;
-> -	};
-> -};
-> -
-> -&i2c10 {
-> -	status = "okay";
-> -
-> -	ir35221@42 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x42>;
-> -	};
-> -
-> -	ir35221@43 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x43>;
-> -	};
-> -
-> -	ir35221@44 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x44>;
-> -	};
-> -
-> -	tmp423a@4c {
-> -		compatible = "ti,tmp423";
-> -		reg = <0x4c>;
-> -	};
-> -
-> -	tmp423b@4d {
-> -		compatible = "ti,tmp423";
-> -		reg = <0x4d>;
-> -	};
-> -
-> -	ir35221@72 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x72>;
-> -	};
-> -
-> -	ir35221@73 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x73>;
-> -	};
-> -
-> -	ir35221@74 {
-> -		compatible = "infineon,ir35221";
-> -		reg = <0x74>;
-> -	};
-> -};
-> -
-> -&i2c11 {
-> -	status = "okay";
-> -
-> -	tmp275@48 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x48>;
-> -	};
-> -
-> -	tmp275@49 {
-> -		compatible = "ti,tmp275";
-> -		reg = <0x49>;
-> -	};
-> -};
-> -
-> -&i2c12 {
-> -	status = "okay";
-> -};
-> -
->   &i2c13 {
->   	status = "okay";
->
+--_000_41D87A5C8EBF4DA29E1EA37D51A4CA72fbcom_--
