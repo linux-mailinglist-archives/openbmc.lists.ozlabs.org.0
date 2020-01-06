@@ -1,64 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FCFB131C5C
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 00:28:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66E65131C17
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 00:08:59 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sB5h2yPjzDqGM
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 10:08:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sBXF5XPVzDqGt
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 10:28:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
- helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ spf=none (no SPF record) smtp.mailfrom=stwcx.xyz
+ (client-ip=136.143.188.51; helo=sender4-of-o51.zoho.com;
+ envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.b="QOtkO7+u"; 
+ unprotected) header.d=stwcx.xyz header.i=patrick@stwcx.xyz header.b="J7gkVJci";
  dkim-atps=neutral
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
- [IPv6:2607:f8b0:4864:20::742])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from sender4-of-o51.zoho.com (sender4-of-o51.zoho.com
+ [136.143.188.51])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sB526hnzzDqDq
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 10:08:20 +1100 (AEDT)
-Received: by mail-qk1-x742.google.com with SMTP id 21so41094916qky.4
- for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2020 15:08:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=hN8CyCJYvNU9I6Cxi7JDORQZij4sF9PJu64S2S9qr6E=;
- b=QOtkO7+u2HudqvKYJVVRxw08eilMHV3scSSh3YIR3IsFf/GbYHuSwu7gUSFsBszE56
- YMsgX1m/Irgsz4OHX9Ze01m4HZnMqRzYxCoCqlo+QFGc3e3pxfS7Us/wzDSToyKQZZRf
- EJ5vndulbPx6rGK3Lzs0VnttP7DjQkMUiwRwc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=hN8CyCJYvNU9I6Cxi7JDORQZij4sF9PJu64S2S9qr6E=;
- b=KR8A81ekXHvhT5wKnmqKkKvreYt1IiDZtHJ1awFqrr0/ZlZZDvVdzU5craK5LPkvle
- PJrknB89know+K7PAQpkMNTf1DuFI/muWl3fZEjls/lHc+O0Tdep7sykPq+lz3N5yMhV
- TqYuK9fi4WJggPBaaigxfqV7wFcrFU1ZPEXqN++DxFuECc0d+cwuAc//h4bTeJjzoeRF
- 9ZneAYMgrgwh7Y22bDj7uS3Ag3LDL21y25gYioT0mVWeCMYO+uIcCcwcLbfIo6sB5qe/
- ysqEgVCe04uVKdNnrJ8oZXuGiB2Eea08vljhgURIpoVYxJ5qXvnz4joja171l2drmVFz
- qo3Q==
-X-Gm-Message-State: APjAAAWIOoniLKVp/yqdgEoJzbnNWZ6ChwBx9lZtQZEeaUCbC3sv+xG2
- sjdMVhnFbsqBsuJgBUiMNlxPL9gbgZWjHVtfHT0=
-X-Google-Smtp-Source: APXvYqzcflcCPRcGPLI9tNeLc3jPDYoM8EGgFBn1+s84s/j9Rjg5dsZxC1F3IRT1di3OmRDG1R4nDWEI7tr8h/J992I=
-X-Received: by 2002:a37:68d5:: with SMTP id
- d204mr85316240qkc.171.1578352096822; 
- Mon, 06 Jan 2020 15:08:16 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sBWD211hzDqFF
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 10:27:34 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1578353248; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=ATon+DCSDF+eQOLhqpdLenFOfNF7sGJQDpLRS6jGAw7NiUXHIWny4JI1a04+SneHUM62WjYR02Q5SmT5rXYvnFO6V0y/3i5zoIcga34A/UHg4QStlGsY4HHrhYv8CuvE8zcza301WkD0CqP6cjU6J3E4XK+wcSRBRjrvhUBtcOY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; 
+ t=1578353248; h=Content-Type:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
+ bh=dTUda17Up3j7tuhBr73Yvaub2WX7CJ1H7FgPHv1IgRU=; 
+ b=f3Kw26xFUuaBnalSo6d3u3fPtqL2d6PIVhqqhmaNlerzfcGdxpEWp1RPzZfbSZ24ihwe0yJpCrj+efFNgPxHBKG0ycB20taKJPrl/nu9lMBFmb1bKaSLGWio7U1cagAylNyNP+KlYhh9xb+353Nq1ZbIFNvAVFZXF+oXtxphp58=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=stwcx.xyz;
+ spf=pass  smtp.mailfrom=patrick@stwcx.xyz;
+ dmarc=pass header.from=<patrick@stwcx.xyz> header.from=<patrick@stwcx.xyz>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1578353248; 
+ s=zoho; d=stwcx.xyz; i=patrick@stwcx.xyz;
+ h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type;
+ bh=dTUda17Up3j7tuhBr73Yvaub2WX7CJ1H7FgPHv1IgRU=;
+ b=J7gkVJci/1pwx4oL37ywmtTasD9pIxysSOsRydrlxYcn/X0AMsJ1VRRjv4knXGNy
+ hZ2IpIp7yjCFPXdeFlzJTi0xUslQrz2lN6F0NsPrVY4xsuwzzJB0XDhBD+SVnbuksJR
+ VNvsZgeAo1SZ6iDCjgth5MX0rmq1rbfJzrwdbqEc=
+Received: from localhost (163.114.130.128 [163.114.130.128]) by mx.zohomail.com
+ with SMTPS id 157835324471863.91117957042252;
+ Mon, 6 Jan 2020 15:27:24 -0800 (PST)
+Date: Mon, 6 Jan 2020 17:27:22 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: openbmc@lists.ozlabs.org
+Subject: Aspeed SPI driver upstreaming
+Message-ID: <20200106232722.GB1233@patrickw3-mbp.dhcp.thefacebook.com>
 MIME-Version: 1.0
-References: <C8678983-8901-4E16-94BB-6C6AF0959B62@fb.com>
-In-Reply-To: <C8678983-8901-4E16-94BB-6C6AF0959B62@fb.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 6 Jan 2020 23:08:04 +0000
-Message-ID: <CACPK8XfhySvWLCTAR54Z8cjW0ne0-W1WFifk4=pKL50J3bGU_Q@mail.gmail.com>
-Subject: Re: Pulling ipmb patch
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
+Content-Disposition: inline
+X-Zoho-Virus-Status: 1
+X-ZohoMailClient: External
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,30 +68,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: taoren@fb.com, clg@kaod.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vijay,
 
-You sent this mail to the worng list. The linux-aspeed list is where
-aspeed related patches for the mainline kernel should go. Instead use
-the openbmc list for this kind of discussion.
+--eJnRUKwClWJh1Khz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 18 Dec 2019 at 20:58, Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> Can you please pull IPMB patches from Corey forNext tree as below into our LF kernel.
+Cedric, Joel,
 
-There is no such thing as a "LF kernel". Do you mean the openbmc kernel?
+There is currently the aspeed-smc driver[1], which is upstreamed, but only
+supports spi-nor devices.  There also a more generic spi-aspeed
+driver[2], which might only exist in Facebook kernel trees, that
+supports all spi devices but it doesn't do the calibration work.
 
-> We need this for ipmbbridge application.
->
-> https://github.com/cminyard/linux-ipmi/commit/0d8633bf5311177c9a26d75daec677cd87e3261b#diff-7708853244e5bf8cd10d205ee1f5dc2c
-> https://github.com/cminyard/linux-ipmi/commit/042f057fe2dcf38682d85d9f88df00d1a8d45dbd
-> https://github.com/cminyard/linux-ipmi/commit/380665becdeeb4f455c23582b7f32e6b3cea27d2
+I made some changes to the spi-aspeed driver recently in order to get it
+to somewhat support TPM 2.0 devices (*).  The spi-aspeed driver also
+already supported generic spi-nor MTD devices, but just at a slower
+speed than aspeed-smc due to missing the calibration routines.
 
-I've applied these three. Well done for submitting them upstream first.
+Tao mentioned to me that there was a discussion at one of the F2F events
+in 2019 about combining those two drivers and getting them upstreamed,
+but that the hang-up was getting upstream mtd and spi subsystems to
+agree on how to handle calibration routines in the spi subsystem?  I
+can't seem to find anything about this on the LKML.  Do either of you
+know where that discussion went and what the current state / plans of
+upstreamming a generic Aspeed SPI driver are?
 
-Cheers,
+[1] https://github.com/openbmc/linux/blob/dev-5.3/drivers/mtd/spi-nor/aspee=
+d-smc.c
+[2] https://github.com/facebook/openbmc-linux/blob/dev-5.0/drivers/spi/spi-=
+aspeed.c
 
-Joel
+(*) The Aspeed SPI master is half-duplex and the TPM SPI spec effectively
+    requires full duplex hardware.  I did some workarounds to get it to work
+    with one particular part and need to work with the vendor and upstream
+    to figure out the best way to reliably handle half-duplex SPI masters.
+--=20
+Patrick Williams
+
+--eJnRUKwClWJh1Khz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl4TwlcACgkQqwNHzC0A
+wRmf/Q//QXQRkt/4zqILYb/ztJeEqfU9ALYrKFYnRweBpW6/Zsd7SZ7hpK5tjbIk
+WhQOMKTvKiixbRF6HyPAfUf+z50rb0Kd/obSPgppmsfwxTtXVA+Nxu5KEk2zp7OG
+zjvmjtjK2YLc+Fz/XwT88tt0SkRUjFoIPtWg/Pz5Mtjp09gcniSVeBkklGzJacKR
+0HGLNa3SkBswofd3wbEOUFdi47SPwWsLnCXe0oMCjf4CJJRPZls/h48iJEvY7kRZ
+0IrpPS8kAHyTrkZ/iYkIuZCTKMuWY1tOxED4KIvbFLvsoqMiuJDimL452Qaczst1
+VdWATvzJ+O1luMeBl87EscimhOwKXEhOW80ZmunCF7LUnfPyZ1vp728jAGCf9fQ8
+p56B0AgKMRLZLF5eGVgCQHxw8yLa0mUDpyJCMkVz9iAw4Cpm0J7eDxuq5OAh+/Jf
+QW53C4UPH42PeqaWdCAzxgydR2mRO9RYgnBR/2U/1IhVzKzPRMKbcHJ/3+GdG0Pe
+QstNgXOdhME0Ac/HG4/jx7yxKVOSMkeebWwPFuIsTcBIyP6q/2G97y8sMffxL/KE
+/mmERDfSoNoA90D4Q2aiJUv6GMWz1w4x5HaWSsRR1bhm6SoKf1DvvzBu+sUVf2Mh
+9LJfWYyxu2F3i20XLWHcEDDvjCDef3Q0s6h03ja7ymaC7NOk9Dc=
+=qPGb
+-----END PGP SIGNATURE-----
+
+--eJnRUKwClWJh1Khz--
+
