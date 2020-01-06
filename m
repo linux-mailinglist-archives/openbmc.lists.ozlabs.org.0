@@ -1,65 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18BC3131B37
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2020 23:18:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47s8zy6PFwzDqFY
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 09:18:54 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7C11131B42
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2020 23:22:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47s93l5gVKzDqFw
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 09:22:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c29;
- helo=mail-yw1-xc29.google.com; envelope-from=jandraara@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=kathryn.elainex.pine@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Fo5R6TVr"; 
- dkim-atps=neutral
-Received: from mail-yw1-xc29.google.com (mail-yw1-xc29.google.com
- [IPv6:2607:f8b0:4864:20::c29])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47s8zD494mzDqFY
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 09:18:16 +1100 (AEDT)
-Received: by mail-yw1-xc29.google.com with SMTP id u139so22538849ywf.13
- for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2020 14:18:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=KgwPH8H6vNIfPF1qb6Q4NB0ehp1ycv8O8jDYIKl7g6M=;
- b=Fo5R6TVrSPmDqH0fL9NfxJhxsiwEJBNuaY4lf1uaZoz6HEECza9heuUUSTepp4HBTJ
- aqoRMQmHXXYiqOajVu6nxGthGhgbSDWKkQSnskyaEqEraLcJGXJTs0R+KL0g0S7fp3Z5
- 1S8Al762H/1hq5mH8MamqwanKhNMtxy18pSMgjysmhimNYFcOptUlQhBSiK5dlvPrYOK
- QS5TlwgG25h/0Y2VJN4BsRSK0hzEn5tP7tFproj5RrdbF9M/F40CpmeGM5LW4Ww89JrO
- j0UH4S8hxxSXpALzk/UWwjuzIhnhf/WVJgGCFt1i/j0aC3LJbxSEoE3a6G4Ct6ORZKGT
- yvQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=KgwPH8H6vNIfPF1qb6Q4NB0ehp1ycv8O8jDYIKl7g6M=;
- b=XZ19wlTa4K6svVA1IaH+6RxcBiwACpcFCQfiQ2dsO8c2H+5jvlv8+C1OVAQtVlg5kB
- Kxyzh52HgXHAAo/aEBiIERrvU4DZzg0BfAmaSQznZ0L1MySK7Zu1QlK/tlVQv8ozD1Db
- 4227Tk9Tokl/iMk6RCHwrVwdnRycsNMWmIn3WTPRvK3aA2rEvbLgvmYZvgJa+lDKu4ZU
- zWVna6LphkRIIdi9pfLrRIP+o83mSoxaCCuBoZm5ETDsJcBonqVm2z5gBzcEq3zh2qrY
- 8YPumef6Q/CxepWwzx2PLeTJ6VM4eFn8K+1FVF75qh6DOGMslbJPZHWkloxzp6V2o2wp
- XGvg==
-X-Gm-Message-State: APjAAAX/ZuJhNQJ/DUzQkiVlE0x+OFQzYRA0QeRaE8fpL0enr4UF4LP/
- cSbg0sMQWx7qICQYHCJ6dmh+6M+mWf7RWKyE588=
-X-Google-Smtp-Source: APXvYqzOzuPtUJdL9swc0HD7aw27UUuDcV3LUCQv/9bQzhHz0CVjZ/I90rjEYDFZXlWgZg+UJ91NORMO1bMIuHIclDg=
-X-Received: by 2002:a81:9b88:: with SMTP id
- s130mr79991433ywg.103.1578349092557; 
- Mon, 06 Jan 2020 14:18:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47s9363plDzDqFY
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 09:21:36 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 06 Jan 2020 14:21:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,403,1571727600"; 
+ d="scan'208,217";a="217537554"
+Received: from orsmsx109.amr.corp.intel.com ([10.22.240.7])
+ by fmsmga008.fm.intel.com with ESMTP; 06 Jan 2020 14:21:33 -0800
+Received: from orsmsx111.amr.corp.intel.com (10.22.240.12) by
+ ORSMSX109.amr.corp.intel.com (10.22.240.7) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 6 Jan 2020 14:21:32 -0800
+Received: from orsmsx113.amr.corp.intel.com ([169.254.9.100]) by
+ ORSMSX111.amr.corp.intel.com ([169.254.12.24]) with mapi id 14.03.0439.000;
+ Mon, 6 Jan 2020 14:21:32 -0800
+From: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
+To: Jandra A <jandraara@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: RE: Change GUI Workgroup meeting time this week?
+Thread-Topic: Change GUI Workgroup meeting time this week?
+Thread-Index: AQHVxN82yhHnnT4lI0GsuPe8qEog6KfeNXkQ
+Date: Mon, 6 Jan 2020 22:21:31 +0000
+Message-ID: <FD0BD680739BFC41807C96BD23118BB1326E26@ORSMSX113.amr.corp.intel.com>
+References: <CAMTupoTd6P4bV2PBA_W-jmtPqye67mAszyaE4f5o6bR+hABNrw@mail.gmail.com>
+In-Reply-To: <CAMTupoTd6P4bV2PBA_W-jmtPqye67mAszyaE4f5o6bR+hABNrw@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.22.254.140]
+Content-Type: multipart/alternative;
+ boundary="_000_FD0BD680739BFC41807C96BD23118BB1326E26ORSMSX113amrcorpi_"
 MIME-Version: 1.0
-From: Jandra A <jandraara@gmail.com>
-Date: Mon, 6 Jan 2020 16:18:01 -0600
-Message-ID: <CAMTupoTd6P4bV2PBA_W-jmtPqye67mAszyaE4f5o6bR+hABNrw@mail.gmail.com>
-Subject: Change GUI Workgroup meeting time this week?
-To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000fe55e8059b800880"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,30 +69,79 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000fe55e8059b800880
-Content-Type: text/plain; charset="UTF-8"
+--_000_FD0BD680739BFC41807C96BD23118BB1326E26ORSMSX113amrcorpi_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hello all,
+V29ya3MgZm9yIG1lLCB0aGFua3MtDQoNCkZyb206IEphbmRyYSBBIDxqYW5kcmFhcmFAZ21haWwu
+Y29tPg0KU2VudDogTW9uZGF5LCBKYW51YXJ5IDYsIDIwMjAgMjoxOCBQTQ0KVG86IFBpbmUsIEth
+dGhyeW4gRWxhaW5lWCA8a2F0aHJ5bi5lbGFpbmV4LnBpbmVAaW50ZWwuY29tPjsgT3BlbkJNQyBN
+YWlsbGlzdCA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KU3ViamVjdDogQ2hhbmdlIEdVSSBX
+b3JrZ3JvdXAgbWVldGluZyB0aW1lIHRoaXMgd2Vlaz8NCg0KSGVsbG8gYWxsLA0KDQpEdWUgdG8g
+bWVldGluZyBjb25mbGljdHMsIEkgd291bGQgbGlrZSB0byBjaGFuZ2UgdGhlIEdVSSBXb3JrZ3Jv
+dXAgbWVldGluZyB0aW1lLCBmb3IgdGhpcyB3ZWVrIG9ubHkuIEkgc3VnZ2VzdCBtZWV0aW5nIGF0
+IDFQTSBDU1QgKDExQU0gUFNUKSwgdGhvdWdoIGFueSB0aW1lIGluIHRoZSBhZnRlcm5vb24gd29y
+a3MuDQoNCkthdGh5IC0tIGRvZXMgdGhhdCB3b3JrIGZvciB5b3U/DQoNCg0KUmVnYXJkcyBhbmQg
+aGFwcHkgbmV3IHllYXIsDQpKYW5kcmEgQXJhbmd1cmVuDQo=
 
-Due to meeting conflicts, I would like to change the GUI Workgroup meeting
-time, for this week only. I suggest meeting at 1PM CST (11AM PST), though
-any time in the afternoon works.
+--_000_FD0BD680739BFC41807C96BD23118BB1326E26ORSMSX113amrcorpi_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Kathy -- does that work for you?
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
+IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
+Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
+OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
+cjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFu
+Lk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjoj
+OTU0RjcyOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5tc29ub3JtYWwwLCBsaS5t
+c29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJ
+bXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2lu
+LWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjExLjBwdDsN
+Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOA0K
+CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIs
+c2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1z
+dHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlm
+O30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4w
+aW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0
+aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZh
+dWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwh
+LS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86
+aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFb
+ZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxp
+bms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPldvcmtzIGZvciBtZSwgdGhhbmtzLTxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj5G
+cm9tOjwvYj4gSmFuZHJhIEEgJmx0O2phbmRyYWFyYUBnbWFpbC5jb20mZ3Q7IDxicj4NCjxiPlNl
+bnQ6PC9iPiBNb25kYXksIEphbnVhcnkgNiwgMjAyMCAyOjE4IFBNPGJyPg0KPGI+VG86PC9iPiBQ
+aW5lLCBLYXRocnluIEVsYWluZVggJmx0O2thdGhyeW4uZWxhaW5leC5waW5lQGludGVsLmNvbSZn
+dDs7IE9wZW5CTUMgTWFpbGxpc3QgJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8YnI+
+DQo8Yj5TdWJqZWN0OjwvYj4gQ2hhbmdlIEdVSSBXb3JrZ3JvdXAgbWVldGluZyB0aW1lIHRoaXMg
+d2Vlaz88bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9v
+OnA+PC9wPg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkhlbGxvIGFsbCwmbmJzcDs8bzpw
+PjwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpw
+PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkR1ZSB0byBtZWV0aW5n
+IGNvbmZsaWN0cywgSSB3b3VsZCBsaWtlIHRvIGNoYW5nZSB0aGUgR1VJIFdvcmtncm91cCBtZWV0
+aW5nIHRpbWUsIGZvciB0aGlzIHdlZWsgb25seS4gSSBzdWdnZXN0IG1lZXRpbmcgYXQgMVBNIENT
+VCAoMTFBTSBQU1QpLCB0aG91Z2ggYW55IHRpbWUgaW4gdGhlIGFmdGVybm9vbiB3b3Jrcy48bzpw
+PjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5i
+c3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+S2F0aHkg
+LS0gZG9lcyB0aGF0IHdvcmsgZm9yIHlvdT88bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxk
+aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5SZWdhcmRzIGFuZCBoYXBweSBuZXcgeWVhciw8bzpw
+PjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkphbmRyYSBB
+cmFuZ3VyZW48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvYm9keT4N
+CjwvaHRtbD4NCg==
 
-
-Regards and happy new year,
-Jandra Aranguren
-
---000000000000fe55e8059b800880
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello all,=C2=A0<div><br></div><div>Due to meeting conflic=
-ts, I would like to change the GUI Workgroup meeting time, for this week on=
-ly. I suggest meeting at 1PM CST (11AM PST), though any time in the afterno=
-on works.</div><div><br></div><div>Kathy -- does that work for you?</div><d=
-iv><br></div><div><br></div><div>Regards and happy new year,</div><div>Jand=
-ra Aranguren</div></div>
-
---000000000000fe55e8059b800880--
+--_000_FD0BD680739BFC41807C96BD23118BB1326E26ORSMSX113amrcorpi_--
