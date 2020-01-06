@@ -2,129 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1658131C93
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 00:56:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF5D9131C95
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 00:57:45 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sC8633PdzDqS9
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 10:56:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sC9z2DJrzDqJX
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 10:57:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=8274c753a8=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.b="K4PeHeB3"; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.b="FgXGZ4hO"; dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sBqM03gmzDqKK
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 10:41:33 +1100 (AEDT)
-Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 006NXfGX028922; Mon, 6 Jan 2020 15:41:30 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=hc4SfsWK8aRfum34QP8JX8ew6mkOIj0gasJ+muLD69g=;
- b=K4PeHeB3VeU6i5SFGcZKBzpP9yo/EChO0mBg2rw28B2ho+peJlIzpDS8eeMkwW4YgplQ
- 1eerIQCCQw4OEwNdC7eOEB2xm+KpDb6ggCg2Pes5JzXqHnNzFhk0wfhwAG3O2hVUz3gK
- 9Ccvt5Ho+Tu00c2ppB0cQ/Fkd2jPTZwQxLc= 
-Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
- by mx0a-00082601.pphosted.com with ESMTP id 2xasdpb5yx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
- Mon, 06 Jan 2020 15:41:30 -0800
-Received: from prn-hub03.TheFacebook.com (2620:10d:c081:35::127) by
- prn-hub04.TheFacebook.com (2620:10d:c081:35::128) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.1.1713.5; Mon, 6 Jan 2020 15:41:29 -0800
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (192.168.54.28)
- by o365-in.thefacebook.com (192.168.16.27) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
- via Frontend Transport; Mon, 6 Jan 2020 15:41:29 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IsYDV5p/J7ZoA/nRVZumd34jjZqmbBkXNVT0Btg2G+P6keyxXhtUCcBNnOr8VPs9zN8tSVKgawKGP2VqAzBGn3kcaP1kwHNKjfVbRsh6/3JGFfUV3k5gP2nwOtCAvlzfPOyMLv5DfMI4921e3+rebRIhA2gPNWM/H8fSQhLjwpBcogcyeImXo1o5nEn+54+WInEn0CXITyxJV0Q4Jt0OiW5L7rBlEui13a+eBQ/pjifdT8y1T+FcW1CZkniz+QzfC04T7kU25cFaIwv4jTfPCHmTylTqi12NMv2xJvDCeI1YCquawLUjE3I//06nUAwk0vh6O5cw6F8ygzDVs80/9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hc4SfsWK8aRfum34QP8JX8ew6mkOIj0gasJ+muLD69g=;
- b=dln/WE+iicqPgXBodtUbBESuPelMUkE/9sqjDA42rXy+r913cq/gLzY6Fz6hMqvNn88fbXi63NMySOzEqwL8DAQpBGB27zDOtW1F76wuqh1KM61iLDHiPmjej/RBX1VqWgGvBkWKT8gJgV1DTXJVH4AfTiNekstmyEXvsbHZiqqVXtzabzh1y2MPdp4HcGbbWl4D0LiCw8ACwWHWbGirEdEg9y13SSIYp1noC5/9NiV0bUhrhdbXkvSOvSom7dvwt3CdSd0qei/F2w2hnxXJg6vkykotzj1NOk0H56ZU3bQSvS4rqwX0JY89sVqsxqbXRkjz7nQNqvnktS5zZ6ZT7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hc4SfsWK8aRfum34QP8JX8ew6mkOIj0gasJ+muLD69g=;
- b=FgXGZ4hOAuntY+DZVoBEerOX1G4sG7Quw3njGh8m9uJFp6kmoVawzv0S849Xviz1EOREH2hTHpu0P0WAR7vtXRnwlFxkVrXGSQibf79fhDTzlsVjIhKcF4VYdv6P/OHrEJ8EsA7x5UOhVIcmbTb04yPmcfk1MgOnA2KzHAIxz64=
-Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
- MWHPR15MB1424.namprd15.prod.outlook.com (10.173.234.138) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2602.10; Mon, 6 Jan 2020 23:41:28 +0000
-Received: from MWHPR15MB1597.namprd15.prod.outlook.com
- ([fe80::cdbf:b63c:437:4dd2]) by MWHPR15MB1597.namprd15.prod.outlook.com
- ([fe80::cdbf:b63c:437:4dd2%8]) with mapi id 15.20.2602.015; Mon, 6 Jan 2020
- 23:41:28 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: Pulling ipmb patch
-Thread-Topic: Pulling ipmb patch
-Thread-Index: AQHVteXlUA+yq0HfFUSSV9onCJICoqfeYIAA//+DOIA=
-Date: Mon, 6 Jan 2020 23:41:28 +0000
-Message-ID: <4C8D120D-AFF5-441C-A399-0A210A64721C@fb.com>
-References: <C8678983-8901-4E16-94BB-6C6AF0959B62@fb.com>
- <CACPK8XfhySvWLCTAR54Z8cjW0ne0-W1WFifk4=pKL50J3bGU_Q@mail.gmail.com>
-In-Reply-To: <CACPK8XfhySvWLCTAR54Z8cjW0ne0-W1WFifk4=pKL50J3bGU_Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:200::1:889a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: da77fbd6-e1ea-4632-a410-08d79301f36c
-x-ms-traffictypediagnostic: MWHPR15MB1424:
-x-microsoft-antispam-prvs: <MWHPR15MB1424A0F429461348ACE361D3DD3C0@MWHPR15MB1424.namprd15.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 0274272F87
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(39860400002)(376002)(136003)(396003)(346002)(43544003)(199004)(189003)(66556008)(86362001)(7116003)(66476007)(66946007)(66446008)(71200400001)(64756008)(76116006)(5660300002)(316002)(966005)(186003)(8676002)(6916009)(2616005)(81166006)(81156014)(33656002)(6506007)(478600001)(8936002)(3480700007)(36756003)(4744005)(6486002)(2906002)(4326008)(6512007);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1424;
- H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 7bJ87+7QWk3cewNzUPtyM8MfpcvnUfIuwJKMvcajbZiK0sfogeYY3yseR/+nx9hpJWey111S03umQnkEQTfsdooFp2zE50Ol7SZkR0HJcshbnideDgpgkLIhZnZUol2cMmM7CQLnS/7W4Xe+eaoM+gzUbtEXBDVgVvjBci5h06dxyS56YVuideXGCr1Yq65P0epy/C3rkonutZaM1KcMOyoXo841RFn0XO7uHs/PV1DhQEC11DDbeBCSjJwaDy1naic2vAICMSe1E+PUT6LS3MylYLHN7WbL3VZC/iTtKAGUzjbBc3pnME5TEuWuBdev3n07AaYFD0UQu/8Zy/kp1Ch/VBa/gQ1keQ5rK/2ifIO6L8RqAdl6GlERYHB6j+qVhIi9qZotjeWDFIQkNyfBDUQtbRI8SPLiRx6V45d74LSYrfJgO9TnxMYf8zWdZWqj8q/fR6eB5H4vhQTmh5JUujBmxX8qeNUwSWDTt3O9lTRKXZLo0LLW53jr5kznZS+4Y6JZwK3+Hcuz0oSNdRHnlKO+f1iSoUsBEGqBhct2GXE=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E88AEF6C0BE86948A026F3142C4D06D1@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sC5C4nrRzDqRf
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 10:53:35 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 006Nq9V1140837; Mon, 6 Jan 2020 18:53:30 -0500
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2xb8wxbpvb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jan 2020 18:53:30 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 006NpU5b029872;
+ Mon, 6 Jan 2020 23:53:29 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma04dal.us.ibm.com with ESMTP id 2xajb6bwg9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 06 Jan 2020 23:53:29 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 006NrSeV62390606
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 6 Jan 2020 23:53:28 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DCF41C6059;
+ Mon,  6 Jan 2020 23:53:27 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 41A19C6057;
+ Mon,  6 Jan 2020 23:53:24 +0000 (GMT)
+Received: from [9.102.41.189] (unknown [9.102.41.189])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  6 Jan 2020 23:53:23 +0000 (GMT)
+Subject: Re: webui not working for me
+To: Vijay Khemka <vijaykhemka@fb.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <41D87A5C-8EBF-4DA2-9E1E-A37D51A4CA72@fb.com>
+ <a009631a-efec-2e14-6871-b8618ffb4b96@linux.vnet.ibm.com>
+ <E008BED2-5B56-4946-BD37-1F6928AE60BE@fb.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <1bec6eda-be49-e9b7-2ba3-f1ec5d4d89e8@linux.vnet.ibm.com>
+Date: Mon, 6 Jan 2020 17:53:22 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: da77fbd6-e1ea-4632-a410-08d79301f36c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jan 2020 23:41:28.2489 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: b3aMJdK/KcZ1YRfOVxBxs3YWRqhwV5nIXJu9y9M8SiJ0kfL+un3nZJ3v75sskkFR/C36usIqebjQaVtxqJoe8Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1424
-X-OriginatorOrg: fb.com
+In-Reply-To: <E008BED2-5B56-4946-BD37-1F6928AE60BE@fb.com>
+Content-Type: multipart/alternative;
+ boundary="------------DC417965B515E26CCD4C8CA4"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.95,18.0.572
  definitions=2020-01-06_08:2020-01-06,2020-01-06 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- adultscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 malwarescore=0 mlxscore=0
- priorityscore=1501 mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-2001060190
-X-FB-Internal: deliver
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 bulkscore=0 mlxscore=0 clxscore=1015
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-2001060193
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,28 +88,465 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCu+7v09uIDEvNi8yMCwgMzowOCBQTSwgIkpvZWwgU3RhbmxleSIgPGpvZWxAam1zLmlkLmF1
-PiB3cm90ZToNCg0KICAgIEhpIFZpamF5LA0KICAgIA0KICAgIFlvdSBzZW50IHRoaXMgbWFpbCB0
-byB0aGUgd29ybmcgbGlzdC4gVGhlIGxpbnV4LWFzcGVlZCBsaXN0IGlzIHdoZXJlDQogICAgYXNw
-ZWVkIHJlbGF0ZWQgcGF0Y2hlcyBmb3IgdGhlIG1haW5saW5lIGtlcm5lbCBzaG91bGQgZ28uIElu
-c3RlYWQgdXNlDQogICAgdGhlIG9wZW5ibWMgbGlzdCBmb3IgdGhpcyBraW5kIG9mIGRpc2N1c3Np
-b24uDQoNClNvcnJ5IEpvZWwsIEkgd2lsbCB0YWtlIGNhcmUgb2YgdGhpcyBuZXh0IHRpbWUuDQog
-ICAgDQogICAgT24gV2VkLCAxOCBEZWMgMjAxOSBhdCAyMDo1OCwgVmlqYXkgS2hlbWthIDx2aWph
-eWtoZW1rYUBmYi5jb20+IHdyb3RlOg0KICAgID4NCiAgICA+IENhbiB5b3UgcGxlYXNlIHB1bGwg
-SVBNQiBwYXRjaGVzIGZyb20gQ29yZXkgZm9yTmV4dCB0cmVlIGFzIGJlbG93IGludG8gb3VyIExG
-IGtlcm5lbC4NCiAgICANCiAgICBUaGVyZSBpcyBubyBzdWNoIHRoaW5nIGFzIGEgIkxGIGtlcm5l
-bCIuIERvIHlvdSBtZWFuIHRoZSBvcGVuYm1jIGtlcm5lbD8NCg0KWWVzIEkgbWVhbnQgb3BlbmJt
-YyBrZXJuZWwuDQogICAgDQogICAgPiBXZSBuZWVkIHRoaXMgZm9yIGlwbWJicmlkZ2UgYXBwbGlj
-YXRpb24uDQogICAgPg0KICAgID4gaHR0cHM6Ly9naXRodWIuY29tL2NtaW55YXJkL2xpbnV4LWlw
-bWkvY29tbWl0LzBkODYzM2JmNTMxMTE3N2M5YTI2ZDc1ZGFlYzY3N2NkODdlMzI2MWIjZGlmZi03
-NzA4ODUzMjQ0ZTViZjhjZDEwZDIwNWVlMWY1ZGMyYw0KICAgID4gaHR0cHM6Ly9naXRodWIuY29t
-L2NtaW55YXJkL2xpbnV4LWlwbWkvY29tbWl0LzA0MmYwNTdmZTJkY2YzODY4MmQ4NWQ5Zjg4ZGYw
-MGQxYThkNDVkYmQNCiAgICA+IGh0dHBzOi8vZ2l0aHViLmNvbS9jbWlueWFyZC9saW51eC1pcG1p
-L2NvbW1pdC8zODA2NjViZWNkZWViNGY0NTVjMjM1ODJiN2YzMmU2YjNjZWEyN2QyDQogICAgDQog
-ICAgSSd2ZSBhcHBsaWVkIHRoZXNlIHRocmVlLiBXZWxsIGRvbmUgZm9yIHN1Ym1pdHRpbmcgdGhl
-bSB1cHN0cmVhbSBmaXJzdC4NCg0KVGhhbmtzDQogICAgDQogICAgQ2hlZXJzLA0KICAgIA0KICAg
-IEpvZWwNCiAgICANCg0K
+This is a multi-part message in MIME format.
+--------------DC417965B515E26CCD4C8CA4
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+
+On 1/6/2020 1:27 PM, Vijay Khemka wrote:
+>
+> Hi Gunnar,
+>
+> Now I am following below steps. I am running all these from my mac 
+> laptop. Nothing on BMC, just copied bmcweb on BMC.
+>
+>  1. npm install in repo directory.
+>  2. npm run-script server
+>  3. Recompiled bmcweb with BMCWEB_INSECURE_DISABLE_XSS_PREVENTION and
+>     BMCWEB_INSECURE_DISABLE_CSRF_PREVENTION and transfered bmcweb to
+>     target.
+>  4. Go to https://bmc-ip
+>     <https://urldefense.proofpoint.com/v2/url?u=https-3A__bmc-2Dip&d=DwMDaQ&c=5VD0RTtNlTh3ycd41b3MUw&r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=kJtGvuus9oDRupym2EBb90B5bKvSi-pPMLdfIXHUGAM&s=gdm3UjRQnu_XRVgmp5SVt9W82Tl-uoCarovDoHDdD1Y&e=>,
+>     no certificates asked, says certificate expired on Dec 29 1979.
+>     Go to http://localhost:8080
+>     <https://urldefense.proofpoint.com/v2/url?u=http-3A__localhost-3A8080&d=DwMDaQ&c=5VD0RTtNlTh3ycd41b3MUw&r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=kJtGvuus9oDRupym2EBb90B5bKvSi-pPMLdfIXHUGAM&s=r_P53gY50VmvMsyQPhxD35FdzONyzQNBH3GUYTerV4M&e=>,
+>     Don’t see any port as output for “npm run-script server”.
+>
+Looks like it is :18898 for you. "Project is running at 
+http://localhost:18898/"
+
+
+> vijaykhemka-mbp:phosphor-webui vijaykhemka$ npm run-script server
+>
+> > phosphor-webui@2.8.0-dev server 
+> /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui
+>
+> > webpack-dev-server --history-api-fallback --inline --progress 
+> --devtool source-map --mode development
+>
+> *10% building 1/1 modules 0 active*ℹ｢wds｣: Project is running at 
+> http://localhost:18898/
+>
+> ℹ｢wds｣: webpack output is served from /
+>
+> ℹ｢wds｣: Content not from webpack is served from ./src/public
+>
+> ℹ｢wds｣: 404s will fallback to /index.html
+>
+> *10% building 1/3 modules 2 active 
+> ...babel-loader/lib/index.js??ref--4!/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/webpack-dev-server/client/index.js?http://localhost:18898*Browserslist: 
+> caniuse-lite is outdated. Please run next command `npm update`
+>
+> *67% building 545/571 modules 26 active 
+> /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/core-js/modules/es.reflect.is-extensible.js*[BABEL] 
+> Note: The code generator has deoptimised the styling of 
+> /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/angular/angular.js 
+> as it exceeds the max of 500KB.
+>
+> *66% building 557/590 modules 33 active 
+> /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/core-js/modules/es.object.to-string.js*[BABEL] 
+> Note: The code generator has deoptimised the styling of 
+> /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/text-encoding/lib/encoding-indexes.js 
+> as it exceeds the max of 500KB.
+>
+> ℹ｢wdm｣: 761 modules
+>
+> ℹ｢wdm｣: Compiled successfully.
+>
+> Regards
+>
+> -Vijay
+>
+
+--------------DC417965B515E26CCD4C8CA4
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 1/6/2020 1:27 PM, Vijay Khemka
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:E008BED2-5B56-4946-BD37-1F6928AE60BE@fb.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Apple Color Emoji";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:Menlo;
+	panose-1:2 11 6 9 3 8 4 2 2 4;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.p1, li.p1, div.p1
+	{mso-style-name:p1;
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.5pt;
+	font-family:Menlo;
+	color:black;}
+p.p2, li.p2, div.p2
+	{mso-style-name:p2;
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.5pt;
+	font-family:Menlo;
+	color:black;}
+span.EmailStyle22
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.s1
+	{mso-style-name:s1;
+	color:#B2B2B2;
+	background:black;}
+span.s3
+	{mso-style-name:s3;
+	background:#878A04;}
+span.s4
+	{mso-style-name:s4;
+	color:#EBEF18;}
+span.s2
+	{mso-style-name:s2;}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+span.EmailStyle28
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:761224288;
+	mso-list-template-ids:1261490162;}
+@list l1
+	{mso-list-id:784426178;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1543190074 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2
+	{mso-list-id:816609008;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1543190074 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoNormal"><span style="font-size:11.0pt">Hi Gunnar,<o:p></o:p></span></p>
+        <p class="MsoNormal"><span style="font-size:11.0pt">Now I am
+            following below steps. I am running all these from my mac
+            laptop. Nothing on BMC, just copied bmcweb on BMC.<o:p></o:p></span></p>
+        <ol style="margin-top:0in" type="1" start="1">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo3"><span
+              style="font-size:11.0pt">npm install in repo directory.</span><o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo3">npm
+            run-script server<o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo3">Recompiled
+            bmcweb with BMCWEB_INSECURE_DISABLE_XSS_PREVENTION and
+            BMCWEB_INSECURE_DISABLE_CSRF_PREVENTION and transfered
+            bmcweb to target.<o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo3">Go to
+            <a
+href="https://urldefense.proofpoint.com/v2/url?u=https-3A__bmc-2Dip&amp;d=DwMDaQ&amp;c=5VD0RTtNlTh3ycd41b3MUw&amp;r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&amp;m=kJtGvuus9oDRupym2EBb90B5bKvSi-pPMLdfIXHUGAM&amp;s=gdm3UjRQnu_XRVgmp5SVt9W82Tl-uoCarovDoHDdD1Y&amp;e="
+              moz-do-not-send="true">
+              https://bmc-ip</a>, no certificates asked, says
+            certificate expired on Dec 29 1979.<br>
+            Go to <a
+href="https://urldefense.proofpoint.com/v2/url?u=http-3A__localhost-3A8080&amp;d=DwMDaQ&amp;c=5VD0RTtNlTh3ycd41b3MUw&amp;r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&amp;m=kJtGvuus9oDRupym2EBb90B5bKvSi-pPMLdfIXHUGAM&amp;s=r_P53gY50VmvMsyQPhxD35FdzONyzQNBH3GUYTerV4M&amp;e="
+              moz-do-not-send="true">
+              http://localhost:8080</a>, Don’t see any port as output
+            for “npm run-script server”.<span style="font-size:11.0pt"> </span><o:p></o:p></li>
+        </ol>
+        <p class="MsoNormal"><span style="font-size:11.0pt"><o:p> </o:p></span></p>
+      </div>
+    </blockquote>
+    <p>Looks like it is :18898 for you. "Project is running at
+      <a class="moz-txt-link-freetext" href="http://localhost:18898/">http://localhost:18898/</a>"<br>
+    </p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:E008BED2-5B56-4946-BD37-1F6928AE60BE@fb.com">
+      <div class="WordSection1">
+        <p class="MsoNormal"><span style="font-size:11.0pt"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">vijaykhemka-mbp:phosphor-webui
+            vijaykhemka$ npm run-script server<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">&gt;
+            <a class="moz-txt-link-abbreviated" href="mailto:phosphor-webui@2.8.0-dev">phosphor-webui@2.8.0-dev</a> server
+            /Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">&gt;
+            webpack-dev-server --history-api-fallback --inline
+            --progress --devtool source-map --mode development<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><b><span
+              style="font-size:8.5pt;font-family:Menlo;color:black">10%
+              building 1/1 modules 0 active</span></b><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wds</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">:
+            Project is running at <a class="moz-txt-link-freetext" href="http://localhost:18898/">http://localhost:18898/</a><o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wds</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">:
+            webpack output is served from /<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wds</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">:
+            Content not from webpack is served from ./src/public<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wds</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">: 404s
+            will fallback to /index.html<o:p></o:p></span></p>
+        <p class="MsoNormal"><b><span
+              style="font-size:8.5pt;font-family:Menlo;color:black">10%
+              building 1/3 modules 2 active
+...babel-loader/lib/index.js??ref--4!/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/webpack-dev-server/client/index.js?<a class="moz-txt-link-freetext" href="http://localhost:18898">http://localhost:18898</a></span></b><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">Browserslist:
+            caniuse-lite is outdated. Please run next command `npm
+            update`<o:p></o:p></span></p>
+        <p class="MsoNormal"><b><span
+              style="font-size:8.5pt;font-family:Menlo;color:black">67%
+              building 545/571 modules 26 active
+/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/core-js/modules/es.reflect.is-extensible.js</span></b><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">[BABEL]
+            Note: The code generator has deoptimised the styling of
+/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/angular/angular.js
+            as it exceeds the max of 500KB.<o:p></o:p></span></p>
+        <p class="MsoNormal"><b><span
+              style="font-size:8.5pt;font-family:Menlo;color:black">66%
+              building 557/590 modules 33 active
+/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/core-js/modules/es.object.to-string.js</span></b><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">[BABEL]
+            Note: The code generator has deoptimised the styling of
+/Users/vijaykhemka/proj/lf/gh/new-gh/gh-repo/phosphor-webui/node_modules/text-encoding/lib/encoding-indexes.js
+            as it exceeds the max of 500KB.<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wdm</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">:   
+            761 modules<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:&quot;Apple Color
+            Emoji&quot;;color:#5620F4">ℹ</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">
+          </span><span style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｢</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:#7D7D7D">wdm</span><span
+            style="font-size:8.5pt;font-family:&quot;MS
+            Mincho&quot;;color:#7D7D7D">｣</span><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">:
+            Compiled successfully.<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">Regards<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black">-Vijay<o:p></o:p></span></p>
+        <p class="MsoNormal"><span
+            style="font-size:8.5pt;font-family:Menlo;color:black"><o:p> </o:p></span></p>
+        <span style="font-size:11.0pt">
+          <o:p></o:p></span>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------DC417965B515E26CCD4C8CA4--
+
