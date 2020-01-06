@@ -1,70 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18BC3131B37
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2020 23:18:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DF31131AA5
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jan 2020 22:45:48 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47s8Fj4BWkzDqDt
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 08:45:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47s8zy6PFwzDqFY
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 09:18:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::335;
- helo=mail-ot1-x335.google.com; envelope-from=xqiu@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c29;
+ helo=mail-yw1-xc29.google.com; envelope-from=jandraara@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="PfIUH5Hp"; 
+ unprotected) header.d=gmail.com header.i=@gmail.com header.b="Fo5R6TVr"; 
  dkim-atps=neutral
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
- [IPv6:2607:f8b0:4864:20::335])
+Received: from mail-yw1-xc29.google.com (mail-yw1-xc29.google.com
+ [IPv6:2607:f8b0:4864:20::c29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47s8Dp3Qq6zDqCB
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 08:44:56 +1100 (AEDT)
-Received: by mail-ot1-x335.google.com with SMTP id r27so73482289otc.8
- for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2020 13:44:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=wItj7FfaDsGLGHUxe2tLfUF4tqw1NQC106j0CAFTB3Q=;
- b=PfIUH5Hp7NPvIE6xzLq4b/nqA0f0JlZRxQAXlRV/GYJulsGKHIzPn3x77nwLmbjhBA
- 3qTUOv8/JpyKpXDpIWJu0bq6qSneZw7MXnhGnw/KpX8we6p1vxbwnWv41S/1NGRrqLax
- nsvy2x1jEEsH7LpA54DC0ryesGiInDkzGVlTEWb8y4xetbt1cISj2Xm1/YxL250K1d2h
- ZR/PeqPk0Zne9plw4YN+vzY3nE2DDHc8oNaq9h7tLbr20aP7MwaPfenAYeFAyO4/fC87
- jBcouViAnvGxhGdyMwuu3s6O/cGTRTPXyHsIYzmaGOUO7RjIUIhKTfD3703ou9dJhGEI
- RrSA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47s8zD494mzDqFY
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 09:18:16 +1100 (AEDT)
+Received: by mail-yw1-xc29.google.com with SMTP id u139so22538849ywf.13
+ for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2020 14:18:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=KgwPH8H6vNIfPF1qb6Q4NB0ehp1ycv8O8jDYIKl7g6M=;
+ b=Fo5R6TVrSPmDqH0fL9NfxJhxsiwEJBNuaY4lf1uaZoz6HEECza9heuUUSTepp4HBTJ
+ aqoRMQmHXXYiqOajVu6nxGthGhgbSDWKkQSnskyaEqEraLcJGXJTs0R+KL0g0S7fp3Z5
+ 1S8Al762H/1hq5mH8MamqwanKhNMtxy18pSMgjysmhimNYFcOptUlQhBSiK5dlvPrYOK
+ QS5TlwgG25h/0Y2VJN4BsRSK0hzEn5tP7tFproj5RrdbF9M/F40CpmeGM5LW4Ww89JrO
+ j0UH4S8hxxSXpALzk/UWwjuzIhnhf/WVJgGCFt1i/j0aC3LJbxSEoE3a6G4Ct6ORZKGT
+ yvQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wItj7FfaDsGLGHUxe2tLfUF4tqw1NQC106j0CAFTB3Q=;
- b=h1ER6uT9e6btDHEqyyC9bgfjkzbJcQL2fum4bQPxuafvdIw21LMPF/pqeew8U/LHy5
- Zaf43krw5P3dZeiFqAAqQyMQNO1w6h8V/67qdstJy3z7n8PY4D+xFYqXw4MAD3cL0U4z
- VDeN0ilITWS4y9huAp2xae3XSGZtlg5cDFoWmbdHkfJZtH1d8/Ve01iAhe8oTJ93wS6e
- sjfS0V6lGhUZWBtcAwZArqNsfh8R3Rl3uhJzgZ1qCu3BiwVW5rGfZhc/ROjgFo9rx1E8
- RmlPvoUD9u7QFkrC+ZwBnYgcb4to29ST8AUUIS6p+KTdNOyIjHfUjaqEbg1SWShbKptk
- dEjg==
-X-Gm-Message-State: APjAAAXPxgQawngnWkBVX5aMIGgYw3s74FJhd4uIbcE2qbkya7wC0OOb
- q4V7ZeeV6kn2LPITxa8jpJCElPvoadTK2ebCaVRsRg==
-X-Google-Smtp-Source: APXvYqz3RFloB3cSrQoa1zzsqfLB3TCVKNYSlRUQth7gmaL6gT4jY3KOvPuCg0s2NGHM2OzoEoLPnyxhHCqj19pI4PM=
-X-Received: by 2002:a05:6830:145:: with SMTP id
- j5mr113595725otp.242.1578347092690; 
- Mon, 06 Jan 2020 13:44:52 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=KgwPH8H6vNIfPF1qb6Q4NB0ehp1ycv8O8jDYIKl7g6M=;
+ b=XZ19wlTa4K6svVA1IaH+6RxcBiwACpcFCQfiQ2dsO8c2H+5jvlv8+C1OVAQtVlg5kB
+ Kxyzh52HgXHAAo/aEBiIERrvU4DZzg0BfAmaSQznZ0L1MySK7Zu1QlK/tlVQv8ozD1Db
+ 4227Tk9Tokl/iMk6RCHwrVwdnRycsNMWmIn3WTPRvK3aA2rEvbLgvmYZvgJa+lDKu4ZU
+ zWVna6LphkRIIdi9pfLrRIP+o83mSoxaCCuBoZm5ETDsJcBonqVm2z5gBzcEq3zh2qrY
+ 8YPumef6Q/CxepWwzx2PLeTJ6VM4eFn8K+1FVF75qh6DOGMslbJPZHWkloxzp6V2o2wp
+ XGvg==
+X-Gm-Message-State: APjAAAX/ZuJhNQJ/DUzQkiVlE0x+OFQzYRA0QeRaE8fpL0enr4UF4LP/
+ cSbg0sMQWx7qICQYHCJ6dmh+6M+mWf7RWKyE588=
+X-Google-Smtp-Source: APXvYqzOzuPtUJdL9swc0HD7aw27UUuDcV3LUCQv/9bQzhHz0CVjZ/I90rjEYDFZXlWgZg+UJ91NORMO1bMIuHIclDg=
+X-Received: by 2002:a81:9b88:: with SMTP id
+ s130mr79991433ywg.103.1578349092557; 
+ Mon, 06 Jan 2020 14:18:12 -0800 (PST)
 MIME-Version: 1.0
-References: <CAA_a9xLm_3CthjLS0rKQCcqYfciFWEXh-9BV4W=AebumP8Rf4A@mail.gmail.com>
- <e5878df7-b127-0f86-3366-722e94f86103@linux.intel.com>
- <CAA_a9x+wpvhD7pEe+TEqkjSb6ZoiiYz4ZZBQz0v_7V-cGywHXg@mail.gmail.com>
- <e585c0d1-81a8-fd09-cb43-84ac878568ad@linux.intel.com>
-In-Reply-To: <e585c0d1-81a8-fd09-cb43-84ac878568ad@linux.intel.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Mon, 6 Jan 2020 13:44:41 -0800
-Message-ID: <CAA_a9xLCmVAjrJhvz5KLx_bWLmvUucx_GAZO1+GEdPXdSFSwjg@mail.gmail.com>
-Subject: Re: Configuring shunt_resistor in hwmon
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: multipart/alternative; boundary="000000000000cb4639059b7f91e7"
+From: Jandra A <jandraara@gmail.com>
+Date: Mon, 6 Jan 2020 16:18:01 -0600
+Message-ID: <CAMTupoTd6P4bV2PBA_W-jmtPqye67mAszyaE4f5o6bR+hABNrw@mail.gmail.com>
+Subject: Change GUI Workgroup meeting time this week?
+To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000fe55e8059b800880"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,150 +71,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Josh Lehan <krellan@google.com>, openbmc@lists.ozlabs.org,
- Kais Belgaied <belgaied@google.com>, Devjit Gopalpur <devjitg@google.com>,
- Peter Lundgren <peterlundgren@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000cb4639059b7f91e7
+--000000000000fe55e8059b800880
 Content-Type: text/plain; charset="UTF-8"
 
-Hi James,
+Hello all,
 
-Got it. Thank you for the answer!
+Due to meeting conflicts, I would like to change the GUI Workgroup meeting
+time, for this week only. I suggest meeting at 1PM CST (11AM PST), though
+any time in the afternoon works.
 
-- Alex Qiu
+Kathy -- does that work for you?
 
 
-On Mon, Jan 6, 2020 at 1:37 PM James Feist <james.feist@linux.intel.com>
-wrote:
+Regards and happy new year,
+Jandra Aranguren
 
-> On 1/6/20 1:29 PM, Alex Qiu wrote:
-> > Hi James,
-> >
-> > Thanks for your quick reply and reviewing my code in the morning!
-> >
-> > That looks interesting, so this ScaleFactor will be used to multiply the
-> > voltage value from hwmon without setting the shunt_resistor explicitly?
-> > I do have a little concern on the resolution, because it's only
-> > reporting 0.165V with default shunt_resistor setting, but we'll try and
-> > see if this will work for our case. In the meantime, do you know any
-> > other method that will work?
->
-> That's all I'm aware of in dbus-sensors. We have a voltage divider
-> in-front of our ADC channels, so we use this scale factor to calculate
-> the actual voltage. Anything else I think you'd need to add as a new
-> change if you're using dbus-sensors. I'm not sure if phosphor-hwmon
-> offers anything you could use or not.
->
-> >
-> > Thank you!
-> >
-> > - Alex Qiu
-> >
-> >
-> > On Mon, Jan 6, 2020 at 1:21 PM James Feist <james.feist@linux.intel.com
-> > <mailto:james.feist@linux.intel.com>> wrote:
-> >
-> >     On 1/6/20 1:16 PM, Alex Qiu wrote:
-> >      > Hi OpenBMC folks,
-> >      >
-> >      > Is there a way to configure the shunt_resistor value for a hwmon
-> >     with
-> >      > entity-manager or other modules?
-> >
-> >     Have you seen this?
-> >
-> https://github.com/openbmc/entity-manager/blob/0cbe6bf34101bab7544b40011868efc5145c0804/configurations/WFT%20Baseboard.json#L7
-> >
-> >     For Entity-Manager + dbus-sensors.
-> >
-> >      > We need to configure this value to make
-> >      > the INA230 report correct voltage, but for now I don't find
-> >     anything in
-> >      > the code for it. Shall this be a feature to implement? Thanks!
-> >      >
-> >      > - Alex Qiu
-> >
->
-
---000000000000cb4639059b7f91e7
+--000000000000fe55e8059b800880
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hi James,</div><div><br></div><div>Got it. Thank you =
-for the answer!</div><br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail=
-_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu<=
-/div></div></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Mon, Jan 6, 2020 at 1:37 PM James Feist &lt;<a href=
-=3D"mailto:james.feist@linux.intel.com">james.feist@linux.intel.com</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 1/6/2=
-0 1:29 PM, Alex Qiu wrote:<br>
-&gt; Hi James,<br>
-&gt; <br>
-&gt; Thanks for your quick reply and reviewing my code in the morning!<br>
-&gt; <br>
-&gt; That looks interesting, so this ScaleFactor will be used to multiply t=
-he <br>
-&gt; voltage value from hwmon without setting the shunt_resistor explicitly=
-? <br>
-&gt; I do have a little concern on the resolution, because it&#39;s only <b=
-r>
-&gt; reporting 0.165V with default shunt_resistor setting, but we&#39;ll tr=
-y and <br>
-&gt; see if this will work for our case. In the meantime, do you know any <=
-br>
-&gt; other method that will work?<br>
-<br>
-That&#39;s all I&#39;m aware of in dbus-sensors. We have a voltage divider =
-<br>
-in-front of our ADC channels, so we use this scale factor to calculate <br>
-the actual voltage. Anything else I think you&#39;d need to add as a new <b=
-r>
-change if you&#39;re using dbus-sensors. I&#39;m not sure if phosphor-hwmon=
- <br>
-offers anything you could use or not.<br>
-<br>
-&gt; <br>
-&gt; Thank you!<br>
-&gt; <br>
-&gt; - Alex Qiu<br>
-&gt; <br>
-&gt; <br>
-&gt; On Mon, Jan 6, 2020 at 1:21 PM James Feist &lt;<a href=3D"mailto:james=
-.feist@linux.intel.com" target=3D"_blank">james.feist@linux.intel.com</a> <=
-br>
-&gt; &lt;mailto:<a href=3D"mailto:james.feist@linux.intel.com" target=3D"_b=
-lank">james.feist@linux.intel.com</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 1/6/20 1:16 PM, Alex Qiu wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hi OpenBMC folks,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Is there a way to configure the shunt_resisto=
-r value for a hwmon<br>
-&gt;=C2=A0 =C2=A0 =C2=A0with<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; entity-manager or other modules?<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Have you seen this?<br>
-&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/entity-manage=
-r/blob/0cbe6bf34101bab7544b40011868efc5145c0804/configurations/WFT%20Basebo=
-ard.json#L7" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbm=
-c/entity-manager/blob/0cbe6bf34101bab7544b40011868efc5145c0804/configuratio=
-ns/WFT%20Baseboard.json#L7</a><br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0For Entity-Manager + dbus-sensors.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; We need to configure this value to make<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; the INA230 report correct voltage, but for no=
-w I don&#39;t find<br>
-&gt;=C2=A0 =C2=A0 =C2=A0anything in<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; the code for it. Shall this be a feature to i=
-mplement? Thanks!<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; - Alex Qiu<br>
-&gt; <br>
-</blockquote></div>
+<div dir=3D"ltr">Hello all,=C2=A0<div><br></div><div>Due to meeting conflic=
+ts, I would like to change the GUI Workgroup meeting time, for this week on=
+ly. I suggest meeting at 1PM CST (11AM PST), though any time in the afterno=
+on works.</div><div><br></div><div>Kathy -- does that work for you?</div><d=
+iv><br></div><div><br></div><div>Regards and happy new year,</div><div>Jand=
+ra Aranguren</div></div>
 
---000000000000cb4639059b7f91e7--
+--000000000000fe55e8059b800880--
