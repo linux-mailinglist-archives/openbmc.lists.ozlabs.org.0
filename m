@@ -2,44 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AB26131D1A
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 02:18:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37DD7131DC0
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 03:44:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sDzf33xCzDqRW
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 12:18:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sGtk4RBDzDqNC
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 13:44:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::741;
+ helo=mail-qk1-x741.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="PlPUMN7d"; 
+ dkim-atps=neutral
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
+ [IPv6:2607:f8b0:4864:20::741])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sDtY4dwZzDqSm;
- Tue,  7 Jan 2020 12:14:29 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga104.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 06 Jan 2020 17:14:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,404,1571727600"; d="scan'208";a="216992332"
-Received: from maru.jf.intel.com ([10.54.51.77])
- by fmsmga007.fm.intel.com with ESMTP; 06 Jan 2020 17:14:22 -0800
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-To: Eddie James <eajames@linux.ibm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH 3/3] media: aspeed: add AST2600 support
-Date: Mon,  6 Jan 2020 17:15:03 -0800
-Message-Id: <20200107011503.17435-4-jae.hyun.yoo@linux.intel.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200107011503.17435-1-jae.hyun.yoo@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sGsm0d5HzDqBt;
+ Tue,  7 Jan 2020 13:43:55 +1100 (AEDT)
+Received: by mail-qk1-x741.google.com with SMTP id 21so41466525qky.4;
+ Mon, 06 Jan 2020 18:43:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=LyWXGqlpcvNUsV6/byFCrmEtMHIShb1ijGFLD53ibQk=;
+ b=PlPUMN7d9Nn66k3HHa44pNzYSnqyDuDqc2kzItmd2CaBY4trqh7Qe7dWFGJnuw8DHA
+ V8j21PR63pR83jsce5aby7Nm3lDKA+lc9frixN2s+Zn3eolm3vFF1bGBtiCC7S2rymav
+ O3DjKq05MkPObXSKhaa66XDt5q4VXdt621cWc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=LyWXGqlpcvNUsV6/byFCrmEtMHIShb1ijGFLD53ibQk=;
+ b=j6L5n9q/KpA3oJ/q5xFOIBLVSYV9OlX+BELQ25OYJ0SI6bPeSk3VDEt1eDfwbtMNvt
+ 0sPsME7b0zVgXgSS1XKQbMQI19YW5V2tWCiThYlp2YceZcoRll1KiD9+ha9/uhoU1L1D
+ BkaUr6azf1i0GBFXmBLwTJTT0g0LuojCE29QR6zgqF6s6uDda4z4Q6kSFy+NPD3ydSir
+ 5t3n5u90KQQ0O+xpCRrdOgi0ESJAzbpPyZylLMOAAtcTHpzdlFdPzOW8DmRtd1sT3JLI
+ 1Xtddj0ExS/fssgp5ZWTir9GGHyfqVOooDSdo11WY+3aYwv11UdnSg1U2RVwtP9r0AzC
+ wKeA==
+X-Gm-Message-State: APjAAAVYJPGDhU2Ucvf9uRomRcNOVKx2ph4rlQfTmVfU5Vp/5XxkbkaY
+ lrWJHZO+16pHwyr9sRhc2jFElqF1zmNgR8G67I8=
+X-Google-Smtp-Source: APXvYqyBIRxMo+kjMv9ML/yu7Ter7COQGfOpYifJbteEuBwqpPXih62HhMK1UnjdlPXu0XOWSax2OmNtaiyS34TkbnI=
+X-Received: by 2002:a05:620a:849:: with SMTP id
+ u9mr86645362qku.414.1578365032850; 
+ Mon, 06 Jan 2020 18:43:52 -0800 (PST)
+MIME-Version: 1.0
 References: <20200107011503.17435-1-jae.hyun.yoo@linux.intel.com>
+ <20200107011503.17435-3-jae.hyun.yoo@linux.intel.com>
+In-Reply-To: <20200107011503.17435-3-jae.hyun.yoo@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 7 Jan 2020 02:43:41 +0000
+Message-ID: <CACPK8Xcf7TOWh673aQwOk385b2QaMT1i7nUHy=18W-rVLX9ewg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] Documentation: dt-bindings: media: add AST2600 Video
+ Engine support
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,70 +72,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org,
- linux-media@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>, Rob Herring <robh+dt@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Video engine in AST2600 has the exactly same register set with
-AST2500 except VR084 register which provides more precise JPEG
-size read back. This commit adds support for the difference and
-adds 'aspeed,ast2600-video-engine' compatible OF string.
+On Tue, 7 Jan 2020 at 01:14, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>
+> The AST2600 has Video Engine so add the compatible string into the
+> document.
+>
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 
-Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
----
- drivers/media/platform/aspeed-video.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-index d8593cb2ae84..0dbe72672338 100644
---- a/drivers/media/platform/aspeed-video.c
-+++ b/drivers/media/platform/aspeed-video.c
-@@ -72,10 +72,10 @@
- #define  VE_SEQ_CTRL_CAP_BUSY		BIT(16)
- #define  VE_SEQ_CTRL_COMP_BUSY		BIT(18)
- 
--#ifdef CONFIG_MACH_ASPEED_G5
--#define  VE_SEQ_CTRL_JPEG_MODE		BIT(13)	/* AST2500 */
--#else
-+#ifdef CONFIG_MACH_ASPEED_G4
- #define  VE_SEQ_CTRL_JPEG_MODE		BIT(8)	/* AST2400 */
-+#else
-+#define  VE_SEQ_CTRL_JPEG_MODE		BIT(13)	/* AST2500/2600 */
- #endif /* CONFIG_MACH_ASPEED_G5 */
- 
- #define VE_CTRL				0x008
-@@ -135,6 +135,12 @@
- 
- #define VE_OFFSET_COMP_STREAM		0x078
- 
-+#ifdef CONFIG_MACH_ASPEED_G6
-+#define VE_JPEG_COMP_SIZE_READ_BACK	0x084	/* AST2600 */
-+#else
-+#define VE_JPEG_COMP_SIZE_READ_BACK	VE_OFFSET_COMP_STREAM
-+#endif
-+
- #define VE_SRC_LR_EDGE_DET		0x090
- #define  VE_SRC_LR_EDGE_DET_LEFT	GENMASK(11, 0)
- #define  VE_SRC_LR_EDGE_DET_NO_V	BIT(12)
-@@ -572,7 +578,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 	if (sts & VE_INTERRUPT_COMP_COMPLETE) {
- 		struct aspeed_video_buffer *buf;
- 		u32 frame_size = aspeed_video_read(video,
--						   VE_OFFSET_COMP_STREAM);
-+						   VE_JPEG_COMP_SIZE_READ_BACK);
- 
- 		spin_lock(&video->lock);
- 		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-@@ -1719,6 +1725,7 @@ static int aspeed_video_remove(struct platform_device *pdev)
- static const struct of_device_id aspeed_video_of_match[] = {
- 	{ .compatible = "aspeed,ast2400-video-engine" },
- 	{ .compatible = "aspeed,ast2500-video-engine" },
-+	{ .compatible = "aspeed,ast2600-video-engine" },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, aspeed_video_of_match);
--- 
-2.17.1
-
+Acked-by: Joel Stanley <joel@jms.id.au>
