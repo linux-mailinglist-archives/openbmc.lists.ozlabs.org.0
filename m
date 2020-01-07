@@ -1,49 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C84A2132DC4
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 18:58:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sg9X0k4RzDqNd
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 04:58:56 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5D2A133000
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 20:55:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sjlW5dd7zDqKW
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 06:55:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sg8Z1sDkzDqJ2;
- Wed,  8 Jan 2020 04:58:04 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 07 Jan 2020 09:58:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.69,406,1571727600"; d="scan'208";a="395465240"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.147])
- ([10.7.153.147])
- by orsmga005.jf.intel.com with ESMTP; 07 Jan 2020 09:58:02 -0800
-Subject: Re: [PATCH 3/3] media: aspeed: add AST2600 support
-To: Joel Stanley <joel@jms.id.au>
-References: <20200107011503.17435-1-jae.hyun.yoo@linux.intel.com>
- <20200107011503.17435-4-jae.hyun.yoo@linux.intel.com>
- <CACPK8XejA6emrboLzfwEpmn=dn1JcyHKJVud_cBXVNRiZixgTA@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <86f3dc92-07b0-c993-6c3e-39db6c58214e@linux.intel.com>
-Date: Tue, 7 Jan 2020 09:58:02 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sjks08QmzDq9j
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 06:54:28 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 007Jm4jB052416
+ for <openbmc@lists.ozlabs.org>; Tue, 7 Jan 2020 14:54:25 -0500
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2xb8un2vxx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 07 Jan 2020 14:54:25 -0500
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 007JnKT5015652
+ for <openbmc@lists.ozlabs.org>; Tue, 7 Jan 2020 19:54:23 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma03wdc.us.ibm.com with ESMTP id 2xajb6dw0q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 07 Jan 2020 19:54:23 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 007JsNcY46858554
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 7 Jan 2020 19:54:23 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61FC9112064
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 19:54:23 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 43F34112061
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 19:54:23 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 19:54:23 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday January 8
+Message-ID: <996e21e2-cf19-10a2-86de-122653561780@linux.ibm.com>
+Date: Tue, 7 Jan 2020 13:54:22 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XejA6emrboLzfwEpmn=dn1JcyHKJVud_cBXVNRiZixgTA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-07_06:2020-01-07,
+ 2020-01-07 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
+ phishscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1910280000
+ definitions=main-2001070156
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,94 +84,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>,
- devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>, Rob Herring <robh+dt@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday January 8 at 10:00am PDT.
+
+We'll discuss current development items, and anything else that comes 
+up.  The current topics:
+
+1. Gerrit review: Overview of BMC interfaces which either (1) someone 
+might want to dynamically enable or disable, or (2) form an interesting 
+part of the BMC’s attack surface. 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/27969  
+
+2. Gerrit review: Prompted by IRC #openbmc discussion: Idea: List 
+applicable security standards and best practices which might apply to 
+OpenBMC for folks who want to use OpenBMC in their higher-security 
+project which needs to meet security standards.
+
+3. Review composition of the openbmc-security email list per 
+https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team-guidelines.md#team-composition-and-email-maintenance  
+
+4. Code review to redirect HTTP to HTTPS (via nc netcat) - 
+https://gerrit.openbmc-project.xyz/c/openbmc/meta-openpower/+/28099 This 
+is currently scoped to OpenPOWER; can it be moved to meta-phosphor.  Are 
+there security concerns with adding the “netcat” (nc) command? 
+
+5. Gerrit review: Denial of service (DoS) considerations - 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28213  (Joseph:) 
+Specifically, I want to know if this is mergeable, and I want to start 
+with the BMCWeb rate-limiting defences.  
 
 
-On 1/6/2020 7:15 PM, Joel Stanley wrote:
-> On Tue, 7 Jan 2020 at 01:14, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->>
->> Video engine in AST2600 has the exactly same register set with
->> AST2500 except VR084 register which provides more precise JPEG
->> size read back. This commit adds support for the difference and
->> adds 'aspeed,ast2600-video-engine' compatible OF string.
->>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
->> ---
->>   drivers/media/platform/aspeed-video.c | 15 +++++++++++----
->>   1 file changed, 11 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
->> index d8593cb2ae84..0dbe72672338 100644
->> --- a/drivers/media/platform/aspeed-video.c
->> +++ b/drivers/media/platform/aspeed-video.c
->> @@ -72,10 +72,10 @@
->>   #define  VE_SEQ_CTRL_CAP_BUSY          BIT(16)
->>   #define  VE_SEQ_CTRL_COMP_BUSY         BIT(18)
->>
->> -#ifdef CONFIG_MACH_ASPEED_G5
->> -#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500 */
->> -#else
->> +#ifdef CONFIG_MACH_ASPEED_G4
->>   #define  VE_SEQ_CTRL_JPEG_MODE         BIT(8)  /* AST2400 */
->> +#else
->> +#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500/2600 */
->>   #endif /* CONFIG_MACH_ASPEED_G5 */
-> 
-> Yeah, nah. This should have never been done this way. I will send some
-> patches to fix it up, and you can add ast2600 support on top of them,
-> if that works for you.
+Access, agenda, and notes are in the wiki:
 
-Yeah, the runtime configuration in your patch set is right way for it.
-I'll rebase this patch set on top of your patch.
+https://github.com/openbmc/openbmc/wiki/Security-working-group
 
-Thanks,
-
-Jae
-
-> Cheers,
-> 
-> Joel
-> 
->>
->>   #define VE_CTRL                                0x008
->> @@ -135,6 +135,12 @@
->>
->>   #define VE_OFFSET_COMP_STREAM          0x078
->>
->> +#ifdef CONFIG_MACH_ASPEED_G6
->> +#define VE_JPEG_COMP_SIZE_READ_BACK    0x084   /* AST2600 */
->> +#else
->> +#define VE_JPEG_COMP_SIZE_READ_BACK    VE_OFFSET_COMP_STREAM
->> +#endif
->> +
->>   #define VE_SRC_LR_EDGE_DET             0x090
->>   #define  VE_SRC_LR_EDGE_DET_LEFT       GENMASK(11, 0)
->>   #define  VE_SRC_LR_EDGE_DET_NO_V       BIT(12)
->> @@ -572,7 +578,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->>          if (sts & VE_INTERRUPT_COMP_COMPLETE) {
->>                  struct aspeed_video_buffer *buf;
->>                  u32 frame_size = aspeed_video_read(video,
->> -                                                  VE_OFFSET_COMP_STREAM);
->> +                                                  VE_JPEG_COMP_SIZE_READ_BACK);
->>
->>                  spin_lock(&video->lock);
->>                  clear_bit(VIDEO_FRAME_INPRG, &video->flags);
->> @@ -1719,6 +1725,7 @@ static int aspeed_video_remove(struct platform_device *pdev)
->>   static const struct of_device_id aspeed_video_of_match[] = {
->>          { .compatible = "aspeed,ast2400-video-engine" },
->>          { .compatible = "aspeed,ast2500-video-engine" },
->> +       { .compatible = "aspeed,ast2600-video-engine" },
->>          {}
->>   };
->>   MODULE_DEVICE_TABLE(of, aspeed_video_of_match);
->> --
->> 2.17.1
->>
+- Joseph
