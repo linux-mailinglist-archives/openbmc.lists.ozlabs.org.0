@@ -1,70 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C84A2132DC4
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 18:58:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0313132D15
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 18:33:28 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sfc44MFTzDqMH
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 04:33:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sg9X0k4RzDqNd
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 04:58:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::230;
- helo=mail-oi1-x230.google.com; envelope-from=xqiu@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.b="EyeYBZbz"; 
- dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sf6h410jzDqLX
- for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 04:11:24 +1100 (AEDT)
-Received: by mail-oi1-x230.google.com with SMTP id 18so103710oin.9
- for <openbmc@lists.ozlabs.org>; Tue, 07 Jan 2020 09:11:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=7A82MIrWe6f3GyBRGFc7fus/vOT+BqZchqR3YS/Il1o=;
- b=EyeYBZbzvO1NOUSMP+o6uvzRncHMeOiszgTn/A8bvEGEociXr4aN5qjfTTpQoA6jA7
- VHtVp1OCz85SXjyTl5vHSUwF5FTUoNIkdOQiC/h16ezoElQaUssqwKp3zqcLIPveeqLp
- JNGaPtiJGwfUaqCC+H3pzYxR5N5JLbtbzUAK5Xs95S+h5Gvz1dilSNIDnMezOmHoGFAT
- vr5NhRu779IFvE9aA5yRWK4MpS3wJt2LqGMjlu/bYa9CxyI3Qe/Hp5Ic9pXqMb4Z5l85
- 5Dr099ehQwoqggDV5V+Bt4jxpUExI0y9VFDi/TKgWUDHpoiy+dpzY2DhUMVdgZzkrfi7
- AqwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=7A82MIrWe6f3GyBRGFc7fus/vOT+BqZchqR3YS/Il1o=;
- b=dYqwRqA2U286OkbgPWkNZK5xMM1CNP86AFhIk1CZySjT6f/36GH/XwwLKrFZ5thG0L
- HaBseLtdmMSwlqHnM5YsxtnNmjAAh/Vw7mrRA44OZRWPVNuwSpgjA5Obk0z9J9emo9a7
- mQZdm5o7nDL4pSZH+T57Oh/cS9CuU7SHkN05U7MrlTVjMjSiPya+kRfF6zmvC5kQ8rpS
- S/JT4kzD82bGDL6JQouSYR3yR7i8U/r/tnriiwKlYMk6bGba2ty/albnSECnLUdyO7+J
- uAklUwuaSF91tQHPeyFaiflWfUSfctSzA1s1sEY0aEhj11zPnFMsYYBVEVyGDY0+qqV0
- /LdA==
-X-Gm-Message-State: APjAAAWP+AKpfNBN/EWPc5PfVCVdurYO8OJ9HdkYA6CWFJmbNalhTJB7
- O/pkp3B6pWBFrNEQepTvntGPY/+w0zr0U/2jBnFujw==
-X-Google-Smtp-Source: APXvYqz2JxEzOBd+vw1OJ3giuwVm60hrAraIlgzY5u47Ed998qmxOepnJyM8CKa9kSSBW3KVdli3yBSvsMnMQSevhA8=
-X-Received: by 2002:aca:d507:: with SMTP id m7mr481566oig.48.1578417078734;
- Tue, 07 Jan 2020 09:11:18 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sg8Z1sDkzDqJ2;
+ Wed,  8 Jan 2020 04:58:04 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2020 09:58:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,406,1571727600"; d="scan'208";a="395465240"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.147])
+ ([10.7.153.147])
+ by orsmga005.jf.intel.com with ESMTP; 07 Jan 2020 09:58:02 -0800
+Subject: Re: [PATCH 3/3] media: aspeed: add AST2600 support
+To: Joel Stanley <joel@jms.id.au>
+References: <20200107011503.17435-1-jae.hyun.yoo@linux.intel.com>
+ <20200107011503.17435-4-jae.hyun.yoo@linux.intel.com>
+ <CACPK8XejA6emrboLzfwEpmn=dn1JcyHKJVud_cBXVNRiZixgTA@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <86f3dc92-07b0-c993-6c3e-39db6c58214e@linux.intel.com>
+Date: Tue, 7 Jan 2020 09:58:02 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <CAA_a9xLm_3CthjLS0rKQCcqYfciFWEXh-9BV4W=AebumP8Rf4A@mail.gmail.com>
- <e5878df7-b127-0f86-3366-722e94f86103@linux.intel.com>
- <CAA_a9x+wpvhD7pEe+TEqkjSb6ZoiiYz4ZZBQz0v_7V-cGywHXg@mail.gmail.com>
- <e585c0d1-81a8-fd09-cb43-84ac878568ad@linux.intel.com>
- <CAARXrt=C4nLhFc0kmgDY7rhjR5FfzFppJwGN7JxoHnKoNsvXag@mail.gmail.com>
-In-Reply-To: <CAARXrt=C4nLhFc0kmgDY7rhjR5FfzFppJwGN7JxoHnKoNsvXag@mail.gmail.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Tue, 7 Jan 2020 09:11:07 -0800
-Message-ID: <CAA_a9xJYCUm79tJAukK2HJFp1t1MtOTOKwYGuArw_W5cLSFZcw@mail.gmail.com>
-Subject: Re: Configuring shunt_resistor in hwmon
-To: Lei YU <mine260309@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000495cae059b8fdd33"
+In-Reply-To: <CACPK8XejA6emrboLzfwEpmn=dn1JcyHKJVud_cBXVNRiZixgTA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,106 +55,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- Kais Belgaied <belgaied@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Josh Lehan <krellan@google.com>,
- James Feist <james.feist@linux.intel.com>,
- Devjit Gopalpur <devjitg@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>, Rob Herring <robh+dt@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000495cae059b8fdd33
-Content-Type: text/plain; charset="UTF-8"
-
-Hi Lei,
-
-I'm not sure if we're using phosphor-hwmon, but I'll take a look. Thank you!
-
-- Alex Qiu
 
 
-On Mon, Jan 6, 2020 at 7:20 PM Lei YU <mine260309@gmail.com> wrote:
+On 1/6/2020 7:15 PM, Joel Stanley wrote:
+> On Tue, 7 Jan 2020 at 01:14, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>>
+>> Video engine in AST2600 has the exactly same register set with
+>> AST2500 except VR084 register which provides more precise JPEG
+>> size read back. This commit adds support for the difference and
+>> adds 'aspeed,ast2600-video-engine' compatible OF string.
+>>
+>> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+>> ---
+>>   drivers/media/platform/aspeed-video.c | 15 +++++++++++----
+>>   1 file changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+>> index d8593cb2ae84..0dbe72672338 100644
+>> --- a/drivers/media/platform/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed-video.c
+>> @@ -72,10 +72,10 @@
+>>   #define  VE_SEQ_CTRL_CAP_BUSY          BIT(16)
+>>   #define  VE_SEQ_CTRL_COMP_BUSY         BIT(18)
+>>
+>> -#ifdef CONFIG_MACH_ASPEED_G5
+>> -#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500 */
+>> -#else
+>> +#ifdef CONFIG_MACH_ASPEED_G4
+>>   #define  VE_SEQ_CTRL_JPEG_MODE         BIT(8)  /* AST2400 */
+>> +#else
+>> +#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500/2600 */
+>>   #endif /* CONFIG_MACH_ASPEED_G5 */
+> 
+> Yeah, nah. This should have never been done this way. I will send some
+> patches to fix it up, and you can add ast2600 support on top of them,
+> if that works for you.
 
-> On Tue, Jan 7, 2020 at 5:38 AM James Feist <james.feist@linux.intel.com>
-> wrote:
-> >
-> > On 1/6/20 1:29 PM, Alex Qiu wrote:
-> > > Hi James,
-> > >
-> > > Thanks for your quick reply and reviewing my code in the morning!
-> > >
-> > > That looks interesting, so this ScaleFactor will be used to multiply
-> the
-> > > voltage value from hwmon without setting the shunt_resistor explicitly?
-> > > I do have a little concern on the resolution, because it's only
-> > > reporting 0.165V with default shunt_resistor setting, but we'll try and
-> > > see if this will work for our case. In the meantime, do you know any
-> > > other method that will work?
-> >
-> > That's all I'm aware of in dbus-sensors. We have a voltage divider
-> > in-front of our ADC channels, so we use this scale factor to calculate
-> > the actual voltage. Anything else I think you'd need to add as a new
-> > change if you're using dbus-sensors. I'm not sure if phosphor-hwmon
-> > offers anything you could use or not.
->
-> With phosphor-hwmon, you could define GAIN, OFFSET in the config file
-> to adjust the reading.
-> See details in
->
-> https://github.com/openbmc/docs/blob/master/architecture/sensor-architecture.md#my-sensors-are-not-defined-in-an-mrw
->
+Yeah, the runtime configuration in your patch set is right way for it.
+I'll rebase this patch set on top of your patch.
 
---000000000000495cae059b8fdd33
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks,
 
-<div dir=3D"ltr">Hi Lei,<div><br></div><div>I&#39;m not sure if we&#39;re u=
-sing phosphor-hwmon, but I&#39;ll take a=C2=A0look. Thank you!</div><div><b=
-r clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartm=
-ail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu</div></div></div><br></=
-div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Mon, Jan 6, 2020 at 7:20 PM Lei YU &lt;<a href=3D"mailto:mine260309@=
-gmail.com">mine260309@gmail.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">On Tue, Jan 7, 2020 at 5:38 AM James Feist=
- &lt;<a href=3D"mailto:james.feist@linux.intel.com" target=3D"_blank">james=
-.feist@linux.intel.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; On 1/6/20 1:29 PM, Alex Qiu wrote:<br>
-&gt; &gt; Hi James,<br>
-&gt; &gt;<br>
-&gt; &gt; Thanks for your quick reply and reviewing my code in the morning!=
-<br>
-&gt; &gt;<br>
-&gt; &gt; That looks interesting, so this ScaleFactor will be used to multi=
-ply the<br>
-&gt; &gt; voltage value from hwmon without setting the shunt_resistor expli=
-citly?<br>
-&gt; &gt; I do have a little concern on the resolution, because it&#39;s on=
-ly<br>
-&gt; &gt; reporting 0.165V with default shunt_resistor setting, but we&#39;=
-ll try and<br>
-&gt; &gt; see if this will work for our case. In the meantime, do you know =
-any<br>
-&gt; &gt; other method that will work?<br>
-&gt;<br>
-&gt; That&#39;s all I&#39;m aware of in dbus-sensors. We have a voltage div=
-ider<br>
-&gt; in-front of our ADC channels, so we use this scale factor to calculate=
-<br>
-&gt; the actual voltage. Anything else I think you&#39;d need to add as a n=
-ew<br>
-&gt; change if you&#39;re using dbus-sensors. I&#39;m not sure if phosphor-=
-hwmon<br>
-&gt; offers anything you could use or not.<br>
-<br>
-With phosphor-hwmon, you could define GAIN, OFFSET in the config file<br>
-to adjust the reading.<br>
-See details in<br>
-<a href=3D"https://github.com/openbmc/docs/blob/master/architecture/sensor-=
-architecture.md#my-sensors-are-not-defined-in-an-mrw" rel=3D"noreferrer" ta=
-rget=3D"_blank">https://github.com/openbmc/docs/blob/master/architecture/se=
-nsor-architecture.md#my-sensors-are-not-defined-in-an-mrw</a><br>
-</blockquote></div>
+Jae
 
---000000000000495cae059b8fdd33--
+> Cheers,
+> 
+> Joel
+> 
+>>
+>>   #define VE_CTRL                                0x008
+>> @@ -135,6 +135,12 @@
+>>
+>>   #define VE_OFFSET_COMP_STREAM          0x078
+>>
+>> +#ifdef CONFIG_MACH_ASPEED_G6
+>> +#define VE_JPEG_COMP_SIZE_READ_BACK    0x084   /* AST2600 */
+>> +#else
+>> +#define VE_JPEG_COMP_SIZE_READ_BACK    VE_OFFSET_COMP_STREAM
+>> +#endif
+>> +
+>>   #define VE_SRC_LR_EDGE_DET             0x090
+>>   #define  VE_SRC_LR_EDGE_DET_LEFT       GENMASK(11, 0)
+>>   #define  VE_SRC_LR_EDGE_DET_NO_V       BIT(12)
+>> @@ -572,7 +578,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>          if (sts & VE_INTERRUPT_COMP_COMPLETE) {
+>>                  struct aspeed_video_buffer *buf;
+>>                  u32 frame_size = aspeed_video_read(video,
+>> -                                                  VE_OFFSET_COMP_STREAM);
+>> +                                                  VE_JPEG_COMP_SIZE_READ_BACK);
+>>
+>>                  spin_lock(&video->lock);
+>>                  clear_bit(VIDEO_FRAME_INPRG, &video->flags);
+>> @@ -1719,6 +1725,7 @@ static int aspeed_video_remove(struct platform_device *pdev)
+>>   static const struct of_device_id aspeed_video_of_match[] = {
+>>          { .compatible = "aspeed,ast2400-video-engine" },
+>>          { .compatible = "aspeed,ast2500-video-engine" },
+>> +       { .compatible = "aspeed,ast2600-video-engine" },
+>>          {}
+>>   };
+>>   MODULE_DEVICE_TABLE(of, aspeed_video_of_match);
+>> --
+>> 2.17.1
+>>
