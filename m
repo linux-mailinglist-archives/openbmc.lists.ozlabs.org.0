@@ -2,68 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42231131DD5
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 04:07:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C7759131DE3
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 04:16:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47sHNV5DBPzDqHV
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 14:07:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47sHbG0m6hzDqLV
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jan 2020 14:16:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235;
- helo=mail-lj1-x235.google.com; envelope-from=mine260309@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::741;
+ helo=mail-qk1-x741.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="LqDoRsOZ"; 
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.b="EaEf9e/u"; 
  dkim-atps=neutral
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
- [IPv6:2a00:1450:4864:20::235])
+Received: from mail-qk1-x741.google.com (mail-qk1-x741.google.com
+ [IPv6:2607:f8b0:4864:20::741])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47sHMk01g6zDqHP
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jan 2020 14:06:23 +1100 (AEDT)
-Received: by mail-lj1-x235.google.com with SMTP id y6so45087538lji.0
- for <openbmc@lists.ozlabs.org>; Mon, 06 Jan 2020 19:06:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47sHZP3wR2zDqHS;
+ Tue,  7 Jan 2020 14:15:41 +1100 (AEDT)
+Received: by mail-qk1-x741.google.com with SMTP id z76so41828933qka.2;
+ Mon, 06 Jan 2020 19:15:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=Fb8D33Yhe/oEYihydW6deuwso6dRDuK+ukLAAvg9Sjk=;
- b=LqDoRsOZRobgnWYDEU0WoVYmScrCaJbOZMvvvueDXuel8z4AoxxQHKBbiF3o4isS5U
- EhYsdpL3eQuD6kQsJy9VB6UboD8MonuohROqJh0XDAUGWGJcsSTsgDpNS6a6D2n8+C/y
- VylUwktqqWBsZnbjOx2g6tSeJKQnzwY2MHm4V9v+AWm0jJ7paCJBSF3wmuXwQg1oMCt0
- MtsjMXFKIwavvGc2LjO3bElpQjUf0SDAQd3potMMYUQBqTCR16DLNkpEaNCQoQdOYiYp
- MU/9to15h2tmTKVSmrAKBvOmyLV7v5kTVZ0cJybm/5nDI6ui9/O5KBF9/nsUq7qRvDy0
- ethQ==
+ :cc; bh=AtlpYaLLMTE+8NWj8eY7Oj/Fx28nhIerkc8u9tEkgfs=;
+ b=EaEf9e/uQygjuM+AEzZUvq8zZj4XTSn8eBSZxJ2kdECMeMr2xsLtNwLrM8H1zWadMR
+ vhcxHHa1FQugOhTE6EOcR3Cagp5qN1zXyVY6TQM1TMoE0yAIds5qKhHWXdZQjwxNYwAa
+ 8LNL3Mgs3mEIDhXSZcI/JY3GiTiP1rFayNVIc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=Fb8D33Yhe/oEYihydW6deuwso6dRDuK+ukLAAvg9Sjk=;
- b=PkbefzoczvdN4MkgpssGjaP0tZErlUyfmfrqO5QayaSfrUsiKr0bh0ioH6NmbX8lg/
- CzjDbVvodQMVfvtTgFDFDtIXMHtPj0GDxvx6Yrb0QVo+axf/7O2Na8D5LgiXcJavTumx
- eKeycmebAu2vlhmVUTDO0X3STQdjMN9t2GFGcolulzyd7scij5XHzwLOnm9X4BwrhdbZ
- 3swzKAjUs+a7MwLMfNaewLLTKiimz5Jqg+vCDmKkHAfXAkMCbwafIOqWy7S479C2fBi+
- vqTHdckW2fsWu51XQC0biR5VvE+X2HI9vyTiaBROzUe5N5f5NBH7kiEUXyVZNXEO0aHm
- gV/A==
-X-Gm-Message-State: APjAAAXh1vrh3B5EG9w9qZhMXqeSuHJqwU+jvOa4t2yEazoQ5BK4i6gz
- cTY3dwigUtuzf8D3ntPsmwugqEI2H3qICJ7VACM=
-X-Google-Smtp-Source: APXvYqwPkznDZja/VXnnAEGryjgZK3jx+3jb+T5vqotx9/CN+UOEYjLOP9WMqZS8/OqXRSg6PwjyVv07V2k1ZH6MRuI=
-X-Received: by 2002:a2e:a486:: with SMTP id h6mr49740735lji.235.1578366377717; 
- Mon, 06 Jan 2020 19:06:17 -0800 (PST)
+ :message-id:subject:to:cc;
+ bh=AtlpYaLLMTE+8NWj8eY7Oj/Fx28nhIerkc8u9tEkgfs=;
+ b=IZydxgN+mXDsKzfXfBmbYMoXgAe8FiJFcRR56gnnamg7yW5SFFpFiNapgWhmJQ/fGu
+ AJSOEWwlUODlUxM3AY/mh7IZoLf5Q94vSkwCKIGlj5+Q8xmOac178sDCoiqyIitcpkLZ
+ 2QhzuhQEksOkRDgLK66h6GINN4RIHihLgwpOWtI5Nlo0amcNM362qz340/XxGr5O4UGQ
+ rNnec7PFFacigzCk5ZBEEBJ1x8BFW3WpWyerv4SvtnzoJJazFiUUpLOQg3aZ+sCoICIj
+ rb0K2Q3JXeckO7OOBOv7M49+beUvIkrIpvcGA51aKl5HOqhP/JlmsuQ7m1c2Q4OgQFzn
+ s9VQ==
+X-Gm-Message-State: APjAAAWq98D+coxBEewlGjTSDCYr9/T+8F3z0aiPrtY0I9sb+ud4fnlZ
+ MgI6zK0Bx65CzwcKinGLU42lt8Eog85+aPGMOxXdhd9i
+X-Google-Smtp-Source: APXvYqzHsbqA4VEOnhaS6z/+XeB6SwzNXtgr4zi0SMOslB8kLr9/KAIzZeRbEKo3csmaVlW7PqquRa2yw1FsJCWhzuU=
+X-Received: by 2002:ae9:e702:: with SMTP id m2mr85124606qka.208.1578366938200; 
+ Mon, 06 Jan 2020 19:15:38 -0800 (PST)
 MIME-Version: 1.0
-References: <CANFuQ7A8xB_xaqMB0fj394Ov9E3RvhOvj7OVVXgqDfA51YDsSg@mail.gmail.com>
- <1B3B2725-9C0F-4829-82BE-7FB35C558AB5@fuzziesquirrel.com>
-In-Reply-To: <1B3B2725-9C0F-4829-82BE-7FB35C558AB5@fuzziesquirrel.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Tue, 7 Jan 2020 11:06:07 +0800
-Message-ID: <CAARXrtntZVsNNBNMO_y_ZVzP13qF-yuCytT8uty5GuVSmwQ6qw@mail.gmail.com>
-Subject: Re: HTTP redirect to HTTPS for web UI
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <20200107011503.17435-1-jae.hyun.yoo@linux.intel.com>
+ <20200107011503.17435-4-jae.hyun.yoo@linux.intel.com>
+In-Reply-To: <20200107011503.17435-4-jae.hyun.yoo@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 7 Jan 2020 03:15:26 +0000
+Message-ID: <CACPK8XejA6emrboLzfwEpmn=dn1JcyHKJVud_cBXVNRiZixgTA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] media: aspeed: add AST2600 support
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,47 +70,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- George Liu <liuxiwei1013@gmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>, Rob Herring <robh+dt@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jan 6, 2020 at 11:20 PM Brad Bishop <bradleyb@fuzziesquirrel.com> w=
-rote:
+On Tue, 7 Jan 2020 at 01:14, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
 >
+> Video engine in AST2600 has the exactly same register set with
+> AST2500 except VR084 register which provides more precise JPEG
+> size read back. This commit adds support for the difference and
+> adds 'aspeed,ast2600-video-engine' compatible OF string.
 >
+> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> ---
+>  drivers/media/platform/aspeed-video.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
 >
-> > On Oct 31, 2019, at 9:45 AM, George Liu <liuxiwei1013@gmail.com> wrote:
-> >
-> > Hi All:
-> > I'm working on http redirect to https task(https://github.com/ibm-openb=
-mc/dev/issues/895).
-> > I took a cursory look at the design(https://gerrit.openbmc-project.xyz/=
-c/openbmc/docs/+/24173) and did some testing.
-> >
-> > In bmcweb, I find it the current communication logic can only listen to=
- one communication protocol (http or https). If you listen to both protocol=
-s at the same time, you need to change a lot of code and communication logi=
-c.
-> > If we are going to implement this feature in bmcweb, it costs extra eff=
-ort and it's likely the implementation is no better than Nginx. so I prefer=
- to use Nginx.
-> >
-> > Please everyone stay here to discuss and leave your comments.
-> >
-> > Thanks!
+> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+> index d8593cb2ae84..0dbe72672338 100644
+> --- a/drivers/media/platform/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed-video.c
+> @@ -72,10 +72,10 @@
+>  #define  VE_SEQ_CTRL_CAP_BUSY          BIT(16)
+>  #define  VE_SEQ_CTRL_COMP_BUSY         BIT(18)
 >
-> Hi George
->
-> I see you implemented this here:
->
-> https://gerrit.openbmc-project.xyz/c/openbmc/meta-openpower/+/28099
->
-> I=E2=80=99d like to propose this go in meta-phosphor and not meta-openpow=
-er.  Does anyone have thoughts on whether or not this should be enabled or =
-disabled by default?
+> -#ifdef CONFIG_MACH_ASPEED_G5
+> -#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500 */
+> -#else
+> +#ifdef CONFIG_MACH_ASPEED_G4
+>  #define  VE_SEQ_CTRL_JPEG_MODE         BIT(8)  /* AST2400 */
+> +#else
+> +#define  VE_SEQ_CTRL_JPEG_MODE         BIT(13) /* AST2500/2600 */
+>  #endif /* CONFIG_MACH_ASPEED_G5 */
 
-As I remember we had some discussion in the mailing list, and Intel
-indicated that it's not a wanted feature.
-But it does make sense to put the recipe into meta-phosphor, and one
-could enable it in some company or machine layer.
+Yeah, nah. This should have never been done this way. I will send some
+patches to fix it up, and you can add ast2600 support on top of them,
+if that works for you.
+
+Cheers,
+
+Joel
+
+>
+>  #define VE_CTRL                                0x008
+> @@ -135,6 +135,12 @@
+>
+>  #define VE_OFFSET_COMP_STREAM          0x078
+>
+> +#ifdef CONFIG_MACH_ASPEED_G6
+> +#define VE_JPEG_COMP_SIZE_READ_BACK    0x084   /* AST2600 */
+> +#else
+> +#define VE_JPEG_COMP_SIZE_READ_BACK    VE_OFFSET_COMP_STREAM
+> +#endif
+> +
+>  #define VE_SRC_LR_EDGE_DET             0x090
+>  #define  VE_SRC_LR_EDGE_DET_LEFT       GENMASK(11, 0)
+>  #define  VE_SRC_LR_EDGE_DET_NO_V       BIT(12)
+> @@ -572,7 +578,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>         if (sts & VE_INTERRUPT_COMP_COMPLETE) {
+>                 struct aspeed_video_buffer *buf;
+>                 u32 frame_size = aspeed_video_read(video,
+> -                                                  VE_OFFSET_COMP_STREAM);
+> +                                                  VE_JPEG_COMP_SIZE_READ_BACK);
+>
+>                 spin_lock(&video->lock);
+>                 clear_bit(VIDEO_FRAME_INPRG, &video->flags);
+> @@ -1719,6 +1725,7 @@ static int aspeed_video_remove(struct platform_device *pdev)
+>  static const struct of_device_id aspeed_video_of_match[] = {
+>         { .compatible = "aspeed,ast2400-video-engine" },
+>         { .compatible = "aspeed,ast2500-video-engine" },
+> +       { .compatible = "aspeed,ast2600-video-engine" },
+>         {}
+>  };
+>  MODULE_DEVICE_TABLE(of, aspeed_video_of_match);
+> --
+> 2.17.1
+>
