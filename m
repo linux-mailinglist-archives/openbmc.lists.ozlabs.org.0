@@ -1,85 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6B0F134540
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 15:44:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE4BF134080
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 12:30:43 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47t6W42qvJzDqSt
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 22:30:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47tBpX2cP6zDqTD
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 01:44:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=us.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47t6Tz5b9WzDqSH
- for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 22:29:42 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 008BS8Kv127035
- for <openbmc@lists.ozlabs.org>; Wed, 8 Jan 2020 06:29:39 -0500
-Received: from e06smtp03.uk.ibm.com (e06smtp03.uk.ibm.com [195.75.94.99])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2xb8saw7rf-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 08 Jan 2020 06:29:38 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47tBnZ5GzVzDqTC
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jan 2020 01:43:29 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 008EgibN077318
+ for <openbmc@lists.ozlabs.org>; Wed, 8 Jan 2020 09:43:26 -0500
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.103])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2xde0nq09c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 08 Jan 2020 09:43:26 -0500
 Received: from localhost
- by e06smtp03.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Wed, 8 Jan 2020 11:29:37 -0000
-Received: from b06avi18878370.portsmouth.uk.ibm.com (9.149.26.194)
- by e06smtp03.uk.ibm.com (192.168.101.133) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Wed, 8 Jan 2020 11:29:35 -0000
-Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
- [9.149.105.62])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 008BTYDw45154786
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 8 Jan 2020 11:29:34 GMT
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25FF9AE053
- for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 11:29:34 +0000 (GMT)
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8BCC2AE058
- for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 11:29:33 +0000 (GMT)
-Received: from [9.202.12.60] (unknown [9.202.12.60])
- by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 11:29:33 +0000 (GMT)
-Subject: Re: Creating VLAN always fails and the phosphor network service aborts
-To: openbmc@lists.ozlabs.org
-References: <MWHPR13MB13602B21B761EAA71B9A4E9EED3E0@MWHPR13MB1360.namprd13.prod.outlook.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Date: Wed, 8 Jan 2020 16:59:31 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Wed, 8 Jan 2020 14:43:26 -0000
+Received: from us1b3-smtp01.a3dr.sjc01.isc4sb.com (10.122.7.174)
+ by smtp.notes.na.collabserv.com (10.122.47.39) with
+ smtp.notes.na.collabserv.com ESMTP; Wed, 8 Jan 2020 14:43:20 -0000
+Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
+ by us1b3-smtp01.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2020010814432003-505243 ;
+ Wed, 8 Jan 2020 14:43:20 +0000 
+In-Reply-To: <CAA_a9xKmRHHx=vXvwTaO+0PRtFjLWQUAL1WnJH8XGBBzvExt2A@mail.gmail.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: Alex Qiu <xqiu@google.com>
+Date: Wed, 8 Jan 2020 14:43:20 +0000
 MIME-Version: 1.0
-In-Reply-To: <MWHPR13MB13602B21B761EAA71B9A4E9EED3E0@MWHPR13MB1360.namprd13.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="------------AB306C900946677E08103A53"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 20010811-0012-0000-0000-0000037B8D00
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 20010811-0013-0000-0000-000021B7AB56
-Message-Id: <9a48bc74-e5f3-1a47-4ddd-9cb8122a5dbe@linux.vnet.ibm.com>
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <CAA_a9xKmRHHx=vXvwTaO+0PRtFjLWQUAL1WnJH8XGBBzvExt2A@mail.gmail.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
+X-LLNOutbound: False
+X-Disclaimed: 29455
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20010814-6283-0000-0000-000000AF5BAF
+X-IBM-SpamModules-Scores: BY=0.035879; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.002740
+X-IBM-SpamModules-Versions: BY=3.00012351; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000292; SDB=6.01316172; UDB=6.00699893; IPR=6.01098500; 
+ MB=3.00030229; MTD=3.00000008; XFM=3.00000015; UTC=2020-01-08 14:43:24
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-01-08 12:43:46 - 6.00010860
+x-cbparentid: 20010814-6284-0000-0000-0000004B64CA
+Message-Id: <OF100509F8.6ECF782D-ON002584E9.004AC321-002584E9.0050DF26@notes.na.collabserv.com>
+Subject: Re:  Configuring device with I2C mux
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
  definitions=2020-01-08_03:2020-01-08,
  2020-01-08 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0
- spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 mlxlogscore=999 adultscore=0 mlxscore=0 phishscore=0
- suspectscore=1 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-1910280000 definitions=main-2001080098
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,320 +83,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Kais Belgaied <belgaied@google.com>, Devjit Gopalpur <devjitg@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------AB306C900946677E08103A53
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+About 01/07/2020 07:14PM in some timezone, Alex Qiu wrote:
+>Hi folks,
+>
+>We have a JSON file configuring I2C devices of a PCIe card which has
+>an 8-channel I2C mux for entity-manager. After we properly configure
+>the mux of the card, we get 8 new I2C buses in sysfs; however, we
+>don't find an arithmetic way to describe the relationship between the
+>new buses and their parent buses.
+>
+>For example, we have a mux on physical BMC I2C bus i2c-8 spawning a
+>couple of child buses including i2c-24 and i2c-26, which are the
+>buses for each PCIe card. The mux on i2c-24 PCIe card spawned 8 buses
+>from i2c-70 to i2c-77, and the mux on i2c-26 PCIe card spawned ones
+>from i2c-62 to i2c-69. We have I2C devices on i2c-76 and i2c-68 needs
+>to be configured together with the PCIe card on i2c-24 and i2c-26
+>separately.
+>
+>How do we implement this in the JSON file? If that's not possible to
+>do it in JSON merely, what's the suggested approach to implement this
+>feature? Device tree? Implement code in entity-manager to walk
+>through the I2C sysfs?
 
-Hi Troy,
 
-Let me see this, it was working before.I will push a fix for the same.
+I would expect the i2c buses provied by the mux to appear in sysfs
+under the hierarchy of the parent bus.  Explore the sysfs directory
+structure, I'm making this up, but I've now peeked at i2c-mux.c and
+have a better chance getting reality.
 
-Regards
-Ratan
 
+/sys/bus/i2c/devices/i2c-8 -> /sys/devices/platform/ahb-432000/i2c-8
 
-On 08/01/20 3:43 PM, Troy.Lee@vertiv.com wrote:
->
-> Hi Team,
->
-> We met an issue that creating a VLAN is always fail, and the 
-> phosphor-network-manager/systemd-networkd are caught abort signal.
->
-> Does anyone have any thought about this?
->
-> root@ ast2500evb:~# ps | grep network
->
-> 4432 root      8804 S    phosphor-network-manager
->
-> 4444 systemd- 16828 S    /lib/systemd/systemd-networkd
->
-> root@ ast2500evb:~# busctl --no-pager call xyz.openbmc_project.Network \
->
-> /xyz/openbmc_project/network \
->
-> xyz.openbmc_project.Network.VLAN.Create \
->
->                                    VLAN su "eth0" 123
->
-> Call failed: Remote peer disconnected
->
-> root@ ast2500evb:~# ps | grep network
->
-> 4489 root      8804 S    phosphor-network-manager
->
-> 4500 systemd-  1448 R    /lib/systemd/systemd-networkd
->
-> Journal log has the following error:
->
-> Jan 01 00:21:10 ast2500evb phosphor-network-manager[4432]: Refreshing 
-> the objects.
->
-> Jan 01 00:21:11 ast2500evb phosphor-network-manager[4432]:ioctl failed 
-> for SIOCETHTOOL:
->
-> Jan 01 00:21:11 ast2500evb phosphor-network-manager[4432]: ioctl 
-> failed for SIOCETHTOOL:
->
-> Jan 01 00:21:11 ast2500evb phosphor-network-manager[4432]: Refreshing 
-> complete.
->
-> Jan 01 00:21:13 ast2500evb phosphor-network-manager[4432]: ioctl 
-> failed for SIOCGIFHWADDR:
->
-> Jan 01 00:21:13 ast2500evb phosphor-network-manager[4432]: terminate 
-> called after throwing an instance of 
-> 'sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure'
->
-> Jan 01 00:21:13 ast2500evb phosphor-network-manager[4432]: what():  
-> xyz.openbmc_project.Common.Error.InternalFailure: The operation failed 
-> internally.
->
-> Jan 01 00:21:13 ast2500evb phosphor-network-manager[4432]: The 
-> operation failed internally.
->
-> Jan 01 00:21:13 ast2500evb systemd[1]: 
-> xyz.openbmc_project.Network.service: Main process exited, code=killed, 
-> status=6/ABRT
->
-> Jan 01 00:21:13 ast2500evb systemd[1]: 
-> xyz.openbmc_project.Network.service: Failed with result 'signal'.
->
-> Jan 01 00:21:14 ast2500evb systemd[1]: 
-> xyz.openbmc_project.Network.service: Service RestartSec=1s expired, 
-> scheduling restart.
->
-> Jan 01 00:21:14 ast2500evb systemd[1]: 
-> xyz.openbmc_project.Network.service: Scheduled restart job, restart 
-> counter is at 3.
->
-> Jan 01 00:21:14 ast2500evb systemd[1]: Stopped Phosphor Network Manager.
->
-> Jan 01 00:21:14 ast2500evb systemd[1]: Starting Phosphor Network 
-> Manager...
->
-> Jan 01 00:21:14 ast2500evb systemd[1]: Started Phosphor Network Manager.
->
-> Jan 01 00:21:17 ast2500evb systemd[1]: Stopping Network Service...
->
-> Jan 01 00:21:18 ast2500evb systemd[1]: systemd-networkd.service: 
-> Succeeded.
->
-> Jan 01 00:21:18 ast2500evb systemd[1]: Stopped Network Service.
->
-> Jan 01 00:21:18 ast2500evb systemd[1]: Starting Network Service...
->
-> Thanks,
->
-> Troy Lee
->
-> CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it 
-> are intended solely for the use of the individual or entity to whom 
-> they are addressed and may contain confidential and privileged 
-> information protected by law. If you received this e-mail in error, 
-> any review, use, dissemination, distribution, or copying of the e-mail 
-> is strictly prohibited. Please notify the sender immediately by return 
-> e-mail and delete all copies from your system. 
+/sys/bus/i2c/devices/i2c-24 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-24
+/sys/bus/i2c/devices/i2c-24 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-25
+/sys/bus/i2c/devices/i2c-24 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-26
 
---------------AB306C900946677E08103A53
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 8bit
+/sys/bus/i2c/devices/i2c-62 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-62
+/sys/bus/i2c/devices/i2c-63 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-63
+/sys/bus/i2c/devices/i2c-64 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-64
+/sys/bus/i2c/devices/i2c-65 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-65
+/sys/bus/i2c/devices/i2c-66 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-66
+/sys/bus/i2c/devices/i2c-67 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-67
+/sys/bus/i2c/devices/i2c-68 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-68
+/sys/bus/i2c/devices/i2c-69 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+6/i2c-69
+/sys/bus/i2c/devices/i2c-70 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-70
+/sys/bus/i2c/devices/i2c-71 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-71
+/sys/bus/i2c/devices/i2c-72 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-72
+/sys/bus/i2c/devices/i2c-73 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-73
+/sys/bus/i2c/devices/i2c-74 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-74
+/sys/bus/i2c/devices/i2c-75 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-75
+/sys/bus/i2c/devices/i2c-76 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-76
+/sys/bus/i2c/devices/i2c-77 -> /sys/devices/platform/ahb-432000/i2c-8/i2c-2=
+4/i2c-77
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;
-      charset=windows-1252">
-  </head>
-  <body text="#000000" bgcolor="#FFFFFF">
-    <p>Hi Troy,</p>
-    <p>Let me see this, it was working before.I will push a fix for the
-      same.<br>
-    </p>
-    Regards<br>
-    Ratan
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 08/01/20 3:43 PM,
-      <a class="moz-txt-link-abbreviated" href="mailto:Troy.Lee@vertiv.com">Troy.Lee@vertiv.com</a> wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:MWHPR13MB13602B21B761EAA71B9A4E9EED3E0@MWHPR13MB1360.namprd13.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html;
-        charset=windows-1252">
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Hi
-            Team,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">We
-            met an issue that creating a VLAN is always fail, and the
-            phosphor-network-manager/systemd-networkd are caught abort
-            signal.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Does
-            anyone have any thought about this?<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">root@
-            ast2500evb:~# ps | grep network<o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:6.0pt"><span
-            style="font-size:12.0pt" lang="EN-US">4432 root      8804
-            S    phosphor-network-manager<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">4444
-            systemd- 16828 S    /lib/systemd/systemd-networkd<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">root@
-            ast2500evb:~# busctl --no-pager call
-            xyz.openbmc_project.Network \<o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:216.0pt"><span
-            style="font-size:12.0pt" lang="EN-US">/xyz/openbmc_project/network
-            \<o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:216.0pt"><span
-            style="font-size:12.0pt" lang="EN-US">xyz.openbmc_project.Network.VLAN.Create
-            \<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">                                   VLAN
-            su "eth0" 123<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt;color:red"
-            lang="EN-US">Call failed: Remote peer disconnected</span><span
-            style="font-size:12.0pt" lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">root@
-            ast2500evb:~# ps | grep network<o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:6.0pt"><span
-            style="font-size:12.0pt" lang="EN-US">4489 root      8804
-            S    phosphor-network-manager<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">4500
-            systemd-  1448 R    /lib/systemd/systemd-networkd<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Journal
-            log has the following error:<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:10 ast2500evb phosphor-network-manager[4432]:
-            Refreshing the objects.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:11 ast2500evb phosphor-network-manager[4432]:<span
-              style="color:red"> ioctl failed for SIOCETHTOOL:</span><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:11 ast2500evb phosphor-network-manager[4432]:
-            <span style="color:red">ioctl failed for SIOCETHTOOL:</span><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:11 ast2500evb phosphor-network-manager[4432]:
-            Refreshing complete.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb phosphor-network-manager[4432]:
-            <span style="color:red">ioctl failed for SIOCGIFHWADDR:</span><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb phosphor-network-manager[4432]:
-            terminate called after throwing an instance of
-            'sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure'<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb phosphor-network-manager[4432]:  
-            what():  xyz.openbmc_project.Common.Error.InternalFailure:
-            The operation failed internally.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb phosphor-network-manager[4432]: The
-            operation failed internally.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb systemd[1]:
-            <span style="color:red">xyz.openbmc_project.Network.service:
-              Main process exited, code=killed, status=6/ABRT</span><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:13 ast2500evb systemd[1]:
-            <span style="color:red">xyz.openbmc_project.Network.service:
-              Failed with result 'signal'.</span><o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:14 ast2500evb systemd[1]:
-            xyz.openbmc_project.Network.service: Service RestartSec=1s
-            expired, scheduling restart.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:14 ast2500evb systemd[1]:
-            xyz.openbmc_project.Network.service: Scheduled restart job,
-            restart counter is at 3.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:14 ast2500evb systemd[1]: Stopped Phosphor Network
-            Manager.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:14 ast2500evb systemd[1]: Starting Phosphor Network
-            Manager...<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:14 ast2500evb systemd[1]: Started Phosphor Network
-            Manager.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:17 ast2500evb systemd[1]: Stopping Network
-            Service...<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:18 ast2500evb systemd[1]: systemd-networkd.service:
-            Succeeded.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:18 ast2500evb systemd[1]: Stopped Network Service.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Jan
-            01 00:21:18 ast2500evb systemd[1]: Starting Network
-            Service...<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Thanks,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-size:12.0pt" lang="EN-US">Troy
-            Lee<o:p></o:p></span></p>
-      </div>
-      CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with
-      it are intended solely for the use of the individual or entity to
-      whom they are addressed and may contain confidential and
-      privileged information protected by law. If you received this
-      e-mail in error, any review, use, dissemination, distribution, or
-      copying of the e-mail is strictly prohibited. Please notify the
-      sender immediately by return e-mail and delete all copies from
-      your system.
-    </blockquote>
-  </body>
-</html>
+/sys/bus/i2c/devices/i2c-24/mux=5Fdevice -> /sys/devices/platform/ahb-43200=
+0/i2c-8/8-52
+/sys/bus/i2c/devices/i2c-25/mux=5Fdevice -> /sys/devices/platform/ahb-43200=
+0/i2c-8/8-52
+/sys/bus/i2c/devices/i2c-26/mux=5Fdevice -> /sys/devices/platform/ahb-43200=
+0/i2c-8/8-52
 
---------------AB306C900946677E08103A53--
+/sys/bus/i2c/devices/8-52/channel-0 -> /sys/devices/platform/ahb-432000/i2c=
+-8/i2c-24
+/sys/bus/i2c/devices/8-52/channel-1 -> /sys/devices/platform/ahb-432000/i2c=
+-8/i2c-25
+/sys/bus/i2c/devices/8-52/channel-2 -> /sys/devices/platform/ahb-432000/i2c=
+-8/i2c-26
+
+/sys/bus/i2c/devices/24-52/channel-0 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-62
+/sys/bus/i2c/devices/24-52/channel-1 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-63
+/sys/bus/i2c/devices/24-52/channel-2 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-64
+/sys/bus/i2c/devices/24-52/channel-3 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-65
+/sys/bus/i2c/devices/24-52/channel-4 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-66
+/sys/bus/i2c/devices/24-52/channel-5 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-67
+/sys/bus/i2c/devices/24-52/channel-6 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-68
+/sys/bus/i2c/devices/24-52/channel-7 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-24/i2c-69
+/sys/bus/i2c/devices/26-52/channel-0 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-70
+/sys/bus/i2c/devices/26-52/channel-1 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-71
+/sys/bus/i2c/devices/26-52/channel-2 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-72
+/sys/bus/i2c/devices/26-52/channel-3 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-73
+/sys/bus/i2c/devices/26-52/channel-4 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-74
+/sys/bus/i2c/devices/26-52/channel-5 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-75
+/sys/bus/i2c/devices/26-52/channel-6 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-76
+/sys/bus/i2c/devices/26-52/channel-7 -> /sys/devices/platform/ahb-432000/i2=
+c-8/i2c-26/i2c-77
+
+The child bus will have a symlink "mux=5Fdevice" pointing to the mux.
+The mux device node will have n symlinks "channel-1" where 1 is=20
+the channel id.
+
+Hmm, there is no apparent code to put a "mux=5Fchannel" attribute in=20
+the adapter node.  The adapter name attribute does include the channel=20
+id, but its long descriptive text.  Regardless, you should be able to=20
+find the buses from the mux channel-3 symlinks.
+
+Note: I haven't looked at the JSON to see how much it will change once=20
+your find the bus.  I'm guessing you will have to generate it by taking=20
+a template and substituting the bus numbers you find to make the slots
+common, alhtough you could just go from the 8-52/channel-3 symlink to
+the adapter bus (the device name will still have the bus number in it).
+
+I hope this helps you,
+
+milton
 
