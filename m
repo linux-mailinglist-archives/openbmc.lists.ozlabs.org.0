@@ -2,62 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7B5C134DB6
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 21:37:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 24050134DD0
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jan 2020 21:43:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47tLdd02jXzDqQG
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 07:37:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47tLmv24HWzDqX6
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 07:43:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::231;
- helo=mail-lj1-x231.google.com; envelope-from=ryanarnellibm@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.b="Q1+eYCfH"; 
- dkim-atps=neutral
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com
- [IPv6:2a00:1450:4864:20::231])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47tLcx4S7tzDqBr
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jan 2020 07:36:30 +1100 (AEDT)
-Received: by mail-lj1-x231.google.com with SMTP id j1so4758234lja.2
- for <openbmc@lists.ozlabs.org>; Wed, 08 Jan 2020 12:36:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=8R/6NL3VNnJyy42DIWPLhmyWH7okTbLcoFJiPLS4Fsw=;
- b=Q1+eYCfHx8jFl27GUD9XeCQ13OFqKhI+uRK8898XmtajRLdCallQLRX5yqBwjWc0/f
- 4pxgx2geIHLGorjxOQgWzjKcil7EfAAS72SJCqoelaIKWUvFwmcBEmWSaHGSheEooI8l
- jzNyS/HrF/sy3leGW9dNW1DjkQOczg3s70rCaHynl0y7hVnAlU972vGfRIoLg3V0BbRV
- OlBkzSXuVfIxqdEa45rcefdYvm6lB4Nnyh7ZyEH+DdRuOMdsfa6TPamUMjgWCuG4c8Ov
- hEH+Sr8PribtGwpIC5oyPyo3L+wJ0Rivy4rbw3wj00F59O9mrCnX8aMX89PIPn6uCD/I
- hPEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=8R/6NL3VNnJyy42DIWPLhmyWH7okTbLcoFJiPLS4Fsw=;
- b=WboV5A4OTB/ndTmZDv9V3CGtukE6tLU/MBKFS6fLjETQoHcF82uXPd1b4fxDry0wGw
- d7LxqRdS6QeosUEfEAA6dedGon1sZEhYMj2IO/7MErwPLWIG8LQ6KCdwjF8gNiqHjDa7
- OzZZZO+EqRxDNvGpgf4eED+dXciKzx1e0DM1CtTkWGcy2FAlwUbkGaOLH7vI1mCI7K9E
- LCTk7MQIasDXXeEJukBZFVdgwj4NtIkG0hcTd56dt4Nmp/9doLD4WUoAxFP6xhmqvy8r
- kDqDaAXzSQ8soyKMnGHiJglqTYhBfM54MoC+GUe9lWPWyBjacLgdWIbohpthFgQGAzN4
- Dw8A==
-X-Gm-Message-State: APjAAAVky9EhjuNf51eDalzEBlbmq4ta2dxrlb7zcWwEMZN5Uf+OkK38
- MplkfjAxADnTBso9vgKrUgp9RrxDtYeLz3BrTqIqtAKO
-X-Google-Smtp-Source: APXvYqxLZz7wv/IDA+dHiBjtKtOUOiV/v9gUh8XjCno+krNDh6Sd0ikznkUEy80gBxif9WvCQSLiA6MzEV8duL5lGWk=
-X-Received: by 2002:a2e:8145:: with SMTP id t5mr4099785ljg.144.1578515785328; 
- Wed, 08 Jan 2020 12:36:25 -0800 (PST)
-MIME-Version: 1.0
-From: Ryan Arnell <ryanarnellibm@gmail.com>
-Date: Wed, 8 Jan 2020 14:36:14 -0600
-Message-ID: <CAH3qHnZfQA4X-n2_cWX-rTRo+YLYxktfQrCB16zpr=FOV8LoTw@mail.gmail.com>
-Subject: GUI design for profile page
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47tLm63GTrzDqQP
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jan 2020 07:42:44 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 08 Jan 2020 12:42:42 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,411,1571727600"; d="scan'208";a="303662776"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga001.jf.intel.com with ESMTP; 08 Jan 2020 12:42:42 -0800
+Received: from [10.241.245.1] (unknown [10.241.245.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 4BF285803E3
+ for <openbmc@lists.ozlabs.org>; Wed,  8 Jan 2020 12:42:42 -0800 (PST)
+Subject: Re: Redfish Dump Service Proposal
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000a82d5c059ba6d878"
+References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
+ <OF3E82A637.78F050C7-ON002584CE.0025B2F4-002584CE.00271DE9@notes.na.collabserv.com>
+ <CAH1kD+YfetwAmGQfjF4ytCQYhhaEorgdiA5svwjm7X91-yG1Tg@mail.gmail.com>
+ <CACkAXSpCwhUwzh1uZMMkFvtkO7Tdi4xoHaq1KtaAndR8pR2gbA@mail.gmail.com>
+ <ac75a152-9bdf-0029-67e8-60e4e99eb1cc@linux.intel.com>
+ <B3B51CCE-D255-489C-9C4C-57DB2F962B31@fuzziesquirrel.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <8ee2690f-0149-3ac3-118a-5489b48afd79@linux.intel.com>
+Date: Wed, 8 Jan 2020 12:42:42 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <B3B51CCE-D255-489C-9C4C-57DB2F962B31@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,43 +66,55 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a82d5c059ba6d878
-Content-Type: text/plain; charset="UTF-8"
 
-Hello everyone,
-Happy new year! We are thinking about introducing a profile page. The idea
-is here users can perform tasks like updating the password and other user
-related tasks. This page is accessible via a generic user icon from header.
-Right now we only have password reset option. Down the road we plan to have
-a default language selector. The design show both components for now.
 
-The invision prototype link is
-https://ibm.invisionapp.com/share/Q6NZ13M3A5B#/319377577_01-Profile-Settings-02
+On 1/8/2020 12:04 PM, Brad Bishop wrote:
+> 
+> 
+>> On Dec 13, 2019, at 3:01 PM, Bills, Jason M <jason.m.bills@linux.intel.com> wrote:
+>>
+>> I like this as well.  I'm trying to support a CPU crashdump that would fit perfectly with this proposal.
+> 
+> Hi Jason
+> 
+> Could you say a few words about how your crash dump service works?  I’m asking because Dhruv is working on an implementation of this proposal:
 
-Please feel free to leave comments in the prototype. We love your feedback.
+Sure.
 
-Thank you
-Ryan Arnell
-UX Engineer
-IBM, Austin, TX.
+I have a service called host-error-monitor that watches for error 
+signals from the host.  When a CPU fatal error occurs, the 
+host-error-monitor triggers a crashdump from the crashdump service.
 
---000000000000a82d5c059ba6d878
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The crashdump service itself is very minimal today.  It has two trigger 
+methods on DBus.  One is to trigger a log for a real error that may need 
+to be stored on the BMC.  The other is to trigger a manual log that does 
+not need to persist.
 
-<div dir=3D"ltr">Hello everyone,<div>Happy new year! We are thinking about =
-introducing a profile page. The idea is here users can perform tasks like u=
-pdating the password and other user related tasks. This page is accessible =
-via a generic user icon from header. Right now we only have password reset =
-option. Down the road we plan to have a default language selector. The desi=
-gn=C2=A0show both components for now.=C2=A0</div><div><br></div><div> The i=
-nvision prototype=C2=A0link is=C2=A0</div><div><a href=3D"https://ibm.invis=
-ionapp.com/share/Q6NZ13M3A5B#/319377577_01-Profile-Settings-02">https://ibm=
-.invisionapp.com/share/Q6NZ13M3A5B#/319377577_01-Profile-Settings-02</a><br=
-></div><div><br></div><div>Please feel free to leave comments in the protot=
-ype. We love your feedback.=C2=A0</div><div><br></div><div>Thank you</div><=
-div>Ryan Arnell</div><div>UX Engineer</div><div>IBM, Austin, TX.=C2=A0</div=
-><div><br></div><div><div><br></div></div><div><br></div><div><br></div></d=
-iv>
+When triggered, the BMC reads the crash data from the CPU using PECI. 
+After a log has been completed, it is added to DBus as a new object with 
+a 'Log' property which holds the contents of the log as a string.
 
---000000000000a82d5c059ba6d878--
+The host-error-monitor source is shared here: 
+https://github.com/Intel-BMC/host-error-monitor.
+The crashdump source is not currently licensed for public access.
+
+> 
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28260
+> 
+> Right now it looks pretty POWER-centric but depending on how your code works I’m wondering which makes more sense:
+> 
+> 1 - a single implementation with —-enable-power —-enable-x86 type configure options.
+> 
+> -or-
+> 
+> 2 - two completely different implementations with the same dbus interfaces.
+I think this is probably the simplest approach.  It will allow us to 
+standardize the Redfish interface without worrying about the actual log 
+collection.
+
+I also think we can move from this toward option 1 if we find a lot of 
+commonalities in the future.
+
+> 
+> thoughts?
+> 
