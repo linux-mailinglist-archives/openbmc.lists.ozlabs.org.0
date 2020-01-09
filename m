@@ -1,66 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2618136187
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 21:08:10 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0955D1360AB
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 20:04:37 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47twXK6B3zzDqbg
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 06:04:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47txxg6dqlzDqcK
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 07:08:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=stwcx.xyz
- (client-ip=136.143.188.51; helo=sender4-of-o51.zoho.com;
- envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=stwcx.xyz header.i=patrick@stwcx.xyz header.a=rsa-sha256
- header.s=zoho header.b=CNYaZdYm; dkim-atps=neutral
-Received: from sender4-of-o51.zoho.com (sender4-of-o51.zoho.com
- [136.143.188.51])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47twWd5WPbzDqQy
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 06:03:57 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1578596629; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=d+jBLVB9hgzjbyvz1U9sSFgZiXQX+m/WE+ghKe+g6ZHA5lToyloW1TZlnSXpIBA1bRjc/rU6VLsn37KLHoJPt0jKZUixJHsmHUCJ9IXz+ybcLjbgY/T5oPtdqOfp1T7K7uNgdvEyEOIpJy9mIh7yd0QfZqIRyqKvynWXpAmbWnE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1578596629;
- h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To;
- bh=OGAcA4m+jfiMRTQMypNyJhJuHwrLug9RPYrNpA+PhzI=; 
- b=Iq7LbhjR2fnoObWdjPdXviA4t1AwumwF5xwLCKf1X73Jf6oA6jUn7JqkfC0uxitsTbJ5HW1JTdllJLC4sGBI6wIcSPUKn4sQjESZpnUW4abL3zXLQ+ELzchyIK7rMXm3khrG1VN6dJfKyQWNa7dAXf6G+UDPyGoKcnDfXXfDQuE=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=stwcx.xyz;
- spf=pass  smtp.mailfrom=patrick@stwcx.xyz;
- dmarc=pass header.from=<patrick@stwcx.xyz> header.from=<patrick@stwcx.xyz>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1578596629; 
- s=zoho; d=stwcx.xyz; i=patrick@stwcx.xyz;
- h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
- bh=OGAcA4m+jfiMRTQMypNyJhJuHwrLug9RPYrNpA+PhzI=;
- b=CNYaZdYmbv2iaEoKaugcFspcf8Hu71OM7EJG1gKEZ5dkCaQ025HwDjuK/LM0RdQP
- woqIfyup46nd1Zg4xuK6a07Yt2q9lBTmTVdACON++RmmLVxfr899HE594ws7ks5hKVz
- kf+iuK0M9EzV0GrAzkp/UZpcht3mHhStxltAvWgQ=
-Received: from localhost (163.114.130.128 [163.114.130.128]) by mx.zohomail.com
- with SMTPS id 1578596625713180.79503221243374;
- Thu, 9 Jan 2020 11:03:45 -0800 (PST)
-Date: Thu, 9 Jan 2020 13:03:43 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Matt Spinler <mspinler@linux.ibm.com>
-Subject: Re: Using a struct[enum] as an sdbusplus D-Bus method arg?
-Message-ID: <20200109190343.GF1233@patrickw3-mbp.dhcp.thefacebook.com>
-References: <ad2ea491-9eb0-375b-1832-c2a50e63b3c7@linux.ibm.com>
- <20200109162238.GD1233@patrickw3-mbp.dhcp.thefacebook.com>
- <0de28bd0-95a7-11f6-f2bd-9806508ec5cd@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47txwy1B9dzDqZ3
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 07:07:28 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 009K2seb080632; Thu, 9 Jan 2020 15:07:25 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2xe7qvf4e2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2020 15:07:24 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 009K4eXe009027;
+ Thu, 9 Jan 2020 20:07:30 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma01wdc.us.ibm.com with ESMTP id 2xajb70k7c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2020 20:07:29 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 009K7MHx59572546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Jan 2020 20:07:22 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B68A4BE053;
+ Thu,  9 Jan 2020 20:07:22 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D8861BE04F;
+ Thu,  9 Jan 2020 20:07:20 +0000 (GMT)
+Received: from [9.81.198.101] (unknown [9.81.198.101])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu,  9 Jan 2020 20:07:20 +0000 (GMT)
+Subject: Re: Redfish Dump Service Proposal
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
+References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
+ <OF3E82A637.78F050C7-ON002584CE.0025B2F4-002584CE.00271DE9@notes.na.collabserv.com>
+ <CAH1kD+YfetwAmGQfjF4ytCQYhhaEorgdiA5svwjm7X91-yG1Tg@mail.gmail.com>
+ <CACkAXSpCwhUwzh1uZMMkFvtkO7Tdi4xoHaq1KtaAndR8pR2gbA@mail.gmail.com>
+ <ac75a152-9bdf-0029-67e8-60e4e99eb1cc@linux.intel.com>
+ <CAK7WoshJ7xMhB_E-ZEpVR+1E_AuGpZfGUFToOihoC5hZ9xyGGg@mail.gmail.com>
+ <CAK7WoshsUE2+GXGEgxe99vkz4aEYTdT_ZcNE_k4Y_6x7JLWsTQ@mail.gmail.com>
+ <62dc3198-40d4-b0f6-4c31-cf829d9311d6@linux.intel.com>
+ <bc442056-ea92-9c65-1028-50839123e5b7@linux.vnet.ibm.com>
+ <a281f9ca-9dc7-9e7a-8e87-08a313d43fe9@linux.intel.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <62d0d9ee-ab0c-7ec9-403d-dc9487872142@linux.vnet.ibm.com>
+Date: Thu, 9 Jan 2020 14:07:19 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="oPmsXEqKQNHCSXW7"
-Content-Disposition: inline
-In-Reply-To: <0de28bd0-95a7-11f6-f2bd-9806508ec5cd@linux.ibm.com>
-X-Zoho-Virus-Status: 1
-X-ZohoMailClient: External
+In-Reply-To: <a281f9ca-9dc7-9e7a-8e87-08a313d43fe9@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------DD2464D8261532D69EB2E0A8"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-09_04:2020-01-09,
+ 2020-01-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ mlxlogscore=999 priorityscore=1501 adultscore=0 impostorscore=0
+ clxscore=1011 mlxscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1910280000 definitions=main-2001090165
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,78 +95,154 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: john.leung@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a multi-part message in MIME format.
+--------------DD2464D8261532D69EB2E0A8
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---oPmsXEqKQNHCSXW7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+A couple comments.
 
-On Thu, Jan 09, 2020 at 11:25:24AM -0600, Matt Spinler wrote:
->=20
->=20
-> On 1/9/2020 10:22 AM, Patrick Williams wrote:
-> > On Wed, Jan 08, 2020 at 01:32:49PM -0600, Matt Spinler wrote:
+On 1/7/2020 2:08 PM, Bills, Jason M wrote:
+>
+> On 1/7/2020 2:11 AM, Ratan Gupta wrote:
+>
+>>>
+>>>>
+>>>> On Sat, Dec 14, 2019 at 10:57 AM dhruvaraj S <dhruvaraj@gmail.com> 
+>>>> wrote:
+>>>>>
+>>>>> On Sat, Dec 14, 2019 at 1:32 AM Bills, Jason M
+>>>>> <jason.m.bills@linux.intel.com> wrote:
+>>>>>>
+>>>>>> I like this as well.  I'm trying to support a CPU crashdump that 
+>>>>>> would
+>>>>>> fit perfectly with this proposal.
+>>>>>>
+>>>>>> A question and some comments below:
+>>>>>>
+>>>>>> Will Dump only have the two types: BMC and Host?  Could this be more
+>>>>>> flexible to allow for multiple different types of dumps from various
+>>>>>> components?
+>>>>> + I think dump types should be flexible to cover different types of
+>>>>> host or bmc dumps from different components with varying formats.
+>> Sure we can enhance the type of dump, it is enum in the proposal 
+>> which can be enhanced.
+>> What could be other dump type which I can add in the types?
 
-> Since the vectors are of different types, I think the code generated code
-> would have to
-> do the equivalent of?
->=20
->     std::vector<std::tuple<std::string, uint8_t>> data{};
-> =A0=A0=A0 m.read(data);
->=20
->     std::vector<std::tuple<Types, uint8_t>> apiData{};
->=20
->     for (const auto& [arg0, arg1]: data)
->        apiData.emplace_back(convertStringToEnum(arg0), arg1))
->     o->createStuff(apiData);
-> That's a pretty big change from what's there today.  Think that's possible
-> to do generically?
->=20
+Slide 15:  Since DumpType is an enum, should reason be as well? "Type" 
+is a pretty typical enum in Redfish. E.g. BaseModuleType from 
+https://redfish.dmtf.org/schemas/Memory.v1_8_0.json
 
-It seems like that is something that should have been done in the
-`message::read` function.  First, since your initial data type is wrong
-(that funny enum<...>), I think we need to figure out why this function
-isn't working correctly:
+Reason seems similar to the LogEntryCode from 
+https://redfish.dmtf.org/schemas/LogEntry.v1_5_0.json
 
-https://github.com/openbmc/sdbusplus/blob/master/tools/sdbusplus/property.p=
-y#L72
+Slide 15:
+"Size": 108944B
+Redfish size properties typically have the unit in the name. E.g. From 
+https://redfish.dmtf.org/schemas/Memory.v1_8_0.json CacheSizeMiB or 
+CapacityMiB.
 
-It was suppose to have handled, through recursion, enums.  I would have
-expected data's type to be vector<tuple<Interface::Types, uint8_t>>.
-After that, I suspect you'll get compile errors that m.read doesn't know
-how to handle an Interface::Types enum type.  This would require some
-C++ template magic, but I think it could be handled there.  We need to
-teach m.read to be able to call convertToMessage and convertFromMessage
-if those exist.  I don't know why we originally did that lifting in the
-=66rom the generated code, except maybe that enums were bolted on later
-and never fully complete?
+odata.context is getting dropped. See 
+https://github.com/DMTF/Redfish/issues/2722 or 
+https://github.com/DMTF/Redfish/commit/ae49f4fb1278fd435f89317c3fa53cac597e3893#diff-e82b4876efbeaa600d3b104a426f7ac5 
 
---=20
-Patrick Williams
 
---oPmsXEqKQNHCSXW7
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+--------------DD2464D8261532D69EB2E0A8
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl4XeQwACgkQqwNHzC0A
-wRn0BA//YWz4MoEePDjiVcO824/5oosFbQTNZY/3wm8EpiD073AwADY6yWTx85f9
-SBZ5qu7nRyyE53a0JsJ9hullSwM9r/vwN65rP7MUg5rBLL6yTp4sC/5n45S0RKsA
-VAXDl5aIkoqiLx9xJ3031THfFKDobv2ZP5Amm9mNAj+mKdKGEFZwOfbTOGSKYK0v
-FQOyJO7bDST73+7tIBF8r2Tzen9Ld8Er56HaHvaWs3WcWOZDktW+HiRchWiSZRag
-uq1SXlG4RlVda2uhrkMuwhPphAzQsOokbxJ3wrR7nvv1m8/kyGRSC7htU0A1rXmK
-9K9Nvfz8SJ1yvn92phmxP1hUWSbeJAv+5r9bg774MKraBq/qzN/ctdRGt0YCz/Qb
-Ipgpe3es9BtdfWqZFC+EUS7DdJh7vaJ3ocR4lPVkEw3b0x6hlZthdxb8aXoV0nz3
-2HxQTM971OYxa40Tw7z+MWFsU3gWH2Ykg6lnEy71B8g/MbLIyWmPN9u2lViSGXfS
-End+bQ3XzzZb4pDTbwgH7MbEY9I2o+O3PGL60fHuTwcTi+FakIpygpMSNcazXDRh
-o5wKSU9SmaLJhAQQTrxwdqtvAac1FhAbWNIcU7C3LZ6TD1M3QJTOs4uOdClkY8S/
-xBdtjCDbax8FG2au2QIKtMcOz+/QXcePQ0l+U+Ri40JGnwedoKE=
-=HkKU
------END PGP SIGNATURE-----
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>A couple comments. <br>
+    </p>
+    <div class="moz-cite-prefix">On 1/7/2020 2:08 PM, Bills, Jason M
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:a281f9ca-9dc7-9e7a-8e87-08a313d43fe9@linux.intel.com">
+      <br>
+      On 1/7/2020 2:11 AM, Ratan Gupta wrote:
+      <br>
+      <br>
+      <blockquote type="cite">
+        <blockquote type="cite">
+          <br>
+          <blockquote type="cite">
+            <br>
+            On Sat, Dec 14, 2019 at 10:57 AM dhruvaraj S
+            <a class="moz-txt-link-rfc2396E" href="mailto:dhruvaraj@gmail.com">&lt;dhruvaraj@gmail.com&gt;</a> wrote:
+            <br>
+            <blockquote type="cite">
+              <br>
+              On Sat, Dec 14, 2019 at 1:32 AM Bills, Jason M
+              <br>
+              <a class="moz-txt-link-rfc2396E" href="mailto:jason.m.bills@linux.intel.com">&lt;jason.m.bills@linux.intel.com&gt;</a> wrote:
+              <br>
+              <blockquote type="cite">
+                <br>
+                I like this as well.  I'm trying to support a CPU
+                crashdump that would
+                <br>
+                fit perfectly with this proposal.
+                <br>
+                <br>
+                A question and some comments below:
+                <br>
+                <br>
+                Will Dump only have the two types: BMC and Host?  Could
+                this be more
+                <br>
+                flexible to allow for multiple different types of dumps
+                from various
+                <br>
+                components?
+                <br>
+              </blockquote>
+              + I think dump types should be flexible to cover different
+              types of
+              <br>
+              host or bmc dumps from different components with varying
+              formats.
+              <br>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+        Sure we can enhance the type of dump, it is enum in the proposal
+        which can be enhanced.
+        <br>
+        What could be other dump type which I can add in the types?
+        <br>
+      </blockquote>
+    </blockquote>
+    <p>Slide 15:  Since DumpType is an enum, should reason be as well?
+      "Type" is a pretty typical enum in Redfish. E.g. BaseModuleType
+      from <a class="moz-txt-link-freetext" href="https://redfish.dmtf.org/schemas/Memory.v1_8_0.json">https://redfish.dmtf.org/schemas/Memory.v1_8_0.json</a><br>
+      <br>
+      Reason seems similar to the <span class="treeLabel objectLabel"
+        aria-labelledby="default" data-level="1">LogEntryCode from</span>
+      <a class="moz-txt-link-freetext" href="https://redfish.dmtf.org/schemas/LogEntry.v1_5_0.json">https://redfish.dmtf.org/schemas/LogEntry.v1_5_0.json</a><br>
+      <br>
+      Slide 15: <br>
+      "Size": 108944B<br>
+      Redfish size properties typically have the unit in the name. E.g.
+      From <a class="moz-txt-link-freetext" href="https://redfish.dmtf.org/schemas/Memory.v1_8_0.json">https://redfish.dmtf.org/schemas/Memory.v1_8_0.json</a>
+      CacheSizeMiB or CapacityMiB. <br>
+      <br>
+      odata.context is getting dropped. See
+      <a class="moz-txt-link-freetext" href="https://github.com/DMTF/Redfish/issues/2722">https://github.com/DMTF/Redfish/issues/2722</a> or
+<a class="moz-txt-link-freetext" href="https://github.com/DMTF/Redfish/commit/ae49f4fb1278fd435f89317c3fa53cac597e3893#diff-e82b4876efbeaa600d3b104a426f7ac5">https://github.com/DMTF/Redfish/commit/ae49f4fb1278fd435f89317c3fa53cac597e3893#diff-e82b4876efbeaa600d3b104a426f7ac5</a>
+      <br>
+    </p>
+  </body>
+</html>
 
---oPmsXEqKQNHCSXW7--
+--------------DD2464D8261532D69EB2E0A8--
 
