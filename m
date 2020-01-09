@@ -1,65 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 023DB135F3E
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 18:26:10 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71E32135E89
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 17:44:14 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47tsQM4Rx0zDqNS
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 03:44:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47ttLk6nMczDqZS
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 04:26:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=stwcx.xyz
- (client-ip=136.143.188.51; helo=sender4-of-o51.zoho.com;
- envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=stwcx.xyz header.i=patrick@stwcx.xyz header.a=rsa-sha256
- header.s=zoho header.b=L6tMK+Er; dkim-atps=neutral
-Received: from sender4-of-o51.zoho.com (sender4-of-o51.zoho.com
- [136.143.188.51])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47tsPb02g9zDqM1
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 03:43:30 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1578588205; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=jfkG6MfAHPX1pZP1WcPfELe/mpDDopB40xjDAg1yvhj1BL8NQPcadZw07Y/HNQu1DVGkHeHqNrtCWd7cZ0eYhRdsBLyw9E+M28GFM6pnN7N9nzRRUO/MYOVVXrzB4l2S5h/1qbIGcHiQanQbFAkDpZWiQzLdALZzcGgYJH09mwY=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1578588205;
- h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To;
- bh=zjy299zeK369Ko5AUG0Q1xDuzV/G3uf7QQjYpdaBn2s=; 
- b=UXprO44bvPLK6YzUUquCGVeuvSarF7/qQeKd641vRINQeDRUh627dtGycvFTs9GyQXIJOiP//BeHTom0y6tF8FcnUtwzPAU7UzT+/924cnlrLBKkSzMrJH+ZRuL+a4r9zfuROsCxW7PuVXBfRfubx409e6hmtKvdOU2VNM7cnXQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=stwcx.xyz;
- spf=pass  smtp.mailfrom=patrick@stwcx.xyz;
- dmarc=pass header.from=<patrick@stwcx.xyz> header.from=<patrick@stwcx.xyz>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1578588205; 
- s=zoho; d=stwcx.xyz; i=patrick@stwcx.xyz;
- h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To;
- bh=zjy299zeK369Ko5AUG0Q1xDuzV/G3uf7QQjYpdaBn2s=;
- b=L6tMK+ErdkEq+XFKvCJZ/26tT6Gwh3eahTzXKE2WpwCBq8dBfW12UuTxzpq3dKzS
- yEEFRVf5CGeyG8iTdNRSEuyuYqOJy1rMaKDrkQ6Xdtp6n8z15A4SeS+qtdXKWg5wDqf
- tGniqpb9gMZ8vtxKpazE2/FvqNOYChiql6NPB3fM=
-Received: from localhost (163.114.130.128 [163.114.130.128]) by mx.zohomail.com
- with SMTPS id 1578588200044300.1622882173341;
- Thu, 9 Jan 2020 08:43:20 -0800 (PST)
-Date: Thu, 9 Jan 2020 10:43:17 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Subject: Re: Aspeed SPI driver upstreaming
-Message-ID: <20200109164317.GE1233@patrickw3-mbp.dhcp.thefacebook.com>
-References: <20200106232722.GB1233@patrickw3-mbp.dhcp.thefacebook.com>
- <31ec66fe-9ff9-b28b-3b83-a6c0a7959f30@kaod.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47ttL05b64zDqYp
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 04:25:27 +1100 (AEDT)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 009H2UbN047624; Thu, 9 Jan 2020 12:25:24 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2xdx6k6t3w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2020 12:25:24 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 009HIhnZ032628;
+ Thu, 9 Jan 2020 17:25:30 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma01wdc.us.ibm.com with ESMTP id 2xajb6yfnf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Jan 2020 17:25:30 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 009HPNRV16777648
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Jan 2020 17:25:23 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 46462AC059;
+ Thu,  9 Jan 2020 17:25:23 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21104AC060;
+ Thu,  9 Jan 2020 17:25:23 +0000 (GMT)
+Received: from [9.10.99.47] (unknown [9.10.99.47])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu,  9 Jan 2020 17:25:23 +0000 (GMT)
+Subject: Re: Using a struct[enum] as an sdbusplus D-Bus method arg?
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <ad2ea491-9eb0-375b-1832-c2a50e63b3c7@linux.ibm.com>
+ <20200109162238.GD1233@patrickw3-mbp.dhcp.thefacebook.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <0de28bd0-95a7-11f6-f2bd-9806508ec5cd@linux.ibm.com>
+Date: Thu, 9 Jan 2020 11:25:24 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="EXKGNeO8l0xGFBjy"
-Content-Disposition: inline
-In-Reply-To: <31ec66fe-9ff9-b28b-3b83-a6c0a7959f30@kaod.org>
-X-Zoho-Virus-Status: 1
-X-ZohoMailClient: External
+In-Reply-To: <20200109162238.GD1233@patrickw3-mbp.dhcp.thefacebook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-09_03:2020-01-09,
+ 2020-01-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ mlxlogscore=999 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1910280000 definitions=main-2001090142
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,73 +86,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: taoren@fb.com, openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---EXKGNeO8l0xGFBjy
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Thanks for the reply C=E9dric.
+On 1/9/2020 10:22 AM, Patrick Williams wrote:
+> On Wed, Jan 08, 2020 at 01:32:49PM -0600, Matt Spinler wrote:
+>
+> Hi Matt,
+>
+>> I'm designing a phosphor-dbus-interfaces D-Bus method where I think the
+>> ideal interface has YAML like:
+>>
+>> - name : CreateStuff
+>>    parameters:
+>>      - name: Data
+>>        type: array[struct[enum[self.Types], uint32]]
+>>
+>> But that doesn't compile using an enum in the struct, and fails because
+>> sdbus++ creates code like:
+>>
+>> server.cpp:
+>>
+>>      // Uses enum<self.Types>
+>>      std::vector<std::tuple<enum<self.Types>, uint8_t>> data{};
+>>      m.read(data);
+>>      auto o = static_cast<Create*>(context);
+>>      o->createStuff(data);
+>>
+>> What I'm trying to do is a valid D-Bus definition, correct? Or should I just
+>> use a string instead
+>> of an enum?
+> Enums are not actually a DBus concept, but something we added to
+> sdbusplus specifically.  What happens is that at the DBus level we send
+> them between processes as fully-qualified strings[1].  In the sdbusplus
+> generated code we know that this was defined in the YAML as an enum and
+> so we look the string up in a map<string, enum> to get you the enum
+> value (and throw an exception if an invalid enum was given).
+>
+> I wouldn't recommend using a string instead because you are just
+> bypassing this enum-string checking code.
+>
+>> It doesn't seem very straightforward to fix, as the vector that gets passed
+>> to o->createStuff()
+>> is a std::vector<std::tuple<Types, uint32_t>>, but the vector passed to
+>> m.read() is a
+>> std::vector<std::tuple<std::string, uint32_t>>.
+> This is a bug / missing feature in the header generator.  I'd have to
+> look into the code but it seems like it is not re-cursing inside the
+> tuple correctly.  We handle this case fine for raw enums.  The
+> definition of data's type looks like a start of the problem
+> (enum<self.Types> doesn't seem correct to me).  It's possible though
+> that the m.read generated function is wrong in that it is missing the
+> conversion from self.Types <-> std::string.
 
-On Tue, Jan 07, 2020 at 09:34:03AM +0100, C=E9dric Le Goater wrote:
-> Regarding the SMC driver, the maintainers are requesting a rewrite=20
-> of the driver using the spimem layer, but we lack handlers to do=20
-> the read training and compute the timing register value.
->=20
-> This is the first thing to address on the todo list. When available,
-> it shouldn't take too long to upstream the driver. Some more info=20
-> here :
->=20
->    https://www.spinics.net/lists/linux-mtd/msg09417.html
->=20
+Since the vectors are of different types, I think the code generated 
+code would have to
+do the equivalent of?
 
-It looks like this patch set is still the MTD-only implementation, which
-is useful for SPI-NOR chips but not useful for non-flash devices such as
-TPMs.  Is there any work or thought into how we could do a generic SPI
-controller and then layer the MTD above it?
+     std::vector<std::tuple<std::string, uint8_t>> data{};
+     m.read(data);
 
-We have some system designs where we have both a NOR device and a TPM on
-the same SPI bus.  What we're currently doing is using the
-(non-upstream) aspeed-spi driver which lets us use both the TPM and
-MTD/SPI-NOR driver, but since it doesn't have the calibration routines
-the SPI-NOR runs at a slower speed than optimal.
+     std::vector<std::tuple<Types, uint8_t>> apiData{};
 
-I'd really like to get a generic SPI controller driver upstreamed, even if =
-it
-doesn't have the calibration (the SPI-NOR device in this case is not as
-performance critical as the BMC's own NOR devices).  Is there any path
-to combining the features of the aspeed-smc and aspeed-spi into a single
-driver, or do you think we should start with them as separate and get
-aspeed-spi upstreamed as an alternative to aspeed-smc?
+     for (const auto& [arg0, arg1]: data)
+        apiData.emplace_back(convertStringToEnum(arg0), arg1))
+   
+     o->createStuff(apiData);
+  
+That's a pretty big change from what's there today.  Think that's possible
+to do generically?
 
-Also, do you have any soft timeline on the follow-ups to this patch set?
 
---=20
-Patrick Williams
-
---EXKGNeO8l0xGFBjy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl4XWCMACgkQqwNHzC0A
-wRmz3w//YAAUwbGTtPOVHl7zyWfMmp56bSs531jHmHPsmVeoB1nS6qhbRHb1h1AL
-Fxi08rx74NI5gD2+ayIRN+514ASdxljd8l3Glc/sK1flWHTPjeYXJczerFWqjIIo
-u9vsw2h8b4fz8GipfgKW7rv1aP2kjZfo7U1E71eQ5kK8xiOCbylYap+xv2x0YUZO
-zkP1Eq2WddrgY/meBkPrvVBLsAdZ09Yd2cIPtphBGR8Mp94Xh9IKvAwe7cQR27Fw
-R9trd/CQHYCJEgQIhWOiowsiQBi0d6OP9o7/W3Bhhyp9VpYmgdOZG9vN5HDiLdmX
-c6AdqkxfjNSUIJ7wKTlqIljfXXcPT/gKoYjqZX3YqqVDIQUFtriKRtwQAMMwW1zg
-+pufdlBGKKU7Y4eomeBsE6H7Sckf+xA7UXf3Prf3l9BL7SJtcuNogvrTlrLH6pP8
-4CLTkmK/JcuxdYRi65y9iLBv17B0ds4sDNi+2d+zqnQV1BQJBmadHGqwo3pilOde
-gCOAWvmv50w7MCxDxSNt7yZYThPXgkX1p/N9cGeWL5xzajIltdP/A+CreX8wPe1B
-ggyAq1i748ZQuo+ihOwVpYrNAHqiuY7TnFclJkdWfBgrMIpUkSVYjQn7W4+0u9io
-VTvexWfI82LRhxY8lJupE8rgXDprR57V4qKNEOSkHZ3IXOhHISI=
-=pSfT
------END PGP SIGNATURE-----
-
---EXKGNeO8l0xGFBjy--
+> [1] A fully-qualified string is something like
+>      xyz.openbmc-project.InterfaceClass.EnumType.EnumValue.
 
