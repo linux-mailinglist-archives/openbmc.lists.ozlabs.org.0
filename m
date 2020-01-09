@@ -1,73 +1,139 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E31C7136332
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 23:22:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47v0wl3W6zzDqbt
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 09:22:31 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8AED13637E
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jan 2020 23:52:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47v1b644rkzDqbC
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 09:52:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12c;
- helo=mail-lf1-x12c.google.com; envelope-from=rhanley@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Bi+gJxKX; dkim-atps=neutral
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com
- [IPv6:2a00:1450:4864:20::12c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=8277eb337b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=PHPTJuN6; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=bgm7OiMG; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47v0vq29D2zDqb0
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 09:21:41 +1100 (AEDT)
-Received: by mail-lf1-x12c.google.com with SMTP id y19so6395172lfl.9
- for <openbmc@lists.ozlabs.org>; Thu, 09 Jan 2020 14:21:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qUYZUyYlfTbzzizvVd33hwzmYPcqZLMT4JhoI75SxIo=;
- b=Bi+gJxKXdInZqQasJSZmjnVTCBlxmXfdgw8F6gUn2IP00hEVrd4f+FY44VTgJn7EW2
- siJCa28VIkckc71kvlTJky4GRwymZfMuISDNqarxpW1msTk03H3Vvoisl7k8+NvijxKr
- BJjpfDc6BtAVvVovRhlHz9jb5wMv6UI7A+MMAGE/RTOxaouG8T2ZOfjxGQJEqJORq7wx
- 7zhNwAmhZfrD3bulqFzNEk9wibWxnq+t0tNduJCSW58xkybXG/ZFK0pnmbpCQomfbvZ3
- 43M2gMnfeyH2jtlPS3VbmdV99N+E2BFiIAWoffxZH4xqKTVzBKYw527LPp1YHVJjACdl
- h6vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qUYZUyYlfTbzzizvVd33hwzmYPcqZLMT4JhoI75SxIo=;
- b=Xa0L7mbUW+J7dLBjBFFB/vXs+idIUGg1bkwX3n3+v2PQd4csMo89OTGIkKOrzkyZ7r
- v7lbE8EKZjnUAHsN7LqSe4IAz++c3CdIBQf/Gu9R8EyyyW9FcqCF1ZQ4zpi92p4xkzmO
- V/0+lRkLDIAX+JUEAr2I/E6bpEZFInkuZQ1FBypdKf9tdip26W9MzlQNMfXTTOcb9b96
- twPYQ8oFrpCcT7oaqWjYZKDhQHTVH3zIw/eYdfI0E+BIs+ePKpc2cE1d642h0ceUrGv0
- 8qVYtoG/FjuyBI1EwnCX2JAvJqfkWbL6e7rmb4rIIZawREC9fiKR/F0RQ8phkTCDswCF
- +YPg==
-X-Gm-Message-State: APjAAAVHOoMClNRJ95cJ/XVfeO57fm0DKizcVFnYu6ubuXCnnbcqsGqO
- smqti3n/otpzQkDc6hEqKjqkK3FaqTsvfUNEj8w1Gw==
-X-Google-Smtp-Source: APXvYqzhJWiGtipkRROW8SYvZN5NoTyljFJ+odvkcjm4AOBW1LviMJ97pTpMTeX9mffNu4ozf94VusvamvaRh3hBcuE=
-X-Received: by 2002:a05:6512:48c:: with SMTP id v12mr37218lfq.56.1578608497078; 
- Thu, 09 Jan 2020 14:21:37 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47v1ZT5K0YzDqZS
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 09:51:43 +1100 (AEDT)
+Received: from pps.filterd (m0044012.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 009MpJTe016482; Thu, 9 Jan 2020 14:51:40 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ mime-version; s=facebook; bh=H+bxeWdIyzn8fNPM8UWsJ2UkbHluOs3dyHFNx33faeI=;
+ b=PHPTJuN6n/DsHNaQb6VPsOlBLW58kAwLhr+rOKY0YD7Rdn3qMEUraDwfZYdn6XkZIpXg
+ U5Crg5pOib6EcJ4mlh5ozqkn598VgPMhYEExgFcKvr8T9RSlM/QVv5oJxplRpBdzFAtE
+ /W1gstyFykSZZojNSt2iqk0OrNaO8uXTyTI= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2xdrj8p9f6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Thu, 09 Jan 2020 14:51:39 -0800
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.102) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Thu, 9 Jan 2020 14:51:32 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=a7moH3FHcQ8TXgQIfymjo1Efz6VMtFx0kFgZOvdYtfC5BcgAWbgispUWjC529IZ9InOHHQEXSbO6zSKZXEc9CQuPsUtiyRgaQirVncQIzr6ctz6VGmBwnfcLrhslxN04oG74z3vM8VyiXugFY13+mp0ygoWjWnFj7C0uwFvBb3WJuAWKhGhwWQQ3JEoAzkyeixoqNXqyFsLKdU/T0ASjrE0djmKL3LUzYlgBZxL8O9KAkU3e0F4tohJ+jqiyd3ChqOBJA27sQ6UipNlo/LJ7FqJznsjDDnnwDkmA15YJXmnOUW9w1XIQWZ03uhl/ntQKf7xWuKq0bhvoO5r25HcurA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H+bxeWdIyzn8fNPM8UWsJ2UkbHluOs3dyHFNx33faeI=;
+ b=CK8VqxwDnczUwy/X43yScras1K0hVKMTZuZ4jzjTrDWssy+aJoMgGkdcgXuh8PtFfIMTM3UCBK5lDNh/v9e2FeSOnN/6CB9O2cXk77T6JqdyJzHRTzM1cxFyWSQefOxX7CvTFrpkb50VPgIhoG2DOMz+3GF6RCxAYnibtDaXtEsBX80gsVPKnPT/RP4oLn6a/gKDo/+uaw+Zc8nsbs+gBmn3KqrQ6XdmZ7vdvzPF7SMLDtY2uT+Y4ZlKdrkBCFNzwcZTBcEsAijKoWUEsklb46pwyHfEy1gZ9xrjT7u/ZW+1OiCi5M3c6kiPa3Rrk3CRNbSupy+9e7Ie6jGUuKZ8KQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H+bxeWdIyzn8fNPM8UWsJ2UkbHluOs3dyHFNx33faeI=;
+ b=bgm7OiMGU0VlhTBWWSqWrD91023sX7DqvNPzEK3bpcXVorddmHs2bgFjIIs4Ct4Mq1jSMMM3G51uh3H9/y35jXzkWBx/0CgS0G40jmrlP5PAa/jQZufs0k1hm7fzc9B3P1rvxg6WDdRgpGaNXlnkZRXRw5Gaj969wY++sgEvZ/k=
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
+ MWHPR15MB1344.namprd15.prod.outlook.com (10.175.2.138) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2623.9; Thu, 9 Jan 2020 22:51:17 +0000
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2]) by MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2%8]) with mapi id 15.20.2623.011; Thu, 9 Jan 2020
+ 22:51:17 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "Pine, Kathryn ElaineX" <kathryn.elainex.pine@intel.com>, Gunnar Mills
+ <gmills@linux.vnet.ibm.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: Re: webui not working for me
+Thread-Topic: webui not working for me
+Thread-Index: AQHVwp+iARalw1g7X0WpTmm06cK1kqfdIe6AgABhfACAANBLAP//gSIAgACHeID//3tIAIAAiQyA//97mIAAoinVgP//hbQA
+Date: Thu, 9 Jan 2020 22:51:17 +0000
+Message-ID: <1CCD8B5B-2FA2-46BC-88F1-B6F3CBD97AF7@fb.com>
+References: <41D87A5C-8EBF-4DA2-9E1E-A37D51A4CA72@fb.com>
+ <a009631a-efec-2e14-6871-b8618ffb4b96@linux.vnet.ibm.com>
+ <E008BED2-5B56-4946-BD37-1F6928AE60BE@fb.com>
+ <1bec6eda-be49-e9b7-2ba3-f1ec5d4d89e8@linux.vnet.ibm.com>
+ <FF4567F9-FA73-4076-AD9E-67C0237F4521@fb.com>
+ <e100a34f-0335-d557-7e83-ebae9338b02f@linux.vnet.ibm.com>
+ <D4297867-C2F9-448D-887E-032C1EF5B871@fb.com>
+ <99c35ab3-0152-afcc-72c1-e359b3569e9a@linux.vnet.ibm.com>
+ <F844EB41-C241-4418-99F8-52E75CF3ED2C@fb.com>
+ <FD0BD680739BFC41807C96BD23118BB13275FD@ORSMSX113.amr.corp.intel.com>
+In-Reply-To: <FD0BD680739BFC41807C96BD23118BB13275FD@ORSMSX113.amr.corp.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:79ae]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 95921ee5-9802-41ee-2270-08d795567003
+x-ms-traffictypediagnostic: MWHPR15MB1344:
+x-microsoft-antispam-prvs: <MWHPR15MB13447E4BE0469B6813DE0D91DD390@MWHPR15MB1344.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 02778BF158
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(39860400002)(376002)(366004)(136003)(346002)(396003)(189003)(199004)(5660300002)(2616005)(186003)(6486002)(76116006)(86362001)(36756003)(966005)(66946007)(53546011)(81166006)(8676002)(6506007)(81156014)(33656002)(2906002)(110136005)(71200400001)(8936002)(316002)(66446008)(66476007)(66556008)(478600001)(64756008)(6512007);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1344;
+ H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: f51z9+n3xjjK78gtFPhcvbZ1nOlYJExylmUlw4IBtYr/LHJtXWV3GuzieFvfbrAW10NMgS+5Ur00/nowdnHuvUS8uJdppFtdu8LTSKdPmF/qi6xpJoSUjEWFc5WyAVhxcmJsChw/lAmTaQU3G5E+QP/3xgXQ1TF+YsZnVlP+KzBKY62EXzkIB4MMltuSKL3LI1gihFeWwnhgSUT/fRlMNc0ipqWpK8Y/duGCNqB6xPctsvCIB7J7xSwCfZ/zG+KNAPPyqre0sqzgUPhLmkCwGxd7CLRQg+fwfKAJ2F/sjEu2IlG89JFdqo4bMu417xZYSZlJSTZaNzC8Kgd0U05WpZQhuEb+n5Ujm3xgFtVNvDohLS+QJRBwmjc9Qu4GDqxaigcw2UWrMKkY6X6rOOEB7lkPB5LZp66SS0JPBzZF8psfAQafNrqo7vNuhXhWDTUhspgmBSsNYSXlyTTV6ACHPRb/kFzd4qe3P3/izTO4OTBkOE0smKuBOKKYAlvc70J7NOmApK784wRPqZJkDRnDzQ==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_1CCD8B5B2FA246BC88F1B6F3CBD97AF7fbcom_"
 MIME-Version: 1.0
-References: <DM6PR21MB13889A7DE46B9DEF6D97959BC8580@DM6PR21MB1388.namprd21.prod.outlook.com>
- <CAH1kD+YrfgnLGdiTOao4t7kXDw7494MQM7pxOAZCbEP6i4EVcw@mail.gmail.com>
- <cb3fe45e-72b8-9910-9dda-b9127bf74fdc@linux.vnet.ibm.com>
- <DM6PR21MB13886072C143F07E3CE63ECDC85B0@DM6PR21MB1388.namprd21.prod.outlook.com>
- <21b9654b-1e40-804b-a607-e156c848ad85@linux.vnet.ibm.com>
- <DM6PR21MB13887E6D80993E771E217B0BC8550@DM6PR21MB1388.namprd21.prod.outlook.com>
- <CAH1kD+YLN37-DHXSZ5RKYa+xmvFSszOf6MxSkHjFC5n6H2GOMg@mail.gmail.com>
- <f487171c-18e3-ee90-6cf8-13f98f04c919@linux.vnet.ibm.com>
-In-Reply-To: <f487171c-18e3-ee90-6cf8-13f98f04c919@linux.vnet.ibm.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Thu, 9 Jan 2020 14:21:25 -0800
-Message-ID: <CAH1kD+a-DtmgbeyE_OyW6uNr9kja=Fe38Lp9oXxdOzFF6RbuoQ@mail.gmail.com>
-Subject: Re: [EXTERNAL] Re: Managing heterogeneous systems
-To: vishwa <vishwa@linux.vnet.ibm.com>
-Content-Type: multipart/alternative; boundary="000000000000b57fa4059bbc6e69"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95921ee5-9802-41ee-2270-08d795567003
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jan 2020 22:51:17.3265 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 8/YWr8VX5g40AsnIvBgYvjlcFjYHsw/iHprWBYmmenUfPaIhPd7xgOz4h8yrf9MRGHlpCoarAb+xa643I/VCUg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1344
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-09_05:2020-01-09,
+ 2020-01-09 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ suspectscore=0
+ adultscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
+ clxscore=1015 mlxscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1910280000 definitions=main-2001090190
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,998 +145,230 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "sgundura@in.ibm.com" <sgundura@in.ibm.com>,
- "shahjsha@in.ibm.com" <shahjsha@in.ibm.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Neeraj Ladkani <neladk@microsoft.com>,
- "vikantan@in.ibm.com" <vikantan@in.ibm.com>,
- "kusripat@in.ibm.com" <kusripat@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b57fa4059bbc6e69
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--_000_1CCD8B5B2FA246BC88F1B6F3CBD97AF7fbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I'm going to resurrect this thread for the new year.
+SXQgZG9lcyB3b3JrIGZvciBtZS4gSSBkb27igJl0IGZpbmQgYW55IHJlYXNvbiB0aGF0IHdoeSBp
+dCBpcyBub3QgYSB2YWx1ZSBhcyBpdCBpcyBlbmFibGluZyByZWRmaXNoIGludGVyZmFjZS4gSWYg
+aXQgaXMgYnJlYWtpbmcgZXhpc3RpbmcgcGhvc3Bob3Igc2Vuc29yIGltcGxlbWVudGF0aW9uIHRo
+ZW4gd2UgbmVlZCB0byBmaXggdGhhdCBidXQgd2Ugc2hvdWxkIGRlZmluaXRlbHkgc3VwcG9ydCBi
+b3RoIGRidXMtc2Vuc29yIGFzIHdlbGwgYXMgcGhvc3Bob3Itc2Vuc29ycy4NCg0KUmVnYXJkcw0K
+LVZpamF5DQoNCkZyb206ICJQaW5lLCBLYXRocnluIEVsYWluZVgiIDxrYXRocnluLmVsYWluZXgu
+cGluZUBpbnRlbC5jb20+DQpEYXRlOiBUaHVyc2RheSwgSmFudWFyeSA5LCAyMDIwIGF0IDI6MDkg
+UE0NClRvOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4sIEd1bm5hciBNaWxscyA8
+Z21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbT4sICJvcGVuYm1jQGxpc3RzLm96bGFicy5vcmciIDxv
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBSRTogd2VidWkgbm90IHdvcmtpbmcg
+Zm9yIG1lDQoNCkhpLA0KDQpJ4oCZdmUgdXBsb2FkZWQgYSB3b3JrIGluIHByb2dyZXNzIHBhdGNo
+IHdpdGggdGhlIHNlbnNvcnMgcGFnZSB1c2luZyBSZWRmaXNoIGRhdGEuDQoNCkkgcHVsbGVkIG1v
+c3Qgb2YgdGhlIEludGVsIGRvd25zdHJlYW0gVUkgb2ZmIHNvIGl04oCZcyBhIGJpdCBwbGFpbiBs
+b29raW5nLCBidXQgc2hvdWxkIGhhdmUgdGhlIGZ1bmN0aW9uYWxpdHkgbmVlZGVkIGZvciB1c2lu
+ZyBSZWRmaXNoIGZvciBzZW5zb3JzOg0KDQpodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3Qu
+eHl6L2Mvb3BlbmJtYy9waG9zcGhvci13ZWJ1aS8rLzI4MzQyPGh0dHBzOi8vdXJsZGVmZW5zZS5w
+cm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9wZW5ibWMtMkRwcm9qZWN0
+Lnh5el9jX29wZW5ibWNfcGhvc3Bob3ItMkR3ZWJ1aV8tMkJfMjgzNDImZD1Ed01GQWcmYz01VkQw
+UlR0TmxUaDN5Y2Q0MWIzTVV3JnI9djlNVTBLaTlwV25UWENXd2pIUFZncG5DUjgwdlhra2NySWFx
+VTdVU2w1ZyZtPUprVm5jNnhjc3JPUUZPejNULTFCRGZmUU9KTnlORjR3VkE1Ykt3OGJJaEEmcz10
+QVdlcms5Qk9hMEVTTjZnNDFmSjRwVDVGc3ZWaElEeWdUQnJGelFWZjhRJmU9Pg0KDQpJZiB0aGVy
+ZeKAmXMgdmFsdWUgaW4gZ2V0dGluZyB0aGlzIGludG8gdXBzdHJlYW0sIHBsZWFzZSBsZXQgbWUg
+a25vdyDigJMgd291bGQgcmVxdWlyZSBhIGJpdCBtb3JlIGNvb3JkaW5hdGluZyBhbmQgVUkgdHdl
+YWtzIHRvIGdldCB0aGlzIHRvIG1hdGNoIHVwc3RyZWFtLCB3aGljaCBpcyB3aHkgZm9yIG5vdyBJ
+IGp1c3QgdXBsb2FkZWQgYXMgV0lQLg0KDQpCZXN0LA0KS2F0aHkNCg0KDQpGcm9tOiBvcGVuYm1j
+IDxvcGVuYm1jLWJvdW5jZXMra2F0aHJ5bi5lbGFpbmV4LnBpbmU9aW50ZWwuY29tQGxpc3RzLm96
+bGFicy5vcmc+IE9uIEJlaGFsZiBPZiBWaWpheSBLaGVta2ENClNlbnQ6IE1vbmRheSwgSmFudWFy
+eSA2LCAyMDIwIDQ6NDYgUE0NClRvOiBHdW5uYXIgTWlsbHMgPGdtaWxsc0BsaW51eC52bmV0Lmli
+bS5jb20+OyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiB3ZWJ1aSBub3Qg
+d29ya2luZyBmb3IgbWUNCg0KDQoNCkZyb206IEd1bm5hciBNaWxscyA8Z21pbGxzQGxpbnV4LnZu
+ZXQuaWJtLmNvbTxtYWlsdG86Z21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbT4+DQpEYXRlOiBNb25k
+YXksIEphbnVhcnkgNiwgMjAyMCBhdCA0OjQwIFBNDQpUbzogVmlqYXkgS2hlbWthIDx2aWpheWto
+ZW1rYUBmYi5jb208bWFpbHRvOnZpamF5a2hlbWthQGZiLmNvbT4+LCAib3BlbmJtY0BsaXN0cy5v
+emxhYnMub3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+IiA8b3BlbmJtY0BsaXN0
+cy5vemxhYnMub3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+Pg0KU3ViamVjdDog
+UmU6IHdlYnVpIG5vdCB3b3JraW5nIGZvciBtZQ0KDQoNCg0KT24gMS82LzIwMjAgNjoyOSBQTSwg
+VmlqYXkgS2hlbWthIHdyb3RlOg0KDQpJdCBzYXlzIG9uIHBhZ2Ug4oCcdGhlcmUgYXJlIG5vIHNl
+bnNvcnMgYXZhaWxhYmxl4oCdDQoNCg0KQSBjdXJsIGNhbGwgdG8gL3h5ei9vcGVuYm1jX3Byb2pl
+Y3Qvc2Vuc29ycy9lbnVtZXJhdGUgcmV0dXJucyBhbGwgdGhlIHNlbnNvcnMgY29ycmVjdGx5ID8N
+Cg0KSSBoYXZlIG5vdCB1c2VkIGFueSBjdXJsIGNvbW1hbmQgaGVyZS4gUGxlYXNlIGxldCBtZSBr
+bm93IHdoYXQgY3VybCBjb21tYW5kIHRvIHVzZS4gQnV0IGludGVsIGlzIHVzaW5nIHJlZGZpc2gg
+bWV0aG9kIHRvIGdldCB0aGVzZSBkYXRhLg0KDQpodHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1D
+L3Bob3NwaG9yLXdlYnVpL2Jsb2IvZTM0ZjQ2YzE5MWE0Yzk5MzYwOGFjNjRhODY3OTIwZmI2NDBl
+ODEzMy9hcHAvY29tbW9uL3NlcnZpY2VzL2FwaS11dGlscy5qcyNMOTMyDQoNCg0KSWYgc28sIHBy
+b2JhYmx5IHdpbGwgbmVlZCB0byBhZGQgc29tZSBjb25zb2xlLmxvZygpcyB0byB0aGF0IGZ1bmN0
+aW9uDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci13ZWJ1aS9ibG9iL2Y3MGY0
+MjU1MzYxNTk3MjE2M2IzNmM5YjRkNzdiZTA3ZTQzOTkxMjIvYXBwL2NvbW1vbi9zZXJ2aWNlcy9h
+cGktdXRpbHMuanMjTDkxMg0K
 
-It sounds like there is a decent need for some type of aggregator.  Would
-anyone be interested in setting up a meeting to try and synthesize our use
-cases into some broadly applicable requirements?
+--_000_1CCD8B5B2FA246BC88F1B6F3CBD97AF7fbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <A1FA4E71C88DD1459ACAD4A473998B4A@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
-I'm located on the West Coast, but I have a pretty flexible schedule for
-other time zones next week.
+PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
+bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
+dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
+dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
+dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
+dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
+bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
+IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
+IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5Ok1lbmxvOw0K
+CXBhbm9zZS0xOjIgMTEgNiA5IDMgOCA0IDIgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25zICov
+DQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47
+DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1p
+bHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXtt
+c28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246
+dW5kZXJsaW5lO30NCmE6dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28t
+c3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6Izk1NEY3MjsNCgl0ZXh0LWRlY29yYXRpb246dW5k
+ZXJsaW5lO30NCnAuTXNvTGlzdFBhcmFncmFwaCwgbGkuTXNvTGlzdFBhcmFncmFwaCwgZGl2Lk1z
+b0xpc3RQYXJhZ3JhcGgNCgl7bXNvLXN0eWxlLXByaW9yaXR5OjM0Ow0KCW1hcmdpbi10b3A6MGlu
+Ow0KCW1hcmdpbi1yaWdodDowaW47DQoJbWFyZ2luLWJvdHRvbTowaW47DQoJbWFyZ2luLWxlZnQ6
+LjVpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250
+LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpwLm1zb25vcm1hbDAsIGxpLm1zb25vcm1h
+bDAsIGRpdi5tc29ub3JtYWwwDQoJe21zby1zdHlsZS1uYW1lOm1zb25vcm1hbDsNCgltc28tbWFy
+Z2luLXRvcC1hbHQ6YXV0bzsNCgltYXJnaW4tcmlnaHQ6MGluOw0KCW1zby1tYXJnaW4tYm90dG9t
+LWFsdDphdXRvOw0KCW1hcmdpbi1sZWZ0OjBpbjsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQt
+ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCnAucDEsIGxpLnAxLCBkaXYucDENCgl7bXNv
+LXN0eWxlLW5hbWU6cDE7DQoJbWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
+Zm9udC1zaXplOjguNXB0Ow0KCWZvbnQtZmFtaWx5Ok1lbmxvOw0KCWNvbG9yOmJsYWNrO30NCnAu
+cDIsIGxpLnAyLCBkaXYucDINCgl7bXNvLXN0eWxlLW5hbWU6cDI7DQoJbWFyZ2luOjBpbjsNCglt
+YXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjguNXB0Ow0KCWZvbnQtZmFtaWx5Ok1l
+bmxvOw0KCWNvbG9yOmJsYWNrO30NCnNwYW4uRW1haWxTdHlsZTIxDQoJe21zby1zdHlsZS10eXBl
+OnBlcnNvbmFsOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndp
+bmRvd3RleHQ7fQ0Kc3Bhbi5zMQ0KCXttc28tc3R5bGUtbmFtZTpzMTsNCgljb2xvcjojQjJCMkIy
+Ow0KCWJhY2tncm91bmQ6YmxhY2s7fQ0Kc3Bhbi5zMw0KCXttc28tc3R5bGUtbmFtZTpzMzsNCgli
+YWNrZ3JvdW5kOiM4NzhBMDQ7fQ0Kc3Bhbi5zNA0KCXttc28tc3R5bGUtbmFtZTpzNDsNCgljb2xv
+cjojRUJFRjE4O30NCnNwYW4uczINCgl7bXNvLXN0eWxlLW5hbWU6czI7fQ0Kc3Bhbi5hcHBsZS1j
+b252ZXJ0ZWQtc3BhY2UNCgl7bXNvLXN0eWxlLW5hbWU6YXBwbGUtY29udmVydGVkLXNwYWNlO30N
+CnNwYW4uRW1haWxTdHlsZTI3DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsOw0KCWZvbnQtZmFt
+aWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0Kc3Bhbi5FbWFp
+bFN0eWxlMjgNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWw7DQoJZm9udC1mYW1pbHk6IkNhbGli
+cmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQpzcGFuLnBsLXMNCgl7bXNvLXN0
+eWxlLW5hbWU6cGwtczt9DQpzcGFuLnBsLXBkcw0KCXttc28tc3R5bGUtbmFtZTpwbC1wZHM7fQ0K
+c3Bhbi5FbWFpbFN0eWxlMzENCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWw7DQoJZm9udC1mYW1p
+bHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQpzcGFuLkVtYWls
+U3R5bGUzMg0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsNCglmb250LWZhbWlseToiQ2FsaWJy
+aSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCnNwYW4uRW1haWxTdHlsZTMzDQoJ
+e21zby1zdHlsZS10eXBlOnBlcnNvbmFsOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNl
+cmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0Kc3Bhbi5FbWFpbFN0eWxlMzQNCgl7bXNvLXN0eWxl
+LXR5cGU6cGVyc29uYWw7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJY29s
+b3I6d2luZG93dGV4dDt9DQpzcGFuLkVtYWlsU3R5bGUzNg0KCXttc28tc3R5bGUtdHlwZTpwZXJz
+b25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3
+aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5
+Ow0KCWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4g
+MTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rp
+b24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+DQo8L2hlYWQ+DQo8Ym9keSBs
+YW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0i
+V29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNp
+emU6MTEuMHB0Ij5JdCBkb2VzIHdvcmsgZm9yIG1lLiBJIGRvbuKAmXQgZmluZCBhbnkgcmVhc29u
+IHRoYXQgd2h5IGl0IGlzIG5vdCBhIHZhbHVlIGFzIGl0IGlzIGVuYWJsaW5nIHJlZGZpc2ggaW50
+ZXJmYWNlLiBJZiBpdCBpcyBicmVha2luZyBleGlzdGluZyBwaG9zcGhvciBzZW5zb3IgaW1wbGVt
+ZW50YXRpb24gdGhlbiB3ZSBuZWVkIHRvIGZpeCB0aGF0IGJ1dCB3ZSBzaG91bGQNCiBkZWZpbml0
+ZWx5IHN1cHBvcnQgYm90aCBkYnVzLXNlbnNvciBhcyB3ZWxsIGFzIHBob3NwaG9yLXNlbnNvcnMu
+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9
+ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5SZWdhcmRzPG86cD48
+L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
+c2l6ZToxMS4wcHQiPi1WaWpheTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwv
+c3Bhbj48L3A+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlkICNCNUM0
+REYgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij48Yj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5
+bGU9ImNvbG9yOmJsYWNrIj4mcXVvdDtQaW5lLCBLYXRocnluIEVsYWluZVgmcXVvdDsgJmx0O2th
+dGhyeW4uZWxhaW5leC5waW5lQGludGVsLmNvbSZndDs8YnI+DQo8Yj5EYXRlOiA8L2I+VGh1cnNk
+YXksIEphbnVhcnkgOSwgMjAyMCBhdCAyOjA5IFBNPGJyPg0KPGI+VG86IDwvYj5WaWpheSBLaGVt
+a2EgJmx0O3ZpamF5a2hlbWthQGZiLmNvbSZndDssIEd1bm5hciBNaWxscyAmbHQ7Z21pbGxzQGxp
+bnV4LnZuZXQuaWJtLmNvbSZndDssICZxdW90O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZxdW90
+OyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5S
+RTogd2VidWkgbm90IHdvcmtpbmcgZm9yIG1lPG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+
+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4w
+cHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPkhpLDwvc3Bhbj48bzpwPjwvbzpw
+PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
+Ij4mbmJzcDs8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SeKAmXZlIHVwbG9hZGVkIGEgd29yayBpbiBwcm9n
+cmVzcyBwYXRjaCB3aXRoIHRoZSBzZW5zb3JzIHBhZ2UgdXNpbmcgUmVkZmlzaCBkYXRhLg0KPC9z
+cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZToxMS4wcHQiPiZuYnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPkkgcHVsbGVkIG1vc3Qgb2YgdGhlIEludGVsIGRvd25zdHJlYW0gVUkgb2ZmIHNv
+IGl04oCZcyBhIGJpdCBwbGFpbiBsb29raW5nLCBidXQgc2hvdWxkIGhhdmUgdGhlIGZ1bmN0aW9u
+YWxpdHkgbmVlZGVkIGZvciB1c2luZyBSZWRmaXNoIGZvciBzZW5zb3JzOjxvOnA+PC9vOnA+PC9w
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48YSBocmVmPSJodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2ludC5j
+b20vdjIvdXJsP3U9aHR0cHMtM0FfX2dlcnJpdC5vcGVuYm1jLTJEcHJvamVjdC54eXpfY19vcGVu
+Ym1jX3Bob3NwaG9yLTJEd2VidWlfLTJCXzI4MzQyJmFtcDtkPUR3TUZBZyZhbXA7Yz01VkQwUlR0
+TmxUaDN5Y2Q0MWIzTVV3JmFtcDtyPXY5TVUwS2k5cFduVFhDV3dqSFBWZ3BuQ1I4MHZYa2tjcklh
+cVU3VVNsNWcmYW1wO209SmtWbmM2eGNzck9RRk96M1QtMUJEZmZRT0pOeU5GNHdWQTViS3c4Yklo
+QSZhbXA7cz10QVdlcms5Qk9hMEVTTjZnNDFmSjRwVDVGc3ZWaElEeWdUQnJGelFWZjhRJmFtcDtl
+PSI+aHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvcGhvc3Bob3It
+d2VidWkvJiM0MzsvMjgzNDI8L2E+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPklmIHRoZXJl4oCZ
+cyB2YWx1ZSBpbiBnZXR0aW5nIHRoaXMgaW50byB1cHN0cmVhbSwgcGxlYXNlIGxldCBtZSBrbm93
+IOKAkyB3b3VsZCByZXF1aXJlIGEgYml0IG1vcmUgY29vcmRpbmF0aW5nIGFuZCBVSSB0d2Vha3Mg
+dG8gZ2V0IHRoaXMgdG8gbWF0Y2ggdXBzdHJlYW0sIHdoaWNoIGlzIHdoeSBmb3Igbm93IEkganVz
+dCB1cGxvYWRlZCBhcyBXSVAuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4m
+bmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkJlc3QsPGJyPg0KS2F0
+aHk8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6MTEuMHB0Ij4mbmJzcDs8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+Jm5ic3A7PC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPGRpdj4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29s
+aWQgI0UxRTFFMSAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Gcm9tOjwvc3Bhbj48
+L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPiBvcGVuYm1jICZsdDtvcGVuYm1jLWJv
+dW5jZXMmIzQzO2thdGhyeW4uZWxhaW5leC5waW5lPWludGVsLmNvbUBsaXN0cy5vemxhYnMub3Jn
+Jmd0Ow0KPGI+T24gQmVoYWxmIE9mIDwvYj5WaWpheSBLaGVta2E8YnI+DQo8Yj5TZW50OjwvYj4g
+TW9uZGF5LCBKYW51YXJ5IDYsIDIwMjAgNDo0NiBQTTxicj4NCjxiPlRvOjwvYj4gR3VubmFyIE1p
+bGxzICZsdDtnbWlsbHNAbGludXgudm5ldC5pYm0uY29tJmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxh
+YnMub3JnPGJyPg0KPGI+U3ViamVjdDo8L2I+IFJlOiB3ZWJ1aSBub3Qgd29ya2luZyBmb3IgbWU8
+L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHls
+ZT0iZm9udC1zaXplOjExLjBwdCI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPiZuYnNwOzwvc3Bh
+bj48bzpwPjwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29s
+aWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+RnJvbTogPC9zcGFuPjwvYj48
+c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPkd1bm5hciBNaWxscyAmbHQ7PGEgaHJlZj0ibWFpbHRv
+OmdtaWxsc0BsaW51eC52bmV0LmlibS5jb20iPmdtaWxsc0BsaW51eC52bmV0LmlibS5jb208L2E+
+Jmd0Ozxicj4NCjxiPkRhdGU6IDwvYj5Nb25kYXksIEphbnVhcnkgNiwgMjAyMCBhdCA0OjQwIFBN
+PGJyPg0KPGI+VG86IDwvYj5WaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWpheWto
+ZW1rYUBmYi5jb20iPnZpamF5a2hlbWthQGZiLmNvbTwvYT4mZ3Q7LCAmcXVvdDs8YSBocmVmPSJt
+YWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8
+L2E+JnF1b3Q7ICZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5v
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5SZTog
+d2VidWkgbm90IHdvcmtpbmcgZm9yIG1lPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8
+ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQi
+PiZuYnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPHA+Jm5ic3A7PG86cD48L286
+cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+T24gMS82LzIwMjAgNjoyOSBQTSwg
+VmlqYXkgS2hlbWthIHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8YmxvY2txdW90ZSBz
+dHlsZT0ibWFyZ2luLXRvcDo1LjBwdDttYXJnaW4tYm90dG9tOjUuMHB0Ij4NCjxkaXY+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+Jm5ic3A7PC9z
+cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZToxMS4wcHQiPkl0IHNheXMgb24gcGFnZSDigJx0aGVyZSBhcmUgbm8gc2Vuc29ycyBh
+dmFpbGFibGXigJ08L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4m
+bmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPHAgc3R5bGU9Im1h
+cmdpbi1ib3R0b206MTIuMHB0Ij48c3BhbiBjbGFzcz0icGwtcyI+QSBjdXJsIGNhbGwgdG8gL3h5
+ei9vcGVuYm1jX3Byb2plY3Qvc2Vuc29ycy9lbnVtZXJhdGUgcmV0dXJucyBhbGwgdGhlIHNlbnNv
+cnMgY29ycmVjdGx5ID8NCjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIHN0eWxlPSJtYXJnaW4t
+Ym90dG9tOjEyLjBwdCI+PHNwYW4gY2xhc3M9InBsLXMiPkkgaGF2ZSBub3QgdXNlZCBhbnkgY3Vy
+bCBjb21tYW5kIGhlcmUuIFBsZWFzZSBsZXQgbWUga25vdyB3aGF0IGN1cmwgY29tbWFuZCB0byB1
+c2UuIEJ1dCBpbnRlbCBpcyB1c2luZyByZWRmaXNoIG1ldGhvZCB0byBnZXQgdGhlc2UgZGF0YS48
+L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBzdHlsZT0ibWFyZ2luLWJvdHRvbToxMi4wcHQiPjxz
+cGFuIGNsYXNzPSJwbC1zIj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1DL3Bo
+b3NwaG9yLXdlYnVpL2Jsb2IvZTM0ZjQ2YzE5MWE0Yzk5MzYwOGFjNjRhODY3OTIwZmI2NDBlODEz
+My9hcHAvY29tbW9uL3NlcnZpY2VzL2FwaS11dGlscy5qcyNMOTMyIj5odHRwczovL2dpdGh1Yi5j
+b20vSW50ZWwtQk1DL3Bob3NwaG9yLXdlYnVpL2Jsb2IvZTM0ZjQ2YzE5MWE0Yzk5MzYwOGFjNjRh
+ODY3OTIwZmI2NDBlODEzMy9hcHAvY29tbW9uL3NlcnZpY2VzL2FwaS11dGlscy5qcyNMOTMyPC9h
+Pjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIHN0eWxlPSJtYXJnaW4tYm90dG9tOjEyLjBwdCI+
+PHNwYW4gY2xhc3M9InBsLXMiPjxicj4NCjxicj4NCklmIHNvLCBwcm9iYWJseSB3aWxsIG5lZWQg
+dG8gYWRkIHNvbWUgY29uc29sZS5sb2coKXMgdG8gdGhhdCBmdW5jdGlvbjxicj4NCjxhIGhyZWY9
+Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLXdlYnVpL2Jsb2IvZjcwZjQyNTUz
+NjE1OTcyMTYzYjM2YzliNGQ3N2JlMDdlNDM5OTEyMi9hcHAvY29tbW9uL3NlcnZpY2VzL2FwaS11
+dGlscy5qcyNMOTEyIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci13ZWJ1aS9i
+bG9iL2Y3MGY0MjU1MzYxNTk3MjE2M2IzNmM5YjRkNzdiZTA3ZTQzOTkxMjIvYXBwL2NvbW1vbi9z
+ZXJ2aWNlcy9hcGktdXRpbHMuanMjTDkxMjwvYT48L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rp
+dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
 
-Some topics for us to discuss (either in a meeting or offline) include:
-
-1) Layer 2/3 discovery and negotiation
-2) Caching, proxy, and consistency requirements
-3) Target hardware, performance requirements, and scale of aggregation
-4) Tooling and infrastructure improvements needed to support an aggregator
-5) Amount of configuration and knowledge an aggregator needs to know a
-priori.
-
-Any ideas on what else we can cover?  Is there a preferred format or medium
-that would work best to gather these higher level requirements?
-
-Regards,
-Richard
-
-On Thu, Dec 19, 2019 at 2:17 AM vishwa <vishwa@linux.vnet.ibm.com> wrote:
-
-> Richard,
->
-> Thanks for putting it together.
-> On 12/13/19 1:32 AM, Richard Hanley wrote:
->
-> In our case we are working to migrate away from IPMI to Redfish.  Most of
-> the solutions I've been thinking about have leaned pretty heavily into
-> that.
->
-> In my mind I've sliced this project up into a few different areas.
->
-> *Merging/Transforming Redfish Resources*
-> Let's say that there are several Redfish services.  They will have
-> collections of Systems, Chassis, and Managers that need to be merged.  In
-> the simplest uses this would be just an HTTP proxy cache with some URL
-> cleaning.
->
-> However, this could end up being a pretty deep merge in cases where some
-> resources are split across multiple management domains.  Memory errors
-> being on one node, but the temperature sensor being on a separate node is=
- a
-> good example. Another example would be the "ContainedBy" link.  These lin=
-ks
-> might reach across different BMC boundaries, and would need to be inserte=
-d
-> by the primary node.
->
-> *Aggregating Services and Actions*
-> This is where I think the DMTF proposals for Redfish aggregation (located
-> here
-> <https://members.dmtf.org/apps/org/workgroup/redfish/document.php?documen=
-t_id=3D91811>)
-> provide the most insight.  My reading of this proposal is that an
-> aggregation service would be used to tie actions together.  For example,
-> there may be individual chassis reset action embedded in the chassis
-> resources, and then aggregated action for a full reset.
->
-> DMTF seems to be leaving the arbiter of the aggregation up to the
-> implementation.  I'd imagine that some implementations would provide a
-> static aggregation service, while others would allow clients to create
-> their own dynamic aggregates.
->
-> *Discovery, Negotiation, and Error Recovery*
-> This is an area where I'd like to hear more about your requirements,
-> Vishwa.  Would you expect the BMC cluster to be hot-swappable?  Is there =
-a
-> particular reason that it has to be peer to peer? What kind of error
-> recovery should be supported when a node fails?
->
-> At a high level, the idea that has been suggested internally is to have a
-> designated master node at install time.  That node would discover any oth=
-er
-> Redfish services on the LAN, and begin aggregating them.  The master node
-> would keep any in memory cache of the other services, and reload resource=
-s
-> on demand.  If a node goes down, then there error is propagated using HTT=
-P
-> return codes.  If the master node goes down, then the entire aggregate wi=
-ll
-> go down.  In theory a client could talk to individual nodes if it needed =
-to.
->
-> Case-1:
-> .......
->
-> Consider a hypothetical case where I have 4 compute nodes, each having BM=
-C
-> in it and that BMC is responsible for initiating power-on and other
-> services for that node / getting the debug data out of that node / etc...
->
-> We would want an external Management Console(MC) to manage this rack.
-> Instead of going to 4 nodes separately, MC can ask 1 BMC that I am callin=
-g
-> as "Point Of Contact" BMC / Primary BMC for that rack. It is the job of
-> that BMC to do whatever is needed to return the result.
->
-> Similarly, when the POC goes down, we would need another POC.
->
-> I believe, Redfish discovery can be used to discover each BMCs. But how
-> does the heart beat work between discovered BMCs ?
-> Also, when the POC goes down, how can we sense that and make some other
-> BMC as POC using Redfish framework ?
->
->
-> Case-2:
-> .......
->
-> I have a control node that is housing 2 BMCs. One can be Primary and othe=
-r
-> can be Slave. Each BMC has the complete view of the whole systems.
->
-> I am assuming, we could still discover the other BMC using Redfish.. But
-> again, how do we exchange heartbeat and do failover operations ?
->
-> Thanks,
->
-> !! Vishwa !!
->
-> * Authentication and Authorization*
-> This is an area where I think Redfish is a little hands off.  In an ideal
-> world ACLs could be setup without proliferating username/passwords across
-> nodes.  As an aside, we've been thinking about how to use Redfish without
-> any usernames or passwords.  By using a combination of certificates and
-> authorization tokens it should be possible to extend a security zone to a
-> small cluster of BMCs.
->
-> Regards,
-> Richard
->
-> On Wed, Dec 11, 2019 at 11:33 PM Neeraj Ladkani <neladk@microsoft.com>
-> wrote:
->
->> Sure, how do we want to enable BMC-BMC communication? Standard
->> redfish/IPMI ?
->>
->>
->>
->> Neeraj
->>
->>
->>
->>
->>
->> *From:* vishwa <vishwa@linux.vnet.ibm.com>
->> *Sent:* Wednesday, December 11, 2019 10:59 PM
->> *To:* Neeraj Ladkani <neladk@microsoft.com>
->> *Cc:* openbmc@lists.ozlabs.org; sgundura@in.ibm.com; kusripat@in.ibm.com=
-;
->> shahjsha@in.ibm.com; vikantan@in.ibm.com; Richard Hanley <
->> rhanley@google.com>
->> *Subject:* Re: [EXTERNAL] Re: Managing heterogeneous systems
->>
->>
->>
->> On 12/10/19 3:20 PM, Neeraj Ladkani wrote:
->>
->> Great discussion.
->>
->>
->>
->> The problem is not physical interface as they can communicate using LAN.
->> The problem is entity binding as one compute node can be connected to 1 =
-or
->> more storage nodes. How can we have one view of system from operational
->> perspective? Power on/off, SEL logs, telemetry?
->>
->>
->>
->>
->> Correct. This is where I mentioned about "Primary BMC acting as Point Of
->> Contact" for external requests.
->> Depending on how we want to service the request, we could orchestrate
->> that via PoC BMC or respond to external requesters on where they can get
->> the data and they connect to 'em directly.
->>
->>
->> !! Vishwa !!
->>
->>
->>
->> Some of problems :
->>
->>
->>
->>    1. Power operations : Power/resets/ need to be coordinated in all
->>    nodes in a system
->>    2. Telemetry : OS runs only on head node so if there are requests to
->>    read telemetry, it should get telemetry ( SEL logs, Sensor Values ) f=
-rom
->>    all the nodes.
->>    3. Firmware Update
->>    4. RAS: Memory errors are logged by UEFI SMM in to head node but
->>    corresponding DIMM temperature , inlet temperature are logged on seco=
-ndary
->>    node which are not mapped.
->>
->>
->>
->>
->>
->> I have been exploring couple of routes
->>
->>
->>
->>    1. LUN  discovery and routing: this is similar to IPMI but I am
->>    working on architecture to extend this to support multiple LUNs and r=
-oute
->>    them from Head node. ( we would need LUN routing over LAN )
->>    2. Redfish hierarchy for systems
->>
->>    "Systems": {
->>
->>         "@odata.id": "/redfish/v1/Systems"
->>
->>     },
->>
->>     "Chassis": {
->>
->>         "@odata.id": "/redfish/v1/Chassis"
->>
->>     },
->>
->>     "Managers": {
->>
->>         "@odata.id": "/redfish/v1/Managers"
->>
->>     },
->>
->>     "AccountService": {
->>
->>         "@odata.id": "/redfish/v1/AccountService"
->>
->>     },
->>
->>     "SessionService": {
->>
->>         "@odata.id": "/redfish/v1/SessionService"
->>
->>     },
->>
->>     "Links": {
->>
->>         "Sessions": {
->>
->>             "@odata.id": "/redfish/v1/SessionService/Sessions"
->>
->>         }
->>
->> 3.  Custom Messaging over LAN ( PubSub)
->>
->>
->>
->> I am also working on a whitepaper on same area J.  Happy to work with
->> you guys if you have any ideas on how can we standardize this.
->>
->>
->>
->> Neeraj
->>
->>
->>
->> *From:* vishwa <vishwa@linux.vnet.ibm.com> <vishwa@linux.vnet.ibm.com>
->> *Sent:* Tuesday, December 10, 2019 1:00 AM
->> *To:* Richard Hanley <rhanley@google.com> <rhanley@google.com>; Neeraj
->> Ladkani <neladk@microsoft.com> <neladk@microsoft.com>
->> *Cc:* openbmc@lists.ozlabs.org; sgundura@in.ibm.com; kusripat@in.ibm.com=
-;
->> shahjsha@in.ibm.com; vikantan@in.ibm.com
->> *Subject:* [EXTERNAL] Re: Managing heterogeneous systems
->>
->>
->>
->> Hi Richard / Neeraj,
->>
->> Thanks for bringing this up. It's one of the interesting topic for IBM.
->>
->> Some of the thoughts here.....
->>
->> When we have multiple BMCs as part of a single system, then there are 3
->> main parts into it.
->>
->> 1/. Discovering the peer BMCs and role assignment
->> 2/. Monitoring the existence of peer BMCs - heartbeat
->> 3/. In the event of loosing the master, detect so using #2 and then
->> reassign the role
->>
->> Depending on how we want to establish the roles, we could have
->> Single-Master, Many-slave or Multi-Master, Multi-Slave. etc
->>
->> One of the team here is trying to do a POC for Multi BMC architecture an=
-d
->> is still in the very beginning stage.
->> The team is currently studying/evaluating the available solution -
->> Corosync / Heartbeat / Pacemaker".
->> Corosync works nice with the clusters, but we need to see if we can trim
->> it down for BMC.
->>
->> If we can not use corosync for some reason, then need to see if we can
->> use the discovery using PLDM ( probably use the terminus IDs )
->> and come up with custom rules for assigning Master-Slave roles.
->>
->> If we choose to have Single-Master and Many-Slave, we could have that
->> Single-Master as an entity acting as a Point of Contact for external
->> request and then could orchestrate with the needed BMCs internally to ge=
-t
->> the job done
->>
->> I will be happy to know if there are alternatives that suit BMC kind of
->> an architecture
->>
->> !! Vishwa !!
->>
->> On 12/10/19 4:32 AM, Richard Hanley wrote:
->>
->> Hi Neeraj,
->>
->>
->>
->> This is an open question that I've been looking into as well.
->>
->>
->>
->> For BMC to BMC communication there are a few options.
->>
->>    1. If you have network connectivity you can communicate using Redfish=
-.
->>    2. If you only have a PCIe connection, you'll have to use either the
->>    inband connection or the side band I2C*.  PLDM and MCTP are protocols=
- that
->>    defined to handle this use case, although I'm not sure if the OpenBMC
->>    implementations have been used in production.
->>    3. There is always IPMI, which has its own pros/cons.
->>
->> For taking several BMCs and aggregating them into a single logical
->> interface that is exposed to the outside world, there are a few things
->> happening on that front.  DMTF has been working on an aggregation protoc=
-ol
->> for Redfish.  However, it's my understanding that their proposal is more
->> directed at the client level, as opposed to within a single "system".
->>
->>
->>
->> I just recently joined the community, but I've been thinking about how a
->> proxy layer could merge two Redfish services together.  Since Redfish is
->> fairly strongly typed and has a well defined mechanism for OEM extension=
-s,
->> this should be pretty generally applicable.  I am planning on having a
->> white paper on the issue sometime after the holidays.
->>
->>
->>
->> Another thing to note, recently DMTF released a spec for running a binar=
-y
->> Redfish over PLDM called RDE.  That might be a useful way of tying all
->> these concepts together.
->>
->>
->>
->> I'd be curious about your thoughts and use cases here.  Would either PLD=
-M
->> or Redfish fit your use case?
->>
->>
->>
->> Regards,
->>
->> Richard
->>
->>
->>
->> *I've heard of some proposals that run a network interface over PCIe.  I
->> don't know enough about PCIe to know if this is a good idea.
->>
->>
->>
->> On Mon, Dec 9, 2019 at 1:27 PM Neeraj Ladkani <neladk@microsoft.com>
->> wrote:
->>
->> Are there any standards in managing heterogeneous systems? For example i=
-n
->> a rack if there is a compute node( with its own BMC) and storage node( w=
-ith
->> its own BMC) connected using a PCIe switch.  How these two BMC represent=
-ed
->> as one system ?  are there any standards for BMC =E2=80=93 BMC communica=
-tion?
->>
->>
->>
->>
->>
->> Neeraj
->>
->>
->>
->>
-
---000000000000b57fa4059bbc6e69
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I&#39;m going to resurrect=C2=A0this thread for the new ye=
-ar.<div><br></div><div>It sounds like there is a decent need for some type =
-of aggregator.=C2=A0 Would anyone be interested in setting up a meeting to =
-try and synthesize our use cases into some broadly applicable=C2=A0requirem=
-ents?</div><div><br></div><div>I&#39;m located on the West Coast, but I hav=
-e a pretty flexible schedule for other=C2=A0time zones next week.</div><div=
-><br></div><div>Some topics for us to discuss (either in a meeting or offli=
-ne) include:</div><div><br></div><div>1) Layer 2/3 discovery and negotiatio=
-n</div><div>2) Caching, proxy, and consistency=C2=A0requirements</div><div>=
-3) Target hardware, performance requirements, and scale of aggregation</div=
-><div>4) Tooling and infrastructure improvements needed to support an aggre=
-gator</div><div>5) Amount of configuration and knowledge an aggregator need=
-s to know a priori.</div><div><br></div><div>Any ideas on what else we can =
-cover?=C2=A0 Is there a preferred=C2=A0format or medium that would work bes=
-t to gather these higher level=C2=A0requirements?</div><div><br></div><div>=
-</div><div>Regards,</div><div>Richard</div></div><br><div class=3D"gmail_qu=
-ote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 19, 2019 at 2:17 AM =
-vishwa &lt;<a href=3D"mailto:vishwa@linux.vnet.ibm.com">vishwa@linux.vnet.i=
-bm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">
- =20
-   =20
- =20
-  <div bgcolor=3D"#FFFFFF">
-    <p>Richard, <br>
-    </p>
-    <p>Thanks for putting it together.<br>
-    </p>
-    <div>On 12/13/19 1:32 AM, Richard Hanley
-      wrote:<br>
-    </div>
-    <blockquote type=3D"cite">
-     =20
-      <div dir=3D"ltr">In our case we are working to migrate away from
-        IPMI to Redfish.=C2=A0 Most of the solutions I&#39;ve been thinking=
- about
-        have leaned pretty heavily into that.
-        <div><br>
-        </div>
-        <div>In my mind I&#39;ve sliced this project up into a few differen=
-t
-          areas.
-          <div><br>
-          </div>
-          <div><b>Merging/Transforming Redfish Resources</b></div>
-          <div>Let&#39;s say that there are several Redfish services.=C2=A0=
- They
-            will have collections of Systems, Chassis, and Managers
-            that=C2=A0need to be merged.=C2=A0 In the simplest uses this wo=
-uld be
-            just an HTTP proxy cache with some URL cleaning.</div>
-          <div><br>
-          </div>
-          <div>However, this could end up being a pretty deep merge in
-            cases where some resources are split across=C2=A0multiple
-            management domains.=C2=A0 Memory errors being on one node, but
-            the temperature=C2=A0sensor being on a separate=C2=A0node is a =
-good
-            example. Another example would be the &quot;ContainedBy&quot; l=
-ink.=C2=A0
-            These links might reach across different BMC boundaries, and
-            would need to be inserted by the primary node.=C2=A0</div>
-          <div><br>
-          </div>
-          <div><b>Aggregating Services and Actions</b></div>
-          <div>This is where I think the DMTF proposals for Redfish
-            aggregation (located <a href=3D"https://members.dmtf.org/apps/o=
-rg/workgroup/redfish/document.php?document_id=3D91811" target=3D"_blank">he=
-re</a>) provide
-            the most insight.=C2=A0 My reading of this proposal is that an
-            aggregation service would be used to tie actions together.=C2=
-=A0
-            For example, there may be individual chassis reset action
-            embedded in the chassis resources, and then aggregated
-            action for a full reset.</div>
-          <div><br>
-          </div>
-          <div>DMTF seems to be leaving the arbiter of the aggregation
-            up to the implementation.=C2=A0 I&#39;d imagine that some
-            implementations would provide a static aggregation service,
-            while others would allow clients to create their own dynamic
-            aggregates.</div>
-          <div><b><br>
-            </b></div>
-          <div><b>Discovery, Negotiation, and Error Recovery</b></div>
-          <div>This is an area where I&#39;d like to hear more about your
-            requirements, Vishwa.=C2=A0 Would you expect the BMC cluster to
-            be hot-swappable?=C2=A0 Is there a particular reason that it ha=
-s
-            to be peer to peer? What kind of error recovery should be
-            supported when a node fails?=C2=A0</div>
-          <div><br>
-          </div>
-          <div>At a high level, the idea that has been suggested
-            internally is to have a designated master node at install
-            time.=C2=A0 That node would discover any other Redfish services
-            on the LAN, and begin aggregating them.=C2=A0 The master node
-            would keep any in memory cache of the other services, and
-            reload resources on demand.=C2=A0 If a node goes down, then the=
-re
-            error is propagated using HTTP return codes.=C2=A0 If the maste=
-r
-            node goes down, then the entire aggregate will go down.=C2=A0 I=
-n
-            theory a client could talk to individual nodes if it needed
-            to.</div>
-          <div><b><br>
-            </b></div>
-        </div>
-      </div>
-    </blockquote>
-    <p>Case-1:<br>
-      .......<br>
-    </p>
-    <p>Consider a hypothetical case where I have 4 compute nodes, each
-      having BMC in it and that BMC is responsible for initiating
-      power-on and other services for that node / getting the debug data
-      out of that node / etc...</p>
-    <p>We would want an external Management Console(MC) to manage this
-      rack. Instead of going to 4 nodes separately, MC can ask 1 BMC
-      that I am calling as &quot;Point Of Contact&quot; BMC / Primary BMC f=
-or that
-      rack. It is the job of that BMC to do whatever is needed to return
-      the result.</p>
-    <p>Similarly, when the POC goes down, we would need another POC.</p>
-    <p>I believe, Redfish discovery can be used to discover each BMCs.
-      But how does the heart beat work between discovered BMCs ?<br>
-      Also, when the POC goes down, how can we sense that and make some
-      other BMC as POC using Redfish framework ?</p>
-    <p><br>
-      Case-2:<br>
-      .......</p>
-    <p>I have a control node that is housing 2 BMCs. One can be Primary
-      and other can be Slave. Each BMC has the complete view of the
-      whole systems. <br>
-    </p>
-    <p>I am assuming, we could still discover the other BMC using
-      Redfish.. But again, how do we exchange heartbeat and do failover
-      operations ?</p>
-    <p>Thanks,</p>
-    <p>!! Vishwa !!<br>
-    </p>
-    <blockquote type=3D"cite">
-      <div dir=3D"ltr">
-        <div>
-          <div><b> Authentication=C2=A0and=C2=A0Authorization</b></div>
-        </div>
-        <div>This is an area where I think Redfish is a little hands
-          off.=C2=A0 In an ideal world ACLs could be setup without
-          proliferating username/passwords across nodes.=C2=A0 As an aside,
-          we&#39;ve been thinking about how to use Redfish without any
-          usernames or passwords.=C2=A0 By using a combination of
-          certificates and authorization tokens it should be possible to
-          extend a security zone to a small cluster of BMCs.</div>
-        <div><br>
-        </div>
-        <div>Regards,</div>
-        <div>Richard</div>
-      </div>
-      <br>
-      <div class=3D"gmail_quote">
-        <div dir=3D"ltr" class=3D"gmail_attr">On Wed, Dec 11, 2019 at 11:33
-          PM Neeraj Ladkani &lt;<a href=3D"mailto:neladk@microsoft.com" tar=
-get=3D"_blank">neladk@microsoft.com</a>&gt;
-          wrote:<br>
-        </div>
-        <blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-          <div lang=3D"EN-US">
-            <div>
-              <p class=3D"MsoNormal"><span style=3D"color:windowtext">Sure,
-                  how do we want to enable BMC-BMC communication?
-                  Standard redfish/IPMI ?
-                </span></p>
-              <p class=3D"MsoNormal"><span style=3D"color:windowtext">=C2=
-=A0</span></p>
-              <p class=3D"MsoNormal"><span style=3D"color:windowtext">Neera=
-j</span></p>
-              <p class=3D"MsoNormal"><span style=3D"color:windowtext">=C2=
-=A0</span></p>
-              <p class=3D"MsoNormal"><span style=3D"color:windowtext">=C2=
-=A0</span></p>
-              <div>
-                <div style=3D"border-right:none;border-bottom:none;border-l=
-eft:none;border-top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
-                  <p class=3D"MsoNormal"><b><span style=3D"color:windowtext=
-">From:</span></b><span style=3D"color:windowtext"> vishwa &lt;<a href=3D"m=
-ailto:vishwa@linux.vnet.ibm.com" target=3D"_blank">vishwa@linux.vnet.ibm.co=
-m</a>&gt;
-                      <br>
-                      <b>Sent:</b> Wednesday, December 11, 2019 10:59 PM<br=
->
-                      <b>To:</b> Neeraj Ladkani &lt;<a href=3D"mailto:nelad=
-k@microsoft.com" target=3D"_blank">neladk@microsoft.com</a>&gt;<br>
-                      <b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org=
-" target=3D"_blank">openbmc@lists.ozlabs.org</a>;
-                      <a href=3D"mailto:sgundura@in.ibm.com" target=3D"_bla=
-nk">sgundura@in.ibm.com</a>;
-                      <a href=3D"mailto:kusripat@in.ibm.com" target=3D"_bla=
-nk">kusripat@in.ibm.com</a>;
-                      <a href=3D"mailto:shahjsha@in.ibm.com" target=3D"_bla=
-nk">shahjsha@in.ibm.com</a>;
-                      <a href=3D"mailto:vikantan@in.ibm.com" target=3D"_bla=
-nk">vikantan@in.ibm.com</a>;
-                      Richard Hanley &lt;<a href=3D"mailto:rhanley@google.c=
-om" target=3D"_blank">rhanley@google.com</a>&gt;<br>
-                      <b>Subject:</b> Re: [EXTERNAL] Re: Managing
-                      heterogeneous systems</span></p>
-                </div>
-              </div>
-              <p class=3D"MsoNormal">=C2=A0</p>
-              <div>
-                <p class=3D"MsoNormal">On 12/10/19 3:20 PM, Neeraj Ladkani
-                  wrote:</p>
-              </div>
-              <blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">G=
-reat
-                    discussion. </span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">T=
-he
-                    problem is not physical interface as they can
-                    communicate using LAN. The problem is entity binding
-                    as one compute node can be connected to 1 or more
-                    storage nodes. How can we have one view of system
-                    from operational perspective? Power on/off, SEL
-                    logs, telemetry? </span></p>
-              </blockquote>
-              <div>
-                <p class=3D"MsoNormal"><span style=3D"color:windowtext">=C2=
-=A0</span></p>
-              </div>
-              <div>
-                <p class=3D"MsoNormal"><span style=3D"color:windowtext"><br=
->
-                    Correct. This is where I mentioned about &quot;Primary
-                    BMC acting as Point Of Contact&quot; for external
-                    requests.<br>
-                    Depending on how we want to service the request, we
-                    could orchestrate that via PoC BMC or respond to
-                    external requesters on where they can get the data
-                    and they connect to &#39;em directly.</span></p>
-              </div>
-              <div>
-                <p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><span s=
-tyle=3D"color:windowtext"><br>
-                    !! Vishwa !!</span></p>
-              </div>
-              <blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">S=
-ome
-                    of problems :</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <ol style=3D"margin-top:0in" start=3D"1" type=3D"1">
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    Power operations : Power/resets/ need to be
-                    coordinated in all nodes in a system </li>
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    Telemetry : OS runs only on head node so if there
-                    are requests to read telemetry, it should get
-                    telemetry ( SEL logs, Sensor Values ) from all the
-                    nodes.
-                  </li>
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    Firmware Update</li>
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    RAS: Memory errors are logged by UEFI SMM in to head
-                    node but corresponding DIMM temperature , inlet
-                    temperature are logged on secondary node which are
-                    not mapped. =C2=A0</li>
-                </ol>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">I
-                    have been exploring couple of routes
-                  </span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <ol style=3D"margin-top:0in" start=3D"1" type=3D"1">
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    LUN=C2=A0 discovery and routing: this is similar to IPM=
-I
-                    but I am working on architecture to extend this to
-                    support multiple LUNs and route them from Head node.
-                    ( we would need LUN routing over LAN )
-                  </li>
-                  <li style=3D"color:rgb(0,32,96);margin-left:0in">
-                    Redfish hierarchy for systems </li>
-                </ol>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0 &quot;Systems=
-&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"_blank">oda=
-ta.id</a>&quot;: &quot;/redfish/v1/Systems&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 },</spa=
-n></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 &quot;C=
-hassis&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"_blank">oda=
-ta.id</a>&quot;: &quot;/redfish/v1/Chassis&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 },</spa=
-n></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 &quot;M=
-anagers&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"_blank">oda=
-ta.id</a>&quot;: &quot;/redfish/v1/Managers&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 },</spa=
-n></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 &quot;A=
-ccountService&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"_blank">oda=
-ta.id</a>&quot;: &quot;/redfish/v1/AccountService&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 },</spa=
-n></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 &quot;S=
-essionService&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"_blank">oda=
-ta.id</a>&quot;: &quot;/redfish/v1/SessionService&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 },</spa=
-n></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0 &quot;L=
-inks&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 &quot;Sessions&quot;: {</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;@<a href=3D"http://odata.i=
-d" target=3D"_blank">odata.id</a>&quot;: &quot;/redfish/v1/SessionService/S=
-essions&quot;</span></pre>
-                <pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 }</span></pre>
-                <pre style=3D"margin-left:0.5in"><span>3.<span style=3D"fon=
-t:7pt &quot;Times New Roman&quot;">=C2=A0 </span></span><span style=3D"font=
--family:Calibri,sans-serif;color:rgb(0,32,96)">Custom Messaging over LAN ( =
-PubSub)</span></pre>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">I
-                    am also working on a whitepaper on same area
-                  </span><span style=3D"font-family:Wingdings;color:rgb(0,3=
-2,96)">J</span><span style=3D"color:rgb(0,32,96)">.=C2=A0 Happy to work wit=
-h you
-                    guys if you have any ideas on how can we standardize
-                    this.
-                  </span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">=
-=C2=A0</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:rgb(0,32,96)">N=
-eeraj</span></p>
-                <p class=3D"MsoNormal"><span style=3D"color:windowtext">=C2=
-=A0</span></p>
-                <div>
-                  <div style=3D"border-right:none;border-bottom:none;border=
--left:none;border-top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
-                    <p class=3D"MsoNormal"><b><span style=3D"color:windowte=
-xt">From:</span></b><span style=3D"color:windowtext"> vishwa
-                        <a href=3D"mailto:vishwa@linux.vnet.ibm.com" target=
-=3D"_blank">&lt;vishwa@linux.vnet.ibm.com&gt;</a>
-                        <br>
-                        <b>Sent:</b> Tuesday, December 10, 2019 1:00 AM<br>
-                        <b>To:</b> Richard Hanley <a href=3D"mailto:rhanley=
-@google.com" target=3D"_blank">&lt;rhanley@google.com&gt;</a>;
-                        Neeraj Ladkani
-                        <a href=3D"mailto:neladk@microsoft.com" target=3D"_=
-blank">&lt;neladk@microsoft.com&gt;</a><br>
-                        <b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.o=
-rg" target=3D"_blank">openbmc@lists.ozlabs.org</a>;
-                        <a href=3D"mailto:sgundura@in.ibm.com" target=3D"_b=
-lank">sgundura@in.ibm.com</a>;
-                        <a href=3D"mailto:kusripat@in.ibm.com" target=3D"_b=
-lank">
-                          kusripat@in.ibm.com</a>; <a href=3D"mailto:shahjs=
-ha@in.ibm.com" target=3D"_blank">shahjsha@in.ibm.com</a>;
-                        <a href=3D"mailto:vikantan@in.ibm.com" target=3D"_b=
-lank">vikantan@in.ibm.com</a><br>
-                        <b>Subject:</b> [EXTERNAL] Re: Managing
-                        heterogeneous systems</span></p>
-                  </div>
-                </div>
-                <p class=3D"MsoNormal">=C2=A0</p>
-                <p>Hi Richard / Neeraj,</p>
-                <p>Thanks for bringing this up. It&#39;s one of the
-                  interesting topic for IBM.</p>
-                <p>Some of the thoughts here.....</p>
-                <p>When we have multiple BMCs as part of a single
-                  system, then there are 3 main parts into it.</p>
-                <p>1/. Discovering the peer BMCs and role assignment<br>
-                  2/. Monitoring the existence of peer BMCs - heartbeat
-                  <br>
-                  3/. In the event of loosing the master, detect so
-                  using #2 and then reassign the role</p>
-                <p>Depending on how we want to establish the roles, we
-                  could have Single-Master, Many-slave or Multi-Master,
-                  Multi-Slave. etc</p>
-                <p>One of the team here is trying to do a POC for Multi
-                  BMC architecture and is still in the very beginning
-                  stage.
-                  <br>
-                  The team is currently studying/evaluating the
-                  available solution - Corosync / Heartbeat /
-                  Pacemaker&quot;.<br>
-                  Corosync works nice with the clusters, but we need to
-                  see if we can trim it down for BMC.<br>
-                  <br>
-                  If we can not use corosync for some reason, then need
-                  to see if we can use the discovery using PLDM (
-                  probably use the terminus IDs )<br>
-                  and come up with custom rules for assigning
-                  Master-Slave roles.</p>
-                <p>If we choose to have Single-Master and Many-Slave, we
-                  could have that Single-Master as an entity acting as a
-                  Point of Contact for external request and then could
-                  orchestrate with the needed BMCs internally to get the
-                  job done</p>
-                <p>I will be happy to know if there are alternatives
-                  that suit BMC kind of an architecture</p>
-                <p>!! Vishwa !!</p>
-                <div>
-                  <p class=3D"MsoNormal">On 12/10/19 4:32 AM, Richard
-                    Hanley wrote:</p>
-                </div>
-                <blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
-                  <div>
-                    <p class=3D"MsoNormal">Hi Neeraj, </p>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">This is an open question that
-                        I&#39;ve been looking into as well.=C2=A0=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">For BMC to BMC communication
-                        there are a few options.</p>
-                    </div>
-                    <div>
-                      <ol start=3D"1" type=3D"1">
-                        <li class=3D"MsoNormal">
-                          If you have network connectivity you can
-                          communicate using Redfish.</li>
-                        <li class=3D"MsoNormal">
-                          If you only have a PCIe connection, you&#39;ll
-                          have to use either the inband connection or
-                          the side band I2C*.=C2=A0 PLDM and MCTP are
-                          protocols that defined to handle this use
-                          case, although I&#39;m not sure if the OpenBMC
-                          implementations have been used in production.</li=
->
-                        <li class=3D"MsoNormal">
-                          There is always IPMI, which has its own
-                          pros/cons.</li>
-                      </ol>
-                      <div>
-                        <p class=3D"MsoNormal">For taking several BMCs and
-                          aggregating them into a single logical
-                          interface that is exposed to the outside
-                          world, there are a few things happening on
-                          that front.=C2=A0 DMTF has been working on an
-                          aggregation protocol for Redfish.=C2=A0 However,
-                          it&#39;s my understanding that their proposal is
-                          more directed at the client level, as opposed
-                          to within a single &quot;system&quot;.</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">I just recently joined the
-                        community, but I&#39;ve been thinking about how a
-                        proxy layer could merge two Redfish services
-                        together.=C2=A0 Since Redfish is fairly strongly
-                        typed and has a well defined mechanism for OEM
-                        extensions, this should be pretty generally
-                        applicable.=C2=A0 I am planning on=C2=A0having a wh=
-ite
-                        paper on the issue sometime after the holidays.</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">Another thing to note,
-                        recently DMTF released a spec for running a
-                        binary Redfish over PLDM called RDE.=C2=A0 That mig=
-ht
-                        be a useful way of tying all these concepts
-                        together.=C2=A0=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">I&#39;d be curious about your
-                        thoughts and use cases here.=C2=A0 Would either PLD=
-M
-                        or Redfish fit your use case?</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">Regards,</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">Richard</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">=C2=A0</p>
-                    </div>
-                    <div>
-                      <p class=3D"MsoNormal">*I&#39;ve heard of some propos=
-als
-                        that run a network interface over PCIe.=C2=A0 I don=
-&#39;t
-                        know enough about PCIe to know if this is a good
-                        idea.</p>
-                    </div>
-                  </div>
-                  <p class=3D"MsoNormal">=C2=A0</p>
-                  <div>
-                    <div>
-                      <p class=3D"MsoNormal">On Mon, Dec 9, 2019 at 1:27
-                        PM Neeraj Ladkani &lt;<a href=3D"mailto:neladk@micr=
-osoft.com" target=3D"_blank">neladk@microsoft.com</a>&gt;
-                        wrote:</p>
-                    </div>
-                    <blockquote style=3D"border-top:none;border-right:none;=
-border-bottom:none;border-left:1pt solid rgb(204,204,204);padding:0in 0in 0=
-in 6pt;margin:5pt 0in 5pt 4.8pt">
-                      <div>
-                        <div>
-                          <p class=3D"MsoNormal">Are there any standards
-                            in managing heterogeneous systems? For
-                            example in a rack if there is a compute
-                            node( with its own BMC) and storage node(
-                            with its own BMC) connected using a PCIe
-                            switch.=C2=A0 How these two BMC represented as
-                            one system ? =C2=A0are there any standards for
-                            BMC =E2=80=93 BMC communication?
-                          </p>
-                          <p class=3D"MsoNormal">=C2=A0</p>
-                          <p class=3D"MsoNormal">=C2=A0</p>
-                          <p class=3D"MsoNormal">Neeraj</p>
-                          <p class=3D"MsoNormal">=C2=A0</p>
-                        </div>
-                      </div>
-                    </blockquote>
-                  </div>
-                </blockquote>
-              </blockquote>
-            </div>
-          </div>
-        </blockquote>
-      </div>
-    </blockquote>
-  </div>
-
-</blockquote></div>
-
---000000000000b57fa4059bbc6e69--
+--_000_1CCD8B5B2FA246BC88F1B6F3CBD97AF7fbcom_--
