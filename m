@@ -1,51 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C0D91374BF
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 18:24:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5012513717D
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 16:39:26 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47vRx73GqKzDqhN
-	for <lists+openbmc@lfdr.de>; Sat, 11 Jan 2020 02:39:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47vVGl13ldzDqgj
+	for <lists+openbmc@lfdr.de>; Sat, 11 Jan 2020 04:24:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::130;
+ helo=mail-il1-x130.google.com; envelope-from=benjaminfair@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ElykqbvM; dkim-atps=neutral
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com
+ [IPv6:2607:f8b0:4864:20::130])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47vRwH5sKTzDqcl
- for <openbmc@lists.ozlabs.org>; Sat, 11 Jan 2020 02:38:36 +1100 (AEDT)
-Received: from sandelman.ca (obiwan.sandelman.ca [209.87.249.21])
- by tuna.sandelman.ca (Postfix) with ESMTP id D7FDD3897D;
- Fri, 10 Jan 2020 10:37:45 -0500 (EST)
-Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id 6BE693D2;
- Fri, 10 Jan 2020 10:38:08 -0500 (EST)
-From: Michael Richardson <mcr@sandelman.ca>
-To: "Andrew Jeffery" <andrew@aj.id.au>
-Subject: Re: MCTP over PCI on AST2500
-In-Reply-To: <a21918d0-d5ba-4959-82b9-3193748fcf72@www.fastmail.com>
-References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
- <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
- <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
- <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
- <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
- <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
- <29717.1578627606@localhost>
- <a21918d0-d5ba-4959-82b9-3193748fcf72@www.fastmail.com>
-X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 24.5.1
-X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
- <'$9xN5Ub#
- z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47vVFV2CLYzDqdp
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Jan 2020 04:23:34 +1100 (AEDT)
+Received: by mail-il1-x130.google.com with SMTP id v15so2389211iln.0
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 09:23:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=NUB7bfQ1WCY9TQqdm60Xy366CIAdDuhorWVuiFqdCxE=;
+ b=ElykqbvMdfKTcycUCbxsuvWMcWK+6p1zTrK7fwv478h29R/A01vXHm4HcZYDc0rTIX
+ 4c55yFDlgvNI1AMlj69AwfhmCvzi692vkLN93FNpIhGWvK+w0Bq/nfLFtJxhCkM2wOG5
+ ACTLdWQedZiKkDjcGhwiii2SF7pTyYVXpPP/+yXpz4VXo4VUQqk6/w0CPK40YOBPaKMD
+ M/bhmi55ymstmHFR90HYPWBaDfjpbVq52+5TdInDs0PImnJ+rVcDuy/wrTE66TAKdOLr
+ qocT74jeRiplIIK+b5LWz+RTJD3fjofOmVsTMzaeX4/AtB3JPqi24dS9JNvb5LjfYKjn
+ K2iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=NUB7bfQ1WCY9TQqdm60Xy366CIAdDuhorWVuiFqdCxE=;
+ b=gDa0/kb4IfpdDTlh+DXSVwpmegqGMSHLDXKHVcjWiiXtlYOXGxMk51NfNFUECqcYYI
+ LMCwOa76v+RyfpDi4gqpohvSWcVUlEeRgO6b4gm/f5RPdDaUwjg4fRjuShXvxWjEeh9u
+ vsiBNgGjjx9grrud7pUgvrdi0qGcVYbSvKJkKypav/kaEad3yBz8QYp0cWdyC5AQP2v5
+ /yKOWMAaTzcQKQGtyCHki3SqIF8gLBv/VQAwZmAGUTC1EGNW753NebmgjDwNJ7gzdNwO
+ B7rLRAGsURMAZ5ui6LSpSfMb8MseMApheU6P9cwuoF5SGZXvrHA8DZcsZaTB0/8M4z3N
+ hEBQ==
+X-Gm-Message-State: APjAAAWCtO8n7yvYUtJhTufxSEuS09osBlJ/pvQ5TjbU169Jzn6v1a1+
+ VuqyY46VSvRDXYYsNZTzoNyM1NXRhjPVywCiQwLdFg==
+X-Google-Smtp-Source: APXvYqwz3ZqMwzO+z1tw5P1pcG20PYmhBnCvFGCOpo9Sgj2IC6OjXgv+PTOuvZ2VBZP7rkQBQH/6/uQH0H5YeiaTUKU=
+X-Received: by 2002:a92:b74c:: with SMTP id c12mr3304670ilm.154.1578677010892; 
+ Fri, 10 Jan 2020 09:23:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
-Date: Fri, 10 Jan 2020 10:38:08 -0500
-Message-ID: <27265.1578670688@localhost>
+References: <0700dec94d76447faae7ab98c0c04516@lenovo.com>
+In-Reply-To: <0700dec94d76447faae7ab98c0c04516@lenovo.com>
+From: Benjamin Fair <benjaminfair@google.com>
+Date: Fri, 10 Jan 2020 09:22:55 -0800
+Message-ID: <CADKL2t5wk+2Yd39=XLih7vFsACrgmsJp96b-su_S5zLis6EgDg@mail.gmail.com>
+Subject: Re: Add member into Lenovo designated employees list
+To: kurt.r.taylor@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000736871059bcc6243"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,94 +72,305 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Sharad Khetan <sharad.khetan@intel.com>, rgrs <rgrs@protonmail.com>,
- Vijay Khemka <vijaykhemka@fb.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Duke KH Du <dukh@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+--000000000000736871059bcc6243
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Kurt,
+
+Could you take a look at the CCLA update from Lenovo when you get a chance?
+
+Thanks,
+Benjamin
 
 
-Andrew Jeffery <andrew@aj.id.au> wrote:
-    >> I have read through a few MCTP documents on dtmf.org, but they either dealt
-    >> with too highlevel (SMBIOS tables), or too low-level (MCTP over UART).
-    >>
-    >> Is there something that I can read that explains the underlying PCI
-    >> relationships between the BMC and the host CPU's PCI/bridges?
-    >> Maybe I just need to read the AST2500 datasheet?
+On Fri, 6 Dec 2019 at 12:45, Duke KH Du <dukh@lenovo.com> wrote:
 
-    > Beware that I brainfarted in my reply above, so before I go further:
+> Hi Master,
+>
+>
+>
+> I would like to add more members of Lenovo in the designated employee lis=
+t
+> as below in Red.
+>
+> Could you help on that?
+>
+>
+>
+> Schedule A
+>
+> Initial list of designated employees. NB: authorization is not tied to
+> particular Contributions.
+>
+> Please indicate =E2=80=9CCLA Manager=E2=80=9D next to the name of any emp=
+loyees listed
+> below that are
+>
+> authorized to add or remove designated employees from this list in the
+> future.
+>
+>
+>
+> CLA Manager:
+>
+> Duke Du dukh@lenovo.com
+>
+>
+>
+> Other designated employees:
+>
+> Andrew Peng pengms1@lenovo.com
+>
+> Yonghui Liu liuyh21@lenovo.com
+>
+> Lisa Liu liuyj19@lenovo.com
+>
+>
+>
+> Payne Yang pyang4@lenovo.com
+>
+> Harry Sung hsung1@lenovo.com
+>
+> Ivan Li rli11@lenovo.com
+>
+> Derek Lin dlin23@lenovo.com
+>
+>
+>
+> Thanks.
+>
+> *From:* Duke KH Du
+> *Sent:* Monday, April 8, 2019 8:44 PM
+> *To:* openbmc@lists.ozlabs.org
+> *Subject:* Add member into Lenovo designated employees list
+>
+>
+>
+> Hi master,
+>
+>
+>
+> I would like to add our new member in Lenovo designated employees list as
+> below in RED color.
+>
+>
+>
+> Could you help on it?
+>
+> Thanks.
+>
+>
+>
+> Schedule A
+>
+> Initial list of designated employees. NB: authorization is not tied to
+> particular Contributions.
+>
+> Please indicate =E2=80=9CCLA Manager=E2=80=9D next to the name of any emp=
+loyees listed
+> below that are
+>
+> authorized to add or remove designated employees from this list in the
+> future.
+>
+>
+>
+> CLA Manager:
+>
+> Duke Du dukh@lenovo.com
+>
+>
+>
+> Other designated employees:
+>
+> Andrew Peng pengms1@lenovo.com
+>
+>
+>
+> Yonghui Liu liuyh21@lenovo.com
+>
+>
+>
+> Lisa Liu liuyj19@lenovo.com
+>
+>
+>
 
-    > https://lists.ozlabs.org/pipermail/openbmc/2020-January/020141.html
+--000000000000736871059bcc6243
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-yes, I got that part :-)
-
-    > But to answer your questions, you should read the MCTP Base Specification
-    > (DSP0236)[1] and MCTP PCIe VDM Transport Binding Specification (DSP0238)[2]
-    > and reference the MCTP Controller section of the ASPEED datasheets.
-
-    > [1] https://www.dmtf.org/sites/default/files/standards/documents/DSP0236_1.3.0.pdf
-    > [2] https://www.dmtf.org/sites/default/files/standards/documents/DSP0238_1.1.0.pdf
-
-Thank you, this is what I was looking for.
-
-    >> (I was at one point quite knowledgeable about PCI, having designed adapter
-    >> cards with multiple targets and dealt with swizzling, and BARs, etc.)
-    >>
-    >> What I heard is that for typical AST2500 based BMCs, the host CPU can map the
-    >> entire address space of the AST2500, and this rather concerns me.
-
-    > Yes, this is indeed concerning. It has its own CVE:
-
-    > https://nvd.nist.gov/vuln/detail/CVE-2019-6260
-
-I was concerned that it really was this bad.
-
-    > OpenBMC provides mitigations through the `phosphor-isolation` distro feature.
-    > The feature enables this u-boot patch that disables all of the backdoors early in
-    > u-boot:
-
-    > https://github.com/openbmc/meta-phosphor/blob/master/aspeed-layer/recipes-bsp/u-boot/files/0001-aspeed-Disable-unnecessary-features.patch
-
-    > The distro feature is opt-in as it has impacts beyond simply disabling the backdoors
-    > (there are some unfortunate side-effects to enforcing confidentiality of the BMC's
-    > address space.
-
-okay, so the bridge gets turned off, and it has some other effects.
-What are the side effects?  I'm guessing by the inclusion of the VGA defines
-in that board init that they are video related.
-
-I can see that doing this in uboot is the earliest possible; but in most
-cases the main CPU has no power until the BMC boots, so it can't attack until
-the BMC is running.  Are there some situations in which the BMC (or the P2A
-bridge) could get reset without the host CPU also being reset?
-
-    >> I had rather expected some kind of mailbox system in a specialized ram that
-    >> both systems could use to exchange data.
-
-    > Well, a few of us at IBM have cooked up an LPC binding that is not yet standardised
-    > but does exactly this. We use a KCS device to send byte-sized control commands
-    > and interrupts between the host and the BMC, and use a reserved memory region
-    > mapped to the LPC firmware space to transfer message data. I don't think we've
-    > published the spec yet, but I can put the work in to get it onto the list.
-
-That's cool, I'm glad that you've gone this way.
+<div dir=3D"ltr">Hi Kurt,<div><br></div><div>Could you take a look at the C=
+CLA update from Lenovo when you get a chance?</div><div><br></div><div>Than=
+ks,</div><div>Benjamin</div></div><br><br><div class=3D"gmail_quote"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Fri, 6 Dec 2019 at 12:45, Duke KH Du &lt=
+;<a href=3D"mailto:dukh@lenovo.com">dukh@lenovo.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">
 
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl4YmmAACgkQgItw+93Q
-3WVuuwf/SwZJXJelVdun+SdrR8KUlMrs58uyIwSjBEkSx0khKHjieSUtXp9Unv6u
-R90a7zGNjfqZbuW/e96VKPnPqs/6bsp/MS5HNgW0WHWuZyHM9eApTFOIkYeIlV5j
-HmcrVOnTk7I3L1YFhViuYlNo+aLj+UNqEGFLsxd8Ery5IN9DNRO3QCyGCke5svOq
-M2qSUmzraSEkAmXxElRthJD6vkoACTjlV3ckGh/zLOrJlYeEXzPROAMwjO7KKjZR
-3ZWR0BU9Tg1GiPHar87PEAeASRIa1hPJqa895eG6qCybhjT3M1xW9mG+9glqMmRc
-EaJ1KD0TpGAiVwgacpHBpz58hCXh5g==
-=sxyS
------END PGP SIGNATURE-----
---=-=-=--
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_8818170090434688875WordSection1">
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">Hi Master,<u></=
+u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)"><u></u>=C2=A0<u=
+></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">I would like to=
+ add more members of Lenovo in the designated employee list as below in Red=
+.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">Could you help =
+on that?<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)"><u></u>=C2=A0<u=
+></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Schedule A<u></u=
+><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Initial list of =
+designated employees. NB: authorization is not tied to particular Contribut=
+ions.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Please indicate
+</span>=E2=80=9C<span style=3D"font-family:ArialMT">CLA Manager</span>=E2=
+=80=9D<span style=3D"font-family:ArialMT"> next to the name of any employee=
+s listed below that are<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">authorized to ad=
+d or remove designated employees from this list in the future.<u></u><u></u=
+></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">CLA Manager:<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Duke Du
+</span><a href=3D"mailto:dukh@lenovo.com" target=3D"_blank"><span style=3D"=
+font-size:10.5pt;font-family:Arial,sans-serif">dukh@lenovo.com</span></a><s=
+pan style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><u></u><=
+/span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Other designated employees:<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Andrew Peng
+</span><a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank"><span style=
+=3D"font-size:10.5pt;font-family:Arial,sans-serif">pengms1@lenovo.com</span=
+></a><span style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><=
+u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Yonghui Liu
+</span><a href=3D"mailto:liuyh21@lenovo.com" target=3D"_blank"><span style=
+=3D"font-size:10.5pt;font-family:Arial,sans-serif">liuyh21@lenovo.com</span=
+></a><span style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><=
+u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Lisa Liu
+</span><span class=3D"gmail-m_8818170090434688875MsoHyperlink"><a href=3D"m=
+ailto:liuyj19@lenovo.com" target=3D"_blank"><span style=3D"font-size:10.5pt=
+;font-family:Arial,sans-serif">liuyj19@lenovo.com</span></a></span><span st=
+yle=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><u></u></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)"><u></u>=C2=A0<u=
+></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:red">Payne Yang <a href=3D"mail=
+to:pyang4@lenovo.com" target=3D"_blank">
+<span style=3D"color:red">pyang4@lenovo.com</span></a><u></u><u></u></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:red">Harry Sung <a href=3D"mail=
+to:hsung1@lenovo.com" target=3D"_blank">
+<span style=3D"color:red">hsung1@lenovo.com</span></a><u></u><u></u></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:red">Ivan Li <a href=3D"mailto:=
+rli11@lenovo.com" target=3D"_blank">
+<span style=3D"color:red">rli11@lenovo.com</span></a><u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span style=3D"color:red">Derek Lin <a href=3D"mailt=
+o:dlin23@lenovo.com" target=3D"_blank">
+<span style=3D"color:red">dlin23@lenovo.com</span></a><u></u><u></u></span>=
+</p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)"><u></u>=C2=A0<u=
+></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">Thanks.<u></u><=
+u></u></span></p>
+<div>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b>From:</b> Duke KH Du <br>
+<b>Sent:</b> Monday, April 8, 2019 8:44 PM<br>
+<b>To:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
+enbmc@lists.ozlabs.org</a><br>
+<b>Subject:</b> Add member into Lenovo designated employees list<u></u><u><=
+/u></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Hi master,<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">I would like to add our new member in Lenovo designa=
+ted employees list as below in
+<span style=3D"color:red">RED </span>color.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Could you help on it?<u></u><u></u></p>
+<p class=3D"MsoNormal">Thanks.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Schedule A<u></u=
+><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Initial list of =
+designated employees. NB: authorization is not tied to particular Contribut=
+ions.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">Please indicate
+</span>=E2=80=9C<span style=3D"font-family:ArialMT">CLA Manager</span>=E2=
+=80=9D<span style=3D"font-family:ArialMT"> next to the name of any employee=
+s listed below that are<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT">authorized to ad=
+d or remove designated employees from this list in the future.<u></u><u></u=
+></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:ArialMT"><u></u>=C2=A0<u>=
+</u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">CLA Manager:<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Duke Du
+</span><a href=3D"mailto:dukh@lenovo.com" target=3D"_blank"><span style=3D"=
+font-size:10.5pt;font-family:Arial,sans-serif">dukh@lenovo.com</span></a><s=
+pan style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><u></u><=
+/span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Other designated employees:<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Andrew Peng
+</span><a href=3D"mailto:pengms1@lenovo.com" target=3D"_blank"><span style=
+=3D"font-size:10.5pt;font-family:Arial,sans-serif">pengms1@lenovo.com</span=
+></a><span style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><=
+u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif">Yonghui Liu
+</span><a href=3D"mailto:liuyh21@lenovo.com" target=3D"_blank"><span style=
+=3D"font-size:10.5pt;font-family:Arial,sans-serif">liuyh21@lenovo.com</span=
+></a><span style=3D"font-size:10.5pt;font-family:Arial,sans-serif"><u></u><=
+u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:Arial,sa=
+ns-serif;color:red">Lisa Liu
+</span><a href=3D"mailto:liuyj19@lenovo.com" target=3D"_blank"><span style=
+=3D"font-size:10.5pt;font-family:Arial,sans-serif;color:red">liuyj19@lenovo=
+.com</span></a><span style=3D"font-size:10.5pt;font-family:Arial,sans-serif=
+;color:red"><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+</div>
+
+</blockquote></div>
+
+--000000000000736871059bcc6243--
