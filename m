@@ -1,90 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 925951364BC
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 02:28:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47v53N3ZLzzDqbq
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 12:28:32 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id BEA6D136503
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 02:47:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47v5TX4pqpzDqc5
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 12:47:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.29;
- helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::329;
+ helo=mail-ot1-x329.google.com; envelope-from=xqiu@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=anCG+TsG; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=N4cCwtVE; 
- dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=RSFzg8Hn; dkim-atps=neutral
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
+ [IPv6:2607:f8b0:4864:20::329])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47v52j1sjMzDqb1
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 12:27:57 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id BE2E821165;
- Thu,  9 Jan 2020 20:27:54 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 09 Jan 2020 20:27:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=e9CLcP5EdpeeGqj8Dz8t5pBUp7NKuue
- LxfVmsT1QZKk=; b=anCG+TsGK7+svuUVKgF4GJsDzggAcIHuOI+BYBVOxuJqX1f
- vjiBRPD497e187Oq9sbTXGMGoU/tKzF4fBVU2P3wwafz8sVBfLbE9YCpS3A8kumv
- +SNZ+q2OCOBkcPC7TlD53bWyVsZFSp5yV26S4O+ewB7jNxlHEw2DpHv0i8Phmogv
- K8KeDpgTbsNsXVFsyryyBLlxOLQo76f7D5EkB+P/mjOTzPbEXTjgayjtVxVF7TJX
- DLaiNa1G20FYzPvqBkNDnEVoOdiPB48GKAejfMsehaGcg2Z+TbawCAWhwUUvDfdP
- lvgwO+yM43uEvh2KGCOjtp72kz1ViDyBIaBWciQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=e9CLcP
- 5EdpeeGqj8Dz8t5pBUp7NKuueLxfVmsT1QZKk=; b=N4cCwtVEuquZMmPGKnUgfF
- 2FaO6mS9IIDrAvQi+FMjriz09noHNR2APXPCRAHIQ78/+fwq4+KURCoN0oKlU2fn
- yspN0rJKPRx0ahFw//Deci+esbm2CL+xWRfPc1mCgUuDQduu6E3GBQn3K1F9I/iZ
- nFFGt69uTt2bVO+uPfLjjMuL1l/InaVicJ7yse1SthWLdCwDw3U8qR2l1S8RqITq
- zYZ3H3+7P1ZwZ6/C0l8zWwlNh4F2H3OHz+PyuWSJ9aeWPWEpAoXa1dFcRVBztb1i
- aTPeXQTMWIVw2j4pvBkqiFzNiXB24JWLCFQ9sIHkaKBMaPrNhyjEpFW4fP71DB7A
- ==
-X-ME-Sender: <xms:GdMXXqa8kq1giTE_sRlwI4EpzSEsQiDSTw1yyStFMfHEHUI9m7xgAA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeivddgfeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
- grihhnpehoiihlrggsshdrohhrghenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
- vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:GdMXXrEvaxUdSD7g_ncugNWaLKNnePj_gNC5rqSuD4xkVXyhk4jqWw>
- <xmx:GdMXXvbqA6G-ZTgmN5tJ5X4dkOVGfONaWSurTBbON4kSlI8IKCKIHQ>
- <xmx:GdMXXk0wVgzhKvP7IlIZGucVerQx7e0YlToVwPgUBJM-FnY7ZtkKGA>
- <xmx:GtMXXmuLQ-v_Y8mBPvj0bLSiq4HVIzAz97FtH8EVGNn8iMPps_p8bA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 8C61BE00A2; Thu,  9 Jan 2020 20:27:53 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-740-g7d9d84e-fmstable-20200109v1
-Mime-Version: 1.0
-Message-Id: <bc761c66-5d19-4c37-b8d5-58251457835e@www.fastmail.com>
-In-Reply-To: <CAH1kD+aa+mG=sMqFstNCokUtdd0QcxL_gxnP=hDJkF-oU2+Ykg@mail.gmail.com>
-References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
- <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
- <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
- <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
- <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
- <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
- <DEDED966-177F-472A-B9EE-677A3114743A@fb.com>
- <CAH1kD+aa+mG=sMqFstNCokUtdd0QcxL_gxnP=hDJkF-oU2+Ykg@mail.gmail.com>
-Date: Fri, 10 Jan 2020 11:59:54 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Richard Hanley" <rhanley@google.com>, "Vijay Khemka" <vijaykhemka@fb.com>
-Subject: Re: MCTP over PCI on AST2500
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47v5Sn5Px6zDqb1
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 12:47:03 +1100 (AEDT)
+Received: by mail-ot1-x329.google.com with SMTP id r9so424582otp.13
+ for <openbmc@lists.ozlabs.org>; Thu, 09 Jan 2020 17:47:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=IU10xcYu+D53roW+T9yLSYSpKEhwEVe5v77sUQMQ2zs=;
+ b=RSFzg8HnIia+DG3aOhgYzOuzLaja9yWdNwydwzm84+FpaXmvRyrt9Nmlf/R38RnZHV
+ AWzlGdZvjBSD08X82L/xKIMJsfUzCwfOnXvocJvX1X6dWm8rurqDpLZkLmHLZ0bOKkBK
+ fphN9i48TB+oYFT78J0oX7S9+RWsVbZaWBxg9OoBw7GJT3PZ69MMR32bxoxwKC16MjnX
+ d67mFfZl0xeWLn44F6H4EmhetO3lU/M9awr+u/+czj5kFBkMtI90XUlWFBHgHVY+C1VU
+ X1w0v4zMYQxgde6S1heAX0hWH+gxjwWOhQ3pn4SmqpNufcFfBOjiiuofboZXhJyNkD8x
+ VRsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=IU10xcYu+D53roW+T9yLSYSpKEhwEVe5v77sUQMQ2zs=;
+ b=CQ3vvUvRgOgkStZNuv1pEdFdWOtkrI5BEKL8Rw2nTgWUwhrlDDjXqxAMZ+GH1zg9O6
+ h5oxMMwM/wT7+yWu7Zh0lULu81z8oKETkS0JhUIz8AULsHfHFCXNN1Xud2xRXfD6kg3G
+ 5oiD8aMPXXO8P7MrKcVL9Xat1Hu8yG0bpsRk6MMFDNKqmIyiWeIjkBAWwWqbsB2vfpqR
+ Kij3jGZtfop/LRosu84OHMASXW0gKhCAKVGelyHweXuzkkt4QEfg+9sanFUJYGz4XIyd
+ 5lddgq0KPH2lxFYUvi2I1uqUW/2t+tDyyOvR8kh5qREKvg/czEgou/GVw4fIxNhu+gHI
+ NLww==
+X-Gm-Message-State: APjAAAW/SokT9pTXi8S0+bquDNNTZ0p9TbmBq2OYUrv0Zg6g4fgW5YkU
+ X/VZtXxLvN1hHiTlHHJneTootDj+iiRP1pEi4ST5qg==
+X-Google-Smtp-Source: APXvYqzGL1RHrcZfSXqyrWRBA4pSkJtI35biG9sbxxvCQJdvVFR5obxHZjyFQPXrb2xLxkE/wpBvjhdbTuFDSK7WW9k=
+X-Received: by 2002:a05:6830:145:: with SMTP id
+ j5mr622298otp.242.1578620819608; 
+ Thu, 09 Jan 2020 17:46:59 -0800 (PST)
+MIME-Version: 1.0
+References: <CAA_a9xKmRHHx=vXvwTaO+0PRtFjLWQUAL1WnJH8XGBBzvExt2A@mail.gmail.com>
+ <OF100509F8.6ECF782D-ON002584E9.004AC321-002584E9.0050DF26@notes.na.collabserv.com>
+ <CAA_a9xJQsSjrcjq+=+uoPe4KCkUjWTgEp_cG-0E2FczP=PtBUg@mail.gmail.com>
+ <d1069c71-108f-d5e0-f2fa-4af1048386e2@linux.intel.com>
+ <CAA_a9xKG_qk5sBUZY6T5xH+XG_HQwLXVf2Jy0GXX0Ob+6R1rig@mail.gmail.com>
+ <27eb67c0-c758-5b46-bb49-9eceec25bc4f@linux.intel.com>
+ <CAA_a9xKa1VpvhfJVdvt_OqJ7in5Ntiowqmdpq_J1okYX8xq1yQ@mail.gmail.com>
+In-Reply-To: <CAA_a9xKa1VpvhfJVdvt_OqJ7in5Ntiowqmdpq_J1okYX8xq1yQ@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Thu, 9 Jan 2020 17:46:48 -0800
+Message-ID: <CAA_a9x+s5Gm4eS2q5it9o+PUoV9+EuyPS=RrWoHkq_15yB+2jQ@mail.gmail.com>
+Subject: Re: Configuring device with I2C mux
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: multipart/alternative; boundary="000000000000308387059bbf4d00"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,46 +79,156 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Sharad Khetan <sharad.khetan@intel.com>, rgrs <rgrs@protonmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Kais Belgaied <belgaied@google.com>, Devjit Gopalpur <devjitg@google.com>,
+ Peter Lundgren <peterlundgren@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Richard,
+--000000000000308387059bbf4d00
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 10 Jan 2020, at 07:15, Richard Hanley wrote:
-> I'll add a +1 in interest for MCTP.
-> 
-> Performance would be better if this is moved to the kernel, but I'm a 
-> bit curious about any other pros and cons of working in userspace.
-> 
-> One of our most immediate use cases for MCTP would be in a UEFI BIOS 
-> before a Redfish client can be bootstrapped. Would things be more 
-> portable for BIOS vendors if this is done in userspace. I genuinely 
-> don't know enough about that area to know which is more flexible.
+Hi folks,
 
-As MCTP is just a transport it has a fairly well-contained set of behaviours
-(by contrast, see PLDM). The idea of implementing MCTP in the kernel isn't
-really about performance so much as providing a consistent, binding-
-independent interface to userspace. The advantage here is that as the
-bindings would also be implemented in-kernel we avoid creating bespoke
-interfaces to plumb binding-specific behaviours out to userspace just to
-hook into e.g. libmctp. This should lead to less friction getting patches
-adding support for new bindings merged upstream (at the cost of getting
-an MCTP subsystem into the kernel).
+Thanks for your responses! We managed to configure them by setting up the
+device tree, fixing the child buses to numbers related to the parent buses,
+so that we could address them using simple arithmetic operations in JSON
+config files.
 
-The proposal is to add a new socket address family, AF_MCTP. A number of
-MCTP concepts map fairly neatly onto existing networking concepts - it's a
-packet-switched network routing data between components inside the
-platform over heterogeneous bus types. The approach is somewhat inspired
-by AF_CAN for CAN bus. libmctp already prepares its consumers for a socket-
-based interface with the demux daemon, so existing consumers would only
-need a small change to switch to the kernel-based socket interface.
+- Alex Qiu
 
-I've written a little more about it all in the past:
 
-https://lists.ozlabs.org/pipermail/openbmc/2019-May/016460.html
+On Wed, Jan 8, 2020 at 10:06 AM Alex Qiu <xqiu@google.com> wrote:
 
-Hope that helps!
+> Hi James,
+>
+> I'll take a look at them. Thanks for pointing the related code out!
+>
+> - Alex Qiu
+>
+>
+> On Wed, Jan 8, 2020 at 10:02 AM James Feist <james.feist@linux.intel.com>
+> wrote:
+>
+>> On 1/8/20 9:54 AM, Alex Qiu wrote:
+>> > Hi James,
+>> >
+>> > Yes, we have multiple devices sitting behind the mux, and they're
+>> > onboard devices instead of standalone FRUs. The parent bus is described
+>> > as the FRU for each PCIe card.
+>> >
+>> > After naming the mux channels, can these names be used somehow to
+>> config
+>> > I2C devices? For example, {"Bus": "$bus", "ChannelNames":
+>> > ["C0", "C1", "C2", "C3"]} for the mux, and {"Bus": "$bus.C1"} for
+>> > devices behind the mux on channel 1.
+>>
+>> This syntax doesn't exist today.. On all our systems things behind the
+>> mux are again detectable, so we haven't hit this problem. Right now the
+>> template replacement is purely based on the found device on d-bus. So
+>> $bus is the bus property from the xyz.openbmc_project.FruDevice
+>> interface, there's no way to trace that to a mux channel, as it's just a
+>> d-bus property.
+>>
+>> The code you're looking for is here:
+>>
+>> https://github.com/openbmc/entity-manager/blob/01542d2af1b1f45335cc8813fffcd3ed07f22989/src/Utils.cpp#L144
+>>
+>>
+>> Along with the channel identification logic here:
+>>
+>> https://github.com/openbmc/entity-manager/blob/01542d2af1b1f45335cc8813fffcd3ed07f22989/src/Overlay.cpp#L112
+>>
+>> You could probably add some special syntax to make this work. Luckily
+>> this is the one part of entity-manager that is unit-tested, so that
+>> should help you
+>>
+>> https://github.com/openbmc/entity-manager/blob/master/test/test_entity-manager.cpp
+>>
+>>
+>> -James
+>>
+>>
+>>
+>>
+>>
 
-Andrew
+--000000000000308387059bbf4d00
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi folks,</div><div><br></div><div>Thanks for your re=
+sponses! We managed to configure them by setting up the device tree, fixing=
+ the child buses to numbers related to the parent buses, so that we could a=
+ddress them using simple arithmetic operations in JSON config files.</div><=
+br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature" data-smart=
+mail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu</div></div></div><br><=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Wed, Jan 8, 2020 at 10:06 AM Alex Qiu &lt;<a href=3D"mailto:xqiu@google.c=
+om">xqiu@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex"><div dir=3D"ltr">Hi James,<div><br></div><div>I&#39;ll t=
+ake a look at them. Thanks for pointing the related code out!</div><div><br=
+ clear=3D"all"><div><div dir=3D"ltr"><div dir=3D"ltr">- Alex Qiu</div></div=
+></div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
+s=3D"gmail_attr">On Wed, Jan 8, 2020 at 10:02 AM James Feist &lt;<a href=3D=
+"mailto:james.feist@linux.intel.com" target=3D"_blank">james.feist@linux.in=
+tel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">On 1/8/20 9:54 AM, Alex Qiu wrote:<br>
+&gt; Hi James,<br>
+&gt; <br>
+&gt; Yes, we have multiple devices sitting behind the mux, and they&#39;re =
+<br>
+&gt; onboard devices instead of standalone FRUs. The parent bus is describe=
+d <br>
+&gt; as the FRU for each PCIe card.<br>
+&gt; <br>
+&gt; After naming the mux channels, can these names be used somehow to conf=
+ig <br>
+&gt; I2C devices? For example, {&quot;Bus&quot;: &quot;$bus&quot;, &quot;Ch=
+annelNames&quot;: <br>
+&gt; [&quot;C0&quot;,=C2=A0&quot;C1&quot;,=C2=A0&quot;C2&quot;,=C2=A0&quot;=
+C3&quot;]} for the mux, and {&quot;Bus&quot;: &quot;$bus.C1&quot;} for <br>
+&gt; devices behind the mux on channel 1.<br>
+<br>
+This syntax doesn&#39;t exist today.. On all our systems things behind the =
+<br>
+mux are again detectable, so we haven&#39;t hit this problem. Right now the=
+ <br>
+template replacement is purely based on the found device on d-bus. So <br>
+$bus is the bus property from the xyz.openbmc_project.FruDevice <br>
+interface, there&#39;s no way to trace that to a mux channel, as it&#39;s j=
+ust a <br>
+d-bus property.<br>
+<br>
+The code you&#39;re looking for is here: <br>
+<a href=3D"https://github.com/openbmc/entity-manager/blob/01542d2af1b1f4533=
+5cc8813fffcd3ed07f22989/src/Utils.cpp#L144" rel=3D"noreferrer" target=3D"_b=
+lank">https://github.com/openbmc/entity-manager/blob/01542d2af1b1f45335cc88=
+13fffcd3ed07f22989/src/Utils.cpp#L144</a> <br>
+<br>
+<br>
+Along with the channel identification logic here: <br>
+<a href=3D"https://github.com/openbmc/entity-manager/blob/01542d2af1b1f4533=
+5cc8813fffcd3ed07f22989/src/Overlay.cpp#L112" rel=3D"noreferrer" target=3D"=
+_blank">https://github.com/openbmc/entity-manager/blob/01542d2af1b1f45335cc=
+8813fffcd3ed07f22989/src/Overlay.cpp#L112</a><br>
+<br>
+You could probably add some special syntax to make this work. Luckily <br>
+this is the one part of entity-manager that is unit-tested, so that <br>
+should help you <br>
+<a href=3D"https://github.com/openbmc/entity-manager/blob/master/test/test_=
+entity-manager.cpp" rel=3D"noreferrer" target=3D"_blank">https://github.com=
+/openbmc/entity-manager/blob/master/test/test_entity-manager.cpp</a><br>
+<br>
+<br>
+-James<br>
+<br>
+<br>
+<br>
+<br>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000308387059bbf4d00--
