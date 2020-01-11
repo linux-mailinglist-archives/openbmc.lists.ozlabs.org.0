@@ -2,74 +2,133 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 856D413780F
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jan 2020 21:41:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C083137AE0
+	for <lists+openbmc@lfdr.de>; Sat, 11 Jan 2020 02:14:55 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47vZdP5dMKzDqjg
-	for <lists+openbmc@lfdr.de>; Sat, 11 Jan 2020 07:41:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47vhj76fW8zDqkL
+	for <lists+openbmc@lfdr.de>; Sat, 11 Jan 2020 12:14:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d42;
- helo=mail-io1-xd42.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=pJFjRS25; dkim-atps=neutral
-Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
- [IPv6:2607:f8b0:4864:20::d42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=8279e5572e=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=qp8Wu09f; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=fEl9Q9Uo; 
+ dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47vZcf0mdrzDqhN
- for <openbmc@lists.ozlabs.org>; Sat, 11 Jan 2020 07:40:33 +1100 (AEDT)
-Received: by mail-io1-xd42.google.com with SMTP id c16so3482093ioo.8
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jan 2020 12:40:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=msjYurKiWbdjJq1h2YgPPDLhli0M7k2d/wSJ65uYcas=;
- b=pJFjRS256hvjKzeQzgGNbPGGhzCO4oCRSRqFHYS9SBHmJqAMWvnqIOts1lVfObFLyM
- eAEcZM0Nw9AiBDEVfeoe1WC/0+1uqALNZ52m6GQlmrSAVEfTeK6/J8+IU9/EFgUrNNbc
- QiCqnXrlcv0Tk+RzedZGs5Kuvh2BSnk3ao3UKgs0d9AOo9lmZ6fITaRyvKH6eK3GxGLK
- JBQOvmrp/jQZG3g/nuNWSRYWgIPbe5L8vw2+C/Ff2MI3jhWg494ohB/BKD66rQWYm7tL
- M8T1U5PWyYmXrgcjntNvLh75vptPt4bzIf5Qh2K31sW2bKyyKZB5elyfOQURVce02XBF
- Ypig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=msjYurKiWbdjJq1h2YgPPDLhli0M7k2d/wSJ65uYcas=;
- b=mrVbHQXDlrLSjTqUuALfiHJ4CEvqWlowIlamRKsqYQEeyX0JNJzqp80AiQuITNxU8W
- Y8kn4bOzQjHvmSJUmIKQTXoe0Vm98bFH4vDW5//OgKZGpaXGcPJ6jZy7WP7LLAF7GTxd
- 4dR2fGjreG8xfMcmyGNI/5UsRv8ebUzvEqamlAzfytkUx0mfmKc4WvDKSbIGpA7NhI/X
- JYo9VUZ5ZVv+X5LOnO5LLsYc/zJYQzkXshZoSE95Va2a2K/TGgMHgTCjydMW7E2Lk0e9
- fFggC4Nh8LL9gWa5jr6308BJJxRuesD4KOZUB7iJytDKPM2Y3M4YXM3PWvTgOSF92IUa
- fxzw==
-X-Gm-Message-State: APjAAAVHVfQoTPJdE4m8lzgajL1yMQnUrB4fGbhaahvheyJfkJGo0RFg
- 3HlWooDIT+7PLKw7oA58Ica6RwvJ
-X-Google-Smtp-Source: APXvYqzLlF+udnhrldD1fdv1gidNvqHC5lVQlvhJe9PG/fmd8hLBBpT+KgWghqMyZnQDsKTY48r17Q==
-X-Received: by 2002:a5d:8901:: with SMTP id b1mr3915837ion.246.1578688829825; 
- Fri, 10 Jan 2020 12:40:29 -0800 (PST)
-Received: from andrews-mbp-2.austin.ibm.com ([129.41.86.0])
- by smtp.gmail.com with ESMTPSA id i136sm994440ild.23.2020.01.10.12.40.29
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 10 Jan 2020 12:40:29 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: [PATCH linux dev-5.4] ARM: dts: aspeed: rainier: Add second cfam
- on the hub
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <20200109200839.11936-1-eajames@linux.ibm.com>
-Date: Fri, 10 Jan 2020 14:40:28 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <05187825-BD49-4186-8AD8-B106AC9A3D7C@gmail.com>
-References: <20200109200839.11936-1-eajames@linux.ibm.com>
-To: Eddie James <eajames@linux.ibm.com>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47vhhP3vtBzDqdW
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Jan 2020 12:14:06 +1100 (AEDT)
+Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 00B1A2Oc026290; Fri, 10 Jan 2020 17:14:01 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=9JePUcnKJgc2YsFYRoRK/qNNuic8J+imM67BNNkL0lw=;
+ b=qp8Wu09fM77uU1XSzEpH4eyjnUYlnOtssTjreciMGrvyIOQFuT4Vcy5YSJJVctQy+77k
+ fFr0gWB5TV6G2OIYC7IZ/rHkG+D8ggdz76W4dU0w240ZONxEs2+TJv0HhJDig/9q1PXc
+ 0KDlpo4qhtQjHCS2o5cjGJDutBUxAn5A/Ok= 
+Received: from mail.thefacebook.com (mailout.thefacebook.com [199.201.64.23])
+ by mx0a-00082601.pphosted.com with ESMTP id 2xeuvwbg6w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Fri, 10 Jan 2020 17:14:01 -0800
+Received: from prn-hub01.TheFacebook.com (2620:10d:c081:35::125) by
+ prn-hub06.TheFacebook.com (2620:10d:c081:35::130) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.1.1713.5; Fri, 10 Jan 2020 17:14:00 -0800
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (192.168.54.28)
+ by o365-in.thefacebook.com (192.168.16.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.1.1713.5
+ via Frontend Transport; Fri, 10 Jan 2020 17:14:00 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DEXTaeh4+fcMS4Z+OnZccjl/7f0hQMXJ3D93aYW/7FVJtQ/lhbg+jmtuUVxCHNCX4fMEqwTn0LbjdJtMiKq5CkEr2tQRlHfnrnu6b00ruKoPS7znWltxDt7XN/m6CBfto+Es+egK9jRHywgWaTsjNSkZ+j/pi0q4KtyQL6JPR8kvttBQa2DjcS78GPuQDCKolMd3EJBdO0E+PYX5GzUea/FZXoJnoxBhg33UQfWxjNxlH+9R0ywrD6u/DwbIMSJyTBlor2nkfuc4gEHWYUzPpmePwfbYF9tS2Xq1kpidQ3+3A1n73BKBD61BjQr3wvCz2wF/183OUSSyQ3/FrHM5aQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9JePUcnKJgc2YsFYRoRK/qNNuic8J+imM67BNNkL0lw=;
+ b=aesbwjlOrUDYauuSxOu1cw02gEw8XEn/fAnnmBzFfrFtAgNwkgoNn35soHbfljyAJZnINuLFtiL3bzCv5rTlKc2DTTcY1Bg7ruYXp1+eIFmIEOVGEOYH9QH6h988x3Qz8/f+z6DUBHZkMWHWg4XeaYljICCHGC4OzHDpetL9N3u+G1NS/bZzxGFHNt2eLmiqrBvcbRC6YJoRv0ycz0mmD8b5w8K5F5zLdRe5zMu9IL3eA3RxQoHROj+SWYIDcTzFuyCU8aRcDdicjoyqo7xXjSfe+nMP9EwbSM0Vzhshax2rM3MWLz4bYWJZiLoZrH2xJcwwgzEwzgF8MpW80akiVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9JePUcnKJgc2YsFYRoRK/qNNuic8J+imM67BNNkL0lw=;
+ b=fEl9Q9Uon6mw53YwOQ5zUMUgwVOoo/sxNPEyF78MJEiRH8SpyZYhHAKdWs+w7NQPtlBRGmH3FYf7zK84GgTJdMNpTv611rZ05Y5ycrXgF7vOfLZj15UMVyrb8MwUQl29eBnhkhbuNrEv3zM695k4UZou6FwET45/SXT7LRHQaLs=
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
+ MWHPR15MB1776.namprd15.prod.outlook.com (10.174.96.135) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2623.9; Sat, 11 Jan 2020 01:13:59 +0000
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2]) by MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2%8]) with mapi id 15.20.2623.011; Sat, 11 Jan 2020
+ 01:13:58 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: David Miller <davem@davemloft.net>
+Subject: Re: [net-next PATCH] net/ncsi: Support for multi host mellanox card
+Thread-Topic: [net-next PATCH] net/ncsi: Support for multi host mellanox card
+Thread-Index: AQHVxn2QUFjYVaSmN0a5L6zvE4MlVKfjMJSAgAD1IQA=
+Date: Sat, 11 Jan 2020 01:13:58 +0000
+Message-ID: <8C9F6A65-E1E5-49FE-83B3-CF69CFCC53AC@fb.com>
+References: <20200108234341.2590674-1-vijaykhemka@fb.com>
+ <20200109.183637.755651104106589448.davem@davemloft.net>
+In-Reply-To: <20200109.183637.755651104106589448.davem@davemloft.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::2:70aa]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 4e615605-8603-442e-1e56-08d79633896d
+x-ms-traffictypediagnostic: MWHPR15MB1776:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <MWHPR15MB1776ED22FA6C2AB22BCCD339DD3B0@MWHPR15MB1776.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:6430;
+x-forefront-prvs: 0279B3DD0D
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(346002)(366004)(396003)(39860400002)(136003)(189003)(199004)(8936002)(81166006)(8676002)(81156014)(4326008)(86362001)(36756003)(64756008)(316002)(66446008)(66476007)(66946007)(66556008)(54906003)(478600001)(33656002)(186003)(5660300002)(6506007)(76116006)(2616005)(6512007)(2906002)(6916009)(6486002)(4744005)(71200400001);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1776;
+ H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 77iqKrWCgzH/IoH0Ulpo08azPpgYYFvygNl4trxLWDCDy5ORmKNrorigFRxirPr0rk8NzpcOUjgFJrWrSBHDfT7Y3MQ3AUaGGR35hzLKauVMXrI2McqKlOAPW2PHXkGSIOswWPCaD/nPDURt4VBurrp8i+w2YwmnAnIszYZwIzNPHoJbcYaKBdTLUnugf9qIvtRXkuXCHdsmQZFxLfUzCoT5ZgDa4RqZqCF0bn5TIk1ZyYUhiDEKMFK95Suxc10ZzWpWcL98p/1eQoyidPmxNvwPCKcUZJSHyhYEBBhzGW8saiyUJPkhw3jN9WHdXEQJ5lSSev4svD4iGPcsYvwyaYIGmsbQP3+veBF3WNBRlmKoymToOp7FisAk+NkW6SZKHerJ0Hf9ryNodS65WQBclOPsamFGMCDrUSxdC9kQKn7DCYUinWwJXFmKuAufEWft
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D0E4D48E59034947B5B61B824E5A32E6@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4e615605-8603-442e-1e56-08d79633896d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jan 2020 01:13:58.7703 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qekzpvMoyst9u5wAFS8bV65UmDttPZtBFKsfuYVqj2t14gwptU4qPhv5Ktigg1kkkHV66+xQOtgVpEX8FmkZEw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1776
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-10_04:2020-01-10,
+ 2020-01-10 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ spamscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 mlxlogscore=999 impostorscore=0
+ clxscore=1015 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-1910280000 definitions=main-2001110006
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,82 +140,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "sam@mendozajonas.com" <sam@mendozajonas.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-> On Jan 9, 2020, at 2:08 PM, Eddie James <eajames@linux.ibm.com> wrote:
->=20
-> The hub FSI master can access the cfams on two other processors. =
-Reflect
-> this by adding a second cfam to the first hub description.
->=20
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
-> arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 36 ++++++++++++++++++++
-> 1 file changed, 36 insertions(+)
->=20
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts =
-b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index 4d8b3cc5f291..9318778a461b 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -143,6 +143,38 @@
-> 			no-scan-on-init;
-> 		};
-> 	};
-> +
-> +	cfam@2,0 {
-> +		reg =3D <2 0>;
-> +		#address-cells =3D <1>;
-> +		#size-cells =3D <1>;
-> +		chip-id =3D <2>;
-> +
-> +		scom@1000 {
-> +			compatible =3D "ibm,fsi2pib";
-> +			reg =3D <0x1000 0x400>;
-> +		};
-> +
-> +		sbefifo@2400 {
-> +			compatible =3D "ibm,p9-sbefifo";
-> +			reg =3D <0x2400 0x400>;
-> +			#address-cells =3D <1>;
-> +			#size-cells =3D <0>;
-> +
-> +			fsi_occ2: occ {
-> +				compatible =3D "ibm,p9-occ";
-> +			};
-> +		};
-> +
-> +		fsi_hub2: hub@3400 {
-> +			compatible =3D "fsi-master-hub";
-> +			reg =3D <0x3400 0x400>;
-> +			#address-cells =3D <2>;
-> +			#size-cells =3D <0>;
-> +
-> +			no-scan-on-init;
-> +		};
-> +	};
-> };
->=20
-> /* Legacy OCC numbering (to get rid of when userspace is fixed) */
-> @@ -154,6 +186,10 @@
-> 	reg =3D <2>;
-> };
->=20
-> +&fsi_occ2 {
-> +	reg =3D <3>;
-> +};
-> +
-> &ibt {
-> 	status =3D "okay";
-> };
-> =E2=80=94=20
-> 2.24.0
->=20
-
-Looked good in testing.
-
-Tested-by: Andrew Geissler  <geissonator@yahoo.com>=
+DQoNCu+7v09uIDEvOS8yMCwgNjozNiBQTSwgIkRhdmlkIE1pbGxlciIgPGRhdmVtQGRhdmVtbG9m
+dC5uZXQ+IHdyb3RlOg0KDQogICAgRnJvbTogVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5j
+b20+DQogICAgRGF0ZTogV2VkLCA4IEphbiAyMDIwIDE1OjQzOjQwIC0wODAwDQogICAgDQogICAg
+PiBNdWx0aSBob3N0IE1lbGxhbm94IGNhcmRzIHJlcXVpcmUgTUFDIGFmZmluaXR5IHRvIGJlIHNl
+dA0KICAgID4gYmVmb3JlIHJlY2VpdmluZyBhbnkgY29uZmlnIGNvbW1hbmRzLiBBbGwgY29uZmln
+IGNvbW1hbmRzDQogICAgPiBzaG91bGQgYWxzbyBoYXZlIHVuaWNhc3QgYWRkcmVzcyBmb3Igc291
+cmNlIGFkZHJlc3MgaW4NCiAgICA+IGNvbW1hbmQgaGVhZGVyLg0KICAgID4gDQogICAgPiBBZGRp
+bmcgR01BIGFuZCBTTUFGKFNldCBNYWMgQWZmaW5pdHkpIGZvciBNZWxsYW5veCBjYXJkDQogICAg
+PiBhbmQgY2FsbCB0aGVzZSBpbiBjaGFubmVsIHByb2JlIHN0YXRlIG1hY2hpbmUgaWYgaXQgaXMN
+CiAgICA+IGRlZmluZWQgaW4gZGV2aWNlIHRyZWUuDQogICAgPiANCiAgICA+IFNpZ25lZC1vZmYt
+Ynk6IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29tPg0KICAgIA0KICAgIEFwcGxpZWQs
+IHRoYW5rIHlvdS4NCg0KVGhhbmtzIERhdmlkLg0KICAgIA0KDQo=
