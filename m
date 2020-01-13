@@ -1,77 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E28B5139692
-	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 17:43:05 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47xKCC1ctqzDqJ7
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 03:43:03 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71EF11396D5
+	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 17:54:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47xKSv4NzZzDqJt
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 03:54:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=sharad.khetan@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47xKBT6dflzDqGX
- for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 03:42:25 +1100 (AEDT)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 00DGgJQh136889
- for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 11:42:22 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.72])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2xfva1btsb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 11:42:22 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Mon, 13 Jan 2020 16:42:21 -0000
-Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
- by smtp.notes.na.collabserv.com (10.106.227.158) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 13 Jan 2020 16:42:16 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp03.a3.dal06.isc4sb.com
- with ESMTP id 2020011316421628-641975 ;
- Mon, 13 Jan 2020 16:42:16 +0000 
-In-Reply-To: <FD0BD680739BFC41807C96BD23118BB1327E11@ORSMSX113.amr.corp.intel.com>
-Subject: GUI design for profile page
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: kathryn.elainex.pine@intel.com
-Date: Mon, 13 Jan 2020 16:42:15 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <FD0BD680739BFC41807C96BD23118BB1327E11@ORSMSX113.amr.corp.intel.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 53911
-X-TNEFEvaluated: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47xKRy1Qj9zDqJs
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 03:53:58 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 13 Jan 2020 08:53:54 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.69,429,1571727600"; d="scan'208";a="397212849"
+Received: from fmsmsx108.amr.corp.intel.com ([10.18.124.206])
+ by orsmga005.jf.intel.com with ESMTP; 13 Jan 2020 08:53:54 -0800
+Received: from fmsmsx161.amr.corp.intel.com (10.18.125.9) by
+ FMSMSX108.amr.corp.intel.com (10.18.124.206) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Mon, 13 Jan 2020 08:53:47 -0800
+Received: from fmsmsx118.amr.corp.intel.com ([169.254.1.58]) by
+ FMSMSX161.amr.corp.intel.com ([10.18.125.9]) with mapi id 14.03.0439.000;
+ Mon, 13 Jan 2020 08:53:47 -0800
+From: "Khetan, Sharad" <sharad.khetan@intel.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Vijay Khemka <vijaykhemka@fb.com>, rgrs
+ <rgrs@protonmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: MCTP over PCI on AST2500
+Thread-Topic: MCTP over PCI on AST2500
+Thread-Index: AQHVn2VSe/daZ1HR/0SJwnpAq7UT7qeUJeQA//96gqCAA0FRAIAtBQZQgB6Aw4CAAXo0gIAFPlBA
+Date: Mon, 13 Jan 2020 16:53:46 +0000
+Message-ID: <865C376D1B77624AAA570EFEF73CE52F9E10C8FD@fmsmsx118.amr.corp.intel.com>
+References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
+ <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
+ <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
+ <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
+ <62036de3-ce3d-4ccb-ac5b-15e9ba39d22b@www.fastmail.com>
+In-Reply-To: <62036de3-ce3d-4ccb-ac5b-15e9ba39d22b@www.fastmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: no-action
+x-originating-ip: [10.1.200.108]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20011316-1335-0000-0000-000002C5D392
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.274178
-X-IBM-SpamModules-Versions: BY=3.00012378; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000292; SDB=6.01318589; UDB=6.00701340; IPR=6.01100919; 
- MB=3.00030299; MTD=3.00000008; XFM=3.00000015; UTC=2020-01-13 16:42:20
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-01-13 13:17:07 - 6.00010881
-x-cbparentid: 20011316-1336-0000-0000-00002302F130
-Message-Id: <OF54B7FA9A.2E44CC83-ON002584EE.0059BF0A-002584EE.005BC27D@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-01-13_05:2020-01-13,
- 2020-01-13 signatures=0
-X-Proofpoint-Spam-Reason: safe
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,67 +73,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, ryanarnellibm@gmail.com
+Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>, "Winiarska,
+ Iwona" <iwona.winiarska@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-=20
-Thank you for your feedback, Kathy!
+Hi Andrew,
 
-> 1. What was the reasoning for making this a separate page instead of putt=
-ing this on the existing local users page?
+On Thu, 9 Jan 2020, at 12:27, Andrew Jeffery wrote:
+>=20
+>=20
+> On Sat, 21 Dec 2019, at 10:45, Khetan, Sharad wrote:
+> > Hi Andrew,
+> > Sorry for late response.
+> > The plan is to have MCTP in user space.=20
+> >=20
+>=20
+> How are you handling this then? mmap()'ing the BAR from sysfs?
 
-A profile page is a common pattern that users are accustomed to. The local =
-user management is a page that admin users of the BMC are accustomed to and=
- the admin user is the only user type with access to this page. Having diff=
-erent information on the local user management page based on user type seem=
-s less intuitive than providing a profile page. We will be user testing thi=
-s.
-
-
-> 2. If it is a separate page, I like that the page would be linked from a =
-header icon, but it seems like there should be access from the menu somehow=
- as well. I wonder if it could be a link on the local users page for each u=
-ser.=20
-
-What problem are we solving with this proposal? I don't feel that admin sho=
-uld have access to a user's profile page. Any information they want to upda=
-te for the user, e.g. username, password, etc should be handled on the loca=
-l user management page.=20
-
-> I can imagine that if control exists to change language for a user, there=
- could be a scenario where an admin user might want to change the language =
-for users when they set the user up, not requiring that user to log in in E=
-nglish (for example) and then find this page and change the language themse=
-lves.
-
-
-The login page will be displayed using the language set in the users operat=
-ing system unless that language is not supported, then it would display in =
-English. Ed's use case that that the use would want to update their languag=
-e from the what they have set in their OS to English. We are contemplating =
-having a language option on the login page to allow the user to select at l=
-ogin.
-
-Even if an admin set the users language, the login page won't know who that=
- user is until they login, so we did not consider that as a use case. We ar=
-e going to be testing different options with users.
-
-
-> If it is accessed from the local users page, could it just be a modal on =
-the page rather than a separate page?
-
-If we wanted the admin to be able to set the users language we would just a=
-dd this to the available settings they could change for that user. I person=
-ally don't think it adds too much value, but it would also be simple to add=
- to form to update the user info.
-=20
+>Sorry, let me put my brain back in, I was thinking of the wrong side of th=
+e  BMC/Host MCTP channel. How much were you planning to do in userspace on =
+the BMC? As in, are you planning to drive the BMC's PCIe MCTP controller fr=
+om userspace (presumably via /dev/mem)?
 
 =20
+For implementation on the BMC, we agree that it's better to do it in kernel=
+ (and as you mentioned  - use consistent interface to upper layers, provide=
+ another transport). However, given the time needed to implement things in =
+kernel (and the review after), we are starting with a short term solution. =
+We will be implementing MCTP (protocol elements) in user space, along with =
+a low level MCTP PCIe driver just to push bits on PCIe. Iwona is working on=
+ this and should be able to describe the exact primitive.
 
-=20
-
-=20
-
-=20
-
+Thanks,
+-Sharad
