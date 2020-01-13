@@ -1,92 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42763139DAF
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 00:55:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45517139D2A
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 00:20:51 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47xV280vglzDqLC
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 10:20:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47xVp85TrPzDqPl
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 10:55:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
- helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
+ helo=mail-oi1-x233.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=VI+y86u5; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=vHpFEBp8; 
- dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
- [64.147.123.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=j5RCUXIk; dkim-atps=neutral
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
+ [IPv6:2607:f8b0:4864:20::233])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47xV1J6HCczDqLF
- for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 10:20:03 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A8B7D4F5;
- Mon, 13 Jan 2020 18:19:59 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 13 Jan 2020 18:20:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=RpHLrWKYe8y7MWPVF7NJmkko/ziBSpw
- b+14ZSy12/VA=; b=VI+y86u5bcxNqFhy1GJ9a1LPJ00gHFbzCaJtE1h7Yv1gHJd
- 7XKuTVYeRMbbz59qxSHcvhRwuZvnF4IiaruX9QT+3q5vJ/FdAEJlvw5k0SoWdtH+
- eJ577ZwAiQSoxaj7BOKJ5Dmj0mid9UfDMWXd6TGE003j3ICOroRV73E9G9lMa3rz
- w3fsP91wL/Q3aabjIxBi+eftzAIkUKOU/e06VV2pFq5+G0Y9BtGZ6dzzu0XRagV0
- /RcYCeyTy+/182srZDO6S63gNXK/z6M3zQNSJNeLbjHRfPxBrTz11CpBL6CpxExa
- dv58zIESiaqy87zCF1oGV7GYnZ3ndwG0fklJcGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=RpHLrW
- KYe8y7MWPVF7NJmkko/ziBSpwb+14ZSy12/VA=; b=vHpFEBp8cPq7t1QF/zxhLR
- OEqhN9OiaD3djuDYjWFoaZh2zLrLtsVMCsW+q6hPSDdJbR8E4obst3hr4xn0tzx0
- ZEjJQ9v+JGZFjuioaGU8ZOPowjgWoZ02GTk3pitX9fn7yQ3LmoYmG3ZKdp29FNi4
- KedOFxb5sGjucoZb6kfQNWGg1QfiMXHcOQDFDoT5eM+PbuxMKYk9RCIqAhCfLVVN
- cc4PBq/2hZyzt0Bqd7lErhQbjnHhLWAXreAMdjN+Ux9K9vXe+TKFb91zEIaIGPPC
- gLhfE083tLpTWbgLdYYD2RDYnz1KrfLgej9IyloZf3jddHr8TIMUzAm2Q9f3KJdg
- ==
-X-ME-Sender: <xms:HvscXqoTG25VUL0c0KDlCpjwJyFW_2efTHr2HBz2jT22DowbqvCpxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdejuddgtdejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecurfgrrh
- grmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghunecuvehluhhsthgv
- rhfuihiivgeptd
-X-ME-Proxy: <xmx:HvscXk8IlYOYhefn820yQgHjYdzQLE-QRGcF7j5w80ZPjwxlPk1P1A>
- <xmx:HvscXh-NviX-nU5Ud6S7MVyf6Mbd5mIE7FNhoZ0d4559YLwJsr2b9w>
- <xmx:HvscXruPExiVXf_qHyHXexR4v2mdcfj3GisbalPZKpMUR6IO73EL0g>
- <xmx:H_scXhBiyw2hU-l8kuonnztwbuRxeZt1K_zFwpCYtzX-KbrNlfP0JQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id B4BCAE00A2; Mon, 13 Jan 2020 18:19:58 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-754-g09d1619-fmstable-20200113v1
-Mime-Version: 1.0
-Message-Id: <3800795e-a89c-40b5-a7b2-4949029286cf@www.fastmail.com>
-In-Reply-To: <865C376D1B77624AAA570EFEF73CE52F9E10C8FD@fmsmsx118.amr.corp.intel.com>
-References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
- <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
- <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
- <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
- <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
- <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
- <62036de3-ce3d-4ccb-ac5b-15e9ba39d22b@www.fastmail.com>
- <865C376D1B77624AAA570EFEF73CE52F9E10C8FD@fmsmsx118.amr.corp.intel.com>
-Date: Tue, 14 Jan 2020 09:52:02 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Sharad Khetan" <sharad.khetan@intel.com>,
- "Vijay Khemka" <vijaykhemka@fb.com>, rgrs <rgrs@protonmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: MCTP over PCI on AST2500
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47xVnL1pbbzDqJY
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 10:54:43 +1100 (AEDT)
+Received: by mail-oi1-x233.google.com with SMTP id 18so10098414oin.9
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 15:54:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=mmrxdrxiETjTLMsgtBl+LuvXtxYGiCxHr4Ayrvw0bBw=;
+ b=j5RCUXIkhcVjCfUTrIlApTlTfQjGon4OgIKGe4+IEJtFxhQLEZj5SV7/2yUmRY+B1N
+ KmiDZ9s/wUWJ2wWDya9B80FhrkVBIEA/yJpo2lK+hdpSnWF1LyOMlzvGfmc+3BlSCdNE
+ jTlJlS2v7ySL5Kb9h4Uu905E4O9135mZse0juiQ5MfvcCH+zGBY3D9pyjjy+R5ToTymb
+ luMhdfAVcuEZwpwSfRUqv/nirIoXvegJJZqqpNW0AsWYLPldiZQEDpZlAt4bUEDLNs4j
+ QzcnJ1vD5mowtXHz+HaIsTQ/RSvtpYXnkuMDoeSUQuF05tnBchoVAB0QdB2AhAS18cNs
+ RRWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=mmrxdrxiETjTLMsgtBl+LuvXtxYGiCxHr4Ayrvw0bBw=;
+ b=ZQjnDCehcBBIxfk942XKEcJWj47D1bsnwx+6yTsTgeGHV3fWmxqhOtvFx2fOf/rKqU
+ 0N0+Qq+Qe6wgTNy2+dI1y1toYuYSOPBCVeNV/v9zHcV1hD+/gkReZQhak2FNCWV+61Ze
+ qWDn/JIF4o7w9djOtgpMErlSHTVrfRiFDL1MJm8u5PjuAPMrKhb7aBM2tstCeQmsLAKW
+ q2eqxYppDDu6A6zG6Pi4NVPfgkcW1Y7IYw53ZeI/R3tlcJru2Skrjl6FIOUEV0UV6UKp
+ rt4aeHKA4ckpgf4l0qsmf7yH0jsN2iVlZWiF8XXhqBXVgJvBQd2/5f9jx3cTUlh2b4BU
+ Dnkw==
+X-Gm-Message-State: APjAAAUvCkf+La3jzfTSfHYHSK46Uwr1uu78jAOnqkuP/RVyfH/QWJ2d
+ HK54YTgvgO02MW20mfTwN7E=
+X-Google-Smtp-Source: APXvYqw6fjd5jnV89RLWYw17F7dM8RrlmMp+TDnXc0I31MExO29uW4pUWuoSMpRKX5AfbXC+3giUzg==
+X-Received: by 2002:aca:4a87:: with SMTP id
+ x129mr14188502oia.165.1578959681605; 
+ Mon, 13 Jan 2020 15:54:41 -0800 (PST)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id 17sm4710686oty.48.2020.01.13.15.54.40
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 13 Jan 2020 15:54:41 -0800 (PST)
+Subject: Re: Add member into Lenovo designated employees list
+To: Benjamin Fair <benjaminfair@google.com>
+References: <0700dec94d76447faae7ab98c0c04516@lenovo.com>
+ <CADKL2t5wk+2Yd39=XLih7vFsACrgmsJp96b-su_S5zLis6EgDg@mail.gmail.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <16a6405b-bbcb-e85d-47bb-280d51fe6785@gmail.com>
+Date: Mon, 13 Jan 2020 17:54:40 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
+MIME-Version: 1.0
+In-Reply-To: <CADKL2t5wk+2Yd39=XLih7vFsACrgmsJp96b-su_S5zLis6EgDg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,39 +85,134 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>, "Winiarska,
- Iwona" <iwona.winiarska@intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Duke KH Du <dukh@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Tue, 14 Jan 2020, at 03:23, Khetan, Sharad wrote:
-> Hi Andrew,
+On 1/10/20 11:22 AM, Benjamin Fair wrote:
+> Hi Kurt,
 > 
-> On Thu, 9 Jan 2020, at 12:27, Andrew Jeffery wrote:
-> > 
-> > 
-> > On Sat, 21 Dec 2019, at 10:45, Khetan, Sharad wrote:
-> > > Hi Andrew,
-> > > Sorry for late response.
-> > > The plan is to have MCTP in user space. 
-> > > 
-> > 
-> > How are you handling this then? mmap()'ing the BAR from sysfs?
-> 
-> >Sorry, let me put my brain back in, I was thinking of the wrong side of the  BMC/Host MCTP channel. How much were you planning to do in userspace on the BMC? As in, are you planning to drive the BMC's PCIe MCTP controller from userspace (presumably via /dev/mem)?
-> 
->  
-> For implementation on the BMC, we agree that it's better to do it in 
-> kernel (and as you mentioned  - use consistent interface to upper 
-> layers, provide another transport). However, given the time needed to 
-> implement things in kernel (and the review after), we are starting with 
-> a short term solution. We will be implementing MCTP (protocol elements) 
-> in user space, along with a low level MCTP PCIe driver just to push 
-> bits on PCIe. Iwona is working on this and should be able to describe 
-> the exact primitive.
+> Could you take a look at the CCLA update from Lenovo when you get a chance?
 
-Alright, great, I'll keep you posted on the kernel-side progress.
+Yes, I have already communicated with them (Dec 13th) about what I am 
+needing.
 
-Andrew
+Kurt Taylor (krtaylor)
+
+> 
+> Thanks,
+> Benjamin
+> 
+> 
+> On Fri, 6 Dec 2019 at 12:45, Duke KH Du <dukh@lenovo.com 
+> <mailto:dukh@lenovo.com>> wrote:
+> 
+>     Hi Master,____
+> 
+>     __ __
+> 
+>     I would like to add more members of Lenovo in the designated
+>     employee list as below in Red.____
+> 
+>     Could you help on that?____
+> 
+>     __ __
+> 
+>     Schedule A____
+> 
+>     Initial list of designated employees. NB: authorization is not tied
+>     to particular Contributions.____
+> 
+>     Please indicate “CLA Manager”next to the name of any employees
+>     listed below that are____
+> 
+>     authorized to add or remove designated employees from this list in
+>     the future.____
+> 
+>     __ __
+> 
+>     CLA Manager:____
+> 
+>     Duke Du dukh@lenovo.com <mailto:dukh@lenovo.com>____
+> 
+>     __ __
+> 
+>     Other designated employees:____
+> 
+>     Andrew Peng pengms1@lenovo.com <mailto:pengms1@lenovo.com>____
+> 
+>     Yonghui Liu liuyh21@lenovo.com <mailto:liuyh21@lenovo.com>____
+> 
+>     Lisa Liu liuyj19@lenovo.com <mailto:liuyj19@lenovo.com>____
+> 
+>     __ __
+> 
+>     Payne Yang pyang4@lenovo.com <mailto:pyang4@lenovo.com>____
+> 
+>     Harry Sung hsung1@lenovo.com <mailto:hsung1@lenovo.com>____
+> 
+>     Ivan Li rli11@lenovo.com <mailto:rli11@lenovo.com>____
+> 
+>     Derek Lin dlin23@lenovo.com <mailto:dlin23@lenovo.com>____
+> 
+>     __ __
+> 
+>     Thanks.____
+> 
+>     *From:* Duke KH Du
+>     *Sent:* Monday, April 8, 2019 8:44 PM
+>     *To:* openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
+>     *Subject:* Add member into Lenovo designated employees list____
+> 
+>     __ __
+> 
+>     Hi master,____
+> 
+>     __ __
+> 
+>     I would like to add our new member in Lenovo designated employees
+>     list as below in RED color.____
+> 
+>     __ __
+> 
+>     Could you help on it?____
+> 
+>     Thanks.____
+> 
+>     __ __
+> 
+>     Schedule A____
+> 
+>     Initial list of designated employees. NB: authorization is not tied
+>     to particular Contributions.____
+> 
+>     Please indicate “CLA Manager”next to the name of any employees
+>     listed below that are____
+> 
+>     authorized to add or remove designated employees from this list in
+>     the future.____
+> 
+>     __ __
+> 
+>     CLA Manager:____
+> 
+>     Duke Du dukh@lenovo.com <mailto:dukh@lenovo.com>____
+> 
+>     __ __
+> 
+>     Other designated employees:____
+> 
+>     Andrew Peng pengms1@lenovo.com <mailto:pengms1@lenovo.com>____
+> 
+>     __ __
+> 
+>     Yonghui Liu liuyh21@lenovo.com <mailto:liuyh21@lenovo.com>____
+> 
+>     __ __
+> 
+>     Lisa Liu liuyj19@lenovo.com <mailto:liuyj19@lenovo.com>____
+> 
+>     __ __
+> 
+
