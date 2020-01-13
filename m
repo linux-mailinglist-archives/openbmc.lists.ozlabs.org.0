@@ -2,90 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A9371388C9
-	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 00:37:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E3AC138C8C
+	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 08:54:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47wtRJ5DqszDqM5
-	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 10:37:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47x5TL4pN3zDqM0
+	for <lists+openbmc@lfdr.de>; Mon, 13 Jan 2020 18:54:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=cRxw/FBr; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=XM3aTD2t; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47wtQN2SSNzDqLf
- for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 10:36:11 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 9FFFF22015;
- Sun, 12 Jan 2020 18:36:07 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Sun, 12 Jan 2020 18:36:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=TqWOZTRsbQ9uWY2q8k9fdhsg4RTG4Zy
- 99YSoKP91yLA=; b=cRxw/FBrlHAmO9TA/gX8sMWXdd4ayZDLvvQfDYzrpCiNQcQ
- LlfmhwOsxTJmB1T792vGBZD6W1bXgGV1g9rULloArNnuQSRxdKNxZHIo5JYhdAcQ
- 8XSFeWcJTbEq8tcx8+25jsAdcanlRwWiDNnlEockMxbtTMV+kYNUr0U4PwQb5YqH
- rXXDU07eeozN9wHP9RMalEx72F3wZ08WzXu2uTlhJvxSsEdHRvTxmP5NPcNaTVHF
- sfSQbn9xw7xdO22iqvzW4c6mQwHF6teFOjBV3yUSo1OXUB9OfGl9du86r5qAHYp6
- n3bQoVd170k1B543GyYV+7wQ56CfCm/ZbInf1gA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=TqWOZT
- RsbQ9uWY2q8k9fdhsg4RTG4Zy99YSoKP91yLA=; b=XM3aTD2t+e/q1VhRY6dFnc
- TpZPBVzzT5Moez4Z7EHx5BbqEQMvvInmtY+bFPeCUQ7dbsodLoOSVlU4ayWRAZwH
- DwgRH4ag5z3aTRIXtgIaLAYPMQcUSqmOxVCgJqctR2wACtTf3sKsOx6Phd5oYxig
- XKFACArZF2+HCga4NuOpPO7cpuLBdgrd39qX2cX7u1MM9oLMUEzvaUfh/grAfJnJ
- QJTLnPaMeykKf1gItFaK3TL9im/CYP9xzalIWLBqeHk4fOweNyLc457g6OpqPuW+
- u/5xYspcaaLzsYRMihVqigU7Cb6DhktmxJlyYgaUqdZWDfRO0Tzw3iiV++fJEPBw
- ==
-X-ME-Sender: <xms:Zq0bXnL7BFFekjI0rS_YiP92T8QM-G_QRcCaC_b7TKSMdd1sHnLPDw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdeiledgudegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
- grihhnpehgihhthhhusgdrtghomhenucfrrghrrghmpehmrghilhhfrhhomheprghnughr
- vgifsegrjhdrihgurdgruhenucevlhhushhtvghrufhiiigvpedt
-X-ME-Proxy: <xmx:Zq0bXrsSsF1uFDk3x0nuOIS3EKrlSva1Au08F_eyT1bKOchSCXWurw>
- <xmx:Zq0bXg4KDddnYf01LUXM3_GuPd_wYb1BujGI1Up2jqtsUtciFxQCOA>
- <xmx:Zq0bXqHwtoz_1Ar53IDBka6YuXDOzKEIZ9Khr9R7-4qmbGAthjoIrA>
- <xmx:Z60bXsWUBzxc3X7_lY_xHhjcZ-2epadDa1Aqh0iyeISD8keqXguADQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 83279E00A2; Sun, 12 Jan 2020 18:36:06 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-740-g7d9d84e-fmstable-20200109v1
-Mime-Version: 1.0
-Message-Id: <b33a4247-e76d-46bb-9853-cf246f55d6bf@www.fastmail.com>
-In-Reply-To: <27265.1578670688@localhost>
-References: <gqnvvFdbRiXJzS3sVr0pSSo8kD6KjPbFMgg8CV1tsi0cKt0zT5mrnSTfBB1cpiOt-MVrXNzlg95DqgWZ3AxD8zOyEbFYRykqjP-DxEW4Mww=@protonmail.com>
- <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
- <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
- <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
- <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
- <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
- <29717.1578627606@localhost>
- <a21918d0-d5ba-4959-82b9-3193748fcf72@www.fastmail.com>
- <27265.1578670688@localhost>
-Date: Mon, 13 Jan 2020 10:08:09 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Michael Richardson" <mcr@sandelman.ca>
-Subject: Re: MCTP over PCI on AST2500
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47x5Rk5tH8zDqMv
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 18:53:06 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 00D7qlec025901
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 02:53:04 -0500
+Received: from e06smtp07.uk.ibm.com (e06smtp07.uk.ibm.com [195.75.94.103])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2xfvpnjeyn-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 02:53:03 -0500
+Received: from localhost
+ by e06smtp07.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Mon, 13 Jan 2020 07:53:02 -0000
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp07.uk.ibm.com (192.168.101.137) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Mon, 13 Jan 2020 07:52:59 -0000
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com
+ (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 00D7qwGf34078966
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 13 Jan 2020 07:52:58 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C3AB4A4054;
+ Mon, 13 Jan 2020 07:52:58 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0931FA405C;
+ Mon, 13 Jan 2020 07:52:58 +0000 (GMT)
+Received: from [9.122.210.66] (unknown [9.122.210.66])
+ by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Mon, 13 Jan 2020 07:52:57 +0000 (GMT)
+From: vishwa <vishwa@linux.vnet.ibm.com>
+To: Kun Yi <kunyi@google.com>
+Subject: Re: *Request For Feedback*: TimeOwner in phosphor-timemanager
+References: <18332622-cec4-37ae-b617-b897622d0ea2@linux.vnet.ibm.com>
+ <FD0BD680739BFC41807C96BD23118BB1321C1D@ORSMSX113.amr.corp.intel.com>
+ <8b717e60-5733-c3ef-13ad-7016e89f932a@linux.vnet.ibm.com>
+ <20e2aaad-dd30-d9b2-36aa-d07b51f9732b@linux.vnet.ibm.com>
+ <CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com>
+ <257c3d82-f6a3-d793-70e7-d8ebec300c40@linux.vnet.ibm.com>
+ <02d18fa0-f9e2-2921-a56d-e76e4fc3b007@linux.vnet.ibm.com>
+Date: Mon, 13 Jan 2020 13:22:57 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+In-Reply-To: <02d18fa0-f9e2-2921-a56d-e76e4fc3b007@linux.vnet.ibm.com>
+Content-Type: multipart/alternative;
+ boundary="------------30EE1CF0F1B112A7DD1E5CED"
+X-TM-AS-GCONF: 00
+x-cbid: 20011307-0028-0000-0000-000003D08F64
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20011307-0029-0000-0000-00002494AC70
+Message-Id: <9142901a-4731-7ed7-d228-f1293e0e5c6c@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-13_01:2020-01-13,
+ 2020-01-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 phishscore=0
+ mlxscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ spamscore=0 clxscore=1011 suspectscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1910280000
+ definitions=main-2001130066
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,64 +96,398 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Sharad Khetan <sharad.khetan@intel.com>, rgrs <rgrs@protonmail.com>,
- Vijay Khemka <vijaykhemka@fb.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Pine,
+ Kathryn ElaineX" <kathryn.elainex.pine@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This is a multi-part message in MIME format.
+--------------30EE1CF0F1B112A7DD1E5CED
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
-On Sat, 11 Jan 2020, at 02:08, Michael Richardson wrote:
-> 
-> Andrew Jeffery <andrew@aj.id.au> wrote: 
->     > 
-> https://github.com/openbmc/meta-phosphor/blob/master/aspeed-layer/recipes-bsp/u-boot/files/0001-aspeed-Disable-unnecessary-features.patch
-> 
->     > The distro feature is opt-in as it has impacts beyond simply 
-> disabling the backdoors
->     > (there are some unfortunate side-effects to enforcing 
-> confidentiality of the BMC's
->     > address space.
-> 
-> okay, so the bridge gets turned off, and it has some other effects.
-> What are the side effects?  I'm guessing by the inclusion of the VGA defines
-> in that board init that they are video related.
+Alright.. This is what I am going ahead with for TimeOwner.
 
-We have a slightly more detailed description here:
+Phase-1 and near term goal: Make "BOTH" as default than what we 
+currently have ( "BMC" )
+Phase-2: Modify the code to remove support for HOST / BMC / SPLIT. Code 
+will behave as if it's BOTH
 
-https://github.com/openbmc/openbmc/issues/3475
+If this breaks any usecase, please let me know.
 
-With respect to PCIe, disabling the P2A causes the host kernel to fail probing
-the  AST DRM driver on kernels before 4.12 (from memory). This impacts
-POWER more than other host architectures due to invalid accesses triggering
-EEH.
+Thank you,
 
-With respect to LPC, the issue is largely that the bit in the LPC controller to
-disable the iLPC2AHB bridge only disables write access, the host can still
-continue to issues arbitrary reads of the BMC address space. To prevent
-arbitrary reads the BMC must disable the entire SuperIO controller, which
-knocks out the ability to configure UARTs, GPIOs, and the LPC mailbox
-among other functionality. On some platforms disabling SuperIO is feasible
-(POWER based), but others may require some of this functionality be
-present.
+!! Vishwa !!
 
-> 
-> I can see that doing this in uboot is the earliest possible;
 
-It's actually possible to disable the backdoors before the first instruction is
-run on the ARM core with the firmware strapping feature, but it's likely the
-result becomes platform-specific and integrating the configuration
-into the flash image can be a bit fiddly (you could implement it with  a
-custom u-boot linker script).
+On 1/6/20 2:48 PM, vishwa wrote:
+> Hi,
+>
+> Happy New Year ...
+>
+> btw, looks like TimeOwner may not be of interest for the community ?. 
+> Shall we go ahead remove that setting ?
+>
+> !! Vishwa !!
+>
+> On 12/19/19 1:30 PM, vishwa wrote:
+>> On 12/19/19 1:29 AM, Kun Yi wrote:
+>>>
+>>
+>>>
+>>> On Wed, Dec 18, 2019 at 7:02 AM vishwa <vishwa@linux.vnet.ibm.com 
+>>> <mailto:vishwa@linux.vnet.ibm.com>> wrote:
+>>>
+>>>     Hello community,
+>>>
+>>>     Would be really great if there is any feedback on this.
+>>>
+>>>     Have a happy holidays !!
+>>>
+>>>     !! Vishwa !!
+>>>
+>>>     On 12/11/19 3:24 PM, vishwa wrote:
+>>>>     On 12/11/19 12:17 AM, Pine, Kathryn ElaineX wrote:
+>>>>>
+>>>>>     >*Do we need this going forward ?*: I am being asked by UX team
+>>>>>     about the need of this and I mentioned I would get the
+>>>>>     community feedback on this. Although, I feel this level of
+>>>>>     granularity gives control over how we can manage time, it
+>>>>>     would not justify the complexity if the customers don't
+>>>>>     appreciate it. Removing the TimeOwner would make the code a
+>>>>>     lot simpler.
+>>>>>
+>>>>>     Hi,
+>>>>>
+>>>>>     I am coming from the UX side of how we set the date time
+>>>>>     settings page up for phosphor-webui downstream recently. We
+>>>>>     switched our page to use Redfish, here’s how ours is set up now:
+>>>>>
+>>>>>     There is no longer a “time owner” and the setting is either:
+>>>>>
+>>>>>     NTPEnabled: true or false
+>>>>>
+>>>>>     If false, we are not allowing the user to set the time,
+>>>>>     because the BMC is synching from the host time and therefore
+>>>>>     any settings we made to the time on the BMC would be overwritten.
+>>>>>
+>>>>>     If true, we use the NTP server(s) the user provides.
+>>>>>
+>>>>>     We are testing this currently.
+>>>>>
+>>>>
+>>>>     Hi, Thank you for the response. From what I interpreted:
+>>>>
+>>>>     - TimeOwner is not settable via GUI
+>>>>     - Irrespective of NTP setting, the user is not allowed to set
+>>>>     the time on BMC
+>>>>     - BMC is syncing the time from Host.
+>>>>        - This means, the current TimeOwner is "Host" and NTP is
+>>>>     off. Is that being set as default ?
+>>>>
+>>>>     I am requesting for feedback from the community on the need of
+>>>>     TimeOwner feature that we have in Settings and timemanager code.
+>>>>
+>>>>     !! Vishwa !!
+>>>>>
+>>> My 2cents here along with a few questions:
+>>> - how does the current time manager interact with systemd-timesyncd?
+>>
+>> TimeManager interacts with systemd-timedated, which in turn engages 
+>> systemd-timesync on setting *NTP *policy.
+>> https://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html**
+>>
+>>> - From my experience, BMC time can drift a lot easily and it is more 
+>>> useful to have the BMC time synced externally
+>>
+>> This is a discussion point for using / not using NTP. It would not 
+>> impact TimeOwner
+>> https://github.com/openbmc/phosphor-time-manager/blob/master/README.md
+>>
+>>> - Whether NTP or host time is preferred should be left to the 
+>>> platform designer to decide
+>>
+>> If the setting is NTP, then Host can not set the time on BMC unless 
+>> the Owner is SPLIT.
+>> I believe, you are saying more from a NTP / Non NTP as opposed to 
+>> TimeOwner ?
+>>
+>>> - sounds like it would be more straightforward to have the 'Owner' 
+>>> reflect one time source: NTP/IPMI/Redfish
+>>
+>> This is part of TimeSynchronization. TimeOwner is another layer on 
+>> who owns the time as opposed to how the time is set.
+>> Hopefully the README I pointed to before would help.
+>>
+>> Thank you,
+>> !! Vishwa !!
+>>>
+>>> -- 
+>>> Regards,
+>>> Kun
 
-> but in most
-> cases the main CPU has no power until the BMC boots, so it can't attack until
-> the BMC is running.  Are there some situations in which the BMC (or the P2A
-> bridge) could get reset without the host CPU also being reset?
+--------------30EE1CF0F1B112A7DD1E5CED
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-See the discussion of the watchdog reset modes in the link above.
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix"><br>
+      Alright.. This is what I am going ahead with for TimeOwner.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">Phase-1 and near term goal: Make "BOTH"
+      as default than what we currently have ( "BMC" )<br>
+    </div>
+    <div class="moz-cite-prefix">Phase-2: Modify the code to remove
+      support for HOST / BMC / SPLIT. Code will behave as if it's BOTH</div>
+    <div class="moz-cite-prefix"><br>
+      If this breaks any usecase, please let me know.<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix">Thank you,</div>
+    <div class="moz-cite-prefix"><br>
+      !! Vishwa !!<br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+    </div>
+    <div class="moz-cite-prefix"><br>
+      On 1/6/20 2:48 PM, vishwa wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:02d18fa0-f9e2-2921-a56d-e76e4fc3b007@linux.vnet.ibm.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <div class="moz-cite-prefix">Hi,</div>
+      <div class="moz-cite-prefix"><br>
+        Happy New Year ... <br>
+      </div>
+      <div class="moz-cite-prefix"><br>
+        btw, looks like TimeOwner may not be of interest for the
+        community ?. Shall we go ahead remove that setting ?<br>
+      </div>
+      <div class="moz-cite-prefix"><br>
+      </div>
+      <div class="moz-cite-prefix">!! Vishwa !!<br>
+        <br>
+      </div>
+      <div class="moz-cite-prefix">On 12/19/19 1:30 PM, vishwa wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:257c3d82-f6a3-d793-70e7-d8ebec300c40@linux.vnet.ibm.com">
+        <meta http-equiv="Content-Type" content="text/html;
+          charset=UTF-8">
+        On 12/19/19 1:29 AM, Kun Yi wrote:<br>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <meta http-equiv="content-type" content="text/html;
+            charset=UTF-8">
+          <div dir="ltr">
+            <div dir="ltr"><br>
+            </div>
+          </div>
+        </blockquote>
+        <br>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <div dir="ltr"><br>
+            <div class="gmail_quote">
+              <div dir="ltr" class="gmail_attr">On Wed, Dec 18, 2019 at
+                7:02 AM vishwa &lt;<a
+                  href="mailto:vishwa@linux.vnet.ibm.com"
+                  target="_blank" moz-do-not-send="true">vishwa@linux.vnet.ibm.com</a>&gt;
+                wrote:<br>
+              </div>
+              <blockquote class="gmail_quote" style="margin:0px 0px 0px
+                0.8ex;border-left:1px solid
+                rgb(204,204,204);padding-left:1ex">
+                <div bgcolor="#FFFFFF">
+                  <p>Hello community,<br>
+                  </p>
+                  <p>Would be really great if there is any feedback on
+                    this.</p>
+                  <p>Have a happy holidays !!<br>
+                  </p>
+                  <p>!! Vishwa !!</p>
+                  <div>On 12/11/19 3:24 PM, vishwa wrote:<br>
+                  </div>
+                  <blockquote type="cite">
+                    <div>On 12/11/19 12:17 AM, Pine, Kathryn ElaineX
+                      wrote:<br>
+                    </div>
+                    <blockquote type="cite">
+                      <div>
+                        <p><span style="color:windowtext">&gt;</span><b>
+                            Do we need this going forward ?</b>: I am
+                          being asked by UX team about the need of this
+                          and I mentioned I would get the community
+                          feedback on this. Although, I feel this level
+                          of granularity gives control over how we can
+                          manage time, it would not justify the
+                          complexity if the customers don't appreciate
+                          it. Removing the TimeOwner would make the code
+                          a lot simpler.</p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">Hi,</span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext"> </span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">I am coming from
+                            the UX side of how we set the date time
+                            settings page up for phosphor-webui
+                            downstream recently. We switched our page to
+                            use Redfish, here’s how ours is set up now:</span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext"> </span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">There is no longer
+                            a “time owner” and the setting is either:</span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">NTPEnabled: true or
+                            false</span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">If false, we are
+                            not allowing the user to set the time,
+                            because the BMC is synching from the host
+                            time and therefore any settings we made to
+                            the time on the BMC would be overwritten. </span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">If true, we use the
+                            NTP server(s) the user provides.</span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext"> </span></p>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext">We are testing this
+                            currently.</span></p>
+                      </div>
+                    </blockquote>
+                    <div><br>
+                      Hi, Thank you for the response. From what I
+                      interpreted:<br>
+                      <br>
+                    </div>
+                    <div>- TimeOwner is not settable via GUI<br>
+                      - Irrespective of NTP setting, the user is not
+                      allowed to set the time on BMC<br>
+                      - BMC is syncing the time from Host.<br>
+                         - This means, the current TimeOwner is "Host"
+                      and NTP is off. Is that being set as default ?<br>
+                    </div>
+                    <div><br>
+                      I am requesting for feedback from the community on
+                      the need of TimeOwner feature that we have in
+                      Settings and timemanager code.<br>
+                    </div>
+                    <div><br>
+                      !! Vishwa !!<br>
+                    </div>
+                    <blockquote type="cite">
+                      <div>
+                        <p class="MsoNormal"><span
+                            style="color:windowtext"><a
+                              name="m_-4131239486451252847_m_691753059126936336______replyseparator"
+                              moz-do-not-send="true"></a></span></p>
+                      </div>
+                    </blockquote>
+                  </blockquote>
+                </div>
+              </blockquote>
+            </div>
+            My 2cents here along with a few questions:
+            <div>- how does the current time manager interact
+              with systemd-timesyncd?<br>
+            </div>
+          </div>
+        </blockquote>
+        <div><br>
+          TimeManager interacts with systemd-timedated, which in turn
+          engages systemd-timesync on setting <strong>NTP </strong>policy.<br>
+          <a class="moz-txt-link-freetext"
+href="https://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html"
+            moz-do-not-send="true">https://www.freedesktop.org/software/systemd/man/systemd-timesyncd.service.html</a><span
+            class="command"><strong></strong></span><br>
+          <br>
+        </div>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <div dir="ltr">
+            <div>
+              <div>- From my experience, BMC time can drift a lot easily
+                and it is more useful to have the BMC time synced
+                externally</div>
+            </div>
+          </div>
+        </blockquote>
+        <div><br>
+          This is a discussion point for using / not using NTP. It would
+          not impact TimeOwner<br>
+          <a class="moz-txt-link-freetext"
+href="https://github.com/openbmc/phosphor-time-manager/blob/master/README.md"
+            moz-do-not-send="true">https://github.com/openbmc/phosphor-time-manager/blob/master/README.md</a><br>
+          <br>
+        </div>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <div dir="ltr">
+            <div>
+              <div>- Whether NTP or host time is preferred should be
+                left to the platform designer to decide</div>
+            </div>
+          </div>
+        </blockquote>
+        <div><br>
+          If the setting is NTP, then Host can not set the time on BMC
+          unless the Owner is SPLIT.<br>
+          I believe, you are saying more from a NTP / Non NTP as opposed
+          to TimeOwner ?<br>
+          <br>
+        </div>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <div dir="ltr">
+            <div>
+              <div>- sounds like it would be more straightforward to
+                have the 'Owner' reflect one time source:
+                NTP/IPMI/Redfish<br clear="all">
+              </div>
+            </div>
+          </div>
+        </blockquote>
+        <div><br>
+          This is part of TimeSynchronization. TimeOwner is another
+          layer on who owns the time as opposed to how the time is set.<br>
+          Hopefully the README I pointed to before would help.<br>
+        </div>
+        <div><br>
+          Thank you,<br>
+          !! Vishwa !!<br>
+        </div>
+        <blockquote type="cite"
+cite="mid:CAGMNF6VnZdkWPUuZR2yThm43gCwxXDu0AVOJ3Wmi5UvOw2s9Sw@mail.gmail.com">
+          <div dir="ltr">
+            <div>
+              <div>
+                <div><br>
+                </div>
+                -- <br>
+                <div dir="ltr">
+                  <div dir="ltr">Regards,
+                    <div>Kun</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
 
-Cheers,
+--------------30EE1CF0F1B112A7DD1E5CED--
 
-Andrew
