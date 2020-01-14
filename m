@@ -1,37 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01E92139F38
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 02:56:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47xYV624SQzDqNL
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 12:56:46 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 78C3C139FFE
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 04:32:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47xbcq6vnQzDqNt
+	for <lists+openbmc@lfdr.de>; Tue, 14 Jan 2020 14:32:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::432;
+ helo=mail-pf1-x432.google.com; envelope-from=tyler.sabdon@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=AzYdc1D/; dkim-atps=neutral
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
+ [IPv6:2607:f8b0:4864:20::432])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47xYTT2SwmzDqNL
- for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 12:56:11 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: multiple device trees
-Message-Id: <02A2EB59-111F-43D2-8CDE-6DFDE75EF292@fuzziesquirrel.com>
-Date: Mon, 13 Jan 2020 20:56:07 -0500
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47xbcC1NSMzDqNL
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Jan 2020 14:32:10 +1100 (AEDT)
+Received: by mail-pf1-x432.google.com with SMTP id x185so5892530pfc.5
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jan 2020 19:32:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=javKdvPN5z9UaD34uPWBcA036tITVXytBF81ZyeTaao=;
+ b=AzYdc1D/neX7SFpW8GX+Ur9zoRTre8wODuU7Xo4uJFziV7n7sTmbnwdsZG800nkM6I
+ FDyplNSdn13AmT6T2xhK/yJxnNDh0Up20gHbqYLIzAxrzLbfxt/pHLUO+A+X58Q9iPuw
+ 2bhDbnYoxSmDW78vn2TejgjV5+9TA32GVHVXVSbYR2tgM4tj0ycaHKkBtA6a7ubHtjHD
+ 8Ya3IEhqlMcSMO+sAYS4husxmScINNH4nRIYi5eDWJsVDeaPjYH0z/So8fqIfVW11XsD
+ cjErdk1DfMTyraxJ71zCSRKG3eVzVStB4bYO5GngMBRt9+87+EhOGlDJLdtjyq+7843o
+ 20/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=javKdvPN5z9UaD34uPWBcA036tITVXytBF81ZyeTaao=;
+ b=Qz20szKHQ0wbgDoMyB2xgtNPDCI3Ul+DUNpMTaj+DfBNY+nqqvj8pp1vOgyo+SvrrM
+ JxbAkoGQrWkpk1mlfsFIsv2leiZaAvU9RYCxFh6QxO10DnhwjQMzYb2RrQ5jD3MbNh/u
+ ZK2X3xq+zaWkRcmwMQ0SKTBNBYdz1j+xriXfq6p58oGDYc5Bs3+JJ/UCHgTqcK9cIqHj
+ +Uv2K2hP9lUFHRCItIFQoXjWGren+EBHBB82akZA/PD2YEljisSxPzQzSvUogBUD8f++
+ niXgF8ZMZdiCzIMhNTqLhsEGzH2p1av+T3b5RLsz4OY1i0l4JOYUbc3qgTQwZj6azQct
+ HI9g==
+X-Gm-Message-State: APjAAAVY9ZJA/NcsGqXPYEersizEcZEz/0oBiX+B6CTieTt+q8zoe9wD
+ i0+ZT8kD9qulqaK/bBueW6B+yiQjSWQngJSd4iCZew==
+X-Google-Smtp-Source: APXvYqzbVVyiVJnIDM6QxRititxGOxXETro2TpnayLZ0MsWfRGVd3DHzOAvbctezAqxcX1hHYJCcM1tAjaYnkHnw3Mo=
+X-Received: by 2002:a63:d153:: with SMTP id c19mr23812274pgj.78.1578972727401; 
+ Mon, 13 Jan 2020 19:32:07 -0800 (PST)
+MIME-Version: 1.0
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Tue, 14 Jan 2020 11:31:54 +0800
+Message-ID: <CAO9PYRKzfWXx4iOOxoGmi_EFb2rdSBmHxVzh-6mzUf-NBoEajA@mail.gmail.com>
+Subject: Dose OpenBMC support UPnP
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000086e145059c113cff"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,10 +72,21 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Does anyone have any experience supporting multiple system =
-configurations in a monolithic flash image with multiple device trees?  =
-Did you consider this and do something else instead?
+--00000000000086e145059c113cff
+Content-Type: text/plain; charset="UTF-8"
 
-thanks!
+Hi all:
+    UPnP is well-known and widely used network protocol. Does openbmc
+support it or plan to support? Thanks.
 
--brad=
+Tyler
+
+--00000000000086e145059c113cff
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi all:=C2=A0<div>=C2=A0 =C2=A0 UPnP is well-known and wid=
+ely used network protocol. Does openbmc support=C2=A0it or plan to support?=
+ Thanks.</div><div><br></div><div>Tyler</div></div>
+
+--00000000000086e145059c113cff--
