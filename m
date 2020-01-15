@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B50C713CA7F
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 18:11:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A146D13CAB9
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 18:15:17 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47yYlR6HqkzDqSW
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 04:11:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47yYqQ49KxzDqTg
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 04:15:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,20 +19,20 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47yYfq1KpwzDqS9
- for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 04:07:46 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47yYg95jV2zDqBc
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 04:08:04 +1100 (AEDT)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 00FGN4nS021581;
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 00FGN4i7021584;
  Wed, 15 Jan 2020 18:23:04 +0200
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 5AFCE60328; Wed, 15 Jan 2020 18:23:04 +0200 (IST)
+ id C265E60328; Wed, 15 Jan 2020 18:23:04 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: broonie@kernel.org, robh+dt@kernel.org, mark.rutland@arm.com,
  avifishman70@gmail.com, tali.perry1@gmail.com, venture@google.com,
  yuenn@google.com, benjaminfair@google.com
-Subject: [PATCH v1 3/4] dt-binding: spi: add NPCM PSPI reset binding
-Date: Wed, 15 Jan 2020 18:23:00 +0200
-Message-Id: <20200115162301.235926-4-tmaimon77@gmail.com>
+Subject: [PATCH v1 4/4] spi: npcm-pspi: modify reset support
+Date: Wed, 15 Jan 2020 18:23:01 +0200
+Message-Id: <20200115162301.235926-5-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20200115162301.235926-1-tmaimon77@gmail.com>
 References: <20200115162301.235926-1-tmaimon77@gmail.com>
@@ -55,50 +55,114 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add NPCM Peripheral SPI reset binding documentation,
-Removing unnecessary aliases use.
+Modify NPCM perphiral SPI reset support from
+direct register access to reset controller support.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- .../devicetree/bindings/spi/nuvoton,npcm-pspi.txt    | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/spi/spi-npcm-pspi.c | 33 +++++++++++----------------------
+ 1 file changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt b/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
-index 1fd9a4406a1d..b98203ca656d 100644
---- a/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
-+++ b/Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt
-@@ -12,6 +12,7 @@ Required properties:
-  - clock-names: Should be "clk_apb5".
-  - pinctrl-names : a pinctrl state named "default" must be defined.
-  - pinctrl-0 : phandle referencing pin configuration of the device.
-+ - resets : phandle to the reset control for this device.
-  - cs-gpios: Specifies the gpio pins to be used for chipselects.
-             See: Documentation/devicetree/bindings/spi/spi-bus.txt
+diff --git a/drivers/spi/spi-npcm-pspi.c b/drivers/spi/spi-npcm-pspi.c
+index eac7ba18b4b9..87cd0233c60b 100644
+--- a/drivers/spi/spi-npcm-pspi.c
++++ b/drivers/spi/spi-npcm-pspi.c
+@@ -12,6 +12,7 @@
+ #include <linux/spi/spi.h>
+ #include <linux/gpio.h>
+ #include <linux/of_gpio.h>
++#include <linux/reset.h>
  
-@@ -19,16 +20,6 @@ Optional properties:
- - clock-frequency : Input clock frequency to the PSPI block in Hz.
- 		    Default is 25000000 Hz.
+ #include <asm/unaligned.h>
  
--Aliases:
--- All the SPI controller nodes should be represented in the aliases node using
--  the following format 'spi{n}' withe the correct numbered in "aliases" node.
+@@ -20,7 +21,7 @@
+ 
+ struct npcm_pspi {
+ 	struct completion xfer_done;
+-	struct regmap *rst_regmap;
++	struct reset_control *reset;
+ 	struct spi_master *master;
+ 	unsigned int tx_bytes;
+ 	unsigned int rx_bytes;
+@@ -59,12 +60,6 @@ struct npcm_pspi {
+ #define NPCM_PSPI_MIN_CLK_DIVIDER	4
+ #define NPCM_PSPI_DEFAULT_CLK		25000000
+ 
+-/* reset register */
+-#define NPCM7XX_IPSRST2_OFFSET	0x24
 -
--Example:
+-#define NPCM7XX_PSPI1_RESET	BIT(22)
+-#define NPCM7XX_PSPI2_RESET	BIT(23)
 -
--aliases {
--	spi0 = &spi0;
--};
+ static inline unsigned int bytes_per_word(unsigned int bits)
+ {
+ 	return bits <= 8 ? 1 : 2;
+@@ -293,9 +288,9 @@ static int npcm_pspi_unprepare_transfer_hardware(struct spi_master *master)
+ 
+ static void npcm_pspi_reset_hw(struct npcm_pspi *priv)
+ {
+-	regmap_write(priv->rst_regmap, NPCM7XX_IPSRST2_OFFSET,
+-		     NPCM7XX_PSPI1_RESET << priv->id);
+-	regmap_write(priv->rst_regmap, NPCM7XX_IPSRST2_OFFSET, 0x0);
++	reset_control_assert(priv->reset);
++	udelay(5);
++	reset_control_deassert(priv->reset);
+ }
+ 
+ static irqreturn_t npcm_pspi_handler(int irq, void *dev_id)
+@@ -359,10 +354,6 @@ static int npcm_pspi_probe(struct platform_device *pdev)
+ 	if (num_cs < 0)
+ 		return num_cs;
+ 
+-	pdev->id = of_alias_get_id(np, "spi");
+-	if (pdev->id < 0)
+-		pdev->id = 0;
 -
- spi0: spi@f0200000 {
- 	compatible = "nuvoton,npcm750-pspi";
- 	reg = <0xf0200000 0x1000>;
-@@ -39,5 +30,6 @@ spi0: spi@f0200000 {
- 	interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
- 	clocks = <&clk NPCM7XX_CLK_APB5>;
- 	clock-names = "clk_apb5";
-+	resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI1>
- 	cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
- };
+ 	master = spi_alloc_master(&pdev->dev, sizeof(*priv));
+ 	if (!master)
+ 		return -ENOMEM;
+@@ -372,7 +363,6 @@ static int npcm_pspi_probe(struct platform_device *pdev)
+ 	priv = spi_master_get_devdata(master);
+ 	priv->master = master;
+ 	priv->is_save_param = false;
+-	priv->id = pdev->id;
+ 
+ 	priv->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(priv->base)) {
+@@ -397,11 +387,10 @@ static int npcm_pspi_probe(struct platform_device *pdev)
+ 		goto out_disable_clk;
+ 	}
+ 
+-	priv->rst_regmap =
+-		syscon_regmap_lookup_by_compatible("nuvoton,npcm750-rst");
+-	if (IS_ERR(priv->rst_regmap)) {
+-		dev_err(&pdev->dev, "failed to find nuvoton,npcm750-rst\n");
+-		return PTR_ERR(priv->rst_regmap);
++	priv->reset = devm_reset_control_get(&pdev->dev, NULL);
++	if (IS_ERR(priv->reset)) {
++		ret = PTR_ERR(priv->reset);
++		goto out_disable_clk;
+ 	}
+ 
+ 	/* reset SPI-HW block */
+@@ -422,7 +411,7 @@ static int npcm_pspi_probe(struct platform_device *pdev)
+ 	master->min_speed_hz = DIV_ROUND_UP(clk_hz, NPCM_PSPI_MAX_CLK_DIVIDER);
+ 	master->mode_bits = SPI_CPHA | SPI_CPOL;
+ 	master->dev.of_node = pdev->dev.of_node;
+-	master->bus_num = pdev->id;
++	master->bus_num = -1;
+ 	master->bits_per_word_mask = SPI_BPW_MASK(8) | SPI_BPW_MASK(16);
+ 	master->transfer_one = npcm_pspi_transfer_one;
+ 	master->prepare_transfer_hardware =
+@@ -455,7 +444,7 @@ static int npcm_pspi_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto out_disable_clk;
+ 
+-	pr_info("NPCM Peripheral SPI %d probed\n", pdev->id);
++	pr_info("NPCM Peripheral SPI %d probed\n", master->bus_num);
+ 
+ 	return 0;
+ 
 -- 
 2.22.0
 
