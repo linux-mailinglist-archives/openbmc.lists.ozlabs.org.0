@@ -2,67 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974C213BCBA
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 10:49:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFAD013C39D
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 14:52:41 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47yMwj1L6XzDqRR
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 20:49:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47yTKf4tnqzDqSq
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 00:52:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430;
- helo=mail-pf1-x430.google.com; envelope-from=tyler.sabdon@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=si4obV55; dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
+Received: from ozlabs.org (bilbo.ozlabs.org [203.11.71.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47yMvt3Zt2zDqCC
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 20:48:23 +1100 (AEDT)
-Received: by mail-pf1-x430.google.com with SMTP id 62so1629876pfu.11
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 01:48:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=HTu3P9qcKCCSGfvKvxFCeBniMJbiQFa9fKCt1P8k0LI=;
- b=si4obV55mLvR713ObNh7ihyLXDMr2YisL55FxJtfsCUdai2o7bpvUWpaaDiHgKyPhB
- LbBwTkqfDrShzMAVkytUyNdXgn6ksDU/KTWzlhd041wNgJHzIQjHAHT0MmqVVMJYbkX5
- 9BJkofRY7zq2JHzrteNUACPThtE2iVHYcZ1+AH4+bBmKUi7EEILMaxDx8yJT4vpg8IZ2
- XV/tI2bDe8AY/jARwzz+rmZds7oKIIOtcziFX5UCxuU0zdcny6FD9LmiBrVIlpqH8XUV
- qylZXAYuRhLiEwfydTF0AeI5aSjUOKN9ueXdW3LhCdbj0HxDCyrS4I8qg1A7LDyJUOP1
- WxOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=HTu3P9qcKCCSGfvKvxFCeBniMJbiQFa9fKCt1P8k0LI=;
- b=g/Jjc7dHjm1qxLoKIzUbuKQOPfFJBwTMkj77eb7dSc5Exd0j+qMl9MvOeJiXtrlhAO
- LYsaoEKMZyzn5t3fQNPm69vgQxmIcyLmW01uSVwJsgIrF7Q6hyzQeGdqlt1TkUoPiE6l
- vfl5soBRDzED2oFzxRaRpbu0vJbl8m7Dept5FZomWgnZCTHwPVitlQAJmxzm5O22J/Yf
- 3d2xM1VumlkH7E+SDhW2CsNlPNJJdFFBogEysDWcfOrSiwq3by9GETWmgaqxE/t6+xYQ
- FrfkSvMgBUlsODKHhoRZVhp4r+yakXKBlrD0cSG2vdQnB/Ca9e0Lr/+mq9hKTVyy3NaE
- AizA==
-X-Gm-Message-State: APjAAAV9LUlXKnM+RMEUMKqHKHZjaplLxaV3DpiaTpB5UFt6Z1FYzOBL
- 5Zp6HM3bu6PWZHclKLnW8d4bNbS/eyZiyiAFlNcQcQ==
-X-Google-Smtp-Source: APXvYqwEIjXjkZihSK99cuMDsDeh34Q+EDSgy8K6O3Ar+Zyb2XT1b3xAPYclV13NvUortYmf64lkvbjXJb2kTK9C4S4=
-X-Received: by 2002:a05:6a00:2ae:: with SMTP id
- q14mr30287720pfs.155.1579081700180; 
- Wed, 15 Jan 2020 01:48:20 -0800 (PST)
-MIME-Version: 1.0
-References: <CAO9PYRKzfWXx4iOOxoGmi_EFb2rdSBmHxVzh-6mzUf-NBoEajA@mail.gmail.com>
- <19711.1579015187@localhost>
-In-Reply-To: <19711.1579015187@localhost>
-From: Deng Tyler <tyler.sabdon@gmail.com>
-Date: Wed, 15 Jan 2020 17:48:06 +0800
-Message-ID: <CAO9PYR+TaknXXgoxw=JibWZ99rOw7FUobVbW_GHD96jkVqd-1g@mail.gmail.com>
-Subject: Re: Dose OpenBMC support UPnP
-To: Michael Richardson <mcr@sandelman.ca>
-Content-Type: multipart/alternative; boundary="000000000000cf86b1059c2a9bb2"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47yTJb5qQ4zDqS3
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 00:51:43 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ozlabs.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256
+ header.s=201707 header.b=ybRP7Tmp; dkim-atps=neutral
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 47yTJW68CTz9s29;
+ Thu, 16 Jan 2020 00:51:39 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
+ t=1579096303; bh=BAeXisiY0OmrCyvzL7hKcDG25jzoFyFo4/lv9StDMXc=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+ b=ybRP7Tmp2zsZsqoNT4ljyPMut6b4Y0QYr/2DMIgvyqyNZwpzzEPK1GqSP2PY9WsLr
+ rnqDvfZWp+0lpUbWPBU50VDxbzU3qlklzkJi9m+xHC3NP6dR37NWyU0sLsJa1yutrB
+ 4ZJwRhEXANHd66ucQ3bViJjUkF2M/zElbg+vAL+F9RBV8xpxBLdKtDjFcnjRw2WjwW
+ QZcJa66ZkwZh6xNS28RBED9mKRGbbelsyhtxVyTapAcw9GLOx2bPdGia/Ygj2jlY7d
+ 9RDGi3uExGMniQTxl1bgP8DxV4MmajxGNLGIUqHrfF9oXWK+LRty+HeQP1+XyyuedO
+ fFIjBu4ANk/QA==
+Message-ID: <ade63a1fda67cd8df1a2ba0638b1015878a0ac80.camel@ozlabs.org>
+Subject: Re: MCTP over PCI on AST2500
+From: Jeremy Kerr <jk@ozlabs.org>
+To: Patrick Williams <patrick@stwcx.xyz>
+Date: Wed, 15 Jan 2020 21:51:38 +0800
+In-Reply-To: <20200114174532.GB3512@patrickw3-mbp.dhcp.thefacebook.com>
+References: <037D4669-D49C-4DF8-B49B-4F3BD97451AE@fb.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E08757B@fmsmsx118.amr.corp.intel.com>
+ <3502e928-40c5-41d9-9ff1-5aa199e0e31b@www.fastmail.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E0E4E3E@fmsmsx118.amr.corp.intel.com>
+ <8a1fc80f-9d25-4c38-bdcd-df05c4194fe7@www.fastmail.com>
+ <62036de3-ce3d-4ccb-ac5b-15e9ba39d22b@www.fastmail.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E10C8FD@fmsmsx118.amr.corp.intel.com>
+ <92f857cc-303a-0d50-e0e4-2de2a8d19e41@linux.vnet.ibm.com>
+ <865C376D1B77624AAA570EFEF73CE52F9E10E9A5@fmsmsx118.amr.corp.intel.com>
+ <22A3B800-F833-4615-B980-EE933E1F83A9@ozlabs.org>
+ <20200114174532.GB3512@patrickw3-mbp.dhcp.thefacebook.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,117 +66,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "Khetan, Sharad" <sharad.khetan@intel.com>, "Winiarska,
+ Iwona" <iwona.winiarska@intel.com>, Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ rgrs <rgrs@protonmail.com>, "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000cf86b1059c2a9bb2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Patrick,
 
-Hi Michael:
-    Thanks for your reply. You are right, UPnP is a set of network
-protocol. I thought BMC doesn't need support full feature of UPnP, but the
-discovery(SSDP) and device description in UPnP are useful tool for server
-management. Does OpenBMC support these currently or plan to support? thanks=
-.
+> > Just a suggestion - you probably don't want to be passing MCTP
+> > messages over dbus - this is something we learnt from the IPMI
+> > implementation.
+> 
+> Is there a pointer to this "lesson learned" or the issues surrounding
+> it?  It seems like the btbridge is still using dbus, so I assume
+> host-ipmid is as well.
+> 
+> https://github.com/openbmc/btbridge/blob/master/btbridged.c#L47
+> 
+> I'm curious to understand what the issues were/are.
 
-Tyler
+No, nothing that anyone had specifically documented. I recall there
+were concerns with shuffling larger amounts of data over dbus,
+particularly for things like firmware update over IPMI. Because we're
+using a dbus signal for incoming messages, we could potentially be
+writing a lot of data to multiple processes - and more than necessary
+if those processes haven't set up their dbus matches correctly.
 
-Michael Richardson <mcr@sandelman.ca> =E6=96=BC 2020=E5=B9=B41=E6=9C=8814=
-=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=8811:19=E5=AF=AB=E9=81=93=EF=
-=BC=9A
+I don't think there's enough concern to change existing code over for,
+more just a consideration for future designs, of which this is one.
 
->
-> Deng Tyler <tyler.sabdon@gmail.com> wrote:
->     > Hi all: UPnP is well-known and widely used network protocol. Does
->     > openbmc support it or plan to support? Thanks.
->
-> Troy Lee <leetroy@gmail.com> wrote:
->     > OpenBMC supports mDNS/DNS-SD(Avahi).
->
-> UPnP is not just mDNS (and originally wasn't mDNS at all)
-> UPnP is a collection of services, that includes being able to open ports
-> on routers
-> for incoming traffic, route AV material, etc.
->
-> Which part of UPnP are you asking about?
->
->     > Thanks, Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
->
->     > On Tue, Jan 14, 2020 at 11:32 AM Deng Tyler <tyler.sabdon@gmail.com=
->
->     > wrote:
->     >>
->     >> Hi all: UPnP is well-known and widely used network protocol. Does
->     >> openbmc support it or plan to support? Thanks.
->     >>
->     >> Tyler
->
->
->     > Tyler
->
->
->     > ----------------------------------------------------
->     > Alternatives:
->
->     > ----------------------------------------------------
->
+Cheers,
 
---000000000000cf86b1059c2a9bb2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Michael:=C2=A0<div>=C2=A0 =C2=A0 Thanks for your reply.=
- You are right, UPnP is a set of network protocol. I thought BMC doesn&#39;=
-t need support=C2=A0full feature of UPnP, but the discovery(SSDP) and devic=
-e description in UPnP are useful=C2=A0tool for server management. Does Open=
-BMC support these currently or plan to support? thanks.</div><div><br></div=
-><div>Tyler</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">Michael Richardson &lt;<a href=3D"mailto:mcr@sandelman.ca"=
->mcr@sandelman.ca</a>&gt; =E6=96=BC 2020=E5=B9=B41=E6=9C=8814=E6=97=A5 =E9=
-=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=8811:19=E5=AF=AB=E9=81=93=EF=BC=9A<br></div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-Deng Tyler &lt;<a href=3D"mailto:tyler.sabdon@gmail.com" target=3D"_blank">=
-tyler.sabdon@gmail.com</a>&gt; wrote:<br>
-=C2=A0 =C2=A0 &gt; Hi all: UPnP is well-known and widely used network proto=
-col. Does<br>
-=C2=A0 =C2=A0 &gt; openbmc support it or plan to support? Thanks.<br>
-<br>
-Troy Lee &lt;<a href=3D"mailto:leetroy@gmail.com" target=3D"_blank">leetroy=
-@gmail.com</a>&gt; wrote:<br>
-=C2=A0 =C2=A0 &gt; OpenBMC supports mDNS/DNS-SD(Avahi).<br>
-<br>
-UPnP is not just mDNS (and originally wasn&#39;t mDNS at all)<br>
-UPnP is a collection of services, that includes being able to open ports on=
- routers<br>
-for incoming traffic, route AV material, etc.<br>
-<br>
-Which part of UPnP are you asking about?<br>
-<br>
-=C2=A0 =C2=A0 &gt; Thanks, Yu-Ting Lee (Troy Lee) &lt;<a href=3D"mailto:Lee=
-Troy@gmail.com" target=3D"_blank">LeeTroy@gmail.com</a>&gt;<br>
-<br>
-=C2=A0 =C2=A0 &gt; On Tue, Jan 14, 2020 at 11:32 AM Deng Tyler &lt;<a href=
-=3D"mailto:tyler.sabdon@gmail.com" target=3D"_blank">tyler.sabdon@gmail.com=
-</a>&gt;<br>
-=C2=A0 =C2=A0 &gt; wrote:<br>
-=C2=A0 =C2=A0 &gt;&gt;<br>
-=C2=A0 =C2=A0 &gt;&gt; Hi all: UPnP is well-known and widely used network p=
-rotocol. Does<br>
-=C2=A0 =C2=A0 &gt;&gt; openbmc support it or plan to support? Thanks.<br>
-=C2=A0 =C2=A0 &gt;&gt;<br>
-=C2=A0 =C2=A0 &gt;&gt; Tyler<br>
-<br>
-<br>
-=C2=A0 =C2=A0 &gt; Tyler<br>
-<br>
-<br>
-=C2=A0 =C2=A0 &gt; ----------------------------------------------------<br>
-=C2=A0 =C2=A0 &gt; Alternatives:<br>
-<br>
-=C2=A0 =C2=A0 &gt; ----------------------------------------------------<br>
-</blockquote></div>
+Jeremy
 
---000000000000cf86b1059c2a9bb2--
