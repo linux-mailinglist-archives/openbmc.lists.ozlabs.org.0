@@ -2,64 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EAFB13BB6D
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 09:44:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 974C213BCBA
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 10:49:12 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47yLV432JmzDqS6
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 19:44:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47yMwj1L6XzDqRR
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jan 2020 20:49:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yahoo.com (client-ip=77.238.178.180;
- helo=sonic308-44.consmr.mail.ir2.yahoo.com;
- envelope-from=max_power2005-openbmc@yahoo.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430;
+ helo=mail-pf1-x430.google.com; envelope-from=tyler.sabdon@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=yahoo.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256
- header.s=s2048 header.b=ivU2JSIQ; dkim-atps=neutral
-Received: from sonic308-44.consmr.mail.ir2.yahoo.com
- (sonic308-44.consmr.mail.ir2.yahoo.com [77.238.178.180])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=si4obV55; dkim-atps=neutral
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
+ [IPv6:2607:f8b0:4864:20::430])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47yLT96ZvdzDqRC
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 19:43:39 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1579077815; bh=35e2fH7iP1r1HqvNX6d8ZyeKP8kmDauUg7f/GdmCXaE=;
- h=Date:From:To:Subject:References:From:Subject;
- b=ivU2JSIQlSYaloIswt2HTbY79F0BgAwbLU3LYeESa5hPiAR5G7zGEsmMlEGx1IXOH9h00vv3Tnmmxb6hvEIzftn7y4u8XPZRClegZ1v3ZmM7dHSbOq1yh+8FAHvYEfMo2oQvaMuA7gq113HySjCKFxGHZ7XcyyA1H5VKuiUtzo1+tMWmlWVJBqA13eKWpjfAppoaoqBGjRHZwk1/6G9GP1iE++vltjdf5YNjIJ991KdwmuPBqsB0USAi1MCfOmg435FBmyk/uQR1vw5hEQvSMLbIADXfgT3yNnRlJtE7c5ElP/d32jaLrOP8O7V62nkDkkyPmST8AqiowyJ3hYclBA==
-X-YMail-OSG: ziYHy2AVM1mxamhElFbHsTl8MEaeN_ffbODkwNhKi4uxYsFhXVFoiH85u_zY0Up
- S_JRm9zGnPB5L_7tAG27g1_yt.x8htjU358QiCtb1uzm2TmXW2P6Nzuo4iJFD0kyZQMKtcCixqlS
- otJGjIHhq2UkcezQNAuCOAKZ6dHozvei5APPhsOsqmw6FAH9v5sEj_yImRjuOxtORTxywtZYqDOc
- JWhBFfgIFtW3JG2rs5yyj4o2demdi_KCyQFJUhOfP2vrz_XzsA1gy2jGvKI4WCsAiVl.C9pWZBPb
- Fyihgzg21ybNt0B3q_CqsRvJriKG8armfy68eaaps9j51JPz4d1gEN9.rIZoG_2HUc_8dlpjYDud
- oRqJJqGVUcesnnub7Ffr03IbZJCdezj5nvUaUf_e3RkoQ46FYRpkJlcb1lTEurm8YowYW8x3ZpiY
- AY59gsbeqFIljPiEqNzpcIqed18NRdp9PJZHjoN.xIHhX9VGEexqoPVurmqgP0_SqIzdh5fozCN_
- a29f3DwzVFJFfwO.AqxjFrKKTwoapqpY9L_mg1g8yaGNzJ.W5gBQj9nN_qyguWN9Exj6x2tDjwap
- 9qUHIX7iZF_nLjKNEUSECqeXXBNsNUY0FBIQCzK.QOfAa9fhfIErgcT2NeJoHe9fAuLDwz8iGvsy
- Pm3_f5l2rqgMQuiIilv82skZErSu0iAPp08Al8N.noGEXPLI00agL2BY2dkpAZUPWX9XCPJSWpGE
- Bp_ibD3q1SS30.j6xNn52R.ibjkz2zrWlq1gIUZUIFNbIFR2aZR1u2eV.LFozm_fFCd4wnncSkXk
- .z8YojHBZmIBSO42Z4jzfPU9mOSq8N6nAilUkBPUAOgAgV3AGWSFDygikBpwwVMQZ9RyGSzwN9zE
- l4Ux0ppyhtf0pwT_IqQNQaBxBES0xCqN8EDa2Grnm3b04DL.Q8aFHrSWT3NVJiM_MGIR1xTWrkPP
- 9fsjA59MAi0Yj00hqv0RKSsdK8wzOl5q1rC4P6Wkz5JYNddVTQf0F.RuOkgYaKlqeERuczmPIhCJ
- TDbC9VE94McVypcLPsdbFnSYl0m6Yyma1Dn5o3DDX6skBDmz72j9fs2f7ndWNmRXXyeDtShcX3fy
- w0MB3BpoTaT6Giy6uXXmqX473hZBItkfQo9gq90J2Pefpp8vUWtbH59Yh.nxg_TaT744LTR3fOtQ
- D_bXJBQohL9WN78YXvc9_1AIgFiSjMGHj2mse0BKb.75EFXUOdVtbSBKhtdtotl0EMCl.2oPkjbG
- 7LWPPpt.dqLHiz2gN.1.2bTNFJBmU_ZqkLIz0JS3VH4VOwHIUXof5ypQC_ICKEjFlDDQWXi3wrU2
- 4Iw052YKYqRVSTmTHWpo-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic308.consmr.mail.ir2.yahoo.com with HTTP; Wed, 15 Jan 2020 08:43:35 +0000
-Date: Wed, 15 Jan 2020 08:41:34 +0000 (UTC)
-From: Max Power <max_power2005-openbmc@yahoo.com>
-To: openbmc@lists.ozlabs.org
-Message-ID: <138261238.19427827.1579077694127@mail.yahoo.com>
-Subject: No sensors displayed in webUI
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47yMvt3Zt2zDqCC
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 20:48:23 +1100 (AEDT)
+Received: by mail-pf1-x430.google.com with SMTP id 62so1629876pfu.11
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 01:48:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=HTu3P9qcKCCSGfvKvxFCeBniMJbiQFa9fKCt1P8k0LI=;
+ b=si4obV55mLvR713ObNh7ihyLXDMr2YisL55FxJtfsCUdai2o7bpvUWpaaDiHgKyPhB
+ LbBwTkqfDrShzMAVkytUyNdXgn6ksDU/KTWzlhd041wNgJHzIQjHAHT0MmqVVMJYbkX5
+ 9BJkofRY7zq2JHzrteNUACPThtE2iVHYcZ1+AH4+bBmKUi7EEILMaxDx8yJT4vpg8IZ2
+ XV/tI2bDe8AY/jARwzz+rmZds7oKIIOtcziFX5UCxuU0zdcny6FD9LmiBrVIlpqH8XUV
+ qylZXAYuRhLiEwfydTF0AeI5aSjUOKN9ueXdW3LhCdbj0HxDCyrS4I8qg1A7LDyJUOP1
+ WxOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=HTu3P9qcKCCSGfvKvxFCeBniMJbiQFa9fKCt1P8k0LI=;
+ b=g/Jjc7dHjm1qxLoKIzUbuKQOPfFJBwTMkj77eb7dSc5Exd0j+qMl9MvOeJiXtrlhAO
+ LYsaoEKMZyzn5t3fQNPm69vgQxmIcyLmW01uSVwJsgIrF7Q6hyzQeGdqlt1TkUoPiE6l
+ vfl5soBRDzED2oFzxRaRpbu0vJbl8m7Dept5FZomWgnZCTHwPVitlQAJmxzm5O22J/Yf
+ 3d2xM1VumlkH7E+SDhW2CsNlPNJJdFFBogEysDWcfOrSiwq3by9GETWmgaqxE/t6+xYQ
+ FrfkSvMgBUlsODKHhoRZVhp4r+yakXKBlrD0cSG2vdQnB/Ca9e0Lr/+mq9hKTVyy3NaE
+ AizA==
+X-Gm-Message-State: APjAAAV9LUlXKnM+RMEUMKqHKHZjaplLxaV3DpiaTpB5UFt6Z1FYzOBL
+ 5Zp6HM3bu6PWZHclKLnW8d4bNbS/eyZiyiAFlNcQcQ==
+X-Google-Smtp-Source: APXvYqwEIjXjkZihSK99cuMDsDeh34Q+EDSgy8K6O3Ar+Zyb2XT1b3xAPYclV13NvUortYmf64lkvbjXJb2kTK9C4S4=
+X-Received: by 2002:a05:6a00:2ae:: with SMTP id
+ q14mr30287720pfs.155.1579081700180; 
+ Wed, 15 Jan 2020 01:48:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-References: <138261238.19427827.1579077694127.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.14873 YMailNodin Mozilla/5.0 (X11; Linux i686;
- rv:52.0) Gecko/20100101 Firefox/52.0 SeaMonkey/2.49.5 Lightning/5.4
+References: <CAO9PYRKzfWXx4iOOxoGmi_EFb2rdSBmHxVzh-6mzUf-NBoEajA@mail.gmail.com>
+ <19711.1579015187@localhost>
+In-Reply-To: <19711.1579015187@localhost>
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Wed, 15 Jan 2020 17:48:06 +0800
+Message-ID: <CAO9PYR+TaknXXgoxw=JibWZ99rOw7FUobVbW_GHD96jkVqd-1g@mail.gmail.com>
+Subject: Re: Dose OpenBMC support UPnP
+To: Michael Richardson <mcr@sandelman.ca>
+Content-Type: multipart/alternative; boundary="000000000000cf86b1059c2a9bb2"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,27 +74,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi
+--000000000000cf86b1059c2a9bb2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-What are the basic requirements for phosphor-webui to display the list
-the available sensors?
+Hi Michael:
+    Thanks for your reply. You are right, UPnP is a set of network
+protocol. I thought BMC doesn't need support full feature of UPnP, but the
+discovery(SSDP) and device description in UPnP are useful tool for server
+management. Does OpenBMC support these currently or plan to support? thanks=
+.
 
-I've create a simple entity-manager configuration for my custom hardware
-containing some voltage and temp sensors definitions. All the configured
-sensors are accessible under "/sys/class/hwmon/hwmon*".
-"entity-manager" and "dbus-sensors" related services like "ADCSensor" or
-"CPUSensor" are up and running, "busctl tree" lists all the sensors
-under "/xyz/openbmc_project/sensors" and I'm able to read the sensors
-properities using "busctl introspect".
+Tyler
 
-But the server-health/sensors-overview page in webUI always shows 
-"There are no sensors found."
+Michael Richardson <mcr@sandelman.ca> =E6=96=BC 2020=E5=B9=B41=E6=9C=8814=
+=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=8811:19=E5=AF=AB=E9=81=93=EF=
+=BC=9A
 
-Any hints or ideas what I am missing?
-Do I need any other services running besides "entity-manger" and
-"dbus-sensors"?
+>
+> Deng Tyler <tyler.sabdon@gmail.com> wrote:
+>     > Hi all: UPnP is well-known and widely used network protocol. Does
+>     > openbmc support it or plan to support? Thanks.
+>
+> Troy Lee <leetroy@gmail.com> wrote:
+>     > OpenBMC supports mDNS/DNS-SD(Avahi).
+>
+> UPnP is not just mDNS (and originally wasn't mDNS at all)
+> UPnP is a collection of services, that includes being able to open ports
+> on routers
+> for incoming traffic, route AV material, etc.
+>
+> Which part of UPnP are you asking about?
+>
+>     > Thanks, Yu-Ting Lee (Troy Lee) <LeeTroy@gmail.com>
+>
+>     > On Tue, Jan 14, 2020 at 11:32 AM Deng Tyler <tyler.sabdon@gmail.com=
+>
+>     > wrote:
+>     >>
+>     >> Hi all: UPnP is well-known and widely used network protocol. Does
+>     >> openbmc support it or plan to support? Thanks.
+>     >>
+>     >> Tyler
+>
+>
+>     > Tyler
+>
+>
+>     > ----------------------------------------------------
+>     > Alternatives:
+>
+>     > ----------------------------------------------------
+>
 
-Max
+--000000000000cf86b1059c2a9bb2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Michael:=C2=A0<div>=C2=A0 =C2=A0 Thanks for your reply.=
+ You are right, UPnP is a set of network protocol. I thought BMC doesn&#39;=
+t need support=C2=A0full feature of UPnP, but the discovery(SSDP) and devic=
+e description in UPnP are useful=C2=A0tool for server management. Does Open=
+BMC support these currently or plan to support? thanks.</div><div><br></div=
+><div>Tyler</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
+s=3D"gmail_attr">Michael Richardson &lt;<a href=3D"mailto:mcr@sandelman.ca"=
+>mcr@sandelman.ca</a>&gt; =E6=96=BC 2020=E5=B9=B41=E6=9C=8814=E6=97=A5 =E9=
+=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=8811:19=E5=AF=AB=E9=81=93=EF=BC=9A<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+Deng Tyler &lt;<a href=3D"mailto:tyler.sabdon@gmail.com" target=3D"_blank">=
+tyler.sabdon@gmail.com</a>&gt; wrote:<br>
+=C2=A0 =C2=A0 &gt; Hi all: UPnP is well-known and widely used network proto=
+col. Does<br>
+=C2=A0 =C2=A0 &gt; openbmc support it or plan to support? Thanks.<br>
+<br>
+Troy Lee &lt;<a href=3D"mailto:leetroy@gmail.com" target=3D"_blank">leetroy=
+@gmail.com</a>&gt; wrote:<br>
+=C2=A0 =C2=A0 &gt; OpenBMC supports mDNS/DNS-SD(Avahi).<br>
+<br>
+UPnP is not just mDNS (and originally wasn&#39;t mDNS at all)<br>
+UPnP is a collection of services, that includes being able to open ports on=
+ routers<br>
+for incoming traffic, route AV material, etc.<br>
+<br>
+Which part of UPnP are you asking about?<br>
+<br>
+=C2=A0 =C2=A0 &gt; Thanks, Yu-Ting Lee (Troy Lee) &lt;<a href=3D"mailto:Lee=
+Troy@gmail.com" target=3D"_blank">LeeTroy@gmail.com</a>&gt;<br>
+<br>
+=C2=A0 =C2=A0 &gt; On Tue, Jan 14, 2020 at 11:32 AM Deng Tyler &lt;<a href=
+=3D"mailto:tyler.sabdon@gmail.com" target=3D"_blank">tyler.sabdon@gmail.com=
+</a>&gt;<br>
+=C2=A0 =C2=A0 &gt; wrote:<br>
+=C2=A0 =C2=A0 &gt;&gt;<br>
+=C2=A0 =C2=A0 &gt;&gt; Hi all: UPnP is well-known and widely used network p=
+rotocol. Does<br>
+=C2=A0 =C2=A0 &gt;&gt; openbmc support it or plan to support? Thanks.<br>
+=C2=A0 =C2=A0 &gt;&gt;<br>
+=C2=A0 =C2=A0 &gt;&gt; Tyler<br>
+<br>
+<br>
+=C2=A0 =C2=A0 &gt; Tyler<br>
+<br>
+<br>
+=C2=A0 =C2=A0 &gt; ----------------------------------------------------<br>
+=C2=A0 =C2=A0 &gt; Alternatives:<br>
+<br>
+=C2=A0 =C2=A0 &gt; ----------------------------------------------------<br>
+</blockquote></div>
+
+--000000000000cf86b1059c2a9bb2--
