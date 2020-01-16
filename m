@@ -1,86 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3ABD140031
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 00:48:54 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B1D713FFB6
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 00:45:48 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47zLRX754lzDr4R
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 10:45:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47zLW75d0CzDr4M
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 10:48:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22b;
+ helo=mail-lj1-x22b.google.com; envelope-from=krellan@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=mkSxf24l; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=gr3Kj4eU; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=fHB0XvXk; dkim-atps=neutral
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com
+ [IPv6:2a00:1450:4864:20::22b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47zLPz12hHzDr3B
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 10:44:22 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 5ED9E21DC4;
- Thu, 16 Jan 2020 18:44:18 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 16 Jan 2020 18:44:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm1; bh=ctpCI/X7a8z8cEUyo5/hY4PDAUc+D7W
- 5JjI5obkKI+8=; b=mkSxf24lwtW7gr7UjB8woU2H6XHMTl2xBCxPGl/PwDfEsxC
- NMAqgflIzUKz96kySSH9KJotnsIwluSUw/N9zhBFl0XQn6dV5DPlQx3YNKj/LOa5
- YRtRtqJYPdDC1rPCqBKOweBTJsg9wh48I9xoZl4GAjxXfA1ESysFaSukAPVNKxFu
- gz2eGCK0beohjKuUgkOSRmTjqaoc+T3jcmkGyxqf43c1bq0urucLB7WIn43QGJq0
- UiDxSn2gYFxNVHxXvZj8ueofZN3xVuoH7wboIt4y0LP5pPslfofGuSUNMZExX2O1
- 16tN/ikxgZ/DPTlT6Kf1veJBV8vmSqrUU/Evqlw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ctpCI/
- X7a8z8cEUyo5/hY4PDAUc+D7W5JjI5obkKI+8=; b=gr3Kj4eUVJh0Lg6Po68xDr
- 1GasAWXIFGSX5bJxUtIs6/psY1aLO/hRhPulYu8fPTDoMd1IRy6MdkBStsabWmB/
- kwxmL+jTzO35isqJ+XmFn+d803CLttAauUFFmwrzJmpoaUcX0C3miUJ/5maHAmT2
- UCWsSS2ibJKcDj/e5aExMyicGxdf2qrCX1eUZ5v0iPEVPMUEFcBcvscXGwdO0LNY
- 9tD9J9V8bv40xEDzs80pZ7tUypols6ymnX5xdEQAqef83SaOhJa/w0/qFus8jn+5
- Mwrb2ybIfRFtQUsHiTfr8QbFXkdG5rYD963eIh2wtCTEqN9xWfBA+BRTNn72hA3w
- ==
-X-ME-Sender: <xms:UfUgXkkkXjPPu_K4Ofik_DSSiZoJrrhBC9Fos4FMbRqMI2PFAgnHfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrtdeigdduudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucfrrghrrg
- hmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruhenucevlhhushhtvghr
- ufhiiigvpedt
-X-ME-Proxy: <xmx:UfUgXnQtImJ5KrOc3j8kpwSWB-t1j1HihkWk2BKDGuBCtK-65Hg9OA>
- <xmx:UfUgXppWZovmwNNKDmgme6MvteEUzatFvAjsWIyO9tmEDRkEYUI4RA>
- <xmx:UfUgXt1oFqvzYmcV5az_dh8cYAFzG4gY_9uQ03e8m-SzOCtayLik1w>
- <xmx:UvUgXiAxMS3fDtwtRb3XTKlx7tLM3_MFrAXXPOenWK6NXU9F4S7pdw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 7F1B7E00A2; Thu, 16 Jan 2020 18:44:17 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-754-g09d1619-fmstable-20200113v1
-Mime-Version: 1.0
-Message-Id: <27f552c8-52bd-4452-9457-54a1963ef67e@www.fastmail.com>
-In-Reply-To: <20200116232525.2819-2-rentao.bupt@gmail.com>
-References: <20200116232525.2819-1-rentao.bupt@gmail.com>
- <20200116232525.2819-2-rentao.bupt@gmail.com>
-Date: Fri, 17 Jan 2020 10:13:57 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Tao Ren" <rentao.bupt@gmail.com>, "Joel Stanley" <joel@jms.id.au>,
- "Tao Ren" <taoren@fb.com>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.4_1/2]_usb:_gadget:_aspeed:_add_ast2600?=
- =?UTF-8?Q?_vhub_support?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47zLR0735RzDr3G
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 10:45:16 +1100 (AEDT)
+Received: by mail-lj1-x22b.google.com with SMTP id h23so24515065ljc.8
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 15:45:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zm9tbfYSw8iRwvzgb83oWyOZnQGwuv+Vhvstp9TpwMo=;
+ b=fHB0XvXk/SMolyIeQ97znsquPmASFF7Yk2C+fCyle0M/ERUs7vCWPvemyW0it+HP0S
+ JTutUms1T3C3yNEmXURChdKnNJNY69f40CEqIp49sZxIS/+EMwXQayYvtaRfYdX61ok7
+ Qa89Y3IUu7HE7me7bflP51h27elqhkl/OQncJxzg3VA+csK6un5xVMnqQvT4ME3JKinu
+ 5nnqMT8scWJg59svOJo5qv8B2R6i1INNGY4fqFkhRZrFukBplK0/DigJx4u9azJSeiT2
+ owlMcTLA1AW4q3iZHvf6X9vZheyLdaN0jrBTK/RyRNaHZxvmFyN6fRw1+uRcFEZqrJbu
+ oTJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zm9tbfYSw8iRwvzgb83oWyOZnQGwuv+Vhvstp9TpwMo=;
+ b=NqTJEoIFhk6rSOH2MtuaJGY9Bcuia9BZJ37yrdnxXQpCPCcd+UhxEqw0MxHf50T2IC
+ 3baA/8VmTQbXOOvK48hcUFIAynFXvaSrbLsfSUVImK0/0lOyi6D0z+7B9w2iadf3vC8M
+ 5uIYTXVwmbm838zxQg5FrPcOJVTDA43ffQaxTys6+VuAemffG8yCjsToKQBZKQzzlszg
+ BJqcPlED1SkP+tSpq3MEIZritP3DbadCgwJcjr0e6CeZZS5IlUcxa2/Gyvcu97Owwsip
+ z+2BpFMZ7k4UhQhJ6cMCR4O/pq4vPY9BmqcMpffyNuWADMgH8Crzj+kSgIPKfFvqvyGF
+ evCw==
+X-Gm-Message-State: APjAAAVxygK6gvILiRMJFWPoRd0xmY8zCM01/moiO9qEFApmkfZUqtTF
+ TXhvByS0F+/Pf4CjN7VZMKljuku9ZDeUlfhOL4cGCg==
+X-Google-Smtp-Source: APXvYqxIPdpRON7t3JeQKGTl99d+hvgrMF4CtNKPid7z4wMSeqqEYTjTF7u6cpA4jT6llj/kSJNwsZ5lLQXtdwzrIhc=
+X-Received: by 2002:a2e:86d6:: with SMTP id n22mr3891401ljj.77.1579218309636; 
+ Thu, 16 Jan 2020 15:45:09 -0800 (PST)
+MIME-Version: 1.0
+References: <CANPkJS9ggqARodBg+dhUEBBXKXANFJ=bJEDEyTmPQbVF=oLOkA@mail.gmail.com>
+ <afa376c6-9886-3f19-399e-81cc3f492f1e@linux.intel.com>
+In-Reply-To: <afa376c6-9886-3f19-399e-81cc3f492f1e@linux.intel.com>
+From: Josh Lehan <krellan@google.com>
+Date: Thu, 16 Jan 2020 15:44:53 -0800
+Message-ID: <CANPkJS-HB8Mpj26CZfcjGW5mGXWyeH4atE=wXNQ6__wv94ogYg@mail.gmail.com>
+Subject: Re: Change 27956 dbus-sensors PSUSensor appears to break Entity ID
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: multipart/alternative; boundary="0000000000005ed9be059c4a6ae7"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,126 +73,149 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, mutyalax.jayaprakash@intel.com,
+ Alex Qiu <xqiu@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000005ed9be059c4a6ae7
+Content-Type: text/plain; charset="UTF-8"
+
+Nice, thanks for your fast follow-up! Here is the created issue:
+
+https://github.com/openbmc/dbus-sensors/issues/3
+
+Thanks!
+Josh
+
+Josh Lehan | Software Engineer | krellan@google.com | +1 650-733-8941
 
 
-On Fri, 17 Jan 2020, at 09:55, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
-> 
-> Add AST2600 support in aspeed-vhub driver.
-> 
-> There are 3 major differences between AST2500 and AST2600 vhub:
->   - AST2600 supports 7 downstream devices while AST2500 supports 5.
->   - AST2600 supports 21 programmable endpoints while AST2500 supports 15.
->   - EP0 data buffer's 8-byte DMA alignment restriction is removed from
->     AST2600.
-> 
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> ---
->  drivers/usb/gadget/udc/aspeed-vhub/Kconfig |  4 +--
->  drivers/usb/gadget/udc/aspeed-vhub/core.c  | 25 ++++++-----------
->  drivers/usb/gadget/udc/aspeed-vhub/vhub.h  | 32 ++++++++++++++++------
->  3 files changed, 35 insertions(+), 26 deletions(-)
-> 
-> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig 
-> b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> index 83ba8a2eb6af..605500b19cf3 100644
-> --- a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> +++ b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> @@ -4,5 +4,5 @@ config USB_ASPEED_VHUB
->  	depends on ARCH_ASPEED || COMPILE_TEST
->  	depends on USB_LIBCOMPOSITE
->  	help
-> -	  USB peripheral controller for the Aspeed AST2500 family
-> -	  SoCs supporting the "vHub" functionality and USB2.0
-> +	  USB peripheral controller for the Aspeed AST2400, AST2500 and
-> +	  AST2600 family SoCs supporting the "vHub" functionality and USB2.0
-> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c 
-> b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> index 90b134d5dca9..5fafe91d3619 100644
-> --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> @@ -97,6 +97,7 @@ void ast_vhub_free_request(struct usb_ep *u_ep, 
-> struct usb_request *u_req)
->  
->  static irqreturn_t ast_vhub_irq(int irq, void *data)
->  {
-> +	u32 i;
->  	struct ast_vhub *vhub = data;
->  	irqreturn_t iret = IRQ_NONE;
->  	u32 istat;
-> @@ -121,7 +122,7 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
->  
->  	/* Handle generic EPs first */
->  	if (istat & VHUB_IRQ_EP_POOL_ACK_STALL) {
-> -		u32 i, ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
-> +		u32 ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
->  		writel(ep_acks, vhub->regs + AST_VHUB_EP_ACK_ISR);
->  
->  		for (i = 0; ep_acks && i < AST_VHUB_NUM_GEN_EPs; i++) {
-> @@ -134,21 +135,10 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
->  	}
->  
->  	/* Handle device interrupts */
-> -	if (istat & (VHUB_IRQ_DEVICE1 |
-> -		     VHUB_IRQ_DEVICE2 |
-> -		     VHUB_IRQ_DEVICE3 |
-> -		     VHUB_IRQ_DEVICE4 |
-> -		     VHUB_IRQ_DEVICE5)) {
-> -		if (istat & VHUB_IRQ_DEVICE1)
-> -			ast_vhub_dev_irq(&vhub->ports[0].dev);
-> -		if (istat & VHUB_IRQ_DEVICE2)
-> -			ast_vhub_dev_irq(&vhub->ports[1].dev);
-> -		if (istat & VHUB_IRQ_DEVICE3)
-> -			ast_vhub_dev_irq(&vhub->ports[2].dev);
-> -		if (istat & VHUB_IRQ_DEVICE4)
-> -			ast_vhub_dev_irq(&vhub->ports[3].dev);
-> -		if (istat & VHUB_IRQ_DEVICE5)
-> -			ast_vhub_dev_irq(&vhub->ports[4].dev);
-> +	for (i = 0; i < AST_VHUB_NUM_PORTS; i++) {
-> +		u32 dev_irq = VHUB_IRQ_DEVICE1 << i;
-> +		if (istat & dev_irq)
-> +			ast_vhub_dev_irq(&vhub->ports[i].dev);
->  	}
->  
->  	/* Handle top-level vHub EP0 interrupts */
-> @@ -407,6 +397,9 @@ static const struct of_device_id ast_vhub_dt_ids[] 
-> = {
->  	{
->  		.compatible = "aspeed,ast2500-usb-vhub",
->  	},
-> +	{
-> +		.compatible = "aspeed,ast2600-usb-vhub",
-> +	},
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
-> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h 
-> b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> index 761919e220d3..76935d02decf 100644
-> --- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> +++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> @@ -2,6 +2,23 @@
->  #ifndef __ASPEED_VHUB_H
->  #define __ASPEED_VHUB_H
->  
-> +/*****************************
-> + *                           *
-> + * Maximum devices/endpoints *
-> + *                           *
-> + *****************************/
-> +
-> +#ifdef CONFIG_MACH_ASPEED_G6
 
-No, this prevents building a kernel supporting multiple AST generations. Please
-describe the differences in a platform data struct attached to struct of_device_id.
+On Thu, Jan 16, 2020 at 11:35 AM James Feist <james.feist@linux.intel.com>
+wrote:
 
-Also, what's the plan for upstreaming these changes? It's okay to send them for
-inclusion in the openbmc tree if you're wanting them to bake there for some
-more widespread testing, but it's not clear what the intent is.
+> On 1/15/20 6:00 PM, Josh Lehan wrote:
+> > Hello there.
+> >
+> > A recent change to dbus-sensors, 27956 on Gerrit, appears to have
+> > introduced a difference which breaks the Entity ID field.
+> >
+> > Alex Qiu has written what the symptom is, and I traced through the code.
+> > Both findings are written as comments, to that change on Gerrit.
+> >
+> > I'm open to suggestions on how to resolve this. There are probably many
+> > people using the PSUSensor program in different ways.
+> >
+> > I am curious as to the behavior Intel was seeing in their project. There
+> > must be a difference in the way we are using the PSUSensor program, in
+> > which the way we're using it sees this as a breakage, but Intel sees
+> > this as a fix. Any details that can be provided?
+>
+> Hi Josh,
+>
+> Thanks for the investigation. Would you mind creating an issue?
+>
+> I think this has to do with Redfish and the power schema. Upon looking
+> closer, I think this patch should be reverted, and the fix be applied to
+> Redfish to distinguish between power sensors and other types of sensors.
+>
+> I'd be fine if you created a revert as well if there is an issue to
+> point to with your research.
+>
+> Thanks
+>
+> -James
+>
+>
+>
+> >
+> > Thanks!
+> > Josh
+> >
+> > Josh Lehan | Software Engineer |krellan@google.com
+> > <mailto:krellan@google.com> | +1 650-733-8941 <(650)%20733-8941>
+> >
+>
 
-Cheers,
+--0000000000005ed9be059c4a6ae7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Andrew
+<div dir=3D"ltr">Nice, thanks for your fast follow-up! Here is the created =
+issue:<div><br></div><div><a href=3D"https://github.com/openbmc/dbus-sensor=
+s/issues/3">https://github.com/openbmc/dbus-sensors/issues/3</a></div><div>=
+<br></div><div>Thanks!</div><div>Josh</div><div><br clear=3D"all"><div><div=
+ dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><=
+div dir=3D"ltr"><div><div dir=3D"ltr"><div style=3D"line-height:1.5em;paddi=
+ng-top:10px;margin-top:10px;color:rgb(85,85,85);font-family:sans-serif"><sp=
+an style=3D"border-width:2px 0px 0px;border-style:solid;border-color:rgb(21=
+3,15,37);padding-top:2px;margin-top:2px">Josh Lehan=C2=A0|</span><span styl=
+e=3D"border-width:2px 0px 0px;border-style:solid;border-color:rgb(51,105,23=
+2);padding-top:2px;margin-top:2px">=C2=A0Software Engineer=C2=A0|</span><sp=
+an style=3D"border-width:2px 0px 0px;border-style:solid;border-color:rgb(0,=
+153,57);padding-top:2px;margin-top:2px">=C2=A0<a href=3D"mailto:krellan@goo=
+gle.com" target=3D"_blank">krellan@google.com</a>=C2=A0|</span><span style=
+=3D"border-width:2px 0px 0px;border-style:solid;border-color:rgb(238,178,17=
+);padding-top:2px;margin-top:2px">=C2=A0+1 650-733-8941</span></div><br></d=
+iv></div></div></div></div><br></div></div><br><div class=3D"gmail_quote"><=
+div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 16, 2020 at 11:35 AM James=
+ Feist &lt;<a href=3D"mailto:james.feist@linux.intel.com">james.feist@linux=
+.intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On 1/15/20 6:00 PM, Josh Lehan wrote:<br>
+&gt; Hello there.<br>
+&gt; <br>
+&gt; A recent change to dbus-sensors, 27956 on Gerrit, appears to have <br>
+&gt; introduced a difference which breaks the Entity ID field.<br>
+&gt; <br>
+&gt; Alex Qiu has written what the symptom is, and I traced through the cod=
+e. <br>
+&gt; Both findings are written as comments, to that change on Gerrit.<br>
+&gt; <br>
+&gt; I&#39;m open to suggestions on how to resolve this. There are probably=
+ many <br>
+&gt; people using the PSUSensor program in different ways.<br>
+&gt; <br>
+&gt; I am curious as to the behavior Intel was seeing in their project. The=
+re <br>
+&gt; must be a difference in the way we are using the PSUSensor program, in=
+ <br>
+&gt; which the way we&#39;re using it sees this as a breakage, but Intel se=
+es <br>
+&gt; this as a fix. Any details that can be provided?<br>
+<br>
+Hi Josh,<br>
+<br>
+Thanks for the investigation. Would you mind creating an issue?<br>
+<br>
+I think this has to do with Redfish and the power schema. Upon looking<br>
+closer, I think this patch should be reverted, and the fix be applied to <b=
+r>
+Redfish to distinguish between power sensors and other types of sensors.<br=
+>
+<br>
+I&#39;d be fine if you created a revert as well if there is an issue to <br=
+>
+point to with your research.<br>
+<br>
+Thanks<br>
+<br>
+-James<br>
+<br>
+<br>
+<br>
+&gt; <br>
+&gt; Thanks!<br>
+&gt; Josh<br>
+&gt; <br>
+&gt; Josh Lehan=C2=A0|=C2=A0Software Engineer=C2=A0|<a href=3D"mailto:krell=
+an@google.com" target=3D"_blank">krellan@google.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:krellan@google.com" target=3D"_blank">kre=
+llan@google.com</a>&gt;=C2=A0|=C2=A0<a href=3D"tel:(650)%20733-8941" value=
+=3D"+16507338941" target=3D"_blank">+1 650-733-8941</a><br>
+&gt; <br>
+</blockquote></div>
+
+--0000000000005ed9be059c4a6ae7--
