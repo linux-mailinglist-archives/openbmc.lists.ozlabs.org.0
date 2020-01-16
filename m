@@ -1,50 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 874B013E2A6
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 17:57:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0684D13DFCF
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 17:20:36 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47z8Yr3FdmzDqZD
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 03:20:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47z9NX00qFzDqcD
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 03:57:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=sashal@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=default header.b=E4i+soLM; dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47z8Xz1B0RzDqXJ
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 03:19:46 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: Redfish Dump Service Proposal
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <8b26e6a2-e4cf-b4b9-845b-4172a076e50f@linux.vnet.ibm.com>
-Date: Thu, 16 Jan 2020 11:19:41 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <816130E9-117A-41E2-9705-9E0BF6040570@fuzziesquirrel.com>
-References: <c31757a8-c71d-43b3-f207-426e94548065@linux.vnet.ibm.com>
- <OF3E82A637.78F050C7-ON002584CE.0025B2F4-002584CE.00271DE9@notes.na.collabserv.com>
- <CAH1kD+YfetwAmGQfjF4ytCQYhhaEorgdiA5svwjm7X91-yG1Tg@mail.gmail.com>
- <CACkAXSpCwhUwzh1uZMMkFvtkO7Tdi4xoHaq1KtaAndR8pR2gbA@mail.gmail.com>
- <ac75a152-9bdf-0029-67e8-60e4e99eb1cc@linux.intel.com>
- <CAK7WoshJ7xMhB_E-ZEpVR+1E_AuGpZfGUFToOihoC5hZ9xyGGg@mail.gmail.com>
- <CAK7WoshsUE2+GXGEgxe99vkz4aEYTdT_ZcNE_k4Y_6x7JLWsTQ@mail.gmail.com>
- <62dc3198-40d4-b0f6-4c31-cf829d9311d6@linux.intel.com>
- <bc442056-ea92-9c65-1028-50839123e5b7@linux.vnet.ibm.com>
- <a281f9ca-9dc7-9e7a-8e87-08a313d43fe9@linux.intel.com>
- <62d0d9ee-ab0c-7ec9-403d-dc9487872142@linux.vnet.ibm.com>
- <1fb0c51e-32a2-1168-1d1d-ac044a5f892c@linux.vnet.ibm.com>
- <8b26e6a2-e4cf-b4b9-845b-4172a076e50f@linux.vnet.ibm.com>
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47z9HN6mydzDqZS;
+ Fri, 17 Jan 2020 03:53:04 +1100 (AEDT)
+Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
+ [73.47.72.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 9DF0721582;
+ Thu, 16 Jan 2020 16:53:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1579193582;
+ bh=iIeP+WJZUUTPVSaBgeB7+7rh6VBmmZIcQvVjeJlK2xE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=E4i+soLM8eNLM0+ILS7C5k5/Z20tMT4oDDg/SBzfUUFSoVtF0hHxNTE+BJGNSw/7d
+ hQ2ktvkzNlezit/cVyxN2rUDUK5n9cQtWBdxOGdGdtCYCHM8hqLCUby8/JeAVTCfwe
+ 0foSulnEsJOaJ7tP/kHAm9inZtXI1K4QtvB355hk=
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.4 124/205] media: aspeed-video: Fix memory leaks in
+ aspeed_video_probe
+Date: Thu, 16 Jan 2020 11:41:39 -0500
+Message-Id: <20200116164300.6705-124-sashal@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20200116164300.6705-1-sashal@kernel.org>
+References: <20200116164300.6705-1-sashal@kernel.org>
+MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,20 +60,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Cc: Sasha Levin <sashal@kernel.org>,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ linux-media@vger.kernel.org, Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-arm-kernel@lists.infradead.org,
+ Navid Emamdoost <navid.emamdoost@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+From: Navid Emamdoost <navid.emamdoost@gmail.com>
 
+[ Upstream commit c3df30a01da4955e04fa068c503cd784b31dad92 ]
 
-> On Jan 16, 2020, at 10:56 AM, Gunnar Mills <gmills@linux.vnet.ibm.com> =
-wrote:
->> On 1/16/2020 5:01 AM, Ratan Gupta wrote:
->>=20
->> 	=E2=80=A2 New Properties to be introduced in the logEntry
->> 		=E2=80=A2 Size
->=20
-> Redfish size properties typically have the unit in the name.
+In the implementation of aspeed_video_probe() the allocated memory for
+video should be released if either devm_ioremap_resource()
+or aspeed_video_init() or aspeed_video_setup_video() fails. Replace
+kzalloc() with devm_kzalloc to avoid explicit release for video.
 
-I wonder if a client could do a HEAD and just check the returned =
-content-length?
+Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+Signed-off-by: Navid Emamdoost <navid.emamdoost@gmail.com>
+Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/media/platform/aspeed-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+index 096a7c9a8963..4eaaf39b9223 100644
+--- a/drivers/media/platform/aspeed-video.c
++++ b/drivers/media/platform/aspeed-video.c
+@@ -1658,7 +1658,8 @@ static int aspeed_video_probe(struct platform_device *pdev)
+ {
+ 	int rc;
+ 	struct resource *res;
+-	struct aspeed_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
++	struct aspeed_video *video =
++		devm_kzalloc(&pdev->dev, sizeof(*video), GFP_KERNEL);
+ 
+ 	if (!video)
+ 		return -ENOMEM;
+-- 
+2.20.1
+
