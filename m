@@ -2,62 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D518113D225
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 03:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9202713D239
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 03:34:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47yp1c4YwkzDqW6
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 13:24:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47ypDW5QDvzDqM1
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jan 2020 13:34:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::130;
- helo=mail-lf1-x130.google.com; envelope-from=krellan@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::234;
+ helo=mail-lj1-x234.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=gZcWA7ey; dkim-atps=neutral
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
- [IPv6:2a00:1450:4864:20::130])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=PkoBu7R2; dkim-atps=neutral
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com
+ [IPv6:2a00:1450:4864:20::234])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47ynf31l9HzDqVJ
- for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 13:07:54 +1100 (AEDT)
-Received: by mail-lf1-x130.google.com with SMTP id f15so14277734lfl.13
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 18:07:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=IFWGR1NMWYINJuBZHrmgb0HfZLRyNyzaw9S0+x++2lI=;
- b=gZcWA7ey70z89c+3OVHuYjAgUJBm3DK3tWn9MF8FqytNrB2hNrOB9cwQtjUZB/D/8H
- zSuxV0B9gB4Q4m07+bOmZJrCxUD1a+6GwMoOS8p1742fd+m8e5n6s1FKFoKFyOp4zZUj
- gO9QpplRNkOIG5YAWcte3tnZ7PwNnmpLjz9bg3nEtxop6TU+K/t6VQ0bu7/s5Q/joFYe
- Ar95AsI4SoLs2TFL+8fbv6b0T2xbFExO3VlO+mvErUbIteQVk4CC4NSDS5d32xbIhbBc
- 1gyzoSytUvv6ZzHslV7I/zxAC6w5p1Sr82P6VY9dX2so+V1U1ju0OCW1fDvgI1XRQOJP
- kRCA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47ypCn6jCjzDqLx
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 13:33:41 +1100 (AEDT)
+Received: by mail-lj1-x234.google.com with SMTP id m26so20814497ljc.13
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Jan 2020 18:33:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=YHnlV8rRJbRQ1g7OriUML9ZkHMOZTSLmQqwNoiuzQbE=;
+ b=PkoBu7R2+vMem8BYxKrIQUukqTdP1/bdmXSDy5iRvApch5AV2zBUuv+3vHYpfWRccW
+ L7XtyJhKbRtwvAw7UIROhoKz8XtKsKht/jcCldjDldViSGcePxT1XY4pCBWS5vk8lUgP
+ 1M+rE61VqEfltGSEwIh51iksctHE55scXFKhgCQntZAx7aPSGRrO86R9OnhoAIR23cIW
+ elPI5iyrXm5/5sTn+kioizZ+CbDWpv4VoU1NbcJZSiGk9xSM3YKBInz2UrcHTmIjW/ad
+ gpQLru6fRDgGi8YEnGXavXXQUKa3atPbEjZvLTXqwUw3gE1E8gg8n/URUUTTyFkUymMn
+ 3Apw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=IFWGR1NMWYINJuBZHrmgb0HfZLRyNyzaw9S0+x++2lI=;
- b=t4JUMdFBcIkNcNx7pI+vjB8B7hNJvNShYvNoS0zjJ+fDePurKW+wbzLONoYWRyIhPV
- szfhMhqOelDhwgdLaMD1IfJE970Aa2nWWnRO93pRyzn8zAQ96MWc8PvWUIZsjZrLLcja
- RG5Y+oieIDp3t+Lap2gZ9BO3RHRZk5cbpQOZNWzX4G+IFY6psbWKYI6bvYFWbOTU7C2r
- 0IX8DdgykLZ9zDrTb5oOwFTjaulG6J88uMawQ1lRc8VOBuUCDP0H+xaQCHEEUPS5P7eF
- e3KLs5yN00qB0ywWDmetHo9k7073EudY0gL+mSqg9HWx41KcuJC6qyNnoQ39iwdiRYDo
- M0bg==
-X-Gm-Message-State: APjAAAVB97VAaoJdxm+gRXmHp0vMV2yotppGsi3gOFi26uc6s0Dfa5S/
- JWmuUlVdAfx0QGKrtUAxxBuUrd9XUHo7S4KM1nojUWf7L4Y=
-X-Google-Smtp-Source: APXvYqwx0Ytt7zcQzKz4ZATOln0gm/FfMRcugGAEZyvH5u/IDixGKQmDIfW5AGEU3DzoWjdYP+JsMkge+wrVhk/O4+8=
-X-Received: by 2002:ac2:5dc7:: with SMTP id x7mr987171lfq.24.1579140057379;
- Wed, 15 Jan 2020 18:00:57 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=YHnlV8rRJbRQ1g7OriUML9ZkHMOZTSLmQqwNoiuzQbE=;
+ b=XH2ZA2gmmOltWR3OOfyySWs3BUaVUaDkt+0CIMe86kD/qP85/SA6RaDpsx4FHRuQ1R
+ CHt3c+uGuDEZU9pcx5TOVrLYqXO5h2cEO3ivG34NW7URpPVZlL/LVdiwNEZ7T6YxIrov
+ Lu1HBEbkvdDjOdu4Jh44KXlGVXvaIOKR67Rcqk2IIPv4iq5IoDj+PCsLtRCX6lRF6r6O
+ oOcw8BkwbT/jIoTTEd9FB67k331LGvWXVG84iTN33cuhTfwUhXzETO4rTVXfxghectPQ
+ UgJVRtcB7pKRUo1hviL/oIoZidAXmRFR1KkgqSaySENQSUNaSUgZra3yYRR2GoyQOZV/
+ FZLw==
+X-Gm-Message-State: APjAAAXFdY78np+HG8G2rFRT0bd/lXSVA4ulDzRXOsv8le/ThsymE32P
+ 1+S0cnot4tPd2L7T5+epPtPdojT6Lqs7syJWnXE=
+X-Google-Smtp-Source: APXvYqypSjA4Pq6ItjnE3amwP/gw3sExPZsL5SCw0b6aIPwy7Un4owbBm2cQEoqOXSSVPc9kZoStMi9M9gY1ICK3u5w=
+X-Received: by 2002:a05:651c:1a8:: with SMTP id
+ c8mr815703ljn.207.1579142016971; 
+ Wed, 15 Jan 2020 18:33:36 -0800 (PST)
 MIME-Version: 1.0
-From: Josh Lehan <krellan@google.com>
-Date: Wed, 15 Jan 2020 18:00:41 -0800
-Message-ID: <CANPkJS9ggqARodBg+dhUEBBXKXANFJ=bJEDEyTmPQbVF=oLOkA@mail.gmail.com>
-Subject: Change 27956 dbus-sensors PSUSensor appears to break Entity ID
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>, mutyalax.jayaprakash@intel.com
-Content-Type: multipart/alternative; boundary="0000000000002c1c61059c3832ef"
+References: <138261238.19427827.1579077694127.ref@mail.yahoo.com>
+ <138261238.19427827.1579077694127@mail.yahoo.com>
+ <3ae17538-5e0d-1228-a242-56ab25dd3229@linux.intel.com>
+ <20200115192701.GD3512@patrickw3-mbp.dhcp.thefacebook.com>
+ <90469760-8693-9481-524a-1b3d92825df2@linux.intel.com>
+In-Reply-To: <90469760-8693-9481-524a-1b3d92825df2@linux.intel.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Thu, 16 Jan 2020 10:33:25 +0800
+Message-ID: <CAARXrtmA_Tj-CLpUdg4NJssHFwe0qpOEmvU=xGLtAvp99iW2-A@mail.gmail.com>
+Subject: Re: No sensors displayed in webUI
+To: James Feist <james.feist@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,63 +77,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>, Alex Qiu <xqiu@google.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: Max Power <max_power2005-openbmc@yahoo.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002c1c61059c3832ef
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Jan 16, 2020 at 4:46 AM James Feist <james.feist@linux.intel.com> wrote:
+>
+> On 1/15/20 11:27 AM, Patrick Williams wrote:
+> > On Wed, Jan 15, 2020 at 09:26:48AM -0800, James Feist wrote:
+> >> There was a thread about this last week:
+> >>
+> >> https://lists.ozlabs.org/pipermail/openbmc/2020-January/020044.html
+> >> https://lists.ozlabs.org/pipermail/openbmc/2020-January/020136.html
+> >>
+> >> TL;DR all the sensors are available in Redfish, but the WebUI hasn't move
+> >> over to full Redfish support yet. There is a test patch that helps enable
+> >> this in the thread.
+> >
+> > Hi James,
+> >
+> > This statement about a dependency on Redfish stood out to me.  The
+> > current UI is mostly using the "old" REST API, but as long as the dbus
+> > objects are created correctly it should not matter one bit if the
+> > external interface is the dbus-based REST API or the Redfish one.
+> >
+> > This is a bug in dbus-sensors that is independent of Redfish vs REST.
+> >
+> > The current webui code expects there to be properties that are specified
+> > in phosphor-dbus-interfaces.  Specifically, it is looking for the "Unit"
+> > property[1], which is a required property on
+> > xyz.openbmc_project.Sensor.Value[2].  The dbus-sensors has a bunch of
+> > Sensor.Value objects that are violating the interface spec by not
+> > providing "Unit" [3].  Notice that `setInitialProperties` doesn't
+> > register_property on "Unit" and neither does any other code in this
+> > repository[4].
+> >
+> > Why is none of this code using the code generated from
+> > phosphor-dbus-interfaces?  Since it is generating dbus objects "by
+> > hand" it isn't not getting any compile-time checking if it is doing the
+> > wrong thing (or more likely that the phosphor-dbus-interface changes out
+> > from underneath it).
+>
+> There is a long history of this where I tried to get everyone to update
+> the sensor value interface to use double instead of INT. I had a large
+> agreement, but unfortunately updating all of the daemons that we did not
+> use (and without any good way of testing), and trying to get by-in or
+> help from all the maintainers became too large of a job. I updated as
+> many daemons as I could to accept both before I ran out of time. At the
+> same time, I was also phasing out unit, as unit was easy enough to read
+> from the sensor path, and redundant information. All of our internal
+> daemons don't use phosphor-dbus-interfaces to create interfaces, as we
+> have found the code generation difficult to explain to new users, and it
+> also makes it difficult to upgrade daemons as all patches need to be
+> merged at once. We have been updating interfaces for documentation
+> purposes, but haven't used them for any new work in quite some time.
+>
 
-Hello there.
+This is really an issue.
+Typically an OpenBMC service will use the data types defined in
+phosphor-dbus-interface, when it does not, it causes such trouble:
 
-A recent change to dbus-sensors, 27956 on Gerrit, appears to have
-introduced a difference which breaks the Entity ID field.
+When I worked on a change in bmcweb to update some sensor value, it's
+found that bmcweb is not using the correct type causing runtime D-Bus
+exception.
+And the code has to be changed to handle both types, where one is
+defined in phosphor-dbus-interface, and the other is un-documented.
 
-Alex Qiu has written what the symptom is, and I traced through the code.
-Both findings are written as comments, to that change on Gerrit.
+It's really appreciated if we could use the unified interface.
 
-I'm open to suggestions on how to resolve this. There are probably many
-people using the PSUSensor program in different ways.
-
-I am curious as to the behavior Intel was seeing in their project. There
-must be a difference in the way we are using the PSUSensor program, in
-which the way we're using it sees this as a breakage, but Intel sees this
-as a fix. Any details that can be provided?
-
-Thanks!
-Josh
-
-Josh Lehan | Software Engineer | krellan@google.com | +1 650-733-8941
-
---0000000000002c1c61059c3832ef
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello there.<div><br></div><div>A recent change to dbus-se=
-nsors, 27956 on Gerrit, appears to have introduced a difference which break=
-s the Entity ID field.</div><div><br></div><div>Alex Qiu has written what t=
-he symptom is, and I traced through the code. Both findings are written as =
-comments, to that change on Gerrit.</div><div><br></div><div>I&#39;m open t=
-o suggestions on how to resolve this. There are probably many people using =
-the PSUSensor program in different ways.</div><div><br></div><div>I am curi=
-ous as to the behavior Intel was seeing in their project. There must be a d=
-ifference in the way we are using the PSUSensor program, in which the way w=
-e&#39;re using it sees this as a breakage, but Intel sees this as a fix. An=
-y details that can be provided?</div><div><br></div><div>Thanks!</div><div>=
-Josh</div><div><br></div><div><div><div dir=3D"ltr" class=3D"gmail_signatur=
-e" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr=
-"><div style=3D"line-height:1.5em;padding-top:10px;margin-top:10px;color:rg=
-b(85,85,85);font-family:sans-serif"><span style=3D"border-width:2px 0px 0px=
-;border-style:solid;border-color:rgb(213,15,37);padding-top:2px;margin-top:=
-2px">Josh Lehan=C2=A0|</span><span style=3D"border-width:2px 0px 0px;border=
--style:solid;border-color:rgb(51,105,232);padding-top:2px;margin-top:2px">=
-=C2=A0Software Engineer=C2=A0|</span><span style=3D"border-width:2px 0px 0p=
-x;border-style:solid;border-color:rgb(0,153,57);padding-top:2px;margin-top:=
-2px">=C2=A0<a href=3D"mailto:krellan@google.com" target=3D"_blank">krellan@=
-google.com</a>=C2=A0|</span><span style=3D"border-width:2px 0px 0px;border-=
-style:solid;border-color:rgb(238,178,17);padding-top:2px;margin-top:2px">=
-=C2=A0+1 650-733-8941</span></div><br></div></div></div></div></div></div><=
-/div>
-
---0000000000002c1c61059c3832ef--
+>
+> >
+> > [1] https://github.com/openbmc/phosphor-webui/blob/f70f42553615972163b36c9b4d77be07e4399122/app/common/services/api-utils.js#L979
+> > [2] https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.interface.yaml#L32
+> > [3] https://github.com/openbmc/dbus-sensors/blob/fbb44ad1ea716d4e8c2cacdf01d380c6d0f53855/include/sensor.hpp#L13
+> > [4] https://github.com/openbmc/dbus-sensors/search?utf8=%E2%9C%93&q=unit&type=
+> >
