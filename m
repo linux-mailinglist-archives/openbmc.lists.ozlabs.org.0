@@ -2,68 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0583D13FD96
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 00:28:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0986213FDF0
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 00:31:09 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47zL440jpQzDql8
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 10:28:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47zL6f1P9rzDr1q
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 10:31:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
- helo=mail-pf1-x443.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::535;
+ helo=mail-pg1-x535.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=OX4sFzXZ; dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
+ header.s=20161025 header.b=pvhfjGPF; dkim-atps=neutral
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com
+ [IPv6:2607:f8b0:4864:20::535])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47zL0b1HHQzDr9L
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 10:25:47 +1100 (AEDT)
-Received: by mail-pf1-x443.google.com with SMTP id x6so10994435pfo.10
- for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 15:25:47 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47zL0c3wKHzDr9K
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 10:25:49 +1100 (AEDT)
+Received: by mail-pg1-x535.google.com with SMTP id x7so10682201pgl.11
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jan 2020 15:25:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=dJT3XEPh1wulXBsm2BcIKCL8ANO/IhYPq3d8NdbYXjw=;
- b=OX4sFzXZVM8EcHpNTfABKpyWtSeAKZPXLlb+V5c+eTznJFQcHgb8DG9OvHKRNsVdMu
- cSV2rtanLMmiW4u/EwPZ2l8GE9MwdvbbqHbd+2Yo1ir2aN+EAHhP6Ig/WoREcVxyzzs7
- ogC54ZEMc5oIFwkT84GC/A6vZDkBB0Z/YExp0n25qG8X2FpZiMbpiNMfzWPZqXYzLplp
- okulHZkY8ZGQ8JzdKAVSIYYNZnitLDFRL//w9D+wmkZ3XOkYSUvuS9WR1TCBcZJgn5cp
- b6GrbZN8IDERNpNvTBoc+f6MKVCDdlxA4AGkBIXTF2Ls56E2hhonljo8KTi3fVLUCtaL
- tpfQ==
+ bh=2yHABHvwxnXim25ZBfXIQNHhAqZGiEyWkS3DEO4gD7M=;
+ b=pvhfjGPF62A8Vt7CoU4XNJHlGAof79jQ5Ba6tCEBCpaOKVUfxowcriaBJyG0iKdRnS
+ 2YAHUPOS1T8mbbRR+D9cwMeFyt0GGm5SqmlFZRAx1z956ahFV4XerZFurCDqZ+D7Zdnd
+ jGraHpPVNGr1jW9jdNKkZ9Zl1bIgQR3SzT5O++tWJoaGZxh4u5BYoB8GkzcCkwULjIRb
+ Um+/kAwX37ZKCUCzEIfvcalCB4LTpw59bsbE2+xtyubHRLstTQWMXsK2fRSmNjexrT9u
+ ueMgKhpW7A3n43vPMb1Yh9r+HJ6uiwiyi8DGDkMgXDK7gD2HBqHu7qqZGXnTAjrH4gsU
+ da8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=dJT3XEPh1wulXBsm2BcIKCL8ANO/IhYPq3d8NdbYXjw=;
- b=byUN1vsUBMhXvr0SS40yyI4ZFdMU6wrfMrFhB3Gge0Z6xIfqMnfbayMNiDz+PC+mX+
- 1xrjGkF3tdrLtm3p109/JqkcOEVW0kkYMqXkf+7U5DpvVmd81GdX65I1DD4LMT4Jz265
- 1jAy7JUSisfzrbld1aVbGuRWWdHzvcO4zM1xdbtF7wNAx2yEUMeyN6Xev3lDnhYvCPBM
- /9fHBWy0SXQfvAHFtjgACYH4kODUVO12AV3yph9O4LtiWjtjlTUeCM3KR+kpNAMlvBwu
- ZGuoNqP69Owyo6+ZUQZ3mXCw+UAdSRz7iq2v7h/y8+LzZcj3fTzFhCqeMcDexSLMbicm
- yV4A==
-X-Gm-Message-State: APjAAAV1D7EuNc+FbIqacGhVVBia31BSUgNehrFNyo9VUROPH9xJJDw4
- FG1eq4ubnRPvlK1cP4+56MA=
-X-Google-Smtp-Source: APXvYqzi1fkwVgTVIuLmurx8lL1yKC3T0LUzbo1/SYGMN6bcCSSGQhaNx1crtJDMCSS5u/drGJxsJw==
-X-Received: by 2002:a65:68c8:: with SMTP id k8mr42321932pgt.216.1579217145287; 
- Thu, 16 Jan 2020 15:25:45 -0800 (PST)
+ bh=2yHABHvwxnXim25ZBfXIQNHhAqZGiEyWkS3DEO4gD7M=;
+ b=OnP+Qce1rNtNREo0ibDuwmTFs/1KACxN7xzU+YtmyR22+sibPzGk4pFzlKVS2EP0GP
+ emdkcCKuDqEtQ9JZqbY1rM6oB87cV0OaiIWbpX5QtYXE5+ZfUSqpHHTXFw9G5zGWC0vN
+ QF87e8XRUs5Ud3usFBx4Y+xTYiiVsBP7/bU996F/STPMFdMZM0WwnreJfEzA7SZd2UT0
+ Ah00Cn9MIurxWbXxq47NzucDXyxi0nfQpKJ/ZRmXrsFWiBqeSBfy7A5mCILpozrXlrkU
+ OV+UK639pAWqlwL2V/q/CiPo+Qpq4bEjgItequGZDqQiHInCGLWA90hc7RfjokPT/Xw8
+ oayw==
+X-Gm-Message-State: APjAAAV9nFG033ayaO5FMGR8INdGFOmc1BJRIJIuFlaqEruq4CWy4BId
+ u6UNa0P5nqdwIcAUgcp03r0=
+X-Google-Smtp-Source: APXvYqzlXK5qxZPPdNOAPtW3t2c6C3akgXIay6WUNKwcjgVKiJZacSkw+skK0OxHdN7V4LAzbnpTIQ==
+X-Received: by 2002:a65:488f:: with SMTP id n15mr44241773pgs.61.1579217146565; 
+ Thu, 16 Jan 2020 15:25:46 -0800 (PST)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  ([2620:10d:c090:200::1:7c0c])
- by smtp.gmail.com with ESMTPSA id o6sm25532204pgg.37.2020.01.16.15.25.44
+ by smtp.gmail.com with ESMTPSA id o6sm25532204pgg.37.2020.01.16.15.25.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 16 Jan 2020 15:25:44 -0800 (PST)
+ Thu, 16 Jan 2020 15:25:46 -0800 (PST)
 From: rentao.bupt@gmail.com
 To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  taoren@fb.com, openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 1/2] usb: gadget: aspeed: add ast2600 vhub
- support
-Date: Thu, 16 Jan 2020 15:25:24 -0800
-Message-Id: <20200116232525.2819-2-rentao.bupt@gmail.com>
+Subject: [PATCH linux dev-5.4 2/2] ARM: dts: aspeed-g6: add usb functions
+Date: Thu, 16 Jan 2020 15:25:25 -0800
+Message-Id: <20200116232525.2819-3-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200116232525.2819-1-rentao.bupt@gmail.com>
 References: <20200116232525.2819-1-rentao.bupt@gmail.com>
@@ -84,165 +83,104 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Add AST2600 support in aspeed-vhub driver.
-
-There are 3 major differences between AST2500 and AST2600 vhub:
-  - AST2600 supports 7 downstream devices while AST2500 supports 5.
-  - AST2600 supports 21 programmable endpoints while AST2500 supports 15.
-  - EP0 data buffer's 8-byte DMA alignment restriction is removed from
-    AST2600.
+Add USB function pins and devices in aspeed-g6 dtsi.
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 ---
- drivers/usb/gadget/udc/aspeed-vhub/Kconfig |  4 +--
- drivers/usb/gadget/udc/aspeed-vhub/core.c  | 25 ++++++-----------
- drivers/usb/gadget/udc/aspeed-vhub/vhub.h  | 32 ++++++++++++++++------
- 3 files changed, 35 insertions(+), 26 deletions(-)
+ arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi | 25 ++++++++++++++
+ arch/arm/boot/dts/aspeed-g6.dtsi         | 43 ++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-index 83ba8a2eb6af..605500b19cf3 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-@@ -4,5 +4,5 @@ config USB_ASPEED_VHUB
- 	depends on ARCH_ASPEED || COMPILE_TEST
- 	depends on USB_LIBCOMPOSITE
- 	help
--	  USB peripheral controller for the Aspeed AST2500 family
--	  SoCs supporting the "vHub" functionality and USB2.0
-+	  USB peripheral controller for the Aspeed AST2400, AST2500 and
-+	  AST2600 family SoCs supporting the "vHub" functionality and USB2.0
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-index 90b134d5dca9..5fafe91d3619 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -97,6 +97,7 @@ void ast_vhub_free_request(struct usb_ep *u_ep, struct usb_request *u_req)
+diff --git a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+index 045ce66ca876..7028e21bdd98 100644
+--- a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+@@ -1112,6 +1112,31 @@
+ 		groups = "UART9";
+ 	};
  
- static irqreturn_t ast_vhub_irq(int irq, void *data)
- {
-+	u32 i;
- 	struct ast_vhub *vhub = data;
- 	irqreturn_t iret = IRQ_NONE;
- 	u32 istat;
-@@ -121,7 +122,7 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
- 
- 	/* Handle generic EPs first */
- 	if (istat & VHUB_IRQ_EP_POOL_ACK_STALL) {
--		u32 i, ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
-+		u32 ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
- 		writel(ep_acks, vhub->regs + AST_VHUB_EP_ACK_ISR);
- 
- 		for (i = 0; ep_acks && i < AST_VHUB_NUM_GEN_EPs; i++) {
-@@ -134,21 +135,10 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
- 	}
- 
- 	/* Handle device interrupts */
--	if (istat & (VHUB_IRQ_DEVICE1 |
--		     VHUB_IRQ_DEVICE2 |
--		     VHUB_IRQ_DEVICE3 |
--		     VHUB_IRQ_DEVICE4 |
--		     VHUB_IRQ_DEVICE5)) {
--		if (istat & VHUB_IRQ_DEVICE1)
--			ast_vhub_dev_irq(&vhub->ports[0].dev);
--		if (istat & VHUB_IRQ_DEVICE2)
--			ast_vhub_dev_irq(&vhub->ports[1].dev);
--		if (istat & VHUB_IRQ_DEVICE3)
--			ast_vhub_dev_irq(&vhub->ports[2].dev);
--		if (istat & VHUB_IRQ_DEVICE4)
--			ast_vhub_dev_irq(&vhub->ports[3].dev);
--		if (istat & VHUB_IRQ_DEVICE5)
--			ast_vhub_dev_irq(&vhub->ports[4].dev);
-+	for (i = 0; i < AST_VHUB_NUM_PORTS; i++) {
-+		u32 dev_irq = VHUB_IRQ_DEVICE1 << i;
-+		if (istat & dev_irq)
-+			ast_vhub_dev_irq(&vhub->ports[i].dev);
- 	}
- 
- 	/* Handle top-level vHub EP0 interrupts */
-@@ -407,6 +397,9 @@ static const struct of_device_id ast_vhub_dt_ids[] = {
- 	{
- 		.compatible = "aspeed,ast2500-usb-vhub",
- 	},
-+	{
-+		.compatible = "aspeed,ast2600-usb-vhub",
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-index 761919e220d3..76935d02decf 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-@@ -2,6 +2,23 @@
- #ifndef __ASPEED_VHUB_H
- #define __ASPEED_VHUB_H
- 
-+/*****************************
-+ *                           *
-+ * Maximum devices/endpoints *
-+ *                           *
-+ *****************************/
++	pinctrl_usb2ah_default: usb2ah_default {
++		function = "USB2AH";
++		groups = "USBA";
++	};
 +
-+#ifdef CONFIG_MACH_ASPEED_G6
-+#define AST_VHUB_NUM_GEN_EPs	21	/* Generic non-0 EPs */
-+#define AST_VHUB_NUM_PORTS	7	/* vHub ports */
-+#else
-+#define AST_VHUB_NUM_GEN_EPs	15	/* Generic non-0 EPs */
-+#define AST_VHUB_NUM_PORTS	5	/* vHub ports */
-+#endif
++	pinctrl_usb2ad_default: usb2ad_default {
++		function = "USB2AD";
++		groups = "USBA";
++	};
 +
-+#define AST_VHUB_GEN_EPS_MASK	((1 << AST_VHUB_NUM_GEN_EPs) - 1)
-+#define AST_VHUB_PORTS_MASK	((1 << AST_VHUB_NUM_PORTS) - 1)
++	pinctrl_usb2bh_default: usb2bh_default {
++		function = "USB2BH";
++		groups = "USBB";
++	};
 +
- /*****************************
-  *                           *
-  * VHUB register definitions *
-@@ -51,6 +68,8 @@
- #define VHUB_IRQ_USB_CMD_DEADLOCK		(1 << 18)
- #define VHUB_IRQ_EP_POOL_NAK			(1 << 17)
- #define VHUB_IRQ_EP_POOL_ACK_STALL		(1 << 16)
-+#define VHUB_IRQ_DEVICE7			(1 << 15)
-+#define VHUB_IRQ_DEVICE6			(1 << 14)
- #define VHUB_IRQ_DEVICE5			(1 << 13)
- #define VHUB_IRQ_DEVICE4			(1 << 12)
- #define VHUB_IRQ_DEVICE3			(1 << 11)
-@@ -70,23 +89,22 @@
- /* SW reset reg */
- #define VHUB_SW_RESET_EP_POOL			(1 << 9)
- #define VHUB_SW_RESET_DMA_CONTROLLER		(1 << 8)
-+#define VHUB_SW_RESET_DEVICE7			(1 << 7)
-+#define VHUB_SW_RESET_DEVICE6			(1 << 6)
- #define VHUB_SW_RESET_DEVICE5			(1 << 5)
- #define VHUB_SW_RESET_DEVICE4			(1 << 4)
- #define VHUB_SW_RESET_DEVICE3			(1 << 3)
- #define VHUB_SW_RESET_DEVICE2			(1 << 2)
- #define VHUB_SW_RESET_DEVICE1			(1 << 1)
- #define VHUB_SW_RESET_ROOT_HUB			(1 << 0)
-+#define VHUB_SW_RESET_DEV_MASK			(AST_VHUB_PORTS_MASK << 1)
- #define VHUB_SW_RESET_ALL			(VHUB_SW_RESET_EP_POOL | \
- 						 VHUB_SW_RESET_DMA_CONTROLLER | \
--						 VHUB_SW_RESET_DEVICE5 | \
--						 VHUB_SW_RESET_DEVICE4 | \
--						 VHUB_SW_RESET_DEVICE3 | \
--						 VHUB_SW_RESET_DEVICE2 | \
--						 VHUB_SW_RESET_DEVICE1 | \
-+						 VHUB_SW_RESET_DEV_MASK | \
- 						 VHUB_SW_RESET_ROOT_HUB)
- /* EP ACK/NACK IRQ masks */
- #define VHUB_EP_IRQ(n)				(1 << (n))
--#define VHUB_EP_IRQ_ALL				0x7fff	/* 15 EPs */
-+#define VHUB_EP_IRQ_ALL				AST_VHUB_GEN_EPS_MASK
++	pinctrl_usb2bd_default: usb2bd_default {
++		function = "USB2BD";
++		groups = "USBB";
++	};
++
++	pinctrl_usb11bhid_default: usb11bhid_default {
++		function = "USB11BHID";
++		groups = "USBB";
++	};
++
+ 	pinctrl_vb_default: vb_default {
+ 		function = "VB";
+ 		groups = "VB";
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 99cc7d7ced4d..d344bb278bdb 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -245,6 +245,49 @@
+ 			status = "disabled";
+ 		};
  
- /* USB status reg */
- #define VHUB_USBSTS_HISPEED			(1 << 27)
-@@ -210,8 +228,6 @@
-  *                                      *
-  ****************************************/
- 
--#define AST_VHUB_NUM_GEN_EPs	15	/* Generic non-0 EPs */
--#define AST_VHUB_NUM_PORTS	5	/* vHub ports */
- #define AST_VHUB_EP0_MAX_PACKET	64	/* EP0's max packet size */
- #define AST_VHUB_EPn_MAX_PACKET	1024	/* Generic EPs max packet size */
- #define AST_VHUB_DESCS_COUNT	256	/* Use 256 descriptor mode (valid
++		ehci0: usb@1e6a1000 {
++			compatible = "aspeed,ast2600-ehci", "generic-ehci";
++			reg = <0x1e6a1000 0x100>;
++			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2ah_default>;
++			status = "disabled";
++		};
++
++		ehci1: usb@1e6a3000 {
++			compatible = "aspeed,ast2600-ehci", "generic-ehci";
++			reg = <0x1e6a3000 0x100>;
++			interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT2CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2bh_default>;
++			status = "disabled";
++		};
++
++		uhci: usb@1e6b0000 {
++			compatible = "aspeed,ast2600-uhci", "generic-uhci";
++			reg = <0x1e6b0000 0x100>;
++			interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
++			#ports = <2>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBUHCICLK>;
++			status = "disabled";
++			/*
++			 * No default pinmux, it will follow EHCI, use an explicit pinmux
++			 * override if you don't enable EHCI
++			 */
++		};
++
++		vhub: usb-vhub@1e6a0000 {
++			compatible = "aspeed,ast2600-usb-vhub";
++			reg = <0x1e6a0000 0x300>;
++			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2ad_default>;
++			status = "disabled";
++		};
++
+ 		apb {
+ 			compatible = "simple-bus";
+ 			#address-cells = <1>;
 -- 
 2.17.1
 
