@@ -2,71 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D74971400EE
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 01:27:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BB181403A2
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 06:40:17 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47zMN56yT0zDrMy
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 11:27:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 47zVJb0YRLzDqpH
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 16:40:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=27848eddf=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=scW++zvv; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47zMMG5ZYMzDrL1
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 11:26:57 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1579220812;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0voE4c55pR1UEDHa8X16fM0/SDBtCGzZwSFH1jL8eig=;
- b=scW++zvvWZCLt+yimZkQP0Xl92L6ufjg1JvAYjE5vlFJV6inyUHxrDGs3TRQyMtOtvh8/s
- Q5vCmXguKrxZisCUoyi+Ujwu2zLVCQMMCE7GimcsozyoIDRYI8rItKT0JNk+12Yu3h5K2k
- o34UIOuDF1N7IkyX+fXhtbW8gHZsAvQ=
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-7-Yf0mX1CONHi9FA726HLvIQ-1; Thu, 16 Jan 2020 19:26:50 -0500
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Thu, 16 Jan 2020 16:26:21 -0800
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Thu, 16 Jan 2020 16:26:15 -0800
-From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Which repo is more stable, feature complete, most functionality?
- https://github.com/openbmc/openbmc or https://github.com/Intel-BMC/openbmc
-Thread-Topic: Which repo is more stable, feature complete, most functionality?
- https://github.com/openbmc/openbmc or
- https://github.com/Intel-BMC/openbmc
-Thread-Index: AdXMzLm+yefvKybER6mmRI5lr0TYXA==
-Date: Fri, 17 Jan 2020 00:26:14 +0000
-Message-ID: <8117ef0c5f9a4c599ebe1d53aae209b3@SCL-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-Content-Language: en-US
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 47zVHn5lw2zDqd9
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 16:39:28 +1100 (AEDT)
+IronPort-SDR: A80SMfZlPYQ8OuZZq9Vr0cRxQbpKOwcMrPu1EAv+m1qoKPVzdKy+Uvrt1urUp2DWtMJMUkFmq3
+ Xvb7Tkd0iYqA==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx01.quantatw.com with ESMTP; 17 Jan 2020 13:39:24 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Fri, 17 Jan
+ 2020 13:39:21 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Fri, 17 Jan 2020 13:39:21 +0800
+From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Subject: RE: Verify Privilege For Different Channels in openbmc-test-automation
+Thread-Topic: Verify Privilege For Different Channels in
+ openbmc-test-automation
+Thread-Index: AdXKuxmeAxEUTzgySNaVM+b2wNcnWQBYBjUAADcISEA=
+Date: Fri, 17 Jan 2020 05:39:21 +0000
+Message-ID: <0ebd5d88a9ea46328db578849d4b061b@quantatw.com>
+References: <10cf015965644daf9cfae7421e9f4710@quantatw.com>
+ <CAAMkS132O2MB4myFcwPo0NQNf=hzvLYXgqoLXOxCcJe6mqHEMQ@mail.gmail.com>
+In-Reply-To: <CAAMkS132O2MB4myFcwPo0NQNf=hzvLYXgqoLXOxCcJe6mqHEMQ@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.122.68.174]
+x-originating-ip: [10.243.91.252]
+x-tm-snts-smtp: C5556053ABEFC99471F79AC024322C86D4F34F84059A7AE527EA66F557427C9A2000:8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-X-MC-Unique: Yf0mX1CONHi9FA726HLvIQ-1
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,24 +59,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Which repo is more stable, feature complete, most functionality?  https://g=
-ithub.com/openbmc/openbmc or https://github.com/Intel-BMC/openbmc
-
-While the WebUI for https://github.com/Intel-BMC/openbmc may look better,
-presently its functionality for BMC operation seems intermittent compared t=
-o the functionality of https://github.com/openbmc/openbmc.
-I am referring to basic things such as displaying the BMC's Firmware Versio=
-n, the lack of displaying any NIC for Network Settings, the "hang" for Heal=
-th Hardware Status. =20
-
-This is not a request about ahead or behind; I am asking about stable, feat=
-ure complete, most functionality.
-
-Using a metaphor here; if you had to select today one of the 2 for controll=
-ing your car's breaks which would it be?
-
-Thank you.
-
+R290IGl0LiBBbm90aGVyIHF1ZXN0aW9uLCBhdCB0aGUgbGFzdCB0d28gIlZlcmlmeSIgc3RlcHMu
+IA0KQ2FuIHRoZSB1c2VyIHJ1biBvdXQtb2YtYmFuZCBJUE1JIGNvbW1hbmRzIHdpdGggdGhlIHNw
+ZWNpZmllZCBjaGFubmVsPw0KKGUuZyBpcG1pdG9vbCAtSSBsYW5wbHVzIC1DIDMgLXAgNjIzIC1V
+IFltUkJ3RFVTIC1QIDBwZW5CbWMxIC1IIHgueC54LnggLUwgQWRtaW5pc3RyYXRvciBzZWwgaW5m
+byAxKQ0KDQpJcyB0aGVyZSBhIGRlc2NyaXB0aW9uIG9yIFNQRUMgYWJvdXQgaXQ/IEl0IGRvZXNu
+J3Qgd29yayBvbiBteSBzeXN0ZW0uDQpGb3IgZXhhbXBsZToNCkkgY3JlYXRlZCBhIHVzZXIgbmFt
+ZSBERCBhbmQgZ2F2ZSBpdCBkaWZmZXJlbnQgcHJpdmlsZWdlIGZvciBkaWZmZXJlbnQgY2hhbm5l
+bHMuDQoNCmlwbWl0b29sIHVzZXIgbGlzdCAxDQpJRCAgTmFtZQkgICAgIENhbGxpbiAgTGluayBB
+dXRoCUlQTUkgTXNnICAgQ2hhbm5lbCBQcml2IExpbWl0DQoxICAgcm9vdCAgICAgICAgICAgICBm
+YWxzZSAgIHRydWUgICAgICAgdHJ1ZSAgICAgICBBRE1JTklTVFJBVE9SDQouLi4NCi4uLg0KNiAg
+IEREICAgICAgICAgICAgICAgdHJ1ZSAgICBmYWxzZSAgICAgIGZhbHNlICAgICAgTk8gQUNDRVNT
+DQoNCmlwbWl0b29sIHVzZXIgbGlzdCAyDQpJRCAgTmFtZQkgICAgIENhbGxpbiAgTGluayBBdXRo
+CUlQTUkgTXNnICAgQ2hhbm5lbCBQcml2IExpbWl0DQoxICAgcm9vdCAgICAgICAgICAgICBmYWxz
+ZSAgIHRydWUgICAgICAgdHJ1ZSAgICAgICBBRE1JTklTVFJBVE9SDQouLi4NCi4uLg0KNiAgIERE
+ICAgICAgICAgICAgICAgdHJ1ZSAgICBmYWxzZSAgICAgIHRydWUgICAgICAgQURNSU5JU1RSQVRP
+Ug0KDQpBcyBleHBlY3RlZCwgaXQgc2hvdWxkIG5vdCB3b3JrIGlmIHVzZXIgcnVuIG91dC1vZi1i
+YW5kIElQTUkgY29tbWFuZHMgd2l0aCB0aGUgY2hhbm5lbCAxLg0KSG93ZXJ2ZXIgaXQgc3RpbGwg
+d29yay4NCiRpcG1pdG9vbCAtSSBsYW5wbHVzIC1DIDMgLXAgNjIzIC1VIEREIC1QIDBwZW5CbWMx
+IC1IIHgueC54Lnggc2VsIGluZm8gMQ0KDQpTRUwgSW5mb3JtYXRpb24NClZlcnNpb24gICAgICAg
+ICAgOiAxLjUgKHYxLjUsIHYyIGNvbXBsaWFudCkNCkVudHJpZXMgICAgICAgICAgOiA2DQpGcmVl
+IFNwYWNlICAgICAgIDogMCBieXRlcyANClBlcmNlbnQgVXNlZCAgICAgOiAxMDAlDQpMYXN0IEFk
+ZCBUaW1lICAgIDogMDEvMDYvMTk3MCAwMDoxMzoxOA0KTGFzdCBEZWwgVGltZSAgICA6IE5vdCBB
+dmFpbGFibGUNCk92ZXJmbG93ICAgICAgICAgOiBmYWxzZQ0KU3VwcG9ydGVkIENtZHMgICA6ICdS
+ZXNlcnZlJw0KDQpUaGFua3MNCkJlc3QgUmVnYXJkcywNClRvbnkNCg0KRnJvbTogUmFodWwgTWFo
+ZXNod2FyaSA8cmFodWxtYWhlc2h3YXJpMDFAZ21haWwuY29tPiANClNlbnQ6IFRodXJzZGF5LCBK
+YW51YXJ5IDE2LCAyMDIwIDc6MTUgUE0NClRvOiBUb255IExlZSAo5p2O5paH5a+MKSA8VG9ueS5M
+ZWVAcXVhbnRhdHcuY29tPg0KU3ViamVjdDogUmU6IFZlcmlmeSBQcml2aWxlZ2UgRm9yIERpZmZl
+cmVudCBDaGFubmVscyBpbiBvcGVuYm1jLXRlc3QtYXV0b21hdGlvbg0KDQpIaSBUb255DQpUaGVz
+ZcKgdGVzdCBjYXNlcyBhcmUgZXhwZWN0ZWQgdG8gZmFpbCBpZiB5b3VyIHN5c3RlbSdzIEJNQyBo
+YXMgb25seSBvbmUgTEFOIGNoYW5uZWwgc3VwcG9ydC4gSW4gY2FzZSBvZiB5b3VyIEJNQyBoYXMg
+MiBMQU4gY2hhbm5lbCBzdXBwb3J0LCB0aGVuIHRoZXNlIHRlc3RzIHNob3VsZCBwYXNzLg0KDQpU
+aGFua3MNClJhaHVsDQoNCk9uIFR1ZSwgSmFuIDE0LCAyMDIwIGF0IDI6NTIgUE0gVG9ueSBMZWUg
+KOadjuaWh+WvjCkgPG1haWx0bzpUb255LkxlZUBxdWFudGF0dy5jb20+IHdyb3RlOg0KSGkgUmFo
+dWwsDQoNCkkgbWVldCB3aXRoIGRpZmZpY3VsdGllcyBmb3IgdGhlIGNhc2VzICJWZXJpZnkgQWRt
+aW5pc3RyYXRvciBBbmQgTm8gQWNjZXNzIFByaXZpbGVnZSBGb3IgRGlmZmVyZW50IENoYW5uZWxz
+IiBhbmQNCiJWZXJpZnkgT3BlcmF0b3IgQW5kIFVzZXIgUHJpdmlsZWdlIEZvciBEaWZmZXJlbnQg
+Q2hhbm5lbHMiIGluIHRlc3RfaXBtaV91c2VyLnJvYm90Lg0KDQpSZWZlciB0byBodHRwczovL2dp
+dGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jLXRlc3QtYXV0b21hdGlvbi9pc3N1ZXMvMTUyMw0KQWNj
+b3JkaW5nIHRvIFJpY2hhcmQncyBjb21tZW50OiAiQ2hhbm5lbCBjb21tYW5kIHByaXZpbGVnZSBh
+cmUgd29ya2luZyBhcyBwZXIgdGhlIGNoYW5uZWwgKGJ1dCBhdCB0aGlzIHBvaW50IG9mIHRpbWUg
+dGhpcyBkaWZmZXJlbnRpYXRpb24gY2FuJ3QgYmUgbWFkZSBkdWUgdG8gYXJjaGl0ZWN0dXJlIGxp
+bWl0YXRpb25zLCBidXQgb2sgdG8gd3JpdGUgdGVzdCBjYXNlIGFuZCBtYXJrIGl0IGFzIGZhaWxl
+ZCwgcmF0aGVyIHRoYW4gc2tpcHBpbmcgdGhlIHNhbWUpIg0KDQpBcmUgdGhlc2UgdHdvIGNhc2Vz
+IGJlIGV4cGVjdGVkIHRvIGZhaWw/DQoNClRoYW5rcw0KQmVzdCBSZWdhcmRzLA0KVG9ueQ0K
