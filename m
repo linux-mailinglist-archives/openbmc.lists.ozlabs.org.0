@@ -1,53 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4327140403
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 07:30:47 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 47zWQr5mGyzDqpv
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 17:30:44 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC14140827
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 11:43:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 47zd2905JnzDqmb
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jan 2020 21:43:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::436;
+ helo=mail-wr1-x436.google.com; envelope-from=asmithakarun@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.149; helo=m13-149.163.com;
- envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=UY0Mlzpc; dkim-atps=neutral
-Received: from m13-149.163.com (m13-149.163.com [220.181.13.149])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ffWYPhkx; dkim-atps=neutral
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com
+ [IPv6:2a00:1450:4864:20::436])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 47zWQ25LVyzDqgw
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 17:30:01 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=+fgMo
- GOzBH1VN6Ucs2g1uYZAdKHyybXrdke62XAbGLw=; b=UY0MlzpcaGu1abJ/6Tigo
- G9eJ/VgXTvudTIkKlEUxOqtQ+6enNjm4GqQVRD3a+ZTraqLMwIV+nNwLUKLbvCc/
- ExJfK9kukmrJR1efe1rRb0FeHcxg1e4ri9mAyELUQWz+0tx/v5QP6Qojno1j5VkW
- Au1QIO4hMaDJmF0hOZzuWI=
-Received: from zhang_cy1989$163.com ( [106.121.178.112] ) by
- ajax-webmail-wmsvr149 (Coremail) ; Fri, 17 Jan 2020 14:29:51 +0800 (CST)
-X-Originating-IP: [106.121.178.112]
-Date: Fri, 17 Jan 2020 14:29:51 +0800 (CST)
-From: zhang_cy1989 <zhang_cy1989@163.com>
-To: openbmc@lists.ozlabs.org
-Subject: How to change BT interface to KCS interface In ibm-romulus recipe
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-X-CM-CTRLDATA: qc2mAWZvb3Rlcl9odG09MTMyOTo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_82754_94835196.1579242591209"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 47zd1Q5KzqzDqnv
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 21:42:31 +1100 (AEDT)
+Received: by mail-wr1-x436.google.com with SMTP id y17so22216648wrh.5
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 02:42:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=H+SbkAmBy1gK7yDEkm8ZuEEW/N5WlK0BVO1jWdJRTrY=;
+ b=ffWYPhkxz+2/BdCtJnBS4dOnRGtHYmUfxnGyLJYv6PPwufP4ZXPS2TpmjZHVsCnIGw
+ Cj7lqdYLqN7bHEYw23McrwKXBm++nQGo/gsB92wrBfL0gTkZzU+ew7IwZpXFCicdy34+
+ 4rTpG4goZcB/AvUmWzPfL5coQIeAmYlHaa98LqIKVomtNgWHERU1X9Lms8XI/QkmVQB7
+ lvVEcYnVElyn1AfVIcHULowTHbTWjgfhexX7iorCv2RTpZYrdBuWW3kKSf2aw25A8M3M
+ zGAfZG/7Lb/u0xkCHrsrnaqESuJ5T8iPj64WEAmKkxWE7MdaKmVuGLWbhO/5zPl2U4RP
+ epXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=H+SbkAmBy1gK7yDEkm8ZuEEW/N5WlK0BVO1jWdJRTrY=;
+ b=EAxBKL4nZAem9WQ67Jt6KceM1ElZEkrsCbIBXnNZ7AxAp5PiFPQqA0PEzRMi9vwymX
+ Bddj6kwVJPZ9U56f9dNYirs6xnaUMo/Mhe7MuesPV2r9ClN0m3fzBa0yOc/FI1wNvOMu
+ 0Yy7IKiNaKj18tjYSZRzXiP5QM3B8gU63+KCdRYvrMgYxxT4qbT/rqyodGCyqCQDIbkz
+ 4vlJ4Nv877qR4ckcsP87GRv21FDz3G2omn8GdEw0SyM7Gfi98AuVMC4oohnL+wAoMI+C
+ hLkveBDThhBcwxdzPo5DtykQFTZUQwOMQM+yDVEvycSGAyuB+ZcUUAxE0SfE15szvyoH
+ +uSQ==
+X-Gm-Message-State: APjAAAVfP0Z4GjnIyye8Cz/CZseN8apb9G9FMmu2065ZAHyHEMmKYgBS
+ ZiRDWn2aIIbybbNZ/+4aqJdl1zLLpVlDixWeEihPdGxS8vs=
+X-Google-Smtp-Source: APXvYqxOgcNXxwWlImmw4DqGTUL3Wk98J/ySs/A3BKOHwa4ZtyjwZxONfQoa0xlTaF0dAPpI7HzQ+w8HedNjqQMWfFw=
+X-Received: by 2002:a5d:68cf:: with SMTP id p15mr2282146wrw.31.1579257744442; 
+ Fri, 17 Jan 2020 02:42:24 -0800 (PST)
 MIME-Version: 1.0
-Message-ID: <7ac0bad6.5629.16fb23193e9.Coremail.zhang_cy1989@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: lcGowAB3mDZgVCFemMXZAg--.39646W
-X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiyACtT1p6+2QkWwACso
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: Asmitha Karunanithi <asmithakarun@gmail.com>
+Date: Fri, 17 Jan 2020 16:11:45 +0530
+Message-ID: <CANGK-S4vcQ9P_fW6ev9h83=GRLCEDr9KeFH2gt-soQ9JpaY_Kw@mail.gmail.com>
+Subject: Library to aid multi-part form data parsing
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000ddcb8f059c539893"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,50 +72,76 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_82754_94835196.1579242591209
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--000000000000ddcb8f059c539893
+Content-Type: text/plain; charset="UTF-8"
 
-RGVhciBBbGwKICAgICAgICAgICAgSSB1c2UgImV4cG9ydCBURU1QTEFURUNPTkY9bWV0YS1pYm0v
-bWV0YS1yb211bHVzL2NvbmYiIGFuZCBiaXRiYWtlIGl0LgogICAgICAgICAgIAoKICAgICAgICAg
-ICAgVGhlIGRldGFpbCBpbmZvcm1hdGlvbnM6CklEPSJvcGVuYm1jLXBob3NwaG9yIgpOQU1FPSJQ
-aG9zcGhvciBPcGVuQk1DIChQaG9zcGhvciBPcGVuQk1DIFByb2plY3QgUmVmZXJlbmNlIERpc3Ry
-bykiClZFUlNJT049IjIuNy4wLTAiClZFUlNJT05fSUQ9IjIuNy4wLTAtZ2NiOTFhNzc3My1kaXJ0
-eSIKUFJFVFRZX05BTUU9IlBob3NwaG9yIE9wZW5CTUMgKFBob3NwaG9yIE9wZW5CTUMgUHJvamVj
-dCBSZWZlcmVuY2UgRGlzdHJvKSAyLjcuMC0wIgpCVUlMRF9JRD0iMi43LjAiCk9QRU5CTUNfVEFS
-R0VUX01BQ0hJTkU9InJvbXVsdXMiCgoKCiAgICAgICAgICAgRGVmYXVsdCBjYXNlLCByb21sdWx1
-cyB1c2VzIGJ0IGludGVyZmFjZSB0byBjb21tdW5pY2F0ZSB3aXRoIEhvc3QuCiAgICAgICAgICAg
-Tm93LCBJIHdhbnQgdG8gY2hhbmdlIEJUIGludGVyZmFjZSB0byAgS0NTIGludGVyZmFjZS4KICAg
-ICAgICAgIEJ1dCBJIGRvbid0IGtub3cgaG93IHRvIGRvIGl0LgogICAgICAgICAKCiAgICAgICAg
-IENhbiBzb21lIG9uZSBoZWxwIG1lPwoKCkZlbGl4emhhbmcKCgo=
-------=_Part_82754_94835196.1579242591209
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Hi All,
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBBbGw8L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBJIHVz
-ZSAiZXhwb3J0IFRFTVBMQVRFQ09ORj1tZXRhLWlibS9tZXRhLXJvbXVsdXMvY29uZiIgYW5kIGJp
-dGJha2UgaXQuPC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgPGJyPjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IFRo
-ZSBkZXRhaWwgaW5mb3JtYXRpb25zOjwvZGl2PjxkaXY+SUQ9Im9wZW5ibWMtcGhvc3Bob3IiPGJy
-Pk5BTUU9IlBob3NwaG9yIE9wZW5CTUMgKFBob3NwaG9yIE9wZW5CTUMgUHJvamVjdCBSZWZlcmVu
-Y2UgRGlzdHJvKSI8YnI+VkVSU0lPTj0iMi43LjAtMCI8YnI+VkVSU0lPTl9JRD0iMi43LjAtMC1n
-Y2I5MWE3NzczLWRpcnR5Ijxicj5QUkVUVFlfTkFNRT0iUGhvc3Bob3IgT3BlbkJNQyAoUGhvc3Bo
-b3IgT3BlbkJNQyBQcm9qZWN0IFJlZmVyZW5jZSBEaXN0cm8pIDIuNy4wLTAiPGJyPkJVSUxEX0lE
-PSIyLjcuMCI8YnI+T1BFTkJNQ19UQVJHRVRfTUFDSElORT0icm9tdWx1cyI8YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsgRGVmYXVsdCBjYXNlLCByb21sdWx1cyB1c2VzIGJ0IGludGVy
-ZmFjZSB0byBjb21tdW5pY2F0ZSB3aXRoIEhvc3QuPC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgTm93LCBJIHdhbnQg
-dG8gY2hhbmdlIEJUIGludGVyZmFjZSB0byZuYnNwOyBLQ1MgaW50ZXJmYWNlLjwvZGl2PjxkaXY+
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IEJ1
-dCBJIGRvbid0IGtub3cgaG93IHRvIGRvIGl0LjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxicj48L2Rpdj48ZGl2PiZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBDYW4gc29tZSBvbmUg
-aGVscCBtZT88L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkZlbGl4emhhbmc8YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+
-Jm5ic3A7PC9wPjwvc3Bhbj4=
-------=_Part_82754_94835196.1579242591209--
+There was a requirement to parse multipart form data during file upload for
+the vendor-specific interface.
 
+The Curl command for multiple file upload will be:
+
+"curl -c cjar -b cjar -k -H "Content-Type: multipart/form-data" -H
+"X-Auth-Token: $bmc_token" -F 'sa1=@/path/to/file1' -F sa2=@/path/to/file2'
+-X POST https://$bmc/ibm/v1/files/partitions/"
+
+The above multipart request contains the file contents separated by a
+boundary and each file contains the filename, Content-Type and
+Content-Disposition.
+
+There were few considerations for this and after testing those libraries,
+the mimetic library seemed to fit for this purpose. Please refer to
+https://github.com/LadislavSopko/mimetic
+
+Only a part of code from this library is used for this purpose (which is
+under "mimetic" folder in this repo).
+
+Regression tests were conducted with that part of the library that is being
+used for multi-part parsing, as a part of which there was no memory leakage
+found after firing a large number of requests (2000 requests in this case).
+
+There was a difference of 71.68 KB in the openbmc flash size when this
+library is pulled. The mimetic shared object files are used from
+mimetic/codec/.libs.
+
+If there are other suggestions for the multi-part form data parsing or if
+there are suggestions for any other test that needs to be done, please post
+in the suggestions.
+
+-- 
+Thanks & Regards,
+Asmitha Karunanithi
+
+--000000000000ddcb8f059c539893
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi All,<div><br></div><div>There was a requirement to pars=
+e multipart form data during file upload for the vendor-specific interface.=
+<br></div><div><br></div><div>The Curl command for multiple file upload wil=
+l be:</div><div><br></div><div>&quot;curl -c cjar -b cjar -k -H &quot;Conte=
+nt-Type: multipart/form-data&quot; -H &quot;X-Auth-Token: $bmc_token&quot; =
+-F &#39;sa1=3D@/path/to/file1&#39; -F sa2=3D@/path/to/file2&#39; -X POST ht=
+tps://$bmc/ibm/v1/files/partitions/&quot;</div><div><br></div><div>The abov=
+e multipart request contains the file contents separated by a boundary and =
+each file contains=C2=A0the filename, Content-Type and Content-Disposition.=
+</div><div><br>There were few considerations for this and after testing tho=
+se libraries, the mimetic library seemed to fit for this purpose. Please re=
+fer to <a href=3D"https://github.com/LadislavSopko/mimetic" target=3D"_blan=
+k">https://github.com/LadislavSopko/mimetic</a><br><br>Only a part of code =
+from this library is used for this purpose (which is under &quot;mimetic&qu=
+ot; folder in this repo).<br><br>Regression tests were conducted with that =
+part of the library that is being used for multi-part parsing, as a part of=
+ which there was no memory leakage found after firing a large number of req=
+uests (2000 requests in this case).</div><div><br></div><div>There was a di=
+fference of 71.68 KB in the openbmc flash size when this library is pulled.=
+ The mimetic shared object files are used from mimetic/codec/.libs.<br></di=
+v><div><br>If there are other suggestions for the multi-part form data pars=
+ing or if there are suggestions for any other test that needs to be done, p=
+lease post in the suggestions.<br><div><br></div>-- <br><div data-smartmail=
+=3D"gmail_signature" dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr">Tha=
+nks &amp; Regards,<div>Asmitha Karunanithi</div></div></div></div></div></d=
+iv></div>
+
+--000000000000ddcb8f059c539893--
