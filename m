@@ -2,43 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B954A141598
-	for <lists+openbmc@lfdr.de>; Sat, 18 Jan 2020 03:39:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 233B41415AE
+	for <lists+openbmc@lfdr.de>; Sat, 18 Jan 2020 04:18:18 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4802Fz1KP9zDr1F
-	for <lists+openbmc@lfdr.de>; Sat, 18 Jan 2020 13:39:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48036G72KzzDqyk
+	for <lists+openbmc@lfdr.de>; Sat, 18 Jan 2020 14:18:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=ssraghavan76@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Fnz+BnDe; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4802FG1c08zDqj4
- for <openbmc@lists.ozlabs.org>; Sat, 18 Jan 2020 13:39:10 +1100 (AEDT)
-Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
- by tuna.sandelman.ca (Postfix) with ESMTP id A24D13897D
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 21:38:36 -0500 (EST)
-Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id 5019910FC
- for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 21:39:05 -0500 (EST)
-From: Michael Richardson <mcr@sandelman.ca>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: Re: Summarizing Meeting on BMC Aggregation
-In-Reply-To: <CAH1kD+ZLYHqc8jVWVYjCPCRC3eanb4EZ7xgW_-sOLm2GhnSfzg@mail.gmail.com>
-References: <CAH1kD+ZLYHqc8jVWVYjCPCRC3eanb4EZ7xgW_-sOLm2GhnSfzg@mail.gmail.com>
-X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 24.5.1
-X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
- <'$9xN5Ub#
- z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48035b4D42zDqyj
+ for <openbmc@lists.ozlabs.org>; Sat, 18 Jan 2020 14:17:33 +1100 (AEDT)
+Received: by mail-oi1-x22e.google.com with SMTP id l9so24038997oii.5
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Jan 2020 19:17:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=cBiVtPjohZr3I/jOwDq0TX+krzk0A8Mh8EdgasFgwZo=;
+ b=Fnz+BnDeEr5zRR4w+eA99GrWgPqbBxEK0W+SQylCxazFp9RjEjddyPrsxHbBMPZ61r
+ 62xsN4NvSqdNx0GgG/pGNwf1N8JsZamKugRGDZgwO8g3eoxPy2FbVwEEUasW5Y5ukYng
+ NhCRQIgcg2qs7TcujGa9Z6a+l9ytG98QvefuVufLYABa4LPqOLC0vNR9opCUaygWuIKJ
+ YVY9HI4gsFchzOmVFQTQMfnfSPmoxclPH86CMu0vg3+6lr5SHYm20BN8aMj5+cdVJHxn
+ YXW4sQluv5JrCperP5w4l3+IWhB2VV0xclz4F1mKv/7P2ixlf/9mvr11IfKmJkEeSH55
+ 494Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=cBiVtPjohZr3I/jOwDq0TX+krzk0A8Mh8EdgasFgwZo=;
+ b=tl2qvIll7YWiRAaijEy9Dz3qEg1wlcrKzr9+0V2Zg6Ri9un1UUCcGWH0uS8XQiI5AY
+ /incvyqLguz0lr82i8qtuecoSxtQVgTNVMwPPhAwfMh96pSnBxKPEwsRv1gZu8UF18ye
+ zNs8dkEYkBRc44ktsjLbnEi0dx2MFZBFdTBziNnffVNPY0KaM4n2UjSIBHhPAo+zR5r8
+ 3mtc0fXhd4s6PeWXh2DAVY0/6efHVCOsOtBEXHhtt0krYKAko6fb7z2t+Fce1cxF18x8
+ +mFl9phsB++0II4mVvwBX38yHL/X1+axag+UsSnZE78g2z86vkHZu28NCIQUEO/q3cEE
+ xKeg==
+X-Gm-Message-State: APjAAAWX6C0KaYo62wb5TVXiz74a2FunWKmXpuhWGMzu8/lP88OurAB7
+ cgzWXX2rqC1EpSSXxdTLknPF/k7zpAwraMG3EIJaC61UBq8=
+X-Google-Smtp-Source: APXvYqyLR7mQPB5N1w5VDW7hXeVtGfCfRfB4jVMd2ltVbJe6+uDL7JDYvRWiTqly1HWiYJINK5zxn5GQm5uoqpnpdcI=
+X-Received: by 2002:a54:4117:: with SMTP id l23mr5692183oic.140.1579317450265; 
+ Fri, 17 Jan 2020 19:17:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
-Date: Fri, 17 Jan 2020 21:39:05 -0500
-Message-ID: <23327.1579315145@localhost>
+From: Srinivasa Raghavan <ssraghavan76@gmail.com>
+Date: Sat, 18 Jan 2020 08:47:59 +0530
+Message-ID: <CAENXB_QOy+7Gm=E+Qmvu+HscvkuGExFYMBBuesiLGFVWtXSjEQ@mail.gmail.com>
+Subject: Support Multiple CPU, I/O modules( Redfish )
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000009c5902059c617f17"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,83 +72,81 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+--0000000000009c5902059c617f17
+Content-Type: text/plain; charset="UTF-8"
 
+Hi,
 
-Thank for the interesting call yesterday.
-I don't think I will have the time to attend regularly, but we'll see.
-I have code to write, ya know :-)
+I am new to openbmc and happen to work on this to support multiple CPU, I/O
+modules, etc using Redfish(bmcweb). Currently, I believe that the Redfish
+hardcoded for only one system. Is it possible to support multiple H/W. My
+requirement is as below
 
-Richard Hanley <rhanley@google.com> wrote:
-    > The definition of a machine here is relatively opaque, but it can be
-    > thought of as an atomic physical unit for management. A machine is
-    > then split into multiple domains, each of which is managed by some
-    > management controller (most cases it would be a BMC). There may be
-    > some cases where a domain has multiple BMCs for redundancy.
+/redfish/v1/Systems/1     --> for CPU1
+/redfish/v1/Systems/2     --> for CPU2
+/redfish/v1/Systems/3     --> for CPU3
+/redfish/v1/Systems/4     --> for CPU4
 
-    > Domains are relatively close to each other physically. Sometimes they
-    > will be in the same chassis/enclosure, while other cases they will be
-    > in an adjacent tray.
+/redfish/v1/Systems/10    --> for I/O1
+/redfish/v1/Systems/11    --> for I/O2
 
-    > One key point that was discussed in this meeting was that the data and
-    > transport of these domains is relatively unconstrained. Domains may be
-    > connected to the aggregator via a LAN, but there is a community need
-    > to support other transports like SMBus and PCIe.
+If Redfish supports multiple H/W's, I have changed the following sources to
+to support multiple CPU, I/O modules,  Is this correct?
+cpudimm.hpp
+storage.hpp
+systems.hpp.
 
-If I were designing this, I would define standard way to transport IPv6 over
-SMBus and PCIe, and then use IPv6 Link-Local addresses, and call it all a
-LAN.  This has three effects in my opinion:
-1) all transports need and get security resulting in fewer bugs
-2) no need to re-invent TCP or HTTPS
-3) directly connected hosts have less inherent privilege.
+Is there anything else need to change in the schema file to support
+multiple H/W's. Thanks in Advance !!!
 
-The IETF ANIMA working group
-    https://datatracker.ietf.org/wg/anima/documents/
-has created an O&M mechanism called the Autonomic Control Plane.
-It has a discovery and negotiation protocol (GRASP), and as well as
-onboarding (BRSKI).  It is designed for exactly this kind of use.
-https://datatracker.ietf.org/doc/rfc8368/  describes some of the high-level
-design goals.  The documents are stuck in the RFC-EDITOR queue due to
-cross-references, but will get RFC-numbers very soon.
-I am one of the authors of BRSKI.
+Regards,
+Srinivasa Raghavan
 
-In addition, the IETF Remote Attestation WG (RATS), at:
-   https://datatracker.ietf.org/wg/rats/documents/
+--0000000000009c5902059c617f17
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-has been working on an architectural document.   (We have people from TCG,
-FIDO, Android, Global Platform, ...)   Actually, we have a few such
-documents, and we are merging them, the live process visible at:
-   https://github.com/ietf-rats-wg/architecture
+<div dir=3D"ltr">Hi,<div><br></div><div>I am new to openbmc and happen to w=
+ork on this to support multiple CPU, I/O modules, etc using Redfish(bmcweb)=
+. Currently, I believe that the Redfish hardcoded for only one system. Is i=
+t possible to support multiple H/W. My requirement is as below</div><div><b=
+r></div><div><span style=3D"font-size:11pt;font-family:Calibri,sans-serif;b=
+ackground-image:initial;background-position:initial;background-size:initial=
+;background-repeat:initial;background-origin:initial;background-clip:initia=
+l;background-color:rgb(255,255,255)">/redfish/v1/Systems/1=C2=A0 =C2=A0 =C2=
+=A0--&gt; for CPU1</span><br></div><div><div><span style=3D"font-size:11pt;=
+font-family:Calibri,sans-serif;background-image:initial;background-position=
+:initial;background-size:initial;background-repeat:initial;background-origi=
+n:initial;background-clip:initial">/redfish/v1/Systems/2=C2=A0 =C2=A0 =C2=
+=A0--&gt; for CPU2=C2=A0</span><br></div><div></div></div><div><div><span s=
+tyle=3D"font-size:11pt;font-family:Calibri,sans-serif;background-image:init=
+ial;background-position:initial;background-size:initial;background-repeat:i=
+nitial;background-origin:initial;background-clip:initial">/redfish/v1/Syste=
+ms/3=C2=A0
 
-In particular, I point you to this pull request which was discussed this past
-Tuesday:
-  https://github.com/ietf-rats-wg/architecture/pull/13/files#diff-daea007baaef3c42f94e996f540dcd76
+ =C2=A0 =C2=A0--&gt; for CPU3=C2=A0</span><br></div><div></div></div><div><=
+div><span style=3D"font-size:11pt;font-family:Calibri,sans-serif;background=
+-image:initial;background-position:initial;background-size:initial;backgrou=
+nd-repeat:initial;background-origin:initial;background-clip:initial">/redfi=
+sh/v1/Systems/4=C2=A0
 
-Doesn't the composite device use case look very much like the aggregator
-situation you are trying to create?  If you care about attestation (and I
-think you said you did), then it seems like there are significant synergies
-here.
+ =C2=A0 =C2=A0--&gt; for CPU4=C2=A0</span><br></div><div></div></div><div><=
+br></div><div><div><span style=3D"font-size:11pt;font-family:Calibri,sans-s=
+erif;background-image:initial;background-position:initial;background-size:i=
+nitial;background-repeat:initial;background-origin:initial;background-clip:=
+initial">/redfish/v1/Systems/10=C2=A0 =C2=A0 --&gt; for I/O1
 
---
-]               Never tell me the odds!                 | ipv6 mesh networks [
-]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+</span><br></div><div></div></div><div><div><span style=3D"font-size:11pt;f=
+ont-family:Calibri,sans-serif;background-image:initial;background-position:=
+initial;background-size:initial;background-repeat:initial;background-origin=
+:initial;background-clip:initial">/redfish/v1/Systems/11
 
+ =C2=A0 =C2=A0--&gt; for I/O2=C2=A0</span><br></div><div></div></div><div><=
+br></div><div>If Redfish supports multiple H/W&#39;s, I have changed the fo=
+llowing sources to to support multiple CPU, I/O modules,=C2=A0 Is this corr=
+ect?</div><div>cpudimm.hpp</div><div>storage.hpp</div><div>systems.hpp.</di=
+v><div><br></div><div>Is there anything else need to change in the schema f=
+ile to support multiple=C2=A0H/W&#39;s. Thanks in Advance !!!</div><div><br=
+></div><div>Regards,</div><div>Srinivasa Raghavan</div></div>
 
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl4ib8kACgkQgItw+93Q
-3WVTlAf9HGW17IuLTWc+Cn4B7QUvbS0i0yD1z6NyB83Fvb6Q72g3MhU+343QE678
-5VrAnbOutzl4JDqmbYX09LkYKPO2spReSxzQ/9gqOJgsJMfgQDmXziKyN9MQhjWN
-nYWfnbRVp2eFYIRoIuoOP/BDsU94BDxjCI/SAgss6WoN3W9f6hbgyHCQKfbmkc0Z
-2SDkyYTaI9Mrc7ILt5XNcCpcjyzE50gI8NCIQ1WGQ3BXc/QSH4pdX41TtSkmLX22
-fDgvREySoqblARHZ20VWXWO4VNXh+Mb3gSMX3PbIo+ddWOSyC6qp1fF23KjYObb4
-kqu53UoxhV3XJJuzNEFMG9RP6of45w==
-=N5jw
------END PGP SIGNATURE-----
---=-=-=--
+--0000000000009c5902059c617f17--
