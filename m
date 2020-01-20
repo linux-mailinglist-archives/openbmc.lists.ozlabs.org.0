@@ -1,44 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C61D2141D76
-	for <lists+openbmc@lfdr.de>; Sun, 19 Jan 2020 12:03:03 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 480sN529fCzDq8B
-	for <lists+openbmc@lfdr.de>; Sun, 19 Jan 2020 22:03:01 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5165A14219F
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2020 03:42:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 481GCv6DlrzDqb1
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jan 2020 13:42:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=28140929a=tony.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 480sLH5Vs8zDqgP
- for <openbmc@lists.ozlabs.org>; Sun, 19 Jan 2020 22:01:21 +1100 (AEDT)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 00JB0bDq001026;
- Sun, 19 Jan 2020 13:00:37 +0200
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id E2DBD6032E; Sun, 19 Jan 2020 13:00:37 +0200 (IST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: jic23@kernel.org, knaack.h@gmx.de, lars@metafoo.de, pmeerw@pmeerw.net,
- robh+dt@kernel.org, mark.rutland@arm.com, avifishman70@gmail.com,
- tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
- benjaminfair@google.com, joel@jms.id.au
-Subject: [PATCH v1 2/2] iio: adc: modify NPCM reset support
-Date: Sun, 19 Jan 2020 13:00:32 +0200
-Message-Id: <20200119110032.124745-2-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20200119110032.124745-1-tmaimon77@gmail.com>
-References: <20200119110032.124745-1-tmaimon77@gmail.com>
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 481GBf1NZ6zDqYq
+ for <openbmc@lists.ozlabs.org>; Mon, 20 Jan 2020 13:41:08 +1100 (AEDT)
+IronPort-SDR: NwaCPS6QpGCYnt6RY+7bLhYrwzEukz1R0D60dKcOVIJKalhsfCHdb40m1NHfpDtYGhbrorFAKR
+ fj3r8FGcu2ag==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx01.quantatw.com with ESMTP; 20 Jan 2020 10:41:05 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 20 Jan
+ 2020 10:41:03 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Mon, 20 Jan 2020 10:41:03 +0800
+From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Subject: RE: Verify Privilege For Different Channels in openbmc-test-automation
+Thread-Topic: Verify Privilege For Different Channels in
+ openbmc-test-automation
+Thread-Index: AdXKuxmeAxEUTzgySNaVM+b2wNcnWQBYBjUAADcISED//9Y/gP/7T9bQ
+Date: Mon, 20 Jan 2020 02:41:02 +0000
+Message-ID: <d5f1c07fa629476798196f9490574c7c@quantatw.com>
+References: <10cf015965644daf9cfae7421e9f4710@quantatw.com>
+ <CAAMkS132O2MB4myFcwPo0NQNf=hzvLYXgqoLXOxCcJe6mqHEMQ@mail.gmail.com>
+ <0ebd5d88a9ea46328db578849d4b061b@quantatw.com>
+ <CAAMkS12VRBFU77D50z0z4MHDeSG6pdOwU2MeBPO0K7TG6arTvA@mail.gmail.com>
+In-Reply-To: <CAAMkS12VRBFU77D50z0z4MHDeSG6pdOwU2MeBPO0K7TG6arTvA@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-snts-smtp: E1CD1C0CE4B6B15C1A7B6A49362BD500F01F7CA56FC2FED2FE3D558A376B82F72000:8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,100 +61,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Modify NPCM ADC reset support from
-direct register access to reset controller support.
-
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/iio/adc/npcm_adc.c | 30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
-index a6170a37ebe8..83bad2d5575d 100644
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -14,6 +14,7 @@
- #include <linux/regulator/consumer.h>
- #include <linux/spinlock.h>
- #include <linux/uaccess.h>
-+#include <linux/reset.h>
- 
- struct npcm_adc {
- 	bool int_status;
-@@ -23,13 +24,9 @@ struct npcm_adc {
- 	struct clk *adc_clk;
- 	wait_queue_head_t wq;
- 	struct regulator *vref;
--	struct regmap *rst_regmap;
-+	struct reset_control *reset;
- };
- 
--/* NPCM7xx reset module */
--#define NPCM7XX_IPSRST1_OFFSET		0x020
--#define NPCM7XX_IPSRST1_ADC_RST		BIT(27)
--
- /* ADC registers */
- #define NPCM_ADCCON	 0x00
- #define NPCM_ADCDATA	 0x04
-@@ -106,13 +103,11 @@ static int npcm_adc_read(struct npcm_adc *info, int *val, u8 channel)
- 					       msecs_to_jiffies(10));
- 	if (ret == 0) {
- 		regtemp = ioread32(info->regs + NPCM_ADCCON);
--		if ((regtemp & NPCM_ADCCON_ADC_CONV) && info->rst_regmap) {
-+		if (regtemp & NPCM_ADCCON_ADC_CONV) {
- 			/* if conversion failed - reset ADC module */
--			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
--				     NPCM7XX_IPSRST1_ADC_RST);
-+			reset_control_assert(info->reset);
- 			msleep(100);
--			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
--				     0x0);
-+			reset_control_deassert(info->reset);
- 			msleep(100);
- 
- 			/* Enable ADC and start conversion module */
-@@ -186,7 +181,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
- 	struct npcm_adc *info;
- 	struct iio_dev *indio_dev;
- 	struct device *dev = &pdev->dev;
--	struct device_node *np = pdev->dev.of_node;
- 
- 	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*info));
- 	if (!indio_dev)
-@@ -199,6 +193,10 @@ static int npcm_adc_probe(struct platform_device *pdev)
- 	if (IS_ERR(info->regs))
- 		return PTR_ERR(info->regs);
- 
-+	info->reset = devm_reset_control_get(&pdev->dev, NULL);
-+	if (IS_ERR(info->reset))
-+		return PTR_ERR(info->reset);
-+
- 	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
- 	if (IS_ERR(info->adc_clk)) {
- 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
-@@ -211,16 +209,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
- 	div = div >> NPCM_ADCCON_DIV_SHIFT;
- 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
- 
--	if (of_device_is_compatible(np, "nuvoton,npcm750-adc")) {
--		info->rst_regmap = syscon_regmap_lookup_by_compatible
--			("nuvoton,npcm750-rst");
--		if (IS_ERR(info->rst_regmap)) {
--			dev_err(&pdev->dev, "Failed to find nuvoton,npcm750-rst\n");
--			ret = PTR_ERR(info->rst_regmap);
--			goto err_disable_clk;
--		}
--	}
--
- 	irq = platform_get_irq(pdev, 0);
- 	if (irq <= 0) {
- 		ret = -EINVAL;
--- 
-2.22.0
-
+WWVzLCBJdCBhbHNvIGlzIHdvcmtpbmcuDQpJIHRoaW5rIHRoaXMgbGFuIHByaW50IGNvbW1hbmQg
+ZG9lc24ndCByZXByZXNlbnQgcnVubmluZyBJUE1JIGNvbW1hbmQgd2l0aCBjaGFubmVsIDEuIEl0
+IGdldCBjaGFubmVsIDEgaW5mbyB3aXRoIHRoZSBMQU4gY2hhbm5lbC4NClRoYW5rcyBmb3IgeW91
+ciBraW5kIGhlbHAuIEknbGwgY2hlY2sgd2l0aCBSaWNoYXJkIHJlZ2FyZGluZyB0aGlzIHByb2Js
+ZW0uDQoNClJlZ2FyZHMsDQpUb255DQoNCkZyb206IFJhaHVsIE1haGVzaHdhcmkgPHJhaHVsbWFo
+ZXNod2FyaTAxQGdtYWlsLmNvbT4gDQpTZW50OiBGcmlkYXksIEphbnVhcnkgMTcsIDIwMjAgNzow
+MiBQTQ0KVG86IFRvbnkgTGVlICjmnY7mloflr4wpIDxUb255LkxlZUBxdWFudGF0dy5jb20+DQpD
+Yzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBSZTogVmVyaWZ5IFByaXZpbGVn
+ZSBGb3IgRGlmZmVyZW50IENoYW5uZWxzIGluIG9wZW5ibWMtdGVzdC1hdXRvbWF0aW9uDQoNClRo
+YXQgc2VlbSB0byBiZSBhbiBpc3N1ZS4gQ2FuIHlvdSBhbHNvIGNoZWNrIG91dHB1dCBmb3IgYmVs
+b3cgbGFuIHByaW50IGNvbW1hbmQ/IElmIHRoYXQgYWxzbyBpcyB3b3JraW5nLCBjaGVjayB3aXRo
+IFJpY2hhcmQgcmVnYXJkaW5nIHRoaXMgcHJvYmxlbS4NCg0KaXBtaXRvb2wgLUkgbGFucGx1cyAt
+QyAzIC1wIDYyMyAtVSBERCAtUCAwcGVuQm1jMSAtSCB4LngueC54IGxhbiBwcmludCAxDQoNCk9u
+IEZyaSwgSmFuIDE3LCAyMDIwIGF0IDExOjA5IEFNIFRvbnkgTGVlICjmnY7mloflr4wpIDxtYWls
+dG86VG9ueS5MZWVAcXVhbnRhdHcuY29tPiB3cm90ZToNCkdvdCBpdC4gQW5vdGhlciBxdWVzdGlv
+biwgYXQgdGhlIGxhc3QgdHdvICJWZXJpZnkiIHN0ZXBzLiANCkNhbiB0aGUgdXNlciBydW4gb3V0
+LW9mLWJhbmQgSVBNSSBjb21tYW5kcyB3aXRoIHRoZSBzcGVjaWZpZWQgY2hhbm5lbD8NCihlLmcg
+aXBtaXRvb2wgLUkgbGFucGx1cyAtQyAzIC1wIDYyMyAtVSBZbVJCd0RVUyAtUCAwcGVuQm1jMSAt
+SCB4LngueC54IC1MIEFkbWluaXN0cmF0b3Igc2VsIGluZm8gMSkNCg0KSXMgdGhlcmUgYSBkZXNj
+cmlwdGlvbiBvciBTUEVDIGFib3V0IGl0PyBJdCBkb2Vzbid0IHdvcmsgb24gbXkgc3lzdGVtLg0K
+Rm9yIGV4YW1wbGU6DQpJIGNyZWF0ZWQgYSB1c2VyIG5hbWUgREQgYW5kIGdhdmUgaXQgZGlmZmVy
+ZW50IHByaXZpbGVnZSBmb3IgZGlmZmVyZW50IGNoYW5uZWxzLg0KDQppcG1pdG9vbCB1c2VyIGxp
+c3QgMQ0KSUTCoCBOYW1lwqAgwqAgwqAgwqAgwqAgwqAgwqBDYWxsaW7CoCBMaW5rIEF1dGjCoCBJ
+UE1JIE1zZ8KgIMKgQ2hhbm5lbCBQcml2IExpbWl0DQoxwqAgwqByb290wqAgwqAgwqAgwqAgwqAg
+wqAgwqBmYWxzZcKgIMKgdHJ1ZcKgIMKgIMKgIMKgdHJ1ZcKgIMKgIMKgIMKgQURNSU5JU1RSQVRP
+Ug0KLi4uDQouLi4NCjbCoCDCoEREwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB0cnVlwqAgwqAgZmFs
+c2XCoCDCoCDCoCBmYWxzZcKgIMKgIMKgIE5PIEFDQ0VTUw0KDQppcG1pdG9vbCB1c2VyIGxpc3Qg
+Mg0KSUTCoCBOYW1lwqAgwqAgwqAgwqAgwqAgwqAgwqBDYWxsaW7CoCBMaW5rIEF1dGjCoCBJUE1J
+IE1zZ8KgIMKgQ2hhbm5lbCBQcml2IExpbWl0DQoxwqAgwqByb290wqAgwqAgwqAgwqAgwqAgwqAg
+wqBmYWxzZcKgIMKgdHJ1ZcKgIMKgIMKgIMKgdHJ1ZcKgIMKgIMKgIMKgQURNSU5JU1RSQVRPUg0K
+Li4uDQouLi4NCjbCoCDCoEREwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB0cnVlwqAgwqAgZmFsc2XC
+oCDCoCDCoCB0cnVlwqAgwqAgwqAgwqBBRE1JTklTVFJBVE9SDQoNCkFzIGV4cGVjdGVkLCBpdCBz
+aG91bGQgbm90IHdvcmsgaWYgdXNlciBydW4gb3V0LW9mLWJhbmQgSVBNSSBjb21tYW5kcyB3aXRo
+IHRoZSBjaGFubmVsIDEuDQpIb3dlcnZlciBpdCBzdGlsbCB3b3JrLg0KJGlwbWl0b29sIC1JIGxh
+bnBsdXMgLUMgMyAtcCA2MjMgLVUgREQgLVAgMHBlbkJtYzEgLUggeC54LngueCBzZWwgaW5mbyAx
+DQoNClNFTCBJbmZvcm1hdGlvbg0KVmVyc2lvbsKgIMKgIMKgIMKgIMKgIDogMS41ICh2MS41LCB2
+MiBjb21wbGlhbnQpDQpFbnRyaWVzwqAgwqAgwqAgwqAgwqAgOiA2DQpGcmVlIFNwYWNlwqAgwqAg
+wqAgwqA6IDAgYnl0ZXMgDQpQZXJjZW50IFVzZWTCoCDCoCDCoDogMTAwJQ0KTGFzdCBBZGQgVGlt
+ZcKgIMKgIDogMDEvMDYvMTk3MCAwMDoxMzoxOA0KTGFzdCBEZWwgVGltZcKgIMKgIDogTm90IEF2
+YWlsYWJsZQ0KT3ZlcmZsb3fCoCDCoCDCoCDCoCDCoDogZmFsc2UNClN1cHBvcnRlZCBDbWRzwqAg
+wqA6ICdSZXNlcnZlJw0KDQpUaGFua3MNCkJlc3QgUmVnYXJkcywNClRvbnkNCg0KRnJvbTogUmFo
+dWwgTWFoZXNod2FyaSA8bWFpbHRvOnJhaHVsbWFoZXNod2FyaTAxQGdtYWlsLmNvbT4gDQpTZW50
+OiBUaHVyc2RheSwgSmFudWFyeSAxNiwgMjAyMCA3OjE1IFBNDQpUbzogVG9ueSBMZWUgKOadjuaW
+h+WvjCkgPG1haWx0bzpUb255LkxlZUBxdWFudGF0dy5jb20+DQpTdWJqZWN0OiBSZTogVmVyaWZ5
+IFByaXZpbGVnZSBGb3IgRGlmZmVyZW50IENoYW5uZWxzIGluIG9wZW5ibWMtdGVzdC1hdXRvbWF0
+aW9uDQoNCkhpIFRvbnkNClRoZXNlwqB0ZXN0IGNhc2VzIGFyZSBleHBlY3RlZCB0byBmYWlsIGlm
+IHlvdXIgc3lzdGVtJ3MgQk1DIGhhcyBvbmx5IG9uZSBMQU4gY2hhbm5lbCBzdXBwb3J0LiBJbiBj
+YXNlIG9mIHlvdXIgQk1DIGhhcyAyIExBTiBjaGFubmVsIHN1cHBvcnQsIHRoZW4gdGhlc2UgdGVz
+dHMgc2hvdWxkIHBhc3MuDQoNClRoYW5rcw0KUmFodWwNCg0KT24gVHVlLCBKYW4gMTQsIDIwMjAg
+YXQgMjo1MiBQTSBUb255IExlZSAo5p2O5paH5a+MKSA8bWFpbHRvOm1haWx0bzpUb255LkxlZUBx
+dWFudGF0dy5jb20+IHdyb3RlOg0KSGkgUmFodWwsDQoNCkkgbWVldCB3aXRoIGRpZmZpY3VsdGll
+cyBmb3IgdGhlIGNhc2VzICJWZXJpZnkgQWRtaW5pc3RyYXRvciBBbmQgTm8gQWNjZXNzIFByaXZp
+bGVnZSBGb3IgRGlmZmVyZW50IENoYW5uZWxzIiBhbmQNCiJWZXJpZnkgT3BlcmF0b3IgQW5kIFVz
+ZXIgUHJpdmlsZWdlIEZvciBEaWZmZXJlbnQgQ2hhbm5lbHMiIGluIHRlc3RfaXBtaV91c2VyLnJv
+Ym90Lg0KDQpSZWZlciB0byBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jLXRlc3Qt
+YXV0b21hdGlvbi9pc3N1ZXMvMTUyMw0KQWNjb3JkaW5nIHRvIFJpY2hhcmQncyBjb21tZW50OiAi
+Q2hhbm5lbCBjb21tYW5kIHByaXZpbGVnZSBhcmUgd29ya2luZyBhcyBwZXIgdGhlIGNoYW5uZWwg
+KGJ1dCBhdCB0aGlzIHBvaW50IG9mIHRpbWUgdGhpcyBkaWZmZXJlbnRpYXRpb24gY2FuJ3QgYmUg
+bWFkZSBkdWUgdG8gYXJjaGl0ZWN0dXJlIGxpbWl0YXRpb25zLCBidXQgb2sgdG8gd3JpdGUgdGVz
+dCBjYXNlIGFuZCBtYXJrIGl0IGFzIGZhaWxlZCwgcmF0aGVyIHRoYW4gc2tpcHBpbmcgdGhlIHNh
+bWUpIg0KDQpBcmUgdGhlc2UgdHdvIGNhc2VzIGJlIGV4cGVjdGVkIHRvIGZhaWw/DQoNClRoYW5r
+cw0KQmVzdCBSZWdhcmRzLA0KVG9ueQ0K
