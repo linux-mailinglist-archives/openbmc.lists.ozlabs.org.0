@@ -1,42 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DD17143F59
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 15:23:01 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28F901438A7
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 09:47:48 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4822H52dsszDqSy
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 19:47:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4829js3nPbzDqWn
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jan 2020 01:22:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=282574ef5=tony.lee@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129;
+ helo=mail-lf1-x129.google.com; envelope-from=rahulmaheshwari01@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 4822GD2RpWzDqRX
- for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 19:46:58 +1100 (AEDT)
-IronPort-SDR: axAlYLZJJtlkQzLEWzHj/jFwiPZKTaTzESexHzTPluHTcOgJxSxDIy0blyNpLXNIFEsSMo84qq
- GAUdLFD8OPCw==
-Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
- by mx02.quantatw.com with ESMTP; 21 Jan 2020 16:46:55 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
- (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 21 Jan
- 2020 16:46:53 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Tue, 21 Jan 2020 16:46:53 +0800
-From: =?utf-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
-To: Rahul Maheshwari <rahulmaheshwari01@gmail.com>, "Thomaiyar, Richard
- Marian" <richard.marian.thomaiyar@linux.intel.com>
-Subject: RE: Verify Privilege For Different Channels in openbmc-test-automation
-Thread-Topic: Verify Privilege For Different Channels in
- openbmc-test-automation
-Thread-Index: AdXKuxmeAxEUTzgySNaVM+b2wNcnWQBYBjUAADcISED//9Y/gP/7T9bQgAmu0AD//rQyUIACMSQAgAAGMID//0J1UA==
-Date: Tue, 21 Jan 2020 08:46:53 +0000
-Message-ID: <059fe82ae51c4e3bbf90f5045e8a9371@quantatw.com>
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=kN3jAX3h; dkim-atps=neutral
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
+ [IPv6:2a00:1450:4864:20::129])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4829fF71rZzDqRs
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Jan 2020 01:19:47 +1100 (AEDT)
+Received: by mail-lf1-x129.google.com with SMTP id n25so2447213lfl.0
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 06:19:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=rOHLtolIP10iKO9Favft6k5tcpmNf1fYJd7gdwH6Xlk=;
+ b=kN3jAX3hJN1GI1JXoFfq9kc1qZnBq+DQIU+TLwHTa2T8f8cu8jXYsrNu86oGzYk0ra
+ FKYHeTx5ErqtLBi5yVRHuP4PSgWTZEr+7HFblszO0BvXvZv26HqlU4J9Q2ju3CZWXHil
+ 6suHZTzXcWg/cYgsVD1beg66l6hD0cz+8+0NwfzdzD2Ri//xhOWqgmdYp90e4AZHCxvL
+ llYVvosKaRz9bKxwPuGZ4SGIypv6Msf7oWy/i4OfM6JCHTCxxkeNarzWAEWUeA+ZsARm
+ bXBzM0iSDpcr6hHAzZ311j3wa1v36dh0gomuIB2FFNbddAMOkFRHP3YurCEpa6+3H33B
+ Uxtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=rOHLtolIP10iKO9Favft6k5tcpmNf1fYJd7gdwH6Xlk=;
+ b=Owg0aCCirDDcf0XlcPgpeYq6jMxYeZF6a8aJTbFiG3BKQ6FgSnr3VJL49cGkb6yQrU
+ 4Uss/HKUWJsksrbtzL0MtU4qBW2cnu9f8nDqL/qEWSwfnOmnodm+vKqAUf/BWW+JcZtD
+ Rt7Mlc6NfMFBDmhqWeoBv1ejoozewTSdPCv4nFy1a+9WAJWtl66imAf8M8fSehHzrZJl
+ AQOFMhavcBzqlOcVnmtoE0qcPgwGMt4nWN1A8oRGpUODDl/I1ye/YQ9PEYSPFwnvuCRZ
+ uq2d1ohWStX36hLxy77+xXTjjU+Q8eDRWe+89CtZc8POweBMtsyNgtUmfUPy8W8aBgT3
+ QoQA==
+X-Gm-Message-State: APjAAAUlfjg4SD0nfoGOW/u10Llg8nQMWgzFP4nGvvOQh+ZInx+mrdQO
+ fc6ezp2wnE4eLmG13f9gtGJiupsk0lMgfKqVpg4=
+X-Google-Smtp-Source: APXvYqwL9yMD4ln5h4uvgn2pby9VBMcRX76hLqjbZomQ15DB2KLQYd4egjNKBZn7C5VwzZtm/GxyPkretWdJZOh4QaY=
+X-Received: by 2002:a19:5212:: with SMTP id m18mr2879607lfb.7.1579616383925;
+ Tue, 21 Jan 2020 06:19:43 -0800 (PST)
+MIME-Version: 1.0
 References: <10cf015965644daf9cfae7421e9f4710@quantatw.com>
  <CAAMkS132O2MB4myFcwPo0NQNf=hzvLYXgqoLXOxCcJe6mqHEMQ@mail.gmail.com>
  <0ebd5d88a9ea46328db578849d4b061b@quantatw.com>
@@ -46,16 +62,14 @@ References: <10cf015965644daf9cfae7421e9f4710@quantatw.com>
  <9f63a6b71e8a485bba08a1bedb1b922c@quantatw.com>
  <c7782b54-da11-953e-815c-8f5a3a6610fc@linux.intel.com>
  <CAAMkS13kJGWWroEkUnJB7Eec6DGWxUTZXM+4ajJpZi=ACkXyyA@mail.gmail.com>
-In-Reply-To: <CAAMkS13kJGWWroEkUnJB7Eec6DGWxUTZXM+4ajJpZi=ACkXyyA@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 8AA781D43DA2A3C1829EBEFD8AB47DF48E5CA78BDCB53E57DCD5C6B45512D8E22000:8
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+ <059fe82ae51c4e3bbf90f5045e8a9371@quantatw.com>
+In-Reply-To: <059fe82ae51c4e3bbf90f5045e8a9371@quantatw.com>
+From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+Date: Tue, 21 Jan 2020 19:49:33 +0530
+Message-ID: <CAAMkS10CpkryFje4BTpFYKmiL44OAuxhG8tbZNPN2GSZr+8nFg@mail.gmail.com>
+Subject: Re: Verify Privilege For Different Channels in openbmc-test-automation
+To: =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
+Content-Type: multipart/alternative; boundary="000000000000720256059ca719f2"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,68 +81,250 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSdtIHNvcnJ5LCB3ZSBhbHNvIGRvIG5vdCBoYXZlIGR1YWwgY2hhbm5lbCBzeXN0ZW0gY3VycmVu
-dGx5Lg0KT25jZSB3ZSBoYXZlLCBpdCB3aWxsIGJlIHRlc3RlZCBhbmQgdXBkYXRlZCBmb3IgdGhl
-c2UgdHdvIHRlc3QgY2FzZXMuDQoNCkZyb206IFJhaHVsIE1haGVzaHdhcmkgPHJhaHVsbWFoZXNo
-d2FyaTAxQGdtYWlsLmNvbT4gDQpTZW50OiBUdWVzZGF5LCBKYW51YXJ5IDIxLCAyMDIwIDE6MjEg
-UE0NClRvOiBUaG9tYWl5YXIsIFJpY2hhcmQgTWFyaWFuIDxyaWNoYXJkLm1hcmlhbi50aG9tYWl5
-YXJAbGludXguaW50ZWwuY29tPg0KQ2M6IFRvbnkgTGVlICjmnY7mloflr4wpIDxUb255LkxlZUBx
-dWFudGF0dy5jb20+OyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBWZXJp
-ZnkgUHJpdmlsZWdlIEZvciBEaWZmZXJlbnQgQ2hhbm5lbHMgaW4gb3BlbmJtYy10ZXN0LWF1dG9t
-YXRpb24NCg0KVGhhbmtzIFJpY2hhcmQgZm9yIGNvcnJlY3RpbmcuIFllcywgdGhlcmUgaXMgYSBu
-ZWVkIHRvIHVwZGF0ZSB0aGlzIHRlc3QgY2FzZS7CoA0KDQpUb255DQpXZSBkb24ndCBydW4gdGhp
-cyB0ZXN0IGNhc2Ugb24gb3VyIHN5c3RlbXMgYXMgd2UgZG9udCBoYXZlIGR1YWwgY2hhbm5lbCBz
-eXN0ZW0uIENhbiB5b3UgZml4IHRoaXMgdGVzdCBjYXNlPw0KDQpUaGFua3MNClJhaHVsDQoNCk9u
-IFR1ZSwgSmFuIDIxLCAyMDIwIGF0IDEwOjI5IEFNIFRob21haXlhciwgUmljaGFyZCBNYXJpYW4g
-PG1haWx0bzpyaWNoYXJkLm1hcmlhbi50aG9tYWl5YXJAbGludXguaW50ZWwuY29tPiB3cm90ZToN
-CkhpIFRvbnkgLyBSYWh1bCwNCg0KMS4gc2VsIGluZm8gMcKgIChJIGRvbid0IHRoaW5rIHNlbCBp
-bmZvIGNhbiBnZXQgY2hhbm5lbCBudW1iZXIsIGFzIHNlbCBpcyANCm5vdCBiYXNlZCBvbiBjaGFu
-bmVsIG51bWJlcnMpDQoNCjIuIHVzZXIgbGlzdCBjYW4gYmUgcXVlcmllZCB0aHJvdWdoIGNoYW5u
-ZWwgbnVtYmVyIGkuZS4gInVzZXIgbGlzdCAxIiANCndpbGwgcXVlcnkgdXNlciBwcml2aWxlZ2Vz
-IGFzIHBlciBjaGFubmVsIG51bWJlciAxIGFuZCAidXNlciBsaXN0IDMiIA0Kd2lsbCBxdWVyeSB1
-c2VyIHByaXZpbGVnZXMgYXMgcGVyIGNoYW5uZWwgbnVtYmVyIDMuIEJ1dCBpdCBkb2Vzbid0IA0K
-ZGV0ZXJtaW5lIHRoZSBpbmNvbWluZyBjaGFubmVsIG51bWJlci4NCg0KaS5lLiBpZiBhIHN5c3Rl
-bSBpcyBoYXZpbmcgMiBMQU4gQ2hhbm5lbHMsIHRoZW4gTEFOIGNoYW5uZWwgcHJpdmlsZWdlIGlz
-IA0KYmFzZWQgb24gdGhlIElQIGFkZHJlc3Mgb2YgdGhvc2UgY2hhbm5lbHMNCg0Kc2F5IGNoYW5u
-ZWwgMSBpcyBoYXZpbmcgSVAgeC55LnouMSAmIGNoYW5uZWwgMyBpcyBoYXZpbmcgSVAgeC55Lnou
-M8KgIGFuZCANCmNoYW5uZWwgMyBpcyB3aXRoIE5vQWNjZXNzDQoNCnRoZW4gZXhlY3V0aW5nIGZv
-bGxvd2luZyBjb21tYW5kIHdpbGwgcGFzcw0KDQppcG1pdG9vbCAtSSBsYW5wbHVzIC1IIHgueS56
-LjEgLVUgcm9vdCAtUCAwcGVuQm1jIHVzZXIgbGlzdCAxDQoNCmlwbWl0b29sIC1JIGxhbnBsdXMg
-LUggeC55LnouMSAtVSByb290IC1QIDBwZW5CbWMgdXNlciBsaXN0IDMNCg0KRm9sbG93aW5nIGNv
-bW1hbmQgZXhlY3V0aW9uIHdpbGwgZmFpbA0KDQppcG1pdG9vbCAtSSBsYW5wbHVzIC1IIHgueS56
-LjMgLVUgcm9vdCAtUCAwcGVuQm1jIHVzZXIgbGlzdCAxIC0tPiB3aWxsIA0KZmFpbCBpZiBjaGFu
-bmVsIDMgaXMgd2l0aCBOb0FjY2VzcyBwcml2aWxlZ2UgZm9yIHVzZXIgcm9vdA0KDQppcG1pdG9v
-bCAtSSBsYW5wbHVzIC1IIHgueS56LjMgLVUgcm9vdCAtUCAwcGVuQm1jIHVzZXIgbGlzdCAxIC0t
-PiB3aWxsIA0KZmFpbCBpZiBjaGFubmVsIDMgaXMgd2l0aCBOb0FjY2VzcyBwcml2aWxlZ2UgZm9y
-IHVzZXIgcm9vdA0KDQpQbGVhc2UgdXBkYXRlIHRoZSB0ZXN0IGNhc2UgYWNjb3JkaW5nbHkuDQoN
-ClJlZ2FyZHMsDQoNClJpY2hhcmQNCg0KT24gMS8yMS8yMDIwIDg6MzkgQU0sIFRvbnkgTGVlICjm
-nY7mloflr4wpIHdyb3RlOg0KPj4gQXJlIHlvdSBzYXlpbmcgdGhhdCB3aXRoIE5vQWNlc3MgZm9y
-IGNoYW5uZWwgeCwgeW91IGFyZSBhYmxlIHRvIGdldCB0aGUgSVBNSQ0KPj4gcmVzcG9uc2UuDQo+
-IFllcy4NCj4NCj4+IHBsZWFzZSBub3RlOiAtSCB4LngueC54wqAgZGV0ZXJtaW5lcywgd2hpY2gg
-Y2hhbm5lbCB5b3UgYXJlIHRyeWluZyB0bw0KPj4gY29tbXVuaWNhdGUuIFRyeSB0aGUgb3RoZXIg
-SVAgYWRkcmVzcyAoYmVjYXVzZSBub3Qgc3VyZSwgd2hpY2ggY2hhbm5lbCBpcw0KPj4gY29uZmln
-dXJlZCB0byB3aGF0IElQKS4NCj4gVGhpcyBpcyBhcyBJIGV4cGVjdGVkIQ0KPiBIb3dldmVyLCBw
-bGVhc2UgbG9vayBhdCB0aGUgY2FzZXMgIlZlcmlmeSBBZG1pbmlzdHJhdG9yIEFuZCBObyBBY2Nl
-c3MgUHJpdmlsZWdlIEZvciBEaWZmZXJlbnQgQ2hhbm5lbHMiDQo+IGFuZCAiVmVyaWZ5IE9wZXJh
-dG9yIEFuZCBVc2VyIFByaXZpbGVnZSBGb3IgRGlmZmVyZW50IENoYW5uZWxzIiBpbiB0ZXN0X2lw
-bWlfdXNlci5yb2JvdC4NCj4gRm9yIGV4YW1wbGU6IGNhc2UgIlZlcmlmeSBBZG1pbmlzdHJhdG9y
-IEFuZCBObyBBY2Nlc3MgUHJpdmlsZWdlIEZvciBEaWZmZXJlbnQgQ2hhbm5lbHMiIGF0IHRoZSBs
-YXN0IHR3byAiVmVyaWZ5IiBzdGVwczoNCj4gJycnDQo+ICMgVmVyaWZ5IHRoYXQgdXNlciBpcyBh
-YmxlIHRvIHJ1biBhZG1pbmlzdHJhdG9yIGxldmVsIElQTUkgY29tbWFuZCB3aXRoIGNoYW5uZWwg
-MS4NCj4gVmVyaWZ5IElQTUkgQ29tbWFuZMKgICR7cmFuZG9tX3VzZXJuYW1lfcKgICR7dmFsaWRf
-cGFzc3dvcmR9wqAgQWRtaW5pc3RyYXRvcsKgIDENCj4NCj4gIyBWZXJpZnkgdGhhdCB1c2VyIGlz
-IHVuYWJsZSB0byBydW4gSVBNSSBjb21tYW5kIHdpdGggY2hhbm5lbCAyLg0KPiBSdW4gSVBNSSBT
-dGFuZGFyZCBDb21tYW5kwqAgc2VsIGluZm8gMsKgIGV4cGVjdGVkX3JjPSR7MX3CoCBVPSR7cmFu
-ZG9tX3VzZXJuYW1lfcKgIFA9JHt2YWxpZF9wYXNzd29yZH0NCj4gJycnDQo+DQo+IEluIHRoaXMg
-Y2FzZSwgZmlyc3QsIHRoZXJlIGlzIG9ubHkgb25lIElQIGFkZHJlc3MuDQo+IHNlY29uZCwgSSBj
-YW4ndCBmaW5kIGEgZGVzY3JpcHRpb24gb3IgU1BFQyBhYm91dCBjb21tYW5kIGxpa2UNCj4gImlw
-bWl0b29sIC1JIGxhbnBsdXMgLUMgMyAtcCA2MjMgLVUgWW1SQndEVVMgLVAgMHBlbkJtYzEgLUgg
-eC54LngueCAtTCBBZG1pbmlzdHJhdG9yIHNlbCBpbmZvIDEiDQo+IHdoaWNoIG1lYW4gdXNlciBp
-cyBhYmxlIHRvIHJ1biBJUE1JIGNvbW1hbmQgd2l0aCBjaGFubmVsIDEuDQo+DQo+IElmIHRoZSBt
-ZXRob2QgZm9yIG91dC1vZi1iYW5kIGNvbW11bmljYXRpb24gdXNpbmcgZGlmZmVyZW50IGNoYW5u
-ZWxzIGlzIHRoZSBzYW1lIGFzIHlvdSBkZXNjcmliZWQsDQo+IGRvIHdlIG5lZWQgdG8gZml4IHRo
-ZXNlIHR3byBjYXNlcz8NCj4NCj4+IFJlZ2FyZHMsDQo+Pg0KPj4gUmljaGFyZA0KPj4NCg==
+--000000000000720256059ca719f2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Sure. Thanks you.
+
+On Tue, Jan 21, 2020 at 2:16 PM Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Ton=
+y.Lee@quantatw.com>
+wrote:
+
+> I'm sorry, we also do not have dual channel system currently.
+> Once we have, it will be tested and updated for these two test cases.
+>
+> From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
+> Sent: Tuesday, January 21, 2020 1:21 PM
+> To: Thomaiyar, Richard Marian <richard.marian.thomaiyar@linux.intel.com>
+> Cc: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) <Tony.Lee@quantatw.com>; openb=
+mc@lists.ozlabs.org
+> Subject: Re: Verify Privilege For Different Channels in
+> openbmc-test-automation
+>
+> Thanks Richard for correcting. Yes, there is a need to update this test
+> case.
+>
+> Tony
+> We don't run this test case on our systems as we dont have dual channel
+> system. Can you fix this test case?
+>
+> Thanks
+> Rahul
+>
+> On Tue, Jan 21, 2020 at 10:29 AM Thomaiyar, Richard Marian <mailto:
+> richard.marian.thomaiyar@linux.intel.com> wrote:
+> Hi Tony / Rahul,
+>
+> 1. sel info 1  (I don't think sel info can get channel number, as sel is
+> not based on channel numbers)
+>
+> 2. user list can be queried through channel number i.e. "user list 1"
+> will query user privileges as per channel number 1 and "user list 3"
+> will query user privileges as per channel number 3. But it doesn't
+> determine the incoming channel number.
+>
+> i.e. if a system is having 2 LAN Channels, then LAN channel privilege is
+> based on the IP address of those channels
+>
+> say channel 1 is having IP x.y.z.1 & channel 3 is having IP x.y.z.3  and
+> channel 3 is with NoAccess
+>
+> then executing following command will pass
+>
+> ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 1
+>
+> ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 3
+>
+> Following command execution will fail
+>
+> ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --> will
+> fail if channel 3 is with NoAccess privilege for user root
+>
+> ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --> will
+> fail if channel 3 is with NoAccess privilege for user root
+>
+> Please update the test case accordingly.
+>
+> Regards,
+>
+> Richard
+>
+> On 1/21/2020 8:39 AM, Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) wrote:
+> >> Are you saying that with NoAcess for channel x, you are able to get th=
+e
+> IPMI
+> >> response.
+> > Yes.
+> >
+> >> please note: -H x.x.x.x  determines, which channel you are trying to
+> >> communicate. Try the other IP address (because not sure, which channel
+> is
+> >> configured to what IP).
+> > This is as I expected!
+> > However, please look at the cases "Verify Administrator And No Access
+> Privilege For Different Channels"
+> > and "Verify Operator And User Privilege For Different Channels" in
+> test_ipmi_user.robot.
+> > For example: case "Verify Administrator And No Access Privilege For
+> Different Channels" at the last two "Verify" steps:
+> > '''
+> > # Verify that user is able to run administrator level IPMI command with
+> channel 1.
+> > Verify IPMI Command  ${random_username}  ${valid_password}
+> Administrator  1
+> >
+> > # Verify that user is unable to run IPMI command with channel 2.
+> > Run IPMI Standard Command  sel info 2  expected_rc=3D${1}
+> U=3D${random_username}  P=3D${valid_password}
+> > '''
+> >
+> > In this case, first, there is only one IP address.
+> > second, I can't find a description or SPEC about command like
+> > "ipmitool -I lanplus -C 3 -p 623 -U YmRBwDUS -P 0penBmc1 -H x.x.x.x -L
+> Administrator sel info 1"
+> > which mean user is able to run IPMI command with channel 1.
+> >
+> > If the method for out-of-band communication using different channels is
+> the same as you described,
+> > do we need to fix these two cases?
+> >
+> >> Regards,
+> >>
+> >> Richard
+> >>
+>
+
+--000000000000720256059ca719f2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Sure. Thanks you.</div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Tue, Jan 21, 2020 at 2:16 PM Tony Lee =
+(=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@quantatw.com">=
+Tony.Lee@quantatw.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">I&#39;m sorry, we also do not have dual channel system=
+ currently.<br>
+Once we have, it will be tested and updated for these two test cases.<br>
+<br>
+From: Rahul Maheshwari &lt;<a href=3D"mailto:rahulmaheshwari01@gmail.com" t=
+arget=3D"_blank">rahulmaheshwari01@gmail.com</a>&gt; <br>
+Sent: Tuesday, January 21, 2020 1:21 PM<br>
+To: Thomaiyar, Richard Marian &lt;<a href=3D"mailto:richard.marian.thomaiya=
+r@linux.intel.com" target=3D"_blank">richard.marian.thomaiyar@linux.intel.c=
+om</a>&gt;<br>
+Cc: Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) &lt;<a href=3D"mailto:Tony.Lee@q=
+uantatw.com" target=3D"_blank">Tony.Lee@quantatw.com</a>&gt;; <a href=3D"ma=
+ilto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</=
+a><br>
+Subject: Re: Verify Privilege For Different Channels in openbmc-test-automa=
+tion<br>
+<br>
+Thanks Richard for correcting. Yes, there is a need to update this test cas=
+e.=C2=A0<br>
+<br>
+Tony<br>
+We don&#39;t run this test case on our systems as we dont have dual channel=
+ system. Can you fix this test case?<br>
+<br>
+Thanks<br>
+Rahul<br>
+<br>
+On Tue, Jan 21, 2020 at 10:29 AM Thomaiyar, Richard Marian &lt;mailto:<a hr=
+ef=3D"mailto:richard.marian.thomaiyar@linux.intel.com" target=3D"_blank">ri=
+chard.marian.thomaiyar@linux.intel.com</a>&gt; wrote:<br>
+Hi Tony / Rahul,<br>
+<br>
+1. sel info 1=C2=A0 (I don&#39;t think sel info can get channel number, as =
+sel is <br>
+not based on channel numbers)<br>
+<br>
+2. user list can be queried through channel number i.e. &quot;user list 1&q=
+uot; <br>
+will query user privileges as per channel number 1 and &quot;user list 3&qu=
+ot; <br>
+will query user privileges as per channel number 3. But it doesn&#39;t <br>
+determine the incoming channel number.<br>
+<br>
+i.e. if a system is having 2 LAN Channels, then LAN channel privilege is <b=
+r>
+based on the IP address of those channels<br>
+<br>
+say channel 1 is having IP x.y.z.1 &amp; channel 3 is having IP x.y.z.3=C2=
+=A0 and <br>
+channel 3 is with NoAccess<br>
+<br>
+then executing following command will pass<br>
+<br>
+ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 1<br>
+<br>
+ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 3<br>
+<br>
+Following command execution will fail<br>
+<br>
+ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --&gt; will <=
+br>
+fail if channel 3 is with NoAccess privilege for user root<br>
+<br>
+ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --&gt; will <=
+br>
+fail if channel 3 is with NoAccess privilege for user root<br>
+<br>
+Please update the test case accordingly.<br>
+<br>
+Regards,<br>
+<br>
+Richard<br>
+<br>
+On 1/21/2020 8:39 AM, Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) wrote:<br>
+&gt;&gt; Are you saying that with NoAcess for channel x, you are able to ge=
+t the IPMI<br>
+&gt;&gt; response.<br>
+&gt; Yes.<br>
+&gt;<br>
+&gt;&gt; please note: -H x.x.x.x=C2=A0 determines, which channel you are tr=
+ying to<br>
+&gt;&gt; communicate. Try the other IP address (because not sure, which cha=
+nnel is<br>
+&gt;&gt; configured to what IP).<br>
+&gt; This is as I expected!<br>
+&gt; However, please look at the cases &quot;Verify Administrator And No Ac=
+cess Privilege For Different Channels&quot;<br>
+&gt; and &quot;Verify Operator And User Privilege For Different Channels&qu=
+ot; in test_ipmi_user.robot.<br>
+&gt; For example: case &quot;Verify Administrator And No Access Privilege F=
+or Different Channels&quot; at the last two &quot;Verify&quot; steps:<br>
+&gt; &#39;&#39;&#39;<br>
+&gt; # Verify that user is able to run administrator level IPMI command wit=
+h channel 1.<br>
+&gt; Verify IPMI Command=C2=A0 ${random_username}=C2=A0 ${valid_password}=
+=C2=A0 Administrator=C2=A0 1<br>
+&gt;<br>
+&gt; # Verify that user is unable to run IPMI command with channel 2.<br>
+&gt; Run IPMI Standard Command=C2=A0 sel info 2=C2=A0 expected_rc=3D${1}=C2=
+=A0 U=3D${random_username}=C2=A0 P=3D${valid_password}<br>
+&gt; &#39;&#39;&#39;<br>
+&gt;<br>
+&gt; In this case, first, there is only one IP address.<br>
+&gt; second, I can&#39;t find a description or SPEC about command like<br>
+&gt; &quot;ipmitool -I lanplus -C 3 -p 623 -U YmRBwDUS -P 0penBmc1 -H x.x.x=
+.x -L Administrator sel info 1&quot;<br>
+&gt; which mean user is able to run IPMI command with channel 1.<br>
+&gt;<br>
+&gt; If the method for out-of-band communication using different channels i=
+s the same as you described,<br>
+&gt; do we need to fix these two cases?<br>
+&gt;<br>
+&gt;&gt; Regards,<br>
+&gt;&gt;<br>
+&gt;&gt; Richard<br>
+&gt;&gt;<br>
+</blockquote></div>
+
+--000000000000720256059ca719f2--
