@@ -2,64 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 308A8143819
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 09:18:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E255D143880
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 09:41:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4821cw1PdmzDqVn
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 19:18:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48227v610jzDqS0
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 19:41:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yahoo.com (client-ip=77.238.179.82;
- helo=sonic309-24.consmr.mail.ir2.yahoo.com;
+ smtp.mailfrom=yahoo.com (client-ip=77.238.179.189;
+ helo=sonic313-22.consmr.mail.ir2.yahoo.com;
  envelope-from=max_power2005-openbmc@yahoo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=yahoo.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256
- header.s=s2048 header.b=SUnY3umu; dkim-atps=neutral
-Received: from sonic309-24.consmr.mail.ir2.yahoo.com
- (sonic309-24.consmr.mail.ir2.yahoo.com [77.238.179.82])
+ header.s=s2048 header.b=be9fVQQ9; dkim-atps=neutral
+Received: from sonic313-22.consmr.mail.ir2.yahoo.com
+ (sonic313-22.consmr.mail.ir2.yahoo.com [77.238.179.189])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4821c92VVQzDqLx
- for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 19:17:26 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4822743SJmzDqFm
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 19:40:46 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1579594642; bh=zscosl6/ydXjjjU5kGF++s6KBwmphSRI3lqXhUzsJuU=;
- h=Date:From:To:Cc:In-Reply-To:References:Subject:From:Subject;
- b=SUnY3umuf4/4x9klwZVkex0JkXS+281DUtbEc58oVVI4M9uAVhz/3I6cdgAzFmG8BbI/yGjJvUYBn2zUFp8vMrdOVWVCHhdPqnB/+YSqCyZUjaV2QbNXIWy3Urf7uvbBVn+U0oPlDR9O04ZPeKSMtdqTPUSqVbwD3mFzM9b9zP/q2DvCBoKyplzHapwGEpnxjtVdn9Oc7qeAiv8uM6iGZ1y6kd7DL6aHNr4WmG3BcDNAbY01RmpE9lqxccZeJ1UMM6aec8HgSyIJl2+fpXyDgW6tN/23mAQEPPL6zXWz2mf6LhLwyXYg8xG00wF0X4Y4qdtxZgid/zbnLHiDUX18Eg==
-X-YMail-OSG: Oh0J.N0VM1mqTem.By0rTqvtRSX_E7gXyD1q4Br2ejvTO9Zrl179JqlYf0l.gUY
- V3s_WKOmz5VigXxwLM4HhAvzaRaHWbcFYIGaG5wW1c7gztkU9k_vD0Cpv7zVq1RVTHYuTDDQqD2L
- 32CP9o5LKijwKCxgySzvP8O_JHrroOjL2VIUZUA_NobBgaOqry1W37B3TQe6bcDWIUTXzLcBeGQb
- 9HzeQ6v45YZ1c6GUiyYfR59phLCimJFPvETgTrH.oUwhNoZMnbmuU1lRkNXROZvDe1vnUbJXv6jC
- 6_cXXKddUdsR.14L8tSGtSSytCUO9aPKhgV8XBYABhkaFD3jrhvcmhPBZb286Zx8H8HYJmtEvdlA
- S5JLCso4ZvlqwF7vzCMULzzuUKYO3X4FWt4UQ_bO_BLDZJS2kUtg6SSqPqtOI.A9ZLp6HrbjMYSx
- zJSV3PD7oBxX7ugSBAyE0Lf8cYX8xijcFhF.9F6VIiBcowUQ1TLGvWoNon.5SGBlkDGaiTh5fUqR
- KYFZC5bkhfcVJrlBXqtPto3z3uH8H0hC9UZ_KFKS7vCOsGtG7AkPCKnK5NHu6iAN.PSkJl3s3qTg
- g49be9z_0QEu2HGEmBTqwaLcij0FU4cYmcuw1csSCciUkDC6n682OwtK8GyNyIgTIMiOdrpZb8NP
- ea1f3ePD1zCQCVpDgOp0vz4dv0quXaLO2ZA8dnL0f_R41MAt2zYIDX1yI1uTB7jH6dxXyQZ0MN8.
- eH93FgkUiK.HXj4nVaBREWTt04337w5.D8QYA2DMb2BXnfevlRSgkv3wdYIkD7tkvQATTjGJ_2wk
- v6fNL_.SUrQtjx0f5iXn3ltvd7I3Gm3WAW9xk9phKCTY7CCpJVOMmUL3.8rWB5OQFtOsxXpm1nAy
- IUCGBB2G8vMP2DZHTswjA5v88NweKasPmCuoMTzlNj_b0828lLE760.11krYuwnlxHfbBDfl_Yon
- V6_UQaUN5eGaNgY6TkvZP.EeUpPuDTAZsdjBtlLkqWyzmEAszBzFnZnFzWFYzLzKofn02PdBwmtR
- tsvwGKZk.gdX7H3_1SGW2duXI0eBSDWHCTmoWH9q.8d7QkNd3.wzb.kJvZ5746E5dCzSFQJAc5hh
- 8XH7oGqHxW.JgZPqxqY_SP9eW4QxOs5zceBd0NPCzXhVyAhptJb5ZfEx5A50Hl8xdUHH_OW1_vJA
- 1d.DEul.LZVP2ltW6Ql68MnywhfTjlvTQl03HeW3V7JwXiZo09BfOiNdYBeDtIl9L5ch6bAIv.2Y
- HBPvtgMMRCmhLp7UhY3GCzcfxEzXmtElj96UTliFdOoS4tA.AISEZNeF_3.e9TCyUlSukHutifDi
- i9RsnEgI-
+ t=1579596040; bh=XLb6i7Yz4noJRZTtljtKSN0wSZpDJBOB5k0DWkX59ns=;
+ h=Date:From:To:Subject:References:From:Subject;
+ b=be9fVQQ9pRpqPhY1GFJk3LX2d13KaTZ9Kl7IeH104u+/buz4IbHpa1Jx25XXzLVgr47YqOn0i5As2vrG/OUDpir8yfagugebnAqdaN+lhR9RGgvdzarZJ95M7E5mSBSd4BfPC7uS+ulKJfHg0KqBohXyJU9W+/Mvvbz9BUrUzmeKzDwcn1lgZESpQLk1Y/KC6AS5fhW69HNcL+xpX0mV9PW3Z1GiVLvxIzTWcnwrudhGJj0pm2ShAIyUjoyoyWgEVOZjKZ2whaYhEJr4AOxvy1/agoIjb2VYD1BKhdCPtZlVAtN6UVxwx4jUi/8pAPBdoerVc5OMu9+E6utwxjDJIg==
+X-YMail-OSG: aI0ghkEVM1kic0GH7bKxCS0q.2CO8QPhHRYKO2OM5vwLOWJb998hJ.sfE3ckklc
+ ppd5ueT9DRd6SzZcTuXx7symabeWgEW0MMcm29NtkUR6D814LyRpy3aV5Kklwq6RZUvR_7RpmQG4
+ ABMtRT72YAqkIjVZMNuI3XWEbd9lddYUXSQ3mNss7nH8xxiqUonetvHhPoEJlv6K9RzX4vnbP1_L
+ 486Pz0ntsq0kn6CgTkPtHvqA9Orwo30pYX400aTz_rBE1puiv9w2r.PvPQ.ID8eqVd88hI219VXz
+ ws07fIHuKDFULKlcDWf0tj7AHvQYulw.qgUu4X_Q_DCZdIVnsg2NElrSAYDHvGVkLPoAvb_wiPPv
+ _ZIZFltJwI56nMqg_P7vJiSk_._f8Q2lZq9LtsKzIheJIfkY3CklSpj8VaVweX5h8FHPRYPy8sRn
+ bM7xwIFIhQpxrDiJBflf5KS.mIQItYdBsl3PtazOZxeeEWS.AL70VEhWlYEYGFmCnG99qNsZK28v
+ PLqtUPQq2mxjwstN3lsbEPbeHikvrxvgoPSBRBjkILmfr0KFG4pgVN3gjxexkZuphY3ZVhTjIpN2
+ idJVmX4PGBAEPvGF1NXw7EznQm0TeViT8vnNY7wHHedwlmSrhphgT_WLROxDbSscGUvXHvFbFsUq
+ PMNtCOit3fCuIej3OzMoicTwcsewvnw5a8Om2842Yn84irtnB6g0Dgl2Ev2wdzE0Ch6Nm7tJqtYZ
+ n86_brmw.eTjxZmc7QAc0POb75hzXo2MRWPin9Cs64IcEqsQ_5mueLgjOinqlVJt6H92YlV4KxF6
+ mAqsvCxW0WfT1T4KFiCZibCXbQGE7oCIaqABAvWpLkRXjf2GYE157cPDs6bVFadsgR8UDOOS1KgW
+ 3kBtVafI6MAQie1gN9Vr11C_v__nPoJNJEWVVOA_OtWhMCxm_M5OsWKpKLPRRpn4Iou9C7lQc1IZ
+ 5EM0IOMFx9dbCEOlsRzrT71JT37dEaSmBS4_.ALJO3jETtRwB9.0LmM0.8eIS1FecfTy0d.FKv4m
+ mz8ea_T_EZoPERPoi9GH4m2SkPiV5wCm6x5OBefdLZ.kc7WwnrCjMDoM1FngbrREGyJPP43FWvvs
+ QHQ1iu7kBzfdB2xNXN0s2rcr.XBVGCvkdnDdx6P32z6EDVB_8wx2ofipGmKJlHsguz4viO2HbiM7
+ 4gVqMEUao9K5YG2otJvRLdbcv5KxjULIFQvD5RRgunlVBd16DuKXxxKOgFjqQrVURArETNqLsaeq
+ zXQJENTSr.UEBOIW3M.8h9yh6WRLPFquTYLNgknrfoF3JvuLc2mPfYJlJwVEAa2LCPQ--
 Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic309.consmr.mail.ir2.yahoo.com with HTTP; Tue, 21 Jan 2020 08:17:22 +0000
-Date: Tue, 21 Jan 2020 08:17:18 +0000 (UTC)
+ sonic313.consmr.mail.ir2.yahoo.com with HTTP; Tue, 21 Jan 2020 08:40:40 +0000
+Date: Tue, 21 Jan 2020 08:40:39 +0000 (UTC)
 From: Max Power <max_power2005-openbmc@yahoo.com>
 To: openbmc@lists.ozlabs.org
-Message-ID: <454935377.24643249.1579594638683@mail.yahoo.com>
-In-Reply-To: <138261238.19427827.1579077694127@mail.yahoo.com>
-References: <138261238.19427827.1579077694127.ref@mail.yahoo.com>
- <138261238.19427827.1579077694127@mail.yahoo.com>
-Subject: Re: No sensors displayed in webUI
+Message-ID: <2064951776.24636656.1579596039011@mail.yahoo.com>
+Subject: No support for clearing the recv irq bit
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
- boundary="----=_Part_24643248_936677462.1579594638682"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+References: <2064951776.24636656.1579596039011.ref@mail.yahoo.com>
 X-Mailer: WebService/1.1.14873 YMailNodin Mozilla/5.0 (X11; Linux i686;
  rv:52.0) Gecko/20100101 Firefox/52.0 SeaMonkey/2.49.5 Lightning/5.4
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -73,23 +70,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_24643248_936677462.1579594638682
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Hi
 
- Thank you all for your explanations.
+The Linux IPMI driver complains about missing support for "clearing the recv irq bit":
 
-Any chance to get the "bug in dbus-sensors" fixed in the near future?
+[   11.531387] ipmi message handler version 39.2
+[   11.553034] ipmi device interface
+[   11.641272] IPMI System Interface driver.
+[   11.641288] ipmi_si dmi-ipmi-si.0: ipmi_platform: probing via SMBIOS
+[   11.641291] ipmi_si: SMBIOS: io 0xca2 regsize 1 spacing 1 irq 0
+[   11.641292] ipmi_si: Adding SMBIOS-specified kcs state machine
+[   11.641315] ipmi_si IPI0001:00: ipmi_platform: probing via ACPI
+[   11.641339] ipmi_si IPI0001:00: [io  0x0ca2] regsize 1 spacing 1 irq 0
+[   11.641341] ipmi_si dmi-ipmi-si.0: Removing SMBIOS-specified kcs state machine in favor of ACPI
+[   11.641342] ipmi_si: Adding ACPI-specified kcs state machine
+[   11.641393] ipmi_si: Trying ACPI-specified kcs state machine at i/o address 0xca2, slave address 0x20, irq 0
+[   12.083482] ipmi_si IPI0001:00: The BMC does not support clearing the recv irq bit, compensating, but the BMC needs to be fixed.
+[   12.476372] ipmi_si IPI0001:00: IPMI kcs interface initialized
+
+Is this something to be worried about or can it be ignored?
 
 Max
-  
-------=_Part_24643248_936677462.1579594638682
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-<div>                Thank you all for your explanations.<br><br>Any chance to get the &quot;bug in dbus-sensors&quot; fixed in the near future?<br><br>Max<br>            </div>            
-------=_Part_24643248_936677462.1579594638682--
