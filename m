@@ -2,72 +2,112 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2E18143681
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 06:22:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D6F4143749
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 07:54:53 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 481xjm1DK2zDqNk
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 16:22:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 481zmp5w04zDqMx
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jan 2020 17:54:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d33;
- helo=mail-io1-xd33.google.com; envelope-from=rahulmaheshwari01@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=kQ+MgUbp; dkim-atps=neutral
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
- [IPv6:2607:f8b0:4864:20::d33])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.244.129;
+ helo=nam12-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.a=rsa-sha256 header.s=selector2 header.b=ECIK0Z6a; 
+ dkim-atps=neutral
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12on2129.outbound.protection.outlook.com [40.107.244.129])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 481xj26wPYzDqLS
- for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 16:21:26 +1100 (AEDT)
-Received: by mail-io1-xd33.google.com with SMTP id t26so1460216ioi.13
- for <openbmc@lists.ozlabs.org>; Mon, 20 Jan 2020 21:21:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=oh+DhfQki56RodSuTxYskZGmjVkIM9shlyOti/5spp4=;
- b=kQ+MgUbplOTK8geVfnlN6CA/cC+zW5SidNfEwDSD7P8KEXy1dmKI2KsnW4dugtOh7a
- jaKAU5TzP5Lnl44NQvF0/fiE7pEar0XTyfDmEwn/csCqjpW+H/LAcNzPn99fYh/La6Ut
- OhUrTbar47ojtD49u2oD5DbTu8bZymvTQfkfM+Z9WqzZUvGck5rqwjTmamOMkMvI0Z15
- 5nIm+PP/+8eS+pS+KFqzo4DLvYtwOxvSKv/GnzfN5sU1fjlCOQoprC08DRZ0/wF9gQ3+
- 6Ocrio05W/0xHkMWPqFDYW/iQb1+HerHFdUOisCuNzL/T4RIAtt1IKAy8wHpBFDyJUki
- 4ipw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=oh+DhfQki56RodSuTxYskZGmjVkIM9shlyOti/5spp4=;
- b=nRcWJDXK3tm/Kv3BXkDD6vXWZoAVrcPixb0h6PHTTes2rcO95cs2+NJcZ/wmZ/QbLP
- 7CjeW5xzSbQytHXx6kPdICSNXcxkJxw8a41VS6d72rfLBNh2z1Myl5jWkKJB+816YEvY
- vQmVP5HSMTE49jae4FCuKfLxKbd8o4eNiMaCbhnRJqmy8L8vppjGjQl4If7960/chu1/
- 2dUnAxBEsAerJYYAZI0ZzPY7U2jDz4Sv4MP+TVRmv9wU2bf+Vb1eHdY2BGrD4DwzuGnF
- 0afJAcSzTKlf4+w6lNQT6q9K2iRufasF+qB8QWy35w7biIqnoWag2Wd+OfQmhzAjb/BD
- vZew==
-X-Gm-Message-State: APjAAAVItxA83NAZR7fNLDKXPVLHaAW0QlLBVFdI0gJvUbwLUj0EShwQ
- 2ZfXS+FQ/cjE1kN7EA+DKcUlDuU5tDymJtj++4UGHkB/
-X-Google-Smtp-Source: APXvYqxyCSXG5r4f+7wvIbqzc3ENR+nwa8oDPLBp9R1czwkDrzIKnbW+WwHWBTw6LCkBqmSM8jzmKfikR+zyUCK8ki0=
-X-Received: by 2002:a6b:6118:: with SMTP id v24mr1808990iob.73.1579584083075; 
- Mon, 20 Jan 2020 21:21:23 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 481zlY2pQkzDqGY
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Jan 2020 17:53:43 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=H+VA3RhOnkkjbKRH+3bKhMU5qap97sqaZCYPC3+znU3OqBJ35PZ8nvOk1OhMAoYQqOh4l7RPDUD7QoSB4/Q1PLg+jvX2a2oh8cuKG/upY2Z8EtzcJAHfi1eRzh1iHKo5ZqTuqeMO0rtLKNBW9fSpmLxqrNN3WqeGSPqVw4Y/yZKuq3DjYvLNYx0ctRshRTXIQB+plG8bgGIHTngBoDyYEVDrxGUz1pMoITkI7pEI/KDunl/Wo6No6hBou51dfZPFCVol26IiGFUUpFOvR5yyGH/KrbiQrGhPw3B9UBQtcPs16EkRWwoexfapiDLJiiAY2ktpDKmq4IwU3YAg+gx76Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nODpwKiY1NE9iK9UEqOKrvMCGaQGHgt1mZhWX6zICV8=;
+ b=DzR7fEWs1V2R9h/7TfK/98y1nB3iYO5UKacojplnyt0hctlxaAtOMY19TmJ2HVjmeTXT+ygiUDED+u6UbAE+9w4q+GcybvhvBuS0xqC123NNS2Y9JVsMWyr74WB41In2YgOu/fO8CE15TKcZL7Gx/YViwzS3Bns1uF+uj0555L2zjqfkRbtHMyMgEiaChchUUud8H8hvrgSuBVLola03cmgs+/GLzJKNriknluupZs1PI9dD7HdqU2MHeHqm3PCmGSg+DK1PYxc/+YjWdgl/AFwDFg1Yl+fvHFW+emy3W+Lr154GN+/ZD7cYaMf8eTsiQSOdSlluEUPLVYFWqrYXaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nODpwKiY1NE9iK9UEqOKrvMCGaQGHgt1mZhWX6zICV8=;
+ b=ECIK0Z6aiWE910NKWeuSczvUkvcI0VzqAPQClUFAU+a7WDL+zH5ymVROPawhj7u00pFoYdZJhDncTR537u5/cV6EeS1Mtgn/LEcnL09ydMsO4VW/0hYOnktxGEbDLVDBgryjX5oX1H04F/4PCgH5u3h+tKcEvD3q7c3VvaQkZvw=
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com (20.180.12.7) by
+ CH2PR21MB1415.namprd21.prod.outlook.com (10.141.57.138) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2686.9; Tue, 21 Jan 2020 06:53:38 +0000
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::3479:604d:610:e546]) by CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::3479:604d:610:e546%10]) with mapi id 15.20.2665.017; Tue, 21 Jan 2020
+ 06:53:38 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: "Lawniczak, Maciej" <maciej.lawniczak@intel.com>, CS20 CTCchien
+ <CTCCHIEN@nuvoton.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>, Vijay Khemka <vijaykhemka@fb.com>
+Subject: RE: Bios upgrade from BMC
+Thread-Topic: Bios upgrade from BMC
+Thread-Index: AQHVzWj+/fCWvtojz0ygzOBgRdR4d6fyxkbggABfJ9CAAASioIABiWJg
+Date: Tue, 21 Jan 2020 06:53:38 +0000
+Message-ID: <CH2PR21MB1510B787B3B07F41ABD6DDDAC80D0@CH2PR21MB1510.namprd21.prod.outlook.com>
+References: <8AA9282E-0D5B-4B99-BAC6-0F9E84CC5A85@fb.com>
+ <HK0PR03MB4068EAA62EDF7CE6C1866306AE320@HK0PR03MB4068.apcprd03.prod.outlook.com>
+ <HK0PR03MB512308F0575110E4A0FEC5C2DF320@HK0PR03MB5123.apcprd03.prod.outlook.com>
+ <DM5PR1101MB233234E1A586D2870AF10EF286320@DM5PR1101MB2332.namprd11.prod.outlook.com>
+In-Reply-To: <DM5PR1101MB233234E1A586D2870AF10EF286320@DM5PR1101MB2332.namprd11.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=neladk@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-01-21T06:53:35.1977203Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=56e7adb4-ff28-4ad8-8482-f83948658e18;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=neladk@microsoft.com; 
+x-originating-ip: [50.35.81.9]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 58346591-6a76-43d8-b2d1-08d79e3ea4ab
+x-ms-traffictypediagnostic: CH2PR21MB1415:
+x-microsoft-antispam-prvs: <CH2PR21MB1415CE83539BFCC5234E9CE2C80D0@CH2PR21MB1415.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0289B6431E
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(4636009)(346002)(136003)(396003)(376002)(366004)(39860400002)(199004)(189003)(8990500004)(76116006)(52536014)(66476007)(66556008)(64756008)(66446008)(66946007)(5660300002)(66574012)(316002)(2906002)(110136005)(9686003)(966005)(8676002)(81156014)(10290500003)(81166006)(55016002)(8936002)(3480700007)(33656002)(86362001)(71200400001)(186003)(478600001)(53546011)(6506007)(7696005)(26005);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:CH2PR21MB1415;
+ H:CH2PR21MB1510.namprd21.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: X9CijYeLIghkSpJFqg/bnLsekvf3hD4hnI9UvhDPnWU8T51ooGJkPFbFZmb3USxtGRmAdJD/rvtA9PcZmzPIZ4S7+8fWZyCcwZ1sN9EbnfG6XEXJDW/xnbkBHDnhDl1Tp7zbOEkFQ74PKSQwfREM+ASsBoQ6M6A44JjPOa26hA3Xo1lxuDmhxl2Sc0jpj3HvJwtBfOWsk5nLzrfN3KhHXX4vNXgK80klWCmr7Aamgrpv7ZNu6GoqepTdkICihPSK8RQfNhnTIApsNgUmstGARGoJ00j47Rf2mFhg/RwE2gkMAP9RItSDHGN2EDLpBlRFWK8ZRLdAaw8oroQsVm1KrLDadEgu3jzb8ObwmjvGNHkUNP9B+yEQtLJpfr5ahAdUlJiuUGRErVLFP8KhvlzuTjDrI26x+imnK52LgSBTPOPB00y+j6zrLvGUP8MKcAb78BdWGMxxsY+oSOG+CkzKrJhNJeP2RugbJ4ett9xygaEzk8IEuLiKA5J9mBCYAoZOVNU1tr75OJ1BEm9hJMOMgA==
+x-ms-exchange-antispam-messagedata: +PVMRZKKCr0mH3fXPM29Sj87pQ4s8bwIgyqMYMg1PwMLhJnpZbAJmDOTMUwx9CU0PKMZzHky7vdhsK3is0PoLb0D9Eo00QhQ4shuLrb0RQIDA7mOiqkd4uunkVn1fUYubek3dig91iut5zLamOASsQ==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <10cf015965644daf9cfae7421e9f4710@quantatw.com>
- <CAAMkS132O2MB4myFcwPo0NQNf=hzvLYXgqoLXOxCcJe6mqHEMQ@mail.gmail.com>
- <0ebd5d88a9ea46328db578849d4b061b@quantatw.com>
- <CAAMkS12VRBFU77D50z0z4MHDeSG6pdOwU2MeBPO0K7TG6arTvA@mail.gmail.com>
- <d5f1c07fa629476798196f9490574c7c@quantatw.com>
- <5cb636bb-0d14-89c9-42b4-1d20d410ea82@linux.intel.com>
- <9f63a6b71e8a485bba08a1bedb1b922c@quantatw.com>
- <c7782b54-da11-953e-815c-8f5a3a6610fc@linux.intel.com>
-In-Reply-To: <c7782b54-da11-953e-815c-8f5a3a6610fc@linux.intel.com>
-From: Rahul Maheshwari <rahulmaheshwari01@gmail.com>
-Date: Tue, 21 Jan 2020 10:51:11 +0530
-Message-ID: <CAAMkS13kJGWWroEkUnJB7Eec6DGWxUTZXM+4ajJpZi=ACkXyyA@mail.gmail.com>
-Subject: Re: Verify Privilege For Different Channels in openbmc-test-automation
-To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Content-Type: multipart/alternative; boundary="0000000000002a2b11059c9f94aa"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 58346591-6a76-43d8-b2d1-08d79e3ea4ab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jan 2020 06:53:38.3464 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: FPm7bMs6CdoGNMsNcjr71coG5f5Mpd9XtBgrNl2ifll8a2k5A+myqZbg35CPycIbc4kjQoiJK8MrcW3DmeFmiA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR21MB1415
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,208 +119,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?VG9ueSBMZWUgKOadjuaWh+WvjCk=?= <Tony.Lee@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002a2b11059c9f94aa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Thanks Richard for correcting. Yes, there is a need to update this test
-case.
-
-Tony
-We don't run this test case on our systems as we dont have dual channel
-system. Can you fix this test case?
-
-Thanks
-Rahul
-
-On Tue, Jan 21, 2020 at 10:29 AM Thomaiyar, Richard Marian <
-richard.marian.thomaiyar@linux.intel.com> wrote:
-
-> Hi Tony / Rahul,
->
-> 1. sel info 1  (I don't think sel info can get channel number, as sel is
-> not based on channel numbers)
->
-> 2. user list can be queried through channel number i.e. "user list 1"
-> will query user privileges as per channel number 1 and "user list 3"
-> will query user privileges as per channel number 3. But it doesn't
-> determine the incoming channel number.
->
-> i.e. if a system is having 2 LAN Channels, then LAN channel privilege is
-> based on the IP address of those channels
->
-> say channel 1 is having IP x.y.z.1 & channel 3 is having IP x.y.z.3  and
-> channel 3 is with NoAccess
->
-> then executing following command will pass
->
-> ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 1
->
-> ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 3
->
-> Following command execution will fail
->
-> ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --> will
-> fail if channel 3 is with NoAccess privilege for user root
->
-> ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --> will
-> fail if channel 3 is with NoAccess privilege for user root
->
-> Please update the test case accordingly.
->
-> Regards,
->
-> Richard
->
-> On 1/21/2020 8:39 AM, Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) wrote:
-> >> Are you saying that with NoAcess for channel x, you are able to get th=
-e
-> IPMI
-> >> response.
-> > Yes.
-> >
-> >> please note: -H x.x.x.x  determines, which channel you are trying to
-> >> communicate. Try the other IP address (because not sure, which channel
-> is
-> >> configured to what IP).
-> > This is as I expected!
-> > However, please look at the cases "Verify Administrator And No Access
-> Privilege For Different Channels"
-> > and "Verify Operator And User Privilege For Different Channels" in
-> test_ipmi_user.robot.
-> > For example: case "Verify Administrator And No Access Privilege For
-> Different Channels" at the last two "Verify" steps:
-> > '''
-> > # Verify that user is able to run administrator level IPMI command with
-> channel 1.
-> > Verify IPMI Command  ${random_username}  ${valid_password}
-> Administrator  1
-> >
-> > # Verify that user is unable to run IPMI command with channel 2.
-> > Run IPMI Standard Command  sel info 2  expected_rc=3D${1}
-> U=3D${random_username}  P=3D${valid_password}
-> > '''
-> >
-> > In this case, first, there is only one IP address.
-> > second, I can't find a description or SPEC about command like
-> > "ipmitool -I lanplus -C 3 -p 623 -U YmRBwDUS -P 0penBmc1 -H x.x.x.x -L
-> Administrator sel info 1"
-> > which mean user is able to run IPMI command with channel 1.
-> >
-> > If the method for out-of-band communication using different channels is
-> the same as you described,
-> > do we need to fix these two cases?
-> >
-> >> Regards,
-> >>
-> >> Richard
-> >>
->
-
---0000000000002a2b11059c9f94aa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks Richard for correcting. Yes, there is a need to upd=
-ate this test case.=C2=A0<div><br></div><div>Tony</div><div>We don&#39;t ru=
-n this test case on our systems as we dont have dual channel system. Can yo=
-u fix this test case?</div><div><br></div><div>Thanks</div><div>Rahul</div>=
-</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
-On Tue, Jan 21, 2020 at 10:29 AM Thomaiyar, Richard Marian &lt;<a href=3D"m=
-ailto:richard.marian.thomaiyar@linux.intel.com">richard.marian.thomaiyar@li=
-nux.intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">Hi Tony / Rahul,<br>
-<br>
-1. sel info 1=C2=A0 (I don&#39;t think sel info can get channel number, as =
-sel is <br>
-not based on channel numbers)<br>
-<br>
-2. user list can be queried through channel number i.e. &quot;user list 1&q=
-uot; <br>
-will query user privileges as per channel number 1 and &quot;user list 3&qu=
-ot; <br>
-will query user privileges as per channel number 3. But it doesn&#39;t <br>
-determine the incoming channel number.<br>
-<br>
-i.e. if a system is having 2 LAN Channels, then LAN channel privilege is <b=
-r>
-based on the IP address of those channels<br>
-<br>
-say channel 1 is having IP x.y.z.1 &amp; channel 3 is having IP x.y.z.3=C2=
-=A0 and <br>
-channel 3 is with NoAccess<br>
-<br>
-then executing following command will pass<br>
-<br>
-ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 1<br>
-<br>
-ipmitool -I lanplus -H x.y.z.1 -U root -P 0penBmc user list 3<br>
-<br>
-Following command execution will fail<br>
-<br>
-ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --&gt; will <=
-br>
-fail if channel 3 is with NoAccess privilege for user root<br>
-<br>
-ipmitool -I lanplus -H x.y.z.3 -U root -P 0penBmc user list 1 --&gt; will <=
-br>
-fail if channel 3 is with NoAccess privilege for user root<br>
-<br>
-Please update the test case accordingly.<br>
-<br>
-Regards,<br>
-<br>
-Richard<br>
-<br>
-On 1/21/2020 8:39 AM, Tony Lee (=E6=9D=8E=E6=96=87=E5=AF=8C) wrote:<br>
-&gt;&gt; Are you saying that with NoAcess for channel x, you are able to ge=
-t the IPMI<br>
-&gt;&gt; response.<br>
-&gt; Yes.<br>
-&gt;<br>
-&gt;&gt; please note: -H x.x.x.x=C2=A0 determines, which channel you are tr=
-ying to<br>
-&gt;&gt; communicate. Try the other IP address (because not sure, which cha=
-nnel is<br>
-&gt;&gt; configured to what IP).<br>
-&gt; This is as I expected!<br>
-&gt; However, please look at the cases &quot;Verify Administrator And No Ac=
-cess Privilege For Different Channels&quot;<br>
-&gt; and &quot;Verify Operator And User Privilege For Different Channels&qu=
-ot; in test_ipmi_user.robot.<br>
-&gt; For example: case &quot;Verify Administrator And No Access Privilege F=
-or Different Channels&quot; at the last two &quot;Verify&quot; steps:<br>
-&gt; &#39;&#39;&#39;<br>
-&gt; # Verify that user is able to run administrator level IPMI command wit=
-h channel 1.<br>
-&gt; Verify IPMI Command=C2=A0 ${random_username}=C2=A0 ${valid_password}=
-=C2=A0 Administrator=C2=A0 1<br>
-&gt;<br>
-&gt; # Verify that user is unable to run IPMI command with channel 2.<br>
-&gt; Run IPMI Standard Command=C2=A0 sel info 2=C2=A0 expected_rc=3D${1}=C2=
-=A0 U=3D${random_username}=C2=A0 P=3D${valid_password}<br>
-&gt; &#39;&#39;&#39;<br>
-&gt;<br>
-&gt; In this case, first, there is only one IP address.<br>
-&gt; second, I can&#39;t find a description or SPEC about command like<br>
-&gt; &quot;ipmitool -I lanplus -C 3 -p 623 -U YmRBwDUS -P 0penBmc1 -H x.x.x=
-.x -L Administrator sel info 1&quot;<br>
-&gt; which mean user is able to run IPMI command with channel 1.<br>
-&gt;<br>
-&gt; If the method for out-of-band communication using different channels i=
-s the same as you described,<br>
-&gt; do we need to fix these two cases?<br>
-&gt;<br>
-&gt;&gt; Regards,<br>
-&gt;&gt;<br>
-&gt;&gt; Richard<br>
-&gt;&gt;<br>
-</blockquote></div>
-
---0000000000002a2b11059c9f94aa--
+VmlqYXksIA0KDQotIEhvdyBhcmUgeW91IGFibGUgdG8gZGV0ZXJtaW5lIGZsYXNoIHJhbmdlcyB1
+c2VkIGJ5IFVFRkkgaW4gY2FzZSB3ZSBtYXkgbm90IHdhbnQgdG8gdXBkYXRlIE1FIGJ1dCBvbmx5
+IFVFRkkgcmVnaW9ucz8gIA0KLSBIb3cgaXMgdGhpcyBpbnRlcmZhY2VkIGZyb20gcmVkZmlzaC9J
+UE1JID8gDQoNCklzIHRoZXJlIGFueSBkZXNpZ24gZG9jdW1lbnQgZm9yIHRoaXMgZmVhdHVyZSB0
+aGF0IHdlIGNhbiByZXZpZXc/IA0KDQpOZWVyYWoNCg0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1j
+LWJvdW5jZXMrbmVsYWRrPW1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZz4gT24gQmVoYWxm
+IE9mIExhd25pY3phaywgTWFjaWVqDQpTZW50OiBTdW5kYXksIEphbnVhcnkgMTksIDIwMjAgMTE6
+MzUgUE0NClRvOiBDUzIwIENUQ2NoaWVuIDxDVENDSElFTkBudXZvdG9uLmNvbT47IG9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZzsgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+DQpTdWJq
+ZWN0OiBbRVhURVJOQUxdIFJFOiBCaW9zIHVwZ3JhZGUgZnJvbSBCTUMNCg0KSGkgTWVkYWQsDQoN
+ClRvIHNldCB1cCBNRSBpbiBSZWNvdmVyeSBtb2RlIHVzZSBJUE1JIGNvbW1hbmQg4oCcRm9yY2Ug
+TUUgUmVjb3ZlcnnigJ0g4oCTIERGaCAoYnl0ZTQ9MDFoKQ0KVG8gc2V0IHVwIE1FIGluIE9wZXJh
+dGlvbmFsIGFnYWluIHVzZSBJUE1JIOKAnENvbGQgUmVzZXTigJ0gY29tbWFuZOKAnSDigJMgMDJo
+DQoNCkZvciBtb3JlIGRldGFpbHMgY2hlY2s6IGh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3Rl
+Y3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRnd3dy5pbnRlbC5jb20lMkZjb250
+ZW50JTJGZGFtJTJGd3d3JTJGcHVibGljJTJGdXMlMkZlbiUyRmRvY3VtZW50cyUyRnRlY2huaWNh
+bC1zcGVjaWZpY2F0aW9ucyUyRmludGVsLXBvd2VyLW5vZGUtbWFuYWdlci12My1zcGVjLnBkZiZk
+YXRhPTAyJTdDMDElN0NuZWxhZGslNDBtaWNyb3NvZnQuY29tJTdDYWRjMTVjZjAxNDhlNDMyMTEw
+YjUwOGQ3OWQ3YjZhMzglN0M3MmY5ODhiZjg2ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0Mw
+JTdDNjM3MTUxMDI2Mjg5MTI2OTQ1JnNkYXRhPTJUTEh3Q3NYTUsydmclMkZmQk1yS0lQeU5vUFVH
+NTJSallxMzNwcnA5eHBzYyUzRCZyZXNlcnZlZD0wDQoNClJlZ2FyZHMsDQpNYWNpZWoNCl9fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCkhpIFZpamF5LA0KDQpJIHRyeSB0
+byB1cGdyYWRlIEJJT1MgZnJvbSBCTUMsIGJ1dCBJIGRvIG5vdCBrbm93IGhvdyB0byBzZXQgdGhl
+IG1vZGUgb2YgwqBNRS9OTS4NCkNhbiB5b3Ugc2hhcmUgdGhlIHByb2Nlc3MgaG93IHlvdSBzZXQg
+TUUvTk0gdG8gcmVjb3ZlcnkgbW9kZSBhbmQgb3BlcmF0aW9uIG1vZGU/DQoNClRoYW5rcy4NCg0K
+Qi5SLg0KTWVkYWQNCg0KRnJvbTogVmlqYXkgS2hlbWthIDxtYWlsdG86dmlqYXlraGVta2FAZmIu
+Y29tPg0KVG86IE9wZW5CTUMgTWFpbGxpc3QgPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmc+DQpTdWJqZWN0OiBCaW9zIHVwZ3JhZGUgZnJvbSBCTUMNCg0KSGksDQpJIGFtIHdyaXRpbmcg
+YW4gYXBwbGljYXRpb24gZm9yIEJpb3MgdXBncmFkZS4gQ3VycmVudGx5IEkgaGF2ZSBjcmVhdGVk
+IGEgaG9vayB0byBvdXIgYm1jIHVwZGF0ZXIgd2hpY2ggZXhwZWN0cyBhIHN5c3RlbWQgdW5pdCBm
+aWxlIHRvIGJlIHJ1biBhdCB0aGUgdGltZSBvZiBhY3RpdmF0aW5nIHVwZGF0ZS4gQnV0IEkgYW0g
+dGhpbmtpbmcgb2YgYWRkaW5nIHNvbWUgb2YgdGhpcyB1bml0IGZpbGUgZnVuY3Rpb25hbGl0eSBp
+biB1cGRhdGVyIGl0c2VsZiBhbmQgd2FudGVkIHRvIHJ1biBieSB5b3UgYWxsIGlmIGl0IGlzIGNv
+bW1vbiBwcm9jZWR1cmUgdXNlZCBieSBldmVyeSBwbGF0Zm9ybS4gQmVsb3cgYXJlIHRoZSBwcm9j
+ZXNzIHdlIHVzZSBpbiBvdXIgcGxhdGZvcm0gYXMgYSBwYXJ0IG9mIGJpb3MgdXBncmFkZS4NCg0K
+MS4gUG93ZXIgb2ZmIGhvc3Qgc2VydmVyLg0KMi4gU2V0IE1FL05NIChNYW5hZ2VtZW50IGVuZ2lu
+ZSBvciBOb2RlIG1hbmFnZXIgaW4geDg2KSB0byByZWNvdmVyeSBtb2RlDQozLiBGbGlwIEdQSU8g
+dG8gYWNjZXNzIFNQSSBmbGFzaCB1c2VkIGJ5IGhvc3QuDQo0LiBCaW5kIHNwaSBkcml2ZXIgdG8g
+YWNjZXNzIGZsYXNoDQo1LiBGbGFzaGNwIGltYWdlIHRvIGRldmljZS4NCjYuIFVuYmluZCBzcGkg
+ZHJpdmVyDQo3LiBGbGlwIEdQSU8gYmFjayBmb3IgaG9zdCB0byBhY2Nlc3MgU1BJIGZsYXNoDQo4
+LiBTZXQgTUUvTk0gdG8gb3BlcmF0aW9uYWwgbW9kZQ0KOS4gUG93ZXIgb24gc2VydmVyLg0KDQpJ
+IGNhbiBoYXZlIHNvbWUgZmxleGliaWxpdHkgaW4gdGhpcyBzZXF1ZW5jZSBiYXNlZCBvbiBlYWNo
+IHBsYXRmb3JtIGNvbmZpZ3VyYXRpb24uIExvb2tpbmcgZm9yd2FyZCB0byB5b3VyIHN1Z2dlc3Rp
+b25zLg0KDQpSZWdhcmRzDQotVmlqYXkNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX18NClRoZSBwcml2aWxlZ2VkIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBjb250YWlu
+ZWQgaW4gdGhpcyBlbWFpbCBpcyBpbnRlbmRlZCBmb3IgdXNlIG9ubHkgYnkgdGhlIGFkZHJlc3Nl
+ZXMgYXMgaW5kaWNhdGVkIGJ5IHRoZSBvcmlnaW5hbCBzZW5kZXIgb2YgdGhpcyBlbWFpbC4gSWYg
+eW91IGFyZSBub3QgdGhlIGFkZHJlc3NlZSBpbmRpY2F0ZWQgaW4gdGhpcyBlbWFpbCBvciBhcmUg
+bm90IHJlc3BvbnNpYmxlIGZvciBkZWxpdmVyeSBvZiB0aGUgZW1haWwgdG8gc3VjaCBhIHBlcnNv
+biwgcGxlYXNlIGtpbmRseSByZXBseSB0byB0aGUgc2VuZGVyIGluZGljYXRpbmcgdGhpcyBmYWN0
+IGFuZCBkZWxldGUgYWxsIGNvcGllcyBvZiBpdCBmcm9tIHlvdXIgY29tcHV0ZXIgYW5kIG5ldHdv
+cmsgc2VydmVyIGltbWVkaWF0ZWx5LiBZb3VyIGNvb3BlcmF0aW9uIGlzIGhpZ2hseSBhcHByZWNp
+YXRlZC4gSXQgaXMgYWR2aXNlZCB0aGF0IGFueSB1bmF1dGhvcml6ZWQgdXNlIG9mIGNvbmZpZGVu
+dGlhbCBpbmZvcm1hdGlvbiBvZiBOdXZvdG9uIGlzIHN0cmljdGx5IHByb2hpYml0ZWQ7IGFuZCBh
+bnkgaW5mb3JtYXRpb24gaW4gdGhpcyBlbWFpbCBpcnJlbGV2YW50IHRvIHRoZSBvZmZpY2lhbCBi
+dXNpbmVzcyBvZiBOdXZvdG9uIHNoYWxsIGJlIGRlZW1lZCBhcyBuZWl0aGVyIGdpdmVuIG5vciBl
+bmRvcnNlZCBieSBOdXZvdG9uLiANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KSW50ZWwgVGVjaG5vbG9neSBQb2xh
+bmQgc3AuIHogby5vLg0KdWwuIFPFgm93YWNraWVnbyAxNzMgfCA4MC0yOTggR2RhxYRzayB8IFPE
+hWQgUmVqb25vd3kgR2RhxYRzayBQw7PFgm5vYyB8IFZJSSBXeWR6aWHFgiBHb3Nwb2RhcmN6eSBL
+cmFqb3dlZ28gUmVqZXN0cnUgU8SFZG93ZWdvIC0gS1JTIDEwMTg4MiB8IE5JUCA5NTctMDctNTIt
+MzE2IHwgS2FwaXRhxYIgemFrxYJhZG93eSAyMDAuMDAwIFBMTi4NClRhIHdpYWRvbW/Fm8SHIHdy
+YXogeiB6YcWCxIVjem5pa2FtaSBqZXN0IHByemV6bmFjem9uYSBkbGEgb2tyZcWbbG9uZWdvIGFk
+cmVzYXRhIGkgbW/FvGUgemF3aWVyYcSHIGluZm9ybWFjamUgcG91Zm5lLiBXIHJhemllIHByenlw
+YWRrb3dlZ28gb3RyenltYW5pYSB0ZWogd2lhZG9tb8WbY2ksIHByb3NpbXkgbyBwb3dpYWRvbWll
+bmllIG5hZGF3Y3kgb3JheiB0cndhxYJlIGplaiB1c3VuacSZY2llOyBqYWtpZWtvbHdpZWsgcHJ6
+ZWdsxIVkYW5pZSBsdWIgcm96cG93c3plY2huaWFuaWUgamVzdCB6YWJyb25pb25lLg0KVGhpcyBl
+LW1haWwgYW5kIGFueSBhdHRhY2htZW50cyBtYXkgY29udGFpbiBjb25maWRlbnRpYWwgbWF0ZXJp
+YWwgZm9yIHRoZSBzb2xlIHVzZSBvZiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50KHMpLiBJZiB5b3Ug
+YXJlIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBwbGVhc2UgY29udGFjdCB0aGUgc2VuZGVy
+IGFuZCBkZWxldGUgYWxsIGNvcGllczsgYW55IHJldmlldyBvciBkaXN0cmlidXRpb24gYnkgb3Ro
+ZXJzIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuDQoNCg==
