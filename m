@@ -2,72 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BAF41463EA
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2020 09:52:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A79751463EB
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2020 09:53:24 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 483GHV5W4lzDqX9
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2020 19:52:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 483GJd5f52zDqTF
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jan 2020 19:53:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=lenovo.com (client-ip=67.219.246.214;
- helo=mail1.bemta23.messagelabs.com; envelope-from=pengms1@lenovo.com;
+ smtp.mailfrom=lenovo.com (client-ip=67.219.250.6;
+ helo=mail1.bemta24.messagelabs.com; envelope-from=pengms1@lenovo.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=lenovo.com
-Received: from mail1.bemta23.messagelabs.com (mail1.bemta23.messagelabs.com
- [67.219.246.214])
+Received: from mail1.bemta24.messagelabs.com (mail1.bemta24.messagelabs.com
+ [67.219.250.6])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 483GGN234qzDqTJ;
- Thu, 23 Jan 2020 19:51:23 +1100 (AEDT)
-Received: from [67.219.246.198] (using TLSv1.2 with cipher
+ by lists.ozlabs.org (Postfix) with ESMTPS id 483GGn374bzDqWj
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jan 2020 19:51:45 +1100 (AEDT)
+Received: from [67.219.250.81] (using TLSv1.2 with cipher
  DHE-RSA-AES256-GCM-SHA384 (256 bits))
- by server-2.bemta.az-c.us-east-1.aws.symcld.net id FD/76-04435-78E592E5;
- Thu, 23 Jan 2020 08:51:19 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDIsWRWlGSWpSXmKPExsWSLveKVbc9TjP
- O4O1mNYtdlzksZux9wGwx/8g5VotNj6+xWjSvPsdscXnXHDaLpdcvMlmcannBYtG69wi7A6fH
- 1fZd7B5r5q1h9FiwqdRj06pONo/NS+o9zs9YyOjxeZNcAHsUa2ZeUn5FAmvGkfPvGQt6EysOt
- U9nbGA87NPFyMUhJPCbUeLvhQvsEM5sRonTZzuZuxg5OdgE1CROzr7HCpIQEbjDKDF543VmEI
- dZoIFRYsrumUAOB4ewgKPEh72lIA0sAqoS/S9a2UBsXgEziRU7DrKC2BIC8hJbv31ihYgLSpy
- c+YQFxGYGijdvnc08gZF7FpLULCSpBYxMqxhNk4oy0zNKchMzc3QNDQx0DQ2NdE10jS30Eqt0
- k/VKi3VTE4tLdA31EsuL9Yorc5NzUvTyUks2MQIDNqWARW0H47Gvb/UOMUpyMCmJ8lq4asYJ8
- SXlp1RmJBZnxBeV5qQWH2KU4eBQkuAtjgHKCRalpqdWpGXmAKMHJi3BwaMkwqsbC5TmLS5IzC
- 3OTIdInWLU5Tj7b94iZiGWvPy8VClx3tPRQEUCIEUZpXlwI2CRfIlRVkqYl5GBgUGIpyC1KDe
- zBFX+FaM4B6OSMK8IyCqezLwSuE2vgI5gAjqiXEcN5IiSRISUVANT1xHvD718RjFpcidzJ1u/
- 3fp3W1vQx/TKdWFbcxddzVhXx2u+rW7Ti+jDDzN3aEq72da2ivU+75kYtEy4Plyi+Zvf8tUan
- mvDv/7c/vynn+zrZ0X6/+8aKSpVvN+913FOyQ/vW9uk4uKDJpxz7JmyZTbrtAXbYsVt/DbxnX
- vVv029vvOAQO/J5W7iWevFrB7++qxgqZ9YEX/zquDDx5ecOPeZsG1+mZ/LXLHO57/6sdKNjDc
- s3/pxRu49z7piOvP3yMbb2p3LlHtjgl5cLDzz98gM+SB7ly7ux0sEJ3PPP33pgN9WrVsSDke1
- Fq97+fL6hQkvlAPVNVg12d1OfF5Yvvtvp8WTknsd2ibnwoUWKLEUZyQaajEXFScCAN6pqbBfA
- wAA
+ by server-6.bemta.az-a.us-west-2.aws.symcld.net id 48/2E-26325-E9E592E5;
+ Thu, 23 Jan 2020 08:51:42 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLIsWRWlGSWpSXmKPExsWSLveKRXdenGa
+ cweppjBYz9j5gtvh9/i+zxamWFywOzB4LNpV6XPx4jNnj/IyFjAHMUayZeUn5FQmsGW/2HmAp
+ mBpfcb/DrIHxrVcXIxeHkMBvRolVJ5eyQDizGSV2Luhn72Lk5GATUJM4OfseK4gtIuAucX9JJ
+ xOIzSyQKnG4cQtYXFggXOL1rxfMIDaLgKpE24d9bCA2r4CZxP0JFxlBbAkBeYmt3z6xQsQFJU
+ 7OfMICMUdeonnrbOYJjNyzkKRmIUktYGRaxWieVJSZnlGSm5iZo2toYKBraGika2hkoWturJd
+ YpZuoV1qsW55aXKJrpJdYXqxXXJmbnJOil5dasokRGFIpBQ2eOxj3fn2rd4hRkoNJSZTXwlUz
+ TogvKT+lMiOxOCO+qDQntfgQowwHh5IEb3EMUE6wKDU9tSItMwcY3jBpCQ4eJRFe3VigNG9xQ
+ WJucWY6ROoUoy7H2X/zFjELseTl56VKifOejgYqEgApyijNgxsBi7VLjLJSwryMDAwMQjwFqU
+ W5mSWo8q8YxTkYlYR5RUBW8WTmlcBtegV0BBPQEeU6aiBHlCQipKQamJa3TBGyFEyaULXCwbD
+ IaJYZy5rp4qs/SHD37norpVziWMW3/Wqaf9+nLZ4/9Tcf2n3s86UP76xdfkxdGpzDcVeEVTHi
+ +qcvH+qeylpwKLeraq3ruZpwsL27c/dG9sN8NwsfVe76tC3c2Dj52sLJp9YzeDzXfBa1aLH4a
+ 8OjLBLX1ZnmO083Ofrl5D9dgZ6qQ1H9Nm0KnxdUv5h8wVY2/LZi087JdYwdSv2Pkxbq1DBdZJ
+ i8Ze1xB6/wx0YijMf3fnvAEDQvxMdDJnCy9uP4xEMMQUrb2DqX/zZdvyKwYIHT8XOSZza6a/Y
+ sS7rSM7e8s2nN0mKd06n7PTKZ78Y1rdXR13Th4vBgWblY/+U0UyWW4oxEQy3mouJEAJAVjTIw
+ AwAA
 X-Env-Sender: pengms1@lenovo.com
-X-Msg-Ref: server-15.tower-406.messagelabs.com!1579769476!599421!1
-X-Originating-IP: [103.30.234.5]
+X-Msg-Ref: server-16.tower-336.messagelabs.com!1579769499!61368!1
+X-Originating-IP: [103.30.234.4]
 X-SYMC-ESS-Client-Auth: outbound-route-from=pass
 X-StarScan-Received: 
 X-StarScan-Version: 9.44.25; banners=-,-,-
 X-VirusChecked: Checked
-Received: (qmail 30447 invoked from network); 23 Jan 2020 08:51:19 -0000
-Received: from unknown (HELO lenovo.com) (103.30.234.5)
- by server-15.tower-406.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
- encrypted SMTP; 23 Jan 2020 08:51:19 -0000
+Received: (qmail 19280 invoked from network); 23 Jan 2020 08:51:41 -0000
+Received: from unknown (HELO lenovo.com) (103.30.234.4)
+ by server-16.tower-336.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384
+ encrypted SMTP; 23 Jan 2020 08:51:41 -0000
 Received: from lenovo.com (unknown [10.96.80.15])
  (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by Forcepoint Email with ESMTPS id 036C18131C3F878AAEBC;
- Thu, 23 Jan 2020 16:51:15 +0800 (CST)
+ by Forcepoint Email with ESMTPS id 9B833AEF5CD5BEACA8B1;
+ Thu, 23 Jan 2020 16:51:38 +0800 (CST)
 Received: from hsbmc.10.240.0.10 (unknown [10.245.100.154])
- by Forcepoint Email with ESMTP id 9670CC6AB0DA431024F2;
- Thu, 23 Jan 2020 16:51:15 +0800 (CST)
+ by Forcepoint Email with ESMTP id 35D82EFA56FCBBFC9C52;
+ Thu, 23 Jan 2020 16:51:38 +0800 (CST)
 From: Andrew Peng <pengms1@lenovo.com>
-To: benjaminfair@google.com, linux-kernel@vger.kernel.org,
- linux-aspeed@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, andrew@aj.id.au, mark.rutland@arm.com,
- robh+dt@kernel.org
-Subject: [PATCH v2] ARM: dts: aspeed: update Hr855xg2 device tree
-Date: Thu, 23 Jan 2020 16:51:12 +0800
-Message-Id: <20200123085112.8371-1-pengms1@lenovo.com>
+To: joel@jms.id.au,
+	openbmc@lists.ozlabs.org,
+	benjaminfair@google.com
+Subject: [PATCH] [PATCH linux dev-5.4 v2] ARM: dts: aspeed: update Hr855xg2
+ device tree
+Date: Thu, 23 Jan 2020 16:51:35 +0800
+Message-Id: <20200123085135.8555-1-pengms1@lenovo.com>
 X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -82,8 +81,8 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Peng <pengms1@lenovo.com>, openbmc@lists.ozlabs.org,
- Harry Sung <hsung1@lenovo.com>, Derek Lin <dlin23@lenovo.com>
+Cc: Andrew Peng <pengms1@lenovo.com>, Harry Sung <hsung1@lenovo.com>,
+ Derek Lin <dlin23@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
@@ -106,7 +105,7 @@ Changes in v2:
  - dropping CPUXX_VCCXX and VR pmbus relative property.
 
 Changes in v1: initial version
-
+---
  .../boot/dts/aspeed-bmc-lenovo-hr855xg2.dts   | 446 +++++++++++-------
  1 file changed, 270 insertions(+), 176 deletions(-)
 
@@ -114,7 +113,7 @@ diff --git a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts b/arch/arm/boot/dt
 index 084c455ad4cb..5f39ad59812a 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-lenovo-hr855xg2.dts
-@@ -15,14 +15,21 @@ / {
+@@ -15,14 +15,21 @@
  	compatible = "lenovo,hr855xg2-bmc", "aspeed,ast2500";
 
  	aliases {
@@ -144,7 +143,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	};
 
  	chosen {
-@@ -40,9 +47,9 @@ reserved-memory {
+@@ -40,9 +47,9 @@
  		#size-cells = <1>;
  		ranges;
 
@@ -156,7 +155,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  		};
 
  		gfx_memory: framebuffer {
-@@ -78,6 +85,82 @@ iio-hwmon-battery {
+@@ -78,6 +85,82 @@
  		io-channels = <&adc 15>;
  	};
 
@@ -239,7 +238,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &fmc {
-@@ -91,10 +174,13 @@ flash@0 {
+@@ -91,10 +174,13 @@
  	};
  };
 
@@ -254,7 +253,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &lpc_snoop {
-@@ -102,11 +188,32 @@ &lpc_snoop {
+@@ -102,11 +188,32 @@
  	snoop-ports = <0x80>;
  };
 
@@ -290,7 +289,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &uart2 {
-@@ -123,12 +230,13 @@ &pinctrl_ndcd2_default
+@@ -123,12 +230,13 @@
  			&pinctrl_nri2_default>;
  };
 
@@ -306,7 +305,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &ibt {
-@@ -172,37 +280,77 @@ &pinctrl_adc14_default
+@@ -172,37 +280,77 @@
  			&pinctrl_adc15_default>;
  };
 
@@ -403,7 +402,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  		};
  	};
  };
-@@ -215,14 +363,45 @@ HotSwap@10 {
+@@ -215,14 +363,45 @@
  		reg = <0x10>;
  	};
 
@@ -452,7 +451,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &i2c3 {
-@@ -284,7 +463,7 @@ tmp75@4d {
+@@ -284,7 +463,7 @@
  	eeprom@54 {
  		compatible = "atmel,24c256";
  		reg = <0x54>;
@@ -461,7 +460,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	};
  };
 
-@@ -306,6 +485,54 @@ &i2c10 {
+@@ -306,6 +485,54 @@
 
  &i2c11 {
  	status = "okay";
@@ -516,7 +515,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  };
 
  &i2c13 {
-@@ -425,20 +652,6 @@ fan@16 {
+@@ -425,20 +652,6 @@
 
  &gpio {
 
@@ -537,7 +536,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_b5 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(B, 5) GPIO_ACTIVE_HIGH>;
-@@ -453,27 +666,6 @@ pin_gpio_b7 {
+@@ -453,27 +666,6 @@
  		line-name = "CPU_SM_WP";
  	};
 
@@ -565,7 +564,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_e6 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(E, 6) GPIO_ACTIVE_HIGH>;
-@@ -481,18 +673,11 @@ pin_gpio_e6 {
+@@ -481,18 +673,11 @@
  		line-name = "BMC_ME_SECURITY_OVERRIDE_N";
  	};
 
@@ -587,7 +586,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	};
 
  	pin_gpio_f2 {
-@@ -516,34 +701,6 @@ pin_gpio_f4 {
+@@ -516,34 +701,6 @@
  		line-name = "BMC_FORCE_NM_THROTTLE_N";
  	};
 
@@ -622,7 +621,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_j1 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(J, 1) GPIO_ACTIVE_HIGH>;
-@@ -565,20 +722,6 @@ pin_gpio_j3 {
+@@ -565,20 +722,6 @@
  		line-name = "SPI_BMC_BIOS_HOLD_N";
  	};
 
@@ -643,7 +642,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_l4 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(L, 4) GPIO_ACTIVE_HIGH>;
-@@ -593,27 +736,6 @@ pin_gpio_l5 {
+@@ -593,27 +736,6 @@
  		line-name = "FM_EFUSE_FAN_G2_EN";
  	};
 
@@ -671,7 +670,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_s2 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(S, 2) GPIO_ACTIVE_HIGH>;
-@@ -621,13 +743,6 @@ pin_gpio_s2 {
+@@ -621,13 +743,6 @@
  		line-name = "PCH_RST_RSMRST_N";
  	};
 
@@ -685,7 +684,7 @@ index 084c455ad4cb..5f39ad59812a 100644
  	pin_gpio_z3 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(Z, 3) GPIO_ACTIVE_HIGH>;
-@@ -638,29 +753,8 @@ pin_gpio_z3 {
+@@ -638,29 +753,8 @@
  	pin_gpio_aa0 {
  		gpio-hog;
  		gpios = <ASPEED_GPIO(AA, 0) GPIO_ACTIVE_HIGH>;
