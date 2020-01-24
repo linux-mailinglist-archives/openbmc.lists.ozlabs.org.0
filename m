@@ -1,51 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF76148CE2
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 18:25:14 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4845ck47WpzDqdm
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jan 2020 04:25:10 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B8ED148D02
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 18:32:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4845mk5FNJzDqg9
+	for <lists+openbmc@lfdr.de>; Sat, 25 Jan 2020 04:32:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4845bz520dzDqWM
- for <openbmc@lists.ozlabs.org>; Sat, 25 Jan 2020 04:24:29 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4845m05gsKzDqb0
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Jan 2020 04:31:25 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 24 Jan 2020 09:24:26 -0800
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 24 Jan 2020 09:19:08 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,358,1574150400"; d="scan'208";a="276373789"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by FMSMGA003.fm.intel.com with ESMTP; 24 Jan 2020 09:24:26 -0800
-Subject: Re: x86 power control for multi host
-To: Vijay Khemka <vijaykhemka@fb.com>,
- "Bills, Jason M" <jason.m.bills@linux.intel.com>
-References: <E8A81BD0-04D4-4ED5-91E3-F4CA85DC8CAE@fb.com>
- <C1AA3F44-5589-4751-B023-8A28CC5ACC19@fb.com>
- <ee4b29ec-561c-72de-1da0-57e9a5f9958b@linux.intel.com>
- <040595EA-2283-4FD6-B89D-DB6C9B93610D@fb.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <641686af-cc02-df5a-7fdb-912ead566b06@linux.intel.com>
-Date: Fri, 24 Jan 2020 09:24:26 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+X-IronPort-AV: E=Sophos;i="5.70,358,1574150400"; d="scan'208";a="216648133"
+Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.169])
+ ([172.22.245.169])
+ by orsmga007.jf.intel.com with ESMTP; 24 Jan 2020 09:19:07 -0800
+Subject: Re: bmcweb and certificate chains [WAS: Security working group
+ meeting 2020-01-22]
+To: openbmc@lists.ozlabs.org
+References: <f62056a8-ddc9-71ae-620f-b9ac45f3c86a@linux.ibm.com>
+From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
+Message-ID: <94fa654c-bfa6-c834-6b18-8867aee49c8f@linux.intel.com>
+Date: Fri, 24 Jan 2020 18:19:07 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <040595EA-2283-4FD6-B89D-DB6C9B93610D@fb.com>
+In-Reply-To: <f62056a8-ddc9-71ae-620f-b9ac45f3c86a@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,50 +55,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 1/23/20 1:37 PM, Vijay Khemka wrote:
-> Thanks Jason for quick response.
-> Now my another question is can I get this configuration from entity manager for gpio lines or should I have a separate config.json file?
+On 22-Jan-20 22:23, Joseph Reynolds wrote:
+> Notes from the security working group meeting 2020-01-22:
+> Highlights below; details in 
+> https://github.com/openbmc/openbmc/wiki/Security-working-group
+>
+>
+> 1. Discuss BMCWeb’s site identity certificate handling, specifically 
+> intermediate certificates.  See 
+> https://github.com/openbmc/bmcweb/#configuration  
+>
+> Other web servers have directives to concatenate the intermediate 
+> certificates (excluding the root CA certificates) and send that. What 
+> does BMCWeb do? 
+>  - What is BMCWeb's default default?
+>  - Need better docs, for example: How can a BMC admin replace 
+> theBMCWeb site cert?  Is it okay to concatenate intermediate certs? 
+> Can we document this for BMCWeb?
 
-Using EM in this context would allow a single image to support both a 
-multi-host system and single host system. If that's possible I'd think 
-that would be better. I guess the question becomes if you have some way 
-to dynamically detect a multi-host system, that'd be better. If that's 
-not possible, then you might be stuck with a hardcoded file.
+As discussed during the meeting, I've looked into that and looks like 
+bmcweb doesn't support sending the cert chain at all right now. When 
+loading it expects the server's cert file to have just a private key and 
+certificate in a single file [1], just as we've discussed during the 
+meeting, and server's init code only loads those [2]. There's an API in 
+Boost.Asio that could allow loading a chain [3], but it's not used 
+anywhere, so for bmcweb to support that, a patch must be created.
 
-> 
-> ﻿On 1/23/20, 10:48 AM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
-> 
->      On 1/21/2020 3:26 PM, Vijay Khemka wrote:
->      > Sorry, missed to add mailing list.
->      >
->      > *From: *Vijay Khemka <vijaykhemka@fb.com>
->      > *Date: *Tuesday, January 21, 2020 at 2:51 PM
->      > *To: *James Feist <james.feist@linux.intel.com>,
->      > "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>
->      > *Subject: *x86 power control for multi host
->      >
->      > Hi James/Jason,
->      >
->      > I am planning to modify x86 power control for multiple host support. As
->      > it has hardcoded name host0 but we want to support for multiple number
->      > of hosts based on configuration. I am thinking of reading different GPIO
->      > lines for each host from a config.json file and then monitor different
->      > gpios. Please suggest that if these configuration, I should read from
->      > entity-manager >
->      > Also looking forward to your thought of this feature addition in
->      > existing daemon or should I have separate repo itself?
->      If it's configurable, then I don't see any reason not to have it in the
->      existing repo.  Is it okay to start there and see how big the impact is
->      before deciding on a separate repo?
->      
->      >
->      > Regards
->      >
->      > -Vijay
->      >
->      
-> 
+HTH,
+Alexander
+
+[1] https://github.com/openbmc/bmcweb/blob/master/http/http_server.h#L159
+[2] https://github.com/openbmc/bmcweb/blob/master/http/app.h#L158-L159
+[3] 
+https://www.boost.org/doc/libs/1_71_0/doc/html/boost_asio/reference/ssl__context/use_certificate_chain_file.html
+
