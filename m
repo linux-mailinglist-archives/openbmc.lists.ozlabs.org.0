@@ -1,88 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 028CD147549
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 01:12:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 483fhm3gtrzDqbv
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 11:12:08 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB655147548
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 01:10:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 483fgB5bN3zDqbv
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jan 2020 11:10:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.221;
- helo=new1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=akn7Mw2c; 
+ header.s=fm1 header.b=PIJyDNIV; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Pnloxcf6; 
+ header.a=rsa-sha256 header.s=fm1 header.b=IowcV9P8; 
  dkim-atps=neutral
-X-Greylist: delayed 552 seconds by postgrey-1.36 at bilbo;
- Fri, 24 Jan 2020 11:11:09 AEDT
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
- [66.111.4.221])
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 483fgd3Z3TzDqZR
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jan 2020 11:11:09 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 483ffV3Lw3zDqZG
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jan 2020 11:10:10 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 6CE7A5320;
- Thu, 23 Jan 2020 19:01:52 -0500 (EST)
+ by mailout.west.internal (Postfix) with ESMTP id E629F6C6;
+ Thu, 23 Jan 2020 19:10:06 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Thu, 23 Jan 2020 19:01:52 -0500
+ by compute4.internal (MEProxy); Thu, 23 Jan 2020 19:10:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=d+Z+lRDYQ/W7oZGZYumKD/oOi9irKSG
- dCEoUinh8nf4=; b=akn7Mw2cYLTiNi7myRpKCK5NSXpmWiZLpHogjGFIsXSAZe+
- +4FMSVFBbnrJjua/GuzvAz/j2AATo1DTwX/lqtn8B2X7mhofEZae9nLLlS4tD5qY
- rKKE/481DLkrGj2VbTKENBWCVa62W/uPgC85XtClyjI8U7w34iCxifwRsa9iXC5R
- 53WWA9KapVNo+xjKOvXn7qfRMaLJllyoI5645Y7AtzwKMjh+kEGLkw2VOfwkkRys
- krl3BaT262tF66rntd3tUlB1rXAJWggK02nzFoNGtpQZRAUEWuoXeDkIBMFasuZG
- 1oM6fBnoh/Q3VXZ0KWJeviHaWAmfZZrHyK+EK1w==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=VBdMzMuV8jNkonULrymJ/TbPw/0OqMp
+ X+aTm17fpwdo=; b=PIJyDNIV+I/WmfHK7cIylQjEqh3zlb9gxoPXhJTNBDgNWen
+ mmEABTBF08Ybgv6d9Drq0Ot34cFatCuN1LVdmZj243L4R26Z/MhQXBdbzf1RgAai
+ p12os3LKfCkga5UYjK5rMYz3/EoYoqDGWwomYucIrAvFEesgTFh110kwBHv7QMnI
+ EtHDT0M/yQcMzNvTWc6k6nWpAVHoeX1xt0swJgrQOPk40ivPmXjxALTMVZPmtm8l
+ Z7VW18u2Rj9BAK0HwvYMz9REcAtwg7ecewHbI2BMrrpZAztTfxTjY+ElYBLeo4Et
+ 4Y6NW2kuD/G9h8OTqQXRE77t272VVc3xVArmtSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ messagingengine.com; h=content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=d+Z+lR
- DYQ/W7oZGZYumKD/oOi9irKSGdCEoUinh8nf4=; b=Pnloxcf61F/oWAq/EcjBsI
- d+OYokWefGcd/06Mku4YDBN9lkw+afK8wtCALzcGIZN3QWZ4mHWOCS4sydr8cs6S
- oapXoSDWW0YkYoNv9lz20Rz/fjJkdqjV3xGnM0+pBoauN/VFXRcF+IddhJubozjj
- LxuXYaGbMopJeJU9oy8PTGAGrCfMDTqqtPHSkVHzQ5ZmvBiy1oEMtyn+65ZoREMu
- ICJUlDaY1xm7NDdNPdWqYQIU8QoYZJZCoLkrx+xc6paB9c53wnx+kCEs5BFR95HW
- FMTRLSqxDokjZB/8U+1bC+gBvXScqJaFODxooAiL1Wd0pMDxOWgM54Zik8EOS0xg
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=VBdMzM
+ uV8jNkonULrymJ/TbPw/0OqMpX+aTm17fpwdo=; b=IowcV9P8ioDGFB3AQiDpaB
+ jD2cm4qgA+mI3Me7Vmq0nIBYuyFP+hwakskHFk17pX9kyBrTk57EK5QscOWz7ARM
+ mkPmsu9At7IvoUAoA+z1YbVWh9Cvr6yNjy9Psn++yBoBygaOgO526IXY1v4sefFU
+ h16Sl8XpU3YRjkIOCS/armwnF+N3NL6YHk1UTcR+Yj131SWYI2V45Al3bzw7uxVM
+ g6NFFQzOyDDaiIMPK2q1kKOrNrktxT7TZp5xkkTx/7sMjit1zZPkuHssjH/xFY/h
+ yx0OoJctcaXTFXoKc9zvtU5eVmJsHDVe7/i0PTNiY/pmKPy4ZbZR04jhCJ4jHppw
  ==
-X-ME-Sender: <xms:7zMqXk_FlYCU5KicE-kJMrxK-9FxmSihK9HomFxVaHUx-Unj3z7fDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrvdefgddtiecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:3TUqXs5WQzGGHePq2lygMAgvh4iYQQ-lGFEaALHvAYbUmcPX6IlPAw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrvdefgddtjecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
  vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucevlhhush
  htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
  rdhiugdrrghu
-X-ME-Proxy: <xmx:7zMqXn1fSD2EQ_b_lEI7ZFAnibLg-os68L9a5wX-IsFBROhBvaXvFQ>
- <xmx:7zMqXpY6sN8zAO06Q9OhPm55LVgrcHxIINw7cDD74IVo0ClkAhH9KA>
- <xmx:7zMqXjukhZ88lvksiO6kTNAnaLKgpQ3uM0woayjYr-3sT-eLVs_HXw>
- <xmx:8DMqXkk_zP_bR8ts8WK4mvZlAsia1fN9rel87NvpbIzqJlK0YitjZw>
+X-ME-Proxy: <xmx:3TUqXpTJWd55a_vm3jgGBBT86ihdbHpHVLMf0ccb6DYRy93BTq_QAQ>
+ <xmx:3TUqXu59cyP-gIl4OuG8Q6R_y3o5dAIt1lF5eYE6ZgSqr9NWqUpBUQ>
+ <xmx:3TUqXs4hSng6YI1cJwthV0g_UeqlZ4GFSn_XPlci5SpCuEIcywbhcA>
+ <xmx:3jUqXvjUCpOoeosg7KvD9IhcUzkMPpKIrVtxlRaYTRkfAuUiA03YbQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 25625E00A2; Thu, 23 Jan 2020 19:01:51 -0500 (EST)
+ id B3EF3E00A2; Thu, 23 Jan 2020 19:10:05 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-777-gdb93371-fmstable-20200123v1
 Mime-Version: 1.0
-Message-Id: <1c13de6c-3bee-4afc-8a03-691222b07ebe@www.fastmail.com>
-In-Reply-To: <20200123085112.8371-1-pengms1@lenovo.com>
-References: <20200123085112.8371-1-pengms1@lenovo.com>
-Date: Fri, 24 Jan 2020 10:31:30 +1030
+Message-Id: <3129984d-421a-42c9-bb5b-c3ee01ccd43e@www.fastmail.com>
+In-Reply-To: <20200123074956.21482-2-rentao.bupt@gmail.com>
+References: <20200123074956.21482-1-rentao.bupt@gmail.com>
+ <20200123074956.21482-2-rentao.bupt@gmail.com>
+Date: Fri, 24 Jan 2020 10:39:45 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Andrew Peng" <pengms1@lenovo.com>,
- "Benjamin Fair" <benjaminfair@google.com>, linux-kernel@vger.kernel.org,
- linux-aspeed@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, mark.rutland@arm.com,
- "Rob Herring" <robh+dt@kernel.org>
-Subject: Re: [PATCH v2] ARM: dts: aspeed: update Hr855xg2 device tree
+To: "Tao Ren" <rentao.bupt@gmail.com>, "Joel Stanley" <joel@jms.id.au>,
+ "Tao Ren" <taoren@fb.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.4_v2_1/3]_usb:_gadget:_aspeed:_read_vhu?=
+ =?UTF-8?Q?b_config_from_of=5Fdevice=5Fid?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -95,32 +92,375 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Harry Sung1 <hsung1@lenovo.com>,
- Derek Lin <dlin23@lenovo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Thu, 23 Jan 2020, at 19:21, Andrew Peng wrote:
-> Update i2c aliases.
-> Change flash_memory mapping address and size.
-> Add in a gpio-keys section.
-> Add in a peci0 section.
-> Update i2c0,i2c0 and i2c11 section.
-> Enable vhub, vuart, spi1 and spi2.
-> Remove gpio from gpio section since it controlled by user space.
+On Thu, 23 Jan 2020, at 18:19, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> The patch moves hardcoded vhub attributes (maximum downstream ports and
+> generic endpoints) to "ast_vhub_config" structure which is attached to
+> struct of_device_id. By doing this, it will be very straightforward to
+> enable support of AST2600 vhub which has different number of downstream
+> ports and endpoints.
+> 
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> ---
+>  Changes in v2:
+>   - this is the first version. It's given v2 to align with the version
+>     of patch series.
+> 
+> 
+>  drivers/usb/gadget/udc/aspeed-vhub/core.c | 100 ++++++++++++++--------
+>  drivers/usb/gadget/udc/aspeed-vhub/dev.c  |  30 +++++--
+>  drivers/usb/gadget/udc/aspeed-vhub/epn.c  |   4 +-
+>  drivers/usb/gadget/udc/aspeed-vhub/hub.c  |  22 +++--
+>  drivers/usb/gadget/udc/aspeed-vhub/vhub.h |  21 ++---
+>  5 files changed, 107 insertions(+), 70 deletions(-)
+> 
+> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c 
+> b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+> index 90b134d5dca9..9efbfdffad30 100644
+> --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
+> +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+> @@ -32,6 +32,29 @@
+>  
+>  #include "vhub.h"
+>  
+> +struct ast_vhub_config {
+> +	u32 max_ports;	/* max number of downstream ports */
+> +	u32 max_epns;	/* max number of generic endpoints */
+> +};
+> +
+> +static const struct ast_vhub_config ast2400_config = {
+> +	.max_ports = 5,
+> +	.max_epns = 15,
+> +};
+> +
+> +static const struct of_device_id ast_vhub_dt_ids[] = {
+> +	{
+> +		.compatible = "aspeed,ast2400-usb-vhub",
+> +		.data = &ast2400_config,
+> +	},
+> +	{
+> +		.compatible = "aspeed,ast2500-usb-vhub",
+> +		.data = &ast2400_config,
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
+> +
 
-These seem like largely independent items. I'd prefer that you have
-one commit for each item in the list, that way it's easier to review
-and understand the relationships between the bits of affected code.
-Basically, don't give people reasons to say no to your patches :) The
-smaller and more coherent the change, the easier it is to give it a
-Reviewed-by or Acked-by tag.
+Is there a reason to move the table from where it was? It's not a problem,
+just makes the diff a bit noisier.
 
-Also commit messages should say _why_ you're making the changes
-not _what_ changes you're making. The diff tells us _what_, but nothing
-besides comments and the commit message can tell us why. It's much
-more convincing if you explain why your patch must be applied.
+>  void ast_vhub_done(struct ast_vhub_ep *ep, struct ast_vhub_req *req,
+>  		   int status)
+>  {
+> @@ -99,7 +122,7 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
+>  {
+>  	struct ast_vhub *vhub = data;
+>  	irqreturn_t iret = IRQ_NONE;
+> -	u32 istat;
+> +	u32 i, istat;
+>  
+>  	/* Stale interrupt while tearing down */
+>  	if (!vhub->ep0_bufs)
+> @@ -121,10 +144,10 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
+>  
+>  	/* Handle generic EPs first */
+>  	if (istat & VHUB_IRQ_EP_POOL_ACK_STALL) {
+> -		u32 i, ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
+> +		u32 ep_acks = readl(vhub->regs + AST_VHUB_EP_ACK_ISR);
+>  		writel(ep_acks, vhub->regs + AST_VHUB_EP_ACK_ISR);
+>  
+> -		for (i = 0; ep_acks && i < AST_VHUB_NUM_GEN_EPs; i++) {
+> +		for (i = 0; ep_acks && i < vhub->max_epns; i++) {
+>  			u32 mask = VHUB_EP_IRQ(i);
+>  			if (ep_acks & mask) {
+>  				ast_vhub_epn_ack_irq(&vhub->epns[i]);
+> @@ -134,21 +157,11 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
+>  	}
+>  
+>  	/* Handle device interrupts */
+> -	if (istat & (VHUB_IRQ_DEVICE1 |
+> -		     VHUB_IRQ_DEVICE2 |
+> -		     VHUB_IRQ_DEVICE3 |
+> -		     VHUB_IRQ_DEVICE4 |
+> -		     VHUB_IRQ_DEVICE5)) {
+> -		if (istat & VHUB_IRQ_DEVICE1)
+> -			ast_vhub_dev_irq(&vhub->ports[0].dev);
+> -		if (istat & VHUB_IRQ_DEVICE2)
+> -			ast_vhub_dev_irq(&vhub->ports[1].dev);
+> -		if (istat & VHUB_IRQ_DEVICE3)
+> -			ast_vhub_dev_irq(&vhub->ports[2].dev);
+> -		if (istat & VHUB_IRQ_DEVICE4)
+> -			ast_vhub_dev_irq(&vhub->ports[3].dev);
+> -		if (istat & VHUB_IRQ_DEVICE5)
+> -			ast_vhub_dev_irq(&vhub->ports[4].dev);
+> +	for (i = 0; i < vhub->max_ports; i++) {
+> +		u32 dev_mask = VHUB_IRQ_DEVICE1 << i;
+> +
+> +		if (istat & dev_mask)
+> +			ast_vhub_dev_irq(&vhub->ports[i].dev);
+>  	}
+>  
+>  	/* Handle top-level vHub EP0 interrupts */
+> @@ -182,7 +195,7 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
+>  
+>  void ast_vhub_init_hw(struct ast_vhub *vhub)
+>  {
+> -	u32 ctrl;
+> +	u32 ctrl, port_mask, epn_mask;
+>  
+>  	UDCDBG(vhub,"(Re)Starting HW ...\n");
+>  
+> @@ -222,15 +235,20 @@ void ast_vhub_init_hw(struct ast_vhub *vhub)
+>  	}
+>  
+>  	/* Reset all devices */
+> -	writel(VHUB_SW_RESET_ALL, vhub->regs + AST_VHUB_SW_RESET);
+> +	port_mask = GENMASK(vhub->max_ports, 1);
+> +	writel(VHUB_SW_RESET_ROOT_HUB |
+> +	       VHUB_SW_RESET_DMA_CONTROLLER |
+> +	       VHUB_SW_RESET_EP_POOL |
+> +	       port_mask, vhub->regs + AST_VHUB_SW_RESET);
+>  	udelay(1);
+>  	writel(0, vhub->regs + AST_VHUB_SW_RESET);
+>  
+>  	/* Disable and cleanup EP ACK/NACK interrupts */
+> +	epn_mask = GENMASK(vhub->max_epns - 1, 0);
+>  	writel(0, vhub->regs + AST_VHUB_EP_ACK_IER);
+>  	writel(0, vhub->regs + AST_VHUB_EP_NACK_IER);
+> -	writel(VHUB_EP_IRQ_ALL, vhub->regs + AST_VHUB_EP_ACK_ISR);
+> -	writel(VHUB_EP_IRQ_ALL, vhub->regs + AST_VHUB_EP_NACK_ISR);
+> +	writel(epn_mask, vhub->regs + AST_VHUB_EP_ACK_ISR);
+> +	writel(epn_mask, vhub->regs + AST_VHUB_EP_NACK_ISR);
+>  
+>  	/* Default settings for EP0, enable HW hub EP1 */
+>  	writel(0, vhub->regs + AST_VHUB_EP0_CTRL);
+> @@ -273,7 +291,7 @@ static int ast_vhub_remove(struct platform_device *pdev)
+>  		return 0;
+>  
+>  	/* Remove devices */
+> -	for (i = 0; i < AST_VHUB_NUM_PORTS; i++)
+> +	for (i = 0; i < vhub->max_ports; i++)
+>  		ast_vhub_del_dev(&vhub->ports[i].dev);
+>  
+>  	spin_lock_irqsave(&vhub->lock, flags);
+> @@ -295,7 +313,7 @@ static int ast_vhub_remove(struct platform_device *pdev)
+>  	if (vhub->ep0_bufs)
+>  		dma_free_coherent(&pdev->dev,
+>  				  AST_VHUB_EP0_MAX_PACKET *
+> -				  (AST_VHUB_NUM_PORTS + 1),
+> +				  (vhub->max_ports + 1),
+>  				  vhub->ep0_bufs,
+>  				  vhub->ep0_bufs_dma);
+>  	vhub->ep0_bufs = NULL;
+> @@ -309,11 +327,30 @@ static int ast_vhub_probe(struct platform_device *pdev)
+>  	struct ast_vhub *vhub;
+>  	struct resource *res;
+>  	int i, rc = 0;
+> +	const struct of_device_id *ofdid;
+> +	struct ast_vhub_config *config;
+>  
+>  	vhub = devm_kzalloc(&pdev->dev, sizeof(*vhub), GFP_KERNEL);
+>  	if (!vhub)
+>  		return -ENOMEM;
+>  
+> +	ofdid = of_match_node(ast_vhub_dt_ids, pdev->dev.of_node);
+> +	if (!ofdid)
+> +		return -EINVAL;
+> +	config = ofdid->data;
+> +
+> +	vhub->max_ports = config->max_ports;
+> +	vhub->ports = devm_kcalloc(&pdev->dev, vhub->max_ports,
+> +				   sizeof(*vhub->ports), GFP_KERNEL);
+> +	if (!vhub->ports)
+> +		return -ENOMEM;
+> +
+> +	vhub->max_epns = config->max_epns;
+> +	vhub->epns = devm_kcalloc(&pdev->dev, vhub->max_epns,
+> +				  sizeof(*vhub->epns), GFP_KERNEL);
+> +	if (!vhub->epns)
+> +		return -ENOMEM;
+> +
+>  	spin_lock_init(&vhub->lock);
+>  	vhub->pdev = pdev;
+>  
+> @@ -366,7 +403,7 @@ static int ast_vhub_probe(struct platform_device *pdev)
+>  	 */
+>  	vhub->ep0_bufs = dma_alloc_coherent(&pdev->dev,
+>  					    AST_VHUB_EP0_MAX_PACKET *
+> -					    (AST_VHUB_NUM_PORTS + 1),
+> +					    (vhub->max_ports + 1),
+>  					    &vhub->ep0_bufs_dma, GFP_KERNEL);
+>  	if (!vhub->ep0_bufs) {
+>  		dev_err(&pdev->dev, "Failed to allocate EP0 DMA buffers\n");
+> @@ -380,7 +417,7 @@ static int ast_vhub_probe(struct platform_device *pdev)
+>  	ast_vhub_init_ep0(vhub, &vhub->ep0, NULL);
+>  
+>  	/* Init devices */
+> -	for (i = 0; i < AST_VHUB_NUM_PORTS && rc == 0; i++)
+> +	for (i = 0; i < vhub->max_ports && rc == 0; i++)
+>  		rc = ast_vhub_init_dev(vhub, i);
+>  	if (rc)
+>  		goto err;
+> @@ -400,17 +437,6 @@ static int ast_vhub_probe(struct platform_device *pdev)
+>  	return rc;
+>  }
+>  
+> -static const struct of_device_id ast_vhub_dt_ids[] = {
+> -	{
+> -		.compatible = "aspeed,ast2400-usb-vhub",
+> -	},
+> -	{
+> -		.compatible = "aspeed,ast2500-usb-vhub",
+> -	},
+> -	{ }
+> -};
+> -MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
+> -
+>  static struct platform_driver ast_vhub_driver = {
+>  	.probe		= ast_vhub_probe,
+>  	.remove		= ast_vhub_remove,
+> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/dev.c 
+> b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+> index 4008e7a51188..f9b762951121 100644
+> --- a/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+> +++ b/drivers/usb/gadget/udc/aspeed-vhub/dev.c
+> @@ -77,7 +77,7 @@ static void ast_vhub_dev_enable(struct ast_vhub_dev 
+> *d)
+>  	writel(d->ep0.buf_dma, d->regs + AST_VHUB_DEV_EP0_DATA);
+>  
+>  	/* Clear stall on all EPs */
+> -	for (i = 0; i < AST_VHUB_NUM_GEN_EPs; i++) {
+> +	for (i = 0; i < d->max_epns; i++) {
+>  		struct ast_vhub_ep *ep = d->epns[i];
+>  
+>  		if (ep && (ep->epn.stalled || ep->epn.wedged)) {
+> @@ -137,7 +137,7 @@ static int ast_vhub_ep_feature(struct ast_vhub_dev *d,
+>  	     is_set ? "SET" : "CLEAR", ep_num, wValue);
+>  	if (ep_num == 0)
+>  		return std_req_complete;
+> -	if (ep_num >= AST_VHUB_NUM_GEN_EPs || !d->epns[ep_num - 1])
+> +	if (ep_num >= d->max_epns || !d->epns[ep_num - 1])
+>  		return std_req_stall;
+>  	if (wValue != USB_ENDPOINT_HALT)
+>  		return std_req_driver;
+> @@ -181,7 +181,7 @@ static int ast_vhub_ep_status(struct ast_vhub_dev *d,
+>  
+>  	DDBG(d, "GET_STATUS(ep%d)\n", ep_num);
+>  
+> -	if (ep_num >= AST_VHUB_NUM_GEN_EPs)
+> +	if (ep_num >= d->max_epns)
+>  		return std_req_stall;
+>  	if (ep_num != 0) {
+>  		ep = d->epns[ep_num - 1];
+> @@ -299,7 +299,7 @@ static void ast_vhub_dev_nuke(struct ast_vhub_dev *d)
+>  {
+>  	unsigned int i;
+>  
+> -	for (i = 0; i < AST_VHUB_NUM_GEN_EPs; i++) {
+> +	for (i = 0; i < d->max_epns; i++) {
+>  		if (!d->epns[i])
+>  			continue;
+>  		ast_vhub_nuke(d->epns[i], -ESHUTDOWN);
+> @@ -416,10 +416,10 @@ static struct usb_ep 
+> *ast_vhub_udc_match_ep(struct usb_gadget *gadget,
+>  	 * that will allow the generic code to use our
+>  	 * assigned address.
+>  	 */
+> -	for (i = 0; i < AST_VHUB_NUM_GEN_EPs; i++)
+> +	for (i = 0; i < d->max_epns; i++)
+>  		if (d->epns[i] == NULL)
+>  			break;
+> -	if (i >= AST_VHUB_NUM_GEN_EPs)
+> +	if (i >= d->max_epns)
+>  		return NULL;
+>  	addr = i + 1;
+>  
+> @@ -526,6 +526,7 @@ void ast_vhub_del_dev(struct ast_vhub_dev *d)
+>  
+>  	usb_del_gadget_udc(&d->gadget);
+>  	device_unregister(d->port_dev);
+> +	kfree(d->epns);
+>  }
+>  
+>  static void ast_vhub_dev_release(struct device *dev)
+> @@ -546,14 +547,25 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, 
+> unsigned int idx)
+>  
+>  	ast_vhub_init_ep0(vhub, &d->ep0, d);
+>  
+> +	/*
+> +	 * A USB device can have up to 30 endpoints besides control
+> +	 * endpoint 0.
+> +	 */
+> +	d->max_epns = min(vhub->max_epns, 30);
+> +	d->epns = kcalloc(d->max_epns, sizeof(*d->epns), GFP_KERNEL);
+> +	if (!d->epns)
+> +		return -ENOMEM;
+> +
+>  	/*
+>  	 * The UDC core really needs us to have separate and uniquely
+>  	 * named "parent" devices for each port so we create a sub device
+>  	 * here for that purpose
+>  	 */
+>  	d->port_dev = kzalloc(sizeof(struct device), GFP_KERNEL);
+> -	if (!d->port_dev)
+> -		return -ENOMEM;
+> +	if (!d->port_dev) {
+> +		rc = -ENOMEM;
+> +		goto fail_alloc;
+> +	}
+>  	device_initialize(d->port_dev);
+>  	d->port_dev->release = ast_vhub_dev_release;
+>  	d->port_dev->parent = parent;
+> @@ -584,6 +596,8 @@ int ast_vhub_init_dev(struct ast_vhub *vhub, 
+> unsigned int idx)
+>  	device_del(d->port_dev);
+>   fail_add:
+>  	put_device(d->port_dev);
+> + fail_alloc:
+> +	kfree(d->epns);
+>  
+>  	return rc;
+>  }
+> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/epn.c 
+> b/drivers/usb/gadget/udc/aspeed-vhub/epn.c
+> index 7475c74aa5c5..0bd6b20435b8 100644
+> --- a/drivers/usb/gadget/udc/aspeed-vhub/epn.c
+> +++ b/drivers/usb/gadget/udc/aspeed-vhub/epn.c
+> @@ -800,10 +800,10 @@ struct ast_vhub_ep *ast_vhub_alloc_epn(struct 
+> ast_vhub_dev *d, u8 addr)
+>  
+>  	/* Find a free one (no device) */
+>  	spin_lock_irqsave(&vhub->lock, flags);
+> -	for (i = 0; i < AST_VHUB_NUM_GEN_EPs; i++)
+> +	for (i = 0; i < vhub->max_epns; i++)
+>  		if (vhub->epns[i].dev == NULL)
+>  			break;
+> -	if (i >= AST_VHUB_NUM_GEN_EPs) {
+> +	if (i >= vhub->max_epns) {
+>  		spin_unlock_irqrestore(&vhub->lock, flags);
+>  		return NULL;
+>  	}
+> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/hub.c 
+> b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+> index 19b3517e04c0..aa1c127e9f2f 100644
+> --- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+> +++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
+> @@ -133,10 +133,9 @@ static const struct ast_vhub_full_cdesc {
+>  
+>  #define AST_VHUB_HUB_DESC_SIZE	(USB_DT_HUB_NONVAR_SIZE + 2)
+>  
+> -static const struct usb_hub_descriptor ast_vhub_hub_desc = {
+> +static struct usb_hub_descriptor ast_vhub_hub_desc = {
+
+This seems unfortunate, though we only have one on the SoC... is
+it worth dynamically allocating it? Or adding a comment?
 
 Andrew
