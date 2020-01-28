@@ -2,78 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F4214AE55
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 04:15:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D75F914B265
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 11:16:28 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 486BZ041NWzDqBx
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 14:15:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 486Mw90SZSzDqJm
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 21:16:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1041;
- helo=mail-pj1-x1041.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32d;
+ helo=mail-wm1-x32d.google.com; envelope-from=asmithakarun@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=JP34GVp/; dkim-atps=neutral
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com
- [IPv6:2607:f8b0:4864:20::1041])
+ header.s=20161025 header.b=L1QSqrHm; dkim-atps=neutral
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com
+ [IPv6:2a00:1450:4864:20::32d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 486BX93H1pzDqDp
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 14:13:28 +1100 (AEDT)
-Received: by mail-pj1-x1041.google.com with SMTP id f2so285358pjq.1
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2020 19:13:28 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 486Mv46v5vzDqFt
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 21:15:25 +1100 (AEDT)
+Received: by mail-wm1-x32d.google.com with SMTP id q9so1828192wmj.5
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 02:15:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=UfHG7P35w9q/a86UKrOeTZOlhh3L/G/FM07DEjw9lA0=;
- b=JP34GVp/F5Z1AtOub7qzey0hsVJ1jedbLLnB4jSmIFzXCRubusfZZZMQDwBfTEvO99
- 5t4q9dBQVER8NZk0lDJ7eSorll0R/BxcT6uPbpLjovpmwNp1noLwM7bUgILhqPE5bneh
- aiebLRWLO80RbLci1Ny7pvki4TeyMXiFZG6uVNx4anX/guvpL1LdTWvJyyCH3K1VTPEf
- Lf3FKq2jUJQimJJTsR7bSpNVfAYZqMhYw6jGudaHy/1ekcJLmMywoSWPyCd0AqNMK1eE
- 9RXmmB7hj3EebjCdI/BODUSdTzXcajnwXaQdibeWvSHicshrLNg0x8tZUxoWHe9Ys2ge
- C92Q==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=N4SRWp4OVj9hg+qC2jLncILKOEsyWL1RkPwSEMHnsY4=;
+ b=L1QSqrHm1pAfq1EGB4qZgoX0nSdbYX5wW8NDdgY0c2L2OZ8W3wf4l/bkRsMNo5jPl5
+ h7s+OW+d/+oVX3dOj5+CkDbN4QiLDwM1LEANp/eMxQZ+1Q88XHlPMpHw3KROYLt2K0F6
+ rw3JMiuuMMJUF1Se8qnjLq0wEqVovNy+rEGK8T2I8uviDllklRlWfl+RX2sg4kZWtuCR
+ gFAX1XXToQC34ao/4lOlwZ9pfOZyCNwB5sLwGlbxVTv33t19qYBg1vDPfnczvRWL5y3I
+ KLCJL5JeWfUDeNXywBDoOmZMUNyhltmk1qU6hqhLzNhKwn/rycDkYXv1EuatKCiY412g
+ mkmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=UfHG7P35w9q/a86UKrOeTZOlhh3L/G/FM07DEjw9lA0=;
- b=p3yuEvM30ByvpJowlw1mcP8+pEh1CFSN5V+i9pxRCZWSauWBcUL9ba6x0qeA7eXe+k
- FdqFnBIg4GMUE+VbZkgU7s6sDTNgm5EEUvHVsjjO9xWQuTfYD7vfIzrpBu1k3dFIEobU
- XNOesn2oSoVWsatQgPr7CNBnT9/CBTLchwTx3xfDyYVPzPZPFRHhaL4FzCVKn1vq6W92
- TRFaiDBQzkRFvX43uLDkvEqZImKDVObIO8zuK9Hod+u6g9iN2nMoZJ5nwOnePWg3+Kpd
- 5GzeiNlp2Vl6+FpUOxU4L9LkyB7wYAdd8XGKAcMqlVNRLT6VqhPIlMrMgAJQoCMUqpV0
- PPCw==
-X-Gm-Message-State: APjAAAXfVlKy/Q+x+7dINVqdWGaH13Y7EVbr8NePIbaUPMN+f/7Q3TIV
- 8ziu2oTnhBrd474jcMB6YYY=
-X-Google-Smtp-Source: APXvYqwlbZZfa6Xk68XuKZFnDc6D5w57n4GpnTBumZSs8DpBFtqeMDYR6LA7+AhWFyTzIPDP1om3mw==
-X-Received: by 2002:a17:902:8485:: with SMTP id
- c5mr20882712plo.330.1580181205522; 
- Mon, 27 Jan 2020 19:13:25 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::2:ab25])
- by smtp.gmail.com with ESMTPSA id t8sm464234pjy.20.2020.01.27.19.13.24
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Mon, 27 Jan 2020 19:13:25 -0800 (PST)
-Date: Mon, 27 Jan 2020 19:13:18 -0800
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: [PATCH linux dev-5.4 v2 1/3] usb: gadget: aspeed: read vhub
- config from of_device_id
-Message-ID: <20200128031317.GA32684@taoren-ubuntu-R90MNF91>
-References: <20200123074956.21482-1-rentao.bupt@gmail.com>
- <20200123074956.21482-2-rentao.bupt@gmail.com>
- <3129984d-421a-42c9-bb5b-c3ee01ccd43e@www.fastmail.com>
- <20200124012317.GA22665@taoren-ubuntu-R90MNF91>
- <1a456e8f-c708-4276-bec8-3b98cee43e47@www.fastmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=N4SRWp4OVj9hg+qC2jLncILKOEsyWL1RkPwSEMHnsY4=;
+ b=A2r//C51T0MROia2qi+ajMg7Qtu+XmZt01uU6LURXt1sY5WhJ+s1SBh1ynrZH56vI8
+ v1yT1gMONSaiusftbGEg0vbV61QGnGyX2hBpYK9Nqyvavq3nUOsWJN8pS0X0JdrqfIfh
+ aU8dPAPPpcA4yMQ+qfzw2YmYD1K+aO/vS/49/4R6CB+V0vS7SPrvZB+t3YJbwxMJ8e0L
+ +q5HJoj983g+Ud0UNNuuDNUat0lZIrLRFiE/qQYehPMer5BCuBKHjebyUuj9neZRV4hF
+ mnQkGqpRR5dvqtAHj3LY2uvm7HsVNQzJKpoqXxvjWtWr97Ga6AOPOxvj1Abin+lG0bP8
+ W3HQ==
+X-Gm-Message-State: APjAAAWRl4V3Wje4/5l5cWxUhvnLijgWmx0s5WmT6DuOMWTdkPRuFFV3
+ +rM2ur5JbL/+/9e5AStpCfb4/b6WwXZQOJmySUE=
+X-Google-Smtp-Source: APXvYqwp0jkWLaoutyoCR7BXd+Y7Uj6QDKMOjdOlVwdvA4j3sUCKbaxhNUXqOz4Py9amWXWl5oZe1nCGG7JXAKzJ5XM=
+X-Received: by 2002:a1c:451:: with SMTP id 78mr3939284wme.125.1580206521043;
+ Tue, 28 Jan 2020 02:15:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1a456e8f-c708-4276-bec8-3b98cee43e47@www.fastmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <CANGK-S4vcQ9P_fW6ev9h83=GRLCEDr9KeFH2gt-soQ9JpaY_Kw@mail.gmail.com>
+In-Reply-To: <CANGK-S4vcQ9P_fW6ev9h83=GRLCEDr9KeFH2gt-soQ9JpaY_Kw@mail.gmail.com>
+From: Asmitha Karunanithi <asmithakarun@gmail.com>
+Date: Tue, 28 Jan 2020 15:44:44 +0530
+Message-ID: <CANGK-S4cpq51ya7QFv1jip=nZOOiDhqc+8PAJX7oOo3T0pN2Pw@mail.gmail.com>
+Subject: Re: Library to aid multi-part form data parsing
+To: mine260309@gmail.com, bradleyb@fuzziesquirrel.com
+Content-Type: multipart/alternative; boundary="0000000000005bce86059d308044"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,55 +72,107 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <taoren@fb.com>, openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jan 28, 2020 at 11:27:57AM +1030, Andrew Jeffery wrote:
-> 
-> 
-> On Fri, 24 Jan 2020, at 11:53, Tao Ren wrote:
-> > On Fri, Jan 24, 2020 at 10:39:45AM +1030, Andrew Jeffery wrote:
-> > > > diff --git a/drivers/usb/gadget/udc/aspeed-vhub/hub.c 
-> > > > b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-> > > > index 19b3517e04c0..aa1c127e9f2f 100644
-> > > > --- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-> > > > +++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-> > > > @@ -133,10 +133,9 @@ static const struct ast_vhub_full_cdesc {
-> > > >  
-> > > >  #define AST_VHUB_HUB_DESC_SIZE	(USB_DT_HUB_NONVAR_SIZE + 2)
-> > > >  
-> > > > -static const struct usb_hub_descriptor ast_vhub_hub_desc = {
-> > > > +static struct usb_hub_descriptor ast_vhub_hub_desc = {
-> > > 
-> > > This seems unfortunate, though we only have one on the SoC... is
-> > > it worth dynamically allocating it? Or adding a comment?
-> > > 
-> > > Andrew
-> > 
-> > According to the comment at the beginning of the file (line 39-47), we
-> > may customize more descriptors in the future. Adding comments involves
-> > little change in this case, because by allocating the descriptors, we
-> > will also need a function to free the descriptors when ast_vhub_remove
-> > is called. Anyways I'm fine with either way.
-> > 
-> > There is another option which is to fixup descriptors in request_desc
-> > callback, like ast_vhub_patch_dev_desc_usb1() in the file. But I don't
-> > like the approach personally.
-> > 
-> > Which way do you prefer?
-> 
-> I'm not wedded to doing anything different from what you've already got
-> in the patch - we don't have hardware that requires a different solution at
-> this point. We can always fix the driver if that changes. The approach just
-> felt a bit icky, but I can live with that :)
-> 
-> Andrew
+--0000000000005bce86059d308044
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks Andrew. I just sent out patch v3 which adds some comments for the
-hub descriptor; 2 compile warnings are also fixed in v3. Please kindly
-review when you have bandwidth.
+Hi Brad and Lei,
 
-Cheers,
+Are there any concerns about having libmimetic for multi-part parsing.
+Please have a look at the below mail.
 
-Tao
+If there are any other suggestions, please post in here.
+
+On Fri, Jan 17, 2020 at 4:11 PM Asmitha Karunanithi <asmithakarun@gmail.com>
+wrote:
+
+> Hi All,
+>
+> There was a requirement to parse multipart form data during file upload
+> for the vendor-specific interface.
+>
+> The Curl command for multiple file upload will be:
+>
+> "curl -c cjar -b cjar -k -H "Content-Type: multipart/form-data" -H
+> "X-Auth-Token: $bmc_token" -F 'sa1=@/path/to/file1' -F sa2=@/path/to/file2'
+> -X POST https://$bmc/ibm/v1/files/partitions/"
+>
+> The above multipart request contains the file contents separated by a
+> boundary and each file contains the filename, Content-Type and
+> Content-Disposition.
+>
+> There were few considerations for this and after testing those libraries,
+> the mimetic library seemed to fit for this purpose. Please refer to
+> https://github.com/LadislavSopko/mimetic
+>
+> Only a part of code from this library is used for this purpose (which is
+> under "mimetic" folder in this repo).
+>
+> Regression tests were conducted with that part of the library that is
+> being used for multi-part parsing, as a part of which there was no memory
+> leakage found after firing a large number of requests (2000 requests in
+> this case).
+>
+> There was a difference of 71.68 KB in the openbmc flash size when this
+> library is pulled. The mimetic shared object files are used from
+> mimetic/codec/.libs.
+>
+> If there are other suggestions for the multi-part form data parsing or if
+> there are suggestions for any other test that needs to be done, please post
+> in the suggestions.
+>
+> --
+> Thanks & Regards,
+> Asmitha Karunanithi
+>
+
+
+-- 
+Thanks & Regards,
+Asmitha Karunanithi
+
+--0000000000005bce86059d308044
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Brad and Lei,</div><div><br></div><div>Are there a=
+ny concerns about having libmimetic for multi-part parsing. Please have a l=
+ook at the below mail.</div><div><br></div><div>If there are any other sugg=
+estions, please post in here.</div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Fri, Jan 17, 2020 at 4:11 PM Asmitha Karun=
+anithi &lt;<a href=3D"mailto:asmithakarun@gmail.com" target=3D"_blank">asmi=
+thakarun@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex"><div dir=3D"ltr">Hi All,<div><br></div><div>There was a r=
+equirement to parse multipart form data during file upload for the vendor-s=
+pecific interface.<br></div><div><br></div><div>The Curl command for multip=
+le file upload will be:</div><div><br></div><div>&quot;curl -c cjar -b cjar=
+ -k -H &quot;Content-Type: multipart/form-data&quot; -H &quot;X-Auth-Token:=
+ $bmc_token&quot; -F &#39;sa1=3D@/path/to/file1&#39; -F sa2=3D@/path/to/fil=
+e2&#39; -X POST https://$bmc/ibm/v1/files/partitions/&quot;</div><div><br><=
+/div><div>The above multipart request contains the file contents separated =
+by a boundary and each file contains=C2=A0the filename, Content-Type and Co=
+ntent-Disposition.</div><div><br>There were few considerations for this and=
+ after testing those libraries, the mimetic library seemed to fit for this =
+purpose. Please refer to <a href=3D"https://github.com/LadislavSopko/mimeti=
+c" target=3D"_blank">https://github.com/LadislavSopko/mimetic</a><br><br>On=
+ly a part of code from this library is used for this purpose (which is unde=
+r &quot;mimetic&quot; folder in this repo).<br><br>Regression tests were co=
+nducted with that part of the library that is being used for multi-part par=
+sing, as a part of which there was no memory leakage found after firing a l=
+arge number of requests (2000 requests in this case).</div><div><br></div><=
+div>There was a difference of 71.68 KB in the openbmc flash size when this =
+library is pulled. The mimetic shared object files are used from mimetic/co=
+dec/.libs.<br></div><div><br>If there are other suggestions for the multi-p=
+art form data parsing or if there are suggestions for any other test that n=
+eeds to be done, please post in the suggestions.<br><div><br></div>-- <br><=
+div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp; Regards=
+,<div>Asmitha Karunanithi</div></div></div></div></div></div></div>
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+><div dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp; Regards,<div>Asmitha K=
+arunanithi</div></div></div></div></div></div>
+
+--0000000000005bce86059d308044--
