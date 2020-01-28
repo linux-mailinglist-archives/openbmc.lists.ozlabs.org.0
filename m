@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F2B914AE4C
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 04:07:52 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 486BPd2Cn4zDqGC
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 14:07:49 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3092314AE4F
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 04:10:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 486BT55lzCzDqGN
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 14:10:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,53 +17,53 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=N9wmUpQX; dkim-atps=neutral
+ header.s=20161025 header.b=F6iTUaKI; dkim-atps=neutral
 Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
  [IPv6:2607:f8b0:4864:20::1042])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 486BMz1cxqzDqGF
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 14:06:22 +1100 (AEDT)
-Received: by mail-pj1-x1042.google.com with SMTP id r67so366546pjb.0
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2020 19:06:22 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 486BMz3XB5zDqGG
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 14:06:23 +1100 (AEDT)
+Received: by mail-pj1-x1042.google.com with SMTP id fa20so365926pjb.1
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2020 19:06:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=x9CyzP5mYGs80vXKnJIP0ABbP5c5hUZVpdm34rV9OJE=;
- b=N9wmUpQX9g1S+Inqs5nS4VtlWHG7XhbKj32iwOYu4Wjr/KMH2DuR09ByfgSM4xj8Yj
- DeA8wwNb9y0GVS+OF8S+XMoFUTY5L0/w/aEl8ZqpYnJqUtd7EYLx3LntAfCsn97/52h3
- Iq36RwBnm6vwdzSEKAOhB4o+Wu35AX1DSAeeQdKiYL27iDbVlnW2xq5t14UABt1PvFpQ
- 2ArsCYQc3mI4N29J+CAThvnmQwjLkhG6Ca1CGt3Bh9JmBwEFMQj51dcqwAhuBZI6apUT
- RyyTO8A9qN1HeqRNNh9D9ehXFJWkrbJR2IYjAL1SfY6hMi66llxxrxJ08cvHdvnkvvro
- 8lLw==
+ bh=xUhtVximgpz8wrKWKYmMXLR09XjEJTp+pyDUoqHKrYA=;
+ b=F6iTUaKIWGujfyfubCt4+mqJxP0MJMPFOsMnX11NFmR8nS2KmSZdN+K3tV1JZqVSJD
+ l0lgzBApi8b8YeYzCjaXvebqfYugcUfhV6PThOwUmNPHnXcjr1CXZueFrKulVs6aUTAL
+ KyGBTzVETpT5iBnVtg3+W/QHvwYkdpLR+RN6vRe8Az2AJk2kNl15V22zmSGkHpapxoUa
+ PCyKQ7wxNPSOd2aolboNKVb/fVMixAh1EODAV5u/JhYcXUDh3sJCKD5iOWrYf8Oax3La
+ llKYJzM49lBmJgknOGhC359FcRNo3OW+Dr1fSwRaevfohTwiWNBHuFHY3ZxLMCnJU7jm
+ pUOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=x9CyzP5mYGs80vXKnJIP0ABbP5c5hUZVpdm34rV9OJE=;
- b=hkv0KWbOk9iP62uz5zHCWp2WASe82pjoy3oYI/MtHA2se3uoJZzeKGvA/b6QmndBas
- 8wA5oE2gv7mU3dbuWsMMzixNzZKIFAixY8AR9dmKQLix6u3EFSUM9ZeF15cSJtGjNP8K
- U55uaHuDNNbDiM4XhyCgrWod0N3tA4XTa6c1yT6VzLiCCnsuE/a6DUqvlF1hyO2uB4mr
- NZyfrjtZk9TJd6o3pZNHmOlKjEX67WfTBCR3BamBLUjKZemHzB+GVJdtIQ9YGQmikAE6
- bS2sOOv/MHlhqqQA6ldnqzNO/xPGhGfPXuFL0yXO1YOVUfCBS4SMfgXWndpeF/1Qh0mB
- myYQ==
-X-Gm-Message-State: APjAAAUv5wAM+n3bLwW/TuQZYvwH9lNw4DbE3ji+nTuYP74HRT+Mw7HY
- lx8IctRqWGqIm8U4mUzSKNo=
-X-Google-Smtp-Source: APXvYqyw9JamHQTV1oVWsLX4pesS6/qd90ZlCkaoHmJyzL2NPz0KwvyHrMfpHxtjFocPvFNsKjeqRw==
-X-Received: by 2002:a17:902:9a8f:: with SMTP id w15mr53529plp.30.1580180779961; 
- Mon, 27 Jan 2020 19:06:19 -0800 (PST)
+ bh=xUhtVximgpz8wrKWKYmMXLR09XjEJTp+pyDUoqHKrYA=;
+ b=Z/4wZFuu8C3SClbCsDmhJAmyaBkAVgkqvnjEq1Pl806/2Zpuh3oshtQPmx6NMKEu7E
+ 3AC4drr3IkfLQDB7O/91ZzPMSv3No+2VGj1bm4Ctgs/HQSRl2Y6aAz+jMkHWnakJ++TI
+ FifIZ7BL4eKXnj+3kzA13GGJNHV6/8nxVSAoWFrF7ADCVr+2fXabF+haLVV/ljPC+7+p
+ plz7ndmWi2aWf7Ye13bSsir6B0Ezg/BB6iNZ/tbrZI4gaz5DyLo4qof0CA5jTt/zGfht
+ /GNOhCM2BLhVxv1DJ4jfJpXyBaoBg1UXFZvfg2AsV+gwBIESq2ewuB6zMXva8qWvLhjg
+ wXxA==
+X-Gm-Message-State: APjAAAUJS98o6LpZdafaMsqsBAvZ8jUJwMwYSH1CmjzYL+Bc2mvf5crG
+ AKxToOCBkQiPtRPJnAm0Azg=
+X-Google-Smtp-Source: APXvYqy2nRBJncC8FjtDPlprTc1px8bm5mCsiJ9thkLa3WqsVoOb1TMPlP8QZLlj05wB0Fd4ki0RbA==
+X-Received: by 2002:a17:902:b712:: with SMTP id
+ d18mr19794290pls.274.1580180780903; 
+ Mon, 27 Jan 2020 19:06:20 -0800 (PST)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  ([2620:10d:c090:200::2:ab25])
- by smtp.gmail.com with ESMTPSA id z4sm17357409pfn.42.2020.01.27.19.06.19
+ by smtp.gmail.com with ESMTPSA id z4sm17357409pfn.42.2020.01.27.19.06.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Jan 2020 19:06:19 -0800 (PST)
+ Mon, 27 Jan 2020 19:06:20 -0800 (PST)
 From: rentao.bupt@gmail.com
 To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
  taoren@fb.com, openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 v3 2/3] usb: gadget: aspeed: add ast2600 vhub
- support
-Date: Mon, 27 Jan 2020 19:06:02 -0800
-Message-Id: <20200128030603.32612-3-rentao.bupt@gmail.com>
+Subject: [PATCH linux dev-5.4 v3 3/3] ARM: dts: aspeed-g6: add usb functions
+Date: Mon, 27 Jan 2020 19:06:03 -0800
+Message-Id: <20200128030603.32612-4-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200128030603.32612-1-rentao.bupt@gmail.com>
 References: <20200128030603.32612-1-rentao.bupt@gmail.com>
@@ -84,12 +84,7 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Add AST2600 support in aspeed-vhub driver. There are 3 major differences
-between AST2500 and AST2600 vhub:
-  - AST2600 supports 7 downstream ports while AST2500 supports 5.
-  - AST2600 supports 21 generic endpoints while AST2500 supports 15.
-  - EP0 data buffer's 8-byte DMA alignment restriction is removed from
-    AST2600.
+Add USB components and according pin groups in aspeed-g6 dtsi.
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
@@ -97,51 +92,102 @@ Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
  Changes in v3:
   - nothing.
  Changes in v2:
-  - all the ports/endpoints handling logic are moved to patch #1.
+  - fixed vhub reg size in aspeed-g6.dtsi.
 
- drivers/usb/gadget/udc/aspeed-vhub/Kconfig | 4 ++--
- drivers/usb/gadget/udc/aspeed-vhub/core.c  | 9 +++++++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi | 25 ++++++++++++++
+ arch/arm/boot/dts/aspeed-g6.dtsi         | 43 ++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-index 83ba8a2eb6af..605500b19cf3 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-@@ -4,5 +4,5 @@ config USB_ASPEED_VHUB
- 	depends on ARCH_ASPEED || COMPILE_TEST
- 	depends on USB_LIBCOMPOSITE
- 	help
--	  USB peripheral controller for the Aspeed AST2500 family
--	  SoCs supporting the "vHub" functionality and USB2.0
-+	  USB peripheral controller for the Aspeed AST2400, AST2500 and
-+	  AST2600 family SoCs supporting the "vHub" functionality and USB2.0
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-index 94081cc04113..c827bf420278 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -42,6 +42,11 @@ static const struct ast_vhub_config ast2400_config = {
- 	.max_epns = 15,
- };
+diff --git a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+index 045ce66ca876..7028e21bdd98 100644
+--- a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+@@ -1112,6 +1112,31 @@
+ 		groups = "UART9";
+ 	};
  
-+static const struct ast_vhub_config ast2600_config = {
-+	.max_ports = 7,
-+	.max_epns = 21,
-+};
++	pinctrl_usb2ah_default: usb2ah_default {
++		function = "USB2AH";
++		groups = "USBA";
++	};
 +
- static const struct of_device_id ast_vhub_dt_ids[] = {
- 	{
- 		.compatible = "aspeed,ast2400-usb-vhub",
-@@ -51,6 +56,10 @@ static const struct of_device_id ast_vhub_dt_ids[] = {
- 		.compatible = "aspeed,ast2500-usb-vhub",
- 		.data = &ast2400_config,
- 	},
-+	{
-+		.compatible = "aspeed,ast2600-usb-vhub",
-+		.data = &ast2600_config,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
++	pinctrl_usb2ad_default: usb2ad_default {
++		function = "USB2AD";
++		groups = "USBA";
++	};
++
++	pinctrl_usb2bh_default: usb2bh_default {
++		function = "USB2BH";
++		groups = "USBB";
++	};
++
++	pinctrl_usb2bd_default: usb2bd_default {
++		function = "USB2BD";
++		groups = "USBB";
++	};
++
++	pinctrl_usb11bhid_default: usb11bhid_default {
++		function = "USB11BHID";
++		groups = "USBB";
++	};
++
+ 	pinctrl_vb_default: vb_default {
+ 		function = "VB";
+ 		groups = "VB";
+diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
+index 99cc7d7ced4d..5b3bd626f62a 100644
+--- a/arch/arm/boot/dts/aspeed-g6.dtsi
++++ b/arch/arm/boot/dts/aspeed-g6.dtsi
+@@ -245,6 +245,49 @@
+ 			status = "disabled";
+ 		};
+ 
++		ehci0: usb@1e6a1000 {
++			compatible = "aspeed,ast2600-ehci", "generic-ehci";
++			reg = <0x1e6a1000 0x100>;
++			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2ah_default>;
++			status = "disabled";
++		};
++
++		ehci1: usb@1e6a3000 {
++			compatible = "aspeed,ast2600-ehci", "generic-ehci";
++			reg = <0x1e6a3000 0x100>;
++			interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT2CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2bh_default>;
++			status = "disabled";
++		};
++
++		uhci: usb@1e6b0000 {
++			compatible = "aspeed,ast2600-uhci", "generic-uhci";
++			reg = <0x1e6b0000 0x100>;
++			interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
++			#ports = <2>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBUHCICLK>;
++			status = "disabled";
++			/*
++			 * No default pinmux, it will follow EHCI, use an
++			 * explicit pinmux override if EHCI is not enabled.
++			 */
++		};
++
++		vhub: usb-vhub@1e6a0000 {
++			compatible = "aspeed,ast2600-usb-vhub";
++			reg = <0x1e6a0000 0x350>;
++			interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&pinctrl_usb2ad_default>;
++			status = "disabled";
++		};
++
+ 		apb {
+ 			compatible = "simple-bus";
+ 			#address-cells = <1>;
 -- 
 2.17.1
 
