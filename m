@@ -2,62 +2,159 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64E7814C1D2
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 21:54:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 95D0E14C22F
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 22:27:08 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 486f3t2MmFzDqLD
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 07:54:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 486fp13QslzDqLw
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 08:27:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::335;
- helo=mail-ot1-x335.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=a5/0hm0Y; dkim-atps=neutral
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
- [IPv6:2607:f8b0:4864:20::335])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=arm.com
+ (client-ip=40.107.20.41; helo=eur05-db8-obe.outbound.protection.outlook.com;
+ envelope-from=supreeth.venkatesh@arm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=arm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=armh.onmicrosoft.com header.i=@armh.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-armh-onmicrosoft-com header.b=WurkcQIx;
+ dkim=pass (1024-bit key) header.d=armh.onmicrosoft.com
+ header.i=@armh.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-armh-onmicrosoft-com header.b=WurkcQIx; 
+ dkim-atps=neutral
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com
+ (mail-db8eur05on2041.outbound.protection.outlook.com [40.107.20.41])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 486f3H3MgxzDqFG
- for <openbmc@lists.ozlabs.org>; Wed, 29 Jan 2020 07:53:31 +1100 (AEDT)
-Received: by mail-ot1-x335.google.com with SMTP id g15so13449201otp.3
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 12:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=IADUpuMsxpT0yDEEuvdSRcAyEIQnR4+W0YotYv/ivZc=;
- b=a5/0hm0YIWJTLr4DtLnnvlQTtWOEcTw2jjLp2tvynoyAO78hKPd6At8Zjw2zrlQmSO
- tOT73JcbSokCz67QDw4RHfgk0awlTJzG+xEIxZYvht4XR58h+aAqyfHVb3vOz2s+Q1w2
- ZfgtU+DtShOIhDjE/QXGDJ5uvFZM7t64El7tLOnDX+olOjF3OE074c/04o9EFa7FvMTp
- IPUsbX7EmiUaAXGYmwHOA6c5+Uy6uybvO6868EHRNZNw5ZaeBoKM3NPU8+NNrg5w9MBk
- 4P7pef1LQ7XZ3qw2J8YqgKNKAtdANXzy0FNJIrVCIzfJVlzShTApNrGCUPe07sweF8yF
- wuWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=IADUpuMsxpT0yDEEuvdSRcAyEIQnR4+W0YotYv/ivZc=;
- b=ETVODGO7IqFpciDrXK8lFE8ifk37BinuXzBCA72NIcKfvpDizLkr75v26MA5laAaua
- CBchjmrhXR9PLqYv7tDhXqf3o2TGZjrKEYX5+Fsy1HJ9qsIiUYEARWBbj1eZsF7xBNZl
- R46V34upY8kOpV/1k5acn67ZgWPQmK5Eq3hRWaWen0GtIeMNwhFrhsZG9WJLhrZiPrpn
- 2C+R6OCqR75KVUJDPOpa9y/hLTsAuTvN0mWODUULEauox9UFIjJy/AqnoZN3JBsawt3+
- sDOsitnVCRDlKz0KcaW8foqWy37ID1QsI0DDJNNHb4sgtnGIRqvujGxrlwdcQMbAPV7C
- k8bg==
-X-Gm-Message-State: APjAAAULTy8KwOHPX7vb8SSg+p2YabN4nwiTG15egrTpOgECjPk0MwN0
- P7vvZTAHv6H+/KBq60JebFRphiGL4N0VQ9HhX+pOnurWjYI=
-X-Google-Smtp-Source: APXvYqxutwE11Oy7gqWkXyuWzPdAWolXCIri668GkACXhMB+hTNY5cvEw2JFu4Z285tlpFDWftHejIbFUxVzk8X7XqM=
-X-Received: by 2002:a9d:12cf:: with SMTP id g73mr17117452otg.329.1580244807765; 
- Tue, 28 Jan 2020 12:53:27 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 486fkf6rjwzDqLx
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Jan 2020 08:24:07 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com; 
+ s=selector2-armh-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=khoo9Ps86IWtlEYaXIWkt5EnlxVgCjJ+HXSgSb69Igk=;
+ b=WurkcQIxUK5G2/RFv4iNC7JwiBxih2Na1sAy7sm84z5PH0/bDKwOBSllLi4QL+/7ddMgtxy/QPZmpRjJMpvv4KYQFDdEccpUICTZPW9iTLOzLSCUfHW2QUALj6qW65aMNCst2g1iy2PVNh+C7LZL78FuAV/C7UWTrw1Kob+fDxA=
+Received: from DB6PR0801CA0050.eurprd08.prod.outlook.com (2603:10a6:4:2b::18)
+ by AM6PR08MB5205.eurprd08.prod.outlook.com (2603:10a6:20b:ee::28)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.24; Tue, 28 Jan
+ 2020 21:24:01 +0000
+Received: from VE1EUR03FT014.eop-EUR03.prod.protection.outlook.com
+ (2a01:111:f400:7e09::204) by DB6PR0801CA0050.outlook.office365.com
+ (2603:10a6:4:2b::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.21 via Frontend
+ Transport; Tue, 28 Jan 2020 21:24:00 +0000
+Authentication-Results: spf=pass (sender IP is 63.35.35.123)
+ smtp.mailfrom=arm.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=armh.onmicrosoft.com;lists.ozlabs.org; dmarc=bestguesspass
+ action=none header.from=arm.com;
+Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
+ 63.35.35.123 as permitted sender) receiver=protection.outlook.com;
+ client-ip=63.35.35.123; helo=64aa7808-outbound-1.mta.getcheckrecipient.com;
+Received: from 64aa7808-outbound-1.mta.getcheckrecipient.com (63.35.35.123) by
+ VE1EUR03FT014.mail.protection.outlook.com (10.152.19.38) with
+ Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2665.18 via Frontend Transport; Tue, 28 Jan 2020 21:24:00 +0000
+Received: ("Tessian outbound 3a0cbd311638:v42");
+ Tue, 28 Jan 2020 21:24:00 +0000
+X-CR-MTA-TID: 64aa7808
+Received: from 1e2264e86741.1
+ by 64aa7808-outbound-1.mta.getcheckrecipient.com id
+ 1D030B63-C63B-45D1-9701-1BED6466A93F.1; 
+ Tue, 28 Jan 2020 21:23:55 +0000
+Received: from EUR03-VE1-obe.outbound.protection.outlook.com
+ by 64aa7808-outbound-1.mta.getcheckrecipient.com with ESMTPS id 1e2264e86741.1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384);
+ Tue, 28 Jan 2020 21:23:55 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lN3Drq6S1Guc08jQLVtkOFn22JNxbZGGzN8EZ9ngr4UCQKu3PRGoKoYI+JBkWJGE1qgLC/1QmcwLBvqvn/c9LVE1H/j5639V6wj3uaPoJLCumNVWzRNwPORfhteDHmPs1dab/Y0e83X8cr/y6ArWpZ66Pgda7ILXS33O5FFS4sGmlN1aGSofKQYhIXIyWVDJgSwRFkKY0fC2LJujIVDmK137dy4I0qcuBLsNHvMJRkSMQQTnfm4K/8bum73rg13T5NQuUehWu+kKGXR8J9mZZCMaHzkUQQYQTgKn5+SD4gAqVcoYsWpIqhdj3kLENwotDlhdJxpxCusUwR8qm4y8yg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=khoo9Ps86IWtlEYaXIWkt5EnlxVgCjJ+HXSgSb69Igk=;
+ b=cAkhxt1+XMosecz7xRj5UETBM7hz3JAhc1HzJ1RdYhescNp5b3j86hz3o1LOZI9XOyIN4FwSDCfPgSNKyyOh7lCfvRXoI05B24VFH6jPngRACur1ETgaIPOCkb9XyE9n2djyE0+Rnp+AZLJ4zW6sCz6/8a2UbuQrSs8Zn/LpRfxVYcr4wyGDvKMNNyTwgU6Ka5RDRskhDkgBfRYoVWTZ6ukXpH7FvMFPX/9+cU75Hleoi+WHB3K6QPs6HuWHSDNEkNyHXTKnDQP7Ww1ViW26TIIumIQbXP+VHD5Jebm/PGrZBkGo8jLqmxCO2oE4bUZnQIbl/n4WGkkv+WIkgxtFTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
+ header.d=arm.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com; 
+ s=selector2-armh-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=khoo9Ps86IWtlEYaXIWkt5EnlxVgCjJ+HXSgSb69Igk=;
+ b=WurkcQIxUK5G2/RFv4iNC7JwiBxih2Na1sAy7sm84z5PH0/bDKwOBSllLi4QL+/7ddMgtxy/QPZmpRjJMpvv4KYQFDdEccpUICTZPW9iTLOzLSCUfHW2QUALj6qW65aMNCst2g1iy2PVNh+C7LZL78FuAV/C7UWTrw1Kob+fDxA=
+Received: from VE1PR08MB5165.eurprd08.prod.outlook.com (20.179.31.32) by
+ VE1PR08MB4829.eurprd08.prod.outlook.com (10.255.113.208) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2665.24; Tue, 28 Jan 2020 21:23:53 +0000
+Received: from VE1PR08MB5165.eurprd08.prod.outlook.com
+ ([fe80::3d8a:3442:a1ad:d5e5]) by VE1PR08MB5165.eurprd08.prod.outlook.com
+ ([fe80::3d8a:3442:a1ad:d5e5%7]) with mapi id 15.20.2665.026; Tue, 28 Jan 2020
+ 21:23:53 +0000
+From: Supreeth Venkatesh <Supreeth.Venkatesh@arm.com>
+To: Andrew Geissler <geissonator@gmail.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Subject: RE: BIOS, Hypervisor, and OS detailed boot progress in Redfish
+Thread-Topic: BIOS, Hypervisor, and OS detailed boot progress in Redfish
+Thread-Index: AQHV1h0ZQtDuEm4zbUi37SGEQPpGHagAkgZw
+Date: Tue, 28 Jan 2020 21:23:53 +0000
+Message-ID: <VE1PR08MB51651480141CAC5B3D370401800A0@VE1PR08MB5165.eurprd08.prod.outlook.com>
+References: <CALLMt=q-f=_5dR=E7QNwB893c1+inv4EPe5ZrAfhG1Va8fUHQQ@mail.gmail.com>
+In-Reply-To: <CALLMt=q-f=_5dR=E7QNwB893c1+inv4EPe5ZrAfhG1Va8fUHQQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ts-tracking-id: edb7f364-bcfc-4620-a7ad-23a01991c188.0
+x-checkrecipientchecked: true
+Authentication-Results-Original: spf=none (sender IP is )
+ smtp.mailfrom=Supreeth.Venkatesh@arm.com; 
+x-originating-ip: [2600:1700:8c61:400:49f8:b8af:64ce:8315]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: a9def0e7-fa2a-41f9-bab5-08d7a4386484
+X-MS-TrafficTypeDiagnostic: VE1PR08MB4829:|AM6PR08MB5205:
+X-Microsoft-Antispam-PRVS: <AM6PR08MB520554E112C9EF57873BBA51800A0@AM6PR08MB5205.eurprd08.prod.outlook.com>
+x-checkrecipientrouted: true
+nodisclaimer: true
+x-ms-oob-tlc-oobclassifiers: OLM:10000;OLM:10000;
+x-forefront-prvs: 029651C7A1
+X-Forefront-Antispam-Report-Untrusted: SFV:NSPM;
+ SFS:(10009020)(4636009)(376002)(39860400002)(136003)(366004)(396003)(346002)(199004)(189003)(316002)(110136005)(966005)(71200400001)(2906002)(55016002)(7696005)(9686003)(478600001)(33656002)(52536014)(53546011)(81156014)(8676002)(6506007)(86362001)(8936002)(81166006)(76116006)(5660300002)(186003)(64756008)(66946007)(66476007)(66556008)(66446008);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:VE1PR08MB4829;
+ H:VE1PR08MB5165.eurprd08.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; A:1; MX:1; 
+received-spf: None (protection.outlook.com: arm.com does not designate
+ permitted sender hosts)
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: yp4APbEw3w3Uq1cHqBrxN0zbEHc2tI9H8iSlmMQrO3Fe0RYMksMvwjE9eRgEHezizISMQ/lZze/h+5NeXZPwgIrV/FOJlEi3CPWJF7D3OgrsVBqf3gW68YHfyvndfwAychTBQtdG9alFjd51DADR3tdxCck5KEbuya0ye+h/Ynr2qbvemeOmsc9ZHdKSuwjsmtZ5mjjCKKCOa1+T0MzRqVvWbEfUZxImJLAfydqaUNBdQZ29GQgqOyPg7et7ySb3MuOtLeJRSrdCXvUJMPlMJzx6NEG1rWYCjuvVpduSUc3xeoULDJy0kC0GqzyoChcF5dTXee6YXVljC+mQUiY9UvR3HfjGVgZsLfpZ2LQVxGa50NEAHeBS04EtSNPP6uXKKBQ3JRGxb6e6m0qhX9DkbKTds0b8vIQzYWKsLrnAfwEWIjZ0LJ8YAFLb1+xgOuYUtHTR5B/cOge6B0a48o4MiHUROzzIAaw2zh5bzXvpWsqAPlpnSLby7y5wmEggHrHFma/MtqHJE4aSKurOVsaFzQ==
+x-ms-exchange-antispam-messagedata: nbztj0DEKj/4FYepo28LvQaeVYRT0ePIyjwO75qLrTYHcXLNFMYj8/P6YGDgeaCzFITSeQrg+F0rpcy+kWZbnjcri9LXQAK3YCFrUqeVNjvuyM6P5Yt/jVNeeZKpKXfcdk90u3gUpOlHqf8770/fjXM9WdbtcVhFGAuw//LnOUnoaXaTxnaazGf5aPb/EF7YMFKlnh+wgTWSXSUuer5evw==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_VE1PR08MB51651480141CAC5B3D370401800A0VE1PR08MB5165eurp_"
 MIME-Version: 1.0
-From: Andrew Geissler <geissonator@gmail.com>
-Date: Tue, 28 Jan 2020 14:53:11 -0600
-Message-ID: <CALLMt=q-f=_5dR=E7QNwB893c1+inv4EPe5ZrAfhG1Va8fUHQQ@mail.gmail.com>
-Subject: BIOS, Hypervisor, and OS detailed boot progress in Redfish
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB4829
+Original-Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=Supreeth.Venkatesh@arm.com; 
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: VE1EUR03FT014.eop-EUR03.prod.protection.outlook.com
+X-Forefront-Antispam-Report: CIP:63.35.35.123; IPV:CAL; SCL:-1; CTRY:IE;
+ EFV:NLI; SFV:NSPM;
+ SFS:(10009020)(4636009)(136003)(346002)(376002)(39860400002)(396003)(189003)(199004)(53546011)(6506007)(110136005)(2906002)(33964004)(9686003)(26826003)(26005)(966005)(186003)(36906005)(336012)(316002)(356004)(55016002)(52536014)(5660300002)(70586007)(70206006)(8936002)(86362001)(8676002)(81166006)(33656002)(478600001)(7696005)(81156014);
+ DIR:OUT; SFP:1101; SCL:1; SRVR:AM6PR08MB5205;
+ H:64aa7808-outbound-1.mta.getcheckrecipient.com; FPR:; SPF:Pass; LANG:en;
+ PTR:ec2-63-35-35-123.eu-west-1.compute.amazonaws.com; MX:1; A:1; 
+X-MS-Office365-Filtering-Correlation-Id-Prvs: fba03807-06d5-4928-afcb-08d7a438602e
+X-Forefront-PRVS: 029651C7A1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: nw02BNQdI0iG5R6MGxDSKG2VqpfsaDsk9ElGseQsfkglAmWTqUGItrBn5glOCaOlGIRI+3i6OFPaL2yhMXqvsHGs1DDdRa9Zozvgi/ifYR0S7v1xi7r5m3L6mb+jeQHDGA3dl6IWWyX97fD9jOMVpKS8HEHg/XVr+0Wa+dvNZuEu5R3hxbBfYnWtTbUPhxmnMOEoypAtMd9wWfoAkl3n2qH04tCas3NwCA3XpCxXWtg+o05diXgiZF/e5sZ4wB4IN7s/e5Az5w7v+a1FQK4zf/ELwIK2/rm04/mcAehpKXgyaG+PQc20/KKpiwYdU1rCVujUJVa+fj2/iOowgr8tLTd3n7c0m3A0qpLZBFBFATYW5VbdUeA4W44ttCuyrye80yeFKfehpH2Hm7GQVRDBXKWJ5BncH3GuCl2KgHo3Ts0WptsMDCV6U4i1au7pMEsDWD/BnArEghIgIvZbHUEVDGFeIVc2nd7o7i1vCVRobT295s/FjYDcDGrNOqraUhX/1Tje2Z7/ahSXZkaPBjR0WA==
+X-OriginatorOrg: arm.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2020 21:24:00.6337 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a9def0e7-fa2a-41f9-bab5-08d7a4386484
+X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d; Ip=[63.35.35.123];
+ Helo=[64aa7808-outbound-1.mta.getcheckrecipient.com]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR08MB5205
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,43 +169,195 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+--_000_VE1PR08MB51651480141CAC5B3D370401800A0VE1PR08MB5165eurp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I recently opened a Redfish forum post[1] asking about tracking BIOS,
-Hypervisor,
-and OS boot status.
+QW5kcmV3LA0KDQoNCg0KQXMgeW91IG1lbnRpb25lZCwgYXMgcGVyIFBMRE0gc3BlY2lmaWNhdGlv
+biwgQm9vdCBwcm9ncmVzcyBjb2RlcyBhcmUgU3RhdGUgU2Vuc29ycy4gQm9vdCBwcm9ncmVzcyBj
+b2RlcyBJRHMgYXJlIDE5NSwgMTk2IGFuZCAxOTguDQoNCklmIHlvdSB3b3VsZCBhZGRpdGlvbmFs
+IHN0YXRlIHNlbnNvcnMgZm9yIGRldGFpbGVkIHByb2dyZXNzLCB3aHkgbm90IGFzayBQTUNJIFdH
+IHRvIGFkZGl0aW9uYWwgc3RhdGUgc2Vuc29ycy4NCg0KQXMgcGVyIHRoZSBzcGVjaWZpY2F0aW9u
+IGh0dHBzOi8vd3d3LmRtdGYub3JnL3NpdGVzL2RlZmF1bHQvZmlsZXMvc3RhbmRhcmRzL2RvY3Vt
+ZW50cy9EU1AwMjQ4XzEuMC4wLnBkZiAsUExETSBjb21tYW5kcyB0byBiZSB1c2VkIGZvciBTdGF0
+ZSBzZW5zb3JzIGFyZQ0KDQpTZXRTdGF0ZVNlbnNvckVuYWJsZXMNCg0KR2V0U3RhdGVTZW5zb3JS
+ZWFkaW5ncw0KDQpJbml0U3RhdGVTZW5zb3INCg0KDQoNCkFsc28sIEkgYWdyZWUgd2UgbmVlZCBh
+IGNvcnJlc3BvbmRpbmcgbWFwcGluZyBvZiB0aGlzIGluIFJlZGZpc2guDQoNCg0KDQpUaGFua3Ms
+DQoNClN1cHJlZXRoDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBvcGVuYm1j
+IDxvcGVuYm1jLWJvdW5jZXMrc3VwcmVldGgudmVua2F0ZXNoPWFybS5jb21AbGlzdHMub3psYWJz
+Lm9yZz4gT24gQmVoYWxmIE9mIEFuZHJldyBHZWlzc2xlcg0KU2VudDogVHVlc2RheSwgSmFudWFy
+eSAyOCwgMjAyMCAyOjUzIFBNDQpUbzogT3BlbkJNQyBNYWlsbGlzdCA8b3BlbmJtY0BsaXN0cy5v
+emxhYnMub3JnPg0KU3ViamVjdDogQklPUywgSHlwZXJ2aXNvciwgYW5kIE9TIGRldGFpbGVkIGJv
+b3QgcHJvZ3Jlc3MgaW4gUmVkZmlzaA0KDQoNCg0KSGksDQoNCg0KDQpJIHJlY2VudGx5IG9wZW5l
+ZCBhIFJlZGZpc2ggZm9ydW0gcG9zdFsxXSBhc2tpbmcgYWJvdXQgdHJhY2tpbmcgQklPUywgSHlw
+ZXJ2aXNvciwgYW5kIE9TIGJvb3Qgc3RhdHVzLg0KDQoNCg0KV2l0aCBJUE1JIHdlIGhhZCB0aGUg
+IlN5c3RlbSBGaXJtd2FyZSBQcm9ncmVzcyIgYW5kICJCYXNlIE9TIEJvb3QgLyBJbnN0YWxsYXRp
+b24gU3RhdHVzIiBzZW5zb3JzIHdoaWNoIHdlIHRoZW4gbWFwcGVkIHRvIHNvbWUgRC1CdXMgc2Vu
+c29yc1syXVszXS4gTXkgZ29hbCBpcyB0aGF0IHdlIGhhdmUgc2ltaWxhciBsZXZlbCBvZiBkZXRh
+aWwgaW4gYSBSZWRmaXNoIGludGVyZmFjZS4NCg0KDQoNCkd1bm5hciBkaXNjdXNzZWQgdGhpcyB3
+aXRoIHRoZSBETVRGIGFuZCBpdCBzZWVtcyB0aGV5IGFyZSBvcGVuIHRvIGEgZW51bSB0aGF0IHdv
+dWxkIGRlc2NyaWJlIHRoZSBib290IHN0YXR1cy4NCg0KDQoNCkFueSB0aG91Z2h0cyBmcm9tIHRo
+ZSBjb21tdW5pdHkgb24gaG93IHdlJ2QgbGlrZSB0aGlzIHRvIGxvb2s/IFNob3VsZCBpdCBqdXN0
+IGJlIGEgY29tYmluYXRpb24gb2Ygb3VyIEJvb3RQcm9ncmVzcyBhbmQgT3BlcmF0aW5nU3lzdGVt
+U3RhdHVzIEQtQnVzIHByb3BlcnRpZXM/DQoNCg0KDQpTb21lIGZpZWxkcyBpbiB0aG9zZSBzZWVt
+IHByZXR0eSBJUE1JL2xlZ2FjeSBzcGVjaWZpYyAoQ0RST01Cb290LCBST01Cb290LCAuLi4pDQoN
+Cg0KDQpJIHRoaW5rIG91ciBnb2FsIHNob3VsZCBiZSB0byBwcm92aWRlIGEgaGlnaCBsZXZlbCBz
+dW1tYXJ5IG9mIHRoZSBib290IGZyb20gdGhlIEJJT1MsIHRvIHRoZSBIeXBlcnZpc29yLCB0byB0
+aGUgT1MuDQoNCg0KDQpTb21ldGhpbmcgbGlrZSB0aGlzPw0KDQpVbmtub3duIC0+IE1vdGhlcmJv
+YXJkSW5pdCAtPiBNZW1vcnlJbml0IC0+IFNlY29uZGFyeVByb2NJbml0IC0+DQoNCiAgICAgICAg
+LT4gSHlwZXJ2aXNvclN0YXJ0IC0+IEh5cGVydmlzb3JTdGFuZGJ5IC0+IE9TU3RhcnQgLT4gT1NS
+dW5uaW5nDQoNCg0KDQpUaGVzZSB3b3VsZCBuZWVkIFBMRE0gY29tbWFuZHMgZm9yIHRoZSBob3N0
+IHRvIHNlbmQgdGhlc2UgZG93biBzbyBtYXliZSB0aGUgUExETSBzcGVjaWZpY2F0aW9ucyBwcm92
+aWRlcyBhIGhpbnQgb24gd2hhdCB0aGVzZSBzaG91bGQgYmU/IEkgc2VlIHRoaXMgZG9jWzRdIGhh
+cyBhICJCb290IFByb2dyZXNzIiBTdGF0ZSBTZXQgYnV0IGEgbG90IG9mIHRoZXNlIGp1c3QgZG9u
+J3QgbWFrZSBtdWNoIHNlbnNlIHRvIG1lLg0KDQoNCg0KVGhvdWdodHMvSWRlYXMgYXBwcmVjaWF0
+ZWQuDQoNCg0KDQpUaGFua3MsDQoNCkFuZHJldw0KDQoNCg0KWzFdOiBodHRwczovL3JlZGZpc2hm
+b3J1bS5jb20vdGhyZWFkLzI3NS9iaW9zLWh5cGVydmlzb3ItZGV0YWlsZWQtYm9vdC1wcm9ncmVz
+cw0KDQpbMl06IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWRidXMtaW50ZXJm
+YWNlcy9ibG9iL21hc3Rlci94eXovb3BlbmJtY19wcm9qZWN0L1N0YXRlL0Jvb3QvUHJvZ3Jlc3Mu
+aW50ZXJmYWNlLnlhbWwNCg0KWzNdOiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhv
+ci1kYnVzLWludGVyZmFjZXMvYmxvYi9tYXN0ZXIveHl6L29wZW5ibWNfcHJvamVjdC9TdGF0ZS9P
+cGVyYXRpbmdTeXN0ZW0vU3RhdHVzLmludGVyZmFjZS55YW1sDQoNCls0XTogaHR0cHM6Ly93d3cu
+ZG10Zi5vcmcvc2l0ZXMvZGVmYXVsdC9maWxlcy9zdGFuZGFyZHMvZG9jdW1lbnRzL0RTUDAyNDlf
+MS4wLjAucGRmDQoNCklNUE9SVEFOVCBOT1RJQ0U6IFRoZSBjb250ZW50cyBvZiB0aGlzIGVtYWls
+IGFuZCBhbnkgYXR0YWNobWVudHMgYXJlIGNvbmZpZGVudGlhbCBhbmQgbWF5IGFsc28gYmUgcHJp
+dmlsZWdlZC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCwgcGxlYXNlIG5v
+dGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5IGFuZCBkbyBub3QgZGlzY2xvc2UgdGhlIGNvbnRl
+bnRzIHRvIGFueSBvdGhlciBwZXJzb24sIHVzZSBpdCBmb3IgYW55IHB1cnBvc2UsIG9yIHN0b3Jl
+IG9yIGNvcHkgdGhlIGluZm9ybWF0aW9uIGluIGFueSBtZWRpdW0uIFRoYW5rIHlvdS4NCg==
 
-With IPMI we had the "System Firmware Progress" and
-"Base OS Boot / Installation Status" sensors which we then mapped to some
-D-Bus sensors[2][3]. My goal is that we have similar level of detail in a
-Redfish interface.
+--_000_VE1PR08MB51651480141CAC5B3D370401800A0VE1PR08MB5165eurp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Gunnar discussed this with the DMTF and it seems they are open to a enum that
-would describe the boot status.
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkRlbmdYaWFuOw0KCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAx
+IDE7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIgMTUg
+NSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IlxARGVuZ1hpYW4i
+Ow0KCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAxIDE7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMg
+Ki8NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0K
+CWNvbG9yOiMwNTYzQzE7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLk1zb1BsYWlu
+VGV4dCwgbGkuTXNvUGxhaW5UZXh0LCBkaXYuTXNvUGxhaW5UZXh0DQoJe21zby1zdHlsZS1wcmlv
+cml0eTo5OTsNCgltc28tc3R5bGUtbGluazoiUGxhaW4gVGV4dCBDaGFyIjsNCgltYXJnaW46MGlu
+Ow0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFt
+aWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCnNwYW4uUGxhaW5UZXh0Q2hhcg0KCXttc28tc3R5
+bGUtbmFtZToiUGxhaW4gVGV4dCBDaGFyIjsNCgltc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJbXNv
+LXN0eWxlLWxpbms6IlBsYWluIFRleHQiOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNl
+cmlmO30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZv
+bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtz
+aXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2
+LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYg
+Z3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0i
+MTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86
+c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEi
+IC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBs
+YW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0i
+V29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPkFuZHJldyw8bzpwPjwvbzpw
+PjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb1BsYWluVGV4dCI+QXMgeW91IG1lbnRpb25lZCwgYXMgcGVyIFBMRE0gc3BlY2lm
+aWNhdGlvbiwgQm9vdCBwcm9ncmVzcyBjb2RlcyBhcmUgU3RhdGUgU2Vuc29ycy4gQm9vdCBwcm9n
+cmVzcyBjb2RlcyBJRHMgYXJlIDE5NSwgMTk2IGFuZCAxOTguPG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvUGxhaW5UZXh0Ij5JZiB5b3Ugd291bGQgYWRkaXRpb25hbCBzdGF0ZSBzZW5zb3Jz
+IGZvciBkZXRhaWxlZCBwcm9ncmVzcywgd2h5IG5vdCBhc2sgUE1DSSBXRyB0byBhZGRpdGlvbmFs
+IHN0YXRlIHNlbnNvcnMuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5B
+cyBwZXIgdGhlIHNwZWNpZmljYXRpb24gPGEgaHJlZj0iaHR0cHM6Ly93d3cuZG10Zi5vcmcvc2l0
+ZXMvZGVmYXVsdC9maWxlcy9zdGFuZGFyZHMvZG9jdW1lbnRzL0RTUDAyNDhfMS4wLjAucGRmIj4N
+Cmh0dHBzOi8vd3d3LmRtdGYub3JnL3NpdGVzL2RlZmF1bHQvZmlsZXMvc3RhbmRhcmRzL2RvY3Vt
+ZW50cy9EU1AwMjQ4XzEuMC4wLnBkZjwvYT4gLFBMRE0gY29tbWFuZHMgdG8gYmUgdXNlZCBmb3Ig
+U3RhdGUgc2Vuc29ycyBhcmU8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQi
+PlNldFN0YXRlU2Vuc29yRW5hYmxlczxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWlu
+VGV4dCI+R2V0U3RhdGVTZW5zb3JSZWFkaW5ncyAmbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNs
+YXNzPSJNc29QbGFpblRleHQiPkluaXRTdGF0ZVNlbnNvcjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
+c3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxh
+aW5UZXh0Ij5BbHNvLCBJIGFncmVlIHdlIG5lZWQgYSBjb3JyZXNwb25kaW5nIG1hcHBpbmcgb2Yg
+dGhpcyBpbiBSZWRmaXNoLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+
+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5UaGFua3MsPG86
+cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5TdXByZWV0aDxvOnA+PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS08
+YnI+DQpGcm9tOiBvcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMmIzQzO3N1cHJlZXRoLnZlbmth
+dGVzaD1hcm0uY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7IE9uIEJlaGFsZiBPZiBBbmRyZXcgR2Vp
+c3NsZXI8YnI+DQpTZW50OiBUdWVzZGF5LCBKYW51YXJ5IDI4LCAyMDIwIDI6NTMgUE08YnI+DQpU
+bzogT3BlbkJNQyBNYWlsbGlzdCAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj4N
+ClN1YmplY3Q6IEJJT1MsIEh5cGVydmlzb3IsIGFuZCBPUyBkZXRhaWxlZCBib290IHByb2dyZXNz
+IGluIFJlZGZpc2g8L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpw
+PjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPkhpLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
+c3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxh
+aW5UZXh0Ij5JIHJlY2VudGx5IG9wZW5lZCBhIFJlZGZpc2ggZm9ydW0gcG9zdFsxXSBhc2tpbmcg
+YWJvdXQgdHJhY2tpbmcgQklPUywgSHlwZXJ2aXNvciwgYW5kIE9TIGJvb3Qgc3RhdHVzLjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+
+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5XaXRoIElQTUkgd2UgaGFkIHRoZSAmcXVvdDtTeXN0
+ZW0gRmlybXdhcmUgUHJvZ3Jlc3MmcXVvdDsgYW5kICZxdW90O0Jhc2UgT1MgQm9vdCAvIEluc3Rh
+bGxhdGlvbiBTdGF0dXMmcXVvdDsgc2Vuc29ycyB3aGljaCB3ZSB0aGVuIG1hcHBlZCB0byBzb21l
+IEQtQnVzIHNlbnNvcnNbMl1bM10uIE15IGdvYWwgaXMgdGhhdCB3ZSBoYXZlIHNpbWlsYXIgbGV2
+ZWwgb2YgZGV0YWlsIGluIGEgUmVkZmlzaCBpbnRlcmZhY2UuPG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Q
+bGFpblRleHQiPkd1bm5hciBkaXNjdXNzZWQgdGhpcyB3aXRoIHRoZSBETVRGIGFuZCBpdCBzZWVt
+cyB0aGV5IGFyZSBvcGVuIHRvIGEgZW51bSB0aGF0IHdvdWxkIGRlc2NyaWJlIHRoZSBib290IHN0
+YXR1cy48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+QW55IHRob3VnaHRzIGZyb20gdGhl
+IGNvbW11bml0eSBvbiBob3cgd2UnZCBsaWtlIHRoaXMgdG8gbG9vaz8gU2hvdWxkIGl0IGp1c3Qg
+YmUgYSBjb21iaW5hdGlvbiBvZiBvdXIgQm9vdFByb2dyZXNzIGFuZCBPcGVyYXRpbmdTeXN0ZW1T
+dGF0dXMgRC1CdXMgcHJvcGVydGllcz88bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFp
+blRleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+U29t
+ZSBmaWVsZHMgaW4gdGhvc2Ugc2VlbSBwcmV0dHkgSVBNSS9sZWdhY3kgc3BlY2lmaWMgKENEUk9N
+Qm9vdCwgUk9NQm9vdCwgLi4uKTxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4
+dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5JIHRoaW5r
+IG91ciBnb2FsIHNob3VsZCBiZSB0byBwcm92aWRlIGEgaGlnaCBsZXZlbCBzdW1tYXJ5IG9mIHRo
+ZSBib290IGZyb20gdGhlIEJJT1MsIHRvIHRoZSBIeXBlcnZpc29yLCB0byB0aGUgT1MuPG86cD48
+L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlNvbWV0aGluZyBsaWtlIHRoaXM/PG86cD48L286cD48
+L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5Vbmtub3duIC0mZ3Q7IE1vdGhlcmJvYXJkSW5p
+dCAtJmd0OyBNZW1vcnlJbml0IC0mZ3Q7IFNlY29uZGFyeVByb2NJbml0IC0mZ3Q7PG86cD48L286
+cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsgLSZndDsgSHlwZXJ2aXNvclN0YXJ0IC0mZ3Q7IEh5cGVydmlzb3JT
+dGFuZGJ5IC0mZ3Q7IE9TU3RhcnQgLSZndDsgT1NSdW5uaW5nPG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Q
+bGFpblRleHQiPlRoZXNlIHdvdWxkIG5lZWQgUExETSBjb21tYW5kcyBmb3IgdGhlIGhvc3QgdG8g
+c2VuZCB0aGVzZSBkb3duIHNvIG1heWJlIHRoZSBQTERNIHNwZWNpZmljYXRpb25zIHByb3ZpZGVz
+IGEgaGludCBvbiB3aGF0IHRoZXNlIHNob3VsZCBiZT8gSSBzZWUgdGhpcyBkb2NbNF0gaGFzIGEg
+JnF1b3Q7Qm9vdCBQcm9ncmVzcyZxdW90OyBTdGF0ZSBTZXQgYnV0IGEgbG90IG9mIHRoZXNlIGp1
+c3QgZG9uJ3QgbWFrZSBtdWNoIHNlbnNlDQogdG8gbWUuPG86cD48L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFp
+blRleHQiPlRob3VnaHRzL0lkZWFzIGFwcHJlY2lhdGVkLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
+c3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxh
+aW5UZXh0Ij5UaGFua3MsPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5B
+bmRyZXc8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+WzFdOiA8YSBocmVmPSJodHRwczov
+L3JlZGZpc2hmb3J1bS5jb20vdGhyZWFkLzI3NS9iaW9zLWh5cGVydmlzb3ItZGV0YWlsZWQtYm9v
+dC1wcm9ncmVzcyI+DQo8c3BhbiBzdHlsZT0iY29sb3I6d2luZG93dGV4dDt0ZXh0LWRlY29yYXRp
+b246bm9uZSI+aHR0cHM6Ly9yZWRmaXNoZm9ydW0uY29tL3RocmVhZC8yNzUvYmlvcy1oeXBlcnZp
+c29yLWRldGFpbGVkLWJvb3QtcHJvZ3Jlc3M8L3NwYW4+PC9hPjxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb1BsYWluVGV4dCI+WzJdOiA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy9waG9zcGhvci1kYnVzLWludGVyZmFjZXMvYmxvYi9tYXN0ZXIveHl6L29wZW5ibWNfcHJv
+amVjdC9TdGF0ZS9Cb290L1Byb2dyZXNzLmludGVyZmFjZS55YW1sIj4NCjxzcGFuIHN0eWxlPSJj
+b2xvcjp3aW5kb3d0ZXh0O3RleHQtZGVjb3JhdGlvbjpub25lIj5odHRwczovL2dpdGh1Yi5jb20v
+b3BlbmJtYy9waG9zcGhvci1kYnVzLWludGVyZmFjZXMvYmxvYi9tYXN0ZXIveHl6L29wZW5ibWNf
+cHJvamVjdC9TdGF0ZS9Cb290L1Byb2dyZXNzLmludGVyZmFjZS55YW1sPC9zcGFuPjwvYT48bzpw
+PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlszXTogPGEgaHJlZj0iaHR0cHM6
+Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItZGJ1cy1pbnRlcmZhY2VzL2Jsb2IvbWFzdGVy
+L3h5ei9vcGVuYm1jX3Byb2plY3QvU3RhdGUvT3BlcmF0aW5nU3lzdGVtL1N0YXR1cy5pbnRlcmZh
+Y2UueWFtbCI+DQo8c3BhbiBzdHlsZT0iY29sb3I6d2luZG93dGV4dDt0ZXh0LWRlY29yYXRpb246
+bm9uZSI+aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItZGJ1cy1pbnRlcmZhY2Vz
+L2Jsb2IvbWFzdGVyL3h5ei9vcGVuYm1jX3Byb2plY3QvU3RhdGUvT3BlcmF0aW5nU3lzdGVtL1N0
+YXR1cy5pbnRlcmZhY2UueWFtbDwvc3Bhbj48L2E+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+TXNvUGxhaW5UZXh0Ij5bNF06IDxhIGhyZWY9Imh0dHBzOi8vd3d3LmRtdGYub3JnL3NpdGVzL2Rl
+ZmF1bHQvZmlsZXMvc3RhbmRhcmRzL2RvY3VtZW50cy9EU1AwMjQ5XzEuMC4wLnBkZiI+DQo8c3Bh
+biBzdHlsZT0iY29sb3I6d2luZG93dGV4dDt0ZXh0LWRlY29yYXRpb246bm9uZSI+aHR0cHM6Ly93
+d3cuZG10Zi5vcmcvc2l0ZXMvZGVmYXVsdC9maWxlcy9zdGFuZGFyZHMvZG9jdW1lbnRzL0RTUDAy
+NDlfMS4wLjAucGRmPC9zcGFuPjwvYT48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KSU1QT1JUQU5U
+IE5PVElDRTogVGhlIGNvbnRlbnRzIG9mIHRoaXMgZW1haWwgYW5kIGFueSBhdHRhY2htZW50cyBh
+cmUgY29uZmlkZW50aWFsIGFuZCBtYXkgYWxzbyBiZSBwcml2aWxlZ2VkLiBJZiB5b3UgYXJlIG5v
+dCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgaW1tZWRp
+YXRlbHkgYW5kIGRvIG5vdCBkaXNjbG9zZSB0aGUgY29udGVudHMgdG8gYW55IG90aGVyIHBlcnNv
+biwgdXNlIGl0IGZvciBhbnkgcHVycG9zZSwNCiBvciBzdG9yZSBvciBjb3B5IHRoZSBpbmZvcm1h
+dGlvbiBpbiBhbnkgbWVkaXVtLiBUaGFuayB5b3UuDQo8L2JvZHk+DQo8L2h0bWw+DQo=
 
-Any thoughts from the community on how we'd like this to look? Should it just
-be a combination of our BootProgress and OperatingSystemStatus D-Bus properties?
-
-Some fields in those seem pretty IPMI/legacy specific (CDROMBoot, ROMBoot, ...)
-
-I think our goal should be to provide a high level summary of the boot from
-the BIOS, to the Hypervisor, to the OS.
-
-Something like this?
-Unknown -> MotherboardInit -> MemoryInit -> SecondaryProcInit ->
-        -> HypervisorStart -> HypervisorStandby -> OSStart -> OSRunning
-
-These would need PLDM commands for the host to send these down so maybe the
-PLDM specifications provides a hint on what these should be? I see this doc[4]
-has a "Boot Progress" State Set but a lot of these just don't make much sense
-to me.
-
-Thoughts/Ideas appreciated.
-
-Thanks,
-Andrew
-
-[1]: https://redfishforum.com/thread/275/bios-hypervisor-detailed-boot-progress
-[2]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/State/Boot/Progress.interface.yaml
-[3]: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/State/OperatingSystem/Status.interface.yaml
-[4]: https://www.dmtf.org/sites/default/files/standards/documents/DSP0249_1.0.0.pdf
+--_000_VE1PR08MB51651480141CAC5B3D370401800A0VE1PR08MB5165eurp_--
