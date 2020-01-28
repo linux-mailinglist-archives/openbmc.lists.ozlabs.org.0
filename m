@@ -1,63 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E6B114AE31
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 03:38:25 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4869lf6PXdzDqGM
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 13:38:22 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 554FF14AE4D
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 04:08:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 486BQq0yJWzDqGv
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 14:08:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::735;
- helo=mail-qk1-x735.google.com; envelope-from=emilyshaffer@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
+ helo=mail-pg1-x541.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=BJt9Jxoh; dkim-atps=neutral
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com
- [IPv6:2607:f8b0:4864:20::735])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ko9jldE1; dkim-atps=neutral
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4869kh06PpzDqFG
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 13:37:28 +1100 (AEDT)
-Received: by mail-qk1-x735.google.com with SMTP id w15so10195516qkf.6
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2020 18:37:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Rcq/tfVUuce/2Je3OiaDcbl6iKhNM7oF1CmSaXk2awQ=;
- b=BJt9Jxohjgu2ncy5yFkTX4rAjql3Ic73EEdzkkBOuS6JGJKDSqLzKF3dX4lRRN+QWa
- UIgV7xwabmRIt1bZ84rGKXjZfkpAlgxqAZBH0fDUMkjhL5dUNKA/+6ikfSjaJMH+qBKx
- 8PS/dJiTcKiARlqenyiqMJ/j8Jbr3ZgianrhWZlJESeBbkdWoxcGbaTGMH3CZ7zr6KyE
- 2sdQuuSh+0/icD7ouzdPv74rIN46XdJBaddkll1RKHpYfWK0FR9PfVqCdzyAL38XRX5c
- L1EDXS6uzS6u42y5YfJfHemB7pc6Ff2BoE9VE5ZyP816ULMg7haEvXswJRbrRRj+Bl4q
- q5xQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 486BMy48JyzDqGC
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 14:06:22 +1100 (AEDT)
+Received: by mail-pg1-x541.google.com with SMTP id 6so6211844pgk.0
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Jan 2020 19:06:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=A7vAKlqPxW853kN1blT1XOUWNAC0tZpHcMuyW0tP+gE=;
+ b=ko9jldE1uNn1wtfLrQrA8zeO4qEJqzscpDgM2Bihn1F3Ei298BFl8SoEOcPiHn9L9u
+ haA4DA1okKChK4J0Q8TmsR6U4iYAT45bLHvi+8Q6LMxJuN9U/10+8LOJ4rrCM4QMkVoj
+ S97qbg5oD08rlERsSx/vn49KNVOpDA6LWcPsdNvepwLKDwqZYSqViwcIP7YhejfDOwH2
+ 87nSYp1wTLB8jD2olmeRaU0onku9fAeaCPw8ru2BNYMnKo31FiNaHP6fRwq5Wo/U8p0u
+ WxsY+W3Rw2TDaE7L8bX0krXamtJoDt4WaG6UCnzkW+Vug892zD/Zsqlhxe/2x0DxdouG
+ xDhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Rcq/tfVUuce/2Je3OiaDcbl6iKhNM7oF1CmSaXk2awQ=;
- b=erzoaC/szsgVyF+K9a2jF8v4ZHshNH+JABqpSVMQ4NQZIqn1jo4arpq4sVfbsF11Eb
- +/lL7vHd3wlV6QihW5FN13ye5PO0LCFlUgTH+VRIeZkU1sc4La1tmX+6ge+lal9l6Q2y
- 9snnchK8Lslx/Zf7bH/AtcNwTu40q9QjYDULgC7XfECEnBQy7TyV3mxWK4uiZdMg3jSJ
- +J4Ap2qjrFsiteZhAm1MHci/j+RdZru3q4La3GSnaqqpZHFbVWfH/RMLchjH44b3bs53
- QMTF9as/EUjykw9ZW8yrenvwciRh5ow6BmR0M1ay2FHheSoRMUY9t3oWrt4rqZHGAoWw
- qCsA==
-X-Gm-Message-State: APjAAAVHx1FeH70ikENwN//sA34asfzQDFOgqVOnaYgVWpb3wer/Po3H
- SdSOPo5Yg2vMvnSlac0qHjh8mHmcQpSfHSMr0q8f/1Hx
-X-Google-Smtp-Source: APXvYqz/zt/RYw6Pp0+7ZCH8FotdraAK0c0Za+oM7qqjUBtdBEKzyUQjJN632N+zUxe5g9Hng5ROOqCt1AUxhPjd95s=
-X-Received: by 2002:a37:2e47:: with SMTP id u68mr19583475qkh.485.1580179044691; 
- Mon, 27 Jan 2020 18:37:24 -0800 (PST)
-MIME-Version: 1.0
-From: Emily Shaffer <emilyshaffer@google.com>
-Date: Mon, 27 Jan 2020 18:37:13 -0800
-Message-ID: <CAJoAoZm41PYLana6j99ZvBgzkB+T-Ww4_gJC24=esecA48HV3Q@mail.gmail.com>
-Subject: Farewell & Best Wishes
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000a47492059d2a1a75"
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=A7vAKlqPxW853kN1blT1XOUWNAC0tZpHcMuyW0tP+gE=;
+ b=eKyJlQhNWt9O0WjWu+RkNWJ7QjYJMn9uSEM1Dzyif1yz7rnsfSHtv1n5CB40CaIUKl
+ qa9JY4oh8+nY3QMvyODfA25GRAR+uIVvOBvms9b7EYnk92GOgq3Rbr6RxOChZE/0+lyC
+ 9FY9FUeyvilKQA8/3yGGhtF+lMMmA/w6u5LdVkhACBzPyWNRQbJ/kGFm9uRB3lu3Rf3P
+ stn6K+XMrFCqKqqDJv0JOEPK4j1P8Da/WFzpAge9h0SB6hvg8M5uUfghbmvzE4XeFFJP
+ xG7/0k4ANGdZWVrhstnE9PID1Ie3ocAgg/ItUbFEwjQdvaB10PDk9JqukITbIVYw2fbI
+ aG8Q==
+X-Gm-Message-State: APjAAAUTFqcgzge68pWad1KaL29U1tbf3kcKDbgxQMs9dPJOeVumQDIH
+ 5P4ZpwEj44kUbGquD23zjdI=
+X-Google-Smtp-Source: APXvYqzgp+UpbGYPlE4N5zQ2J32BEQ8Wo8rDIgC7dhW7X3RTgr9j7Lzj5sw7CpcDMF9AKY6NinwBTA==
+X-Received: by 2002:aa7:9510:: with SMTP id b16mr1768595pfp.65.1580180777932; 
+ Mon, 27 Jan 2020 19:06:17 -0800 (PST)
+Received: from taoren-ubuntu-R90MNF91.thefacebook.com
+ ([2620:10d:c090:200::2:ab25])
+ by smtp.gmail.com with ESMTPSA id z4sm17357409pfn.42.2020.01.27.19.06.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Jan 2020 19:06:17 -0800 (PST)
+From: rentao.bupt@gmail.com
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ taoren@fb.com, openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.4 v3 0/3] aspeed-g6: enable usb support
+Date: Mon, 27 Jan 2020 19:06:00 -0800
+Message-Id: <20200128030603.32612-1-rentao.bupt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,58 +74,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a47492059d2a1a75
-Content-Type: text/plain; charset="UTF-8"
+From: Tao Ren <rentao.bupt@gmail.com>
 
-All,
+The patch series aims at enabling USB Host and Gadget support on AST2600
+platforms. I'm targeting openbmc tree mainly for some early feedback and
+more widespread testing. I'm planning to upstream the patches after
+5.6-rc1.
 
-While I've very much enjoyed my time working with this community, it's time
-for me to step down as comaintainer on the various IPMI projects. I'll be
-fully devoting my time to hacking Git, these days. :)
+Patch #1 moves hardcoded vhub attributes (number of downstream ports and
+endpoints) to "struct ast_hub_config" which is then attached to "struct
+of_device_id". By doing this, it will be easier to enable ast2600 vhub
+which supports more ports and endpoints.
 
-Sometime this week I'll be sending changes to remove me from the
-appropriate MAINTAINERS files. If there is something that you still need
-from me - a review, an opinion, whatever - please let me know and I can
-take care of it. I'll continue to peek into my review queue this week and
-next week; after that, I won't be gone forever, but I won't be able to
-grant approvals on Gerrit.
+Patch #2 enables AST2600 support in aspeed-vhub gadget driver.
 
-I expect I'll still be reachable all the usual ways - this email, Freenode,
-LinkedIn, whatever - I won't be disappearing or changing employers, just
-focusing my time elsewhere.
+Patch #3 adds USB devices and according pin groups in aspeed-g6 dtsi.
 
-Thank you all very much for the extraordinary learning experience I've had
-working with this project and incredible group of people. I wish everyone
-success in the future and look forward to OpenBMC as the norm in
-datacenters and home workstations.
+Tao Ren (3):
+  usb: gadget: aspeed: read vhub config from of_device_id
+  usb: gadget: aspeed: add ast2600 vhub support
+  ARM: dts: aspeed-g6: add usb functions
 
-Yours,
-Emily
+ arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi   |  25 +++++
+ arch/arm/boot/dts/aspeed-g6.dtsi           |  43 ++++++++
+ drivers/usb/gadget/udc/aspeed-vhub/Kconfig |   4 +-
+ drivers/usb/gadget/udc/aspeed-vhub/core.c  | 109 ++++++++++++++-------
+ drivers/usb/gadget/udc/aspeed-vhub/dev.c   |  30 ++++--
+ drivers/usb/gadget/udc/aspeed-vhub/epn.c   |   4 +-
+ drivers/usb/gadget/udc/aspeed-vhub/hub.c   |  26 +++--
+ drivers/usb/gadget/udc/aspeed-vhub/vhub.h  |  23 ++---
+ 8 files changed, 191 insertions(+), 73 deletions(-)
 
---000000000000a47492059d2a1a75
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-- 
+2.17.1
 
-<div dir=3D"ltr">All,<div><br></div><div>While I&#39;ve very much enjoyed m=
-y time working with this community, it&#39;s time for me to step down as co=
-maintainer on the various IPMI projects. I&#39;ll be fully devoting my time=
- to hacking Git, these days. :)<br><br>Sometime this week I&#39;ll be sendi=
-ng changes to remove me from the appropriate MAINTAINERS files. If there is=
- something that you still need from me - a review, an opinion, whatever - p=
-lease let me know and I can take care of it. I&#39;ll continue to peek into=
- my review queue this week and next week; after that, I won&#39;t be gone f=
-orever, but I won&#39;t be able to grant approvals on Gerrit.</div><div><br=
-></div><div>I expect I&#39;ll still be reachable all the usual ways - this =
-email, Freenode, LinkedIn, whatever - I won&#39;t be disappearing or changi=
-ng employers, just focusing my time elsewhere.</div><div><br></div><div>Tha=
-nk you all very much for the extraordinary learning experience I&#39;ve had=
- working with this project and incredible group of people. I wish everyone =
-success in the future and look forward to OpenBMC as the norm in datacenter=
-s and home workstations.</div><div><br></div><div>Yours,<br clear=3D"all"><=
-div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_sign=
-ature">Emily</div></div></div></div>
-
---000000000000a47492059d2a1a75--
