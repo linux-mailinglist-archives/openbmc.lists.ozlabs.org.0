@@ -1,85 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C272814AD41
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 01:38:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B227A14AD3E
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 01:35:17 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48671Z54LlzDqGg
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 11:35:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48674x0LQ4zDqGg
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jan 2020 11:38:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.18;
- helo=wnew4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=jRd1UP4A; 
+ header.s=fm1 header.b=go4DyDoe; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=WGURrXmL; 
+ header.a=rsa-sha256 header.s=fm1 header.b=XYVnqh27; 
  dkim-atps=neutral
-Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com
- [64.147.123.18])
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48670r4YXxzDqCk
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 11:34:36 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4867422lhVzDqCk
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jan 2020 11:37:22 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.west.internal (Postfix) with ESMTP id BF80D56E;
- Mon, 27 Jan 2020 19:34:32 -0500 (EST)
+ by mailout.west.internal (Postfix) with ESMTP id 0A8D052C;
+ Mon, 27 Jan 2020 19:37:18 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 27 Jan 2020 19:34:33 -0500
+ by compute4.internal (MEProxy); Mon, 27 Jan 2020 19:37:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=Q2osZlpfo6p20zNQOxsnn1lJjaI7EbZ
- h2NpclMwO7Ts=; b=jRd1UP4AHsi0mWw7M1Euns2l2U9WBlLCtl4Cptt8WFp+74s
- wC0Wp7HJgSQ2tzmkzcQec1VGJbTKvbziduEYnRoxNU4Uuhac/fsTblvVTM9EAs6u
- hmk32DCCT58aUaLPWSFDnis3SiJOjkbiJpDgiPGzxReIF8aZQbWkxNqgizG82bji
- tCi9bthMZl5/HNqobbAW0ImCvQgF+teq5o4Byk7pHmN80GFY5/x6jDlasqddZ+KE
- P+KoY2nkxVSn/MCkC3mNjJ53TCJtXh8fBHjyCvAUX6/enksqzV3vlWOGbpHhVRHp
- F2spEvpRm2SxhQBYbfvGWqJlODJpPOF7blR7ghQ==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm1; bh=QUsHI
+ 3XjEYn57WGeGfBv+F6fPWDDnJTfpjOVKPp7Zvo=; b=go4DyDoeVK17nEydI4akf
+ WJ1J2SiqpY2QUc/QSbgwa7wXwQtD40fIDR3D19SPtZ1DqosQ0OE+v6Z/D2GKBtig
+ sdRTV8R0oYWw7fvDYQ315s+Y9UfAaEa4H5u2UNdJkmXUvpLTYA2g9nt4jTWFS6+R
+ 1gamlzjeIzAvBkGq3tTfXmfLdC5d8CaZDNdtJniUtpC9XPYFrJVrbdlia6CT/UuP
+ P5qaVdPwTH0a0G7tjF5MLTnuoZDV7uoIIaGmimaNBYVEtuNMWigng/CkJOGgL9+H
+ 41MLUu8XSnKX5k/H+yLG5yK3V1wljV9yQhKE6JY1hAg4KX3RuF+RU6EQeBXRsBBD
+ A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Q2osZl
- pfo6p20zNQOxsnn1lJjaI7EbZh2NpclMwO7Ts=; b=WGURrXmLai8cYBbXZ+im1F
- wCpne6J8gu2HWkjYwsg6RWXpWuNXjAnqorBKYH2PkwQQ8drbt7tnMNnjBY4noZ3n
- 4zJsu9/wRw/rtu8yubwqD3GSvRuKFteVtFYF8xjLRXM4KqbN62tSEiupgxUrKTZK
- XcnHVMzG6XLxzMDYjrc/SxAwdpxl82CXcZkIRFq63grWXNFhW+SeSCfwGLxdmFoW
- v1NWigzC+eiyWQXRYwl+24NphdX5UvkS7neeVva/OQ6jOJIy600s6T9OT3LXKchA
- mG3Ia5RhQN6mMeXurkb9qn4Gq8TpqUqkcMidllmoF287e+UoHIlv7qL+gYO66Bhg
- ==
-X-ME-Sender: <xms:l4EvXgEKtH3oXuA9syqRXolJ5Iu9As8RDxw3fG7LASRW9BV4xNBXfQ>
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; bh=QUsHI3XjEYn57WGeGfBv+F6fPWDDnJTfpjOVKPp7Z
+ vo=; b=XYVnqh27ieiilvfAUY6dpneYJjciMTY1Hif2ScnAtUxVvNv6vjt9XuOqY
+ 3FTjyw2Ar08EhpxI8tosOvL1IVS8NpxAlKIMN5R0ZczccsShwQjUSDQ+/sV3joug
+ /PivAgeeEAIktflRyzNMzmS6PO3qxNm0leoOp6GhFQ2FuBYtlibFkOeGdCV55BEK
+ eFQwJLoAWnunBP0eqwjPidZS/rv6cIfPj2xOFz7HlH2fZs3HVGc90uDfxIwWY0Ia
+ R39Mq43Q4citVa2WUEppE6LOuf91m7H3+fC/ad2owaFlcEt7sRtJZTO+Ut2V7jvD
+ uVJU0qNNY5sfrjIua+3vIcuJ5VA9Q==
+X-ME-Sender: <xms:PYIvXlwLKfXeluSLC9IeCgY2ITPY6IMTNDWxdI6aCzHO8AU2FNwqvg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrfeefgddvvdcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
- rdhiugdrrghu
-X-ME-Proxy: <xmx:l4EvXuMb4l-2AkWDTNZcVXzKw6Wx6SGoLTHxdlSuv-YNC0aykYlidg>
- <xmx:l4EvXnviw9-rAI4PASWLYgBIkuNHcuD9bUTuBx5CFDNirsqLLfi-IQ>
- <xmx:l4EvXkLA6MPgSNwSXeoSFPDlEu_bQasiE2ngqs126Xy4-wWN75PpvA>
- <xmx:mIEvXiFIZvsdHs9XCzR-2gennBOPK_qp7AbU7YSAeKD7fUbGnruy8xhcO9Y>
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuvehluh
+ hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegr
+ jhdrihgurdgruh
+X-ME-Proxy: <xmx:PYIvXg9Vyx4VxbnDHtYCQi8T-eGkBE3Iy4tzWRbSlBGeTtSU8PDNLw>
+ <xmx:PYIvXmOpRAN3zea-AQVlnHO4V4F27cNGq39xE_oPHEEEDqA74QwRJg>
+ <xmx:PYIvXsXRm2MxCXQOIACsRAkl8okngUDWVMyafZ6K4P-IcWpcpveTxQ>
+ <xmx:PoIvXinUZtf7CFNf-p7l3nsH1zfjHQI3z0nW9U2TKgKQi-m8L7KBzw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 6387FE00A2; Mon, 27 Jan 2020 19:34:31 -0500 (EST)
+ id D2235E00A2; Mon, 27 Jan 2020 19:37:17 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-781-gfc16016-fmstable-20200127v1
 Mime-Version: 1.0
-Message-Id: <13a2567e-5426-4dc5-b7fd-4d982203eb61@www.fastmail.com>
-In-Reply-To: <CAH1kD+bewL+yeW82bb_1uJx1cx6y_EC5oLXEHkwGwWM8wy8TUw@mail.gmail.com>
+Message-Id: <4469ca80-8df5-43be-876b-f3e393407e59@www.fastmail.com>
+In-Reply-To: <67e599e4-0b45-aa01-1e27-d49c52873646@linux.intel.com>
 References: <67e599e4-0b45-aa01-1e27-d49c52873646@linux.intel.com>
- <13B92308-8346-4B8F-9A1C-139A0B11A762@fb.com>
- <CAH1kD+bewL+yeW82bb_1uJx1cx6y_EC5oLXEHkwGwWM8wy8TUw@mail.gmail.com>
-Date: Tue, 28 Jan 2020 11:04:14 +1030
+Date: Tue, 28 Jan 2020 11:07:00 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Richard Hanley" <rhanley@google.com>, "Vijay Khemka" <vijaykhemka@fb.com>
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "OpenBMC Maillist" <openbmc@lists.ozlabs.org>,
+ "Deepak Kodihalli" <dkodihal@linux.vnet.ibm.com>, tomjoseph@in.ibm.com,
+ "Winiarska, Iwona" <iwona.winiarska@intel.com>,
+ "piotr.matuszczak@intel.com" <piotr.matuszczak@intel.com>,
+ "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
+ "sumanth.bhat@linux.intel.com" <sumanth.bhat@linux.intel.com>,
+ "James Mihm" <james.mihm@intel.com>
 Subject: Re: Reg OpenBMC PMCI Workgroup
-Content-Type: text/plain
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,31 +98,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "tomjoseph@in.ibm.com" <tomjoseph@in.ibm.com>,
- James Mihm <James.Mihm@intel.com>, "Winiarska,
- Iwona" <iwona.winiarska@intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "piotr.matuszczak@intel.com" <piotr.matuszczak@intel.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, "Thomaiyar,
- Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- "sumanth.bhat@linux.intel.com" <sumanth.bhat@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Sat, 25 Jan 2020, at 08:17, Richard Hanley wrote:
-> Hi Richard,
-> 
-> +1 on interest from PST time zone. I know I've personally been 
-> struggling with how to get meetings that cover most timezones. I'm 
-> starting to think that a possible system is to alternating between two 
-> set times. That way most people can be somewhat involved.
->
+On Wed, 22 Jan 2020, at 01:32, Thomaiyar, Richard Marian wrote:
+> =20
+>=20
+> All,=20
+>=20
+> In order to co-ordinate the PMCI implementation in OpenBMC (MCTP, PLDM=
+,=20
+> SPDM etc.), thought of having OpenBMC PMCI workgroup. Workgroups main=20=
 
-I'm in ACDT (UTC+10:30), PST can work for me but at the wrong end of
-the day for what works for Richard. I'm maintaining libmctp with Jeremy
-and have a plan for implementing kernel-based MCTP support, so really
-want to be present at any related get-togethers.
+> objective will be to discuss PMCI related design, and to speed up the=20=
+
+> implementation in a collaborative manner with the community. This has=20=
+
+> already been discussed in IRC, and few people already showed interest=20=
+
+> in having a weekly / bi-weekly call for the same.=20
+>=20
+> Let me know if you are interested in joining and contributing the same=
+,=20
+> and what time will be convenient for you. Finding time convenient for=20=
+
+> all time zone=E2=80=99s will be difficult but will try to see. So far =
+people=20
+> from Bangalore, Australia & Poland have shown interest / already=20
+> contributing, and hence listed out times convenient for them. Please=20=
+
+> reply to me your convenient time, if below mentioned time doesn=E2=80=99=
+t suit.=20
+> (Based on the reply, will try to select).=20
+>=20
+> Option1 : Monday - 3 PM to 4 PM IST (10:30 to 11:30 AM Poland / 8:30 t=
+o=20
+> 9:30 PM ACT).
+
+This is probably going to work best for me out of all options.
+
+>=20
+> Option2: Tuesday (Same as above)
+
+This is my second choice.
+
+>=20
+> Option 3: Monday - An hour earlier. (2 PM to 3 PM IST (9:30 to 10:30 A=
+M=20
+> Poland / 7:30 to 8:30 PM ACT).
+>=20
+> Option 4: Tuesday =E2=80=93 same time as option 3
+>=20
+>=20
+
+Cheers,
 
 Andrew
