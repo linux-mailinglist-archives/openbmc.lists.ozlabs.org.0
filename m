@@ -1,86 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CDE314D1A9
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 21:02:45 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A32714D1C0
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 21:12:32 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 487F5S3814zDqTN
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 07:12:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 487DtB29zdzDqTd
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 07:02:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.27;
- helo=wnew2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=jic23@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=e5TMFiC5; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=w0Kk2e7S; 
- dkim-atps=neutral
-Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com
- [64.147.123.27])
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=default header.b=rjv5RFPq; dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 487F4m47HzzDqSv
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 07:11:52 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.west.internal (Postfix) with ESMTP id 0574E4EC;
- Wed, 29 Jan 2020 15:11:49 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Wed, 29 Jan 2020 15:11:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=z63y3KQucGGKRU50qPo3AWSzZmu
- 4XRNq1wQn7uzforQ=; b=e5TMFiC5X60BLRTwNZ36dGovPneOFe1Wj8LxLOxb2i1
- e1yfXoAO33qpwEdfyQ8ANwmDcuQBkVzhoWRCdM6/qTg7J1VZEXSilmFNVKbsHTh3
- 4R+wL8UeMgh1F+ve36ehKGQRvMaPGUB39HSB/3ydpNwA29LceaUaSEA5OaxCT46E
- 0C9PM165e38bA2l/KB9laNDUbmViHoRpR/TmXAF+d4Rsrd/F3imVr4iZidaGVD/h
- nfbkAZoIy64GUAdNuDoyrlL1cQ7VZoB3xol412ASPRmGZOqCx6PmuNfUSaxwYX0p
- Zl+xP6y64BdVy3TY7e92fYzEAnGOoUHEwtIM9fogR6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=z63y3K
- QucGGKRU50qPo3AWSzZmu4XRNq1wQn7uzforQ=; b=w0Kk2e7SF3JBfSFa4LmpEz
- 0HhLdPrgsbxjtGvJcWHZmNK+ibY4YRqETl/oaG/SVGef2qoR5ll5EHOsvADj0zyz
- /hbGrgEWr33wS2p4ONedFO+H7lQSLMAgpzzc80Wd444pUf8g1VksXI4YMI69oZOV
- T4vp2PwlVcLcfPP06niLTDJWH4wsWp7f+Fc4NuDceXeCjK25oW+r8PjQ0H93hOe7
- LRjHKSDvdwg8yj4SDUqT9ZJ2pSG/MYl/eQn6IpwkLV+mSRVQPB1E4xAu8LnHi6DV
- NDTh702LEOgzvTiXnDmcwT6041gcHCbS9M1izst8BSNPUijX//0KhkMeKYeV3YOw
- ==
-X-ME-Sender: <xms:BecxXs-HzIAjGUvn0zmxCDb6QkLWid6e6fbzvFvbswskdBt2S-SamA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrfeeigddufeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecukfhppeduleelrddvtddurdeigedrudefvdenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
- iftgigrdighiii
-X-ME-Proxy: <xmx:BecxXn3PESErOvABDzvamNUIktiNtEAP-pAmli2mETFkZp9X9RucIA>
- <xmx:BecxXvc3fObHdBFt7msIozLcJdBk_7WVkyxDM2Bu7pC4JK18agwbNw>
- <xmx:BecxXhA9ApbUPvh09lgTa82lzuS1qPTEfjdFFKe4CBT_F-BPVFQJNw>
- <xmx:BecxXvLeIG4vYqqd01_yyb9RKYajMfbA-DQ-1qig1zftrRR0nS5G6daopORoCwA2>
-Received: from localhost (unknown [199.201.64.132])
- by mail.messagingengine.com (Postfix) with ESMTPA id D3A0D30607B0;
- Wed, 29 Jan 2020 15:11:48 -0500 (EST)
-Date: Wed, 29 Jan 2020 11:18:59 -0800
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: Test email - ignore
-Message-ID: <20200129191857.GB89175@patrickw3-mbp.dhcp.thefacebook.com>
-References: <23247186-abaa-4f7d-88fb-38f871c745e8@www.fastmail.com>
- <CAJoAoZkC6qb35i7GUXMdG3ZKvCDkeX6KAQoumFpjRpVZFsahpg@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 487DsD2zGjzDqSk
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 07:01:51 +1100 (AEDT)
+Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net
+ [82.4.196.95])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id B276F2067C;
+ Wed, 29 Jan 2020 20:01:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1580328109;
+ bh=eUqnYUa8xJcvz8vjf0xZN38k+FZQvoRAsBz21Xm6sZU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=rjv5RFPqGSLFBb+bMIdmwauMlY6BQgrgduh+b+BbCWLmSNE5sAYkGdk3gjtU5l0cm
+ yM1Mevx+pg8NIM1pZfvo4qhbpqD3PvHGA8bqty+FHme7kVyyJLyOe0Au3HwLzHqd3c
+ 2zZHeagcFw2DxanCXC2NByH9ip34n2nnY56U3X64=
+Date: Wed, 29 Jan 2020 20:01:43 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v1 2/2] iio: adc: modify NPCM reset support
+Message-ID: <20200129200143.08bf4a91@archlinux>
+In-Reply-To: <20200119110032.124745-2-tmaimon77@gmail.com>
+References: <20200119110032.124745-1-tmaimon77@gmail.com>
+ <20200119110032.124745-2-tmaimon77@gmail.com>
+X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="eJnRUKwClWJh1Khz"
-Content-Disposition: inline
-In-Reply-To: <CAJoAoZkC6qb35i7GUXMdG3ZKvCDkeX6KAQoumFpjRpVZFsahpg@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,45 +58,110 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, patrickw3@fb.com
+Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, lars@metafoo.de,
+ benjaminfair@google.com, avifishman70@gmail.com, venture@google.com,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-iio@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org,
+ pmeerw@pmeerw.net, knaack.h@gmx.de
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sun, 19 Jan 2020 13:00:32 +0200
+Tomer Maimon <tmaimon77@gmail.com> wrote:
 
---eJnRUKwClWJh1Khz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Modify NPCM ADC reset support from
+> direct register access to reset controller support.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-On Wed, Jan 29, 2020 at 11:01:47AM -0800, Emily Shaffer wrote:
-> I had pretty high latency between sending and my mail showing up on the
-> archive earlier this week. I wonder if some queue is overfull somewhere.
->=20
+Hmm.  This presumably breaks all old DT. 
 
-Thanks for the ack.  I seem to be able to get mail to show up on the
-list when I use my providers web-client but not SMTP.  Not sure why.
+If that's not a problem please say why.
 
---=20
-Patrick Williams
+Jonathan
 
---eJnRUKwClWJh1Khz
-Content-Type: application/pgp-signature; name="signature.asc"
+> ---
+>  drivers/iio/adc/npcm_adc.c | 30 +++++++++---------------------
+>  1 file changed, 9 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
+> index a6170a37ebe8..83bad2d5575d 100644
+> --- a/drivers/iio/adc/npcm_adc.c
+> +++ b/drivers/iio/adc/npcm_adc.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/spinlock.h>
+>  #include <linux/uaccess.h>
+> +#include <linux/reset.h>
+>  
+>  struct npcm_adc {
+>  	bool int_status;
+> @@ -23,13 +24,9 @@ struct npcm_adc {
+>  	struct clk *adc_clk;
+>  	wait_queue_head_t wq;
+>  	struct regulator *vref;
+> -	struct regmap *rst_regmap;
+> +	struct reset_control *reset;
+>  };
+>  
+> -/* NPCM7xx reset module */
+> -#define NPCM7XX_IPSRST1_OFFSET		0x020
+> -#define NPCM7XX_IPSRST1_ADC_RST		BIT(27)
+> -
+>  /* ADC registers */
+>  #define NPCM_ADCCON	 0x00
+>  #define NPCM_ADCDATA	 0x04
+> @@ -106,13 +103,11 @@ static int npcm_adc_read(struct npcm_adc *info, int *val, u8 channel)
+>  					       msecs_to_jiffies(10));
+>  	if (ret == 0) {
+>  		regtemp = ioread32(info->regs + NPCM_ADCCON);
+> -		if ((regtemp & NPCM_ADCCON_ADC_CONV) && info->rst_regmap) {
+> +		if (regtemp & NPCM_ADCCON_ADC_CONV) {
+>  			/* if conversion failed - reset ADC module */
+> -			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
+> -				     NPCM7XX_IPSRST1_ADC_RST);
+> +			reset_control_assert(info->reset);
+>  			msleep(100);
+> -			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
+> -				     0x0);
+> +			reset_control_deassert(info->reset);
+>  			msleep(100);
+>  
+>  			/* Enable ADC and start conversion module */
+> @@ -186,7 +181,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
+>  	struct npcm_adc *info;
+>  	struct iio_dev *indio_dev;
+>  	struct device *dev = &pdev->dev;
+> -	struct device_node *np = pdev->dev.of_node;
+>  
+>  	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*info));
+>  	if (!indio_dev)
+> @@ -199,6 +193,10 @@ static int npcm_adc_probe(struct platform_device *pdev)
+>  	if (IS_ERR(info->regs))
+>  		return PTR_ERR(info->regs);
+>  
+> +	info->reset = devm_reset_control_get(&pdev->dev, NULL);
+> +	if (IS_ERR(info->reset))
+> +		return PTR_ERR(info->reset);
+> +
+>  	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
+>  	if (IS_ERR(info->adc_clk)) {
+>  		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
+> @@ -211,16 +209,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
+>  	div = div >> NPCM_ADCCON_DIV_SHIFT;
+>  	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
+>  
+> -	if (of_device_is_compatible(np, "nuvoton,npcm750-adc")) {
+> -		info->rst_regmap = syscon_regmap_lookup_by_compatible
+> -			("nuvoton,npcm750-rst");
+> -		if (IS_ERR(info->rst_regmap)) {
+> -			dev_err(&pdev->dev, "Failed to find nuvoton,npcm750-rst\n");
+> -			ret = PTR_ERR(info->rst_regmap);
+> -			goto err_disable_clk;
+> -		}
+> -	}
+> -
+>  	irq = platform_get_irq(pdev, 0);
+>  	if (irq <= 0) {
+>  		ret = -EINVAL;
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl4x2qEACgkQqwNHzC0A
-wRnxMg//Sw5caV6JwIQGZuNn65niPgfV+wMCKD6sxm5RtFP2rGw41WG6uwn6M69L
-vcHUaTsfYbL1wIkVM/oKz1xbJ7dl37BQbHWyTv7iqVvya60ZtpvCAjn+OsWJ9h+r
-KoZvKyUm03TdrNG/08xjQEs6btXWB1f0J6yAg4btNrZjqRKd74bZFExg+5zpcO/K
-djP6PF0kamuS9aox32AfX3TPshmRtHNx17iDHPO8GF2H+YdNgAEtjC7eO4yUmxLe
-Y9pNl5pO4a5llBWZUQI+aWxSPpxgizZQ/2BdxkDjtFWfKZ4/caSVEoODLLL8Bc5D
-PKnxQDeSAy6Igrp9euJl2gCGN3z5EVX2A8ExfgqBa2ItkhnrYYEp1Sueoq0SNx60
-5wbdKSFK0aW9C6UeSovwAXpOTBV6wYIaySXlL9zW+XuyUvd6w+RPWX4ltbpJKkjd
-vlZDrCqTb83k+g8K06bfGYMXxtcS/rx6/8r1PrMVkhMvdbT38o+6MMcxLgFguiKv
-zktQvVucR8bHE6dZk/mE3ghJyo/vscYeL1Fp7ZzEEGwJRQM3yiVLdCOTvsSB6j5G
-a2z6Hf7Lud3FzhyDeDBluBne9M+zFCqLNZZbFKhl0+QadekVOddic0lMfz7TSfxC
-B0iUJ/x9fVcVDHkdTLLXi3+VKU+A8Hh0T+SKcyX/LQoMfGKXoIw=
-=ZrF7
------END PGP SIGNATURE-----
-
---eJnRUKwClWJh1Khz--
