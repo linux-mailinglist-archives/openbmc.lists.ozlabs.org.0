@@ -1,52 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CDE314D1A9
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 21:02:45 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 487DtB29zdzDqTd
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 07:02:42 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EC4314D1CD
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 21:17:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 487FC33GnFzDqTq
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 07:17:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=jic23@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.27;
+ helo=wnew2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=rjv5RFPq; dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=RJslye5i; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=iADosyz/; 
+ dkim-atps=neutral
+Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com
+ [64.147.123.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 487DsD2zGjzDqSk
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 07:01:51 +1100 (AEDT)
-Received: from archlinux (cpc149474-cmbg20-2-0-cust94.5-4.cable.virginm.net
- [82.4.196.95])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id B276F2067C;
- Wed, 29 Jan 2020 20:01:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1580328109;
- bh=eUqnYUa8xJcvz8vjf0xZN38k+FZQvoRAsBz21Xm6sZU=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=rjv5RFPqGSLFBb+bMIdmwauMlY6BQgrgduh+b+BbCWLmSNE5sAYkGdk3gjtU5l0cm
- yM1Mevx+pg8NIM1pZfvo4qhbpqD3PvHGA8bqty+FHme7kVyyJLyOe0Au3HwLzHqd3c
- 2zZHeagcFw2DxanCXC2NByH9ip34n2nnY56U3X64=
-Date: Wed, 29 Jan 2020 20:01:43 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 2/2] iio: adc: modify NPCM reset support
-Message-ID: <20200129200143.08bf4a91@archlinux>
-In-Reply-To: <20200119110032.124745-2-tmaimon77@gmail.com>
-References: <20200119110032.124745-1-tmaimon77@gmail.com>
- <20200119110032.124745-2-tmaimon77@gmail.com>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 487FBR03lczDqTC
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 07:16:46 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.west.internal (Postfix) with ESMTP id 6E6A8711;
+ Wed, 29 Jan 2020 15:16:44 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Wed, 29 Jan 2020 15:16:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=wQyyJc9BNiZrGN4Trsz+VKOBJl6
+ x6VtabdXYAP6aD1E=; b=RJslye5iNeOcs6Yx4/8OvIobVLKZRuggr0/oWyv6pkn
+ bek3FASGF88zR1omAJGmDp1p4sQYv4/MOeUw71okhtXOG0vSeVOAV36UGne3TLHf
+ +SHw6ZHaCmK/k3qpr95wRw52JHah8Xq+06SHMJJu+PSZ9ZDBKJHjJ3kOyQFwq50k
+ rrNDpafwSJzAfNPm3D/xc9LBB/A05KKRX+wIqILH0TtU4FjYHWS1Y5fZekDawvSW
+ pUvjqbbfhyAeAtwm3HUR569x38DgQJeYbLdDDnBI9ZXX/F1It3ywW+ttFbiMxtXb
+ +Yjc3rNRob1TsAdUEydH5BEGAQk/7XgI7SEY4m7tH8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=wQyyJc
+ 9BNiZrGN4Trsz+VKOBJl6x6VtabdXYAP6aD1E=; b=iADosyz/lVBZouC3BzbGQs
+ a6N2j7S1up8lLTcL4SAFPA8y60PHCIWCjBVV1J6EhfDIqnr2twiCw7ej4yOtIIUy
+ fDNEVEdOu/Lqafipum2CrACt/qTEbBEQQS9m35bixK3lWAvpa7uiWWakIIu18b3l
+ CS9olC56BjptNsNWnwCr2SPykvpcKBmVSdGbnKO+M7vxqTtmpmd+SYOwzxsq83GJ
+ hSzsZ4cbDQg+/1fGxiplEj2BtvzT1hipCH4rg+vrR5RL4Uw1utwpI5bIArZFEykn
+ nv8NTwwN+OMcOhhHAi2In8HtLnMLjuuOrG6rpXAI0W5menzNttyFHrdMsL7z98zA
+ ==
+X-ME-Sender: <xms:K-gxXscAAdHsE1jeSReY6i1IU7jmMARSa9YhIlnZXuXWq9BmCbAw-A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrfeeigddufedvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecukfhppeduleelrddvtddurdeigedrudefvdenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:K-gxXkhn_cDGL2ruSZTnX8_z_pfDDHYJqrRRSBXRriT4cXtpRpoXVQ>
+ <xmx:K-gxXjgfnG66-lFXhl5vHEVz7xBt7SzDAVYFvjZqkke8QMHxTqt88w>
+ <xmx:K-gxXvQ7IhMv3Y2OE0M0OffOyTI-JrWhEIU00bF5m3aTCpj7RKCUBg>
+ <xmx:K-gxXlRcCZyWVjexzXjmhFSMVGQCN0QGVkEqNZqxPAieRf1hxzquM5uDqCQVnqmu>
+Received: from localhost (unknown [199.201.64.132])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 640CF3060B27;
+ Wed, 29 Jan 2020 15:16:43 -0500 (EST)
+Date: Wed, 29 Jan 2020 12:16:42 -0800
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: Test email - ignore
+Message-ID: <20200129201642.GA92818@patrickw3-mbp.dhcp.thefacebook.com>
+References: <23247186-abaa-4f7d-88fb-38f871c745e8@www.fastmail.com>
+ <CAJoAoZkC6qb35i7GUXMdG3ZKvCDkeX6KAQoumFpjRpVZFsahpg@mail.gmail.com>
+ <20200129191857.GB89175@patrickw3-mbp.dhcp.thefacebook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="pWyiEgJYm5f9v55/"
+Content-Disposition: inline
+In-Reply-To: <20200129191857.GB89175@patrickw3-mbp.dhcp.thefacebook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,110 +93,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, lars@metafoo.de,
- benjaminfair@google.com, avifishman70@gmail.com, venture@google.com,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- linux-iio@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org,
- pmeerw@pmeerw.net, knaack.h@gmx.de
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, 19 Jan 2020 13:00:32 +0200
-Tomer Maimon <tmaimon77@gmail.com> wrote:
 
-> Modify NPCM ADC reset support from
-> direct register access to reset controller support.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+--pWyiEgJYm5f9v55/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm.  This presumably breaks all old DT. 
+On Wed, Jan 29, 2020 at 11:18:59AM -0800, Patrick Williams wrote:
+> On Wed, Jan 29, 2020 at 11:01:47AM -0800, Emily Shaffer wrote:
+> > I had pretty high latency between sending and my mail showing up on the
+> > archive earlier this week. I wonder if some queue is overfull somewhere.
+> >=20
+>=20
+> Thanks for the ack.  I seem to be able to get mail to show up on the
+> list when I use my providers web-client but not SMTP.  Not sure why.
 
-If that's not a problem please say why.
+I think I figured this out, which might be useful to someone somewhere
+someday.  The latest version of msmtp deprecated (and maybe changed the
+behavior of) the 'auto_from on'.  My emails were being generated with a
+Return-Path of <local-user>@<domain> instead of <email>@<domain>.  Seems
+that the mailing list software didn't like that.
 
-Jonathan
+I'm going to "spam" the list with a few emails that I intended to send
+over the last week but never made it through.  Sorry if you were on a
+direct To/Cc and you're getting a duplicate.
 
-> ---
->  drivers/iio/adc/npcm_adc.c | 30 +++++++++---------------------
->  1 file changed, 9 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
-> index a6170a37ebe8..83bad2d5575d 100644
-> --- a/drivers/iio/adc/npcm_adc.c
-> +++ b/drivers/iio/adc/npcm_adc.c
-> @@ -14,6 +14,7 @@
->  #include <linux/regulator/consumer.h>
->  #include <linux/spinlock.h>
->  #include <linux/uaccess.h>
-> +#include <linux/reset.h>
->  
->  struct npcm_adc {
->  	bool int_status;
-> @@ -23,13 +24,9 @@ struct npcm_adc {
->  	struct clk *adc_clk;
->  	wait_queue_head_t wq;
->  	struct regulator *vref;
-> -	struct regmap *rst_regmap;
-> +	struct reset_control *reset;
->  };
->  
-> -/* NPCM7xx reset module */
-> -#define NPCM7XX_IPSRST1_OFFSET		0x020
-> -#define NPCM7XX_IPSRST1_ADC_RST		BIT(27)
-> -
->  /* ADC registers */
->  #define NPCM_ADCCON	 0x00
->  #define NPCM_ADCDATA	 0x04
-> @@ -106,13 +103,11 @@ static int npcm_adc_read(struct npcm_adc *info, int *val, u8 channel)
->  					       msecs_to_jiffies(10));
->  	if (ret == 0) {
->  		regtemp = ioread32(info->regs + NPCM_ADCCON);
-> -		if ((regtemp & NPCM_ADCCON_ADC_CONV) && info->rst_regmap) {
-> +		if (regtemp & NPCM_ADCCON_ADC_CONV) {
->  			/* if conversion failed - reset ADC module */
-> -			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
-> -				     NPCM7XX_IPSRST1_ADC_RST);
-> +			reset_control_assert(info->reset);
->  			msleep(100);
-> -			regmap_write(info->rst_regmap, NPCM7XX_IPSRST1_OFFSET,
-> -				     0x0);
-> +			reset_control_deassert(info->reset);
->  			msleep(100);
->  
->  			/* Enable ADC and start conversion module */
-> @@ -186,7 +181,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
->  	struct npcm_adc *info;
->  	struct iio_dev *indio_dev;
->  	struct device *dev = &pdev->dev;
-> -	struct device_node *np = pdev->dev.of_node;
->  
->  	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*info));
->  	if (!indio_dev)
-> @@ -199,6 +193,10 @@ static int npcm_adc_probe(struct platform_device *pdev)
->  	if (IS_ERR(info->regs))
->  		return PTR_ERR(info->regs);
->  
-> +	info->reset = devm_reset_control_get(&pdev->dev, NULL);
-> +	if (IS_ERR(info->reset))
-> +		return PTR_ERR(info->reset);
-> +
->  	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
->  	if (IS_ERR(info->adc_clk)) {
->  		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
-> @@ -211,16 +209,6 @@ static int npcm_adc_probe(struct platform_device *pdev)
->  	div = div >> NPCM_ADCCON_DIV_SHIFT;
->  	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
->  
-> -	if (of_device_is_compatible(np, "nuvoton,npcm750-adc")) {
-> -		info->rst_regmap = syscon_regmap_lookup_by_compatible
-> -			("nuvoton,npcm750-rst");
-> -		if (IS_ERR(info->rst_regmap)) {
-> -			dev_err(&pdev->dev, "Failed to find nuvoton,npcm750-rst\n");
-> -			ret = PTR_ERR(info->rst_regmap);
-> -			goto err_disable_clk;
-> -		}
-> -	}
-> -
->  	irq = platform_get_irq(pdev, 0);
->  	if (irq <= 0) {
->  		ret = -EINVAL;
+--=20
+Patrick Williams
 
+--pWyiEgJYm5f9v55/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl4x6CgACgkQqwNHzC0A
+wRmQ7Q/9GQWK7KwyOw9duEEs9hnfL0xL0ITeDMZOnqdFdiV4seJb2GEvXj7FdLzf
+op0oNaAnnI/378VhFpz1eijDVvnX/0DHFIbXvZsBDlqOdfhp3d3A444YidCAyL4H
+NMSJ+KvN0mq9U11xz0zydqW5cM++EuX6Gvw3qInHLnBANrdAq1wF4wiSTdr3taEf
+MzMc+fDFlRKia1FrxGS5GUpy6h59uy3WhY0VlcL35HTn64Ck9S6XCfOSfAhCp0x+
+fXV1M7Oojmf7Hkf+MIYpHD0kjBjWMl3WL8tKdUnWGxKGabi6Yl89eHgzIwNvcQGA
+hVclz7Hl3fwKFzFCAbw0Rhq+XOoOMV8WQrmMCJ5IXdxVH7695cFGr/tovgCOZitG
+EUDMakIPhDZrVDTUQRH1U2tAV8YY/oAMm6h/rrRwG1sbZgVII71NMWQbpWsaIUh0
+Ztv0DjhLn1PctFPG2+04HulGENiRzVFNFJ5rzM+2lfpt1vh/chylRmJUrj2wq30A
+dUYVr+b4GfsWzyEZXC8DzueuTCB/SnL7f9OU/cAtBm8+BAdFNlwfqrpUgAhGv/9H
+C+rtvYu0HkNSA/NFby6twCVzTY7M3dYp2eiEuHYDpf1M7YL/1u+SS9iR+RYppk1D
+23IUlTdeYjm1FsFWiU9v78TnmmKfv4fcg/bLgKyg/4Jno9KhX/o=
+=FjDf
+-----END PGP SIGNATURE-----
+
+--pWyiEgJYm5f9v55/--
