@@ -1,59 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A013414D088
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 19:31:45 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C89A514CF8C
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jan 2020 18:22:01 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4879Jk1q1MzDqTM
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 04:21:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 487BsC16pMzDqTJ
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 05:31:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.27;
+ helo=wnew2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=XA6QvyuD; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=cF35u8JE; 
+ dkim-atps=neutral
+X-Greylist: delayed 483 seconds by postgrey-1.36 at bilbo;
+ Thu, 30 Jan 2020 05:31:03 AEDT
+Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com
+ [64.147.123.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4879Hy12XvzDqRC
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 04:21:16 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 29 Jan 2020 09:21:12 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,378,1574150400"; d="scan'208";a="277524160"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by FMSMGA003.fm.intel.com with ESMTP; 29 Jan 2020 09:20:59 -0800
-Subject: Re: Redfish OpenBMC OEM
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>,
- Joseph Reynolds <jrey@linux.ibm.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <bec7abfa-8a69-3c8b-7985-dccb80d5c674@linux.vnet.ibm.com>
- <dcfd49c5-48a1-12aa-2f1e-56aef6232cfc@linux.ibm.com>
- <0967abf5-7eb4-8b72-2fe7-d8d4a95ca856@linux.intel.com>
- <5e21e041-aa40-f1a1-e4eb-9aed63db368a@linux.ibm.com>
- <b2654349-f0bf-b341-5736-618dfa2c1fa9@linux.intel.com>
- <bd1c5c4f-68f7-42d4-aebd-daa6629deef5@linux.vnet.ibm.com>
- <e4ce21b1-cab9-765d-100b-5c62843468e0@linux.intel.com>
- <f5078dd7-1b7b-1b93-d1e6-b56081b55835@linux.vnet.ibm.com>
- <e869ddc9-4682-78b1-b289-6f5ad4a525dc@linux.intel.com>
- <ad43dba0-7831-e93d-b073-a6b9de737593@linux.vnet.ibm.com>
- <2b781d56-e375-96a9-c83d-87e07f0d00dd@linux.vnet.ibm.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <bdedea87-1400-7aa3-e1dc-a1c915b2cdb0@linux.intel.com>
-Date: Wed, 29 Jan 2020 09:20:59 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
-MIME-Version: 1.0
-In-Reply-To: <2b781d56-e375-96a9-c83d-87e07f0d00dd@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 487BrR4XQ4zDqQC
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 05:31:03 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.west.internal (Postfix) with ESMTP id 36C846A6
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Jan 2020 13:22:56 -0500 (EST)
+Received: from imap21 ([10.202.2.71])
+ by compute2.internal (MEProxy); Wed, 29 Jan 2020 13:22:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ mime-version:message-id:date:from:to:subject:content-type; s=
+ fm1; bh=4ug6ydH1mh/RofW+uG6Tvmt1+riPwc20zXxURFDVmbk=; b=XA6QvyuD
+ efz55Ke0tt0FoZ2m8EGXhsAa1fsaxvl7fGsnIS0l3DQrt8NI1szX+H7x8BbCfNRB
+ dKnYjrlI4YtMoaB7vC4RWJicy7q36V/9I1Dgafx1ETyrduFB1LyG1Bb1x8ZMh1UN
+ +00pz3hDjHZq/oC3iYjuKMnRyzBsDGh88x4rHqyiaJVWo4dwluLLbZq40qsvU2Df
+ Y1cmRWL/wEqlOIvVm9WkJGyuVo1hVmtZAcYHF6ve+9KDJbRITlSS9zAXYstbaQOF
+ n5mP4rcUn+dp+4mtho6AYJJkJ2U04+H3+m7ZXm6o4IuGkN9aTWUfjQ/4uWn00k2h
+ its/7gqc5wrK7Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm1; bh=4ug6ydH1mh/RofW+uG6Tvmt1+riPw
+ c20zXxURFDVmbk=; b=cF35u8JEvyEs1aYLbM14kl9+2pvt3ARhDNI6heJfGYsEJ
+ fqdmRvp0hTmXRCzfTMeKTI21oAZGuV8VaNVyMGJzdHnN6261Vvn5XXikI52y1sFj
+ YTACYlwrmeVo+FjBVHhitJecRQhErUN8R2/Vj8Bz75EOhz0WhWBr3etfpgn4GUVU
+ VzORBHcJ+FktJ7GIW26X57VZQJc3MSP4oU17G1gfGwQhSJXXwZWpu6Ios7LiNU8y
+ gRG/eMLPgsaMhmivwf3YdeV5xzsOWIyKIllh63rLsh2ceoH63TInVaxcKbOj38yU
+ e9zO5l+Wm/BYQxKosdoq+rsBaZ8/zl3i0Xd7wSFvw==
+X-ME-Sender: <xms:f80xXmIyE0TV1R1KjCV1Vmd8gy_qBagWfeD5RT6PP9D_VStbyFaKjw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrfeeigdduuddtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefofg
+ ggpffkfffhvffutgesrgdtreerreertdenucfhrhhomhepfdfrrghtrhhitghkucghihhl
+ lhhirghmshdfuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuvehluhhsthgvrh
+ fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigt
+ gidrgiihii
+X-ME-Proxy: <xmx:f80xXrSVPbSm8tZCFCDTtZLDKyty5dKA_-5LcM21N7_aILJ90CZcTw>
+ <xmx:f80xXnJdGcvxNTkTeKkyD62z1iQz9aOUF2f4LWB0gBYKKYbQKcp02w>
+ <xmx:f80xXsa2suAZXIyvuaorzkgWrie9t2CiNelfGFVyXltWuo371g6-yA>
+ <xmx:f80xXvVJw7BJ6Ps3yE8ZGF8RYpTqhbsT312wmYR7GyF8kNBsOilcYsksCro6iOfk>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 04C48660069; Wed, 29 Jan 2020 13:22:54 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-781-gfc16016-fmstable-20200127v1
+Mime-Version: 1.0
+Message-Id: <23247186-abaa-4f7d-88fb-38f871c745e8@www.fastmail.com>
+Date: Wed, 29 Jan 2020 10:22:34 -0800
+From: "Patrick Williams" <patrick@stwcx.xyz>
+To: openbmc@lists.ozlabs.org
+Subject: Test email - ignore
+Content-Type: multipart/alternative; boundary=e636fd1f8e594dff829065bc6e6c3a2a
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,27 +88,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: jason.m.bills@linux.intel.com, apparao.puli@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Did we engage Redfish on this one 
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/28699 ?
+--e636fd1f8e594dff829065bc6e6c3a2a
+Content-Type: text/plain
 
-Yes, from the comments:
+I seem to be having trouble getting mails to the mailing list. Sorry for the noise.
+--e636fd1f8e594dff829065bc6e6c3a2a
+Content-Type: text/html
 
-"Was this brought up to DMTF? 
-https://github.com/openbmc/bmcweb/commit/40d68ef6ebe088e4cd0078f8ff4910ca58f2be5d
-
-I've created new thread on Redfish forum:
-https://redfishforum.com/thread/273/extending-virtualmedia-schema-proposal"
-
-> 
-> Should the schema go in a different repo, and have a different review 
-> process? Maybe a minimum of N contributing companies have to sign off on 
-> the interface definition of a Redfish "OpenBMC" OEM? Do others have a 
-> similar concern?
-> 
-> Thanks!
-> Gunnar
-> 
+<!DOCTYPE html><html><head><title></title><style type="text/css">p.MsoNormal,p.MsoNoSpacing{margin:0}</style></head><body><div>I seem to be having trouble getting mails to the mailing list.&nbsp; Sorry for the noise.</div></body></html>
+--e636fd1f8e594dff829065bc6e6c3a2a--
