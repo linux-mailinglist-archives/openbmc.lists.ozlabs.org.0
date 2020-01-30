@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B71014D9A1
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 12:24:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EF5A14DB0E
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 13:55:13 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 487dL91y94zDqYS
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 22:24:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 487gLN2991zDqYS
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jan 2020 23:55:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=rknec.edu
- (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com;
- envelope-from=karpatear@rknec.edu; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=rknec.edu
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=rknec-edu.20150623.gappssmtp.com
- header.i=@rknec-edu.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=Xzs4Ekzu; dkim-atps=neutral
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com
- [IPv6:2a00:1450:4864:20::22f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=eS2hm5XL; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 487dK01lcdzDqSh
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 22:23:39 +1100 (AEDT)
-Received: by mail-lj1-x22f.google.com with SMTP id q8so2878202ljj.11
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 03:23:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rknec-edu.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=Yh32qexuEinjouDSPu1YN/3L86PGDC2elTnUXkgvlas=;
- b=Xzs4EkzuEvdZFXnvYNGVVNBZIPcOIZJN9FCI9Q4PXVcGUHvKRenoC0lkzjOvM211YZ
- Rhj/PJTqyXlWfIiN/ank24q1tE47Dub+ZgJ+Dvqwx91BcLmAoAfYksuyjr/7xs9rtecd
- kGARwgKH2wHjpmJz5Js6PdI9ilkbTBWlhdmLj+QZ5zgzjthg08/r0Bl4XW2Us+nkmVW6
- SnJiPmeSIMoY/Sa6Be/IhAb2qgYP6r8govyoSeRxbpdfr7UIwvG5sByQYnqXFeRWeouC
- CbfUO3BQ5EH94/QvofXVKqvEZhqUZ1Spe+fS78oV5EflNzjJ4qf2p3HO8a3dw8Gu74hM
- SANw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Yh32qexuEinjouDSPu1YN/3L86PGDC2elTnUXkgvlas=;
- b=Mw9TKwIMaVFTq41KZT3Al+tuWBE0zQQQYYbUzqLNDvlbPRgfc+0W/R/+rqTsJMXTE8
- aW8lEylJonEibmudmrU/iEQa+NwFNZ4qnBiEq6KDchNIYI5sIRwmOqNO8UyKFBPUwbUV
- 2qYLEv79GtfpCcg6G29HoHhJXAWxkF/sRFN98JLHieE6Jf1MtiY4JTus2laOKbTPgDLe
- F/lvxViWQknetNbqQUoFTE0YQkwEsBFLR9YT5j6phM/z2sgIg3qoVN3aOktHXZAsXIy5
- 0jGVneVESAQbmrQ7yG48s56Qo9tJ67SMW9qTGkpjXdHY3DbyH8u4niktIAVCTXRBnmgW
- kzeQ==
-X-Gm-Message-State: APjAAAVdcEIKA6+1VguPntWScet3KBO+1YP/fd2Ljw5ch+kzpfuFdoj2
- mgKBCOLcV+GK3YdBMk2MEJQT7FZYlChX4YYTiDGSb08JMaM=
-X-Google-Smtp-Source: APXvYqwOffWuMZ3RENYrUsK2ZfnlPbyRmv0YM3m1sBvmxnqGnuEaWYp9Y6TOJDV3v7s48cDAtO0BUHEbOnQIvChxQMU=
-X-Received: by 2002:a2e:990d:: with SMTP id v13mr2608204lji.47.1580383413799; 
- Thu, 30 Jan 2020 03:23:33 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 487gJX0K8szDqRM
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Jan 2020 23:53:25 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 8B1EA47996;
+ Thu, 30 Jan 2020 12:53:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ in-reply-to:content-disposition:content-type:content-type
+ :mime-version:references:message-id:subject:subject:from:from
+ :date:date:received:received:received; s=mta-01; t=1580388798;
+ x=1582203199; bh=XWcuAmRmCeDLq9Wllx6gU+a40VS33CAJGHvhmyDMYRE=; b=
+ eS2hm5XLlYqdFaMeetdLR+qCm5OKOWpIuOa/ihnBcCL2bDayaSxreLSZGAUxtkIu
+ Vkc+GjPlpOaFIIm6zq+I30Vgt7r/tjc1+5iCGBPzrPVyPFFXA1pIBPQlP/zz2ndB
+ as8d0C4wzG57wHq9kVph8u4pouLa3A/E969q9Ys6xb0=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id zjMXSCo4W_Hp; Thu, 30 Jan 2020 15:53:18 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 8A4B947995;
+ Thu, 30 Jan 2020 15:53:17 +0300 (MSK)
+Received: from localhost (172.17.14.115) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 30
+ Jan 2020 15:53:17 +0300
+Date: Thu, 30 Jan 2020 15:53:17 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: Atharva Rajendra Karpate <karpatear@rknec.edu>
+Subject: Re: OpenBmc Hardware
+Message-ID: <20200130125317.GA21443@bbwork.lan>
+References: <CAF0vu0SZuKY7gsSTkd=H2sbc_Oi4-j9_8r7GnWUFngPT_-0wRw@mail.gmail.com>
 MIME-Version: 1.0
-From: Atharva Rajendra Karpate <karpatear@rknec.edu>
-Date: Thu, 30 Jan 2020 16:53:22 +0530
-Message-ID: <CAF0vu0SZuKY7gsSTkd=H2sbc_Oi4-j9_8r7GnWUFngPT_-0wRw@mail.gmail.com>
-Subject: OpenBmc Hardware
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000fd24f6059d59af7f"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <CAF0vu0SZuKY7gsSTkd=H2sbc_Oi4-j9_8r7GnWUFngPT_-0wRw@mail.gmail.com>
+X-Originating-IP: [172.17.14.115]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,38 +71,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000fd24f6059d59af7f
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Jan 30, 2020 at 04:53:22PM +0530, Atharva Rajendra Karpate wrote:
+> Hi,
+> I am a newbie to openBmc. I have tried the QEMU KVM Romulus openBmc.I want
+> to further explore openBmc on real hardware. Could anyone suggest 1U or 2U
+> rack servers which allow me to install openBmc on them?
 
-Hi,
-I am a newbie to openBmc. I have tried the QEMU KVM Romulus openBmc.I want
-to further explore openBmc on real hardware. Could anyone suggest 1U or 2U
-rack servers which allow me to install openBmc on them?
+Someone wrote in this list that he has run the OpenBMC on the Raspberry Pi.
+Maybe it is, what are you looking for?
 
-Thanks & Regards,
-Atharva R Karpate
+Most of hardware equipment with the OpenBMC on board is an enterprise solution.
+In my opinion, it is too expensive for just examining the OpenBMC.
 
---000000000000fd24f6059d59af7f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> 
+> Thanks & Regards,
+> Atharva R Karpate
 
-<div dir=3D"ltr">Hi,=C2=A0<div>I am a newbie=C2=A0to openBmc.=C2=A0I have t=
-ried the QEMU KVM Romulus openBmc.<span style=3D"color:rgb(51,51,51);font-f=
-amily:&quot;Source Sans Pro&quot;,sans-serif;white-space:pre-wrap;backgroun=
-d-color:rgb(255,255,255)">I want to further explore openBmc on real hardwar=
-e. Could anyone suggest 1U or 2U rack servers which allow me to install ope=
-nBmc on them? </span></div><div><span style=3D"color:rgb(51,51,51);font-fam=
-ily:&quot;Source Sans Pro&quot;,sans-serif;white-space:pre-wrap;background-=
-color:rgb(255,255,255)"><br></span></div><div><span style=3D"color:rgb(51,5=
-1,51);font-family:&quot;Source Sans Pro&quot;,sans-serif;white-space:pre-wr=
-ap;background-color:rgb(255,255,255)">Thanks &amp; Regards, </span></div><d=
-iv><span style=3D"color:rgb(51,51,51);font-family:&quot;Source Sans Pro&quo=
-t;,sans-serif;white-space:pre-wrap;background-color:rgb(255,255,255)">Athar=
-va R Karpate</span></div><div><span style=3D"color:rgb(51,51,51);font-famil=
-y:&quot;Source Sans Pro&quot;,sans-serif;white-space:pre-wrap;background-co=
-lor:rgb(255,255,255)"><br></span></div></div>
-
---000000000000fd24f6059d59af7f--
+Cheers,
+Alexander
