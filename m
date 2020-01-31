@@ -2,67 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0762814EA72
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 11:07:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 45E8314F0D5
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 17:46:57 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 488CYw0LkwzDqgf
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 21:07:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 488NRK4YY1zDqgb
+	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2020 03:46:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234;
+ helo=mail-oi1-x234.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=la+lhIs0; dkim-atps=neutral
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com
+ [IPv6:2607:f8b0:4864:20::234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 488CYC64ZSzDqbh
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jan 2020 21:06:22 +1100 (AEDT)
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2020 02:06:18 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,385,1574150400"; 
- d="md'?scan'208";a="223579087"
-Received: from irsmsx151.ger.corp.intel.com ([163.33.192.59])
- by fmsmga007.fm.intel.com with ESMTP; 31 Jan 2020 02:06:17 -0800
-Received: from irsmsx603.ger.corp.intel.com (163.33.146.9) by
- IRSMSX151.ger.corp.intel.com (163.33.192.59) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Fri, 31 Jan 2020 10:06:16 +0000
-Received: from irsmsx606.ger.corp.intel.com (163.33.146.139) by
- irsmsx603.ger.corp.intel.com (163.33.146.9) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Fri, 31 Jan 2020 10:06:16 +0000
-Received: from irsmsx606.ger.corp.intel.com ([163.33.146.139]) by
- IRSMSX606.ger.corp.intel.com ([163.33.146.139]) with mapi id 15.01.1713.004;
- Fri, 31 Jan 2020 10:06:16 +0000
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: "gmills@linux.vnet.ibm.com" <gmills@linux.vnet.ibm.com>,
- "Paul.Vancil@dell.com" <Paul.Vancil@dell.com>, Neeraj Ladkani
- <neladk@microsoft.com>
-Subject: User-defined metrics - MetricDefinition Redfish schema change proposal
-Thread-Topic: User-defined metrics - MetricDefinition Redfish schema change
- proposal
-Thread-Index: AdXYHOwkd/2YXD5/S9iSlIZrl9FIHA==
-Date: Fri, 31 Jan 2020 10:06:16 +0000
-Message-ID: <0ed2056122a54c17ab997961796b0330@intel.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiOWU3MGU1NTYtYjE3Mi00ODMxLThhODItMDA2NmExMTc4ZWQwIiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoic1BJNlorSFprVUU5SHkrOWM0d25QbW50TjQ5QUFudnVKblV2UzYweUJjMVJjTEZBTXdPMTlrTVhmdUpiRnBOQiJ9
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-ctpclassification: CTP_NT
-x-originating-ip: [163.33.253.164]
-Content-Type: multipart/mixed;
- boundary="_002_0ed2056122a54c17ab997961796b0330intelcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 488NQX5Jd1zDqfJ
+ for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2020 03:46:10 +1100 (AEDT)
+Received: by mail-oi1-x234.google.com with SMTP id a142so7848806oii.7
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jan 2020 08:46:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=1xIvBg1A22TciGIt5oBhYmyOSR+7fp6pE/Nz3elabQg=;
+ b=la+lhIs0T/QVXLGZsv8tUcHe8sLP156FZ9zpu81RW8+Fas2s658142dfyuqaDS5bPr
+ IKcTgFyQhKApkX2EN+/e3fDB7w89J49ltDGR6WFT4oZZgPqVDfq7kMKeYXWCFb8KzQsA
+ 9J3Jmeax64Ovbk/T7DrF1jzhT/D2vXjmTA0anE9tBrYNNYPsLL3++XT40tpiGmjqEhoh
+ 56HMowd2RCeaxkH0cqSQZkUI2Wf5K74epozOT39q7MrY5OYdBHnZZVC/jHxr3zrNQV4A
+ 7+jDGN8rHY67ofOCAJ+mwiGjyPY6ZX2BowQyIbJ4ia6AVfYd5yZRHX8mXfA1sqs6rsax
+ yT9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=1xIvBg1A22TciGIt5oBhYmyOSR+7fp6pE/Nz3elabQg=;
+ b=I7coUzwt6Y3QR02OvKAwO/EOKwPH6eXXduS/4tsNe+LyF4VX5DnWs+2jIMchfqlwNy
+ hpsXAuh4/GgKXdxAEpjAR/tyA2yNv8Os+M9NiS6bDDqnHkbdP4U5ZpGuec4hYLnY1iee
+ sMnVLHDOxUr+aa4nHdc3zx68lOeDISKkFGgeV7qNpvw2SuWdqy+ruB8ScEqVEaq1SVSP
+ VLtNlwMxR3NqrrzHNHFIF/UdyQGvMvDvMV6M28FTmIrgS2555K1W0ztM1DmXGTUx8mDk
+ yX2/klXkfB1TPnIF9Q7tO00sk8rzJNGrdaXDkSHtL10shexiD4I2cO/tN6+KgQx8ieOU
+ yIwA==
+X-Gm-Message-State: APjAAAVRjg6U2WU6LaIfnEqQHd71I02hf7nUkHy/gYYObVaTv3L9di8v
+ aysPZ+ifwGnKAEHJbK9OP5AjM2Vu
+X-Google-Smtp-Source: APXvYqxGxOvD/j7L4gtb7/qX6eNbU9B/3a2gSXuf1eMKGpO9wE3RhhHBd7mvwRym1ZPWyONor1tX7w==
+X-Received: by 2002:a54:4595:: with SMTP id z21mr7057586oib.136.1580489166774; 
+ Fri, 31 Jan 2020 08:46:06 -0800 (PST)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id f3sm3185497otl.38.2020.01.31.08.46.05
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 31 Jan 2020 08:46:05 -0800 (PST)
+Subject: Re: Farewell & Best Wishes
+To: Emily Shaffer <emilyshaffer@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAJoAoZm41PYLana6j99ZvBgzkB+T-Ww4_gJC24=esecA48HV3Q@mail.gmail.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <c2c7447f-fc31-362c-2586-1c3e8f155ac2@gmail.com>
+Date: Fri, 31 Jan 2020 10:46:04 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
+In-Reply-To: <CAJoAoZm41PYLana6j99ZvBgzkB+T-Ww4_gJC24=esecA48HV3Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,124 +84,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_002_0ed2056122a54c17ab997961796b0330intelcom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+On 1/27/20 8:37 PM, Emily Shaffer wrote:
+> All,
+> 
+> While I've very much enjoyed my time working with this community, it's 
+> time for me to step down as comaintainer on the various IPMI projects. 
+> I'll be fully devoting my time to hacking Git, these days. :)
+> 
+> Sometime this week I'll be sending changes to remove me from the 
+> appropriate MAINTAINERS files. If there is something that you still need 
+> from me - a review, an opinion, whatever - please let me know and I can 
+> take care of it. I'll continue to peek into my review queue this week 
+> and next week; after that, I won't be gone forever, but I won't be able 
+> to grant approvals on Gerrit.
 
-Hi,
+Our loss. Thank you for all your contributions, but also your wit! The 
+project is better today because of it.
 
-As a result of OpenBMC telemetry WG meetings, I would like to present Metri=
-cDefinition schema change proposal to the DMTF. I would like to give you he=
-ads-up. I attach the change proposal description.
+Best of luck in your new endeavors.
 
-Piotr Matuszczak
----------------------------------------------------------------------
-Intel Technology Poland sp. z o.o.
-ul. Slowackiego 173, 80-298 Gdansk
-KRS 101882
-NIP 957-07-52-316
+Kurt Taylor (krtaylor)
 
+> 
+> I expect I'll still be reachable all the usual ways - this email, 
+> Freenode, LinkedIn, whatever - I won't be disappearing or changing 
+> employers, just focusing my time elsewhere.
+> 
+> Thank you all very much for the extraordinary learning experience I've 
+> had working with this project and incredible group of people. I wish 
+> everyone success in the future and look forward to OpenBMC as the norm 
+> in datacenters and home workstations.
+> 
+> Yours,
+> Emily
 
---_002_0ed2056122a54c17ab997961796b0330intelcom_
-Content-Type: application/octet-stream;
-	name="MetricDefinition_schema_change_proposal.md"
-Content-Description: MetricDefinition_schema_change_proposal.md
-Content-Disposition: attachment;
-	filename="MetricDefinition_schema_change_proposal.md"; size=4929;
-	creation-date="Fri, 17 Jan 2020 12:23:14 GMT";
-	modification-date="Fri, 31 Jan 2020 09:47:44 GMT"
-Content-Transfer-Encoding: base64
-
-IyBNZXRyaWNEZWZpbml0aW9uIFJlZGZpc2ggc2NoZW1hIGNoYW5nZSBwcm9wb3NhbA0KDQojIyBC
-YWNrZ3JvdW5kDQpUaGUgUmVkZmlzaCBUZWxlbWV0cnkgU2VydmljZSBpcyB0aGUgQVBJIGZvciBt
-ZXRyaWMgbWFuYWdlbWVudC4gSXQgaGFzIHRoZQ0KY2FwYWJpbGl0eSBvZiBhZ2dyZWdhdGluZyBt
-ZXRyaWMgcmVwb3J0cyB1c2luZyBleGlzdGluZyBSZWRmaXNoIHNlbnNvcnMgYW5kDQpzdXBwb3J0
-cyBzaW1wbGUgb3BlcmF0aW9ucyBvbiBtZXRyaWNzLCBsaWtlIGF2ZXJhZ2UsIG1pbiwgbWF4IGFu
-ZCBzdW0gb2YNCm1ldHJpY3Mgb2YgdGhlIHNhbWUgdHlwZS4gTW9zdCBvZiB0aGVzZSBzaW1wbGUg
-b3BlcmF0aW9ucyBhcmUgc2luZ2xlLWFyZ3VtZW50LA0KZXhjZXB0IG9mIHN1bSwgYnV0IGl0IGlz
-IGxpbWl0ZWQgdG8gdGhlIHJlYWRpbmdzIG9mIHRoZSBzYW1lIHR5cGUgc2Vuc29ycywNCmZvciBl
-eGFtcGxlIHN1bSBvZiBQU1UgaW5wdXQgcG93ZXIgc2Vuc29ycyBvZiBhbGwgUFNVcyBwcmVzZW50
-IG9uIHRoZSBwbGF0Zm9ybS4NCg0KVGhlcmUgYXJlIGFsc28gc3ludGhlc2l6ZWQgc2Vuc29ycywg
-d2hpY2ggcmVhZGluZ3MgYXJlIGNhbGN1bGF0ZWQgb3V0IG9mDQptZXRyaWNzIGN1cnJlbnRseSBj
-b2xsZWN0ZWQgYnkgdGhlIEJNQy4gVGhvc2Ugc2Vuc29ycyBhcmUgZXhwb3NlZCBvdmVyIHRoZQ0K
-UmVkZmlzaCBhcyBuZXcgc2Vuc29ycyBhbmQgYXJlIHN1cHBvcnRlZCBhcyBhbnkgb3RoZXIgc2Vu
-c29yLiBUaGUgbWFpbg0KZGlzYWR2YW50YWdlIG9mIHRoZXNlIHNlbnNvcnMgaXMgdGhhdCB0aGV5
-IGNhbm5vdCBiZSBkZWZpbmVkIGluIHJ1bnRpbWUuIFRoZXkNCnJlcXVpcmUgdG8gYmUgaW1wbGVt
-ZW50ZWQgaW4gdGhlIEJNQydzIGNvZGUgYW5kIGFueSBjaGFuZ2UgcmVxdWlyZXMgQk1DJ3MNCnVw
-ZGF0ZS4gDQoNCiMjIE1vdGl2YXRpb24NCkluIG9yZGVyIHRvIG92ZXJjb21lIHRoZSBsaW1pdGF0
-aW9uIG9mIGV4aXN0aW5nIHNlbnNvcnMgaW1wbGVtZW50YXRpb25zLA0KdXNlci1kZWZpbmVkIHNl
-bnNvcnMgYXJlIGludHJvZHVjZWQuIFRoZSB1c2UgY2FzZSBpcyB0byBjcmVhdGUgbmV3IG1ldHJp
-YyB1c2luZw0KZXhpc3Rpbmcgb25lcyBpbiBydW50aW1lLiBJbiBvcmRlciB0byBkbyB0aGlzLCBN
-ZXRyaWNEZWZpbml0aW9uIFJlZGZpc2ggc2NoZW1hDQp3aWxsIGJlIHVzZWQsIGJ1dCBpdCByZXF1
-aXJlcyBzb21lIG1vZGlmaWNhdGlvbnMgdG8gbWFrZSBwb3NzaWJsZSBjb25maWd1cmluZw0KbWF0
-aCBmb3JtdWxhIGZvciByZWFkaW5ncyBjYWxjdWxhdGlvbi4NCg0KIyMgQ2hhbmdlIHByb3Bvc2Fs
-DQpUaGUgaWRlYSBpcyB0byBhZGQgOCB1c2VyLWRlZmluZWQgc2Vuc29ycyB0byBSZWRmaXNoIHRy
-ZWUuIEluIG9yZGVyIHRvIHByb2R1Y2UNCnJlYWRpbmdzLCB0aG9zZSBzZW5zb3JzIHJlcXVpcmUg
-dG8gYmUgY29uZmlndXJlZCBieSB0aGUgdXNlci4gRXhhbXBsZSBVUkkgZm9yDQp0aGUgc2Vuc29y
-IHJlc291cmNlIGlzIHNob3duIGJlbG93LiANCg0KYGBgDQovcmVkZmlzaC92MS9DaGFzc2lzLzEv
-U2Vuc29ycy9Vc2VyRGVmaW5lZFNlbnNvck4gDQooTiA9IDAuLjcpDQpgYGANClRoZSBzZW5zb3Ig
-Y29uZmlndXJhdGlvbiBzaGFsbCBiZSBwZXJmb3JtZWQgaW4gcnVudGltZSB1c2luZyBNZXRyaWNE
-ZWZpbml0aW9uDQpzY2hlbWEuIEluIG9yZGVyIHRvIHBlcmZvcm0gcHJvcGVyIGNvbmZpZ3VyYXRp
-b24sIHVzZXIgaGFzIHRvIGJlIGFibGUgdG8gZGVmaW5lDQpzb3VyY2UgbWV0cmljcyBhbmQgYWxz
-byBjYWxjdWxhdGlvbiBmb3JtdWxhLiBUaGlzIHdpbGwgcmVxdWlyZSBNZXRyaWNEZWZpbml0aW9u
-DQpzY2hlbWEgZXh0ZW5zaW9uLiBUaGUgZXhhbXBsZSBvZiB0aGUgZXh0ZW5kZWQgTWV0cmljRGVm
-aW5pdGlvbiBpcyBzaG93biBiZWxvdy4NCg0KYGBganNvbg0Kew0KICAiQG9kYXRhLnR5cGUiOiAi
-I01ldHJpY0RlZmluaXRpb24udjFfMF8zLk1ldHJpY0RlZmluaXRpb24iLA0KICAiSWQiOiAiVXNl
-ckRlZmluZWRTZW5zb3IwICIsDQogICJOYW1lIjogIkRlZmluaXRpb24gb2YgVXNlci1kZWZpbmVk
-IHNlbnNvciAwIiwNCiAgIk1ldHJpY1R5cGUiOiAiTnVtZXJpYyIsDQogICJJbXBsZW1lbnRhdGlv
-biI6ICJTeW50aGVzaXplZCIsDQogICJQaHlzaWNhbENvbnRleHQiOiAiVG90YWwgUFNVIGVmZmlj
-aWVuY3kiLA0KICAiVW5pdHMiOiAiJSIsDQogICJTeW50aGVzaXNGb3JtdWxhIjogIlBTVTBfT1VU
-LFBTVTFfT1VULCssUFNVMF9JTixQU1UxX0lOLCssLywxMDAsKiIsDQogICJDYWxjdWxhdGlvblBh
-cmFtZXRlcnMiOiBbDQogICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgIkFsaWFzIjogIlBT
-VTBfSU4iLA0KICAgICAgICAgICAgICAgICAgIlNvdXJjZU1ldHJpYyI6ICIvcmVkZmlzaC92MS9D
-aGFzc2lzLzEvUG93ZXIjL1BTVS8wL0lucHV0UG93ZXIiDQogICAgICAgICAgfSwNCiAgICAgICAg
-ICB7DQogICAgICAgICAgICAgICAgICAiQWxpYXMiOiAiUFNVMF9PVVQiLA0KICAgICAgICAgICAg
-ICAgICAgIlNvdXJjZU1ldHJpYyI6ICIvcmVkZmlzaC92MS9DaGFzc2lzLzEvUG93ZXIjL1BTVS8w
-L091dHB1dFBvd2VyIg0KICAgICAgICAgIH0sDQogICAgICAgICAgew0KICAgICAgICAgICAgICAg
-ICAgIkFsaWFzIjogIlBTVTFfSU4iLA0KICAgICAgICAgICAgICAgICAgIlNvdXJjZU1ldHJpYyI6
-ICIvcmVkZmlzaC92MS9DaGFzc2lzLzEvUG93ZXIjL1BTVS8xL0lucHV0UG93ZXIiDQogICAgICAg
-ICAgfSwNCiAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAiQWxpYXMiOiAiUFNVMV9PVVQi
-LA0KICAgICAgICAgICAgICAgICAgIlNvdXJjZU1ldHJpYyI6ICIvcmVkZmlzaC92MS9DaGFzc2lz
-LzEvUG93ZXIjL1BTVS8xL091dHB1dFBvd2VyIg0KICAgICAgICAgIH0sDQogICAgICAgICAgew0K
-ICAgICAgICAgICAgICAgICAgIkFsaWFzIjogIlBTVV9FRkYiLA0KICAgICAgICAgICAgICAgICAg
-IlJlc3VsdE1ldHJpYyI6ICIvcmVkZmlzaC92MS9DaGFzc2lzLzEvU2Vuc29ycy9Vc2VyRGVmaW5l
-ZFNlbnNvcjAiDQogICAgICAgICAgfQ0KICBdLA0KICAiQG9kYXRhLmlkIjogIi9yZWRmaXNoL3Yx
-L1RlbGVtZXRyeVNlcnZpY2UvTWV0cmljRGVmaW5pdGlvbnMvVXNlckRlZmluZWRTZW5zb3IwICIN
-Cn0NCmBgYA0KDQpUaGlzIGlzIGFuIGV4YW1wbGUgb2YgdG90YWwgUFNVIGVmZmljaWVuY3kgdXNl
-ci1kZWZpbmVkIG1ldHJpYyBmb3IgZG91YmxlLVBTVQ0Kc3lzdGVtLiBUaGUgb3JpZ2luYWwgTWV0
-cmljIERlZmluaXRpb24gc2NoZW1hIGlzIGV4dGVuZGVkIGJ5IHR3byBuZXcgYXR0cmlidXRlcywN
-CnRoZSBTeW50aGVzaXNGb3JtdWxhIGFuZCBBbGlhcy4gDQoqIFN5bnRoZXNpc0Zvcm11bGEgY29u
-dGFpbnMgbWF0aGVtYXRpY2FsIGZvcm11bGEgZm9yIG1ldHJpYyBjYWxjdWxhdGlvbiB3cml0dGVu
-DQp1c2luZyBbcmV2ZXJzZSBwb2xpc2ggbm90YXRpb25dWzFdIChSUE4pLiBUaGUgUlBOIHdhcyBj
-aG9zZW4gdG8gbWFrZSB0aGUgZm9ybXVsYQ0KZWFzaWVyIHRvIHBhcnNlIGFuZCBjYWxjdWxhdGUg
-YnkgdGhlIEJNQy4gDQoqIEFsaWFzIGlzIGRlZmluZWQgZm9yIGVhY2ggc291cmNlIG9yIHJlc3Vs
-dCBtZXRyaWMgdG8gZWFzZSB3cml0aW5nIHRoZQ0KU3ludGhlc2lzRm9ybXVsYSBieSBhdm9pZGlu
-ZyB1c2luZyBzZW5zb3IncyBVUklzLiANCg0KQWZ0ZXIgUE9TVGluZyBjb25maWd1cmF0aW9uIHRv
-IHRoZSBwcm9wZXIgTWV0cmljRGVmaW5pdGlvbiByZXNvdXJjZSBmb3IgZ2l2ZW4NCnVzZXItZGVm
-aW5lZCBzZW5zb3IgaXQgd2lsbCBzdGFydCB0byBwcm9kdWNlIHJlYWRpbmdzIG9ubHkgd2hlbiBh
-bGwgcmVxdWlyZWQNCnNvdXJjZSBtZXRyaWNzIGFyZSBnZW5lcmF0aW5nIHZhbGlkIHJlYWRpbmdz
-Lg0KDQpUaGUgdGFibGUgYmVsb3cgc2hvd3MgdGhlIHN1cHBvcnRlZCBvcGVyYXRvcnMgZm9yIHRo
-ZSBmb3JtdWxhLiBBbGwgbWF0aGVtYXRpY2FsDQpvcGVyYXRpb25zIHN1cHBvcnRzIGludGVnZXIg
-YW5kIGZsb2F0aW5nIHBvaW50IG9wZXJhbmRzIGFuZCBlaXRoZXIgbWV0cmljcyBvcg0KY29uc3Rh
-bnRzLiBJZiBhdCBsZWFzdCBvbmUgb3BlcmFuZCBpcyBmbG9hdGluZyBwb2ludCB0aGUgcmVzdWx0
-IG1ldHJpYyBhbHNvDQp3aWxsIGJlIGZsb2F0aW5nIHBvaW50LiBMb2dpY2FsIG9wZXJhdGlvbnMg
-c3VwcG9ydCBvbmx5IGludGVnZXIgbWV0cmljcy4NClRoZSBtYWluIHVzZS1jYXNlIGZvciB0aGVt
-IGlzIGZvciBvcGVyYXRpb25zIG9uIGJpdG1hc2sgbWV0cmljcyAobGlrZSBQU1UNCnN0YXR1cyBi
-aXRzZXQpLiBUaGUgZGVsdGEgb3BlcmF0b3Igc3VwcG9ydCBib3RoLCBpbnRlZ2VyIGFuZCBmbG9h
-dGluZyBwb2ludA0KbWV0cmljcy4gSXQgY2FsY3VsYXRlcyB0aGUgZGVsdGEgYmV0d2VlbiB0d28g
-c3Vic2VxdWVudCBtZXRyaWMgc2FtcGxlcy4NCg0KfE9wZXJhdG9yfE1lYW5pbmd8TnVtYmVyIG9m
-IDxicj4gb3BlcmFuZHN8IFR5cGUgb2YgPGJyPiBvcGVyYXRpb24NCnw6LTp8Oi06fDotOnw6LTp8
-DQp8ICsgfCBhZGRpdGlvbnwgMiB8IG1hdGhlbWF0aWNhbCB8DQp8IC0gfCBzdWJ0cmFjdGlvbiB8
-IDIgfCBtYXRoZW1hdGljYWwgfA0KfCAqIHwgbXVsdGlwbGljYXRpb24gfCAyIHwgbWF0aGVtYXRp
-Y2FsIHwNCnwgLyB8IGRpdmlzaW9uIHwgMiB8IG1hdGhlbWF0aWNhbCB8DQp8IDwgfCBzaGlmdCBs
-ZWZ0IHwgMiB8IGxvZ2ljYWwgfA0KfCA+IHwgc2hpZnQgcmlnaHQgfCAyIHwgbG9naWNhbCB8DQp8
-ICYgfCBiaXR3aXNlIEFORCB8IDIgfCBsb2dpY2FsIHwNCnwgXHwgfCBiaXR3aXNlIE9SIHwgMiB8
-IGxvZ2ljYWwgfA0KfCB+IHwgYml0d2lzZSBOT1QgfCAxIHwgbG9naWNhbCB8DQp8ICQgfCBEZWx0
-YSB8IDEgfCBtYXRoZW1hdGljYWwgfA0KDQpbMV06IGh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93
-aWtpL1JldmVyc2VfUG9saXNoX25vdGF0aW9u
-
---_002_0ed2056122a54c17ab997961796b0330intelcom_--
