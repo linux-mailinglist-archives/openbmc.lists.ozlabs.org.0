@@ -2,41 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9635E14F4EE
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 23:41:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80A3714F500
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 23:54:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 488XJV6n7hzDqhD
-	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2020 09:41:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 488XbW0MbRzDqgf
+	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2020 09:54:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=9299fa1787=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=kC9mK/AE; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=AbTN+rw5; 
+ dkim-atps=neutral
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 488XHq6CQjzDqdg
- for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2020 09:40:53 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 31 Jan 2020 14:40:50 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,387,1574150400"; d="scan'208";a="430516029"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga006.fm.intel.com with ESMTP; 31 Jan 2020 14:40:49 -0800
-Received: from [10.241.246.17] (unknown [10.241.246.17])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id AE0F758043A;
- Fri, 31 Jan 2020 14:40:49 -0800 (PST)
-Subject: Re: power button override
-To: Vijay Khemka <vijaykhemka@fb.com>,
+ by lists.ozlabs.org (Postfix) with ESMTPS id 488XZq6WnqzDqfY
+ for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2020 09:53:53 +1100 (AEDT)
+Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 00VMqKfZ024312; Fri, 31 Jan 2020 14:53:49 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type : content-id :
+ content-transfer-encoding : mime-version; s=facebook;
+ bh=cS7Xd4LTtyUrggOK/X8dfFv8VK4fs5gT6fghP++sRFY=;
+ b=kC9mK/AEs8urSetiVGYxLFN9I7UTzYJ1U3r/lfLPqCI8Fx9YFencVf0mfzlqlV1rjjnW
+ sd6Oj/Kx5qHI16fSLNHtFFifx1FmEUH/wYuwQL8EyardPS71qLoOjOXOnTjsJqL4s2Qb
+ MLwOzrf9l0aTKbZ8JobmfqwV37xd25x/W40= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2xvs2gscx1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Fri, 31 Jan 2020 14:53:49 -0800
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.102) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1779.2; Fri, 31 Jan 2020 14:53:48 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PrrchUHpkr/pjq2FhE5LNkiFxSSe3i3vdnG1faYVwWkl4GAzQY5OuGUISvpgjCcCPoMswWMZ7Pmw9W3sEyYHDTsJYHbZF3UsgMZ/gORDSPbnSyzXuEhP6zM7nuQh29JMJ83uOSDexX06GVEhnl/ZQrAP8Q69+nIyI+GECQDugLWBWvJZ0JmX/I4aQlLfevUZw0bud+pBG83uD2jFiTasGpkfUlLl76GVBYK78pI8c4Y/9LkL95RNKHvPcHwQZN6gnKezkupZOoePDcYjk2K3W/ESqH/EHKHnQ1Vqi0PXrm6q2Pkyu3anaeIv3WS6yEOy7D2xFdPDhMFnXDefwboBMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cS7Xd4LTtyUrggOK/X8dfFv8VK4fs5gT6fghP++sRFY=;
+ b=Rkyjs4v9gXHBt21R4XlLhGc2hOUw7f9hI9ZT+0Igxu77wUC7CnFE2YM+Ud+D6oInGs003xBMTZuJfBHsqYGvlfFbowAFXgH3+gP2bcvVSS49WWerd4EoCwwmbG6s94aZBs+wfKCLA5AQtpXuJITmiUZjN5/MaIoWKbA+M2tWb+MLaFAEnkGJC3g+DAiwotewHItOQk3ZqqoWoSWUR+PeYapYhJhigOIvh2lQQdgZzj/jHfg25ZbEPHb4n/BuXPm64u9/vqHvEV87zuX29Wl9aofN/XsYwQ0bkzPoHsptWsdjbB7hJddJdiMkNNmwKZLa16KTjUJXZj5lNcylt72ANQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cS7Xd4LTtyUrggOK/X8dfFv8VK4fs5gT6fghP++sRFY=;
+ b=AbTN+rw5P7ijH4PmcrYGlCjox+HcJXVnXlrDLdylbYeg7M+GthpeVTQCN7dMlNVR/DDkKezEMr67tVNE+Kg714+rwXoHCNpt1GPpPcj9DppOqjzaQ6BCRVbCpVvT0DXFpwf2/ham2P6ej6D9Ff6owl1Myj0qGms3o1gmTLVmu78=
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com (10.173.234.137) by
+ MWHPR15MB1453.namprd15.prod.outlook.com (10.173.234.143) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2686.28; Fri, 31 Jan 2020 22:53:47 +0000
+Received: from MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2]) by MWHPR15MB1597.namprd15.prod.outlook.com
+ ([fe80::cdbf:b63c:437:4dd2%8]) with mapi id 15.20.2665.027; Fri, 31 Jan 2020
+ 22:53:47 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: power button override
+Thread-Topic: power button override
+Thread-Index: AQHV0ksr3xkr2xM5GUmL71a8unTXDaf49/wAgACl3ACAAK69gIAABOgA//+HZoCABQhZAP//lXuAgAId0ACAAnzCgIAAARYAgACscID//4GqAABFPRWA//99ggA=
+Date: Fri, 31 Jan 2020 22:53:47 +0000
+Message-ID: <5C6D5FE2-C4FF-49F7-91E7-58FF3EA10CFA@fb.com>
 References: <98EE6AEE-9440-4AA5-971A-833EA0342226@fb.com>
  <d01cf897-0c23-35dc-5f81-aca67d31b98a@linux.intel.com>
  <0017A7FA-E86C-4524-B53B-9129A968C7DB@fb.com>
@@ -50,16 +92,54 @@ References: <98EE6AEE-9440-4AA5-971A-833EA0342226@fb.com>
  <65B9F3C8-1066-449B-B0AE-928ED1455687@fb.com>
  <0e9dbc2f-3dba-ebb7-4acc-28b43cf4e480@linux.intel.com>
  <72D25FAF-9E04-4459-90C5-910AD4E59B9D@fb.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <874c4922-5d73-bcb3-5594-0f3bd36c4fee@linux.intel.com>
-Date: Fri, 31 Jan 2020 14:40:49 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <72D25FAF-9E04-4459-90C5-910AD4E59B9D@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ <874c4922-5d73-bcb3-5594-0f3bd36c4fee@linux.intel.com>
+In-Reply-To: <874c4922-5d73-bcb3-5594-0f3bd36c4fee@linux.intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:200::3:652d]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1596ff8e-e3ea-4f56-e37f-08d7a6a06e8c
+x-ms-traffictypediagnostic: MWHPR15MB1453:
+x-microsoft-antispam-prvs: <MWHPR15MB14535D85883318EEC3C146AADD070@MWHPR15MB1453.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:5797;
+x-forefront-prvs: 029976C540
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(396003)(376002)(39860400002)(136003)(366004)(346002)(189003)(199004)(53546011)(6512007)(86362001)(6486002)(36756003)(6506007)(81156014)(81166006)(2906002)(3480700007)(8676002)(66946007)(66446008)(64756008)(66556008)(66476007)(76116006)(7116003)(8936002)(33656002)(966005)(71200400001)(110136005)(316002)(186003)(2616005)(478600001)(5660300002);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MWHPR15MB1453;
+ H:MWHPR15MB1597.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: x1JK3hJc/+4mwLKr4kEZKSuyhyz8QwhxDVyBbC0PlVVD/SPAz5qw2YqlXDKMFaMtEL32AjlI39yXAY2rJ3k3q1IGviQJ+hdKYBc+VQe/ejwyrgjdTHz0G11ZixNbNBs89tIxlxvpJwu1ghC/ntdbb+1Em3aI8cONnoVUfuYwJ+NN8dyONOTmYGpwe2/+6a1KEyVz7e/5Vr3iKM1eD9b6hW8tlDYm0pf/+B9F4DC8J4fkmKXUex+k7Q8iUZqbtWIza2GZmi6uQt/rl6BetJwxtu7oKnO/5h1fh29Mgw5f3NJjhNR80ktaLclzOiUpa+Zm4UuACY8njv9oTSGWH6y305oqnCP31Vi3/P4MSxkQp2IrYnRQ7W3cFhnDlFc19nZjn5leZ2yssby6U3QhWaYa/BIk8xsX1fYnmaGGtr38YCewQMi9LQQo21WhFatPeBZEi/FKEuP1K4Z+RUdLNjXpotIZ2Je0F7Ibf25dbLBwcZGs97H3n1Pd3bd1AnnZIdwF5yqydhD7Myu+NAxod/hvZg==
+x-ms-exchange-antispam-messagedata: 1s6N4F4CDlnCrS3vUPoumCkNrt1m8eoOG8qOvVQ8mylZNJqQn1CTaA485+9PYfRQm6PLDXpX5ijmrc9Hr1KkzImgYEOm3jWwuj5cKb1wUrgciQTrPFCT/I0wZ871RwIf3fV7HiJ5HdExUlirNJ4f5sAHVg9+30gLUKdkv28XIozPUGgfBYk7MRz9x62laqhd
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <00AA9C1E273AD842B61004E3E7DB3656@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1596ff8e-e3ea-4f56-e37f-08d7a6a06e8c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jan 2020 22:53:47.3630 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 2Cu9zXExX/oHijS2SQMYH/4FI/FLTeGBGVBEK3cSXaJ2I65+e99kMCo9esFURhsYCLqeJd9ThjmK/wVJqB1e4Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1453
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-01-31_07:2020-01-31,
+ 2020-01-31 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ malwarescore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=999 adultscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-1911200001 definitions=main-2001310182
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,150 +154,153 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 1/30/2020 1:38 PM, Vijay Khemka wrote:
-> 
-> 
-> ﻿On 1/30/20, 1:10 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
-> 
->      
->      
->      On 1/30/2020 10:53 AM, Vijay Khemka wrote:
->      > And it is inconsistent as 2 times works out of 5 time loop with 30 second delay.
->      >
->      > Regards
->      > -Vijay
->      >
->      > On 1/30/20, 10:49 AM, "Vijay Khemka" <vijaykhemka@fb.com> wrote:
->      >
->      >      Hi Jason,
->      >      The problem I am seeing as I am unable to send reset ipmi command to ME via IPMB on i2c bus. I tried to give 30 second delay after power off and setting in ME recovery mode. Once I do force poweroff then only I am able to send any command to ME. I don't know what is the relation of power to ME access on i2c bus.
->      I have been told that this is not expected behavior and that you can
->      file an IPS ticket for support.
->      
->      The biggest issue with force poweroff using the power button while the
->      system is off is that it will first start booting the system then
->      immediately shut it down which is not desired behavior.
->      
->      What happens if you try to power on in the failure?  Will it go to the
->      On state where you can issue a ForceOff?
-> 
-> No, this is also intermittent. And sometimes it powers on and sometimes it gets stuck on TransitionToOnFailed. This is very dangerous state as no power command works after this, not even poweroff. Then I have to leave a system for some time and try many other things or sled cycle the system.
-
-Vijay,
-
-Will this change help fix the issue you are seeing?
-
-diff --git a/power-control-x86/src/power_control.cpp 
-b/power-control-x86/src/power_control.cpp
-index 20ea9cd..eecc10a 100644
---- a/power-control-x86/src/power_control.cpp
-+++ b/power-control-x86/src/power_control.cpp
-@@ -1518,6 +1518,10 @@ static void powerStateOff(const Event event)
-              setPowerState(PowerState::waitForPSPowerOK);
-              powerOn();
-              break;
-+        case Event::powerOffRequest:
-+            setPowerState(PowerState::transitionToOff);
-+            forcePowerOff();
-+            break;
-          default:
-              std::cerr << "No action taken.\n";
-              break;
-
-This adds support for powerOffRequest to the Off state.  So even when 
-the host is off, the force off command will still hold the power button 
-until the power good signal deasserts (on my system it asserts followed 
-by a deassert).  This will more closely follow the Chassis.State 
-definition of allowing a Chassis.Off request even while the Host.State 
-is Off.
-
->      
->      Thanks,
->      -Jason
->      
->      >
->      >      Regards
->      >      -Vijay
->      >
->      >      On 1/28/20, 12:50 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
->      >
->      >
->      >
->      >          On 1/27/2020 12:31 PM, Vijay Khemka wrote:
->      >          >
->      >          >
->      >          > On 1/27/20, 10:52 AM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
->      >          >
->      >          >
->      >          >
->      >          >      On 1/24/2020 2:01 PM, Vijay Khemka wrote:
->      >          >      >
->      >          >      >
->      >          >      > On 1/24/20, 1:13 PM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
->      >          >      >
->      >          >      >
->      >          >      >
->      >          >      >      On 1/24/2020 12:55 PM, Bills, Jason M wrote:
->      >          >      >      >
->      >          >      >      >
->      >          >      >      > On 1/24/2020 10:29 AM, Vijay Khemka wrote:
->      >          >      >      >>
->      >          >      >      >>
->      >          >      >      >> On 1/23/20, 4:36 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com>
->      >          >      >      >> wrote:
->      >          >      >      >>
->      >          >      >      >>      On 1/23/2020 4:13 PM, Vijay Khemka wrote:
->      >          >      >      >>      > Hi Jason,
->      >          >      >      >>      >
->      >          >      >      >>      > We have a requirement of power button override. I don’t see
->      >          >      >      >> x86-power
->      >          >      >      >>      > control doesn’t support this currently. Do you need this
->      >          >      >      >> features or do
->      >          >      >      >>      > you have any local patch for this.
->      >          >      >      >>      Hi Vijay,
->      >          >      >      >>      power button override is used for the "Force Off" actions in
->      >          >      >      >> power control:
->      >          >      >      >>
->      >          >      >      >> https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp#L50.
->      >          >      >      >>
->      >          >      >      >>
->      >          >      >      >> This will not work if current status is off. This should just send
->      >          >      >      >> pulse in any status on/off.
->      >          >      >      > Correct.  Force Off is not done if the current status is off.
->      >          >      >      Do you have more details on the power button override behavior that you
->      >          >      >      need?
->      >          >      >
->      >          >      > Yes, This is required to bring ME back to operation mode from recovery. How are you handling ME for Bios upgrade.
->      >          >      When in recovery mode, the ME will accept a reset command (IPMI raw 0x6
->      >          >      0x2) to reset to operational mode.
->      >          >
->      >          > Bill, I tried this and see inconsistent behavior from host. Sometime it refuse to power on. So PBO resolves this.
->      >          I checked with the ME team and ME reset to move from recovery mode to
->      >          operational mode should work.  You can file a ticket with Intel support
->      >          to help resolve the inconsistent behavior that you see when doing this.
->      >
->      >          In the meantime, I will look over your patch.
->      >
->      >          Thanks,
->      >          -Jason
->      >
->      >          >
->      >          >      >
->      >          >      >      >>      >
->      >          >      >      >>      > Regards
->      >          >      >      >>      >
->      >          >      >      >>      > -Vijay
->      >          >      >      >>      >
->      >          >      >      >>
->      >          >      >
->      >          >      >
->      >          >
->      >          >
->      >
->      >
->      >
->      >
->      
-> 
+DQoNCu+7v09uIDEvMzEvMjAsIDI6NDEgUE0sICJCaWxscywgSmFzb24gTSIgPGphc29uLm0uYmls
+bHNAbGludXguaW50ZWwuY29tPiB3cm90ZToNCg0KICAgIA0KICAgIA0KICAgIE9uIDEvMzAvMjAy
+MCAxOjM4IFBNLCBWaWpheSBLaGVta2Egd3JvdGU6DQogICAgPiANCiAgICA+IA0KICAgID4gT24g
+MS8zMC8yMCwgMToxMCBQTSwgIkJpbGxzLCBKYXNvbiBNIiA8amFzb24ubS5iaWxsc0BsaW51eC5p
+bnRlbC5jb20+IHdyb3RlOg0KICAgID4gDQogICAgPiAgICAgIA0KICAgID4gICAgICANCiAgICA+
+ICAgICAgT24gMS8zMC8yMDIwIDEwOjUzIEFNLCBWaWpheSBLaGVta2Egd3JvdGU6DQogICAgPiAg
+ICAgID4gQW5kIGl0IGlzIGluY29uc2lzdGVudCBhcyAyIHRpbWVzIHdvcmtzIG91dCBvZiA1IHRp
+bWUgbG9vcCB3aXRoIDMwIHNlY29uZCBkZWxheS4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+
+IFJlZ2FyZHMNCiAgICA+ICAgICAgPiAtVmlqYXkNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+
+IE9uIDEvMzAvMjAsIDEwOjQ5IEFNLCAiVmlqYXkgS2hlbWthIiA8dmlqYXlraGVta2FAZmIuY29t
+PiB3cm90ZToNCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgSGkgSmFzb24sDQogICAg
+PiAgICAgID4gICAgICBUaGUgcHJvYmxlbSBJIGFtIHNlZWluZyBhcyBJIGFtIHVuYWJsZSB0byBz
+ZW5kIHJlc2V0IGlwbWkgY29tbWFuZCB0byBNRSB2aWEgSVBNQiBvbiBpMmMgYnVzLiBJIHRyaWVk
+IHRvIGdpdmUgMzAgc2Vjb25kIGRlbGF5IGFmdGVyIHBvd2VyIG9mZiBhbmQgc2V0dGluZyBpbiBN
+RSByZWNvdmVyeSBtb2RlLiBPbmNlIEkgZG8gZm9yY2UgcG93ZXJvZmYgdGhlbiBvbmx5IEkgYW0g
+YWJsZSB0byBzZW5kIGFueSBjb21tYW5kIHRvIE1FLiBJIGRvbid0IGtub3cgd2hhdCBpcyB0aGUg
+cmVsYXRpb24gb2YgcG93ZXIgdG8gTUUgYWNjZXNzIG9uIGkyYyBidXMuDQogICAgPiAgICAgIEkg
+aGF2ZSBiZWVuIHRvbGQgdGhhdCB0aGlzIGlzIG5vdCBleHBlY3RlZCBiZWhhdmlvciBhbmQgdGhh
+dCB5b3UgY2FuDQogICAgPiAgICAgIGZpbGUgYW4gSVBTIHRpY2tldCBmb3Igc3VwcG9ydC4NCiAg
+ICA+ICAgICAgDQogICAgPiAgICAgIFRoZSBiaWdnZXN0IGlzc3VlIHdpdGggZm9yY2UgcG93ZXJv
+ZmYgdXNpbmcgdGhlIHBvd2VyIGJ1dHRvbiB3aGlsZSB0aGUNCiAgICA+ICAgICAgc3lzdGVtIGlz
+IG9mZiBpcyB0aGF0IGl0IHdpbGwgZmlyc3Qgc3RhcnQgYm9vdGluZyB0aGUgc3lzdGVtIHRoZW4N
+CiAgICA+ICAgICAgaW1tZWRpYXRlbHkgc2h1dCBpdCBkb3duIHdoaWNoIGlzIG5vdCBkZXNpcmVk
+IGJlaGF2aW9yLg0KICAgID4gICAgICANCiAgICA+ICAgICAgV2hhdCBoYXBwZW5zIGlmIHlvdSB0
+cnkgdG8gcG93ZXIgb24gaW4gdGhlIGZhaWx1cmU/ICBXaWxsIGl0IGdvIHRvIHRoZQ0KICAgID4g
+ICAgICBPbiBzdGF0ZSB3aGVyZSB5b3UgY2FuIGlzc3VlIGEgRm9yY2VPZmY/DQogICAgPiANCiAg
+ICA+IE5vLCB0aGlzIGlzIGFsc28gaW50ZXJtaXR0ZW50LiBBbmQgc29tZXRpbWVzIGl0IHBvd2Vy
+cyBvbiBhbmQgc29tZXRpbWVzIGl0IGdldHMgc3R1Y2sgb24gVHJhbnNpdGlvblRvT25GYWlsZWQu
+IFRoaXMgaXMgdmVyeSBkYW5nZXJvdXMgc3RhdGUgYXMgbm8gcG93ZXIgY29tbWFuZCB3b3JrcyBh
+ZnRlciB0aGlzLCBub3QgZXZlbiBwb3dlcm9mZi4gVGhlbiBJIGhhdmUgdG8gbGVhdmUgYSBzeXN0
+ZW0gZm9yIHNvbWUgdGltZSBhbmQgdHJ5IG1hbnkgb3RoZXIgdGhpbmdzIG9yIHNsZWQgY3ljbGUg
+dGhlIHN5c3RlbS4NCiAgICANCiAgICBWaWpheSwNCiAgICANCiAgICBXaWxsIHRoaXMgY2hhbmdl
+IGhlbHAgZml4IHRoZSBpc3N1ZSB5b3UgYXJlIHNlZWluZz8NCiAgICANCiAgICBkaWZmIC0tZ2l0
+IGEvcG93ZXItY29udHJvbC14ODYvc3JjL3Bvd2VyX2NvbnRyb2wuY3BwIA0KICAgIGIvcG93ZXIt
+Y29udHJvbC14ODYvc3JjL3Bvd2VyX2NvbnRyb2wuY3BwDQogICAgaW5kZXggMjBlYTljZC4uZWVj
+YzEwYSAxMDA2NDQNCiAgICAtLS0gYS9wb3dlci1jb250cm9sLXg4Ni9zcmMvcG93ZXJfY29udHJv
+bC5jcHANCiAgICArKysgYi9wb3dlci1jb250cm9sLXg4Ni9zcmMvcG93ZXJfY29udHJvbC5jcHAN
+CiAgICBAQCAtMTUxOCw2ICsxNTE4LDEwIEBAIHN0YXRpYyB2b2lkIHBvd2VyU3RhdGVPZmYoY29u
+c3QgRXZlbnQgZXZlbnQpDQogICAgICAgICAgICAgICAgICBzZXRQb3dlclN0YXRlKFBvd2VyU3Rh
+dGU6OndhaXRGb3JQU1Bvd2VyT0spOw0KICAgICAgICAgICAgICAgICAgcG93ZXJPbigpOw0KICAg
+ICAgICAgICAgICAgICAgYnJlYWs7DQogICAgKyAgICAgICAgY2FzZSBFdmVudDo6cG93ZXJPZmZS
+ZXF1ZXN0Og0KICAgICsgICAgICAgICAgICBzZXRQb3dlclN0YXRlKFBvd2VyU3RhdGU6OnRyYW5z
+aXRpb25Ub09mZik7DQogICAgKyAgICAgICAgICAgIGZvcmNlUG93ZXJPZmYoKTsNCiAgICArICAg
+ICAgICAgICAgYnJlYWs7DQogICAgICAgICAgICAgIGRlZmF1bHQ6DQogICAgICAgICAgICAgICAg
+ICBzdGQ6OmNlcnIgPDwgIk5vIGFjdGlvbiB0YWtlbi5cbiI7DQogICAgICAgICAgICAgICAgICBi
+cmVhazsNCiAgIA0KICAgIFRoaXMgYWRkcyBzdXBwb3J0IGZvciBwb3dlck9mZlJlcXVlc3QgdG8g
+dGhlIE9mZiBzdGF0ZS4gIFNvIGV2ZW4gd2hlbiANCiAgICB0aGUgaG9zdCBpcyBvZmYsIHRoZSBm
+b3JjZSBvZmYgY29tbWFuZCB3aWxsIHN0aWxsIGhvbGQgdGhlIHBvd2VyIGJ1dHRvbiANCiAgICB1
+bnRpbCB0aGUgcG93ZXIgZ29vZCBzaWduYWwgZGVhc3NlcnRzIChvbiBteSBzeXN0ZW0gaXQgYXNz
+ZXJ0cyBmb2xsb3dlZCANCiAgICBieSBhIGRlYXNzZXJ0KS4gIFRoaXMgd2lsbCBtb3JlIGNsb3Nl
+bHkgZm9sbG93IHRoZSBDaGFzc2lzLlN0YXRlIA0KICAgIGRlZmluaXRpb24gb2YgYWxsb3dpbmcg
+YSBDaGFzc2lzLk9mZiByZXF1ZXN0IGV2ZW4gd2hpbGUgdGhlIEhvc3QuU3RhdGUgDQogICAgaXMg
+T2ZmLg0KDQpZb3UgZG9uJ3QgZ2V0IGRlYXNzZXJ0IHNpZ25hbCBhcyBpdCBpcyBhbHJlYWR5IGRl
+YXNzZXJ0ZWQgYnkgcHJldmlvdXMgcG93ZXIgb2ZmLg0KQ3VycmVudGx5IEkgaGF2ZSBhYmFuZG9u
+ZWQgbXkgcGF0Y2guIEJ1dCBmb2xsb3dpbmcgY2hhbmdlIHdvdWxkIGhlbHANCg0KLS0tIGEvcG93
+ZXItY29udHJvbC14ODYvc3JjL3Bvd2VyX2NvbnRyb2wuY3BwDQorKysgYi9wb3dlci1jb250cm9s
+LXg4Ni9zcmMvcG93ZXJfY29udHJvbC5jcHANCkBAIC0xNDcwLDYgKzE0NzAsMTAgQEAgc3RhdGlj
+IHZvaWQgcG93ZXJTdGF0ZUZhaWxlZFRyYW5zaXRpb25Ub09uKGNvbnN0IEV2ZW50IGV2ZW50KQ0K
+ICAgICAgICAgICAgIHNldFBvd2VyU3RhdGUoUG93ZXJTdGF0ZTo6d2FpdEZvclBTUG93ZXJPSyk7
+DQogICAgICAgICAgICAgcG93ZXJPbigpOw0KICAgICAgICAgICAgIGJyZWFrOw0KKyAgICAgICAg
+Y2FzZSBFdmVudDo6cG93ZXJPZmZSZXF1ZXN0Og0KKyAgICAgICAgICAgIHNldFBvd2VyU3RhdGUo
+UG93ZXJTdGF0ZTo6b2ZmKTsNCisgICAgICAgICAgICBmb3JjZVBvd2VyT2ZmKCk7DQorICAgICAg
+ICAgICAgYnJlYWs7DQogICAgICAgICBkZWZhdWx0Og0KICAgICAgICAgICAgIHN0ZDo6Y2VyciA8
+PCAiTm8gYWN0aW9uIHRha2VuLlxuIjsNCiAgICAgICAgICAgICBicmVhazsNCkBAIC0xNDk2LDYg
+KzE1MDAsOSBAQCBzdGF0aWMgdm9pZCBwb3dlclN0YXRlT2ZmKGNvbnN0IEV2ZW50IGV2ZW50KQ0K
+ICAgICAgICAgICAgIHNldFBvd2VyU3RhdGUoUG93ZXJTdGF0ZTo6d2FpdEZvclBTUG93ZXJPSyk7
+DQogICAgICAgICAgICAgcG93ZXJPbigpOw0KICAgICAgICAgICAgIGJyZWFrOw0KKyAgICAgICAg
+Y2FzZSBFdmVudDo6cG93ZXJPZmZSZXF1ZXN0Og0KKyAgICAgICAgICAgIGZvcmNlUG93ZXJPZmYo
+KTsNCisgICAgICAgICAgICBicmVhazsNCiAgICAgICAgIGRlZmF1bHQ6DQogICAgICAgICAgICAg
+c3RkOjpjZXJyIDw8ICJObyBhY3Rpb24gdGFrZW4uXG4iOw0KICAgICAgICAgICAgIGJyZWFrOw0K
+DQpSZWdhcmRzDQotVmlqYXkNCiAgICANCiAgICA+ICAgICAgDQogICAgPiAgICAgIFRoYW5rcywN
+CiAgICA+ICAgICAgLUphc29uDQogICAgPiAgICAgIA0KICAgID4gICAgICA+DQogICAgPiAgICAg
+ID4gICAgICBSZWdhcmRzDQogICAgPiAgICAgID4gICAgICAtVmlqYXkNCiAgICA+ICAgICAgPg0K
+ICAgID4gICAgICA+ICAgICAgT24gMS8yOC8yMCwgMTI6NTAgUE0sICJCaWxscywgSmFzb24gTSIg
+PGphc29uLm0uYmlsbHNAbGludXguaW50ZWwuY29tPiB3cm90ZToNCiAgICA+ICAgICAgPg0KICAg
+ID4gICAgICA+DQogICAgPiAgICAgID4NCiAgICA+ICAgICAgPiAgICAgICAgICBPbiAxLzI3LzIw
+MjAgMTI6MzEgUE0sIFZpamF5IEtoZW1rYSB3cm90ZToNCiAgICA+ICAgICAgPiAgICAgICAgICA+
+DQogICAgPiAgICAgID4gICAgICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAgID4gT24gMS8y
+Ny8yMCwgMTA6NTIgQU0sICJCaWxscywgSmFzb24gTSIgPGphc29uLm0uYmlsbHNAbGludXguaW50
+ZWwuY29tPiB3cm90ZToNCiAgICA+ICAgICAgPiAgICAgICAgICA+DQogICAgPiAgICAgID4gICAg
+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAgID4NCiAgICA+ICAgICAgPiAgICAgICAgICA+
+ICAgICAgT24gMS8yNC8yMDIwIDI6MDEgUE0sIFZpamF5IEtoZW1rYSB3cm90ZToNCiAgICA+ICAg
+ICAgPiAgICAgICAgICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+DQog
+ICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gT24gMS8yNC8yMCwgMToxMyBQTSwgIm9wZW5i
+bWMgb24gYmVoYWxmIG9mIEJpbGxzLCBKYXNvbiBNIiA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hl
+bWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnIG9uIGJlaGFsZiBvZiBqYXNvbi5tLmJpbGxzQGxp
+bnV4LmludGVsLmNvbT4gd3JvdGU6DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4NCiAg
+ICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAg
+ICA+DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICBPbiAxLzI0LzIwMjAgMTI6
+NTUgUE0sIEJpbGxzLCBKYXNvbiBNIHdyb3RlOg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAg
+ICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+ICAgICAgPg0KICAgID4g
+ICAgICA+ICAgICAgICAgID4gICAgICA+ICAgICAgPiBPbiAxLzI0LzIwMjAgMTA6MjkgQU0sIFZp
+amF5IEtoZW1rYSB3cm90ZToNCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+
+DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+Pg0KICAgID4gICAgICA+ICAg
+ICAgICAgID4gICAgICA+ICAgICAgPj4gT24gMS8yMy8yMCwgNDozNiBQTSwgIkJpbGxzLCBKYXNv
+biBNIiA8amFzb24ubS5iaWxsc0BsaW51eC5pbnRlbC5jb20+DQogICAgPiAgICAgID4gICAgICAg
+ICAgPiAgICAgID4gICAgICA+PiB3cm90ZToNCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAg
+PiAgICAgID4+DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+PiAgICAgIE9u
+IDEvMjMvMjAyMCA0OjEzIFBNLCBWaWpheSBLaGVta2Egd3JvdGU6DQogICAgPiAgICAgID4gICAg
+ICAgICAgPiAgICAgID4gICAgICA+PiAgICAgID4gSGkgSmFzb24sDQogICAgPiAgICAgID4gICAg
+ICAgICAgPiAgICAgID4gICAgICA+PiAgICAgID4NCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAg
+ICAgPiAgICAgID4+ICAgICAgPiBXZSBoYXZlIGEgcmVxdWlyZW1lbnQgb2YgcG93ZXIgYnV0dG9u
+IG92ZXJyaWRlLiBJIGRvbuKAmXQgc2VlDQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4g
+ICAgICA+PiB4ODYtcG93ZXINCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+
+ICAgICAgPiBjb250cm9sIGRvZXNu4oCZdCBzdXBwb3J0IHRoaXMgY3VycmVudGx5LiBEbyB5b3Ug
+bmVlZCB0aGlzDQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+PiBmZWF0dXJl
+cyBvciBkbw0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+ICAgICAgPj4gICAgICA+IHlv
+dSBoYXZlIGFueSBsb2NhbCBwYXRjaCBmb3IgdGhpcy4NCiAgICA+ICAgICAgPiAgICAgICAgICA+
+ICAgICAgPiAgICAgID4+ICAgICAgSGkgVmlqYXksDQogICAgPiAgICAgID4gICAgICAgICAgPiAg
+ICAgID4gICAgICA+PiAgICAgIHBvd2VyIGJ1dHRvbiBvdmVycmlkZSBpcyB1c2VkIGZvciB0aGUg
+IkZvcmNlIE9mZiIgYWN0aW9ucyBpbg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+ICAg
+ICAgPj4gcG93ZXIgY29udHJvbDoNCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAg
+ID4+DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+PiBodHRwczovL2dpdGh1
+Yi5jb20vb3BlbmJtYy94ODYtcG93ZXItY29udHJvbC9ibG9iL21hc3Rlci9wb3dlci1jb250cm9s
+LXg4Ni9zcmMvcG93ZXJfY29udHJvbC5jcHAjTDUwLg0KICAgID4gICAgICA+ICAgICAgICAgID4g
+ICAgICA+ICAgICAgPj4NCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+DQog
+ICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+PiBUaGlzIHdpbGwgbm90IHdvcmsg
+aWYgY3VycmVudCBzdGF0dXMgaXMgb2ZmLiBUaGlzIHNob3VsZCBqdXN0IHNlbmQNCiAgICA+ICAg
+ICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+IHB1bHNlIGluIGFueSBzdGF0dXMgb24vb2Zm
+Lg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+ICAgICAgPiBDb3JyZWN0LiAgRm9yY2Ug
+T2ZmIGlzIG5vdCBkb25lIGlmIHRoZSBjdXJyZW50IHN0YXR1cyBpcyBvZmYuDQogICAgPiAgICAg
+ID4gICAgICAgICAgPiAgICAgID4gICAgICBEbyB5b3UgaGF2ZSBtb3JlIGRldGFpbHMgb24gdGhl
+IHBvd2VyIGJ1dHRvbiBvdmVycmlkZSBiZWhhdmlvciB0aGF0IHlvdQ0KICAgID4gICAgICA+ICAg
+ICAgICAgID4gICAgICA+ICAgICAgbmVlZD8NCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAg
+Pg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+IFllcywgVGhpcyBpcyByZXF1aXJlZCB0
+byBicmluZyBNRSBiYWNrIHRvIG9wZXJhdGlvbiBtb2RlIGZyb20gcmVjb3ZlcnkuIEhvdyBhcmUg
+eW91IGhhbmRsaW5nIE1FIGZvciBCaW9zIHVwZ3JhZGUuDQogICAgPiAgICAgID4gICAgICAgICAg
+PiAgICAgIFdoZW4gaW4gcmVjb3ZlcnkgbW9kZSwgdGhlIE1FIHdpbGwgYWNjZXB0IGEgcmVzZXQg
+Y29tbWFuZCAoSVBNSSByYXcgMHg2DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgIDB4Mikg
+dG8gcmVzZXQgdG8gb3BlcmF0aW9uYWwgbW9kZS4NCiAgICA+ICAgICAgPiAgICAgICAgICA+DQog
+ICAgPiAgICAgID4gICAgICAgICAgPiBCaWxsLCBJIHRyaWVkIHRoaXMgYW5kIHNlZSBpbmNvbnNp
+c3RlbnQgYmVoYXZpb3IgZnJvbSBob3N0LiBTb21ldGltZSBpdCByZWZ1c2UgdG8gcG93ZXIgb24u
+IFNvIFBCTyByZXNvbHZlcyB0aGlzLg0KICAgID4gICAgICA+ICAgICAgICAgIEkgY2hlY2tlZCB3
+aXRoIHRoZSBNRSB0ZWFtIGFuZCBNRSByZXNldCB0byBtb3ZlIGZyb20gcmVjb3ZlcnkgbW9kZSB0
+bw0KICAgID4gICAgICA+ICAgICAgICAgIG9wZXJhdGlvbmFsIG1vZGUgc2hvdWxkIHdvcmsuICBZ
+b3UgY2FuIGZpbGUgYSB0aWNrZXQgd2l0aCBJbnRlbCBzdXBwb3J0DQogICAgPiAgICAgID4gICAg
+ICAgICAgdG8gaGVscCByZXNvbHZlIHRoZSBpbmNvbnNpc3RlbnQgYmVoYXZpb3IgdGhhdCB5b3Ug
+c2VlIHdoZW4gZG9pbmcgdGhpcy4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+ICAgICAgICAg
+IEluIHRoZSBtZWFudGltZSwgSSB3aWxsIGxvb2sgb3ZlciB5b3VyIHBhdGNoLg0KICAgID4gICAg
+ICA+DQogICAgPiAgICAgID4gICAgICAgICAgVGhhbmtzLA0KICAgID4gICAgICA+ICAgICAgICAg
+IC1KYXNvbg0KICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICAgICAgPg0KICAgID4gICAg
+ICA+ICAgICAgICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAg
+ICA+PiAgICAgID4NCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+ICAgICAg
+PiBSZWdhcmRzDQogICAgPiAgICAgID4gICAgICAgICAgPiAgICAgID4gICAgICA+PiAgICAgID4N
+CiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+ICAgICAgPiAtVmlqYXkNCiAg
+ICA+ICAgICAgPiAgICAgICAgICA+ICAgICAgPiAgICAgID4+ICAgICAgPg0KICAgID4gICAgICA+
+ICAgICAgICAgID4gICAgICA+ICAgICAgPj4NCiAgICA+ICAgICAgPiAgICAgICAgICA+ICAgICAg
+Pg0KICAgID4gICAgICA+ICAgICAgICAgID4gICAgICA+DQogICAgPiAgICAgID4gICAgICAgICAg
+Pg0KICAgID4gICAgICA+ICAgICAgICAgID4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICA+DQog
+ICAgPiAgICAgID4NCiAgICA+ICAgICAgPg0KICAgID4gICAgICANCiAgICA+IA0KICAgIA0KDQo=
