@@ -1,75 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9635E14F4EE
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 23:41:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF15114F4D2
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jan 2020 23:37:10 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 488XCR5SxPzDqdG
-	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2020 09:37:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 488XJV6n7hzDqhD
+	for <lists+openbmc@lfdr.de>; Sat,  1 Feb 2020 09:41:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1043;
- helo=mail-pj1-x1043.google.com; envelope-from=rentao.bupt@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=lDra1qh5; dkim-atps=neutral
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com
- [IPv6:2607:f8b0:4864:20::1043])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 488XBr45v3zDqcn
- for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2020 09:36:34 +1100 (AEDT)
-Received: by mail-pj1-x1043.google.com with SMTP id r67so3516279pjb.0
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jan 2020 14:36:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=uYZEm0INzrdIayljD4bc7Hbhm9MJ1GCTdIMQygedjS4=;
- b=lDra1qh5NSvj1ltdQOPb4xzuKbYHdlaycOVfOwdmXoLr1w83nSj6IxzT79GMq2KYfU
- PSXxNzsIJqu2kEzjs7JGvkmLsmYKgP5wyWpRDuVrye3o9vdijWuULOrspJbu7geUsnqZ
- oJvBqI30/5ZfdnEDfmNcwQM9KkOGQjlhh2d2uAeIVDQNZJg/E4i2cZt03VX5PeWKU6GF
- FQqsAO1n8C8fKmVkuTZOFVKAu8VyDQzRUgWeYSXykJHwyrr/54ldDlRS16eB8eDe5t+P
- IPgv6OYiGgUzikjxEyWV2Ujh8fW/zTGZKvnB4IJayVGjpGMGA+Xg3fVgQl9slOyG9Vbd
- RYvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=uYZEm0INzrdIayljD4bc7Hbhm9MJ1GCTdIMQygedjS4=;
- b=J5UO8oVxrrY4E+dqYNOPO+GSPZ61i8gfelElTIxYNW6PuMF8QxknzVCKtRR2NsiWRL
- c5q6wMSW/QQmlh4hLysM2S3mYcvDT8Yw32RjOl4FzcQA0GG3H7BsNpzdqlI2c5E1Bro0
- R46IPlQ+6JqOpk17tTm6a1dGc4G+MvJc0tMbk01QhIMyIkvmCapKhNys/rVegn8TWaj1
- 2VlfBbaT2Q0OibDgNh9eBaiUHkGWkb5TJVhdwP48cGQQxd3HDD5oWConMUThllPqqRUw
- xUG7hxlkNJ1iJWEA3knw5VDRaUBFw+WMaQ0TQtDpA16NC9CwynNpWmn542GbiO8d7XB3
- Vv6A==
-X-Gm-Message-State: APjAAAVkCLpDne8W0Sapp2NkN7/mmaXIqslsj2C3UyiUlKWmW2xRMD6y
- VxdiKs+5/+gpbDdSdlpws1A=
-X-Google-Smtp-Source: APXvYqzNd9bbz77OEQDkrWzijD1Psh3irv6XDzpc6tdbQkloUUX1adR2LflizmOLXIzUnlM3x0xfzA==
-X-Received: by 2002:a17:90a:8043:: with SMTP id
- e3mr14488242pjw.24.1580510190870; 
- Fri, 31 Jan 2020 14:36:30 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:200::1:a521])
- by smtp.gmail.com with ESMTPSA id f81sm10913394pfa.118.2020.01.31.14.36.29
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 31 Jan 2020 14:36:30 -0800 (PST)
-Date: Fri, 31 Jan 2020 14:36:24 -0800
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH linux dev-5.4 v2 0/3] aspeed-g6: enable usb support
-Message-ID: <20200131223623.GA20974@taoren-ubuntu-R90MNF91>
-References: <20200123074956.21482-1-rentao.bupt@gmail.com>
- <CACPK8XcWsHoeamPtd_R3=RUEjs93OyEo_Q-uk0=wfoa8ispSbA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 488XHq6CQjzDqdg
+ for <openbmc@lists.ozlabs.org>; Sat,  1 Feb 2020 09:40:53 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 31 Jan 2020 14:40:50 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,387,1574150400"; d="scan'208";a="430516029"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga006.fm.intel.com with ESMTP; 31 Jan 2020 14:40:49 -0800
+Received: from [10.241.246.17] (unknown [10.241.246.17])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id AE0F758043A;
+ Fri, 31 Jan 2020 14:40:49 -0800 (PST)
+Subject: Re: power button override
+To: Vijay Khemka <vijaykhemka@fb.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <98EE6AEE-9440-4AA5-971A-833EA0342226@fb.com>
+ <d01cf897-0c23-35dc-5f81-aca67d31b98a@linux.intel.com>
+ <0017A7FA-E86C-4524-B53B-9129A968C7DB@fb.com>
+ <563c3b07-d5f5-1897-404b-ceb97f713610@linux.intel.com>
+ <1b72ee84-6ad3-f5bb-bfed-2f6487893f59@linux.intel.com>
+ <3AC1554A-4B97-45CA-BDE2-299AD172A9FD@fb.com>
+ <698a1a8e-786e-3713-4b94-da7cf7864406@linux.intel.com>
+ <01CE1094-7B1C-44F5-8580-C0098391EA6F@fb.com>
+ <da001fe8-31f4-4343-a711-a91e44c0a22c@linux.intel.com>
+ <A81FB058-4102-4774-B238-2C5484BCF938@fb.com>
+ <65B9F3C8-1066-449B-B0AE-928ED1455687@fb.com>
+ <0e9dbc2f-3dba-ebb7-4acc-28b43cf4e480@linux.intel.com>
+ <72D25FAF-9E04-4459-90C5-910AD4E59B9D@fb.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <874c4922-5d73-bcb3-5594-0f3bd36c4fee@linux.intel.com>
+Date: Fri, 31 Jan 2020 14:40:49 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8XcWsHoeamPtd_R3=RUEjs93OyEo_Q-uk0=wfoa8ispSbA@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <72D25FAF-9E04-4459-90C5-910AD4E59B9D@fb.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,41 +71,153 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Tao Ren <taoren@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jan 31, 2020 at 04:00:29AM +0000, Joel Stanley wrote:
-> On Thu, 23 Jan 2020 at 07:50, <rentao.bupt@gmail.com> wrote:
-> >
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> >
-> > The patch series aims at enabling USB Host and Gadget support on AST2600
-> > platforms. I'm targeting openbmc tree mainly for some early feedback and
-> > more widespread testing. I'm planning to upstream the patches after
-> > 5.6-rc1.
-> >
-> > Patch #1 moves hardcoded vhub attributes (number of downstream ports and
-> > endpoints) to "struct ast_hub_config" which is then attached to "struct
-> > of_device_id". By doing this, it will be easier to enable ast2600 vhub
-> > which supports more ports and endpoints.
-> >
-> > Patch #2 enables AST2600 support in aspeed-vhub gadget driver.
-> >
-> > Patch #3 adds USB devices and according pin groups in aspeed-g6 dtsi.
+
+
+On 1/30/2020 1:38 PM, Vijay Khemka wrote:
 > 
-> I have put these in the openbmc tree. Please send the changes upstream
-> for review asap (I would do it now) so we can get Ben's feedback on
-> them.
 > 
-> Cheers,
+> ﻿On 1/30/20, 1:10 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
 > 
-> Joel
+>      
+>      
+>      On 1/30/2020 10:53 AM, Vijay Khemka wrote:
+>      > And it is inconsistent as 2 times works out of 5 time loop with 30 second delay.
+>      >
+>      > Regards
+>      > -Vijay
+>      >
+>      > On 1/30/20, 10:49 AM, "Vijay Khemka" <vijaykhemka@fb.com> wrote:
+>      >
+>      >      Hi Jason,
+>      >      The problem I am seeing as I am unable to send reset ipmi command to ME via IPMB on i2c bus. I tried to give 30 second delay after power off and setting in ME recovery mode. Once I do force poweroff then only I am able to send any command to ME. I don't know what is the relation of power to ME access on i2c bus.
+>      I have been told that this is not expected behavior and that you can
+>      file an IPS ticket for support.
+>      
+>      The biggest issue with force poweroff using the power button while the
+>      system is off is that it will first start booting the system then
+>      immediately shut it down which is not desired behavior.
+>      
+>      What happens if you try to power on in the failure?  Will it go to the
+>      On state where you can issue a ForceOff?
+> 
+> No, this is also intermittent. And sometimes it powers on and sometimes it gets stuck on TransitionToOnFailed. This is very dangerous state as no power command works after this, not even poweroff. Then I have to leave a system for some time and try many other things or sled cycle the system.
 
-Thanks Joel. I've already sent the patch series to upstream.
+Vijay,
 
+Will this change help fix the issue you are seeing?
 
-Cheers,
+diff --git a/power-control-x86/src/power_control.cpp 
+b/power-control-x86/src/power_control.cpp
+index 20ea9cd..eecc10a 100644
+--- a/power-control-x86/src/power_control.cpp
++++ b/power-control-x86/src/power_control.cpp
+@@ -1518,6 +1518,10 @@ static void powerStateOff(const Event event)
+              setPowerState(PowerState::waitForPSPowerOK);
+              powerOn();
+              break;
++        case Event::powerOffRequest:
++            setPowerState(PowerState::transitionToOff);
++            forcePowerOff();
++            break;
+          default:
+              std::cerr << "No action taken.\n";
+              break;
 
-Tao
+This adds support for powerOffRequest to the Off state.  So even when 
+the host is off, the force off command will still hold the power button 
+until the power good signal deasserts (on my system it asserts followed 
+by a deassert).  This will more closely follow the Chassis.State 
+definition of allowing a Chassis.Off request even while the Host.State 
+is Off.
+
+>      
+>      Thanks,
+>      -Jason
+>      
+>      >
+>      >      Regards
+>      >      -Vijay
+>      >
+>      >      On 1/28/20, 12:50 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
+>      >
+>      >
+>      >
+>      >          On 1/27/2020 12:31 PM, Vijay Khemka wrote:
+>      >          >
+>      >          >
+>      >          > On 1/27/20, 10:52 AM, "Bills, Jason M" <jason.m.bills@linux.intel.com> wrote:
+>      >          >
+>      >          >
+>      >          >
+>      >          >      On 1/24/2020 2:01 PM, Vijay Khemka wrote:
+>      >          >      >
+>      >          >      >
+>      >          >      > On 1/24/20, 1:13 PM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
+>      >          >      >
+>      >          >      >
+>      >          >      >
+>      >          >      >      On 1/24/2020 12:55 PM, Bills, Jason M wrote:
+>      >          >      >      >
+>      >          >      >      >
+>      >          >      >      > On 1/24/2020 10:29 AM, Vijay Khemka wrote:
+>      >          >      >      >>
+>      >          >      >      >>
+>      >          >      >      >> On 1/23/20, 4:36 PM, "Bills, Jason M" <jason.m.bills@linux.intel.com>
+>      >          >      >      >> wrote:
+>      >          >      >      >>
+>      >          >      >      >>      On 1/23/2020 4:13 PM, Vijay Khemka wrote:
+>      >          >      >      >>      > Hi Jason,
+>      >          >      >      >>      >
+>      >          >      >      >>      > We have a requirement of power button override. I don’t see
+>      >          >      >      >> x86-power
+>      >          >      >      >>      > control doesn’t support this currently. Do you need this
+>      >          >      >      >> features or do
+>      >          >      >      >>      > you have any local patch for this.
+>      >          >      >      >>      Hi Vijay,
+>      >          >      >      >>      power button override is used for the "Force Off" actions in
+>      >          >      >      >> power control:
+>      >          >      >      >>
+>      >          >      >      >> https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp#L50.
+>      >          >      >      >>
+>      >          >      >      >>
+>      >          >      >      >> This will not work if current status is off. This should just send
+>      >          >      >      >> pulse in any status on/off.
+>      >          >      >      > Correct.  Force Off is not done if the current status is off.
+>      >          >      >      Do you have more details on the power button override behavior that you
+>      >          >      >      need?
+>      >          >      >
+>      >          >      > Yes, This is required to bring ME back to operation mode from recovery. How are you handling ME for Bios upgrade.
+>      >          >      When in recovery mode, the ME will accept a reset command (IPMI raw 0x6
+>      >          >      0x2) to reset to operational mode.
+>      >          >
+>      >          > Bill, I tried this and see inconsistent behavior from host. Sometime it refuse to power on. So PBO resolves this.
+>      >          I checked with the ME team and ME reset to move from recovery mode to
+>      >          operational mode should work.  You can file a ticket with Intel support
+>      >          to help resolve the inconsistent behavior that you see when doing this.
+>      >
+>      >          In the meantime, I will look over your patch.
+>      >
+>      >          Thanks,
+>      >          -Jason
+>      >
+>      >          >
+>      >          >      >
+>      >          >      >      >>      >
+>      >          >      >      >>      > Regards
+>      >          >      >      >>      >
+>      >          >      >      >>      > -Vijay
+>      >          >      >      >>      >
+>      >          >      >      >>
+>      >          >      >
+>      >          >      >
+>      >          >
+>      >          >
+>      >
+>      >
+>      >
+>      >
+>      
+> 
