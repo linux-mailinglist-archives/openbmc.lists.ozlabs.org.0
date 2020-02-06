@@ -2,169 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 853A9154965
-	for <lists+openbmc@lfdr.de>; Thu,  6 Feb 2020 17:40:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AB1071549A1
+	for <lists+openbmc@lfdr.de>; Thu,  6 Feb 2020 17:49:07 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48D40f1C9bzDqbW
-	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 03:40:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48D4C44QWszDqTF
+	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 03:49:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::343;
+ helo=mail-ot1-x343.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=arm.com
- (client-ip=40.107.7.70; helo=eur04-he1-obe.outbound.protection.outlook.com;
- envelope-from=supreeth.venkatesh@arm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=arm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=armh.onmicrosoft.com header.i=@armh.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-armh-onmicrosoft-com header.b=glC6lX/V;
- dkim=pass (1024-bit key) header.d=armh.onmicrosoft.com
- header.i=@armh.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-armh-onmicrosoft-com header.b=glC6lX/V; 
- dkim-atps=neutral
-Received: from EUR04-HE1-obe.outbound.protection.outlook.com
- (mail-eopbgr70070.outbound.protection.outlook.com [40.107.7.70])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=lY/ZBt3S; dkim-atps=neutral
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com
+ [IPv6:2607:f8b0:4864:20::343])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48D3zj12BSzDqYV
- for <openbmc@lists.ozlabs.org>; Fri,  7 Feb 2020 03:39:08 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com; 
- s=selector2-armh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nTAqM32liWcZ0sDPluCd0XjbbrsxDTsbykwtGB66274=;
- b=glC6lX/VXayJos9fP6793nAm452ES6TBTH1cRbJZsL607uyRojrn4JYqyhoxzW7uFcASj3I9aux9TV/yMlbiSTyyEhBrcE+5fSog/MenYViygSMTEjxBlIOf1wM1/VuzGDb0OLBR/vYDD2XaxneGlyazUtkXrSIiFAk3KZPakP8=
-Received: from VI1PR0801CA0085.eurprd08.prod.outlook.com
- (2603:10a6:800:7d::29) by DB6PR0801MB1846.eurprd08.prod.outlook.com
- (2603:10a6:4:35::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2707.23; Thu, 6 Feb
- 2020 16:39:00 +0000
-Received: from DB5EUR03FT004.eop-EUR03.prod.protection.outlook.com
- (2a01:111:f400:7e0a::201) by VI1PR0801CA0085.outlook.office365.com
- (2603:10a6:800:7d::29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2707.21 via Frontend
- Transport; Thu, 6 Feb 2020 16:39:00 +0000
-Authentication-Results: spf=pass (sender IP is 63.35.35.123)
- smtp.mailfrom=arm.com; lists.ozlabs.org; dkim=pass (signature was verified)
- header.d=armh.onmicrosoft.com;lists.ozlabs.org; dmarc=bestguesspass
- action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 63.35.35.123 as permitted sender) receiver=protection.outlook.com;
- client-ip=63.35.35.123; helo=64aa7808-outbound-1.mta.getcheckrecipient.com;
-Received: from 64aa7808-outbound-1.mta.getcheckrecipient.com (63.35.35.123) by
- DB5EUR03FT004.mail.protection.outlook.com (10.152.20.128) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2665.18 via Frontend Transport; Thu, 6 Feb 2020 16:39:00 +0000
-Received: ("Tessian outbound 1f9bda537fdc:v42");
- Thu, 06 Feb 2020 16:39:00 +0000
-X-CR-MTA-TID: 64aa7808
-Received: from fca9adb96db0.1
- by 64aa7808-outbound-1.mta.getcheckrecipient.com id
- 271173DC-0242-466D-9B7B-DF2A6770C6CC.1; 
- Thu, 06 Feb 2020 16:38:55 +0000
-Received: from EUR02-VE1-obe.outbound.protection.outlook.com
- by 64aa7808-outbound-1.mta.getcheckrecipient.com with ESMTPS id fca9adb96db0.1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384);
- Thu, 06 Feb 2020 16:38:55 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Gf3askKl0xD9ua8PUYfYGeY+pbBzC5+VbCnAjTN09BdqjPO+V37SxJAgvBTuEqa4W1S/ggTS6/iuJZHM/BVst/7Nl59awZFzKGnyRbBdHNvzG4ctKlXhmZGfhKPnt/hMwauR3L03IXYLRwQeQ6eLIOb0IdW5p5jfs37VQbPMnyGGX8tS0WVMXmG9vMCwYmBSPE5mcl3473X0rLBykuTC4TAuwSq2nJIYD53jLeqqJXD4jxyd0RqffLSDHNDSCpNvv9LbFlyXJh6p+MJsnofGrNg6ZdBMrDFUdtCqXkkKVsngwfLxa4ZobLCM0w56w2VzGpVCTUZ/0H3a/AjCCchk2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nTAqM32liWcZ0sDPluCd0XjbbrsxDTsbykwtGB66274=;
- b=K2HL9Rwz7jyaiCgs8nhQ9YzSn5qyGNV8P0rCRl4o5CoySs0+IBpwYr9T96FNjBF9jNccxBjdgOkgxhqtxdi3n4hVM9tGcU4wouleTFGFZSiUzaefj3N9289Q0fw576qhhgEbpcSWBXDlJhCTEt289P8AALcW0k5nclNsooVGRF5aQUchCobJBQWARgHYiP0nRzu5ZSoUxszzzoHv6PFXv+Nbb2ZpZCJsObR41Dt8eq7oLJ5rXrg+LiS01sJ7YhGxPVzfzz9CrsNcEpLFtK8UbYeLU61KBS4+EspoEUGDRQGS2tov1D3vXAv6X1Kw//82esgXTtCjBVV3GwyqFnQ7rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=armh.onmicrosoft.com; 
- s=selector2-armh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nTAqM32liWcZ0sDPluCd0XjbbrsxDTsbykwtGB66274=;
- b=glC6lX/VXayJos9fP6793nAm452ES6TBTH1cRbJZsL607uyRojrn4JYqyhoxzW7uFcASj3I9aux9TV/yMlbiSTyyEhBrcE+5fSog/MenYViygSMTEjxBlIOf1wM1/VuzGDb0OLBR/vYDD2XaxneGlyazUtkXrSIiFAk3KZPakP8=
-Received: from VE1PR08MB5165.eurprd08.prod.outlook.com (20.179.31.32) by
- VE1PR08MB4912.eurprd08.prod.outlook.com (10.255.114.13) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2707.21; Thu, 6 Feb 2020 16:38:53 +0000
-Received: from VE1PR08MB5165.eurprd08.prod.outlook.com
- ([fe80::3d8a:3442:a1ad:d5e5]) by VE1PR08MB5165.eurprd08.prod.outlook.com
- ([fe80::3d8a:3442:a1ad:d5e5%7]) with mapi id 15.20.2686.034; Thu, 6 Feb 2020
- 16:38:53 +0000
-From: Supreeth Venkatesh <Supreeth.Venkatesh@arm.com>
-To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- Bruce Mitchell <Bruce_Mitchell@phoenix.com>, Andrew Jeffery
- <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Deepak
- Kodihalli <dkodihal@linux.vnet.ibm.com>, "tomjoseph@in.ibm.com"
- <tomjoseph@in.ibm.com>, "Winiarska, Iwona" <iwona.winiarska@intel.com>,
- "piotr.matuszczak@intel.com" <piotr.matuszczak@intel.com>, Brad Bishop
- <bradleyb@fuzziesquirrel.com>, "sumanth.bhat@linux.intel.com"
- <sumanth.bhat@linux.intel.com>, James Mihm <james.mihm@intel.com>, Richard
- Hanley <rhanley@google.com>, Vijay Khemka <vijaykhemka@fb.com>
-Subject: RE: OpenBMC PMCI Working group - Kick start Feb 10th
-Thread-Topic: OpenBMC PMCI Working group - Kick start Feb 10th
-Thread-Index: AQHV3Pjr04GoGJSgY0WirxbQtP36sagOXYAg
-Date: Thu, 6 Feb 2020 16:38:53 +0000
-Message-ID: <VE1PR08MB5165118C5D7CB83AF984773C801D0@VE1PR08MB5165.eurprd08.prod.outlook.com>
-References: <67e599e4-0b45-aa01-1e27-d49c52873646@linux.intel.com>
- <4469ca80-8df5-43be-876b-f3e393407e59@www.fastmail.com>
- <acadebfec93f429e804443d76462456e@SCL-EXCHMB-13.phoenix.com>
- <7333abcd-873d-422d-fc94-2a0bc91f6d5d@linux.intel.com>
-In-Reply-To: <7333abcd-873d-422d-fc94-2a0bc91f6d5d@linux.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ts-tracking-id: 2dfedcaf-a494-4daa-8b7f-26869d953be1.0
-x-checkrecipientchecked: true
-Authentication-Results-Original: spf=none (sender IP is )
- smtp.mailfrom=Supreeth.Venkatesh@arm.com; 
-x-originating-ip: [2600:1700:8c61:400:8dbc:9b6c:8775:714a]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-HT: Tenant
-X-MS-Office365-Filtering-Correlation-Id: a5697d36-c4a1-45e1-6314-08d7ab23117a
-X-MS-TrafficTypeDiagnostic: VE1PR08MB4912:|DB6PR0801MB1846:
-X-Microsoft-Antispam-PRVS: <DB6PR0801MB18464423BF4E2FBD044FC4EA801D0@DB6PR0801MB1846.eurprd08.prod.outlook.com>
-x-checkrecipientrouted: true
-nodisclaimer: true
-x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:9508;
-x-forefront-prvs: 0305463112
-X-Forefront-Antispam-Report-Untrusted: SFV:NSPM;
- SFS:(10009020)(4636009)(366004)(136003)(396003)(376002)(346002)(39860400002)(199004)(189003)(81156014)(76116006)(7416002)(81166006)(71200400001)(966005)(478600001)(110136005)(86362001)(7696005)(66556008)(64756008)(8936002)(66476007)(66446008)(52536014)(66946007)(186003)(316002)(8676002)(6506007)(9686003)(53546011)(55016002)(5660300002)(2906002)(33656002)(921003)(1121003);
- DIR:OUT; SFP:1101; SCL:1; SRVR:VE1PR08MB4912;
- H:VE1PR08MB5165.eurprd08.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: arm.com does not designate
- permitted sender hosts)
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: tUCLVoIvzvjK70Lp++GqrsCO0k+MWS4cTfMORMgH+NNGBFPieHeQwrH3A1Zc+qMJdrwhSvVsOHb2CIiyMgZQvv/jvggmLPAWuIcKmSP5/KrE/1YykZH4fYc4/EkYEMM2ResAS90ZOU1rWAmw+KaMeNdeGfAi1ccBtU7csvWEQ6cT7dyCySXXGZSgtpcIZwITWaiiYfocoXTjAo5l35lpT7MGEPxN9qU64j8cCFLqFY85iF1bW5fszF7VwQ6o2FNcWKgQr8Y1HdOuocGRfrfbKWJB5Pu6VDfFN1v3pvZFVbYbefAMNVotcWigsX6gM7yWzWGLMD78ZTFemxtkeqWLOR2Y7yzG/3bcuxmxRlVipO0YIwJpMjl6HqVi4GViYbENuO1tn64Yt5IUtKAEg51y3lmPawSOz8uC9brrsZRXUlYkcuOrc6U7ciEsd4vAcbpY448tTh8TRDzspQ3NO+YL4xaWz1eOUc2SwUgE8zJvhao8DSXbO9WPZLKvBlGBeNP55tTjmEi+DrnYKUIq87lQ4Sw25Z6GpQGU10TqFVb1o+wMKgSuI8ywieCqtkXbm5oaAzzhZC3tKgbCZ9giw2Y4+g==
-x-ms-exchange-antispam-messagedata: 50VtNwAZ0Dir8U52e6ZzG0p+X8iXh9ApLS/Sbp/xfZqxRhhu+WtKSgMW44nmB0Z4iHZxzv5+p4HIkZ5yrGE5M7uEc6ZmNvyvyv6Q++wciiiczPuZxoSF1h2v6J+n3oW5vpGglJ+eFVbSR0lDFW6qul/QlzqUMsGRsCX3TFQhXHw5B6yXklM9YuMTv2/ln1tao+01ls4EtLTlSJvWD0HWcA==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR08MB4912
-Original-Authentication-Results: spf=none (sender IP is )
- smtp.mailfrom=Supreeth.Venkatesh@arm.com; 
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: DB5EUR03FT004.eop-EUR03.prod.protection.outlook.com
-X-Forefront-Antispam-Report: CIP:63.35.35.123; IPV:CAL; SCL:-1; CTRY:IE;
- EFV:NLI; SFV:NSPM;
- SFS:(10009020)(4636009)(346002)(376002)(39860400002)(396003)(136003)(199004)(189003)(6506007)(53546011)(8676002)(336012)(8936002)(81166006)(81156014)(110136005)(316002)(52536014)(356004)(70206006)(70586007)(5660300002)(9686003)(55016002)(7696005)(86362001)(26005)(33656002)(2906002)(186003)(966005)(478600001)(26826003)(921003)(1121003);
- DIR:OUT; SFP:1101; SCL:1; SRVR:DB6PR0801MB1846;
- H:64aa7808-outbound-1.mta.getcheckrecipient.com; FPR:; SPF:Pass; LANG:en;
- PTR:ec2-63-35-35-123.eu-west-1.compute.amazonaws.com; A:1; MX:1; 
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 3f99e0cc-aeb5-4bbb-bc49-08d7ab230d55
-X-Forefront-PRVS: 0305463112
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qwWyP3Qx5BcfrHihGxbvrWMfJsTceus0wrkWkqn9h43ukfcoTYOVFrTMYazV2fEeHi8qQjs7VvcgU91/J93U588Emi+fUehBj6Gjc6AeGsZEGERQ1NixpmDwKRKDGRoXBeSW+W6SDW8BeFgvf+RqKOMlvqdkSUXmZIjy2ykdAUNGtO8X2zZjDbpsVftZGa53fe25FtTx2URTIDAZGDEM3TFYTIA3xmrEPUAhSA7H7k5yXRTyx6GUI8Mfz4lGmJQ+I158l3pF/d+j8KH9tFHVs0PbE9vF4LqZ/raaISvIK80PfhjRO87jJP5nibRImMaBKcBm0Os4O0MVcsBQBpHT2CAJzStKoNIKS9Wb86Nlmw9pZXEnydjYlWMnXdbqdSdPoMs9W4fenkGdMp7Ofe/W/fn18phWdrgOKtfAnGis8YYhrbjZkf9uxX/wnhlPNgWFDn7jj2UO4uyOgCoscxJQAXTXJcKLXeoh7ldOju4wAQMn6vFDXmiTBAsKVEXLT4+qpNFUy9YvOv7T+iQqTuKQ1Lo28+EDhDk5UZHyRpPvPvwkUKsBArUi7+vJfkhaE2T71baAvEGsNudJrFixg7jXkw==
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2020 16:39:00.1112 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5697d36-c4a1-45e1-6314-08d7ab23117a
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d; Ip=[63.35.35.123];
- Helo=[64aa7808-outbound-1.mta.getcheckrecipient.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0801MB1846
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48D4BR0vKczDqTF;
+ Fri,  7 Feb 2020 03:48:28 +1100 (AEDT)
+Received: by mail-ot1-x343.google.com with SMTP id z9so6119569oth.5;
+ Thu, 06 Feb 2020 08:48:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+ :references; bh=gGmz+a38l6sGP1Hy20E77NwbQs/y1Wjt4qa/v7yN3Zc=;
+ b=lY/ZBt3SarIVkc8ZKhK8g26QR3CGTUG69BY6o9eT3igsieegbVgiJjPx3DO9q7A/VQ
+ LWB6O/ZxuJXhQTzMQWDJeEgc3RkySnNYpM5DP9VffHyWMuAS+P+x9St9Ppz1cx87rTW0
+ 6rKhkXWwT+ezYVkz707QN4sU7pnn+Naqxk8pl0dleRB+Fa8yEZydHCPhdyH7OAkp5zXw
+ t6wHaIGMmAsN00vst/dndcmEPKW9RVdnoQmaWxA6qPaULV9g12FaD3v6BeDF+WhPTbCG
+ Wzg3sP+SWm+MAfhKa33gSX0B3A6yqgtjxs//wtgnYo+lH16Y2cxctuIN89/RyLr1UvQH
+ 5esw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:message-id:mime-version:subject:date
+ :in-reply-to:cc:to:references;
+ bh=gGmz+a38l6sGP1Hy20E77NwbQs/y1Wjt4qa/v7yN3Zc=;
+ b=TlZzpFCIalCCFPxq3YBPYzCjdIQOgDpmvbPVvYD07m89s3SxrYut7MIzlDin/FWWnG
+ 17KAtqermAlf1WOTBepjjQqvGmpftamsgGaPcxKBjbVJeQ7npfoaaeIo8XisCEDzGF1h
+ B/Y4kZpV63TMcuPZhCAxgCObN2Cmuipr0AHEvgJjMR6g7BR/QbXk/BYaqLafz5CDNGRG
+ itzyyq9NaSwbmN3Sa3BrPukoY6N4o7sdmjQ9amIAanu0opBqE0Bl9KPAGa+jDFaxLUho
+ QAbdyd/SnO5WvMGdcOVlaOl5ZE1WF71LdnPal2aA419iEKjVJp+T/k/CosvOukKvHSKN
+ tVMw==
+X-Gm-Message-State: APjAAAXDAgCFD30fCGvdTC3irpPMu9dPLvq8tx02ARtmB843cDjn+z6+
+ Pn846UuC8yIJIfz3X/k/gh0=
+X-Google-Smtp-Source: APXvYqyB3yg8nVdizsuR2J02PNJiYu/cZwT7t36Akkyh5VbU/3NLZGbu4kgYcW+0ulEFC43VAa/pGA==
+X-Received: by 2002:a9d:4706:: with SMTP id a6mr29024572otf.331.1581007705206; 
+ Thu, 06 Feb 2020 08:48:25 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:e4f7:ce54:d2b2:68f4])
+ by smtp.gmail.com with ESMTPSA id 22sm26246otf.53.2020.02.06.08.48.24
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 06 Feb 2020 08:48:24 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Message-Id: <73471F41-EB8B-4B8B-9BF1-BB56FA666F50@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_4F9F5361-9644-4CBD-A602-AD540758D21B"
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [PATCH linux dev-5.4 v2] ARM: dts: aspeed: witherspoon: Add gpio
+ line names
+Date: Thu, 6 Feb 2020 10:48:23 -0600
+In-Reply-To: <CACPK8XcGJ61mgCL+vZQEzTmcwu+jZ0hpKrnOz7B7K14y79cvFQ@mail.gmail.com>
+To: Joel Stanley <joel@jms.id.au>
+References: <20200205215511.80333-1-geissonator@gmail.com>
+ <CACPK8XcGJ61mgCL+vZQEzTmcwu+jZ0hpKrnOz7B7K14y79cvFQ@mail.gmail.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -176,33 +81,408 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-UmljaGFyZCwNCg0KSWYgdGhlcmUgd2lsbCBiZSBvbmUgZm9yIFVTLCBJIGFtIGludGVyZXN0ZWQg
-YXMgd2VsbC4NCg0KVGhhbmtzLA0KU3VwcmVldGgNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0t
-LS0NCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcytzdXByZWV0aC52ZW5rYXRlc2g9YXJt
-LmNvbUBsaXN0cy5vemxhYnMub3JnPiBPbiBCZWhhbGYgT2YgVGhvbWFpeWFyLCBSaWNoYXJkIE1h
-cmlhbg0KU2VudDogVGh1cnNkYXksIEZlYnJ1YXJ5IDYsIDIwMjAgODoyMCBBTQ0KVG86IEJydWNl
-IE1pdGNoZWxsIDxCcnVjZV9NaXRjaGVsbEBwaG9lbml4LmNvbT47IEFuZHJldyBKZWZmZXJ5IDxh
-bmRyZXdAYWouaWQuYXU+OyBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmc+OyBEZWVwYWsgS29kaWhhbGxpIDxka29kaWhhbEBsaW51eC52bmV0LmlibS5jb20+OyB0b21q
-b3NlcGhAaW4uaWJtLmNvbTsgV2luaWFyc2thLCBJd29uYSA8aXdvbmEud2luaWFyc2thQGludGVs
-LmNvbT47IHBpb3RyLm1hdHVzemN6YWtAaW50ZWwuY29tOyBCcmFkIEJpc2hvcCA8YnJhZGxleWJA
-ZnV6emllc3F1aXJyZWwuY29tPjsgc3VtYW50aC5iaGF0QGxpbnV4LmludGVsLmNvbTsgSmFtZXMg
-TWlobSA8amFtZXMubWlobUBpbnRlbC5jb20+OyBSaWNoYXJkIEhhbmxleSA8cmhhbmxleUBnb29n
-bGUuY29tPjsgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+DQpTdWJqZWN0OiBPcGVu
-Qk1DIFBNQ0kgV29ya2luZyBncm91cCAtIEtpY2sgc3RhcnQgRmViIDEwdGgNCg0KQWxsLA0KDQpM
-ZXQncyBzdGFydCBvdXIgZmlyc3QgT3BlbkJNQyBQTUNJIHdvcmsgZ3JvdXAgb24gRmViIDEwIC0g
-M1BNIHRvIDQgUE0gSVNUIChHTVQrNTMwKSAoU2VsZWN0ZWQgdGhpcyB0aW1lem9uZSwgYmFzZWQg
-b24gdGhlIG1heGltdW0gcmVzcG9uc2VzKS4NCg0KQ2FsbCBpbiBkZXRhaWxzIGFyZSBpbg0KaHR0
-cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy93aWtpL09wZW5CTUMtUE1DSS1XRw0KDQpO
-b3RlOiBXaWxsIHBsYW4gdG8gaG9zdCAxIG1lZXRpbmcgYXQtbGVhc3QgMiBvciAzIHdlZWtzIG9u
-Y2UgaW4gVVMgRnJpZW5kbHkgdGltZXpvbmUuIFdpbGwgY2FwdHVyZSBhbGwgdGhlIG1pbnV0ZXMg
-aW4gdGhlIHdpa2kgcGFnZSB0byBrZWVwIGV2ZXJ5b25lIGluIHN5bmMuDQoNClJlZ2FyZHMsDQoN
-ClJpY2hhcmQNCg0KSU1QT1JUQU5UIE5PVElDRTogVGhlIGNvbnRlbnRzIG9mIHRoaXMgZW1haWwg
-YW5kIGFueSBhdHRhY2htZW50cyBhcmUgY29uZmlkZW50aWFsIGFuZCBtYXkgYWxzbyBiZSBwcml2
-aWxlZ2VkLiBJZiB5b3UgYXJlIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBwbGVhc2Ugbm90
-aWZ5IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkgYW5kIGRvIG5vdCBkaXNjbG9zZSB0aGUgY29udGVu
-dHMgdG8gYW55IG90aGVyIHBlcnNvbiwgdXNlIGl0IGZvciBhbnkgcHVycG9zZSwgb3Igc3RvcmUg
-b3IgY29weSB0aGUgaW5mb3JtYXRpb24gaW4gYW55IG1lZGl1bS4gVGhhbmsgeW91Lg0K
+
+--Apple-Mail=_4F9F5361-9644-4CBD-A602-AD540758D21B
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+
+
+> On Feb 6, 2020, at 12:45 AM, Joel Stanley <joel@jms.id.au> wrote:
+>=20
+> On Wed, 5 Feb 2020 at 21:55, Andrew Geissler <geissonator@gmail.com =
+<mailto:geissonator@gmail.com>> wrote:
+>>=20
+>> From: Andrew Geissler <geissonator@yahoo.com =
+<mailto:geissonator@yahoo.com>>
+>>=20
+>> Name the gpios so libgiod will work with them
+>=20
+> Perhaps: "Name the GPIOs to help userspace work with them."
+
+ack
+
+>=20
+> You could also mention that the names are describe the functionality
+> that the lines provide, and not a net or ball name.
+
+ack
+
+>=20
+> A heads up: when you send patches upstream to the kernel mailing list,
+> we don't include the "linux dev-X.y" stuff in the subject.
+
+thanks, will fix in next patch
+
+>=20
+>> Signed-off-by: Andrew Geissler <geissonator@yahoo.com>
+>> ---
+>> v2: added upstream to patch
+>>    prepended fsi- on fsi related gpios
+>>    prepended led- on led related gpios
+>>    prepended presence on presence related gpios
+>>    dropped pin_gpio_a1 definition
+>> ---
+>> .../boot/dts/aspeed-bmc-opp-witherspoon.dts   | 36 =
++++++++++++++++++++
+>> 1 file changed, 36 insertions(+)
+>>=20
+>> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts =
+b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
+>> index 515f0f208ee6..2519722928a4 100644
+>> --- a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
+>> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
+>> @@ -193,6 +193,42 @@
+>>=20
+>> };
+>>=20
+>> +&gpio {
+>> +    status =3D "okay";
+>=20
+> The status=3Dokay is harmless but redundant, as this node is already =
+enabled.
+
+ack
+
+>=20
+>> +       gpio-line-names =3D
+>> +       /*A0-A7*/       "","cfam-reset","","","","","fsi-mux","",
+>> +       /*B0-B7*/       "","","","","","air-water","","",
+>> +       /*C0-C7*/       "","","","","","","","",
+>> +       /*D0-D7*/       "fsi-enable","","","","","","","",
+>> +       /*E0-E7*/       "fsi-data","","","","","","","",
+>> +       /*F0-F7*/       "","","","","","","","",
+>> +       /*G0-G7*/       "","","","","","","","",
+>> +       /*H0-H7*/       "","","","","","","","",
+>> +       /*I0-I7*/       "","","","","","","","",
+>> +       /*J0-J7*/       "","","checkstop","","","","","",
+>> +       /*K0-K7*/       "","","","","","","","",
+>> +       /*L0-L7*/       "","","","","","","","",
+>> +       /*M0-M7*/       "","","","","","","","",
+>> +       /*N0-N7*/       =
+"presence-ps1","","led-rear-fault","led-rear-power",
+>> +                       "led-rear-id","","","",
+>> +       /*O0-O7*/       "","","","","","","","",
+>> +       /*P0-P7*/       "","","","","","","","presence-ps0",
+>> +       /*Q0-Q7*/       "","","","","","","","",
+>> +       /*R0-R7*/       "","","fsi-trans","","","power-button","","",
+>> +       /*S0-S7*/       "","","","","","","","",
+>> +       /*T0-T7*/       "","","","","","","","",
+>> +       /*U0-U7*/       "","","","","","","","",
+>> +       /*V0-V7*/       "","","","","","","","",
+>> +       /*W0-W7*/       "","","","","","","","",
+>> +       /*X0-X7*/       "","","","","","","","",
+>> +       /*Y0-Y7*/       "","","","","","","","",
+>> +       /*Z0-Z7*/       "","","","","","","","",
+>> +       /*AA0-AA7*/     "fsi-clock","","","","","","","",
+>> +       /*AB0-AB7*/     "","","","","","","","",
+>> +       /*AC0-AC7*/     "","","","","","","","";
+>> +
+>=20
+> Cean up the line of whitespace here.
+
+ack
+
+>=20
+>> +};
+>> +
+>> &fmc {
+>>        status =3D "okay";
+>>=20
+>> --
+>> 2.21.0 (Apple Git-122)
+
+
+--Apple-Mail=_4F9F5361-9644-4CBD-A602-AD540758D21B
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dus-ascii"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
+class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D"">On Feb 6, 2020, at 12:45 AM, Joel Stanley &lt;<a =
+href=3D"mailto:joel@jms.id.au" class=3D"">joel@jms.id.au</a>&gt; =
+wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;" class=3D"">On Wed, 5 Feb 2020 at 21:55, =
+Andrew Geissler &lt;</span><a href=3D"mailto:geissonator@gmail.com" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" =
+class=3D"">geissonator@gmail.com</a><span style=3D"caret-color: rgb(0, =
+0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">&gt; wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><br class=3D"">From: Andrew Geissler =
+&lt;<a href=3D"mailto:geissonator@yahoo.com" =
+class=3D"">geissonator@yahoo.com</a>&gt;<br class=3D""><br class=3D"">Name=
+ the gpios so libgiod will work with them<br class=3D""></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;" class=3D"">Perhaps: "Name the GPIOs to help =
+userspace work with them."</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""></div></blockquote><div><br =
+class=3D""></div><div>ack</div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D""><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">You could also mention that the names are describe the =
+functionality</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;" class=3D"">that the =
+lines provide, and not a net or ball name.</span><br style=3D"caret-color:=
+ rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""></div></blockquote><div><br =
+class=3D""></div><div>ack</div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D""><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">A heads up: when you send patches upstream to the kernel =
+mailing list,</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;" class=3D"">we don't =
+include the "linux dev-X.y" stuff in the subject.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" =
+class=3D""></div></blockquote><div><br class=3D""></div><div>thanks, =
+will fix in next patch</div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D""><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">Signed-off-by: Andrew Geissler &lt;<a =
+href=3D"mailto:geissonator@yahoo.com" =
+class=3D"">geissonator@yahoo.com</a>&gt;<br class=3D"">---<br =
+class=3D"">v2: added upstream to patch<br =
+class=3D"">&nbsp;&nbsp;&nbsp;prepended fsi- on fsi related gpios<br =
+class=3D"">&nbsp;&nbsp;&nbsp;prepended led- on led related gpios<br =
+class=3D"">&nbsp;&nbsp;&nbsp;prepended presence on presence related =
+gpios<br class=3D"">&nbsp;&nbsp;&nbsp;dropped pin_gpio_a1 definition<br =
+class=3D"">---<br class=3D"">.../boot/dts/aspeed-bmc-opp-witherspoon.dts =
+&nbsp;&nbsp;| 36 +++++++++++++++++++<br class=3D"">1 file changed, 36 =
+insertions(+)<br class=3D""><br class=3D"">diff --git =
+a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts =
+b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts<br class=3D"">index =
+515f0f208ee6..2519722928a4 100644<br class=3D"">--- =
+a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts<br class=3D"">+++ =
+b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts<br class=3D"">@@ =
+-193,6 +193,42 @@<br class=3D""><br class=3D"">};<br class=3D""><br =
+class=3D"">+&amp;gpio {<br class=3D"">+ &nbsp;&nbsp;&nbsp;status =3D =
+"okay";<br class=3D""></blockquote><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">The status=3Dokay is harmless but redundant, as this node is =
+already enabled.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""></div></blockquote><div><br =
+class=3D""></div><div>ack</div><br class=3D""><blockquote type=3D"cite" =
+class=3D""><div class=3D""><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gpio-line-names =3D<br class=3D"">+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*A0-A7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","cfam-reset","","","","","fsi-mux",=
+"",<br class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*B0-B7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","air-water","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*C0-C7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*D0-D7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fsi-enable","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*E0-E7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fsi-data","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*F0-F7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*G0-G7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*H0-H7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*I0-I7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*J0-J7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","checkstop","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*K0-K7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*L0-L7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*M0-M7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*N0-N7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"presence-ps1","","led-rear-fault","le=
+d-rear-power",<br class=3D"">+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"led-rear-id",""=
+,"","",<br class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*O0-O7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*P0-P7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","presence-ps0",<b=
+r class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*Q0-Q7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*R0-R7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","fsi-trans","","","power-button"=
+,"","",<br class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*S0-S7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*T0-T7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*U0-U7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*V0-V7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*W0-W7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*X0-X7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*Y0-Y7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*Z0-Z7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br =
+class=3D"">+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*AA0-AA7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;"fsi-clock","","","","","","","",<br class=3D"">+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*AB0-AB7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","",<br class=3D"">+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*AC0-AC7*/ =
+&nbsp;&nbsp;&nbsp;&nbsp;"","","","","","","","";<br class=3D"">+<br =
+class=3D""></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">Cean up the line of whitespace here.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" =
+class=3D""></div></blockquote><div><br class=3D""></div><div>ack</div><br =
+class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" =
+class=3D""><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D"">+};<br =
+class=3D"">+<br class=3D"">&amp;fmc {<br =
+class=3D"">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status =3D =
+"okay";<br class=3D""><br class=3D"">--<br class=3D"">2.21.0 (Apple =
+Git-122)</blockquote></div></blockquote></div><br =
+class=3D""></body></html>=
+
+--Apple-Mail=_4F9F5361-9644-4CBD-A602-AD540758D21B--
