@@ -1,76 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE878153A8B
-	for <lists+openbmc@lfdr.de>; Wed,  5 Feb 2020 22:56:33 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Cb4G5kNgzDqLC
-	for <lists+openbmc@lfdr.de>; Thu,  6 Feb 2020 08:56:29 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id EBAC3153C39
+	for <lists+openbmc@lfdr.de>; Thu,  6 Feb 2020 01:03:15 +0100 (CET)
+Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48CdtS26KrzDqTs
+	for <lists+openbmc@lfdr.de>; Thu,  6 Feb 2020 11:03:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::244;
- helo=mail-oi1-x244.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e32;
+ helo=mail-vs1-xe32.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=q34KOhpk; dkim-atps=neutral
-Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com
- [IPv6:2607:f8b0:4864:20::244])
+ header.s=20161025 header.b=gm6CVsjP; dkim-atps=neutral
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com
+ [IPv6:2607:f8b0:4864:20::e32])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Cb3N0G7TzDqKb;
- Thu,  6 Feb 2020 08:55:43 +1100 (AEDT)
-Received: by mail-oi1-x244.google.com with SMTP id i1so2400091oie.8;
- Wed, 05 Feb 2020 13:55:43 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48CdsQ2Q41zDqSS
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Feb 2020 11:02:17 +1100 (AEDT)
+Received: by mail-vs1-xe32.google.com with SMTP id p6so2594811vsj.11
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Feb 2020 16:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=qndbgjnKGTRqil5Ffj6ZYDKeVw7HlXNwJpUlAgm+S6Y=;
- b=q34KOhpk47Q/2E2X+VFfQB25SvVHJuhCnCg72JdZCFnW+34+VG2/GkEDFmAASAupm4
- on29xmt526yzth1T5zm/ebJ1M1wvCuY4Yx6/901AobkiGPk8jC7h3RyrgcH5Vs4C8UF7
- KN/spHDzuJjORoS0IUzm0FRkq1V9B/lbDpLuH0gB4B5pLXTjNV0uKEZCndTP1J4oCf8/
- h/1WjYJS3OGsZsmR6BFQPvhvM6grondSLwj30uUnPicUHus/rgxmJdX6sdVQ4DIV/eiN
- xO+0hbO8PBLNoTOiNpeK721XNw3+z+C9X+yrn0GnSkd+efN1vixeURjr63JB7sXnCxsx
- 8Xlw==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=YNy4lTCGCOpbgK+HpSX4oODLnWYi08bUsAoE+YaU+ho=;
+ b=gm6CVsjPBPiLv1lWfsIXTsvJGryXpznXPRS4gk5/Rffa+gOkdfbUYNz1n1cVHYGE+H
+ b3PU7l+OtAP7+mIUNNMiV0il0FGrGoe+0dS6XdM4Gwbhghhq2dEVSDHHKEpQYB8dqh/h
+ pzbTKTlFdaxEUR5a8M/SyRPs3cOPvS8fweAi2Ij/GQhEWwuXOce+a8aA/nE5gp86udNx
+ 5iV9XvWVlTuX7qpqIn9ulXEPp0+Kww7i9yE/Ygmz0M2GjRf+U83U5ojHZq74R83bx1MY
+ aZZ/6b78FXcWmMT6tb+17vsfBZcvQEWt1AfcwOhTGBY4tqcRT+dnt8+YzZFckoNmM1Yl
+ E3Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=qndbgjnKGTRqil5Ffj6ZYDKeVw7HlXNwJpUlAgm+S6Y=;
- b=i2eUHSxy9MqauX0FngUjzFSxvsLtxRnezFvdUrgkxHfgXayzmc4fuq9E+nn7k2vMAW
- SpFAdSJrlSNXjIGzeQf19OydbHS99vnplpzVs+PADNdCg9/mdEf+CqMDW6VxjUen/0bs
- BQNW/MpM9ZSjCP2V43T7Xydtea9x8S2ybfMk/cKN/jhSXJ48YoKm2FRY1YNREkriFC8Q
- Kj4PknqhrmRwZQ+tzzyZeAbm35hzBTudORMmsThIsMSNFhbL5WM+V/UCdKyELkDFyOCv
- l0T3eID1RxDh0/tWEJb6C3qRegJkBLovDne17VEQL2wztXhpf2EFT3FlxU0MnjgCVioO
- RFNA==
-X-Gm-Message-State: APjAAAWm2NiKa53o5nuWlOKNDTVFhIiDdzus/n9S/BnRzmrBL6fK43qB
- mhe3NqEN1ZEA9Ldz3ZgXEZPGBknLExUTEg==
-X-Google-Smtp-Source: APXvYqzIKlb6ICrQEIE/J8GnWSUbGPOQNuGxtAkBKjeoaS1kBpIQsikXhsSVFf7o1NUhEsOJfJTFIA==
-X-Received: by 2002:aca:fd16:: with SMTP id b22mr4657409oii.73.1580939740596; 
- Wed, 05 Feb 2020 13:55:40 -0800 (PST)
-Received: from Andrews-MBP-2.attlocal.com
- (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
- by smtp.gmail.com with ESMTPSA id t23sm242396oic.28.2020.02.05.13.55.39
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 05 Feb 2020 13:55:40 -0800 (PST)
-From: Andrew Geissler <geissonator@gmail.com>
-To: openbmc@lists.ozlabs.org, joel@jms.id.au, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-Subject: [PATCH linux dev-5.4 v2] ARM: dts: aspeed: witherspoon: Add gpio line
- names
-Date: Wed,  5 Feb 2020 15:55:11 -0600
-Message-Id: <20200205215511.80333-1-geissonator@gmail.com>
-X-Mailer: git-send-email 2.21.0 (Apple Git-122)
-In-Reply-To: <FMfcgxwGDDpcbrVbWGfkMRbZCLSZqpMM>
-References: <FMfcgxwGDDpcbrVbWGfkMRbZCLSZqpMM>
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=YNy4lTCGCOpbgK+HpSX4oODLnWYi08bUsAoE+YaU+ho=;
+ b=a2dHIbIYQZ6QUQnNNlgkQIqjjdKO4oS1DjDyL7xdhCpY39bkQ7G7oQidXQ9Rr8Xu3P
+ xo3YJ4TSrybzaIX6tZ7ZIDyoiCKTxxtakLXgxxFOuPsV1ctVw02jIWxtu6DoKBLLvC4F
+ Eg1cVZbJEC4gRzhkkCXKAvWhoh0DmJjLgxKWneyTy1MBmIJAL11ZhxGgCvvhqEMiQ1jg
+ zWFtHtNoWPL+CQM82023fGEhR303J1jhbLt5QFO1cPl1DwxWUjBfbp/mhSTkztODBQsm
+ 9IXyH7M1fIkE4zLAdzxVKf+TFvYO6XWY7b0rkjUUjUXjmuqoP6zZmgi0XMP0Fj0nbqEb
+ VQoA==
+X-Gm-Message-State: APjAAAW8MDiHQiOYgKo3W5uJjQv3LTJfphtllM64RY1YKNG4TA8/3m7k
+ B7h4qochCwtpXABDtxlLrpFYiTowoSteCOP7mVC4+Q==
+X-Google-Smtp-Source: APXvYqzg3juqRcOscCWd6jJdHBIIOPylcnfJ6t+bzsZf/izVDV0vCeY/01fYddkFk0AcsD05brPixEwRGOHLbzxZWZo=
+X-Received: by 2002:a67:bc04:: with SMTP id t4mr159042vsn.139.1580947332542;
+ Wed, 05 Feb 2020 16:02:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Kurt Taylor <kurt.r.taylor@gmail.com>
+Date: Wed, 5 Feb 2020 18:02:01 -0600
+Message-ID: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
+Subject: Community support - where do want to be in a year?
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,72 +69,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, Andrew Geissler <geissonator@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Andrew Geissler <geissonator@yahoo.com>
+The new year is well underway, and I have started thinking about more
+that could be done to enable a stronger, more open community, and to
+have a better developer experience.
 
-Name the gpios so libgiod will work with them
+I'd like to get your feedback, but please, this is not meant to be a
+complaint platform, reply with ideas and solutions, or at least an
+open mind for how we can fix it. I want to hear ideas!
 
-Signed-off-by: Andrew Geissler <geissonator@yahoo.com>
----
-v2: added upstream to patch
-    prepended fsi- on fsi related gpios
-    prepended led- on led related gpios
-    prepended presence on presence related gpios
-    dropped pin_gpio_a1 definition
----
- .../boot/dts/aspeed-bmc-opp-witherspoon.dts   | 36 +++++++++++++++++++
- 1 file changed, 36 insertions(+)
+I am looking to organize a prioritized list so I (and others?) can
+focus on making things happen. I am hopeful that my downstream
+responsibilities will be reduced in the coming months and that we can
+start making real community progress.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-index 515f0f208ee6..2519722928a4 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts
-@@ -193,6 +193,42 @@
- 
- };
- 
-+&gpio {
-+    status = "okay";
-+	gpio-line-names =
-+	/*A0-A7*/	"","cfam-reset","","","","","fsi-mux","",
-+	/*B0-B7*/	"","","","","","air-water","","",
-+	/*C0-C7*/	"","","","","","","","",
-+	/*D0-D7*/	"fsi-enable","","","","","","","",
-+	/*E0-E7*/	"fsi-data","","","","","","","",
-+	/*F0-F7*/	"","","","","","","","",
-+	/*G0-G7*/	"","","","","","","","",
-+	/*H0-H7*/	"","","","","","","","",
-+	/*I0-I7*/	"","","","","","","","",
-+	/*J0-J7*/	"","","checkstop","","","","","",
-+	/*K0-K7*/	"","","","","","","","",
-+	/*L0-L7*/	"","","","","","","","",
-+	/*M0-M7*/	"","","","","","","","",
-+	/*N0-N7*/	"presence-ps1","","led-rear-fault","led-rear-power",
-+		        "led-rear-id","","","",
-+	/*O0-O7*/	"","","","","","","","",
-+	/*P0-P7*/	"","","","","","","","presence-ps0",
-+	/*Q0-Q7*/	"","","","","","","","",
-+	/*R0-R7*/	"","","fsi-trans","","","power-button","","",
-+	/*S0-S7*/	"","","","","","","","",
-+	/*T0-T7*/	"","","","","","","","",
-+	/*U0-U7*/	"","","","","","","","",
-+	/*V0-V7*/	"","","","","","","","",
-+	/*W0-W7*/	"","","","","","","","",
-+	/*X0-X7*/	"","","","","","","","",
-+	/*Y0-Y7*/	"","","","","","","","",
-+	/*Z0-Z7*/	"","","","","","","","",
-+	/*AA0-AA7*/	"fsi-clock","","","","","","","",
-+	/*AB0-AB7*/	"","","","","","","","",
-+	/*AC0-AC7*/	"","","","","","","","";
-+
-+};
-+
- &fmc {
- 	status = "okay";
- 
--- 
-2.21.0 (Apple Git-122)
+Incomplete list (for priming the idea pump):
+1) Existing (donated?) services - Gerrit/Jenkins hosting, email
+service - what about hosting? what about disaster recovery/backups?
+How can we improve?
+2) Automate openbmc.org wordpress content/updates, current events?
+meetups? blog planet?
+3) Metrics - what would the community like to see?
+4) Early development plans disclosure (new features),
+charter/policy/culture changes for upstream plans, improving speed to
+commit, review commitments?
+5) Third-party CI testing/review reporting, supported platforms,
+release testing commitments
 
+What are *your* ideas for improving the community?
+
+Kurt Taylor (krtaylor)
