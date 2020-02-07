@@ -2,77 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 656D0155D3A
-	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 18:58:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76C1E155E96
+	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 20:28:48 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48DjjB5TfNzDqgd
-	for <lists+openbmc@lfdr.de>; Sat,  8 Feb 2020 04:58:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Dlhs5p48zDqkD
+	for <lists+openbmc@lfdr.de>; Sat,  8 Feb 2020 06:28:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
- helo=mail-oi1-x235.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XbgtFpJ8; dkim-atps=neutral
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
- [IPv6:2607:f8b0:4864:20::235])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Djhc3kmtzDqbm
- for <openbmc@lists.ozlabs.org>; Sat,  8 Feb 2020 04:58:21 +1100 (AEDT)
-Received: by mail-oi1-x235.google.com with SMTP id l9so2819332oii.5
- for <openbmc@lists.ozlabs.org>; Fri, 07 Feb 2020 09:58:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=Y/Pu4/5TNWEbBxNNIEtW/omWLhVG/eT0FRZx24Pi7Ko=;
- b=XbgtFpJ8XIvKa3dETv1siSny+bWAUPhJHJlpJC74LARBoWXMrFK1pSqb52OUHuJDDE
- QBCI6FXAQd4sR6jedvNWurQdX8MMTooC8q0qYXqEqfXKvFXuKT7d//QvmSJH5KLN07nW
- gqbym2b6itdyOp0v8N7wMDTWnj09RzypHx4D7S8rc9TOBOGnvbK6fe9NLX05bJij/pTe
- LW3U+4a1nGZj7ZNPpzZIy33NV/Jf2C/u6bGo8Emy9jMnOghwJp4mwpSYBehjXcFNhkyo
- WMvo5Ey3mJd3XpCWDJgdnt1CDoRfoWxCJ1fwumXdq/0NAuaJfYRSyY3Z0sPQ0g6EGEPT
- FBTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=Y/Pu4/5TNWEbBxNNIEtW/omWLhVG/eT0FRZx24Pi7Ko=;
- b=T1B84g1XhwS2Du+RuVOKykY68DNjwAaOd/8x3kwSYXr5uFtUHRHvX0Ge5q1Z7+UI3o
- cc87KNyxKfFNCS0KoysscHoKQ4ChvWakY5XPO4gVmMdiZRnQGGioJSi7g75E8w0EggPf
- VBK28o38qk9ZJHjBzG5sH3kP/LR1vexYkRZjbg0xDlA8nfxepoW+NZXWj/4DmrGcu7dh
- gCuc+W/DgyFdm+VjRM5eCbo5bOXhm6MMSDTEpoISH3d+5daXmM+xdiJkSJPTDMciEBd2
- ga2aAFN/8CaG/t3ZuVAGXKSRxwNyBthJJ26M4NjIaIlz7vJ1mbrHVSL6LRvG/dau/DCz
- FVnQ==
-X-Gm-Message-State: APjAAAWDViMvv2+5Rruf4r9eWyh72mpEP6fnF5WV2QkeEAKDjmIb3IDz
- MpRfcE9OqyQRqkOGo/wFqoo8ZbuI
-X-Google-Smtp-Source: APXvYqxsprhVEdEkYW641++g4vI+IZmMbrKFtGaCukYSzoKLgTWfwvWgLCpVZRbUdxPOX0koJ9lxiw==
-X-Received: by 2002:aca:560b:: with SMTP id k11mr2855551oib.53.1581098297925; 
- Fri, 07 Feb 2020 09:58:17 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id e16sm1279421otp.72.2020.02.07.09.58.17
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 07 Feb 2020 09:58:17 -0800 (PST)
-Subject: Re: Community support - where do want to be in a year?
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
- <20200207163045.GA38734@patrickw3-mbp.dhcp.thefacebook.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <c35f31e6-29fc-223b-08f1-7357457f813e@gmail.com>
-Date: Fri, 7 Feb 2020 11:58:16 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48DlhJ2Wh7zDqgl
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Feb 2020 06:28:12 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 017JRnPi033150
+ for <openbmc@lists.ozlabs.org>; Fri, 7 Feb 2020 14:28:09 -0500
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2y0knfbj4u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Feb 2020 14:28:09 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 017JPoah027215
+ for <openbmc@lists.ozlabs.org>; Fri, 7 Feb 2020 19:28:08 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma02dal.us.ibm.com with ESMTP id 2xykca5krt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Feb 2020 19:28:08 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 017JS89Q42795276
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Fri, 7 Feb 2020 19:28:08 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 212EA124053
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Feb 2020 19:28:08 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D35CB124052
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Feb 2020 19:28:07 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Feb 2020 19:28:07 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <20200207163045.GA38734@patrickw3-mbp.dhcp.thefacebook.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Fri, 07 Feb 2020 13:28:18 -0600
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: BMC Secure Boot - dm-verity
+Message-ID: <33245ec544dc3da5d7f988d5020b265c@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-02-07_04:2020-02-07,
+ 2020-02-07 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 mlxlogscore=413 adultscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002070140
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,36 +84,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/7/20 10:30 AM, Patrick Williams wrote:
-> On Wed, Feb 05, 2020 at 06:02:01PM -0600, Kurt Taylor wrote:
-> 
-> One interesting thing the #yocto channel has on IRC is a bot that
-> posts links whenever someone opens a Stack Overflow with a 'yocto'
-> tag.  I think we need a better mechanism to help with "drive by"
-> questions.
+Hi,
 
-Yes! maybe a variant of the meetbot functionality to monitor SO - may 
-require channel logging, we'd need everyone to be comfortable with that.
+We're planning to use dm-verity to verify the rootfs on eMMC, as 
+mentioned in this doc update[1], following what chromeOs[2]/android[3] 
+have done.
 
-Thanks, I'll add that to the list...
+The verity root hash value is needed to do the verification, which in 
+chromeos appears to be compiled into the kernel, they don't have an 
+initramfs.
+For OpenBMC, we're thinking of creating a new binding for the kernel 
+device tree so that an initramfs can read the hash value and do the 
+verification.
 
-https://docs.google.com/document/d/1QCFRGCRofcR3K8clSLtJHw10-Cu9zkp0dvwXPWzQSCc/edit?usp=sharing
-
-Kurt Taylor (krtaylor)
+Any opinions or suggestions?
 
 
-> This was pointedly said in the IRC and I certainly agree with it:
-> 
->      ------: I realize ------ is asking a lot of basic questions that most
->      of us would normally answer by reading the code and experimenting.
->      They are highlighting major gaps in documentation though
-> 
-> We often have introductory questions on IRC and mailing list that go
-> unanswered.  So, having a Stack Override bot wouldn't do anything if
-> people don't take turns answering.
-> 
-
+[1] https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28443
+[2] 
+https://www.chromium.org/chromium-os/chromiumos-design-docs/verified-boot
+[3] https://source.android.com/security/verifiedboot/dm-verity
