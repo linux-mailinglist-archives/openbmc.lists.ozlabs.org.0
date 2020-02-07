@@ -1,79 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57852155A3E
-	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 16:01:25 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48DdmL3XVPzDqf5
-	for <lists+openbmc@lfdr.de>; Sat,  8 Feb 2020 02:01:22 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 93033155BCE
+	for <lists+openbmc@lfdr.de>; Fri,  7 Feb 2020 17:31:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48DgmZ5Jf7zDqgS
+	for <lists+openbmc@lfdr.de>; Sat,  8 Feb 2020 03:31:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329;
- helo=mail-ot1-x329.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.17;
+ helo=wnew3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ENlxBtAU; dkim-atps=neutral
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
- [IPv6:2607:f8b0:4864:20::329])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=JI9YC+kX; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=bQSuxy75; 
+ dkim-atps=neutral
+Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com
+ [64.147.123.17])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48DdlX5d3lzDqdp
- for <openbmc@lists.ozlabs.org>; Sat,  8 Feb 2020 02:00:38 +1100 (AEDT)
-Received: by mail-ot1-x329.google.com with SMTP id r27so2390368otc.8
- for <openbmc@lists.ozlabs.org>; Fri, 07 Feb 2020 07:00:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=wfdT2YqjuP9CE0MxHPwED0BY4piw+zz7dtpua/txkWU=;
- b=ENlxBtAU611NkbIQ+onb3MuMTECw0BisN6r9kVrxLuu5tKy9kqiSyRs6UyNLRAFRBb
- VVC+5KYp+AZmlZGNBJmjMh5sREbI1CXpH/Z6wgwsHuHhbmfXMfwnMe0GCVBKcRZT0nI2
- hvXO+Wc/0rT7KTh3TplxYo92/bpKRBS85qc2uqNzUyWiq9khOMpSsQjM+RxxtK0eTjAC
- 96+HuPn97VcjPAxhHQ+fUaC3zl1nwUv3sLgM1FRbSf2qOWAo6kP9pYI08EsCpZHWgXWb
- cD9rHXHuMOxs7xuY2w+61Ni7LrqUJq15JZGkDw8hyJVOd15gL2AMBKHU44hH7u5MeQOD
- 3O5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=wfdT2YqjuP9CE0MxHPwED0BY4piw+zz7dtpua/txkWU=;
- b=bukdpZiGuh24KhP7qf9nD9UK/mO9NczzVTVvWeyQO7tKjWv0CP1Q1fe5tKlLUSLb2s
- lLOipdiK0oBkyal+j+Mws0pBRVghaKqMGh00JLFjYN3K0D9Zgevk4QFjVWIE3QANRnVh
- Kd2uiODtGphZA5i1U/Sq7MCwB6d8flLKDPWAsI+oYloC8C9apUc4OtlvLjNIkN9KU32+
- ZSPPojL7b2QIoow9EMAq1IvDQgYthmeb5PmLpeXW88FZfFE1E7MasMVUNOpkI2YNX+Sk
- e0nHxdO8VMQlySBZFikpPnnWNWbRhUDWSZuHnH5xkdO1jjDtulGxmxvEjQYk4Hp6fAk8
- 94cg==
-X-Gm-Message-State: APjAAAVPQRoeZ8gqD8fNq47hF+2a+NRCt2rX5XKsOaiEEaLZgmlVp7Cf
- G/fJdrsdCQfOAnge7zcYaazqZL+4
-X-Google-Smtp-Source: APXvYqw7GCOvLv60MHwWqwivF89StAc0uYJxukHPsD9ul8ycgKy6QRxnbcKlZSHWxHT+nzRRXOiwrA==
-X-Received: by 2002:a05:6830:1049:: with SMTP id
- b9mr3175133otp.100.1581087634096; 
- Fri, 07 Feb 2020 07:00:34 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id 67sm1069773oid.30.2020.02.07.07.00.33
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 07 Feb 2020 07:00:33 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Dglg4wsSzDqdR
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Feb 2020 03:30:54 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.west.internal (Postfix) with ESMTP id 062F1501;
+ Fri,  7 Feb 2020 11:30:50 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Fri, 07 Feb 2020 11:30:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=Owg+UkSsQCPmiABga+pRK6S9a4/
+ I6dUWenOfIB728ow=; b=JI9YC+kXMI+5e/IAlVj2I/3uCOqyLq3Xg76HB3QSItV
+ pd0mqCxGS44xOTMqxxEbwvSNzWuvyUwl5F21stIq+zC8nzRgdXuBgp1H7pNIIJSD
+ cfYumou3U/R8rimJ9foVICxCUJoQO2HON+h0/c7qIj6OYttTM22VwDS0EhnicqJm
+ skdKNmVxXIG4oVnAmLcozrmalbi3opBhnDew497NGcxvzCuiTsiez7qzmwYgeQMI
+ swU01P3fw17oYN+28yknLvba+wEseUncQbZhO8X3X9Y5B0LkScogte4hfv4Danxc
+ ZIuWLYJ3Pmx/pWp7wgU7NZPzGWWY3fZAZi2TqE3KavQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Owg+Uk
+ SsQCPmiABga+pRK6S9a4/I6dUWenOfIB728ow=; b=bQSuxy75gAw0adDquyJuyY
+ uzW3+g4DFr14thVkhS7L9D0DZ/sIPMhlgEY9xqoi0i6JZDW1RGGhlbHwwFeeLfEr
+ R8ZA9WOCquDB00SQFuVu81d+X1r1+NLdr/fQtqQ8X0sICzJV0AnJ6BnF3vKVLa0s
+ eKRaVC+QRGPVRrPLVt91pSBpM/TpWzNwSg7dgqsePVTEejDKP1L535UsjeQV6OOm
+ 59OpXjBq0Xsm4bFpKeD8JS9yb150ddOkb8QEi9HyBrdmO06kqkLkmBOP6qbd284P
+ qnbKcAIf1reM75syndgQ2gazR0luvtegXIaWgOj2X7887BdoCb1SAhnZV8bTbR1w
+ ==
+X-ME-Sender: <xms:upA9Xvjoc_AAthsbHyt8KiHlrh5If0osp3nyqQIyPY_0TsUu_4AARg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrheehgdeklecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucfkphepudeifedruddugedrudeftddruddvkeenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:upA9XuohEfWPAd0YzrRFLwuhi7Lf1YFCDSvCCfQvN_ODHy0vr3hyhw>
+ <xmx:upA9XkBy0CXkp_Em8VdWrdp4I9jxlxk8VJ4QovAVXX-Mq2_BZRXY1g>
+ <xmx:upA9XvNy1aVCBaS3bHDg5tXalnWK4EJFeZ5loTHHvfzYVXUziirQOw>
+ <xmx:upA9XmD_74Z9ndhc6ptNq80OPlniqWcEfd5Qt9jsG361UJ_SzcMr_bgCxSE>
+Received: from localhost (unknown [163.114.130.128])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 05FF13280062;
+ Fri,  7 Feb 2020 11:30:49 -0500 (EST)
+Date: Fri, 7 Feb 2020 10:30:45 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Kurt Taylor <kurt.r.taylor@gmail.com>
 Subject: Re: Community support - where do want to be in a year?
-To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
+Message-ID: <20200207163045.GA38734@patrickw3-mbp.dhcp.thefacebook.com>
 References: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
- <77d0f857-e263-4000-b884-46326fc28a74@www.fastmail.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <a4a9ba03-abc1-6ab8-82b6-272a8dbbbc4c@gmail.com>
-Date: Fri, 7 Feb 2020 09:00:32 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <77d0f857-e263-4000-b884-46326fc28a74@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="HcAYCG3uE/tztfnV"
+Content-Disposition: inline
+In-Reply-To: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,43 +91,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/5/20 6:55 PM, Andrew Jeffery wrote:
-> 
-> 
-> On Thu, 6 Feb 2020, at 10:32, Kurt Taylor wrote:
->> The new year is well underway, and I have started thinking about more
->> that could be done to enable a stronger, more open community, and to
->> have a better developer experience.
->>
->> I'd like to get your feedback, but please, this is not meant to be a
->> complaint platform, reply with ideas and solutions, or at least an
->> open mind for how we can fix it. I want to hear ideas!
->>
->> I am looking to organize a prioritized list so I (and others?) can
->> focus on making things happen. I am hopeful that my downstream
->> responsibilities will be reduced in the coming months and that we can
->> start making real community progress.
 
-I created a google doc so we can organize (then prioritize). Anyone can 
-add ideas or questions, in fact, please do.
+--HcAYCG3uE/tztfnV
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-https://docs.google.com/document/d/1QCFRGCRofcR3K8clSLtJHw10-Cu9zkp0dvwXPWzQSCc/edit?usp=sharing
+On Wed, Feb 05, 2020 at 06:02:01PM -0600, Kurt Taylor wrote:
 
->> What are *your* ideas for improving the community?
-> 
-> Make use of the Contributor Agreement Gerrit configuration if we're
-> going to retain CLAs going forward:
-> 
-> https://gerrit-review.googlesource.com/Documentation/config-cla.html
-> 
-> Andrew
+One interesting thing the #yocto channel has on IRC is a bot that=20
+posts links whenever someone opens a Stack Overflow with a 'yocto'
+tag.  I think we need a better mechanism to help with "drive by"
+questions.
 
-Thanks Andrew, good idea and definitely one I wanted to capture. I have 
-moved it to the google doc.
+This was pointedly said in the IRC and I certainly agree with it:
 
-Kurt Taylor (krtaylor)
+    ------: I realize ------ is asking a lot of basic questions that most
+    of us would normally answer by reading the code and experimenting.
+    They are highlighting major gaps in documentation though
 
+We often have introductory questions on IRC and mailing list that go
+unanswered.  So, having a Stack Override bot wouldn't do anything if
+people don't take turns answering.
 
+--=20
+Patrick Williams
+
+--HcAYCG3uE/tztfnV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl49kLMACgkQqwNHzC0A
+wRmQ2hAApETZTfnK515lqFMgRL5vxpf6/BxVckzhyFxoZVigeZfZVFJxmphF/EfS
+dd3ZkAak0fQYcgZYmn+Zqq+tbAhj4rzy97hME2pCALTHuxc9a8qmvOyLhz0ZDPxk
+IegX1LlbSmwyIOgxsn2M7ulTNfO0xjXz4oLzoMsEtE2t6jTzaIHhy0h9elpQKGXB
+SrRB5F2CBG+zrADaIRpFlJzVysApAa5ZFgyuwCtpCSi+gimzWiSYR11GReFNTPJU
+a4xqHud4VOuh/QMfeml2Q6HyCzLxdLFoxvX+4RqpMDNY4E9bWhvslBHe5zuRm5tm
+vyVZQywgY1dxDKmKqkZPh6ul/yJlA6S7cv4SPLdLNrWaLm0RboNXsvFZoFDgXgku
+yDG1Qh0sw5WGIG92cxGjtRj7jYVav+KOqmQLsy9AwqTjaK71Y+nhAZJexyXhgndc
+HxOSXC+vWd4LXSggULU0UXDqmqJ6LCN+UxzzqfP2LDqlJtPbbsJAOM0n6JRpwtRY
+aJHJRJKsOsPBv7aEfEky0D8BZhmel8ZI6F2uYD0bJ3EDphUJvSzmSx5b35aoRA1g
+JONGa881rKdoG83W2L/D6CvtuWz/hqZQFbeekHnvbmzgDWUGPwPH3QmsVwEfNpn9
+qVq3/1AS2WtlKKV7yaR9efLDO58n46E1SBHZxNsRCjiExfX7Kxc=
+=Ge9K
+-----END PGP SIGNATURE-----
+
+--HcAYCG3uE/tztfnV--
