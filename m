@@ -1,46 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EDF0156FDA
-	for <lists+openbmc@lfdr.de>; Mon, 10 Feb 2020 08:31:19 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48GHdc0lwbzDqP4
-	for <lists+openbmc@lfdr.de>; Mon, 10 Feb 2020 18:31:16 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id A85AF157317
+	for <lists+openbmc@lfdr.de>; Mon, 10 Feb 2020 11:51:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48GN5024pvzDqBy
+	for <lists+openbmc@lfdr.de>; Mon, 10 Feb 2020 21:51:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Unknown mechanism
- found: ip:192.40.192.88/32) smtp.mailfrom=kernel.crashing.org
- (client-ip=76.164.61.194; helo=kernel.crashing.org;
- envelope-from=benh@kernel.crashing.org; receiver=<UNKNOWN>)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=suryakanth.sekar@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=kernel.crashing.org
-X-Greylist: delayed 110 seconds by postgrey-1.36 at bilbo;
- Mon, 10 Feb 2020 18:29:59 AEDT
-Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
+ header.from=linux.intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48GHc754D1zDqKM;
- Mon, 10 Feb 2020 18:29:59 +1100 (AEDT)
-Received: from localhost (gate.crashing.org [63.228.1.57])
- (authenticated bits=0)
- by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 01A7TN4p010982
- (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 10 Feb 2020 01:29:29 -0600
-Message-ID: <b7bf421b5fad397a7ef430af6c0c09602dd66c2a.camel@kernel.crashing.org>
-Subject: Re: [PATCH 2/3] usb: gadget: aspeed: add ast2600 vhub support
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-To: Joel Stanley <joel@jms.id.au>, Tao Ren <rentao.bupt@gmail.com>
-Date: Mon, 10 Feb 2020 08:29:22 +0100
-In-Reply-To: <CACPK8XcmUYhnePr1AG2M9P-oGvOM=zCM+r44jWUzPYGxUEGOGw@mail.gmail.com>
-References: <20200131222157.20849-1-rentao.bupt@gmail.com>
- <20200131222157.20849-3-rentao.bupt@gmail.com>
- <CACPK8XcmUYhnePr1AG2M9P-oGvOM=zCM+r44jWUzPYGxUEGOGw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48GN231GBRzDqGY
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Feb 2020 21:49:10 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 10 Feb 2020 02:49:06 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,424,1574150400"; 
+ d="scan'208,217";a="226112656"
+Received: from ssekar-mobl1.gar.corp.intel.com (HELO [10.66.114.123])
+ ([10.66.114.123])
+ by orsmga008.jf.intel.com with ESMTP; 10 Feb 2020 02:49:05 -0800
+Subject: Re: FW: Exposing BIOS attributes to a remote management console
+To: openbmc@lists.ozlabs.org, Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>, 
+ suryakanth.sekar@linux.intel.com
+References: <7622d97a-13f2-8c38-6ae8-9325923c3c83@linux.vnet.ibm.com>
+ <48777ea3-0af2-4725-9304-64ae4edb71d9@email.android.com>
+ <1504A9E7C77EF44697F386AD61B16260152FEBA5@BGSMSX105.gar.corp.intel.com>
+From: "Sekar, Suryakanth" <suryakanth.sekar@linux.intel.com>
+Message-ID: <a54b4da5-b7a9-423e-a01e-720808ae748c@linux.intel.com>
+Date: Mon, 10 Feb 2020 16:19:04 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
+MIME-Version: 1.0
+In-Reply-To: <1504A9E7C77EF44697F386AD61B16260152FEBA5@BGSMSX105.gar.corp.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------91C2B5403BA14D7F4E91806C"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,95 +58,269 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- devicetree <devicetree@vger.kernel.org>, Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-usb@vger.kernel.org,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Stephen Boyd <swboyd@chromium.org>, Rob Herring <robh+dt@kernel.org>,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Colin Ian King <colin.king@canonical.com>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2020-02-10 at 02:48 +0000, Joel Stanley wrote:
-> On Fri, 31 Jan 2020 at 22:22, <rentao.bupt@gmail.com> wrote:
-> > 
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > Add AST2600 support in aspeed-vhub driver. There are 3 major differences
-> > between AST2500 and AST2600 vhub:
-> >   - AST2600 supports 7 downstream ports while AST2500 supports 5.
-> >   - AST2600 supports 21 generic endpoints while AST2500 supports 15.
-> >   - EP0 data buffer's 8-byte DMA alignment restriction is removed from
-> >     AST2600.
-> > 
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> > Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+This is a multi-part message in MIME format.
+--------------91C2B5403BA14D7F4E91806C
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Travelling at the moment so my review might be a bit delayed. Also for
-some reason I missed your original submission, sorry about that, please
-poke me next time if I don't reply within a couple of days !
+Hi Deepak,
 
-One thing to look into as well is the 2600 has revived the "device
-controller" which looks like a cut down version of a vhub device, so we
-should break a bit more the linkage between vhub and the underlying
-devices so the latter can be instanciated standalone...
+OOB BIOS high level config design doc is in progress. I will send for 
+review soon.
 
-(Foor for thought, I'm not asking you to do that right now)
+Yes, we need to support all interface -IPMI/ MCTP/ Redfish Host interface.
 
-Cheers,
-Ben.
+If BIOS is not booted at all. BMC wont have any attribute info. It will 
+be empty in BMC side.
 
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> 
-> > ---
-> >  drivers/usb/gadget/udc/aspeed-vhub/Kconfig | 4 ++--
-> >  drivers/usb/gadget/udc/aspeed-vhub/core.c  | 9 +++++++++
-> >  2 files changed, 11 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> > index 83ba8a2eb6af..605500b19cf3 100644
-> > --- a/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> > +++ b/drivers/usb/gadget/udc/aspeed-vhub/Kconfig
-> > @@ -4,5 +4,5 @@ config USB_ASPEED_VHUB
-> >         depends on ARCH_ASPEED || COMPILE_TEST
-> >         depends on USB_LIBCOMPOSITE
-> >         help
-> > -         USB peripheral controller for the Aspeed AST2500 family
-> > -         SoCs supporting the "vHub" functionality and USB2.0
-> > +         USB peripheral controller for the Aspeed AST2400, AST2500 and
-> > +         AST2600 family SoCs supporting the "vHub" functionality and USB2.0
-> > diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > index 94081cc04113..c827bf420278 100644
-> > --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > @@ -42,6 +42,11 @@ static const struct ast_vhub_config ast2400_config = {
-> >         .max_epns = 15,
-> >  };
-> > 
-> > +static const struct ast_vhub_config ast2600_config = {
-> > +       .max_ports = 7,
-> > +       .max_epns = 21,
-> > +};
-> > +
-> >  static const struct of_device_id ast_vhub_dt_ids[] = {
-> >         {
-> >                 .compatible = "aspeed,ast2400-usb-vhub",
-> > @@ -51,6 +56,10 @@ static const struct of_device_id ast_vhub_dt_ids[] = {
-> >                 .compatible = "aspeed,ast2500-usb-vhub",
-> >                 .data = &ast2400_config,
-> >         },
-> > +       {
-> > +               .compatible = "aspeed,ast2600-usb-vhub",
-> > +               .data = &ast2600_config,
-> > +       },
-> >         { }
-> >  };
-> >  MODULE_DEVICE_TABLE(of, ast_vhub_dt_ids);
-> > --
-> > 2.17.1
-> > 
+BIOS must provide BIOS OOB capability via KCS interface in early boot stage.
+Like supported proprietary BIOS attribute file format or PLDM support 
+via MCTP  or
+Redfish BIOS attribute registry format to the BMC.
 
+BIOS must send the master BIOS attributes file(Intel properitary - XML 
+type 0)
+via KCS interface or all attributes details via Bios configuration PLDM 
+via MCTP or
+Redfish host interface during first boot.
+
+BIOS must collect the new attribute values from BMC and update the same 
+in BIOS
+
+BIOS must send the updated master attributes file to the BMC and once 
+its updated in BIOS
+
+and reset the system to reflect the BIOS configuration.
+
+OOB daemon in BMC  must maintain and collect the  attribute registry 
+file from MCTP/ IPMI/ Redfish interface.
+
+Convert the proprietary XML format/ PLDM data  into BIOS attribute 
+Registry format &
+must support the below following dbus method.
+
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/18242
+
+Validate the BIOS input data or User attribute value.
+
+MCTP / Redfish host interface / IPMI must communicate with OOB daemon in 
+BMC via D bus
+
+Thanks
+
+Suryakanth.S
+
+
+
+> ---------- Forwarded message ----------
+> From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com 
+> <mailto:dkodihal@linux.vnet.ibm.com>>
+> Date: Feb 8, 2020 1:59 PM
+> Subject: Exposing BIOS attributes to a remote management console
+> To: openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
+> Cc:
+>
+> Hi,
+>
+> To enable remote updates (via a remote management console that talks to
+> the BMC) to the host firmware's BIOS settings table on IBM systems,
+> we're thinking of the following flow:
+>
+> a) The host firmware sends down a BIOS settings table to the BMC using
+> PLDM [1].
+> b) The BMC uses phosphor-settingsd [2] as the backend to store BIOS
+> attributes on D-Bus.
+> c) Bmcweb implements the Redfish BIOS schema [3] to enable remote
+> reads/writes on the BIOS attributes.
+>
+> However, c) is a problem because one needs to write YAML files [4] for
+> the BMC to determine what D-Bus objects to make corresponding to the
+> BIOS attributes. This requires a unique D-Bus interface *per* BIOS
+> attribute. This means the BMC must have prior knowledge about the BIOS
+> attributes.
+>
+> I don't think that's the right way to go about this for two reasons. One
+> - this creates a lockstep dependency on the host firmware when the BIOS
+> settings table needs to be updated, and two - I think the OpenBMC
+> implementation of this must be able to receive (via PLDM/IPMI/other
+> standard in-band means) a set of BIOS attributes from different BIOS
+> firmware stacks dynamically and expose them for out of band updates,
+> without having prior/build-time knowledge of those attributes. So I
+> think this calls for a different kind of D-Bus interface/infrastructure
+> than what the phosphor-settingsd app relies on. Something that enables
+> the BMC to add to D-Bus a BIOS attribute dynamically, knowing it's name,
+> type and default value.
+>
+> Any thoughts on this flow? I'm also curious to know if the Redfish BIOS
+> schema/attribute registry model requires the BMC to have prior knowledge
+> about the system BIOS attributes to update the registry. This wasn't
+> obvious to me from a quick read of the schema.
+>
+> Thanks,
+> Deepak
+>
+> [1]
+> https://www.dmtf.org/sites/default/files/standards/documents/DSP0247_1.0.0.pdf
+> [2] https://github.com/openbmc/phosphor-settingsd
+> [3] https://redfish.dmtf.org/schemas/v1/Bios.v1_1_0.json
+> [4]
+> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/settings/phosphor-settings-defaults/defaults.yaml
+>
+
+--------------91C2B5403BA14D7F4E91806C
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p>Hi Deepak,</p>
+    <p>OOB BIOS high level config design doc is in progress. I will send
+      for review soon. <br>
+    </p>
+    <p>Yes, we need to support all interface -IPMI/ MCTP/ Redfish Host
+      interface. <br>
+    </p>
+    <p>If BIOS is not booted at all. BMC wont have any attribute info.
+      It will be empty in BMC side.</p>
+    <p>BIOS must provide BIOS OOB capability via KCS interface in early
+      boot stage.<br>
+      Like supported proprietary BIOS attribute file format or PLDM
+      support via MCTP  or <br>
+      Redfish BIOS attribute registry format to the BMC.</p>
+    <p>BIOS must send the master BIOS attributes file(Intel properitary
+      - XML type 0)<br>
+      via KCS interface or all attributes details via Bios configuration
+      PLDM via MCTP or<br>
+      Redfish host interface during first boot.</p>
+    BIOS must collect the new attribute values from BMC and update the
+    same in BIOS<br>
+    <p>BIOS must send the updated master attributes file to the BMC and 
+      once its updated in BIOS</p>
+    <p>and reset the system to reflect the BIOS configuration.<br>
+    </p>
+    <p>OOB daemon in BMC  must maintain and collect the  attribute
+      registry file from MCTP/ IPMI/ Redfish interface.<br>
+    </p>
+    <p>Convert the proprietary XML format/ PLDM data  into BIOS
+      attribute Registry format &amp;<br>
+      must support the below following dbus method.</p>
+    <p><a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/18242">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/18242</a></p>
+    <p>Validate the BIOS input data or User attribute value.</p>
+    <p>MCTP / Redfish host interface / IPMI must communicate with OOB
+      daemon in BMC via D bus</p>
+    <p>Thanks</p>
+    <p>Suryakanth.S<br>
+    </p>
+    <p><br>
+    </p>
+    <br>
+    <blockquote type="cite"
+cite="mid:1504A9E7C77EF44697F386AD61B16260152FEBA5@BGSMSX105.gar.corp.intel.com">
+      <div class="WordSection1">
+        <div>
+          <div>
+            <p class="MsoNormal">---------- Forwarded message ----------<br>
+              From: Deepak Kodihalli &lt;<a
+                href="mailto:dkodihal@linux.vnet.ibm.com"
+                moz-do-not-send="true">dkodihal@linux.vnet.ibm.com</a>&gt;<br>
+              Date: Feb 8, 2020 1:59 PM<br>
+              Subject: Exposing BIOS attributes to a remote management
+              console<br>
+              To: <a href="mailto:openbmc@lists.ozlabs.org"
+                moz-do-not-send="true">openbmc@lists.ozlabs.org</a><br>
+              Cc: <br>
+              <br>
+              <o:p></o:p></p>
+          </div>
+        </div>
+        <div>
+          <p class="MsoNormal" style="margin-bottom:12.0pt"><span
+              style="font-size:10.0pt">Hi,<br>
+              <br>
+              To enable remote updates (via a remote management console
+              that talks to <br>
+              the BMC) to the host firmware's BIOS settings table on IBM
+              systems, <br>
+              we're thinking of the following flow:<br>
+              <br>
+              a) The host firmware sends down a BIOS settings table to
+              the BMC using <br>
+              PLDM [1].<br>
+              b) The BMC uses phosphor-settingsd [2] as the backend to
+              store BIOS <br>
+              attributes on D-Bus.<br>
+              c) Bmcweb implements the Redfish BIOS schema [3] to enable
+              remote <br>
+              reads/writes on the BIOS attributes.<br>
+              <br>
+              However, c) is a problem because one needs to write YAML
+              files [4] for <br>
+              the BMC to determine what D-Bus objects to make
+              corresponding to the <br>
+              BIOS attributes. This requires a unique D-Bus interface
+              *per* BIOS <br>
+              attribute. This means the BMC must have prior knowledge
+              about the BIOS <br>
+              attributes.<br>
+              <br>
+              I don't think that's the right way to go about this for
+              two reasons. One <br>
+              - this creates a lockstep dependency on the host firmware
+              when the BIOS <br>
+              settings table needs to be updated, and two - I think the
+              OpenBMC <br>
+              implementation of this must be able to receive (via
+              PLDM/IPMI/other <br>
+              standard in-band means) a set of BIOS attributes from
+              different BIOS <br>
+              firmware stacks dynamically and expose them for out of
+              band updates, <br>
+              without having prior/build-time knowledge of those
+              attributes. So I <br>
+              think this calls for a different kind of D-Bus
+              interface/infrastructure <br>
+              than what the phosphor-settingsd app relies on. Something
+              that enables <br>
+              the BMC to add to D-Bus a BIOS attribute dynamically,
+              knowing it's name, <br>
+              type and default value.<br>
+              <br>
+              Any thoughts on this flow? I'm also curious to know if the
+              Redfish BIOS <br>
+              schema/attribute registry model requires the BMC to have
+              prior knowledge <br>
+              about the system BIOS attributes to update the registry.
+              This wasn't <br>
+              obvious to me from a quick read of the schema.<br>
+              <br>
+              Thanks,<br>
+              Deepak<br>
+              <br>
+              [1] <br>
+              <a
+href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0247_1.0.0.pdf"
+                moz-do-not-send="true">https://www.dmtf.org/sites/default/files/standards/documents/DSP0247_1.0.0.pdf</a><br>
+              [2] <a
+                href="https://github.com/openbmc/phosphor-settingsd"
+                moz-do-not-send="true">https://github.com/openbmc/phosphor-settingsd</a><br>
+              [3] <a
+                href="https://redfish.dmtf.org/schemas/v1/Bios.v1_1_0.json"
+                moz-do-not-send="true">https://redfish.dmtf.org/schemas/v1/Bios.v1_1_0.json</a><br>
+              [4] <br>
+              <a
+href="https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/settings/phosphor-settings-defaults/defaults.yaml"
+                moz-do-not-send="true">https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/settings/phosphor-settings-defaults/defaults.yaml</a><o:p></o:p></span></p>
+        </div>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------91C2B5403BA14D7F4E91806C--
