@@ -1,48 +1,42 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CF55159DA9
+	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2020 00:48:38 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2BD2159CB4
-	for <lists+openbmc@lfdr.de>; Tue, 11 Feb 2020 23:57:40 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48HJ816DFKzDqLT
-	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2020 09:57:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48HKGq27bCzDqKq
+	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2020 10:48:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
  envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48HJ7L5B0JzDqCR
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 09:56:59 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48HKG50pkhzDqKj
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 10:47:55 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 11 Feb 2020 14:56:55 -0800
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 11 Feb 2020 15:47:52 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,428,1574150400"; d="scan'208";a="251710487"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.7.153.143])
- ([10.7.153.143])
- by orsmga002.jf.intel.com with ESMTP; 11 Feb 2020 14:56:54 -0800
-Subject: Re: [PATCH dev-5.4] peci: fix license identifier
-To: Joel Stanley <joel@jms.id.au>
-References: <20200211224345.3624-1-jae.hyun.yoo@linux.intel.com>
- <CACPK8Xdb+gMZgEo-kCOBnjQtEMiPWoc5QJ7fF5W7ZeAOWzP6Og@mail.gmail.com>
+X-IronPort-AV: E=Sophos;i="5.70,428,1574150400"; d="scan'208";a="380597860"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga004.jf.intel.com with ESMTP; 11 Feb 2020 15:47:51 -0800
 From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <8bfd6c3a-f5d1-254d-25d0-efcea5ff7886@linux.intel.com>
-Date: Tue, 11 Feb 2020 14:56:54 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <CACPK8Xdb+gMZgEo-kCOBnjQtEMiPWoc5QJ7fF5W7ZeAOWzP6Og@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To: Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH dev-5.4] hwmon: peci: change label strings to reflect natural
+ numbers
+Date: Tue, 11 Feb 2020 15:49:50 -0800
+Message-Id: <20200211234950.4010-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,47 +48,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/11/2020 2:52 PM, Joel Stanley wrote:
-> On Tue, 11 Feb 2020 at 22:41, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
->>
->> This commit fixes license identifier to prevent an error while
->> doing 'make headers_install' that says:
->> error: include/uapi/linux/peci-ioctl.h: missing "WITH Linux-syscall-note" for SPDX-License-Identifier
->>
->> Reported-by: Tao Ren <rentao.bupt@gmail.com>
->> Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-> 
-> Thakns for the patch.
-> 
-> How's the upstream submission of PECI going?
+This commit changes label strings to reflect user friendly natural
+numbers like 'Core 1' instead of 'Core 0' and 'DIMM A1' instead of
+'DIMM A0'.
 
-I'm still trying. I'll update you if any progress.
+Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+---
+ drivers/hwmon/peci-cputemp.c  | 2 +-
+ drivers/hwmon/peci-dimmtemp.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 drivers/hwmon/peci-cputemp.c
+ mode change 100644 => 100755 drivers/hwmon/peci-dimmtemp.c
 
-Thanks,
+diff --git a/drivers/hwmon/peci-cputemp.c b/drivers/hwmon/peci-cputemp.c
+old mode 100644
+new mode 100755
+index 78e442f433a7..b9fe91281d58
+--- a/drivers/hwmon/peci-cputemp.c
++++ b/drivers/hwmon/peci-cputemp.c
+@@ -363,7 +363,7 @@ static int create_core_temp_label(struct peci_cputemp *priv, int idx)
+ 	if (!priv->coretemp_label[idx])
+ 		return -ENOMEM;
+ 
+-	sprintf(priv->coretemp_label[idx], "Core %d", idx);
++	sprintf(priv->coretemp_label[idx], "Core %d", idx + 1);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/hwmon/peci-dimmtemp.c b/drivers/hwmon/peci-dimmtemp.c
+old mode 100644
+new mode 100755
+index 8ceab08d06e1..45eabd2ec5c8
+--- a/drivers/hwmon/peci-dimmtemp.c
++++ b/drivers/hwmon/peci-dimmtemp.c
+@@ -260,7 +260,7 @@ static int create_dimm_temp_label(struct peci_dimmtemp *priv, int chan)
+ 	rank = chan / priv->gen_info->dimm_idx_max;
+ 	idx = chan % priv->gen_info->dimm_idx_max;
+ 
+-	sprintf(priv->dimmtemp_label[chan], "DIMM %c%d", 'A' + rank, idx);
++	sprintf(priv->dimmtemp_label[chan], "DIMM %c%d", 'A' + rank, idx + 1);
+ 
+ 	return 0;
+ }
+-- 
+2.17.1
 
-Jae
-
->> ---
->>   include/uapi/linux/peci-ioctl.h | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/include/uapi/linux/peci-ioctl.h b/include/uapi/linux/peci-ioctl.h
->> index 843930f9fedd..c74b3cde52e8 100644
->> --- a/include/uapi/linux/peci-ioctl.h
->> +++ b/include/uapi/linux/peci-ioctl.h
->> @@ -1,5 +1,5 @@
->> -/* SPDX-License-Identifier: GPL-2.0 */
->> -/* Copyright (c) 2018-2019 Intel Corporation */
->> +/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
->> +/* Copyright (c) 2018-2020 Intel Corporation */
->>
->>   #ifndef __PECI_IOCTL_H
->>   #define __PECI_IOCTL_H
->> --
->> 2.17.1
->>
