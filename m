@@ -2,81 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A6D815B1DB
-	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2020 21:29:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CEF6C15B283
+	for <lists+openbmc@lfdr.de>; Wed, 12 Feb 2020 22:11:50 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Hrpt3SVfzDqRy
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 07:29:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48HslS0MZ5zDqSc
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 08:11:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=thalerj@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Hrp94kk6zDqGJ
- for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 07:29:04 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Hskr67TVzDqRS
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 08:11:15 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01CKSetX061565
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 15:28:43 -0500
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2y3u51pc3c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 15:28:43 -0500
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01CKPCaZ028534
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:42 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma02dal.us.ibm.com with ESMTP id 2y1mm8f1yw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:42 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 01CKSfia59769118
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:41 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C7EFBE053
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:41 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EA127BE051
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:40 +0000 (GMT)
-Received: from oc2358436115.ibm.com (unknown [9.41.74.115])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Wed, 12 Feb 2020 20:28:40 +0000 (GMT)
-Subject: Re: Enabling OpenBMC Debug
-To: openbmc@lists.ozlabs.org
-References: <776B4FA1-4427-4FC1-802A-BC4192CA3D2E@gmail.com>
- <27a538db-96e4-f83f-6541-93e974f78ead@linux.ibm.com>
-From: Justin Thaler <thalerj@linux.vnet.ibm.com>
-Message-ID: <c012602f-281a-0cc7-961d-67599cf679be@linux.vnet.ibm.com>
-Date: Wed, 12 Feb 2020 14:28:40 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ 01CL4TiX113539; Wed, 12 Feb 2020 16:09:12 -0500
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2y4qys222n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Feb 2020 16:09:12 -0500
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01CL59uT000986;
+ Wed, 12 Feb 2020 21:09:11 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma03wdc.us.ibm.com with ESMTP id 2y1mm7fpjs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Feb 2020 21:09:11 +0000
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 01CL99ta57147900
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 12 Feb 2020 21:09:10 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 994B86E054;
+ Wed, 12 Feb 2020 21:09:09 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3A4DC6E05B;
+ Wed, 12 Feb 2020 21:09:09 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.142.217])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Wed, 12 Feb 2020 21:09:09 +0000 (GMT)
+Subject: Re: Redfish security questions
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+References: <fe46c534-7e23-bc54-2ae9-0057866d6be0@linux.ibm.com>
+ <a1b54026-444b-5693-a2af-bbd43b0a95d2@linux.intel.com>
+ <084d6c01-092a-c026-d504-34cfe89f5ebf@linux.ibm.com>
+ <6c396e46-6942-15e2-ec71-f8387037783e@linux.intel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <64e4420e-ae3f-0943-4200-d07166914955@linux.ibm.com>
+Date: Wed, 12 Feb 2020 15:09:07 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.4.2
 MIME-Version: 1.0
-In-Reply-To: <27a538db-96e4-f83f-6541-93e974f78ead@linux.ibm.com>
+In-Reply-To: <6c396e46-6942-15e2-ec71-f8387037783e@linux.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
  definitions=2020-02-12_09:2020-02-12,
  2020-02-12 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 mlxscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002120141
+ clxscore=1015 phishscore=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=999 lowpriorityscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002120145
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,78 +93,96 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a really good set of information! I must say I think the 
-obmcutil command is a good idea, for development purposes.
+On 2/12/20 12:18 AM, Thomaiyar, Richard Marian wrote:
+> This is on next week right? I will attend (it will be late, but i will 
+> try to manage). We can discuss about this and also about pam_abl 
+> related to blocking users based on IP address issue.
 
-On 2/11/20 11:58 AM, Joseph Reynolds wrote:
-> On 2/11/20 9:51 AM, Andrew Geissler wrote:
->> I find myself running a lot of different commands to enable a variety of
->> debug data on OpenBMC when debugging different issues (usually BIOS
->> communication issues). I also end up giving these commands to a lot of 
->> people
->> when recreating issues for me. Stuff like this:
->>
->> # enable debug logs in journal
->> sed -i 's/info/debug/' 
->> /lib/systemd/journald.conf.d/journald-maxlevel-policy.conf
->> systemctl restart systemd-journald.service
->>
->> # Enable BIOS communication service debug
->> sed -i 's/mboxd/mboxd -vv/' /lib/systemd/system/mboxd.service
->> sed -i 's/btbridged/btbridged --vv/' 
->> /lib/systemd/system/org.openbmc.HostIpmi.service
->> sed -i 's/ipmid/ipmid -d 0xff/'  
->> /lib/systemd/system/phosphor-ipmi-host.service
->> sed -i 's/0/1/' /etc/default/pldmd
->> systemctl daemon-reload
->> systemctl restart mboxd.service
->> systemctl restart org.openbmc.HostIpmi.service
->> systemctl restart phosphor-ipmi-host.service
->> systemctl restart pldmd.service
->>
->> I was contemplating wrapping the above stuff in a obmcutil command so 
->> instead
->> of telling people to do all of the above (and dealing with situations 
->> when
->> those commands change), I could say something like run "obmcutil 
->> debugon".
->>
-What about a REST API command tied to this? It could help when dealing 
-with external to BMC problems.
+Yes, both topics mentioned in this email are on the Wednesday 2020-02-19 
+security work group agenda.  We can discuss them early in the meeting if 
+you wish.
 
->> Any thoughts out there? Would finer granularity of the debug be useful?
->> Are there other forms of debug people would like enabled?
-Sometimes we have to recreate issues that occur on a system, a rather 
-unfortunate situation in and of itself. I'll have to counter with a 
-question of my own. Do you think this would be good to enable during a 
-recreate, and we don't risk flooding the useful info?
+I am trying to push the conversation back out onto the email list (as a 
+general principle).  I'll cut/paste the forum topic into a separate 
+email thread to get it going.
 
+I briefly looked at using pam_abl (Linux-PAM module(8) and its 
+corresponding command(1)).  I am interested in using its "automatic 
+black listing IP addresses" function.  It is GPL3 license which I think 
+OpenBMC can use.  I am also interested in rate-limiting authentication 
+attempts as a complementary solution.  I'll continue that email thread 
+as I have time to do so.
 
-> 
-> Thank you for the information.  I keep learning all the time.
-> 
-> These settings factor into service scenarios and also deployment 
-> readiness.  For example:
-> - I want to turn off debug.  For example, I want a debug-off command.
-> - I would want a way to validate (or at least show) these settings when 
-> testing firmware image release candidates.  For example, another 
-> obmcutil command "debug-show" which uses "grep -H" instead of "sed".
-> - I would want some documentation added the BMC administrator's guide to 
-> make them aware of OpenBMC debug support.  Draft: The obmcutil command 
-> can control debug settings for a variety of the components running on 
-> the BMC.  For more information, see 
-> https://github.com/openbmc/phosphor-state-manager/blob/master/obmcutil
-> 
-> The obmcutil tool is a shell script, so folks can take just the pieces 
-> they need.  That is, don't be more granular at this time.
-> 
-> In summary, it seems like a good idea.  It seems like we should ask our 
-> service architects to weight in.  I'll go ask mine....
-> 
-> - Joseph
-> 
+Thank you!
+
+- Joseph
+
+>
+>
+> regards,
+>
+> Richard
+>
+> On 2/11/2020 11:01 PM, Joseph Reynolds wrote:
 >>
->> Andrew
-> 
-Thanks,
-Justin
+>> On 2/10/20 10:37 PM, Thomaiyar, Richard Marian wrote:
+>>> On a different note,
+>>>
+>>> Let me know your  thoughts on this too 
+>>> https://redfishforum.com/thread/279/channel-privilege-support-direction-redfish
+>>>
+>>> I am trying to get the direction of the redfish  spec, whether they 
+>>> want to consider channel based privilege restriction or just single 
+>>> privilege.
+>>
+>> Richard,
+>>
+>> Thanks.  I've replied to your thread with questions of my own. Please 
+>> reply to my questions on the Redfish forum.  I think we (OpenBMC) 
+>> need to have clear requirements.  I've added your topic to the 
+>> OpenBMC security working group and plan to stir up any interest.  
+>> You're welcome to attend, but it is not necessary.
+>>
+>> OpenBMC security working group:
+>> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI 
+>>
+>>
+>> - Joseph
+>>
+>>>
+>>> regards,
+>>>
+>>> Richard
+>>>
+>>> On 2/10/2020 11:05 PM, Joseph Reynolds wrote:
+>>>> The Redfish spec recently changed to allow users with the Login 
+>>>> privilege to enumerate all BMC users. Previously only the admin 
+>>>> user could do this.  I disagree with this change and believe it is 
+>>>> an unnecessary information exposure.  Details are in the Redfish 
+>>>> forum post.
+>>>>
+>>>> https://redfishforum.com/thread/281/manageraccountcollection-change-allows-account-enumeration 
+>>>>
+>>>>
+>>>> Are we okay with this?  Do we ask Redfish to change it back? Please 
+>>>> reply to this email or to the forum with your thoughts.
+>>>>
+>>>> Thanks,
+>>>> - Joseph
+>>>>
+>>>> References:
+>>>>
+>>>> The change was made to Redfish version 2019.4 > DSP2046 > 
+>>>> Redfish-1.0.4-PrivilegeRegistry > ManagerAccountCollection > GET:
+>>>> https://www.dmtf.org/standards/redfish
+>>>>
+>>>> OpenBMC has the corresponding implementation change pending here:
+>>>> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/28881
+>>>>
+>>>> This was discussed in the 2020-02-05 OpenBMC security working group 
+>>>> meeting as agenda item 3.  Minutes:
+>>>> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI 
+>>>>
+>>>>
+>>
+
